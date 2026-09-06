@@ -4622,7 +4622,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'against the local repo (portal + pipeline scripts + graph modules) + the S3 '
                                      'AWS-resource snapshot -> stitch_graph.json, then publishes '
                                      'artifact-FIRST/marker-LAST to s3://opal-313476888478-globgrph/stitch/ (the '
-                                     'atomic commit point; contract preserved for the comp-debt ensure_fresh '
+                                     'atomic commit point; contract preserved for the comp-debt freshness '
                                      'consumer). Replaces the retired GH-Action/CodeBuild/EventBridge apparatus '
                                      "(Andrew-direct 2026-07-07: a solo contributor's local tree IS the canonical "
                                      'state). It WRITES the substrate the query tools read; it does not query an '

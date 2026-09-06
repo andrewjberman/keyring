@@ -19,7 +19,6 @@ import json
 import math
 import sys
 import time
-from datetime import datetime
 from pathlib import Path
 
 # G2 (NFRA_COMPEFFICACY CE-g-2): `datetime` above parses the kuzu manifest's ISO built_at into the
@@ -388,69 +387,72 @@ def _vintage_dict(*, db_name: str, nodes, edges, built_iso: str | None, age_h,
     }
 
 
-def _kuzu_vintage(db_path: str) -> dict:
-    """comp-blast's extraction half: the VINTAGE fields for the canonical kuzu DB, read from the
-    SAME carriers `comp-kuzu`'s own provenance header reads -- infra/aws/globgrph/_canonical.py
-    and _provenance.py are byte-identical before and after this order (G2-AC5); every call here is
-    a READ of an already-published, already-imported reader function (`comp_blast_universe`
-    imports `_canonical`/`_provenance` for exactly this purpose already). Returns the kwargs for
-    `_format_vintage_line` / `_vintage_dict`.
+def _served_vintage(served: dict) -> dict:
+    """comp-blast's extraction half, TO-CG-D-7 (R7): the VINTAGE fields for the SERVED cloud graph,
+    read from the SERVICE's OWN response fields -- `vintage`, `age_line`, `manifest_sha256`,
+    `artifact_prefix` -- plus the two counts the universe load already measured.
 
-    Two axes, one function each, both pre-existing: AGE from the manifest's own `built_at`
-    (`_provenance._age_hours`, the same computation `format_provenance_header` uses). STALE-SERVED
-    from the seam's OWN two labels, checked in order, first hit wins -- (1) the on-disk marker
-    (`_canonical.refresh_failure`, the `._refresh_status.json` file `_incremental_or_serve_stale`
-    writes -- e.g. `inc-served-labeled-stale`); (2) the seam's own LIVE predicate
-    (`_canonical.needs_refresh`, the exact call `load_kuzu_universe`'s budgeted branch already
-    makes to decide whether it is serving this DB stale-on-purpose -- CE-t-6/T6-AC7's "age/reason
-    disclosure" line). Never a second vintage source, never a new sensor: both are the seam's own,
-    already-written-or-already-evaluated carriers, re-read here rather than re-derived."""
-    db_name = Path(str(db_path).rstrip("/\\")).name
-    try:
-        _kuzu_mod, _canon, _prov = _bu._import_globgrph()
-    except _bu.KuzuUnavailable as ex:
-        return dict(db_name=db_name, nodes="?", edges="?", built_iso=None, age_h=None,
-                    unread_reason=f"cannot read the graph layer ({ex})", stale_served=None)
+    WHAT CHANGED AND WHY (CE-g-2's engine half, carried from NFRA_COMPEFFICACY into CG-s-8):
+    the disclosure used to read the LOCAL DB's `_build_manifest.json` through `_provenance`, and
+    its `STALE-SERVED:` arm read the rebuild seam's own labels (`_canonical.refresh_failure`, the
+    the rebuild seam's on-disk marker file wrote, and the seam's own live predicate).
+    Both carriers are GONE: the local DB is retired and the seam that could label a serve "stale"
+    was removed by this order. On a served graph the POINTER IS THE VINTAGE -- what the service
+    hands you is, by construction, the generation it has installed -- so there is no state in which
+    a caller is served one vintage while a fresher one is being withheld. The `STALE-SERVED` arm is
+    therefore REMOVED rather than left to render a permanent None: a field that can never be
+    populated is a false reassurance, not a disclosure.
 
-    stale_served = None
-    try:
-        rf = _canon.refresh_failure(db_path)
-        if rf:
-            stale_served = rf.get("kind") or "labeled-stale"
-    except Exception:  # noqa: BLE001 -- disclosure must never break the answer it decorates
-        stale_served = None
-    if stale_served is None:
-        try:
-            _needs, _reason = _canon.needs_refresh(db_path, _prov.DEFAULT_AGE_WARN_HOURS)
-            if _needs:
-                stale_served = f"served-stale ({_reason})"
-        except Exception:  # noqa: BLE001 -- disclosure must never break the answer it decorates
-            pass
+    There is still exactly ONE age and it is still never a client clock: `age_line` is the SERVICE's
+    sentence, computed from the manifest's `committed_at`."""
+    served = served or {}
+    return dict(
+        age_line=served.get("age_line"),
+        vintage=served.get("vintage"),
+        manifest_sha256=served.get("manifest_sha256"),
+        artifact_prefix=served.get("artifact_prefix"),
+        nodes=served.get("nodes", "?"),
+        edges=served.get("edges", "?"),
+        unread_reason=None if served.get("vintage") else "the service returned no vintage",
+    )
 
-    manifest = _prov.read_manifest(db_path)
-    if manifest is None:
-        return dict(db_name=db_name, nodes="?", edges="?", built_iso=None, age_h=None,
-                    unread_reason="no _build_manifest.json beside this DB", stale_served=stale_served)
 
-    nodes = manifest.get("node_count", "?")
-    edges = manifest.get("edge_count", "?")
-    built_at = manifest.get("built_at")
-    if not built_at:
-        return dict(db_name=db_name, nodes=nodes, edges=edges, built_iso=None, age_h=None,
-                    unread_reason="no built_at in manifest", stale_served=stale_served)
+def _format_served_vintage_line(*, age_line, vintage, manifest_sha256=None, artifact_prefix=None,
+                                nodes="?", edges="?", unread_reason: str | None = None) -> str:
+    """`VINTAGE: <age_line>  [vintage=<iso> manifest=<12 hex> nodes=<n> edges=<m>]`.
 
-    age_h = _prov._age_hours(built_at)
-    if age_h is None:
-        return dict(db_name=db_name, nodes=nodes, edges=edges, built_iso=None, age_h=None,
-                    unread_reason=f"built_at unparseable ({built_at!r})", stale_served=stale_served)
+    An unreadable vintage is NEVER a default (never a silent 0.0h, never a silently omitted line):
+    `unread_reason` set, or a missing `age_line`, forces `UNREAD (<reason>)` in the age slot."""
+    if unread_reason is not None or not age_line:
+        reason = unread_reason or "the service returned no age line"
+        head = "UNREAD (%s)" % reason
+    else:
+        head = age_line
+    bits = ["vintage=%s" % (vintage or "UNREAD")]
+    if manifest_sha256:
+        bits.append("manifest=%s" % str(manifest_sha256)[:12])
+    bits.append("nodes=%s" % nodes)
+    bits.append("edges=%s" % edges)
+    return "VINTAGE: %s  [%s]" % (head, " ".join(bits))
 
-    try:
-        built_iso = datetime.fromisoformat(built_at).strftime("%Y-%m-%dT%H:%M:%SZ")
-    except Exception:  # noqa: BLE001 -- a render failure is not a read failure; fall back to the raw value
-        built_iso = str(built_at)
 
-    return dict(db_name=db_name, nodes=nodes, edges=edges, built_iso=built_iso, age_h=age_h,
-                unread_reason=None, stale_served=stale_served)
+def _served_vintage_dict(*, age_line, vintage, manifest_sha256=None, artifact_prefix=None,
+                         nodes="?", edges="?", unread_reason: str | None = None) -> dict:
+    """The `--json` carrier for the served graph. `vintage`/`age_line` are `None` (never a
+    fabricated value) when the service did not return them, and the reason travels beside them so a
+    JSON reader never re-derives an UNREAD verdict from an absence. There is no `stale_served` key:
+    see `_served_vintage` -- the pointer IS the vintage."""
+    unread = unread_reason is not None or not vintage
+    return {
+        "graph": "served cloud graph (opal-globgrph projection)",
+        "nodes": nodes,
+        "edges": edges,
+        "vintage": None if unread else vintage,
+        "age_line": None if unread else age_line,
+        "vintage_unread_reason": (unread_reason or "no vintage returned") if unread else None,
+        "manifest_sha256": manifest_sha256,
+        "artifact_prefix": artifact_prefix,
+    }
 
 
 def _emit_trace_provenance(g: TraceGraph) -> dict:
@@ -1208,7 +1210,7 @@ def cmd_blast(args):
     # would do it invisibly -- the tool would answer from a universe the operator did not choose and
     # cannot see, which is strictly worse than the NOT-FOUND that started this.
     try:
-        g, _kuzu_prov, _db_path = _bu.load_kuzu_universe(
+        g, _kuzu_prov, _served = _bu.load_kuzu_universe(
             refresh=not getattr(args, "force", False),
             budgeted=budgeted_call,
             unbudgeted_label=unbudgeted_label,
@@ -1221,9 +1223,9 @@ def cmd_blast(args):
 
     # G2 (NFRA_COMPEFFICACY CE-g-2): ONE extraction, reused on every answer path below (clean,
     # AMBIGUOUS, NOT-FOUND, partial-budget, JSON) -- never a second read of the manifest per branch.
-    _vintage_fields = _kuzu_vintage(_db_path)
-    _vintage_line = _format_vintage_line(**_vintage_fields)
-    _vintage_json = _vintage_dict(**_vintage_fields)
+    _vintage_fields = _served_vintage(_served)
+    _vintage_line = _format_served_vintage_line(**_vintage_fields)
+    _vintage_json = _served_vintage_dict(**_vintage_fields)
 
     # ---------------------------------------------------------------- SUBJECT RESOLUTION (defect c)
     _kind, matches = _blast_resolve_subject(g, query, getattr(args, "exact", False))

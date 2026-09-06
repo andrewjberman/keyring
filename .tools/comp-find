@@ -127,15 +127,20 @@ def _aws_corpus(pattern, pathspec, *, ignore_case, name_mode, files_only, show_a
     """--corpus aws (Andrew-direct 2026-08-28, "based off of the comp-kuzu surface ... the easiest way
     to have fast scan access to aws cloud"): the LIVE AWS plane as a search corpus.
 
-    Source = the GLOBGRPH Kuzu DB (infra/aws/globgrph/kuzu_cli.py), whose aws layer is produced by the
-    02:00Z full re-derive + the CloudTrail-driven incremental -- NOT parsed Terraform. Every aws
-    CloudNode carries name / arn / node_type / drift_class / source / snapshot_ts + a props JSON
-    (runtime, handler, role, env keys, tf provenance ...). One Cypher pull per UNIT, then the SAME
+    Source = the SERVED cloud graph projection, reached through the ONE thin client
+    (infra/aws/globgrph/projection_client.py, TO-CG-D-3/CG-s-6). TO-CG-D-7 (R7) retired the local
+    Kuzu DB and the kuzu_cli subprocess this used to shell out to: there is no local database, no
+    rebuild, no `--mode inc`, and no `GLOBGRPH_KUZU_*` flag left on this path. The aws layer is
+    still produced by the 02:00Z full re-derive + the CloudTrail-driven incremental -- NOT parsed
+    Terraform -- but a laptop now READS it and never BUILDS it. Every aws CloudNode carries
+    name / arn / node_type / drift_class / source / snapshot_ts + a props JSON (runtime, handler,
+    role, env keys, tf provenance ...). One Cypher pull per UNIT over HTTPS, then the SAME
     in-process regex the repo corpus uses, over `name + arn + props` (or name + arn only under
     --name). Pathspecs are node_type filters (case-insensitive: lambda == LAMBDA). Bands = node_type.
-    DENOMINATOR = nodes scanned; VINTAGE = the DB's own provenance header (built: ... age ...);
-    drift_class rides every hit -- the "exists in AWS but not in the repo" case is a labelled column.
-    A FAILED pull is printed as a failure, never as a zero.
+    DENOMINATOR = nodes scanned; VINTAGE = the SERVICE's own `age_line` (its source is the served
+    manifest's committed_at -- never a client clock); drift_class rides every hit -- the "exists in
+    AWS but not in the repo" case is a labelled column. A FAILED pull is printed as a failure,
+    never as a zero.
 
     RULE T (PRD v0.4 s.4.4, NFRA_COMPEFFICACY CE-t-1): budgeted via .tools/_compbudget (--budget /
     env COMP_BUDGET_S / default 90s -- the shared carrier, never a per-tool copy). THE UNIT: when
@@ -148,13 +153,15 @@ def _aws_corpus(pattern, pathspec, *, ignore_case, name_mode, files_only, show_a
     case would defeat the rule it exists to satisfy. That is a disclosed non-application (BUDGET
     REACHED prints "NO CURSOR" and why), never a cursor faked to look like one that exists.
     """
-    import json
-    import subprocess
-
-    cli = os.path.join(WS, "infra", "aws", "globgrph", "kuzu_cli.py")
-    if not os.path.isfile(cli):
+    _client_dir = os.path.join(WS, "infra", "aws", "globgrph")
+    if _client_dir not in sys.path:
+        sys.path.insert(0, _client_dir)
+    try:
+        import projection_client as _pc
+    except Exception as exc:   # noqa: BLE001
         print("comp-find [aws] %r" % pattern)
-        print("  BLOCKED: %s is absent -- no AWS corpus on this device (not a zero)." % cli)
+        print("  BLOCKED: the served-graph client is unreachable (%s) -- NO MEASUREMENT, not a "
+              "zero." % exc)
         return 2
 
     try:
@@ -180,8 +187,6 @@ def _aws_corpus(pattern, pathspec, *, ignore_case, name_mode, files_only, show_a
                 print("comp-find: WARNING: --cursor %r does not match any requested node_type -- "
                       "running the full requested set (no units skipped)." % cursor)
 
-    env = dict(os.environ)
-    env.setdefault("GLOBGRPH_KUZU_INCREMENTAL_REFRESH", "1")
     clock = _compbudget.Clock(budget_s)
 
     all_rows = []
@@ -201,34 +206,31 @@ def _aws_corpus(pattern, pathspec, *, ignore_case, name_mode, files_only, show_a
                   "n.drift_class AS drift, n.source AS src, n.snapshot_ts AS ts, n.props AS props "
                   "LIMIT 1000000" % where)
         try:
-            proc = subprocess.run([sys.executable, cli, "--json", "--mode", "inc", cypher],
-                                  capture_output=True, text=True, timeout=remaining, env=env, cwd=WS)
-        except subprocess.TimeoutExpired:
-            deferred_reasons.append("%s: did not return within the remaining budget (TimeoutExpired)" % u)
-            continue
-        except OSError as exc:
+            res = _pc.query(cypher, timeout_s=remaining if remaining is not None else 240.0)
+        except Exception as exc:   # noqa: BLE001 -- a failed pull is a FAILURE, never a zero
+            ename = type(exc).__name__
+            if "timed out" in str(exc).lower() or "timeout" in ename.lower():
+                deferred_reasons.append("%s: did not return within the remaining budget (%s)"
+                                        % (u, ename))
+                continue
             print("comp-find [aws] %r" % pattern)
-            print("  BLOCKED: comp-kuzu pull failed (%s) -- NO MEASUREMENT, not a zero." % exc)
-            _comprail.log_rail(RAIL_LOG, "RUN-FIND-ERR", "comp-find", pattern, "corpus=aws err=%s" % exc)
+            print("  BLOCKED: served-graph pull failed (%s: %s) -- NO MEASUREMENT, not a zero."
+                  % (ename, exc))
+            _comprail.log_rail(RAIL_LOG, "RUN-FIND-ERR", "comp-find", pattern,
+                               "corpus=aws err=%s" % ename)
             return 2
         if not vintage:
-            vintage = [ln.strip() for ln in (proc.stderr or "").splitlines()
-                       if ln.strip().startswith(("built:", "Nessie HEAD:", "DB:"))]
-        body = proc.stdout or ""
-        start = body.find("[")
-        try:
-            rows = json.loads(body[start:]) if start != -1 else []
-        except ValueError:
-            rows = None
-        if proc.returncode != 0 or rows is None:
+            age_line = res.get("age_line")
+            if age_line:
+                vintage = [age_line,
+                           "manifest: %s" % str(res.get("manifest_sha256") or "")[:12]]
+        rows = res.get("rows")
+        if rows is None:
             print("comp-find [aws] %r" % pattern)
-            print("  BLOCKED: comp-kuzu returned rc=%s / unparseable JSON on unit %s -- NO "
-                  "MEASUREMENT, not a zero." % (proc.returncode, u))
-            tail = (proc.stderr or "").strip().splitlines()[-3:]
-            for ln in tail:
-                print("    " + ln[:200])
+            print("  BLOCKED: the served graph returned no `rows` field on unit %s -- NO "
+                  "MEASUREMENT, not a zero." % u)
             _comprail.log_rail(RAIL_LOG, "RUN-FIND-ERR", "comp-find", pattern,
-                               "corpus=aws rc=%s unit=%s" % (proc.returncode, u))
+                               "corpus=aws no-rows unit=%s" % u)
             return 2
         all_rows.extend(rows)
         completed.append(u)
@@ -315,10 +317,10 @@ def _aws_corpus(pattern, pathspec, *, ignore_case, name_mode, files_only, show_a
         page = min(page, pages)
         start_i, end_i = (page - 1) * limit, min((page - 1) * limit + limit, total)
 
+    print("  VINTAGE: %s" % ("  ".join(vintage) if vintage else "UNREAD (the served response carried no age_line)"))
     print("  DENOMINATOR: %d hit(s) across %d aws node(s) scanned [corpus=aws%s]%s"
           % (len(hits), scanned, (" types=" + ",".join(types)) if types else "",
              (" | band=%s -> %d" % (band_filter.upper(), total)) if band_filter else ""))
-    print("  VINTAGE: %s" % ("  ".join(vintage) if vintage else "UNREAD (no provenance header on stderr)"))
     print("  DRIFT (scanned): %s" % (" ".join("%s=%d" % (k or "unset", v)
                                               for k, v in sorted(drift_census.items())) or "none"))
     counts = " ".join("%s=%d" % (t, len(by_type[t])) for t in sorted(by_type))
@@ -366,7 +368,7 @@ def _usage():
     print("     all       default + gitignored, minus the declared ephemeral floor   [THE DEFAULT]")
     print("     ignored   ONLY gitignored files -- 'is it in the hidden files?'")
     print("     raw       default + ALL gitignored, floor disabled (slow, complete)")
-    print("     aws       THE LIVE AWS PLANE via comp-kuzu (Andrew-direct 2026-08-28): regex over every")
+    print("     aws       THE LIVE AWS PLANE via the SERVED graph (Andrew-direct 2026-08-28): regex over every")
     print("               aws CloudNode's name + arn + props; pathspecs = node_type filters (LAMBDA,")
     print("               IAM_ROLE, S3_BUCKET, ...); --name = name/arn only; drift_class per hit;")
     print("               denominator = nodes scanned; vintage = the DB's own built: line.")
