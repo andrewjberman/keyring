@@ -11,8 +11,10 @@ against OBJECT defaults, corrections fold before close).
 
 THE SIGNAL (locked invariant #1): write-heat = the lastModifiedDateTime TIMESTAMP carried on the
 MS nodes by the S2 extract -- NEVER file content, NEVER comms. This module reads the canonical
-kuzu graph (the S2 cert-clean substrate) and computes ages; it opens no gateway call, no file
-body, nothing beyond node metadata already in the graph.
+estate graph (the S2 cert-clean substrate) from the SERVED projection and computes ages; it makes
+no MICROSOFT GRAPH call, reads no file body, and takes nothing beyond node metadata already in the
+graph. (Its one network call is the opal-globgrph projection gateway, which serves those same
+nodes -- the invariant is about the MS side, and it is unchanged.)
 
 THE INDEX (TO scope #3, S4-consumption-grounded): one JSON artifact --
   { generated_at, graph_vintage{...}, params{...}, denominators{...},
@@ -35,8 +37,10 @@ a sizing RAVC to COO/CTO -- the honest math: the MS lastModified data refreshes 
 extract is derive-folded), so hourly snapshots of a nightly signal capture only deterministic
 decay drift (24x rows, zero information); post-derive-nightly matches the data vintage.
 
-VINTAGE DISCIPLINE: ensure_fresh (the comp-kuzu house pattern) runs before the read, so heat is
-computed at pin==HEAD; the graph vintage (snapshot ids + marker committed_at) rides the artifact.
+VINTAGE DISCIPLINE (NFRA_CLDGRPH R7, TO-CG-D-7): the nodes come from the SERVED cloud graph over
+one HTTPS /graph/cypher call -- no local database, no local rebuild, no fallback. The service
+installs one generation atomically, so the served pointer IS the pin; the graph vintage
+(served vintage + manifest sha + marker committed_at) rides the artifact.
 
 Usage:
   python ms_heat_index.py                 # compute + write local index + S3 latest + snapshot
@@ -83,27 +87,26 @@ def _iso(dt: datetime) -> str:
 
 
 # ---------------------------------------------------------------------------------------------
-# Graph read (canonical kuzu, read-only, ensure_fresh house pattern)
+# Graph read (SERVED cloud graph, read-only, one HTTPS round trip)
 # ---------------------------------------------------------------------------------------------
 def read_ms_nodes() -> tuple[list, dict]:
-    """MS_FILE + MS_FOLDER rows from the canonical DB at pin==HEAD.
-    Returns (rows, graph_vintage). Each row: {node_id, node_type, props(dict)}."""
+    """MS_FILE + MS_FOLDER rows from the SERVED cloud graph (NFRA_CLDGRPH TO-CG-D-7 / R7).
+    Returns (rows, graph_vintage). Each row: {node_id, node_type, props(dict)}.
+
+    WHAT MOVED AND WHY THE VINTAGE DISCIPLINE IS UNCHANGED. This used to open the local
+    kuzu_nessie_db after calling _canonical.ensure_fresh, which could trigger a local rebuild
+    on the caller's machine. Both are retired: the graph is BUILT in the cloud and installed by
+    the service at a pointer swapped atomically, so the vintage the caller is handed IS the
+    installed generation. There is no state in which this reader gets one generation while a
+    fresher one is withheld, which is exactly the condition ensure_fresh existed to remove --
+    so the refresh call is not replaced by a poll, it is unnecessary. An UNREACHABLE service
+    RAISES (ProjectionClientError) rather than computing heat over a stale local copy: a
+    VISIBLE gap, never a silent old answer."""
     sys.path.insert(0, GLOBGRPH_DIR)
-    import _canonical  # noqa: E402
+    import projection_client  # noqa: E402
     import _provenance  # noqa: E402
 
-    db_path = _canonical.CANONICAL_DB_PATH
-    # ensure_fresh returns (refreshed, reason): refreshed=False + reason "current" IS the healthy
-    # steady state (no swap needed); only a not-refreshed on a NEEDED refresh is degraded.
-    refreshed, why = _canonical.ensure_fresh(db_path)
-    if refreshed:
-        print(f"INFO: CANONICAL_REFRESHED ({why}) -- heat computed at the new pin")
-    elif "current" not in str(why):
-        print(f"WARN: ENSURE_FRESH_DEGRADED ({why}) -- computing over the EXISTING pin; "
-              "the vintage below is authoritative, read it")
-    import kuzu
-    db = kuzu.Database(db_path, read_only=True)
-    conn = kuzu.Connection(db)
+    conn = projection_client.connect()
     q = conn.execute(
         "MATCH (n:CloudNode) WHERE n.node_type IN ['MS_FILE','MS_FOLDER'] "
         "RETURN n.node_id, n.node_type, n.props")
@@ -115,9 +118,16 @@ def read_ms_nodes() -> tuple[list, dict]:
         except ValueError:
             props = {"_unparseable_props": True}
         rows.append({"node_id": nid, "node_type": ntype, "props": props})
-    del conn, db
 
-    vintage = {"db_path_basename": os.path.basename(db_path)}
+    # The served pointer IS the pin: vintage + manifest identify the generation these rows came
+    # from, and they replace the old db_path_basename (which named a file, not a generation).
+    vintage = {
+        "source": "served cloud graph (opal-globgrph projection)",
+        "served_vintage": conn.vintage,
+        "served_manifest": conn.manifest_sha256,
+        "served_artifact": conn.artifact_prefix,
+        "transport": "HTTPS /graph/cypher -- no local database, no cache, no fallback",
+    }
     try:
         marker = _provenance.read_branch_head_marker(S3_BUCKET) or {}
         tm = marker.get("table_metadata") or {}
