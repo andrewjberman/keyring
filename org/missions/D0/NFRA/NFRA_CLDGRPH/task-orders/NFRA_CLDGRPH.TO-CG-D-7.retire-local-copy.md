@@ -44,8 +44,65 @@
 
 ## ACCEPTANCE (v3 grammar: one clause per criterion; every mechanical invocation bounded)
 
-<criterion id="D7-AC1" cell_refs="CG-s-8"><invocation>python .tools/comp-find 'ensure_fresh|_full_rebuild_only|_incremental_or_serve_stale|GLOBGRPH_KUZU_INCREMENTAL_REFRESH|GLOBGRPH_KUZU_REBUILD_LIVENESS|_FALLBACK_SINK_SUFFIX' .tools org/modules/graph infra/aws/globgrph --all --limit 50</invocation><expect>0 hit\(s\) across</expect></criterion>
+<criterion id="D7-AC1" cell_refs="CG-s-8"><invocation>python .tools/comp-find 'ensure_fresh|_full_rebuild_only|_incremental_or_serve_stale|GLOBGRPH_KUZU_INCREMENTAL_REFRESH|GLOBGRPH_KUZU_REBUILD_LIVENESS|_FALLBACK_SINK_SUFFIX' .tools org/modules/graph org/modules/heatmap --all --limit 50</invocation><expect>0 hit\(s\) across</expect></criterion>
 `D7-AC1` -- THE REBUILD / LABELED-STALE SEAM AND ITS SINK ARE GONE from every tool surface (the census; the tool prints its denominator).
+
+> ### AMENDMENT 2026-09-06 ~00:5xZ BY THE ISSUER, ON PASS 1's REPORT -- THREE DEFECTS IN THIS CUT,
+> ALL THREE THE ISSUER'S, ALL THREE MEASURED BEFORE BEING FIXED. Pass 1 is NOT a failed pass: it
+> LANDED THE PORT (ten consumers repointed and each exercised live) and FAILED on defects this face
+> carried. Criteria count is EIGHT before and after; two invocations change and no expectation does.
+>
+> **(1) `D7-AC1` AND `D7-AC5` COULD NOT BOTH BE MET -- NO ACT SATISFIED THIS ORDER AS WRITTEN.**
+> AC1 demanded `ensure_fresh` and `GLOBGRPH_KUZU_INCREMENTAL_REFRESH` be ABSENT from
+> `infra/aws/globgrph`, while AC5 PINS `kuzu_nessie_load.py` and `kuzu_incremental_refresh.py`
+> byte-identical -- and those two files carry those very tokens (`kuzu_nessie_load.py:275`,
+> `kuzu_incremental_refresh.py:30`, both verified by the issuer at HEAD; both are a COMMENT and a
+> DOCSTRING, never a call). **AC1's path list now reads `.tools org/modules/graph
+> org/modules/heatmap`** -- the TOOL SURFACE, which is what the cell means by *any tool a user works
+> with*, and which is the same exclusion AC2 already carried with the same stated reason.
+>
+> ⛔ **THE NARROWING IS NOT A SOFTENING, AND HERE IS THE MEASUREMENT THAT SHOWS IT.** Run at pass 1's
+> own HEAD, the narrowed census returns **`25 hit(s) across 799 file(s)`** -- **the arm STILL FAILS**
+> on exactly the property it exists to catch. What the narrowing removed is the part no act could
+> ever have satisfied; what it kept is the part that is still unmet. A re-cut is judged on EFFECT,
+> and this one's effect is to leave the criterion failing.
+>
+> **(2) `D7-AC3` NAMED THE WRONG INTERPRETER.** `.tools/comp-find` begins `#!/usr/bin/env python3`;
+> `bash` on it dies at `syntax error near unexpected token '('` in 0.21 s, so the criterion measured
+> the shell, not the world. (`D7-AC4` uses `bash .tools/comp-blast` and PASSED -- comp-blast IS a
+> shell script; this cut copied one invocation shape across two tools of different kinds.) Now
+> `python`. Pass 1 showed that form matching the expect in full, VINTAGE line and denominator in
+> order, so this changes the INSTRUMENT and not the bar.
+>
+> **(3) THE CENSUS AT THE CUT WAS SCOPED, AND THE POPULATION WAS WIDER.** It swept three directory
+> roots and `org/modules/heatmap` was not among them, so it could not see
+> **`org/modules/heatmap/ms_heat_index.py:92-98`**, which imports `_canonical`, reads
+> `CANONICAL_DB_PATH` and calls `ensure_fresh` -- a class-B consumer by this order's own definition.
+> The worker found it with an UNSCOPED read, filed the row, and correctly refused to edit out of
+> grant. **Rule 22 says to re-read the population unscoped once after a scoped pass; this cut did
+> not, and the worker did.**
+>
+> ⚠ **AND THE UNSCOPED CENSUS ITSELF HAS A TRAP THE ISSUER WALKED INTO WHILE FIXING THIS.** The
+> obvious pattern `import _canonical` matches **`_canonical_silver_lib`** as a SUBSTRING, which
+> pulled twelve `data/canonical/schwab/*` files into the list -- a DIFFERENT module, in another
+> lane, sharing a prefix. Anchor it: **`import _canonical\b|from _canonical\b`**. Anchored, the real
+> population is SIX importers.
+>
+> **`<paths>` IS WIDENED BY FOUR, AND TWO IMPORTERS ARE DELIBERATELY NOT GRANTED:**
+> ADDED -- `org/modules/heatmap/ms_heat_index.py` (the live consumer) and the three seam tests
+> `infra/aws/globgrph/tests/{test_canonical_rebuild_liveness.py, test_canonical_refresh_failure_signal.py,
+> test_comp_cluster_cli.py}` (they pin the behaviour being removed and must move with it).
+> **NOT ADDED, and this is a lane call, not an oversight:**
+> `org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/NFRA_EDGES_P3_c3_subgraph.py:427` and
+> `org/tier2_senior/0.8.0_AE_CloudComp/deliverables/l1a_item1b/sensor_kuzu_schema_residue.py:216`
+> are **another seat's deliverables** -- historical records, not live tool surface. This seat does
+> not admit a worker to another seat's lane to keep its own census tidy. **DECLARE them in your
+> table as KNOWN-STALE-IMPORTERS-OUT-OF-LANE**; they travel to L10 named, for their owners.
+>
+> **WHAT PASS 2 OWES:** re-run AC1 and AC3 on the corrected invocations, repoint
+> `ms_heat_index.py` and move the three seam tests, then remove the seam. `D7-AC4`, `D7-AC5`,
+> `D7-AC6` and `D7-AC7` PASSED at pass 1 and are carried by citation unless your own re-run moves
+> them; **`D7-AC5`'s pins did not decay under pass 1 and are re-verified at your new base.**
 
 <criterion id="D7-AC2" cell_refs="CG-s-8"><invocation>python .tools/comp-find 'kuzu\.Database\(|CANONICAL_DB_PATH|kuzu_nessie_db' org/modules/graph .tools --all --limit 50</invocation><expect>0 hit\(s\) across</expect></criterion>
 `D7-AC2` -- NO USER-FACING CONSUMER OPENS A LOCAL DATABASE: zero hits under the tool homes (`infra/aws/globgrph/` is excluded here because the cloud engine legitimately names the DB it BUILDS; D7-AC5 pins those files).
@@ -77,7 +134,7 @@
 > three has moved by the time you run, that is NOT a failure of this cell -- report it, name the
 > commit that moved it, and this seat re-pins. Do not edit the pin yourself.
 
-<criterion id="D7-AC3" cell_refs="CG-s-8"><invocation>bash .tools/comp-find --corpus aws 'opal-globgrph' --budget 120 --limit 5 2>&1</invocation><expect>VINTAGE: Built from the estate as of[\s\S]*hit\(s\) across</expect></criterion>
+<criterion id="D7-AC3" cell_refs="CG-s-8"><invocation>python .tools/comp-find --corpus aws 'opal-globgrph' --budget 120 --limit 5 2>&1</invocation><expect>VINTAGE: Built from the estate as of[\s\S]*hit\(s\) across</expect></criterion>
 `D7-AC3` -- THE ESTATE'S GRAPH TOOLS STILL WORK, from the served graph: `comp-find --corpus aws` answers with the served vintage line and its denominator (the bound that can fail: "retiring earlier breaks the estate's only graph").
 
 <criterion id="D7-AC4" cell_refs="CG-s-8"><invocation>bash .tools/comp-blast component:AdvisorsTab.tsx --budget 90 2>&1</invocation><expect>VINTAGE: Built from the estate as of</expect></criterion>
@@ -136,6 +193,10 @@ org/modules/graph/comp_aws_cli.py
 .tools/tests/test_g2_disclosure_battery.py
 .tools/tests/test_comp_similar_battery.py
 .tools/tests/test_cg8_*.py
+org/modules/heatmap/ms_heat_index.py
+infra/aws/globgrph/tests/test_canonical_rebuild_liveness.py
+infra/aws/globgrph/tests/test_canonical_refresh_failure_signal.py
+infra/aws/globgrph/tests/test_comp_cluster_cli.py
 org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-D-7.retire-local-copy.md
 </paths>
