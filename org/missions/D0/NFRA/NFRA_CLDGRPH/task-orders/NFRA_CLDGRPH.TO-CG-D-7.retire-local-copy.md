@@ -158,6 +158,60 @@
 <criterion id="D7-AC2" cell_refs="CG-s-8"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/consumers_no_local_db.sh</invocation><expect>CONSUMERS_OPENING_LOCAL_DB=0 of [0-9]+[\s\S]*CONSUMER_PROBE_CONTROL=FIRED</expect></criterion>
 `D7-AC2` -- NO USER-FACING CONSUMER OPENS A LOCAL DATABASE: zero hits under the tool homes (`infra/aws/globgrph/` is excluded here because the cloud engine legitimately names the DB it BUILDS; D7-AC5 pins those files).
 
+> ### AMENDMENT 2026-09-06 ~03:5xZ BY THE ISSUER, ON PASS 3's REPORT. **`D7-AC1` NOW PASSES AND THE
+> RETIREMENT IS REAL.** `SEAM_REACHABLE=0 of 3` with the probe control firing on a constant the
+> tombstone still defines, through the same verb on the same object in the same process, and
+> `SEAM_REFUSAL_KIND_RUNTIMEERROR=3 of 3` -- because an `AttributeError` would score 0 while a
+> `hasattr()` caller carried on past it. That is a better instrument than the one this face asked
+> for, and it is accepted as written.
+>
+> ⛔ **`D7-AC2` FAILS ON THE WORLD, NOT THE INSTRUMENT: `CONSUMERS_OPENING_LOCAL_DB=3 of 30`, both
+> controls fired. THE THREE ARE REAL AND THE ISSUER RE-MEASURED EACH ONE IN THE CODE BAND.** The
+> arm is NOT re-cut to clear them. What changes is one scope alignment, and the other two get
+> dispositions.
+>
+> **(i) `comp_debt.py:215` opens `kuzu_stitch_db` -- A STORE THIS CELL DOES NOT ENUMERATE.** CG-s-8
+> names four surfaces and every one of them is `kuzu_nessie_db` or its seam. **So the predicate is
+> WIDER THAN THE CELL, and it is narrowed to the canonical store** -- this is the SAME split
+> `1.0.0_SA_CTO` ruled at 94456 for the scratch loaders: *in FWD-7's TERRITORY, not in CG-s-8's
+> PATHS*. **Narrowed, the arm reads 2 of 30 and STILL FAILS**, so the alignment clears nothing.
+> The stitch store is FWD-7's business and is PLACED as a manifest row at the recut, per the same
+> ruling: a channel row records that something is true, a manifest row makes it someone's work.
+>
+> **(ii) `kuzu_ac_traversals.py` IS YOURS TO FIX AND IT IS THE WORST OF THE THREE.** `:28` sets
+> `DEFAULT_DB_PATH` to `kuzu_nessie_db`, `:83` makes it the `--db` default, and `:90` prints
+> `ERROR: Kuzu DB not found at {args.db} -- run kuzu_nessie_load.py first`. **That is not stale
+> prose, it is an EXECUTABLE INSTRUCTION to re-create the retired store**, and `kuzu_nessie_load.py`
+> still exists byte-pinned by D7-AC5 -- exactly the shape the CTO called *a live instruction to
+> re-create the path FWD-7 exists to remove*. It READS, so a repoint target exists: **repoint it
+> through `projection_client` like the other class-B consumers, and replace that error line with
+> one that names the served graph.** It is inside your `<paths>`.
+>
+> **(iii) `kuzu_cost_enrich.py` HAS NO REPOINT TARGET AND IS NOT YOURS TO DECIDE.** Measured in the
+> CODE band by the issuer: `:228` and `:242` HARDCODE `os.path.join(WORKSPACE, 'kuzu_nessie_db')`
+> with no argparse in the file, `:127` and `:197` open it, and **`:132` WRITES**
+> (`ALTER TABLE CloudNode ADD cost_mtd_usd`). The served graph is READ-ONLY, so repointing is not
+> available and the honest dispositions are DELETE or DECLARE-AS-DEAD -- an endpoint call, put to
+> `1.0.0_SA_CTO` in the same tick as this amendment. **DECLARE it, do not edit it**, and record in
+> your table that it is a WRITER against a retired local store.
+>
+> ⚠ **AND SAY THE RESIDUAL PLAINLY, BECAUSE THE ISSUER GOT IT WRONG ONCE ALREADY IN THIS VERY
+> AMENDMENT AND CORRECTED IT BEFORE COMMITTING:** with the predicate narrowed to the canonical
+> store, the stitch open drops OUT of the count -- so the residual is NOT the stitch open. With
+> (ii) repointed and (iii) merely DECLARED, this arm reads **1 of 30 and still FAILS, on
+> `kuzu_cost_enrich.py`** -- a file the cell DOES own, whose opens cannot be removed without the
+> disposition ruling. **SO D7-AC2 CANNOT REACH ZERO UNTIL THAT RULING LANDS AND IS EXECUTED, AND
+> THIS ORDER CANNOT GO TERMINAL BEFORE IT.** That is stated here rather than discovered at your
+> flip. **Do not chase the number**: run the arm, report `1 of 30` honestly with the residual
+> named, and stop. An arm failing on a disposition the issuer owes you is the issuer's debt, not
+> a defect for you to engineer away.
+>
+> **PASS 3's SELF-CORRECTION IS ACCEPTED AND MATTERS:** pass 1's census row 18 declared these two as
+> taking a `--db` from the caller, *never `CANONICAL_DB_PATH`*. True on the constant and false on
+> the world -- **the constant was retired; the string it pointed at was not.** That is why a
+> pattern-shaped census missed them, and it is the fourth time this round an instrument agreed
+> about the wrong object.
+
 > ### AMENDMENT 2026-09-05 ~20:0xZ BY THE ISSUER, BEFORE THE HAND-OFF -- A REQUIRED CONTROL ON BOTH
 > ABSENCE ARMS. **THE BAR DOES NOT MOVE:** D7-AC1 and D7-AC2 still expect `0 hit(s) across`, their
 > invocations are unchanged, and there are EIGHT criteria before and after.
