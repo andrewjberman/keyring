@@ -57,12 +57,19 @@ every producer-side probe, exactly the memory entry's shape.
    second after a dwm.exe fault, both under a low-virtual-memory condition Windows had been diagnosing every few minutes since
    12:19 that day, with `EPProtectedService.exe` (pid 6444) the top consumer at 21.4 -> 23.4 GB virtual. Every Claude seat was a
    tab of that terminal. The Codex seats (separate console hosts) and the broker (detached python, pid 28260) survived. Last
-   fabric commit 23:54; Andrew's own hand-off commit in the D-7 worker worktree 23:56; dark until this launch 22:11 on 09-06.
+   fabric commit 23:54; the D-7 hand-off merge in the worker worktree 23:55:56; dark until this launch 22:11 on 09-06.
+   **CORRECTION (02:5xZ, same session, on the HUD log line at 03:55:56Z):** that hand-off merge `c8d93dddfd` was run by
+   `2.0.0_SA_COO~A` (`export OPAL_AGENT_SERIAL=2.0.0_SA_COO~A; git -C $W merge CLOUD -m ...`), a bare `git merge` that git
+   stamped with the default author "Andrew Berman". The first draft of this log and of the Desktop report called it Andrew's
+   own commit; both are corrected. Also measured after the first draft: `/tmp/os18plan.out` (42,141 B, written 23:59:00 ET)
+   opens with `fatal error: runtime: cannot allocate memory` -- the Terraform plan CloudOps~W was running died of the same
+   exhaustion in the same second as the Terminal.
 3. **Where each seat left off** (from commits + telemetry, since no seat logged the death):
    - `2.0.0_SA_COO~A` (NFRA_CLDGRPH): L6 amendment of TO-CG-D-7 for PASS 4 @7d81a9c25f (23:54) -- D7-AC1 passes, D7-AC2 fails on
      the world (3 of 30 consumers open a local DB; `kuzu_cost_enrich.py` has no repoint target), order cannot go terminal until
      the CTO's disposition ruling. Worker `0.9.0_WK_NFRA_CLDGRPH~2` died at 03:58Z on `/c/tmp/wk-cldgrph-2-d7` @c8d93dddfd
-     (Andrew's merge, nothing committed after; untracked `tsgraph_detect_ledger.json` + a gate audit log). D-8 queued behind.
+     (the COO~A lane's hand-off merge, see CORRECTION above; nothing committed after; untracked `tsgraph_detect_ledger.json`
+     + a gate audit log). D-8 queued behind.
    - `2.0.0_SA_COO` (NFRA_OUTSET): round-2 issuance @37b2a19129 (23:40) -- OS-s-18 (the publish) and OS-s-19 (the S3 deploy,
      NEVER-2 cell) seated in order on `0.7.0_AE_CloudOps~W`; dep_stage EXECUTING.
    - `0.7.0_AE_CloudOps~W`: mid-OS-s-18 at 03:59Z -- the `infra/aws/terraform/estate-report/iam.tf` `outset/*` GetObject grant
