@@ -12,12 +12,15 @@
 for `FWD-1` through `FWD-18`, every `C-n`, every manifest row and the whole ratified body. This
 addendum is PRIMARY for exactly two things and nothing else:
 
-1. **`FWD-19` -- PROPOSED, NOT RATIFIED.** A new outcome covering automated traffic against the
-   marketing site. It is deliberately NOT in the parent's `endpoint_outcomes` JSON array and NOT in
-   its fenced ENDPOINT block, because the parent's PRD_HEADER declares `"status": "RATIFIED"` and
-   an unratified outcome sitting inside a ratified array would be a false claim that the L6 gate
-   reads. **On Andrew's word it folds into the parent as v0.13 and this section becomes the record
-   of how it got there.**
+1. ⭐ **`FWD-19` -- RATIFIED AND LANDED, 2026-09-09, SAME DAY.** Andrew-direct at the
+   `1.0.0_SA_CTO~Z` terminal, VERBATIM: *"1.) Ratified on FWD-19."* ⛔ **THE PARENT PRD IS NOW
+   PRIMARY FOR `FWD-19` AND THIS DOCUMENT IS NOT.** It folded in at **v0.13**: the outcome is in
+   `endpoint_outcomes`, in the fenced ENDPOINT block, and bound by new constraints `C-17`
+   (soak-first) and `C-18` (volume-graded). **Where this addendum and the parent differ on
+   `FWD-19`, THE PARENT GOVERNS.** What survives here is the RECORD OF DERIVATION -- the live
+   measurement (section 1), the argument that `FWD-13` structurally cannot serve form spam
+   (section 2), and the MailerLite declared residual (section 2.1) -- none of which is duplicated
+   into the parent and all of which a later reader will want.
 2. **The Infrastructure Report dependency set** (section 5), which is RATIFIED already -- it rests
    on Andrew-direct rulings recorded below, not on a proposal.
 
@@ -178,11 +181,14 @@ vendor setting, not a cell.
 
 ---
 
-## 3. PROPOSED `FWD-19` -- awaiting Andrew's ratification
+## 3. `FWD-19` -- RATIFIED 2026-09-09 AND LANDED IN THE PARENT AT v0.13
 
-⛔ **NOT RATIFIED. NOT IN THE PARENT'S `endpoint_outcomes`.** `ACCEPT` lines are plain English and
-disputable by rule; this one is Andrew's to set or change. Presented in the parent's exact
-definition form so that ratification is a copy, not a rewrite.
+⭐ **LANDED. THIS BLOCK IS NO LONGER THE CARRIER.** Andrew ratified it the same day, VERBATIM
+*"1.) Ratified on FWD-19."*, and it now lives in the parent PRD's fenced ENDPOINT block and
+`endpoint_outcomes` array, bound by `C-17` and `C-18`. ⛔ **READ IT THERE, NOT HERE** -- the text
+below is kept verbatim as the record of what was put to him, so a later reader can see the outcome
+as proposed against the outcome as ratified and find them identical. **If they ever diverge, the
+parent is right and this is stale.**
 
 ```
   FWD-19  Automated submissions and scraping against the marketing site are
@@ -316,9 +322,14 @@ two consumers of one engine.**
 
 ---
 
-## 6. THE EXACT PARENT-PRD EDITS ON RATIFICATION (v0.13)
+## 6. THE EXACT PARENT-PRD EDITS ON RATIFICATION (v0.13) -- ALL LANDED 2026-09-09
 
-Enumerated so the fold-in is mechanical and reviewable, not a re-derivation.
+⭐ **EVERY EDIT BELOW IS APPLIED.** This section is retained as the CHECKLIST A REVIEWER CAN GRADE
+THE FOLD-IN AGAINST, not as pending work. 6.1-6.4 landed as written; **6.5 landed WIDER than
+drafted** because Andrew's clause 2 (*"Box hardening folded in"*) answered the section 8 fork in
+favour of shape (b), so section 3 now also grants the contact form's ON-BOX anti-automation
+settings -- **taken at the fork's width and no wider, with the broader reading flagged back to him
+rather than assumed**; 6.6 landed as written (no manifest row; `FWD-19`'s cell mirrors `S13`).
 
 **6.1 PRD_HEADER JSON:** `prd_version` -> `"v0.13"`; append `"FWD-19"` to `endpoint_outcomes`.
 **6.2 ENDPOINT fenced block:** insert the section 3 `FWD-19` block after `FWD-18`, unchanged.
@@ -362,7 +373,20 @@ count rather than quietly breaking it.
 
 ---
 
-## 8. ⛔ THE ONE FORK FOR ANDREW, AND IT IS A SCOPE BOUNDARY RATHER THAN A PREFERENCE
+## 8. THE ONE FORK -- ANSWERED 2026-09-09: SHAPE (b)
+
+⭐ **ANDREW ANSWERED THIS, VERBATIM: *"2.) Box hardening folded in."*** Shape **(b)** is taken and
+parent PRD section 3 now grants the contact form's on-box anti-automation settings under `FWD-19`.
+⛔ **ONE PRECISION THIS SEAT DID NOT RESOLVE ON ITS OWN, AND FLAGGED BACK INSTEAD:** the fork asked
+for ON-BOX FORM CONTROLS (the Gravity Forms honeypot, optionally a native CAPTCHA field), and that
+is exactly the width granted. The phrase "box hardening" could also read as the WHOLE
+`infra/aws/ec2/website/` on-box surface moving from *relies on* to *owns* -- a materially larger
+territory change. **It is NOT taken; it is one word away.** Relaying a sovereign word wider than
+its referent is forbidden in both directions, so the narrower reading is the one that lands and the
+question goes back rather than being settled by inference. **The fork text below is retained
+unchanged as what was put to him.**
+
+### The fork as it was put (retained for the record)
 
 Parent PRD section 3 owns *"the website's edge protection"* and explicitly **relies on, does not
 own** *"the website box's on-box hardening (`infra/aws/ec2/website/`, already built)"*. **A Gravity
