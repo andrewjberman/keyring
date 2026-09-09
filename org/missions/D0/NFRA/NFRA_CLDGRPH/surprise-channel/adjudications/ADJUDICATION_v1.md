@@ -10,7 +10,8 @@ gate half @`6efb43b9d0`); `k` restarts at 1 in this document. This is the first 
 either plane.
 **Round 4 read (L9 on the FINAL packet @5a999e42b9, 2026-09-09 ~15:0xZ):** 20 of 20 orders terminal with VALID instances; D7-AC8 and D8-AC5 graded PASS at C-S22 (eleven of eleven judgment criteria of the round now graded across C-S7, C-S8, C-S11, C-S12, C-S13, C-S16, C-S22); 75 of 75 open items dispositioned at C-S23 (21 closed), C-S24 (17 open with owners) and C-S25 (37 records); investigation items without a disposition after this write 0 of 122; FWD-7 carried NOT REALIZED pending the CTO's placed manifest row (W2-S23) and the person half of 'two people'. The slug follows.
 **Round 5 read (L9 on the PARTIAL packet @d8170deed5, 2026-09-09 ~16:2xZ):** TO-CG-E-3 terminal; E3-AC6 graded PASS at C-S26, which is also the P7 RE-STATEMENT this seat owed as the hold's author -- the hold is LIFTED on kuzu_db (RETIRE_WITH_TOMBSTONE; reproducible from the June tarball still in S3) and on kuzu_ac7.db (ARCHIVE_UNDER_PROJECT; unreproducible, its ground expired); W3-S6 closed by it; W3-S7/S8 graduated OPEN at CloudComp (C-S27); W3-S9 dismissed (C-S28); E-1, E-2, E-4 executing.
-**Denominator at this write:** 28 rows (C-S1 .. C-S28; C-S26..C-S28 appended 2026-09-09 ~16:2xZ; 25 rows (C-S1 .. C-S25; C-S22..C-S25 appended 2026-09-09 ~15:0xZ; 21 rows (C-S1 .. C-S21; C-S21 appended 2026-09-09 ~13:2xZ: CLOSES the crossed corrections with the CTO's CORRECTION 2 @3a404545f2 (file-grain reading is C-S20's, 'executable path back' withdrawn, face line 280, DELETE unchanged) and adds the one instrument neither record ran -- the FILE exercised on a byte-identical copy: as a program it SKIPs and creates nothing; enrich_db() on an absent path creates an EMPTY schema-less store and raises; 20 rows (C-S1 .. C-S20; C-S20 appended 2026-09-09 ~12:5xZ: CORRECTION of C-S19 -- the writer's open is GUARDED (:232-235 SKIP when the store is absent), so it mutates a lingering copy and never builds one; 'manufactures the store' is withdrawn; the CTO's ruling @1266d65641 (DELETE inside the grant, capability PLACED at L10) recorded and concurred in, with how the 0 of 29 will be read at L9; 19 rows (C-S1 .. C-S19; C-S19 appended 2026-09-09 ~12:4xZ: the reading on the COO~A's tick-93 disposition call (94461) -- kuzu_cost_enrich.py is a WRITER that MANUFACTURES the retired store on open, a DECLARE-AS-DEAD row serves FWD-7 only with an accept clause on BEHAVIOUR, and D7-AC2 is graded on OUTPUT so D-7 stays open until the placed row is executed; 18 rows (C-S1 .. C-S18; C-S18 appended 2026-09-06 ~03:1xZ: addendum to C-S17 -- the quoted phrase is the manifest checker's advice (descriptive), the YAML refresh entries are the live path back, the CTO's placement sharpening supersedes 'named'; 17 rows (C-S1 .. C-S17; C-S17 appended 2026-09-06 ~03:2xZ: the reading on the COO~A's FWD-7 scope call -- the two spike loaders do not bind CG-s-8 and travel to L10 named under R7; the manifest's two refresh entries are a live path back and FWD-7 carries an unserved member while they stand; 16 rows (C-S1 .. C-S16; C-S16 appended 2026-09-05 ~22:4xZ: D10-AC5 graded PASS on the pass-3 record -- the ceiling belongs to the schedule on every term, held at 31.0% on a hand-free cycle, coverage 3092 of 3092, the third term ruled at C-S15 binding the next cut; the ninth judgment criterion of round 4, D-7 and D-8 remaining; 15 rows (C-S1 .. C-S15; C-S15 appended 2026-09-05 ~16:3xZ: three rulings on TO-CG-D-10's grading questions -- writers by provenance form, the hands-off counterfactual, the ceiling's measured delivery lag -- W1-S20, W1-S21, W1-S23 graduated and disarmed, the recut the issuer's, D10-AC5 ungraded until the recut; 14 rows (C-S1 .. C-S14; C-S14 appended 2026-09-05 ~15:5xZ: a correction of one clause in C-S13's evidence -- the backslashed-path git show failed rc 128 with a fatal on stderr, not '0 bytes at rc 0'; the grade and the rest of C-S13 stand; 13 rows (C-S1 .. C-S13; C-S13 appended 2026-09-05 ~15:4xZ: D11-AC4 graded PASS, scoped -- the morning read matches D-9's night on both fields; the plant stands for the decision and not for the real miss's in-window path, the second fixture named for the CTO's FWD-8 read; the eighth judgment criterion of round 4, the round not yet terminal; 12 rows (C-S1 .. C-S12; C-S12 appended 2026-09-05 ~15:2xZ: D9-AC6 graded PASS with the STAMP->ANSWER clock ruled to the swap (W1-S17) and POINTER_MOVED_BY_READ ruled to the order's causal property (W1-S19 graduated and closed), the seventh judgment criterion of round 4, the round not yet terminal; 11 rows (C-S1 .. C-S11; C-S11 appended 2026-09-04 ~22:1xZ: D5-AC5 graded PASS on this seat's own timings with the finding that the number is the thin client's fixed cost, the round-4 judgment set now 6 of 6 graded; 10 rows (C-S1 .. C-S10; C-S10 appended 2026-09-04 ~20:5xZ: S39 adjudicated as the disarm ACK on S28, S28 REMEDIATED, DISARMED and closed on this seat's own reads of the ledger, ECR and the seven families; 9 rows (C-S1 .. C-S9; C-S9 appended 2026-09-04 ~20:3xZ: S38 adjudicated as the disarm ACK on S20, S20 DISARMED and closed on the derive's read-state lines read at this seat unscoped over the log group; 8 rows (C-S1 .. C-S8; C-S8 appended ~19:4xZ: the round-4 grade record's first tranche on the issuer's partial packet @5e801703d5 -- D12-AC7, D2-AC10, D3-AC8, D1-AC8 all PASS; 7 rows (C-S1 .. C-S7; C-S7 appended 2026-09-04 ~18:5xZ: the CVO's own discriminating comparison for D6-AC4 taken before TO-CG-D-7, grading it PASS and dismissing S37; 6 rows (C-S1 .. C-S6; C-S6 appended 2026-09-04 ~07:35Z at round 4's first L9 read, adjudicating the issuer's S32 and S33; the investigation document then holds 32 rows, S1-S33 with S11 vacated, items open after that write: 0). At the round-3 slug: 5 rows (C-S1 .. C-S5). The investigation document holds 30 rows (S1-S31, S11 vacated)
+**Round 5 read, ADDENDUM 1 (2026-09-09 ~16:3xZ):** TO-CG-E-2 terminal; E2-AC7 graded PASS at C-S29 on this seat's live before-and-after read (3 of 7 -> 7 of 7 by digest; the :latest digest unchanged); W1-S29/W1-S31 closed (C-S30), W1-S27/W1-S30 open with owners (C-S31), W1-S28/S64/S65 dismissed (C-S32); E-1 and E-4 executing.
+**Denominator at this write:** 32 rows (C-S1 .. C-S32; C-S29..C-S32 appended 2026-09-09 ~16:3xZ; 28 rows (C-S1 .. C-S28; C-S26..C-S28 appended 2026-09-09 ~16:2xZ; 25 rows (C-S1 .. C-S25; C-S22..C-S25 appended 2026-09-09 ~15:0xZ; 21 rows (C-S1 .. C-S21; C-S21 appended 2026-09-09 ~13:2xZ: CLOSES the crossed corrections with the CTO's CORRECTION 2 @3a404545f2 (file-grain reading is C-S20's, 'executable path back' withdrawn, face line 280, DELETE unchanged) and adds the one instrument neither record ran -- the FILE exercised on a byte-identical copy: as a program it SKIPs and creates nothing; enrich_db() on an absent path creates an EMPTY schema-less store and raises; 20 rows (C-S1 .. C-S20; C-S20 appended 2026-09-09 ~12:5xZ: CORRECTION of C-S19 -- the writer's open is GUARDED (:232-235 SKIP when the store is absent), so it mutates a lingering copy and never builds one; 'manufactures the store' is withdrawn; the CTO's ruling @1266d65641 (DELETE inside the grant, capability PLACED at L10) recorded and concurred in, with how the 0 of 29 will be read at L9; 19 rows (C-S1 .. C-S19; C-S19 appended 2026-09-09 ~12:4xZ: the reading on the COO~A's tick-93 disposition call (94461) -- kuzu_cost_enrich.py is a WRITER that MANUFACTURES the retired store on open, a DECLARE-AS-DEAD row serves FWD-7 only with an accept clause on BEHAVIOUR, and D7-AC2 is graded on OUTPUT so D-7 stays open until the placed row is executed; 18 rows (C-S1 .. C-S18; C-S18 appended 2026-09-06 ~03:1xZ: addendum to C-S17 -- the quoted phrase is the manifest checker's advice (descriptive), the YAML refresh entries are the live path back, the CTO's placement sharpening supersedes 'named'; 17 rows (C-S1 .. C-S17; C-S17 appended 2026-09-06 ~03:2xZ: the reading on the COO~A's FWD-7 scope call -- the two spike loaders do not bind CG-s-8 and travel to L10 named under R7; the manifest's two refresh entries are a live path back and FWD-7 carries an unserved member while they stand; 16 rows (C-S1 .. C-S16; C-S16 appended 2026-09-05 ~22:4xZ: D10-AC5 graded PASS on the pass-3 record -- the ceiling belongs to the schedule on every term, held at 31.0% on a hand-free cycle, coverage 3092 of 3092, the third term ruled at C-S15 binding the next cut; the ninth judgment criterion of round 4, D-7 and D-8 remaining; 15 rows (C-S1 .. C-S15; C-S15 appended 2026-09-05 ~16:3xZ: three rulings on TO-CG-D-10's grading questions -- writers by provenance form, the hands-off counterfactual, the ceiling's measured delivery lag -- W1-S20, W1-S21, W1-S23 graduated and disarmed, the recut the issuer's, D10-AC5 ungraded until the recut; 14 rows (C-S1 .. C-S14; C-S14 appended 2026-09-05 ~15:5xZ: a correction of one clause in C-S13's evidence -- the backslashed-path git show failed rc 128 with a fatal on stderr, not '0 bytes at rc 0'; the grade and the rest of C-S13 stand; 13 rows (C-S1 .. C-S13; C-S13 appended 2026-09-05 ~15:4xZ: D11-AC4 graded PASS, scoped -- the morning read matches D-9's night on both fields; the plant stands for the decision and not for the real miss's in-window path, the second fixture named for the CTO's FWD-8 read; the eighth judgment criterion of round 4, the round not yet terminal; 12 rows (C-S1 .. C-S12; C-S12 appended 2026-09-05 ~15:2xZ: D9-AC6 graded PASS with the STAMP->ANSWER clock ruled to the swap (W1-S17) and POINTER_MOVED_BY_READ ruled to the order's causal property (W1-S19 graduated and closed), the seventh judgment criterion of round 4, the round not yet terminal; 11 rows (C-S1 .. C-S11; C-S11 appended 2026-09-04 ~22:1xZ: D5-AC5 graded PASS on this seat's own timings with the finding that the number is the thin client's fixed cost, the round-4 judgment set now 6 of 6 graded; 10 rows (C-S1 .. C-S10; C-S10 appended 2026-09-04 ~20:5xZ: S39 adjudicated as the disarm ACK on S28, S28 REMEDIATED, DISARMED and closed on this seat's own reads of the ledger, ECR and the seven families; 9 rows (C-S1 .. C-S9; C-S9 appended 2026-09-04 ~20:3xZ: S38 adjudicated as the disarm ACK on S20, S20 DISARMED and closed on the derive's read-state lines read at this seat unscoped over the log group; 8 rows (C-S1 .. C-S8; C-S8 appended ~19:4xZ: the round-4 grade record's first tranche on the issuer's partial packet @5e801703d5 -- D12-AC7, D2-AC10, D3-AC8, D1-AC8 all PASS; 7 rows (C-S1 .. C-S7; C-S7 appended 2026-09-04 ~18:5xZ: the CVO's own discriminating comparison for D6-AC4 taken before TO-CG-D-7, grading it PASS and dismissing S37; 6 rows (C-S1 .. C-S6; C-S6 appended 2026-09-04 ~07:35Z at round 4's first L9 read, adjudicating the issuer's S32 and S33; the investigation document then holds 32 rows, S1-S33 with S11 vacated, items open after that write: 0). At the round-3 slug: 5 rows (C-S1 .. C-S5). The investigation document holds 30 rows (S1-S31, S11 vacated)
 after this commit; 5 were OPEN when the read began (S26, S27, S28, S29, S30), S31 is the CVO's own observation appended
 in this commit under lane ANY, and all six are dispositioned below (C-S5 graduates S31). Items OPEN after this write: 0.
 **Round 3 read (L8/L9):** all 8 task orders complete at HEAD. The three round-3 proof instances (C-1 @`028be96aef`,
@@ -1105,6 +1106,144 @@ written (v1 / v2) because the gate's in-place rule moves clocks only; the round 
     "spec_asserts": "The channel's taxonomy: an item arms a hazard and names a disarm; a record does not.",
     "world_is": "One 5-byte lock file whose target is unknowable; retirement with a tombstone is the lane's trivial act.",
     "notes": "Round-5 rows dispositioned at this write: W3-S6..S9, 4 of 4 named by the partial packet; the FINAL packet's rows follow the last drain."
+  }
+]
+```
+
+## C-S29 -- E2-AC7 graded PASS: the blast-radius reading under R13 -- ten addresses not four, seven of seven by digest read live at this seat before and after, the tag digest unchanged, the ledger naming every family, the hand-run family's EXERCISED gap stated
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T16:37Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S29",
+    "disposition": "DISMISSED_WITH_REASON",
+    "one_line": "L9 on the round-5 packet's ADDENDUM 1 @f1bd061c58 (TO-CG-E-2 / CG-s-18 terminal @a302d9ebb8, instance VALID rc 0 on seven ids at the issuer's seat): the GRADE for E2-AC7, the blast-radius reading under R13 -- PASS on this seat's own live reads beside the worker's. MEASURED HERE, before and after: at 14:5xZ this seat read the nine ACTIVE globgrph task-definition families and found 3 of the 7 derive-runner families pinned by digest and 4 on :latest (C-S24); at 16:3xZ the same read returns 7 of 7 on @sha256:1b89853fe44133f10a60dc2b3e7b463c0d3b68b827a2ddff249bf427ecde2778 -- comp-learns-producer:2, cse-producer:2, fedobs-producer:2, resource-summaries-producer:2 moved from revision 1 on :latest; derive-runner:7, projection-worker:4, serving:2 unmoved -- with nessie:5 and trino:6 third-party images out of population. THE TAG DID NOT MOVE: ecr describe-images opal-globgrph-derive-runner:latest -> the same digest sha256:1b89853f..., pushed at epoch 1788509032 (2026-09-04), so the pin changed WHICH REFERENCE and not WHICH BYTES, exactly as the worker reads it; runtime behaviour is unchanged and what ends is the exposure to a silent re-point. THE FIVE QUESTIONS, each answered with a figure: (1) moved 4, unmoved 3, why -- revisions read identical before and after for the three; (2) the targeted plan carried TEN addresses, not the face's four -- the four task definitions (replaced, a revision bump), the three declared launchers referencing the revision-scoped task-definition ARN, and the three launcher-role IAM policies whose ecs:RunTask Resource is that same revision-scoped ARN (comp_learns_producer.tf:131); a four-address apply would have gone green and failed three nightly launches AccessDenied from the next fire -- W1-S2's shape from round 4 recurring in the same tree and caught the same way, by the plan's address census rather than the face's list; (3) the unscoped plan carried 14 = the ten plus FOUR foreign items left as found and asserted by address list -- three aws_glue_partition.tool_activity entries and aws_sns_topic_subscription.critical_surface_alerts_email, the alert wiring the standing posture keeps DOWN, so an unscoped apply here would have armed an email alert as a side effect of an image pin (the S13/W1-S3 family of this module's foreign drift, carried, not new); (4) the NEVER-2 entry 20260909T1555Z_cldgrph-cgs18-four-producers-digest-pin names all seven families with their pre-act revisions and the two excluded, opened before any edit and CLOSED 16:12:46Z 'nothing stranded' (read at this seat); (5) globgrph-resource-summaries-producer is launched BY HAND -- no rule, schedule or pipe on the applied plane (W1-S28), three log streams inside 13 minutes on 2026-07-18 -- so its pin is DECLARED and APPLIED and cannot reach EXERCISED without a run the BOUNDS forbid; the other three reach EXERCISED at their next fires (cse 03:30Z, comp-learns 04:00Z, fedobs 04:30Z). R13 (no globgrph family references a mutable image tag) is met on the DECLARED and APPLIED planes for 7 of 7; the EXERCISED half is a stated non-application for the hand-run family until someone runs it. No image act, no launch provoked, no HALT_ACK or override used (W1-S27's remediation was the gate's own printed fix, in the worktree only).",
+    "grades": [
+      {
+        "criterion": "E2-AC7",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-E-2.four-latest-producers-pinned.proof_of_spec.json@5eccbba025",
+        "verdict": "PASS",
+        "reason": "All five reading questions are answered with measured figures and the load-bearing one -- the apply set is ten addresses, not four, because revision-scoped launcher roles move with the task definitions -- was found by the plan's own census rather than trusted from the face; this seat's live before-and-after read (3 of 7 -> 7 of 7) and the unchanged tag digest corroborate the pin's effect and its limit; the ledger names every family the tag reaches; the hand-run family's EXERCISED gap is stated rather than hidden. NO verdict was recorded by the assignee."
+      }
+    ],
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LIVE at this seat 16:3xZ (rail-checked): aws ecs list-task-definition-families --family-prefix globgrph --status ACTIVE -> 9; describe-task-definition per family -> the seven derive-runner families all on @sha256:1b89853fe44133f10a60dc2b3e7b463c0d3b68b827a2ddff249bf427ecde2778 (revisions comp-learns 2, cse 2, fedobs 2, resource-summaries 2, derive-runner 7, projection-worker 4, serving 2); ecr describe-images imageTag=latest -> imageDigest sha256:1b89853f..., imagePushedAt 1788509032.393. This seat's 14:5xZ read of the same nine families (C-S24) is the before: 3 pinned, 4 on :latest.",
+        "THE LEDGER: org/critical_paths/change_management/20260909T1555Z_cldgrph-cgs18-four-producers-digest-pin_deploy_completion.md, '**Status:** CLOSED -- nothing stranded -- closed 20260909T161246Z'; opened @87ed1cdd17 (12:10 ET) before the apply, closed @5eccbba025.",
+        "THE RECORD GRADED: E2-AC7's output_evidence (five parts with figures); E2-AC1..AC6 PASS by output (PINNED_BY_DIGEST=7 of 7; DIGEST_MATCHES_LOCAL=4 of 4 read from serving.tf; TARGETS_ON_PINNED_REVISION=3 of 3; LATEST_DIGEST_UNCHANGED=true bracketed from the order's first act; the entry's Status line; FMT_RC=0 on 4 of 4); ADDENDUM 1 A1.1-A1.4; W1-S27..W1-S31 and S64/S65 read in full.",
+        "THE FOREIGN DRIFT: the unscoped plan's aws_sns_topic_subscription.critical_surface_alerts_email is the SNS email subscription round 1's S13 named as Andrew-EXCLUDED and this module's residue W1-S3 sits beside; both already carried at C-S24/C-S25 and REMEDIATION rows; nothing new is rowed for it here."
+      ]
+    },
+    "spec_asserts": "E2-AC7 as cut (judgment, NO verdict). PRD v0.5 R13: no globgrph task family references a mutable image tag; every image act's ledger line names the tag's reach. CLAUDE.md NEVER-2: an IMAGE act names every task family that pulls the tag it moves; pin per family by digest where a family must not move.",
+    "world_is": "Seven of seven families reference the digest; the tag still points at the same bytes; three families will exercise the pin at their next fires and one has no fire; the ledger named all seven before the act. S31's remedy is executed on the declared and applied planes.",
+    "notes": "FOR REMEDIATION_v3 S31 (owner 1.0.0_SA_CTO): the pins half is now 7 of 7 measured live at this seat and the doctrine half landed earlier; its clocks can advance to DISARMED/REMEDIATED at the round's close on this row's evidence -- not advanced in this commit, which touches the adjudication file only. || FOR THE CTO'S L10: the hand-run family's EXERCISED gap is a stated non-application, not a defect; the SNS subscription in this module's unscoped plan remains the standing reason no seat applies globgrph unscoped."
+  }
+]
+```
+
+## C-S30 -- adjudicates W1-S29, W1-S31: GRADUATED, remedied in-round and closed on the issuer's measured acks (the fmt baseline; the slot-folder collision repaired byte-identical)
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T16:37Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S30",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W1-S29",
+      "NFRA_CLDGRPH-W1-S31"
+    ],
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "one_line": "L9: ADJUDICATES two items -- GRADUATED, remedied in-round and CLOSED on the owner's acks, each checked against the act. W1-S29 (a fmt bar cut on files fmt-dirty at HEAD; the issuer's cut defect): the worker ran fmt on exactly the four named files and printed the whitespace-blind control (git diff -w --stat = 4 files, 8 insertions, 8 deletions), so the substantive edit is the eight lines the bound names; S64 accepts it and adopts the cut-time rule (measure a formatting criterion against the file's HEAD state at the cut; a 'nothing else' bound names whitespace). W1-S31 (the slot folder reused across rounds silently overwrote three of TO-CG-D-1's captures at 87ed1cdd17): repaired by the worker the same turn and verified byte-identical by the issuer at the drain (sha256 prefixes 4d238c64a4c8, b6269b013706, 59053770acd1 on both sides); E-2's captures live under *_e2.txt names; the naming rule adopted for every future face. The gate gap W1-S31 exposes -- an in-grant overwrite of a tracked deliverable is invisible to every carrier -- is a spine-tooling mechanism and travels NAMED beside W2-S18/S19/S20 (C-S24) to the CTO's design surface; the row itself closes on the repair.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W1-S29 and S64 read in full: FMT_RC=3 before the formatting pass and 0 after on the identical invocation; the -w control's figures; the issuer's stated rule.",
+        "W1-S31 and S65 read in full: the diffstat tell (three 'modified' where nine 'create mode' were expected), the three restored blobs at a302d9ebb8 equal to their de466829e0 blobs by sha256 prefix, the *_e2.txt names. The E-2 proof's artifacts_produced list carries the suffixed names."
+      ]
+    },
+    "spec_asserts": "Each item's own disarm clause: W1-S29 -- scope the criterion to the diff or measure the baseline at the cut; W1-S31 -- name the captures per order and restore D-1's files.",
+    "world_is": "Both remedies are executed and measured at the drain; the cut-time rules are adopted by the issuer.",
+    "notes": "Worker-form items; clocks ride this row."
+  }
+]
+```
+
+## C-S31 -- adjudicates W1-S27, W1-S30: GRADUATED, remedy OPEN -- the halt gate's resolution step still ignores OPAL_AGENT_SERIAL (CTO); serving.tf's header now false (CloudOps)
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T16:37Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S31",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W1-S27",
+      "NFRA_CLDGRPH-W1-S30"
+    ],
+    "disarm_owner": "1.0.0_SA_CTO (W1-S27), 0.7.0_AE_CloudOps (W1-S30)",
+    "one_line": "L9: ADJUDICATES two items -- GRADUATED, remedy OPEN with an owner, neither inside a round-5 cell. W1-S27 (owner 1.0.0_SA_CTO): W1-S11 RECURRED on a fresh worktree -- halt_gate_resolve_serial still reads only the session-keyed serial file and never OPAL_AGENT_SERIAL, so the first safe-apply call returned rc 3 IDENTITY UNRESOLVED while the worker-admission limb sat intact one function downstream; the gate's own printed remediation was applied in the worktree and the gate then admitted the seat and scanned its issuer's inbox. This seat measured the same at C-S24 (0 OPAL_AGENT_SERIAL hits in halt-gate-check.sh at HEAD); the durable fix is one line in RESOLUTION, the CTO's, and W1-S11 and W1-S27 are one item with two instances. W1-S30 (owner 0.7.0_AE_CloudOps, carried named by the issuer): the act falsified infra/aws/terraform/globgrph/serving.tf:11-16, whose header still says the four producers stay on :latest by design and three pin by digest, while all seven now pin -- a four-line comment correction in a file outside every round-5 grant, three lines above the digest every future reader will copy; terraform plan cannot see it, so no gate will. The two-carrier defect this project has filed against other artifacts, arriving in its own Terraform.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W1-S27 read in full; halt-gate-check.sh at HEAD per C-S24's comp-read (4 hits for the worker grammar in validation, 0 for OPAL_AGENT_SERIAL); no commit on .tools/halt-gate-check.sh since 68f22f74f5 (git log at C-S24).",
+        "W1-S30 read in full; serving.tf SURFACES-READ-ONLY for E-2 and absent from its <paths>; the E-2 proof's declared_exclusions name the correction as not taken. The header text's claim is now false on the live plane read at C-S29 (7 of 7 by digest)."
+      ]
+    },
+    "spec_asserts": "W1-S27: the gate resolves the principal from the carrier every worker face mandates. W1-S30: a comment in the file a pin is copied from describes the world as it is.",
+    "world_is": "One gate defect recurring until its resolution step reads OPAL_AGENT_SERIAL; one authoritative comment made false by the act it describes, with no owner until named. Both named with owners; neither a fault of E-2.",
+    "notes": "Worker-form items; clocks ride this row. W1-S27 joins W1-S11 in the CTO's queue behind Andrew's 'no new work' (the round-4 L10 s.5); W1-S30 joins CloudOps' four live-plane drifts (C-S24)."
+  }
+]
+```
+
+## C-S32 -- adjudicates W1-S28, S64, S65: DISMISSED_WITH_REASON, records
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T16:37Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S32",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W1-S28",
+      "NFRA_CLDGRPH-S64",
+      "NFRA_CLDGRPH-S65"
+    ],
+    "one_line": "L9: ADJUDICATES three rows -- DISMISSED_WITH_REASON, each a record. W1-S28 (INERT): globgrph-resource-summaries-producer has no launcher on any plane and is a hand-run family (one 13-minute session on 2026-07-18); its consequence for E2-AC7 -- the pin is DECLARED and APPLIED and reaches EXERCISED only when someone runs it -- is carried in the grade at C-S29, and whether the family is given a trigger or retired is W1-S8's open item (C-S24, CloudOps), not a second row. S64 and S65 (the issuer's disarm acks for W1-S29 and W1-S31, measured at the drain): consumed by C-S30's closures.",
+    "dismissal_reason": "Records: a measured fact carried in a grade and already owned elsewhere (W1-S8), and two acks consumed by the closures they evidence.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W1-S28's three-substrate census (rules, schedules, pipes; 0 launchers) and its log-group read; S64/S65 read in full with their controls; C-S24 carries W1-S8 (declare or retire the untriggered family) OPEN at 0.7.0_AE_CloudOps."
+      ]
+    },
+    "spec_asserts": "The channel's taxonomy: an item arms a hazard and names a disarm; a record does not.",
+    "world_is": "A hand-run family whose fate is already an open item; two acks whose substance lives on the closures.",
+    "notes": "Round-5 rows dispositioned at this write: W3-S6..S9 (C-S26..C-S28) and W1-S27..S31, S64, S65 (C-S29..C-S32); the FINAL packet's rows follow the last drain."
   }
 ]
 ```
