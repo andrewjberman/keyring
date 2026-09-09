@@ -3,6 +3,55 @@
 **L2 owner + author:** `1.0.0_SA_CTO~Z` · **Run:** 2026-09-09 ~16:4xZ · **Mode:** PHASE 0 (greenfield)
 **archetype:** SCRIBE (spec)
 
+---
+
+# ⛔⛔ PROVISIONAL -- SUPERSEDED VINTAGE. A RE-RUN IS OWED. DO NOT CONSUME THIS AS THE L2 OUTPUT.
+
+**Andrew-direct 2026-09-09 ~16:5xZ, VERBATIM:** *"wait on /endpoint just yet for the global infra
+report, because CRO~Z is still adding some more detail to that brief doc"* / *"They will ping you
+when ready for you to run endpoint on it"*
+
+⛔ **THIS FILE WAS CUT AND COMMITTED (`2286056b79`) MINUTES BEFORE THAT INSTRUCTION ARRIVED**, against
+brief vintage **`@5807d05c81`**. The brief has since been amended to **`@37ff80867a`**.
+
+⚠ **THIS SEAT'S FIRST VERSION OF THIS BANNER WAS TOO STRONG AND IS CORRECTED HERE.** It said the
+brief "has moved" under every outcome and that a full re-run from F1 was owed. **That overstated it,
+and an over-strong self-correction misleads exactly as much as an over-strong claim.** The amendment's
+author states its scope narrowly (msg 20526) and the scope is small:
+
+| Region | State at `@37ff80867a` |
+|---|---|
+| **PART I, O1-O10 -- the outcome territory** | ⭐ **BYTE-UNCHANGED.** *"Any /endpoint --forward cut already made against O1-O10 stands and does NOT need redoing."* |
+| PART II, III, IV F1-F11, V, VI, REFS | BYTE-UNCHANGED |
+| **F11a** | **ADDED** -- evidence for O2 and for the GREEN definition. **Deliberately NOT a new outcome**; the author declined to add an O11 because decomposing is not a brief's act. |
+| **PART VII item 2** | **DISCHARGED** -- the `website-estate-admin` policy has now been read, by that seat and independently by this one. |
+
+**SO WHAT IS ACTUALLY OWED IS NARROW, AND IT IS NOT THE OUTCOMES:**
+1. **RE-PIN THE VINTAGE.** F1 and F5 cite `@5807d05c81`; the live brief is `@37ff80867a`.
+2. ⛔ **FIX ONE FALSE SENTENCE IN F5.** This file's provenance block lists *"the `website-estate-admin`
+   policy document was not read by the brief's author"* as a live non-claim. **That is now FALSE** --
+   it was discharged at `@37ff80867a`. A provenance block asserting a limitation that no longer holds
+   is precisely the stale-carrier defect this project exists to remove, and it would be quoted
+   forward. **Corrected in F5 below rather than left for the re-run.**
+3. **NOTHING ELSE.** `FWD-1..FWD-11` stand as cut.
+
+**THE HOLD STANDS ANYWAY, AND ON ANDREW'S WORD RATHER THAN ON A TECHNICAL BASIS.** He said wait for
+the ping. That governs regardless of how small the amendment turned out to be, and this seat is not
+converting "the delta was smaller than I thought" into "therefore I may proceed."
+
+- ⛔ **THE `NFRA_OPSEC202609` GATE IS NOT DECLARED CLEARED BY THIS FILE.** Whether L2 has cleared is
+  Andrew's to say, not this artifact's. **No seat may seat `2.0.0_SA_COO~Z` on the strength of it.**
+- ⛔ **THESE OUTCOMES ARE CUT, NOT RATIFIED.** They await Andrew's `DONE WHEN` confirmation.
+- **ON THE PING:** this seat re-reads the two amended regions only -- **not the whole brief** -- and
+  confirms or amends. A full re-run from F1 would re-litigate ten outcomes nobody questioned, which
+  is the same error in the opposite direction.
+
+⚠ **AND THE ID CONTRACT BINDS ACROSS ANY LATER AMENDMENT.** If the final brief changes an outcome the
+id stays and the text is amended; if it removes one, the number goes vacant. **No renumbering** --
+this vintage is committed and citable.
+
+---
+
 ⛔ **NOT YET LANDED IN A PRD.** There is no PRD and no project code -- L3 registration and L4 authoring
 both follow. This file is the endpoint's durable carrier until it is pasted, VERBATIM, under a section
 titled exactly `ENDPOINT (step 2, /endpoint --forward)` in that PRD. An endpoint that lives only in a
@@ -214,11 +263,21 @@ NOT READ, AND IT MATTERS:
              cut from moving numbers rot.
 ```
 
-**FOUR LIMITS THE BRIEF DECLARES ABOUT ITSELF, carried forward rather than absorbed** (Part VII):
+**THE LIMITS THE BRIEF DECLARES ABOUT ITSELF, carried forward rather than absorbed** (Part VII):
 the live AWS fleet was **never enumerated** because the estate's own inspection instrument is down,
-so every fleet statement is DECLARED and none is LIVE; the `website-estate-admin` policy document was
-not read by the brief's author; the cost reconciliation gap is reported and not diagnosed; and **no
-claim is made that any alarm has ever fired.** Two of Part VII's items are that author's
+so every fleet statement is DECLARED and none is LIVE; the cost reconciliation gap is reported and
+not diagnosed; and **no claim is made that any alarm has ever fired.**
+⚠ **ONE OF PART VII's ITEMS IS NO LONGER A LIMIT AND THIS LINE IS CORRECTED RATHER THAN LEFT.** The
+first version of this block listed *"the `website-estate-admin` policy document was not read"* among
+them. **It has been read** -- by the brief's author at `@37ff80867a` (Part VII item 2 struck and
+DISCHARGED) and INDEPENDENTLY by this seat on a different instrument. Both reads agree on the
+substance: tag-scoped to one project, one bucket ARN, one log group, sessions scoped to the user's
+own, **zero data-estate reach and zero IAM-modify**. ⛔ **They disagree on ONE NUMBER and the
+discrepancy is settled in this seat's favour by a second plane:** that message says *7 statements*;
+this seat measured **9** on the live default policy version, and `iam_patricia.tf` declares **9**
+`statement {` blocks with 9 sids. **DESIRED and APPLIED agree at 9, so there is no drift** -- the 7
+is a miscount of the same policy (7 operational, plus the two self-service MFA sids that message
+names separately). Substance unaffected; the number corrected because numbers propagate. Two of Part VII's items are that author's
 falsifications of its own inferences, which is the reason a reader should discount its absence-claims
 accordingly -- and is why `FWD-11` is cut against an OWNS line rather than against an absence.
 
