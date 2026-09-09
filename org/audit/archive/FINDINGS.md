@@ -293,3 +293,8 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 <!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/to-pipeline-override-audit.log|baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\#-#-#T#Z\org_to-pipeline-override-audit.log -->
 - log: org/to-pipeline-override-audit.log
 - detail: baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\2026-08-20T042433Z\org_to-pipeline-override-audit.log
+
+## 2026-09-09T131729Z -- COVERAGE -- UNCOVERED-AUDIT-LOG
+<!-- sig: COVERAGE|UNCOVERED-AUDIT-LOG|org/opal-ipblock-audit.log|audit-log-shaped file not in MANIFEST -- review + add or exclude -->
+- log: org/opal-ipblock-audit.log
+- detail: audit-log-shaped file not in MANIFEST -- review + add or exclude
