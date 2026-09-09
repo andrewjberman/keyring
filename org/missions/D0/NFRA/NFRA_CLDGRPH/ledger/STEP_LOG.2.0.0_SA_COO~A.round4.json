@@ -583,6 +583,29 @@
       "spine_clause": "L7 the drain: report AND instance read; merge on a VALID instance through the refuser; every ARMED row the branch carries read at the merge (W2-S26, disarm_owner this seat, disarmed by S61; W2-S27 INERT); the next order handed by continuing the same subagent",
       "gate_or_notifier_touched": ".tools/proof-of-spec-check.py (rc 0, in the worker's plane); .tools/safe-merge.sh (surprise-row-gate on the merged index; pipescript-suite-gate; missions-tree-check); rm -rf on six gitignored paths (Andrew-authorized)",
       "note": "THE DELETION IS MEASURED ON BOTH SIDES AND CARRIES A POSITIVE CONTROL because the only other evidence D-8 could carry is this seat's own word. A count that could not read non-zero would be a constant; the stitch store's 2 shows the same verb on the same directory returns non-zero for a name that is present. || W2-S26's disarm is the ruling's execution, not this seat's preference: the row's block was 'D7-AC2 cannot reach zero until the disposition lands' and the arm now reads 0 of 29 with three controls fired at a HEAD the checker validated."
+    },
+    {
+      "seq": 21,
+      "limb": "L7/L10",
+      "started_utc": "2026-09-09T14:33Z",
+      "ended_utc": "2026-09-09T14:43Z",
+      "act": "TO-CG-D-8 DRAINED AND THE RUN CLOSES AT L7; THE COO'S COMPLETION REPORT WRITTEN. The worker report (0.9.0_WK_NFRA_CLDGRPH~2, branch HEAD 238acd2cf8) and the instance read at this seat inside the worktree: checker rc=0 on the five ids (D8-AC1 ROWS_EQUAL=true WINDOW_S=4.229 over 58 of 58 rows; D8-AC2 one distinct vintage 2026-09-09T12:23:34.893879+00:00 over two machines, the filter shown able to return 2; D8-AC3 0 in the worktree beside the worker's OWN main-workspace read MAIN_WORKSPACE_LOCAL_DB_COUNT=0 at 14:14:15Z over 69 entries with a positive control of 2; D8-AC4 GATEWAY_LOCAL_DB_COUNT=0 over 32,220 paths with the probe control; D8-AC5 recorded, no verdict). Both commits authored by the worker serial; every touched path inside the grant. MERGED through safe-merge.sh @772edbc1b9 (row gate on the merged index: 2 new rows of 120; missions-tree-check 0 violations; no conflict). Worktree C:/tmp/wk-cldgrph-2-d7 and branch wk-cldgrph-2-d7 REMOVED (queue empty). THE WHOLE SET RE-VERIFIED FROM THE RECORD, not from memory: 20 of 20 task-order faces read <status> complete at HEAD; 20 of 20 proof instances VALID rc=0 with each face's own id list (V-1's six ids read from its criterion tags after a first parse took its expected_criteria line wrongly). Channel at HEAD: 120 items, 73 undispositioned, 48 ARMED by raw field (27 owned by this seat, 11 of them carrying an ack row before this commit; S62/S63 added here for W2-S13 and W2-S21; 14 remain ARMED and travel NAMED). COMPLETION_REPORT.round4.json written under org/standards/COMPLETION_REPORT.schema.json: 8 of 8 FWD COVERED, 22 cells, 20 orders, 20 terminal with valid proof.",
+      "inputs": [
+        "WORKER REPORT 0.9.0_WK_NFRA_CLDGRPH~2 on TO-CG-D-8 (final message; branch @238acd2cf8)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-8.close-fwd7-two-machines.proof_of_spec.json @238acd2cf8",
+        "org/standards/COMPLETION_REPORT.schema.json",
+        "comp-surprise --project NFRA_CLDGRPH --json at 772edbc1b9"
+      ],
+      "outputs": [
+        "CLOUD @772edbc1b9 (the D-8 drain; every round-4 order terminal)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/COMPLETION_REPORT.round4.json (this commit)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/L8_PACKET.round4.final.md (this commit)",
+        "rows NFRA_CLDGRPH-S62, NFRA_CLDGRPH-S63 (this commit)",
+        "worktree + branch wk-cldgrph-2-d7 removed"
+      ],
+      "spine_clause": "L7 the drain (report AND instance; merge through the refuser; worktree and branch removed explicitly; a worker with an empty queue ends) -> L10 the close, the COO's half: the decomposition is spent (every cell holds a terminal task order with a valid proof-of-spec) and the COMPLETION_REPORT is the final drain record; the grades are 1.0.0_SA_CTO's and the slug is 3.0.0_SA_CVO's -- neither is taken here",
+      "gate_or_notifier_touched": ".tools/proof-of-spec-check.py x21 (rc 0 x20 after the V-1 id fix); .tools/safe-merge.sh; git worktree remove + branch -d; jsonschema on the report (if importable; the result is printed in the commit)",
+      "note": "THE L10 PRECONDITION IS NOT MET ON THE ROW AXIS AND THIS SEAT SAYS SO RATHER THAN CLAIMING A SLUG-READY ROUND: 73 investigation rows are undispositioned and the slug's gate refuses a remediation row while any is. That backlog is L8/L9 (3.0.0_SA_CVO); the packet hands it over compiled. || The COMPLETION_REPORT claims COVERAGE only; FWD-7's realization turns on the CVO's D7-AC8/D8-AC5 readings and the CTO's placed rows, stated in the report's own note so the two axes are never conflated."
     }
   ]
 }

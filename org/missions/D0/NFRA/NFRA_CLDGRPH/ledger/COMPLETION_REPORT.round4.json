@@ -1,0 +1,329 @@
+{
+  "kind": "COMPLETION_REPORT",
+  "schema_version": "1.0",
+  "project": "NFRA_CLDGRPH",
+  "round": 4,
+  "written_by": "2.0.0_SA_COO~A",
+  "written_utc": "2026-09-09T14:43Z",
+  "decomposition_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md@de8fe05b97",
+  "denominators": {
+    "fwd_in_prd_header": 8,
+    "cells_in_decomposition": 22,
+    "task_orders": 20,
+    "task_orders_terminal_with_valid_proof": 20
+  },
+  "outcomes": [
+    {
+      "fwd_id": "FWD-1",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- someone who has never run a graph tool has asked and been answered",
+      "cells": [
+        {
+          "cell_id": "CG-s-4",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-C-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~T/NFRA_CLDGRPH.TO-CG-C-1.serving-service-on-the-cluster.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-5",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-2.gateway-traversal-integration.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-x-1",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-D-5.close-fwd1-never-compiled-seat.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "Served by the serving service, the gateway traversal and the never-compiled-seat exercise (D-5: answered in 7.668 s with no build). Judgment D2-AC10 (the eight-item architecture gate, G6 PARTIAL) is the CVO's at L9."
+    },
+    {
+      "fwd_id": "FWD-2",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- the schedule has fired on its own at least once and the next morning's answers carry that night's date",
+      "cells": [
+        {
+          "cell_id": "CG-s-1",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-B-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~P/NFRA_CLDGRPH.TO-CG-B-1.marker-notification-to-projection-queue.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-2",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-B-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~S/NFRA_CLDGRPH.TO-CG-B-2.projection-worker-ported.proof_of_spec.json@772edbc1b9"
+            },
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-C-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~S/NFRA_CLDGRPH.TO-CG-C-2.worker-revision-three.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-14",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-C-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.8.0_AE_CloudComp~O/NFRA_CLDGRPH.TO-CG-C-3.deriver-read-state.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-15",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-D-1.shared-image-rebuild-deriver-live.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-16",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-12",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-D-12.derive-role-bucket-notification-grant.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-x-2",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-9",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-D-9.close-fwd2-schedule-exercised.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "The nightly chain: marker notification -> queue -> worker (revision 3) -> the deriver's honest read state (C-3) -> the shared image rebuilt on the fix (D-1) behind the derive role's grant (D-12) -> the schedule exercised on the 2026-09-05 night (D-9, three passes; STAMP->ANSWER's two readings recorded, row W1-S17). CG-s-14/15/16 are placed here because the round-3 analysis ordered them AHEAD of CG-x-2's night as its preconditions."
+    },
+    {
+      "fwd_id": "FWD-3",
+      "done_when_state": "APPLIED",
+      "done_when_text": "APPLIED -- the age is printed in plain language wherever an answer is given",
+      "cells": [
+        {
+          "cell_id": "CG-s-3",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-B-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~T/NFRA_CLDGRPH.TO-CG-B-3.artifact-manifest-pointer-contract.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-6",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-3.thin-client.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "The contract's vintage/age_line (B-3) rendered in plain words by the thin client (D-3); judgment D3-AC8 (the rendering choice) is the CVO's."
+    },
+    {
+      "fwd_id": "FWD-4",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- a full cycle has passed with nobody enforcing the ceiling by hand and no answer served older than it",
+      "cells": [
+        {
+          "cell_id": "CG-s-2",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-B-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~S/NFRA_CLDGRPH.TO-CG-B-2.projection-worker-ported.proof_of_spec.json@772edbc1b9"
+            },
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-C-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~S/NFRA_CLDGRPH.TO-CG-C-2.worker-revision-three.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-x-4",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-10",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-D-10.close-fwd4-ceiling-holds.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "The ceiling held over a pinned closed cycle with nobody enforcing it by hand (D-10 pass 3, the hand-free cycle); the D10-AC3 proxies and the 60 s lag allowance are graded by the CVO (rows W1-S20..S25)."
+    },
+    {
+      "fwd_id": "FWD-5",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- a machine that has never held the graph has asked and been answered",
+      "cells": [
+        {
+          "cell_id": "CG-s-4",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-C-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~T/NFRA_CLDGRPH.TO-CG-C-1.serving-service-on-the-cluster.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-5",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-2.gateway-traversal-integration.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-x-5",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-6.close-fwd5-fresh-machine.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "A fresh machine answered on its first try (D-6); the issuer's half in step-log row 11. The CVO grades D6-AC4 under S37 (both readers now read the same served projection)."
+    },
+    {
+      "fwd_id": "FWD-6",
+      "done_when_state": "APPLIED",
+      "done_when_text": "APPLIED -- the full-versus-incremental choice no longer appears anywhere an ordinary user works",
+      "cells": [
+        {
+          "cell_id": "CG-s-6",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-3.thin-client.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "The full-versus-incremental choice is gone from the thin client (D-3: 10 switches removed) and the local rebuild wrappers were already ABSENT @dffbee781c (COMPEFFICACY t-22)."
+    },
+    {
+      "fwd_id": "FWD-7",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- two people on different machines have asked the same question at the same moment and received the same answer, after the local copy was switched off",
+      "cells": [
+        {
+          "cell_id": "CG-s-3",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-B-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~T/NFRA_CLDGRPH.TO-CG-B-3.artifact-manifest-pointer-contract.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-4",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-C-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~T/NFRA_CLDGRPH.TO-CG-C-1.serving-service-on-the-cluster.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-8",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-7",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-7.retire-local-copy.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-x-7",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-8",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-8.close-fwd7-two-machines.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "The retirement (D-7, four passes; the writer against the retired store DELETED on the CTO's ruling @1266d65641) and the two-machine exercise (D-8: identical 58-row answers under one vintage inside 4.2 s, no local canonical copy on either machine, the laptop copy switched off by the issuer @c2f4ce26be). COVERED on the coverage axis; the CVO's L9 reading on D7-AC8 (help text and graph-call-manifest.yaml still selling the retired surface) and D8-AC5 (the gateway host standing for a second PERSON; the other local Kuzu stores named in W2-S28) and the CTO's placed L10 rows (cost attribution, the stitch reader, the manifest re-route) decide the realization axis, which is not this report's."
+    },
+    {
+      "fwd_id": "FWD-8",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- the answer has been read on a real morning, and a night that did not run reads differently from one that did",
+      "cells": [
+        {
+          "cell_id": "CG-s-7",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-D-4.operator-status-read.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-x-8",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-11",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-D-11.close-fwd8-status-read-morning.proof_of_spec.json@772edbc1b9"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "The operator status read repointed at the pointer's manifest (D-4) and read on a real morning after the night (D-11: REFRESHED LAST NIGHT: YES at 2026-09-05T02:23:22); the negative-control limb's instrument gaps are rows W3-S3/S4/S5, carried NAMED."
+    }
+  ]
+}
