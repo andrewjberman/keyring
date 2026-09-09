@@ -212,6 +212,66 @@
 > pattern-shaped census missed them, and it is the fourth time this round an instrument agreed
 > about the wrong object.
 
+> ### AMENDMENT 2026-09-09 ~13:3xZ BY THE ISSUER, FOR PASS 4, ON THE CTO'S RULING 94466 @`1266d65641`
+> (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_NFRA_CLDGRPH_20260909T1251Z_CG_S_8_DISPOSITION.md`,
+> corrected in place @`65953c8ad2` and @`3a404545f2`; the CVO's concurrence C-S20 @`db7b74cf2a`). **THE BAR
+> DOES NOT MOVE:** EIGHT criteria before and after; no invocation and no expectation changes. The pass-3
+> amendment above said D7-AC2 could not reach zero until a disposition ruling landed on `kuzu_cost_enrich.py`.
+> **It has landed.**
+>
+> **THE RULING, IN ITS OPERATIVE LINE (verbatim):** *"DELETE infra/aws/globgrph/kuzu_cost_enrich.py. The rec
+> (DECLARE-AS-DEAD with a manifest row) is NOT adopted."* Measured by the CTO at HEAD `4510dcaa2a`: the file is a
+> one-off session artifact of a CLOSED project (NFRA_DEBTSCAN TO-D4, `0.7.0_AE_CloudOps` @`f8ba82b894`,
+> 2026-06-12; `--full-history` is ONE commit); its cost tables hardcode June-2026 MTD with the vintage in its own
+> docstring; callers 0 of 18 token hits (every one a log, a ledger, a face or a name in `surface_map.json`);
+> consumers of `cost_mtd_usd` 0 of 14, none code; it opens and ALTERs the retired store, so it violates the
+> cell's property (*no user-facing consumer opens a local database*) whatever a row beside it says. The
+> CAPABILITY it stood for -- cost attribution on graph nodes -- is PLACED by the CTO as a producer-side manifest
+> row at L10 (lane `0.8.0_AE_CloudComp`); that is not your act and not this cell's.
+>
+> **WHY THIS IS INSIDE YOUR GRANT AND NOT A WIDENING (the CTO's reading, carried here so the record states it
+> once):** the file is INSIDE this face's `<paths>`; REMOVED is already in step 1's disposition vocabulary and is
+> what this order did to the seam; the cell's REPOINT-or-DECLARE dichotomy assumed every local consumer READS,
+> and a WRITER is the uncovered member of that declared domain -- naming the third disposition at the member the
+> cell never enumerated is a CORRECTION, not a scope change (Rule 22 / Rule 24 postulate i).
+>
+> **WHAT PASS 4 OWES, in this order:**
+> 1. **Re-ground at your HEAD** (this branch after the issuer's hand-off merge of CLOUD): the pass-3 instance
+>    validates rc 0 with D7-AC2 FAIL by output; `infra/aws/globgrph/kuzu_cost_enrich.py` EXISTS;
+>    `infra/aws/globgrph/_canonical.py` is the 78-line tombstone; `infra/aws/globgrph/projection_client.py`
+>    exists. Any of these false = BLOCKING row + report, and stop.
+> 2. **(iii) DELETE:** `git rm infra/aws/globgrph/kuzu_cost_enrich.py`. Its census row (your own table; correct
+>    pass 1's row 18 for this file): **REMOVED -- WRITER AGAINST A RETIRED LOCAL STORE, NO REPOINT TARGET**;
+>    methodology preserved at `f8ba82b894` + `org/modules/graph/debtscan/2026-06-12_D4_costrecon_ae.md`; callers
+>    0 of 18; attribute consumers 0 of 14 (the CTO's numbers at `4510dcaa2a`; re-measure both with `comp-find` at
+>    your HEAD and print your denominators beside his). Deleting it also removes the stitch store's only WRITER;
+>    the stitch READER (`comp_debt.py:215`) is the issuer's placed row and is NOT yours to touch.
+> 3. **(ii) REPOINT `infra/aws/globgrph/kuzu_ac_traversals.py`** through `projection_client` like the other
+>    class-B consumers: `:28`/`:83` lose the `kuzu_nessie_db` default, `:92` no longer opens a Kuzu database, and
+>    the `:90` error line names the served graph instead of `run kuzu_nessie_load.py first`. `commit-gate.sh` on
+>    it (D7-AC7); one real bounded run quoted in the deliverable.
+> 4. **(i) The stitch open at `comp_debt.py:215`** is OUT OF THIS CELL by the pass-3 amendment: narrow
+>    `consumers_no_local_db.sh`'s predicate to the CANONICAL store as that amendment directs, print the stitch
+>    open as `DECLARED-OUT-OF-CELL` beside the count (never silently dropped), keep BOTH controls firing, and
+>    state the narrowing and its rule in the deliverable. The deleted file prints on the script's existing
+>    `ABSENT (excluded from the denominator)` line.
+> 5. **D7-AC2 then reads `CONSUMERS_OPENING_LOCAL_DB=0 of 29`** beside `CONSUMER_PROBE_CONTROL=FIRED` and
+>    `CONSUMER_PROBE_BAND_CONTROL=FIRED`. If it reads anything else, report the residual NAMED and stop; do not
+>    engineer the number.
+> 6. **D7-AC1, AC3, AC4, AC5, AC6 re-run at your HEAD** (AC5's three pins re-verified; a moved pin is NOT your
+>    failure -- name the commit that moved it and stop on that criterion; the issuer re-pins). **D7-AC7** over
+>    every `.py` this pass touches (a removed file has no bytes to gate). **D7-AC8's residue** (`tool_index.py`
+>    help text in 6 places, `comp_aws_cli.py:2857/2866`, `comp_similar.py:591`, the manifest entries, W2-S23)
+>    carried exactly as before, unchanged.
+> 7. Update the deliverable and the instance (every mechanical row re-run at your HEAD; AC8 under
+>    `UNVERIFIABLE-BY-INSTRUMENT`), validate with the eight ids, and -- only on rc 0 with every mechanical
+>    criterion PASS-by-output -- flip `<status>` to `complete` and commit instance + deliverable + flip together.
+>
+> **PASS 4 IS A FRESH SPAWN ON THE SAME BRANCH, NOT A CONTINUATION.** The pass-3 subagent died with every Claude
+> seat at 2026-09-06 03:59Z; its work is durable on `wk-cldgrph-2-d7` and this face is the whole of your
+> context. The laptop's own copy remains the issuer's act at the drain (Andrew's word @`61d5ef55dd`), never
+> yours.
+
 > ### AMENDMENT 2026-09-05 ~20:0xZ BY THE ISSUER, BEFORE THE HAND-OFF -- A REQUIRED CONTROL ON BOTH
 > ABSENCE ARMS. **THE BAR DOES NOT MOVE:** D7-AC1 and D7-AC2 still expect `0 hit(s) across`, their
 > invocations are unchanged, and there are EIGHT criteria before and after.
