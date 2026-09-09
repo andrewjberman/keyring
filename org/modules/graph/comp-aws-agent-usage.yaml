@@ -1,62 +1,85 @@
-# comp-aws -- agent usage guide (NFRA_COMPAWS cloud compiler)
+# comp-aws -- DEPRECATED FOR AGENT USE (NFRA_COMPAWS cloud compiler; the ENGINE behind the served graph)
 # The deterministic, typed graph of the AWS cloud (live-AWS reconciled vs terraform-state).
 # In PATH at .tools/comp-aws. Read-only AWS (boto3 in-process). Design: docs/architecture/NFRA_GRAPH_ARCHITECTURE.md
 tool: comp-aws
+status: deprecated
 source: org/modules/graph/comp_aws_cli.py
+deprecation: >
+  DEPRECATED FOR AGENT USE since 2026-09-09 (Andrew-direct; NFRA_CLDGRPH CG-s-30; record:
+  org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260909_191xZ_NO_LAPTOP_GRAPH_REFRESH_COMP_AWS_WRITE_PATHS_RETIRED.md).
+  THE GRAPH IS SERVED AND THE ESTATE REFRESHES IT. The nightly Fargate derive-runner calls this
+  engine IN-PROCESS (infra/aws/globgrph/derive_runner.py) for the full reconcile, and the
+  incremental updater Lambda keeps it near-real-time in between. There is no refresh an agent runs
+  and no question is ever the cause of a rebuild.
+  IT IS NOT GATED. Every subcommand still runs and every exit code is unchanged; the CLI prints a
+  deprecation notice on stderr first and then behaves exactly as before. What changed is ROUTING
+  and DESCRIPTION -- comp-which no longer ranks it, and nothing here presents it as yours to run.
 when_to_use: >
-  Any question about what exists in the cloud, who-can-reach-what (blast radius),
-  IaC drift (live vs terraform-state), or to snapshot/diff the cloud over time.
-  Deterministic + brittleness-safe -- prefer it over ad-hoc aws-cli spelunking.
+  Prefer the SERVED surface for every cloud question: `comp-kuzu "<Cypher>"` (manifest entry
+  cloud.read.served_vintage -- each call states how old its answer is), or
+  `comp-find --corpus aws '<regex>'` for a name/arn sweep with drift_class per hit.
+  Reach for this engine only when you are working ON the compiler itself.
+read_instead:
+  - call: 'comp-kuzu "MATCH (n:CloudNode) RETURN n.node_type, count(*)"'
+    answers: What AWS resources exist and how are they typed/connected.
+  - call: 'comp-kuzu "MATCH (n:CloudNode) WHERE n.drift_class=''LIVE-no-DECLARED'' RETURN n.arn"'
+    answers: Drift / unmanaged surface (drift_class is a node property on the served graph).
+  - call: 'comp-kuzu "MATCH (n:CloudNode) WHERE n.drift_class=''MULTI_STATE_MANAGED'' RETURN n.arn"'
+    answers: Resources owned by more than one terraform root-module state.
+  - call: "comp-find --corpus aws '<regex>'"
+    answers: Regex over every CloudNode's name/arn/props, with drift_class per hit.
+
+engine_paths:
+  note: >
+    NOT AGENT CALLS. Listed so the names resolve and nothing reads as missing. They remain callable
+    by name -- nothing refuses -- but the estate, not a laptop, is what runs them.
+  paths:
+    - name: derive
+      run_by: "the nightly Fargate derive-runner, in-process (infra/aws/globgrph/derive_runner.py); also the incremental updater"
+      does: Reconcile live-AWS against the terraform-state union into the typed graph.
+    - name: snapshot
+      run_by: "the estate's archive step"
+      does: Point-in-time archive of the cloud shape (the black-box recorder).
+    - name: "the versioned-store commit subcommand (name in comp_aws_cli.py main(); cited, not spelled -- a repeated literal stays in every text census)"
+      run_by: "the estate's versioned-store step"
+      does: Commit a derived graph into the versioned store.
 
 commands:
-  - cmd: comp-aws derive [--class C] [--out FILE]
-    does: >
-      Build the full typed graph (17 node classes + edges + drift_class) by reconciling
-      live-AWS with the terraform-state union. --class limits to one class; --out writes JSON.
-    use_when: You need the whole graph, or one class's nodes/edges/provenance.
-    output: JSON of classes_data + edges + meta; stdout prints per-class + edge-type counts.
-
   - cmd: comp-aws classes
     does: List the supported resource classes + their terraform types.
-    use_when: Quick reference for what the compiler covers.
+    use_when: Quick static reference for what the compiler covers.
+    output: text; no AWS call.
 
   - cmd: comp-aws metrics [--graph FILE]
     does: >
       Key summary numbers: per-class + drift-class + edge-type counts, untyped count
       (must be 0), and security findings (overperm roles, IMDSv2-optional EC2,
       unencrypted SNS, unmanaged secrets, LIVE-no-DECLARED total).
-    use_when: The daily posture/alarm surface, or a one-shot security tally.
-    output: JSON metrics block. --graph reads a snapshot JSON; omit to derive live.
+    use_when: Reading an EXISTING snapshot JSON with --graph. Without --graph it derives, which is an engine path.
+    output: JSON metrics block.
 
   - cmd: comp-aws diff PRIOR CURRENT
     does: >
       Diff two graph JSONs: nodes/edges ADDED/REMOVED/MODIFIED + drift-class transitions
       + per-class count and security-finding deltas (the graph_changes audit timeline).
-    use_when: Incident forensics or change review -- what changed between two snapshots.
+    use_when: Incident forensics over two snapshots that already exist.
     output: JSON of nodes_added/removed/modified, edge counts, and deltas.
 
   - cmd: comp-aws dual-managed
     does: >
       Flag ARNs managed in more than one terraform root-module state (MULTI_STATE_MANAGED --
       the over-declared mirror of LIVE-no-DECLARED; an apply-conflict footgun).
-    use_when: Config-integrity audit; before touching a resource you suspect is dual-owned.
+    use_when: Config-integrity audit. The served graph answers the same question via drift_class.
     output: count + each arn with its owning modules.
-
-  - cmd: comp-aws snapshot [--stamp TS] [--no-s3]
-    does: >
-      Full derive then gzip tarball then archive to s3://opal-313476888478-globgrph/snapshots/
-      {date}/graph-{stamp}.tar.gz + latest.txt pointer (the black-box recorder). --no-s3 = local only.
-    use_when: Record a point-in-time cloud shape (the versioned-store + Kuzu feed).
-    output: local tar.gz path + the S3 archive key.
 
   - cmd: comp-aws score [--class C]
     does: P/R/F1 of the derivation vs the CVO-certified hand-audit oracles (advisory harness).
-    use_when: Self-check a class's precision/recall before signaling a cert.
+    use_when: Working on the compiler itself -- self-check a class's precision/recall before signaling a cert.
 
 key_facts:
   drift_classes: [DECLARED, LIVE-no-DECLARED, DECLARED-no-LIVE, AWS_MANAGED, MULTI_STATE_MANAGED]
   edge_semantic: data-access edges are CAPABILITY (what a role COULD reach), not observed-use.
   zero_dangling: every concrete edge ends at a real node; unresolved becomes wildcard=true, never dangling.
   declared_side: terraform-STATE union across 25 root modules, NOT a .tf text-grep.
-  runtime: full derive about 3-4 min (parallel boto3); read-only, safe to run anytime.
-related_tools: comp-trace, comp-blast, comp-iam, comp-routes, comp-platinum (targeted probes; comp-aws is the unified graph)
+  who_refreshes: the estate -- nightly derive-runner (whole-graph reconcile, minutes) + incremental updater. Not you.
+related_tools: comp-kuzu (READ the served graph -- start here), comp-find --corpus aws, comp-trace, comp-blast, comp-iam, comp-routes, comp-platinum

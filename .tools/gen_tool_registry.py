@@ -106,6 +106,26 @@ def population_from_map():
     return pop
 
 
+def status_from_map():
+    """TOOL-GRAIN LIFECYCLE from the SOLE authority (comp-coverage-map.yaml `status:`, declared in
+    its schema.node_fields, NFRA_CLDGRPH CG-s-30).
+
+    A tool that omits the key is `active` -- the DEFAULT is declared in the map's schema, and it is
+    applied HERE rather than left as None so every generated row carries a value a consumer can
+    reject on (A_VALUE_MUST_CARRY_ITS_CLAIM: an unpopulated provenance field drifts).
+
+    THIS IS NOT A POPULATION READ. It is an ATTRIBUTE read over the same rows population_from_map()
+    walks; the population still comes from that function alone.
+    """
+    cm = load(COVERAGE_MAP, {}) or {}
+    out = {}
+    for section in ('tools', 'meta_tools'):
+        for row in (cm.get(section) or []):
+            if isinstance(row, dict) and row.get('tool'):
+                out[norm_tool(str(row['tool']))] = str(row.get('status') or 'active')
+    return out
+
+
 def norm_tool(name):
     """Canonical tool id. The map drops the file suffix; an on-disk listing keeps it.
 
@@ -173,6 +193,8 @@ def main():
 
     # POPULATION comes from the AUTHORITY, never from this file's own inputs (CTO ruling 212335Z).
     authority = population_from_map()
+    # TOOL-GRAIN LIFECYCLE from the same authority (CG-s-30). Attribute, not population.
+    tool_status = status_from_map()
 
     master_tools = {}
     for tool_raw, c in classification.items():
@@ -197,6 +219,7 @@ def main():
             'primitives': prims,
             'engines': p.get('engines', []),
             'bounding': c.get('bounding', []),
+            'status': tool_status.get(tool, 'active'),
         }
 
     # NO SILENT SKIP (CTO ruling 212335Z, explicit). A tool in the authority that this generator
@@ -214,6 +237,7 @@ def main():
             'knows_own_denominator': None, 'control_established': None,
             'universe': None, 'excludes': [], 'cost_band': 'UNKNOWN',
             'primitives': [], 'engines': [], 'bounding': [],
+            'status': tool_status.get(tool, 'active'),
         }
 
     n_pop = assert_population_parity(authority, set(master_tools))
@@ -239,7 +263,10 @@ def main():
 
     # ---- compile the LIGHT card: 8 decision fields, importable, no parse ----
     CARD = ('concern', 'canonical_call', 'state', 'denominator_construction',
-            'control_established', 'excludes', 'cost_band', 'knows_own_denominator')
+            'control_established', 'excludes', 'cost_band', 'knows_own_denominator',
+            # CG-s-30: the tool-grain lifecycle rides the LIGHT card too, so a consumer on the
+            # import path (comp-which) can exclude a deprecated tool without parsing the map.
+            'status')
     cards = {t: {k: v[k] for k in CARD if v.get(k) is not None} for t, v in master_tools.items()}
 
     # ---- compile the ROUTING CORPORA (comp-which wiring, CTO ruling #1 @212335Z) ----
