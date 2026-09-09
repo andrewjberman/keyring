@@ -80,6 +80,31 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
     "spec_asserts": "TO-RP-s-5, MEASURED STARTING STATE, carried not re-derived: 'the manifest is itself 2014.2h old.'",
     "world_is": "At this cell's re-grounding the manifest's own _last_updated timestamp is approximately 1 hour old, because an unrelated opal-gateway deploy commit wrote to the same file's top-level timestamp after the brief's vintage. The brief's number was correct when measured; it does not describe the file's age at TO-RP-s-5's execution time.",
     "notes": "INERT: this cell's ACT (the schema fix, the ECS enumeration, the always-on grouping) does not depend on the manifest's age, so nothing here changed as a result. Recorded per CLAUDE.md rule 22's STATE axis (DESIRED/APPLIED/EXERCISED are not a description) and re-grounding discipline."
+  },
+  {
+    "id": "NFRA_REPORT-Z-S1",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZZ",
+    "surfaced_at": "2026-09-09T21:35:00Z",
+    "one_line": "RP-s-1's cell text covers only the two-axis vocabulary, but the S1 manifest row it mirrors covers FWD-2 AND FWD-4 including 'the property+owner attribution riding both' -- so FWD-4's attribution axis was never cut into any cell of this round, and the L6 coverage limb cannot see it because that limb grades cell IDS against the decomposition's id space, never a cell's TEXT against its manifest row's CONTENT.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRD NFRA_REPORT_PRD.md s.8 row S1 names outcomes 'FWD-2, FWD-4' and its surface text ends '... plus the property+owner attribution riding both'.",
+        "NFRA_REPORT_DECOMP.md: enumeration of the token 'attribution' over the whole file returns 0 hit(s). The RP-s-1 cell text covers axis 1's six values, axis 2, GREEN, and the two expressibility gaps -- and no attribution limb.",
+        "NFRA_REPORT.TO-RP-s-1.state-model-two-axis-vocabulary.md: enumeration of 'attribution' returns 0 hit(s). The worker face never carried the limb, and the worker face is the whole of a worker's context.",
+        "The built deliverable deliverables/0.9.0_WK_NFRA_REPORT~1/STATE_MODEL.md: enumeration of 'UNGROUPED' returns 0 hit(s) and of 'Dashboard' returns 0 hit(s) -- it renders no attribution axis at all. The worker built exactly what it was given.",
+        "L6 issuance @7d698685fe printed 'issuance coverage 12 of 12 cell(s) ... owned by the staged orders' and PASSED, because every cell id in the decomposition is owned by an order. Coverage by ID was complete while coverage by CONTENT was not."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD s.8 row S1: outcomes 'FWD-2, FWD-4'; surface includes 'the property+owner attribution riding both'. Decomp s.1 invariant: 'every cell mirrors a manifest row, and every manifest row has at least one cell.'",
+    "world_is": "RP-s-1 mirrors S1 by ID and covers only its FWD-2 half. Zero occurrences of 'attribution' in the decomposition or in the task order; zero occurrences of 'Dashboard' or 'UNGROUPED' in the completed, merged deliverable. FWD-4 therefore has NO built artifact in round 1, and no gate refused: the coverage limb compares the union of <owned_cells> to the decomposition's cell id set, which is satisfied by a cell that owns a row and cuts only part of it. This is the L5 author's error, not the worker's and not the gate's.",
+    "notes": "ARMED because rule 27's round-close asks the CTO for a PRD addendum where an FWD no cell served, and this is exactly that case -- FWD-4 is unserved by any cell of this issuance. disarm_owner is 1.0.0_SA_CTO~Z as the L4 owner who decides whether FWD-4's attribution limb is an addendum or a round-2 recut; the recut itself would be 2.0.0_SA_COO~ZZ's in ONE issuance. NOT a request to reopen RP-s-1: that order is terminal, its instance VALID, and reopening an accepted certified cell is a rewind. The repair lives forward. Sharpened by the same seat's disarm of NFRA_REPORT-Z-W2-S2 at a535ae513e, which ADDED a mandatory rendered UNGROUPED value to FWD-4's attribution axis -- so the uncovered limb has since grown a new required value that no cell is positioned to build."
   }
 ]
 ```
