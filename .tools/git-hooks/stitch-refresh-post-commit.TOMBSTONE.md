@@ -30,12 +30,14 @@ Andrew-direct 2026-07-07**, as quoted in `.tools/stitch-refresh:6-12` and in the
 > Andrew-direct 2026-07-07: for a SOLO contributor whose local working tree IS the
 > canonical state, the derivation should read the local repo directly -- the entire
 > cloud apparatus existed only to get repo source to a repo-less cloud runner, a
-> problem that does not exist when you run where the source already lives.
+> problem that does not exist when you run where the source already lives. This
+> deletes the GH-Action + CodeBuild + EventBridge + GHA-OIDC roles + the
+> PORTAL_REPO_PAT / .gitmodules-second-checkout saga.
 
 **THE LATER WORD, which governs -- Andrew, 2026-09-02 ~17:5xZ**, the ratified endpoint of NFRA_CLDGRPH:
 FWD-7 *"The estate keeps one graph story, and the per-machine copy is retired rather than kept alongside"*,
-DONE WHEN *"after the local copy was switched off"*; and the PRD title he ratified, *"no machine is in the
-compile business"*.
+DONE WHEN *"after the local copy was switched off"*; and the PRD title he ratified:
+*"no machine is in the compile business"*.
 
 **THE RULE THAT RECONCILES THEM -- R16** (NFRA_CLDGRPH PRD v0.7 s.6 @`a46abe413a`, ratified from the ruling
 below), verbatim:
