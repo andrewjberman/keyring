@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~V</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-09</issued_date>
-<status>staged</status>
+<status>complete</status>
 
 **BLOCKER: NONE. GO immediately.** Third and last enabling instance on `OP-s-10`. `TO-OP-S-10B` taught two verifiers, `TO-OP-S-10D` the third; this one fixes the WRITE side, which no face in the chain had ever read on this axis.
 
