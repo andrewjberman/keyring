@@ -1,7 +1,8 @@
 # DEPLOY COMPLETION LEDGER -- the device drift publisher's SCOPED ROLE (NFRA_OUTSET.TO-OS-s-21)
 
-**Opened:** 2026-09-09T16:50Z by `0.7.0_AE_CloudOps~W`
-**Status:** OPEN -- the apply has NOT been performed at this write
+**Opened:** 2026-09-09T16:50Z by `0.7.0_AE_CloudOps~W` (committed OPEN at `569c698d4a`)
+**Status:** **CLOSED 2026-09-09T16:55Z** -- all four legs verified, including a negative
+control proving the session-name condition is enforced rather than decorative
 **TO:** `org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-21.the-cadence-scheduled-publish.md`
 AMENDED @`eb2d27b6e4` on the CTO's ruling @`054353ac5e` (row `NFRA_OUTSET-S25`, shape **(d)**)
 
@@ -57,15 +58,55 @@ exists, and the applied-plane sweep for `s3:PutObject` reaching
 `opal-estate-report/outset/laptop/*` returns **0** holders. Coverage qualifier: attached-managed
 statements in that census are UNRESOLVED and therefore uncovered, never absent.
 
-## Legs
+## Legs -- ALL FOUR VERIFIED
 
-1. [ ] `safe-apply` (never bare `terraform apply`; vendored `.tools/terraform.exe`)
-2. [ ] Unscoped re-plan reads 0/0/0
-3. [ ] APPLIED-plane read after a census refresh: the role exists, ONE statement, the ONE key, and
-       the trust names the user ARN with the session-name condition
-4. [ ] **EXERCISED**: assume the role under the pinned session name and confirm the caller ARN is
-       the assumed-role session, not the ambient admin user. NEGATIVE CONTROL: assuming with a
-       DIFFERENT session name must be DENIED, or the condition is decoration.
+1. [x] `safe-apply`: **2 added, 0 changed, 0 destroyed**. Role created in 1s, policy in 0s.
+2. [x] Unscoped re-plan: **"no differences, so no changes are needed"**.
+3. [x] APPLIED plane, census refreshed first (2026-09-09T16:52:15Z, **229 roles**):
+       `outset-drift-publisher-laptop` holds **exactly 1 statement** --
+       `PublishThisDevicesDriftArtifactOnly`, `["s3:PutObject"]`,
+       `["arn:aws:s3:::opal-estate-report/outset/laptop/comp_heat_drift.json"]`. Trust principal
+       `{"AWS": "arn:aws:iam::313476888478:user/Andrew_Berman"}`; trust condition
+       `{"StringEquals": {"sts:RoleSessionName": "outset-drift-laptop"}}`. DESIRED == APPLIED.
+4. [x] **EXERCISED, with the control that makes it mean anything.**
+       ambient caller -> `arn:aws:iam::313476888478:user/Andrew_Berman`
+       GREEN, assume as `outset-drift-laptop` -> the caller becomes
+       `arn:aws:sts::313476888478:assumed-role/outset-drift-publisher-laptop/outset-drift-laptop`
+       **NEGATIVE CONTROL, assume as `some-other-session` -> DENIED.** Without this arm the
+       condition would be untested and indistinguishable from decoration.
+       AND THE REAL PUBLISH, end to end under the named identity:
+       `OK: device=laptop publisher_arn=arn:aws:sts::313476888478:assumed-role/`
+       `outset-drift-publisher-laptop/outset-drift-laptop answer_state=OK n=156`
+       `tracked_total=30835 git_head=2befa0e9ff10 bytes=27572`
+       `dest=s3://opal-estate-report/outset/laptop/comp_heat_drift.json`
+
+## SHARPENING (2) ANSWERED: NO SEAM-MODULE CHANGE, NO BLOCKING ROW
+
+`publisher_arn` rides in `denominators.tool_scalars` beside `device` / `tree_root` / `git_head` --
+the node `_denominators_of` already surfaces a tool's scalars into, and the node the consumer's
+`_outset_device_fields` already reads from. `publish_artifact` already accepts an `s3_client`, which
+is exactly the hook a scoped-session publish needs. `org/modules/heatmap/outset_seam.py` is READ and
+unedited; the lane resolver was run with that file as the NEGATIVE CONTROL and refused it, while the
+device path and `iam.tf` were PERMITTED.
+
+## SHARPENING (5): THE INSTALL LINE, REPORTED BEFORE INSTALLING
+
+Reported to `2.0.0_SA_COO` before the task is created, as the amendment requires. The task did NOT
+exist beforehand (`Get-ScheduledTask` -> ABSENT), so nothing is installed over blind.
+
+**INSTALL** (run in PowerShell -- `schtasks` through Git Bash is mangled by MSYS path conversion,
+which rewrote `/Query` into `C:/Program Files/Git/Query` when measured):
+
+    schtasks.exe /Create /TN "OpalOutsetDriftLaptop" /SC DAILY /ST 07:30 /F /TR "cmd /c cd /d C:\Users\AndrewBerman\Desktop\ajb_workspace && C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\python.exe infra\aws\ec2\outset-drift-device\publish_drift.py --out-prefix s3://opal-estate-report/outset"
+
+**REMOVAL, one line:**
+
+    schtasks.exe /Delete /TN "OpalOutsetDriftLaptop" /F
+
+07:30 local is **11:30Z** in September (ET, UTC-4) -- ninety minutes before the 13:00Z report, which
+is the ordering `O21-AC1` grades. The `cd /d` is REQUIRED: the script DERIVES its tree from
+`git rev-parse --show-toplevel` and Task Scheduler sets no working directory. The interpreter path
+and the repo root were both MEASURED on this device, never assumed.
 
 ## Rollback
 
