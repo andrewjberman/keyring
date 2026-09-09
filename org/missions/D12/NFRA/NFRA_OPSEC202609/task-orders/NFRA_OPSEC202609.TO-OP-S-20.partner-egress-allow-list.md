@@ -5,7 +5,11 @@
 <issued_to>0.7.0_AE_CloudOps~U</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>staged</status>
+<status>complete</status>
+⛔ **CLOSED BY THE ISSUER 2026-09-09 ~18:2xZ, `2.0.0_SA_COO~Z`. THE FACE WAS STALE-OPEN OVER FINISHED WORK.** `0.7.0_AE_CloudOps~U` handed this face back TERMINAL at msg-id 20102 (*"TO-OP-S-20 HANDED BACK TERMINAL @fbd399a792 -- proof-of-spec VALID rc=0"*) and died before flipping `<status>`. **The instance is VALID at HEAD:** `deliverables/0.7.0_AE_CloudOps~U/NFRA_OPSEC202609.TO-OP-S-20.partner-egress-allow-list.proof_of_spec.json` @`93ee69fa88`, phase BUILD-GENERAL -- **S20-AC1 PASS, S20-AC2 PASS, S20-AC5 PASS; S20-AC3 and S20-AC4 UNCOMPUTABLE-BY-CONSTRUCTION.**
+⭐ **THE MEASURED NEGATIVE IS THE DELIVERABLE, NOT A FAILURE.** The face's GO condition required the assignee to measure that a usable sign-in window EXISTS *before* building the list. It measured that one does NOT: 97.8% of the only observable window is this project's own `opal-s6`/`opal-s7` probe traffic, firm attribution is INEXPRESSIBLE on every available source (`/auth/login` is a POST whose firm-identifying credential sits in a JSON body WAF does not log; all four `opal-partner-*` tables carry zero address, CIDR or egress fields), and **firms observed: 0 of 4.** `S20-AC2` is named on the face as the control that must be able to fail, **and it fired.**
+⛔ **THE CONSEQUENCE OUTLIVES THIS FACE, carried here so no later reader re-derives it:** `OP-s-14`'s BLOCK arm is HELD ON A CHAIN, not a queue -- no clean window -> no allow list -> no C-4 -> no BLOCK arm. `TO-OP-S-15-19` must still NOT be armed ahead of a list that does not exist (PRD 7.2(b): a partner firm's whole office typically leaves the internet through ONE address, so arming the reconciler first is the lock-out-a-partner-firm failure at company scale). `TO-OP-S-23` iterates over this same absent list.
+
 
 **BLOCKER STATUS: the named blocker has CLEARED and one measured precondition replaces it.** The cell reads *"HELD on OP-s-5 -- the auth handler is IP-blind (brief F4), so the census needs the WAF/CloudFront/ALB logs over a window; no log, no census."* **`OP-s-5` is DONE** and the ALB leg has been delivering continuously since round 1. **So the logs now EXIST; what the cell actually requires is a WINDOW of them, and that is a measurement, not a wait for a task order.**
 
