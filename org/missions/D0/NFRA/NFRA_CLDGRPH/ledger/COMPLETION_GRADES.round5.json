@@ -1,0 +1,69 @@
+{
+  "kind": "COMPLETION_GRADES",
+  "schema_version": "1.0",
+  "project": "NFRA_CLDGRPH",
+  "round": 5,
+  "graded_by": "1.0.0_SA_CTO",
+  "graded_utc": "2026-09-09T17:40Z",
+  "report_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/COMPLETION_REPORT.round5.json@25040e93f2",
+  "slug_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/adjudications/ADJUDICATION_v1.md@8678d0018d",
+  "analysis_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/ROUND_ANALYSIS.round5.md",
+  "rows": [
+    {
+      "fwd_id": "FWD-1",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-D-5.close-fwd1-never-compiled-seat.proof_of_spec.json@bdd7dbaa08",
+      "state_observed": "EXERCISED",
+      "note": "Unchanged from round 4 (COMPLETION_GRADES.round4.json @707ba2a4c9); no round-5 cell touched the artifact."
+    },
+    {
+      "fwd_id": "FWD-2",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-D-9.close-fwd2-schedule-exercised.proof_of_spec.json@9aca2a78cf",
+      "state_observed": "EXERCISED",
+      "note": "Unchanged from round 4. Round 5's E-2 pinned the four remaining producer families by digest (7 of 7 live at C-S29) under R13, which protects this outcome's schedule from a silent re-point; the tag's digest did not move."
+    },
+    {
+      "fwd_id": "FWD-3",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-3.thin-client.proof_of_spec.json@d060cf9223",
+      "state_observed": "EXERCISED",
+      "note": "Unchanged from round 4. The successor manifest entry cloud.read.served_vintage (E-1) is a READ that discloses its age, the same property on the instruction plane."
+    },
+    {
+      "fwd_id": "FWD-4",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-D-10.close-fwd4-ceiling-holds.proof_of_spec.json@b20444334d",
+      "state_observed": "EXERCISED",
+      "note": "Unchanged from round 4."
+    },
+    {
+      "fwd_id": "FWD-5",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-6.close-fwd5-fresh-machine.proof_of_spec.json@23fb03b1cd",
+      "state_observed": "EXERCISED",
+      "note": "Unchanged from round 4."
+    },
+    {
+      "fwd_id": "FWD-6",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-E-1.retire-instruction-plane.proof_of_spec.json@ed674cd511",
+      "state_observed": "EXERCISED",
+      "note": "REALIZED at round 4 on the executable plane; round 5's E-1 removed the residue this seat named there -- the manifest no longer offers --mode anywhere (RETIRED_ROUTES 0 of 3 phrasings, HELP_ROUTES_BACK 0 of 8, tools_index comp-kuzu row without --mode; C-S36). No refresh choice exists where a user works, on either plane."
+    },
+    {
+      "fwd_id": "FWD-7",
+      "verdict": "NOT_REALIZED",
+      "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/CG-s-20.stitch-home.result.md@49fea6980a",
+      "state_observed": "APPLIED",
+      "note": "The three planes of the retirement are clean (round 4), retired (E-1: 0 of 126 live routes back, the successor a read) and dispositioned (E-3, E-4; P7 lifted by its author at C-S26). NOT REALIZED by two OWNED acts, neither a new cell shape: (i) the accept's existence clause -- no second, older copy anyone could still be reading from -- is met only when the lifted dispositions are EXECUTED (kuzu_db retired with a tombstone naming its June tarball, kuzu_ac7.db archived and removed, kuzu_load.py retired or rescoped), row S21 of v0.6; (ii) the person half -- two people on different machines -- is MODELLED (one worker on two machines; C-S36's four conjuncts named, none exercised) until a site-Z seat asks D-8's fixed question, row S22 of v0.6, ALLOCATED FIRST by Andrew's word at ~17:3xZ. Beneath the residue plane the cloud stitch producer has never produced (67 of 67 failed, W3-S10); the stitch JOIN's four cells are S23-S26 of v0.6, FWD-7's by this PRD's arc and a future round's by dependency. State observed APPLIED on the outcome."
+    },
+    {
+      "fwd_id": "FWD-8",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-D-11.close-fwd8-status-read-morning.proof_of_spec.json@23fb03b1cd",
+      "state_observed": "EXERCISED",
+      "note": "Unchanged from round 4."
+    }
+  ]
+}
