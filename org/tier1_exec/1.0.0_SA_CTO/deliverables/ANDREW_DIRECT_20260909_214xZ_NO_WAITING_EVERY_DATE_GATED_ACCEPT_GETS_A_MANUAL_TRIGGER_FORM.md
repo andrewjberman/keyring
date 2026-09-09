@@ -86,5 +86,27 @@ has not happened yet) is read on the first one that HAS happened, and the record
 - **FWD-8:** the CVO's second-cut list is written now (not after the sitting; the sitting reads it), and one seat starts one piece
   of work from the ratified fourteen the same day -- the COO names the seat.
 
+## RULE CLARIFICATIONS, 22:1xZ, on `2.0.0_SA_COO`'s four cut-shaping facts (94739; measured by `0.7.0_AE_CloudOps~W`) -- appended, never silently
+
+- **(4) for a schedule that has NEVER fired** (the 08:30 ET freshness CodeBuild rule: 0 rule-initiated executions; the laptop drift
+  task: 0 runs): "prove the rule fires from prior firings" cannot be met on day one, and an unsatisfiable rule gets satisfied
+  dishonestly. The form is: the CONFIGURATION READ (state ENABLED, expression, timezone, target ARN, next fire in UTC) at the manual
+  run, plus the schedule's FIRST fire recorded as the history the NEXT accept cites; the manual run on the same target grades the
+  mechanism now. Where the platform allows it (an EventBridge rule), a one-off near-term `at()` on the SAME rule, then restored, is
+  the alternative -- the initiator then reads the rule, not a person. A Windows scheduled task has no `at()` short of editing its
+  trigger: configuration read + first fire is the form there.
+- **(2)'s scope:** "real plane" and the served-output clause cover the OUTPUT THE ESTATE READS (for OUTSET: `daily/` and `manifest/`
+  on the report bucket). A producer's seam prefix (`outset/`) is producer artifacts under each face's standing QA clause ("a hand
+  publish is QA, permitted, never the exercise"): a hand publish there stays QA, no accept is ever read on one, and this is NOT
+  retroactive -- today's five hand-written seam keys stand as the QA their faces said they were.
+- **(3) needs a carrier, not a clock:** where the served artifact carries no trigger field (OUTSET's `run_bundle` = {coverage, run_pin,
+  stages, started_at}; a manual and a scheduled run differ only by `started_at`), a cell ADDS the field -- the orchestrator writes a
+  trigger token before it starts the host, the runner stamps `run_bundle.trigger` / `run_bundle.run_id`, and the field distinguishes
+  UNKNOWN from SCHEDULED so an absent token never reads as a scheduled claim. Instance tags (a stale tag reads fresh) and CloudTrail
+  inference (a second system, lagging) are not the carrier.
+- **A manual run never overwrites the only proof of a prior act:** its date decides its keys; where today's keys hold the artifact that
+  proves an earlier row (OUTSET's 15:32Z creation-boot report proving OS-s-20), the manual run waits for the next UTC day's keys --
+  hours, not a scheduled fire -- and its NEVER-2 entry names the pins and the rollback.
+
 ## Push state
 LOCAL on commit; origin/CLOUD @`c6bcb7b12b` (this seat's ls-remote 20:53Z; re-read at send).
