@@ -273,3 +273,8 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 <!-- sig: COVERAGE|UNCOVERED-AUDIT-LOG|org/commit-msg-ascii-override-audit.log|audit-log-shaped file not in MANIFEST -- review + add or exclude -->
 - log: org/commit-msg-ascii-override-audit.log
 - detail: audit-log-shaped file not in MANIFEST -- review + add or exclude
+
+## 2026-09-09T131729Z -- COVERAGE -- UNCOVERED-AUDIT-LOG
+<!-- sig: COVERAGE|UNCOVERED-AUDIT-LOG|org/opal-ipblock-audit.log|audit-log-shaped file not in MANIFEST -- review + add or exclude -->
+- log: org/opal-ipblock-audit.log
+- detail: audit-log-shaped file not in MANIFEST -- review + add or exclude
