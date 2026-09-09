@@ -1,6 +1,13 @@
 schema_version: '0.1'
 authority: Andrew-direct 2026-07-28 -- standardized constants for tool classification
 generated_by: .tools/gen_tool_classification.py (re-runnable; derived from source, not asserted)
+population_authority: 'org/modules/graph/comp-coverage-map.yaml -- tools[] + meta_tools[] (CTO ruling
+  20260728T212335Z, the SOLE population authority). READ through gen_tool_registry.population_from_map(),
+  never re-implemented here. org/tier1_exec/3.0.0_SA_CVO/deliverables/tool_profile.json is the ATTRIBUTE
+  source ONLY: a profile row whose tool is absent from the authority is EXCLUDED and NAMED on stdout,
+  and an excluded name that is not a declared retired alias is reported as a finding. Before NFRA_CLDGRPH
+  CG-s-17 (2026-09-09) the profile was also the population, and the four retired names it still carries
+  made gen_tool_registry refuse outright.'
 source_of_truth_note: 'This file classifies HOW a tool retrieves and what it covers. Tool INVENTORY (which
   tools exist + their one home) remains org/modules/graph/comp-coverage-map.yaml per CTO ruling #1. This
   does NOT supersede it and must not duplicate its fields.'
@@ -58,31 +65,40 @@ known_limitations:
   negative_control: Only EXERCISED (SIMULATE) tools can establish absence. 8 of 89 today. For the other
     81, POSITIVE control is the floor and is what is claimed -- per Andrew-direct, that is enough to start.
 counts:
-  classified: 89
-  unclassified: 4
+  classified: 85
+  unclassified: 3
   unclassified_tools:
   - comp-imgread
   - comp-tagauthz
   - comp-to
+  profile_rows: 93
+  excluded_not_in_authority: 5
+  excluded_not_in_authority_tools:
+  - comp-adapter-audit
+  - comp-kuzu-full
+  - comp-kuzu-inc
+  - comp-surface-check
   - comp-v5-composite-test.sh
+  excluded_not_declared_retired:
+  - comp-v5-composite-test.sh
+  authority_without_a_profile_row:
+  - comp-adversary
+  - comp-atomcheck
+  - comp-claimlink
+  - comp-closure
+  - comp-cochange
+  - comp-directives
+  - comp-estate
+  - comp-find
+  - comp-lease
+  - comp-ledger-agreement
+  - comp-legacywriter
+  - comp-read
+  - comp-schedule
+  - comp-surprise
+  - comp-v5-composite-test
+  - pipescript
 tools:
-  comp-adapter-audit:
-    primitives:
-    - REGISTRY
-    state: PERSISTED
-    derived: false
-    denominator_construction: ENUMERATED
-    denominator_knowable_up_front: true
-    universe: an authored ledger (coverage-map / manifest / project JSON)
-    excludes:
-    - anything unregistered -- THE PHANTOM CLASS
-    control_established: POSITIVE
-    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
-    refresh_is_incremental: true
-    bounding:
-    - head slice
-    - json out
-    declares_denominator_in_output: false
   comp-arity:
     primitives:
     - GIT
@@ -1018,46 +1034,6 @@ tools:
     - head slice
     - json out
     declares_denominator_in_output: false
-  comp-kuzu-full:
-    primitives:
-    - GRAPH-DB
-    - REGISTRY
-    state: PERSISTED
-    derived: true
-    denominator_construction: TRAVERSED
-    denominator_knowable_up_front: false
-    universe: the derived globgrph (kuzu) nodes and edges
-    excludes:
-    - anything not yet ingested into the graph
-    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
-    - anything unregistered -- THE PHANTOM CLASS
-    control_established: POSITIVE
-    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
-    refresh_is_incremental: true
-    bounding:
-    - head slice
-    - json out
-    declares_denominator_in_output: false
-  comp-kuzu-inc:
-    primitives:
-    - GRAPH-DB
-    - REGISTRY
-    state: PERSISTED
-    derived: true
-    denominator_construction: TRAVERSED
-    denominator_knowable_up_front: false
-    universe: the derived globgrph (kuzu) nodes and edges
-    excludes:
-    - anything not yet ingested into the graph
-    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
-    - anything unregistered -- THE PHANTOM CLASS
-    control_established: POSITIVE
-    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
-    refresh_is_incremental: true
-    bounding:
-    - head slice
-    - json out
-    declares_denominator_in_output: false
   comp-lambdamap:
     primitives:
     - FS-WALK
@@ -1568,34 +1544,6 @@ tools:
     refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
     refresh_is_incremental: true
     bounding:
-    - json out
-    declares_denominator_in_output: false
-  comp-surface-check:
-    primitives:
-    - GIT
-    - AWS-API
-    - GRAPH-DB
-    - REGISTRY
-    state: PERSISTED
-    derived: true
-    denominator_construction: TRAVERSED
-    denominator_knowable_up_front: false
-    universe: the derived globgrph (kuzu) nodes and edges
-    excludes:
-    - gitignored paths
-    - submodule contents (gitlink only)
-    - anything not in the repo
-    - other regions
-    - other accounts
-    - resource types not queried
-    - anything not yet ingested into the graph
-    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
-    - anything unregistered -- THE PHANTOM CLASS
-    control_established: POSITIVE
-    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
-    refresh_is_incremental: true
-    bounding:
-    - head slice
     - json out
     declares_denominator_in_output: false
   comp-symbols:

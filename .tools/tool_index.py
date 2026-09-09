@@ -11,21 +11,13 @@ A reader MUST compare against the live file and FALL BACK TO PARSING on mismatch
 must be able to know it is stale.
 """
 MASTER_PATH = 'org/modules/graph/TOOL_MASTER.yaml'
-MASTER_SHA256 = '59b9472535b2d03d53d68a39812df83dfb6e5b4e86e50187087d966078cf99a9'
+MASTER_SHA256 = '6bde9aa2bce785f8c30a17c476bb331906100aa209149e8dd651e79de34a7f58'
 MANIFEST_PATH = 'org/modules/graph/graph-call-manifest.yaml'
-MANIFEST_SHA256 = 'f934bd687edbddfec88242d7805955d0df4e74a3fed646ab45075a58ebb31d0a'
+MANIFEST_SHA256 = '548792d1478b09ccc91189a3d627b1fefec0d74d011812d1fad48801407c14ca'
 LEDGER_PATH = 'org/modules/graph/comp-coverage-map.yaml'
-LEDGER_SHA256 = '931f52bad3c17b7b8c7491e6abe33e97e01ec222744c1e9f5cbf6b44ea7731a0'
+LEDGER_SHA256 = '94803f60d6db2557df9b1d058613ffd7e0ef078bc29b5c5701add58afbb062b3'
 
-TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-fn> [--severity warn|error]',
-                        'concern': 'portal ADAPTER field-threading audit vs LIVE S3 envelope (schema-drift / '
-                                   'not-threaded / fallback-order)',
-                        'control_established': 'POSITIVE',
-                        'cost_band': 'SUB_SECOND',
-                        'denominator_construction': 'ENUMERATED',
-                        'excludes': ['anything unregistered -- THE PHANTOM CLASS'],
-                        'knows_own_denominator': True,
-                        'state': 'PERSISTED'},
+TOOLS = {'comp-adversary': {'cost_band': 'UNKNOWN', 'excludes': []},
  'comp-arity': {'control_established': 'POSITIVE',
                 'cost_band': 'TENS_OF_SECONDS',
                 'denominator_construction': 'TRAVERSED',
@@ -40,7 +32,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                              'other accounts',
                              'resource types not queried',
                              'anything not yet ingested into the graph',
-                             'a scratch --db-path is a frozen vintage',
+                             'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                              'anything unregistered -- THE PHANTOM CLASS',
                              'non-Python lanes',
                              'runtime/dynamic construction'],
@@ -62,6 +54,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                               'anything unregistered -- THE PHANTOM CLASS'],
                  'knows_own_denominator': True,
                  'state': 'PERSISTED'},
+ 'comp-atomcheck': {'cost_band': 'UNKNOWN', 'excludes': []},
  'comp-aws': {'canonical_call': 'comp-aws derive --out <path>    # full; or --resource <arn> for bounded',
               'concern': 'IAM-as-graph-nodes -- the live-AWS cloud-graph estate topology (17 node classes; the '
                          'WRITE-PATH + cert; the LIVE half of the desired-vs-live overlay)',
@@ -76,7 +69,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                            'resource types not queried',
                            'candidates not enumerated for simulation',
                            'anything not yet ingested into the graph',
-                           'a scratch --db-path is a frozen vintage',
+                           'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                            'anything unregistered -- THE PHANTOM CLASS'],
               'knows_own_denominator': False,
               'state': 'PERSISTED'},
@@ -88,7 +81,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                             'other accounts',
                             'resource types not queried',
                             'anything not yet ingested into the graph',
-                            'a scratch --db-path is a frozen vintage'],
+                            'anything the SERVED projection has not picked up yet -- read the VINTAGE line'],
                'knows_own_denominator': False,
                'state': 'PERSISTED'},
  'comp-blast': {'canonical_call': 'comp-blast <fn-or-arn> [--function name] [--check-consumers]',
@@ -121,7 +114,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                              'unlisted extensions',
                              'non-filesystem stores',
                              'anything not yet ingested into the graph',
-                             'a scratch --db-path is a frozen vintage',
+                             'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                              'anything unregistered -- THE PHANTOM CLASS'],
                 'knows_own_denominator': False,
                 'state': 'PERSISTED'},
@@ -129,7 +122,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                       'cost_band': 'SECONDS',
                       'denominator_construction': 'TRAVERSED',
                       'excludes': ['anything not yet ingested into the graph',
-                                   'a scratch --db-path is a frozen vintage'],
+                                   'anything the SERVED projection has not picked up yet -- read the VINTAGE line'],
                       'knows_own_denominator': False,
                       'state': 'PERSISTED'},
  'comp-chainrun': {'canonical_call': 'comp-chainrun snapshot --label <L> ; comp-chainrun diff <A> <B>',
@@ -144,6 +137,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                                 'anything unregistered -- THE PHANTOM CLASS'],
                    'knows_own_denominator': True,
                    'state': 'PERSISTED'},
+ 'comp-claimlink': {'cost_band': 'UNKNOWN', 'excludes': []},
  'comp-clobber': {'canonical_call': 'comp-clobber [--min-writers N] [--include-partitioned] [--json]   # static '
                                     'candidate scan; comp-clobber --sweep BUCKET PREFIX = the LIVE oracle '
                                     '(interleaved etag-lineage across every key under a prefix); comp-clobber --live '
@@ -162,6 +156,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                                'resource types not queried'],
                   'knows_own_denominator': True,
                   'state': 'LIVE'},
+ 'comp-closure': {'cost_band': 'UNKNOWN', 'excludes': []},
  'comp-cluster': {'canonical_call': 'comp-cluster AdvisorIntelligence    # panel->drilldown tree + per-cluster '
                                     'sources + cross-panel coupling\n'
                                     'comp-cluster --list                 # every page + cluster counts + coverage\n'
@@ -176,10 +171,11 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                   'cost_band': 'SECONDS',
                   'denominator_construction': 'TRAVERSED',
                   'excludes': ['anything not yet ingested into the graph',
-                               'a scratch --db-path is a frozen vintage',
+                               'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                                'anything unregistered -- THE PHANTOM CLASS'],
                   'knows_own_denominator': False,
                   'state': 'PERSISTED'},
+ 'comp-cochange': {'cost_band': 'UNKNOWN', 'excludes': []},
  'comp-constants': {'canonical_call': 'comp-constants check [--lane bd|inf|cot|multifirm] ; comp-constants new',
                     'concern': 'marker/firm-CONSTANT drift vs canonical config (rep_id sweeps, FIRM_ID, AUA bounds; '
                                'pre-commit gate)',
@@ -205,7 +201,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                                       'submodule contents (gitlink only)',
                                       'anything not in the repo',
                                       'anything not yet ingested into the graph',
-                                      'a scratch --db-path is a frozen vintage',
+                                      'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                                       'anything unregistered -- THE PHANTOM CLASS',
                                       'catalogs not federated',
                                       'in-VPC only; ~3-4 min/call'],
@@ -275,7 +271,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                              'submodule contents (gitlink only)',
                              'anything not in the repo',
                              'anything not yet ingested into the graph',
-                             'a scratch --db-path is a frozen vintage',
+                             'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                              'anything unregistered -- THE PHANTOM CLASS'],
                 'knows_own_denominator': False,
                 'state': 'PERSISTED'},
@@ -285,7 +281,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                    'cost_band': 'SECONDS',
                    'denominator_construction': 'TRAVERSED',
                    'excludes': ['anything not yet ingested into the graph',
-                                'a scratch --db-path is a frozen vintage',
+                                'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                                 'anything unregistered -- THE PHANTOM CLASS'],
                    'knows_own_denominator': False,
                    'state': 'PERSISTED'},
@@ -300,6 +296,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                             'anything unregistered -- THE PHANTOM CLASS'],
                'knows_own_denominator': True,
                'state': 'PERSISTED'},
+ 'comp-directives': {'cost_band': 'UNKNOWN', 'excludes': []},
  'comp-dispatch': {'canonical_call': 'comp-dispatch <firm> [--chain <name> | --script <ID> | --gates | '
                                      '--undispatched] | comp-dispatch --list',
                    'concern': 'gold-dispatch orchestration-DAG -- which scripts run / in what order / under which '
@@ -332,7 +329,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                              'other accounts',
                              'resource types not queried',
                              'anything not yet ingested into the graph',
-                             'a scratch --db-path is a frozen vintage',
+                             'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                              'anything unregistered -- THE PHANTOM CLASS',
                              'catalogs not federated',
                              'in-VPC only; ~3-4 min/call'],
@@ -364,9 +361,10 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                               'other accounts',
                               'resource types not queried',
                               'anything not yet ingested into the graph',
-                              'a scratch --db-path is a frozen vintage'],
+                              'anything the SERVED projection has not picked up yet -- read the VINTAGE line'],
                  'knows_own_denominator': False,
                  'state': 'PERSISTED'},
+ 'comp-find': {'cost_band': 'UNKNOWN', 'excludes': []},
  'comp-firmsep-sweep': {'canonical_call': 'comp-firmsep-sweep <firm> [--write-reach]',
                         'control_established': 'NEGATIVE',
                         'cost_band': 'MINUTES',
@@ -415,7 +413,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                 'cost_band': 'SECONDS',
                 'denominator_construction': 'TRAVERSED',
                 'excludes': ['anything not yet ingested into the graph',
-                             'a scratch --db-path is a frozen vintage',
+                             'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                              'anything unregistered -- THE PHANTOM CLASS'],
                 'knows_own_denominator': False,
                 'state': 'PERSISTED'},
@@ -465,7 +463,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                            'resource types not queried',
                            'candidates not enumerated for simulation',
                            'anything not yet ingested into the graph',
-                           'a scratch --db-path is a frozen vintage',
+                           'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                            'anything unregistered -- THE PHANTOM CLASS'],
               'knows_own_denominator': False,
               'state': 'PERSISTED'},
@@ -490,7 +488,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                                 'other accounts',
                                 'resource types not queried',
                                 'anything not yet ingested into the graph',
-                                'a scratch --db-path is a frozen vintage',
+                                'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                                 'anything unregistered -- THE PHANTOM CLASS'],
                    'knows_own_denominator': False,
                    'state': 'PERSISTED'},
@@ -516,7 +514,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                'cost_band': 'SECONDS',
                'denominator_construction': 'TRAVERSED',
                'excludes': ['anything not yet ingested into the graph',
-                            'a scratch --db-path is a frozen vintage',
+                            'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                             'anything unregistered -- THE PHANTOM CLASS'],
                'knows_own_denominator': False,
                'state': 'PERSISTED'},
@@ -537,31 +535,10 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                'cost_band': 'SECONDS',
                'denominator_construction': 'TRAVERSED',
                'excludes': ['anything not yet ingested into the graph',
-                            'a scratch --db-path is a frozen vintage',
+                            'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                             'anything unregistered -- THE PHANTOM CLASS'],
                'knows_own_denominator': False,
                'state': 'PERSISTED'},
- 'comp-kuzu-full': {'canonical_call': 'comp-kuzu-full [--json] [--limit N] "<Cypher>"   # forces a FULL '
-                                      'kuzu_nessie_load unconditionally, then serves the query',
-                    'control_established': 'POSITIVE',
-                    'cost_band': 'SECONDS',
-                    'denominator_construction': 'TRAVERSED',
-                    'excludes': ['anything not yet ingested into the graph',
-                                 'a scratch --db-path is a frozen vintage',
-                                 'anything unregistered -- THE PHANTOM CLASS'],
-                    'knows_own_denominator': False,
-                    'state': 'PERSISTED'},
- 'comp-kuzu-inc': {'canonical_call': 'comp-kuzu-inc [--json] [--limit N] "<Cypher>"   # '
-                                     'incremental-OR-serve-labeled-stale (Andrew O-1 / sec-4 hard gate), then serves '
-                                     'the query',
-                   'control_established': 'POSITIVE',
-                   'cost_band': 'SECONDS',
-                   'denominator_construction': 'TRAVERSED',
-                   'excludes': ['anything not yet ingested into the graph',
-                                'a scratch --db-path is a frozen vintage',
-                                'anything unregistered -- THE PHANTOM CLASS'],
-                   'knows_own_denominator': False,
-                   'state': 'PERSISTED'},
  'comp-lambdamap': {'canonical_call': 'comp-lambdamap <args>',
                     'concern': 'DEPLOY-SHA parity -- source-map record == live CodeSha256 == S3-artifact sha '
                                '(3-leg); lambda-source-map drift',
@@ -583,7 +560,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                        'cost_band': 'SECONDS',
                        'denominator_construction': 'TRAVERSED',
                        'excludes': ['anything not yet ingested into the graph',
-                                    'a scratch --db-path is a frozen vintage',
+                                    'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                                     'anything unregistered -- THE PHANTOM CLASS'],
                        'knows_own_denominator': False,
                        'state': 'PERSISTED'},
@@ -595,11 +572,13 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                                      'submodule contents (gitlink only)',
                                      'anything not in the repo',
                                      'anything not yet ingested into the graph',
-                                     'a scratch --db-path is a frozen vintage',
+                                     'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                                      'catalogs not federated',
                                      'in-VPC only; ~3-4 min/call'],
                         'knows_own_denominator': False,
                         'state': 'PERSISTED'},
+ 'comp-lease': {'cost_band': 'UNKNOWN', 'excludes': []},
+ 'comp-ledger-agreement': {'cost_band': 'UNKNOWN', 'excludes': []},
  'comp-legacywriter': {'cost_band': 'UNKNOWN', 'excludes': []},
  'comp-manifest-check': {'control_established': 'POSITIVE',
                          'cost_band': 'MINUTES',
@@ -608,7 +587,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                                       'submodule contents (gitlink only)',
                                       'anything not in the repo',
                                       'anything not yet ingested into the graph',
-                                      'a scratch --db-path is a frozen vintage',
+                                      'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                                       'anything unregistered -- THE PHANTOM CLASS',
                                       'catalogs not federated',
                                       'in-VPC only; ~3-4 min/call',
@@ -642,7 +621,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                  'cost_band': 'SECONDS',
                  'denominator_construction': 'TRAVERSED',
                  'excludes': ['anything not yet ingested into the graph',
-                              'a scratch --db-path is a frozen vintage',
+                              'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                               'anything unregistered -- THE PHANTOM CLASS'],
                  'knows_own_denominator': False,
                  'state': 'PERSISTED'},
@@ -653,7 +632,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                                  'submodule contents (gitlink only)',
                                  'anything not in the repo',
                                  'anything not yet ingested into the graph',
-                                 'a scratch --db-path is a frozen vintage'],
+                                 'anything the SERVED projection has not picked up yet -- read the VINTAGE line'],
                     'knows_own_denominator': False,
                     'state': 'PERSISTED'},
  'comp-perf': {'control_established': 'POSITIVE',
@@ -690,7 +669,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                                   'other accounts',
                                   'resource types not queried',
                                   'anything not yet ingested into the graph',
-                                  'a scratch --db-path is a frozen vintage',
+                                  'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                                   'anything unregistered -- THE PHANTOM CLASS',
                                   'non-Python lanes',
                                   'runtime/dynamic construction'],
@@ -720,7 +699,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                              'unlisted extensions',
                              'non-filesystem stores',
                              'anything not yet ingested into the graph',
-                             'a scratch --db-path is a frozen vintage',
+                             'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                              'anything unregistered -- THE PHANTOM CLASS'],
                 'knows_own_denominator': False,
                 'state': 'PERSISTED'},
@@ -736,12 +715,13 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                               'other accounts',
                               'resource types not queried',
                               'anything not yet ingested into the graph',
-                              'a scratch --db-path is a frozen vintage',
+                              'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                               'anything unregistered -- THE PHANTOM CLASS',
                               'non-Python lanes',
                               'runtime/dynamic construction'],
                  'knows_own_denominator': False,
                  'state': 'PERSISTED'},
+ 'comp-read': {'cost_band': 'UNKNOWN', 'excludes': []},
  'comp-registry': {'canonical_call': 'comp-registry sync ROW=N | --project CODE | --all',
                    'control_established': 'POSITIVE',
                    'cost_band': 'SUB_SECOND',
@@ -762,7 +742,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                          'cost_band': 'SECONDS',
                          'denominator_construction': 'TRAVERSED',
                          'excludes': ['anything not yet ingested into the graph',
-                                      'a scratch --db-path is a frozen vintage',
+                                      'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                                       'anything unregistered -- THE PHANTOM CLASS'],
                          'knows_own_denominator': False,
                          'state': 'PERSISTED'},
@@ -775,6 +755,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                  'excludes': ['anything unregistered -- THE PHANTOM CLASS'],
                  'knows_own_denominator': True,
                  'state': 'PERSISTED'},
+ 'comp-schedule': {'cost_band': 'UNKNOWN', 'excludes': []},
  'comp-secrets': {'canonical_call': 'comp-secrets list [--firm bd|cot|inf|mdpf|opal|shared] [--json] ; comp-secrets '
                                     'get <name|arn> [--reveal] ; comp-secrets consumers <name|arn> ; comp-secrets '
                                     'rotation',
@@ -802,7 +783,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                   'cost_band': 'MINUTES',
                   'denominator_construction': 'TRAVERSED',
                   'excludes': ['anything not yet ingested into the graph',
-                               'a scratch --db-path is a frozen vintage',
+                               'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                                'anything unregistered -- THE PHANTOM CLASS',
                                'catalogs not federated',
                                'in-VPC only; ~3-4 min/call'],
@@ -823,23 +804,11 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                                       'submodule contents (gitlink only)',
                                       'anything not in the repo',
                                       'anything not yet ingested into the graph',
-                                      'a scratch --db-path is a frozen vintage'],
+                                      'anything the SERVED projection has not picked up yet -- read the VINTAGE '
+                                      'line'],
                          'knows_own_denominator': False,
                          'state': 'PERSISTED'},
- 'comp-surface-check': {'control_established': 'POSITIVE',
-                        'cost_band': 'SECONDS',
-                        'denominator_construction': 'TRAVERSED',
-                        'excludes': ['gitignored paths',
-                                     'submodule contents (gitlink only)',
-                                     'anything not in the repo',
-                                     'other regions',
-                                     'other accounts',
-                                     'resource types not queried',
-                                     'anything not yet ingested into the graph',
-                                     'a scratch --db-path is a frozen vintage',
-                                     'anything unregistered -- THE PHANTOM CLASS'],
-                        'knows_own_denominator': False,
-                        'state': 'PERSISTED'},
+ 'comp-surprise': {'cost_band': 'UNKNOWN', 'excludes': []},
  'comp-symbols': {'canonical_call': 'comp-symbols <file> [--grep <pattern>] [--kind func|class|const|import] '
                                     '[--json]',
                   'concern': 'file-symbol INVENTORY -- what functions/classes/constants/imports a source file '
@@ -871,7 +840,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                               'other accounts',
                               'resource types not queried',
                               'anything not yet ingested into the graph',
-                              'a scratch --db-path is a frozen vintage',
+                              'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                               'anything unregistered -- THE PHANTOM CLASS'],
                  'knows_own_denominator': False,
                  'state': 'PERSISTED'},
@@ -890,7 +859,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                                    'submodule contents (gitlink only)',
                                    'anything not in the repo',
                                    'anything not yet ingested into the graph',
-                                   'a scratch --db-path is a frozen vintage',
+                                   'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                                    'anything unregistered -- THE PHANTOM CLASS'],
                       'knows_own_denominator': False,
                       'state': 'PERSISTED'},
@@ -914,7 +883,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                                  'unlisted extensions',
                                  'non-filesystem stores',
                                  'anything not yet ingested into the graph',
-                                 'a scratch --db-path is a frozen vintage',
+                                 'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                                  'anything unregistered -- THE PHANTOM CLASS',
                                  'non-Python lanes',
                                  'runtime/dynamic construction'],
@@ -997,7 +966,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                 'denominator_construction': 'TRAVERSED',
                 'excludes': ['candidates not enumerated for simulation',
                              'anything not yet ingested into the graph',
-                             'a scratch --db-path is a frozen vintage',
+                             'anything the SERVED projection has not picked up yet -- read the VINTAGE line',
                              'anything unregistered -- THE PHANTOM CLASS',
                              'non-Python lanes',
                              'runtime/dynamic construction',
@@ -1058,19 +1027,17 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                     'trace: comp-build)'],
               'rule': 'Never rebuild the full graph to answer a traversal a query can answer.'},
  'entries': [{'anti_pattern': 'comp-aws derive (8-min full rebuild) to list nodes',
-              'canonical_call': 'comp-kuzu "MATCH (n:CloudNode) WHERE n.node_type=\'LAMBDA\' RETURN n.id, n.name '
-                                'LIMIT 50"\n',
+              'canonical_call': 'comp-kuzu "MATCH (n:CloudNode) WHERE n.node_type=\'LAMBDA\' RETURN n.node_id, '
+                                'n.name LIMIT 50"\n',
               'cost': '~ms',
-              'freshness': 'kuzu DB <- latest Nessie/Iceberg commit (nightly + intraday); every call prints a '
-                           'provenance header (built-when + source vintage + counts), WARNs past 26h, reports '
-                           'BEHIND-Nessie-HEAD-by-N for nessie DBs, UNKNOWN VINTAGE if unstamped (TO-F1 contract '
-                           'above); DEFAULT surface (no --db-path) = canonical Nessie kuzu_nessie_db; auto-refreshes '
-                           'on Nessie-HEAD-advance ENGINE-INTERNALLY (Rule 20 QUERY-default posture UNCHANGED -- '
-                           'agents never run rebuilds to answer traversals; engine rebuilds exactly when pin trails '
-                           'HEAD); explicit --db-path for scratch DBs (kuzu_db tarball/stitch/ac7) (TO-F2); HEAD '
-                           'oracle = writer-stamped s3://warehouse/_branch_head.main.json marker (mtime-scan '
-                           'RETIRED, CVO dc06744c6); header prints current/BEHIND+writer+ts/HEAD-ORACLE-UNKNOWN per '
-                           'marker (TO-F6)',
+              'freshness': 'the SERVED projection; every call ends with a VINTAGE line on stderr stating in plain '
+                           'words how old the answer is, plus [vintage= manifest= prefix=] for an auditor '
+                           '(kuzu_cli.py:46-61). Nothing is inferred from client time: no age stated by the service '
+                           'says so verbatim, and an unanswered call names the ABSENCE rather than a default '
+                           'vintage. There is NO agent-runnable refresh and no database path -- the served '
+                           "projection is advanced on the estate's own schedule. Rule 20's QUERY-default posture is "
+                           'unchanged and now unconditional: an agent reads, and reads the vintage. See '
+                           'cloud.read.served_vintage.',
               'id': 'cloud.lookup.nodes_by_type',
               'layer': 'cloud',
               'mode': 'query',
@@ -1081,13 +1048,15 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
               'use_case': 'List/inspect cloud resources of a type (all Lambdas, all S3 buckets, all roles).'},
              {'anti_pattern': 'manual multi-hop tracing or a full re-derive',
               'canonical_call': 'comp-kuzu "MATCH (a:CloudNode {name:$x})-[*1..3]->(b:CloudNode) RETURN DISTINCT '
-                                'b.node_type, b.id"\n',
+                                'b.node_type, b.node_id  // TEMPLATE: no CLI param binding -- substitute $x with a '
+                                'literal name before running"\n',
               'cost': '~ms',
-              'freshness': 'kuzu DB (provenance header on every call -- see contract above); DEFAULT surface = '
-                           'canonical Nessie kuzu_nessie_db; auto-refreshes ENGINE-INTERNALLY on '
-                           'Nessie-HEAD-advance; explicit --db-path for scratch DBs (TO-F2); HEAD oracle = '
-                           'writer-stamped _branch_head.main.json marker (mtime-scan RETIRED, CVO dc06744c6); header '
-                           'prints current/BEHIND+writer+ts/HEAD-ORACLE-UNKNOWN per marker (TO-F6)',
+              'freshness': 'the SERVED projection; every call ends with a VINTAGE line on stderr stating in plain '
+                           'words how old the answer is, plus [vintage= manifest= prefix=] for an auditor '
+                           '(kuzu_cli.py:46-61). Nothing is inferred from client time: no age stated by the service '
+                           'says so verbatim, and an unanswered call names the ABSENCE rather than a default '
+                           'vintage. There is NO agent-runnable refresh and no database path -- the served '
+                           "projection is advanced on the estate's own schedule. See cloud.read.served_vintage.",
               'id': 'cloud.reachability.transitive',
               'layer': 'cloud',
               'mode': 'query',
@@ -1096,14 +1065,16 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
               'tool': 'comp-kuzu',
               'use_case': 'What can X reach transitively (role->resources, lambda->KMS via role/policy)?'},
              {'anti_pattern': 'eyeballing terraform / a full derive',
-              'canonical_call': 'comp-kuzu "MATCH (n:CloudNode {id:$arn})<-[e:CloudEdge*1..3]-(dep) RETURN dep.id, '
-                                'dep.node_type, e"\n',
+              'canonical_call': 'comp-kuzu "MATCH (n:CloudNode {node_id:$arn})<-[e:CloudEdge*1..3]-(dep) RETURN '
+                                'dep.node_id, dep.node_type, e  // TEMPLATE: no CLI param binding -- substitute $arn '
+                                'with a literal ARN before running"\n',
               'cost': '~ms',
-              'freshness': 'kuzu DB (provenance header on every call -- see contract above); DEFAULT surface = '
-                           'canonical Nessie kuzu_nessie_db; auto-refreshes ENGINE-INTERNALLY on '
-                           'Nessie-HEAD-advance; explicit --db-path for scratch DBs (TO-F2); HEAD oracle = '
-                           'writer-stamped _branch_head.main.json marker (mtime-scan RETIRED, CVO dc06744c6); header '
-                           'prints current/BEHIND+writer+ts/HEAD-ORACLE-UNKNOWN per marker (TO-F6)',
+              'freshness': 'the SERVED projection; every call ends with a VINTAGE line on stderr stating in plain '
+                           'words how old the answer is, plus [vintage= manifest= prefix=] for an auditor '
+                           '(kuzu_cli.py:46-61). Nothing is inferred from client time: no age stated by the service '
+                           'says so verbatim, and an unanswered call names the ABSENCE rather than a default '
+                           'vintage. There is NO agent-runnable refresh and no database path -- the served '
+                           "projection is advanced on the estate's own schedule. See cloud.read.served_vintage.",
               'id': 'cloud.blast.what_breaks',
               'layer': 'cloud',
               'mode': 'query',
@@ -1158,56 +1129,129 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
               'tool': 'comp-aws',
               'use_case': 'Rebuild the cloud graph from live AWS (the WRITE-PATH — scheduled, not agent-default).',
               'write_path': True},
-             {'anti_pattern': 'running comp-kuzu-full mid-task to answer a traversal (a 482s full rebuild to serve a '
-                              'read) -> bare comp-kuzu (auto) or comp-kuzu-inc',
-              'canonical_call': 'comp-kuzu-full [--json] [--limit N] "<Cypher>"   # forces a FULL kuzu_nessie_load '
-                                'unconditionally, then serves the query',
-              'cost': '~482s (measured P0 @b0c94d9ff -- absorbs the daily whole-table delta once)',
-              'freshness': 'post-run = current Nessie HEAD (unconditional full load); the MSTR-startup warm-once '
-                           'mode',
+             {'anti_pattern': 'hunting for a refresh flag when an answer looks old, or reaching for a local copy to '
+                              'get a fresher one -> read the VINTAGE line. If the stated vintage is too old for the '
+                              'question, that is an estate-schedule matter to raise, not a call to make.',
+              'canonical_call': 'comp-kuzu "<Cypher>" [--json] [--limit N]   # the answer on stdout, then a VINTAGE '
+                                'line on stderr saying in plain words how old it is',
+              'cost': '~ms -- one call to the projection service; no store is opened, built or downloaded',
+              'freshness': 'STATED BY THE SERVICE, PER CALL. Every read ends with `VINTAGE: <plain-words age>  '
+                           '[vintage=<vintage> manifest=<sha12> prefix=<artifact prefix>]` on stderr '
+                           '(infra/aws/globgrph/kuzu_cli.py:46-61). The sentence is what a reader acts on; the '
+                           'triple is what an auditor re-derives from. NOTHING IS COMPUTED FROM CLIENT TIME: when '
+                           'the service states no age the line says so verbatim (`AGE NOT STATED BY THE SERVICE -- '
+                           'no age was inferred`), and when the service does not answer the line names the ABSENCE '
+                           '(`VINTAGE: unavailable -- the projection service did not answer; no age was inferred and '
+                           'no local copy was read`) rather than a default vintage.',
+              'id': 'cloud.read.served_vintage',
+              'layer': 'cloud',
+              'mode': 'query',
+              'notes': 'NFRA_CLDGRPH CG-s-17 (round 5, 2026-09-09) -- the SUCCESSOR entry named by '
+                       'cloud.refresh.full and cloud.refresh.incremental. Deliberately a READ: FWD-2 (the served '
+                       "projection refreshes on the estate's own schedule) and FWD-3 (every answer carries its own "
+                       'age) are what make a refresh route unnecessary, and re-creating one would re-create the '
+                       'retired rebuild path. The client takes NO database path and NO Cypher parameter dict -- '
+                       'projection_client.query(statement, timeout_s) -> {rows, vintage, age_line, manifest_sha256, '
+                       'artifact_prefix} (:194-201). A call form documenting either documents a capability that does '
+                       'not exist.',
+              'rebuild_trigger': 'none. There is no refresh an agent runs. The served projection is advanced by the '
+                                 "estate's own producers on their own schedule; an agent reads, and reads the "
+                                 'vintage.',
+              'status': 'canonical',
+              'tool': 'comp-kuzu',
+              'use_case': 'How old is this answer / is the graph behind / should I refresh before I query / bring '
+                          'the graph up to date -- READ the served projection and read the VINTAGE line it prints. '
+                          "There is nothing an agent refreshes: the served graph is advanced on the estate's own "
+                          'schedule.',
+              'write_path': False},
+             {'anti_pattern': 'looking for a rebuild when an answer seems old -> read cloud.read.served_vintage and '
+                              'read the VINTAGE line it prints.',
+              'canonical_call': 'RETIRED 2026-09-09 -- there is no such call. The client REFUSES the refresh-mode '
+                                'flag this entry named; exercised at this cut, kuzu_cli.py answers `unrecognized '
+                                'arguments`. Successor: cloud.read.served_vintage.',
+              'cost': 'n/a -- retired; nothing to cost',
+              'freshness': 'n/a -- retired. Freshness is now STATED BY THE SERVICE on every read: '
+                           'cloud.read.served_vintage.',
               'id': 'cloud.refresh.full',
               'layer': 'cloud',
               'mode': 'rebuild',
-              'notes': 'NFRA_KUZUSPLIT P1 (code @5de839ff0, 0.8.0_AE_CloudComp~D; registration COO-SoD-landed -- '
-                       'grantee cannot self-register). Refresh-mode VARIANT of the comp-kuzu graph-query surface '
-                       '(SAME kuzu_nessie_db store, NOT a new surface). Three-tool model (LD-0307): comp-aws derive '
-                       '= cloud producer (nightly, never MSTR-startup) / comp-kuzu-full = local full (MSTR startup '
-                       "once) / comp-kuzu-inc = local incremental (workers, pre-query). comp-which routing: 'full "
-                       "rebuild / ground-truth reset / reconcile the local projection / MSTR startup graph' -> "
-                       'comp-kuzu-full.',
-              'rebuild_trigger': 'MSTR session startup (once), or an explicit ground-truth reset when the local '
-                                 'projection is untrusted',
-              'status': 'canonical',
-              'tool': 'comp-kuzu-full',
-              'use_case': 'Full rebuild / ground-truth reset / reconcile the LOCAL kuzu projection from Nessie -- '
-                          'the once-per-session MSTR-startup warm that absorbs the whole-table daily delta and warms '
-                          'the shared canonical for peers.',
+              'notes': 'HISTORY (past tense, kept as the record): landed by NFRA_KUZUSPLIT P1 (code @5de839ff0, '
+                       '0.8.0_AE_CloudComp~D; registration COO-SoD-landed -- the grantee could not self-register), '
+                       'as the full-refresh mode of a LOCAL store the comp-kuzu surface then opened directly. It sat '
+                       'inside a three-tool model (LD-0307) whose other two members outlived it: the cloud producer '
+                       'still runs on its own schedule, and the read is now the whole agent-facing surface. Its '
+                       'comp-which vocabulary (full rebuild / ground-truth reset / reconcile the local projection / '
+                       'MSTR startup graph) was NOT deleted -- it was REPOINTED to cloud.read.served_vintage at this '
+                       'retirement, so an agent who still types it lands on the read rather than falling through to '
+                       'nothing.',
+              'rebuild_trigger': 'none -- retired. There is no agent-runnable refresh; the served projection is '
+                                 "advanced on the estate's own schedule.",
+              'retired': '2026-09-09, NFRA_CLDGRPH CG-s-17 (round 5), by 0.9.0_WK_NFRA_CLDGRPH~2 under '
+                         "2.0.0_SA_COO~A's issuance. CONSUMERS FIRST, per the comp-surface-check precedent recorded "
+                         "in retired_aliases: above -- (1) comp-which's two curated refresh routes repointed to "
+                         'cloud.read.served_vintage, (2) the registry carriers (comp-tools.yaml, '
+                         'comp-output-contracts.yaml, the TOOL_CLASSIFICATION generator and the compiled '
+                         "tool_index), (3) the tools_index comp-kuzu row's subcommands + entries, (4) THEN these two "
+                         'entries. The EXECUTABLE plane went first, at CG-s-8 @173a1d8c90; this is the INSTRUCTION '
+                         'plane behind it.',
+              'status': 'retired',
+              'superseded_by': 'cloud.read.served_vintage',
+              'tool': 'comp-kuzu',
+              'use_case': 'RETIRED RECORD -- not a route. This entry named a full rebuild of the LOCAL kuzu '
+                          'projection; that projection and the flag that drove it no longer exist. Read '
+                          'cloud.read.served_vintage instead.',
+              'why': 'The entry routed agents to a call that does not exist. THE LITERAL HISTORICAL CALL FORM IS NOT '
+                     "REPEATED HERE: it is recorded ONE GRAIN UP, in this file's retired_aliases entry for "
+                     'comp-kuzu-full, which is the record the convention reserves for a retired name and its flag. '
+                     'What it did: a forced full load of a LOCAL projection, ~482s (measured P0 @b0c94d9ff), the '
+                     'MSTR-startup warm-once. The local projection is retired and the thin client refuses the flag, '
+                     'so the entry could only send a reader to a refusal or, worse, to re-creating the store. A '
+                     'manifest that retires only the executable passes every cell and leaves a live instruction to '
+                     're-create the path (the CTO round-4 analysis). KEPT as a record, not deleted.',
               'write_path': False},
-             {'anti_pattern': 'a mid-task FULL rebuild (Andrew O-1 forbids incremental-or-full; the fork is '
-                              'incremental-OR-labeled-stale) -> comp-kuzu-full is MSTR-startup-only',
-              'canonical_call': 'comp-kuzu-inc [--json] [--limit N] "<Cypher>"   # '
-                                'incremental-OR-serve-labeled-stale (Andrew O-1 / sec-4 hard gate), then serves the '
-                                'query',
-              'cost': '~5.2s (measured P0 @b0c94d9ff -- incremental delta) / instant when serving labeled-stale',
-              'freshness': 'post-run = current HEAD when the delta is small; ELSE a LABELED-STALE prior-vintage '
-                           'projection with an in-band SERVED-LABELED-STALE header (COND-1) -- honestly labeled, '
-                           'never a silent stale read',
+             {'anti_pattern': 'looking for a refresh when an answer seems old -> read cloud.read.served_vintage and '
+                              'read the VINTAGE line it prints.',
+              'canonical_call': 'RETIRED 2026-09-09 -- there is no such call. The client REFUSES the refresh-mode '
+                                'flag this entry named; exercised at this cut, kuzu_cli.py answers `unrecognized '
+                                'arguments`. Successor: cloud.read.served_vintage.',
+              'cost': 'n/a -- retired; nothing to cost',
+              'freshness': 'n/a -- retired. Freshness is now STATED BY THE SERVICE on every read: '
+                           'cloud.read.served_vintage.',
               'id': 'cloud.refresh.incremental',
               'layer': 'cloud',
               'mode': 'rebuild',
-              'notes': 'NFRA_KUZUSPLIT P1 (code @5de839ff0, 0.8.0_AE_CloudComp~D; registration COO-SoD-landed). '
-                       'Refresh-mode VARIANT of the comp-kuzu graph-query surface (SAME store). O-1 '
-                       '(Andrew-ratified): serves incremental OR labeled-stale, NEVER incremental-or-full. In-band '
-                       'provenance header (COND-1) + persistent .fallback.jsonl sink (COND-2) + COMPSIMILAR overlay '
-                       "hook both paths (COND-3). comp-which routing: 'refresh the graph / update the graph / my "
-                       "graph is behind / default worker graph refresh' -> comp-kuzu-inc.",
-              'rebuild_trigger': 'any worker, pre-query, when the local projection may be behind -- the default '
-                                 'refresh',
-              'status': 'canonical',
-              'tool': 'comp-kuzu-inc',
-              'use_case': 'Refresh / update the graph / my graph is behind -- the DEFAULT every non-MSTR worker runs '
-                          'pre-query: serve the incremental delta, OR serve a LABELED-STALE prior-vintage '
-                          'projection, but NEVER a mid-task full rebuild.',
+              'notes': 'HISTORY (past tense, kept as the record): landed by NFRA_KUZUSPLIT P1 (code @5de839ff0, '
+                       '0.8.0_AE_CloudComp~D; registration COO-SoD-landed), the worker-default refresh of a LOCAL '
+                       "store, under Andrew's O-1 ruling that it serve incremental OR a labeled-stale prior vintage "
+                       "and NEVER a mid-task full rebuild. O-1's substance -- an answer is never silently stale -- "
+                       "survives the retirement in the served read's own VINTAGE line. Its comp-which vocabulary "
+                       '(refresh the graph / update the graph / my graph is behind / default worker graph refresh) '
+                       'was NOT deleted -- it was REPOINTED to cloud.read.served_vintage at this retirement, so an '
+                       'agent who still types it lands on the read.',
+              'rebuild_trigger': 'none -- retired. There is no agent-runnable refresh; the served projection is '
+                                 "advanced on the estate's own schedule.",
+              'retired': '2026-09-09, NFRA_CLDGRPH CG-s-17 (round 5), by 0.9.0_WK_NFRA_CLDGRPH~2 under '
+                         "2.0.0_SA_COO~A's issuance. CONSUMERS FIRST, per the comp-surface-check precedent recorded "
+                         "in retired_aliases: above -- (1) comp-which's two curated refresh routes repointed to "
+                         'cloud.read.served_vintage, (2) the registry carriers (comp-tools.yaml, '
+                         'comp-output-contracts.yaml, the TOOL_CLASSIFICATION generator and the compiled '
+                         "tool_index), (3) the tools_index comp-kuzu row's subcommands + entries, (4) THEN these two "
+                         'entries. The EXECUTABLE plane went first, at CG-s-8 @173a1d8c90; this is the INSTRUCTION '
+                         'plane behind it.',
+              'status': 'retired',
+              'superseded_by': 'cloud.read.served_vintage',
+              'tool': 'comp-kuzu',
+              'use_case': 'RETIRED RECORD -- not a route. This entry named an incremental refresh of the LOCAL kuzu '
+                          'projection; that projection and the flag that drove it no longer exist. Read '
+                          'cloud.read.served_vintage instead.',
+              'why': 'This was the entry a WORKER was told to run pre-query, so it was the most-travelled route '
+                     'back. THE LITERAL HISTORICAL CALL FORM IS NOT REPEATED HERE: it is recorded ONE GRAIN UP, in '
+                     "this file's retired_aliases entry for comp-kuzu-inc. What it did: "
+                     'incremental-OR-serve-labeled-stale (Andrew O-1 / sec-4 hard gate), ~5.2s (measured P0 '
+                     '@b0c94d9ff). The local projection is retired and the thin client refuses the flag. The '
+                     'GUARANTEE the entry carried (never a silent stale read) is NOT lost: it moved into the served '
+                     'read itself, which states its own vintage in plain words on every call and names the ABSENCE '
+                     'when the service does not answer. KEPT as a record, not deleted.',
               'write_path': False},
              {'anti_pattern': 'using it for NEAREST-BY-PURPOSE similarity (that is comp-similar Phase-2, '
                               'KUZUSPLIT-P1 + table gated) -> describe is exact/lexical find of ONE resource. '
@@ -1319,8 +1363,138 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
               'status': 'canonical',
               'tool': 'comp-platinum',
               'use_case': 'Full-stack trace: portal component -> endpoint -> Lambda/S3 -> gold script, PER FIRM.'},
+             {'anti_pattern': 'reading 0 matches as CONFIRMED ABSENCE. A sovereign-HELD path is excluded (it prints '
+                              '-- read it), and python `re` treats a backslash before | ( ) as a LITERAL, so a '
+                              'BRE-shaped pattern honestly matches nothing. Both produce a real zero over the wrong '
+                              'universe.',
+              'canonical_call': 'comp-grep <pattern> [pathspec ...]   # -i ; -l/--files ; --max N',
+              'cost': '~1-5s (repo-scoped; scales with pathspec)',
+              'freshness': 'live working tree',
+              'id': 'search.rails.grep',
+              'layer': 'source',
+              'mode': 'rebuild',
+              'notes': 'ROUTABLE 2026-08-06 (Andrew-approved). Was routable:false as a search-primitive while '
+                       'CLAUDE.md Rule 21 named it as THE sanctioned fallback and Gate-1 hard-denies raw grep ON THE '
+                       'PREMISE IT EXISTS -- the law pointed agents at a tool the router would not name. comp-find '
+                       'is the graded successor surface; comp-grep stays live until CTO routes the Rule-21 repoint.',
+              'status': 'canonical',
+              'tool': 'comp-grep',
+              'use_case': "Grep the repo when Rule 21's Gate-1 has denied a raw Bash estate grep -- the sanctioned "
+                          'on-rails fallback. Repo-scoped, .gitignore-aware, audited, and it never dead-ends.'},
+             {'anti_pattern': 'same as comp-grep: a held-path exclusion or an over-narrow pathspec makes an honest '
+                              'zero over the wrong universe -- read the printed scope before concluding a file does '
+                              'not exist.',
+              'canonical_call': 'comp-glob "<glob>" [pathspec ...]   # no pattern = list everything under the '
+                                'pathspec',
+              'cost': '~1-5s',
+              'freshness': 'live working tree',
+              'id': 'search.rails.glob',
+              'layer': 'source',
+              'mode': 'rebuild',
+              'notes': 'ROUTABLE 2026-08-06 (Andrew-approved), same reasoning as comp-grep: named in Rule 21 as the '
+                       'sanctioned fallback while unroutable.',
+              'status': 'canonical',
+              'tool': 'comp-glob',
+              'use_case': 'Find FILES by name/glob on the rails -- the filename half of the Gate-1 fallback pair.'},
+             {'anti_pattern': 'writing TO_ID= into .comp-graph/.agent_context instead -- that file is ONE '
+                              'repo-global file, last-writer-wins across every concurrent agent, so it silently '
+                              'mis-attributes under parallelism. comp-to writes a race-free per-session file. ALSO: '
+                              'it takes a TO id and does NOT parse flags -- `comp-to --help` SETS your TO_ID to the '
+                              "string '--help' (measured 2026-08-06, on me).",
+              'canonical_call': 'comp-to <TO_filename_without_.md>   # e.g. comp-to ADVI_OFFICE.W1',
+              'cost': 'instant',
+              'freshness': 'per-session file, written at call time',
+              'id': 'session.context.set_to',
+              'layer': 'session',
+              'mode': 'rebuild',
+              'notes': 'ROUTABLE 2026-08-06 (Andrew-approved). org/XXX.md Step 1b-E instructs every agent to run it '
+                       'at startup, yet the router would not name it.',
+              'status': 'canonical',
+              'tool': 'comp-to',
+              'use_case': 'Tell the comp-tool auto-logger which task order you are working under, so tool runs '
+                          'attribute correctly.'},
+             {'anti_pattern': 'hand-copying its counts into prose. They are GATE-MAINTAINED and move whenever a tool '
+                              'lands or retires -- a frozen digit in a doc is the stale-record class CLAUDE.md names '
+                              'by name. Quote the gate, not a memory of it.',
+              'canonical_call': 'comp-manifest-check completeness   # also: check | routable | existence | '
+                                'retired-alias | selfcheck',
+              'cost': '~5-20s (sweeps the whole tool universe)',
+              'freshness': 'live registries + live disk',
+              'id': 'registry.gate.completeness',
+              'layer': 'meta',
+              'mode': 'rebuild',
+              'notes': 'ROUTABLE 2026-08-06 (Andrew-approved). It is the enforcement gate for '
+                       'COMP_TOOL_REGISTRATION_CANON.md, and an agent registering a tool is explicitly told to run '
+                       'it -- while the router could not name it. Registration canon: '
+                       'org/modules/graph/COMP_TOOL_REGISTRATION_CANON.md',
+              'status': 'canonical',
+              'tool': 'comp-manifest-check',
+              'use_case': 'Is my new comp-tool actually registered -- and is the tool registry still consistent with '
+                          'the tools on disk? The gate that answers both, and the one that BLOCKS a commit when it '
+                          'is not.'},
+             {'anti_pattern': "reading comp-read's output INSTEAD of the file -- it is an INDEX INTO the file, never "
+                              'a substitute, and treating it as one rebuilds the satisficing failure it exists to '
+                              "fix. Also: reading an empty SALIENT panel as 'the file does not say' -- salience is "
+                              'lexical, so check the UNREAD LEDGER before concluding absence.',
+              'canonical_call': 'comp-read <file> --for "<your question>"   # --at <line> ; --top N ; --all-quals',
+              'cost': '2-7ms typical; ~105ms on a 3.7k-line python module (CPython ast.parse is the floor)',
+              'freshness': 'live working-tree read; NO cache, so no vintage can be stale',
+              'id': 'read.keycontext.file',
+              'layer': 'source',
+              'mode': 'rebuild',
+              'notes': 'NFRA_SCRIPTGEN Part B. Built against FOUR measured failure mechanisms (wrong authority / '
+                       'adjacent question / qualifier blindness / satisficing), all specimens from one CVO~B session '
+                       '2026-08-05. Deterministic, no SLM (Andrew-direct 2026-08-06).',
+              'status': 'canonical',
+              'tool': 'comp-read',
+              'use_case': 'Read a file for a question and see WHICH PART ANSWERS IT -- plus the qualifier, exception '
+                          'or correction sitting next to the claim, and an explicit list of what you did NOT read. '
+                          'For when you already found the right file and need the crucial lines, not the whole '
+                          'file.'},
+             {'anti_pattern': 'reading a 0-hit run as CONFIRMED ABSENCE -- it is a MEASURED zero over the scanned '
+                              'denominator the tool prints, and a held-path exclusion or a BRE-shaped pattern (a '
+                              'backslash before | ( ) is a LITERAL in python re) both produce an honest zero over '
+                              'the wrong universe. Also: treating the band order as a verdict -- the bands order the '
+                              'DIVE, they do not decide which file is right.',
+              'canonical_call': "comp-find <pattern> [pathspec ...]   # or: comp-find --name '<glob>' ; --band DEF ; "
+                                '--page N ; --all',
+              'cost': '~1-5s (repo-scoped, .gitignore-aware; scales with pathspec)',
+              'freshness': 'live working tree -- no cache, no snapshot',
+              'id': 'search.graded.find',
+              'layer': 'source',
+              'mode': 'rebuild',
+              'notes': 'NFRA_SCRIPTGEN Part B (Andrew-direct 2026-08-05: replace comp-grep/glob with comp-find, '
+                       'structured + paginated, no SLM rerank). Unifies the two primitives behind one verb and adds '
+                       'grading + pagination + per-page systems-context. comp-grep/comp-glob remain LIVE beneath it '
+                       '-- Rule 21 still names them as the sanctioned fallback and repointing that law surface is '
+                       "CTO's to route, so this is an ADDITION today, not yet a replacement.",
+              'status': 'canonical',
+              'tool': 'comp-find',
+              'use_case': 'Search the repo / grep the codebase for a symbol, string, or filename -- and know WHICH '
+                          'HITS ARE WORTH OPENING: where is this defined vs merely mentioned, with definitions and '
+                          'filename matches sorted above test and doc noise instead of a flat list you triage by '
+                          'eye.'},
+             {'anti_pattern': 'reading TRACE as a failure (the reader is NOT misled -- it is a traceability note), '
+                              'or reading 0 declarations as a clean bill (nothing DECLARED a correction, so nothing '
+                              'was checked).',
+              'canonical_call': 'comp-claimlink   # or: comp-claimlink --self-test ; comp-claimlink <root>',
+              'cost': '~1-3s (markdown scan + git log per declaration)',
+              'entries': ['record.correction.propagation'],
+              'freshness': 'live working tree',
+              'id': 'record.correction.propagation',
+              'layer': 'records',
+              'mode': 'read',
+              'notes': "Built 2026-08-06 (3.0.0_SA_CVO, Andrew-direct 'fix the propagation problem') after the same "
+                       'defect landed TWICE in one session: a finding written into a NEW artifact while the OLD '
+                       'document asserting the now-wrong claim went on asserting it. NOT the retrieval class -- the '
+                       'measurement was right both times; the PROPAGATION failed. Reports, never gates.',
+              'tool': 'comp-claimlink',
+              'use_case': 'Did my correction actually reach the document it corrects? Is a document still asserting '
+                          'something I already disproved?'},
              {'anti_pattern': 'manual s3_layout reading',
-              'canonical_call': 'comp-pipescript <io|dag|chain|feeds|consumers|deployed|overlap> <script>',
+              'canonical_call': 'comp-pipescript <io|dag|chain|feeds|consumers|overlap> <script> --pipeline <tree>   '
+                                '# --pipeline REQUIRED for these six (flagless = rc=2 REFUSED, NO GUESS). `deployed` '
+                                'is EXEMPT -- see pipeline.pipescript.deployed_match.',
               'cost': '~1-2s',
               'freshness': 'live repo parse',
               'id': 'trace.pipeline.gold_dag',
@@ -1330,6 +1504,142 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
               'status': 'canonical',
               'tool': 'comp-pipescript',
               'use_case': 'Gold script I/O, chain membership, deployed-match, overlap.'},
+             {'anti_pattern': 'reconstructing run order by reading gold_dispatch.sh (text-local; misses group flags '
+                              '+ conditional gates -- see the comp-dispatch entry, which is the ORCHESTRATION grain)',
+              'canonical_call': 'comp-pipescript dag --pipeline <tree> [--json]',
+              'cost': '~1-2s',
+              'freshness': 'live repo parse',
+              'id': 'pipeline.pipescript.dag',
+              'layer': 'pipeline',
+              'mode': 'rebuild',
+              'notes': '--pipeline REQUIRED (flagless = rc=2 REFUSED, no guess). Per-SCRIPT grain is `io`; per-CHAIN '
+                       'is `chain`; orchestration-DAG is comp-dispatch.',
+              'status': 'canonical',
+              'tool': 'comp-pipescript',
+              'use_case': 'The whole execution DAG for one tree, with I/O edges -- run order, groups, and what each '
+                          'node reads/writes. Use when you need the SHAPE of a pipeline, not one script.'},
+             {'anti_pattern': 'assuming chain order from script-ID lexical order (IDs like B_01b/D_00f do not sort '
+                              'into run order)',
+              'canonical_call': 'comp-pipescript chain <chain_name> --pipeline <tree>',
+              'cost': '~1-2s',
+              'freshness': 'live repo parse',
+              'id': 'pipeline.pipescript.chain',
+              'layer': 'pipeline',
+              'mode': 'rebuild',
+              'notes': '--pipeline REQUIRED. Takes a CHAIN NAME (e.g. downstream), not a script id.',
+              'status': 'canonical',
+              'tool': 'comp-pipescript',
+              'use_case': 'Chain membership + order: which scripts are in a named chain and in what sequence.'},
+             {'anti_pattern': 'grepping the script for read paths (misses artifacts arriving via _KEY constants + '
+                              'FUNC-keys that `io` resolves)',
+              'canonical_call': 'comp-pipescript feeds <script> --pipeline <tree> [--json]',
+              'cost': '~1-2s',
+              'freshness': 'live repo parse',
+              'id': 'pipeline.pipescript.feeds',
+              'layer': 'pipeline',
+              'mode': 'rebuild',
+              'notes': '--pipeline REQUIRED. Inverse of `consumers`. For blast radius ACROSS layers (not just '
+                       'pipeline-internal), use comp-blast.',
+              'status': 'canonical',
+              'tool': 'comp-pipescript',
+              'use_case': 'UPSTREAM: what scripts feed this one -- the producers whose artifacts it consumes.'},
+             {'anti_pattern': "treating an empty consumer list as 'safe to change' -- it is pipeline-INTERNAL only; "
+                              'a portal component or a Lambda can still consume the artifact (comp-blast / '
+                              'comp-platinum reverse cover those)',
+              'canonical_call': 'comp-pipescript consumers <script> --pipeline <tree> [--json]',
+              'cost': '~1-2s',
+              'freshness': 'live repo parse',
+              'id': 'pipeline.pipescript.consumers',
+              'layer': 'pipeline',
+              'mode': 'rebuild',
+              'notes': '--pipeline REQUIRED. Inverse of `feeds`. The empty-list caveat is the load-bearing one: '
+                       'scope is intra-pipeline.',
+              'status': 'canonical',
+              'tool': 'comp-pipescript',
+              'use_case': "DOWNSTREAM: what scripts consume this one's output -- who breaks if it changes."},
+             {'anti_pattern': 'running two gold scripts that write the same key without checking overlap first',
+              'canonical_call': 'comp-pipescript overlap <script_a> <script_b> --pipeline <tree>',
+              'cost': '~1-2s',
+              'freshness': 'live repo parse',
+              'id': 'pipeline.pipescript.overlap',
+              'layer': 'pipeline',
+              'mode': 'rebuild',
+              'notes': '--pipeline REQUIRED. Exactly two positional scripts.',
+              'status': 'canonical',
+              'tool': 'comp-pipescript',
+              'use_case': 'Shared S3 artifacts between TWO scripts -- do they write the same key (collision / '
+                          'double-write risk)?'},
+             {'anti_pattern': "quoting a stats count as an ESTATE denominator -- it is the parsed pipeline graph's "
+                              "count, not the repo's",
+              'canonical_call': 'comp-pipescript stats',
+              'cost': '~instant',
+              'freshness': '.comp-graph build vintage',
+              'id': 'pipeline.pipescript.stats',
+              'layer': 'pipeline',
+              'mode': 'cached',
+              'notes': 'Takes NO --pipeline flag (unlike the six gated subcommands) -- verified via `stats --help`.',
+              'status': 'canonical',
+              'tool': 'comp-pipescript',
+              'use_case': 'Pipeline graph statistics -- node/edge counts and graph-shape summary.'},
+             {'anti_pattern': "running inject to 'fix' a stale traversal answer without first checking whether the "
+                              'SOURCE parse is stale -- inject propagates what it parsed, correct or not',
+              'canonical_call': 'comp-pipescript inject',
+              'cost': '~1-2s',
+              'freshness': 'writes the comp-trace cache',
+              'id': 'pipeline.pipescript.inject',
+              'layer': 'pipeline',
+              'mode': 'rebuild',
+              'notes': 'MUTATES a cache (the only write-side subcommand here). Takes NO --pipeline flag.',
+              'status': 'canonical',
+              'tool': 'comp-pipescript',
+              'use_case': 'Inject pipeline edges into the comp-trace graph cache (maintenance -- makes pipeline '
+                          'edges visible to cross-layer traversal).'},
+             {'anti_pattern': 'shipping a new merge() in a gold script without running it -- a silent suffix '
+                              'collision renames a column downstream consumers read by name',
+              'canonical_call': 'comp-pipescript postmerge-cols <script> [--strict]',
+              'cost': '~1-2s',
+              'freshness': 'live repo parse',
+              'id': 'pipeline.pipescript.postmerge_cols',
+              'layer': 'pipeline',
+              'mode': 'rebuild',
+              'notes': 'ADHC_COMPIL_V4.027. Takes a script id, no --pipeline. --strict tightens the flagging '
+                       'threshold.',
+              'status': 'canonical',
+              'tool': 'comp-pipescript',
+              'use_case': 'Flag suffix-collision risks at merge() call sites -- the _x/_y column-collision class in '
+                          'a gold script.'},
+             {'anti_pattern': 'reading the NAME as a shadow-PIPELINE detector -- it is NOT one, and it has NOTHING '
+                              'to do with the 2026-08-04 shadow/shadow-fork veto. It analyses post-condition lock-in '
+                              'for a FUNCTION. (Recorded because a reader of the tools_index list -- me, 2026-08-05 '
+                              '-- inferred the veto link from the name alone; the subparser help= says otherwise.)',
+              'canonical_call': 'comp-pipescript shadow-detect <function> [--recent-failures <7d|14d>]',
+              'cost': '~1-2s',
+              'freshness': 'live repo parse',
+              'id': 'pipeline.pipescript.shadow_detect',
+              'layer': 'pipeline',
+              'mode': 'rebuild',
+              'notes': 'ADHC_COMPIL_V4.028. Takes a FUNCTION name, not a script id. --recent-failures '
+                       'cross-references git log for a cascade pattern.',
+              'status': 'canonical',
+              'tool': 'comp-pipescript',
+              'use_case': 'Enumerate the POST-CONDITION LOCK-IN CHAIN for a function -- what downstream state '
+                          'becomes fixed once it runs.'},
+             {'anti_pattern': 'assuming a gold run will recompute a partition -- a skip-gate can SKIP it silently, '
+                              "so a 'ran clean' result can mean 'computed nothing'",
+              'canonical_call': 'comp-pipescript skipgate <script> [--rebuild-window START:END] '
+                                '[--manifest-fresh-only] [--limit N]',
+              'cost': '~1-2s',
+              'freshness': 'live repo parse + manifest state',
+              'id': 'pipeline.pipescript.skipgate',
+              'layer': 'pipeline',
+              'mode': 'rebuild',
+              'notes': 'ADHC_COMPIL_V4.025. Pattern A scripts only. The anti_pattern here is the '
+                       'ran-clean-computed-nothing class -- a preview is the cheap way to see it before the run, not '
+                       'after.',
+              'status': 'canonical',
+              'tool': 'comp-pipescript',
+              'use_case': 'Per-partition SKIP/COMPUTE/MISSING-INPUT preview for Pattern A scripts -- what a run '
+                          'WOULD do per partition before you fire it.'},
              {'anti_pattern': 'guessing CF behavior order',
               'canonical_call': 'comp-routes trace <url|endpoint> | comp-routes behaviors',
               'cost': '~1-2s',
@@ -1432,17 +1742,6 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
               'status': 'canonical',
               'tool': 'comp-types',
               'use_case': 'Which components consume this TypeScript type (before editing an interface)?'},
-             {'anti_pattern': 'shipping an adapter without verifying the field threads through',
-              'canonical_call': 'comp-adapter-audit <adapter-fn> [--severity warn|error]',
-              'cost': '~60s (live S3 fetch + regex parse)',
-              'freshness': 'live S3 + portal',
-              'id': 'trace.adapter.field_threading',
-              'layer': 'trace',
-              'mode': 'rebuild',
-              'rebuild_trigger': 'n/a — needs the live served artifact',
-              'status': 'canonical',
-              'tool': 'comp-adapter-audit',
-              'use_case': 'Pre-ship field-threading audit of a portal adapter function.'},
              {'anti_pattern': 'guessing which components break if a key changes',
               'canonical_call': 'comp-platinum reverse <s3_key> [--firm <bd|inf|cot>] [--fresh|--force]',
               'cost': '~0.2s warm (cache read); ~5s cold/--force',
@@ -1558,12 +1857,15 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
               'mode': 'query-cached',
               'notes': 'NFRA_TOOLHUD #2 (Andrew-direct 2026-06-15). The HUD router: a natural-language question -> '
                        'the canonical comp call, so an agent never has to KNOW the catalog. Curated high-confidence '
-                       "rules = CVO #3 baseline's ranked question->tool map (bdf7a0a9a: S3-key->comp-pipescript "
-                       'io/pipescript --resource; portal->comp-transform/comp-routes; gold-id->comp-pipescript '
+                       "rules = CVO #3 baseline's ranked question->tool map (bdf7a0a9a: S3-key->comp-pipescript io / "
+                       'comp-estate --resource; portal->comp-transform/comp-routes; gold-id->comp-pipescript '
                        'io/feeds/consumers; lambda->comp-iam service/comp-aws; iam-role->comp-iam; '
-                       'blast->comp-blast; named-thread->pipescript) + a keyword-fuzzy backstop over this manifest. '
-                       'Sibling of the PreToolUse comp-tool-hud.sh intercept hook (#1, fires on the grep reflex). '
-                       "Read-only; points, doesn't run.",
+                       'blast->comp-blast; named-thread->comp-estate) + a keyword-fuzzy backstop over this manifest. '
+                       '[The two named-thread slots read bare `pipescript` until 2026-08-06 -- a retired rc=2 name '
+                       'emitted by the ROUTER itself. Re-pointed to comp-estate per the retired_aliases: row; '
+                       'comp-pipescript is a DIFFERENT LIVE tool and is untouched.] Sibling of the PreToolUse '
+                       "comp-tool-hud.sh intercept hook (#1, fires on the grep reflex). Read-only; points, doesn't "
+                       'run.',
               'rebuild_trigger': "none -- auto-includes new tools as they're added to this manifest (fuzzy backstop)",
               'status': 'canonical',
               'tool': 'comp-which',
@@ -2016,23 +2318,6 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
               'use_case': 'Is a gold script producing an artifact no portal component consumes? Pre-stitch: '
                           'comp-platinum reverse + comp-pipescript consumers. Post-stitch (D4): comp-kuzu Cypher '
                           'traversal.'},
-             {'anti_pattern': "treating UNUSED fields as bugs without checking if they're passed wholesale to a "
-                              'sub-component (comp-platinum whole-object-pass FP); also: ADAPTER type mismatch in '
-                              'comp-transform (fetch return type != state var type) is a real bug even when '
-                              'comp-transform reports no MISSING fields',
-              'canonical_call': 'comp-adapter-audit <adapter-fn> --severity warn  &&  comp-transform schema-check '
-                                '<Component>',
-              'cost': '~60s (live S3 fetch) + ~1s (comp-transform)',
-              'freshness': 'live S3 artifact + portal/src',
-              'id': 'anomaly.field.contract_break',
-              'layer': 'trace',
-              'mode': 'rebuild',
-              'rebuild_trigger': 'n/a — always live',
-              'status': 'canonical',
-              'tool': 'comp-adapter-audit',
-              'use_case': 'Are the portal response types out of sync with the S3 artifact shape? typed_field_count=0 '
-                          'means all fields are silently any. Run comp-adapter-audit for a live S3 diff; '
-                          'comp-transform for rendered-field coverage.'},
              {'anti_pattern': 'treating 0-chain-resolution as a wiring bug (pre-stitch limitation for dynamic-key '
                               'artifacts; verify with D4 post-stitch comp-kuzu before filing TO)',
               'canonical_call': "comp-platinum summary  # check 'Chains' column; 0 chains on >3 fetches = flag",
@@ -2068,9 +2353,14 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
               'canonical_call': 'comp-kuzu "MATCH (c:PortalComponent {name:$comp})-[:FETCHES]->(:ApiRoute)\n'
                                 '           -[:ROUTES_TO]->(l:CloudNode '
                                 "{node_type:'LAMBDA'})-[:WRITES]->(b:CloudNode {node_type:'S3_BUCKET'})\n"
-                                '           RETURN c.name, l.name, b.id"\n',
+                                '           RETURN c.name, l.name, b.node_id"  # TEMPLATE (planned, post P2-STITCH): '
+                                'edge labels non-literal, $comp needs literal substitution\n',
               'cost': '~ms',
-              'freshness': 'kuzu stitch DB (stitched trace+cloud); db-path infra/aws/globgrph/kuzu_stitch_db',
+              'freshness': 'kuzu stitch DB (stitched trace+cloud); db-path infra/aws/globgrph/kuzu_stitch_db -- '
+                           'FROZEN VINTAGE (K4 adjudication 2026-08-04, CTO): last built 2026-07-07, NO nightly '
+                           "reload exists; the prior 'reload on the nightly cycle' claim was fiction. A stitch-DB "
+                           'query answers at its build vintage -- label it, never quote it as the estate (Rule 20 '
+                           'scratch-DB law)',
               'id': 'xlayer.fullstack.firm_component_to_bucket',
               'layer': 'cross-layer',
               'mode': 'query',
@@ -2078,11 +2368,28 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                        "truth). Cypher uses the CloudNode/CloudEdge schema: -[:CloudEdge {edge_type:'FETCHES'}]->. "
                        'CTO-verified: 49F+cottonwood ADVI components resolve component->lambda->dynamodb/s3 '
                        'cross-layer; 15 components reach a bucket.',
-              'rebuild_trigger': 'n/a once stitched; reload on the nightly comp-aws derive->Nessie->kuzu cycle',
+              'rebuild_trigger': "none an agent runs. Cross-layer freshness rides the SERVED projection's own "
+                                 'vintage, stated on every read (cloud.read.served_vintage).',
               'status': 'canonical',
               'tool': 'comp-kuzu',
               'use_case': 'Frontend component -> API route -> Lambda -> S3 bucket -> IAM role, LIVE-truth, per '
                           'firm.'},
+             {'anti_pattern': 'raw `git log --name-only` pair-hunting (connection-blind, no denominators); comp-heat '
+                              '(WRITE-freshness of objects, not pair co-movement); comp-missions (mission '
+                              'attribution, not coupling)',
+              'canonical_call': 'comp-cochange [matrix | pair <T1> <T2> | file <path-substr>] [--since "14 days ago" '
+                                '| --range A..B] [--grain type|serial] [--json]',
+              'cost': '~seconds (one comp-missions commit walk, derived live)',
+              'freshness': 'derived live from git history at call time; HEAD anchor printed on every output',
+              'id': 'estate.cochange.agent_type_comovement',
+              'layer': 'pipeline',
+              'mode': 'query',
+              'rebuild_trigger': 'n/a (always derived live)',
+              'status': 'canonical',
+              'tool': 'comp-cochange',
+              'use_case': 'What changes together with X? Which agent types co-move on the same files over a window '
+                          '(friction/coordination surfaces; the Kimi Friction-battery leg beside comp-blast overlap '
+                          '+ comp-heat trajectory)?'},
              {'anti_pattern': 'raw `git log --name-only` / `find -mtime` / `ls -t` for staleness/archive intent '
                               '(text-local, connection-blind; misses the cold-SUBTREE locality signal). DISTINCT '
                               'from comp-freshness (that is data-pipeline S3/DDB).',
@@ -2370,13 +2677,16 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
               'layer': 'org',
               'mode': 'query',
               'notes': 'NFRA_NERVES L5 endgame: the danger map as an ACTIVE IMMUNE RESPONSE, not a wiki. WIRED '
-                       'CONSUMER: safe-commit.sh runs this advisory on every staged set (the [risk-reflex] block, '
-                       'sibling to [surface-check]) -- ADVISORY-ONLY per the LD-0273 lesson (surface-check '
-                       'precedent: an advisory prints, a commit proceeds; blocking is a separate arch decision). '
-                       'Matching is generous by policy (a missed hold can cost the estate; a noisy one costs ten '
-                       'seconds) and every hit prints its doc:line citation -- the alarm points at the claim, never '
-                       'replaces it. Regen: nerves_lexical build (owner + triggers in NFRA_NERVES_PRD SS3.2 -- '
-                       'MANDATORY regen before any hold-lift announcement).',
+                       'CONSUMER: safe-commit.sh runs this advisory on every staged set (the [risk-reflex] block) -- '
+                       'ADVISORY-ONLY per the LD-0273 lesson (an advisory prints, a commit proceeds; blocking is a '
+                       "separate arch decision). [This note located the block as 'sibling to [surface-check]'. "
+                       'safe-commit.sh no longer emits a [surface-check] block -- comp-surface-check RETIRED '
+                       '2026-08-06, its safe-commit leg stripped at :454. [risk-reflex] is now the only such '
+                       'advisory block; the LD-0273 lesson it set stands.] Matching is generous by policy (a missed '
+                       'hold can cost the estate; a noisy one costs ten seconds) and every hit prints its doc:line '
+                       'citation -- the alarm points at the claim, never replaces it. Regen: nerves_lexical build '
+                       '(owner + triggers in NFRA_NERVES_PRD SS3.2 -- MANDATORY regen before any hold-lift '
+                       'announcement).',
               'status': 'canonical',
               'tool': 'comp-pulse',
               'use_case': 'Am I about to commit a change that touches a node the estate has WRITTEN WARNINGS about '
@@ -2486,6 +2796,129 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                           'works/broken health, cert status, materialized recognizers, freshness/vintage). Compiles '
                           'infra/system/06_current_state.{md,json} -- the dynamic SYSTEM half + the LOCALROOT '
                           'runtime index + the P4-maturity grading source.'},
+             {'anti_pattern': 'hand-editing DIRECTIVES_RETIRED.yaml (100% machine-written; ANY hand edit fails the '
+                              "check's freeze/seal invariants) or machine-writing a `retired:` FACT (the fact is "
+                              'human/sovereign-only, register owner MSTR -- the machine only reacts to it). Also: '
+                              'extending the deprecated missions machinery instead of this tool (CTO 63580 fence), '
+                              'or adding attribution tracking (Andrew ruling c: never absent his fresh word).',
+              'canonical_call': 'comp-directives retire [--dry-run]  (the MOVE: cut rows carrying a COMPLETE '
+                                'human-written retired record into DIRECTIVES_RETIRED.yaml) ; comp-directives check  '
+                                '(PARTITION/CONSERVATION/FORM/FREEZE, rc 0|2|1) ; comp-directives --self-test',
+              'cost': 'instant (text-surgical + sha256 over two small yaml views)',
+              'freshness': 'reads the live register at call time; the retired view is frozen BY LAW '
+                           '(closed-period-immutable -- no TTL aging on a closed judgment; the freeze is '
+                           'hash-verified, not aspirational).',
+              'id': 'governance.directives.retirement',
+              'layer': 'governance',
+              'mode': 'emit+police',
+              'notes': 'FACT + MOVE + CHECK (CVO proposal @da758c3a43 + AMENDMENT 1 directives-native + AMENDMENT 2 '
+                       'approval). Presence-based record -- ZERO enum tokens minted (Lifecycle_Stage reuse REJECTED '
+                       'on grain: vertical-lifecycle vs work-completion). OPAL_DIRECTIVES_DIR overrides both paths '
+                       "for scratch exercise. comp-which routing string: 'retire a directive ; directive "
+                       'done/complete ; directives register retirement ; DIRECTIVES_RETIRED ; live vs retired '
+                       "directives' -> comp-directives.",
+              'rebuild_trigger': 'a new human-written retired record on a live row -> run `retire`; any '
+                                 'register-touching commit -> the post-commit hook runs `check` automatically.',
+              'status': 'canonical',
+              'tool': 'comp-directives',
+              'use_case': "Retire a completed directive from the directives register / verify the register's "
+                          'live-vs-retired partition: how does a done directive (D0-D9 class) leave the live view; '
+                          'is the retired view intact (never hand-drawn); did anything vanish from the register '
+                          'silently; is a retirement record complete?'},
+             {'anti_pattern': 'storing a lease state and reading it later (the stored verdict is the thing this '
+                              "service exists to abolish); leasing a closure by NAME (leases bind the closure's "
+                              "vintage IDENTITIES); an untyped 'we did not see it change' offered as an exclusion "
+                              'proof (REFUSED, m5); covering a NEW member with an old ENUMERATED waiver (REFUSED, m3 '
+                              '-- only a ratified predicate whose declared scope includes it covers); '
+                              're-implementing the digest derivation (the normative home is precondition_token.py '
+                              '_request_hash; any other serialization is NON-CONFORMANT even if the pattern '
+                              "matches); reading a lease's EXPIRED as INVALID (INVALID is an EVALUATION's result; "
+                              'EXPIRED means no binding evaluation exists -- out of scope, not out-ranked; CRO D1 '
+                              'ruling @053b83f414).',
+              'canonical_call': 'comp-lease evaluate <closure.json> [--out DIR]  (one evaluation per (assessment, '
+                                'scope, basis, support-state); mints the lease it licenses) ; comp-lease state '
+                                '<lease.json>  (the read-time partition tree; live side re-read) ; comp-lease '
+                                '--self-test',
+              'cost': '~2-10s (one source-map read + one get-function + git HEAD per subject via the C3 '
+                      'side-readers)',
+              'freshness': 'state is NEVER stored -- every `state` call re-reads the five support identities live; '
+                           "the minting evaluation's binding is re-derived on every read ('failure to reevaluate "
+                           "never preserves validity' is the tree's level-1 branch). The knowledge basis is consumed "
+                           "from base's minted instance (content-found, digest REPRODUCED through the normative home "
+                           'before use).',
+              'id': 'epistemy.lease.eligibility',
+              'layer': 'cloud',
+              'mode': 'query',
+              'notes': 'Four-state axis {VALID, INVALID, UNKNOWN, EXPIRED} is a TWO-LEVEL PARTITION TREE (binds? -> '
+                       "EXPIRED on no; then the evaluation's result), MECE with no ordering language; "
+                       'NEVER_EVALUATED unreachable by construction (a lease requires minted_by_evaluation). The '
+                       'effect PAIR (effect_as_recorded + effect_as_evaluated, UNCOMPUTED -> EXPANDING one-way) is '
+                       'mandatory on every evaluation record. Null basis members (UNRATIFIED_BASIS) CAP their '
+                       'governed axes at UNKNOWN and the lease names them. Content-addressed ids '
+                       '(evaluation_id/lease_id) derive via the normative home over named payloads -- derivation '
+                       "home in the contract, not at a line number (COO 64098). comp-which routing string: 'is this "
+                       'lease still valid ; may I rely on this claim ; eligibility evaluation ; lease expired ; '
+                       "support identity changed ; knowledge basis digest' -> comp-lease.",
+              'rebuild_trigger': 'n/a -- evaluate on demand; a changed basis digest or support state is a '
+                                 'legitimately NEW evaluation (an identical replay is REFUSED, m4).',
+              'status': 'canonical',
+              'tool': 'comp-lease',
+              'use_case': 'May this claim still be RELIED ON now / may this edit proceed under the current knowledge '
+                          'basis: run ONE Eligibility_Evaluation over a committed C3 Support_Closure (the '
+                          "invalidation pipeline in the spec's order: coarse coordinate intersection OVER-included "
+                          '-> typed exclusion-proof replay -> residual recomputation -> policy), mint the Lease it '
+                          "licenses, and compute a lease's state at READ TIME -- a support identity that moved "
+                          'without re-evaluation reads EXPIRED, never VALID.'},
+             {'anti_pattern': 'reading reach=PRESENCE_ONLY as behavior (every Lambda closure tonight is '
+                              'PRESENCE_ONLY BY CONSTRUCTION -- no invokes are taken; an executing read is the ONLY '
+                              'way to BEHAVIOR and the constructor refuses the label without one); reading a clean '
+                              "EQUIVALENT as 'deployed matches repo' when standing is AMBIGUOUS (a second plausible "
+                              'home makes the claim neither true nor false -- owner declares fork-or-drift); '
+                              'resolving a hop by FILENAME (refused: every hop carries resolved_via '
+                              'BUILD_INPUT:<field>); rewriting the lambda source map from a closure (it is a BUILD '
+                              'INPUT you read, never a finding you fix); emitting an observation without the '
+                              'RATIFIED plane enum {DESIRED, APPLIED, EXERCISED} + substrate {aws, portal, codebase, '
+                              'ms} (C1 rider @6f944857c4 -- the CTO 63744 carry-opaque condition is DISCHARGED; the '
+                              'envelope schema REJECTS the old shape).',
+              'canonical_call': 'comp-closure compile <lambda-name> [--out DIR]  (read-only AWS: get-function + '
+                                'package download) ; comp-closure verify <closure.json>  (re-read the sides; any '
+                                'change -> standing INVALIDATED) ; comp-closure ec2-fixture <service> [--fixture F]  '
+                                '(staged=DESIRED vs executing=APPLIED from RECORDED reads -- a FIXTURE, said so) ; '
+                                'comp-closure --self-test',
+              'cost': '~5-20s per Lambda (one get-function + one package download + git show at two commits + a '
+                      'HEAD-tree home census, indexed once per run)',
+              'freshness': 'every acquisition is an Observation_Record built by the C1 envelope '
+                           '(org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE/src); the closure '
+                           'carries its vintage (source-map _updated, artifact_sha256, live CodeSha256, '
+                           'last_deployed_commit, repo HEAD, observed_at) and `verify` turns any moved side into '
+                           'standing INVALIDATED -- a closure is a dated object, never a standing guarantee.',
+              'id': 'epistemy.closure.identity_support',
+              'layer': 'cloud',
+              'mode': 'query',
+              'notes': 'Two axes, split per base A1 (a precedence rule is the tell that two axes are fused): reach '
+                       '{NONE, PRESENCE_ONLY, BEHAVIOR} at MEMBER grain with closure reach = MIN over members (the '
+                       'declared aggregation layer); standing {BROKEN, AMBIGUOUS, CURRENT, INVALIDATED} at CLOSURE '
+                       'grain, disjoint by construction (BROKEN stops the chain; INVALIDATED only on re-read; '
+                       'AMBIGUOUS is the value a recompile cannot clear). Equivalence {EQUIVALENT, DIVERGENT, '
+                       'UNMEASURED, UNKNOWN} lives on the bundle. Resolution shapes A-E reused from '
+                       'NFRA_DEPLOYCENSUS (shape C transformed builds ride the digest chain; shape D '
+                       'directory+basename is DECLARED WEAKER). Ambiguity predicate: exact bytes elsewhere OR a '
+                       'non-generic same-basename file with content similarity >= 0.5 (generic entry-point names '
+                       'never count by name alone). Rule-24 records + pinned token census: '
+                       'org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_EPISTEMY.C3-IDENTITY/RULE24_RECORDS_AND_TOKEN_CENSUS_20260820.md. '
+                       "comp-which routing string: 'what supports this claim ; what changed under this lambda ; "
+                       'support closure ; identity bundle ; deployed vs built-from ; two copies / second home ; '
+                       "staged vs executing ; is the deployed code what runs' -> comp-closure.",
+              'rebuild_trigger': 'n/a -- compiles on demand; re-run `compile` after any deploy, map edit, or HEAD '
+                                 'advance touching the subject; `verify` tells you when.',
+              'status': 'canonical',
+              'tool': 'comp-closure',
+              'use_case': "What SUPPORTS the claim 'Lambda F runs code C@v' / what CHANGED under it, at the right "
+                          'grain: compile the typed hop chain build-input -> package manifest -> deployed bytes -> '
+                          'repo bytes -> (execution) for one Lambda (or an EC2 service from recorded reads), with '
+                          'reach per member (closure = MIN), standing per closure, and the equivalence verdict on '
+                          'the Identity_Bundle. The 08-12 two-copies class reads AMBIGUOUS -- never drift, never '
+                          'clean.'},
              {'anti_pattern': "raw grep/Read across portal/src/pages to reconstruct a page's panel->drilldown tree + "
                               'which components share a data source (text-local; misses the render-subtree nesting + '
                               'the per-firm cohort fork + cross-panel coupling); comp-cache sees only RQ-key '
@@ -2612,6 +3045,28 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
               'use_case': 'What fires this lambda / is its EventBridge rule or schedule enabled or disabled / what '
                           'schedule cron runs it / what targets does the rule dispatch to / did the trigger actually '
                           'fire recently / does terraform declare it?'},
+             {'anti_pattern': 'reading a NOT-CHECKABLE row as a pass (it is an honest absence and can never be '
+                              'CONFORMS); or checking the schedule floor on the EventBridge Rules plane alone -- '
+                              '`aws events list-rules` structurally cannot see `aws scheduler list-schedules`, and a '
+                              'floor living on the Scheduler plane makes a one-plane sweep report VIOLATES with a '
+                              'correct denominator about the wrong population',
+              'canonical_call': 'comp-atomcheck --product advi --firm 49financial [--atom N] [--json]',
+              'cost': '~seconds (one paginated S3 listing of the product root + list-rules + list-schedules; '
+                      'read-only)',
+              'freshness': 'live AWS; a UTC provenance header stamps every run and the key count is materialised and '
+                           'printed. A product root under active write moves between reads -- every figure is true '
+                           'of the stamped instant and of nothing else',
+              'id': 'cloud.product.archetype_conformance',
+              'layer': 'cloud',
+              'mode': 'query',
+              'rebuild_trigger': 'n/a',
+              'status': 'canonical',
+              'tool': 'comp-atomcheck',
+              'use_case': "Does this product's gold estate conform to the archetype / is the product root grammar "
+                          'right / does every gold partition carry a manifest / does this product have a scheduled '
+                          'writer at all / are gold keys spelled with underscores / is every served field traceable '
+                          'to an endpoint or a ratified exception / which archetype atoms can nobody currently '
+                          'check?'},
              {'anti_pattern': 'raw `aws s3 ls --recursive | wc -l` census re-derived per session (loses '
                               "feeds/frontier/declared-status and drops keys silently); or reading this tool's "
                               'declared-vs-listed divergence as an ALARM -- it is a census fact, the no-alarms '
@@ -2862,14 +3317,11 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
               'use_case': 'Does this value come from the CANONICAL source, or from a served/legacy artifact? Which '
                           'producers read a SERVED artifact as a value source (the layer grammar running '
                           'backwards)?'}],
- 'excluded_not_graph_use_cases': ['comp-missions',
+ 'excluded_not_graph_use_cases': ['comp-surprise',
+                                  'comp-ledger-agreement',
+                                  'comp-missions',
                                   'comp-perf',
                                   'comp-v5-composite-test',
-                                  'comp-manifest-check',
-                                  'comp-surface-check',
-                                  'comp-to',
-                                  'comp-grep',
-                                  'comp-glob',
                                   'comp-imgread',
                                   'comp-coverage-check',
                                   'comp-routable-check',
@@ -2879,12 +3331,53 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                   'comp-passcraft',
                                   'comp-stitch-refresh',
                                   'comp-residue',
-                                  'comp-arity'],
- 'retired_aliases': {'comp-coverage-view': {'retired': 'NFRA_MSBEFF.R6 2026-07-23 -- absent from .tools/ AND '
+                                  'comp-arity',
+                                  'comp-adversary',
+                                  'comp-schedule'],
+ 'retired_aliases': {'comp-adapter-audit': {'retired': '2026-07-30 Andrew-ruled staleness-audit AT-RISK retirement '
+                                                       '-- executable + fixtures + registry rows deleted in one '
+                                                       'commit; ~/bin deprovisioned',
+                                            'successor': None,
+                                            'why': 'portal adapter field-threading audit whose hand-frozen coverage '
+                                                   'denominator (19 of 122 adapters, censused 2026-07-10) decayed '
+                                                   'silently as the portal grew -- the dangerous quadrant: '
+                                                   'live-consumed claim, no re-census trigger. Andrew: delete over '
+                                                   're-census.'},
+                     'comp-coverage-view': {'retired': 'NFRA_MSBEFF.R6 2026-07-23 -- absent from .tools/ AND '
                                                        'tools_index; last invoked in org/compiler-tools-log.md',
                                             'successor': None,
                                             'why': 'standalone coverage-view tool; superseded by comp-manifest-check '
                                                    'completeness'},
+                     'comp-kuzu-full': {'retired': '2026-09-02 NFRA_COMPEFFICACY unit 2 (Andrew-approved 92664; '
+                                                   'executed by 0.8.0_AE_CloudComp, re-scoped by 3.0.0_SA_CVO '
+                                                   '92726). Consolidated onto comp-kuzu --mode full -- the flag '
+                                                   'kuzu_cli.py :165 always carried; the wrapper was a 16-line alias '
+                                                   'that set it. RETIREMENT ORDER per the comp-surface-check '
+                                                   'precedent: consumers FIRST (comp-which routing, comp-describe '
+                                                   'hint, comp-tools.yaml, comp-coverage-map.yaml, '
+                                                   'comp-output-contracts.yaml, this manifest -- routing entries '
+                                                   'retargeted + tools_index row removed), the measured 30d callers '
+                                                   'notified (92748), THEN the executable; ~/bin forwarders '
+                                                   'deprovisioned on device Andrew (the provisioner only ADDS, so '
+                                                   'every other box re-provisions or carries a loud dead forwarder '
+                                                   'until it does).',
+                                        'successor': 'comp-kuzu',
+                                        'why': 'Two names for one flag on one engine; Andrew ruled consolidate. The '
+                                               'guarantee that lived on a NAME now lives on the FLAG, stated in code '
+                                               '(kuzu_cli.py :42/:167) and in every registry carrier, so nothing '
+                                               'that read the name reads an absence.'},
+                     'comp-kuzu-inc': {'retired': '2026-09-02 NFRA_COMPEFFICACY unit 2 -- same commit, same order as '
+                                                  'comp-kuzu-full. 30d callers re-derived from '
+                                                  'org/mcp/comp-tool-runs.jsonl by ts_epoch: 1.0.0_SA_CTO 7, '
+                                                  '4.0.0_SA_CRO 6, 1.0.0_SA_CTO~B 1 -- all notified (92748) before '
+                                                  'the executable was removed.',
+                                       'successor': 'comp-kuzu',
+                                       'why': 'Consolidated onto comp-kuzu --mode inc: '
+                                              'incremental-OR-serve-labeled-stale, NEVER a mid-task full rebuild '
+                                              '(Andrew O-1 / NFRA_KUZUSPLIT sec-4 hard gate). The guarantee is now a '
+                                              'property of the FLAG, declared in comp-tools.yaml, '
+                                              'comp-output-contracts.yaml and the cloud.refresh.incremental routing '
+                                              'entry below.'},
                      'comp-learns-run': {'retired': 'NFRA_MSBEFF.R6 2026-07-23 -- absent from .tools/ AND '
                                                     'tools_index; last invoked in org/compiler-tools-log.md',
                                          'successor': None,
@@ -2905,11 +3398,36 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                                       'POLICES routing surfaces (incl. the HUD hook) against citing '
                                                       'it -- the HUD carried 4 bare-pipescript nudges undetected '
                                                       'precisely because no deleted name was ever declared in this '
-                                                      'section (CVO, Andrew-direct programmatic-staleness mandate)'}},
- 'tools_index': {'comp-adapter-audit': {'does': 'Portal adapter field-threading audit',
-                                        'entries': ['trace.adapter.field_threading'],
-                                        'subcommands': ['<adapter-fn>', '--severity']},
-                 'comp-assets': {'does': 'READ-ONLY backfill census over the OPAL_ASSETS monolith '
+                                                      'section (CVO, Andrew-direct programmatic-staleness mandate)'},
+                     'comp-surface-check': {'retired': '2026-08-06 Andrew-direct retirement -- executable + registry '
+                                                       'rows + comp-which route + the publish workflow + the portal '
+                                                       'CI leg and pre-commit hook all removed; ~/bin deprovisioned. '
+                                                       "VERBATIM: 'I want comp-surface-check retired. i do not like "
+                                                       "that tool.'",
+                                            'successor': None,
+                                            'why': 'THE SEV1 critical-surface guard for '
+                                                   'model-portfolios/benchmarks/ADVI. Declared here (rather than '
+                                                   'merely deleted) so the retired-alias invariant POLICES routing '
+                                                   'surfaces against citing it -- the exact mechanism that let 4 '
+                                                   'bare-`pipescript` nudges survive undetected, because no deleted '
+                                                   'name had ever been declared. RETIREMENT ORDER MATTERED AND IS '
+                                                   'RECORDED FOR THE NEXT ONE: consumers first (portal pre-commit '
+                                                   'hook + portal CI), then the S3 publish leg, then the workspace '
+                                                   'advisory caller, then the executable. Binary-first would have '
+                                                   'converted a deliberate retirement into a SILENT SKIP -- every '
+                                                   'caller guards on `command -v`, and a gate that cannot be found '
+                                                   'is not advisory, it is off while reporting nothing (the '
+                                                   '2026-07-29 precedent).'},
+                     'pipescript': {'retired': '2026-07-30 Andrew-direct naming consolidation -- bare `pipescript` '
+                                               'is a RETIRED rc=2 stub, PROHIBITED (CLAUDE.md comp-estate row); NOTE '
+                                               'comp-pipescript is a DIFFERENT LIVE tool, not this alias',
+                                    'successor': 'comp-estate',
+                                    'why': 'declared per dial(comp-kuzu) K5 (2026-08-04, CVO): the retired-alias '
+                                           'invariant was BLIND to bare-pipescript citations while this name was '
+                                           'undeclared -- the one live citation (molecule SKILL.md Dimension-3 '
+                                           'upstream bullet) fixed in the declaring commit; from here the gate '
+                                           'polices estate-wide'}},
+ 'tools_index': {'comp-assets': {'does': 'READ-ONLY backfill census over the OPAL_ASSETS monolith '
                                          '(s3://opal-data-assets): per channel folder, per-layer counts/bytes/feeds '
                                          "+ date FRONTIER + 0-byte count, PLUS the channel's declared "
                                          'meta/backfill-status.json (V2-6 schema: frontier/completeness/counts/NAMED '
@@ -2924,6 +3442,20 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                                  '--json',
                                                  '--bucket <name>',
                                                  '--self-test']},
+                 'comp-atomcheck': {'does': 'Product-ARCHETYPE CONFORMANCE runner (READ-ONLY, never a monitor): one '
+                                            'verdict row per atom per product x firm -- {atom, scope, verdict, '
+                                            'evidence, denominator, why?} over CONFORMS / VIOLATES / '
+                                            'NOT-CHECKABLE-BY-THIS-RUNNER. v1 legs: 1 root-grammar, 3 '
+                                            'manifest-coverage (BOTH the partition-local and _manifests sidecar '
+                                            'conventions, resolved at scope+table+date grain), 5-floor schedule '
+                                            '(sweeps BOTH the events and scheduler planes -- one cannot see the '
+                                            'other), 7-spelling, 8 lineage-declaration COVERAGE (never veracity), 9 '
+                                            'provenance-columns. Atoms 2/4/6 + the residue halves of 5/7 print '
+                                            'NOT-CHECKABLE WITH A WHY and can never print CONFORMS. UTC provenance '
+                                            'header on every run; a live-written root moves between reads. Engine '
+                                            'atomcheck_cli.py',
+                                    'entries': ['cloud.product.archetype_conformance'],
+                                    'subcommands': ['--product P --firm F', '--atom N', '--json']},
                  'comp-aws': {'does': 'Live-AWS + Terraform-state cloud-graph compiler (the WRITE-PATH + cert)',
                               'entries': ['cloud.derive.refresh',
                                           'cloud.derive.class',
@@ -2986,11 +3518,52 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                                   '--sweep BUCKET PREFIX',
                                                   '--json',
                                                   'self-test']},
+                 'comp-closure': {'does': 'NFRA_EPISTEMY C3 -- the IDENTITY + SUPPORT-CLOSURE COMPILER (COO GO '
+                                          '63813; object shape per 4.0.0_SA_CRO cert 63859 + 1.0.0_SA_CTO gate '
+                                          "63865). For a logical fact ('Lambda F runs code C@v') compiles the typed "
+                                          'hop chain build-input -> package manifest -> deployed bytes -> repo bytes '
+                                          '-> (execution), every hop resolved_via BUILD_INPUT:<field> (a '
+                                          'filename-resolved hop is REFUSED), every acquisition an '
+                                          'Observation_Record built by the C1 envelope (a failed stage forces '
+                                          'UNKNOWN). Emits Support_Closure (reach per member '
+                                          '{NONE,PRESENCE_ONLY,BEHAVIOR}, closure reach = MIN; standing '
+                                          '{BROKEN,AMBIGUOUS,CURRENT,INVALIDATED}) + Identity_Bundle (equivalence '
+                                          '{EQUIVALENT,DIVERGENT,UNMEASURED,UNKNOWN}). Last-hop honesty by '
+                                          'construction: a deployed digest is PRESENCE_ONLY; BEHAVIOR needs an '
+                                          'executing read and cannot be labelled in. The two-copies class (08-12 '
+                                          'specimen inf-silver-chain) reads AMBIGUOUS, never drift/clean. Read-only '
+                                          'AWS; never rewrites the source map; arms nothing; observations carry the '
+                                          'ratified plane enum + substrate (C1 rider @6f944857c4). Engine: '
+                                          'org/modules/graph/comp_closure.py (AE lane).',
+                                  'entries': ['epistemy.closure.identity_support'],
+                                  'subcommands': ['compile <lambda> [--out DIR]',
+                                                  'verify <closure.json>',
+                                                  'ec2-fixture <service> [--fixture F]',
+                                                  '--self-test',
+                                                  '--help']},
                  'comp-cluster': {'does': 'Page-rooted PAGE->PANEL->DRILLDOWN cluster view over the LIVE canonical '
                                           'graph (data-source clusters + drilldown depth/cohort + cross-panel '
                                           'SHARES_SOURCE coupling); the cloud-graph generalization of comp-cache',
                                   'entries': ['cloud.cluster.page_panel_drilldown'],
-                                  'subcommands': ['<Page>', '--list', '--coverage', '--json', '--db-path']},
+                                  'subcommands': ['<Page>', '--list', '--coverage', '--json']},
+                 'comp-cochange': {'does': 'agent-type CO-MOVEMENT over git history (F4 instrument): which agent '
+                                           'TYPES change the SAME FILES within a window, with BOTH F4 denominators '
+                                           'on every output (commits-attributed/total AND pairs-observed/possible). '
+                                           'Typed dispatch over the comp-missions commit walk -- runs NO git of its '
+                                           'own; READ-ONLY, no LLM, observations never verdicts (UNATTRIBUTED '
+                                           'authors counted in denominator 1, never dropped). Feeds the Friction '
+                                           'battery (Kimi meta-analysis) beside comp-blast overlap + comp-heat '
+                                           'trajectory. Subject-coordinate C1-discovered-relations (provisional -- '
+                                           'first CVO dial confirms).',
+                                   'entries': ['estate.cochange.agent_type_comovement'],
+                                   'subcommands': ['matrix',
+                                                   'pair <T1> <T2>',
+                                                   'file <path-substr>',
+                                                   '--since',
+                                                   '--range',
+                                                   '--grain type|serial',
+                                                   '--json',
+                                                   '--self-test']},
                  'comp-constants': {'does': 'Marker/firm-constant drift vs canonical config',
                                     'entries': ['pipeline.constants.drift'],
                                     'subcommands': ['check', 'index', 'new', 'list']},
@@ -3059,6 +3632,23 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                  'comp-diff': {'does': 'Map git/uncommitted changes to graph blast radius',
                                'entries': ['trace.diff.staged_blast'],
                                'subcommands': ['--ref', '--staged']},
+                 'comp-directives': {'does': 'The DIRECTIVES-NATIVE retirement compiler + mechanical check (LD-0433, '
+                                             'Andrew-approved @52db6f2835): FACT (human/sovereign `retired: '
+                                             '{at,by,authority}` on the live row -- the machine NEVER writes a fact) '
+                                             '+ MOVE (`retire`: cuts recorded rows from org/missions/DIRECTIVES.yaml '
+                                             'into DIRECTIVES_RETIRED.yaml -- byte-frozen literal blocks, stamped '
+                                             'vintage, ever_minted roster, emit_hash seal; 100% machine-written, '
+                                             'text-surgical on the hand-written live view, idempotent, partial '
+                                             'records REFUSED) + CHECK (`check`: '
+                                             'PARTITION/CONSERVATION/FORM-tripwire/FREEZE invariants, rc 0|2|1, '
+                                             'denominators printed; a hand edit in the retired view FAILS it). '
+                                             'Directives-native by ruling (CTO 63580 fence: zero missions dependency '
+                                             'either direction); NO attribution leg (Andrew ruling c). Register home '
+                                             "= the owner's word (MSTR 63620). Engine: "
+                                             'org/modules/graph/comp_directives.py (AE lane); post-commit hook fires '
+                                             'check on register-touching commits.',
+                                     'entries': ['governance.directives.retirement'],
+                                     'subcommands': ['retire [--dry-run]', 'check', '--self-test', '--help']},
                  'comp-dispatch': {'does': 'The gold-dispatch ORCHESTRATION-DAG (NFRA_COMPROUTE Stage-1 #1; '
                                            'CTO-ratified 2026-07-01 as a distinct one-home node): which gold scripts '
                                            'run, in what order, under which chain/group flags + conditional gates, '
@@ -3075,7 +3665,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                                    '--list [--json]']},
                  'comp-drift': {'does': 'Estate propagation-drift ORCHESTRATOR -- walks drift-topology.yaml CALLING '
                                         'the seam engines '
-                                        '(comp-heat/pipescript/lambdamap/iam/kuzu/iceberg_parity/code_heat_parity/tool_activity_parity/trino_catalog_parity/freshness), '
+                                        '(comp-heat/comp-pipescript/lambdamap/iam/kuzu/iceberg_parity/code_heat_parity/tool_activity_parity/trino_catalog_parity/freshness), '
                                         'NEVER re-implementing a check. seam-6 (ICEBERG->TRINO) fully COVERED (P3c: '
                                         'trino_catalog_parity.py closes the 3 iceberg legs). sweep ALSO folds '
                                         "drift_producer.py's infra/repo drift legs (P4: manifest+surface always, "
@@ -3153,6 +3743,20 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                                  'provenance',
                                                  '--json',
                                                  '--uri']},
+                 'comp-find': {'does': 'THE graded search SURFACE -- content + filename in one verb, every hit on a '
+                                       'deterministic reject-first band ladder '
+                                       '(HEAD/DEF/SURFACED/CONFIG/TEST/DOC/COLD), paginated with TRUE band totals + '
+                                       'the scanned denominator on every run. No SLM, no learned rerank -- ordering '
+                                       'is re-derivable from (query, path, line)',
+                               'entries': ['search.graded.find'],
+                               'subcommands': ['<pattern>',
+                                               '--name <glob>',
+                                               '-i',
+                                               '--page',
+                                               '--limit',
+                                               '--band',
+                                               '--files',
+                                               '--all']},
                  'comp-firmsep-sweep': {'does': 'PROVE-THE-UNIVERSE firm-separation sweep: simulates a firm '
                                                 'credential against EVERY role in the account and asserts only the '
                                                 "firm's own roles allow (optionally write-reach too). Enumerates by "
@@ -3192,15 +3796,35 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                                    '--limit N',
                                                    '--json',
                                                    '--self-test']},
+                 'comp-glob': {'does': 'ON-RAILS repo FILE find by glob -- same rails as comp-grep '
+                                       '(.gitignore-aware, held-path guarded, audited). No pattern = list everything '
+                                       'under the pathspec',
+                               'entries': ['search.rails.glob'],
+                               'subcommands': ['<glob> [pathspec]', '--max']},
                  'comp-graph': {'does': 'Freshness status across all graphs (local trace caches + cloud artifacts) + '
                                         'clear; uniform --fresh/--force contract (graph_cache.py)',
                                 'entries': ['meta.freshness.status'],
                                 'subcommands': ['status', 'clear', '--json']},
+                 'comp-grep': {'does': 'ON-RAILS repo content search -- .gitignore-aware (incl. nested repos), '
+                                       "sovereign-held guarded, audited, with each hit's dependency systems-context. "
+                                       "The sanctioned answer when Rule 21's Gate-1 denies a raw Bash estate grep",
+                               'entries': ['search.rails.grep'],
+                               'subcommands': ['<pattern> [pathspec]', '-i', '-l/--files', '--max']},
                  'comp-heat': {'does': 'Estate OBJECT write-freshness + hygiene (repo files: hot/warm/cold + cold '
                                        'SUBTREES=archive candidates, uncommitted-write drift); ADVISORY-ONLY, '
-                                       'read-only. DISTINCT from comp-freshness (data-pipeline S3/DDB)',
+                                       'read-only. BASIS-IN-OUTPUT (Andrew-ratified CH-3, 2026-08-04): every band '
+                                       'verdict prints WITH age/score/half-life/barrier-definition. `compare` = heat '
+                                       'CONVERGING/DIVERGING/PARALLEL between two resources (per-window series + '
+                                       "delta + windows/commits/shared denominators -- the Friction battery's "
+                                       'trajectory leg). `federated` = LIVE-Trino estate-ASSETS x git code-heat view '
+                                       '(Andrew round-3 registration 2026-08-04). DISTINCT from comp-freshness '
+                                       '(data-pipeline S3/DDB)',
                                'entries': ['estate.heat.object_freshness', 'estate.heat.uncommitted_drift'],
-                               'subcommands': ['freshness', 'drift', 'score']},
+                               'subcommands': ['freshness',
+                                               'drift',
+                                               'score',
+                                               'compare <A> <B> [--windows N --window-days D]',
+                                               'federated']},
                  'comp-honesty': {'does': 'Honesty/completion GATE over GOV-A I1/I2/I3: claim+evidence -> '
                                           'per-invariant PASS/FAIL/N-A; makes NFRA_SEMCTL_HONESTY_INVARIANTS.md '
                                           'runnable. N-A is LOUD, never a silent pass',
@@ -3258,37 +3882,25 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                        's3api, explicit-Z, denominator-always. NFRA_MSBEFF.R5',
                                'entries': ['pipeline.keys.enumerate'],
                                'subcommands': ['prefix', 'partitions', 'exists']},
-                 'comp-kuzu': {'does': 'Cypher query the loaded Kuzu graph (cloud + cross-layer); the FAST default '
-                                       'read-path',
+                 'comp-kuzu': {'does': 'Cypher query the SERVED graph projection (cloud + cross-layer) -- a thin '
+                                       'client over the projection service; the FAST default read-path, and the ONLY '
+                                       'one (it takes no database path and there is no refresh flag)',
                                'entries': ['cloud.lookup.nodes_by_type',
                                            'cloud.reachability.transitive',
                                            'cloud.blast.what_breaks',
-                                           'xlayer.fullstack.firm_component_to_bucket'],
-                               'subcommands': ['<cypher>', '--db-path', '--json', '--limit']},
-                 'comp-kuzu-full': {'does': 'NFRA_KUZUSPLIT P1 refresh-mode VARIANT of comp-kuzu (SAME '
-                                            'kuzu_nessie_db store, not a new surface): forces a FULL '
-                                            'kuzu_nessie_load UNCONDITIONALLY. 0.0.0_AB_MSTR-startup-only -- absorbs '
-                                            'the daily whole-table delta once, warming the shared canonical for '
-                                            'every peer that day. Every OTHER agent uses comp-kuzu-inc; a '
-                                            'mid-session comp-kuzu-full is the ~482s ambush the split exists to '
-                                            'remove (WS-7 tools_index closure, NFRA_TOOLUNIFY 2026-07-25 -- '
-                                            'router-reachable per comp-routable-check, was missing from this '
-                                            'browsable catalog; entry already existed at cloud.refresh.full)',
-                                    'entries': ['cloud.refresh.full'],
-                                    'subcommands': ['<cypher>', '--json', '--limit']},
-                 'comp-kuzu-inc': {'does': 'NFRA_KUZUSPLIT P1 refresh-mode VARIANT of comp-kuzu (SAME store): the '
-                                           'DEFAULT every non-MSTR worker runs before a query. Serves the '
-                                           'incremental delta OR a labeled-stale prior-vintage projection, NEVER a '
-                                           "mid-task full rebuild (Andrew O-1 / sec-4 hard gate). 'My local graph is "
-                                           "behind, refresh it' -> this, not comp-aws derive (the cloud nightly "
-                                           'producer). WS-7 tools_index closure (router-reachable, entry already '
-                                           'existed at cloud.refresh.incremental, was missing from this browsable '
-                                           'catalog)',
-                                   'entries': ['cloud.refresh.incremental'],
-                                   'subcommands': ['<cypher>', '--json', '--limit']},
-                 'comp-lambdamap': {'does': 'Lambda deployed-SHA vs live CodeSha256 + 3-leg deploy-parity',
+                                           'xlayer.fullstack.firm_component_to_bucket',
+                                           'cloud.read.served_vintage'],
+                               'subcommands': ['<cypher>', '--json', '--limit', '--schema']},
+                 'comp-lambdamap': {'does': 'Lambda deployed-SHA vs live CodeSha256 + 3-leg deploy-parity; census = '
+                                            'vintage-stamped APPLIED lambda snapshot via the census substrate '
+                                            '(descriptor row aws.lambda, 2026-08-05 extraction)',
                                     'entries': ['cloud.lambdamap.deployed_sha', 'cloud.lambdamap.parity'],
-                                    'subcommands': ['check', 'sha', 'derive', 'parity']},
+                                    'subcommands': ['check',
+                                                    'sha',
+                                                    'derive',
+                                                    'parity',
+                                                    'census',
+                                                    'reconcile-deployed']},
                  'comp-learns-score': {'does': 'COMPLEARN P2 value-anchored SCORER: ranks build-next / route-fix / '
                                                'merge-retire candidates by escapes-prevented / drift-caught / '
                                                'cost-per-outcome (NEVER usage count -- the Goodhart gate, provable '
@@ -3312,6 +3924,25 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                                         '<view>  # gap_heat|coverage_gaps|tool_demand|...',
                                                         '--json',
                                                         '--source <s3://...|LOCAL.json>']},
+                 'comp-lease': {'does': 'NFRA_EPISTEMY C4 -- the FOUR-STATE LEASE SERVICE + Eligibility_Evaluation '
+                                        '(COO GO 64063; base cert + first basis mint @053b83f414). Runs ONE '
+                                        "Eligibility_Evaluation over a committed C3 closure (pipeline in the spec's "
+                                        'order: OVER-included coarse intersection -> typed exclusion replay -> '
+                                        'residual -> policy; one per (assessment, scope, basis, support-state), '
+                                        'identical replay REFUSED; untyped silence REFUSED; old enumerated waiver '
+                                        'never covers a new member), mints the Lease it licenses (NEVER_EVALUATED '
+                                        'unreachable: minted_by_evaluation required), and computes lease state at '
+                                        'READ TIME via the partition tree {binds? no -> EXPIRED; yes -> '
+                                        'VALID|INVALID|UNKNOWN} -- a moved support identity without re-evaluation is '
+                                        'EXPIRED, never VALID. Consumes: the C1 envelope (observations), C3 '
+                                        'side-readers (support identities), Knowledge_Basis minted instance (digest '
+                                        'reproduced through the normative home precondition_token.py _request_hash '
+                                        'before use). Engine: org/modules/graph/comp_lease.py (AE lane).',
+                                'entries': ['epistemy.lease.eligibility'],
+                                'subcommands': ['evaluate <closure.json> [--out DIR]',
+                                                'state <lease.json>',
+                                                '--self-test',
+                                                '--help']},
                  'comp-legacywriter': {'does': 'WRITER-CONTEST + DECOMMISSION-SAFETY lens: who WRITES a served '
                                                'location, who READS it, and WHAT BREAKS WHEN IT IS GONE. Location '
                                                'identity is the (BUCKET,KEY) PAIR and call DIRECTION is modelled, so '
@@ -3330,6 +3961,20 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                                        '--json',
                                                        '--require-live-substrate',
                                                        '--self-test']},
+                 'comp-manifest-check': {'does': 'THE comp-tool REGISTRATION GATE -- registration + output-contract '
+                                                 '+ stage-2 vocab + retired-alias + subcommand-declaration + '
+                                                 'existence-as-tracked-executable + ROUTABILITY invariants over the '
+                                                 'whole tool universe. Its counts are the gate-maintained truth '
+                                                 'prose must not hand-copy',
+                                         'entries': ['registry.gate.completeness'],
+                                         'subcommands': ['check',
+                                                         'list',
+                                                         'selfcheck',
+                                                         'tally',
+                                                         'routable',
+                                                         'existence',
+                                                         'completeness',
+                                                         'retired-alias']},
                  'comp-ontolint': {'does': 'Lint the NFRA_ONTOLOGY Relation-vs-Role DUAL-AXIS composite exception '
                                            '(routes-to->Router / resolves-through->Registry / projects->Gateway are '
                                            'dual-axis; every other relation is single-axis, a Relation with no Role) '
@@ -3384,6 +4029,17 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                          'Engine comp_pydeps.py',
                                  'entries': ['meta.pydeps.reference_graph'],
                                  'subcommands': ['consumers', 'deps', 'egress', 'build', '--self-test', '--json']},
+                 'comp-read': {'does': 'KEY-CONTEXT READ of ONE file -- SHAPE (all sections, never truncated), the '
+                                       'regions salient to your question tagged AUTHORITATIVE vs DESCRIPTIVE, every '
+                                       'QUALIFIER that limits/negates/corrects a nearby claim, intra-file '
+                                       'CONTRADICTIONS, and an UNREAD LEDGER naming what you did NOT see. Verbatim '
+                                       'excerpts with line numbers -- indexes the file, never replaces it',
+                               'entries': ['read.keycontext.file'],
+                               'subcommands': ['<file>',
+                                               '--for <question>',
+                                               '--at <line>',
+                                               '--top N',
+                                               '--all-quals']},
                  'comp-registry': {'does': 'REGISTRY narrative vs project-JSON drift',
                                    'entries': ['meta.registry.drift'],
                                    'subcommands': ['sync ROW=N', '--project', '--all']},
@@ -3428,9 +4084,10 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                         "task-order status / a PRD Status line BEHIND the estate's actual git-commit "
                                         'state? BM25-style drift check over git commits (Andrew-direct 2026-07-14). '
                                         'ADVISORY: a BEHIND is a place to LOOK never an auto-edit; CURRENT is '
-                                        'absence-of-lexical-evidence not a verified record. --self-test MUST pass '
-                                        '3/3 before trusting a report. WS-7 tools_index closure (router-reachable, '
-                                        'entry already existed at org.state.registry_drift, was missing from this '
+                                        'absence-of-lexical-evidence not a verified record. --self-test MUST print '
+                                        'PASS (its own N/N line; 4/4 since the TIGHTENING-J2 encoding leg) before '
+                                        'trusting a report. WS-7 tools_index closure (router-reachable, entry '
+                                        'already existed at org.state.registry_drift, was missing from this '
                                         'browsable catalog)',
                                 'entries': ['org.state.registry_drift'],
                                 'subcommands': ['--project CODE', '--days N', '--all', '--self-test', '--json']},
@@ -3466,6 +4123,11 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                            'access -- this measures AUTHORIZATION, not attribute surface',
                                    'entries': ['cloud.tagauthz.tag_authorization_gate'],
                                    'subcommands': ['<resource|tf-tree>']},
+                 'comp-to': {'does': 'Set the SESSION TO_ID for comp-tool auto-logging -- a race-free per-session '
+                                     'file, NOT .comp-graph/.agent_context (which is repo-global and '
+                                     'last-writer-wins across concurrent agents)',
+                             'entries': ['session.context.set_to'],
+                             'subcommands': ['<TO_filename_without_.md>']},
                  'comp-tool-health': {'does': 'Fused per-comp-tool 3-axis HEALTH query (used / rail_consistent / '
                                               'effective -> KEEP|FIX|PROMOTE|RETIRE) over the COMPLEARN substrate; '
                                               'value-anchored (outcome value + rail quality, never invocation '
@@ -3990,7 +4652,99 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                          "Sharing the dispatcher IS the suite architecture; the facets' semantic "
                                          'distinctness is declared via trace-graph distinct_from above.'}],
  'last_reviewed': '2026-06-30',
- 'meta_tools': [{'not_homed_reason': "NFRA_GENESIS provisioner SDK: spins up a NEW company's semantic system (graph "
+ 'meta_tools': [{'not_homed_reason': 'THE SURPRISE CHANNEL ROLLUP (Andrew-direct 2026-08-25, context-flooding '
+                                     'remediation; CLAUDE.md Rule 27 / Directive Execution Pipeline stage 5). Reads '
+                                     'every org/surprise_channel/{PROJECT}/INVESTIGATION_v*.md + REMEDIATION_v*.md '
+                                     "JSON block into ONE list with denominators, and flags the item schema's OWN "
+                                     'unmet obligations (ARMED with no disarm_owner; GRADUATED without GROUNDED '
+                                     'grounding; DISMISSED with no reason). THE GAP IT CLOSES: the protocol writes '
+                                     'one file PER PROJECT and nothing read them together, so an item could be FILED '
+                                     'AND INVISIBLE AT THE SAME TIME -- which is where investigate -> graduate -> '
+                                     "remediate stalls at 'filed'. First run surfaced 143 items / 14 projects / 30 "
+                                     'open / 67 ARMED / 1 schema obligation unmet, none of it visible in aggregate '
+                                     'before. NOT ROUTABLE and NOT a graph-query use-case BY SUBJECT: it queries '
+                                     "RECORDS (the channel's JSON blocks + investigation_item.schema.json), never "
+                                     'the dependency graph, so there is no traversal to route TO -- the '
+                                     'comp-missions precedent exactly. Excluded in graph-call-manifest.yaml '
+                                     'excluded_not_graph_use_cases with the same reason; that exclusion is a DEBT, '
+                                     'not a resting place, and a curated comp-which vocabulary pass is OWED (CTO). '
+                                     'READ-ONLY: it REPORTS and never files, graduates, dismisses or edits -- the '
+                                     "channel is CVO's surface. Engine .tools/comp-surprise.py.",
+                 'role': 'surprise-channel-rollup',
+                 'routable': False,
+                 'tool': 'comp-surprise'},
+                {'not_homed_reason': 'ADVISORY header/body AGREEMENT scan over deploy-completion ledgers (CTO ruling '
+                                     '2026-08-19, instrument-repair batch). Classifies header-lags-body (the '
+                                     'measured FALSE-RED class: a completed deploy presenting as a stranded leg '
+                                     'because the Status header never advanced) vs body-lags-header CANDIDATES (the '
+                                     'dangerous inverse). A RECORDS lint over ledger prose, not a graph/surface '
+                                     'query -- police, not query, same class as comp-manifest-check. Reports '
+                                     'DENOMINATORS and refuses to bucket the 123 of 511 ledgers that carry no '
+                                     'machine-readable Status header at all. ADVISORY ONLY: it does not block a '
+                                     "commit; escalation to blocking is Andrew's to grant (never-implement-a-gate "
+                                     'rule) -- proposed, not implemented. routable:false is a DEBT NOT A JUDGMENT '
+                                     'and explicitly not precedent: no law tells an agent to type this name YET, and '
+                                     'a tools_index row without curated comp-which vocabulary manufactures a BLOCKED '
+                                     'self-route finding (the documented comp-residue/comp-arity trap). It rides '
+                                     "CTO's curated-vocabulary batch, already queued at this seat, and flips "
+                                     'routable:true there. Registered 2026-08-19 by 0.8.0_AE_CloudComp.',
+                 'role': 'records-agreement-lint',
+                 'routable': False,
+                 'tool': 'comp-ledger-agreement'},
+                {'not_homed_reason': 'VALIDATOR-CONTEXT COMPOSER (Andrew-ratified name @7241d0dfd7; Andrew-direct '
+                                     "2026-08-19: functional + MANDATORY in the atom_decomp workflow's VALIDATION "
+                                     'piece). Composes what the validator of returned work IS and IS NOT shown: '
+                                     'author-profile pins -> complement (cited-commit verification, cited-path '
+                                     'vintage vs artifact vintage, uncited neighborhood, comp-state drift; v1 defers '
+                                     'toolgraph/axes/blast/pulse/read-digests AS DECLARED EXCLUSIONS in its own '
+                                     'output) -> a validation_context_declaration (L0a boundary_report SIBLING per '
+                                     'the ruled declaration family). --open mode = model-prior validator, zero '
+                                     'estate context, declared. routable:TRUE because the PRD protocol TELLS '
+                                     'validators to type its name (the door-real-key-not test answers YES). Arch '
+                                     'frame: CTO design note '
+                                     'DESIGN_NOTE_CHECK_SYSTEM_DEFINITIONS_AND_COMP_ADVERSARY_20260819.md; v2 '
+                                     '(deferred sources) = 0.8.0 build per the note. Carries --self-test (4 controls '
+                                     'incl. a planted bogus-commit discriminator). Registered 2026-08-19 by '
+                                     '1.0.0_SA_CTO.',
+                 'role': 'validation-context-composer',
+                 'routable': True,
+                 'tool': 'comp-adversary'},
+                {'not_homed_reason': "THE GATE LEDGER (Andrew-direct 2026-09-01: 'having preconditions floating from "
+                                     '12 days ago with no immediate visibility is not good planning ... we need a '
+                                     'clear way of managing these ... and clear means of cleaning/sweeping items '
+                                     "from that list when they no longer are needed'). Answers what /schedule-check "
+                                     'and comp-lease do NOT: /schedule-check covers scheduled JOBS from the live AWS '
+                                     'APIs, comp-lease covers C3 CLOSURES -- neither covers GATES, a promise to '
+                                     'check something later. A job that stops firing gets noticed because something '
+                                     'expected output; A GATE THAT OUTLIVES ITS REASON EMITS NOTHING AT ALL. '
+                                     'VIEW-TIME COMPILED from five carriers (code sentinels via '
+                                     'safe_deploy_core.SERVE_HELD_RE -- the grammar that gates real deploys, REUSED '
+                                     'not copied; open deploy-ledger entries; CLAUDE.md standing moratoria; '
+                                     'task-order scope_guards; project blocking fields) -- NO artifact, NO registry, '
+                                     'so nothing can go stale, which is the exact failure a curated gate list would '
+                                     'reproduce. CARRIES A DECIDABILITY SCHEMA (Rule 24 four-postulate record in its '
+                                     'header): DECIDABLE carriers are counted, SEMI-DECIDABLE are counted only after '
+                                     'a declared chatter exclusion, and org/projects/*.json `blocking` is '
+                                     'NOT-DECIDABLE and NEVER counted -- measured 333 keys of which 189 are the word '
+                                     'None in English and 135 are prose (16 SELF-NEGATING, 65 using closed/resolved '
+                                     'language, median 648 chars, max 30,625): a 30KB blocking field is an essay, '
+                                     'not a field, and counting it would report 135 blocked and be wrong before the '
+                                     'second line. UNREADABLE is never rendered as zero rows. --drift is '
+                                     'EXCEPTIONS-ONLY and raises CANDIDATES, never verdicts: THE TOOL NEVER CLOSES A '
+                                     'GATE. First live run: 20 sentinel lines collapsed to 4 gates (a line count is '
+                                     'not a gate count; 19 further raw matches were agents QUOTING a sentinel in '
+                                     'inbox mail, excluded and declared), and it surfaced a gate whose own comment '
+                                     'reads SATISFIED 2026-07-13 while still armed seven weeks later. routable:TRUE '
+                                     '-- agents should type this name when asking what is blocked or who can lift a '
+                                     'hold. LAST-VERIFIED is a DERIVED WEAK proxy (carrier last-edit, not a human '
+                                     'confirmation) and is labelled weak on every row. Carries --self-test (5 '
+                                     'controls) + a 9-leg battery incl. a planted mutant. Read-only; no AWS, no '
+                                     'model calls. Engine .tools/comp-schedule. Registered 2026-09-01 by '
+                                     '3.0.0_SA_CVO~C.',
+                 'role': 'gate-ledger',
+                 'routable': True,
+                 'tool': 'comp-schedule'},
+                {'not_homed_reason': "NFRA_GENESIS provisioner SDK: spins up a NEW company's semantic system (graph "
                                      '+ ontology-binding + closed learning loop) from company.yaml on the proven '
                                      'Opal stack, parameterized -- a cross-surface META/tooling provisioner (like '
                                      'comp-system), ROUTED to when an agent asks how to generalize/bootstrap to a '
@@ -4007,14 +4761,65 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                  'role': 'router',
                  'routable': False,
                  'tool': 'comp-which'},
+                {'not_homed_reason': 'PLACED-ONLY 2026-08-06 by 3.0.0_SA_CVO~B (NOT the owner) to clear a HARD '
+                                     'BLOCK: the tool was committed and left UNPLACED, and comp-coverage-check '
+                                     'inventory_completeness is a BLOCKING gate in scope for ANY commit touching '
+                                     '.tools/comp-* -- so it wedged every agent, not just its author. >> THIS ROW IS '
+                                     'DELIBERATELY INCOMPLETE. The output contract and the routable: decision are '
+                                     'NOT mine to make: both require knowing what the tool actually EMITS and '
+                                     'whether an agent is meant to type its name, and per '
+                                     'COMP_TOOL_REGISTRATION_CANON.md a contract declaring a denominator the tool '
+                                     'does not emit is WORSE than a missing one because it makes the tool look '
+                                     'audited. routable:false here is a PLACEHOLDER, not a judgment -- do not cite '
+                                     'it as precedent. OWNER 3.0.0_SA_CVO to complete registration per the canon '
+                                     'checklist (contract, routable call, tools_index+entries+curated route if '
+                                     'routable, shim). Notified 20260806T151724Z. Tool purpose from its own '
+                                     'docstring: does a CORRECTION reach the DOCUMENT IT CORRECTS.',
+                 'role': 'correction-propagation',
+                 'routable': False,
+                 'tool': 'comp-claimlink'},
+                {'not_homed_reason': 'KEY-CONTEXT READ (NFRA_SCRIPTGEN Part B, Andrew-direct 2026-08-05). Fixes the '
+                                     'right-file-wrong-read failure: SHAPE + salience + AUTHORITATIVE-vs-DESCRIPTIVE '
+                                     'tagging + a QUALIFIER panel (the EXCEPT/NEVER/CORRECTED beside a claim) + '
+                                     'intra-file CONTRADICTIONS + an UNREAD LEDGER. Deterministic, no model, no '
+                                     'cache (Andrew-direct 2026-08-06: milliseconds). Pairs with comp-find: find '
+                                     'LOCATES the file, read surfaces the part that matters.',
+                 'role': 'read-surface',
+                 'routable': True,
+                 'tool': 'comp-read'},
+                {'not_homed_reason': 'THE graded search SURFACE (NFRA_SCRIPTGEN Part B, Andrew-direct 2026-08-05: '
+                                     '"replace comp-grep/glob with comp-find ... structure paginated results"). '
+                                     'Unifies content+name search behind one verb, grades every hit on a '
+                                     'deterministic reject-first ladder, paginates with true band totals. '
+                                     'routable:TRUE deliberately, breaking the comp-grep search-primitive precedent: '
+                                     'comp-grep is what comp-which RUNS internally, comp-find is what an AGENT '
+                                     'invokes -- and this file already records that an unroutable tool is one nobody '
+                                     "finds ('the door is real, the key is not'). comp-grep/comp-glob remain live "
+                                     'beneath it until CTO routes the Rule-21 repoint.',
+                 'role': 'search-surface',
+                 'routable': True,
+                 'tool': 'comp-find'},
                 {'not_homed_reason': 'on-rails grep comp-which RUNS when no rich tool fits (never-dead-end); a '
-                                     'search primitive, not a surface tool',
+                                     'search primitive, not a surface tool ROUTABLE-FLIP 2026-08-06 '
+                                     '(Andrew-approved; CVO~B swept all 21 routable:false rows against ONE question '
+                                     '-- is an agent ever TOLD to type this name? -- and for this tool the answer is '
+                                     'YES, in CLAUDE.md and/or org/XXX.md). routable:false had been inherited as a '
+                                     'default for anything shaped like a primitive while a LIVE LAW instructed '
+                                     'agents to use it: the door-real-key-not failure this file already names. The '
+                                     'exclusion comment always called itself a DEBT, NOT a resting place.',
                  'role': 'search-primitive',
-                 'routable': False,
+                 'routable': True,
                  'tool': 'comp-grep'},
-                {'not_homed_reason': 'on-rails glob comp-which RUNS when no rich tool fits; a search primitive',
+                {'not_homed_reason': 'on-rails glob comp-which RUNS when no rich tool fits; a search primitive '
+                                     'ROUTABLE-FLIP 2026-08-06 (Andrew-approved; CVO~B swept all 21 routable:false '
+                                     'rows against ONE question -- is an agent ever TOLD to type this name? -- and '
+                                     'for this tool the answer is YES, in CLAUDE.md and/or org/XXX.md). '
+                                     'routable:false had been inherited as a default for anything shaped like a '
+                                     'primitive while a LIVE LAW instructed agents to use it: the door-real-key-not '
+                                     'failure this file already names. The exclusion comment always called itself a '
+                                     'DEBT, NOT a resting place.',
                  'role': 'search-primitive',
-                 'routable': False,
+                 'routable': True,
                  'tool': 'comp-glob'},
                 {'not_homed_reason': 'AST sweep for UNPACK-ARITY MISMATCH: a tuple-unpacking call site whose arity '
                                      'disagrees with the actual return arity of the repo-defined function it calls. '
@@ -4041,35 +4846,21 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                  'routable': False,
                  'tool': 'comp-imgread'},
                 {'not_homed_reason': 'session-context setter (race-free per-session TO_ID for the comp auto-logger); '
-                                     'a startup primitive',
+                                     'a startup primitive ROUTABLE-FLIP 2026-08-06 (Andrew-approved; CVO~B swept all '
+                                     '21 routable:false rows against ONE question -- is an agent ever TOLD to type '
+                                     'this name? -- and for this tool the answer is YES, in CLAUDE.md and/or '
+                                     'org/XXX.md). routable:false had been inherited as a default for anything '
+                                     'shaped like a primitive while a LIVE LAW instructed agents to use it: the '
+                                     'door-real-key-not failure this file already names. The exclusion comment '
+                                     'always called itself a DEBT, NOT a resting place.',
                  'role': 'session-primitive',
-                 'routable': False,
+                 'routable': True,
                  'tool': 'comp-to'},
                 {'not_homed_reason': 'rebuilds the trace-graph cache (the trace WRITE-PATH); operates on the tooling '
                                      'cache, not a surface',
                  'role': 'cache-management',
                  'routable': True,
                  'tool': 'comp-build'},
-                {'not_homed_reason': 'NFRA_KUZUSPLIT P1 refresh-mode VARIANT of the comp-kuzu graph-query surface '
-                                     '(SAME kuzu_nessie_db store, not a new surface) -- forces a FULL '
-                                     'kuzu_nessie_load UNCONDITIONALLY (0.0.0_AB_MSTR startup, absorbs the daily '
-                                     'whole-table delta once, warming the shared canonical for peers). LANDED by COO '
-                                     '2026-07-17 (SoD; routing entry cloud.refresh.full in graph-call-manifest.yaml; '
-                                     'code @5de839ff0)',
-                 'role': 'graph-refresh-mode',
-                 'routable': True,
-                 'tool': 'comp-kuzu-full'},
-                {'not_homed_reason': 'REFRESH / UPDATE my LOCAL graph when it is BEHIND, pre-query -- the DEFAULT a '
-                                     'worker runs before a query. NFRA_KUZUSPLIT P1 refresh-mode VARIANT of the '
-                                     'comp-kuzu graph-query surface (SAME store): serves the incremental delta OR a '
-                                     'labeled-stale prior-vintage projection, NEVER a mid-task full rebuild (Andrew '
-                                     'O-1 / the section-4 hard gate). My local dependency graph is behind -> refresh '
-                                     'it here (not comp-aws derive, which is the CLOUD nightly producer). LANDED by '
-                                     'COO 2026-07-17 (SoD; routing entry cloud.refresh.incremental in '
-                                     'graph-call-manifest.yaml; code @5de839ff0)',
-                 'role': 'graph-refresh-mode',
-                 'routable': True,
-                 'tool': 'comp-kuzu-inc'},
                 {'not_homed_reason': 'NFRA_COMPSIMILAR describe surface (Andrew-direct pull-forward 2026-07-18) -- '
                                      "FIND + DESCRIBE one AWS resource ('what is this / what does it do / find an "
                                      "AWS resource') off the LANDED derive-at-scan engine (summary_corpus.py) over "
@@ -4130,6 +4921,35 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                  'role': 'clobber-scanner',
                  'routable': True,
                  'tool': 'comp-clobber'},
+                {'concern': 'agent-type CO-MOVEMENT -- which agent TYPES change the SAME FILES within a window '
+                            '(friction/coordination surfaces), with BOTH F4 denominators on every output '
+                            '(commits-attributed/total AND pairs-observed/possible). The Kimi Friction-battery leg '
+                            'beside comp-blast overlap + comp-heat trajectory',
+                 'declared_grain': ['pair', 'file'],
+                 'distinct_from': [{'my_concern': 'PAIR co-movement (who moves WITH whom)',
+                                    'shared_resource': 'git-history',
+                                    'their_concern': 'object WRITE-freshness (how recently a file moved at all)',
+                                    'tool': 'comp-heat'},
+                                   {'my_concern': 'agent-type x agent-type coupling over shared files',
+                                    'shared_resource': 'git-history',
+                                    'their_concern': 'commit->mission attribution (which mission a commit serves)',
+                                    'tool': 'comp-missions'},
+                                   {'my_concern': 'OBSERVED co-change in history (empirical coupling)',
+                                    'shared_resource': 'estate-structure',
+                                    'their_concern': 'DECLARED dependency blast radius (structural coupling)',
+                                    'tool': 'comp-blast'}],
+                 'not_homed_reason': 'estate-wide history scanner (like comp-clobber/comp-dups): typed dispatch over '
+                                     'the comp-missions commit walk, runs NO git of its own -- not homed to one '
+                                     'surface/pipeline. READ-ONLY, no LLM, observations + denominators never '
+                                     'verdicts; UNATTRIBUTED authors counted in denominator 1, never dropped. '
+                                     'BORN-REGISTERED 2026-08-04 (first tool under the C-indexed regime: contract + '
+                                     'subject-coordinate C1-discovered-relations provisional + intent_from_above in '
+                                     'the landing commit; Andrew @22f33727a, CTO arch word 200144Z, CTO~B F4 '
+                                     'definition). Author 0.2.0_DS_PortfolioAnalytics. Engine '
+                                     'org/modules/graph/comp_cochange.py',
+                 'role': 'comovement-scanner',
+                 'routable': True,
+                 'tool': 'comp-cochange'},
                 {'concern': 'value-ORIGIN / canonical-source lineage -- does a producer read a SERVED '
                             '(platinum/served/portal-json) artifact as a value source? The layer grammar running '
                             'BACKWARDS (RF-7: 49F counts sourced from platinum, no canonical per-date source). The '
@@ -4269,14 +5089,17 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                  'role': 'estate-semantic-traversal',
                  'routable': True,
                  'tool': 'comp-estate'},
-                {'not_homed_reason': 'D6 manifest-ENFORCEMENT commit-gate; polices the manifest, not a surface query',
+                {'not_homed_reason': 'D6 manifest-ENFORCEMENT commit-gate; polices the manifest, not a surface query '
+                                     'ROUTABLE-FLIP 2026-08-06 (Andrew-approved; CVO~B swept all 21 routable:false '
+                                     'rows against ONE question -- is an agent ever TOLD to type this name? -- and '
+                                     'for this tool the answer is YES, in CLAUDE.md and/or org/XXX.md). '
+                                     'routable:false had been inherited as a default for anything shaped like a '
+                                     'primitive while a LIVE LAW instructed agents to use it: the door-real-key-not '
+                                     'failure this file already names. The exclusion comment always called itself a '
+                                     'DEBT, NOT a resting place.',
                  'role': 'enforcement-gate',
-                 'routable': False,
+                 'routable': True,
                  'tool': 'comp-manifest-check'},
-                {'not_homed_reason': 'D8 critical-surface commit-gate (auto in safe-commit); an enforcement gate',
-                 'role': 'enforcement-gate',
-                 'routable': False,
-                 'tool': 'comp-surface-check'},
                 {'not_homed_reason': "lints the NFRA_ONTOLOGY vocab's Relation-vs-Role DUAL-AXIS composite exception "
                                      '(routes-to/resolves-through/projects carry a Role; all other relations '
                                      'single-axis) from the canonical rule-bank -- a vocab invariant, NOT a '
@@ -4439,6 +5262,47 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                  'role': 'governance',
                  'routable': True,
                  'tool': 'comp-registry'},
+                {'not_homed_reason': 'NFRA_EPISTEMY C4 four-state lease service + Eligibility_Evaluation (COO GO '
+                                     "64063; base cert + first basis mint @053b83f414): leases bind a C3 closure's "
+                                     'vintage IDENTITIES (never names); state is a read-time partition-tree '
+                                     "computation over live side re-reads -- 'failure to reevaluate never preserves "
+                                     "validity' is the level-1 branch, so a stored stale VALID cannot exist. A "
+                                     'VERIFY instrument over reliance-now, per subject: denominators per run (5 '
+                                     'support identities re-read, capped axes named). routable:TRUE -- the '
+                                     'lease/evaluation instances, the C4 records doc, and the proof tell an agent to '
+                                     'type this name. Registered 2026-08-21 by 0.8.0_AE_CloudComp.',
+                 'role': 'verify',
+                 'routable': True,
+                 'tool': 'comp-lease'},
+                {'not_homed_reason': 'NFRA_EPISTEMY C3 identity + support-closure compiler (COO GO 63813; base cert '
+                                     '63859; CTO gate 63865/63887): compiles, per Lambda (or EC2 service from '
+                                     'recorded reads), the typed hop chain build-input -> package manifest -> '
+                                     'deployed bytes -> repo bytes -> (execution) with reach per member (closure = '
+                                     'MIN), standing per closure, equivalence on the Identity_Bundle; every '
+                                     'acquisition an envelope Observation_Record. A VERIFY instrument over the '
+                                     'deployed<->built-from identity (Rule 22a CODE layer), not an estate surface: '
+                                     "it answers 'what supports this / what changed' for one subject at a time; its "
+                                     'denominators are per-closure (members compared, homes found) and print on '
+                                     "every run. routable:TRUE -- the closures' `notes`, the Rule-24 record, and the "
+                                     'proof all tell an agent to type this name. Registered 2026-08-20 by '
+                                     '0.8.0_AE_CloudComp.',
+                 'role': 'verify',
+                 'routable': True,
+                 'tool': 'comp-closure'},
+                {'not_homed_reason': 'The DIRECTIVES-NATIVE retirement compiler + check (LD-0433, Andrew-approved '
+                                     '@52db6f2835): FACT (human-only retired record, register owner MSTR) + MOVE '
+                                     '(machine cut -> DIRECTIVES_RETIRED.yaml, byte-frozen + hash-sealed) + CHECK '
+                                     '(partition/conservation/form/freeze; a hand edit FAILS it). Governs the '
+                                     "directives REGISTER (org/missions/DIRECTIVES.yaml, path = the owner's word "
+                                     '63620), not an estate surface -- same class as comp-registry. routable:TRUE by '
+                                     'the door-real-key test: the signal chain, the retired-view banner, the '
+                                     'live-view breadcrumb, and the post-commit hook all TELL an agent to type this '
+                                     'name. Directives-native by CTO 63580 fence (zero missions dependency either '
+                                     'direction); NO attribution leg (Andrew ruling c). Registered 2026-08-20 by '
+                                     '0.8.0_AE_CloudComp.',
+                 'role': 'governance',
+                 'routable': True,
+                 'tool': 'comp-directives'},
                 {'not_homed_reason': 'compiler/task-order coverage report; a meta view over the tooling/TOs',
                  'role': 'meta-report',
                  'routable': True,
@@ -4556,6 +5420,25 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                  'role': 'system-compiler',
                  'routable': True,
                  'tool': 'comp-system'},
+                {'not_homed_reason': 'ARCHETYPE-CONFORMANCE runner (read-only, NEVER a monitor): renders one verdict '
+                                     'row per product-archetype atom per product x firm -- {atom, scope, verdict, '
+                                     'evidence, denominator, why?} over the enum CONFORMS / VIOLATES / '
+                                     'NOT-CHECKABLE-BY-THIS-RUNNER. v1 checks six legs (1 root-grammar, 3 '
+                                     'manifest-coverage, 5-floor schedule, 7-spelling, 8 '
+                                     'lineage-declaration-COVERAGE, 9 provenance-columns); atoms 2/4/6 and the '
+                                     'residue halves of 5/7 print NOT-CHECKABLE WITH A WHY and can never print '
+                                     'CONFORMS -- an unchecked atom costs the reader a visible row, never silence. '
+                                     'Reads across S3 + EventBridge Rules + EventBridge Scheduler + repo '
+                                     'declarations, so like comp-trigger it is cross-plane and has no single-surface '
+                                     'home. ATOM 5 SWEEPS BOTH TRIGGER PLANES BY CONSTRUCTION: events list-rules '
+                                     'cannot see scheduler list-schedules, and the 49F gold floor lives on the '
+                                     'scheduler plane, so a one-plane sweep returns a TRUE answer about the WRONG '
+                                     'population. Coverage, never veracity, on atom 8. Built 2026-08-25 per '
+                                     'TIGHTENING_ENUMERATION_SPEC J3 (NFRA_COMPTOOLS.REG-SCAN-ATOMCHECK). Engine '
+                                     'atomcheck_cli.py; battery .tools/tests/test_atomcheck.py',
+                 'role': 'archetype-conformance',
+                 'routable': True,
+                 'tool': 'comp-atomcheck'},
                 {'concern': 'structural-cruft / abandonment DISPOSITION over the propagation seams '
                             '(edges-that-go-nowhere, old duplicated channels, deprecated outputs) -- the '
                             'resource-STATE verb of NFRA_COMP*',
@@ -4622,7 +5505,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'against the local repo (portal + pipeline scripts + graph modules) + the S3 '
                                      'AWS-resource snapshot -> stitch_graph.json, then publishes '
                                      'artifact-FIRST/marker-LAST to s3://opal-313476888478-globgrph/stitch/ (the '
-                                     'atomic commit point; contract preserved for the comp-debt freshness '
+                                     'atomic commit point; contract preserved for the comp-debt ensure_fresh '
                                      'consumer). Replaces the retired GH-Action/CodeBuild/EventBridge apparatus '
                                      "(Andrew-direct 2026-07-07: a solo contributor's local tree IS the canonical "
                                      'state). It WRITES the substrate the query tools read; it does not query an '
@@ -4712,13 +5595,11 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'resource': 'trace-graph',
                                      'state': 'DECLARED',
                                      'tools': ['comp-trace', 'comp-blast', 'comp-diff', 'comp-xref']},
-                                    {'concerns': ['JSX field-render vs TS type',
-                                                  'adapter field-threading vs live S3',
-                                                  'PII exposure'],
+                                    {'concerns': ['JSX field-render vs TS type', 'PII exposure'],
                                      'finding': 'none',
                                      'resource': 'portal-component',
                                      'state': 'DECLARED',
-                                     'tools': ['comp-transform', 'comp-adapter-audit', 'comp-pii']},
+                                     'tools': ['comp-transform', 'comp-pii']},
                                     {'concerns': ['DUPLICATE/dead census', 'DUAL-MANAGED (TF-state conflict)'],
                                      'finding': 'none',
                                      'resource': 'estate-structure',
@@ -5211,8 +6092,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                                      'regime': 'surface',
                                                      'severity': 'high'}],
                             'source_only_grains': ['chain'],
-                            'tool_grain_map': {'comp-adapter-audit': ['component', 'field'],
-                                               'comp-assets': ['object'],
+                            'tool_grain_map': {'comp-assets': ['object'],
                                                'comp-aws': ['resource'],
                                                'comp-blast': ['function', 'symbol', 'cross-grain'],
                                                'comp-cache': ['component'],
@@ -5443,11 +6323,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
             'touches_resource': ['panel-coupling']},
            {'concern': 'React component field-RENDER schema-check (MISSING=runtime-undefined / UNUSED=waste; '
                        'ternary-audit for new cohorts)',
-            'distinct_from': [{'my_concern': 'JSX field-render vs TS type (MISSING/UNUSED)',
-                               'shared_resource': 'portal-component',
-                               'their_concern': 'ADAPTER field-threading vs LIVE S3 envelope (schema-drift)',
-                               'tool': 'comp-adapter-audit'},
-                              {'my_concern': 'JSX field-render schema-check',
+            'distinct_from': [{'my_concern': 'JSX field-render schema-check',
                                'shared_resource': 'portal-component',
                                'their_concern': 'PII EXPOSURE (hashed vs cleartext)',
                                'tool': 'comp-pii'}],
@@ -5455,29 +6331,11 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
             'surface': 'AWS-CLOUD',
             'tool': 'comp-transform',
             'touches_resource': ['portal-component']},
-           {'concern': 'portal ADAPTER field-threading audit vs LIVE S3 envelope (schema-drift / not-threaded / '
-                       'fallback-order)',
-            'distinct_from': [{'my_concern': 'adapter field-threading vs live S3',
-                               'shared_resource': 'portal-component',
-                               'their_concern': 'JSX field-render vs TS type',
-                               'tool': 'comp-transform'},
-                              {'my_concern': 'adapter field-threading vs live S3',
-                               'shared_resource': 'portal-component',
-                               'their_concern': 'PII exposure',
-                               'tool': 'comp-pii'}],
-            'granularity': 'component',
-            'surface': 'AWS-CLOUD',
-            'tool': 'comp-adapter-audit',
-            'touches_resource': ['portal-component']},
            {'concern': 'PII EXPOSURE audit (routes + components; hashed vs cleartext; pseudonymizer coverage)',
             'distinct_from': [{'my_concern': 'PII exposure',
                                'shared_resource': 'portal-component',
                                'their_concern': 'JSX field-render vs TS type',
-                               'tool': 'comp-transform'},
-                              {'my_concern': 'PII exposure',
-                               'shared_resource': 'portal-component',
-                               'their_concern': 'adapter field-threading vs live S3',
-                               'tool': 'comp-adapter-audit'}],
+                               'tool': 'comp-transform'}],
             'granularity': 'component',
             'surface': 'AWS-CLOUD',
             'tool': 'comp-pii',
