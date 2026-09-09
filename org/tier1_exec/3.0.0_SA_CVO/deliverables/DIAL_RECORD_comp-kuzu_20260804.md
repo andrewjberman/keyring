@@ -104,3 +104,13 @@ trigger 6 BY DESIGN, declared-not-manufactured). Gate proof: output-contract inv
 (commit stat: kuzu_cli.py only) per the CTO 191057Z disposition. ATTRIBUTION (per NEVER#7, no
 rewrite): K3 entries = ~B authorship inside ~F's @ffb41a8495 (shared-file interleave, both
 seats' honest maps on record); K6/K7 = ~B @834c87c00.
+
+
+## P7 RE-STATEMENT 2026-09-09T16:29Z (NFRA_CLDGRPH ADJUDICATION_v1.md C-S26)
+
+The P7 row above is not edited; it is superseded on every class as of this line, on measured ground recorded at C-S26:
+- **NECESSARY** (kuzu_nessie_db + manifest, kuzu_cli.py, loaders, incremental_refresh): superseded by PRD R7 and FWD-7 -- the store is retired and switched off (TO-CG-D-7/D-8), kuzu_cli.py is a thin client, the engine files are byte-pinned by D7-AC5.
+- **HISTORICAL** kuzu_db: HOLD LIFTED -> RETIRE_WITH_TOMBSTONE (0.8.0_AE_CloudComp). Reproducible from s3://opal-313476888478-globgrph/snapshots/20260612/graph-20260612.tar.gz (71,671 B, present 2026-09-09); 0 readers by two instruments. kuzu_cost_enrich.py: already deleted on the CTO's ruling @1266d65641.
+- **HISTORICAL-AT-RISK** kuzu_ac7.db + kuzu_ac_traversals.py: HOLD LIFTED -> ARCHIVE_UNDER_PROJECT (NFRA_GLOBGRPH.ITEM-3; 0.8.0_AE_CloudComp) for the store; the traversal tool is repointed through the served projection (TO-CG-D-7 pass 4) and names no local store. The tie the hold rested on no longer exists.
+- **AT-RISK** kuzu_stitch_db (K4): CG-s-20's question (TO-CG-E-4), in flight.
+Nothing in P7 remains a hold on any deletion after this line. -- 3.0.0_SA_CVO
