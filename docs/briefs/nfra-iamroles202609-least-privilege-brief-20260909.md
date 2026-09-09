@@ -73,6 +73,12 @@ instrument cannot see does not read as clean.
 **This is the estate's ratified two-axis discipline** (instrument state vs world state) applied to
 the identity plane; it is not a new invention for this project.
 
+⛔ **AND HALF OF IT IS ALREADY BUILT — DO NOT CUT THIS AS GREENFIELD.** `comp-iam-usage`'s
+`self-test` asserts **`never-used != cold`** and the tool carries an explicit **`UNKNOWN` band**
+(F5 corrected). **That is exactly this outcome, already implemented on the ROLE axis.** What is
+missing is the same discipline at **permission** grain. An O7 cell written as new work would re-buy
+passing, self-testing code.
+
 ## O8 — The assessment can be re-run without redoing it by hand
 
 Someone can ask the same question next quarter and get a comparable answer. The existing closest
@@ -172,24 +178,62 @@ is finding **12 missing permissions** right now. **Least privilege is the OVER-g
 surface answers it.** The closest, `investigate-candidates`, is explicitly labelled **TRIAGE ONLY,
 `RoleLastUsed`-based, never "unused", NOT SCHEDULABLE.**
 
-## F5 — ⭐ THE OVER-GRANT INSTRUMENT WAS DESIGNED AND PROTOTYPED SEVEN WEEKS AGO, AND NEVER BUILT
+## F5 — ⭐ CORRECTED 2026-09-09 17:1xZ. THE INSTRUMENT IS BUILT — BUT NOT AT THE GRAIN THE QUESTION NEEDS
 
-**Measured by this author, 2026-09-09.** `comp-find` over the Access-Advisor family
-(`GetServiceLastAccessedDetails|ServiceLastAccessed|access-advisor|AccessAdvisor|
-generate-service-last-accessed`, case-insensitive) returns **3 hits across 52,607 files — ALL in the
-`[DOC]` band. ZERO in `SURFACED`, `DEF` or `CONFIG`.** The concept exists only in prose.
+> ⛔ **THIS FINDING PREVIOUSLY READ "DESIGNED AND PROTOTYPED SEVEN WEEKS AGO, AND NEVER BUILT." THAT
+> WAS FALSE.** Falsified by `1.0.0_SA_CTO~Z` at L2 (msg 20532) before outcomes were cut, and
+> re-measured independently by this author before amending. The wrong version is quoted here rather
+> than deleted, because the reason it was wrong is itself a finding — see the tell at the end.
 
-The prose is a **design with a validated prototype**:
-`org/tier2_senior/0.8.0_AE_CloudComp/deliverables/COMP_IAM_USAGE_DESIGN_20260717.md` — *"comp-iam-usage
-— design (decommission research, thread 2/3)"*, **Status: "RESEARCH / DESIGN + validated
-prototype"**, on **Andrew's own steer 2026-07-17: "go ahead with comp-iam expansion"**. It names its
-build target (`org/modules/graph/`, ANY_EXEC → build lane/CTO), its signal table, and a Rule-22a
-mandate to **fix-or-explicitly-carry** comp-iam's three limits rather than silently inherit them.
+**`.tools/comp-iam-usage` EXISTS, IS TRACKED, AND RUNS.**
+**Measured independently by this author, 2026-09-09**, using the instrument the first census should
+have used:
 
-⛔ **THIS CHANGES THE PROJECT'S SHAPE.** The handoff calls the over-grant census *"the hardest
-instrument problem."* It may instead be **build-ladder rung 2 — the estate already has it, on
-paper.** The first act is to establish what that prototype does and does not do, not to design an
-instrument from scratch.
+- `comp-find --name 'comp-iam-usage*'` → **1 hit across 54,558 files** — `.tools/comp-iam-usage`
+- `--help` **RUNS**, five subcommands: `role-cold`, `who-can-reach`, `reach-check`, `limits`,
+  `self-test`
+- **NEGATIVE CONTROL:** an unrecognised flag errors *differently* from `--help`
+  (`error: unrecognized arguments: …`), so the parser is real and `--help` is not a static banner
+- `self-test` **PASSES**: *"never-used!=cold, break-glass-guard-not-debris, UNKNOWN-band, hold-aware,
+  22a limits NAMED (fix-or-carry) — all held"*
+- Committed **57d9c8fd20**, `1.0.0_SA_CTO`, **2026-07-17** — the same day as its design — registered
+  under `NFRA_DECOMTOOL`.
+
+### ⭐ AND THE GRAIN IS THE POINT — this is what replaces the old claim rather than merely negating it
+
+| Grain | State | What exists |
+|---|---|---|
+| **ROLE** coldness | **BUILT** | `role-cold` ranks roles by last-**assume** coldness. Answers *"is this ROLE cold"* — **never** *"which permissions inside it are unused"* |
+| **APPLIED plane** | **BUILT** | `reach-check` gives an `(action, resource)` verdict via `simulate`; `who-can-reach` reads LIVE resource policies |
+| **PERMISSION** grain | ⛔ **NOT BUILT** | *Which granted permissions has this principal never used* — the Access-Advisor question. **No code.** |
+
+**So the brief's central claim survives in a SHARPER form:** the over-grant question **at permission
+grain** is genuinely unanswered, while the role-coldness and APPLIED-plane halves are already built
+and self-testing. **That is a materially different project from either *"the hardest instrument
+problem"* (the handoff, which overstated it) or *"designed and never built"* (this brief's first
+version). Both were wrong in the same direction.**
+
+**F7 therefore matters MORE, not less:** `accessanalyzer list-analyzers` is `[]`, so the native
+instrument for **exactly the unbuilt grain** is still unenabled.
+
+**The three Rule-22a limits are FIXED, not inherited** — read from the tool's own `limits` output:
+`(a)` `reach-check` simulates the EXACT `--resource-arns` (comp-iam models `(action)` only, so a
+grant on ANY arn falsely reads GRANTED for EVERY arn); `(b)` ONE arn per call, because batching
+poisons the control and the positive control is a separate invocation; `(c)` a conditioned statement
+with no context is **UNKNOWN, never a false deny**; `(+)` an unreadable policy is **UNKNOWN, never
+"no reach"** — an unparsed Deny is not silence.
+
+### ⛔ THE TELL — why the first census returned a false absence, kept because it is reusable
+
+The original search was keyed on the **ANSWER'S vocabulary** (`GetServiceLastAccessedDetails`,
+`access-advisor`, …) and searched **CONTENT**. **The tool does not use those APIs**, so it was
+invisible to that pattern. A `--name` census on the name **the design document itself gives** returns
+it as the single hit.
+
+**The denominator was honest the whole time — 3 of 3 in the `[DOC]` band was TRUE.** The pattern was
+wrong, and a true count over a wrong pattern reads exactly like a settled absence. **Keyed on what
+the tool would DO rather than what it is CALLED, and the tool's name was sitting in the title of the
+document being read.**
 
 ## F6 — The core signal is live, and it carries a retrieval trap
 
@@ -274,10 +318,12 @@ unowned**. ⚠ **It is the SAME dependency the Global Infrastructure Reporting b
 D4** — one instrument, two projects. Whichever cuts it first should own it. *(An L5 observation for
 `2.0.0_SA_COO~Z`, not a ruling made here.)*
 
-**D2 — The `comp-iam-usage` prototype's real state must be established before anything is built.**
-F5 says a validated prototype existed on 2026-07-17. Whether it still runs, what it covers, and
-where it lives are unknown — and the difference between "extend a prototype" and "build an
-instrument" is the difference between two very different projects.
+**D2 — CORRECTED. `comp-iam-usage` is BUILT and RUNNING; what must be established is its COVERAGE at
+permission grain.** F5 (corrected) locates it at `.tools/comp-iam-usage`, tracked, executable,
+self-test passing. The open question is no longer *"does it exist"* but *"`role-cold` answers the
+ROLE axis — what answers the PERMISSION axis?"* **Extending a working, self-testing tool that already
+names its Rule-22a limits is a different and much smaller act than building an instrument**, and any
+cell written as greenfield here would re-buy working code.
 
 **D3 — `DESIRED ≠ APPLIED ≠ EXERCISED`, and every scope claim so far is DESIRED.** Every statement
 in this brief about what a policy permits is read from a **document**. No
@@ -311,7 +357,10 @@ correct, and they are not to be re-run. What they are not is coverage.
 - **`comp-iam gaps` is currently finding 12 missing permissions** (UNDER-grant direction).
 - **No over-grant census has ever been run.** Coverage of the least-privilege question: **zero of
   208.**
-- **`comp-iam-usage`**: design + validated prototype dated 2026-07-17; **no code in the corpus.**
+- **`comp-iam-usage`: BUILT, TRACKED AND RUNNING** at `.tools/comp-iam-usage` (committed
+  `57d9c8fd20`, 2026-07-17; five subcommands; `self-test` PASSES). ⛔ **CORRECTED 17:1xZ — this line
+  previously read "no code in the corpus", which was false.** Coverage: ROLE-coldness and
+  APPLIED-plane reach are built; **the PERMISSION grain is not.**
 - `website-estate-admin`'s console credential removed 2026-09-09 16:38Z; the MFA-condition gap
   persists in Terraform and re-arms at onboarding.
 
@@ -326,8 +375,11 @@ correct, and they are not to be re-run. What they are not is coverage.
    `website-estate-admin` exemplar — is read from a DOCUMENT and never EXERCISED.
 3. **Whether the 2026-02-17 forty-policy remediation executed is unknown.** Nothing was read either
    way, and its directory location is not evidence.
-4. **The `comp-iam-usage` prototype was not run or located.** F5 establishes that a design and a
-   claimed validated prototype exist; it does not establish that any code does.
+4. ~~**The `comp-iam-usage` prototype was not run or located.**~~ **FALSIFIED AND REPLACED 17:1xZ** —
+   it was located and run (F5 corrected). **The replacement non-claim, which is narrower and real:
+   the tool was exercised only via `--help`, `limits` and `self-test` (offline). `role-cold`,
+   `who-can-reach` and `reach-check` were NOT run against live AWS by this author**, so its coverage
+   at role and APPLIED grain is read from its own `--help` and `limits` output, never exercised.
 5. **The `MultiFactorAuthPresent` finding is scoped to ONE policy.** No estate-wide condition census
    was run, so "the estate is largely silent on the condition axis" is an **inference from one
    exemplar plus the absence of any condition-aware surface in comp-iam's fourteen modes** — not a
