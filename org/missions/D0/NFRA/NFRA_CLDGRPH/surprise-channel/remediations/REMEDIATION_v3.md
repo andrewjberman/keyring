@@ -3,7 +3,7 @@
 **Home:** the project tree's remediation document (`org/ref/SURPRISE_CHANNEL_PROTOCOL.md` section 5; lane `TREE_CVO`).
 **Who writes:** `3.0.0_SA_CVO`. One row per GRADUATED item, keyed by the item's id; the clocks (`disarm`, `remediation`,
 `closed`) advance in place and only forward. Form: spine v3 -- no route token; the CTO routes every round from the slug.
-**Denominator at this write:** 9 rows -- round 4 L9 (2026-09-09 ~15:0xZ): S26 clocks advanced in place (DISARMED on this seat's unscoped DACL read after a fresh provisioning run, 211 files / 0 protected / 0 deny; REMEDIATED at the writer @e4167f3c3b; closed false pending the fresh-Codex-seat acceptance, which waits on Andrew's Codex word); S31 untouched (pins 3 of 7 measured, recorded at C-S24); S36 and S57 minted REMEDIATED and closed; S34, S35, S53 minted OPEN (owner 1.0.0_SA_CTO). Round 3 at its write: 4 rows (S26, S27, S28, S31), all OPEN. The graduations are recorded in
+**Denominator at this write:** 9 rows -- round 5 close (2026-09-09 ~17:3xZ): S31 clocks advanced in place to DISARMED / REMEDIATED / closed on C-S29's live read (7 of 7 globgrph families by digest after TO-CG-E-2, the :latest digest unchanged), PRD v0.5 R13 (no family references a mutable tag) and CLAUDE.md's NEVER-2 clause (an image act names every family the tag reaches); S26 stays open on its Codex-seat acceptance; S34, S35, S53 OPEN at the CTO; round 4 L9 (2026-09-09 ~15:0xZ): S26 clocks advanced in place (DISARMED on this seat's unscoped DACL read after a fresh provisioning run, 211 files / 0 protected / 0 deny; REMEDIATED at the writer @e4167f3c3b; closed false pending the fresh-Codex-seat acceptance, which waits on Andrew's Codex word); S31 untouched (pins 3 of 7 measured, recorded at C-S24); S36 and S57 minted REMEDIATED and closed; S34, S35, S53 minted OPEN (owner 1.0.0_SA_CTO). Round 3 at its write: 4 rows (S26, S27, S28, S31), all OPEN. The graduations are recorded in
 `../adjudications/ADJUDICATION_v1.md` (C-S1, C-S3, C-S4, C-S5). Rows of rounds 1 and 2 whose clocks this round
 advanced are edited in place in REMEDIATION_v1.md (S2, S3, S8) and REMEDIATION_v2.md (S10, S20, S22, S23, S24).
 
@@ -116,9 +116,17 @@ advanced are edited in place in REMEDIATION_v1.md (S2, S3, S8) and REMEDIATION_v
     "remedy": "Pin each task family to the image it was certified with -- a digest, or a per-purpose tag that only that family's deploy moves -- so one cell's rebuild cannot change another family's bytes; state the rule in the PRD's deploy section and require every image act's ledger line to name the tag's reach at that moment (it is seven families today, five on 08-26). The S28 rebuild is the first act under the rule: it must name all seven and read each one's next launch.",
     "owner": "1.0.0_SA_CTO",
     "round": "v3",
-    "disarm": {"state": "ARMED", "owner": "1.0.0_SA_CTO", "at": null},
-    "remediation": {"state": "OPEN", "owner": "1.0.0_SA_CTO", "round": "v3"},
-    "closed": false
+    "disarm": {
+      "state": "DISARMED",
+      "owner": "1.0.0_SA_CTO",
+      "at": "2026-09-09T17:30Z"
+    },
+    "remediation": {
+      "state": "REMEDIATED",
+      "owner": "1.0.0_SA_CTO",
+      "round": "v3"
+    },
+    "closed": true
   }
 ]
 ```
