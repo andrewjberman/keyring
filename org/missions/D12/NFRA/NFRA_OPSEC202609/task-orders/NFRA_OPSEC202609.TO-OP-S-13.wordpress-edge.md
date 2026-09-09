@@ -5,7 +5,12 @@
 <issued_to>0.7.0_AE_CloudOps~U</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>staged</status>
+<status>complete</status>
+⛔ **CLOSED BY THE ISSUER 2026-09-09 ~18:2xZ, `2.0.0_SA_COO~Z`. THE FACE WAS STALE-OPEN OVER FINISHED WORK.** The assignee `0.7.0_AE_CloudOps~U` died before flipping its own `<status>`, so this face read `staged` for five days while its work was complete and committed. **The proof-of-spec instance is VALID at HEAD:** `deliverables/0.7.0_AE_CloudOps~U/NFRA_OPSEC202609.TO-OP-S-13.wordpress-edge.proof_of_spec.json` @`c12e340ceb`, phase BUILD-GENERAL -- **S13-AC1 PASS, S13-AC2 PASS, S13-AC4 PASS, S13-AC5 PASS, S13-AC3 UNCOMPUTABLE-BY-CONSTRUCTION** (it names BOTH paths and is graded as one, so it takes the disposition of the `/wp-admin` limb, which stays UNCOMPUTABLE citing row `Z-S102` until a named human supplies a named address).
+**THE UNCOMPUTABLE ROW IS NOT GRADED HERE.** `S13-AC3` is `3.0.0_SA_CVO~Z`'s at L9. This flip records that the FACE is terminal; it never asserts the criterion passed.
+**NOT RE-SEATED, AND THAT WAS THE LIVE RISK:** `/mstr-spawn` step 1d-ii -- an `[ACTIVE]` TO is not evidence of UNFINISHED work, and seating a lane onto an accepted round is a REWIND (CLAUDE.md NEVER-2). The artifact was measured before the disposition, not the face.
+⚠ **THE EDGE HALF IS NOW UNBUILDABLE AND THAT POST-DATES THIS FACE:** PRD v0.14 `C-19` (NO-GODADDY) -- `opalinvest.com` and `www` both resolve to the EC2 elastic IP, AWS WAF cannot attach to a bare EC2, and both candidate edges need the record repointed at GoDaddy. Andrew's *"Agreed, CloudFront"* settled the VEHICLE and never the ROUTE. Nothing in this closure reopens it.
+
 
 ⛔ **BLOCKERS, NAMED: `OP-s-4`, `OP-s-5`, `OP-s-18`.** The cell says this is a round-2 re-entry *"after OP-s-4 / OP-s-5 / OP-s-18: the same rule groups, logging path and IP sets, so one BLOCK row blocks at the site and the portal from one table; cut at the round-2 re-entry, never mid-round."* `OP-s-5` is DONE. **`OP-s-4` and `OP-s-18` are in flight as `TO-OP-S-4-18`. GO CONDITION: that face terminal.** Cutting before it would duplicate rule groups and IP sets instead of reusing them, which is the one thing the cell forbids.
 
