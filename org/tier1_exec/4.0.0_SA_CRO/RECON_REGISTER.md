@@ -683,3 +683,12 @@ pages viewed. PII scrubbed: client name, advisor contact, client-portfolio incep
 amended with finding F-M + non-claim 13. Findings: hypothetical weighted-blend calculation, not account performance; four
 as-of clocks in one report; ~half the fields are look-through classification (the RCN-0001 moat); alpha/beta benchmark unnamed;
 **no stress scenario anywhere in the artifact**. No vendor egress.
+
+### Correction append -- 2026-09-09 ~18:4xZ, Andrew-direct, same terminal, VERBATIM
+*"THe YCharts artifact is not a performance reporting product, that is a sensitivity analysis. The performance reporting asset
+is product 1, this is a sample of 1 of 3 varietals for product 2."* The downstream entry above framed the artifact against
+product 1 (performance reporting); that framing was this seat's and is WRONG. The artifact is PRODUCT 2 (sensitivity
+analysis, brief O4 / Capability 2), varietal 1 of 3; the remaining two varietals are uncaptured. What stands: no
+historical-scenario replay in THIS varietal. Corrected in the brief (F-M, non-claim 13) and in the JSON
+(`_meta.classification_correction`, `what_this_report_is`); the 18:2xZ entry above is left as written per this file's
+append-only law. Record: `deliverables/ANDREW_DIRECT_20260909_184xZ_YCHARTS_ARTIFACT_IS_PRODUCT_2_SENSITIVITY_1_OF_3_VARIETALS.md`.
