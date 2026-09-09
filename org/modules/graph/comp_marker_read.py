@@ -320,51 +320,38 @@ class MarkerHeadGraph:
 # ---- loader (reuses the comp-kuzu marker-head DB + provenance) --------------------------
 
 def load_marker_head_graph(*, db_path: str | None = None) -> MarkerHeadGraph:
-    """Open the canonical marker-head Kuzu DB read-only (auto-refreshed on HEAD-advance,
-    same oracle as comp-kuzu), read CloudNode/CloudEdge, and return the head-pinned handle
-    with its provenance header resolved. Raises on a missing DB (a VISIBLE gap, never a
-    silent stale read)."""
-    import kuzu
-    import _canonical
-    import _provenance
+    """Read CloudNode/CloudEdge from the SERVED cloud graph and return the handle with its
+    provenance resolved (TO-CG-D-7 / R7).
 
-    path = db_path or _canonical.CANONICAL_DB_PATH
-    if _canonical.is_canonical(path):
-        try:
-            _canonical.ensure_fresh(path)   # marker-oracle auto-refresh (HEAD-advance)
-        except Exception:  # noqa: BLE001 -- provenance header still records the vintage below
-            pass
-    if not os.path.exists(path):
-        raise RuntimeError("marker-head Kuzu DB not found at %s (run kuzu_load.py)" % path)
+    WHAT THE "MARKER HEAD" MEANS NOW. It used to mean: a local DB, auto-refreshed when the marker
+    oracle saw HEAD advance, whose manifest carried the `nodes_snapshot_id` it was built at. The
+    refresh seam is gone and so is the local DB. The served projection is BUILT by the cloud engine
+    at a pointer the service installs atomically, so the head pin is the SERVICE's `vintage` and the
+    identity is its `manifest_sha256`. `status` is therefore always "current": a client cannot be
+    handed a generation other than the installed one, so BEHIND has no state left to name. An
+    UNREACHABLE service RAISES -- a VISIBLE gap, never a silent stale read, which is the property
+    this function has always been written to protect.
 
-    prov = {"marker_head": None, "nodes_snapshot_id": None, "status": "UNKNOWN-VINTAGE",
-            "built_at": None, "header": None}
-    try:
-        man = _provenance.read_manifest(path) or {}
-        if isinstance(man, dict):
-            sv = man.get("source_vintage") or {}
-            # the resolved graph_nodes snapshot IS the head pin the DB reads AT (D4 identity).
-            # The Nessie commit hash lives in the S3 _branch_head marker, not the local manifest;
-            # the snapshot-id is the durable pin identity, so marker_head = nodes_snapshot_id here.
-            prov["nodes_snapshot_id"] = sv.get("nodes_snapshot_id")
-            prov["marker_head"] = sv.get("nodes_snapshot_id")
-            prov["built_at"] = man.get("built_at")
-        hdr = _provenance.format_provenance_header(path) or ""
-        prov["header"] = hdr
-        low = hdr.lower()
-        if "head: current" in low or "pin == marker" in low:
-            prov["status"] = "current"
-        elif "behind" in low:
-            prov["status"] = "BEHIND"
-        elif "unknown vintage" in low or "unknown-vintage" in low:
-            prov["status"] = "UNKNOWN-VINTAGE"
-    except Exception:  # noqa: BLE001 -- absent provenance => UNKNOWN-VINTAGE (surfaced, not silent)
-        pass
+    `db_path` is refused rather than ignored: a caller still holding a local path is asking for a
+    surface that no longer exists, and answering from the served graph anyway would substitute one
+    universe for another without saying so."""
+    if db_path:
+        raise RuntimeError(
+            "local marker-head DB paths are RETIRED (NFRA_CLDGRPH R7): %r will not be opened. "
+            "The marker-head graph is the SERVED projection." % db_path)
+    import projection_client
 
-    db = kuzu.Database(path, read_only=True)
-    conn = kuzu.Connection(db)
+    conn = projection_client.connect()
     nodes = _fetch_nodes(conn)
     edges = _fetch_edges(conn)
+    prov = {
+        "marker_head": conn.manifest_sha256,
+        "nodes_snapshot_id": conn.manifest_sha256,
+        "status": "current",
+        "built_at": conn.vintage,
+        "header": projection_client.vintage_line(conn,
+                                                 {"nodes": len(nodes), "edges": len(edges)}),
+    }
     return MarkerHeadGraph(nodes, edges, prov)
 
 

@@ -51,6 +51,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -160,24 +161,31 @@ def service_linked(node: dict) -> bool:
 # data is not on.
 # ---------------------------------------------------------------------------
 
-KUZU_DB = WORKSPACE / "infra" / "aws" / "globgrph" / "kuzu_nessie_db"
+# TO-CG-D-7 (R7): the graph is SERVED. There is no local database constant here any more; the one
+# transport is infra/aws/globgrph/projection_client.py.
+GLOBGRPH = WORKSPACE / "infra" / "aws" / "globgrph"
 
 
 def kuzu_iam_rows(db_path=None):
-    """Read IAM_ROLE nodes straight from the materialized graph. Returns [] if kuzu is unavailable.
+    """Read IAM_ROLE nodes from the SERVED cloud graph. Returns [] if the service is unavailable.
 
-    Read-only, local, no AWS. Returns [] rather than raising so the caller degrades to the derive
-    artifact and SAYS SO, instead of erroring out of a plane that has a working fallback."""
-    try:
-        import kuzu
-    except ImportError:
+    Read-only, no AWS call, no local database (TO-CG-D-7 / R7 retired it). Returns [] rather than
+    raising so the caller degrades to the derive artifact and SAYS SO, instead of erroring out of a
+    plane that has a working fallback -- the degradation is DISCLOSED by the caller, which is why an
+    empty list is safe here and a silent local-copy read would not have been.
+
+    `db_path` is accepted for signature compatibility and ignored except to refuse: naming a local
+    path asks for a surface that no longer exists."""
+    if db_path:
         return []
-    p = Path(db_path) if db_path else KUZU_DB
-    if not p.exists():
+    try:
+        if str(GLOBGRPH) not in sys.path:
+            sys.path.insert(0, str(GLOBGRPH))
+        import projection_client
+    except Exception:   # noqa: BLE001
         return []
     try:
-        conn = kuzu.Connection(kuzu.Database(str(p), read_only=True))
-        res = conn.execute(
+        res = projection_client.connect().execute(
             "MATCH (n:CloudNode) WHERE n.node_type = 'IAM_ROLE' "
             "RETURN n.name, n.arn, n.drift_class, n.source, n.snapshot_ts")
         out = []
@@ -186,7 +194,7 @@ def kuzu_iam_rows(db_path=None):
             out.append({"id": name, "name": name, "arn": arn,
                         "drift_class": dc, "source": src, "snapshot_ts": ts})
         return out
-    except Exception:
+    except Exception:   # noqa: BLE001
         return []
 
 
