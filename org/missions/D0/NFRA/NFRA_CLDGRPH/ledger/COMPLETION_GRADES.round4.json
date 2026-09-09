@@ -1,0 +1,69 @@
+{
+  "kind": "COMPLETION_GRADES",
+  "schema_version": "1.0",
+  "project": "NFRA_CLDGRPH",
+  "round": 4,
+  "graded_by": "1.0.0_SA_CTO",
+  "graded_utc": "2026-09-09T15:10Z",
+  "report_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/COMPLETION_REPORT.round4.json@5a999e42b9",
+  "slug_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/adjudications/ADJUDICATION_v1.md@23fb03b1cd",
+  "analysis_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/ROUND_ANALYSIS.round4.md",
+  "rows": [
+    {
+      "fwd_id": "FWD-1",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-D-5.close-fwd1-never-compiled-seat.proof_of_spec.json@bdd7dbaa08",
+      "state_observed": "EXERCISED",
+      "note": "A never-compiled seat asked through the thin client and got the three correct rows at a disclosed vintage on 11 of 11 asks across three seats and two projections (C-S11, D5-AC5 PASS); the gateway bearer path is CG-s-5 (D-2). Finding carried, not a fail: ~90% of the answer time is the thin client's fixed cost (9-13 s)."
+    },
+    {
+      "fwd_id": "FWD-2",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-D-9.close-fwd2-schedule-exercised.proof_of_spec.json@9aca2a78cf",
+      "state_observed": "EXERCISED",
+      "note": "The nightly fired itself (events-rule provenance, 0 of 15 rebuild-constituting tasks seat-caused), the served answer carried the night's vintage 82.186 s after the stamp (the clock ruled to the swap, C-S12), and a read taken while the answer was 38.4 s behind returned the stale answer with its age through a client with no rebuild path (BEHIND_CAUGHT). D9-AC6 PASS."
+    },
+    {
+      "fwd_id": "FWD-3",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-3.thin-client.proof_of_spec.json@d060cf9223",
+      "state_observed": "EXERCISED",
+      "note": "The card asks APPLIED (the thin client prints the age in plain words); every round-4 answer on the record carries the VINTAGE line, so the observed state is EXERCISED. D3-AC8 PASS (C-S8)."
+    },
+    {
+      "fwd_id": "FWD-4",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-D-10.close-fwd4-ceiling-holds.proof_of_spec.json@b20444334d",
+      "state_observed": "EXERCISED",
+      "note": "A full closed cycle with nobody enforcing the ceiling by hand: HAND_ENFORCED_CEILING 0 on a hand-free cycle re-derived from artifacts, the ceiling held at 31.0% of budget with 3092 of 3092 answers placed, and the counterfactual controls fired (C-S16, D10-AC5 PASS). The bar was re-cut once to the cell's causal property (@9f4a57262f) and the stronger bar is what passed."
+    },
+    {
+      "fwd_id": "FWD-5",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-6.close-fwd5-fresh-machine.proof_of_spec.json@23fb03b1cd",
+      "state_observed": "EXERCISED",
+      "note": "A machine with no local DB (0 of 60 entries before the ask, proven absent by ls) asked once and was answered first try with the served vintage; after the ask the census still read 0, so the reader did not become a builder. D6-AC4 PASS (C-S7). The instance is cited at the slug's tree vintage."
+    },
+    {
+      "fwd_id": "FWD-6",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-7.retire-local-copy.proof_of_spec.json@23fb03b1cd",
+      "state_observed": "EXERCISED",
+      "note": "No flag, mode or prompt exists where an ordinary user works: the thin client carries no --mode or --db-path, and `comp-kuzu --mode full` is REFUSED by the client (exercised by the CVO at C-S22). A refused flag is not a choice a user can make. The manifest still OFFERING the flag is an instruction path back -- FWD-7's row S17 in the v0.5 addendum -- not a refresh choice under this card."
+    },
+    {
+      "fwd_id": "FWD-7",
+      "verdict": "NOT_REALIZED",
+      "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-8.close-fwd7-two-machines.proof_of_spec.json@23fb03b1cd",
+      "state_observed": "APPLIED",
+      "note": "The cells are met: the seam unreachable (0 of 3), no consumer opens a local DB (0 of 29, three controls), the writer deleted, the canonical copy switched off on Andrew's word (6 -> 0 at 14:08:02Z), and two machines answered byte-identically under one vintage 2.1 s apart (D7-AC8, D8-AC5 PASS at C-S22). NOT REALIZED on the accept's third clause -- 'no second, older copy anyone could still be reading from' -- because graph-call-manifest.yaml, the file Rule 20 sends every seat to before an infra change, still registers `comp-kuzu --mode full|inc` as the canonical refresh call (:219, :233, :1783; W2-S23), and two residual local stores stand with no owner of their disposition (W2-S28; S19/S20 in v0.5). The person half of 'two people' is MODELLED (one worker on two machines); its exercise from site Z is S17's clause (2) on the roadmap's allocation. State observed APPLIED on the outcome: the retirement is real on the executable plane and unserved on the instruction plane."
+    },
+    {
+      "fwd_id": "FWD-8",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-D-11.close-fwd8-status-read-morning.proof_of_spec.json@23fb03b1cd",
+      "state_observed": "EXERCISED",
+      "note": "A real morning read 11h59m after the day's boundary said REFRESHED LAST NIGHT: YES with the night's own vintage to the microsecond (D-9's), the planted-miss fixture read NO with the last full's time, PROCS=0 and the pointer's ETag unchanged across the reads. D11-AC4 PASS (C-S13): the plant stands for the decision, and the second fixture is named for a real miss's in-window path. R4 held: a pull-style read, no alarm."
+    }
+  ]
+}
