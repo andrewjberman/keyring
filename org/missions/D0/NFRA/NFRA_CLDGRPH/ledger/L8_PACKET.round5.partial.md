@@ -113,3 +113,52 @@ addresses, 4 foreign, none applied). No image rebuilt, pushed or re-tagged; no l
 ## A1.4 WHAT DID NOT CHANGE
 
 E-1 (`~2`) and E-4 (`~3`) executing; no FWD graded; no row dispositioned. Push state LOCAL.
+
+---
+
+# ADDENDUM 2 -- 2026-09-09T16:55Z, appended by `2.0.0_SA_COO~A` at the TO-CG-E-4 drain (@`49fea6980a`)
+
+## A2.1 TO-CG-E-4 (CG-s-20) IS TERMINAL -- three of four; 23 of 24 project orders
+
+Instance `deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-E-4.stitch-graph-home-decided.proof_of_spec.json`
+@`aff8c7a102`, rc 0 on six ids at the issuer's seat inside the worktree.
+
+| id | verdict | deciding line | denominator |
+|---|---|---|---|
+| E4-AC1 | PASS by output | `STITCH_HOME=JOIN_PROJECTION RECORDED` / `PRODUCER_READ=true` | 4 producer fields; 4 later-round cells with lanes; the control caught a planted thin reason |
+| E4-AC2 | PASS by output | `REFUSAL_TEXTS_NAME_HOME=2 of 2` | the two `SystemExit` sites in `_stitch_freshness`; the nessie leg's raise printed out-of-scope |
+| E4-AC3 | PASS by output | `BUILDER_STAMPS_CLAIM=true` / `MANIFEST_CLAIM_FIELDS=2 of 2` / store `UNCHANGED=True` | the issuer read the manifest: `edge_count_claim merge_attempts`, `artifact_claim interim_local_projection` |
+| E4-AC4 | PASS by output | `PROJECTION_REBUILD_PATHS=0 of 3216` | AST nodes across both edited files; 1 comment + 1 docstring mention printed beside the zero |
+| E4-AC5 | PASS by output | `OK: pre-commit gate clean for 16 of 16 file(s)` + the bounded `comp_debt.py` run (rc 1, the refusal naming the home) | see W3-S12, W3-S13 |
+| E4-AC6 | RECORDED, no verdict | the record's s.4 | 4 of 4 questions + the deliberate-omissions clause |
+
+## A2.2 THE DECISION, AND THE FINDING BENEATH IT -- for the CVO's E4-AC6 grade and the CTO's L10 read
+
+**HOME = JOIN_PROJECTION** (owner `0.8.0_AE_CloudComp`). The one-line reason: the S3 stitch artifact's own marker
+says `"producer": "stitch-local"` -- the estate already treats the cloud key as the destination and only the COMPUTE is
+misplaced; declaring the local store canonical would ratify the workaround and retire the destination. Four
+later-round cells are named with lanes, verbs and accepts (none cut here): **repair the producer** (`0.7.0_AE_CloudOps`);
+extend the projection to carry the stitch source; repoint `comp-debt`'s second leg through the client; retire the local
+store with a CG-s-19-shaped disposition (all `0.8.0_AE_CloudComp`).
+
+⛔ **W3-S10 (ARMED, `0.8.0_AE_CloudComp`): the cloud stitch producer has NEVER succeeded.** `opal-stitch-produce`:
+67 of 67 CodeBuild builds FAILED since 2026-07-07, 25 of 25 consecutive rule-initiated nightlies (`cron(0 3 * * ? *)`,
+ENABLED, fires on time); the BUILD phase dies in ~30 s on `derive_stitch.py ... exit status 2`; `stitch-source/source.zip`
+last pushed 2026-07-07. The issuer's own `list-builds-for-project` read 67. What IS in S3 was written by a laptop. **JOIN
+was decided on a substrate that currently produces nothing**, which is why the first named cell is the repair.
+
+⛔ **W3-S11 (ARMED, `0.8.0_AE_CloudComp`): the local stitch store's bytes were content-written 2026-08-27 02:32 with no
+manifest rewrite** (Modify == Change; no build, since the builder rewrites the manifest); `node_count 3414 / edge_count
+5329` describe the July bytes and no manifest describes the store on disk. The capable mutator is INFERRED as the
+deleted `kuzu_cost_enrich.py` (it wrote both stores; the identification is marked inferred, the capability grounded).
+
+- **W3-S12** (INERT): the face's expected bounded `comp-debt` run cannot show the stitch leg NOT refusing from any
+  worktree (`STITCH_DB` is script-relative and the store is gitignored); from the main workspace it refuses STALE by
+  mtime. The refusal itself was the exercised artifact.
+- **W3-S13** (INERT): E-3 and E-4 both named `commit_gate_all.sh` in the same slot folder (the issuer's cut, the same
+  defect as W1-S31/W2-S34); resolved as a UNION script gating all 16 `.py` of both orders, its header saying so.
+
+## A2.3 WHAT DID NOT CHANGE
+
+E-1 pass 2 (`~2`) executing on the issuer's ruling of W2-S30 (the classification generator on the population
+authority). No FWD graded; no row dispositioned. Channel 137 at the drain. Push state LOCAL.
