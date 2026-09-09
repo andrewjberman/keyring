@@ -124,18 +124,29 @@ For a NEW bucket/table/ARN, verify on the live primitive:
 aws iam simulate-principal-policy --policy-source-arn <role> --action-names <action> \
     --resource-arns <exact key>
 ```
-⛔ **THAT INSTRUMENT HAS THREE INDEPENDENT FALSE-DENY MODES:**
+⛔ **THAT INSTRUMENT HAS FOUR INDEPENDENT FALSE-DENY MODES:**
 1. **2+ `--resource-arns` in one call flips the HELD ones to `implicitDeny`.**
 2. **It EVALUATES `Condition` blocks** -- with no `--context-entries`, a conditioned statement returns
    `implicitDeny` **byte-identical to a real deny**.
 3. **It does NOT validate action names** -- a nonexistent action returns `implicitDeny` too, so **a
    TYPO is indistinguishable from a missing grant** (exercised: `s3:ZzzNoSuchActionName9999` ->
    `implicitDeny`).
+4. **A resource ARN at the WRONG GRAIN for the action returns `implicitDeny` even for an
+   `AdministratorAccess` (`*`/`*`) principal** -- no error, no hint the resource failed to match the
+   action's resource type. Measured 2026-09-04 (NFRA_OUTSET-S3, `0.7.0_AE_CloudOps~W`):
+   `logs:GetLogEvents` against `...:log-group:/ecs/globgrph/trino:log-stream:*` -> `implicitDeny`;
+   the same principal and action against the log-GROUP-grain ARN -> `allowed`. **It fails in the
+   UNDER-granted direction and is INVISIBLE against a narrowly scoped principal** -- the normal
+   subject of an IAM audit -- where it reads as a correct negative. Modes 1-3's mitigations were all
+   in force and none prevents it.
 
 **THEREFORE: ONE `--resource-arns` PER CALL - run the positive control as a SEPARATE INVOCATION -
-pass `--context-entries` for any conditioned statement - and NEVER use it to check whether an action
-name is REAL** (use `aws accessanalyzer validate-policy`: bogus -> `INVALID_ACTION` naming the right
-one; real -> 0 findings).
+pass `--context-entries` for any conditioned statement - pass the resource ARN AT THE GRAIN THE
+ACTION IS AUTHORIZED ON (`log-group` for `logs:GetLogEvents`, `task-definition` for `ecs:RunTask`)
+and run a `*`/`*`-principal positive control beside any deny you intend to act on (a deny you cannot
+reproduce against an admin principal is the instrument, not the world) - and NEVER use it to check
+whether an action name is REAL** (use `aws accessanalyzer validate-policy`: bogus -> `INVALID_ACTION`
+naming the right one; real -> 0 findings).
 
 *A POSITIVE CONTROL IS ONLY A CONTROL IF IT IS RUN IN ISOLATION FROM THE TARGET* -- mode (1) silently
 disarms the very control this rule leans on.
