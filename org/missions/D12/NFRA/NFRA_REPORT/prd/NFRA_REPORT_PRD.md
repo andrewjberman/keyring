@@ -9,7 +9,7 @@ citations behind.*
 **L1 owner:** `4.0.0_SA_CRO~Z` · **L2-L4 owner + author:** `1.0.0_SA_CTO~Z` · **L5-L6:** `2.0.0_SA_COO~ZZ` · **L8-L10:** `3.0.0_SA_CVO~Z` · **Integrator:** `0.0.0_AB_MSTR~Z`
 **Brief (L1):** `docs/briefs/global-infrastructure-reporting-brief-20260909.md` @`37ff80867a`
 **Endpoint (L2):** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_GLOBAL_INFRA_REPORTING_20260909.md`
-**Version:** v0.4, 2026-09-09 ~21:2xZ -- **v0.4 DISARMS ARMED ROW `NFRA_REPORT-Z-W2-S2`**: section 6's first ruling collapsed TWO axes into one and dropped `Graph`; `FWD-4` now carries a mandatory rendered `UNGROUPED` value so no live surface leaves the axis silently; and ruling 15b's open sub-item is discharged (the Graph group is NOT empty -- 3 of 3 ECS services running). The member NAMES go to Andrew as an open call. Before it, **v0.3 ADDED SECTION 9, THE ADVERSARY GRID**, on Andrew-direct
+**Version:** v0.5, 2026-09-09 ~21:5xZ -- **v0.5 IS THE ROUND-1 ADDENDUM FOR AN OUTCOME NO CELL SERVED (rule 27).** ARMED row `NFRA_REPORT-Z-S1` (`2.0.0_SA_COO~ZZ`, msg 20627) measured that `FWD-4` was cut into NO cell: `S1` bundled TWO outcomes, `RP-s-1` mirrored it BY ID and cut only the FWD-2 half, and L6's coverage limb compares row IDS so it passed 12-of-12 while content coverage did not. **`S1` is NARROWED to `FWD-2` and the attribution limb becomes its OWN row `S13`** -- which also makes `RP-s-1` an exact mirror of the narrowed `S1` rather than a deficient cell, so nothing is reopened and no certified work is rewound. Censused: 2 of 12 rows named multiple outcomes; `S2` is deliberately left as is for a stated reason. Before it, **v0.4 DISARMED ARMED ROW `NFRA_REPORT-Z-W2-S2`**: section 6's first ruling collapsed TWO axes into one and dropped `Graph`; `FWD-4` now carries a mandatory rendered `UNGROUPED` value so no live surface leaves the axis silently; and ruling 15b's open sub-item is discharged (the Graph group is NOT empty -- 3 of 3 ECS services running). The member NAMES go to Andrew as an open call. Before it, **v0.3 ADDED SECTION 9, THE ADVERSARY GRID**, on Andrew-direct
 (*"then they run a comp-adversary and include the comp-adversary results in a grid beneath the
 surface_manifest as an extra section for the reference of the COO"*), and folds `2.0.0_SA_COO~ZZ`'s
 msg 20592: the `S1` cell now carries **ruling 12's SIX-value axis verbatim** (v0.2 abbreviated it to
@@ -33,7 +33,7 @@ before landing (see its `CONFIRMED` line).
   "project": "NFRA_REPORT",
   "directive": "D12",
   "fabric": "site-z",
-  "prd_version": "v0.4",
+  "prd_version": "v0.5",
   "step": 4,
   "brief_ref": "docs/briefs/global-infrastructure-reporting-brief-20260909.md@37ff80867a",
   "endpoint_outcomes": [
@@ -435,7 +435,7 @@ not asserted.**
 
 | id | outcome | surface (engine) | claim | MEASURED-BY / evidence | lane | verb | depends_on | accept | bound |
 |---|---|---|---|---|---|---|---|---|---|
-| S1 | FWD-2, FWD-4 | The report's STATE MODEL -- ruling 12's vocabulary IN FULL: instrument axis `CHECKED \| BLIND \| INERT \| COARSE \| UNCHECKED \| DENY-BY-DESIGN` (**SIX values, all six binding** -- v0.2 abbreviated this cell as "CHECKED vs BLIND" and a worker handed only the cell would have built a TWO-value axis, silently dropping the four that carry ruling 12's own worked examples; corrected at v0.3 on `2.0.0_SA_COO~ZZ`'s msg 20592) · world axis `OK \| DEGRADED \| BREACH`, meaningful ONLY where axis 1 is `CHECKED` · plus the property+owner attribution riding both | absent | brief F6 (the vocabulary already exists in two places, unratified as the report's law); Andrew-direct 2026-09-09 ratified the two-axis model and the three properties | report lane | wire | -- | 2, 3 | `C-FWD2-FIRST`; `C-WEBSITE-BLIND` -- it MUST express a PERMANENT blind, not only a not-yet; `C-SENTINEL-STATE` -- and a DESIRED-not-APPLIED row |
+| S1 | FWD-2 | The report's STATE MODEL -- ruling 12's vocabulary IN FULL: instrument axis `CHECKED \| BLIND \| INERT \| COARSE \| UNCHECKED \| DENY-BY-DESIGN` (**SIX values, all six binding** -- v0.2 abbreviated this cell as "CHECKED vs BLIND" and a worker handed only the cell would have built a TWO-value axis, silently dropping the four that carry ruling 12's own worked examples; corrected at v0.3 on `2.0.0_SA_COO~ZZ`'s msg 20592) · world axis `OK \| DEGRADED \| BREACH`, meaningful ONLY where axis 1 is `CHECKED`. **NARROWED AT v0.5: the property+owner ATTRIBUTION limb moved OUT of this row to `S13`** -- it was bundled here, `RP-s-1` cut only the vocabulary half, and an id-scoped coverage check cannot see that | absent | brief F6 (the vocabulary already exists in two places, unratified as the report's law); Andrew-direct 2026-09-09 ratified the two-axis model and the three properties | report lane | wire | -- | 2, 3 | `C-FWD2-FIRST`; `C-WEBSITE-BLIND` -- it MUST express a PERMANENT blind, not only a not-yet; `C-SENTINEL-STATE` -- and a DESIRED-not-APPLIED row |
 | S2 | FWD-3, FWD-1 | The report ARTIFACT's row structure and its PER-ROW DELTA against the previous edition | absent | brief F1: the rollup is a `max()` over eight rows and the subject line read the same value on every instance in the window -- a signal that never changes | report lane | wire | S1 | 1, 3 | a delta computed per ROW, never only on the total; `C-AI` -- the delta is COMPUTED |
 | S3 | FWD-1 | The report's SCHEDULE and DELIVERY -- trading days only, before Andrew's morning | measured | brief F2: the detectors are weekday-aware and NOT trading-day-aware; **it sent on Labor Day 2026-09-07** | report lane | align | S2 | 1 | `C-TRADING-DAYS`; `lib/trading_calendar.py` is the ONE frontier (CLAUDE.md NEVER#4) -- never a calendar-day subtraction |
 | S4 | FWD-1 | The VERDICT rule -- the does-anything-need-Andrew determination, derived from the rows | absent | brief F1 (the current signal cannot vary); FWD-1's own bar requires at least one correct NOTHING morning | report lane | wire | S1, S2 | 1 | `C-AI` part 3 -- **A VERDICT IS COMPUTED, NEVER GENERATED.** A model may render it, not decide it |
@@ -447,14 +447,24 @@ not asserted.**
 | S10 | FWD-10 | The COVERAGE / DENOMINATOR carrier -- every count states what it counted out of | absent | brief F3: coverage, not staleness, is the freshness story (`mdpf 0/1`); brief F5: the drift section colours on INSTRUMENT freshness rather than on drift | report lane | wire | S1 | 4, 5 | a thinly-monitored surface must not produce a score that reads as healthy as a thoroughly-monitored one |
 | S11 | FWD-11 | The MONITORED-vs-SERVED reconciler -- what we publish that no instrument covers | absent | brief Part II Owns, verbatim: *"the standing check that NO EXISTING INSTRUMENT PERFORMS"* | report lane | wire | S10 | 5 | the live-plane enumerator is `comp-find --corpus aws`, **REPAIRED 2026-09-09 and re-exercised at the merged head: 757 hits / 2157 nodes, VINTAGE now carried.** No longer a blocked dependency |
 | S12 | FWD-12 | The ANOMALY BREAKDOWN -- connected resources/consumers/generators for an anomalous row -- plus its written account | absent | Andrew-direct 2026-09-09 (the outcome's SOURCE line) | report lane | wire | S1, S11 | 3, 5 | `C-AI` parts 1+2 -- the breakdown is COMPUTED, the account is GENERATED and **may never be the sole carrier of a fact**. **BUILD-LADDER RUNG 2 FIRST:** the graph and its call manifest exist; CLAUDE.md rule 20 says QUERY, NEVER REBUILD |
+| S13 | FWD-4 | The PROPERTY+OWNER ATTRIBUTION axis -- every finding rolled up to a NAMED part of the business with an owner, and the mandatory RENDERED `UNGROUPED` value for a live surface no ratified group covers | absent | ARMED row `NFRA_REPORT-Z-S1` (`2.0.0_SA_COO~ZZ`, msg 20627): `FWD-4` was served by NO cell of round 1. Live surfaces already known ungrouped: `opal-gateway`, `canonical-schwab-si2` (`0.9.0_WK_NFRA_REPORT~2`) | report lane | wire | S1 | 2, 3 | `UNGROUPED` is RENDERED, never omitted and never guessed; the MEMBER NAMES are an open call at Andrew and this row must not invent them |
 
 **MECE, BOTH DIRECTIONS, RUN RATHER THAN ASSERTED (at this edit):**
 - **FORWARD -- every OWNS item has at least one row:** (1)->S1 · (2)->S2 · (3)->S3 · (4)->S4 ·
   (5)->S5 · (6)->S6 · (7)->S7 · (8)->S8 · (9)->S9 · (10)->S10 · (11)->S11 · (12)->S12.
   **12 of 12 covered, 0 uncovered.**
-- **BACKWARD -- every row maps to an OWNS item and to at least one outcome:** 12 rows, 0 orphans.
-- **OUTCOME COVERAGE:** `FWD-1` is served by S2/S3/S4, `FWD-2` and `FWD-4` by S1, every other outcome
-  by exactly one row. **12 of 12 outcomes carried, 0 uncovered.**
+- **BACKWARD -- every row maps to an OWNS item and to at least one outcome:** **13 rows** (S13 added at v0.5), 0 orphans. S13 maps to OWNS item (1) alongside S1.
+- **OUTCOME COVERAGE:** `FWD-1` is served by S2/S3/S4, `FWD-2` by S1, **`FWD-4` by S13**, every other
+  outcome by exactly one row. **12 of 12 outcomes carried, 0 uncovered.**
+- ⛔ **AND THE ROW-TO-OUTCOME MAPPING IS NOW ONE-TO-ONE EXCEPT FOR `FWD-1`, DELIBERATELY.** At v0.4 TWO
+  rows named two outcomes each -- `S1` (FWD-2, FWD-4) and `S2` (FWD-3, FWD-1) -- and **a row serving two
+  outcomes is exactly where a PARTIAL CUT is invisible to a coverage check scoped to row IDS.** That is what
+  happened: `RP-s-1` owned `S1` by id, cut only its FWD-2 half, and L6's "12 of 12 cell(s)" passed.
+  **CENSUSED, not assumed: 2 of 12 rows carried multiple outcomes.** `S1` is SPLIT here. `S2` is LEFT AS IS
+  **for a stateable reason rather than by omission** -- its second outcome `FWD-1` also has DEDICATED rows
+  `S3` and `S4`, so a partial cut of `S2` cannot orphan it, which is precisely what was not true of `FWD-4`.
+  **RECOMMENDED TO L5, not mandated (the decomp's contract is that lane's):** cut one cell per
+  (row, outcome) pair wherever a row names more than one.
 
 ⚠ **THE 12-AND-12 IS A MEASUREMENT AT THIS EDIT, NOT AN INVARIANT, AND IT IS DELIBERATELY NOT
 DECLARED AS ONE.** `NFRA_OPSEC202609` asserted an `OP-s-<n>` IS `S<n>` bijection in a heading and it
