@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-09T21:3xZ",
+  "written_utc": "2026-09-09T21:4xZ",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -174,8 +174,21 @@
         "CLOUD @8a074ba7ba (the F-2 drain)",
         "ledger/L8_PACKET.round6.partial.md"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "d1b413f3b0",
       "next": "the packet's READ ack from the CVO (nudge at one tick); F-4's report (the image act + the derive + the projection); then F-5, F-11, F-6 on ~2; the FINAL packet and the drain-end read to the CTO."
+    },
+    {
+      "seq": 13,
+      "limb": "L7 (a drain + a hand-off) / adjudication",
+      "started_utc": "2026-09-09T21:3xZ",
+      "ended_utc": "2026-09-09T21:4xZ",
+      "act": "TO-CG-F-4 (CG-s-24) TERMINAL AND DRAINED: THE PROJECTION CARRIES THE STITCH SOURCE. Instance rc 0 in-worktree; this seat's own reads after the merge: the thin client answers GOLD_SCRIPT 1380 / S3_DATA_KEY 294 / API_ROUTE 151 with the VINTAGE line 'Built from the estate as of 2026-09-09 21:05:17 UTC. Stitch source: stitch-codebuild built 2026-09-09T19:55:00Z'; 7 of 7 families by describe-task-definition on the new digest sha256:478d0a43...dae20 (derive-runner 8, projection-worker 5, serving 3, the four producers 3); NODE_TYPE_LAYER 65 keys at CLOUD HEAD. The worker's measures: the fold on 21 of 21 fixture arms; the image rebuilt by CodeBuild f8abbe55 over 27e4ac36de and pushed 20:39:50Z; the NEVER-2 entry naming seven families CLOSED; the apply 18 of 18 addresses (E-2's ten was a four-family set; four foreign addresses left as found, W2-S52); the ad-hoc derive on revision 8 (task deee298ca1bd, exit 0) folding 1,844 nodes / 723 edges, 27,423 duplicates skipped by co-key, 1,771 stamped stitch-v1, 0 unmapped; the pointer 20:04:09 -> 21:05:17; three planes agree on 1,771 (the log, the served props count, the CVO's C-S40 census minus the 20 co-keyed PORTAL_COMPONENT ids). Channel union (W2-S50..S54). Worktree KEPT (the chain continues); CLOUD merged into the branch. TO-CG-F-5 (CG-s-25, comp-debt's second leg) HANDED to the same subagent. ADJUDICATED: W2-S51 (the issuer's `n.vocabulary` query form -- not a column; the stamp rides props) -> S86 accepted; W2-S53 (safe-apply's halt gate requires a session-serial file outside any grant) -> S87 carried named to L10 beside W1-S27; W2-S50 (the face's inline GO quotation differs by a clause from the record's -- the worker extracted the record's text programmatically) and W2-S54 (a bare bash in a Python subprocess is the WSL stub -- three silent zeros) INERT, no ack owed. 8 of 11 terminal.",
+      "artifacts": [
+        "CLOUD (the F-4 drain)",
+        "rows S86, S87"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "F-5 on ~2 (the repoint reads a served graph that carries the types); then F-11 (the vocabulary unified; the four interim entries retired) and F-6 (the local stitch store retired, LAST); the FINAL packet and the drain-end read."
     }
   ]
 }
