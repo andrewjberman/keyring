@@ -336,23 +336,38 @@ should be built ON it, never beside it** — and it is the natural substrate for
 
 *Named, not ordered. Sequencing is L5.*
 
-**D1 — RESOLVED 2026-09-09 ~17:5xZ. `comp-find --corpus aws` is FIXED and exercised.** It was
-BLOCKED (`kuzu_cli.py: unrecognized arguments: --mode`) — a caller/callee contract break introduced
-when `d060cf9223` removed `--mode` from `kuzu_cli.py` and left its consumers passing it. Diagnosed by
-this author to `.tools/comp-find:204`; **repaired by `1.0.0_SA_CTO~Z` at `9b99b49342`, which found a
-SECOND broken caller this author missed — `org/modules/graph/comp_trigger.py:107`.**
-⛔ **The reason it was missed is a reusable instrument lesson: this author ran
-`git log -S'"--mode"' -- kuzu_cli.py`, which searches the CALLEE'S HISTORY and CANNOT ENUMERATE
-CALLERS**, and then ran a caller census scoped to two hand-picked files. Right instrument for *"when
-did this change"*, wrong one for *"who calls this."* **Declared-vs-live reconciliation (O4) is no
-longer blocked.**
+**D1 — RESOLVED, AND RE-VERIFIED AT THE MERGED HEAD 2026-09-09 ~18:5xZ. `comp-find --corpus aws`
+works.** ⛔ **THE MECHANISM RECORDED HERE EARLIER WAS SUPERSEDED WITHIN THE HOUR, and the conclusion
+surviving is not the same as the reason surviving.**
 
-**D1a — THE RESIDUAL THE FIX DOES NOT CLEAR, and it is unowned.** `comp-find --corpus aws` now
-prints **`VINTAGE: UNREAD (no provenance header on stderr)`**. Rows come back; **their age does
-not.** `kuzu_cli` DOES emit the header — this author read it directly and dated the projection at
-2026-09-09T14:59:48Z — **so the wrapper is dropping it.** ⛔ **A denominator with no vintage is the
-shape this estate refuses**, and every `--corpus aws` census quoted anywhere until this is fixed
-must carry an age read from `kuzu_cli` directly rather than from the census output. Needs an owner.
+- **The break:** `kuzu_cli.py: unrecognized arguments: --mode` — a caller/callee contract break from
+  `d060cf9223`, which removed `--mode` and left its consumers passing it. Diagnosed by this author
+  to `.tools/comp-find:204`; repaired by `1.0.0_SA_CTO~Z` at `9b99b49342`, **which found a SECOND
+  broken caller this author missed — `org/modules/graph/comp_trigger.py:107`.**
+- ⛔ **THAT FIX IS NOT WHAT MAKES IT WORK NOW.** The `CLOUD→SITEZ` merge took `.tools/comp-find`
+  **whole from CLOUD**, and the `9b99b49342` hunk was **DROPPED** — correctly, because CLOUD's R7
+  served-graph port removed the subprocess call that hunk patched. **The instrument works at the
+  merged head for a different reason than this brief first recorded.**
+- **RE-MEASURED at merged HEAD by this author:** `216 hit(s) across 216 aws node(s)`,
+  `DRIFT: DECLARED=200 LIVE-no-DECLARED=16` — **identical to the pre-merge read**, so F2a's
+  set-identity result stands. **O4 is not blocked.**
+
+⛔ **THE LESSON THIS AUTHOR OWES, kept because it is reusable:** the caller census that missed the
+second consumer was `git log -S'"--mode"' -- kuzu_cli.py` — **which searches the CALLEE'S HISTORY and
+CANNOT ENUMERATE CALLERS** — followed by a content census **scoped to two hand-picked files**. The
+tell was in this author's own output: comp-find printed `across 2 file(s) scanned`, and a 1-of-2 hit
+was read as *"the caller"* rather than *"the only caller I looked for."* Right instrument for *when
+did this change*, wrong one for *who calls this*.
+
+**D1a — OPENED 17:5xZ AS UNOWNED, CLOSED 18:5xZ BY THE MERGE. No longer a dependency.**
+This brief recorded that `comp-find --corpus aws` printed `VINTAGE: UNREAD (no provenance header on
+stderr)` — rows without an age — and flagged it unowned.
+**Re-measured at the merged head, it now prints:**
+`VINTAGE: Built from the estate as of 2026-09-09 14:59:48 UTC. manifest: 86ea84674078`
+**CLOUD's served-graph port carries the provenance header through the wrapper.** ⭐ **Nobody routed
+this item to anybody — it was closed by work already in flight elsewhere**, which is worth recording
+because an unowned residual that resolves itself leaves no signal, and the brief would otherwise have
+carried a stale blocker into L5.
 
 **D2 — CORRECTED. `comp-iam-usage` is BUILT and RUNNING; what must be established is its COVERAGE at
 permission grain.** F5 (corrected) locates it at `.tools/comp-iam-usage`, tracked, executable,
