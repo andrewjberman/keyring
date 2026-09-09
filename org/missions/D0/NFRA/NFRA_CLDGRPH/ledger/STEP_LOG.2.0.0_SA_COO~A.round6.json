@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "project": "NFRA_CLDGRPH",
+  "round": 6,
+  "seat": "2.0.0_SA_COO~A",
+  "written_utc": "2026-09-09T18:0xZ",
+  "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
+  "rows": [
+    {
+      "seq": 1,
+      "limb": "L5/L6",
+      "started_utc": "2026-09-09T17:4xZ",
+      "ended_utc": "2026-09-09T18:0xZ",
+      "act": "ROUND 6 ISSUED AS ONE ISSUANCE (spine v3 L10 -> L5 -> L6, obligation 1 of the drive: the analysis in hand -> the recut the same tick). Decomposition v0.6: CG-s-21..CG-s-28 ADDED (34 cells), the s.2 ROUND 6 block, changelog 0.6 with the two L5 choices recorded (fixed instants for the two-seat 'same moment'; stitch-codebuild as the value of the PRD's stitch-cloud class). EIGHT task orders TO-CG-F-1..F-8 in the v3 grammar, one cell each, every probe name carrying its order id (f1_..f8_), the PATH line in every face, R14/R15 in the two retirement faces, 'together' at the flip named as two commits. Chains per the CTO's ordering: ~1 F-1 (S21) -> F-2 (S22 laptop half, instants T0 19:00Z / T1 20:00Z / T2 21:00Z); ~2 F-3 (S23) -> F-4 (S24) -> F-5 (S25) -> F-6 (S26 LAST); ~3 F-7 (S27); ~4 F-8 (S28). fanout 4 of 4 chains, cap 8. dep_stage ROUND_CLOSE -> EXECUTING on both carriers (project.json + derive --write). THE CUT'S CENSUS (the cost of a v3 round goes into the cut): the tarball head-object (71,671 B, ETag 3925738f...), both stores' sizes and claim cards, derive_stitch.py's exit-2 paths (:246-248 GRAIN_SENTINEL_FAIL), the buildspec's marker literal 'stitch-codebuild', the newest build id and its BUILD-phase failure text, the source zip's date and size, the workflow's zip recipe and the PORTAL_REPO_PAT dependency, write_manifest's 4 call sites (9 hits / 961 files), the REFRESH string re-located from the PRD's :80 to :133 (16 hits / 854 files), the three generated carriers' real paths (.tools/TOOL_CLASSIFICATION.yaml, .tools/tool_index.py, org/modules/graph/TOOL_MASTER.yaml), comp_debt.py's stitch sites by line, the tests dir (15 files), .tools/terraform.exe present in the main tree (copied to slot ~2's worktree at hand-off for F-4's apply). THE WORLD MOVED AT THE CUT: the S3 stitch marker rewritten by a laptop at 17:53:55Z from a clone not in this repository -> row S70 (ARMED to 0.8.0_AE_CloudComp), CG-s-23's face carries it and F3-AC4 discriminates on the producer field. The site-Z half: ONE message to 0.0.0_AB_MSTR naming the fixed question, the three instants, the record path and the census both seats run.",
+      "artifacts": [
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md v0.6",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-F-1..F-8.*.md",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/project.json (dep_stage EXECUTING) + org/projects/NFRA_CLDGRPH.json (derived)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md (S70; 152 rows)"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "spawn the four workers on fresh worktrees wk-cldgrph-6-1..4 from CLOUD (opus; F-4's slot gets .tools/terraform.exe at hand-off); the MSTR message for site Z; the 20-minute cron re-armed; drains through safe-merge.sh; F-2 handed after F-1's drain (its instants are fixed: a late hand-off asks at the remaining instants)."
+    }
+  ]
+}

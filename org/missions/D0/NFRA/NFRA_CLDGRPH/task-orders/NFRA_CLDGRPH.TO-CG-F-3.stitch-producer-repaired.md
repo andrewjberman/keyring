@@ -1,0 +1,111 @@
+# TO NFRA_CLDGRPH.TO-CG-F-3 -- CG-s-23 (ADDED at decomposition v0.6 on the CTO's round-5 analysis @30027295be, PRD addendum v0.6 row S23): REPAIR THE CLOUD STITCH PRODUCER -- `opal-stitch-produce` has FAILED 67 of 67 CodeBuild builds since 2026-07-07 on an ENABLED nightly (`derive_stitch.py` exit 2 on a July source snapshot never re-pushed); the exit 2 REPRODUCED on the snapshot as pulled BEFORE any fix; the source re-pushed from HEAD under a NEVER-2 entry; an ad-hoc build SUCCEEDS with a marker whose producer is not `stitch-local`; a night that did not run reads differently from one that did. The JOIN's cell 1 of 4
+
+<to_id>NFRA_CLDGRPH.TO-CG-F-3</to_id>
+<project>NFRA_CLDGRPH</project>
+<issued_to>0.9.0_WK_NFRA_CLDGRPH~2</issued_to>
+<issued_by>2.0.0_SA_COO~A</issued_by>
+<issued_date>2026-09-09</issued_date>
+<status>pending -- GO = the spawn (spine v3 L7): slot ~2 on a fresh worktree from CLOUD at this issuance. ROUND 6 of NFRA_CLDGRPH (the recut as ONE issuance on the CTO's round-5 analysis @30027295be / msg 94610). Slot ~2's FIRST order; the chain TO-CG-F-4 (CG-s-24) -> TO-CG-F-5 (CG-s-25) -> TO-CG-F-6 (CG-s-26, LAST) follows on the same subagent, each handed after the previous order's drain. LANE NOTE: the cell's lane is `0.7.0_AE_CloudOps` (the producer's Terraform and the source push) WITH `0.8.0_AE_CloudComp` for `derive_stitch.py`; under spine v3 both are this worker's write surface through the PATHS block. PREMISE RE-GROUND at hand-off: `list-builds-for-project opal-stitch-produce` newest build FAILED with initiator `rule/opal-stitch-produce-nightly`; `stitch-source/source.zip` head-object LastModified 2026-07-07; the rule ENABLED. The assignee commits its own status flip after a VALID proof-of-spec instance whose mechanical rows ALL read PASS; the L8 seat reads the record; the CVO grades F3-AC6 at L9 the morning after the 03:00Z nightly.</status>
+
+**Directive:** D0 · **Fabric:** laptop · **PRD:** `org/missions/D0/NFRA/NFRA_CLDGRPH/prd/NFRA_CLDGRPH_PRD.md` v0.6 @`30027295be` (FWD-7 by the PRD's arc, *no machine is in the compile business*; s.7 row S23) · **Decomp cell:** `CG-s-23` (decomposition v0.6, this recut) · **Lane:** `0.7.0_AE_CloudOps` + `0.8.0_AE_CloudComp` · **Rule 27 seating:** `0.9.0_WK_NFRA_CLDGRPH~2`, a spine-v3 worker subagent of `2.0.0_SA_COO~A`.
+
+---
+
+## STANDING LAW (inlined; the worker face is your whole context)
+
+- **Serial:** `0.9.0_WK_NFRA_CLDGRPH~2`. Every Bash call begins `export OPAL_AGENT_SERIAL=0.9.0_WK_NFRA_CLDGRPH~2; export PATH="/c/Users/AndrewBerman/AppData/Local/Programs/Python/Python312:$PATH";`. Commit only on your worktree branch via `bash .tools/safe-commit.sh --author "0.9.0_WK_NFRA_CLDGRPH~2 <0.9.0_WK_NFRA_CLDGRPH~2@opal.agent>" -F <msgfile> -- <files>`, `<msgfile>` written with the Write tool. Never push (CLOUD included -- the GH-Action source leg fires on a CLOUD push, which is `0.0.0_AB_MSTR`'s act on Andrew's word and NOT yours; this order re-pushes the SOURCE ZIP by the second route below), merge, rebase, `checkout --` or `clean`. Push state is LOCAL and you say so.
+- **Your write surface is exactly the PATHS block below plus `org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/`.** Every script and capture carries `f3_` in its name (W2-S34: a slot folder reused across orders collided on generic names). Scratch: `<your worktree>/.scratch/`.
+- **Surprise = ONE ROW, never a message.** Append to `org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md` inside the fenced json array per `org/surprise_channel/schemas/investigation_item.schema.json`; id `NFRA_CLDGRPH-W2-S<k>`, `<k>` the next unused within W2 (W2-S1..S39 exist at HEAD; start at S40); restate the header denominator by parsing every fenced block; never edit an existing row; keep working.
+- **Every criterion invocation runs under `timeout 120`**; a CodeBuild wait uses a polled loop (`batch-get-builds` every 30 s, `timeout 1800` on the whole loop), never a bare sleep.
+- **Every `.py` edit passes `bash .tools/commit-gate.sh <file>`** before the commit. Non-ASCII in code is refused.
+- **NEVER:** any local Kuzu store built, opened or written (`kuzu_stitch_db` is S26's, LAST in your chain; `kuzu_stitch_load.py` is NOT run by this order); any S3 object written other than `stitch-source/source.zip` (and, by the CodeBuild you start, the two keys its role permits -- read `stitch-produce.tf:100-123`); `terraform apply` of any kind (this order changes NO Terraform: if the repair NEEDS a `.tf` change, that is a BLOCKING row with the diff proposed, and the order ends as a report); a Lambda `update-function-code`; an alarm, monitor or notifier (CLAUDE.md s.5); `2>/dev/null` on a verdict read; bare `git commit`.
+- **Search rail:** `python .tools/comp-read <file> --for "..."` / `--enumerate '<regex>'`; `python .tools/comp-find '<pattern>' <pathspec>`; raw recursive grep/find in Bash is refused; a `cmd | grep` receiver is free. AWS CLI = `.tools/aws` (v1; `--output text` rows end in CR; `aws s3 ls` renders LOCAL time, `s3api` UTC). Region us-east-1, account 313476888478.
+
+## THE CELL (decomposition v0.6, this recut, s.1a; PRD v0.6 s.7 row S23 verbatim in its accept)
+
+> **CG-s-23** | S23 REPAIR THE CLOUD STITCH PRODUCER: `opal-stitch-produce` 67 of 67 CodeBuild builds FAILED 2026-07-07 .. 2026-09-09 on an ENABLED nightly (`derive_stitch.py` exit 2 on a July source snapshot never re-pushed); the S3 artifact was written by a laptop (`producer=stitch-local`) -- W3-S10, C-S34 | FWD-7 (the stitch JOIN, cell 1 of 4) | claim: measured (the CVO's `list-builds` + `batch-get-builds` census {FAILED: 67}; the rule ENABLED cron(0 3 * * ? *)) | status: OPEN -- ROUND 6 (recut) | lane `0.7.0_AE_CloudOps` with `0.8.0_AE_CloudComp` | placement laptop | depends_on: -- | **closes on (the PRD's accept, verbatim):** the exit 2 REPRODUCED on the snapshot as pulled before any fix (diagnosed on the snapshot, not HEAD); the source re-pushed from HEAD under a NEVER-2 entry; `list-builds` reads SUCCEEDED for a rule-initiated nightly whose artifact's manifest carries `producer=stitch-cloud` and a `built_at` inside that night; a night that DID NOT RUN reads differently from one that did -- with the rule disabled the consumer reads NO-RUN/STALE by vintage, never a plausible object
+
+**THE CTO's reason (round-5 analysis s.2):** *JOIN was decided on a substrate that produces nothing today; the repair is the FIRST of the four cells, or the join is to a fiction.*
+
+## MEASURED BY THE ISSUER AT THE CUT (2026-09-09 ~17:5xZ)
+
+- **The producer:** `infra/aws/terraform/globgrph/stitch-produce.tf` (READ ONLY for this order): CodeBuild project `opal-stitch-produce` (`:130-190`; image `aws/codebuild/amazonlinux2-x86_64-standard:5.0`, `build_timeout 30`, source `S3` at `opal-313476888478-globgrph/stitch-source/source.zip`, the BUILDSPEC inline: `pip install -q boto3 pyyaml || true`, then `python3 infra/aws/globgrph/derive_stitch.py --out /tmp/stitch_graph.json`, then a marker with `'producer': 'stitch-codebuild'`, then artifact-first / marker-last to `stitch/stitch_graph.json` + `stitch/stitch_marker.json`); rule `opal-stitch-produce-nightly` `cron(0 3 * * ? *)` (`:224-235`), ENABLED; the CodeBuild role writes ONLY those two keys (`:100-123`); log group `/aws/codebuild/opal-stitch-produce`.
+- **The newest build** (this seat's own read at the cut): `opal-stitch-produce:3a5b2473-f46a-490a-ae5e-874a96c90b16` FAILED, initiator `rule/opal-stitch-produce-nightly`, phase BUILD: *"Error while executing command: python3 infra/aws/globgrph/derive_stitch.py --out /tmp/stitch_graph.json. Reason: exit status 2"*. The two before it: `9c957225-283d-4ce8-9a47-20ee7537ec7c`, `e16803f3-e300-4cfb-94e0-9c9440f34c7c`. The CVO's census: 67 of 67 FAILED (C-S34).
+- **The source zip:** `stitch-source/source.zip` LastModified 2026-07-07, 156,995,002 B -- pushed ONCE by the GH-Action `.github/workflows/stitch-source-push.yml` (on push to CLOUD with path filters; checks out `Opal-Capital/portal` with `secrets.PORTAL_REPO_PAT`, which this seat cannot read: whether that secret exists is UNKNOWN here and is a row if the workflow's run history says it never succeeded -- read it with `gh run list --workflow stitch-source-push.yml --limit 20` if `gh` is authenticated, else record UNREADABLE).
+- **`derive_stitch.py` (267 lines):** `sys.exit(main())`; `main` returns **2 ONLY on `GRAIN_SENTINEL_FAIL`** (`:246-248`, `run_grain_sentinel` against `org/modules/graph/grain_baseline.json`), 1 on genuine dangling edges, 0 otherwise; argparse also exits 2 on a bad argument. Imports `boto3`, `org.modules.graph.trace_graph`, `org.modules.graph.grain_sentinel`, `extract_portal_stitch` (the zip must carry `org/modules`, `portal/src`, `infra/aws`, `.tools`, `data/*/scripts/**/*.py`). **So the exit 2 is EITHER the grain sentinel refusing (a July snapshot's portal subset packed 0 files -- the workflow's own comment at `:47-56` records exactly that class, `REACT_QUERY_KEY 0/32, PORTAL_COMPONENT 0/27`) OR an argparse failure; the CloudWatch log of build 3a5b2473 says which. Diagnose on the log and on the zip AS PULLED, never on HEAD.**
+- **THE WORLD MOVED WHILE THIS ORDER WAS CUT (row NFRA_CLDGRPH-S70, this seat's):** at 2026-09-09T17:53:55Z the S3 marker `stitch/stitch_marker.json` was REWRITTEN with `producer: stitch-local`, `git_sha 9b99b4934217c54aea516591a65e1009a5f9bdf6` (an object NOT in this repository -- another clone), `aws_snapshot snapshots/20260909/graph-20260909.tar.gz`, `total_nodes 29320 / total_edges 61833`, and the artifact `stitch/stitch_graph.json` 39,904,831 B at 17:53:58Z. A laptop somewhere is producing by hand while the cloud producer fails. This order does not chase who; its accept DISCRIMINATES from that laptop by the marker's `producer` field: **the PRD's token `producer=stitch-cloud` is read as the buildspec's literal `stitch-codebuild` (the class the PRD named; the value the buildspec writes) -- the issuer's ruling inside the grant; a grader who reads it otherwise files a row.** A marker reading `stitch-local` FAILS F3-AC4 whatever its date.
+
+## DELIVERABLE -- in this order
+
+1. **Reproduce on the snapshot as pulled:** `aws s3api get-object` the July `source.zip` (156,995,002 B; record its ETag) into `.scratch/f3_source_asis/`, unzip, count `portal/src` files in it (the zero the workflow comment predicts), read the CloudWatch log of build `3a5b2473` (`logs get-log-events` on `/aws/codebuild/opal-stitch-produce`, stream by build id) and record the LAST 40 lines; run `derive_stitch.py` FROM THE UNZIPPED SNAPSHOT (its own bytes, `--out .scratch/f3_asis_graph.json`) under `timeout 600` and record the rc and the sentinel lines. **`f3_reproduce.txt`: `ASIS_RC=<n>`, `ASIS_CAUSE=<GRAIN_SENTINEL|ARGPARSE|IMPORT|OTHER>`, `ASIS_PORTAL_SRC_FILES=<n>`.** If the local run cannot reproduce the cloud's rc (a different Python, a missing package), say so with both numbers; the LOG is the cloud's own reading.
+2. **The fix, sized to the cause:** if the cause is the stale/incomplete zip, the fix IS the re-push (step 3) and no code changes; if `derive_stitch.py` or `extract_portal_stitch.py` needs a change, it is the MINIMUM (commit-gate; no non-ASCII), with the cause cited by log line. A `.tf` change is out of this order (BLOCKING row + proposed diff).
+3. **Re-push the source from HEAD by the SECOND route** (the GH-Action is the first and fires only on a CLOUD push, MSTR's act): build the zip LOCALLY with the workflow's own recipe (`portal/src`, `org/modules`, `infra/aws`, `.tools`, `stitch_source_sha.txt` = your HEAD, every `data/*/scripts/**/*.py`; the same exclusions) from your worktree, with `portal/src` taken from the MAIN workspace's `portal/` checkout by absolute path (the gitlink; record its `git -C portal rev-parse HEAD`), and `aws s3 cp` it to `s3://opal-313476888478-globgrph/stitch-source/source.zip` -- under a NEVER-2 ledger entry opened at `org/critical_paths/change_management/<UTC>_stitch-source-repush_deploy_completion.md` BEFORE the cp and CLOSED after (the object's new ETag, size, the zip's file count and `portal/src` count in the entry; the task families this touches: NONE -- it is a CodeBuild source, no image, no task definition; say so in the entry). Head-object after: LastModified today.
+4. **One ad-hoc build** (`codebuild start-build --project-name opal-stitch-produce`; QA is permitted, the nightly stays the acceptance), polled to a terminal status; the marker read back (`producer`, `built_at`, `git_sha` = your HEAD, `artifact_sha256`), the artifact head-object size; the build's log tail recorded. A FAILED ad-hoc build is diagnosed ONCE more on its log and fixed if inside the grant, else the row + report.
+5. **The NO-RUN discrimination by vintage:** the consumer of the marker is `comp-graph status` / `comp-debt`'s stitch reader (`comp_debt.py:128-160` reads a LOCAL manifest today; S25 repoints it). This order proves the DISCRIMINATION on the marker itself: `f3_marker_read.sh` prints `STITCH_MARKER_AGE_H=<n>` and `STITCH_MARKER_VERDICT=<FRESH|STALE|NO-RUN>` from `built_at` against `DEFAULT_AGE_WARN_HOURS` (26 h, `_provenance.py:41`) -- and against a PLANTED marker 80 h old reads STALE, against a MISSING key reads NO-RUN, never a plausible object. No rule is disabled by this order (an infra act; the vintage read is the discriminator the PRD names).
+6. **The record** `CG-s-23.stitch-producer-repaired.result.md`: one fenced JSON block (the as-is reproduction; the cause; the fix; the ledger entry path; the re-push head-object; the ad-hoc build id + status + marker; the nightly build id to read tomorrow = the rule's 03:00Z fire) then prose. The proof instance, validate, and -- ONLY if every mechanical row is PASS -- flip and commit.
+
+## ACCEPTANCE (v3 grammar: one clause per criterion; every mechanical invocation bounded)
+
+<criterion id="F3-AC1" cell_refs="CG-s-23"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/f3_reproduced.sh</invocation><expect>ASIS_RC=2[\s\S]*ASIS_CAUSE=(GRAIN_SENTINEL|ARGPARSE|IMPORT|OTHER)[\s\S]*ASIS_ZIP_ETAG=[0-9a-f"-]+[\s\S]*ASIS_LOG_LINES=[1-9][0-9]*</expect></criterion>
+`F3-AC1` -- THE EXIT 2 REPRODUCED ON THE SNAPSHOT AS PULLED: the July zip's ETag recorded, the cloud log of build 3a5b2473 read (line count printed), the local run of the SNAPSHOT's own `derive_stitch.py` returning 2 with the cause named from the log and the sentinel output (a cause read from HEAD's bytes is the wrong grain and FAILS).
+
+<criterion id="F3-AC2" cell_refs="CG-s-23"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/f3_source_repushed.sh</invocation><expect>SOURCE_ZIP_LASTMODIFIED=2026-09-(09|10)T[\s\S]*SOURCE_ZIP_PORTAL_SRC_FILES=[1-9][0-9]*[\s\S]*SOURCE_ZIP_SHA_FILE=[0-9a-f]{40}[\s\S]*LEDGER_ENTRY_STATUS=CLOSED</expect></criterion>
+`F3-AC2` -- THE SOURCE RE-PUSHED FROM HEAD UNDER A NEVER-2 ENTRY: head-object LastModified today, the zip listing carrying a NON-ZERO `portal/src` count (the July zip's zero is the control), `stitch_source_sha.txt` = your HEAD, the ledger entry CLOSED with the ETag and counts.
+
+<criterion id="F3-AC3" cell_refs="CG-s-23"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/f3_adhoc_build.sh</invocation><expect>ADHOC_BUILD_ID=opal-stitch-produce:[0-9a-f-]+[\s\S]*ADHOC_BUILD_STATUS=SUCCEEDED[\s\S]*ADHOC_BUILD_INITIATOR=(?!rule/)</expect></criterion>
+`F3-AC3` -- ONE AD-HOC BUILD SUCCEEDED on the re-pushed source (its id, status and a NON-rule initiator printed; the failed builds before it are the control that the project CAN fail).
+
+<criterion id="F3-AC4" cell_refs="CG-s-23"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/f3_marker_cloud.sh</invocation><expect>MARKER_PRODUCER=stitch-codebuild[\s\S]*MARKER_GIT_SHA=[0-9a-f]{40}[\s\S]*MARKER_SHA_IN_THIS_REPO=true[\s\S]*ARTIFACT_SHA256_MATCH=true</expect></criterion>
+`F3-AC4` -- THE MARKER WAS WRITTEN BY THE CLOUD: `producer` is the buildspec's literal (NOT `stitch-local` -- the 17:53:55Z laptop marker is the control that FAILS this read), its `git_sha` is an object IN THIS REPOSITORY (`git cat-file -e`; the 17:53Z marker's `9b99b493...` is not), and the artifact's sha256 read from S3 equals the marker's `artifact_sha256`.
+
+<criterion id="F3-AC5" cell_refs="CG-s-23"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/f3_marker_read.sh</invocation><expect>LIVE_VERDICT=FRESH age_h=[0-9.]+[\s\S]*PLANTED_STALE_VERDICT=STALE age_h=(7[0-9]|8[0-9]|9[0-9]|[1-9][0-9]{2,})[\s\S]*MISSING_VERDICT=NO-RUN</expect></criterion>
+`F3-AC5` -- A NIGHT THAT DID NOT RUN READS DIFFERENTLY: the live marker reads FRESH by vintage with its age; a planted 80 h marker reads STALE; a missing marker reads NO-RUN -- three distinct verdicts from one reader, never a plausible object.
+
+<criterion id="F3-AC6" cell_refs="CG-s-23" judgment="true"/> `F3-AC6` -- THE NIGHTLY, READ THE MORNING AFTER (graded by `3.0.0_SA_CVO` at L9, not self-graded): the record NAMES the read the grader performs -- `list-builds-for-project opal-stitch-produce` for the build whose initiator is `rule/opal-stitch-produce-nightly` and whose startTime is 2026-09-10T03:00Z (+/- 15 min), its status, and the marker's `built_at` inside that night with `producer=stitch-codebuild`. The worker's half is to leave the producer in a state where that read CAN be SUCCEEDED and to say what would make it fail (the marker rewritten by a laptop again; a source drift). A reading act; NO verdict by the worker.
+
+<expected_criteria>F3-AC1, F3-AC2, F3-AC3, F3-AC4, F3-AC5, F3-AC6</expected_criteria>
+
+## SURFACES
+
+`infra/aws/terraform/globgrph/stitch-produce.tf` (READ) · `.github/workflows/stitch-source-push.yml` (READ; the zip recipe) · `infra/aws/globgrph/derive_stitch.py`, `extract_portal_stitch.py` (WRITE only if the cause is in them) · `org/modules/graph/grain_baseline.json` (READ) · `s3://opal-313476888478-globgrph/stitch-source/source.zip` (WRITE, once, ledgered) · `s3://.../stitch/*` (READ; written only by the CodeBuild) · CodeBuild `opal-stitch-produce` (start-build; logs) · the E-4 record `deliverables/0.9.0_WK_NFRA_CLDGRPH~3/CG-s-20.stitch-home.result.md` s.1b (READ).
+
+## BOUNDS
+
+- **No Terraform change, no apply, no rule disabled, no local Kuzu store, no monitor.** One S3 write by you; two by the CodeBuild's own role.
+- **The nightly is the acceptance; the ad-hoc build is the test.** Nothing in this order waits for 03:00Z.
+- A spec-vs-world divergence is a ROW. Certifier != author.
+
+<paths>
+infra/aws/globgrph/derive_stitch.py
+infra/aws/globgrph/extract_portal_stitch.py
+org/critical_paths/change_management/
+org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md
+org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-F-3.stitch-producer-repaired.md
+</paths>
+
+<decomp_ref>
+<decomp_doc>org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md</decomp_doc> v0.6 (this recut), cell CG-s-23 (s.1a; ADDED on the CTO's round-5 analysis @30027295be, PRD addendum v0.6 row S23, over rows NFRA_CLDGRPH-W3-S10, W3-S11 and C-S34).
+<owned_cells>CG-s-23</owned_cells>
+Read-dependencies, NOT claimed: CG-s-20 (DONE; the JOIN decision). Downstream, yours next in this chain: CG-s-24 (TO-CG-F-4), then CG-s-25 (TO-CG-F-5), then CG-s-26 (TO-CG-F-6, LAST). Siblings, NOT yours: CG-s-21/22 (slot ~1), CG-s-27 (slot ~3), CG-s-28 (slot ~4).
+</decomp_ref>
+
+<preflight>
+comp-schedule: RUN -- 2026-09-09 15:3xZ at the round-5 recut (GATES ARMED 25 across 5 carriers; C2 6 open deploy-ledger entries); the C3 moratoria bind BOUNDS (no monitor; the rule is not disabled).
+comp-iam: DECLARED-NOT-APPLICABLE -- one PutObject on the globgrph bucket with the seat's existing credentials and one StartBuild; the CodeBuild's own role (`stitch-produce.tf:100-123`) is READ, not changed; no principal, policy or grant moves.
+comp-adversary: DECLARED-NOT-APPLICABLE -- composed at L5 on the decomposition (rc 0 @07288006e5); the deliverable's validator context is the L9 seat's compose.
+comp-find: RUN at the cut -- `write_manifest(` 9 hits / 961 files; `stitch` on the projection path 7 hits / 5 files (`derive_runner.py:1869 stitch_served_from`, the TSGRAPH P4 join -- NOT this producer).
+</preflight>
+
+<proof_of_spec>
+Criterion ids minted at the recut by the issuer: `F3-AC1`..`F3-AC6`. The ASSIGNEE fills a `org/standards/PROOF_OF_SPEC.schema.json` instance at
+`org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-F-3.stitch-producer-repaired.proof_of_spec.json`
+and validates it with `python .tools/proof-of-spec-check.py <instance> F3-AC1,F3-AC2,F3-AC3,F3-AC4,F3-AC5,F3-AC6` BEFORE the complete flip; the flip requires rc 0 AND every mechanical row PASS. `F3-AC4` (the laptop marker fails it) and `F3-AC5` (three verdicts) are the controls that must be able to FAIL. `F3-AC6` is `judgment="true"`: recorded under `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming `3.0.0_SA_CVO` and the 03:00Z read; **`PASS` or `FAIL` on it is INVALID.** Two commits at the flip (the acts, then the instance pinning them), and the face says so.
+</proof_of_spec>
+
+<compiler_tools_mandate>
+BEFORE ANY ACT: `python .tools/comp-read infra/aws/globgrph/derive_stitch.py --for "every return path of main() and its exit code; what the grain sentinel refuses on"`; `python .tools/comp-read .github/workflows/stitch-source-push.yml --for "the exact zip recipe (paths, exclusions) and the portal checkout's pin"`. Every `.py` you touch: `bash .tools/commit-gate.sh <file>`.
+</compiler_tools_mandate>
+
+**THE REPORT IS YOUR FINAL MESSAGE, ONCE, IN THE `WORKER REPORT` SHAPE.** You cannot send a message and nobody can send you one.
+
+**GO = the spawn.**
