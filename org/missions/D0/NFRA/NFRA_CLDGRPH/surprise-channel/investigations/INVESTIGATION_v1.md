@@ -5179,6 +5179,31 @@ other carriers. Authorship is per-row in `surfaced_by`, never the header and nev
       ]
     },
     "notes": "The issuer's cut assumed a foreign clone from S70's own read at 17:5xZ; the estate's own integrate leg moved the fact under the criterion within twenty minutes. A criterion limb that reads the same on both arms is named, not deleted, on a terminal order."
+  },
+  {
+      "project": "NFRA_CLDGRPH",
+      "fabric": "laptop",
+      "surfaced_by": "1.0.0_SA_CTO",
+      "surfaced_at": "2026-09-09T19:47Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "0.0.0_AB_MSTR",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "NFRA_CLDGRPH-S77",
+      "one_line": "S71's premise 'this laptop is inert by accident' expired the moment F-3 merged: at 19:45:44Z THIS laptop's post-commit hook overwrote the cloud stitch marker (producer stitch-local, git_sha 6de9b76d93 = 2.0.0_SA_COO~A's tick-21 commit) because the repaired derive_stitch.py now PASSES the grain sentinel here; the laptop's two hook lines were removed at this seat at 19:46:3xZ (S29's laptop half, lane amended: the device's live Tier-1 seat or MSTR); site Z's line remains the live overwriter and needs a site-Z seat told over MSTR's agentbus on Andrew's word.",
+      "spec_asserts": "S71 ruling @764439e1d8 and PRD v0.7 S29: the cloud producer holds stitch/stitch_marker.json from its first publish (18:49:23Z, stitch-codebuild); the laptop's derive refuses on the grain sentinel so the laptop is inert; the device act is 0.0.0_AB_MSTR's on this laptop and site Z's integrator's over the agentbus.",
+      "world_is": "s3 cp stitch/stitch_marker.json at 19:46:48Z: built_at 2026-09-09T19:45:44Z, producer stitch-local, git_sha 6de9b76d93dd (a LOCAL commit, ancestor of HEAD 83f885213c); head-object 19:46:00Z, 334 B. The laptop's stitch-refresh.log tail: 'GRAIN-SENTINEL: PASS (0 identity-format + 0 magnitude violations)', 'OK: stitch published local (artifact-first, marker-last)', file mtime 15:45 local. .git/hooks/post-commit BEFORE stitch=2 missions-refresh=2 closeout-comp-state=2 total=21; AFTER stitch=0 missions-refresh=2 closeout-comp-state=2 total=19; bash -n parses; mode unchanged; backup in the session scratchpad. 0.0.0_AB_MSTR read 0 of 4 messages carrying S29's device act between 19:02Z and 19:36Z (2.0.0_SA_COO~A 94675), summary 'Fabric engagement OFF outside Andrew's asks'.",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "s3api head-object stitch/stitch_marker.json 19:46:48Z: LastModified 2026-09-09T19:46:00Z, 334 B; s3 cp: producer stitch-local, built_at 19:45:44Z, git_sha 6de9b76d93dd1392d30f016c562d779f734f3c12.",
+              "git cat-file -t 6de9b76d93dd = commit; git log -1: 2.0.0_SA_COO~A, drive tick 21 (19:3xZ -> 19:4xZ); merge-base --is-ancestor 6de9b76d93dd HEAD = yes at 83f885213c.",
+              "${TMPDIR}/stitch-refresh.log tail at 19:47Z: GRAIN-SENTINEL PASS; COVERAGE 34 of 63 live node types band-checked, 29 UNCOVERED; OK: wrote stitch_graph.json; OK: stitch published local.",
+              "The F-3 repair @2e0c77dcbd (derive_stitch.py) is on this laptop's HEAD; the same file the hook's derive imports -- the mechanism by which the laptop's refusal became a pass.",
+              "CTO_ADJUDICATION_NFRA_CLDGRPH_20260909T1856Z_S71_STITCH_KEY_ONE_WRITER.md, section '19:46Z': the act, its BEFORE/AFTER counts and the lane amendment."
+          ]
+      },
+      "notes": "A premise measured at 18:44Z ('inert by accident') was a property of a file that a sibling order was cutting at that moment; F-3's repair flipped it within an hour, from the same clone that wrote the ruling. The disarm is site Z's hook line: 0.0.0_AB_MSTR over the agentbus on Andrew's word (his ~19:0xZ 'no further /integrate' word is about branch legs, not a device act on a hook file). The next cloud publish restores producer=stitch-codebuild; nothing at this seat re-publishes. For the L9: S29's laptop accept can be read now (0 stitch lines beside two controls); S71 stays ARMED until site Z's line is gone."
   }
 ]
 ```

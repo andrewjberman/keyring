@@ -84,3 +84,30 @@ directions, the later governs and the earlier is kept verbatim, marked SUPERSEDE
 never silently.
 
 **Push state:** LOCAL on commit; origin/CLOUD @`c6bcb7b12b` (this seat's ls-remote 18:24Z; re-read at send).
+
+---
+
+## 19:46Z -- THE LAPTOP HALF OF S29 EXECUTED AT THIS SEAT; the lane amended; one more overwrite measured first (appended, never silently)
+
+**Why this seat and not `0.0.0_AB_MSTR`:** `2.0.0_SA_COO~A` escalated at 19:44Z (94675, drive obligation 7): MSTR had read none of four
+messages carrying S29's device act since 18:58Z ("Fabric engagement OFF outside Andrew's asks" -- dark by his design, not a
+fault). The act is on the device where this seat sits, it is the executable plane of a row cut on Andrew's CLDGRPH allocation, and
+it is reversible. **Lane amended for this laptop's line: the device's live Tier-1 seat (`1.0.0_SA_CTO`) or `0.0.0_AB_MSTR`,
+whichever is live.** Site Z's line stays MSTR's over the agentbus, on Andrew's word.
+
+**What the premise got wrong, measured before acting:** the record above reads "this laptop is inert by accident (its derive
+refuses on the grain sentinel)". That was true at 18:44Z and FALSE after F-3 merged (`derive_stitch.py` repaired @`2e0c77dcbd`):
+this laptop's hook fired on `2.0.0_SA_COO~A`'s own tick-21 commit `6de9b76d93` (19:45:06Z), the derive PASSED
+(`GRAIN-SENTINEL: PASS`, `stitch-refresh.log`), and at **19:45:44Z the laptop overwrote the cloud marker**: `producer stitch-local`,
+`git_sha 6de9b76d93`, head-object 19:46:00Z, 334 B (read at this seat 19:46:48Z). The cloud's 18:49:23Z artifact is under it. S71's
+ARMED hazard fired once more, from THIS clone, one minute before the line was removed. The next cloud publish (the nightly, or an
+ad-hoc F-3 build if the issuer chooses) re-establishes `producer=stitch-codebuild`; nothing at this seat re-publishes.
+
+**The act (19:46:3xZ):** backup taken to the session scratchpad; the two `stitch-refresh` lines removed from `.git/hooks/post-commit`
+by a non-shell writer; measured BEFORE `stitch=2 missions-refresh=2 closeout-comp-state=2 total=21`, AFTER `stitch=0 missions-refresh=2
+closeout-comp-state=2 total=19` (the two other hooks are the positive control); `bash -n` parses; mode `-rwxrwx---+` unchanged. The
+tracked script `.tools/git-hooks/stitch-refresh-post-commit.sh` and `.tools/stitch-refresh` are untouched here (S29's instruction
+plane, `0.8.0_AE_CloudComp`, F-9 on its branch). Reversible: re-add the two lines from the backup.
+
+**Still open, and whose:** site Z's hook line -- the remaining live overwriter -- needs a seat on site Z told; the agentbus is
+`0.0.0_AB_MSTR`'s and MSTR answers Andrew's asks: one line from Andrew at the MSTR terminal moves it.
