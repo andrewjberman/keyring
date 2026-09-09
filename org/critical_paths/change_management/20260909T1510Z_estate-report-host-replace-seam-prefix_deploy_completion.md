@@ -1,7 +1,8 @@
 # DEPLOY COMPLETION LEDGER -- estate-report HOST REPLACE, the OS-s-20 consumer switch
 
-**Opened:** 2026-09-09T15:10Z by `0.7.0_AE_CloudOps~W`
-**Status:** OPEN -- the apply has NOT been performed at this write
+**Opened:** 2026-09-09T15:10Z by `0.7.0_AE_CloudOps~W` (committed OPEN at `4c173cddbc`)
+**Status:** **CLOSED 2026-09-09T15:05Z** -- all four legs verified; the ACCEPT remains pending the
+2026-09-10 13:00Z scheduled fire and is NOT claimed here
 **TO:** `org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-20.the-consumer-switch-host-replace.md`
 (cell `OS-s-20`, outcome_ref FWD-3; issuance `e4dbe0448e`)
 
@@ -87,16 +88,65 @@ Nothing unrelated to the replacement appears in the plan.
 
 ## Legs
 
-1. [ ] `safe-apply` (never bare `terraform apply`; vendored `.tools/terraform.exe` v1.9.8, not the
-       PATH substitute which re-pins remote state)
-2. [ ] Unscoped re-plan reads 0 to add, 0 to change, 0 to destroy
-3. [ ] **The orchestrator's target agrees with a live instance** -- `get-function-configuration` on
-       `estate-report-orchestrator` reads the NEW id, `describe-instances` on that id returns a live
-       instance, and the two MATCH. (`lambda_function.py:34` reads the id at IMPORT, so a warm
-       container can hold the old one until the configuration change retires it.) A CONTROL on this
-       close, never the accept.
-4. [ ] `ESTATE_OUTSET_SEAM_PREFIX` present in the live `runtime.env` on the new host (SSM). A
-       CONTROL arm, never the deciding line -- the deciding line is a served day.
+1. [x] `safe-apply` at 14:56:4xZ. Instance state read LIVE immediately before: **`stopped`**
+       (14:56:30Z); schedule read LIVE: ENABLED, `cron(0 9 * * ? *)`. Result: **`Apply complete!
+       Resources: 1 added, 3 changed, 1 destroyed`**. `i-0512bd3cbaf602b7f` destroyed in 11s,
+       **`i-0584e17d283fa7ef4`** created in 14s.
+2. [x] Unscoped re-plan: **"No changes. Your infrastructure matches the configuration."**
+3. [x] **The orchestrator's target agrees with a live instance.**
+       `get-function-configuration` -> `ESTATE_INSTANCE_ID = i-0584e17d283fa7ef4`;
+       `describe-instances` on that id -> exists, state `running`; terraform output
+       `estate_report_runner_instance_id = i-0584e17d283fa7ef4`. **All three agree.**
+       NEGATIVE CONTROL on the comparator, because an equality test that cannot fail is not a test:
+       the retired id `i-0512bd3cbaf602b7f` against the new one -> **MISMATCH**, so the match above
+       is a measurement.
+4. [x] `ESTATE_OUTSET_SEAM_PREFIX` in the live `runtime.env` on the NEW host, read via SSM:
+       **`ESTATE_OUTSET_SEAM_PREFIX=s3://opal-estate-report/outset`**, 1 occurrence, and the file
+       now carries **12** variables against 11 before. The SSM principal was read inside the same
+       invocation and is
+       `arn:aws:sts::313476888478:assumed-role/estate-report-runner-role/i-0584e17d283fa7ef4`, so
+       this is the new host and not a stale one.
+       **AND THE GRANT STILL HOLDS ON THE NEW INSTANCE** (a fresh instance profile assumption):
+       `get-object outset/comp_heat_drift.json` -> rc 0, **27,060 B**; NEGATIVE CONTROL on a `logs/`
+       object the role has no `GetObject` on -> rc 254 AccessDenied.
+
+## POST-STATE
+
+| | value |
+|---|---|
+| Instance | `i-0584e17d283fa7ef4`, LaunchTime 2026-09-09T14:57:29Z (was `i-0512bd3cbaf602b7f`) |
+| Orchestrator target | `ESTATE_INSTANCE_ID=i-0584e17d283fa7ef4`, agreeing with a live instance |
+| `runtime.env` | 12 variables, including the seam prefix as an `s3://` URI |
+| Terraform | unscoped plan 0/0/0 |
+
+## ⛔ A CONSEQUENCE NO FACE NAMED: THE REPLACE FIRED A REPORT RUN
+
+Filed as row **`NFRA_OUTSET-S22`**. The order requires the replace "outside the run window" and
+forbids starting the box to force an early exercise. **The replacement starts it anyway**:
+`instance.tf:236-241` deliberately STARTS the units on the creation boot rather than only enabling
+them, because an earlier creation boot left both units enabled-and-inactive with no dead-man's
+switch armed. Measured via SSM: `estate-report.service` `activating`, `ExecMainStartTimestamp`
+**Wed 2026-09-09 14:58:27 UTC**; deadman `active`. Nobody started the box; the replace did, and any
+future replacement of this host will do the same.
+
+**It does not contaminate the accept and it is not admissible as one.** `O20-AC1` reads a SCHEDULED
+run; a creation-boot run is not scheduled, and ad-hoc artifacts are never production evidence. It is
+QA signal only.
+
+⛔ **AND IT OVERWRITES TODAY'S SERVED REPORT AT THE SAME KEY**, which would have destroyed
+`O20-AC1`'s own negative arm -- the face requires "the 2026-09-09 served report (run under the
+un-switched host) reads `INSTRUMENT_UNAVAILABLE` on the same stratum". Bucket versioning is
+**Enabled**, and the un-switched baseline is pinned here BEFORE the overwrite:
+
+| | value |
+|---|---|
+| Key | `daily/2026/09/09/estate-report-2026-09-09.json` |
+| VersionId | **`8SP4fGAuhE8twzBpucMPsYbotD6Tddty`** |
+| Written | 2026-09-09T13:11:02Z by `i-0512bd3cbaf602b7f` (the un-switched host), 162,172 B |
+| Its propagation reading | `/ai/groups/A/stratum_status` = **`INSTRUMENT_UNAVAILABLE`** (also at `/run_bundle/stages[3]/strata_status/A`) |
+
+The negative arm addresses that VersionId explicitly rather than the key, so it survives every later
+run. Nothing was deleted (PRD R-5).
 
 ## Rollback -- stated before the act, because a destroyed instance is not restored
 
@@ -107,9 +157,20 @@ from git (`instance.tf` @HEAD before this commit) and its hash is recorded above
 a `git revert` of one file plus one apply. **The data plane is untouched by either direction** --
 no S3 object, no schedule and no IAM grant beyond the two ID-scoped statements changes.
 
-## Close condition
+## Close condition -- MET
 
-All four legs checked. Closed in a second commit that flips this Status line.
-**The ACCEPT is NOT this entry** -- `O20-AC1` reads a SERVED DAY and cannot pass before the
-2026-09-10 13:00Z fire at the earliest. **Nothing is armed to watch that fire** (standing
-moratorium); the scheduled fire is the acceptance, not an ad-hoc run.
+All four legs checked and the post-state measured. Closed in a second commit flipping the Status
+line above.
+
+⛔ **THE ACCEPT IS NOT THIS ENTRY, AND THE ORDER DOES NOT FLIP HERE.** `O20-AC1` reads a SERVED DAY
+produced by a SCHEDULED run of the replaced host, so it cannot pass before **2026-09-10 13:00Z** at
+the earliest. This entry records that the ACT landed and is verified on the infrastructure plane;
+the ACCEPT is a separate reading on a separate day. **Nothing is armed to watch that fire** (standing
+moratorium), and the box was not started to force an early exercise -- the one run that did occur was
+caused by the replacement itself and is recorded above as QA, never as evidence.
+
+## Rollback -- NOT exercised, and still stated
+
+Unused. Had a leg failed, the path was a further replace under the prior `user_data` (revert one
+file, apply again, accept a second new instance id), with the data plane untouched in either
+direction. Recorded before the act at `4c173cddbc` rather than reconstructed here.
