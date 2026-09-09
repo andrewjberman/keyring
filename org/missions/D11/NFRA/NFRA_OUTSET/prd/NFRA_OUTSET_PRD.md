@@ -12,7 +12,7 @@ under the same directive and macro) · **dep_stage at write:** `REGISTERED` → 
   "project": "NFRA_OUTSET",
   "directive": "D11",
   "fabric": "laptop",
-  "prd_version": "v0.6",
+  "prd_version": "v0.7",
   "step": 4,
   "brief_ref": "docs/briefs/comp-heat-and-the-semantic-estate-pipeline-outset-tooling-brief-20260904.md@bc52eb658d",
   "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
@@ -284,3 +284,14 @@ two `unmeasured` rows (OS-s-6, OS-s-7) read first if the COO wants the federated
 and they release OS-s-4 and OS-s-10.
 
 — `1.0.0_SA_CTO`, L4
+
+## 9. ADDENDUM v0.7 (2026-09-09 ~22:0xZ, `1.0.0_SA_CTO`) -- "on a served day" made contingent on a manual served day
+
+**THE MANUAL-TRIGGER RULE** (Andrew-direct 2026-09-09 ~21:4xZ at the `1.0.0_SA_CTO` terminal, verbatim in `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260909_214xZ_NO_WAITING_EVERY_DATE_GATED_ACCEPT_GETS_A_MANUAL_TRIGGER_FORM.md`: *"we need to not be 'waiting' on anything, anything that we'd be waiting for needs a manual trigger of some kind depending on the test type ... include addendums for each that mandate the requirement is contingent on a relevantly structured manual/test run"*). A manual run is the EXERCISED form of an outcome only when all five hold: (1) SAME TARGET, not a copy -- the rule's own target invoked with the scheduled payload shape; (2) REAL PLANE -- real keys, catalogs, inboxes, devices; a by-hand write to a SERVED key is a served-output move (NEVER-2 entry + never-widen sign-off CTO+COO, rollback named); (3) TOLD APART ON THE ARTIFACT -- a run-id / trigger field, never the clock; (4) the schedule's OWN firing proven from HISTORY (prior rule-initiated executions listed with a denominator), never by waiting -- a rule that has never fired gets a one-off near-term `at()` on the same rule, then restored; (5) the next scheduled fire is CONFIRMATION, never a gate -- no grade carries "pending the fire" again.
+
+Round 3's four open accepts all read "on a served day" and would wait for 09-10 and 09-11. Under the rule they read on the manual served day below; the scheduled fires confirm. Rows OS-s-24 and OS-s-25 are the cells `2.0.0_SA_COO` cuts into round 3 by amendment (the round is mid-execution; Andrew's 2026-09-03 scope-change word).
+
+| id | outcome_ref | surface | claim | evidence at the brief's vintage | lane | verb | depends_on | accept |
+|---|---|---|---|---|---|---|---|---|
+| OS-s-24 | FWD-2, FWD-3, FWD-4, FWD-7 | THE MANUAL SERVED DAY: (i) the cloud-side freshness publisher's CodeBuild started by hand (`start-build`, same project, role and keys); (ii) the report host started by the SAME mechanism the 13:00Z rule uses (the rule's target invoked by hand, or `start-instances` on the replaced host, whose boot units run the report by design), outside the 13:00Z window; (iii) the report published to the SAME served key with the run's own `run_id` and `trigger=manual` on the propagation stratum; every accept of OS-s-19 / OS-s-20 / OS-s-21 (cloud half) / OS-s-23 read on THAT run | absent | every open accept today reads "on a served day" = the 09-10 13:00Z fire; the schedule's own firing is already proven (today's 13:00:45Z-13:11:04Z run) | CloudOps (host + publisher) with CloudComp (the runner's fields) | verify | OS-s-19, OS-s-20, OS-s-21, OS-s-23 | the seam artifacts' vintages precede the manual run's start (head-object, UTC); the served report carries `run_id` + `trigger=manual`; group A reads OK from the seam with the vintage disclosed and group B renders from its seam artifact with its grain disclosed; the host self-stops after; the 13:00Z fire is confirmation read if present |
+| OS-s-25 | FWD-3 | THE LAPTOP DRIFT HALF ON DEMAND: the drift publisher's scheduled task INSTALLED on this laptop now (Andrew's ~21:4xZ word is the heads-up the S25 ruling asked for -- stated in the record so no seat waits on a second one) and RUN ON DEMAND (`schtasks /run`, the same action the schedule runs); then a second manual served day in OS-s-24's form reads the device row with that vintage | absent | the drift half is held device-side pending a heads-up; the device row would read INSTRUMENT_FAILED until a 09-11 scheduled run | CloudOps~W (the task) | verify | OS-s-21, OS-s-22, OS-s-24 | the task exists on the laptop (`schtasks /query`, its action and trigger printed); one on-demand run publishes `outset/<device>/comp_heat_drift.json` under the scoped role (head-object with the run's UTC; the role's session name in CloudTrail); the second manual served day's group A shows this device by name with that vintage inside its ceiling, a silent device still reading INSTRUMENT_FAILED as the negative arm; the task's next scheduled fire is confirmation |
