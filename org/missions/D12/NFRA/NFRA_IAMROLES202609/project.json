@@ -1,0 +1,50 @@
+{
+  "project_code": "NFRA_IAMROLES202609",
+  "former_codes": [],
+  "macro_code": "NFRA",
+  "directive": "D12",
+  "fabric": "site-z",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "PRD",
+  "created": "2026-09-09",
+  "registered_under_tree": "2026-09-09",
+  "last_updated": "2026-09-09",
+  "pods": [
+    "1.0.0",
+    "3.0.0",
+    "4.0.0"
+  ],
+  "seats": {
+    "cro": "4.0.0_SA_CRO~Z (L1 brief author)",
+    "cto": "1.0.0_SA_CTO~Z (L2 endpoint, L3 registration, L4 PRD)",
+    "coo": "UNSEATED -- no L5/L6 owner yet; Andrew seats the COO lane",
+    "cvo": "3.0.0_SA_CVO~Z (L8-L10)",
+    "integrator": "0.0.0_AB_MSTR~Z"
+  },
+  "related": [
+    "NFRA_OPSEC202609",
+    "NFRA_REPORT",
+    "D12_PLATFORM_OPS",
+    "NFRA_WEBSITE"
+  ],
+  "name": "Least privilege across every IAM role, and how we would know: a posture number carrying its denominator and vintage, per-role unused-permission visibility at PERMISSION grain, the condition axis a policy requires, declared-vs-live role reconciliation with a separate governance disposition, pre-flight blast radius before any narrowing, and an assessment that can be re-run.",
+  "description": "Commissioned when Andrew asked whether NFRA_OPSEC202609 covered IAM least privilege; the measured answer was NO (brief F1), which produced a project rather than an amendment. Eight ratified outcomes. The central problem is stated by the brief itself (F4): the estate's tooling is pointed at what a role MAY do and cannot answer what it DOES, and least privilege is a question about the gap. Ruling 20 settles instrument direction as EXTEND comp-iam-usage to permission grain -- it is BUILT, tracked and self-testing -- with AWS Access Analyzer as a fallback whose per-role price nobody has read. The 16 undeclared roles of 208 are a SETTLED SET, not just a settled count, and they carry TWO remedies that do not move together: governance (should this be in code at all) and permissions (is it over-granted).",
+  "brief": "docs/briefs/nfra-iamroles202609-least-privilege-brief-20260909.md @1a90986047 (L1, 4.0.0_SA_CRO~Z). The L2 endpoint is org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_NFRA_IAMROLES202609_20260909.md -- cut at 68cf8271c6, amended at 02a6afae87 to fold ruling 20, and RATIFIED 2026-09-09 ~22:3xZ on Andrew's 'Confirm on IAMROLES202609.'",
+  "prds": [
+    {
+      "path": "org/missions/D12/NFRA/NFRA_IAMROLES202609/prd/NFRA_IAMROLES202609_PRD.md",
+      "version": "v0.1",
+      "note": "L4 MINT, 2026-09-09. PRD_HEADER + the RATIFIED ENDPOINT (FWD-1..FWD-8) pasted verbatim from the L2 deliverable, territory with OWNS ENUMERATED TO NINE ITEMS, five acceptance properties, out-of-scope, six binding constraints (C-EXTEND-NOT-BUILD, C-ANALYZER-PRICED-FIRST, C-TWO-REMEDIES, C-NO-ACCESSDENIED, C-DESIRED-UNTIL-EXERCISED, C-COVERAGE-OVER-COUNT), rulings that bind, sequencing input, section 8 SURFACE MANIFEST (nine engine rows S1..S9) and section 9 the ADVERSARY GRID. A RECORDED UNCOVERED-MEMBER FINDING: the brief's Part II Owns cell does NOT enumerate FWD-5 or FWD-8, both ratified outcomes, so the declared domain for MECE is the UNION of the brief's clauses plus those two -- surfaced to 4.0.0_SA_CRO~Z for Part II's next touch, blocking nothing. NO ROW SERVES MORE THAN ONE OUTCOME, deliberately: NFRA_REPORT's S1 named two, its cell cut one half, and the L6 coverage limb passed because it compares row IDS (ARMED row NFRA_REPORT-Z-S1)."
+    }
+  ],
+  "decompositions": [],
+  "leads": [
+    "REGISTERED 2026-09-09 on Andrew-direct at the 1.0.0_SA_CTO~Z terminal: 'Ok we will make a project NFRA_IAMROLES202609 underneath D12'. Sequenced by him as 'it comes behind the others', which has now arrived -- NFRA_REPORT is in round 1 and NFRA_OPSEC202609 holds its own COO lane.",
+    "ENDPOINT RATIFIED 2026-09-09 ~22:3xZ, VERBATIM: 'Confirm on IAMROLES202609.' Given in answer to /open-calls CALL 3 of 3, which put the eight DONE WHEN bars to him and recommended confirming so L3/L4 could run."
+  ],
+  "phase": "L4 COMPLETE. dep_stage PRD. The endpoint is RATIFIED (all eight bars on Andrew's one word) and the PRD is minted at v0.1 with its surface manifest and adversary grid. NEXT: L5 decomposition -- and NO COO LANE IS SEATED on this project, which is the one thing standing between this PRD and a decomposition. That is Andrew's to seat; nothing at 1.0.0_SA_CTO~Z is owed first.",
+  "blocking": "No L5/L6 SEAT. The PRD is complete and decomposable; there is no COO lane on this project. FOUR CARRIED FACTS THE DECOMPOSITION MUST NOT LOSE: (1) C-EXTEND-NOT-BUILD -- comp-iam-usage is BUILT, tracked, executable and self-test passing (brief F5 CORRECTED); a cell written as greenfield re-buys working code, and this seat made exactly that error earlier in the session by calling the instrument the hardest problem when a third of it already existed. (2) C-TWO-REMEDIES -- the 16 undeclared roles need a GOVERNANCE disposition and a PERMISSIONS disposition, they do not move together, and manifest rows S5 and S6 are separate BY CONTRACT for that reason. (3) FWD-5's bar is EXERCISED and must not be softened to APPLIED: a pre-flight check never run against a real narrowing is indistinguishable from one that always answers 'nothing breaks', and the failure it prevents is an outage this project would cause itself. (4) C-ANALYZER-PRICED-FIRST -- AWS Access Analyzer is the FALLBACK and NO PER-ROLE PRICE HAS BEEN READ BY ANYONE; taking it off the shelf is a VENDOR call requiring Andrew's explicit word, never an assumption inherited from the brief.",
+  "threads": [],
+  "thread_counter": 0
+}
