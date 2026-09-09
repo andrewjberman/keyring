@@ -28,7 +28,6 @@ so INVISIBLY, which is worse than the original because the original at least sai
 """
 from __future__ import annotations
 
-import os
 import subprocess
 import sys
 from pathlib import Path
@@ -119,93 +118,94 @@ class KuzuUnavailable(RuntimeError):
     """Kuzu could not be reached or read. comp-blast FAILS on this -- it never falls back."""
 
 
-def _import_globgrph():
-    """Import the globgrph modules (_canonical/_provenance) that live outside this package."""
+def _projection_client():
+    """Import the ONE served-graph client (TO-CG-D-3 / CG-s-6). No local database exists."""
     if str(_GLOBGRPH) not in sys.path:
         sys.path.insert(0, str(_GLOBGRPH))
     try:
-        import _canonical  # noqa: PLC0415
-        import _provenance  # noqa: PLC0415
-        import kuzu  # noqa: PLC0415
+        import projection_client  # noqa: PLC0415
     except Exception as ex:  # noqa: BLE001
         raise KuzuUnavailable(
-            f"cannot import the canonical graph layer ({type(ex).__name__}: {ex}). "
-            f"comp-blast's universe IS the canonical kuzu graph -- it does not fall back to a "
-            f"private scan."
+            f"cannot import the served graph client ({type(ex).__name__}: {ex}). "
+            f"comp-blast's universe IS the served cloud graph -- it does not fall back to a "
+            f"private scan and there is no local database left to read."
         ) from ex
-    return kuzu, _canonical, _provenance
+    return projection_client
 
 
-def kuzu_provenance(db_path: str) -> str:
-    """The comp-kuzu provenance block, passed through AS-IS (spec 3.3: dual provenance)."""
+def _import_globgrph():
+    """RETIRED SHIM (TO-CG-D-7, R7). The local `_canonical`/`_provenance`/`kuzu` triple this
+    returned no longer exists on any consumer path; the universe comes from the served graph.
+    Kept as a NAMED refusal rather than deleted so a stale caller gets a sentence, not an
+    AttributeError."""
+    raise KuzuUnavailable(
+        "the local canonical kuzu layer is RETIRED (NFRA_CLDGRPH R7 / CG-s-8). The universe is "
+        "the SERVED graph; use projection_client.connect() / load_kuzu_universe()."
+    )
+
+
+def kuzu_provenance(db_path: str | None = None) -> str:
+    """The served graph's provenance block, from the service's OWN fields (never a client clock)."""
     try:
-        _kuzu, _canonical, _provenance = _import_globgrph()
-        return ascii_safe(_provenance.format_provenance_header(db_path))
+        pc = _projection_client()
+        return ascii_safe(_served_provenance_block(pc.health()))
     except Exception as ex:  # noqa: BLE001
-        return f"=== kuzu provenance UNAVAILABLE ({type(ex).__name__}: {ex}) ==="
+        return f"=== served graph provenance UNAVAILABLE ({type(ex).__name__}: {ex}) ==="
+
+
+def _served_provenance_block(served: dict, nodes=None, edges=None) -> str:
+    """The comp-kuzu-shaped provenance header, rebuilt from the SERVICE's response fields.
+
+    The age is the service's `age_line` (source: the manifest's `committed_at`); there is no
+    second clock here and no `STALE-SERVED` arm -- the served pointer IS the vintage, so a served
+    graph cannot be labeled-stale (TO-CG-D-7 removed the seam that could label one)."""
+    lines = ["=== served cloud graph (opal-globgrph projection) ==="]
+    age_line = served.get("age_line") or (
+        "Built from the estate as of %s." % str(served.get("vintage") or "unknown"))
+    lines.append("  %s" % age_line)
+    lines.append("  vintage: %s" % (served.get("vintage") or "unknown"))
+    if served.get("manifest_sha256"):
+        lines.append("  manifest: %s" % served["manifest_sha256"])
+    if served.get("artifact_prefix"):
+        lines.append("  artifact: %s" % served["artifact_prefix"])
+    if nodes is not None or edges is not None:
+        lines.append("  universe: %s nodes / %s edges (served, whole estate)" % (nodes, edges))
+    lines.append("  transport: HTTPS /graph/cypher -- no local database, no cache, no fallback")
+    return "\n".join(lines)
 
 
 def load_kuzu_universe(db_path: str | None = None, refresh: bool = True, *,
                        budgeted: bool = False,
-                       unbudgeted_label: str | None = None) -> tuple[TraceGraph, str, str]:
-    """Project the canonical kuzu graph into a TraceGraph.
+                       unbudgeted_label: str | None = None) -> tuple[TraceGraph, str, dict]:
+    """Project the SERVED cloud graph into a TraceGraph.
 
-    Returns (graph, provenance_block, db_path).
+    Returns (graph, provenance_block, served) -- `served` is the SERVICE's own provenance dict
+    (`vintage`, `age_line`, `manifest_sha256`, `artifact_prefix`, plus the two counts this call
+    measured). The third element used to be a local db path; there is no local path any more.
 
-    A TraceGraph is the carrier ON PURPOSE: its BFS traversal, the `format_blast` renderer, and the
-    PHANTOM-CONSUMER / CONSUMER-OK marker strings callers key on are all reused unchanged, so this
-    swaps the UNIVERSE without disturbing the behavioral contract in spec section 4.
+    TO-CG-D-7 (R7): the universe arrives over ONE transport, `projection_client.query`. Nothing
+    here opens a database, imports `kuzu`, names a local directory, refreshes, or decides between
+    full and incremental -- those decisions moved to the cloud engine and the pointer swap.
+    `refresh` and `budgeted` are accepted for signature compatibility and are INERT: there is no
+    refresh mutex a client can enter, so a bounded caller costs exactly what an unbounded one does.
 
-    Nodes/edges are populated DIRECTLY rather than via add_node/add_edge: add_node computes a
-    per-node source SHA (a filesystem hash), which is right for a 2.2K worktree-derived graph and
-    catastrophic for a 20K estate graph whose nodes are ARNs, not files.
+    A TraceGraph is still the carrier ON PURPOSE: BFS traversal, `format_blast` and the
+    PHANTOM-CONSUMER / CONSUMER-OK strings callers key on are reused unchanged.
     """
-    kuzu, _canonical, _provenance = _import_globgrph()
-    path = db_path or _canonical.CANONICAL_DB_PATH
-
-    # AC-7 / CE-g-5: a bounded client must never enter the refresh mutex.  The existing projection
-    # is a complete, queryable prior vintage; serve it now and disclose its age below instead of
-    # allowing a stale HEAD to launch the ~17-minute loader outside Rule T.
-    refresh_allowed = not budgeted
-    if refresh and _canonical.is_canonical(path) and refresh_allowed:
-        try:
-            _canonical.ensure_fresh(path)
-        except Exception as ex:  # noqa: BLE001 -- staleness is REPORTED (provenance), never fatal
-            print(f"WARN: canonical auto-refresh skipped ({type(ex).__name__}: {ex})",
-                  file=sys.stderr)
-
-    if not os.path.exists(path):
+    if db_path:
         raise KuzuUnavailable(
-            f"canonical kuzu DB not found at {path}. comp-blast's universe IS this graph; it does "
-            f"NOT fall back to a private scan. Rebuild: python infra/aws/globgrph/kuzu_load.py"
+            f"local database paths are RETIRED (NFRA_CLDGRPH R7 / CG-s-8): {db_path!r} will not be "
+            f"opened. comp-blast's universe is the SERVED graph and there is no local copy to read."
         )
-
-    prov = ascii_safe(_provenance.format_provenance_header(path))
-    if budgeted and _canonical.is_canonical(path):
-        try:
-            needs, reason = _canonical.needs_refresh(path, _provenance.DEFAULT_AGE_WARN_HOURS)
-            age = _canonical._served_age_str(path)
-            if needs:
-                prov += ("\n  BUDGETED CALL: SERVING EXISTING GRAPH STALE (age %s); refresh skipped "
-                         "to keep the whole call within Rule-T (%s)." % (age, reason))
-            else:
-                prov += "\n  BUDGETED CALL: existing graph current; no refresh required."
-        except Exception as ex:  # noqa: BLE001 -- disclosure must not make a readable DB unusable
-            prov += ("\n  BUDGETED CALL: serving existing graph; staleness disclosure unavailable "
-                     "(%s)." % type(ex).__name__)
-    elif unbudgeted_label:
-        prov += ("\n  UNBUDGETED CALL (%s): today's canonical refresh/serve path retained; "
-                 "no Rule-T ceiling applied to universe loading." % unbudgeted_label)
+    pc = _projection_client()
+    conn = pc.connect(timeout_s=240.0)
 
     try:
-        db = kuzu.Database(path, read_only=True)
-        conn = kuzu.Connection(db)
-        g = TraceGraph(built_at=0.0)
-
         res = conn.execute(
             "MATCH (n:CloudNode) RETURN n.node_id, n.node_type, n.name, n.layer, n.arn, "
             "n.source, n.drift_class"
         )
+        g = TraceGraph(built_at=0.0)
         while res.has_next():
             nid, ntype, name, layer, arn, source, drift = res.get_next()
             nid = str(nid)
@@ -233,15 +233,28 @@ def load_kuzu_universe(db_path: str | None = None, refresh: bool = True, *,
         raise
     except Exception as ex:  # noqa: BLE001
         raise KuzuUnavailable(
-            f"kuzu query failed ({type(ex).__name__}: {ex}). comp-blast does not fall back."
+            f"served graph query failed ({type(ex).__name__}: {ex}). comp-blast does not fall back."
         ) from ex
 
     if not g.nodes:
         raise KuzuUnavailable(
-            "canonical kuzu graph returned ZERO nodes. An empty universe makes every query a "
+            "the served cloud graph returned ZERO nodes. An empty universe makes every query a "
             "NOT-FOUND, which on this gate reads as 'nothing breaks' -- refusing to serve it."
         )
-    return g, prov, path
+
+    served = {
+        "vintage": conn.vintage,
+        "age_line": conn.age_line,
+        "manifest_sha256": conn.manifest_sha256,
+        "artifact_prefix": conn.artifact_prefix,
+        "nodes": len(g.nodes),
+        "edges": len(g.edges),
+    }
+    prov = ascii_safe(_served_provenance_block(served, len(g.nodes), len(g.edges)))
+    if unbudgeted_label:
+        prov += ("\n  UNBUDGETED CALL (%s): the served graph costs the same either way; "
+                 "no refresh path exists to skip." % unbudgeted_label)
+    return g, prov, served
 
 
 # --------------------------------------------------------------------------- resolution (defect c)

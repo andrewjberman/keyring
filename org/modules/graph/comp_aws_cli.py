@@ -2854,21 +2854,21 @@ def cmd_derive_cli(args):
     # believes derive refreshed the projection is holding a stale graph and a fresh belief.
     #
     # U4 RESOLVED (source-confirmed) -- and it is why this wording is not "use snapshot":
-    #   comp-kuzu's DEFAULT surface is _canonical.CANONICAL_DB_PATH = kuzu_nessie_db,
-    #   built from NESSIE/Iceberg. Bare `snapshot` writes the tarball + snapshots/latest.txt,
-    #   which feed kuzu_load.py -> kuzu_db -- a NON-canonical scratch DB comp-kuzu never
-    #   opens (_canonical.py:19 says so in terms). Telling an operator to "run snapshot to
-    #   publish" would send them to a verb that does not refresh the surface they query.
+    #   comp-kuzu reads the SERVED projection and nothing else (it is a thin client with no
+    #   database path, NFRA_CLDGRPH round 5). Bare `snapshot` writes a tarball +
+    #   snapshots/latest.txt -- artifacts the served projection is not built from, so telling
+    #   an operator to "run snapshot to publish" would send them to a verb that does not move
+    #   the surface they query. The surface moves when the served projection's pointer moves.
     if not args.out:
         print("\nNOT PERSISTED -- this derive was not published, and nothing downstream saw it.")
     else:
         print(f"\nNOT PUBLISHED -- {args.out} is a local file; no shared surface changed.")
-    print("  comp-kuzu's canonical surface (kuzu_nessie_db, Nessie-sourced) still serves its")
-    print("  previous vintage. To publish to THAT surface:")
+    print("  comp-kuzu reads the SERVED projection, which still serves its previous vintage --")
+    print("  the vintage its own VINTAGE line will state on your next read. To move THAT surface:")
     print("      comp-aws snapshot --commit-to-nessie   |   comp-aws iceberg-commit")
     print("      (or wait for the nightly derive_runner)")
-    print("  NOTE: bare `comp-aws snapshot` does NOT refresh it -- it writes the tarball +")
-    print("  snapshots/latest.txt, which feed kuzu_load.py -> kuzu_db (a scratch DB).")
+    print("  NOTE: bare `comp-aws snapshot` does NOT move it -- it writes the tarball +")
+    print("  snapshots/latest.txt, which the served projection is not built from.")
     return RC_OK
 
 

@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.0",
+  "project": "NFRA_CLDGRPH",
+  "round": 5,
+  "seat": "2.0.0_SA_COO~A",
+  "written_utc": "2026-09-09T15:43Z",
+  "trigger": "1.0.0_SA_CTO's L10 read of round 4 (msg 94509, records @707ba2a4c9 merged @d419ab0d6d): ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED on the INSTRUCTION plane, PRD addendum v0.5 rows S17-S20 + R13; Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion' and at the CTO terminal ~12:5xZ 'any work that can be adjudicated or pushed forward on NFRA_CLDGRPH ... go ahead'.",
+  "rows": [
+    {
+      "seq": 1,
+      "limb": "L10->L5/L6/L7",
+      "started_utc": "2026-09-09T15:18Z",
+      "ended_utc": "2026-09-09T15:43Z",
+      "act": "THE RECUT AS ONE ISSUANCE, the same tick the analysis was read (drive obligation 1). The CTO's answer read whole (ROUND_ANALYSIS.round4.md, COMPLETION_GRADES.round4.json, PRD v0.5 s.7 rows S17-S20 + R13 + the correction retiring the cost-attribution placement). RE-ISSUE chosen over re-decomposition and recorded in the issuance commit: every prior cell DONE with a valid proof at HEAD; the four rows are additive. Decomposition v0.5 (CG-s-17..20 ADDED, 26 cells; s.2 ROUND 5 block; s.6 row 0.5). Four task orders cut in the v3 grammar with the issuer's own census at the cut: E-1 (CG-s-17, ~2): 18 files / 165 hits carrying the retired refresh routes, 11 routing/registry carriers in <paths> (the manifest, comp-which's curated routes :631-642, tool_index.py, four registry YAMLs + generator, three shims), 7 history docs declared; seven criteria with YAML/AST probes and controls; the PERSON half recorded MODELLED under E1-AC7. E-2 (CG-s-18, ~1): the four producer .tf lines and comment lines, the three declared launch targets and the one producer without a declared launcher, all seven families named for the NEVER-2 entry, the ECR :latest digest as the no-image-moved control; seven criteria. E-3 (CG-s-19, ~3): the residue by ls -la (sizes, mtimes, manifests quoted), the P7 row quoted, a closed disposition vocabulary, the S53 claim shape; six criteria. E-4 (CG-s-20, ~3 second): the stitch producer found CLOUD-SIDE and scheduled (stitch-produce.tf:231), the 51-day store/manifest mtime gap named for explanation, both answers with what each requires; six criteria. dep_stage ROUND_CLOSE -> EXECUTING on BOTH carriers (the first commit attempt was REFUSED by missions-tree-check on INDEX-DRIFT because the generated flat index still read ROUND_CLOSE; `derive --write` re-derived it and the second attempt landed @de466829e0, 7 files). Three worktrees wk-cldgrph-5-1/2/3 from CLOUD at that commit, .tools/terraform.exe copied into ~1's (gitignored, absent in every fresh worktree), three workers spawned (opus; E-2 and E-1 marked HARD).",
+      "inputs": [
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/ROUND_ANALYSIS.round4.md @707ba2a4c9",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/COMPLETION_GRADES.round4.json @707ba2a4c9 (7 REALIZED, FWD-7 NOT_REALIZED, state_observed APPLIED)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/prd/NFRA_CLDGRPH_PRD.md v0.5 @707ba2a4c9 (s.7 S17-S20; s.6 R13)",
+        "1.0.0_SA_CTO msg 94509 (inbox 20260909T151821Z); 2.0.0_SA_COO msg 94528 (the base loop's seat-triage nudge, 15:33Z -- answered by this issuance, nothing asked of the base)",
+        "the issuer's censuses at the cut: comp-find over the retired routes (18 files / 165 hits); comp-find over the globgrph Terraform (12 image references, 17 target references); ls -la of the residue; comp-schedule (GATES ARMED 25 across 5 carriers); comp-manifest-check completeness PASS (E1-AC4's baseline); comp_coverage_view --verify OK (E1-AC5's baseline)"
+      ],
+      "outputs": [
+        "CLOUD @de466829e0: task-orders/NFRA_CLDGRPH.TO-CG-E-{1,2,3,4}.*.md; decompositions/NFRA_CLDGRPH_DECOMP.md v0.5; project.json dep_stage EXECUTING; org/projects/NFRA_CLDGRPH.json re-derived",
+        "fanout: 3 of 3 chains, cap 8 (in the issuance commit message)",
+        "worktrees C:/tmp/wk-cldgrph-5-{1,2,3} on branches wk-cldgrph-5-{1,2,3} @de466829e0; terraform.exe provisioned into 5-1",
+        "spawned: 0.9.0_WK_NFRA_CLDGRPH~1 (E-2), ~2 (E-1), ~3 (E-3 then E-4)"
+      ],
+      "spine_clause": "L10 the recut (the COO reads the analysis and the remediations, re-issues as ONE issuance under L6, the choice recorded in the issuance commit) -> L6 (the L6 gate, the tree check on both carriers) -> L7 (the spawn IS the GO; one worktree per slot from CLOUD)",
+      "gate_or_notifier_touched": ".tools/safe-commit.sh (to-pipeline-gate: 4 newly-added TOs carry <decomp_ref> + preflight; surprise-row-gate; missions-tree-check REFUSED once on INDEX-DRIFT then 0 violations); .tools/missions-tree-index.py derive --write; git worktree add x3; Agent(subagent_type=worker, model opus) x3",
+      "note": "TWO THINGS STATED PLAINLY. (1) The tree check's first refusal was CORRECT: a flip on one carrier is the split the check exists to catch, and the remedy was the generator, not an edit to the index. (2) A cut-time defect the issuer will own if it bites: E1-AC3's zero over help strings can be unreachable if a retired-alias RECORD inside tool_index.py must name the retired surface -- the face pre-empts it by excluding declared retired records from the count and printing them; if the worker finds a carrier the exclusion cannot express, that is a row and an amendment, not a re-cut to pass. || The base COO's nudge (94528) measured this lane's summary as stale ('awaiting the CTO analysis'); the heartbeat process is restarted with a WORKING summary in the same tick."
+    },
+    {
+      "seq": 2,
+      "limb": "L7/L8",
+      "started_utc": "2026-09-09T16:18Z",
+      "ended_utc": "2026-09-09T16:22Z",
+      "act": "TO-CG-E-3 DRAINED AND TERMINAL; TO-CG-E-4 HANDED; the round-5 L8 packet OPENED. The worker report (0.9.0_WK_NFRA_CLDGRPH~3, branch HEAD 7f3616c14b) and the instance read at this seat inside the worktree: checker rc=0 on the six ids; E3-AC1 4 of 4 dispositions from the closed vocabulary with P7_ROW_FILED=W3-S6; E3-AC2 READERS=0 of 487 .py by AST with the builder declared and both controls fired; E3-AC3 the two stores byte- and mtime-identical to the cut (the issuer's own ls -la agrees); E3-AC4 the builder stamps edge_count_claim + artifact_claim and both staying manifests carry them (the issuer read kuzu_db's: edge_count 2488, edge_count_claim merge_attempts, artifact_claim historical); E3-AC5 7 of 7 gate-clean; E3-AC6 recorded, no verdict. Both commits authored by the worker; every touched path inside the grant. MERGED through safe-merge.sh @d3a03a7b7b (row gate on the merged index: 4 new rows of 126; missions-tree-check 0 violations; no conflict). CLOUD merged into wk-cldgrph-5-3 @ab45a3337f; E-4's premises re-read there (E-3 instance rc 0; E-4 pending; kuzu_stitch_db + manifest present in the main workspace; comp_debt.py carries the refusal line); TO-CG-E-4 handed by continuing the same subagent. L8_PACKET.round5.partial.md opened with E-3's section, the judgment split (the READING clause met, the EXISTENCE clause met only by a deletion gated on P7's author -- W3-S6 is the ask) and the four rows for the CVO's desk. This seat registered through the MCP client at 16:1xZ (PID 20528); 94466/94509/94528 acked READ.",
+      "inputs": [
+        "WORKER REPORT 0.9.0_WK_NFRA_CLDGRPH~3 on TO-CG-E-3 (final message; branch @7f3616c14b)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-E-3.residual-local-stores-dispositioned.proof_of_spec.json @7f3616c14b",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/CG-s-19.residual-stores.result.md @85e33e98ee"
+      ],
+      "outputs": [
+        "CLOUD @d3a03a7b7b (the E-3 drain)",
+        "wk-cldgrph-5-3 @ab45a3337f (the E-4 hand-off merge)",
+        "TO-CG-E-4 handed (0.9.0_WK_NFRA_CLDGRPH~3 continued)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/L8_PACKET.round5.partial.md (this commit)"
+      ],
+      "spine_clause": "L7 the drain (report AND instance; merge through the refuser; every ARMED row the branch carries read at the merge -- W3-S6 to the CVO, W3-S7/S8 to CloudComp, none this seat's to disarm; the next order handed by continuing the same subagent) -> L8 (the terminal order compiled the tick it went terminal)",
+      "gate_or_notifier_touched": ".tools/proof-of-spec-check.py (rc 0 in the worker's plane, and again at the hand-off HEAD); .tools/safe-merge.sh; git merge --no-ff into the worker branch (no gate: not a drain)",
+      "note": "THE WORKTREE IS KEPT (E-4 runs on it); the removal is at E-4's drain. || The worker named the gap the CVO must see rather than letting the five PASS rows imply the outcome: kuzu_db is still on disk and FWD-7's existence clause is met by a deletion this order was forbidden to take -- that is the P7 row, not a defect of the order."
+    },
+    {
+      "seq": 3,
+      "limb": "L7/L8",
+      "started_utc": "2026-09-09T16:2xZ",
+      "ended_utc": "2026-09-09T16:31Z",
+      "act": "TO-CG-E-2 DRAINED AND TERMINAL; the channel resolved as the append-only UNION; two of the worker's three rows to this seat DISARMED. The worker report (0.9.0_WK_NFRA_CLDGRPH~1, branch HEAD 5eccbba025) and the instance read at this seat inside the worktree: checker rc=0 on seven ids; E2-AC1 PINNED_BY_DIGEST=7 of 7 (the issuer's own describe-task-definition on globgrph-cse-producer read revision 2 on @sha256:1b89853f... -- a different instrument agreeing); E2-AC2 4 of 4 equal to local.globgrph_image_digest read from serving.tf; E2-AC3 3 of 3 declared launchers on the pinned revision (resource-summaries has NO launcher on any plane, W1-S28: a hand-run family since one 13-minute session on 2026-07-18; the pin is in force for whoever runs it next); E2-AC4 the ECR :latest digest unchanged across every act; E2-AC5 the NEVER-2 entry CLOSED with all seven families and pre-act revisions; E2-AC6 FMT_RC=0; E2-AC7 recorded, no verdict. THE APPLY SET WAS TEN ADDRESSES, NOT FOUR: the four task definitions + the three declared launchers (their target ARNs carry the revision) + the three launcher roles' revision-scoped ecs:RunTask policies -- omitting the last three would have applied green and failed three nightly launches AccessDenied from the next fire (W1-S2's shape recurring; caught by reading the plan's address census, as the face ordered). Both commits by the worker; every path inside the grant; D-1's three captures RESTORED byte-identical (sha256 on both sides by the issuer). MERGED through safe-merge.sh: CONFLICT rc 4 on the append-only channel (CLOUD carried 126 after E-3's drain; the branch 127 = base 122 + 5), resolved as the UNION (131, ids unique, the header restated from the parsed count) and re-entered with --continue so the guards ran on the merged index (5 new rows of 131; 0 violations) @a302d9ebb8. Worktree + branch wk-cldgrph-5-1 REMOVED (queue empty). Rows S64 (ack W1-S29: the issuer's fmt-vs-bounds cut defect, resolution accepted) and S65 (ack W1-S31: the slot-folder collision, repaired and verified) filed; W1-S30 (serving.tf:11-16's comment falsified by the apply, a CloudOps-lane comment edit outside every grant) and W1-S27 (the halt gate's identity axis, the CTO's, recurred from W1-S11) carried NAMED.",
+      "inputs": [
+        "WORKER REPORT 0.9.0_WK_NFRA_CLDGRPH~1 on TO-CG-E-2 (final message; branch @5eccbba025)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-E-2.four-latest-producers-pinned.proof_of_spec.json @5eccbba025",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/CG-s-18.four-producers-digest-pin.result.md @5eccbba025",
+        "rows W1-S27..S31 read at the merge"
+      ],
+      "outputs": [
+        "CLOUD @a302d9ebb8 (the E-2 drain; TO-CG-E-2 complete at HEAD; the four producers by digest at HEAD)",
+        "rows NFRA_CLDGRPH-S64, NFRA_CLDGRPH-S65 (this commit)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/L8_PACKET.round5.partial.md ADDENDUM 1 (this commit)",
+        "worktree + branch wk-cldgrph-5-1 removed"
+      ],
+      "spine_clause": "L7 the drain (report AND instance; merge through the refuser; a conflict left OPEN by the refuser and re-entered with --continue so the row gate grades the union -- S36's remedy exercised; every ARMED row the branch carries read at the merge, the two owned by this seat disarmed, the two owned elsewhere carried named) -> L8 (compiled the tick it went terminal)",
+      "gate_or_notifier_touched": ".tools/proof-of-spec-check.py (rc 0 in the worker's plane); .tools/aws ecs describe-task-definition (the issuer's independent read); .tools/safe-merge.sh (rc 4 then --continue rc 0; row gate on the merged index); git worktree remove + branch -d",
+      "note": "THE UNION RESOLVER ASSERTED ITS OWN PREMISE (each side's body starts with the base body) rather than assuming append-only; had a side rewritten the base, the script would have stopped instead of producing a plausible file. || TWO CUT DEFECTS OF THE ISSUER'S ARE ON THE RECORD (S64: a fmt bar on an unmeasured baseline; S65: generic capture names in a reused slot folder); both found by a worker measuring rather than believing the face, both adopted as cut-time rules."
+    },
+    {
+      "seq": 4,
+      "limb": "L7/L6",
+      "started_utc": "2026-09-09T16:3xZ",
+      "ended_utc": "2026-09-09T16:47Z",
+      "act": "TO-CG-E-1 PASS 1 READ, NOT DRAINED (E1-AC3 FAIL by output; the order correctly left pending by the worker); THE BLOCKING ROW W2-S30 RULED BY THE ISSUER (drive obligation 7, ADJUDICABLE) AND PASS 2 HANDED. The instance re-validated at this seat inside the worktree: rc 0 on seven ids, six PASS by output, E1-AC3 FAIL (HELP_ROUTES_BACK=1 of 8, every counted hit in the GENERATED .tools/tool_index.py), E1-AC7 recorded. Pass 1 landed: the two refresh entries retired under the file's own per-entry schema with the READ successor cloud.read.served_vintage (the issuer's own yaml read of tools_index comp-kuzu: subcommands ['<cypher>','--json','--limit','--schema'], entries without cloud.refresh.*); comp-which's curated routes repointed (the issuer's own comp-which run on 'refresh the graph, my graph is behind' routes to no retired entry); the registry carriers repointed; AC4/AC5 PASS; the battery 7 of 7. THE BLOCK, measured at this seat by a different instrument (the sources read directly): the compiler gen_tool_registry.py builds its master population from TOOL_CLASSIFICATION.yaml and refuses on divergence from the SOLE authority comp-coverage-map.yaml (CTO ruling 212335Z); TOOL_CLASSIFICATION.yaml is generated by gen_tool_classification.py (IN the grant) whose population is the CVO's tool_profile.json (:17, :122), which still lists the four RETIRED tools (comp-adapter-audit, comp-kuzu-full, comp-kuzu-inc, comp-surface-check -- present in the profile and the classification, absent from the map). THE RULING: the classification generator takes its population from the authority, excludes profile tools absent from it PRINTING the exclusions (a non-retired absence is a row), regenerates classification -> registry -> TOOL_MASTER.yaml + tool_index.py; the bar unmoved (seven criteria; E1-AC3's invocation and expect unchanged). Three more rows answered in the same amendment @facc7241a5: W2-S32 -- <paths> widened by ONE file (org/modules/graph/debtscan/summary_corpus.py, the provenance-header capture the repointed comparison depends on); W2-S34 -- per-order probe names (E1-AC6's invocation -> e1_commit_gate_all.sh; D-7's probe restored from de466829e0); W2-S36 -- the comp-system two-phase override EXPECTED, its discharge into infra/system/ the issuer's at the drain, the grant not widened there. CLOUD merged into wk-cldgrph-5-2 THROUGH safe-merge.sh (a plain git merge conflicted on the channel and its --continue was correctly REFUSED as a merge the refuser did not open; aborted and re-run from the top: rc 4, the union resolved 129 + 133 over base 122 = 140 unique, --continue rc 0) @91d62f2ee6; the pass-1 instance validates at that HEAD; pass 2 handed by continuing the same subagent.",
+      "inputs": [
+        "WORKER REPORT 0.9.0_WK_NFRA_CLDGRPH~2 on TO-CG-E-1 pass 1 (final message; branch @629fa87b36; BLOCKING W2-S30)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-E-1.instruction-plane-route-back-retired.proof_of_spec.json @629fa87b36",
+        ".tools/gen_tool_registry.py:86-134,150-205 and .tools/gen_tool_classification.py:17,122 read at the branch HEAD; tool_profile.json / comp-coverage-map.yaml / TOOL_MASTER.yaml / TOOL_CLASSIFICATION.yaml / tool_overrides.yaml censused for the four retired names",
+        "rows W2-S30, W2-S32, W2-S34, W2-S36 read at the merge"
+      ],
+      "outputs": [
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-E-1.instruction-plane-route-back-retired.md @facc7241a5 (AMENDED FOR PASS 2; <paths> +1; E1-AC6's invocation renamed)",
+        "wk-cldgrph-5-2 @91d62f2ee6 (the hand-off merge through safe-merge.sh; channel union 140)",
+        "TO-CG-E-1 pass 2 handed (0.9.0_WK_NFRA_CLDGRPH~2 continued)"
+      ],
+      "spine_clause": "L7 (a FAIL row leaves the order open; the worker's BLOCKING row read by the COO in its final report) -> obligation 7 (ADJUDICABLE within L6: an instrument defect inside the grant, ruled and dispatched the same tick; no NEVER-line names it; the CTO's standing ruling on the population authority is the law applied) -> L6 (the issuer's amendment under the standing test: bar unmoved, one instrument path renamed, the grant widened by one same-lane file for the cell's own accept) -> L7 (the next pass handed by continuing the subagent)",
+      "gate_or_notifier_touched": ".tools/safe-commit.sh (the never-rules gate REFUSED one call that paired safe-commit with a $( substitution -- correctly; re-run without it); .tools/safe-merge.sh from the worker's worktree (the refuser REFUSED --continue on a merge it did not open -- correctly; abort + re-run from the top); .tools/proof-of-spec-check.py x2",
+      "note": "THE WORKER'S REFUSAL TO HAND-EDIT THE GENERATED ARTIFACT WAS RIGHT and is why this is a clean ruling: a hand edit would have passed E1-AC3 and been reverted by the next regeneration -- the D7-AC1 shape (a count that passes while the property does not hold) from the other side. || Both gate refusals this tick were the gates being correct about this seat's own shortcuts; neither was overridden."
+    },
+    {
+      "seq": 5,
+      "limb": "L7/L8",
+      "started_utc": "2026-09-09T16:5xZ",
+      "ended_utc": "2026-09-09T16:55Z",
+      "act": "TO-CG-E-4 DRAINED AND TERMINAL; three of four round-5 orders terminal (23 of 24 project orders). The worker report (0.9.0_WK_NFRA_CLDGRPH~3, branch HEAD aff8c7a102) and the instance read at this seat inside the worktree: checker rc=0 on six ids; E4-AC1 STITCH_HOME=JOIN_PROJECTION RECORDED with PRODUCER_READ=true and four later-round cells named with lanes (repair the producer -- 0.7.0_AE_CloudOps; extend the projection to carry the stitch source; repoint comp-debt's second leg; retire the local store -- 0.8.0_AE_CloudComp); E4-AC2 both refusal texts name the home and CG-s-20; E4-AC3 the builder stamps the claim and the manifest carries edge_count_claim=merge_attempts + artifact_claim=interim_local_projection (the issuer's own read), the store's bytes UNCHANGED; E4-AC4 0 rebuild paths of 3216 AST nodes; E4-AC5 16 of 16 gate-clean with the bounded comp-debt run quoted; E4-AC6 recorded, no verdict. Both commits the worker's; every path inside the grant. MERGED through safe-merge.sh: rc 4 on the append-only channel (CLOUD 133 after S64/S65; the branch 130 = base 126 + 4), the union 137 unique, --continue rc 0 @49fea6980a. Worktree + branch wk-cldgrph-5-3 REMOVED (queue empty). THE TWO ARMED FINDINGS, both to 0.8.0_AE_CloudComp and both for the CTO's L10 read: W3-S10 -- the cloud stitch producer opal-stitch-produce has NEVER succeeded (67 of 67 CodeBuild builds FAILED since 2026-07-07, 25 of 25 consecutive rule-initiated nightlies; the issuer's own list-builds-for-project read 67; the S3 stitch marker says producer=stitch-local, so the artifact in the cloud was written by a laptop); W3-S11 -- kuzu_stitch_db's bytes were content-written 2026-08-27 02:32 with no manifest rewrite (no build), so its manifest describes the July bytes; the capable mutator INFERRED as the deleted kuzu_cost_enrich.py. JOIN was decided on a substrate that currently produces nothing, which is why the first named cell is the repair.",
+      "inputs": [
+        "WORKER REPORT 0.9.0_WK_NFRA_CLDGRPH~3 on TO-CG-E-4 (final message; branch @aff8c7a102)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-E-4.stitch-graph-home-decided.proof_of_spec.json @aff8c7a102",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/CG-s-20.stitch-home.result.md @0d0b1f09bf (the decision record; the four later-round cells)",
+        "rows W3-S10..S13 read at the merge"
+      ],
+      "outputs": [
+        "CLOUD @49fea6980a (the E-4 drain; TO-CG-E-4 complete at HEAD; channel 137)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/L8_PACKET.round5.partial.md ADDENDUM 2 (this commit)",
+        "worktree + branch wk-cldgrph-5-3 removed"
+      ],
+      "spine_clause": "L7 the drain (report AND instance; merge through the refuser with the union on the channel; every ARMED row the branch carries read -- W3-S10/S11 owned by CloudComp, carried NAMED; none this seat's) -> L8 (compiled the tick it went terminal)",
+      "gate_or_notifier_touched": ".tools/proof-of-spec-check.py (rc 0 in the worker's plane); .tools/aws codebuild list-builds-for-project (the issuer's independent read: 67); .tools/safe-merge.sh (rc 4 then --continue rc 0); git worktree remove + branch -d",
+      "note": "THE FINDING BENEATH THE DECISION IS LARGER THAN THE CELL: a nightly the estate has trusted since July has failed every night, and the cloud artifact it was meant to produce was written by a laptop. That is the RESIDUE plane's twin of the INSTRUCTION plane's route back -- the estate runs one graph and the second graph it also runs has no working producer. It is not this round's cell; it is the first cell of the JOIN and it goes to the CTO's L10 read named with its lane."
+    },
+    {
+      "seq": 6,
+      "limb": "L7/L8/L10",
+      "started_utc": "2026-09-09T17:0xZ",
+      "ended_utc": "2026-09-09T17:21Z",
+      "act": "TO-CG-E-1 PASS 2 DRAINED AND TERMINAL; ROUND 5 DRAINED (4 of 4; 24 of 24 project orders); THE TWO-PHASE DISCHARGE MADE; THE COO'S COMPLETION REPORT WRITTEN. The worker report (0.9.0_WK_NFRA_CLDGRPH~2, branch HEAD f868aeda6c) and the instance read at this seat inside the worktree: checker rc=0 on seven ids, six PASS by output, E1-AC7 recorded; E1-AC3 1 of 8 -> 0 of 8 with the probe byte-unchanged (the issuer's own count of ENGINE-INTERNALLY / kuzu_nessie_db / --db-path in the regenerated tool_index.py: 0 / 0 / 0; the issuer's own re-run of the classification generator reproduced EXCLUDED_NOT_IN_AUTHORITY=5 of 93 and left the tree clean). Both commits the worker's; every touched path inside the grant (summary_corpus.py by the pass-2 widening). MERGED through safe-merge.sh: rc 4 on the channel; the base-plus-tail resolver REFUSED (criss-cross history: the merge base was not a clean ancestor of the branch), so a BASE-INDEPENDENT union was used -- CLOUD's channel whole plus the branch's rows absent from it appended verbatim (137 + 10 = 147, ids unique), --continue rc 0 @ed674cd511. Worktree + branch wk-cldgrph-5-2 REMOVED; no cldgrph worktree or branch remains. THE DISCHARGE (W2-S36): comp-system run once after the merge (grounded-against-live; 0 changed rows across 26 managed regions in 6 files), infra/system/06_current_state.{md,json} committed @59c46a5c19. THE WHOLE SET RE-VERIFIED FROM THE RECORD: 24 of 24 faces complete at HEAD; 24 of 24 instances VALID rc=0 with each face's own criterion ids; zero unfinished edits under the project's paths. Rows S66 (ack W2-S30: the issuer's block, cleared at its cause), S67 (ack W2-S32: the capture outside the grant, widened and repointed), S68 (ack W2-S34: the probe-name collision, the cut-time rule adopted), S69 (ack W2-S36: the discharge made) filed. COMPLETION_REPORT.round5.json written and schema-VALID: 8 of 8 FWD COVERED, 26 cells, 24 orders, 24 terminal with valid proof; its FWD-7 note states what coverage does not claim (the existence clause gated on P7; the person half modelled; the stitch JOIN decided, not built).",
+      "inputs": [
+        "WORKER REPORT 0.9.0_WK_NFRA_CLDGRPH~2 on TO-CG-E-1 pass 2 (final message; branch @f868aeda6c)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-E-1.instruction-plane-route-back-retired.proof_of_spec.json @f868aeda6c",
+        "rows W2-S37..S39 read at the merge; W2-S30/S32/S34/S36 answered",
+        "org/standards/COMPLETION_REPORT.schema.json"
+      ],
+      "outputs": [
+        "CLOUD @ed674cd511 (the E-1 drain; every round-5 order terminal at HEAD)",
+        "CLOUD @59c46a5c19 (the comp-system discharge, W2-S36)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/COMPLETION_REPORT.round5.json (this commit)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/L8_PACKET.round5.final.md (this commit)",
+        "rows NFRA_CLDGRPH-S66..S69 (this commit)",
+        "worktree + branch wk-cldgrph-5-2 removed"
+      ],
+      "spine_clause": "L7 the drain (report AND instance; the refuser on the merged index; every ARMED row the branch carries read -- four owned by this seat disarmed by ack, W2-S37/S38/S39 INERT and named) -> the gate's phase two (the drain seat's) -> L8 (the FINAL packet) -> L10 the close, the COO's half (the decomposition spent: every cell holds a terminal order with a valid proof; the COMPLETION_REPORT the final drain record; the grades the CTO's, the slug the CVO's)",
+      "gate_or_notifier_touched": ".tools/proof-of-spec-check.py x25 (the instance at the drain + the whole set at HEAD); .tools/safe-merge.sh (rc 4, --continue rc 0); comp-system (the discharge); .tools/safe-commit.sh x2; jsonschema on the report",
+      "note": "THE RESOLVER'S OWN PREMISE FAILED AND THAT IS THE RIGHT OUTCOME: the base-plus-tail script asserted append-only against git's chosen base and stopped instead of writing a plausible file; the base-independent union it was replaced with asserts the id set instead (ours ∪ theirs, unique), which is the property that actually matters on an append-only channel. || THREE ISSUER DEFECTS IN ONE ROUND SHARE A CAUSE (W1-S31, W2-S34, W3-S13: generic artifact names in a slot folder reused across rounds) and the rule is adopted at the cut, where it belongs. || W2-S37 (the normaliser strips .py and not .sh, so one tool is spelled two ways) is a registry-tooling defect outside every grant and travels NAMED."
+    }
+  ]
+}

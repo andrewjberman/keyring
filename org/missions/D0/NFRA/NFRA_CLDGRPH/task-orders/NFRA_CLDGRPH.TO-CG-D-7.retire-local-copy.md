@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CLDGRPH~2</issued_to>
 <issued_by>2.0.0_SA_COO~A</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>pending -- GO = the COO handing this order to slot ~2 by CONTINUING the same subagent LAST OF THE RUN: after TO-CG-D-3 (CG-s-6) and TO-CG-D-6 (CG-x-5: a fresh machine ANSWERED, R7's release) are terminal and merged, AND after TO-CG-D-9, TO-CG-D-10 and TO-CG-D-11 (CG-x-2, CG-x-4, CG-x-8) are terminal and merged -- the CTO's round-3 analysis @2dd381d969 orders "then CG-s-8 -> CG-x-7 last (R7)" -- with CLOUD merged into your branch (spine v3 L7 drain). ROUND 4 of NFRA_CLDGRPH (the ONE issuance covering every open cell, Andrew's word via CRO record @aff3bfb7bf), slot ~2's FOURTH order; STAGE 3, S8 LAST by ruling R7. Marked HARD by the issuer (a 33-file consumer census with a working-tool bar; opus). PREMISE RE-GROUND at hand-off: `infra/aws/globgrph/projection_client.py` exists at your HEAD; `comp-kuzu` answers with a VINTAGE line; TO-CG-D-6's proof instance reads VALID at your HEAD; if any fails, BLOCKING row + report. The assignee commits its own status flip after a VALID proof-of-spec instance; the L8 seat reads the record.</status>
+<status>complete -- CG-s-8 CLOSED AT PASS 4 by 0.9.0_WK_NFRA_CLDGRPH~2 on branch wk-cldgrph-2-d7, work commit 99fe7e4141, push state LOCAL (never pushed, never merged, never rebased). ALL EIGHT CRITERIA TERMINAL: D7-AC1 SEAM_REACHABLE=0 of 3 with SEAM_PROBE_CONTROL=FIRED and SEAM_REFUSAL_KIND_RUNTIMEERROR=3 of 3; D7-AC2 CONSUMERS_OPENING_LOCAL_DB=0 of 29 with CONSUMER_PROBE_CONTROL, CONSUMER_PROBE_BAND_CONTROL and CONSUMER_NARROWING_CONTROL all FIRED; D7-AC3 the served VINTAGE line + 87 hit(s) across 2158 aws node(s); D7-AC4 comp-blast's VINTAGE line over 27304 nodes / 58794 edges; D7-AC5 all three engine pins byte-identical (8b79ca1bdf.../80d60f8ffa.../9dd104db29...) AFTER a pass that deleted one file and rewrote another in the same directory; D7-AC6 7 of 7 battery arms; D7-AC7 19 of 19 gate-clean; D7-AC8 RECORDED under UNVERIFIABLE-BY-INSTRUMENT with NO verdict, for 3.0.0_SA_CVO at L9. Proof instance VALID rc=0 against all eight ids. PASS 4 executed the issuer's 2026-09-09 amendment carrying 1.0.0_SA_CTO's ruling 94466 @1266d65641: kuzu_cost_enrich.py DELETED (the last WRITER against the retired store; the CTO's four findings re-measured here with this seat's own denominators printed beside his), kuzu_ac_traversals.py REPOINTED through projection_client and exercised live, and D7-AC2's predicate NARROWED fail-closed to the canonical store with comp_debt.py:215's stitch open printed as DECLARED-OUT-OF-CELL. Row NFRA_CLDGRPH-W2-S27 filed (OBSERVATION/INERT). STILL OPEN AND NOT THIS ORDER'S: the laptop's own kuzu_nessie_db directory is the ISSUER's act at the drain; W2-S26 stays ARMED and travels ANSWERED for 2.0.0_SA_COO~A's disarm; the D7-AC8 documentation residue travels to L9 named. The L8 seat reads the record. PRIOR STATUS, kept for the record: pending -- GO = the COO handing this order to slot ~2 by CONTINUING the same subagent LAST OF THE RUN: after TO-CG-D-3 (CG-s-6) and TO-CG-D-6 (CG-x-5: a fresh machine ANSWERED, R7's release) are terminal and merged, AND after TO-CG-D-9, TO-CG-D-10 and TO-CG-D-11 (CG-x-2, CG-x-4, CG-x-8) are terminal and merged -- the CTO's round-3 analysis @2dd381d969 orders "then CG-s-8 -> CG-x-7 last (R7)" -- with CLOUD merged into your branch (spine v3 L7 drain). ROUND 4 of NFRA_CLDGRPH (the ONE issuance covering every open cell, Andrew's word via CRO record @aff3bfb7bf), slot ~2's FOURTH order; STAGE 3, S8 LAST by ruling R7. Marked HARD by the issuer (a 33-file consumer census with a working-tool bar; opus). PREMISE RE-GROUND at hand-off: `infra/aws/globgrph/projection_client.py` exists at your HEAD; `comp-kuzu` answers with a VINTAGE line; TO-CG-D-6's proof instance reads VALID at your HEAD; if any fails, BLOCKING row + report. The assignee commits its own status flip after a VALID proof-of-spec instance; the L8 seat reads the record.</status>
 
 **Directive:** D0 · **Fabric:** laptop · **PRD:** `org/missions/D0/NFRA/NFRA_CLDGRPH/prd/NFRA_CLDGRPH_PRD.md` v0.4 @`25c66d3358` (FWD-7; s.7 row S8; R7) · **Decomp cell:** `CG-s-8` (v0.2 @`70918d5d2b`) · **Lane:** `infra/aws/globgrph/_canonical.py` and the LOCAL consumers under `org/modules/graph/`, `.tools/`, `infra/aws/globgrph/` · **Rule 27 seating:** `0.9.0_WK_NFRA_CLDGRPH~2`, a spine-v3 worker subagent of `2.0.0_SA_COO~A`.
 
@@ -44,13 +44,262 @@
 
 ## ACCEPTANCE (v3 grammar: one clause per criterion; every mechanical invocation bounded)
 
-<criterion id="D7-AC1" cell_refs="CG-s-8"><invocation>python .tools/comp-find 'ensure_fresh|_full_rebuild_only|_incremental_or_serve_stale|GLOBGRPH_KUZU_INCREMENTAL_REFRESH|GLOBGRPH_KUZU_REBUILD_LIVENESS|_FALLBACK_SINK_SUFFIX' .tools org/modules/graph infra/aws/globgrph --all --limit 50</invocation><expect>0 hit\(s\) across</expect></criterion>
+<criterion id="D7-AC1" cell_refs="CG-s-8"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/seam_unreachable.sh</invocation><expect>SEAM_REACHABLE=0 of 3[\s\S]*SEAM_PROBE_CONTROL=FIRED</expect></criterion>
 `D7-AC1` -- THE REBUILD / LABELED-STALE SEAM AND ITS SINK ARE GONE from every tool surface (the census; the tool prints its denominator).
 
-<criterion id="D7-AC2" cell_refs="CG-s-8"><invocation>python .tools/comp-find 'kuzu\.Database\(|CANONICAL_DB_PATH|kuzu_nessie_db' org/modules/graph .tools --all --limit 50</invocation><expect>0 hit\(s\) across</expect></criterion>
+> ### AMENDMENT 2026-09-06 ~03:1xZ BY THE ISSUER, ON PASS 2's REPORT -- BOTH ABSENCE ARMS ARE THE
+> WRONG INSTRUMENT, AND THIS IS THE ISSUER'S FOURTH DEFECT IN THIS ORDER. Pass 2 REMOVED THE SEAM
+> (`_canonical.py` 746 lines to a 78-line tombstone) and its instance is **VALID rc=0**, yet AC1 and
+> AC2 both FAILED. They failed because they count TEXT while the property is BEHAVIOUR.
+>
+> ⛔ **AC1'S ZERO IS STRUCTURALLY UNREACHABLE, AND THE COUNT RISES AS THE RETIREMENT GETS BETTER.**
+> The issuer classified all 36 hits independently, by file and by band, and **NOT ONE is a call into
+> the retired seam**: 22 are two OTHER freshness families the unanchored pattern collides with
+> (`tool_probe.ensure_fresh` at `comp_tool_health.py:754`, `_ensure_fresh_danger_map` in the pulse
+> tests), 10 are batteries that must NAME the retired symbols to assert they refuse, and the rest
+> are comments and config. In `ms_heat_index.py` -- the consumer this order repointed -- the two
+> hits are DOCSTRING lines describing the history while the CODE reads `import projection_client`
+> and `projection_client.connect()`. **The count went 29 -> 36 under a pass that improved the
+> retirement**, because pinning an absence requires naming it. An arm that rises when the property
+> strengthens is anti-correlated with what it certifies.
+>
+> **AC1 NOW MEASURES THE PROPERTY DIRECTLY,** through `seam_unreachable.sh` (yours): import the
+> tombstone and touch **three** retired symbols -- `ensure_fresh`, `_full_rebuild_only`,
+> `_append_fallback_sink` -- printing `SEAM_REACHABLE=<n> of 3`. **The issuer exercised this before
+> writing it:** all three raise `RuntimeError` naming R7/FWD-7/CG-s-8, and `RuntimeError` is the
+> right class because an `AttributeError` reads to a caller as *older build, carry on*. **Print a
+> `SEAM_PROBE_CONTROL=FIRED` line beside it** -- a symbol that IS present and does NOT raise, so a
+> module that failed to import cannot masquerade as a clean absence.
+>
+> ⛔ **AC2 IS NARROWED TO THE NAMED CONSUMER POPULATION, AND IT STILL FAILS -- WHICH IS THE POINT.**
+> Its 54 hits are dominated by carriers that are not consumers: 18 in a `.jsonl` advisory tally, 8
+> in the new battery's own mutant strings, 6 in `tool_index.py` HELP TEXT, 5 in a YAML manifest, the
+> rest in JSON reports and design markdown. **But narrowing to the opener alone (`kuzu\.Database\(`)
+> still returns 18, and TWO ARE REAL OPENERS:** `org/modules/graph/tsgraph_spike/load_scratch_kuzu.py:97`
+> and `org/modules/graph/tsgraph_spike/load_clusters_scratch.py:43`, both `db = kuzu.Database(DB_PATH)`.
+> **So AC2 does NOT fail only on prose, and it is NOT re-cut to pass.** `consumers_no_local_db.sh`
+> (yours) walks the CONSUMER FILES THIS ORDER NAMES -- the class-B list in `<paths>`, a closed and
+> enumerated population -- and prints `CONSUMERS_OPENING_LOCAL_DB=<n> of <N>` with `<N>` the file
+> count, plus `CONSUMER_PROBE_CONTROL=FIRED` from a planted opener line the probe must catch.
+>
+> **THE TWO SPIKE OPENERS ARE NOT YOURS TO FIX AND NOT YOURS TO IGNORE.** They sit under
+> `org/modules/graph/tsgraph_spike/`, outside your `<paths>`. **DECLARE them** in the census table
+> with their line numbers and what they open, and file a ROW naming them. Whether FWD-7's *no local
+> copy left that either could have read instead* obliges THIS cell to retire a scratch loader is a
+> SCOPE question, and the issuer has put it to `1.0.0_SA_CTO` in the same tick as this amendment --
+> you are not waiting on that answer, because declaring them is your act either way.
+>
+> **AND THE CENSUS FOUND REAL RESIDUE THAT IS NOT NOISE -- carry it into D7-AC8's reading:**
+> `.tools/tool_index.py` help text (6 places) still tells a user the DEFAULT surface is
+> `kuzu_nessie_db` which *auto-refreshes ENGINE-INTERNALLY*; `comp_aws_cli.py:2857,2866` prints the
+> same; `comp_similar.py:591` compares `cap.get("corpus_db") == "kuzu_nessie_db"` in CODE; and
+> `graph-call-manifest.yaml` still advises routing a repointed consumer BACK through `comp-kuzu`
+> (your row W2-S23). **A retired surface that the estate's own manifest still recommends is the
+> shadow path R7 exists to close.** Name each with its line; the CVO grades whether the retirement
+> is real while the documentation still sells the old one.
+
+> ### AMENDMENT 2026-09-06 ~00:5xZ BY THE ISSUER, ON PASS 1's REPORT -- THREE DEFECTS IN THIS CUT,
+> ALL THREE THE ISSUER'S, ALL THREE MEASURED BEFORE BEING FIXED. Pass 1 is NOT a failed pass: it
+> LANDED THE PORT (ten consumers repointed and each exercised live) and FAILED on defects this face
+> carried. Criteria count is EIGHT before and after; two invocations change and no expectation does.
+>
+> **(1) `D7-AC1` AND `D7-AC5` COULD NOT BOTH BE MET -- NO ACT SATISFIED THIS ORDER AS WRITTEN.**
+> AC1 demanded `ensure_fresh` and `GLOBGRPH_KUZU_INCREMENTAL_REFRESH` be ABSENT from
+> `infra/aws/globgrph`, while AC5 PINS `kuzu_nessie_load.py` and `kuzu_incremental_refresh.py`
+> byte-identical -- and those two files carry those very tokens (`kuzu_nessie_load.py:275`,
+> `kuzu_incremental_refresh.py:30`, both verified by the issuer at HEAD; both are a COMMENT and a
+> DOCSTRING, never a call). **AC1's path list now reads `.tools org/modules/graph
+> org/modules/heatmap`** -- the TOOL SURFACE, which is what the cell means by *any tool a user works
+> with*, and which is the same exclusion AC2 already carried with the same stated reason.
+>
+> ⛔ **THE NARROWING IS NOT A SOFTENING, AND HERE IS THE MEASUREMENT THAT SHOWS IT.** Run at pass 1's
+> own HEAD, the narrowed census returns **`25 hit(s) across 799 file(s)`** -- **the arm STILL FAILS**
+> on exactly the property it exists to catch. What the narrowing removed is the part no act could
+> ever have satisfied; what it kept is the part that is still unmet. A re-cut is judged on EFFECT,
+> and this one's effect is to leave the criterion failing.
+>
+> **(2) `D7-AC3` NAMED THE WRONG INTERPRETER.** `.tools/comp-find` begins `#!/usr/bin/env python3`;
+> `bash` on it dies at `syntax error near unexpected token '('` in 0.21 s, so the criterion measured
+> the shell, not the world. (`D7-AC4` uses `bash .tools/comp-blast` and PASSED -- comp-blast IS a
+> shell script; this cut copied one invocation shape across two tools of different kinds.) Now
+> `python`. Pass 1 showed that form matching the expect in full, VINTAGE line and denominator in
+> order, so this changes the INSTRUMENT and not the bar.
+>
+> **(3) THE CENSUS AT THE CUT WAS SCOPED, AND THE POPULATION WAS WIDER.** It swept three directory
+> roots and `org/modules/heatmap` was not among them, so it could not see
+> **`org/modules/heatmap/ms_heat_index.py:92-98`**, which imports `_canonical`, reads
+> `CANONICAL_DB_PATH` and calls `ensure_fresh` -- a class-B consumer by this order's own definition.
+> The worker found it with an UNSCOPED read, filed the row, and correctly refused to edit out of
+> grant. **Rule 22 says to re-read the population unscoped once after a scoped pass; this cut did
+> not, and the worker did.**
+>
+> ⚠ **AND THE UNSCOPED CENSUS ITSELF HAS A TRAP THE ISSUER WALKED INTO WHILE FIXING THIS.** The
+> obvious pattern `import _canonical` matches **`_canonical_silver_lib`** as a SUBSTRING, which
+> pulled twelve `data/canonical/schwab/*` files into the list -- a DIFFERENT module, in another
+> lane, sharing a prefix. Anchor it: **`import _canonical\b|from _canonical\b`**. Anchored, the real
+> population is SIX importers.
+>
+> **`<paths>` IS WIDENED BY FOUR, AND TWO IMPORTERS ARE DELIBERATELY NOT GRANTED:**
+> ADDED -- `org/modules/heatmap/ms_heat_index.py` (the live consumer) and the three seam tests
+> `infra/aws/globgrph/tests/{test_canonical_rebuild_liveness.py, test_canonical_refresh_failure_signal.py,
+> test_comp_cluster_cli.py}` (they pin the behaviour being removed and must move with it).
+> **NOT ADDED, and this is a lane call, not an oversight:**
+> `org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/NFRA_EDGES_P3_c3_subgraph.py:427` and
+> `org/tier2_senior/0.8.0_AE_CloudComp/deliverables/l1a_item1b/sensor_kuzu_schema_residue.py:216`
+> are **another seat's deliverables** -- historical records, not live tool surface. This seat does
+> not admit a worker to another seat's lane to keep its own census tidy. **DECLARE them in your
+> table as KNOWN-STALE-IMPORTERS-OUT-OF-LANE**; they travel to L10 named, for their owners.
+>
+> **WHAT PASS 2 OWES:** re-run AC1 and AC3 on the corrected invocations, repoint
+> `ms_heat_index.py` and move the three seam tests, then remove the seam. `D7-AC4`, `D7-AC5`,
+> `D7-AC6` and `D7-AC7` PASSED at pass 1 and are carried by citation unless your own re-run moves
+> them; **`D7-AC5`'s pins did not decay under pass 1 and are re-verified at your new base.**
+
+<criterion id="D7-AC2" cell_refs="CG-s-8"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/consumers_no_local_db.sh</invocation><expect>CONSUMERS_OPENING_LOCAL_DB=0 of [0-9]+[\s\S]*CONSUMER_PROBE_CONTROL=FIRED</expect></criterion>
 `D7-AC2` -- NO USER-FACING CONSUMER OPENS A LOCAL DATABASE: zero hits under the tool homes (`infra/aws/globgrph/` is excluded here because the cloud engine legitimately names the DB it BUILDS; D7-AC5 pins those files).
 
-<criterion id="D7-AC3" cell_refs="CG-s-8"><invocation>bash .tools/comp-find --corpus aws 'opal-globgrph' --budget 120 --limit 5 2>&1</invocation><expect>VINTAGE: Built from the estate as of[\s\S]*hit\(s\) across</expect></criterion>
+> ### AMENDMENT 2026-09-06 ~03:5xZ BY THE ISSUER, ON PASS 3's REPORT. **`D7-AC1` NOW PASSES AND THE
+> RETIREMENT IS REAL.** `SEAM_REACHABLE=0 of 3` with the probe control firing on a constant the
+> tombstone still defines, through the same verb on the same object in the same process, and
+> `SEAM_REFUSAL_KIND_RUNTIMEERROR=3 of 3` -- because an `AttributeError` would score 0 while a
+> `hasattr()` caller carried on past it. That is a better instrument than the one this face asked
+> for, and it is accepted as written.
+>
+> ⛔ **`D7-AC2` FAILS ON THE WORLD, NOT THE INSTRUMENT: `CONSUMERS_OPENING_LOCAL_DB=3 of 30`, both
+> controls fired. THE THREE ARE REAL AND THE ISSUER RE-MEASURED EACH ONE IN THE CODE BAND.** The
+> arm is NOT re-cut to clear them. What changes is one scope alignment, and the other two get
+> dispositions.
+>
+> **(i) `comp_debt.py:215` opens `kuzu_stitch_db` -- A STORE THIS CELL DOES NOT ENUMERATE.** CG-s-8
+> names four surfaces and every one of them is `kuzu_nessie_db` or its seam. **So the predicate is
+> WIDER THAN THE CELL, and it is narrowed to the canonical store** -- this is the SAME split
+> `1.0.0_SA_CTO` ruled at 94456 for the scratch loaders: *in FWD-7's TERRITORY, not in CG-s-8's
+> PATHS*. **Narrowed, the arm reads 2 of 30 and STILL FAILS**, so the alignment clears nothing.
+> The stitch store is FWD-7's business and is PLACED as a manifest row at the recut, per the same
+> ruling: a channel row records that something is true, a manifest row makes it someone's work.
+>
+> **(ii) `kuzu_ac_traversals.py` IS YOURS TO FIX AND IT IS THE WORST OF THE THREE.** `:28` sets
+> `DEFAULT_DB_PATH` to `kuzu_nessie_db`, `:83` makes it the `--db` default, and `:90` prints
+> `ERROR: Kuzu DB not found at {args.db} -- run kuzu_nessie_load.py first`. **That is not stale
+> prose, it is an EXECUTABLE INSTRUCTION to re-create the retired store**, and `kuzu_nessie_load.py`
+> still exists byte-pinned by D7-AC5 -- exactly the shape the CTO called *a live instruction to
+> re-create the path FWD-7 exists to remove*. It READS, so a repoint target exists: **repoint it
+> through `projection_client` like the other class-B consumers, and replace that error line with
+> one that names the served graph.** It is inside your `<paths>`.
+>
+> **(iii) `kuzu_cost_enrich.py` HAS NO REPOINT TARGET AND IS NOT YOURS TO DECIDE.** Measured in the
+> CODE band by the issuer: `:228` and `:242` HARDCODE `os.path.join(WORKSPACE, 'kuzu_nessie_db')`
+> with no argparse in the file, `:127` and `:197` open it, and **`:132` WRITES**
+> (`ALTER TABLE CloudNode ADD cost_mtd_usd`). The served graph is READ-ONLY, so repointing is not
+> available and the honest dispositions are DELETE or DECLARE-AS-DEAD -- an endpoint call, put to
+> `1.0.0_SA_CTO` in the same tick as this amendment. **DECLARE it, do not edit it**, and record in
+> your table that it is a WRITER against a retired local store.
+>
+> ⚠ **AND SAY THE RESIDUAL PLAINLY, BECAUSE THE ISSUER GOT IT WRONG ONCE ALREADY IN THIS VERY
+> AMENDMENT AND CORRECTED IT BEFORE COMMITTING:** with the predicate narrowed to the canonical
+> store, the stitch open drops OUT of the count -- so the residual is NOT the stitch open. With
+> (ii) repointed and (iii) merely DECLARED, this arm reads **1 of 30 and still FAILS, on
+> `kuzu_cost_enrich.py`** -- a file the cell DOES own, whose opens cannot be removed without the
+> disposition ruling. **SO D7-AC2 CANNOT REACH ZERO UNTIL THAT RULING LANDS AND IS EXECUTED, AND
+> THIS ORDER CANNOT GO TERMINAL BEFORE IT.** That is stated here rather than discovered at your
+> flip. **Do not chase the number**: run the arm, report `1 of 30` honestly with the residual
+> named, and stop. An arm failing on a disposition the issuer owes you is the issuer's debt, not
+> a defect for you to engineer away.
+>
+> **PASS 3's SELF-CORRECTION IS ACCEPTED AND MATTERS:** pass 1's census row 18 declared these two as
+> taking a `--db` from the caller, *never `CANONICAL_DB_PATH`*. True on the constant and false on
+> the world -- **the constant was retired; the string it pointed at was not.** That is why a
+> pattern-shaped census missed them, and it is the fourth time this round an instrument agreed
+> about the wrong object.
+
+> ### AMENDMENT 2026-09-09 ~13:3xZ BY THE ISSUER, FOR PASS 4, ON THE CTO'S RULING 94466 @`1266d65641`
+> (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_NFRA_CLDGRPH_20260909T1251Z_CG_S_8_DISPOSITION.md`,
+> corrected in place @`65953c8ad2` and @`3a404545f2`; the CVO's concurrence C-S20 @`db7b74cf2a`). **THE BAR
+> DOES NOT MOVE:** EIGHT criteria before and after; no invocation and no expectation changes. The pass-3
+> amendment above said D7-AC2 could not reach zero until a disposition ruling landed on `kuzu_cost_enrich.py`.
+> **It has landed.**
+>
+> **THE RULING, IN ITS OPERATIVE LINE (verbatim):** *"DELETE infra/aws/globgrph/kuzu_cost_enrich.py. The rec
+> (DECLARE-AS-DEAD with a manifest row) is NOT adopted."* Measured by the CTO at HEAD `4510dcaa2a`: the file is a
+> one-off session artifact of a CLOSED project (NFRA_DEBTSCAN TO-D4, `0.7.0_AE_CloudOps` @`f8ba82b894`,
+> 2026-06-12; `--full-history` is ONE commit); its cost tables hardcode June-2026 MTD with the vintage in its own
+> docstring; callers 0 of 18 token hits (every one a log, a ledger, a face or a name in `surface_map.json`);
+> consumers of `cost_mtd_usd` 0 of 14, none code; it opens and ALTERs the retired store, so it violates the
+> cell's property (*no user-facing consumer opens a local database*) whatever a row beside it says. The
+> CAPABILITY it stood for -- cost attribution on graph nodes -- is PLACED by the CTO as a producer-side manifest
+> row at L10 (lane `0.8.0_AE_CloudComp`); that is not your act and not this cell's.
+>
+> **WHY THIS IS INSIDE YOUR GRANT AND NOT A WIDENING (the CTO's reading, carried here so the record states it
+> once):** the file is INSIDE this face's `<paths>`; REMOVED is already in step 1's disposition vocabulary and is
+> what this order did to the seam; the cell's REPOINT-or-DECLARE dichotomy assumed every local consumer READS,
+> and a WRITER is the uncovered member of that declared domain -- naming the third disposition at the member the
+> cell never enumerated is a CORRECTION, not a scope change (Rule 22 / Rule 24 postulate i).
+>
+> **WHAT PASS 4 OWES, in this order:**
+> 1. **Re-ground at your HEAD** (this branch after the issuer's hand-off merge of CLOUD): the pass-3 instance
+>    validates rc 0 with D7-AC2 FAIL by output; `infra/aws/globgrph/kuzu_cost_enrich.py` EXISTS;
+>    `infra/aws/globgrph/_canonical.py` is the 78-line tombstone; `infra/aws/globgrph/projection_client.py`
+>    exists. Any of these false = BLOCKING row + report, and stop.
+> 2. **(iii) DELETE:** `git rm infra/aws/globgrph/kuzu_cost_enrich.py`. Its census row (your own table; correct
+>    pass 1's row 18 for this file): **REMOVED -- WRITER AGAINST A RETIRED LOCAL STORE, NO REPOINT TARGET**;
+>    methodology preserved at `f8ba82b894` + `org/modules/graph/debtscan/2026-06-12_D4_costrecon_ae.md`; callers
+>    0 of 18; attribute consumers 0 of 14 (the CTO's numbers at `4510dcaa2a`; re-measure both with `comp-find` at
+>    your HEAD and print your denominators beside his). Deleting it also removes the stitch store's only WRITER;
+>    the stitch READER (`comp_debt.py:215`) is the issuer's placed row and is NOT yours to touch.
+> 3. **(ii) REPOINT `infra/aws/globgrph/kuzu_ac_traversals.py`** through `projection_client` like the other
+>    class-B consumers: `:28`/`:83` lose the `kuzu_nessie_db` default, `:92` no longer opens a Kuzu database, and
+>    the `:90` error line names the served graph instead of `run kuzu_nessie_load.py first`. `commit-gate.sh` on
+>    it (D7-AC7); one real bounded run quoted in the deliverable.
+> 4. **(i) The stitch open at `comp_debt.py:215`** is OUT OF THIS CELL by the pass-3 amendment: narrow
+>    `consumers_no_local_db.sh`'s predicate to the CANONICAL store as that amendment directs, print the stitch
+>    open as `DECLARED-OUT-OF-CELL` beside the count (never silently dropped), keep BOTH controls firing, and
+>    state the narrowing and its rule in the deliverable. The deleted file prints on the script's existing
+>    `ABSENT (excluded from the denominator)` line.
+> 5. **D7-AC2 then reads `CONSUMERS_OPENING_LOCAL_DB=0 of 29`** beside `CONSUMER_PROBE_CONTROL=FIRED` and
+>    `CONSUMER_PROBE_BAND_CONTROL=FIRED`. If it reads anything else, report the residual NAMED and stop; do not
+>    engineer the number.
+> 6. **D7-AC1, AC3, AC4, AC5, AC6 re-run at your HEAD** (AC5's three pins re-verified; a moved pin is NOT your
+>    failure -- name the commit that moved it and stop on that criterion; the issuer re-pins). **D7-AC7** over
+>    every `.py` this pass touches (a removed file has no bytes to gate). **D7-AC8's residue** (`tool_index.py`
+>    help text in 6 places, `comp_aws_cli.py:2857/2866`, `comp_similar.py:591`, the manifest entries, W2-S23)
+>    carried exactly as before, unchanged.
+> 7. Update the deliverable and the instance (every mechanical row re-run at your HEAD; AC8 under
+>    `UNVERIFIABLE-BY-INSTRUMENT`), validate with the eight ids, and -- only on rc 0 with every mechanical
+>    criterion PASS-by-output -- flip `<status>` to `complete` and commit instance + deliverable + flip together.
+>
+> **PASS 4 IS A FRESH SPAWN ON THE SAME BRANCH, NOT A CONTINUATION.** The pass-3 subagent died with every Claude
+> seat at 2026-09-06 03:59Z; its work is durable on `wk-cldgrph-2-d7` and this face is the whole of your
+> context. The laptop's own copy remains the issuer's act at the drain (Andrew's word @`61d5ef55dd`), never
+> yours.
+
+> ### AMENDMENT 2026-09-05 ~20:0xZ BY THE ISSUER, BEFORE THE HAND-OFF -- A REQUIRED CONTROL ON BOTH
+> ABSENCE ARMS. **THE BAR DOES NOT MOVE:** D7-AC1 and D7-AC2 still expect `0 hit(s) across`, their
+> invocations are unchanged, and there are EIGHT criteria before and after.
+>
+> ⛔ **A ZERO FROM `comp-find` IS NOT AN ABSENCE UNTIL THE INSTRUMENT HAS BEEN SHOWN TO FIND
+> SOMETHING.** That tool's content mode has **two measured false-zero modes**: `rc=124` with zero
+> bytes, and -- the nastier one -- **`rc=0` with a full confident DENOMINATOR and no budget line**.
+> Neither is distinguishable from a true zero by reading the verdict, and this round has already paid
+> for the general shape four times (rows W1-S13, W1-S18, S57, W3-S3: an instrument that answers `0`
+> for a structural reason while the thing it was pointed at is present).
+>
+> **REQUIRED IN YOUR REPORT, one per arm:** beside each `0 hit(s)` you print a POSITIVE CONTROL --
+> the SAME verb, the SAME paths, a pattern that IS present -- returning non-zero, with its own
+> denominator. D9-AC5 is the worked precedent: `0 hits` beside a control returning 13 on the same
+> file and verb. **A zero with no control beside it is reported as UNVERIFIED, not as PASS**, and
+> this seat will re-hand rather than drain it.
+>
+> **AND THE DENOMINATOR IS PART OF THE ANSWER:** `0 hit(s) across 0 file(s)` is OUT-OF-CORPUS, not
+> absence. If the file count is zero, say so and stop -- that is a different finding and a BLOCKING
+> row, not a pass.
+>
+> **D7-AC5's three pinned hashes were RE-VERIFIED at 2026-09-05 19:4xZ and all three still match**
+> (`8b79ca1bdfd51c18...`, `80d60f8ffa3c3c5d...`, `9dd104db29d558e4...`, by the criterion's own
+> `git show HEAD:<f> | sha256sum`). ⚠ **A PINNED HASH IS A BASELINE THAT DECAYS:** if any of the
+> three has moved by the time you run, that is NOT a failure of this cell -- report it, name the
+> commit that moved it, and this seat re-pins. Do not edit the pin yourself.
+
+<criterion id="D7-AC3" cell_refs="CG-s-8"><invocation>python .tools/comp-find --corpus aws 'opal-globgrph' --budget 120 --limit 5 2>&1</invocation><expect>VINTAGE: Built from the estate as of[\s\S]*hit\(s\) across</expect></criterion>
 `D7-AC3` -- THE ESTATE'S GRAPH TOOLS STILL WORK, from the served graph: `comp-find --corpus aws` answers with the served vintage line and its denominator (the bound that can fail: "retiring earlier breaks the estate's only graph").
 
 <criterion id="D7-AC4" cell_refs="CG-s-8"><invocation>bash .tools/comp-blast component:AdvisorsTab.tsx --budget 90 2>&1</invocation><expect>VINTAGE: Built from the estate as of</expect></criterion>
@@ -109,6 +358,10 @@ org/modules/graph/comp_aws_cli.py
 .tools/tests/test_g2_disclosure_battery.py
 .tools/tests/test_comp_similar_battery.py
 .tools/tests/test_cg8_*.py
+org/modules/heatmap/ms_heat_index.py
+infra/aws/globgrph/tests/test_canonical_rebuild_liveness.py
+infra/aws/globgrph/tests/test_canonical_refresh_failure_signal.py
+infra/aws/globgrph/tests/test_comp_cluster_cli.py
 org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-D-7.retire-local-copy.md
 </paths>

@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": "estate-report",
   "status": "active",
-  "dep_stage": "DECOMP",
+  "dep_stage": "EXECUTING",
   "created": "2026-09-04",
   "registered_under_tree": "2026-09-04",
   "placement": "LAPTOP",
@@ -44,8 +44,12 @@
     "docs/architecture/NFRA_FEDOBS_PRD.md -- a sibling's, consumed: the five federated observers and the co-evolution signal this project decides the landing place of",
     "docs/briefs/comp-heat-tool-spec-for-cto-20260625.md -- the tool's own birth spec: advisory-only, read-only, derived on demand from git; the purpose was clear at birth and the consumer was never named"
   ],
-  "decompositions": [],
-  "decomposition_lineage": [],
+  "decompositions": [
+    "org/missions/D11/NFRA/NFRA_OUTSET/decompositions/NFRA_OUTSET_DECOMP.md"
+  ],
+  "decomposition_lineage": [
+    "org/missions/D11/NFRA/NFRA_OUTSET/decompositions/NFRA_OUTSET_DECOMP.md -- v0.1 @6f1655f376 (2.0.0_SA_COO, L5), 17 cells 1:1 with PRD v0.1 s.7's manifest; v0.2 @74051b2087 re-identified OS-n to OS-s-n on the CTO's ruling because the gate's CELL_ID_RE requires a lowercase middle segment and OS-n was UNEXPRESSIBLE. Chain read computed from the manifest's own depends_on edges: M=3 chains, 15 of 17 cells on ONE chain rooted at OS-s-1 at depth 6, which is why the issuance's fanout is 3 (the CHAIN count) and not 17 (the cell count)."
+  ],
   "leads": {
     "cto": "1.0.0_SA_CTO",
     "coo": "2.0.0_SA_COO",

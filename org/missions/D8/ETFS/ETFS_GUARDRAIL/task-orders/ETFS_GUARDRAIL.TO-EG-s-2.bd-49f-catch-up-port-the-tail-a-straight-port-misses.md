@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ETFS_GUARDRAIL~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>pending -- GO paired at cut (the spawn IS the GO); in your queue after EG-s-1; premise-bound to EG-s-11's WRITER determination (your earlier order). Authority: PRD v0.3 @`4e30d6b635` (flat lineage @`7aa1554881`, ON ORIGIN) RATIFIED; decomposition v0.1 @`c4ab429993`, v0.1.1 in this issuance (s.6a: the probe); Andrew-direct 2026-09-01 and 2026-09-04 ~17:0xZ (94224/94225).</status>
+<status>complete -- all nine criteria PASS-by-output/RECORDED at HEAD: 10/10 arms passed (tail arm (i) + negative control (j) included), no day-count constant, calendar via the published layer only, DS module untouched, plan 0/2/0 as bound, 0-diff over the whole (wide) bd-pipeline directory, served CodeSha256 MATCH, deployed probe partition=true; deploy ledger etfs-guardrail-eg-s-2-bd49f-catchup-port CLOSED; instance VALID (proof-of-spec-check rc=0, 0 violations); flipped by 0.9.0_WK_ETFS_GUARDRAIL~2.</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `../prd/ETFS_GUARDRAIL_PRD.md` v0.3 (s.7.2 row S2; s.6 rulings 1 and 2; s.4 properties 1 and 2 -- "Property 2 is the one that matters"; brief s.3 the lag table) | **Decomp cell:** `EG-s-2` | **outcome_ref:** FWD-1 | **verb:** port | **depends_on:** `EG-s-3`, `EG-s-10`, `EG-s-11` (all earlier in your queue or slot 1's, merged before this hand-off)
 
@@ -28,7 +28,7 @@ The shell, the test, the vendored calendar, the source map update, the IAM Sid, 
 ## ACCEPTANCE
 
 <criterion id="S2-AC1" cell_refs="EG-s-2"><invocation>python -m pytest infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily/test_catchup_window.py -q</invocation><expect>passed</expect></criterion>
-`S2-AC1` -- the ten-arm battery is green, the tail arm (i) and its negative control (j) included (record N passed).
+`S2-AC1` -- the ten-arm battery is green, the tail arm (i) and its negative control (j) included (record N passed). (AMENDED BY THE ISSUER at the drain on row ETFS_GUARDRAIL-W2-S4: the battery is REAL `def test_*` functions that pytest collects, exactly the shape you built for EG-s-1 -- NEVER the port contract's bare-script shape ending in a module-level `sys.exit()`, which crashes pytest at collection with INTERNALERROR rc=3 whatever the arms say.)
 
 <criterion id="S2-AC2" cell_refs="EG-s-2"><invocation>python -c "s=open('infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily/lambda_function.py').read(); print('DAYCOUNT_WINDOW=%s SHIPPED_SIGNAL=%s PROBE=%s EMPTY_SOURCE_GUARD=%s' % ('CATCHUP_WINDOW_DAYS' in s, 'etf_ownership.pdf' in s, '\"probe\"' in s, 'skipped-empty-source' in s))"</invocation><expect>DAYCOUNT_WINDOW=False SHIPPED_SIGNAL=True PROBE=True EMPTY_SOURCE_GUARD=True</expect></criterion>
 `S2-AC2` -- no day-count constant; the shipped signal; the probe; the contract guard survives.
@@ -61,16 +61,18 @@ The shell, the test, the vendored calendar, the source map update, the IAM Sid, 
 - **Your write surface is the `<paths>` block below, PLUS the two grants the tree convention gives every worker without an entry -- your own `deliverables/<serial>/` folder, and THIS ORDER'S OWN FILE under `task-orders/` (lane ANY) for the `<status>` flip -- and nothing else.** (Restated by the issuer at the drain on row ETFS_GUARDRAIL-W1-S2: the flip was always admitted; the wording withheld it.) A path you need that it does not name is a BLOCKING row, never an override. The `-canonical` twin and the DS module are NOT edited.
 - **NEVER#1 / NEVER#2:** this producer reads `schwab/08242234/silver/fact_rps/*` ONLY (49F's own data; the Sid stays scoped to `fact_rps/*` exactly); the new Sid is on the aggregation bucket's `platinum/reports/` key; nothing on `opal-data-bd`, `opal-data-cot`, `opal-data-inf` or `blackdiamond/`.
 - **NO SERVED DELETE, NO FABRICATION, no dated non-probe invoke in this order** (it writes; overwrite-per-date is the AVGCAP per-day invariant and a scheduled floor exists).
-- **NEVER-2 / NEVER-9:** `.tools/safe-apply.sh` only; ledger before/after; plan read before apply; 0-diff after; artifact upload before the plan.
+- **NEVER-2 / NEVER-9:** `.tools/safe-apply.sh` only; ledger before/after; plan read before apply; 0-diff after; artifact upload before the plan. (AMENDED BY THE ISSUER at the drain on the worker's row: `record-terraform-deploy.sh` writes `infra/aws/terraform/bd-pipeline/CHANGELOG.json` as the deploy record, and this order's `<paths>` named only two files under that wide directory, so the record sat outside the grant; the path is now granted -- commit the CHANGELOG entry with the deploy record BEFORE the flip.)
 - **EVERY invocation is bounded.** `timeout 120`.
 - **Scratch:** `<your worktree>/.scratch/` only.
 - **A spec-vs-world divergence is a ROW** at `org/missions/D8/ETFS/ETFS_GUARDRAIL/surprise-channel/investigations/INVESTIGATION_v1.md`, minted `ETFS_GUARDRAIL-W2-S<k>`.
+- **THE TERRAFORM BINARY (AMENDED BY THE ISSUER at the drain on row ETFS_GUARDRAIL-W1-S6):** `.tools/terraform.exe` (v1.9.8) is the estate's terraform and it is GITIGNORED, so a fresh worktree lacks it; the issuer provisions a copy into your worktree's `.tools/` at hand-off (confirm `.tools/terraform.exe version` before any plan). NEVER substitute the PATH `terraform` (v1.14.5) for an apply: a newer CLI re-pins the remote state's `terraform_version` and the estate's binary can no longer read that state. If the copy is absent, that is a BLOCKING row, not a substitution.
 - **NEVER `git push`.** Report push state as MEASURED.
 
 <paths>
 infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily/
 infra/aws/terraform/bd-pipeline/bd-49f-etf-ownership-daily.tf
 infra/aws/terraform/bd-pipeline/.terraform.lock.hcl
+infra/aws/terraform/bd-pipeline/CHANGELOG.json
 infra/aws/lambda/ci/lambda-source-map.json
 infra/aws/lambda/ci/build-and-upload.sh
 infra/aws/lambda/ci/record-terraform-deploy.sh

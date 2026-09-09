@@ -137,39 +137,33 @@ tools:
     overlay_role: "The LIVE half of the desired-vs-live overlay (see comp-iam.overlay_pattern): comp-iam parses TF = DESIRED; comp-aws emits the LIVE census; `comp-iam reconcile` overlays live on desired. IAM axis feeds comp-iam reconcile (per-role statements in its contract shape). NOTE 2026-07-14 (NFRA_COMPCLOSE): this file carried a SECOND `comp-aws:` key adjacent to comp-iam -- YAML duplicate-key semantics meant that thin Phase-0 stub SILENTLY REPLACED this canonical entry in every safe_load of this catalog. The stub is now a comment there; this is the one entry."
 
   comp-kuzu:
-    command: 'comp-kuzu [--mode auto|inc|full] [--json] [--limit N] [--db-path PATH] "<Cypher>"'
+    command: 'comp-kuzu "<Cypher>" [--json] [--limit N] [--schema]'
     segment_scope: aws-cloud
     when: |
       - "List/inspect cloud resources of a type, transitive reachability, or blast radius" (the fast ~ms query layer over the comp-aws cloud graph)
-      - DEFAULT surface (no --db-path) = the canonical Nessie-sourced kuzu_nessie_db (post-2a nightly + accumulated-2b). Scratch DBs (kuzu_db tarball, kuzu_stitch_db, kuzu_ac7.db) via explicit --db-path ONLY.
-      - "refresh / update the graph / my graph is behind" -> comp-kuzu --mode inc. NFRA_KUZUSPLIT P1: incremental-OR-serve-labeled-stale, NEVER a mid-task full rebuild (Andrew O-1, the section-4 hard gate). The DEFAULT for every non-MSTR agent pre-query. THE GUARANTEE LIVES ON THE FLAG since 2026-09-02 -- the comp-kuzu-inc wrapper is retired (NFRA_COMPEFFICACY unit 2).
-      - "full rebuild / ground-truth reset / reconcile" -> comp-kuzu --mode full: force kuzu_nessie_load UNCONDITIONALLY (~482s measured P0). 0.0.0_AB_MSTR startup only; NOT for mid-session use. The comp-kuzu-full wrapper is retired.
-    cost: "~ms (auto-refresh adds a one-time Nessie rebuild only when the canonical DB trails HEAD)"
+      - THE ONLY surface is the SERVED projection. The tool is a thin client: it takes NO database path and NO Cypher parameter dict, so there is no second surface to select and no frozen-vintage copy to point at.
+      - "refresh / update the graph / my graph is behind / ground-truth reset" -> THERE IS NO REFRESH TO RUN. Read: `comp-kuzu "<Cypher>"`. The served projection is advanced on the estate's own schedule (NFRA_CLDGRPH round 5, CG-s-17); the read STATES how old its answer is, so a behind-ness is reported to you rather than fixed by you. Manifest entry: cloud.read.served_vintage.
+      - "I do not know the Cypher dialect" -> `comp-kuzu --schema`: the CloudNode/CloudEdge-with-PROPERTIES form (node_type and edge_type are PROPERTIES, not node labels or typed relationships) -- the #1 dialect error, static and service-free.
+    cost: "~ms -- one call to the projection service; nothing is opened, built or downloaded locally"
     output: "Cypher result (table, or --json array on stdout)"
     freshness: |
-      TO-F2 canonical surface: the DEFAULT comp-kuzu DB auto-refreshes on Nessie-HEAD-advance ENGINE-INTERNALLY --
-      when TO-F1's pin-vs-HEAD check says BEHIND/stale/unstamped, it rebuilds from the warehouse (under a build
-      mutex + atomic swap; readers never see a half-built DB) BEFORE serving. Rule 20's QUERY-default posture is
-      UNCHANGED: agents never run rebuilds to answer a traversal; the engine does it for them exactly when needed.
-      TO-F1 provenance contract (still prints on every call, STDERR): DB, built-when, source vintage (tarball key /
-      Nessie dual snapshot-id pin / stitch file+mtime), node/edge counts; age >26h => WARN: STALE; manifest-less =>
-      loud UNKNOWN VINTAGE; stderr-only so stdout stays parseable.
-      TO-F6 HEAD oracle: the Nessie HEAD comparison keys off the writer-stamped branch-head marker
-      (s3://<warehouse>/_branch_head.main.json), NOT newest-metadata-by-mtime (RETIRED -- CVO dc06744c6 proved mtime
-      newest can be an orphaned-commit artifact). Header prints "Nessie HEAD: current (pin==marker)" /
-      "WARN: BEHIND Nessie HEAD -- pin X != HEAD Y" / loud "HEAD-ORACLE UNKNOWN (no branch-head marker)". The marker is
-      stamped post-commit by the 2a derive_runner, the 2b incremental Lambda, and the F3 snapshot --commit-to-nessie path.
-      TO-Q1 in-flight visibility: when the 2b SQS queue (opal-globgrph-incremental-events) has uncommitted events in
-      its <=2min debounce window, a nessie header adds "PENDING: ~N event(s) in flight" (non-destructive SQS
-      ApproximateNumberOfMessages; best-effort/silent on 0/no-perms). So "current" is never silently blind to in-flight
-      changes -- the marker tracks COMMITTED HEAD; PENDING surfaces the not-yet-committed delta.
-      The graph is a minutes-stale-and-LABELED traversal surface, NOT a read-your-own-writes verification substitute
-      (verify vs served artifact / live AWS).
-      --mode inc (NFRA_KUZUSPLIT P1): on a large delta the provenance header carries "SERVED LABELED-STALE -- behind-by-N"
-      IN-BAND (Rule 20, COND-1) and a persistent fallback line lands beside the DB (.fallback.jsonl, COND-2). A worker
-      serving labeled-stale is SAFE: a complete prior-vintage projection, honestly labeled. --mode full advances HEAD.
-      THE VERDICT RIDES STDERR, NOT rc: a labeled-stale serve exits 0 -- an rc-only caller cannot tell fresh from stale.
-    rebuild_trigger: "DEFAULT (--mode auto) auto-rebuilds on BEHIND/stale. --mode inc: small delta -> incremental applied; large/cold -> serve labeled-stale + LOUD, NEVER full. --mode full: always rebuilds. Scratch DBs: rerun the matching loader (kuzu_nessie_load / kuzu_load / kuzu_stitch_load, force default)."
+      STATED BY THE SERVICE, PER CALL. comp-kuzu is a THIN CLIENT over the served projection; it holds no
+      store, opens none, and builds none. Every read ends with a VINTAGE line on STDERR:
+        VINTAGE: <plain-words age>  [vintage=<vintage> manifest=<sha12> prefix=<artifact prefix>]
+      The sentence leads because it is what a reader acts on; the bracketed triple trails because it is what
+      a machine or an auditor re-derives from (infra/aws/globgrph/kuzu_cli.py:46-61). stderr-only, so --json
+      and table stdout stay parseable.
+      NOTHING IS COMPUTED FROM CLIENT TIME. If the service states no age, the line says so verbatim
+      ("AGE NOT STATED BY THE SERVICE -- no age was inferred"). If the service does not answer, the line
+      names the ABSENCE ("VINTAGE: unavailable -- the projection service did not answer; no age was inferred
+      and no local copy was read") and the call exits 1 -- it never falls back to a local copy and never
+      invents a vintage.
+      THERE IS NO REFRESH AN AGENT RUNS (NFRA_CLDGRPH round 5, CG-s-17). The served projection is advanced by
+      the estate's own producers on their own schedule; Rule 20's QUERY-default posture is now unconditional.
+      A behind-ness is REPORTED to the reader by the VINTAGE line, not fixed by the reader.
+      The graph remains a minutes-stale-and-LABELED traversal surface, NOT a read-your-own-writes verification
+      substitute (verify against the served artifact / live AWS).
+    rebuild_trigger: "none. There is no rebuild call and no database path. The served projection is advanced on the estate's own schedule; read it, and read the VINTAGE line it prints (manifest entry cloud.read.served_vintage)."
     project: "NFRA_GLOBGRPH"
 
   comp-describe:
@@ -181,7 +175,7 @@ tools:
     cost: "~ms: 2 targeted comp-kuzu queries for an exact ARN (node + edge neighborhood); +1 light all-node sweep only when resolving a name/substring. NEVER the full-corpus build."
     output: "human summary (RESOURCE / SUMMARY / produced-by / consumes / provenance), or --json. Exit 1 (no silent guess) when a query resolves to 0 (refresh hint) or N (disambiguation list) resources."
     freshness: "Reads the live comp-kuzu graph (shares its provenance/HEAD-oracle contract). derive-at-scan: no projected property, no table -- nothing to go stale beyond the graph vintage itself."
-    rebuild_trigger: "Never rebuilds (Rule 20 QUERY-default). 0 matches -> hints comp-kuzu --mode inc to refresh a behind graph (broken retrieval != absent resource)."
+    rebuild_trigger: "Never rebuilds (Rule 20 QUERY-default). 0 matches -> read the served graph's VINTAGE line before concluding absence (a broken retrieval and an absent resource read identically)."
     project: "NFRA_COMPSIMILAR"
 
   comp-similar:

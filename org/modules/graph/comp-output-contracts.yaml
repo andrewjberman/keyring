@@ -387,7 +387,7 @@ contracts:
 
   comp-blast:
     coverage: "the CANONICAL KUZU resource graph (~20,480 CloudNode / ~40,945 CloudEdge) -- all of AWS plus the GIT code plane and MS_CLOUD -- overlaid with the blasted SUBJECT's worktree-derived edges"
-    address_space: "kuzu_nessie_db CloudNode/CloudEdge (estate) + a subject-scoped working-tree overlay (mid-edit, uncommitted included)"
+    address_space: "the SERVED projection's CloudNode/CloudEdge (estate) + a subject-scoped working-tree overlay (mid-edit, uncommitted included)"
     universe_change_20260803: >-
       ANDREW-DIRECT RULING (ANDREW_RULING_projections_default_kuzu_full_graph_20260803.md, verbatim:
       "all projections should by default be kuzudb full resource graph ... Comp-blast absolutely
@@ -716,18 +716,18 @@ contracts:
     rebaseline_note: "comp-pipescript nonzero rows are genuine bad-script-name/usage errors (FAIL), NOT verdicts -- the STALE/MISSING VERDICT is carried in stdout text at exit 0. Declaring it keeps those rows FAIL rather than flipping them to UNKNOWN."
 
   comp-kuzu:
-    coverage: "the Cypher query result over the canonical auto-refreshing Kuzu graph DB"
+    coverage: "the Cypher query result over the SERVED graph projection, read through a thin client"
     blind_spots:
-      - "--mode inc (NFRA_KUZUSPLIT P1, formerly the comp-kuzu-inc wrapper, retired 2026-09-02): THE VERDICT-BEARING BEHAVIOR IS IN-BAND, NOT IN THE rc -- a labeled-stale serve exits 0; the verdict rides stderr (provenance marker 'SERVED LABELED-STALE ... behind-by-N' + WARN line) and the persistent .fallback.jsonl sink beside the DB. An rc-only caller CANNOT distinguish fresh from labeled-stale; read the header. Declared from source (_canonical.py:483-530, COND-1 :524-529, COND-2 :423 @2026-08-04); the live labeled-stale exercise remains dial re-dial trigger 6"
-      - "--mode full (formerly comp-kuzu-full, retired 2026-09-02): forces kuzu_nessie_load UNCONDITIONALLY before serving; a rebuild failure is WARN-and-proceed on the prior DB, never an exit -- read stderr, not rc, for the refresh outcome"
-      - "answers ONLY what the graph models; a relationship not extracted into the graph is absent, not zero. Read the provenance header (UNKNOWN VINTAGE = freshness unverifiable; a --db-path scratch DB is a frozen vintage)"
+      - "THE VINTAGE IS IN-BAND, NOT IN THE rc: a successful read exits 0 whatever its age, and the age rides STDERR as `VINTAGE: <plain-words age>  [vintage= manifest= prefix=]` (kuzu_cli.py:46-61). An rc-only caller CANNOT tell a current answer from an old one; read the line. NFRA_CLDGRPH round 5, CG-s-17"
+      - "NOTHING IS INFERRED FROM CLIENT TIME. When the service states no age the line says so verbatim ('AGE NOT STATED BY THE SERVICE -- no age was inferred'); when the service does not answer the line names the ABSENCE ('VINTAGE: unavailable ... no local copy was read') and the call exits 1. There is no fallback to a local copy, and no refresh an agent runs -- the served projection is advanced on the estate's own schedule"
+      - "answers ONLY what the graph models; a relationship not extracted into the graph is absent, not zero -- and a 0-row result carries that scope note in band. The client takes NO database path and NO Cypher parameter dict, so there is no frozen-vintage copy to select and no server-side parameter binding: substitute literals before running"
     plane: projection
     grain: field
     scope: estate
-    vintage: "the materialized Kuzu DB (provenance header printed to stderr every call). --mode inc: current on small-delta incremental; PRIOR vintage honestly labeled on large-delta/timeout/error fallback (never half-built). --mode full: post-rebuild = current HEAD"
+    vintage: "the SERVED projection's own, stated by the service on every call (VINTAGE line on stderr). The client re-states it verbatim and adds nothing; an unanswered call names the absence rather than a default"
     exit_codes:
-      "1": {class: fail, meaning: "tool/input error -- DB not found (incl. --mode inc COLD START: no local DB to serve stale, and inc NEVER full-rebuilds -- run --mode full or wait for MSTR startup), or the Cypher query failed to execute"}
-    exit_source: "infra/aws/globgrph/kuzu_cli.py:66 (DB-missing), :90 (query error) -- both genuine errors, not verdicts @2026-07-23"
+      "1": {class: fail, meaning: "tool/input error -- the projection service did not answer (unreachable / non-2xx), or the Cypher query failed to execute. Both print the ERROR line plus the unavailable-VINTAGE disclosure on stderr; neither is a verdict about the estate"}
+    exit_source: "infra/aws/globgrph/kuzu_cli.py:89-95 (service error -> ERROR + unavailable disclosure, return 1) and :115 (query served, return 0) @2026-09-09"
 
 
 

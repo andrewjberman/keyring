@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ETFS_GUARDRAIL~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>pending -- GO paired at cut (the spawn IS the GO); HANDED to the slot only after EG-s-4's proof instance is VALID at HEAD (the classifier this line calls). Authority: PRD v0.3 @`4e30d6b635` (flat lineage @`7aa1554881`, ON ORIGIN) RATIFIED; decomposition v0.1 @`c4ab429993`, v0.1.1 in this issuance; Andrew-direct at the 1.0.0_SA_CTO terminal 2026-09-04 ~17:0xZ (94224/94225).</status>
+<status>complete -- all six criteria PASS-by-output/RECORDED at HEAD: 4/4 test arms passed, live August 2026 render completed with 3 coverage lines (one per present partner) in both the HTML and the CSVs, commit gate clean, classifier imported with zero re-implementation; instance VALID (proof-of-spec-check rc=0, 0 violations); flipped by 0.9.0_WK_ETFS_GUARDRAIL~2.</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `../prd/ETFS_GUARDRAIL_PRD.md` v0.3 (s.7.2 row S5; s.2 DONE item 2; s.4 property 6; brief s.4 "The report must carry its own coverage line regardless of verdict") | **Decomp cell:** `EG-s-5` | **outcome_ref:** FWD-3 | **verb:** wire | **depends_on:** `EG-s-4` (slot 1, merged before this hand-off)
 

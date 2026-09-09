@@ -2,10 +2,12 @@
 
 <to_id>NFRA_OUTSET.TO-OS-s-11</to_id>
 <project>NFRA_OUTSET</project>
-<issued_to>0.9.0_WK_NFRA_OUTSET~1</issued_to>
+<issued_to>0.9.0_WK_NFRA_OUTSET~2</issued_to>
+⛔ **RE-ADDRESSED TO `~2` ON BOTH LIMBS BEFORE SEATING.** A mis-addressed order is refused on TWO independent limbs -- `ADHC_OWNPTH.005` keys the grant on `<issued_to>`, clause 4 keys it on the DELIVERABLES FOLDER NAME -- so amending only the first admits the assignee to a folder carrying another slot's serial (measured as `NFRA_OUTSET-W2-S4` and `W3-S6`). Slot chosen from FILE CONTENTION, not dependency width: `OS-s-11` writes `estate_report_runner.py`, which slot `~2` already holds from `OS-s-9` and will hold again for `OS-s-14`; those three are serial on one slot by file contention.
+
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>pending -- GO paired at cut (the spawn IS the GO for a worker face; a seat order is dispatched by its issuance). Authority: PRD v0.1 @`7fb59f239b` RATIFIED on Andrew's "all approved" (FWD-1..FWD-8) @`26da5ec0fa`; decomposition v0.1 @`6f1655f376`; Andrew-direct at this terminal 2026-09-04 ~15:5xZ, VERBATIM: "youre clear, first write every single task order" then "proceed with internal fan out".</status>
+<status>complete -- flipped 2026-09-05 by `0.9.0_WK_NFRA_OUTSET~2` (the assignee, per this order's own <proof_of_spec> clause) AFTER the mechanical criterion was exercised PASS-by-output and the instance validated. O11-AC1 (mechanical): `python .tools/tests/test_os11_traceability.py` -> `=== test_os11_traceability: PASS (12/12) ===`, rc 0, and `python -m pytest -q` -> `1 passed`; 8 of 8 stratum exits carry tool+invocation+vintage+claim; 2 of 2 RED mutants EXECUTED (the recipe dropped AT THE DEFINITION of `_stratum` leaves 0 of 8 exits traceable); regressions on the same file `test_os9_cochange_source.py` 16/16 and `test_os10_seam.py` 12/12, both rc 0. O11-AC2 (judgment=true): evidence recorded, NO verdict -- `3.0.0_SA_CVO` grades it at L9. `python .tools/proof-of-spec-check.py org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/NFRA_OUTSET.TO-OS-s-11.traceability-on-deterministic-lines.proof_of_spec.json O11-AC1,O11-AC2` -> `VALID (rc=0)`; 5 of 5 artifacts resolved at pin, 2 CONTENT-resolved, 3 of 3 surprises resolve to a channel row. Rows filed: `NFRA_OUTSET-W2-S18`..`-W2-S20`. ⛔ THE DENOMINATOR THAT MUST TRAVEL WITH THIS COMPLETE: 4 of 4 deterministic strata now CARRY a re-run recipe, and **1 of 4** has a DEMONSTRATED end-to-end reproduction -- stratum C, 17 of 17 rows re-derived identically by an independent fold, with a negative control (corrupted recipe -> 107 rows, differ) proving the comparison can fail. `D_naming` and the `B` host stand-in are untested; BOTH SEAM EXITS ARE UNTESTABLE ON THIS FABRIC because their arms run against an INJECTED artifact, nothing publishes to a seam prefix (`NFRA_OUTSET-W2-S15`) and the applied role grants nothing on one (`NFRA_OUTSET-W1-S19`). TWELVE GREEN ARMS ARE NOT A REPRODUCED REPORT. Also open and not closed by this flip: `NFRA_OUTSET-W2-S20` -- `_stratum` now carries a field SPEC `@58505c291` does not describe, and only `3.0.0_SA_CVO` can close that. Original issuance status follows. || pending -- GO paired at cut (the spawn IS the GO for a worker face; a seat order is dispatched by its issuance). Authority: PRD v0.1 @`7fb59f239b` RATIFIED on Andrew's "all approved" (FWD-1..FWD-8) @`26da5ec0fa`; decomposition v0.1 @`6f1655f376`; Andrew-direct at this terminal 2026-09-04 ~15:5xZ, VERBATIM: "youre clear, first write every single task order" then "proceed with internal fan out".</status>
 
 **Directive:** D11 · **Fabric:** laptop · **PRD:** `../prd/NFRA_OUTSET_PRD.md` v0.1 @`7fb59f239b` (s.7 row OS-s-11; s.4 the bar; s.6 the rulings) · **Decomp cell:** `OS-s-11` (`../decompositions/NFRA_OUTSET_DECOMP.md` v0.1 @`6f1655f376`) · **outcome_ref:** FWD-3 · **verb:** build · **depends_on:** OS-s-10
 
@@ -17,7 +19,7 @@ OS-s-11 (PRD s.7): nothing in the report is re-runnable through the rail today.
 
 ## DELIVERABLE
 
-`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/traceability-on-deterministic-lines.result.md` -- the result document: what you measured, what you changed, each criterion's invocation and its output verbatim with rc and denominator, and any row you filed.
+`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/traceability-on-deterministic-lines.result.md` -- the result document: what you measured, what you changed, each criterion's invocation and its output verbatim with rc and denominator, and any row you filed.
 
 ## ACCEPTANCE
 
@@ -44,7 +46,7 @@ One clause per criterion. A mechanical criterion carries exactly one `<invocatio
 <paths>
 infra/aws/ec2/estate-report-runner/estate_report_runner.py
 .tools/tests/
-org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/
+org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/
 org/missions/D11/NFRA/NFRA_OUTSET/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -62,7 +64,7 @@ lane: the `<paths>` block above IS the grant (RULING 1, Andrew 2026-09-04 ~04:58
 
 <proof_of_spec>
 Criterion ids minted at cut by the issuer: `O11-AC1`, `O11-AC2`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at
-`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-11.traceability-on-deterministic-lines.proof_of_spec.json`
+`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/NFRA_OUTSET.TO-OS-s-11.traceability-on-deterministic-lines.proof_of_spec.json`
 and validates it with `python .tools/proof-of-spec-check.py <instance> O11-AC1,O11-AC2` BEFORE the complete flip, which the assignee commits itself.
 ⛔ **A `complete` flip WITHDRAWS YOUR OWN GRANT** (the grant is read from a NON-TERMINAL order): flip only when every MECHANICAL criterion PASSES. A mis-flip is REOPENED by the issuer, never re-cut.
 </proof_of_spec>

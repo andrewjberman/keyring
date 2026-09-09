@@ -1,0 +1,126 @@
+{
+  "kind": "COMPLETION_REPORT",
+  "schema_version": "1.0",
+  "project": "NFRA_OUTSET",
+  "round": 2,
+  "written_by": "2.0.0_SA_COO",
+  "written_utc": "2026-09-09T14:05Z",
+  "decomposition_ref": "org/missions/D11/NFRA/NFRA_OUTSET/decompositions/NFRA_OUTSET_DECOMP.md@056f3867e1",
+  "denominators": {
+    "fwd_in_prd_header": 8,
+    "cells_in_decomposition": 19,
+    "task_orders": 2,
+    "task_orders_terminal_with_valid_proof": 2,
+    "note": "task_orders counts ROUND 2 only (OS-s-18, OS-s-19), cut from PRD v0.3's two addendum rows at @37b2a19129. Cumulative across rounds 1-2: 19 cells, 19 orders, 19 terminal with a valid instance (round 1: 17 of 17 at @a483609584). Both round-2 instances re-validated at the issuer's seat with the expected criterion ids passed as the checker's third argument: OS-s-18 VALID rc=0 (alignment 2/2, 1/1, 1/1; 7 artifact rows; 4 of 4 surprises resolving), OS-s-19 VALID rc=0 (4 artifact rows; 4 of 4 surprises resolving). Rows this round: S16, S17 (OBSERVATION/ARMED, placed by the CTO @e18317d0e0 as addendum rows OS-s-20 / OS-s-21), S18 (BLOCKING, the issuer's cut defect, RULED @cb43d05200), S19 (the S18 disarm ack, INERT). Dispositions are the CVO's at L9. The partial packet that preceded this report: ledger/L8_PACKET.round2.partial.md @deec39ce22."
+  },
+  "outcomes": [
+    {
+      "fwd_id": "FWD-1",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- someone has asked and been answered",
+      "cells": [],
+      "claim": "COVERED",
+      "note": "No round-2 cell. Coverage stands on round 1 (OS-s-1/2/3, COMPLETION_REPORT.round1.json @a483609584; graded at L9 in ADJUDICATION_v1.md and read at L10 in ROUND_ANALYSIS.round1.md @a0500abe18). Unchanged by this round."
+    },
+    {
+      "fwd_id": "FWD-2",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- someone has asked and been answered",
+      "cells": [
+        {
+          "cell_id": "OS-s-19",
+          "task_orders": [
+            {
+              "id": "NFRA_OUTSET.TO-OS-s-19",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/NFRA_OUTSET.TO-OS-s-19.the-deploy-of-the-served-runner.proof_of_spec.json@9e023d20b5"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "COVERED, and this is the row round 1 could not write: the artifact the estate READS has moved. Round 1 covered FWD-2 on committed code (OS-s-4/5/6/7) while the served runner stayed dated 2026-08-25; OS-s-19 replaced it. ISSUER'S OWN INSTRUMENT, different from the assignee's re-download comparator: s3api head-object on code/estate_report_runner.py -> ETag e75c59a35457535ca0d339c9f59589f5, 159,687 B, LastModified 2026-09-09T13:53:22Z, VersionId GQny85Je837UhagoFc0FY8eoJzcB1RFy; md5 of `git show HEAD:infra/aws/ec2/estate-report-runner/estate_report_runner.py` -> e75c59a35457535ca0d339c9f59589f5, 159,687 B: EQUAL. NEGATIVE CONTROL that discriminates: the last blob before round 1 (@c6d7bfcd5d) -> md5 58113db66bf3819f3515333d55fd5877, 125,857 B, which is EXACTLY the previous served ETag and size from the ledger entry's pre-state -- so the instrument tells the two vintages apart and the served object went from the old blob to HEAD's. (A first control against @4510dcaa2a read EQUAL and discriminated nothing: that pin postdates round 1's runner commits; disclosed rather than dropped.) The assignee's O19-AC1: SERVED MATCHES HEAD rc=0 unpiped, 6 of 6 arms incl. a bit-flip comparator control at fixed length and a per-token positive control (5 LIVE tokens each 0 in the old served object and equal now; 1 INERT token carried as a sealed control). NEVER-2 ledger org/critical_paths/change_management/20260909T1352Z_estate-report-runner-outset-seam-consumer_deploy_completion.md: committed OPEN before the upload @6dbb1e6a3a, CLOSED 13:56Z @9e023d20b5, one functional consumer censused (estate-report.service ExecStartPre pull; the orchestrator reads no code key), upload outside the run window with the instance stopped, rollback recorded before the act (one copy-object from VersionId bvnr1MynPuJ8Asn3u6Tgo9LPd5CrL5OO). WHAT THIS CLAIM DOES NOT SAY: the first LIVE exercise of the new runner is the scheduled 2026-09-10 13:00Z fire, not yet observed; the assignee did not start the box to force it (the scheduled fire is the acceptance, and an ad-hoc run would consume the discriminator). O19-AC2 (judgment) is recorded with no verdict, including on whether the window choice was right -- the CVO's at L9."
+    },
+    {
+      "fwd_id": "FWD-3",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- a reader has followed one line back and reproduced it",
+      "cells": [
+        {
+          "cell_id": "OS-s-18",
+          "task_orders": [
+            {
+              "id": "NFRA_OUTSET.TO-OS-s-18",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/NFRA_OUTSET.TO-OS-s-18.the-publish-to-the-consumption-seam.proof_of_spec.json@0c1c0110ae"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "COVERED ON THE PRODUCER SIDE, AND THE GRADER MUST NOT HAVE TO FIND THE REST. OS-s-18 did what the round-1 analysis placed it for: the runner's role is granted s3:GetObject on outset/* (DESIRED @54ccbdb47d, plan 0/1/0, safe-apply 0/1/0, unscoped re-plan clean; APPLIED from a census refreshed first, 6 resolved + 1 UNRESOLVED managed statement disclosed as UNCOVERED; EXERCISED from inside the 13:00 ET run window with sts:GetCallerIdentity naming assumed-role/estate-report-runner-role/i-0512bd3cbaf602b7f, GetObject outset/comp_heat_drift.json rc 0 27060 B, a negative control AccessDenied on a REAL object under a Put-only prefix, a positive control head-object rc 0), and 2 of 2 producers published into a prefix that held ZERO objects (outset/comp_heat_drift.json 27060 B @13:03:50Z, outset/comp_heat_freshness_tools.json 63822 B @13:03:49Z). O18-AC1: OS18-SEAM-READABLE rc=0 unpiped; 13 of 13 arms at 13:10Z (nine RED arms; R8 shows the OK and FAILED renderings are NOT byte-identical, 4151 vs 1436 B, the arm 51 round-1 green arms assumed; arm M a planted mutant DETECTED), 12 of 12 + 1 honestly NOT-EVALUATED at the graded 13:45Z run. The issuer read the committed output and did not re-run it: arm R2 put_objects a fixed probe key to the live seam. THE CAVEAT: the consumer still does not look -- ESTATE_OUTSET_SEAM_PREFIX is set nowhere in Terraform (5 of 5 hits inside the runner; the runtime.env heredoc at instance.tf:130-151 omits it), so _stratum_propagation returns INSTRUMENT_UNAVAILABLE without composing a key (row S16), and the artifact published by hand goes STALE at 26 h with no cadence (row S17, ~2026-09-10T15:03Z). Both are placed by the CTO @e18317d0e0 as addendum rows OS-s-20 (set the prefix, replace the host, AFTER OS-s-19) and OS-s-21 (the producers' own scheduled publish). This seat expects FWD-3's REALIZED reading to wait on OS-s-20 -- the third project in two days where cell PASS and outcome REALIZED part company on Rule 22's STATE axis -- and states it here so the L10 read is not the first place it appears. O18-AC2 (judgment) recorded with vintage and no verdict."
+    },
+    {
+      "fwd_id": "FWD-4",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- one day has been decided that way",
+      "cells": [
+        {
+          "cell_id": "OS-s-19",
+          "task_orders": [
+            {
+              "id": "NFRA_OUTSET.TO-OS-s-19",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/NFRA_OUTSET.TO-OS-s-19.the-deploy-of-the-served-runner.proof_of_spec.json@9e023d20b5"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "COVERED, and round 1's own warning on this row is now discharged on the artifact axis: OS-s-17's tool-row citation gate (a proposal must cite the stratum AND its vintage) was built in round 1 and served by nothing; the served runner now carries it (the per-token census in O19-AC1 arm D counts render_trace 2 and _outset_trace 3 in the served bytes, 0 before). 'One day decided that way' still waits on a published day: the first fire under the new runner is 2026-09-10 13:00Z. Same proof_of_spec_ref as FWD-2; the same order serves three outcomes by the PRD manifest."
+    },
+    {
+      "fwd_id": "FWD-5",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- the working order has been read from one place on a real day",
+      "cells": [],
+      "claim": "COVERED",
+      "note": "No round-2 cell. Coverage stands on round 1 (OS-s-12), with the KNOWN-FALSE census row round 1's report named (W3-S10: comp-pipescript accepts --budget on `deployed`; the census read the top-level parser). Unchanged by this round."
+    },
+    {
+      "fwd_id": "FWD-6",
+      "done_when_state": "APPLIED",
+      "done_when_text": "APPLIED -- the one account of how they fit is written and nothing does another job over again",
+      "cells": [],
+      "claim": "COVERED",
+      "note": "No round-2 cell. Coverage stands on round 1 (OS-s-9/13/14; the composition contract at docs/architecture/NFRA_OUTSET_COMPOSITION_CONTRACT.md). Unchanged by this round."
+    },
+    {
+      "fwd_id": "FWD-7",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- a run shows a reader own material carrying them",
+      "cells": [
+        {
+          "cell_id": "OS-s-19",
+          "task_orders": [
+            {
+              "id": "NFRA_OUTSET.TO-OS-s-19",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/NFRA_OUTSET.TO-OS-s-19.the-deploy-of-the-served-runner.proof_of_spec.json@9e023d20b5"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "COVERED, and round 1's expectation on this row ('the served artifact does not yet carry it') is met on the artifact axis: OS-s-8's consumer wire is in the served bytes (arm D: _outset_read 4, OUTSET_ANSWER_STATE_TO_STATUS 3 in the served object, 0 before). 'A run shows it' still waits on the 2026-09-10 13:00Z fire, and the seam branch of that wire reaches no data until OS-s-20 (see FWD-3). Same proof_of_spec_ref as FWD-2."
+    },
+    {
+      "fwd_id": "FWD-8",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- someone has asked and got a list they could argue with",
+      "cells": [],
+      "claim": "COVERED",
+      "note": "No round-2 cell. Coverage stands on round 1 (OS-s-15/16, comp-heat archive). Unchanged by this round."
+    }
+  ]
+}

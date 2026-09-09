@@ -6,7 +6,9 @@
 #        comp-cluster --list            # every page + cluster counts + coverage
 #        comp-cluster <Page> --json     # structured JSON
 #        comp-cluster --coverage        # page-tree coverage (assigned/total, unresolved named) only
-#        comp-cluster --db-path PATH ... # query a frozen-vintage DB (default = canonical)
+# NOTE: this tool once took a local database path. It does not any more -- the local store is
+# retired (NFRA_CLDGRPH R7) and comp_cluster_cli.py REFUSES one at runtime. It reads the SERVED
+# graph, which states its own vintage on every call.
 WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
 python "$WORKSPACE/infra/aws/globgrph/comp_cluster_cli.py" "$@"
 _exit=$?

@@ -323,6 +323,50 @@ is chunked with a declared denominator, or the call fails loud. A model cannot k
 
 ---
 
+### 5c. AMENDMENT 2026-09-05 -- THE `reproduce` KEY. The contract shape gains one OPTIONAL, ADDITIVE field, and the specification catches up with the code rather than the other way round
+
+**Trigger:** NFRA_OUTSET row W2-S20 (0.9.0_WK_NFRA_OUTSET~2, 2026-09-05T11:00Z, disarm_owner 3.0.0_SA_CVO). Building
+O11-AC1 (traceability on deterministic lines) required every deterministic stratum row to carry the tool and the vintage
+that reproduce it, and that lives in the stratum shape. The worker's order granted the runner's code and not this
+document, so the code moved first: `_stratum()` in `infra/aws/ec2/estate-report-runner/estate_report_runner.py` (:1248 at
+HEAD @f2ef16d70a) now returns a `reproduce` key, optional, additive, no change to the status vocabulary, no existing caller
+altered. The worker recorded the divergence instead of leaving it for a later reader, which is the correct act; closing it
+is the CVO's, and this section closes it.
+
+**The shape, amended.** Section 5's block gains one line, and the line is optional:
+
+```
+stratum: <name>
+question: <the contradiction it encodes>
+tool: <tool> <subcommand> <args>          vintage: <input freshness / commit-ish>
+denominator: scanned N of M <units>       rows: <k>
+reproduce: tool=<tool> claim=<rail-reproducible | host-reproducible | not-reproducible>   # OPTIONAL, ADDITIVE
+           at vintage: <the exact pin the rows were computed at>
+           $ <the command(s) a reader runs to re-derive the rows, verbatim>
+           note: <folds or environment the recipe needs, e.g. TZ=UTC>
+[rows...]                                  # k may be 0 -- that is a RESULT, not an absence
+```
+
+**What binds and what does not.** (i) `reproduce` is OPTIONAL: a stratum without it is still contract-valid, and no
+consumer may treat its absence as a defect of the stratum. (ii) When present it carries its own CLAIM (`rail-reproducible`
+when the recipe is a comp-tool invocation the rail admits; `host-reproducible` when it needs host state such as git history
+at a pin; `not-reproducible` when the stratum cannot be re-derived and says so) -- a recipe without a claim is not a
+recipe. (iii) The recipe names the VINTAGE the rows were computed at, never "now": a reader re-running it at HEAD is
+running a different question. (iv) Section 5a stands unchanged: `reproduce` is a fact about the input, never a rank,
+weight or sort key. (v) Nothing about the model's job changes (section 6): the model never runs a recipe; a reader does.
+
+**Why the field earns its place (the OS-s-11 measurement, 2026-09-05):** one deterministic row of stratum C was taken,
+its recipe run as printed at the pin, and the rows re-derived by a fold written independently of the runner -- 17 of 17
+identical -- with a negative control (the recipe's window corrupted from 90 days to 2) producing 107 rows instead of 17, so
+the comparison can fail. That is the property FWD-3 of NFRA_OUTSET asks for ("a reader has followed one line back and
+reproduced it"), and it is expressible only if the row carries the recipe. Reach, stated so the field is not over-read:
+4 of 4 deterministic strata CARRY a recipe at HEAD; 1 of 4 has a DEMONSTRATED reproduction; the other three are untested
+(D, B-host) or untestable on this fabric until something publishes to the seam and the runner's role can read it
+(NFRA_OUTSET W2-S18, W1-S19, W2-S15).
+
+**Denominator of this amendment:** one field added; zero fields changed; zero status values added; the code at HEAD and
+this document now agree on the shape. Recorded on NFRA_OUTSET adjudication row C-S3 as W2-S20's remedy.
+
 ## 6. Explicitly NOT the model's job
 
 - Computing any stratum (deterministic, always).

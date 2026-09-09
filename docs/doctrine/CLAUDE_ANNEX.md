@@ -234,7 +234,8 @@ Doctrine: `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`.
     --date=format:'...Z'` **renders local and stamps a literal `Z`** -- use `%aI`/`--date=iso-strict`
     and **never type a `Z` into a format string.** A missing marker makes a reader ask; a false one
     makes them stop asking.
-    **IAM instrument traps (comp-iam is a FLOOR, `simulate-principal-policy`'s three false-deny modes,
+    **IAM instrument traps (comp-iam is a FLOOR, `simulate-principal-policy`'s four false-deny modes --
+    multi-ARN, conditioned grant, unvalidated action name, WRONG-GRAIN resource ARN (NFRA_OUTSET-S3) --
     `accessanalyzer validate-policy`): `/cloud-ops`.**
 28. **THE SUBSTRATE TEST -- BEFORE YOU BUILD ON A RESOURCE, QUALIFY IT: SEVEN QUESTIONS, THREE
     DECLARED GRAINS.** A resource you are about to make LOAD-BEARING earns a SUBSTRATE CARD; a

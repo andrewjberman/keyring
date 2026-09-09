@@ -147,6 +147,22 @@ def _norm_band(raw: str) -> str:
     return "UNKNOWN"
 
 
+# One resource NAME can be carried by SEVERAL repo paths with different bands. HOT wins, then
+# WARM, then COLD, then UNKNOWN -- never let one cold path make a resource look COLDER than its
+# hottest evidence, because the cold member of a divergent pair is emitted as a decommission
+# CANDIDATE and NEVER-AUTO-DELETE (PRD R-5) makes the conservative direction the only safe one.
+# Deterministic by construction: unlike the setdefault it replaces, the merge is order-free.
+_BAND_RANK = {"HOT": 3, "WARM": 2, "COLD": 1, "UNKNOWN": 0}
+
+
+def _merge_band(heat: dict, name: str, axis: str, band: str) -> None:
+    entry = heat.setdefault(name, {})
+    if _BAND_RANK.get(band, 0) > _BAND_RANK.get(entry.get(axis, "UNKNOWN"), 0):
+        entry[axis] = band
+    else:
+        entry.setdefault(axis, band)
+
+
 def is_cold(entry: dict) -> bool:
     """A resource is COLD only if >=1 axis reads COLD and NO axis reads HOT (ambiguous
     data-cold-but-invoke-hot is NOT cold -- it is still in use)."""
@@ -304,6 +320,27 @@ def pairwise(a_arn, b_arn, corpus, index):
 # Live heat assembly -- shell the canonical tools ONCE, index by resource name. GRACEFUL: a
 # tool failure/timeout leaves that axis UNKNOWN for all (never assume cold -- C3).
 # ==========================================================================================
+def _tool_argv(tool: Path, *args: str) -> list[str]:
+    """argv that ACTUALLY EXECUTES an extensionless .tools/ shim on this fabric.
+    MEASURED 2026-09-04 (laptop, Windows): subprocess.run(['.tools/comp-heat', ...]) raises
+    OSError [WinError 193] '%1 is not a valid Win32 application' because the shim carries a
+    shebang and no extension -- _run_json swallowed that as None, so load_heat_live returned {}
+    WITHOUT EVER REACHING comp-heat (PRD s.7 row OS-s-8 / row S29). Resolve the interpreter from
+    the shebang instead: python shims run under THIS interpreter, bash shims under Git Bash via
+    the estate's own resolver (build ladder rung 2 -- never bare 'bash', the WSL-stub trap)."""
+    tool = Path(tool)
+    try:
+        shebang = tool.open(encoding="utf-8", errors="replace").readline()
+    except OSError:
+        shebang = ""
+    if "python" in shebang:
+        return [sys.executable, str(tool), *args]
+    if "bash" in shebang or shebang.startswith("#!/bin/sh"):
+        from git_bash_resolver import bash_argv          # .tools is already on sys.path
+        return bash_argv(str(tool), *args)
+    return [str(tool), *args]
+
+
 def _run_json(cmd, timeout=180):
     try:
         p = subprocess.run(cmd, cwd=str(REPO), capture_output=True, text=True, timeout=timeout)
@@ -317,7 +354,7 @@ def _run_json(cmd, timeout=180):
 def normalize_heat(raw: dict) -> dict:
     """Accept EITHER a pre-normalized {name: {data, invoke}} snapshot OR the raw JSON of
     comp-debris (invoke bands under reap_rank_cold_dormant/hot/too_young/unknown/... , each row
-    {name, band}) and comp-heat freshness ({paths: [{path, class}]}), and fold both into the
+    {name, band}) and comp-heat freshness ({paths: [{path, band}]}), and fold both into the
     canonical {name -> {data, invoke}} map. UNKNOWN where unread -- the blind-row control (C3)."""
     heat: dict[str, dict] = {}
     if not isinstance(raw, dict):
@@ -335,11 +372,28 @@ def normalize_heat(raw: dict) -> dict:
                 heat.setdefault(row["name"], {})["invoke"] = _norm_band(row.get("band", ""))
     for held in (raw.get("held_excluded") or []):        # held names -> recorded, not cold
         heat.setdefault(str(held), {}).setdefault("invoke", "UNKNOWN")
-    # (c) raw comp-heat freshness: path-keyed data bands (map basename -> resource name)
+    # (c) raw comp-heat freshness: path-keyed data bands, joined to resource NAMES.
+    # FIELD: comp-heat emits `band` (hot/warm/cold) on every freshness row; `class` was never a
+    # key it writes and is kept only as a back-compat alias for a hand-rolled snapshot. Measured
+    # 2026-09-04 on .tools/tests: reading `class` banded 43 of 43 rows UNKNOWN.
+    # KEY: a resource name is joined under EVERY key its repo path can plausibly carry -- the
+    # basename, its extension-stripped stem, and each path COMPONENT + stem (a lambda's source
+    # DIRECTORY is the usual carrier). Measured on the live corpus: basename alone joined 0 of
+    # 1774 corpus names; component+stem joins 184. A name join is a HYPOTHESIS, never a verdict:
+    # heat only ever CORROBORATES a summary twin (C1), and collisions resolve HOT-wins.
     for row in (raw.get("paths") or []):
-        if isinstance(row, dict) and row.get("path"):
-            base = os.path.basename(str(row["path"]).rstrip("/"))
-            heat.setdefault(base, {}).setdefault("data", _norm_band(row.get("class", "")))
+        if not (isinstance(row, dict) and row.get("path")):
+            continue
+        band = _norm_band(str(row.get("band", row.get("class", "")) or ""))
+        keys = set()
+        for part in str(row["path"]).rstrip("/").split("/"):
+            if not part or part in (".", ".."):
+                continue
+            keys.add(part)
+            keys.add(os.path.splitext(part)[0])
+        for key in keys:
+            if key:
+                _merge_band(heat, key, "data", band)
     return heat
 
 
@@ -363,19 +417,27 @@ def load_heat_live(timeout=280, *, clock=None, deferred=None) -> dict:
         return None if remaining is None else min(timeout, remaining)
 
     debris_timeout = remaining_timeout("comp-debris")
-    dbg = (_run_json([str(REPO / ".tools" / "comp-debris"), "--json"],
+    dbg = (_run_json(_tool_argv(REPO / ".tools" / "comp-debris", "--json"),
                      timeout=debris_timeout) if debris_timeout != 0 else None)
     if dbg:
-        heat.update(normalize_heat(dbg))
+        for name, v in normalize_heat(dbg).items():
+            for axis, band in v.items():
+                _merge_band(heat, name, axis, band)
     out_json = _GRAPH / "debtscan" / ".comp_similar_heat.json"
     heat_timeout = remaining_timeout("comp-heat freshness")
     if heat_timeout != 0:
-        _run_json([str(REPO / ".tools" / "comp-heat"), "freshness", "--json", str(out_json)],
-                  timeout=heat_timeout)
+        heat_args = ["freshness", "--json", str(out_json)]
+        # OS-s-1 wired Rule T's --budget across comp-heat's five subcommands. Hand the CALLER's
+        # remaining budget down, or the child silently runs to its own 90s default inside a
+        # possibly-shorter outer timeout and reports WITHIN BUDGET against the wrong clock.
+        if heat_timeout is not None:
+            heat_args += ["--budget", str(max(1, int(heat_timeout)))]
+        _run_json(_tool_argv(REPO / ".tools" / "comp-heat", *heat_args), timeout=heat_timeout)
     try:
         if out_json.exists():
             for name, v in normalize_heat(json.loads(out_json.read_text())).items():
-                heat.setdefault(name, {}).update(v)
+                for axis, band in v.items():
+                    _merge_band(heat, name, axis, band)
     except (OSError, ValueError):
         pass
     finally:
@@ -505,40 +567,68 @@ def self_test() -> int:
           f"compute={n_compute}/2 json={n_json}/4 human={n_human}/4 "
           f"{'PASS' if c3b else 'FAIL'}")
 
-    # C3c CAPTURE (added 2026-09-02, same session, after C3b was caught committing C3's own
-    # defect). WARN: C3b tests ONLY the UNKNOWN path -- it passed IDENTICALLY before and after the
-    # stderr fix, while the live corpus still rendered UNKNOWN. A control that green-lights the
-    # broken state is the D3 shape one domain over, so the MEASURED path needs its own leg.
-    # The header below is a VERBATIM excerpt of real comp-kuzu output (streams separated,
-    # 2026-09-02), so this tests the shape the parser actually meets -- not one written to fit
-    # the parser. Runs offline: no graph, no AWS.
+    # C3c CAPTURE. REWRITTEN 2026-09-09 (NFRA_CLDGRPH CG-s-17, the INSTRUCTION plane; pass 2 on the
+    # issuer's amendment, which widened the grant to summary_corpus.py so the CAPTURE could move
+    # with the comparison -- row W2-S32). The header this leg used to feed -- "DB: kuzu_nessie_db
+    # ... built: ..." -- was a VERBATIM excerpt of a tool that no longer emits it. comp-kuzu is a
+    # thin client over the SERVED projection and its whole disclosure is ONE line (kuzu_cli.py:
+    # 46-61):
+    #     VINTAGE: <plain-words age>  [vintage=<vintage> manifest=<sha12> prefix=<prefix>]
+    # A fixture that keeps feeding the old shape scores this leg GREEN against a header the estate
+    # never sees again, and a fixture that cannot represent the current world cannot score it.
+    # BOTH ARMS ARE THE SERVED SHAPE NOW, which is what makes this a measurement rather than a
+    # tautology: the POSITIVE arm feeds a served line carrying a vintage and requires a MEASURED
+    # claim whose corpus_db is the SERVED SURFACE (the artifact prefix), and the NEGATIVE arm feeds
+    # a served line the service answered WITHOUT a vintage -- the client renders those bracket
+    # fields as the literal `None` -- and requires NO measured claim, because a parser that reads
+    # "None" as a vintage is the false-green the disclosure exists to prevent. Without the negative
+    # arm, a capture that returned `measured` unconditionally would pass the positive one.
+    # Runs offline: no graph, no AWS, no clock.
     import summary_corpus as _sc
+    _served_header = ("VINTAGE: built 2026-09-09T11:02:44+00:00, 0.4h ago  "
+                      "[vintage=2026-09-09T11:02:44+00:00 manifest=9f4a57262f1c "
+                      "prefix=s3://opal-globgrph-projection/served/]\n")
+    _served_no_vintage = ("VINTAGE: AGE NOT STATED BY THE SERVICE -- no age was inferred.  "
+                          "[vintage=None manifest=None prefix=None]\n")
     _saved = dict(_sc._CORPUS_VINTAGE)
     try:
         _sc._CORPUS_VINTAGE.clear()
-        _sc._capture_kuzu_vintage(
-            "=== comp-kuzu provenance ===\n"
-            "  DB: kuzu_nessie_db  (27122 nodes / 60670 edges)\n"
-            "  source: nessie\n"
-            "  built: 2026-09-02T14:20:11.113748+00:00 (age: 0.2h)\n"
-            "============================\n")
+        _sc._capture_kuzu_vintage(_served_header)
         cap = coverage(corpus)
         c3c = (cap.get("corpus_vintage_claim") == "measured"
-               and cap.get("corpus_built") == "2026-09-02T14:20:11.113748+00:00"
-               and cap.get("corpus_age") == "0.2h"
-               and cap.get("corpus_db") == "kuzu_nessie_db"
+               and cap.get("corpus_built") == "2026-09-09T11:02:44+00:00"
+               and cap.get("corpus_age") == "built 2026-09-09T11:02:44+00:00, 0.4h ago"
+               and cap.get("corpus_db") == "s3://opal-globgrph-projection/served/"
                and "UNKNOWN" not in cap.get("vintage_note", ""))
-        # negative control: a header with NO built: line must NOT yield a measured claim.
+        # NEGATIVE CONTROL: a served line the service answered without a vintage must NOT yield a
+        # measured claim, and coverage() must say UNKNOWN in terms.
         _sc._CORPUS_VINTAGE.clear()
-        _sc._capture_kuzu_vintage("=== comp-kuzu provenance ===\n  DB: kuzu_nessie_db\n")
-        c3c_neg = coverage(corpus).get("corpus_vintage_claim") == "absent"
+        _sc._capture_kuzu_vintage(_served_no_vintage)
+        neg = coverage(corpus)
+        c3c_neg = (neg.get("corpus_vintage_claim") == "absent"
+                   and neg.get("corpus_built") is None
+                   and "UNKNOWN" in neg.get("vintage_note", ""))
+        # RETIRED-SHAPE CONTROL: the OLD local-projection header must no longer be readable. A
+        # parser that still answered it would be a live reader for a store retired at CG-s-8.
+        # The discriminating line is the `built:` one -- that is what the retired regex keyed on --
+        # so the control feeds THAT and nothing else. It deliberately does NOT spell the retired
+        # store's name: this is a live code-band string constant, and a fixture that names the
+        # retired surface in order to prove the retired surface is gone puts the token back on the
+        # very instruction plane this cell is clearing. E1-AC3 counts code-band strings and it is
+        # right to -- an agent reading this file would meet the name here as readily as in a help
+        # text -- so the control is written to discriminate without carrying it.
+        _sc._CORPUS_VINTAGE.clear()
+        _sc._capture_kuzu_vintage("  built: 2026-09-02T14:20:11+00:00 (age: 0.2h)\n")
+        c3c_old = coverage(corpus).get("corpus_vintage_claim") == "absent"
     finally:
         _sc._CORPUS_VINTAGE.clear()
         _sc._CORPUS_VINTAGE.update(_saved)
-    c3c_ok = c3c and c3c_neg
+    c3c_ok = c3c and c3c_neg and c3c_old
     ok &= c3c_ok
-    print(f"  C3c vintage-CAPTURE (real header parsed -> measured; headerless -> absent): "
-          f"parse={'ok' if c3c else 'BROKEN'} neg-control={'ok' if c3c_neg else 'BROKEN'} "
+    print(f"  C3c vintage-CAPTURE (served+vintage -> measured on the SERVED surface; served without "
+          f"a vintage -> absent + DISCLOSED; the retired local header -> unreadable): "
+          f"served={'ok' if c3c else 'BROKEN'} neg-control={'ok' if c3c_neg else 'BROKEN'} "
+          f"retired-shape-control={'ok' if c3c_old else 'BROKEN'} "
           f"{'PASS' if c3c_ok else 'FAIL'}")
 
     # C5 hold-aware: the held twin is excluded even though it is COLD + summary-identical.
@@ -784,6 +874,12 @@ def main(argv=None) -> int:
             elif args.live_heat:
                 heat = load_heat_live(clock=clock, deferred=deferred)
                 heat_src = "live (comp-debris+comp-heat)"
+            # THE CONSUMPTION MEASUREMENT: len(heat) counts KEYS THE HEAT SOURCE OFFERED, which
+            # is not the question -- the question is how many CORPUS resources the heat actually
+            # reached with a usable band. An all-UNKNOWN heat map is a heat map in NAME ONLY, and
+            # counting its keys reported a confident denominator for a blind result.
+            heat_banded = sum(1 for d in corpus.values()
+                              if any(b != "UNKNOWN" for b in (heat.get(d.name) or {}).values()))
             # One deterministic outer sweep produces both views. Their similarity thresholds and
             # neighbor widths remain the legacy 8 (supersede) / 6 (pool); only scheduling changed.
             pool = []
@@ -795,7 +891,7 @@ def main(argv=None) -> int:
                 progress, budget_s, budget_source, clock, _resume_args(args, mode))
             resume_note = f"RESUMED AFTER: {args.cursor}" if args.cursor else None
             state, state_detail = _supersede_answer_state(
-                progress, cov, heat_present=bool(heat), result_count=len(cands))
+                progress, cov, heat_present=bool(heat_banded), result_count=len(cands))
             state_text = answer_state_line(state, state_detail) if state else None
             deferred_lines = _compbudget.deferred_bucket(
                 len(deferred), 2 if args.live_heat else 0, "heat subprocess", deferred)
@@ -804,7 +900,9 @@ def main(argv=None) -> int:
                                   "answer_state": state,
                                   "answer_state_detail": state_detail,
                                   "deferred": deferred_lines, "coverage": cov, "heat_source": heat_src,
-                                  "heat_resources": len(heat), "candidates": cands,
+                                  "heat_keys": len(heat), "heat_banded": heat_banded,
+                                  "heat_corpus_denominator": len(corpus),
+                                  "heat_resources": heat_banded, "candidates": cands,
                                   "summary_twin_pool": pool}, indent=2))
                 return 0
             if resume_note:
@@ -815,11 +913,19 @@ def main(argv=None) -> int:
             if state_text:
                 print(state_text)
             print(cov["note"])
-            print(f"heat: source={heat_src}, {len(heat)} resources banded "
+            print(f"heat: source={heat_src}, {heat_banded} of {len(corpus)} corpus "
+                  f"resources banded from {len(heat)} heat key(s) "
                   f"(UNKNOWN heat -> never a candidate -- C3)")
-            if not heat:
-                print("\nNO HEAT SOURCE -> 0 supersede verdicts (similarity alone is never a "
-                      "verdict -- C1). Provide --heat-json <snapshot> or --live-heat (slow).")
+            if not heat_banded:
+                if not heat:
+                    print("\nNO HEAT SOURCE -> 0 supersede verdicts (similarity alone "
+                          "is never a verdict -- C1). Provide --heat-json <snapshot> or "
+                          "--live-heat (slow).")
+                else:
+                    print(f"\nHEAT READ BUT 0 OF {len(corpus)} CORPUS RESOURCES BANDED "
+                          f"(source={heat_src}, {len(heat)} key(s) offered) -> 0 supersede "
+                          f"verdicts. The heat source did not JOIN this corpus by name: this "
+                          f"is a BLIND result, not a measured zero -- C1/C3.")
                 print(f"\n=== summary-twin POOL (supersede candidates PENDING heat corroboration) "
                       f"[{len(pool)}] ===")
                 for c in pool:

@@ -11,7 +11,7 @@ which is the at-surfacing classification and is append-only.
 **Coordinate:** `ESTATE_GOVERNANCE-C-S<k>`, `k` from 1 in this document.
 **No round, no L10:** this channel has no task orders and no slug. A graduated item's remedy is routed to its owner by name
 in `REMEDIATION_v1.md`, and the clocks there advance as the owner's acts land, each advance evidenced in this document.
-**Denominator at this write:** 6 rows (C-S1 .. C-S6; C-S6 appended ~22:4xZ: S5's clocks advance on @`14f26b5eff` and this row's own admission without override is the exercise; the flat-kind ruling) dispositioning S1 .. S5 -- all five GRADUATED (C-S5 on S5, the row gate's coordinate limb refusing this very document, appended ~21:4xZ in the same commit under the audited override that limb forced); S4 REMEDIATED and
+**Denominator at this write:** 8 rows (C-S1 .. C-S8; C-S8 appended 2026-09-05 ~16:1xZ: a correction of one count in S6's evidence -- 0 `<paths>`-block lines in afa659557d's order file, not 3; the three were prose; 7 rows (C-S1 .. C-S7; C-S7 appended 2026-09-05 ~16:1xZ: the ruling on repository-scoped provenance's residual, accepted on four terms, beside S6 filed in the same commit and left UNDER_INVESTIGATION; 6 rows (C-S1 .. C-S6; C-S6 appended ~22:4xZ: S5's clocks advance on @`14f26b5eff` and this row's own admission without override is the exercise; the flat-kind ruling) dispositioning S1 .. S5 -- all five GRADUATED (C-S5 on S5, the row gate's coordinate limb refusing this very document, appended ~21:4xZ in the same commit under the audited override that limb forced); S4 REMEDIATED and
 DISARMED at this write on the CTO's two fixes, read and exercised at this seat; S1, S2 and S3 OPEN with owners named.
 Investigation rows without a disposition after this write: 0 of 5.
 
@@ -212,6 +212,62 @@ Investigation rows without a disposition after this write: 0 of 5.
     "spec_asserts": "Annex v3.6 section 4 / 4a: the flat channel's adjudication document carries the CVO's C- rows; the row gate's coordinate limb admits them there. S5's remediation row: disarm on one CVO commit of a flat ADJUDICATION_v document admitted without override.",
     "world_is": "The limb admits the flat document's C- rows on the filename's kind while the order-bound limbs stay keyed to the tree spelling. S5 is REMEDIATED (round v1), DISARMED at 2026-09-04T22:45Z and closed; the exercise is this commit. Sequencing of the boundary's (b) and (c) after the push, as the CTO proposes, is accepted -- nothing of this seat's waits on them, and the exemptions @69603c1807 coming out in the same commit as their replacement is the right shape.",
     "notes": "The clock-advance table convention of the tree channels is carried here in prose: the S5 advance's evidence is this row. ESTATE_GOVERNANCE at this write: S4 and S5 closed; S1, S2, S3 OPEN at 1.0.0_SA_CTO, who has taken S3 by name (94300 s.3). Three docstrings stated a behaviour their code did not have today (safe-merge's abort claim, the gate's merge principle, this one) -- a docstring is a carrier nothing compares to the code; noted for the annex's next revision as a reading rule, not a new gate."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-C-S7",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-05T16:12Z",
+    "one_line": "RULING on the question 0.0.0_AB_MSTR 94398 s.4 put to this seat: is repository-scoped provenance's residual acceptable -- a value the worker could have read from the shared tree and committed without being told? YES, on four terms, and it is the same shape as boundary (b)'s residual bounded at @2eabc5197e. (1) The limb grades against an artifact the acting seat did not author -- an ISSUER-authored commit anywhere in the object graph at or before the carry that set the field to that value -- and states on its own output WHICH commit blessed the value and that ancestry was not required. (2) Time-bounded: a later issuer commit blesses nothing retroactively. (3) The residual is named in the gate's own note as what the limb does not guard, exactly as the ANY-lane note names what the lane no longer guards -- a permit you can explain. (4) The residual stays OBSERVED, not trusted: at L9 this seat censuses, per project, the worker commits that modify a grant field (anchored diff lines, `--full-history`, denominator printed) and the count rides the slug -- today 2 of 2 faithful in NFRA_OUTSET -- so a value read-and-committed-untold would appear as a MATCH with no instruction in the issuer's hand-off, which the COO can see at its drain. NOT done by this ruling: narrowing the lane (Andrew's word), designing the limb (the CTO's neck), or asking for a merge-based transport (the COO's reasons for the path-scoped checkout stand; a transport chosen to avoid a merge conflict discards the merge's evidence, and the estate takes that trade with its eyes open).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A ruling record, not a hazard: it answers the one call the thread assigned to the CVO and dispositions nothing -- S6 stays UNDER_INVESTIGATION and ARMED to 1.0.0_SA_CTO until the limb lands and its ACK row cites it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE PRECEDENT THIS RULING EXTENDS: boundary (b) @2eabc5197e grades a C- row on a merge against the merge's PARENTS -- an artifact the committer did not author -- and its residual (a parent a seat could have arranged) was bounded and disclosed rather than closed. The provenance limb's residual has the same structure: the blessing artifact (the issuer's commit) is one the worker did not write; what the worker could still do is copy it unbidden, and that act leaves a MATCH with no hand-off behind it, which term (4) makes visible.",
+        "WHY THE THREE REFUSED KEYS ARE NOT REVIVED BY THIS RULING: authorship refuses the instructed carry because the slot IS the identity and the carrier is the assignee by design (94388); ancestry refuses it because the prescribed transport is a path-scoped checkout (94398, 94401); a simplified log refuses it because history simplification drops the amendment commit (94391). Each was caught before shipping by a positive control on a KNOWN faithful transport -- which is why term (ii) of S6's disarm requires that control in the self-test, permanently.",
+        "TERM (4) IS A READ THIS SEAT ALREADY OWNS, NOT A NEW GATE: the L9 reads a round's task orders from git (spine v3 s.4, the step log's L7 read); adding `git log --full-history --format=%h --author=<worker> -- <project>/task-orders/` with the anchored `^[+-]<issued_to>[^<]*</issued_to>$` and `<paths>`-block diff lines is one command per project with its denominator printed. It was run for this ruling on NFRA_OUTSET: 2 commits, 2 faithful. No approval gate is implemented or proposed (CLAUDE.md s.2, do not manufacture friction)."
+      ]
+    },
+    "spec_asserts": "Boundary (b)'s property (@2eabc5197e): grade against an artifact the acting seat did not author, with the residual disclosed on the limb's own output. Rule 22: a permit you cannot explain is worth less than a refusal you can; DISCRIMINATION -- could the evidence differ if the claim were false.",
+    "world_is": "Three keys were tried in one day and all three refused the instructed path; the fourth -- repository-scoped issuer authorship, time-bounded -- admits both real carries and refuses an invented value, and its price is the residual above. Accepted on the four terms; the annex's next revision carries them as section 5's provenance clause.",
+    "notes": "The CVO's one call in this thread, recorded as a file because that is the carrier the spine names for rulings the CTO reads; no message rides it beyond the CTO's next slug, where S6 and C-S7 are cited by path and vintage."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-C-S8",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-05T16:15Z",
+    "one_line": "CORRECTION of one clause in S6's grounding evidence [0], scoped to that clause. S6 says of afa659557d: '3 line(s) touching a <paths> block'. The three were PROSE: a `<paths>` mention inside the proof instance's surprises string (W3-S5's text), a `<paths>` mention inside an investigation row's world_is, and the order's own `<status>` paragraph -- the exact wrong-object class 2.0.0_SA_COO disclosed in 94382 (a detector that matches the DISCUSSION of a field as well as the field), reproduced by this seat one commit after citing it. Re-derived on the ORDER FILE ALONE, the object the claim is about: 6 changed lines, 0 `<paths>`-block lines, exactly the two anchored `<issued_to>` lines. S6's conclusion -- neither commit added a `<paths>` line -- was and is correct; the number beside it was the wrong count of the wrong object. Nothing else in S6 or C-S7 changes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A correction record: it retracts one mislabeled count in this seat's own row and replaces it with the measurement on the right object. S6 stays UNDER_INVESTIGATION and ARMED to 1.0.0_SA_CTO; no grade or disposition moves.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE MATCHED LINES, read rather than counted: `git show --format= afa659557d | grep -n -E '^\\+\\+\\+ b/|^\\+.*<paths>|^\\+\\s*-\\s+org/'` -- line 32 inside the proof_of_spec.json ('...the very deliverables folder the order's <paths> block grants...'), line 84 inside INVESTIGATION_v1.md ('...it governs only the paths whose lane is resolved per-serial...'), line 104 the order's `<status>` paragraph. None is a `<paths>` block element.",
+        "THE ORDER FILE ALONE: `git show --format= afa659557d -- org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-15.reachability-of-the-heat-engine-legs.md` -> the two anchored `<issued_to>` lines (-~1 / +~3), the issuer-defect paragraph and the `<status>` rewrite; no line opens, closes or extends a `<paths>` block. 26a8bc43f8 touched only its order file and had 0 such lines in S6's own read, which stands.",
+        "WHY THIS IS THE SAME FAMILY AS THE ONE S6 CITES: S6's assembler pattern (`<paths>|^\\+\\s*-\\s+org/`) matched the WORD inside prose and a markdown list shape in a result document, over ALL files in the commit rather than the order; 2.0.0_SA_COO's first detector (94382) matched `<issued_to>`/`<paths>` anywhere in a diff line and returned 11 where the truth was 2. Both inflate toward alarm. The fix in both is the same: anchor the whole element and scope the read to the object the claim names."
+      ]
+    },
+    "spec_asserts": "A number beside a conclusion is a measurement of the object the conclusion names, on an instrument that cannot match the object's description.",
+    "world_is": "The count was taken over every file in the commit with a pattern that matches prose; on the order file with an anchored pattern it is 0. Corrected here; the conclusion it sat beside was right for the wrong reason until now.",
+    "notes": "Instrument note, this seat's own: when a commit touches a channel document or a proof instance, ANY token census over the whole diff will hit the rows and strings that DESCRIBE the thing; scope to the object file first, anchor the element second, and read the matched lines before printing a count."
   }
 ]
 ```

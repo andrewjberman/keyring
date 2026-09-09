@@ -1,0 +1,54 @@
+# ETFS_GUARDRAIL round 1 -- the DATED READS still owed after ROUND_CLOSE, declared as comp-schedule gates.
+#
+# WHY THIS FILE: comp-schedule stores nothing; it compiles the gate ledger from five carriers, and the
+# one a seat can declare a future read into is C1, the DEPLOY-SERVE-HELD sentinel grammar
+# (safe_deploy_core.SERVE_HELD_RE). This file is never deploy-scoped, so the sentinels below hold no
+# deploy; they exist so `comp-schedule` and `comp-schedule --owner 1.0.0_SA_CTO` list the reads the
+# CTO's grades wait on, with their dates. Andrew-direct 2026-09-05 (/log + "include the time details in
+# the schedule ledger (comp-schedule) that is the dedicated location for future items we need to be
+# watching for"). Each gate's reason starts with its OWNER (the grader), then the DATE, then WHAT TO READ.
+#
+# SWEEP RULE: when a read is done, edit its sentinel to say DISCHARGED with the commit that graded it
+# (comp-schedule --drift then lists it as looking satisfied), and delete the block at the round's CLOSED.
+# Lines inside ``` fences do not count; keep these unfenced.
+#
+# DEPLOY-SERVE-HELD: OWNER 1.0.0_SA_CTO grades; READ ON 2026-10-01 after 14:00Z (10:00 America/New_York,
+# the etfs-reports-monthly-run fire, cron(0 10 1 * ? *) in infra/aws/terraform/etfs-reports/orchestrator.tf).
+# WHAT TO READ, all under s3://opal-data-etfs/platinum/reports/2026-09/: coverage_verdict.json (written on
+# every gated render), coverage_unresolved.json and coverage_egress_ask.json (only if the ladder ended
+# unresolved), etf_ownership.pdf at the publish key OR the HTML under refused/, each firm CSV's last
+# '# coverage:' row; then the orchestrator's alert text and the terminal email (andrew@ only, only on a
+# refusal with unresolved days); then DELIVERY at both inboxes aj@opalinvest.com and andrew@opalinvest.com.
+# GRADES THIS READ SETTLES: FWD-2 (a refusal that reached a person, or a gated publish), FWD-3 (the coverage
+# line on the SERVED artifact), FWD-5 (both inboxes received), FWD-7 and FWD-8 (only exercised if a gap
+# survived every rung). DISCHARGE: the CTO's grades recorded for round 1 (ledger/COMPLETION_GRADES or the
+# analysis's grade table) citing this read; the /drive loop of 2.0.0_SA_COO~B reads the artifacts the same
+# day and reports them in its tick log.
+#
+# DEPLOY-SERVE-HELD: OWNER 1.0.0_SA_CTO grades; the first real LEGITIMATELY-EMPTY DAY is 2026-09-07 (Labor
+# Day, US market shut), READ at the 2026-10-01 render: in coverage_verdict.json for 2026-09, 2026-09-07 must
+# classify A (market closed), appear in no partner's holes list, and no producer may have written a
+# daily/<partner>/2026-09-07.json slice for cottonwood or 49financial (Inflection writes calendar days by
+# design and is read separately). GRADE THIS READ SETTLES: FWD-4 ("the system has ACTUALLY MET such a day
+# and left it alone"), which the CTO's L10 @0557afa38a graded NOT_EVALUATED because every B-class proof was
+# a synthetic fixture. The other accepted form -- a real partner file with holdings and no prices --
+# discharges it equally if one appears first. DISCHARGE: FWD-4 graded on a live render's expected_empty
+# with holes unaffected and nothing written.
+#
+# DEPLOY-SERVE-HELD: OWNER 1.0.0_SA_CTO grades; NO FIXED DATE -- the first scheduled fire of
+# cot-etf-ownership-daily (cron(30 10 * * ? *) UTC) or bd-49f-etf-ownership-daily (cron(45 10 * * ? *) UTC)
+# whose run names a recovered date in catchup_processed. WHAT TO READ: the function's CloudWatch log for
+# that day ('CATCHUP:' lines and the catchup_processed key in the handler's return), then the slice
+# daily/<partner>/<date>.json that appeared after its trading day. GRADE THIS READ SETTLES: FWD-1 ("a real
+# missed day caught up without a person"). It needs a real miss first, which the ports exist to make rare;
+# an idle month is not a failure of the port. DISCHARGE: FWD-1 graded on a producer's own fire, or the CTO
+# closing it NOT_EVALUATED-BY-ABSENCE at the round's CLOSED with the reason stated.
+#
+# The three open remediation items of the round (W2-S1 the inf battery, W1-S5 build-zip.sh, S2 the *.tf
+# eol rule) are NOT repeated here: their carrier is surprise-channel/remediations/REMEDIATION_v1.md and the
+# adjudication rows that graduate them, with owners named there.
+round: 1
+project: ETFS_GUARDRAIL
+declared_by: 2.0.0_SA_COO~B
+declared_at: 2026-09-05T15:2xZ
+gates: 3

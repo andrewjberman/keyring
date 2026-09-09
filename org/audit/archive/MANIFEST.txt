@@ -15,6 +15,20 @@
 # PRECEDENT: org/tombstone-gate-audit.log was added 2026-08-03 after this same COVERAGE clause fired
 # on it -- same class, same answer. The file is un-ignored at .gitignore:505 and registered at
 # .owned-paths.yaml:801; it was untracked, which is why the clause saw it.
+# ADDED 2026-09-05 (gate decision by 1.0.0_SA_CTO on 3.0.0_SA_CVO's ESTATE_GOVERNANCE-S2, which routed the
+# COVERAGE finding to this seat; owner of this file is 0.7.0_AE_CloudOps and the add is recorded here as
+# the GATE acting on a routed finding rather than the owner's own act -- said plainly so the record shows
+# who did what): org/to-pos-override-audit.log and org/to-pipeline-override-audit.log.
+# THE CTO'S TEST APPLIED -- "a real gate's audit trail, or a transient?" Both are real, and they are the
+# highest-value class this instrument exists for: THEY RECORD OVERRIDES TAKEN ON GATES. Shape is
+# `timestamp | seat | task-order path` -- to-pos 7 lines (2026-08-25..08-28, writers incl. 0.0.0_AB_MSTR
+# and Andrew Berman), to-pipeline 4 lines (2026-09-03, FIRST LINE WRITTEN BY ANDREW HIMSELF). LOW CHURN,
+# so the "do not track a live high-churn log" constraint does not bite.
+# WHY IT MATTERED: both were UNTRACKED **and** absent from this MANIFEST, so they had NO durable carrier
+# at all -- the override trail for the L6 gate, the gate 0.0.0_AB_MSTR declined to override four times on
+# the night of 2026-09-04, was archived nowhere.
+org/to-pos-override-audit.log
+org/to-pipeline-override-audit.log
 org/pipescript-suite-gate-audit.log
 org/git-author-override-audit.log
 org/halt-gate-override-audit.log

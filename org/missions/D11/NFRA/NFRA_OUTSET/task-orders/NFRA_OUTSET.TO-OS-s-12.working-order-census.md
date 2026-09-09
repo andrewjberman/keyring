@@ -2,10 +2,12 @@
 
 <to_id>NFRA_OUTSET.TO-OS-s-12</to_id>
 <project>NFRA_OUTSET</project>
-<issued_to>0.9.0_WK_NFRA_OUTSET~1</issued_to>
+<issued_to>0.9.0_WK_NFRA_OUTSET~3</issued_to>
+⛔ **RE-ADDRESSED TO `~3` BEFORE SEATING -- BOTH LIMBS, and the second limb is the one two workers had to find the hard way.** A mis-addressed order fails on TWO independent gate limbs, not one: `ADHC_OWNPTH.005` keys the worker grant on `<issued_to>`, AND clause 4 keys it on the DELIVERABLES FOLDER NAME. Amending only `<issued_to>` leaves the assignee admitted to a folder carrying another slot's serial. Measured on OS-s-8 (`NFRA_OUTSET-W2-S4`, 4 of 4 paths granted to `~1` and 0 of 4 to `~2`) and on OS-s-15 (`NFRA_OUTSET-W3-S6`, which corrected my own over-wide claim: only the TREE_DELIVERABLES limb refuses, because `task-orders/**` and the surprise channel are lane ANY and consult no serial). **This face was amended BEFORE its worker was seated rather than after it hit the wall** -- the first time on this project the population question was asked ahead of the second victim instead of behind it.
+
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>pending -- GO paired at cut (the spawn IS the GO for a worker face; a seat order is dispatched by its issuance). Authority: PRD v0.1 @`7fb59f239b` RATIFIED on Andrew's "all approved" (FWD-1..FWD-8) @`26da5ec0fa`; decomposition v0.1 @`6f1655f376`; Andrew-direct at this terminal 2026-09-04 ~15:5xZ, VERBATIM: "youre clear, first write every single task order" then "proceed with internal fan out".</status>
+<status>complete -- flipped 2026-09-05 by `0.9.0_WK_NFRA_OUTSET~3`. O12-AC1 is MECHANICAL and PASSED BY OUTPUT: `timeout 120 python .tools/tests/test_os12_census.py` -> rc=0, deciding line `=== test_os12_census: PASS (7/7) in 42.3s ===`, matching the criterion's `<expect>PASS</expect>`; the planted-failure arm the criterion names reads `A4 planted failure reads FAILED and is counted in the denominator -- denominator 3 (subset was 2); planted verdict=FAILED`. O12-AC2 is `judgment="true"` and carries its census table, its denominator and its plane with NO verdict -- `3.0.0_SA_CVO` grades it at L9. CENSUS RESULT: 9 of 9 outset tools censused, 8 WORKING, 1 FAILED (`comp-pipescript deployed`, no answer at 9 s or 75 s); disclosure answer-state 2/9, vintage 2/9, budget-line-when-offered 2/4. Proof-of-spec VALID (`violations=0 ... VALID (rc=0)`, surprises limb 3 of 3 resolving). Rows filed: `NFRA_OUTSET-W3-S7` (ARMED -- bare-`bash` hits the WSL stub and would mark 4 of 9 outset tools falsely BROKEN; live victim at `.tools/drift_producer.py:155`; outside this cell's `<paths>`, filed not fixed), `W3-S8`, `W3-S9`. Built one file, `.tools/tests/test_os12_census.py`; nothing else written; nothing scheduled, alarmed or removed. ORIGINAL ISSUANCE STATUS BELOW, unchanged: pending -- GO paired at cut (the spawn IS the GO for a worker face; a seat order is dispatched by its issuance). Authority: PRD v0.1 @`7fb59f239b` RATIFIED on Andrew's "all approved" (FWD-1..FWD-8) @`26da5ec0fa`; decomposition v0.1 @`6f1655f376`; Andrew-direct at this terminal 2026-09-04 ~15:5xZ, VERBATIM: "youre clear, first write every single task order" then "proceed with internal fan out".</status>
 
 **Directive:** D11 · **Fabric:** laptop · **PRD:** `../prd/NFRA_OUTSET_PRD.md` v0.1 @`7fb59f239b` (s.7 row OS-s-12; s.4 the bar; s.6 the rulings) · **Decomp cell:** `OS-s-12` (`../decompositions/NFRA_OUTSET_DECOMP.md` v0.1 @`6f1655f376`) · **outcome_ref:** FWD-5 · **verb:** build · **depends_on:** OS-s-1, OS-s-4
 
@@ -17,7 +19,7 @@ OS-s-12 (PRD s.7): no working-order census exists for the tools the brief's Part
 
 ## DELIVERABLE
 
-`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/working-order-census.result.md` -- the result document: what you measured, what you changed, each criterion's invocation and its output verbatim with rc and denominator, and any row you filed.
+`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~3/working-order-census.result.md` -- the result document: what you measured, what you changed, each criterion's invocation and its output verbatim with rc and denominator, and any row you filed.
 
 ## ACCEPTANCE
 
@@ -43,7 +45,7 @@ One clause per criterion. A mechanical criterion carries exactly one `<invocatio
 
 <paths>
 .tools/tests/
-org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/
+org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~3/
 org/missions/D11/NFRA/NFRA_OUTSET/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -61,7 +63,7 @@ lane: the `<paths>` block above IS the grant (RULING 1, Andrew 2026-09-04 ~04:58
 
 <proof_of_spec>
 Criterion ids minted at cut by the issuer: `O12-AC1`, `O12-AC2`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at
-`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-12.working-order-census.proof_of_spec.json`
+`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~3/NFRA_OUTSET.TO-OS-s-12.working-order-census.proof_of_spec.json`
 and validates it with `python .tools/proof-of-spec-check.py <instance> O12-AC1,O12-AC2` BEFORE the complete flip, which the assignee commits itself.
 ⛔ **A `complete` flip WITHDRAWS YOUR OWN GRANT** (the grant is read from a NON-TERMINAL order): flip only when every MECHANICAL criterion PASSES. A mis-flip is REOPENED by the issuer, never re-cut.
 </proof_of_spec>

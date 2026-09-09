@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ETFS_GUARDRAIL~1</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>pending -- GO paired at cut (the spawn IS the GO). Authority: PRD v0.3 @`4e30d6b635` (flat lineage @`7aa1554881`, ON ORIGIN) RATIFIED; decomposition v0.1 @`c4ab429993`, v0.1.1 in this issuance; Andrew-direct at the 1.0.0_SA_CTO terminal 2026-09-04 ~17:0xZ (94224/94225).</status>
+<status>complete -- proof-of-spec instance `org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-sb-7.rung-3-stops-and-asks-a-person.proof_of_spec.json` VALID (rc=0). All 5 criteria S7B-AC1..AC4 PASS by output (8/8 tests, +2 over EG-s-7's 6; HTTP_CLIENT_IMPORTS=0 ASK_WRITER=1; direct-call check ASKS=1 PROVIDER=Black Diamond AUTH=PER-USE with write=False making no S3 call; commit gate clean); S7B-AC5 judgment RECORDED for CVO L9 grading. No surprise row this cell. Flip made by the assignee per the tree-convention grant. Prior: pending -- GO paired at cut (the spawn IS the GO). Authority: PRD v0.3 @`4e30d6b635` (flat lineage @`7aa1554881`, ON ORIGIN) RATIFIED; decomposition v0.1 @`c4ab429993`, v0.1.1 in this issuance; Andrew-direct at the 1.0.0_SA_CTO terminal 2026-09-04 ~17:0xZ (94224/94225).</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `../prd/ETFS_GUARDRAIL_PRD.md` v0.3 (s.7.2 row S7b; s.0 ruling card 4; s.6 ruling 4; ENDPOINT FWD-8 and the "WHY FWD-8 SURVIVED THE FOLD" note) | **Decomp cell:** `EG-sb-7` | **outcome_ref:** FWD-8 | **verb:** wire | **depends_on:** `EG-s-7` (your previous order)
 
