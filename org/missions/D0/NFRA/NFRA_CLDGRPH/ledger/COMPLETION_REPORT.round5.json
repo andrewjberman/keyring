@@ -1,0 +1,379 @@
+{
+  "kind": "COMPLETION_REPORT",
+  "schema_version": "1.0",
+  "project": "NFRA_CLDGRPH",
+  "round": 5,
+  "written_by": "2.0.0_SA_COO~A",
+  "written_utc": "2026-09-09T17:21Z",
+  "decomposition_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md@de466829e0",
+  "denominators": {
+    "fwd_in_prd_header": 8,
+    "cells_in_decomposition": 26,
+    "task_orders": 24,
+    "task_orders_terminal_with_valid_proof": 24
+  },
+  "outcomes": [
+    {
+      "fwd_id": "FWD-1",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- someone who has never run a graph tool has asked and been answered",
+      "cells": [
+        {
+          "cell_id": "CG-s-4",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-C-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~T/NFRA_CLDGRPH.TO-CG-C-1.serving-service-on-the-cluster.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-5",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-2.gateway-traversal-integration.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-x-1",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-D-5.close-fwd1-never-compiled-seat.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "Unchanged from round 4 (REALIZED at the CTO's round-4 grades)."
+    },
+    {
+      "fwd_id": "FWD-2",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- the schedule has fired on its own at least once and the next morning's answers carry that night's date",
+      "cells": [
+        {
+          "cell_id": "CG-s-1",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-B-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~P/NFRA_CLDGRPH.TO-CG-B-1.marker-notification-to-projection-queue.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-2",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-B-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~S/NFRA_CLDGRPH.TO-CG-B-2.projection-worker-ported.proof_of_spec.json@59c46a5c19"
+            },
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-C-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~S/NFRA_CLDGRPH.TO-CG-C-2.worker-revision-three.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-14",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-C-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.8.0_AE_CloudComp~O/NFRA_CLDGRPH.TO-CG-C-3.deriver-read-state.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-15",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-D-1.shared-image-rebuild-deriver-live.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-16",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-12",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-D-12.derive-role-bucket-notification-grant.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-18",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-E-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-E-2.four-latest-producers-pinned.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-x-2",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-9",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-D-9.close-fwd2-schedule-exercised.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "Round 5 adds CG-s-18: the four :latest producers pinned by digest (E-2), 7 of 7 families by digest read live, R13 the rule. Otherwise unchanged from round 4 (REALIZED)."
+    },
+    {
+      "fwd_id": "FWD-3",
+      "done_when_state": "APPLIED",
+      "done_when_text": "APPLIED -- the age is printed in plain language wherever an answer is given",
+      "cells": [
+        {
+          "cell_id": "CG-s-3",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-B-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~T/NFRA_CLDGRPH.TO-CG-B-3.artifact-manifest-pointer-contract.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-6",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-3.thin-client.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "Unchanged from round 4 (REALIZED)."
+    },
+    {
+      "fwd_id": "FWD-4",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- a full cycle has passed with nobody enforcing the ceiling by hand and no answer served older than it",
+      "cells": [
+        {
+          "cell_id": "CG-s-2",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-B-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~S/NFRA_CLDGRPH.TO-CG-B-2.projection-worker-ported.proof_of_spec.json@59c46a5c19"
+            },
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-C-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~S/NFRA_CLDGRPH.TO-CG-C-2.worker-revision-three.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-18",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-E-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-E-2.four-latest-producers-pinned.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-x-4",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-10",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-D-10.close-fwd4-ceiling-holds.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "Round 5 adds CG-s-18 (E-2). Otherwise unchanged (REALIZED)."
+    },
+    {
+      "fwd_id": "FWD-5",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- a machine that has never held the graph has asked and been answered",
+      "cells": [
+        {
+          "cell_id": "CG-s-4",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-C-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~T/NFRA_CLDGRPH.TO-CG-C-1.serving-service-on-the-cluster.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-5",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-2.gateway-traversal-integration.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-x-5",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-6.close-fwd5-fresh-machine.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "Unchanged from round 4 (REALIZED)."
+    },
+    {
+      "fwd_id": "FWD-6",
+      "done_when_state": "APPLIED",
+      "done_when_text": "APPLIED -- the full-versus-incremental choice no longer appears anywhere an ordinary user works",
+      "cells": [
+        {
+          "cell_id": "CG-s-6",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-3.thin-client.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "Unchanged from round 4 (REALIZED; the CTO placed the manifest residue under FWD-7)."
+    },
+    {
+      "fwd_id": "FWD-7",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- two people on different machines have asked the same question at the same moment and received the same answer, after the local copy was switched off",
+      "cells": [
+        {
+          "cell_id": "CG-s-3",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-B-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~T/NFRA_CLDGRPH.TO-CG-B-3.artifact-manifest-pointer-contract.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-4",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-C-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~T/NFRA_CLDGRPH.TO-CG-C-1.serving-service-on-the-cluster.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-8",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-7",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-7.retire-local-copy.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-17",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-E-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-E-1.instruction-plane-route-back-retired.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-19",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-E-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-E-3.residual-local-stores-dispositioned.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-s-20",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-E-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-E-4.stitch-graph-home-decided.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-x-7",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-8",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-8.close-fwd7-two-machines.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "The outcome graded NOT_REALIZED at round 4 on the INSTRUCTION plane. Round 5 adds the three planes' remaining cells: CG-s-17 (E-1: the instruction plane's route back retired -- the manifest's refresh entries retired with a READ successor, comp-which's curated routes and every registry carrier repointed, the compiled tool index regenerated from a classification whose population is the coverage map, 0 of 8 help carriers naming the retired surface); CG-s-19 (E-3: the residual local stores dispositioned from a closed vocabulary, nothing deleted, kuzu_db and kuzu_ac7.db HOLD_PENDING_P7 asked of the CVO by row W3-S6); CG-s-20 (E-4: the stitch graph's home decided JOIN_PROJECTION with four later-round cells named; beneath it the cloud stitch producer has failed 67 of 67 builds, W3-S10). COVERED on the coverage axis. What this report does NOT claim: the EXISTENCE clause of the accept ('no second, older copy anyone could still be reading from') is met only by the deletion of kuzu_db, gated on the CVO's P7 re-statement; the PERSON half (S17 clause 2) stays MODELLED until the site-Z allocation (Andrew's roadmap); the stitch graph's JOIN is decided, not built. The CTO's grade on the realization axis reads those three."
+    },
+    {
+      "fwd_id": "FWD-8",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- the answer has been read on a real morning, and a night that did not run reads differently from one that did",
+      "cells": [
+        {
+          "cell_id": "CG-s-7",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-D-4.operator-status-read.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        },
+        {
+          "cell_id": "CG-x-8",
+          "task_orders": [
+            {
+              "id": "NFRA_CLDGRPH.TO-CG-D-11",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-D-11.close-fwd8-status-read-morning.proof_of_spec.json@59c46a5c19"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "Unchanged from round 4 (REALIZED)."
+    }
+  ]
+}

@@ -113,6 +113,30 @@
       "spine_clause": "L7 the drain (report AND instance; merge through the refuser with the union on the channel; every ARMED row the branch carries read -- W3-S10/S11 owned by CloudComp, carried NAMED; none this seat's) -> L8 (compiled the tick it went terminal)",
       "gate_or_notifier_touched": ".tools/proof-of-spec-check.py (rc 0 in the worker's plane); .tools/aws codebuild list-builds-for-project (the issuer's independent read: 67); .tools/safe-merge.sh (rc 4 then --continue rc 0); git worktree remove + branch -d",
       "note": "THE FINDING BENEATH THE DECISION IS LARGER THAN THE CELL: a nightly the estate has trusted since July has failed every night, and the cloud artifact it was meant to produce was written by a laptop. That is the RESIDUE plane's twin of the INSTRUCTION plane's route back -- the estate runs one graph and the second graph it also runs has no working producer. It is not this round's cell; it is the first cell of the JOIN and it goes to the CTO's L10 read named with its lane."
+    },
+    {
+      "seq": 6,
+      "limb": "L7/L8/L10",
+      "started_utc": "2026-09-09T17:0xZ",
+      "ended_utc": "2026-09-09T17:21Z",
+      "act": "TO-CG-E-1 PASS 2 DRAINED AND TERMINAL; ROUND 5 DRAINED (4 of 4; 24 of 24 project orders); THE TWO-PHASE DISCHARGE MADE; THE COO'S COMPLETION REPORT WRITTEN. The worker report (0.9.0_WK_NFRA_CLDGRPH~2, branch HEAD f868aeda6c) and the instance read at this seat inside the worktree: checker rc=0 on seven ids, six PASS by output, E1-AC7 recorded; E1-AC3 1 of 8 -> 0 of 8 with the probe byte-unchanged (the issuer's own count of ENGINE-INTERNALLY / kuzu_nessie_db / --db-path in the regenerated tool_index.py: 0 / 0 / 0; the issuer's own re-run of the classification generator reproduced EXCLUDED_NOT_IN_AUTHORITY=5 of 93 and left the tree clean). Both commits the worker's; every touched path inside the grant (summary_corpus.py by the pass-2 widening). MERGED through safe-merge.sh: rc 4 on the channel; the base-plus-tail resolver REFUSED (criss-cross history: the merge base was not a clean ancestor of the branch), so a BASE-INDEPENDENT union was used -- CLOUD's channel whole plus the branch's rows absent from it appended verbatim (137 + 10 = 147, ids unique), --continue rc 0 @ed674cd511. Worktree + branch wk-cldgrph-5-2 REMOVED; no cldgrph worktree or branch remains. THE DISCHARGE (W2-S36): comp-system run once after the merge (grounded-against-live; 0 changed rows across 26 managed regions in 6 files), infra/system/06_current_state.{md,json} committed @59c46a5c19. THE WHOLE SET RE-VERIFIED FROM THE RECORD: 24 of 24 faces complete at HEAD; 24 of 24 instances VALID rc=0 with each face's own criterion ids; zero unfinished edits under the project's paths. Rows S66 (ack W2-S30: the issuer's block, cleared at its cause), S67 (ack W2-S32: the capture outside the grant, widened and repointed), S68 (ack W2-S34: the probe-name collision, the cut-time rule adopted), S69 (ack W2-S36: the discharge made) filed. COMPLETION_REPORT.round5.json written and schema-VALID: 8 of 8 FWD COVERED, 26 cells, 24 orders, 24 terminal with valid proof; its FWD-7 note states what coverage does not claim (the existence clause gated on P7; the person half modelled; the stitch JOIN decided, not built).",
+      "inputs": [
+        "WORKER REPORT 0.9.0_WK_NFRA_CLDGRPH~2 on TO-CG-E-1 pass 2 (final message; branch @f868aeda6c)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-E-1.instruction-plane-route-back-retired.proof_of_spec.json @f868aeda6c",
+        "rows W2-S37..S39 read at the merge; W2-S30/S32/S34/S36 answered",
+        "org/standards/COMPLETION_REPORT.schema.json"
+      ],
+      "outputs": [
+        "CLOUD @ed674cd511 (the E-1 drain; every round-5 order terminal at HEAD)",
+        "CLOUD @59c46a5c19 (the comp-system discharge, W2-S36)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/COMPLETION_REPORT.round5.json (this commit)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/L8_PACKET.round5.final.md (this commit)",
+        "rows NFRA_CLDGRPH-S66..S69 (this commit)",
+        "worktree + branch wk-cldgrph-5-2 removed"
+      ],
+      "spine_clause": "L7 the drain (report AND instance; the refuser on the merged index; every ARMED row the branch carries read -- four owned by this seat disarmed by ack, W2-S37/S38/S39 INERT and named) -> the gate's phase two (the drain seat's) -> L8 (the FINAL packet) -> L10 the close, the COO's half (the decomposition spent: every cell holds a terminal order with a valid proof; the COMPLETION_REPORT the final drain record; the grades the CTO's, the slug the CVO's)",
+      "gate_or_notifier_touched": ".tools/proof-of-spec-check.py x25 (the instance at the drain + the whole set at HEAD); .tools/safe-merge.sh (rc 4, --continue rc 0); comp-system (the discharge); .tools/safe-commit.sh x2; jsonschema on the report",
+      "note": "THE RESOLVER'S OWN PREMISE FAILED AND THAT IS THE RIGHT OUTCOME: the base-plus-tail script asserted append-only against git's chosen base and stopped instead of writing a plausible file; the base-independent union it was replaced with asserts the id set instead (ours ∪ theirs, unique), which is the property that actually matters on an append-only channel. || THREE ISSUER DEFECTS IN ONE ROUND SHARE A CAUSE (W1-S31, W2-S34, W3-S13: generic artifact names in a slot folder reused across rounds) and the rule is adopted at the cut, where it belongs. || W2-S37 (the normaliser strips .py and not .sh, so one tool is spelled two ways) is a registry-tooling defect outside every grant and travels NAMED."
     }
   ]
 }
