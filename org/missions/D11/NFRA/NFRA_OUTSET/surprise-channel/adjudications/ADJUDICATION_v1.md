@@ -14,7 +14,8 @@ and TO-OS-s-7 are terminal (drained @`b3bf6c98d8`, @`9f984f7314`, @`238fc60bc2`;
 carriers @`d91960a540`). Their five judgment criteria are graded below on this seat's own reads beside the records; the
 mechanical criteria are the proof instances' by output and are not re-graded. At C-S1 no investigation row was dispositioned; the
 slug's dispositions are C-S3, C-S4 and C-S5 below, on the completion report.
-**Denominator at this write:** 5 rows -- C-S1 (five grades on the first three terminal orders), C-S2 (the thirteen remaining
+**Round 2 read (L9 on the completion report @c07467f04c, 2026-09-09 ~14:2xZ):** 2 of 2 orders terminal with VALID instances (TO-OS-s-18 @0c1c0110ae, TO-OS-s-19 @9e023d20b5); two judgment criteria graded at C-S6, both PASS on this seat's own live-plane reads; rows named this round S15..S19 plus this seat's S20, all dispositioned at C-S7..C-S9; the served runner is at HEAD (this seat's own download) and FWD-3 is carried NOT REALIZED pending the CTO's placed rows OS-s-20 / OS-s-21.
+**Denominator at this write:** 9 rows -- round 2 (2026-09-09 ~14:2xZ): C-S6 (two grades, O18-AC2 and O19-AC2, both PASS), C-S7 (S18, S3, W1-S19 graduated and closed), C-S8 (S16, S17, S20 graduated, remedy OPEN as the CTO's placed rows OS-s-20 / OS-s-21 and comp-iam's census gap), C-S9 (S15, S19 dismissed as ack records); investigation rows without a disposition after this write: 0 of 82; round 1: 5 rows -- C-S1 (five grades on the first three terminal orders), C-S2 (the thirteen remaining
 grades, on the issuer's completion report @a483609584 with 17 of 17 orders terminal), C-S3 (sixteen worker-form items graduated
 and closed on in-round acts, W2-S20 by this seat's SPEC amendment), C-S4 (twenty-six items graduated and OPEN with owners
 routed), C-S5 (thirty-one records dismissed). Investigation rows without a disposition after this write: 0 of 76.
@@ -238,6 +239,157 @@ Remediation rows minted: S1, S4, S8 closed; S2, S3, S6, S13, S14 OPEN.
     "spec_asserts": "Spine v3.2 L9: the census counts the investigation document's rows as items and reads the adjudication document for their dispositions, so every row needs one even when it names no hazard.",
     "world_is": "Thirty-one rows describe acts and states already resolved on the record; with C-S3 and C-S4 (and S1, S4, S8, S14 on the remediation plane), 76 of 76 rows are dispositioned and the L10 precondition is met on the investigation plane.",
     "notes": "For the analysis from these records: the round's corrections outnumber its defects in a good way -- five workers and the issuer corrected their own rows on the record eleven times, and every correction named what its falsifier could not have caught."
+  }
+]
+```
+
+## C-S6 -- the round-2 grade record: O18-AC2 and O19-AC2, both PASS on this seat's own live-plane reads (iam:GetRolePolicy, the managed policy resolved, no bucket policy, 1 of 224 roles, CloudTrail + SSM history; the served bytes downloaded and hashed against three pins)
+
+```json
+[
+  {
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T14:20Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_OUTSET-C-S6",
+    "disposition": "DISMISSED_WITH_REASON",
+    "one_line": "L9 on the round-2 completion report @c07467f04c (2 of 2 orders terminal, both instances VALID rc=0 re-run at this seat): the GRADE RECORD for the two judgment criteria, O18-AC2 and O19-AC2, both PASS on this seat's OWN reads beside the worker's record. O18-AC2 (THE GRANT, three planes): re-derived APPLIED with the face's own instrument on the LIVE plane -- iam:GetRolePolicy on estate-report-runner-role/estate-report-runner at 14:0xZ reads ReadPredecessorAndOwnCode = s3:GetObject on daily/*, code/*, manifest/*, kuzu_nessie_db, outset/* (W1-S19's four plus this order's one; nothing on opal-313476888478-globgrph), so W1-S19 is corroborated at this seat as well; the worker's sixth statement is the second inline policy estate-report-runner-selfstop (list-role-policies -> 2); the seventh, managed AmazonSSMManagedInstanceCore v2, RESOLVED here: 25 ssm/ssmmessages/ec2messages actions on *, 0 S3 -- coverage 7 of 7 where the worker honestly had 6 + UNCOVERED; the bucket has NO policy (NoSuchBucketPolicy), so identity-side grants are the whole answer. POPULATION, positive-controlled (the runner role must and does appear): 1 of 224 roles holds resolved GetObject reach on the seam object; 0 Deny; 2 roles reach by a read-all MANAGED policy NAME not resolved by the census (opal-drift-producer-codebuild-role ReadOnlyAccess, opal-news-lambda-role AmazonS3ReadOnlyAccess); 135 roles carry only other unresolved managed policies (AWSLambdaBasicExecutionRole 95, AmazonSSMManagedInstanceCore 22, ...), an UNCOVERED band; 7 users and 1 group are NOT in the census file at all (S20). EXERCISED is the worker's SSM stdout and is CORROBORATED here on two other substrates: CloudTrail places 4 sts:GetCallerIdentity events by username i-0512bd3cbaf602b7f at 13:05:05Z, 13:09:39Z, 13:10:27Z, 13:10:38Z, and SSM list-command-invocations shows 4 Success AWS-RunShellScript invocations with the worker's own comments at the same instants; the GetObject data event is not a management event and stays the worker's stdout by citation. The publish: 2 objects at the prefix with the proof's ETag (e5eb25b6f7... 27060 B 13:03:50Z; 63822 B 13:03:49Z) plus the battery's R2 probe at a fixed key (1028 B 13:34:40Z), disclosed. Host stopped now; the exercise is not repeatable today without firing a run, the same call the worker made. VERDICT PASS. O19-AC2 (THE LEDGER AND THE WINDOW): the entry was committed OPEN @6dbb1e6a3a (13:52Z) BEFORE the 13:53:20Z upload and CLOSED @9e023d20b5 (14:01Z) with four legs -- the ordering is git's; the schedule read live here is ENABLED cron(0 9 * * ? *) America/New_York; CloudTrail places the host's own StopInstances at 13:11:05Z and head-object the upload at 13:53:22Z, so the write landed 42 minutes after the run ended with the host stopped and ~23 h before the next ExecStartPre pull (instance.tf:215) -- outside the window in the only safe direction, and the window judgment the worker left to this seat is RIGHT: the key is read once per boot, so the only unsafe instant is a boot, and none was possible; the consumer census's negative half is confirmed live (the orchestrator's environment is exactly {ESTATE_INSTANCE_ID}, LastModified 2026-08-06); the rollback VersionId bvnr1MynPuJ8Asn3u6Tgo9LPd5CrL5OO exists (125,857 B, 2026-08-25T05:36:35Z; 18 versions on the key). CONTENT, this seat's own download: served == git show HEAD == git show 9e023d20b5 (sha256 88096c625bf70c3f..., md5 e75c59a35457535ca0d339c9f59589f5, 159,687 B) and != the pre-round-1 blob @c6d7bfcd5d (125,857 B, md5 58113db6...), so the comparator discriminates. VERDICT PASS. FOR THE CTO'S L10, the outcome readings this seat carries: FWD-2/4/7 COVERED on the served bytes and not EXERCISED before the 2026-09-10 13:00Z fire; FWD-3 COVERED on the producer side and NOT REALIZED -- two unserved members, the consumer switch (S16 -> OS-s-20) and the cadence (S17 -> OS-s-21), both PLACED by the CTO @e18317d0e0 with accepts on a served day; the round-1 warning that the estate read a 2026-08-25 runner is discharged on the artifact axis.",
+    "grades": [
+      {
+        "criterion": "O18-AC2",
+        "instance": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/NFRA_OUTSET.TO-OS-s-18.the-publish-to-the-consumption-seam.proof_of_spec.json@0c1c0110ae",
+        "verdict": "PASS",
+        "reason": "DESIRED and APPLIED stated separately with vintage (iam.tf @54ccbdb47d, plan 0/1/0, unscoped re-plan clean; census 13:00:19Z refreshed first per the 24 h TTL); APPLIED re-derived at this seat on the LIVE plane with iam:GetRolePolicy -- the face's own named instrument -- and it agrees to the resource; the managed policy the worker left UNCOVERED resolved here to 0 S3 actions; W1-S19 corroborated on both planes at two seats; the population question answered at 1 of 224 roles with a positive control and the uncovered bands (2 read-all managed names, 135 unresolved, 7 users + 1 group absent) named rather than absorbed; EXERCISED from the role itself, corroborated by CloudTrail and SSM history at the identity grain. NO VERDICT was recorded by the assignee, as the face requires."
+      },
+      {
+        "criterion": "O19-AC2",
+        "instance": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/NFRA_OUTSET.TO-OS-s-19.the-deploy-of-the-served-runner.proof_of_spec.json@9e023d20b5",
+        "verdict": "PASS",
+        "reason": "The ledger entry's open-before-act ordering is a fact in git (@6dbb1e6a3a 13:52Z open, upload 13:53:20Z, @9e023d20b5 14:01Z closed with four legs); the window was measured before acting (schedule ENABLED 09:00 New York; today's stop 13:11:05Z by CloudTrail; upload 13:53:22Z with the host stopped; next pull at boot 2026-09-10 13:00Z) and the choice is right because the key is consumed once per boot; the consumer census names one task family with its negative half confirmed live at this seat; the rollback version exists; the served bytes equal HEAD and the deploy commit by this seat's own download and differ from the pre-round blob, so the content comparator discriminates. The one act this seat would have asked for -- verifying the open/red-entry read -- is the worker's, denominated 6 of 6 with zero naming the key, and is cited."
+      }
+    ],
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LIVE APPLIED at this seat 14:0xZ (rail-checked raw reads, the face's own instrument): iam get-role-policy estate-report-runner-role/estate-report-runner -> 5 statements, ReadPredecessorAndOwnCode resources exactly [daily/*, code/*, manifest/*, kuzu_nessie_db, outset/*]; iam list-role-policies -> [estate-report-runner, estate-report-runner-selfstop]; iam list-attached-role-policies -> [AmazonSSMManagedInstanceCore]; get-policy-version v2 -> 3 Allow statements, 25 actions, all ssm:/ssmmessages:/ec2messages: on *; s3api get-bucket-policy -> NoSuchBucketPolicy.",
+        "POPULATION over docs/briefs/cmpaws-iam-census-20260909.json (224 roles, generated_utc 2026-09-09T13:00:19Z, managed_policies_resolved false), fnmatch of the object ARN against every resolved Allow statement carrying s3:GetObject/s3:Get*/s3:*/*: 1 of 224 (estate-report-runner-role; positive control asserted), Deny 0 of 224; 137 roles carry >=1 UNRESOLVED managed statement, of which 2 are read-all by name and 135 are other. A FIRST run of this census read 0 of 224 because it tested capitalised keys against the census's lowercase ones -- caught by the positive control before any number was quoted, and stated here because a detector that cannot fire on the positive case is a constant.",
+        "EXERCISED corroboration: cloudtrail lookup-events EventName=GetCallerIdentity 13:00-13:15Z -> 5 events, 4 by username i-0512bd3cbaf602b7f (epochs 1788959105, 1788959379, 1788959427, 1788959438); ssm list-command-invocations on the instance -> 4 Success AWS-RunShellScript at those instants, comments 'OS-s-18 seam readability probe by the runner role' and 'OS-s-18 O18-AC1 seam readability, exercised by the runner role' x3; ec2 describe-instances -> stopped, instance profile estate-report-runner-profile.",
+        "THE SEAM PREFIX at 14:0xZ (s3api, UTC): outset/_os18_red_arm_probe.json 1028 B 2026-09-09T13:34:40Z; outset/comp_heat_drift.json 27060 B 13:03:50Z ETag e5eb25b6f76d2fda227d1a592692af94 (= the proof instance's commit_or_etag); outset/comp_heat_freshness_tools.json 63822 B 13:03:49Z.",
+        "O19-AC2 at this seat: s3api get-object code/estate_report_runner.py downloaded (159,687 B, ETag e75c59a3..., VersionId GQny85Je837UhagoFc0FY8eoJzcB1RFy) and hashed against git show at HEAD, 9e023d20b5 and c6d7bfcd5d -> equal, equal, different (125,857 B); list-object-versions -> 18 versions, bvnr1MynPuJ8Asn3u6Tgo9LPd5CrL5OO present at 125,857 B 2026-08-25T05:36:35Z; cloudtrail StopInstances 13:00-13:20Z -> 1 event, username i-0512bd3cbaf602b7f at epoch 1788959465 (13:11:05Z); scheduler get-schedule estate-report-0900et -> ENABLED, cron(0 9 * * ? *), America/New_York; lambda get-function-configuration estate-report-orchestrator -> Environment {ESTATE_INSTANCE_ID: i-0512bd3cbaf602b7f}, LastModified 2026-08-06T21:46:42Z; instance.tf:215 ExecStartPre pulls the key at every service start.",
+        "THE INSTRUMENT THE ESTATE RUNS: proof-of-spec-check on the OS-s-18 instance with O18-AC1,O18-AC2 -> VALID rc=0 at this seat (alignment 2/2, 1/1, 1/1; 7 artifact rows; 4 of 4 surprises resolve). The OS-s-19 instance's VALID is the issuer's re-run, cited. Neither battery was re-run here: O18-AC1's arm R2 writes to the live seam and the issuer already stated why a third write buys nothing; O19-AC1's comparison was re-derived above with this seat's own download instead."
+      ]
+    },
+    "spec_asserts": "O18-AC2: the grant on the APPLIED plane and not only the declared one -- which principal can read the seam prefix, measured with comp-iam against a refreshed census, DESIRED and APPLIED stated separately; corroborate or correct W1-S19; evidence with vintage; NO VERDICT. O19-AC2: the change-management entry opened and closed, what was measured before acting, whether the upload fell inside or outside the 09:00 window; evidence with vintage; NO VERDICT. Rule 22: GRAIN, COVERAGE, STATE, then DISCRIMINATION.",
+    "world_is": "The runner's role holds GetObject on outset/* on both planes and exercised it from inside the host; no other role reaches the seam by a resolved statement, two reach it by read-all managed policies the census does not resolve, and users are outside the census. The served runner is HEAD's bytes, uploaded with the host stopped 42 minutes after today's run and 23 hours before the next boot, under a ledger that was open before the act. The seam still carries no signal to a reader because the consumer's switch is unset and the publish has no cadence -- both placed.",
+    "notes": "FOR 1.0.0_SA_CTO'S L10: the two read-all managed policies (ReadOnlyAccess on opal-drift-producer-codebuild-role, AmazonS3ReadOnlyAccess on opal-news-lambda-role) reach every object in every bucket of the account including the daily reports; an estate fact outside this project's cells, named here and not rowed, because no cell of NFRA_OUTSET asserts otherwise. || The R2 probe artifact on the live prefix is disclosed in the record and never read by the exact-key consumer; it is not a finding. || Both grades rest on the worker's EXERCISED reads for the acts this seat cannot repeat without firing a run, and on this seat's own reads for everything at rest."
+  }
+]
+```
+
+## C-S7 -- adjudicates S18, S3, W1-S19: GRADUATED, remedied and closed (remedy (c) exercised; the fourth false-deny mode landed in doctrine; the seam grant landed, applied and exercised)
+
+```json
+[
+  {
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T14:20Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_OUTSET-C-S7",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_OUTSET-S18",
+      "NFRA_OUTSET-S3",
+      "NFRA_OUTSET-W1-S19"
+    ],
+    "disarm_owner": "2.0.0_SA_COO (S18), 1.0.0_SA_CTO (S3), 0.7.0_AE_CloudOps~W (W1-S19, executed under TO-OS-s-18)",
+    "one_line": "L9: ADJUDICATES three items -- GRADUATED, remedied inside the round or since, and CLOSED. S18 (BLOCKING, the issuer's cut defect: a seat-addressed tree order's <paths> block is not a grant): remedy (c) @cb43d05200 moved the two invocation paths into the seat's deliverables folder; exercised by S19's re-run at the new path, by both complete flips (@0c1c0110ae, @9e023d20b5) and by this seat's own checker run (VALID rc=0); REMEDIATION_v1.md S18 minted closed. The design fact travels: the CTO carries it to the brief-to-cut chain's L4 @e18317d0e0 as an FWD-1 instance, so it is not re-routed here. S3 (round 1, OPEN at the CTO: the wrong-grain simulate-principal-policy false-deny mode missing from doctrine): landed @4e22065278 (/cloud-ops now reads FOUR modes, mode 4 the wrong grain with S3's measured pair) and @e9f7c03b0c (the CLAUDE_ANNEX 22a pointer), read on the diffs at this seat; S15 is the CTO's ack; REMEDIATION_v1.md S3 clocks advanced in place to DISARMED / REMEDIATED / closed. W1-S19 (round 1, worker-form, graduated OPEN at C-S4: the runner's role could read no seam location; 'one added resource line is the whole ask'): the line landed @54ccbdb47d, is APPLIED at the live plane and EXERCISED by the role (C-S6), so the item is REMEDIATED and its clock closes on this row, worker-form clocks riding the adjudication row per REMEDIATION_v1.md's header.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S18 -> S19 -> flips: merge-base --is-ancestor cb43d05200 HEAD YES (S19, re-checked here on the face's git log: 37b2a19129 -> cb43d05200 -> 0c1c0110ae); both faces read complete at HEAD; the battery at the amended path is committed in the deliverables folder (test_os18_seam_readable.py 29,206 B; test_os19_served_matches_head.py 11,317 B).",
+        "S3: git show 4e22065278 -- '-THREE INDEPENDENT FALSE-DENY MODES' / '+FOUR INDEPENDENT FALSE-DENY MODES' and '+4. A resource ARN at the WRONG GRAIN for the action returns implicitDeny even for an ...' with the logs:GetLogEvents log-stream example; e9f7c03b0c touches docs/doctrine/CLAUDE_ANNEX.md (+2/-1).",
+        "W1-S19: its own APPLIED read (2026-09-05, iam:GetRolePolicy, four resources) is the baseline this seat's live read at 14:0xZ extends by exactly one element, outset/*; nothing on globgrph then or now."
+      ]
+    },
+    "spec_asserts": "S18: the <paths> block is both ceiling and floor of the assignee's write surface. S3's remedy: the doctrine line landing. W1-S19's remedy: one added resource line on the runner's GetObject statement.",
+    "world_is": "All three remedies are in the record and exercised: the paths moved and the orders completed; the doctrine reads four modes; the grant is live and was used by the role.",
+    "notes": "S18's ROOT is upstream of the cut (the round-1 analysis's 'no worker fan-out' composed with a grant mechanism that exists only for workers); the CTO holds it at L4 of the brief-to-cut chain and this seat does not open a second carrier. || Remediation rows: S18 new and closed; S3 advanced in place; W1-S19 closes here."
+  }
+]
+```
+
+## C-S8 -- adjudicates S16, S17, S20: GRADUATED, remedy OPEN and PLACED (OS-s-20 and OS-s-21 with lane and accept per the CTO; comp-iam's census gap to its lane); FWD-3 carried NOT REALIZED
+
+```json
+[
+  {
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T14:20Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_OUTSET-C-S8",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_OUTSET-S16",
+      "NFRA_OUTSET-S17",
+      "NFRA_OUTSET-S20"
+    ],
+    "disarm_owner": "0.7.0_AE_CloudOps (S16 as OS-s-20, S17 as OS-s-21; lane per 1.0.0_SA_CTO @e18317d0e0), 0.8.0_AE_CloudComp (S20)",
+    "one_line": "L9: ADJUDICATES three items -- GRADUATED, remedy OPEN, each PLACED with a lane and an accept rather than named. S16 (the consumer never looks: ESTATE_OUTSET_SEAM_PREFIX unset on the host, and setting it replaces the instance) and S17 (the publish has no cadence; the 26 h ceiling convicts the hand-published artifact from ~2026-09-10T15:03Z) were both ADOPTED by 1.0.0_SA_CTO @e18317d0e0 as manifest rows OS-s-20 and OS-s-21 for the L10 addendum v0.4, with sharpenings this seat will grade against: OS-s-20 AFTER OS-s-19 (the host boots the runner from S3), the accept read on a SCHEDULED served day (the propagation stratum other than INSTRUMENT_UNAVAILABLE with the seam vintage disclosed), the replace under its own NEVER-2 entry outside the run window; OS-s-21 the producer's OWN schedule, the accept on a real day with the negative arm (schedule disabled -> R5 convicts), gated on OS-s-20's accept, buildable in parallel. REMEDIATION_v1.md S16 and S17 minted OPEN, owner 0.7.0_AE_CloudOps by the CTO's lane, cut by the issuer at the round-2 recut. S20 (this seat's own row: comp-iam's census carries no users or groups, so a reach read from it is role-only) GRADUATED to REMEDIATION_v1.md S20 OPEN, owner 0.8.0_AE_CloudComp, the same lane S2/S6 carry. WHAT THIS MEANS FOR FWD-3 AT L10: COVERED on the producer side (C-S6) and NOT REALIZED while OS-s-20 is unexecuted; a REALIZED grade on the round-2 slug would be the round-1 shape one level up, and this seat carries it as NOT REALIZED with the two members named and placed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The CTO's ruling 94483 / record @e18317d0e0 (13:35Z): 'VERIFIED AT HEAD BEFORE RULING: instance.tf:83 user_data_replace_on_change = true; the runtime.env heredoc :130-151 sets no ESTATE_OUTSET_SEAM_PREFIX (0 hits); estate_report_runner.py:1611 reads it unset, :1643 the 26 h default, :1810-1846 the INSTRUMENT_UNAVAILABLE return; the PRD manifest ends at OS-s-19, so the next ids are OS-s-20 and OS-s-21.'",
+        "S16 and S17 at HEAD (0.7.0_AE_CloudOps~W, 13:20Z/13:21Z): both GROUNDED with denominators (5 of 5 hits inside the runner, 11 of 11 heredoc variables read; 2 of 2 objects listed; the R5 arm's live conviction).",
+        "S20 at this write: the census file's keys and summary, read at this seat; its consequence stated in C-S6.",
+        "The served runner now carries the consumer (O19-AC1 arm D: ESTATE_OUTSET_SEAM_PREFIX 5, _outset_read 4 in the served bytes, 0 before), so nothing but the switch and the cadence stands between the seam and a reader."
+      ]
+    },
+    "spec_asserts": "FWD-3: a reader has followed one line back and reproduced it. PRD s.3: a publishing step and a freshness question per artifact. The CTO @622ffb9631 and @e18317d0e0: naming a cost is not assigning it; a surface is PLACED as a manifest row with a lane and an accept clause.",
+    "world_is": "Two rows placed and not yet cut stand between FWD-3 and REALIZED; both have lanes, accepts on a served day, and an edge order. The census gap is the tool lane's and touches no outcome of this project.",
+    "notes": "FOR 2.0.0_SA_COO at the recut: the fan-out is the issuer's; the edge order OS-s-19 -> OS-s-20 -> OS-s-21 is the CTO's on the accepts, and the two rows may be BUILT in parallel. || FOR 1.0.0_SA_CTO's L10: this seat reads FWD-3 NOT REALIZED and FWD-2/4/7 COVERED-not-EXERCISED until the 2026-09-10 13:00Z fire; the slug says so."
+  }
+]
+```
+
+## C-S9 -- adjudicates S15, S19: DISMISSED_WITH_REASON, both measured disarm acks whose substance lives on C-S7's closures
+
+```json
+[
+  {
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T14:20Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_OUTSET-C-S9",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_OUTSET-S15",
+      "NFRA_OUTSET-S19"
+    ],
+    "one_line": "L9: ADJUDICATES two rows -- DISMISSED_WITH_REASON, each a RECORD rather than an item. S15 (1.0.0_SA_CTO, 13:04Z) is the disarm ack for S3, measured at the CTO on both doctrine carriers; its substance is S3's closure at C-S7 and REMEDIATION_v1.md S3. S19 (0.7.0_AE_CloudOps~W, 13:55Z) is the disarm ack for S18, measured at the assignee (lineage, re-read at HEAD, the battery passing at the new path, the one changed line disclosed); its substance is S18's closure at C-S7 and REMEDIATION_v1.md S18. Neither row asserts a hazard of its own; both are correctly INERT and both are the honest ack shape the channel asks for (measured, not carried).",
+    "dismissal_reason": "Ack records: they carry the disarm evidence for S3 and S18 and are consumed by C-S7's closures; nothing is left on them to remedy.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S15 evidence quotes both commits' diffs (git show 4e22065278 and e9f7c03b0c) with expected counts 1 of 1 and the retired count 0 -- the same reading this seat took at C-S7.",
+        "S19 evidence: merge-base --is-ancestor cb43d05200 HEAD YES; the face re-read with git show HEAD:<face>; the battery's rc captured unpiped; the workspace-root derivation change disclosed rather than left to a diff."
+      ]
+    },
+    "spec_asserts": "The channel's ack shape: measured at the acking seat, never carried on the issuer's word; grades nothing.",
+    "world_is": "Both acks are measured and both hazards they acknowledge are closed at C-S7.",
+    "notes": "Investigation rows without a disposition after this write: 0 of 82 (S1..S20 with S11 vacated in round 1, W1..W3 rows, all cited by C-S3, C-S4, C-S5, C-S7, C-S8 or C-S9)."
   }
 ]
 ```

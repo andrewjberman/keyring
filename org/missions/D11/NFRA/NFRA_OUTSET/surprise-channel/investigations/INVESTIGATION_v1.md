@@ -1987,3 +1987,31 @@ The only authored bytes are this header; every row below is its writer's, unmodi
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "NFRA_OUTSET-S20",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T14:20Z",
+    "one_line": "THE IAM CENSUS comp-iam refresh-census WRITES CARRIES NO USERS AND NO GROUPS, so any who-can-reach question answered from it is ROLE-ONLY. Found at L9 while answering O18-AC2's 'which principal can read the seam prefix' at the population grain: docs/briefs/cmpaws-iam-census-20260909.json (generated_utc 2026-09-09T13:00:19Z, api iam:GetAccountAuthorizationDetails) has top-level keys _meta, summary, roles; summary reads role_count 224, group_count 1, user_count 7, policy_count 50; the file holds a roles array of 224 and NO users or groups array at all. The 7 users and 1 group the API returned were counted and dropped. A census that counts a population it does not record reads as complete to a consumer that trusts the summary line.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "0.8.0_AE_CloudComp",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python over the census file at this seat 14:0xZ: list(d.keys()) -> ['_meta', 'summary', 'roles']; len(d['roles']) -> 224; 'users' in d -> False; 'groups' in d -> False; d['summary'] -> {'role_count': 224, 'group_count': 1, 'user_count': 7, 'policy_count': 50}; d['_meta']['managed_policies_resolved'] -> False.",
+        "The worker's own compiler_tools note on TO-OS-s-18 quotes the tool's stdout 'roles 224 | groups 1 | users 7' -- the tool SAW them; the file does not carry them. The role-only census answered O18-AC2's population question at 1 of 224 roles with a positive control (C-S6); the 7 users and 1 group are UNCOVERED by it, which is stated in that grade rather than absorbed.",
+        "Not a defect of TO-OS-s-18 or TO-OS-s-19: the face asked for the RUNNER'S grant on both planes and it was measured; this is an instrument limit of the same family as S2/S6 (comp-find) and belongs to comp-iam's lane, 0.8.0_AE_CloudComp, as those did."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "O18-AC2: 'which principal can read the seam prefix, measured with comp-iam against a refreshed census'. comp-iam refresh-census: a census of the account's IAM principals (its stdout names roles, groups and users).",
+    "world_is": "The census records roles only. A principal that is an IAM user (7 exist, presumably including the human operator's) or a group member is invisible to every reach question asked of the file, and the file's own summary says the population is larger than what it holds.",
+    "notes": "INERT because the seam grant question was answered at the role grain and users are not the runner. The remedy is the tool's: record users and groups with their statements, or print them as UNCOVERED with a denominator on every read. Filed under lane ANY by the seat that saw it; graduated at C-S8 with a remediation row, owner 0.8.0_AE_CloudComp."
+  }
+]
+```
