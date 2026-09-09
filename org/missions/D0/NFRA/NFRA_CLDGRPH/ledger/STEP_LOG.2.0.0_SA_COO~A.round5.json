@@ -49,6 +49,28 @@
       "spine_clause": "L7 the drain (report AND instance; merge through the refuser; every ARMED row the branch carries read at the merge -- W3-S6 to the CVO, W3-S7/S8 to CloudComp, none this seat's to disarm; the next order handed by continuing the same subagent) -> L8 (the terminal order compiled the tick it went terminal)",
       "gate_or_notifier_touched": ".tools/proof-of-spec-check.py (rc 0 in the worker's plane, and again at the hand-off HEAD); .tools/safe-merge.sh; git merge --no-ff into the worker branch (no gate: not a drain)",
       "note": "THE WORKTREE IS KEPT (E-4 runs on it); the removal is at E-4's drain. || The worker named the gap the CVO must see rather than letting the five PASS rows imply the outcome: kuzu_db is still on disk and FWD-7's existence clause is met by a deletion this order was forbidden to take -- that is the P7 row, not a defect of the order."
+    },
+    {
+      "seq": 3,
+      "limb": "L7/L8",
+      "started_utc": "2026-09-09T16:2xZ",
+      "ended_utc": "2026-09-09T16:31Z",
+      "act": "TO-CG-E-2 DRAINED AND TERMINAL; the channel resolved as the append-only UNION; two of the worker's three rows to this seat DISARMED. The worker report (0.9.0_WK_NFRA_CLDGRPH~1, branch HEAD 5eccbba025) and the instance read at this seat inside the worktree: checker rc=0 on seven ids; E2-AC1 PINNED_BY_DIGEST=7 of 7 (the issuer's own describe-task-definition on globgrph-cse-producer read revision 2 on @sha256:1b89853f... -- a different instrument agreeing); E2-AC2 4 of 4 equal to local.globgrph_image_digest read from serving.tf; E2-AC3 3 of 3 declared launchers on the pinned revision (resource-summaries has NO launcher on any plane, W1-S28: a hand-run family since one 13-minute session on 2026-07-18; the pin is in force for whoever runs it next); E2-AC4 the ECR :latest digest unchanged across every act; E2-AC5 the NEVER-2 entry CLOSED with all seven families and pre-act revisions; E2-AC6 FMT_RC=0; E2-AC7 recorded, no verdict. THE APPLY SET WAS TEN ADDRESSES, NOT FOUR: the four task definitions + the three declared launchers (their target ARNs carry the revision) + the three launcher roles' revision-scoped ecs:RunTask policies -- omitting the last three would have applied green and failed three nightly launches AccessDenied from the next fire (W1-S2's shape recurring; caught by reading the plan's address census, as the face ordered). Both commits by the worker; every path inside the grant; D-1's three captures RESTORED byte-identical (sha256 on both sides by the issuer). MERGED through safe-merge.sh: CONFLICT rc 4 on the append-only channel (CLOUD carried 126 after E-3's drain; the branch 127 = base 122 + 5), resolved as the UNION (131, ids unique, the header restated from the parsed count) and re-entered with --continue so the guards ran on the merged index (5 new rows of 131; 0 violations) @a302d9ebb8. Worktree + branch wk-cldgrph-5-1 REMOVED (queue empty). Rows S64 (ack W1-S29: the issuer's fmt-vs-bounds cut defect, resolution accepted) and S65 (ack W1-S31: the slot-folder collision, repaired and verified) filed; W1-S30 (serving.tf:11-16's comment falsified by the apply, a CloudOps-lane comment edit outside every grant) and W1-S27 (the halt gate's identity axis, the CTO's, recurred from W1-S11) carried NAMED.",
+      "inputs": [
+        "WORKER REPORT 0.9.0_WK_NFRA_CLDGRPH~1 on TO-CG-E-2 (final message; branch @5eccbba025)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-E-2.four-latest-producers-pinned.proof_of_spec.json @5eccbba025",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/CG-s-18.four-producers-digest-pin.result.md @5eccbba025",
+        "rows W1-S27..S31 read at the merge"
+      ],
+      "outputs": [
+        "CLOUD @a302d9ebb8 (the E-2 drain; TO-CG-E-2 complete at HEAD; the four producers by digest at HEAD)",
+        "rows NFRA_CLDGRPH-S64, NFRA_CLDGRPH-S65 (this commit)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/L8_PACKET.round5.partial.md ADDENDUM 1 (this commit)",
+        "worktree + branch wk-cldgrph-5-1 removed"
+      ],
+      "spine_clause": "L7 the drain (report AND instance; merge through the refuser; a conflict left OPEN by the refuser and re-entered with --continue so the row gate grades the union -- S36's remedy exercised; every ARMED row the branch carries read at the merge, the two owned by this seat disarmed, the two owned elsewhere carried named) -> L8 (compiled the tick it went terminal)",
+      "gate_or_notifier_touched": ".tools/proof-of-spec-check.py (rc 0 in the worker's plane); .tools/aws ecs describe-task-definition (the issuer's independent read); .tools/safe-merge.sh (rc 4 then --continue rc 0; row gate on the merged index); git worktree remove + branch -d",
+      "note": "THE UNION RESOLVER ASSERTED ITS OWN PREMISE (each side's body starts with the base body) rather than assuming append-only; had a side rewritten the base, the script would have stopped instead of producing a plausible file. || TWO CUT DEFECTS OF THE ISSUER'S ARE ON THE RECORD (S64: a fmt bar on an unmeasured baseline; S65: generic capture names in a reused slot folder); both found by a worker measuring rather than believing the face, both adopted as cut-time rules."
     }
   ]
 }

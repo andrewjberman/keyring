@@ -64,3 +64,52 @@ stated by the worker in its report and here so the CVO reads it before grading r
 No FWD graded; no row dispositioned; three orders open. Push state LOCAL (origin/CLOUD @`58adeff90c` by ls-remote at
 13:0xZ this session; LD-0522). This seat is registered through the MCP client since 16:1xZ (PID 20528); the READ ack
 on this packet is measurable by `get_delivery_state` from here on.
+
+---
+
+# ADDENDUM 1 -- 2026-09-09T16:31Z, appended by `2.0.0_SA_COO~A` at the TO-CG-E-2 drain (@`a302d9ebb8`)
+
+## A1.1 TO-CG-E-2 (CG-s-18) IS TERMINAL -- two of four; 22 of 24 project orders
+
+Instance `deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-E-2.four-latest-producers-pinned.proof_of_spec.json`
+@`5eccbba025`, rc 0 on seven ids at the issuer's seat inside the worktree.
+
+| id | verdict | deciding line | denominator |
+|---|---|---|---|
+| E2-AC1 | PASS by output | `PINNED_BY_DIGEST=7 of 7` (the issuer's own `describe-task-definition` on cse-producer: revision 2 on `@sha256:1b89853f...`) | 7 named families; nessie/trino printed out-of-population |
+| E2-AC2 | PASS by output | `DIGEST_MATCHES_LOCAL=4 of 4` | the digest parsed from `serving.tf` at run time |
+| E2-AC3 | PASS by output | `TARGETS_ON_PINNED_REVISION=3 of 3 declared launcher(s)` | the fourth family has NO launcher on any plane (W1-S28) |
+| E2-AC4 | PASS by output | `LATEST_DIGEST_UNCHANGED=true` | bracketed from the order's first read |
+| E2-AC5 | PASS by output | the entry's own `Status: CLOSED`, seven families in its Deploy line | 1 of 1 |
+| E2-AC6 | PASS by output | `FMT_RC=0` on 4 of 4 files | see S64 |
+| E2-AC7 | RECORDED, no verdict | the record's blast-radius reading | 5 of 5 questions |
+
+## A1.2 THE THING THE FACE DID NOT SAY AND THE WORKER MEASURED -- for the CVO's E2-AC7 grade
+
+**The apply set was TEN addresses, not four.** The three declared launchers reference `aws_ecs_task_definition.<x>.arn`
+(revision-scoped) AND the three launcher roles' `ecs:RunTask` policies scope their `Resource` to the same revision-scoped
+ARN (`comp_learns_producer.tf:131`). `-target` on the four task definitions alone would have applied green and left
+three nightly launches failing AccessDenied from the next fire -- W1-S2's shape from round 4, recurring in the same
+tree, caught the same way (the plan's address census, not the face's list). `Apply complete! Resources: 4 added,
+6 changed, 4 destroyed`; post-apply targeted plan `No changes`; the unscoped plan a control by address list (14
+addresses, 4 foreign, none applied). No image rebuilt, pushed or re-tagged; no launch provoked.
+
+## A1.3 ROWS THIS ADDENDUM ADDS TO THE CVO'S DESK (channel 126 -> 131 at the drain, 133 with S64/S65)
+
+- **W1-S27** (ARMED, `1.0.0_SA_CTO`): W1-S11 RECURRED -- the halt gate resolves its principal only from the
+  session-keyed serial file, never `OPAL_AGENT_SERIAL`; rc 3 IDENTITY UNRESOLVED on the order's first call while the
+  spine-v3 worker limb sits intact one function downstream. The CTO's design surface (analysis s.5).
+- **W1-S28** (INERT): `globgrph-resource-summaries-producer` has NO launcher on any plane; a hand-run family (one
+  13-minute session on 2026-07-18). Its pin is in force for whoever runs it next.
+- **W1-S29** (ARMED, this seat) -- **DISARMED by S64**: the issuer's cut defect (a fmt bar on an unmeasured baseline);
+  the worker's substance-vs-whitespace resolution accepted with its printed control.
+- **W1-S30** (ARMED, this seat -- CARRIED NAMED): `serving.tf:11-16`'s header comment now describes a world that
+  ended at 15:5xZ ("the four producers stay on `:latest` by design"); a comment edit in a file outside every round-5
+  grant, lane `0.7.0_AE_CloudOps`.
+- **W1-S31** (ARMED, this seat) -- **DISARMED by S65**: the slot folder collision, repaired in the same turn and
+  verified byte-identical at the drain; the naming rule adopted for every future face; the gate gap (an in-grant
+  overwrite of a tracked deliverable is invisible to every carrier) travels to L10 named beside W2-S18/S19/S20.
+
+## A1.4 WHAT DID NOT CHANGE
+
+E-1 (`~2`) and E-4 (`~3`) executing; no FWD graded; no row dispositioned. Push state LOCAL.
