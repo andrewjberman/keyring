@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-09T19:4xZ",
+  "written_utc": "2026-09-09T19:5xZ",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -77,8 +77,22 @@
         "task-orders/NFRA_CLDGRPH.TO-CG-F-10.comp-aws-deprecated-unrouted.md",
         "project.json phase"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "973a20aff9",
       "next": "spawn ~6; F-2's flip after 21:00Z; F-4 on ~2; F-9's F9-AC3 at its deadline (MSTR); the partial L8 packet at the next drain."
+    },
+    {
+      "seq": 6,
+      "limb": "L7 (the shared plane re-asserted) / adjudication",
+      "started_utc": "2026-09-09T19:4xZ",
+      "ended_utc": "2026-09-09T19:5xZ",
+      "act": "THE CTO ANSWERED THE MSTR ESCALATION (94679 @ce0eee9f93): MSTR is dark by Andrew's design; the CTO took this laptop's device act itself (the two stitch-refresh lines removed from .git/hooks/post-commit at 19:46:3xZ; BEFORE 2 of 21 lines, AFTER 0 of 19; the lane amended on the record to 'the device's live Tier-1 seat or MSTR'); site Z's line stays MSTR's on Andrew's word (row S77 ARMED to MSTR; the CTO put the one line to Andrew at its terminal). AND: at 19:45:44Z this laptop's hook had fired on this seat's own tick-21 commit 6de9b76d93 and OVERWRITTEN the cloud marker (producer stitch-local) -- F-3's repaired derive now PASSES locally, so S71's 'inert by accident' premise expired at F-3's merge. THE ISSUER'S CALL, taken: ONE ad-hoc opal-stitch-produce build (fe7ff348, 19:53:45Z -> SUCCEEDED 19:55:34Z) re-asserted producer=stitch-codebuild on the key (marker 19:55:00Z, git_sha de590a7d02, 29,267 nodes; read 19:55:4xZ) -- so F-4 folds a cloud-made artifact and F-9's marker read is clean; row S78. Worker ~5 (F-9) told by ruling: the laptop pair is gone (re-run F9-AC3 if its poll expired; continue to the silence test; take F9-AC4's marker read after the build; name site Z's half in F9-AC5). Verified at this seat: 0 stitch-refresh lines at 19:52Z.",
+      "artifacts": [
+        "row S78",
+        "build opal-stitch-produce:fe7ff348-819d-4dce-b688-801ae19de95e SUCCEEDED",
+        "the marker at 19:55:00Z (stitch-codebuild)"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "F-9's flip; F-2 after 21:00Z; F-4; F-10; the partial L8 packet at the next drain; site Z's hook line (MSTR/Andrew)."
     }
   ]
 }
