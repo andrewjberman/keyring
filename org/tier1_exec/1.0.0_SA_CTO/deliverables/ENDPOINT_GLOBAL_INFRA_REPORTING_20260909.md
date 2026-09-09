@@ -21,8 +21,7 @@ same principle, **applied to an outcome he did not name and flagged as this seat
 `FWD-12` ADDED (the anomaly breakdown + analysis); `C-AI` ADDED (where AI analysis is applied).
 `FWD-2..FWD-7`, `FWD-9..FWD-11` stand as cut and are CONFIRMED by his (b)/(c)/(d).
 
-⛔ **TWO BARS HE HAS NOT SEEN AND HAS NOT CONFIRMED: `FWD-1`'s NEW bar and `FWD-12`'s.** Everything
-else in this file is ratified. Those two are CUT and awaiting his word.
+⭐ **ALL TWELVE BARS ARE NOW CONFIRMED.** Andrew-direct 2026-09-09: *"then give me /open-calls on FWD-1 and FWD-12"* / *"and go with your recs on those two."* The two outstanding bars were rendered as cards with this seat's recommendation and he ratified the recommendations. `FWD-1`'s stands as written; **`FWD-12`'s was TIGHTENED before landing** -- its first cut leaned on a reader's judgment ("could act on or correctly set aside"), which is his own clause-(a) defect one layer subtler, so the account is now graded against the computed breakdown under `C-AI` instead. **The endpoint is RATIFIED and L3/L4 may proceed.**
 
 ---
 
@@ -128,6 +127,8 @@ handoff  msg 20524
                     control: a verdict that is always "something needs you" is the
                     Part IV F1 defect wearing new words, and only a correct negative
                     proves the signal can vary.
+         CONFIRMED  2026-09-09, Andrew-direct: "go with your recs on those two." The
+                    bar stands as written, including the NOTHING-morning control.
 
   FWD-2  Any reader can tell "nobody looked" apart from "we looked, and it is broken"
          DONE WHEN  APPLIED -- the distinction is in the report's own vocabulary and
@@ -253,8 +254,19 @@ handoff  msg 20524
   FWD-12 When something looks wrong, the report shows what it is connected to and
          says what appears to be going on
          DONE WHEN  EXERCISED -- a real anomaly has produced a breakdown whose named
-                    connections were CHECKED and correct, and a written account a
-                    reader could act on or correctly set aside
+                    connections were CHECKED and found correct, and a written account
+                    that asserts nothing the breakdown does not support
+         CONFIRMED  2026-09-09, Andrew-direct: "go with your recs on those two."
+                    ⛔ THE BAR WAS TIGHTENED BEFORE IT LANDED. The first cut read
+                    "a written account a reader could act on or correctly set aside",
+                    which leans on a reader's judgment and is therefore not gradeable
+                    without one -- the same defect his clause (a) struck from FWD-1
+                    and FWD-8, one layer subtler because it hid behind "could".
+                    The account is now graded AGAINST THE COMPUTED BREAKDOWN BESIDE
+                    IT under C-AI: it may interpret that evidence and may not exceed
+                    it. That is checkable by anyone, needs no reader's verdict, and
+                    it is the clause that stops a confident narrative from becoming
+                    the finding.
          ACCEPT     When something looks wrong, a reader sees what it is connected to
                     -- what feeds it, what reads it, what else would be affected --
                     and a few sentences on what appears to be happening. Nobody has

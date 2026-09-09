@@ -1,0 +1,13 @@
+{
+ "project_code": "NFRA_REPORT",
+ "home": "org/missions/D12/NFRA/NFRA_REPORT",
+ "directive": "D12",
+ "macro_code": "NFRA",
+ "fabric": "site-z",
+ "dep_stage": "PRD",
+ "status": "active",
+ "name": "Global Infrastructure Reporting and Analysis: one morning read that declares whether anything needs Andrew, across three properties (Dashboard, Website, Gateway), with instrument state separable from world state and every number carrying its coverage.",
+ "generated_from": "org/missions/D12/NFRA/NFRA_REPORT/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-09-09T18:06:30Z"
+}
