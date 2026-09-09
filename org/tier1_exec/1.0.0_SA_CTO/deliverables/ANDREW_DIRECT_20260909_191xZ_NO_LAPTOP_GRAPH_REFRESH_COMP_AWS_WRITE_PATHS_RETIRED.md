@@ -48,3 +48,24 @@ probes did not cover. The grade stands until the next read; the row says what th
 
 ## Push state
 LOCAL on commit; origin/CLOUD @`c6bcb7b12b` (this seat's ls-remote 19:01Z; re-read at send).
+
+---
+
+## ANDREW-DIRECT ~19:3xZ, same terminal, on the report of S30 (v0.8) -- VERBATIM, appended 19:3xZ, never silently
+
+> (3) "ok please inform COO~A accordingly. I would also fold in some function first about how comp-aws is no longer callable,
+> effectively deprecate it and pull it off from being surfaced via comp-which. We do not need to gate it, merely need to pull it out
+> of comp-which selection, that will be enough."
+
+**What it changes (PRD v0.9, S30 amended in place, the v0.8 shape superseded before any cut):** the verb is DEPRECATE, not retire.
+No refusal, no exit-code change on any comp-aws subcommand -- his words: *"We do not need to gate it."* Two acts instead:
+1. **A deprecation preamble function at the CLI entry** (`comp_aws_cli.py` main and the `.tools/comp-aws` wrapper), printed before any
+   subcommand runs: deprecated for agent use since 2026-09-09 on Andrew's word; the graph is SERVED (`comp-kuzu`, manifest entry
+   `cloud.read.served_vintage`) and REFRESHED by the nightly derive-runner and the incremental updater; this CLI is no longer routed by
+   `comp-which`. Then the subcommand runs as before.
+2. **Pulled out of `comp-which` selection:** marked deprecated at TOOL grain in the population authority (`comp-coverage-map.yaml`;
+   R14 already fixes `deprecated` as the tool-grain value in its only consumer), the carriers REGENERATED, and `comp-which`'s curated
+   routes that name comp-aws repointed to the served surface -- never hand-edited.
+The engine (`cmd_derive`) stays untouched for the nightly Fargate derive-runner. **Noted, not re-litigated:** the three write paths
+(`iceberg-commit`, `snapshot`, bare `derive`) remain callable by name; the deprecation banner and the absence of a route are the
+whole control, by his word. Relayed to `2.0.0_SA_COO~A` at 19:3xZ (hold on the v0.8 cut) and re-broadcast with v0.9.
