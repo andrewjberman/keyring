@@ -360,3 +360,103 @@ is worse than a record that carries its own correction. **Every OTHER timestamp 
 was checked against its commit's author date in the same read and is within its stated band.**
 
 PUSH STATE: LOCAL.
+
+---
+
+# ADDENDUM 5 -- 2026-09-09 ~14:2xZ, appended by `2.0.0_SA_COO~A`
+
+**TO-CG-D-7 (CG-s-8) IS TERMINAL AT PASS 4 -- the count is 11 of 12.** The only open order is TO-CG-D-8 (CG-x-7),
+the closing pass for FWD-7, handed to the same worker at 915d75c4bf after the drain below. This addendum is the L8
+compile of D-7 for `3.0.0_SA_CVO`, appended the tick the order went terminal (drive s.2 obligation 3).
+
+## A5.1 WHY THERE WERE FOUR PASSES, in one paragraph each
+
+- **Pass 1** landed the PORT (ten consumers repointed and exercised live) and failed on three ISSUER defects (AC1/AC5
+  mutually unsatisfiable; AC3 named `bash` on a python3 file; the cut census scoped past `ms_heat_index.py`). Amended
+  @`1c6a05fbc3`.
+- **Pass 2** REMOVED THE SEAM (`_canonical.py` 746 lines to a 78-line tombstone that raises `RuntimeError` on every
+  retired attribute) with a VALID instance, and both absence arms still failed because they counted TEXT while the
+  property is BEHAVIOUR. Amended @`e27c871ccf`: AC1 became a refusal probe with a control, AC2 a closed-population AST
+  walk with a planted-opener control.
+- **Pass 3** PASSED AC1 (`0 of 3`, RuntimeError 3 of 3, control fired) and FAILED AC2 on the WORLD, `3 of 30`: the
+  stitch open at `comp_debt.py:215` (out of the cell), `kuzu_ac_traversals.py` (repointable), and `kuzu_cost_enrich.py`
+  (a WRITER with no repoint target). Amended @`7d81a9c25f`: the predicate narrowed to the canonical store, (ii)
+  ordered repointed, (iii) put to `1.0.0_SA_CTO` as a disposition call (94460). The worker died with every seat at
+  2026-09-06 03:59Z before pass 4 ran.
+- **Pass 4** (this session) executed the CTO's ruling 94466 @`1266d65641` (DELETE; corrected in place @`65953c8ad2`
+  and @`3a404545f2`; the CVO's C-S19..C-S21 read beside it), carried into the face once @`34e1fd1a54`.
+
+## A5.2 THE EIGHT CRITERIA AS THE CHECKER GRADED THEM (instance VALID, rc 0, 24 of 24 artifacts at pin, 16 of 16 surprises resolving)
+
+Instance: `deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-7.retire-local-copy.proof_of_spec.json` @`d44c9cc8cf`,
+re-validated at this seat INSIDE the worker's worktree with the eight ids as the third argument (rc=0), drained
+@`173a1d8c90` through `safe-merge.sh` (row gate on the merged index: 16 new rows of 117; pipescript suite 141 passed).
+
+| id | verdict | deciding line | denominator |
+|---|---|---|---|
+| D7-AC1 | PASS by output | `SEAM_REACHABLE=0 of 3` + `SEAM_REFUSAL_KIND_RUNTIMEERROR=3 of 3` + `SEAM_PROBE_CONTROL=FIRED` | 3 of 3 symbols |
+| D7-AC2 | PASS by output | `CONSUMERS_OPENING_LOCAL_DB=0 of 29` + `CONSUMER_PROBE_CONTROL=FIRED` + `CONSUMER_PROBE_BAND_CONTROL=FIRED` + `CONSUMER_NARROWING_CONTROL=FIRED`; the stitch open printed `DECLARED-OUT-OF-CELL store=kuzu_stitch_db` | 29 of 32 declared files walked, 3 ABSENT and named |
+| D7-AC3 | PASS by output | `VINTAGE: Built from the estate as of 2026-09-09 12:23:34 UTC. manifest: 83c6e1335f43` / `87 hit(s) across 2158 aws node(s)` | 87 of 2158 |
+| D7-AC4 | PASS by output | comp-blast's VINTAGE line, `nodes=27304 edges=58794` | 1 of 1 |
+| D7-AC5 | PASS by output | the three engine pins byte-identical AFTER a pass that deleted one file and rewrote another in the same directory | 3 of 3 |
+| D7-AC6 | PASS by output | `DENOMINATOR: 7 of 7 arm(s) recorded a pass` then `PASS` | 7 of 7 |
+| D7-AC7 | PASS by output | `pre-commit gate clean (18 .py file(s) + .tools/comp-find; denominator 19 of 19)` | 19 of 19 |
+| D7-AC8 | RECORDED, no verdict | `UNVERIFIABLE-BY-INSTRUMENT`, status_reason names `3.0.0_SA_CVO` | 4 of 4 residue carriers re-measured, 4 of 4 unchanged |
+
+The worker applied each expect regex programmatically to its own transcript (7 of 7 MATCH) and to pass 4's pre-write
+baseline for AC2 (`3 of 30` -> NO-MATCH), so the arm that passes is shown able to fail.
+
+## A5.3 THE JUDGMENT CRITERION D7-AC8 -- THIS IS THE L9 WORK, and the split is the whole question
+
+**The EXECUTABLE plane is clean and the DOCUMENTATION plane is unchanged, and the worker says which zero is which.**
+Executable: `0 of 3` seam symbols reachable, `0 of 29` enumerated consumers opening a local database, the last file that
+could re-create the store DELETED, `kuzu_ac_traversals.py`'s `--db` flag REMOVED outright rather than defaulted (row
+W2-S27: `projection_client` carries neither a database path nor a Cypher parameter dict, so a like-for-like swap was
+not available and two capabilities left the surface in a pass whose face named neither). Documentation, unchanged and
+named carrier by carrier: `tool_index.py` help text (6 CODE-band hits telling a user the default surface is
+`kuzu_nessie_db` that auto-refreshes engine-internally), `comp_aws_cli.py:2857/2866`, `debtscan/comp_similar.py:591`
+(`cap.get("corpus_db") == "kuzu_nessie_db"` in CODE), and `graph-call-manifest.yaml` (row W2-S23, the CTO's A4.3
+reading: under rule 20 a manifest entry MANUFACTURES a path). The worker deliberately did not edit the two carriers
+inside its `<paths>`: the amendment carried the residue "unchanged", and editing the object under a judgment
+criterion is not a worker's call.
+
+**What the CVO grades:** whether the retirement is REAL while the estate's own help text and manifest still sell the
+retired surface. A4.3 stands as told: **FWD-7 cannot read REALIZED while `graph-call-manifest.yaml` routes a
+repointed consumer back through `comp-kuzu`.** That fix is a manifest row the CTO placed at L10 alongside the cost-
+attribution capability (lane `0.8.0_AE_CloudComp`), not a cell of this round.
+
+## A5.4 THE ISSUER'S ACT AT THE DRAIN, measured on both sides
+
+On Andrew's word @`61d5ef55dd` ("we can switch off laptop copy", 2026-09-05 ~15:0xZ), held until this drain by the
+order's own text: `ls infra/aws/globgrph/ | grep -c kuzu_nessie_db` read **6** (46 MB, gitignored, 0 tracked) at
+`2026-09-09T14:08:02Z`; `rm -rf` of exactly those six paths, rc 0; the same command read **0** (grep rc 1) at the same
+second; positive control on the same verb and directory: `kuzu_stitch_db` -> **2**, NOT authorized, NOT touched.
+Step-log row 20 @`c2f4ce26be` is the line TO-CG-D-8 quotes; D-8 also measures the main workspace INDEPENDENTLY by
+absolute path, because a producer's self-report is not verification of the produced state.
+
+## A5.5 ROWS THIS ADDENDUM ADDS TO THE CVO'S DESK
+
+- **W2-S27** (OBSERVATION / INERT, the worker): the repoint of `kuzu_ac_traversals.py` could not be like-for-like;
+  the parameter-dict limb is a client-shaped constraint the NEXT repointed consumer will meet (a `parameters`
+  argument on `projection_client.ServedConnection`, or a proof that its values are literals). Travels to the slug
+  named; no cell cut.
+- **S61** (OBSERVATION / INERT, this seat): the DISARM ACK for **W2-S26** (BLOCKING / ARMED, owner this seat) -- the
+  block was the disposition the issuer owed; it is ruled, executed, measured `0 of 29`, merged. The remediation-plane
+  flip is the CVO's, citing S61. What S61 does NOT disarm is stated inside it: the AC8 documentation residue and the
+  stitch reader's placed row.
+- **The CVO's own rows C-S19, C-S20, C-S21** (the crossed corrections on `kuzu_cost_enrich.py`, closed by C-S21
+  @`2e5dcbf112`) are the CVO's, read here only so the packet is complete: the FILE-grain reading (guarded entry point,
+  nobody imports its functions; as a program it creates nothing) and the LIBRARY-grain fact (`kuzu.Database` creates
+  an absent store) were both stated and reconciled before the deletion landed, and the ruling never moved.
+
+## A5.6 WHAT DID NOT CHANGE
+
+No cell cut, no grant widened, no criterion re-cut in pass 4, FWD-7 unchanged, the decomposition v0.4 unchanged. The
+channel reads 118 rows at `c2f4ce26be`. This packet stays PARTIAL until TO-CG-D-8 drains; the FINAL packet and the
+drain-end read to `1.0.0_SA_CTO` follow that drain, and the slug is the CVO's.
+
+**This seat is not registered on the broker this session** (the MCP client failed at connect; the daemon is live), so
+no READ ack on this addendum can be measured by `get_delivery_state` from here; the commit is the carrier and the
+CVO's surprise watcher sees S61.
+
+PUSH STATE: LOCAL; origin/CLOUD @`58adeff90c` by ls-remote at 13:0xZ this session; LD-0522 hold standing.
