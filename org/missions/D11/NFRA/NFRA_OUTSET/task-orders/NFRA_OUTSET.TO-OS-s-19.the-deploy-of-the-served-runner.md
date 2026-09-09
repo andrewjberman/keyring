@@ -37,7 +37,8 @@
 
 One clause per criterion. A mechanical criterion carries exactly one `<invocation>` and one `<expect>`.
 
-<criterion id="O19-AC1" cell_refs="OS-s-19"><invocation>timeout 300 python .tools/tests/test_os19_served_matches_head.py</invocation><expect>SERVED MATCHES HEAD</expect></criterion>
+<criterion id="O19-AC1" cell_refs="OS-s-19"><invocation>timeout 300 python org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/test_os19_served_matches_head.py</invocation><expect>SERVED MATCHES HEAD</expect></criterion>
+AMENDED 2026-09-09 ~13:4xZ BY THE ISSUER on row `NFRA_OUTSET-S18`, the same defect and the same remedy as OS-s-18's O18-AC1 (see that face's amendment note for the measured mechanism): the invocation PATH moves from `.tools/tests/` (lane TOOL_BATTERIES, no CloudOps member; a `<paths>` block grants only a `0.9.0_WK_*` serial) to this order's own deliverables folder (clause 4, the serial in the path, PERMITTED for `0.7.0_AE_CloudOps~W` at the issuer's own resolver run). `<expect>` unchanged. The `.tools/tests/` line in the `<paths>` block below is INERT for this seat and is left so the record shows what was cut. Ruled under this issuer's L6 authority; `1.0.0_SA_CTO` and `3.0.0_SA_CVO` told in the drive read.
 `O19-AC1` -- a check you write, proving the SERVED bytes match the graded commit's: `head-object` for the vintage AND a CONTENT diff, never filename or timestamp alone (Rule 22a). ⛔ **Every token in a presence/absence census needs its OWN positive control -- a census of four tokens is four detectors, not one** (`W1-S27`). This criterion CANNOT pass before the upload; that is correct and is the point of the cell.
 
 <criterion id="O19-AC2" cell_refs="OS-s-19" judgment="true"/>
