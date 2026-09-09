@@ -35,10 +35,25 @@ cannot", the measured wedge risk is zero, and an escape hatch on a one-line requ
 invitation to use it. REVERSIBLE IN ONE WORD if that proves wrong -- this paragraph is the flag.
 
 ONE DETECTOR, ONE PRIMARY. The manifest test is NOT re-implemented here. It is IMPORTED from
-.tools/to-pipeline-gate.py (_top_section + MANIFEST_HEADING_RE + PRD_FENCE_RE), which is the
-same code the L6 limb runs and which CVO~A already hardened @d019922d68 against two false
-passes: a heading INSIDE a code fence, and a heading with an empty body. Two carriers of one
-rule drift from minute one; this file is a CALLER, not a copy.
+.tools/to-pipeline-gate.py (_top_section + MANIFEST_HEADING_RE + PRD_FENCE_RE +
+MANIFEST_MIN_BODY_CHARS), which is the same code the L6 limb runs and which CVO~A already
+hardened @d019922d68 against two false passes: a heading INSIDE a code fence, and a heading with
+an empty body. Two carriers of one rule drift from minute one; this file is a CALLER, not a copy.
+
+  CORRECTED 2026-09-09 on 3.0.0_SA_CVO~Z's verification (msg 20602), and the correction is
+  against THIS FILE'S OWN CLAIM. The first cut said the two gates "cannot drift apart". That was
+  TRUE of the two symbols it imported and FALSE of the THIRD thing the gates share: the
+  emptiness floor, which was a duplicated literal `40` in both files. Both read 40, so nothing
+  had diverged -- but the property CLAIMED was structural and this limb did not have it, and
+  tuning the floor in one file would have made the L4 and L6 refusals disagree SILENTLY, which
+  is the exact outcome importing was chosen to prevent. The floor is now a NAMED CONSTANT in the
+  primary and imported here. The shape is worth naming because it is general: a property
+  verified on the limbs it names, with an untested limb sitting inside the same claim.
+
+THE FLOOR IS UNMEASURED AND SAYS SO. 40 is inherited; no derivation appears in either file's
+history and none is invented here. What is new is that it is CONTROLLED AT ITS BOUNDARY by
+--self-test below (39 chars must refuse, 41 must pass), so a change to it fails a test rather
+than silently splitting the two gates.
 
 GRADES THE STAGED BLOB, not the worktree -- the staged bytes are what the commit will contain.
 
@@ -104,9 +119,13 @@ def grade(text, tpg):
     if body is None:
         return ("no top-level SURFACE MANIFEST section (a heading inside a code fence does not "
                 "count). Step 5 cannot run a battery on prose.")
-    if len(body.strip()) < 40:
-        return ("SURFACE MANIFEST heading present but the section is EMPTY (%d chars). "
-                "A heading is not a manifest." % len(body.strip()))
+    if len(body.strip()) < tpg.MANIFEST_MIN_BODY_CHARS:
+        # The floor is IMPORTED, not copied -- see the module docstring. And the wording says
+        # UNDER-POPULATED rather than EMPTY because the case that actually trips it is a real
+        # two-row table one char short: telling a reader EMPTY sends them to the wrong repair.
+        return ("SURFACE MANIFEST heading present but the section is UNDER-POPULATED (%d chars, "
+                "floor %d). The section exists -- it needs MORE ROWS, not a new heading."
+                % (len(body.strip()), tpg.MANIFEST_MIN_BODY_CHARS))
     return None
 
 
@@ -207,6 +226,16 @@ def self_test():
          HDR + "## 8. SURFACE MANIFEST (step 4 -> step 5)\n\n| id | surface | claim |\n"
                "|---|---|---|\n| S1 | the thing | absent |\n", False),
     ]
+    # BOUNDARY CONTROLS on the imported floor (3.0.0_SA_CVO~Z msg 20602: "40 IS AN UNMEASURED EXACT
+    # CONSTANT and the 5 controls do not cover its boundary"). Built by CONSTRUCTION off the imported
+    # value rather than hardcoding 39/41, so these follow the floor if it is ever retuned -- a control
+    # pinned to a constant the fix will move is a control that stops testing.
+    floor = tpg.MANIFEST_MIN_BODY_CHARS
+    pad = "## 8. SURFACE MANIFEST\n\n"
+    cases.append(("BOUNDARY-CONTROL  body of floor-1 chars REFUSES",
+                  HDR + pad + "x" * (floor - 1) + "\n", True))
+    cases.append(("BOUNDARY-CONTROL  body of floor+1 chars PASSES",
+                  HDR + pad + "x" * (floor + 1) + "\n", False))
     ok = True
     for name, text, expect in cases:
         got = grade(text, tpg) is not None
