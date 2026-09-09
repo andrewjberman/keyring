@@ -32,6 +32,9 @@ OVERRIDES = '.tools/tool_overrides.yaml'
 MASTER = 'org/modules/graph/TOOL_MASTER.yaml'
 INDEX = '.tools/tool_index.py'
 
+# The suffix set norm_tool() strips, censused over BOTH population sides -- see norm_tool.
+SUFFIXES_STRIPPED = ('.py', '.sh')
+
 COST_BANDS = [(1.0, 'SUB_SECOND'), (10.0, 'SECONDS'), (60.0, 'TENS_OF_SECONDS'), (1e9, 'MINUTES')]
 # measured this session; others inherit their primitive's band
 MEASURED = {'comp-coverage-check': 0.34, 'comp-which': 1.07, 'comp-grep': 1.45,
@@ -104,14 +107,28 @@ def population_from_map():
 
 
 def norm_tool(name):
-    """Canonical tool id. The map drops the .py suffix; an on-disk listing keeps it.
+    """Canonical tool id. The map drops the file suffix; an on-disk listing keeps it.
 
     FIRST EXERCISE OF THE PARITY CHECK found both sides at EXACTLY 89 with 12 DIVERGENT MEMBERS --
     a count-equality check would have passed clean and said nothing. 5 of the 12 were this suffix
     convention alone. Normalising here is correct; hiding the divergence would not be.
+
+    SUFFIX DOMAIN, CENSUSED (NFRA_CLDGRPH CG-s-28, 2026-09-09) -- a suffix set is a DECLARED
+    DOMAIN, so it is measured on both sides rather than assumed:
+      AUTHORITY org/modules/graph/comp-coverage-map.yaml -- 99 name(s), suffixes present: NONE.
+      PROFILE   org/tier1_exec/.../tool_profile.json     -- 93 name(s), suffixes present: .py (6),
+                .sh (1). No .cmd, no .ps1, no other suffix on either side.
+    Stripping .py ALONE made comp-v5-composite-test.sh read as a FIFTH exclusion that is not a
+    retirement (row NFRA_CLDGRPH-W2-S37): one tool spelled two ways, printed beside four real
+    retirements. SUFFIXES_STRIPPED below is therefore MECE over the names that exist today; a NEW
+    suffix is a RE-CENSUS of this constant, never a silent pass-through (an unstripped suffix does
+    not lose a tool -- it splits one into two names and prints the second as an exclusion).
     """
     n = name.strip()
-    return n[:-3] if n.endswith('.py') else n
+    for suffix in SUFFIXES_STRIPPED:
+        if n.endswith(suffix):
+            return n[:-len(suffix)]
+    return n
 
 
 class PopulationDivergence(RuntimeError):

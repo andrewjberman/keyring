@@ -129,8 +129,20 @@ PRIM_MAP = {
                 ['inherits the callee blind spots'],
                 'NONE'),
 }
+# NFRA_CLDGRPH CG-s-28 (2026-09-09): the HEAD-advance auto-refresh string this constant used to
+# carry described the LOCAL Kuzu projection, retired at CG-s-8 (@173a1d8c90). It is CITED, not
+# repeated, so a census of the retired phrase does not hit this tombstone (the W2-S38 convention).
+# Nothing refreshes on a HEAD-advance any more and no
+# CALL refreshes anything: the SERVED projection is refreshed by the marker-driven cloud worker
+# (CG-s-2/3) off a real S3 marker, and every seat READS it through the thin client, which prints the
+# VINTAGE line per call. refresh_is_incremental stays True on the MEASURED behaviour of that worker
+# -- infra/aws/globgrph/kuzu_incremental_refresh.py is incremental with a FULL-RELOAD FALLBACK on a
+# large delta (:53-56 FALLBACK_MIN_ABS/FALLBACK_FRACTION), so the mechanism is incremental-first and
+# the fallback is the exception, not the rule.
 REFRESH = {
-    'GRAPH-DB': {'refresh_mechanism': 'auto-refresh on HEAD-advance; provenance header printed per call',
+    'GRAPH-DB': {'refresh_mechanism': 'served projection; refreshed by the marker-driven cloud '
+                                      'worker (NFRA_CLDGRPH CG-s-2/3), never by a call; provenance '
+                                      'header (VINTAGE) printed per call',
                  'refresh_is_incremental': True},
     'REGISTRY': {'refresh_mechanism': 'gate-enforced at registration (comp-coverage-check)',
                  'refresh_is_incremental': True},

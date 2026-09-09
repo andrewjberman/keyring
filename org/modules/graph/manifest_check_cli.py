@@ -208,7 +208,10 @@ ADHOC_PATTERNS = [
         "pattern": re.compile(r"""['"]\s*MATCH\s*\("""),
         "note": (
             "embeds raw Cypher outside comp-kuzu. Route graph queries through comp-kuzu so they "
-            "hit the canonical persisted Kuzu DB (manifest cloud.* / xlayer.*)."
+            "hit the SERVED graph projection through the thin client (manifest "
+            "cloud.lookup.nodes_by_type / cloud.read.served_vintage / "
+            "xlayer.fullstack.firm_component_to_bucket); the local persisted Kuzu DB is RETIRED "
+            "(NFRA_CLDGRPH CG-s-8)."
         ),
     },
     {

@@ -11,7 +11,7 @@ A reader MUST compare against the live file and FALL BACK TO PARSING on mismatch
 must be able to know it is stale.
 """
 MASTER_PATH = 'org/modules/graph/TOOL_MASTER.yaml'
-MASTER_SHA256 = '6bde9aa2bce785f8c30a17c476bb331906100aa209149e8dd651e79de34a7f58'
+MASTER_SHA256 = '3d2deb234dc29a28b1f0da5f6cd5dba36b68789c43f7389fd9bfac4e9b176c62'
 MANIFEST_PATH = 'org/modules/graph/graph-call-manifest.yaml'
 MANIFEST_SHA256 = '548792d1478b09ccc91189a3d627b1fefec0d74d011812d1fad48801407c14ca'
 LEDGER_PATH = 'org/modules/graph/comp-coverage-map.yaml'
