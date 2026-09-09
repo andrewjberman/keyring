@@ -5280,6 +5280,29 @@ other carriers. Authorship is per-row in `surfaced_by`, never the header and nev
       ]
     },
     "notes": "A census whose members can ERROR needs the error counted on its own line beside the negatives (Rule 22: a detector that cannot return non-zero on the positive case is a constant)."
+  },
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.0.0_AB_MSTR",
+    "surfaced_at": "2026-09-09T20:14Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S81",
+    "one_line": "S77's site-Z half is DISARMED on a measured fact: 0.0.0_AB_MSTR~Z removed the two stitch-refresh lines from site Z's .git/hooks/post-commit at 2026-09-09T19:58:27.757Z (17 -> 15 lines; stitch-refresh 2 of 17 -> 0 of 15; the four other _ws= hook entries named and surviving as the positive control; bash -n and sh -n clean; mode 755 unchanged; byte-level LF write, 0 CRLF before and after; backup taken; installer left on disk under F-9's tombstone). With the laptop's pair gone at 19:46:3xZ (@ce0eee9f93), NO CLONE'S POST-COMMIT HOOK WRITES stitch/stitch_marker.json any more; the cloud producer is the one writer. S77 itself is an OBSERVATION row with no `disarm` object, so its standing cannot be advanced in place under the gate's monotone rule -- this row is the disarm record citing it, per 'corrections are NEW items citing the old id'.",
+    "spec_asserts": "S77 (1.0.0_SA_CTO, 19:47Z): 'site Z's line remains the live overwriter and needs a site-Z seat told over MSTR's agentbus', hazard_standing ARMED, disarm_owner 0.0.0_AB_MSTR. S71/R16 (@764439e1d8): one writer of the stitch keys, the cloud producer. S29's ask step 3: a trigger-class commit on site Z with no hook fire in 120 s and the marker's LastModified unmoved.",
+    "world_is": "Site Z's hook pair removed at 19:58:27.757Z (bus ack 3a7fe696, 20:07:51Z, carrying the before/after counts and controls). Step 3 (the silence test) is OUTSTANDING ON SITE Z and not by choice: 0.0.0_AB_MSTR~Z cannot write org/modules/graph/ (owned-paths-validate: False for that serial on the subject path and on derive_stitch.py; negative control 2.0.0_SA_COO on LD-9999.md False; positive control MSTR~Z on LD-9999.md True; 1.0.0_SA_CTO~Z on the graph path True), and it declined the two trigger classes it can write (a data/*/scripts probe, a portal gitlink bump) as worse than asking; it routed the one trigger-class commit to 1.0.0_SA_CTO~Z, which holds the grant and authored S71 -- a commit by ANY seat on that device exercises the same per-clone hook file, so that is the artifact under test, not a workaround. Site Z also read the marker at 19:55:15Z: producer=stitch-codebuild, git_sha de590a7d02 -- the cloud producer had ALREADY re-asserted the key three minutes before site Z's removal.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "agentbus 3a7fe696-6457-4499-b551-4105788f6b6d (0.0.0_AB_MSTR~Z, 2026-09-09T20:07:51Z): instant 19:58:27.757Z; 17->15 lines; stitch-refresh 2/17 -> 0/15; _ws= 5 -> 4 (closeout-comp-state, deploy-pipescript-check, missions-refresh, prd-header-notify); bash -n + sh -n clean; mode 755/755; CRLF 0/0.",
+        "agentbus 2a5b3ff5-b3d1-4d32-b4a0-385b609ce5dd (0.0.0_AB_MSTR, 19:5xZ): the ask as carried, citing S71 @764439e1d8 and the laptop execution @ce0eee9f93.",
+        "This laptop's .git/hooks/post-commit read at 19:5xZ as the control: 0 stitch-refresh lines of 19.",
+        "owned-paths-validate.py on site Z, five rows, both controls firing (quoted in the ack)."
+      ]
+    },
+    "notes": "Two things the L9 should carry from site Z's ack rather than from the ask's wording. (1) The silence test's 'LastModified does not move' is NOT sufficient alone: CodeBuild is a LEGITIMATE writer of the same key and can fire inside the 120 s window, so a moved timestamp with producer=stitch-codebuild is the HEALTHY case and an unmoved one proves nothing about the hook; the discriminator is the producer field (and git_sha) of whatever is there after the window, never the timestamp -- the same hash-vs-timestamp opposite-blind-spots trap 1.0.0_SA_CTO named on the 08-21 integrate. (2) bash -n alone would not have covered site Z's hook, whose shebang is /bin/sh; both parsers were run. Andrew's ~19:0xZ 'no need to integrate at this time' word is untouched: this was a relay and a per-clone device act, not a branch leg."
   }
 ]
 ```
