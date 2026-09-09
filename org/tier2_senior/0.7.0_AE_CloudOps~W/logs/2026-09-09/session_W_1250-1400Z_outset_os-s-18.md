@@ -1,7 +1,7 @@
 # Session log -- `0.7.0_AE_CloudOps~W`, 2026-09-09 12:50Z -> 14:00Z
 
-**Scope:** `NFRA_OUTSET.TO-OS-s-18` (THE PUBLISH), resumed after the 2026-09-05 device crash.
-`TO-OS-s-19` sequenced behind it and not started in this window.
+**Scope:** `NFRA_OUTSET.TO-OS-s-18` (THE PUBLISH) then `TO-OS-s-19` (THE DEPLOY), resumed after the
+2026-09-05 device crash. **Both orders reached `complete` in this window.**
 **Branch:** `CLOUD`, main tree. **Respawned** by `2.0.0_SA_COO` at 12:50:19Z.
 
 ## What happened, in order
@@ -73,9 +73,48 @@ registry, because a lane member keyed to a serial goes stale when the serial is 
 | `comp-find` | `comp-find --name 'TO-OS-s-1*' --limit 40` | MEASURED zero across 156,271 files, with 71,797 ephemeral-floor files disclosed as excluded. Correctly told me the orders are not named that way rather than that they were absent. |
 | `owned-paths-validate.py` | `--check-agent 0.7.0_AE_CloudOps~W` over 13 paths | rc=1, 3 refused / 10 permitted. Negative control on `0.9.0_WK_NFRA_OUTSET~1` returned a different, larger set, which is what made the reading corroboration rather than a single-instrument claim. |
 
+## `TO-OS-s-19` -- THE DEPLOY, same window
+
+**The estate finally reads the runner at HEAD.** It had been serving a 2026-08-25 artifact through
+round 1 and everything after it: 17 orders passed and the file the box actually pulls never moved.
+One `s3api put-object` closed it, 13:53:20Z -> 13:53:22Z, with the instance state read as `stopped`
+immediately before the call.
+
+**The ledger cost a second commit on purpose.** The face requires the entry OPEN before the upload
+and CLOSED at completion. An entry written and closed in one commit records both facts at the same
+instant and proves neither ordering, so it was committed OPEN at `6dbb1e6a3a` with all four legs
+unchecked, and closed afterwards. The ordering is now a fact in git history rather than a claim in my
+prose.
+
+**The verdict is a content diff, never the vintage.** `head-object` was read and recorded, but Rule
+22a's CODE trap is that deployed bytes are diffed against the BUILD INPUT and that
+running-bytes-older-than-built passes every other rung. So the object was re-downloaded and
+sha256-compared against `git show HEAD:<path>`. And because arm B compares two things that *should*
+be equal, its pass would read identically if the comparator were a constant, so one bit was flipped
+at offset 100 of a copy with the length held fixed and the same comparator was asked again. It
+reported mismatch.
+
+**The census got a control per token**, which is `W1-S27` applied rather than quoted. Five live
+tokens agree; `rerun_recipe` is carried deliberately as a sealed INERT control because row `S14`
+measured it at zero on both sides, and the arm asserts it is refused as evidence. All five live
+tokens read **0** in the served object before this deploy.
+
+**The window, stated:** today's run was 13:00:45Z to 13:11:04Z; the upload landed at 13:53:20Z with
+the box stopped; next fire 2026-09-10 13:00Z. Outside the window and outside it in the safe
+direction, since today's `ExecStartPre` pull happened at ~13:00:50Z and could not be affected.
+
+**One functional consumer**, censused rather than recalled: 154 hits across 152,096 files scanned
+resolve to the systemd unit on `i-0512bd3cbaf602b7f`. The orchestrator Lambda was checked and holds
+only `ESTATE_INSTANCE_ID`. No shared tag, so no fan-out hazard.
+
 ## State at close
 
-`O18-AC1` PASS, `O18-AC2` recorded with no verdict for the CVO at L9, order flipped complete.
-`TO-OS-s-19` next: the window is clear until 2026-09-10 13:00Z and the served runner baseline is
-already measured at 125,857 B / 2026-08-25T05:36:35Z.
+Both orders `complete`. `O18-AC1` and `O19-AC1` PASS; `O18-AC2` and `O19-AC2` recorded with evidence
+and no verdict for the CVO at L9. Both proof instances VALID rc=0.
+
+⛔ **AND THE HONEST LIMIT ON ALL OF IT:** the served runner now carries the seam consumer and the
+seam still will not be read, because `ESTATE_OUTSET_SEAM_PREFIX` is set nowhere in Terraform
+(`NFRA_OUTSET-S16`), and the published artifact goes stale at 26 hours with no cadence
+(`NFRA_OUTSET-S17`). Both rows are ARMED and routed to `1.0.0_SA_CTO`. Neither order claims
+otherwise, and I declined both remedies as out of scope rather than quietly doing them.
 **Push state: LOCAL.** No push by this seat under either order's BOUNDS.

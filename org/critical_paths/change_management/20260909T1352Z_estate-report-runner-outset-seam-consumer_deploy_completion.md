@@ -1,7 +1,8 @@
 # DEPLOY COMPLETION LEDGER -- estate-report-runner OUTSET SEAM CONSUMER (NFRA_OUTSET.TO-OS-s-19)
 
-**Opened:** 2026-09-09T13:52Z by `0.7.0_AE_CloudOps~W`
-**Status:** OPEN -- upload not yet performed at this write
+**Opened:** 2026-09-09T13:52Z by `0.7.0_AE_CloudOps~W` (committed OPEN at `6dbb1e6a3a`)
+**Status:** **CLOSED 2026-09-09T13:56Z** -- all four legs verified, content diff identical, the
+comparator proven able to fail
 **TO:** `org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-19.the-deploy-of-the-served-runner.md`
 (cell `OS-s-19`, outcome_refs FWD-2 / FWD-4 / FWD-7; issuance `37b2a19129`, face amended `cb43d05200`)
 
@@ -84,18 +85,50 @@ overtaken promote is a REWIND. So the ledger was read before this act rather tha
 
 ## Legs
 
-1. [ ] `s3api put-object` HEAD bytes -> `s3://opal-estate-report/code/estate_report_runner.py`
-2. [ ] `head-object` verify: ContentLength == 159,687 and ETag == `e75c59a35457535ca0d339c9f59589f5`
-3. [ ] CONTENT diff verify, not filename or timestamp: re-download the served object and compare
-       sha256 against `git show HEAD:<path>`, with a NEGATIVE CONTROL proving the comparison can fail
-4. [ ] `O19-AC1` battery green at the amended path
+1. [x] `s3api put-object` HEAD bytes -> `s3://opal-estate-report/code/estate_report_runner.py`.
+       Instance state read **immediately before** the call: `stopped`. Started 13:53:20Z, returned
+       13:53:22Z. New `VersionId GQny85Je837UhagoFc0FY8eoJzcB1RFy`, SSE AES256.
+2. [x] `head-object` verify: ContentLength **159,687 == 159,687**; ETag
+       `e75c59a35457535ca0d339c9f59589f5` **== HEAD md5** `e75c59a35457535ca0d339c9f59589f5`;
+       LastModified 2026-09-09T13:53:22Z.
+3. [x] **CONTENT diff, which is the leg that actually decides** (Rule 22a: deployed bytes are diffed
+       against the BUILD INPUT, never by filename -- running-bytes-older-than-built passes every
+       other rung). Re-downloaded the object and compared sha256 against `git show HEAD:<path>`:
+       **`88096c625bf70c3f...` == `88096c625bf70c3f...`, 159,687 B both.**
+       **NEGATIVE CONTROL, because a comparison that cannot fail is not a comparison:** one bit
+       flipped at offset 100 of a copy, length unchanged -> the same comparator reports MISMATCH. So
+       leg 3's match is a measurement and not a constant.
+4. [x] `O19-AC1` battery green at the amended path: **6 of 6 arms PASSED, 0 NOT-EVALUATED**,
+       `SERVED MATCHES HEAD`, rc 0 captured unpiped; second grain `pytest -q` -> 1 passed; two
+       same-input repeats with an IDENTICAL verdict set.
 
-## Close condition
+## Post-state
 
-All four legs checked. Closed in a second commit that flips this Status line. First live exercise is
-the next scheduled 09:00 ET fire, which is left untouched -- **no watcher, monitor or freshness
-checker is armed against it** (standing moratorium; the acceptance is the scheduled fire, not an
-ad-hoc run).
+| | value |
+|---|---|
+| Served object | **159,687 B**, ETag `e75c59a35457535ca0d339c9f59589f5`, LastModified **2026-09-09T13:53:22Z**, VersionId `GQny85Je837UhagoFc0FY8eoJzcB1RFy` |
+| Identical to | `git show HEAD:infra/aws/ec2/estate-report-runner/estate_report_runner.py`, sha256 `88096c625bf70c3f...` |
+
+**THE TOKEN CENSUS, WITH A POSITIVE CONTROL PER TOKEN** (`W1-S27`: a census of four tokens is four
+detectors, not one). Five LIVE tokens -- non-zero at HEAD, so their counts carry information --
+`_outset_read` 4, `OUTSET_ANSWER_STATE_TO_STATUS` 3, `ESTATE_OUTSET_SEAM_PREFIX` 5, `_outset_trace`
+3, `render_trace` 2, each now equal in the served bytes; **before this deploy every one of them was
+0 in the served object.** One INERT token, `rerun_recipe`, carried deliberately as a sealed control
+because row `S14` measured it at zero on BOTH sides -- the battery classifies it INERT and REFUSES
+it as evidence rather than counting a meaningless zero. Same-program positive control `_stratum(`
+reads 16 on both sides.
+
+## Close condition -- MET
+
+All four legs checked and the post-state measured. First live exercise is the next scheduled 09:00 ET
+fire at **2026-09-10 13:00Z**, which is left untouched -- **no watcher, monitor or freshness checker
+is armed against it** (standing moratorium; the scheduled fire is the acceptance, not an ad-hoc run).
+
+⛔ **WHAT THIS DEPLOY DOES NOT DO, stated so the close is not read as more than it is.** The served
+runner now carries the OS-s-10 seam consumer, and the consumer will still return
+`INSTRUMENT_UNAVAILABLE` on the next fire, because `ESTATE_OUTSET_SEAM_PREFIX` is set nowhere in
+Terraform (row `NFRA_OUTSET-S16`). This deploy closes the gap between HEAD and the served artifact.
+It does not turn the seam on, and no criterion on this order claims it does.
 
 ## Rollback
 
