@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-09T22:1xZ",
+  "written_utc": "2026-09-09T22:5xZ",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -202,8 +202,22 @@
         "CLOUD @b9917bc2e1 (the F-5 drain)",
         "row S88"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "ab47e7a5d7",
       "next": "F-11 on ~2 (the identity census, the producer edits, the map's four entries retired, the derive + projection, comp-debt re-read); then F-6 LAST; the FINAL packet and the drain-end read to the CTO; CronDelete on the send."
+    },
+    {
+      "seq": 15,
+      "limb": "L6 (the edict: a widened fan-out) / adjudication (a certified baseline pitched)",
+      "started_utc": "2026-09-09T22:2xZ",
+      "ended_utc": "2026-09-09T22:5xZ",
+      "act": "ANDREW'S EDICT (~22:3xZ at the CTO terminal; CTO 94766): proceed through /canonical-flow spawning the subagents the cuts need, whatever the rows need, without asking. Executed the one widening the rows admit: TO-CG-F-6 (CG-s-26) depends on S25 ONLY (DONE @b9917bc2e1), so it was RE-ADDRESSED from slot ~2 to a new slot ~7 @f2750f9212 (comp_debt.py removed from its grant -- the refusal at HEAD already names 'served nessie+stitch' at :133-137; the two live orders share no file), the worktree cut from CLOUD and the worker spawned at 22:4xZ -- its transcript reads claude-opus-5 / effort high on 11 of 11 requests; fanout 7 of 7 chains, cap 8. The spine v3.7 law edit (the CTO @cec3d4274d: Opus by the definition; hand-cut worktrees) agrees with the definition @65d7815288. TO-CG-F-11 (CG-s-31) reported OPEN at 8261f08a4b with the unification PROVEN on a local run against the real snapshot and portal source: the identity census 1,790 of 1,790 across four populations (1,330/1,380; 145/294; 20/22; 26/94 resolved; 269 carried with origin=stitch, 24 of them ambiguous-across-firms -- a carry, never a coin flip; LOST=0); admitted 3,560 = merged 3,022 + created 538; DERIVES_FROM 216/216 and STORED_IN 955/955 resolving, 0 dangling; the four provisional names absent from the unified output, PORTAL_BUNDLE kept; the map 65 -> 61 keys with the COND-A resource count unmoved at 32; comp-debt's leg on the canonical names rc 0; three of four census figures reproducing the CVO's C-S40 exactly. BLOCKED at the push: the producer's own grain sentinel refuses because org/modules/graph/grain_baseline.json (CVO-certified) still names the four retired types at non-zero (1260/272/27/85) -- pushing the zip would have made the cloud producer fail as it failed 67 times before F-3. W2-S60 (BLOCKING -> the CTO + CVO). PITCHED (94776/94777) with the REC: recertify the four to 0 in the file's own form (the 2026-07-25 EXTERNAL_ENDPOINT precedent), the CTO's GO + the CVO's sign, then the grant widened to those entries and F-11 re-handed for the push, build, derive, projection and served reads under the manual-trigger form. W2-S61 (the producer's input carries its own prior output -- derive_runner archives the snapshot derive_stitch reads; closed in-grant by a retype pass) -> CloudComp; W2-S63 -> CloudOps; the STORED_IN builder's stale class literal (955 edges would have silently become 0) fixed in-grant.",
+      "artifacts": [
+        "CLOUD @f2750f9212 (F-6 re-addressed)",
+        "wk-cldgrph-6-7 (slot ~7 spawned)",
+        "msgs 94776/94777 (the W2-S60 pitch)"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "the CTO's GO + the CVO's sign on W2-S60 -> widen F-11's grant to grain_baseline.json's four entries and re-hand; F-6's report on ~7; the FINAL packet and the drain-end read after both drains; CronDelete on the send."
     }
   ]
 }
