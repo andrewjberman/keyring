@@ -2187,6 +2187,57 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "TO-OS-s-21 as re-cut @2e1d755943: drift on the device's own timer under the device's own NAMED identity with its s3:PutObject reach read on the APPLIED plane; 'a worker subagent's ambient * on * is NOT a publishing identity for a scheduled pipeline'.",
     "world_is": "After this commit the face names the identity (a per-device scoped role, assumed from the existing principal, fixed session name), the artifact field that proves it (publisher_arn), the three planes the accept reads on, and the home for the device script. Nothing is built yet: no role applied, no scheduled task installed, no credential minted (none will be). The hand-published artifact of 15:55Z stands as QA and reads FRESH at the 09-10 13:00Z run; the first EXERCISED drift read is 2026-09-11 at the earliest.",
     "notes": "This row is the disarm act's record (the W1-S22 / OPSEC disarm-record shape): S25 itself is not edited, and its DISPOSITION at L9 is the CVO's through an adjudicates carrier, not this seat's. What the ruling left for round 3's L10 (the CTO's, not a PRD bump now): OS-s-21's PRD row gains publisher_arn and the per-device role in its accept. Related: [[NFRA_OUTSET-S25]] (the row disarmed), [[NFRA_OUTSET-S23]] (why drift is device-side), [[NFRA_OUTSET-S17]] (the cadence gap)."
+  },
+  {
+    "id": "NFRA_OUTSET-S28",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~W",
+    "surfaced_at": "2026-09-09T23:20:00Z",
+    "one_line": "THE DRIFT ARTIFACT'S `git_head` NAMES A DIFFERENT COMMIT THAN THE ROWS BESIDE IT WERE MEASURED AT -- OS-s-25's on-demand run published git_head=4155c85a1f56 while its 153 rows were measured against that commit's CHILD, 93264db36c97.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE ARTIFACT: s3://opal-estate-report/outset/laptop/comp_heat_drift.json VersionId sm4ktX4NckwQOXAzLELPJKqXz4_d5Tlv, LastModified 2026-09-09T22:54:45Z, vintage.answer_produced_utc 2026-09-09T22:54:40Z, denominators.tool_scalars.git_head = 4155c85a1f56, n = 153.",
+        "INSTRUMENT 1 -- this device's own HEAD reflog: HEAD moved to 93264db36c97 at 2026-09-09T18:54:28-04:00 = 22:54:28Z, SIX SECONDS BEFORE the task's own LastRunTime (22:54:34Z) and twelve before the producer's answer. `git rev-parse 'HEAD@{2026-09-09T18:54:40}'` -> 93264db36c97.",
+        "INSTRUMENT 2, A DIFFERENT SUBSTRATE (the artifact's own rows, not the reflog): commit 93264db36c97 added exactly ONE file, org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260909_ANATOMY_Y_ASSESS_DEBRIEF_AND_CRO_VERIFICATION.md. It appears in ZERO of the artifact's 153 rows. Had HEAD been 4155c85a1f56, that path was necessarily either '??' (untracked) or 'A ' (staged) against it and would have BEEN a row. Its absence proves the worktree was at the child.",
+        "CONTROL ON THE POPULATION, not just this member: of the three published versions of the key, the two earlier ones MATCH the reflog exactly -- 1dd59a6bab55 at 15:55:13Z and 2befa0e9ff10 at 16:52:28Z. Only this one is behind, by exactly one commit. A race, not a systematic offset.",
+        "n ITSELF IS UNAFFECTED, and was verified by SET IDENTITY rather than by count: the artifact's 153 row paths against the live porcelain set differ by exactly ONE path, fully attributed to a commit that landed AFTER the artifact (0f53c01ae7 at 23:02:41Z committed the CE-P-4 task order that was untracked at run time); 0 unattributed disappearances, 0 appearances. Internally n_modified 2 + n_untracked 151 = n 153 = len(rows) 153, three fields agreeing.",
+        "COUNT-INSTRUMENT NOTE: `git status --porcelain | wc -l` undercounts by one when the final line carries no trailing newline; the set comparison above avoids the question entirely."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-21's device publisher stamps the reading's own vintage: denominators.tool_scalars.git_head is the device HEAD the drift rows were measured against. OS-s-25's O25-AC1 arm (c) then reads n 'FROM THE DEVICE at the artifact's git_head' -- a phrase that presumes the field and the rows share one instant.",
+    "world_is": "They can differ by a commit. publish_drift.py reads `git rev-parse HEAD` at :96, BEFORE it runs the producer at :125, so any commit landing in that window leaves the field naming an ANCESTOR of the tree the rows describe -- and on a shared worktree with five live seats commits land every few minutes (six landed in the twelve minutes after this run). MECHANISM NOT ESTABLISHED, and this row does not assert one: the :96-:125 read-order gap is the candidate and is a real window, but it does not fit the clock, because the ref moved at 22:54:28Z, six seconds before the task's own LastRunTime, so a rev-parse issued after process start should already have seen the child. The DISAGREEMENT is proven twice on different substrates; the CAUSE is not.",
+    "notes": "NOT a blocker for O25-AC1: n is correct and was proven by set identity against the live tree with every difference attributed, so arm (c)'s substance holds. What is ARMED is THE FIELD AS A VINTAGE -- `_outset_device_fields` surfaces git_head into the estate report, and a reader who pins a drift reading to that commit cites the wrong one; it is the project's recurring shape, a clean-looking field answering a slightly different question. THE FIX IS NOT MINE UNDER THIS ORDER: TO-OS-s-25's face says publish_drift.py 'is READ by this order and not edited (a needed change is a row under TO-OS-s-21)' -- this is that row. Candidate remedy for the issuer, NOT implemented here: read HEAD again after the producer and either stamp the post-read or refuse when the two differ, which converts a silent wrong vintage into a loud one. Related: [[NFRA_OUTSET-S23]] (why drift is device-side), [[NFRA_OUTSET-S21]] (the publisher's own order), [[NFRA_OUTSET-S29]]."
+  },
+  {
+    "id": "NFRA_OUTSET-S29",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~W",
+    "surfaced_at": "2026-09-09T23:20:00Z",
+    "one_line": "O25-AC1 ARM (d) READS AN INSTRUMENT THAT DOES NOT COVER THE KEY -- no trail in this account records object-level writes on opal-estate-report, so the drift PutObject is not NOT-YET, it is never coming; and the arm's only absence-handling is 'record NOT-YET and re-read'.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DENOMINATOR, read live 2026-09-09T23:1xZ: 2 trails in the account (cloudtrail describe-trails) and 0 CloudTrail Lake event data stores (list-event-data-stores -> EventDataStores: []). Those are the only two surfaces that can hold a data event.",
+        "opal-organization-trail (multi-region): management events ReadWriteType All; its ONE data-event selector is ReadWriteType 'ReadOnly' over arn:aws:s3:::opal-data-bd/ and arn:aws:s3:::opal-data-inf/. Wrong bucket, and ReadOnly excludes PutObject even for those.",
+        "opal-served-key-write-trail: advanced selector 'served-firm-header-writes-only' -- eventCategory Data, readOnly false, resources.type AWS::S3::Object, resources.ARN StartsWith exactly three prefixes: opal-data-inf/platinum/firm/, opal-data-bd/platinum/firm/, opal-data-cot/platinum/firm/. opal-estate-report is not among them.",
+        "A SECOND, INDEPENDENT REASON the named API cannot answer it: CloudTrail LookupEvents serves management and Insights events only and does not return data events even for a captured key. So the read the arm specifies would fail on this key regardless of selectors.",
+        "POSITIVE CONTROL, so this is not a dead instrument reading as a clean zero: the SAME LookupEvents call over the SAME window (2026-09-09T22:54:00Z..23:10:00Z) returned 53 AssumeRole events, of which exactly ONE is this run -- eventTime 2026-09-09T22:54:39Z, roleArn arn:aws:iam::313476888478:role/outset-drift-publisher-laptop, roleSessionName outset-drift-laptop, assumedRoleUser.arn arn:aws:sts::313476888478:assumed-role/outset-drift-publisher-laptop/outset-drift-laptop -- byte-equal to the artifact's publisher_arn. The same call for PutObject over the same window returned 0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "O25-AC1 arm (d), verbatim: \"CloudTrail's PutObject on that key by the outset-drift-laptop session for the run's minute (read when it lands -- CloudTrail lags up to ~15 min; a read before it lands is recorded as NOT-YET, never as absent, and re-read once within the timeout)\". The clause's only contemplated failure mode is LAG.",
+    "world_is": "The failure mode here is COVERAGE, not lag -- and from a single read the two are indistinguishable, which is what makes this a row rather than a retry. An arm whose absence-handling is 'record NOT-YET and re-read within the timeout' records NOT-YET forever on a key no trail watches, and NOT-YET reads to every later seat as 'coming', which is the more expensive of the two wrong answers. The write itself is not in doubt: the object carries a new VersionId at 22:54:45Z and the writer's session is independently recorded on the MANAGEMENT plane.",
+    "notes": "CUT DEFECT, the issuer's, filed as the face instructs ('If something in this face is wrong or missing, that is a CUT DEFECT and it is the issuer's -- file the row and say so; do not work around it'). NOT WORKED AROUND: I did not add a data-event selector -- that is a billed infra change to a trail this order grants nothing on, and it is not an act to slip inside an accept. TWO REMEDIES FOR THE ISSUER, neither implemented here: (a) re-cut arm (d) onto the evidence that EXISTS -- the AssumeRole management event, which is independent of the artifact's self-report and pins the session to the second; or (b) authorize an advanced selector covering arn:aws:s3:::opal-estate-report/outset/, an infra act with its own cost and its own NEVER-2 entry. REC: (a). It is available now, it costs nothing, and it DISCRIMINATES -- a forged or copied publisher_arn in the artifact could not produce a matching AssumeRole record at the right second. What arm (d) was buying is already bought: the write's occurrence by the object's own VersionId and LastModified, the writer's identity by the AssumeRole record. Related: [[NFRA_OUTSET-S28]], [[NFRA_OUTSET-S21]]."
   }
 ]
 ```
