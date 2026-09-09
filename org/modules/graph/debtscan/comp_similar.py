@@ -567,40 +567,68 @@ def self_test() -> int:
           f"compute={n_compute}/2 json={n_json}/4 human={n_human}/4 "
           f"{'PASS' if c3b else 'FAIL'}")
 
-    # C3c CAPTURE (added 2026-09-02, same session, after C3b was caught committing C3's own
-    # defect). WARN: C3b tests ONLY the UNKNOWN path -- it passed IDENTICALLY before and after the
-    # stderr fix, while the live corpus still rendered UNKNOWN. A control that green-lights the
-    # broken state is the D3 shape one domain over, so the MEASURED path needs its own leg.
-    # The header below is a VERBATIM excerpt of real comp-kuzu output (streams separated,
-    # 2026-09-02), so this tests the shape the parser actually meets -- not one written to fit
-    # the parser. Runs offline: no graph, no AWS.
+    # C3c CAPTURE. REWRITTEN 2026-09-09 (NFRA_CLDGRPH CG-s-17, the INSTRUCTION plane; pass 2 on the
+    # issuer's amendment, which widened the grant to summary_corpus.py so the CAPTURE could move
+    # with the comparison -- row W2-S32). The header this leg used to feed -- "DB: kuzu_nessie_db
+    # ... built: ..." -- was a VERBATIM excerpt of a tool that no longer emits it. comp-kuzu is a
+    # thin client over the SERVED projection and its whole disclosure is ONE line (kuzu_cli.py:
+    # 46-61):
+    #     VINTAGE: <plain-words age>  [vintage=<vintage> manifest=<sha12> prefix=<prefix>]
+    # A fixture that keeps feeding the old shape scores this leg GREEN against a header the estate
+    # never sees again, and a fixture that cannot represent the current world cannot score it.
+    # BOTH ARMS ARE THE SERVED SHAPE NOW, which is what makes this a measurement rather than a
+    # tautology: the POSITIVE arm feeds a served line carrying a vintage and requires a MEASURED
+    # claim whose corpus_db is the SERVED SURFACE (the artifact prefix), and the NEGATIVE arm feeds
+    # a served line the service answered WITHOUT a vintage -- the client renders those bracket
+    # fields as the literal `None` -- and requires NO measured claim, because a parser that reads
+    # "None" as a vintage is the false-green the disclosure exists to prevent. Without the negative
+    # arm, a capture that returned `measured` unconditionally would pass the positive one.
+    # Runs offline: no graph, no AWS, no clock.
     import summary_corpus as _sc
+    _served_header = ("VINTAGE: built 2026-09-09T11:02:44+00:00, 0.4h ago  "
+                      "[vintage=2026-09-09T11:02:44+00:00 manifest=9f4a57262f1c "
+                      "prefix=s3://opal-globgrph-projection/served/]\n")
+    _served_no_vintage = ("VINTAGE: AGE NOT STATED BY THE SERVICE -- no age was inferred.  "
+                          "[vintage=None manifest=None prefix=None]\n")
     _saved = dict(_sc._CORPUS_VINTAGE)
     try:
         _sc._CORPUS_VINTAGE.clear()
-        _sc._capture_kuzu_vintage(
-            "=== comp-kuzu provenance ===\n"
-            "  DB: kuzu_nessie_db  (27122 nodes / 60670 edges)\n"
-            "  source: nessie\n"
-            "  built: 2026-09-02T14:20:11.113748+00:00 (age: 0.2h)\n"
-            "============================\n")
+        _sc._capture_kuzu_vintage(_served_header)
         cap = coverage(corpus)
         c3c = (cap.get("corpus_vintage_claim") == "measured"
-               and cap.get("corpus_built") == "2026-09-02T14:20:11.113748+00:00"
-               and cap.get("corpus_age") == "0.2h"
-               and cap.get("corpus_db") == "kuzu_nessie_db"
+               and cap.get("corpus_built") == "2026-09-09T11:02:44+00:00"
+               and cap.get("corpus_age") == "built 2026-09-09T11:02:44+00:00, 0.4h ago"
+               and cap.get("corpus_db") == "s3://opal-globgrph-projection/served/"
                and "UNKNOWN" not in cap.get("vintage_note", ""))
-        # negative control: a header with NO built: line must NOT yield a measured claim.
+        # NEGATIVE CONTROL: a served line the service answered without a vintage must NOT yield a
+        # measured claim, and coverage() must say UNKNOWN in terms.
         _sc._CORPUS_VINTAGE.clear()
-        _sc._capture_kuzu_vintage("=== comp-kuzu provenance ===\n  DB: kuzu_nessie_db\n")
-        c3c_neg = coverage(corpus).get("corpus_vintage_claim") == "absent"
+        _sc._capture_kuzu_vintage(_served_no_vintage)
+        neg = coverage(corpus)
+        c3c_neg = (neg.get("corpus_vintage_claim") == "absent"
+                   and neg.get("corpus_built") is None
+                   and "UNKNOWN" in neg.get("vintage_note", ""))
+        # RETIRED-SHAPE CONTROL: the OLD local-projection header must no longer be readable. A
+        # parser that still answered it would be a live reader for a store retired at CG-s-8.
+        # The discriminating line is the `built:` one -- that is what the retired regex keyed on --
+        # so the control feeds THAT and nothing else. It deliberately does NOT spell the retired
+        # store's name: this is a live code-band string constant, and a fixture that names the
+        # retired surface in order to prove the retired surface is gone puts the token back on the
+        # very instruction plane this cell is clearing. E1-AC3 counts code-band strings and it is
+        # right to -- an agent reading this file would meet the name here as readily as in a help
+        # text -- so the control is written to discriminate without carrying it.
+        _sc._CORPUS_VINTAGE.clear()
+        _sc._capture_kuzu_vintage("  built: 2026-09-02T14:20:11+00:00 (age: 0.2h)\n")
+        c3c_old = coverage(corpus).get("corpus_vintage_claim") == "absent"
     finally:
         _sc._CORPUS_VINTAGE.clear()
         _sc._CORPUS_VINTAGE.update(_saved)
-    c3c_ok = c3c and c3c_neg
+    c3c_ok = c3c and c3c_neg and c3c_old
     ok &= c3c_ok
-    print(f"  C3c vintage-CAPTURE (real header parsed -> measured; headerless -> absent): "
-          f"parse={'ok' if c3c else 'BROKEN'} neg-control={'ok' if c3c_neg else 'BROKEN'} "
+    print(f"  C3c vintage-CAPTURE (served+vintage -> measured on the SERVED surface; served without "
+          f"a vintage -> absent + DISCLOSED; the retired local header -> unreadable): "
+          f"served={'ok' if c3c else 'BROKEN'} neg-control={'ok' if c3c_neg else 'BROKEN'} "
+          f"retired-shape-control={'ok' if c3c_old else 'BROKEN'} "
           f"{'PASS' if c3c_ok else 'FAIL'}")
 
     # C5 hold-aware: the held twin is excluded even though it is COLD + summary-identical.
