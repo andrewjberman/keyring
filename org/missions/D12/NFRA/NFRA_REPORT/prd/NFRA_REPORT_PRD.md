@@ -9,7 +9,7 @@ citations behind.*
 **L1 owner:** `4.0.0_SA_CRO~Z` · **L2-L4 owner + author:** `1.0.0_SA_CTO~Z` · **L5-L6:** `2.0.0_SA_COO~ZZ` · **L8-L10:** `3.0.0_SA_CVO~Z` · **Integrator:** `0.0.0_AB_MSTR~Z`
 **Brief (L1):** `docs/briefs/global-infrastructure-reporting-brief-20260909.md` @`37ff80867a`
 **Endpoint (L2):** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_GLOBAL_INFRA_REPORTING_20260909.md`
-**Version:** v0.1, 2026-09-09 -- **L4 MINT. The ENDPOINT below is RATIFIED IN FULL.** Ten bars
+**Version:** v0.2, 2026-09-09 ~19:0xZ -- **v0.2 ADDS THE SURFACE MANIFEST (section 8), WHICH v0.1 OMITTED.** Andrew asked whether the PRD carried one and 2.0.0_SA_COO~ZZ filed the same gap at msg 20590 as an L5 blocker-in-waiting. BOTH WERE RIGHT, and the census settles it: across 205 tracked *_PRD.md, seven carry a manifest, and of the SIX tree-home L4-spine PRDs FIVE do -- NFRA_CLDGRPH (28 rows), NFRA_OPSEC202609 (28), ETFS_GUARDRAIL (12), NFRA_COMPEFFICACY, NFRA_OUTSET -- with NFRA_REPORT the SOLE omission. That resolves msg 20590's fork in favour of reading (A): the manifest is an L4 DELIVERABLE, rule 27 makes L4 the CTO's alone, and the owned-paths gate independently refuses 2.0.0_SA_COO_ZZ on prd/**. Section 2 OWNS is ENUMERATED to twelve items in the same version, because a domain written as one prose sentence cannot have a MECE check RUN against it and rule 24(i) requires hunting the uncovered member -- that lane raised this too. Before it, **v0.1 = L4 MINT. The ENDPOINT below is RATIFIED IN FULL.** Ten bars
 confirmed by Andrew's (b)/(c)/(d) on the L2 read; the remaining two -- `FWD-1`'s declarative re-cut
 and `FWD-12` -- confirmed by his **"go with your recs on those two."** `FWD-12`'s bar was TIGHTENED
 before landing (see its `CONFIRMED` line).
@@ -170,10 +170,17 @@ ever standing in for a measured one.
 
 ## 2. Territory -- what this owns, and what it only relies on
 
-**Owns:** the report artifact -- its state model, structure, schedule and delivery; the **compute
-manifest** as a reporting substrate (EC2 + ECS), including its schema fix and backfill;
-**reconciliation between what is monitored and what is actually served**; and **suppression /
-deprecation as recorded state**, with owner and reason.
+**Owns (ENUMERATED for postulate (i) -- twelve items).** ⛔ **The enumeration is the point, not the
+prose.** Rule 24(i) requires hunting the UNCOVERED member, and a domain written as one sentence
+cannot be run against; `2.0.0_SA_COO~ZZ` raised exactly this at msg 20590 and was right.
+**(1)** the report's STATE MODEL -- the two-axis vocabulary itself · **(2)** the report ARTIFACT's
+row STRUCTURE, including the per-row delta · **(3)** its SCHEDULE and DELIVERY · **(4)** its
+VERDICT -- the does-anything-need-Andrew determination · **(5)** the COMPUTE MANIFEST as a reporting
+substrate (EC2 **and** ECS), its schema fix and its backfill · **(6)** the ALERT-DELIVERY read ·
+**(7)** the DEPRECATION determination -- the consumer walk to the client-facing terminus ·
+**(8)** SUPPRESSION / RETIREMENT as recorded state, with owner and reason · **(9)** the COST-ANOMALY
+detector · **(10)** the COVERAGE / DENOMINATOR discipline carried on every count ·
+**(11)** MONITORED-vs-SERVED reconciliation · **(12)** the ANOMALY BREAKDOWN and its written account.
 
 **Relies on, does not own:**
 
@@ -297,3 +304,56 @@ vintage. **Unowned, and it bears directly on `FWD-10`.**
 **ZERO of the twelve outcomes are BLOCKED by `NFRA_OPSEC202609`.** That project is a CONTENT
 dependency on three security rows, never a structural one on this report. OPSEC completion is a
 QUALITY gate on those rows, not a LAUNCH gate on the project.
+---
+
+## 8. SURFACE MANIFEST (step 4 -> step 5) -- one row per ENGINE
+
+**Contract** (as adopted @`ecaa7c7dcb`, ETFS_GUARDRAIL s.7, and used by `NFRA_OPSEC202609` s.8):
+`claim` is about the SURFACE ADDRESS and takes the five-value basis vocabulary
+`absent | unmeasured | held | inferred | measured` (`.tools/substrate-card-check.py` `BASIS_RANK`;
+every legal transition is a rank increase, and `verify` is the act that moves `absent`/`unmeasured`);
+`verb` is the contract enum `port | classify | wire | align | retire | verify`; `outcome` = `FWD-n`;
+`accept` = the section 3 acceptance-property number; `depends_on` = row ids; `bound` = the constraint
+the cell may not cross.
+
+**Provenance, read before citing any cell.** Every `measured` evidence cell is the L1 BRIEF's
+measurement at `@37ff80867a` (`4.0.0_SA_CRO~Z`, 2026-09-09) unless it names another seat. **Nothing
+in this table was re-measured at L4**; the brief's `F<n>` ids are cited so `2.0.0_SA_COO~ZZ`'s L5
+battery re-grounds each cell at its own vintage. `absent` rows are outcomes with nothing built.
+
+**Domain (postulate i):** the section 2 **OWNS** cell, TWELVE enumerated items. **MECE is RUN below,
+not asserted.**
+
+| id | outcome | surface (engine) | claim | MEASURED-BY / evidence | lane | verb | depends_on | accept | bound |
+|---|---|---|---|---|---|---|---|---|---|
+| S1 | FWD-2, FWD-4 | The report's STATE MODEL -- the two-axis vocabulary (instrument axis CHECKED vs BLIND; world axis OK / DEGRADED / BREACH) and the property+owner attribution riding it | absent | brief F6 (the vocabulary already exists in two places, unratified as the report's law); Andrew-direct 2026-09-09 ratified the two-axis model and the three properties | report lane | wire | -- | 2, 3 | `C-FWD2-FIRST`; `C-WEBSITE-BLIND` -- it MUST express a PERMANENT blind, not only a not-yet; `C-SENTINEL-STATE` -- and a DESIRED-not-APPLIED row |
+| S2 | FWD-3, FWD-1 | The report ARTIFACT's row structure and its PER-ROW DELTA against the previous edition | absent | brief F1: the rollup is a `max()` over eight rows and the subject line read the same value on every instance in the window -- a signal that never changes | report lane | wire | S1 | 1, 3 | a delta computed per ROW, never only on the total; `C-AI` -- the delta is COMPUTED |
+| S3 | FWD-1 | The report's SCHEDULE and DELIVERY -- trading days only, before Andrew's morning | measured | brief F2: the detectors are weekday-aware and NOT trading-day-aware; **it sent on Labor Day 2026-09-07** | report lane | align | S2 | 1 | `C-TRADING-DAYS`; `lib/trading_calendar.py` is the ONE frontier (CLAUDE.md NEVER#4) -- never a calendar-day subtraction |
+| S4 | FWD-1 | The VERDICT rule -- the does-anything-need-Andrew determination, derived from the rows | absent | brief F1 (the current signal cannot vary); FWD-1's own bar requires at least one correct NOTHING morning | report lane | wire | S1, S2 | 1 | `C-AI` part 3 -- **A VERDICT IS COMPUTED, NEVER GENERATED.** A model may render it, not decide it |
+| S5 | FWD-9 | The COMPUTE MANIFEST as reporting substrate -- EC2 **and ECS**, each unit's duty cycle, autoshutdown state, the always-on set by group | measured | brief F8: 27 declared services, 18 of 27 rows carry a lifecycle word where a machine type belongs, two services share an id, **and the manifest is EC2-ONLY -- ECS absent entirely**; the manifest is itself 2014.2h old | infra lane | port | -- | 4 | `D3` -- per-box cost anomaly (S9) CANNOT be computed until this lands; segment grain is available now. Reuse `sync-ec2-manifest.sh`, do not re-buy it |
+| S6 | FWD-5 | The ALERT-DELIVERY read -- alarm-anchored, resolving alarm -> topic -> CONFIRMED subscriber | measured | brief F4; and `1.0.0_SA_CTO~Z` 2026-09-09 live, row `NFRA_OPSEC202609-Z-S151`: **3 of 7 distinct alarm targets have ZERO confirmed subscribers** (`opal-login-abuse-alerts`, `astn-wsjft-alerts`, `etfs-reports-alerts`), positive-controlled by the 4 that do | report lane | wire | S1 | 6 | `C-ALARM-ANCHORED` -- CONFIRMED delivery, never "subscribed", never the alarm's own configuration. **A pending subscription delivers nothing** |
+| S7 | FWD-6 | The DEPRECATION determination -- the consumer walk from a stale artifact to a client-facing terminus | absent | brief F7 (monitors outlive migrations and nothing detects it); Andrew-direct ruling 9 supplies the criterion and its grain | report lane | wire | S1 | 2 | `C-DEPRECATED-TERMINUS` -- zero consumers AT THE TERMINUS by walking the chain; **never the first `scripts:` field, never age** |
+| S8 | FWD-7 | The RETIREMENT REGISTER -- suppression/deprecation as recorded state with owner, reason and date | absent | brief F10: 216 security findings are all configuration properties and **no suppression state exists, so the same items are re-reasoned daily** | report lane | wire | S7 | 2 | never-widen sign-off (CTO+COO) still governs RETIRING SERVED OUTPUT -- this project CLASSIFIES, it does not delete |
+| S9 | FWD-8 | The COST-ANOMALY detector -- material divergence from a segment's or a box's own trailing history | measured | brief F9: cost has no standard so it cannot fail; **`(untagged)` is $154.21, 45% of spend and the largest single line** | report lane | wire | S5 | 4 | `C-COST-15` (Andrew's 15% / trailing-30-day detector, verbatim). **BOX grain is blocked on S5; SEGMENT grain is available now** |
+| S10 | FWD-10 | The COVERAGE / DENOMINATOR carrier -- every count states what it counted out of | absent | brief F3: coverage, not staleness, is the freshness story (`mdpf 0/1`); brief F5: the drift section colours on INSTRUMENT freshness rather than on drift | report lane | wire | S1 | 4, 5 | a thinly-monitored surface must not produce a score that reads as healthy as a thoroughly-monitored one |
+| S11 | FWD-11 | The MONITORED-vs-SERVED reconciler -- what we publish that no instrument covers | absent | brief Part II Owns, verbatim: *"the standing check that NO EXISTING INSTRUMENT PERFORMS"* | report lane | wire | S10 | 5 | the live-plane enumerator is `comp-find --corpus aws`, **REPAIRED 2026-09-09 and re-exercised at the merged head: 757 hits / 2157 nodes, VINTAGE now carried.** No longer a blocked dependency |
+| S12 | FWD-12 | The ANOMALY BREAKDOWN -- connected resources/consumers/generators for an anomalous row -- plus its written account | absent | Andrew-direct 2026-09-09 (the outcome's SOURCE line) | report lane | wire | S1, S11 | 3, 5 | `C-AI` parts 1+2 -- the breakdown is COMPUTED, the account is GENERATED and **may never be the sole carrier of a fact**. **BUILD-LADDER RUNG 2 FIRST:** the graph and its call manifest exist; CLAUDE.md rule 20 says QUERY, NEVER REBUILD |
+
+**MECE, BOTH DIRECTIONS, RUN RATHER THAN ASSERTED (at this edit):**
+- **FORWARD -- every OWNS item has at least one row:** (1)->S1 · (2)->S2 · (3)->S3 · (4)->S4 ·
+  (5)->S5 · (6)->S6 · (7)->S7 · (8)->S8 · (9)->S9 · (10)->S10 · (11)->S11 · (12)->S12.
+  **12 of 12 covered, 0 uncovered.**
+- **BACKWARD -- every row maps to an OWNS item and to at least one outcome:** 12 rows, 0 orphans.
+- **OUTCOME COVERAGE:** `FWD-1` is served by S2/S3/S4, `FWD-2` and `FWD-4` by S1, every other outcome
+  by exactly one row. **12 of 12 outcomes carried, 0 uncovered.**
+
+⚠ **THE 12-AND-12 IS A MEASUREMENT AT THIS EDIT, NOT AN INVARIANT, AND IT IS DELIBERATELY NOT
+DECLARED AS ONE.** `NFRA_OPSEC202609` asserted an `OP-s-<n>` IS `S<n>` bijection in a heading and it
+went FALSE with nothing able to fail -- prose cannot fail. **A surface needing two acts across rounds
+is normal, not an exception**, so a later cell mirroring S1 twice, or a row acquiring a second cell,
+breaks nothing here. What L5 must preserve is COVERAGE IN BOTH DIRECTIONS, never the one-to-one.
+
+**What this manifest does NOT assert:** that every row is buildable as written -- `S5`'s ECS half and
+`S9`'s box grain are coupled and `D3` says so; that the `lane` column is a seat assignment (it is a
+lane; `2.0.0_SA_COO~ZZ` seats workers at L6); or that `absent` means unexamined -- every `absent` row
+names what was measured about the CURRENT state's failure to serve it.
