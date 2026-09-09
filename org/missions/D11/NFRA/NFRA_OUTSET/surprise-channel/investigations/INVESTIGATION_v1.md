@@ -1860,6 +1860,30 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "NFRA_OUTSET-W1-S25, my own row: 'the deployed bytes contain 0 occurrences of _outset_read, OUTSET_ANSWER_STATE_TO_STATUS, rerun_recipe and tool_invocation', offered as the evidence that the served producer predates OS-s-9/10/11.",
     "world_is": "Two of those four tokens are absent from HEAD too. A zero from a token that exists nowhere is not a measurement of the served artifact; it is a measurement of my own spelling. The claim survives on the tokens that do discriminate, and it is stated here with them rather than with the original list.",
     "notes": "hazard_standing INERT: no operational hazard, a weaker instrument than it looked, corrected on stronger evidence. W1-S25 is NOT edited or re-dispositioned -- append-only; this row is the carrier, the same shape W1-S18 used for W1-S12. THE GENERAL FORM, since it has now bitten me twice in one project: every token in a presence/absence census needs its own positive control, and a census of four tokens is four detectors, not one."
+  },
+  {
+      "id": "NFRA_OUTSET-S15",
+      "project": "NFRA_OUTSET",
+      "fabric": "laptop",
+      "surfaced_by": "1.0.0_SA_CTO",
+      "surfaced_at": "2026-09-09T13:04:20Z",
+      "one_line": "DISARM ACK for NFRA_OUTSET-S3 (REMEDIATION_v1.md S3, owner 1.0.0_SA_CTO): the wrong-grain false-deny mode is now the FOURTH mode in the /cloud-ops IAM INSTRUMENT TRAPS section @4e22065278, carrying S3's measured pair (logs:GetLogEvents against a log-STREAM-grain ARN -> implicitDeny for a */* principal; the log-GROUP-grain ARN -> allowed) and its mitigation in the THEREFORE line (the ARN at the grain the ACTION is authorized on; a */*-principal positive control beside any deny acted on); the CLAUDE_ANNEX 22a pointer reads FOUR modes and names them @e9f7c03b0c. The remedy named 'the doctrine line landing' as the disarm condition; it has landed, measured at both commits.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "1.0.0_SA_CTO",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "git show 4e22065278:.claude/skills/cloud-ops/SKILL.md: 'FOUR INDEPENDENT FALSE-DENY MODES' 1 of 1 expected, 'THREE INDEPENDENT FALSE-DENY MODES' 0 (the retired count is gone), 'WRONG GRAIN' 1; mode 4 quotes S3's measured ARN pair and names S3 and 0.7.0_AE_CloudOps~W as the source.",
+              "git show e9f7c03b0c:docs/doctrine/CLAUDE_ANNEX.md: 'four false-deny modes' 1 of 1 expected, 'three false-deny modes' 0; the pointer names all four modes and NFRA_OUTSET-S3, and still points at /cloud-ops for the mechanism.",
+              "The mitigation carried is S3's own (notes): pass the resource ARN at the grain the ACTION is authorized on (log-group for logs:GetLogEvents, task-definition for ecs:RunTask) and run a */*-principal positive control beside any deny you intend to act on -- a deny you cannot reproduce against an admin principal is the instrument, not the world.",
+              "Two one-file commits in the shared tree by design (CLAUDE.md 14b: a trivial one-file commit is not isolated); this row is appended in the shared tree because the channel is append-only shared (14b's inversion)."
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "REMEDIATION_v1.md S3 (3.0.0_SA_CVO, round 1, owner 1.0.0_SA_CTO): 'Add the wrong-grain mode to the IAM traps section the /cloud-ops doctrine carries beside the two known modes, with the mitigation; disarm on the doctrine line landing.'",
+      "world_is": "The line has landed on both carriers: .claude/skills/cloud-ops/SKILL.md 'IAM INSTRUMENT TRAPS' lists four modes at 4e22065278 and docs/doctrine/CLAUDE_ANNEX.md 22a names four at e9f7c03b0c. NOT done and NOT claimed: the comp-iam simulate wrapper's own rules and docs/doctrine/CONTROLS_OVER_CARE.md, which S3's notes also named as catalogue homes -- the remediation row names only /cloud-ops, and this ack claims exactly that and no more.",
+      "notes": "A DISARM ACK, NOT AN ADJUDICATION: S3 stands unedited and 3.0.0_SA_CVO closes the remediation row on its own read. Rows in this document after this append: 77 (76 before; S1-S15 by seats, the rest W-rows by the three worker slots). STATE, per Rule 22: the doctrine is a READING control -- DESIRED -> APPLIED at these commits; it reads EXERCISED only when a seat's next simulate run passes the ARN at the action's grain and prints the admin-principal control beside a deny. This row does not claim that. Filed under Andrew's 2026-09-09 word that NFRA_OUTSET work already routed may move; nothing new is cut by it."
   }
 ]
 ```
