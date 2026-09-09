@@ -313,6 +313,24 @@ as D10's instrument over the D10 taxonomy; the prior per-partner attempt stalled
 `DIRECTIVES_RETIRED.yaml`. Live: D0–D12 (13 live, 1 retired; `directives-check` 17:17Z). **Finding:** D14 is
 Andrew's number and is unminted; D13 is unexplained by anything read here. The register row is `0.0.0_AB_MSTR`'s cell.
 
+### F-M — What "the current YCharts solution" actually provides, field by field (ADDED 2026-09-09 ~18:2xZ on Andrew's word)
+Andrew supplied one YCharts "portfolio vs Opal model" comparison report (33 pages, sha256 `dc824eac…68a90`, client-named file
+kept in Downloads, not committed) and asked for a fine-toothed scrape of its fields as a JSON addition for the CTO. Delivered:
+`docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json` — 33 sections, 176 field-catalog rows, 125
+distinct field names, 1,359 numeric values transcribed (33 of 33 pages text-extracted; 7 chart pages viewed as renders), 46
+glossary terms parsed from the report's own definitions, client name / advisor contact / client inception date scrubbed.
+**Findings that bear on O3/O4:** (i) the report is a HYPOTHETICAL weighted-blend calculation (target weights × fund total
+return, rebalanced, no flows, no costs), not account performance — its own p23 says "THIS REPORT IS NOT AN INVESTMENT
+PERFORMANCE REPORT"; (ii) FOUR as-of clocks coexist in one document (Sep 9, Sep 8, Aug 31, Jun 30) plus per-cell SEC-yield
+dates back to 2022 — O9's four-facts rule, illustrated by the incumbent; (iii) roughly half the fields are LOOK-THROUGH
+exposures and fundamentals (region/country, style box, sector, bond sector/maturity/credit, weighted P/E etc.) that need a
+licensed fund-holdings + classification feed — RCN-0001 finding 5's moat, again; the return/risk arithmetic is computable
+from a total-return series; (iv) the alpha/beta benchmark is never named; (v) **no stress scenario appears in 33 pages** —
+the nearest fields are Drawdown and Monthly VaR 5% — so if the estate's sensitivity workflow is a different YCharts report
+type, that artifact is NOT yet captured (Part VII.13); (vi) the report carries an Opal factsheet disclosure ("net of the
+highest Opal fee, 1%") that does not reconcile with the report's own 0.30% advisory-fee setting — a disclosure-owner item
+(Part V.12). A PROPOSAL-flagged feasibility read per field group is inside the JSON for the CTO.
+
 ### F-L — The proposal's terminology map already has an estate object: one firm enumeration, and ADVI_ROLGAT's role tiers
 `data/firm_registry.json` is "THE ONE FIRM ENUMERATION" by its own law block (3 client firms; `kind` enum
 client|test|demo). §03's "partner/advisory firm vs advisor/book" split maps to `firm_id` vs the ROLGAT/ADVI advisor
@@ -402,6 +420,9 @@ Measured 2026-09-09 17:00Z–17:35Z. Ages; do not cut outcomes from it.
 10. **The `1:69ANNUAL`/`c01` defect's current state in `ADVI_49F` was not re-measured**; F-F carries RCN-0002's naming only.
 11. **"2016 issue" and "Pershing Square"** remain exactly as unresolved as the proposal leaves them.
 12. **D13** — its absence is reported, not explained.
+13. **The YCharts scrape (F-M) covers ONE report type, a portfolio-vs-model comparison.** It says nothing about what YCharts
+    provides for stress/sensitivity analysis; no scenario field exists in that artifact. Per-point coordinates on the 5-year
+    scatter plot were not read (chart-only).
 
 ---
 
@@ -411,6 +432,8 @@ Measured 2026-09-09 17:00Z–17:35Z. Ages; do not cut outcomes from it.
   BRIEF PATH        docs/briefs/investor-reporting-unification-brief-20260909.md
   SOURCE            docs/briefs/sources/INVESTOR_REPORTING_UNIFICATION_PROPOSAL_20260909_extracted.txt
                     (docx sha256 db4168a65ef0afe2c7e8436ca9be8e2ee5776d35e6d5ae2cf4df769ff61ef0e8, 80,251 B, Andrew's Desktop)
+  YCHARTS SCRAPE    docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json (F-M; for the CTO)
+                    (source PDF sha256 dc824eacf1ed4920c3c45be988b045850cf086985ee52550373e5a426ba68a90, 858,808 B, 33 pp, Andrew's Downloads, NOT committed)
   ANDREW-DIRECT     org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260909_171xZ_INVESTOR_REPORTING_BRIEF_CREATE_WRAPS_D1_D2_D3_ESTABLISHES_D14.md
   DIRECTIVE         D14 "Investor Reporting" -- Andrew's number, UNMINTED (F-K); register owner 0.0.0_AB_MSTR
   PROJECT           NONE-YET

@@ -35,6 +35,14 @@ brief "wraps a lot of work we've been doing on D1 D2 D3 as well as establishes a
    sent to `1.0.0_SA_CTO` (94600), `2.0.0_SA_COO` (94601), `0.0.0_AB_MSTR` (94602) — 3 DELIVERED / 0 QUEUED.
    Register: RCN-0008 appended (index row placed after RCN-0007 on a second edit; the first edit had put it before).
 
+6. **(17:45Z → 18:3xZ, appended.)** The CTO answered 94600 with 94608: brief READ; L2 waits on Andrew's ~12:5xZ "no new work
+   until you get my transcript" word to the CTO seat, not on anything from this seat; acked on the ledger. Then Andrew, same
+   terminal: a fine-toothed field scrape of a YCharts portfolio-vs-model comparison PDF (33 pp) as a JSON addition for the CTO.
+   Built by a Python script (values hand-transcribed from the pypdf extraction, glossary parsed, sums and counts computed):
+   `docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json` -- 33 sections / 176 catalog rows / 125 fields /
+   1,359 values / 46 glossary terms; PII predicate 0 hits (client name, advisor contact, a personal-looking inception date, the
+   compliance contact all scrubbed). Brief amended (F-M, non-claim 13, REFS). Register downstream appended. Sent to the CTO.
+
 ## Compiler Tools
 | Tool | Invocation | Result | Note |
 |---|---|---|---|

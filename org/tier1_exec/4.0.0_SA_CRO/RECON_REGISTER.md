@@ -672,3 +672,14 @@ current-flags caveat).
 - **Register act named, not taken:** D14 row = `0.0.0_AB_MSTR`'s cell; member re-homing = CTO at L3.
 - **Surfaced for Andrew:** the ADVI_PERFRP 08-24 distribution restriction naming this seat (stand / lift / scope).
 - **Declared not chased:** why NFRA_PPL* stalled; INF cohort semantics; silver column retention; live bucket reads.
+
+### Downstream append -- 2026-09-09 ~18:2xZ, the YCharts field scrape (Andrew-direct, same terminal)
+Andrew: *"do a fine-toothed scrape of the various fields in this document and include it as a json file addition to CTO,
+because this is the information that the current YCharts solution provides"* -- one YCharts portfolio-vs-Opal-model comparison
+report (33 pp, sha256 `dc824eac…68a90`, client-named, kept in Downloads, NOT committed). Delivered
+`docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json`: 33 sections / 176 catalog rows / 125 distinct
+fields / 1,359 numeric values / 46 glossary terms; 33 of 33 pages text-extracted (pypdf), 33 of 33 rendered (PyMuPDF), 7 chart
+pages viewed. PII scrubbed: client name, advisor contact, client-portfolio inception date, Opal compliance contact. Brief
+amended with finding F-M + non-claim 13. Findings: hypothetical weighted-blend calculation, not account performance; four
+as-of clocks in one report; ~half the fields are look-through classification (the RCN-0001 moat); alpha/beta benchmark unnamed;
+**no stress scenario anywhere in the artifact**. No vendor egress.
