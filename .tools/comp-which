@@ -287,7 +287,11 @@ RULES = [
      "genuinely ambiguous among data-feed vs serving-route vs named-thread; surfaces all three"),
     (["lambda", "function", "handler", "what does this lambda", "what does the lambda"],
      "lambda",
-     ["comp-iam service <fn>", "comp-aws", "comp-estate --resource <fn>"],
+     # CG-s-30 (2026-09-09, Andrew-direct): comp-aws is DEPRECATED FOR AGENT USE and is no longer
+     # routed. The served graph answers the same question in ~ms -- comp-kuzu, not a laptop derive.
+     ["comp-iam service <fn>",
+      "comp-kuzu \"MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' AND n.name CONTAINS '<fn>' RETURN n\"",
+      "comp-estate --resource <fn>"],
      "what a lambda does + its IAM + its named thread"),
     # THE THREE CLAUDE.md-MANDATED CALLS (CTO~Z ruling 223728Z). They were DECLARED in tools_index and
     # still UNROUTABLE: the router ranks TOOLS off THIS curated vocabulary, and never reads tools_index.
@@ -372,8 +376,13 @@ RULES = [
      "functional-overlap/superseded -> comp-similar). All advisory, NONE deletes"),
     (["what resources", "aws resource", "which thread owns", "estate", "cloud graph", "blast radius of"],
      "AWS resources / thread ownership",
-     ["comp-aws", "comp-estate <name>", "comp-pipescript deployed"],
-     "what AWS resources exist + which named thread owns them"),
+     # CG-s-30: repointed off comp-aws (deprecated for agent use 2026-09-09) onto the SERVED
+     # surface -- comp-kuzu for the typed graph, comp-find --corpus aws for a name/arn regex.
+     ["comp-kuzu \"MATCH (n:CloudNode) RETURN n.node_type, count(*)\"",
+      "comp-find --corpus aws '<regex>'",
+      "comp-estate <name>", "comp-pipescript deployed"],
+     "what AWS resources exist + which named thread owns them (the SERVED cloud graph -- read it, "
+     "never rebuild it to answer a traversal)"),
     (["breaks", "blast", "what depends", "if i change", "impact of changing", "downstream of",
       # real-NL impact vocabulary: "what would a CHANGE TO X AFFECT", "what does changing X
       # break" -- agents say affect/change-to, not "impact of changing". (paraphrase 2026-06-26)
@@ -1187,8 +1196,9 @@ RULES = [
      "cloud resources of a type -- census/list (comp-kuzu, the Rule-20 QUERY default)",
      ["comp-kuzu \"MATCH (n:LAMBDA) RETURN n.id\"  # ~ms, canonical graph; swap the label per type"],
      "list/inspect cloud resources of a type (all Lambdas / S3 buckets / roles): comp-kuzu is the "
-     "fast query layer over the canonical cloud graph; comp-aws classes/derive is the live census "
-     "(WRITE-path derive is compute-intent). Rule 20: default to QUERY, never rebuild to answer a traversal"),
+     "fast query layer over the SERVED cloud graph, which the estate refreshes on its own schedule "
+     "(nightly derive-runner + incremental updater). Rule 20: default to QUERY, never rebuild to "
+     "answer a traversal -- and since 2026-09-09 (CG-s-30) there is no agent-routed rebuild to run"),
     # pipescript -- the CLAUDE.md situation-table's own headline question ("What's in the news/advi/
     # market/... pipeline?") had NO curated vocabulary and fell to grep (frozen-cohort sub-floor).
     (["what's in the", "whats in the", "what is in the", "pipeline overview", "named thread",
@@ -1394,6 +1404,35 @@ def _load_ledger():
     return _LEDGER_DATA
 
 
+_DEPRECATED_TOOLS = None
+
+
+def _deprecated_tools():
+    """TOOL IDs the population authority marks `status: deprecated` (comp-coverage-map.yaml
+    schema.node_fields.status, NFRA_CLDGRPH CG-s-30, 2026-09-09 Andrew-direct).
+
+    A deprecated tool STAYS IN THE POPULATION -- it is homed, counted, parity-checked and still
+    CALLABLE BY NAME. It is only PULLED OUT OF SELECTION here: never ranked, never drilled to from
+    a surface. That is the whole control; there is no gate and no refusal anywhere (Andrew: "We do
+    not need to gate it, merely need to pull it out of comp-which selection, that will be enough").
+
+    Read from the ledger comp-which already loads (compiled index first, YAML on sha mismatch), so
+    this costs nothing on the hot path. An empty/failed read returns an EMPTY set -- the router
+    never crashes and never silently drops a live tool.
+    """
+    global _DEPRECATED_TOOLS
+    if _DEPRECATED_TOOLS is None:
+        out = set()
+        led = _load_ledger() or {}
+        for section in ("tools", "meta_tools"):
+            for row in (led.get(section) or []):
+                if isinstance(row, dict) and row.get("tool"):
+                    if str(row.get("status") or "active") == "deprecated":
+                        out.add(str(row["tool"]).strip())
+        _DEPRECATED_TOOLS = out
+    return _DEPRECATED_TOOLS
+
+
 def _surface_index(led):
     """{surface_id: {high_level, gap, gap_note, tools:[(tool, concern, concern_tokens)]}} built
     from the ledger. Data-readable (AC3 -- COMPLEARN can score against this projection)."""
@@ -1409,6 +1448,11 @@ def _surface_index(led):
                     "gap_note": s.get("gap_note") or s.get("high_level_concern"), "tools": []}
     for t in (led.get("tools", []) if led else []):
         sid = t.get("surface")
+        # CG-s-30: a `status: deprecated` tool is NOT an agent route -- it is skipped in the
+        # surface drill-down exactly as it is skipped in the ranking. Its membership in the
+        # ledger is untouched; only its presentation is.
+        if str(t.get("status") or "active") == "deprecated":
+            continue
         if sid and sid in idx:
             idx[sid]["tools"].append((t["tool"], t.get("concern", ""), _tokens(t.get("concern", ""))))
     return idx
@@ -2048,7 +2092,14 @@ def _default_router(q, qtok, hits, term, list_intent):
     # `ranked` is the full ranking (comp_route.py:160 -- "nothing is ever filtered out by score").
     # NOTE: the score is TOKEN/PRIOR OVERLAP, not a confidence. Never label it one.
     # The r.kind == "fallback" abstain path above is UNTOUCHED -- it works (1,722 live RUN-GREP/GLOB).
-    ranked = (r.ranked or [])[:_TOPK]
+    # ---- CG-s-30: PULL DEPRECATED TOOLS OUT OF SELECTION -------------------------------------
+    # Applied to the WHOLE ranking (not just the printed top-K) so the SPILLED RANK FILE -- the
+    # surface a measurement reads -- carries no deprecated row either. A filter that only trimmed
+    # the terminal menu would leave the tool one `open` away and the "0 rows" claim would be a
+    # claim about page 1. Membership is untouched: the tool stays in the population authority.
+    _dep = _deprecated_tools()
+    ranked_all = [s for s in (r.ranked or []) if s.cap.id not in _dep] if _dep else (r.ranked or [])
+    ranked = ranked_all[:_TOPK]
     if not ranked:
         return None
     caps = [s.cap.id for s in ranked]
@@ -2060,14 +2111,14 @@ def _default_router(q, qtok, hits, term, list_intent):
     # A scored menu first and a "these are guesses" second is a MIXED SIGNAL: the NUMBERS land before
     # the caveat does, and a number is the strongest credibility signal this fabric has. Frame first,
     # evidence second -- otherwise the caveat is arguing against an impression already formed.
-    no_fit = (r.ranked and r.ranked[0].score < _VETTED_BAND)
+    no_fit = (ranked_all and ranked_all[0].score < _VETTED_BAND)
     if no_fit:
         print("  !! NO CURATED RULE MATCHED THIS QUESTION -- READ THIS BEFORE THE LIST BELOW.")
         print("     Every candidate scored below the vetted band. These are FUZZY GUESSES, not a")
         print("     routing decision. If none of the descriptions answer your question, THE CATALOG")
         print("     DOES NOT COVER IT -- do not pick one because it was ranked first.\n")
     print("  MATCHES (top %d of %d -- score is overlap, NOT a confidence):\n"
-          % (len(ranked), len(r.ranked)))
+          % (len(ranked), len(ranked_all)))
     for i, s in enumerate(ranked, 1):
         cid = s.cap.id
         print("  %d. score %.2f   %s" % (i, s.score, call_of.get(cid, cid)))
@@ -2094,9 +2145,9 @@ def _default_router(q, qtok, hits, term, list_intent):
     # F-1). The threshold must be set FROM THE SCORE DISTRIBUTION, not eyeballed. TO-2 owns it.
     # The terminal shows 3; the YAML holds ALL of them. The right tool is at rank 4+ ~10% of the time
     # (measured, live router) -- so the deeper answer must be ONE OPEN AWAY, not gone.
-    spill = _spill_full_ranking(r.ranked or [], call_of, concern_of, q)
+    spill = _spill_full_ranking(ranked_all, call_of, concern_of, q)
     if spill:
-        print("  Not it?  ALL %d tools, ranked + described:  %s" % (len(r.ranked or []), spill))
+        print("  Not it?  ALL %d tools, ranked + described:  %s" % (len(ranked_all), spill))
     print("           or search directly:  comp-find '%s'   (or comp-find --name)" % (term or q))
     _log_rail("NOFIT-POSTERIOR" if no_fit else "ROUTE-POSTERIOR", "+".join(caps), term, q)
     # --- THE ABSTAIN, PROGRAMMATIC (MSTR directive 2026-07-13) --------------------------------------

@@ -67,6 +67,29 @@ schema:
     concern:
       type: string
       doc: "the SINGLE question this node answers at its home. MUST be unique within any shared touches_resource group (that uniqueness IS the non-redundancy gate)."
+    status:
+      type: enum
+      values: [active, deprecated, retired]
+      default: active
+      doc: "TOOL-GRAIN LIFECYCLE (NFRA_CLDGRPH CG-s-30, 2026-09-09, Andrew-direct). OPTIONAL; an
+        entry that omits it IS `active` -- the default is stated here so a missing key is never read
+        as an unknown. MIRRORS graph-call-manifest.yaml's per-entry `status: retired`, at TOOL grain
+        rather than route grain.
+          active     -- routed by comp-which, described for agent use. THE DEFAULT.
+          deprecated -- STILL HOMED and still in the population (membership is unchanged: a
+                        deprecated tool is present, counted, parity-checked and callable BY NAME),
+                        but EXCLUDED from comp-which ranking and never presented as an agent route.
+                        There is NO gate and NO refusal: deprecation is a ROUTING + DESCRIPTION
+                        state, not an execution state.
+          retired    -- the tool is gone; its name resolves to a stub or nothing. NOT this field's
+                        job to enforce -- a retirement is a MEMBERSHIP act on this file.
+        WHAT ONE REMEDY DOES NOT MOVE (TAXONOMY LAW iv): un-deprecating is a one-line edit here plus
+        a regeneration; it does NOT restore curated comp-which vocabulary tuples that were repointed
+        elsewhere, and it does NOT re-describe the tool in comp-tools.yaml. Those are separate acts
+        on separate files.
+        CONSUMER: .tools/gen_tool_registry.py projects it onto every generated master/index row, and
+        .tools/comp-which excludes a `deprecated` tool from ranking + surface drill-down. A value
+        here with no consumer would drift to unpopulated (A_VALUE_MUST_CARRY_ITS_CLAIM)."
     # --- overlap declaration (the non-redundancy machinery) ---
     touches_resource:
       type: list[string]
@@ -394,10 +417,10 @@ surfaces:
   - id: AWS-CLOUD
     kind: territory
     store: "live AWS (S3 artifacts / Lambda / EC2 code / DynamoDB config / IAM)"
-    high_level_tool: "comp-aws"
-    high_level_concern: "live-AWS + Terraform-state cloud-graph (the write-path + cert)"
+    high_level_tool: "comp-kuzu"
+    high_level_concern: "the SERVED cloud graph -- read it with comp-kuzu (manifest entry cloud.read.served_vintage); comp-aws is the ENGINE beneath it (deprecated for agent use 2026-09-09, CG-s-30), not the surface's agent-facing entry"
     provenance:
-      refresh_mechanism: "event-driven (incremental_updater Lambda, near-real-time) + nightly comp-aws derive full reconcile"
+      refresh_mechanism: "event-driven (incremental_updater Lambda, near-real-time) + a NIGHTLY FULL RECONCILE run by the Fargate derive-runner (infra/aws/globgrph/derive_runner.py, which calls the derive ENGINE in-process). Both are ESTATE-SIDE: no laptop and no agent refreshes this surface, and no question is ever the cause of a rebuild"
       cadence: near-real-time                  # HIGH-freshness BY DESIGN
       concurrency_basis: "HIGH -- Opal runs multiagent processes IN AWS, so the estate changes continuously; event-driven freshness is matched to that intensity. (memory project_globgrph_refresh_cadence_by_concurrency_basis)"
     drill_down: S1   # comp-routes/comp-cache/comp-transform/comp-freshness/comp-secrets/comp-iam/comp-pii/comp-platinum/comp-blast/trace home here in S1
@@ -650,7 +673,8 @@ tools:
   - tool: comp-aws
     surface: AWS-CLOUD
     granularity: graph-node
-    concern: "IAM-as-graph-nodes -- the live-AWS cloud-graph estate topology (17 node classes; the WRITE-PATH + cert; the LIVE half of the desired-vs-live overlay)"
+    status: deprecated   # CG-s-30, 2026-09-09 Andrew-direct: DEPRECATED FOR AGENT USE and pulled out of comp-which selection. STILL HOMED (membership unchanged, parity unchanged) and STILL CALLABLE BY NAME -- there is no gate and no refusal. The AWS-CLOUD surface's agent-facing entry is comp-kuzu (the served read); comp-aws is the ENGINE the estate-side runners call in-process.
+    concern: "the ENGINE that DERIVES the cloud graph (17 node classes; IAM-as-graph-nodes; the LIVE half of the desired-vs-live overlay). Run ESTATE-SIDE by the nightly Fargate derive-runner and the incremental updater -- deprecated for agent use; read the result with comp-kuzu"
     touches_resource: [IAM, estate-structure]   # estate-structure added (CVO~B V1 P2-1): comp-aws's dual-managed detection shares the resource with comp-dups; now bidirectionally DECLARED so the gate forms the group (was a one-sided comp-dups declaration)
     distinct_from:
       - { tool: comp-iam,       shared_resource: IAM, my_concern: "IAM-as-graph-nodes (estate topology)", their_concern: "grant-analysis (permission gaps)" }

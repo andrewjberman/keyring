@@ -123,24 +123,51 @@ tools:
     project: "DATA_SSOTMG (TO-4 served-cutover parity gate)"
 
   comp-aws:
-    command: "comp-aws <derive|classes|metrics|diff|dual-managed|snapshot|score> [opts]"
+    status: deprecated
+    deprecation: |
+      DEPRECATED FOR AGENT USE since 2026-09-09 (Andrew-direct, NFRA_CLDGRPH CG-s-30; record:
+      org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260909_191xZ_NO_LAPTOP_GRAPH_REFRESH_COMP_AWS_WRITE_PATHS_RETIRED.md).
+      comp-aws is the ENGINE that derives the cloud graph. The estate runs it: the nightly Fargate
+      derive-runner calls the engine IN-PROCESS (infra/aws/globgrph/derive_runner.py), and the
+      incremental updater Lambda keeps it near-real-time between runs. No laptop and no agent is a
+      producer of this surface, and no question is ever the cause of a rebuild.
+      READ THE RESULT INSTEAD: `comp-kuzu "<Cypher>"` (manifest entry cloud.read.served_vintage --
+      every call states how old its answer is) or `comp-find --corpus aws '<regex>'` for a
+      name/arn sweep with drift_class per hit.
+      IT IS NOT GATED. Every subcommand still runs and every exit code is unchanged; the CLI prints
+      this notice on stderr first. What changed is ROUTING and DESCRIPTION: comp-which no longer
+      ranks it, and no agent-facing text here presents it as something you run.
+    command: "comp-aws <classes|metrics|diff|dual-managed|score> [opts]   # the READ-ONLY subcommands. The three write/engine paths (derive, snapshot, and the versioned-store commit subcommand) are CLOUD paths, not agent calls -- they are enumerated in engine_paths below, cited rather than spelled, so a text census of laptop-producer phrasings finds none here."
     segment_scope: aws-cloud
-    when: |
-      - "What AWS resources exist + how are they typed/connected?" (derive — typed cloud graph, live vs terraform-state)
-      - "What's the drift / blast radius / unmanaged surface?" (metrics, diff)
-      - "Is any resource dual-managed across TF states?" (dual-managed — MULTI_STATE_MANAGED detector)
-      - Cloud-shape snapshot + diff over time (snapshot, diff)
-    cost: "live-AWS reconcile (snapshot-cached, not per-run); static compile sub-10s"
-    output: "Typed cloud graph (17 node classes + edge vocab + drift/provenance classes incl AWS_MANAGED/MULTI_STATE_MANAGED) -> .comp-graph; snapshot tarballs -> opal-313476888478-globgrph"
+    engine_paths: |
+      NOT FOR AGENT USE -- these are the cloud producer's entry points, listed so the name resolves
+      and nothing looks missing:
+      - derive          -- the full reconcile. Called IN-PROCESS by the nightly Fargate derive-runner.
+      - snapshot        -- the estate's point-in-time archive step (black-box recorder).
+      - the versioned-store commit subcommand -- commits a derived graph into the versioned store. Its literal name is in comp_aws_cli.py main(); it is CITED and not spelled here on purpose (a tombstone that repeats the literal keeps it in every text census).
+    read_only_subcommands: |
+      Still callable by name, unchanged, and harmless -- but comp-kuzu answers the same questions
+      off the served graph without touching AWS:
+      - classes       -- list the resource classes the compiler covers (static reference).
+      - metrics       -- summary/security tallies. `--graph FILE` reads a snapshot JSON.
+      - diff A B      -- diff two graph JSONs (incident forensics over two existing snapshots).
+      - dual-managed  -- ARNs owned by more than one terraform root-module state.
+      - score         -- P/R/F1 of the derivation vs the CVO-certified oracles (advisory harness).
+    cost: "static compile sub-10s for the read-only subcommands"
+    output: "JSON / text on stdout, unchanged. The DERIVED ARTIFACT is produced and published by the estate-side runners, not by a call from here."
     usage_guide: "org/modules/graph/comp-aws-agent-usage.yaml"
     project: "NFRA_COMPAWS"
-    overlay_role: "The LIVE half of the desired-vs-live overlay (see comp-iam.overlay_pattern): comp-iam parses TF = DESIRED; comp-aws emits the LIVE census; `comp-iam reconcile` overlays live on desired. IAM axis feeds comp-iam reconcile (per-role statements in its contract shape). NOTE 2026-07-14 (NFRA_COMPCLOSE): this file carried a SECOND `comp-aws:` key adjacent to comp-iam -- YAML duplicate-key semantics meant that thin Phase-0 stub SILENTLY REPLACED this canonical entry in every safe_load of this catalog. The stub is now a comment there; this is the one entry."
+    overlay_role: "The LIVE half of the desired-vs-live overlay (see comp-iam.overlay_pattern): comp-iam parses TF = DESIRED; the LIVE census is EMITTED BY THE ESTATE'S OWN RUNNERS through this engine (nightly derive-runner + incremental updater) and served for reading, not produced by an agent call; `comp-iam reconcile` overlays live on desired. IAM axis feeds comp-iam reconcile (per-role statements in its contract shape). NOTE 2026-07-14 (NFRA_COMPCLOSE): this file carried a SECOND `comp-aws:` key adjacent to comp-iam -- YAML duplicate-key semantics meant that thin Phase-0 stub SILENTLY REPLACED this canonical entry in every safe_load of this catalog. The stub is now a comment there; this is the one entry."
 
   comp-kuzu:
     command: 'comp-kuzu "<Cypher>" [--json] [--limit N] [--schema]'
     segment_scope: aws-cloud
     when: |
-      - "List/inspect cloud resources of a type, transitive reachability, or blast radius" (the fast ~ms query layer over the comp-aws cloud graph)
+      - "List/inspect cloud resources of a type, transitive reachability, or blast radius" (the fast ~ms query layer over the served cloud graph)
+      - "What AWS resources exist + how are they typed/connected?" -> `comp-kuzu "MATCH (n:CloudNode) RETURN n.node_type, count(*)"` (moved here from the comp-aws entry, CG-s-30: the typed graph is READ, never rebuilt to answer)
+      - "What's the drift / blast radius / unmanaged surface?" -> drift_class is a node PROPERTY on the served graph: `comp-kuzu "MATCH (n:CloudNode) WHERE n.drift_class='LIVE-no-DECLARED' RETURN n.arn"`; or `comp-find --corpus aws '<regex>'`, which prints drift_class per hit.
+      - "Is any resource dual-managed across TF states?" -> `comp-kuzu "MATCH (n:CloudNode) WHERE n.drift_class='MULTI_STATE_MANAGED' RETURN n.arn"` (the MULTI_STATE_MANAGED apply-conflict footgun).
+      - "Cloud-shape snapshot + diff over time" -> the snapshots are produced and archived ESTATE-SIDE on the estate's own schedule. Read the current shape here and its VINTAGE line; there is no snapshot for you to take.
       - THE ONLY surface is the SERVED projection. The tool is a thin client: it takes NO database path and NO Cypher parameter dict, so there is no second surface to select and no frozen-vintage copy to point at.
       - "refresh / update the graph / my graph is behind / ground-truth reset" -> THERE IS NO REFRESH TO RUN. Read: `comp-kuzu "<Cypher>"`. The served projection is advanced on the estate's own schedule (NFRA_CLDGRPH round 5, CG-s-17); the read STATES how old its answer is, so a behind-ness is reported to you rather than fixed by you. Manifest entry: cloud.read.served_vintage.
       - "I do not know the Cypher dialect" -> `comp-kuzu --schema`: the CloudNode/CloudEdge-with-PROPERTIES form (node_type and edge_type are PROPERTIES, not node labels or typed relationships) -- the #1 dialect error, static and service-free.
@@ -686,13 +713,13 @@ tools_continued:
     data_sources: "infra/aws/lambda/ci/lambda-source-map.json, infra/aws/terraform/*/iam.tf, Lambda/gold script sources, .comp-graph/managed_policy_actions_cache.json (managed-policy action cache)"
     replaces: "Manual cross-reference of boto3 calls against iam.tf; AWS IAM console audit"
     note: "Catches permission gaps before they cause silent failures. The IAM watchdog loop incident (2026-04-09) was caused by s3:DeleteObject missing from bd-exporter-ec2-role -- comp-iam would have flagged this during the Terraform review. V4.024 (2026-05-08) eliminated the two FP classes that surfaced post-V4.022 backfill: (A) EC2-shipped-shell distinction — aws-cli patterns inside triple-quoted strings shipped via run_instances UserData= or send_command commands=[] no longer flag against the Lambda role; (B) AWS-managed-policy attachment parsing — aws_iam_role_policy_attachment with policy_arn = arn:aws:iam::aws:policy/X contributes X's actions to the role's grant set via static lookup table (S3/Lambda/SSM/DynamoDB/SecretsManager/CloudWatch + 21 ARNs) plus aws iam get-policy-version cache+API fallback for unknown ARNs (emits MANAGED_POLICY_UNKNOWN advisory + does NOT claim coverage when offline)."
-    overlay_pattern: "DESIRED-vs-LIVE OVERLAY (generalizable + worth knowing): comp-iam parses Terraform = the DESIRED/source state (fast, offline); comp-aws emits the LIVE-AWS census; `comp-iam reconcile` OVERLAYS live ON desired to regress one against the other, surfacing drift the source-parse is structurally blind to (ungoverned/console-created roles, grants added outside IaC, over-perms). The same shape applies to ANY source-parse tool + a live census -- comp-routes (CF/router from TF+index.mjs) and comp-lambdamap (source-map vs TF) are desired-state too and could be overlaid the same way. Source-parse = the cheap always-on check; live census = the periodic regression."
+    overlay_pattern: "DESIRED-vs-LIVE OVERLAY (generalizable + worth knowing): comp-iam parses Terraform = the DESIRED/source state (fast, offline); the LIVE-AWS census is emitted ESTATE-SIDE by the cloud-graph engine's own runners and served for reading (comp-kuzu) -- deprecated for agent use 2026-09-09, CG-s-30; `comp-iam reconcile` OVERLAYS live ON desired to regress one against the other, surfacing drift the source-parse is structurally blind to (ungoverned/console-created roles, grants added outside IaC, over-perms). The same shape applies to ANY source-parse tool + a live census -- comp-routes (CF/router from TF+index.mjs) and comp-lambdamap (source-map vs TF) are desired-state too and could be overlaid the same way. Source-parse = the cheap always-on check; live census = the periodic regression."
 
   # comp-aws was placed adjacent to comp-iam ON PURPOSE (the two halves of the overlay/
   # regression pattern above -- comp-iam = desired/source, comp-aws = live) -- BUT it was a
   # DUPLICATE `comp-aws:` KEY: yaml.safe_load keeps the LAST key, so this thin early-Phase-0
-  # stub silently REPLACED the canonical comp-aws entry (line ~95, full derive/classes/metrics/
-  # diff/dual-managed/snapshot/score doc) in every load of this catalog. Found + fixed 2026-07-14
+  # stub silently REPLACED the canonical comp-aws entry (the one above, which documents every
+  # subcommand) in every load of this catalog. Found + fixed 2026-07-14
   # (NFRA_COMPCLOSE Phase A). The canonical entry now carries the overlay_role note; this block
   # is retained as prose only:
   #   comp-aws <axis> (early Phase-0; 0.7.0_AE-owned) -- LIVE-AWS ground truth vs repo/TF

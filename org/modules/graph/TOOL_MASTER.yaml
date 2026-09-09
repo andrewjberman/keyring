@@ -28,6 +28,7 @@ tools:
     primitives: []
     engines: []
     bounding: []
+    status: active
   comp-arity:
     concern: null
     canonical_call: null
@@ -75,6 +76,7 @@ tools:
     - --limit N
     - head slice
     - json out
+    status: active
   comp-assets:
     concern: 'OPAL_ASSETS monolith backfill COMPLETENESS census (V2-6) -- per channel folder of s3://opal-data-assets:
       per-layer object/byte counts, feed breakdown, date FRONTIER, 0-byte count, PLUS the channel''s own
@@ -106,6 +108,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-atomcheck:
     concern: null
     canonical_call: null
@@ -122,10 +125,14 @@ tools:
     primitives: []
     engines: []
     bounding: []
+    status: active
   comp-aws:
-    concern: IAM-as-graph-nodes -- the live-AWS cloud-graph estate topology (17 node classes; the WRITE-PATH
-      + cert; the LIVE half of the desired-vs-live overlay)
-    canonical_call: 'comp-aws derive --out <path>    # full; or --resource <arn> for bounded'
+    concern: the ENGINE that derives the cloud graph (17 node classes; IAM-as-graph-nodes; the LIVE half
+      of the desired-vs-live overlay). Run ESTATE-SIDE by the nightly Fargate derive-runner and the incremental
+      updater -- DEPRECATED for agent use 2026-09-09 (NFRA_CLDGRPH CG-s-30, R14a PRD v0.12 @b77a6c3a27);
+      read the result with comp-kuzu
+    canonical_call: 'comp-kuzu "<Cypher>"    # comp-aws is DEPRECATED for agent use; the engine runs in
+      the nightly derive-runner'
     state: PERSISTED
     derived: true
     refresh_mechanism: gate-enforced at registration (comp-coverage-check)
@@ -159,6 +166,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: deprecated
   comp-axes:
     concern: null
     canonical_call: comp-axes [--axes a,b] [--no-snapshot] [--json]
@@ -186,6 +194,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-blast:
     concern: downstream IMPACT set + upstream callers (what breaks if I change X; function-level)
     canonical_call: comp-blast <fn-or-arn> [--function name] [--check-consumers]
@@ -213,6 +222,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-build:
     concern: null
     canonical_call: comp-build [--check]
@@ -240,6 +250,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-cache:
     concern: React-Query cache-KEY collision detection (shared key -> type-mismatch break)
     canonical_call: comp-cache collisions ; comp-cache key <substring>
@@ -270,6 +281,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-canon-motif:
     concern: null
     canonical_call: null
@@ -292,6 +304,7 @@ tools:
     engines: []
     bounding:
     - json out
+    status: active
   comp-chainrun:
     concern: ATOMIC-BUNDLE gold snapshot/diff (pre/post chain re-run -- DROPPED/COLUMNS-LOST/EMPTIED partial-refactor
       leak; VALGATE Class-B)
@@ -320,6 +333,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-claimlink:
     concern: null
     canonical_call: null
@@ -336,6 +350,7 @@ tools:
     primitives: []
     engines: []
     bounding: []
+    status: active
   comp-clobber:
     concern: output-key COLLISION -- 2+ DISTINCT producers writing ONE sink (an S3 key / DDB table); the
       two-writers-one-key clobber where a stale/deprecated producer overwrites a fresh one (the 2026-07-21
@@ -368,6 +383,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-closure:
     concern: null
     canonical_call: null
@@ -384,6 +400,7 @@ tools:
     primitives: []
     engines: []
     bounding: []
+    status: active
   comp-cluster:
     concern: page-rooted PAGE->PANEL->DRILLDOWN cluster structure + per-cluster data-sources + cross-panel
       SHARES_SOURCE coupling (NFRA_TSGRAPH P2-3; read-side peer of comp-cache, generalizing cache-key
@@ -420,6 +437,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-cochange:
     concern: null
     canonical_call: null
@@ -436,6 +454,7 @@ tools:
     primitives: []
     engines: []
     bounding: []
+    status: active
   comp-constants:
     concern: marker/firm-CONSTANT drift vs canonical config (rep_id sweeps, FIRM_ID, AUA bounds; pre-commit
       gate)
@@ -463,6 +482,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-coverage:
     concern: null
     canonical_call: comp-coverage <args>
@@ -486,6 +506,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-coverage-check:
     concern: null
     canonical_call: null
@@ -517,6 +538,7 @@ tools:
     - org/modules/graph/comp_coverage_check.py
     bounding:
     - json out
+    status: active
   comp-dataflow:
     concern: 'value-ORIGIN / canonical-source lineage -- does a producer read a SERVED (platinum/served/portal-json)
       artifact as a value source? The layer grammar running BACKWARDS (RF-7: 49F counts sourced from platinum,
@@ -553,6 +575,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-deadgrant:
     concern: null
     canonical_call: comp-deadgrant [<lambda|role>]
@@ -579,6 +602,7 @@ tools:
     - --limit N
     - head slice
     - json out
+    status: active
   comp-debris:
     concern: null
     canonical_call: 'comp-debris [--types ddb|s3|ec2|events] [--days 30] [--hot-days 7]   # default --types
@@ -607,6 +631,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-denytest:
     concern: null
     canonical_call: comp-denytest <plan|change-spec>
@@ -628,6 +653,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-depth:
     concern: 'DEPTH-scoped graph querying (NFRA_GRAPHDEPTH P3) -- scope a traversal to a declared grain:
       drill coarse->fine + rollup fine->coarse EXISTENTIAL over the RUNS/CONTAINS/OWNED_BY strata (drilldown_seams-derived),
@@ -663,6 +689,7 @@ tools:
     - org/modules/graph/comp_depth_cli.py
     bounding:
     - head slice
+    status: active
   comp-describe:
     concern: null
     canonical_call: 'comp-describe <arn-or-name> [--json]   # find + describe ONE resource off the derive-at-scan
@@ -690,6 +717,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-diff:
     concern: map git/uncommitted CHANGES to graph blast radius (pre-commit/post-pull/pre-deploy)
     canonical_call: comp-diff [--staged | --ref HEAD~3]
@@ -717,6 +745,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-directives:
     concern: null
     canonical_call: null
@@ -733,6 +762,7 @@ tools:
     primitives: []
     engines: []
     bounding: []
+    status: active
   comp-dispatch:
     concern: 'gold-dispatch orchestration-DAG -- which scripts run / in what order / under which chain-group-flag
       / past which gate (freshness/resume-skip/incremental); firm-parameterized (data/<firm>/scripts/gold).
@@ -764,6 +794,7 @@ tools:
     - org/modules/graph/comp_dispatch.py
     bounding:
     - json out
+    status: active
   comp-drift:
     concern: structural-cruft / abandonment DISPOSITION over the propagation seams (edges-that-go-nowhere,
       old duplicated channels, deprecated outputs) -- the resource-STATE verb of NFRA_COMP*
@@ -807,6 +838,7 @@ tools:
     - --max N
     - head slice
     - json out
+    status: active
   comp-dups:
     concern: estate DUPLICATE/dead-resource census (4 classes CROSS_FIRM/IAM_POLICY_SPLIT/SERVICE_SPLIT/ENV_TWIN
       + dual-evidence dead-confirm)
@@ -838,6 +870,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-estate:
     concern: null
     canonical_call: null
@@ -854,6 +887,7 @@ tools:
     primitives: []
     engines: []
     bounding: []
+    status: active
   comp-fedobs:
     concern: null
     canonical_call: comp-fedobs coevolution | comp-fedobs
@@ -881,6 +915,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-find:
     concern: null
     canonical_call: null
@@ -897,6 +932,7 @@ tools:
     primitives: []
     engines: []
     bounding: []
+    status: active
   comp-firmsep-sweep:
     concern: null
     canonical_call: comp-firmsep-sweep <firm> [--write-reach]
@@ -918,6 +954,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-freshness:
     concern: pipeline-DATA S3/DDB freshness -- is upstream fresh enough to run a gold chain? (the gold-run-readiness
       gate)
@@ -941,6 +978,7 @@ tools:
     - --max N
     - head slice
     - json out
+    status: active
   comp-genesis:
     concern: null
     canonical_call: comp-genesis {new <c> | validate <c> | up --dry-run <c> | verify --local <c> | selftest
@@ -964,6 +1002,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-gitdrill:
     concern: null
     canonical_call: comp-gitdrill <node|file> [--at <ref> [--diff]]
@@ -992,6 +1031,7 @@ tools:
     - --limit N
     - head slice
     - json out
+    status: active
   comp-glob:
     concern: null
     canonical_call: null
@@ -1013,6 +1053,7 @@ tools:
     engines: []
     bounding:
     - NONE -- unbounded output
+    status: active
   comp-graph:
     concern: graph-cache VINTAGE/freshness across the derived models (local trace caches + cloud artifacts)
       + clear
@@ -1040,6 +1081,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-grep:
     concern: null
     canonical_call: null
@@ -1062,6 +1104,7 @@ tools:
     engines: []
     bounding:
     - head slice
+    status: active
   comp-heat:
     concern: estate-OBJECT write-freshness + uncommitted-write drift (repo files; hot/warm/cold + archive
       candidates)
@@ -1090,6 +1133,7 @@ tools:
     - --top N
     - head slice
     - json out
+    status: active
   comp-honesty:
     concern: honesty/completion GATE over the GOV-A invariants (I1 honest-missing / I2 measure-per-case
       / I3 control-fires-when-exercised); claim+evidence (or --file src.py) -> per-invariant PASS/FAIL/N-A,
@@ -1119,6 +1163,7 @@ tools:
     - org/modules/graph/comp_honesty.py
     bounding:
     - NONE -- unbounded output
+    status: active
   comp-iam:
     concern: grant-analysis -- boto3 calls vs IAM grants (permission gaps; who-can-do-what; the DESIRED/source
       half + `reconcile` overlay)
@@ -1152,6 +1197,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-iam-usage:
     concern: null
     canonical_call: comp-iam-usage {role-cold | who-can-reach <arn> | reach-check <role> <action> <arn>
@@ -1183,6 +1229,7 @@ tools:
     - --limit N
     - head slice
     - json out
+    status: active
   comp-icedrill:
     concern: null
     canonical_call: comp-icedrill s3://bucket/prefix/ | s3://bucket/key.json | ddb <table> | graph <node>
@@ -1215,6 +1262,7 @@ tools:
     - head slice
     - MaxKeys
     - json out
+    status: active
   comp-imgread:
     concern: null
     canonical_call: null
@@ -1231,6 +1279,7 @@ tools:
     primitives: []
     engines: []
     bounding: []
+    status: active
   comp-incrparity:
     concern: INCREMENTAL BD-pipeline parity (incremental cache vs full-recompute oracle)
     canonical_call: comp-incrparity <args>
@@ -1258,6 +1307,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-keys:
     concern: 'S3 INVENTORY -- WHAT EXISTS under a prefix: arbitrary-prefix key enumeration, per-prefix
       partition-date enumeration (earliest/latest/gaps), per-firm existence. Live s3api, explicit-Z, denominator-always.
@@ -1290,6 +1340,7 @@ tools:
     - --max N
     - head slice
     - json out
+    status: active
   comp-kit-striplist-gate:
     concern: null
     canonical_call: null
@@ -1314,6 +1365,7 @@ tools:
     engines: []
     bounding:
     - head slice
+    status: active
   comp-kuzu:
     concern: cross-surface federated READ -- Cypher over the loaded estate graph (the FAST default read-path)
     canonical_call: 'comp-kuzu "MATCH (n:CloudNode) WHERE n.node_type=''LAMBDA'' RETURN n.id, n.name LIMIT
@@ -1342,6 +1394,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-lambdamap:
     concern: DEPLOY-SHA parity -- source-map record == live CodeSha256 == S3-artifact sha (3-leg); lambda-source-map
       drift
@@ -1374,6 +1427,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-learns-score:
     concern: null
     canonical_call: comp-learns-score [--top N] [--file-candidates] [--goodhart-audit] [--json]
@@ -1401,6 +1455,7 @@ tools:
     - --top N
     - head slice
     - json out
+    status: active
   comp-learns-status:
     concern: null
     canonical_call: comp-learns-status [gap_heat|coverage_gaps|tool_demand|...] [--json]
@@ -1430,6 +1485,7 @@ tools:
     engines: []
     bounding:
     - json out
+    status: active
   comp-lease:
     concern: null
     canonical_call: null
@@ -1446,6 +1502,7 @@ tools:
     primitives: []
     engines: []
     bounding: []
+    status: active
   comp-ledger-agreement:
     concern: null
     canonical_call: null
@@ -1462,6 +1519,7 @@ tools:
     primitives: []
     engines: []
     bounding: []
+    status: active
   comp-legacywriter:
     concern: null
     canonical_call: null
@@ -1478,6 +1536,7 @@ tools:
     primitives: []
     engines: []
     bounding: []
+    status: active
   comp-manifest-check:
     concern: null
     canonical_call: null
@@ -1514,6 +1573,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-missions:
     concern: null
     canonical_call: null
@@ -1544,6 +1604,7 @@ tools:
     - --limit N
     - head slice
     - json out
+    status: active
   comp-ontolint:
     concern: null
     canonical_call: comp-ontolint {check | self-test}
@@ -1567,6 +1628,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-parity:
     concern: DATA/served parity -- can the canonical pipeline STAND IN for the BD-served surface? (never-widen
       cutover; multi-day CLEAN streak)
@@ -1595,6 +1657,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-passcraft:
     concern: null
     canonical_call: null
@@ -1624,6 +1687,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-perf:
     concern: null
     canonical_call: null
@@ -1650,6 +1714,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-pii:
     concern: PII EXPOSURE audit (routes + components; hashed vs cleartext; pseudonymizer coverage)
     canonical_call: comp-pii audit ; comp-pii scan <Component>
@@ -1680,6 +1745,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-pipescript:
     concern: gold-script DAG -- intra-pipeline I/O (reads/writes), chains, column-gaps, portal consumers
       (the `deployed` subcmd serves seam-2)
@@ -1719,6 +1785,7 @@ tools:
     - --limit N
     - head slice
     - json out
+    status: active
   comp-platinum:
     concern: full-stack component->gold COMPOSITION trace (page/reverse/tab-audit; firm-aware; chains
       transform+routes+pipescript)
@@ -1747,6 +1814,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-pulse:
     concern: null
     canonical_call: 'comp-pulse [--days 7] [--top 8] [--json]   # exit 1 = the immune response is FIRING
@@ -1784,6 +1852,7 @@ tools:
     - --top N
     - head slice
     - json out
+    status: active
   comp-pydeps:
     concern: null
     canonical_call: comp-pydeps consumers <name> | comp-pydeps deps <name> | comp-pydeps egress [<name>]
@@ -1821,6 +1890,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-read:
     concern: null
     canonical_call: null
@@ -1837,6 +1907,7 @@ tools:
     primitives: []
     engines: []
     bounding: []
+    status: active
   comp-registry:
     concern: null
     canonical_call: comp-registry sync ROW=N | --project CODE | --all
@@ -1860,6 +1931,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-residue:
     concern: null
     canonical_call: null
@@ -1888,6 +1960,7 @@ tools:
     - --max N
     - head slice
     - json out
+    status: active
   comp-routable-check:
     concern: null
     canonical_call: null
@@ -1912,6 +1985,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-routes:
     concern: CloudFront->origin->Lambda SERVING path (behaviors/origins/rewrites/auth-map; 4xx/HTML-mask
       debugging)
@@ -1936,6 +2010,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-schedule:
     concern: null
     canonical_call: null
@@ -1952,6 +2027,7 @@ tools:
     primitives: []
     engines: []
     bounding: []
+    status: active
   comp-secrets:
     concern: Secrets-Manager lens -- inventory (firm-tagged + rotation) + SAFE redacted read + secret->consumer
       map
@@ -1977,6 +2053,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-shell:
     concern: Rule-16 bare-util scan in new .sh (Git-Bash-3.6.7-missing pgrep/pkill/flock/pidof/setsid/wget)
     canonical_call: comp-shell scan [path ...]
@@ -2000,6 +2077,7 @@ tools:
     - org/modules/graph/shell_cli.py
     bounding:
     - head slice
+    status: active
   comp-similar:
     concern: null
     canonical_call: 'comp-similar <arn-or-name> [<arn-or-name>] | supersede [--heat-json F | --live-heat]
@@ -2031,6 +2109,7 @@ tools:
     - --top N
     - head slice
     - json out
+    status: active
   comp-state:
     concern: null
     canonical_call: 'comp-state [--project CODE] [--days N] [--all] [--json]   # drift-only by default;
@@ -2057,6 +2136,7 @@ tools:
     - --top N
     - head slice
     - json out
+    status: active
   comp-stitch-refresh:
     concern: null
     canonical_call: null
@@ -2083,6 +2163,7 @@ tools:
     engines: []
     bounding:
     - json out
+    status: active
   comp-surprise:
     concern: null
     canonical_call: null
@@ -2099,6 +2180,7 @@ tools:
     primitives: []
     engines: []
     bounding: []
+    status: active
   comp-symbols:
     concern: 'file-symbol INVENTORY -- what functions/classes/constants/imports a source file DEFINES
       + where (forward AST enumeration, input=a FILE). NFRA_COMPROUTE S1 #2; fronts the previously-empty
@@ -2128,6 +2210,7 @@ tools:
     - org/modules/graph/comp_symbols.py
     bounding:
     - json out
+    status: active
   comp-system:
     concern: null
     canonical_call: 'comp-system  (writes infra/system/06_current_state.{md,json}) ; comp-system --stdout
@@ -2171,6 +2254,7 @@ tools:
     - --limit N
     - head slice
     - json out
+    status: active
   comp-tagauthz:
     concern: null
     canonical_call: null
@@ -2194,6 +2278,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-to:
     concern: null
     canonical_call: null
@@ -2210,6 +2295,7 @@ tools:
     primitives: []
     engines: []
     bounding: []
+    status: active
   comp-tool-health:
     concern: null
     canonical_call: comp-tool-health [<tool>] [--json]
@@ -2241,6 +2327,7 @@ tools:
     - --top N
     - head slice
     - json out
+    status: active
   comp-tool-health-gate:
     concern: null
     canonical_call: null
@@ -2268,6 +2355,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-toolgraph:
     concern: null
     canonical_call: comp-toolgraph [--json]
@@ -2305,6 +2393,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-tooltip:
     concern: tooltip MIGRATION/coverage audit (inline vs <DataTooltip> canonical; one-off sprint tool)
     canonical_call: comp-tooltip <args>
@@ -2332,6 +2421,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-trace:
     concern: bidirectional dependency PATH walk from any repo node (where does data come/go -- up/down/both)
     canonical_call: comp-trace <node> --direction both [--depth N]
@@ -2359,6 +2449,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-transform:
     concern: React component field-RENDER schema-check (MISSING=runtime-undefined / UNUSED=waste; ternary-audit
       for new cohorts)
@@ -2388,6 +2479,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-trigger:
     concern: null
     canonical_call: comp-trigger <name-or-target-substring> [--days 7] | comp-trigger --list
@@ -2419,6 +2511,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-types:
     concern: TS TYPE consumers/blast/fields before editing a shared type
     canonical_call: comp-types index <TypeName> [--firm-conditional-sites]
@@ -2442,6 +2535,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-v5-composite-test:
     concern: null
     canonical_call: null
@@ -2458,6 +2552,7 @@ tools:
     primitives: []
     engines: []
     bounding: []
+    status: active
   comp-validate:
     concern: gold-artifact INVARIANT validation pre-upload (key_present/count_min/sum_approx/...; the
       no-crash-but-wrong-output gate)
@@ -2485,6 +2580,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-which:
     concern: null
     canonical_call: 'comp-which "<your natural-language question>"   # e.g. comp-which "what produces
@@ -2521,6 +2617,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-which-routing-test:
     concern: null
     canonical_call: null
@@ -2551,6 +2648,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-whoread:
     concern: null
     canonical_call: comp-whoread <bucket>[/prefix] [--since ...]
@@ -2576,6 +2674,7 @@ tools:
     engines: []
     bounding:
     - head slice
+    status: active
   comp-xray:
     concern: value-MOTION -- is the CONTENT genuinely changing or frozen-but-fresh? (code/config/schema/served-key
       motion lens)
@@ -2599,6 +2698,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   comp-xref:
     concern: SYMBOL cross-ref across graph nodes/edges + graph-state diff-vs-baseline
     canonical_call: comp-xref <symbol>
@@ -2626,6 +2726,7 @@ tools:
     bounding:
     - head slice
     - json out
+    status: active
   pipescript:
     concern: null
     canonical_call: null
@@ -2642,3 +2743,4 @@ tools:
     primitives: []
     engines: []
     bounding: []
+    status: active
