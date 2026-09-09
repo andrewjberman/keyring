@@ -329,9 +329,15 @@ cell written as greenfield here would re-buy working code.
 in this brief about what a policy permits is read from a **document**. No
 `simulate-principal-policy` battery has been run. `comp-iam` states this limit about itself.
 
-**D4 — Enabling IAM Access Analyzer is available and unenabled** (F7). The 2026-07-17 design called
-it *a recommendation, not a dependency* — that framing should be re-examined rather than inherited,
-because it is the only native instrument for the project's central question.
+**D4 — SETTLED BY ANDREW 2026-09-09 ~17:2xZ. EXTEND `comp-iam-usage` TO PERMISSION GRAIN; AWS ACCESS
+ANALYZER IS THE FALLBACK.** ⛔ *This was previously an open fork inviting re-examination; it is now
+ruled, and is recorded here so the L2 cut does not treat a settled question as open.*
+Basis: `comp-iam-usage` already FIXES comp-iam's three Rule-22a limits rather than inheriting them,
+already carries an `UNKNOWN` band, and is free and in-estate; Access Analyzer bills per analyzed role
+against ~208 roles. ⛔ **No per-role price has been read by anyone — if Access Analyzer is ever taken
+off the fallback shelf, pricing it is the first act, not an assumption inherited from this brief.**
+The ruling settles INSTRUMENT DIRECTION only: it authorises no build and cuts no cell.
+Record: `ANDREW_DIRECT_20260909_1458Z_INFRA_REPORT_FIVE_RULINGS.md`, ruling 20 (discharging ruling 18).
 
 **D5 — The remediation must be designed not to cause an `AccessDenied`.** `CONTROLS_OVER_CARE.md:512`
 names the failure mode. This constrains **how** grants are narrowed, which is a design input and not

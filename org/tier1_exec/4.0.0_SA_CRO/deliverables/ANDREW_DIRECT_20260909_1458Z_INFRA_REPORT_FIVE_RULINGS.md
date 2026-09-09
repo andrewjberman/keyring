@@ -405,3 +405,42 @@ that instrument's ownership.
 **Relayed to `1.0.0_SA_CTO~Z` the same turn**, on Andrew's explicit instruction (*"tell CTO~Z to
 process the infra report brief first"*). Verbatim scope: an ORDERING instruction, neither widened
 into a priority ruling on anything else that seat holds, nor narrowed.
+
+# BATCH 8 -- ruling 20. **RULING 18's CONDITION WAS MET, AND THE DEFERRED FORK IS NOW SETTLED**
+
+## VERBATIM AND ENTIRE
+
+> rec approved
+
+## RULING 20 -- EXTEND `comp-iam-usage` TO PERMISSION GRAIN; AWS ACCESS ANALYZER IS THE FALLBACK
+
+Approves this seat's recommendation on the `/open-calls` card of 17:17Z.
+
+**THIS IS RULING 18 DISCHARGED, NOT A NEW SUBJECT.** Ruling 18 said *establish the state of the
+`comp-iam-usage` prototype FIRST, then decide between it and AWS IAM Access Analyzer; do not enable
+blind.* That state was established between the rulings — **by `1.0.0_SA_CTO~Z`'s L2 correction (msg
+20532) and this seat's independent re-measurement**, not by a project act:
+
+| Grain | State |
+|---|---|
+| ROLE coldness (`role-cold`) | **BUILT** |
+| APPLIED plane (`reach-check`, `who-can-reach`) | **BUILT** |
+| **PERMISSION** — which grants a principal has never used | **NOT BUILT** |
+
+**The ruling's basis, as recommended and approved:** `comp-iam-usage` already FIXES comp-iam's three
+Rule-22a limits rather than inheriting them, already carries an `UNKNOWN` band, and is free and
+in-estate. Access Analyzer bills **per analyzed role against ~208 roles**.
+
+⛔ **NO PER-ROLE PRICE IS RECORDED, IN THIS BATCH OR IN BATCH 7.** This seat did not read AWS's
+pricing page and declined twice to quote a figure it had not measured. **If Access Analyzer is ever
+taken off the fallback shelf, pricing it is the first act, not an assumption inherited from this
+record.**
+
+**Scope, so no seat over-reads it:** ruling 20 settles the INSTRUMENT DIRECTION for
+`NFRA_IAMROLES202609`. It authorises no build, cuts no cell, and does not enable anything. The work
+itself is L5/L6 and the project is not yet decomposed.
+
+**Consequence carried into the brief the same turn:** `PART V D4` previously invited the project to
+*"re-examine"* the recommendation-not-dependency framing. That question is now ANSWERED, and an L1
+brief carrying a settled question as open would mislead the L2 cut, so D4 is amended to record the
+ruling rather than pose the fork.
