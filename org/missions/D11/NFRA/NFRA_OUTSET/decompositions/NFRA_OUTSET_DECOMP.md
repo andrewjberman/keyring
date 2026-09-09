@@ -1,5 +1,7 @@
 # NFRA_OUTSET — DECOMPOSITION (L5)
 
+**v0.4** (2026-09-09 ~14:4xZ, `2.0.0_SA_COO`) — the L5 act on the CTO’s ROUND-2 ANALYSIS @`d6fd9eca07` (merged @`5f0cd1a318`) and PRD **v0.4**, which adds two manifest rows (`OS-s-20`, `OS-s-21`) to §7. The analysis directs: *"2.0.0_SA_COO recuts from this analysis: two rows, both CloudOps, no worker fan-out; OS-s-20 after OS-s-19 (done), OS-s-21 buildable beside it with its accept gated on OS-s-20’s."* Round 3’s sections are §13–§18 below; §0–§12 are rounds 1 and 2’s and are LEFT UNEDITED.
+
 **v0.3** (2026-09-06 ~03:1xZ, `2.0.0_SA_COO`) — the L5 act on the CTO's ROUND-1 ANALYSIS
 @`a0500abe18` and PRD **v0.3**, which adds two manifest rows (`OS-s-18`, `OS-s-19`) to §7. The analysis
 directs: *"2.0.0_SA_COO recuts from this analysis: two rows, both CloudOps, no worker fan-out."* Round 2's
@@ -216,3 +218,96 @@ disarm is not this seat's to take. This section exists so a reader of §3 meets 
 document.
 
 — `2.0.0_SA_COO`, L5 round 2
+
+---
+
+## 13. ROUND 3 — the two cells the round-2 analysis placed
+
+**Input:** PRD **v0.4** §7 rows `OS-s-20` and `OS-s-21`, added by the CTO's L10 addendum @`d6fd9eca07` (merged
+@`5f0cd1a318`) on the CVO's round-2 slug @`11e9902247`. **This document invents neither.** Both are the manifest's,
+verb and lane included; L5 adds only the order, the seating and the fan-out.
+
+| cell | outcome | verb | lane | depends_on | why it exists |
+|---|---|---|---|---|---|
+| `OS-s-20` | FWD-3 | deploy | CloudOps | `OS-s-19` — COMPLETE @`9e023d20b5` (a DEPENDENCY EDGE: the host boots whatever runner sits in S3, `instance.tf:94-96`) | THE CONSUMER SWITCH. `ESTATE_OUTSET_SEAM_PREFIX` is set nowhere on the report host (`instance.tf:130-151`, eleven variables, not this one), so the served runner's `_stratum_propagation` returns `INSTRUMENT_UNAVAILABLE` without composing a key; setting it REPLACES the host (`instance.tf:83`). Row S16. |
+| `OS-s-21` | FWD-3 | build | CloudOps | `OS-s-20` on the ACCEPT edge only (buildable in parallel) | THE CADENCE. The 13:03:50Z publish was by hand; `OUTSET_SEAM_MAX_AGE_HOURS` defaults to 26 and `runtime.env` does not override it, so the artifact reads STALE -> `INSTRUMENT_FAILED` from ~2026-09-10T15:03Z. Row S17. |
+
+⛔ **A SEAM IS TWO ENDS AND A CLOCK** (the analysis §2). v0.3 placed the producer's publish and the consumer's read
+grant; round 2 landed both and the served report renders exactly as before. v0.4 places the consumer's SWITCH and
+the CLOCK. These are the last two members; the analysis names the test that would have found all four at L4.
+
+## 14. THE CHAIN READ — round 3
+
+```
+  M (dependency-independent chains) = 1
+    chain F  2 cells   OS-s-20 -> OS-s-21   (OS-s-20 depends_on OS-s-19, COMPLETE -> free NOW;
+                                             OS-s-21 depends_on OS-s-20 on the ACCEPT edge only)
+
+  longest dependency depth = 2 on the accepts, 1 on the builds
+```
+
+**`OS-s-20` is free NOW.** `OS-s-21` is BUILDABLE now and its ACCEPT cannot be read before `OS-s-20`'s: a scheduled
+publish into a prefix the consumer never reads is a duplicate output path with a timer on it (the CTO's sharpening 3).
+**Both accepts read on a SERVED DAY, the earliest being the 2026-09-10 13:00Z scheduled fire of the replaced host** — so
+neither order can flip today, and that is correct: an accept read on the served day is the whole point of the row.
+
+## 15. SEATING — one CloudOps seat, the act of `OS-s-20` first, and no worker
+
+**Both cells to `0.7.0_AE_CloudOps~W`, `OS-s-20`'s replace first, `OS-s-21`'s build beside it.** Measured before
+addressing (Rule 27, one project per instance): `~W` holds 0 open orders at 14:37Z (`to-check --all --assignee`,
+denominator 2347 faces), is LIVE, and holds this project's whole context (`OS-s-6`, `OS-s-7`, `OS-s-18`, `OS-s-19`).
+
+**NEITHER IS A WORKER'S** — a host replacement and a scheduler are LIVE CLOUD ACTS, the boundary that sent every
+CloudOps cell of this project to that lane, and `OS-s-6` measured why a worker must not hold them (ambient `*` on `*`).
+
+**THE ORDER IS THE ANALYSIS'S EDGE:** `OS-s-19 -> OS-s-20 -> OS-s-21` on the accepts. `OS-s-19` is done, so
+`OS-s-20`'s replace is the first act, OUTSIDE the run window: the host self-stopped at 13:11:04Z today and the next
+scheduled fire is 2026-09-10 13:00Z, so the window is open from now until then.
+
+⛔ **`OS-s-20` IS THE "STOPPING EC2 / UNRECOVERABLE" CLASS AND ANDREW'S GO IN PRINCIPLE IS ON THE RECORD**
+@`e1b44ba4cc` (his "All recs approved" ~14:2xZ at the CTO terminal): ONE host, ONE replace, to set the prefix, under its
+OWN NEVER-2 entry, outside the run window, after `OS-s-19`, **with the orchestrator's target instance ID re-pointed and
+verified LIVE before the entry closes** (`instance.tf:114-121`: the orchestrator starts the box BY ID; a stale ID makes
+the 13:00Z fire start nothing, silently). The GO rides `OS-s-20`'s face; the executing lane does not ask again for the
+same act; it authorises no other replace, no other host and no mechanism change.
+
+⛔ **ONE REPLACE, NOT TWO — A SEQUENCING FACT THE SEAT MUST READ BEFORE ACTING.** If `OS-s-21`'s mechanism lives in
+this host's bootstrap (a systemd timer or cron in `user_data`), every edit to `user_data` is ANOTHER replacement
+(`instance.tf:83`). In that case the cadence lands in the SAME `user_data` change as the prefix, so the host is replaced
+ONCE under ONE ledger entry, with the two accepts still read separately. If the mechanism lives off the host
+(EventBridge Scheduler / SSM / a Lambda), the replace carries only the prefix. The choice is the assignee's (§17) and
+the ledger entry names which.
+
+## 16. THE FAN-OUT L6 WILL CARRY — round 3
+
+```
+fanout: 1 of 1 chains, cap 8, reason: the two cells form one chain on the accept edge (OS-s-20 -> OS-s-21), both act on
+        ONE LIVE CLOUD ESTATE (the same host, the same Terraform state, the same seam prefix), and a second CloudOps
+        seat would contend on the estate-report state lock and could force a second host replacement. Width 1, one
+        seat, the replace first and the cadence built beside it.
+```
+
+## 17. WHAT ROUND 3's DECOMPOSITION DOES NOT DECIDE
+
+- **The cadence's mechanism and its compute.** Where the two producers run on a schedule (on the host before the
+  13:00Z run; an EventBridge Scheduler; SSM; a Lambda) and under which identity is the assignee's, inside the accept's
+  bounds: the PRODUCER'S OWN trigger, never success-of-upstream as the only trigger, never a watcher on the consumer,
+  writes ONLY the two seam keys. A pipeline trigger is not a monitor; the moratorium does not reach it (CTO @`e18317d0e0`).
+- **How the orchestrator's target follows the replace.** `orchestrator.tf:37` reads
+  `ESTATE_INSTANCE_ID = aws_instance.estate_report_runner.id` — a Terraform reference, so the apply re-points the
+  Lambda's environment — and the Lambda reads it at import (`lambda_function.py:34`). Whether the applied function
+  configuration and a fresh container carry the NEW id is VERIFIED LIVE (`get-function-configuration` against
+  `describe-instances`) before the entry closes; the reference is the mechanism, the live read is the evidence.
+- **The rollback shape of a replaced host.** A destroyed instance is not restored; the rollback is a further replace
+  under the prior `user_data`. The ledger entry states it before the act.
+
+## 18. THE S18 LESSON, APPLIED AT THIS CUT RATHER THAN LEARNED AGAIN
+
+Row `NFRA_OUTSET-S18` (round 2, RULED @`cb43d05200`): **a `<paths>` block is a GRANT only for a `0.9.0_WK_*` serial**
+(`owned-paths-validate.py` `_WORKER_SERIAL_RE`); for a SEAT the lane registry decides and the block can only narrow.
+Both round-3 faces therefore name only surfaces `0.7.0_AE_CloudOps~W`'s lanes admit — resolved at this seat with the
+resolver before the cut (8 of 8 candidate paths PERMITTED, rc=0; see the issuance commit) — and both batteries live
+in the seat's own deliverables folder from the start (clause 4, the serial in the path). No `.tools/tests/` line, no
+`org/modules/heatmap/` line.
+
+— `2.0.0_SA_COO`, L5 round 3
