@@ -28,6 +28,27 @@
       "spine_clause": "L10 the recut (the COO reads the analysis and the remediations, re-issues as ONE issuance under L6, the choice recorded in the issuance commit) -> L6 (the L6 gate, the tree check on both carriers) -> L7 (the spawn IS the GO; one worktree per slot from CLOUD)",
       "gate_or_notifier_touched": ".tools/safe-commit.sh (to-pipeline-gate: 4 newly-added TOs carry <decomp_ref> + preflight; surprise-row-gate; missions-tree-check REFUSED once on INDEX-DRIFT then 0 violations); .tools/missions-tree-index.py derive --write; git worktree add x3; Agent(subagent_type=worker, model opus) x3",
       "note": "TWO THINGS STATED PLAINLY. (1) The tree check's first refusal was CORRECT: a flip on one carrier is the split the check exists to catch, and the remedy was the generator, not an edit to the index. (2) A cut-time defect the issuer will own if it bites: E1-AC3's zero over help strings can be unreachable if a retired-alias RECORD inside tool_index.py must name the retired surface -- the face pre-empts it by excluding declared retired records from the count and printing them; if the worker finds a carrier the exclusion cannot express, that is a row and an amendment, not a re-cut to pass. || The base COO's nudge (94528) measured this lane's summary as stale ('awaiting the CTO analysis'); the heartbeat process is restarted with a WORKING summary in the same tick."
+    },
+    {
+      "seq": 2,
+      "limb": "L7/L8",
+      "started_utc": "2026-09-09T16:18Z",
+      "ended_utc": "2026-09-09T16:22Z",
+      "act": "TO-CG-E-3 DRAINED AND TERMINAL; TO-CG-E-4 HANDED; the round-5 L8 packet OPENED. The worker report (0.9.0_WK_NFRA_CLDGRPH~3, branch HEAD 7f3616c14b) and the instance read at this seat inside the worktree: checker rc=0 on the six ids; E3-AC1 4 of 4 dispositions from the closed vocabulary with P7_ROW_FILED=W3-S6; E3-AC2 READERS=0 of 487 .py by AST with the builder declared and both controls fired; E3-AC3 the two stores byte- and mtime-identical to the cut (the issuer's own ls -la agrees); E3-AC4 the builder stamps edge_count_claim + artifact_claim and both staying manifests carry them (the issuer read kuzu_db's: edge_count 2488, edge_count_claim merge_attempts, artifact_claim historical); E3-AC5 7 of 7 gate-clean; E3-AC6 recorded, no verdict. Both commits authored by the worker; every touched path inside the grant. MERGED through safe-merge.sh @d3a03a7b7b (row gate on the merged index: 4 new rows of 126; missions-tree-check 0 violations; no conflict). CLOUD merged into wk-cldgrph-5-3 @ab45a3337f; E-4's premises re-read there (E-3 instance rc 0; E-4 pending; kuzu_stitch_db + manifest present in the main workspace; comp_debt.py carries the refusal line); TO-CG-E-4 handed by continuing the same subagent. L8_PACKET.round5.partial.md opened with E-3's section, the judgment split (the READING clause met, the EXISTENCE clause met only by a deletion gated on P7's author -- W3-S6 is the ask) and the four rows for the CVO's desk. This seat registered through the MCP client at 16:1xZ (PID 20528); 94466/94509/94528 acked READ.",
+      "inputs": [
+        "WORKER REPORT 0.9.0_WK_NFRA_CLDGRPH~3 on TO-CG-E-3 (final message; branch @7f3616c14b)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-E-3.residual-local-stores-dispositioned.proof_of_spec.json @7f3616c14b",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/CG-s-19.residual-stores.result.md @85e33e98ee"
+      ],
+      "outputs": [
+        "CLOUD @d3a03a7b7b (the E-3 drain)",
+        "wk-cldgrph-5-3 @ab45a3337f (the E-4 hand-off merge)",
+        "TO-CG-E-4 handed (0.9.0_WK_NFRA_CLDGRPH~3 continued)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/L8_PACKET.round5.partial.md (this commit)"
+      ],
+      "spine_clause": "L7 the drain (report AND instance; merge through the refuser; every ARMED row the branch carries read at the merge -- W3-S6 to the CVO, W3-S7/S8 to CloudComp, none this seat's to disarm; the next order handed by continuing the same subagent) -> L8 (the terminal order compiled the tick it went terminal)",
+      "gate_or_notifier_touched": ".tools/proof-of-spec-check.py (rc 0 in the worker's plane, and again at the hand-off HEAD); .tools/safe-merge.sh; git merge --no-ff into the worker branch (no gate: not a drain)",
+      "note": "THE WORKTREE IS KEPT (E-4 runs on it); the removal is at E-4's drain. || The worker named the gap the CVO must see rather than letting the five PASS rows imply the outcome: kuzu_db is still on disk and FWD-7's existence clause is met by a deletion this order was forbidden to take -- that is the P7 row, not a defect of the order."
     }
   ]
 }
