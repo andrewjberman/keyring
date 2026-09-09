@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-09T20:2xZ",
+  "written_utc": "2026-09-09T20:5xZ",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -120,8 +120,22 @@
         "task-orders/NFRA_CLDGRPH.TO-CG-F-11.stitch-vocabulary-unified.md",
         "project.json phase"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "cdb38aeb66",
       "next": "F-4's image act + derive + projection on ~2; F-2 after 21:00Z; F-9's flip; F-10; the partial L8 packet at the next drain; F-5 -> F-11 -> F-6 in order."
+    },
+    {
+      "seq": 9,
+      "limb": "adjudication (a gate that refused its own outcome) / L6 (a grant widened)",
+      "started_utc": "2026-09-09T20:4xZ",
+      "ended_utc": "2026-09-09T20:5xZ",
+      "act": "TO-CG-F-10 (CG-s-30, worker ~6) reported OPEN at 7cf9c9d4e1 with EVERY mechanical criterion PASSING on its worktree (the preamble first on stderr with stdout byte-identical and rc equal on 3 of 3 read-only subcommands; comp-aws rows 0 of 4 phrasings from ranks 4/42/23/1 of 79, the control still comp-kuzu; curated tuples 2 -> 0 of 90; the map's tool-grain status declared and carried; parity 99 of 99; idempotent regeneration; 0 of 7 laptop-producer phrasings; the engine byte-unchanged) and the acts UNCOMMITTABLE: the pre-existing self-route invariant (registered-implies-reachable over the manifest's tools_index) refuses the commit because comp-aws no longer surfaces in comp-which -- the deliverable's own outcome (W6-S2, BLOCKING). RULED inside the grant (a gate edit in the order's own lane; told to the CTO and CVO 94707/94708): the invariant exempts a tool by DECLARED status (retired | deprecated) read from the map's tool-grain field and the manifest's entry-grain field, printing the exempt set; the manifest's ONE comp-aws tools_index entry gains status: deprecated (R14's entry-grain parallel); the worker's refusal of the gate's suggested workaround (vocabulary routing AWAY) upheld. W6-S1 (the generated carriers read concern/canonical_call from a frozen tool_overrides.yaml bootstrap, so the map reword never reached them): the grant widened to that file's comp-aws entry; the census extended to the generated carriers; the frozen-bootstrap shape carried named to L10. F-10's face amended on its branch and the order re-handed; rows S82/S83.",
+      "artifacts": [
+        "wk-cldgrph-6-6 F-10 face amendment (this seat's commit)",
+        "rows S82, S83",
+        "msgs 94707/94708"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "F-10's commit under the amended gate, re-run, flip, drain; F-2's flip after 21:00Z; F-4's image act on ~2; the partial L8 packet at the next drain."
     }
   ]
 }
