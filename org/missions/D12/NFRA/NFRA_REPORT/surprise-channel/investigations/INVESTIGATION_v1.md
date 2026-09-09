@@ -184,6 +184,31 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
     "spec_asserts": "TO-RP-s-9's original BOUNDS: 'BOX grain CANNOT be computed until RP-s-5 lands, because the compute manifest is EC2-only with ECS absent entirely' -- attributing the entire box-grain block to the manifest. The coordinator's addendum on this same TO asked this cell to state plainly if box grain is now fully reachable given RP-s-5 landed.",
     "world_is": "RP-s-5 discharged the INVENTORY half of the box-grain blocker (a complete, schema-clean EC2+ECS list with machine_type/lifecycle). It did not and could not discharge the COST-ATTRIBUTION half: AWS Cost Explorer's resource-level (per-instance) cost API is opted OUT at the payer account, and the only active cost-allocation tags are segment-grain or a coarser-than-box 'System' sub-segment with 9 of 27 rows untagged and a casing drift splitting one real segment into two. Literal box-grain cost (one figure per EC2 instance or ECS service, tested against its own trailing-30-day price) remains unreachable today, for reasons that have nothing to do with RP-s-5.",
     "notes": "Not remediated: enabling payer-account resource-level CE data, fixing the System tag casing drift, and retiring the stale M365MCPGateway cost tag (found in the same sweep, s.2a of the deliverable) are all outside this cell's <paths> and outside comp-schedule's battery finding for this project. Disarm owner is the L6 issuer (2.0.0_SA_COO~ZZ), who owns whether a future round routes this to a billing/Terraform-tag owner."
+  },
+  {
+    "id": "NFRA_REPORT-Z-S4",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZZ",
+    "surfaced_at": "2026-09-09T22:00:00Z",
+    "one_line": "Disarms NFRA_REPORT-Z-W2-S4. The finding is ACCEPTED as measured: box-grain cost attribution is blocked by TWO causes independent of RP-s-5 -- resource-level Cost Explorer data is opt-in DISABLED at the payer account (get-cost-and-usage-with-resources returns AccessDeniedException, confirmed live), and the only active cost-allocation tags are segment-grain or a coarser System tag that groups up to 5 boxes, is null on 9 of 27 declared rows, and carries a bd-pipeline/BDPipeline casing drift.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "NFRA_REPORT-Z-W2-S4"
+    ],
+    "disposition": "GRADUATED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "0.9.0_WK_NFRA_REPORT~2's live reads at RP-s-9: aws ce get-cost-and-usage-with-resources -> AccessDeniedException; the active cost-allocation tag set enumerated and its coarseness/null-rate/casing-drift measured against the v1.1 EC2_MANIFEST.json's 27 declared rows.",
+        "RP-s-9's delivered SEGMENT-grain detector is live and control-tested: (untagged), 45% of spend and the largest single line, sits at -4.5% and does NOT fire; inf (+639.6%) and bd (+37.3%) do. The control half is what the cell's own bound required and it holds.",
+        "RP-s-5 (same worker, merged @42fcf408d1) discharged the INVENTORY half in full -- EC2 and ECS enumerated, machine_type/lifecycle split on all 27 rows -- so the residual blocker is demonstrably NOT the compute manifest the PRD's D3 named."
+      ]
+    },
+    "spec_asserts": "PRD s.8 row S9 and TO-RP-s-9 BOUNDS: 'BOX grain CANNOT be computed until RP-s-5 lands, because the compute manifest is EC2-only with ECS absent entirely.' The stated blocker is the manifest.",
+    "world_is": "RP-s-5 landed and the manifest blocker is discharged, yet box-grain dollars remain unreachable for two causes the PRD never named: an account-level Cost Explorer opt-in, and cost-allocation tag hygiene. D3's dependency was correctly stated and INCOMPLETE -- it named the blocker this project could clear and not the two it cannot.",
+    "notes": "DISARMED TO INERT because the hazard was that an unreachable limb would be read as merely pending on a dependency that has since cleared -- a caveat outliving its cause, which is this project's own defect class. Recording it here removes that: the residual is now durable, attributed, and carried by 2.0.0_SA_COO~ZZ into the round-close slug to 1.0.0_SA_CTO~Z as a named limitation on FWD-8's box-grain limb. GRADUATED in the sense 1.0.0_SA_CTO~Z flagged at msg 20629 -- accepted and acted on, NOT an assertion that a CVO remediation row is owed. NOT FIXED HERE AND NOT THIS LANE'S TO FIX: enabling resource-level Cost Explorer is a payer-account billing setting and is Andrew's; the tag hygiene belongs to the owning infra lanes. FWD-8's SEGMENT limb is delivered and unaffected -- the outcome is not blocked, only its box-grain half."
   }
 ]
 ```
