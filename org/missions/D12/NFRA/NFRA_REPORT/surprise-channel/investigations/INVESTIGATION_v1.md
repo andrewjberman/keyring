@@ -304,6 +304,88 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
     "spec_asserts": "TO-RP-s-11's ACT: 'make it findable what we put in front of people that nobody is checking at all... a part of the business with nothing watching it must look DIFFERENT from one that is watched and healthy.'",
     "world_is": "trade-submission-api and sentiment-query-api are live, reachable API Gateway endpoints with no Terraform declaration and, on this sweep, no matching CloudWatch alarm of any kind -- the same evidentiary shape (positive-controlled zero, against a sibling surface that does match) that this project's own STATE_MODEL.md renders as the not-CHECKED family. E1DHJH4Y1W8YC2 is a declared, live CloudFront distribution with zero alarms by the SAME structural dimension that finds its sibling three times over. None of the three is a proof that nothing IS wrong with them; each is a measured absence of any instrument that would tell anyone if something were.",
     "notes": "ARMED specifically because of trade-submission-api's name and undeclared status -- a live, unmonitored, untracked surface named for a financially consequential function is exactly the class of risk a reader of this report needs surfaced, not buried in a deliverable prose paragraph. Declared method limit, named rather than hidden: the API-gateway matches are NAME/ID SUBSTRING searches over whatever comp-find's aws corpus indexes (alarm name, ARN, a truncated JSON excerpt) -- weaker evidence than the CloudFront case's exact DistributionId dimension match, because an alarm targeting the same underlying Lambda under an unrelated name would be missed by this method. Not remediated here: this project's standing alerting/monitor moratorium forbids minting a new alarm from any cell, and disarm_owner is set to the sovereign-adjacent seat that can decide whether this is escalated to Andrew directly rather than carried only in a report row."
+  },
+  {
+    "id": "NFRA_REPORT-Z-S5",
+    "adjudicates": [
+      "NFRA_REPORT-Z-W1-S1"
+    ],
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-09T23:20:00Z",
+    "one_line": "DISARM of NFRA_REPORT-Z-W1-S1 by its named disarm_owner: comp-blast's missing GOLD_SCRIPT->Lambda/ReactComponent edge is CONFIRMED estate-wide and is now a citable recorded limit at org/modules/graph/INSTRUMENT_LIMITS.md. The HAZARD is disarmed; the GRAPH IS NOT FIXED and the row says so.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The row's own measurements are ACCEPTED and deliberately NOT re-run -- re-running a peer's instrument is repetition, not corroboration (CLAUDE.md rule 22). Its positive control is what makes it decisive: comp-blast on arn:aws:lambda:...:function:inf-api-positions --direction upstream, a lambda INDEPENDENTLY known live because it backs a served portal API route, FAILED in the same graph. The instrument is blind, not the candidates.",
+        "And the blindness is a MISSING EDGE TYPE rather than absent nodes: comp-blast 'component:AdvisorsTab.tsx' prints the live node-type census ReactComponent=442, JSXRender=1433, JSXElement=2205, GOLD_SCRIPT=1380, S3_DATA_KEY=294. Both endpoint families are modelled; the edge between them is not.",
+        "COVERAGE of the row's own sweep: 10 gold scripts, every one returning only gold:/s3: prefixes where non-zero, including INF_D_00b.portal_timeseries.py -- a script named for the portal it serves.",
+        "org/modules/graph/INSTRUMENT_LIMITS.md (this act) records the limit, its positive control, and the route around it that TO-RP-s-7 actually used (comp-pipescript's PORTAL CONSUMERS resolution + comp-platinum reverse, which DO model this edge for the platinum/ key convention)."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "CLAUDE.md rule 20 and the build ladder direct callers to QUERY the estate's existing dependency graph rather than rebuild one, and TO-RP-s-7's battery findings named no instrument gap.",
+    "world_is": "For the GOLD_SCRIPT-to-client-facing-terminus question comp-blast returns a silent false negative for the entire edge class, for any gold script, alive or dead. A caller who does not know to route around it -- as this cell did -- reads 'no consumers' as evidence of death.",
+    "notes": "DISARMED, and the disarm is precisely scoped: THE HAZARD was that a future caller reads a comp-blast zero as evidence for or against deprecation. That is closed by a findable, citable record at the module the instrument lives in, cited from this row. THE GRAPH IS NOT FIXED -- no GOLD_SCRIPT->Lambda/ReactComponent edge is modelled today, repairing it is comp-tool build-lane work owned by 1.0.0_SA_CTO~Z, and it is SIZED AND NOT DONE. A document warning about a gap is not a graph that models the edge and must never be cited as though the instrument improved. A STRONGER CARRIER WAS DELIBERATELY NOT TAKEN: a one-line stderr banner in .tools/comp-blast would reach the callers who never open the doc, which is the whole population at risk, but it changes a shared tool's OUTPUT and anything parsing that stderr is an unmeasured consumer set -- that is the right next act and it needs its own measurement rather than a same-turn edit. TO-RP-s-7 IS NOT INVALIDATED: the cell found the gap while GROUNDING a claim, declared it, routed around it, and treated every unresolved candidate as NOT deprecated. Discovering an instrument's blindness is the cell working, not failing."
+  },
+  {
+    "id": "NFRA_REPORT-Z-S6",
+    "adjudicates": [
+      "NFRA_REPORT-Z-W1-S2"
+    ],
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-09T23:21:00Z",
+    "one_line": "DISARM of NFRA_REPORT-Z-W1-S2 by its named disarm_owner: comp-pipescript's static WRITES parser misses dynamically-constructed S3 keys, CONFIRMED as a two-pattern false-negative class that PROPAGATES into comp-platinum reverse. Recorded at org/modules/graph/INSTRUMENT_LIMITS.md; the PARSER IS NOT FIXED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The row's measurements are ACCEPTED and not re-run. TWO confirmed instances, each with the write located at file:line: INF_D_07.concentration_risk.py:55 builds its key by PREFIX-VARIABLE CONCATENATION; INF_C_01.canonical_nna.py writes through a _write_s3(df, key) helper (251-258) with the key built by a separate _nna_key() plus an output-prefix guard (259-299). Both print 'WRITES: (none detected)'.",
+        "THE PROPAGATION IS THE SHARPEST PART AND IT DEFEATS CROSS-TOOL AGREEMENT: comp-platinum reverse 'platinum/firm/concentration_risk.json' --firm inf returns a BLANK PRODUCER, because the same static write-index has no entry for the key. Two tools, ONE parser -- so agreement between them is not corroboration (CLAUDE.md rule 22: a second seat's confirmation via the FIRST seat's method is repetition).",
+        "AND THE FALSE NEGATIVE LANDS ON THE MOST GOVERNED SCRIPT IN THE SAMPLE: INF_C_01's own header comments describe an 'ATOMIC SET' with three guard libraries, a 'gold-dispatch chokepoint APPLIED + EXERCISED', a 'NEVER#2 co-signed by CTO + COO' and a SERVE-RELEASE-ACK discipline. The tool reports it as writing nothing.",
+        "org/modules/graph/INSTRUMENT_LIMITS.md (this act) records both patterns so a reader can check by hand: (a) key built by concatenating a prefix variable; (b) write routed through a helper receiving a computed key."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "TO-RP-s-7's BOUNDS anticipated the OPPOSITE miscalibration -- that a one-hop check would OVER-report aliveness relative to the terminus.",
+    "world_is": "The static parser UNDER-reports the WRITE ITSELF, so a script that is unambiguously alive by its own in-repo governance language reads as writing nothing. For a naive consumer 'WRITES: (none detected)' is indistinguishable from 'this script does nothing', which is a sentence a decommissioning decision acts on.",
+    "notes": "DISARMED on the same scoping as Z-S5: the HAZARD (a false zero recruited into a deprecation or decommissioning decision) is closed by a citable record naming both patterns; THE PARSER IS NOT FIXED and that is comp-tool build-lane work owned by 1.0.0_SA_CTO~Z, sized and not done. WORTH KEEPING BEYOND THIS ROW: the battery's own worked example predicted an OVER-report and the world produced an UNDER-report, which is why the cell caught it -- it checked the direction its bound did NOT warn about. Testing only the direction a spec anticipates leaves its mirror open."
+  },
+  {
+    "id": "NFRA_REPORT-Z-S7",
+    "adjudicates": [
+      "NFRA_REPORT-Z-W1-S4"
+    ],
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-09T23:22:00Z",
+    "one_line": "DISARM of NFRA_REPORT-Z-W1-S4 by its named disarm_owner, and the substance is BIGGER than the row could see: trade-submission-api is a LIVE, PORTAL-CONSUMED trade submission AND APPROVAL workflow whose 7 lambdas, DynamoDB table, S3 bucket and IAM role are ALL DECLARED while the API GATEWAY ITSELF is LIVE-no-DECLARED -- and a SECOND, DECLARED front door reaches the same handler. NOTHING WAS BUILT; the monitoring question is an open call at Andrew.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The row's own alarm sweep is ACCEPTED and not re-run; its positive controls are what make the zeros evidence (session-analytics-api matches 4 of 51 alarms; the sibling CloudFront distribution matches 3 by a structural DistributionId dimension).",
+        "1.0.0_SA_CTO~Z live read, comp-find 'trade-submission|w8jnzvs21g' --corpus aws --all, VINTAGE 2026-09-09 21:05:17 UTC (stitch-codebuild built 19:55:00Z, manifest 09be45b5ff92), DENOMINATOR 32 hits across 2530 aws nodes: API_GW trade-submission-api drift=LIVE-no-DECLARED with SEVEN routes -- POST /submit, POST /workflow, POST /auth, GET /submissions, GET /submissions/{proxy+}, GET /submissions/{submission_id}/excel, GET /users.",
+        "EVERY COMPONENT BEHIND THE DOOR IS DECLARED: 7 lambdas (trade-submission-handler, trade-workflow-handler, trade-auth-handler, trade-authorizer, trade-dashboard-api, trade-identifier-cache, trade-parquet-batch-export), DynamoDB opal-trade-submissions, S3 opal-data-trade-submissions, IAM role trade-submission-lambda-role with 2 inline policies. The asymmetry IS the finding: a fully Terraform-managed trade path whose front door is not in Terraform.",
+        "TWO FRONT DOORS TO THE SAME HANDLER: a DECLARED route POST /api/general/trades/submit on a DIFFERENT api (7k3ed8px20, owner_pipeline shared-infra, tf-managed) integrates the SAME trade-submission-handler. Only the declared side is visible to any Terraform-plane drift check.",
+        "THE CONSUMER IS THE PORTAL: portal/src/api/endpoints/trade-submission.ts carries 10 functions incl. submitTrade, approveSubmission, rejectSubmission, executeSubmission, downloadExcelFile -- so this is not an abandoned endpoint."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "TO-RP-s-11's cell asks whether an instrument covers each served surface; the row asks whether an ALARM EXISTS AT ALL, upstream of NFRA_OPSEC202609-Z-S151's delivery-leg question on alarms that already exist.",
+    "world_is": "Three live surfaces match zero of 51 alarms, positive-controlled. And the largest of them is not archaeological: it is a live, portal-consumed trade submission and approval workflow, fully declared behind an undeclared front door, reachable through a second declared door as well.",
+    "notes": "DISARMED AS A RECORDED FINDING, NOT AS A REPAIR. WHAT WAS DELIBERATELY NOT DONE: nothing was built. The standing moratorium forbids minting any alert, alarm, monitor or notification without Andrew's explicit word, so the remedy is NOT 'add alarms' -- it is this record plus a sovereign call, which is carried to Andrew in the same turn rather than waiting on a drain. WHAT THIS ROW DOES NOT CLAIM, because a trade-named finding is exactly where overstating would do damage: NO REQUEST LOGS WERE READ, so nothing here shows the undeclared door is RECEIVING TRAFFIC -- only that it is live, wired and consumed by portal code. And POST /auth carrying authorization NONE while the other six carry CUSTOM + authorizer nfa51m is NORMAL for a login endpoint and is NOT offered as a defect; it is named only so its absence from the finding list is not later read as a missed check. THE OPEN CALL AT ANDREW: whether to declare the gateway in Terraform (a change with a blast radius on a live trade path), whether to consolidate the two front doors, and whether any monitoring is authorized at all. RP-s-11 IS DOING EXACTLY WHAT FWD-11 COMMISSIONED: the monitored-vs-served reconciler found a served surface no instrument covers on its first real pass, and found it because the cell was told to ask that question -- RP-s-6 swept the SAME 51-alarm population for a different question and could not have seen it."
   }
 ]
 ```

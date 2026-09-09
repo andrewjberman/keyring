@@ -7,9 +7,14 @@ arrived -- `NFRA_REPORT` is in round 1 and `NFRA_OPSEC202609` holds its own COO 
 
 **Directive:** D12 Platform Operations - **Fabric:** site-z - **dep_stage:** PRD
 **L1 owner:** `4.0.0_SA_CRO~Z` - **L2-L4 owner + author:** `1.0.0_SA_CTO~Z` - **L5-L6:** UNSEATED - **L8-L10:** `3.0.0_SA_CVO~Z` - **Integrator:** `0.0.0_AB_MSTR~Z`
-**Brief (L1):** `docs/briefs/nfra-iamroles202609-least-privilege-brief-20260909.md` @`1a90986047`
+**Brief (L1):** `docs/briefs/nfra-iamroles202609-least-privilege-brief-20260909.md` @`cbe45b0db4`
+*(RE-PINNED at v0.2 from `1a90986047` -- `comp-adversary` source 2 flagged the brief MOVED-SINCE-AUTHORING, three
+minutes after the v0.1 commit. Section 9 carries it.)*
 **Endpoint (L2):** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_NFRA_IAMROLES202609_20260909.md`
-**Version:** v0.1, 2026-09-09 ~22:5xZ -- **L4 MINT. THE ENDPOINT BELOW IS RATIFIED IN FULL.** All
+**Version:** v0.2, 2026-09-09 ~23:3xZ -- **v0.2 ADDS SECTION 9, THE ADVERSARY GRID**, and RE-PINS the brief after
+that grid caught the L1 source moving under this PRD. **The uncovered-member finding v0.1 recorded is now CLOSED AT
+THE SOURCE:** `4.0.0_SA_CRO~Z` amended Part II Owns @`cbe45b0db4` to enumerate both missing clauses, so the brief's
+boundary and this PRD's declared domain now AGREE. Before it, **v0.1 = L4 MINT. THE ENDPOINT BELOW IS RATIFIED IN FULL.** All
 eight `DONE WHEN` bars confirmed by Andrew 2026-09-09 ~22:3xZ, VERBATIM: **"Confirm on
 IAMROLES202609."** Given in answer to `/open-calls` CALL 3 of 3, whose card put exactly these eight
 bars to him and recommended confirming now so L3/L4 could run.
@@ -20,9 +25,9 @@ bars to him and recommended confirming now so L3/L4 could run.
   "project": "NFRA_IAMROLES202609",
   "directive": "D12",
   "fabric": "site-z",
-  "prd_version": "v0.1",
+  "prd_version": "v0.2",
   "step": 4,
-  "brief_ref": "docs/briefs/nfra-iamroles202609-least-privilege-brief-20260909.md@1a90986047",
+  "brief_ref": "docs/briefs/nfra-iamroles202609-least-privilege-brief-20260909.md@cbe45b0db4",
   "endpoint_outcomes": [
     "FWD-1",
     "FWD-2",
@@ -193,8 +198,14 @@ from the Part II Owns cell:
 **`FWD-5` and `FWD-8` are ratified outcomes with no OWNS clause behind them.** Both are genuinely
 in-scope capabilities Andrew confirmed; the brief's boundary section simply did not enumerate them.
 **THE DECLARED DOMAIN FOR THIS PRD IS THEREFORE THE UNION: the seven OWNS items above PLUS `FWD-5`
-and `FWD-8` as items (8) and (9).** Surfaced to `4.0.0_SA_CRO~Z` so Part II can be amended at its
-next touch if wanted; nothing waits on that, and the manifest below is MECE against the union.
+and `FWD-8` as items (8) and (9).** Surfaced to `4.0.0_SA_CRO~Z`, and **ACCEPTED AND CLOSED AT
+THE SOURCE within minutes** -- that seat amended Part II Owns @`cbe45b0db4` to enumerate both clauses, called the
+gap *"a real defect in this brief"*, and named the cause better than this finding did: **"a boundary section
+derived from the shape of the QUESTIONS will drop every outcome that is not shaped like one"** -- `FWD-5` is a
+doing-something-safely item and `FWD-8` a doing-it-again item, and neither is a question. **The brief's Owns list
+and this PRD's declared domain now AGREE**, so the union below is no longer a divergence being carried. The nine
+items remain nine because the brief's first clause is split into instrument/census/coverage here -- the manifest
+needs that split and the brief does not.
 
 8. **PRE-FLIGHT BLAST RADIUS for a narrowing** -- what breaks, known BEFORE the change (`FWD-5`).
 9. **RE-RUNNABILITY of the whole assessment** (`FWD-8`).
@@ -345,3 +356,49 @@ the ONE-OUTCOME-PER-ROW property**, never the counts.
 simulate battery nobody has run (`D3`); that the `lane` column is a seat assignment (it is a lane;
 no COO is seated on this project yet); or that `absent` means unexamined -- every `absent` row names
 what was measured about the CURRENT state's failure to serve it.
+
+---
+
+## 9. ADVERSARY GRID (`comp-adversary`, run ON this PRD) -- for the L5 lane's reference
+
+**Commissioned Andrew-direct 2026-09-09 ~19:2xZ, VERBATIM:** *"CTO adds the surface manifest based on
+what they're finding when composing the PRD, and then they run a comp-adversary and include the
+comp-adversary results in a grid beneath the surface_manifest as an extra section for the reference
+of the COO."*
+
+`comp-adversary compose org/missions/D12/NFRA/NFRA_IAMROLES202609/prd/NFRA_IAMROLES202609_PRD.md`
+read-vintage HEAD @`b3b94ed455` at 2026-09-09T23:21:25Z · artifact-vintage `1aae9c43fe` (v0.1)
+
+⭐ **THIS RUN EARNED ITS COST, WHICH THE FIRST ONE (on `NFRA_REPORT`) DID NOT.** It caught that this
+PRD's own L1 SOURCE MOVED three minutes after the v0.1 commit -- a stale citation nobody would have
+noticed, on the one artifact the whole PRD is derived from.
+
+| # | source | denominator | result | what it means for L5 |
+|---|---|---|---|---|
+| profile | author's own pins | 3 commits, 4 repo paths, **2 `file:line` cites**, 5 tools | ✅ ADEQUATE | Two line-level citations, against ZERO on the `NFRA_REPORT` PRD. Rule 22 reserves "proof/root cause" for citations carrying a `file:line @ vintage`; these two carry one. |
+| profile | pin-parse warning | 1 hex run unparsed (`20260909`) of 3 | ✅ BENIGN | A date, not a commit. **Checked rather than assumed** -- the same warning on the `NFRA_REPORT` PRD hid a REAL unparsed commit (`9b99b49342`). |
+| 1 | cited-commit verification | 3 attempted | ✅ **3 VERIFIED / 0 UNVERIFIABLE** | `@1a90986047` (brief), `@39b106d036` (the F5 correction), `@ecaa7c7dcb` (the manifest contract) all resolve at read-vintage. |
+| 2 | cited-path vintage | 4 attempted | ⛔ **1 FLAGGED -- THE BRIEF ITSELF** | `docs/briefs/nfra-iamroles202609-...md`: **MOVED-SINCE-AUTHORING**, last change 2026-09-09T19:05:33, POSTDATING the artifact. **This is the finding of the run and it is now folded** -- see below. |
+| 3 | uncited neighborhood | **975 uncited siblings** (25 shown, cap DECLARED) | ⚠ **T11 NOT RESOLVED** | A step-4 PRD carries no `<decomp_ref>`, so comp-adversary's SHARPEST source is structurally unavailable at L4 and filesystem adjacency stands in. **It resolves the moment an L5 decomp exists** -- re-run it against the decomp, not against this PRD. |
+| 4 | comp-state drift | 400 commits / 2812 records | ⚠ INFORMATIONAL | Estate-wide TO drift; **nothing names an `NFRA_IAMROLES202609` artifact**, as expected for a project with no cells cut. Nothing here bears on section 8. |
+| 5 | the PACKET (digests) | **12 of 975** selected | ⚠ **ONE REAL HIT, ELEVEN FILLER** | Class census: **`S1` POSTDATES 1/1**, `S2` KIN 0/0, `S3` DENSE 0/0, `S4` PERIPHERAL 11/974. The single `S1` is the moved brief -- the same finding source 2 flagged, reached independently. The other eleven fell through to PERIPHERAL and are alphabetical `docs/briefs/` neighbours: **not adversarial findings, do not read them as such.** |
+| -- | declared exclusions | **4 sources NOT shown** | ⚠ BY CONTRACT | toolgraph SHARES_SUBSTRATE independence · comp-axes unexamined-axes · comp-blast/comp-trace CODE-graph expansion · comp-pulse/comp-cochange. v1 does not wire these and says so. **This grid is a BOUNDED bill of health, not a clean one.** |
+
+⭐ **WHAT SOURCE 2 CAUGHT, AND WHY IT MATTERS MORE THAN THE GRID ITSELF.** The brief moved at
+`cbe45b0db4` because `4.0.0_SA_CRO~Z` acted on THIS PRD's own section-2 finding -- that Part II Owns
+named no clause behind `FWD-5` or `FWD-8`. So the sequence was: L4 finds a defect in L1 → L1 is
+amended → **and the L4 artifact is now citing a superseded vintage of its own source.** Nothing was
+wrong with either act; the staleness is a pure consequence of the fix landing after the citation.
+**`brief_ref` is re-pinned to `cbe45b0db4` at v0.2 and section 2 records the finding as CLOSED AT THE
+SOURCE.**
+
+⚠ **THE GENERAL SHAPE, worth more than this instance: A CITATION GOES STALE FASTEST WHEN YOUR OWN
+FINDING IS WHAT MOVES IT.** The author has every reason to believe the pin is current -- they read it
+minutes ago -- and no reason to re-check, because they are the one who prompted the change. Nothing
+in the fabric announces it. `comp-adversary` source 2 is the only instrument that asked.
+
+⚠ **WHAT THIS GRID IS NOT.** `comp-adversary` reports **CITATIONS, not the world** -- every figure is
+scoped to what THIS PRD cited, while reading like a claim about the estate. "3 verified / 0
+unverifiable" certifies *the pins the author wrote*, never *the pins the author should have written*.
+**The uncovered-member hunt is NOT discharged here** and remains section 8's own MECE run, printed
+there in both directions.
