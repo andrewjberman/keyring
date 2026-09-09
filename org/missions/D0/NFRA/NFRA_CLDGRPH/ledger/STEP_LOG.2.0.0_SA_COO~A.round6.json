@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-09T19:3xZ",
+  "written_utc": "2026-09-09T19:4xZ",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -63,8 +63,22 @@
         "infra/system/06_current_state.{md,json} (the discharge, this commit)",
         "channel rows S75, S76 (173)"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "55b70c3a54",
       "next": "F-2's flip after 21:00Z (or earlier if site Z's instants matched); F-4 on ~2 (the image act); F-9 on ~5 after MSTR's device act; the partial L8 packet once F-2 or F-9 lands; MSTR [STUCK] at the two-tick mark if 94655 stays unread."
+    },
+    {
+      "seq": 5,
+      "limb": "L6 (second mid-round addendum) / adjudication",
+      "started_utc": "2026-09-09T19:2xZ",
+      "ended_utc": "2026-09-09T19:4xZ",
+      "act": "PRD v0.8 (row S30, RETIRE the compiler's write paths; msg 94659) arrived at 19:25Z on Andrew's ~19:1xZ word; the CTO's HOLD (94665, 19:28Z) followed within minutes on Andrew's ~19:3xZ word ('effectively deprecate it and pull it off from being surfaced via comp-which. We do not need to gate it') -- NOTHING was cut against the v0.8 row; the cut inputs were gathered while waiting (the CLI seam main :3254-3324, the wrapper, the map's comp-aws entries :397/:650 and its lack of any tool-grain status field, comp-which's tuples :290/:375 and string :1190, comp-tools.yaml :125-143 with the duplicate-key history :691-698, comp-aws-agent-usage.yaml). PRD v0.9 @a10004ecdf merged @6593536bab landed 19:35Z (S30 amended in place: DEPRECATE, no refusal, no exit-code change; a preamble + pulled out of comp-which selection at tool grain; the carriers regenerated; the engine untouched). EXECUTED THE SAME TICK as ONE issuance: decomposition v0.8 (CG-s-30, 36 cells), TO-CG-F-10 to a NEW slot ~6 (the preamble on STDERR so 'as before' is measurable as stdout byte-equality on read-only subcommands; a tool-grain status field declared in the map's schema and honoured by gen_tool_registry; comp-which's tuples repointed and its ranker skipping deprecated tools; the registry text rewritten under a declared phrase domain; the engine byte-checked); fanout 6 of 6 chains, cap 8. MSTR DARK: the CTO's 94651/94662 and this seat's 94655/94656 all OFFER-EXHAUSTED at 19:36Z (0 of 4 read), the hook pair still on this laptop -- the two-tick mark; escalated to the CTO in this tick's telling (MSTR is the seat the rule names for [STUCK], and MSTR is the dark one).",
+      "artifacts": [
+        "decompositions/NFRA_CLDGRPH_DECOMP.md v0.8",
+        "task-orders/NFRA_CLDGRPH.TO-CG-F-10.comp-aws-deprecated-unrouted.md",
+        "project.json phase"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "spawn ~6; F-2's flip after 21:00Z; F-4 on ~2; F-9's F9-AC3 at its deadline (MSTR); the partial L8 packet at the next drain."
     }
   ]
 }
