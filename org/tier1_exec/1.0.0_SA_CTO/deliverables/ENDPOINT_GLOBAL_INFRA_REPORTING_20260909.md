@@ -5,10 +5,28 @@
 
 ---
 
-# ✅ DELTA READ COMPLETE 2026-09-09 ~17:0xZ -- CONFIRMED AGAINST `@37ff80867a`, ONE OUTCOME AMENDED
+# ✅ v4 -- ANDREW'S AMENDMENTS FOLDED IN 2026-09-09 ~17:3xZ. TWELVE OUTCOMES.
 
-**The two amended regions were read and the cut re-tested against them. `FWD-1..FWD-11` stand;
-`FWD-2`'s ACCEPT is AMENDED (see its own `AMENDED` line). The vintage is re-pinned throughout.**
+**Andrew-direct, VERBATIM AND ENTIRE:** *"(a) this should not require my buy-in, it is purely
+declarative. I can elect to remediate issues or not at my discretion, separate from the greater
+flow. (b) This is fine. I would also make sure that on the subject of the aggregate FWDs that there
+is a clear strategy for where AI analysis is applied, whether for summary generation and for nuanced
+description of anomalous patterns. I think there should be something where if there is an anomaly,
+we get a clear breakdown of the connected resources/artifacts/consumers/generators/etc and a brief
+analysis of the scenario. (c) This is fine. (d) This is fine. I will spawn COO~Z to proceed
+OPSEC202609 and COO~ZZ to proceed REPORT."*
+
+**WHAT CHANGED:** `FWD-1` RE-CUT as declarative (his (a)); `FWD-8`'s action clause STRUCK on the
+same principle, **applied to an outcome he did not name and flagged as this seat's judgment**;
+`FWD-12` ADDED (the anomaly breakdown + analysis); `C-AI` ADDED (where AI analysis is applied).
+`FWD-2..FWD-7`, `FWD-9..FWD-11` stand as cut and are CONFIRMED by his (b)/(c)/(d).
+
+⛔ **TWO BARS HE HAS NOT SEEN AND HAS NOT CONFIRMED: `FWD-1`'s NEW bar and `FWD-12`'s.** Everything
+else in this file is ratified. Those two are CUT and awaiting his word.
+
+---
+
+## v3 -- THE DELTA READ AGAINST `@37ff80867a` (retained)
 
 ⛔ **THE AMENDMENT'S SCOPE WAS VERIFIED HERE, NOT ACCEPTED ON REPORT.** `4.0.0_SA_CRO~Z` stated the
 outcome territory was byte-unchanged; this seat measured it rather than taking the word, because a
@@ -30,8 +48,7 @@ conclusion was wrong, because it could not see a sovereign hold or a delivery st
 ratified two-axis model grades that row CHECKED / DEGRADED, never BREACH. **A "re-read is optional"
 would have carried a subtly wrong acceptance line into a PRD.**
 
-**STILL AWAITING ANDREW: the `DONE WHEN` confirmation.** These outcomes are CUT and NOT RATIFIED, and
-no PRD may carry them as ratified until he confirms (his 2026-09-03 word).
+**SUPERSEDED BY v4 ABOVE:** his confirmation arrived for ten of twelve; only `FWD-1`'s new bar and `FWD-12` remain unconfirmed.
 
 ⚠ **ONE RESIDUAL, MEASURED AND NAMED:** the brief is CLEAN AT HEAD `@37ff80867a` with an empty
 worktree and has not moved since 16:43Z, and **no "ready" ping has reached this seat.** Andrew's
@@ -39,8 +56,7 @@ worktree and has not moved since 16:43Z, and **no "ready" ping has reached this 
 is sound against `@37ff80867a` and is NOT a claim the brief is final.** If more lands, the same
 two-region delta read runs again -- it cost one diff and two controls.
 
-⛔ **THE `NFRA_OPSEC202609` GATE IS STILL ANDREW'S TO DECLARE CLEARED, NOT THIS ARTIFACT'S.** No seat
-may seat `2.0.0_SA_COO~Z` on the strength of this file.
+⭐ **THE GATE IS CLEARED BY ANDREW HIMSELF:** *"I will spawn COO~Z to proceed OPSEC202609 and COO~ZZ to proceed REPORT."* He is seating both lanes. `NFRA_OPSEC202609` is unparked and `NFRA_REPORT` gets its own COO lane.
 
 ---
 
@@ -61,8 +77,7 @@ costume of rigour** -- a reader would have re-litigated ten outcomes nobody ques
 
 ---
 
-⛔ **NOT YET LANDED IN A PRD.** There is no PRD and no project code -- L3 registration and L4 authoring
-both follow. This file is the endpoint's durable carrier until it is pasted, VERBATIM, under a section
+⛔ **NOT YET LANDED IN A PRD.** ⭐ **The project code IS settled -- `NFRA_REPORT`, Andrew-direct.** The DIRECTIVE is not; L3 registration and L4 authoring both follow. This file is the endpoint's durable carrier until it is pasted, VERBATIM, under a section
 titled exactly `ENDPOINT (step 2, /endpoint --forward)` in that PRD. An endpoint that lives only in a
 terminal is the carrier failure Phase 0 exists to close, which is why this file exists rather than a
 chat message.
@@ -90,16 +105,29 @@ handoff  msg 20524
 `NFRA_OPSEC202609`'s `FWD-1..19`. A retired outcome leaves its number vacant forever.
 
 ```
-  FWD-1  Andrew opens one morning review and knows whether anything needs him today
-         DONE WHEN  EXERCISED -- he has read one on a real trading morning and come
-                    away with a decision, without opening a second thing
-         ACCEPT     On a trading morning Andrew reads one thing and comes away
-                    knowing whether he needs to do something today. On a day when
-                    nothing needs him it says so plainly, rather than looking exactly
-                    like a day when something does.
+  FWD-1  One morning read DECLARES whether anything needs Andrew today
+         DONE WHEN  EXERCISED -- it has run on real trading mornings and its verdict
+                    has been checked against the underlying rows and found right,
+                    INCLUDING at least one morning where the verdict was "nothing"
+         ACCEPT     On a trading morning the report states plainly whether anything
+                    needs Andrew, and that statement can be checked against the rows
+                    beneath it by anyone. A day when nothing needs him says so, and
+                    does not look like a day when something does.
          SOURCE     brief Part I, O1; the defect it displaces is Part IV F1 -- the
                     subject line has read the same alarming word on every instance
                     in the window, and a signal that never changes cannot answer this
+         AMENDED    2026-09-09, Andrew-direct: "this should not require my buy-in, it
+                    is purely declarative. I can elect to remediate issues or not at
+                    my discretion, separate from the greater flow."
+                    ⛔ THE FIRST CUT MADE ANDREW THE ACCEPTANCE INSTRUMENT -- it read
+                    "he has read one and come away with a decision", which the project
+                    could not grade without him and which coupled the outcome to a
+                    remediation choice that is his alone. The subject of the grade is
+                    now THE REPORT'S VERDICT and whether it is right, not whether a
+                    person acted on it. The "at least one NOTHING morning" limb is the
+                    control: a verdict that is always "something needs you" is the
+                    Part IV F1 defect wearing new words, and only a correct negative
+                    proves the signal can vary.
 
   FWD-2  Any reader can tell "nobody looked" apart from "we looked, and it is broken"
          DONE WHEN  APPLIED -- the distinction is in the report's own vocabulary and
@@ -172,8 +200,21 @@ handoff  msg 20524
                     artifacts/generators should be a function of this work"
 
   FWD-8  A person can see a cost movement that matters and ignore one that does not
-         DONE WHEN  EXERCISED -- one real movement has been surfaced and acted on or
-                    consciously dismissed, and ordinary variation did not surface
+         DONE WHEN  EXERCISED -- one real movement has been SURFACED, and ordinary
+                    variation over the same window did NOT surface
+         AMENDED    2026-09-09, on Andrew's clause (a) applied to a SECOND outcome he
+                    did not name. ⚠ FLAGGED SO IT CAN BE REVERSED IN ONE WORD. The
+                    first cut read "surfaced and ACTED ON OR CONSCIOUSLY DISMISSED",
+                    which embeds a decision-maker's action in the bar exactly as
+                    FWD-1 did. His principle -- "purely declarative... I can elect to
+                    remediate or not at my discretion, separate from the greater
+                    flow" -- plainly reaches it. Applying his STATED PRINCIPLE to an
+                    instance he did not enumerate is a judgment this seat is making
+                    and naming, not a widening smuggled in: the report's job is to
+                    SURFACE the movement; whether anyone acts is outside every
+                    outcome here. The second half (ordinary variation did not
+                    surface) is the control and is unchanged -- without it a detector
+                    that fires on everything passes.
          ACCEPT     A meaningful jump in what something costs shows up. Normal
                     week-to-week wobble does not. A reader can tell which is which
                     without doing the arithmetic themselves.
@@ -208,6 +249,31 @@ handoff  msg 20524
          SOURCE     brief Part II, Owns -- "Reconciliation between what is monitored
                     and what is actually served -- the standing check that NO EXISTING
                     INSTRUMENT PERFORMS"
+
+  FWD-12 When something looks wrong, the report shows what it is connected to and
+         says what appears to be going on
+         DONE WHEN  EXERCISED -- a real anomaly has produced a breakdown whose named
+                    connections were CHECKED and correct, and a written account a
+                    reader could act on or correctly set aside
+         ACCEPT     When something looks wrong, a reader sees what it is connected to
+                    -- what feeds it, what reads it, what else would be affected --
+                    and a few sentences on what appears to be happening. Nobody has
+                    to go and assemble that picture themselves before they can judge
+                    it.
+         SOURCE     Andrew-direct 2026-09-09 at the 1.0.0_SA_CTO~Z terminal: "if
+                    there is an anomaly, we get a clear breakdown of the connected
+                    resources/artifacts/consumers/generators/etc and a brief analysis
+                    of the scenario"
+         BOUND BY   C-AI (below) -- the written account is GENERATED and must never
+                    be readable as MEASURED
+         ⚠ BUILD-LADDER RUNG 2 BEFORE ANY CELL IS CUT: the connected-things half is
+                    very likely a QUERY, not a build. The estate already holds a
+                    dependency graph with a call manifest, and CLAUDE.md rule 20 says
+                    QUERY IT, NEVER REBUILD; a blast-radius surface already exists.
+                    ⛔ This seat got exactly this wrong on the IAM project six hours
+                    ago -- calling an instrument "the hardest problem" when a third
+                    of it was already built and tracked -- so the check is written
+                    into the outcome here rather than left for L5 to rediscover.
 ```
 
 ⭐ **`FWD-11` IS AN ADDITION AND IS DECLARED AS ONE.** The brief numbers TEN outcomes (O1..O10) and
@@ -223,7 +289,7 @@ reads that as over-cutting, retiring it costs one line and its number stays vaca
 
 ## F3 -- BARS, AND WHY EACH ONE SITS WHERE IT DOES
 
-Seven of eleven are **EXERCISED** and four are **APPLIED**. The split is deliberate:
+NINE of TWELVE are **EXERCISED** and THREE are **APPLIED** (v2, after Andrew's 2026-09-09 amendments: `FWD-1` re-cut as declarative, `FWD-8`'s action clause struck, `FWD-12` added). The split is deliberate:
 
 - **APPLIED** where the outcome is a PROPERTY OF THE ARTIFACT that is true once built and cannot be
   faked by building it -- `FWD-2` (the vocabulary distinguishes instrument from world), `FWD-9` (one
@@ -250,14 +316,11 @@ check the builder grades.
 ## F4 -- WHERE THIS LANDS, AND WHAT IS STILL OPEN AT L3
 
 **Section title, exact:** `ENDPOINT (step 2, /endpoint --forward)`
-**PRD path:** `org/missions/D<n>/NFRA/<CODE>/prd/<CODE>_PRD.md` -- **neither `<n>` nor `<CODE>` is
-settled, and this seat is not inventing either.**
+**PRD path:** `org/missions/D<n>/NFRA/NFRA_REPORT/prd/NFRA_REPORT_PRD.md` -- ⭐ **`<CODE>` IS SETTLED: `NFRA_REPORT`, Andrew-direct 2026-09-09 (*"let's brand this as NFRA_REPORT"*).** `<n>` is NOT, and this seat is not inventing it.
 
-TWO L3 ITEMS, both this seat's limb but neither decidable from the brief alone:
+ONE L3 ITEM REMAINS (the other is closed):
 
-1. **PROJECT CODE.** Proposed: **`NFRA_INFRAREP`**. ⚠ The tree grammar has refused a name on length
-   before -- `NFRA_SECURITY202609` was renamed to `NFRA_OPSEC202609` for exactly that -- so the
-   proposal is short and the grammar check runs at registration rather than being assumed here.
+1. ⭐ **PROJECT CODE -- CLOSED. `NFRA_REPORT`**, Andrew-direct. (This seat had proposed `NFRA_INFRAREP`; his name governs.) ⚠ The tree grammar's length check still runs at registration rather than being assumed here.
 2. **DIRECTIVE MEMBERSHIP.** `NFRA_OPSEC202609` sits in **D12 Platform Operations**, and this project
    consumes D12's output while owning a reporting artifact D12 does not. Whether it JOINS D12 or takes
    its own directive is a REGISTER decision with Andrew's placement convention behind it, and this
@@ -302,6 +365,41 @@ is a miscount of the same policy (7 operational, plus the two self-service MFA s
 names separately). Substance unaffected; the number corrected because numbers propagate. Two of Part VII's items are that author's
 falsifications of its own inferences, which is the reason a reader should discount its absence-claims
 accordingly -- and is why `FWD-11` is cut against an OWNS line rather than against an absence.
+
+---
+
+## C-AI -- WHERE AI ANALYSIS IS APPLIED, AND WHERE IT IS NOT (Andrew-direct 2026-09-09)
+
+**His words:** *"I would also make sure that on the subject of the aggregate FWDs that there is a
+clear strategy for where AI analysis is applied, whether for summary generation and for nuanced
+description of anomalous patterns."*
+
+**This is a CONSTRAINT and not an outcome, deliberately.** It is not a thing a person can DO; it is a
+boundary binding several outcomes at once -- `FWD-1`'s verdict, `FWD-12`'s written account, and any
+summary prose anywhere in the report.
+
+⛔ **WHY IT IS LOAD-BEARING RATHER THAN HOUSEKEEPING: a generated sentence sitting beside a computed
+number will be read as a measurement.** This project's whole premise is that instrument state and
+world state never share a colour (`FWD-2`) and that every count carries what it counted out of
+(`FWD-10`). **An unlabelled model-written narrative re-introduces exactly the defect the report
+exists to remove, one layer up** -- and in the most persuasive register available, because prose
+reads as understanding.
+
+**THE BOUNDARY, three parts:**
+1. **DECLARED PER REGION.** Every part of the report is one of: COMPUTED (derived from a reading by
+   a rule anyone can re-run), GENERATED (written by a model), or QUOTED (someone's own words). A
+   reader can tell which without knowing how the report is built.
+2. **A GENERATED PART MAY NEVER BE THE SOLE CARRIER OF A FACT.** `FWD-12`'s connected-things
+   breakdown is COMPUTED -- it comes from the dependency graph. The *analysis* beside it is
+   GENERATED, a reading OF that computed evidence and never a substitute for it. **Strip every
+   generated sentence and the report must still be true and still be checkable.**
+3. **A VERDICT IS COMPUTED, NOT GENERATED.** `FWD-1`'s "does anything need Andrew today" is derived
+   from the rows by a rule. A model may render it in better English; it may not decide it.
+
+⚠ **RECOMMENDATION, because the constraint is easier to state than to hold:** the estate already has
+a discipline for exactly this -- a value carries its claim in a field a consumer can reject on -- and
+the report should reuse it rather than mint a second vocabulary. **The consuming half is the whole
+mechanism: an unenforced provenance label drifts to unpopulated.**
 
 ---
 
