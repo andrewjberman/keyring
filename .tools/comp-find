@@ -201,7 +201,7 @@ def _aws_corpus(pattern, pathspec, *, ignore_case, name_mode, files_only, show_a
                   "n.drift_class AS drift, n.source AS src, n.snapshot_ts AS ts, n.props AS props "
                   "LIMIT 1000000" % where)
         try:
-            proc = subprocess.run([sys.executable, cli, "--json", "--mode", "inc", cypher],
+            proc = subprocess.run([sys.executable, cli, "--json", cypher],
                                   capture_output=True, text=True, timeout=remaining, env=env, cwd=WS)
         except subprocess.TimeoutExpired:
             deferred_reasons.append("%s: did not return within the remaining budget (TimeoutExpired)" % u)
