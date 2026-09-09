@@ -95,6 +95,26 @@ every time, which is how an assessment silently stops happening.
 - **The condition axis** — what a policy requires, not only what it scopes.
 - **Declared-vs-live role reconciliation**, and the governance disposition of undeclared roles.
 - **Completion evidence for historical least-privilege remediations.**
+- **PRE-FLIGHT BLAST RADIUS for a narrowing** — what a change would break, known BEFORE it is made.
+- **RE-RUNNABILITY of the whole assessment** — by someone who did not build it.
+
+> ⛔ **THE LAST TWO WERE ADDED 2026-09-09 ~23:1xZ. THEY WERE MISSING, AND THE GAP WAS A REAL DEFECT
+> IN THIS BRIEF.** Found by `1.0.0_SA_CTO~Z` at L4 while MECE-ing the PRD's declared domain against
+> Part I: **`FWD-5` ("narrow a permission and know beforehand what it would break") and `FWD-8` ("the
+> assessment can be re-run without doing it by hand again") are ratified outcomes cut verbatim from
+> O5 and O8 — and PART II NAMED NO OWNS CLAUSE BEHIND EITHER.**
+>
+> **PART I PROMISED TWO CAPABILITIES THAT PART II'S BOUNDARY NEVER CLAIMED.** The Owns list was
+> written around the QUESTIONS this project answers (over-grant, condition axis, reconciliation,
+> completion evidence) and silently omitted two capabilities that are equally owned — a
+> DOING-something-safely item and a DOING-it-again item, neither of which is a question. **A boundary
+> section derived from the shape of the questions will drop every outcome that is not shaped like
+> one.**
+>
+> The PRD did not wait on this: it declared its domain as the UNION (the Owns items plus those two
+> as items 8 and 9) and MECE'd against the union, so **nothing was blocked and no cell is missing**.
+> This amendment removes the divergence at the source rather than leaving the L1 carrier reliant on
+> an L4 patch to be complete.
 
 ## Relies on, does not own
 
