@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-09T19:5xZ",
+  "written_utc": "2026-09-09T20:1xZ",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -91,8 +91,22 @@
         "build opal-stitch-produce:fe7ff348-819d-4dce-b688-801ae19de95e SUCCEEDED",
         "the marker at 19:55:00Z (stitch-codebuild)"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "c14a7b4366",
       "next": "F-9's flip; F-2 after 21:00Z; F-4; F-10; the partial L8 packet at the next drain; site Z's hook line (MSTR/Andrew)."
+    },
+    {
+      "seq": 7,
+      "limb": "adjudication (an arch-gate call pitched) / L6 (a face amended)",
+      "started_utc": "2026-09-09T20:0xZ",
+      "ended_utc": "2026-09-09T20:1xZ",
+      "act": "TO-CG-F-4 (CG-s-24) reported OPEN at 9c98dd1e63: the fold and its vintage carrier BUILT and exercised (15 of 15 fixture arms), the image act deliberately NOT taken. W2-S45 (BLOCKING -> the CTO): the live stitch artifact carries FIVE node types absent from derive_runner.NODE_TYPE_LAYER (GOLD_SCRIPT 1,380, S3_DATA_KEY 294, REACT_QUERY_KEY 94, PORTAL_COMPONENT 22, PORTAL_BUNDLE 1) and the COND-2 cert fails the nightly derive CLOSED on any unmapped type; the guarded partial fold drops 100% of the DERIVES_FROM and STORED_IN boundary edges (216/216, 955/955); the rename shortcut is a grain violation (W2-S48: populations differ up to 10x). Classified ADJUDICABLE-ARCH (a CVO-signed frozen taxonomy under a CTO arch-gate) -> PITCHED to the CTO + CVO with the REC (five ADDITIVE entries: GOLD_SCRIPT -> pipeline as a new type, the three portal types -> portal, S3_DATA_KEY the CTO's call between aws and pipeline; the GO stamped in the map's own comment form; the CVO's re-sign; then the issuer widens F-4's grant to the dict and re-hands). Chain ~2 (F-4 -> F-5 -> F-6) IDLE by dependency until ruled. RULED inside the grant: W2-S46 (the served header premise wrong; the worker's appended age_line carrier accepted) -> S79; W2-S47 (F4-AC4's control 1 of 3; GOLD_SCRIPT discriminates) -> in the face; W2-S49 (four family names lack the globgrph- prefix and fail SOFT) -> S80 and the face's names corrected. F-4's face amended on the worker's branch with all four rulings; no re-hand until the gate GO. Perishable: the marker still the cloud's at the worker's 20:04Z read.",
+      "artifacts": [
+        "wk-cldgrph-6-2 F-4 face amendment (this seat's commit on the branch)",
+        "rows S79, S80",
+        "the pitch to the CTO + CVO"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "the CTO's GO + the CVO's re-sign -> widen F-4's grant to NODE_TYPE_LAYER and re-hand; F-2 (21:00Z); F-9's flip; F-10; the partial L8 packet at the next drain."
     }
   ]
 }
