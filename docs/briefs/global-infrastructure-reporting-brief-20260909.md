@@ -281,6 +281,42 @@ Tags: `ManagedBy: Terraform`, `Project: NFRA_WEBSITE`, `Org: TWLC-external`,
 report surfaced correctly and that the sovereign's own prior expected not to exist. It is
 Terraform-managed, so its remedy is a Terraform change, not a console act.
 
+## F11a — ADDED 2026-09-09 16:38Z: the same finding, measured to the end. **Posture without context reads as breach**
+
+F11 is the report's view. This is what the surface actually contained, read after the brief was
+first committed and after Andrew authorised remediation.
+
+**Measured** on `infra/aws/terraform/website/iam_patricia.tf` (180 lines) and the live plane:
+
+- **`website-estate-admin` is not account admin.** 7 statements, tag-scoped to
+  `Project=NFRA_WEBSITE` for EC2/SSM, ONE exact backups-bucket ARN, one log group. Header, verbatim:
+  *"ZERO data-estate reach, ZERO other bucket, ZERO Secrets Manager, ZERO IAM-modify, ZERO
+  SG/perimeter rewrite, ZERO instance-terminate."* **One EC2 box.**
+- **The policy already granted self-service MFA enrolment**, scoped to her own identity
+  (`SelfManageCredsMfa`, `ViewAccountInfoForConsoleSelfService`). MFA was designed in.
+- **The login profile's absence from Terraform is deliberate and documented** (`:163-176`): the AWS
+  provider can only GENERATE a random password, so a specific one could not be expressed in TF.
+  **Not the `deployed-ahead` class** — that concerns CODE outside Terraform, never a credential
+  VALUE the provider cannot express.
+- **She had no MFA because she had never logged in.** `PasswordLastUsed` ABSENT; Andrew's 2026-07-08
+  delivery hold (*"dont send anything to Patricia yet"*) was **honoured**, and the absence is the
+  evidence.
+
+**So the real exposure was never an unprotected external admin. It was a ONE-TIME BOOTSTRAP PASSWORD
+created 2026-07-08 19:07:43Z and never delivered** — small, nonzero, 63 days. Remediated 16:38Z
+(login profile deleted, verified `NoSuchEntity` against a positive control; user and policy intact,
+no drift). Record:
+`org/critical_paths/change_management/20260909T1638Z_patricia-console-login-profile-removed_deploy_completion.md`
+
+⛔ **THE FINDING FOR THIS PROJECT, AND IT IS A WORKED EXAMPLE OF O2 AND OF GREEN:** every fact the
+security scanner reported was **CORRECT**, and the conclusion a reader draws from it was **WRONG** —
+because a scanner cannot see a sovereign hold, a delivery state, or a `PasswordLastUsed` absence.
+The AI briefing ranked it **#1 urgent, "suspend immediately."**
+Under the ratified two-axis model this row is **`CHECKED` on Axis 1 and `DEGRADED` on Axis 2 — never
+`BREACH`.** A report that cannot express the difference will keep escalating correct facts into
+wrong conclusions, and a reader who checks two of them and finds both overstated stops checking
+the third.
+
 ---
 
 # PART V — WHAT MUST BE TRUE, NOT SEQUENCED
@@ -359,8 +395,10 @@ made here.**
 1. **The live AWS fleet was never enumerated.** `comp-find --corpus aws` is BLOCKED (D4). Every
    fleet statement is **DECLARED** (the manifest), never **LIVE**. The declared-vs-live gap is
    asserted to exist and is **not measured**.
-2. **`website-estate-admin`'s policy document was not read.** F11 states the exposure, not its blast
-   radius.
+2. ~~**`website-estate-admin`'s policy document was not read.**~~ **DISCHARGED 2026-09-09 16:38Z** —
+   the policy was read and the identity remediated on Andrew's word. See F11a. The blast radius is
+   now measured; what remains unmeasured is that the 7 statements were READ and never EXERCISED (no
+   `simulate-principal-policy` battery re-run by this author).
 3. **Andrew's premise in ruling 8 — that no client-facing surface consumes the ten stale artifacts —
    is carried as a HYPOTHESIS TO BE MEASURED, not as an established fact.** This brief measured one
    hop (artifact → `scripts:`) and found declared consumers on all ten; the terminus walk has not
