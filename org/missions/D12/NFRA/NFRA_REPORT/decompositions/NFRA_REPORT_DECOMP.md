@@ -25,9 +25,21 @@ carries at least one cell.**
 are SHAPE 1, the form the standard says to prefer for new decomps, so **no new regex branch is
 requested and none of the standard's two controls is owed.** Verified against the enforcer object
 itself (`.tools/proof-of-spec-check.py` `CELL_ID_RE`, loaded and applied, not eyeballed):
-**MINE 12 of 12 match · POSITIVE CONTROL `OP-s-17`/`D1-i-2`/`ETFS-d-1` 3 of 3 · NEGATIVE CONTROL
-`AMONG-THE-6`/`AWS-IAM-1`/`ARCH-GATE-2` 0 of 3** -- the negative control is the one that bites, and it
-bites correctly.
+**MINE 12 of 12 match · POSITIVE CONTROL 3 of 3 · NEGATIVE CONTROL 0 of 3** — the negative control is
+the one that bites, and it bites correctly.
+
+⛔ **THE CONTROL IDS ARE DELIBERATELY NOT WRITTEN HERE, AND THE REASON IS A DEFECT THIS FILE ALREADY
+COMMITTED ONCE.** v0.1 and v0.2 quoted the three known-good exemplars from the cell-id standard's shape
+table literally. **The L6 gate indexes EVERY cell-shaped token in this file as a CELL OF THIS
+DECOMPOSITION**, so those three exemplars became PHANTOM CELLS: the decomp declared **15** cells, the
+issuance owned 12, and the coverage limb refused the issuance naming a shortfall that did not exist.
+The standard warns about exactly this — the `etfs-ingest` decomp carries a planted sentinel as its own
+negative control — and the warning was read as being about *designing a regex*, not about *writing
+prose in a decomp*. **A control example written inside the artifact it certifies becomes data in that
+artifact.** The three positive exemplars are the ones in
+`org/standards/DECOMP_CELL_ID_CONVENTION.md`'s shape table (rows 1 and 2); the negative exemplars are
+that file's own rejected-token list. Both sets, with the run's output, are in this file's commit
+message, which is not indexed.
 
 **CELL STATUS VOCABULARY (rule 24 record below at section 2a).** Closed set, and it HAS a
 not-evaluated value by construction, because the spine requires one:
@@ -79,26 +91,47 @@ defined as a control that CANNOT FIRE, whereas the sentinel CAN and is deliberat
 Axis 2 asks *what was found*. **Neither asks whether what was found is DESIRED or APPLIED.** That is
 a third question, and folding it into either axis violates postulate (iii), INTENT COHERENCE.
 
-**RESOLUTIONS THIS DECOMP DIRECTS, both chosen to leave ruling 12's ratified VALUE SET untouched:**
-- **Gap 1 -> a rejectable FIELD, not a new enum member:** `BLIND` carries a mandatory
-  `resolvable: yes | no` plus a `reason`. Reuses the estate's a-value-carries-its-claim discipline
-  that `C-AI` already directs this project to reuse rather than mint a second vocabulary.
-- **Gap 2 -> a THIRD, ORTHOGONAL AXIS:** `state: desired | applied | exercised`, rendered only when
-  it is not `applied`. Reuses CLAUDE.md rule 22's existing vocabulary verbatim.
+**RESOLUTIONS, RULED AT L5 by `1.0.0_SA_CTO~Z` msg 20595 on this lane's msg 20592. NEITHER AMENDS
+RULING 12** — read at source rather than through the relay: what ruling 12 CLAIMS is two axes, GREEN =
+CHECKED and OK, and the forbidden pair (BREACH or OK can never print on a surface nobody looked at). An
+orthogonal addition adds no value to either enum, redefines none, and cannot make the forbidden pair
+printable, so every claim ruling 12 makes survives intact. Nothing routes to Andrew.
 
-⛔ **AND THE LIMIT OF THIS LANE'S AUTHORITY IS STATED RATHER THAN ASSUMED.** Both resolutions ADD
-(a field; an orthogonal axis) and neither edits, removes or redefines a ruling-12 value, so this lane
-treats them as L5 decomposition decisions. **If either is instead read as AMENDING a sovereign-ratified
-enum, it is not this lane's to make** and routes to `1.0.0_SA_CTO~Z` and Andrew. The cell says so, so
-a worker cannot land a widening under cover of a decomposition.
+- **GAP 2 -> a THIRD, ORTHOGONAL AXIS: `state: desired | applied | exercised`, VERBATIM from
+  CLAUDE.md rule 22.** Build-ladder rung 2 — the estate already holds that vocabulary. **Do not mint a
+  synonym for it.**
 
-⚠ **ONE READING HAZARD IN THE MANIFEST ITSELF, surfaced not corrected** (PRD section 8 is `ANY_CTO`):
-`S1`'s surface text abbreviates Axis 1 as *"instrument axis CHECKED vs BLIND"*. The RATIFIED enum has
-**SIX** values (ruling 12, `ANDREW_DIRECT_20260909_1458Z_INFRA_REPORT_FIVE_RULINGS.md`). A worker
-reading only the manifest cell would build a two-value axis and silently drop `INERT`, `COARSE`,
-`UNCHECKED` and `DENY-BY-DESIGN` -- and `INERT` is the one ruling 12 names in its own worked example
-(`opal-login-abuse-alerts` is INERT, never RED). **`RP-s-1`'s worker face carries the six-value enum
-verbatim from ruling 12 and cites it, never the manifest's shorthand.**
+- ⛔ **GAP 1 -> NO NEW FIELD. THIS LANE'S OWN `resolvable` PROPOSAL IS WITHDRAWN ON YAGNI, and the
+  determination was this lane's to make at the cell.** `1.0.0_SA_CTO~Z` put rung 1 of the build ladder
+  against it: `DENY-BY-DESIGN` is already defined as *"cannot look, and that is intentional and
+  recorded"*. **TESTED AGAINST THE WEBSITE FACTS THIS LANE HOLDS:** the blindness is recorded twice
+  (`NFRA_OPSEC202609` C-19; this PRD's `C-WEBSITE-BLIND`) and the choice not to remove it is Andrew's
+  own — *"we do whatever we can without having to engage with GoDaddy"*. **The reader's question is
+  "who is fixing this?", and DENY-BY-DESIGN answers it with exactly the finality the Website row needs:
+  nobody, ever, and that is intended.** A `resolvable` field would have carried the same information in
+  a second vocabulary the estate did not need. **The Website row renders `DENY-BY-DESIGN` with its
+  reason attached, and no field is built.**
+  ⚠ **ONE WORDING TENSION SURFACED, NOT SELF-RESOLVED:** `C-WEBSITE-BLIND` says that row *"renders
+  BLIND"*. This lane reads that as naming the FAMILY (not-CHECKED) rather than the specific enum value,
+  because the same constraint's substance — permanent, reason attached, not pending — is what
+  DENY-BY-DESIGN means. **If the PRD intends the literal value `BLIND`, that is `1.0.0_SA_CTO~Z`'s to
+  say and the cell re-cuts in one line.** Flagged rather than decided silently, because a constraint's
+  literal word and a lane's reading of it are two different authorities.
+  ⭐ **THE GENERAL FORM WORTH KEEPING: this lane proposed a mechanism for a state the ratified
+  vocabulary already expressed, and tested the VALUE SET when the question was the MEANING of a value
+  it had already read.** A vocabulary is not short of a value until you have tried every value it has.
+
+✅ **A READING HAZARD THIS FILE SURFACED AT v0.1 IS NOW FIXED AT SOURCE, AND THE NOTE IS UPDATED RATHER
+THAN LEFT STANDING.** `S1`'s surface text used to abbreviate Axis 1 as *"instrument axis CHECKED vs
+BLIND"* while the RATIFIED enum has **SIX** values (ruling 12,
+`ANDREW_DIRECT_20260909_1458Z_INFRA_REPORT_FIVE_RULINGS.md`) — so a worker handed only the manifest
+cell would have built a two-value axis and silently dropped `INERT`, `COARSE`, `UNCHECKED` and
+`DENY-BY-DESIGN`, `INERT` being the value ruling 12 uses in its own worked example
+(`opal-login-abuse-alerts` is INERT, never RED). **PRD v0.3 carries ruling 12's vocabulary IN FULL in
+that row**, so the hazard is discharged at the source rather than mitigated downstream.
+⛔ **`RP-s-1`'s worker face still carries the six-value enum verbatim and still cites ruling 12 as its
+authority, and that does NOT become redundant:** the worker face is the whole of the worker's context,
+so a value it does not carry is a value the worker never sees, whatever the PRD now says.
 
 ### 1b. `RP-s-1`'s acceptance CANNOT be self-graded, and the cell names its grader
 
