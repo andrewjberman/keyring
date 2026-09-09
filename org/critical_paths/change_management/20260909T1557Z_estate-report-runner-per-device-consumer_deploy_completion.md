@@ -1,7 +1,8 @@
 # DEPLOY COMPLETION LEDGER -- estate-report-runner PER-DEVICE CONSUMER (NFRA_OUTSET.TO-OS-s-22)
 
-**Opened:** 2026-09-09T15:57Z by `0.7.0_AE_CloudOps~W`
-**Status:** OPEN -- the upload has NOT been performed at this write
+**Opened:** 2026-09-09T15:57Z by `0.7.0_AE_CloudOps~W` (committed OPEN at `7b9bbecd34`)
+**Status:** **CLOSED 2026-09-09T15:59Z** -- all four legs verified; the ACCEPT remains pending the
+2026-09-10 13:00Z scheduled fire and is NOT claimed here
 **TO:** `org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-22.the-per-device-consumer.md`
 (cell `OS-s-22`, outcome_ref FWD-3; issuance `6facf7eef3`, PRD v0.5 @`1ac8679844`)
 
@@ -79,15 +80,39 @@ SMS, FRESHGUARD) and **ZERO name this key**. The 4 scoped hits remain inside
 opened AND closed on 2026-08-05 -- three weeks OLDER than the served object's own vintage, so
 neither is an unfinished promote of this key.
 
-## Legs
+## Legs -- ALL FOUR VERIFIED
 
-1. [ ] `s3api put-object` HEAD bytes -> `s3://opal-estate-report/code/estate_report_runner.py`
-2. [ ] `head-object`: ContentLength == 168,853 and ETag == `b6fd49329e80a1bae8152991893ac498`
-3. [ ] CONTENT diff, not filename or timestamp: re-download and sha256-compare against
-       `git show HEAD:<path>`, with a NEGATIVE CONTROL proving the comparator can fail
-4. [ ] THE RETIREMENT SHOWN IN THE SERVED BYTES, not asserted: a token census over the downloaded
-       object with a positive control per token -- `OUTSET_DEVICES` and `_outset_device_fields`
-       present, and NO `prefix + "/comp_heat_drift.json"` single-key read
+1. [x] Uploaded 2026-09-09T15:58:59Z. Instance state read LIVE immediately before: **`stopped`**.
+       New VersionId `eg2KHrrDxdwdgZrpWYPudGBZ_ThwA.08`, ETag `b6fd49329e80a1bae8152991893ac498`.
+2. [x] ETag `b6fd49329e80a1bae8152991893ac498` **== the HEAD md5**; ContentLength 168,853.
+3. [x] **CONTENT diff, the deciding leg** (Rule 22a -- deployed bytes against the BUILD INPUT, never
+       by filename): served sha256 `af1c3e01ee002a11...` == HEAD `af1c3e01ee002a11...`, 168,853 B
+       both. **NEGATIVE CONTROL:** one bit flipped at offset 100 of a copy with the length held
+       fixed -> the same comparator reports MISMATCH, so the match is a measurement.
+4. [x] **THE RETIREMENT, SHOWN IN THE SERVED BYTES RATHER THAN ASSERTED**, with a control per token
+       (`W1-S27`: a census of N tokens is N detectors). Compared against the PRIOR served object
+       (VersionId `GQny85Je837UhagoFc0FY8eoJzcB1RFy`, the OS-s-19 runner):
+
+       | token | prior | new | verdict |
+       |---|---|---|---|
+       | `OUTSET_DEVICES` | 0 | 3 | ADDED |
+       | `_outset_device_fields` | 0 | 2 | ADDED |
+       | `OUTSET_DRIFT_KEY` | 0 | 2 | ADDED |
+       | `OUT-OF-CORPUS` | 0 | 4 | ADDED |
+       | `tracked_total` | 0 | 15 | ADDED |
+       | `prefix.rstrip("/") + "/comp_heat_drift.json"` | **1** | **0** | **RETIRED** |
+
+       The retired read's own detector is proven by its PRIOR count of 1: a pattern that had been
+       0 on both sides would have discriminated nothing, which is exactly the defect `S14` recorded.
+
+## POST-STATE
+
+| | value |
+|---|---|
+| Served object | **168,853 B**, ETag `b6fd49329e80a1bae8152991893ac498`, VersionId `eg2KHrrDxdwdgZrpWYPudGBZ_ThwA.08` |
+| Identical to | `git show HEAD:infra/aws/ec2/estate-report-runner/estate_report_runner.py`, sha256 `af1c3e01ee002a11...` |
+| Roster it will read | `laptop`, `site-z`, `_os22_probe_device` |
+| Keys present for it | `outset/laptop/comp_heat_drift.json` (real), `outset/_os22_probe_device/comp_heat_drift.json` (QA fixture) |
 
 ## Rollback -- stated before the act
 
