@@ -158,10 +158,36 @@ only), `C-1` (identity tables only), `C-2` (231 principals but **one action** on
 **Measured (`comp-iam live`, by `1.0.0_SA_CTO~Z`):** **208 live roles · 192 Terraform-declared · 16
 governable and completely undeclared**, all sixteen named in the handoff — including
 `portal-auth-lambda-role`, `portfolio-management-lambda-role`, `lambda-test-role`.
-⚠ **VINTAGE, and it bounds the claim:** materialized graph at **2026-09-03T02:00:31Z, 158.5h old**,
-flagged STALE against its own 24h cadence, incremental pipe UNVERIFIED, population cross-check
-UNAVAILABLE. **The tool calls itself a DETECTOR, not an oracle**, and evaluates no
-Deny/boundary/condition/SCP. **16 is a strong signal to confirm, never a settled count.**
+⚠ **VINTAGE, and it bounded the claim as first written:** materialized graph at
+**2026-09-03T02:00:31Z, 158.5h old**, flagged STALE, incremental pipe UNVERIFIED, population
+cross-check UNAVAILABLE. **The tool calls itself a DETECTOR, not an oracle**, and evaluates no
+Deny/boundary/condition/SCP.
+
+### ⭐ F2a — CONFIRMED 2026-09-09 ~17:5xZ: **THE 16 IS A SETTLED COUNT AND A SETTLED SET**
+
+The brief first said *"16 is a strong signal to confirm, never a settled count."* **It has now been
+confirmed** — by a second instrument, on a different substrate, at a different vintage, once
+`comp-find --corpus aws` was repaired (D1).
+
+| | roles | DECLARED | LIVE-no-DECLARED |
+|---|---|---|---|
+| `comp-iam live` — materialized graph, **158.5h stale** | **208** | 192 | **16** |
+| `comp-find --corpus aws IAM_ROLE` — served projection, **vintage 2026-09-09T14:59:48Z** | **216** | 200 | **16** |
+
+⭐ **AND THE SETS ARE IDENTICAL, NOT MERELY THE SAME SIZE.** Measured by this author: the 16 names
+from the fresh projection diffed against the 16 named in the commissioning handoff — **intersection
+16 of 16, symmetric difference EMPTY.** `1.0.0_SA_CTO~Z` correctly warned that an agreeing
+cardinality is not an agreeing set and that the comparison had not been run; it has now been run and
+it holds.
+
+**Two instruments, two substrates, two vintages, two different total populations — one identical
+undeclared set.** That is corroboration in CLAUDE.md's strict sense, not repetition.
+
+⚠ **AND THE 8-ROLE DELTA IN THE TOTALS IS UNEXPLAINED AND NOT CHASED.** 216 − 208 = 8, and the
+DECLARED bucket moves by exactly the same 8 (200 − 192). Consistent with *eight Terraform-declared
+roles appearing in the 158.5h between vintages*, and equally consistent with *the two instruments
+scoping the population differently*. **Not measured.** It does not disturb the undeclared set, which
+is what this project is about — but nobody should quote 208 and 216 as the same number.
 
 ## F3 — The 16 matter more than their number: they are invisible to the estate's own analysis
 
@@ -310,13 +336,23 @@ should be built ON it, never beside it** — and it is the natural substrate for
 
 *Named, not ordered. Sequencing is L5.*
 
-**D1 — The live plane cannot currently be enumerated.** `comp-find --corpus aws` returns
-`BLOCKED: comp-kuzu rc=2 / unparseable JSON on unit EC2_INSTANCE — NO MEASUREMENT, not a zero`
-(`kuzu_cli.py: unrecognized arguments: --mode`). **A blocked measurement is not a zero.**
-Declared-vs-live IAM reconciliation (O4) cannot be automated until it is repaired, and **it is
-unowned**. ⚠ **It is the SAME dependency the Global Infrastructure Reporting brief carries as its
-D4** — one instrument, two projects. Whichever cuts it first should own it. *(An L5 observation for
-`2.0.0_SA_COO~Z`, not a ruling made here.)*
+**D1 — RESOLVED 2026-09-09 ~17:5xZ. `comp-find --corpus aws` is FIXED and exercised.** It was
+BLOCKED (`kuzu_cli.py: unrecognized arguments: --mode`) — a caller/callee contract break introduced
+when `d060cf9223` removed `--mode` from `kuzu_cli.py` and left its consumers passing it. Diagnosed by
+this author to `.tools/comp-find:204`; **repaired by `1.0.0_SA_CTO~Z` at `9b99b49342`, which found a
+SECOND broken caller this author missed — `org/modules/graph/comp_trigger.py:107`.**
+⛔ **The reason it was missed is a reusable instrument lesson: this author ran
+`git log -S'"--mode"' -- kuzu_cli.py`, which searches the CALLEE'S HISTORY and CANNOT ENUMERATE
+CALLERS**, and then ran a caller census scoped to two hand-picked files. Right instrument for *"when
+did this change"*, wrong one for *"who calls this."* **Declared-vs-live reconciliation (O4) is no
+longer blocked.**
+
+**D1a — THE RESIDUAL THE FIX DOES NOT CLEAR, and it is unowned.** `comp-find --corpus aws` now
+prints **`VINTAGE: UNREAD (no provenance header on stderr)`**. Rows come back; **their age does
+not.** `kuzu_cli` DOES emit the header — this author read it directly and dated the projection at
+2026-09-09T14:59:48Z — **so the wrapper is dropping it.** ⛔ **A denominator with no vintage is the
+shape this estate refuses**, and every `--corpus aws` census quoted anywhere until this is fixed
+must carry an age read from `kuzu_cli` directly rather than from the census output. Needs an owner.
 
 **D2 — CORRECTED. `comp-iam-usage` is BUILT and RUNNING; what must be established is its COVERAGE at
 permission grain.** F5 (corrected) locates it at `.tools/comp-iam-usage`, tracked, executable,
@@ -374,9 +410,13 @@ correct, and they are not to be re-run. What they are not is coverage.
 
 # PART VII — WHAT THIS BRIEF DOES NOT CLAIM
 
-1. **The live IAM fleet was never enumerated by this author.** The 208/192/16 split is relayed from
-   `1.0.0_SA_CTO~Z`'s `comp-iam live` read at a **158.5h-stale** vintage, and that seat labelled it a
-   signal to confirm. This brief does not upgrade it.
+1. ~~**The live IAM fleet was never enumerated by this author.**~~ **DISCHARGED 17:5xZ (F2a).** The
+   live plane WAS enumerated once `comp-find --corpus aws` was repaired, and the undeclared SET was
+   confirmed identical across both substrates by this author. **The replacement non-claim, narrower
+   and real: the 8-role delta between the 208 and 216 totals is UNEXPLAINED** — vintage drift and
+   differing population scope are both untested — and `VINTAGE: UNREAD` means `comp-find --corpus
+   aws` output carries no age of its own (D1a), so its rows were dated by reading `kuzu_cli`
+   directly rather than from the census itself.
 2. **No `simulate-principal-policy` battery was run.** Every scope statement — including the
    `website-estate-admin` exemplar — is read from a DOCUMENT and never EXERCISED.
 3. **Whether the 2026-02-17 forty-policy remediation executed is unknown.** Nothing was read either
