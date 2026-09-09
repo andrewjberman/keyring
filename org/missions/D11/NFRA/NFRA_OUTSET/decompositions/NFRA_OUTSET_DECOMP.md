@@ -1,5 +1,7 @@
 # NFRA_OUTSET — DECOMPOSITION (L5)
 
+**v0.6** (2026-09-09 ~15:5xZ, `2.0.0_SA_COO`) — the L5 act on PRD **v0.6** @`be662c311f` (the CTO’s mid-round addendum on the S24 ruling @`5f39f3a512`): `OS-s-23` added, the group-B publish as a derived second artifact on the OS-s-21 publisher. Round 3’s v0.6 sections are §23–§26 below; §0–§22 are LEFT UNEDITED.
+
 **v0.5** (2026-09-09 ~15:3xZ, `2.0.0_SA_COO`) — the L5 act on PRD **v0.5** @`1ac8679844` (the CTO’s mid-round addendum on the S23 ruling @`98722f9355`): `OS-s-21` re-worded to the ruling (its face already re-cut @`2e1d755943`), `OS-s-22` added. Round 3’s addendum sections are §19–§22 below; §0–§18 are LEFT UNEDITED.
 
 **v0.4** (2026-09-09 ~14:4xZ, `2.0.0_SA_COO`) — the L5 act on the CTO’s ROUND-2 ANALYSIS @`d6fd9eca07` (merged @`5f0cd1a318`) and PRD **v0.4**, which adds two manifest rows (`OS-s-20`, `OS-s-21`) to §7. The analysis directs: *"2.0.0_SA_COO recuts from this analysis: two rows, both CloudOps, no worker fan-out; OS-s-20 after OS-s-19 (done), OS-s-21 buildable beside it with its accept gated on OS-s-20’s."* Round 3’s sections are §13–§18 below; §0–§12 are rounds 1 and 2’s and are LEFT UNEDITED.
@@ -369,3 +371,64 @@ fanout: 1 of 1 chains, cap 8, reason: the three round-3 cells form one chain (OS
   after the exercise under R-5, exactly as the R2 probe is.
 
 — `2.0.0_SA_COO`, L5 round 3 addendum v0.5
+
+---
+
+## 23. ROUND 3, ADDENDUM v0.6 — the group-B publish the S24 ruling placed, cut mid-round
+
+**Input:** PRD **v0.6** @`be662c311f` (`1.0.0_SA_CTO`, mid-round on the same word as v0.5), which ADDS `OS-s-23` on the
+S24 ruling @`5f39f3a512`. **This document invents nothing.** The ruling's two parts: (1) the honest `INSTRUMENT_FAILED`
+for group B on 2026-09-10 is the interim reading (a named absence under a configured seam beats a rendered stand-in;
+no revert of the switch, no stand-in re-enabled, no ceiling raised); (2) the group-B publish is a row, and its
+mechanism is sharpened: a DERIVED artifact, not a copy, from the publisher OS-s-21 already built.
+
+| cell | outcome | verb | lane | depends_on | why it exists |
+|---|---|---|---|---|---|
+| `OS-s-23` | FWD-3 | build | CloudOps (the OS-s-21 publisher's role, its Put widened to the group-B key ONLY; one read line on the CSE log's location) | `OS-s-21` (the cloud-side publisher and its role), `OS-s-20` (DONE on the act) | THE GROUP-B PUBLISH. `outset/comp_fedobs_coevolution.json` (file-pair grain from the CSE log, the artifact OS-s-14 built the consumer for), produced by `comp-fedobs coevolution --json` through `outset_seam.py` as a SECOND artifact on the same CodeBuild fire, after the fedobs nightly (04:30Z) and before the 13:00Z run. NOT a copy of the fedobs nightly's staged health snapshot (a different artifact at a different grain; a copy is the duplicate output path CLAUDE.md s.5 forbids); NOT a change to the fedobs ECS producer or the shared image (R13). |
+
+⛔ **THE SWITCH TURNED GROUP B OFF, AND THIS ROW IS WHY THAT IS THE HONEST STATE UNTIL IT LANDS.** `_stratum_cochange`
+reads the same prefix as `_stratum_propagation`; with a prefix configured and every group-B source absent it returns
+`INSTRUMENT_FAILED` by contract (`estate_report_runner.py:1424-1436`). The seam's four-row test applied to group B: the
+switch is ON and the read grant exists; this row is the publish; its clock is OS-s-21's fire.
+
+## 24. THE CHAIN READ — round 3 with v0.6
+
+```
+  M (dependency-independent chains) = 1
+    chain F  4 cells   OS-s-20 -> OS-s-21 -> { OS-s-22, OS-s-23 }
+      OS-s-20  act LANDED, PROVEN on the creation-boot read (A UNAVAILABLE -> OK, QA); accept 2026-09-10 13:00Z
+      OS-s-21  freshness publisher BUILT and applied @9ba4fdd9e9 (CodeBuild, 08:30 ET); drift device-side
+      OS-s-22  code committed DESIRED @1dd59a6bab; the deploy under its ledger next
+      OS-s-23  depends on OS-s-21's publisher (a second artifact on the same fire) -- buildable NOW; accept on a served
+               day after the publisher fires with both artifacts and the 13:00Z run reads them
+
+  longest dependency depth = 3 on the accepts; OS-s-22 and OS-s-23 are siblings behind OS-s-21
+```
+
+**`OS-s-23` is BUILDABLE now**: it adds a second artifact to a publisher that exists, one exact-key Put and one read
+line. Its ACCEPT needs the publisher to FIRE, which today waits on the push gate carded to MSTR for Andrew (or the
+assignee's S3-sourced alternative), and then a served day.
+
+## 25. SEATING AND FAN-OUT — unchanged: one CloudOps seat, width 1
+
+**`OS-s-23` to `0.7.0_AE_CloudOps~W`** (continuity: it holds OS-s-20/21/22 and BUILT the publisher this row extends).
+The role's Put is widened to exactly one more key; the grant is `iam.tf` under `safe-apply`; no host replace, no image
+act, nothing on the fedobs ECS producer.
+
+```
+fanout: 1 of 1 chains, cap 8, reason: OS-s-23 is a second artifact on the publisher OS-s-21 built, on the same fire, under
+        the same role; a second seat would edit the same CodeBuild project and the same iam.tf. Width 1, the same seat,
+        cut mid-round on the addendum.
+```
+
+## 26. WHAT THIS ADDENDUM'S DECOMPOSITION DOES NOT DECIDE
+
+- **How the publisher reaches the CSE log** (the read line's exact form) and how the second artifact rides the same
+  build step -- the assignee's, inside the accept: derived by `comp-fedobs coevolution --json`, published through
+  `outset_seam.py`, grain disclosed, row count non-zero and independently readable.
+- **The push gate** on the publisher's fire: MSTR's card to Andrew (LD-0522), or the assignee's S3-sourced entrypoint
+  (Rule 12's shape) which removes it for BOTH publishers; named, not decided here.
+- **W2-S15** (the resource-grain producer, `comp_cochange.json`): a LATER row the ruling names and does not cut; the
+  search order of `OUTSET_GROUP_B_SOURCES` (resource grain first) stays.
+
+— `2.0.0_SA_COO`, L5 round 3 addendum v0.6
