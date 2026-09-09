@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-09T19:1xZ",
+  "written_utc": "2026-09-09T19:3xZ",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -48,8 +48,23 @@
         "task-orders/NFRA_CLDGRPH.TO-CG-F-9.local-stitch-hook-retired.md",
         "channel rows S72-S74 (160)"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "2e8dd90435",
       "next": "spawn ~5 on wk-cldgrph-6-5; MSTR's device act; F-2's instants; F-3's flip and drain then F-4 to ~2; F-8's re-run and drain (+ comp-system phase two)."
+    },
+    {
+      "seq": 4,
+      "limb": "L7 (two drains + a hand-off) / the two-phase discharge / adjudication",
+      "started_utc": "2026-09-09T19:1xZ",
+      "ended_utc": "2026-09-09T19:3xZ",
+      "act": "TO-CG-F-3 (CG-s-23) TERMINAL AND DRAINED @2e0c77dcbd: instance rc 0 in-worktree; this seat's own read of build opal-stitch-produce:daaedf78-3ea7-4dd4-828b-be1c843f5d4c = SUCCEEDED (initiator Andrew_Berman -- the seat's credentials); channel union 160 + 5 = 165 (W2-S40..S44). The worker's two findings carried: the exit 2 was TWO stacked failure modes (the stale July zip -- 0 portal/src files and a pre-07-25 grain baseline -- and, behind it, derive_stitch's 0-dangling check dropping the AWS layer's own wildcard flag, fixed at de590a7d02 and narrowed to service ssm); F3-AC4's git_sha limb cannot fire because the 'foreign clone' was site Z on this estate (W2-S42 -> S76). W2-S40 (three portal shas, no two agree) ARMED to 0.7.0_AE_CloudOps; W2-S44 (the order's own grant sits inside the hook's trigger regex; the fix commit fired the local publisher in the worktree, refused only because portal/ is empty there) ARMED to 1.0.0_SA_CTO -- both carried to the packet. TO-CG-F-4 (CG-s-24) HANDED to the same subagent with CLOUD merged (2e0c77dcbd) and .tools/terraform.exe verified present in its worktree; the hand-off names F-7's landed writer contract and W3-S14 (no serve path calls format_provenance_header) for the vintage carrier. TO-CG-F-8 (CG-s-28) TERMINAL at pass 2 on the amended face and DRAINED @f2ddef8deb: F8-AC1 0 of 0 hits (the widened one-string grant fixed the last index hit at its source, graph-call-manifest.yaml:1500; the manifest's own invariants PASS after), F8-AC2 4 of 93 all declared retired, F8-AC3 2 commands / 3 carriers / 0 diff, F8-AC4 the generator's silent parity assertion with both controls; channel union 165 + 6 = 171 (W4-S1..S6); slot ~4's worktree and branch removed. THE TWO-PHASE DISCHARGE (W2-S36's pattern): comp-system run once after the merge (grounded-against-live at f2ddef8deb; 0 changed rows across 26 managed regions in 6 files; infra/system/06_current_state.{md,json} regenerated) and committed in this commit. ADJUDICATED: W4-S6 (two more fields of the opened manifest entry describe the dead engine by other words) -> S75, carried named to L10 with W4-S4, not widened again (the accept's letter is met; a field census of every entry is a PRD row's shape); W2-S42 -> S76 (the criterion met by its discriminating limb; the limb that reads the same on both arms named, not deleted). Not yet: MSTR's device act (the hook pair still on this laptop at 19:14Z; 94655 and the nudge 94657 unread); F-2's instants (T0 and T1 reached); F-9 polling.",
+      "artifacts": [
+        "CLOUD @2e0c77dcbd (F-3 drain)",
+        "CLOUD @f2ddef8deb (F-8 drain)",
+        "infra/system/06_current_state.{md,json} (the discharge, this commit)",
+        "channel rows S75, S76 (173)"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "F-2's flip after 21:00Z (or earlier if site Z's instants matched); F-4 on ~2 (the image act); F-9 on ~5 after MSTR's device act; the partial L8 packet once F-2 or F-9 lands; MSTR [STUCK] at the two-tick mark if 94655 stays unread."
     }
   ]
 }
