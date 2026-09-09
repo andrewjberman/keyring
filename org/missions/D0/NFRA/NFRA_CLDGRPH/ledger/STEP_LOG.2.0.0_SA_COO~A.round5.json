@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "project": "NFRA_CLDGRPH",
+  "round": 5,
+  "seat": "2.0.0_SA_COO~A",
+  "written_utc": "2026-09-09T15:43Z",
+  "trigger": "1.0.0_SA_CTO's L10 read of round 4 (msg 94509, records @707ba2a4c9 merged @d419ab0d6d): ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED on the INSTRUCTION plane, PRD addendum v0.5 rows S17-S20 + R13; Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion' and at the CTO terminal ~12:5xZ 'any work that can be adjudicated or pushed forward on NFRA_CLDGRPH ... go ahead'.",
+  "rows": [
+    {
+      "seq": 1,
+      "limb": "L10->L5/L6/L7",
+      "started_utc": "2026-09-09T15:18Z",
+      "ended_utc": "2026-09-09T15:43Z",
+      "act": "THE RECUT AS ONE ISSUANCE, the same tick the analysis was read (drive obligation 1). The CTO's answer read whole (ROUND_ANALYSIS.round4.md, COMPLETION_GRADES.round4.json, PRD v0.5 s.7 rows S17-S20 + R13 + the correction retiring the cost-attribution placement). RE-ISSUE chosen over re-decomposition and recorded in the issuance commit: every prior cell DONE with a valid proof at HEAD; the four rows are additive. Decomposition v0.5 (CG-s-17..20 ADDED, 26 cells; s.2 ROUND 5 block; s.6 row 0.5). Four task orders cut in the v3 grammar with the issuer's own census at the cut: E-1 (CG-s-17, ~2): 18 files / 165 hits carrying the retired refresh routes, 11 routing/registry carriers in <paths> (the manifest, comp-which's curated routes :631-642, tool_index.py, four registry YAMLs + generator, three shims), 7 history docs declared; seven criteria with YAML/AST probes and controls; the PERSON half recorded MODELLED under E1-AC7. E-2 (CG-s-18, ~1): the four producer .tf lines and comment lines, the three declared launch targets and the one producer without a declared launcher, all seven families named for the NEVER-2 entry, the ECR :latest digest as the no-image-moved control; seven criteria. E-3 (CG-s-19, ~3): the residue by ls -la (sizes, mtimes, manifests quoted), the P7 row quoted, a closed disposition vocabulary, the S53 claim shape; six criteria. E-4 (CG-s-20, ~3 second): the stitch producer found CLOUD-SIDE and scheduled (stitch-produce.tf:231), the 51-day store/manifest mtime gap named for explanation, both answers with what each requires; six criteria. dep_stage ROUND_CLOSE -> EXECUTING on BOTH carriers (the first commit attempt was REFUSED by missions-tree-check on INDEX-DRIFT because the generated flat index still read ROUND_CLOSE; `derive --write` re-derived it and the second attempt landed @de466829e0, 7 files). Three worktrees wk-cldgrph-5-1/2/3 from CLOUD at that commit, .tools/terraform.exe copied into ~1's (gitignored, absent in every fresh worktree), three workers spawned (opus; E-2 and E-1 marked HARD).",
+      "inputs": [
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/ROUND_ANALYSIS.round4.md @707ba2a4c9",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/COMPLETION_GRADES.round4.json @707ba2a4c9 (7 REALIZED, FWD-7 NOT_REALIZED, state_observed APPLIED)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/prd/NFRA_CLDGRPH_PRD.md v0.5 @707ba2a4c9 (s.7 S17-S20; s.6 R13)",
+        "1.0.0_SA_CTO msg 94509 (inbox 20260909T151821Z); 2.0.0_SA_COO msg 94528 (the base loop's seat-triage nudge, 15:33Z -- answered by this issuance, nothing asked of the base)",
+        "the issuer's censuses at the cut: comp-find over the retired routes (18 files / 165 hits); comp-find over the globgrph Terraform (12 image references, 17 target references); ls -la of the residue; comp-schedule (GATES ARMED 25 across 5 carriers); comp-manifest-check completeness PASS (E1-AC4's baseline); comp_coverage_view --verify OK (E1-AC5's baseline)"
+      ],
+      "outputs": [
+        "CLOUD @de466829e0: task-orders/NFRA_CLDGRPH.TO-CG-E-{1,2,3,4}.*.md; decompositions/NFRA_CLDGRPH_DECOMP.md v0.5; project.json dep_stage EXECUTING; org/projects/NFRA_CLDGRPH.json re-derived",
+        "fanout: 3 of 3 chains, cap 8 (in the issuance commit message)",
+        "worktrees C:/tmp/wk-cldgrph-5-{1,2,3} on branches wk-cldgrph-5-{1,2,3} @de466829e0; terraform.exe provisioned into 5-1",
+        "spawned: 0.9.0_WK_NFRA_CLDGRPH~1 (E-2), ~2 (E-1), ~3 (E-3 then E-4)"
+      ],
+      "spine_clause": "L10 the recut (the COO reads the analysis and the remediations, re-issues as ONE issuance under L6, the choice recorded in the issuance commit) -> L6 (the L6 gate, the tree check on both carriers) -> L7 (the spawn IS the GO; one worktree per slot from CLOUD)",
+      "gate_or_notifier_touched": ".tools/safe-commit.sh (to-pipeline-gate: 4 newly-added TOs carry <decomp_ref> + preflight; surprise-row-gate; missions-tree-check REFUSED once on INDEX-DRIFT then 0 violations); .tools/missions-tree-index.py derive --write; git worktree add x3; Agent(subagent_type=worker, model opus) x3",
+      "note": "TWO THINGS STATED PLAINLY. (1) The tree check's first refusal was CORRECT: a flip on one carrier is the split the check exists to catch, and the remedy was the generator, not an edit to the index. (2) A cut-time defect the issuer will own if it bites: E1-AC3's zero over help strings can be unreachable if a retired-alias RECORD inside tool_index.py must name the retired surface -- the face pre-empts it by excluding declared retired records from the count and printing them; if the worker finds a carrier the exclusion cannot express, that is a row and an amendment, not a re-cut to pass. || The base COO's nudge (94528) measured this lane's summary as stale ('awaiting the CTO analysis'); the heartbeat process is restarted with a WORKING summary in the same tick."
+    }
+  ]
+}
