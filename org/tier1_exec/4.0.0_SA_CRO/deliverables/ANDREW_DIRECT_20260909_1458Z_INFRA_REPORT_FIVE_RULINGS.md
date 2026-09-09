@@ -262,3 +262,87 @@ escalation channel `opal-infrastructure-alerts` is among the thirteen.
 
 **Standing-moratorium note:** ruling 13 authorises REPAIR of existing topics, not the creation of
 new alerting. The CLAUDE.md moratorium on building alerts/monitors is untouched by it.
+
+# BATCH 6 -- 2026-09-09 ~16:5xZ (rulings 14-17)
+
+## VERBATIM AND ENTIRE
+
+> 1.) Just flip her needsMFA on opal-users-v2 to True. 2.) First of all moltbot should be completely
+> terminated at this point, I am suspcting this is a mistake reference. But yes, should be named
+> separately id say by group (Dashboard, Website, Graph). 3.) Yes agreed. 4.) Let's hold onto this
+> for now, we will come back to the rotation subject because I want a clean and easy mechanism for
+> doing it reliably so we don't inadvertently get locked out of any property.
+
+## RULING 14 -- patricia MFA. **INSTRUCTION RECEIVED, NOT EXECUTED. ONE WORD IS OWED BACK.**
+
+Recorded as NOT DONE so no reader infers closure. Two measurements taken before acting, both of
+which bear on whether the instructed act reaches the reported exposure:
+
+1. **`needsMFA` is a MEASURED ZERO** -- `comp-find 'needsMFA'` returns 0 hits across **52,598 files
+   scanned** (`corpus=all`). Qualifiers preserved: 1 UNREADABLE, 1945 BINARY and 425,106
+   ephemeral-floor files were NOT searched, so the zero does not cover them. For a code identifier
+   a zero over 52.6k first-party files is strong but is not proof of absence from the running system.
+2. **THE FINDING AND THE INSTRUCTED TARGET ARE ON DIFFERENT IDENTITY PLANES.** The report's finding
+   is `iam_users / patricia@thewhitelabelcreative.com: Console access with NO MFA` -- the **AWS IAM**
+   plane. `opal-users-v2` is the **portal application** table. A portal-table flag does not remove
+   AWS console access, and AWS MFA is not enforced by a DynamoDB attribute.
+
+**Two readings, DIFFERENT OWNERS AND DIFFERENT REMEDIES, and the difference is not decidable from
+here:** (a) patricia is a PORTAL user whom the security scanner mislabels `iam_users` -- then the
+instructed portal fix is right and the scanner carries a labelling defect worth its own row; or
+(b) she genuinely holds AWS IAM console access -- then the remedy is IAM (enforce MFA or disable
+console) and the portal flag does not touch the exposure.
+
+**A wrong-plane control cannot catch a wrong-plane error** (CLAUDE.md rule 22a / retrieval law), so
+this seat does NOT guess, and does not execute either reading. The act is additionally an
+identity-plane write outside `4.0.0_SA_CRO`'s lane. Held, surfaced, one word owed.
+
+## RULING 15 -- moltbot. **ANDREW'S SUSPICION IS CORRECT AND THIS SEAT'S SURFACING WAS WRONG.**
+
+Andrew: *"I am suspcting this is a mistake reference."* It is. Measured:
+
+- `org/critical_paths/change_management/20260629T1313Z_moltbot-teardown_deploy_completion.md`
+- `org/tier1_exec/3.0.0_SA_CVO/logs/2026-06-29/SCTY.W2_moltbot_teardown_0residual_VERDICT.md`
+  -- **independent CVO verdict, re-run against LIVE AWS acct 313476888478, not off the producer's
+  sweep table: `EC2 instances (any state) -> describe-instances Name tag -> []`; IAM role, instance
+  profile, SGs, Lambdas, CodeBuild project all `[]` / NoSuchEntity. "0 active residual."**
+
+**moltbot was torn down 2026-06-29 and independently verified gone.** Its absence from the
+September manifest is CORRECT, not a gap.
+
+**THE MECHANISM OF THIS SEAT'S ERROR, banked because it is the exact class this whole review is
+cataloguing:** `4.0.0_SA_CRO~Z` read the 2026-04-02 auto-shutdown audit -- a DESCRIPTIVE record --
+and treated it as CURRENT STATE. comp-find had even banded those files `[DOC] -- prose -- DESCRIBES
+the code and may be STALE; confirm against source`, and the warning was not applied. This is the
+same defect as the freshness config outliving MDPF_SCOPED and the data catalog outliving the
+AGG-view excision: **a record outliving the thing it describes.** It strengthens requirement 31
+(declared-vs-live reconciliation as a STANDING check) rather than weakening it -- the review's own
+author walked into it.
+
+## RULING 15b -- THE EXCEPTION SET IS NAMED BY GROUP, NOT BY BOX
+
+Andrew: *"should be named separately id say by group (Dashboard, Website, Graph)."* The always-on
+exception set is expressed on the SAME three-property axis as the report itself (ruling: the three
+Opal properties). **moltbot is NOT in it -- it does not exist.**
+
+Open sub-item carried to Andrew: no graph-ops box appears in the 27-service manifest, and the
+security sweep reports **7 unused `opal-globgrph-*` security groups** as bulk-deletion candidates.
+The **Graph** group may therefore be EMPTY. Not resolved here.
+
+## RULING 16 -- the EC2 manifest backfill is the THIRD NAMED WORKSTREAM, SEQUENCED FIRST
+
+Agreed as recommended. It is the precondition for box-grain cost anomaly (ruling: >=15% vs trailing
+30 days), for the autoshutdown answer, and for any decommissioning under ruling 8.
+
+## RULING 17 -- KEY ROTATION IS DEFERRED, WITH A STATED REQUIREMENT
+
+Andrew: *"we will come back to the rotation subject because I want a clean and easy mechanism for
+doing it reliably so we don't inadvertently get locked out of any property."*
+
+**That mechanism is already specified and STAGED inside NFRA_OPSEC202609.** FWD-10: *"The keys that
+sign logins can be replaced without signing everyone out, and have been replaced at least once on
+purpose."* Its task orders `TO-OP-S-10` (signing-key-rotation) and `TO-OP-S-10B` (two-slot and TTL
+for the JWT consumers) are both STAGED, Round 3. **DISTINCTION PRESERVED:** those cover **JWT
+signing keys**, NOT the **IAM access keys** the security sweep flagged -- a different key type on a
+different plane. What generalises is the DISCIPLINE (two slots, overlap window, no cutover), not
+the implementation. Surfaced as a candidate brief requirement; not adjudicated here.
