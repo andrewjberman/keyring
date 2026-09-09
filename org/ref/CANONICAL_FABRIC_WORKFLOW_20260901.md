@@ -169,7 +169,8 @@ travels to the worker.
   line. Two task orders on one chain belong to one worker's queue; two chains may take two workers. No cell is left
   for a later round; a later round exists only when the CTO's round-N analysis sends work back.
 - **Tool:** the task-order protocol; then, per worker slot, the harness's subagent call with the worker agent type and
-  worktree isolation, its prompt the worker face of the slot's first task order verbatim plus the identity line of
+  a HAND-CUT worktree off CLOUD (`git worktree add -b wk-<code>-<round>-<n> /c/tmp/<slot> CLOUD`, its path in the prompt;
+  never the harness's own isolation option, which bases on origin/main with no `org/` or `.tools/`), its prompt the worker face of the slot's first task order verbatim plus the identity line of
   L7. The spawn is the GO; no broker message carries it and no inbox receives it.
 - **Gate:** at commit, `.tools/git-hooks/to-proof-of-spec-check.sh` refuses a new task order without `<proof_of_spec>`
   or without `<decomp_ref>`; `.tools/to-pipeline-gate.py` refuses a new task order whose project row is absent, whose
@@ -189,8 +190,10 @@ travels to the worker.
 - **The worker.** It starts with fresh context: the worker face of its task order, the standing law, and nothing else.
   It runs as the worker agent type, whose tools are the shell, the file tools and the search tools and nothing else:
   no broker tool, so it cannot register, send or receive; no subagent tool, so it cannot nest; no skill, gateway or
-  browser tool. Its model is the cheaper one unless the task order's preflight marks the cell hard and the COO
-  overrides per task order. It exports its serial in every shell call and commits under it through `safe-commit.sh`
+  browser tool. Its model is Opus at high effort, declared by the worker agent type's own definition
+  (`.claude/agents/worker.md`, Andrew-direct 2026-09-09 ~21:5xZ at the `2.0.0_SA_COO~A` terminal: "All spawned workers for
+  /canonical-flow should be subagents in the same session box using Opus with effort high"), never chosen per task order
+  and never left to a per-spawn override. It exports its serial in every shell call and commits under it through `safe-commit.sh`
   with that serial as author; the serial reads as Tier-2 to every guard and is registered nowhere. Its write surface
   is its task order: no lane enumerates a worker, and the lane resolver admits it to exactly the paths its order
   names in `<paths>` while that order is non-terminal at HEAD, to `deliverables/<serial>/` by convention, and to
@@ -460,3 +463,4 @@ verdict, read against the last round under the prior text on the same instrument
 | 3.4 | 2026-09-04 | `4.0.0_SA_CRO`'s check-out of the drain refuser's deciding arm (message 94094): a real cross-document collision at the merged index did not land, rc 1, but by the pre-commit hook and not by the script -- `safe-merge.sh` calls the row gate with no paths, grades nothing, and exits with the merge open; the green arm merges correctly | section 4's drain clause states the exercised state: the script's own abort has not passed, the hook is what refuses today, the merge is left open, and the clause leaves this section when the script grades the merged index's changed paths and the arm passes at check-out |
 | 3.5 | 2026-09-04 | `2.0.0_SA_COO`'s fix of the drain refuser @747a0b23c3 (the gate fed the merged index's staged paths; an empty set refused; the merge aborted on refusal; two regression arms) and `4.0.0_SA_CRO`'s check-out of its deciding arm on its own instrument (message 94105): the collision refused by the script's own grade and aborted with no merge left open, the non-colliding branch merged | the drain clause leaves section 4: the L7 drain merges through `safe-merge.sh`, which grades the merged index and aborts on a refusal; section 4 holds one clause, the step log's L7 read from git |
 | 3.6 | 2026-09-04 | `3.0.0_SA_CVO`'s constitutional review of v3.2-v3.5 (message 94134, record `org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_CONSTITUTIONAL_REVIEW_SPINE_v3.2-v3.5_20260904T0740Z.md` @5c965cfcdb; ACCEPT all four; finding F1: the narrowed L8 guard and the same-turn broadcast law contradicted at the CVO's terminal); the gate's owner's ruling and build, `org/mcp/cvo_send_guard.py` with both callers @8623a92a70 | L8's silence and its guard take one exception, the law's own carrier: the CVO's same-turn broadcast of an Andrew-direct record, admitted by its marker and the record's path under the CVO's own home, either alone still refused; section 2 says the broadcast is not a message of the round |
+| 3.7 | 2026-09-09 | Andrew-direct ~21:5xZ at the `2.0.0_SA_COO~A` terminal (workers on Opus at high effort; "I'm ok with enumerating opus for worker agents"), the agent definition edit `.claude/agents/worker.md` @65d7815288 and its broadcast (message 94731); `1.0.0_SA_CTO` moves the two spine clauses the edit contradicted | L7: the worker's model is Opus at high effort by the agent type's definition, never per task order and never a per-spawn override (was "the cheaper one unless the preflight marks the cell hard"); L6 tool clause: the spawn uses a hand-cut worktree off CLOUD with its path in the prompt, never the harness's isolation option (which bases on origin/main with no `org/` or `.tools/` -- the trap the first exercised spawn hit for 51 minutes). No step, owner or gate changes. |
