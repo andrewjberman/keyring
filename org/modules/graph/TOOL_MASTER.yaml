@@ -164,7 +164,8 @@ tools:
     canonical_call: comp-axes [--axes a,b] [--no-snapshot] [--json]
     state: PERSISTED
     derived: true
-    refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
+    refresh_mechanism: served projection; refreshed by the marker-driven cloud worker (NFRA_CLDGRPH CG-s-2/3),
+      never by a call; provenance header (VINTAGE) printed per call
     refresh_is_incremental: true
     denominator_construction: TRAVERSED
     knows_own_denominator: false
@@ -274,7 +275,8 @@ tools:
     canonical_call: null
     state: PERSISTED
     derived: true
-    refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
+    refresh_mechanism: served projection; refreshed by the marker-driven cloud worker (NFRA_CLDGRPH CG-s-2/3),
+      never by a call; provenance header (VINTAGE) printed per call
     refresh_is_incremental: true
     denominator_construction: TRAVERSED
     knows_own_denominator: false
@@ -857,7 +859,8 @@ tools:
     canonical_call: comp-fedobs coevolution | comp-fedobs
     state: PERSISTED
     derived: true
-    refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
+    refresh_mechanism: served projection; refreshed by the marker-driven cloud worker (NFRA_CLDGRPH CG-s-2/3),
+      never by a call; provenance header (VINTAGE) printed per call
     refresh_is_incremental: true
     denominator_construction: TRAVERSED
     knows_own_denominator: false
@@ -1403,7 +1406,8 @@ tools:
     canonical_call: comp-learns-status [gap_heat|coverage_gaps|tool_demand|...] [--json]
     state: PERSISTED
     derived: true
-    refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
+    refresh_mechanism: served projection; refreshed by the marker-driven cloud worker (NFRA_CLDGRPH CG-s-2/3),
+      never by a call; provenance header (VINTAGE) printed per call
     refresh_is_incremental: true
     denominator_construction: TRAVERSED
     knows_own_denominator: false
@@ -1596,7 +1600,8 @@ tools:
     canonical_call: null
     state: PERSISTED
     derived: true
-    refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
+    refresh_mechanism: served projection; refreshed by the marker-driven cloud worker (NFRA_CLDGRPH CG-s-2/3),
+      never by a call; provenance header (VINTAGE) printed per call
     refresh_is_incremental: true
     denominator_construction: TRAVERSED
     knows_own_denominator: false
@@ -2057,7 +2062,8 @@ tools:
     canonical_call: null
     state: PERSISTED
     derived: true
-    refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
+    refresh_mechanism: served projection; refreshed by the marker-driven cloud worker (NFRA_CLDGRPH CG-s-2/3),
+      never by a call; provenance header (VINTAGE) printed per call
     refresh_is_incremental: true
     denominator_construction: TRAVERSED
     knows_own_denominator: false
