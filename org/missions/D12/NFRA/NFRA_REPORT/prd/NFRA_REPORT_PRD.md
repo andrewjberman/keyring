@@ -9,7 +9,20 @@ citations behind.*
 **L1 owner:** `4.0.0_SA_CRO~Z` · **L2-L4 owner + author:** `1.0.0_SA_CTO~Z` · **L5-L6:** `2.0.0_SA_COO~ZZ` · **L8-L10:** `3.0.0_SA_CVO~Z` · **Integrator:** `0.0.0_AB_MSTR~Z`
 **Brief (L1):** `docs/briefs/global-infrastructure-reporting-brief-20260909.md` @`37ff80867a`
 **Endpoint (L2):** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_GLOBAL_INFRA_REPORTING_20260909.md`
-**Version:** v0.2, 2026-09-09 ~19:0xZ -- **v0.2 ADDS THE SURFACE MANIFEST (section 8), WHICH v0.1 OMITTED.** Andrew asked whether the PRD carried one and 2.0.0_SA_COO~ZZ filed the same gap at msg 20590 as an L5 blocker-in-waiting. BOTH WERE RIGHT, and the census settles it: across 205 tracked *_PRD.md, seven carry a manifest, and of the SIX tree-home L4-spine PRDs FIVE do -- NFRA_CLDGRPH (28 rows), NFRA_OPSEC202609 (28), ETFS_GUARDRAIL (12), NFRA_COMPEFFICACY, NFRA_OUTSET -- with NFRA_REPORT the SOLE omission. That resolves msg 20590's fork in favour of reading (A): the manifest is an L4 DELIVERABLE, rule 27 makes L4 the CTO's alone, and the owned-paths gate independently refuses 2.0.0_SA_COO_ZZ on prd/**. Section 2 OWNS is ENUMERATED to twelve items in the same version, because a domain written as one prose sentence cannot have a MECE check RUN against it and rule 24(i) requires hunting the uncovered member -- that lane raised this too. Before it, **v0.1 = L4 MINT. The ENDPOINT below is RATIFIED IN FULL.** Ten bars
+**Version:** v0.3, 2026-09-09 ~19:4xZ -- **v0.3 ADDS SECTION 9, THE ADVERSARY GRID**, on Andrew-direct
+(*"then they run a comp-adversary and include the comp-adversary results in a grid beneath the
+surface_manifest as an extra section for the reference of the COO"*), and folds `2.0.0_SA_COO~ZZ`'s
+msg 20592: the `S1` cell now carries **ruling 12's SIX-value axis verbatim** (v0.2 abbreviated it to
+"CHECKED vs BLIND", from which a worker builds a two-value axis), section 7's `VINTAGE` residual is
+**CORRECTED as the stale half of a contradiction with `S11`** (re-measured: the vintage IS carried),
+and section 6 carries the **CTO ruling that neither `RP-s-1` resolution amends ruling 12** -- both
+land at L5, nothing routes to Andrew.
+⛔ **AND A DEFECT IN v0.2 IS DISCHARGED HERE: the JSON header still read `prd_version: v0.1` while the
+prose said v0.2.** The schema names that field's whole purpose -- *"the R3 monitor emits on
+new-or-bumped, so an un-bumped substantive edit is INVISIBLE to COO"*. **The manifest v0.2 added was
+therefore invisible to the monitor that exists to announce it**, and the two readers who caught the
+original omission reached it by other means. Both carriers are bumped together at v0.3.
+**v0.2 ADDED THE SURFACE MANIFEST (section 8), WHICH v0.1 OMITTED.** Andrew asked whether the PRD carried one and 2.0.0_SA_COO~ZZ filed the same gap at msg 20590 as an L5 blocker-in-waiting. BOTH WERE RIGHT, and the census settles it. ⚠ **THE v0.2 CENSUS WAS SCOPED AND UNDERSTATED ITS POPULATION; the UNSCOPED re-read at v0.3 is the honest one.** v0.2 said *"of the SIX tree-home L4-spine PRDs FIVE do"* -- true, and scoped to `org/missions/**`. The estate's OWN discriminator for a step-4 PRD is the header field (`"Always 4. Present so a consumer can reject a document that merely LOOKS like a PRD"`), and on that basis: **205 tracked `*_PRD.md`, 187 with no fenced json header, 4 unparseable, and EIGHT step-4 PRDs** -- the six in the tree PLUS `ADVI_INSURE` and `ADVI_49F`, both at the legacy `docs/architecture/` home. **SEVEN of the eight already carried a manifest and NFRA_REPORT was the sole omission**; all eight carry one now (`.tools/prd-manifest-gate.py --census`). That resolves msg 20590's fork in favour of reading (A): the manifest is an L4 DELIVERABLE, rule 27 makes L4 the CTO's alone, and the owned-paths gate independently refuses 2.0.0_SA_COO_ZZ on prd/**. Section 2 OWNS is ENUMERATED to twelve items in the same version, because a domain written as one prose sentence cannot have a MECE check RUN against it and rule 24(i) requires hunting the uncovered member -- that lane raised this too. Before it, **v0.1 = L4 MINT. The ENDPOINT below is RATIFIED IN FULL.** Ten bars
 confirmed by Andrew's (b)/(c)/(d) on the L2 read; the remaining two -- `FWD-1`'s declarative re-cut
 and `FWD-12` -- confirmed by his **"go with your recs on those two."** `FWD-12`'s bar was TIGHTENED
 before landing (see its `CONFIRMED` line).
@@ -20,7 +33,7 @@ before landing (see its `CONFIRMED` line).
   "project": "NFRA_REPORT",
   "directive": "D12",
   "fabric": "site-z",
-  "prd_version": "v0.1",
+  "prd_version": "v0.3",
   "step": 4,
   "brief_ref": "docs/briefs/global-infrastructure-reporting-brief-20260909.md@37ff80867a",
   "endpoint_outcomes": [
@@ -285,6 +298,48 @@ field, never age.
   clause on the clause-(a) principle, applied to an outcome Andrew did not enumerate and **flagged
   as reversible in one word**.
 
+- **2026-09-09 ~19:3xZ, CTO ruling at L4 on `2.0.0_SA_COO~ZZ`'s msg 20592 (the two `RP-s-1`
+  expressibility gaps): NEITHER RESOLUTION AMENDS RULING 12. BOTH LAND AT L5. NOTHING ROUTES TO
+  ANDREW.** That lane asked the question the right way round -- it built the cell, stated the limit
+  of its own authority, and refused to widen under cover of a decomposition. The answer is that it
+  never needed the widening.
+  - **What ruling 12 actually claims, read at source** (`org/tier1_exec/4.0.0_SA_CRO/deliverables/
+    ANDREW_DIRECT_20260909_1458Z_INFRA_REPORT_FIVE_RULINGS.md`, batch 5): two axes; `GREEN` = every
+    property `CHECKED` and `OK`; and the forbidden pair -- **it is structurally impossible to print
+    `BREACH` or `OK` on a surface nobody looked at.** A field added ORTHOGONALLY adds no value to
+    either enum, redefines none, and cannot make the forbidden pair printable. **Every claim ruling
+    12 makes survives both resolutions intact.**
+  - **And the record DISCLAIMS completeness in its own words:** *"WHY THIS IS NOT AN INVENTION.
+    Every Axis-1 value is PROMOTED from a section already running in this estate."* A vocabulary
+    assembled by HARVESTING the values that happened to exist has no MECE claim over a domain it
+    never declared -- and rule 24(i) requires a DECLARED domain. **So "the enum cannot express X" is
+    not a defect in the ruling; it is the ruling's own stated construction method meeting a state no
+    existing section ever had to name.** Note also what Andrew's verbatim word on batch 5 was:
+    **"Both recs approved, move to Costs."** The six-value table is `4.0.0_SA_CRO~Z`'s construction,
+    approved as a rec. It is ratified, and it is not scripture.
+  - **Rule 24(iii) is the deciding postulate and that lane applied it correctly:** axis 1 asks *did
+    the check happen*, axis 2 asks *what was found*, and DESIRED-vs-APPLIED is a THIRD question.
+    Folding it into either axis is the intent-coherence violation. **Adopt `state: desired \|
+    applied \| exercised` VERBATIM from CLAUDE.md rule 22 -- build-ladder rung 2, the estate already
+    has this vocabulary. Do not mint a synonym for it.**
+  - ⚠ **ONE CORRECTION TO THAT LANE'S FRAMING, because it tested the wrong surface for the risk it
+    was worried about.** It tested against the VALUE SET. The thing Andrew ratified that a third
+    axis could actually touch is the **SHAPE** -- *"the two-axis state model"* is his ratified
+    phrase and it sits in this very section. A third axis neither collapses the two nor removes
+    either, so it stands; **but the moment a third axis lands, this PRD must stop calling it "the
+    two-axis model" or the record and the artifact diverge.** That is this seat's to carry, not that
+    lane's, and it is flagged here so it is not discovered later as a contradiction.
+  - ⛔ **BEFORE BUILDING GAP 1's `resolvable` FIELD, TEST `DENY-BY-DESIGN` AGAINST THE WEBSITE --
+    rung 1 of the build ladder is YAGNI.** That value already means *"cannot look, and that is
+    intentional and recorded."* The fact that lane may not hold: **`C-19` settled this session that
+    NO AWS-ONLY ROUTE TO AN EDGE EXISTS** -- WAF cannot attach to bare EC2 and every candidate edge
+    needs a GoDaddy change Andrew has ruled out, which is why `FWD-19` in `NFRA_OPSEC202609` is
+    UNBUILDABLE rather than deferred. If the Website blind is structural-and-recorded, the ratified
+    enum may already carry it and the field is unnecessary. If it is instead *blind, permanent, and
+    not a design choice*, the field is right and lands at L5 on this ruling. **That determination is
+    that lane's at the cell, not this seat's** -- it holds the website facts at a grain this PRD does
+    not, and a ruling made without them would be a guess wearing authority.
+
 ## 7. Sequencing input for `2.0.0_SA_COO~ZZ` (not a dispatch)
 
 **`FWD-2` FIRST.** It is the critical path into the whole `NFRA_OPSEC202609` relationship and three
@@ -297,9 +352,17 @@ dependency graph with a call manifest and CLAUDE.md rule 20 says QUERY IT, NEVER
 blast-radius surface exists.
 ⭐ **The shared blocked instrument is FIXED and no longer a dependency:** `comp-find --corpus aws`
 was repaired at `9b99b49342` (TWO broken callers, both dropping a `--mode` argument `kuzu_cli.py` no
-longer accepts) and exercised end-to-end -- 757 hits across 2157 AWS nodes. ⚠ **One residual: it
-prints `VINTAGE: UNREAD`.** Rows come back and their age does not, which is a denominator without a
-vintage. **Unowned, and it bears directly on `FWD-10`.**
+longer accepts) and exercised end-to-end -- 757 hits across 2157 AWS nodes.
+
+⚠ **CORRECTED AT v0.3 -- THIS SECTION AND SECTION 8'S `S11` CONTRADICTED EACH OTHER, AND SECTION 7
+WAS THE STALE HALF.** Through v0.2 this paragraph carried *"One residual: it prints `VINTAGE:
+UNREAD` ... Unowned, and it bears directly on `FWD-10`"* while `S11` three sections below said
+**VINTAGE now carried**. `2.0.0_SA_COO~ZZ` flagged the pair at msg 20592 as *"overstating a closed
+item"*. **Resolved by MEASUREMENT rather than by preferring the newer sentence** -- re-exercised
+2026-09-09 19:2xZ, the tool prints `VINTAGE: Built from the estate as of 2026-09-09 14:59:48 UTC.
+manifest: 86ea84674078` beside `DENOMINATOR: 757 hit(s) across 2157 aws node(s)`. **The vintage IS
+carried; there is no residual and no unowned item here.** Two durable records of one obligation
+drift from minute one, and this file held both halves.
 
 **ZERO of the twelve outcomes are BLOCKED by `NFRA_OPSEC202609`.** That project is a CONTENT
 dependency on three security rows, never a structural one on this report. OPSEC completion is a
@@ -326,7 +389,7 @@ not asserted.**
 
 | id | outcome | surface (engine) | claim | MEASURED-BY / evidence | lane | verb | depends_on | accept | bound |
 |---|---|---|---|---|---|---|---|---|---|
-| S1 | FWD-2, FWD-4 | The report's STATE MODEL -- the two-axis vocabulary (instrument axis CHECKED vs BLIND; world axis OK / DEGRADED / BREACH) and the property+owner attribution riding it | absent | brief F6 (the vocabulary already exists in two places, unratified as the report's law); Andrew-direct 2026-09-09 ratified the two-axis model and the three properties | report lane | wire | -- | 2, 3 | `C-FWD2-FIRST`; `C-WEBSITE-BLIND` -- it MUST express a PERMANENT blind, not only a not-yet; `C-SENTINEL-STATE` -- and a DESIRED-not-APPLIED row |
+| S1 | FWD-2, FWD-4 | The report's STATE MODEL -- ruling 12's vocabulary IN FULL: instrument axis `CHECKED \| BLIND \| INERT \| COARSE \| UNCHECKED \| DENY-BY-DESIGN` (**SIX values, all six binding** -- v0.2 abbreviated this cell as "CHECKED vs BLIND" and a worker handed only the cell would have built a TWO-value axis, silently dropping the four that carry ruling 12's own worked examples; corrected at v0.3 on `2.0.0_SA_COO~ZZ`'s msg 20592) · world axis `OK \| DEGRADED \| BREACH`, meaningful ONLY where axis 1 is `CHECKED` · plus the property+owner attribution riding both | absent | brief F6 (the vocabulary already exists in two places, unratified as the report's law); Andrew-direct 2026-09-09 ratified the two-axis model and the three properties | report lane | wire | -- | 2, 3 | `C-FWD2-FIRST`; `C-WEBSITE-BLIND` -- it MUST express a PERMANENT blind, not only a not-yet; `C-SENTINEL-STATE` -- and a DESIRED-not-APPLIED row |
 | S2 | FWD-3, FWD-1 | The report ARTIFACT's row structure and its PER-ROW DELTA against the previous edition | absent | brief F1: the rollup is a `max()` over eight rows and the subject line read the same value on every instance in the window -- a signal that never changes | report lane | wire | S1 | 1, 3 | a delta computed per ROW, never only on the total; `C-AI` -- the delta is COMPUTED |
 | S3 | FWD-1 | The report's SCHEDULE and DELIVERY -- trading days only, before Andrew's morning | measured | brief F2: the detectors are weekday-aware and NOT trading-day-aware; **it sent on Labor Day 2026-09-07** | report lane | align | S2 | 1 | `C-TRADING-DAYS`; `lib/trading_calendar.py` is the ONE frontier (CLAUDE.md NEVER#4) -- never a calendar-day subtraction |
 | S4 | FWD-1 | The VERDICT rule -- the does-anything-need-Andrew determination, derived from the rows | absent | brief F1 (the current signal cannot vary); FWD-1's own bar requires at least one correct NOTHING morning | report lane | wire | S1, S2 | 1 | `C-AI` part 3 -- **A VERDICT IS COMPUTED, NEVER GENERATED.** A model may render it, not decide it |
@@ -357,3 +420,59 @@ breaks nothing here. What L5 must preserve is COVERAGE IN BOTH DIRECTIONS, never
 `S9`'s box grain are coupled and `D3` says so; that the `lane` column is a seat assignment (it is a
 lane; `2.0.0_SA_COO~ZZ` seats workers at L6); or that `absent` means unexamined -- every `absent` row
 names what was measured about the CURRENT state's failure to serve it.
+
+---
+
+## 9. ADVERSARY GRID (`comp-adversary`, run ON this PRD) -- for `2.0.0_SA_COO~ZZ`'s reference
+
+**Commissioned Andrew-direct 2026-09-09 ~19:2xZ at the `1.0.0_SA_CTO~Z` terminal, VERBATIM:**
+*"a surface_manifest is just an immediately obvious grid group, it is a starting point not an ending
+point. What I believe should happen is that CTO adds the surface manifest based on what they're
+finding when composing the PRD, and then they run a comp-adversary and include the comp-adversary
+results in a grid beneath the surface_manifest as an extra section for the reference of the COO."*
+
+**What this section IS:** the declaration of what the PRD's AUTHOR had in evidence context and what
+the author did NOT -- so the consumer of section 8 knows the manifest's blind spots without having to
+re-derive them. Section 8 is the STARTING point; this is the honest account of where it starts from.
+
+`comp-adversary compose org/missions/D12/NFRA/NFRA_REPORT/prd/NFRA_REPORT_PRD.md`
+read-vintage HEAD @`f060f2354e` at 2026-09-09T19:22:26Z · artifact-vintage `1703e825d0` (v0.2)
+
+| # | source | denominator | result | what it means for L5 |
+|---|---|---|---|---|
+| profile | author's own pins | 2 commits, 3 repo paths, **0 file:line cites**, 1 tool | ⚠ THIN | The PRD cites commits and paths but **never a `file:line`**. Rule 22 reserves "proof/root cause" for citations carrying one. Treat every section-8 `measured` cell as a POINTER to the brief's measurement, never as a line-level proof. |
+| profile | pin-parse warning | 2 hex runs unparsed: `20260909`, **`9b99b49342`** | ⚠ REAL DEFECT | `9b99b49342` IS a real commit this PRD relies on (the `comp-find --corpus aws` repair, section 7) and the tool could NOT parse it as a pin -- it is written bare in backticks with no `@`. **A citation the machinery cannot read is not a citation.** Owned by this seat, not L5. |
+| 1 | cited-commit verification | 2 attempted | ✅ **2 VERIFIED / 0 UNVERIFIABLE** | `@37ff80867a` (the brief) and `@ecaa7c7dcb` (the manifest contract) both resolve at read-vintage. The two pins section 8 leans on are sound. |
+| 2 | cited-path vintage | 3 attempted | ✅ **3 stable / 0 flagged** | No path this PRD cites moved under it between artifact-vintage and read-vintage. |
+| 3 | uncited neighborhood | **962 uncited siblings** (25 shown, cap DECLARED not silent) | ⛔ **T11 NOT RESOLVED** | The artifact carries no `<decomp_ref>` -- **a PRD is not a task order, so comp-adversary's SHARPEST source is structurally unavailable at L4** and filesystem adjacency stands in its place. See the note below; this is the finding of the run. |
+| 4 | comp-state drift | 400 commits / 2812 records | ⚠ INFORMATIONAL | Drift rows are estate-wide (e.g. `NFRA_COMPUNIFY.S1` BEHIND) and **none names an `NFRA_REPORT` artifact** -- expected, the project has no served artifacts yet. Nothing here bears on section 8. |
+| 5 | the PACKET (digests) | **12 of 962** selected | ⛔ **DEGENERATE -- DO NOT READ AS ADVERSARIAL** | Class census: **`S1` POSTDATES 0, `S2` KIN 0, `S3` DENSE 0, `S4` PERIPHERAL 12.** See below. |
+| -- | declared exclusions | **4 sources NOT shown** | ⚠ BY CONTRACT | toolgraph SHARES_SUBSTRATE independence · comp-axes unexamined-axes · comp-blast/comp-trace CODE-graph expansion · comp-pulse/comp-cochange. **v1 does not wire these; the declaration says so rather than staying silent.** So this grid is not a clean bill of health -- it is a bounded one. |
+
+⛔ **THE PACKET DEGENERATED TO ALPHABETICAL, AND THE COO MUST NOT READ ITS 12 DIGESTS AS ADVERSARIAL
+FINDINGS.** The selection rule is first-match-wins over `S1 > S2 > S3 > S4`. **All three sharp classes
+returned ZERO**, so selection fell through to `S4 PERIPHERAL` and took the first 12 of 962 in
+directory order -- which is why every digest is a `docs/briefs/ADVI_*` advisor-platform document with
+no relationship to this project. **That is the selection rule working as designed on an artifact whose
+neighborhood is uninformative, not a set of things the author should have read.**
+
+⭐ **BUT THE ZEROS ARE THEMSELVES THE USEFUL RESULT, and they are a genuinely clean signal:**
+`S1 POSTDATES = 0 of 962` means **nothing in this PRD's neighborhood changed after the artifact's
+vintage** -- there is no file the author could not have read because it moved. `S2 KIN = 0` means no
+wrong-version sibling of a cited path. **A zero from a probe that CAN return non-zero is evidence; the
+class census is printed above so it can be checked rather than trusted.**
+
+⚠ **THE STRUCTURAL FINDING, and it is about the INSTRUMENT rather than this PRD.** comp-adversary's
+T11 admissibility source -- the DECOMPOSITION neighborhood, which is the informative one -- resolves
+only for an artifact carrying `<decomp_ref>` + `<owned_cells>`. **A step-4 PRD carries neither by
+construction, so at L4 this tool can only ever offer filesystem adjacency.** It gets sharper
+IMMEDIATELY downstream: `2.0.0_SA_COO~ZZ`'s decomp @`f060f2354e` DOES carry cells, so **a
+comp-adversary run against the DECOMP will resolve T11 and return a neighborhood worth reading.**
+Recommended at L5, and recorded here so the weakness of the L4 run is not mistaken for a weakness of
+the tool.
+
+⚠ **WHAT THIS GRID IS NOT.** `comp-adversary` reports **CITATIONS, not the world** -- every figure
+above is scoped to what THIS PRD cited while reading like a general claim about the estate. A source
+returning "0 flagged" certifies *the pins the author wrote*, never *the pins the author should have
+written*. **The uncovered-member hunt (rule 24(i)) is not discharged by this section** and remains
+section 8's own MECE run, which is printed there in both directions.

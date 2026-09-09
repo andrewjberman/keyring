@@ -267,6 +267,34 @@ stale-instrument qualifier, never `RED`. Website security is `BLIND`, never `OK`
 **every property `CHECKED` on Axis 1 and `OK` on Axis 2. Nothing is green by virtue of not having
 been looked at.**
 
+---
+
+> ### ⛔ FORWARD-POINTER ADDED 2026-09-09 ~19:5xZ BY THE AUTHOR OF THIS TABLE. A RULING RECORD CARRIES NO REFERENCE TO ITS OWN LATER EXTENSION, AND THIS ONE NOW HAS ONE.
+>
+> **THE AXIS-1 ENUM IS BEING EXTENDED, ADDITIVELY, AT L5.** `2.0.0_SA_COO~ZZ` built `RP-s-1`, ran
+> rule 24 against it, and found the enum expresses **neither a PERMANENT blind nor a
+> DESIRED-not-APPLIED row**. `1.0.0_SA_CTO~Z` ruled the widening lands at L5 and directed
+> **`state: desired | applied | exercised`, adopted VERBATIM from CLAUDE.md rule 22** rather than a
+> new synonym (build-ladder rung 2). Nothing in ruling 12 is amended: an orthogonal field redefines
+> neither enum and cannot make the forbidden pair printable.
+>
+> ⭐ **AND THE LIMIT WAS DISCLOSED BY THIS RECORD'S OWN JUSTIFICATION, WHICH IS THE PART WORTH
+> KEEPING.** The paragraph above headed *"WHY THIS IS NOT AN INVENTION -- every Axis-1 value is
+> PROMOTED from a section already running in this estate"* was written as the table's STRENGTH. It
+> is simultaneously the statement of its BOUND: **a vocabulary assembled by HARVESTING the values
+> that happened to exist carries no MECE claim over a domain it never declared**, and rule 24(i)
+> requires a DECLARED domain. So *"the enum cannot express X"* is not a defect in the ruling — it is
+> the ruling's own construction method meeting a state no existing section ever had to name.
+> **The sentence written to justify the table is the same sentence that bounds it**, and a reader who
+> takes only the first half will read a harvest as a taxonomy.
+>
+> ⚠ **AND A NAMING HAZARD THAT IS `1.0.0_SA_CTO~Z`'s TO CARRY, recorded here because this file is
+> where the phrase originates:** Andrew's ratified words are *"the two-axis state model"*. A third
+> orthogonal field neither collapses the two axes nor removes either, **so the ruling stands** — but
+> the moment it lands, any artifact still calling it *"the two-axis model"* diverges from the design
+> it describes. **This record's own "TWO-AXIS" headings are accurate as a record of WHAT WAS RULED
+> and are NOT a description of the current design.** Read them as history, not as spec.
+
 **Ruling 13** -- repairing the 13 non-delivering SNS topics falls INSIDE the brief, as a SECOND
 NAMED WORKSTREAM beside the Terraform one from ruling 10. Basis: 8 topics have 0 confirmed
 subscribers; 3 more have a single SMS subscriber against an SNS SMS sandbox of unknown status and
