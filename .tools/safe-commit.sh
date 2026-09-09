@@ -777,6 +777,40 @@ if [ ${#PATHSPEC[@]} -gt 0 ] && [ -f "$SCRIPT_DIR/surprise-row-gate.py" ]; then
   fi
 fi
 
+# STEP-4 PRD SURFACE-MANIFEST GATE (Andrew-direct 2026-09-09 ~19:2xZ at the 1.0.0_SA_CTO~Z terminal,
+# VERBATIM: "the surface_manifest first of all is mandatory; a PRD literally cannot be committed
+# unless it has one."). This MOVES an existing refusal rather than inventing one: the L6 TO gate's
+# step-4 conformance limb already refused a TO whose PRD lacked a manifest, so the refusal pointed at
+# the COO's artifact for the CTO's omission -- which is precisely how NFRA_REPORT v0.1 committed clean
+# with no manifest (@ff9900b0ea) and was caught by two READERS instead of by the machinery.
+# ⛔ KEYED ON PATHSPEC, NOT IN_SCOPE -- every PRD is .md and IN_SCOPE is the .py/.sh gate scope, so
+# wiring this like the .py gate would produce a gate that never fires and reports OK (the silent-no-op
+# class the surprise-row-gate block above documents at length).
+# DOMAIN: only a doc whose PRD_HEADER declares `step: 4` -- 205 tracked *_PRD.md, 8 are step-4 PRDs.
+# MEASURED BEFORE SHIPPING (`prd-manifest-gate.py --census` @f060f2354e): 0 of 8 refused today, so
+# there is NO legacy carve-out and none is needed (Andrew, same session: "we dont need legacy carve
+# out, that is all tbd"). NO audited override, deliberately -- his word is "literally cannot".
+if [ ${#PATHSPEC[@]} -gt 0 ] && [ -f "$SCRIPT_DIR/prd-manifest-gate.py" ]; then
+  PMGATE_FILES=()
+  for _pf in "${PATHSPEC[@]}"; do
+    case "$_pf" in
+      *_PRD.md) PMGATE_FILES+=("$_pf") ;;
+    esac
+  done
+  if [ "${#PMGATE_FILES[@]}" -gt 0 ]; then
+    PMGATE_OUT=""; PMGATE_RC=0
+    PMGATE_OUT="$(python "$SCRIPT_DIR/prd-manifest-gate.py" "${PMGATE_FILES[@]}" 2>&1)" || PMGATE_RC=$?
+    if [ "$PMGATE_RC" -ne 0 ]; then
+      for _pf in "${PMGATE_FILES[@]}"; do git reset -q HEAD -- "$_pf" 2>/dev/null || true; done
+      echo "ERROR: BLOCKED -- step-4 PRD surface-manifest gate. Commit aborted; files unstaged." >&2
+      printf '%s\n' "$PMGATE_OUT" | sed 's/^/  /' >&2
+      exit 1
+    elif [ -n "$PMGATE_OUT" ]; then
+      printf '%s\n' "$PMGATE_OUT" | sed 's/^/  /' >&2
+    fi
+  fi
+fi
+
 # WS-2 comp-system 06_current_state staleness gate (NFRA_SYSPARITY, CTO arch-gate 20260719T213935Z).
 # A commit that touches a comp-system _SOURCE must not leave 06 stale. FAIL-CLOSED on GENUINE drift
 # (source-fingerprint / managed-region), STALENESS-CONDITIONED (comp-system --gate --changed evaluates
