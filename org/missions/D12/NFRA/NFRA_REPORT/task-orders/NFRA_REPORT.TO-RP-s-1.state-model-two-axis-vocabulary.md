@@ -41,8 +41,9 @@ A dependency is keyed to OBSERVED COMPLETION -- a deliverable that exists and wh
 
 ```
 C-FWD2-FIRST: this cell is the critical path into the entire NFRA_OPSEC202609 relationship.
-C-WEBSITE-BLIND: the Website security row renders BLIND with resolvable:no PERMANENTLY. It does NOT
-wait on TO-OP-S-13 and is NOT a gap awaiting a fix.
+C-WEBSITE-BLIND: the Website security row is settled PERMANENTLY, not pending -- it renders
+DENY-BY-DESIGN with its reason attached (see GAP 1 in the cell). It does NOT wait on TO-OP-S-13 and is
+NOT a gap awaiting a fix.
 C-SENTINEL-STATE: a BLOCKED address is DESIRED, never APPLIED.
 DO NOT EDIT, REMOVE OR REDEFINE ANY OF THE SIX RATIFIED AXIS-1 VALUES. RULED at msg 20595: neither
 resolution amends ruling 12 -- an orthogonal axis adds no value to either enum, redefines none, and
@@ -60,8 +61,10 @@ concludes the PRD intends the literal value BLIND, file a surprise ROW rather th
 comp-iam does NOT model wafv2 -- the plane C-SENTINEL-STATE lives on. comp-iam silence is
 NEVER evidence about the sentinel's enforcement path, and no criterion here may cite comp-iam as
 evidence about it.
-THE MANIFEST'S OWN SHORTHAND IS A TRAP: PRD section 8's S1 row abbreviates axis 1 as "CHECKED vs
-BLIND". THE RATIFIED ENUM HAS SIX VALUES. Build the SIX. Cite ruling 12, never the manifest cell.
+BUILD ALL SIX AXIS-1 VALUES AND CITE RULING 12 AS THEIR AUTHORITY. PRD v0.2's S1 row used to
+abbreviate axis 1 as "CHECKED vs BLIND"; v0.3 now carries ruling 12 IN FULL, so the PRD and this order
+agree. The six are inlined in the cell above BECAUSE THIS FACE IS THE WHOLE OF YOUR CONTEXT -- a value
+this order does not carry is a value you never see, whatever any other document says.
 ```
 
 ## PATHS -- your write surface IS this list, and nothing else
