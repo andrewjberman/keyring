@@ -1,5 +1,6 @@
 # NFRA_OUTSET — DECOMPOSITION (L5)
 
+**v0.7** (2026-09-09 ~22:2xZ, `2.0.0_SA_COO`) — the L5 act on PRD **v0.7** @`0d44fdd1ee` amended to **v0.8** @`dc6a33c3e3` (the CTO’s manual-trigger addendum on Andrew’s ~21:4xZ no-waiting word, amended on this seat’s four cut-shaping facts): `OS-s-24` (the manual served day), `OS-s-25` (the drift half on demand), `OS-s-26` (the trigger token) added; the five open accepts re-pointed to read on `OS-s-24`’s run. Round 3’s v0.7 sections are §27–§30 below; §0–§26 are LEFT UNEDITED.
 **v0.6** (2026-09-09 ~15:5xZ, `2.0.0_SA_COO`) — the L5 act on PRD **v0.6** @`be662c311f` (the CTO’s mid-round addendum on the S24 ruling @`5f39f3a512`): `OS-s-23` added, the group-B publish as a derived second artifact on the OS-s-21 publisher. Round 3’s v0.6 sections are §23–§26 below; §0–§22 are LEFT UNEDITED.
 
 **v0.5** (2026-09-09 ~15:3xZ, `2.0.0_SA_COO`) — the L5 act on PRD **v0.5** @`1ac8679844` (the CTO’s mid-round addendum on the S23 ruling @`98722f9355`): `OS-s-21` re-worded to the ruling (its face already re-cut @`2e1d755943`), `OS-s-22` added. Round 3’s addendum sections are §19–§22 below; §0–§18 are LEFT UNEDITED.
@@ -432,3 +433,76 @@ fanout: 1 of 1 chains, cap 8, reason: OS-s-23 is a second artifact on the publis
   search order of `OUTSET_GROUP_B_SOURCES` (resource grain first) stays.
 
 — `2.0.0_SA_COO`, L5 round 3 addendum v0.6
+
+## 27. ROUND 3, ADDENDUM v0.7 — the manual served day, cut mid-round on Andrew's no-waiting word
+
+**Input:** PRD **v0.7** @`0d44fdd1ee` amended to **v0.8** @`dc6a33c3e3` (`1.0.0_SA_CTO`, on Andrew's ~21:4xZ word at the CTO
+terminal -- *"we need to not be 'waiting' on anything, anything that we'd be waiting for needs a manual trigger of some
+kind depending on the test type"* -- and on this seat's four cut-shaping facts 94739, all four adopted 94751). **This
+document invents nothing.** The manual-trigger rule's five conditions (same target; real plane; told apart on the
+artifact; the schedule's firing from history; the next fire is confirmation) bind every accept in round 3 from this
+addendum on. Three cells:
+
+| cell | outcome | verb | lane | depends_on | why it exists |
+|---|---|---|---|---|---|
+| `OS-s-26` | FWD-3 (rule (3)'s carrier) | build | CloudOps (the orchestrator, the two exact-key grants) with CloudComp's half (the runner's stamp) seated on the same CloudOps seat by owned-paths | -- | THE TRIGGER TOKEN. The served report's `run_bundle` carries no trigger or run id and the orchestrator ignores its event, so a manual run and a scheduled run are told apart by nothing but the clock. The orchestrator writes `config/last-trigger.json` `{trigger, run_id, invoked_at}` before `StartInstances`; the runner stamps `run_bundle.trigger` / `run_bundle.run_id` from it; domain `{scheduled, manual, UNKNOWN}`, absent or stale reads `UNKNOWN`. FIRST of the three. |
+| `OS-s-25` | FWD-3 | verify | CloudOps~W (the task) | `OS-s-21` (built), `OS-s-22` (served) | THE DRIFT HALF ON DEMAND. The installed task run by its own action (`Start-ScheduledTask`), the artifact under the scoped role; rule (4) for a never-fired task = the configuration read + its first scheduled run recorded as history. SECOND: before OS-s-24 so ONE manual day reads the device row. |
+| `OS-s-24` | FWD-2, FWD-3, FWD-4, FWD-7 | verify | CloudOps (host + publisher; the orchestrator invoked with the rule's own payload) | `OS-s-26`, `OS-s-25`, `OS-s-19`, `OS-s-20`, `OS-s-21`, `OS-s-22`, `OS-s-23` | THE MANUAL SERVED DAY, AFTER 00:00Z on 09-10 keys (nothing overwritten; the 09-09 pins protected in the NEVER-2 entry; never-widen sign-off CTO + COO on the entry): the freshness build by hand (same project), the orchestrator invoked with the rule's own payload, the report on the same served keys with `trigger=manual`; every round-3 accept read on that run before 13:00Z; the 13:00Z fire confirms. THIRD. |
+
+**Denominator:** PRD s.7 + s.9 manifest rows now 26 (`OS-s-1`..`OS-s-26`); decomposition cells 26; 0 either way. The
+five open accepts (`OS-s-19`, `OS-s-20`, `OS-s-21`, `OS-s-22`, `OS-s-23`) are RE-POINTED by amendment on their faces
+to read on `OS-s-24`'s run; their `<invocation>`/`<expect>` are unchanged, so the L6 gate's coverage read is unmoved.
+
+⛔ **THE FOUR FACTS THAT SHAPED THE CUT, measured by the assignee (94738) and adopted by the CTO (94751):** (1) no
+trigger field exists and no channel reaches the runner -- so the carrier is a CELL, not a line; (2) rule (4) is
+unsatisfiable by construction for a schedule created today (the 08:30 ET rule and the laptop task have ZERO
+rule-initiated executions), so its form for a never-fired schedule is the configuration read plus the first fire as
+history; (3) a manual run dated 09-09 would OVERWRITE the only artifact proving OS-s-20, so the day runs after 00:00Z
+on 09-10 keys; (4) rule (2) covers the served output the estate reads (`daily/`, `manifest/`) and not the `outset/`
+seam prefix -- today's five hand-written seam keys stand as the QA their faces said, not retroactive.
+
+## 28. THE CHAIN READ — round 3 with v0.7
+
+```
+  M (dependency-independent chains) = 1
+    chain F  7 cells   OS-s-26 -> OS-s-25 -> OS-s-24 -> { the five re-read accepts }
+      OS-s-26  BUILD tonight: orchestrator mapping + token, two exact-key grants under safe-apply, the runner's stamp
+               deployed under its own NEVER-2 entry (the OS-s-19 shape); no host replace
+      OS-s-25  RUN tonight, before OS-s-24: Start-ScheduledTask; configuration read as (4)'s form; artifact under the role
+      OS-s-24  RUN after 00:00Z 2026-09-10: entry OPEN with both sign-off halves -> start-build by hand -> the orchestrator
+               invoked with {"mode":"daily-run","trigger":"manual"} -> the report on 09-10 keys with trigger=manual ->
+               every accept of OS-s-19/20/21/22/23 read on it before 13:00Z -> the 13:00Z fire confirms
+
+  longest dependency depth = 3; the whole chain is one seat's, in sequence, tonight
+```
+
+**Nothing waits.** No accept in this project reads "pending the fire" after this addendum; 09-10 13:00Z and the task's
+first scheduled run at 09-10 11:30Z are CONFIRMATION, recorded if present, never a gate.
+
+## 29. SEATING AND FAN-OUT — one CloudOps seat, width 1, the CloudComp half seated by owned-paths
+
+**All three cells to `0.7.0_AE_CloudOps~W`** (continuity: it holds OS-s-20/21/22/23, built the publisher, the role and
+the task, and measured the four facts). The PRD names CloudComp for the runner's stamp in OS-s-26 and OS-s-24; the
+runner directory (`infra/aws/ec2/estate-report-runner/`) resolved PERMITTED for `0.7.0_AE_CloudOps~W` at this cut and
+it edited the runner today under OS-s-22, so the half is seated on the same seat rather than on a CloudComp seat that
+is not live; stated here, not silent. The seam module (`org/modules/heatmap/outset_seam.py`, lane NFRA_HEATMAP) read
+VIOLATION for that serial as the negative control and is not touched by any of the three.
+
+```
+fanout: 1 of 1 chains, cap 8, reason: three cells in strict sequence on one seat -- the token carrier must exist before
+        the manual day can be told apart on the artifact, and the drift run must precede the manual day so one day reads
+        the device row; a second seat would edit the same orchestrator, iam.tf and runner. Width 1, cut mid-round on
+        the addendum, executed tonight. Workers are not spawned (a Tier-2 seat holds the round, already open on v2).
+```
+
+## 30. WHAT THIS ADDENDUM'S DECOMPOSITION DOES NOT DECIDE
+
+- **The token's `run_id` format and how the runner reads its boot instant** (for the STALE test) -- the assignee's,
+  inside OS-s-26's accept; the domain `{scheduled, manual, UNKNOWN}` and "absent or stale reads UNKNOWN" are fixed.
+- **Whether the 08:30 ET CodeBuild rule takes a one-off `at()` or the configuration-read form** for rule (4) -- the
+  assignee's call under TO-OS-s-21's amendment, stated in its deliverable; either satisfies the rule as adopted.
+- **The CTO's half of the never-widen sign-off** -- asked in the drive read that carries this issuance; OS-s-24's step
+  (iii) does not start until the entry quotes both halves.
+- **A second manual served day** -- cut only if the first's device row fails (PRD v0.8 OS-s-25); not cut here.
+
+— `2.0.0_SA_COO`, L5 round 3 addendum v0.7
