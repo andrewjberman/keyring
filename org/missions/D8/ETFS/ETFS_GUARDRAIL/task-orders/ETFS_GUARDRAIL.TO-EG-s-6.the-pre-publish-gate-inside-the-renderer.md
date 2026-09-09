@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ETFS_GUARDRAIL~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>pending -- GO paired at cut (the spawn IS the GO); HANDED to the slot only after EG-s-1, EG-s-2 (your own), EG-s-4, EG-s-7, EG-sb-7 (slot 1) and EG-s-13 (slot 3) are terminal with VALID instances at HEAD -- it uploads the ONE merged renderer. Authority: PRD v0.3 @`4e30d6b635` (flat lineage @`7aa1554881`, ON ORIGIN) RATIFIED; decomposition v0.1 @`c4ab429993`, v0.1.1 in this issuance; Andrew-direct 2026-09-01 ("yes do all of the above") and 2026-09-04 ~17:0xZ (94224/94225).</status>
+<status>complete -- all eight criteria PASS-by-output/RECORDED at HEAD: 6/6 gate arms passed, pre-09-01-repair August REFUSES with exactly 5 holes named (rc=3), current August PUBLISHES (rc=0), the refused deck still carries all 3 partners' coverage lines, commit gate clean, the ONE renderer artifact upload MATCH 6 of 6 (head-object ETag == local md5), the box's pull prefix confirmed; deploy ledger etfs-guardrail-eg-s-6-renderer-artifact-upload CLOSED; instance VALID (proof-of-spec-check rc=0, 0 violations); flipped by 0.9.0_WK_ETFS_GUARDRAIL~2.</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `../prd/ETFS_GUARDRAIL_PRD.md` v0.3 (s.7.2 row S6; s.7.4 "S6 gate -> INSIDE render_month_end.py, NOT the orchestrator"; s.1 "Catch-up BEFORE the gate"; s.4 properties 3 and 5; brief s.4) | **Decomp cell:** `EG-s-6` | **outcome_ref:** FWD-2 | **verb:** wire | **depends_on:** `EG-s-1`, `EG-s-2`, `EG-s-4` (and, for the upload, every other renderer/coverage cell)
 

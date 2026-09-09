@@ -15,15 +15,17 @@
 #   comp-describe arn:aws:lambda:us-east-1:313476888478:function:bd-49f-fees-runner
 #   comp-describe opal-data-mdpf --json
 # Exit 0 = one resource described; exit 1 = query did not resolve to a single resource
-# (0 matches -> refresh hint; N candidates -> disambiguation list; never a silent guess).
+# (0 matches -> read the VINTAGE line before concluding absence; N candidates -> disambiguation
+#  list; never a silent guess).
 # Advisory / read-only. NEVER a verdict, NEVER deletes.
 if [ "$#" -eq 0 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
   echo "comp-describe -- FIND + DESCRIBE one AWS resource (NFRA_COMPSIMILAR describe surface)."
   echo "Usage: comp-describe <arn-or-name> [--json]"
   echo "  <arn-or-name>  exact ARN, exact name, or a lexical substring (unique -> described;"
-  echo "                 ambiguous -> disambiguation list; 0 matches -> comp-kuzu --mode inc refresh hint)."
+  echo "                 ambiguous -> disambiguation list; 0 matches -> re-read the served graph's"
+  echo "                 VINTAGE line: a broken retrieval and an absent resource read alike)."
   echo "  --json         machine JSON instead of the human summary."
-  echo "Reads the live comp-kuzu graph (derive-at-scan; no projection, no table). Advisory/read-only."
+  echo "Reads the SERVED comp-kuzu graph (derive-at-scan; no local store, no db path). Advisory/read-only."
   exit 2
 fi
 WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"

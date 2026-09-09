@@ -169,35 +169,67 @@ def _kuzu_cmd() -> list[str]:
 # coverage(). CVO finding 2026-09-02 (D1), exercised on the live corpus before landing.
 _CORPUS_VINTAGE: dict = {}
 
-_BUILT_RE = re.compile(r"^\s*built:\s*(\S+)(?:\s*\(age:\s*([^)]*)\))?", re.M)
-_DBNAME_RE = re.compile(r"^\s*DB:\s*(\S+)", re.M)
+# THE SERVED DISCLOSURE, and the only header comp-kuzu emits (infra/aws/globgrph/kuzu_cli.py:46-61,
+# repointed here 2026-09-09 by NFRA_CLDGRPH CG-s-17 pass 2, row W2-S32):
+#     VINTAGE: <plain-words age sentence>  [vintage=<vintage> manifest=<sha12> prefix=<prefix>]
+# The sentence leads because it is what a reader acts on; the bracketed triple trails because it is
+# what a machine re-derives from -- so this parser reads the TRIPLE and keeps the sentence as the
+# age. The OLD local-projection header (`built:` / `DB:` lines) is NOT parsed any more: that store
+# was retired at CG-s-8 and nothing emits those lines, so a second limb for them would be a reader
+# kept alive for a surface that is gone -- the instruction-plane defect this cell exists to remove.
+_SERVED_VINTAGE_RE = re.compile(
+    r"^\s*VINTAGE:\s*(?P<age>.*?)\s*\[vintage=(?P<vintage>\S*)\s+manifest=(?P<manifest>\S*)"
+    r"\s+prefix=(?P<prefix>[^\]]*)\]\s*$", re.M)
+# The client prints the literal string None when the service supplied no value for a bracket field
+# (kuzu_cli.py builds the line with %s over the raw dict). "None" is therefore an ABSENCE, not a
+# vintage, and must never be recorded as one.
+_ABSENT_FIELD = ("", "None", "none", "null")
 
 
 def _capture_kuzu_vintage(*streams: str) -> None:
-    """Record the vintage from comp-kuzu's provenance header into _CORPUS_VINTAGE.
+    """Record the vintage from comp-kuzu's SERVED disclosure line into _CORPUS_VINTAGE.
 
-    WARN: THE HEADER IS ON **STDERR**, NOT STDOUT. Measured 2026-09-02 with the streams
-    separated: stdout carries the bare JSON array (0 `built:` lines), stderr carries the
-    provenance block (1). _kuzu_json's docstring says the header "is printed before the JSON
-    array", which reads as one stream and is two -- and a first pass at this fix captured
-    stdout only, self-tested GREEN, and still rendered UNKNOWN against the live corpus.
-    Both streams are searched so a future comp-kuzu that moves it does not silently re-break.
+    REPOINTED 2026-09-09 (NFRA_CLDGRPH CG-s-17 pass 2, row W2-S32). This used to parse the LOCAL
+    projection's `built:` / `DB:` header. That store was retired at CG-s-8 and comp-kuzu became a
+    thin client over the SERVED projection, whose whole disclosure is one line -- so the old parser
+    matched nothing on every real call and coverage() rendered UNKNOWN beside a confident
+    denominator. It failed in the safe direction and said so, which is why it was survivable; it was
+    still a permanent UNKNOWN where a stated vintage exists.
 
-    WARN: FAILS TOWARD 'ABSENT', LOUDLY -- never toward a fresh-looking value. If the header
-    shape changes or is missing, the dict stays empty and coverage() renders UNKNOWN with an
-    explicit do-not-trust clause. A vintage that silently defaulted to 'now' would be the
-    exact false-green this fix exists to close."""
+    WARN: THE LINE IS ON **STDERR**, NOT STDOUT. Measured 2026-09-02 on the previous header with the
+    streams separated, and unchanged for the served one (kuzu_cli.py prints the disclosure with
+    file=sys.stderr so stdout stays a parseable JSON array). Both streams are searched so a future
+    comp-kuzu that moves it does not silently re-break.
+
+    WARN: FAILS TOWARD 'ABSENT', LOUDLY -- never toward a fresh-looking value. Three ways this
+    yields no measured claim, all of them REAL states of the served client: the line is missing
+    entirely; the service did not answer (`VINTAGE: unavailable -- ...`, which carries no bracketed
+    triple); or the service answered but stated no vintage, in which case the client renders the
+    field as the literal `None` and this treats it as the ABSENCE it is. In every case the dict
+    stays empty and coverage() renders UNKNOWN with its explicit do-not-trust clause. A vintage that
+    silently defaulted to 'now' -- or to the string "None" -- would be the exact false-green this
+    parser exists to close.
+
+    WHAT EACH FIELD BECOMES: `built` is the service's own VINTAGE stamp (never client time); `age`
+    is the service's plain-words age sentence VERBATIM, because that sentence is what a reader acts
+    on and nothing here recomputes it; `db` is the SERVED SURFACE's name -- the artifact prefix the
+    service reported, or the literal `served` when it reported none, so a coverage line can never
+    again print the name of a store that no longer exists."""
     for out in streams:
-        m = _BUILT_RE.search(out or "")
+        m = _SERVED_VINTAGE_RE.search(out or "")
         if m:
             break
     else:
         return
-    db = _DBNAME_RE.search(out or "")
+    vintage = (m.group("vintage") or "").strip()
+    if vintage in _ABSENT_FIELD:
+        return
+    age = (m.group("age") or "").strip() or None
+    prefix = (m.group("prefix") or "").strip()
     _CORPUS_VINTAGE.clear()
-    _CORPUS_VINTAGE.update({"built": m.group(1),
-                            "age": (m.group(2) or "").strip() or None,
-                            "db": db.group(1) if db else None,
+    _CORPUS_VINTAGE.update({"built": vintage,
+                            "age": age,
+                            "db": prefix if prefix not in _ABSENT_FIELD else "served",
                             "claim": "measured"})
 
 

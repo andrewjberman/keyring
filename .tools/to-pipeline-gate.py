@@ -366,15 +366,71 @@ def _coverage_grade(groups, stage_of, decomp_of):
     return v, notes
 
 
-def _coverage_violations(root, targets):
-    def stage_of(code, rel_json):
-        try:
-            import json as _j
-            with open(os.path.join(root, rel_json), "r", encoding="utf-8") as fh:
-                return _j.load(fh).get("dep_stage")
-        except Exception:  # noqa: BLE001
+def _row_stage_at(root, rel_json, ref):
+    """dep_stage of a project row at `ref` ("" = the staged index, "HEAD" = the last commit), or None.
+
+    NEVER THE WORKTREE. The first cut of `stage_of` opened the file on disk, which is the
+    worktree-vs-record class -- a peer's UNCOMMITTED edit to project.json could change another seat's
+    coverage grade, and the gate would report on a state no commit ever held.
+    """
+    spec = ("%s:%s" % (ref, rel_json)) if ref else (":%s" % rel_json)
+    try:
+        p = subprocess.run(["git", "show", spec], cwd=root, capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", timeout=30)
+        if p.returncode != 0:
             return None
-    return _coverage_grade(_coverage_groups(root, targets), stage_of, lambda doc: _decomp_text(root, doc)[0])
+        import json as _j
+        return (_j.loads(p.stdout) or {}).get("dep_stage")
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def _coverage_violations(root, targets):
+    # COVERAGE GRADES THE ISSUANCE **MOMENT**, SO IT READS **HEAD** -- the stage BEFORE this commit.
+    # ⛔ THE COUPLING THIS FIXES, measured by exercise: the limb grades only at DECOMP, and `stage_of`
+    # used to read the WORKTREE. So a COO obeying spine s.4 carrier 2 -- "the COO flips EXECUTING in
+    # the issuance commit" -- flipped the row to EXECUTING and TURNED THIS LIMB OFF in the same act.
+    # THE ONLY WAY TO GET COVERAGE GRADED WAS TO VIOLATE CARRIER 2. That is why the flip drifted on
+    # v3's first fresh-project round (4.0.0_SA_CRO 94331). Reading HEAD decouples them: at the issuance
+    # moment the row still reads DECOMP, so coverage grades AND the flip may land in the same commit.
+    # A genuine recut (row already EXECUTING at HEAD) is still not graded here, exactly as documented.
+    return _coverage_grade(_coverage_groups(root, targets),
+                           lambda code, rel_json: _row_stage_at(root, rel_json, "HEAD"),
+                           lambda doc: _decomp_text(root, doc)[0])
+
+
+def _carrier2_violations(root, targets):
+    """SPINE s.4 CARRIER 2: after an L6 issuance the project row must read EXECUTING.
+
+    CARRIER 2 GRADES THE ISSUANCE **RESULT**, SO IT READS THE **STAGED INDEX** (else HEAD) -- the
+    stage AFTER this commit. Coverage reads HEAD, this reads the index; two limbs, two moments, both
+    satisfiable at once. Read from ONE moment they are mutually exclusive, which was the defect.
+
+    WHY A REFUSER AT ALL (1.0.0_SA_CTO's design call on 4.0.0_SA_CRO 94331): carrier 2 is one of the
+    spine's s.4 clauses that BINDS BY READING rather than by enforcement, and s.4 exists precisely to
+    name what is still owed a refuser. It drifted on the first fresh-project round, silently, and the
+    measured consequence was that cvo_send_guard's executing census did not carry the project at all --
+    so the CVO's one-send rule did not bind for it and every reader of dep_stage saw a project at L5
+    while two orders were complete and a drain had landed.
+
+    ⛔ IT IS NOT AN APPROVAL GATE (CLAUDE.md forbids inventing one): it grades the issuance's OWN
+    contents against the spine, exactly as the coverage limb grades "every cell covered". Nobody's
+    permission is added to anything.
+    NOT "this commit changed project.json" -- "AFTER this commit the row READS EXECUTING", so a recut
+    mid-round whose row is already EXECUTING passes without re-flipping a field that is already right.
+    """
+    out = []
+    for (code, rel_json, _doc) in sorted({k for k in _coverage_groups(root, targets)}):
+        after = _row_stage_at(root, rel_json, "") or _row_stage_at(root, rel_json, "HEAD")
+        if after != "EXECUTING":
+            out.append("%s: this commit adds NEW tree task order(s) but %s reads dep_stage=%r after it. "
+                       "Spine s.4 carrier 2: THE COO FLIPS EXECUTING IN THE ISSUANCE COMMIT. Until it does, "
+                       "cvo_send_guard's executing census omits the project (so the L8 one-send rule does not "
+                       "bind for it) and every reader of dep_stage -- the L10 precondition, R6's close limbs, "
+                       "the drain-prep probes -- sees a project still at L5 while its orders run. Stage the "
+                       "row with the issuance. FIX: set dep_stage EXECUTING in project.json and re-commit."
+                       % (code, rel_json, after))
+    return out
 
 
 _SELF_SRC = pathlib.Path(__file__).read_text(encoding="utf-8", errors="replace") \
@@ -427,6 +483,34 @@ def _merge_exemption_precedes_checks():
     return 0 <= i_probe < i_added
 
 
+def _carrier2_grades_state_after():
+    """True iff _carrier2_violations decides on the row's STATE AFTER the commit, judged on CODE lines.
+
+    The distinction that matters: "AFTER this commit the row reads EXECUTING" (correct -- a recut whose
+    row is already EXECUTING passes) versus "this commit CHANGED project.json" (wrong -- it would refuse
+    a legitimate recut for not re-flipping a field that is already right). Comments and the docstring are
+    stripped, because this function's own prose necessarily discusses the shape it forbids.
+    """
+    try:
+        src = inspect.getsource(_carrier2_violations)
+    except Exception:  # noqa: BLE001
+        return False
+    code, in_doc = [], False
+    for ln in src.split(chr(10)):
+        t = ln.strip()
+        if t.startswith(chr(34) * 3):
+            in_doc = not in_doc
+            continue
+        if in_doc or not t or t.startswith("#"):
+            continue
+        code.append(t)
+    body = chr(10).join(code)
+    reads_after = ('_row_stage_at(root, rel_json, "")' in body)
+    compares_executing = ('!= "EXECUTING"' in body)
+    no_diffing = not any(tok in body for tok in ("git diff", "--name-only", "changed"))
+    return reads_after and compares_executing and no_diffing
+
+
 def _self_test():
     """RED/GREEN arms for carriers 1 (coverage) and 4 (criterion grammar), pure -- no repo read."""
     decomp = "cells: CE-a-1 CE-a-2 CE-a-3 (three)"
@@ -472,6 +556,28 @@ def _self_test():
          lambda: _worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\nthe `<paths>` block below names the grant\n<paths>\norg/ok.py\n</paths>\n" + v3) == []),
         ("grant: a prose mention with NO block after it -> refused as NO block",
          lambda: any("NO <paths> block" in x for x in _worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\nsee <paths> in the protocol\n" + v3))),
+        # CARRIER 2 + THE DECOUPLING (4.0.0_SA_CRO 94331; the coupling measured by exercise before the fix).
+        # THE ARM THAT MATTERS IS THE THIRD: the two limbs must read DIFFERENT refs. Read from ONE moment
+        # they are mutually exclusive -- coverage grades only at DECOMP, carrier 2 requires EXECUTING --
+        # which is why obeying carrier 2 used to turn coverage OFF.
+        ("carrier2: coverage reads HEAD (the issuance MOMENT), never the worktree",
+         lambda: '_row_stage_at(root, rel_json, "HEAD")' in inspect.getsource(_coverage_violations)
+         and "open(os.path.join(root, rel_json)" not in inspect.getsource(_coverage_violations)),
+        ("carrier2: the limb reads the STAGED INDEX first, HEAD as fallback (the issuance RESULT)",
+         lambda: '_row_stage_at(root, rel_json, "")' in inspect.getsource(_carrier2_violations)),
+        ("carrier2 DECOUPLING: the two limbs read DIFFERENT refs -- one moment each",
+         lambda: '"HEAD"' in inspect.getsource(_coverage_violations)
+         and '_row_stage_at(root, rel_json, "")' in inspect.getsource(_carrier2_violations)
+         and inspect.getsource(_coverage_violations) != inspect.getsource(_carrier2_violations)),
+        ("carrier2: the refusal names the MEASURED consequence, not just the rule",
+         lambda: "executing census" in inspect.getsource(_carrier2_violations)
+         and "one-send rule does not" in inspect.getsource(_carrier2_violations)),
+        # STOP: THIS ARM GRADES CODE, NOT PROSE. Its first cut greped the docstring for a phrase and
+        # failed on a capitalisation difference in the sentence it was quoting -- the third time tonight
+        # a check read the tool instead of the world. The predicate is a NAMED HELPER now: a lambda doing
+        # multi-line string surgery is where both that bug and its two failed repairs lived.
+        ("carrier2: it grades the STATE AFTER (a recut whose row already reads EXECUTING passes)",
+         lambda: _carrier2_grades_state_after()),
         # MERGE EXEMPTION (94264). A self-test cannot safely open a real merge in the shared tree,
         # so these are structural + a function-level probe; the behavioural arm is 0.0.0_AB_MSTR's
         # own reconcile, which is the RED case that produced the finding.
@@ -1342,6 +1448,38 @@ def sweep(root):
     return 0
 
 
+_GATE_TAG = "to-pipeline-gate"
+
+def _dispatched_from_argv_or_env(argv):
+    """The paths to grade: ARGV first, the STAGED env var only when argv is empty.
+
+    THE ~32 KB ARGV CLIFF (0.0.0_AB_MSTR 94338): the pre-commit hook passed this list as UNQUOTED
+    ARGV, and Windows caps a command line near 32,767 chars -- so on a large merge python NEVER
+    STARTED (rc 126, "Argument list too long") and the gate that carries the merge exemptions was
+    exactly the gate that could not run. Bisected on this box: 300 paths / 29,098 B rc 0;
+    400 paths / 38,798 B rc 126. The estate's real paths put the cliff near 320 files. It fails
+    CLOSED, so nothing landed -- but the only escape left was blanket `--no-verify`, which discards
+    every other gate too.
+    MEASURED: the ENVIRONMENT removes the cliff rather than raising it (516,000 B -> rc 0 here).
+
+    ARGV REMAINS THE CONTRACT. A bare call with no env still grades NOTHING, because safe-merge.sh
+    relies on exactly that and says so. And the SOURCE is printed whenever it is not argv: an input
+    whose origin is invisible is how a vacuous pass reads as a clean one.
+    """
+    args = [a for a in argv if a and not a.startswith("--")]
+    if args:
+        return args, "argv"
+    env = os.environ.get("STAGED", "")
+    if env.strip():
+        paths = [p.strip() for p in env.replace("\r", "").split("\n") if p.strip()]
+        if paths:
+            print("[%s] input: %d path(s) from the STAGED environment variable "
+                  "(argv was empty; the ~32 KB argv cliff, 0.0.0_AB_MSTR 94338)"
+                  % (_GATE_TAG, len(paths)))
+            return paths, "env"
+    return [], "none"
+
+
 def _merge_in_progress(root):
     """True iff a merge is in progress -- MERGE_HEAD exists.
 
@@ -1408,7 +1546,8 @@ def main(argv):
         return 1
 
     # Consider only paths the caller dispatched AND that git says are newly added.
-    dispatched = [a.replace("\\", "/") for a in argv[1:]]
+    _disp, _src = _dispatched_from_argv_or_env(argv[1:])
+    dispatched = [a.replace("\\", "/") for a in _disp]
     targets = sorted(p for p in dispatched
                      if TO_PATH_RE.search(p) and p in added)
 
@@ -1427,6 +1566,7 @@ def main(argv):
     # spine v3.0 L6 carrier 1: ONE issuance covers EVERY cell -- graded over the staged set, not per file.
     if targets:
         _cov_v, _cov_n = _coverage_violations(root, targets)
+        _cov_v.extend(_carrier2_violations(root, targets))
         all_v.extend(_cov_v)
         all_notes.extend(_cov_n)
 

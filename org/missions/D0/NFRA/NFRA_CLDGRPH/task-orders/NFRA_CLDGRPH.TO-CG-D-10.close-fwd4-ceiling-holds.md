@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CLDGRPH~1</issued_to>
 <issued_by>2.0.0_SA_COO~A</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>pending -- GO = the COO handing this order to slot ~1 by CONTINUING the same subagent after TO-CG-D-9 (CG-x-2) is terminal and merged (spine v3 L7 drain). ROUND 4 of NFRA_CLDGRPH (the ONE issuance covering every open cell, Andrew's word via CRO record @aff3bfb7bf), slot ~1's FOURTH order; the closing pass for FWD-4, released by CG-x-2 DONE and one full cycle. The cycle is READ from the record, not waited for: the serving service has been up since 2026-09-03 18:3xZ (task `c18ee8b40e4a4bf3993f8f78cc2f98a6`, startedAt epoch 1788460967), so by the time this order is handed a 24 h window containing one nightly boundary (02:00Z) is on its log. The assignee commits its own status flip after a VALID proof-of-spec instance; the L8 seat reads the record.</status>
+<status>complete -- flipped 2026-09-05 ~21:5xZ by `0.9.0_WK_NFRA_CLDGRPH~1` on a VALID proof-of-spec instance (`python .tools/proof-of-spec-check.py <instance> D10-AC1,D10-AC2,D10-AC3,D10-AC4,D10-AC5` rc 0) at PASS 3: over a HAND-FREE cycle re-derived from artifacts (2026-09-04T21:18:54Z -> 2026-09-05T21:18:54Z; the hand-off's own boundary corrected by one second per row NFRA_CLDGRPH-W1-S26, CloudTrail's --start-time being inclusive), D10-AC1/AC2/AC3/AC4 are PASS-by-output (OLDEST_AGE_SERVED_S=27049.418 <= CEILING_S=87191.260; ANSWERS_IN_CYCLE=212, SWAPS_IN_CYCLE=31, NIGHTLY_SWAP_AT=2026-09-05T02:23:34Z; HAND_ENFORCED_CEILING=0 of 0 with the positive control FIRED first, HANDS_OFF_RUNTASK=0 of 51; 3 passed, 4 deselected) and D10-AC5 is recorded UNVERIFIABLE-BY-INSTRUMENT for `3.0.0_SA_CVO` at L9, exactly as its judgment="true" grading requires. No criterion was re-cut a second time; pass 1 (FAIL, both limbs of the pre-amendment D10-AC3) and pass 2 (FAIL, HAND_ENFORCED_CEILING=1 of 3 on the amended D10-AC3) are preserved unedited in the deliverable record.</status>
 
 **Directive:** D0 · **Fabric:** laptop · **PRD:** `org/missions/D0/NFRA/NFRA_CLDGRPH/prd/NFRA_CLDGRPH_PRD.md` v0.4 @`25c66d3358` (FWD-4; acceptance 4) · **Decomp cell:** `CG-x-4` (v0.2 @`70918d5d2b` s.1b) · **Lane:** this order's deliverables only · **Rule 27 seating:** `0.9.0_WK_NFRA_CLDGRPH~1`, a spine-v3 worker subagent of `2.0.0_SA_COO~A`.
 
@@ -48,8 +48,46 @@
 <criterion id="D10-AC2" cell_refs="CG-x-4"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/cycle.sh | grep -E '^(ANSWERS_IN_CYCLE|SWAPS_IN_CYCLE|NIGHTLY_SWAP_AT)='</invocation><expect>ANSWERS_IN_CYCLE=[1-9][0-9]*[\s\S]*SWAPS_IN_CYCLE=[1-9][0-9]*[\s\S]*NIGHTLY_SWAP_AT=20[0-9]{2}-[0-9]{2}-[0-9]{2}T0[2-3]:</expect></criterion>
 `D10-AC2` -- THE CYCLE IS REAL: at least one answer and one swap on the log, and the nightly's swap inside the window at 02:xx-03:xxZ (the denominators).
 
-<criterion id="D10-AC3" cell_refs="CG-x-4"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/cycle.sh | grep -E '^(HANDS_OFF_RUNTASK|WRITERS_IN_CYCLE)='</invocation><expect>HANDS_OFF_RUNTASK=0 of [0-9]+[\s\S]*WRITERS_IN_CYCLE=\{?('?(derive_runner|incremental_updater)'?,? ?)+\}?$</expect></criterion>
-`D10-AC3` -- NOBODY ENFORCED IT BY HAND: zero non-Pipe/non-scheduler RunTasks; every vintage in the cycle written by a producer, never a seat.
+<criterion id="D10-AC3" cell_refs="CG-x-4"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/cycle.sh | grep -E '^(HAND_ENFORCED_CEILING|HANDS_OFF_RUNTASK|WRITERS_IN_CYCLE)='</invocation><expect>HAND_ENFORCED_CEILING=0 of [0-9]+[\s\S]*HANDS_OFF_RUNTASK=[0-9]+ of [0-9]+[\s\S]*WRITERS_IN_CYCLE=</expect></criterion>
+`D10-AC3` -- **NOBODY ENFORCED THE CEILING BY HAND.** AMENDED 2026-09-05 ~16:4xZ by the issuer on
+`1.0.0_SA_CTO`'s RULING @`9f4a57262f` (msg 94405), which adopted this seat's rec. **Scope: D10-AC3
+ONLY.** FWD-4 is not amended, CG-x-4 is not amended, D10-AC1/AC2/AC4/AC5 are untouched, and there are
+FIVE criteria before and after.
+
+> **WHY, in the ruling's own four steps.** (1) **The cell already says causal** -- CG-x-4 reads
+> *"nobody enforcing the ceiling BY HAND"* and this criterion's own prose read *"never a seat"*, so
+> the `<expect>` encoded PROXIES for the sentence directly above it: the proxy was the outlier inside
+> its own cell. (2) **Limb A convicted the round for being worked** -- of its 3 hits in 61 events, one
+> was `startedBy wk-cldgrph-1-cgs15`, THIS ROUND'S OWN worker slot 1 exercising CG-s-15, a
+> digest-pinned rebuild for a DIFFERENT cell and not ceiling enforcement; and it was unsatisfiable by
+> any window at that HEAD, the latest hand RunTask being 2026-09-04T21:18:53Z. (3) **Limb B was a
+> closed list over an open set** -- three writers where it named two, the third
+> `cse_producers_nightly`, a chronos-scheduled producer, so the clause the enumeration CARRIES was true
+> of all three while the enumeration was not. (4) **Waiting fixes half** -- limb B's producer is in
+> every cycle.
+>
+> ⛔ **THE RE-CUT MOVES THE READING, NEVER THE EVIDENCE, AND IT MUST NOT HIDE THE SUBSTANCE.** Pass 1
+> measured the ceiling holding at **20.8% of budget** (oldest served 18,138.643 s against 87,191.260
+> s), **261 of 261** answers placed, **0 unplaced of 3,151** http lines, zero refusals, the can-fail
+> control **3 of 3**. None of that is in question and none of it is re-opened by this amendment.
+>
+> **WHAT TO MEASURE NOW.** `HAND_ENFORCED_CEILING=<n> of <N>` -- over every hand-started task in the
+> cycle (`<N>` printed as the denominator), the count `<n>` whose EFFECT was to make a served answer
+> fresher than the schedule alone would have made it. A hand-started task that rebuilt something else,
+> or that served nothing, **does not enforce the ceiling and does not void the arm.**
+>
+> ⛔ **CORRECTION 2026-09-05 ~18:2xZ, ROW `NFRA_CLDGRPH-W1-S25`: THE ISSUER'S OWN WORKED EXAMPLE WAS WRONG AND IS STRUCK.** The hand-off prose for pass 2 offered the `wk-cldgrph-1-cgs15` RunTask as an instance of the first excuse -- *a digest-pinned rebuild for a DIFFERENT cell*. **MEASURED, IT IS NEITHER EXCUSE.** That task's warehouse commit at `2026-09-04T16:38:39.485910Z` IS the vintage the service swapped to at 16:51:51Z and served until 18:12:58Z, and removing it ages 20 of the cycle's 261 answers by up to 6,798.156 s. **The issuer read pass 1's claim about the task's PURPOSE as a claim about its EFFECT -- the exact substitution this criterion exists to forbid, committed one level up while writing it.** Take NO example on the issuer's word: **read the effect from the task and the artifact it produced.** The two excuses above stand as written; only the illustration is withdrawn. Read the effect
+> from the task and the artifact it produced, never from the fact that a hand started it.
+>
+> ⛔ **AND PRINT BOTH OLD NUMBERS BESIDE IT, UNCHANGED** -- `HANDS_OFF_RUNTASK=<n> of <N>` and the FULL
+> `WRITERS_IN_CYCLE=` set with every member named. They are no longer the bar; they are still the
+> evidence, and the ruling requires that no number the failing instrument measured is lost. **Keep the
+> per-row labels and the label-vs-denominator agreement control** that made pass 1's 61-event census
+> readable (`PIPE 54 / EVENTS_RULE 3 / CHRONOS 1 / HAND 3`, summing to 61).
+>
+> **A CRITERION THAT FAILS BECAUSE THE WORK IS WRONG IS NEVER IN THIS CLASS.** This one failed because
+> the instrument named the wrong thing while the property held; if the property itself fails, this arm
+> FAILS honestly and the order stays open.
 
 <criterion id="D10-AC4" cell_refs="CG-x-4"><invocation>python -m pytest infra/aws/globgrph/tests/test_projection_server.py -q -k "backward or refus"</invocation><expect>[1-9][0-9]* passed</expect></criterion>
 `D10-AC4` -- THE CONTROL: a planted stale/backward artifact is NOT served (the reader's own seam, re-run at your HEAD).

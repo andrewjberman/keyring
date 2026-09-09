@@ -40,28 +40,21 @@ FAIL F's own predicate. ALL SKIP (recorded, not silently omitted) if this box ha
 DB/CLI to exercise (a fixture that cannot represent the failure cannot score it -- stated, not
 silent).
 
-ARM G5 (NFRA_COMPEFFICACY TO-CE-G-5, the freshness layer under a budgeted client): comp-find's
---corpus aws pull budgets the KUZU_CLI subprocess, but a killed budgeted client only reaches its
-DIRECT child (kuzu_cli.py) -- subprocess.run(timeout=)'s kill never reaches the GRANDCHILD
-(kuzu_nessie_load.py / kuzu_incremental_refresh.py), which survived ORPHANED holding the shared
-rebuild mutex (measured: PID 25896, parent dead, 743s past its own ceiling -- row
-NFRA_COMPEFFICACY-S6). G5-AC1 exercises the fix -- infra/aws/globgrph/_canonical.py's
-_run_child_supervised, a Windows Job Object (JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE) / POSIX process-
-group wrapper -- via a REAL subprocess killed externally (the same act comp-find performs on
-kuzu_cli.py), reading the OS process table for the grandchild's pid, never this process's own
-bookkeeping. Its planted mutant (an UNSUPERVISED spawn, the pre-fix shape) must show the orphan
-SURVIVING, proving the arm can fail. G5-AC2 exercises ensure_fresh(wait_for_peer=False): with a
-planted lock directory (a temp DB, never the live one), a budgeted caller must return immediately
-("STALE", labeled with an age) rather than polling MUTEX_WAIT_S (180s) against a 90s client
-budget. Nothing here touches the live canonical DB or its rebuild (PID 25896 or its successor) --
-every fixture is a fresh, disposable temp path per TO-CE-G-5's own bound. SKIPS (recorded, not
-silent) if infra/aws/globgrph/_canonical.py cannot be imported here.
+ARM G5 (NFRA_COMPEFFICACY TO-CE-G-5, REPOINTED by NFRA_CLDGRPH TO-CG-D-7 / R7). The original
+arms guarded an ORPHANED GRANDCHILD: the --corpus aws pull shelled out to a local CLI, which itself
+spawned a loader, so a killed budgeted client reached only its DIRECT child and the grandchild
+survived holding the shared rebuild mutex (measured: PID 25896, parent dead, 743s past its own
+ceiling -- row NFRA_COMPEFFICACY-S6). THAT WHOLE CLASS IS NOW REMOVED BY CONSTRUCTION: the aws
+corpus is ONE in-process HTTPS call to the served graph. There is no child, so no grandchild, so
+no orphan and no mutex a bounded client could enter. The arms therefore pin the STRONGER property
+-- the tool's aws path spawns NOTHING -- read from the tool's own source, with a POSITIVE CONTROL
+running the same detector over a source that DOES spawn, so a zero is a measured absence rather
+than a matcher that cannot fire.
 
 Run: python .tools/tests/test_comp_find_battery.py    |    pytest -q .tools/tests/test_comp_find_battery.py
 """
 from __future__ import annotations
 
-import importlib
 import os
 import re
 import subprocess
@@ -84,16 +77,17 @@ AWS_HEADER_RE = re.compile(r"^comp-find \[aws", re.M)
 
 
 def _aws_exercisable() -> bool:
-    """MOVE-2-style precondition, not an assumption: the CLI file and the default Kuzu DB path
-    must both exist on THIS box, or --corpus aws cannot be exercised for real here."""
-    cli = _ws() / "infra" / "aws" / "globgrph" / "kuzu_cli.py"
-    if not cli.is_file():
-        return False
+    """MOVE-2-style precondition, not an assumption. TO-CG-D-7 (R7) retired the local Kuzu DB, so
+    what must exist for `--corpus aws` to be exercisable is no longer a CLI file plus a DB
+    directory on this box: it is the SERVED graph answering. Probed with the service's own health
+    route through the one thin client. An unreachable service SKIPs these arms (they measure the
+    budget contract, not the estate's connectivity) -- it never renders as a pass."""
     try:
-        sys.path.insert(0, str(cli.parent))
-        import kuzu_cli  # noqa: PLC0415
-        return os.path.exists(kuzu_cli.DEFAULT_DB_PATH)
-    except Exception:
+        sys.path.insert(0, str(_ws() / "infra" / "aws" / "globgrph"))
+        import projection_client  # noqa: PLC0415
+
+        return bool(projection_client.health().get("vintage"))
+    except Exception:   # noqa: BLE001
         return False
 
 
@@ -186,7 +180,8 @@ def _run_battery() -> None:
     # .tools/_compbudget carrier (--budget / env COMP_BUDGET_S / default 90s), its two terminal
     # tokens (WITHIN BUDGET / BUDGET REACHED), and the per-node_type unit loop.
     if not _aws_exercisable():
-        skip = "SKIP: no local Kuzu CLI/DB on this box -- --corpus aws not exercisable here"
+        skip = ("SKIP: the served cloud graph did not answer here -- --corpus aws not "
+                "exercisable (this is a CONNECTIVITY skip, never a pass)")
         for tid in ("F-UNSCOPED-BUDGET-REACHED", "F2-CLEAN-EMPTY-DISCRIMINATOR",
                     "F3-SCOPED-DISCRIMINATOR", "G-MUTANT-NO-BUDGET-REACHED"):
             rec(tid, None, skip)
@@ -337,49 +332,47 @@ def _g5_no_orphan_check(module_dir: str, module_name: str) -> tuple[bool, str]:
 
 
 def _g5_arms() -> None:
-    gdir = str(_globgrph_dir())
-    try:
-        sys.path.insert(0, gdir)
-        canon = importlib.import_module("_canonical")
-    except Exception as ex:
-        skip = "SKIP: infra/aws/globgrph/_canonical.py not importable here (%s)" % ex
-        for tid in ("G5-AC1-NO-ORPHAN", "G5-AC1-MUTANT-STILL-ORPHANS", "G5-AC2-SERVE-STALE-IMMEDIATELY"):
-            rec(tid, None, skip)
+    """G5, REPOINTED by TO-CG-D-7 (R7). The original three arms guarded an ORPHANED GRANDCHILD:
+    `comp-find --corpus aws` shelled out to kuzu_cli.py, which itself spawned
+    kuzu_incremental_refresh.py, so a TerminateProcess on the direct child left the grandchild
+    running (NFRA_COMPEFFICACY-S6), and `_canonical._run_child_supervised` was the fix.
+
+    THE CLASS IS NOW REMOVED BY CONSTRUCTION, NOT BY SUPERVISION: the aws corpus is one in-process
+    HTTPS call through projection_client. There is no child, so there is no grandchild to orphan,
+    and no mutex a bounded client could enter. That is a STRONGER property than the supervised
+    spawn -- and it is the one worth pinning, because a future re-introduction of a subprocess on
+    this path would silently restore the whole class.
+
+    The arm therefore reads the tool's OWN aws-corpus source and asserts it spawns nothing. It
+    carries a POSITIVE CONTROL on the same predicate over a source that DOES spawn, so a zero here
+    is a measured absence rather than a broken matcher."""
+    import re as _re   # noqa: PLC0415
+
+    src = _tool().read_text(encoding="utf-8", errors="replace")
+    start = src.find("def _aws_corpus(")
+    if start < 0:
+        rec("G5-AWS-PATH-SPAWNS-NOTHING", False,
+            "the _aws_corpus function is absent from the tool under test -- fixture failure")
+        rec("G5-SPAWN-DETECTOR-POSITIVE-CONTROL", False, "not evaluated: no _aws_corpus to scan")
         return
+    end = src.find("\ndef ", start + 1)
+    body = src[start:end if end > 0 else len(src)]
+    spawn_rx = _re.compile(r"subprocess\.(run|Popen|call|check_output)|os\.(spawn|system)")
+    found = spawn_rx.findall(body)
+    rec("G5-AWS-PATH-SPAWNS-NOTHING", not found,
+        "spawn calls in _aws_corpus: %d (%s) over %d lines scanned"
+        % (len(found), found, body.count(chr(10))))
 
-    # G5-AC1 -- production: no orphan survives a killed budgeted client.
-    ok, detail = _g5_no_orphan_check(gdir, "_canonical")
-    rec("G5-AC1-NO-ORPHAN", ok, detail)
-
-    # G5-AC1 mutant, red-first: an UNSUPERVISED spawn (the pre-fix shape) must show the orphan
-    # SURVIVING -- proving the arm above can fail, not just always pass.
-    with tempfile.TemporaryDirectory() as md:
-        Path(os.path.join(md, "_g5_mutant_unsupervised.py")).write_text(
-            _G5_MUTANT_UNSUPERVISED_SRC, encoding="utf-8")
-        mok, mdetail = _g5_no_orphan_check(md, "_g5_mutant_unsupervised")
-        # mok is the "no orphan" reading; under the mutant it must read False (orphan SURVIVED).
-        rec("G5-AC1-MUTANT-STILL-ORPHANS", mok is False, mdetail)
-
-    # G5-AC2 -- a live peer's lock must never be waited on by a wait_for_peer=False caller. The
-    # db_path need not exist: needs_refresh() reads a SIBLING manifest file, absent here by
-    # construction, so it always reads "needs refresh" -- no real Kuzu DB required for this check.
-    with tempfile.TemporaryDirectory() as d:
-        db_path = os.path.join(d, "kuzu_nessie_db")
-        lock_path = db_path.rstrip("/\\") + ".rebuild.lock"
-        os.mkdir(lock_path)   # a FRESH lock -- simulates a live peer (far younger than ORPHAN_LOCK_S)
-        try:
-            t0 = time.time()
-            refreshed, reason = canon.ensure_fresh(db_path, wait_for_peer=False)
-            elapsed = time.time() - t0
-            ok2 = (refreshed is False and reason.startswith("STALE") and elapsed < 10.0)
-            rec("G5-AC2-SERVE-STALE-IMMEDIATELY", ok2,
-                "refreshed=%s reason=%r elapsed=%.2fs (must be << MUTEX_WAIT_S=%.0fs)"
-                % (refreshed, reason, elapsed, canon.MUTEX_WAIT_S))
-        finally:
-            try:
-                os.rmdir(lock_path)
-            except OSError:
-                pass
+    # POSITIVE CONTROL on the SAME predicate and the SAME verb: this battery's own supervisor
+    # helper DOES spawn, so the detector must return non-zero on it. Without this, a matcher that
+    # can never fire reads identically to a genuine absence.
+    own = Path(__file__).read_text(encoding="utf-8", errors="replace")
+    ctrl_start = own.find("def _g5_no_orphan_check(")
+    ctrl_body = own[ctrl_start:own.find("\ndef ", ctrl_start + 1)] if ctrl_start >= 0 else ""
+    ctrl = spawn_rx.findall(ctrl_body)
+    rec("G5-SPAWN-DETECTOR-POSITIVE-CONTROL", bool(ctrl),
+        "control found %d spawn call(s) %s in this file's own _g5_no_orphan_check"
+        % (len(ctrl), ctrl))
 
 
 def _report() -> int:

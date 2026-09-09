@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "task_order_id": "1.0.0_SA_CTO~Y-2026-09-05-preq-04-merits-adjudication",
+  "issued_to": "4.0.0_SA_CRO~Y",
+  "status": "complete",
+  "completed_at_utc": "2026-09-05T20:12:33Z",
+  "final_disposition": "AMEND",
+  "disposition_stated_verbatim": "AMEND -- CLOUDOPS READINESS PREDICATE ONLY.",
+  "criteria": {
+    "C1": {
+      "status": "PASS",
+      "evidence": {
+        "docs_commit": "cafa9f2422c818053a6e03edec70b910556179f8",
+        "proposal_path": "C:/Users/AndrewBerman/Downloads/docs_abcdeg/plan/integration_proposals/PHASE_3_CONTINUATION_AUTHORITY_AND_PREQ_04_NEXT_MOTION_20260905.md",
+        "proposal_bytes": 4683,
+        "proposal_sha256": "534F0C41111C9B7F579BABEE4DF06798B62ADAD35FFB4A0D4B1C7BD10A8FA22F",
+        "authority_path": "C:/Users/AndrewBerman/Downloads/docs_abcdeg/plan/integration_proposals/ANDREW_DIRECT_CTO_CRO_GOVERNANCE_AND_CLOUDOPS_CONTINUATION_20260905.md"
+      }
+    },
+    "C2": {
+      "status": "PASS",
+      "evidence": "The committed verbatim Andrew-direct ruling authorizes CTO/CRO governance adjudication, reserves CVO for a genuine impasse, and is carried by the exact CTO-issued task order."
+    },
+    "C3": {
+      "status": "PASS_WITH_NARROWING",
+      "evidence": "All seven steps were reviewed. The read-only API/action ceiling passed. The CloudOps readiness predicate was amended from a Codex-only oracle to the measured Claude-runtime predicate."
+    },
+    "C4": {
+      "status": "PASS",
+      "evidence": {
+        "base_verdict_path": "C:/Users/AndrewBerman/Downloads/docs_abcdeg/plan/integration_proposals/CROY_VERDICT_PHASE_3_PREQ_04_READ_ONLY_DISCOVERY_CAFA9F2_20260905.md",
+        "base_verdict_bytes": 4123,
+        "base_verdict_sha256": "AD13EC95680BE468DF1832DDEFEC4D0A294253EE3AA6B6995F0BAAD64A4C6E94",
+        "amendment_path": "C:/Users/AndrewBerman/Downloads/docs_abcdeg/plan/integration_proposals/CROY_AMEND_PHASE_3_PREQ_04_CLOUDOPS_CLAUDE_READINESS_20260905.md",
+        "amendment_bytes": 3036,
+        "amendment_sha256": "D585F589C394058BDA50A77534E8C47105B33E024183245582FA4ABE88B439E2"
+      }
+    },
+    "C5": {
+      "status": "PASS",
+      "evidence": "No AWS mutation, CodeBuild start, IAM change, secret-value read, final project selection, product mutation, deployment, or push is authorized. Runtime-family readiness must be re-measured immediately before dispatch."
+    }
+  },
+  "corrected_verdict_validation": {
+    "fabric_generation": 232,
+    "fabric_head": "2a6ac8182beefd1acefe6e0815e9597b7c7e6bdb5d3bd3964b9c6eb0b56dc766",
+    "verifier_exit": 0,
+    "recorded_artifacts": 159,
+    "present_artifacts": 159,
+    "referenced_verdict_records": 32,
+    "backup_entries_verified": 160,
+    "backup_entries_total": 160
+  },
+  "cloudops_runtime_evidence": {
+    "serial": "0.7.0_AE_CloudOps~Y",
+    "runtime_family": "claude",
+    "liveness_pid": 41524,
+    "last_seen": "2026-09-05T20:12:07.195109+00:00",
+    "registered_process": "python org/mcp/server.py",
+    "monitor_pids": [23472, 27632, 42576],
+    "monitor_command": "inbox-watch.sh 0.7.0_AE_CloudOps~Y stream",
+    "freshness_must_be_remeasured_at_dispatch": true
+  },
+  "non_claims": [
+    "No AWS call was made.",
+    "No CloudOps task was issued by CRO.",
+    "No AWS or product mutation was authorized.",
+    "No CodeBuild execution or final project selection was authorized.",
+    "No CVO tie-break was needed."
+  ]
+}

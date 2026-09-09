@@ -11,11 +11,63 @@ CONSTANTS (Andrew-direct 2026-07-28):
 """
 import collections
 import json
+import os
+import sys
 
 import yaml
 
 PROFILE = 'org/tier1_exec/3.0.0_SA_CVO/deliverables/tool_profile.json'
 OUT = '.tools/TOOL_CLASSIFICATION.yaml'
+COVERAGE_MAP = 'org/modules/graph/comp-coverage-map.yaml'
+MANIFEST = 'org/modules/graph/graph-call-manifest.yaml'
+
+# ---- THE POPULATION COMES FROM THE AUTHORITY, NEVER FROM THIS FILE'S OWN INPUT ------------------
+# NFRA_CLDGRPH CG-s-17 pass 2 (2026-09-09, the issuer's amendment). PROFILE above is an ATTRIBUTE
+# source and was ALSO being used as the POPULATION -- exactly the "peer file that enumerates its own
+# tool list becomes a 5th copy of the population and drifts" that CTO ruling 20260728T212335Z
+# forbids, with org/modules/graph/comp-coverage-map.yaml named as the SOLE authority.
+# MEASURED CONSEQUENCE, not a tidiness argument: the profile still lists retired tools, they landed
+# in TOOL_CLASSIFICATION.yaml, and gen_tool_registry.py -- which builds its master FROM this file
+# and asserts parity against the authority -- REFUSED with PopulationDivergence, so TOOL_MASTER.yaml
+# and .tools/tool_index.py could not be regenerated AT ALL. A stale help text in a generated index
+# then has no repair path, which is how an instruction plane outlives the thing it points at.
+#
+# THE AUTHORITY IS READ THROUGH gen_tool_registry's OWN READER, IMPORTED, NEVER COPIED. A second
+# implementation of population_from_map() here would be a second reader of one population -- the
+# very defect this fix removes, one file over. It FAILS CLOSED AND LOUD if the import or the read
+# does not work: a local fallback copy IS the drift.
+
+
+def authority():
+    """(population, norm_tool) from the SOLE authority, via the registry generator's own reader."""
+    try:
+        import gen_tool_registry as reg
+    except ImportError:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        try:
+            import gen_tool_registry as reg
+        except ImportError as exc:
+            raise SystemExit(
+                'BLOCKED: .tools/gen_tool_registry.py is not importable (%s), so the population\n'
+                '  authority cannot be read the way its own consumer reads it. This generator does\n'
+                '  NOT carry a fallback copy of population_from_map() on purpose: a second reader\n'
+                '  of one population is the drift (CTO ruling 20260728T212335Z).' % exc)
+    pop = reg.population_from_map()
+    if not pop:
+        raise SystemExit(
+            'BLOCKED: the population authority %s yielded 0 tool(s). An empty authority would\n'
+            '  EXCLUDE EVERY profile row and write an empty classification -- a vacuous pass that\n'
+            '  reads as clean. Refusing.' % COVERAGE_MAP)
+    return pop, reg.norm_tool
+
+
+def declared_retired():
+    """The manifest's closed set of retired comp-* NAMES -- read, never hardcoded here."""
+    if not os.path.isfile(MANIFEST):
+        return set()
+    with open(MANIFEST, encoding='utf-8', errors='replace') as f:
+        doc = yaml.safe_load(f) or {}
+    return set((doc.get('retired_aliases') or {}).keys())
 
 # HOW THE DENOMINATOR IS CONSTRUCTED -- the archetype. Replaces a bounded/unbounded boolean that
 # measured VACUOUS (True for 89/89): a field that cannot vary is not a classification.
@@ -65,7 +117,8 @@ PRIM_MAP = {
                   'POSITIVE'),
     'GRAPH-DB': ('PERSISTED', True, True,
                  'the derived globgrph (kuzu) nodes and edges',
-                 ['anything not yet ingested into the graph', 'a scratch --db-path is a frozen vintage'],
+                 ['anything not yet ingested into the graph',
+                  'anything the SERVED projection has not picked up yet -- read the VINTAGE line'],
                  'POSITIVE'),
     'REGISTRY': ('PERSISTED', False, True,
                  'an authored ledger (coverage-map / manifest / project JSON)',
@@ -119,9 +172,42 @@ def classify(prims):
 
 
 rows = json.load(open(PROFILE, encoding='utf-8'))
+
+# THE SPLIT, PRINTED BEFORE ANYTHING IS WRITTEN. A profile row whose tool is not in the authority is
+# EXCLUDED and NAMED -- never silently dropped, because a population that shrinks quietly is the
+# failure this whole chain is built against. An excluded name that is ALSO a declared retired alias
+# is expected bookkeeping; one that is NOT is a finding, and it is printed as such rather than
+# absorbed into the exclusion count.
+AUTHORITY, NORM = authority()
+RETIRED_NAMES = declared_retired()
+kept, excluded, undeclared = [], [], []
+for r in rows:
+    if NORM(str(r['tool'])) in AUTHORITY:
+        kept.append(r)
+    else:
+        excluded.append(str(r['tool']))
+        if NORM(str(r['tool'])) not in RETIRED_NAMES:
+            undeclared.append(str(r['tool']))
+orphan_authority = sorted(AUTHORITY - {NORM(str(r['tool'])) for r in rows})
+
+print('POPULATION AUTHORITY: %s -- %d tool(s) (read via gen_tool_registry.population_from_map)'
+      % (COVERAGE_MAP, len(AUTHORITY)))
+print('PROFILE (attributes only): %s -- %d row(s)' % (PROFILE, len(rows)))
+print('EXCLUDED_NOT_IN_AUTHORITY=%d of %d: %s'
+      % (len(excluded), len(rows), ', '.join(sorted(excluded)) or 'none'))
+print('  of those, DECLARED RETIRED ALIASES (expected)=%d of %d: %s'
+      % (len(excluded) - len(undeclared), len(excluded),
+         ', '.join(sorted(set(excluded) - set(undeclared))) or 'none'))
+print('  NOT DECLARED RETIRED -- A FINDING, NOT AN EXCLUSION=%d of %d: %s'
+      % (len(undeclared), len(excluded), ', '.join(sorted(undeclared)) or 'none'))
+print('AUTHORITY_WITHOUT_A_PROFILE_ROW=%d of %d: %s'
+      % (len(orphan_authority), len(AUTHORITY), ', '.join(orphan_authority) or 'none'))
+print('  (these are NOT dropped: gen_tool_registry emits each one with an explicit'
+      ' UNCLASSIFIED marker, per CTO ruling 212335Z "no silent skip".)')
+
 tools = {}
 unclassified = []
-for r in rows:
+for r in kept:
     c = classify(r['primitives'])
     if c is None:
         unclassified.append(r['tool'])
@@ -134,6 +220,15 @@ doc = {
     'schema_version': '0.1',
     'authority': 'Andrew-direct 2026-07-28 -- standardized constants for tool classification',
     'generated_by': '.tools/gen_tool_classification.py (re-runnable; derived from source, not asserted)',
+    'population_authority':
+        'org/modules/graph/comp-coverage-map.yaml -- tools[] + meta_tools[] (CTO ruling '
+        '20260728T212335Z, the SOLE population authority). READ through '
+        'gen_tool_registry.population_from_map(), never re-implemented here. '
+        'org/tier1_exec/3.0.0_SA_CVO/deliverables/tool_profile.json is the ATTRIBUTE source ONLY: a '
+        'profile row whose tool is absent from the authority is EXCLUDED and NAMED on stdout, and '
+        'an excluded name that is not a declared retired alias is reported as a finding. Before '
+        'NFRA_CLDGRPH CG-s-17 (2026-09-09) the profile was also the population, and the four '
+        'retired names it still carries made gen_tool_registry refuse outright.',
     'source_of_truth_note':
         'This file classifies HOW a tool retrieves and what it covers. Tool INVENTORY '
         '(which tools exist + their one home) remains org/modules/graph/comp-coverage-map.yaml '
@@ -194,6 +289,11 @@ doc = {
         'classified': len(tools),
         'unclassified': len(unclassified),
         'unclassified_tools': unclassified,
+        'profile_rows': len(rows),
+        'excluded_not_in_authority': len(excluded),
+        'excluded_not_in_authority_tools': sorted(excluded),
+        'excluded_not_declared_retired': sorted(undeclared),
+        'authority_without_a_profile_row': orphan_authority,
     },
     'tools': dict(sorted(tools.items())),
 }

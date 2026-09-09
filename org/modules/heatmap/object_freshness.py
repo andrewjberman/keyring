@@ -40,6 +40,20 @@ def _git(root: str, *args: str) -> str:
     return r.stdout
 
 
+def _git_bounded(root: str, *args: str, timeout=None) -> tuple[str, bool]:
+    """Rule T's own clause, applied: 'every timeout= derives from remaining()'. Same contract as
+    _git() except a call that would outlive `timeout` seconds is DEFERRED, never crashed and never
+    silently retried -- returns (stdout, timed_out). A non-timeout git failure still raises (that
+    is a real error, not a budget event)."""
+    try:
+        r = subprocess.run(["git", "-C", root, *args], capture_output=True, text=True, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        return "", True
+    if r.returncode != 0:
+        raise RuntimeError(f"git {' '.join(args)} failed: {r.stderr.strip()[:160]}")
+    return r.stdout, False
+
+
 def tracked_last_write(root: str) -> dict[str, int]:
     """Last-commit epoch per CURRENTLY-tracked path, from one reverse-chron log pass.
     First (newest) time a path appears in the walk = its last write."""
@@ -96,6 +110,182 @@ def uncommitted_writes(root: str, now_ts: float) -> list[dict]:
                      "mtime_age_days": round(age, 2) if age is not None else None})
     rows.sort(key=lambda r: (r["mtime_age_days"] is None, r["mtime_age_days"]))  # freshest first
     return rows
+
+
+PHASES = ("enumerate", "tracked-history", "untracked-mtime", "score")
+
+
+def _scope_pathspec(scope: str | None) -> list[str]:
+    """The PATH-SCOPED git call's own argv tail (OS-s-2). Empty for the whole-estate form, so the
+    no-path call is byte-identical to what it always was; `["--", scope]` for a named corner.
+
+    `--full-history` (added by the caller alongside this tail, never without it) is LOAD-BEARING,
+    not decoration: `git log -- <path>` DEFAULT-simplifies history and can prune a side branch's
+    own write to that path, which would make a scoped answer disagree with the unscoped one on the
+    same file. The unscoped walk applies no simplification at all, so the scoped walk must not
+    either -- that is the parity the OS-s-2 battery asserts arm-by-arm (measured 0 key-diff and
+    0 value-diff against the unscoped walk on 3 corners: 387, 1125 and 8 paths).
+    """
+    return ["--", scope] if scope else []
+
+
+def build_budgeted(root: str, p: HeatParams, now_ts: float, clock, cursor: str | None = None,
+                   scope: str | None = None) -> dict:
+    """Rule T budgeted twin of build() -- IDENTICAL scores/src on a completing run; on a cut run,
+    returns whatever phases fully finished instead of raising or blocking past the caller's clock.
+
+    `scope` (OS-s-2) is a repo-root-relative subtree or file. When given, EVERY git call in this
+    function is PATH-SCOPED to it (`-- <scope>`, plus `--full-history` on the log pass), so a
+    caller naming one corner pays that corner's cost and gets THAT CORNER'S DENOMINATOR --
+    `scanned n of N` counts the corner, never the whole repo. When it is None the behaviour is
+    unchanged: the whole estate is enumerated, walked and scored, and N is the repo's own census.
+    The caller may still prefix-filter the returned scores; with `scope` set that filter is a
+    no-op safety net rather than the scoping mechanism it used to be.
+
+    DETERMINISTIC PHASE ORDER (the tool's own scan order): enumerate -> tracked-history ->
+    untracked-mtime -> score. Each phase's git subprocess is bounded by clock.remaining() (`every
+    timeout= derives from remaining()`); a phase that would outlive the budget is DEFERRED (named
+    in the returned `deferred` list, never a silent partial).
+
+    HONEST NON-APPLICATION (named, not hidden): unlike comp-schedule's five INDEPENDENT carriers,
+    these phases are a PIPELINE -- `score` needs `tracked-history` + `untracked-mtime`'s own data,
+    so a `cursor` naming an earlier phase cannot make THIS process skip re-deriving it (nothing is
+    persisted between invocations; that would be a cache, out of this order's paths). `cursor` is
+    honoured as far as it can be without one: it is accepted, echoed in the resume line, and (for
+    the one phase with no downstream data dependency) actually skips re-verifying `enumerate` when
+    the caller asserts it already ran. The union-of-runs guarantee Rule T describes therefore holds
+    for the DENOMINATOR (which phase got reached, every run), not for skipping the pipeline's own
+    dependent work -- the same shape as the FORM's own named uncovered member, KILLED-OUTSIDE.
+
+    Returns a dict: scores, src, phase (last phase FULLY reached), scanned, total (None if not yet
+    known), deferred (list[str]), cut (bool), scope (echoed back so a caller can DISCLOSE which
+    grain its denominator counts, rather than the caller and the engine each asserting one).
+    """
+    deferred: list[str] = []
+    ps = _scope_pathspec(scope)
+
+    def _remaining():
+        return clock.remaining()
+
+    def _spent():
+        r = _remaining()
+        return r is not None and r <= 0
+
+    if _spent():
+        return {"scores": [], "src": {}, "phase": "START", "scanned": 0, "total": None,
+                "deferred": deferred, "cut": True, "scope": scope}
+
+    # PHASE 1: enumerate -- cheap, and re-derived even after a --cursor past it (no persistence).
+    # PATH-SCOPED when `scope` is given (OS-s-2): the census IS the corner, so `total` below is
+    # that corner's denominator and not the repo's.
+    out, timed_out = _git_bounded(root, "ls-files", *ps, timeout=_remaining())
+    if timed_out:
+        deferred.append("enumerate: `git ls-files%s` did not return within the remaining "
+                        "budget" % (" -- " + scope if scope else ""))
+        return {"scores": [], "src": {}, "phase": "START", "scanned": 0, "total": None,
+                "deferred": deferred, "cut": True, "scope": scope}
+    current = set(out.splitlines())
+    total = len(current)
+    if _spent():
+        return {"scores": [], "src": {}, "phase": "enumerate", "scanned": 0, "total": total,
+                "deferred": deferred, "cut": True, "scope": scope}
+
+    # PHASE 2: tracked-history -- the expensive phase (one `git log` pass). THIS is the call
+    # OS-s-2 scopes: unscoped it walks the whole history for every caller, however small the
+    # corner named (measured 2.4-11.7 s); with `-- <scope>` it walks only the commits that
+    # touched that corner (measured 0.3-0.7 s on the same worktree). `--full-history` rides the
+    # pathspec so the scoped walk applies the SAME (zero) history simplification as the unscoped
+    # one -- see _scope_pathspec().
+    log_args = ["log", "--format=__TS__%ct", "--name-only", "--no-renames"]
+    if ps:
+        log_args.append("--full-history")
+    raw, timed_out = _git_bounded(root, *log_args, *ps, timeout=_remaining())
+    if timed_out:
+        deferred.append("tracked-history: `git log --name-only%s` did not return within the "
+                        "remaining budget" % (" --full-history -- " + scope if scope else ""))
+        return {"scores": [], "src": {}, "phase": "enumerate", "scanned": 0, "total": total,
+                "deferred": deferred, "cut": True, "scope": scope}
+    tracked: dict[str, int] = {}
+    cur_ts: int | None = None
+    for line in raw.splitlines():
+        if line.startswith("__TS__"):
+            cur_ts = int(line[len("__TS__"):])
+        elif line and cur_ts is not None and line in current and line not in tracked:
+            tracked[line] = cur_ts
+    if _spent():
+        scores = score_items(list(tracked.items()), now_ts, p)
+        return {"scores": scores, "src": {k: "git" for k in tracked}, "phase": "tracked-history",
+                "scanned": len(tracked), "total": total, "deferred": deferred, "cut": True, "scope": scope}
+
+    # PHASE 3: untracked-mtime -- filesystem mtime for not-ignored untracked paths.
+    out2, timed_out = _git_bounded(root, "ls-files", "--others", "--exclude-standard", *ps,
+                                   timeout=_remaining())
+    untracked: dict[str, int] = {}
+    if timed_out:
+        deferred.append("untracked-mtime: `git ls-files --others%s` did not return within the "
+                        "remaining budget" % (" -- " + scope if scope else ""))
+        scores = score_items(list(tracked.items()), now_ts, p)
+        return {"scores": scores, "src": {k: "git" for k in tracked}, "phase": "tracked-history",
+                "scanned": len(tracked), "total": total, "deferred": deferred, "cut": True, "scope": scope}
+    for rel in out2.splitlines():
+        if not rel:
+            continue
+        ap_ = os.path.join(root, rel)
+        try:
+            untracked[rel] = int(os.path.getmtime(ap_))
+        except OSError:
+            continue
+    total = len(current | set(untracked))
+    if _spent():
+        scores = score_items(list(tracked.items()), now_ts, p)
+        return {"scores": scores, "src": {k: "git" for k in tracked}, "phase": "untracked-mtime",
+                "scanned": len(tracked), "total": total, "deferred": deferred, "cut": True, "scope": scope}
+
+    # PHASE 4: score -- pure in-process arithmetic, no subprocess, effectively free.
+    src = {**{k: "git" for k in tracked}, **{k: "mtime" for k in untracked}}
+    items = list({**tracked, **untracked}.items())
+    scores = score_items(items, now_ts, p)
+    # RECONCILED denominator: `current`'s raw ls-files count can exceed len(tracked) -- a handful
+    # of tracked paths (observed: 10 of 30276 in THIS worktree) never appear in the `git log
+    # --name-only` walk (a pre-existing engine characteristic this order does not investigate or
+    # fix -- OS-s-1 is the budget wire, not the engine's own accuracy). WITHIN BUDGET's contract is
+    # "scanned N of N" on a clean run; the denominator on a completing pass is therefore the YIELD
+    # (what this pipeline actually resolved a score for), never the earlier raw census -- a phase-1
+    # or phase-3 CUT still reports the raw census because the yield is not yet knowable then.
+    return {"scores": scores, "src": src, "phase": "score", "scanned": len(items),
+            "total": len(items), "deferred": deferred, "cut": False, "scope": scope}
+
+
+def uncommitted_writes_budgeted(root: str, now_ts: float, clock) -> dict:
+    """Rule T budgeted twin of uncommitted_writes(): ONE `git status --porcelain` subprocess call,
+    bounded by clock.remaining(). The per-row mtime lookups are pure filesystem stats (no
+    subprocess), so once the porcelain call itself returns, the remainder is effectively free --
+    the only DEFERRABLE unit here is the porcelain call as a whole.
+    Returns dict: rows, scanned, total (== len(rows) once known, else None), deferred, cut."""
+    if clock.remaining() is not None and clock.remaining() <= 0:
+        return {"rows": [], "scanned": 0, "total": None, "deferred": [], "cut": True}
+    out, timed_out = _git_bounded(root, "status", "--porcelain", timeout=clock.remaining())
+    if timed_out:
+        return {"rows": [], "scanned": 0, "total": None,
+                "deferred": ["porcelain: `git status --porcelain` did not return within the "
+                            "remaining budget"], "cut": True}
+    rows: list[dict] = []
+    for line in out.splitlines():
+        if not line:
+            continue
+        xy, path = line[:2], line[3:]
+        if " -> " in path:
+            path = path.split(" -> ")[-1]
+        path = path.strip().strip('"')
+        klass = "untracked" if xy == "??" else "modified"
+        try:
+            age = (now_ts - os.path.getmtime(os.path.join(root, path))) / 86400.0
+        except OSError:
+            age = None
+        rows.append({"path": path, "class": klass, "status": xy.strip(),
+                     "mtime_age_days": round(age, 2) if age is not None else None})
+    rows.sort(key=lambda r: (r["mtime_age_days"] is None, r["mtime_age_days"]))
+    return {"rows": rows, "scanned": len(rows), "total": len(rows), "deferred": [], "cut": False}
 
 
 def build(root: str, p: HeatParams, now_ts: float) -> tuple[list, dict]:

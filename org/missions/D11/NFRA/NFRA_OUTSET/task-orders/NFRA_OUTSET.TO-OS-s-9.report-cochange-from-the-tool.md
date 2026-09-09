@@ -2,10 +2,12 @@
 
 <to_id>NFRA_OUTSET.TO-OS-s-9</to_id>
 <project>NFRA_OUTSET</project>
-<issued_to>0.9.0_WK_NFRA_OUTSET~1</issued_to>
+<issued_to>0.9.0_WK_NFRA_OUTSET~2</issued_to>
+⛔ **RE-ADDRESSED TO `~2` ON BOTH LIMBS BEFORE SEATING.** A mis-addressed order is refused on TWO independent limbs -- `ADHC_OWNPTH.005` keys the grant on `<issued_to>`, and clause 4 keys it on the DELIVERABLES FOLDER NAME -- so amending only the first admits the assignee to a folder carrying another slot's serial (measured on OS-s-8 as `NFRA_OUTSET-W2-S4`, and on OS-s-15 as `W3-S6`, which also corrected this issuer's over-wide claim: only the TREE_DELIVERABLES limb refuses, since `task-orders/**` and the surprise channel are lane ANY and consult no serial). Seated on `~2` rather than `~1` because `OS-s-9`, `OS-s-11` and `OS-s-14` all write `estate_report_runner.py` and must therefore run SERIALLY on one slot, while `~1` holds `.tools/comp-heat` for `OS-s-16`.
+
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>pending -- GO paired at cut (the spawn IS the GO for a worker face; a seat order is dispatched by its issuance). Authority: PRD v0.1 @`7fb59f239b` RATIFIED on Andrew's "all approved" (FWD-1..FWD-8) @`26da5ec0fa`; decomposition v0.1 @`6f1655f376`; Andrew-direct at this terminal 2026-09-04 ~15:5xZ, VERBATIM: "youre clear, first write every single task order" then "proceed with internal fan out".</status>
+<status>complete -- flipped 2026-09-05 by `0.9.0_WK_NFRA_OUTSET~2` (the assignee, per this order's own <proof_of_spec> clause) AFTER the mechanical criterion was exercised PASS-by-output and the instance validated. O9-AC1 (mechanical): `python .tools/tests/test_os9_cochange_source.py` -> `=== test_os9_cochange_source: PASS (16/16) ===`, rc 0, and `python -m pytest -q` -> `1 passed`; 2 of 2 RED mutants EXECUTED and each breaks the arm it targets; regression `.tools/tests/test_os10_seam.py` 12/12 rc 0. O9-AC2 (judgment=true): evidence recorded, NO verdict written -- `3.0.0_SA_CVO` grades it at L9. `python .tools/proof-of-spec-check.py org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/NFRA_OUTSET.TO-OS-s-9.report-cochange-from-the-tool.proof_of_spec.json O9-AC1,O9-AC2` -> `VALID (rc=0)`; 4 of 4 artifacts resolved at pin, 2 CONTENT-resolved, 4 of 4 surprises resolve to a channel row. Rows filed: `NFRA_OUTSET-W2-S14`..`-W2-S17`, two of them ARMED and neither closed by this flip. ⛔ WHAT THIS COMPLETE DOES NOT MEAN, because the cell's premise did not survive contact: the second implementation is NOT retired, and it cannot be from inside this grant. There is no tool at this grain -- `_stratum_cochange` pairs RESOURCE/pipeline-chain labels while `.tools/comp-cochange` answers AGENT-TYPE co-movement (measured live: agent tags, 0 resource labels) -- so this cell took FWD-6's other branch: the stratum now READS the OS-s-10 seam artifact when one is published, and the host copy stays and DECLARES what it stands in for, in the rendered denominator on both of its exits. The seam branch is DORMANT until a resource-grain producer is registered in `org/modules/heatmap/outset_seam.py` (`NFRA_OUTSET-W2-S15`), which is outside this order's `<paths>`. Production bytes are unchanged: `ESTATE_OUTSET_SEAM_PREFIX` remains unset. Original issuance status follows. || pending -- GO paired at cut (the spawn IS the GO for a worker face; a seat order is dispatched by its issuance). Authority: PRD v0.1 @`7fb59f239b` RATIFIED on Andrew's "all approved" (FWD-1..FWD-8) @`26da5ec0fa`; decomposition v0.1 @`6f1655f376`; Andrew-direct at this terminal 2026-09-04 ~15:5xZ, VERBATIM: "youre clear, first write every single task order" then "proceed with internal fan out".</status>
 
 **Directive:** D11 · **Fabric:** laptop · **PRD:** `../prd/NFRA_OUTSET_PRD.md` v0.1 @`7fb59f239b` (s.7 row OS-s-9; s.4 the bar; s.6 the rulings) · **Decomp cell:** `OS-s-9` (`../decompositions/NFRA_OUTSET_DECOMP.md` v0.1 @`6f1655f376`) · **outcome_ref:** FWD-3, FWD-6 · **verb:** fix · **depends_on:** OS-s-10
 
@@ -17,7 +19,7 @@ OS-s-9 (PRD s.7): `_stratum_cochange` at infra/aws/ec2/estate-report-runner/esta
 
 ## DELIVERABLE
 
-`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/report-cochange-from-the-tool.result.md` -- the result document: what you measured, what you changed, each criterion's invocation and its output verbatim with rc and denominator, and any row you filed.
+`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/report-cochange-from-the-tool.result.md` -- the result document: what you measured, what you changed, each criterion's invocation and its output verbatim with rc and denominator, and any row you filed.
 
 ## ACCEPTANCE
 
@@ -44,7 +46,7 @@ One clause per criterion. A mechanical criterion carries exactly one `<invocatio
 <paths>
 infra/aws/ec2/estate-report-runner/estate_report_runner.py
 .tools/tests/
-org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/
+org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/
 org/missions/D11/NFRA/NFRA_OUTSET/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -62,7 +64,7 @@ lane: the `<paths>` block above IS the grant (RULING 1, Andrew 2026-09-04 ~04:58
 
 <proof_of_spec>
 Criterion ids minted at cut by the issuer: `O9-AC1`, `O9-AC2`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at
-`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-9.report-cochange-from-the-tool.proof_of_spec.json`
+`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/NFRA_OUTSET.TO-OS-s-9.report-cochange-from-the-tool.proof_of_spec.json`
 and validates it with `python .tools/proof-of-spec-check.py <instance> O9-AC1,O9-AC2` BEFORE the complete flip, which the assignee commits itself.
 ⛔ **A `complete` flip WITHDRAWS YOUR OWN GRANT** (the grant is read from a NON-TERMINAL order): flip only when every MECHANICAL criterion PASSES. A mis-flip is REOPENED by the issuer, never re-cut.
 </proof_of_spec>

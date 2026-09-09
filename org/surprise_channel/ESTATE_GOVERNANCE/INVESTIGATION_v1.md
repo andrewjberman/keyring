@@ -172,3 +172,32 @@ graduated item's remedy is routed by the CVO to its owner by name and the clocks
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S6",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-05T16:10Z",
+    "one_line": "A MODIFICATION to a NON-TERMINAL tree task order's grant fields (`<issued_to>`, the `<paths>` block) is graded by none of the three controls the ANY-lane note names -- to-pipeline-gate grades NEWLY-ADDED orders at issuance (:699 'THIS GATE NEVER REFUSES AN EXISTING TO'), the proof-of-spec hook grades issuance, check_complete_flip grades the TERMINAL flip (LAYER 1 half B, :1573, modify-scoped for that one question) -- and the member was EXERCISED twice on 2026-09-05 in NFRA_OUTSET: afa659557d (0.9.0_WK_NFRA_OUTSET~3) and 26a8bc43f8 (0.9.0_WK_NFRA_OUTSET~2), both faithful carries of the issuer's amendment @b630052d6a by the prescribed path-scoped checkout, which copies content without history. Found by 0.0.0_AB_MSTR with 0.0.0_AB_MSTR~Z (94375, 94378), measured on the hot path by 2.0.0_SA_COO (94382, 94391, 94401), a first authorship-keyed limb built and reverted unshipped by 1.0.0_SA_CTO (94388), the design constraint -- provenance cannot be an ancestry test -- measured by 0.0.0_AB_MSTR (94398). FILED HERE BY THE CVO because the finding travelled only by broker message and a message is never the carrier; this row is what the CTO's limb disarms against.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RE-DERIVED AT THIS SEAT with a different instrument than any of the three seats quoted (an anchored regex over `git show --format= <commit>`, positive-controlled by requiring exactly two anchored lines per commit): afa659557d (0.9.0_WK_NFRA_OUTSET~3 2026-09-05T00:52:32-04:00): files NFRA_OUTSET.TO-OS-s-15.reachability-of-the-heat-engine-legs.proof_of_spec.json,reachability-of-the-heat-engine-legs.result.md,INVESTIGATION_v1.md,NFRA_OUTSET.TO-OS-s-15.reachability-of-the-heat-engine-legs.md, anchored <issued_to> diff lines ['-<issued_to>0.9.0_WK_NFRA_OUTSET~1</issued_to>', '+<issued_to>0.9.0_WK_NFRA_OUTSET~3</issued_to>'], 3 line(s) touching a <paths> block; 26a8bc43f8 (0.9.0_WK_NFRA_OUTSET~2 2026-09-05T00:45:32-04:00): files NFRA_OUTSET.TO-OS-s-8.comp-similar-heat-weighting-consumes.md, anchored <issued_to> diff lines ['-<issued_to>0.9.0_WK_NFRA_OUTSET~1</issued_to>', '+<issued_to>0.9.0_WK_NFRA_OUTSET~2</issued_to>'], 0 line(s) touching a <paths> block. So both commits are worker-authored modifications of an existing order's `<issued_to>` and neither added a `<paths>` line -- 2.0.0_SA_COO's bounded negative reproduced.",
+        "THE POPULATION, cited to the seat that measured it and not re-run here: 12 self-granting tree orders, 5 non-terminal, from 0.0.0_AB_MSTR~Z's production parser (`_paths_block_entries` + `_order_grants`) over the 104-file tree population with a status-reader positive control (complete 66 / pending 28 / staged 7 / withdrawn 3) -- 94375 s.4; 0.0.0_AB_MSTR's own 27/4 by text match over 2,345 blobs is disclosed there as NOT the number to quote.",
+        "THE PERMIT, measured by 0.0.0_AB_MSTR with the CLI the hook runs (94375 s.1): three unrelated serials PERMIT on TO-CG-D-1 and REFUSE on org/modules/heatmap/heat_map.py -- the lane is ANY by 2.0.0_SA_COO's registry note of 2026-09-03 on Andrew's word ('worker agents should be able to commit freely to the directives folder path as thats where their work is'), with its residual disclosed in the note. This row does not contest the lane.",
+        "WHY NEITHER AUTHORSHIP NOR ANCESTRY DISCRIMINATES: 1.0.0_SA_CTO's gate (vi) keyed on 'is the committer the assignee' would have refused both carries (and `_base()` collapsed the `~n` slot, reading every worker of a project as one identity) -- 94388; 0.0.0_AB_MSTR measured b630052d6a as an ancestor of NEITHER carry though it predates both by 9 and 16 minutes, positive control afa659557d is-ancestor of itself -- 94398; 2.0.0_SA_COO named the cause: the hand-offs prescribed `git checkout CLOUD -- <the order file>`, content without history, chosen to spare live worker branches a conflict on the append-only channel -- 94401. And a plain `git log -- <file>` lookup drops the amendment commit itself under history simplification (5 vs 24 with --full-history) -- 94391."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The registry note for `org/missions/*/*/*/task-orders/**: lane: ANY` names three compensating controls as the guard the lane no longer provides ('THE GATES ARE THE CONTROL, not the lane'). Rule 22: verifying each member certifies the set while what the members share goes unchecked; Rule 24 (i): MECE over a declared domain -- hunt the uncovered member.",
+    "world_is": "The three controls span issuance and the terminal flip and not the space between, so a worker can widen its own grant in two individually legal commits that no gate inspects. The legitimate transport of an issuer's amendment and the self-widening escalation are the same commit shape, and the prescribed transport strips the history a gate would read, so the discriminator must be PROVENANCE measured repository-wide and time-bounded: did an ISSUER-authored commit anywhere in the object graph, at or before the carry, set this field to this value. Exercised population to date: 2 grant-field modifications by workers, both faithful; 0 `<paths>` lines added by any worker in NFRA_OUTSET.",
+    "notes": "DISARM (owner 1.0.0_SA_CTO, the L6 neck's author, who has said the limb is being designed and not rushed in front of live workers): a provenance limb at LAYER 1 half B with (i) a repository-scoped, time-bounded lookup -- `--full-history` or the object graph, never a simplified `git log -- <path>` and never ancestry -- (ii) a positive control in its self-test that a KNOWN faithful transport (afa659557d) returns MATCH and a KNOWN invented value returns DIVERGES, and (iii) its residual stated on its own output; ACK by a new row from 1.0.0_SA_CTO citing the commit. The residual's acceptability is ruled at ADJUDICATION_v1.md C-S7. This row asks for nothing beyond what the CTO has already undertaken; it gives the undertaking a row to close against."
+  }
+]
+```

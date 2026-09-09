@@ -9,32 +9,25 @@ population_authority: org/modules/graph/comp-coverage-map.yaml -- tools[] + meta
   AN ATTRIBUTE STORE AND IS NEVER A POPULATION SOURCE (CTO ruling 20260728T212335Z). gen_tool_registry.py
   FAILS LOUD on any population divergence in either direction -- no silent skip.
 counts:
-  tools: 91
-  population_authority_count: 91
+  tools: 99
+  population_authority_count: 99
 tools:
-  comp-adapter-audit:
-    concern: portal ADAPTER field-threading audit vs LIVE S3 envelope (schema-drift / not-threaded / fallback-order)
-    canonical_call: comp-adapter-audit <adapter-fn> [--severity warn|error]
-    state: PERSISTED
-    derived: false
-    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
-    refresh_is_incremental: true
-    denominator_construction: ENUMERATED
-    knows_own_denominator: true
-    declares_denominator_in_output: false
-    control_established: POSITIVE
-    universe: an authored ledger (coverage-map / manifest / project JSON)
-    excludes:
-    - anything unregistered -- THE PHANTOM CLASS
-    cost_band: SUB_SECOND
-    primitives:
-    - REGISTRY
-    engines:
-    - org/modules/graph/adapter_audit_cli.py
-    - org/modules/graph/comp_log_auto.py
-    bounding:
-    - head slice
-    - json out
+  comp-adversary:
+    concern: null
+    canonical_call: null
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
   comp-arity:
     concern: null
     canonical_call: null
@@ -59,7 +52,7 @@ tools:
     - other accounts
     - resource types not queried
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     - non-Python lanes
     - runtime/dynamic construction
@@ -113,6 +106,22 @@ tools:
     bounding:
     - head slice
     - json out
+  comp-atomcheck:
+    concern: null
+    canonical_call: null
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
   comp-aws:
     concern: IAM-as-graph-nodes -- the live-AWS cloud-graph estate topology (17 node classes; the WRITE-PATH
       + cert; the LIVE half of the desired-vs-live overlay)
@@ -135,7 +144,7 @@ tools:
     - resource types not queried
     - candidates not enumerated for simulation
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     cost_band: MINUTES
     primitives:
@@ -167,7 +176,7 @@ tools:
     - other accounts
     - resource types not queried
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     cost_band: SECONDS
     primitives:
     - AWS-API
@@ -247,7 +256,7 @@ tools:
     - unlisted extensions
     - non-filesystem stores
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     cost_band: TENS_OF_SECONDS
     primitives:
@@ -274,7 +283,7 @@ tools:
     universe: the derived globgrph (kuzu) nodes and edges
     excludes:
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     cost_band: SECONDS
     primitives:
     - GRAPH-DB
@@ -309,6 +318,22 @@ tools:
     bounding:
     - head slice
     - json out
+  comp-claimlink:
+    concern: null
+    canonical_call: null
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
   comp-clobber:
     concern: output-key COLLISION -- 2+ DISTINCT producers writing ONE sink (an S3 key / DDB table); the
       two-writers-one-key clobber where a stale/deprecated producer overwrites a fresh one (the 2026-07-21
@@ -341,6 +366,22 @@ tools:
     bounding:
     - head slice
     - json out
+  comp-closure:
+    concern: null
+    canonical_call: null
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
   comp-cluster:
     concern: page-rooted PAGE->PANEL->DRILLDOWN cluster structure + per-cluster data-sources + cross-panel
       SHARES_SOURCE coupling (NFRA_TSGRAPH P2-3; read-side peer of comp-cache, generalizing cache-key
@@ -366,7 +407,7 @@ tools:
     universe: the derived globgrph (kuzu) nodes and edges
     excludes:
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     cost_band: SECONDS
     primitives:
@@ -377,6 +418,22 @@ tools:
     bounding:
     - head slice
     - json out
+  comp-cochange:
+    concern: null
+    canonical_call: null
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
   comp-constants:
     concern: marker/firm-CONSTANT drift vs canonical config (rep_id sweeps, FIRM_ID, AUA bounds; pre-commit
       gate)
@@ -444,7 +501,7 @@ tools:
     - submodule contents (gitlink only)
     - anything not in the repo
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     - catalogs not federated
     - in-VPC only; ~3-4 min/call
@@ -593,7 +650,7 @@ tools:
     - submodule contents (gitlink only)
     - anything not in the repo
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     cost_band: SECONDS
     primitives:
@@ -619,7 +676,7 @@ tools:
     universe: the derived globgrph (kuzu) nodes and edges
     excludes:
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     cost_band: SECONDS
     primitives:
@@ -658,6 +715,22 @@ tools:
     bounding:
     - head slice
     - json out
+  comp-directives:
+    concern: null
+    canonical_call: null
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
   comp-dispatch:
     concern: 'gold-dispatch orchestration-DAG -- which scripts run / in what order / under which chain-group-flag
       / past which gate (freshness/resume-skip/incremental); firm-parameterized (data/<firm>/scripts/gold).
@@ -710,7 +783,7 @@ tools:
     - other accounts
     - resource types not queried
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     - catalogs not federated
     - in-VPC only; ~3-4 min/call
@@ -796,7 +869,7 @@ tools:
     - other accounts
     - resource types not queried
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     cost_band: SECONDS
     primitives:
     - AWS-API
@@ -805,6 +878,22 @@ tools:
     bounding:
     - head slice
     - json out
+  comp-find:
+    concern: null
+    canonical_call: null
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
   comp-firmsep-sweep:
     concern: null
     canonical_call: comp-firmsep-sweep <firm> [--write-reach]
@@ -936,7 +1025,7 @@ tools:
     universe: the derived globgrph (kuzu) nodes and edges
     excludes:
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     cost_band: SECONDS
     primitives:
@@ -1046,7 +1135,7 @@ tools:
     - resource types not queried
     - candidates not enumerated for simulation
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     cost_band: MINUTES
     primitives:
@@ -1108,7 +1197,7 @@ tools:
     - other accounts
     - resource types not queried
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     cost_band: SECONDS
     primitives:
@@ -1184,7 +1273,7 @@ tools:
     universe: the derived globgrph (kuzu) nodes and edges
     excludes:
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     cost_band: SECONDS
     primitives:
@@ -1239,59 +1328,7 @@ tools:
     universe: the derived globgrph (kuzu) nodes and edges
     excludes:
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
-    - anything unregistered -- THE PHANTOM CLASS
-    cost_band: SECONDS
-    primitives:
-    - GRAPH-DB
-    - REGISTRY
-    engines:
-    - org/modules/graph/comp_log_auto.py
-    bounding:
-    - head slice
-    - json out
-  comp-kuzu-full:
-    concern: null
-    canonical_call: 'comp-kuzu-full [--json] [--limit N] "<Cypher>"   # forces a FULL kuzu_nessie_load
-      unconditionally, then serves the query'
-    state: PERSISTED
-    derived: true
-    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
-    refresh_is_incremental: true
-    denominator_construction: TRAVERSED
-    knows_own_denominator: false
-    declares_denominator_in_output: false
-    control_established: POSITIVE
-    universe: the derived globgrph (kuzu) nodes and edges
-    excludes:
-    - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
-    - anything unregistered -- THE PHANTOM CLASS
-    cost_band: SECONDS
-    primitives:
-    - GRAPH-DB
-    - REGISTRY
-    engines:
-    - org/modules/graph/comp_log_auto.py
-    bounding:
-    - head slice
-    - json out
-  comp-kuzu-inc:
-    concern: null
-    canonical_call: 'comp-kuzu-inc [--json] [--limit N] "<Cypher>"   # incremental-OR-serve-labeled-stale
-      (Andrew O-1 / sec-4 hard gate), then serves the query'
-    state: PERSISTED
-    derived: true
-    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
-    refresh_is_incremental: true
-    denominator_construction: TRAVERSED
-    knows_own_denominator: false
-    declares_denominator_in_output: false
-    control_established: POSITIVE
-    universe: the derived globgrph (kuzu) nodes and edges
-    excludes:
-    - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     cost_band: SECONDS
     primitives:
@@ -1348,7 +1385,7 @@ tools:
     universe: the derived globgrph (kuzu) nodes and edges
     excludes:
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     cost_band: SECONDS
     primitives:
@@ -1378,7 +1415,7 @@ tools:
     - submodule contents (gitlink only)
     - anything not in the repo
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - catalogs not federated
     - in-VPC only; ~3-4 min/call
     cost_band: MINUTES
@@ -1389,6 +1426,38 @@ tools:
     engines: []
     bounding:
     - json out
+  comp-lease:
+    concern: null
+    canonical_call: null
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
+  comp-ledger-agreement:
+    concern: null
+    canonical_call: null
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
   comp-legacywriter:
     concern: null
     canonical_call: null
@@ -1422,7 +1491,7 @@ tools:
     - submodule contents (gitlink only)
     - anything not in the repo
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     - catalogs not federated
     - in-VPC only; ~3-4 min/call
@@ -1510,7 +1579,7 @@ tools:
     universe: the derived globgrph (kuzu) nodes and edges
     excludes:
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     cost_band: SECONDS
     primitives:
@@ -1539,7 +1608,7 @@ tools:
     - submodule contents (gitlink only)
     - anything not in the repo
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     cost_band: SECONDS
     primitives:
     - GIT
@@ -1627,7 +1696,7 @@ tools:
     - other accounts
     - resource types not queried
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     - non-Python lanes
     - runtime/dynamic construction
@@ -1694,7 +1763,7 @@ tools:
     - unlisted extensions
     - non-filesystem stores
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     cost_band: TENS_OF_SECONDS
     primitives:
@@ -1730,7 +1799,7 @@ tools:
     - other accounts
     - resource types not queried
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     - non-Python lanes
     - runtime/dynamic construction
@@ -1747,6 +1816,22 @@ tools:
     bounding:
     - head slice
     - json out
+  comp-read:
+    concern: null
+    canonical_call: null
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
   comp-registry:
     concern: null
     canonical_call: comp-registry sync ROW=N | --project CODE | --all
@@ -1812,7 +1897,7 @@ tools:
     universe: the derived globgrph (kuzu) nodes and edges
     excludes:
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     cost_band: SECONDS
     primitives:
@@ -1846,6 +1931,22 @@ tools:
     bounding:
     - head slice
     - json out
+  comp-schedule:
+    concern: null
+    canonical_call: null
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
   comp-secrets:
     concern: Secrets-Manager lens -- inventory (firm-tagged + rotation) + SAFE redacted read + secret->consumer
       map
@@ -1909,7 +2010,7 @@ tools:
     universe: the derived globgrph (kuzu) nodes and edges
     excludes:
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     - catalogs not federated
     - in-VPC only; ~3-4 min/call
@@ -1968,7 +2069,7 @@ tools:
     - submodule contents (gitlink only)
     - anything not in the repo
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     cost_band: SECONDS
     primitives:
     - GIT
@@ -1976,6 +2077,22 @@ tools:
     engines: []
     bounding:
     - json out
+  comp-surprise:
+    concern: null
+    canonical_call: null
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
   comp-symbols:
     concern: 'file-symbol INVENTORY -- what functions/classes/constants/imports a source file DEFINES
       + where (forward AST enumeration, input=a FILE). NFRA_COMPROUTE S1 #2; fronts the previously-empty
@@ -2029,7 +2146,7 @@ tools:
     - other accounts
     - resource types not queried
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     cost_band: SECONDS
     primitives:
@@ -2104,7 +2221,7 @@ tools:
     - submodule contents (gitlink only)
     - anything not in the repo
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     cost_band: SECONDS
     primitives:
@@ -2165,7 +2282,7 @@ tools:
     - unlisted extensions
     - non-filesystem stores
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     - non-Python lanes
     - runtime/dynamic construction
@@ -2378,7 +2495,7 @@ tools:
     excludes:
     - candidates not enumerated for simulation
     - anything not yet ingested into the graph
-    - a scratch --db-path is a frozen vintage
+    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     - anything unregistered -- THE PHANTOM CLASS
     - non-Python lanes
     - runtime/dynamic construction

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ETFS_GUARDRAIL~1</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>pending -- GO paired at cut (the spawn IS the GO). Authority: PRD v0.3 @`4e30d6b635` (flat lineage @`7aa1554881`, ON ORIGIN) RATIFIED; decomposition v0.1 @`c4ab429993`, v0.1.1 in this issuance; Andrew-direct 2026-09-02 (PRD s.0 ruling (3), the SES carve-out) and 2026-09-04 ~17:0xZ (94224/94225).</status>
+<status>complete -- proof-of-spec instance `org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-8.the-one-terminal-ses-send.proof_of_spec.json` VALID (rc=0). All 9 criteria S8-AC1..AC7,AC9 PASS by output (targeted plan 1-to-change after the issuer's row-S2 LF correction; ledger opened/applied BY TARGET/0-diff/closed; served CodeSha256 MATCHES the built zip; the live `terminal_qa` rehearsal ran safely post-deploy; the `--gate` seam from row S3 present); S8-AC8 judgment RECORDED for CVO L9 grading. Row `ETFS_GUARDRAIL-W1-S8` stays as filed, dispositioned by the issuer's rulings on rows S2/S3. Flip made by the assignee per the tree-convention grant. Prior: pending -- GO paired at cut (the spawn IS the GO). Authority: PRD v0.3 @`4e30d6b635` (flat lineage @`7aa1554881`, ON ORIGIN) RATIFIED; decomposition v0.1 @`c4ab429993`, v0.1.1 in this issuance; Andrew-direct 2026-09-02 (PRD s.0 ruling (3), the SES carve-out) and 2026-09-04 ~17:0xZ (94224/94225).</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `../prd/ETFS_GUARDRAIL_PRD.md` v0.3 (s.7.2 row S8; s.7.4 the home; s.0 MORATORIUM CARVE-OUT; s.6 ruling 7; s.4 property 8) | **Decomp cell:** `EG-s-8` | **outcome_ref:** FWD-7 | **verb:** wire | **depends_on:** `EG-sb-7` (your previous order)
 
@@ -27,6 +27,7 @@
 2. `infra/aws/lambda/etfs-reports-orchestrator/test_terminal_send.py` (NOT packaged: `archive_file` zips only `lambda_function.py`) -- boto3 clients stubbed at module level; arms: (a) unresolved present -> exactly ONE `send_raw_email`, `Destinations == ["andrew@opalinvest.com"]`, body names every date/partner/provider; (b) unresolved absent -> ZERO sends and the ordinary alert text unchanged; (c) `terminal_qa` makes no SES call; (d) `absence_check` makes no SES call; (e) the handler's mode table has no new sending mode besides the existing `send_correction`.
 3. The ledger entry `etfs-guardrail-eg-s-8-orchestrator-terminal-send` opened with `--lambda etfs-reports-orchestrator` BEFORE the apply and closed with proof after; entry + sentinel COMMITTED.
 4. `org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/the-one-terminal-ses-send.result.md` -- criteria verbatim with rc and denominator; the plan summary; the served-vs-built hash pair; the `terminal_qa` rehearsal output for 2026-08 (send-free).
+5. (ADDED BY THE ISSUER on row ETFS_GUARDRAIL-S3 -- a seam no cell owned) `_render_command` passes `--gate` to the renderer: `python3 render_month_end.py --month {month} --pdf --gate --s3-out {out}`, so the scheduled fire runs `EG-s-6`'s pre-publish gate. ORDER OF DEPLOYS, stated: this Lambda deploy lands BEFORE `EG-s-6`'s renderer upload (slot 2, in flight now); until that upload lands, the box's OLD renderer would reject the unknown flag -- the two land the same night and the issuer holds the rollback (remove the flag, one deploy) if `EG-s-6` does not land before the 10-01 fire. `terminal_qa` (S8-AC7) does not run the render and is unaffected. No other edit to `_render_command`.
 
 ## ACCEPTANCE
 
@@ -39,11 +40,11 @@
 <criterion id="S8-AC3" cell_refs="EG-s-8"><invocation>bash .tools/commit-gate.sh infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py infra/aws/lambda/etfs-reports-orchestrator/test_terminal_send.py</invocation><expect>pre-commit gate clean</expect></criterion>
 `S8-AC3` -- the commit gate is clean.
 
-<criterion id="S8-AC4" cell_refs="EG-s-8"><invocation>.tools/terraform.exe -chdir=infra/aws/terraform/etfs-reports plan -no-color -input=false -lock=false</invocation><expect>1 to change</expect></criterion>
-`S8-AC4` -- the plan changes EXACTLY `aws_lambda_function.orchestrator` (source hash): `0 to add, 1 to change, 0 to destroy`. Any other resource in the plan -> do NOT apply, BLOCKING row. (`init -input=false` first if `.terraform/` is absent.)
+<criterion id="S8-AC4" cell_refs="EG-s-8"><invocation>.tools/terraform.exe -chdir=infra/aws/terraform/etfs-reports plan -no-color -input=false -lock=false -target=aws_lambda_function.orchestrator</invocation><expect>1 to change</expect></criterion>
+`S8-AC4` -- the TARGETED plan changes EXACTLY `aws_lambda_function.orchestrator` (source hash): `0 to add, 1 to change, 0 to destroy`. Any other resource in the targeted plan -> do NOT apply, BLOCKING row. (`init -input=false` first if `.terraform/` is absent.) (AMENDED BY THE ISSUER at the drain on row ETFS_GUARDRAIL-W1-S7: the `aws_instance.reporter` `user_data` 'drift' rows W1-S7 and W1-S8 saw was a FALSE drift, corrected by the issuer on row ETFS_GUARDRAIL-S2: the live instance's user_data (sha1 e47b615c) is byte-identical to the LF rendering of `instance.tf` at HEAD, and the plan's 'new' hash 434774b5 is the CRLF rendering of the same heredoc -- a fresh worktree on this `core.autocrlf=true` box checks every `.tf` out with CRLF (no `*.tf` eol rule in `.gitattributes`), and Terraform hashes what it reads; the July commit @`1502fdd6f9` concerns `ami` and the public IP, not `user_data`. The issuer normalizes every `.tf` in your worktree to LF at hand-off (confirm: `file infra/aws/terraform/etfs-reports/instance.tf` reads `ASCII text` with no CRLF), after which the instance shows NO change in any plan. The by-target form stays as a precaution, and a `user_data` change on `aws_instance` remains a confirm-with-Andrew act if one ever appears for real; plan and apply BY TARGET to `aws_lambda_function.orchestrator`, state the target in the ledger entry, record the full untargeted plan's summary and its `aws_instance.reporter` line verbatim in the result.)
 
-<criterion id="S8-AC5" cell_refs="EG-s-8"><invocation>.tools/terraform.exe -chdir=infra/aws/terraform/etfs-reports plan -no-color -input=false -lock=false -detailed-exitcode; echo rc=$?</invocation><expect>rc=0</expect></criterion>
-`S8-AC5` -- 0-diff after the apply (`HALT_ACK=1 .tools/safe-apply.sh -chdir=infra/aws/terraform/etfs-reports apply -input=false -auto-approve`, run only after AC4 read exactly one resource).
+<criterion id="S8-AC5" cell_refs="EG-s-8"><invocation>.tools/terraform.exe -chdir=infra/aws/terraform/etfs-reports plan -no-color -input=false -lock=false -detailed-exitcode -target=aws_lambda_function.orchestrator; echo rc=$?</invocation><expect>rc=0</expect></criterion>
+`S8-AC5` -- 0-diff on the TARGETED plan after the apply (`HALT_ACK=1 .tools/safe-apply.sh -chdir=infra/aws/terraform/etfs-reports apply -input=false -auto-approve -target=aws_lambda_function.orchestrator`, run only after AC4's targeted plan read exactly one resource) -- AMENDED on row ETFS_GUARDRAIL-W1-S7.
 
 <criterion id="S8-AC6" cell_refs="EG-s-8"><invocation>python org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/orchestrator_served_vs_built.py</invocation><expect>VERDICT: MATCH</expect></criterion>
 `S8-AC6` -- the served `CodeSha256` (`.tools/aws lambda get-function-configuration --function-name etfs-reports-orchestrator --query CodeSha256 --output text`) equals the base64 sha256 of the zip Terraform built (`infra/aws/terraform/etfs-reports/.build/etfs-reports-orchestrator.zip`); your script prints the two values and the one verdict line.
@@ -51,10 +52,13 @@
 <criterion id="S8-AC7" cell_refs="EG-s-8"><invocation>.tools/aws lambda invoke --function-name etfs-reports-orchestrator --cli-binary-format raw-in-base64-out --payload "{\"mode\":\"terminal_qa\",\"month\":\"2026-08\"}" /dev/stdout</invocation><expect>"mode": "terminal_qa"</expect></criterion>
 `S8-AC7` -- the deployed function's SEND-FREE rehearsal runs live and returns the built message's fields (no email is sent; the `.tools/aws` shim is CLI v1 -- if `--cli-binary-format` is refused as unknown, drop the flag and pass the payload as a plain JSON string; record the exact form that ran).
 
+<criterion id="S8-AC9" cell_refs="EG-s-8"><invocation>python -c "s=open('infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py').read(); i=s.find('def _render_command'); j=s.find('return [', i); print('GATE_FLAG_IN_RENDER_COMMAND=%s' % ('--gate' in s[i:j]))"</invocation><expect>GATE_FLAG_IN_RENDER_COMMAND=True</expect></criterion>
+`S8-AC9` -- MINTED BY THE ISSUER on row ETFS_GUARDRAIL-S3: `_render_command` passes `--gate` (deliverable item 5), the one-line seam between the orchestrator and `EG-s-6`'s gate that neither face carried.
+
 <criterion id="S8-AC8" cell_refs="EG-s-8" judgment="true"/>
 `S8-AC8` -- graded by the CVO at L9: the send fires only from the terminal failure branch, exactly once, to andrew@ only, with dates/partner/provider a person can act on without a follow-up; no schedule, no topic, no alarm, no polling was added; the carve-out's width is not exceeded. FWD-7's EXERCISED grade needs a REAL terminal failure, which by the PRD's own design should almost never happen -- record the rehearsal and say so. RECORD; NO VERDICT.
 
-<expected_criteria>S8-AC1, S8-AC2, S8-AC3, S8-AC4, S8-AC5, S8-AC6, S8-AC7, S8-AC8</expected_criteria>
+<expected_criteria>S8-AC1, S8-AC2, S8-AC3, S8-AC4, S8-AC5, S8-AC6, S8-AC7, S8-AC8, S8-AC9</expected_criteria>
 
 ## BOUNDS
 
@@ -65,6 +69,7 @@
 - **EVERY invocation is bounded.** `timeout 120`.
 - **Scratch:** `<your worktree>/.scratch/` only.
 - **A spec-vs-world divergence is a ROW** at `org/missions/D8/ETFS/ETFS_GUARDRAIL/surprise-channel/investigations/INVESTIGATION_v1.md`, minted `ETFS_GUARDRAIL-W1-S<k>`.
+- **THE TERRAFORM BINARY (AMENDED BY THE ISSUER at the drain on row ETFS_GUARDRAIL-W1-S6):** `.tools/terraform.exe` (v1.9.8) is the estate's terraform and it is GITIGNORED, so a fresh worktree lacks it; the issuer provisions a copy into your worktree's `.tools/` at hand-off (confirm `.tools/terraform.exe version` before any plan). NEVER substitute the PATH `terraform` (v1.14.5) for an apply: a newer CLI re-pins the remote state's `terraform_version` and the estate's binary can no longer read that state. If the copy is absent, that is a BLOCKING row, not a substitution.
 - **NEVER `git push`.** Report push state as MEASURED.
 
 <paths>
@@ -91,10 +96,10 @@ lane: the `<paths>` block above IS the grant (RULING 1 @`9ef9a40aae`); the ledge
 </preflight>
 
 <proof_of_spec>
-Criterion ids minted at cut: `S8-AC1` .. `S8-AC8`. Instance at
+Criterion ids minted at cut: `S8-AC1` .. `S8-AC8`; `S8-AC9` minted by the issuer's amendment on row ETFS_GUARDRAIL-S3. Instance at
 `org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-8.the-one-terminal-ses-send.proof_of_spec.json`
 (AMENDED BY THE ISSUER at the drain on row ETFS_GUARDRAIL-W3-S2: the instance file is named by the TASK ORDER'S OWN BASENAME stem, which is what `.tools/to-pipeline-gate.py` `check_complete_flip` globs for under `deliverables/*/`; the short `to_id` form this face carried before would have refused every flip. ONE instance file, this name, no duplicate.),
-validated with `python .tools/proof-of-spec-check.py <instance> S8-AC1,S8-AC2,S8-AC3,S8-AC4,S8-AC5,S8-AC6,S8-AC7,S8-AC8` BEFORE the complete flip, which the assignee commits itself. A `complete` flip WITHDRAWS YOUR OWN GRANT: flip only when every MECHANICAL criterion PASSES by output.
+validated with `python .tools/proof-of-spec-check.py <instance> S8-AC1,S8-AC2,S8-AC3,S8-AC4,S8-AC5,S8-AC6,S8-AC7,S8-AC8,S8-AC9` BEFORE the complete flip, which the assignee commits itself. A `complete` flip WITHDRAWS YOUR OWN GRANT: flip only when every MECHANICAL criterion PASSES by output.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape. You cannot send or receive messages -- anything you would ask is a surprise row.

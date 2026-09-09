@@ -26,6 +26,7 @@ directory an engagement's artifacts live in.
 | **RCN-0005** | 2026-08-05 | **Opal MDPF portfolio ontology** -- five-category taxonomy, Model lifecycle, Client Mandates, Sleeves, selection/advisory axes, and fee basis | 2 (research/design specification + visual ontology diagram) | MDPF_GLOBAL PRD + Andrew recording + MDPF_3FIRMS PRD + live crosswalk source + Andrew/Yang direction + 5 Andrew/CRO design rounds + exact-contract repo scan across 5 roots | 4.0.0_SA_CRO | **RATIFIED** -- Andrew-direct 2026-08-06 (CRO terminal), VERBATIM: *"it is already ratified i worked on that"* -- superseding the STAGED-FOR-REVIEW state this row carried; he worked the spec himself. Still no build/serve mutation from this row -- build authorization flows through CTO/COO as ever |
 | **RCN-0006** | 2026-08-07 | **The Opal ontology itself** — a proposed "Script I/O" (S-layer) for line-level field flow, Python + React/JS | 5 (spec REV1-3, axis field test, disposition, Python feasibility, **`LAYER_FIELD_ANATOMY.md`**) | live `comp-kuzu` graph (20,585 nodes / 41,144 edges @2026-08-07T00:32Z, HEAD current) + 8 first-party extractor surfaces read at source + 2 hand-classified code samples + an exercised SDK run (CVO~C) + 4 non-held-out tree censuses | `4.0.0_SA_CRO` | **DELIVERED — CONCLUSION IS A NEGATIVE.** The S-layer is **DISSOLVED**: all 7 specified capabilities already exist on live D1 edges. Real gap = D1 field grain has **no Python producer**. Build LEFT the CRO lane → CTO~D PRD |
 | **RCN-0007** | 2026-09-03 | **`.tools/comp-read` itself** — instrument misattachment: four measured instances in one exchange where the tool was correct and the answer was attached to a different question | 1 (brief) | 9 comp-read calls across 2 modes over 3 files at stated vintages (`.tools/deploy_ledger.py` @`79c0e68071` clean, `.tools/comp-read` 1250 ln, `INVESTIGATION_v1.md`) + 3-seat round trip (`0.0.0_AB_MSTR~Z`, `3.0.0_SA_CVO~Z`) | `4.0.0_SA_CRO~Z` | **DELIVERED — PROPOSALS ONLY, none dispatched.** 5 changes proposed, suggested owner the CVO lane (authorship-measured). P5 marked UNTESTED for feasibility; P3's contrast is n=2 and no threshold is proposed |
+| **RCN-0008** | 2026-09-09 | **Investor Reporting & Data Unification** — Andrew's proposal docx → the L1 BRIEF for the D14 directive (wraps D1/D2/D3; the client workflow leaves Advisor Intelligence) | 3 (brief, citable source text, Andrew-direct record) | Andrew's proposal (80,251 B docx, sha256 `db4168a6…f0e8`, 450 blocks extracted) + directives board (13 live) + registry (355 JSONs / 48 open / 86 open TOs) + 6 PRD §1–§2 reads + 5 comp-find censuses over 152,3xx files + `comp-trigger --list` (142 rules + 19 schedules) + `comp-schedule` (26 gates) + 1 `comp-read` | `4.0.0_SA_CRO` | **DELIVERED at L1** — consumer `1.0.0_SA_CTO` `/endpoint --forward`. Nothing dispatched, no register row written (D14 is MSTR's cell). ADVI_PERFRP read to its header only (standing 08-24 restriction names this seat; surfaced, not adjudicated) |
 
 ---
 
@@ -620,3 +621,65 @@ The eight sites defining "open leg" in `deploy_ledger.py` -- seven predicates pl
 `:211` -- belong on NFRA_OPSEC202609 row **Z-S47** (`3.0.0_SA_CVO~Z`, confirmed by that seat as the
 standing carrier). The INSTANCE is that project's r2b ledger; **the CLASS is a fabric item on the
 deploy-ledger contract and closing NFRA_OPSEC202609 would not close it.**
+
+---
+
+## RCN-0008 -- Investor Reporting & Data Unification: Andrew's proposal -> the L1 brief for the D14 directive
+
+| Field | Value |
+|---|---|
+| **Target** | Andrew's strategic product proposal `Opal_Capital_Investor_Reporting_Unification_Proposal_Clean.docx` (Desktop; 80,251 B; sha256 `db4168a65ef0afe2c7e8436ca9be8e2ee5776d35e6d5ae2cf4df769ff61ef0e8`) -- a dedicated advisor-first Investor Reporting product on a common data foundation, three capabilities (performance report + PDF, sensitivity analysis + PDF, Opal model-allocation visibility) on the firm -> advisor/book -> relationship -> account spine |
+| **Date** | 2026-09-09 |
+| **Commissioned** | Andrew-direct ~17:1xZ + ~17:2xZ at this terminal, VERBATIM in `deliverables/ANDREW_DIRECT_20260909_171xZ_INVESTOR_REPORTING_BRIEF_CREATE_WRAPS_D1_D2_D3_ESTABLISHES_D14.md` |
+| **Owner** | `4.0.0_SA_CRO` |
+| **Egress** | NONE. No vendor call. The docx was read locally; every other read was repo, register, or the estate's own AWS plane via `comp-trigger --list` (read-only, operational). |
+
+### Evidence basis + denominators
+The proposal, extracted to 450 blocks (styles + 20 tables preserved) and read entire. Directives board: 13 live
+(D0-D12), 1 retired, neither D13 nor D14 in either register file (0/481 and 0/44 lines). Registry: 355 project JSONs,
+48 open, 86 open TOs. PRD SS1-SS2 reads: D1, D2, D3, D6, D8, D10, MDPF_CHANNEL_INDEPENDENCE, PORTAL_AUTHHARD, ADVI_ROLGAT;
+ADVI_PERFRP header only. Censuses (`comp-find`, corpus=all, ~152,38x files): `supervis` 12,243 hits (DEF 10);
+`billable` 1,078 (DEF 6); stress-scenario tokens 103 (DEF 0); PDF libraries 143 (DEF 13, all puppeteer `.mjs`).
+Gold script listing: 208 `.py` across 6 trees. Live triggers: 142 EventBridge rules + 19 Scheduler schedules.
+`comp-schedule`: 26 armed gates. `comp-read` on `data/cot/scripts/gold/D_05.supervised_split.py` (account grain,
+current-flags caveat).
+
+### Artifacts (committed)
+| Artifact | Path |
+|---|---|
+| The brief (L1) | `docs/briefs/investor-reporting-unification-brief-20260909.md` |
+| Citable source text | `docs/briefs/sources/INVESTOR_REPORTING_UNIFICATION_PROPOSAL_20260909_extracted.txt` |
+| Andrew-direct record | `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260909_171xZ_INVESTOR_REPORTING_BRIEF_CREATE_WRAPS_D1_D2_D3_ESTABLISHES_D14.md` |
+
+### Findings that carried (the brief's Part IV, compressed)
+1. Three legacy routes live, no Investor Reporting route -- the product surface is greenfield (F-A).
+2. Gold is 208 scripts across 6 per-firm/per-domain trees with THREE bucket generations live; "same gold contract
+   across partners" is the D10 direction, measured on 49F only (F-B).
+3. Supervision/billing exist as per-firm gold FIELDS at account grain with a current-flags caveat (cot), not as a
+   two-axis cohort dimension (F-C).
+4. Tenant isolation measured sound at 07-20 (edge JWT + `X-Firm-Id` injection + ownership-map + ROLGAT) -- a reuse (F-D).
+5. The performance method is further along than the proposal says: Account365 PINNED (Andrew 07-21), contract
+   WRITTEN (RCN-0001/0002), `fact_account_return` HELD since 07-22, TWR engine LIVE (ADVI_49F), parity harness LIVE
+   (ADVI_BDPARITY); the open question is the HOME (ADVI Books tab per ADVI_PERFRP vs Investor Reporting per SS06 D01) (F-F).
+6. Sensitivity/stress is GREENFIELD (0 DEF hits); PDF-as-client-artifact is GREENFIELD (F-G, F-H).
+7. Scheduling is two mechanisms (142 UTC-cron rules + 19 schedules incl. `-et` ones); event-driven silver->gold
+   exists for cot and inf; SS14 restates the 2026-07-24 channel-independence rulings and the D8 frozen-payload incident (F-I).
+8. The path manifest was attempted per partner (NFRA_PPL49F/INF/COT) and is dormant at Phase 0 since 07-10 (F-J).
+
+### Downstream
+- **Consumer:** `1.0.0_SA_CTO` at L2 (`/endpoint --forward`). Twelve outcomes O1-O12 cut for a person to do; O12 is
+  horizon-bearing and flagged as a constraint, not a build.
+- **Register act named, not taken:** D14 row = `0.0.0_AB_MSTR`'s cell; member re-homing = CTO at L3.
+- **Surfaced for Andrew:** the ADVI_PERFRP 08-24 distribution restriction naming this seat (stand / lift / scope).
+- **Declared not chased:** why NFRA_PPL* stalled; INF cohort semantics; silver column retention; live bucket reads.
+
+### Downstream append -- 2026-09-09 ~18:2xZ, the YCharts field scrape (Andrew-direct, same terminal)
+Andrew: *"do a fine-toothed scrape of the various fields in this document and include it as a json file addition to CTO,
+because this is the information that the current YCharts solution provides"* -- one YCharts portfolio-vs-Opal-model comparison
+report (33 pp, sha256 `dc824eac…68a90`, client-named, kept in Downloads, NOT committed). Delivered
+`docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json`: 33 sections / 176 catalog rows / 125 distinct
+fields / 1,359 numeric values / 46 glossary terms; 33 of 33 pages text-extracted (pypdf), 33 of 33 rendered (PyMuPDF), 7 chart
+pages viewed. PII scrubbed: client name, advisor contact, client-portfolio inception date, Opal compliance contact. Brief
+amended with finding F-M + non-claim 13. Findings: hypothetical weighted-blend calculation, not account performance; four
+as-of clocks in one report; ~half the fields are look-through classification (the RCN-0001 moat); alpha/beta benchmark unnamed;
+**no stress scenario anywhere in the artifact**. No vendor egress.

@@ -21,7 +21,9 @@ The two are complementary; both help texts cross-link.
 Usage:
   comp-heat freshness [path] [--half-life N] [--top N] [--json [OUT]]
         per-path hot/warm/cold + ranked COLD SUBTREES (archive candidates). [O1 build]
-        path = subtree to scope to (default: the repo root / whole estate).
+        path = subtree to scope to (default: the repo root / whole estate). A NAMED path is
+        answered at a PATH GRAIN (OS-s-2): every git call is scoped to that corner, so the cost
+        and the printed `denominator:` line are that corner's, never the whole repo's.
   comp-heat drift [--top N] [--json [OUT]]
         WRITES NOT IN A COMMIT (untracked + modified working-tree, freshest first) -- the
         LOCAL->GIT layer. "what have I written that isn't committed?" [O1 uncommitted_writes]
@@ -48,6 +50,18 @@ import sys
 _HERE = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(_HERE)                       # .tools/ -> repo root
 HEATMAP_DIR = os.environ.get("COMP_HEATMAP_DIR", os.path.join(REPO_ROOT, "org", "modules", "heatmap"))
+
+# RULE T (NFRA_COMPEFFICACY PRD v0.4 s.4.4; shared carrier .tools/_compbudget.py, never a
+# per-tool copy -- build ladder rung 2). Import failure is reported IN main(), in the tool's own
+# voice, never a bare traceback.
+sys.path.insert(0, _HERE)
+try:
+    import _compbudget
+except Exception as _budget_error:                          # noqa: BLE001
+    _compbudget = None
+    _BUDGET_ERROR_NAME = type(_budget_error).__name__
+else:
+    _BUDGET_ERROR_NAME = None
 
 STATE_ABSENT = "SUBJECT_ABSENT_FROM_CORPUS"
 STATE_ZERO = "PRESENT_WITH_ZERO_RESULTS"
@@ -86,10 +100,100 @@ def _state_result(a, state, message):
     return RC_BY_STATE[state]
 
 
+def _budget_unavailable(a) -> int:
+    return _state_result(a, STATE_PARTIAL,
+                         "comp-heat: Rule T budget carrier .tools/_compbudget.py unavailable: "
+                         f"{_BUDGET_ERROR_NAME}; no heat answer is claimed")
+
+
+def _resolve_clock(a):
+    """THE CARRIER: flag > env COMP_BUDGET_S > default 90s. Raises ValueError on a bad flag
+    value -- the caller reports that as a usage error, never a silent fall-through."""
+    budget_s, budget_source = _compbudget.resolve_budget(getattr(a, "budget", None))
+    return _compbudget.Clock(budget_s), budget_s, budget_source
+
+
+def _spent(clock) -> bool:
+    """True iff the caller's remaining budget has hit zero -- the fast-path pre-check every
+    subcommand consults before starting a phase of bounded work. NAMED, NOT OVERCLAIMED: for
+    freshness/drift/compare, the DEEPER and load-bearing enforcement is the subprocess-level
+    `timeout=remaining()` on each git call (object_freshness.py's `_git_bounded`) -- a cut still
+    lands even if THIS pre-check were skipped, because the subprocess itself refuses to outlive
+    its own timeout. `_spent()` is the SOLE guard only where there is no bounded subprocess to
+    fall back on: score's O(1) work and federated's refuse-before-dispatch. The one thing every
+    path shares is `_compbudget.resolve_budget()` -- a caller's --budget genuinely has nowhere
+    else to be ignored from, which is why the battery's RED mutant targets THAT, not this line."""
+    r = clock.remaining()
+    return r is not None and r <= 0
+
+
+def _reached_line(budget_s, budget_source, n, total, unit, resume_args, cursor):
+    """Same wording as _compbudget.budget_reached_line(), widened for the one case that module's
+    int-typed `total` cannot carry: a cut before enumeration even finished, when N genuinely is
+    not yet known (comp-schedule's own printed convention: 'UNKNOWN (enumeration itself hit
+    budget)') -- never a fabricated 0, which would misreport a stopped census as an empty one."""
+    total_text = str(total) if total is not None else "UNKNOWN (enumeration itself hit budget)"
+    return ("BUDGET REACHED: %s s (%s); scanned %d of %s %s; results are a PREFIX, not the "
+            "answer; resume: %s --cursor %s"
+            % (_compbudget.fmt(budget_s), budget_source, n, total_text, unit, resume_args, cursor))
+
+
+def _add_budget(sp):
+    sp.add_argument("--budget", type=float, default=None,
+                    help="Rule T: flag > env COMP_BUDGET_S > default 90s; 0 = unbounded")
+    sp.add_argument("--cursor", default=None,
+                    help="Rule T resume cursor from a prior BUDGET REACHED line")
+
+
+def _scoped_git_call(rel: str) -> str:
+    """The git call the answer's denominator actually came from -- printed, not implied, so a
+    reader can re-run it. OS-s-2: the scoped form names its pathspec."""
+    if rel:
+        return f"git log --format=%ct --name-only --no-renames --full-history -- {rel}"
+    return "git log --format=%ct --name-only --no-renames"
+
+
+def _denominator_line(rel: str, scanned, total, dropped: int = 0, cut: bool = False) -> str:
+    """OS-s-2's own disclosure: WHICH POPULATION the number beside this answer counts.
+
+    Before OS-s-2 a caller naming one corner was answered with the WHOLE REPO's `scanned n of N`
+    beside that corner's per-path rows -- two grains in one output, neither labelled. This line
+    labels the grain, prints the pathspec that produced it, and states the prefix filter's residue
+    (0 on a correct scoped run: the engine, not the filter, did the scoping).
+    """
+    total_s = "UNKNOWN" if total is None else str(total)
+    if rel:
+        head = (f"  denominator: {scanned} of {total_s} files under {rel}/ -- PATH-SCOPED to this "
+                f"corner, NOT the whole repository")
+    else:
+        head = (f"  denominator: {scanned} of {total_s} files -- WHOLE-ESTATE (the no-path form "
+                f"scores the whole repository, by design)")
+    tail = f"; git call: `{_scoped_git_call(rel)}`"
+    if cut:
+        return head + tail + "; PREFIX ONLY (budget reached before this population was finished)"
+    if rel:
+        tail += f"; wrapper prefix-filter dropped {dropped} row(s) (0 = the engine scoped it)"
+    return head + tail
+
+
 def cmd_freshness(a) -> int:
-    # The O1 engine scores the WHOLE repo (git history is repo-root-relative, so its --root must
-    # BE the repo root). Subtree scoping is therefore a wrapper-side PREFIX FILTER over the engine's
-    # pure analytic (build/summarize/cluster) -- reused, not re-implemented.
+    if _compbudget is None:
+        return _budget_unavailable(a)
+    try:
+        clock, budget_s, budget_source = _resolve_clock(a)
+    except ValueError as e:
+        sys.stderr.write(f"comp-heat: {e}\n")
+        return 2
+    disclosure = _compbudget.disclosure_line(budget_s, budget_source)
+
+    # The O1 engine's --root must BE the repo root (git history is repo-root-relative), but as of
+    # OS-s-2 the SCOPE travels into the engine and every git call it makes is PATH-SCOPED to the
+    # named corner (`build_budgeted(..., scope=rel)`). A caller naming one corner therefore pays
+    # that corner's cost and is answered with THAT CORNER'S DENOMINATOR -- `scanned n of N` counts
+    # the corner, not the estate. Before OS-s-2 the scoping was a wrapper-side PREFIX FILTER over a
+    # whole-repo scan, so every scoped call paid the full history walk and then disclosed the
+    # repo's denominator beside a corner's answer. The prefix filter below is RETAINED as a no-op
+    # safety net (it must find nothing left to drop on a scoped run), never as the scoping.
     if not os.path.isdir(HEATMAP_DIR):
         return _state_result(a, STATE_PARTIAL,
                              f"comp-heat: heatmap source unavailable at {HEATMAP_DIR}; no heat answer is claimed")
@@ -97,7 +201,7 @@ def cmd_freshness(a) -> int:
     try:
         import time
         from heat_map import HeatParams, cluster_by_locality, summarize  # noqa: E402
-        from object_freshness import build                                # noqa: E402
+        from object_freshness import build_budgeted                       # noqa: E402
     except Exception as e:                                                 # noqa: BLE001
         return _state_result(a, STATE_PARTIAL,
                              f"comp-heat: heatmap source unreadable: {e}; no heat answer is claimed")
@@ -108,10 +212,47 @@ def cmd_freshness(a) -> int:
                              f"comp-heat freshness: subject '{rel}' is absent from the repository corpus")
 
     p = HeatParams(half_life_days=a.half_life)
-    scores, src = build(REPO_ROOT, p, time.time())
+    result = build_budgeted(REPO_ROOT, p, time.time(), clock, cursor=getattr(a, "cursor", None),
+                            scope=rel or None)
+    scores, src = result["scores"], result["src"]
 
+    if result["cut"]:
+        # VERDICT-BEARING (PRD s.4.4): freshness's rc already distinguishes answer states
+        # (RC_BY_STATE) -- a BUDGET REACHED run returns the SAME non-clean rc as a genuine
+        # PARTIAL_OR_BLIND answer (3), never the clean 0, so a caller checking rc alone cannot
+        # mistake a cut run for a complete one.
+        resume_args = "comp-heat freshness" + (f" {rel}" if rel else "")
+        total_for_line = result["total"] if result["total"] is not None else 0
+        terminal = _reached_line(budget_s, budget_source, result["scanned"], result["total"],
+                                 "files", resume_args, result["phase"])
+        if a.json is not None:
+            payload = {"answer_state": STATE_PARTIAL, "vintage": _vintage(),
+                       "budget": {"seconds": budget_s, "source": budget_source},
+                       "rule_t": {"terminal": terminal, "phase_reached": result["phase"],
+                                  "scanned": result["scanned"], "total": result["total"],
+                                  "deferred": result["deferred"]},
+                       "message": "comp-heat freshness: BUDGET REACHED -- results are a PREFIX, "
+                                  "not the answer"}
+            _write_json(a, payload)
+        else:
+            print(disclosure)
+            print(terminal)
+            print(_denominator_line(rel, result["scanned"], result["total"], cut=True))
+            for line in _compbudget.deferred_bucket(len(result["deferred"]), total_for_line,
+                                                     "files", result["deferred"]):
+                print(line)
+            print(f"ANSWER-STATE: {STATE_PARTIAL}")
+        return RC_BY_STATE[STATE_PARTIAL]
+
+    # SAFETY NET, NOT THE SCOPING (OS-s-2): the engine's git calls are already path-scoped, so on a
+    # scoped run this filter must have NOTHING to drop. `dropped` is carried into the denominator
+    # disclosure so a future regression (the engine silently returning unscoped rows again) shows
+    # up as a non-zero number in the output rather than being quietly absorbed here.
+    dropped = 0
     if rel:
-        scores = [s for s in scores if s.item_id == rel or s.item_id.startswith(rel + "/")]
+        kept = [s for s in scores if s.item_id == rel or s.item_id.startswith(rel + "/")]
+        dropped = len(scores) - len(kept)
+        scores = kept
         if not scores:
             return _state_result(a, STATE_ZERO,
                                  f"comp-heat freshness: subject '{rel}' exists but has zero scored files")
@@ -120,9 +261,14 @@ def cmd_freshness(a) -> int:
     clusters = cluster_by_locality(scores, lambda path: os.path.dirname(path) or ".")
     cold_dirs = sorted(((k, v) for k, v in clusters.items() if v["n"] >= 3 and v["cold_frac"] >= 0.8),
                        key=lambda kv: (-kv[1]["n_cold"], -kv[1]["oldest_age_days"]))
+    terminal = _compbudget.within_budget_line(result["scanned"], result["total"], "files",
+                                              budget_s, budget_source, round(clock.elapsed(), 3))
     if a.json != "":                                      # human render (skip when JSON->stdout)
         scope = f"{rel}/" if rel else "(whole estate)"
         print(f"=== comp-heat freshness  scope={scope}  files={summ['n']}  half_life={a.half_life}d ===")
+        print(disclosure)
+        print(terminal)
+        print(_denominator_line(rel, result["scanned"], result["total"], dropped=dropped))
         # BASIS-IN-OUTPUT (Andrew-ratified CH-3 elevation, 2026-08-04): a band NEVER prints
         # without the numbers that produced it -- the barrier definition rides every output.
         print(f"  basis: band = age vs barriers [hot<={p.hot_days:.0f}d, warm<={p.warm_days:.0f}d, "
@@ -134,12 +280,27 @@ def cmd_freshness(a) -> int:
         for s in sorted(scores, key=lambda s: s.age_days, reverse=True)[:a.top]:
             print(f"    {s.age_days:7.0f}d  score={s.score:.4f}  {s.band:4s}  "
                   f"[{src.get(s.item_id, '?'):5s}]  {s.item_id}")
-        print(f"  cold SUBTREES (n>=3, cold_frac>=0.8) -- archive candidates (ADVISORY): {len(cold_dirs)}")
+        # LABEL CORRECTED (OS-s-16, row NFRA_OUTSET-W3-S4): this list is grouped by
+        # os.path.dirname -- each file's IMMEDIATE parent -- so no ancestor ever accumulates a
+        # count and a whole dead subtree whose leaf dirs each hold fewer than 3 files is
+        # INVISIBLE here. Calling it "cold SUBTREES" asserted a roll-up the code does not do.
+        # The roll-up answer is `comp-heat archive`, which consumes O2's aggregate_tree +
+        # maximal_cold_subtrees and then O3's verify-before-recommend chain.
+        print(f"  cold LEAF DIRS (immediate-parent grouping, n>=3, cold_frac>=0.8): "
+              f"{len(cold_dirs)} -- NOT a subtree roll-up; for maximal cold SUBTREES with an "
+              f"inbound-reference check per line, run `comp-heat archive` (ADVISORY, removes nothing)")
         for k, v in cold_dirs[:a.top]:
             print(f"    {v['n_cold']:4d}/{v['n']:<4d} cold  oldest={v['oldest_age_days']:.0f}d  {k}/")
 
     if a.json is not None:
         snap = {"scope": rel or None, "half_life_days": a.half_life,
+                "denominator": {"grain": "PATH-SCOPED" if rel else "WHOLE-ESTATE",
+                                "counts": rel or "(whole estate)",
+                                "scanned": result["scanned"], "total": result["total"],
+                                "scored": summ["n"],
+                                "git_call": _scoped_git_call(rel),
+                                "prefix_filter_dropped": dropped,
+                                "claim": "measured"},
                 "basis": {"half_life_days": p.half_life_days,
                           "barriers": {"hot_days": p.hot_days, "warm_days": p.warm_days},
                           "freq_weight": p.freq_weight},
@@ -148,29 +309,256 @@ def cmd_freshness(a) -> int:
                            "score": round(s.score, 6), "band": s.band,
                            "source": src.get(s.item_id, "?")} for s in scores],
                 "cold_subtrees": [{"dir": k, **v} for k, v in cold_dirs],
-                "answer_state": None, "vintage": _vintage()}
+                # ADDITIVE, never a rename: the key is kept for any existing consumer, and the
+                # basis beside it says what the key actually contains (OS-s-16 / W3-S4).
+                "cold_subtrees_basis": {
+                    "grouping": "IMMEDIATE-PARENT (os.path.dirname), not a directory roll-up",
+                    "consequence": "a subtree that is wholly cold but whose leaf dirs each hold "
+                                   "fewer than 3 files does not appear here -- the miss is a "
+                                   "FALSE NEGATIVE, never a false archive candidate",
+                    "filter": "n>=3 and cold_frac>=0.8",
+                    "the_rollup_answer": "comp-heat archive (O2 maximal_cold_subtrees + O3 "
+                                         "verify-before-recommend)",
+                    "claim": "measured"},
+                "answer_state": None, "vintage": _vintage(),
+                "budget": {"seconds": budget_s, "source": budget_source, "terminal": terminal}}
         _write_json(a, snap)
     return 0
 
 
+def cmd_archive(a) -> int:
+    """OS-s-16 -- THE ARCHIVE-CANDIDATE ANSWER, and it is a WIRE, not a build.
+
+    OS-s-15 ruled none of the O2/O3/O4 legs is a retire candidate, so this subcommand connects
+    legs that already exist rather than writing a fourth one (build ladder rung 2):
+        O1  object_freshness.build_budgeted   per-path heat, path-scoped and budgeted (OS-s-2/1)
+        O2  object_locality.aggregate_tree    roll heat UP THE DIRECTORY TREE, every ancestor
+            + maximal_cold_subtrees           the highest wholly-cold dir, never its children too
+        O3  object_recommend.assess           VERIFY BEFORE RECOMMEND -- any inbound reference
+                                              from outside the subtree is a HOLD
+
+    WARN: WHY THIS EXISTS BESIDE `freshness`, and it is row NFRA_OUTSET-W3-S4. `freshness` groups
+    by `os.path.dirname` -- each file's IMMEDIATE parent -- and printed that under the label "cold
+    SUBTREES". No ancestor ever accumulates a count, so a wholly dead tree whose leaf dirs each
+    hold fewer than three files is INVISIBLE to it: exercised by slot 3 on a synthetic 8-of-8-cold
+    tree at 400 days across four leaf dirs, the CLI returned 0 candidates and O2 returned 1
+    maximal cold root. The direction is a FALSE NEGATIVE -- it under-reports what is safe to put
+    away and never over-reports -- so R-5 was not breached, but the label asserted a roll-up the
+    code did not do. That label is corrected in `freshness`, and the roll-up answer is here.
+
+    WARN: NEVER-AUTO-DELETE (PRD R-5, ABSOLUTE) IS THE POINT OF THIS SUBCOMMAND, NOT A CAVEAT ON
+    IT. Nothing here removes, moves, renames or writes anything anywhere: the only writes this
+    process makes are to stdout and, if the caller names one, a --json file the caller chose. A
+    RECOMMEND is a sentence a person can dispute, and it still carries a MANDATORY graph gate that
+    has to be run by a human before anything is acted on. `.tools/tests/test_os16_archive_answer.py`
+    asserts the tree is byte-identical before and after a run, and its RED mutant -- a copy of this
+    tool that deletes one file -- fails that arm.
+    """
+    if _compbudget is None:
+        return _budget_unavailable(a)
+    try:
+        clock, budget_s, budget_source = _resolve_clock(a)
+    except ValueError as e:
+        sys.stderr.write(f"comp-heat: {e}\n")
+        return 2
+    disclosure = _compbudget.disclosure_line(budget_s, budget_source)
+    if not os.path.isdir(HEATMAP_DIR):
+        return _state_result(a, STATE_PARTIAL,
+                             f"comp-heat: heatmap source unavailable at {HEATMAP_DIR}; no archive "
+                             "answer is claimed")
+    sys.path.insert(0, HEATMAP_DIR)
+    try:
+        import time
+        from heat_map import HeatParams                                    # noqa: E402
+        from object_freshness import build_budgeted                        # noqa: E402
+        from object_locality import aggregate_tree, maximal_cold_subtrees  # noqa: E402
+        from object_recommend import assess                                # noqa: E402
+    except Exception as e:                                                 # noqa: BLE001
+        return _state_result(a, STATE_PARTIAL,
+                             f"comp-heat: heatmap source unreadable: {e}; no archive answer is "
+                             "claimed")
+
+    root = os.path.abspath(a.root) if getattr(a, "root", None) else REPO_ROOT
+    rel = a.path.replace("\\", "/").strip("/") if a.path else ""
+    if rel and not os.path.exists(os.path.join(root, rel)):
+        return _state_result(a, STATE_ABSENT,
+                             f"comp-heat archive: subject '{rel}' is absent from the repository "
+                             "corpus")
+    p = HeatParams(half_life_days=a.half_life)
+    result = build_budgeted(root, p, time.time(), clock, scope=rel or None)
+    if result["cut"]:
+        resume = "comp-heat archive" + (f" {rel}" if rel else "")
+        terminal = _reached_line(budget_s, budget_source, result["scanned"], result["total"],
+                                 "files", resume, result["phase"])
+        print(disclosure)
+        print(terminal)
+        print("comp-heat archive: no candidate list is claimed from a PREFIX -- a subtree that "
+              "looks wholly cold in a partial scan may not be.")
+        print(f"ANSWER-STATE: {STATE_PARTIAL}")
+        return RC_BY_STATE[STATE_PARTIAL]
+
+    scores = result["scores"]
+    if rel:
+        scores = [s for s in scores if s.item_id == rel or s.item_id.startswith(rel + "/")]
+    if not scores:
+        return _state_result(a, STATE_ZERO,
+                             f"comp-heat archive: subject '{rel or '(whole estate)'}' exists but "
+                             "has zero scored files")
+
+    agg = aggregate_tree(scores)
+    cold = maximal_cold_subtrees(agg, a.cold_threshold, a.min_files)
+    # The ranked head is what gets the (bounded) inbound-reference pass; the tail is disclosed as
+    # UNASSESSED rather than dropped, because an unassessed candidate is not a cleared one.
+    head, tail = cold[:a.top], cold[a.top:]
+    remaining = clock.remaining()
+    assessed = assess(root, head, timeout_s=remaining) if head else []
+    rec = [x for x in assessed if x["verdict"] == "RECOMMEND_ARCHIVE"]
+    hold = [x for x in assessed if x["verdict"] == "HOLD_REFERENCED"]
+    grep_failed = [x for x in assessed if "<grep-error>" in (x.get("inbound_refs") or [])]
+    terminal = _compbudget.within_budget_line(result["scanned"], result["total"], "files",
+                                              budget_s, budget_source, round(clock.elapsed(), 3))
+
+    if a.json != "":
+        scope = f"{rel}/" if rel else "(whole estate)"
+        print(f"=== comp-heat archive  scope={scope}  ADVISORY-ONLY -- NOTHING IS REMOVED ===")
+        print(disclosure)
+        print(terminal)
+        print(_archive_denominator_line(rel, agg, scores, cold, head, tail))
+        print(f"  basis: a candidate is a MAXIMAL cold subtree -- the highest directory whose "
+              f"whole subtree is >= {a.cold_threshold:.0%} cold with >= {a.min_files} files, whose "
+              f"parent does not itself qualify. cold = age > {p.warm_days:.0f}d "
+              f"(hot<={p.hot_days:.0f}d, warm<={p.warm_days:.0f}d); "
+              f"score = exp(-ln2*age/{p.half_life_days:.0f}d half-life).")
+        print(f"  verdicts: {len(rec)} RECOMMEND_ARCHIVE / {len(hold)} HOLD_REFERENCED / "
+              f"{len(tail)} UNASSESSED (beyond --top {a.top})"
+              + (f" / {len(grep_failed)} REFERENCE-CHECK-FAILED (held, conservatively)"
+                 if grep_failed else ""))
+        for i, x in enumerate(assessed, 1):
+            print(f"    {i:3d}. {x['verdict']:18s} {x['dir']}/")
+            print(f"         REASON: {x['n_cold']} of {x['n']} files in this subtree are cold "
+                  f"(cold_frac={x['cold_frac']}), oldest write {x['oldest_age_days']:.0f} days ago, "
+                  f"mean heat {x['mean_score']:.4f}, depth {x['depth']}.")
+            if x["verdict"] == "RECOMMEND_ARCHIVE":
+                print(f"         DISPUTE IT BY: naming any file outside this subtree that "
+                      f"references it -- the name-vs-edge pass found none. THEN RUN THE MANDATORY "
+                      f"GRAPH GATE, which this tool does NOT run: {x['mandatory_graph_gate']}")
+            else:
+                refs = ", ".join(x["inbound_refs"][:3]) or "(reference check failed)"
+                print(f"         DISPUTE IT BY: showing these references are stale -- HELD because "
+                      f"{len(x['inbound_refs'])} file(s) outside it reference it: {refs}")
+        for x in tail[:a.top]:
+            print(f"    ---. UNASSESSED        {x['dir']}/  ({x['n_cold']} of {x['n']} cold) -- "
+                  f"beyond --top; NOT cleared, just not examined")
+        print("  REMINDER: ADVISORY ONLY. This tool removes nothing, moves nothing and writes "
+              "nothing outside its own --json. Every RECOMMEND still needs the graph gate above "
+              "and a human. cold != safe.")
+
+    if a.json is not None:
+        _write_json(a, {
+            "scope": rel or None, "root": root, "advisory_only": True,
+            "never_removes": True, "removals_performed": 0,
+            "denominator": _archive_denominator(rel, agg, scores, cold, head, tail),
+            "basis": {"cold_threshold": a.cold_threshold, "min_files": a.min_files,
+                      "half_life_days": p.half_life_days,
+                      "barriers": {"hot_days": p.hot_days, "warm_days": p.warm_days},
+                      "maximality": "a candidate's parent does not itself qualify",
+                      "claim": "measured"},
+            "candidates": assessed,
+            "unassessed": tail,
+            "answer_state": None, "vintage": _vintage(),
+            "budget": {"seconds": budget_s, "source": budget_source, "terminal": terminal}})
+    return 0
+
+
+def _archive_denominator(rel, agg, scores, cold, head, tail) -> dict:
+    """Every population this answer stands on, named. A ranked list with no denominator invites
+    'these are the cold subtrees'; what is true is 'these are the N examined of M found among K
+    scored paths'."""
+    return {
+        "scope": rel or "(whole estate)",
+        "scored_paths": len(scores),
+        "rollup_clustered_n": getattr(agg, "clustered_n", None),
+        "rollup_total_n": getattr(agg, "total_n", None),
+        "directories_rolled_up": len(agg),
+        "maximal_cold_subtrees_found": len(cold),
+        "assessed": len(head),
+        "unassessed": len(tail),
+        "claim": "measured",
+    }
+
+
+def _archive_denominator_line(rel, agg, scores, cold, head, tail) -> str:
+    d = _archive_denominator(rel, agg, scores, cold, head, tail)
+    cov = ""
+    if d["rollup_clustered_n"] is not None and d["rollup_clustered_n"] != d["rollup_total_n"]:
+        cov = (f"; WARN: the roll-up placed only {d['rollup_clustered_n']} of "
+               f"{d['rollup_total_n']} scored paths into any directory")
+    return ("  denominator: %d maximal cold subtree(s) found across %d directory(ies) rolled up "
+            "from %d scored path(s) under %s; %d assessed, %d UNASSESSED%s"
+            % (d["maximal_cold_subtrees_found"], d["directories_rolled_up"], d["scored_paths"],
+               d["scope"], d["assessed"], d["unassessed"], cov))
+
+
 def cmd_drift(a) -> int:
+    if _compbudget is None:
+        return _budget_unavailable(a)
+    try:
+        clock, budget_s, budget_source = _resolve_clock(a)
+    except ValueError as e:
+        sys.stderr.write(f"comp-heat: {e}\n")
+        return 2
+    disclosure = _compbudget.disclosure_line(budget_s, budget_source)
+
     if not os.path.isdir(HEATMAP_DIR):
         sys.stderr.write(f"comp-heat: heatmap module missing at {HEATMAP_DIR}\n")
         return 3
     sys.path.insert(0, HEATMAP_DIR)
     try:
         import time
-        from object_freshness import uncommitted_writes    # noqa: E402
+        from object_freshness import uncommitted_writes_budgeted   # noqa: E402
     except Exception as e:                                  # noqa: BLE001
         sys.stderr.write(f"comp-heat: cannot import the heat_map engine: {e}\n")
         return 3
-    rows = uncommitted_writes(REPO_ROOT, time.time())
+    result = uncommitted_writes_budgeted(REPO_ROOT, time.time(), clock)
+
+    # NON-VERDICT (PRD s.4.4): drift's rc is 0 whether it finds 0 or 500 uncommitted writes --
+    # never a verdict a caller branches on -- so rc STAYS 0 at BUDGET REACHED too; the terminal
+    # LINE (not the rc) is the rejectable state, exactly the FORM's default clause.
+    if result["cut"]:
+        total_for_line = result["total"] if result["total"] is not None else 0
+        terminal = _reached_line(budget_s, budget_source, result["scanned"], result["total"],
+                                 "files", "comp-heat drift", "START")
+        if a.json is not None:
+            import json
+            payload = {"n": 0, "cut": True, "rule_t": {"terminal": terminal,
+                       "scanned": result["scanned"], "total": result["total"],
+                       "deferred": result["deferred"]}}
+            text = json.dumps(payload, indent=2)
+            if a.json == "":
+                print(text)
+            else:
+                with open(a.json, "w", encoding="utf-8") as fh:
+                    fh.write(text)
+                print(f"OK: wrote drift snapshot -> {a.json}")
+        else:
+            print(disclosure)
+            print(terminal)
+            for line in _compbudget.deferred_bucket(len(result["deferred"]), total_for_line,
+                                                     "files", result["deferred"]):
+                print(line)
+        return 0
+
+    rows = result["rows"]
     n_un = sum(1 for r in rows if r["class"] == "untracked")
     n_mod = sum(1 for r in rows if r["class"] == "modified")
+    terminal = _compbudget.within_budget_line(result["scanned"], result["total"], "files",
+                                              budget_s, budget_source, round(clock.elapsed(), 3))
 
     if a.json != "":                                        # human render (skip when JSON->stdout)
         print(f"=== comp-heat drift: writes NOT in a commit  ({len(rows)}: "
               f"{n_mod} modified + {n_un} untracked, freshest first) ===")
+        print(disclosure)
+        print(terminal)
         for r in rows[:a.top]:
             age = f"{r['mtime_age_days']:.2f}d" if r["mtime_age_days"] is not None else "  -  "
             print(f"    {age:>9}  {r['class']:9s} [{r['status'] or ' '}]  {r['path']}")
@@ -178,7 +566,8 @@ def cmd_drift(a) -> int:
 
     if a.json is not None:
         import json
-        snap = {"n": len(rows), "n_modified": n_mod, "n_untracked": n_un, "uncommitted": rows}
+        snap = {"n": len(rows), "n_modified": n_mod, "n_untracked": n_un, "uncommitted": rows,
+                "budget": {"seconds": budget_s, "source": budget_source, "terminal": terminal}}
         text = json.dumps(snap, indent=2)
         if a.json == "":
             print(text)
@@ -190,6 +579,15 @@ def cmd_drift(a) -> int:
 
 
 def cmd_score(a) -> int:
+    if _compbudget is None:
+        return _budget_unavailable(a)
+    try:
+        clock, budget_s, budget_source = _resolve_clock(a)
+    except ValueError as e:
+        sys.stderr.write(f"comp-heat: {e}\n")
+        return 2
+    disclosure = _compbudget.disclosure_line(budget_s, budget_source)
+
     if not os.path.isdir(HEATMAP_DIR):
         sys.stderr.write(f"comp-heat: heatmap module missing at {HEATMAP_DIR}\n")
         return 3
@@ -199,8 +597,24 @@ def cmd_score(a) -> int:
     except Exception as e:                                 # noqa: BLE001
         sys.stderr.write(f"comp-heat: cannot import S0 heat_map: {e}\n")
         return 3
+
+    # RULE T NON-APPLICATION (PRD s.4.4, named not silent): score_item is O(1) -- no loop whose
+    # iteration count depends on corpus width, no subprocess. It cannot be usefully CUT; the
+    # carrier still runs so --budget/--cursor are uniform across all five subcommands and the
+    # disclosure line still prints (Rule P's own baseline), but a BUDGET REACHED here would only
+    # ever fire if the clock is already spent before this line runs (astronomically unlikely).
+    if _spent(clock):
+        terminal = _compbudget.budget_reached_line(budget_s, budget_source, 0, 1, "items",
+                                                    f"comp-heat score {a.id} --age-days {a.age_days}",
+                                                    "START")
+        print(disclosure)
+        print(terminal)
+        return 0
+
     p = HeatParams(half_life_days=a.half_life)
     s = score_item(a.id, a.age_days, p=p)
+    terminal = _compbudget.within_budget_line(1, 1, "items", budget_s, budget_source,
+                                              round(clock.elapsed(), 3))
     if a.json:
         import json
         print(json.dumps({"item_id": s.item_id, "age_days": round(s.age_days, 2),
@@ -208,10 +622,14 @@ def cmd_score(a) -> int:
                           "score": round(s.score, 6), "band": s.band,
                           "basis": {"half_life_days": p.half_life_days,
                                     "barriers": {"hot_days": p.hot_days,
-                                                 "warm_days": p.warm_days}}}))
+                                                 "warm_days": p.warm_days}},
+                          "budget": {"seconds": budget_s, "source": budget_source,
+                                     "terminal": terminal}}))
     else:
         # BASIS-IN-OUTPUT: the band verdict prints WITH every number that produced it.
         print(f"=== comp-heat score: {s.item_id} ===")
+        print(disclosure)
+        print(terminal)
         print(f"  band={s.band.upper()}  <- age={s.age_days:.2f}d vs barriers "
               f"[hot<={p.hot_days:.0f}d, warm<={p.warm_days:.0f}d, cold>{p.warm_days:.0f}d]")
         print(f"  score={s.score:.4f}  recency={s.recency_score:.4f}  "
@@ -229,6 +647,15 @@ def cmd_compare(a) -> int:
     if a.a == a.b:
         return _state_result(a, STATE_NA,
                              "comp-heat compare: one path cannot form a two-resource comparison")
+    if _compbudget is None:
+        return _budget_unavailable(a)
+    try:
+        clock, budget_s, budget_source = _resolve_clock(a)
+    except ValueError as e:
+        sys.stderr.write(f"comp-heat: {e}\n")
+        return 2
+    disclosure = _compbudget.disclosure_line(budget_s, budget_source)
+
     if not os.path.isdir(HEATMAP_DIR):
         sys.stderr.write(f"comp-heat: heatmap module missing at {HEATMAP_DIR}\n")
         return 3
@@ -236,7 +663,7 @@ def cmd_compare(a) -> int:
     try:
         import time
         from heat_map import HeatParams, recency_score, classify_band   # noqa: E402
-        from object_freshness import _git                                # noqa: E402
+        from object_freshness import _git_bounded                        # noqa: E402
     except Exception as e:                                               # noqa: BLE001
         sys.stderr.write(f"comp-heat: cannot import the heat_map engine: {e}\n")
         return 3
@@ -246,8 +673,11 @@ def cmd_compare(a) -> int:
     D, W = a.window_days, a.windows
     span_start = now - W * D * 86400
 
-    def side(path):
-        raw = _git(REPO_ROOT, "log", "--format=%H|%at", "--", path)
+    def side(path, timeout):
+        raw, timed_out = _git_bounded(REPO_ROOT, "log", "--format=%H|%at", "--", path,
+                                      timeout=timeout)
+        if timed_out:
+            return "TIMEOUT"
         commits = []
         for line in raw.splitlines():
             if "|" in line:
@@ -279,7 +709,31 @@ def cmd_compare(a) -> int:
                             "heat": round(recency_score(cur_age, p.half_life_days), 4),
                             "band": classify_band(cur_age, p)}}
 
-    A, B = side(a.a), side(a.b)
+    # The two sides ('a' then 'b') are the tool's DETERMINISTIC scan order/resume unit; each
+    # fetch's `git log` is bounded by clock.remaining() (Rule T: "every timeout= derives from
+    # remaining()"). HONEST NON-APPLICATION: like freshness's phases, the FINAL verdict needs
+    # BOTH sides, so a --cursor naming a completed side cannot skip real work without a
+    # persistence layer this order does not add -- it is accepted and echoed, not a real skip.
+    results = {}
+    for label, path in (("a", a.a), ("b", a.b)):
+        if _spent(clock):
+            break
+        r = side(path, clock.remaining())
+        if r == "TIMEOUT":
+            break
+        results[label] = r
+
+    if len(results) < 2:
+        cursor_val = "a" if "a" in results else "START"
+        terminal = _compbudget.budget_reached_line(
+            budget_s, budget_source, len(results), 2, "resources",
+            f"comp-heat compare {a.a} {a.b}", cursor_val)
+        print(disclosure)
+        print(terminal)
+        print(f"ANSWER-STATE: {STATE_PARTIAL}")
+        return RC_BY_STATE[STATE_PARTIAL]
+
+    A, B = results["a"], results["b"]
     for name, s in ((a.a, A), (a.b, B)):
         if s is None:
             print(f"comp-heat compare: NO git history for {name!r} "
@@ -314,11 +768,16 @@ def cmd_compare(a) -> int:
                             "commits_a_in_span": A["commits_in_span"],
                             "commits_b_in_span": B["commits_in_span"],
                             "shared_commits_in_span": shared}}
+    terminal = _compbudget.within_budget_line(2, 2, "resources", budget_s, budget_source,
+                                              round(clock.elapsed(), 3))
+    out["budget"] = {"seconds": budget_s, "source": budget_source, "terminal": terminal}
     if a.json:
         import json
         print(json.dumps(out, indent=2))
         return 0
     print(f"=== comp-heat compare: {a.a}  vs  {a.b} ===")
+    print(disclosure)
+    print(terminal)
     print(f"  VERDICT: {verdict}  ({out['verdict_rule']})")
     print(f"  current heat delta: {cur_delta}")
     for name, s in ((a.a, A), (a.b, B)):
@@ -345,18 +804,173 @@ def _add_json(sp, with_value=True):
         sp.add_argument("--json", action="store_true", help="emit JSON to stdout")
 
 
+FEDERATED_LIVE_FLOOR_S = 200.0   # _trino_fed.py's own docstring: "~3-4 min/call" (180-240s)
+
+# OS-s-5. The transport's OWN bounding parameters, which the caller had never been passing.
+# `_trino_fed.run_federated_query(sqls, *, delay=15, max_attempts=40)` bounds the ECS
+# `tasks_stopped` waiter at delay*max_attempts seconds. Called with neither -- as this wrapper did
+# until OS-s-5 -- that is 15 x 40 = 600 s of waiting, fixed, and COMPLETELY INDEPENDENT of the
+# caller's --budget. Deriving both from clock.remaining() is what carries Rule T's own clause
+# ("every timeout= derives from remaining()") ACROSS THE MODULE BOUNDARY without editing
+# .tools/_trino_fed.py, which is outside this order's <paths>. Build ladder rung 4: the transport
+# already had the parameter; nothing new is implemented here.
+FEDERATED_WAITER_DELAY_S = 5
+# Wall-clock the dispatch needs for everything that is NOT the waiter: boto3 client construction,
+# ecs:RunTask, and the logs:GetLogEvents read afterwards. Held back so the waiter's own ceiling
+# cannot consume the whole budget and leave the log read to run past it.
+FEDERATED_NON_WAIT_RESERVE_S = 25.0
+
+
+def _federated_waiter_bound(remaining):
+    """(delay, max_attempts, ceiling_s, basis) for _trino_fed.run_federated_query.
+
+    `remaining is None` means the CALLER asked for unbounded (`--budget 0`); this returns the
+    transport's own defaults and says so, rather than inventing a ceiling the caller declined.
+    """
+    if remaining is None:
+        return 15, 40, 600.0, "caller asked for unbounded (--budget 0); transport defaults"
+    usable = max(float(remaining) - FEDERATED_NON_WAIT_RESERVE_S, float(FEDERATED_WAITER_DELAY_S))
+    attempts = max(1, int(usable // FEDERATED_WAITER_DELAY_S))
+    ceiling = float(FEDERATED_WAITER_DELAY_S * attempts)
+    return (FEDERATED_WAITER_DELAY_S, attempts, ceiling,
+            f"derived from clock.remaining()={float(remaining):.1f}s minus a "
+            f"{FEDERATED_NON_WAIT_RESERVE_S:.0f}s non-wait reserve")
+
+
+def _federated_dispatch_bound_line(delay, attempts, ceiling, basis) -> str:
+    """WHAT THE BOUND DOES AND WHAT IT DOES NOT DO, printed together so neither can be read alone.
+
+    It bounds THIS PROCESS'S WAIT. It does NOT cancel the remote work: `run_federated_query` never
+    returns the ECS task ARN, so there is nothing for this wrapper to call `ecs:StopTask` on, and
+    .tools/_trino_fed.py is outside this order's <paths>. A caller that reads "bounded" as "the
+    Fargate task stopped" would be wrong, so the line says which one it is.
+    """
+    return ("comp-heat federated: dispatch BOUNDED -- ECS tasks_stopped waiter capped at "
+            "%ds x %d attempts = %.0fs (%s). THIS BOUNDS THIS PROCESS'S WAIT, NOT THE REMOTE TASK: "
+            "the task ARN is not returned across .tools/_trino_fed.py's boundary, so no StopTask "
+            "is issued and the in-VPC task runs to its own completion (OS-s-5 residue, row "
+            "NFRA_OUTSET-W1-S2)" % (delay, attempts, ceiling, basis))
+
+
+def _federated_sqls(a):
+    """The SQL this invocation WOULD run, resolved once and used for BOTH the vintage block and the
+    dispatch -- so the catalogs disclosed are provably the catalogs joined, and not a second list
+    that could drift away from the first."""
+    from _trino_fed import Q_CODE_BANDS, Q_CODE_COLDEST                    # noqa: E402
+    if a.sql:
+        return [a.sql]
+    return [Q_CODE_BANDS] + ([Q_CODE_COLDEST.format(top=a.top)] if a.top else [])
+
+
+def _print_federated_vintage(sqls, clock) -> int:
+    """OS-s-4: print the VINTAGE block for the artifacts these SQL statements join.
+
+    PRINTED ON EVERY PATH, INCLUDING REFUSE-BEFORE-DISPATCH. An artifact's build time is a property
+    of the artifact, not of whether this process got as far as querying it -- so a caller told
+    "refusing to dispatch" is still told what it would have been reading and how old it is. That is
+    also the only path a sub-floor budget (anything under FEDERATED_LIVE_FLOOR_S) can ever reach,
+    so putting the vintage only on the dispatch path would hide it from every bounded caller.
+
+    Returns the number of tables that could NOT report a build time (0 = all measured).
+    """
+    if not os.path.isdir(HEATMAP_DIR):
+        print("VINTAGE: UNREAD -- claim=absent")
+        print(f"      reason: heatmap engine directory unavailable at {HEATMAP_DIR}; no vintage "
+              "is claimed")
+        return 1
+    sys.path.insert(0, HEATMAP_DIR)
+    try:
+        import federated_vintage                                           # noqa: E402
+    except Exception as e:                                                 # noqa: BLE001
+        print("VINTAGE: UNREAD -- claim=absent")
+        print(f"      reason: federated_vintage engine unreadable: {type(e).__name__}: {e}; "
+              "no vintage is claimed")
+        return 1
+    rows = federated_vintage.vintage_rows(sqls, budget_remaining=clock.remaining())
+    for line in federated_vintage.render_vintage(rows):
+        print(line)
+    return sum(1 for r in rows if r["claim"] != federated_vintage.CLAIM_MEASURED)
+
+
 def cmd_federated(a) -> int:
     # comp-heat federated = the LIVE-Trino graph x code-heat view (the federation's net-new over
     # the git-local freshness/drift engines). Engine: .tools/_trino_fed.py (0.8.0_AE, S5; transport
     # = in-VPC run-task->Trino-REST->CloudWatch, zero new attack surface; the persistent endpoint is
     # SCTY-gated/HELD). Shares the substrate comp-diff's lakehouse axis will reuse.
+    #
+    # RULE T, CUT DEFECT NAMED (not silently missing): _trino_fed.run_federated_query() takes NO
+    # timeout/deadline parameter and .tools/_trino_fed.py is OUTSIDE this order's <paths> write
+    # grant, so the LIVE call's OWN internal duration (~3-4 min/call, its own docstring) cannot be
+    # bounded from here -- that is OS-s-5's row ("comp-heat federated --sql -- the unbounded
+    # arbitrary-query path", depends_on OS-s-1). What THIS wrapper can and does do without touching
+    # the transport: resolve the carrier, disclose it, and REFUSE to dispatch to the live plane
+    # whenever the resolved budget could not possibly cover one call. A clock-elapsed check ALONE
+    # is a race here (there is no bounded subprocess between resolving the budget and dispatching,
+    # unlike every other subcommand -- nothing burns wall-clock to make a near-zero budget register
+    # as spent before the live call fires), so this is the one subcommand that ALSO gates on the
+    # NOMINAL budget against the transport's own known floor, not on elapsed time alone.
+    if _compbudget is None:
+        return _budget_unavailable(a)
+    try:
+        clock, budget_s, budget_source = _resolve_clock(a)
+    except ValueError as e:
+        sys.stderr.write(f"comp-heat: {e}\n")
+        return 2
+    disclosure = _compbudget.disclosure_line(budget_s, budget_source)
+
     sys.path.insert(0, _HERE)            # .tools/ -- for _trino_fed
-    from _trino_fed import (run_federated_query, render_table,
-                            Q_CODE_BANDS, Q_CODE_COLDEST)
-    qs = [a.sql] if a.sql else [Q_CODE_BANDS] + ([Q_CODE_COLDEST.format(top=a.top)] if a.top else [])
-    for res in run_federated_query(qs):
+    qs = _federated_sqls(a)
+
+    insufficient = budget_s != 0 and budget_s < FEDERATED_LIVE_FLOOR_S
+    if _spent(clock) or insufficient:
+        terminal = _reached_line(
+            budget_s, budget_source, 0, None, "queries",
+            "comp-heat federated" + (f" --sql {a.sql!r}" if a.sql else ""), "START")
+        print(disclosure)
+        print(terminal)
+        reason = (f"budget below the transport's own known floor (~{FEDERATED_LIVE_FLOOR_S:.0f}s; "
+                  "_trino_fed.py: '~3-4 min/call')" if insufficient
+                  else "an already-spent budget")
+        print(f"comp-heat federated: refusing to dispatch to the LIVE Trino plane -- {reason} "
+              "(the transport starts a remote task this wrapper cannot cancel, so a budget that "
+              "could not cover one call is refused BEFORE dispatch rather than cut after it "
+              "-- .tools/_trino_fed.py, OS-s-5)")
+        # The vintage of what this call WOULD have joined is still the caller's business, and this
+        # is the only path a sub-floor budget can reach -- see _print_federated_vintage().
+        _print_federated_vintage(qs, clock)
+        return 0
+
+    from _trino_fed import run_federated_query, render_table                # noqa: E402
+    print(disclosure)
+    _print_federated_vintage(qs, clock)
+
+    # OS-s-5: the caller's ceiling now reaches the transport's own waiter parameters. Before this,
+    # `run_federated_query(qs)` was called with neither, i.e. a fixed 600 s wait no --budget could
+    # shorten -- which is what made `--sql` an unbounded remote query rather than a bounded one.
+    delay, attempts, ceiling, basis = _federated_waiter_bound(clock.remaining())
+    print(_federated_dispatch_bound_line(delay, attempts, ceiling, basis))
+    try:
+        results = run_federated_query(qs, delay=delay, max_attempts=attempts)
+    except Exception as e:                                                  # noqa: BLE001
+        # A waiter that ran out of attempts is a BUDGET event, not a crash, and it is reported in
+        # the Rule T vocabulary with a NON-CLEAN rc: unlike refuse-before-dispatch (a complete and
+        # correct answer to "should I run this?", rc 0), a cut AFTER dispatch leaves the caller
+        # with NO answer at all, so rc 0 there would say "fine" about nothing.
+        if type(e).__name__ != "WaiterError":
+            raise
+        print(_reached_line(budget_s, budget_source, 0, len(qs), "queries",
+                            "comp-heat federated" + (f" --sql {a.sql!r}" if a.sql else ""),
+                            "DISPATCHED"))
+        print("comp-heat federated: the in-VPC task did not stop within this caller's derived "
+              f"ceiling ({ceiling:.0f}s); results are NOT claimed. The remote task was NOT "
+              "cancelled -- see the dispatch bound line above.")
+        print(f"ANSWER-STATE: {STATE_PARTIAL}")
+        return RC_BY_STATE[STATE_PARTIAL]
+    for res in results:
         print(f"\n# {res['sql'][:90]}")
         print(render_table(res))
+    print(_compbudget.within_budget_line(len(qs), len(qs), "queries", budget_s, budget_source,
+                                         round(clock.elapsed(), 3)))
     return 0
 
 
@@ -366,19 +980,51 @@ def main(argv=None) -> int:
         description="Estate OBJECT write-freshness + hygiene (NFRA_HEATMAP_OBJECT). "
                     "ADVISORY-ONLY, read-only. Distinct from comp-freshness (data-pipeline S3/DDB).",
         epilog="compose: `comp-heat drift` is LOCAL->GIT; the GIT->DEPLOY hop is "
-               "`comp-pipescript deployed` + `comp-freshness`.")
+               "`comp-pipescript deployed` + `comp-freshness`. "
+               "RULE T (NFRA_COMPEFFICACY PRD s.4.4): every subcommand accepts "
+               "--budget <seconds> (flag > env COMP_BUDGET_S > default 90s; 0 = unbounded) and a "
+               "--cursor resume hint; a cut run prints BUDGET REACHED with its scanned-of-total "
+               "denominator instead of running past the caller's ceiling -- see `comp-heat "
+               "<subcommand> --help`.")
     sub = ap.add_subparsers(dest="cmd")
 
-    f = sub.add_parser("freshness", help="per-path hot/warm/cold + cold SUBTREES (archive candidates)")
-    f.add_argument("path", nargs="?", default="", help="subtree to scope to (default: repo root)")
+    f = sub.add_parser("freshness",
+                       help="per-path hot/warm/cold + cold LEAF DIRS (immediate-parent grouping; "
+                            "the SUBTREE roll-up answer is `comp-heat archive`)")
+    f.add_argument("path", nargs="?", default="",
+                   help="subtree (or single file) to scope to (default: repo root). A named path "
+                        "is PATH-SCOPED at the git call, so the printed denominator counts THAT "
+                        "corner; the no-path form scores the whole repository.")
     f.add_argument("--half-life", type=float, default=30.0, help="decay half-life in days (default 30)")
     f.add_argument("--top", type=int, default=25, help="show N coldest (default 25)")
     _add_json(f)
+    _add_budget(f)
     f.set_defaults(fn=cmd_freshness)
+
+    ar = sub.add_parser("archive",
+                        help="ranked MAXIMAL cold subtrees with a disputable reason per line "
+                             "(O2 roll-up + O3 verify-before-recommend). ADVISORY: removes nothing")
+    ar.add_argument("path", nargs="?", default="", help="subtree to scope to (default: repo root)")
+    ar.add_argument("--root", default=None,
+                    help="repository root to analyse (default: this tool's own repo). Present "
+                         "because O2 and O3 both take one, and because the battery's RED mutant "
+                         "must be pointed at a THROWAWAY tree -- a mutant that deletes must never "
+                         "be able to reach the real one")
+    ar.add_argument("--cold-threshold", type=float, default=0.9,
+                    help="fraction of a subtree that must be cold to qualify (default 0.9)")
+    ar.add_argument("--min-files", type=int, default=5,
+                    help="minimum files in a subtree before it can be a candidate (default 5)")
+    ar.add_argument("--half-life", type=float, default=30.0, help="decay half-life in days (default 30)")
+    ar.add_argument("--top", type=int, default=25,
+                    help="assess the N highest-ranked candidates; the rest are printed UNASSESSED")
+    _add_json(ar)
+    _add_budget(ar)
+    ar.set_defaults(fn=cmd_archive)
 
     d = sub.add_parser("drift", help="writes NOT in a commit (untracked + modified, freshest first)")
     d.add_argument("--top", type=int, default=25, help="show N (default 25)")
     _add_json(d)
+    _add_budget(d)
     d.set_defaults(fn=cmd_drift)
 
     s = sub.add_parser("score", help="ad-hoc S0 heat score for one item")
@@ -386,12 +1032,19 @@ def main(argv=None) -> int:
     s.add_argument("--age-days", type=float, required=True, help="days since last write/activity")
     s.add_argument("--half-life", type=float, default=30.0, help="decay half-life in days (default 30)")
     _add_json(s, with_value=False)
+    _add_budget(s)
     s.set_defaults(fn=cmd_score)
 
     fed = sub.add_parser("federated",
         help="hot/cold across estate ASSETS x their git code-heat (LIVE Trino federation; graph-joined)")
     fed.add_argument("--top", type=int, default=0, help="also show the N coldest files")
-    fed.add_argument("--sql", help="run an arbitrary federated Trino query instead")
+    fed.add_argument("--sql",
+                     help="run an arbitrary federated Trino query instead. BOUNDED like every "
+                          "other subcommand: a budget below the transport's own ~200s floor is "
+                          "REFUSED before dispatch, and once dispatched the ECS waiter is capped "
+                          "from --budget (the remote task is not cancelled -- the bound is on "
+                          "this process's wait, and the output says so)")
+    _add_budget(fed)
     fed.set_defaults(fn=cmd_federated)
 
     cp = sub.add_parser("compare",
@@ -402,6 +1055,7 @@ def main(argv=None) -> int:
     cp.add_argument("--window-days", type=int, default=14, help="days per window (default 14)")
     cp.add_argument("--half-life", type=float, default=30.0, help="decay half-life in days (default 30)")
     _add_json(cp, with_value=False)
+    _add_budget(cp)
     cp.set_defaults(fn=cmd_compare)
 
     args = ap.parse_args(argv)
