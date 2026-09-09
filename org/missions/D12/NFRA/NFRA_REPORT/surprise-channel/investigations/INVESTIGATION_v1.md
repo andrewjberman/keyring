@@ -257,6 +257,53 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
     "spec_asserts": "This cell's BOUNDS: 'a one-hop check said all ten candidate artifacts HAVE consumers; at the terminus it may say none do' -- the battery's own worked example assumes hop-1 OVER-reports aliveness relative to the terminus. This finding is the OPPOSITE miscalibration: the static tool UNDER-reports even the WRITE ITSELF for a script that is, by its own in-repo governance language, unambiguously alive.",
     "world_is": "comp-pipescript's static-analysis WRITES detector has a false-negative mode (dynamic key construction via concatenation or a key-building helper function) that is not specific to these two scripts -- any gold script in the estate using either pattern would read as writing nothing, which for a naive consumer of 'WRITES: (none detected)' reads identically to 'this script does nothing' and could recruit a future deprecation or decommissioning decision built on that silence.",
     "notes": "Not remediated -- fixing comp-pipescript's parser is outside this cell's paths. INF_C_01.canonical_nna.py is documented here as LIKELY ALIVE on textual/governance evidence, not as a terminus-walk PASS -- DEPRECATION.md renders it UNRESOLVED-BY-THIS-WALK rather than CHECKED, because this cell's own instrument could not independently confirm the write reaches a served terminus (only that it writes at all)."
+  },
+  {
+    "id": "NFRA_REPORT-Z-W1-S3",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_REPORT~1",
+    "surfaced_at": "2026-09-09T22:15:00Z",
+    "one_line": "RP-s-11's AC1 invocation as literally written -- 'bash .tools/comp-find . --corpus aws IAM_ROLE --limit 5' -- fails rc=2 with a bash syntax error, because .tools/comp-find is a Python script (shebang #!/usr/bin/env python3), not a bash script; the working form is the shimmed 'comp-find' or 'python .tools/comp-find'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~ZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "timeout 120 bash .tools/comp-find '.' --corpus aws IAM_ROLE --limit 5, run 2026-09-09 this session -> rc=2, '.tools/comp-find: line 5: ...: command not found' / 'line 6: syntax error near unexpected token (' -- bash attempting to interpret Python source as shell script.",
+        "file .tools/comp-find -> 'Python script, ASCII text executable'; head -c 300 shows '#!/usr/bin/env python3'.",
+        "The corrected, functionally-identical invocation 'comp-find . --corpus aws IAM_ROLE --limit 5' (using the ~/bin/comp-find forwarder, per CLAUDE.md's shim mechanism) run the same session -> rc=0, VINTAGE line present with a real UTC timestamp, DENOMINATOR: 219 hit(s) across 219 aws node(s) [types=IAM_ROLE] -- the substantive result AC1 is actually testing for."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-RP-s-11's AC1: <invocation>bash .tools/comp-find '.' --corpus aws IAM_ROLE --limit 5</invocation>, expecting output containing VINTEAGE plus a date.",
+    "world_is": "The literal invocation cannot produce the named result under any circumstance -- it is a shell/interpreter mismatch, not a data-dependent failure -- so running it verbatim always yields a syntax error regardless of the live AWS plane's state. The tool itself (comp-find) works correctly and does carry a real vintage when invoked correctly, which is what this cell's proof instance records as the substantive AC1 evidence.",
+    "notes": "INERT and narrow -- a one-TO authoring typo (a stray 'bash ' prefix on a Python script path), not an estate-wide tool defect; comp-find itself is unaffected. Not remediated by this cell: editing the TO's own proof_of_spec text is not in this cell's paths and the round's decomposition/TOs are frozen mid-round per rule 27. Filed per the general Surprise trigger ('an invocation does not produce the named result') rather than silently substituting the corrected form without a citable record of the discrepancy."
+  },
+  {
+    "id": "NFRA_REPORT-Z-W1-S4",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_REPORT~1",
+    "surfaced_at": "2026-09-09T22:16:00Z",
+    "one_line": "RP-s-11: two live, UNDECLARED API Gateways -- including one named 'trade-submission-api' -- and one live, DECLARED CloudFront distribution match ZERO of the estate's 51 CloudWatch alarms by name/ID/dimension, positive-controlled against siblings that DO match (session-analytics-api: 4 alarms; the other CloudFront distribution: 3 alarms via a structural DistributionId dimension match).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find '.' --corpus aws API_GW --all, 2026-09-09: 5 of 5 API_GW nodes, DRIFT DECLARED=2 LIVE-no-DECLARED=3 -- the 3 undeclared are opal-session-analytics-api, sentiment-query-api, trade-submission-api.",
+        "comp-find 'trade-submission|w8jnzvs21g' --corpus aws CW_ALARM --all -> 0 of 51 hits. comp-find 'sentiment-query|cxm5b58nme' --corpus aws CW_ALARM --all -> 0 of 51 hits. comp-find 'session-analytics|f7lvfv4bjc' --corpus aws CW_ALARM --all -> 4 of 51 hits (opal-session-analytics-errors/estimated-monthly-cost/high-invocations/throttles) -- the positive control proving the 51-alarm sweep and the name/ID match method can and does return non-zero when a real match exists.",
+        "comp-find '.' --corpus aws CLOUDFRONT_DISTRIBUTION --all -> 2 of 2 distributions, both DECLARED: E1DHJH4Y1W8YC2 (aliases: [], target_origin wp-origin) and EVTSA9VEHNZVH (aliases: opalinvest.dev, www.opalinvest.dev). comp-find 'DistributionId' --corpus aws CW_ALARM --all -> exactly 3 of 51 alarms carry a DistributionId dimension, ALL THREE = EVTSA9VEHNZVH (cloudfront-high-error-rate, cloudfront-high-origin-latency, cloudfront-low-cache-hit-rate). comp-find 'E1DHJH4Y1W8YC2' --corpus aws CW_ALARM --all -> 0 of 51 hits, structurally, not by weaker name-substring: NO alarm's DistributionId, name, or ARN mentions it at all.",
+        "This is the SAME 51-alarm population NFRA_OPSEC202609-Z-S151 and this project's own ALERT_DELIVERY.md (RP-s-6) already swept for a DIFFERENT question (delivery-leg confirmation on alarms that exist); this row is upstream of that one -- it asks whether an ALARM EXISTS AT ALL for a given served surface, not whether an existing alarm's delivery works."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-RP-s-11's ACT: 'make it findable what we put in front of people that nobody is checking at all... a part of the business with nothing watching it must look DIFFERENT from one that is watched and healthy.'",
+    "world_is": "trade-submission-api and sentiment-query-api are live, reachable API Gateway endpoints with no Terraform declaration and, on this sweep, no matching CloudWatch alarm of any kind -- the same evidentiary shape (positive-controlled zero, against a sibling surface that does match) that this project's own STATE_MODEL.md renders as the not-CHECKED family. E1DHJH4Y1W8YC2 is a declared, live CloudFront distribution with zero alarms by the SAME structural dimension that finds its sibling three times over. None of the three is a proof that nothing IS wrong with them; each is a measured absence of any instrument that would tell anyone if something were.",
+    "notes": "ARMED specifically because of trade-submission-api's name and undeclared status -- a live, unmonitored, untracked surface named for a financially consequential function is exactly the class of risk a reader of this report needs surfaced, not buried in a deliverable prose paragraph. Declared method limit, named rather than hidden: the API-gateway matches are NAME/ID SUBSTRING searches over whatever comp-find's aws corpus indexes (alarm name, ARN, a truncated JSON excerpt) -- weaker evidence than the CloudFront case's exact DistributionId dimension match, because an alarm targeting the same underlying Lambda under an unrelated name would be missed by this method. Not remediated here: this project's standing alerting/monitor moratorium forbids minting a new alarm from any cell, and disarm_owner is set to the sovereign-adjacent seat that can decide whether this is escalated to Andrew directly rather than carried only in a report row."
   }
 ]
 ```
