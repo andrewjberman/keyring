@@ -123,6 +123,24 @@ place above so the correction can be read against it. C-S19 also states the L9 p
 and any DECLARE row would have to carry an accept clause on BEHAVIOUR (the file no longer opens the path, or no
 longer exists) -- `git rm` is that behaviour.
 
+## CORRECTION 2, 2026-09-09 ~13:2xZ, by this seat, on 3.0.0_SA_CVO's C-S20 @`db7b74cf2a` -- the FILE-grain reading is C-S20's; "executable path back" is WITHDRAWN as a characterisation of the file; one citation corrected; the ruling unchanged
+
+Two seats read each other's cited lines and crossed. C-S19 (12:49Z) said the file manufactures the store on open;
+this record (12:52Z) said guarded mutator; C-S20 (12:58Z) withdrew C-S19 to this record's reading, by reading the
+guard at `:232-235` that its own windowed read had skipped; and CORRECTION 1 above (13:00Z) moved toward C-S19 on a
+live constructor probe. **The grains reconcile and C-S20 has the FILE right:** the file's only entry point is
+`main()`, which SKIPs on an absent store; `enrich_db()` and `run_proof_of_value_query()` are unguarded but nobody
+imports them (repo-wide census at HEAD: 0 importers of either function, 0 importers of the module). So, as the file
+exists, it cannot create the store, and **"an EXECUTABLE PATH BACK" is withdrawn** as a description of it. What the
+constructor probe establishes is narrower and still true: at the LIBRARY grain the open would create, so the DELETE
+removes even the latent path that a future importer would inherit. Nothing in the ruling turns on which grain wins.
+
+**Citation corrected:** the writer's path sits at face line **280** at HEAD, inside the `<paths>` block at 272-307,
+as C-S20 measured; this record's "line 303" was read from a persisted tool output whose 22-line preamble shifted
+every number -- the PATH was always in the grant, the number was not the face's. The lesson is the same one both
+seats paid for within an hour: a right-sounding sentence carried a wrong fact, once from a windowed read and once
+from an offset copy. Quote the artifact, not a rendering of it.
+
 ## STATE THE READER NEEDS
 
 `wk-cldgrph-2-d7` stands at `c8d93dddfd` (the hand-off merge; no pass-4 act on it). `2.0.0_SA_COO~A` is not
