@@ -1860,6 +1860,105 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "NFRA_OUTSET-W1-S25, my own row: 'the deployed bytes contain 0 occurrences of _outset_read, OUTSET_ANSWER_STATE_TO_STATUS, rerun_recipe and tool_invocation', offered as the evidence that the served producer predates OS-s-9/10/11.",
     "world_is": "Two of those four tokens are absent from HEAD too. A zero from a token that exists nowhere is not a measurement of the served artifact; it is a measurement of my own spelling. The claim survives on the tokens that do discriminate, and it is stated here with them rather than with the original list.",
     "notes": "hazard_standing INERT: no operational hazard, a weaker instrument than it looked, corrected on stronger evidence. W1-S25 is NOT edited or re-dispositioned -- append-only; this row is the carrier, the same shape W1-S18 used for W1-S12. THE GENERAL FORM, since it has now bitten me twice in one project: every token in a presence/absence census needs its own positive control, and a census of four tokens is four detectors, not one."
+  },
+  {
+      "id": "NFRA_OUTSET-S15",
+      "project": "NFRA_OUTSET",
+      "fabric": "laptop",
+      "surfaced_by": "1.0.0_SA_CTO",
+      "surfaced_at": "2026-09-09T13:04:20Z",
+      "one_line": "DISARM ACK for NFRA_OUTSET-S3 (REMEDIATION_v1.md S3, owner 1.0.0_SA_CTO): the wrong-grain false-deny mode is now the FOURTH mode in the /cloud-ops IAM INSTRUMENT TRAPS section @4e22065278, carrying S3's measured pair (logs:GetLogEvents against a log-STREAM-grain ARN -> implicitDeny for a */* principal; the log-GROUP-grain ARN -> allowed) and its mitigation in the THEREFORE line (the ARN at the grain the ACTION is authorized on; a */*-principal positive control beside any deny acted on); the CLAUDE_ANNEX 22a pointer reads FOUR modes and names them @e9f7c03b0c. The remedy named 'the doctrine line landing' as the disarm condition; it has landed, measured at both commits.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "1.0.0_SA_CTO",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "git show 4e22065278:.claude/skills/cloud-ops/SKILL.md: 'FOUR INDEPENDENT FALSE-DENY MODES' 1 of 1 expected, 'THREE INDEPENDENT FALSE-DENY MODES' 0 (the retired count is gone), 'WRONG GRAIN' 1; mode 4 quotes S3's measured ARN pair and names S3 and 0.7.0_AE_CloudOps~W as the source.",
+              "git show e9f7c03b0c:docs/doctrine/CLAUDE_ANNEX.md: 'four false-deny modes' 1 of 1 expected, 'three false-deny modes' 0; the pointer names all four modes and NFRA_OUTSET-S3, and still points at /cloud-ops for the mechanism.",
+              "The mitigation carried is S3's own (notes): pass the resource ARN at the grain the ACTION is authorized on (log-group for logs:GetLogEvents, task-definition for ecs:RunTask) and run a */*-principal positive control beside any deny you intend to act on -- a deny you cannot reproduce against an admin principal is the instrument, not the world.",
+              "Two one-file commits in the shared tree by design (CLAUDE.md 14b: a trivial one-file commit is not isolated); this row is appended in the shared tree because the channel is append-only shared (14b's inversion)."
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "REMEDIATION_v1.md S3 (3.0.0_SA_CVO, round 1, owner 1.0.0_SA_CTO): 'Add the wrong-grain mode to the IAM traps section the /cloud-ops doctrine carries beside the two known modes, with the mitigation; disarm on the doctrine line landing.'",
+      "world_is": "The line has landed on both carriers: .claude/skills/cloud-ops/SKILL.md 'IAM INSTRUMENT TRAPS' lists four modes at 4e22065278 and docs/doctrine/CLAUDE_ANNEX.md 22a names four at e9f7c03b0c. NOT done and NOT claimed: the comp-iam simulate wrapper's own rules and docs/doctrine/CONTROLS_OVER_CARE.md, which S3's notes also named as catalogue homes -- the remediation row names only /cloud-ops, and this ack claims exactly that and no more.",
+      "notes": "A DISARM ACK, NOT AN ADJUDICATION: S3 stands unedited and 3.0.0_SA_CVO closes the remediation row on its own read. Rows in this document after this append: 77 (76 before; S1-S15 by seats, the rest W-rows by the three worker slots). STATE, per Rule 22: the doctrine is a READING control -- DESIRED -> APPLIED at these commits; it reads EXERCISED only when a seat's next simulate run passes the ARN at the action's grain and prints the admin-principal control beside a deny. This row does not claim that. Filed under Andrew's 2026-09-09 word that NFRA_OUTSET work already routed may move; nothing new is cut by it."
+  },
+  {
+    "id": "NFRA_OUTSET-S16",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~W",
+    "surfaced_at": "2026-09-09T13:20:00Z",
+    "one_line": "THE SEAM IS NOW READABLE AND PUBLISHED-TO, AND THE CONSUMER STILL WILL NOT LOOK AT IT: ESTATE_OUTSET_SEAM_PREFIX is absent from the runtime.env heredoc in instance.tf, so OUTSET_SEAM_PREFIX is None on the host and _stratum_propagation returns INSTRUMENT_UNAVAILABLE ('no seam source configured') without ever composing a key. NEITHER OS-s-18 NOR OS-s-19 NAMES THAT VARIABLE, and it is not a config edit: aws_instance.estate_report_runner carries user_data_replace_on_change = true (instance.tf:83, deliberate), so adding one line to runtime.env DESTROYS AND RECREATES the instance. Filed, not worked around.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'ESTATE_OUTSET_SEAM_PREFIX' infra/ -> DENOMINATOR 5 hit(s) across 11398 file(s) scanned, corpus=all; ALL FIVE are in infra/aws/ec2/estate-report-runner/estate_report_runner.py (:1605 comment, :1611 the os.environ.get DEF, :1691, :1833, :1841 prose). ZERO hits anywhere under infra/aws/terraform/. The variable exists only in the code that reads it.",
+        "estate_report_runner.py:1611 `OUTSET_SEAM_PREFIX = os.environ.get(\"ESTATE_OUTSET_SEAM_PREFIX\")   # unset => not configured`; :1836-1844 `if not prefix:` returns _stratum(status='INSTRUMENT_UNAVAILABLE') and the key `<prefix>/comp_heat_drift.json` is composed only on the else limb.",
+        "instance.tf:130-148 is the runtime.env heredoc and it sets ELEVEN variables (ESTATE_REPORT_BUCKET, ESTATE_GITHUB_SECRET_ID, ESTATE_KIMI_SECRET_ID, ESTATE_KIMI_URL, ESTATE_KIMI_MODEL, ESTATE_GRAPH_KEY, ESTATE_REPO_URL, ESTATE_REPO_BRANCH, ESTATE_SCHEDULE_HOUR_LOCAL, ESTATE_SCHEDULE_TZ, AWS_DEFAULT_REGION). ESTATE_OUTSET_SEAM_PREFIX is not among them; denominator 11 of 11 read, not sampled.",
+        "instance.tf:83 `user_data_replace_on_change = true`, with :69-72 stating why it is REQUIRED on this instance -- in AWS provider v5 the flag defaults to false and an in-place user_data update is recorded as applied while the running instance NEVER EXECUTES the new script. So the cheap-looking one-line edit is an instance replacement, which is a NEVER-2 act with its own ledger, not a side effect of this cell.",
+        "THE GRANT AND THE PUBLISH ARE REAL AND ARE NOT WHAT THIS ROW DOUBTS: the runner's own role read s3://opal-estate-report/outset/comp_heat_drift.json at 2026-09-09T13:0xZ (principal arn:aws:sts::313476888478:assumed-role/estate-report-runner-role/i-0512bd3cbaf602b7f, rc=0, 27060 bytes) with a negative control on logs/ returning AccessDenied. The seam works; nothing points the consumer at it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-18's cell: 'nothing publishes to the consumption seam, and the runner's role holds no grant on any seam prefix', with FWD-3 as the outcome_ref -- i.e. the two things standing between the seam and the estate are a PUBLISH and a GRANT.",
+    "world_is": "There is a third, and it is in neither order. With the publish landed and the grant applied and exercised, the estate STILL reads nothing from this seam, because the host never composes the key: the switch that turns the consumer on is an environment variable that exists only in the consumer's own source. OS-s-18 and OS-s-19 can both pass every criterion as written and the served report will render A_propagation as INSTRUMENT_UNAVAILABLE exactly as it does today. THAT IS ROUND 1'S SHAPE ONE LEVEL UP -- the round-1 analysis' own words, 'naming a cost is not assigning it', applied to a step nobody has yet named at all.",
+    "notes": "hazard_standing ARMED, and the harm is NOT a wrong number: INSTRUMENT_UNAVAILABLE is the honest rendering for an unconfigured source and the runner is right to emit it. The armed hazard is that a round can CLOSE on it -- every criterion green, FWD-3 unrealised, and the discrepancy invisible because the report is telling the truth. disarm_owner is 2.0.0_SA_COO because placing an unowned step is an issuance act, not an assignee's: my <paths> DO grant infra/aws/terraform/, so this is NOT a cut defect and I am not claiming one -- I can reach the file and am declining to, because an instance replacement that neither of my criteria asks for is scope I do not hold. NOT DONE AND NOT CLAIMED: I have not measured whether a replacement would preserve the schedule, the deadman unit or the manifest, and that question belongs to whoever gets the cell. Related: NFRA_OUTSET-S17 (the same seam, the cadence half)."
+  },
+  {
+    "id": "NFRA_OUTSET-S17",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~W",
+    "surfaced_at": "2026-09-09T13:21:00Z",
+    "one_line": "THE PUBLISH I JUST LANDED HAS NO CADENCE AND THE CONSUMER'S OWN CEILING WILL CONVICT IT IN 26 HOURS. outset/comp_heat_drift.json was written by hand at 2026-09-09T13:03:50Z; OUTSET_SEAM_MAX_AGE_HOURS defaults to 26 and runtime.env does not override it, so from roughly 2026-09-10T15:03Z the artifact reads STALE -> INSTRUMENT_FAILED. That is the seam behaving CORRECTLY. It is also a producer with no schedule and no owner, which is the exact object OS-s-7 already measured once at 50.7 days.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3api list-objects-v2 --bucket opal-estate-report --prefix outset/ (s3api, so UTC and not the local-time rendering `aws s3 ls` would give): outset/comp_heat_drift.json 27060 B LastModified 2026-09-09T13:03:50.000Z; outset/comp_heat_freshness_tools.json 63822 B 2026-09-09T13:03:49.000Z. Denominator 2 of 2 objects at the prefix; the prefix held ZERO objects before this publish.",
+        "estate_report_runner.py:1645 `OUTSET_SEAM_MAX_AGE_HOURS = float(os.environ.get(\"ESTATE_OUTSET_SEAM_MAX_AGE_HOURS\", \"26\"))`, and the eleven-variable runtime.env heredoc at instance.tf:130-148 does not set it -- so 26 is the effective ceiling, read rather than assumed.",
+        "_outset_read's STALE branch is exercised, not inferred: .tools/tests/test_os18_seam_readable.py arm R5 fed a 999.0 h artifact through the real consumer and got status=INSTRUMENT_FAILED with 'artifact STALE ... age 999.0 h > ceiling 26.0 h'. The convicting mechanism is live today.",
+        "the producer is a CLI with no caller: org/modules/heatmap/outset_seam.py main() requires --tool and --out-dir and is invoked by nothing in the estate -- comp-find 'outset_seam' over the repo returns its own definition, its battery and prose, and no scheduler, EventBridge rule, systemd unit or CI step.",
+        "PRD s.3 costed exactly this: 'a publishing step and a freshness question per artifact'. The freshness question is ANSWERED (the consumer refuses a stale artifact); the publishing step's CADENCE is the half still unassigned."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-18's deliverable is THE PUBLISH -- 'an outset tool's artifact reaching the consumption seam' -- and O18-AC1 grades that the published artifact is readable at the seam and that a failed publish reads FAILED.",
+    "world_is": "Both are true and neither is durable. The order grades an ACT (one artifact reaching the seam) where the outcome needs a PROCESS (an artifact continuing to reach it). A hand-published artifact satisfies the criterion on the day it is written and reads INSTRUMENT_FAILED-because-STALE about 26 hours later, so the seam's steady state under the work as cut is FAILED, not OK. Nothing is wrong with the cell's grading; the cadence simply belongs to no cell.",
+    "notes": "hazard_standing ARMED because time alone arms it -- no further act is needed for the seam to start reading FAILED. I HAVE NOT BUILT A SCHEDULE AND WILL NOT UNASKED: CLAUDE.md's standing moratorium reserves alerts, monitors and freshness-checkers to Andrew's explicit word, and 'production pipelines MUST be scheduled' is a rule about who may cut the schedule, not a licence for an assignee to cut one inside a build cell. The honest disposition is that this is a ROW for the issuer, and the cheapest remedy is probably the SAME cell as NFRA_OUTSET-S16 -- the host that would gain ESTATE_OUTSET_SEAM_PREFIX is not the host that can publish, so the producer needs a home where the tools live. Deliberately NOT claimed here: which home that is."
+  },
+  {
+    "id": "NFRA_OUTSET-S18",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~W",
+    "surfaced_at": "2026-09-09T13:35:00Z",
+    "one_line": "CUT DEFECT, BOTH FACES: three paths that TO-OS-s-18 and TO-OS-s-19 grant in their <paths> blocks are UNWRITABLE BY THE SEAT THEY WERE ISSUED TO, because the <paths>-block-as-grant mechanism the preflight cites (ADHC_OWNPTH.005, RULING 1) is IMPLEMENTED FOR WORKERS ONLY -- owned-paths-validate.py:123 matches ^0\\.9\\.0_WK_<CODE>[~_]<n>$ and :387 gates the whole grant on that match. 0.7.0_AE_CloudOps~W is a SEAT, so for it the lane registry binds unchanged and the order's grant is inert. REFUSED: .tools/tests/test_os18_seam_readable.py and .tools/tests/test_os19_served_matches_head.py (lane TOOL_BATTERIES, owner 0.8.0_AE_CloudComp) and org/modules/heatmap/outset_seam.py (lane NFRA_HEATMAP). O18-AC1's and O19-AC1's <invocation> paths therefore cannot exist at HEAD.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED ON THE ESTATE'S OWN INSTRUMENT, whole surface at once rather than one file at a time: `python .tools/owned-paths-validate.py --check-agent 0.7.0_AE_CloudOps~W .owned-paths.yaml` over the 13 concrete paths both <paths> blocks imply -> rc=1, 3 VIOLATION lines, 10 of 13 permitted. PERMITTED and confirmed: infra/aws/terraform/estate-report/{iam.tf,instance.tf}, infra/aws/ec2/estate-report-runner/estate_report_runner.py, org/critical_paths/{change_management,.open_deploys}/, the deliverables folder, INVESTIGATION_v1.md, infra/system/06_current_state.{json,md}, and the task-order file itself. REFUSED: the three named above.",
+        "NEGATIVE CONTROL ON THE INSTRUMENT, run in the same act: the identical 13-path census for 0.9.0_WK_NFRA_OUTSET~1 returns a DIFFERENT and LARGER refusal set (9 lines, including the terraform and runner paths this seat holds), each carrying the '-- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path' suffix. So the checker discriminates per serial and is not refusing everything; a shared refusal would have been the tell that I was measuring the tool.",
+        "owned-paths-validate.py:123 `_WORKER_SERIAL_RE = re.compile(r\"^0\\.9\\.0_WK_(?P<code>[A-Z0-9_]+?)[~_](?P<n>[0-9]+)$\")`; :387 `is_worker = bool(_WORKER_SERIAL_RE.match(agent.strip()))`; :404-406 the worker-only explanatory limb. CLAUDE.md Rule 27 states the same design in words: 'A worker's write surface is exactly the <paths> its non-terminal order names (no lane enumerates a worker)'. The grant was built for the serial class that has no lane; a seat already has one and keeps it.",
+        "CORROBORATED BY HISTORY, on a different instrument: `git log --full-history` on .tools/tests/test_os10_seam.py and test_os17_tool_row.py shows round 1's batteries authored by 0.9.0_WK_NFRA_OUTSET~1 and ~2 and merged by 2.0.0_SA_COO. Every prior battery in this project reached .tools/tests/ through a WORKER, which is why the collision did not appear until round 2 seated the cells on a seat.",
+        "THE REFUSAL IS REAL AND WAS HIT, not predicted: safe-commit.sh on .tools/tests/test_os18_seam_readable.py returned 'ERROR: owned-paths lane violation(s) detected (block mode) ... agent=0.7.0_AE_CloudOps~W not in permitted_agents' and rc=1, with the commit-gate and to-pipeline-gate having passed immediately before it. Verified against the repository rather than the tool's stdout: the battery is NOT in git log."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Both faces' <preflight> lane clause: 'the <paths> block IS the grant (RULING 1, Andrew 2026-09-04 ~04:58Z) while this order is NON-TERMINAL at HEAD', and both BOUNDS blocks: 'Your write surface is the <paths> block below and nothing else.' Read together these assert the block is BOTH the ceiling and the floor of the assignee's write surface.",
+    "world_is": "It is the ceiling and NOT the floor. For a seat the block can only narrow what the lane registry already permits; it cannot widen it, because the widening code path is unreachable for any serial that is not 0.9.0_WK_<CODE>~<n>. Three granted paths are consequently unwritable, and two of them are the literal <invocation> targets of the MECHANICAL criterion on each order. THE ROOT IS UPSTREAM OF THE CUT: the CTO's round-1 analysis @a0500abe18 directs 'two rows, both CloudOps, NO WORKER FAN-OUT', and the grant mechanism that makes a <paths> block load-bearing exists only for workers. The issuance obeyed the analysis exactly; the two rulings are simply not composable as written.",
+    "notes": "STOPPING THE CRITERION, NOT WORKING AROUND IT, and naming the override I am declining: CLAUDE.md 14a offers GIT_COMMIT_AUTHOR_OVERRIDE=<LANE> as an audited escape from a lane refusal, and I am NOT using it. The TOOL_BATTERIES lane is deliberately built so that '1.0.0_SA_CTO GATES battery repairs and is deliberately NOT a member: gate and author are different seats' -- a unilateral override by the author would collapse exactly that separation, which is not an assignee's to collapse. WHAT IS DONE ANYWAY, so the remedy is cheap whoever takes it: the battery is WRITTEN, passes both required grains (OS18-SEAM-READABLE, 13 of 13 arms on the exercised run; pytest 1 passed) and sits in the working tree ready to land unchanged. THREE REMEDIES, the choice being the issuer's and none of them mine: (a) the grantor adds 0.7.0_AE_CloudOps~W to TOOL_BATTERIES and NFRA_HEATMAP; (b) the two cells are re-seated on a 0.9.0_WK_NFRA_OUTSET~<n> worker, for which the <paths> grant actually fires -- which is how round 1 landed these same paths; (c) the criteria are re-cut to an invocation path inside a lane this seat holds. NOT AFFECTED: everything else in both orders. OS-s-18's publish, grant and applied-plane measurement are COMPLETE, and OS-s-19's substantive surfaces -- the runner file, the change-management ledger and .open_deploys -- are all PERMITTED to this seat. Related: NFRA_OUTSET-S16, NFRA_OUTSET-S17."
   }
 ]
 ```

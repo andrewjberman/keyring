@@ -152,3 +152,11 @@ carrier landed @`58adeff90c`). Named here so L4 does not have to rediscover it.
 
 Andrew confirms these seven DONE WHEN lines. From L3 onward the loop cycles on its own: register under the
 tree, the PRD at L4 with these outcomes verbatim, and the L4 notifier hands it to `2.0.0_SA_COO` for L5.
+
+## CONFIRMED -- 2026-09-09 ~13:1xZ, Andrew-direct at the `1.0.0_SA_CTO` terminal
+
+VERBATIM: *"Call 2 yes agreed with rec, confirm as written."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260909_131xZ_COOA_ALREADY_SPAWNED_AND_BRIEF_TO_CUT_DONE_WHEN_CONFIRMED.md`.
+FWD-1..FWD-7 stand as written above. **L3 does not start on this confirmation:** the REC he agreed with keeps L3/L4
+behind his same-session word *"no new work until you get my transcript and we discuss"*; the loop starts from L3 the
+moment the roadmap allocates this project, with no further word owed.
