@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-09T23:0xZ",
+  "written_utc": "2026-09-09T23:28Z",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -229,8 +229,22 @@
         "wk-cldgrph-6-2 @9495eb15f7 (the F-11 GO amendment)",
         "msg to the CVO 23:04Z"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "aad0fd7fab",
       "next": "F-11's flip (the push, build, derive, projection, served reads) and F-6's flip; both drains; the CVO's baseline sign; the FINAL packet; the drain-end read to the CTO; CronDelete."
+    },
+    {
+      "seq": 17,
+      "limb": "L7 (a worker report adjudicated) / L6 (a re-cut under @9f4a57262f)",
+      "started_utc": "2026-09-09T23:22Z",
+      "ended_utc": "2026-09-09T23:28Z",
+      "act": "TICKS 44-45 READ NOTHING TERMINAL (both workers active at 23:10Z and 23:19Z; no broker traffic since the W2-S60 GO; no log written). TICK 46: 0.9.0_WK_NFRA_CLDGRPH~7 REPORTED TO-CG-F-6 OPEN with a VALID instance @98323fe799 and two mechanical FAILs -- the work itself stands @6abd4a9d94 (four archive objects on s3://opal-313476888478-globgrph/archive/NFRA_CLDGRPH.CG-s-26/, ARCHIVE_OBJECTS=4 of 4, SHA256_MATCH=3 of 3 by S3-computed checksum; the tombstone 7 of 7 fields; kuzu_stitch_load.py git rm'd, last hash 8a074ba7ba; the store absent 3 of 3 by absolute path with the control fired; comp-debt rc 0 with no store, refusal naming the served source; no engine opened). ADJUDICATED as THREE CUT DEFECTS, ZERO WORK DEFECTS, and RE-CUT on the worker's branch @6b3aef13a1 under the standing authority: (1) F6-AC3 (W7-S4) -- the face widened the cell's scope to the tool homes and the REAL-WIDE sweep read LOCAL_KUZU_BUILDERS=2 of 486 files (0 parse failures) against 0 of 66 beside the projection; the two hits are tsgraph_spike/load_scratch_kuzu.py:97 and load_clusters_scratch.py:43, each opening its OWN scratch store under tsgraph_spike/out/ -- the population row W2-S25 declared harmless at D-7 pass 3; the pair joins the named exclusion with W2-S25 printed, the wide sweep stays deciding, the planted-builder control unchanged; (2) F6-AC5 (W7-S3) -- the expect hard-coded the W2 row namespace of the slot the order was cut for; the schema binds W{n} to the committing suffix; now W[0-9]+-S[0-9]+, grammar only; (3) W7-S1 -- six deliverables paths named ~2, which the lane gate refuses for serial ~7 (18 ADHC_OWNPTH.005 measured); now ~7. NOT re-cut, carried to the L8 packet: W7-S2 (graph-call-manifest.yaml:1237 freshness and its mirror tool_index.py:2443 still name the deleted store's db-path; outside the grant; the cell's accept met by the row; REC to L10: one entry-grained edit under the manifest owner). The worker RE-HANDED (widen the EXCL, re-run AC3/AC5, re-write the instance, flip in the two-commit shape). The CTO and CVO TOLD (94784, 94785). F-11 on slot ~2 executing the W2-S60 GO, no commit past 9495eb15f7 at 23:19Z.",
+      "artifacts": [
+        "wk-cldgrph-6-7 @6b3aef13a1 (the F-6 re-cut)",
+        "msgs 94784 (CTO), 94785 (CVO)",
+        "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260909T2325Z.md"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "F-6's flip and drain (union the four W7 rows; my disarm rows W7-S1..S4 at the drain); F-11's flip and drain; the CVO's baseline sign; the FINAL packet; the drain-end read to the CTO; CronDelete."
     }
   ]
 }
