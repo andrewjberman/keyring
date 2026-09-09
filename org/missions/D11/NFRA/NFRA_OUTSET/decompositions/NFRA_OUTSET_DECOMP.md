@@ -1,5 +1,7 @@
 # NFRA_OUTSET — DECOMPOSITION (L5)
 
+**v0.5** (2026-09-09 ~15:3xZ, `2.0.0_SA_COO`) — the L5 act on PRD **v0.5** @`1ac8679844` (the CTO’s mid-round addendum on the S23 ruling @`98722f9355`): `OS-s-21` re-worded to the ruling (its face already re-cut @`2e1d755943`), `OS-s-22` added. Round 3’s addendum sections are §19–§22 below; §0–§18 are LEFT UNEDITED.
+
 **v0.4** (2026-09-09 ~14:4xZ, `2.0.0_SA_COO`) — the L5 act on the CTO’s ROUND-2 ANALYSIS @`d6fd9eca07` (merged @`5f0cd1a318`) and PRD **v0.4**, which adds two manifest rows (`OS-s-20`, `OS-s-21`) to §7. The analysis directs: *"2.0.0_SA_COO recuts from this analysis: two rows, both CloudOps, no worker fan-out; OS-s-20 after OS-s-19 (done), OS-s-21 buildable beside it with its accept gated on OS-s-20’s."* Round 3’s sections are §13–§18 below; §0–§12 are rounds 1 and 2’s and are LEFT UNEDITED.
 
 **v0.3** (2026-09-06 ~03:1xZ, `2.0.0_SA_COO`) — the L5 act on the CTO's ROUND-1 ANALYSIS
@@ -311,3 +313,59 @@ in the seat's own deliverables folder from the start (clause 4, the serial in th
 `org/modules/heatmap/` line.
 
 — `2.0.0_SA_COO`, L5 round 3
+
+---
+
+## 19. ROUND 3, ADDENDUM v0.5 — one cell the S23 ruling placed, cut mid-round
+
+**Input:** PRD **v0.5** @`1ac8679844` (`1.0.0_SA_CTO`, mid-round on Andrew's 2026-09-03 scope-change word), which RE-WORDS
+`OS-s-21` to the S23 ruling @`98722f9355` and ADDS `OS-s-22`. **This document invents neither.** `OS-s-21`'s face was
+already re-cut to the ruling @`2e1d755943` and the v0.5 row agrees with it (freshness cloud-side under a new role with the
+minimum Put; drift device-side on the device's own timer, per-device key, the artifact carrying its device and tree
+denominators; the accepts as ruled). `OS-s-22` is the one new cell.
+
+| cell | outcome | verb | lane | depends_on | why it exists |
+|---|---|---|---|---|---|
+| `OS-s-22` | FWD-3 | wire | CloudOps (the runner's deploy path, OS-s-19's; code in `estate_report_runner.py`) | `OS-s-21` (the key layout), `OS-s-19` (DONE @`9e023d20b5`) | THE PER-DEVICE CONSUMER. `estate_report_runner.py:1844` reads ONE key; two devices on one key is last-writer-wins, a confident partial. Group A composes every `outset/<device>/comp_heat_drift.json`, renders each device with its own vintage and ceiling, reads QUIET and SILENT as different states, never sums devices; the single-key read is retired WITH the composition. |
+
+## 20. THE CHAIN READ — round 3 with v0.5
+
+```
+  M (dependency-independent chains) = 1
+    chain F  3 cells   OS-s-20 -> OS-s-21 -> OS-s-22
+      OS-s-20  act LANDED (host replaced @2686fc81d6); accept pending the 2026-09-10 13:00Z served day
+      OS-s-21  BUILDING (freshness cloud-side; drift device-side); accept on a served day
+      OS-s-22  depends on OS-s-21's KEY LAYOUT (buildable once the per-device key is named, which it is on the face
+               and in the row) and on OS-s-19 (done); accept on a served day with a real device artifact and a planted
+               second-device control
+
+  longest dependency depth = 3 on the accepts; the builds overlap
+```
+
+**`OS-s-22` is BUILDABLE now** against the key layout the ruling names (`outset/<device>/comp_heat_drift.json`); its
+ACCEPT needs a real device artifact under that layout (OS-s-21's drift half) on a served day, so it reads no earlier than
+the first 13:00Z fire after both the consumer deploy and a device publish have landed.
+
+## 21. SEATING AND FAN-OUT — unchanged: one CloudOps seat, width 1
+
+**`OS-s-22` to `0.7.0_AE_CloudOps~W`**, the seat holding `OS-s-20` and `OS-s-21` (continuity on one project, Rule 27).
+It is a runner code change and a single S3 upload of the runner — the OS-s-19 shape exactly — so it is a NEVER-2 cell
+with its own ledger entry, outside the run window, the consumer census (one functional consumer, the host's boot pull),
+and the served bytes proven against HEAD by content. It does NOT replace the host (no `user_data` change; the host pulls
+the runner at boot).
+
+```
+fanout: 1 of 1 chains, cap 8, reason: the three round-3 cells form one chain (OS-s-20 -> OS-s-21 -> OS-s-22) on one live
+        estate and one served runner; OS-s-22 is the runner's deploy path, which OS-s-19 already exercised from this seat.
+        Width 1, the same seat, cut mid-round on the addendum.
+```
+
+## 22. WHAT THIS ADDENDUM'S DECOMPOSITION DOES NOT DECIDE
+
+- **The composition's rendering** (how group A lays out N devices, QUIET vs SILENT wording) — the assignee's, inside the
+  accept: each reporting device by name with its vintage; a silent device `INSTRUMENT_FAILED` for that device only while
+  the others render; a planted second-device artifact renders as a second row and never merges into the first's n.
+- **Whether the planted control key lives on** — it is a QA artifact under a non-device name on the seam prefix, untouched
+  after the exercise under R-5, exactly as the R2 probe is.
+
+— `2.0.0_SA_COO`, L5 round 3 addendum v0.5
