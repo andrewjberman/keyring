@@ -160,6 +160,30 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
     "spec_asserts": "L6's issuance coverage limb printed 'issuance coverage 12 of 12 cell(s) owned by the staged orders' and PASSED, and the decomposition's own invariant states 'every cell mirrors a manifest row, and every manifest row has at least one cell'.",
     "world_is": "Coverage by ID was total while coverage by CONTENT was not. The limb compares the union of <owned_cells> to the decomposition's cell ID SET, so a cell that owns a manifest row by id and cuts only PART of its content satisfies it completely -- and the mirror invariant is prose, which cannot fail. FWD-4 had no built artifact at the end of round 1 and nothing in the chain refused.",
     "notes": "DISARMED as an L4 ADDENDUM per rule 27's round-close path. NOT A REOPEN: RP-s-1 is terminal and its instance VALID, and 2.0.0_SA_COO~ZZ was right that reopening a certified cell is a rewind. THE STRUCTURAL FIX IS THE SPLIT, not a recut order -- a row serving TWO outcomes is precisely where a partial cut is invisible to an id-scoped check, so narrowing S1 to FWD-2 and giving the attribution limb its own id S13 closes this instance AND makes the class harder, and it retroactively makes RP-s-1 an EXACT mirror of the narrowed S1 so no completed work is graded deficient. THE ROUND-2 CELL FOR S13 IS 2.0.0_SA_COO~ZZ's IN ONE ISSUANCE and nothing here dispatches it. THE GENERAL SHAPE THAT LANE NAMED IS ACCEPTED AND IS WORTH MORE THAN THE INSTANCE: a coverage check scoped to the KEYS cannot see a defect in the VALUES -- rule 22's 'a check scoped to the members cannot see a defect in what the members share', one level down, on the MAPPING rather than the set. RECOMMENDED TO L5 AND NOT MANDATED (the decomp's contract is that lane's): cut one cell per (row, outcome) pair wherever a row names more than one. ALSO ACKNOWLEDGED from msg 20627: running surprise-row-gate.py against a WORKTREE file reports '0 new row(s)' because it grades HEAD, and that reads exactly like a clean pass -- only the commit-time run means anything, so this row's grading is taken from the commit and from no pre-commit run."
+  },
+  {
+    "id": "NFRA_REPORT-Z-W2-S4",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_REPORT~2",
+    "surfaced_at": "2026-09-09T21:10:00Z",
+    "one_line": "RP-s-9: box-grain cost attribution is blocked by a payer-account Cost Explorer setting (resource-level data opt-in DISABLED, confirmed live) and by cost-allocation tag coarseness/drift -- both independent of RP-s-5's manifest fix and outside this project's write surface, so RP-s-5 landing does NOT fully unblock box grain as the original bound's stated reason implied it would.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws ce get-cost-and-usage-with-resources --time-period Start=2026-09-01,End=2026-09-09 --granularity DAILY --metrics UnblendedCost --group-by Type=DIMENSION,Key=RESOURCE_ID --filter '{\"Dimensions\":{\"Key\":\"SERVICE\",\"Values\":[\"Amazon Elastic Compute Cloud - Compute\"]}}' run 2026-09-09 this session -> AccessDeniedException: 'Resource-level data granularity is an opt-in only feature. You can be enable this feature from the PAYER account's Cost Explorer Settings page.'",
+        "aws ce list-cost-allocation-tags --status Active run 2026-09-09 this session -> exactly 7 active tags (System, Pipeline, Owner, Partner, Macro, Project, Environment), unchanged from the L1 brief's 2026-07-07 measurement; none is a per-instance-unique key",
+        "aws ec2 describe-instances --region us-east-1 (Tags) run 2026-09-09 this session -> System=bd-pipeline shared by 5 declared EC2 rows (bd-allocations, bd-gold-layer-runner, bd-transactions, bd-assets, bd-fees); System=InflectionPipeline shared by 4 (inf-gold-layer-runner, inf-gold-qa-runner, inf-exporter, inf-bronze-runner); System absent (null) on 9 of 27 declared rows (all 8 live historical-prices-fetcher instances + canonical-schwab-si2); bd-gold-qa-runner tagged System=BDPipeline (differently cased from its 5 bd-pipeline siblings)",
+        "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~2/COST_ANOMALY.md s.2/s.2a -- the full reasoning and the System-tag intermediate-grain table cross-referenced against RP-s-5's EC2_MANIFEST.json v1.1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-RP-s-9's original BOUNDS: 'BOX grain CANNOT be computed until RP-s-5 lands, because the compute manifest is EC2-only with ECS absent entirely' -- attributing the entire box-grain block to the manifest. The coordinator's addendum on this same TO asked this cell to state plainly if box grain is now fully reachable given RP-s-5 landed.",
+    "world_is": "RP-s-5 discharged the INVENTORY half of the box-grain blocker (a complete, schema-clean EC2+ECS list with machine_type/lifecycle). It did not and could not discharge the COST-ATTRIBUTION half: AWS Cost Explorer's resource-level (per-instance) cost API is opted OUT at the payer account, and the only active cost-allocation tags are segment-grain or a coarser-than-box 'System' sub-segment with 9 of 27 rows untagged and a casing drift splitting one real segment into two. Literal box-grain cost (one figure per EC2 instance or ECS service, tested against its own trailing-30-day price) remains unreachable today, for reasons that have nothing to do with RP-s-5.",
+    "notes": "Not remediated: enabling payer-account resource-level CE data, fixing the System tag casing drift, and retiring the stale M365MCPGateway cost tag (found in the same sweep, s.2a of the deliverable) are all outside this cell's <paths> and outside comp-schedule's battery finding for this project. Disarm owner is the L6 issuer (2.0.0_SA_COO~ZZ), who owns whether a future round routes this to a billing/Terraform-tag owner."
   }
 ]
 ```
