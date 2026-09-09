@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-09T21:0xZ",
+  "written_utc": "2026-09-09T21:2xZ",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -147,8 +147,22 @@
         "wk-cldgrph-6-1 F-2 face amendment (this seat's commit)",
         "row S84"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "b00f295d5e",
       "next": "F-2's re-run and flip -> drain -> slot ~1 closed; the partial L8 packet (F-1, F-7, F-3, F-8, F-9 + F-2 once drained) to the CVO; F-4's image act; F-10's commit under the amended gate."
+    },
+    {
+      "seq": 11,
+      "limb": "L7 (a drain) / the two-phase discharge / adjudication",
+      "started_utc": "2026-09-09T21:1xZ",
+      "ended_utc": "2026-09-09T21:2xZ",
+      "act": "TO-CG-F-10 (CG-s-30) TERMINAL at pass 2 on the amended face and DRAINED: instance rc 0 in-worktree; this seat's own reads at CLOUD HEAD after the merge -- `comp-aws classes` rc 0 with the deprecation preamble as the first stderr line; `comp-which` over the first `when:` phrasing returns 0 comp-aws rows. The worker's pass-2 measures: preamble first on 3 of 3 read-only subcommands with stdout byte-identical and rc equal; comp-aws rows 0 of 4 phrasings (from ranks 4/42/23/1 of 79); curated tuples 0 of 90; the map's tool-grain status declared and carried, parity 99 of 99, idempotent regeneration; laptop-producer phrasings 0 of 7 in the registry text; the engine byte-unchanged; the self-route invariant exempting by DECLARED status at either grain with the exempt set printed and four controls fired (map unreadable; neither grain declares -> fail-closed; a planted foreign status not exempted; both grains agree); the manifest's one entry deprecated with R14a cited and its four invariants PASS; the override entry reworded and reaching both carriers by import; SAFE_COMMIT_GATE=PASS. Channel union (W6-S1..S4). Slot ~6's worktree and branch removed. THE TWO-PHASE DISCHARGE run once after the merge (comp-system; infra/system regenerated) and committed in this commit. ADJUDICATED: W6-S3 (a second upstream -- eleven cloud.* manifest entries register comp-aws subcommands with no status; one reaches the generated index) -> S85, carried named to L10 as the instruction plane's remaining residue (a PRD row's shape under R14/R14a); W6-S4 (the addendum's 'merge CLOUD into your branch' declined by the worker under its standing law -- correct; the drain owns the merge) INERT, no ack needed. 6 of 11 terminal.",
+      "artifacts": [
+        "CLOUD (the F-10 drain)",
+        "infra/system/06_current_state.{md,json} (the discharge, this commit)",
+        "row S85"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "F-2's flip and drain (slot ~1 closes); F-4's image act on ~2; the PARTIAL L8 packet to the CVO once F-2 drains (six terminal orders); F-5 -> F-11 -> F-6 on ~2."
     }
   ]
 }
