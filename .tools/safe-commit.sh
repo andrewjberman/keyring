@@ -783,7 +783,7 @@ fi
 # step-4 conformance limb already refused a TO whose PRD lacked a manifest, so the refusal pointed at
 # the COO's artifact for the CTO's omission -- which is precisely how NFRA_REPORT v0.1 committed clean
 # with no manifest (@ff9900b0ea) and was caught by two READERS instead of by the machinery.
-# ⛔ KEYED ON PATHSPEC, NOT IN_SCOPE -- every PRD is .md and IN_SCOPE is the .py/.sh gate scope, so
+# CRITICAL: KEYED ON PATHSPEC, NOT IN_SCOPE -- every PRD is .md and IN_SCOPE is the .py/.sh gate scope, so
 # wiring this like the .py gate would produce a gate that never fires and reports OK (the silent-no-op
 # class the surprise-row-gate block above documents at length).
 # DOMAIN: only a doc whose PRD_HEADER declares `step: 4` -- 205 tracked *_PRD.md, 8 are step-4 PRDs.
