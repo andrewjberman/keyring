@@ -163,7 +163,11 @@ inverts on grain is not yet a criterion (CLAUDE.md rule 24 (ii), SAME GRAIN).
 
 **Recommended completion, for the brief to carry:** *deprecated = zero consumers at the
 CLIENT-FACING TERMINUS, established by walking the chain to a served artifact and a rendered
-component, not by reading the first `scripts:` field.* That is precisely the instrument Andrew
+component, not by reading the first `scripts:` field.*
+
+<!-- BATCH 7 IS APPENDED AT THE END OF THIS FILE; this marker exists so a reader who stops here
+     does not conclude the record ends at batch 6. -->
+ That is precisely the instrument Andrew
 already required for the brief (`/atom-decomp` denominator coverage on every presented metric), so
 it adds no new machinery -- it names which end of the chain the criterion is evaluated at.
 
@@ -355,3 +359,49 @@ for the JWT consumers) are both STAGED, Round 3. **DISTINCTION PRESERVED:** thos
 signing keys**, NOT the **IAM access keys** the security sweep flagged -- a different key type on a
 different plane. What generalises is the DISCIPLINE (two slots, overlap window, no cutover), not
 the implementation. Surfaced as a candidate brief requirement; not adjudicated here.
+
+# BATCH 7 -- rulings 18 and 19. **SUBJECT WIDENS BEYOND THE INFRA REPORT**
+
+⚠ **SCOPE NOTE ON THIS CARRIER.** Batches 1-6 are all Infrastructure Report review. Ruling 18 below
+concerns a DIFFERENT project (`NFRA_IAMROLES202609`). It is recorded here because this file is the
+declared single running carrier for **this session's** Andrew-direct rulings, and splitting mid-session
+would create the second carrier the file's own banner exists to prevent. A reader looking for
+IAMROLES rulings should expect to find them here.
+
+## VERBATIM AND ENTIRE
+
+> Agreed on both, tell CTO~Z to process the infra report brief first
+
+## RULING 18 -- `NFRA_IAMROLES202609`: ESTABLISH THE PROTOTYPE BEFORE SPENDING
+
+Approves this seat's recommendation: **establish the state of the `comp-iam-usage` prototype FIRST,
+then decide between it and AWS IAM Access Analyzer. DO NOT ENABLE BLIND.**
+
+**Why it needed a sovereign word at all:** Access Analyzer's unused-access analyzer is a **CHARGED**
+feature billed per analyzed role, against a population of ~208 roles. That is spend, and spend is
+Andrew's. ⛔ **NO PER-ROLE PRICE IS RECORDED HERE** — this seat did not read AWS's pricing page and
+declined to quote a number it had not measured. Pricing it properly is part of the decision, not an
+input this record supplies.
+
+**The substance, measured (brief F5/F7):** `comp-iam-usage` was designed 2026-07-17 with a claimed
+**validated prototype**, on Andrew's own steer (*"go ahead with comp-iam expansion"*), and the
+Access-Advisor family returns **3 hits estate-wide, all `[DOC]` band, ZERO in code**. Access Analyzer
+measured `{"analyzers": []}` live 2026-09-09 — still absent 54 days after the same design flagged it.
+**So the fork is rung-2 (the estate already has it, on paper) versus rung-4 (native platform
+feature), and which one is real is unmeasured.** Ruling 18 makes that measurement the first act
+rather than a decision taken ahead of it.
+
+## RULING 19 -- BRIEF PROCESSING ORDER AT `1.0.0_SA_CTO~Z`
+
+**The Global Infrastructure Reporting brief is processed FIRST**, ahead of `NFRA_IAMROLES202609`.
+
+**Basis, in Andrew's own prior word:** the hold he placed on `2.0.0_SA_COO~Z` seating names the
+Global Infrastructure Reporting brief specifically, so processing it releases that seating and
+unparks all of `NFRA_OPSEC202609`. `NFRA_IAMROLES202609` has no seat waiting behind it. The two
+briefs also share one dependency — the BLOCKED `comp-find --corpus aws` (`comp-kuzu rc=2`), carried
+as D4 in the Global Infra brief and D1 in the IAMROLES brief — so the first through should pick up
+that instrument's ownership.
+
+**Relayed to `1.0.0_SA_CTO~Z` the same turn**, on Andrew's explicit instruction (*"tell CTO~Z to
+process the infra report brief first"*). Verbatim scope: an ORDERING instruction, neither widened
+into a priority ruling on anything else that seat holds, nor narrowed.
