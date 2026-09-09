@@ -173,3 +173,38 @@ brief will surface with evidence. Either way the brief answers it rather than as
 3. Requirements carried forward into the brief: decommissioning/cleaning as an explicit function
    (ruling 8); the consumer-based deprecation criterion with its grain named (ruling 9 + the
    refinement above); trading-day-only delivery before Andrew's morning (ruling 7).
+
+# BATCH 4 -- 2026-09-09 ~15:3xZ (rulings 10 and 11)
+
+## VERBATIM AND ENTIRE
+
+> Both recs approved
+
+Answering the two cards issued at 15:2xZ on the Deploy Drift / Producer Drift section. The rulings
+are Andrew's approval of this seat's recommendations, which are therefore quoted here in full so
+the record does not depend on the cards being read alongside it.
+
+**Ruling 10 -- the 15 unassessable Terraform modules.** APPROVED: *"fold them in, but as a NAMED
+separate workstream inside the brief. Nine of the fifteen share one error class and three share one
+line, so the fix is far smaller than the count suggests; and the report cannot honestly claim drift
+coverage while blind to a quarter of the estate. Keeping it inside the brief keeps one owner, per
+ruling 8."*
+
+Measured basis: `coverage 40/55 assessable (73%)`; 9 of 15 are `Archive creation error`; 3 of those
+9 (`served-guard-49f`, `served-guard-cot`, `served-guard-inf`) fail on the identical line
+`../modules/served-guard/main.tf line 41`.
+
+**Ruling 11 -- out-of-band Lambda deploys.** APPROVED: *"enforce, and make the report say so.
+'Deployed-ahead' should render as a violation with an owner, not a WATCH. mdpf-gold-lambda is the
+argument: it is one of the four AND one of the 100%-failing functions, so nobody can currently
+trust a source-line citation against it. If any surface genuinely needs out-of-band deploys, that
+is worth naming explicitly rather than leaving as drift."*
+
+Measured basis: 4 modules `[deployed-ahead]` -- `opal-partners-data` (artifact 4245.6h),
+`mdpf-accrual-trigger` (695.4h), `mdpf-gold-lambda` (705.8h), `opal-assets-mdpf-portal-publisher`
+(276.1h). CLAUDE.md names `aws lambda update-function-code` a NEVER (Terraform only).
+
+**SCOPE NOTE, so no seat over-reads ruling 11.** It approves (a) enforcement as the report's
+RENDERING of deployed-ahead, and (b) that a genuine need for out-of-band deploys be named
+explicitly. It is NOT a remediation order against any of the four modules, and this seat issues
+none. `4.0.0_SA_CRO` does not dispatch.
