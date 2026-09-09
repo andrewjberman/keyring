@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-09T22:5xZ",
+  "written_utc": "2026-09-09T23:0xZ",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -216,8 +216,21 @@
         "wk-cldgrph-6-7 (slot ~7 spawned)",
         "msgs 94776/94777 (the W2-S60 pitch)"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "381eda9ebb",
       "next": "the CTO's GO + the CVO's sign on W2-S60 -> widen F-11's grant to grain_baseline.json's four entries and re-hand; F-6's report on ~7; the FINAL packet and the drain-end read after both drains; CronDelete on the send."
+    },
+    {
+      "seq": 16,
+      "limb": "L6 (a grant widened by a gate GO) / L7 (a re-hand)",
+      "started_utc": "2026-09-09T23:0xZ",
+      "ended_utc": "2026-09-09T23:0xZ",
+      "act": "THE CTO RULED W2-S60 within the tick (94778; a dated section of the W2-S45 record): GO in two parts under ONE CVO sign -- the four retired provisional types recertified to 0 in grain_baseline.json (the EXTERNAL_ENDPOINT precedent: a baseline that certifies a vocabulary the producer no longer emits is a check reading the old world) AND the five canonical types recertified at their first post-unification magnitudes (PipelineScript 332, PipelineFunction 2,428, S3Key 588, Component 24, ReactQueryKey 188; the CVO re-measuring before signing -- 'not read at L9': a band check against the old magnitudes would refuse the correct output, and leaving the nightly refusing until L9 is the waiting Andrew's word forbids); the GO line 20260909T2305Z verbatim; the COND-A resource-type count unmoved at 32. EXECUTED THE SAME TICK: F-11's face on the worker's branch amended @9495eb15f7 (the grant widened to exactly nine entries of grain_baseline.json; the entries written with the sign field `pending 3.0.0_SA_CVO`; the local derive re-run to GRAIN-SENTINEL PASS; then the zip push, ONE ad-hoc build, ONE ad-hoc derive, the projection and the served reads under the manual-trigger form) and F-11 RE-HANDED to the same subagent; the CVO told (the sign lands on CLOUD after the drain, C-S40's shape). Carried by the CTO to the L10: W2-S61 as a substrate-card question for the stitch producer (Rule 28 q3/q4: a producer that re-archives its own reader's input); W2-S63 to CloudOps; the STORED_IN silent-zero fix as a lesson for the accept's negative arm. F-6 on slot ~7 past its archive and delete (the local store gone from the main workspace; 19 files edited; flip pending).",
+      "artifacts": [
+        "wk-cldgrph-6-2 @9495eb15f7 (the F-11 GO amendment)",
+        "msg to the CVO 23:04Z"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "F-11's flip (the push, build, derive, projection, served reads) and F-6's flip; both drains; the CVO's baseline sign; the FINAL packet; the drain-end read to the CTO; CronDelete."
     }
   ]
 }
