@@ -1,7 +1,7 @@
 # DEPLOY COMPLETION LEDGER -- estate-report-runner TRIGGER-TOKEN READ (NFRA_OUTSET.TO-OS-s-26)
 
-**Opened:** 2026-09-09T22:43Z by `0.7.0_AE_CloudOps~W`
-**Status:** OPEN -- the upload has NOT been performed at this write
+**Opened:** 2026-09-09T22:43Z by `0.7.0_AE_CloudOps~W` (committed OPEN at `d1c0fa3c83`)
+**Status:** **CLOSED 2026-09-09T22:45Z** -- all four legs verified, both controls fired
 **TO:** `org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-26.the-trigger-token.md`
 (cell `OS-s-26`, PRD v0.8 @`dc6a33c3e3`; issuance `26f1cd8b82`)
 
@@ -50,15 +50,44 @@ Unchanged and re-stated rather than assumed carried: exactly ONE functional cons
 service start (`instance.tf:215`). The orchestrator reads no code key -- it now writes the token
 object, which is a different key and a different direction.
 
-## Legs
+## Legs -- ALL FOUR VERIFIED
 
-1. [ ] `s3api put-object` HEAD bytes -> `code/estate_report_runner.py`
-2. [ ] `head-object`: ContentLength == 173,482 and ETag == `03298f0f5c2177335349ce053a744bc4`
-       (**the OS-s-19 control: a DIFFERENT blob's md5 must NOT match**)
-3. [ ] CONTENT diff: re-download and sha256-compare against `git show HEAD:<path>`, with a negative
-       control proving the comparator can fail
-4. [ ] The token-read code is present in the SERVED bytes, by token census with a control per token
-       against the PRIOR served object
+1. [x] Uploaded 2026-09-09T22:44:30Z, instance read LIVE as `stopped` immediately before. New
+       VersionId `BUorf3uM3aGvDQRveDn8JvdMvWoPGVK6`.
+2. [x] ETag `03298f0f5c2177335349ce053a744bc4` **== the HEAD md5**; ContentLength 173,482.
+       **THE OS-s-19 CONTROL FIRED:** the PRIOR served blob's md5 is
+       `b6fd49329e80a1bae8152991893ac498`, which does **not** match -- so the ETag test
+       discriminates rather than passing on any deploy.
+3. [x] CONTENT diff: served sha256 `082f4cf5ab78440b...` == HEAD, 173,482 B both. NEGATIVE CONTROL:
+       one bit flipped at offset 100 with the length held fixed -> MISMATCH.
+4. [x] **The token READ is in the SERVED bytes**, a control per token against the PRIOR served
+       object:
+
+       | token | prior | new | verdict |
+       |---|---|---|---|
+       | `OUTSET_TRIGGER_KEY` | 0 | 2 | ADDED |
+       | `_trigger_token_read` | 0 | 2 | ADDED |
+       | `_trigger_for_run` | 0 | 2 | ADDED |
+       | `TRIGGER_TOKEN_MAX_AGE_S` | 0 | 3 | ADDED |
+       | `config/last-trigger.json` | 0 | 1 | ADDED |
+       | `"trigger": trigger` | 0 | 1 | ADDED |
+       | `"run_id": run_id` | 0 | 1 | ADDED |
+       | `run_pin` | 1 | 2 | CONTROL, both sides |
+       | `_stratum_propagation` | 3 | 3 | CONTROL, both sides |
+
+       **The last two rows are the control that makes the first seven mean something.** A reader
+       that returned 0 for every token on the prior side -- because it failed to open that file, say
+       -- would produce seven identical-looking ADDED verdicts. Two tokens present on BOTH sides
+       prove the prior object was actually read.
+
+## POST-STATE
+
+| | value |
+|---|---|
+| Served runner | **173,482 B**, ETag `03298f0f5c2177335349ce053a744bc4`, VersionId `BUorf3uM3aGvDQRveDn8JvdMvWoPGVK6` |
+| Identical to | `git show HEAD:infra/aws/ec2/estate-report-runner/estate_report_runner.py` |
+| Grants, applied plane (census 22:41:56Z) | orchestrator `s3:PutObject` on `config/last-trigger.json` ONLY; runner `s3:GetObject` on the same ONE key |
+| Carrier state | BOTH halves live: the orchestrator writes the token on every invoke from now; the served runner reads it |
 
 ## Rollback
 
