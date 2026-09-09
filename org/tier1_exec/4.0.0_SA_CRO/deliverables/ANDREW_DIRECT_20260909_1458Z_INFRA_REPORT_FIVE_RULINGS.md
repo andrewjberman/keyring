@@ -389,9 +389,22 @@ Andrew: *"should be named separately id say by group (Dashboard, Website, Graph)
 > this record's prose. **A false weld in a ruling record does not stay in the record.**
 >
 > **NOW SPECIFIED, not guessed:** FWD-4's attribution axis carries a mandatory rendered `UNGROUPED`
-> value, so a surface with no ratified group is SHOWN rather than omitted. Whether the attribution
-> axis's third member is Gateway, Graph, or both, is **an open call at Andrew** — and the loop
-> cycles without it.
+> value, so a surface with no ratified group is SHOWN rather than omitted.
+>
+> ⛔ **CLOSED 2026-09-09 ~22:4xZ — NOT an open call, and this record briefly said it was.** Andrew,
+> VERBATIM: *"irrelevant already covered this call with CTO~Z."* **The naming was ruled at the
+> `1.0.0_SA_CTO~Z` terminal and that seat carries it.**
+> ⚠ **THIS SEAT HAS NOT READ THE RULING AND ASSERTS NOTHING ABOUT ITS CONTENT** — not whether the
+> third member is Gateway, Graph or both. Recorded as CLOSED-ELSEWHERE rather than answered here,
+> because a record that guesses at a ruling it has not read is worse than one that names the owner.
+> *(The PRD read at v0.5 still shows the item open at line 320; that is `1.0.0_SA_CTO~Z`'s to
+> reconcile, not this seat's to chase.)*
+>
+> **AND THE PROCESS FAILURE IS THIS SEAT'S:** this call was re-listed at 22:3xZ having been carried
+> from 21:5xZ without re-checking whether a ruling had landed at another terminal. `/open-calls`
+> names that as its single most damaging failure — *"a call answered elsewhere is CLOSED, listing it
+> re-opens settled law."* A carried call needs the same inbox sweep as a new one; carrying is not a
+> licence to skip the check.
 
 ### ⭐ THE "GRAPH MAY BE EMPTY" SUB-ITEM IS DISCHARGED -- AND THIS RECORD WAS WRONG ABOUT THAT TOO
 
