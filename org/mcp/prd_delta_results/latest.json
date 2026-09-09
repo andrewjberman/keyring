@@ -1,33 +1,96 @@
 {
-  "generated_scope": 25,
-  "with_prd": 25,
-  "no_prd": 0,
-  "generated_by": "1.0.0_SA_CTO manual session-context assessment 2026-07-09 (single-agent judgment pass; python renderer was env-blocked at generation, persisted post-recovery)",
+  "generated_scope": 3,
+  "with_prd": 1,
+  "no_prd": 2,
+  "scope_note": "D0 pre-tree sweep, Andrew-direct 2026-09-09 ~22:4xZ: NFRA_COMPTOOLS, NFRA_DEPLOYLEDGER, NFRA_TORECORD (replaces the 2026-07-09 25-project sweep in this file; that sweep stays in git history)",
   "results": [
-    {"code":"NFRA_COMPAWS","completeness_pct":95,"completeness_label":"MOSTLY-COMPLETE","items":[],"missing":["nothing material -- DEPRIORITIZED; tool current, 13/13 certs HOLD on the estate"],"registry_mismatch":"status active but Andrew-deprioritized 07-01; re-activation would re-litigate DONE work","undocumented_activity":[],"status":"assessed"},
-    {"code":"NFRA_CMTQUE","completeness_pct":90,"completeness_label":"MOSTLY-COMPLETE","items":[],"missing":["residual polish only -- TO-4 alarms + TO-5F guard-retirement live-EXERCISED (real alarm/DLQ/SNS fires)"],"registry_mismatch":null,"undocumented_activity":[],"status":"assessed"},
-    {"code":"MKOV_RETFIX","completeness_pct":90,"completeness_label":"MOSTLY-COMPLETE","items":[],"missing":["TO-2 residual-bps reconciliation final leg (behind an access-gate)"],"registry_mismatch":null,"undocumented_activity":[],"status":"assessed"},
-    {"code":"NFRA_TERRAFORM","completeness_pct":85,"completeness_label":"MOSTLY-COMPLETE","items":[],"missing":["unmanaged hand-written inline IAM policies exist LIVE but are not in TF state (surfaced tonight via the data-plane firm-sep finding)"],"registry_mismatch":"'the estate is in Terraform' is not fully true -- unmanaged inline IAM invisible to plan/drift","undocumented_activity":[],"status":"assessed"},
-    {"code":"ADVI_BREAKS","completeness_pct":80,"completeness_label":"MOSTLY-COMPLETE","items":[],"missing":["TO-5 final CVO cross-cutting sign-off AFTER the fixes landed"],"registry_mismatch":"never advanced past initial filing despite same-day served-GREEN close","undocumented_activity":[],"status":"assessed"},
-    {"code":"NFRA_SEMCTL","completeness_pct":80,"completeness_label":"MOSTLY-COMPLETE","items":[],"missing":["final promote-fold (C1-C3 materialize + @0.4 deploy + incremental-refresh certed)"],"registry_mismatch":null,"undocumented_activity":[],"status":"assessed"},
-    {"code":"ETFS_AVGCAP","completeness_pct":75,"completeness_label":"MOSTLY-COMPLETE","items":[],"missing":["expanded ingestion->presentation scope (Andrew-expanded 06-25); monthly cert holds"],"registry_mismatch":null,"undocumented_activity":[],"status":"assessed"},
-    {"code":"NFRA_LOCALROOT","completeness_pct":75,"completeness_label":"MOSTLY-COMPLETE","items":[],"missing":["P3 (b) homeless-knowledge consolidation + (c) reconcile 3 homes","P4 anti-scatter convention"],"registry_mismatch":null,"undocumented_activity":[],"status":"assessed"},
-    {"code":"ADVI_COTETL","completeness_pct":70,"completeness_label":"MOSTLY-COMPLETE","items":[],"missing":["49F served un-freeze verification (scheduled ~04:00Z 07-10)","DATEMODE-B cot holdings root-fix (CTO-ruling-gated)"],"registry_mismatch":null,"undocumented_activity":[],"status":"assessed"},
-    {"code":"ADVI_BDAPIMIG","completeness_pct":70,"completeness_label":"MOSTLY-COMPLETE","items":[],"missing":["49F served-API asOfDate propagation verification"],"registry_mismatch":null,"undocumented_activity":[],"status":"assessed"},
-    {"code":"ADVI_ETLFIX","completeness_pct":70,"completeness_label":"MOSTLY-COMPLETE","items":[],"missing":["Phase-1 durable-hardening completion (WS-4 portal-refresh; 10 increments landed, ongoing)"],"registry_mismatch":null,"undocumented_activity":[],"status":"assessed"},
-    {"code":"NFRA_EDGES","completeness_pct":65,"completeness_label":"IN-PROGRESS","items":[],"missing":["P3 materialize deploy-gated on tonight's ~02:10Z nightly (not yet applied)","P4 pre-ratified but held"],"registry_mismatch":null,"undocumented_activity":[],"status":"assessed"},
-    {"code":"NFRA_AGENTBUS","completeness_pct":60,"completeness_label":"IN-PROGRESS","items":[],"missing":["S3 broker adapter (held on MCPGUARD/PREMCP/COMPTEAM impls)","S4 CVO live re-verify","AB-ACTIVATE (Andrew-fenced, un-authored)"],"registry_mismatch":null,"undocumented_activity":[],"status":"assessed"},
-    {"code":"ADVI_INFREF","completeness_pct":60,"completeness_label":"IN-PROGRESS","items":[],"missing":["old per-dim pull Lambdas + inf-bronze-runner not retired","auth-hardening alarms not built","Yahoo-price-fallback removal not built","no clean consecutive-run checkpoint"],"registry_mismatch":"no formal TOs despite 77 commits (tracked informally via commit messages)","undocumented_activity":[],"status":"assessed"},
-    {"code":"SCTY","completeness_pct":60,"completeness_label":"IN-PROGRESS","items":[],"missing":["W1 agent-supply-chain technical control is DOCTRINE-ONLY (most urgent -- no sandbox / no-auto-run-external built)","the live cross-firm data-plane bucket belt (tonight's NEVER#1 finding; write-plane closed, read-plane in progress)"],"registry_mismatch":null,"undocumented_activity":[],"status":"assessed"},
-    {"code":"NFRA_COMPTEAM","completeness_pct":55,"completeness_label":"IN-PROGRESS","items":[],"missing":["A1 kit has NO end-to-end verification run + untested secrets-leak gate","B2 access-control layer not built (design cleared)","no non-Andrew teammate onboarded (Andrew-gated)"],"registry_mismatch":null,"undocumented_activity":[],"status":"assessed"},
-    {"code":"DATA_PLATFORM","completeness_pct":55,"completeness_label":"IN-PROGRESS","items":[],"missing":["DC1 Orion sanctioned crawl BLOCKED (instance STOPPED + a pending CTO invoke-IAM ruling)","DC2/DC3 queued","Schwab unattended-pull automation ('Quartz' EC2) not built","trade-plane self-build-vs-partner fork"],"registry_mismatch":null,"undocumented_activity":[],"status":"assessed"},
-    {"code":"SCTY_PREMCP","completeness_pct":55,"completeness_label":"IN-PROGRESS","items":[],"missing":["secrets-rotation runbook + JWT/Fernet/Graph break-glass (not written)","per-capability OAuth token-scope split (not built)","B2 read-only grant partial"],"registry_mismatch":"SCTY parent calls it 'closed' but it is half-built","undocumented_activity":[],"status":"assessed"},
-    {"code":"NFRA_GCONTR","completeness_pct":40,"completeness_label":"IN-PROGRESS","items":[],"missing":["3 SEV1 contract rows need Andrew sign-off","write-path + advisory->hard-flip promotion"],"registry_mismatch":"was stale ~3wk ('COO to decompose') though 5 rows authored 06-16/17/18","undocumented_activity":[],"status":"assessed"},
-    {"code":"ADVI_INFFEE","completeness_pct":35,"completeness_label":"IN-PROGRESS","items":[],"missing":["TO-2 gold revise (count-by-holdings)","TO-3 frontend"],"registry_mismatch":"TO-1 findings OVERTURN the PRD's default-recommended grain (count by holdings, not custody record)","undocumented_activity":[],"status":"assessed"},
-    {"code":"NFRA_WEBSITE","completeness_pct":35,"completeness_label":"IN-PROGRESS","items":[],"missing":["W1 WordPress-on-AWS platform build (in progress)","W2 TLS/SMTP/backups/hardening","W3 GoDaddy apex-A cutover"],"registry_mismatch":null,"undocumented_activity":[],"status":"assessed"},
-    {"code":"ADVI_COTPPLADVFIX","completeness_pct":25,"completeness_label":"EARLY","items":[],"missing":["TO-1 build (synthetic Cottonwood advisor injection)","TO-2 (DE)","TO-3 (frontend)"],"registry_mismatch":null,"undocumented_activity":[],"status":"assessed"},
-    {"code":"MKOV_TRSRCE","completeness_pct":10,"completeness_label":"EARLY","items":[],"missing":["implementation -- no TOs dispatched yet (PRD v1.1 authored 07-07)"],"registry_mismatch":null,"undocumented_activity":[],"status":"assessed"},
-    {"code":"MDPF_COTMDL","completeness_pct":null,"completeness_label":"HELD","items":[],"missing":["Andrew-parked 07-07: Cottonwood runs NO model-portfolio program in BD (TO-1 populated-check negative) -- nothing to build"],"registry_mismatch":"status=active but ON HOLD (Andrew)","undocumented_activity":[],"status":"assessed"},
-    {"code":"COMP_LEARNS","completeness_pct":null,"completeness_label":"INACTIVE","items":[],"missing":["Stage 3 dormant >5wk; resume = Andrew-sovereign CL re-activation"],"registry_mismatch":"MSTR-reclassified inactive; still appears in the active-activity scope","undocumented_activity":[],"status":"assessed"}
+    {
+      "code": "NFRA_COMPTOOLS",
+      "completeness_pct": 100,
+      "completeness_label": "COMPLETE",
+      "status": "assessed",
+      "items": [
+        {
+          "item": "comp-pipescript io sees paginated prefix reads (PREFIX-READS)",
+          "verdict": "LANDED",
+          "evidence": "TO status 'complete -- DELIVERED 2026-08-25 @3b789c9d6f (ON origin/CLOUD, ancestry checked)'; proof instance on disk"
+        },
+        {
+          "item": "runners-registry state scan fix + atom check, three comp-lane acts (REG-SCAN-ATOMCHECK)",
+          "verdict": "LANDED",
+          "evidence": "TO status 'complete -- DELIVERED 2026-08-25 across TWO proof instances whose UNION covers REG-1,J2-1,J3-1,RSA-VAL'"
+        }
+      ],
+      "missing": [],
+      "registry_mismatch": "org/projects/NFRA_COMPTOOLS.json reads status active / dep_stage EXECUTING / phase 'UNSEATED-ON-CAPACITY' (COO record 08-29 @a6b255c1ec), but both TOs flipped complete on 08-25 and 0.8.0_AE_CloudComp~F restamped them DELIVERED on 08-26 (@1098342ec) -- the register is three days behind its own TOs",
+      "undocumented_activity": [
+        "NFRA_COMPEFFICACY (D11, tree) has since audited every comp-tool (22 accounts) -- the comp-tool hardening subject moved there"
+      ],
+      "rec": "MARK CLOSED (complete). No re-home: the subject lives in NFRA_COMPEFFICACY."
+    },
+    {
+      "code": "NFRA_DEPLOYLEDGER",
+      "completeness_pct": 100,
+      "completeness_label": "COMPLETE",
+      "status": "assessed",
+      "items": [
+        {
+          "item": "deploy-ledger HELD state: schema + act-held terminal vocabulary + required re-read condition (HELD-STATE)",
+          "verdict": "LANDED",
+          "evidence": "TO status 'complete -- DELIVERED 2026-08-25 @6fc0b41fb0 (ON origin/CLOUD)'; proof VALID 6/6 @feaed42e5; .tools/deploy_ledger.py check is live and ran tonight (COO gate-bypass scan 19:20Z; this seat 22:5xZ: 6 of 6 sentinels scanned, 3 OPEN past-window, 2 HELD-STALE, 1 in-window)"
+        }
+      ],
+      "missing": [
+        "The unfielded historical corpus named at registration and explicitly OUT of the TO's scope: 109 of 692 ledger records carry no parseable Status field tonight (was 106 of 542 on 08-25; the growth is the corpus, not the defect -- new records are fielded; the unfielded ones are June-era)"
+      ],
+      "registry_mismatch": "org/projects/NFRA_DEPLOYLEDGER.json reads active / EXECUTING / 'UNSEATED-ON-CAPACITY' (08-29) while its only TO was delivered and proven 08-25",
+      "undocumented_activity": [],
+      "rec": "MARK CLOSED (complete). The 109 unfielded historical records are a one-time backfill or a declared pre-schema exemption in the checker -- a single D0 tree row if Andrew wants the ledger corpus fully fielded; otherwise closed with the residue named."
+    },
+    {
+      "code": "NFRA_TORECORD",
+      "completeness_pct": null,
+      "completeness_label": "SUPERSEDED",
+      "status": "assessed",
+      "items": [
+        {
+          "item": "(1) the <status> face nothing enforces -- cert+proof land, face still reads open",
+          "verdict": "SUPERSEDED for tree projects",
+          "evidence": "spine v3 L7 reads from git; .tools/git-hooks/to-proof-of-spec-check.sh refuses a complete flip without a VALID instance"
+        },
+        {
+          "item": "(2) <status> is free prose (429 values / 1,991 TOs)",
+          "verdict": "PARTLY SUPERSEDED",
+          "evidence": "project grain: dep_stage is a gated enum (to-pipeline-gate DEP_STAGE_ENUM); TO grain: the face keys on its leading token (TR-a-3's closed-token key) -- still prose after the token"
+        },
+        {
+          "item": "(3) no declared CERT -> TO link",
+          "verdict": "SUPERSEDED for tree projects",
+          "evidence": "every tree TO carries proof_of_spec_ref; the L8 packet and the CVO's adjudication rows cite TO ids; the L9 slug is the declared link"
+        },
+        {
+          "item": "(4) the assignee scan discards SEATED: prose",
+          "verdict": "SUPERSEDED",
+          "evidence": "workers are subagents; no lane enumerates a worker; the owned-paths resolver admits by <paths> -- the assignee scan is a legacy lens"
+        },
+        {
+          "item": "(5) 67 declared instance paths that do not resolve",
+          "verdict": "SUPERSEDED for tree projects",
+          "evidence": "the SURPRISES limb + proof-of-spec-check block a flip whose instance does not resolve; the 67 legacy paths remain as history"
+        },
+        {
+          "item": "(6) no instance status for an issuer-ruled-closed criterion",
+          "verdict": "PARTLY SUPERSEDED",
+          "evidence": "standing authority @9f4a57262f (proxy re-cut, told not asked), the PENDING-THIS-COMMIT sentinel, COMPLETION_GRADES at L10 -- ruled-closed lives on the record face, not in an instance enum"
+        }
+      ],
+      "missing": [
+        "Nothing was ever cut: dep_stage REGISTERED since 08-26; the purpose-level PRD v1 and a 19-cell atom decomp exist and no TO was issued",
+        "The only population the six defects still bite is the LEGACY flat-TO corpus (1,991 TOs) -- which this directive-by-directive sweep retires project by project"
+      ],
+      "registry_mismatch": "none (REGISTERED is accurate) -- but the phase text names a next step (the COO's purpose-level PRD) that happened 08-26 and was never recorded back",
+      "undocumented_activity": [],
+      "rec": "MARK CLOSED / SUPERSEDED by spine v3.0-3.7 and the tree gates. No re-home: its residual population (legacy free-prose faces) is retired by this sweep, not by a project."
+    }
   ]
 }
