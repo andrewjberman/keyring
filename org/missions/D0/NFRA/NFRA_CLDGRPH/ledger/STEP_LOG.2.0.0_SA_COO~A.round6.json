@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-09T18:0xZ",
+  "written_utc": "2026-09-09T18:5xZ",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -18,8 +18,22 @@
         "org/missions/D0/NFRA/NFRA_CLDGRPH/project.json (dep_stage EXECUTING) + org/projects/NFRA_CLDGRPH.json (derived)",
         "org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md (S70; 152 rows)"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "c6b16d8f04",
       "next": "spawn the four workers on fresh worktrees wk-cldgrph-6-1..4 from CLOUD (opus; F-4's slot gets .tools/terraform.exe at hand-off); the MSTR message for site Z; the 20-minute cron re-armed; drains through safe-merge.sh; F-2 handed after F-1's drain (its instants are fixed: a late hand-off asks at the remaining instants)."
+    },
+    {
+      "seq": 2,
+      "limb": "L7 (drain + hand-off) / L6 (two rulings) / adjudication",
+      "started_utc": "2026-09-09T18:40Z",
+      "ended_utc": "2026-09-09T18:5xZ",
+      "act": "TO-CG-F-1 (CG-s-21) TERMINAL AND DRAINED. The worker report (0.9.0_WK_NFRA_CLDGRPH~1; acts dcdf0581b1, flip 86b71ad4a3) and the instance re-verified at this seat INSIDE the worktree: checker rc 0 on six ids (F1-AC1..AC5 PASS by output; F1-AC6 recorded UNVERIFIABLE-BY-INSTRUMENT for 3.0.0_SA_CVO); this seat's own read on the main workspace: kuzu_db and kuzu_ac7.db ABSENT by absolute ls -d beside projection_client.py present; kuzu_load.py absent at HEAD after the merge (git show rc 128). MERGED through safe-merge.sh: rc 4 on the channel (CLOUD had moved: the CVO's S71 landed at 18:44Z, 153 rows); the base-independent union resolver produced 154 (ours 153 + the branch's W1-S32), no markers; the first --continue REFUSED because the resolved file was not staged (git add, then --continue rc 0) -- @2c4e462a7b. Worktree and branch KEPT (slot ~1's chain continues). CLOUD merged into wk-cldgrph-6-1 (fast-forward to 2c4e462a7b). TO-CG-F-2 (CG-s-22, the site-Z exercise's LAPTOP half) HANDED at 18:49Z by continuing the same subagent, eleven minutes before T0 19:00Z; the site-Z half is CARRIED by 0.0.0_AB_MSTR over the agentbus (msg 94630, 18:26Z: one message with the six items verbatim; site Z's comp-kuzu blob may lag origin/SITEZ's integrate leg -- the record must name which blob answered; a missing ack before 19:00Z is site Z's MISSED to print). ADJUDICATION (obligation 7) -- ONE call this tick, from the CVO's row S71 (18:44Z): S70's laptop is an INSTALLED POST-COMMIT HOOK at both clones (.tools/git-hooks/stitch-refresh-post-commit.sh -> .tools/stitch-refresh; 552 laptop publishes since 07-07, refused since 09-05 by the grain sentinel; site Z's derive passes so site Z now writes the shared key), carrying an Andrew-direct of 2026-07-07 ('a SOLO contributor whose local working tree IS the canonical state') against PRD v0.6 S23-S26. Classified ADJUDICABLE-SPEC (no NEVER line; the Andrew word is a direction whose premise the fabric no longer meets) -> PITCHED to 1.0.0_SA_CTO with 0.0.0_AB_MSTR copied (msgs 94637/94638) with the REC: the cloud producer holds the key; the hook stops publishing to it (uninstall at every clone as a device act; .tools/stitch-refresh refuses the cloud-owned key) -- as a PRD v0.7 line on S23's accept or a card to Andrew. RULED INSIDE THE GRANT the same tick (recorded on the F-3 and F-4 faces; sent to worker ~2 as a ruling): F3-AC4 read IMMEDIATELY after the ad-hoc build with its UTC instant (perishable; a hook overwrite recorded beside it); the hook and its scripts untouched by every round-6 order; F3-AC1's cause citable from the cloud log S71 carries; F3-AC6's status_reason marks the nightly read perishable; F-4's fold CARRIES the marker's producer into the served vintage and does not refuse on it. Slots ~2/~3/~4 mid-order (F-3 finding commit de590a7d02: derive_stitch's 0-dangling check dropped the AWS layer's wildcard flag; F-7 acts commit 987e920554; F-8 carriers regenerated, uncommitted).",
+      "artifacts": [
+        "CLOUD @2c4e462a7b (the F-1 drain)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-F-3.*.md + F-4 (the S71 rulings)",
+        "msgs 94637/94638 (the pitch)"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "F-2's three instants (19/20/21Z); drains of F-3/F-7/F-8 as they flip; F-4 handed to ~2 after F-3 (terraform.exe already in its worktree); the CTO's answer on S71 executed as a ruling when it lands."
     }
   ]
 }
