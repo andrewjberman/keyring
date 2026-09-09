@@ -209,6 +209,54 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
     "spec_asserts": "PRD s.8 row S9 and TO-RP-s-9 BOUNDS: 'BOX grain CANNOT be computed until RP-s-5 lands, because the compute manifest is EC2-only with ECS absent entirely.' The stated blocker is the manifest.",
     "world_is": "RP-s-5 landed and the manifest blocker is discharged, yet box-grain dollars remain unreachable for two causes the PRD never named: an account-level Cost Explorer opt-in, and cost-allocation tag hygiene. D3's dependency was correctly stated and INCOMPLETE -- it named the blocker this project could clear and not the two it cannot.",
     "notes": "DISARMED TO INERT because the hazard was that an unreachable limb would be read as merely pending on a dependency that has since cleared -- a caveat outliving its cause, which is this project's own defect class. Recording it here removes that: the residual is now durable, attributed, and carried by 2.0.0_SA_COO~ZZ into the round-close slug to 1.0.0_SA_CTO~Z as a named limitation on FWD-8's box-grain limb. GRADUATED in the sense 1.0.0_SA_CTO~Z flagged at msg 20629 -- accepted and acted on, NOT an assertion that a CVO remediation row is owed. NOT FIXED HERE AND NOT THIS LANE'S TO FIX: enabling resource-level Cost Explorer is a payer-account billing setting and is Andrew's; the tag hygiene belongs to the owning infra lanes. FWD-8's SEGMENT limb is delivered and unaffected -- the outcome is not blocked, only its box-grain half."
+  },
+  {
+    "id": "NFRA_REPORT-Z-W1-S1",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_REPORT~1",
+    "surfaced_at": "2026-09-09T21:20:00Z",
+    "one_line": "RP-s-7: comp-blast's served kuzu graph models NO edge at all between GOLD_SCRIPT nodes and Lambda/portal nodes -- confirmed by a positive-control FAILURE on a definitely-live lambda -- so a 'zero downstream consumers' or 'zero upstream gold: ancestor' result from comp-blast is not evidence for OR against C-DEPRECATED-TERMINUS, for ANY gold script in the estate, not only this cell's ten candidates.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-blast 'gold:B_01.holdings_lots' --direction downstream --json, 2026-09-09 ~21:0xZ: WITHIN BUDGET, scanned 164 of 164, 164 distinct ids returned, prefixes {gold:77, s3:87} -- ZERO ids of any other prefix (no lambda:, component:, jsx:, arn: node reached).",
+        "REPEATED on 8 more gold scripts (B_02, A_03, INF_D_00, INF_D_04, INF_D_07, INF_D_03, INF_D_02b, INF_C_01, INF_D_00c) -- every single one returns ONLY gold:/s3: prefixed ids where non-zero, or ANSWER-STATE: PRESENT_WITH_ZERO_RESULTS (0 of 0 scanned) where zero -- including INF_D_00b.portal_timeseries.py, a script named for portal serving and NOT one of this cell's ten candidates, which ALSO returned PRESENT_WITH_ZERO_RESULTS.",
+        "POSITIVE CONTROL, the discriminating read: comp-blast 'arn:aws:lambda:us-east-1:313476888478:function:inf-api-positions' --direction upstream --json, 2026-09-09 ~21:1xZ -- this lambda is independently known-live (it backs a served portal API route per infra/aws/lambda/inf-pipeline/inf-api-positions). Its upstream ancestor set in the SAME graph returns 14 ids, prefixes {system:2, motif:3, motifi:7, arn:1, event-source:1} -- ZERO gold: ancestors, even though this lambda demonstrably reads gold-layer output at runtime. The graph is blind to this edge type in EITHER direction, on a node proven to be alive, not merely on the ten candidates under test.",
+        "the graph DOES model the client-facing layer generally (comp-blast 'component:AdvisorsTab.tsx' NOT-FOUND response prints the live node-type census: ReactComponent=442, JSXRender=1433, JSXElement=2205, GOLD_SCRIPT=1380, S3_DATA_KEY=294 -- so the blindness is a specific missing EDGE TYPE (GOLD_SCRIPT<->Lambda/ReactComponent), not an absent NODE population; the graph has both endpoints and no path recorded between them for gold-layer artifacts."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md rule 20 + the build ladder direct querying the estate's existing dependency graph (comp-blast/kuzu) rather than rebuilding one; this cell's bound C-DEPRECATED-TERMINUS requires walking the chain to a served artifact AND a rendered component, and the battery findings name no instrument gap.",
+    "world_is": "The estate's own served graph cannot answer the gold-script-to-client-facing-terminus question at all via comp-blast, for any gold script, alive or dead -- proven by testing the mechanism against a node already known to be live rather than only against the candidates in question (Rule 22's ORDER: the check on the members alone would have certified the instrument clean). This cell routed around the gap using comp-pipescript's embedded 'PORTAL CONSUMERS' resolution and comp-platinum reverse instead (see DEPRECATION.md), which DO model this edge for the platinum/ key convention -- but comp-blast itself, the estate's general-purpose blast-radius tool, would silently return a false 'no consumers' for this entire edge class to any future caller who does not know to route around it the way this cell did.",
+    "notes": "Not remediated -- fixing comp-blast's graph-build coverage for this edge type is outside this cell's paths and outside a report-lane cell's mandate entirely. Filed because the finding is ESTATE-WIDE (it would mislead any future C-DEPRECATED-TERMINUS-style determination, or any 'is this gold artifact safe to delete' blast-radius check, anywhere the graph is consulted) and not specific to NFRA_REPORT's ten candidates. ARMED because a future actor trusting a bare comp-blast zero-count on a GOLD_SCRIPT node, without the positive control run here, would draw a false deprecation or false safe-to-delete conclusion."
+  },
+  {
+    "id": "NFRA_REPORT-Z-W1-S2",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_REPORT~1",
+    "surfaced_at": "2026-09-09T21:21:00Z",
+    "one_line": "RP-s-7: comp-pipescript's static WRITES parser misses dynamically-constructed S3 keys (prefix-variable concatenation, or a write routed through a helper function taking a computed key) -- producing a FALSE 'WRITES: (none detected)' for 2 of this cell's ten candidates, one of which (INF_C_01.canonical_nna.py) is textually a heavily-governed, actively-maintained production chokepoint, not a dead script.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-pipescript io INF_D_07.concentration_risk.py --pipeline inf-gold, 2026-09-09: prints 'WRITES: (none detected)'. comp-read data/inf/scripts/gold/INF_D_07.concentration_risk.py --for 'what does this script write, and to what S3 key' surfaces (AUTHORITATIVE, line 55): CONCENTRATION_RISK_KEY = OUTPUT_PREFIX + 'firm/concentration_risk.json', with OUTPUT_PREFIX defaulting to 'platinum/' (line 54) -- a real write key the static parser did not resolve because it is built by string concatenation of a module-level variable rather than a literal or f-string.",
+        "comp-pipescript io INF_C_01.canonical_nna.py --pipeline inf-gold, 2026-09-09: also prints 'WRITES: (none detected)'. comp-read on the same file shows a _write_s3(df, key) helper (line 251-258) called with a key built by a separate _nna_key() function and an output-prefix guard _set_out_prefix() (lines 259-299) -- the write exists and is real, routed through two levels of indirection the static parser does not follow.",
+        "INF_C_01.canonical_nna.py's own header comments (lines ~68-77, ~92, ~269, ~282, read via comp-read) describe it as part of an 'ATOMIC SET' with three guard libraries, a 'gold-dispatch chokepoint APPLIED + EXERCISED', 'NEVER#2 co-signed by CTO + COO', and a SERVE-RELEASE-ACK discipline -- textual, in-repo evidence of active, heavily-governed production status, the OPPOSITE of the 'looks deprecated' reading Andrew's ruling 6 offered for this artifact at hop 1.",
+        "comp-platinum reverse 'platinum/firm/concentration_risk.json' --firm inf: PRODUCER field returns BLANK (the tool's own static write-index has no entry for this key at all, confirming the parser miss propagates downstream into the portal-reverse-lookup tool too, not only comp-pipescript's own io view)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This cell's BOUNDS: 'a one-hop check said all ten candidate artifacts HAVE consumers; at the terminus it may say none do' -- the battery's own worked example assumes hop-1 OVER-reports aliveness relative to the terminus. This finding is the OPPOSITE miscalibration: the static tool UNDER-reports even the WRITE ITSELF for a script that is, by its own in-repo governance language, unambiguously alive.",
+    "world_is": "comp-pipescript's static-analysis WRITES detector has a false-negative mode (dynamic key construction via concatenation or a key-building helper function) that is not specific to these two scripts -- any gold script in the estate using either pattern would read as writing nothing, which for a naive consumer of 'WRITES: (none detected)' reads identically to 'this script does nothing' and could recruit a future deprecation or decommissioning decision built on that silence.",
+    "notes": "Not remediated -- fixing comp-pipescript's parser is outside this cell's paths. INF_C_01.canonical_nna.py is documented here as LIKELY ALIVE on textual/governance evidence, not as a terminus-walk PASS -- DEPRECATION.md renders it UNRESOLVED-BY-THIS-WALK rather than CHECKED, because this cell's own instrument could not independently confirm the write reaches a served terminus (only that it writes at all)."
   }
 ]
 ```
