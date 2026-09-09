@@ -207,10 +207,21 @@ EXERCISED**. The tool being built is measured; the tool being *sufficient* is no
 - **D2 (CORRECTED) -- the question is no longer whether the instrument exists.** It does. The open
   question is what answers the PERMISSION axis, and **extending a working, self-testing tool that
   already names its own limits is a far smaller act than building one.**
-- **D4 + ANDREW'S RULING 18 -- establish the prototype's state FIRST, then choose; DO NOT ENABLE
-  BLIND.** The native alternative is a **charged** feature billed per analyzed role against ~208
-  roles, and **no per-role price has been read by anyone.** ⭐ **The first half of ruling 18 is
-  already discharged** by this seat's reads above; **what remains is the pricing and the coverage
-  comparison**, and the pricing is spend, which makes it Andrew's.
+- **D4 -- SETTLED BY ANDREW'S RULING 20, and this endpoint is amended to stop posing it as open.**
+  Ruling 18 deferred the instrument fork until the prototype's state was established. **That state
+  was established by this seat's L2 correction, not by any project act** -- so the condition was met
+  EARLY and the fork became answerable ahead of the project meant to answer it. Andrew then ruled
+  (*"rec approved"*, ~17:2xZ, brief amended `@39b106d036` -> `@efe60cf3e5`, PART V D4 only):
+  **EXTEND `comp-iam-usage` TO PERMISSION GRAIN; AWS Access Analyzer is the FALLBACK, not the path.**
+  Basis: the existing tool already FIXES comp-iam's three Rule-22a limits rather than inheriting
+  them, already carries an UNKNOWN band, and is free and in-estate.
+  ⛔ **THE PRICING OBLIGATION SURVIVES AS A CONDITIONAL AND MUST NOT BE READ AS DISCHARGED: no
+  per-role price is recorded in the ruling, the brief, or any batch.** If Access Analyzer is ever
+  taken off the fallback shelf, **pricing it is the FIRST act** and never a figure inherited from
+  these records. ⚠ Ruling 20 settles INSTRUMENT DIRECTION only -- it authorises no build, cuts no
+  cell and enables nothing.
+  ⭐ **CONSEQUENCE FOR `FWD-2`:** its cell is now an EXTENSION of a working, self-testing tool to a
+  new grain, not an instrument build. That is a materially smaller act, and `FWD-7`'s
+  do-not-cut-as-greenfield clause applies to it for the same reason.
 - **D5 -- the remediation must be designed not to cause an `AccessDenied`.** This constrains HOW
   grants are narrowed and is a design input, not a sequencing note. It is why `FWD-5` is EXERCISED.
