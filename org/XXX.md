@@ -281,7 +281,7 @@ for a new GO is a protocol violation** — the batch GO covers the whole lane.
 
 ---
 
-**F. Loop arming — every serial arms ZERO crons at launch, with ONE standing exception the ledger names.**
+### F. Loop arming — every serial arms ZERO crons at launch, with ONE standing exception the ledger names.
 
 Loops are **operator-initiated**. `/watcher` is not a loop — it arms the persistent inbox Monitor once.
 
