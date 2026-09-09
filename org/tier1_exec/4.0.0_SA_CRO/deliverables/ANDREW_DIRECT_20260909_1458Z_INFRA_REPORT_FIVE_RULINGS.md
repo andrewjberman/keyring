@@ -208,3 +208,57 @@ Measured basis: 4 modules `[deployed-ahead]` -- `opal-partners-data` (artifact 4
 RENDERING of deployed-ahead, and (b) that a genuine need for out-of-band deploys be named
 explicitly. It is NOT a remediation order against any of the four modules, and this seat issues
 none. `4.0.0_SA_CRO` does not dispatch.
+
+# BATCH 5 -- 2026-09-09 ~15:5xZ (rulings 12 and 13) -- THE NAMING LAW
+
+## VERBATIM AND ENTIRE
+
+> Both recs approved, move to Costs
+
+**RULING 12 IS THE ONE THAT BINDS THE BRIEF.** It ratifies the TWO-AXIS STATE MODEL as the report's
+naming law, settling the question Andrew opened the review with ("we need to define what Blind and
+Breach even are"). The answer the estate's own artifacts already contained: **Blind and Breach were
+never on the same scale. They are values on two DIFFERENT axes**, which is exactly why one colour
+could not hold both.
+
+**AXIS 1 -- THE INSTRUMENT. Did the check happen, and could it?**
+
+| State | Meaning | Promoted from |
+|---|---|---|
+| `CHECKED` | looked, and the result is trustworthy | Contract Integrity |
+| `BLIND` | could not look -- nothing governs or detects this surface | Contract Integrity |
+| `INERT` | a control exists but CANNOT FIRE (names no live role; pages no subscriber) | Contract Integrity |
+| `COARSE` | looked at the wrong grain -- the answer is advisory only | Contract Integrity |
+| `UNCHECKED` | deliberately not asserted | Contract Integrity |
+| `DENY-BY-DESIGN` | cannot look, and that is intentional and recorded | Terraform drift |
+
+**AXIS 2 -- THE WORLD. What was found. Only meaningful where Axis 1 = `CHECKED`.**
+
+| State | Meaning |
+|---|---|
+| `OK` | within standard |
+| `DEGRADED` | outside standard, contained |
+| `BREACH` | outside standard, NOT contained |
+
+**WHY THIS IS NOT AN INVENTION.** Every Axis-1 value is PROMOTED from a section already running in
+this estate -- five from CONTRACT INTEGRITY's own output line, one from the Terraform drift
+sub-section's `deny-blocked-by-design [recorded]` tag. Two subsections had already solved the
+problem the other six had not. Ruling 12 makes them the standard instead of the exceptions.
+
+**WHAT IT FORBIDS, which is the point:** it becomes structurally impossible to print `BREACH` on a
+surface nobody looked at, and impossible to print `OK` on a surface nobody looked at. Worked
+examples: `opal-login-abuse-alerts` is `INERT`, never `RED`. `comp` is `CHECKED/OK` carrying a
+stale-instrument qualifier, never `RED`. Website security is `BLIND`, never `OK`.
+
+**AND GREEN GETS ITS DEFINITION FOR FREE** -- the definition Andrew asked for in his third message:
+**every property `CHECKED` on Axis 1 and `OK` on Axis 2. Nothing is green by virtue of not having
+been looked at.**
+
+**Ruling 13** -- repairing the 13 non-delivering SNS topics falls INSIDE the brief, as a SECOND
+NAMED WORKSTREAM beside the Terraform one from ruling 10. Basis: 8 topics have 0 confirmed
+subscribers; 3 more have a single SMS subscriber against an SNS SMS sandbox of unknown status and
+are therefore non-delivering, which is ONE account-level root cause, not three. The report's own
+escalation channel `opal-infrastructure-alerts` is among the thirteen.
+
+**Standing-moratorium note:** ruling 13 authorises REPAIR of existing topics, not the creation of
+new alerting. The CLAUDE.md moratorium on building alerts/monitors is untouched by it.
