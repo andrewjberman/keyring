@@ -2,22 +2,22 @@
 
 <to_id>NFRA_CLDGRPH.TO-CG-F-6</to_id>
 <project>NFRA_CLDGRPH</project>
-<issued_to>0.9.0_WK_NFRA_CLDGRPH~2</issued_to>
+<issued_to>0.9.0_WK_NFRA_CLDGRPH~7</issued_to>
 <issued_by>2.0.0_SA_COO~A</issued_by>
 <issued_date>2026-09-09</issued_date>
-<status>pending -- GO = the COO handing this order to slot ~2 by CONTINUING the same subagent after TO-CG-F-5 (CG-s-25) is terminal and merged, with CLOUD merged into your branch. ROUND 6 of NFRA_CLDGRPH. Slot ~2's FOURTH and LAST order; S26 is LAST in the round by the CTO's ordering. PREMISE RE-GROUND at hand-off: F-5's instance VALID at your HEAD (`comp_debt.py` opens no local store: F5-AC3); F-1's instance VALID at HEAD (the tombstone shape at `infra/aws/globgrph/kuzu_db.TOMBSTONE.md` -- reuse it); the store present in the MAIN workspace by absolute path (`ls -d C:/Users/AndrewBerman/Desktop/ajb_workspace/infra/aws/globgrph/kuzu_stitch_db`); if any fails, BLOCKING row + report. The assignee commits its own status flip after a VALID proof-of-spec instance whose mechanical rows ALL read PASS.</status>
+<status>pending -- GO = the spawn (spine v3 L7): slot ~7 on a fresh worktree from CLOUD, RE-ADDRESSED 2026-09-09 22:3xZ from slot ~2 under Andrew's edict (CTO 94766: proceed through /canonical-flow spawning the subagents the cuts need; a widened fan-out inside the cap) -- S26 depends on S25 ONLY (DONE @b9917bc2e1), so it runs BESIDE TO-CG-F-11 (slot ~2) instead of after it; fanout 7 of 7 chains, cap 8. ROUND 6 of NFRA_CLDGRPH. Slot ~7's ONLY order. `comp_debt.py` is REMOVED from this grant: its unreachable refusal at CLOUD HEAD already names 'served nessie+stitch' (comp_debt.py:133-137, F-5's), so F6-AC4 READS it and edits nothing -- F-11 holds that file concurrently. PREMISE RE-GROUND at hand-off: F-5's instance VALID at your HEAD (`comp_debt.py` opens no local store: F5-AC3); F-1's instance VALID at HEAD (the tombstone shape at `infra/aws/globgrph/kuzu_db.TOMBSTONE.md` -- reuse it); the store present in the MAIN workspace by absolute path (`ls -d C:/Users/AndrewBerman/Desktop/ajb_workspace/infra/aws/globgrph/kuzu_stitch_db`); if any fails, BLOCKING row + report. The assignee commits its own status flip after a VALID proof-of-spec instance whose mechanical rows ALL read PASS.</status>
 
-**Directive:** D0 · **Fabric:** laptop · **PRD:** v0.6 @`30027295be` (FWD-7 by the arc; s.7 row S26; s.6 R14/R15 for any registry record the retirement touches) · **Decomp cell:** `CG-s-26` · **Lane:** `0.8.0_AE_CloudComp` · **Rule 27 seating:** `0.9.0_WK_NFRA_CLDGRPH~2`.
+**Directive:** D0 · **Fabric:** laptop · **PRD:** v0.6 @`30027295be` (FWD-7 by the arc; s.7 row S26; s.6 R14/R15 for any registry record the retirement touches) · **Decomp cell:** `CG-s-26` · **Lane:** `0.8.0_AE_CloudComp` · **Rule 27 seating:** `0.9.0_WK_NFRA_CLDGRPH~7`, a spine-v3 worker subagent of `2.0.0_SA_COO~A`.
 
 ---
 
 ## STANDING LAW (inlined)
 
-- **Serial:** `0.9.0_WK_NFRA_CLDGRPH~2`. Every Bash call begins `export OPAL_AGENT_SERIAL=0.9.0_WK_NFRA_CLDGRPH~2; export PATH="/c/Users/AndrewBerman/AppData/Local/Programs/Python/Python312:$PATH";`. Commit via `bash .tools/safe-commit.sh --author "0.9.0_WK_NFRA_CLDGRPH~2 <0.9.0_WK_NFRA_CLDGRPH~2@opal.agent>" -F <msgfile> -- <files>`. Never push, merge, rebase, `checkout --` or `clean`. Push state LOCAL.
-- **Write surface = the PATHS block + `deliverables/0.9.0_WK_NFRA_CLDGRPH~2/`.** The store, its manifest and the local `stitch_graph.json` live in the MAIN workspace (gitignored): READ by absolute path, UPLOAD the archive objects, DELETE ONLY after verification -- the one act on the main workspace this order permits. Every script and capture carries `f6_`. Scratch `.scratch/`.
-- **Surprise = ONE ROW** (`NFRA_CLDGRPH-W2-S<k>`, continuing; restate the denominator; never edit; keep working).
+- **Serial:** `0.9.0_WK_NFRA_CLDGRPH~7`. Every Bash call begins `export OPAL_AGENT_SERIAL=0.9.0_WK_NFRA_CLDGRPH~7; export PATH="/c/Users/AndrewBerman/AppData/Local/Programs/Python/Python312:$PATH";`. Commit via `bash .tools/safe-commit.sh --author "0.9.0_WK_NFRA_CLDGRPH~7 <0.9.0_WK_NFRA_CLDGRPH~7@opal.agent>" -F <msgfile> -- <files>`, `<msgfile>` written with the Write tool. Never push, merge, rebase, `checkout --` or `clean`. Push state LOCAL.
+- **Write surface = the PATHS block + `deliverables/0.9.0_WK_NFRA_CLDGRPH~7/`.** The store, its manifest and the local `stitch_graph.json` live in the MAIN workspace (gitignored): READ by absolute path, UPLOAD the archive objects, DELETE ONLY after verification -- the one act on the main workspace this order permits. Every script and capture carries `f6_`. Scratch `.scratch/`.
+- **Surprise = ONE ROW** (`NFRA_CLDGRPH-W7-S<k>`, from S1 -- this slot's first rows; `surfaced_at` a REAL minute, never an `x`; restate the denominator by parsing every fenced block; never edit; keep working).
 - **Every criterion invocation under `timeout 120`** (the S3 upload may use `timeout 600`). Non-ASCII refused.
-- **NEVER:** delete before the archive object is verified by head-object with a printed size and a sha256 equal to the pre-upload local hash; open the store with an engine (`kuzu.Database` CREATES an absent store); run any loader; write anything to S3 but the archive objects (the bucket is `opal-313476888478-globgrph`; a typo'd bucket is a BLOCKING row, never a retry with a guess); touch `derive_stitch.py` / `extract_portal_stitch.py` (the CLOUD producer's inputs -- NOT a local builder; they stay); touch `comp_debt.py` beyond the ONE refusal text if it does not already name the served stitch source (F-5 should have left it so; verify first); `2>/dev/null` on a verdict read; bare `git commit`.
+- **NEVER:** delete before the archive object is verified by head-object with a printed size and a sha256 equal to the pre-upload local hash; open the store with an engine (`kuzu.Database` CREATES an absent store); run any loader; write anything to S3 but the archive objects (the bucket is `opal-313476888478-globgrph`; a typo'd bucket is a BLOCKING row, never a retry with a guess); touch `derive_stitch.py` / `extract_portal_stitch.py` (the CLOUD producer's inputs -- NOT a local builder; they stay); touch `comp_debt.py` AT ALL (out of this grant now: its refusal already names the served source, and slot ~2 holds the file under F-11; if you find the refusal text NOT naming it, that is a ROW); `2>/dev/null` on a verdict read; bare `git commit`.
 - **Search rail:** `python .tools/comp-read` / `python .tools/comp-find`; raw recursive grep/find refused; a `cmd | grep` receiver is free.
 
 ## THE CELL (decomposition v0.6 s.1a; PRD v0.6 s.7 row S26 verbatim in its accept)
@@ -35,7 +35,7 @@
 
 ## DELIVERABLE -- in this order
 
-1. **Verify BEFORE anything moves** (`f6_before.txt`: `ls -d`, sizes, mtimes, sha256 of the three files). 2. **Archive** the three + the archive manifest; head-object each; sha256 equality printed (`f6_archive.txt`). 3. **The tombstone; `git rm kuzu_stitch_load.py`;** the AST census of local builders re-run. 4. **Delete** the three local files -- ONLY after 1-3; `ls -d` after. 5. **`comp-debt`'s refusal text** verified (or the one-line edit) and the tool run once from your worktree (no store anywhere) -> rc 0. 6. **The record** `CG-s-26.local-stitch-store-retired.result.md` (one fenced JSON block per artifact: before, archive key + head-object + sha256, after; the builder's last hash; the refusal text) then prose; the instance; the flip.
+1. **Verify BEFORE anything moves** (`f6_before.txt`: `ls -d`, sizes, mtimes, sha256 of the three files). 2. **Archive** the three + the archive manifest; head-object each; sha256 equality printed (`f6_archive.txt`). 3. **The tombstone; `git rm kuzu_stitch_load.py`;** the AST census of local builders re-run. 4. **Delete** the three local files -- ONLY after 1-3; `ls -d` after. 5. **`comp-debt`'s refusal text** READ (comp_debt.py:133-137 at your HEAD names 'served nessie+stitch' -- print the lines) and the tool run once from your worktree (`python infra/aws/globgrph/comp_debt.py`; there is no `.tools/comp-debt` shim -- S88) with no store anywhere -> rc 0. 6. **The record** `CG-s-26.local-stitch-store-retired.result.md` (one fenced JSON block per artifact: before, archive key + head-object + sha256, after; the builder's last hash; the refusal text) then prose; the instance; the flip.
 
 ## ACCEPTANCE (v3 grammar)
 
@@ -60,7 +60,7 @@
 
 ## SURFACES
 
-`infra/aws/globgrph/kuzu_stitch_load.py` (retired) · `infra/aws/globgrph/kuzu_stitch_db.TOMBSTONE.md` (new) · `infra/aws/globgrph/comp_debt.py` (the ONE refusal text, only if needed) · the main workspace's three files (read, archive, delete by absolute path) · `s3://opal-313476888478-globgrph/archive/NFRA_CLDGRPH.CG-s-26/` (WRITE, four objects) · F-1's tombstone and scripts (READ; reuse) · E-4's `_rebuild_path_ast.py` (READ; reuse).
+`infra/aws/globgrph/kuzu_stitch_load.py` (retired) · `infra/aws/globgrph/kuzu_stitch_db.TOMBSTONE.md` (new) · `infra/aws/globgrph/comp_debt.py` (READ only) · the main workspace's three files (read, archive, delete by absolute path) · `s3://opal-313476888478-globgrph/archive/NFRA_CLDGRPH.CG-s-26/` (WRITE, four objects) · F-1's tombstone and scripts (READ; reuse) · E-4's `_rebuild_path_ast.py` (READ; reuse).
 
 ## BOUNDS
 
@@ -71,7 +71,6 @@
 <paths>
 infra/aws/globgrph/kuzu_stitch_load.py
 infra/aws/globgrph/kuzu_stitch_db.TOMBSTONE.md
-infra/aws/globgrph/comp_debt.py
 org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-F-6.local-stitch-store-retired.md
 </paths>
@@ -79,7 +78,7 @@ org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-F-6.local-stitc
 <decomp_ref>
 <decomp_doc>org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md</decomp_doc> v0.6 (this recut), cell CG-s-26 (s.1a; ADDED on the CTO's round-5 analysis @30027295be, PRD addendum v0.6 row S26, over W3-S11 and C-S33).
 <owned_cells>CG-s-26</owned_cells>
-Read-dependencies, NOT claimed: CG-s-25 (TO-CG-F-5, terminal and merged before this order is handed); CG-s-21 (TO-CG-F-1, the tombstone shape); CG-s-27 (TO-CG-F-7, slot ~3, may have edited `kuzu_stitch_load.py`'s manifest call -- retired whole here regardless). Nothing downstream: LAST.
+Read-dependencies, NOT claimed: CG-s-25 (TO-CG-F-5, DONE @b9917bc2e1); CG-s-21 (TO-CG-F-1, the tombstone shape); CG-s-27 (TO-CG-F-7, DONE -- it edited `kuzu_stitch_load.py`'s manifest call; retired whole here regardless). CONCURRENT, NOT yours: CG-s-31 (TO-CG-F-11, slot ~2 -- the producer files and `comp_debt.py`; you touch neither). Nothing downstream.
 </decomp_ref>
 
 <preflight>
@@ -99,4 +98,4 @@ BEFORE ANY ACT: `python .tools/comp-read infra/aws/globgrph/kuzu_db.TOMBSTONE.md
 
 **THE REPORT IS YOUR FINAL MESSAGE, ONCE, IN THE `WORKER REPORT` SHAPE.**
 
-**GO = the hand-off (the COO continues this subagent after TO-CG-F-5's drain).**
+**GO = the spawn.**
