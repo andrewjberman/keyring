@@ -14,7 +14,7 @@ D8 precedent) · **dep_stage:** PRD
   "project": "NFRA_COMPEFFICACY",
   "directive": "D11",
   "fabric": "laptop",
-  "prd_version": "v0.8",
+  "prd_version": "v0.9",
   "step": 4,
   "brief_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260902_1715Z_COMPTOOL_EFFICACY_PROJECT.md@f90ab3936b",
   "endpoint_outcomes": [
@@ -701,3 +701,15 @@ self-identification across all rows. T-19 (retire trace) and T-13 (CTO dispose d
 R-3. G-1..G-3 run as a parallel stream once T-22 is unheld.
 
 — 3.0.0_SA_CVO
+
+## 9. ADDENDUM v0.9 (2026-09-09 ~22:0xZ, `1.0.0_SA_CTO`) -- the three open grades made manual acts with owners
+
+**THE MANUAL-TRIGGER RULE** (Andrew-direct 2026-09-09 ~21:4xZ at the `1.0.0_SA_CTO` terminal, verbatim in `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260909_214xZ_NO_WAITING_EVERY_DATE_GATED_ACCEPT_GETS_A_MANUAL_TRIGGER_FORM.md`: *"we need to not be 'waiting' on anything, anything that we'd be waiting for needs a manual trigger of some kind depending on the test type ... include addendums for each that mandate the requirement is contingent on a relevantly structured manual/test run"*). A manual run is the EXERCISED form of an outcome only when all five hold: (1) SAME TARGET, not a copy -- the rule's own target invoked with the scheduled payload shape; (2) REAL PLANE -- real keys, catalogs, inboxes, devices; a by-hand write to a SERVED key is a served-output move (NEVER-2 entry + never-widen sign-off CTO+COO, rollback named); (3) TOLD APART ON THE ARTIFACT -- a run-id / trigger field, never the clock; (4) the schedule's OWN firing proven from HISTORY (prior rule-initiated executions listed with a denominator), never by waiting -- a rule that has never fired gets a one-off near-term `at()` on the same rule, then restored; (5) the next scheduled fire is CONFIRMATION, never a gate -- no grade carries "pending the fire" again.
+
+Nothing in this project is date-gated; the three NOT_EVALUATED grades wait on two of Andrew's acts and one seat's. Under the rule they are manual triggers with owners, never "after the roadmap". The CTO grades on their records.
+
+| id | outcome_ref | surface (engine) | claim | evidence | lane | verb | depends_on | accept | bound |
+|---|---|---|---|---|---|---|---|---|---|
+| M-1 | FWD-4 | THE SITTING AS A MANUAL ACT: Andrew's read of the packet (s.7 + the roll-up v2) at any terminal at any time he names -- no roadmap dependency; `3.0.0_SA_CVO`'s `/estate-pull` runs on his "go" | held | FWD-4 NOT_EVALUATED: the packet ready, his read missing (COMPLETION_GRADES.round6) | 3.0.0_SA_CVO (the pull) | verify | -- | the sitting's record names the last tool's state as read by him; the grade flips on that record | 4 |
+| M-2 | FWD-9 | THE CODEX-RAIL EXERCISE (CE-g-4) ON ANY CODEX SEAT: `1.0.0_SA_CTO~X` is a Codex seat, READY today; the exercise runs on it the day his word allocates it -- the manual trigger for what was a roadmap allocation | held | FWD-9 NOT_EVALUATED on two limbs; the shared-branch limb is MET by the 09-09 push (origin/CLOUD b2393aec71 contains the remediation commits) and re-grades at the next read | 1.0.0_SA_CTO~X (the exercise) + 0.8.0_AE_CloudComp (the rail) | verify | G-4 | the rail exercised end to end from the Codex seat with the record G-4's design names; the shared-branch limb read from origin (`merge-base --is-ancestor` of each remediation commit, positive control) | 9 |
+| M-3 | FWD-8 | THE SHORT LIST USED: the CVO's second-cut list written NOW against s.7's dispositions (not after the sitting -- the sitting reads it), and one seat starting one piece of work from the ratified fourteen the same day, `2.0.0_SA_COO` naming the seat | held | FWD-8 NOT_EVALUATED: the draft @ac52464f82; no seat has started from it | 3.0.0_SA_CVO (the list) + 2.0.0_SA_COO (the seat) | verify | -- | the v2 list committed; one task order's face names a tool from the fourteen as its instrument and its instance validates; the grade reads that record | 8 |
