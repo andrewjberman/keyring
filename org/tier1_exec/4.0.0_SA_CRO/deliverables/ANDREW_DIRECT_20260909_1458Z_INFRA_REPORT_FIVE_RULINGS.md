@@ -2,8 +2,17 @@
 
 > **THE FILENAME UNDERCOUNTS ON PURPOSE.** It was minted at the first batch of five. This file is
 > the SINGLE RUNNING CARRIER for every Andrew-direct ruling in this review session and now holds
-> **nine**. A second file was rejected deliberately: two durable records of one obligation diverge
-> from minute one. Read to the end; the batches are stamped in order.
+> **seventeen**. A second file was rejected deliberately: two durable records of one obligation
+> diverge from minute one. Read to the end; the batches are in order.
+
+> ⛔ **TIMESTAMP CORRECTION, 2026-09-09 16:26Z (measured), by the author.** Only the BATCH 1 header
+> stamp (`14:58Z`) was read off a clock. **Every later batch header stamp in this file was ESTIMATED
+> by the author and drifts AHEAD of real time by up to ~50 minutes** -- BATCH 6's `~16:5xZ` was in
+> fact ~16:0xZ. The estimates were written in a format indistinguishable from a measurement, which
+> is the defect: a fabricated-looking precise stamp in an audit record is worse than no stamp.
+> **THE ORDERING IS SOUND AND THE VERBATIM QUOTES ARE EXACT** -- batches are strictly sequential and
+> each quote is the sovereign's text. **Read the batch headers as ORDER, never as clock time.** Real
+> bounds: batch 1 at 14:58Z measured; batches 2-6 fall between 14:58Z and 16:26Z.
 
 **Received by:** `4.0.0_SA_CRO~Z` (site-Z terminal, Andrew present)
 **Channel:** direct at the `4.0.0_SA_CRO~Z` terminal, in response to this seat's `/open-calls` segment
