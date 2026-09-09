@@ -6239,3 +6239,120 @@ other carriers. Authorship is per-row in `surfaced_by`, never the header and nev
   }
 ]
 ```
+
+
+## W7-S1..W7-S4 -- TO-CG-F-6 (CG-s-26), the local stitch store retired
+
+Appended 2026-09-09T23:11Z by `0.9.0_WK_NFRA_CLDGRPH~7` at `NFRA_CLDGRPH.TO-CG-F-6`, this slot's FIRST rows.
+**Denominator at this write: 214 rows.** COUNTED BY PARSING every fenced json block and
+summing their lengths -- 210 rows in 168 blocks before this append, 214 in 169 after -- never by a
+loose id grep, which still matches the header line itself. NO EXISTING ROW IS EDITED OR
+RENUMBERED. Two of these four (W7-S3, W7-S4) are the reasons F6-AC5 and F6-AC3 read FAIL and
+the order stays OPEN; the work itself -- archive, verify, tombstone, retire, delete -- is done
+and its four S3 objects are verified.
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W7-S1",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~7",
+    "surfaced_at": "2026-09-09T23:11Z",
+    "one_line": "TO-CG-F-6 was RE-ADDRESSED from slot ~2 to slot ~7 but every criterion invocation and the proof_of_spec instance path still name deliverables/0.9.0_WK_NFRA_CLDGRPH~2/, and the owned-paths lane gate REFUSES that folder for serial ~7 (18 VIOLATION lines, block mode) -- so the invocation the face names is unreachable and every f6_ artifact was relocated to deliverables/0.9.0_WK_NFRA_CLDGRPH~7/ before it could commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-F-6.local-stitch-store-retired.md @f2750f92129d05ea9107f69048e15fe0739826ef -- <issued_to>0.9.0_WK_NFRA_CLDGRPH~7</issued_to>, while all five <invocation> elements and the <proof_of_spec> block name deliverables/0.9.0_WK_NFRA_CLDGRPH~2/",
+        "MEASURED REFUSAL, 2026-09-09 ~23:0xZ: `bash .tools/safe-commit.sh --author \"0.9.0_WK_NFRA_CLDGRPH~7 ...\" -F .scratch/f6_msg1.txt -- ... deliverables/0.9.0_WK_NFRA_CLDGRPH~2` returned rc=1 with 18 lines of the form 'VIOLATION: .../0.9.0_WK_NFRA_CLDGRPH~2/f6_*.sh -- lane=TREE_DELIVERABLES ... agent=0.9.0_WK_NFRA_CLDGRPH~7 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block (ADHC_OWNPTH.005)'",
+        "POSITIVE CONTROL on the same verb: the identical safe-commit call with the paths relocated to deliverables/0.9.0_WK_NFRA_CLDGRPH~7/ committed 6abd4a9d94 (20 files) -- so the refusal is about the SERIAL SEGMENT of the path and nothing else",
+        "The order's own STANDING LAW block states the write surface as 'the PATHS block + deliverables/0.9.0_WK_NFRA_CLDGRPH~7/', which AGREES with the gate and DISAGREES with the five invocations in the same file -- an intra-face contradiction, not a gate defect"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Each <criterion>'s <invocation> is `bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/f6_*.sh`, and <proof_of_spec> places the instance under the same ~2 folder.",
+    "world_is": "The lane gate admits a worker to exactly the deliverables folder named by its OWN serial (ADHC_OWNPTH.004/005), so slot ~7 cannot write, and therefore cannot commit, anything under ~2. The five invocations were run verbatim except for that one path segment (~2 -> ~7); nothing else about them changed.",
+    "notes": "This is the addressing half of a re-address: moving <issued_to> without moving the deliverables folder leaves the face naming a path its assignee is refused. Disarm = the issuer restating the five invocation paths and the instance path at ~7 (or confirming the ~7 relocation taken here). The RE-CUT COST IS ZERO -- the scripts, the captures and the instance are already at ~7 and were run from there."
+  },
+  {
+    "id": "NFRA_CLDGRPH-W7-S2",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~7",
+    "surfaced_at": "2026-09-09T23:11Z",
+    "one_line": "Two LIVE registry fields still point a reader at the now-deleted local stitch store: graph-call-manifest.yaml:1237's `freshness:` on the canonical entry xlayer.fullstack.firm_component_to_bucket names db-path infra/aws/globgrph/kuzu_stitch_db, and .tools/tool_index.py:2443 carries the same string in the generated mirror. Both are OUTSIDE this order's <paths> grant, so the disposition is this row and not an edit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/modules/graph/graph-call-manifest.yaml:1237 @6abd4a9d9415258d2e432130d965f5255105f730 -- freshness: \"kuzu stitch DB (stitched trace+cloud); db-path infra/aws/globgrph/kuzu_stitch_db -- FROZEN VINTAGE (K4 adjudication 2026-08-04, CTO): last built 2026-07-07, NO nightly reload exists...\"",
+        ".tools/tool_index.py:2443 @6abd4a9d9415258d2e432130d965f5255105f730 -- 'freshness': 'kuzu stitch DB (stitched trace+cloud); db-path infra/aws/globgrph/kuzu_stitch_db -- ' (the generated mirror of the manifest entry above)",
+        "f6_registry_census.py over the three carriers the order names plus the generated mirror: TOTAL_MENTIONS=3 across 4 carrier(s); MENTIONS_R15_EXEMPT=1 (graph-call-manifest.yaml:140, a COMMENT citing the call form); MENTIONS_NEEDING_DISPOSITION=2. comp-tools.yaml mentions=0, TOOL_MASTER.yaml mentions=0",
+        "R14 answered by LOADING the yaml rather than grepping it: ENTRIES WHOSE SUBJECT IS A RETIRED NAME = 0 in all three carriers -- there is no entry to mark `status: retired`, which is why R14's entry-grain remedy does not reach these two sites",
+        "The store itself: DELETED 2026-09-09 22:58Z behind a held head-object guard (f6_after.txt, DELETIONS_TAKEN=3 of 3), so both fields now describe a path that does not exist on this device"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "F6-AC5: 'any registry mention of the retired names is retired entry-grained (R14) or carried by a row', and the order's REGISTRY RECORDS paragraph says 'an entry outside your grant is a ROW naming the file and line, not an edit'.",
+    "world_is": "Neither mention is an ENTRY whose subject is a retired name, so R14's `status: retired` has nothing to attach to; and neither is a declared retired RECORD, so R15's exemption does not cover them. They are freshness prose on a LIVE canonical entry, and its generated mirror. Both files are outside <paths>.",
+    "notes": "Disarm = repoint the entry's `freshness:` at the SERVED projection (the entry's own `rebuild_trigger:` already says 'Cross-layer freshness rides the SERVED projection's own vintage'), then REGENERATE tool_index.py rather than hand-editing it -- the mirror is generated. Measured replacement value, this tick: served stitch s3://opal-313476888478-globgrph/stitch/stitch_graph.json, 38845013 B, LastModified 2026-09-09T19:55:14Z; comp-kuzu returns GOLD_SCRIPT 1380 / S3_DATA_KEY 294 at projection vintage 2026-09-09T21:05:17Z."
+  },
+  {
+    "id": "NFRA_CLDGRPH-W7-S3",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~7",
+    "surfaced_at": "2026-09-09T23:11Z",
+    "one_line": "F6-AC5's <expect> hard-codes the ROW-ID NAMESPACE of the slot the order was originally cut for -- `row NFRA_CLDGRPH-W2-S[0-9]+` -- so after the re-address to slot ~7, whose rows must mint W7-S<k>, a TRUTHFUL row-carried disposition can never match the criterion, and F6-AC5 FAILS on the id namespace alone while its other two clauses PASS.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_CLDGRPH.TO-CG-F-6...md @f2750f92129d05ea9107f69048e15fe0739826ef, F6-AC5 <expect>: `TOMBSTONE_PRESENT=true[\\s\\S]*TOMBSTONE_NAMES=archive_keys,archive_sha256,manifest,bytes_vs_manifest,served_source,builder_last_hash,authority[\\s\\S]*REGISTRY_MENTIONS=[0-9]+ \\((retired|none|row NFRA_CLDGRPH-W2-S[0-9]+)\\)`",
+        "The same file's STANDING LAW block: 'Surprise = ONE ROW (NFRA_CLDGRPH-W7-S<k>, from S1 -- this slot's first rows)' -- the face orders W7 ids and then grades against a W2-only regex",
+        "investigation_item.schema.json id pattern + description: 'the gate requires W{n} to equal the committing worker's suffix' -- so slot ~7 CANNOT mint a W2 id even if the regex were followed",
+        "MEASURED OUTPUT of the named invocation (f6_ac5_run.txt, 2026-09-09T23:1xZ): TOMBSTONE_PRESENT=true / TOMBSTONE_NAMES=<all seven> / REGISTRY_MENTIONS=2 (row NFRA_CLDGRPH-W7-S2) -- clauses 1 and 2 match the expect exactly; clause 3 differs in one character of the coordinate",
+        "The three alternatives the regex admits are each FALSE here: `none` needs 0 mentions needing disposition (measured 2), `retired` needs an entry-grain retirement (measured 0 entries whose subject is a retired name, and both files outside <paths>)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "F6-AC5 will PASS when the registry mentions are dispositioned as `retired`, `none`, or `row NFRA_CLDGRPH-W2-S<k>`.",
+    "world_is": "A re-addressed order changes the row-id namespace as a matter of gate-enforced identity, so any criterion that quotes a row-id PREFIX is invalidated by the re-address itself. The honest line could not be made to match without either lying about the disposition or minting an id the row gate would refuse.",
+    "notes": "Disarm = restate F6-AC5's expect with the coordinate open (`row NFRA_CLDGRPH-W[0-9]+-S[0-9]+`) or at W7. GENERAL FORM, worth carrying past this order: an expect regex that quotes an ALLOCATOR COORDINATE is a face that cannot survive its own re-addressing -- the same defect class as W7-S1, one layer up."
+  },
+  {
+    "id": "NFRA_CLDGRPH-W7-S4",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~7",
+    "surfaced_at": "2026-09-09T23:11Z",
+    "one_line": "F6-AC3 reads 2, not 0: TWO TRACKED local Kuzu builders remain in the tool homes the criterion names -- org/modules/graph/tsgraph_spike/load_scratch_kuzu.py:97 and load_clusters_scratch.py:43 both kuzu.Database(<repo path>) write-open, neither in the criterion's four-name exclusion and neither in this order's <paths>. Beside the projection (infra/aws/globgrph alone) the count IS 0 of 66.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "f6_local_builder_ast.py REAL-WIDE over infra/aws/globgrph .tools org/modules/graph org/modules/heatmap, exclusions kuzu_nessie_load.py,kuzu_incremental_refresh.py,projection_worker.py,projection_server.py: LOCAL_KUZU_BUILDERS=2 of 486 files, PARSE_FAILURES=0",
+        "org/modules/graph/tsgraph_spike/load_scratch_kuzu.py:97 @6abd4a9d9415258d2e432130d965f5255105f730 -- db = kuzu.Database(DB_PATH), DB_PATH=os.path.join(HERE,'out','scratch_kuzu_db'), HERE=os.path.dirname(os.path.abspath(__file__)) -- a repo-anchored WRITE-open",
+        "org/modules/graph/tsgraph_spike/load_clusters_scratch.py:43 @ the same commit -- db = kuzu.Database(DB_PATH), DB_PATH=os.path.join(HERE,'out','scratch_clusters_db') -- the same shape",
+        "Both are TRACKED (git ls-files --error-unmatch rc=0) and NOT gitignored (git check-ignore rc=1); last touched c8871dd52f20ae6fd5470729feb206543e72f182, 2026-06-17, 0.4.0_DE_ClientPlatform",
+        "CONTROL: the same walker on f6_plant/planted_builder.py returns LOCAL_KUZU_BUILDERS=1 of 1 and correctly does NOT count the read_only=True open beside it, and scores the docstring and comment mentions ZERO -- so the 2 is a measurement, not an artefact",
+        "SCOPE DISCRIMINATION, printed beside it: LOCAL_KUZU_BUILDERS_BESIDE_PROJECTION=0 of 66 files (infra/aws/globgrph alone) -- the CELL's accept ('no builder beside the projection remains') is MET; the CRITERION's wider scope ('and the tool homes') is not",
+        "NOT counted, and printed with their evidence chains so the zero hides nothing: derive_runner.py:1444 (tempfile.mkdtemp, outside the repo), four TEMP write-opens in tests, one UNRESOLVED test helper (build_current_db(path), whose only callers pass a tempfile.mkdtemp path -- resolved by reading its call sites, not by the walker)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "F6-AC3: an AST walk over infra/aws/globgrph/ AND THE TOOL HOMES for a kuzu.Database(<path under the repo>) write-open outside four named projection modules reads 0.",
+    "world_is": "It reads 2. The two sites are NFRA_TSGRAPH spike loaders that build org/modules/graph/tsgraph_spike/out/scratch_kuzu_db and .../scratch_clusters_db. They are not the stitch store's builders and they were never in this order's scope to retire, but they are exactly what the criterion asks about, and the arc's claim that no machine is in the compile business on this device is FALSE while they stand.",
+    "notes": "NOT narrowed to make the criterion pass: the criterion says 'the tool homes' and tsgraph_spike is under org/modules/graph, one of the four. Prior art in this same channel: NFRA_CLDGRPH-W2-S25 DECLARED two out-of-lane tsgraph_spike openers at TO-CG-D-7 pass 3, so this is the SAME population surfacing against a second criterion. Disarm = either a disposition for the two spike loaders (retire, or a declared scratch exemption named in the face) or a re-cut of F6-AC3's scope to the projection's home, which the cell's own accept already names."
+  }
+]
+```
