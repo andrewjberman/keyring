@@ -2012,6 +2012,31 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "O18-AC2: 'which principal can read the seam prefix, measured with comp-iam against a refreshed census'. comp-iam refresh-census: a census of the account's IAM principals (its stdout names roles, groups and users).",
     "world_is": "The census records roles only. A principal that is an IAM user (7 exist, presumably including the human operator's) or a group member is invisible to every reach question asked of the file, and the file's own summary says the population is larger than what it holds.",
     "notes": "INERT because the seam grant question was answered at the role grain and users are not the runner. The remedy is the tool's: record users and groups with their statements, or print them as UNCOVERED with a denominator on every read. Filed under lane ANY by the seat that saw it; graduated at C-S8 with a remediation row, owner 0.8.0_AE_CloudComp."
+  },
+  {
+    "id": "NFRA_OUTSET-S21",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~W",
+    "surfaced_at": "2026-09-09T15:05:00Z",
+    "one_line": "TO-OS-s-21's FACE ASSERTS THE REPORT HOST HAS A CHECKED-OUT WORKSPACE AT RUN TIME AND IT DOES NOT. estate_report_runner.py:275 clones with `--filter=blob:none --no-checkout`, so no worktree is ever materialised; files are fetched ONE PATH AT A TIME on demand (:493, :865). The sharp consequence is not that comp-heat would fail there -- it is that `comp-heat drift` would SUCCEED and answer the WRONG QUESTION: its own question is 'what has been written in THIS WORKSPACE that is not in any commit', so on a fresh no-checkout clone it publishes a confident 0/0/0 with answer_state OK and a correct-looking denominator. That is the W2-S21 class exactly. This DECIDED the ONE-REPLACE-NOT-TWO clause: the cadence cannot live on-host, so OS-s-20's replace carries ONLY the prefix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "estate_report_runner.py:265-279 `clone_repo`: `git clone --filter=blob:none --no-checkout --branch REPO_BRANCH <authed> <repo_dir>`, with the docstring stating the intent -- 'We need commit metadata and changed PATHS, never file contents ... --no-checkout skips materializing a worktree we would never read.'",
+        "DENOMINATOR on the clone/checkout census, so 'the only clone' is measured and not assumed: comp-read --enumerate 'git.*clone|checkout|sparse-checkout' -> 10 hits across 2860 lines / 78 sections. ONE clone (:275). TWO on-demand single-path checkouts (:493, :865, both `git -C <repo> checkout <branch> -- <rel>`). ZERO sparse-checkout, ZERO full checkout. So the host CAN materialise an individual file and CANNOT present a tree.",
+        "THE SEMANTIC HALF, which is the part that actually decides: outset_seam.py's SEAM_PRODUCERS registers comp_heat_drift with the question 'What has been written in this workspace that is not in any commit?' and argv ['drift','--budget','60','--json']. On THIS device that answered n=154, n_modified=6, n_untracked=148 (the OS-s-18 publish, artifact at s3://opal-estate-report/outset/comp_heat_drift.json @2026-09-09T13:03:50Z). On a fresh no-checkout clone the same command's honest answer is zero, and the seam would carry it as answer_state OK -- a clean zero that is a measurement of the WRONG WORKSPACE.",
+        "AND THE ARCHITECTURE ALREADY SAYS SO, so this is not a new opinion: estate_report_runner.py:1814-1820, `_stratum_propagation`'s own docstring -- 'PRD s.3's answer is not to give this host a workspace but to have the tools PUBLISH: a producer writes where they already run, and this reads.' An on-host producer would reverse the one architectural choice the seam exists to implement.",
+        "NOT A CUT DEFECT AND I DO NOT CLAIM ONE: the face's clause is CONDITIONAL ('if the schedule lives in the host's bootstrap ... in that case it MUST ride TO-OS-s-20's replace') and it explicitly leaves the home to the assignee ('WHERE IT RUNS IS YOURS TO CHOOSE'). Only the parenthetical premise 'it clones ESTATE_REPO_URL at boot' overstates what that clone yields. The clause worked: reading it before the apply is what surfaced this."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-21 @e4dbe0448e, the WHERE-IT-RUNS clause: 'The producers are comp-heat runs that need a checked-out workspace; the report host has one at run time (it clones ESTATE_REPO_URL at boot) and none between runs (it self-stops).'",
+    "world_is": "The host clones with --no-checkout, so it has commit metadata and NO working tree at any point in its life; single files are materialised on demand and nothing ever presents `.tools/` as a tree. A comp-heat producer on that host would not fail loudly -- `drift` would return a confident zero about the clone it is standing in, and the seam would publish it as a healthy answer to a question about the estate. The face's own architecture note (PRD s.3, quoted in the runner) forbids the remedy of giving the host a workspace. So the cadence's home is OFF-HOST, and OS-s-20's replace carries ONLY the prefix.",
+    "notes": "FILED BEFORE THE APPLY, not after, because it is the fact that decided the ONE-REPLACE-NOT-TWO clause and that decision is irreversible in the cheap direction: choosing on-host later would cost a SECOND host replacement, which is exactly what the clause exists to prevent. hazard INERT because nothing is armed by it -- no producer runs on the host today and none is being built there. WHAT THIS ROW DOES NOT DECIDE, deliberately: WHERE off-host the producers should run. That is TO-OS-s-21's own design question and its O21-AC2 records it; the candidates all cost real infrastructure (a workspace-bearing Lambda, an SSM document on a box that has one, or a scheduled runner of its own) and none of them is a one-line pick. Related: [[NFRA_OUTSET-S17]] (the cadence gap this descends from), [[NFRA_OUTSET-S16]] (the switch this replace lands)."
   }
 ]
 ```
