@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-09T18:5xZ",
+  "written_utc": "2026-09-09T19:1xZ",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -32,8 +32,24 @@
         "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-F-3.*.md + F-4 (the S71 rulings)",
         "msgs 94637/94638 (the pitch)"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "527cd9386d",
       "next": "F-2's three instants (19/20/21Z); drains of F-3/F-7/F-8 as they flip; F-4 handed to ~2 after F-3 (terraform.exe already in its worktree); the CTO's answer on S71 executed as a ruling when it lands."
+    },
+    {
+      "seq": 3,
+      "limb": "L7 (drain) / L6 (re-cut + mid-round addendum) / adjudication",
+      "started_utc": "2026-09-09T18:5xZ",
+      "ended_utc": "2026-09-09T19:1xZ",
+      "act": "TO-CG-F-7 (CG-s-27) TERMINAL AND DRAINED @3e6be14930 (instance rc 0 in-worktree; 13 of 13 contract tests re-run on CLOUD after the merge; channel union 154 + 3 = 157; slot ~3's worktree and branch removed). TO-CG-F-8 (CG-s-28) reported OPEN with two BLOCKING rows to the issuer: F8-AC3's expect assumed three generators (two scripts write three carriers) and F8-AC4 invoked a --check flag the script does not parse (it silently REGENERATED) -- both issuer defects; RE-CUT on the worker's branch @c722bf8bdc under the standing authority @9f4a57262f (effect not purpose; numbers measured), the grant WIDENED by one manifest string (W4-S1: graph-call-manifest.yaml cloud.cluster.page_panel_drilldown freshness, the source of the last index hit), W4-S4 (six out-of-grant descriptions) carried named to L10; seat rows S72-S74 (the first commit attempt was refused by the index race with the CTO's merge @764439e1d8 and re-run in this commit); the CTO and CVO TOLD (94653/94654); the worker re-runs at HEAD and flips. THE CTO'S RULING ON S71 (msg 94648, PRD v0.7 @a46abe413a merged @764439e1d8): the CLOUD producer holds the stitch keys from its first publish (18:49:23Z, producer=stitch-codebuild -- F-3's ad-hoc build SUCCEEDED); Andrew's 07-07 local-hook word SUPERSEDED by his 09-02 ratification (R16); S29 retires the hook on three planes, SITE Z FIRST; the interim: no seat runs stitch-refresh by hand. EXECUTED AS A RULING THE SAME TICK (obligation 1: an addendum in hand -> one issuance): decomposition v0.7 (CG-s-29, 35 cells), TO-CG-F-9 to a NEW slot ~5 (the instruction plane: the hook script + installer retired with a tombstone, stitch-refresh refuses with exit 3 and the 07-07 words kept verbatim under a SUPERSEDED block; the laptop reads: the hook file after MSTR's act, the 120 s silence test via an in-grant filter-matching pointer file); fanout 5 of 5 chains, cap 8; 0.0.0_AB_MSTR asked for the device act on this laptop NOW and site Z's via the agentbus with the record paths. Verified at the cut: stitch-refresh :6-12 words, :47-50 sentinel exit 2, :82-83 publish; the hook file's pair at :3-4 beside six other entries (the PRD's 'two other hook lines' is the CTO's count; the worker prints the real one); the marker at 18:49:37Z, 330 B, the cloud's.",
+      "artifacts": [
+        "CLOUD @3e6be14930 (the F-7 drain)",
+        "wk-cldgrph-6-4 @c722bf8bdc (the F-8 amendment)",
+        "decompositions/NFRA_CLDGRPH_DECOMP.md v0.7",
+        "task-orders/NFRA_CLDGRPH.TO-CG-F-9.local-stitch-hook-retired.md",
+        "channel rows S72-S74 (160)"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "spawn ~5 on wk-cldgrph-6-5; MSTR's device act; F-2's instants; F-3's flip and drain then F-4 to ~2; F-8's re-run and drain (+ comp-system phase two)."
     }
   ]
 }
