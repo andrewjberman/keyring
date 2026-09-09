@@ -6,8 +6,8 @@
  "fabric": "site-z",
  "dep_stage": "EXECUTING",
  "status": "active",
- "name": "Global Infrastructure Reporting and Analysis: one morning read that declares whether anything needs Andrew, across three properties (Dashboard, Website, Gateway), with instrument state separable from world state and every number carrying its coverage.",
+ "name": "Global Infrastructure Reporting and Analysis: one morning read that declares whether anything needs Andrew, across every Opal property (third-member naming at Andrew; PRD s.6), with instrument state separable from world state and every number carrying its coverage.",
  "generated_from": "org/missions/D12/NFRA/NFRA_REPORT/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-09T19:35:31Z"
+ "generated_at": "2026-09-09T21:26:08Z"
 }

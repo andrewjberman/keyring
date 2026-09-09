@@ -9,7 +9,7 @@ citations behind.*
 **L1 owner:** `4.0.0_SA_CRO~Z` · **L2-L4 owner + author:** `1.0.0_SA_CTO~Z` · **L5-L6:** `2.0.0_SA_COO~ZZ` · **L8-L10:** `3.0.0_SA_CVO~Z` · **Integrator:** `0.0.0_AB_MSTR~Z`
 **Brief (L1):** `docs/briefs/global-infrastructure-reporting-brief-20260909.md` @`37ff80867a`
 **Endpoint (L2):** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_GLOBAL_INFRA_REPORTING_20260909.md`
-**Version:** v0.3, 2026-09-09 ~19:4xZ -- **v0.3 ADDS SECTION 9, THE ADVERSARY GRID**, on Andrew-direct
+**Version:** v0.4, 2026-09-09 ~21:2xZ -- **v0.4 DISARMS ARMED ROW `NFRA_REPORT-Z-W2-S2`**: section 6's first ruling collapsed TWO axes into one and dropped `Graph`; `FWD-4` now carries a mandatory rendered `UNGROUPED` value so no live surface leaves the axis silently; and ruling 15b's open sub-item is discharged (the Graph group is NOT empty -- 3 of 3 ECS services running). The member NAMES go to Andrew as an open call. Before it, **v0.3 ADDED SECTION 9, THE ADVERSARY GRID**, on Andrew-direct
 (*"then they run a comp-adversary and include the comp-adversary results in a grid beneath the
 surface_manifest as an extra section for the reference of the COO"*), and folds `2.0.0_SA_COO~ZZ`'s
 msg 20592: the `S1` cell now carries **ruling 12's SIX-value axis verbatim** (v0.2 abbreviated it to
@@ -33,7 +33,7 @@ before landing (see its `CONFIRMED` line).
   "project": "NFRA_REPORT",
   "directive": "D12",
   "fabric": "site-z",
-  "prd_version": "v0.3",
+  "prd_version": "v0.4",
   "step": 4,
   "brief_ref": "docs/briefs/global-infrastructure-reporting-brief-20260909.md@37ff80867a",
   "endpoint_outcomes": [
@@ -100,8 +100,10 @@ by rule, and carry no technical language.*
   FWD-4  A reader can tell which part of the business a problem belongs to, and who owns it
          DONE WHEN  EXERCISED -- a real failure has been read and attributed by a
                     person to one part and one owner
-         ACCEPT     Every problem belongs to one of the three parts of the business
-                    and names who would fix it. When one thing breaks it is mentioned
+         ACCEPT     Every problem belongs to a named part of the business and names
+                    who would fix it. Anything we run that has no part named for it
+                    yet is shown as not-yet-grouped, in plain sight, and is never
+                    quietly left out. When one thing breaks it is mentioned
                     once, not once for every tool that happened to notice it.
 
   FWD-5  A person can tell whether an alert would reach a human, before an incident tests it
@@ -285,8 +287,52 @@ field, never age.
 
 ## 6. Rulings that BIND
 
-- **2026-09-09, Andrew-direct:** the three properties are **Dashboard** (the entire serverless system
-  feeding opalinvest.dev), **Website**, **Gateway** (the opal-gateway MCP server).
+- ⛔ **2026-09-09, Andrew-direct -- AMENDED AT v0.4, AND THE v0.1-v0.3 FORM OF THIS LINE WAS WRONG.**
+  It read: *"the three properties are Dashboard (the entire serverless system feeding
+  opalinvest.dev), Website, Gateway (the opal-gateway MCP server)"* -- **a single three-member axis
+  that silently DROPPED `Graph`.** Filed as ARMED row `NFRA_REPORT-Z-W2-S2` by
+  `0.9.0_WK_NFRA_REPORT~2`, routed by `2.0.0_SA_COO~ZZ` (msg 20620), and **disarmed here on a read of
+  the L1 brief rather than of this PRD.**
+
+  **THERE ARE TWO AXES, NOT ONE, AND THE BRIEF CARRIED BOTH.** The welding was an INFERENCE in ruling
+  15b's own prose -- *"the always-on exception set is expressed on the SAME three-property axis as the
+  report itself"* -- **not in anything Andrew said.** Each of his two utterances is coherent on its
+  own axis, and they name different third members because they answer different questions:
+  - **ATTRIBUTION AXIS (`O4` -> `FWD-4`)** -- *which property owns a problem.* Brief line 46:
+    *"Every finding rolls up to **Dashboard**, **Website** or **Gateway** (Andrew-direct,
+    2026-09-09)"*.
+  - **ALWAYS-ON EXCEPTION SET (`O9` -> `FWD-9`)** -- *what is exempt from autoshutdown.* Brief line
+    83 and ruling 15b verbatim: *"should be named separately id say by group (Dashboard, Website,
+    **Graph**)."*
+
+  **Collapsing them into one axis is a rule 24(iii) INTENT-COHERENCE violation** -- one axis, one
+  intent -- and this seat committed it at L4 by keeping the O4 member list and discarding O9's.
+
+- **2026-09-09, CTO ruling at L4 (disarms `NFRA_REPORT-Z-W2-S2`): NO LIVE SURFACE MAY LEAVE THE AXIS
+  SILENTLY.** `FWD-4`'s attribution axis carries a MANDATORY, RENDERED `UNGROUPED` value. A surface
+  with no ratified group is **shown as ungrouped**, never omitted and never guessed into a group.
+  This is ruling 12's own shape applied one axis over: it is structurally impossible to print `OK` on
+  a surface nobody looked at, and it must be equally impossible to make a surface **disappear for
+  want of a name**. `0.9.0_WK_NFRA_REPORT~2` left `opal-gateway` and `canonical-schwab-si2`
+  explicitly ungrouped rather than guessing; **that was correct and is now the specified behaviour
+  rather than a worker's judgment call.**
+  ⚠ **THE MEMBER NAMES ARE NOT SETTLED BY THIS RULING AND ARE NOT THIS SEAT'S TO SETTLE** -- naming
+  law is sovereign. Carried to Andrew as an open call: whether the attribution axis's third member is
+  `Gateway`, `Graph`, or **both (a four-member axis)**, and where `canonical-schwab-si2` belongs.
+  **The `UNGROUPED` value makes the loop cycle without that answer**, and makes the gap visible in
+  the report instead of hiding it.
+
+- **2026-09-09, ruling 15b's open sub-item is DISCHARGED: the `Graph` group is NOT empty.** 15b
+  carried *"The **Graph** group may therefore be EMPTY. Not resolved here."* It is resolved.
+  `opal-globgrph` is an ACTIVE ECS Fargate cluster, **3 of 3 services running** (`globgrph-nessie`,
+  `globgrph-trino`, `globgrph-serving`, `desiredCount=1` each, 0 scheduled scaling actions), read
+  live by `0.9.0_WK_NFRA_REPORT~2`. ⭐ **AND THE BRIEF HAD ALREADY FALSIFIED ITS OWN ASSERTION** --
+  its limits section item 7 names *"the Graph group (asserted empty; three ECS services exist)"* as
+  one of two inferences falsified during the review. **The correction was sitting in this PRD's own
+  L1 source and this seat did not carry it**, which is the same class of defect as the axis collapse
+  above: reading a source for its conclusions and not for its retractions.
+  ⭐ It was re-found only because `RP-s-5` was told to cover **ECS**; the compute manifest is EC2-only
+  (`S5`), so **no prior artifact of this project had ever seen that cluster.**
 - **2026-09-09, Andrew-direct:** GREEN = every property CHECKED and OK; the two-axis state model;
   decommissioning is a FUNCTION of this work; the always-on set is named by group.
 - **2026-09-09, Andrew-direct (clause a):** the morning read is **purely declarative**. *"I can elect
