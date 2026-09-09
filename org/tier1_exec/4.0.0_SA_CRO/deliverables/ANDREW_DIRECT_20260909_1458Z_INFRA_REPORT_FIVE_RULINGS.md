@@ -1,4 +1,9 @@
-# ANDREW-DIRECT 2026-09-09 ~14:5xZ -- five rulings on the Infrastructure Report review
+# ANDREW-DIRECT 2026-09-09 -- rulings on the Infrastructure Report review
+
+> **THE FILENAME UNDERCOUNTS ON PURPOSE.** It was minted at the first batch of five. This file is
+> the SINGLE RUNNING CARRIER for every Andrew-direct ruling in this review session and now holds
+> **nine**. A second file was rejected deliberately: two durable records of one obligation diverge
+> from minute one. Read to the end; the batches are stamped in order.
 
 **Received by:** `4.0.0_SA_CRO~Z` (site-Z terminal, Andrew present)
 **Channel:** direct at the `4.0.0_SA_CRO~Z` terminal, in response to this seat's `/open-calls` segment
@@ -89,3 +94,82 @@ is not recorded as one.
 
 **Not done, and deliberately:** no task order is cut, no sequencing order is issued to any executing
 seat, and no retirement is initiated. `4.0.0_SA_CRO` does not dispatch.
+
+---
+---
+
+# BATCH 2 -- 2026-09-09 ~15:0xZ (rulings 6 and 7)
+
+Answering the two cards `4.0.0_SA_CRO~Z` put up at 15:0xZ, after this seat's additional review of
+the ten months-stale artifacts.
+
+## VERBATIM AND ENTIRE
+
+> 1.) All of these look deprecated, that is worth additional review. If any artifact is over 1 week
+> old it is almost certainly deprecated. 2.) Correct, rec approved.
+
+**Ruling 6** = the ten stale artifacts look deprecated; additional review directed; the age
+heuristic offered. **Ruling 7** = the morning review lands on trading days only, before Andrew's
+morning (this seat's rec approved).
+
+# BATCH 3 -- 2026-09-09 ~15:1xZ (rulings 8 and 9)
+
+Answering the two cards issued after the additional review came back and FALSIFIED ruling 6's
+hypothesis on the evidence available to this seat.
+
+## VERBATIM AND ENTIRE
+
+> 1.) I dont believe any client-facing surfaces are consuming these artifacts. Accordingly this
+> information should simply be rolled up into the brief, as decommissioning/cleaning
+> artifacts/generators should be a function of this work. 2.) Agreed.
+
+**Ruling 8** -- the ten-artifact finding is NOT routed separately; it rolls into the brief, and
+**DECOMMISSIONING / CLEANING ARTIFACTS AND GENERATORS BECOMES A FUNCTION OF THE BRIEF'S WORK.**
+That is a SCOPE ADDITION to the brief, sourced to Andrew's sentence, not to this seat.
+
+**Ruling 9** -- the deprecation criterion is **ZERO DECLARED CONSUMERS, NOT AGE**, evidenced by an
+empty consumer set plus an explicit `deprecated:` marker carrying a reason and a date. The age
+heuristic of ruling 6 is superseded by Andrew's own word here.
+
+---
+
+## THE ONE REFINEMENT RULING 9 STILL NEEDS -- A GRAIN, surfaced not adjudicated
+
+Ruling 8's premise and this seat's measurement are **NOT in contradiction; they were taken at
+DIFFERENT GRAINS**, and saying so is the point:
+
+- **This seat measured ONE HOP:** artifact -> the `scripts:` field in the freshness config. At that
+  grain all ten have declared consumers (`B_01`, `B_02`, `A_03`, `INF_D_00`, `INF_D_04`,
+  `INF_D_07`, `INF_D_03`, `INF_D_02b`, `INF_C_01`, `INF_D_00c`). MEASURED.
+- **Andrew's claim is about the TERMINUS:** whether any *client-facing surface* consumes them --
+  hop N, after those scripts' own outputs are followed to a served artifact and a rendered
+  component. **This seat has NOT measured that.** HELD, not measured, and not contradicted.
+
+Both can be true: an artifact can feed a script whose output reaches nothing a client sees.
+
+**THEREFORE ruling 9's criterion is under-specified by exactly one word, and will return OPPOSITE
+answers depending on where a reader stops walking the chain.** "Zero declared consumers" at hop 1
+says none of the ten is deprecated; at the terminus it may say all ten are. A criterion that
+inverts on grain is not yet a criterion (CLAUDE.md rule 24 (ii), SAME GRAIN).
+
+**Recommended completion, for the brief to carry:** *deprecated = zero consumers at the
+CLIENT-FACING TERMINUS, established by walking the chain to a served artifact and a rendered
+component, not by reading the first `scripts:` field.* That is precisely the instrument Andrew
+already required for the brief (`/atom-decomp` denominator coverage on every presented metric), so
+it adds no new machinery -- it names which end of the chain the criterion is evaluated at.
+
+**Consequence for ruling 8, stated so the brief does not inherit an assumption as a fact:** Andrew's
+"I dont believe any client-facing surfaces are consuming these artifacts" is a TESTABLE claim and
+the brief's own instrument tests it. It is carried into the brief as a HYPOTHESIS TO BE MEASURED,
+never as an established premise. If it holds, the ten are decommissioning candidates and ruling 8's
+disposition is exactly right. If it does not hold for some subset, that subset is a live outage the
+brief will surface with evidence. Either way the brief answers it rather than assuming it.
+
+## ACTS TAKEN ON BATCHES 2 AND 3
+
+1. This record extended (single carrier; no second file minted).
+2. No separate routing of the ten-artifact finding -- ruling 8 directs it into the brief, and this
+   seat does not override a disposition with its own urgency read.
+3. Requirements carried forward into the brief: decommissioning/cleaning as an explicit function
+   (ruling 8); the consumer-based deprecation criterion with its grain named (ruling 9 + the
+   refinement above); trading-day-only delivery before Andrew's morning (ruling 7).
