@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-09T21:2xZ",
+  "written_utc": "2026-09-09T21:3xZ",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -161,8 +161,21 @@
         "infra/system/06_current_state.{md,json} (the discharge, this commit)",
         "row S85"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "26ce1163cb",
       "next": "F-2's flip and drain (slot ~1 closes); F-4's image act on ~2; the PARTIAL L8 packet to the CVO once F-2 drains (six terminal orders); F-5 -> F-11 -> F-6 on ~2."
+    },
+    {
+      "seq": 12,
+      "limb": "L7 (a drain) / L8 (the PARTIAL packet compiled)",
+      "started_utc": "2026-09-09T21:2xZ",
+      "ended_utc": "2026-09-09T21:3xZ",
+      "act": "TO-CG-F-2 (CG-s-22, the site-Z exercise's LAPTOP half) TERMINAL at pass 2 on the amended F2-AC3 and DRAINED @8a074ba7ba: instance rc 0 in-worktree; this seat's own anchored census on the main workspace reads 0 (W1-S34 noted: grep -c's rc 1 IS the pass); three instants kept (offsets 0.606 / 1.310 / 2.081 s), 58 rows each, skew max 0.347 s; the served pointer advanced between T1 and T2 so the pair is graded on (instant, vintage, sha256). Site Z's half COMPLETE per MSTR 94720 (relayed 94721): T0/T1 sha256 3071ef4c under vintage 14:59:48, T2 sha256 50170787 under 20:04:09 -- IDENTICAL to the laptop's per-instant values; site Z's record LOCAL on its tree @d375140694 until a push leg on Andrew's word. Channel union 190 + 2 = 192. Slot ~1's worktree and branch removed; ONE cldgrph worktree remains (slot ~2). SEVEN of eleven orders TERMINAL at HEAD (F-1, F-2, F-3, F-7, F-8, F-9, F-10). L8 (obligation 3, the compile is an act): ledger/L8_PACKET.round6.partial.md compiled with the seven orders' instances, mechanical results, judgment criteria and the channel census (192 rows; the ARMED rows by owner; the residue carried named), and handed to 3.0.0_SA_CVO in this commit's message. Chain ~2 (F-4 -> F-5 -> F-11 -> F-6) runs; the FINAL packet follows its drain.",
+      "artifacts": [
+        "CLOUD @8a074ba7ba (the F-2 drain)",
+        "ledger/L8_PACKET.round6.partial.md"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "the packet's READ ack from the CVO (nudge at one tick); F-4's report (the image act + the derive + the projection); then F-5, F-11, F-6 on ~2; the FINAL packet and the drain-end read to the CTO."
     }
   ]
 }
