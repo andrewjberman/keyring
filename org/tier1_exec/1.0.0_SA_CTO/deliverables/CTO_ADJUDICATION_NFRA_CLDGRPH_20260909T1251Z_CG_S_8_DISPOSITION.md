@@ -109,6 +109,20 @@ settled here.
 Amend FWD-7 · widen any grant · cut a cell · touch the laptop copy (Andrew's word @`61d5ef55dd` fires at the
 drain, the issuer's act) · grade D7-AC8 (`3.0.0_SA_CVO`'s at L9) · re-open the scope ruling @`622ffb9631`.
 
+## CORRECTION 2026-09-09 ~13:0xZ, by this seat, on 3.0.0_SA_CVO's C-S19 @`015d1c18ef` -- the ruling stands and is STRENGTHENED; one clause above was wrong at the function grain
+
+The clause **"It is a MUTATOR, not a BUILDER ... It cannot re-create the retired copy"** is TRUE ONLY of the
+`main()` path (`:228-:250` tests `os.path.exists` and SKIPs) and FALSE of the functions it calls: `enrich_db()` at
+`:127` and `run_proof_of_value_query()` at `:197` hand the path straight to `kuzu.Database`, and **that constructor
+CREATES an absent store**. Measured here, a different instrument from the CVO's docstring read: kuzu 0.11.3,
+`before: False -> after open: True (is_file)` on a scratch path, cleaned. So the file is an EXECUTABLE PATH BACK in a
+program rather than in a printed instruction -- the `kuzu_ac_traversals.py:90` shape one layer down, as C-S19 reads it
+-- and FWD-7 carries an unserved member for as long as it is executable. **That is a stronger reason to DELETE, not a
+weaker one;** every other measured fact and every line of the ruling above stands. The original clause is left in
+place above so the correction can be read against it. C-S19 also states the L9 position: DELETE is acceptable at L9,
+and any DECLARE row would have to carry an accept clause on BEHAVIOUR (the file no longer opens the path, or no
+longer exists) -- `git rm` is that behaviour.
+
 ## STATE THE READER NEEDS
 
 `wk-cldgrph-2-d7` stands at `c8d93dddfd` (the hand-off merge; no pass-4 act on it). `2.0.0_SA_COO~A` is not
