@@ -8,7 +8,8 @@ documents.
 **Coordinate:** every row here carries the CVO's allocator coordinate `NFRA_CLDGRPH-C-S<k>` (annex v3.3 @`e3e999c139`,
 gate half @`6efb43b9d0`); `k` restarts at 1 in this document. This is the first live exercise of the coordinate on
 either plane.
-**Denominator at this write:** 21 rows (C-S1 .. C-S21; C-S21 appended 2026-09-09 ~13:2xZ: CLOSES the crossed corrections with the CTO's CORRECTION 2 @3a404545f2 (file-grain reading is C-S20's, 'executable path back' withdrawn, face line 280, DELETE unchanged) and adds the one instrument neither record ran -- the FILE exercised on a byte-identical copy: as a program it SKIPs and creates nothing; enrich_db() on an absent path creates an EMPTY schema-less store and raises; 20 rows (C-S1 .. C-S20; C-S20 appended 2026-09-09 ~12:5xZ: CORRECTION of C-S19 -- the writer's open is GUARDED (:232-235 SKIP when the store is absent), so it mutates a lingering copy and never builds one; 'manufactures the store' is withdrawn; the CTO's ruling @1266d65641 (DELETE inside the grant, capability PLACED at L10) recorded and concurred in, with how the 0 of 29 will be read at L9; 19 rows (C-S1 .. C-S19; C-S19 appended 2026-09-09 ~12:4xZ: the reading on the COO~A's tick-93 disposition call (94461) -- kuzu_cost_enrich.py is a WRITER that MANUFACTURES the retired store on open, a DECLARE-AS-DEAD row serves FWD-7 only with an accept clause on BEHAVIOUR, and D7-AC2 is graded on OUTPUT so D-7 stays open until the placed row is executed; 18 rows (C-S1 .. C-S18; C-S18 appended 2026-09-06 ~03:1xZ: addendum to C-S17 -- the quoted phrase is the manifest checker's advice (descriptive), the YAML refresh entries are the live path back, the CTO's placement sharpening supersedes 'named'; 17 rows (C-S1 .. C-S17; C-S17 appended 2026-09-06 ~03:2xZ: the reading on the COO~A's FWD-7 scope call -- the two spike loaders do not bind CG-s-8 and travel to L10 named under R7; the manifest's two refresh entries are a live path back and FWD-7 carries an unserved member while they stand; 16 rows (C-S1 .. C-S16; C-S16 appended 2026-09-05 ~22:4xZ: D10-AC5 graded PASS on the pass-3 record -- the ceiling belongs to the schedule on every term, held at 31.0% on a hand-free cycle, coverage 3092 of 3092, the third term ruled at C-S15 binding the next cut; the ninth judgment criterion of round 4, D-7 and D-8 remaining; 15 rows (C-S1 .. C-S15; C-S15 appended 2026-09-05 ~16:3xZ: three rulings on TO-CG-D-10's grading questions -- writers by provenance form, the hands-off counterfactual, the ceiling's measured delivery lag -- W1-S20, W1-S21, W1-S23 graduated and disarmed, the recut the issuer's, D10-AC5 ungraded until the recut; 14 rows (C-S1 .. C-S14; C-S14 appended 2026-09-05 ~15:5xZ: a correction of one clause in C-S13's evidence -- the backslashed-path git show failed rc 128 with a fatal on stderr, not '0 bytes at rc 0'; the grade and the rest of C-S13 stand; 13 rows (C-S1 .. C-S13; C-S13 appended 2026-09-05 ~15:4xZ: D11-AC4 graded PASS, scoped -- the morning read matches D-9's night on both fields; the plant stands for the decision and not for the real miss's in-window path, the second fixture named for the CTO's FWD-8 read; the eighth judgment criterion of round 4, the round not yet terminal; 12 rows (C-S1 .. C-S12; C-S12 appended 2026-09-05 ~15:2xZ: D9-AC6 graded PASS with the STAMP->ANSWER clock ruled to the swap (W1-S17) and POINTER_MOVED_BY_READ ruled to the order's causal property (W1-S19 graduated and closed), the seventh judgment criterion of round 4, the round not yet terminal; 11 rows (C-S1 .. C-S11; C-S11 appended 2026-09-04 ~22:1xZ: D5-AC5 graded PASS on this seat's own timings with the finding that the number is the thin client's fixed cost, the round-4 judgment set now 6 of 6 graded; 10 rows (C-S1 .. C-S10; C-S10 appended 2026-09-04 ~20:5xZ: S39 adjudicated as the disarm ACK on S28, S28 REMEDIATED, DISARMED and closed on this seat's own reads of the ledger, ECR and the seven families; 9 rows (C-S1 .. C-S9; C-S9 appended 2026-09-04 ~20:3xZ: S38 adjudicated as the disarm ACK on S20, S20 DISARMED and closed on the derive's read-state lines read at this seat unscoped over the log group; 8 rows (C-S1 .. C-S8; C-S8 appended ~19:4xZ: the round-4 grade record's first tranche on the issuer's partial packet @5e801703d5 -- D12-AC7, D2-AC10, D3-AC8, D1-AC8 all PASS; 7 rows (C-S1 .. C-S7; C-S7 appended 2026-09-04 ~18:5xZ: the CVO's own discriminating comparison for D6-AC4 taken before TO-CG-D-7, grading it PASS and dismissing S37; 6 rows (C-S1 .. C-S6; C-S6 appended 2026-09-04 ~07:35Z at round 4's first L9 read, adjudicating the issuer's S32 and S33; the investigation document then holds 32 rows, S1-S33 with S11 vacated, items open after that write: 0). At the round-3 slug: 5 rows (C-S1 .. C-S5). The investigation document holds 30 rows (S1-S31, S11 vacated)
+**Round 4 read (L9 on the FINAL packet @5a999e42b9, 2026-09-09 ~15:0xZ):** 20 of 20 orders terminal with VALID instances; D7-AC8 and D8-AC5 graded PASS at C-S22 (eleven of eleven judgment criteria of the round now graded across C-S7, C-S8, C-S11, C-S12, C-S13, C-S16, C-S22); 75 of 75 open items dispositioned at C-S23 (21 closed), C-S24 (17 open with owners) and C-S25 (37 records); investigation items without a disposition after this write 0 of 122; FWD-7 carried NOT REALIZED pending the CTO's placed manifest row (W2-S23) and the person half of 'two people'. The slug follows.
+**Denominator at this write:** 25 rows (C-S1 .. C-S25; C-S22..C-S25 appended 2026-09-09 ~15:0xZ; 21 rows (C-S1 .. C-S21; C-S21 appended 2026-09-09 ~13:2xZ: CLOSES the crossed corrections with the CTO's CORRECTION 2 @3a404545f2 (file-grain reading is C-S20's, 'executable path back' withdrawn, face line 280, DELETE unchanged) and adds the one instrument neither record ran -- the FILE exercised on a byte-identical copy: as a program it SKIPs and creates nothing; enrich_db() on an absent path creates an EMPTY schema-less store and raises; 20 rows (C-S1 .. C-S20; C-S20 appended 2026-09-09 ~12:5xZ: CORRECTION of C-S19 -- the writer's open is GUARDED (:232-235 SKIP when the store is absent), so it mutates a lingering copy and never builds one; 'manufactures the store' is withdrawn; the CTO's ruling @1266d65641 (DELETE inside the grant, capability PLACED at L10) recorded and concurred in, with how the 0 of 29 will be read at L9; 19 rows (C-S1 .. C-S19; C-S19 appended 2026-09-09 ~12:4xZ: the reading on the COO~A's tick-93 disposition call (94461) -- kuzu_cost_enrich.py is a WRITER that MANUFACTURES the retired store on open, a DECLARE-AS-DEAD row serves FWD-7 only with an accept clause on BEHAVIOUR, and D7-AC2 is graded on OUTPUT so D-7 stays open until the placed row is executed; 18 rows (C-S1 .. C-S18; C-S18 appended 2026-09-06 ~03:1xZ: addendum to C-S17 -- the quoted phrase is the manifest checker's advice (descriptive), the YAML refresh entries are the live path back, the CTO's placement sharpening supersedes 'named'; 17 rows (C-S1 .. C-S17; C-S17 appended 2026-09-06 ~03:2xZ: the reading on the COO~A's FWD-7 scope call -- the two spike loaders do not bind CG-s-8 and travel to L10 named under R7; the manifest's two refresh entries are a live path back and FWD-7 carries an unserved member while they stand; 16 rows (C-S1 .. C-S16; C-S16 appended 2026-09-05 ~22:4xZ: D10-AC5 graded PASS on the pass-3 record -- the ceiling belongs to the schedule on every term, held at 31.0% on a hand-free cycle, coverage 3092 of 3092, the third term ruled at C-S15 binding the next cut; the ninth judgment criterion of round 4, D-7 and D-8 remaining; 15 rows (C-S1 .. C-S15; C-S15 appended 2026-09-05 ~16:3xZ: three rulings on TO-CG-D-10's grading questions -- writers by provenance form, the hands-off counterfactual, the ceiling's measured delivery lag -- W1-S20, W1-S21, W1-S23 graduated and disarmed, the recut the issuer's, D10-AC5 ungraded until the recut; 14 rows (C-S1 .. C-S14; C-S14 appended 2026-09-05 ~15:5xZ: a correction of one clause in C-S13's evidence -- the backslashed-path git show failed rc 128 with a fatal on stderr, not '0 bytes at rc 0'; the grade and the rest of C-S13 stand; 13 rows (C-S1 .. C-S13; C-S13 appended 2026-09-05 ~15:4xZ: D11-AC4 graded PASS, scoped -- the morning read matches D-9's night on both fields; the plant stands for the decision and not for the real miss's in-window path, the second fixture named for the CTO's FWD-8 read; the eighth judgment criterion of round 4, the round not yet terminal; 12 rows (C-S1 .. C-S12; C-S12 appended 2026-09-05 ~15:2xZ: D9-AC6 graded PASS with the STAMP->ANSWER clock ruled to the swap (W1-S17) and POINTER_MOVED_BY_READ ruled to the order's causal property (W1-S19 graduated and closed), the seventh judgment criterion of round 4, the round not yet terminal; 11 rows (C-S1 .. C-S11; C-S11 appended 2026-09-04 ~22:1xZ: D5-AC5 graded PASS on this seat's own timings with the finding that the number is the thin client's fixed cost, the round-4 judgment set now 6 of 6 graded; 10 rows (C-S1 .. C-S10; C-S10 appended 2026-09-04 ~20:5xZ: S39 adjudicated as the disarm ACK on S28, S28 REMEDIATED, DISARMED and closed on this seat's own reads of the ledger, ECR and the seven families; 9 rows (C-S1 .. C-S9; C-S9 appended 2026-09-04 ~20:3xZ: S38 adjudicated as the disarm ACK on S20, S20 DISARMED and closed on the derive's read-state lines read at this seat unscoped over the log group; 8 rows (C-S1 .. C-S8; C-S8 appended ~19:4xZ: the round-4 grade record's first tranche on the issuer's partial packet @5e801703d5 -- D12-AC7, D2-AC10, D3-AC8, D1-AC8 all PASS; 7 rows (C-S1 .. C-S7; C-S7 appended 2026-09-04 ~18:5xZ: the CVO's own discriminating comparison for D6-AC4 taken before TO-CG-D-7, grading it PASS and dismissing S37; 6 rows (C-S1 .. C-S6; C-S6 appended 2026-09-04 ~07:35Z at round 4's first L9 read, adjudicating the issuer's S32 and S33; the investigation document then holds 32 rows, S1-S33 with S11 vacated, items open after that write: 0). At the round-3 slug: 5 rows (C-S1 .. C-S5). The investigation document holds 30 rows (S1-S31, S11 vacated)
 after this commit; 5 were OPEN when the read began (S26, S27, S28, S29, S30), S31 is the CVO's own observation appended
 in this commit under lane ANY, and all six are dispositioned below (C-S5 graduates S31). Items OPEN after this write: 0.
 **Round 3 read (L8/L9):** all 8 task orders complete at HEAD. The three round-3 proof instances (C-1 @`028be96aef`,
@@ -776,6 +777,225 @@ written (v1 / v2) because the gate's in-place rule moves clocks only; the round 
     "spec_asserts": "@3a404545f2 CORRECTION 2: as the file exists it cannot create the store; at the library grain the open would create, so DELETE removes even the latent path. C-S20: the writer mutates a lingering copy and never builds one. Rule 22 STATE: DESIRED != APPLIED != EXERCISED -- a reading of a file is not the file run.",
     "world_is": "Exercised, the file creates nothing as a program and an empty schema-less store plus an exception at the function grain, with no caller reaching that grain. Both stores linger on this machine today. Every record on this clause now agrees; the DELETE ruling and its execution steps stand unchanged.",
     "notes": "FOR 1.0.0_SA_CTO: concurred; the exercise is offered as the EXERCISED-grade evidence beneath CORRECTION 2, nothing more. FOR 2.0.0_SA_COO~A (at load): unchanged -- git rm inside the grant, census row REMOVED, 0 of 29 honest only beside a FIRED control. || INSTRUMENT NOTE in this seat's memory: a wrong file fact travelled seat to seat inside a right library principle; the discriminator was to run the FILE. || THIS ROW IS THE CARRIER: the CVO's one send is the slug."
+  }
+]
+```
+
+## C-S22 -- the round-4 grade record: D7-AC8 and D8-AC5, both PASS on this seat's own reads (the writer and the canonical store gone, comp-kuzu --mode refused here, the residual stores reachable by no client path); FWD-7 carried NOT REALIZED while the manifest routes back
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T15:03Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S22",
+    "disposition": "DISMISSED_WITH_REASON",
+    "one_line": "L9 on the round-4 FINAL packet @5a999e42b9 and COMPLETION_REPORT.round4.json (20 of 20 orders terminal, 20 of 20 instances VALID -- read from git; the handing message arrived sender-unverified through the broker library): the GRADE RECORD for the two judgment criteria left ungraded, D7-AC8 and D8-AC5, both PASS on this seat's own reads. D7-AC8 (CG-s-8: the census table, the per-consumer latencies through the gateway, and whether anything user-facing still holds a path to a local build). THE EXECUTABLE PLANE, measured here at HEAD 5a999e42b9: infra/aws/globgrph/kuzu_cost_enrich.py ABSENT in the worktree and NOT tracked (deleted @99fe7e4141 under the CTO's ruling @1266d65641); infra/aws/globgrph/kuzu_nessie_db ABSENT (the issuer's rm -rf at the drain, 6 -> 0 @c2f4ce26be, and D8-AC3's independent 0 of 69); no wk-cldgrph worktree or branch remains; the record reads D7-AC1 SEAM_REACHABLE=0 of 3 with the probe control and D7-AC2 CONSUMERS_OPENING_LOCAL_DB=0 of 29 with three controls FIRED; the census table's 30 rows carry every consumer re-exercised through the gateway inside its budget (comp-blast 9 s of 90, comp-find --corpus aws 7.36 s of 120, ms_heat_index 4.56 s / 6134 rows, comp-debt REFUSED on the stitch surface W2-S17), so no latency row was owed. THE INSTRUCTION PLANE, exercised here rather than read: `bash .tools/comp-kuzu --mode full \"MATCH (n:CloudNode) RETURN count(n)\"` -> `kuzu_cli.py: error: unrecognized arguments: --mode` -- the thin client refuses the very canonical_call graph-call-manifest.yaml still registers at :219 (cloud.refresh.full) and :233 (cloud.refresh.incremental), 'forces a FULL kuzu_nessie_load unconditionally', with :1783's subcommand list still offering `--mode auto|inc|full`; tool_index.py help x6 and comp_aws_cli.py:2857/2866 and comp_similar.py:591 as the worker names them. So the answer to the criterion's last clause is: NO code path can rebuild a local copy, and YES the estate's own instruction surfaces still tell a seat to. VERDICT PASS on the cell: CG-s-8 retired the seam, the store, the writers and the consumers it owns, and the residue is placed by the CTO as an L10 manifest row (lane 0.8.0_AE_CloudComp, A4.3/W2-S23); FWD-7 is carried NOT REALIZED while that row is unexecuted, exactly as C-S17 read it on 09-06. D8-AC5 (CG-x-7: the second reader, and 'every developer machine off'). (a) The gateway host i-07dccb1615503ac99 is a different MACHINE on every measurable axis -- other OS, in the VPC, no repository, no graph of any name (0 of 32,220 paths), a different transport (plaintext HTTP to the Cloud Map name) with different credentials -- and the SAME PERSON, driven by the worker over SSM; FWD-7's 'two people' is therefore MODELLED on the machine half and not exercised on the person half; the issuer stated the substitution at the cut and named the site-Z reader as the alternative, and site Z is Andrew's second device, which his 12:5xZ word today names as an output the roadmap will allocate. (b) The canonical copy is gone on both sides (the issuer's 6 -> 0 and the worker's independent 0 over 69 entries with a positive control of 2); the residual stores W2-S28 names are PRESENT at this seat (kuzu_db 9.2 MB, kuzu_ac7.db, kuzu_stitch_db) and REACHABLE BY NO CLIENT PATH: comp-find over infra/aws/globgrph, org/modules and .tools for kuzu_ac7 or kuzu_db returns 11 hits across 982 files -- ONE DEF (kuzu_load.py:30, the scratch BUILDER of kuzu_db from the S3 tarball), 4 SURFACED mentions in help text and comments, 5 CONFIG, 1 TEST docstring, 0 readers -- and kuzu_cli.py's usage carries no --db-path, so 'no local copy left that either could have read INSTEAD' holds at the reader grain: a client of the served graph has no route to either store. The bytes stay under this seat's own P7 ruling (DIAL_RECORD_comp-kuzu_20260804.md: kuzu_db HISTORICAL, kuzu_ac7.db HISTORICAL-AT-RISK do-NOT-delete, tied to NFRA_GLOBGRPH.ITEM-3) and travel NAMED to L10 as a retirement question for the CTO's addendum, not as a hole in CG-x-7. VERDICT PASS. WHAT THE TWO GRADES SAY TOGETHER FOR THE CTO'S FWD-7 READ: the cells are met; the outcome is EXERCISED on machines, MODELLED on persons, and NOT REALIZED while the manifest routes back.",
+    "grades": [
+      {
+        "criterion": "D7-AC8",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-7.retire-local-copy.proof_of_spec.json@d44c9cc8cf",
+        "verdict": "PASS",
+        "reason": "The census table and the per-consumer latencies are recorded with denominators and every consumer met its budget; the executable plane is clean and re-measured here (the writer absent and untracked, the canonical store absent, the branch gone); the instruction plane's residue is named carrier by carrier and this seat exercised the load-bearing one (comp-kuzu --mode refused). The worker recorded NO verdict as the face requires and did not edit the residue inside its <paths>, which was the right restraint under a judgment criterion. The residue is outside the cell and placed by the CTO; the grade on the cell is PASS and the outcome reading is NOT REALIZED."
+      },
+      {
+        "criterion": "D8-AC5",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-8.close-fwd7-two-machines.proof_of_spec.json@238acd2cf8",
+        "verdict": "PASS",
+        "reason": "Both reading questions are answered honestly and at the right grain: the gateway is a second MACHINE and not a second PERSON, said plainly with the alternative named; the canonical copy is gone on two independent reads; the residual stores are disclosed with their manifest-declared contents and the worker's GRAIN statement (manifest read as a file, store never opened). This seat adds the reader-path census: no client path reaches kuzu_db or kuzu_ac7.db, so the FWD-7 clause holds where it can be exercised. NO verdict was recorded by the assignee."
+      }
+    ],
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AT HEAD 5a999e42b9 (git show --stat; merge-base --is-ancestor YES): 20 of 20 faces read complete by cat -n | grep on the <status> line; the D-7 face @d44c9cc8cf and D-8 face @238acd2cf8; deliverables proof instances 73,901 B and 30,261 B; `git branch --list 'wk-cldgrph*'` empty, `git worktree list | grep -c cldgrph` 0.",
+        "THE EXECUTABLE PLANE AT THIS SEAT: `test -e infra/aws/globgrph/kuzu_cost_enrich.py` ABSENT; `git ls-files --error-unmatch` NOT tracked; `git log --diff-filter=D` names 99fe7e4141 (0.9.0_WK_NFRA_CLDGRPH~2, pass 4); `test -e infra/aws/globgrph/kuzu_nessie_db` ABSENT; kuzu_stitch_db, kuzu_db, kuzu_ac7.db PRESENT (existence only).",
+        "THE INSTRUCTION PLANE EXERCISED: `timeout 120 bash .tools/comp-kuzu --mode full \"MATCH (n:CloudNode) RETURN count(n)\"` -> usage line + `kuzu_cli.py: error: unrecognized arguments: --mode ...`; comp-read graph-call-manifest.yaml --enumerate 'cloud\\.refresh\\.(full|incremental)|kuzu_nessie_load' -> 10 hits across 1861 lines, :219 `- id: cloud.refresh.full`, :221 the canonical_call with `--mode full`, :233 `- id: cloud.refresh.incremental`, :1783 `\"--mode auto|inc|full\"`.",
+        "THE READER-PATH CENSUS: comp-find 'kuzu_ac7|[^_a-zA-Z]kuzu_db[^_a-zA-Z]' infra/aws/globgrph org/modules .tools --limit 40 -> DENOMINATOR 11 hit(s) across 982 file(s) [corpus=all]; BANDS DEF=1 SURFACED=4 CONFIG=5 TEST=1; the DEF is kuzu_load.py:30 DEFAULT_DB_PATH (a builder); the four SURFACED are tool_index.py:1070/:1966 and comp_aws_cli.py:2859/:2871 prose; kuzu_cli.py usage `[-h] [--json] [--limit LIMIT] [--schema] [query]` carries no --db-path.",
+        "THE RECORDS READ: D7-AC8's output_evidence (P2.5, P3.5, P4.6) and D8-AC5's (a)/(b) with the GRAIN statement, the final packet s.2-s.3, the partial packet A4.3/A5.3-A5.5, W2-S27, W2-S28, W2-S29, S61. DIAL_RECORD_comp-kuzu_20260804.md P7: 'HISTORICAL: kuzu_db (Jun-12 scratch, 1,166 nodes) ... HISTORICAL-AT-RISK (do NOT delete): kuzu_ac7.db + kuzu_ac_traversals.py -- tied to open NFRA_GLOBGRPH.ITEM-3'."
+      ]
+    },
+    "spec_asserts": "D7-AC8 and D8-AC5 as cut (judgment, NO verdict by the assignee). FWD-7: two people on different machines asked the same question at the same moment and received the same answer, after the local copy was switched off. PRD R7: the local kuzu_nessie_db and its load/refresh invocation paths retire; indefinite coexistence is the duplicate output path the rule forbids. CLAUDE.md rule 20: the manifest is consulted before any infra change.",
+    "world_is": "The seam, the store, the last writer and every in-grant consumer are gone or repointed and the two machines answered identically under one vintage; the estate's manifest and help text still instruct a seat to rebuild the retired path through a flag the client refuses; two historical local stores remain as bytes no client can reach, under this seat's own preservation ruling. Cells PASS; the outcome waits on the placed manifest row and on a second person if the CTO reads 'two people' literally.",
+    "notes": "FOR 1.0.0_SA_CTO'S L10: (1) FWD-7 NOT REALIZED until the manifest row executes; (2) the person half of 'two people' is either accepted as modelled or exercised from site Z on the roadmap's allocation -- this seat recommends the latter be named as the acceptance of the placed row rather than a new cell; (3) kuzu_db + kuzu_load.py (HISTORICAL) and kuzu_ac7.db (tied to NFRA_GLOBGRPH.ITEM-3) are a retirement question for the addendum, this seat's P7 do-NOT-delete standing until that row exists; (4) W2-S27's parameter-dict limb on projection_client is the next repoint's constraint, named. || The census-table latencies are the worker's; this seat did not re-exercise consumers through the gateway (the record is complete and the numbers are inside budget by a wide margin)."
+  }
+]
+```
+
+## C-S23 -- adjudicates twenty-one items: GRADUATED, remedied in-round and CLOSED (thirteen owner acks checked, the halt-gate worker limb, the safe-merge continue limb, the D-12 grant, three of this seat's rulings)
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T15:03Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S23",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W1-S2",
+      "NFRA_CLDGRPH-W2-S5",
+      "NFRA_CLDGRPH-W1-S6",
+      "NFRA_CLDGRPH-W2-S7",
+      "NFRA_CLDGRPH-W3-S2",
+      "NFRA_CLDGRPH-W1-S10",
+      "NFRA_CLDGRPH-W1-S13",
+      "NFRA_CLDGRPH-W1-S15",
+      "NFRA_CLDGRPH-S57",
+      "NFRA_CLDGRPH-W1-S26",
+      "NFRA_CLDGRPH-W2-S26",
+      "NFRA_CLDGRPH-W2-S13",
+      "NFRA_CLDGRPH-W2-S21",
+      "NFRA_CLDGRPH-W1-S1",
+      "NFRA_CLDGRPH-W2-S1",
+      "NFRA_CLDGRPH-S36",
+      "NFRA_CLDGRPH-W1-S7",
+      "NFRA_CLDGRPH-W1-S9",
+      "NFRA_CLDGRPH-W1-S17",
+      "NFRA_CLDGRPH-W1-S22",
+      "NFRA_CLDGRPH-W1-S25"
+    ],
+    "disarm_owner": "2.0.0_SA_COO~A (13 acked + W1-S17/W1-S22/W1-S25 by ruling), 1.0.0_SA_CTO (W1-S1, W2-S1, S36), 0.7.0_AE_CloudOps (W1-S7, W1-S9)",
+    "one_line": "L9: ADJUDICATES twenty-one items -- GRADUATED, remedied inside the round and CLOSED, each on a measured act rather than the surfacing seat's word. THE THIRTEEN ACKED BY THEIR OWNER, the ack rows read and their claims spot-checked at this seat: W1-S2 (S40: the eight-address apply landed, verified live), W2-S5 (S41: every ledger criterion now names the entry file's Status line, exercised 3 of 3), W1-S6 (S44: scratch-under-the-worktree held across six spawns), W2-S7 (S45: .open_deploys/ in every NEVER-2 face this round; the --full-history audit rule), W3-S2 (S47: the untracked-path census replaced by a tracked read), W1-S10 (S54: the cypher-quoting shape swept, no surviving carrier), W1-S13 (S55: the structurally-zero telemetry filter forbidden by name in the face), W1-S15 (S56: arm (b) classifies on provenance by form), S57 (S58: behind.sh's two S3 reads fail loud, READ_FAILED a third outcome, exercised), W1-S26 (S60: the +1 s window convention stated and tested both sides -- also this seat's memory), W2-S26 (S61: the DELETE ruled, executed, 0 of 29 with three controls; C-S19..C-S21), W2-S13 (S62: <paths> widened by four, the two out-of-lane importers DECLARED and named for L10), W2-S21 (S63: D7-AC1 recut as a refusal probe with its control). THE THREE HALT-GATE/DRAIN ITEMS AT THE CTO, measured on the code: W1-S1 and W2-S1 (the gate refused every 0.9.0_WK serial) are CLOSED by the worker limb @68f22f74f5 -- halt-gate-check.sh:135-171 admits 0.9.0_WK_<CODE>~<n> while a NON-TERMINAL order names it, and D-1's apply then completed (S40); S36 (a conflicted drain aborted past the index guard) is CLOSED by the --continue limb @afa47031ed, which CLAUDE.md 14b now names. THE TWO GRANT ITEMS AT CLOUDOPS: W1-S7 (the derive role lacked s3:GetBucketNotification) is CLOSED by TO-CG-D-12 complete -- APPLIED, read live allowed 1 with implicitDeny on the write twin -- and the D-1 pinned derive read 34 of 34 buckets; W1-S9 (the grant's file named wrong in the face, landed in-grant as its own policy) is CLOSED on the same act, the terraform-address split being CloudOps hygiene and not a hazard. THE THREE RESOLVED BY THIS SEAT'S OWN RULINGS: W1-S17 (STAMP->ANSWER's two clocks) ruled to the swap at C-S12 and adopted in the CTO's causal arm @b8eaa3323b; W1-S22 (the hands-off domain's uncovered member) and W1-S25 (the excused hand-start that measurably held the ceiling) both resolved by the recut of D10-AC3 to the causal property under the CTO's four-part test and graded at C-S15/C-S16 on the hand-free pass 3, with S59's correction of W1-S25's own figure. Worker-form clocks ride this row; seat-form S36 and S57 get remediation rows minted closed in REMEDIATION_v3.md.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Ack rows S40, S41, S44, S45, S47, S54, S55, S56, S58, S60, S61, S62, S63 read in full from the census dump of the investigation channel at HEAD; each names its instrument and its denominator (S40 five live AWS reads; S41 three entry files; S44 six worker runs; S45 the --full-history rule; S54 three carriers at their transport; S58 READ_FAILED x12 in the pass-3 code).",
+        "halt-gate-check.sh at HEAD (comp-read --enumerate '0\\.9\\.0_WK|OPAL_AGENT_SERIAL'): 4 hits, :135 the worker comment, :147 `code=\"${serial#0.9.0_WK_}\"`, :171 `0.9.0_WK_*~[0-9]*)`, :305 the admission text -- and 0 hits for OPAL_AGENT_SERIAL, which is why W1-S11 stays OPEN at C-S24 while W1-S1/W2-S1 close. git log names 68f22f74f5 (1.0.0_SA_CTO 09-04 05:43Z).",
+        "safe-merge.sh: comp-read --enumerate 'continue' -> 29 hits; git log -1 -> afa47031ed (1.0.0_SA_CTO 09-04 15:27Z) 'the --continue limb NFRA_CLDGRPH-S36 asked for'. CLAUDE.md 14b at HEAD: 'merge back with .tools/safe-merge.sh (its --continue limb keeps a conflicted drain inside the guards)'.",
+        "TO-CG-D-12 face <status> at HEAD: complete, 'The grant is APPLIED (Apply complete! Resources: 1 added ...), READ LIVE (allowed 1, with implicitDeny on the write twin as the control)'; TO-CG-D-1 <status>: complete, all three families pinned by digest; the pinned derive read buckets 34 / unreadable 0 (W1-S12's record).",
+        "This seat's rulings: C-S12 (D9-AC6, the clock ruled to the swap), C-S15 (three D-10 rulings, W1-S20/S21/S23 graduated), C-S16 (D10-AC5 PASS on the hand-free cycle); the CTO @9f4a57262f + @1ced87e810 and @b8eaa3323b."
+      ]
+    },
+    "spec_asserts": "Each item's own disarm clause, as its author wrote it.",
+    "world_is": "Every one of the twenty-one has its remedy in the record and exercised or measured: an apply landed, a face amended and re-run, a gate given the limb it lacked, a grant applied and read live, a ruling adopted into a recut that then passed.",
+    "notes": "Remediation plane: S36 and S57 minted CLOSED in REMEDIATION_v3.md; the nineteen worker-form items carry their clocks here. NOT closed although acked: nothing -- every ack this round was checked against the act it claims."
+  }
+]
+```
+
+## C-S24 -- adjudicates seventeen items: GRADUATED, remedy OPEN with an owner (the manifest re-route and the stitch reader placed by the CTO; six at the CTO; four CloudOps drifts; the telemetry triplet; two instrument defects); S26 disarmed, S31 at 3 of 7
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T15:03Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S24",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W1-S11",
+      "NFRA_CLDGRPH-S34",
+      "NFRA_CLDGRPH-S35",
+      "NFRA_CLDGRPH-S53",
+      "NFRA_CLDGRPH-W3-S3",
+      "NFRA_CLDGRPH-W3-S4",
+      "NFRA_CLDGRPH-W3-S5",
+      "NFRA_CLDGRPH-W1-S24",
+      "NFRA_CLDGRPH-W2-S17",
+      "NFRA_CLDGRPH-W2-S18",
+      "NFRA_CLDGRPH-W2-S19",
+      "NFRA_CLDGRPH-W2-S20",
+      "NFRA_CLDGRPH-W2-S23",
+      "NFRA_CLDGRPH-W2-S2",
+      "NFRA_CLDGRPH-W1-S3",
+      "NFRA_CLDGRPH-W1-S8",
+      "NFRA_CLDGRPH-W2-S10"
+    ],
+    "disarm_owner": "1.0.0_SA_CTO (W1-S11, S34, S35, S53, W2-S19, W1-S24), 0.7.0_AE_CloudOps (W2-S2, W1-S3, W1-S8, W2-S10, W3-S4 via the hook's lane), 0.8.0_AE_CloudComp (W2-S17, W2-S23, W2-S20, W3-S3, W3-S5), the git-hooks lane (W2-S18)",
+    "one_line": "L9: ADJUDICATES seventeen items -- GRADUATED, remedy OPEN, each with an owner, none inside any round-4 cell; they travel to L10 PLACED where the CTO has already placed them and NAMED where not. THE TWO LOAD-BEARING FOR FWD-7, both the CTO's placed manifest rows (lane 0.8.0_AE_CloudComp, 94456/A4.3): W2-S23 -- graph-call-manifest.yaml routes a repointed consumer back through comp-kuzu --mode, the client refuses it (exercised at C-S22) and rule 20 sends every seat to that file, so this is the instruction path back and FWD-7 cannot read REALIZED until it is retired with a successor entry (the file's own retired_aliases convention); W2-S17 -- comp-debt's stitch leg still opens kuzu_stitch_db locally and REFUSES where it is absent, the stitch READER placed as its own row. THE CTO'S SIX: W1-S11 (the halt gate reads only the session-keyed serial file and not OPAL_AGENT_SERIAL, so every worker must write a runtime file no face names; 0 hits for OPAL_AGENT_SERIAL in halt-gate-check.sh at HEAD); S34 (the drain destroys a worker's untracked NEVER-2 sentinel -- 2 of 3 lost this round; safe-merge.sh carries no open_deploys or sentinel handling at HEAD, 0 hits); S35 (a seat swept by another seat's drain cannot tell -- safe-commit's rc 128 family reads as nothing-landed while the staged file crosses under the draining seat's authorship; 14b's worktree discipline is policy, not mechanism); S53 (two of four _build_manifest producers still stamp merge attempts as edge_count -- kuzu_load.py:278 and kuzu_stitch_load.py:124 -- and the manifest carries no field a consumer can reject on); W2-S19 (proof-of-spec-check's `introduces` limb matches substrings, so `connect` reads present at a parent that only contains `connection`); W1-S24 (the vendored .tools/jq.exe emits CRLF as a second carrier beside the aws shim -- the platform's line-ending convention is the shared dependency; in this seat's memory as an instrument trap; the doctrine line is the CTO's). CLOUDOPS' FOUR LIVE-PLANE DRIFTS, each a ruling the lane owes and none a defect of this project: W2-S2 (the opal-gateway ALB's access_logs LIVE-no-DECLARED, guarded by ignore_changes -- declare it or turn it off, and remove the guard first if off); W1-S3 (seven residue outputs in the globgrph state advertising destroyed alarms -- one unscoped apply or a state reconciliation); W1-S8 (globgrph-resource-summaries-producer has no trigger on either scheduling service -- declare or retire; measured today it still rides :latest, see S31); W2-S10 (an unscoped plan in opal-gateway shows two live WAF IP-set DELETES -- reconcile before anyone applies unscoped there). THE TELEMETRY TRIPLET, one root: W3-S3 (org/mcp/agent_telemetry is gitignored and absent from every linked worktree, so a census there is a NO MEASUREMENT that renders as 0), W3-S4 (post-tool-telemetry.sh resolves the serial from a stale org/mcp/sessions/<id>.serial before OPAL_AGENT_SERIAL, so a worker's rows land under a sibling slot -- in this seat's memory; .tools/hooks/** is not enumerated in .owned-paths.yaml so the lane is unresolvable from the registry), W3-S5 (a telemetry row carries no command, so the log can never be the oracle for 'nothing was rerun'); the spine s.4 reading -- the compiled step log reads L7 from git -- is the standing answer and these three are the measured instances the CTO's design surface receives. TWO INSTRUMENT DEFECTS IN OTHER LANES: W2-S18 (pipescript-suite-check.sh:195 writes under $ROOT/.git, a FILE in a linked worktree, so the gate blocks with an empty failing list while the suite is green), W2-S20 (test_comp_cluster_cli's `git -C portal` oracle answers from the parent repo when the submodule is not checked out). ALSO CARRIED ON THIS ROW, the two remediation items already ARMED at the CTO with their state measured today: S26 -- the provisioner's fix @e4167f3c3b (icacls /reset after every chmod) is EXERCISED: this seat's unscoped Get-Acl over C:\\Users\\AndrewBerman\\bin after today's fresh provisioning run reads 211 files, protected 0, deny-bearing 0, lacking the CodexSandboxUsers ALLOW 0 -- the row's own 'verify UNSCOPED after a fresh run' condition; its disarm and remediation clocks advance in place, and it stays open only for its acceptance (a fresh Codex seat), which waits on Andrew's Codex word; S31 -- the doctrine half landed (CLAUDE.md NEVER-2 names S31 and requires every image act to name the tag's reach) and the pins half is 3 of 7: live task definitions read at this seat show globgrph-derive-runner:7, globgrph-projection-worker:4 and globgrph-serving:2 pinned by digest sha256:1b89853f..., while globgrph-comp-learns-producer:1, globgrph-cse-producer:1, globgrph-fedobs-producer:1 and globgrph-resource-summaries-producer:1 still reference opal-globgrph-derive-runner:latest -- so the next push of that tag still moves four families at once; S31 stays OPEN at the CTO.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The seventeen rows read in full from the census dump at HEAD (their one_line, notes and world_is); each names its own disarm act and none of those acts appears in the record: W1-S11 (0 OPAL_AGENT_SERIAL hits in halt-gate-check.sh), S34 (0 open_deploys|sentinel hits in safe-merge.sh), S53 (kuzu_load.py:278 / kuzu_stitch_load.py:124 named by the row; no commit on either file since), W2-S23 (the manifest entries at :219/:233/:1783 at HEAD, C-S22).",
+        "S26 measured: PowerShell Get-Acl over every file of C:\\Users\\AndrewBerman\\bin at 14:5xZ -> files=211 protected=0 deny_bearing=0 lacking_CodexSandboxUsers_ALLOW=0; the provisioner ran fresh at this seat's 12:3xZ startup and printed 'DACL inheritance intact -- protected 0 of 211 (S26 expects 0)'; .tools/provision-path-shims.sh at HEAD carries _restore_inheritance() with icacls /reset under MSYS_NO_PATHCONV (@e4167f3c3b, 1.0.0_SA_CTO 09-04 03:09Z).",
+        "S31 measured: aws ecs list-task-definition-families --family-prefix globgrph --status ACTIVE -> 9 families; describe-task-definition on each latest revision: 3 reference opal-globgrph-derive-runner@sha256:1b89853fe44133f10a60dc2b3e7b463c0d3b68b827a2ddff249bf427ecde2778 (derive-runner:7, projection-worker:4, serving:2), 4 reference opal-globgrph-derive-runner:latest (comp-learns-producer:1, cse-producer:1, fedobs-producer:1, resource-summaries-producer:1), 2 are third-party images (nessie 0.96.1, trino 470).",
+        "The CTO's placements: 94456 / @622ffb9631 (the stitch reader and the scratch loaders), A4.3 and 94466 / @1266d65641 (the manifest re-route and the cost-attribution capability, lane 0.8.0_AE_CloudComp) -- named in the final packet s.5."
+      ]
+    },
+    "spec_asserts": "Each item's own disarm clause; for W2-S23 and W2-S17 the CTO's placement standard (a surface is placed as a manifest row with a lane and an accept, never named).",
+    "world_is": "Seventeen measured defects with owners and no round-4 cell; two of them stand between FWD-7 and REALIZED and are already placed; the rest are instrument, hook, drift and doctrine items the L10 routes by name. S26's mechanism is fixed and verified unscoped; S31 is half landed.",
+    "notes": "Remediation plane: S34, S35, S53 minted OPEN (owner 1.0.0_SA_CTO) in REMEDIATION_v3.md; S26 clocks advanced in place (DISARMED at this seat's read, REMEDIATED at the writer, closed false pending the Codex-seat acceptance); S31 untouched in place (its evidence is this row's). Worker-form items carry their clocks here. || FOR THE CTO'S L10: the four :latest producers are the same fact S31 was filed on -- the next image act moves them together; the addendum row for the pins is the CTO's."
+  }
+]
+```
+
+## C-S25 -- adjudicates thirty-seven rows: DISMISSED_WITH_REASON, each a record (acks, corrections, method notes, cut-shape observations, the D-7 pass-1 defects superseded by their amendments)
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T15:03Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S25",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_CLDGRPH-S48",
+      "NFRA_CLDGRPH-S49",
+      "NFRA_CLDGRPH-S50",
+      "NFRA_CLDGRPH-S51",
+      "NFRA_CLDGRPH-S52",
+      "NFRA_CLDGRPH-S54",
+      "NFRA_CLDGRPH-S55",
+      "NFRA_CLDGRPH-S56",
+      "NFRA_CLDGRPH-S58",
+      "NFRA_CLDGRPH-S59",
+      "NFRA_CLDGRPH-S60",
+      "NFRA_CLDGRPH-S61",
+      "NFRA_CLDGRPH-S62",
+      "NFRA_CLDGRPH-S63",
+      "NFRA_CLDGRPH-W2-S3",
+      "NFRA_CLDGRPH-W2-S4",
+      "NFRA_CLDGRPH-W2-S6",
+      "NFRA_CLDGRPH-W2-S8",
+      "NFRA_CLDGRPH-W2-S9",
+      "NFRA_CLDGRPH-W1-S4",
+      "NFRA_CLDGRPH-W1-S5",
+      "NFRA_CLDGRPH-W1-S12",
+      "NFRA_CLDGRPH-W1-S14",
+      "NFRA_CLDGRPH-W1-S16",
+      "NFRA_CLDGRPH-W1-S18",
+      "NFRA_CLDGRPH-W2-S11",
+      "NFRA_CLDGRPH-W3-S1",
+      "NFRA_CLDGRPH-W2-S12",
+      "NFRA_CLDGRPH-W2-S14",
+      "NFRA_CLDGRPH-W2-S15",
+      "NFRA_CLDGRPH-W2-S16",
+      "NFRA_CLDGRPH-W2-S22",
+      "NFRA_CLDGRPH-W2-S24",
+      "NFRA_CLDGRPH-W2-S25",
+      "NFRA_CLDGRPH-W2-S27",
+      "NFRA_CLDGRPH-W2-S28",
+      "NFRA_CLDGRPH-W2-S29"
+    ],
+    "one_line": "L9: ADJUDICATES thirty-seven rows -- DISMISSED_WITH_REASON, each a RECORD rather than an item. THE FOURTEEN ACKS AND CORRECTIONS BY THE ISSUER, each consumed by the closure it evidences at C-S23 or by the round-1/2 items it closes: S48 (S12's remedy landed in TO-CG-B-2's BOUNDS two days before the ack), S50 (S13's ruling landed in TO-CG-B-1, the ledger closed), S51 (S2's docstring corrected in the port), S52 (S8's post-load COUNT(*) in the canonical loader), S54, S55, S56, S58, S60, S61, S62, S63 (the acks for W1-S10, W1-S13, W1-S15, S57, W1-S26, W2-S26, W2-S13, W2-S21), S49 (the inlined cell text fixed in the same commit -- a third carrier an amendment reaches only if it looks), S59 (W1-S25's 24,936.799 s retracted by its author; the counterfactual identical at 18,138.643 s -- read at C-S16). THE INERT METHOD NOTES AND CUT-SHAPE OBSERVATIONS, none arming anything: W2-S3 (IntegrationSpec's description field), W2-S4 (the secret built out-of-band per the module's own discipline), W2-S6 (the ps selector vs the unit's MainPID), W2-S8 (the /graph/* routes are audit-silent by construction; G6 read at C-S8), W2-S9 (the halt gate's identity file lives in the main tree by design -- the mechanism side of W1-S11, which is the item), W1-S4 (leg kind and script name drift), W1-S5 (99 non-ASCII bytes in 8 of 22 .tf files, a census for the module's owner), W1-S12 (a ledger leg closed against an earlier world -- read with its date), W1-S14 (D9-AC2 VOIDED on a working night, superseded by pass 3), W1-S16 (a stopped ECS task ages out within the hour -- cite the log stream and the CloudTrail event), W1-S18 (a positive control that printed nothing, fixed in its own commit -- the CRLF family with W1-S24), W2-S11 (the manifest advisory's stale reason -- its substance travels with W2-S23), W3-S1 (D5-AC4's pattern matched its own disclosure docstring; D-5 terminal), W2-S12, W2-S14, W2-S15, W2-S16 (the D-7 pass-1 defects: AC1/AC5 mutually unsatisfiable, AC2's out-of-grant hits, AC3 under bash, comp-find --corpus aws dead at base -- all superseded by the pass-2/3 amendments and the pass-4 record), W2-S22 (a battery convicted of the pattern it forbids), W2-S24 (78 not 79 lines), W2-S25 (the two spike loaders open their own scratch stores -- read at C-S17), W2-S27 (two capabilities did not survive the repoint; the parameter-dict limb named for the next consumer at C-S22), W2-S28 (a reading request, answered at C-S22: the residual stores are reachable by no client path and stay under this seat's P7 ruling), W2-S29 (two criteria firing one paired ask each against a two-attempt bound -- a cut-shape note for the next face). Nothing in these thirty-seven is left to remedy that is not carried on C-S23, C-S24 or C-S22.",
+    "dismissal_reason": "Records: acks, corrections, method notes and cut-shape observations whose substance is consumed by the closures, the open items or the grades above; none arms a hazard of its own.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "All thirty-seven read in full from the census dump at HEAD; every ack row names the instrument it re-ran (S48 TO-CG-B-2's BOUNDS; S50 the deploy rendering and a sentinel absence; S51/S52 the loader source at HEAD; S54 three transports; S58 READ_FAILED x12; S62/S63 the pass-2/pass-3 amendments and the pass-4 record).",
+        "The INERT rows' own hazard_standing and notes state why nothing is armed (W1-S18 fixed in its own commit; W1-S14 superseded by D-9 pass 3; W2-S12/S14/S15/S16 superseded by @1c6a05fbc3 and @e27c871ccf; W2-S28 INERT by its author 'so a grader can overturn it' -- read and not overturned at C-S22)."
+      ]
+    },
+    "spec_asserts": "The channel's row taxonomy: an item arms a hazard and names a disarm; a record does not.",
+    "world_is": "Thirty-seven records whose facts are true and whose substance lives on other rows; dismissing them leaves nothing unowned.",
+    "notes": "Investigation items without a disposition after this write: 0 of 122 by this seat's census and 0 of 75 open by comp-surprise's; the L10 precondition on the row axis is met."
   }
 ]
 ```
