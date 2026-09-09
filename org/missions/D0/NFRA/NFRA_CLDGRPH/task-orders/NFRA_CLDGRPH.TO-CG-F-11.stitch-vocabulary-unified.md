@@ -1,0 +1,104 @@
+# TO NFRA_CLDGRPH.TO-CG-F-11 -- CG-s-31 (ADDED at decomposition v0.9 on PRD v0.10 row S31 @04d9942aff, MID-ROUND, the W2-S45 arch-gate ruling + R17): THE STITCH VOCABULARY UNIFIED AT THE PRODUCER -- the four provisional stitch-v1 types the GO admitted for the fold (GOLD_SCRIPT, S3_DATA_KEY, PORTAL_COMPONENT, REACT_QUERY_KEY) become the projection's own types at the projection's grain, by an IDENTITY CENSUS first (per provisional population: how many members resolve to an existing canonical id, with its denominator), unresolved members carried under the canonical type with `origin=stitch` and a reason, never dropped; `PORTAL_BUNDLE` stays as the one genuinely new class; the map then RETIRES the four entries and the stamp; DERIVES_FROM and STORED_IN resolve 100% after unification; comp-debt's second leg reads the unified vocabulary
+
+<to_id>NFRA_CLDGRPH.TO-CG-F-11</to_id>
+<project>NFRA_CLDGRPH</project>
+<issued_to>0.9.0_WK_NFRA_CLDGRPH~2</issued_to>
+<issued_by>2.0.0_SA_COO~A</issued_by>
+<issued_date>2026-09-09</issued_date>
+<status>pending -- GO = the COO handing this order to slot ~2 by CONTINUING the same subagent after TO-CG-F-5 (CG-s-25) is terminal and merged, with CLOUD merged into your branch (spine v3 L7 drain). ROUND 6 of NFRA_CLDGRPH (cut MID-ROUND at v0.9 of the decomposition on PRD v0.10). Chain ~2 is now F-3 (DONE) -> F-4 -> F-5 -> F-11 -> F-6 (S26, the local stitch store retired, stays LAST: it depends on the repoint reading a served graph that carries the types, whichever vocabulary). PREMISE RE-GROUND at hand-off: F-4's and F-5's instances VALID at your HEAD; the served graph carries the four provisional types with `vocabulary=stitch-v1` on every admitted node (a `comp-kuzu` count); the map's five stitch-v1 entries present with the GO comment; if any fails, BLOCKING row + report. The assignee commits its own status flip after a VALID proof-of-spec instance whose mechanical rows ALL read PASS; the CVO re-signs the map at L9 (F11-AC6).</status>
+
+**Directive:** D0 · **Fabric:** laptop · **PRD:** `org/missions/D0/NFRA/NFRA_CLDGRPH/prd/NFRA_CLDGRPH_PRD.md` v0.10 @`4fc1bcb3e4` (s.7 row S31; s.6 R17; the CTO's record `CTO_ADJUDICATION_NFRA_CLDGRPH_20260909T2015Z_W2_S45_STITCH_VOCABULARY_GATE.md`) · **Decomp cell:** `CG-s-31` (decomposition v0.9) · **Lane:** `0.8.0_AE_CloudComp` · **Rule 27 seating:** `0.9.0_WK_NFRA_CLDGRPH~2`.
+
+---
+
+## STANDING LAW (inlined)
+
+- **Serial:** `0.9.0_WK_NFRA_CLDGRPH~2`. Every Bash call begins `export OPAL_AGENT_SERIAL=0.9.0_WK_NFRA_CLDGRPH~2; export PATH="/c/Users/AndrewBerman/AppData/Local/Programs/Python/Python312:$PATH";`. Commit via `bash .tools/safe-commit.sh --author "0.9.0_WK_NFRA_CLDGRPH~2 <0.9.0_WK_NFRA_CLDGRPH~2@opal.agent>" -F <msgfile> -- <files>`. Never push, merge, rebase, `checkout --` or `clean`. Push state LOCAL.
+- **Write surface = the PATHS block + `deliverables/0.9.0_WK_NFRA_CLDGRPH~2/`.** Every script and capture carries `f11_`. Rows continue your W2 numbering; `surfaced_at` a real minute.
+- **Every criterion invocation under `timeout 120`**; a derive/projection wait is a polled loop under `timeout 3600`. Every `.py` edit passes `bash .tools/commit-gate.sh <file>`. Non-ASCII refused.
+- **NEVER:** DROP a member of a provisional population (an unresolved member is CARRIED under the canonical type with `origin=stitch` and a reason -- R17: never dropped); merge by NAME (a merge is by IDENTITY -- a resolvable canonical id -- or it is a carry with `origin=stitch`); move the frozen aws RESOURCE count without the CVO (S3_DATA_KEY merges INTO `S3Key`, already aws; no new aws type); an image act outside a NEVER-2 entry naming the seven families by their TRUE `globgrph-` names; `:latest` on any family (R13); a local Kuzu store; touching `kuzu_stitch_db` (S26's, LAST); `2>/dev/null` on a verdict read; bare `git commit`.
+- **Search rail:** `python .tools/comp-read` / `python .tools/comp-find`; raw recursive grep/find refused; a `cmd | grep` receiver is free.
+
+## THE CELL (decomposition v0.9 s.1a; PRD v0.10 s.7 row S31 verbatim in its accept)
+
+> **CG-s-31** | S31 THE STITCH VOCABULARY UNIFIED AT THE PRODUCER: the four provisional stitch-v1 types (GOLD_SCRIPT, S3_DATA_KEY, PORTAL_COMPONENT, REACT_QUERY_KEY; each admitted node stamped `vocabulary=stitch-v1`) become the projection's own types at the projection's grain -- GOLD_SCRIPT split by grain into `PipelineScript` / `PipelineFunction`; S3_DATA_KEY merged into `S3Key` (aws) by key identity; PORTAL_COMPONENT into `Component` and REACT_QUERY_KEY into `ReactQueryKey` by identity where the ids resolve; `PORTAL_BUNDLE` stays as the one genuinely new class (a synthetic root keyed by version tag). FIRST ACT, before any merge: the IDENTITY CENSUS per provisional population (how many members resolve to an existing canonical id, with its denominator); unresolved members carried under the canonical type with `origin=stitch` and a reason, never dropped. The map then RETIRES the four entries and the stamp with the CVO's re-sign; comp-debt's second leg (S25) reads the unified vocabulary | FWD-7 (the stitch JOIN, cell 2's vocabulary) | claim: measured (one object class, two names, populations at 10x: GOLD_SCRIPT 1,380 vs PipelineScript 133 -- fn+script in one type, a mixed grain; S3_DATA_KEY 294 vs S3Key 232; PORTAL_COMPONENT 22 vs Component 199; REACT_QUERY_KEY 94 vs ReactQueryKey 57; `extract_portal_stitch.NODE_TYPE_MAP` / `CLASS_LAYER` and `extract_gold_compute.py:91` read at HEAD by the CTO) | status: OPEN -- ROUND 6 (mid-round addendum 3) | lane `0.8.0_AE_CloudComp` | verb port | depends_on: S24, S25 | **closes on (the PRD's accept, verbatim):** `comp-kuzu "MATCH (n:CloudNode) RETURN DISTINCT n.node_type"` shows none of the four provisional names and shows PORTAL_BUNDLE; 0 nodes carry `vocabulary=stitch-v1`; the identity census printed per type with denominators; node count reconciled before/after (admitted = merged + created, 0 lost); DERIVES_FROM and STORED_IN resolve 100% after unification (the day's counts; 216 of 216 and 955 of 955 today); the rule-initiated nightly derive SUCCEEDED; the map re-signed by the CVO with the four entries gone
+
+**R17 (verbatim):** *a second vocabulary for an object class the graph already types enters only as a LABELLED INTERIM (a queryable stamp on every admitted node) with its retirement row placed; a mixed-grain type is never frozen.*
+
+## MEASURED BY THE ISSUER AT THE CUT (2026-09-09 20:2xZ, CLOUD @04d9942aff) -- the shape; the worker measures the populations at its own HEAD
+
+- **Where the unification lives:** AT THE PRODUCER -- `infra/aws/globgrph/derive_stitch.py` (the cloud producer; emits the stitch graph with the provisional names, `:10-17`) and/or `extract_portal_stitch.py` (its `NODE_TYPE_MAP` / `CLASS_LAYER` -- the CTO read them), so the CodeBuild's nightly artifact ITSELF carries the canonical names; the fold in `derive_runner.py` (F-4's) then admits canonical types and the five map entries become dead. **The unification is a producer change, not a fold-time rename** (a rename at the fold is W2-S48's grain violation in another place). `extract_gold_compute.py:91` (the pipeline extractor: `PipelineScript` / `PipelineFunction`, tier-agnostic) is the grain the GOLD_SCRIPT split follows.
+- **The identity census (FIRST, before any merge):** for each provisional population at HEAD's artifact: members whose id resolves to an existing canonical node id (the projection's `PipelineScript`/`PipelineFunction` ids for GOLD_SCRIPT by path + function; `S3Key` ids by bucket/key; `Component` / `ReactQueryKey` ids by path/name) -> `RESOLVED=<r> of <n>`; the rest -> carried under the canonical type with `origin=stitch` + `origin_reason=<why unresolved>`. Print all four censuses with denominators BEFORE editing the producer.
+- **Reconciliation:** `admitted (before) = merged + created (after)`, 0 lost -- per type and in total; the day's counts for the two boundary edge types (216 DERIVES_FROM, 955 STORED_IN today) resolve 100% after unification.
+- **The map:** `derive_runner.NODE_TYPE_LAYER` loses the four provisional entries (PORTAL_BUNDLE stays) and the comment records the retirement (S31, this order, the date); the stamp `vocabulary=stitch-v1` is no longer written by the fold and 0 nodes carry it on the served graph after the next derive + projection. **The CVO's re-sign** of the map (the count line) is the CVO's act at L9: your record carries the before/after entry counts for it; you do not write the re-sign hash.
+- **Then ONE derive + projection** (the same shape as F-4's: the image rebuilt ONLY if the derive image must carry the producer change -- it does not: the PRODUCER runs on CodeBuild from the source zip, so re-push the zip by F-3's route under a NEVER-2 entry, start ONE ad-hoc `opal-stitch-produce` build, then ONE ad-hoc derive on the current digest, then the projection) and the thin-client reads.
+- **comp-debt's second leg** (F-5's, already repointed): its stitch type scope (`GOLD_SCRIPT` script-level + `S3_DATA_KEY`) must be re-read against the unified names (`PipelineScript` with `tier=gold`, `S3Key`) -- the ONE edit in `comp_debt.py` this order may make (in `<paths>`), with the tool run once after.
+
+## DELIVERABLE -- in this order
+
+1. The identity census (four types, denominators) on the artifact at your HEAD; the grain split for GOLD_SCRIPT (script vs function members) printed. 2. The producer edits (commit-gate); a local run of `derive_stitch.py --out .scratch/f11_unified.json` (no publish) -> the reconciliation printed. 3. The zip re-push (ledgered) + ONE ad-hoc CodeBuild -> the marker `stitch-codebuild`. 4. The map: four entries retired, the comment; the fold's stamp removed; `f11_test_unified.py` on the fixture (commit-gate). 5. ONE ad-hoc derive + projection; the reads. 6. `comp_debt.py`'s type scope; the tool run. 7. The record `CG-s-31.stitch-vocabulary-unified.result.md` (one fenced JSON block: the four censuses, the reconciliation, the edge resolution, the map entry counts before/after, the build/derive/pointer ids, the `DISTINCT node_type` list) then prose; the instance; the flip.
+
+## ACCEPTANCE (v3 grammar)
+
+<criterion id="F11-AC1" cell_refs="CG-s-31"><invocation>timeout 120 python org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/f11_identity_census.py</invocation><expect>CENSUS_GOLD_SCRIPT=RESOLVED [0-9]+ of [1-9][0-9]* \(script [0-9]+, function [0-9]+\)[\s\S]*CENSUS_S3_DATA_KEY=RESOLVED [0-9]+ of [1-9][0-9]*[\s\S]*CENSUS_PORTAL_COMPONENT=RESOLVED [0-9]+ of [1-9][0-9]*[\s\S]*CENSUS_REACT_QUERY_KEY=RESOLVED [0-9]+ of [1-9][0-9]*[\s\S]*CARRIED_WITH_ORIGIN_STITCH=[0-9]+[\s\S]*LOST=0 of [1-9][0-9]*[\s\S]*CENSUS_PROBE_CONTROL=FIRED</expect></criterion>
+`F11-AC1` -- THE IDENTITY CENSUS, per provisional population with its denominator, the GOLD_SCRIPT grain split, the carried count, ZERO lost; a planted unresolvable member is caught as CARRIED, never dropped.
+
+<criterion id="F11-AC2" cell_refs="CG-s-31"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/f11_served_unified.sh</invocation><expect>PROVISIONAL_NAMES_SERVED=0 of 4[\s\S]*PORTAL_BUNDLE_SERVED=[1-9][0-9]*[\s\S]*STITCH_V1_STAMPED_SERVED=0[\s\S]*PIPELINESCRIPT_TIER_GOLD=[1-9][0-9]*[\s\S]*POINTER_ADVANCED=true</expect></criterion>
+`F11-AC2` -- THE SERVED GRAPH CARRIES THE UNIFIED VOCABULARY: none of the four provisional names in `DISTINCT n.node_type`, PORTAL_BUNDLE present, 0 nodes stamped stitch-v1, the merged pipeline scripts queryable by tier, the pointer advanced past F-4's vintage.
+
+<criterion id="F11-AC3" cell_refs="CG-s-31"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/f11_edges_resolve.sh</invocation><expect>DERIVES_FROM_RESOLVED=([0-9]+) of \1[\s\S]*STORED_IN_RESOLVED=([0-9]+) of \2[\s\S]*RECONCILED admitted=([0-9]+) merged\+created=\3 lost=0</expect></criterion>
+`F11-AC3` -- 100% OF THE BOUNDARY EDGES RESOLVE AND THE NODE COUNT RECONCILES: the day's DERIVES_FROM and STORED_IN counts resolve fully on the served graph; admitted = merged + created, 0 lost.
+
+<criterion id="F11-AC4" cell_refs="CG-s-31"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/f11_map_retired.sh</invocation><expect>PROVISIONAL_ENTRIES_IN_MAP=0 of 4[\s\S]*PORTAL_BUNDLE_IN_MAP=true[\s\S]*STAMP_WRITTEN_BY_FOLD=false[\s\S]*MAP_COMMENT_NAMES=S31,retired,CVO-resign-pending</expect></criterion>
+`F11-AC4` -- THE MAP RETIRED THE FOUR ENTRIES AND THE STAMP: the entries gone, PORTAL_BUNDLE kept, the fold no longer writes the stamp, the comment names S31 and the pending CVO re-sign.
+
+<criterion id="F11-AC5" cell_refs="CG-s-31"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/f11_comp_debt.sh</invocation><expect>COMP_DEBT_RC=0[\s\S]*STITCH_LEG_TYPES=PipelineScript\(tier=gold\),S3Key[\s\S]*STITCH_LEG_ISOLATED=[0-9]+ of [1-9][0-9]*</expect></criterion>
+`F11-AC5` -- COMP-DEBT'S SECOND LEG READS THE UNIFIED VOCABULARY and still answers from the served graph.
+
+<criterion id="F11-AC6" cell_refs="CG-s-31" judgment="true"/> `F11-AC6` -- THE VOCABULARY, READ (and the CVO's re-sign): whether the merges were by identity everywhere they claim to be (the census as the evidence), what the carried `origin=stitch` members are (a producer gap or a real object the canonical extractor misses), whether GOLD_SCRIPT's grain split leaves any mixed-grain node, and what the CVO needs to re-sign the map (the entry counts before/after; the frozen aws resource count unmoved). A reading act; NO verdict; graded and the map re-signed by `3.0.0_SA_CVO` at L9.
+
+<expected_criteria>F11-AC1, F11-AC2, F11-AC3, F11-AC4, F11-AC5, F11-AC6</expected_criteria>
+
+## SURFACES
+
+`infra/aws/globgrph/derive_stitch.py`, `extract_portal_stitch.py` (the producer: the names) · `derive_runner.py` (the map's four entries retired; the fold's stamp removed) · `comp_debt.py` (the type scope) · `org/modules/graph/extract_gold_compute.py` (READ: the grain) · the F-3 route for the zip re-push · the D-1/E-2/F-4 records (the derive + projection shape).
+
+## BOUNDS
+
+- **Identity or carry, never drop; never rename at the fold.** One zip re-push, one build, one derive, one projection. The local stitch store untouched (S26's).
+- A spec-vs-world divergence is a ROW. Certifier != author.
+
+<paths>
+infra/aws/globgrph/derive_stitch.py
+infra/aws/globgrph/extract_portal_stitch.py
+infra/aws/globgrph/derive_runner.py
+infra/aws/globgrph/comp_debt.py
+org/critical_paths/change_management/
+org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md
+org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-F-11.stitch-vocabulary-unified.md
+</paths>
+
+<decomp_ref>
+<decomp_doc>org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md</decomp_doc> v0.9 (this mid-round recut), cell CG-s-31 (s.1a; ADDED on PRD v0.10 row S31 @04d9942aff, the W2-S45 arch-gate ruling, R17).
+<owned_cells>CG-s-31</owned_cells>
+Read-dependencies, NOT claimed: CG-s-24 (TO-CG-F-4) and CG-s-25 (TO-CG-F-5), both terminal and merged before this order is handed; CG-s-23 (DONE, the zip route). Downstream, yours LAST: CG-s-26 (TO-CG-F-6).
+</decomp_ref>
+
+<preflight>
+comp-schedule: RUN -- 2026-09-09 15:3xZ at the round-5 recut (GATES ARMED 25); C2's open deploy-ledger entries are the NEVER-2 discipline this order adds one to; the C3 moratoria bind BOUNDS.
+comp-iam: DECLARED-NOT-APPLICABLE -- the F-3 route's PutObject and StartBuild; the derive task's existing grants; no principal changes.
+comp-adversary: DECLARED-NOT-APPLICABLE -- composed at L5 (rc 0 @07288006e5); the L9 seat's compose is the deliverable's context.
+comp-find: RUN at the cut -- the four provisional names by the worker's counts (W2-S45/W2-S48) against the canonical types' counts.
+</preflight>
+
+<proof_of_spec>
+Criterion ids: `F11-AC1`..`F11-AC6`. Instance at `org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-F-11.stitch-vocabulary-unified.proof_of_spec.json`, validated with `python .tools/proof-of-spec-check.py <instance> F11-AC1,F11-AC2,F11-AC3,F11-AC4,F11-AC5,F11-AC6` BEFORE the flip; rc 0 AND every mechanical row PASS. `F11-AC1` (LOST=0, the planted member) and `F11-AC3` (the reconciliation) are the controls that must be able to FAIL. `F11-AC6` is `judgment="true"`: `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming `3.0.0_SA_CVO` and the re-sign; **`PASS`/`FAIL` on it is INVALID.** Two commits at the flip.
+</proof_of_spec>
+
+<compiler_tools_mandate>
+BEFORE ANY ACT: `python .tools/comp-read infra/aws/globgrph/extract_portal_stitch.py --for "NODE_TYPE_MAP and CLASS_LAYER: every provisional name, its source and its id form"`; `python .tools/comp-read org/modules/graph/extract_gold_compute.py --for "the PipelineScript / PipelineFunction id forms and the tier attribute"`; the CTO's record with `--for "the identity rule per type and what is carried with origin=stitch"`. Every `.py`: `bash .tools/commit-gate.sh <file>`.
+</compiler_tools_mandate>
+
+**THE REPORT IS YOUR FINAL MESSAGE, ONCE, IN THE `WORKER REPORT` SHAPE.**
+
+**GO = the hand-off (the COO continues this subagent after TO-CG-F-5's drain).**
