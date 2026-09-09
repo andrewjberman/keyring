@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-09T21:4xZ",
+  "written_utc": "2026-09-09T22:1xZ",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -187,8 +187,23 @@
         "CLOUD (the F-4 drain)",
         "rows S86, S87"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "d660609c61",
       "next": "F-5 on ~2 (the repoint reads a served graph that carries the types); then F-11 (the vocabulary unified; the four interim entries retired) and F-6 (the local stitch store retired, LAST); the FINAL packet and the drain-end read."
+    },
+    {
+      "seq": 14,
+      "limb": "L7 (a drain + a hand-off) / L10 (two words executed) / adjudication",
+      "started_utc": "2026-09-09T21:4xZ",
+      "ended_utc": "2026-09-09T22:1xZ",
+      "act": "TWO WORDS OF ANDREW'S EXECUTED between drains: (a) at this terminal ~21:5xZ, on the question what model the spawned workers use -- measured first from two subagent transcripts (claude-opus-5 at effort high on 459 of 459 and 291 of 291 requests; the definition said sonnet and every Opus worker had come from a per-spawn override) -- his word 'I'm ok with enumerating opus for worker agents ... as opposed to Sonnet': .claude/agents/worker.md `model: sonnet -> opus` @65d7815288, the description naming the hand-cut CLOUD worktree and retiring 'isolation worktree'; broadcast to the CTO, CVO, base COO and MSTR (94731-94734) with push state; the spine's L7 'cheaper model' clause named as the CTO's to move. (b) at the CTO terminal ~21:4xZ (94727), NO WAITING on any scheduled fire: F-11's face amended @6d68da35cd before its hand-off (the 'nightly SUCCEEDED' clause on the manual-trigger form: same-target ad-hoc build + run-task, told apart on the artifact, the rules' history listed; the 03:00Z fires confirmation); the CVO and CTO told (94736/94737) that F3-AC6, F-4's derive and F10-AC6 read on the ad-hoc runs already on the record (daaedf78, fe7ff348, task deee298ca1bd) + the 67-build rule history; PRD v0.13 S32 @8387f0cc21 landed with those very ids, and the CVO's C-S52 graded F3-AC6 PASS on that form. TO-CG-F-5 (CG-s-25) TERMINAL AND DRAINED @b9917bc2e1 (the first attempt REFUSED by safe-merge on a shared index carrying the CTO's in-flight staging -- a correct refusal, retried clean; a premature `git merge CLOUD` on the worker's branch was ABORTED before the retry and left it at 0af7df1d71): instance rc 0 in-worktree; this seat's own census at HEAD: 0 CODE-band hits on kuzu/STITCH_DB/_stitch_freshness in comp_debt.py. comp-debt's second leg answers from the served graph -- nessie 308 + stitch 207 of 1,674 stitch-typed nodes, one connection, 4.8 s inside a 120 s budget imported not retyped, the VINTAGE line with the stitch clause printed once for both legs, 0 local opens with a planted control, the CVO's baseline byte-unchanged (autocrlf nearly accused the worker of editing it -- W2-S58) and the delta +96 residuals / 112 new keys carried to the CVO (W2-S57: the July local store's universe vs the September served graph; S31 changes every key again). Channel union 204 + 5 = 209. CLOUD merged into the branch; TO-CG-F-11 (CG-s-31, the vocabulary unified at the PRODUCER) HANDED to the same subagent -- F-6 stays LAST. ADJUDICATED: W2-S56 -> S88 (comp-debt invisible to comp-which by construction: no shim, no map row, a homonymous package; carried named to L10). 9 of 11 terminal.",
+      "artifacts": [
+        "CLOUD @65d7815288 (.claude/agents/worker.md)",
+        "CLOUD @6d68da35cd (F-11's manual-trigger amendment)",
+        "CLOUD @b9917bc2e1 (the F-5 drain)",
+        "row S88"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "F-11 on ~2 (the identity census, the producer edits, the map's four entries retired, the derive + projection, comp-debt re-read); then F-6 LAST; the FINAL packet and the drain-end read to the CTO; CronDelete on the send."
     }
   ]
 }
