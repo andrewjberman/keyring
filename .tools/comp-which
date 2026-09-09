@@ -618,31 +618,30 @@ RULES = [
      ["comp-kuzu \"MATCH ...\""],
      "an ARBITRARY cross-layer graph query (Cypher MATCH) over the canonical auto-refreshing DB -- "
      "DISTINCT from comp-xref (graph-wide OCCURRENCE of one symbol) and pipescript (a named thread)"),
-    # ---- NFRA_KUZUSPLIT P1 (COO-SoD land 2026-07-17, code @5de839ff0): the two LOCAL kuzu-projection
-    # REFRESH MODES. Meta-homed -> they need a STRONG curated rule (the fuzzy backstop under-serves meta
-    # tools). Distinctive vocabulary per the anti-collision discipline: comp-build owns the TRACE cache,
-    # comp-graph owns graph VINTAGE, comp-aws derive owns the CLOUD nightly producer -- these own the LOCAL
-    # kuzu-projection refresh ONLY. full = MSTR-startup warm-once (rebuild/reset/reconcile verbs); inc =
-    # worker pre-query default (refresh/update/behind verbs). First worked example of the canonical flow.
-    (["full rebuild the local", "full rebuild my local graph", "full rebuild the local projection",
-      "ground-truth reset", "ground truth reset", "reconcile the local projection", "reconcile the local kuzu",
-      "reconcile my local graph", "mstr startup graph", "mstr-startup graph", "warm the canonical graph",
-      "full kuzu reload", "unconditional full kuzu load", "reset my local graph", "full projection rebuild"],
-     "full local kuzu-projection rebuild (comp-kuzu --mode full)",
-     ["comp-kuzu --mode full \"MATCH ...\""],
-     "FORCE a full kuzu_nessie_load of the LOCAL projection -- the MSTR-startup warm-once that absorbs the "
-     "daily whole-table delta. DISTINCT from comp-build (trace cache), comp-graph (graph vintage), comp-aws "
-     "derive (the CLOUD nightly producer). A mid-task refresh -> comp-kuzu --mode inc, not this"),
+    # ---- NFRA_CLDGRPH CG-s-17 (round 5, 2026-09-09): the two LOCAL kuzu-projection REFRESH routes that
+    # stood here are RETIRED with the local surface itself (CG-s-8 @173a1d8c90), and BOTH vocabularies are
+    # merged into this ONE route to the served READ. The vocabulary is KEPT ON PURPOSE: an agent who still
+    # types "my graph is behind" or "ground-truth reset" must LAND somewhere that answers, not fall through
+    # to a manifest entry naming a flag the client refuses. THE SUCCESSOR IS A READ, NEVER A REFRESH --
+    # there is no rebuild to run, and the answer states its own age. DISTINCT from comp-build (trace cache),
+    # comp-graph (graph vintage), comp-aws derive (the cloud producer on its own schedule).
     (["my graph is behind", "my local graph is behind", "graph is behind", "refresh my local graph",
       "refresh the local graph", "update my local graph", "update the local projection",
       "bring my local graph up to date", "incremental graph refresh", "incremental kuzu refresh",
       "refresh before querying", "pre-query graph refresh", "my dependency graph is stale",
-      "refresh the local projection", "refresh the local kuzu projection"],
-     "incremental local kuzu-projection refresh (comp-kuzu --mode inc)",
-     ["comp-kuzu --mode inc \"MATCH ...\""],
-     "REFRESH the LOCAL kuzu projection incrementally -- the DEFAULT a worker runs pre-query: serves the "
-     "incremental delta OR a labeled-stale prior-vintage projection, NEVER a mid-task full rebuild (Andrew "
-     "O-1). DISTINCT from comp-build (trace cache), comp-graph (graph vintage), comp-aws derive (cloud producer)"),
+      "refresh the local projection", "refresh the local kuzu projection",
+      "full rebuild the local", "full rebuild my local graph", "full rebuild the local projection",
+      "ground-truth reset", "ground truth reset", "reconcile the local projection", "reconcile the local kuzu",
+      "reconcile my local graph", "mstr startup graph", "mstr-startup graph", "warm the canonical graph",
+      "full kuzu reload", "unconditional full kuzu load", "reset my local graph", "full projection rebuild",
+      "how old is the graph", "how old is this answer", "graph vintage before i query"],
+     "read the served graph -- it states how old its answer is (comp-kuzu)",
+     ["comp-kuzu \"MATCH ...\""],
+     "THERE IS NO REFRESH TO RUN, and no store to rebuild. The SERVED projection is advanced on the "
+     "estate's own schedule; every read ends with a VINTAGE line saying in plain words how old its answer "
+     "is, and names the ABSENCE when the service does not answer -- so a behind-ness is REPORTED to you "
+     "rather than fixed by you. If the stated vintage is too old for the question, raise it: that is an "
+     "estate-schedule matter, not a call you make. Manifest entry: cloud.read.served_vintage"),
     # comp-describe -- NFRA_COMPSIMILAR describe surface (Andrew-direct pull-forward 2026-07-18, COO-SoD land
     # @ff21627b0 AE half). describe/what-is/what-does-it-do vocab = the clean gap (no curated rule matched these
     # pre-land). Deliberately NOT bare "find an aws resource" (fuzzy-hits comp-assets 1.85) -- steered to describe.

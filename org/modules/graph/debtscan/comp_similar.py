@@ -567,40 +567,50 @@ def self_test() -> int:
           f"compute={n_compute}/2 json={n_json}/4 human={n_human}/4 "
           f"{'PASS' if c3b else 'FAIL'}")
 
-    # C3c CAPTURE (added 2026-09-02, same session, after C3b was caught committing C3's own
-    # defect). WARN: C3b tests ONLY the UNKNOWN path -- it passed IDENTICALLY before and after the
-    # stderr fix, while the live corpus still rendered UNKNOWN. A control that green-lights the
-    # broken state is the D3 shape one domain over, so the MEASURED path needs its own leg.
-    # The header below is a VERBATIM excerpt of real comp-kuzu output (streams separated,
-    # 2026-09-02), so this tests the shape the parser actually meets -- not one written to fit
-    # the parser. Runs offline: no graph, no AWS.
+    # C3c CAPTURE. REWRITTEN 2026-09-09 (NFRA_CLDGRPH CG-s-17, the INSTRUCTION plane): the header
+    # this leg used to feed -- "DB: kuzu_nessie_db ... built: ..." -- was a VERBATIM excerpt of a
+    # tool that no longer emits it. comp-kuzu is now a thin client over the SERVED projection and
+    # its whole disclosure is ONE line (kuzu_cli.py:60-61):
+    #     VINTAGE: <plain-words age>  [vintage=<vintage> manifest=<sha12> prefix=<prefix>]
+    # There is no `DB:` line and no `built:` line any more. A fixture that keeps feeding the old
+    # shape scores this leg GREEN against a header the estate never sees again -- and a fixture
+    # that cannot represent the current world cannot score it. So the leg now feeds the SERVED
+    # header and asserts what the parser ACTUALLY does with it.
+    # WHY 'absent' IS THE HONEST ASSERTION HERE: summary_corpus._capture_kuzu_vintage still keys
+    # on `built:`/`DB:`, so the served header yields NO measured claim -- it FAILS TOWARD 'absent',
+    # LOUDLY, exactly as that function's own docstring promises, and coverage() then renders
+    # "corpus built: UNKNOWN -- ... DO NOT read this denominator as current". A safe failure, and
+    # a DISCLOSED one, is not a false green.
+    # OWED, NOT DONE HERE: repointing the parser to the served header's own fields lives in
+    # org/modules/graph/debtscan/summary_corpus.py:172-199, which is NOT in this order's write
+    # grant. Surfaced as a surprise row rather than reached for.
     import summary_corpus as _sc
+    _served_header = ("VINTAGE: built 2026-09-09T11:02:44+00:00, 0.4h ago  "
+                      "[vintage=2026-09-09T11:02:44+00:00 manifest=9f4a57262f1c "
+                      "prefix=s3://opal-globgrph-projection/served/]\n")
     _saved = dict(_sc._CORPUS_VINTAGE)
     try:
         _sc._CORPUS_VINTAGE.clear()
-        _sc._capture_kuzu_vintage(
-            "=== comp-kuzu provenance ===\n"
-            "  DB: kuzu_nessie_db  (27122 nodes / 60670 edges)\n"
-            "  source: nessie\n"
-            "  built: 2026-09-02T14:20:11.113748+00:00 (age: 0.2h)\n"
-            "============================\n")
+        _sc._capture_kuzu_vintage(_served_header)
         cap = coverage(corpus)
-        c3c = (cap.get("corpus_vintage_claim") == "measured"
-               and cap.get("corpus_built") == "2026-09-02T14:20:11.113748+00:00"
-               and cap.get("corpus_age") == "0.2h"
-               and cap.get("corpus_db") == "kuzu_nessie_db"
-               and "UNKNOWN" not in cap.get("vintage_note", ""))
-        # negative control: a header with NO built: line must NOT yield a measured claim.
+        # the SERVED header carries no built:/DB: line -> no measured claim, and the note SAYS so.
+        c3c = (cap.get("corpus_vintage_claim") == "absent"
+               and cap.get("corpus_built") is None
+               and cap.get("corpus_db") is None
+               and "UNKNOWN" in cap.get("vintage_note", ""))
+        # LIVE-PARSER CONTROL: the parser must not be a constant. A header it CAN still read must
+        # yield a measured claim -- so the 'absent' above is the SERVED SHAPE and not a dead arm.
         _sc._CORPUS_VINTAGE.clear()
-        _sc._capture_kuzu_vintage("=== comp-kuzu provenance ===\n  DB: kuzu_nessie_db\n")
-        c3c_neg = coverage(corpus).get("corpus_vintage_claim") == "absent"
+        _sc._capture_kuzu_vintage("  built: 2026-09-09T11:02:44+00:00 (age: 0.4h)\n")
+        c3c_neg = coverage(corpus).get("corpus_vintage_claim") == "measured"
     finally:
         _sc._CORPUS_VINTAGE.clear()
         _sc._CORPUS_VINTAGE.update(_saved)
     c3c_ok = c3c and c3c_neg
     ok &= c3c_ok
-    print(f"  C3c vintage-CAPTURE (real header parsed -> measured; headerless -> absent): "
-          f"parse={'ok' if c3c else 'BROKEN'} neg-control={'ok' if c3c_neg else 'BROKEN'} "
+    print(f"  C3c vintage-CAPTURE (SERVED header -> absent + DISCLOSED; readable header -> "
+          f"measured, so the parser is not a constant): "
+          f"served={'ok' if c3c else 'BROKEN'} live-parser-control={'ok' if c3c_neg else 'BROKEN'} "
           f"{'PASS' if c3c_ok else 'FAIL'}")
 
     # C5 hold-aware: the held twin is excluded even though it is COLD + summary-identical.

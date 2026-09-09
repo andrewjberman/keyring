@@ -20,8 +20,20 @@
 #   freshness:       how current the answer is + what backs it
 #   rebuild_trigger: when to force a rebuild INSTEAD of querying (staleness-preempt)
 #   anti_pattern:    the slower/ad-hoc thing NOT to do
-#   status:          canonical | deprecated | planned
-#   superseded_by:   (deprecated only) the canonical id that replaces this
+#   status:          canonical | deprecated | planned | retired
+#   superseded_by:   (deprecated / retired) the canonical id that replaces this
+#
+# ENTRY-GRAIN RETIREMENT (`status: retired`) -- added 2026-09-09, NFRA_CLDGRPH CG-s-17.
+#   A `retired` entry is a RECORD, not a route: the call it named no longer exists, the entry is
+#   KEPT so the retirement stays legible (the same reason retired_aliases: keeps a NAME), and it
+#   carries `superseded_by` (a LIVE entry id), `retired:` (when, by whom, and the consumers-first
+#   ORDER) and `why:` -- the retired_aliases convention applied one grain down, at the entry.
+#   WHY NOT `deprecated` HERE: `deprecated` is TOOL-grained in its only consumer.
+#   manifest_check_cli.deprecated_signatures() :355-380 builds its detection signature from the
+#   entry's `tool:` name alone, so marking a MODE-VARIANT entry of a still-LIVE tool `deprecated`
+#   flags every code line that names that tool. Measured 2026-09-09 before choosing: the two
+#   entries below, set to `deprecated`, produced 168 ERROR-class A_deprecated_call findings over
+#   5 files. `deprecated` stays reserved for what it can actually detect -- a whole TOOL superseded.
 
 # INTENTIONALLY NOT CATALOGED (not graph-access use-cases -> exempt from the mandate, AC1-complete):
 #   comp-learns-status                    -- compiler self-learning/telemetry status (not a graph query). NOTE: comp-learns-run RETIRED 2026-07-08 (NFRA_TOOLCHECK P2, CTO-ruled: un-landed stub superseded by the PROMOTE loop).
@@ -140,7 +152,7 @@ entries:
     mode: query
     layer: cloud
     cost: "~ms"
-    freshness: "kuzu DB <- latest Nessie/Iceberg commit (nightly + intraday); every call prints a provenance header (built-when + source vintage + counts), WARNs past 26h, reports BEHIND-Nessie-HEAD-by-N for nessie DBs, UNKNOWN VINTAGE if unstamped (TO-F1 contract above); DEFAULT surface (no --db-path) = canonical Nessie kuzu_nessie_db; auto-refreshes on Nessie-HEAD-advance ENGINE-INTERNALLY (Rule 20 QUERY-default posture UNCHANGED -- agents never run rebuilds to answer traversals; engine rebuilds exactly when pin trails HEAD); explicit --db-path for scratch DBs (kuzu_db tarball/stitch/ac7) (TO-F2); HEAD oracle = writer-stamped s3://warehouse/_branch_head.main.json marker (mtime-scan RETIRED, CVO dc06744c6); header prints current/BEHIND+writer+ts/HEAD-ORACLE-UNKNOWN per marker (TO-F6)"
+    freshness: "the SERVED projection; every call ends with a VINTAGE line on stderr stating in plain words how old the answer is, plus [vintage= manifest= prefix=] for an auditor (kuzu_cli.py:46-61). Nothing is inferred from client time: no age stated by the service says so verbatim, and an unanswered call names the ABSENCE rather than a default vintage. There is NO agent-runnable refresh and no database path -- the served projection is advanced on the estate's own schedule. Rule 20's QUERY-default posture is unchanged and now unconditional: an agent reads, and reads the vintage. See cloud.read.served_vintage."
     rebuild_trigger: "resource created/changed since last load -> comp-aws derive --resource <arn> ; kuzu_nessie_load"
     anti_pattern: "comp-aws derive (8-min full rebuild) to list nodes"
     status: canonical
@@ -153,7 +165,7 @@ entries:
     mode: query
     layer: cloud
     cost: "~ms"
-    freshness: "kuzu DB (provenance header on every call -- see contract above); DEFAULT surface = canonical Nessie kuzu_nessie_db; auto-refreshes ENGINE-INTERNALLY on Nessie-HEAD-advance; explicit --db-path for scratch DBs (TO-F2); HEAD oracle = writer-stamped _branch_head.main.json marker (mtime-scan RETIRED, CVO dc06744c6); header prints current/BEHIND+writer+ts/HEAD-ORACLE-UNKNOWN per marker (TO-F6)"
+    freshness: "the SERVED projection; every call ends with a VINTAGE line on stderr stating in plain words how old the answer is, plus [vintage= manifest= prefix=] for an auditor (kuzu_cli.py:46-61). Nothing is inferred from client time: no age stated by the service says so verbatim, and an unanswered call names the ABSENCE rather than a default vintage. There is NO agent-runnable refresh and no database path -- the served projection is advanced on the estate's own schedule. See cloud.read.served_vintage."
     rebuild_trigger: "edges changed since last load"
     anti_pattern: "manual multi-hop tracing or a full re-derive"
     status: canonical
@@ -166,7 +178,7 @@ entries:
     mode: query
     layer: cloud
     cost: "~ms"
-    freshness: "kuzu DB (provenance header on every call -- see contract above); DEFAULT surface = canonical Nessie kuzu_nessie_db; auto-refreshes ENGINE-INTERNALLY on Nessie-HEAD-advance; explicit --db-path for scratch DBs (TO-F2); HEAD oracle = writer-stamped _branch_head.main.json marker (mtime-scan RETIRED, CVO dc06744c6); header prints current/BEHIND+writer+ts/HEAD-ORACLE-UNKNOWN per marker (TO-F6)"
+    freshness: "the SERVED projection; every call ends with a VINTAGE line on stderr stating in plain words how old the answer is, plus [vintage= manifest= prefix=] for an auditor (kuzu_cli.py:46-61). Nothing is inferred from client time: no age stated by the service says so verbatim, and an unanswered call names the ABSENCE rather than a default vintage. There is NO agent-runnable refresh and no database path -- the served projection is advanced on the estate's own schedule. See cloud.read.served_vintage."
     rebuild_trigger: "you just added the dependency you're checking for"
     anti_pattern: "eyeballing terraform / a full derive"
     status: canonical
@@ -210,39 +222,65 @@ entries:
     anti_pattern: "running this to answer a traversal -> query comp-kuzu instead"
     status: canonical
 
-  # ---- LOCAL-PROJECTION REFRESH MODES (comp-kuzu --mode full / --mode inc -- NFRA_KUZUSPLIT P1, code @5de839ff0;
-    #      the comp-kuzu-full / comp-kuzu-inc WRAPPERS were RETIRED 2026-09-02, NFRA_COMPEFFICACY unit 2 -- see retired_aliases) ----
-  # Refresh WRITE-PATH counterparts to cloud.derive.refresh, but for the LOCAL kuzu projection (kuzu_nessie_load),
-  # NOT the Nessie derive. Bare comp-kuzu stays the READ default; these are the two named REFRESH modes (LD-0307
-  # three-tool model). Registration is COO-SoD (grantee ~D cannot self-register); landed as the first worked
-  # example of the emerging canonical comp-tool registration flow.
+  # ---- "IS MY ANSWER OLD?" -- THE READ THAT STATES ITS OWN VINTAGE ----
+  # NFRA_CLDGRPH CG-s-17 (2026-09-09). The two LOCAL-PROJECTION REFRESH entries that used to sit
+  # here are RETIRED RECORDS below. There is no agent-runnable refresh any more: the local
+  # projection went with its executable plane (CG-s-8 @173a1d8c90) and the SERVED projection is
+  # refreshed on the estate's own schedule. THE SUCCESSOR IS A READ, NEVER A REFRESH -- the answer
+  # arrives with a plain-words line saying how old it is, so "my graph is behind" is ANSWERED
+  # instead of acted on.
+  - id: cloud.read.served_vintage
+    use_case: "How old is this answer / is the graph behind / should I refresh before I query / bring the graph up to date -- READ the served projection and read the VINTAGE line it prints. There is nothing an agent refreshes: the served graph is advanced on the estate's own schedule."
+    canonical_call: "comp-kuzu \"<Cypher>\" [--json] [--limit N]   # the answer on stdout, then a VINTAGE line on stderr saying in plain words how old it is"
+    tool: comp-kuzu
+    mode: query
+    write_path: false
+    layer: cloud
+    cost: "~ms -- one call to the projection service; no store is opened, built or downloaded"
+    freshness: "STATED BY THE SERVICE, PER CALL. Every read ends with `VINTAGE: <plain-words age>  [vintage=<vintage> manifest=<sha12> prefix=<artifact prefix>]` on stderr (infra/aws/globgrph/kuzu_cli.py:46-61). The sentence is what a reader acts on; the triple is what an auditor re-derives from. NOTHING IS COMPUTED FROM CLIENT TIME: when the service states no age the line says so verbatim (`AGE NOT STATED BY THE SERVICE -- no age was inferred`), and when the service does not answer the line names the ABSENCE (`VINTAGE: unavailable -- the projection service did not answer; no age was inferred and no local copy was read`) rather than a default vintage."
+    rebuild_trigger: "none. There is no refresh an agent runs. The served projection is advanced by the estate's own producers on their own schedule; an agent reads, and reads the vintage."
+    anti_pattern: "hunting for a refresh flag when an answer looks old, or reaching for a local copy to get a fresher one -> read the VINTAGE line. If the stated vintage is too old for the question, that is an estate-schedule matter to raise, not a call to make."
+    status: canonical
+    notes: "NFRA_CLDGRPH CG-s-17 (round 5, 2026-09-09) -- the SUCCESSOR entry named by cloud.refresh.full and cloud.refresh.incremental. Deliberately a READ: FWD-2 (the served projection refreshes on the estate's own schedule) and FWD-3 (every answer carries its own age) are what make a refresh route unnecessary, and re-creating one would re-create the retired rebuild path. The client takes NO database path and NO Cypher parameter dict -- projection_client.query(statement, timeout_s) -> {rows, vintage, age_line, manifest_sha256, artifact_prefix} (:194-201). A call form documenting either documents a capability that does not exist."
+
+  # ---- RETIRED RECORDS (entry grain): the two LOCAL-PROJECTION REFRESH MODES ----
+  # KEPT, never deleted -- a retirement nobody can read is indistinguishable from a thing that
+  # never existed, which is the reason retired_aliases: above keeps a retired NAME. Convention and
+  # the reason `retired` rather than `deprecated` is used at this grain: the per-entry schema at
+  # the top of this file.
   - id: cloud.refresh.full
-    use_case: "Full rebuild / ground-truth reset / reconcile the LOCAL kuzu projection from Nessie -- the once-per-session MSTR-startup warm that absorbs the whole-table daily delta and warms the shared canonical for peers."
-    canonical_call: "comp-kuzu --mode full [--json] [--limit N] \"<Cypher>\"   # forces a FULL kuzu_nessie_load unconditionally, then serves the query"
+    use_case: "RETIRED RECORD -- not a route. This entry named a full rebuild of the LOCAL kuzu projection; that projection and the flag that drove it no longer exist. Read cloud.read.served_vintage instead."
+    canonical_call: "RETIRED 2026-09-09 -- there is no such call. The client REFUSES the flag (kuzu_cli.py: `unrecognized arguments: --mode`, exercised at this cut). Successor: cloud.read.served_vintage."
     tool: comp-kuzu
     mode: rebuild
-    write_path: false   # SERVES the Cypher query after a refresh-first (read-WITH-refresh: `comp-kuzu --mode full "<Cypher>"` returns results), NOT a pure producer like comp-aws derive. Must stay in the read/navigate candidate set or the DR1 write_path pre-filter EXCLUDES it from the very 'reconcile then query' intents it owns (measured 2026-07-17).
+    write_path: false   # HISTORICAL, kept with the record: while live, this entry served the query after refreshing, so it was NOT a pure producer and had to stay in the read/navigate candidate set or the DR1 write_path pre-filter would have excluded it from its own intents (measured 2026-07-17). It is retired; it owns no intent now.
     layer: cloud
-    cost: "~482s (measured P0 @b0c94d9ff -- absorbs the daily whole-table delta once)"
-    freshness: "post-run = current Nessie HEAD (unconditional full load); the MSTR-startup warm-once mode"
-    rebuild_trigger: "MSTR session startup (once), or an explicit ground-truth reset when the local projection is untrusted"
-    anti_pattern: "running --mode full mid-task to answer a traversal (a 482s full rebuild to serve a read) -> bare comp-kuzu (auto) or --mode inc"
-    status: canonical
-    notes: "NFRA_KUZUSPLIT P1 (code @5de839ff0, 0.8.0_AE_CloudComp~D; registration COO-SoD-landed -- grantee cannot self-register). Refresh-mode VARIANT of the comp-kuzu graph-query surface (SAME kuzu_nessie_db store, NOT a new surface). Three-tool model (LD-0307): comp-aws derive = cloud producer (nightly, never MSTR-startup) / comp-kuzu --mode full = local full (MSTR startup once) / comp-kuzu --mode inc = local incremental (workers, pre-query). comp-which routing: 'full rebuild / ground-truth reset / reconcile the local projection / MSTR startup graph' -> comp-kuzu --mode full. Wrappers retired 2026-09-02."
+    cost: "n/a -- retired; nothing to cost"
+    freshness: "n/a -- retired. Freshness is now STATED BY THE SERVICE on every read: cloud.read.served_vintage."
+    rebuild_trigger: "none -- retired. There is no agent-runnable refresh; the served projection is advanced on the estate's own schedule."
+    anti_pattern: "looking for a rebuild when an answer seems old -> read cloud.read.served_vintage and read the VINTAGE line it prints."
+    status: retired
+    superseded_by: cloud.read.served_vintage
+    retired: "2026-09-09, NFRA_CLDGRPH CG-s-17 (round 5), by 0.9.0_WK_NFRA_CLDGRPH~2 under 2.0.0_SA_COO~A's issuance. CONSUMERS FIRST, per the comp-surface-check precedent recorded in retired_aliases: above -- (1) comp-which's two curated refresh routes repointed to cloud.read.served_vintage, (2) the registry carriers (comp-tools.yaml, comp-output-contracts.yaml, the TOOL_CLASSIFICATION generator and the compiled tool_index), (3) the tools_index comp-kuzu row's subcommands + entries, (4) THEN these two entries. The EXECUTABLE plane went first, at CG-s-8 @173a1d8c90; this is the INSTRUCTION plane behind it."
+    why: "The entry routed agents to a call that does not exist. Its historical form was `comp-kuzu --mode full [--json] [--limit N] \"<Cypher>\"` -- a forced full kuzu_nessie_load of a LOCAL projection, ~482s (measured P0 @b0c94d9ff), the MSTR-startup warm-once. The local projection is retired and the thin client refuses the flag, so the entry could only send a reader to a refusal or, worse, to re-creating the store. A manifest that retires only the executable passes every cell and leaves a live instruction to re-create the path (the CTO round-4 analysis). KEPT as a record, not deleted."
+    notes: "HISTORY (past tense, kept as the record): landed by NFRA_KUZUSPLIT P1 (code @5de839ff0, 0.8.0_AE_CloudComp~D; registration COO-SoD-landed -- the grantee could not self-register), as the full-refresh mode of a LOCAL store the comp-kuzu surface then opened directly. It sat inside a three-tool model (LD-0307) whose other two members outlived it: the cloud producer still runs on its own schedule, and the read is now the whole agent-facing surface. Its comp-which vocabulary (full rebuild / ground-truth reset / reconcile the local projection / MSTR startup graph) was NOT deleted -- it was REPOINTED to cloud.read.served_vintage at this retirement, so an agent who still types it lands on the read rather than falling through to nothing."
 
   - id: cloud.refresh.incremental
-    use_case: "Refresh / update the graph / my graph is behind -- the DEFAULT every non-MSTR worker runs pre-query: serve the incremental delta, OR serve a LABELED-STALE prior-vintage projection, but NEVER a mid-task full rebuild."
-    canonical_call: "comp-kuzu --mode inc [--json] [--limit N] \"<Cypher>\"   # incremental-OR-serve-labeled-stale (Andrew O-1 / sec-4 hard gate), then serves the query"
+    use_case: "RETIRED RECORD -- not a route. This entry named an incremental refresh of the LOCAL kuzu projection; that projection and the flag that drove it no longer exist. Read cloud.read.served_vintage instead."
+    canonical_call: "RETIRED 2026-09-09 -- there is no such call. The client REFUSES the flag (kuzu_cli.py: `unrecognized arguments: --mode`, exercised at this cut). Successor: cloud.read.served_vintage."
     tool: comp-kuzu
     mode: rebuild
-    write_path: false   # SERVES the Cypher query after an incremental refresh (read-WITH-refresh: `comp-kuzu --mode inc "<Cypher>"` returns results), NOT a pure producer. Must stay in the read candidate set: "my graph is behind, refresh then query" is a READ intent, and write_path==true DR1-excludes it before its curated route can fire (measured 2026-07-17).
+    write_path: false   # HISTORICAL, kept with the record: while live, this entry served the query after an incremental refresh, so it had to stay in the read candidate set -- "my graph is behind, refresh then query" was a READ intent and write_path==true would have DR1-excluded it before its curated route could fire (measured 2026-07-17). It is retired; that intent is now cloud.read.served_vintage.
     layer: cloud
-    cost: "~5.2s (measured P0 @b0c94d9ff -- incremental delta) / instant when serving labeled-stale"
-    freshness: "post-run = current HEAD when the delta is small; ELSE a LABELED-STALE prior-vintage projection with an in-band SERVED-LABELED-STALE header (COND-1) -- honestly labeled, never a silent stale read"
-    rebuild_trigger: "any worker, pre-query, when the local projection may be behind -- the default refresh"
-    anti_pattern: "a mid-task FULL rebuild (Andrew O-1 forbids incremental-or-full; the fork is incremental-OR-labeled-stale) -> --mode full is MSTR-startup-only"
-    status: canonical
-    notes: "NFRA_KUZUSPLIT P1 (code @5de839ff0, 0.8.0_AE_CloudComp~D; registration COO-SoD-landed). Refresh-mode VARIANT of the comp-kuzu graph-query surface (SAME store). O-1 (Andrew-ratified): serves incremental OR labeled-stale, NEVER incremental-or-full. In-band provenance header (COND-1) + persistent .fallback.jsonl sink (COND-2) + COMPSIMILAR overlay hook both paths (COND-3). comp-which routing: 'refresh the graph / update the graph / my graph is behind / default worker graph refresh' -> comp-kuzu --mode inc. Wrapper retired 2026-09-02."
+    cost: "n/a -- retired; nothing to cost"
+    freshness: "n/a -- retired. Freshness is now STATED BY THE SERVICE on every read: cloud.read.served_vintage."
+    rebuild_trigger: "none -- retired. There is no agent-runnable refresh; the served projection is advanced on the estate's own schedule."
+    anti_pattern: "looking for a refresh when an answer seems old -> read cloud.read.served_vintage and read the VINTAGE line it prints."
+    status: retired
+    superseded_by: cloud.read.served_vintage
+    retired: "2026-09-09, NFRA_CLDGRPH CG-s-17 (round 5), by 0.9.0_WK_NFRA_CLDGRPH~2 under 2.0.0_SA_COO~A's issuance. CONSUMERS FIRST, per the comp-surface-check precedent recorded in retired_aliases: above -- (1) comp-which's two curated refresh routes repointed to cloud.read.served_vintage, (2) the registry carriers (comp-tools.yaml, comp-output-contracts.yaml, the TOOL_CLASSIFICATION generator and the compiled tool_index), (3) the tools_index comp-kuzu row's subcommands + entries, (4) THEN these two entries. The EXECUTABLE plane went first, at CG-s-8 @173a1d8c90; this is the INSTRUCTION plane behind it."
+    why: "This was the entry a WORKER was told to run pre-query, so it was the most-travelled route back. Its historical form was `comp-kuzu --mode inc [--json] [--limit N] \"<Cypher>\"` -- incremental-OR-serve-labeled-stale (Andrew O-1 / sec-4 hard gate), ~5.2s (measured P0 @b0c94d9ff). The local projection is retired and the thin client refuses the flag. The GUARANTEE the entry carried (never a silent stale read) is NOT lost: it moved into the served read itself, which states its own vintage in plain words on every call and names the ABSENCE when the service does not answer. KEPT as a record, not deleted."
+    notes: "HISTORY (past tense, kept as the record): landed by NFRA_KUZUSPLIT P1 (code @5de839ff0, 0.8.0_AE_CloudComp~D; registration COO-SoD-landed), the worker-default refresh of a LOCAL store, under Andrew's O-1 ruling that it serve incremental OR a labeled-stale prior vintage and NEVER a mid-task full rebuild. O-1's substance -- an answer is never silently stale -- survives the retirement in the served read's own VINTAGE line. Its comp-which vocabulary (refresh the graph / update the graph / my graph is behind / default worker graph refresh) was NOT deleted -- it was REPOINTED to cloud.read.served_vintage at this retirement, so an agent who still types it lands on the read."
 
   - id: cloud.describe.resource
     use_case: "What IS this resource / what does it do / describe this ARN / find + describe one AWS resource -- ONE resource's purpose synthesized from the graph (type + layer + producers/consumers/wiring)."
@@ -1197,7 +1235,7 @@ entries:
     layer: cross-layer
     cost: "~ms"
     freshness: "kuzu stitch DB (stitched trace+cloud); db-path infra/aws/globgrph/kuzu_stitch_db -- FROZEN VINTAGE (K4 adjudication 2026-08-04, CTO): last built 2026-07-07, NO nightly reload exists; the prior 'reload on the nightly cycle' claim was fiction. A stitch-DB query answers at its build vintage -- label it, never quote it as the estate (Rule 20 scratch-DB law)"
-    rebuild_trigger: "manual stitch rebuild only (no scheduled reload); canonical cross-layer freshness rides kuzu_nessie_db"
+    rebuild_trigger: "none an agent runs. Cross-layer freshness rides the SERVED projection's own vintage, stated on every read (cloud.read.served_vintage)."
     anti_pattern: "comp-platinum (static heuristic, inf producer-incomplete) for a question the live stitch answers"
     status: canonical     # LANDED 2026-06-11 (P2-STITCH f754164b4, CTO-certified); supersedes the heuristic inf producer-resolution
     notes: "The structural fix for comp-platinum's firm producer-resolution residual (live per-bucket truth). Cypher uses the CloudNode/CloudEdge schema: -[:CloudEdge {edge_type:'FETCHES'}]->. CTO-verified: 49F+cottonwood ADVI components resolve component->lambda->dynamodb/s3 cross-layer; 15 components reach a bucket."
@@ -1780,7 +1818,7 @@ entries:
 tools_index:
   comp-ontolint: { does: "Lint the NFRA_ONTOLOGY Relation-vs-Role DUAL-AXIS composite exception (routes-to->Router / resolves-through->Registry / projects->Gateway are dual-axis; every other relation is single-axis, a Relation with no Role) from the canonical rule-bank -- machine-enforced, replaces the prose 'load-bearing subtlety' (NFRA_ONTOCLARITY WS-B fog-7). ALSO the WS-C spot-8 polymorphic-Role tie-breaker (role-resolve): role_priority total-order arbitration when a node matches 2+ roles (guards+transforms -> Guard)", subcommands: ["check", "self-test", "role-resolve <Role>..."], entries: [ontology.relation_role.dual_axis_lint] }
   comp-genesis:  { does: "NFRA_GENESIS provisioner -- SPIN UP a NEW company: bootstrap its graph + ontology-binding + closed learning loop (versioned Nessie/Iceberg -> Kuzu -> Trino + the C0-C3 ladder) from a single company.yaml, on the proven Opal stack (parameterized; Opal is the reference instance). Two bespoke-per-company pieces (recognizer keystone + binding adapter); everything else reused. verify --local closes the loop at zero cloud spend. NOT a query over Opal's OWN estate (that is comp-system). Thin shim -> infra/system/sdk/genesis", subcommands: ["new <c>", "validate <c>", "project <c>", "up [--dry-run] <c>", "verify --local <c>", "loop --tick --local <c>", "status <c>", "selftest", "down <c>"], entries: [meta.genesis.provision_new_company] }
-  comp-kuzu:     { does: "Cypher query the loaded Kuzu graph (cloud + cross-layer); the FAST default read-path", subcommands: ["<cypher>", "--mode auto|inc|full", "--db-path", "--json", "--limit"], entries: [cloud.lookup.nodes_by_type, cloud.reachability.transitive, cloud.blast.what_breaks, xlayer.fullstack.firm_component_to_bucket, cloud.refresh.full, cloud.refresh.incremental] }
+  comp-kuzu:     { does: "Cypher query the SERVED graph projection (cloud + cross-layer) -- a thin client over the projection service; the FAST default read-path, and the ONLY one (it takes no database path and there is no refresh flag)", subcommands: ["<cypher>", "--json", "--limit", "--schema"], entries: [cloud.lookup.nodes_by_type, cloud.reachability.transitive, cloud.blast.what_breaks, xlayer.fullstack.firm_component_to_bucket, cloud.read.served_vintage] }
   comp-describe: { does: "FIND + DESCRIBE one AWS resource -- ONE resource's purpose synthesized from the graph (type + layer + producers/consumers/wiring), off the derive-at-scan summary-corpus engine over the comp-kuzu QUERY path. Lexical resolution (exact ARN -> exact name -> substring); ambiguous -> disambiguation list, no silent guess. NOT nearest-BY-PURPOSE similarity (that is comp-similar). WS-7 tools_index closure (router-reachable, entry already existed at cloud.describe.resource, was missing from this browsable catalog)", subcommands: ["<arn-or-name>", "--json"], entries: [cloud.describe.resource] }
   comp-state:    { does: "Registry/TO/PRD state linter -- is the registry / a project JSON / a task-order status / a PRD Status line BEHIND the estate's actual git-commit state? BM25-style drift check over git commits (Andrew-direct 2026-07-14). ADVISORY: a BEHIND is a place to LOOK never an auto-edit; CURRENT is absence-of-lexical-evidence not a verified record. --self-test MUST print PASS (its own N/N line; 4/4 since the TIGHTENING-J2 encoding leg) before trusting a report. WS-7 tools_index closure (router-reachable, entry already existed at org.state.registry_drift, was missing from this browsable catalog)", subcommands: ["--project CODE", "--days N", "--all", "--self-test", "--json"], entries: [org.state.registry_drift] }
   comp-keys:     { does: "What S3 keys / partition-dates / per-firm existence EXIST under a prefix -- INVENTORY (what exists), distinct from comp-freshness (is-it-fresh). Live s3api, explicit-Z, denominator-always. NFRA_MSBEFF.R5", subcommands: [prefix, partitions, exists], entries: [pipeline.keys.enumerate] }
@@ -1806,7 +1844,7 @@ tools_index:
   comp-xref:     { does: "Symbol cross-ref (cached) + graph-state drift-vs-baseline", subcommands: ["<symbol>", "--save"], entries: [trace.xref.symbol, trace.xref.graph_drift] }
   comp-transform: { does: "React component field-render schema-check (MISSING/UNUSED)", subcommands: [schema-check, ternary-audit], entries: [trace.transform.component_fields] }
   comp-cache:    { does: "React Query cache-key collision detection", subcommands: [map, collisions, key], entries: [trace.cache.key_collisions] }
-  comp-cluster:  { does: "Page-rooted PAGE->PANEL->DRILLDOWN cluster view over the LIVE canonical graph (data-source clusters + drilldown depth/cohort + cross-panel SHARES_SOURCE coupling); the cloud-graph generalization of comp-cache", subcommands: ["<Page>", "--list", "--coverage", "--json", "--db-path"], entries: [cloud.cluster.page_panel_drilldown] }
+  comp-cluster:  { does: "Page-rooted PAGE->PANEL->DRILLDOWN cluster view over the LIVE canonical graph (data-source clusters + drilldown depth/cohort + cross-panel SHARES_SOURCE coupling); the cloud-graph generalization of comp-cache", subcommands: ["<Page>", "--list", "--coverage", "--json"], entries: [cloud.cluster.page_panel_drilldown] }
   comp-cochange: { does: "agent-type CO-MOVEMENT over git history (F4 instrument): which agent TYPES change the SAME FILES within a window, with BOTH F4 denominators on every output (commits-attributed/total AND pairs-observed/possible). Typed dispatch over the comp-missions commit walk -- runs NO git of its own; READ-ONLY, no LLM, observations never verdicts (UNATTRIBUTED authors counted in denominator 1, never dropped). Feeds the Friction battery (Kimi meta-analysis) beside comp-blast overlap + comp-heat trajectory. Subject-coordinate C1-discovered-relations (provisional -- first CVO dial confirms).", subcommands: [matrix, "pair <T1> <T2>", "file <path-substr>", "--since", "--range", "--grain type|serial", "--json", "--self-test"], entries: [estate.cochange.agent_type_comovement] }
   comp-pii:      { does: "PII exposure audit (routes + components)", subcommands: [audit, scan], entries: [trace.pii.exposure] }
   comp-types:    { does: "TS type consumers (before editing a shared type)", subcommands: [index], entries: [trace.types.type_consumers] }
