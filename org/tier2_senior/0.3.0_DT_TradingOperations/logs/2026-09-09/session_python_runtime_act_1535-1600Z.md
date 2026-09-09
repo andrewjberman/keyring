@@ -124,16 +124,51 @@ Module provenance: websockets 16.0, yaml 6.0.3, boto3 1.42.54; pip list counts 3
 (the CRO's 310 figure reproduces on my own instrument).
 ```
 
-**LIVE NEGATIVE CONTROL that the fix requires a RESTART, not a `/mcp` reconnect:** this session's own
-`opal-agent-comms` is still CONNECTION_CLOSED, because this process holds the pre-act PATH. Same
-device, same repo, same minute — a fresh-PATH child serves 16 tools while the in-process client stays
-dead. That is why this whole session ran the broker through the Python 3.12 library fallback.
+**On this session's own still-dead client:** `opal-agent-comms` here remains CONNECTION_CLOSED, which is
+why this whole session ran the broker through the Python 3.12 library fallback. That is a property of an
+MCP client spawned BEFORE the act and never re-spawned — it is NOT evidence that a restart is needed.
+See the Correction section: a reconnect re-spawns the server and now succeeds.
 
 **Independent corroboration:** `1.0.0_SA_CTO` (msg 94548) re-measured from a live registry read in its
 own session — a different instrument from my rebuilt process environment — and reproduced every line
 of the verdict and the residue: 12 machine PATH entries with 0 matching Python314, user PATH intact,
 `python.exe` absent with the directory remaining, `py -0p` listing 3.12 alone, and exactly one
 remaining 3.14 ARP row. Closed at that seat.
+
+---
+
+## Correction — a restart is NOT required; `/mcp` reconnect is sufficient
+
+**Superseded claim (mine, in msg 94545/94546 and in the first version of this log):** "RESTART every
+Claude session started today. Do NOT `/mcp`-reconnect", on the reasoning that a reconnect re-spawns
+`python org/mcp/server.py` from a process environment still holding the pre-act PATH.
+
+**Why it was wrong:** that reasoning holds for a PATH-edit-alone fix. It does not hold here, because
+this act REMOVED `python.exe`. The stale PATH still lists the two Python314 entries, but nothing
+resolves at them any more, so lookup falls through to the Python312 entries behind them.
+`4.0.0_SA_CRO` caught this in msg 94553 and owns the correction.
+
+**Confirmed at the affected seat.** The CRO measured it at its own seat; this session is the actual
+stale-PATH case, since its `opal-agent-comms` is CONNECTION_CLOSED. A Bash child with NO PATH
+override, inheriting this process's pre-act environment:
+
+```
+PATH still lists, in this order:
+  /c/Program Files/Python314/Scripts
+  /c/Program Files/Python314
+  /c/Users/AndrewBerman/AppData/Local/Programs/Python/Python312/Scripts
+  /c/Users/AndrewBerman/AppData/Local/Programs/Python/Python312
+
+which -a python   -> /c/Users/.../Python312/python      (ONE hit; the Python314 entries hit nothing)
+python --version  -> Python 3.12.10
+python -c "import sys, mcp; ..." -> OK 3.12.10  C:\...\Python312\python.exe
+```
+
+**Net effect on the instruction to Andrew:** a `/mcp` reconnect is sufficient for a Claude session
+started after 12:30Z; a restart works too but is unnecessary. The Codex item is unchanged —
+`1.0.0_SA_CTO~X` still needs a relaunch, because that seat was never provisioned and has no client to
+reconnect. Correction sent to both seats as msg 94555 / 94556 after they had closed the item, because
+the wrong line instructs a human act and had already been handed onward.
 
 ---
 
@@ -192,9 +227,11 @@ inert Add-to-Path ARP row plus an empty-of-executables directory. Both dying har
 green: `python org/mcp/server.py` completes a real MCP handshake and serves 16 tools, and both Codex
 launcher components (`org/mcp/codex-inbox-turn-bridge.py`, `org/mcp/codex-agent-heartbeat.py`) run at
 exit 0. `1.0.0_SA_CTO` independently reproduced the verdict from a live registry read and closed it at
-its seat (msg 94548); the measurement is handed to `4.0.0_SA_CRO`, which owns the joint python answer
-with `1.0.0_SA_CTO~X` on Andrew's 15:2xZ word. Every already-running process on this box, this session
-included, still carries the pre-act PATH and stays broken until restarted.
+its seat (msg 94548), and `4.0.0_SA_CRO` validated and closed it independently (msg 94553); the
+measurement is handed to `4.0.0_SA_CRO`, which owns the joint python answer with `1.0.0_SA_CTO~X` on
+Andrew's 15:2xZ word. Already-running processes still carry the pre-act PATH, but because the fix removed
+`python.exe` rather than only editing PATH, that stale PATH now falls through to 3.12 — so a `/mcp`
+reconnect is enough and no restart is required. See Correction, below.
 
 ---
 
@@ -203,9 +240,9 @@ included, still carries the pre-act PATH and stays broken until restarted.
 1. **[Andrew] Relaunch `1.0.0_SA_CTO~X` with ajb2 from a NEW shell** — the launcher's "FAILED COMPONENT"
    throw must not fire, and `get_agent_status("1.0.0_SA_CTO~X")` must read LIVE with a heartbeat. This is
    the acceptance the CRO's brief reserved for the Codex harness.
-2. **[Andrew] RESTART every Claude session started after 12:30Z — do not `/mcp` reconnect** — a reconnect
-   re-spawns `python org/mcp/server.py` from the running process's environment, which still holds the old
-   PATH. My own still-dead client is the live proof.
+2. **[Andrew] `/mcp` reconnect is SUFFICIENT for any Claude session started after 12:30Z** — a restart also
+   works but is unnecessary. See the Correction section below; an earlier version of this line said the
+   opposite and was wrong.
 3. **[4.0.0_SA_CRO] Fold this measurement into the joint 3.12-vs-3.14 answer with `1.0.0_SA_CTO~X`** —
    delivered as msg 94545; the repo-side load-time guard remains that lane's item, deliberately untouched
    here.
