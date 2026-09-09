@@ -1,5 +1,6 @@
 # ETFS_GUARDRAIL -- DECOMPOSITION (L5)
 
+**v0.2** (2026-09-09 ~22:4xZ, `2.0.0_SA_COO`, the base COO: `~B` not seated) -- ROUND 2 on PRD **v0.4** @`a830ea1cc0` (the CTO's manual-trigger addendum on Andrew's ~21:4xZ no-waiting word): five cells `EG-s-14`..`EG-s-18` added, 1:1 with rows S14-S18, ONE issuance, three worker slots on Opus in hand-cut worktrees (spine v3.7). Round 2's sections are s.8-s.11 below; s.0-s.7 are LEFT UNEDITED. Cells 14 -> 19; edges 15 -> 17.
 **v0.1.1** (2026-09-04 ~19:0xZ, `2.0.0_SA_COO~B`, in the issuance commit, BEFORE the cut freezes it): three
 amendments on evidence read after v0.1 -- (a) s.7 gains THE DISCRIMINATOR'S PRINCIPAL (the ETFS layer holds no
 firm-bucket grant by NEVER#1 design, measured at `infra/aws/terraform/etfs-reports/iam.tf:24-59` and
@@ -276,3 +277,83 @@ construction: a probe that answers B is never followed by an invoke.
   says the terminus is a shipped signal and L5 agrees rather than absorbing it.
 
 -- `2.0.0_SA_COO~B`, L5
+
+## 8. ROUND 2 -- the manual-trigger addendum (PRD v0.4 s.9, rows S14-S18), cut as ONE issuance
+
+**Input:** PRD **v0.4** @`a830ea1cc0` (`1.0.0_SA_CTO`, 2026-09-09 ~22:0xZ, on Andrew's ~21:4xZ word at the CTO terminal:
+*"ETFS GUARDRAIL is a perfect example, we are not going to just wait for October and hope it works, that needs to be
+closed out and proven"*). **This document invents nothing.** Round 1 closed with 7 of 8 grades NOT_EVALUATED, every one
+"on the 10-01 fire" or "a rare real event"; the addendum makes each a MANUAL RUN under the five conditions (same target;
+real plane; told apart on the artifact; the schedule's firing from history; the next fire is confirmation). The base
+COO cuts (`2.0.0_SA_COO~B` is not seated; Andrew's ~22:3xZ edict: proceed through /canonical-flow spawning what the cuts
+need, without asking).
+
+**`EG-s-n` IS manifest row `Sn`**, as in round 1. Five rows in, five cells out; the `claim`, `MEASURED-BY`, `lane`,
+`verb`, `depends_on`, `accept` and `bound` columns are the PRD's and are not restated here.
+
+| cell | row | outcome_ref | surface (PRD s.9) | verb | depends_on (as cells) |
+|---|---|---|---|---|---|
+| `EG-s-14` | S14 | FWD-3, FWD-5, FWD-6 | THE AUGUST RE-RENDER: the same monthly orchestrator invoked by hand with the rule's own payload (`{"mode":"run"}` renders LAST month = 2026-08 in September); re-published to the served key WITH the coverage line; delivered to both inboxes; a served-output move (NEVER-2 entry first, both never-widen halves quoted, the prior objects archived, rollback named) | verify | -- |
+| `EG-s-15` | S15 | FWD-2, FWD-7, FWD-8 | THE SEPTEMBER-TO-DATE REFUSAL: the same orchestrator for `month=2026-09` TODAY -- the run mode taught to honor a `month` override by ONE line (`lambda_function.py:383`, the expression its QA modes already use), deployed under NEVER-2 (the EG-s-8 shape), then the refusal ladder on real data to its one terminal email | verify (+1 line, deployed) | `EG-s-14` |
+| `EG-s-16` | S16 | FWD-4 | 2026-09-07 (Labor Day) read on EG-s-15's run as class A: no hole, no slice, 0 PutObject | verify | `EG-s-15` |
+| `EG-s-17` | S17 | FWD-1 | THE FILLED-IN DAY: a daily producer invoked by hand with its rule's own payload against a REAL hole (found by census + probe; class B never fired against); no manufactured hole (a served delete needs a human's word -- routed, not taken) | verify | -- |
+| `EG-s-18` | S18 | the schedules | THE SCHEDULES' FIRING FROM HISTORY: the monthly and the two daily schedules' executions from CloudTrail with initiators and denominators, matched to the August artifact and the daily slices | verify | -- |
+
+**Denominator:** PRD s.7.2 + s.9 manifest rows 13 + 5 = 18 (S7 split -> 19 cells); decomposition cells 14 + 5 = 19; 0
+either way. **Outcome coverage after round 2:** FWD-1 (s-17), FWD-2 (s-15), FWD-3 (s-14), FWD-4 (s-16), FWD-5 (s-14),
+FWD-6 (s-14's alignment re-read), FWD-7 (s-15), FWD-8 (s-15) -- 8 of 8 served by a manual run; 10-01 confirms.
+
+## 9. THE CHAIN READ -- round 2
+
+```
+  M (dependency-independent chains) = 3
+    chain A  3 cells   EG-s-14 -> EG-s-15 -> EG-s-16     (one orchestrator, one deploy, one queue: v0.1.1's rule)
+    chain B  1 cell    EG-s-17                           (the producers; independent)
+    chain C  1 cell    EG-s-18                           (read-only history; independent)
+
+  longest dependency depth = 3 (chain A); chains B and C run beside it from the first tick
+```
+
+**The one line in `EG-s-15` and why it is in the cut, not a pitch:** the rule's target cannot render a named month in
+`run` mode as deployed (`_last_month()` unconditional at `:383`); the QA modes already read `event.get("month")`. The
+same expression at `:383` keeps the SCHEDULED payload's behaviour byte-for-byte (no `month` -> last month) and lets the
+hand invoke name September -- same target, the scheduled payload shape plus one field, the OS-s-26 pattern the CTO
+adopted on NFRA_OUTSET tonight. Stated to the CTO in the drive read that carries this issuance; a code change on a served
+Lambda, so it rides its own NEVER-2 entry and the served-vs-built control from round 1.
+
+## 10. SEATING AND FAN-OUT -- three worker slots, Opus at high effort, hand-cut worktrees off CLOUD
+
+**Every cell is a worker's** (`0.9.0_WK_ETFS_GUARDRAIL~n`; round 1's serials re-used, their round-1 orders all terminal,
+no encumbrance). Spine v3.7 @`cec3d4274d`: the worker agent type runs Opus at high effort by its definition; each spawn
+is a hand-cut worktree `git worktree add -b wk-etfs_guardrail-2-<n> /c/tmp/wk-etfs-2-<n> CLOUD`, never the harness's
+isolation option. Decision 1 of s.3 stands: the workers' AWS reads and invokes carry the launching seat's identity and
+are recorded verbatim. **Two reads the workers cannot make are the issuer's:** delivery at the two inboxes (S14) and at
+andrew@ (S15) is read by `2.0.0_SA_COO` through the gateway and cited on the faces by amendment; the CTO's never-widen
+half for S14 and S15 arrives as a message id and is handed to slot ~1 in its prompt, so slot ~1 is spawned when that id
+is in hand and slots ~2 and ~3 are spawned at the issuance. `.tools/terraform.exe` (gitignored) is provisioned into slot
+~1's worktree at hand-off for EG-s-15's one deploy.
+
+```
+fanout: 3 of 3 chains, cap 8, reason: chain A is one orchestrator and one deploy (S14's run, S15's one-line deploy and
+        run, S16's read of that run) on ONE slot in sequence; S17 and S18 touch different targets and no shared file,
+        so they run beside it from the first tick; a 4th slot would hold nothing. Width 3, one issuance.
+```
+
+| slot | queue (dependency order) | waits the COO sequences |
+|---|---|---|
+| `~1` | `EG-s-14` -> `EG-s-15` -> `EG-s-16` | spawned when the CTO's never-widen id is in hand; `EG-s-15` handed after `EG-s-14`'s report; `EG-s-16` after `EG-s-15`'s |
+| `~2` | `EG-s-17` | none |
+| `~3` | `EG-s-18` | none (reads the August archive if `EG-s-14` has already run, and says which) |
+
+## 11. WHAT THIS ROUND'S DECOMPOSITION DOES NOT DECIDE
+
+- **Whether a real class-C hole exists in the 20-trading-day window** (`EG-s-17`): the census decides; if none, the
+  controlled-hole path (a served delete) is routed to Andrew's word with its own NEVER-2 entry -- not taken by a worker.
+- **Whether any served artifact carries a trigger / run-id field** (rule (3)): the workers print
+  `ARTIFACT-CARRIES-NO-TRIGGER-FIELD` if none does and file the row; a carrier cell (the OUTSET OS-s-26 shape) is a
+  cut question for the next addendum, not this round's.
+- **The archive shape for the August prior objects** (versioning pins vs archive copies): the worker reads
+  `get-bucket-versioning` and takes the shape the bucket allows, recorded in the entry.
+- **The CTO's never-widen halves** for S14 and S15: asked in the drive read; slot ~1 does not start without them.
+
+-- `2.0.0_SA_COO`, L5 round 2
