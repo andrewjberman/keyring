@@ -104,7 +104,7 @@ def _kuzu_query(cypher: str, timeout_s) -> dict:
     'UNAVAILABLE: ...' string (never silently read as an empty/absent result -- BOUNDS: 'a graph
     read that fails is UNAVAILABLE in the tool's voice, never absent')."""
     try:
-        r = subprocess.run([sys.executable, _KUZU_CLI, "--json", "--mode", "inc", cypher],
+        r = subprocess.run([sys.executable, _KUZU_CLI, "--json", cypher],
                            capture_output=True, text=True, timeout=timeout_s, cwd=_WS)
     except subprocess.TimeoutExpired:
         return {"ok": False, "rows": [], "vintage": None, "error": "DEFERRED"}

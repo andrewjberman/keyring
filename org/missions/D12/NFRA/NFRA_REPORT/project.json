@@ -1,0 +1,50 @@
+{
+  "project_code": "NFRA_REPORT",
+  "former_codes": [
+    "NFRA_INFRAREP (proposed by 1.0.0_SA_CTO~Z at L2; NEVER REGISTERED -- Andrew renamed it before registration, Andrew-direct 2026-09-09 \"let's brand this as NFRA_REPORT\")"
+  ],
+  "macro_code": "NFRA",
+  "directive": "D12",
+  "fabric": "site-z",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "PRD",
+  "created": "2026-09-09",
+  "registered_under_tree": "2026-09-09",
+  "last_updated": "2026-09-09",
+  "pods": [
+    "1.0.0",
+    "2.0.0",
+    "3.0.0",
+    "4.0.0"
+  ],
+  "seats": {
+    "cro": "4.0.0_SA_CRO~Z (L1 brief author)",
+    "cto": "1.0.0_SA_CTO~Z (L2 endpoint, L3 registration, L4 PRD)",
+    "coo": "2.0.0_SA_COO~ZZ (L5/L6; seated 2026-09-09 ~17:4xZ on Andrew's word)",
+    "cvo": "3.0.0_SA_CVO~Z (L8-L10)",
+    "integrator": "0.0.0_AB_MSTR~Z"
+  },
+  "related": [
+    "NFRA_OPSEC202609",
+    "NFRA_IAMROLES202609",
+    "D12_PLATFORM_OPS"
+  ],
+  "name": "Global Infrastructure Reporting and Analysis: one morning read that declares whether anything needs Andrew, across three properties (Dashboard, Website, Gateway), with instrument state separable from world state and every number carrying its coverage.",
+  "description": "Replace a miscalibrated daily infrastructure report with one whose rows can be trusted. Twelve ratified outcomes: a declarative morning verdict; a vocabulary that separates 'nobody looked' from 'we looked and here is how bad'; per-row deltas; property+owner attribution; whether an alert would reach a human before an incident tests it; broken-vs-retired on consumer evidence rather than age; retirement on the record; cost movement that matters; one compute record spanning EC2 and ECS; counts that carry their denominators; what we publish that nothing watches; and, on an anomaly, the connected resources plus an analysis bounded by C-AI. Andrew-direct commissioning 2026-09-09: 'it has been miscalibrated for a long time and it's time that we fixed that.'",
+  "brief": "docs/briefs/global-infrastructure-reporting-brief-20260909.md @37ff80867a (L1, 4.0.0_SA_CRO~Z; handed @5807d05c81 and AMENDED @37ff80867a adding F11a and discharging Part VII item 2). The L2 endpoint is org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_GLOBAL_INFRA_REPORTING_20260909.md.",
+  "prds": [
+    {
+      "path": "org/missions/D12/NFRA/NFRA_REPORT/prd/NFRA_REPORT_PRD.md",
+      "version": "v0.1",
+      "note": "L4, 2026-09-09: PRD_HEADER + the RATIFIED ENDPOINT (FWD-1..FWD-12), territory, acceptance properties, out-of-scope, C-AI and the brief's carried constraints. All twelve DONE WHEN bars confirmed by Andrew."
+    }
+  ],
+  "leads": [
+    "REGISTERED 2026-09-09 on Andrew-direct at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'NFRA_REPORT sits in D12' -- the last open L3 item, which had blocked 2.0.0_SA_COO~ZZ from any legal act since seating."
+  ],
+  "phase": "L4 COMPLETE, L5 OPEN. dep_stage PRD. The endpoint is RATIFIED: ten bars confirmed by Andrew's (b)/(c)/(d) on 2026-09-09, and the remaining two (FWD-1's declarative re-cut and FWD-12) confirmed by his 'go with your recs on those two'. 2.0.0_SA_COO~ZZ holds L5.",
+  "blocking": "None on this project. TWO CARRIED FACTS THE DECOMPOSITION MUST NOT LOSE: (1) FWD-2 is the CRITICAL PATH into the NFRA_OPSEC202609 relationship -- until the report can express BLIND, DEGRADED and DESIRED-not-APPLIED, it cannot honestly render ANY OPSEC surface, and every gap becomes either a false OK or a false alarm. (2) The Website property's security row is settled PERMANENTLY, not pending: NFRA_OPSEC202609 C-19 establishes there is no AWS-only route to an edge for opalinvest.com, so that row renders BLIND with its reason attached forever and does NOT wait on TO-OP-S-13.",
+  "threads": [],
+  "thread_counter": 0
+}
