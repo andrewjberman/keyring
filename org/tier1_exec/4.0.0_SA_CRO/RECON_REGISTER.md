@@ -692,3 +692,10 @@ analysis, brief O4 / Capability 2), varietal 1 of 3; the remaining two varietals
 historical-scenario replay in THIS varietal. Corrected in the brief (F-M, non-claim 13) and in the JSON
 (`_meta.classification_correction`, `what_this_report_is`); the 18:2xZ entry above is left as written per this file's
 append-only law. Record: `deliverables/ANDREW_DIRECT_20260909_184xZ_YCHARTS_ARTIFACT_IS_PRODUCT_2_SENSITIVITY_1_OF_3_VARIETALS.md`.
+
+### Placement append -- 2026-09-09 ~21:0xZ, Andrew-direct, same terminal, VERBATIM
+*"its ok I think we can basically wrap that whole function into D9 Opal Workflows, because it effectively is going to be a
+bunch of middlemanning ops that pulls data from some vendor, runs it through some AI/pipeline processes, and becomes a flow on
+the dashboard."* Supersedes the ~17:2xZ "dedicated D14" placement this engagement was cut under. Brief re-pointed (title,
+Part II, F-K, Part V.1, REFS); outcomes O1-O12 unchanged. No register row written by this seat (D9 member set = MSTR's).
+Record: `deliverables/ANDREW_DIRECT_20260909_210xZ_INVESTOR_REPORTING_WRAPS_INTO_D9_OPAL_WORKFLOWS_NOT_A_NEW_D14.md`.
