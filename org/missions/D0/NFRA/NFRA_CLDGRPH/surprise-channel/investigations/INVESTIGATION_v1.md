@@ -8732,3 +8732,34 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-S127 -- the CloudTrail payload already carries what the dead classes re-fetch, and no VPC endpoint for IAM exists at all
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-10T22:58Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S127",
+    "one_line": "THE UPDATER IS DISCARDING THE ANSWER AND THEN MAKING A CALL IT CANNOT COMPLETE. S120/S125 left an open question: is the updater MEANT to be S3+DynamoDB-only, or are the endpoints missing? Measured answer: neither. The CloudTrail event that wakes the Lambda ALREADY CARRIES the fields bounded_derive_node re-fetches, for every dead class measured. Over 6 days: 6 of 6 mutating lambda events carry functionArn AND functionName AND runtime in responseElements -- the exact three fields the LAMBDA node needs; 1 of 1 sns carries topicArn; 6 of 6 sqs carry queueUrl plus the ARN in the resources array. The S3 branch ALREADY works this way and is the only branch that never fails: it makes no API call, it parses the bucket out of the ARN. The pattern is in the file; it was never extended to the other four classes. Andrew raised the possibility unprompted; this row is the measurement, not the proposal, and nothing has been built.",
+    "spec_asserts": "bounded_derive_node re-derives each node 'from live AWS state' via a per-service boto3 call: lambda.get_function, iam.get_role, dynamodb.describe_table, sns.get_topic_attributes, sqs.get_queue_attributes. The _BOTO_CFG comment treats the no-route condition as a latency problem to fail fast on ('fail fast (3s) rather than hanging'), not as a data-availability problem with another source.",
+    "world_is": "The data is already in the payload. CloudTrail lookup-events over 6 days, mutating only (readOnly=false): lambda.amazonaws.com 6 mutating of 200 scanned -- ALL 6 carry arn+name+runtime (UpdateFunctionCode20150331v2 x4, UpdateFunctionConfiguration20150331v2 x2; responseElements also carries codeSha256, handler, memorySize, lastModified, architectures, i.e. MORE than the node uses); sns 1 mutating -- carries topicArn in requestParameters and the topic ARN in resources; sqs 6 mutating (CreateQueue) -- carry queueUrl and the queue ARN in resources; iam 0 mutating in the window, so IAM is UNMEASURED and must not be claimed. AND THE ENDPOINT ROUTE CANNOT FIX IAM AT ALL, which is the fact that decides this: over the 621 endpoint services offered in us-east-1 there is an interface endpoint for lambda, sns, sqs, sts, dynamodb and s3, and NONE for iam -- 'com.amazonaws.us-east-1.iam' does not exist, IAM being global. So provisioning endpoints, the obvious remedy, leaves IAM_ROLE permanently underivable while costing per-endpoint monthly spend. AWS Config, the other candidate source, is NOT AVAILABLE either: zero configuration recorders and zero delivery channels in this account.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws cloudtrail lookup-events per EventSource, 6d window ending 2026-09-10T22:1xZ, paginated, filtered to readOnly=false client-side -- lambda 6/6 carry arn+name+runtime; sns 1/1 topicArn; sqs 6/6 queueUrl+resources ARN; iam 0 mutating events",
+        "aws ec2 describe-vpc-endpoint-services -> 621 service names; exact-match test for com.amazonaws.us-east-1.iam returns NONE, while lambda/sns/sqs/sts/dynamodb/s3 all exist",
+        "aws configservice describe-configuration-recorders -> [] and describe-delivery-channels -> [] (AWS Config is not recording in this account)",
+        "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py bounded_derive_node -- the s3 branch returns a node built from the ARN with no _boto() call; the other five branches each call _boto(svc)"
+      ]
+    },
+    "notes": "NOT BUILT, AND DELIBERATELY SO. lambda_function.py is inside this seat's PERMIT set and inside tonight's four handoff paths, so the edit is mechanically available -- but tonight's authorization is the key-collision fix and the stitch producer, and a new derive path is a feature, not that fix. It needs a cut. THREE HONEST LIMITS ON THE MEASUREMENT, none of which the numbers above disclose on their own: (1) the denominators are SMALL -- 6, 1, 6 and 0 mutating events -- so what is established is 'carried it in every case measured', never 'always carries it'; (2) responseElements is null on some event shapes (a tag or a delete), which would yield a PARTIAL node carrying arn+name but no runtime -- still strictly better than today, where those classes produce NOTHING, but it is a design decision about partial nodes rather than a free win; (3) an event is a CHANGE RECORD, not live state, so an event-derived node reflects the event's own snapshot rather than current truth -- acceptable for a wiring graph and already accepted for S3, but it is a real semantic difference and should be chosen knowingly rather than inherited. IF IT IS CUT, the cheapest shape is a per-class payload extractor tried FIRST with the existing boto3 call kept as the fallback for whatever the payload lacks, so the change is additive and the classes that work today are untouched."
+  }
+]
+```
