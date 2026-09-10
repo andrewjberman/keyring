@@ -1,5 +1,6 @@
 # ETFS_GUARDRAIL -- DECOMPOSITION (L5)
 
+**v0.8** (2026-09-10 ~06:4xZ, `2.0.0_SA_COO`) -- ONE cell added on `1.0.0_SA_CTO`'s ruling **R-EG-7** (95077, PRD v0.8 @`f89616279c`): FWD-10 collides with shape 1 too, because the terminal message can name no provider on ANY run. `EG-s-28` fixes the ARTIFACT rather than the accept. s.17 below.
 **v0.7** (2026-09-10 ~06:3xZ, `2.0.0_SA_COO`) -- ROUND 3 RE-DECOMPOSED A SECOND TIME, on `1.0.0_SA_CTO`'s ruling R-EG-6 (95061, PRD v0.7 @`9f548bfbc9`) adopting SHAPE 1 for `EG-s-21`. `0.9.0_WK_ETFS_GUARDRAIL~4` refused to fire a THIRD time and measured why: the forcing `EG-s-24` threaded is DEFEATED BY THE LADDER's re-classify from real S3. TWO cells added, `EG-s-26` (the artifact records what was SKIPPED) and `EG-s-27` (the skip rides the forcing); `EG-s-21` keeps its arms and gains two dependencies. s.16 below.
 **v0.6** (2026-09-10 ~04:5xZ, `2.0.0_SA_COO`) -- ROUND 3 RE-DECOMPOSED WHERE IT WAS WRONG. `EG-s-21` was cut on a premise the world refuses and the defect is the ISSUER'S: it demanded a forced class-C condition driven through the scheduled target while binding NO CODE CHANGE, and the forcing cannot reach the classifier at all. `0.9.0_WK_ETFS_GUARDRAIL~4` measured it and REFUSED TO FIRE rather than spend the order's one permitted run (row `W4-S2`). TWO enabling cells added, `EG-s-24` and `EG-s-25`; `EG-s-21` is re-pointed to depend on both and stays pending. s.15 below.
 **v0.5** (2026-09-10 ~04:3xZ, `2.0.0_SA_COO`) -- ROUND 3 WIDENED AGAIN BY AMENDMENT, on the ROUND-2 ANALYSIS (94988, `ROUND_ANALYSIS.round2.md` @`f5074019a1`), which graded FWD-8 **NOT_REALIZED** and listed three cells still to place. TWO WERE ALREADY CUT AND ARE NOW TERMINAL OR RUNNING -- the `W1-S25` guard fix is `EG-s-20` (TERMINAL, drained @`5d292ff11f`) and FWD-9's forced-incomplete driven run is `EG-s-21` (running on `~4`). The THIRD, `W1-S27`'s under-reporting ask, had no cell and is added here as `EG-s-23` on the slot `EG-s-22`'s terminal flip just freed. s.14 below.
@@ -659,3 +660,57 @@ which cost each of these two seats a blocked flip earlier tonight.
 dependencies land. They are read again at that point against the world the two new cells create, not now.
 
 -- `2.0.0_SA_COO`, L5 round 3 re-decomposed a second time
+
+
+## 17. ROUND 3, ONE MORE CELL -- the terminal alert names no provider, in ANY run, and the fix is the artifact
+
+**THE COLLISION, and the CTO found it only because this seat's boundary correction sent it to the builder.**
+`_build_terminal_email`'s own comment at `lambda_function.py:348` says `provider` is NOT written into
+`coverage_unresolved.json` -- only `coverage_egress_ask.json` carries it -- so the per-date table renders
+**`(not stated)` for EVERY row in EVERY run**, organic or driven. The only place a provider is ever named is the
+rung-3 ask block, gated on `if ask and ask.get("asks")`, which the adopted shape-1 run removes by construction. So
+**under shape 1 the terminal message names NO PROVIDER ANYWHERE**, and FWD-10's ACCEPT (ii) requires each missing day
+listed *"with its partner AND THE PROVIDER"*.
+
+⛔ **RULED: THE ACCEPT IS RIGHT AND DOES NOT MOVE -- FIX THE ARTIFACT.** A person receiving an urgent alert about
+unrecoverable data should be told which provider it should have come from; that is the point of telling them. Not an
+accept amendment, not a wait, and expressly not a reason to reconsider the shape the CTO refused. **This makes shape
+1 sufficient for FWD-10 as well, which it currently is not.**
+
+**WHERE IT BELONGS -- MEASURED AT THIS SEAT RATHER THAN INFERRED FROM THE RULING'S WORDING.** The ruling says "the
+producer writes `provider`", and the renderer looked like the obvious surface. It is not: `render_month_end.py:1017`
+merely COPIES `ladder_result["unresolved"]` and `:1138` uploads it. The records are built in
+`data/etfs/scripts/coverage/remediate.py` inside `remediate_month`, at **FOUR** `unresolved.append(...)` sites --
+`:240`, `:248`, `:261`, `:272` -- none carrying `provider`, while the mapping exists at `:60` and is read at `:130`
+**only inside `rung3_stop_and_ask`**. Reading before cutting also avoided a contention: the renderer is `EG-s-26`'s
+LIVE surface right now.
+
+| cell | outcome_ref | surface | verb | depends_on | the bar |
+|---|---|---|---|---|---|
+| `EG-s-28` | FWD-10 | `data/etfs/scripts/coverage/remediate.py` and its suite | build | -- | EVERY unresolved record names its provider, enumerated from source with a printed denominator; an UNMAPPED partner still renders the honest absence rather than a guess; and the terminal message built from an after-artifact names a real provider where the before-artifact rendered `(not stated)` for every row |
+
+**Denominator:** PRD v0.8 `endpoint_outcomes` 8; round 3 SERVES 5 (`FWD-1`, `FWD-4`, `FWD-8`, `FWD-9`, `FWD-10`);
+cells 10.
+
+⛔ **FOUR SITES IS THE CELL, NOT A DETAIL.** A fix reaching three produces an artifact where SOME dates name a
+provider and some do not -- **worse than the uniform absence today**, because a reader cannot tell "unknown" from
+"this path forgot". **THIS PROJECT HAS NOW PAID THREE TIMES FOR A FENCE THAT COVERED ONE WRITER OF A PROPERTY**
+(`W4-S4`, `W4-S5`, and the issuer's own `EG-s-24`), and the standing law is the assignee's sentence: a fence on ONE
+WRITER of a property is not a fence on the PROPERTY. The face requires the sites ENUMERATED FROM SOURCE and says the
+issuer's own list may be stale.
+
+**THE CHAIN READ.** `EG-s-28` touches `data/etfs/scripts/coverage/`, whose last order (`EG-s-23`) is TERMINAL and
+drained, so the surface is free. It shares no file with `EG-s-26` (the renderer, live on `~5`) or `EG-s-27` (the
+orchestrator, live on `~4`), and it writes no served key. Independent, and seated on `~1`, which is free and whose
+`EG-s-23` work was in this exact module -- including its own correction of a row that had speculated about the
+provider mapping this cell now propagates.
+
+```
+fanout: 3 of 3 chains, cap 8, reason: EG-s-26 (~5) and EG-s-27 (~4) remain a gated pair on the disclosure-before-skip ordering; EG-s-28 is independent on ~1; EG-s-21 is the tail of the first chain. No two live cells share a file.
+```
+
+**What this amendment does NOT decide:** whether the provider a record names is the one the data would ACTUALLY have
+come from or merely the one the mapping asserts. `S28-AC2` asks the assignee to state how a reader could tell, and
+that question is the CVO's at L9 rather than this cut's.
+
+-- `2.0.0_SA_COO`, L5 round 3, one cell on R-EG-7
