@@ -1,0 +1,122 @@
+{
+  "kind": "COMPLETION_REPORT",
+  "schema_version": "1.0",
+  "project": "NFRA_CLDGRPH",
+  "round": 7,
+  "written_by": "2.0.0_SA_COO~A",
+  "written_utc": "2026-09-10T06:25Z",
+  "decomposition_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md v0.10",
+  "prd_version_graded_against": "v0.14",
+  "denominators": {
+    "fwd_in_prd_header": 8,
+    "cells_in_decomposition": 41,
+    "task_orders_issued_round7": 4,
+    "task_orders_drained": 4,
+    "task_orders_terminal_with_valid_proof": 4,
+    "task_orders_drained_open": 0,
+    "channel_rows_at_close": 263,
+    "worktrees_remaining": 0,
+    "judgment_criteria_for_l9": 4,
+    "egress_acts_performed": "0, measured per order rather than asserted; on one order the AWS client library appears zero times across all four executables, which bounds every AWS act at once"
+  },
+  "orders": [
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-G-1",
+      "cell": "CG-s-32",
+      "drained_at": "15bfeb3a62",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~1",
+      "what": "the boundary-edge class census in FACTS PER KEY"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-G-2",
+      "cell": "CG-s-33",
+      "drained_at": "e0255e47db",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~1",
+      "what": "the bucket identity made one at both planes, proven on a local fold"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-G-3",
+      "cell": "CG-s-34",
+      "drained_at": "91654ab3c6",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~2",
+      "what": "the archive-read substrate card, a row per carrier"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-G-4",
+      "cell": "CG-s-35",
+      "drained_at": "67d7453815",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~3",
+      "what": "the portal layer's vintage dated and explained"
+    }
+  ],
+  "the_round_in_one_line": "The wrong-class boundary edges were EXPLAINED and FIXED on the plane the egress hold allows: a served node is keyed arn-or-node-id with endpoints matched RAW, so an edge built on a bucket's NAME landed on its policy node and never dangled -- which is why 135 wrong-class landings survived every integrity check this project has ever run. Both planes moved in one act; the widened admission also recovered round 6's two unresolved edges. Nothing is deployed: both producer files read COMMITTED-NOT-DEPLOY-SCOPE.",
+  "the_retirement_did_not_happen": {
+    "ruled": "RETIRE STORED_IN, RE-POINT SERVED_FROM (CTO 94872 @f4bd6c6093)",
+    "condition_1": "FAILED ON MEASUREMENT: the census as specified returns MANIFEST_TOOLS_TOUCHING_STORED_IN=0 of 78 and would have authorized a retirement that breaks FIVE consumers found by an unscoped sweep of 31,293 tracked files. A manifest is a DECLARATION of consumers, not a census of them. Rows W1-S38, S110",
+    "condition_2": "BLOCKED ON MEASUREMENT: OWNED_BY is consumed as a CONTAINMENT seam by three tools, so widening its stated intent to absorb location changes what they mean -- which by the condition's own terms makes the act a DELETION. Row W1-S37, open",
+    "issuer_defect": "the retirement arrived as a ruling's condition on a face whose accepts are G2-AC1..AC5; a ruling was written onto a face without a criterion to grade it, so the order could not tell its assignee whether the retirement was inside what it accepts. Flip-and-stop ruled @86adc0280a",
+    "state_left": "SAFE and not half-landed: the family is live and now correctly pointed, so the retirement's argument is stronger and its urgency lower"
+  },
+  "carried_to_round_8": [
+    {
+      "item": "the retirement as its own cell with its own accepts; reader denominator = the REPOSITORY",
+      "rows": [
+        "W1-S37",
+        "W1-S38",
+        "S110"
+      ]
+    },
+    {
+      "item": "the served re-take of F11-AC3 and G2-AC2, one pass when the hold lifts",
+      "rows": [
+        "S102",
+        "S104"
+      ]
+    },
+    {
+      "item": "the NODES carrier's missing drop-on-read",
+      "rows": [
+        "W2-S74",
+        "W2-S75",
+        "S103"
+      ]
+    },
+    {
+      "item": "the portal vintage's four-hop feed, hop 1 with no committed producer",
+      "rows": [
+        "W3-S17",
+        "S108"
+      ]
+    },
+    {
+      "item": "the 124-edge silent loss, bounded by a third read but unexplained",
+      "rows": [
+        "W1-S39",
+        "S111"
+      ]
+    },
+    {
+      "item": "two scorers declaring different canonical shapes for one edge",
+      "rows": [
+        "the census record"
+      ]
+    }
+  ],
+  "rows_against_this_seats_own_cut": {
+    "count": 5,
+    "shape": "a NAME, a CONTRACT or a DECLARATION written into a face as if it were a CENSUS or a RUN",
+    "instances": [
+      "W2-S73 a validator path and card-schema version that do not exist",
+      "W3-S17 a premise labelled MEASURED taken from a contract document; the header prints 3 of 7 keys and drops 4 silently",
+      "W1-S36 a count carried from an earlier vintage",
+      "W1-S35 a comparator force-fitted into a population it sits outside",
+      "the ruling written onto a face with no criterion to grade it"
+    ],
+    "note": "every one surfaced by the ASSIGNEE and none by the issuer, and every one came back through the refusal clause -- now spine v3.11 L6, cut from this lane's own generalisation"
+  },
+  "push_state": "LOCAL at this write; origin/CLOUD @c6bcb7b12b (the CTO's ls-remote 04:44Z, not re-read; local reported 390 ahead at 06:1xZ). Andrew holds the push."
+}
