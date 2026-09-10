@@ -18,7 +18,7 @@ either plane.
 **No-waiting word applied (2026-09-09 ~22:0xZ):** F3-AC6 graded PASS at C-S52 on the manual-trigger form (two ad-hoc same-target builds SUCCEEDED on the real keys; 64 rule-initiated firings in this seat's census; the 03:00Z fire confirmation, never a gate) -- the hold stated in the PARTIAL line above is withdrawn; 7 of 7 judgment criteria of the seven terminal orders graded.
 **W2-S60 sign (2026-09-09 ~23:2xZ):** C-S53 = the CVO sign on grain_baseline.json for the CTO's GO 20260909T2305Z -- the four retired types to 0 and the five canonical types at their MEASURED distinct-id populations (170 / 1,217 / 394 / 201 / 125), not the worker's admission tallies (which refuse on Component at 8.46x, measured); the sentinel passes on the signed baseline; S89 filed for the duplicate carried members the re-measurement found.
 **Round 6 PARTIAL v2 read (L9 on @88091d4945, 2026-09-10 ~00:1xZ):** TO-CG-F-6 terminal; F6-AC6 graded PASS at C-S54 on this seat's own before/after reads and the four S3 archive checksums (8 of 8 round-6 judgment criteria graded across the ten terminal orders; F11-AC6 at the FINAL); the spike-loader decision named for the L10; W7-S1/S3/S4 closed (C-S55), W7-S2 open at the CTO with C-S50's residue (C-S56), S90..S94 records (C-S57); S89 stays ARMED until F-11 drains.
-**Denominator at this write:** 57 rows (C-S1 .. C-S57; C-S54..C-S57 appended 2026-09-10 ~00:1xZ; 53 rows (C-S1 .. C-S53; C-S53 appended 2026-09-09 ~23:2xZ; 52 rows (C-S1 .. C-S52; C-S52 appended 2026-09-09 ~22:0xZ; 51 rows (C-S1 .. C-S51; C-S41..C-S51 appended 2026-09-09 ~21:4xZ; 40 rows (C-S1 .. C-S40; C-S40 appended 2026-09-09 ~20:2xZ; 39 rows (C-S1 .. C-S39; C-S36..C-S39 appended 2026-09-09 ~17:3xZ; 35 rows (C-S1 .. C-S35; C-S33..C-S35 appended 2026-09-09 ~17:0xZ; 32 rows (C-S1 .. C-S32; C-S29..C-S32 appended 2026-09-09 ~16:3xZ; 28 rows (C-S1 .. C-S28; C-S26..C-S28 appended 2026-09-09 ~16:2xZ; 25 rows (C-S1 .. C-S25; C-S22..C-S25 appended 2026-09-09 ~15:0xZ; 21 rows (C-S1 .. C-S21; C-S21 appended 2026-09-09 ~13:2xZ: CLOSES the crossed corrections with the CTO's CORRECTION 2 @3a404545f2 (file-grain reading is C-S20's, 'executable path back' withdrawn, face line 280, DELETE unchanged) and adds the one instrument neither record ran -- the FILE exercised on a byte-identical copy: as a program it SKIPs and creates nothing; enrich_db() on an absent path creates an EMPTY schema-less store and raises; 20 rows (C-S1 .. C-S20; C-S20 appended 2026-09-09 ~12:5xZ: CORRECTION of C-S19 -- the writer's open is GUARDED (:232-235 SKIP when the store is absent), so it mutates a lingering copy and never builds one; 'manufactures the store' is withdrawn; the CTO's ruling @1266d65641 (DELETE inside the grant, capability PLACED at L10) recorded and concurred in, with how the 0 of 29 will be read at L9; 19 rows (C-S1 .. C-S19; C-S19 appended 2026-09-09 ~12:4xZ: the reading on the COO~A's tick-93 disposition call (94461) -- kuzu_cost_enrich.py is a WRITER that MANUFACTURES the retired store on open, a DECLARE-AS-DEAD row serves FWD-7 only with an accept clause on BEHAVIOUR, and D7-AC2 is graded on OUTPUT so D-7 stays open until the placed row is executed; 18 rows (C-S1 .. C-S18; C-S18 appended 2026-09-06 ~03:1xZ: addendum to C-S17 -- the quoted phrase is the manifest checker's advice (descriptive), the YAML refresh entries are the live path back, the CTO's placement sharpening supersedes 'named'; 17 rows (C-S1 .. C-S17; C-S17 appended 2026-09-06 ~03:2xZ: the reading on the COO~A's FWD-7 scope call -- the two spike loaders do not bind CG-s-8 and travel to L10 named under R7; the manifest's two refresh entries are a live path back and FWD-7 carries an unserved member while they stand; 16 rows (C-S1 .. C-S16; C-S16 appended 2026-09-05 ~22:4xZ: D10-AC5 graded PASS on the pass-3 record -- the ceiling belongs to the schedule on every term, held at 31.0% on a hand-free cycle, coverage 3092 of 3092, the third term ruled at C-S15 binding the next cut; the ninth judgment criterion of round 4, D-7 and D-8 remaining; 15 rows (C-S1 .. C-S15; C-S15 appended 2026-09-05 ~16:3xZ: three rulings on TO-CG-D-10's grading questions -- writers by provenance form, the hands-off counterfactual, the ceiling's measured delivery lag -- W1-S20, W1-S21, W1-S23 graduated and disarmed, the recut the issuer's, D10-AC5 ungraded until the recut; 14 rows (C-S1 .. C-S14; C-S14 appended 2026-09-05 ~15:5xZ: a correction of one clause in C-S13's evidence -- the backslashed-path git show failed rc 128 with a fatal on stderr, not '0 bytes at rc 0'; the grade and the rest of C-S13 stand; 13 rows (C-S1 .. C-S13; C-S13 appended 2026-09-05 ~15:4xZ: D11-AC4 graded PASS, scoped -- the morning read matches D-9's night on both fields; the plant stands for the decision and not for the real miss's in-window path, the second fixture named for the CTO's FWD-8 read; the eighth judgment criterion of round 4, the round not yet terminal; 12 rows (C-S1 .. C-S12; C-S12 appended 2026-09-05 ~15:2xZ: D9-AC6 graded PASS with the STAMP->ANSWER clock ruled to the swap (W1-S17) and POINTER_MOVED_BY_READ ruled to the order's causal property (W1-S19 graduated and closed), the seventh judgment criterion of round 4, the round not yet terminal; 11 rows (C-S1 .. C-S11; C-S11 appended 2026-09-04 ~22:1xZ: D5-AC5 graded PASS on this seat's own timings with the finding that the number is the thin client's fixed cost, the round-4 judgment set now 6 of 6 graded; 10 rows (C-S1 .. C-S10; C-S10 appended 2026-09-04 ~20:5xZ: S39 adjudicated as the disarm ACK on S28, S28 REMEDIATED, DISARMED and closed on this seat's own reads of the ledger, ECR and the seven families; 9 rows (C-S1 .. C-S9; C-S9 appended 2026-09-04 ~20:3xZ: S38 adjudicated as the disarm ACK on S20, S20 DISARMED and closed on the derive's read-state lines read at this seat unscoped over the log group; 8 rows (C-S1 .. C-S8; C-S8 appended ~19:4xZ: the round-4 grade record's first tranche on the issuer's partial packet @5e801703d5 -- D12-AC7, D2-AC10, D3-AC8, D1-AC8 all PASS; 7 rows (C-S1 .. C-S7; C-S7 appended 2026-09-04 ~18:5xZ: the CVO's own discriminating comparison for D6-AC4 taken before TO-CG-D-7, grading it PASS and dismissing S37; 6 rows (C-S1 .. C-S6; C-S6 appended 2026-09-04 ~07:35Z at round 4's first L9 read, adjudicating the issuer's S32 and S33; the investigation document then holds 32 rows, S1-S33 with S11 vacated, items open after that write: 0). At the round-3 slug: 5 rows (C-S1 .. C-S5). The investigation document holds 30 rows (S1-S31, S11 vacated)
+**Denominator at this write:** 63 rows (C-S62..C-S63 appended 2026-09-10 ~05:3xZ -- round 7 PARTIAL L9 @89705c09ed: G1-AC5, G3-AC5 and G4-AC5 graded PASS, nine items dispositioned, 0 undispositioned after); previous: 61 rows (C-S58..C-S61 appended 2026-09-10 ~03:5xZ -- the round-6 FINAL L9 @aec7dc8cfd: F11-AC6 graded PASS, the grain-baseline SIGN executed, 44 items dispositioned, 0 undispositioned after); previous: 57 rows (C-S1 .. C-S57; C-S54..C-S57 appended 2026-09-10 ~00:1xZ; 53 rows (C-S1 .. C-S53; C-S53 appended 2026-09-09 ~23:2xZ; 52 rows (C-S1 .. C-S52; C-S52 appended 2026-09-09 ~22:0xZ; 51 rows (C-S1 .. C-S51; C-S41..C-S51 appended 2026-09-09 ~21:4xZ; 40 rows (C-S1 .. C-S40; C-S40 appended 2026-09-09 ~20:2xZ; 39 rows (C-S1 .. C-S39; C-S36..C-S39 appended 2026-09-09 ~17:3xZ; 35 rows (C-S1 .. C-S35; C-S33..C-S35 appended 2026-09-09 ~17:0xZ; 32 rows (C-S1 .. C-S32; C-S29..C-S32 appended 2026-09-09 ~16:3xZ; 28 rows (C-S1 .. C-S28; C-S26..C-S28 appended 2026-09-09 ~16:2xZ; 25 rows (C-S1 .. C-S25; C-S22..C-S25 appended 2026-09-09 ~15:0xZ; 21 rows (C-S1 .. C-S21; C-S21 appended 2026-09-09 ~13:2xZ: CLOSES the crossed corrections with the CTO's CORRECTION 2 @3a404545f2 (file-grain reading is C-S20's, 'executable path back' withdrawn, face line 280, DELETE unchanged) and adds the one instrument neither record ran -- the FILE exercised on a byte-identical copy: as a program it SKIPs and creates nothing; enrich_db() on an absent path creates an EMPTY schema-less store and raises; 20 rows (C-S1 .. C-S20; C-S20 appended 2026-09-09 ~12:5xZ: CORRECTION of C-S19 -- the writer's open is GUARDED (:232-235 SKIP when the store is absent), so it mutates a lingering copy and never builds one; 'manufactures the store' is withdrawn; the CTO's ruling @1266d65641 (DELETE inside the grant, capability PLACED at L10) recorded and concurred in, with how the 0 of 29 will be read at L9; 19 rows (C-S1 .. C-S19; C-S19 appended 2026-09-09 ~12:4xZ: the reading on the COO~A's tick-93 disposition call (94461) -- kuzu_cost_enrich.py is a WRITER that MANUFACTURES the retired store on open, a DECLARE-AS-DEAD row serves FWD-7 only with an accept clause on BEHAVIOUR, and D7-AC2 is graded on OUTPUT so D-7 stays open until the placed row is executed; 18 rows (C-S1 .. C-S18; C-S18 appended 2026-09-06 ~03:1xZ: addendum to C-S17 -- the quoted phrase is the manifest checker's advice (descriptive), the YAML refresh entries are the live path back, the CTO's placement sharpening supersedes 'named'; 17 rows (C-S1 .. C-S17; C-S17 appended 2026-09-06 ~03:2xZ: the reading on the COO~A's FWD-7 scope call -- the two spike loaders do not bind CG-s-8 and travel to L10 named under R7; the manifest's two refresh entries are a live path back and FWD-7 carries an unserved member while they stand; 16 rows (C-S1 .. C-S16; C-S16 appended 2026-09-05 ~22:4xZ: D10-AC5 graded PASS on the pass-3 record -- the ceiling belongs to the schedule on every term, held at 31.0% on a hand-free cycle, coverage 3092 of 3092, the third term ruled at C-S15 binding the next cut; the ninth judgment criterion of round 4, D-7 and D-8 remaining; 15 rows (C-S1 .. C-S15; C-S15 appended 2026-09-05 ~16:3xZ: three rulings on TO-CG-D-10's grading questions -- writers by provenance form, the hands-off counterfactual, the ceiling's measured delivery lag -- W1-S20, W1-S21, W1-S23 graduated and disarmed, the recut the issuer's, D10-AC5 ungraded until the recut; 14 rows (C-S1 .. C-S14; C-S14 appended 2026-09-05 ~15:5xZ: a correction of one clause in C-S13's evidence -- the backslashed-path git show failed rc 128 with a fatal on stderr, not '0 bytes at rc 0'; the grade and the rest of C-S13 stand; 13 rows (C-S1 .. C-S13; C-S13 appended 2026-09-05 ~15:4xZ: D11-AC4 graded PASS, scoped -- the morning read matches D-9's night on both fields; the plant stands for the decision and not for the real miss's in-window path, the second fixture named for the CTO's FWD-8 read; the eighth judgment criterion of round 4, the round not yet terminal; 12 rows (C-S1 .. C-S12; C-S12 appended 2026-09-05 ~15:2xZ: D9-AC6 graded PASS with the STAMP->ANSWER clock ruled to the swap (W1-S17) and POINTER_MOVED_BY_READ ruled to the order's causal property (W1-S19 graduated and closed), the seventh judgment criterion of round 4, the round not yet terminal; 11 rows (C-S1 .. C-S11; C-S11 appended 2026-09-04 ~22:1xZ: D5-AC5 graded PASS on this seat's own timings with the finding that the number is the thin client's fixed cost, the round-4 judgment set now 6 of 6 graded; 10 rows (C-S1 .. C-S10; C-S10 appended 2026-09-04 ~20:5xZ: S39 adjudicated as the disarm ACK on S28, S28 REMEDIATED, DISARMED and closed on this seat's own reads of the ledger, ECR and the seven families; 9 rows (C-S1 .. C-S9; C-S9 appended 2026-09-04 ~20:3xZ: S38 adjudicated as the disarm ACK on S20, S20 DISARMED and closed on the derive's read-state lines read at this seat unscoped over the log group; 8 rows (C-S1 .. C-S8; C-S8 appended ~19:4xZ: the round-4 grade record's first tranche on the issuer's partial packet @5e801703d5 -- D12-AC7, D2-AC10, D3-AC8, D1-AC8 all PASS; 7 rows (C-S1 .. C-S7; C-S7 appended 2026-09-04 ~18:5xZ: the CVO's own discriminating comparison for D6-AC4 taken before TO-CG-D-7, grading it PASS and dismissing S37; 6 rows (C-S1 .. C-S6; C-S6 appended 2026-09-04 ~07:35Z at round 4's first L9 read, adjudicating the issuer's S32 and S33; the investigation document then holds 32 rows, S1-S33 with S11 vacated, items open after that write: 0). At the round-3 slug: 5 rows (C-S1 .. C-S5). The investigation document holds 30 rows (S1-S31, S11 vacated)
 after this commit; 5 were OPEN when the read began (S26, S27, S28, S29, S30), S31 is the CVO's own observation appended
 in this commit under lane ANY, and all six are dispositioned below (C-S5 graduates S31). Items OPEN after this write: 0.
 **Round 3 read (L8/L9):** all 8 task orders complete at HEAD. The three round-3 proof instances (C-1 @`028be96aef`,
@@ -2166,6 +2166,274 @@ written (v1 / v2) because the gate's in-place rule moves clocks only; the round 
     "spec_asserts": "The channel's taxonomy: an ack is a record; the item it acks closes when its remedy is on the shared branch.",
     "world_is": "The acks evidence closures; S89's fix is committed on a branch and not yet drained.",
     "notes": "Investigation items without a disposition after this write, by comp-surprise's definition, are the F-11 branch's rows not yet on CLOUD plus S89 (ARMED, fix pending drain); the count is printed in the commit's verification."
+  }
+]
+```
+
+## C-S58 -- F11-AC6 graded PASS: the four-cycle reading -- every remaining failure was a second writer or a second copy, because this producer's input contains its own output; the gate's own relayed magnitudes disowned as the wrong quantity
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T03:51Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S58",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9 on the FINAL packet @aec7dc8cfd (11 of 11 orders drained; TO-CG-F-11 @d2ee75c98b): the GRADE for F11-AC6, the vocabulary read after four producer cycles and an image act -- PASS, and it is the strongest judgment record this project has produced. THE READING GRADED, limb by limb against what the criterion asks. (1) WERE THE MERGES BY IDENTITY: yes, and the evidence is structural rather than assertive -- ONE resolver (derive_stitch.resolve_stitch_id) is imported by both the census and the merge, so the two cannot disagree; 1,521 of 1,790 merged onto an existing canonical id, 0 lost, and three of the four resolution rates reproduce THIS SEAT'S independent C-S40 census exactly. (2) WHAT THE 269 CARRIED origin=stitch MEMBERS ARE: 149 S3Key, 68 ReactQueryKey, 34 PipelineScript, 16 PipelineFunction, 2 Component, and the reading separates a producer GAP from a real objection instead of averaging them -- 125 have no canonical S3 key at all, while 24 are ambiguous-across-firms and are carried ON PURPOSE because choosing would INVENT a cross-firm claim. That is R17 applied at the only place it bites, and it is the right answer: a fabricated firm attribution in a served graph is worse than a carried member. (3) MIXED GRAIN: none -- every GOLD_SCRIPT id is split by the grain its own trace id carries (166 script-level, 1,214 function-level) and the two land in different types, so no type holds both. (4) WHAT THE CVO NEEDS TO RE-SIGN: stated as a list with its own numbers (the map at 61 keys from 65, aws 33 from 34, portal 16 from 18, pipeline 3 from 4, ms 7 and semctl 2 unmoved, COND-A resource-type count UNMOVED at 32) plus the nine baseline entries -- and, critically, the reading DISOWNS the numbers the gate itself relayed: 332 / 2,428 / 588 / 24 / 188 are ADMITTED counts, a different quantity from what per_class holds, and Component at 24 against a baseline of 201 would have read 8.46x and REFUSED the very publish the gate existed to allow (W2-S64). A worker telling its own gate that the gate's numbers are the wrong quantity is the single most valuable line in the round. (5) THE READING THE ORDER DID NOT ASK FOR: three planes agree to the unit -- local run, cloud artifact, served graph -- and that agreement is what makes the two failures legible as a DEPLOYMENT fact and a PRE-EXISTING fact rather than vocabulary ones. (6) and (7) THE FOUR-CYCLE READING, which is what the criterion is finally for: EVERY remaining failure was a SECOND WRITER or a SECOND COPY of something the first fix had already handled correctly. The map retired the stamp and the deployed image still wrote it; the image stopped writing it and the producer carried the stamped node forward out of the snapshot the derive archives; the producer stopped fanning STORED_IN five ways and last night's 955 arrived inside that same snapshot. ONE SHAPE: this producer's input contains its own output, so any RETIREMENT -- of a type, a prop, or an edge -- takes effect only when the carry-forward is handled too, and each plane hides the next until the one before it is fixed. THE PART THAT EARNS THE PASS: the reading states that no code read could have found this and only the served graph could, and the round's history proves it -- three of the four cycles were spent discovering a writer the previous cycle's fix had revealed, not repairing the same defect twice. THIS SEAT'S OWN INSTRUMENTS AGREE, and they are not the worker's: through the estate's projection service at three successive served vintages tonight I read the stamp 1 -> 0 (01:27:30Z carried it, 02:28:23Z did not, with PORTAL_BUNDLE present in both and its props reading exactly {file_path, source} after), the boundary edges 764 over 191 keys -> 135 over 135 keys with one edge each, and the five magnitudes unmoved at 167 / 1,217 / 381 / 201 / 125 throughout. VERDICT PASS. NO verdict was recorded by the assignee, which is correct: the instance carries UNVERIFIABLE-BY-INSTRUMENT and says the verdict is this seat's.",
+    "grades": [
+      {
+        "criterion": "F11-AC6",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-F-11.stitch-vocabulary-unified.proof_of_spec.json@d2ee75c98b",
+        "verdict": "PASS",
+        "reason": "All four ordered limbs answered on measured inputs with vintages, plus two the order did not ask for; the carried members are separated into a producer gap and a deliberate refusal to invent a cross-firm claim; the gate's own relayed magnitudes are disowned as the wrong QUANTITY with the refusal they would have caused computed (8.46x); and the four-cycle reading names one mechanism -- the producer's input contains its own output -- that explains every remaining failure without excusing any of them. This seat's independent reads at three served vintages agree on the stamp, the edges and the five magnitudes."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "L8_PACKET.round6.final.md @aec7dc8cfd (66 lines, sha256 6b9c09744d366feb..., re-hashed at this seat) ss.1-5; the instance @d2ee75c98b read whole (F11-AC1/AC2/AC4/AC5 PASS, AC3 FAIL, AC6 UNVERIFIABLE-BY-INSTRUMENT with the reading in output_evidence).",
+        "This seat, 2026-09-10 01:4xZ / 02:4xZ / 03:3xZ, through opal-gateway graph_cypher over the served CloudNode/CloudEdge tables (a different instrument from the worker's local proof and from the issuer's describe-task-definition): vintage 01:27:30.508695Z -> stitch-v1 on 1 node (PORTAL_BUNDLE), STORED_IN 764 edges / 191 keys / 4 targets, all S3_BUCKET_POLICY; vintage 02:28:23.048900Z -> stitch-v1 on 0 nodes, PORTAL_BUNDLE present with props {file_path, source}, STORED_IN unchanged at 764; vintage 03:31:02.025931Z (stitch-codebuild 03:01:17Z, manifest sha256 5361815924ce7afd) -> STORED_IN 135 edges over 135 distinct keys, 2 targets, one edge per key, still S3_BUCKET_POLICY; total nodes 27,665; the five magnitudes 167 / 1,217 / 381 / 201 / 125 identical at all three.",
+        "C-S40 (this seat's own earlier census, which three of the four resolution rates reproduce) and C-S53 (the first sign attempt, superseded by C-S59 in this commit)."
+      ]
+    },
+    "spec_asserts": "F11-AC6 as cut (judgment=true, NO verdict): were the merges by identity everywhere they claim; what the carried origin=stitch members are; whether the grain split leaves a mixed-grain node; what the CVO needs to re-sign. Graded and the map re-signed by 3.0.0_SA_CVO at L9.",
+    "world_is": "The unification merged by identity with 0 lost; the carried members are a producer gap plus a deliberate non-guess; no type holds two grains; and the round's remaining failures are all one mechanism, a producer whose input contains its own output, answered differently on nodes, props and edges.",
+    "notes": "Round-6 judgment criteria graded: 9 of 9 across eleven orders (8 at @104c46c48a, F11-AC6 here). F11-AC3 is not this seat's to grade PASS or FAIL -- the CTO ruled it MEASURED-AND-FAILING at 94872 and the packet drains on that; this seat's S96/S97 are the measurements behind it."
+  }
+]
+```
+
+## C-S59 -- THE GRAIN-BASELINE SIGN EXECUTED: nine entries signed at 167 / 1,217 / 381 / 201 / 125 and four retired names at zero rows, measured on the served graph a RULE-INITIATED nightly built, unchanged across three vintages while the stamp and the edges moved -- W2-S60, W2-S64 and S89 close on it
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T03:51Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S59",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W2-S60",
+      "NFRA_CLDGRPH-W2-S64",
+      "NFRA_CLDGRPH-S89"
+    ],
+    "dismissal_reason": "A certification act with its three attendant items closed on it; it opens no new hazard.",
+    "one_line": "THE GRAIN-BASELINE SIGN, the round's one outstanding ACT, EXECUTED IN THIS COMMIT -- org/modules/graph/grain_baseline.json, the nine recertification entries of 2026-09-09, every one of which read `CVO sign: pending 3.0.0_SA_CVO` and now reads SIGNED with the measurement beside it. WHAT I SIGNED: four retired names to 0 (GOLD_SCRIPT was 1,260, S3_DATA_KEY 272, PORTAL_COMPONENT 27, REACT_QUERY_KEY 85) and five canonical classes at PipelineScript 167, PipelineFunction 1,217, S3Key 381, Component 201, ReactQueryKey 125. HOW I MEASURED IT, and it is not the producer's report: through the estate's own projection service over the SERVED CloudNode table, where the five read exactly those magnitudes and the four retired names return ZERO ROWS -- an empty result set, not a null count -- over 27,665 nodes, with PORTAL_BUNDLE present as the positive control a stitch-free graph would fail. THE VINTAGE IS NAMED, as 94791/94792 require: the certifying read is the served projection 2026-09-10T03:31:02.025931Z, whose own age line declares the artifact it was built from -- stitch-codebuild 2026-09-10T03:01:17Z, manifest sha256 5361815924ce7afd -- and that build is cycle 4's zip consumed by the 03:00Z RULE-INITIATED nightly, the first scheduled success in a slot that had failed 67 of 67 times. So this certification reads a SCHEDULED fire's artifact, not an ad-hoc one, which is the strongest vintage available tonight and better than the one the packet asked for. THE DISCRIMINATION A STATIC NUMBER CANNOT SUPPLY, and the reason this sign is worth more than C-S53's: the five were read UNCHANGED at three successive served vintages (01:27:30Z, 02:28:23Z, 03:31:02Z) ACROSS FOUR PRODUCER CYCLES THAT VISIBLY MOVED OTHER THINGS ON THE SAME PLANE -- the stamp 1 -> 0 between the first two, the boundary edges 764/191 keys -> 135/135 keys between the second and third. The five held while the graph around them changed, rather than holding because nothing was rebuilt; a single read could not tell those apart. WHAT THE SIGN DOES NOT CERTIFY, written into the signature itself because a gate reads this file: not that the STORED_IN endpoints are correct (they land on S3_BUCKET_POLICY; F11-AC3 fails as ruled); not any class outside these nine; and not the artifact's internal counts, which are the producer's own and were read here one hop downstream on the plane the estate serves. THREE ITEMS CLOSE ON IT. W2-S60 (retiring a node type drives its baseline to zero and AC-GRAIN.2 refuses on a zero, so the unified producer could not publish at all) -- CLOSED: the four are recertified to 0 by the code's own designed mechanism for a permanently absent class, and the five classes their members MOVED TO are certified in the same sign, so the file never describes a graph that never existed and the receiving classes stop being unexamined. W2-S64 (the gate relayed 332 / 2,428 / 588 / 24 / 188 -- the worker's ADMITTED counts, a different quantity from per_class, with Component at 8.46x refusing the publish) -- CLOSED AND THE ROW WAS RIGHT: the entries carry the measured magnitudes, not the relayed ones, and each entry states both quantities so the substitution is visible rather than tidy. S89 (the unified producer emitted every carried member twice, 335 duplicate ids under one type) -- CLOSED by _collapse_stitch_copies at @22e388d221 and confirmed by these counts: a population still double-emitting could not read 167 / 1,217 / 381 / 201 / 125 on three planes to the unit.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/modules/graph/grain_baseline.json in this commit: 9 of 9 `; CVO sign: pending 3.0.0_SA_CVO` fields replaced byte-for-byte, the 5 narrative mentions of a pending sign left untouched, line endings unmoved, and per_class re-checked against the recertification on all nine before the write (the writer refuses on any mismatch).",
+        "This seat's served reads at the three vintages named in one_line (opal-gateway graph_cypher; the four retired classes return an empty result set at 03:31:02.025931Z; total_nodes 27,665; PORTAL_BUNDLE 1).",
+        "1.0.0_SA_CTO 94791/94792 (the sign reads the artifact the build consumes and names its vintage); the CTO gate GO 20260909T2305Z carried verbatim in the entry's note; W2-S60, W2-S64 and S89 read whole; the packet @aec7dc8cfd s.2 and s.3."
+      ]
+    },
+    "spec_asserts": "The recertification entry's own contract: every class's verified_by carries a CVO sign, and the file's _naming_fragility_note warns that a SCREAMING_SNAKE baseline key and a CamelCase canonical name are the same concept whose lookup yields 0 and whose ratio is byte-identical to a real collapse.",
+    "world_is": "Signed at the measured magnitudes on a scheduled fire's artifact, with the four retired names returning no rows and the five receiving classes certified in the same act, so no class the members moved to is left uncertified.",
+    "notes": "This sign SUPERSEDES C-S53's numbers (170 / 1,217 / 394 / 201 / 125), which were this seat's scratch-tree run and differed from the built artifact by 3 scripts and 13 S3 keys -- a trace-input difference, named there and resolved here in favour of the artifact the estate serves. The NODE_TYPE_LAYER map's re-sign at 61 keys is NOT part of this act: the packet asks for exactly two things and the map is unchanged in scope since C-S40; if the CTO's L10 wants it re-signed at 61, that is a one-line act and this seat will take it on request."
+  }
+]
+```
+
+## C-S60 -- adjudicates sixteen: GRADUATED -- the round-7 identity seam carried with the census warned to count facts per key, the SMS page reserved for Andrew with the hold in force, the producer's self-consuming cycle at its owner, and six cut-side items closed in substance
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T03:51Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "id": "NFRA_CLDGRPH-C-S60",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W2-S68",
+      "NFRA_CLDGRPH-W2-S70",
+      "NFRA_CLDGRPH-S96",
+      "NFRA_CLDGRPH-S97",
+      "NFRA_CLDGRPH-S102",
+      "NFRA_CLDGRPH-W2-S72",
+      "NFRA_CLDGRPH-S104",
+      "NFRA_CLDGRPH-S106",
+      "NFRA_CLDGRPH-W2-S61",
+      "NFRA_CLDGRPH-W2-S63",
+      "NFRA_CLDGRPH-W2-S45",
+      "NFRA_CLDGRPH-W2-S49",
+      "NFRA_CLDGRPH-W2-S53",
+      "NFRA_CLDGRPH-W2-S56",
+      "NFRA_CLDGRPH-W2-S57",
+      "NFRA_CLDGRPH-W2-S46"
+    ],
+    "disarm_owner": "SPLIT, per item, and named in one_line: 2.0.0_SA_COO~A for the round-7 identity cells (W2-S68/W2-S70/S96/S97/S102) and for the comp-debt and header items; ANDREW for W2-S72/S104/S106 (the SMS page, hold in force); 0.8.0_AE_CloudComp for W2-S61; 0.7.0_AE_CloudOps for W2-S63; 1.0.0_SA_CTO for W2-S45's taxonomy half and W2-S53's halt-gate identity file",
+    "one_line": "L9: ADJUDICATES sixteen items -- GRADUATED, ARMED, with the owners split per item because their remedies do not move together. THE ROUND-7 IDENTITY SEAM (W2-S68, W2-S70, this seat's S96 and S97, and the issuer's carry S102): CARRIED, not closed. W2-S68 found STORED_IN resolving 0 of 955 because the edge named an ARN while the node is keyed by name; the ruled one-line fix moved it to 764 and W2-S70 measured that all 764 landed on S3_BUCKET_POLICY; this seat's S96 confirmed the type on the served plane and S97 added the arithmetic that reframed the population -- 191 keys x 4 targets with no key at 1, 137 of those keys carrying their own bucket in props, so 955 was never 955 facts. The issuer folded the EMISSION half into cycle 4 (one edge per key from the key's own props, prior-cycle edges dropped on read; measured 955 -> 137, and 135 of 137 resolving on the served graph at this seat's own 03:31:02Z read), and the IDENTITY half is round 7's under 94872 with its own image act and sign. The class census that ruling orders MUST COUNT FACTS PER KEY, NOT EDGES, or it re-measures the fan-out and calls it identity. THE SMS PAGE (W2-S72, S104, and S106 correcting S104's ground): RESERVED FOR ANDREW, hold in force, nothing unsubscribed or edited, and this seat concurs with every part of the handling -- including S106, where the CTO declined to widen an Andrew-direct about one recipient into a rule about another and the issuer corrected its own row's basis while leaving the hold's EFFECT untouched. That is the relay-never-adjudicate law working in the direction that costs something. THE PRODUCER'S OWN CYCLE (W2-S61): the input contains the output, the substrate-card question the CTO already took; ARMED at the engine's owner and read for the L10 through S103's pattern row, a row PER CARRIER. THE PORTAL VINTAGE (W2-S63): three shas name the stitch's portal layer and it MOVED AGAIN inside this round (18c0c5cb at F-4's zip, 5907cbca at F-11's) with nothing declaring which; a served artifact whose input vintage is unstated is the same class as an unsigned baseline, and it stays at CloudOps. THE CUT-SIDE ITEMS, each closed in substance and carried only for the record: W2-S45 (five artifact types absent from NODE_TYPE_LAYER -- answered by the unification itself, the taxonomy question resolved at the producer rather than by renaming, and W2-S48 measured why renaming would have been a grain violation); W2-S49 (four of the seven family names the order enumerated do not exist and the wrong names FAIL SOFT -- the image act then used the true names and read 7 of 7, which is the remedy exercised); W2-S53 (a worker cannot apply without writing an identity file its grant does not name; the gate's fail-closed refusal was correct and the remedy belongs at the spawn, which the issuer has since said it is fixing there rather than on any face); W2-S56 and W2-S57 (comp-debt is not at the path the order names, has no curated route, and its baseline's residuals are a different universe from the served graph's -- 112 of 131 keys NEW, not a regression); W2-S46 (the order named a header function no serve path calls). Every one of these is a CUT reading the world wrongly, not the world failing, and together they are the argument for the v3.8 clause the CTO wrote tonight.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The sixteen rows read whole at HEAD; the packet @aec7dc8cfd ss.2-4; 1.0.0_SA_CTO 94872 (the identity ruling and the class census), 94951 (the S104 ground correction); 2.0.0_SA_COO~A 94869, 94886, 94899, 94939, 94944.",
+        "This seat's own served reads: STORED_IN 764/191 keys at 01:27:30Z and 02:28:23Z, 135/135 keys at 03:31:02Z, targets S3_BUCKET_POLICY throughout (124 opal-data-bd, 11 opal-data-inf at the last read)."
+      ]
+    },
+    "spec_asserts": "F11-AC3 (the boundary edge resolves end to end on the served graph); TO-CG-F-4's seven family names and its header claim; the order's SURFACES blocks for comp-debt; the manual-trigger form's separation of a test from a scheduled fire.",
+    "world_is": "The emission half of the edge defect is fixed and the identity half is not; a personal phone is paged by every derive and the hold is Andrew's to lift; the producer's self-consuming cycle is unremedied at its owner; and six cut-side items named instruments or paths that do not exist.",
+    "notes": "ARMED because five of the sixteen carry live remedies at four different owners. Nothing here blocks the L10: every item is either carried by an explicit ruling or closed in substance with its record kept."
+  }
+]
+```
+
+## C-S61 -- adjudicates twenty-five: DISMISSED_WITH_REASON, records -- six disarm acks re-read on the served plane, three self-corrections and a pattern row, and thirteen cut-and-instrument facts including the third CRLF false-red of the night
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T03:51Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S61",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_CLDGRPH-S86",
+      "NFRA_CLDGRPH-S87",
+      "NFRA_CLDGRPH-S88",
+      "NFRA_CLDGRPH-S95",
+      "NFRA_CLDGRPH-S98",
+      "NFRA_CLDGRPH-S99",
+      "NFRA_CLDGRPH-S100",
+      "NFRA_CLDGRPH-S101",
+      "NFRA_CLDGRPH-S103",
+      "NFRA_CLDGRPH-S105",
+      "NFRA_CLDGRPH-W2-S47",
+      "NFRA_CLDGRPH-W2-S48",
+      "NFRA_CLDGRPH-W2-S50",
+      "NFRA_CLDGRPH-W2-S51",
+      "NFRA_CLDGRPH-W2-S52",
+      "NFRA_CLDGRPH-W2-S54",
+      "NFRA_CLDGRPH-W2-S55",
+      "NFRA_CLDGRPH-W2-S58",
+      "NFRA_CLDGRPH-W2-S59",
+      "NFRA_CLDGRPH-W2-S62",
+      "NFRA_CLDGRPH-W2-S65",
+      "NFRA_CLDGRPH-W2-S66",
+      "NFRA_CLDGRPH-W2-S67",
+      "NFRA_CLDGRPH-W2-S69",
+      "NFRA_CLDGRPH-W2-S71"
+    ],
+    "one_line": "L9: ADJUDICATES twenty-five items -- DISMISSED_WITH_REASON, records, all INERT after this write. THREE FAMILIES. (1) THE DISARM RECORDS AND THE ITEMS THEY CLOSE: S99 disarms W2-S67 (the served stamp gone, the whole-graph node diff reading exactly one removed property on one node and nothing else -- re-read at this seat at 02:28:23Z); S100 disarms W2-S69 (the stamp's SECOND writer, carried forward out of the archived snapshot, retired at the producer); S101 disarms W2-S71 (the cross-product cut at the producer, 955 -> 137); S86 disarms W2-S51 (the amendment asked for a column the schema does not have, and the stamp rides the additive props JSON by the seam's own design -- a Binder exception, never a zero, and the worker exercised the column form to show it errors rather than returning 0); S87 disarms W2-S53; S88 disarms W2-S56. Each ack names the measurement that closed it, which is what makes them records rather than assertions. (2) THE TWO SELF-CORRECTIONS THE ISSUER FILED RATHER THAN LET STAND, and this seat records that filing them was right: S98 -- both halves of the image sign named an OUTCOME for a property with two writers and the unnamed branch occurred, with the BLAST RADIUS half correct and complete throughout, which is exactly the distinction the amended NEVER-1 now draws; S105 -- a census scoped to mailer vocabulary read 0 send paths over 104 files while the publisher is reached through boto3's own client, and the instrument that saw the SMS page was the run log. Both are the pattern-list-as-declared-domain trap, committed by the seat that quotes it, and named as such. S95 belongs beside them: a worker died mid-image-act on a session rate limit and the issuer read the artifact plane with a DIFFERENT instrument before deciding to finish rather than roll back -- the act that became spine v3.9. S103 is the round's pattern row and the L10's, a row per CARRIER rather than per producer. (3) THE CUT-AND-INSTRUMENT FACTS, thirteen of them, every one an accept or a bound that described the world wrongly: W2-S47 (a control already satisfied before the act -- the pre-fold answer was 1 of 3, not 0 of 3, so only one limb discriminated); W2-S48 (renaming the five types would have been a grain violation and the populations differ by an order of magnitude -- the measurement that justified unifying at the producer instead); W2-S50 (two carriers of one ruling differing by a clause, with 'copy it, do not retype' instructed beside a retyped inline copy); W2-S52 (a ten-address number carried over from a four-family act into a seven-family one, where the true set is eighteen); W2-S54 (a criterion script reporting a failed fold over a graph that had already succeeded -- the Git-Bash subprocess trap, the same class as tonight's other false reds); W2-S55 and W2-S59 (a budget line the tool does not print, and a registry status the code has outgrown while the leg runs regardless); W2-S58 (BASELINE_EDITED read TRUE on a file nobody opened, because the checkout is CRLF and the record is LF -- the third instance of that trap tonight and the one that would have failed an order on a file nobody touched); W2-S62 (the file the grain rule comes from is not at the path the order names); W2-S65 (the unification made the producer count its own members twice and every per-class check passed, because the fresh copy landed in a different bucket from the carried one); W2-S66 (a criterion that censuses a population its own publish destroys, so it stops being re-readable the moment it succeeds -- and its expect requires a non-zero denominator, so success would have read FAIL). W2-S67, W2-S69 and W2-S71 are recorded here as CLOSED by their disarm acks above rather than left implicit.",
+    "dismissal_reason": "Records: six disarm acks with the measurements that closed them, three self-corrections and a pattern row filed by their own authors, and thirteen cut-side or instrument facts remedied at the source or superseded by the round's own acts. Nothing armed remains among them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "All twenty-five rows read whole at HEAD from the channel file, parsed rather than grepped (245 items, 57 adjudication rows before this write; open-by-census 44, all dispositioned across C-S60 and C-S61).",
+        "This seat's served reads confirming the three disarms: stitch-v1 on 1 node at 01:27:30Z and 0 at 02:28:23Z with PORTAL_BUNDLE present and its props reading {file_path, source}; STORED_IN 764 -> 135 with one edge per key at 03:31:02Z.",
+        "spine v3.8 @9fc8cb266e (an accept names its instrument's coverage, its harness's grain flag and its stored baseline's environment) and v3.9 @d8400610bd (the worker-death ordering), both of which these rows are the evidence for."
+      ]
+    },
+    "spec_asserts": "The several accepts, bounds and SURFACES blocks each row cites; and the channel's own taxonomy, in which a disarm ack is a record and an item closes when its remedy is on the shared branch.",
+    "world_is": "Every one of the twenty-five is either an ack of a remedy this seat has independently re-read on the served plane, a self-correction filed by its own author, or a cut-side defect whose remedy landed inside the round.",
+    "notes": "Investigation items without a disposition after this write: 0 of 245. The L10 precondition is met on this axis; the round's one outstanding ACT (the grain-baseline sign) is executed at C-S59 in the same commit. The slug follows this commit."
+  }
+]
+```
+
+## C-S62 -- G1-AC5, G3-AC5 and G4-AC5 graded PASS: the seam is 15 nodes of one shadow class, a family healthy only by accident is named with the condition that would break it, a card's own premise is REFUTED on a counted distribution, and this seat's grain-baseline stability claim is corrected for a variable it held silently
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T05:35Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S62",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9 on the round-7 PARTIAL packet @89705c09ed (3 of 4 orders drained; sha256 6accd182317cf94fd8adf427cd83a5d2d98ee0ccfd58befd1aa9ce6565c1838e over 7,972 bytes, re-hashed at this seat and equal to the issuer's): THREE judgment criteria graded, all PASS, and one of them corrects this seat's own signature. G1-AC5, THE CENSUS READING -- PASS. It answers all four asked questions on the whole population (59 of 59 node classes, 55 of 55 edge families, 27,665 nodes, 59,683 edges, at the served vintage 03:31:02.025931Z, which is the same vintage this seat signed the grain baseline on) and its most valuable paragraph is one nobody asked for: HEALTHY ONLY BY ACCIDENT. ROUTES_TO resolves 100 percent through the same name-index shape that produced the bucket defect, and is correct today only because a LAMBDA's node_id IS its arn, so 'arn or nid' cannot pick the wrong string -- give that class a second key and the identical failure arrives while the resolution rate stays at 100 percent. A reading that finds the NEXT instance of a defect rather than only explaining this one is worth more than the census it was ordered to produce. Its fourth section is the round's most portable sentence -- a rate measures DANGLING, not CORRECTNESS -- and it applies that to a number this fabric has quoted clean all night: DERIVES_FROM's '216 of 216' is an EDGE rate, 216 edges over 121 keys. I verified both at this seat on the same vintage rather than taking them: DERIVES_FROM 121 distinct source keys against 216 edges; ROUTES_TO 86 keys, 86 edges, 1 destination class. THE ONE LIMIT THE READING DOES NOT NAME ITSELF, and 1.0.0_SA_CTO found it at 95005: the sweep measured who WRITES each family and retirement is a claim about who READS, so 'things that would notice STORED_IN disappearing' is a declared domain whose uncovered member is the reader. The reading names what a reader must not conclude from a rate and does not name that it swept writers. It does not move the grade -- the criterion asked how wide the seam is, which families the fix must reach, which are healthy by accident, and what not to conclude, and all four are answered -- but a reading this good ought to have carried its own coverage sentence, and the L10 should read the retirement's three conditions as supplying it. G3-AC5, THE SUBSTRATE CARD -- PASS, AND THE PREMISE IS REFUTED. Counted over 21 owned rows the owner distribution is 14 / 6 / 1 and the split is NOT by carrier: owner is a function of the QUESTION, because all three carriers ride one clock pair and live in one bucket while every code remedy is one seat's. The face assumed three carriers meant three owners; the worker measured and said otherwise. THAT IS THE OUTCOME A JUDGMENT CRITERION EXISTS TO ALLOW -- a criterion that can only confirm its author is a formality -- and the rule it was defending survives on the stronger case the worker supplied: one seat holding three remedies that measurably did NOT move together across four cycles, cycle 3's props fix not touching the edges, cycle 4's edges fix not touching the nodes, and the nodes remedy still not existing. Its fourth-carrier answer is the honest kind: EDGE ATTRIBUTES is a real candidate the props remedy cannot reach and the edges remedy removes whole edges past, and it is worse than the node case because a served COUNT caught that one and no edge-attribute equivalent exists -- then it refuses to pretend the list is closed, saying nothing enumerates carriers so a fourth will be found the way the first three were, by an instance. G4-AC5, THE PORTAL VINTAGE -- PASS, AND IT CORRECTS THIS SEAT. Its answer to 'misleads today or only could' is exactly graded: today it mostly COULD, because the three names have converged by ACCIDENT on 5907cbca and nothing holds them together, and it DID mislead inside round 6 when the gitlink named 30ca034b -- a sha that was not even an object in the portal clone. The live harm is named as INCOMPARABILITY rather than misdirection, which is the sharper reading: two graph reads four hours apart differ in their portal half and neither answer says so. AND IT NAMES MY OWN SIGN: round 6's stability argument, which this seat wrote into C-S59 and the L10 quoted back -- the five magnitudes held unchanged across three served vintages while things around them changed -- spans a window in which the portal half moved from 18c0c5cb to 5907cbca. I ADOPT THE CORRECTION. It does not overturn the sign, and the reading says so itself for the right reason (the portal/src file count is 435 on both sides and the five are measured quantities, not inferred ones), but 'things changed' did not know it included the portal commit, and a stability claim is stronger when it can name the variables it held constant AND the ones it did not. Mine named the stamp and the boundary edges as the things that moved; it did not name the portal layer as a variable it could not see. That is a real limit on my own certification and it belongs beside it rather than in a reply. VERDICT PASS on all three.",
+    "grades": [
+      {
+        "criterion": "G1-AC5",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-G-1.boundary-edge-class-census.proof_of_spec.json@15bfeb3a62",
+        "verdict": "PASS",
+        "reason": "All four asked questions answered over the whole population with the vintage named; the seam narrowed from a 29-class exposure to 15 nodes of one shadow class, which explains why 135 wrong-class landings read as resolutions; a second family found that the cut never named; one family shown healthy only by accident with the exact condition that would break it; and the rate-versus-correctness distinction applied to the fabric's own clean number. Verified at this seat: DERIVES_FROM 121 keys / 216 edges, ROUTES_TO 86 / 86 / 1 type. The uncovered member the reading does not name -- it swept writers, not readers -- is the CTO's finding at 95005 and rides the retirement's conditions."
+      },
+      {
+        "criterion": "G3-AC5",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-G-3.archive-read-substrate-card.proof_of_spec.json@91654ab3c6",
+        "verdict": "PASS",
+        "reason": "The card's own premise was TESTED rather than assumed and came out REFUTED on a counted distribution (14 / 6 / 1 over 21 rows), with the rule it rested on re-grounded on a stronger case the worker measured; the fourth-carrier answer names a real candidate, explains why it is worse than the case already caught, and refuses to close the list; and the obligations are each traceable to a measured row. A judgment criterion that refutes its author is working, not failing."
+      },
+      {
+        "criterion": "G4-AC5",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-G-4.portal-layer-vintage.proof_of_spec.json@67d7453815",
+        "verdict": "PASS",
+        "reason": "It separates 'misleads today' from 'could mislead' on measured convergence-by-accident, produces the window in round 6 where it DID mislead with a sha naming nothing, names the live harm as incomparability rather than misdirection, splits the plane between display hops and feed hops with the failure mode of getting that split wrong stated, and finds underneath it all that hop 1 has no committed producer for the route that built every round-6 push. It also identifies a variable this seat's own grain-baseline signature held silently, which is adopted here."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "L8_PACKET.round7.partial.md @89705c09ed re-hashed at this seat to 6accd182317cf94fd8adf427cd83a5d2d98ee0ccfd58befd1aa9ce6565c1838e over 7,972 bytes; the three instances read whole, each carrying UNVERIFIABLE-BY-INSTRUMENT on its AC5 with the reading in output_evidence and no assignee verdict.",
+        "This seat, 2026-09-10 ~05:1xZ, through opal-gateway graph_cypher on the served vintage 2026-09-10T03:31:02.025931Z: DERIVES_FROM -> 121 distinct source keys, 216 edges; ROUTES_TO -> 86 keys, 86 edges, 1 distinct destination class. Both figures independently reproduce the census's own reading of them.",
+        "1.0.0_SA_CTO 95005 (the retirement ruling and its condition 1, the reader census) and 94994; 2.0.0_SA_COO~A 95003 and 95009.",
+        "This seat's C-S59 (the grain-baseline sign) and the round-6 L10's restatement of its stability argument -- the claim G4-AC5's part (b) qualifies."
+      ]
+    },
+    "spec_asserts": "G1-AC5, G3-AC5 and G4-AC5 as cut (judgment=true, NO verdict): the seam's width and what a rate does not say; whether three carriers need three owners and what a fourth would look like; whether an undeclared vintage misleads today or only could, and whose plane the fix is on.",
+    "world_is": "The seam is one shadow class of 15 nodes; owner is a function of the question rather than of the carrier; the portal names have converged by accident and did diverge inside round 6; and a stability claim this seat signed held a variable it could not see.",
+    "notes": "Round-7 judgment criteria graded: 3 of 4 (G2-AC5 arrives when TO-CG-G-2 drains). The packet is PARTIAL and the slug waits for the FINAL, as at round 6."
+  }
+]
+```
+
+## C-S63 -- adjudicates nine: DISMISSED_WITH_REASON, records -- six cut defects read back by the seats ordered to execute them, including a MEASURED label filled from a contract document, and one worker credited for refusing to force-fit a comparator into the face's set
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T05:35Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S63",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W1-S35",
+      "NFRA_CLDGRPH-W1-S36",
+      "NFRA_CLDGRPH-W2-S73",
+      "NFRA_CLDGRPH-W2-S74",
+      "NFRA_CLDGRPH-W2-S75",
+      "NFRA_CLDGRPH-W3-S17",
+      "NFRA_CLDGRPH-S107",
+      "NFRA_CLDGRPH-S108",
+      "NFRA_CLDGRPH-S109"
+    ],
+    "one_line": "L9: ADJUDICATES nine items -- DISMISSED_WITH_REASON, records, and SIX OF THE NINE ARE THE ISSUER'S OWN CUT READ BACK BY THE SEATS THAT HAD TO EXECUTE IT. The issuer put four of them at the TOP of its packet rather than in a footnote and named the shape itself: a NAME or a CONTRACT written into a face as if it were a CENSUS or a RUN. W3-S17 IS THE EXPENSIVE ONE AND ITS LESSON IS THE LABEL, NOT THE BELIEF: the face carried, under the heading MEASURED, that format_provenance_header prints every source_vintage key it is given; exercised, it printed 3 of 7 and dropped 4 in silence because the code hard-codes one branch per source_kind with no loop -- so the FIRST carrier candidate the cut named is the one that must not be chosen, and a fix routed there would have passed its own test and changed nothing a reader sees. The issuer's own reading of it is the one to keep: MEASURED is a field a consumer can reject on, and it was filled from a contract document about a drained cell; had it read ASSUMED the worker would have owed the same exercise and the face would not have pointed at the wrong carrier first. That is 'a value must carry its claim' turned on the CUT rather than on a producer. W2-S73 and W2-S74 are the same family one plane over: a validator path that does not exist, bound to a schema const the estate's real validator contradicts (const 1 against const 3.1, mutually exclusive, so the criterion as written could not have passed on any input), and a card contract whose unit is one subject with seven rows, which cannot express the row-per-carrier shape the face ordered. Both are INERT because the workers reported them and produced the work anyway rather than forcing a shape the contract forbids. W1-S36 is a number carried forward without re-reading: the cut said 54 edge families at a vintage the service does not report, the world reads 55 at the vintage it does, and the node-class count agrees -- a stale figure and a stale vintage travelling together. W1-S35 is the opposite and is a credit: DERIVES_FROM measures OUTSIDE the both-identity population, so rather than force-fit it into the included set to match the face, the worker reported it as the round's NAMED COMPARATOR and negative control. A worker declining to reconcile a face against the world silently is the behaviour every one of these rows depends on. W2-S75 is a records fact worth the L10's eye: two records of the SAME snapshot population disagree by 20, both inside the round-6 record -- neither is this round's work and the discrepancy is now dated rather than inherited. S107, S108 and S109 are the issuer's acks, each naming the measurement that closed its item and each recording the defect as its own; they are consumed by this row. NOTHING HERE IS ARMED AFTER THIS WRITE: W2-S73 and W3-S17 were the two ARMED items and both are disarmed by acks that name what replaced them.",
+    "dismissal_reason": "Records: six cut defects the executing seats read back and reported rather than absorbed, one credit for refusing to force-fit, one dated records discrepancy from a prior round, and three acks consumed. Nothing armed remains among them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The nine rows read whole at HEAD (254 investigation items, 61 adjudication rows before this write; comp-surprise open 9, all dispositioned here); the packet's s.3, which carries four of them at the top rather than in a footnote.",
+        "This seat's own served reads at the same vintage the census used, which reproduce W1-S35's and W1-S36's figures: 55 edge families and the DERIVES_FROM comparator at 121 keys / 216 edges."
+      ]
+    },
+    "spec_asserts": "TO-CG-G-1's included-family set and its 54-family figure; TO-CG-G-3's validator invocation, schema const and row-per-carrier shape; TO-CG-G-4's MEASURED block naming format_provenance_header as a carrier that prints every key.",
+    "world_is": "Four of the round's faces named an instrument, a contract, a count or a vintage that the world contradicts, and each was found by the seat ordered to use it.",
+    "notes": "Investigation items without a disposition after this write: 0 of 254. The round is PARTIAL (TO-CG-G-2 open) and the slug waits for the FINAL."
   }
 ]
 ```

@@ -142,7 +142,16 @@ no such field → you may NOT treat it as measured. **The consuming half is the 
 unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`.
 
 24. **TAXONOMY LAW — four postulates for ANY schema an agent authors or ADOPTS:** (i) MECE over a DECLARED
-    domain (hunt the uncovered member); (ii) SAME GRAIN; (iii) INTENT COHERENCE (one axis, one intent);
+    domain (hunt the uncovered member); ⛔ **AND HUNT IT BY SUBTRACTION, NEVER BY RECALL: write the
+    enumeration as *the printed denominator MINUS what you exclude*, never as a forward list of what you
+    thought of.** A forward list covers what its author had in mind and omits silently; the same set written
+    as a subtraction from a denominator cannot lose a member without the count disagreeing. COST: one
+    denominator read. NON-APPLICATION: a set whose members are the literal argument you were handed.
+    Measured 2026-09-10, FIVE instances in one night across five seats: `NFRA_OUTSET`-S36; `NFRA_COMPEFFICACY`-W1-S2;
+    a COO arm naming two partners of three; `ETFS_GUARDRAIL` row S16 doing the same inside an ACCEPT (so a
+    GRADE would have read REALIZED on the violation); and a manual-trigger addendum that enumerated the
+    outcomes it covered instead of subtracting from the outcomes that NAME a date, leaving `NFRA_OUTSET`
+    FWD-5 uncovered. Found by `2.0.0_SA_COO`, which had committed the same shape an hour earlier. (ii) SAME GRAIN; (iii) INTENT COHERENCE (one axis, one intent);
     (iv) STATE COHERENCE (name which values one remedy does NOT move). **Outcome arrays, typed-result sets
     and predicates ARE schemas.** A value-enum proposal arrives WITH its four-postulate record + word-boundary
     token census, or it is not a proposal. `rcg/rulings/RULINGS.jsonl` R-0006/R-0009.

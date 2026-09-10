@@ -1,0 +1,47 @@
+diff --git a/.tools/to-pipeline-gate.py b/.tools/to-pipeline-gate.py
+index ab65b510c8..c48b247840 100644
+--- a/.tools/to-pipeline-gate.py
++++ b/.tools/to-pipeline-gate.py
+@@ -274,6 +274,42 @@ def _criterion_grammar_violations(rel, text):
+     if not TREE_TO_RE.search(rel):
+         return []
+     v = []
++
++    # WARN: CRITERION PRESENCE -- ADDED 2026-09-10 ~05:1xZ by 2.0.0_SA_COO, on D0_INFRA_TIGHTENING_PRD
++    # s.6 ROW 10 (placed by 1.0.0_SA_CTO at 94994, owner 2.0.0_SA_COO, ACTIVE).
++    #
++    # THE LIMBS BELOW GRADE THE GRAMMAR OF CRITERIA THAT EXIST. Both are `for` loops over matches,
++    # so a face carrying ZERO criteria runs ZERO iterations and produces ZERO violations -- the gate
++    # passes it, and the ORDER CAN THEN NEVER BE CLOSED. `.tools/proof-of-spec-check.py` reads
++    # cell_refs EXCLUSIVELY from these tags (":435 -- NOTHING HERE IS DERIVED") and the acceptance-row
++    # schema exposes no cell_refs field, so a prose-only acceptance section yields
++    # `0/0 criteria carry >=1 cell_ref` and the `complete` flip is STRUCTURALLY UNREACHABLE no matter
++    # how good the work is.
++    #
++    # MEASURED, and the issuer who added this limb is the one who caused it: ETFS_GUARDRAIL.TO-EG-s-22
++    # was cut with a prose acceptance section, PASSED THIS GATE at issuance, and its assignee then
++    # finished 7 of 7 arms and could not flip (row ETFS_GUARDRAIL-W1-S32). The assignee held the face
++    # in its own <paths> grant and REFUSED to add the tags itself -- editing the issuance half so your
++    # own proof validates certifies an alignment the cut never declared -- which is the only reason
++    # the defect was visible rather than absorbed. Census by SUBTRACTION at that time: 23 faces in
++    # that project, 22 carrying both tags, blast radius exactly 1.
++    #
++    # NOTE: A GATE THAT GRADES ONLY WHAT IS PRESENT CANNOT SEE AN OMISSION. Same class as the dep_stage
++    # enum note below, arriving from the other direction: there a wrong vocabulary hid matching
++    # violations; here an empty set passes vacuously.
++    n_crit = len(re.findall(r"<criterion\b", text))
++    if n_crit == 0:
++        v.append("%s: carries ZERO <criterion> tags. A face with no criterion PASSES every grammar\n"
++                 "  check vacuously and can NEVER be closed: proof-of-spec-check reads cell_refs only\n"
++                 "  from <criterion> tags, so the instance reads '0/0 criteria carry >=1 cell_ref' and\n"
++                 "  the complete flip is unreachable. Add at least one:\n"
++                 "    <criterion id=\"..\" cell_refs=\"..\"><invocation>..</invocation><expect>..</expect></criterion>\n"
++                 "  or a judgment criterion <criterion id=\"..\" cell_refs=\"..\" judgment=\"true\"/>." % rel)
++    elif not re.search(r"<expected_criteria>", text):
++        v.append("%s: carries %d <criterion> tag(s) but NO <expected_criteria> element. The flip check\n"
++                 "  and the proof instance are validated against that list; without it the criterion ids\n"
++                 "  minted at the cut are named nowhere the checker reads." % (rel, n_crit))
++
+     for m in CRITERION_SELFCLOSE_RE.finditer(text):
+         attrs = dict(ATTR_RE.findall(m.group(0)))
+         if attrs.get("judgment", "").strip().lower() == "true":

@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-10T02:25Z",
+  "written_utc": "2026-09-10T03:55Z",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -317,8 +317,24 @@
         "msgs 94885/94886; acks 94872, 94880",
         "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260910T0220Z.md"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "674b0c35ea",
       "next": "cycle three's reads, then cycle four (the fan-out); F-11's report and drain with AC3 measured-and-failing; comp-system phase two (grain_baseline.json moves); the CVO's baseline sign; the FINAL packet + COMPLETION_REPORT.round6.json; the drain-end read to the CTO; CronDelete."
+    },
+    {
+      "seq": 23,
+      "limb": "L7 (the last drain) / L8 (the FINAL packet) / adjudication (7 dispositions, 1 RESERVED)",
+      "started_utc": "2026-09-10T03:25Z",
+      "ended_utc": "2026-09-10T03:55Z",
+      "act": "ROUND 6 IS DRAINED, 11 OF 11. TO-CG-F-11 reported with F11-AC2 PASSING (STITCH_V1_STAMPED_SERVED 1 -> 0, the node diff over 27,665 nodes reading exactly {'-vocabulary': 1} on PORTAL_BUNDLE, 0 added/removed/re-typed) and AC3 the only mechanical FAIL, which is exactly what the CTO's 94872 ruled it should drain on. VERIFIED IN-WORKTREE (checker VALID rc 0, 26 artifact rows resolved at pin, 13 surprises resolving to channel rows), DRAINED @d2ee75c98b (rc 4 on the channel, union 224 + 13 = 237, --continue under the guards), worktree and branch REMOVED, and COMP-SYSTEM PHASE TWO run because grain_baseline.json moved (06_current_state written, grounded-against-live at HEAD, 0 changed rows across 26 regions). THE FOURTH CYCLE'S RESULT: 955 emitted STORED_IN -> 137, per-key {5: 191} -> {1: 137}, 0 edges contradicted by their own source node, 54 no-bucket keys counted and not guessed, served edges 1678 -> 860 (exactly the 818 the fan-out had added), pointer 02:28:23 -> 03:02:00. BOTH NIGHTLIES READ as the confirmation the manual-trigger form names: the 02:00Z derive on :9 exit 0 with a STITCH_INGEST line identical to the ad-hoc's, and THE 03:00Z opal-stitch-produce-nightly SUCCEEDED -- the first rule-initiated success in a slot that had failed 67 of 67 times -- building from cycle 4's zip, so tonight the confirmation and the test are the same object. ROWS S99-S105 (channel 237 -> 244): S99/S100/S101 DISARM W2-S67, W2-S69, W2-S71 (the served stamp gone; the stamp's second writer retired; the cross-product cut at the producer); S102 CARRIES W2-S68 + W2-S70 to round 7 under 94872; S103 is the PATTERN row (this producer's input contains its own output, answered separately and differently on nodes, props and edges -- and the edge case is the tell, because duplicates collapsed in the dedup while emission was fixed and only became visible when a run emitted FEWER); S104 CARRIES W2-S72 RESERVED FOR ANDREW with a hold in force (every derive publishes SEV1/SEV2 to a topic carrying a LIVE SMS subscription to a personal mobile, re-measured by this seat before escalating at 94937/94938/94939; nothing unsubscribed, nothing edited); S105 is this seat's SECOND self-correction of the night -- my tick-62 census read 0 send paths over 104 files while scoped to mailer tokens the boto3 publish never uses, and the instrument that saw the SMS page was the run log I had not read. THE FINAL L8 PACKET compiled (ledger/L8_PACKET.round6.final.md) and the COMPLETION_REPORT.round6.json written (11 orders, 37 cells, 8 FWDs, 244 rows, the four outstanding items and the three laws this round produced). The CVO is asked for exactly two things: F11-AC6, and THE GRAIN-BASELINE SIGN on nine entries reading `pending 3.0.0_SA_CVO`.",
+      "artifacts": [
+        "CLOUD @d2ee75c98b (the F-11 drain)",
+        "ledger/L8_PACKET.round6.final.md",
+        "ledger/COMPLETION_REPORT.round6.json",
+        "rows S99-S105",
+        "msgs 94937/94938/94939 (the RESERVED card)"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "the FINAL packet to the CVO; the drain-end read to 1.0.0_SA_CTO; CronDelete 01a64433. Then round 6 is closed at this seat and the L9/L10 are others'."
     }
   ]
 }

@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `ETFS_GUARDRAIL-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `ETFS_GUARDRAIL-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`ETFS_GUARDRAIL-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 62 rows, COUNTED not carried forward (W5-S7 appended by `0.9.0_WK_ETFS_GUARDRAIL~5` 2026-09-10T05:5xZ under EG-s-25; summed over the file's 3 fenced json blocks).
+`ETFS_GUARDRAIL-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 71 rows, COUNTED not carried forward -- the MERGE of `wk-etfs_guardrail-3-5` and CLOUD, resolved as a strict UNION of both sides (58 shared + 9 appended on CLOUD + 4 appended on the branch: W5-S4/S5/S6/S7). No row from either side was dropped and no id is duplicated; summed over the file's 8 fenced json blocks.
 **Round 1 task orders:** 14, one per cell of `../../decompositions/ETFS_GUARDRAIL_DECOMP.md` v0.1.1, on three worker
 slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
 
@@ -1390,6 +1390,261 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "S19-AC1 arm (d): 'the payload byte-equal to the rule's delivered envelope with NO `date` key (both printed)'.",
     "world_is": "The rule's delivered envelope carries a per-delivery UUID `id` and a per-delivery `time`, so it is not byte-equal even to another delivery of itself; and the producer never logs its event, so no delivered envelope is observable at this seat. The provable and proven substitute is that the target carries no Input/InputPath/InputTransformer (1 of 1 target), so the default scheduled envelope is what the rule delivers, and the payload fired is shape-equal to it and branch-equivalent in the handler.",
     "notes": "No verdict is offered on whether the substitute satisfies arm (d) -- that is the CVO's at L9, and S19-AC2 is the judgment criterion where it belongs. Recorded because a proof-of-spec line reading 'byte-equal' would have been false, and a line reading 'equal' without saying in WHAT would have been a summary field no consumer could reject on."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S30",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T03:40:00Z",
+    "one_line": "S16-AC1 arms (b) and (c) name evidence the served artifact does not carry: coverage_verdict.json holds PER-CLASS COUNTS plus a `holes` date list and NO per-date class map (the literal 2026-09-07 appears 0 times in the whole document), and `expected_empty` is the class B count by the classifier's own definition, so it cannot carry a class-A date. Both limbs are unsatisfiable against the named object for ANY month, not just this one.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SERVED OBJECT, s3://opal-data-etfs/platinum/reports/2026-09/coverage_verdict.json, 2705 B, LastModified 2026-09-10T01:20:20Z (list-objects-v2 ISO rendering): top-level keys ['month','verdict','per_partner','holes','unresolved','generated_at']; each per_partner entry carries ONLY ['summary','coverage_line','holes']; summary keys are ['A','B','C','COVERED','D','UNKNOWN','covered','expected_empty','holes','trading_days'] -- all counts",
+        "MEASURED: json.dumps(verdict).count('2026-09-07') == 0. The date the criterion asks the object to classify does not appear in the object at all, so 'this object classifies 2026-09-07 as class A' is not readable from it",
+        "data/etfs/scripts/coverage/classifier.py:168-170 @c866edd324 -- summarize()'s docstring: 'Counts per class plus trading_days, covered, holes (= C + UNKNOWN + D; B is NOT a hole), expected_empty (= B).' and :178 expected_empty = counts[\"B\"]. MEASURED on the served object: expected_empty == B == 0 for 3 of 3 partners",
+        "classifier.py:122-125 @c866edd324 -- a non-trading day is classified A and `continue`s, so class A and class B are DIFFERENT axes: A is 'market closed (not a trading day)', B is 'upstream present, priced == 0'. A class-A date cannot appear in an expected_empty that counts B, by construction and not by accident",
+        "EQUIVALENT-FIELD HUNT, which the face explicitly allows ('or the verdict's equivalent field, named'): the only per_partner field carrying DATES at all is `holes`, and 2026-09-07 is in none of them (3 of 3 partners)",
+        "WHAT IS READABLE, and it is the substance: 2026-09-07 is in NO partner's holes (3 of 3), the hole list is IDENTICAL with and without the date (3 of 3), and class A == 3 for 3 of 3 partners, exactly matching the calendar's three non-trading days 2026-09-05 (Sat), 2026-09-06 (Sun), 2026-09-07 (Labor Day)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-16 S16-AC1: '(b) platinum/reports/2026-09/coverage_verdict.json (the object EG-s-15's run wrote; its UTC printed) classifies 2026-09-07 as class A (market closed) for EVERY partner it covers' , and '(c) expected_empty (or the verdict's equivalent field, named) carries 2026-09-07 with the partners' hole counts UNAFFECTED by it'.",
+    "world_is": "The persisted verdict drops the per-date class map the classifier computes in memory, keeping only counts plus the `holes` dates. So the object can prove 2026-09-07 is NOT A HOLE, but it cannot prove the date was classified A -- only that the A COUNT equals the number of non-trading days. And `expected_empty` tracks class B, a different axis from class A, so nothing in the object 'carries' 2026-09-07. A count is not a per-date classification, and reporting it as one would be a grain error.",
+    "notes": "BLOCKING because arms (b) and (c) cannot hold as written, so S16-AC1 cannot print its token and the order cannot go terminal. NOT RE-WORDED and NOT WORKED AROUND: the battery could have re-derived the per-date map by running the classifier locally, but that substitutes a DIFFERENT instrument for the one the criterion names ('the object EG-s-15's run wrote'), and choosing the instrument is the issuer's act, not a worker's. ARMED because the gap is standing, not incidental: for any month, no consumer of the served verdict can audit WHICH dates were classified A, B or COVERED -- only how many. Two disarm paths for the issuer, both outside this order's read-only grant: (1) re-cut (b)/(c) onto the evidence the artifact does carry -- 'in no partner's holes', 'hole list identical with and without the date', and 'A count == the calendar's non-trading-day count', all of which this battery already measures and prints; or (2) a code cell having the renderer persist the per-date class map beside the counts, which would also make FWD-4 auditable after the fact for every future month."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S31",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T03:40:00Z",
+    "one_line": "A DAILY SLICE EXISTS ON THE CLOSED-MARKET DAY, for the one partner the criterion does not enumerate: daily/inflection/2026-09-07.json (1209 B, written 2026-09-07T15:00:41Z) carries four priced ETF rows with source_as_of 2026-09-07 -- and 09-05 (Sat) and 09-06 (Sun) too, all three byte-identical in value to 09-08. The classifier is STRUCTURALLY BLIND to this because class A short-circuits before the slice check, and S16-AC1 arm (d) enumerates only cottonwood and 49financial -- the two partners that do NOT do it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api list-objects-v2 on daily/inflection/ -> 122 keys (denominator); 1 of 122 names 2026-09-07. head-object: daily/inflection/2026-09-07.json, ContentLength 1209, LastModified 2026-09-07T15:00:41Z (UTC), ETag de9410b6113e4979ef4c714ddb0b63eb",
+        "ITS CONTENT: four rows, each {schema_version 1.0, partner inflection, date 2026-09-07, etf_ticker, ownership_value, account_count 562, source_artifact s3://opal-data-inf/gold/canonical/holdings_2026-09-07.parquet, source_as_of 2026-09-07} -- i.e. it asserts an as-of date on which the US market was shut",
+        "THE WHOLE CLOSED STRETCH IS PRESENT: daily/inflection/2026-09-05.json and 2026-09-06.json also exist, 1209 B each, written 15:00:41Z on their own dates. A sha256 over each file's (ticker, ownership_value, account_count) tuples is IDENTICAL for 09-05, 09-06, 09-07 AND 09-08 (41d1124f75c3...), and DIFFERENT for 09-04 (e4cb7e34a31c...) -- so the closed-day slices are carried-forward duplicates, not independently priced days",
+        "CONTRAST, measured the same way: daily/cottonwood/ 0 of 62 keys and daily/49financial/ 0 of 89 keys name 2026-09-07. Only inflection writes on closed days",
+        "THE CLASSIFIER CANNOT SEE IT: data/etfs/scripts/coverage/classifier.py:122-125 @c866edd324 -- 'if not tcal.is_trading_day(d): result[date_str] = {\"class\": \"A\", ...}; continue' -- the class-A branch returns BEFORE the 'if date_str in series' slice check at :128, so whether a slice exists on a non-trading day is never examined. inflection's summary reads A=3 exactly like the other two partners",
+        "THE CRITERION'S OWN SCOPE: S16-AC1 arm (d) reads 'NO daily slice exists for 2026-09-07 for cottonwood or 49financial' -- 2 of the 3 partners the verdict covers, and precisely the 2 that are clean"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-16 THE CELL and outcome_ref FWD-4: 'a legitimately-empty day is classified A, not a hole, and nothing is backfilled against it' , with arm (d) checking that no daily slice exists for 2026-09-07 for cottonwood or 49financial.",
+    "world_is": "Something IS written against the legitimately-empty day -- by inflection, every closed day, with carried-forward values and a source_as_of on the closed date. The classification half of FWD-4 holds (class A, not a hole, hole counts unaffected); the 'nothing is backfilled against it' half does not hold for 1 of 3 partners. The criterion as cut cannot detect this because it enumerates the two clean partners, so arm (d) PASSES while the phenomenon FWD-4 forbids sits in the uncovered member.",
+    "notes": "Filed for FORM: a partner-enumerating check is a DECLARED DOMAIN, and the uncovered member is exactly where the defect sits. The battery PRINTS inflection beside the two graded partners, with its denominator, so the reading is visible even though the arm does not grade it -- printing it is not widening the criterion. ARMED for two reasons that need different remedies: (i) the served plane carries priced rows dated to days the market was shut, which any downstream consumer reading daily/ by date will pick up, and (ii) the classifier can never flag it, so no future run will surface it either -- a check scoped to trading days cannot see a defect on the non-trading ones. NOT investigated further and NOT fixed here: data/etfs/scripts/ is READ-only under this order and inflection's producer is outside this project's surface entirely; whether the carry-forward is intended for inflection's feed is a question for the issuer, not a defect this worker should assert."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S32",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T04:40:00Z",
+    "one_line": "The EG-s-22 face carries ZERO <criterion> tags and NO <expected_criteria> element, so proof-of-spec-check's alignment limb reads '0/0 criteria carry >=1 cell_ref' and refuses the instance with 'declared cell EG-s-22 ... NO criterion references it'. S22-AC1 PASSES BY OUTPUT (7 of 7 arms, token printed, rc=0) and the work is complete, but the `complete` flip is blocked by the ISSUANCE HALF alone.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED on the face at eab3712b31: `grep -c '<criterion'` on org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-22.the-classifier-tells-a-closed-day-with-a-slice-from-one-without.md returns 0, and a grep for <expected_criteria> returns nothing -- the face carries <owned_cells>EG-s-22</owned_cells> and no machine-readable criterion element at all",
+        "CONTRAST, same project, same issuer: the EG-s-16 face carries 2 <criterion id=... cell_refs=...> tags and an <expected_criteria> element, and its instance validated VALID rc=0 twice (pre- and post-commit)",
+        ".tools/proof-of-spec-check.py:664-677 -- criteria are parsed ONLY from CRITERION_TAG_RE over the TO's text ('NOTHING HERE IS DERIVED. cell_refs are read as DECLARED in the TO's issuance half', :435), and the acceptance-row schema has NO cell_refs property, so an instance cannot supply what the face omits",
+        "THE RUN, with every other violation cleared: 'alignment-forward-1 (criterion -> cell): 0/0 criteria carry >=1 cell_ref'; 'alignment-backward: 0/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion'; 'artifact-resolution: 0 resolved at pin / 4 PENDING co-committed (PRE-COMMIT: staged in this commit)'; single remaining VIOLATION: \"alignment: declared cell 'EG-s-22' is named in the TO's <owned_cells> but NO criterion references it -- the TO claims a cell it never discharges\"; INVALID (rc=1)",
+        "THE WORK ITSELF IS DONE AND MEASURED: the battery prints 'ARMS 7 of 7 PASS' then EGS22-CLASSIFIER-DISCRIMINATES at rc=0, and .tools/commit-gate.sh reports 'pre-commit gate clean for 2 of 2 file(s)' on both .py edits"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-22 <proof_of_spec>: 'Criterion ids minted at cut: S22-AC1, S22-AC2 ... validated with python .tools/proof-of-spec-check.py <instance> S22-AC1,S22-AC2 BEFORE the complete flip, which you commit yourself. Flip only when S22-AC1 PASSES by output.' -- i.e. the face expects the instance to be validatable and the flip to follow a passing S22-AC1.",
+    "world_is": "S22-AC1 does pass by output, but the instance cannot be made VALID from the assignee's side: the checker reads cell_refs exclusively from <criterion> tags in the TO, the face has none, and the proof-of-spec schema exposes no cell_refs field on an acceptance row. So the completion flip is unreachable no matter what the worker produces. The face's acceptance is stated in bold prose (**S22-AC1** ... **S22-AC2** ...), which is human-readable and machine-invisible.",
+    "notes": "NOT WORKED AROUND, and the reason is the same one that produced W1-S30 and W1-S29: <paths> does grant this worker the task-order file, so adding <criterion id=\"S22-AC1\" cell_refs=\"EG-s-22\"> tags and an <expected_criteria> element was mechanically available -- but that is EDITING THE ISSUANCE HALF so the worker's own proof validates, which is the issuer's act and not the assignee's. A flip bought that way would certify alignment the cut never declared. INERT: nothing in the world is left armed -- no deploy, no write, no send; the code change and its two regression arms are committed and green, and the only casualty is the <status> field. DISARM (issuer, one edit): add the two <criterion id=... cell_refs=\"EG-s-22\"> elements and an <expected_criteria>S22-AC1, S22-AC2</expected_criteria> to the face, exactly as EG-s-15 and EG-s-16 carry them; the instance then validates unchanged and this worker commits the flip. WORTH A WIDER LOOK than this one face: any round-3 face cut in the same prose style has the same unreachable flip, and the L6 gate did not refuse it at issuance -- the denominator of faces carrying zero <criterion> tags is a census the issuer can run in one pass."
+  }
+]
+```
+
+
+## W4-S1 -- `safe-apply`'s halt gate does NOT read `OPAL_AGENT_SERIAL`: the face's own remedy for the fresh-worktree rc=3 is inert, and the gate's real (and only) identity source is a gitignored session file
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-W4-S1",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T03:52:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO (the issuer -- the inert remedy is stated as an OPERATING FACT in this slot's worker face and in EG-s-21's, and the face said the gap `is fixed at the spawn from here on`, so the correction belongs where the faces are cut)",
+    "one_line": "MY FACE SAID: `safe-apply`'s identity gate fails closed in a worktree and `.tools/lib/resolve-actor.sh` reads `$OPAL_AGENT_SERIAL` first, so `export OPAL_AGENT_SERIAL=<serial>` before any safe-apply is the fix. THE WORLD: `.tools/safe-apply.sh` does not call `resolve-actor.sh` at all -- it calls `.tools/halt-gate-check.sh`, whose `halt_gate_resolve_serial()` (:52-118) resolves identity from EXACTLY TWO sources, both keyed on `$CLAUDE_CODE_SESSION_ID`: `org/mcp/sessions/<sid>.serial`, then the newest `org/mcp/sessions/<sid>.*.orphan-cleaned` marker -- and then `return 1` (FAIL CLOSED, the legacy `.comp-graph/.agent_context` fallback deliberately REMOVED, Andrew-direct 2026-07-13). `$OPAL_AGENT_SERIAL` appears NOWHERE in that file. So the exported variable my face names is INERT for this gate: with it exported the first `bash .tools/safe-apply.sh apply <planfile>` still returned rc=3 `HALT-GATE: IDENTITY UNRESOLVED -- BLOCKED (fail-closed)`. WHAT ACTUALLY WORKS is the one line the gate itself prints: write the serial to `org/mcp/sessions/<sid>.serial`. That path is GITIGNORED (`.gitignore:423 org/mcp/sessions/`) and ABSENT from a fresh worktree, so nothing is tracked and nothing is committed -- which is also why no worktree can ever inherit it and why EVERY worker slot meets this rc=3 exactly once. I applied that one line with my own true serial (`0.9.0_WK_ETFS_GUARDRAIL~4`), verified the file's content, and the re-run passed the halt gate OUTRIGHT: no pending message for this seat, so `HALT_ACK=1` was NEITHER USED NOR NEEDED and the apply proceeded on its own merits. TWO THINGS THIS COSTS IF LEFT: (1) a face that names an inert remedy teaches the next worker to try it, fail, and then reach for an override on a gate whose whole purpose is that it must not be overridden -- the gate's own text says `Do NOT override this; overriding it means deploying while blind to your own STOP messages`; (2) the SESSION-KEYED write is a shared-coordinate write, and the estate has already measured the sibling case (`reference_worker_telemetry_rows_land_under_a_sibling_slots_serial_via_a_stale_session_id_map`: a hook preferring a stale `sessions/<id>.serial` over `OPAL_AGENT_SERIAL` mis-attributed a worker's telemetry) -- here the session id was mine and the file did not previously exist, so no sibling was overwritten, but a slot that shares a session id with another WOULD overwrite it and the halt gate would then scan the wrong inbox in the direction the 2026-07-13 fix exists to prevent. NOT FIXED HERE: `.tools/` is outside this order's `<paths>` grant, and adding an `OPAL_AGENT_SERIAL` limb to a safety gate's identity resolution is a change to a NEVER-class control, not a worker's incidental repair.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 2026-09-10 ~03:52Z, worktree /c/tmp/wk-etfs-3-4 @6b79c79663: `export OPAL_AGENT_SERIAL=0.9.0_WK_ETFS_GUARDRAIL~4; bash .tools/safe-apply.sh apply ../../../../.scratch/egs20.tfplan` -> rc=3, verbatim 'HALT-GATE: IDENTITY UNRESOLVED -- BLOCKED (fail-closed)' with the printed remedy 'printf %s\\n \"1.2.3_XX_Yourserial\" > \"org/mcp/sessions/841d85fd-2c27-4579-b402-d8a65558f7eb.serial\"'. The variable WAS exported in the same shell segment.",
+        "`.tools/halt-gate-check.sh` @6b79c79663, `halt_gate_resolve_serial()` at :52-118: primary `${repo_root}/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial`; secondary the newest `${CLAUDE_CODE_SESSION_ID}.*.orphan-cleaned` marker; then `return 1` under the comment 'A SAFETY GATE THAT CANNOT NAME ITS OWN PRINCIPAL MUST NOT GUESS'. comp-read --enumerate 'OPAL_AGENT_SERIAL|resolve-actor|\\.serial' over the file returns 6 of 6 hits across 455 lines and NOT ONE of them is OPAL_AGENT_SERIAL or resolve-actor -- all six are the session-file path or its printed remedy.",
+        "`.tools/lib/resolve-actor.sh` EXISTS in this worktree, so the face's premise is not that the helper is missing -- it is that `safe-apply`/`halt-gate-check` never call it. `.tools/safe-apply.sh` resolves `HALT_GATE=\"$SCRIPT_DIR/halt-gate-check.sh\"` and delegates there.",
+        "`git check-ignore -v org/mcp/sessions/841d85fd-2c27-4579-b402-d8a65558f7eb.serial` -> `.gitignore:423 org/mcp/sessions/`, rc=0; `ls org/mcp/sessions/` before the write -> 'No such file or directory'. After `printf %s\\n \"0.9.0_WK_ETFS_GUARDRAIL~4\" > org/mcp/sessions/841d85fd-2c27-4579-b402-d8a65558f7eb.serial` the re-run of the SAME safe-apply command returned rc=0 with 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed.' -- no HALT_ACK on either attempt.",
+        "PRECEDENT, and it is the same gap one round earlier: `ETFS_GUARDRAIL-W1-S21` and the L2 leg of `org/critical_paths/change_management/20260910T0112Z_etfs-guardrail-eg-s-15-september-refusal_deploy_completion.md`, which records 'the first apply attempt returned rc=3 at the HALT-GATE ... because a fresh worktree carries no org/mcp/sessions/<session>.serial'. The remedy applied there was the same one-line write, not an environment variable."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The worker face of ETFS_GUARDRAIL.TO-EG-s-20, OPERATING FACTS: \"`safe-apply`'s identity gate FAILS CLOSED in a worktree (rc=3, `IDENTITY UNRESOLVED`): `.tools/lib/resolve-actor.sh` reads `$OPAL_AGENT_SERIAL` (per-process, the ISSUER's) or a GITIGNORED session file (never yours). **Run `export OPAL_AGENT_SERIAL=0.9.0_WK_ETFS_GUARDRAIL~4` before any safe-apply** -- that is the helper's own first precedence and it names the TRUE actor. This gap was the issuer's and it is fixed at the spawn from here on.\"",
+    "world_is": "`safe-apply.sh` never consults `resolve-actor.sh` or `$OPAL_AGENT_SERIAL`; its halt gate resolves identity ONLY from `org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial` or an `*.orphan-cleaned` marker, then fails closed. The exported variable did not clear the gate; the gate's own printed one-line write to the gitignored session file did, and the apply then passed with no HALT_ACK at all.",
+    "notes": "Filed as OBSERVATION because it did not block this order: the gate's own remedy is one line, it is printed in the refusal, and the apply completed. ARMED because the wrong fact is stated as an OPERATING FACT in two live worker faces (this one and EG-s-21's, which will need the same apply-free but gate-adjacent path) and because a worker who tries the inert remedy and then reaches for an override is defeating a control that exists precisely to be un-overridable. NOTHING IN `.tools/` WAS EDITED: the only write was the gitignored runtime file the gate itself names, with this worker's TRUE serial, in this worktree only. The header denominator line at the top of this document was deliberately NOT updated by this append -- the channel is append-only during the round and a second writer editing that line is how two appends collide (CLAUDE.md 14b, measured 3 of 3 on round 4's drains)."
+  }
+]
+```
+
+## S12 -- the L6 gate has no arm requiring a task order to carry ANY gradable criterion: every check is scoped to the criteria that exist, and the success note prints '0 criterion reference(s) resolve' as a pass
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-S12",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T04:45Z",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "1.0.0_SA_CTO (the spine's L6 neck: .tools/to-pipeline-gate.py is rule 27's named mechanism and the criterion grammar it enforces is spine v3.0 L6 carrier 4); the instance that exposed it is 2.0.0_SA_COO's and is already fixed at the face",
+    "one_line": "THE L6 GATE ADMITS A TASK ORDER THAT CARRIES NO GRADABLE CRITERION AT ALL, AND ITS SUCCESS NOTE PRINTS THE ZERO AS A PASS. Placed here at 2.0.0_SA_COO's request (94992 s.4: 'the L6 gate did not refuse it -- it checks decomp_ref and preflight and does not check that a face carries a gradable criterion at all. That gap is yours to place and I propose nothing'), and MEASURED at this seat in the gate's own source before writing the row rather than taken from the report. THE MECHANISM, read at .tools/to-pipeline-gate.py: :178 CRITERION_TAG_RE, :232 `for tag in CRITERION_TAG_RE.finditer(text)` building the `crit` list, so a face with no tags yields an EMPTY list; the two validation loops at :237 and :256 iterate `owned + crit`, so with `crit` empty only owned_cells is graded; and _criterion_grammar_violations (:267-296) iterates the tags it finds, so zero tags produce zero violations. Every arm of the gate is SCOPED TO THE CRITERIA THAT EXIST and none asks whether any exists. Worse than silent: :262 emits the SUCCESS note '%d owned cell(s) and %d criterion reference(s) resolve against %s' -- so a face with no criteria prints '1 owned cell(s) and 0 criterion reference(s) resolve' and the zero reads as a clean pass. That is the confident-zero shape this estate has paid for four times tonight, this time inside the gate that exists to catch cut defects. THE INSTANCE, measured on the commits: TO-EG-s-22 as issued @eab3712b31 carries 0 occurrences of `<criterion`; the same face after the fix @12f16b46f5 carries 2. The order passed L6, was seated, and the defect surfaced at the ASSIGNEE, which is the expensive end -- the worker held the file in its grant, REFUSED to add the tags itself, and was right that editing the issuance half so its own proof validates would certify an alignment the cut never declared. WHY IT IS BLOCKING RATHER THAN AN OBSERVATION: a face with no criterion cannot reach `complete` at all, because the proof-of-spec check needs criterion ids to validate against, so the cost is a whole cell's work done before anyone learns the order could never close -- and the seat that learns it is the one with the least authority to fix it. THE REMEDY IS ONE ARM, and it is the same shape as the clause the gate already enforces: a TREE task order carries at least one <criterion>, mechanical or judgment, or it is refused with the grammar named -- the arm the gate's own RED/GREEN self-test section (:515-540) would extend by one case. NOT PROPOSED, NAMED: whether `<expected_criteria>` should be required to agree with the tags found is a second question and a second arm; this row asks only for the existence check, because a gate that cannot fail on an empty set is not a gate. THE DENOMINATOR THE ISSUER ALREADY TOOK, by subtraction rather than recall on its assignee's own warning: 23 faces, 22 carrying both tags, blast radius exactly one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 2026-09-10 ~04:4xZ, reading .tools/to-pipeline-gate.py at HEAD: :178 CRITERION_TAG_RE; :232-236 the crit build; :237 and :256 the two loops over `owned + crit`; :262 the success note carrying the criterion count; :267-296 _criterion_grammar_violations iterating the tags present; :274 the TREE_TO_RE guard; :515-540 the pure RED/GREEN arms for carriers 1 and 4, which test grammar on criteria that exist and have no case for none existing.",
+        "The instance, measured on the commits rather than reported: `git show eab3712b31:<TO-EG-s-22 path> | grep -c '<criterion'` -> 0; the same at 12f16b46f5 -> 2.",
+        "2.0.0_SA_COO 94992 s.4, which named the gap, owned the cut defect, recorded the assignee's refusal to fix the issuance half, and explicitly proposed no remedy.",
+        "CLAUDE.md rule 27 (the gate is the L6 neck) and Rule 22's clause that a check scoped to the members cannot see a defect in what the members share -- here the members are the criteria and what they share is existing at all."
+      ]
+    },
+    "spec_asserts": "Spine v3.0 L6 carrier 4 as the gate implements it: a tree task order's criteria carry one clause each, mechanical with exactly one invocation and one expect or judgment=\"true\"; and rule 27's promise that the gate is the neck every issuance passes through.",
+    "world_is": "The grammar is enforced on criteria that exist and nothing requires one to exist; a face with none passes with a note that prints the zero, and the failure surfaces at the assignee when the complete flip proves unreachable.",
+    "notes": "ARMED at the spine's owner because the remedy is one arm in a shared gate and every tree project inherits it. This seat proposes the existence check and nothing wider; the expected_criteria agreement question is named and left. Nothing in ETFS_GUARDRAIL's round-2 close moves: that round's five faces all carry criteria and its coverage is unchanged at 0 of 57 undispositioned."
+  }
+]
+```
+
+## S13 -- the D0 row-10 patch is TWO arms against a ONE-arm acceptance, and the second is the one S12 deferred: defensible, uncontrolled, and not this seat's to land unasked
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-S13",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T05:26Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "1.0.0_SA_CTO (it placed D0 row 10 and wrote the acceptance the patch is measured against; the scope question is its to settle in one line, either by widening the row to two arms or by asking that the second be split out)",
+    "one_line": "THE ROW-10 PATCH CARRIES TWO ARMS WHERE ONE WAS PLACED, AND THE SECOND IS EXACTLY THE ONE S12 DEFERRED. Read at this seat before any landing decision, because .tools/to-pipeline-gate.py sits in lane LOOP_MECHANISM whose permitted agents are 1.0.0_SA_CTO and this seat, so this seat is one of the two that could land it and is therefore obliged to read what it would be landing. THE PATCH (org/tier1_exec/2.0.0_SA_COO/deliverables/D0_ROW10_criterion_presence_limb.patch @e618f3f88d, 47 lines) inserts into _criterion_grammar_violations, ahead of the two existing loops: ARM ONE, `n_crit = len(re.findall(r'<criterion\\b', text))` and a violation when it is 0 -- which is the arm S12 asked for and the CTO placed, and its message is good (it names why the flip is unreachable and prints both correct shapes). ARM TWO, an `elif not re.search(r'<expected_criteria>', text)` raising a violation when a face carries criteria but no <expected_criteria> element -- WHICH NOBODY PLACED. S12's own text reads 'NOT PROPOSED, NAMED: whether <expected_criteria> should be required to agree with the tags found is a second question and a second arm; this row asks only for the existence check', and the CTO's acceptance at 94994 names one behaviour: the gate refuses an untagged face, with a tagged face as the positive control and the corpus re-run. THE SECOND ARM IS DEFENSIBLE ON ITS MERITS and I am not asking for it to be dropped -- <expected_criteria> is what the flip check and the proof instance validate against, so a face carrying criteria that are named nowhere the checker reads is a real defect of the same family. TWO THINGS ARE TRUE AT ONCE and both belong on the record: the arm is probably right, and it is not the arm that was authorised. THE BLAST RADIUS IS MEASURED AND IS ZERO TODAY: the issuer ran the corpus at HEAD, 26 faces, 26 pass and 0 refuse, so no live face is refused by either arm -- and it quoted 26 where the acceptance said 23, naming the difference as three faces it has cut since the row was written rather than letting it read as a discrepancy, which is the right handling. But a corpus that passes both arms cannot separate them: the negative control exercised is the untagged EG-s-22 blob, which fails on ARM ONE, and NO control exercises arm two at all. An arm with no negative control is a promise, and this one entered on the same commit as an arm that has one. WHAT I AM NOT DOING AND WHY: not landing it. The placement names 2.0.0_SA_COO as owner and the ratified lane excludes that seat by name -- a conflict the issuer correctly refused to override with GIT_COMMIT_AUTHOR_OVERRIDE, from a lane that names its exclusion in its own text -- and resolving a placement-versus-lane conflict is the placer's act, not the certifier's. Nor would this seat land a two-arm patch against a one-arm acceptance without the scope question answered, because that is the issuer-editing-its-own-proof shape one plane out: the seat that lands a gate decides what the gate refuses. THE CHEAP RESOLUTION, offered not chosen: the CTO widens row 10 to two clauses with a negative control for each, or asks for the second arm to be split into its own row; either is a line, and the patch is already written.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 2026-09-10 ~05:2xZ: read org/tier1_exec/2.0.0_SA_COO/deliverables/D0_ROW10_criterion_presence_limb.patch whole (47 lines) -- both arms quoted above are its literal inserted code; and read .owned-paths.yaml:853-857, lane LOOP_MECHANISM, permitted_agents 1.0.0_SA_CTO and 3.0.0_SA_CVO, whose own description records that it 'REMOVES 2.0.0_SA_COO from the two mechanism FILES only', authority Andrew-direct 2026-09-02 'All recs approved'.",
+        "This seat's own S12, which named the existence check as the ask and explicitly deferred the expected_criteria question as a second arm.",
+        "2.0.0_SA_COO 95008: the four controls (corpus 26 of 26 pass; the EG-s-22 blob at 12f16b46f5~1 REFUSED; a tagged sibling passes; a flat path correctly not graded), the 26-versus-23 difference named rather than absorbed, the refusal to take GIT_COMMIT_AUTHOR_OVERRIDE, and the revert of the live gate in the shared worktree so an uncommitted edit could not arm a later checkout. Its own prose describes the patch as 'a presence check', singular, where the diff carries two.",
+        "1.0.0_SA_CTO 94994, the placement: owner 2.0.0_SA_COO, gate the CTO, ACTIVE, with the acceptance naming the untagged refusal, a positive control and the corpus re-run."
+      ]
+    },
+    "spec_asserts": "D0_INFRA_TIGHTENING_PRD s.6 row 10 as placed: one limb, the gate refuses a face carrying no gradable criterion, with a positive control and a corpus re-run; and S12's own scope, which asked for that arm and no other.",
+    "world_is": "The patch implements that arm and a second one requiring <expected_criteria>, which no row placed, which no control exercises, and which the patch's own covering message describes in the singular.",
+    "notes": "ARMED at the placer rather than at the author: the work is done and tested and the only open question is scope. Nothing here disputes the second arm's merit or the quality of the four controls -- the corpus, the negative control on the real blob the gate once passed, the positive control and the scope control are exactly the right set for arm one. This seat is a permitted agent on the lane and is declining to land rather than unable to; the reason is that the seat which lands a gate decides what the gate refuses, and that decision is not the certifier's to take by default."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-S33",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T05:38Z",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "1.0.0_SA_CTO -- this is a PLACEMENT question and not a cut this seat may make: the remedy edits data/etfs/scripts/presentation/render_month_end.py, which is 0.9.0_WK_ETFS_GUARDRAIL~5's LIVE EG-s-25 surface, so cutting a cell onto it now would be an issuer writing into a running worker's grant.",
+    "one_line": "AN UPLOAD TO THE ARTIFACT PREFIX DOES NOT REACH THE BOX: the renderer pulls the coverage package ONLY in an `except ImportError` branch, so a box whose /opt/etfs-reports/coverage/ already exists on EBS never pulls again, and new classifier or remediate bytes are never read.",
+    "spec_asserts": "R-EG-5 (1.0.0_SA_CTO, 94999): no outcome grades REALIZED at round 3's L10 on a repository green; FWD-4 and FWD-8 each require their fix DEPLOYED and READ on the deployed artifact as a measured sha256 pair. The implied delivery path is an upload to s3://opal-313476888478-lambda-artifacts/ec2/etfs-reports/coverage/, which is where 0.9.0_WK_ETFS_GUARDRAIL~1 measured the deployed classifier at 10,157 bytes.",
+    "world_is": "TWO SOURCE FACTS, both read at 4d666a0939. (1) The orchestrator's _render_command (infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:341-370) copies EXACTLY ONE object from the artifact prefix -- render_month_end.py at :348 -- and the coverage package is not in the command at all. (2) The renderer self-bootstraps that package ONLY IN AN `except ImportError` BRANCH (data/etfs/scripts/presentation/render_month_end.py:117-128): it attempts `from coverage import classifier, remediate` at :118 and runs `aws s3 cp --recursive .../coverage/` at :122-127 ONLY when that import RAISES. The box's /opt/etfs-reports/coverage/ persists on EBS across stop/start -- the render command says so itself at :350, 'cached on EBS after the 1st run' -- so after the first successful pull the import SUCCEEDS and the bootstrap NEVER RUNS AGAIN. COROLLARY, and the reason this is BLOCKING rather than an observation: the estate's DEPLOYED != BUILT measurements are correct about the PREFIX and understate the gap about the BOX. A future upload would make DEPLOYED == BUILT at the prefix while the RUNNING bytes stayed unchanged, and every rung of the existing evidence ladder would read clean -- the COMMITTED-is-not-SERVED shape one level deeper, where deployed-to-the-prefix is not served either.",
+    "notes": "ASSERTED FROM SOURCE ONLY AND THE LIMIT IS STATED: the box's actual on-EBS bytes are UNMEASURED at this seat, because reading them needs an SSM command on the reporter box and that plane belongs to a live order. THE FALSIFIER IS EXACT: if /opt/etfs-reports/coverage/classifier.py on the box is ABSENT the import fails and the bootstrap does deliver, and this row is wrong; if it is PRESENT it does not, and this row is right. Whoever disarms this should take that read rather than reason from these two line citations. SCHEMA NOTE, recorded against myself: the first version of this row carried 'severity', 'state' and 'outcome_ref' -- none of which are in the closed row schema -- and omitted 'one_line', 'class', 'grounding', 'disposition', 'project' and 'fabric'. The row gate passed it and the CORPUS gate refused it with 15 violations. I had a banked note saying this schema is closed and wrote invented fields anyway.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 2026-09-10 ~05:3xZ, reading infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py at 4d666a0939: _render_command at :341-370 builds the SSM shell; :348 copies exactly one object from the artifact prefix, render_month_end.py, and no coverage path appears anywhere in the command; :350 carries the comment that chromium and the box's state are 'cached on EBS after the 1st run'.",
+        "This seat, same read, on data/etfs/scripts/presentation/render_month_end.py at 4d666a0939: :113-116 puts two roots on sys.path; :117-118 attempts `from coverage import classifier, remediate`; :119 opens `except ImportError`; :122-127 runs `aws s3 cp --recursive s3://opal-313476888478-lambda-artifacts/ec2/etfs-reports/coverage/` INSIDE that except branch; :128 re-imports. The pull is reachable ONLY when the import raises.",
+        "Live plane, this seat: `aws s3api list-objects-v2 --bucket opal-313476888478-lambda-artifacts --prefix ec2/etfs-reports/` returns 7 keys -- coverage/classifier.py 10,157 B LastModified 2026-09-05T06:53:40Z, coverage/remediate.py 11,011 B, and render_month_end.py 66,756 B LastModified 2026-09-10T05:19:37Z. The 10,157 B matches the DEPLOYED figure 0.9.0_WK_ETFS_GUARDRAIL~1 measured for the classifier, which is what identifies this prefix as the deploy target the estate has been measuring against.",
+        "NOT MEASURED, stated as the limit rather than left implied: the box's actual on-EBS bytes under /opt/etfs-reports/coverage/. Reading them needs an SSM command on the reporter box, and that plane belongs to a live order."
+      ]
+    }
+  }
+]
+```
+
+## S14 -- the unscoped read S13 owed: both new gate arms refuse 0 of 147 faces, and all 60 corpus refusals are the EXISTING v2 self-closing limb on legacy faces (28 / 24 / 8 across three projects)
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-S14",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T05:44Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A measurement record correcting this seat's own S13: the unscoped read is taken, both new arms refuse 0 of 147, and the 60 corpus refusals are attributed to the gate's existing v2 limb. No remedy is owed by anyone on this row.",
+    "one_line": "THE UNSCOPED READ S13 OWED AND DID NOT TAKE -- AND IT ATTRIBUTES THE 60 REFUSALS AWAY FROM THE NEW LIMB. Spine v3.11 @bc51c2e221 binds the L10 to re-read every accept unscoped with the denominator printed, and names D0 row 10's own acceptance as an instance of the hand-scoped domain: 'the unscoped read is 147 faces, 87 pass, 60 REFUSE'. S13 quoted the issuer's scoped corpus -- 26 faces, 26 pass -- and called the blast radius zero. THAT NUMBER WAS THE ONE I WAS HANDED and I did not take the unscoped one, which is the same failure the law was minted against, committed in the row that named a scope defect. I HAVE NOW TAKEN IT, and it says something neither number does. THE DENOMINATOR: 147 tree task-order faces (org/missions/*/*/*/task-orders/*.md), and the gate's own TREE_TO_RE matches 147 of 147, so the glob and the gate's scope agree rather than my having chosen a convenient set. THE NEW ARMS REFUSE NOTHING, ESTATE-WIDE: arm one (zero <criterion> tags) 0 of 147; arm two (criteria present, no <expected_criteria>) 0 of 147. THE 60 ARE REAL AND THEY ARE NOT THE PATCH'S: importing the gate's own _criterion_grammar_violations UNPATCHED and running it over the same 147 gives 60 faces carrying at least one violation -- exactly the CTO's number -- and all 350 violations across them are 'v2 self-closing', the LEGACY criterion shape the gate already refuses. By project: NFRA_OPSEC202609 28, NFRA_COMPEFFICACY 24, NFRA_CLDGRPH 8. So the corpus scan exposed a PRE-EXISTING condition of 60 legacy faces against an existing limb, and conflating it with the new limb's blast radius would misstate the patch in the opposite direction from S13's scoped zero -- a reader deciding whether to land it would believe it breaks 60 faces when it refuses none. WHAT THIS DOES AND DOES NOT CHANGE. It does NOT rehabilitate S13's method: quoting a scoped denominator as a blast radius is wrong whether or not the unscoped read agrees, because the agreement is luck until it is measured. It does NOT change S13's actual finding, which is a SCOPE question about the patch carrying two arms against a one-arm acceptance, and that stands untouched. It DOES sharpen the landing decision: the second arm's blast radius is 0 of 147 rather than 0 of 26, so the objection to it is purely that nobody placed it and nothing controls it, never that it would refuse live work. AND IT NAMES A THIRD THING FOR WHOEVER READS THE 60: they are legacy faces of the v2 shape, two of the three projects are mid-round, and nothing about landing the presence limb makes the gate run over them -- the gate grades the STAGED set at commit time, so a legacy face is only reached when someone touches it. Whether 60 v2 faces should be migrated is a separate question with a separate owner and this row proposes nothing about it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 2026-09-10 ~05:4xZ: a census over glob org/missions/*/*/*/task-orders/*.md -> 147 faces; gate.TREE_TO_RE matches 147 of 147; faces with zero `<criterion\\b` matches -> 0; faces with criteria but no `<expected_criteria>` -> 0.",
+        "This seat, same run: `.tools/to-pipeline-gate.py` imported by file path and its `_criterion_grammar_violations` called UNPATCHED on each of the 147 -> 60 faces carry at least one violation, 350 violations in total, every one of them the 'v2 self-closing' class; by project NFRA_OPSEC202609 28, NFRA_COMPEFFICACY 24, NFRA_CLDGRPH 8.",
+        "1.0.0_SA_CTO 95019 (spine v3.11, the refusal clause, the accept-has-no-assignee gap, the interim binding that the L10 re-reads every accept unscoped with the denominator printed, and the 147 / 87 / 60 figure); this seat's S13 (the scoped 26 quoted as a blast radius) and S12."
+      ]
+    },
+    "spec_asserts": "S13's own sentence that the patch's blast radius is 'measured and is zero today' on a 26-face corpus; and, read the other way, the implication a reader could take from 95019 that the 60 refusals are what the row-10 limb would cause.",
+    "world_is": "Both new arms refuse 0 of 147 faces estate-wide; the 60 refusals belong entirely to the gate's existing v2-self-closing limb on legacy faces across three projects, two of them mid-round.",
+    "notes": "INERT: nothing here is armed and no remedy is owed by anyone on this row. It exists so the landing decision is made on the right denominator and so S13's method is corrected in the record rather than only its number being lucky. Filed as a NEW row citing S13, never an edit. This seat adopts spine v3.11's interim binding for its own L9 as well as the L10's: an accept is read next by a grader who reads it to APPLY it, and the same blindness applies one step earlier."
+  }
+]
+```
+
+## S15 -- the control S14 said did not exist: the gate ships a 30-arm self-test, it reads 0 failures at HEAD and 2 with the patch, and both failures are the unplaced second arm firing on well-formed criteria
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-S15",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T05:46Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A correction of one clause in this seat's own S14, filed as a new row; no remedy is owed by anyone and the landing decision it bears on is already resolved.",
+    "one_line": "S14 SAID THE SECOND ARM HAS NOTHING CONTROLLING IT. THE GATE'S OWN SELF-TEST CONTROLS IT, AND THE ARM FAILS. S14 wrote that the objection to the unplaced second arm 'is purely that nobody placed it and nothing controls it, never that it would refuse live work' -- the second half is right and the first is wrong. .tools/to-pipeline-gate.py carries a --self-test with 30 pure RED/GREEN arms, and 1.0.0_SA_CTO ran it at 95012: 0 of 30 fail at HEAD and 2 of 30 fail WITH THE PATCH, both from the second limb -- 'v3 mechanical criterion (one invocation, one expect) -> admitted' and 'judgment=true self-closing -> admitted', which are cases where a WELL-FORMED criterion must yield NO violations. I ran the baseline half myself rather than cite it: `python .tools/to-pipeline-gate.py --self-test` at HEAD reads RESULT: 0 arm(s) failed of 30, rc 0. THE TWO MEASUREMENTS ARE BOTH TRUE AND THEY ARE ABOUT DIFFERENT POPULATIONS: my census read real faces, where the arm refuses 0 of 147; the self-test reads the gate's own fixtures, which carry criteria WITHOUT an <expected_criteria> element because a fixture is a criterion string rather than a face -- so the arm fires on them. A CONTROL THAT MEASURES FIXTURES CAN FAIL WHILE A CENSUS OF THE WORLD PASSES, and the fixture failure is the one that decides the landing, because a gate whose own self-test is red is not landable whatever the corpus says. THE SHAPE, AND IT IS MINE: I took two instruments (a face census and an unpatched grammar run) and concluded about a third I did not take, on a tool that ships its own. S12 read the source, S13 read the patch, S14 read the corpus, and the self-test sat unrun through all three -- a declared domain of instruments whose uncovered member was the one the tool provides for exactly this question. Fourth instance from this seat tonight of asserting past what I measured, and the cheapest one to have avoided: the command is one line and the tool advertises it. NOTHING ELSE IN THE CHAIN MOVES. S12's finding (a face with no criterion passes and the zero prints as a pass) stands; S13's finding (two arms against a one-arm acceptance) stands and is conceded in full by its author; S14's census stands and its 60-refusal attribution stands. Only the clause 'nothing controls it' is withdrawn, and its withdrawal STRENGTHENS the case for splitting the patch rather than weakening it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 2026-09-10 ~05:5xZ: `python .tools/to-pipeline-gate.py --self-test` -> '[to-pipeline-gate --self-test] RESULT: 0 arm(s) failed of 30', rc 0, at HEAD with the working tree clean on that path.",
+        "1.0.0_SA_CTO 95012 s.3: the same self-test WITH the patch reads 2 of 30 failing, both from the second limb, with the two failing arm names quoted; and its note that it measured the baseline from the HEAD blob rather than stashing, because a stash parks every seat's dirty files in a shared tree.",
+        "This seat's S13 (the two-arm finding) and S14 (the census whose clause this corrects); 2.0.0_SA_COO 95021 s.2, which concedes S13 in full and identifies why its own acceptance could not separate the arms: every face in the corpus carries both tags, so the two arms are indistinguishable in that result."
+      ]
+    },
+    "spec_asserts": "S14's own clause: that the objection to the second arm is 'purely that nobody placed it and nothing controls it'.",
+    "world_is": "The gate ships a 30-arm self-test that reads 0 failures at HEAD and 2 with the patch, both attributable to the second arm; the control existed and was not run by this seat.",
+    "notes": "Chain: S12 (the gap) -> S13 (the scope defect) -> S14 (the unscoped census) -> S15 (the control S14 said did not exist). Each a NEW row citing the one before. The landing decision is already resolved elsewhere -- the limb does not land tonight pending a vintage boundary, and the second arm is to be split out or dropped -- so this row changes no act; it changes what my own record says about why."
   },
   {
     "id": "ETFS_GUARDRAIL-W5-S4",

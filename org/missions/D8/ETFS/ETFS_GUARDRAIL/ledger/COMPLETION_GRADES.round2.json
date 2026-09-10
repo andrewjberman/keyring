@@ -1,0 +1,85 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "ETFS_GUARDRAIL",
+ "round": 2,
+ "graded_by": "1.0.0_SA_CTO",
+ "graded_utc": "2026-09-10T04:3xZ",
+ "graded_against_prd_version": "v0.6",
+ "first_grades_artifact_for_this_project": true,
+ "mint_note": "This project had NO COMPLETION_GRADES artifact for round 1 either -- the same missing verdict plane this seat found and closed at NFRA_OUTSET an hour earlier, and the same seat's gap. Round 1's verdicts live in ROUND_ANALYSIS.round1.md's own table (FWD-6 REALIZED; all others NOT_EVALUATED) and are cited rather than re-derived here. FWD-2 and FWD-7 are SUPERSEDED by FWD-9 and FWD-10 (PRD v0.5, ids permanent and never reused) and are not graded.",
+ "packet_ref": "org/missions/D8/ETFS/ETFS_GUARDRAIL/ledger/L8_PACKET.round2.partial.md@616b49f610",
+ "packet_sha256": "b3c49c6a499fa56e41819fc2b497764b8d73b97cb8340de908ade87bff6444a1",
+ "slug_ref": "org/missions/D8/ETFS/ETFS_GUARDRAIL/surprise-channel/adjudications/ADJUDICATION_v1.md@1ea6da48c4",
+ "analysis_ref": "org/missions/D8/ETFS/ETFS_GUARDRAIL/ledger/ROUND_ANALYSIS.round2.md",
+ "preconditions_measured": {
+  "orders_terminal_and_drained": "5 of 5",
+  "investigation_items_undispositioned": "0 of 57 (comp-surprise census at 3.0.0_SA_CVO; 0 duplicate ids)",
+  "packet_hash_independently_recomputed": true
+ },
+ "round1_comparison": {
+  "REALIZED": 1,
+  "NOT_REALIZED": 0,
+  "NOT_EVALUATED": 7
+ },
+ "dep_stage": "EXECUTING",
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "REALIZED",
+   "state_observed": "EXERCISED",
+   "artifact_ref": "org/missions/D8/ETFS/ETFS_GUARDRAIL/prd/ETFS_GUARDRAIL_PRD.md@8563434d16",
+   "note": "EG-s-17: cottonwood 2026-09-08 recovered by the PRODUCER'S OWN fire, one write, byte-identical across three battery runs, the recovered date named in catchup_processed. Round 1 had this NOT_EVALUATED waiting on a real missed day. The controlled-hole shape is authorised by PRD v0.4 row S17 in as many words, so the word REAL in the DONE WHEN is qualified by the addendum that governs its grading -- 2.0.0_SA_COO chased that suspected tension and cleared it (94960), and it is recorded because a suspected tension left unreported gets rediscovered by whoever grades it next."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "REALIZED",
+   "state_observed": "EXERCISED",
+   "artifact_ref": "org/missions/D8/ETFS/ETFS_GUARDRAIL/prd/ETFS_GUARDRAIL_PRD.md@8563434d16",
+   "note": "The August re-render published 5 of 5 keys carrying '# coverage: 21/21 trading days' on the SERVED artifact. Round 1 could not grade this: the published CSV still ended on its numeric rows and predated the round."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "NOT_REALIZED",
+   "state_observed": "APPLIED",
+   "artifact_ref": "org/missions/D8/ETFS/ETFS_GUARDRAIL/prd/ETFS_GUARDRAIL_PRD.md@8563434d16",
+   "note": "THE CRITERION PASSES AND THE OUTCOME DOES NOT, and those are different questions. S16-AC2 PASS: 3 of 3 partners from the ARTIFACT'S OWN LIST, the calendar ENUMERATED by the battery rather than transcribed into it, class A = 3 and trading_days = 6 per partner, agreeing with the estate's calendar to the day. But 3.0.0_SA_CVO measured the WORLD: daily/inflection/2026-09-07.json exists at 1,209 bytes written on the day itself (as do 09-05 and 09-06) while head-object for cottonwood and 49financial on that date returns 404 -- two partners honestly absent, one carrying a file, and the verdict reads A=3 identically for all three because class A short-circuits before the presence check (classifier.py:122-125 ahead of :128). THE ESTATE SERVES A CLOSED DAY CARRYING FOUR PRICED ROWS NOBODY MEASURED, which is precisely the property this outcome exists to prevent. Detector half cut as EG-s-22 (PRD v0.6 row S19); producer half placed OUT at row S20 with its brief request's delivery state recorded on the row. This seat's row S16 would have graded it REALIZED before v0.6 because it named two partners of three."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "REALIZED",
+   "state_observed": "EXERCISED at andrew@ / APPLIED at aj@",
+   "artifact_ref": "org/missions/D8/ETFS/ETFS_GUARDRAIL/prd/ETFS_GUARDRAIL_PRD.md@8563434d16",
+   "note": "ADOPTED FROM 3.0.0_SA_CVO'S REC AGAINST THIS SEAT'S OWN RULING OF FORTY MINUTES EARLIER. The August delivery at 2026-09-10T00:25:59Z was addressed to aj@ AND andrew@ and read at andrew@'s mailbox through the gateway; nobody read aj@'s inbox. 94974 ruled the envelope insufficient and named a third instrument -- the mail platform's per-recipient delivery record. THE PRINCIPLE STANDS AND THE INSTRUMENT DOES NOT EXIST, measured at two seats on two substrates: exactly one SES configuration set exists (trade-pipeline-notifications), its ONLY event destinations are COMPLAINT and BOUNCE and not DELIVERY, the identity carries NO default ConfigurationSetName, and a repo census of ConfigurationSetName over 153,416 files (pages 1-3 of 3, 38 hits) finds every first-party hit inside a vendored AWS SDK bundle -- no Opal sender names a set. So no delivery event was ever published for that message on any plane. The remaining acts are a read of aj@'s mailbox (not an instrument this estate has or should acquire) and another send (barred by Andrew's ~02:5xZ constraint). NO ACT AVAILABLE TO THE FABRIC CLOSES IT, so holding it short would make it permanently ungradeable -- exactly what the 2026-09-10 no-FWD-is-a-wait law forbids -- and that law's remedy is satisfied by banked history already read. state_observed records the split so no later reader mistakes the envelope for a mailbox. A seat re-sending to firm up this grade would be the very act the constraint forbids; 2.0.0_SA_COO said so before anyone asked it to."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "REALIZED",
+   "state_observed": "APPLIED",
+   "artifact_ref": "org/missions/D8/ETFS/ETFS_GUARDRAIL/prd/ETFS_GUARDRAIL_PRD.md@8563434d16",
+   "note": "Carried from round 1 (ROUND_ANALYSIS.round1.md), whose bar is APPLIED and whose applied plane was measured. Round 2 adds that the Orion alignment module executed in production for the first time this night."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "verdict": "NOT_REALIZED",
+   "state_observed": "EXERCISED",
+   "artifact_ref": "org/missions/D8/ETFS/ETFS_GUARDRAIL/prd/ETFS_GUARDRAIL_PRD.md@8563434d16",
+   "note": "THE STOP WORKED AND THE ASK UNDER-REPORTS. The September run wrote coverage_egress_ask.json naming date, partner and provider, with ZERO vendor egress over the run window on two instruments with printed denominators -- the mechanism is real and was exercised on real data, which is why state_observed is EXERCISED rather than APPLIED. But W1-S27 measures that the ask names ONE OF TWO unresolved dates, and a person authorising egress on it would approve less than what is actually outstanding while believing they had seen all of it. A stop-and-ask whose ask under-reports fails the outcome even though the stop worked. Code cell for round 3, not a wait.",
+   "correction": "CORRECTION 2026-09-10 ~04:4xZ, VERDICT UNCHANGED, MECHANISM CORRECTED. This row said the ask 'names one of two unresolved dates'. That is the SYMPTOM. 2.0.0_SA_COO read the code before cutting EG-s-23 and measured the CAUSE: rung3_stop_and_ask builds its asks from EVERY day in the unresolved set it is handed (remediate.py:100-109) and is faithful to its partner -- but it writes to platinum/reports/<month>/coverage_egress_ask.json (:118), keyed by MONTH, while remediate_month (:129) is a PER-PARTNER function. So each partner's ask OVERWRITES the one before it at the same key. An entire partner's outstanding days are absent from an artifact whose whole purpose is completeness, and absent in a way that READS AS COMPLETE: well-formed, correct authorization line, nothing indicating another partner ever existed. That is worse than under-reporting a count and it makes the NOT_REALIZED verdict more clearly right, not less. Cell EG-s-23 @5aeb940bd0; its bar is that a PARTIAL ask must read DIFFERENTLY from a complete one."
+  },
+  {
+   "fwd_id": "FWD-9",
+   "verdict": "NOT_EVALUATED",
+   "state_observed": "DESIRED",
+   "artifact_ref": "org/missions/D8/ETFS/ETFS_GUARDRAIL/prd/ETFS_GUARDRAIL_PRD.md@8563434d16",
+   "note": "Minted 2026-09-10 ~03:1xZ (PRD v0.5) to supersede FWD-2, whose only proof was a refusal nobody could schedule. Requires a DRIVEN forced-incomplete condition under a NEVER-2 entry with the forcing disclosed on the artifact. Not driven yet. NOT A WAIT -- queued work, and aj@ is not a recipient of any driven run."
+  },
+  {
+   "fwd_id": "FWD-10",
+   "verdict": "NOT_EVALUATED",
+   "state_observed": "DESIRED",
+   "artifact_ref": "org/missions/D8/ETFS/ETFS_GUARDRAIL/prd/ETFS_GUARDRAIL_PRD.md@8563434d16",
+   "note": "Minted 2026-09-10 ~03:1xZ (PRD v0.5) to supersede FWD-7. GATED ON THE W1-S25 FIX FIRST: the terminal send guard reads a key the renderer never writes, so it cannot fire at all and round 1's proof passed on a fixture built to the docstring rather than the producer's output. Already going to round 3. NOT A WAIT -- the defect is the work."
+  }
+ ]
+}

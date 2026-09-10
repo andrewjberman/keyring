@@ -1,0 +1,129 @@
+{
+  "schema_version": 3.1,
+  "carded_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+  "subject": {
+    "id": "globgrph stitch producer, archive carry-forward -- CARRIER: PROPS",
+    "kind": "script",
+    "declared_domain": "The PROP half of the same mechanism: key/value props riding on the nodes this producer reads back out of the snapshot it archives. Covers which copy of a duplicated node wins (and therefore whose props are served) and which prop keys a surviving copy is allowed to carry. Does NOT cover the node population itself (the nodes carrier card) or the edges (the edges carrier card). A prop has no id of its own, which is exactly why this carrier needed a different remedy from the other two."
+  },
+  "as_of": {
+    "carded_utc": "2026-09-10T04:37:24Z",
+    "commit_ish": "f3b5f26f77",
+    "graph_vintage": "The served projection projection/2026-09-10T01:27:30.508695+00:00/, read at 2026-09-10T01:47:03Z by the seat that filed row NFRA_CLDGRPH-W2-S69, and the local producer run against snapshots/20260909/graph-20260909.tar.gz. NOT RE-READ BY THIS CARD -- the round-7 egress hold; every served number here is read from the record of that read."
+  },
+  "process": {
+    "methodology": {
+      "how": "Props reach the served graph on their node, so the prop question is decided by WHICH COPY OF A NODE SURVIVES and by WHAT THAT COPY IS ALLOWED TO CARRY. Two producer-side handlers, one for each, both inside _collapse_stitch_copies. The tie-break keeps the object this run emitted, identified by Python object identity taken before the union. The drop pops every key in RETIRED_STITCH_PROPS from every stitch-sourced node that survives, archived or fresh. The producer states why both are needed and the statement is the design: the tie-break decides which copy survives, the drop decides what a surviving copy may carry; only the first would leave the value one iteration-order change away from returning, only the second would leave two copies of every member differing in their props.",
+      "determinism": "deterministic",
+      "composes": [
+        {
+          "id": "_collapse_stitch_copies",
+          "note": "the tie-break, shared with the nodes carrier"
+        },
+        {
+          "id": "derive_runner.ingest_stitch_artifact",
+          "note": "the FOLD, the stamp's original writer, retired by the image act of 2026-09-10T01:09Z"
+        }
+      ],
+      "invents": [
+        {
+          "id": "RETIRED_STITCH_PROPS",
+          "note": "an ENUMERATED list of retired prop keys, currently one entry"
+        }
+      ],
+      "materializer_standing": "canonical",
+      "basis": "measured",
+      "evidence": "infra/aws/globgrph/derive_stitch.py:301-306 (the retired-props comment and the tuple), :411-427 (the tie-break's own account of why the inferred freshness mark failed and why both remedies exist), :456-461 (the pop, counted into retired_props_dropped) @f3b5f26f77.",
+      "owner": "0.8.0_AE_CloudComp"
+    },
+    "cadence": {
+      "declared_rhythm": "The same two clocks as every other carrier -- producer at cron(0 3 * * ? *), archiving derive at cron(0 2 * * ? *) -- and this carrier is where the 23-hour gap was MEASURED as a consequence rather than inferred: the fold's writer was retired by an image act, the fold printed stamped=0 on the very next run, and the served stamp was still 1 because the value had already been archived by an earlier cycle.",
+      "actual_trigger": "EventBridge schedule rules on both sides, plus -- for this carrier's history -- the ad-hoc cycles authorised inside round 6, four in one night. THE CADENCE IS THE COST: a producer-side prop remedy cannot be proven on the served plane inside one cycle, because the value must be re-read after the next archive.",
+      "live_matches_declared": "yes",
+      "live_instance_age": "Round 6 closed with the served stamp at 0, down from 1,771 at the round's start; the current instance was not re-read by this card.",
+      "basis": "held",
+      "evidence": "DESIRED plane, measured: infra/aws/terraform/globgrph/stitch-produce.tf:228 and infra/aws/terraform/globgrph/item2a.tf:441 @f3b5f26f77. APPLIED plane, HELD: NFRA_CLDGRPH-W2-S69 @2f87f07926 (the derive on the new image, task e054a78ebc56479f843ba589f6cff4e4, printing STITCH_INGEST stamped=0 while the served read at 2026-09-10T01:47:03Z still returned 1) and ROUND_ANALYSIS.round6.md:28 @f3b5f26f77 (the stamp retired on BOTH writers, 0 served).",
+      "owner": "0.7.0_AE_CloudOps"
+    }
+  },
+  "artifact": {
+    "persistence": {
+      "persisted": true,
+      "authority_role": "projection",
+      "mutation_policy": "replaceable",
+      "form": "A props dict on a node object inside the archived graph JSON, and the same props on the served CloudNode row.",
+      "basis": "measured",
+      "evidence": "NFRA_CLDGRPH-W2-S69 @2f87f07926 -- exactly one node carried the retired key, in class bucket stitch_cloud (the archived side), with props file_path, source and vocabulary; the same value read on the served projection at 2026-09-10T01:47:03Z. Two planes, one value, and the props ride the node on both.",
+      "owner": "0.8.0_AE_CloudComp"
+    },
+    "location": {
+      "home": "On the node, in s3://opal-313476888478-globgrph/snapshots/<date>/graph-<date>.tar.gz and in the served CloudNode table. A prop has NO home of its own -- it cannot be addressed, listed or retired independently of the node that carries it, which is why the remedy had to be a key list applied at collapse time.",
+      "projection_of": [
+        {
+          "id": "derive_runner.ingest_stitch_artifact",
+          "note": "the fold that wrote the key; its writer is retired"
+        },
+        {
+          "id": "archived_snapshot_node_copy",
+          "note": "the copy of the node that already carried the key when this cycle read it back"
+        }
+      ],
+      "co_resident_stores": [
+        {
+          "id": "served_cloudnode_table",
+          "note": "the props ride the node onto the served row"
+        },
+        {
+          "id": "kuzu_store",
+          "note": "built from the same graph"
+        }
+      ],
+      "basis": "measured",
+      "evidence": "infra/aws/globgrph/derive_stitch.py:301-306 @f3b5f26f77 names both writers and states that a node still carrying the key arrived out of the snapshot this producer archives; NFRA_CLDGRPH-W2-S69 @2f87f07926 measured it in the artifact and on the served plane in the same hour.",
+      "owner": "0.7.0_AE_CloudOps"
+    }
+  },
+  "trust": {
+    "coverage": {
+      "universe": "Prop keys on stitch-sourced nodes that the producer has retired and must not serve again.",
+      "denominator": "1 of 1 retired key enumerated (vocabulary), applied to every surviving stitch-sourced node. On the served plane the population moved 1,771 -> 1 -> 0 across round 6: 1,771 stamped at the round's start, 1 surviving the image act (the PORTAL_BUNDLE node), 0 after the producer-side drop, measured over a 27,665-node whole-graph diff whose props delta read exactly one removed key and nothing else.",
+      "explicitly_out": [
+        "EVERY OTHER RETIRED PROP KEY, PRESENT OR FUTURE. RETIRED_STITCH_PROPS is an enumeration, so its coverage is exactly as wide as its list and it lapses SILENTLY when the next key is retired -- the same shape CLAUDE.md names for an enumerated ban list.",
+        "props on non-stitch nodes: the collapse never touches a node this producer did not source, deliberately",
+        "prop VALUE drift: the remedy removes a key, it does not compare two copies' values, so a fresh and an archived copy differing in a value they both carry is invisible to it"
+      ],
+      "basis": "measured",
+      "evidence": "infra/aws/globgrph/derive_stitch.py:306 @f3b5f26f77 (the tuple, one entry); NFRA_CLDGRPH-W2-S69 @2f87f07926 (1 served, the whole-graph diff over 27,663 -> 27,665 nodes showing no vocabulary entry in the props-key delta at all -- which is why a diff scoped to the stamp would have proved nothing either way); ROUND_ANALYSIS.round6.md:28 @f3b5f26f77 (0 served, from 1,771).",
+      "owner": "0.8.0_AE_CloudComp"
+    },
+    "key": {
+      "identity_space": "The pair (node id, prop key). A prop has no key of its own; it is addressed only through its node, and the retired-key remedy addresses it by the literal key STRING.",
+      "key_expression": "n.pop(k) for k in RETIRED_STITCH_PROPS, over every stitch-sourced node that survives the collapse -- derive_stitch.py:456-461 @f3b5f26f77.",
+      "key_is_stable": "stable",
+      "crosses_spaces": false,
+      "declared_mapping": null,
+      "basis": "measured",
+      "evidence": "infra/aws/globgrph/derive_stitch.py:456-461 @f3b5f26f77. The key string is stable in the sense that matters here -- a literal compared to a literal -- and that stability is precisely what makes the coverage row's enumeration defect a silent one: nothing about a stable key tells you the LIST of keys is complete.",
+      "owner": "0.8.0_AE_CloudComp"
+    },
+    "failure_mode": {
+      "returns_on_failure": "A SERVED VALUE THAT NOBODY WRITES ANY MORE, with every writer-side instrument reading clean. This is the measured case, not a hypothetical: the image act retired the fold's writer, the fold printed stamped=0, seven of seven task families were confirmed on the new digest, and the served count stayed at 1. Every instrument pointed at the WRITER said the retirement had worked; only a read of the served value disagreed, and a diff scoped to the stamp would have shown nothing either way because the value was unchanged on both sides.",
+      "distinguishable_from_true_negative": "no",
+      "silent_degrade_paths": [
+        "THE TIE-BREAK LOSING ITS SIGNAL: the collapse first inferred freshness from retyped_from, the mark the re-type leaves. Once the archived snapshot itself carried canonical names nothing was re-typed, the mark went empty for every node, and the winner fell to dict iteration order. It fell to the archived copy. A signal that goes QUIET degrades silently in a way a signal that goes WRONG does not, and no test of the tie-break's logic could have caught it.",
+        "THE ENUMERATION LAPSING: the next prop key retired without an edit to RETIRED_STITCH_PROPS is carried forward exactly as vocabulary was, and the producer will print retired_props_dropped=0 while doing it -- a clean zero indistinguishable from a genuinely clean graph.",
+        "A retired key surviving on a node the collapse skips: only nodes with source=portal-stitch are visited (derive_stitch.py:448 @f3b5f26f77), so the same key on a node whose source stamp was lost or never set is never popped."
+      ],
+      "basis": "measured",
+      "evidence": "NFRA_CLDGRPH-W2-S69 @2f87f07926, five GROUNDED evidence items including the seven-family describe-task-definition read, the derive's own STITCH_INGEST line and the served read; infra/aws/globgrph/derive_stitch.py:411-427 and :447-461 @f3b5f26f77.",
+      "owner": "0.8.0_AE_CloudComp"
+    }
+  },
+  "verdict": {
+    "standing": "QUALIFIED",
+    "why": "Both remedies are in the producer and both are measured working -- the tie-break now rests on an object identity no data field can drift out from under, and the retired key is popped from every surviving stitch-sourced node. What keeps this carrier off SOUND is that its coverage is an ENUMERATION of one key: the mechanism is correct and its population is hand-maintained, so the NEXT retired prop repeats this instance exactly, and the producer's own counter will read 0 while it happens. Usable as evidence that the vocabulary stamp is gone; NOT usable as evidence that no retired prop is being carried forward.",
+    "blocking_defects": [
+      "AN ENUMERATED RETIRED-KEY LIST WITH NO PRODUCER OF ITS OWN (owner 0.8.0_AE_CloudComp): RETIRED_STITCH_PROPS at derive_stitch.py:306 @f3b5f26f77 is maintained by hand, and a prop retired anywhere else in the pipeline does not reach it. Remedy shape: derive the list from the emitter's own current prop vocabulary rather than restating it, or make the producer count and print every prop key that arrives on a carried node and is absent from this cycle's emission -- the shrink, expressed as a number, which is what the edges carrier already does for its edge type."
+    ]
+  }
+}

@@ -1,0 +1,79 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "NFRA_CLDGRPH",
+ "round": 6,
+ "graded_by": "1.0.0_SA_CTO",
+ "graded_utc": "2026-09-10T04:0xZ",
+ "graded_against_prd_version": "v0.14",
+ "report_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/COMPLETION_REPORT.round6.json",
+ "packet_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/L8_PACKET.round6.final.md@aec7dc8cfd",
+ "packet_sha256_prefix": "6b9c09744d366feb",
+ "slug_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/adjudications/ADJUDICATION_v1.md@32114f8e9b",
+ "analysis_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/ROUND_ANALYSIS.round6.md",
+ "preconditions_measured": {
+  "orders_terminal_and_drained": "11 of 11",
+  "investigation_items_undispositioned": "0 of 245 (comp-surprise census at 3.0.0_SA_CVO; 0 defects, 0 malformed, no duplicate ids)",
+  "orders_flipped_complete": 10,
+  "orders_drained_open": "TO-CG-F-11 on F11-AC3 alone, per this seat's ruling 94872"
+ },
+ "dep_stage": "EXECUTING",
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/prd/NFRA_CLDGRPH_PRD.md@2c689ef807",
+   "state_observed": "EXERCISED",
+   "note": "Carried REALIZED. Round 6's served-graph work did not touch the answering surface itself. Carried REALIZED from round 5 (COMPLETION_GRADES.round5.json). No round-6 cell moved this outcome's substance. Re-read against PRD v0.14: FWD-2, FWD-4 and FWD-8 had their DONE WHEN re-pointed at on-demand READS of history that already exists, ids KEPT -- a re-pointing that makes an outcome provable today cannot make it less proven than it was, so no grade moves. 2.0.0_SA_COO~A and 3.0.0_SA_CVO each said so independently before this seat read either."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/prd/NFRA_CLDGRPH_PRD.md@2c689ef807",
+   "state_observed": "EXERCISED",
+   "note": "Carried REALIZED from round 5 (COMPLETION_GRADES.round5.json). No round-6 cell moved this outcome's substance. Re-read against PRD v0.14: FWD-2, FWD-4 and FWD-8 had their DONE WHEN re-pointed at on-demand READS of history that already exists, ids KEPT -- a re-pointing that makes an outcome provable today cannot make it less proven than it was, so no grade moves. 2.0.0_SA_COO~A and 3.0.0_SA_CVO each said so independently before this seat read either."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/prd/NFRA_CLDGRPH_PRD.md@2c689ef807",
+   "state_observed": "EXERCISED",
+   "note": "Carried REALIZED, and round 6 strengthens it without changing the grade: the served projection now declares the artifact it was built from (stitch-codebuild 2026-09-10T03:01:17Z, manifest sha256 5361815924ce7afd) and that artifact came from a RULE-INITIATED fire, so a vintage question now answers with a scheduled provenance rather than an ad-hoc one. Carried REALIZED from round 5 (COMPLETION_GRADES.round5.json). No round-6 cell moved this outcome's substance. Re-read against PRD v0.14: FWD-2, FWD-4 and FWD-8 had their DONE WHEN re-pointed at on-demand READS of history that already exists, ids KEPT -- a re-pointing that makes an outcome provable today cannot make it less proven than it was, so no grade moves. 2.0.0_SA_COO~A and 3.0.0_SA_CVO each said so independently before this seat read either."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/prd/NFRA_CLDGRPH_PRD.md@2c689ef807",
+   "state_observed": "EXERCISED",
+   "note": "Carried REALIZED from round 5 (COMPLETION_GRADES.round5.json). No round-6 cell moved this outcome's substance. Re-read against PRD v0.14: FWD-2, FWD-4 and FWD-8 had their DONE WHEN re-pointed at on-demand READS of history that already exists, ids KEPT -- a re-pointing that makes an outcome provable today cannot make it less proven than it was, so no grade moves. 2.0.0_SA_COO~A and 3.0.0_SA_CVO each said so independently before this seat read either."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/prd/NFRA_CLDGRPH_PRD.md@2c689ef807",
+   "state_observed": "EXERCISED",
+   "note": "Carried REALIZED. The vocabulary unification (0 of 4 provisional stitch types, PORTAL_BUNDLE as the positive control) is the strongest evidence yet that one story is told once, but the outcome was already EXERCISED and this is corroboration, not a state change. Carried REALIZED from round 5 (COMPLETION_GRADES.round5.json). No round-6 cell moved this outcome's substance. Re-read against PRD v0.14: FWD-2, FWD-4 and FWD-8 had their DONE WHEN re-pointed at on-demand READS of history that already exists, ids KEPT -- a re-pointing that makes an outcome provable today cannot make it less proven than it was, so no grade moves. 2.0.0_SA_COO~A and 3.0.0_SA_CVO each said so independently before this seat read either."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/prd/NFRA_CLDGRPH_PRD.md@2c689ef807",
+   "state_observed": "EXERCISED",
+   "note": "Carried REALIZED from round 4's executable plane, round 5 having removed the residue. Carried REALIZED from round 5 (COMPLETION_GRADES.round5.json). No round-6 cell moved this outcome's substance. Re-read against PRD v0.14: FWD-2, FWD-4 and FWD-8 had their DONE WHEN re-pointed at on-demand READS of history that already exists, ids KEPT -- a re-pointing that makes an outcome provable today cannot make it less proven than it was, so no grade moves. 2.0.0_SA_COO~A and 3.0.0_SA_CVO each said so independently before this seat read either."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "verdict": "NOT_REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/prd/NFRA_CLDGRPH_PRD.md@2c689ef807",
+   "state_observed": "APPLIED",
+   "note": "NOT_REALIZED, state APPLIED -- UNCHANGED AS A VERDICT, but TWO of the three limbs round 5 named CLOSED THIS ROUND. (i) the accept's existence clause -- 'no second, older copy anyone could still be reading from' -- is CLOSED: the per-machine store was archived with an S3-COMPUTED checksum, deleted, tombstoned, and its loader removed. (iii) the stitch producer that had never produced (67 of 67 failed) SUCCEEDED on the 03:00Z rule-initiated nightly, and that fire's artifact is what the grain baseline is signed on. WHAT REMAINS IS ONE LIMB: the PERSON half -- two people on different machines asking the same question at the same moment (row S22). IT IS AN ACT, NOT A WAIT: it is proven the moment a site-Z seat asks D-8's fixed question beside this one. It is gated on a NAMED HUMAN DECISION -- Andrew's allocation of a site-Z seat (his word ~17:3xZ) -- and practically on the push he holds, local being 303 ahead of origin/CLOUD @c6bcb7b12b, so site Z cannot yet read what this round built. Under the 2026-09-10 L2 law that is the EXPRESSLY QUALIFIED exception, not the indeterminate wait the law forbids, and ROUND_ANALYSIS.round6.md s.5 is that qualification on the record."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/prd/NFRA_CLDGRPH_PRD.md@2c689ef807",
+   "state_observed": "EXERCISED",
+   "note": "Carried REALIZED from round 5 (COMPLETION_GRADES.round5.json). No round-6 cell moved this outcome's substance. Re-read against PRD v0.14: FWD-2, FWD-4 and FWD-8 had their DONE WHEN re-pointed at on-demand READS of history that already exists, ids KEPT -- a re-pointing that makes an outcome provable today cannot make it less proven than it was, so no grade moves. 2.0.0_SA_COO~A and 3.0.0_SA_CVO each said so independently before this seat read either."
+  }
+ ]
+}

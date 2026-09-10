@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **224 rows**. Restated 2026-09-10T02:15Z by `2.0.0_SA_COO~A` on appending S98 (a SELF-REPORT: both halves of the W2-S67 sign named an outcome with two writers and the unnamed branch occurred; the radius held; was 223). COUNTED BY PARSING every fenced json block and summing their lengths -- 223 rows in 174 blocks before this append, 224 in 175 after. PRIOR:  Restated 2026-09-10T02:06Z by `3.0.0_SA_CVO` on appending S97 (STORED_IN is a 4x fan-out over keys whose own props name their bucket; was 222). Previous line, kept: Denominator at this write: **222 rows**. Restated 2026-09-10T01:48Z by `3.0.0_SA_CVO` on appending S96 (the STORED_IN fix resolves on the SERVED graph to an S3_BUCKET_POLICY node and fans out 4x; was 221). Previous line, kept: Denominator at this write: **221 rows**. Restated 2026-09-10T01:35Z by `2.0.0_SA_COO~A` on appending S95 (the worker died mid-image-act on a session rate limit; the seven-family re-pin measured WHOLE on the live plane by the issuer; was 220). COUNTED BY PARSING every fenced json block and summing their lengths -- 220 rows in 171 blocks before this append, 221 in 172 after. PRIOR:  Restated 2026-09-09T23:52Z by `2.0.0_SA_COO~A` on appending S90-S94 (disarm acks for W7-S1/S3/S4 -- three cut defects re-cut @6b3aef13a1 and drained @acf75d72d8; W7-S2 carried to L8; was 215; S94 acks the CVO's S89 against the worker's fix @22e388d221). COUNTED BY PARSING every fenced json block and summing their lengths -- 215 rows in 170 blocks before this append, 220 in 171 after. PRIOR:  Restated 2026-09-09T23:52Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 211; the branch 214; 4 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T23:25Z by `3.0.0_SA_CVO` on appending S89 (the unified producer emits every carried member twice -- once per class list -- and PORTAL_BUNDLE twice; the sentinel counts both, the fold keeps one; ARMED to 2.0.0_SA_COO~A; was 210). Previous: Restated 2026-09-09T22:14Z by `2.0.0_SA_COO~A` on appending S88 (disarm ack for W2-S56 -- comp-debt invisible to comp-which by construction, carried named to L10; was 209). COUNTED BY PARSING every fenced json block and summing their lengths -- 209 rows in 167 blocks before this append, 210 in 168 after. PRIOR:  Restated 2026-09-09T22:10Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 204; the branch 207; 5 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T21:38Z by `2.0.0_SA_COO~A` on appending S86 and S87 (disarm acks for W2-S51 -- the stamp counted on props, three planes at 1,771 -- and W2-S53 -- the halt gate's session-serial write carried named to L10; was 202). COUNTED BY PARSING every fenced json block and summing their lengths -- 202 rows in 161 blocks before this append, 204 in 162 after. PRIOR:  Restated 2026-09-09T21:37Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 192; the branch 175; 10 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T21:21Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 190; the branch 156; 2 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T21:26Z by `2.0.0_SA_COO~A` on appending S85 (disarm ack for W6-S3 -- eleven cloud.* manifest entries naming comp-aws subcommands carried named to L10; was 189). COUNTED BY PARSING every fenced json block and summing their lengths -- 189 rows in 148 blocks before this append, 190 in 149 after. PRIOR:  Restated 2026-09-09T21:19Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 185; the branch 177; 4 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T21:06Z by `2.0.0_SA_COO~A` on appending S84 (disarm ack for W1-S33 -- F2-AC3's substring census re-cut to whole store names; was 184). COUNTED BY PARSING every fenced json block and summing their lengths -- 184 rows in 144 blocks before this append, 185 in 145 after. PRIOR:  Restated 2026-09-09T20:48Z by `2.0.0_SA_COO~A` on appending S82 and S83 (disarm acks for W6-S2 -- the self-route invariant taught to read a declared status; the manifest's one comp-aws entry deprecated -- and W6-S1 -- the frozen override entry reworded; was 182). COUNTED BY PARSING every fenced json block and summing their lengths -- 182 rows in 143 blocks before this append, 184 in 144 after. PRIOR:  Restated 2026-09-09T20:24Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 178; the branch 164; 4 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T20:12Z by `2.0.0_SA_COO~A` on appending S79 and S80 (disarm acks for W2-S46 -- the served header premise corrected, the worker's carrier accepted -- and W2-S49 -- the four family names corrected on the face; was 175). COUNTED BY PARSING every fenced json block and summing their lengths -- 175 rows in 139 blocks before this append, 177 in 140 after. PRIOR:  Restated 2026-09-09T19:56Z by `2.0.0_SA_COO~A` on appending S78 (the cloud producer re-asserted on the stitch key after this laptop's hook overwrote it -- S77; was 174). The header read 173 while the parse read 174: S77 was appended by 1.0.0_SA_CTO @ce0eee9f93 without restating this line; the parse is the instrument. COUNTED BY PARSING every fenced json block and summing their lengths -- 174 rows in 138 blocks before this append, 175 in 139 after. PRIOR:  Restated 2026-09-09T19:31Z by `2.0.0_SA_COO~A` on appending S75 and S76 (disarm acks for W4-S6 -- carried named to L10 with W4-S4 -- and W2-S42 -- F3-AC4's git_sha limb non-discriminating, the producer field decided; was 171). COUNTED BY PARSING every fenced json block and summing their lengths -- 171 rows in 137 blocks before this append, 173 in 138 after. PRIOR:  Restated 2026-09-09T19:22Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 165; the branch 158; 6 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T19:21Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 160; the branch 157; 5 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T19:0xZ by `2.0.0_SA_COO~A` on appending S72, S73 and S74 (disarm acks for W4-S2/W4-S3 -- two criteria re-cut on the worker's branch; W4-S1 -- the grant widened by one manifest string; W4-S4 -- carried named to L10; was 157). COUNTED BY PARSING every fenced json block and summing their lengths -- 157 rows in 129 blocks before this append, 160 in 130 after. PRIOR:  Restated 2026-09-09T18:58Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 154; the branch 155; 3 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T18:47Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 153; the branch 153; 1 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T18:44Z by `3.0.0_SA_CVO` on appending S71 (S70's clone NAMED: the stitch-refresh post-commit hook, installed at site Z and at this laptop, 552 laptop publishes since 2026-07-07, the cloud producer failing the same grain sentinel; ARMED to 0.8.0_AE_CloudComp; was 152). Previous: Restated 2026-09-09T17:58Z by `2.0.0_SA_COO~A` on appending S70 at the ROUND-6 cut (the stitch marker rewritten by a laptop at 17:53:55Z from a clone not in this repository; ARMED to 0.8.0_AE_CloudComp; was 151). COUNTED BY PARSING every fenced json block and summing their lengths -- 151 rows in 123 blocks before this append, 152 in 124 after. PRIOR:  Restated 2026-09-09T17:21Z by `2.0.0_SA_COO~A` on appending S66-S69 at the round-5 close (disarm acks for W2-S30, W2-S32, W2-S34, W2-S36 by their named owner; was 147). PRIOR:  Restated 2026-09-09T17:14Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 137; the branch 143; 10 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T16:53Z by `2.0.0_SA_COO~A` at the TO-CG-E-2 drain as the APPEND-ONLY UNION of two concurrent drains (CLOUD carried 133 after E-3's drain; the E-2 branch carried 130 = the base 126 + 4 W1 rows; union 137, ids unique -- NFRA_CLDGRPH-S36's shape, resolved the same way). PRIOR:  Restated 2026-09-09T16:31Z by `2.0.0_SA_COO~A` on appending S64 and S65 at the TO-CG-E-2 drain (disarm acks for W1-S29 and W1-S31 by their named owner; was 131). PRIOR:  Restated 2026-09-09T16:29Z by `2.0.0_SA_COO~A` at the TO-CG-E-2 drain as the APPEND-ONLY UNION of two concurrent drains (CLOUD carried 126 after E-3's drain; the E-2 branch carried 127 = the base 122 + 5 W1 rows; union 131, ids unique -- NFRA_CLDGRPH-S36's shape, resolved the same way). PRIOR:  Restated 2026-09-09T16:00Z by `0.9.0_WK_NFRA_CLDGRPH~3` on appending W3-S6, W3-S7, W3-S8 and W3-S9 at TO-CG-E-3 (CG-s-19, round 5), this seat's FIRST append of round 5 and its first since W3-S5: W3-S6 is the ASK to P7's author for the re-statement the cell's accept requires and is the only one of the four this seat cannot answer itself; W3-S7 and W3-S8 are consequences of acts this order ORDERED (the S53 claim field's writer and consumer both live in _provenance.py, outside the <paths> grant; an honest UNKNOWN claim card silences format_provenance_header's '!! UNKNOWN VINTAGE' branch); W3-S9 records that the stale loader lock's target cannot be recovered from its own name (was 122). COUNTED BY PARSING every fenced json block and summing their lengths -- 122 rows in 116 blocks before this append, 126 in 117 after -- never by a loose id grep, which still matches this header line itself. NO ROW IS EDITED: W3-S1..W3-S5 are this seat's round-4 rows and none is renumbered. Prior: Denominator at this write: **122 rows**. Restated 2026-09-09T14:43Z by `2.0.0_SA_COO~A` on appending S62 and S63 at the round-4 close (disarm acks for W2-S13 and W2-S21 by their named owner; was 120). PRIOR:  Restated 2026-09-09 14:2xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S28 and W2-S29 at TO-CG-D-8, an EIGHTH append by this seat in this round and its LAST order: W2-S28 records that MAIN_WORKSPACE_LOCAL_DB_COUNT=0 is TRUE and independently measured, while an UNSCOPED read of the same directory in the same tick shows three other local Kuzu stores -- one of them a 1,166-node June copy of THIS graph by its own manifest -- already carded by `3.0.0_SA_CVO` with a do-NOT-delete on two of them, which is a D8-AC5 reading input and not a criterion failure; W2-S29 records that D8-AC1 and D8-AC2 each re-fire the paired ask while the BOUNDS cap it at two attempts (was 118). COUNTED BY PARSING every fenced json block and summing their lengths -- 118 rows in 115 blocks before this append, 120 in 116 after -- never by a loose id grep, which still matches this header line itself. Prior: Denominator at this write: **118 rows**. Restated 2026-09-09T14:10Z by `2.0.0_SA_COO~A` on appending S61 at the TO-CG-D-7 pass-4 drain (the disarm ack for W2-S26 by its named owner; was 117). PRIOR:  Restated 2026-09-09 14:0xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S27 at TO-CG-D-7 PASS 4, a SEVENTH append by this seat in this order: W2-S27 records that the pass-4 repoint of kuzu_ac_traversals.py could not be a like-for-like swap, because the served client's contract carries neither a database path nor a Cypher parameter dict (was 116). COUNTED BY PARSING every fenced json block and summing their lengths -- 116 rows in 114 blocks before this append, 117 in 115 after -- never by a loose id grep, which still matches this header line itself. NO ROW IS EDITED HERE: W2-S26 stays as written even though its BLOCKING/ARMED standing is answered by this pass (D7-AC2 reads 0 of 29), because the append-only rule forbids editing it and the disarm is `2.0.0_SA_COO~A`'s to record. Prior: Denominator at this write: **116 rows**. Restated 2026-09-06 03:2xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S25 and W2-S26 at TO-CG-D-7 PASS 3, a SIXTH append by this seat in this order: W2-S25 DECLARES the two out-of-lane tsgraph_spike openers the pass-3 face named by line, and W2-S26 records that the AMENDED D7-AC2 reads 3 of 30 and that this seat's own PASS-1 census note about two of those three files was wrong on the facts (was 114). COUNTED BY PARSING every fenced json block and summing their lengths -- 114 rows in 112 blocks before this append, 116 in 114 after -- never by a loose id grep, which still matches this header line itself. Prior: Denominator at this write: **114 rows**. Restated 2026-09-06 01:4xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S24 at TO-CG-D-7 PASS 2, a FIFTH append by this seat in this order and the only one that is a CORRECTION: W2-S21 and W2-S23 both quote the tombstone as 79 lines and it measures 78, so the figure travels as its own row because the append-only rule forbids editing either (was 113). COUNTED BY PARSING every fenced json block and summing their lengths -- 113 rows before this append, 114 after -- never by a loose id grep, which still matches this header line itself. Prior: Denominator at this write: **113 rows**. Restated 2026-09-06 01:3xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S23 at TO-CG-D-7 PASS 2, a FOURTH append by this seat in this order because the finding arrived from the COMMIT ATTEMPT itself and not from the work: the surprise-row gate REFUSED the first commit (three `surfaced_at` values written as `01:2xZ`, which the schema's timestamp pattern rejects -- a correct refusal, and the three rows were corrected before they ever entered the record rather than edited afterwards), and the same run's commit-gate output carried the advisory this row is about (was 112). COUNTED BY PARSING every fenced json block and summing their lengths -- 112 rows before this append, 113 after -- never by a loose id grep, which still matches this header line itself. Prior: Denominator at this write: **112 rows**. Restated 2026-09-06 01:2xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S20, W2-S21 and W2-S22 at TO-CG-D-7 PASS 2 (was 109). COUNTED BY PARSING every fenced json block and summing their lengths -- 109 rows in 107 blocks before this append, 112 in 110 after -- never by a loose id grep, which still matches this header line itself. W2-S1..W2-S19 are this seat's prior rows and none is edited or renumbered here. Prior: Denominator at this write: **109 rows**. Restated 2026-09-06 00:3xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S19 at TO-CG-D-7, a THIRD append by the same seat in the same task order -- W2-S18 came from the COMMIT and W2-S19 from VALIDATING what the commit produced, neither from the work (was 108). COUNTED BY PARSING every fenced json block and summing their lengths -- 108 rows in 106 blocks before this append, 109 in 107 after -- never by a loose id grep, which still matches this header line itself. NOTE: the proof instance committed at 7f0a9d249c lists SEVEN surprises and does not list W2-S19, which was surfaced by validating that instance; the checker's surprises limb requires every LISTED id to resolve to a row, not every row to be listed, so this is not a gap. Prior: Denominator at this write: **108 rows**. Restated 2026-09-06 00:1xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S18 at TO-CG-D-7, a SECOND append by the same seat in the same task order because the finding arrived from the COMMIT itself and not from the work (was 107). COUNTED BY PARSING every fenced json block and summing their lengths -- 107 rows in 105 blocks before this append, 108 in 106 after -- never by a loose id grep, which still matches this header line itself. Prior: Denominator at this write: **107 rows**. Restated 2026-09-05 23:5xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S12..W2-S17 at TO-CG-D-7 (was 101). COUNTED BY PARSING every fenced json block and summing their lengths -- 101 rows in 99 blocks before this append, 107 in 105 after -- never by a loose id grep, which still matches this header line itself. W2-S1..W2-S11 are this seat's prior rows from TO-CG-D-3 and none is edited or renumbered here. A NOTE FOR THE NEXT APPENDER: the last block of this file lost its closing fence on the first write of this append and the parse read 106 rows in 104 blocks -- one row SHORT and with no error, because an unterminated fence makes the regex skip the block entirely rather than fail on it; the fence was closed and the count re-derived before this line was written. Prior: Denominator at this write: **101 rows**. Restated 2026-09-05 22:2xZ by `2.0.0_SA_COO~A` on appending S60, the DISARM ACK for the worker row W1-S26 (was 100). Prior: Denominator at this write: **100 rows**. Restated 2026-09-05 21:56Z by `0.9.0_WK_NFRA_CLDGRPH~1` on appending W1-S26 at TO-CG-D-10 PASS 3 (the CYCLE_START boundary correction), COUNTED BY PARSING every fenced json block and summing their lengths -- 99 rows in 97 blocks before this append, 100 in 98 after -- never by a loose id grep, which still matches this header line itself (was 99). Prior: Denominator at this write: **99 rows**. Restated 2026-09-05 18:2xZ by `2.0.0_SA_COO~A` on appending S59, which carries a CORRECTION to a figure inside W1-S25 that the append-only rule forbids editing in place (was 98). Prior: Denominator at this write: **98 rows**. Restated 2026-09-05 17:3xZ by `0.9.0_WK_NFRA_CLDGRPH~1` on appending W1-S24 and W1-S25 at TO-CG-D-10 PASS 2 (was 96), the pass that re-measures the AMENDED D10-AC3 and leaves the order OPEN a second time. COUNTED BY PARSING every fenced json block and summing their lengths -- 96 rows in 94 blocks before this append, 98 in 96 after -- never by a loose id grep, which still matches this header line itself. W1-S1..W1-S23 are this seat's prior rows and none is edited or renumbered here. Prior: Denominator at this write: **96 rows**. Restated 2026-09-05 16:0xZ by `2.0.0_SA_COO~A` at the drain merge of `wk-CLDGRPH-d10` (TO-CG-D-10, which STAYS OPEN) -- the SEVENTH textual conflict of the round on this file, resolved as the append-only UNION from three blobs (base `:1` 88, ours `:2` 92, theirs `:3` 92): 88 base + 4 ours (W3-S3, W3-S4, W3-S5 from the D-11 drain, and S58) + 4 theirs (W1-S20, W1-S21, W1-S22, W1-S23) = 96, every id unique, no row edited, no id renumbered. BOTH SIDES restated the header from 88 to 92 INDEPENDENTLY and by different arithmetic, which is why the header line is the conflict on every drain and is REPLACED here rather than merged. Prior: Restated 2026-09-05 15:3xZ by `2.0.0_SA_COO~A` on appending S58, the DISARM ACK for S57 -- disarmed BY EXERCISE in TO-CG-D-9 pass 3, not by the face that ordered it (was 91). Prior: Denominator at this write: **91 rows** (S1-S57 with id S11 vacated by the concurrent-append renumber = 56, plus W1-S1..W1-S19 = 19, W2-S1..W2-S11 = 11, and W3-S1..W3-S5 = 5; 56+19+11+5 = 91). Restated 2026-09-05 14:3xZ by `0.9.0_WK_NFRA_CLDGRPH~3` on appending W3-S3, W3-S4 and W3-S5 at TO-CG-D-11 (was 88). COUNTED BY PARSING every fenced json block and summing their lengths -- 88 rows in 86 blocks before this append, 91 in 89 after -- never by a loose id grep, which still matches this header line itself. FOR THE DRAIN: `0.9.0_WK_NFRA_CLDGRPH~1` is appending to this same file in parallel on TO-CG-D-10, so this number is correct for THIS worktree index and the union may exceed it; no row here is edited and no id renumbered. Prior: Denominator at this write: **88 rows** (S1-S57 with id S11 vacated by the concurrent-append renumber = 56, plus W1-S1..W1-S19 = 19, W2-S1..W2-S11 = 11, and W3-S1..W3-S2 = 2; 56+19+11+2 = 88). Restated 2026-09-05 12:30Z by `0.9.0_WK_NFRA_CLDGRPH~1` on appending W1-S19 at TO-CG-D-9 pass 3 (was 87). COUNTED BY PARSING every fenced json block and summing their lengths -- 87 rows in 85 blocks before this append, 88 in 86 after -- never by a loose id grep, which still matches this header line itself. Prior: Denominator at this write: **87 rows** (S1-S57 with id S11 vacated by the concurrent-append renumber = 56, plus W1-S1..W1-S18, W2-S1..W2-S11, and W3-S1..W3-S2 = 31). Restated 2026-09-05 10:0xZ by `2.0.0_SA_COO~A` on appending S57, a NEW finding on the instrument that decides the round's LAST open criterion (was 86). Prior: Denominator at this write: **86 rows** (S1-S56 with id S11 vacated by the concurrent-append renumber = 55, plus W1-S1..W1-S18, W2-S1..W2-S11, and W3-S1..W3-S2 = 31). Restated 2026-09-05 09:4xZ by `2.0.0_SA_COO~A` on appending S56, the DISARM ACK for W1-S15 (was 85). WITH THIS ROW THIS SEAT'S DISARM QUEUE IS EMPTY: of the 19 ARMED rows it owns, 17 carry an ACK and the remaining TWO -- S16 (no disarm clause at all) and W1-S17 (a grading question that is 3.0.0_SA_CVO's at L9) -- are not disarmable by this seat and travel to the L10 slug NAMED. Prior: Denominator at this write: **85 rows** (S1-S55 with id S11 vacated by the concurrent-append renumber = 54, plus W1-S1..W1-S18, W2-S1..W2-S11, and W3-S1..W3-S2 = 31). Restated 2026-09-05 09:2xZ by `2.0.0_SA_COO~A` on appending S55, the DISARM ACK for W1-S13 (was 84). Prior: Denominator at this write: **84 rows** (S1-S54 with id S11 vacated by the concurrent-append renumber = 53, plus W1-S1..W1-S18, W2-S1..W2-S11, and W3-S1..W3-S2 = 31). Restated 2026-09-05 08:5xZ by `2.0.0_SA_COO~A` at the drain merge of `wk-NFRA_CLDGRPH-1` (TO-CG-D-9 pass 2, which STAYS OPEN) -- the SIXTH textual conflict of the round on this file, resolved as the append-only UNION from the three blobs (base `:1` at 76 rows, ours `:2` at 83, theirs `:3` at 77) under the base-plus-appended-tail assertion, with the unscoped control that exactly ONE line is removed from base and it is the old header. 76 base + 7 ours (S48, S49, S50, S51, S52, S53, S54) + 1 theirs (W1-S18) = 84, every id unique, no row edited, no id renumbered. Both sides restated the header from 76 independently -- the worker to 77 in ITS index and this seat to 83 in the shared one -- which is why the header line is the conflict on EVERY drain and why it is REPLACED here rather than merged. Prior: restated 2026-09-05 08:3xZ by `2.0.0_SA_COO~A` on appending S54, the DISARM ACK for W1-S10 (was 82). Prior: restated 2026-09-05 08:1xZ by `2.0.0_SA_COO~A` on appending S52 (the DISARM ACK for S8) and S53 (a NEW finding the same read turned up), was 80 -- TWO rows, ONE disarm: the one-at-a-time rule governs disarms, and a new observation is the off-spec act the round permits. Prior: restated 2026-09-05 07:4xZ by `2.0.0_SA_COO~A` on appending S51, the DISARM ACK for S2 (was 79). Prior: restated 2026-09-05 07:1xZ by `2.0.0_SA_COO~A` on appending S50, the DISARM ACK for S13 (was 78). Prior: restated 2026-09-05 07:0xZ by `2.0.0_SA_COO~A` on appending S49 (was 77). Prior: restated 2026-09-05 06:2xZ by `2.0.0_SA_COO~A` on appending S48, the DISARM ACK for S12 (was 76). AND THE ENUMERATION IN THIS PARENTHESIS WAS STALE WHILE THE TOTAL WAS RIGHT: it read *'S1-S37'* at the 76-row restatement, which sums to 66, not 76 -- the seat family had run to S47 since 01:1xZ and ten appends never touched the range. The TOTAL was correct every time, so no instrument that checks the number against the file could see it; only reading the parenthesis against a per-family parse does. Corrected here and re-derived: 46 seat rows (S1..S47 less S11) + 17 W1 + 11 W2 + 2 W3 = 76 before this append, 77 after. Prior: restated 2026-09-05 04:4xZ by `0.9.0_WK_NFRA_CLDGRPH~1` on appending W1-S13..W1-S17 at TO-CG-D-9 (was 71). COUNTED BY PARSING every fenced json block and summing their lengths -- 76 in 74 blocks -- never by a loose id grep, which reads 77 on this file because it still matches this header line, the self-counting-denominator trap the 18:3xZ restatement recorded. Prior: restated 2026-09-05 01:1xZ by `2.0.0_SA_COO~A` on appending S47, the DISARM ACK for W3-S2 (was 70). Prior: restated 2026-09-05 00:5xZ by `2.0.0_SA_COO~A` on appending S46, the DISARM ACK for S5 (was 69). Prior: restated 2026-09-05 00:3xZ by `2.0.0_SA_COO~A` on appending S45, the DISARM ACK for W2-S7 (was 68). Prior: restated 2026-09-04 23:5xZ by `2.0.0_SA_COO~A` on appending S44, the DISARM ACK for W1-S6 (was 67). Prior: restated 2026-09-04 23:1xZ by `2.0.0_SA_COO~A` on appending S43, the DISARM ACK for S27 (was 66). Prior: restated 2026-09-04 22:4xZ by `2.0.0_SA_COO~A` on appending S42, the ISSUER'S RULING on W2's question in S21 and its disarm (was 65). Prior: restated 2026-09-04 22:1xZ by `2.0.0_SA_COO~A` on appending S41, the DISARM ACK for W2-S5 (was 64). Prior: restated 2026-09-04 21:2xZ by `2.0.0_SA_COO~A` on appending S40, the DISARM ACK for W1-S2 (was 63). Prior: restated 2026-09-04 20:2xZ by `2.0.0_SA_COO~A` on appending S39, the DISARM ACK for S28 (was 62). Prior: restated 2026-09-04 19:5xZ by `2.0.0_SA_COO~A` on appending S38, the DISARM ACK for S20 (was 61). Prior: restated 2026-09-04 18:3xZ by `2.0.0_SA_COO~A` at the drain merge of wk-NFRA_CLDGRPH-3 (TO-CG-D-5, which stays OPEN) -- the FIFTH textual conflict of the round on this file, resolved as the append-only UNION from the three blobs (base 4e30d6b635, ours, theirs) under the base-plus-appended-tail assertion, with the unscoped control that exactly ONE line is removed from base (the old header). 55 base + 4 ours (S35 by `1.0.0_SA_CTO`, S37, W1-S11, W1-S12) + 2 theirs (W3-S1, W3-S2) = 61, every id unique, no row edited, no id renumbered. A COUNTING NOTE WORTH KEEPING, because it nearly put a wrong number here: at the base vintage the HEADER LINE ITSELF matched a loose `grep -c '"id": "NFRA_CLDGRPH-'`, so that instrument read 56 where the true row count was 55 -- a denominator instrument that counts its own denominator line. The number above is taken from the JSON-indented field and confirmed by PARSING every fenced block, two instruments that cannot see the header. Prior restatement: **59 rows**, 2026-09-04 18:0xZ by `2.0.0_SA_COO~A` on appending S37 (was 58); **58 rows**, 17:4xZ at the wk-NFRA_CLDGRPH-1 drain union, where `1.0.0_SA_CTO`'s S35 landed on CLOUD mid-merge and corrected this seat's draft of 57; **55 rows**, ~16:5xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S11 at the TO-CG-D-3 drain (was 54); **54 rows**, 15:1xZ on appending S36 (was 53); **53 rows**, 14:1xZ at the wk-NFRA_CLDGRPH-2 drain union; **50 rows**, 14:0xZ at the wk-NFRA_CLDGRPH-1 drain union; **48 rows**, 12:5xZ on appending S34 (was 47), which restated the 09:5xZ union of the two worker branches at the first drain (was 39 after wk-NFRA_CLDGRPH-2's merge; the branch's own header read 40). Before that: restated 2026-09-04 09:15Z by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S7 (was 38, restated 2026-09-04 08:39Z by the same seat on appending W2-S1..W2-S6, the first WORKER-coordinate rows in this channel (was 32, restated 2026-09-04 07:0xZ by `2.0.0_SA_COO~A` on appending S32 + S33 (was 30, restated 2026-09-04 06:2xZ by `3.0.0_SA_CVO` on appending S31 (was 29; the CVO's own observation, filed here under lane ANY because a remediation row carries its item's id and the C- coordinate lives only in `../adjudications/`); before that restated 2026-09-03 19:55Z by `1.0.0_SA_CTO` on appending S30 (was 28); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **254 rows**. Restated 2026-09-10T05:30Z by `2.0.0_SA_COO~A` on appending S107-S109 (three acks on round 7's rows, TWO of them disarming defects in this seat's OWN cut; was 251). COUNTED BY PARSING every fenced json block and summing their lengths -- 251 rows in 189 blocks before this append, 254 in 190 after. PRIOR:  Restated 2026-09-10T05:20Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 250; the branch 246; 1 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-10T05:11Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 247; the branch 248; 3 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-10T04:45Z by `0.9.0_WK_NFRA_CLDGRPH~1` on appending W1-S35 and W1-S36 (TO-CG-G-1's census: DERIVES_FROM measures OUTSIDE the both-identity population; the cut's 54 edge families reads 55 at the service's own vintage; was 245). COUNTED BY PARSING every fenced json block and summing their lengths -- 245 rows in 186 blocks before this append, 247 in 187 after. PRIOR:   Restated 2026-09-10T03:48Z by `2.0.0_SA_COO~A` on appending S106 (the GROUND of S104's hold corrected to the standing egress exclusion; the hold and the RESERVED card unchanged; was 244). COUNTED BY PARSING every fenced json block and summing their lengths -- 244 rows in 185 blocks before this append, 245 in 186 after. PRIOR:  Restated 2026-09-10T03:45Z by `2.0.0_SA_COO~A` at the ROUND-6 CLOSE on appending S99-S105 (three disarms, two carried to round 7, one pattern row, one self-correction; was 237). COUNTED BY PARSING every fenced json block and summing their lengths -- 237 rows in 184 blocks before this append, 244 in 185 after. PRIOR:  Restated 2026-09-10T03:29Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 224; the branch 222; 13 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-10T02:15Z by `2.0.0_SA_COO~A` on appending S98 (a SELF-REPORT: both halves of the W2-S67 sign named an outcome with two writers and the unnamed branch occurred; the radius held; was 223). COUNTED BY PARSING every fenced json block and summing their lengths -- 223 rows in 174 blocks before this append, 224 in 175 after. PRIOR:  Restated 2026-09-10T02:06Z by `3.0.0_SA_CVO` on appending S97 (STORED_IN is a 4x fan-out over keys whose own props name their bucket; was 222). Previous line, kept: Denominator at this write: **222 rows**. Restated 2026-09-10T01:48Z by `3.0.0_SA_CVO` on appending S96 (the STORED_IN fix resolves on the SERVED graph to an S3_BUCKET_POLICY node and fans out 4x; was 221). Previous line, kept: Denominator at this write: **221 rows**. Restated 2026-09-10T01:35Z by `2.0.0_SA_COO~A` on appending S95 (the worker died mid-image-act on a session rate limit; the seven-family re-pin measured WHOLE on the live plane by the issuer; was 220). COUNTED BY PARSING every fenced json block and summing their lengths -- 220 rows in 171 blocks before this append, 221 in 172 after. PRIOR:  Restated 2026-09-09T23:52Z by `2.0.0_SA_COO~A` on appending S90-S94 (disarm acks for W7-S1/S3/S4 -- three cut defects re-cut @6b3aef13a1 and drained @acf75d72d8; W7-S2 carried to L8; was 215; S94 acks the CVO's S89 against the worker's fix @22e388d221). COUNTED BY PARSING every fenced json block and summing their lengths -- 215 rows in 170 blocks before this append, 220 in 171 after. PRIOR:  Restated 2026-09-09T23:52Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 211; the branch 214; 4 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T23:25Z by `3.0.0_SA_CVO` on appending S89 (the unified producer emits every carried member twice -- once per class list -- and PORTAL_BUNDLE twice; the sentinel counts both, the fold keeps one; ARMED to 2.0.0_SA_COO~A; was 210). Previous: Restated 2026-09-09T22:14Z by `2.0.0_SA_COO~A` on appending S88 (disarm ack for W2-S56 -- comp-debt invisible to comp-which by construction, carried named to L10; was 209). COUNTED BY PARSING every fenced json block and summing their lengths -- 209 rows in 167 blocks before this append, 210 in 168 after. PRIOR:  Restated 2026-09-09T22:10Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 204; the branch 207; 5 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T21:38Z by `2.0.0_SA_COO~A` on appending S86 and S87 (disarm acks for W2-S51 -- the stamp counted on props, three planes at 1,771 -- and W2-S53 -- the halt gate's session-serial write carried named to L10; was 202). COUNTED BY PARSING every fenced json block and summing their lengths -- 202 rows in 161 blocks before this append, 204 in 162 after. PRIOR:  Restated 2026-09-09T21:37Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 192; the branch 175; 10 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T21:21Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 190; the branch 156; 2 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T21:26Z by `2.0.0_SA_COO~A` on appending S85 (disarm ack for W6-S3 -- eleven cloud.* manifest entries naming comp-aws subcommands carried named to L10; was 189). COUNTED BY PARSING every fenced json block and summing their lengths -- 189 rows in 148 blocks before this append, 190 in 149 after. PRIOR:  Restated 2026-09-09T21:19Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 185; the branch 177; 4 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T21:06Z by `2.0.0_SA_COO~A` on appending S84 (disarm ack for W1-S33 -- F2-AC3's substring census re-cut to whole store names; was 184). COUNTED BY PARSING every fenced json block and summing their lengths -- 184 rows in 144 blocks before this append, 185 in 145 after. PRIOR:  Restated 2026-09-09T20:48Z by `2.0.0_SA_COO~A` on appending S82 and S83 (disarm acks for W6-S2 -- the self-route invariant taught to read a declared status; the manifest's one comp-aws entry deprecated -- and W6-S1 -- the frozen override entry reworded; was 182). COUNTED BY PARSING every fenced json block and summing their lengths -- 182 rows in 143 blocks before this append, 184 in 144 after. PRIOR:  Restated 2026-09-09T20:24Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 178; the branch 164; 4 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T20:12Z by `2.0.0_SA_COO~A` on appending S79 and S80 (disarm acks for W2-S46 -- the served header premise corrected, the worker's carrier accepted -- and W2-S49 -- the four family names corrected on the face; was 175). COUNTED BY PARSING every fenced json block and summing their lengths -- 175 rows in 139 blocks before this append, 177 in 140 after. PRIOR:  Restated 2026-09-09T19:56Z by `2.0.0_SA_COO~A` on appending S78 (the cloud producer re-asserted on the stitch key after this laptop's hook overwrote it -- S77; was 174). The header read 173 while the parse read 174: S77 was appended by 1.0.0_SA_CTO @ce0eee9f93 without restating this line; the parse is the instrument. COUNTED BY PARSING every fenced json block and summing their lengths -- 174 rows in 138 blocks before this append, 175 in 139 after. PRIOR:  Restated 2026-09-09T19:31Z by `2.0.0_SA_COO~A` on appending S75 and S76 (disarm acks for W4-S6 -- carried named to L10 with W4-S4 -- and W2-S42 -- F3-AC4's git_sha limb non-discriminating, the producer field decided; was 171). COUNTED BY PARSING every fenced json block and summing their lengths -- 171 rows in 137 blocks before this append, 173 in 138 after. PRIOR:  Restated 2026-09-09T19:22Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 165; the branch 158; 6 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T19:21Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 160; the branch 157; 5 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T19:0xZ by `2.0.0_SA_COO~A` on appending S72, S73 and S74 (disarm acks for W4-S2/W4-S3 -- two criteria re-cut on the worker's branch; W4-S1 -- the grant widened by one manifest string; W4-S4 -- carried named to L10; was 157). COUNTED BY PARSING every fenced json block and summing their lengths -- 157 rows in 129 blocks before this append, 160 in 130 after. PRIOR:  Restated 2026-09-09T18:58Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 154; the branch 155; 3 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T18:47Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 153; the branch 153; 1 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T18:44Z by `3.0.0_SA_CVO` on appending S71 (S70's clone NAMED: the stitch-refresh post-commit hook, installed at site Z and at this laptop, 552 laptop publishes since 2026-07-07, the cloud producer failing the same grain sentinel; ARMED to 0.8.0_AE_CloudComp; was 152). Previous: Restated 2026-09-09T17:58Z by `2.0.0_SA_COO~A` on appending S70 at the ROUND-6 cut (the stitch marker rewritten by a laptop at 17:53:55Z from a clone not in this repository; ARMED to 0.8.0_AE_CloudComp; was 151). COUNTED BY PARSING every fenced json block and summing their lengths -- 151 rows in 123 blocks before this append, 152 in 124 after. PRIOR:  Restated 2026-09-09T17:21Z by `2.0.0_SA_COO~A` on appending S66-S69 at the round-5 close (disarm acks for W2-S30, W2-S32, W2-S34, W2-S36 by their named owner; was 147). PRIOR:  Restated 2026-09-09T17:14Z by `2.0.0_SA_COO~A` at a drain as the APPEND-ONLY UNION (CLOUD carried 137; the branch 143; 10 rows absent from CLOUD appended verbatim; ids unique). PRIOR:  Restated 2026-09-09T16:53Z by `2.0.0_SA_COO~A` at the TO-CG-E-2 drain as the APPEND-ONLY UNION of two concurrent drains (CLOUD carried 133 after E-3's drain; the E-2 branch carried 130 = the base 126 + 4 W1 rows; union 137, ids unique -- NFRA_CLDGRPH-S36's shape, resolved the same way). PRIOR:  Restated 2026-09-09T16:31Z by `2.0.0_SA_COO~A` on appending S64 and S65 at the TO-CG-E-2 drain (disarm acks for W1-S29 and W1-S31 by their named owner; was 131). PRIOR:  Restated 2026-09-09T16:29Z by `2.0.0_SA_COO~A` at the TO-CG-E-2 drain as the APPEND-ONLY UNION of two concurrent drains (CLOUD carried 126 after E-3's drain; the E-2 branch carried 127 = the base 122 + 5 W1 rows; union 131, ids unique -- NFRA_CLDGRPH-S36's shape, resolved the same way). PRIOR:  Restated 2026-09-09T16:00Z by `0.9.0_WK_NFRA_CLDGRPH~3` on appending W3-S6, W3-S7, W3-S8 and W3-S9 at TO-CG-E-3 (CG-s-19, round 5), this seat's FIRST append of round 5 and its first since W3-S5: W3-S6 is the ASK to P7's author for the re-statement the cell's accept requires and is the only one of the four this seat cannot answer itself; W3-S7 and W3-S8 are consequences of acts this order ORDERED (the S53 claim field's writer and consumer both live in _provenance.py, outside the <paths> grant; an honest UNKNOWN claim card silences format_provenance_header's '!! UNKNOWN VINTAGE' branch); W3-S9 records that the stale loader lock's target cannot be recovered from its own name (was 122). COUNTED BY PARSING every fenced json block and summing their lengths -- 122 rows in 116 blocks before this append, 126 in 117 after -- never by a loose id grep, which still matches this header line itself. NO ROW IS EDITED: W3-S1..W3-S5 are this seat's round-4 rows and none is renumbered. Prior: Denominator at this write: **122 rows**. Restated 2026-09-09T14:43Z by `2.0.0_SA_COO~A` on appending S62 and S63 at the round-4 close (disarm acks for W2-S13 and W2-S21 by their named owner; was 120). PRIOR:  Restated 2026-09-09 14:2xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S28 and W2-S29 at TO-CG-D-8, an EIGHTH append by this seat in this round and its LAST order: W2-S28 records that MAIN_WORKSPACE_LOCAL_DB_COUNT=0 is TRUE and independently measured, while an UNSCOPED read of the same directory in the same tick shows three other local Kuzu stores -- one of them a 1,166-node June copy of THIS graph by its own manifest -- already carded by `3.0.0_SA_CVO` with a do-NOT-delete on two of them, which is a D8-AC5 reading input and not a criterion failure; W2-S29 records that D8-AC1 and D8-AC2 each re-fire the paired ask while the BOUNDS cap it at two attempts (was 118). COUNTED BY PARSING every fenced json block and summing their lengths -- 118 rows in 115 blocks before this append, 120 in 116 after -- never by a loose id grep, which still matches this header line itself. Prior: Denominator at this write: **118 rows**. Restated 2026-09-09T14:10Z by `2.0.0_SA_COO~A` on appending S61 at the TO-CG-D-7 pass-4 drain (the disarm ack for W2-S26 by its named owner; was 117). PRIOR:  Restated 2026-09-09 14:0xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S27 at TO-CG-D-7 PASS 4, a SEVENTH append by this seat in this order: W2-S27 records that the pass-4 repoint of kuzu_ac_traversals.py could not be a like-for-like swap, because the served client's contract carries neither a database path nor a Cypher parameter dict (was 116). COUNTED BY PARSING every fenced json block and summing their lengths -- 116 rows in 114 blocks before this append, 117 in 115 after -- never by a loose id grep, which still matches this header line itself. NO ROW IS EDITED HERE: W2-S26 stays as written even though its BLOCKING/ARMED standing is answered by this pass (D7-AC2 reads 0 of 29), because the append-only rule forbids editing it and the disarm is `2.0.0_SA_COO~A`'s to record. Prior: Denominator at this write: **116 rows**. Restated 2026-09-06 03:2xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S25 and W2-S26 at TO-CG-D-7 PASS 3, a SIXTH append by this seat in this order: W2-S25 DECLARES the two out-of-lane tsgraph_spike openers the pass-3 face named by line, and W2-S26 records that the AMENDED D7-AC2 reads 3 of 30 and that this seat's own PASS-1 census note about two of those three files was wrong on the facts (was 114). COUNTED BY PARSING every fenced json block and summing their lengths -- 114 rows in 112 blocks before this append, 116 in 114 after -- never by a loose id grep, which still matches this header line itself. Prior: Denominator at this write: **114 rows**. Restated 2026-09-06 01:4xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S24 at TO-CG-D-7 PASS 2, a FIFTH append by this seat in this order and the only one that is a CORRECTION: W2-S21 and W2-S23 both quote the tombstone as 79 lines and it measures 78, so the figure travels as its own row because the append-only rule forbids editing either (was 113). COUNTED BY PARSING every fenced json block and summing their lengths -- 113 rows before this append, 114 after -- never by a loose id grep, which still matches this header line itself. Prior: Denominator at this write: **113 rows**. Restated 2026-09-06 01:3xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S23 at TO-CG-D-7 PASS 2, a FOURTH append by this seat in this order because the finding arrived from the COMMIT ATTEMPT itself and not from the work: the surprise-row gate REFUSED the first commit (three `surfaced_at` values written as `01:2xZ`, which the schema's timestamp pattern rejects -- a correct refusal, and the three rows were corrected before they ever entered the record rather than edited afterwards), and the same run's commit-gate output carried the advisory this row is about (was 112). COUNTED BY PARSING every fenced json block and summing their lengths -- 112 rows before this append, 113 after -- never by a loose id grep, which still matches this header line itself. Prior: Denominator at this write: **112 rows**. Restated 2026-09-06 01:2xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S20, W2-S21 and W2-S22 at TO-CG-D-7 PASS 2 (was 109). COUNTED BY PARSING every fenced json block and summing their lengths -- 109 rows in 107 blocks before this append, 112 in 110 after -- never by a loose id grep, which still matches this header line itself. W2-S1..W2-S19 are this seat's prior rows and none is edited or renumbered here. Prior: Denominator at this write: **109 rows**. Restated 2026-09-06 00:3xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S19 at TO-CG-D-7, a THIRD append by the same seat in the same task order -- W2-S18 came from the COMMIT and W2-S19 from VALIDATING what the commit produced, neither from the work (was 108). COUNTED BY PARSING every fenced json block and summing their lengths -- 108 rows in 106 blocks before this append, 109 in 107 after -- never by a loose id grep, which still matches this header line itself. NOTE: the proof instance committed at 7f0a9d249c lists SEVEN surprises and does not list W2-S19, which was surfaced by validating that instance; the checker's surprises limb requires every LISTED id to resolve to a row, not every row to be listed, so this is not a gap. Prior: Denominator at this write: **108 rows**. Restated 2026-09-06 00:1xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S18 at TO-CG-D-7, a SECOND append by the same seat in the same task order because the finding arrived from the COMMIT itself and not from the work (was 107). COUNTED BY PARSING every fenced json block and summing their lengths -- 107 rows in 105 blocks before this append, 108 in 106 after -- never by a loose id grep, which still matches this header line itself. Prior: Denominator at this write: **107 rows**. Restated 2026-09-05 23:5xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S12..W2-S17 at TO-CG-D-7 (was 101). COUNTED BY PARSING every fenced json block and summing their lengths -- 101 rows in 99 blocks before this append, 107 in 105 after -- never by a loose id grep, which still matches this header line itself. W2-S1..W2-S11 are this seat's prior rows from TO-CG-D-3 and none is edited or renumbered here. A NOTE FOR THE NEXT APPENDER: the last block of this file lost its closing fence on the first write of this append and the parse read 106 rows in 104 blocks -- one row SHORT and with no error, because an unterminated fence makes the regex skip the block entirely rather than fail on it; the fence was closed and the count re-derived before this line was written. Prior: Denominator at this write: **101 rows**. Restated 2026-09-05 22:2xZ by `2.0.0_SA_COO~A` on appending S60, the DISARM ACK for the worker row W1-S26 (was 100). Prior: Denominator at this write: **100 rows**. Restated 2026-09-05 21:56Z by `0.9.0_WK_NFRA_CLDGRPH~1` on appending W1-S26 at TO-CG-D-10 PASS 3 (the CYCLE_START boundary correction), COUNTED BY PARSING every fenced json block and summing their lengths -- 99 rows in 97 blocks before this append, 100 in 98 after -- never by a loose id grep, which still matches this header line itself (was 99). Prior: Denominator at this write: **99 rows**. Restated 2026-09-05 18:2xZ by `2.0.0_SA_COO~A` on appending S59, which carries a CORRECTION to a figure inside W1-S25 that the append-only rule forbids editing in place (was 98). Prior: Denominator at this write: **98 rows**. Restated 2026-09-05 17:3xZ by `0.9.0_WK_NFRA_CLDGRPH~1` on appending W1-S24 and W1-S25 at TO-CG-D-10 PASS 2 (was 96), the pass that re-measures the AMENDED D10-AC3 and leaves the order OPEN a second time. COUNTED BY PARSING every fenced json block and summing their lengths -- 96 rows in 94 blocks before this append, 98 in 96 after -- never by a loose id grep, which still matches this header line itself. W1-S1..W1-S23 are this seat's prior rows and none is edited or renumbered here. Prior: Denominator at this write: **96 rows**. Restated 2026-09-05 16:0xZ by `2.0.0_SA_COO~A` at the drain merge of `wk-CLDGRPH-d10` (TO-CG-D-10, which STAYS OPEN) -- the SEVENTH textual conflict of the round on this file, resolved as the append-only UNION from three blobs (base `:1` 88, ours `:2` 92, theirs `:3` 92): 88 base + 4 ours (W3-S3, W3-S4, W3-S5 from the D-11 drain, and S58) + 4 theirs (W1-S20, W1-S21, W1-S22, W1-S23) = 96, every id unique, no row edited, no id renumbered. BOTH SIDES restated the header from 88 to 92 INDEPENDENTLY and by different arithmetic, which is why the header line is the conflict on every drain and is REPLACED here rather than merged. Prior: Restated 2026-09-05 15:3xZ by `2.0.0_SA_COO~A` on appending S58, the DISARM ACK for S57 -- disarmed BY EXERCISE in TO-CG-D-9 pass 3, not by the face that ordered it (was 91). Prior: Denominator at this write: **91 rows** (S1-S57 with id S11 vacated by the concurrent-append renumber = 56, plus W1-S1..W1-S19 = 19, W2-S1..W2-S11 = 11, and W3-S1..W3-S5 = 5; 56+19+11+5 = 91). Restated 2026-09-05 14:3xZ by `0.9.0_WK_NFRA_CLDGRPH~3` on appending W3-S3, W3-S4 and W3-S5 at TO-CG-D-11 (was 88). COUNTED BY PARSING every fenced json block and summing their lengths -- 88 rows in 86 blocks before this append, 91 in 89 after -- never by a loose id grep, which still matches this header line itself. FOR THE DRAIN: `0.9.0_WK_NFRA_CLDGRPH~1` is appending to this same file in parallel on TO-CG-D-10, so this number is correct for THIS worktree index and the union may exceed it; no row here is edited and no id renumbered. Prior: Denominator at this write: **88 rows** (S1-S57 with id S11 vacated by the concurrent-append renumber = 56, plus W1-S1..W1-S19 = 19, W2-S1..W2-S11 = 11, and W3-S1..W3-S2 = 2; 56+19+11+2 = 88). Restated 2026-09-05 12:30Z by `0.9.0_WK_NFRA_CLDGRPH~1` on appending W1-S19 at TO-CG-D-9 pass 3 (was 87). COUNTED BY PARSING every fenced json block and summing their lengths -- 87 rows in 85 blocks before this append, 88 in 86 after -- never by a loose id grep, which still matches this header line itself. Prior: Denominator at this write: **87 rows** (S1-S57 with id S11 vacated by the concurrent-append renumber = 56, plus W1-S1..W1-S18, W2-S1..W2-S11, and W3-S1..W3-S2 = 31). Restated 2026-09-05 10:0xZ by `2.0.0_SA_COO~A` on appending S57, a NEW finding on the instrument that decides the round's LAST open criterion (was 86). Prior: Denominator at this write: **86 rows** (S1-S56 with id S11 vacated by the concurrent-append renumber = 55, plus W1-S1..W1-S18, W2-S1..W2-S11, and W3-S1..W3-S2 = 31). Restated 2026-09-05 09:4xZ by `2.0.0_SA_COO~A` on appending S56, the DISARM ACK for W1-S15 (was 85). WITH THIS ROW THIS SEAT'S DISARM QUEUE IS EMPTY: of the 19 ARMED rows it owns, 17 carry an ACK and the remaining TWO -- S16 (no disarm clause at all) and W1-S17 (a grading question that is 3.0.0_SA_CVO's at L9) -- are not disarmable by this seat and travel to the L10 slug NAMED. Prior: Denominator at this write: **85 rows** (S1-S55 with id S11 vacated by the concurrent-append renumber = 54, plus W1-S1..W1-S18, W2-S1..W2-S11, and W3-S1..W3-S2 = 31). Restated 2026-09-05 09:2xZ by `2.0.0_SA_COO~A` on appending S55, the DISARM ACK for W1-S13 (was 84). Prior: Denominator at this write: **84 rows** (S1-S54 with id S11 vacated by the concurrent-append renumber = 53, plus W1-S1..W1-S18, W2-S1..W2-S11, and W3-S1..W3-S2 = 31). Restated 2026-09-05 08:5xZ by `2.0.0_SA_COO~A` at the drain merge of `wk-NFRA_CLDGRPH-1` (TO-CG-D-9 pass 2, which STAYS OPEN) -- the SIXTH textual conflict of the round on this file, resolved as the append-only UNION from the three blobs (base `:1` at 76 rows, ours `:2` at 83, theirs `:3` at 77) under the base-plus-appended-tail assertion, with the unscoped control that exactly ONE line is removed from base and it is the old header. 76 base + 7 ours (S48, S49, S50, S51, S52, S53, S54) + 1 theirs (W1-S18) = 84, every id unique, no row edited, no id renumbered. Both sides restated the header from 76 independently -- the worker to 77 in ITS index and this seat to 83 in the shared one -- which is why the header line is the conflict on EVERY drain and why it is REPLACED here rather than merged. Prior: restated 2026-09-05 08:3xZ by `2.0.0_SA_COO~A` on appending S54, the DISARM ACK for W1-S10 (was 82). Prior: restated 2026-09-05 08:1xZ by `2.0.0_SA_COO~A` on appending S52 (the DISARM ACK for S8) and S53 (a NEW finding the same read turned up), was 80 -- TWO rows, ONE disarm: the one-at-a-time rule governs disarms, and a new observation is the off-spec act the round permits. Prior: restated 2026-09-05 07:4xZ by `2.0.0_SA_COO~A` on appending S51, the DISARM ACK for S2 (was 79). Prior: restated 2026-09-05 07:1xZ by `2.0.0_SA_COO~A` on appending S50, the DISARM ACK for S13 (was 78). Prior: restated 2026-09-05 07:0xZ by `2.0.0_SA_COO~A` on appending S49 (was 77). Prior: restated 2026-09-05 06:2xZ by `2.0.0_SA_COO~A` on appending S48, the DISARM ACK for S12 (was 76). AND THE ENUMERATION IN THIS PARENTHESIS WAS STALE WHILE THE TOTAL WAS RIGHT: it read *'S1-S37'* at the 76-row restatement, which sums to 66, not 76 -- the seat family had run to S47 since 01:1xZ and ten appends never touched the range. The TOTAL was correct every time, so no instrument that checks the number against the file could see it; only reading the parenthesis against a per-family parse does. Corrected here and re-derived: 46 seat rows (S1..S47 less S11) + 17 W1 + 11 W2 + 2 W3 = 76 before this append, 77 after. Prior: restated 2026-09-05 04:4xZ by `0.9.0_WK_NFRA_CLDGRPH~1` on appending W1-S13..W1-S17 at TO-CG-D-9 (was 71). COUNTED BY PARSING every fenced json block and summing their lengths -- 76 in 74 blocks -- never by a loose id grep, which reads 77 on this file because it still matches this header line, the self-counting-denominator trap the 18:3xZ restatement recorded. Prior: restated 2026-09-05 01:1xZ by `2.0.0_SA_COO~A` on appending S47, the DISARM ACK for W3-S2 (was 70). Prior: restated 2026-09-05 00:5xZ by `2.0.0_SA_COO~A` on appending S46, the DISARM ACK for S5 (was 69). Prior: restated 2026-09-05 00:3xZ by `2.0.0_SA_COO~A` on appending S45, the DISARM ACK for W2-S7 (was 68). Prior: restated 2026-09-04 23:5xZ by `2.0.0_SA_COO~A` on appending S44, the DISARM ACK for W1-S6 (was 67). Prior: restated 2026-09-04 23:1xZ by `2.0.0_SA_COO~A` on appending S43, the DISARM ACK for S27 (was 66). Prior: restated 2026-09-04 22:4xZ by `2.0.0_SA_COO~A` on appending S42, the ISSUER'S RULING on W2's question in S21 and its disarm (was 65). Prior: restated 2026-09-04 22:1xZ by `2.0.0_SA_COO~A` on appending S41, the DISARM ACK for W2-S5 (was 64). Prior: restated 2026-09-04 21:2xZ by `2.0.0_SA_COO~A` on appending S40, the DISARM ACK for W1-S2 (was 63). Prior: restated 2026-09-04 20:2xZ by `2.0.0_SA_COO~A` on appending S39, the DISARM ACK for S28 (was 62). Prior: restated 2026-09-04 19:5xZ by `2.0.0_SA_COO~A` on appending S38, the DISARM ACK for S20 (was 61). Prior: restated 2026-09-04 18:3xZ by `2.0.0_SA_COO~A` at the drain merge of wk-NFRA_CLDGRPH-3 (TO-CG-D-5, which stays OPEN) -- the FIFTH textual conflict of the round on this file, resolved as the append-only UNION from the three blobs (base 4e30d6b635, ours, theirs) under the base-plus-appended-tail assertion, with the unscoped control that exactly ONE line is removed from base (the old header). 55 base + 4 ours (S35 by `1.0.0_SA_CTO`, S37, W1-S11, W1-S12) + 2 theirs (W3-S1, W3-S2) = 61, every id unique, no row edited, no id renumbered. A COUNTING NOTE WORTH KEEPING, because it nearly put a wrong number here: at the base vintage the HEADER LINE ITSELF matched a loose `grep -c '"id": "NFRA_CLDGRPH-'`, so that instrument read 56 where the true row count was 55 -- a denominator instrument that counts its own denominator line. The number above is taken from the JSON-indented field and confirmed by PARSING every fenced block, two instruments that cannot see the header. Prior restatement: **59 rows**, 2026-09-04 18:0xZ by `2.0.0_SA_COO~A` on appending S37 (was 58); **58 rows**, 17:4xZ at the wk-NFRA_CLDGRPH-1 drain union, where `1.0.0_SA_CTO`'s S35 landed on CLOUD mid-merge and corrected this seat's draft of 57; **55 rows**, ~16:5xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S11 at the TO-CG-D-3 drain (was 54); **54 rows**, 15:1xZ on appending S36 (was 53); **53 rows**, 14:1xZ at the wk-NFRA_CLDGRPH-2 drain union; **50 rows**, 14:0xZ at the wk-NFRA_CLDGRPH-1 drain union; **48 rows**, 12:5xZ on appending S34 (was 47), which restated the 09:5xZ union of the two worker branches at the first drain (was 39 after wk-NFRA_CLDGRPH-2's merge; the branch's own header read 40). Before that: restated 2026-09-04 09:15Z by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S7 (was 38, restated 2026-09-04 08:39Z by the same seat on appending W2-S1..W2-S6, the first WORKER-coordinate rows in this channel (was 32, restated 2026-09-04 07:0xZ by `2.0.0_SA_COO~A` on appending S32 + S33 (was 30, restated 2026-09-04 06:2xZ by `3.0.0_SA_CVO` on appending S31 (was 29; the CVO's own observation, filed here under lane ANY because a remediation row carries its item's id and the C- coordinate lives only in `../adjudications/`); before that restated 2026-09-03 19:55Z by `1.0.0_SA_CTO` on appending S30 (was 28); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -6631,6 +6631,803 @@ and its four S3 objects are verified.
       ]
     },
     "notes": "The sharpening this instance offers the rule, for whoever next edits it: a half that names an outcome must first ask HOW MANY WRITERS the named property has, because reading one producer's rule perfectly still predicts the wrong branch when a second writer feeds the same field -- the same shape as Rule 22's 'a check scoped to the members cannot see a defect in what the members share', one level up, at the SIGN rather than at the check. The cheap version of the discipline: name the property, census its writers, and let the half say what the act may touch rather than what the graph will then read. Third instance of the family tonight after NFRA_OUTSET-S34 and ETFS_GUARDRAIL EG-s-15, and the first where the prediction sat in BOTH halves."
+  }
+]
+```
+
+## S60 -- BLOCKING: the grain baseline is written in the RETIRED vocabulary, so unifying it makes the producer refuse to publish
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S60",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-09T22:45Z",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "RETIRING A NODE_TYPE DRIVES ITS GRAIN BASELINE TO ZERO, AND AC-GRAIN.2 REFUSES ON A ZERO. S31's whole point is that GOLD_SCRIPT, S3_DATA_KEY, PORTAL_COMPONENT and REACT_QUERY_KEY stop existing as node types. org/modules/graph/grain_baseline.json still carries all four as CERTIFIED per_class counts -- GOLD_SCRIPT 1260, S3_DATA_KEY 272, PORTAL_COMPONENT 27, REACT_QUERY_KEY 85 -- and grain_sentinel's AC-GRAIN.2 compares each baseline key against the stream, so four classes that correctly become 0 read 0.00x, outside the [0.4, 2.5]x band, four violation groups, and derive_stitch.main() returns 2. MEASURED LOCALLY, on the real snapshot and a HEAD-built source tree, BEFORE anything was pushed: the unified producer emits 0 of the four provisional names, 955 of 955 STORED_IN and 216 of 216 DERIVES_FROM resolve, 0 genuine dangling -- and then 'GRAIN-SENTINEL: FAIL (4 violation group(s))' and 'ERROR: GRAIN_SENTINEL_FAIL -- refusing to emit grain-violating stitch graph'. CONSEQUENCE: pushing this source zip would make opal-stitch-produce FAIL exactly the way it failed 67 times before CG-s-23 repaired it. So the zip was NOT pushed, no build was started, no image was rebuilt and no derive was run -- the order stops here rather than re-breaking the producer it depends on. THE REMEDY IS PRECEDENTED AND THE FILE'S OWN: recertify the four to 0, which makes grain_sentinel skip them permanently (check_magnitude: base<=0 -> skip) -- exactly what the 2026-07-25 EXTERNAL_ENDPOINT entry did for a class dropped by an Andrew-direct taxonomy change, with a verified_reason and a signer. grain_baseline.json is NOT in this order's <paths> and every recertification in it names its CTO gate and CVO sign, so the recertification is theirs, not this worker's.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Local run of the HEAD-built source tree (zip 298ada9a4f, repo_head 139cbe1d40, portal/src 435 files), python infra/aws/globgrph/derive_stitch.py: 'GRAIN-SENTINEL: FAIL (4 violation group(s))' -- REACT_QUERY_KEY 0 vs 85, PORTAL_COMPONENT 0 vs 27, S3_DATA_KEY 0 vs 272, GOLD_SCRIPT 0 vs 1260 -- then 'ERROR: GRAIN_SENTINEL_FAIL' and rc 2.",
+        "The same run's unification lines: 'INFO: STITCH_UNIFY_TOTAL admitted=3560 merged=3022 created=538 lost=0 edges_rewritten=3273' and 'stitch edges: {...derives_from: 216, stored_in: 955...}' with 'OK: genuine (non-wildcard) dangling edges = 0' -- the unification itself is complete and correct; only the sentinel's reference points are stale.",
+        "org/modules/graph/grain_baseline.json @b9917bc2e1 per_class: GOLD_SCRIPT 1260, S3_DATA_KEY 272, PORTAL_COMPONENT 27, REACT_QUERY_KEY 85.",
+        "The same file's 2026-07-25 EXTERNAL_ENDPOINT recertification is the precedent AND the mechanism: 'Recertifying to 0 makes the sentinel skip this permanently-dropped class going forward (the code's own designed mechanism for a class with base<=0)'.",
+        "TO-CG-F-11 <paths> names derive_stitch.py, extract_portal_stitch.py, derive_runner.py, comp_debt.py, the change-management ledger, the channel and the face. org/modules/graph/grain_baseline.json is not among them, and the file's every recertification entry carries a verified_by naming 3.0.0_SA_CVO and/or 1.0.0_SA_CTO."
+      ]
+    },
+    "spec_asserts": "TO-CG-F-11 closes on the served graph showing none of the four provisional names, and orders one zip re-push, one ad-hoc stitch build, one derive and one projection to get there.",
+    "world_is": "The producer refuses to emit a unified artifact at all, because the grain sentinel's certified baseline still names the four types it just retired and reads their correct zero as a 100% collapse. The publish path is closed until the baseline retires them too.",
+    "notes": "The four are NOT the same case as W2-S45's five: those were types the map had never seen, and the ruling ADMITTED them. These are types a certified baseline still expects, and the ruling must RETIRE them. Same gate, opposite direction. F11-AC1, AC4 and AC5 are met and committed; AC2 and AC3 are what this row holds."
+  }
+]
+```
+
+## S61 -- the stitch producer's INPUT carries its own prior OUTPUT: the derive archives the snapshot the producer reads
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S61",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-09T22:45Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.8.0_AE_CloudComp",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "A CYCLE NOBODY HAD WRITTEN DOWN, AND A VOCABULARY CHANGE IS EXACTLY WHAT MAKES IT VISIBLE. derive_stitch.load_aws_layer() reads snapshots/latest.txt -> the nightly AWS snapshot; derive_runner.archive_snapshot() WRITES that same snapshot after folding the stitch in (CG-s-24). So the producer's input contains its own previous output. MEASURED: snapshots/20260909/graph-20260909.tar.gz, LastModified 2026-09-09T21:05:21Z -- re-archived by THIS worker's own F-4 derive -- carries 1,771 nodes with source='portal-stitch' under the PROVISIONAL names (GOLD_SCRIPT 1380, S3_DATA_KEY 294, REACT_QUERY_KEY 94, PORTAL_COMPONENT 2, PORTAL_BUNDLE 1). CONSEQUENCE FOR ANY PRODUCER VOCABULARY CHANGE: emitting new names is not enough -- the OLD names keep arriving from the snapshot for one more cycle, so the graph is MIXED in between and, worse, the grain sentinel sees the old classes at collapsed counts and refuses (W2-S60). Handled in-grant here by derive_stitch._retype_prior_cycle, which re-types the producer's own earlier output by its own `source` stamp before the identity merge and counts what it moved (1,770 in the local run) -- not a fold-time rename of someone else's data, but a producer re-typing its own. The CYCLE itself is the row: it is a standing property of the pipeline that no document states, and the next person to change a type will meet it the same way.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/globgrph/derive_stitch.py load_aws_layer(): reads Key='snapshots/latest.txt' then that key from opal-313476888478-globgrph.",
+        "infra/aws/globgrph/derive_runner.py archive_snapshot() writes the dated snapshot after the folds; the fold itself is CG-s-24's ingest_stitch_artifact.",
+        "s3api head-object snapshots/20260909/graph-20260909.tar.gz -> LastModified 2026-09-09 21:05:21+00:00, i.e. the archive written by task deee298ca1bd422fa3fcc124cf42a86f (this worker's F-4 ad-hoc derive, STOPPED 21:0xZ).",
+        "Node census of that tarball, by type and source: GOLD_SCRIPT 1380 / S3_DATA_KEY 294 / REACT_QUERY_KEY 94 / PORTAL_COMPONENT 2 / PORTAL_BUNDLE 1, ALL with source='portal-stitch'; the canonical types in the same tarball carry source=None (PipelineScript 133, PipelineFunction 1201, S3Key 232, Component 199, ReactQueryKey 57).",
+        "First local run WITHOUT the re-type: the four provisional names survived at exactly the CARRIED counts (GOLD_SCRIPT 50, S3_DATA_KEY 149, PORTAL_COMPONENT 2, REACT_QUERY_KEY 68) and PORTAL_BUNDLE doubled to 2. With the re-type: 'INFO: STITCH_UNIFY_PRIOR_CYCLE retyped=1770' and all four at 0."
+      ]
+    },
+    "spec_asserts": "TO-CG-F-11 treats the unification as a change at the producer whose effect is the next artifact: 'the CodeBuild's nightly artifact ITSELF carries the canonical names'.",
+    "world_is": "The producer reads a snapshot that the derive writes AFTER folding the producer's own output into it, so the retired names re-enter the producer for one more cycle and must be re-typed at the producer to converge in one pass.",
+    "notes": "Found by RUNNING the producer locally before pushing anything, which is also how the STORED_IN class literal (955 boundary edges silently dropped to 0 by a renamed class key) was caught. Both would have shipped in the zip."
+  }
+]
+```
+
+## S62 -- the compiler mandate names extract_gold_compute.py in the wrong directory
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S62",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-09T22:45Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "THE FILE THE GRAIN RULE COMES FROM IS NOT WHERE THE ORDER SAYS. TO-CG-F-11's compiler_tools_mandate and its SURFACES block both name 'org/modules/graph/extract_gold_compute.py' (the cell text cites it as 'extract_gold_compute.py:91'). comp-read returns 'ERROR: not a file'. comp-find --name finds exactly one, at infra/aws/globgrph/extract_gold_compute.py (1 hit across 31,162 files scanned). The content is right and the grain rule is there -- PipelineScript for a file, PipelineFunction for a function, tier as an ATTRIBUTE -- so this cost a redirect, not a decision. Recorded because a mandate that names an absent path is a mandate a worker can satisfy vacuously: comp-read on a missing file is an ERROR, but a less careful reader could take the error for 'nothing to read here' and proceed without the grain rule at all.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/comp-read org/modules/graph/extract_gold_compute.py --for '...' -> 'comp-read: ERROR: not a file: org/modules/graph/extract_gold_compute.py'.",
+        "python .tools/comp-find --name 'extract_gold_compute' -> 'DENOMINATOR: 1 hit(s) across 31162 file(s) scanned in scope [corpus=all]', [HEAD] infra/aws/globgrph/extract_gold_compute.py.",
+        "The real file's grain rule, read at :108-115: add_node(pid, 'PipelineFunction' if is_fn else 'PipelineScript', ...) with the comment 'node_type is TIER-AGNOSTIC ... PipelineScript/PipelineFunction with tier as an ATTRIBUTE (tier=gold)'. The id form is 'pipeline:<firm>:<tier>:<script>[:<fn>]'.",
+        "TO-CG-F-11 SURFACES: 'org/modules/graph/extract_gold_compute.py (READ: the grain)'."
+      ]
+    },
+    "spec_asserts": "TO-CG-F-11 directs the worker to comp-read org/modules/graph/extract_gold_compute.py for the PipelineScript/PipelineFunction id forms and the tier attribute.",
+    "world_is": "That path does not exist; the file is at infra/aws/globgrph/extract_gold_compute.py, and it is the only one in the corpus.",
+    "notes": "The mandate was satisfied against the real file. Same class as W2-S49 and W2-S56: a face naming a path or a tool that does not resolve, where the instrument's failure is an ERROR rather than a negative."
+  }
+]
+```
+
+## S63 -- the portal checkout moved AGAIN mid-round, so the stitch's portal layer changed vintage under the order
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S63",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-09T22:45Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "THE STITCH'S PORTAL LAYER IS A MOVING TARGET AND NOTHING DECLARES ITS VINTAGE. W2-S40 recorded that three different portal shas name this layer and no two agree (the superproject gitlink 30ca034b, the GH-Action's hard-coded pin b9656272, and the main workspace checkout the zip is built from). The checkout has now MOVED AGAIN inside the same round: it was 18c0c5cb at TO-CG-F-4's zip build (2026-09-09 18:47Z) and is 5907cbca at TO-CG-F-11's (22:1xZ), a different portal in the same evening. Neither the marker, the manifest nor the served VINTAGE line names a portal vintage: the marker's git_sha is the SUPERPROJECT commit, which does not move when the gitlink's target does. ARMED because the identity census this cell is built on is computed against a portal population that can change between the census and the publish, and nothing downstream can tell that it did.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "f3_build_source_zip.py report at TO-CG-F-4 (2026-09-09T18:47Z): portal_head '18c0c5cb6a26c2c8e9fbfa168dadf04de4344705', portal_src_files 435.",
+        "The same builder at TO-CG-F-11 (2026-09-09T22:1xZ): portal_head '5907cbca98eb091124e38a32debefa355c1d4376', portal_src_files 435.",
+        "git ls-tree HEAD -- portal @b9917bc2e1 (this worktree): gitlink 30ca034bbaa4b9d2864d3acce826e3c2fa59be0a -- unchanged, and still not an object in the portal checkout.",
+        ".github/workflows/stitch-source-push.yml:66 still pins ref b96562720505fa143aad7cc5dd75115e6c609912.",
+        "The stitch marker's fields are built_at / aws_snapshot / git_sha / producer / total_nodes / total_edges / artifact_sha256 -- no portal vintage among them; git_sha is the superproject HEAD (de590a7d02 today), which does not move with the gitlink's target."
+      ]
+    },
+    "spec_asserts": "TO-CG-F-11 builds its identity census on 'the artifact at your HEAD' and then re-pushes a zip built from the same portal source, as if the portal layer were a fixed input of the round.",
+    "world_is": "The portal checkout the zip is built from moved between two cells of the same round, and no carrier -- marker, manifest or served vintage line -- records which portal a given stitch was cut from.",
+    "notes": "Not a criterion failure here: the census and the local reconciliation were computed on ONE pull of ONE artifact and one build of one zip, both recorded with their shas. It is the NEXT comparison across cells that this makes unsound, which is why it is armed rather than filed and forgotten."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S64",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-09T23:35Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "3.0.0_SA_CVO",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "THE FIVE MAGNITUDES THE GATE RELAYS ARE A DIFFERENT QUANTITY FROM THE ONE per_class HOLDS, AND ONE OF THEM WOULD HAVE REFUSED THE VERY PUBLISH THE GATE EXISTS TO ALLOW. The W2-S60 ruling recertifies PipelineScript, PipelineFunction, S3Key, Component, ReactQueryKey 'at their first post-unification magnitudes (your run: 332, 2,428, 588, 24, 188)'. Those five numbers are this worker's own STITCH_UNIFY *admitted* counts -- stitch members the unifier processed -- which is what this worker reported and therefore what the ruling was given to work with. grain_baseline.per_class is compared by grain_sentinel.check_magnitude against the number of nodes of that type IN THE EMITTED STREAM, and a MERGED member adds NO node: it lands on a canonical node that was already counted. MEASURED BOTH WAYS BEFORE WRITING ANYTHING: with the relayed numbers as the baseline the next run reads PipelineScript 0.61x, PipelineFunction 0.51x, S3Key 0.90x, ReactQueryKey 1.03x -- and Component 203/24 = 8.46x, OUTSIDE [0.4, 2.5]x, an AC-GRAIN.2 FAIL that refuses the publish. The four that happen to sit inside the band are no better as a record: each would certify the class at a reference point roughly double its real magnitude, so the file would describe a graph that never existed and the next honest run would read as a 40-50% collapse. WHAT WAS WRITTEN: the STREAM magnitudes this run measures -- PipelineScript 167, PipelineFunction 1217, S3Key 381, Component 201, ReactQueryKey 125 -- because the GO LINE ITSELF (copied verbatim from the face, not the parenthetical) says 'recertified at their first post-unification magnitudes', and the magnitude of a class in this file is its node count. Every entry states both quantities and names the substitution; the CVO's re-measurement is the pending sign on all nine.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/modules/graph/grain_sentinel.py check_magnitude: iterates the BASELINE's keys and counts nodes whose (node_type or type) equals the key in the stream handed to it; derive_stitch.main passes all_nodes = every node of every class bucket.",
+        "Local unified derive, real snapshot snapshots/20260909/graph-20260909.tar.gz, 2026-09-09: STITCH_UNIFY admitted PipelineScript 166 / PipelineFunction 1214 / S3Key 294 / Component 22 / ReactQueryKey 94; STREAM counts of the same run 167 / 1217 / 381 / 201 / 125 (canonical members already present 133 / 1201 / 232 / 199 / 57 plus carried 34 / 16 / 149 / 2 / 68).",
+        "Band arithmetic printed before the write: 203/24 = 8.46x outside [0.4, 2.5]x (the Component measurement predates the duplicate-copy fix of W2-S65; after that fix the same class reads 201, ratio 8.38x -- the verdict does not move).",
+        "The relayed numbers 332 / 2428 / 588 / 24 / 188 are exactly the admitted counts of this worker's FIRST unified run (the one that double-counted the archived copies, W2-S65), which is how they reached the ruling.",
+        "Written: org/modules/graph/grain_baseline.json, the nine entries of the gate and nothing else (scope asserted mechanically by the patch script: ENTRIES MOVED = 9)."
+      ]
+    },
+    "spec_asserts": "The W2-S60 ruling relayed on the face: the five canonical types recertified 'at their first post-unification magnitudes (your run: 332, 2,428, 588, 24, 188)'.",
+    "world_is": "Those are admitted counts, not class magnitudes; the magnitudes per_class compares against are 167 / 1217 / 381 / 201 / 125, and writing 24 for Component would put the next run at 8.46x and refuse the publish the gate authorises.",
+    "notes": "A worker does not get to move a number a gate names, so this row IS the act: the entries are written at the measured magnitudes with both quantities stated in each verified_reason, and 3.0.0_SA_CVO's pending sign -- already required by the gate for all nine -- is the re-measurement that either ratifies or corrects them. If the CVO reads the gate as naming the literal five numbers rather than the quantity, the correction is one field per entry and the sentinel result is the discriminator."
+  },
+  {
+    "id": "NFRA_CLDGRPH-W2-S65",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-09T23:20Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "THE UNIFICATION MADE THE PRODUCER COUNT ITS OWN MEMBERS TWICE, AND EVERY PER-CLASS CHECK PASSED. W2-S61 recorded the cycle (the producer reads a snapshot containing its own prior output) and _retype_prior_cycle re-types those 1,770 nodes. What the re-type does NOT do is collapse them onto this cycle's emission of the same objects: before the unification both copies landed in the SAME class bucket and the existing per-class dedup silently absorbed them, but the unified emitter writes the fresh copy into the bucket named for the canonical type while the archived copy stays in the bucket it was written under -- ONE id, TWO nodes, TWO buckets, and a per-class `seen` set cannot see across buckets. MEASURED on the real snapshot: 449 duplicated ids in the emitted stream, 416 of them involving a stitch node, 269 of them a stitch member duplicated against ITSELF; every carried count exactly doubled (PipelineScript 68 vs 34, S3Key 298 vs 149, ReactQueryKey 136 vs 68, PipelineFunction 32 vs 16, Component 4 vs 2) and admitted read 3,560 where the true membership is 1,790. Fixed in-grant by derive_stitch._collapse_stitch_copies, which keeps ONE node per stitch id and prefers THIS cycle's emission over the archived copy -- not a coin toss: the archived copy carries last cycle's props, including the vocabulary=stitch-v1 stamp this same order retires, so keeping it would have SERVED the retired stamp. Non-stitch nodes are never touched (33 ids legitimately appear in two buckets, e.g. S3_BUCKET and S3_BUCKET_POLICY).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Probe over the emitted stream before the fix: DUPLICATE_IDS=449 of 27628 distinct ids; DUPLICATES_INVOLVING_A_STITCH_NODE=416; type-pair breakdown showed 269 as (stitch bucket 'stitch_cloud', bucket named for the canonical type) with the SAME source portal-stitch, e.g. component:portal/src/pages/TicketCenter/TicketCenter.tsx and rqk:'etf-positioning-data'.",
+        "After _collapse_stitch_copies: STITCH_UNIFY_COLLAPSED {'prior_cycle_copy': 1770, 'cross_class_copy': 66}; STITCH_UNIFY_TOTAL admitted=1790 merged=1521 created=269 lost=0; UNIONED nodes 28077 -> 27742; duplicate ids 449 -> 114.",
+        "The corrected admitted total 1790 equals F11-AC1's own census denominator (GOLD_SCRIPT 1380 + S3_DATA_KEY 294 + PORTAL_COMPONENT 22 + REACT_QUERY_KEY 94 = 1790), which the double-counting run did not.",
+        "Two independent dedup implementations (a cross-class keep-one pass in the id rewrite loop, and the pre-merge collapse that shipped) produce the SAME five stream magnitudes 167 / 1217 / 381 / 201 / 125.",
+        "GRAIN-SENTINEL: PASS printed by the local run after the fix and the recertification, rc=0, 'OK: genuine (non-wildcard) dangling edges = 0'."
+      ]
+    },
+    "spec_asserts": "TO-CG-F-11 cuts the unification as merge-onto-identity or carry, 'never drop', with the reconciliation admitted = merged + created as the acceptance -- an accounting that assumes each member is admitted once.",
+    "world_is": "Each member was admitted twice (this cycle's emission and the copy read back from the snapshot the producer archives), the identity was still exact, so the reconciliation balanced at 3,560 = 3,022 + 538 while the graph carried 269 duplicated nodes and inflated four of the five class magnitudes.",
+    "notes": "INERT because it is fixed inside this order's own <paths> before anything was pushed, and because the duplicate was of a node against itself (same id, same source), so no estate object was at risk. Filed because the CUT did not name this act and because the shape generalises: any producer that archives its own output and then re-buckets its types converts a dedup that worked into one that cannot see the duplicate."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S66",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T00:15Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "F11-AC1 CENSUSES A POPULATION THIS ORDER'S OWN PUBLISH DESTROYS, so the criterion stops being re-readable the moment it succeeds. The census reads the PUBLISHED stitch artifact for members under the four provisional names; at 2026-09-09T23:52Z the unified build replaced that object and the same invocation now prints '0 of 0' -- a TRUE reading of the WRONG OBJECT, and byte-identical to a census that found nothing. Its expect requires a non-zero denominator, so the criterion would read FAIL for the very reason it succeeded. Handled inside the deliverable: the script still reads the LIVE key FIRST, and only when that object has no members left does it fall back to a PINNED BEFORE OBJECT committed beside it (f11_precensus_nodes.json.gz -- id/type/source of all 29,267 nodes of the artifact published before the unification, identified by the source object's sha256 a7c1d5898bac1d8c...), and it says so on its own labelled line. Same numbers as the pre-publish run: 1330 of 1380, 145 of 294, 20 of 22, 26 of 94, carried 269, lost 0 of 1790.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Run at 2026-09-10T00:0xZ against the live key: CENSUS_GOLD_SCRIPT=RESOLVED 0 of 0, all four populations 0, LOST=0 of 0 -- rc 0, no error, nothing to distinguish it from an empty census.",
+        "s3://opal-313476888478-globgrph/stitch/stitch_graph.json now carries producer=stitch-codebuild built_at=2026-09-09T23:52:06Z git_sha=22e388d221 and 0 nodes under any of the four names (sha256-verified against its own marker).",
+        "The pinned object's census reproduces the pre-publish figures exactly, and CARRIED_WITH_ORIGIN_STITCH=269 now equals the producer's own created=269.",
+        "The same perishability class the issuer ruled on for F3-AC4's marker read (ISSUER RULING 2026-09-09 18:5xZ, row S71): a criterion whose object is rewritten by the act it grades must be read at a stamped instant or pinned."
+      ]
+    },
+    "spec_asserts": "F11-AC1: 'THE IDENTITY CENSUS ... on the artifact at your HEAD', with an expect requiring a non-zero denominator per provisional population.",
+    "world_is": "The artifact at HEAD IS the unified one after step 3 of the same order, and it has no members under those names; the population the criterion measures exists only before this order's own publish.",
+    "notes": "The fallback is never silent, never preferred and never a different QUESTION: the live key is read first every time, the substitution prints its reason, and the pinned object is the same bytes the criterion was originally read on. A grader who re-runs the invocation gets the census the criterion asks for AND the sentence that says which plane answered."
+  },
+  {
+    "id": "NFRA_CLDGRPH-W2-S67",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T00:27Z",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "F11-AC2 FAILS ON ONE LIMB AND THE CAUSE IS A PLANE THIS ORDER'S BOUNDS EXCLUDE: STITCH_V1_STAMPED_SERVED=1, expected 0. The stamp is retired IN THE CODE and F11-AC4 measures that at HEAD (STAMP_WRITTEN_BY_FOLD=false, two instruments), but the fold that ran tonight is the DEPLOYED IMAGE globgrph-derive-runner:8 -- built during CG-s-24, digest sha256:478d0a43..., which still carries STITCH_V1_TYPES and stamped exactly one node: PORTAL_BUNDLE 'portal', props {\"file_path\": \"\", \"source\": \"portal-stitch\", \"vocabulary\": \"stitch-v1\"}. It is 1 and not 1,771 because the four types it used to stamp no longer arrive under those names -- the unification did land; only the last stamped node is the one the map deliberately KEEPS. CLOSING IT NEEDS A DERIVE-RUNNER IMAGE REBUILD AND A DIGEST RE-PIN ACROSS THE SEVEN FAMILIES THAT PULL IT, which is an image act under NEVER-2 and is NOT this order's: its BOUNDS read 'One zip re-push, one build, one derive, one projection', and that build is the stitch producer's. Every other limb of AC2 passes: 0 of 4 provisional names served, PORTAL_BUNDLE 1, PIPELINESCRIPT_TIER_GOLD 133, POINTER_ADVANCED true.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Served read 2026-09-10T00:26:24Z through bash .tools/comp-kuzu: STITCH_V1_STAMPED_SERVED=1; the one node identified by a follow-up query as PORTAL_BUNDLE id=portal with vocabulary=stitch-v1 in props.",
+        "Derive log, task 681858ce935040a9bc88a3e10ec4f6f4 (globgrph-derive-runner:8, ad-hoc, exit 0): 'INFO: STITCH_INGEST nodes=338 edges=723 skipped_dup=27404 stamped=1 skipped_unmapped_type=0 skipped_edge_unresolved=2694 producer=stitch-codebuild vintage=2026-09-09T23:52:06Z' -- skipped_unmapped_type is 0 as the order requires; stamped is 1 because the image predates the retirement.",
+        "F11-AC4 at HEAD: PROVISIONAL_ENTRIES_IN_MAP=0 of 4, STAMP_WRITTEN_BY_FOLD=false, module constants STITCH_V1_TYPES/STITCH_V1_STAMP absent, a live fold on the fixture wrote no vocabulary property, stitch_v1_stamped counter 0 over 2 nodes.",
+        "The image is pinned by digest in infra/aws/terraform/globgrph/serving.tf:22 (local.globgrph_image_digest sha256:478d0a43...), the pin CG-s-24 moved across seven families in one act; moving it again is an image act with its own ledger entry and family census."
+      ]
+    },
+    "spec_asserts": "F11-AC2 expects STITCH_V1_STAMPED_SERVED=0 on the served graph in the same order whose BOUNDS allow exactly one build, one derive and one projection.",
+    "world_is": "The stamp is written by the DEPLOYED fold image, not by the code the order changes, so no sequence of acts inside those bounds can drive the served count to 0; it needs a derive-runner image rebuild and a seven-family digest re-pin.",
+    "notes": "This is the CODE-vs-IMAGE seam the round has already paid for once (CG-s-24's re-pin). ARMED to the issuer because the order cannot close on its own terms: either the image act is authorised as a follow-on, or AC2's stamp limb is re-cut to read the code plane it can actually reach. The measured 1,771 -> 1 is itself the evidence that the vocabulary change landed."
+  },
+  {
+    "id": "NFRA_CLDGRPH-W2-S68",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T00:31Z",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "F11-AC3 FAILS ON THE STORED_IN LIMB, AND THE DEFECT IS OLDER THAN THIS ORDER: STORED_IN_RESOLVED=0 of 955. The boundary edge is emitted s3:<firm-relative key> -[STORED_IN]-> arn:aws:s3:::<bucket>, but the S3_BUCKET NODE in this graph is keyed by BUCKET NAME (id='opal-data-bd', with the arn in a separate field) -- so the edge's target names an object that is not a node id, the fold's both-ends-resolve guard rejects every one of the 955, and none reaches the served graph. THE ARN TARGET COMES FROM derive_stitch._index_aws, which indexes bkt_by_name[name] = 'arn or nid'; aws_keys (the producer's own dangling check) contains ARNs too, so the producer's '0 genuine dangling' is TRUE and BLIND to this: two carriers of node identity, one per plane, never compared. PRE-EXISTING, MEASURED BOTH WAYS: the artifact published before the unification (sha256 a7c1d5898b..., F-4's) carries the same 955 STORED_IN edges with the same ARN target and the same 0 resolvable, while its 216 DERIVES_FROM resolve fully -- so this is not a regression of CG-s-31 and never has resolved. DERIVES_FROM_RESOLVED=216 of 216 and RECONCILED admitted=1790 merged+created=1790 lost=0 both pass.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "f11_edges_resolve.sh, 2026-09-10T00:28:23Z: DERIVES_FROM_RESOLVED=216 of 216, STORED_IN_RESOLVED=0 of 955; the served graph's 54 edge_type values printed unscoped contain DERIVES_FROM and no STORED_IN at all.",
+        "Sample edge from the published artifact: {\"source\": \"s3:gold/dimensions/accounts_dimension_latest.parquet\", \"target\": \"arn:aws:s3:::opal-data-bd\", \"edge_type\": \"STORED_IN\"}; the node with that source id IS present (149 carried s3: ids), the target arn is NOT a node id.",
+        "S3_BUCKET node shape in the same artifact: id='opal-313476888478-globgrph', arn='arn:aws:s3:::opal-313476888478-globgrph', name=the same -- id is the NAME.",
+        "derive_stitch._index_aws:87 bkt_by_name[name] = arn or nid, and :83 node_keys.add(arn or nid); the STORED_IN builder at :173 emits that arn.",
+        "PRE-UNIFICATION CONTROL: the same census over F-4's published artifact gives STORED_IN 955 with both-ends-present 0 and DERIVES_FROM 216 with 216 -- the defect is not introduced here.",
+        "The fold's own counter agrees: 'skipped_edge_unresolved=2694' in the derive log."
+      ]
+    },
+    "spec_asserts": "F11-AC3: 'the day's DERIVES_FROM and STORED_IN counts resolve fully on the served graph', with an expect of the form STORED_IN_RESOLVED=(N) of N.",
+    "world_is": "STORED_IN targets are ARN-grain while S3_BUCKET node identity is NAME-grain, so 0 of 955 resolve and none ever has; the producer's dangling check cannot see it because it resolves against a key set that holds ARNs.",
+    "notes": "The fix is one line in this order's own grant (index the bucket NODE ID, not the arn), but proving it needs a SECOND producer build, derive and projection, and this order's BOUNDS allow exactly one of each -- all three already spent tonight. So the code is left as found and the criterion is reported FAIL rather than widening the order. ARMED to the issuer to decide: authorise a second cycle, or carry the fix into the next stitch cell."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S69",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T01:45Z",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "THE IMAGE ACT DID EXACTLY WHAT IT WAS SIGNED FOR AND THE SERVED STAMP DID NOT MOVE, BECAUSE A SECOND WRITER WAS CARRYING IT. The new image is live on all seven families (sha256:17ccc9b0..., 7 of 7 by digest, 0 on a tag) and the fold on it printed 'stamped=0' -- the retirement works. But STITCH_V1_STAMPED_SERVED is still 1, and the one node is the same PORTAL_BUNDLE 'portal'. THE STAMP NOW ARRIVES FROM THE PRODUCER, NOT THE FOLD: derive_stitch reads the snapshot derive_runner archives (the cycle of W2-S61), that snapshot holds the node the OLD fold stamped, and _collapse_stitch_copies kept THAT copy over this cycle's fresh emission. Measured in the artifact itself: exactly one node carries 'stitch-v1', in bucket 'stitch_cloud' (the archived side), with props {\"file_path\": \"\", \"source\": \"portal-stitch\", \"vocabulary\": \"stitch-v1\"}. THE TIE-BREAK LOST ITS SIGNAL THIS CYCLE: the collapse prefers the fresh copy by the `retyped_from` mark that _retype_prior_cycle sets, and with the snapshot already unified nothing gets re-typed (retyped_prior_cycle={}, prior_cycle_copy 0, cross_class_copy 335) -- so the winner is bucket iteration order, and the archived copy won. The fix is one producer change (mark this cycle's emission explicitly, or drop the retired key on read) and it needs ONE more producer cycle to prove on the served plane; this order's sign spent its build, derive and projection.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "describe-task-definition x7 after the apply: 7 of 7 on sha256:17ccc9b01855138e2abd0c36938c62a21ffd0730bf7886b9758a5317b4d24d04, 0 on the old digest, 0 on any tag (f11_families_after.json).",
+        "Derive on the new image (task e054a78ebc56479f843ba589f6cff4e4, globgrph-derive-runner:9, exit 0): 'INFO: STITCH_INGEST nodes=338 edges=1678 skipped_dup=27407 stamped=0 skipped_unmapped_type=0 skipped_edge_unresolved=1740' -- stamped is 0 where the previous image printed 1.",
+        "Served read 2026-09-10T01:47:03Z on the new projection (projection/2026-09-10T01:27:30.508695+00:00/): STITCH_V1_STAMPED_SERVED=1, the node PORTAL_BUNDLE 'portal'.",
+        "The producer's own artifact carries it: the local run of the same source against the same snapshot holds exactly 1 node with 'stitch-v1', in class bucket 'stitch_cloud' -- the copy read back from the archived snapshot, not the fresh emission.",
+        "The before/after node diff over EVERY served node (27,663 -> 27,665, id + type + props) shows PROPS_KEY_DELTA with no 'vocabulary' entry at all: the stamp is unchanged on both sides, which is why a diff scoped to the stamp would have proved nothing either way."
+      ]
+    },
+    "spec_asserts": "The image-act GO's discriminator: 'STITCH_V1_STAMPED_SERVED 1 -> 0 with PORTAL_BUNDLE still present' and 'a before/after node diff reading exactly {PORTAL_BUNDLE: -vocabulary} and nothing else', on the premise that the DEPLOYED FOLD was the only writer of the stamp.",
+    "world_is": "The fold stopped writing it (stamped=0 on the new image) and the value survives because the PRODUCER copies its own prior output forward out of the snapshot the derive archives; the served count is still 1 and the diff shows no vocabulary delta.",
+    "notes": "The image act is NOT wasted and NOT half-landed: the fold's writer is retired, the seven families are pinned by digest, and the rollback digest is named in the ledger. What is left is a producer change plus one cycle. ARMED to the issuer because the order cannot close AC2 inside its own sign: either a further cycle is authorised, or AC2's stamp limb is graded at L9 with this row."
+  },
+  {
+    "id": "NFRA_CLDGRPH-W2-S70",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T01:48Z",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "A BUCKET HAS TWO IDENTITIES AND EACH PLANE ACCEPTS A DIFFERENT ONE, SO THE STORED_IN BOUNDARY EDGE CANNOT BE MADE CORRECT FROM THE PRODUCER ALONE -- the ruled one-line fix moved the count off zero and onto THE WRONG CLASS. Measured on the served graph after the second cycle: STORED_IN_RESOLVED=764 of 955, and ALL 764 land on S3_BUCKET_POLICY, not S3_BUCKET (source node_type S3Key 764). The remaining 191 are the one firm bucket with no policy node. WHY: the artifact's AWS layer keys a bucket by NAME (id='opal-data-bd', arn in its own field); the fold resolves an edge endpoint against the DERIVE graph and accepts the NAME (0 of 955 admitted when the edge named the ARN, 955 admitted when it named the name); the SERVED graph gives that same NAME to the S3_BUCKET_POLICY node and keys S3_BUCKET by ARN. So the ARN is the only identity that names a bucket where the edge lands, and the NAME is the only identity the fold will admit -- three planes, two names, no single value that is right at both ends. F11-AC3 therefore still FAILS, now at 764 of 955 with a wrong-class landing instead of 0 of 955 with none, and the instrument that says so is the one this order added (the reader prints what the edges LAND ON, not just that they resolved).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "f11_edges_resolve.sh, 2026-09-10T01:47:29Z: DERIVES_FROM_RESOLVED=216 of 216, STORED_IN_RESOLVED=764 of 955; target node_type {'S3_BUCKET_POLICY': 764}; source node_type {'S3Key': 764}.",
+        "Served identity, measured: node_id 'arn:aws:s3:::opal-data-bd' is S3_BUCKET; node_id 'opal-data-bd' is S3_BUCKET_POLICY; 34 S3_BUCKET nodes, all ARN-keyed.",
+        "Artifact identity, measured: S3_BUCKET nodes carry id='opal-...' (the name) with arn='arn:aws:s3:::opal-...' in a separate field.",
+        "Fold behaviour, both ways, one variable changed: cycle 1 (ARN target) 'STITCH_INGEST ... edges=723 ... skipped_edge_unresolved=2694' and 0 STORED_IN served; cycle 2 (node-id target) 'edges=1678 ... skipped_edge_unresolved=1740' -- exactly +955 admitted -- and 764 served.",
+        "191 = 955 - 764 is one firm bucket's worth (5 buckets x 191 keys): the bucket whose name has no S3_BUCKET_POLICY node to answer to.",
+        "The producer's own dangling check reads 0 either way: node_keys now holds BOTH identities, which is what makes the check honest, and honest here means it cannot tell the two apart."
+      ]
+    },
+    "spec_asserts": "F11-AC3: 'the day's DERIVES_FROM and STORED_IN counts resolve fully on the served graph'; and the second-cycle ruling: 'index the bucket NODE ID at derive_stitch._index_aws so the edge builder targets the id the graph keys'.",
+    "world_is": "There is no single id that IS 'the id the graph keys': the fold's graph admits the name, the served graph gives the name to the policy node and the bucket to the arn. The producer-side fix lands 764 edges on the wrong class and leaves 191 unresolved.",
+    "notes": "NOT ROLLED BACK BY THIS SEAT, and the reason is stated rather than assumed: the artifact carrying these edges was published at 01:06Z and the 02:00Z derive folds THAT artifact whatever the source zip says, so a zip rollback in the last minutes before the fire would change nothing tonight and would leave the deployed producer out of step with HEAD. The ledger entry names the rollback material and the act is one `aws s3 cp` whenever the issuer wants it. THE REAL REMEDY is a decision about which identity a bucket HAS in this estate -- the fold rewriting a name endpoint onto the arn, or the AWS layer keying buckets by arn everywhere -- and that is a change outside this cell's cut, needing its own cycle. Whoever takes it should note the same shape may exist for any class whose node carries both an id and an arn."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S71",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T02:20Z",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "THE 955 WAS NEVER 955 FACTS AND THE FIX FOR IT ARRIVED AFTER THE PUSH -- SAID PLAINLY RATHER THAN QUIETLY RE-RUN. 3.0.0_SA_CVO's rows S96/S97 measured the served STORED_IN population as 191 keys x a five-way fan-out, and this seat re-derived the same arithmetic on its OWN cycle-3 artifact before the ruling could be acted on: 955 edges, 191 distinct sources, 5 distinct targets, per-key edge-count distribution {5: 191} -- EVERY key carries an edge to EVERY candidate firm bucket, none at 1. The answer is on the node: 137 of the 191 keys carry their own bucket in props (e.g. opal-data-bd/gold/_parity/account_gains/*/scorecard.json has {\"bucket\": \"opal-data-bd\", \"level\": \"prefix\", \"stratum\": \"object\", \"attribution\": \"writer-firm\"}) and the producer still fans it to all five, so 548 of the 955 edges are CONTRADICTED BY THEIR OWN SOURCE NODE and a further 270 belong to the 54 carried keys whose props name no bucket at all. Only 137 edges are supported. THE TIMING IS THE ROW AS MUCH AS THE DEFECT: the third cycle's zip was pushed at 02:13:37Z and its build started at 02:14:35Z; the ruling folding this fix into that same cycle reached this seat at ~02:2xZ. The producer's STORED_IN builder is therefore UNCHANGED in the artifact now published, and this seat did NOT fire a fourth cycle on its own -- as the ruling itself instructs.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Re-derived on this seat's own cycle-3 artifact (the one published at 2026-09-10T02:15:44Z, sha256 6b9da08cfae31a0d0112e92077b8947be2e079a1391ce198a64240307f38dd32): STORED_IN emitted 955; distinct sources 191; distinct targets 5 {opal-data-bd 191, opal-data-inf 191, opal-data-cot 191, opal-data-mdpf 191, opal-data-demo 191}; 191 x 5 = 955.",
+        "PER-KEY EDGE-COUNT DISTRIBUTION = {5: 191} -- not one key at 1, 2, 3 or 4.",
+        "keys whose OWN props name a bucket = 137 of 191; each has an edge to that bucket AND four others; EDGES CONTRADICTED BY THE SOURCE NODE'S OWN props = 548 of 955.",
+        "The remaining 54 sources are the carried s3:-prefixed keys, which carry no bucket prop at all: 54 x 5 = 270 edges naming a bucket nothing on the node supports. 137 supported + 548 contradicted + 270 unsupported = 955.",
+        "derive_stitch.py's builder is a cross-product by construction: for each firm key it iterates `present_firm_buckets` and appends one edge per bucket (infra/aws/globgrph/derive_stitch.py, the STORED_IN loop).",
+        "TIMING, measured not recalled: s3api head-object on the pushed key reads LastModified Thu, 10 Sep 2026 02:13:37 GMT; the build opal-stitch-produce:312bb1cb started 02:14:35Z; the marker for the artifact this cycle published reads built_at 2026-09-10T02:15:44Z."
+      ]
+    },
+    "spec_asserts": "The added-to-the-third-cycle ruling: emit ONE STORED_IN per key, to the bucket the key's own props name, never a cross-product -- folded into the SAME cycle at no extra build.",
+    "world_is": "The cycle's zip was already pushed and its build already running when the ruling arrived, so the fan-out is still in the artifact this cycle published and the fix cannot ride this cycle; the ruling's own instruction for that case is to say so and stop rather than fire a fourth.",
+    "notes": "NOT FIXED HERE AND NOT SILENTLY RE-RUN. What this row adds to the CVO's S96/S97 is an INDEPENDENT re-derivation on a different object (this seat's artifact, not the served projection) reaching the same arithmetic, plus the two numbers the CVO's reading did not have: 137 of 191 keys carry the answer in their own props, and 548 of the 955 edges are contradicted by that answer. NOTE FOR WHOEVER TAKES IT: this is NOT W2-S70. W2-S70 is which NAME an endpoint should use (name vs arn, ruled to round 7, producer-alone refused); this is HOW MANY endpoints a key should have, and the answer -- exactly one, from the node's own props -- needs no identity decision. The two remedies are independent and can land in either order."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S72",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T02:55Z",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "EVERY DERIVE -- AD-HOC OR NIGHTLY -- PUBLISHES TWO SNS MESSAGES TO A TOPIC WITH A LIVE SMS SUBSCRIPTION TO A PERSONAL PHONE NUMBER, so the standing Andrew-direct (~02:5xZ, 'make sure no test run hits aj's email, that is not appropriate') is already engaged by the derive path this order runs. MEASURED, not inferred: the derive log prints 'OK: SNS_PUBLISHED subject=[SEV1][PAGE] critical-surface backend change 20260910' and 'OK: SNS_PUBLISHED subject=[SEV2][digest] ...' near the end of EVERY run -- this seat's 02:18Z ad-hoc derive and the 02:00Z rule-initiated nightly both did -- and the topic those go to, arn:aws:sns:us-east-1:313476888478:opal-critical-surface-alerts, carries TWO live subscriptions: sqs -> opal-critical-surface-alerts-coo (internal, harmless) and **sms -> +1786261xxxx**, a person's phone. A DELIVERED SMS IS A RECIPIENT LIST BY ANY READING. THE ISSUER'S OWN CENSUS READ ZERO AND IS NOT WRONG, IT IS SCOPED: comp-find over infra/aws/globgrph for aj@, send_email, sesv2, ses_client, sns_client, send_raw_email finds no hit because the publisher is not spelled with any of those tokens -- the send is reached through boto3's own client from the critical-surface scan, so a token census of the mailer vocabulary cannot see it and the RUN LOG can. A zero from the enumerated names is not a zero from the plane.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Derive log, this seat's 02:18Z ad-hoc run (task bc59354a831441ee9e9da0f35b54c8e5, globgrph-derive-runner:9): lines 270-271 'OK: SNS_PUBLISHED subject=...[SEV1]...' and '...[SEV2][digest]...'.",
+        "The 02:00Z rule-initiated nightly (task 2229aae52b7448b699d0caa4028221ca) prints the same two lines, so this is the standing behaviour of the family and not a property of an ad-hoc run.",
+        "sns list-subscriptions-by-topic on arn:aws:sns:us-east-1:313476888478:opal-critical-surface-alerts, read live 2026-09-10T02:55Z: 2 subscriptions -- protocol=sqs endpoint=arn:aws:sqs:us-east-1:313476888478:opal-critical-surface-alerts-coo, and protocol=sms endpoint=a +1786... personal number (the digits are in the live read, not repeated here).",
+        "16 SNS topics exist in the account; this is the one whose name the derive's subject line names and the only plausible target among them.",
+        "The NEVER-2 entry of this order's second cycle already left aws_sns_topic_subscription.critical_surface_alerts_email UNAPPLIED as a foreign address -- so the EMAIL destination is still DESIRED-not-applied, while the SMS one is LIVE. The instinct was right and it did not cover this."
+      ]
+    },
+    "spec_asserts": "The standing Andrew-direct as relayed: no test run hits a personal contact; and the issuer's measurement that 'no act in your grant has a known send path' (comp-find over infra/aws/globgrph, 0 hits across 104 files).",
+    "world_is": "The derive task -- which this order's cut runs ad hoc, and which the estate runs nightly -- publishes two SNS messages per run to a topic with a live SMS subscription to a personal phone. The grant's own files carry no mailer token, and the send happens anyway one call away.",
+    "notes": "WHAT THIS SEAT DID AND DID NOT DO. The fourth cycle's ad-hoc derive was started at 02:50:18Z, BEFORE the constraint arrived, and was mid-run when it did; its SNS publish comes near the end of the run. It was NOT stopped, deliberately: (a) the same two publishes happen on every nightly and one already fired at 02:0xZ tonight, so a stop does not remove the hazard, it only removes this seat's evidence of it; (b) stopping a derive mid-run risks a half-written graph (the Iceberg node and edge tables are written separately), and NEVER-2 forbids leaving a deploy half-landed more strongly than it forbids one more of a standing send; (c) the constraint's own instruction is 'do not RUN it', and the run predates it. NO FURTHER DERIVE, BUILD OR PUSH WILL BE STARTED BY THIS SEAT on this order. NOT DISARMED HERE and no recipient override attempted -- the constraint says the safety must be proven by a read of the deployed code path and that read is not this seat's to make alone. What the disarm owner needs: whether the SMS subscriber consents to nightly and ad-hoc derive traffic, or whether the publish belongs behind a flag the ad-hoc path does not set."
+  }
+]
+```
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T03:45Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S99",
+    "one_line": "DISARM ACK for NFRA_CLDGRPH-W2-S67 (BLOCKING/ARMED): the served stitch-v1 stamp is GONE. The row said the fold's writer was retired in code while the DEPLOYED image :8 still wrote it, and closing it needed an image act. The act was signed by both halves (94807 + 94809), executed, and MEASURED: STITCH_V1_STAMPED_SERVED 1 -> 0 on the served graph after cycle 3, with the whole-graph node diff over 27,665 nodes each side reading exactly {'-vocabulary': 1} on PORTAL_BUNDLE and 0 added, removed or re-typed -- the discriminator the sign demanded, satisfied on the nose. DISARMED.",
+    "spec_asserts": "CG-s-31's accept: 0 nodes stamped stitch-v1 on the served graph; F11-AC2's expect STITCH_V1_STAMPED_SERVED=0.",
+    "world_is": "The seven families run the new image by digest and the fold prints stamped=0; the last stamped node's props lost only the retired key.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "F11-AC2 at 72e6ab172b: STITCH_V1_STAMPED_SERVED=0, PORTAL_BUNDLE_SERVED=1, PROVISIONAL_NAMES_SERVED=0 of 4, PIPELINESCRIPT_TIER_GOLD=133, POINTER_ADVANCED=true.",
+        "The image act's own close: 7 of 7 families on sha256:17ccc9b0..., 0 on the old digest, 0 on any tag (issuer-measured live at 01:3xZ, row S95)."
+      ]
+    },
+    "notes": "Two acts were needed and neither alone would have done it: the image retired the fold's writer, and cycle 3 retired the producer's carry-forward copy (W2-S69). That is the shape S98 self-reports at the SIGN."
+  },
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T03:45Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S100",
+    "one_line": "DISARM ACK for NFRA_CLDGRPH-W2-S69 (BLOCKING/ARMED): the stamp's SECOND writer is retired. derive_stitch carried the previously-stamped PORTAL_BUNDLE forward out of the snapshot derive_runner archives, and _collapse_stitch_copies kept the archived copy once its tie-break lost its signal. Cycle 3 made this cycle's emission explicitly identified and dropped the retired props on read (RETIRED_STITCH_PROPS), and the served count went 1 -> 0. DISARMED.",
+    "spec_asserts": "CG-s-31: the four provisional types retired AT THE PRODUCER and the stamp with them.",
+    "world_is": "The archived snapshot is an INPUT to the producer that writes it, so a retired property survives in it until the reader drops it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "wk-cldgrph-6-2 @22bc65fab0 (cycle 3); F11-AC2 at 72e6ab172b reads 0.",
+        "Cycle 3's own chain: zip 9974d612c36b @02:13:37Z, build 312bb1cb SUCCEEDED, derive bc59354a on :9 exit 0 with stamped=0, pointer 02:12:05 -> 02:28:23."
+      ]
+    },
+    "notes": "First of the three carrier instances; see S103 for the pattern across nodes, props and edges."
+  },
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T03:45Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S101",
+    "one_line": "DISARM ACK for NFRA_CLDGRPH-W2-S71 (BLOCKING/ARMED): the STORED_IN cross-product is gone at the producer. 955 emitted edges were 191 keys x 5 candidate buckets (per-key distribution {5: 191}, no key at 1) while only 137 of those keys carry a bucket in their OWN props -- so 548 edges were contradicted by the node they start from and 270 belonged to 54 keys naming no bucket at all. Cycle 4 emits ONE edge per key from the key's own props and drops the prior cycle's STORED_IN on read; measured after: 955 -> 137 emitted, per-key {1: 137}, 0 edges contradicted by their own source, 54 no-bucket keys counted and NOT guessed, served edges 1678 -> 860 (exactly the 818 the fan-out had added). DISARMED at the producer.",
+    "spec_asserts": "CG-s-31's accept via F11-AC3: the day's DERIVES_FROM and STORED_IN counts resolve on the served graph; a fact per key, not a candidate set.",
+    "world_is": "The producer emitted a cross-product over candidate buckets while each key already carried its own bucket in a field a consumer can read.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "wk-cldgrph-6-2 @f9000bd0dd (cycle 4); the CVO's S96/S97 arithmetic on the served plane (191 x 4 = 764, 191 x 5 = 955), reconciled to the artifact's own props.",
+        "Cycle 4's chain: zip 486216313fee @02:46:36Z, build e9c74983 SUCCEEDED, derive 37a71d00 exit 0, pointer 02:28:23 -> 03:02:00."
+      ]
+    },
+    "notes": "A missing fact is honest and a fanned-out guess is not: the 54 unsupported keys get no edge and a counter instead."
+  },
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T03:45Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S102",
+    "one_line": "ACK for NFRA_CLDGRPH-W2-S68 and NFRA_CLDGRPH-W2-S70 -- NOT DISARMED, CARRIED TO ROUND 7 by the CTO's ruling 94872 @8ee07e73f9: which identity a bucket HAS. F11-AC3 still FAILS, now at 135 of 137 resolving and ALL of them landing on S3_BUCKET_POLICY rather than S3_BUCKET. The CTO's words: the resolutions are a FALSE resolution, not progress, because an edge landing on a policy asserts a gold script stores its data IN A POLICY -- discrimination passing inside a wrong grain. CANONICAL: an AWS resource node IS its arn in the served graph and the name is an attribute; BOTH planes move together (the fold normalizes a name endpoint onto the arn at admission, the producer emits canonically) and producer-alone is REFUSED on this order's own measurement that the fold admits 0 of 955 arn endpoints and 955 name endpoints. The class census, the fold's admission rule, the producer's endpoint and the re-taken AC3 are ROUND-7 cells with their own image act and their own never-widen sign.",
+    "spec_asserts": "F11-AC3's expect; and CG-s-31's accept that the boundary edges resolve on the served graph.",
+    "world_is": "Three planes hold two names for one bucket and no single value is right at both ends; the criterion's own defect is that it checked both-ends-PRESENT and never the resolved node's TYPE.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "F11-AC3 at 72e6ab172b: STORED_IN_RESOLVED=135 of 137, target node_type {'S3_BUCKET_POLICY': 135}; DERIVES_FROM_RESOLVED=216 of 216.",
+        "CTO ruling 94872 @8ee07e73f9, recorded as the third section of CTO_ADJUDICATION_NFRA_CLDGRPH_20260909T2015Z_W2_S45_STITCH_VOCABULARY_GATE.md."
+      ]
+    },
+    "notes": "The round-7 census must count FACTS PER KEY, not edges, or it will measure the fan-out again instead of the identity. Carried in the FINAL L8 packet."
+  },
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T03:45Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S103",
+    "one_line": "PATTERN ROW, this seat's, closing the three carrier instances as one finding for the L10: THIS PRODUCER'S INPUT CONTAINS ITS OWN OUTPUT, AND THE QUESTION 'IS THE PRIOR CYCLE'S OUTPUT INPUT OR NOISE?' WAS ANSWERED SEPARATELY, AND DIFFERENTLY, ON EACH OF THREE CARRIERS -- nodes (W2-S61, the CTO's substrate-card question), props (W2-S69, the retired stamp), edges (W2-S71, last night's 955). The sharpest tell in the round is the edge case: WHILE THE PRODUCER EMITTED THE SAME TRIPLES NIGHTLY THE DUPLICATES COLLAPSED IN THE DEDUP AND NOTHING SHOWED; the stale carry-forward became visible only when a run emitted FEWER than the run before (137 emitted, 955 still in the artifact). A producer that reads back its own output is silently idempotent under a fixed emission and silently wrong under a shrinking one, which is exactly what a nightly with stable counts cannot surface.",
+    "spec_asserts": "CLAUDE.md Rule 28: card a resource before building on it, every row carrying its owner; Rule 22: a check scoped to the members cannot see a defect in what the members share.",
+    "world_is": "Three cells found the same disease three times because each looked at one carrier; the shared dependency was the archive-read itself.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W2-S61, W2-S69, W2-S71 on this channel, each with its own measurement.",
+        "Cycle 4's measurement of the edge case: 137 emitted against 955 present in the artifact before the drop-on-read."
+      ]
+    },
+    "notes": "For the round-7 substrate card: a row PER CARRIER, not one row for the producer. The answer differed on each and each was found separately, three cells apart."
+  },
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T03:45Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S104",
+    "one_line": "ACK for NFRA_CLDGRPH-W2-S72 -- NOT DISARMED, RESERVED FOR ANDREW and escalated this tick (msgs 94937 CTO, 94938 0.0.0_AB_MSTR, 94939 CVO), with a HOLD IN FORCE: no further derive, build or push on this project by this seat or its worker until he rules. Every globgrph derive, ad-hoc AND rule-initiated, publishes [SEV1][PAGE] and [SEV2][digest] to arn:aws:sns:us-east-1:313476888478:opal-critical-surface-alerts, and that topic carries a LIVE SMS subscription to a personal mobile number beside its internal SQS queue -- RE-MEASURED BY THIS SEAT with sns list-subscriptions-by-topic at 03:3xZ before the escalation, not taken from the row. So Andrew's ~02:5xZ constraint is engaged IN CLASS by the derive path. It is the STANDING behaviour of the family and not something this round created; what this round added is extra pages from ad-hoc test derives, and the first measurement that anyone was being paged at all. NOT TOUCHED BY THIS SEAT: no unsubscribe, no topic change, no edit to the publish site -- removing a person's alerting is outward-facing, the endpoint may be exactly who wants those pages, and an alert path's existence is Andrew's business under the standing moratorium.",
+    "spec_asserts": "Andrew-direct ~02:5xZ, verbatim: 'make sure no test run hits aj's email, that is not appropriate' -- read for its CLASS, a test run contacting a person, not for the one address it names.",
+    "world_is": "A delivered SMS is a recipient list by any reading, and the derive that this order ran four times tonight publishes to a topic that has one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat's live read 2026-09-10 03:3xZ: 2 subscriptions on the topic -- sqs to opal-critical-surface-alerts-coo, and sms to a +1 personal number (digits in the live read, masked in every message).",
+        "W2-S72's derive-log evidence: the same two SNS_PUBLISHED lines in this seat's 02:18Z ad-hoc run (task bc59354a) and in the 02:00Z rule-initiated nightly (task 2229aae5)."
+      ]
+    },
+    "notes": "MY REC to Andrew, stated in the escalation: keep the publish on the SCHEDULED fire and suppress it on ad-hoc invocations -- the same manual-trigger seam PRD v0.13 S32 already draws -- as a round-7 code cell gated on his answer. It builds no alert; it stops one that fires on a test."
+  },
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T03:45Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S105",
+    "one_line": "SELF-CORRECTION, and the second one this seat owes tonight: AT TICK 62 I TOLD THIS FABRIC THAT NFRA_CLDGRPH HAD NO SEND PATH, citing a comp-find over infra/aws/globgrph for aj@, send_email, sesv2, ses_client, sns_client and send_raw_email that read 0 hits across 104 files scanned. The zero is REAL and it is USELESS: the publisher is reached through boto3's own client from the critical-surface scan and is spelled with none of the tokens I enumerated, so a census of the MAILER vocabulary could not see an SMS page and the RUN LOG could. I brought a mailer vocabulary to a question about whether anyone gets CONTACTED, and the output answered the question I brought. The worker's row W2-S72 is what found it, hours after my zero was on the record and after four derives had run.",
+    "spec_asserts": "CLAUDE.md Rule 22 (COVERAGE: evidence spans the claimed set; print the denominator) and the pattern-list-as-declared-domain rule: hunt the uncovered member.",
+    "world_is": "An enumerated-token census over one plane answered a question about a different plane, and its printed denominator (104 files) made it read as thorough.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "My own message 94924 at tick 62 carrying the zero; W2-S72 and this seat's confirming live read at 03:3xZ.",
+        "The comp-find output itself already disclosed what its zero did not cover: 3 binary and 86 ephemeral-floor files excluded -- and neither of those is where the miss was, which is the point: the miss was in the VOCABULARY, not the file set."
+      ]
+    },
+    "notes": "The rule I will carry: for 'can this reach a person', the instrument is the RUN LOG and the live subscription list, never a token census of send verbs -- a send you did not name is a send you cannot see, and the denominator makes the blindness look like coverage."
+  }
+]
+```
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T03:48Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S106",
+    "one_line": "CORRECTION OF THE GROUND OF S104's HOLD, ruled by the CTO at 94951 -- the hold STANDS, its EFFECT is unchanged, and its BASIS in the record was wrong. S104 rested the hold on Andrew's ~02:5xZ constraint ('no test run hits aj's email') read for its CLASS. The CTO deliberately did NOT widen that word to reach an SMS subscription, citing the law that binds hardest here: never convert Andrew's word to ONE agent into a gate on another -- verbatim scope, relay never adjudicate wider OR narrower, and where wider seems plausible, ASK. Wider IS plausible here, so it is ASKED and the card stays RESERVED FOR ANDREW exactly as cut. THE HOLD IS INSTEAD BACKED BY LAW ALREADY ON THE BOOKS AND NEEDED NO NEW RULING: CLAUDE.md Agent Autonomy -- 'Do NOT ask permission to read/write/build/test/commit/push CLOUD-DEV/run scripts/call Opal-owned APIs. EXCLUDED: ALL EGRESS OFF OPAL INFRASTRUCTURE.' A delivered SMS to a personal mobile IS egress off Opal infrastructure, and an ad-hoc test derive that publishes to that topic performs it. So a seat may not fire an ad-hoc globgrph derive on its own authority, and that was TRUE BEFORE TONIGHT MEASURED IT. SCOPE, stated so it is not read wider: the 02:00Z rule-initiated nightly is the estate's own standing schedule and is NOT stopped; nothing is unsubscribed, nothing is edited, no alerting change is proposed under the standing moratorium; only Andrew's word moves the subscription.",
+    "spec_asserts": "CLAUDE.md Agent Autonomy: all egress off Opal infrastructure is excluded from standing autonomy. CLAUDE.md DO NOT MANUFACTURE FRICTION (b): never convert Andrew's word to ONE agent into a gate/stop on another; verbatim scope; relay, never adjudicate wider or narrower; if wider seems plausible, ASK.",
+    "world_is": "The hold on ad-hoc derives is correct and was always correct; the seat that filed it named a plausible-but-unwidened Andrew word as its authority instead of the standing egress exclusion that already covered it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CTO ruling 94951, answering this seat's RESERVED card 94937: 'YOUR HOLD IS BACKED, on that ground, and I am recording it as the ground so nobody later thinks it rests on a constraint that was never widened.'",
+        "S104 as filed, which named the constraint 'read for its CLASS' as the basis -- the claim this row corrects.",
+        "This seat's live read 2026-09-10 03:3xZ: the topic every derive publishes to carries an sms subscription to a personal mobile beside its internal sqs queue."
+      ]
+    },
+    "notes": "The lesson is narrower than the hazard and worth keeping separately: WHEN A STANDING LAW ALREADY REACHES AN ACT, CITE THAT LAW AND NOT A PERSON'S RECENT WORD, even when the word is fresher and feels more directly on point. Reaching for the word makes the hold look like an inference from something Andrew said about a different subject, which is exactly the friction-manufacturing shape the law forbids, and it puts the hold at risk the moment someone reads the word narrowly and correctly. The egress exclusion needed no interpretation at all. Row stays ARMED: only Andrew's answer disarms the card itself."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W1-S35, NFRA_CLDGRPH-W1-S36 -- 0.9.0_WK_NFRA_CLDGRPH~1 on TO-CG-G-1 (CG-s-32), 2026-09-10T04:45Z
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S35",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-10T04:45Z",
+    "one_line": "TO-CG-G-1 treats DERIVES_FROM as one of the two INCLUDED families the census reports, but on the served graph none of its three endpoint classes carries a second identity, so the census's own endpoint test classifies it EXCLUDED; it is reported in the facts-per-key form as the round's NAMED COMPARATOR and negative control rather than omitted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-CG-G-1 G1-AC3: 'every included family reports FACTS PER KEY with its distinct-key denominator, its per-key distribution and its by-resolved-type breakdown; the two known families appear', and DELIVERABLE 3 orders the report 'for each INCLUDED family'. Read together the cut presumes STORED_IN and DERIVES_FROM are both members of the INCLUDED population the order defines as 'every edge family whose endpoint names a resource carrying BOTH an id and an arn'.",
+    "world_is": "Measured through the projection service at served vintage 2026-09-10T03:31:02.025931+00:00: DERIVES_FROM's endpoint classes are S3Key (source, 216 of 216 edges) and PipelineFunction / PipelineScript (targets, 127 and 89). None of the three carries a second identity -- 0 of 381 S3Key, 0 of 1217 PipelineFunction and 0 of 167 PipelineScript nodes carry an ARN-shaped node_id beside a distinct name, against a swept denominator of 27,665 nodes in 59 classes. Neither endpoint is a SHADOW ID either (all 15 shadow ids in the graph are S3_BUCKET_POLICY nodes). So g1_edge_families.py puts DERIVES_FROM in EXCLUDED (INCLUDED=34 EXCLUDED=21 of 55 families swept), and g1_facts_per_key.py prints it beside STORED_IN in the identical keys/edges/dist/by_type form as the round's NAMED COMPARATOR -- the negative control for the seam, a stitch family with no identity ambiguity -- rather than dropping it. NOTE the second half, which is the part worth the CTO's attention: read in facts per key, DERIVES_FROM's round-6 headline '216 of 216' is 216 edges over keys=121 with distribution {1: 84, 2: 20, 3: 13, 4: 1, 12: 1, 16: 1, 21: 1}, i.e. 1.79 edges per key. The 100 percent figure is an EDGE resolution rate on a family that already fans; it is not 216 facts.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-G-1.boundary-edge-class-census.md@f3b5f26f77 -- G1-AC3 and DELIVERABLE 3, the clauses this row measures against",
+        "timeout 120 python org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/g1_edge_families.py -> 'FAMILY DERIVES_FROM DECISION=EXCLUDED keys=121 edges=216 REASON=no endpoint carries two identities: source class(es) S3Key and target class(es) PipelineFunction,PipelineScript are all single-identity, and no endpoint node_id is a shadow id', rc 0",
+        "timeout 120 python org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/g1_both_identity_nodes.py -> 'CLASS S3Key both=0 of 381', 'CLASS PipelineFunction both=0 of 1217', 'CLASS PipelineScript both=0 of 167'; BOTH_IDENTITY_CLASSES=29 of 59 node class(es); SWEPT_NODES=27665 of 27665",
+        "instrument: projection_client.query -> POST <base_url>/graph/cypher, the SERVED graph; no local store opened; served vintage 2026-09-10T03:31:02.025931+00:00 as reported by the service's own health dict"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Form only, not significance: the row states what the order said and what the served graph is, and the census does BOTH things the order can be read to want -- DERIVES_FROM appears, in the required form, with its decision printed beside it, and the INCLUDED set stays honest to the population the order defines. What the census cannot do is call DERIVES_FROM a member of a population it measurably does not belong to; that would be the wrong-quantity error one level up from the one the binding condition forbids. 3.0.0_SA_CVO at L9 owns whether the criterion is met on this reading."
+  },
+  {
+    "id": "NFRA_CLDGRPH-W1-S36",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-10T04:45Z",
+    "one_line": "The cut states the served graph carried 54 distinct edge_type values at vintage 2026-09-10T03:02:00; the served graph this worker read carries 55 edge families at vintage 2026-09-10T03:31:02.025931+00:00 -- the node-class count (59) agrees, the edge-family count does not, and the vintage the service reports is not the one the cut names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-CG-G-1, MEASURED BY THE ISSUER AT THE CUT: 'The served graph carried 59 distinct node_type values and 54 distinct edge_type values at round 6's last read (vintage 2026-09-10T03:02:00; the CVO signed on 03:31:02Z).'",
+    "world_is": "Read through the projection service at 2026-09-10 04:4xZ: the service's own health dict reports vintage 2026-09-10T03:31:02.025931+00:00 -- the CVO's SIGNING minute, not the 03:02:00 the cut names as the vintage. At that vintage the graph carries 59 distinct node_type values (AGREES with the cut) and 55 distinct edge_type values over 59,683 edges (DOES NOT: one more than the 54 stated). The census reports its own denominator as EDGE_FAMILIES_SWEPT=55 of 55 and does not adopt the cut's 54, so no number in this deliverable is computed against the stale figure. This worker cannot say WHICH family is the extra one, because the cut carries the count and not the list, and this order runs no producer and reads no earlier artifact; the difference could be a re-derive between 03:02:00 and 03:31:02, a miscount at the cut, or a different denominator convention (for example counting only families with both endpoints in one layer).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-G-1.boundary-edge-class-census.md@f3b5f26f77 -- the MEASURED BY THE ISSUER AT THE CUT block, third bullet",
+        "timeout 120 python org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/g1_edge_families.py -> 'EDGE_FAMILIES_SWEPT=55 of 55', 'SWEPT_EDGES=59683 of 59683', 'VINTAGE=2026-09-10T03:31:02.025931+00:00', rc 0",
+        "timeout 120 python org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/g1_both_identity_nodes.py -> 'BOTH_IDENTITY_CLASSES=29 of 59 node class(es)', the 59 agreeing with the cut",
+        "timeout 120 python org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/g1_facts_per_key.py --reconcile -> 'DIFFERENCE 4 -- FAMILY COUNT AT THE CUT vs HERE ... 59 node class(es) and 55 edge family(ies)', 'DIFFERENCE 5 -- VINTAGE', rc 0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed as FORM: a stated baseline and a live measurement disagree by one, and the census names which of the two it used. It is INERT because nothing in this deliverable is derived from the 54 -- every count here prints its own denominator from the same read that produced it -- but it matters to any later seat that quotes the cut's 54 as a served-plane fact, and to the reader of round 6's own coverage line. The vintage half is the sharper of the two: a signing MINUTE and an artifact VINTAGE are different quantities, and the service reports the artifact's."
+  }
+]
+```
+
+## W2-S73, W2-S74, W2-S75 -- the validator and schema G3-AC2 names, the card shape the contract cannot hold, and a 20-node disagreement between two records of one snapshot (TO-CG-G-3, CG-s-34)
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S73",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T04:53Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "THE VALIDATOR G3-AC2 NAMES DOES NOT EXIST, AND THE ONE THE ESTATE HAS BINDS A DIFFERENT SCHEMA THAN THE ONE THE FACE NAMES -- SO THE SUBSTITUTION IS NOT NEUTRAL. .tools/validate-json-schema.py is absent from this worktree (ls: No such file or directory, at f3b5f26f77) and appears nowhere in the corpus: comp-find over .tools for 'validate.json.schema|validate_json_schema|jsonschema' returns 38 hits across 397 files scanned and the only HEAD-band hit is .tools/surprise-corpus-validate.py. The estate's substrate-card validator is .tools/substrate-card-check.py, which the face's own escape clause instructs me to find and use, AND IT TAKES NO SCHEMA ARGUMENT: SCHEMA_PATH is hardcoded at :28 to org/standards/SUBSTRATE_CARD.v3.1.schema.json. That is NOT the org/standards/SUBSTRATE_CARD.schema.json the DELIVERABLE and the invocation name, and the two are MUTUALLY EXCLUSIVE rather than merely different: v1 fixes schema_version to the const 1 and v3.1 to the const 3.1, both roots are additionalProperties:false, and v3.1 retypes composes, invents, projection_of and co_resident_stores from arrays of strings to arrays of joinable_ref objects. One file cannot satisfy both. I BUILT TO v3.1 -- the schema the estate's own validator enforces and the version the sampled estate cards carry -- and ran python .tools/substrate-card-check.py over the card, which prints VALID and exits 0. The G3-AC2 evidence in this order's proof instance is therefore from a DIFFERENT INSTRUMENT and a DIFFERENT CONTRACT than the face names, and it says so there too.",
+    "spec_asserts": "TO-CG-G-3 G3-AC2: timeout 120 python .tools/validate-json-schema.py org/standards/SUBSTRATE_CARD.schema.json <card>, expect VALID; and the DELIVERABLE clause, the card validating against org/standards/SUBSTRATE_CARD.schema.json.",
+    "world_is": "No validator exists at that path; the estate's substrate-card validator hardcodes the v3.1 schema, ignores any schema argument, and v1 and v3.1 cannot both be satisfied by one file because each fixes schema_version to a different const.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls -la .tools/validate-json-schema.py at f3b5f26f77 -> 'No such file or directory'.",
+        "comp-find [content] 'validate.json.schema|validate_json_schema|jsonschema' .tools --limit 40 --files at f3b5f26f77: DENOMINATOR 38 hit(s) across 397 file(s) scanned, corpus=all; HEAD band = .tools/surprise-corpus-validate.py only; no file of that name anywhere in scope.",
+        ".tools/substrate-card-check.py:28 at f3b5f26f77 -- SCHEMA_PATH resolves to org/standards/SUBSTRATE_CARD.v3.1.schema.json from the tool's own location; main() reads only card paths from argv.",
+        "org/standards/SUBSTRATE_CARD.schema.json properties.schema_version const 1 against org/standards/SUBSTRATE_CARD.v3.1.schema.json properties.schema_version const 3.1, both roots additionalProperties:false, at f3b5f26f77.",
+        "Exercised, this order's four cards: 'substrate-card-check | <card> | structural=jsonschema | violations=0' then VALID, four times, rc 0.",
+        "PRECEDENT read, not assumed: three sampled estate cards (derive_stitch.card.json, kuzu_nessie_db.rebuild.tmp.SET.card.json, comp-iam.card.json) all carry schema_version 3.1."
+      ]
+    },
+    "notes": "DISARM SHAPE, for whoever owns the next cut: either name .tools/substrate-card-check.py and the v3.1 schema on the face, or build the generic validator the face assumes. NOT PROPOSED HERE AS A BUILD: a new tool is the last rung of the ladder and this order has no grant on .tools/. The wider point is the one the face itself warns about -- an invocation naming a tool nobody has is indistinguishable, from inside the worker, from a tool the worker cannot find, and only the escape clause in G3-AC2's prose kept that from being a BLOCKING row."
+  },
+  {
+    "id": "NFRA_CLDGRPH-W2-S74",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T04:53Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "ONE ROW PER CARRIER, EACH CARRYING ALL SEVEN QUESTIONS, IS NOT EXPRESSIBLE IN ONE SUBSTRATE CARD ON EITHER SCHEMA VERSION -- THE CONTRACT'S UNIT IS ONE SUBJECT WITH SEVEN ROWS. Both org/standards/SUBSTRATE_CARD.schema.json and org/standards/SUBSTRATE_CARD.v3.1.schema.json are type object, additionalProperties false, required [schema_version, subject, as_of, process, artifact, trust, verdict, carded_by], with exactly one subject and exactly seven question rows (methodology, cadence, persistence, location, coverage, key, failure_mode). Three carriers times seven questions with an owner each is 21 owned rows, which is three cards and not three sentences in one; and a top-level ARRAY of three cards is refused by the validator (jsonschema reports not-of-type-object and the tool's set_by check would raise on a list). SO THE CARD AT THE NAMED PATH IS A CARRIER-SET CARD and the three carriers are full cards beside it, enumerated in the set card's artifact.location.projection_of: nodes, props and edges each carry their own seven rows, their own basis, evidence and owner, and their own verdict. PRECEDENT, not invention: the estate already cards a SET this way -- org/tier2_senior/0.7.0_AE_CloudOps~K/deliverables/D11_CARDS/kuzu_nessie_db.rebuild.tmp.SET.card.json cards the SET of per-rebuild temporary Kuzu databases as one subject. The cost of the shape is disclosed on the set card itself: the set's denominator is its own enumeration, so a fourth carrier is invisible until someone adds a card, which is the same defect class the set exists to record.",
+    "spec_asserts": "TO-CG-G-3 DELIVERABLE 2: the card at org/missions/D0/NFRA/NFRA_CLDGRPH/cards/stitch-producer-archive-read.card.json, validating against the substrate-card schema, with one row per carrier -- nodes, props, edges -- each carrying all seven questions across the three grains and its own owner.",
+    "world_is": "The substrate-card contract's unit is one subject with seven rows and additionalProperties false at the root, so a single file cannot carry three carriers times seven questions with an owner each; the deliverable is met as four validating cards -- a set card at the named path plus one card per carrier -- and not as one file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/standards/SUBSTRATE_CARD.schema.json:6-8 and the root of org/standards/SUBSTRATE_CARD.v3.1.schema.json at f3b5f26f77: type object, additionalProperties false, the same eight required keys, one subject object.",
+        "The seven rows are fixed by process.required [methodology, cadence], artifact.required [persistence, location], trust.required [coverage, key, failure_mode] at f3b5f26f77.",
+        "Exercised: all four delivered cards read VALID with 0 violations under .tools/substrate-card-check.py, and g2_card_rows.py reads CARD_ROWS=3 of 3 carrier(s), QUESTIONS_PER_ROW=7 of 7, OWNER_PER_ROW=3 of 3 over 21 rows.",
+        "comp-find --name card.json at f3b5f26f77: DENOMINATOR 39 hit(s) across 31,257 file(s) scanned -- 39 cards in the estate, one file per subject, including one existing SET card."
+      ]
+    },
+    "notes": "Filed as a SHAPE disclosure, not a complaint: the face's clause is right about what the reader needs and the contract cannot hold it in one file, and a worker that silently collapsed three carriers into one card's prose would have produced exactly the summary this order was cut to prevent. If the estate wants a single-file carrier set, that is a schema act at 1.0.0_SA_CTO's lane and this row is the input to it."
+  },
+  {
+    "id": "NFRA_CLDGRPH-W2-S75",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T04:53Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "TWO RECORDS OF THE SAME SNAPSHOT POPULATION DISAGREE BY 20, AND BOTH ARE IN THE ROUND-6 RECORD. Row W2-S61 censuses the 2026-09-09T21:05:21Z snapshot as 1,771 nodes with source=portal-stitch and prints the per-type breakdown that sums to exactly that (GOLD_SCRIPT 1380 + S3_DATA_KEY 294 + REACT_QUERY_KEY 94 + PORTAL_COMPONENT 2 + PORTAL_BUNDLE 1 = 1,771). The producer's own comment at infra/aws/globgrph/derive_stitch.py:313 at f3b5f26f77, written in the same cell, reads for the SAME 21:05Z snapshot: the 21:05Z snapshot carries 1,791 nodes with source=portal-stitch under the four PROVISIONAL names. 1,791 minus 1,771 is 20, and the comment says FOUR names while the census enumerates FIVE. A third figure of the same family sits in the neighbouring commits (1,521 merged by identity plus 269 carried = 1,790, and the round-6 analysis's LOST 0 of 1,790), so at least two different populations are in play under one description. NOT RESOLVED HERE AND NOT AVERAGED: resolving it requires re-reading the snapshot tarball, which is an S3 read this round's egress hold and this order's BOUNDS put out of reach, and the card that needed the number prints BOTH figures in its coverage denominator rather than choosing one.",
+    "spec_asserts": "Row NFRA_CLDGRPH-W2-S61 at 80daa1fff6: the 21:05Z snapshot carries 1,771 nodes with source=portal-stitch under the PROVISIONAL names, with a five-way per-type census summing to 1,771.",
+    "world_is": "The producer's own comment for the same snapshot and the same source stamp reads 1,791 under four provisional names, and neighbouring records of the same night carry 1,790; the three figures are never compared anywhere, so the discrepancy has never been visible to a reader of any one of them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_CLDGRPH-W2-S61 at 80daa1fff6, one_line and evidence item 4: the per-type census, summing to 1,771 by arithmetic done here on the row's own numbers.",
+        "infra/aws/globgrph/derive_stitch.py:311-314 at f3b5f26f77: Measured 2026-09-09, the 21:05Z snapshot carries 1,791 nodes with source=portal-stitch under the four PROVISIONAL names.",
+        "Commit 139cbe1d40 subject at f3b5f26f77: 1,521 of 1,790 merged by identity with 269 CARRIED, which sums to 1,790.",
+        "The two figures name the same object: the same bucket, the same key (snapshots/20260909/graph-20260909.tar.gz) and the same LastModified 2026-09-09T21:05:21Z, so this is not two snapshots."
+      ]
+    },
+    "notes": "WHY IT IS FILED RATHER THAN FIXED: a card whose coverage denominator is one of two disagreeing figures is a card that has chosen without saying so, and the choice would be invisible to every later reader. The card at org/missions/D0/NFRA/NFRA_CLDGRPH/cards/stitch-producer-archive-read.nodes.card.json therefore carries both numbers and this row's id in its trust.coverage.denominator. The cheapest resolution when the hold lifts: one census of that tarball by source stamp AND by type, printing whether PORTAL_BUNDLE and the canonical-named stitch nodes are inside or outside the population each figure counted -- the likeliest explanation is that the two figures count different sets under one sentence, which is a denominator defect and not an arithmetic one. Owner of that read: 0.8.0_AE_CloudComp, the engine owner named by W2-S61's own disarm."
+  }
+]
+```
+
+## W3-S17 -- format_provenance_header prints a hard-coded SUBSET of source_vintage, not every key it is given
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W3-S17",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~3",
+    "surfaced_at": "2026-09-10T04:55Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "format_provenance_header DOES NOT PRINT EVERY source_vintage KEY IT IS GIVEN -- IT PRINTS A HARD-CODED SUBSET AND DROPS THE REST IN SILENCE. TO-CG-G-4's MEASURED block offers this function as the first carrier candidate for a portal vintage on the ground that it 'prints every source_vintage key it is given (CG-s-27's contract)'. EXERCISED at HEAD f3b5f26f77: handed a nessie manifest whose source_vintage carried 7 non-empty keys, the function printed 3 (nodes_snapshot_id, edges_snapshot_id, nodes_metadata_key) and DROPPED 4 (stitch_built_at, stitch_producer, stitch_git_sha, and the fabricated stitch_portal_sha) with no warning line. The drop is structural, not a fixture artifact: :800-812 hard-codes one branch per source_kind (tarball -> tarball_key; nessie -> the three above; stitch -> stitch_path/stitch_mtime) and there is no loop over the dict anywhere in the function. So the five stitch keys read_stitch_vintage already injects into a kind='nessie' manifest are invisible there TODAY, and a SIXTH portal key added for CG-s-35 would be equally invisible. ARMED because the premise is on the face of an open order: a round-8 cut that routes the portal-vintage remedy to this function on the strength of that sentence would ship a change that passes its own test and alters nothing a reader sees. This is DISTINCT from W3-S14 (which found that no serve path CALLS the function): W3-S14 says a reader never reaches it; this row says that even if a reader did, the new key would not be there. Both hold, and each alone would leave the other undiscovered. The carrier this order recommends instead is projection_worker._age_line, EXERCISED in the same run and shown to render the stitch clause it is fed.",
+    "spec_asserts": "NFRA_CLDGRPH.TO-CG-G-4 'MEASURED BY THE ISSUER AT THE CUT', third bullet: '`_provenance.format_provenance_header` prints every `source_vintage` key it is given (CG-s-27's contract, drained @3e6be14930) -- so the carrier may already exist and simply not be fed.'",
+    "world_is": "It prints a hard-coded subset selected by source_kind and drops every other key silently -- measured 3 printed of 7 given. The 'carrier exists and is unfed' conclusion is still TRUE, but of a different carrier (projection_worker._age_line plus the source_vintage dict that feeds it), and routing the remedy to the function the face names would not reach a reader.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/globgrph/_provenance.py:753-857 @f3b5f26f77 -- format_provenance_header; the kind branches are at :800-812 and there is no iteration over source_vintage in the function body.",
+        "EXERCISED by org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/g3_carrier.py candidate C3: a temp DB with a schema_version 1 manifest, source_kind 'nessie', source_vintage carrying nodes_snapshot_id, edges_snapshot_id, nodes_metadata_key, stitch_built_at, stitch_producer, stitch_git_sha and stitch_portal_sha; the header was searched for each value. Output: 'EXERCISED: handed 7 non-empty source_vintage keys; it PRINTED 3 and DROPPED 4'.",
+        "infra/aws/globgrph/kuzu_nessie_load.py:71-77 @f3b5f26f77 -- read_stitch_vintage returns stitch_built_at / stitch_producer / stitch_git_sha / stitch_artifact_sha256 / stitch_marker_last_modified into source_vintage; every one of the first three is in the DROPPED set above.",
+        "infra/aws/globgrph/projection_worker.py:245-247 @f3b5f26f77 -- the producer's own docstring: 'No serve path calls _provenance.format_provenance_header (W3-S14), so this is where a stitch vintage becomes readable at all.' The independent second reason, recorded a round earlier by this slot.",
+        "POSITIVE CONTROL in the same call: the three nessie keys WERE found in the header, so the search that reports the drops can find a key that is printed."
+      ]
+    },
+    "notes": "Filed, not chased. The function is producer code and this order is READ ONLY on it; nothing was edited. The remedy this order recommends does not touch it at all -- the four named hops are the zip packer, stitch-produce.tf's marker dict, kuzu_nessie_load.read_stitch_vintage and projection_worker._age_line, with owners, in CG-s-35.portal-layer-vintage.result.md. Whether format_provenance_header should ALSO loop over the dict it is handed is a separate question with a separate owner and is not proposed here."
+  }
+]
+```
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T05:30Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S107",
+    "one_line": "DISARM ACK for NFRA_CLDGRPH-W2-S73 (OBSERVATION/ARMED) -- MY CUT DEFECT, THE THIRD OF THE NIGHT AND THE SAME SHAPE AS THE OTHER TWO: G3-AC2's invocation named `.tools/validate-json-schema.py`, WHICH DOES NOT EXIST, and bound `SUBSTRATE_CARD.schema.json` (const version 1) when the estate's real validator takes no schema argument and binds `SUBSTRATE_CARD.v3.1.schema.json` (const 3.1) -- mutually exclusive, so the criterion as written could not have passed on the estate's own contract. The worker substituted the estate's actual instrument (`.tools/substrate-card-check.py`), got 4 of 4 cards VALID with 0 violations, and FILED A ROW rather than rescuing my criterion silently -- which is the behaviour the faces order and the only reason this is countable. DISARMED, and the substitution is ADOPTED as the criterion's instrument. THE SHAPE, stated once for all three: I wrote a tool path and a schema version from a NAME I believed in rather than from a census of what exists. Same as TO-CG-F-5's `.tools/comp-debt` (row S88), same as this seat's tick-62 send-path census (row S105), same as G-4's face asserting a header behaviour from a CONTRACT rather than a RUN (row W3-S17, acked at S108). Four instances, one seat, one night.",
+    "spec_asserts": "CLAUDE.md Rule 21: `comp-find --name` is the census verb -- run it before converting a name into an absence OR into a presence. The cut-discipline clause (spine v3.8): an accept names its instrument's coverage and its stored baseline's environment.",
+    "world_is": "The named validator is absent from the tree and the named schema version is superseded; the estate's own validator binds v3.1 and takes no schema argument.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W2-S73 @40a76d3fea: the substituted invocation, its rc 0, and the const-1-versus-const-3.1 conflict named.",
+        "The drained face's G3-AC2 as I wrote it, at f3b5f26f77."
+      ]
+    },
+    "notes": "THE FIX FOR THE NEXT CUT, and it is one command: any face naming a tool path or a schema file runs `comp-find --name` on that basename FIRST and pastes the denominator into the SURFACES line. A path I have not censused is a claim, not a surface."
+  },
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T05:30Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S108",
+    "one_line": "DISARM ACK for NFRA_CLDGRPH-W3-S17 (OBSERVATION/ARMED) -- MY CUT DEFECT, AND THIS ONE IS WORSE THAN A WRONG PATH: G-4's face carried, under MEASURED BY THE ISSUER AT THE CUT, the premise that `_provenance.format_provenance_header` 'prints every `source_vintage` key it is given (CG-s-27's contract)'. EXERCISED at f3b5f26f77 by the worker: handed SEVEN non-empty keys it printed THREE and DROPPED FOUR SILENTLY, including all three stitch keys `read_stitch_vintage` already injects, because `_provenance.py:800-812` hard-codes one branch per `source_kind` with NO loop over the dict. So the FIRST carrier candidate my own cut named is the one that MUST NOT be chosen, and I labelled the claim MEASURED when what I had was a CONTRACT DOCUMENT from a drained cell. A contract states what a function promises; only a run states what it does. The worker exercised it because the criterion made the carrier decision falsifiable, and it answered EXISTS-AND-UNFED over 8 of 8 candidates with the feed's four hops and their split owners named -- a better answer than the one my premise would have produced. DISARMED as a cut defect; the CARRIER FINDING it produced is carried live to the L8.",
+    "spec_asserts": "CLAUDE.md Rule 22: a description is never a state, and 'measured' is reserved for what an instrument returned. CG-s-27's contract (drained @3e6be14930) is a promise about the function, not a reading of it.",
+    "world_is": "The header prints 3 of 7 keys handed to it and drops 4 without an error; the drop is structural (one branch per source_kind, no loop), so it cannot be fed by adding a key.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W3-S17 @7abde30b23: the exercise, the 7-in-3-out count, and `_provenance.py:800-812` cited with its structure.",
+        "G-4's face at f3b5f26f77: the premise as I wrote it, under the MEASURED heading."
+      ]
+    },
+    "notes": "The label did the damage, not the belief: had I written it as ASSUMED the worker would have owed the same exercise and my face would not have pointed at the wrong carrier first. `measured/inferred/held/absent` is a field a consumer can reject on, and a face's MEASURED heading is exactly such a field."
+  },
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T05:30Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S109",
+    "one_line": "ACK for NFRA_CLDGRPH-W1-S35 and NFRA_CLDGRPH-W1-S36 (both OBSERVATION/INERT), recorded rather than left to the L9 to rediscover. W1-S35: `DERIVES_FROM` measures OUTSIDE the both-identity population -- all three of its endpoint classes carry ONE identity -- so the census reported it as the NAMED COMPARATOR and the seam's negative control instead of force-fitting it into the included set. That is the right call and it is why G1-AC3's `DERIVES_FROM` line reads as a control rather than as a member. W1-S36: the served graph carried 55 edge families at vintage 2026-09-10T03:31:02Z, not the 54 my cut stated at 03:02:00; node classes agree at 59, and NO number in the census is computed against the 54. My figure was a real reading of an EARLIER vintage that I carried forward into a face without re-reading it -- a stale vintage rather than a wrong count, which is the cheaper half of the same family as S107 and S108.",
+    "spec_asserts": "The cut-discipline clause: an accept names its instrument's coverage and the environment its stored baseline came from. A vintage carried forward is a stored baseline.",
+    "world_is": "One family appeared between the two vintages; the census's own denominators are internally consistent and none depends on my figure.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W1-S35 and W1-S36 @71a2c8986f, with the census's own denominators beside them.",
+        "The census output: EDGE_FAMILIES_SWEPT=55 of 55, 59,683 of 59,683 edges, partition 34 + 21 = 55."
+      ]
+    },
+    "notes": "Both rows are the worker declining to silently reconcile a face against the world, which is the same behaviour that produced S107 and S108. Three of the four round-7 orders filed at least one row against their own cut."
   }
 ]
 ```
