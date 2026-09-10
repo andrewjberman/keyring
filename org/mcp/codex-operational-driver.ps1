@@ -311,15 +311,29 @@ function Invoke-DriverPass {
         $ctoUnread = @(Get-ChildItem -LiteralPath $ctoInbox -File -Filter '*.md')
     }
 
+    # THE ALERT ROSTER IS AN EXPECTATION, NOT AN OBSERVATION. A seat stays here while somebody expects it
+    # to be running, and its ABSENCE is then an outage worth reporting. It is deliberately NOT derived from
+    # live registration: a seat that goes dark must not vanish from the roster, because that is precisely
+    # how an eight-day outage stayed invisible (see the retirement note below).
+    #
+    # RETIRED 2026-09-10 by 1.0.0_SA_CTO, on the charter issuer 1.0.0_SA_CTO~Y's answer relayed at 95289:
+    # Phase 2 is DONE in canonical 02 and its execution round is RETIRED, NOT PAUSED. The continuous-run
+    # expectation for all six producer lanes is WITHDRAWN; 1.2.0_SA_A0 explicitly released; 1.1.0_SA_KJ's
+    # P3-TO-05-PREQ-02 landed and closed. No spawn was requested and none was performed.
+    #   1.1.0_SA_KJ~Y  1.2.0_SA_A0~Y  1.3.0_SA_ADP~Y  1.4.0_SA_GATE~Y  1.5.0_SA_FI~Y  1.6.0_SA_TRN~Y
+    #
+    # ⛔ REMOVING A LANE FROM THIS ROSTER IS NOT DELETING THE SEAT. Charters, history, deliverables and
+    # worktrees are PRESERVED by the issuer's explicit instruction; only the running EXPECTATION is gone.
+    # ⛔ AND THIS IS NOT "DROP A ROW BECAUSE IT IS QUIET" -- that is the failure mode the paragraph above
+    # guards. These rows are retired because their EXPECTATION WAS WITHDRAWN BY THE SEAT THAT HOLDS IT.
+    # The two acts look identical in a diff and are opposites in kind; a future edit here must say which.
+    #
+    # WHY THEY WERE MEASURED AT ALL: until b2a9f0b255 one incident flag suppressed the red alert for the
+    # WHOLE roster, hiding six dark seats -- four of which stopped at the SAME SECOND, 2026-09-02T12:13:56Z,
+    # by the driver's own pass log over 1,179 passes. Scoping the suppression is what surfaced them.
     $seats = @(
         '1.0.0_SA_CTO~Y',
-        '4.0.0_SA_CRO~Y',
-        '1.1.0_SA_KJ~Y',
-        '1.2.0_SA_A0~Y',
-        '1.3.0_SA_ADP~Y',
-        '1.4.0_SA_GATE~Y',
-        '1.5.0_SA_FI~Y',
-        '1.6.0_SA_TRN~Y'
+        '4.0.0_SA_CRO~Y'
     )
     $seatStates = @($seats | ForEach-Object { Get-SeatStatus -Root $Root -Serial $_ })
     $seatSummary = ($seatStates | ForEach-Object { "$($_.Serial)=$($_.State)/$($_.Exit)" }) -join ', '
