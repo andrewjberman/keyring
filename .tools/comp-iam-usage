@@ -4,13 +4,15 @@
 # SIBLING answers the LIFECYCLE question: is this role/grant still USED, and who still REACHES a
 # resource. Modes: role-cold (comp_debris.classify on the identity plane -- RoleLastUsed coldness),
 # who-can-reach <arn> (APPLIED resource-policy principals), reach-check <role> <action> <arn>
-# (a (principal,action,resource) verdict on the live simulate primitive), limits (the Rule-22a
-# statement). RULE-22a FIX-OR-CARRY is NAMED in the output, never silently inherited: (a) reach-check
-# is (action,resource)-precise; (b) ONE --resource-arns per call + a SEPARATE positive control;
-# (c) --context-entries for conditioned statements, else UNKNOWN (never a false deny); (+) reads LIVE
-# (APPLIED), an unreadable policy is UNKNOWN not 'no reach'. Access Analyzer enable HELD (alert-
-# suspension) -- this computes coldness without it. ADVISORY, read-only, NEVER deletes.
-#   comp-iam-usage {role-cold [--days 90] [--limit N] | who-can-reach <arn> | reach-check <role> <action> <arn> [--context k=v] | limits | self-test}
+# (a (principal,action,resource) verdict on the live simulate primitive), permission-cold --role
+# <name> --lookback <days> (PERMISSION grain: which GRANTED permissions were never used, over IAM
+# Access Advisor ACTION_LEVEL telemetry -- NOT AWS Access Analyzer, which stays HELD), limits (the
+# Rule-22a statement). RULE-22a FIX-OR-CARRY is NAMED in the output, never silently inherited: (a)
+# reach-check is (action,resource)-precise; (b) ONE --resource-arns per call + a SEPARATE positive
+# control; (c) --context-entries for conditioned statements, else UNKNOWN (never a false deny); (+)
+# reads LIVE (APPLIED), an unreadable policy is UNKNOWN not 'no reach'. Access Analyzer enable HELD
+# (alert-suspension) -- this computes coldness without it. ADVISORY, read-only, NEVER deletes.
+#   comp-iam-usage {role-cold [--days 90] [--limit N] | who-can-reach <arn> | reach-check <role> <action> <arn> [--context k=v] | permission-cold --role <name> [--lookback 90] | limits | self-test}
 WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
 python "$WORKSPACE/org/modules/graph/comp_iam_usage.py" "$@"
 _exit=$?
