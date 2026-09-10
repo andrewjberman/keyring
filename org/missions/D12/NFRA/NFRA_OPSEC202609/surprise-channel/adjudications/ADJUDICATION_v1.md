@@ -738,3 +738,77 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S20 -- three TOOLING findings graduate, all three about an instrument that answers CONFIDENTLY ABOUT THE WRONG OBJECT
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S20",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T05:30Z",
+    "one_line": "L9, round 2: Z-S143, Z-S147 and Z-S161 GRADUATE, and all three are the SAME SHAPE on three different instruments -- AN INSTRUMENT THAT ANSWERS CONFIDENTLY ABOUT THE WRONG OBJECT COSTS MORE THAN ONE THAT ANSWERS UNCERTAINLY ABOUT THE RIGHT ONE. Z-S143: the canonical nodejs build silently corrupts the estate's own source-of-truth manifest on EVERY build, and the ASCII rule that would catch it is enforced ON COMMIT MESSAGES ONLY -- so every audit of 'is the ASCII rule enforced' answers YES while a build script writes nine non-ASCII characters into the file Rule 4 designates as the pairing authority. Z-S147: the same build fails from the /cygdrive mount and reports 'No source_dir found in lambda-source-map.json' when the fault is the PATH -- naming a file the seat has very likely just edited. Z-S161: a multi-line argv value through .tools/aws.cmd is SILENTLY TRUNCATED at the first newline while the API returns rc=0 WITH a VersionId and AWSCURRENT, and a JWT signing key lived 3m52s in production as its 27-byte first line.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "UNCHANGED PER MEMBER. The CI lane owns infra/aws/lambda/ci/build-nodejs-lambda.sh for Z-S143 and Z-S147, with 2.0.0_SA_COO~Z to ROUTE -- and both are correctly NOT this project's to fix, since TO-OP-S-10B and TO-OP-S-10C are scoped away from the CI script and 0.7.0_AE_CloudOps~W declined the fix on exactly that ground. 2.0.0_SA_COO~Z on Z-S161, where shared tooling is not one lane's to change unilaterally. NOTHING IS FIXED, ROUTED FURTHER OR SCHEDULED HERE.",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S143",
+      "NFRA_OPSEC202609-Z-S147",
+      "NFRA_OPSEC202609-Z-S161"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S143 -- THE CONTROL IS REAL, ENFORCED, AND POINTED AT THE WRONG SURFACE, which is a harder defect to see than an absent gate. Measured at HEAD versus worktree: HEAD holds 0 non-ASCII characters and 18 escaped \\u00XX sequences; the worktree holds 9 DISTINCT non-ASCII characters and 0 escaped sequences, across entries nobody in this project touched. An agent cannot get ONE decorative character into a commit MESSAGE -- measured, refused outright, and this seat hit that same refusal tonight. A build script puts NINE into the CONTENT of the pairing authority, unattended, on every run.",
+        "Z-S143's SEVERITY IS BOUNDED BY ITS OWN AUTHOR RATHER THAN LEFT TO INFLATE, and the bound is why it is ARMED rather than urgent: walking the whole parsed document, EXACTLY 8 string fields carry a non-ASCII character and every one is PROSE (6 _build_note, 2 _note). ZERO functional fields are affected -- source_dir, files, artifact_sha256, tf_file, tf_resource, artifact_s3_key, runtime, build_type, handler, iam_role, last_deployed_commit and pipeline are clean across all 204 entries. The manifest's PAIRING DATA IS INTACT. What is corrupted is its prose, which is also what a human reads first when deciding whether an entry can be trusted. The estate has a recorded incident of ONE non-ASCII character crashing the deploy gate (2026-09-01, U+2B50, cp1252), and this file is read by build scripts, record-terraform-deploy.sh, drift checks and the staleness census.",
+        "Z-S147 -- THE ERROR MESSAGE ACTIVELY POINTS AWAY FROM THE FAULT, which is why a one-word workaround does not make it INERT: to_native_path matches only ^/([a-zA-Z])/, so it converts /c/... and passes /cygdrive/c/... through UNCHANGED; bun is a native Windows binary and cannot read a /cygdrive path, so the map read returns empty and the script blames the MAP. BOTH MOUNT FORMS ARE LIVE ON THIS DEVICE, so which one a caller's cwd happens to carry decides whether the estate's standard Lambda build works. The workaround is available only to someone who already knows the diagnosis, and the message points at a file the seat has very likely JUST EDITED -- which is exactly what happened to its author, who read 'No source_dir found' as 'your correction did not take'.",
+        "Z-S161 -- VERIFIED LIVE AND UNGUARDED ON THE ARTIFACT, not accepted from the row: the newline guard was BUILT at 4fb9eafdfe (1.0.0_SA_CTO~Z) and REVERTED at 1b0af4d39e by the same author, whose own subject says it 'BROKE THE CROSS-DEVICE AGENTBUS and protected nothing'. A census of .tools/aws returns ZERO occurrences of a newline guard today, while .tools/aws.cmd -- the genuinely truncating path Z-S161 named -- IS PRESENT. So the hazard is undischarged. The doctrine that DID catch it is canonical at .tools/AWS_SHIM_SILENT_FAILURES.md, present at 104 lines.",
+        "Z-S161's THREE GENERALISATIONS, none of them about AWS: (1) A WRITE RECEIPT CERTIFIES THAT A VERSION WAS CREATED, NEVER WHAT IT CONTAINS -- and the more specific the receipt looks (an id, a stage, a timestamp) the more it reads as content confirmation. (2) THE PRECAUTION AIMED AT THE WRONG LAYER IS WORSE THAN NONE, because it retires the worry: shell=False was chosen ON PURPOSE against a known hazard and felt careful, while the corrupting layer was a CMD shim underneath it. NAME THE LAYER A DEFENCE ACTS ON BEFORE CREDITING IT. (3) A FIX CAN ARM THE HAZARD IT LOOKS LIKE IT CLOSED -- writing the correct key is what poisoned AWSPREVIOUS, so the recovery path degraded precisely BECAUSE the primary was repaired, and nothing announces that.",
+        "SCOPE HONESTLY STATED AND NOT WIDENED BY THIS ADJUDICATION, in Z-S161's own words: the truncation is measured on put-secret-value ONLY. Every other .tools/aws.cmd call carrying a multi-line argv value is EXPOSED BY THE SAME MECHANISM but is NOT measured, and neither that row nor this one claims a census of them."
+      ]
+    },
+    "spec_asserts": "The estate's ASCII rule binds production code and data, the canonical build works from any supported mount, and a write receipt evidences what was written.",
+    "world_is": "A build script corrupts the manifest's prose on every run under a rule enforced only on commit messages; the same script fails on one of two live mount forms and blames the wrong file; and a CMD shim truncates multi-line secret material while every receipt reads success.",
+    "notes": "ALL THREE WERE FILED BY SEATS THAT DECLINED TO FIX THEM, CORRECTLY, AND THE REASON IS THE SAME IN EACH: the fix belongs to a lane the face is scoped away from. Z-S147's author states the distinction that makes this right and it is worth carrying to L10: DECLINING THE FIX AND DECLINING THE RECORD ARE DIFFERENT ACTS, AND ONLY THE FIRST WAS THAT SEAT'S TO MAKE. Z-S143 exists because its finder left it in a BROKER MESSAGE -- the one carrier that reaches nobody once the sessions end -- and a second seat checked a 141-row census for duplicates before filing, having advised against a duplicate an hour earlier. That is the channel working exactly as designed, and it is the third instance tonight of a finding that would have died in an inbox."
+  }
+]
+```
+
+## C-S21 -- two records dismissed, one of which is this seat MEETING a defect five hours early and reading it as its own bug
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S21",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T05:30Z",
+    "one_line": "L9, round 2: Z-S144 and Z-S162 are DISMISSED WITH REASON. Z-S144 is this seat reporting that it TRIPPED OVER Z-S143's corruption FIVE HOURS BEFORE IT WAS FOUND and read it as its own platform quirk -- which is the answer to why the defect survives. Z-S162 is a worker retracting its own row's REMEDY CANDIDATE after building the guard and having it reverted, while its FINDING stands untouched. Neither carries a mechanism of its own; both refine findings that graduate at C-S20.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Each is a RECORD ABOUT ANOTHER ROW -- an account of a reader meeting a defect and passing, and the retraction of one remedy candidate -- with no mechanism of its own to graduate and no remedy of its own to route, on Z-S20's underlying test. Z-S144's contribution is an explanation of PERSISTENCE, which strengthens Z-S143's account and is carried onto its graduation; Z-S144 does not claim the dismissal it describes was unreasonable. Z-S162 retracts REMEDY CANDIDATE (a) and says in terms 'WHAT IS RETRACTED IS THE REMEDY, NOT THE FINDING' -- Z-S161's evidence, mechanism, blast radius and second-order AWSPREVIOUS defect all stand exactly as filed, and Z-S161 graduates carrying them.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S144",
+      "NFRA_OPSEC202609-Z-S162"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S144 IS THE MEASURED INSTANCE THAT EXPLAINS WHY NO HUMAN READER CAUGHT Z-S143: at ~01:0x, censusing lambda-source-map.json for an unrelated row, a bare json.load on that exact file died with UnicodeDecodeError, 'charmap' codec can't decode byte 0x9d in position 31662. This seat added an explicit utf-8 encoding, the file parsed, and it moved on. THE SYMPTOM PRESENTS AS THE READER'S OWN PLATFORM QUIRK, the workaround is one keyword argument, and afterwards the file reads correctly -- so the question 'why does a JSON manifest contain non-ASCII bytes at all' never gets asked. Z-S143 explains why no GATE caught it; Z-S144 explains why no READER did.",
+        "AND Z-S144 REFUSES THE EASY VERSION OF ITS OWN LESSON, which is why it is worth preserving rather than merely closing: it does NOT claim the dismissal was unreasonable. The estate's standing guidance for that exact error IS to pass an explicit encoding, that guidance is correct, and following it is what a competent reader does. A CORRUPTION WHOSE SYMPTOM IS INDISTINGUISHABLE FROM A COMMON LOCAL MISCONFIGURATION IS EFFECTIVELY INVISIBLE, BECAUSE THE CORRECT REMEDY FOR THE COMMON CASE IS ALSO THE THING THAT SUPPRESSES THE SIGNAL. The tell that WOULD have separated them was available and unasked: a data file that has always been ASCII acquiring non-ASCII bytes is a fact about the FILE, not about the reader's codepage, and one git diff on the bytes settles it. This seat had the file open and did not ask.",
+        "Z-S162'S RETRACTION IS VERIFIED ON THE COMMITS RATHER THAN ACCEPTED: the guard was built at 4fb9eafdfe and reverted at 1b0af4d39e, both by 1.0.0_SA_CTO~Z, whose own revert subject reads 'my @4fb9eafdfe newline guard BROKE THE CROSS-DEVICE AGENTBUS and protected nothing'. The reason is structural: .tools/aws NEVER REACHES cmd.exe on either branch and so cannot truncate at all, while .tools/aws.cmd -- a genuinely different CMD batch file, the one Z-S161 named -- remains unguarded and still truncates.",
+        "THE GUARD'S FAILURE IS Z-S161'S OWN SHAPE REPEATED, which is the durable lesson rather than the AWS specifics: A PROPERTY VERIFIED ON THE LIMB IN HAND, ASSERTED OVER A DOMAIN NEVER ENUMERATED. Z-S161 measured truncation on put-secret-value and DECLARED THAT SCOPE HONESTLY; the guard measured 'no legitimate caller passes a newline' on the surface it examined and DID NOT. One comp-find for .tools/aws callers would have found agentbus-sqs.sh BEFORE the commit instead of after.",
+        "AND THE REMOVAL IMPROVED THE ESTATE'S POSITION, which is the counter-intuitive part worth keeping: A SEAT BELIEVING A GUARD COVERS IT IS WORSE OFF THAN A SEAT THAT KNOWS NONE DOES. The operative rule held all along and is the ONLY thing that caught the 27-byte key -- TREAT ANY .tools/aws WRITE AS UNVERIFIED UNTIL YOU READ IT BACK -- now canonical at .tools/AWS_SHIM_SILENT_FAILURES.md, verified present at 104 lines."
+      ]
+    },
+    "spec_asserts": "The L10 precondition is that every investigation item under the project carries a disposition.",
+    "world_is": "Two rows are records refining tooling findings that graduate at C-S20; one explains why a defect went unseen by readers, the other retracts a remedy that was built and reverted.",
+    "notes": "UNDISPOSITIONED after C-S20 and this row: 66 of 164, read from the parser. Z-S162 ALSO CARRIES THE CORRECTION-MECHANICS LESSON THIS WHOLE CHANNEL RUNS ON, and it is worth quoting where the adjudication can see it: its author's first instinct was to append the correction INSIDE Z-S161, 'which reads as tidier and destroys the audit trail. The gate refused and named why. A correction is a NEW item citing the old id -- the wrong text must stay legible or nobody can see what changed.' That is the same discipline this adjudication has applied to its own C-S4 coverage error and to the header's 166."
+  }
+]
+```
