@@ -21,6 +21,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -30,6 +31,26 @@ import server as comms
 
 def heartbeat_needs_reregistration(serial: str, result: str) -> bool:
     return result.strip() == f"{serial} is not registered. Call register_agent first."
+
+
+def broker_registration_status(serial: str) -> str:
+    """Check this exact process's broker row without polling or consuming mail.
+
+    A broker heartbeat returns OK even when its UPDATE matches no row. Local
+    liveness therefore cannot establish broker registration. Use the existing
+    list endpoint, and the guarded broker recovery only on transport failure.
+    """
+    rows = comms._broker_fetch("/list-agents")
+    if rows is None and comms._ensure_broker():
+        rows = comms._broker_fetch("/list-agents")
+    if not isinstance(rows, list) or any(not isinstance(row, dict) for row in rows):
+        return "unavailable"
+    matches = [row for row in rows if row.get("serial") == serial]
+    if not matches:
+        return "missing"
+    if len(matches) == 1 and matches[0].get("pid") == os.getpid():
+        return "registered"
+    return "conflict"
 
 
 def default_runtime_dir(serial: str) -> Path:
@@ -117,6 +138,23 @@ async def run(
                     continue
                 return 2
             return 3
+
+        # Registration can be lost in the broker while liveness.json survives.
+        # Reuse the guarded registration above, including poller cancellation;
+        # never start a second helper or claim a row held by another process.
+        broker_status = broker_registration_status(serial)
+        if broker_status == "missing":
+            print(f"Broker registration missing for {serial}; re-registering.",
+                  file=sys.stderr, flush=True)
+            if not await register():
+                return 2
+        elif broker_status == "conflict":
+            print(f"Broker registration conflict for {serial}: another PID holds "
+                  "the row; refusing to replace it.", file=sys.stderr, flush=True)
+            return 2
+        elif broker_status == "unavailable":
+            print(f"Broker registration unverifiable for {serial}; local heartbeat "
+                  "continues, retrying next beat.", file=sys.stderr, flush=True)
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
