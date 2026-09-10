@@ -51,6 +51,14 @@ Both FAILs sit in the cell's own accept ("0 nodes stamped stitch-v1"; "DERIVES_F
 1. **W2-S68 RULED (my L6 authority: the BOUNDS were this seat's, not the spec's):** the fix is one line inside `<paths>` (index the bucket NODE ID at `_index_aws`, so `STORED_IN` targets the node the graph keys, with the ARN kept as the field it already is) and proving it needs one more producer cycle. BOUNDS widened above to a SECOND cycle: the local derive on the real snapshot FIRST (`STORED_IN` both-ends-present printed as `N of 955` with the 149 carried `s3:` ids and the bucket ids named; the reconciliation still `admitted = merged + created, lost 0`; `GRAIN-SENTINEL: PASS`), then the zip re-push (ledgered, its own NEVER-2 entry in the shape of tonight's), ONE ad-hoc `opal-stitch-produce` build, ONE ad-hoc derive on the pinned runner, the projection, and F11-AC3's served reading re-taken. `aws_keys` (the producer's own dangling check) is made to hold the same identity the edge builder emits, so the "0 genuine dangling" line can no longer be true and blind at once -- name the change in the record.
 2. **W2-S67 PITCHED (not this seat's to rule):** driving the served stamp count to 0 is a derive-runner IMAGE rebuild and a digest re-pin across the seven families that pull it -- an image act under NEVER-2 with the never-widen sign (CTO + COO). This seat's half is given in the pitch; the CTO's half is asked in the same tick. **This order does NOT wait on it** (Andrew, 2026-09-09 ~21:4xZ: nothing waits; anything waited for gets a manual trigger). If the CTO's GO lands as an amendment to this face before your second derive, the image act (its own ledger entry naming all seven families by `describe-task-definition`, the ad-hoc build, the re-pin by digest in `infra/aws/terraform/globgrph/serving.tf` via safe-apply, the derive on the new image) is executed inside this order and F11-AC2 is re-taken on it. If it has not landed, the second derive runs on `:8`, F11-AC2's stamp limb is reported as measured with W2-S67 carried, and the order reports OPEN on that limb alone -- the FINAL L9 reads it with the row.
 
+## THE IMAGE ACT GO -- ISSUER AMENDMENT (2026-09-10 00:5xZ): the CTO's half of the never-widen sign LANDED (msg 94809, within the tick); W2-S67's image act is EXECUTED INSIDE THIS ORDER, NOW, on this slot
+
+The sign is BOTH halves: this seat's (94807) and the CTO's (94809, "this message id is the CTO's half of the never-widen sign-off for the image act below and no wider"). THE ACT THE SIGN COVERS, verbatim in scope: **a derive-runner image rebuilt from HEAD's `derive_runner.py`, whose only change on the served plane is the stamp retirement (F11-AC4); the digest re-pinned across the SEVEN globgrph task families BY DIGEST (R13, never `:latest`) under a NEVER-2 entry that names every family by its TRUE name (the `globgrph-` prefix, W2-S49's correction) with the digest before and after and the `describe-task-definition` census as the read; the ad-hoc derive on the new digest as the TEST; the 02:00Z rule fire as CONFIRMATION (PRD v0.13 S32), never a gate. Rollback = re-pin to the previous digest, named in the entry.** Anything wider (a second props change, a family missing from the entry, a pin by tag) is OUTSIDE the sign -- if the act needs it, STOP and file a BLOCKING row.
+
+**THE DISCRIMINATORS you print (the CTO's, verbatim):** a before/after node diff on the served graph reading exactly `{PORTAL_BUNDLE: -vocabulary}` and nothing else; `STITCH_V1_STAMPED_SERVED 1 -> 0` with PORTAL_BUNDLE still present; `PROVISIONAL_NAMES_SERVED 0 of 4` unchanged; the ECR tag's digest read before and after (the tag does not move; the pins do); the five canonical magnitudes 167 / 1,217 / 381 / 201 / 125 unchanged.
+
+**ORDER OF ACTS, folded into the second cycle so ONE derive tests both:** (1) the STORED_IN fix and its local proof (the ruling above); (2) the zip re-push + ONE ad-hoc `opal-stitch-produce` build (the producer cycle); (3) THE IMAGE ACT in CG-s-24's shape, the procedure at `deliverables/0.9.0_WK_NFRA_CLDGRPH~2/CG-s-24.projection-carries-stitch-source.result.md` and the entry `org/critical_paths/change_management/20260909T203713Z_cldgrph-cgs24-stitch-fold-image-and-sevenfamily-repin_deploy_completion.md`: the NEVER-2 entry OPENED naming all seven families by TRUE name with the digest before; the image built from HEAD and pushed; the pins moved by digest in `infra/aws/terraform/globgrph/serving.tf` (the local) with the ten-address `safe-apply` from THIS worktree (`.tools/terraform.exe` present here, 91,104,424 B); `describe-task-definition` x7 reading the NEW digest; the entry CLOSED with the rollback digest named; (4) ONE ad-hoc derive ON THE NEW DIGEST (the test for BOTH W2-S67 and W2-S68); (5) the projection; (6) F11-AC2 and F11-AC3 re-taken on the served graph, with the discriminators above captured beside them. `<paths>` gains the image-act files below (F-4's grant, this slot's own precedent). If any step outside the sign is needed, a BLOCKING row and the OPEN report, never a widening by you.
+
 Rows continue at W2-S69. The nine baseline entries and `_collapse_stitch_copies` stand @22e388d221; do not re-measure the five magnitudes unless the second cycle moves them (if it does, print both and say why).
 
 ## DELIVERABLE -- in this order
@@ -90,6 +98,14 @@ Rows continue at W2-S69. The nine baseline entries and `_collapse_stitch_copies`
 <paths>
 org/modules/graph/grain_baseline.json
 infra/aws/globgrph/derive_stitch.py
+infra/aws/globgrph/Dockerfile
+infra/aws/terraform/globgrph/serving.tf
+infra/aws/terraform/globgrph/comp_learns_producer.tf
+infra/aws/terraform/globgrph/cse_producer.tf
+infra/aws/terraform/globgrph/fedobs_producer.tf
+infra/aws/terraform/globgrph/resource_summaries_producer.tf
+infra/aws/terraform/globgrph/item2a.tf
+infra/aws/terraform/globgrph/projection.tf
 infra/aws/globgrph/extract_portal_stitch.py
 infra/aws/globgrph/derive_runner.py
 infra/aws/globgrph/comp_debt.py
