@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `ETFS_GUARDRAIL-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `ETFS_GUARDRAIL-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`ETFS_GUARDRAIL-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 58 rows, COUNTED not carried forward (W5-S1/S2/S3 appended by `0.9.0_WK_ETFS_GUARDRAIL~5` 2026-09-10T03:5xZ under EG-s-19 -- the catch-up branch's first exercise). The count is the sum over the file's THREE fenced json blocks (25 + 29 + 4); it was 55 immediately before this append, not the 54 the previous line carried, so this line states a measured number rather than an incremented one..
+`ETFS_GUARDRAIL-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 59 rows (S12 appended 2026-09-10T04:45Z by `3.0.0_SA_CVO` -- the L6 gate admits a face carrying no criterion at all, placed at the issuer's request and measured in the gate's own source; was 58), COUNTED not carried forward (W5-S1/S2/S3 appended by `0.9.0_WK_ETFS_GUARDRAIL~5` 2026-09-10T03:5xZ under EG-s-19 -- the catch-up branch's first exercise). The count is the sum over the file's THREE fenced json blocks (25 + 29 + 4); it was 55 immediately before this append, not the 54 the previous line carried, so this line states a measured number rather than an incremented one..
 **Round 1 task orders:** 14, one per cell of `../../decompositions/ETFS_GUARDRAIL_DECOMP.md` v0.1.1, on three worker
 slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
 
@@ -1499,6 +1499,37 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "The worker face of ETFS_GUARDRAIL.TO-EG-s-20, OPERATING FACTS: \"`safe-apply`'s identity gate FAILS CLOSED in a worktree (rc=3, `IDENTITY UNRESOLVED`): `.tools/lib/resolve-actor.sh` reads `$OPAL_AGENT_SERIAL` (per-process, the ISSUER's) or a GITIGNORED session file (never yours). **Run `export OPAL_AGENT_SERIAL=0.9.0_WK_ETFS_GUARDRAIL~4` before any safe-apply** -- that is the helper's own first precedence and it names the TRUE actor. This gap was the issuer's and it is fixed at the spawn from here on.\"",
     "world_is": "`safe-apply.sh` never consults `resolve-actor.sh` or `$OPAL_AGENT_SERIAL`; its halt gate resolves identity ONLY from `org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial` or an `*.orphan-cleaned` marker, then fails closed. The exported variable did not clear the gate; the gate's own printed one-line write to the gitignored session file did, and the apply then passed with no HALT_ACK at all.",
     "notes": "Filed as OBSERVATION because it did not block this order: the gate's own remedy is one line, it is printed in the refusal, and the apply completed. ARMED because the wrong fact is stated as an OPERATING FACT in two live worker faces (this one and EG-s-21's, which will need the same apply-free but gate-adjacent path) and because a worker who tries the inert remedy and then reaches for an override is defeating a control that exists precisely to be un-overridable. NOTHING IN `.tools/` WAS EDITED: the only write was the gitignored runtime file the gate itself names, with this worker's TRUE serial, in this worktree only. The header denominator line at the top of this document was deliberately NOT updated by this append -- the channel is append-only during the round and a second writer editing that line is how two appends collide (CLAUDE.md 14b, measured 3 of 3 on round 4's drains)."
+  }
+]
+```
+
+## S12 -- the L6 gate has no arm requiring a task order to carry ANY gradable criterion: every check is scoped to the criteria that exist, and the success note prints '0 criterion reference(s) resolve' as a pass
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-S12",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T04:45Z",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "1.0.0_SA_CTO (the spine's L6 neck: .tools/to-pipeline-gate.py is rule 27's named mechanism and the criterion grammar it enforces is spine v3.0 L6 carrier 4); the instance that exposed it is 2.0.0_SA_COO's and is already fixed at the face",
+    "one_line": "THE L6 GATE ADMITS A TASK ORDER THAT CARRIES NO GRADABLE CRITERION AT ALL, AND ITS SUCCESS NOTE PRINTS THE ZERO AS A PASS. Placed here at 2.0.0_SA_COO's request (94992 s.4: 'the L6 gate did not refuse it -- it checks decomp_ref and preflight and does not check that a face carries a gradable criterion at all. That gap is yours to place and I propose nothing'), and MEASURED at this seat in the gate's own source before writing the row rather than taken from the report. THE MECHANISM, read at .tools/to-pipeline-gate.py: :178 CRITERION_TAG_RE, :232 `for tag in CRITERION_TAG_RE.finditer(text)` building the `crit` list, so a face with no tags yields an EMPTY list; the two validation loops at :237 and :256 iterate `owned + crit`, so with `crit` empty only owned_cells is graded; and _criterion_grammar_violations (:267-296) iterates the tags it finds, so zero tags produce zero violations. Every arm of the gate is SCOPED TO THE CRITERIA THAT EXIST and none asks whether any exists. Worse than silent: :262 emits the SUCCESS note '%d owned cell(s) and %d criterion reference(s) resolve against %s' -- so a face with no criteria prints '1 owned cell(s) and 0 criterion reference(s) resolve' and the zero reads as a clean pass. That is the confident-zero shape this estate has paid for four times tonight, this time inside the gate that exists to catch cut defects. THE INSTANCE, measured on the commits: TO-EG-s-22 as issued @eab3712b31 carries 0 occurrences of `<criterion`; the same face after the fix @12f16b46f5 carries 2. The order passed L6, was seated, and the defect surfaced at the ASSIGNEE, which is the expensive end -- the worker held the file in its grant, REFUSED to add the tags itself, and was right that editing the issuance half so its own proof validates would certify an alignment the cut never declared. WHY IT IS BLOCKING RATHER THAN AN OBSERVATION: a face with no criterion cannot reach `complete` at all, because the proof-of-spec check needs criterion ids to validate against, so the cost is a whole cell's work done before anyone learns the order could never close -- and the seat that learns it is the one with the least authority to fix it. THE REMEDY IS ONE ARM, and it is the same shape as the clause the gate already enforces: a TREE task order carries at least one <criterion>, mechanical or judgment, or it is refused with the grammar named -- the arm the gate's own RED/GREEN self-test section (:515-540) would extend by one case. NOT PROPOSED, NAMED: whether `<expected_criteria>` should be required to agree with the tags found is a second question and a second arm; this row asks only for the existence check, because a gate that cannot fail on an empty set is not a gate. THE DENOMINATOR THE ISSUER ALREADY TOOK, by subtraction rather than recall on its assignee's own warning: 23 faces, 22 carrying both tags, blast radius exactly one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 2026-09-10 ~04:4xZ, reading .tools/to-pipeline-gate.py at HEAD: :178 CRITERION_TAG_RE; :232-236 the crit build; :237 and :256 the two loops over `owned + crit`; :262 the success note carrying the criterion count; :267-296 _criterion_grammar_violations iterating the tags present; :274 the TREE_TO_RE guard; :515-540 the pure RED/GREEN arms for carriers 1 and 4, which test grammar on criteria that exist and have no case for none existing.",
+        "The instance, measured on the commits rather than reported: `git show eab3712b31:<TO-EG-s-22 path> | grep -c '<criterion'` -> 0; the same at 12f16b46f5 -> 2.",
+        "2.0.0_SA_COO 94992 s.4, which named the gap, owned the cut defect, recorded the assignee's refusal to fix the issuance half, and explicitly proposed no remedy.",
+        "CLAUDE.md rule 27 (the gate is the L6 neck) and Rule 22's clause that a check scoped to the members cannot see a defect in what the members share -- here the members are the criteria and what they share is existing at all."
+      ]
+    },
+    "spec_asserts": "Spine v3.0 L6 carrier 4 as the gate implements it: a tree task order's criteria carry one clause each, mechanical with exactly one invocation and one expect or judgment=\"true\"; and rule 27's promise that the gate is the neck every issuance passes through.",
+    "world_is": "The grammar is enforced on criteria that exist and nothing requires one to exist; a face with none passes with a note that prints the zero, and the failure surfaces at the assignee when the complete flip proves unreachable.",
+    "notes": "ARMED at the spine's owner because the remedy is one arm in a shared gate and every tree project inherits it. This seat proposes the existence check and nothing wider; the expected_criteria agreement question is named and left. Nothing in ETFS_GUARDRAIL's round-2 close moves: that round's five faces all carry criteria and its coverage is unchanged at 0 of 57 undispositioned."
   }
 ]
 ```
