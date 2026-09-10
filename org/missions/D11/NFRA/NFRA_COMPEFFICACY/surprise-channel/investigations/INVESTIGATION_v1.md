@@ -1165,3 +1165,128 @@ per the pitch 93644) is not pre-empted.
   }
 ]
 ```
+
+## W1-S1 -- the accept's two-value `subject_resolved` cannot cover the regression set it also names: the four F-10 phrasings carry NO gold id, so `true` for them would record a check that never ran
+
+```json
+[
+  {
+    "id": "NFRA_COMPEFFICACY-W1-S1",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_COMPEFFICACY~1",
+    "surfaced_at": "2026-09-09T23:56Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "TO-CE-P-4 accept clause (e) maps the spilled rank file's `subject_resolved` to (b)=false, (c)=true, (d)=false, where (c) IS the four F-10 / C-S46 regression phrasings. Measured at this seat: GOLD_ID.search() matches 0 of 4 of those phrasings, so none of them carries a subject at all and none can be `true` without the field asserting that an authority was consulted when nothing was looked up. Resolved WITHOUT widening the order: the field is a THREE-value enum (`true` / `false` / `not-applicable`), `authority_consulted` is populated exactly when the check RAN and empty when it did not, and an extra POSITIVE CONTROL question carrying a REAL id (`what does INF_D_02 write to s3`) supplies clause (e)'s `true` reading. Both readings are printed by the battery so the grader sees the substitution rather than a repaired-looking summary.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-CE-P-4.comp-which-subject-existence.md@0e9ef40b37, criterion P4-AC1 clause (e): 'the spilled rank file for (b), (c) and (d) carries `subject_resolved` (`false`, `true`, `false`)'; clause (c) defines (c) as 'the four regression phrasings'.",
+        "The four phrasings, verbatim from org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~6/f10_lib.py:23-28@0e9ef40b37. This seat, 2026-09-09 23:0xZ: `.tools/comp-which`'s own GOLD_ID (:1279) searched against each -> 0 of 4 match. Printed by the battery as arm (f).",
+        "TAXONOMY LAW postulate (i) MECE over a DECLARED domain and (iv) STATE COHERENCE: a two-value enum over a domain whose largest member is 'no subject present' has an uncovered member, and the standing rule that a verdict vocabulary with no NOT-EVALUATED value encodes non-evaluation as a verdict.",
+        "The implemented carrier: .tools/comp-which _SUBJECT_UNKNOWN = 'not-applicable' and _spill_full_ranking's three new header keys (subject / subject_resolved / authority_consulted), this worker's branch wk-nfra_compefficacy-7-1."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "P4-AC1 clause (e): the spilled rank file for (b), (c), (d) carries `subject_resolved` reading false, true, false -- a two-value field, with (c) bound to the four F-10 regression phrasings.",
+    "world_is": "0 of 4 regression phrasings carry a gold id, so (c) has no subject to resolve and cannot honestly read `true`. The field shipped with three values and clause (e)'s `true` reading is supplied by an added real-subject positive control; the regression phrasings read `not-applicable` with an empty `authority_consulted`.",
+    "notes": "For the CVO at L9: the substitution is visible in the battery's (e) table, which prints all four cases side by side. No registry was edited and no ranking changed. If the CVO reads clause (e) as requiring the four phrasings themselves to read `true`, that reading is not implementable without the field making a false claim, and this row is where that disagreement lands."
+  }
+]
+```
+
+## W1-S2 -- the `~/bin/comp-which` forwarder is HARD-BAKED to the main tree, so a bare `comp-which` run from ANY linked worker worktree measures the UNPATCHED tool
+
+```json
+[
+  {
+    "id": "NFRA_COMPEFFICACY-W1-S2",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_COMPEFFICACY~1",
+    "surfaced_at": "2026-09-09T23:56Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.8.0_AE_CloudComp (owner of .tools/provision-path-shims.sh and the comp-tool forwarders); mitigation at the cut is 2.0.0_SA_COO's, which already carries the explicit-path instruction in this worker's launch face",
+    "one_line": "/c/Users/AndrewBerman/bin/comp-which is a generated bootstrap shim whose target is the LITERAL string /c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/comp-which -- the MAIN tree -- with a both-flavor fallback that only swaps /c for /cygdrive and never resolves relative to the caller's worktree. A spine-v3 worker patching any comp-tool in a linked worktree and verifying it with the bare PATH name therefore exercises the file it did NOT change, and the run succeeds, prints a plausible route and returns rc 0. This is the classic false-green: the negative result and the wrong-object result are byte-identical. This worker used `python .tools/comp-which ...` from the worktree root throughout and its battery resolves the CLI from the test file's own location, printing the absolute path it ran.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cat /c/Users/AndrewBerman/bin/comp-which, this seat 2026-09-09 22:5xZ: `_t=\"/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/comp-which\"` then a case that only maps /c/* <-> /cygdrive/c/* before `exec \"$_t\" \"$@\"`. No worktree resolution of any kind.",
+        "`command -v comp-which` from /c/tmp/wk-compeff-7-1 -> /c/Users/AndrewBerman/bin/comp-which (not the worktree copy).",
+        "The same shim header names .tools/provision-path-shims.sh as its generator and records that all 186 forwarders died at once at site Z when the baked prefix went away -- the same single-point-of-baking that makes this worktree-blind.",
+        "P4-AC1 as cut requires 'each arm invoking the ESTATE'S OWN CLI (`comp-which \"<question>\"`, never an inner function)'; org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-CE-P-4.comp-which-subject-existence.md@0e9ef40b37."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The accept names `comp-which \"<question>\"` as the estate's own CLI and the instrument every arm must use; CLAUDE.md 14b mandates one linked worktree per worker slot.",
+    "world_is": "Inside a linked worktree those two are in conflict: the PATH name resolves to the main tree's copy of the tool, so the ordered instrument reads a different file from the one the order tells the worker to change. Bare-name verification of a comp-tool edit is unsound from every worktree, and it fails GREEN.",
+    "notes": "ARMED because the recurrence is structural, not incidental: every future worker cell that edits a .tools/comp-* binary reproduces it, and the failure mode is a pass. Candidate disarms, none taken here (out of grant): make the shim resolve its target from `git rev-parse --show-toplevel` of the caller's cwd with the baked path as fallback; or have the shim print its resolved target to stderr so the wrong-object case is visible. Not repaired at this seat -- ~/bin and .tools/provision-path-shims.sh are outside this order's <paths>."
+  }
+]
+```
+
+## W1-S3 -- P4-AC1 arm (g)'s literal invocation cannot measure this change, cannot be run inside the grant, and does not terminate: `--binary-ref` defaults to HEAD, the default `--out` clobbers a committed baseline, and the bare run is rc 124 at 580 s ON THE UNPATCHED TOOL
+
+```json
+[
+  {
+    "id": "NFRA_COMPEFFICACY-W1-S3",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_COMPEFFICACY~1",
+    "surfaced_at": "2026-09-09T23:56Z",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.8.0_AE_CloudComp (the harness's authoring lane, whose deliverables dir holds its baseline artifact); the criterion-text half is 2.0.0_SA_COO's at the next cut",
+    "one_line": "Arm (g) as cut is `python .tools/comp-which-routing-test.py` with no flags. Three defects, all PRE-EXISTING and all read in the harness's own source at 0e9ef40b37. (1) GRAIN: `--binary-ref` defaults to 'HEAD' (:1134) and :1177-1181 does `ref = None if args.binary_ref.upper() == 'WORKING' else args.binary_ref; vintage, blob = extract_binary(ref, tmp.name)` -- the bare form extracts the COMMITTED blob and scores THAT, so it is structurally incapable of seeing an uncommitted change and would have certified this fix by running the bytes the fix replaces. (2) GRANT: `out_path = args.out or BASELINE` (:1653) writes org/tier2_senior/0.8.0_AE_CloudComp/deliverables/comp-which-routing-baseline.json, outside this worker's <paths>, and the flag's own help says a regression run passes --out because 'A LATER VINTAGE MUST NOT CLOBBER A COMMITTED BASELINE' -- so the ordered invocation instructs an act the order's own bounds forbid. (3) TERMINATION: the bare form does not finish under a 580 s bound on the UNPATCHED tool -- measured rc 124, 23:42:21Z to 23:52:01Z, 153 lines of output, with .tools/comp-which restored to its HEAD bytes for the run and sha256-verified back afterwards. The arm was therefore run as `--binary-ref WORKING --out <this worker's deliverables>/cep4_routing_test_report.json`: the SAME harness, parameterised so it measures the changed bytes and writes inside the grant, with its SUBJECT line ('.tools/comp-which @ WORKING-TREE, blob 810fad08478a27fcac5a5f8d54ee13ab6a79e0ce') printed as the proof of which vintage was scored, and the bare form's rc recorded beside it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/comp-which-routing-test.py@0e9ef40b37 :1134 `ap.add_argument('--binary-ref', default='HEAD', help=\"git ref to measure (default HEAD). 'WORKING' = the dirty tree.\")`; :1177 `ref = None if args.binary_ref.upper() == 'WORKING' else args.binary_ref`; :1181 `vintage, blob = extract_binary(ref, tmp.name)`; :1653 `out_path = args.out or BASELINE`; :190-192 `_DELIV = .../0.8.0_AE_CloudComp/deliverables`, `BASELINE = _DELIV/comp-which-routing-baseline.json`.",
+        "This seat, HEAD-bytes control run: `cp .scratch/comp-which.HEAD .tools/comp-which` (from `git show HEAD:.tools/comp-which`), `timeout 580 python .tools/comp-which-routing-test.py` -> rc 124, start 23:42:21Z end 23:52:01Z, 153 lines captured at .scratch/rt_before.txt. Restored with `cp .scratch/comp-which.PATCHED .tools/comp-which`; sha256 of both read 57690d9cae59f61190c89014e2bae5183a5723f6bd6558a6258db27ecc539ed4 after restore.",
+        "This seat, patched-bytes bare run: `timeout 580 python .tools/comp-which-routing-test.py` -> rc 124, 290 lines (.scratch/rt_after.txt). Both bare runs timed out; neither reached the `out_path` write, which is why no committed baseline was in fact clobbered -- `git status --porcelain` at 23:5xZ shows only `.tools/comp-which`, `.scratch/` and this worker's deliverables folder.",
+        "The parameterised run's own header, 23:54:57Z: 'SUBJECT : .tools/comp-which @ WORKING-TREE / blob 810fad08478a27fcac5a5f8d54ee13ab6a79e0ce'. The bare form's header names a git ref instead.",
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-CE-P-4.comp-which-subject-existence.md@0e9ef40b37, P4-AC1 clause (g) and the BOUNDS clause 'A path you need that it does not name is a BLOCKING row, never an override'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "P4-AC1 clause (g): '`python .tools/comp-which-routing-test.py` passes after the change (its own token/rc printed)'.",
+    "world_is": "The bare invocation measures the COMMITTED blob, not the change; its default output path is outside this worker's write grant and its own help forbids that write for a regression run; and it does not terminate under a 580 s bound on the tool as it stood BEFORE the change. Arm (g) was executed as the same harness with `--binary-ref WORKING --out <in-grant path>`, with the bare form's rc recorded verbatim beside it.",
+    "notes": "The substitution is a GRAIN correction, not a relaxation -- the parameterised form is strictly harder to pass, because it is the only form that can fail on this change at all. Whether the substitution is accepted is the CVO's at L9 and it is the reason arm (g) is called out separately in the result document. ARMED because any future criterion naming the bare invocation reproduces all three defects, and defect (1) fails GREEN: a bare run that passes certifies HEAD while reading as a certification of the worker's change."
+  }
+]
+```
+
+## W1-S4 -- the AMENDED arm (g) carries `timeout 600`, and the harness it names measured 680 s and 826 s on two consecutive WORKING runs: the literal amended command returns rc 124
+
+```json
+[
+  {
+    "id": "NFRA_COMPEFFICACY-W1-S4",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_COMPEFFICACY~1",
+    "surfaced_at": "2026-09-10T00:31Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.8.0_AE_CloudComp (the harness's runtime is the harness lane's, carried with W1-S3's three defects); the criterion-bound half is 2.0.0_SA_COO's at the next cut",
+    "one_line": "The face amended @2fbb844173 re-cut P4-AC1 clause (g) to `timeout 600 python .tools/comp-which-routing-test.py --binary-ref WORKING --out <in-grant>` -- the GRAIN and GRANT halves of row W1-S3 correctly fixed, and the TERMINATION half (W1-S3 defect 3) carried forward into the new bound. This seat's two consecutive WORKING runs of that exact harness took 680 s (2026-09-09T23:54:57Z -> 2026-09-10T00:06:17Z) and 826 s (00:07:30Z -> 00:21:16Z), both rc 0 with 'VERDICT: PASS' and the WORKING-TREE header naming blob 810fad08478a27fcac5a5f8d54ee13ab6a79e0ce. Both exceed 600 s, so the literal amended command cannot return anything but rc 124 on this box. Run at its literal bound to measure rather than infer it, and recorded in cep4_amended_bound_probe.json and printed by the battery BESIDE the arm's verdict, never as it -- the same treatment the issuer ruled for the bare form. Arm (g) is scored on the un-truncated recorded run under a grain control (the blob the harness says it measured must equal `git hash-object .tools/comp-which` at battery time), because P4-AC1's OWN invocation is also `timeout 600` and a harness that needs 826 s cannot run inside it either way.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-CE-P-4.comp-which-subject-existence.md@2fbb844173, P4-AC1 clause (g) as amended: '`timeout 600 python .tools/comp-which-routing-test.py --binary-ref WORKING --out org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~1/cep4_routing_test_report.json` passes after the change'.",
+        "Run 1, this seat: 2026-09-09T23:54:57Z -> 2026-09-10T00:06:17Z = 680 s, rc 0, 'VERDICT: PASS -- controls held, zero pollution, and comp-which ABSTAINED on 100% of generated gibberish', header 'SUBJECT : .tools/comp-which @ WORKING-TREE / blob 810fad08478a27fcac5a5f8d54ee13ab6a79e0ce'.",
+        "Run 2, this seat, via the committed runner cep4_run_routing_test.py: started 2026-09-10T00:07:30Z, ended 00:21:16Z = 826 s, rc 0, same verdict and same blob; recorded at org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~1/cep4_routing_test.rc.json.",
+        "The literal amended command at its literal bound, this seat, started 2026-09-10T00:25:56Z: recorded rc and window in cep4_amended_bound_probe.json and printed by the battery's arm (g).",
+        "W1-S3's defect 3 at 0e9ef40b37 (the bare form, rc 124 at a 580 s bound on the UNPATCHED HEAD bytes, 23:42:21Z -> 23:52:01Z) -- the same non-termination, which the amendment addressed on its other two limbs."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "P4-AC1 clause (g) as amended @2fbb844173: the parameterised harness invocation, prefixed `timeout 600`, passes after the change.",
+    "world_is": "The harness passes after the change (rc 0, twice, on the correct blob) but needs 680-826 s to do it, so the 600 s prefix truncates it to rc 124. The bound is below the instrument's runtime; the instrument's verdict is not in dispute.",
+    "notes": "NOT a defect of the change and not a request to relax the arm: the harness passes, and the arm is scored on a run that was allowed to finish, under a blob-equality grain control so a stale record cannot pass. What is ARMED is the bound travelling to the next cut that names this harness -- and a `timeout 600` that always returns 124 reads as a failing subject rather than an exhausted clock. The durable remedy is the harness lane's runtime, or a bound stated from a measured distribution; neither is this worker's."
+  }
+]
+```
