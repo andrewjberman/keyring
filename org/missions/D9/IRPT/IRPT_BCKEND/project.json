@@ -1,0 +1,39 @@
+{
+  "project_code": "IRPT_BCKEND",
+  "macro_code": "IRPT",
+  "directive": "D9",
+  "fabric": "laptop",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "created": "2026-09-10",
+  "registered_under_tree": "2026-09-10",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "IRPT_FNTEND"
+  ],
+  "name": "Investor Reporting, ingestion, multi-tenant scoping and execution: directory ingestion and freshness, authorization enforcement on every route, provider normalization, email intake bound to the firm at ingestion, YCharts generation, holdings joins, narrative evidence, export execution",
+  "description": "One of the two Investor Reporting projects (two projects, no umbrella). Owns the grade on FWD-2, FWD-7, FWD-9, FWD-10; contributes to the outcomes the counterpart owns. Endpoint: org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md. Macro IRPT in D9; D9 placed LAPTOP.",
+  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+  "prds": [
+    "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md"
+  ],
+  "prd_lineage": [],
+  "decompositions": [],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": "2.0.0_SA_COO~B",
+    "cvo": "3.0.0_SA_CVO",
+    "cro": "4.0.0_SA_CRO",
+    "workers": "0.9.0_WK_IRPT_BCKEND~<n>, per the L6 issuance"
+  },
+  "coo_lane": "2.0.0_SA_COO~B",
+  "fabric_ruling": "laptop -- inherited from D9, placed LAPTOP 2026-09-10 ~18:5xZ (Andrew-direct, D9 as a whole).",
+  "blocking": "Not blocked. Every outcome is ratified; the PRD is being written at L4.",
+  "thread_counter": 0,
+  "threads": [],
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md",
+  "counterpart": "IRPT_FNTEND"
+}

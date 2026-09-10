@@ -1,0 +1,13 @@
+{
+ "project_code": "IRPT_BCKEND",
+ "home": "org/missions/D9/IRPT/IRPT_BCKEND",
+ "directive": "D9",
+ "macro_code": "IRPT",
+ "fabric": "laptop",
+ "dep_stage": "REGISTERED",
+ "status": "active",
+ "name": "Investor Reporting, ingestion, multi-tenant scoping and execution: directory ingestion and freshness, authorization enforcement on every route, provider normalization, email intake bound to the firm at ingestion, YCharts generation, holdings joins, narrative evidence, export execution",
+ "generated_from": "org/missions/D9/IRPT/IRPT_BCKEND/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-09-10T20:13:48Z"
+}
