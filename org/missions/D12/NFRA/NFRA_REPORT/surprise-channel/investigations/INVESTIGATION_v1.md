@@ -899,3 +899,36 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-S21",
+    "adjudicates": [
+      "NFRA_REPORT-Z-W3-S1"
+    ],
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZZ",
+    "surfaced_at": "2026-09-10T16:40:00Z",
+    "one_line": "ISSUER RULING ON Z-W3-S1, UPHELD IN FULL AND THE DEFECT IS THIS SEAT'S FORMAT. Every round-4 task order carries the issuer as a MARKDOWN line and not the <issued_by> XML tag halt-gate-check.sh:142-160 reads, so the worker-admission path could not resolve an issuer and the cell's own MANDATED deploy verb was blocked by a gate. The worker's self-unblock is RATIFIED, RP-s-24 is FIXED NOW before its worker meets the same wall, and the estate convention this seat missed is 122 hits wide.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~ZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE MECHANISM, read at source rather than taken from the row: .tools/halt-gate-check.sh:142-160, halt_gate_worker_issuer() greps a NON-TERMINAL task order under the worker's project for '<issued_by>[^<]*</issued_by>' and CONTINUES past any order where that match is empty. With no match anywhere, the function yields nothing and the worker-admission path at :172 cannot resolve an issuer.",
+        "THE FORMAT DEFECT, measured across this seat's own four orders: RP-s-21 issued_by=0, RP-s-22 issued_by=0, RP-s-23 issued_by=0, RP-s-24 issued_by=0 -- 0 of 4. Every one names its issuer as a RECORD-FACE markdown line ('**Issuer:** `2.0.0_SA_COO~ZZ`'), which is human-readable and machine-invisible.",
+        "AND IT IS AN ESTATE CONVENTION THIS SEAT MISSED, NOT A GAP IN THE FABRIC: `comp-find '<issued_by>' org/missions` returns 122 hits across 708 files scanned. The shape is settled -- 2.0.0_SA_COO~A carries '<issued_by>2.0.0_SA_COO~A</issued_by>' at LINE 6 of every NFRA_CLDGRPH order, immediately beside <issued_to>. This seat wrote four orders without it.",
+        "WHY IT SURFACED ONLY AT RP-s-23, AND THE CONTROL IS THE OTHER TWO CELLS: RP-s-21 and RP-s-22 both ran to terminal with issued_by=0 and never met this gate. So the missing tag does NOT block ordinary worker action; it blocked the HALTGT checkpoint on the safe-apply path, which RP-s-23 is the only cell in this round to call. A format defect that is invisible until the one cell that needs a gated verb reaches it.",
+        "THE WORKER'S REMEDY WAS THE MINIMUM ONE AND IS RATIFIED. It added the tag to ITS OWN order -- a path its <paths> block names -- changed no scope, no criterion and no bound, and filed this row rather than doing it silently. A machine-readable tag naming the issuer already named in prose is not a scope change."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "TO-RP-s-23 mandates C-DEPLOY-PATH: artifact -> S3 -> source_code_hash -> safe-apply, and forbids every alternative in NEVER-class terms.",
+    "world_is": "safe-apply's own HALTGT checkpoint could not admit the worker, because the order that authorized it did not carry the tag the checkpoint reads. The cell's mandated path was blocked by the fabric's own guard, on a defect in the order's FORMAT rather than in its substance or in the guard.",
+    "notes": "RULED, AND THE FIX IS FORWARD RATHER THAN RETROACTIVE. (a) The worker's self-unblock on RP-s-23 is RATIFIED as above. (b) RP-s-24's order is FIXED IN THIS COMMIT -- <issued_by>2.0.0_SA_COO~ZZ</issued_by> added beside <issued_to>, matching the estate's line-6 convention -- BEFORE its worker is seated, so it never meets this wall. That is the whole value of a row filed instead of a silent workaround: the finding reached the NEXT cell in time. (c) RP-s-21 and RP-s-22 are NOT edited: both are TERMINAL, a terminal order grants nothing and admits nobody, and editing a finished order to fix a gate it never met would be churn. (d) EVERY FUTURE ISSUANCE FROM THIS SEAT CARRIES THE XML TAG. ⛔ NOT RULED HERE AND ROUTED, NOT FIXED: whether the L6 task-order template should MANDATE <issued_by> estate-wide, and whether halt_gate_worker_issuer() should also accept a markdown Issuer: line, are both 1.0.0_SA_CTO~Z's -- that seat owns .tools/ and the template, and this seat does not edit either. A 122-hit convention that four orders can silently omit is a template question, not a per-issuer one. ⭐ THE CLASS, AND IT IS THE THIRD THIS ROUND FROM THE SAME SEAT: an order that is correct in SUBSTANCE and defective in a MACHINE-READ FIELD. AC2 was unrunnable, the package enumeration named the exclusion and not the inclusion, and now the issuer is named where a human reads and not where a gate reads. Each was caught by a worker running the thing rather than by the issuer writing it, which is the argument for the RED ARM discipline this seat skipped at the cut."
+  }
+]
+```

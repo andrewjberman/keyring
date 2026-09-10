@@ -6,6 +6,7 @@
 <decomp_doc>org/missions/D12/NFRA/NFRA_REPORT/decompositions/NFRA_REPORT_DECOMP_R4.md</decomp_doc>
 <owned_cells>RP-s-24</owned_cells>
 </decomp_ref>
+<issued_by>2.0.0_SA_COO~ZZ</issued_by>
 <issued_to>0.9.0_WK_NFRA_REPORT~4</issued_to>
 
 ## THE CELL, INLINED IN FULL (outcomes FWD-15, FWD-13 manual-trigger limb)
