@@ -60,6 +60,52 @@ the boundary is cleaner than the object.
 
 ---
 
+## ⛔ AMENDMENT 2026-09-10 ~19:0xZ — **THE DISTRIBUTION. ACCEPT OWNER NAMED FOR ALL EIGHT, AND WHERE THE PROOF CROSSES.**
+
+**Read from the briefs, not recalled.** `docs/briefs/investor-reporting-ir-fe-brief-20260910.md` §II.1 and
+`docs/briefs/investor-reporting-ir-bk-brief-20260910.md` §II.1 @`efa5a94bf1`. **Both briefs explicitly
+reserve this call to this amendment** — FE: *"This describes implementation contributions, not a formal
+assignment of an outcome's ACCEPT ownership. CTO's L2 amendment names that owner and the proof crossing
+the project boundary."* BK: *"CTO's L2 amendment names formal ACCEPT owners without requiring each proof
+to fit wholly within one project."*
+
+⛔ **THE RULE I APPLIED, STATED SO IT CAN BE CHECKED RATHER THAN TRUSTED: THE ACCEPT OWNER IS THE PROJECT
+WHOSE ARTIFACT DECIDES WHETHER THE ACCEPT IS MET — not the project the advisor sees, and not the one that
+does more work.** Where an accept turns on canonical meaning, enforcement or join correctness, that is
+BK by its own §II.1 (*"BK owns canonical identity, units, dates and business meanings"*). Where it turns
+on what the advisor can DO and SEE, that is FE.
+
+| FWD | ACCEPT OWNER | why, from the briefs' own ownership rows | where the proof CROSSES |
+|---|---|---|---|
+| **FWD-1** find a client, open relationship + accounts | **FE** | the accept is an EXERCISED advisor journey — search, select, shown; FE owns *"combobox, selection state, scoped navigation and displayed capabilities"*, and *"survives a tab switch"* is selection state | BK supplies the permitted account set and the directory as-of, and the **zero-vendor-request** arm is a BK guarantee observed at FE |
+| **FWD-2** restricted advisor confined to permitted population | **BK** | the accept is a REPLAYED UNAUTHORIZED REQUEST — server enforcement; BK owns *"firm/advisor/account authorization … server/storage enforcement, revocation"* | FE owns the visible half: permission states, **no protected stale display**, and the negative integration fixtures |
+| **FWD-3** provider's performance result read and exported | **BK** | a PARITY claim from capture through export; BK owns *"retrieval, return units/method normalization, exact-scope aggregate, report revision"* | FE owns presentation and method/coverage labels; **export executes FE's RenderPackage inside BK's service** — the proof spans both by construction |
+| **FWD-4** YCharts analysis obtained and exported | **BK** | the accept replays a validated input revision through the **request/job/result chain**; BK owns intake, sessions, generation, extraction, release state | FE owns variant/input-review UI, request history and the native sections as displayed |
+| **FWD-5** holdings organized by models | **BK** | the accept turns on JOIN CORRECTNESS — unassigned account, unmatched join, blended model; BK owns *"joins, canonical taxonomy application, denominators and reconciliation"* | FE owns radial/category presentation, drill UI and coverage display |
+| **FWD-6** keep working when one report is unavailable; ages visible | **FE** | the accept is CONTINUED USE under degradation — delay a provider, switch clients mid-request, expire a cache, complete jobs out of order; FE owns *"product error/recovery views"* | BK supplies the `StatusEnvelope` states and the ages FE renders |
+| **FWD-7** the directory cannot go quietly stale | **BK** | a DRIVEN exercise on a CONTROLLED CLOCK against ingestion; BK owns *"directory ingestion/projection/search service … and refresh/expiry"* | FE displays the as-of and the capability gap; the terminated-client rule (**stay visible, entitlement governs**) is enforced by BK and shown by FE |
+| **FWD-8** branded export with a contemporaneous narrative | **BK** | *"never as a cause"* is an EVIDENCE-AND-PROSE VALIDITY claim; BK owns *"event detection, dated sentiment/news retrieval, evidence/prose validation"* | FE owns wide-chart composition, annotation/footnote placement and the shared template package BK executes |
+
+**COUNT, PRINTED RATHER THAN ASSERTED: 8 of 8 assigned. FE 2 (`FWD-1`, `FWD-6`), BK 6.**
+
+⛔ **AND THE ASYMMETRY IS A FINDING, NOT AN OVERSIGHT — I CHECKED IT RATHER THAN LETTING IT STAND.** Six
+of eight accepts turn on data correctness, enforcement or vendor semantics, which is where the deciding
+artifact lives. **It does NOT mean FE carries less work**: FE contributes user-facing proof to six of the
+eight and owns the RenderPackage that BK's export service executes. **An ACCEPT owner is who the grade is
+read from, never a measure of scope.**
+
+⚠ **NO PROOF IS FORCED WHOLLY INSIDE ONE PROJECT, WHICH BOTH BRIEFS ASKED FOR EXPLICITLY.** Every row
+above names its crossing. **`FWD-3` and `FWD-8` cross by construction** — an export is FE's package run
+by BK's worker — and a decomposition that pretends otherwise would put the render half and the execute
+half in different rounds with no shared criterion.
+
+**`FWD-1`..`FWD-8` ARE UNCHANGED AS OUTCOMES. Nothing is renumbered, retired or re-worded here; this
+amendment assigns GRADING OWNERSHIP and nothing else.** The two project codes follow at L3.
+
+---
+
+---
+
 ⛔ **NO FWD BELOW IS A WAIT.** Every one is provable by an act a seat can take ON DEMAND. The single
 place a human gates an act is **FWD-4**, and it is EXPRESSLY QUALIFIED on the outcome with its reason,
 per Rule 27's L2 clause. Nothing here waits on an event nobody controls.
