@@ -1,0 +1,174 @@
+{
+  "kind": "COMPLETION_REPORT",
+  "schema_version": "1.0",
+  "project": "NFRA_IAMROLES202609",
+  "round": 1,
+  "written_by": "2.0.0_SA_COO~ZI",
+  "written_utc": "2026-09-10T12:17Z",
+  "decomposition_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/decompositions/NFRA_IAMROLES202609_DECOMP.md@9e72041da5",
+  "denominators": {
+    "fwd_in_prd_header": 8,
+    "cells_in_decomposition": 9,
+    "task_orders": 9,
+    "task_orders_terminal_with_valid_proof": 9
+  },
+  "outcomes": [
+    {
+      "fwd_id": "FWD-1",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "a reviewer has actually answered the question with that evidence attached, rather than an opinion",
+      "cells": [
+        {
+          "cell_id": "IAM-s-2",
+          "task_orders": [
+            {
+              "id": "NFRA_IAMROLES202609.TO-IAM-s-2.posture-number-with-denominator-and-vintage",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~1/NFRA_IAMROLES202609.TO-IAM-s-2.posture-number-with-denominator-and-vintage.proof_of_spec.json@cb93354362"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "COVERAGE ONLY, and the qualifier is this lane's to state rather than the grader's to discover: the posture figure is correctly formed and is ONE ROLE DEEP, not estate-wide, because IAM-s-1 exercised the instrument on one role. POSTURE_NUMBER.md declares that scope in five places and IAM-s-9's harness carries it forward in four. Whether one role meets an estate-scoped DONE WHEN is the REALIZATION axis and is not claimed here."
+    },
+    {
+      "fwd_id": "FWD-2",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "real roles have been read and their unused permissions named, over a stated lookback",
+      "cells": [
+        {
+          "cell_id": "IAM-s-1",
+          "task_orders": [
+            {
+              "id": "NFRA_IAMROLES202609.TO-IAM-s-1.permission-grain-usage-instrument",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~1/NFRA_IAMROLES202609.TO-IAM-s-1.permission-grain-usage-instrument.proof_of_spec.json@d0c36abcc8"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-3",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "at least one real policy has been surfaced as perfectly scoped and yet requiring nothing of whoever calls it",
+      "cells": [
+        {
+          "cell_id": "IAM-s-4",
+          "task_orders": [
+            {
+              "id": "NFRA_IAMROLES202609.TO-IAM-s-4.condition-axis-reader-what-a-policy-requires",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~2/NFRA_IAMROLES202609.TO-IAM-s-4.condition-axis-reader-what-a-policy-requires.proof_of_spec.json@6135bb93f6"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-4",
+      "done_when_state": "APPLIED",
+      "done_when_text": "each one is either in code or carries a named owner and a reason",
+      "cells": [
+        {
+          "cell_id": "IAM-s-5",
+          "task_orders": [
+            {
+              "id": "NFRA_IAMROLES202609.TO-IAM-s-5.declared-vs-live-reconciler-member-identity",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/NFRA_IAMROLES202609.TO-IAM-s-5.declared-vs-live-reconciler-member-identity.proof_of_spec.json@52c82c7537"
+            }
+          ]
+        },
+        {
+          "cell_id": "IAM-s-6",
+          "task_orders": [
+            {
+              "id": "NFRA_IAMROLES202609.TO-IAM-s-6.governance-disposition-of-undeclared-roles",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/NFRA_IAMROLES202609.TO-IAM-s-6.governance-disposition-of-undeclared-roles.proof_of_spec.json@ffcc39967a"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "Two cells by contract (C-TWO-REMEDIES): IAM-s-5 reconciles, IAM-s-6 disposes. Both terminal with valid instances, so the coverage claim is COVERED on this axis. NOT encoded here, because it is the realization axis and the CTO's: IAM-s-6's judgment criterion was graded FAIL at L9. Also on the record: IAM-s-6 established that the undeclared SET contains at least one false positive (seeking-alpha-scraper-role is declared), so the population this outcome is measured against is AT MOST 15."
+    },
+    {
+      "fwd_id": "FWD-5",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "a real narrowing has been checked in advance and the check was believed",
+      "cells": [
+        {
+          "cell_id": "IAM-s-8",
+          "task_orders": [
+            {
+              "id": "NFRA_IAMROLES202609.TO-IAM-s-8.pre-flight-blast-radius-exercised",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~2/NFRA_IAMROLES202609.TO-IAM-s-8.pre-flight-blast-radius-exercised.proof_of_spec.json@aafee3fc57"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "Served by IAM-s-8, which ran the simulate battery D3 recorded as never run. ISSUER SPECIFICATION CALL, recorded at the cut and repeated here: the EXERCISED bar was read as being on the CHECK, not on an APPLY, resolving against C-NO-ACCESSDENIED. The cell applied nothing to production. If that reading is graded wrong the remedy is a round-2 cell under a change-management entry."
+    },
+    {
+      "fwd_id": "FWD-6",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "each of the known past plans has been established as done or not done, on evidence",
+      "cells": [
+        {
+          "cell_id": "IAM-s-7",
+          "task_orders": [
+            {
+              "id": "NFRA_IAMROLES202609.TO-IAM-s-7.historical-remediation-completion-on-the-artifact",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~4/NFRA_IAMROLES202609.TO-IAM-s-7.historical-remediation-completion-on-the-artifact.proof_of_spec.json@ff86d57e03"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-7",
+      "done_when_state": "APPLIED",
+      "done_when_text": "the assessment reports the two differently, at permission grain",
+      "cells": [
+        {
+          "cell_id": "IAM-s-3",
+          "task_orders": [
+            {
+              "id": "NFRA_IAMROLES202609.TO-IAM-s-3.coverage-vocabulary-unused-vs-unobservable",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~1/NFRA_IAMROLES202609.TO-IAM-s-3.coverage-vocabulary-unused-vs-unobservable.proof_of_spec.json@26cb49f072"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-8",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "it has actually been re-run and produced a comparable answer",
+      "cells": [
+        {
+          "cell_id": "IAM-s-9",
+          "task_orders": [
+            {
+              "id": "NFRA_IAMROLES202609.TO-IAM-s-9.re-run-harness-composed-not-scheduled",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~1/NFRA_IAMROLES202609.TO-IAM-s-9.re-run-harness-composed-not-scheduled.proof_of_spec.json@9f59424340"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    }
+  ]
+}
