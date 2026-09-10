@@ -1,0 +1,973 @@
+{
+ "kind": "COMPLETION_REPORT",
+ "schema_version": "1.0",
+ "project": "NFRA_OPSEC202609",
+ "round": 3,
+ "written_by": "2.0.0_SA_COO~Z",
+ "written_utc": "2026-09-10T20:22Z",
+ "decomposition_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/decompositions/NFRA_OPSEC202609_DECOMP_round3.md@598bca6e96",
+ "denominators": {
+  "fwd_in_prd_header": 19,
+  "cells_in_decomposition": 39,
+  "task_orders": 35,
+  "task_orders_terminal_with_valid_proof": 33
+ },
+ "outcomes": [
+  {
+   "fwd_id": "FWD-1",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "a request with no login, sent straight to the system's own address rather than through the portal, has actually been tried and refused",
+   "cells": [
+    {
+     "cell_id": "OP-s-1",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~Z/NFRA_OPSEC202609.TO-OP-S-1.rest-api-adoption-and-authorizer.proof_of_spec.json@9d451c7636"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-24",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~Z/NFRA_OPSEC202609.TO-OP-S-1.rest-api-adoption-and-authorizer.proof_of_spec.json@9d451c7636"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Served in round 2; mapping carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0 (method: an order serves an outcome when its face names the FWD (round-2 token census carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0); the cells listed are that order's OWN <owned_cells>, never the cells its face merely cites). Rounds 3 and 3A added no cell for this outcome."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "tried with a valid login at the direct address and refused; tried through the portal and admitted",
+   "cells": [
+    {
+     "cell_id": "OP-s-1",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~Z/NFRA_OPSEC202609.TO-OP-S-1.rest-api-adoption-and-authorizer.proof_of_spec.json@9d451c7636"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-24",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~Z/NFRA_OPSEC202609.TO-OP-S-1.rest-api-adoption-and-authorizer.proof_of_spec.json@9d451c7636"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-14",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-14-21",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-14-21.sentinel-watch-only.proof_of_spec.json@94c3c322b8"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-21",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-14-21",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-14-21.sentinel-watch-only.proof_of_spec.json@94c3c322b8"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-2",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~Z/NFRA_OPSEC202609.TO-OP-S-2.http-api-authorizer-and-belt-rider.proof_of_spec.json@182d29bbf1"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-3",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~Z/NFRA_OPSEC202609.TO-OP-S-3.origin-secret-both-gateways.proof_of_spec.json@44db4f2099"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Served in round 2; mapping carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0 (method: an order serves an outcome when its face names the FWD (round-2 token census carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0); the cells listed are that order's OWN <owned_cells>, never the cells its face merely cites). Rounds 3 and 3A added no cell for this outcome."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "an anonymous request for a never-seen keyword has been sent and produced no paid computation",
+   "cells": [
+    {
+     "cell_id": "OP-s-2",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~Z/NFRA_OPSEC202609.TO-OP-S-2.http-api-authorizer-and-belt-rider.proof_of_spec.json@182d29bbf1"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Served in round 2; mapping carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0 (method: an order serves an outcome when its face names the FWD (round-2 token census carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0); the cells listed are that order's OWN <owned_cells>, never the cells its face merely cites). Rounds 3 and 3A added no cell for this outcome."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "the notification has fired on a real or staged burst and the person named has read it",
+   "cells": [
+    {
+     "cell_id": "OP-s-4",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-4-18",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-4-18.web-acls-and-ip-sets.proof_of_spec.json@6b1843ad6a"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-18",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-4-18",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-4-18.web-acls-and-ip-sets.proof_of_spec.json@6b1843ad6a"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-6",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-6",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~T/NFRA_OPSEC202609.TO-OP-S-6.login-abuse-alarm.proof_of_spec.json@be92ea504c"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP3-s-2",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP3-S-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.9.0_WK_NFRA_OPSEC202609~2/NFRA_OPSEC202609.TO-OP3-S-2.login-alarm-subscription.proof_of_spec.json@0963e96840"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Round 2 served the alarms (OP-s-6) and the WAF side (OP-s-4/18); round 3 cell OP3-s-2 attached the C-20 recipient andrew@opalinvest.com and the SNS subscription left PendingConfirmation on Andrew's own confirmation 2026-09-10 (S2-AC4 flipped on read, order complete @db72506ec3). The DONE WHEN's 'the person named has read it' is the CTO's grade, not this claim."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "done_when_state": "APPLIED",
+   "done_when_text": "the records are being written to durable storage",
+   "cells": [
+    {
+     "cell_id": "OP-s-16",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-16-17-8R2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-16-17-8R2.key-flips-and-demo-import.proof_of_spec.json@976e405a89"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-17",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-16-17-8R2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-16-17-8R2.key-flips-and-demo-import.proof_of_spec.json@976e405a89"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-17R-28",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-17R-28.evidence-store-split.proof_of_spec.json@245ce08d20"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-8",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-16-17-8R2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-16-17-8R2.key-flips-and-demo-import.proof_of_spec.json@976e405a89"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-28",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-17R-28",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-17R-28.evidence-store-split.proof_of_spec.json@245ce08d20"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-4",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-4-18",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-4-18.web-acls-and-ip-sets.proof_of_spec.json@6b1843ad6a"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-18",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-4-18",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-4-18.web-acls-and-ip-sets.proof_of_spec.json@6b1843ad6a"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-5",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~Z/NFRA_OPSEC202609.TO-OP-S-5.waf-cloudfront-alb-logging.proof_of_spec.json@f49c82b891"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-29",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-29",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-29.log-destination-source-conditions.proof_of_spec.json@c3eb11f9a9"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Served in round 2; mapping carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0 (method: an order serves an outcome when its face names the FWD (round-2 token census carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0); the cells listed are that order's OWN <owned_cells>, never the cells its face merely cites). Rounds 3 and 3A added no cell for this outcome."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "the protections have run in watch-only mode long enough to know what they would wrongly stop, and have then been switched to stopping",
+   "cells": [
+    {
+     "cell_id": "OP-s-4",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-4-18",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-4-18.web-acls-and-ip-sets.proof_of_spec.json@6b1843ad6a"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-18",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-4-18",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-4-18.web-acls-and-ip-sets.proof_of_spec.json@6b1843ad6a"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Served in round 2; mapping carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0 (method: an order serves an outcome when its face names the FWD (round-2 token census carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0); the cells listed are that order's OWN <owned_cells>, never the cells its face merely cites). Rounds 3 and 3A added no cell for this outcome."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "the bookkeeping has been made unavailable on purpose and sign-in slowed rather than became unlimited",
+   "cells": [
+    {
+     "cell_id": "OP-s-7",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-7",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~Z/NFRA_OPSEC202609.TO-OP-S-7.throttle-fail-open-coverage.proof_of_spec.json@37bbac8dd7"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Served in round 2; mapping carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0 (method: an order serves an outcome when its face names the FWD (round-2 token census carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0); the cells listed are that order's OWN <owned_cells>, never the cells its face merely cites). Rounds 3 and 3A added no cell for this outcome."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "done_when_state": "APPLIED",
+   "done_when_text": "the protections are switched on for every such table",
+   "cells": [
+    {
+     "cell_id": "OP-s-16",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-16-17-8R2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-16-17-8R2.key-flips-and-demo-import.proof_of_spec.json@976e405a89"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-17",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-16-17-8R2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-16-17-8R2.key-flips-and-demo-import.proof_of_spec.json@976e405a89"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-8",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-16-17-8R2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-16-17-8R2.key-flips-and-demo-import.proof_of_spec.json@976e405a89"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-8",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-8.identity-and-rbac-table-protection.proof_of_spec.json@2da0c78f6a"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-8R2B",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~W/NFRA_OPSEC202609.TO-OP-S-8R2B.identity-tables-cmk-alignment.proof_of_spec.json@6a84269b03"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Served in round 2; mapping carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0 (method: an order serves an outcome when its face names the FWD (round-2 token census carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0); the cells listed are that order's OWN <owned_cells>, never the cells its face merely cites). Rounds 3 and 3A added no cell for this outcome."
+  },
+  {
+   "fwd_id": "FWD-9",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "the old copy is gone and nothing noticed",
+   "cells": [
+    {
+     "cell_id": "OP-s-8",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-8R2B",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~W/NFRA_OPSEC202609.TO-OP-S-8R2B.identity-tables-cmk-alignment.proof_of_spec.json@6a84269b03"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-9",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-9-11",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~X/NFRA_OPSEC202609.TO-OP-S-9-11.legacy-users-and-token-binding.proof_of_spec.json@bd01fb99f2"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-9C",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~X/NFRA_OPSEC202609.TO-OP-S-9C.trade-role-residual-grant-on-opal-users.proof_of_spec.json@f2f5d933fa"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-9D",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~X/NFRA_OPSEC202609.TO-OP-S-9D.opal-users-retirement.proof_of_spec.json@6f009e0f03"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-11",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-9-11",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~X/NFRA_OPSEC202609.TO-OP-S-9-11.legacy-users-and-token-binding.proof_of_spec.json@bd01fb99f2"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Served in round 2; mapping carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0 (method: an order serves an outcome when its face names the FWD (round-2 token census carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0); the cells listed are that order's OWN <owned_cells>, never the cells its face merely cites). Rounds 3 and 3A added no cell for this outcome."
+  },
+  {
+   "fwd_id": "FWD-10",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "one deliberate rotation has happened and users stayed signed in through it",
+   "cells": [
+    {
+     "cell_id": "OP-s-10",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-10",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~V/NFRA_OPSEC202609.TO-OP-S-10.signing-key-rotation.proof_of_spec.json@941aea16c8"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-10B",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~V/NFRA_OPSEC202609.TO-OP-S-10B.two-slot-and-ttl-for-the-jwt-consumers.proof_of_spec.json@8bbb3eec1c"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-10C",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~W/NFRA_OPSEC202609.TO-OP-S-10C.session-analytics-build-path.proof_of_spec.json@1e95f1b10c"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-10D",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~V/NFRA_OPSEC202609.TO-OP-S-10D.session-analytics-two-slot.proof_of_spec.json@649a6a8fd1"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-10E",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~V/NFRA_OPSEC202609.TO-OP-S-10E.signer-key-read-ttl.proof_of_spec.json@d09246e8fd"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-10F",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~V/NFRA_OPSEC202609.TO-OP-S-10F.signer-verify-path-two-slot.proof_of_spec.json@d228e80537"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-9",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-9-11",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~X/NFRA_OPSEC202609.TO-OP-S-9-11.legacy-users-and-token-binding.proof_of_spec.json@bd01fb99f2"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-11",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-9-11",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~X/NFRA_OPSEC202609.TO-OP-S-9-11.legacy-users-and-token-binding.proof_of_spec.json@bd01fb99f2"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Served in round 2; mapping carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0 (method: an order serves an outcome when its face names the FWD (round-2 token census carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0); the cells listed are that order's OWN <owned_cells>, never the cells its face merely cites). Rounds 3 and 3A added no cell for this outcome."
+  },
+  {
+   "fwd_id": "FWD-11",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "a deleted account has been re-created on the same email and the old session did not come back",
+   "cells": [
+    {
+     "cell_id": "OP-s-8",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-8R2B",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~W/NFRA_OPSEC202609.TO-OP-S-8R2B.identity-tables-cmk-alignment.proof_of_spec.json@6a84269b03"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-9",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-9-11",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~X/NFRA_OPSEC202609.TO-OP-S-9-11.legacy-users-and-token-binding.proof_of_spec.json@bd01fb99f2"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-11",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-9-11",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~X/NFRA_OPSEC202609.TO-OP-S-9-11.legacy-users-and-token-binding.proof_of_spec.json@bd01fb99f2"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Served in round 2; mapping carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0 (method: an order serves an outcome when its face names the FWD (round-2 token census carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0); the cells listed are that order's OWN <owned_cells>, never the cells its face merely cites). Rounds 3 and 3A added no cell for this outcome."
+  },
+  {
+   "fwd_id": "FWD-12",
+   "done_when_state": "APPLIED",
+   "done_when_text": "request logging is on and every long-lived shared key has an expiry",
+   "cells": [
+    {
+     "cell_id": "OP-s-12",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-12",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~Z/NFRA_OPSEC202609.TO-OP-S-12.gateway-machine-keys-expire.proof_of_spec.json@e6ee3e79b8"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP3A-s-1",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP3A-S-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.9.0_WK_NFRA_OPSEC202609~6/NFRA_OPSEC202609.TO-OP3A-S-1.in-lane-liveness-caller-migration.proof_of_spec.json@1d103b4651"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Round 2 served the DONE WHEN as the PRD states it (request logging on, long-lived shared keys expire: OP-s-12). Issuance 3A cell OP3A-s-1 moved the two IN-LANE liveness callers (opal-otp-liveness, opal-ms-ingest-liveness) off the static bearer onto the gateway's capability-token exchange endpoint: targeted safe-apply 2026-09-10T19:37Z, both invoked from the Lambda runtime with cred_path=exchange, ledger 20260910T1714Z CLOSED, dual-accept intact. The THREE CROSS-LANE callers (OpalETL, PartnerETL, CloudComp) are outside this project's boundary by Andrew's ruling @9382d107a3 s.1 and are NOT claimed here."
+  },
+  {
+   "fwd_id": "FWD-13",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "a known-bad request has been sent to the site and refused before WordPress handled it, and the site still loads normally for visitors",
+   "cells": [
+    {
+     "cell_id": "OP-s-13",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-13",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~U/NFRA_OPSEC202609.TO-OP-S-13.wordpress-edge.proof_of_spec.json@c12e340ceb"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Served in round 2; mapping carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0 (method: an order serves an outcome when its face names the FWD (round-2 token census carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0); the cells listed are that order's OWN <owned_cells>, never the cells its face merely cites). Rounds 3 and 3A added no cell for this outcome."
+  },
+  {
+   "fwd_id": "FWD-14",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "a staged burst from a test address has been blocked with nobody acting, and a normal partner office signing in at the same time was not",
+   "cells": [
+    {
+     "cell_id": "OP-s-14",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-14-21",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-14-21.sentinel-watch-only.proof_of_spec.json@94c3c322b8"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-21",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-14-21",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-14-21.sentinel-watch-only.proof_of_spec.json@94c3c322b8"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-2",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~Z/NFRA_OPSEC202609.TO-OP-S-2.http-api-authorizer-and-belt-rider.proof_of_spec.json@182d29bbf1"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-20",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-20",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~U/NFRA_OPSEC202609.TO-OP-S-20.partner-egress-allow-list.proof_of_spec.json@93ee69fa88"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-22",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-22",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~W/NFRA_OPSEC202609.TO-OP-S-22.sentinel-chain-iam-verdict.proof_of_spec.json@8c7c24adfb"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-4",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-4-18",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-4-18.web-acls-and-ip-sets.proof_of_spec.json@6b1843ad6a"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-18",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-4-18",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-4-18.web-acls-and-ip-sets.proof_of_spec.json@6b1843ad6a"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP3-s-3",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP3-S-3",
+       "status": "superseded",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.9.0_WK_NFRA_OPSEC202609~3/NFRA_OPSEC202609.TO-OP3-S-3.blocked-ip-sets-second-writer.proof_of_spec.json@14ff0c4b38"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Round 2 cells plus round 3 cell OP3-s-3, whose order is `superseded` (its declared-state remedy had landed @3758b14afc six days before the cut, row Z-W3-S1) but whose instance is VALID and EXERCISED the no-removal behaviour end to end (S3-AC4/S3-AC5: a runtime-added address survived a plan with no removal proposed). TO-OP-S-15-19 is cancelled with no instance and is not counted as serving."
+  },
+  {
+   "fwd_id": "FWD-15",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "a real block has produced exactly one email that he received and could act on",
+   "cells": [
+    {
+     "cell_id": "OP-s-14",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-14-21",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-14-21.sentinel-watch-only.proof_of_spec.json@94c3c322b8"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-21",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-14-21",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-14-21.sentinel-watch-only.proof_of_spec.json@94c3c322b8"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP3-s-3",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP3-S-3",
+       "status": "superseded",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.9.0_WK_NFRA_OPSEC202609~3/NFRA_OPSEC202609.TO-OP3-S-3.blocked-ip-sets-second-writer.proof_of_spec.json@14ff0c4b38"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Round 2 cell OP-s-14/21 plus round 3 cell OP3-s-3 (superseded, instance VALID, see FWD-14). The 'exactly one email that he received' limb is the CTO's grade against delivery, not this claim."
+  },
+  {
+   "fwd_id": "FWD-16",
+   "done_when_state": "APPLIED",
+   "done_when_text": "the list and the files exist and are being written",
+   "cells": [
+    {
+     "cell_id": "OP-s-16",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-16-17-8R2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-16-17-8R2.key-flips-and-demo-import.proof_of_spec.json@976e405a89"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-17-16",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-17-16.evidence-store-and-address-table.proof_of_spec.json@f9b2a16c2c"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-17",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-16-17-8R2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-16-17-8R2.key-flips-and-demo-import.proof_of_spec.json@976e405a89"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-17-16",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-17-16.evidence-store-and-address-table.proof_of_spec.json@f9b2a16c2c"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-17B",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~X/NFRA_OPSEC202609.TO-OP-S-17B.object-lock-on-cases.proof_of_spec.json@c42b9aa75c"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-17R-28",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-17R-28.evidence-store-split.proof_of_spec.json@245ce08d20"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-8",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-16-17-8R2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-16-17-8R2.key-flips-and-demo-import.proof_of_spec.json@976e405a89"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-8R2B",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~W/NFRA_OPSEC202609.TO-OP-S-8R2B.identity-tables-cmk-alignment.proof_of_spec.json@6a84269b03"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-28",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-17R-28",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-17R-28.evidence-store-split.proof_of_spec.json@245ce08d20"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-25",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-25-26-27",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-25-26-27.project-key-admin-role-logs-target.proof_of_spec.json@71f74091d0"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-26",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-25-26-27",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-25-26-27.project-key-admin-role-logs-target.proof_of_spec.json@71f74091d0"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-27",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-25-26-27",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-25-26-27.project-key-admin-role-logs-target.proof_of_spec.json@71f74091d0"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Served in round 2; mapping carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0 (method: an order serves an outcome when its face names the FWD (round-2 token census carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0); the cells listed are that order's OWN <owned_cells>, never the cells its face merely cites). Rounds 3 and 3A added no cell for this outcome."
+  },
+  {
+   "fwd_id": "FWD-17",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "an authorised person has removed a block and the address reached us again within minutes; a block left alone has expired by itself",
+   "cells": [
+    {
+     "cell_id": "OP-s-22",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-22",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~W/NFRA_OPSEC202609.TO-OP-S-22.sentinel-chain-iam-verdict.proof_of_spec.json@8c7c24adfb"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-25",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-25-26-27",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-25-26-27.project-key-admin-role-logs-target.proof_of_spec.json@71f74091d0"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-26",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-25-26-27",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-25-26-27.project-key-admin-role-logs-target.proof_of_spec.json@71f74091d0"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-27",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-25-26-27",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-25-26-27.project-key-admin-role-logs-target.proof_of_spec.json@71f74091d0"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "TO-OP-S-15-19 (cancelled, no instance) is not counted; the two complete orders carry the claim."
+  },
+  {
+   "fwd_id": "FWD-18",
+   "done_when_state": "APPLIED",
+   "done_when_text": "the store exists with its rules switched on",
+   "cells": [
+    {
+     "cell_id": "OP-s-16",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-16-17-8R2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-16-17-8R2.key-flips-and-demo-import.proof_of_spec.json@976e405a89"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-17-16",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-17-16.evidence-store-and-address-table.proof_of_spec.json@f9b2a16c2c"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-17",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-16-17-8R2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-16-17-8R2.key-flips-and-demo-import.proof_of_spec.json@976e405a89"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-17-16",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-17-16.evidence-store-and-address-table.proof_of_spec.json@f9b2a16c2c"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-17B",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~X/NFRA_OPSEC202609.TO-OP-S-17B.object-lock-on-cases.proof_of_spec.json@c42b9aa75c"
+      },
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-17R-28",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-17R-28.evidence-store-split.proof_of_spec.json@245ce08d20"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-8",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-16-17-8R2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-16-17-8R2.key-flips-and-demo-import.proof_of_spec.json@976e405a89"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-28",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-17R-28",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-17R-28.evidence-store-split.proof_of_spec.json@245ce08d20"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-25",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-25-26-27",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-25-26-27.project-key-admin-role-logs-target.proof_of_spec.json@71f74091d0"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-26",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-25-26-27",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-25-26-27.project-key-admin-role-logs-target.proof_of_spec.json@71f74091d0"
+      }
+     ]
+    },
+    {
+     "cell_id": "OP-s-27",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP-S-25-26-27",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-25-26-27.project-key-admin-role-logs-target.proof_of_spec.json@71f74091d0"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Served in round 2; mapping carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0 (method: an order serves an outcome when its face names the FWD (round-2 token census carried from ledger/COMPLETION_REPORT.round2.json@9c386cb7c0); the cells listed are that order's OWN <owned_cells>, never the cells its face merely cites). Rounds 3 and 3A added no cell for this outcome."
+  },
+  {
+   "fwd_id": "FWD-19",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "a scripted submission to the contact form has been refused or challenged without a human acting, a real submission made by a person in a browser has succeeded unchanged in the same window, and the volume of automated submissions reaching the entry store has been measured before and after",
+   "cells": [
+    {
+     "cell_id": "OP3-s-1",
+     "task_orders": [
+      {
+       "id": "NFRA_OPSEC202609.TO-OP3-S-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.9.0_WK_NFRA_OPSEC202609~1/NFRA_OPSEC202609.TO-OP3-S-1.form-spam-baseline-and-naive-control.proof_of_spec.json@23a98bb30a"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Cut for the first time in round 3 (OP3-s-1) after ratification at PRD v0.14 post-freeze. Instance VALID: baseline 8 of 53 automated over 36.82 days (0.217/day) taken BEFORE arming; a NO-GODADDY control armed in COUNT; the after-window (~32 min) is UNDERPOWERED and the worker said so; the scripted submission was classified spam with zero notifications and the real-visitor probe landed as entry 23 unaltered. S1-AC4 FAILS on the issuer's own compound wording (row Z-S169, disarm owner 3.0.0_SA_CVO~Z); S1-AC7 is the judgment criterion, graded at L9. COVERED is the coverage claim only."
+  }
+ ]
+}

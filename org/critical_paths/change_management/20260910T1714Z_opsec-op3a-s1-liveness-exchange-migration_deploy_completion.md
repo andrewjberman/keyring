@@ -1,6 +1,10 @@
 # DEPLOY-COMPLETION LEDGER -- NFRA_OPSEC202609 OP3A-s-1 / FWD-12: the two IN-LANE liveness callers move onto the gateway's capability-token EXCHANGE endpoint
 
-**Status:** **OPEN 2026-09-10T17:14Z** by `0.9.0_WK_NFRA_OPSEC202609~5` (L7, TO-OP3A-S-1).
+**Status:** **CLOSED 2026-09-10T19:4xZ** by `0.9.0_WK_NFRA_OPSEC202609~6` (L7, TO-OP3A-S-1). Opened
+2026-09-10T17:14Z by `0.9.0_WK_NFRA_OPSEC202609~5`. **See the "CLOSURE" section at the end of this
+entry for steps 6-10, the live post-deploy state and the push state, all measured after closure.**
+The narrative below this line describes the entry's OPEN window (17:14Z-17:2xZ) and is left as
+written -- it is history, not current state.
 **Opened BEFORE any apply**, per CLAUDE.md s.5 NEVER-2 and the task order's own bound.
 ⛔ **STILL OPEN AT 17:2xZ -- THE APPLY WAS REFUSED BY A GATE AND NOTHING WAS DEPLOYED. NOTHING IS
 HALF-LANDED. Read "THE APPLY WAS BLOCKED" below before treating this entry as an in-flight deploy.**
@@ -247,3 +251,67 @@ Step 6 was blocked and is escalated by the artifact rather than quietly retried:
 `source_code_hash` values above and escalate loud with the apply's own output.
 
 -- `0.9.0_WK_NFRA_OPSEC202609~5`
+
+## CLOSURE -- 2026-09-10, by `0.9.0_WK_NFRA_OPSEC202609~6`
+
+**Closed 2026-09-10T19:4xZ.** Re-took the grounding first (S3A-AC1/AC2/AC3, this seat's own
+proof-of-spec instance carries the full evidence): dual-accept intact (static bearer 200 on both
+`/otp/health` at 19:26:25Z and `/ms/health` at 19:28:16Z; junk bearer 401), the exchange endpoints
+answer a real JSON exchange (not a Microsoft OIDC 302) at 19:27:11Z (`/otp/token`) and 19:28:17Z
+(`/ms/token`), both minted tokens accepted on their own `/health` and rejected 401 cross-audience
+both directions. Applied the committed patch record
+`org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.9.0_WK_NFRA_OPSEC202609~5/OP3A-s-1.exchange-migration.WORKTREE-ONLY.patch`
+(sha256 `a5bf2999bcbf7c1125eecd83ed28f0bbb41734786ba8e18b8ec6d9be0c9d8c24`, verified byte-identical
+before applying) onto the four canonical paths with `git apply`; `py_compile` clean on both sources;
+`terraform validate` `Success!`; `fmt -check` rc 0.
+
+### Steps 4-10, completed by this seat
+
+| # | Step | State |
+|---|---|---|
+| 4 | Baseline plan re-taken, unscoped, read-only, at 19:33:10Z: `Plan: 0 to add, 4 to change, 0 to destroy` -- the same two `aws_wafv2_ip_set` description changes described by row `Z-W5-S1` (unchanged text, confirmed byte-for-byte against that row) plus my two functions. Apply remained `-target`ed. | **DONE, RE-CONFIRMED** |
+| 5 | Gateway health re-confirmed IMMEDIATELY before the apply: `/otp/health` 200 and `/ms/health` 200 at 19:34:57Z-19:34:58Z. | **DONE** |
+| 6 | Targeted `safe-apply` (`-target=aws_lambda_function.otp_liveness -target=aws_lambda_function.ms_ingest_liveness`), started 19:36:09Z. `comp-tagauthz` pre-apply gate PASSED (0 candidate resources overwrite an access-granting tag); `tombstone-gate` CLEAN. `Apply complete! Resources: 0 added, 2 changed, 0 destroyed.` at ~19:37:07Z. | **DONE** |
+| 7 | `get-function-configuration` read on both, 19:40:40Z: `opal-otp-liveness` CodeSha256 `3arS31NYi8MRfT2zpMny1r4xApcR7GffVRf1TWP9+xI=` (== the targeted plan's predicted hash), LastModified `2026-09-10T19:37:07.000+0000`, `OTP_TOKEN_URL=https://mcp.opalinvest.dev/otp/token`. `opal-ms-ingest-liveness` CodeSha256 `tsI6QgpY3ODD3CLYdrdZMv6vUleIUpWF7RgEXXVM7i4=` (== predicted), LastModified `2026-09-10T19:37:02.000+0000`, `MS_TOKEN_URL=https://mcp.opalinvest.dev/ms/token`. Both hashes match the plan saved at `.scratch/op3a-s1.tfplan` and shown via `terraform show` before the apply. | **DONE, HASHES MATCH** |
+| 8 | Manual `lambda invoke` of both, `--log-type Tail --payload '{}'`. `opal-otp-liveness` at 19:37:50Z: response `{"ok": true, "cred_path": "exchange", "detail": "status=200"}`; own CloudWatch log (this invocation's RequestId `051a99f4-553a-4880-b9d9-7731b9a90db9`) carries `cred_path=exchange url=https://mcp.opalinvest.dev/otp/token aud=gw:otp ttl=300s`. `opal-ms-ingest-liveness` at 19:38:36Z: response `{"ok": true, "cred_path": "exchange", "detail": "status=200"}`; log (RequestId `8ec0ccb4-8c2f-47d7-a28a-b317d50e5ddb`) carries `cred_path=exchange url=https://mcp.opalinvest.dev/ms/token aud=gw:ms ttl=300s`. Both `ok:true` -- the alert branch (`_alert`, 2 call sites unchanged in each module) did NOT fire on either invocation. | **DONE, BOTH EXERCISED FROM THE LAMBDA RUNTIME** |
+| 9 | Commit under this serial: the four canonical files (both `lambda_function.py`, both `.tf`), this ledger entry, the task order (`<status>` flip), and this seat's `proof_of_spec.json`, plus any new surprise row this seat filed. | **DONE -- see the commit hash in this seat's final report; this ledger entry cannot self-cite a hash for the commit that carries it (CLAUDE.md's own-act-same-call rule).** |
+| 10 | Push state stated as MEASURED, this entry. | **DONE -- see "Push state, re-measured at closure" below.** |
+
+### Live post-deploy state (the closing artifact this entry names in its own "Closes when" clause)
+
+```
+opal-otp-liveness        CodeSha256   3arS31NYi8MRfT2zpMny1r4xApcR7GffVRf1TWP9+xI=
+                         LastModified 2026-09-10T19:37:07.000+0000
+                         OTP_TOKEN_URL  https://mcp.opalinvest.dev/otp/token
+opal-ms-ingest-liveness  CodeSha256   tsI6QgpY3ODD3CLYdrdZMv6vUleIUpWF7RgEXXVM7i4=
+                         LastModified 2026-09-10T19:37:02.000+0000
+                         MS_TOKEN_URL   https://mcp.opalinvest.dev/ms/token
+```
+
+Both hashes equal the targeted plan's predicted `source_code_hash` values shown above the "Rollback"
+section (`3arS31NYi8MRfT2zpMny1r4xApcR7GffVRf1TWP9+xI=` and `tsI6QgpY3ODD3CLYdrdZMv6vUleIUpWF7RgEXXVM7i4=`).
+Both invocations returned `{"ok": true, "cred_path": "exchange"}` with the CloudWatch log itself
+carrying `cred_path=exchange`. Both closing conditions this entry names are MET.
+
+### Rollback -- still named, now UNUSED because the deploy landed clean
+
+The rollback recipe above (restore both sources to their pre-change bytes at `c9c6600e95`, drop the
+two env vars, re-apply with the same two `-target`s) is unchanged and still the correct recipe if a
+defect surfaces later. Its oracle is unchanged: the pre-deploy pair
+`hot3riLNhAoNfPYJhQPI/z/TW5Cd4BjfaQ73Q5oZbMU=` (otp) and `eJivS8spnzrkj5eCovTF5BWU22kclsEMabGOrQYQ6UI=`
+(ms). **NEVER-2 is not engaged**: both functions landed together in one targeted apply: 0 of 2
+half-landed.
+
+### Push state, re-measured at closure
+
+**LOCAL**, worktree branch `wk-NFRA_OPSEC202609-3A-6` -- a MEASURED value. `git rev-parse HEAD`
+immediately before this closing commit reads `1f87188985a47f0703c327376dfcd07950e12ee8` (the branch's
+base). This entry, this seat's `proof_of_spec.json`, the four canonical files and (if filed) new
+surprise rows ride the NEXT commit on this branch; per CLAUDE.md's rule against composing a report of
+a completed act in the same call as the act, this entry does not assert that commit's own hash --
+this seat's final report states it, read with `git log --oneline -1` AFTER the commit completes.
+`git ls-remote origin SITEZ` at 2026-09-10T19:4xZ reads `refs/heads/SITEZ` at
+`c0b5636ea98a7a1d70aa15192a00d9c12b9fb9e3`. **This branch is not on origin; no push was attempted and
+none is permitted from this seat.** The claim is perishable and ages the moment an integrator runs.
+
+-- `0.9.0_WK_NFRA_OPSEC202609~6`
