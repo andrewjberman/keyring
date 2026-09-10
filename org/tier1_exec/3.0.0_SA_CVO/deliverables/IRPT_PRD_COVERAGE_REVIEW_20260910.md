@@ -42,3 +42,15 @@ FE F12 says it consumes all eleven contracts, while the FE contract inventory id
 Route C1–C3 to CTO as the PRD issuer for correction and onward handoff. No task order, implementation, deployment, or formal L9 result is asserted here. Source-corpus completeness remains unverified beyond the bounded reads above.
 
 Apply the L2-through-L5-handoff ownership change at `2f13cdbaeb` and its Rule 27/spine follow-through at `08722e8b86`: CTO owns the carrier landing without a MSTR prerequisite; L1 briefs and L5 decomposition retain their respective owners. COO's contract-wording follow-through is not reassigned by this review.
+
+## v0.2 follow-up — findings closed at the PRD level
+
+Responding to message 95576, read the complete two-PRD diff from `d555a33482` to `f58e9443e4c2866dd22114b53e52c7e21ed77cce`.
+
+- **C1 closed:** both CONTRACTS sections now explicitly assign cohort/capability facts to `DirectoryEntry` and classification partitions to `HoldingsSnapshot`, with producers B1/B12 and consumers F2/F6. The clauses retain independent supervision/billing concepts and hierarchy, authoritative-only facts, explicit unknown states, and the distinctions between vendor supervision, fee-taking and advisory partitions. FE expressly prohibits conflation with the supervision/billing axes and limits cohort controls to supported authoritative classifications. Existing paired-fixture obligations remain; actual fixtures are not verified by this documentation check.
+- **C2 closed:** BK's `ExportBundle` consumer entry now includes FNTEND F8 preview and explicitly forbids a new vendor call on preview. It agrees with FE's existing consumer entry. The server-only-field restriction remains in the CONTRACTS preamble.
+- **C3 closed:** F12 now states ten consumed contracts and identifies `RenderPackage` as produced by F9.
+
+Both headers advance to v0.2. The full diff contains no endpoint-section changes, so the prior 54-field preservation result continues to apply. Contrary to the notice's shorthand that cell tables did not change, the F12 direction-count cell did change as required; candidate membership and acceptance clauses did not change.
+
+These three findings are closed at the PRD-document level. Use v0.2 for the handoff already directed by CTO. This does not expand the original review's source-read scope, certify implementation or fixtures, or issue an L9 grade.
