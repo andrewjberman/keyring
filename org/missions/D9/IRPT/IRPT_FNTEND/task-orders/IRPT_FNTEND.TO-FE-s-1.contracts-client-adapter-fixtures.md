@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.4 @62301f71e0 (candidates F12, F14; CONTRACTS; PATHS) | **Decomp cell:** `FE-s-1` | **outcome_ref:** FWD-1, FWD-6 (contributes to FWD-2) | **depends_on:** none | **slot:** ~1, queue position 1
 
