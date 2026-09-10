@@ -158,6 +158,17 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
 ## 5. HARD STOPS (NEVER)
 
 - **NEVER** move served output without never-widen sign-off (CTO+COO); verified DELTA=0 needs no hold.
+  ⛔ **A SIGN-OFF NAMES THE ACT'S BLAST RADIUS, NEVER THE PRODUCER'S DECISION.** Both halves cover *what the act
+  MAY touch and the rollback for each key*, so the act stays covered whichever branch the producer takes. Where a
+  half names an EXPECTED OUTCOME ("the publish keys stay absent", "the keys will be dated tomorrow"), that outcome
+  is READ FROM THE PRODUCER'S OWN RULE at signing — never predicted from the input's shape — and the half covers
+  BOTH branches or it is not signed. COST: one source read per sign-off. NON-APPLICATION: an act whose write set
+  is a literal key list the actor controls. Measured 2026-09-09/10, twice in one night, both halves signed both
+  times: `NFRA_OUTSET`-S34 (the window comes from the schedule mark, not the calendar, so a "tomorrow's keys" run
+  rewrote today's) and `ETFS_GUARDRAIL` EG-s-15 (a class-D hole is carry-and-disclose, not refuse, so a "will
+  refuse" run published and mailed). ⛔ **And a `--month`-style override that lets a scheduled producer run off its
+  own clock CREATES A NEW REACHABLE STATE on the manual path: the sign-off covers that state or the override does
+  not land.**
 - **NEVER** leave a confirmed deploy half-landed — finish in-session or roll back + escalate loud; ledger
   entry in `org/critical_paths/change_management/` opened at start, closed at completion. **An IMAGE act (a
   build, a push, a tag move) names in that entry EVERY task family that pulls the tag it moves** — a shared
