@@ -4607,3 +4607,119 @@ one-line path amendment; sent UP to 2.0.0_SA_COO~Z at the read. The worker is st
  }
 ]
 ```
+
+```json
+[
+ {
+  "id": "NFRA_OPSEC202609-Z-W1-S1",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPSEC202609~1 (found in phase-1 re-grounding of TO-OP3-S-1's given box handle, as the order itself instructed)",
+  "surfaced_at": "2026-09-10T12:15:58Z",
+  "one_line": "THE TO'S NAMED SSM DOCUMENT `opal-website-edge-protection` DOES NOT EXIST -- IT IS THE WAF WEB ACL'S NAME FROM TO-OP-S-13, NOT AN SSM DOCUMENT. `aws ssm list-documents --filters Key=Name,Values=opal-website-edge-protection` returns an empty DocumentIdentifiers list; a wider Owner=Self filter for name substrings 'website'/'edge' also returns zero. The actual object at that name is `aws_wafv2_web_acl.website_edge`, ARN `arn:aws:wafv2:us-east-1:313476888478:global/webacl/opal-website-edge-protection/af7ed304-f3b9-4135-b7c4-42af5913df6d` per TO-OP-S-13's own proof instance. SSM ITSELF IS REACHABLE (PingStatus Online, i-0152e3fe2599fa630, confirmed live) and the origin access-log path IS reachable (/usr/local/lsws/logs/access.log, confirmed live) -- the two things phase-1 grounding required to hold before this is BLOCKING both hold, so this is filed as a correction to the TO's specific artifact claim, not a stop.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "`aws ssm list-documents --filters \"Key=Name,Values=opal-website-edge-protection\"` -> `{\"DocumentIdentifiers\": []}`, run live against account 313476888478 (sts get-caller-identity confirmed arn:aws:iam::313476888478:user/Andrew_Berman).",
+    "`aws ssm list-documents --document-filter-list \"key=Owner,value=Self\" --query 'DocumentIdentifiers[?contains(Name,`website`) || contains(Name,`edge`)].Name'` -> `[]` -- no self-owned SSM document contains either substring.",
+    "`aws ssm describe-instance-information --filters Key=InstanceIds,Values=i-0152e3fe2599fa630` -> PingStatus Online, LastPingDateTime 2026-09-10T07:03:53-04:00, PlatformName Ubuntu, AgentVersion 3.3.4793.0 -- SSM reachability to the named box is GROUNDED, positively, not merely by absence of a contrary signal.",
+    "The name is traced to its real referent by reading TO-OP-S-13's committed proof instance (org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~U/NFRA_OPSEC202609.TO-OP-S-13.wordpress-edge.proof_of_spec.json), whose S13-AC4 invocation reads `aws wafv2 get-web-acl --scope CLOUDFRONT --name opal-website-edge-protection --id af7ed304-f3b9-4135-b7c4-42af5913df6d` -- the SAME STRING, one word for a WAF ACL, not an SSM document."
+   ]
+  },
+  "spec_asserts": "TO-OP3-S-1 GROUNDING section, verbatim: 'an SSM document opal-website-edge-protection exists'.",
+  "world_is": "No SSM document of that name exists anywhere in the account (denominator: 1 exact-name filter + 1 substring-filtered Owner=Self census, both zero). The name belongs to a WAF Web ACL TO-OP-S-13 created. SSM reachability to the box itself is real and was independently confirmed by this seat via describe-instance-information, so the TO's underlying CAPABILITY claim (reach the box over SSM) holds even though its NAMED ARTIFACT does not exist."
+ },
+ {
+  "id": "NFRA_OPSEC202609-Z-W1-S2",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPSEC202609~1 (found by reading the Gravity Forms honeypot handler's PHP source after a first arming attempt rendered no visible effect on the live page)",
+  "surfaced_at": "2026-09-10T12:15:58Z",
+  "one_line": "SETTING `$form['honeypot']=true` VIA GFAPI::update_form() RETURNS true (NO ERROR) BUT SILENTLY ARMS NOTHING -- THE PLUGIN'S OWN ENABLEMENT CHECK READS A DIFFERENT KEY, `enableHoneypot`. This seat's FIRST arming write set `honeypot`, a key Gravity Forms Core never reads; `GF_Honeypot_Handler::is_honeypot_enabled()` (includes/honeypot/class-gf-honeypot-handler.php) tests `rgar($form,'enableHoneypot')` only. The wrong-key write round-tripped cleanly (GFAPI::update_form returned true; a re-read of the same wrong key showed the value 'armed'), and the live page's rendered field count was BYTE-IDENTICAL before and after (95838 vs 95839 bytes) -- a DESIRED-vs-APPLIED gap with zero mechanical signal that anything failed. Caught only by comparing the live rendered HTML's field list against the pre-arm capture and finding no honeypot input, then reading the plugin source to find the real key; corrected by setting `enableHoneypot=true` (confirmed live: is_honeypot_enabled -> input_8 rendered, version_hash present in page JS, and a labeled scripted probe subsequently landed status=spam citing the honeypot's own validation reason).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.7.0_AE_CloudOps (the seat class that owns this website surface per TO-OP-S-13 and holds any future on-box form-control change) -- DISARM = read the form's live rendered markup (or GFAPI::get_form()['enableHoneypot'], the correct key) after any future write to this form's anti-automation settings, never the write call's own return value alone.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "SSM read-back immediately after the first arm: `wp eval 'var_export(GFAPI::get_form(1)[\"honeypot\"]);'` -> `true`; but `wp eval 'var_export(GFAPI::get_form(1)[\"enableHoneypot\"]);'` -> `'unset'` at the SAME instant -- two reads of the same live object disagree because they read different keys, and only one of them is the key the plugin consults.",
+    "PLUGIN SOURCE, READ AT source on the live box (not recalled): `/usr/local/lsws/wordpress/wp-content/plugins/gravityforms/includes/honeypot/class-gf-honeypot-handler.php`, method `is_honeypot_enabled($form)`: `$is_disabled = ! rgar($form,'enableHoneypot') || GFCommon::is_preview() || $is_wp_dashboard;` -- `honeypot` appears NOWHERE in this file's enablement path.",
+    "LIVE PAGE BEFORE THE FIX: curl fetch of https://opalinvest.com/contact/ (fresh, x-litespeed-cache: miss, confirmed not a stale-cache artifact) returned 95839 bytes with input names input_1,input_3..input_7 only -- no input_8, no honeypot field, no version_hash reference beyond the static JS config blob.",
+    "LIVE PAGE AFTER THE CORRECT KEY WAS SET AND THE CACHE PURGED: same fetch returns input_8 present, wrapped `class='gform_validation_container'`, description 'This field is for validation purposes and should be left unchanged.' -- the field only renders once the CORRECT key is set.",
+    "DOWNSTREAM CONFIRMATION THE FIX TOOK: a labeled scripted probe run after the fix landed entry id 22 status=spam with note 'This entry has been flagged as spam. Reason: The version_hash was not included in the submission.' -- a validation path that can only fire when is_honeypot_enabled() returns true."
+   ]
+  },
+  "spec_asserts": "PRD ADDENDUM_01 s.4 item 4 / s.8: 'Enabling the Gravity Forms honeypot is a single setting and costs nothing' -- read most naturally as: flip one value, the control is live.",
+  "world_is": "The single setting exists, but it is `enableHoneypot`, not `honeypot`, and Gravity Forms' own API accepts and silently no-ops the wrong key with no warning, no validation error, and no visible difference in GFAPI::update_form()'s return value. A future seat trusting the addendum's 'single setting' framing, or trusting a write call's rc, without reading the plugin source or the RENDERED page, would believe this control is armed when it is not -- and FWD-19's whole C-18 volume-graded bar depends on the control actually being live during whatever window is read as 'after'."
+ },
+ {
+  "id": "NFRA_OPSEC202609-Z-W1-S3",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPSEC202609~1 (found while re-fetching the live contact page to confirm the honeypot field rendered)",
+  "surfaced_at": "2026-09-10T12:15:58Z",
+  "one_line": "LITESPEED'S FULL-PAGE CACHE (max-age=604800, 7 DAYS) SERVES THE PRE-ARM /contact/ MARKUP TO REAL VISITORS FOR UP TO A WEEK AFTER A FORM-CONFIG CHANGE UNLESS THE CACHE IS EXPLICITLY PURGED -- arming alone does not make a form-level control live for the audience it exists to protect. Immediately after the FIRST (wrong-key, see W1-S2) arm, a fresh curl of https://opalinvest.com/contact/ returned `x-litespeed-cache: hit`; the served bytes were generated before the change. Running `wp litespeed-purge all` was required before the honeypot field appeared in the served markup at all -- and this had to be done TWICE in this session, once after each of the two arming writes (the wrong-key one and the corrected one), because each write independently left a stale cached page in place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.7.0_AE_CloudOps (this website surface's owner) -- DISARM = any procedure this project or a future one documents for changing this form's (or any cached page's) live configuration names a mandatory `wp litespeed-purge all` (or equivalent targeted purge) as part of the change, not an afterthought discovered by re-fetching the page.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "Response headers captured via `curl -D -` immediately after the first arm, before any purge: `x-litespeed-cache: hit`, `x-litespeed-cache-control: public,max-age=604800`, `server: LiteSpeed` -- a live, timestamped read, not an assumption from the plugin's documented default.",
+    "`wp litespeed-purge all --path=/usr/local/lsws/wordpress --allow-root` -> `Success: Purged All!`, run over SSM immediately after.",
+    "Re-fetch immediately after the purge: `x-litespeed-cache: miss` -- the SAME page, same URL, same UA, now a fresh render. The only variable that changed between the two fetches is the purge.",
+    "The `litespeed-cache` plugin is listed ACTIVE in this box's plugin census (`wp plugin list`), so this is not a hypothetical -- it is the live, currently-enabled cache in front of this exact form."
+   ]
+  },
+  "spec_asserts": "PRD ADDENDUM_01 / the TO's own C-18: the control must be genuinely ARMED before the after-window starts, and the after-read must measure the control's real effect.",
+  "world_is": "A correct database-level arm (enableHoneypot=true, confirmed via GFAPI read-back) does NOT make the control live for a visitor hitting a cached page -- the page they receive can be up to 7 days stale. This seat purged explicitly before both the scripted-probe and real-visitor-probe tests and before the after-read census, so THIS deliverable's after-window is not affected; the hazard is for any FUTURE change to this form that is not accompanied by an equally explicit purge."
+ },
+ {
+  "id": "NFRA_OPSEC202609-Z-W1-S4",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPSEC202609~1 (found while building the real-visitor-equivalent probe for S1-AC5, needing the version_hash a browser's JS would send)",
+  "surfaced_at": "2026-09-10T12:15:58Z",
+  "one_line": "THE HONEYPOT'S `version_hash` CHECK IS DEFEATABLE BY A NON-JS SCRIPT: THE HASH IS A STATIC CONSTANT EMBEDDED IN THE PAGE'S INITIAL JS CONFIG BLOB, NOT COMPUTED PER-SESSION. `gform_theme_config` on the live page carries a literal `\"honeypot\":{\"version_hash\":\"3306833645cc55ebae51b15fd27abcd8\"}` -- a plain regex over the raw HTML extracts it with no JS engine required, and this seat used exactly that extraction to build the S1-AC5 real-visitor-equivalent probe. FWD-19's own ACCEPT line states a sophisticated bot still getting through is NOT a failure of this outcome, so this is filed as an OBSERVATION for the record, not a defect to fix -- gold-plating a fix here is explicitly out of scope.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "Raw curl fetch (no JS execution) of https://opalinvest.com/contact/, grep for `version_hash`: two hits, both the literal string `\"version_hash\":\"3306833645cc55ebae51b15fd27abcd8\"` inside the `gform_theme_config` JS variable -- present verbatim in the server-rendered HTML.",
+    "This exact extracted value was used, unmodified, in this seat's S1-AC5 python probe (`.scratch/real_visitor_probe.py`) and the submission it produced landed status=active -- proving the value is sufficient on its own to pass `is_valid_version_hash()` with no JS execution.",
+    "Plugin source (`class-gf-honeypot-handler.php`, `is_valid_version_hash()`) confirms the check is `in_array($hash, [wp_hash(GFForms::$version), wp_hash($previous_db_version)])` -- a function of the INSTALLED PLUGIN VERSION only, constant across every visitor and every session until the plugin is upgraded."
+   ]
+  },
+  "spec_asserts": "FWD-19 ACCEPT line (PRD, v0.14): 'A SOPHISTICATED BOT STILL GETTING THROUGH IS NOT A FAILURE OF THIS OUTCOME. Do not gold-plate.'",
+  "world_is": "The version_hash half of the honeypot's defense is scrapeable by a plain HTTP client with one regex, no headless browser needed -- the 'naive majority' bar FWD-19 sets is unaffected (a bot that does not even scrape the JS config, which is what the addendum's own attack model describes, is still caught), but a bot author who reads this page's source once would defeat this specific check. Recorded as scope information for whoever next revisits this control's coverage, per Andrew's own 'narrow is fine' -- no remedy taken."
+ },
+ {
+  "id": "NFRA_OPSEC202609-Z-W1-S5",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPSEC202609~1 (found while computing the baseline census the TO's C-18 mandates)",
+  "surfaced_at": "2026-09-10T12:15:58Z",
+  "one_line": "MEASURED AUTOMATED VOLUME ON /contact/ IS LOW, NOT HIGH: 8 OF 53 POSTs (15.1%) OVER 36.82 DAYS CARRY THIS SEAT'S MEASURED BOT DISCRIMINATOR -- ROUGHLY ONE TEMPLATED-UA SUBMISSION EVERY 4.6 DAYS, NOT 'A LOT'. FWD-19's own SOURCE line is Andrew-direct: 'We get a lot of bullshit form fillouts that are surely programmatic from bots.' The baseline census this TO commissioned (committed @6c4b8b8994) measured, over the full window the origin's own log retention allows (2026-08-04T15:31:44Z through 2026-09-10T11:19:02Z), 53 total POSTs to /contact/, of which 8 carry a quoted-UA or self-declared-bot signature (cross-checked 8-for-8 against the Gravity Forms entry store at matching IP+timestamp) and 18 total created a stored entry (8 automated, 10 human-like). This does not contradict Andrew's complaint -- 'a lot' is a subjective bar and this seat offers no verdict on it -- but the MAGNITUDE is recorded plainly because S1-AC7's judgment (whether the naive majority stops arriving) is graded against whatever bar the CVO reads into 'a lot', and a small base rate also means a short after-window (see the after-read's own window-length note) is even less likely to show a legible signal either way.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "`grep -c 'POST /contact/'` across all 16 retained access.log* files on i-0152e3fe2599fa630 (36.82-day window) -> 53, cross-verified by a full line-by-line dump matching the count exactly (no truncation).",
+    "wp-cli `wp db query` against wp_gf_entry for form_id=1, date_created in the same window -> 18 rows; 8 of 18 carry a quoted-UA or explicit bot-token user_agent (ids 4,5,7,11,15,18,20,21), matching the 8 log-side hits by (ip, date) exactly, 8-for-8.",
+    "All-time GF entry count (since the form's first-ever row, 2026-07-16, wider than the log-retention-bounded window) is 21, of which 10 are automated-flagged -- the same order of magnitude, ruling out the possibility that the log-bounded window happened to catch an unusually quiet stretch."
+   ]
+  },
+  "spec_asserts": "FWD-19 SOURCE, Andrew-direct: 'We get a lot of bullshit form fillouts that are surely programmatic from bots.' -- the premise the whole outcome is built on.",
+  "world_is": "Measured automated volume is real but modest: ~0.22 automated /contact/ POSTs per day, roughly 1 every 4.6 days, over the 36.82-day window this project's own log retention permits reading. No verdict is offered on whether this constitutes 'a lot' -- that is squarely S1-AC7's judgment, reserved for 3.0.0_SA_CVO~Z at L9 -- but the number itself is recorded here because it was not previously measured anywhere in this project's record before this TO's baseline census."
+ }
+]
+```
