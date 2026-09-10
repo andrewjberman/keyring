@@ -1265,6 +1265,30 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "TO-EG-s-15 as cut @4155c85a1f and amended @5507841f04, and its NEVER-2 entry 20260910T0112Z: the September-to-date run REFUSES -- leg L5 'THE PUBLISH KEYS ... ARE NOT WRITTEN', leg L6 'the ONE terminal SES send ... to andrew@opalinvest.com only ... the ordinary monthly send must NOT fire', S15-AC4 arm (c) 'coverage_verdict.json reading REFUSE with the month's classes' and arm (e) 'exactly ONE send_raw_email on the terminal branch ... the ordinary monthly send does NOT fire on a refusal -- print its count, expected 0'.",
     "world_is": "The gate classifies holes and DISCLOSES them; it does not refuse a month for two class-D holes out of six trading days. So the run published a self-disclosing partial-month report to the served September keys and delivered it as the ordinary monthly mail to both recipients. Every criterion arm that names REFUSE is unsatisfiable on this data, and the never-widen halves covered an outcome that could not occur. The live risk is a READING risk, not a data risk: the mail's subject says 'Month-End Report' with three weeks left in the month, and the artifact's self-disclosure is a coverage line inside the PDF rather than in the mail body.",
     "notes": "ESCALATED LOUD the tick it was measured (94870 to 1.0.0_SA_CTO as the other half, 94871 to 3.0.0_SA_CVO), and the two calls it raises are AT ANDREW at this seat's terminal: whether the served September keys stay (this seat's REC: YES -- self-disclosing, self-healing on 10-01, and deletion is irreversible with versioning off) and whether he wants a clarifying line to aj@ (a send to a person, therefore his). NOT TAKEN HERE: no delete, no re-run, no send, no code change. THE CLASS, and it is the second instance tonight after NFRA_OUTSET-S34: A SIGN-OFF THAT NAMES AN OUTCOME IS A CLAIM ABOUT THE PRODUCER'S OWN RULE -- read the rule from the producer before a half is signed, never predict it from the shape of the input. S34 was the report runner's dating rule; this is the coverage gate's verdict rule. The face's S15-AC4 arms (c) and (e) are re-cut by the issuer on the worker's report, so the re-cut is taken once against the whole evidence. Related: [[ETFS_GUARDRAIL-W1-S22]] (the assignee's own inversion row), [[ETFS_GUARDRAIL-W2-S8]] (the D+1 race the two holes are), [[ETFS_GUARDRAIL-W1-S12]] (versioning disabled), [[NFRA_OUTSET-S34]] (the same class on the other project)."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S29",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T03:05:00Z",
+    "one_line": "CORRECTION TO MY OWN ROW W1-S25, which the re-cut face then inherited: the terminal-send guard is at lambda_function.py:435 in the DEPLOYED bytes, NOT :439 (:439 is the `except` clause). AND THE DEFECT HAS A SECOND SITE the original row missed -- :516 in the terminal_qa rehearsal mode reads unresolved_doc.get(\"unresolved\") the same way, so the send-free rehearsal is blind to the same key-shape mismatch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DEPLOYED BYTES, read this session from the presigned get-function zip: lambda_function.py sha256 dc05ea90c94dc41e21a92b63a69a3bc3f278dbc878c11324e35b56a295241fd8, 28504 B -- BYTE-EQUAL to the worktree file at bd0e384890 (both sha256 dc05ea90c94dc41e...), so the line numbers are the same in both and this is not a worktree-vs-deployed skew",
+        "Line 435 @bd0e384890: unresolved_days = (unresolved_doc or {}).get(\"unresolved\") or [] -- the guard. Line 439: except Exception as e:  # noqa: BLE001 -- the SNS alert already fired",
+        "SECOND SITE, line 516 @bd0e384890: msg = _build_terminal_email(month, unresolved_doc.get(\"unresolved\") or [], artifacts[\"ask\"]) -- inside the terminal_qa rehearsal mode, the same .get(\"unresolved\") against the same partner-keyed document; comp-read --enumerate 'get(\"unresolved\")' returns 2 of 2 hits, so the denominator of affected sites is 2, not 1",
+        "The consequence of the second site: the send-free rehearsal EG-s-8 built to exercise this exact path would also render an empty table against a real artifact, so the rehearsal cannot surface the defect either"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-15 S15-AC4 arm (e) as RE-CUT 2026-09-10 ~02:3xZ: 'lambda_function.py:439 guards it on (unresolved_doc or {}).get(\"unresolved\")' , and '(ii) the guard expression is quoted with its file:line @ <commit-ish> from the DEPLOYED bytes, not the worktree'.",
+    "world_is": "The guard is at :435, not :439, in the deployed bytes -- the face inherited the wrong line from my own row W1-S25, so the error is mine and it propagated into a criterion. Reading the deployed bytes as the arm requires is what surfaced it. Separately, the same expression appears at :516 in terminal_qa, a site neither W1-S25 nor the re-cut names, so the repair cell must fix TWO sites.",
+    "notes": "Filed as a CORRECTION rather than an edit, because the channel is append-only and W1-S25 stays as it is. The arm PASSES on the substance -- it quotes the guard from the deployed bytes at its true line and prints the discrepancy inline -- so this row blocks nothing; hence OBSERVATION. ARMED because a repair cell cut from W1-S25 alone would fix :435 and leave :516, and the rehearsal that is supposed to catch exactly this would still be blind. Carried to the issuer for the round-3 repair cell it already escalated to 1.0.0_SA_CTO. NOT FIXED HERE: lambda_function.py is READ-ONLY under this order."
   }
 ]
 ```
