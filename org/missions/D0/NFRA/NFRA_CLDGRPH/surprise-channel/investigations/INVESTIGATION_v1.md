@@ -7674,3 +7674,34 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-S114 -- the L6 gate's cell index counts a decomposition's PROSE, not its cell table
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T13:12Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S114",
+    "one_line": "THE L6 GATE'S CELL INDEX OVER A DECOMPOSITION ADMITS ANOTHER PROJECT'S CELL IDS MERELY MENTIONED IN ITS PROSE, so a criterion naming a FOREIGN cell RESOLVES and the gate reports it as a cell of this decomposition. Found at the round-8 issuance: the gate printed '48 cell ids' for NFRA_CLDGRPH_DECOMP.md while the file carries 46 CG- cells by two independent counts (46 table rows, 46 any-mention ids). Reproducing the gate's own CELL_ID_RE over the same bytes gives 48 = 46 CG- ids PLUS 'CE-g-2' and 'CE-g-3', which are NFRA_COMPEFFICACY cells named in this file's changelog prose. The regex (.tools/to-pipeline-gate.py:187, deliberately the same grammar as .tools/proof-of-spec-check.py CELL_ID_RE) matches any PREFIX-<1-4 lowercase>-<digits>, and the index is built by findall over the WHOLE DOCUMENT TEXT at :252, not over its cell TABLE. THE FAILURE MODE IS A PASS: a task order whose <owned_cells> or cell_refs named a foreign project's cell would resolve cleanly and be admitted, and the note line the gate prints would assert the resolution against a denominator that is not this decomposition's cell set. NOT TRIGGERED BY THIS ISSUANCE -- all five round-8 orders reference only CG- ids, verified here.",
+    "spec_asserts": "The L6 gate's own note text: 'N owned cell(s) and M criterion reference(s) resolve against <decomp> (48 cell ids, index)' -- which reads as a statement about the decomposition's cell set.",
+    "world_is": "It is a statement about every token in the document that matches the cell-id grammar. A denominator certifies the SWEEP, never the SET (CLAUDE.md Rule 24(i) as amended @b3bc1d7511), and here the sweep is the file's prose while the set is its table.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The gate's own output at this issuance, five times: '(48 cell ids, index)'.",
+        "This seat's two independent counts over the same bytes at HEAD: 46 rows matching '^| CG-[sx]-N |', and 46 distinct CG- ids by any mention.",
+        "The gate's CELL_ID_RE re-applied to the same bytes at this seat: 48 total, the two non-CG members being 'CE-g-2' and 'CE-g-3'.",
+        ".tools/to-pipeline-gate.py:187 (the regex) and :252 (ids = set(CELL_ID_RE.findall(decomp_text))) read at HEAD."
+      ]
+    },
+    "notes": "DISARM OWNER IS THE CTO because the fix is a gate edit and the gate's half is that seat's, and because the same grammar is shared with .tools/proof-of-spec-check.py by an explicit comment at :185 -- a change in one is a change in both, which is exactly the shared-dependency shape this estate keeps finding. CHEAPEST REMEDY, not proposed as a build: scope the index to the cell TABLE rows rather than the document text, or filter it to the decomposition's own project prefix, and keep the existing battery (.tools/tests/test_proof_of_spec_cell_id_re.py) as the control for both callers. FOUND OFF-TASK during the round-8 issuance and NOT CHASED: no order was changed for it and the issuance proceeded, because all five faces reference only CG- ids."
+  }
+]
+```
