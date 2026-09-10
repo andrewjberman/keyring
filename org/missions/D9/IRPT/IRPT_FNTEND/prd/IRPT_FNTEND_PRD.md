@@ -5,7 +5,7 @@
  "project": "IRPT_FNTEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.3",
+ "prd_version": "v0.4",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-8", "FWD-11", "FWD-12"],
@@ -184,12 +184,12 @@ Denominator: 25 sections of the brief at `2acf23d8fd` + 9 source documents = **3
 | 25 | REFS TO CARRY | NOT CONSUMED as work: a link list; each referent is consumed through the entry that cites it | -- |
 | 27 | S1 original unification brief | F1, F2, F4, F5 (distinct client-service surface, hierarchy/search, report transparency, cohort semantics, modeled-analysis distinction); broad replacement and history ambitions deferred | FWD-1, 3, 4 |
 | 28 | S2 lightweight brief | F1-F8 (three-tab product, fast client context, view/export behaviour, lifecycle states) | FWD-1..8 |
-| 29 | S3 YCharts brief | F5 (email-request visibility, input inspection/correction, three choices, recovery states, native analysis, released revisions) | FWD-4 |
+| 29 | S3 YCharts brief | F5 (email-request visibility, input inspection/correction, three choices, recovery states, native analysis, released revisions); F8, F9 (the Analysis export: options and the certified section layout in the render package) | FWD-4 |
 | 30 | S4 holdings/model-overlay brief | F6 (advisor-scoped current view, taxonomy/radial drilldowns, basis/denominator/coverage labels; no time series) | FWD-5 |
 | 31 | S5 lightweight design | F2, F3, F4, F8, F12 (header/tab/search components, selected-scope behaviour, normalized envelopes, same-revision export, source/code index) | FWD-1, 3, 6, 8 |
 | 32 | S6 performance review | F4 (summary/chart/account layout, defaults to review, optional sections, autosuggest interaction, synthetic reference) | FWD-3 |
 | 33 | S7 export/narrative specification | F8, F9, F10 (standard branded pages, optional advisor assets, wide narrative chart, freeze/preview/export rules, synthetic PDF); event/data algorithms are the counterpart's | FWD-8 |
-| 34 | S8 YCharts design | F5 (request fields/settings, variant/cardinality/orientation, understandable lifecycle, native section schema, PDF fidelity gap); vendor execution is the counterpart's | FWD-4 |
+| 34 | S8 YCharts design | F5 (request fields/settings, variant/cardinality/orientation, understandable lifecycle, native section schema, PDF fidelity gap); F8, F9 (variant orientation and the Analysis PDF at the same revision); vendor execution is the counterpart's | FWD-4 |
 | 35 | S9 model-overlay design | F6 (display-node contract, taxonomy/colours, signed values, percentage/drill rules, scope/revision-bound serving); partner joins are the counterpart's | FWD-5 |
 
 (Entry numbering skips 26 so the source rows read S1..S9 as 27..35; the count is 25 + 9 = 34.)
