@@ -250,7 +250,7 @@ def _foreign_row_violations(rel, kind, added, committer, coworkers=None, merging
     OPEN ORDER on that project. A cross-fabric integrator carries rows from seats with no order on this fabric at all,
     so every one reads foreign. The two cases need different admissions and only one of them existed.
 
-    ⛔ CONSEQUENCE WORTH STATING BECAUSE IT IS NOT OBVIOUS: safe-merge.sh grades the MERGED INDEX by calling this gate
+    BLOCKED: CONSEQUENCE WORTH STATING BECAUSE IT IS NOT OBVIOUS: safe-merge.sh grades the MERGED INDEX by calling this gate
     while MERGE_HEAD is present, so the sweep is skipped there too. That is acceptable and it is not silent -- the
     DUPLICATE-ID limb, which is the reason the drain grades the merged index at all, is untouched, and the co-worker
     admission already covered the drain case. The residual is a branch on which no hook ever ran, which is the same
@@ -1756,7 +1756,7 @@ def main(argv):
         # never has it, so an un-audited override is still impossible. The variable carries the reason, never a bare flag.
         _ovr = os.environ.get("SURPRISE_ROW_OVERRIDE", "").strip()
         if _ovr:
-            # ⛔ THIS LINE USED TO READ "(audited by safe-commit)" UNCONDITIONALLY (found 2026-09-10 by
+            # BLOCKED: THIS LINE USED TO READ "(audited by safe-commit)" UNCONDITIONALLY (found 2026-09-10 by
             # 1.0.0_SA_CTO~Z while measuring 0.0.0_AB_MSTR~Z's 20975, which announced it would set this
             # variable BY HAND for a merge). The gate cannot see who set the variable. safe-commit writes
             # the audit line at safe-commit.sh:758 and THEN exports; a hand-exported variable is honoured
