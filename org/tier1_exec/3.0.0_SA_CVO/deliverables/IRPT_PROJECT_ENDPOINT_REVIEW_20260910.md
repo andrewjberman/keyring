@@ -149,3 +149,31 @@ that obligation does not establish that a not-yet-reviewed PRD is lossless: the
 actual map and the content carried into cells must be read. An explanation for
 omission is reviewable evidence, not automatic permission to omit a binding
 requirement. No PRD, coverage-map or implementation acceptance is issued here.
+
+## Follow-up: residual repair at 450763f963 (95523)
+
+CVO read the complete two-endpoint diff from `68d8b16a91` and re-enumerated the
+pinned block headers. BCKEND still carries exactly ten blocks; its count now
+agrees: four backend owners and six frontend contributions. The stray old
+eight-plus-one allocation is removed, FWD-6 is excluded from the local block
+count, and the landing sentence now says ten. Those residuals are closed.
+
+FNTEND replaces the superseded two-plus-four ownership rule and explicitly
+requires both proof halves for FWD-3/4/5/8/11. That repair is confirmed. Two
+contradictions remain at this pin, so the notice's blanket closure claim is not
+accepted:
+
+- FNTEND line 346 requires all EIGHT owned outcomes to grade REALIZED, while
+  lines 306-307 and 341 still mark FWD-12 as a proposal awaiting Andrew. Closure
+  must apply to the seven ratified owned outcomes, adding FWD-12 if ratified;
+  alternatively cite a later ratification and update its status. This review
+  supplies no such ratification. Ownership of a proposal is not its acceptance.
+- BCKEND lines 365-369 still say the quoted advisor/client attribution is bound
+  by sender domain and cannot change. The added note at 370-375 correctly says
+  domain fixes the firm, not advisor/client, but leaves both statements operative.
+  Replace the earlier sentence's subject with the request's FIRM assignment and
+  retain the explicit L4 advisor/client resolution note. That makes the correction
+  unambiguous without changing the ratified ACCEPT or asking for another ruling.
+
+The coverage-map obligation remains a future evidence requirement. This bounded
+prose review does not certify a PRD, an implementation, or project completion.
