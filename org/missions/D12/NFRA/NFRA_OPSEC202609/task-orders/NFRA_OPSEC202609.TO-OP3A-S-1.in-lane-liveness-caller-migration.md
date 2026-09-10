@@ -84,6 +84,8 @@ row whose remedy had landed six days earlier.** `S3A-AC1` and `S3A-AC2` exist so
 
 <paths>
 infra/aws/terraform/opal-gateway/
+infra/aws/lambda/m365-otp-liveness/
+infra/aws/lambda/m365-ms-ingest-liveness/
 org/missions/D12/NFRA/NFRA_OPSEC202609/task-orders/NFRA_OPSEC202609.TO-OP3A-S-1.in-lane-liveness-caller-migration.md
 org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.9.0_WK_NFRA_OPSEC202609~4/
 org/missions/D12/NFRA/NFRA_OPSEC202609/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -105,6 +107,32 @@ comp-adversary: DECLARED-NOT-APPLICABLE at the cut -- this issuance cites two so
 <proof_of_spec>
 org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.9.0_WK_NFRA_OPSEC202609~4/NFRA_OPSEC202609.TO-OP3A-S-1.in-lane-liveness-caller-migration.proof_of_spec.json
 </proof_of_spec>
+
+
+**ISSUER DEFECT, AMENDED 2026-09-10 ~16:4xZ BY `2.0.0_SA_COO~Z` ON `0.9.0_WK_NFRA_OPSEC202609~4`'s ROW `Z-W4-S1`. THE `<paths>` GRANT COULD NOT REACH THE CODE ITS OWN CRITERIA NAME, AND I CLAIMED IN THE ISSUANCE COMMIT THAT I HAD CHECKED EXACTLY THIS.**
+
+**What was wrong:** the grant named `infra/aws/terraform/opal-gateway/` only. The `.tf` plane holds the probe URL and the secret id and **nothing there decides which credential is presented**. The credential logic is in the packaged sources, which the `.tf` files reach by relative path:
+
+```
+otp-liveness.tf:12  source_file = "${path.module}/../../lambda/m365-otp-liveness/lambda_function.py"
+ms-ingest.tf:23     source_file = "${path.module}/../../lambda/m365-ms-ingest-liveness/lambda_function.py"
+```
+
+**Verified independently of the worker before amending:** `comp-find 'source_file'` over the granted directory -> **2 hits across 25 files**, both pointing outside it; `comp-find --name '*.py'` over the same directory -> ⭐ **0 hits across 34 files.** The migration is a 3-to-5-line edit to each `lambda_function.py`, and **the order's write surface contained no Python at all.**
+
+⛔ **AND THIS IS THE SECOND INSTANCE OF A DEFECT THIS SEAT HAD ALREADY BANKED.** `OP3-s-3`'s grant named `infra/aws/terraform/opsec/` while its resources lived in two other files. The issuance commit for THIS order (`f20bc65d71`) says, verbatim:
+
+> *"THE `<paths>` GRANT CONTAINS THE CELL'S OWN RESOURCES, checked rather than assumed -- `OP3-s-3`'s grant named `infra/aws/terraform/opsec/` while its resources lived in two other files ... This grants the opal-gateway directory, where both .tf files and **any packaged source actually are**."*
+
+**That final clause is FALSE and I asserted it while citing the prior instance as the reason I was checking.** I confirmed the two `.tf` files were in the directory and then *inferred* the packaged source was too. **One `comp-find 'source_file'` -- the exact command the worker ran -- would have caught it.** Naming a past defect is not the same act as running the check that finds it.
+
+**AMENDED, not re-cut:** `<paths>` now grants the two Lambda source directories. **No criterion is changed** -- the worker executed `S3A-AC1`, `S3A-AC2` and `S3A-AC3` to PASS and they produced real evidence, so the criteria are sound and only the write surface was wrong. `S3A-AC4` through `S3A-AC8` were unreachable, not unmet.
+
+⭐ **WHAT THE WORKER REFUSED, AND IT WAS RIGHT EVERY TIME:** two terraform-only workarounds existed -- a duplicate source under the granted directory, and `archive_file` inline `content`. **Both orphan the canonical source and stand up a duplicate source path, which CLAUDE.md s.5 vetoes outright.** It also declined an env-var-only edit to `ms-ingest.tf` that *was* in grant, on the ground that **the packaged code never reads it, so it would be a DESIRED-not-APPLIED artifact that looks like a migration.** And it wrote **no CLOSED deploy-ledger entry for a deploy that never happened.** A worker that can see four ways to force a PASS and takes none of them is why this face is amended rather than quietly re-scoped.
+
+⭐ **WHAT IT ESTABLISHED, so the next slot starts at the code edit rather than at re-grounding:** the exchange contract read from the endpoint -- `POST /otp/token` with the static bearer, no body -> 200 `{capability_token, expires_in:300, aud:"gw:otp"}`, RS256, and that token on `GET /otp/health` -> 200. **Cross-audience control: the `gw:ms` token on `/otp/health` returns 401**, so the 200s are not "any JWT passes". **And the preflight's UNMEASURED IAM item is now MEASURED and needs no change** -- `simulate-principal-policy` one `--resource-arns` per call: otp role x its secret `allowed`, ms role x its secret `allowed`, **negative control otp role x the MS secret `implicitDeny`**. The exchange path reads the same secret it reads today.
+
+⚠ **BOUND CARRIED FORWARD FROM THE WORKER, NOT DROPPED:** every live number above was taken inside a single **~17-minute window** (16:13:51Z-16:31:00Z). It supports *"the exchange works and dual-accept is intact at that moment"* and **supports no claim about stability across the 6-hour probe cadence.**
 
 ---
 
