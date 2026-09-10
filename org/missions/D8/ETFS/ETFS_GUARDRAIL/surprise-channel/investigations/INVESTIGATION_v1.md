@@ -500,6 +500,78 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "This TO's deliverable item 3: 'apply through safe-apply under the ledger entry ... entry + sentinel COMMITTED' -- read together with NEVER-2's 'ledger entry opened at start, closed at completion' for EVERY apply.",
     "world_is": "The second apply (email_qa's To-header fix) ran through the same safe-apply.sh gates (HALT-GATE, comp-tagauthz, tombstone-gate) as the first, and both applies are part of the SAME task order's SAME deliverable (deliverable item 4 explicitly required the To-header evidence the fix enables) -- but no ledger entry was open across that second apply's window.",
     "notes": "Remediated same-turn: a supplementary ledger entry is opened and closed immediately after this row, with proof from the SAME final measurements (served-vs-built MATCH, live rehearsal outputs) already gathered post-second-apply, so the deploy history carries a ledger trail for both applies rather than leaving the second one unrecorded. INERT: both applies succeeded, are 0-diff-confirmed, and the underlying resource (aws_lambda_function.orchestrator) is not half-landed by any measure -- the gap is in the LEDGER's bookkeeping order, not in the infrastructure's state."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W3-S3",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~3",
+    "surfaced_at": "2026-09-10T00:30:00Z",
+    "one_line": "The issuer's amendment re-cuts arm (c) onto 'the two daily rules' roles ... named from list-targets-by-rule / get-schedule'. Neither daily target has a role there: an EventBridge RULE that targets a Lambda carries NO RoleArn on its target -- it invokes through the function's resource-based policy -- and neither daily rule is a Scheduler schedule, so get-schedule does not apply either. The role whose AssumeRole events ARE the daily history is the FUNCTION'S EXECUTION role, which this battery names from lambda get-function-configuration --query Role and prints beside the reason. The re-cut's numbers reproduce exactly on that role, so the arm is satisfied; only the naming route in the amendment's text does not resolve.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured 2026-09-10T00:2xZ: `aws events list-targets-by-rule --rule cot-etf-ownership-daily-schedule` -> 1 target, Id=CotEtfOwnershipDailyLambda, Arn=arn:aws:lambda:us-east-1:313476888478:function:cot-etf-ownership-daily, Input ABSENT, RoleArn ABSENT; same shape for `--rule bd-49f-etf-ownership-scheduled-floor` -> Id=Bd49fEtfOwnershipScheduledFloor, RoleArn ABSENT",
+        "contrast in the SAME run, which is why the monthly arm's naming route DOES resolve: `aws scheduler get-schedule --name etfs-reports-monthly-run` -> Target.RoleArn = arn:aws:iam::313476888478:role/etfs-reports-scheduler-role. A Scheduler schedule carries a role; an EventBridge rule targeting Lambda does not",
+        "the route this battery used instead, printed in its own output beside the reason: `aws lambda get-function-configuration --function-name cot-etf-ownership-daily --query Role` -> arn:aws:iam::313476888478:role/cot-etf-ownership-daily-role (rc=0); `... --function-name bd-49f-etf-ownership-daily --query Role` -> arn:aws:iam::313476888478:role/bd-49f-etf-ownership-daily-role (rc=0)",
+        "the re-cut reproduces exactly on those roles, which is what makes this a naming gap and not a substantive one: cot 30 rule-initiated AssumeRole rows on 30 distinct days at 10:30:24Z of 30 scheduled instants due, and bd-49f 30 of 30 at 10:45:05Z -- byte-identical to the numbers the amendment cites from worker ~2",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-18.the-schedules-from-history.md@5507841f04 AMENDMENT limb (ii): 'a RULE-INITIATED fire is the scheduler/rule role's AssumeRole MANAGEMENT event (etfs-reports-scheduler-role for the monthly schedule; the two daily rules' roles, named from list-targets-by-rule / get-schedule)'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDMENT limb (ii): the two daily rules' roles are 'named from list-targets-by-rule / get-schedule'.",
+    "world_is": "list-targets-by-rule returns no RoleArn for either daily target (measured on both, RoleArn ABSENT), and get-schedule does not apply because neither daily trigger is an EventBridge Scheduler schedule -- both are EventBridge RULES on the default bus. The role that carries the daily firing history is the target function's EXECUTION role, read from lambda get-function-configuration.",
+    "notes": "CONVERGENT, INDEPENDENTLY: worker ~2 filed the same finding as ETFS_GUARDRAIL-W2-S10 and the issuer corrected arm (c) on it at ~00:3xZ, WHILE this row was being written from this worker's own reads -- two workers, two worktrees, the same measurement. The issuer's correction goes further than this row did and is adopted in the battery: the execution role is assumed on a COLD START by whoever invoked, so its AssumeRole rows CORROBORATE a fire at the cron instant but are NOT an initiator signal. Arm (c) as run therefore reads three instruments -- PRIMARY the log group by time (START at the cron instant, 28 of 60 scheduled days, 28 of 28 reachable under 14-day retention), CORROBORATION the execution-role cold-start AssumeRole (60 of 60), THIRD AWS/Events TriggeredRules dimensioned by RuleName (60 of 60), the only one of the three that carries an initiator claim. INERT and not a blocker: the arm's substance is delivered, the substitution is printed at the point of use rather than buried, and the counts match the numbers the amendment cites. Recorded so a later reader does not run list-targets-by-rule, get an empty RoleArn, and conclude the daily rules have no history."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W3-S4",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~3",
+    "surfaced_at": "2026-09-10T00:31:00Z",
+    "one_line": "comp-trigger (the scheduler-forensics lens the preflight names as the natural second instrument) reports `schedule: -` and prints NO fired-evidence line for the EventBridge SCHEDULER schedule etfs-reports-monthly-run, while the live API returns ScheduleExpression cron(0 10 1 * ? *) timezone America/New_York for the same object. Both fields are populated correctly for the two EventBridge RULES in the same run, so the gap is Scheduler-schedule-shaped, not a budget or a match failure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured 2026-09-10T00:2xZ from inside the battery: `python org/modules/graph/comp_trigger.py etfs-reports --days 90 --budget 120` (rc=0, WITHIN BUDGET, 'scanned 1 of 1 match', denominator '142 events-rules + 19 schedules scanned, region us-east-1') -> `etfs-reports-monthly-run  [scheduler]  ENABLED` / `matched by: name | schedule: -` and NO 'LIVE fired-evidence' line",
+        "the live read of the same object in the same run: `aws scheduler get-schedule --name etfs-reports-monthly-run` -> State ENABLED, ScheduleExpression cron(0 10 1 * ? *), ScheduleExpressionTimezone America/New_York, GroupName default, Target.Arn arn:aws:lambda:us-east-1:313476888478:function:etfs-reports-orchestrator, Target.RoleArn arn:aws:iam::313476888478:role/etfs-reports-scheduler-role",
+        "positive control in the SAME tool and the SAME run: `comp_trigger.py cot-etf-ownership --days 30` -> `cot-etf-ownership-daily-schedule [events-rule] ENABLED / schedule: cron(30 10 * * ? *) / target: ...:function:cot-etf-ownership-daily / LIVE fired-evidence: FIRED 30x in window`; and `comp_trigger.py bd-49f-etf-ownership --days 30` -> the same three lines populated for bd-49f-etf-ownership-scheduled-floor. Both fired-evidence counts AGREE with this battery's independent AssumeRole day count (30 and 30) and with AWS/Events TriggeredRules (30 and 30)",
+        "the probable cause of the fired-evidence half, measured independently: AWS/Scheduler publishes InvocationAttemptCount with dimension ScheduleGroup ONLY in this account (`aws cloudwatch list-metrics --namespace AWS/Scheduler` -> two entries, dimensions [ScheduleGroup=default] and [], no ScheduleName dimension), so a per-schedule fired-evidence line has no per-schedule metric to read. The missing `schedule:` EXPRESSION is NOT explained by that -- get-schedule returns it in the same call that yields State and kind",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-18.the-schedules-from-history.md@5507841f04 preflight: 'comp-trigger (the scheduler-forensics lens, marquis) is the natural second instrument if it covers these rules -- run it and print its answer beside CloudTrail's, or print why it does not apply'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The TO's preflight names comp-trigger as the natural second instrument for these schedules and requires its answer printed beside CloudTrail's.",
+    "world_is": "comp-trigger covers all three objects by name and gets the two EventBridge RULES fully right, including a fired-evidence count that agrees with two of this battery's independent substrates. For the Scheduler SCHEDULE it returns name, kind and State only -- neither the expression nor any fired evidence -- so a reader taking comp-trigger alone as the answer for etfs-reports-monthly-run would see an ENABLED schedule with no cron and no history, and could not tell a firing schedule from a dead one.",
+    "notes": "This worker's three comp-trigger invocations all returned rc=0 WITHIN BUDGET; the CR-literal defect the issuer's nudge asks about was NOT encountered here (the battery runs org/modules/graph/comp_trigger.py directly through sys.executable with PYTHONIOENCODING=utf-8, not through the ~/bin forwarder). INERT: a read-only lens under-reporting one field harms nothing by sitting; the cost is that the ONE object in this project that is a Scheduler schedule is exactly the one the lens is quietest about. Not fixed -- org/modules/graph/comp_trigger.py is outside this order's <paths>. The preflight's requirement is discharged: comp-trigger's answer is printed verbatim inside the battery's own output."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W3-S5",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~3",
+    "surfaced_at": "2026-09-10T00:32:00Z",
+    "one_line": "The amendment's arm (b) says every AssumeRole management event on etfs-reports-scheduler-role IS a rule-initiated fire. Measured over 90 days there are 6, and 2 of them are not fires: they land at 2026-06-25T22:27:48Z, the schedule's own CreationDate to the second, are EventBridge Scheduler VALIDATING the role at CreateSchedule, and join to no orchestrator START inside 60 s. Taken literally the arm reports 6 monthly fires where 4 occurred. The battery separates them on a printed, falsifiable rule (an AssumeRole within 5 s of CreationDate is a role validation) and reports fires 4 of events 18.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured 2026-09-10T00:2xZ, window 90 d, lookup-events ResourceName=arn:aws:iam::313476888478:role/etfs-reports-scheduler-role fully paginated: 7 events, 6 AssumeRole, 6 distinct requestIDs. The six, with their join to the orchestrator log GROUP read BY TIME: 2026-06-25T22:27:48Z req 9552122c-5856-4923-81a9-fdf63b6fd5eb (no START inside 60 s), 2026-06-25T22:27:48Z req c5899520-1917-4b3e-97b3-b12f5c94e907 (no START inside 60 s), 2026-07-01T14:00:14Z req 1c65f0db-5a68-429f-aacb-2396f0f6244b -> START 2026-07-01T14:00:15Z, 2026-07-01T18:00:50Z req f1358e9f-1209-486a-b6aa-4b296548325f -> START 2026-07-01T18:00:51Z, 2026-08-01T14:00:14Z req ac4aaf56-9244-4832-818f-08446354c4d9 -> START 2026-08-01T14:00:15Z, 2026-09-01T14:00:14Z req 79cb559a-3a3e-4b66-a55e-4c77db3d6ac4 -> START 2026-09-01T14:00:15Z",
+        "the discriminator, read live in the same run and printed in arm (a): `aws scheduler get-schedule --name etfs-reports-monthly-run` -> CreationDate 2026-06-25T22:27:48Z, LastModificationDate 2026-06-25T22:27:48Z. The two unjoined AssumeRole rows sit at that instant to the second; the four that join are 1 s before a START",
+        "a second, independent signature of the same split: the four joining rows each precede a START by exactly 1 s, and AWS/Lambda Invocations Sum over the 90 d window is 18 -- the two CreateSchedule-time rows correspond to no invocation on either substrate",
+        "corroborating that the split is not an artefact of the join tolerance: at the tolerance actually used (60 s) the two validation rows join to nothing; at the looser 180 s this battery first tried, they both falsely joined to a person's 2026-06-25T22:29:27Z invoke 99 s later (request id 7e5288cb-bc24-41c0-bd5e-8dca03c17126), which is what surfaced the distinction",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-18.the-schedules-from-history.md@5507841f04 AMENDMENT limb (ii) and criterion S18-AC1 arm (b): 'etfs-reports-scheduler-role's AssumeRole management events over the last 90 days (paginated, denominator printed) -- each is a rule-initiated fire'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S18-AC1 arm (b) as amended: `etfs-reports-scheduler-role`'s AssumeRole management events over the last 90 days -- 'each is a rule-initiated fire'.",
+    "world_is": "6 AssumeRole events exist on that role in the window, but only 4 are fires. Two are EventBridge Scheduler validating the role at CreateSchedule: they carry the schedule's CreationDate to the second, they join to no orchestrator START inside 60 s, and no invocation exists on the AWS/Lambda Invocations substrate at that instant either. The scheduler role remains a sound initiator discriminator -- nothing but EventBridge Scheduler assumes it, and arm (d) measured 0 such events in a real manual invoke's minute -- but the row count is a superset of the fire count by exactly the schedule's lifecycle events.",
+    "notes": "INERT: the re-cut's discriminating power is unchanged and its conclusion is unchanged (3 of 3 scheduled instants due in the window fired). The correction makes the arm's own number right rather than weakening it. The rule the battery applies is printed at the point of use and is falsifiable (an AssumeRole within CREATE_TOL_S=5 s of the live CreationDate is a role validation), so a reader can reject it. Note for the issuer, recorded and not chased: one of the four fires, 2026-07-01T18:00:50Z, is a genuine scheduler-initiated fire at a NON-cron minute -- the schedule's live RetryPolicy is MaximumRetryAttempts 185 / MaximumEventAgeInSeconds 86400 and LastModificationDate equals CreationDate, so a retry is the cheapest hypothesis that fits, but this order measured it rather than diagnosing it."
   }
 ]
 ```
