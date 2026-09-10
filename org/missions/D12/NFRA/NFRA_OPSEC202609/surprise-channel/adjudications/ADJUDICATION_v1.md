@@ -1088,3 +1088,47 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S29 -- eight rows graduate on ONE shape: AN ARTIFACT THAT OUTLIVED ITS OWN TRUTH AND KEPT DIRECTING. A closed ledger certifying code a later deploy removed, a decomposition holding open an edge ruled unbuildable, a PRD diagram routing evidence to the log bucket, and a criterion whose zero is an EMPTY LOOP
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S29",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T09:25Z",
+    "one_line": "L9, round 2: EIGHT rows GRADUATE -- Z-S103, Z-S104, Z-S121, Z-S131, Z-S132, Z-S152, Z-S153, Z-S156. Six are artifacts that were CORRECT WHEN WRITTEN and now instruct an actor about a world that moved beneath them, and two are scope boundaries that do not hold at the mechanism (an agreement that deconflicts the COMMAND but not the SCOPE, and a -target that structurally cannot exclude another cell's work). The hardest is Z-S153: a deploy ledger closed 5 of 5 on a control that a LATER deploy silently removed from the box seven hours afterwards, using bytes OLDER than the ones it replaced.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "GRADUATED",
+    "disarm_owner": "NONE AT THIS ROW. All eight keep the owners their rows name -- 2.0.0_SA_COO~Z on six, 1.0.0_SA_CTO~Z on Z-S131 as the L4 owner, 0.7.0_AE_CloudOps~Z on Z-S153 and ~S on Z-S132. Z-S103's disarm is the one that RELEASES work rather than gating it.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S103",
+      "NFRA_OPSEC202609-Z-S104",
+      "NFRA_OPSEC202609-Z-S121",
+      "NFRA_OPSEC202609-Z-S131",
+      "NFRA_OPSEC202609-Z-S132",
+      "NFRA_OPSEC202609-Z-S152",
+      "NFRA_OPSEC202609-Z-S153",
+      "NFRA_OPSEC202609-Z-S156"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** Z-S153 IS THE MOST SERIOUS ROW IN THIS BATCH AND IT IS RULE 22a's RUNNING-BYTES-OLDER-THAN-BUILT TRAP, MEASURED LIVE. *** TO-OP-S-12 deployed ~05:20Z and its ledger CLOSED 5 of 5. A later, unrelated deploy the same day replaced /opt/opal-gateway/app at 10:10Z with the bytes of commit 4c3999de4a -- WHICH PREDATES IT -- and the service restarted onto them at 12:52:29Z. The capability-token endpoints, the dual-accept and the FWD-12 observation instrument are ABSENT from the running code. ⛔ NOTHING IN THE FABRIC COULD NOTICE: the ledger was already CLOSED and carries no forward reference to its own supersession, and the ALB access logs kept flowing, so every downstream health signal stayed green while the certified control was gone. Measured on the RUNNING PROCESS rather than an assumed path -- one gateway dir, the unit's ExecStart, and the live pid's own cwd.",
+        "Z-S152 AND Z-S131 ARE THE SAME DEFECT IN THE TWO DOCUMENTS THAT DIRECT WORK. Z-S152: the decomposition's s.9 hold list still tells a future actor to cut OP-s-13's order at the round-2 re-entry for 'CloudFront + WAF managed rules', while PRD v0.14's C-19 (NO-GODADDY) makes that edge UNBUILDABLE rather than deferred -- there is no AWS-only route to any edge for a site answering from a bare EC2 elastic IP, because AWS WAF cannot attach to one and every candidate requires a DNS change C-19 puts out of scope. Z-S131: PRD 7.3's pipeline diagram still routes case files to s3://opal-data-security/, the LOG DESTINATION, while the evidence store is opal-security-evidence -- AND THE SAME DOCUMENT SAYS BOTH, its own S17 row recording the rename in terms. A document that contradicts itself is worse than one that is merely stale, because each half corroborates a reader who arrives at it first.",
+        "⭐ AND Z-S131 ENDS ON THE SAME SENTENCE Z-S114 DID, which is why the two are the strongest evidence for one estate-wide claim: A SPLIT RE-POINTS THE CELL THAT OWNS THE RESOURCE AND LEAVES EVERY OTHER REFERENCE BEHIND. Z-S114 found the operator role still granting the old bucket; this finds the PRD still diagramming it. Neither cell was wrong; the split's blast radius was never enumerated.",
+        "Z-S132 IS A COMPLETED SWEEP WITH AN HONEST YIELD, and it graduates for the finding AND for the negative result. 62 of 62 criteria across 11 of 11 non-complete faces, population parsed from each order's own <status> and <criterion id> at a named HEAD rather than from file location -- 26 face files, 15 complete, 11 non-complete. THE ONE NEW FINDING: S23-AC3 iterates over OP-s-20's ALLOW list, which does not exist and cannot be built, so its 'zero firms would trip the threshold' is produced BY AN EMPTY LOOP and is indistinguishable from a real zero -- and the criterion's own clause 'Zero is a fine answer' PRE-BLESSES that misreading, on a card that faces the sovereign. ⛔ NO FINDING WAS MANUFACTURED TO JUSTIFY THE SWEEP, which the commission warned against in terms; the row says so and the yield is one item.",
+        "Z-S121 IS RULE 22's SHARED-DEPENDENCY CLAUSE ONE LEVEL FURTHER OUT THAN EITHER SEAT APPLIED IT: a two-lane sequencing agreement that both seats wrote, and both believed closed the shared-root hazard, DECONFLICTS THE COMMAND AND NOT THE SCOPE. Terraform applies the ROOT, so the moment a lane COMMITS a .tf into a root another lane is about to apply, its resources are applied by the other lane's command. THE MEASUREMENT THAT SETTLES IT IS A TIMESTAMP AND NOT THE STATE FILE: opal-ipset-reconciler, opal-ipblock-cli and opal-sentinel each carry CreateDate 2026-09-04T01:51:56Z -- three roles across TWO task orders, created in ONE SECOND by ONE apply, while the lane owning one of them had not run anything.",
+        "Z-S156 IS THE SAME BOUNDARY FAILURE IN TERRAFORM'S OWN GRAMMAR, and it is structural rather than a scoping mistake: -target on the edge function alone plans 1 change with ZERO wafv2 resources, but publishing a version REQUIRES repointing the distribution, and the distribution DEPENDS ON the WAF web ACL -- so any Lambda@Edge code deploy necessarily pulls three OP-s-15 / C-2 resources into the apply. Measured NON-DESTRUCTIVE today, before applying, and ARMED for the right reason: the hazard is not today's diff but the NEXT one, because the next edge deploy carries whatever state those actively-worked resources are in at that moment.",
+        "Z-S103 AND Z-S104 ARE THE FACE-PREMISE PAIR, both produced by the re-grounding their own faces mandated. Z-S103 RELEASES WORK rather than blocking it -- the face's headline that its limb 'is the only thing standing between the project and FWD-9 and FWD-11' is FALSE against the decomposition's own edge, which reads '[DP + PITR read ON per table]', a predicate measured TRUE on 5 of 5 tables live. Left alone, two ready outcomes stay parked behind a face they do not depend on, which is why an OBSERVATION is correctly ARMED. Z-S104 carries three premise defects at once, including a carrier the face names that does not hold the table (opal-users-v2 lives in shared-infra/dynamo.tf, its portal-auth block having been deleted in the 2026-06-26 twin-dedup) and a table set of FIVE where the face quotes three."
+      ]
+    },
+    "spec_asserts": "The faces, the decomposition's s.9 hold list, PRD 7.3's pipeline diagram and TO-OP-S-12's closed deploy ledger each assert a world their readers are directed to act in.",
+    "world_is": "Six of those artifacts now describe a world that has moved -- a removed control, an unbuildable edge, a renamed bucket, a carrier that does not hold the table, a blocker that does not gate, a list that cannot be built -- and two scope boundaries turn out not to hold at the level the mechanism operates.",
+    "notes": "WHAT THE EIGHT SHARE: AN ARTIFACT THAT OUTLIVED ITS OWN TRUTH AND KEPT DIRECTING. A closed ledger, a frozen decomposition, a PRD diagram, a task-order headline, a two-lane agreement. NONE of them is wrong in the sense of having been written carelessly -- every one was correct at its vintage -- and every one is now an INSTRUCTION pointed at a world that moved. ⛔ THE DANGEROUS PROPERTY THEY SHARE IS THAT NONE CARRIES A FORWARD REFERENCE: a closed ledger does not learn it was superseded, a frozen decomposition cannot record that a ruling made its hold list unbuildable, and a PRD section does not know its sibling section renamed the bucket. || THE COST IS ASYMMETRIC AND WORTH STATING: Z-S103's stale headline cost PARKED WORK, which is visible and recoverable. Z-S153's stale ledger cost a SILENTLY REMOVED CONTROL that every health signal reported green through, which is neither. || TWO OF THE EIGHT WERE FOUND BY A MANDATED RE-GROUNDING AND ONE BY A COMMISSIONED SWEEP -- i.e. by process rather than by luck -- and the sweep's honest yield of ONE finding across 62 criteria is itself the useful result, because the classes its commission feared were largely absent."
+  }
+]
+```
