@@ -29,6 +29,8 @@
 
 **Smoke map** `fixtures/smoke/fe-s-2-default.json` (from the success fixtures; the two-firm `ResolvedScope`) and `fixtures/smoke/fe-s-2-one-firm.json` (a one-firm `ResolvedScope`).
 
+**Shim collision removal (AMENDED BY THE ISSUER at the FE-s-1 drain on row IRPT_FNTEND-W1-S1).** `portal/src/pages/InvestorReporting/__tests__/fe-s-1/node-builtins.d.ts` declares `export interface Dirent` inside `declare module 'node:fs'`; if `@types/node` is ever added to `tsconfig.app.json`'s `types` array, that interface merges against its `class Dirent` and the typecheck breaks. Replace the exported interface with an inline structural type on the `readdirSync` overload (`{ name: string; isFile(): boolean; isDirectory(): boolean }[]`) and remove the `Dirent` name from the module; nothing else in the shim changes and no other file under `__tests__/fe-s-1/` is edited.
+
 **Tests** under `__tests__/fe-s-2/`: `search.test.ts` (duplicate-name fixture yields two options with distinct discriminators; account-only entry resolves to its relationship with that account narrowed; terminated entry carries the marker and dates; unmapped entry present with a capability gap; 25 simulated keystrokes against the adapter produce a call log with 0 calls outside the directory-search operation), `dropdown.test.ts` (option list is `global` then the catalogue; hidden when the catalogue has one entry), `app-diff.test.ts` (reads `git -C <WS>/portal diff HEAD~1 -- src/App.tsx` output the worker saves to `.scratch/app.diff` and asserts exactly three added hunks and zero removed lines).
 
 ### ACCEPTANCE
@@ -54,7 +56,13 @@
 <criterion id="F2-AC7" cell_refs="FE-s-2" judgment="true"/>
 `F2-AC7` -- graded at L9 from the two PNGs: the header, dropdown and search read as the portal's own controls in the portal's places; nothing light sits on the silver canvas. RECORD; NO VERDICT.
 
-<expected_criteria>F2-AC1, F2-AC2, F2-AC3, F2-AC4, F2-AC5, F2-AC6, F2-AC7</expected_criteria>
+<criterion id="F2-AC8" cell_refs="FE-s-2"><invocation>cd <WS>/portal && python -c "s=open('src/pages/InvestorReporting/__tests__/fe-s-1/node-builtins.d.ts').read(); print('DIRENT_NAME=%s' % ('Dirent' in s))"</invocation><expect>DIRENT_NAME=False</expect></criterion>
+`F2-AC8` -- the shim no longer declares a `Dirent` name that can merge against `@types/node`.
+
+<criterion id="F2-AC9" cell_refs="FE-s-2"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-1</invocation><expect>0 fail</expect></criterion>
+`F2-AC9` -- the FE-s-1 test set still passes with the shim changed.
+
+<expected_criteria>F2-AC1, F2-AC2, F2-AC3, F2-AC4, F2-AC5, F2-AC6, F2-AC7, F2-AC8, F2-AC9</expected_criteria>
 
 ## BOUNDS
 
@@ -77,6 +85,7 @@ portal/src/pages/InvestorReporting/index.tsx
 portal/src/pages/InvestorReporting/header/
 portal/src/pages/InvestorReporting/fixtures/smoke/
 portal/src/pages/InvestorReporting/__tests__/fe-s-2/
+portal/src/pages/InvestorReporting/__tests__/fe-s-1/node-builtins.d.ts
 org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -89,7 +98,7 @@ org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v
 Criterion ids: `F2-AC1` .. `F2-AC7`. Instance at
 `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-2.route-shell-header-search.proof_of_spec.json`
 per `org/standards/PROOF_OF_SPEC.schema.json` (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
-`python .tools/proof-of-spec-check.py <instance> F2-AC1,F2-AC2,F2-AC3,F2-AC4,F2-AC5,F2-AC6,F2-AC7` BEFORE the `complete` flip. `F2-AC7` is recorded `UNVERIFIABLE-BY-INSTRUMENT` with `status_reason` naming the CVO at L9. Result file beside it: `route-shell-header-search.result.md`. Flip only when every mechanical criterion PASSES by output.
+`python .tools/proof-of-spec-check.py <instance> F2-AC1,F2-AC2,F2-AC3,F2-AC4,F2-AC5,F2-AC6,F2-AC7,F2-AC8,F2-AC9` BEFORE the `complete` flip. `F2-AC7` is recorded `UNVERIFIABLE-BY-INSTRUMENT` with `status_reason` naming the CVO at L9. Result file beside it: `route-shell-header-search.result.md`. Flip only when every mechanical criterion PASSES by output.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape. You cannot send or receive messages; anything you would ask is a surprise row.
