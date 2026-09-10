@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ETFS_GUARDRAIL~3</issued_to>
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-09</issued_date>
-<status>pending -- issued in round 2's ONE issuance on PRD v0.4 @`a830ea1cc0` (the manual-trigger addendum on Andrew's ~21:4xZ word), s.9 row S18; decomposition v0.2 s.8-s.11. Slot ~3, independent; runs now; read-only.</status>
+<status>complete -- 2026-09-10 by `0.9.0_WK_ETFS_GUARDRAIL~3` on branch `wk-etfs_guardrail-2-3`. S18-AC1 PASSES by output: `timeout 600 python org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~3/test_egs18_schedules_from_history.py` -> rc=0, final line `EGS18-SCHEDULES-FIRED-FROM-HISTORY`, five of five arms HOLD, 85 of 85 AWS read calls rc=0, on the arms as AMENDED 23:5xZ and arm (c) as RE-CUT 00:4xZ. fires 4 of events 18 (etfs-reports-scheduler-role, 3 of 3 monthly instants due FIRED); fires 30 of events 53 (cot-etf-ownership-daily-schedule) and 30 of events 31 (bd-49f-etf-ownership-scheduled-floor), both 30 of 30 days, reproducing W2's cited numbers. S18-AC2 is `judgment="true"`: evidence recorded, NO VERDICT, graded by `3.0.0_SA_CVO` at L9. Rows filed: `ETFS_GUARDRAIL-W3-S3`, `-W3-S4`, `-W3-S5`, all OBSERVATION / INERT. Proof-of-spec instance validated `proof-of-spec-check.py <instance> S18-AC1,S18-AC2` rc=0 BEFORE this flip. READ-ONLY: no invoke, no write, no deploy. LOCAL on the worker branch; the issuer merges.</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `../prd/ETFS_GUARDRAIL_PRD.md` v0.4 (s.9 row S18) | **Decomp cell:** `EG-s-18` (`../decompositions/ETFS_GUARDRAIL_DECOMP.md` v0.2, s.8-s.11) | **outcome_ref:** the schedules (rule (4) for FWD-1 and FWD-5) | **verb:** verify | **depends_on:** none
 
