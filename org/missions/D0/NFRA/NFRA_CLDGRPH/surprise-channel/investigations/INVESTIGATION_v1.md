@@ -8509,3 +8509,97 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-S120 -- the incremental updater's VPC reaches S3 ONLY, so it derives S3_BUCKET and nothing else -- and the SNS page this deploy was authorized to fire has never left the subnet
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-10T21:27Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S120",
+    "one_line": "THE UPDATER IS AN S3-ONLY WRITER IN PRODUCTION AND NOTHING SAYS SO. Over the last 72h of its own log group: 7150 of 7150 successful derives are type=S3_BUCKET and ZERO are any other class, while BOUNDED_DERIVE_FAIL fired 22 times (lambda 20, sns 1, iam 1), every one of them a connect timeout to a PUBLIC AWS endpoint (lambda.us-east-1.amazonaws.com, iam.amazonaws.com, sns.us-east-1.amazonaws.com). The Lambda is in-VPC and the subnet has interface endpoints for S3 and CloudWatch Logs but not for lambda/iam/sns, so bounded_derive_node can only ever complete for the one class whose endpoint exists. THE SHARED DEPENDENCY IS THE FINDING, not any one class: the same missing egress also kills _publish_marker_advance, which logs MARKER_ADVANCE_SNS_FAIL on EVERY marker stamp. That matters tonight beyond the graph, because Andrew's 2026-09-10 ~20:2xZ authorization for this deploy explicitly ACCEPTED the SMS pages it would cause -- and those pages are not being sent. A cost he agreed to pay is silently not being charged, which is exactly the kind of fact that makes a later 'we never heard anything' unreadable.",
+    "spec_asserts": "item2b.tf's ingest filter admits mutating CloudTrail events across 14 services (aws.s3, aws.iam, aws.lambda, aws.ec2, aws.dynamodb, aws.events, aws.sns, aws.sqs, aws.secretsmanager, aws.kms, aws.logs, aws.cloudwatch, aws.cloudfront, aws.states) and its own comment says 'lambda CODE changes ride this via UpdateFunctionCode'. lambda_function.py's bounded_derive_node implements six classes (S3_BUCKET, LAMBDA, IAM_ROLE, DYNAMODB_TABLE, SNS_TOPIC, SQS_QUEUE). _publish_marker_advance is wired to SNS_TOPIC_ARN as a real-time 2b-class signal.",
+    "world_is": "Only S3_BUCKET is reachable. Census over /aws/lambda/opal-globgrph-incremental-updater, last 72h, auto-paginated (403 BATCH_START across 46 pages, 7150 DERIVED across 48 pages, 22 BOUNDED_DERIVE_FAIL across 51 pages): DERIVED by type = {S3_BUCKET: 7150}; BOUNDED_DERIVE_FAIL by cls = {lambda: 20, sns: 1, iam: 1}. Exercised deliberately this turn: a synthetic TagRole event for arn:aws:iam::313476888478:role/opal-ipset-reconciler returned BOUNDED_DERIVE_FAIL cls=iam 'Connect timeout on endpoint URL: https://iam.amazonaws.com/' and wrote nothing. Every marker stamp observed tonight (21:05:17Z, 21:07:01Z, 21:17:38Z) is followed by MARKER_ADVANCE_SNS_FAIL 'Connect timeout on endpoint URL: https://sns.us-east-1.amazonaws.com/'. So four of the five key-collision class pairs (IAM_ROLE+LAMBDA n=8, EVENT_RULE+LAMBDA n=8, CODEBUILD_PROJECT+IAM_ROLE n=1, EVENT_RULE+SSM_DOCUMENT n=1) are not merely unfixed-by-exercise, they are UNREACHABLE by this writer, and were therefore never at risk from it either.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws logs filter-log-events on /aws/lambda/opal-globgrph-incremental-updater, window 72h ending 2026-09-10T21:2xZ, client-side counted after full pagination -- DERIVED type= census {S3_BUCKET: 7150}, BOUNDED_DERIVE_FAIL cls= census {lambda: 20, sns: 1, iam: 1}, denominator 403 BATCH_START",
+        "live invocation 65f31fc9-1d4a-407d-9c2c-86dea1e64792 at 2026-09-10T21:19:36Z -- BOUNDED_DERIVE_FAIL arn=arn:aws:iam::313476888478:role/opal-ipset-reconciler cls=iam, BATCH_END nodes_written=0",
+        "live invocation 888f2c17-3a06-455a-b8ad-63be1cc1b39f at 2026-09-10T21:17:24Z -- MARKER_STAMPED then MARKER_ADVANCE_SNS_FAIL connect timeout to sns.us-east-1.amazonaws.com",
+        "infra/aws/terraform/globgrph/item2b.tf -- aws_cloudwatch_event_rule.cloudtrail_mgmt source list of 14 services; aws_vpc_endpoint.s3 and aws_vpc_endpoint.cloudwatch_logs are the only interface/gateway endpoints refreshed in the targeted plan for this stack",
+        "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py bounded_derive_node -- six implemented classes"
+      ]
+    },
+    "notes": "NOT CAUSED BY TONIGHT'S DEPLOY and the negative control is on the record: BOUNDED_DERIVE_FAIL occurs 13+ times across 2026-09-09 and 2026-09-10 BEFORE the 21:07:39Z apply. NOT ACTED ON, DELIBERATELY: adding VPC interface endpoints is infrastructure outside the four paths this handoff names and outside tonight's authorization, which covers the key-collision fix and the stitch producer only. WHY IT IS FILED AS ONE ROW RATHER THAN THREE: the lambda, iam and sns failures are not three independent faults, they are one missing dependency wearing three names -- CLAUDE.md Rule 22's 'ask what the members have in COMMON', which here arrives as three identical connect-timeout strings to three different public endpoints. CHEAPEST NEXT STEP for whoever holds it: decide whether the updater is MEANT to be S3-only (in which case the 14-service ingest filter and five of the six derive classes are dead weight advertising a capability that does not exist) or whether the endpoints are missing (in which case the graph's incremental layer has been blind to every non-S3 resource change for as long as this has been true). ANDREW-FACING HALF: he agreed to be paged and is not being paged."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S121 -- BATCH_END failed=0 does not count a derive failure, so 403 of 403 batches report clean while classes silently never enter the graph
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-10T21:27Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S121",
+    "one_line": "THE BATCH COUNTER CANNOT REPORT THE ONLY FAILURE THIS FUNCTION ACTUALLY HAS. `failed` counts RECORD_FAIL (an exception while parsing a record) and is what the SQS partial-batch response is built from. A BOUNDED_DERIVE_FAIL -- the derive timing out, so no node is built and nothing is written -- increments nothing. Measured over 72h: 403 BATCH_END lines, 403 of them failed=0, alongside 22 BOUNDED_DERIVE_FAIL warnings in the same window. The summary field is not merely incomplete, it is ANTI-CORRELATED with the real failure mode: the batch reports clean BECAUSE the derive gave up quietly and left nothing to fail on. This is a false-clean of exactly the shape CLAUDE.md warns about -- a clean denominator with confident per-row verdicts, nothing anomalous in the output, and the WARNING that carries the truth sitting one log level away where no counter reads it.",
+    "spec_asserts": "handler() logs BATCH_END with processed_arns/nodes_written/nodes_deleted/failed as the batch's outcome summary, and returns batchItemFailures from failed_ids so SQS can redrive genuinely failed records.",
+    "world_is": "failed_ids is appended to ONLY in the `except Exception` around record parsing (RECORD_FAIL). bounded_derive_node's timeout path logs a WARNING and returns None, the arn is simply absent from node_by_key, and no counter moves. Census over the last 72h of /aws/lambda/opal-globgrph-incremental-updater: 403 BATCH_END lines, 0 with failed>0, against 22 BOUNDED_DERIVE_FAIL lines. A reader consuming BATCH_END -- or any monitor built on it -- sees an unbroken clean run.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py handler() -- failed_ids.append(msg_id) appears only inside the record-level except Exception block; the bounded-derive path logs WARNING and returns None",
+        "aws logs filter-log-events, 72h window ending 2026-09-10T21:2xZ, fully paginated: BATCH_END n=403, failed>0 n=0, BOUNDED_DERIVE_FAIL n=22",
+        "live invocation 65f31fc9-1d4a-407d-9c2c-86dea1e64792 -- BOUNDED_DERIVE_FAIL cls=iam followed by BATCH_END ... failed=0 in the same request"
+      ]
+    },
+    "notes": "PRE-EXISTING, not introduced tonight. FILED SEPARATELY FROM the endpoint row on purpose: that row is why the derive fails, this row is why nobody would ever find out. They have different owners and different remedies -- provisioning an endpoint does not make the counter honest, and making the counter honest does not restore the missing nodes. NO MONITOR IS PROPOSED AND NONE MAY BE BUILT HERE: CLAUDE.md's standing alert/monitor moratorium binds, and a monitor on an unsettled route measures the wrong thing precisely. The finding is the counter's blindness, and the remedy is the counter."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S122 -- the Lambda's vendored _provenance.py is 401 diff lines behind the canonical copy its own comment promises it tracks
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-10T21:27Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S122",
+    "one_line": "A VENDORED COPY WITH A COMMENT PROMISING IT IS REBUILT IN THE SAME DEPLOY, THAT NOTHING REBUILDS. lambda_function.py:26-29 says _provenance.py is the 'Same source that the derive image COPYs, rebuilt in the same deploy'. The copy inside the deployed zip is 27,072 B; the canonical infra/aws/globgrph/_provenance.py is 44,900 B, a 401-line unified diff, and carries round 6's whole CG-s-27 manifest contract (write_manifest gained two REQUIRED kwargs, plus store_content_sha256 / store_bytes_size / store_mtime_iso / cohort_vintage_lines). Nothing in the repo rebuilds the zip on a change to the canonical file -- the only coupling is a human remembering the sentence. THE TRAP FOR THE NEXT DEPLOYER is that the drift is currently HARMLESS and reads as fine: this Lambda's ONLY entry point is stamp_marker, whose body is byte-identical across both copies, so refreshing the vendor today changes nothing this function executes. The day it stops being harmless there is no signal.",
+    "spec_asserts": "lambda_function.py:26-29 -- 'the ONE centralized marker stamp ... VENDORED into this Lambda zip as _provenance.py at the task root ... Same source that the derive image COPYs, rebuilt in the same deploy.' FRESHGUARD leg-4's own ledger entry closed L1 with 'zip vendors _provenance.py' and L2 with the derive image rebuild, treating the two as one act.",
+    "world_is": "Vendored copy in the zip: 27,072 B, sha256 db07a7a6a5201dea..., mtime 2026-07-10. Canonical infra/aws/globgrph/_provenance.py: 44,900 B, sha256 f3358d013f765b9b..., last touched by 1d62717c65 / 3e6be14930 (CG-s-27, round 6). Unified diff = 401 lines. Deliberately NOT refreshed in tonight's rebuild, and the pin is licensed by measurement rather than caution: an AST walk of lambda_function.py finds exactly one _provenance attribute access, stamp_marker; and stamp_marker's body is byte-identical between the two copies (42 lines each, empty diff). Refreshing would have shipped ~17.8 KB this Lambda never executes and made tonight's settle reading un-attributable between the collision fix and a vendor bump. Both facts are asserted in the build script, so the pin fails closed if either stops holding.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "zipfile read of infra/aws/lambda/globgrph/incremental_updater/incremental_updater.zip at HEAD~1 -- member _provenance.py 27072 B, sha256 db07a7a6a5201dea",
+        "infra/aws/globgrph/_provenance.py -- 44900 B, sha256 f3358d013f765b9b; difflib unified diff vs the vendored copy = 401 lines",
+        "git log --full-history -- infra/aws/globgrph/_provenance.py -> 1d62717c65, 8a074ba7ba, f2ddef8deb, 2e0c77dcbd, 3e6be14930 (CG-s-27 manifest contract, round 6)",
+        "AST walk of lambda_function.py: {_provenance.<attr>} == {stamp_marker}; a regex over the same file also returns 'py', matching the filename inside the comment -- the regex answer is wrong and the AST answer is right",
+        "stamp_marker body extracted from both copies: 42 lines each, difflib diff empty"
+      ]
+    },
+    "notes": "THE REUSABLE FORM: a vendored copy whose freshness is guaranteed by a COMMENT is guaranteed by nothing, and it fails in the quietest possible direction because the stale copy keeps working until the day the call site moves. This is the same class as the source_code_hash trap this deploy just closed (W1-S51): in both, the artifact that production actually consumes is coupled to its source only by a step someone has to remember. CHEAPEST NEXT STEP: either make the zip build a real build step that reads the canonical file, or delete the promise from the comment so the next reader does not trust it. Not acted on here -- infra/aws/globgrph/_provenance.py is outside the four paths this handoff names."
+  }
+]
+```
