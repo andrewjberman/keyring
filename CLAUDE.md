@@ -305,6 +305,12 @@ derived layer is current-day-only; never mint `data/bloomberg/`).
   sibling: verify a substantive send by `wc -c` on the delivered file.
 - **Never "you/your" about a specific seat in a multi-recipient message — name the serial + msg-id**
   (second person resolves per reader).
+- ⛔ **"Queued if not live" is a WISH, not a delivery. A BASE serial with no base session is a silent
+  hole** — an inbox is a per-recipient slice, so mail to a base while only LANES are live gets no bounce,
+  no ack and no staleness signal, and reads as delivered. Address a LIVE recipient, or PARK the item on
+  its own carrier with an OWNER and the CONDITION that un-parks it. Measured 2026-09-10: five messages,
+  all from one seat, unread in `0.7.0_AE_CloudOps` for 6-9 days across a device crash; two carried live
+  scope decisions that were neither working nor waiting.
 - **A commit report states its PUSH STATE as a MEASURED value:** "on origin @hash (ls-remote read)" ·
   "LOCAL @hash (ls-remote read)" · "push state UNREAD" — never a default; the claim is perishable and ages
   the moment an integrator runs.
