@@ -2346,6 +2346,32 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "A correction is a new row citing the old id; S32 is not edited and its ARMED standing is disarmed by this record. INERT: the two facts are reading rules for the drain and the L9. Dispositioned with S32 at OUTSET round 3's L9."
+  },
+  {
+    "id": "NFRA_OUTSET-S34",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~W",
+    "surfaced_at": "2026-09-10T01:00:00Z",
+    "one_line": "THE MANUAL SERVED DAY CANNOT PRODUCE 09-10 KEYS BEFORE 13:00Z, AND THE RUN WROTE OVER THE PROTECTED 09-09 RECORD -- the report is dated by the most recent 09:00 America/New_York SCHEDULE MARK, not by the calendar day, so the first instant yielding 2026-09-10 keys IS the scheduled fire.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE ACT: orchestrator invoked 2026-09-10T00:29:57Z with the rule's own payload plus the manual marker, per TO-OS-s-24 step (iii), with the NEVER-2 entry committed OPEN first (38f65276e7) quoting both never-widen halves.",
+        "WHAT IT WROTE: manifest/2026-09-09.json PENDING at 00:30:33Z, then daily/2026/09/09/estate-report-2026-09-09.json (F3CLuHhwgcRKo7OdbCdLbexIO6BUo3Mw), the .md (LDU91_HNL2W37JpxYerMhKjffcFDNje9) and manifest/2026-09-09.json (o7A8G0W4zwPmHnGsESt7Np3lBFyH21dY) at 00:52:49Z. ZERO objects under daily/2026/09/10/. The report's own `date` field reads 2026-09-09.",
+        "THE CAUSE, read at source and not inferred from the one observation: estate_report_runner.py:219-226 `_window` sets end_local to today's 09:00 America/New_York mark when local_now is at or past it, else yesterday's, and the report date is that mark's date. This is CORRECT and deliberate -- CVO approval condition C1 requires window boundaries from the SCHEDULE and never from wall time, or consecutive windows overlap or gap.",
+        "EVALUATED ACROSS THE CANDIDATE INSTANTS, which is what turns one observation into the general statement: 2026-09-10T00:29:57Z -> 2026-09-09; 2026-09-10T04:00:00Z (midnight ET, the obvious fix) -> 2026-09-09; 2026-09-10T12:59:00Z -> 2026-09-09; 2026-09-10T13:00:00Z -> 2026-09-10. THE FIRST INSTANT YIELDING 09-10 KEYS IS THE SCHEDULED FIRE ITSELF.",
+        "ROLLBACK EXECUTED 00:57:56-00:58:03Z, the remedy the sign-off pre-authorized by name: three copy-object calls restoring each pinned VersionId as latest. VERIFIED BY SHA256 OF THE BYTES, not by VersionId (a copy mints a new id whatever it copies): .json 9d0ff4d6135a9ccb/204,352 B, .md c3b6a88eeaf1da87/27,505 B, manifest 0a7f44e8812ba910/16,812 B, all IDENTICAL to their pins. NEGATIVE CONTROL: the run's own version hashes dbe02e28c705f3eb at 206,144 B and DIFFERS. Nothing destroyed -- versioning is enabled and the run's versions remain retrievable.",
+        "WHAT THE RUN DID PROVE, and it is not small: OS-s-26's trigger carrier worked end to end on its first exercised read -- run_bundle.trigger = manual and run_bundle.run_id = a588a7ea-8ad2-4f03-a814-4f02668a66d6, byte-equal to the token written at 00:30:07Z. A manual run was told apart from a scheduled one ON THE ARTIFACT, never by the clock."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.8, TO-OS-s-24's face and BOTH never-widen halves share one premise: a run AFTER 2026-09-10T00:00:00Z and before 13:00Z writes keys dated 2026-09-10 and overwrites nothing. The CTO's half (94764) states it as the sign-off's boundary and excludes by name 'a 09-09-dated run'.",
+    "world_is": "The premise conflates the CALENDAR DAY with the SCHEDULE MARK. The report is dated by the most recent 09:00 America/New_York mark, so every instant between 2026-09-09T13:00Z and 2026-09-10T13:00Z produces a 09-09-dated report -- and the served keys for a report already written are the protected ones. The manual served day as cut therefore cannot be performed at all before the scheduled fire: there is no window in which it writes new keys, only windows in which it overwrites the record OS-s-20's accept depends on. The 00:00Z boundary in the face is not merely too early; no earlier boundary exists.",
+    "notes": "CUT DEFECT, and it reaches further than one face: it is in PRD v0.8, in TO-OS-s-24, and in BOTH sign-off halves, so it is not disarmable by an assignee and no re-run is attempted. NO SECOND INVOKE WAS MADE -- a second run before 13:00Z would write the 09-09 keys again, and re-running until the race falls the right way is the failure this project has already met. WHAT I DID NOT DECIDE: the run's 00:52:49Z report is a legitimate, newer report of the 09-09 window and is NOT lost; whether the estate should serve it instead of the 15:32:41Z pin is the issuer's call. I restored the pin because that is the remedy the sign-off names and because the pin is the artifact OS-s-20's accept reads. THREE SHAPES FOR THE ISSUER, none taken here: (a) accept the 13:00Z fire as the served day and read the five accepts on it -- it is 12 hours away, not a future date, and it is the ONLY instant that yields 09-10 keys; (b) re-cut the manual served day onto a date-overriding parameter the runner does not have today, which is a code cell, not a verify cell; (c) declare the 09-09 keys' newest version the served record and drop the never-widen protection, which contradicts OS-s-20's accept. REC: (a). Andrew's no-waiting word is satisfied by it -- the fire is today, the trigger carrier is proven, and (b) would build a new code path to avoid a 12-hour wait on a schedule that already fires. Related: [[NFRA_OUTSET-S28]], [[NFRA_OUTSET-S29]]."
   }
 ]
 ```
