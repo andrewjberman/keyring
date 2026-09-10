@@ -4483,3 +4483,33 @@ one-line path amendment; sent UP to 2.0.0_SA_COO~Z at the read. The worker is st
  }
 ]
 ```
+
+```json
+[
+ {
+  "id": "NFRA_OPSEC202609-Z-S165",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.5.0_AE_OpalETL~Z (seated for the FWD-12 caller-migration ask; found while executing this lane's half, not while reviewing it)",
+  "surfaced_at": "2026-09-10T05:44Z",
+  "one_line": "FWD-12's MIGRATION DENOMINATOR COUNTS CALLERS, BUT THE CALLERS DO NOT HAVE ONE CODE CARRIER EACH. The 49F and cot auto-login boxes execute THE SAME FILE -- infra/aws/ec2/bd-49f-auto-login/bd_49f_auto_login.js is the canonical firm-parameterized script and there is no cot copy of it in the repo; only run-bd-auto-login.sh and secret-ids.env are per-firm. So this lane's migration commit @463f53561f, which is scoped to the 49F caller and to this lane's territory, ALSO migrates the cot caller at cot's next artifact pull -- a decision belonging to the PartnerETL lane, taken structurally by an edit in another lane's commit. 'Migration state 0 of 5' is measured per caller and is correct; what it does not show is that two of the five move together whether or not anyone intends it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "SPLIT, and named rather than chosen because this seat will not adjudicate another pod's lane boundary. (a) THE NOTICE HALF IS DISCHARGED SAME-TURN by this seat: msg 20784 to 0.6.0_AE_PartnerETL~Z (DELIVERED), copied to 2.0.0_SA_COO~Z at 20785, sent because that lane's broker summary read 'next: locate NFRA_OPSEC202609 caller-migration ask' -- it was about to open the same file. (b) THE REMAINING HALF IS THE PartnerETL LANE'S: whether /opt/bd-cot-auto-login pulls the artifact and when. This seat did not deploy to cot and will not. DISARM = the PartnerETL lane that owns the cot box states its deploy intent for the shared .js. NOT NFRA_OPSEC202609's: PRD s.3 lists these callers under 'Relies on, does not own' and Andrew-direct @9382d107a3 s.1 expressly withheld authority to act on them.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "TWO INDEPENDENT CARRIERS, because one file describing itself is not evidence about a second box. (1) SOURCE: infra/aws/ec2/bd-cot-auto-login/run-bd-auto-login.sh:50 reads `node \"$APP_DIR/bd_49f_auto_login.js\"` with APP_DIR self-locating from the wrapper (line 15), so on the cot box it resolves to /opt/bd-cot-auto-login and runs the 49F-named script. (2) DEPLOY RECORD, a different instrument and a different author: org/critical_paths/change_management/20260626T1444Z_cot-piece2-boxflip-stage_deploy_completion.md:17, LEG L3 proof, names `node $APP_DIR/bd_49f_auto_login.js` verified by SSM on the running path under BD_FIRM_ID=cot, CLOSED 20260626T144757Z.",
+    "THE ABSENCE IS MEASURED, NOT ASSUMED: `ls infra/aws/ec2/bd-cot-auto-login/` returns exactly two files, run-bd-auto-login.sh and secret-ids.env. There is no cot .js to diverge, which is what makes the coupling structural rather than a drift that could be repaired by syncing.",
+    "IT WAS ALSO RAISED BY AN INSTRUMENT THIS SEAT DID NOT CHOOSE, which is why it is filed rather than noted: the pre-commit risk reflex (comp-pulse diff, danger map 2.6h old, denominator 1 file against 1524 danger nodes) returned [HOLD] on bd_49f_auto_login.js and cited the cot deploy record above -- 11 recorded claims on that node. The estate had already written the warning down.",
+    "WHY IT IS SAFE-BY-CONSTRUCTION AND STILL WORTH A ROW, so nobody sizes the risk up: the exchange presents whatever BD_OTP_GATEWAY_SECRET_ID resolves to, which on the cot box is cot's own firm-namespaced bearer (secret-ids.env, BD_FIRM_ID=cot), and the gateway returns a capability token whose sub is cot's label -- firm-sep (NEVER#1) is preserved and gw_cred_observe's firm attribution IMPROVES. The hazard is a GOVERNANCE one: a lane's credential posture changes without that lane deciding it.",
+    "WHAT THIS SEAT HAS NOT ESTABLISHED, stated because the row would otherwise read as a cot finding: no cot-side exercise was run, no cot box was touched, and nothing here measures cot's deploy cadence or whether its box would pull at all. The claim is about the SHARED ARTIFACT, not about cot's behaviour."
+   ]
+  },
+  "spec_asserts": "FWD-12 tracks caller migration per caller, and each owning lane decides whether and when its own caller migrates -- PRD s.3 'Relies on, does not own', reinforced by Andrew-direct @9382d107a3 s.1 withholding authority over these callers from this project.",
+  "world_is": "Two of the five callers (49F and cot) share ONE code artifact with no per-firm copy, so a migration commit in the OpalETL lane's territory carries the cot caller with it at cot's next artifact pull, and the PartnerETL lane's decision is made for it unless that lane declines the pull.",
+  "notes": "THIS IS THE 'CHECK WHAT THE MEMBERS HAVE IN COMMON' CELL OF RULE 22, met from the inside rather than in review: a per-caller check certifies each of the five clean while the thing two of them SHARE is the object that actually moves. Every per-caller arm passes, so nothing fails, which is exactly the shape the rule describes. || THE ROW IS FILED BY THE SEAT THAT CAUSED THE CONDITION, not by a reviewer. This seat wrote @463f53561f; the coupling was found while writing it, and the honest place for it is the channel rather than this seat's own report, where it would read as a caveat instead of an obligation with an owner. || WHY IT IS NOT ALSO A FINDING AGAINST @463f53561f: the commit is correct for the 49F caller and its scope is this lane's. Narrowing it to avoid touching cot is not available -- there is no cot artifact to leave alone. The alternatives were to write it (and say so, which is this row) or to hold this lane's migration hostage to another lane's calendar, which nothing authorises and which leaves a never-expiring bearer on the wire meanwhile. || A NOTE FOR WHOEVER COUNTS FWD-12 LATER: if both boxes pull, migration moves 0 -> 2 of 5 on ONE artifact act, and the gateway's gw_cred_observe will show two distinct labels appearing at once. That is the expected shape, not a double-count."
+ }
+]
+```
