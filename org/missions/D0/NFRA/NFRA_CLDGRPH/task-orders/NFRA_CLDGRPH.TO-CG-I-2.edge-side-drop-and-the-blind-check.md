@@ -4,7 +4,7 @@
 <project>NFRA_CLDGRPH</project>
 <issued_to>0.9.0_WK_NFRA_CLDGRPH~2</issued_to>
 <issued_by>2.0.0_SA_COO~A</issued_by>
-<status>pending -- GO = the spawn (spine L7, read at HEAD): slot ~2 on a worktree cut from CLOUD BY THE ISSUER and named in your prompt. ROUND 9 of NFRA_CLDGRPH; fanout 4 of 4 chains, cap 8. FIRST of slot ~2's chain (I-2 then I-3); both write derive_stitch.py, which is why they are ONE queue and not two workers. The assignee commits its own status flip after a VALID proof-of-spec instance whose mechanical rows ALL read PASS.</status>
+<status>complete -- 0.9.0_WK_NFRA_CLDGRPH~2, branch wk-cldgrph-9-2 (LOCAL). Acts at efbddbccd6; instance NFRA_CLDGRPH.TO-CG-I-2.edge-side-drop-and-the-blind-check.proof_of_spec.json VALID (rc=0, 0 violations, 7 of 7 artifact rows resolved at pin) with I2-AC1/AC2/AC3/AC4 PASS-by-output and I2-AC5 UNVERIFIABLE-BY-INSTRUMENT for 3.0.0_SA_CVO at L9. REMEDY = AWS_KEYS_MOVED (the check's key set is rebuilt AFTER the collapse, both identities preserved); the edge-side drop was considered and refused on the source's own evidence. Row NFRA_CLDGRPH-W2-S79 filed. MAGNITUDE ON THE LIVE SNAPSHOT: UNMEASURED, not manufactured -- it needs a producer run the egress hold forbids. Nothing deployed.</status>
 
 ## STANDING LAW (inlined)
 

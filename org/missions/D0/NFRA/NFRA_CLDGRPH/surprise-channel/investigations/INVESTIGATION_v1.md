@@ -8267,3 +8267,32 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-W2-S79 -- the key set the 0-dangling check resolves against is bound TWICE, and the snapshot-shaped bind is DEAD: the blindness was never in the union everyone cited
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "id": "NFRA_CLDGRPH-W2-S79",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T18:05Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "THE PRODUCER BINDS `all_keys` TWICE AND THE FIRST BIND IS DEAD -- so the snapshot-shaped key set every account of this defect cites (`all_keys = aws_keys | portal_keys`) is NOT the set the 0-dangling check reads, and after CG-s-43 the only surviving consumer of `aws_keys` is that dead bind.",
+    "spec_asserts": "TO-CG-I-2's face and row W1-S44 both describe ONE computation: `all_keys` is the post-collapse node ids UNION `aws_keys`, and `aws_keys` is what the check resolves against. Nothing in either says the name is bound more than once.",
+    "world_is": "An AST walk of build_stitched_graph shows `all_keys` BOUND at :144 and again at :259, and READ only at :266 (twice, inside the genuine_dangling filter). No read of `all_keys` occurs between :144 and :259, so the :144 bind -- `all_keys = aws_keys | portal_keys`, the one whose text most looks like the defect -- is DEAD CODE and never reached the check at all. The check's key set was only ever the :259 one. The cell's diagnosis is still correct (the :259 union carried `| aws_keys`, taken pre-collapse) but the line a later reader would go to is not the line that mattered. After CG-s-43 moved the check's key set to a post-collapse rebuild, `aws_keys` is read by NOTHING except that dead bind.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/globgrph/derive_stitch.py:144 and :259-260 @b5bb2f16a0ad960406fea53ead0b0e1a1d24526f (worktree C:/tmp/wk-cldgrph-9-2, branch wk-cldgrph-9-2) -- the two binds, in the pre-remedy bytes this order started from",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/i2_consumers.py, run 2026-09-10T18:0xZ: 'all_keys is BOUND at [144, 259] and READ at [266, 266]' and 'the bind at :144 is DEAD -- no read of all_keys occurs between it and the rebind at :259'",
+        "The same run's repo census: 6 consumer lines of {aws_keys, _index_aws} across 30045 files scanned, corpus=all, TREE_READ=WORKTREE with the branch-only positive control FIRED"
+      ]
+    },
+    "notes": "NOT REMOVED, AND THE OMISSION IS DELIBERATE. Deleting a dead assignment is a second act on a file the next order in this worker's own queue (CG-s-42) also writes, and this cell's grant covers changing what the check resolves against, not tidying around it. INERT rather than ARMED because a dead bind harms nothing the process does at run time; the harm is to a READER -- and that is precisely the harm this project keeps paying for, since the round-8 row, the round-9 decomposition and this order's own face all cite the union at :144's shape while the operative one is 115 lines further down. THE REUSABLE FORM: a text census cannot tell a live read from a dead assignment, so every account of a defect built from grep-shaped evidence inherits the ambiguity; the AST arm cost one function call and moved the finding from 'the union is wrong' to 'the union that is wrong is the OTHER one'. Cheapest remedy for whoever holds the file next: delete :144 in the same commit as any other work there, or bind it to a name that says it is unused."
+  }
+]
+```
