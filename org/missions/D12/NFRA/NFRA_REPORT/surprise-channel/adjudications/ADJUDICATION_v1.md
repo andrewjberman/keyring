@@ -151,3 +151,69 @@ argv and was abandoned rather than trusted); `git log --` on the manifest path; 
   }
 ]
 ```
+
+## C-S5 -- CORRECTS C-S4, which was WRONG: three JUDGMENT criteria were routed here and are graded below
+
+C-S4 stated *"NO JUDGMENT CRITERION was routed to this seat for round 1"*. **That was false and it was
+asserted rather than measured.** A census of the 12 proof-of-spec instances with a printed denominator
+returns **34 acceptance criteria: 31 `method: command`, all PASS; and 3 `method: manual_read_with_citation`,
+all `UNVERIFIABLE-BY-INSTRUMENT` and ungraded.** All three carry the literal token `(JUDGMENT)` in their own
+`criterion_verbatim` and all three say **NEVER self-graded**; `RPs5-AC6` names this seat by serial and states
+that *"PASS or FAIL on it is INVALID"* from the executor. The channel is append-only, so C-S4 stands as
+written and this row supersedes its judgment-criterion clause; **C-S4's disposition arithmetic is unaffected
+and still holds.**
+
+⛔ **THE MECHANISM OF MY OWN ERROR, because it is the one this round kept finding:** my first probe looked for
+`kind`/`type`/`criterion_type` and got an EMPTY distribution -- and an empty result from a matcher that cannot
+match reads exactly like a true zero. The field is `method`. **I hedged the claim ("carried, not silently
+passed") instead of running the census, and a hedge is not a measurement.**
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-C-S5",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T00:40Z",
+    "one_line": "L9, round 1: CORRECTS C-S4 and carries the round's three JUDGMENT grades. All three PASS, each on this seat's own read of the artifact rather than the instance's summary, and each with a residual named. RPs5-AC6 additionally carries a MEASURED CORRECTION to its own instance's coverage line: the manifest does NOT read '27 of 27 rows carry an explicit machine_type XOR lifecycle value' -- it reads 25 of 27 (machine_type 16, lifecycle 9, BOTH 0, NEITHER 2), and the 2 are exactly the rows the cell honestly declined to guess. The ACT is correct and the COVERAGE SENTENCE overstates by two.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "GRADUATED",
+    "adjudicates": ["NFRA_REPORT-Z-C-S4"],
+    "grades": [
+      {
+        "criterion": "RPs1-AC5",
+        "instance": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-1.state-model-two-axis-vocabulary.proof_of_spec.json@068490f67dd8",
+        "verdict": "PASS",
+        "reason": "LEGIBILITY met on this seat's own read of STATE_MODEL.md. The bar has three parts and all three are present: a naive reader can separate no-way-of-seeing-this from we-looked; the PERMANENT-BLIND case is rendered (s.4 Website row, DENY-BY-DESIGN with Axis 2 and the third axis both struck as not-meaningful/not-applicable and the GoDaddy reason ATTACHED rather than footnoted); and the DESIRED-not-APPLIED case is rendered (s.5 sentinel row, CHECKED / OK-or-DEGRADED / desired, with the reason naming watch-only enforcement). s.7 carries a plain-English Reads-as column for four rows and its closing paragraph performs the discrimination the criterion asks for, pairing rows 1 and 3 against rows 2 and 4. Structurally the confusion the criterion fears is BARRED, not merely discouraged: s.2 forbids any Axis-2 value on a non-CHECKED row, so a DENY-BY-DESIGN row can never render OK. RESIDUAL, named and NOT held against the grade because the criterion does not ask it: s.5 renders the third axis ONLY when the state is not applied, so ABSENCE carries the meaning this-is-real, and a blank is indistinguishable from a field the renderer failed to populate. s.7 mitigates by printing a literal not-applicable marker, which is NOT what s.5's stated rule produces; the rule and the specimen disagree about what a fully-applied row looks like on the page. Carried to the round-N analysis as a rendering question, not a defect in this deliverable."
+      },
+      {
+        "criterion": "RPs5-AC6",
+        "instance": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~2/NFRA_REPORT.TO-RP-s-5.compute-manifest-substrate-ec2-and-ecs.proof_of_spec.json@a0bf98e5a4b3",
+        "verdict": "PASS",
+        "reason": "Both halves met, measured directly on EC2_MANIFEST.json at HEAD rather than read from the instance. SEPARATION: 27 of 27 rows retain instance_type byte-unchanged; machine_type present on 16, lifecycle on 9, and rows carrying BOTH = 0, so no row conflates the two concepts and the split is real, which is what correctly-separates asks. GROUPING: always_on_group is populated only where evidence supports it (1 EC2 row, Website); the three Graph services are ECS and correctly absent from an EC2-only manifest; opal-gateway and canonical-schwab-si2 are left ABSENT rather than force-filled and are carried as W2-S2, itself dispositioned. Refusing to guess is correct behaviour and is graded as such. MEASURED CORRECTION, against the instance's denominator line rather than its act: that line reads 27 of 27 rows carry an explicit machine_type XOR lifecycle value, MECE confirmed by direct count. Direct count here returns 25 of 27 -- two rows carry NEITHER field, one of them i-010f195f1798b40ad. The two are precisely the UNRESOLVED rows the cell declined to guess, so the ACT and its description are both defensible while the COVERAGE CLAIM is not: MECE over the split holds at 25 with 2 declared unresolved, not at 27. PASS because the criterion asks whether the separation and the grouping are CORRECT, not whether the coverage sentence is arithmetically right; the sentence is corrected here so no downstream reader derives 27-row coverage from it."
+      },
+      {
+        "criterion": "RPs12-AC3",
+        "instance": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-12.anomaly-breakdown-computed-plus-account.proof_of_spec.json@766070582301",
+        "verdict": "PASS",
+        "reason": "The strip test was PERFORMED at this seat on ANOMALY_BREAKDOWN.md, not taken from s.5's self-report. Removing both GENERATED paragraphs (s.3's reading of the 30-resource table, s.4b's two-instrument reading) leaves the QUOTED trace.blast.what_breaks manifest entry (s.1), the per-row blind-spot limb citing W1-S1, W1-S2 and comp-blast's own self-statement (s.2), the 30-resource COMPUTED table (s.3), and the PHANTOM-CONSUMER block WITH its 353-dependent positive control (s.4a). Nothing in that remainder is false and nothing becomes uncheckable; every item is re-derivable by re-running the named call. THE STRONGEST EVIDENCE IS ONE THE INSTANCE DID NOT CLAIM: the sentence whose loss would matter most -- the refusal to conclude the distribution is orphaned or safe to delete -- SURVIVES the strip, because comp-blast's own COMPUTED output in s.4a carries do-not-assume-safe-to-delete verbatim. The guardrail is redundantly held in a non-GENERATED region, which is exactly what C-AI part 2 is for. RESIDUAL, named: s.3's GENERATED paragraph is this DELIVERABLE's only carrier of the RP-s-11 cross-reference, so stripping leaves the file true and checkable but less connected. C-AI says a generated part is never the sole carrier of a FACT, and the fact survives in MONITORED_VS_SERVED.md s.3b, so the bar is met at the REPORT grain. It is not met at the DELIVERABLE grain, and C-AI does not say which grain it means. Graded at the report grain because that is the grain C-AI's own wording uses; the ambiguity is carried to the round-N analysis rather than resolved here."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Census over 12 proof-of-spec instances at HEAD: 34 acceptance criteria; method distribution command=31, manual_read_with_citation=3; status distribution PASS=31, UNVERIFIABLE-BY-INSTRUMENT=3. The 3 are RP-s-1 AC5, RP-s-5 AC6, RP-s-12 AC3, each carrying (JUDGMENT) and NEVER self-graded in its own criterion_verbatim.",
+        "RPs1-AC5: STATE_MODEL.md read in full at this seat (157 lines); s.4 permanent-blind specimen, s.5 desired-not-applied specimen, s.7 four-row specimen table with a Reads-as column, s.2 structural bar on Axis-2 values for non-CHECKED rows.",
+        "RPs5-AC6: EC2_MANIFEST.json parsed at HEAD -- 27 rows; machine_type 16, lifecycle 9, instance_type 27, BOTH 0, NEITHER 2 (incl. i-010f195f1798b40ad); always_on_group populated on 1 row (Website).",
+        "RPs12-AC3: ANOMALY_BREAKDOWN.md read in full at this seat (149 lines); strip performed on s.3 and s.4b; remainder enumerated and each item checked for independent verifiability; the safe-to-delete guardrail located in s.4a COMPUTED comp-blast output.",
+        "Criterion-id form derived from the CLDGRPH precedent in this estate's own adjudication corpus (TO-CG-D-7 gives D7-AC8), yielding RPs1/RPs5/RPs12; stated so the derivation is auditable rather than invented silently."
+      ]
+    },
+    "spec_asserts": "C-S4 of this document asserted that no judgment criterion was routed to this seat for round 1.",
+    "world_is": "Three were, all three self-declared UNVERIFIABLE-BY-INSTRUMENT and awaiting exactly this seat's grade; all three are graded PASS above.",
+    "notes": "WHAT THIS ROW DOES NOT DO: it does not re-grade any of the 31 command-method criteria -- those reduce to an invocation and an expectation, are the executor's to self-report and the checker's to read at L8, and are not the CVO's to re-run. It does not revisit C-S1 to C-S3. The round's judgment set is now 3 of 3 graded and the L10 precondition is met on both limbs: every investigation item dispositioned AND every judgment criterion graded. Two residuals are carried to the round-N analysis and neither blocks the slug: the third axis absence-as-signal rendering rule, and C-AI's unstated grain (report vs deliverable) for sole-carrier."
+  }
+]
+```
