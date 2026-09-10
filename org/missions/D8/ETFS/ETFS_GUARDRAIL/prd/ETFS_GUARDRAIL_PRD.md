@@ -5,10 +5,10 @@
  "project": "ETFS_GUARDRAIL",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.4",
+ "prd_version": "v0.5",
  "step": 4,
  "brief_ref": "docs/briefs/ETFS_COVERAGE_GUARDRAIL_BUILD_SPEC_20260901.md@1890d7785c",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
+ "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-8", "FWD-9", "FWD-10"],
  "status": "RATIFIED"
 }
 ```
@@ -120,10 +120,18 @@ cited it** -- which is the only condition under which a renumber is safe.
                     two weeks later
          SOURCE     brief s.3 (81-129), lag table 93-110
 
-  FWD-2  The monthly report cannot go out over incomplete data unless a
+  FWD-2  [SUPERSEDED 2026-09-10 by FWD-9 -- Andrew-direct ~03:0xZ: "anything that we'd have to
+         actually wait for a failure to close out, that FWD should be superseded". The id is
+         PERMANENT and never reused; the text is kept verbatim below and is no longer graded.]
+         The monthly report cannot go out over incomplete data unless a
          person decides to let it
          DONE WHEN  EXERCISED -- the check has actually refused a month, and the
                     refusal reached a person
+         WHY SUPERSEDED  its only proof was a REFUSE verdict, which arrives when the data
+                    happens to carry a class-C-or-worse hole that survives the ladder -- an
+                    event no seat controls. Measured 2026-09-10: the September run produced
+                    PUBLISH over two class-D holes, because carry-and-disclose IS the designed
+                    behaviour there, so the refusal this bar waits for may never come.
          ACCEPT     when days are genuinely missing, the report does not go out,
                     and someone is told which days and why -- rather than it
                     arriving looking normal
@@ -160,9 +168,20 @@ cited it** -- which is the only condition under which a renumber is safe.
                     the two being a day apart
          SOURCE     brief s.6a (206-232)
 
-  FWD-7  When a gap survives every attempt to repair it, Andrew finds out --
+  FWD-7  [SUPERSEDED 2026-09-10 by FWD-10 -- same Andrew-direct. Id permanent, never reused;
+         text kept verbatim, no longer graded.]
+         When a gap survives every attempt to repair it, Andrew finds out --
          and finds out exactly what is missing, without having to ask
          DONE WHEN  EXERCISED -- such a message has actually been sent and read
+         WHY SUPERSEDED  two reasons, either alone sufficient. (1) Its bar waited on a real
+                    terminal failure the PRD itself calls rare by design -- "he should almost
+                    never receive one" -- so the outcome was written to be proven by an event we
+                    hope never happens. (2) Measured 2026-09-10 (row W1-S25): the terminal send
+                    CANNOT FIRE AT ALL -- lambda_function.py:439 guards it on
+                    (unresolved_doc or {}).get("unresolved") while the renderer writes that
+                    document KEYED BY PARTNER, so the guard reads [] and skips the send on a
+                    genuine refuse; round 1's proof passed on a fixture built to the docstring
+                    rather than to the producer's output. Waiting would have waited forever.
          ACCEPT     if every attempt to fill a gap has failed, including asking
                     the outside provider, Andrew receives an urgent message that
                     lists each day still missing, which partner it belongs to,
@@ -507,3 +526,59 @@ Round 1 closed with 7 of 8 grades NOT_EVALUATED, every one of them "on the 10-01
 | S16 | FWD-4 | THE LEGITIMATELY-EMPTY DAY THAT HAS ALREADY HAPPENED: 2026-09-07 (Labor Day, US market shut) read on S15's run | measured | a real closed-market day inside the month; graded NOT_EVALUATED only because every prior B-class proof was a fixture | AE_CloudOps | verify | S15 | 4 | `coverage_verdict.json` for 2026-09 classifies 2026-09-07 as A (market closed); it appears in no partner's holes; no `daily/<partner>/2026-09-07.json` slice exists for cottonwood or 49financial (list-objects on the prefix, denominator printed); `expected_empty` carries it with holes unaffected; CloudTrail PutObject 0 for that day's keys over the run |
 | S17 | FWD-1 | THE FILLED-IN DAY: the daily producer (S1 `cot-etf-ownership-daily` / S2 `bd-49f-etf-ownership-daily`) invoked by hand with the scheduled event payload against a REAL hole (named by S15's coverage read, or by `catchup_processed` on a date the producer missed); if the estate holds no real hole, a CONTROLLED one -- one slice archived to a quarantine key under its own NEVER-2 entry, the producer fired, the slice restored byte-equal after | absent | FWD-1 NOT_EVALUATED: needs a recovered date on the producer's own fire | AE_CloudOps | verify | -- | 1 | the function's CloudWatch log for the manual invocation names the recovered date in `catchup_processed`; the slice exists after with the day's rows; positive control: a date NOT missing is not reported recovered; the invocation record shows the manual initiator; the schedule's own firing proven from the function's prior scheduled invocations (CloudTrail Invoke by the rule), listed with a denominator |
 | S18 | -- (the schedules) | THE SCHEDULE'S FIRING FROM HISTORY: the executions of `etfs-reports-monthly-run` and the two daily rules listed from CloudTrail / the state machine's execution list with their initiators -- the ones that produced the published August artifact and the daily slices | measured | the published August CSV and the daily slices exist, so the fires have fired; never listed as evidence | AE_CloudOps | verify | -- | 1, 5 | the list printed with its denominator and the initiator column showing the rule; 10-01 and the daily crons stay CONFIRMATION, never a gate |
+
+## 10. ENDPOINT ADDENDUM v0.5 (2026-09-10 ~03:1xZ, `1.0.0_SA_CTO`) -- the two WAIT outcomes superseded
+
+**Andrew-direct ~03:0xZ at the `1.0.0_SA_CTO` terminal, VERBATIM:** *"Anything that we'd have to actually wait for a failure to close
+out, that FWD should be superseded, because otherwise we might be waiting forever. It is not good to write FWDs in a manner that cannot
+be proven or that requires waiting some indeterminate time to be proven. Our goal with projects and task orders is not to sit on them for
+weeks, it is to sprint, execute, validate, and close. We should almost never be waiting unless it is truly essential to the project in some
+crucial way to do so, the likes of which should be expressly qualified. I think the way it should work actually is that no FWD is ever a
+'wait' unless explicitly advised otherwise."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_030xZ_NO_FWD_IS_A_WAIT.md`.
+
+**Applied here:** of the eight, SIX were provable by an act a seat can take and are proven or in flight. TWO waited on a failure mode
+nobody controls -- FWD-2 (a REFUSE verdict) and FWD-7 (a terminal failure the PRD itself calls rare by design). Both are superseded in
+place above; their ids are permanent and never reused. The successors keep the OUTCOME he wants and move the proof from *the event
+happened* to *the mechanism was driven deliberately and worked*.
+
+```
+  FWD-9   The monthly report cannot go out over incomplete data unless a person
+          decides to let it -- and we can DEMONSTRATE the refusal on demand
+          DONE WHEN  EXERCISED -- the refusal path has been DRIVEN DELIBERATELY on a
+                     forced incomplete condition, end to end, and the refusal reached
+                     a person; no seat waits for the data to produce one
+          ACCEPT     a forced class-C-or-worse condition (a hole the ladder cannot close,
+                     injected under a NEVER-2 entry and restored after) drives a real run
+                     of the SAME target the schedule invokes: the verdict object reads
+                     REFUSE with the classifier's own class table quoted at file:line, the
+                     publish keys for that month stay ABSENT (a 404 beside the refused
+                     200), the refusal reaches a person, and the FORCING is disclosed on
+                     the artifact so the run is never mistaken for organic. The already-
+                     measured carry-and-disclose branch (2026-09-10: PUBLISH over two
+                     class-D holes, coverage line "5/6 trading days; 1 carried") is the
+                     NEGATIVE arm and is already banked
+          SOURCE     supersedes FWD-2; Andrew-direct 2026-09-10 ~03:0xZ
+
+  FWD-10  When a gap survives every attempt to repair it, Andrew finds out -- and
+          the path that tells him is PROVEN to work, not presumed
+          DONE WHEN  EXERCISED -- the terminal message has been sent by the deployed
+                     handler on a DELIBERATELY driven terminal condition and READ at
+                     Andrew's own inbox; no seat waits for a real failure
+          ACCEPT     (i) the W1-S25 guard defect is fixed FIRST -- the guard and the
+                     renderer agree on the shape of coverage_unresolved.json, with a test
+                     built from the PRODUCER'S OWN OUTPUT rather than from a docstring;
+                     (ii) a driven terminal condition produces the message, it lists each
+                     day still missing with its partner and the provider the data should
+                     have come from, and it is read at andrew@ by a gateway read (never a
+                     send-log self-report); (iii) the send is OBSERVABLE afterwards -- the
+                     handler records that it fired (W1-S26: today it emits no log line and
+                     no trail selects the SES data plane); (iv) aj@ IS NOT A RECIPIENT of
+                     any driven run (Andrew-direct ~02:5xZ)
+          SOURCE     supersedes FWD-7; Andrew-direct 2026-09-10 ~03:0xZ
+```
+
+**R-EG-1 (ruling, binding on this PRD and offered to the spine): NO FWD IS A WAIT.** An endpoint outcome is provable by an act a seat can
+take ON DEMAND. An outcome whose only proof is an event nobody controls is written wrong: it is re-cut so its MECHANISM is driven
+deliberately, with the organic case kept as the negative arm. Where a wait is genuinely essential it is EXPRESSLY QUALIFIED on the
+outcome, with the reason and Andrew's word, and it is the exception that names itself.

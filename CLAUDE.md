@@ -16,7 +16,13 @@ stable, citations resolve there. DS/AE seats read their sections before touching
 ## 1. HOW WE WORK
 
 27. **Every directive/project runs the CANONICAL WORKFLOW L1–L10, ONE OWNER PER STEP, IN ORDER: L1 brief
-    (`4.0.0_SA_CRO` only) → L2 endpoint (`1.0.0_SA_CTO` only) → L3 register (`1.0.0_SA_CTO` only; `0.0.0_AB_MSTR`
+    (`4.0.0_SA_CRO` only) → L2 endpoint (`1.0.0_SA_CTO` only; ⛔ **NO FWD IS A WAIT** — every outcome is provable by
+    an act a seat can take ON DEMAND, and one whose only proof is an event nobody controls is re-cut so its MECHANISM
+    is driven deliberately, the organic case kept as the negative arm; a genuinely essential wait is EXPRESSLY
+    QUALIFIED on the outcome with its reason and Andrew's word. Andrew-direct 2026-09-10: *"no FWD is ever a 'wait'
+    unless explicitly advised otherwise ... sprint, execute, validate, and close"*. Measured the same night:
+    `ETFS_GUARDRAIL` FWD-7 sat NOT_EVALUATED as "a real terminal failure, rare by design" while its send guard could
+    not fire AT ALL — waiting would have waited forever) → L3 register (`1.0.0_SA_CTO` only; `0.0.0_AB_MSTR`
     HOLDS the directive register the row must appear in — a different act) → L4 PRD (`1.0.0_SA_CTO` only — no COO, no CVO) →
     L5 decomp + battery → L6 ONE ISSUANCE covering EVERY cell (`2.0.0_SA_COO` only; fan-out derived from the
     decomp's dependency chains and stated as `fanout:` data in the issuance commit, default cap 8) → L7
