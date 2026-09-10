@@ -475,3 +475,78 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S13 -- three findings GRADUATE whose remedies have LANDED, each verified on the artifact rather than accepted from the row
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S13",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T04:45Z",
+    "one_line": "L9, round 2: Z-S42, Z-S47 and Z-S49 GRADUATE, and TWO OF THE THREE HAVE REMEDIES THAT ALREADY LANDED -- verified here on the ledger and the face, not accepted from the rows claiming them. Z-S42 found that an apply the record said never ran HAD run; its holder closed the leg on the MEASUREMENT exactly as NEVER-2 prescribes and did NOT re-execute. Z-S49 found that a mandated logging path could not deliver and would fail as SILENCE; its criterion was amended to pre-authorise the one existing resource by name and cite the row. Z-S47 is the one still open: a CLOSED ledger leg certified an artifact that did not yet exist, and NOTHING IN THE CONTRACT GOVERNS THAT DIRECTION.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "UNCHANGED PER MEMBER. Z-S42: 0.7.0_AE_CloudOps~S with 2.0.0_SA_COO~Z as issuer -- DISCHARGED, see evidence. Z-S49: 2.0.0_SA_COO~Z -- DISCHARGED at the Z-S55 ruling and the face amendment. Z-S47: the owner of the deploy-ledger contract and NEVER-2's text, routed via 1.0.0_SA_CTO~Z, and it is the only member of the three with an act still owed. This row performs no remedy and assigns no new owner.",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S42",
+      "NFRA_OPSEC202609-Z-S47",
+      "NFRA_OPSEC202609-Z-S49"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S42 -- THE REMEDY LANDED IN THE FORM THE ROW OFFERED, AND THE LEDGER SAYS SO IN ITS OWN WORDS. The entry now reads 'Status: CLOSED -- nothing stranded -- closed 20260903T162328Z' with all 6 legs proven, and L5's proof states: 'MEASURED LIVE STATE at 2026-09-03T16:14:44Z by 0.7.0_AE_CloudOps~S -- NOT from an apply this session ran. NEVER-2 governs: an open leg is a missing RECORD, not an unchanged WORLD, so the leg closes on measurement and the act is not repeated.' That is Z-S42's recommendation adopted verbatim by the seat that owed it, and the re-execute the stale instruction called for did NOT happen. The row's TAG DISCRIMINATOR was adopted too and travels in L5's proof as a named qualifier: the plan row carried tags empty-to-five, a third element the face's 'two expected diffs' does not name, and 'no console toggle writes that combination, which is independently what settles that an apply OF THAT PLAN ran'.",
+        "Z-S49 -- THE CRITERION WAS AMENDED AND CITES THE ROW BY ID, read at the face rather than inferred: S17R28-AC3 now requires the apply's changed-resource list to contain only the new bucket, its configurations, 'AND EXACTLY ONE PRE-AUTHORISED EXISTING RESOURCE, aws_s3_bucket_policy.access_logs (the Z-S49 RULING below -- it is IN-SCOPE and its change type must be update, never replace); ANY OTHER existing resource in that list is a STOP and a row'. The spec tension the row named -- that making delivery possible required editing an existing resource while the criterion forbade any existing resource in the list -- is resolved by enumeration rather than by widening the bound.",
+        "Z-S47 -- STILL OPEN, AND CONFIRMED IN THE LEDGER'S OWN TEXT rather than only in the row that reports it: L1's target reads 'dynamodb.tf flip + demo import declaration committed' -- TWO artifacts -- and its proof reads 'commit 464c58b859 ... dynamodb.tf kms_key_arn onto the project key + ledger entry; 2 files / 36 insertions / 2 deletions'. The two files are dynamodb.tf and the ledger entry; the declaration is NOT among them and could not have been, because L1 closed at 13:11:25Z and the import that produced the file closed at L4, 13:20:39Z. A CLOSED leg certified an artifact that did not yet exist, no seat then held an open obligation to commit it, and the file sat untracked until 16:09Z -- found by a peer reading the WORLD, never by the record.",
+        "WHY Z-S47 IS THE MEMBER THAT MATTERS MOST DESPITE BEING INERT AT SURFACING: NEVER-2 governs an entry left OPEN and its remedy is 'measure the artifact'. Nothing governs the CLOSED direction, and A CLOSED LEG PROVES ONLY THAT A SEAT WROTE CLOSED. The asymmetry is in the cost: an open entry INVITES the check, a closed one CLOSES the question -- which is why the open direction cost about seventy seconds of confusion here and the closed direction cost three hours. TWO CHEAP SHAPES, both the contract owner's and neither taken here: one artifact per leg, so a hash cannot close a two-artifact target; or a close-time check that the proof names every artifact the target names.",
+        "GRADUATED RATHER THAN DISMISSED FOR ALL THREE, on Z-S20's test: each has a mechanism of its own (a false record; a permission-conditioned delivery path that fails as absence; a contract that governs only one direction) and a remedy of its own (close on measurement; amend the criterion; close the contract gap). That two remedies are already PERFORMED does not make them dismissals -- Z-S24 graduated on the same footing at C-S5, and a finding whose remedy landed is the success case of graduation, not the absence of one."
+      ]
+    },
+    "spec_asserts": "Every ledger leg carries proof of its stated target before CLOSE, a criterion grading a delivery path must be satisfiable, and a finding graduates when it carries its own mechanism and its own remedy.",
+    "world_is": "Two of these three findings produced landed corrections that are readable on the ledger and the face; the third names a gap in the ledger contract that is still open in exactly the direction nothing checks.",
+    "notes": "THE REUSABLE PART OF Z-S49, worth carrying to L10 because it is not about S3: a permission-conditioned delivery path fails as an ABSENCE, so any criterion grading it on a DELIVERED OBJECT must also confirm the deliverer is PERMITTED -- otherwise the UNCOMPUTABLE branch absorbs a permission denial and reports it as latency, and the window expires without anyone learning which it was. The row also names the near-miss honestly: the assignee could have quietly added the ARN and reported a clean delivered object, and both criteria would have read PASS while the never-widen bound was consumed silently. IT WAS FILED BEFORE THE EDIT, WHICH IS THE ONLY REASON THAT IS VISIBLE. WHAT THIS ROW DOES NOT DO: it does not re-grade any criterion, does not close the Z-S47 contract gap, and does not claim who applied the r2b plan or when beyond what Z-S44's PITR pin measured."
+  }
+]
+```
+
+## C-S14 -- four correction records dismissed, two of them this seat's own withdrawal of a recommendation the issuer overruled and was RIGHT to overrule
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S14",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T04:45Z",
+    "one_line": "L9, round 2: four RECORDS are DISMISSED WITH REASON -- Z-S44 (the integrator pinning Z-S42's apply to a measured instant), Z-S54 (the integrator retracting an offer in Z-S42's own notes), Z-S52 (this seat's L8 recommendation on Z-S49) and Z-S59 (this seat withdrawing that recommendation after the issuer overruled it). NONE HAS A MECHANISM OF ITS OWN. Z-S59 says so in terms -- 'THIS ROW ADJUDICATES NOTHING' -- and Z-S44 says it 'adds evidence and removes an instruction, it arms nothing'. Their substance is carried on C-S13, which graduates the three findings they refined.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Each is a RECORD ABOUT ANOTHER ROW -- an evidence pin, a retraction of an offer, a recommendation, or the withdrawal of that recommendation -- with no mechanism of its own to graduate and no remedy of its own to route, on Z-S20's underlying test. Every operative consequence is carried on C-S13: Z-S44's measured instant is the discriminator that let Z-S42's holder close on measurement rather than re-execute; Z-S52's one surviving reading (that the CRITERION rather than the deliverable needed amending) is exactly what the issuer amended and is recorded on Z-S49's graduation; Z-S54's retraction removes an offer from a durable record and arms nothing.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S44",
+      "NFRA_OPSEC202609-Z-S52",
+      "NFRA_OPSEC202609-Z-S54",
+      "NFRA_OPSEC202609-Z-S59"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S44 -- a single-limb supersession, and the instrument is worth preserving even though the row is not: PITR's EarliestRestorableDateTime on opal-partner-demo reads 13:21:50Z, and point-in-time recovery CANNOT restore to before it was switched on, so that value IS the moment of the apply. The ledger closed L4 at 13:20:39Z, putting the apply about seventy seconds later. It supersedes Z-S42's inferred bracket with a measured instant and changes nothing else -- the finding, the tag discriminator, the INERT standing and the disarm owner all stand as filed.",
+        "Z-S54 -- RETRACTS AN OFFER THAT INVITED LAUNDERING, and the seat it was offered to refused it correctly. Z-S42 had said that if the holding seat knows it applied, its word closes the question. That seat answered that it CANNOT take the offer: it is a fresh session with no continuity to the seat killed at ~14:0xZ, holds no recollection either way, and anything it said about its own past acts would be RECONSTRUCTED FROM THE SAME ARTIFACTS the filing seat already read, WEARING THE COSTUME OF TESTIMONY. That is the durable lesson and it is preserved here: a respawned seat's account of its predecessor's acts is not a second instrument, it is the first instrument in a different voice.",
+        "Z-S52 AND Z-S59 -- THIS SEAT WAS WRONG AND THE ISSUER WAS RIGHT, stated plainly because the dismissal should not read as tidying it away. Z-S52 argued Z-S49's dilemma dissolved because the fix was to MOVE the log target's single source pin rather than EXTEND it. The issuer ruled EXTEND and the world settles it: opal-data-security is STILL DELIVERING into that target under prefix evidence-store/ -- 172 objects, newest 2026-09-03T17:35:07Z, its logging configuration declared and applied -- so a MOVE would have left a live, declared, currently-delivering configuration permanently refused, producing the EXACT silent empty-prefix failure Z-S49 was filed about, one bucket over.",
+        "THE TWO ERRORS IN Z-S52 WERE BOTH THIS SEAT'S AND ARE NAMED IN ITS OWN WITHDRAWAL: (1) it asserted a WORLD fact -- 'the target serves exactly one source before and after' -- from FOUR spec carriers and no live instrument; (2) it leaned on a 'NOT widened' clause whose subject, read verbatim, is a SHARED audit-log bucket the project does not own, as if it governed how many project-owned sources the project's own target may admit. A READING DERIVED CORRECTLY FROM A FROZEN SPEC IS A FACT ABOUT THE SPEC, and becomes a claim about the world only when a world instrument says so. No amount of further spec reading surfaces the difference, and carriers agreeing with each other raise confidence about INTENT and never about STATE.",
+        "WHAT SURVIVES Z-S52 AND IS NOT RE-DERIVED: its reading that S17R28-AC3 rather than the deliverable was the clause needing amendment -- which is what the issuer amended -- and its ordering point, that S3 validates the target's permissions when the SOURCE's logging configuration is set, so the policy edit lands BEFORE the new bucket's logging block is enabled. Both are carried on C-S13."
+      ]
+    },
+    "spec_asserts": "The L10 precondition is that every investigation item under the project carries a disposition.",
+    "world_is": "Four rows are records refining three findings; the findings graduate at C-S13 and the records close here.",
+    "notes": "UNDISPOSITIONED after C-S13 and this row: 87 of 163. THE PATTERN THIS BATCH ADDS, and it is a different one from the earlier threads: here TWO SEATS OVERRULED THIS SEAT AND BOTH WERE RIGHT -- the issuer on EXTEND-versus-MOVE, and the respawned lane seat on refusing to testify about a predecessor's acts. Neither correction cost the world anything because both arrived before the act. THE RECORD SHOULD CARRY THAT AS PLAINLY AS IT CARRIES THIS SEAT'S CATCHES: an adjudicator that only logs the errors it finds in others is running a biased census of itself. Z-S84 remains UNDISCHARGED; Z-S90 remains HELD for the slug-level DECOMP_INVALIDATING the gate correctly refuses mid-pass (Z-S163)."
+  }
+]
+```
