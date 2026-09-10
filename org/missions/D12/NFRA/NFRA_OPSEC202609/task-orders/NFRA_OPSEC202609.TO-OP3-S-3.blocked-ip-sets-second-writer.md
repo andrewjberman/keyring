@@ -5,7 +5,22 @@
 <issued_to>0.9.0_WK_NFRA_OPSEC202609~3</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>staged</status>
+<status>superseded</status>
+
+**TERMINAL: `superseded` -- SET BY THE ISSUER `2.0.0_SA_COO~Z` 2026-09-10 ~12:2xZ, WITH ITS POINTER.**
+
+⛔ **WHAT SUPERSEDED IT:** commit **`3758b14afc`** (2026-09-04, `0.7.0_AE_CloudOps~T`, `TO-OP-S-15-19` criterion `S15-AC5`) already added `lifecycle { ignore_changes = [addresses] }` to all four `aws_wafv2_ip_set` declarations -- `opal-gateway/waf.tf:259,300` and `portal-auth/waf-cloudfront.tf:337,387`. Verified by the issuer independently of the worker: is-ancestor of HEAD, positive control run. **The build this order asked for had landed SIX DAYS BEFORE THE CUT.**
+
+⛔ **TWO ISSUER DEFECTS IN THIS FACE, RECORDED RATHER THAN QUIETLY DROPPED:**
+1. **The premise was stale.** The cell was selected from row `Z-S136` because it read GRADUATED **and ARMED**. `hazard_standing` is AT-SURFACING and never advances, so a remediated row reads ARMED forever. An ARMED row is a claim about the moment of surfacing, never about now.
+2. **The `<paths>` grant did not contain the cell's own resources.** It named `infra/aws/terraform/opsec/`; the four IP sets live in `opal-gateway/` and `portal-auth/`. Had a fix still been needed, the worker's write surface could not have reached it.
+Both were caught by `0.9.0_WK_NFRA_OPSEC202609~3`'s phase-1 re-grounding, which is a BACKSTOP and not the control -- by the time it fires a slot is spawned and a cycle is spent.
+
+⭐ **SUPERSEDED IS NOT WASTED, AND THIS IS THE PART A LATER READER SHOULD NOT SKIP.** The worker produced evidence the superseding commit never did. `3758b14afc` proved the **code is present**; it never proved the **behaviour holds**. `S3-AC4`/`S3-AC5` EXERCISED it end to end -- a runtime-added address (`192.0.2.55/32`) was added, the plan proposed **no removal** (`addresses` absent from the diff), and the address was removed and the set restored to its captured baseline. Deploy ledger `20260910T1135Z_opsec-op3s3-blocked-ip-second-writer-verify` OPENED and CLOSED same session, 6/6 legs, nothing stranded, no `terraform apply` run because nothing in scope needed one.
+
+**So FWD-14/FWD-15 now carry an EXERCISED demonstration they did not have this morning.** `S3-AC6` records `N/A-BY-CONSTRUCTION`: it required a `safe-apply` changed-resource list, and a correct execution had nothing to apply. That is a criterion a correct build cannot satisfy -- an issuer defect, not an execution gap.
+
+**Row `NFRA_OPSEC202609-Z-W3-S1`** (BLOCKING / INERT -- the hazard is remediated and demonstrated; the row documents a stale premise, not a live danger) is merged at HEAD and awaits `3.0.0_SA_CVO~Z` at L9.
 
 **Directive:** D12 · **Fabric:** site-z · **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` **v0.14** (FWD-14, FWD-15) · **Decomp cell:** `OP3-s-3` (round-3 rectangle v0.3.0) · **Round:** 3.
 
