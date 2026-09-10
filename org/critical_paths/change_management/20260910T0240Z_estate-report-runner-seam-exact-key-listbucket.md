@@ -1,7 +1,7 @@
 # DEPLOY COMPLETION LEDGER -- the SIX EXACT SEAM KEYS on the runner's ListBucket condition
 
 **Opened:** 2026-09-10T02:40Z by `0.7.0_AE_CloudOps~W` (committed OPEN before the apply)
-**Status:** OPEN
+**Status:** **CLOSED 2026-09-10T02:5xZ -- APPLIED, NOT EXERCISED.** The statement is applied and read back on the applied plane; the runner's OWN 404 is still owed and the first served run supplies it.
 **Order:** `NFRA_OUTSET.TO-OS-s-23` (face @`7a1950d478`); row `NFRA_OUTSET-S36` @`c02b54d903`;
 CTO ruling 94887 + residual 94894; COO 94882 / 94889 / 94896 / 94897.
 
@@ -86,14 +86,28 @@ print both denominators with the intersection and both differences, and run it o
 EXTRA DEVICE which must FAIL. The comment in `iam.tf` tells the editor why; the arm makes the drift
 loud.
 
-## Legs
+## Legs -- 1 through 4 VERIFIED; 5 is the standing state
 
-1. [ ] This entry committed OPEN before the apply.
-2. [ ] `safe-apply` consumes the saved plan; triple is exactly 0/1/0 on the one address.
-3. [ ] Post-apply re-plan reads 0-diff.
-4. [ ] APPLIED-plane re-read: `iam get-role-policy` shows all six keys in the condition and the
-       three original prefixes still present.
-5. [ ] Recorded **APPLIED, NOT EXERCISED** until the runner's own identity returns the 404.
+1. [x] Committed OPEN at `13fa248402`, before the apply. The ordering is a fact in git history
+       rather than a claim in this seat's prose.
+2. [x] `safe-apply` rc=0 consuming the SAVED PLAN FILE. **"Apply complete! Resources: 0 added, 1
+       changed, 0 destroyed."** ONE address: `aws_iam_role_policy.runner: Modifying... /
+       Modifications complete after 0s`. comp-tagauthz gate PASSED (0 candidates overwrite an
+       access-granting tag); tombstone-gate CLEAN (0 creates against 7 tombstones).
+       **HALT-GATE FIRED AND BLOCKED THE FIRST ATTEMPT** on 5 pending messages, all 6-9 days old
+       and all addressed to the BASE serial: a cadence MEASURE REQUEST and the STAND DOWN that
+       supersedes it, two CTO scope decisions homing other-directive items to this seat, and an
+       Andrew-direct on ms-heat-snapshots. Each was read; NONE is STOP-class and none touches
+       estate-report or this apply, so `HALT_ACK=1` on re-invocation.
+3. [x] Post-apply re-plan, `-detailed-exitcode` **rc=0**: "No changes. Your infrastructure matches
+       the configuration."
+4. [x] APPLIED-plane re-read, `iam get-role-policy`: the condition holds **9 values** -- the
+       original `daily/*`, `manifest/*`, `code/*` all THREE still present, and all SIX new exact
+       keys present, **none missing**. Read back from AWS, not from the `.tf` source.
+5. [x] **RECORDED APPLIED, NOT EXERCISED.** Nothing above proves the grant WORKS from the runner's
+       identity -- only that the statement AWS holds says what was written. See the CTO residual
+       section: the EXERCISED read is a 404 on the runner's own identity beside a 200 positive
+       control, and the first served run supplies it.
 
 ## Rollback
 
