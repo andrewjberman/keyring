@@ -86,7 +86,7 @@ IR BK Part II.3 is the common wire/data contract inventory. FE consumes `Directo
 
 FE supplies a versioned **RenderPackage** to BK: supported schema/template versions, deterministic screen/print components, locally packaged fonts and asset requirements, page options and render fixtures. BK supplies the immutable **ExportBundle**, executes that package and returns a protected **ExportReceipt**. Provider retrieval and narrative generation happen before rendering. Render retries reuse the bundle; a preview is not allowed to silently call the vendor again.
 
-The eight permanent FWD IDs remain unchanged. FE contributes the user-facing proof for FWD-1/3/4/5/6/8 and the visible behavior for FWD-2/7; BK supplies and enforces their data/operational halves. This describes implementation contributions, **not** a formal assignment of an outcome's ACCEPT ownership. CTO's L2 amendment names that owner and the proof crossing the project boundary.
+The eight permanent FWD IDs remain unchanged. [CTO's L2 distribution](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md) at `58266dab2d` now assigns **FE acceptance ownership for FWD-1 and FWD-6**, and **BK acceptance ownership for FWD-2/3/4/5/7/8**. This resolves the ownership call reserved in the initial briefs. The endpoint names the crossing proof for every outcome: FE supplies the client journey, presentation and RenderPackage; BK supplies authorized data, canonical meaning and execution. FWD-3 and FWD-8 require FE rendering inside BK export execution. Acceptance ownership identifies the deciding artifact, not team workload or a partition of all evidence. The implementation ownership table above remains unchanged.
 
 ### II.3 Scope retained and scope deferred
 

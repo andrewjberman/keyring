@@ -80,7 +80,7 @@ FE owns templates, chart/table layout, print styles and the **RenderPackage**; B
 
 Coordinate source contracts with OPAL_ASSETS/D10, D1_CATVIEWS, ASSETCLASS_TAXONOMY, D3_MODELOVERLAY, ADVI_ECLDAT, WSE_COTMDL and MDPF3FIRMS. Coordinate authentication with PORTAL_AUTHHARD/ADVI_ROLGAT; the runner pattern with ADVI_BDAPIMIG.P1; shared YCharts session compatibility with YALP_MDSRC; historical market/news inputs with their existing producers; and manifests with OPAL_ADVIPOINTERS. Existing shared code owners retain their boundaries. Reusing a pure helper does not authorize widening its existing deployment or IAM role.
 
-IR BK now includes directory ingestion and all multi-tenant security previously grouped under WS1. WS2–WS4 labels in source documents are research boundaries only. The permanent **FWD-1 through FWD-8** remain unchanged. BK contributes service/source/security proof across them; FE contributes the corresponding user-facing proof. CTO's L2 amendment names formal ACCEPT owners without requiring each proof to fit wholly within one project.
+IR BK now includes directory ingestion and all multi-tenant security previously grouped under WS1. WS2–WS4 labels in source documents are research boundaries only. The permanent **FWD-1 through FWD-8** remain unchanged. BK contributes service/source/security proof across them; FE contributes the corresponding user-facing proof. [CTO's L2 distribution](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md) at `58266dab2d` now assigns **FE acceptance ownership for FWD-1 and FWD-6**, and **BK acceptance ownership for FWD-2/3/4/5/7/8**, resolving the reserved call. Every endpoint row names its crossing proof; FWD-3 and FWD-8 require FE rendering inside BK export execution. Acceptance ownership identifies the deciding artifact, not relative workload or exclusive ownership of all evidence.
 
 S1's vendor retirement, historical cohort reconstruction, full analytical replacement and later agent/BI ambitions remain future context. Preserve independent supervision and billing semantics when authoritative; do not require the held historical return engine to deliver native vendor performance. V1 adds no holdings time series, trades, alternate scenario engine or automatic distribution.
 
@@ -262,7 +262,7 @@ These are dependencies, not sequenced task orders.
 - Source owners provide completion/date semantics and resolve or expose missing identity/model mappings and target units. Canonical taxonomy/cohort rules remain authoritative.
 - Historical sentiment/news evidence meets the chosen date/cutoff policy. Narrative coverage can be partial without blocking a performance-only report.
 - FE supplies a compatible versioned RenderPackage and representative consumer fixtures. BK supplies frozen bundles and source/security/economic proof; both exercise the same real end-to-end revisions.
-- Register owners carry the already-directed IRPT/D9/laptop representation and CTO assigns canonical project codes and formal FWD ACCEPT owners. This bookkeeping does not reopen the settled two-project scope or delay drafting.
+- Register owners carry the already-directed IRPT/D9/laptop representation and CTO assigns canonical project codes; formal FWD ACCEPT ownership is now recorded in II.2. This bookkeeping does not reopen the settled two-project scope or delay drafting.
 
 # PART VI — STATUS — NOT OUTCOME-BEARING
 

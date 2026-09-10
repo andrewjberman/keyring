@@ -13,7 +13,7 @@
     "execution": "laptop",
     "d9_whole_move_directed": true,
     "canonical_codes_assigned_here": false,
-    "permanent_outcome_ids": "FWD-1 through FWD-8 unchanged; formal ACCEPT owners assigned by CTO"
+    "permanent_outcome_ids": "FWD-1 through FWD-8 unchanged; L2 58266dab2d assigns FE: 1,6; BK: 2,3,4,5,7,8; crossing proof retained."
   },
   "scope_limits": [
     "All nine source document bodies retain their original evidence clocks and limitations.",
@@ -338,22 +338,22 @@
     {
       "project": "IR FE",
       "path": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "sha256": "448008a4768c37cc37473ce7308765b8c16062e58b9d7ca2d98bbef9d39aef9e",
+      "sha256": "a98fac3cbf91d9f785b62394bb6f6e95901e9112e6ff9cd0580a34b7e340ada9",
       "outcomes": 6,
       "parts": 7,
       "source_documents_mapped": 9,
       "lines": 191,
-      "words": 3572
+      "words": 3613
     },
     {
       "project": "IR BK",
       "path": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "sha256": "6ea44e5d147b757e36c924f22bce7da985081a42c5934183158ec8766531ba6a",
+      "sha256": "0ed9ef0f6ad1895504925b931cb50c52d2d0619624b425034233fe077489cd6f",
       "outcomes": 7,
       "parts": 7,
       "source_documents_mapped": 9,
       "lines": 293,
-      "words": 5810
+      "words": 5853
     }
   ],
   "repository_paths": [
@@ -1510,6 +1510,12 @@
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 89,
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
       "line": 113,
       "target": "investor-reporting-unification-brief-20260909.md",
       "exists": true
@@ -1662,6 +1668,12 @@
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
       "line": 6,
       "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_185xZ_D9_TO_LAPTOP_CLDGRPH_FINISHED_15MIN_RATIFIED.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 83,
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md",
       "exists": true
     },
     {
@@ -1827,6 +1839,27 @@
       "files": 3,
       "findings": [],
       "limitation": "AWS access-key, bearer-token and Cookie header signatures only; not universal secret detection."
-    }
+    },
+    "l2_distribution_covers_all_eight_once": true
+  },
+  "updated_at_utc": "2026-09-10T19:07:06.359206+00:00",
+  "acceptance_distribution": {
+    "source_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md",
+    "source_commit": "58266dab2d7974bd3e24b469c89c7e5fdb63ae88",
+    "source_blob_sha256": "b78fea1a0f3a752d9e4ba4491e67cf08725c331650ddd9cf3affc70da2b73fb5",
+    "FE": [
+      "FWD-1",
+      "FWD-6"
+    ],
+    "BK": [
+      "FWD-2",
+      "FWD-3",
+      "FWD-4",
+      "FWD-5",
+      "FWD-7",
+      "FWD-8"
+    ],
+    "scope": "Acceptance/grade ownership only, not a measure of work; all cross-project proof retained.",
+    "read_scope": "Committed distribution amendment diff read in full; no fresh review of all other endpoint sections."
   }
 }
