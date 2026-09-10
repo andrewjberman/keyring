@@ -71,12 +71,32 @@
 # IDEMPOTENT: safe to re-run (overwrites with identical content; a fresh agent session running
 # this at startup is a no-op once another session already provisioned this machine).
 #
-# ROLLBACK: rm -rf ~/bin/{aws,aws.cmd,comp-which,comp-which.cmd,comp-system,comp-system.cmd} --
-# every shell falls back to today's pre-fix state (the documented explicit-.tools/-prefix
-# convention in CLAUDE.md still works regardless, unaffected by this script either way).
+# ROLLBACK: restore ~/bin from a byte copy taken before the run, then re-run the PREVIOUS
+# version of this script (`git show <ref>:.tools/provision-path-shims.sh`). The older note --
+# "rm -rf ~/bin/{aws,comp-which,comp-system}..." -- NAMED SIX FILES WHILE THE LOOP WRITES TWO
+# HUNDRED-PLUS, and deleting them does not restore anything: every shell then reaches NO
+# comp-tool by bare name at all. A rollback that is a partial delete is not a rollback.
+# Count the population from disk (`ls ~/bin | wc -l`), never from this prose.
 set -euo pipefail
 
-WS="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# THE BAKED FALLBACK MUST NAME A DURABLE TREE, AND THE RUNNING CHECKOUT IS NOT ONE.
+# (0.9.0_WK_NFRA_COMPEFFICACY~2, NFRA_COMPEFFICACY CE-e-2, 2026-09-10.) This script used to bake
+# whatever checkout happened to RUN it. Under spine v3 that checkout is usually a worker's LINKED
+# WORKTREE under C:/tmp -- which the worker REMOVES when its order ends. Every forwarder on the
+# box would then carry a fallback into a deleted directory, and the moment a caller stood outside
+# any git worktree (no toplevel to resolve) it would get rc 127 from every comp-tool on this
+# machine. That is the SAME DEFECT FAMILY this cell exists to fix -- a generated artifact bound to
+# the tree that generated it -- one layer beneath the one the row named.
+# So: RUN from anywhere, BAKE the MAIN worktree, DERIVED and never hardcoded
+# (`git worktree list --porcelain` names the main worktree on its first line). Both are printed.
+# The derived main path is Windows-form (C:/...), which is also strictly more durable than either
+# MSYS flavor: /c exists only while something mounts it (LD-0340 died exactly that way at site Z).
+WS_RUN="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+WS="$(git -C "$WS_RUN" worktree list --porcelain 2>/dev/null | sed -n '1s/^worktree //p')"
+if [ -z "$WS" ] || [ ! -d "$WS/.tools" ]; then
+    echo "provision-path-shims: WARN: could not derive a main worktree from $WS_RUN -- baking the RUNNING checkout instead. If that checkout is temporary, every forwarder's fallback dies with it." >&2
+    WS="$WS_RUN"
+fi
 WS_WIN="$(cygpath -w "$WS" 2>/dev/null || echo "$WS")"
 BIN="$HOME/bin"
 mkdir -p "$BIN"
@@ -85,8 +105,18 @@ mkdir -p "$BIN"
 # chmod +x below is honoured by writing a PROTECTED explicit DACL with two DENY ACEs onto the file -- the exact state
 # that denied a Codex seat every shim (S26; this seat's S29/S30). Measured: S30's reset left 0 of 211 protected and
 # every forwarder worked all evening; the next provisioning run re-protected 105 of 211 within two seconds. So the
-# mode write is followed by `icacls /reset` (default inherited ACLs), the state proven to work; the .cmd twins never
-# needed it. Fail-open with a WARN naming the file -- a shim that exists with a bad DACL beats no shim; the DACL read
+# mode write is followed by `icacls /reset` (default inherited ACLs), the state proven to work.
+#
+# CORRECTED 2026-09-10 (0.9.0_WK_NFRA_COMPEFFICACY~2, NFRA_COMPEFFICACY CE-e-2, row W2-S5). THIS BLOCK USED TO SAY 'the
+# .cmd twins never needed it' AND THAT WAS BACKWARDS -- THE .cmd TWINS ARE THE ONLY ONES THAT DO. Measured by
+# dry-running this script into a scratch HOME before the live run: 105 of 210 files came out with a protected
+# DACL and EVERY ONE OF THEM WAS A .cmd (aws.cmd, comp-adversary.cmd, comp-arity.cmd, ...); the chmod'd
+# extensionless forwarders all read AreAccessRulesProtected=False because _restore_inheritance already ran on
+# them. The count 105 the header cites is therefore the .cmd plane, not the chmod plane, and the count matches
+# the twin population exactly. That also matches the standing note that a ~/bin shim denied to a Codex seat is
+# broken ACL inheritance ON THE .cmd PLANE. So _restore_inheritance is now called on the twin as well: without
+# it, EVERY RUN OF THIS SCRIPT TAKES THE FLEET FROM 0 PROTECTED TO 105 -- measured live pre-run 0 of 211.
+# Fail-open with a WARN naming the file -- a shim that exists with a bad DACL beats no shim; the DACL read
 # at the end of the run prints the count either way. No-op where icacls is absent (a non-Windows host).
 _restore_inheritance() {
   command -v icacls >/dev/null 2>&1 || return 0
@@ -98,7 +128,8 @@ _restore_inheritance() {
   MSYS_NO_PATHCONV=1 icacls "$_w" /reset >/dev/null 2>&1 || echo "WARN: icacls /reset failed on $1 -- its DACL may still carry a chmod's DENY ACEs (S26)"
 }
 
-echo "provision-path-shims: workspace=$WS  ~/bin=$BIN"
+echo "provision-path-shims: RUNNING FROM $WS_RUN"
+echo "provision-path-shims: BAKING (durable fallback + tool census) $WS  ~/bin=$BIN"
 
 # ---- aws: PATH-strip-then-reinvoke, so .tools/aws's own self-discovery never sees this file ----
 cat > "$BIN/aws" << EOF
@@ -123,25 +154,77 @@ cat > "$BIN/aws" << EOF
 # construction, so it matches its own PATH entry no matter which flavor that is.
 _self_dir="\$(cd "\$(dirname "\${BASH_SOURCE[0]}")" 2>/dev/null && pwd)"
 export PATH="\$(printf '%s' "\$PATH" | tr ':' '\n' | grep -Fxv "\$_self_dir" | paste -sd: -)"
-# Prepend the workspace .tools ONLY if it resolves here. Baked (this file lives outside the repo
-# and must point home somehow) but VERIFIED rather than assumed -- a stale or wrong-flavor bake
-# now degrades to "use whatever aws is on PATH" instead of breaking every call.
-if [ -x "$WS/.tools/aws" ]; then
-  export PATH="$WS/.tools:\$PATH"
+#
+# CALLER-TOPLEVEL RESOLUTION (NFRA_COMPEFFICACY CE-e-2, 2026-09-10, row W1-S2). Same rule as the
+# comp-* forwarders: prepend the CALLER'S OWN .tools when it carries an aws wrapper, so a seat
+# editing .tools/aws in a linked worktree exercises the file it changed rather than the
+# provisioning tree's. The baked prefix stays as the fallback -- this file lives outside the repo
+# and must point home somehow -- but it is VERIFIED rather than assumed, and a fallback SAYS SO
+# on stderr. NO NEW LOOP RISK: .tools/aws's own "find the real aws, skip myself" search skips any
+# candidate matching */.tools/aws, which is true of the caller's copy exactly as it was of the
+# baked one.
+_aws_baked_tools="$WS/.tools"
+_git_out="\$(git rev-parse --show-toplevel 2>&1)"; _git_rc=\$?
+_aws_tools=""
+if [ \$_git_rc -eq 0 ] && [ -n "\$_git_out" ] && [ -x "\$_git_out/.tools/aws" ]; then
+  _aws_tools="\$_git_out/.tools"
+elif [ -x "\$_aws_baked_tools/aws" ]; then
+  _aws_tools="\$_aws_baked_tools"
+  printf '%s\n' "WARN: aws: no caller-toplevel .tools/aws (git rc=\$_git_rc) -- PREPENDING THE BAKED \$_aws_tools instead (run: aws --which)" >&2
+else
+  printf '%s\n' "WARN: aws: neither a caller-toplevel nor the baked \$_aws_baked_tools carries an aws wrapper -- DEFERRING TO WHATEVER aws IS ON PATH (run: aws --which)" >&2
 fi
+
+if [ "\${1-}" = "--which" ]; then
+  if [ -n "\$_aws_tools" ]; then printf '%s\n' "\$_aws_tools/aws"; else printf '%s\n' "(none -- this shim would exec whatever aws is on PATH)"; fi
+  exit 0
+fi
+
+[ -n "\$_aws_tools" ] && export PATH="\$_aws_tools:\$PATH"
 exec aws "\$@"
 EOF
 chmod +x "$BIN/aws" || echo "WARN: chmod EINVAL on $BIN/aws (ACL-inherited fs; file is executable by ACL) -- continuing"
 _restore_inheritance "$BIN/aws"
 
-cat > "$BIN/aws.cmd" << EOF
+# CRLF, deliberately: see the goto note inside. sed adds the CR the heredoc does not.
+sed 's/$/\r/' > "$BIN/aws.cmd" << EOF
 @echo off
+setlocal EnableExtensions
 rem Bootstrap shim (NFRA_TOOLARCH.PATHFIX) -- generated by .tools\\provision-path-shims.sh, do
 rem not hand-edit. Delegates directly to the tracked .tools\\aws.cmd by absolute path -- that
 rem file already hardcodes the real python Scripts aws.cmd target with no self-discovery, so
 rem there is no loop risk here (unlike the bash form above).
-call "$WS_WIN\\.tools\\aws.cmd" %*
+rem CALLER-TOPLEVEL RESOLUTION (NFRA_COMPEFFICACY CE-e-2): resolve the CALLER'S git toplevel
+rem first, fall back to the baked path and SAY SO on stderr, and answer --which.
+set "SHIM_BAKED=$WS_WIN\\.tools\\aws.cmd"
+set "SHIM_TARGET=%SHIM_BAKED%"
+set "SHIM_TOP="
+for /f "usebackq delims=" %%i in (\`git rev-parse --show-toplevel 2^>nul\`) do set "SHIM_TOP=%%i"
+if not defined SHIM_TOP goto _shim_no_top
+if exist "%SHIM_TOP%\\.tools\\aws.cmd" goto _shim_use_top
+echo WARN: aws.cmd: the caller toplevel %SHIM_TOP% carries no .tools\\aws.cmd -- CALLING THE BAKED PATH %SHIM_BAKED% instead ^(run: aws --which^) 1>&2
+goto _shim_resolved
+:_shim_no_top
+echo WARN: aws.cmd: no git toplevel at %CD% -- CALLING THE BAKED PATH %SHIM_BAKED% instead ^(run: aws --which^) 1>&2
+goto _shim_resolved
+:_shim_use_top
+set "SHIM_TARGET=%SHIM_TOP%\\.tools\\aws.cmd"
+:_shim_resolved
+rem SINGLE-LINE STATEMENTS ONLY, CRLF-written -- see the comp-* twin for the measurement.
+rem BRACKET COMPARISON, NOT "%~1" -- a MEASURED choice, not a style. %~1 strips only the OUTER
+rem quote pair, so an argument that reaches this file with DOUBLED quotes (a bash caller doing
+rem cmd.exe /c "..." does exactly that) leaves an ODD number of quotes, and "%~1"=="--which"
+rem then expands to an unbalanced comparison that cmd refuses with "<word> was unexpected at
+rem this time" -- measured on comp-which.cmd "what produces canonical prices". [%1] adds no
+rem quotes, so the token stays balanced whatever it holds and the compare is false, not fatal.
+if /i [%1]==[--which] goto _shim_which
+call "%SHIM_TARGET%" %*
+exit /b %ERRORLEVEL%
+:_shim_which
+echo %SHIM_TARGET%
+exit /b 0
 EOF
+_restore_inheritance "$BIN/aws.cmd"
 
 # ---- comp-which / comp-system: plain absolute-path forwarders, no self-discovery risk ----------
 # .cmd form's interpreter MUST match each tool's actual shebang -- comp-which is
@@ -201,39 +284,122 @@ for tool in $_derived; do
 # hand-edit; re-run that script instead. All logic stays in the tracked .tools/$tool.
 # \`exec\` performs a real execve, so the target's own shebang resolves the interpreter.
 #
-# BOTH-FLAVOR FALLBACK (added 2026-07-29). The baked prefix is whatever flavor the PROVISIONING
-# shell used. At site Z a reboot killed LD-0340's volatile \`mount -f C: /c\`, and ALL 186
-# forwarders -- every one baked against /c/... -- died at once. The comp rail was dead at the
-# entrypoint and safe-commit's own hooks printed "No such file or directory" and let commits
-# THROUGH: a live gate failing OPEN and SILENT.
+# CALLER-TOPLEVEL RESOLUTION (NFRA_COMPEFFICACY CE-e-2, 2026-09-10, on round-7 row W1-S2).
+# THE DEFECT THIS REPLACES: this file used to point ONLY at a path baked into whichever tree
+# provisioned it. Spine v3 puts every worker in a LINKED WORKTREE (CLAUDE.md 14b), so a worker
+# that edited .tools/$tool in its worktree and verified it BY THE BARE NAME ran the provisioning
+# tree's copy -- THE FILE IT DID NOT CHANGE -- and the run succeeded, printed a plausible answer
+# and returned rc 0. The wrong-object result and the correct result are byte-identical and
+# nothing in the output said which file answered. That is a FALSE GREEN, and it is invisible.
+# SO: resolve the CALLER'S own git toplevel first and exec ITS .tools/$tool when that exists;
+# fall back to the baked path otherwise AND SAY SO ON STDERR. A SILENT fallback would rebuild
+# the same defect one layer down -- the caller still could not tell which file answered.
+# --which prints the absolute target this shim would exec, and exits 0 without running it.
+# COST: one \`git rev-parse --show-toplevel\` per invocation. NON-APPLICATION: none -- the
+# resolution IS the point, and the tools it fronts each cost far more than the rev-parse.
+_baked="$WS/.tools/$tool"
+
+# BOTH-FLAVOR FALLBACK for the BAKED path (added 2026-07-29; reasoning unchanged and still
+# binding). The baked prefix is whatever flavor the PROVISIONING shell used. At site Z a reboot
+# killed LD-0340's volatile \`mount -f C: /c\` and ALL forwarders -- every one baked against
+# /c/... -- died at once; safe-commit's own hooks printed "No such file or directory" and let
+# commits THROUGH: a live gate failing OPEN and SILENT. /cygdrive/c is a compiled-in default and
+# is always present; /c exists only while something mounts it.
 #   GENERAL FORM: A NON-DURABLE FIX THAT GENERATES DURABLE ARTIFACTS PROPAGATES ITS OWN EXPIRY
-#   INTO THEM. \`mount -f\` was correctly labelled "dies at reboot"; nobody labelled the
-#   forwarders it had silently made conditional on itself.
-# So: try the baked path, then the OTHER flavor. /cygdrive/c is a compiled-in default and is
-# always present; /c exists only while something mounts it. Costs one \`[ -x ]\` per call.
-_t="$WS/.tools/$tool"
-if [ ! -x "\$_t" ]; then
-  case "\$_t" in
-    /c/*)        _alt="/cygdrive\${_t}" ;;
-    /cygdrive/c/*) _alt="\${_t#/cygdrive}" ;;
-    *)           _alt="" ;;
+#   INTO THEM.
+_shim_flavor() {
+  if [ -x "\$1" ]; then printf '%s' "\$1"; return 0; fi
+  case "\$1" in
+    /c/*)          [ -x "/cygdrive\$1" ] && { printf '%s' "/cygdrive\$1"; return 0; } ;;
+    /cygdrive/c/*) [ -x "\${1#/cygdrive}" ] && { printf '%s' "\${1#/cygdrive}"; return 0; } ;;
   esac
-  [ -n "\$_alt" ] && [ -x "\$_alt" ] && _t="\$_alt"
+  printf '%s' "\$1"
+  return 1
+}
+
+# The toplevel read KEEPS its rc AND its stderr. An empty answer here carries a VERDICT -- which
+# file is about to answer -- and CLAUDE.md rule 16 forbids sending a verdict-bearing read to
+# /dev/null. Both are reported in the fallback line below.
+_git_out="\$(git rev-parse --show-toplevel 2>&1)"; _git_rc=\$?
+if [ \$_git_rc -eq 0 ] && [ -n "\$_git_out" ] && [ -x "\$_git_out/.tools/$tool" ]; then
+  _t="\$_git_out/.tools/$tool"
+elif [ \$_git_rc -eq 0 ] && [ -n "\$_git_out" ]; then
+  _t="\$(_shim_flavor "\$_baked")"
+  printf '%s\n' "WARN: $tool: the caller toplevel \$_git_out carries no .tools/$tool -- EXECUTING THE BAKED PATH \$_t instead (run: $tool --which)" >&2
+else
+  _t="\$(_shim_flavor "\$_baked")"
+  printf '%s\n' "WARN: $tool: no git toplevel at \$PWD (git rc=\$_git_rc: \$_git_out) -- EXECUTING THE BAKED PATH \$_t instead (run: $tool --which)" >&2
+fi
+
+if [ "\${1-}" = "--which" ]; then
+  printf '%s\n' "\$_t"
+  exit 0
+fi
+
+if [ ! -x "\$_t" ]; then
+  printf '%s\n' "ERROR: $tool: no executable target -- neither the caller toplevel nor the baked path \$_baked resolves .tools/$tool" >&2
+  exit 127
 fi
 exec "\$_t" "\$@"
 EOF
     chmod +x "$BIN/$tool" || echo "WARN: chmod EINVAL on $BIN/$tool (ACL-inherited fs; file is executable by ACL) -- continuing"
     _restore_inheritance "$BIN/$tool"
 
-    cat > "$BIN/$tool.cmd" << EOF
+        # CRLF, deliberately: see the goto note inside.
+    sed 's/$/\r/' > "$BIN/$tool.cmd" << EOF
 @echo off
+setlocal EnableExtensions
 rem Bootstrap shim (NFRA_TOOLARCH.PATHFIX) -- generated by .tools\\provision-path-shims.sh, do
 rem not hand-edit. Windows .cmd has no shebang mechanism, so the interpreter is named
 rem explicitly and MUST match $tool's actual shebang (py.exe for python3, bash.exe for bash) --
 rem never a bare \`bash\` (Windows would resolve that to the WSL stub, not Git Bash; this
 rem workspace's own git_bash_resolver.py exists for exactly that hazard).
-${_INTERP_WIN[$tool]} "$WS_WIN\\.tools\\$tool" %*
+rem
+rem CALLER-TOPLEVEL RESOLUTION (NFRA_COMPEFFICACY CE-e-2, 2026-09-10, row W1-S2) -- THE SAME RULE
+rem AS THE BASH TWIN, AND IT IS NOT OPTIONAL HERE. A PowerShell or cmd caller standing in a
+rem linked worktree otherwise runs the provisioning tree's copy: the file it did not change,
+rem returning rc 0 with a byte-identical answer. Fixing only the bash plane would leave the
+rem defect alive on the plane PowerShell uses, which is the primary shell on this box.
+rem Resolve the CALLER'S git toplevel first; fall back to the baked path and SAY SO on stderr;
+rem answer --which with the absolute target.
+set "SHIM_BAKED=$WS_WIN\\.tools\\$tool"
+set "SHIM_TARGET=%SHIM_BAKED%"
+set "SHIM_TOP="
+for /f "usebackq delims=" %%i in (\`git rev-parse --show-toplevel 2^>nul\`) do set "SHIM_TOP=%%i"
+if not defined SHIM_TOP goto _shim_no_top
+if exist "%SHIM_TOP%\\.tools\\$tool" goto _shim_use_top
+echo WARN: $tool: the caller toplevel %SHIM_TOP% carries no .tools\\$tool -- EXECUTING THE BAKED PATH %SHIM_BAKED% instead ^(run: $tool --which^) 1>&2
+goto _shim_resolved
+:_shim_no_top
+echo WARN: $tool: no git toplevel at %CD% -- EXECUTING THE BAKED PATH %SHIM_BAKED% instead ^(run: $tool --which^) 1>&2
+goto _shim_resolved
+:_shim_use_top
+set "SHIM_TARGET=%SHIM_TOP%\\.tools\\$tool"
+:_shim_resolved
+rem SINGLE-LINE STATEMENTS ONLY BELOW, AND THIS FILE IS WRITTEN CRLF -- both are load-bearing.
+rem A .cmd emitted with LF-only endings (which a bash heredoc does by default, and which every
+rem earlier version of this twin had) survives while every line is a lone command, and BREAKS the
+rem moment a multi-line \`if (...)\` block or a goto label is introduced: measured on the first
+rem exercise of this shim, \`comp-which.cmd "what produces canonical_prices.parquet?"\` answered
+rem "produces was unexpected at this time." while \`--which\` on the same file worked. So the
+rem block form is replaced by a goto and the heredoc is piped through sed to add the CR.
+rem BRACKET COMPARISON, NOT "%~1" -- a MEASURED choice, not a style. %~1 strips only the OUTER
+rem quote pair, so an argument that reaches this file with DOUBLED quotes (a bash caller doing
+rem cmd.exe /c "..." does exactly that) leaves an ODD number of quotes, and "%~1"=="--which"
+rem then expands to an unbalanced comparison that cmd refuses with "<word> was unexpected at
+rem this time" -- measured on comp-which.cmd "what produces canonical prices". [%1] adds no
+rem quotes, so the token stays balanced whatever it holds and the compare is false, not fatal.
+if /i [%1]==[--which] goto _shim_which
+${_INTERP_WIN[$tool]} "%SHIM_TARGET%" %*
+exit /b %ERRORLEVEL%
+:_shim_which
+echo %SHIM_TARGET%
+exit /b 0
 EOF
+    # THE TWIN NEEDS THE RESET TOO -- and only the twin comes out protected (see the
+    # _restore_inheritance header). Without this line every run of this script moves the
+    # fleet from 0 protected to one-per-tool, which is S26 re-armed by the fix itself.
+    _restore_inheritance "$BIN/$tool.cmd"
 done
 
 # Report what was ACTUALLY written, counted from disk -- never a hardcoded list. A hand-written
