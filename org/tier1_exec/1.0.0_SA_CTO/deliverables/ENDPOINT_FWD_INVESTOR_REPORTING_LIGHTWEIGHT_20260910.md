@@ -157,17 +157,39 @@ per Rule 27's L2 clause. Nothing here waits on an event nobody controls.
 
   FWD-7  The client directory cannot go quietly stale, and its ceiling belongs to
          the system rather than to the advisor's diligence
-         DONE WHEN  EXERCISED -- READ ON DEMAND from the projection's own refresh
-                    history: consecutive refreshes with their instants, and no served
-                    directory older than the ceiling across them
-         ACCEPT     a client added or terminated in the source appears or disappears
-                    in search within the declared refresh window WITHOUT anyone
-                    asking for a refresh; the oldest directory an advisor can be
-                    served is set by the SCHEDULE, not by whether they noticed the
-                    as-of; a refresh that DID NOT RUN reads differently from one that
-                    completed
+         DONE WHEN  EXERCISED -- a DRIVEN exercise on a CONTROLLED CLOCK against
+                    source fixtures, covering the FAILURE arms, with NO REAL-CALENDAR
+                    WAIT anywhere in it
+         ACCEPT     a client added, or whose eligibility changes, in the source
+                    becomes visible or ceases to be offered within the declared
+                    refresh window WITHOUT anyone asking for a refresh; a MISSED
+                    TRIGGER and a FAILED REFRESH each read DIFFERENTLY from a
+                    completed one; a request served from an OVER-AGE directory hits
+                    the declared expiry/fallback behavior rather than being answered
+                    silently; the oldest directory an advisor can be served is set by
+                    the SCHEDULE, not by whether they noticed the as-of
+         PROOF      controlled-clock / source-fixture exercise driving ALL FIVE arms:
+                    an added client, a changed eligibility, a MISSED trigger, a
+                    FAILED refresh, and an OVER-AGE directory request
          OWNER      WS1
-         SOURCE     ⭐ **NOT IN THE BRIEF'S SIX. ADDED AT L2** -- see UNCOVERED below
+         SOURCE     ⭐ **NOT IN THE BRIEF'S SIX. ADDED AT L2** -- see UNCOVERED below.
+                    DONE WHEN and PROOF re-cut on `4.0.0_SA_CRO`'s L2 review (95180):
+                    my first form read a HISTORY of consecutive refreshes, which has
+                    NO NEGATIVE ARM -- a run of successes cannot show what a missed
+                    or failed refresh does, and a SCHEDULE is not by itself a
+                    MAXIMUM SERVED AGE. The driven form is strictly stronger and is
+                    what the L2 "no FWD is a wait" clause actually demands
+         ⛔ OPEN, AND IT IS A PRODUCT DECISION RATHER THAN A CUT DEFECT: a terminated
+                    client or account may still require HISTORICAL reporting, so
+                    DISAPPEARANCE FROM SEARCH MUST NOT BE EQUATED WITH ACCESS
+                    REVOCATION. This outcome names an ELIGIBILITY POLICY and does not
+                    write one; my first form assumed termination implies
+                    disappearance, which is a decision I do not own. Andrew's, or the
+                    project's at L4 with his word. Raised by `4.0.0_SA_CRO`
+         ⛔ WHAT THIS OUTCOME IS **NOT**: it is DIRECTORY FRESHNESS AND ELIGIBILITY,
+                    and NOTHING about it grades revocation. FWD-2 owns revocation
+                    INDEPENDENTLY and the two are not substitutes -- see the
+                    correction under UNCOVERED
 ```
 
 ---
@@ -196,9 +218,29 @@ onboarded last week is INVISIBLE and a terminated one is still selectable.
 
 **That is the FWD-3 versus FWD-4 distinction from `NFRA_CLDGRPH` arriving in a new project** — age
 being *legible* and age having a *ceiling* are different outcomes with different owners, and this
-estate has already paid to learn that they do not travel together. Given entitlement rides on the same
-projection (FWD-2), a stale directory is not merely a stale list: **a terminated advisor's population
-can outlive the termination.** That is why it is an outcome and not a maintenance note.
+estate has already paid to learn that they do not travel together.
+
+⛔ **CORRECTION TO MY OWN ARGUMENT, MADE BEFORE RATIFICATION RATHER THAN AFTER.** My first cut escalated
+this by claiming that, because entitlement rides on the same projection, *"a terminated advisor's
+population can outlive the termination."* **THAT IS WRONG AGAINST THIS DESIGN, and `4.0.0_SA_CRO`
+refused it at 95180.** Verified at source rather than conceded on assertion — the design annex says so
+in two places: §1.2 *"A scope token/reference must be bound to the authenticated principal and CURRENT
+PERMISSION VERSION, not a bearer grant that outlives revocation. Recheck authorization when requesting
+a report, polling it and downloading it"*, and §2.1 *"KEEP AUTHORIZATION REVISION SEPARATE so
+permission changes can invalidate visibility without rebuilding all names."* **Authorization revision
+is separate from the directory projection BY DESIGN.** A stale directory yields stale NAMES, not stale
+PERMISSIONS.
+
+**HOW I GOT IT WRONG, because the shape matters more than the error:** I read the BRIEF and asserted a
+mechanism that is specified in the DESIGN ANNEX — a 31,172-byte document I had not opened. I certified
+the gap between what I read. That is the unread-gap hazard, committed by the seat that has been citing
+it at others all day, and it was caught by the author of the document I skipped.
+
+**FWD-7 SURVIVES THE CORRECTION; ONLY MY ARGUMENT FOR ITS SEVERITY DIES.** The outcome stands on its
+own plain facts: a directory that silently stops refreshing leaves a client onboarded last week
+INVISIBLE and a terminated one still OFFERED, while every one of O1–O6 passes. That is sufficient. It
+does not need the revocation escalation and must not borrow FWD-2's weight — **FWD-2 owns revocation
+independently, and nothing in FWD-7 grades it.**
 
 **NOT ADDED, and I name them so the exclusion is deliberate rather than an omission:** vendor
 retirement, a replacement performance engine, estate-wide pipeline consolidation, BI/agent query
