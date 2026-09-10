@@ -51,10 +51,12 @@ this cut; none carries NOT-EVALUATED**, which is a measurement and not a vocabul
 - **(ii) SAME GRAIN.** Every cell is one ENGINE or one DECISION RECORD. ⚠ Five of six serve `FWD-4`,
   which is not a grain defect: that outcome is served by two engines by contract already, and its
   remediation is genuinely several separate acts on separate members.
-- **(iii) INTENT COHERENCE.** One axis per cell. ⛔ `IAM-r-1` and `IAM-r-6` BOTH touch the disposition
-  vocabulary and are therefore placed on ONE CHAIN so they cannot race: the split lands first, the
-  third value is added onto the split result. Two cells editing one enum concurrently is how a
-  vocabulary acquires a fourth intent nobody chose.
+- **(iii) INTENT COHERENCE.** One axis per cell. ⛔ `IAM-r-1`, `IAM-r-4` and `IAM-r-6` ALL edit the
+  governance disposition document and are therefore placed on ONE CHAIN so they cannot race: the
+  split lands first, the class ruling is recorded onto the split result, the third value is added
+  onto that. Two cells editing one enum concurrently is how a vocabulary acquires a fourth intent
+  nobody chose -- and two workers editing one prose document is how a drain becomes a hand-merge.
+  Section 4 carries the edge set and why it costs a worker to buy this.
 - **(iv) STATE COHERENCE -- which values one remedy does NOT move.** Splitting the token moves
   `IAM-r-1` and unblocks `IAM-r-6`; it does **not** move `IAM-r-3` (membership is a measurement, not
   a vocabulary), does **not** move `IAM-r-2` (a population denominator is a different plane), and
@@ -134,19 +136,39 @@ degenerate and said it would become load-bearing the moment an `infra` cell appe
 ```
   IAM-r-1  <- (none)                      IAM-r-2  <- (none)          <-- TWO ROOTS
   IAM-r-3  <- IAM-r-2
-  IAM-r-4  <- IAM-r-3
+  IAM-r-4  <- IAM-r-1, IAM-r-3
   IAM-r-5  <- IAM-r-3
-  IAM-r-6  <- IAM-r-1, IAM-r-3
+  IAM-r-6  <- IAM-r-4
 ```
 
-**Why membership gates the three disposition cells:** the set has a confirmed false positive, so
-disposing a member before its membership is re-established risks disposing something that is not in
-the set. The three disposition cells therefore wait on the per-member read rather than on each other.
+**Why membership gates the disposition cells:** the set has a confirmed false positive, so disposing
+a member before its membership is re-established risks disposing something that is not in the set.
 
-**MAXIMUM ANTICHAIN = 3** (`IAM-r-4`, `IAM-r-5`, `IAM-r-6` are mutually incomparable; no antichain of
-4 exists -- adding any other cell brings a comparable pair). By Dilworth the **minimum chain
-partition is 3**, and that is the fan-out input. ⛔ **This section is the INPUT to the derivation and
-is not itself the fan-out; the `fanout:` line is stated in the L6 issuance commit.**
+⛔ **AND WHY THE THREE DOCUMENT-EDITING CELLS ARE ONE CHAIN RATHER THAN THREE PARALLEL ONES -- THIS IS
+A WRITE-SURFACE EDGE, NOT A DATA-DEPENDENCY EDGE, AND IT IS THE HALF A DEPENDENCY GRAPH USUALLY
+MISSES.** `IAM-r-1`, `IAM-r-4` and `IAM-r-6` all edit the SAME governance disposition document:
+the first splits its vocabulary, the second records a class ruling against three of its rows, the
+third adds a value and disposes a fourth. Nothing in the DATA forces `IAM-r-4` before `IAM-r-6`.
+**The shared FILE does.** Three workers hold three worktrees, so they would not collide while
+working -- they would collide at the DRAIN, as a three-way conflict on one markdown document, which
+is the hand-merge path that loses content. An append-only JSON channel at least fails loudly on a
+parse; a prose document merges dirty and reads fine.
+
+So the edge set is ordered by the write surface: **split -> class ruling -> third value**, one chain,
+each cell inheriting the document the previous one left. **This costs parallelism deliberately** --
+it takes the maximum antichain from 3 to 2 and the fan-out from 3 workers to 2.
+
+**MAXIMUM ANTICHAIN = 2** (`IAM-r-4` and `IAM-r-5` are incomparable; no antichain of 3 survives the
+write-surface edges). By Dilworth the **minimum chain partition is 2**, and that is the fan-out
+input. ⛔ **This section is the INPUT to the derivation and is not itself the fan-out; the `fanout:`
+line is stated in the L6 issuance commit.**
+
+⚠ **THIS EDGE SET REPLACED AN EARLIER ONE IN THIS SAME FILE, BEFORE THE CUT AND THEREFORE BEFORE THE
+FREEZE.** The first version let the three document-editing cells run in parallel and was wrong for
+the reason above. It was found while writing their `<paths>` blocks -- the write surfaces collided on
+the page. Recorded rather than silently replaced, because the near-miss is the useful part: a
+decomposition that reasons only about DATA dependencies will cheerfully schedule two cells onto one
+file, and nothing downstream refuses it until the drain.
 
 ---
 
