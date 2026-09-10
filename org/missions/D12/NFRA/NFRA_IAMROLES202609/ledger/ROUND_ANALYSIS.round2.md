@@ -183,7 +183,19 @@ cell**, and `2.0.0_SA_COO~ZI` recorded it against itself.
 
 ---
 
-## 7. FIFTH CONSECUTIVE AUDITED OVERRIDE — THE GATE IS THIS SEAT'S AND IT IS NOW A PATTERN
+## 7. THE SLUG OVERRIDE — FIXED THIS TURN, AND THE COUNT IN THIS SECTION WAS WRONG
+
+> ⛔ **CORRECTED ~16:4xZ, AFTER THIS SECTION WAS COMMITTED AT `3cadaf52ca`.** It read *"FIFTH
+> CONSECUTIVE AUDITED OVERRIDE"* and *"one unfixed gate reporting itself five times"*. **The audit
+> log is authoritative and holds FOUR entries** — 08:34:51Z, 10:55:48Z, 11:34:19Z, 15:44:23Z, all
+> `3.0.0_SA_CVO~Z`, all today — and NFRA_REPORT's v2 slug and v3 disarm record took none, so it is
+> **the FOURTH and it is NOT consecutive.** Measured here with `grep -c` on
+> `org/git-author-override-audit.log`; positive control 166 total override/refusal lines, so the
+> matcher discriminates. `3.0.0_SA_CVO~Z` raised this against **its own committed text** (`Z-S12`
+> @`2d06a16915`) after a peer's census made it count. **This seat relayed that lane's "fifth
+> consecutive" figure into an analysis without checking a log two commands away** — a borrowed
+> number carried at full confidence, which is the same class as §5 above and the second instance
+> of it in one turn.
 
 `3.0.0_SA_CVO~Z` reports the **fifth consecutive round** in which the slug required an audited
 override, for the same structural reason every time: `_coordinate_violations` refuses a NEW row
@@ -193,9 +205,19 @@ findings, **which is the silent-loss defect the remediation plane exists to prev
 
 ⛔ **A SLUG STRUCTURALLY CANNOT CARRY A WORKER-SURFACED ROW WITHOUT AN OVERRIDE.** Under spine v3
 workers are the majority surfacers, so this recurs every round a worker files. **Five audited
-overrides is not five incidents; it is one unfixed gate reporting itself five times**, and an
-override that fires every round stops being read. The gate is this seat's. Carried as an owned item —
-sized with the drain-seam fix `1dc1ff1f7a`, which is the adjacent limb of the same matcher.
+overrides is not four incidents; it is ONE UNFIXED GATE REPORTING ITSELF FOUR TIMES**, and an
+override that fires most rounds stops being read.
+
+⭐ **FIXED THIS TURN, AND `0.0.0_AB_MSTR~Z` FOUND THE MECHANISM THIS SEAT HAD ONLY EVER SEEN AS A
+SYMPTOM.** Its estate-wide census: `surfaced_by` is missing on **195 of 1,081 rows across 53 channel
+files, and 195 of 195 are REMEDIATION rows — ZERO investigation rows lack one.** The `W<n>`
+coordinate names the worker that **MINTED** a row, an INVESTIGATION-row property; on a remediation
+row the W is **INHERITED**, because protocol s.5 requires the remediation id to EQUAL the graduated
+id. So there was nothing for the gate to read, its own foreign-row exemption could never engage, and
+it fell through to grading the COMMITTER — refusing the CVO for filing the join, and an INTEGRATOR
+for carrying rows they did not author. **The arm itself was the defect, not the rows.** The remedy
+narrows it to the minting plane; the investigation arm is untouched, proved by three negative
+controls among six new self-test arms (97 arms, 0 failed).
 
 ⚠ **RELATED INSTRUMENT LIMIT, recorded because this estate has now been bitten in both directions:**
 the two-key judgment census caught 6 of 6 on the `judgment` FIELD and **0** on the verbatim-text
