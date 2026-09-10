@@ -699,3 +699,14 @@ bunch of middlemanning ops that pulls data from some vendor, runs it through som
 the dashboard."* Supersedes the ~17:2xZ "dedicated D14" placement this engagement was cut under. Brief re-pointed (title,
 Part II, F-K, Part V.1, REFS); outcomes O1-O12 unchanged. No register row written by this seat (D9 member set = MSTR's).
 Record: `deliverables/ANDREW_DIRECT_20260909_210xZ_INVESTOR_REPORTING_WRAPS_INTO_D9_OPAL_WORKFLOWS_NOT_A_NEW_D14.md`.
+
+### Pilot append — 2026-09-10, 4.0.0_SA_CRO — one project, four workstreams
+
+Andrew commissioned a lightweight /brief-create using vendor reports and existing silver caches, then clarified ONE umbrella project with FOUR workstreams, potentially coordinated across COO lanes. His full wording and clarification are preserved in `deliverables/ANDREW_DIRECT_20260910_0919ET_LIGHTWEIGHT_INVESTOR_REPORTING.md` (initial record `822f3d7519`). D9 placement stands; the September 9 broader brief is preserved.
+
+Artifacts:
+- `docs/briefs/investor-reporting-lightweight-brief-20260910.md` — six person-action outcomes; four workstream boundaries; WS1 explicitly owns discovery/entitlement as well as the page; no orphaned shared substrate.
+- `docs/briefs/investor-reporting-lightweight-design-20260910.md` — page shape, partner identity/cache methodology, performance normalizer, YCharts routing/capture requirements, holdings/model normalizer, common report/PDF lifecycle.
+- `docs/briefs/sources/INVESTOR_REPORTING_LIGHTWEIGHT_EVIDENCE_20260910.json` — 31 source fingerprints with targeted-read scope; three registry client firms.
+
+Findings: existing 49F BD performance request builder; Orion on-demand response gap versus an existing saved-query pull; 49F Schwab/BD/SmartX key distinctions; INF household/representative mapping with some legacy-bucket inputs; COT relationship membership grain and incomplete segmentable advisor model; existing YCharts transport is not proof of report-generation routing. Current live joins, freshness and timing remain unmeasured. YCharts analyst transcripts/generation HAR and two remaining sensitivity varietals are pending evidence. No vendor egress, live S3 read, implementation, deployment, project registration or task-order issuance. Consumer: CTO L2. Push state LOCAL at delivery; origin hash carried in the delivery receipt.

@@ -12,3 +12,9 @@
 ## Receiving-seat action
 
 Read `.claude/skills/brief-create/SKILL.md`; author a new L1 brief grounded in repository code and captured evidence. Four proposed boundaries are page/client navigation, performance normalization, YCharts routing, and holdings/model normalization. Client discovery and entitlement are shared substrate. Actual registration, project codes, task orders, implementation, and deployment are downstream acts. Existing September 9 brief remains the broader reference; the new brief explicitly describes this lighter pilot. No live vendor calls are needed to write the first evidence-grounded cut.
+
+## Andrew's clarification, same turn, verbatim
+
+> I kind of think we can do this all in one project believe it or not, its just creating separate workstreams under said project. I think the 4 boundaries can basically be split across multiple COO~N agents and they each take a boundary, having each boundary be clearly established under the umbrella project.
+
+Applied: ONE umbrella project, FOUR workstreams with explicit boundaries. Potential COO-lane coordination is Andrew's proposed staffing pattern; the brief does not issue lane assignments or task orders.
