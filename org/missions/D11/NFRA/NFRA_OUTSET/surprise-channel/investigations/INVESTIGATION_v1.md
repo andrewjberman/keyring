@@ -2652,3 +2652,35 @@ The only authored bytes are this header; every row below is its writer's, unmodi
   }
 ]
 ```
+
+## S44 -- an accept arm that reads a MUTABLE key at `latest` is correct only on the day it is authored: three of my own arms passed on 09-09 and failed on 09-10 with no line changed, and the fix is to SELECT rather than to pin
+
+```json
+[
+  {
+    "id": "NFRA_OUTSET-S44",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~W",
+    "surfaced_at": "2026-09-10T14:46Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps~W for this project's own batteries (done -- three arms corrected @c851343). 2.0.0_SA_COO for whether the SELECT-don't-pin shape should bind future cuts across the fabric, which is what makes this row worth filing rather than closing.",
+    "one_line": "AN ACCEPT ARM THAT READS A MUTABLE KEY AT `latest` IS CORRECT ONLY ON THE DAY IT IS AUTHORED, AND ITS LATER FAILURE IS INDISTINGUISHABLE FROM BROKEN WORK. Filed at the issuer's direction (95241) because it generalises past this project and past this cell. MEASURED ON MY OWN BATTERY, WHICH IS THE POINT: `test_os24_manual_served_day.py` graded the 00:29:57Z manual served day and carried THREE arms reading `latest`. arm (b) `head_object` on the three seam keys, compared against a run that started 00:30:30Z -- the 12:30Z scheduled build re-published two of them, so the arm compared TODAY'S vintage (12:31:14Z, 12:31:17Z) against YESTERDAY'S run and reported two failures. arm (c) `get_object` on `config/last-trigger.json` at latest -- that key is OVERWRITTEN BY EVERY INVOKE, so once the 13:00Z fire replaced the manual token the arm compared this run's report against a LATER run's token and reported a third failure. arm (d) `get_object` on the fedobs artifact at latest -- printing 39,008 rows at 12:31:13Z beside a run that could only have read 38,872 rows at 00:18:58Z, a wrong-vintage citation inside a failure message. \u26d4 ALL THREE PASSED WHEN WRITTEN, on 2026-09-09, when the manual token WAS latest and the seam keys had not been re-published. THE ARMS DID NOT BREAK; THE WORLD MOVED PAST THEM. Of the four failures that battery reported tonight, THREE WERE MINE AND ONE WAS THE WORLD'S -- and the three would have been reported as findings about the estate if the arms had not been re-read first. THIS IS THE TIME-BOMB FORM OF A TRAP THIS PROJECT ALREADY KNOWS. The `latest`-versus-VersionId rule has been stated four times here already (rows S34, the OS-s-24 re-cut, O20-AC1's negative arm, O26-AC1's token arm), always about READING THE RIGHT OBJECT NOW. What none of those statements covered is the TIME AXIS: an arm can read the right object on Tuesday and the wrong one on Wednesday without a line of it changing. \u26d4 AND THE FIX IS NOT A PINNED VersionId, which is the obvious remedy and the wrong one: a pin is a literal that goes stale one round later in exactly the same way, and it requires a human to notice. THE DURABLE SHAPE IS TO SELECT: arms (b) and (d) now take, per key, the LATEST VERSION WHOSE LastModified PRECEDES THE RUN START -- which IS, by construction, the version that run read. Arm (c) reads EVERY version of the token key and selects the one whose `run_id` EQUALS the report's -- identifying the token by its CARRIER rather than by recency, which is the same discipline OS-s-26 proved end to end. Both print their DENOMINATORS (versions seen, versions eligible), so a reader sees the choice rather than trusting it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "test_os24_manual_served_day.py before the fix, run 2026-09-10T14:2xZ: FAILED with 4 arm failures -- 'outset/comp_heat_freshness_tools.json vintage 2026-09-10T12:31:14Z does not precede the run start 2026-09-10T00:30:30.554548+00:00', the same for comp_fedobs_coevolution.json at 12:31:17Z, and \"run_id 'a588a7ea-8ad2-4f03-a814-4f02668a66d6' does not match the live token's '77904431-4b72-4033-8f68-4eaba9704b1e'\".",
+        "The same battery had PASSED those arms on 2026-09-09 (commit c02b54d903: 'O24-AC1 passes (a)(b)(c)(e)(f)(g)'). Nothing in the battery changed between the two runs.",
+        "WHAT MOVED, measured: outset/comp_heat_freshness_tools.json gained a version at 2026-09-10T12:31:14Z and comp_fedobs_coevolution.json at 12:31:17Z, both written by the 12:30Z scheduled CodeBuild; config/last-trigger.json gained a version at 2026-09-10T13:00:46Z written by the orchestrator for the scheduled invoke.",
+        "After the fix, run 2026-09-10T14:4xZ: 25 OK verdicts, 0 FAIL, and the arms now print their selection -- 'outset/comp_heat_freshness_tools.json 4 version(s), 3 predating the run start / the version THIS RUN read: wPjEwsCY4Fg2o84Wp3bG.. 2026-09-10T00:18:59Z', and for the token 'DENOMINATOR: 2 version(s) ... selected token version QRHqSjmNPdImTp_rmka.gCcoK1MLWfDR'.",
+        "The fourth failure was NOT mine and survived the fix: group B INSTRUMENT_FAILED on the manual served day, re-pointed by the issuer at 95241 onto the 13:00Z run with the before-state preserved."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every accept in this round that says 'read the served day's artifact' and every battery written against one: that an arm reading a named key reads THE OBJECT THAT RUN SAW. The faces are careful to say BY VersionId for the REPORT keys and are silent about the INPUT keys and the TOKEN key, which are equally mutable.",
+    "world_is": "Three arms read mutable INPUT keys at `latest`, passed on the day of authorship, and became wrong when a later scheduled producer re-published. The failure surfaces as an accept failing, which is indistinguishable from the estate being broken, and it surfaces at an arbitrary later date rather than at the edit that caused it.",
+    "notes": "WHY THIS IS A ROW RATHER THAN A FIXED BUG, in the issuer's words at 95241: it generalises past this project and past this cell. Every future battery in this fabric that grades a run against its INPUTS has the same exposure, and the cheap remedy -- pin a VersionId -- reproduces the defect one round later while looking careful. THE SHAPE TO CARRY: SELECT BY THE RUN, NEVER BY RECENCY. For an input the run consumed, select the latest version preceding the run's own start. For a per-invoke carrier, select by the id the artifact itself names. Print the denominator either way. AND THE META-POINT, which is the reason this was found at all: THE THREE DEFECTS WERE IN THE INSTRUMENT, NOT THE SUBJECT, AND THE INSTRUMENT'S OUTPUT ACCUSED THE SUBJECT. A seat reading its own battery's failure as a finding about the world would have filed three false rows tonight. The check that caught it was re-reading my own arms before reporting their output -- which costs one pass and is the only thing standing between a stale arm and a fabricated finding. Related: [[NFRA_OUTSET-S34]] (the latest-versus-pin trap on the REPORT keys), [[NFRA_OUTSET-S43]] (the id minted from a stale read -- the same staleness on a different axis), [[NFRA_OUTSET-S36]]."
+  }
+]
+```
