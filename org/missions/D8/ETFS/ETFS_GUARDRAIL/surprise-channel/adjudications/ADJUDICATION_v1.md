@@ -18,7 +18,7 @@ instance but is `UNVERIFIABLE-BY-INSTRUMENT` with the CVO named, and is graded a
 disposition rests on this seat's own read beside the record: the served Lambda code hashes, environment and the
 deployed Inflection zip, the reporter role's inline grant, SES's account state, the report bucket, the source at HEAD,
 the vendored-copy census, the published layer, and `.gitattributes`.
-**Denominator at this write:** 5 rows (C-S1 the grade record; C-S2 the eight worker-form items graduated and closed on
+**Denominator at this write:** 6 rows (C-S6 appended 2026-09-10 ~00:2xZ: S4 graduated, the deploy_ledger NEVER-2 defect, owner 0.2.0_DT_PortfolioAnalytics); previous: 5 rows (C-S1 the grade record; C-S2 the eight worker-form items graduated and closed on
 the issuer's in-round acts; C-S3 the three items graduated and OPEN; C-S4 the ten records dismissed with reason; C-S5 the
 correction carrying the CTO's L10 @0557afa38a -- FWD-4 NOT_EVALUATED, seven fire-gated outcomes, not six).
 Investigation rows without a disposition after this write: 0 of 21. Remediation rows minted: S2 (OPEN), S3 (closed).
@@ -216,6 +216,37 @@ Investigation rows without a disposition after this write: 0 of 21. Remediation 
     "spec_asserts": "Spine v3 L10: the CTO grades outcomes (REALIZED / NOT_REALIZED / NOT_EVALUATED) on the slug and the artifact; L9 grades criteria. FWD-4's DONE WHEN as cut: EXERCISED.",
     "world_is": "ETFS_GUARDRAIL round 1 is at ROUND_CLOSE: FWD-6 REALIZED; FWD-1, -2, -3, -4, -5, -7, -8 NOT_EVALUATED pending real fires and a real legitimately-empty day. Three open items carry owners: W2-S1 the inf-pipeline lane, W1-S5 CLOUD_OPS_OR_ETL, S2 the CTO's own queue.",
     "notes": "Scope of the retraction, stated so it is not read wider: the slug's grades, dispositions, precondition measurement and open-item routing stand; the single refuted clause is the count and membership of the fire-gated outcome list, which now includes FWD-4."
+  }
+]
+```
+
+## C-S6 -- adjudicates S4: GRADUATED, remedy OPEN at 0.2.0_DT_PortfolioAnalytics (the deploy_ledger NEVER-2 defect); the remediation row is ../remediations/ S4
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-C-S6",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:23Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-S4"
+    ],
+    "disarm_owner": "0.2.0_DT_PortfolioAnalytics",
+    "one_line": "L9-shaped act mid-round (the issuer's and the CTO's ask, 94794 / 94796): ADJUDICATES one seat-form item -- GRADUATED, remedy OPEN, owner 0.2.0_DT_PortfolioAnalytics. S4 (this seat's row on the mechanism W1-S16 measured): .tools/deploy_ledger.py re-renders the change_management entry from the sentinel on every open / close-leg / close / hold and writes it truncate-and-replace, so the NEVER-2 section a deploy must hand-append (sign-off ids, served keys, archive, rollback) is deleted by the next tool call with no warning -- measured 5 of 5 -> 1 of 5 -> 5 of 5 by the worker, the mechanism read at :239-250 and :289-291 by this seat. The remediation row ETFS_GUARDRAIL-S4 carries the remedy (a sentinel field the renderer emits, or a preserved hand section, and a printed diff either way), the interim (the issuer's ordering clause), and the disarm (a round-trip through the tool leaving a hand-appended section byte-equal, planted both ways). W1-S16 itself is dispositioned at the round-2 L9 when its branch drains; this row does not adjudicate it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S4 (this write) and its evidence; W1-S16 on wk-etfs_guardrail-2-1; deploy_ledger.py :239-250, :289-291 at HEAD 104c46c48a; 94794, 94796."
+      ]
+    },
+    "spec_asserts": "NEVER-2 and TO-EG-s-14's entry clause (the entry CARRIES the halves, keys, archive, rollback); the tool renders the entry from a sentinel with no such field.",
+    "world_is": "A law that requires content the tool cannot carry, and a tool that deletes the content when it is carried by hand.",
+    "notes": "Seat-form item; its clocks live on the remediation row S4. The round-2 L9 reads W1-S16 and the GUARDRAIL faces' ordering clause against this row."
   }
 ]
 ```

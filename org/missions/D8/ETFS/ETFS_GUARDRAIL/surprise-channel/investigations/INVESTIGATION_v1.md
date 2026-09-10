@@ -503,3 +503,35 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
   }
 ]
 ```
+
+## S4 -- deploy_ledger.py re-renders the change entry from the sentinel and DELETES the hand-appended NEVER-2 section (sign-off ids, served keys, archive, rollback); ARMED to 0.2.0_DT_PortfolioAnalytics; filed by the CVO beside W1-S16 so the remediation can be minted tonight
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-S4",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:23Z",
+    "one_line": "THE CHANGE-MANAGEMENT TOOL DELETES THE SECTION THE CHANGE-MANAGEMENT LAW REQUIRES. `.tools/deploy_ledger.py` renders the change_management entry .md WHOLLY from the sentinel state and writes it with write_text (truncate-and-replace) on every `open` / `close-leg` / `close` / `hold` -- `_render_entry` :239-250 says so ('regenerated from state on every mutation THAT GOES THROUGH THIS TOOL'), `_write_entry` :289-291 does it. The sentinel schema has NO field for the content NEVER-2 requires the entry to CARRY (the never-widen sign-off ids, the served keys the run rewrites, the archive table, the rollback recipe), so that content can only be hand-appended to the .md -- and the next tool call deletes it silently, with no diff shown. MEASURED by 0.9.0_WK_ETFS_GUARDRAIL~1 (W1-S16 @wk-etfs_guardrail-2-1): the S14-AC1 arm (a) read 'served keys named 5 of 5; rollback=True' at 23:25:51Z, then 'served keys named 1 of 5; rollback=False' at 23:35Z after three close-leg calls and one hold, then 5 of 5 again after re-appending. The one limb that survived (prior sha256 5 of 5) survived only because the hashes also sit inside a leg's --proof string the sentinel carries -- a partially surviving section reads as a partially intact record. The tool's own docstring names the hand-edit case as 'outside this tool's world' and warns only about the OPPOSITE drift (a hand-edited CLOSED over a live sentinel). The finding is the worker's (W1-S16, on its branch until the drain); this seat re-read the mechanism at the tool and files it as a SEAT row so the remediation the issuer and the CTO named is OWNED tonight (C-S6, 0.2.0_DT_PortfolioAnalytics); the REMEDIATION row with its clocks is minted at the round-2 L9 once every ETFS_GUARDRAIL order is terminal -- the row gate refused it tonight as an L10-shaped act (spine v3: every new remediation row waits for terminality; 5 of 19 orders not terminal at HEAD), rightly; until then the owner, remedy, interim and disarm are recorded on C-S6 and the clocks ride it.",
+    "spec_asserts": "CLAUDE.md NEVER-2: a deploy 'names in that entry EVERY task family that pulls the tag it moves'; TO-EG-s-14 NEVER-2 clause: the entry is 'OPENED FIRST and BOTH never-widen halves are quoted in it ... naming the served keys the run will REWRITE ... the PRIOR objects ARCHIVED ... the ROLLBACK ... and the two sign-off ids'; S14-AC1(a) grades the ENTRY FILE for exactly that content. deploy_ledger.py's own docstring: the entry is 'regenerated from state on every mutation'.",
+    "world_is": "The entry is a rendering of a sentinel that has no field for the content the law requires the entry to carry; every tool call after a hand-append deletes the append silently. Four NEVER-2 entries were opened on this box tonight and a fifth (OS-s-24) is about to be; each carries or will carry a hand-appended section a later close-leg would destroy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.2.0_DT_PortfolioAnalytics",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/deploy_ledger.py at HEAD 104c46c48a (last commit 119ce3a68e, 0.0.0_AB_MSTR~Z, 2026-09-04): :239 `def _render_entry(state)` with the docstring 'regenerated from state on every mutation THAT GOES THROUGH THIS TOOL ... `open` / `close-leg` / `close` / `hold` re-render the entry from the sentinel'; :289-291 `def _write_entry(state): Path(WORKSPACE / state[\"entry_path\"]).write_text(_render_entry(state), encoding=\"utf-8\", newline=\"\\n\")` -- read by this seat (sed), nothing preserved from the existing file.",
+        "ETFS_GUARDRAIL-W1-S16 (0.9.0_WK_ETFS_GUARDRAIL~1, 2026-09-09T23:38Z, on wk-etfs_guardrail-2-1): the three timed reads of the S14-AC1 battery's arm (a) -- 23:25:51Z 5 of 5 / rollback=True; 23:35Z after close-leg L1/L2/L5 (20260909T233249Z) and hold (20260909T233308Z) 1 of 5 / rollback=False; 23:39Z after re-appending 5 of 5 / rollback=True.",
+        "2.0.0_SA_COO 94794 (00:02Z): 'W1-S16 deploy_ledger.py regenerates the entry from the sentinel on every close-leg/hold and silently destroyed the NEVER-2 section (measured 5 of 5 -> 1 of 5 -> 5 of 5) -- ordering clause on the faces; FOR 3.0.0_SA_CVO a remediation row against the tool's lane 0.2.0_DT_PortfolioAnalytics'. 1.0.0_SA_CTO 94796: 'a real tool defect: the CVO's remediation row against 0.2.0_DT_PortfolioAnalytics is right, and the ordering clause on the faces is the interim'.",
+        "EXPOSURE TONIGHT, by census of org/critical_paths/change_management/ (mtime order): 20260909T2355Z outset-drift-publisher-git-head-read-order; 20260909T2243Z estate-report-runner-trigger-token-read (OS-s-26); 20260909T203713Z cldgrph-cgs24 stitch-fold image + seven-family repin; 20260909T184608Z stitch-source-repush; the OS-s-24 manual-served-day entry 20260910T0020Z_estate-report-manual-served-day-09-10.md (two never-widen ids, four protected pins, a rollback recipe) was opened at 00:20Z -- every one a NEVER-2 entry whose hand-carried section a later close-leg would delete.",
+        "Andrew-direct ~00:0xZ (1.0.0_SA_CTO 94801): NFRA_DEPLOYLEDGER CLOSED on the register with a named residue -- this defect postdates that closure and is carried here as a row against the tool's lane, not as a re-opened project."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed by the CVO (lane ANY for investigation rows) beside the worker's W1-S16 so that the REMEDIATION row can be minted now (the remediation document keys on a GRADUATED seat-form item; W1-S16 is worker-form and its clocks ride its C-row at the round-2 L9). Graduated at C-S6; the REMEDIATION row with its clocks is minted at the round-2 L9 once every ETFS_GUARDRAIL order is terminal -- the row gate refused it tonight as an L10-shaped act (spine v3: every new remediation row waits for terminality; 5 of 19 orders not terminal at HEAD), rightly; until then the owner, remedy, interim and disarm are recorded on C-S6 and the clocks ride it. The tool's lane is as the issuer and the CTO named it; the file's last committer was 0.0.0_AB_MSTR~Z."
+  }
+]
+```
