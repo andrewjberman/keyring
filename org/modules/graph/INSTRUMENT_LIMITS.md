@@ -20,9 +20,21 @@ because that dismissal removed the row from one project's L10 predicate and woul
 a live, estate-wide, unowned hazard recorded only in `NFRA_REPORT`-scoped places, where no seat on any
 other project could find it. Gap measured and raised by `2.0.0_SA_COO~ZZ` at msg 20823.
 
-> ⛔ **THE SHARED FAILURE MODE: A FALSE ZERO AND A TRUE ZERO READ IDENTICALLY.** All four limits below
+**ADDENDUM 2026-09-10, `LIMIT 4a`, surfaced by `2.0.0_SA_COO~Z` (msg 20831) from an OBSERVED instance and
+traced to source by `1.0.0_SA_CTO~Z`.** The same corpus-resolution defect fires inside `comp-pulse`, which
+`.tools/safe-commit.sh` runs as the PRE-COMMIT RISK REFLEX -- and there it **skips the risk reflex for the
+whole commit**, not just for the worktree-created file. ⭐ It also RULES OUT the worse case that report
+raised as untested: `risk_reflex()` never opens a subject file, so there are no wrong bytes to read.
+**Severity moved in both directions and the entry says which way on each.**
+
+> ⛔ **THE SHARED FAILURE MODE: A FALSE ZERO AND A TRUE ZERO READ IDENTICALLY.** LIMITS 1-4 below
 > produce an EMPTY RESULT rather than an error, and an empty result from a dependency tool is exactly
 > what a deprecation, decommissioning or blast-radius decision treats as permission to proceed.
+>
+> ⛔ **`LIMIT 4a` IS THE EXCEPTION IN SHAPE AND THE WORST IN EFFECT:** it does NOT produce an empty
+> result. It prints a DISTINCT answer-state (`SUBJECT_ABSENT_FROM_CORPUS`) and **silently skips the
+> gate for the entire commit**, with `safe-commit` swallowing the return code. A reader looking only
+> for empty results will not find it.
 
 ---
 
@@ -177,13 +189,66 @@ invoked from a linked worktree returned **`0 hit(s) across 173 file(s)`** -- a r
 denominator -- for a token that returned **8 hits** when the identical query was run from the main tree.
 Two empirical arms, two projects, two seats.
 
-**Exposure is CURRENT, not theoretical (`git worktree list`, 2026-09-10 07:2xZ):** FOUR linked worktrees
-live besides the main checkout, two of them belonging to seats mid-work -- `2.0.0_SA_COO~ZI`'s
-`coo-zi-iamroles-l6` and `2.0.0_SA_COO~Z`'s `coo-z-drive-t1`.
+**Exposure, stated as a STANDING CONDITION rather than a roster** (a count here rots within the hour --
+the first draft of this entry named a worktree that had already been drained when it was written, caught
+by `2.0.0_SA_COO~Z` at msg 20831): **under spine v3 EVERY worker commits from its own worktree**, so the
+exposed population is *every live worker slot plus every seat working under rule 14b*, continuously. A
+dated snapshot, for calibration only: 6 linked worktrees at 2026-09-10 07:37Z, including four
+`wk-iamroles-1..4` belonging to `2.0.0_SA_COO~ZI`'s workers.
 
-⚠ **SCOPE HONESTLY BOUNDED:** the arms above exercise `comp-find`. `comp-read` and `comp-which` share the
-same shim shape and the same `repo_root()`, so the mechanism covers them by construction -- but they have
-**not** been separately exercised from a worktree, and this entry does not claim they were.
+---
+
+### LIMIT 4a -- the same defect INSIDE `safe-commit`'s pre-commit risk reflex, and it skips the WHOLE commit
+
+**Surfaced by `2.0.0_SA_COO~Z` (msg 20831) from an OBSERVED instance, not a constructed one; mechanism
+traced to source by `1.0.0_SA_CTO~Z`.** `comp-pulse` is the fourth member of this family and it is invoked
+by `.tools/safe-commit.sh:568` as the **PRE-COMMIT RISK REFLEX** on every commit.
+
+**Observed (`2.0.0_SA_COO~Z`, 07:16Z, committing from worktree `coo-z-drive-t1`):**
+`[risk-reflex] ANSWER STATE: SUBJECT_ABSENT_FROM_CORPUS` on a file that **existed on disk in that
+worktree**, was staged, and committed seconds later as `create mode 100644` in `c58e6fc264`.
+
+**The rival was killed before the report (four arms, one invocation each):** (A) new untracked file, MAIN
+tree -> `PRESENT_WITH_ZERO_RESULTS`; (B) tracked file, MAIN tree -> `PRESENT_WITH_ZERO_RESULTS` [positive
+control]; (C) path in no tree -> `SUBJECT_ABSENT_FROM_CORPUS`; (D) the 07:16Z observation. **A kills
+"newness causes the state"; C fixes the state's meaning as *not present in the tree comp-pulse resolved
+to*; D's file was present in the caller's tree.**
+
+**MECHANISM, traced to source at HEAD -- the whole chain:**
+
+1. `~/bin/comp-pulse` hardcodes the main-tree `.tools/comp-pulse`.
+2. `.tools/comp-pulse:5` sets `WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"` -- the SCRIPT's location.
+3. `comp_pulse.py:62` `_WS = os.path.normpath(os.path.join(_HERE, "..", "..", ".."))` -- same, in python.
+4. `comp_pulse.py:678` `_missing_subject_paths()` tests `os.path.join(_WS, path)` -- a worktree-relative
+   path joined to the MAIN tree root, so it does not exist and is reported "missing".
+5. `comp_pulse.py:741-744` **prints `SUBJECT_ABSENT_FROM_CORPUS` and `return 2` -- BEFORE `risk_reflex()`
+   is ever called.**
+
+⛔ **THEREFORE IT IS WORSE THAN A BLIND SPOT ON ONE FILE: ONE worktree-created path in the staged set
+SKIPS THE RISK REFLEX FOR THE ENTIRE COMMIT.** Files in the same commit that DO exist in the main tree and
+DO sit on `HOLD`/`RISK` danger nodes are never scored, because the early return precedes the scoring loop.
+And `safe-commit.sh:568` pipes the call through `| sed ... || true`, so `rc=2` is swallowed and the commit
+proceeds -- the single `SUBJECT_ABSENT_FROM_CORPUS` line is the only signal that the gate did not run.
+
+⭐ **AND ONE HYPOTHESIS IS RULED OUT, WHICH BOUNDS THE SEVERITY IN THE OTHER DIRECTION.** msg 20831 raised
+as its untested worse case that comp-pulse might read a worktree-MODIFIED file's *unmodified* main-tree
+content and print "REFLEX CLEAN -- a MEASURED result" over the wrong bytes. **That is structurally
+impossible.** `risk_reflex()` (`comp_pulse.py:302-322`) matches only
+`os.path.basename(rel).lower()`, `rel.lower()` and `"file:" + rel.lower()` against the danger-map index --
+**it never opens the subject file in any tree.** There are no bytes to get wrong. A file present in BOTH
+trees therefore scores identically from either. The exposure is the skipped commit, not a wrong reading.
+
+⚠ **A SEPARATE LIMB, NOT EXERCISED:** `comp_pulse.py:665` `_staged_files()` runs
+`git diff --cached --name-only` with `cwd=_WS`, so a bare `comp-pulse diff` with no paths would score the
+MAIN tree's staged set from anywhere. `safe-commit.sh` always passes explicit paths, so that limb does not
+fire there; it is recorded as read-from-source, not as an observation.
+
+---
+
+⚠ **SCOPE HONESTLY BOUNDED:** the arms above exercise `comp-find` (LIMIT 4) and `comp-pulse` (LIMIT 4a).
+`comp-read` and `comp-which` share the same shim shape and the same `repo_root()`, so the mechanism covers
+them by construction -- but they have **not** been separately exercised from a worktree, and this entry
+does not claim they were.
 
 ---
 
