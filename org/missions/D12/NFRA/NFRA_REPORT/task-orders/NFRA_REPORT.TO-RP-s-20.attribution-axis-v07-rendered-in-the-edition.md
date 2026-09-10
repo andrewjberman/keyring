@@ -175,7 +175,7 @@ Every invocation runs under `timeout 120`; a timeout is recorded AS the output, 
 
 <!-- ============ RECORD FACE -- does NOT travel to the worker ============ -->
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <sub_round>A</sub_round>
 <slot>~1</slot>
