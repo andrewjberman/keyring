@@ -298,3 +298,18 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 <!-- sig: COVERAGE|UNCOVERED-AUDIT-LOG|org/opal-ipblock-audit.log|audit-log-shaped file not in MANIFEST -- review + add or exclude -->
 - log: org/opal-ipblock-audit.log
 - detail: audit-log-shaped file not in MANIFEST -- review + add or exclude
+
+## 2026-09-10T045739Z -- COVERAGE -- MANIFEST-ENTRY-MISSING-LIVE
+<!-- sig: COVERAGE|MANIFEST-ENTRY-MISSING-LIVE|org/to-pos-override-audit.log|listed in manifest but no live file -->
+- log: org/to-pos-override-audit.log
+- detail: listed in manifest but no live file
+
+## 2026-09-10T045739Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/to-pos-override-audit.log|baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\#-#-#T#Z\org_to-pos-override-audit.log -->
+- log: org/to-pos-override-audit.log
+- detail: baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\2026-08-20T042433Z\org_to-pos-override-audit.log
+
+## 2026-09-10T045739Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/to-pipeline-override-audit.log|baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\#-#-#T#Z\org_to-pipeline-override-audit.log -->
+- log: org/to-pipeline-override-audit.log
+- detail: baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\2026-08-20T042433Z\org_to-pipeline-override-audit.log
