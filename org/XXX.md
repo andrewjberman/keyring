@@ -294,13 +294,20 @@ Loops are **operator-initiated**. `/watcher` is not a loop — it arms the persi
 
 **A live SCOPED arm is re-armed from the ANDREW_DIRECT record its serial names, never from this table**, while its
 scope is not DONE on the register and no hold stands: `2.0.0_SA_COO~A` `/drive` NFRA_CLDGRPH
-(`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_1308Z_DRIVE_CLDGRPH_TO_COMPLETION.md`; HELD on
-Andrew's "we will wait" 2026-09-03 ~21:0xZ); `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE
+(`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_1308Z_DRIVE_CLDGRPH_TO_COMPLETION.md`; the
+2026-09-03 ~21:0xZ "we will wait" HOLD was LIFTED Andrew-direct 2026-09-10 ~17:1xZ, *"take off any holds on
+CLDGRPH let's wrap that up"*, record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_171xZ_CLDGRPH_HOLDS_OFF_WRAP_IT_UP.md`,
+and he ruled *"CLDGRPH shall be finished I am allowing it"* at ~18:5xZ -- the arm is LIVE to CLOSED); `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE
 (`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260828_050xZ_COOX_DRIVE_LOOP_NFRA_C3MATERIALIZE.md`);
-`2.0.0_SA_COO~B` `/goal` + `/drive` ETFS_GUARDRAIL on the internal-subagent dispatch drain, cron `13,33,53 * * * *`, stop =
-the row reads `CLOSED` or Andrew's word
+⛔ SUPERSEDED 2026-09-10 ~20:0xZ BY ITS OWN STOP CLAUSE ("or Andrew's word"): `2.0.0_SA_COO~B` was RE-SEATED on
+`IRPT_BCKEND` by Andrew-direct at that lane's terminal, VERBATIM *"You are going to be working on the IRPT_BCKEND
+project. Finish startup and await further advisory from CTO Base."* (relayed by `2.0.0_SA_COO~B` as 95537; ETFS_GUARDRAIL
+is held by the base `2.0.0_SA_COO` this session). The superseded arm, kept verbatim: `2.0.0_SA_COO~B` `/goal` + `/drive`
+ETFS_GUARDRAIL on the internal-subagent dispatch drain, cron `13,33,53 * * * *`, stop = the row reads `CLOSED` or
+Andrew's word
 (`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260904_170xZ_COOB_GOAL_AND_DRIVE_LOOP_ETFS_GUARDRAIL_DISPATCH_DRAIN.md`,
-Andrew-direct at the CTO terminal 2026-09-04 ~17:0xZ, relayed as 94224/94225);
+Andrew-direct at the CTO terminal 2026-09-04 ~17:0xZ, relayed as 94224/94225). NOTHING ARMS FROM THIS ROW; `~B` and
+`~F` on the two IRPT projects are EVENT-DRIVEN with zero crons until Andrew arms a loop by name;
 `3.0.0_SA_CVO~Z` the SYSPARITY cron (`org/tier0/ledger/LD-0318.md`) and the parity-first duty (`LD-0319.md`);
 `2.0.0_SA_COO~Z` `/drive` STANDING 20m over NFRA_OPSEC202609 and `2.0.0_SA_COO~ZZ` `/drive` STANDING 20m over
 NFRA_REPORT -- BOTH armed Andrew-direct 2026-09-10 ~00:3xZ at the `1.0.0_SA_CTO~Z` terminal, VERBATIM: *"I need
