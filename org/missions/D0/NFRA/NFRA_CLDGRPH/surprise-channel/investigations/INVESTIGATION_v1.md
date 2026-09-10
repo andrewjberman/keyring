@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **289 rows**. Restated 2026-09-10T19:1xZ by `2.0.0_SA_COO~A` at a round-9 drain, by parsing every fenced json block in the MERGED file (217 blocks, 289 rows). This drain merged two branches that each restated this line for their own side; neither count was true of the union, so the number is re-measured here rather than carried from either.
+**Append-only during the round.** Denominator at this write: **290 rows**. Restated 2026-09-10T19:52Z by `2.0.0_SA_COO~A` on appending NFRA_CLDGRPH-S119, by parsing every fenced json block in this file (218 blocks, 290 rows after this append).
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -8444,6 +8444,37 @@ and its four S3 objects are verified.
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "FOUND AFTER THE STATUS FLIP, by the unscoped `git status` read that should have run before it -- stated plainly rather than back-dated, and the ordering mistake is mine. It is filed anyway because the surprise channel is lane ANY (CLAUDE.md s.2: 'the seat that sees it appends its own row'), which is not gated on this order still being non-terminal, and because an ARMED hazard about a DEPLOY ARTIFACT is exactly what must not go unreported when the whole project's convention is committed-not-deployed. ARMED, and specifically: the deploy of CG-s-41's fix is the process's next normal step for this file, and a deploy that reads the committed zip ships the collision while every repo-plane check reads clean -- the source says fixed, the artifact is not. NOT A CRITERION FAILURE: all four mechanical criteria are PASS-by-output on their own invocations and the instance is VALID at rc=0; this concerns a SECOND artifact none of them measures. NOT REMEDIATED HERE, twice over: the zip and the .pyc are both outside <paths>, and rebuilding a deploy zip is an IMAGE-class act the egress hold forbids outright. THE GENERAL FORM, which is why it is a row rather than a footnote: a write grant expressed as a FILE does not bound the artifacts that file's modification obliges, and a tracked build output beside tracked source is a two-writer surface where only one writer was granted."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S119 -- the READ ack clock is dark at the codex validator seat, so obligation 4's trigger cannot go positive there
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T19:52Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.0.0_AB_MSTR",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S119",
+    "one_line": "THE READ ACK CLOCK IS DARK AT THE CODEX VALIDATOR SEAT, SO THE DRIVE LAW'S OBLIGATION-4 TRIGGER IS KEYED TO A DETECTOR THAT CANNOT GO POSITIVE THERE. 50 of 50 messages to 3.0.0_SA_CVO -- from FOUR different senders across about four and a half hours -- read QUEUED with 'no clock stamps yet', READ COVERAGE 0 of 50 and 0 structurally un-ackable. AND THE SEAT DEMONSTRABLY READS ITS MAIL: REMEDIATION_v4.md cites CTO messages 95382 and 95389 by id and by timestamp and executes both, and BOTH of those rows read QUEUED. So 'no READ ack after N ticks' at this recipient is not weak evidence of a stall -- it is NO evidence either way, and an escalation keyed to it reports the instrument rather than the world.",
+    "spec_asserts": "/drive obligation 4: 'L8 packet at the CVO: no READ ack at one tick -> nudge with path + hash; two ticks -> [STUCK] to 0.0.0_AB_MSTR.' The rule reads a missing READ ack as evidence about the RECIPIENT, which presumes the READ clock can go positive at that recipient.",
+    "world_is": "get_delivery_state(3.0.0_SA_CVO, limit 50) at 2026-09-10T19:5xZ: QUEUED=50, denominator 50, ACKABLE 50 of 50, READ COVERAGE 0 of 50. Senders in that window: 1.0.0_SA_CTO, 2.0.0_SA_COO, 2.0.0_SA_COO~A and 0.0.0_AB_MSTR. The seat is a codex seat and it is working -- it authored df23e32346 at 19:23:56Z, twenty-two seconds after this project's packet was queued. The ack primitive is an MCP tool call; a codex seat's reads arrive by a transport that writes no ack row, which CLAUDE.md already records for codex-send in the other direction ('delivers OFF-LEDGER so no read ack can exist').",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "get_delivery_state(agent_serial=3.0.0_SA_CVO, limit=50): 50 QUEUED, 0 READ, denominator printed by the tool itself.",
+        "get_delivery_state(message_id=95511) at two successive ticks: QUEUED both times, 'no clock stamps yet'.",
+        "REMEDIATION_v4.md (untracked draft at the CVO) cites 'CTO direction 95382' and 'CTO ruling 95389 (2026-09-10T17:53:54Z)' and acts on both -- the positive control that the seat READS what its delivery rows call unread.",
+        "git log: 3.0.0_SA_CVO authored df23e32346 at 2026-09-10T19:23:56Z, 22 s after message 95511 was queued at 19:23:34Z."
+      ]
+    },
+    "notes": "ARMED and routed to 0.0.0_AB_MSTR because the remedy is fabric-level and belongs to no project: either the ack primitive reaches codex seats, or obligation 4's trigger names a DISCRIMINATOR THAT CAN GO POSITIVE at a codex recipient -- the estate already has one, and it is the one used here: an artifact the recipient authored that cites the message. WHAT THIS SEAT DID INSTEAD OF FIRING THE LITERAL RULE: it sent the nudge (harmless, carries path and hash), and it did NOT send a [STUCK] asserting the CVO is unreachable, because that assertion would have been FALSE and would have been made on an instrument that cannot return the other answer. THE GENERAL FORM IS ALREADY IN THIS ESTATE'S TRAP SET: a detector that cannot return non-zero on the positive case is a constant wearing a measurement's clothes -- and the failure mode here is an ESCALATION, which is louder and more expensive than a quiet false green. NOT PROPOSED AS A GATE and this lane edits no skill."
   }
 ]
 ```
