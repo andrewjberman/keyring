@@ -12,7 +12,7 @@
   "dep_stage": "EXECUTING",
   "created": "2026-09-02",
   "registered_under_tree": "2026-09-03",
-  "last_updated": "2026-09-10T06:4xZ (2.0.0_SA_COO~Z; /canonical-flow re-measured from artifacts after the 06:17:18Z device reboot -- L10 distance and the post-reboot fabric state refreshed)",
+  "last_updated": "2026-09-10T07:1xZ (2.0.0_SA_COO~Z; drive tick 1 -- prds[0].version made to carry its claim after reading v0.4 against a v0.14 artifact)",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -36,8 +36,8 @@
   "prds": [
     {
       "path": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md",
-      "version": "v0.4",
-      "note": "L4, 2026-09-03 @43b75ffbd6: PRD_HEADER + ENDPOINT FWD-1..18 + SURFACE MANIFEST S1-S24 + sequencing input; flat history at docs/architecture/NFRA_SECURITY202609_PRD.md, now a redirect stub -- vintages @eba7e15054 v0.1, @7a51451d69 v0.2, @8cbe362358 v0.3. Dict form because to-pipeline-gate.py _prd_paths reads a bare string VERBATIM as a path (2.0.0_SA_COO~Z 19485: the annotated string read FILE NOT FOUND and refused every round-1 task order)."
+      "version": "v0.14 CURRENT (2026-09-09 @5f4d4b894f, PRD_HEADER status RATIFIED) -- ENTERED THE TREE AT v0.4",
+      "note": "THE FIELD ABOVE NOW CARRIES ITS CLAIM, because it did not and the drift reached TEN VERSIONS. It read a bare 'v0.4' -- the version at which this PRD ENTERED THE TREE -- while the artifact's own PRD_HEADER read v0.14, and nothing in the field said which of the two it meant. Found by 2.0.0_SA_COO~Z on drive tick 1 (2026-09-10 ~07:1xZ) while running the tick's OWN step 3, which treats a bumped prd_version as one of the two forms of the CTO's answer to a slug: the read that was supposed to detect an ANSWER detected a STALE REGISTER instead. GROUNDED BEFORE BEING ACTED ON, because the same value read two ways decides opposite acts -- v0.14 landed 2026-09-09T16:16:47Z and the round-2 L8 packet landed 2026-09-10T04:19:23Z, so the bump PREDATES the packet by twelve hours and is NOT an answer to round 2; had it been read as one, this lane would have cut an issuance against a slug that does not exist. NOT ROWED, deliberately: the CVO is mid-L9 with 64 undispositioned of 167 and a new row moves the denominator it is grading against, for a field with no machine consumer -- to-pipeline-gate.py's _prd_paths reads `path`, never `version` (which is why the dict form exists at all, per 2.0.0_SA_COO~Z msg 19485). L4 LANDING, PRESERVED: 2026-09-03 @43b75ffbd6 at v0.4 -- PRD_HEADER + ENDPOINT FWD-1..18 + SURFACE MANIFEST S1-S24 + sequencing input; flat history at docs/architecture/NFRA_SECURITY202609_PRD.md, now a redirect stub, vintages @eba7e15054 v0.1, @7a51451d69 v0.2, @8cbe362358 v0.3. DICT FORM, PRESERVED: to-pipeline-gate.py _prd_paths reads a bare string VERBATIM as a path (2.0.0_SA_COO~Z msg 19485: the annotated string read FILE NOT FOUND and refused every round-1 task order)."
     }
   ],
   "leads": [
