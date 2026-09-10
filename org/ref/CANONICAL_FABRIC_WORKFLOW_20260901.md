@@ -107,8 +107,10 @@ travels to the worker.
 
 ### L3 — Register
 
-- **Owner:** `1.0.0_SA_CTO`. **Not engaged:** `2.0.0_SA_COO`, `3.0.0_SA_CVO`, every worker. `0.0.0_AB_MSTR` holds the
-  directive register the row must appear in.
+- **Owner:** `1.0.0_SA_CTO`. **Not engaged:** `2.0.0_SA_COO`, `3.0.0_SA_CVO`, every worker. `0.0.0_AB_MSTR` is NOT
+  ENGAGED AT L3 EITHER: it retains write access to `DIRECTIVES.yaml` and `MACROS.yaml` as an integrator fallback and
+  gates neither; the CTO writes all four carriers — tree row, generated index, members line, macro enum — in one commit
+  (Andrew-direct 2026-09-10 ~20:1xZ; LD-0542).
 - **Input:** the endpoint. **Output:** `org/missions/D<n>/<MACRO>/<CODE>/project.json` with `project_code`,
   `macro_code`, `directive`, `fabric` (`laptop` or `site-z`), `dep_stage`, `status`; the generated
   `org/projects/<CODE>.json`; the project listed under `directives.D<n>.members.projects` in `org/missions/DIRECTIVES.yaml`;
@@ -438,7 +440,7 @@ watcher from its watermark, and the CTO does nothing. `/canonical-flow` is the i
 
 ### Cross-cutting — the integrator
 
-`0.0.0_AB_MSTR` holds the directive register, opens and closes the push windows on the shared branch, and seats
+`0.0.0_AB_MSTR` retains write access to the directive register WITHOUT holding a gate over it, opens and closes the push windows on the shared branch, and seats
 classes on request. It works no limb, holds no task order and spawns no worker. Whether a commit is on origin is a
 measured property of every done test, read by `ls-remote`, never a cell of a decomposition.
 

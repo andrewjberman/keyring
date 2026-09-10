@@ -22,8 +22,13 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     QUALIFIED on the outcome with its reason and Andrew's word. Andrew-direct 2026-09-10: *"no FWD is ever a 'wait'
     unless explicitly advised otherwise ... sprint, execute, validate, and close"*. Measured the same night:
     `ETFS_GUARDRAIL` FWD-7 sat NOT_EVALUATED as "a real terminal failure, rare by design" while its send guard could
-    not fire AT ALL — waiting would have waited forever) → L3 register (`1.0.0_SA_CTO` only; `0.0.0_AB_MSTR`
-    HOLDS the directive register the row must appear in — a different act) → L4 PRD (`1.0.0_SA_CTO` only — no COO, no CVO) →
+    not fire AT ALL — waiting would have waited forever) → L3 register (`1.0.0_SA_CTO` only, **AND THE CTO WRITES EVERY
+    CARRIER ITSELF IN ITS OWN COMMIT** — the tree row, the generated index, the `DIRECTIVES.yaml` members line and the
+    `MACROS.yaml` macro enum; `0.0.0_AB_MSTR` is PERMIT on the last two as an integrator fallback and HOLDS NO GATE OVER
+    ANY OF THEM. Andrew-direct 2026-09-10 ~20:1xZ: *"anything from L2 up to the L5 handoff to COO for decomp needs to be
+    able to be handled by CTO so we dont have this arbitrary mcp'ing"* — the round trip is retired; measured that night:
+    five of five L2–L5 carriers were already PERMIT for the CTO and two IRPT projects sat unregistered across four seats'
+    messages anyway, because the blocker was this sentence, not a lane) → L4 PRD (`1.0.0_SA_CTO` only — no COO, no CVO) →
     L5 decomp + battery → L6 ONE ISSUANCE covering EVERY cell (`2.0.0_SA_COO` only; fan-out derived from the
     decomp's dependency chains and stated as `fanout:` data in the issuance commit, default cap 8) → L7
     execute (WORKER SUBAGENTS of the COO, `0.9.0_WK_<CODE>~<n>`, one worktree each, NO send tool; the TO's
