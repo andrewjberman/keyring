@@ -8289,3 +8289,33 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S51",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-10T19:02Z",
+    "one_line": "Editing the ONE granted producer file mechanically obliges TWO tracked artifacts beside it that the grant does not name: a committed deploy zip that still carries the PRE-FIX lambda_function.py, and a committed __pycache__ .pyc that any import of the module rewrites. The repo now holds fixed source next to an unfixed deploy artifact.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "spec_asserts": "TO-CG-I-1's BOUNDS: 'IF A PATH YOU NEED IS NOT IN <paths>, THAT IS A BLOCKING ROW AND A REPORT, NEVER AN OVERRIDE. And if a granted path's modification mechanically OBLIGES a second artifact, this face names the override and its owner below -- if it does not and you hit one, that omission is itself the row.' The <paths> block grants the FILE infra/aws/lambda/globgrph/incremental_updater/lambda_function.py and names no second artifact and no override.",
+    "world_is": "That directory has FOUR tracked files, not one (git ls-files): lambda_function.py, .gitignore, incremental_updater.zip and __pycache__/lambda_function.cpython-312.pyc. (1) THE ZIP IS A TRACKED DEPLOY ARTIFACT CONTAINING A COPY OF THE SOURCE. Read at HEAD c7de3661d5 with zipfile: 2 entries, lambda_function.py and _provenance.py; its lambda_function.py still declares `def _match_filter(arns` and contains neither ids_by_type nor MATCH_KEY_UNUSABLE. So after this order's fix, the repo carries FIXED source and an UNFIXED deploy artifact side by side, and the zip was last committed 2026-07-15 @03e6ed3bd3, long before this change. (2) THE .pyc IS TRACKED AND IS REWRITTEN BY THE ACT THE CELL ASKS FOR: i1_arm.py and i1_served_from.py import lambda_function to exercise the post-fix predicate against the pre-fix one, and CPython writes the bytecode cache as a side effect. `git status --porcelain` shows ' M .../__pycache__/lambda_function.cpython-312.pyc' -- a MODIFIED TRACKED FILE outside the write grant, produced by no edit of mine. It was last committed 2026-06-15 @d17d45be07. It is NOT committed by either of this order's two commits and it was NOT reverted, because a worker may not `checkout --`.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-files infra/aws/lambda/globgrph/incremental_updater/ at this seat: 4 tracked paths, of which the order's <paths> names exactly 1.",
+        "zipfile read of infra/aws/lambda/globgrph/incremental_updater/incremental_updater.zip @c7de3661d5: 2 entries; the contained lambda_function.py matches 'def _match_filter(arns' and does NOT contain ids_by_type or MATCH_KEY_UNUSABLE -- i.e. it is the PRE-FIX source.",
+        "git log -1 -- .../incremental_updater.zip -> 03e6ed3bd3 2026-07-15; git log -1 -- .../__pycache__/lambda_function.cpython-312.pyc -> d17d45be07 2026-06-15.",
+        "git status --porcelain at this seat after the two flip commits: the ONLY tracked modification outside the write grant is that .pyc; every other path this order touched is inside <paths> or the worker's own deliverables folder.",
+        "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py @c7de3661d5 carries the fix (ids_by_type, MATCH_KEY_UNUSABLE, del_typed_ids, EqualTo -- all four measured absent at e86c4fb778~1 and present at e86c4fb778 by the proof checker's content rung)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "FOUND AFTER THE STATUS FLIP, by the unscoped `git status` read that should have run before it -- stated plainly rather than back-dated, and the ordering mistake is mine. It is filed anyway because the surprise channel is lane ANY (CLAUDE.md s.2: 'the seat that sees it appends its own row'), which is not gated on this order still being non-terminal, and because an ARMED hazard about a DEPLOY ARTIFACT is exactly what must not go unreported when the whole project's convention is committed-not-deployed. ARMED, and specifically: the deploy of CG-s-41's fix is the process's next normal step for this file, and a deploy that reads the committed zip ships the collision while every repo-plane check reads clean -- the source says fixed, the artifact is not. NOT A CRITERION FAILURE: all four mechanical criteria are PASS-by-output on their own invocations and the instance is VALID at rc=0; this concerns a SECOND artifact none of them measures. NOT REMEDIATED HERE, twice over: the zip and the .pyc are both outside <paths>, and rebuilding a deploy zip is an IMAGE-class act the egress hold forbids outright. THE GENERAL FORM, which is why it is a row rather than a footnote: a write grant expressed as a FILE does not bound the artifacts that file's modification obliges, and a tracked build output beside tracked source is a two-writer surface where only one writer was granted."
+  }
+]
+```
