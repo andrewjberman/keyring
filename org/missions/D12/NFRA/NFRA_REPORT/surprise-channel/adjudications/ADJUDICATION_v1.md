@@ -217,3 +217,117 @@ passed") instead of running the census, and a hedge is not a measurement.**
   }
 ]
 ```
+
+## C-S6 -- four findings GRADUATE, three of them ESTATE-WIDE, and one of them BLOCKS FWD-4 from grading REALIZED
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-C-S6",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T07:30Z",
+    "one_line": "L9, round 2: FOUR findings GRADUATE -- Z-S8 (all seven orders name ONE worker's deliverable folder regardless of <issued_to>, so the tree no longer identifies who authored what), Z-S10 (RP-s-13's merged ATTRIBUTION.md renders two NAMED v0.7 axis members as UNGROUPED, which BLOCKS FWD-4 from grading REALIZED), Z-W1-S5 (the comp-rail resolves its corpus from the TOOL SCRIPT'S location, so every call from a rule-14b worktree silently scans the MAIN checkout), and Z-W2-S6 (comp-blast never models a raw SNS phone/email endpoint, so PHANTOM-CONSUMER means 'no graph-typed subscriber', never 'no subscriber'). Three of the four are ESTATE-WIDE rather than project-local.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "GRADUATED",
+    "disarm_owner": "NONE AT THIS ROW -- and that is the correct reading rather than a gap. An adjudication row is a VERDICT about items; it surfaces no new hazard of its own, so hazard_standing INERT is a statement about THIS row and not about the set it closes. The live hazards stay where they were surfaced and keep their own owners: Z-S10 with 2.0.0_SA_COO~ZZ (disarm FIXED to the round-3 recut by its own notes, not disarmable before the round-2 analysis exists) and Z-W1-S5 with 1.0.0_SA_CTO~Z (the comp-rail is that seat's surface). Z-W2-S6 is already disarmed by its author via LIMIT 3, verified on the artifact. Z-S8 carries no owner and its remedy is a property of the round-3 CUT.",
+    "adjudicates": [
+      "NFRA_REPORT-Z-S8",
+      "NFRA_REPORT-Z-S10",
+      "NFRA_REPORT-Z-W1-S5",
+      "NFRA_REPORT-Z-W2-S6"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S8 GRADUATES ON ITS MECHANISM, NOT ITS HARM. The harm is record attribution only -- no worker was blocked and no criterion mis-graded, because each order's <paths> grants the deliverables/ DIRECTORY PREFIX rather than a per-serial folder, so the wide grant is exactly what kept a record defect from ever surfacing as a lane refusal. That is the finding: a permission broad enough to be convenient is also broad enough to hide a naming defect. The measurement is clean at 7 of 7 -- <issued_to> is ~1 for RP-s-15/16/18, ~2 for RP-s-13/19, ~3 for RP-s-14/17, while the deliverable path set is {~1} for all seven -- and two of two drained cells (63efc53452 RP-s-13 by ~2, c2a582b17d RP-s-14 by ~3) already landed under a serial that did not produce them. THE SHARED-DEPENDENCY SHAPE IS WHY NOTHING CAUGHT IT: one generator emitted all seven orders, so every per-order arm passed while the defect lived in what the members SHARE. Remedy is named and belongs to the next cut -- derive the folder FROM <issued_to> rather than from a literal -- and this seat endorses NOT remediating mid-round, because RP-s-14 is merged with its criteria pinned to the ~1 path and rewriting the open orders would split one round across two conventions.",
+        "Z-S10 GRADUATES AND IT IS THE ONE THAT CONSTRAINS AN OUTCOME GRADE. Verified at this seat on both sides rather than carried on the row's word: ATTRIBUTION.md renders opal-gateway -> UNGROUPED and opal-globgrph -> UNGROUPED, while NFRA_REPORT_PRD.md at v0.7 carries a FOUR-member axis (Dashboard | Website | Gateway | Graph) and names opal-gateway as Gateway's referent and opal-globgrph as Graph's. So the deliverable and its governing spec disagree, and FWD-4 cannot read REALIZED against the v0.7 bar while its own deliverable renders two ratified members as ungrouped. ⛔ THIS IS NOT A DEFECT IN THE CELL AND IS EXPRESSLY NOT GRADED AS ONE: RP-s-13 was cut, built and merged inside the window in which FWD-4 was under ACTIVE ANDREW ADJUDICATION, and it was overtaken TWICE -- v0.6's si2 amendment overtook its issued BOUNDS mid-build (that is Z-W2-S5, dismissed at C-S7), and v0.7's axis ruling overtook the finished deliverable. The worker was right at every vintage it read. 2.0.0_SA_COO~ZZ asked that the cell not be graded deficient and this seat agrees, on the evidence rather than on the request.",
+        "Z-W1-S5 GRADUATES AS THE WIDEST FINDING OF THE ROUND, and it is estate-wide rather than this project's. The defect: ~/bin/comp-find:16 and ~/bin/comp-read:16 hardcode the tool path into the MAIN checkout, and .tools/_comprail.py repo_root() runs git rev-parse with cwd=_HERE -- the SCRIPT's own directory, never PWD -- so the corpus is fixed by where the tool lives, not where the caller stands. RULE 21 MAKES THE COMP-RAIL THE REFLEX AND RULE 14b MANDATES A LINKED WORKTREE, so the two laws compose into a silent false zero for every worker that obeys both. The worker's proof is a canary: an untracked file written inside its OWN write surface returned 'DENOMINATOR: 0 hit(s) across 53245 file(s) scanned' -- a MEASURED zero over a corpus that never included the tree it was standing in -- and at --corpus raw the only 2 hits were comp-find's own telemetry echo from files that do not exist under that worktree at all. THAT LAST DETAIL IS THE PROOF, because it shows positively which tree was scanned rather than merely that the canary was missed.",
+        "Z-W2-S6 GRADUATES AND ITS DISARM IS VERIFIED ON THE ARTIFACT RATHER THAN ACCEPTED FROM THE ROW. The row claims it appended LIMIT 3 to org/modules/graph/INSTRUMENT_LIMITS.md in the same commit; read at this seat, that file carries '## LIMIT 3 -- comp-blast never models a raw SNS destination endpoint (phone number / email) as a node' as a real heading at line 81, an addendum note at lines 8-9 naming 0.9.0_WK_NFRA_REPORT~2 and row NFRA_REPORT-Z-W2-S6, and a line 154 clause recording that LIMIT 3 does not invalidate TO-RP-s-19. The finding itself is positive-controlled in BOTH directions -- inf-otp-alert returns CONSUMER-OK with a LAMBDA leg and opal-critical-surface-alerts returns CONSUMER-OK with an SQS leg, so the tool is demonstrably NOT blind to SNS subscriptions generally, which is what makes the raw-endpoint blindness a specific finding rather than a vague one.",
+        "WHAT THE FOUR SHARE, AND IT IS THE ROUND'S SIGNATURE: three of them are a FALSE ZERO OR A FALSE IDENTITY produced by an instrument answering confidently about the wrong object -- comp-find about the wrong tree, comp-blast about the wrong node class, the deliverables tree about the wrong author. Z-S10 is the fourth shape: an artifact that was RIGHT AT CUT and STALE AT GRADE because its governing outcome moved while it was being built. None of the four is a worker error and none is graded as one."
+      ]
+    },
+    "spec_asserts": "The L10 precondition is that every investigation item under the project carries a disposition; and FWD-4's DONE WHEN requires every finding rolled up to a NAMED part of the business under the ratified axis.",
+    "world_is": "Four items carried real, reproducible mechanisms and are graduated here. One of them (Z-S10) establishes that FWD-4 cannot grade REALIZED at v0.7 until a round-3 cell re-renders the two axis members its deliverable still shows as UNGROUPED.",
+    "notes": "ROUTING, UNCHANGED BY THIS GRADUATION -- graduating a row does not move its disarm owner and this row moves none. Z-W1-S5 stays with 1.0.0_SA_CTO~Z (comp-rail is that seat's surface). Z-S10 stays with 2.0.0_SA_COO~ZZ and its disarm is FIXED TO THE ROUND-3 RECUT by its own notes -- it is not disarmable before 1.0.0_SA_CTO~Z's round-2 analysis exists, so it is correctly ARMED and correctly NOT actionable today. Z-W2-S6 is already disarmed by its author via LIMIT 3, verified above. Z-S8 carries no disarm owner and its remedy is a property of the round-3 CUT rather than an act anyone performs now. || A CORRECTION THIS SEAT MADE AT THE GATE'S PROMPTING, recorded rather than silently fixed: this row was first written hazard_standing=ARMED on the reasoning that two of the four rows it graduates remain ARMED. The gate refused it -- ARMED with no disarm_owner is a hazard nobody has agreed to hold -- and the refusal was CORRECT on a point of grain this seat had wrong. hazard_standing is a property AT SURFACING of the row that carries it; an adjudication row surfaces no hazard, and inheriting the standing of the rows it closes would double-count a single hazard on two carriers and put it in a queue nobody owns. The underlying rows keep their own ARMED standing and their own owners, which is where a reader scanning that axis correctly finds them. || THIS SEAT'S OWN BOUND: Z-W1-S5's canary was run by the worker in its own worktree and is NOT reproduced here -- this seat read the two forwarders and _comprail.py's repo_root() and confirms the MECHANISM by source, which is a different instrument from the empirical canary and agrees with it. The estate already banks this class independently, which is corroboration and not this seat's own re-derivation."
+  }
+]
+```
+
+## C-S7 -- one record dismissed: a cell re-grounding past its own stale BOUNDS, which is the behaviour the channel exists to produce
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-C-S7",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T07:30Z",
+    "one_line": "L9, round 2: Z-W2-S5 is DISMISSED WITH REASON -- it records that RP-s-13's issued BOUNDS told the cell to render canonical-schwab-si2 UNGROUPED while the PRD had already been amended to v0.6 ruling si2 into Dashboard, and that the worker built against the LIVE PRD rather than its frozen order. That is CORRECT BEHAVIOUR being reported, not a defect: the row's own notes say nothing is ARMED and no future actor needs to disarm anything. It closes here and its content is carried onto Z-S10's graduation, which names this same overtaking as the FIRST of the two that hit that one manifest row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A RECORD, not a finding: it has no mechanism of its own to graduate and no remedy of its own to route. The question it raises was already RULED and CITED before the row was written -- PRD v0.6 section 6 carries Andrew-direct VERBATIM ('I would include si2 under the Dashboard') and states no cell may render it ungrouped -- and the deliverable already complies, rendering si2 under Dashboard and only opal-gateway as UNGROUPED. So there is nothing for an owner to do and nothing for a later reader to resolve. WHAT IS NOT LOST BY DISMISSING IT, stated because a dismissal that discards evidence is the failure mode here: the row's real content is the PATTERN -- a cell's issued BOUNDS going stale mid-build while its governing PRD moved underneath it -- and that pattern is the load-bearing half of Z-S10's graduation at C-S6, where it is named as the first of TWO overtakings of the same manifest row. The row is also a correct piece of defensive record-keeping in its own right: it exists so a reader of the BOUNDS text alone is not misled into thinking si2 should still render UNGROUPED, and that function survives the dismissal because the row stays in the channel.",
+    "adjudicates": [
+      "NFRA_REPORT-Z-W2-S5"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE TEST APPLIED IS THE ROUND-1 Z-S20 TEST USED THROUGHOUT THIS ESTATE'S L9 PASSES: does the row carry a mechanism of its own to graduate, or a remedy of its own to route? This one carries neither. Its subject is a discrepancy between a FROZEN order text and a LIVE spec, where the live spec is authoritative, already ruled, already cited, and already obeyed by the artifact.",
+        "AND THE BEHAVIOUR IT REPORTS IS THE BEHAVIOUR THE SPINE WANTS. A worker re-grounding its premises against live state before building, and FILING A ROW when it finds its own order's bounds superseded, is precisely what the surprise channel exists for. Dismissing the row is not a criticism of filing it -- the alternative, a worker silently following a stale bound, is the failure this channel prevents. Recorded so the dismissal is not read as discouraging the next worker from filing the same shape.",
+        "NOTHING IN IT IS ARMED AND ITS OWN AUTHOR SAYS SO: hazard_standing INERT, no disarm_owner, and the notes read 'no future actor needs to disarm anything'. A dismissal here removes no live hazard from anyone's queue."
+      ]
+    },
+    "spec_asserts": "The L10 precondition is that every investigation item under the project carries a disposition.",
+    "world_is": "One of the five open items is a record of correct re-grounding whose subject was already ruled; it closes, and its pattern is carried forward on Z-S10 rather than lost.",
+    "notes": "WITH THIS ROW AND C-S6, ROUND 2's UNDISPOSITIONED COUNT REACHES ZERO on the gate's own predicate -- 22 items, 0 UNDER_INVESTIGATION -- which is the first of the TWO L10 preconditions this document has to meet. The second is that every JUDGMENT criterion is graded, and round 1's C-S4 got that exact question WRONG by asserting none were routed here; C-S8 below measures it rather than asserting it."
+  }
+]
+```
+
+## C-S8 -- the round's TWO JUDGMENT criteria, found by census rather than by announcement, graded PASS on this seat's own read
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-C-S8",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T07:30Z",
+    "one_line": "L9, round 2: the round's TWO JUDGMENT criteria are graded PASS -- RP-s-15's AC5 (does stripping every GENERATED sentence leave the EDITION true and checkable) and RP-s-19's AC4 (is the per-row 'cannot see' limb honest against the recorded instrument limits). ⚠ NEITHER WAS NAMED IN THE L8 PACKET, which reported '19 of 19 with a valid proof' and reserved nothing; they were found by censusing all 24 round-2 criteria for judgment=true. That is the SAME MISS round 1's C-S4 made in this document, arriving from the other direction -- so it is recorded rather than quietly corrected.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "GRADUATED",
+    "grades": [
+      {
+        "criterion": "RPs15-AC5",
+        "instance": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-15.build-the-composer-and-per-row-delta.proof_of_spec.json@5d808488f0ca",
+        "verdict": "PASS",
+        "reason": "THE STRIP TEST HOLDS, AND IT WAS GRADED BY HUNTING THE SOLE-CARRIER CASE RATHER THAN BY READING THE WORKER'S ACCOUNT OF IT. EDITION_SPECIMEN.md@dd7e3f4e351b declares three provenance regions in a key at sec.0 and confines GENERATED to exactly two wholesale regions -- the 'Per-row reading' subsection (line 54) and section 3 (line 84) -- each carrying its own explicit 'delete this and X is unchanged' claim. A marker census found ONE further GENERATED sentence outside both, at line 20, INSIDE the COMPUTED verdict section, and that is the only place this criterion could have failed: it asserts that the illustrative regression row is excluded from both verdict clauses. IT IS NOT A SOLE CARRIER. The fact is redundantly carried twice in non-GENERATED regions -- the COMPUTED basis states '3 of 24 REAL rows' and '0 of 24 REAL rows', and the table row itself is labelled in its QUOTED Property cell '(ILLUSTRATIVE ONLY -- NOT A LIVE ROW ...) (ILLUSTRATIVE, NOT LIVE)'. So a reader who strips every GENERATED sentence still counts 25 table rows, sees one labelled illustrative, and reconciles to the verdict's denominator of 24 with nothing missing. ADVERSARIAL PROBE ON THE PER-ROW READINGS: the readings restate a delta word and the numbered rule that fired, both of which sit in the COMPUTED Delta column; the row whose reading DIFFERS from its neighbours (opal-infrastructure-alerts reads 'better' where the three SNS rows above it read 'unchanged') was checked against its own table cell, which reads UNCHECKED | CHECKED / BREACH | better -- the GENERATED sentence and the COMPUTED cell agree exactly, including the axis transition the rule names. BOUND ON THIS GRADE: the sole-carrier property was verified against the one GENERATED sentence outside the two wholesale regions plus a 3-of-25 sample of per-row readings chosen to include the discrepant one; all 25 were NOT individually verified. And 'checkable' is graded at the REPORT grain sec.0 fixes -- checkable via the row's own Citation column into the round-1 deliverable -- never as re-derivable inside this document, which is the grain AMENDMENT (b) rules."
+      },
+      {
+        "criterion": "RPs19-AC4",
+        "instance": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-19.anomaly-breakdown-in-a-real-edition.proof_of_spec.json@8e9197bc5e5e",
+        "verdict": "PASS",
+        "reason": "PASS, AND IT CLEARS THE BAR BY MORE THAN THE CRITERION ASKED. The criterion asks whether the per-row 'cannot see' limb is honest against the TWO recorded instrument limits -- i.e. whether a reader could mistake an unmodelled edge for an absent one. Read at ANOMALY_IN_EDITION.md@8e9197bc5e5e sec.4: LIMIT 1 is checked against THIS row and found to APPLY, but scoped precisely -- one hop further back than sec.2's table, on 4 of the 24 CW_ALARM nodes named for gold-layer conditions -- rather than blanket-cited. LIMIT 2 is checked and found NOT to apply, with its reason stated (this row's downstream question is an SNS subscription protocol, never an S3 write key) and NAMED AS CHECKED-AND-NON-APPLICABLE rather than omitted, which is the honest form: a limit silently dropped is indistinguishable from a limit never considered. THEN THE CELL FOUND A THIRD LIMIT OF THE IDENTICAL FALSE-ZERO SHAPE while grounding its own PHANTOM-CONSUMER result, declared it in sec.4, filed it as row Z-W2-S6, and appended it to the canonical INSTRUMENT_LIMITS.md -- which this seat verified independently on that artifact (LIMIT 3 present as a heading at line 81). ON THE CRITERION'S ACTUAL QUESTION the document answers directly and against its own convenience: it states that comp-blast's zero 'means no graph-typed subscriber, never no subscriber', that it is NOT what establishes the topic reaches nobody (ALERT_DELIVERY.md's live AWS read is), and it names the exact misreading a reader could make if sec.2's zero were shown without sec.3 beside it. A cell that renders the failure mode of its own instrument, in the reader's favour, is the thing this criterion exists to reward."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CENSUS, WITH ITS DENOMINATOR, because the whole point is that the packet's silence was not evidence of absence: all 7 round-2 proof instances were parsed on the acceptance key -- 24 criteria total, 22 PASS and 2 UNVERIFIABLE-BY-INSTRUMENT. Both of the two carry judgment=true and both name 3.0.0_SA_CVO~Z at L9 in their own status_reason. There is no third.",
+        "⚠ AN INSTRUMENT DEFECT IN THIS SEAT'S OWN FIRST PASS, RECORDED BECAUSE IT PRODUCED A CLEAN-LOOKING ZERO: the first census read the wrong top-level key (guessing 'criteria'/'instances' where the schema uses 'acceptance') and returned 'criteria=0 judgment=0' for all seven orders -- a perfectly formatted zero across a real denominator of files. It was caught only because zero criteria on seven completed orders is impossible on its face, not by any check. A wrong-key parse and a genuine absence render identically, which is the same class as the three findings graduated at C-S6 and is now the fourth instance of it in this round.",
+        "WHY THE PACKET'S SILENCE IS WORTH A LINE RATHER THAN A SHRUG: msg 20818 reported '19 of 19 with a valid proof' and reserved nothing to this seat, and a CVO that took that as the judgment-criteria answer would have cut the slug with 2 of 2 ungraded and the L10 precondition unmet. Round 1's C-S4 in this same document made the mirror-image error by ASSERTING no judgment criterion was routed here, and C-S5 had to correct it. Two rounds, two seats, one shape: the judgment set is the limb nobody measures because it is the limb with no mechanical gate behind it. NOT FILED AS A FINDING AGAINST 2.0.0_SA_COO~ZZ -- the packet's arithmetic was correct on every number it did report, and 'valid proof' and 'graded' are different predicates."
+      ]
+    },
+    "spec_asserts": "L10 requires BOTH preconditions: every investigation item dispositioned, AND every judgment criterion graded by the CVO rather than self-graded by its executor.",
+    "world_is": "Round 2 carried exactly two judgment criteria, neither announced; both are graded PASS here on this seat's own read of the deciding surfaces. With C-S6 and C-S7 closing the last five items, both L10 preconditions are now met and the slug is cuttable.",
+    "notes": "WHAT THIS ROW DOES NOT DO: it does not re-grade the 22 command-method criteria. Those reduce to an invocation and an expectation, are the executor's to self-report and the checker's to read at L8, and are not the CVO's to re-run -- the same boundary C-S5 drew in round 1. It does not revisit C-S1 through C-S5. || BOTH GRADES ARE PASS AND NEITHER IS A COURTESY: each was graded by going to the deciding artifact and looking for the case that would FAIL it -- the sole-carrier GENERATED sentence for AC5, the silently-dropped limit for AC4 -- and in both the cell had already handled it. Two judgment criteria, two artifacts that survive an adversarial read."
+  }
+]
+```
