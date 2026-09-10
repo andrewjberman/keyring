@@ -90,31 +90,48 @@ nothing was lost in the move. Every other criterion guards a way that proof coul
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="RP-s-21"><invocation>cd "C:/Users/Opal Bloomberg/Desktop/ajb_workspace" && timeout 120 python -c "import ast,sys;src=open('infra/aws/lambda/infrastructure_monitor/edition.py',encoding='utf-8').read();t=ast.parse(src);names={n.name for n in t.body if isinstance(n,(ast.FunctionDef,))};want={'compute_delta','compute_delta_watch','compute_verdict','fmt_state','gen_sentence','render_markdown'};print('DEFINED=%d of %d MISSING=%s' % (len(want&names),len(want),sorted(want-names)))"</invocation><expect>DEFINED=6 of 6 and MISSING=[] -- the module exists and defines all six ported functions at module level. This is the POSITIVE arm and it exists so no later criterion can pass on an absent file</expect></criterion>
+  <!-- AC2 AMENDED by NFRA_REPORT-Z-S20 (2.0.0_SA_COO~ZZ, ISSUER RULING, commit 95b7d4ecd2220fdf8751028d7ee59694521b0bd8): the original AC2 below called compute_verdict()/render_markdown() directly on spec.ROW_FACTS, which never carries a "delta" key -- only main() (specimen :549-555, excluded by this cell's own bound) ever attached one. Reproduced against the UNMODIFIED SPECIMEN, independent of any port, by 0.9.0_WK_NFRA_REPORT~1 (surprise row NFRA_REPORT-Z-W1-S7): KeyError: 'delta'. UPHELD IN FULL, defect the issuer's. Recut below attaches delta via the PORT's OWN compute_delta/compute_delta_watch, over an independent deepcopy per side, before either side is rendered -- strictly stronger than the original (the original never called compute_delta or compute_delta_watch at all). -->
   <criterion id="AC2" cell_refs="RP-s-21"><invocation>cd "C:/Users/Opal Bloomberg/Desktop/ajb_workspace" && timeout 180 python -c "
-import importlib.util,sys,re
+import importlib.util,sys,copy
 def load(p,n):
     s=importlib.util.spec_from_file_location(n,p);m=importlib.util.module_from_spec(s);sys.modules[n]=m;s.loader.exec_module(m);return m
 spec=load('org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/compose_edition.py','spec_ce')
 port=load('infra/aws/lambda/infrastructure_monitor/edition.py','port_ed')
-rows=spec.ROW_FACTS
-na,br,wr=port.compute_verdict(rows)
-got=port.render_markdown(rows,na,br,wr,'PORT-FIDELITY-FIXED-VINTAGE')
-na2,br2,wr2=spec.compute_verdict(rows)
-want=spec.render_markdown(rows,na2,br2,wr2,'PORT-FIDELITY-FIXED-VINTAGE')
+def attach(rows,mod):
+    for r in rows:
+        if r['family']=='watch':
+            d,n=mod.compute_delta_watch(r['prev'],r['curr'])
+        else:
+            d,n=mod.compute_delta(r['prev'],r['curr'])
+        r['delta']=d;r['rule_note']='(%s)' % n
+    return rows
+a=attach(copy.deepcopy(spec.ROW_FACTS),port)
+b=attach(copy.deepcopy(spec.ROW_FACTS),spec)
+got=port.render_markdown(a,*port.compute_verdict(a),'PORT-FIDELITY-FIXED-VINTAGE')
+want=spec.render_markdown(b,*spec.compute_verdict(b),'PORT-FIDELITY-FIXED-VINTAGE')
 gl=[l for l in got.splitlines() if l.startswith('|')];wl=[l for l in want.splitlines() if l.startswith('|')]
 print('SPEC_TABLE_LINES=%d PORT_TABLE_LINES=%d IDENTICAL=%s' % (len(wl),len(gl),got==want))
-"</invocation><expect>SPEC_TABLE_LINES and PORT_TABLE_LINES are EQUAL and both greater than zero, and IDENTICAL=True -- fed the specimen's own rows at a fixed vintage, the ported module reproduces the specimen's edition exactly. The line counts are printed so an IDENTICAL=True over two empty strings is visible rather than silent</expect></criterion>
+"</invocation><expect>SPEC_TABLE_LINES and PORT_TABLE_LINES are EQUAL and both greater than zero, and IDENTICAL=True -- fed the specimen's own rows at a fixed vintage, each side's delta attached independently via the PORT's own compute_delta/compute_delta_watch over an independent deepcopy (so neither module grades rows the other mutated), the ported module reproduces the specimen's edition exactly. AMENDED by NFRA_REPORT-Z-S20; see comment above</expect></criterion>
   <criterion id="AC3" cell_refs="RP-s-21"><invocation>cd "C:/Users/Opal Bloomberg/Desktop/ajb_workspace" && timeout 120 python -c "import ast;src=open('infra/aws/lambda/infrastructure_monitor/edition.py',encoding='utf-8').read();t=ast.parse(src);lits=[n for n in t.body if isinstance(n,ast.Assign) and any(isinstance(tg,ast.Name) and tg.id.isupper() and tg.id not in ('__all__',) for tg in n.targets) and isinstance(n.value,(ast.List,ast.Dict)) and len(ast.dump(n.value))>400];print('MODULE_LEVEL_DEFS=%d BIG_UPPERCASE_DATA_LITERALS=%d NAMES=%s' % (len(t.body),len(lits),[tg.id for n in lits for tg in n.targets]))"</invocation><expect>BIG_UPPERCASE_DATA_LITERALS=0 with MODULE_LEVEL_DEFS greater than zero -- no transcribed fact table travelled with the logic. C-NO-FROZEN-FACTS. The MODULE_LEVEL_DEFS denominator is printed so a zero over an unparsed file is visible</expect></criterion>
+  <!-- AC4 AMENDED by NFRA_REPORT-Z-S20 (2.0.0_SA_COO~ZZ, ISSUER RULING, commit 95b7d4ecd2220fdf8751028d7ee59694521b0bd8): same defect, same fix as AC2 above -- base/mut carried no "delta" key so compute_verdict() raised KeyError: 'delta' before render_markdown was ever reached. Recut attaches delta via the port's own compute_delta/compute_delta_watch on each independently-deepcopied row list before rendering. Printed denominators (BASE_ROWS, MUT_ROWS, OUTPUTS_DIFFER) unchanged. -->
   <criterion id="AC4" cell_refs="RP-s-21"><invocation>cd "C:/Users/Opal Bloomberg/Desktop/ajb_workspace" && timeout 120 python -c "
 import importlib.util,sys,copy
 def load(p,n):
     s=importlib.util.spec_from_file_location(n,p);m=importlib.util.module_from_spec(s);sys.modules[n]=m;s.loader.exec_module(m);return m
 spec=load('org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/compose_edition.py','spec_ce2')
 port=load('infra/aws/lambda/infrastructure_monitor/edition.py','port_ed2')
-base=copy.deepcopy(spec.ROW_FACTS)
-mut=copy.deepcopy(spec.ROW_FACTS)[:1]
-a=port.render_markdown(base,*port.compute_verdict(base),vintage='V')
-b=port.render_markdown(mut,*port.compute_verdict(mut),vintage='V')
+def attach(rows,mod):
+    for r in rows:
+        if r['family']=='watch':
+            d,n=mod.compute_delta_watch(r['prev'],r['curr'])
+        else:
+            d,n=mod.compute_delta(r['prev'],r['curr'])
+        r['delta']=d;r['rule_note']='(%s)' % n
+    return rows
+base=attach(copy.deepcopy(spec.ROW_FACTS),port)
+mut=attach(copy.deepcopy(spec.ROW_FACTS)[:1],port)
+a=port.render_markdown(base,*port.compute_verdict(base),'V')
+b=port.render_markdown(mut,*port.compute_verdict(mut),'V')
 print('BASE_ROWS=%d MUT_ROWS=%d OUTPUTS_DIFFER=%s' % (len(base),len(mut),a!=b))
 "</invocation><expect>BASE_ROWS greater than MUT_ROWS, both greater than zero, and OUTPUTS_DIFFER=True -- the renderer reads the rows it is GIVEN. This is the discrimination arm: a module that ignored its argument and printed a literal would pass AC2 and fail here</expect></criterion>
   <criterion id="AC5" cell_refs="RP-s-21"><invocation>cd "C:/Users/Opal Bloomberg/Desktop/ajb_workspace" && timeout 120 python -c "import ast,sys;src=open('infra/aws/lambda/infrastructure_monitor/edition.py',encoding='utf-8').read();t=ast.parse(src);mods=set()
@@ -157,7 +174,7 @@ visible. This is the `AC4`-vacuity lesson from round 3 applied at the cut instea
 
 <!-- ============ RECORD FACE -- does NOT travel to the worker ============ -->
 
-<status>open</status>
+<status>complete</status>
 <round>4</round>
 <sub_round>A</sub_round>
 <slot>~1</slot>

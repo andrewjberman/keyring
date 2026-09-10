@@ -805,3 +805,37 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
   }
 ]
 ```
+
+## Z-W1-S7 -- AC2 ("THE CELL") and AC4 are unsatisfiable by ANY port that honours the cell's own "main() does NOT travel" bound, because the frozen row shape never carries `delta` and only main()'s excluded loop ever attached it
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-W1-S7",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_REPORT~1",
+    "surfaced_at": "2026-09-10T15:07:18Z",
+    "one_line": "TO-RP-s-21's AC2 (THE CELL) and AC4 invoke port.compute_verdict()/render_markdown() directly on spec.ROW_FACTS-shaped rows, but ONLY main() (specimen :549-555, explicitly excluded -- 'main() does NOT travel') ever attaches r['delta']; the identical call against the UNMODIFIED specimen itself raises the same KeyError, so this is not a porting defect -- the two invocations cannot pass for any implementation that honours the cell's own bound.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZZ -- issuer of TO-RP-s-21 (and, per the cell's own text, of the sibling RP-s-22 mapper cell whose output is the plausible place the delta-attach step belongs); only the issuer/L9 can decide whether AC2/AC4 are recut to run against a caller that attaches delta first, or the port's scope is widened to include that step, or the criteria are accepted as testing a not-yet-assembled pipeline.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/compose_edition.py:388-396 @20327a663f652cde867f0962206f346b2e6d3a60 -- compute_verdict(rows) reads `r[\"delta\"]` directly (`worse_rows = [r for r in real_rows if r[\"delta\"] == \"worse\"]`) with no fallback and no computation of its own.",
+        "compose_edition.py:76-331 @20327a663f652cde867f0962206f346b2e6d3a60 -- every ROW_FACTS entry's own literal keys are exactly {property, attribution, family, prev, curr, citation, evidence[, illustrative]}; none carries a 'delta' key. Confirmed by direct introspection: `sorted(rows[0].keys())` on a freshly loaded spec.ROW_FACTS returns `['attribution','citation','curr','evidence','family','prev','property']`, no 'delta'.",
+        "compose_edition.py:548-559 @20327a663f652cde867f0962206f346b2e6d3a60 (main()) is the ONLY code in the specimen that ever sets `r[\"delta\"]`/`r[\"rule_note\"]`, in a loop over ROW_FACTS run once before compute_verdict()/render_markdown() are ever called. The cell's own text: 'main() does NOT travel.'",
+        "REPRODUCED AGAINST THE UNMODIFIED SPECIMEN, INDEPENDENT OF ANY PORT: `spec=load(compose_edition.py); spec.compute_verdict(spec.ROW_FACTS)` (no main() run first) raises `KeyError: 'delta'` at compose_edition.py:394's list comprehension -- run in C:/tmp/wk-report-4-1 this session, 2026-09-10. This is the SAME error AC2's invocation hits when it calls the equivalent `port.compute_verdict(rows)` on rows drawn from the same un-annotated spec.ROW_FACTS.",
+        "AC2's own invocation verbatim (TO-RP-s-21 <proof_of_spec>): `rows=spec.ROW_FACTS; na,br,wr=port.compute_verdict(rows); got=port.render_markdown(rows,na,br,wr,...)` -- never runs main()'s delta-attach loop or any equivalent before the first call. AC4's invocation does the same via `port.render_markdown(base,*port.compute_verdict(base),vintage='V')`.",
+        "This worker's port (infra/aws/lambda/infrastructure_monitor/edition.py, verbatim one-for-one lift of compute_delta/compute_delta_watch/compute_verdict/fmt_state/gen_sentence/render_markdown, no behavior change) run against AC2's exact invocation this session: `KeyError: 'delta'` at edition.py:107 (the ported compute_verdict), identical shape, both AC2 and AC4, stable across 2 consecutive runs each.",
+        "AC1 (DEFINED=6 of 6 MISSING=[]), AC3 (BIG_UPPERCASE_DATA_LITERALS=0), AC5 (NON_STDLIB=0) and AC6 (NON_ASCII_LINES=0) all PASS against this same port, ruling out an absent-file or malformed-module explanation for AC2/AC4's failure -- the module is present, complete, stdlib-only and ASCII-clean; only the two criteria that call compute_verdict() on raw ROW_FACTS-shaped rows fail."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-RP-s-21 AC2 ('THE CELL'): fed the specimen's own ROW_FACTS rows at a fixed vintage, `port.compute_verdict(rows)` then `port.render_markdown(rows,...)` should reproduce `spec.render_markdown(rows,...)` exactly (IDENTICAL=True, table line counts equal and >0). AC4 expects the same call shape to discriminate on row-list size. The cell's own bound: 'ROW_FACTS does NOT travel. main() does NOT travel... The module is pure functions over arguments its caller supplies' and 'THE ROW SHAPE IS FROZEN and you may not change it... render_markdown must accept exactly the row dicts the specimen's ROW_FACTS entries already are.'",
+    "world_is": "spec.ROW_FACTS-shaped rows never carry a 'delta' key (confirmed by direct key introspection); only main()'s excluded loop ever attaches one. AC2's and AC4's own invocations call compute_verdict()/render_markdown() directly on that un-annotated shape, so both raise KeyError: 'delta' on the FIRST call, before any comparison to the specimen's output is possible -- reproducibly, on the unmodified specimen module itself and not only on this worker's port. Measured this session: AC1 PASS (DEFINED=6 of 6), AC2 FAIL (KeyError, rc=1), AC3 PASS (BIG_UPPERCASE_DATA_LITERALS=0), AC4 FAIL (KeyError, rc=1, same cause), AC5 PASS (NON_STDLIB=0), AC6 PASS (NON_ASCII_LINES=0).",
+    "notes": "NOT crossed to make AC2/AC4 pass: this worker did NOT fold main()'s delta-attach loop into compute_verdict() (which would (a) exceed the specimen's own compute_verdict body at :388-396, the exact ported range the cell names, and (b) reintroduce, under a different function name, precisely the wiring the cell's own bound excludes -- 'main() does NOT travel'). Doing so might make AC2's script stop crashing (rows mutated in place before spec.compute_verdict(rows) runs on the same objects), but it would do so by adding scope the cell never asked for, not by porting more faithfully. Filed instead of worked around, per this project's own standing instruction not to change the frozen row shape or smuggle excluded logic elsewhere. TO-RP-s-21's <status> stays OPEN on this worker's own proof-of-spec instance because AC2 and AC4 are recorded FAIL as measured; AC1/AC3/AC5/AC6 PASS. The likely resolution lives in RP-s-22 (the parallel mapper cell the TO names as building 'against that shape RIGHT NOW') or RP-s-23 (the lambda_function.py wiring cell) -- whichever of them is the caller responsible for attaching `delta` before calling into this module -- but naming that is a judgment for the issuer/L9, not something this cell's paths authorize this worker to decide or build."
+  }
+]
+```
