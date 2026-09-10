@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `ETFS_GUARDRAIL-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `ETFS_GUARDRAIL-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`ETFS_GUARDRAIL-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 61 rows, COUNTED not carried forward (W5-S4/S5/S6 appended by `0.9.0_WK_ETFS_GUARDRAIL~5` 2026-09-10T05:3xZ under EG-s-25; summed over the file's 3 fenced json blocks).
+`ETFS_GUARDRAIL-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 62 rows, COUNTED not carried forward (W5-S7 appended by `0.9.0_WK_ETFS_GUARDRAIL~5` 2026-09-10T05:5xZ under EG-s-25; summed over the file's 3 fenced json blocks).
 **Round 1 task orders:** 14, one per cell of `../../decompositions/ETFS_GUARDRAIL_DECOMP.md` v0.1.1, on three worker
 slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
 
@@ -1460,6 +1460,30 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "'the box pulls this file by key at run time (lambda_function.py:348)'.",
     "world_is": "At CLOUD, :348 is prose inside an email body. The pull is at :207 in _render_command and the renderer is invoked at :227; ARTIFACT_PREFIX is bound at :48. The CLAIM is correct and was confirmed at the corrected lines; only the line number is stale, because the orchestrator has been edited twice tonight by adjacent cells.",
     "notes": "INERT: the deploy shape the citation justifies is correct and was verified at the true location before the deploy was made. Filed for form -- a line number without a commit-ish is not a citation, and in this file it decayed within hours."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W5-S7",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~5",
+    "surfaced_at": "2026-09-10T05:52Z",
+    "one_line": "THE ORDER ASSIGNS THIS WORKER A <status> FLIP THAT THE L6 GATE REFUSES, BECAUSE THE WORKTREE WAS RE-USED FOR A SECOND ORDER WITHOUT A RE-CUT BRANCH. EG-s-25's <proof_of_spec> says the instance is 'validated with python .tools/proof-of-spec-check.py <instance> S25-AC1,S25-AC2 BEFORE the complete flip, which you commit yourself.' This branch, wk-etfs_guardrail-3-5, was cut at ea47e92a72 -- BEFORE the issuance d30e3ca107 that created the EG-s-25 face -- because the same worktree was re-used for a second order (EG-s-19 first, then this one) and nothing re-based it. So the task-order FILE does not exist on this branch at all. The face was read by `git show d30e3ca107:<path>` plus a plain file write, deliberately avoiding both `checkout --` and `merge`, which this worker is instructed never to run. Committing that file is therefore an ADD, not a modification, and `.tools/to-pipeline-gate.py` REFUSES it in terms that are exactly correct: 'a NEW tree task order committed under 0.9.0_WK_ETFS_GUARDRAIL~5. COO is the only agent that does task orders (LD-0521 A3): a new file under org/missions/*/*/*/task-orders/ commits only under 2.0.0_SA_COO or a ~lane of it. A worker's own <status> flip on an EXISTING task order is a modification and is not this limb's.' THE GATE IS RIGHT AND THE DISTINCTION IT DRAWS IS THE WHOLE POINT: a flip on an EXISTING file is a worker's; an ADD wears an issuance's authority. It refuses on three further counts for the same root cause -- the decomposition on this branch is v0.3 with 23 cell ids and contains no EG-s-25 (v0.6 is on CLOUD, likewise unreachable without a merge), so owned_cells and both criteria cite a cell this branch's decomp lacks. AN AUDITED ESCAPE EXISTS AND WAS NOT TAKEN: '# pipeline-override: <reason>' would have let the commit through, and using it would have made a worker's commit carry an issuance's authority, which is the one thing this limb exists to prevent. Widening my own grant to satisfy a clause is not available to me. WHAT IS AND IS NOT DONE, so the issuer can act on this in one read: every other deliverable is committed and terminal -- the code and its 5 new suite arms at c2787650f5, the deploy under its own closed NEVER-2 entry at 9b8a50c6cd, three rows at 9393136bf7, and the battery, result and proof-of-spec instance at 1a07f65a4a. S25-AC1 PASSES BY OUTPUT (rc 0, 6 of 6 arms, token EGS25-VERDICT-DISCLOSES-FORCING) and S25-AC2 is RECORDED with no verdict. proof-of-spec-check returns rc 0 VALID with all 3 surprise ids resolving. The ONLY thing outstanding is the one-line <status> flip, and it needs a hand that can legitimately carry the face -- the issuer's, at the drain, or a worker on a branch cut at or after d30e3ca107.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-25.the-verdict-discloses-its-own-forcing.md@d30e3ca107 <proof_of_spec>: 'validated with `python .tools/proof-of-spec-check.py <instance> S25-AC1,S25-AC2` BEFORE the complete flip, which you commit yourself.'",
+        "This seat 05:4xZ, .tools/safe-commit.sh with the face in the pathspec -> 'ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate). Commit aborted; files unstaged.' and '[to-pipeline-gate] REFUSED -- 4 violation(s) across 1 newly-added TO file(s)', the first being the LD-0521 A3 clause quoted in full above and the other three being 'criterion S25-AC1 / S25-AC2 / owned_cells names cell EG-s-25, which is not a cell of org/missions/D8/ETFS/ETFS_GUARDRAIL/decompositions/ETFS_GUARDRAIL_DECOMP.md (23 cell ids read from the index)'.",
+        "git rev-parse: this branch wk-etfs_guardrail-3-5 was cut from CLOUD at ea47e92a72; the EG-s-25 face and decomp v0.6 were both added at d30e3ca107, which is NOT an ancestor of this branch's base. `git merge-base --is-ancestor HEAD CLOUD` rc 0 (this branch's work IS on CLOUD), but the reverse is not true and no merge was performed.",
+        "The worker's own standing instruction, which is why no merge was attempted: 'Commit on your worktree branch only; never push, merge, rebase, `checkout --` or `clean`.'",
+        "proof-of-spec-check.py on the committed instance, this seat: rc 0 VALID, 'surprises-frame: 3 entries; 3 open with a row id; 3 resolve to a channel row', with 'alignment: NOT EVALUATED -- the governing TO exists but is UNCOMMITTED ... Not a violation.' -- the checker names the same root cause and explicitly does not treat it as a defect."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "EG-s-25's <proof_of_spec>: the complete flip is one 'you commit yourself', after validating the instance.",
+    "world_is": "The face does not exist on this worker's branch, because the worktree was re-used for a second order without a re-cut branch and a merge is forbidden to this seat. Committing the face is an ADD, which .tools/to-pipeline-gate.py refuses as an issuance act reserved to 2.0.0_SA_COO (LD-0521 A3), plus three further refusals because this branch's decomp v0.3 has no EG-s-25 cell. The audited pipeline-override escape exists and was deliberately not taken. Everything else the cell owes is committed and terminal.",
+    "notes": "BLOCKING because it leaves the order non-terminal on a mechanical step the face assigns to this worker, and only the issuer can clear it. INERT because nothing in the world is left wrong or armed: the deploy is landed, verified and reversible, the criteria are met and evidenced, and the outstanding act is a one-line status edit on a document. Cheapest remedies, named for the issuer to pick from and not chosen here: flip it at the drain; or seat future second orders on a branch re-cut at or after their own issuance, which would have avoided this entirely and is the general fix -- a worker's branch should contain its own task order."
   }
 ]
 ```
