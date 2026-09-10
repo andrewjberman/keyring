@@ -2262,3 +2262,37 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
   }
 ]
 ```
+
+
+## S37 -- W5-S11's HAZARD IS GONE FROM THE WORLD: the stray served object is DELETED on Andrew's word, and this row is the carrier because a committed row's standing is never flipped in place
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-S37",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T15:30:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO -- this row carries no hazard of its own; it RECORDS that `ETFS_GUARDRAIL-W5-S11`'s hazard no longer exists in the world. W5-S11's own `hazard_standing` STILL READS ARMED and that is CORRECT and DELIBERATE -- see notes.",
+    "one_line": "THE STRAY SERVED OBJECT `ETFS_GUARDRAIL-W5-S11` NAMED IS DELETED. Andrew's word, verbatim and entire, at this seat's terminal in reply to `/open-calls`: *\"Yes to Call 1. On Call 2, I do not understand what this drift timer is for exactly, explain\"*. Recorded durably at `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260910_152xZ_DELETE_STRAY_SERVED_TEST_OBJECT.md`. THE ACT, with both reads: BEFORE `head-object` returned ETag `647e565208eccd9a0d4b4a08159c082b` at 1,878 B; `aws s3api delete-object --bucket opal-data-etfs --key platinum/reports/2026-08/coverage_egress_ask_ladder_skipped.json`; AFTER `head-object` returns `An error occurred (404) when calling the HeadObject operation: Not Found`. ⛔ AND THE POSITIVE CONTROL, because a delete that removed MORE than intended reads identically on the target key alone: the SIX legitimate August artifacts are UNTOUCHED at their original sizes and timestamps -- `coverage_verdict.json` 1,225 B, `etf_ownership.html` 43,376 B, `etf_ownership.pdf` 252,393 B and three per-partner CSVs, all stamped 2026-09-10T00:24:4xZ from the re-render. Prefix denominator SEVEN keys before, SIX after, and the six are exactly the re-render's own set. WHY ANDREW'S WORD WAS REQUIRED RATHER THAN MY JUDGMENT: `opal-data-etfs` carries NO VERSIONING, so the delete is unrecoverable, and CLAUDE.md's Agent Autonomy section reserves S3 deletes and anything unrecoverable to human confirmation -- an agent may not take that act however obvious the cleanup looks. SCOPE, neither widened nor narrowed: his word covers THIS ONE KEY. It is not a standing grant over served objects, not another prefix or bucket, and not authorization for any other unrecoverable act. Call 2 of that same `/open-calls` -- the drift timer's principal -- is UNANSWERED and remains OPEN; he asked for an explanation before ruling.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 2026-09-10 ~15:2xZ, `aws s3api head-object` BEFORE the delete: ContentLength 1878, ETag \"647e565208eccd9a0d4b4a08159c082b\", LastModified Thu, 10 Sep 2026 13:54:44 GMT.",
+        "The same call AFTER the delete: `An error occurred (404) when calling the HeadObject operation: Not Found`. The 404 is the discriminating read -- an absent key and an unreadable key would not render the same way here, and the BEFORE read on the same instrument proves the reader reaches this bucket.",
+        "POSITIVE CONTROL on the same instrument in the same tick: `list-objects-v2` over `platinum/reports/2026-08/` returns SIX keys, all stamped 2026-09-10T00:24:4xZ with their original sizes. So the delete was scoped to one key rather than to the prefix, and a broader delete would have shown here.",
+        "The bucket's versioning state: `get-bucket-versioning` returns EMPTY, which is how an unversioned bucket answers. That is why the act was Andrew's and not mine, and it is consistent with this estate's banked note that `opal-data-etfs` has versioning DISABLED.",
+        "The cause, from `ETFS_GUARDRAIL-W5-S11` filed by `0.9.0_WK_ETFS_GUARDRAIL~5`: one `pytest` run of `EG-s-29`'s own suite PUT the object while EVERY ASSERTION PASSED, because three arms shared a premise that was a property of the code (\"this branch touches no S3\") and that cell's own change killed it for all three at once. Recurrence closed by an autouse fixture in the same commit.",
+        "NOT MEASURED and named as the residual: whether any OTHER served prefix received a write from that same suite before the fixture landed. I checked only `platinum/reports/2026-08/`, because that is the prefix W5-S11 named. A wider sweep is not claimed here."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "CLAUDE.md Agent Autonomy: human confirmation is required for S3 deletes and anything unrecoverable. CLAUDE.md's surprise-channel rule: an ARMED hazard disarms via the row's `disarm_owner`. `org/surprise_channel/schemas/investigation_item.schema.json`: `hazard_standing` admits exactly `ARMED` and `INERT`, `additionalProperties` is FALSE, and `.tools/surprise-row-gate.py` refuses any in-place mutation of an existing row -- 'Corrections are NEW items citing the old id; an edited history is a history nobody can audit.'",
+    "world_is": "The object is gone and W5-S11's hazard no longer exists. W5-S11's committed row still reads ARMED and cannot be edited to say otherwise without breaking the append-only property the gate enforces.",
+    "notes": "⛔ WHY THIS IS A NEW ROW AND NOT AN EDIT TO W5-S11, AND I LEARNED IT BY BEING REFUSED TWICE. My first attempt set W5-S11's `hazard_standing` to `DISARMED` and added a `disarmed_at` field. THE GATE REFUSED IT ON BOTH LIMBS AND WAS RIGHT ON BOTH: the schema's `hazard_standing` enum is exactly ['ARMED','INERT'] so DISARMED is not a value it has, and `additionalProperties: false` means `disarmed_at` is not a field this row type carries. The nested `disarm` object with its `state`/`at` clock -- the one the gate's monotone-advance limb admits -- belongs to `remediation_row.schema.json`, a DIFFERENT plane, and remediation rows are `3.0.0_SA_CVO`'s. I reverted with `git checkout HEAD --` and verified the restore (89 rows, W5-S11 reading ARMED, no stray field) before writing this. THE CONVENTION THE CHANNEL ALREADY USES, read from its own rows rather than assumed: a disarm is recorded in the `disarm_owner` PROSE AT AUTHORING TIME -- `W4-S5` 'DISARMED SAME-TURN by this cell', `W5-S8` 'DISARMED THIS TURN for the instance'. W5-S11 was authored ARMED because at authoring time it WAS armed, so there was no prose to write. A NEW ROW CITING THE OLD ID IS THEREFORE THE ONLY CARRIER, which is the same mechanism `S36` used for the eleven re-pointed rows an hour earlier -- and the gate had already taught me that lesson once today, which is why the second refusal is mine rather than the gate's. READING ORDER FOR A FUTURE SEAT: if you are triaging `W5-S11`, its standing is HERE. Its own row will read ARMED forever and that is what an append-only channel means. DISPOSITION `GRADUATED` rather than `UNDER_INVESTIGATION`: the finding produced an act, the act is complete and verified with a control, and nothing further is owed on it."
+  }
+]
+```
