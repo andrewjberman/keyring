@@ -1349,3 +1349,41 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S35 -- closing the defect THIS DOCUMENT DIAGNOSED: the three self-set rows C-S30 named get a CVO disposition at last, and round 1's slug is measured to have carried FIVE of its TEN graduations -- the other five have never reached any remediation document
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S35",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T10:10Z",
+    "one_line": "L9, round 2, the last per-item act: FIVE rows are DISMISSED WITH REASON -- Z-S117, Z-S126 and Z-S149 (the three terminal SELF-SET dispositions C-S30 identified as this project's genuine defect class, all disarm records by 2.0.0_SA_COO~Z), plus Z-S19 and Z-S20 (this seat's OWN round-1 L9 adjudication rows, self-set the same way). ⛔ AND A SEPARATE FINDING FOUND WHILE CUTTING THE SLUG: round 1 GRADUATED TEN items and its remediation document carries FIVE. Z-S1, Z-S2, Z-S11, Z-S13 and Z-S17 have never appeared in any slug, so five graduated findings have never reached the COO's recut by the only carrier that delivers them.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "ALL FIVE ARE RECORDS on round 1's own Z-S20 test. Z-S117, Z-S126 and Z-S149 open with the words 'DISARM RECORD for NFRA_OPSEC202609-<id>' and exist to record that a hazard was stood down -- exactly the class C-S11 dismissed on NFRA_REPORT and C-S33 dismissed here. Z-S19 and Z-S20 are this seat's own round-1 L9 adjudication rows, which are verdicts ABOUT items and are not items; the spine says so directly ('an ADJUDICATION document's rows are the CVO's rows ABOUT items ... their own ids are NOT items'), and they carry ids in the investigation file only because round 1 predates this project's adjudications/ folder. ⭐ THE POINT OF DISMISSING THEM IS NOT THE VALUE, IT IS THE AUTHORITY: every one carried a TERMINAL disposition set by its own surfacing seat, which is precisely the defect C-S10 named and C-S30 counted. A document that diagnoses that defect and then leaves five live instances of it in its own channel has described a problem rather than closed one. Nothing here re-arms a hazard or disputes a disarm: all three disarms were correct and their targets stay disposed as their own rows left them.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S117",
+      "NFRA_OPSEC202609-Z-S126",
+      "NFRA_OPSEC202609-Z-S149",
+      "NFRA_OPSEC202609-Z-S19",
+      "NFRA_OPSEC202609-Z-S20"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE THREE SELF-SET ROWS ARE THE EXACT THREE C-S30 NAMED, re-measured here keyed on the AUTHOR of the setting row: of 168 items, 111 carry a CVO-authored setting row in adjudications/, 18 a CVO-authored setting row in the investigation file (spine s.4's home for round 1's CVO rows), and 5 were TERMINAL SELF-SET -- Z-S19 and Z-S20 by this seat, and Z-S117, Z-S126 and Z-S149 by 2.0.0_SA_COO~Z. That is the whole residual class and it is closed by this row.",
+        "⛔ THE SLUG-COMPLETENESS FINDING, MEASURED WHILE BUILDING THE ROUND-2 REMEDIATION DOCUMENT AND NOT BEFORE: round 1's adjudication row Z-S19 GRADUATES TEN items by name -- S1, S2, S3, S4, S5, S10, S11, S13, S14, S17. REMEDIATION_v1.Z.md carries FIVE: Z-S3, Z-S4, Z-S5, Z-S10, Z-S14. So Z-S1, Z-S2, Z-S11, Z-S13 and Z-S17 GRADUATED AND WERE NEVER CARRIED. Protocol s.5 makes the remediation document the only artifact that reaches 2.0.0_SA_COO's recut, so a graduation absent from it is a finding that was adjudicated, recorded, and then delivered to nobody.",
+        "WHY NEITHER GATE COULD SEE IT, which is what makes it worth a row rather than a fix in passing: the L10 precondition tests that every INVESTIGATION item carries a disposition, and all ten did. NOTHING ANYWHERE TESTS THAT EVERY GRADUATED ITEM HAS A REMEDIATION ROW. The two documents are validated independently and no predicate joins them, so a slug can omit half its graduations and every check in the fabric still reads green. It is the same shape as C-S10's finding one artifact further down the chain: a precondition that measures the presence of a value rather than the completeness of a delivery.",
+        "THE FIVE ARE CARRIED INTO THE ROUND-2 SLUG rather than left for a round-3 that may never re-read round 1. They are real: Z-S1 (the L10 route handoff addressing a BASE serial no site-Z lane watches), Z-S2 (Terraform reading the origin secret via a data source, which writes the secret's VALUE into state), Z-S11 (a cell_refs separator the checker and the face disagree on), Z-S13 (WAF logging asserted OFF on both ACLs where the vintage differed), Z-S17 (two findings on the opal-users-v2 limb, one corrective and one hazardous). Four of the five read ARMED."
+      ]
+    },
+    "spec_asserts": "Protocol s.4 fixes the terminal disposition as the CVO's act; s.5 makes the remediation document the carrier that reaches the COO's recut; s.8's L10 precondition requires every investigation item dispositioned.",
+    "world_is": "Five items held terminal dispositions no CVO adjudication row ever set -- three by a peer, two by this seat -- and five of round 1's ten graduations were never carried into any remediation document at all.",
+    "notes": "THIS IS THE LAST PER-ITEM ACT OF ROUND 2 AND IT CLOSES THIS DOCUMENT'S OWN DIAGNOSIS. C-S10 named the mechanism, C-S30 counted it and corrected the count against this seat, and this row disposes of the residual rather than leaving the estate with a finding and no remedy in the one channel that could demonstrate the fix. || ⚠ THE SLUG-COMPLETENESS DEFECT IS NAMED AND NOT DESIGNED, and this seat is explicit that no gate edit is proposed: 1.0.0_SA_CTO~Z ruled at msg 20853 s.2 that the row gate is not to be edited on the strength of a related finding, and this is a DIFFERENT limb of the same file arriving one day later. The candidate predicate is obvious -- every GRADUATED item resolves to a remediation row before a round closes -- and choosing whether it belongs in the gate, in /canonical-flow's L10 read, or nowhere is the gate owner's call. || COST OF THE CHECK THAT FOUND IT: one set difference between the graduated set and the existing slug's ids, run while building the next slug. It cannot be run any earlier than the slug, which is probably why no round has run it."
+  }
+]
+```
