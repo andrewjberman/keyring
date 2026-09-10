@@ -13,7 +13,7 @@
     "execution": "laptop",
     "d9_whole_move_directed": true,
     "canonical_codes_assigned_here": false,
-    "permanent_outcome_ids": "FWD-1 through FWD-11: first eight retained, FWD-9 ratified, FWD-10 recut and FWD-11 added on Andrew words at 2dcd88091f.",
+    "permanent_outcome_ids": "FWD-1 through FWD-11 active on the cited directions; FWD-12 proposed and unratified at 68d8b16a91.",
     "canonical_project_codes": {
       "IR FE": "IRPT_FNTEND",
       "IR BK": "IRPT_BCKEND"
@@ -62,6 +62,12 @@
       "source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
       "sha256": "bd7a5c1c5ed5ec7c194be93c13b1b29445ad6a652ec74b447c68ada79a509f4f",
       "size_bytes": 6945
+    },
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_192xZ_FWD9_YES_FWD10_IMPOSSIBLE_BY_INGESTION_GATE.md",
+      "source_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
+      "sha256": "310a075f509ed884a266ac22ee01fa62efee757d0736600579a7b54105b8a2f8",
+      "size_bytes": 9569
     }
   ],
   "source_documents": [
@@ -358,24 +364,399 @@
     {
       "project": "IR FE",
       "path": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "sha256": "95722eba7d421421396e08452374218a8dfe55a61037163b15f9555acc7cfd94",
-      "outcomes": 7,
+      "sha256": "90666179755178584a64b6bf3891355a3bcc536bcf3d1882ca4ce0113cdc4cae",
+      "outcomes": 8,
       "parts": 7,
       "source_documents_mapped": 9,
-      "lines": 203,
-      "words": 4010,
-      "canonical_code": "IRPT_FNTEND"
+      "lines": 215,
+      "words": 4297,
+      "canonical_code": "IRPT_FNTEND",
+      "section_inventory": [
+        {
+          "heading": "# IR FE — Investor Reporting frontend project brief",
+          "start_line": 1,
+          "end_line": 13,
+          "section_sha256": "bb993d53dec83f89568dd4461434eee0cf09c9c539e86dc06dfa5b7f7fa2bead",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART I — THE OUTCOME TERRITORY",
+          "start_line": 14,
+          "end_line": 15,
+          "section_sha256": "6bb8f139919add885e2f01acad1ad46897bf2c9ff48b18cfb347f8413a264c79",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O1 — An advisor finds the right client and keeps that context across the three tabs",
+          "start_line": 16,
+          "end_line": 23,
+          "section_sha256": "a813d986b9020ce2ad5c25ffc04cb917c7c3586bb8c7354b8f71d989676accc5",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O2 — An advisor reads a clear performance report with the provider's meaning intact",
+          "start_line": 24,
+          "end_line": 31,
+          "section_sha256": "f6297c25729326e9bdb638270bdc19861b54d90aca3dd4eee46758825c17d5d7",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O3 — An advisor obtains and reviews the requested YCharts analysis in the same client context",
+          "start_line": 32,
+          "end_line": 39,
+          "section_sha256": "a8f9cde0c1c808ff45da1721405c8ca1fdd9a3e862e28803f30104640edb24fa",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O4 — An advisor reads current holdings through model-led radial drilldowns",
+          "start_line": 40,
+          "end_line": 47,
+          "section_sha256": "64c13d7d384e1c7206497a4820c790e21e0f43ca5182d8e956cfaac25e34fe17",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O5 — An advisor previews and downloads a branded report that matches the reviewed revision",
+          "start_line": 48,
+          "end_line": 57,
+          "section_sha256": "f8b89badaebf524bc77378f2df00cb383a1529b9c8cc136fbec6197c2aa6eb48",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O6 — An advisor understands partial, stale or failed results and continues using the rest of the product",
+          "start_line": 58,
+          "end_line": 65,
+          "section_sha256": "7968ff251a30b9a42d56f55619e686ad30ab1a6d47ab59097633810b2724dd79",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O7 — An entitled Opal user runs reports across all firms from the Global view",
+          "start_line": 66,
+          "end_line": 73,
+          "section_sha256": "d6c3681574606c2112aee810f1574473e36e7e0e60a8dee4f1ee76a809720abc",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O8 — An advisor finds familiar portal components and consistent design throughout the product",
+          "start_line": 74,
+          "end_line": 79,
+          "section_sha256": "fbbad8fd0a44ed18dee0f9dd14e047b76bac92ecb525c7902165e33acc097743",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART II — WHERE THE BOUNDARY SITS",
+          "start_line": 80,
+          "end_line": 81,
+          "section_sha256": "bf760645b8160d0f4d56f97321c4fb8c8c767a564c4061003dcca9d73118867e",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### II.1 Two teams with explicit ownership",
+          "start_line": 82,
+          "end_line": 98,
+          "section_sha256": "0d5e00251ec7512acc3c1488c2feba9d0d4bcc2253e9f35bbfc6edd00b87c5c3",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### II.2 Handoff contracts",
+          "start_line": 99,
+          "end_line": 106,
+          "section_sha256": "1d78ef1ace7dc5ab57b79c8eb05cbdc78efaf122edbc3f555228ff3c0ab1e928",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### II.3 Scope retained and scope deferred",
+          "start_line": 107,
+          "end_line": 112,
+          "section_sha256": "22bc80df1398fd93106a6b36a313239ff54a65d97f3fe01e9f05773f08fe9602",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART III — THE QUALITATIVE BAR",
+          "start_line": 113,
+          "end_line": 122,
+          "section_sha256": "6555a17d87f41373e72089a990db665009c80c9595e11e86a6c7ad793c09c4be",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART IV — SUBSTRATE, SOURCE MAP AND FRONTEND PATHS",
+          "start_line": 123,
+          "end_line": 124,
+          "section_sha256": "6fd9de28302d2b863d4cb335b665f4255b0b02741aa57572a90456c6da2a34c3",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.1 All nine source documents: what IR FE takes from each",
+          "start_line": 125,
+          "end_line": 140,
+          "section_sha256": "f75965b6e16186a1279c26aebd45d2490f8a79f36fd97ec800410c3acf349ada",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.2 Existing frontend and brand paths to use",
+          "start_line": 141,
+          "end_line": 160,
+          "section_sha256": "3d2c6126d74134b2aa4fbefd66b924fb000540b3e4912abbc7c9ce924d3a0755",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.3 Review artifacts and evidence to carry",
+          "start_line": 161,
+          "end_line": 167,
+          "section_sha256": "d93f0e607dbbc934fcc77589a11341b83fe5c567a770d9ef49af426952df1bbe",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.4 Measured findings relevant to FE",
+          "start_line": 168,
+          "end_line": 171,
+          "section_sha256": "20002d141f4bfd10ec9eb65b7b9456564926ee402d37012c33ae8babdeb2b408",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.5 Required detail coverage in the frontend PRD",
+          "start_line": 172,
+          "end_line": 177,
+          "section_sha256": "138476ca76700512820f9a2f18b729dc88ed0961aa729275b861aa01a9358328",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART V — WHAT MUST BE TRUE, WITHOUT SCOPING IT NOW",
+          "start_line": 178,
+          "end_line": 188,
+          "section_sha256": "6f73cb23162f8bc749086057b9f40b8d3f849e7e8243305f9f5de9fec1dff857",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART VI — STATUS — NOT OUTCOME-BEARING",
+          "start_line": 189,
+          "end_line": 194,
+          "section_sha256": "c734a9aa28cc41ccb8bac5df96e48211c7d3bb95e7b0d817a7f2599d37ef2d21",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART VII — WHAT THIS BRIEF DOES NOT CLAIM",
+          "start_line": 195,
+          "end_line": 198,
+          "section_sha256": "d0a188145e42fb643bca18b933e2325fffe78b657cca584647075e3f31a4fe40",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "## REFS TO CARRY",
+          "start_line": 199,
+          "end_line": 215,
+          "section_sha256": "f10cb5ff9b619ae61048ef03cc30c4e70465e198f60a3e84247d17f56e5a8a3b",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        }
+      ]
     },
     {
       "project": "IR BK",
       "path": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "sha256": "a36ef3bd7bfd1fd916770df36c1a0ac28435b97a1f1650366cdf60d60de9d350",
+      "sha256": "4b45472449e9f6d24ef25d4dacb9ace88a455400d38c9349c8f58c0fd97e1698",
       "outcomes": 8,
       "parts": 7,
       "source_documents_mapped": 9,
-      "lines": 312,
-      "words": 6608,
-      "canonical_code": "IRPT_BCKEND"
+      "lines": 318,
+      "words": 6718,
+      "canonical_code": "IRPT_BCKEND",
+      "section_inventory": [
+        {
+          "heading": "# IR BK — Investor Reporting backend project brief",
+          "start_line": 1,
+          "end_line": 11,
+          "section_sha256": "377161ff4c846ef60a0614a2a2d644a1d27927e3f0a5264b4b2dbbe4bea005c6",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART I — THE OUTCOME TERRITORY",
+          "start_line": 12,
+          "end_line": 13,
+          "section_sha256": "6bb8f139919add885e2f01acad1ad46897bf2c9ff48b18cfb347f8413a264c79",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O1 — An advisor finds permitted clients quickly and receives only the authorized account population",
+          "start_line": 14,
+          "end_line": 21,
+          "section_sha256": "af102b597185db062cdc28e8e8e580e65c692098b1dd5a5fdb21e13b24a8e337",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O2 — An advisor receives a comparable performance report without losing vendor semantics",
+          "start_line": 22,
+          "end_line": 27,
+          "section_sha256": "898797e95b969e72a7a58136c530d28280fa3488a986314ba0dd4da7676f5cdd",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O3 — A submitted holdings email becomes a durable, correctly scoped analysis request",
+          "start_line": 28,
+          "end_line": 35,
+          "section_sha256": "12ecb079a39831bcc170b35be7e258be9016b38a9fdc6bdf04874fdc1abe0da2",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O4 — An advisor receives the correct YCharts variant and can recover an interrupted generation",
+          "start_line": 36,
+          "end_line": 43,
+          "section_sha256": "d0e6eb999b2377f2dc35b0f789939bcb8b5451f3f4ed72b1a6cb2b1232bac7db",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O5 — An advisor sees current custody holdings with model percentages that state what they measure",
+          "start_line": 44,
+          "end_line": 49,
+          "section_sha256": "7812e420879b7ef2b39a7262be8ae496d17bd1b8dd2c256611b1b1acad47feed",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O6 — An advisor exports a branded, reproducible report with evidence-backed market context",
+          "start_line": 50,
+          "end_line": 57,
+          "section_sha256": "700d740a6e04707312774c8393f2567a6dd3b9d9f1b98dfc4cec5807e2ee5b2a",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O7 — A request is bound to its firm at ingestion and cannot write into another firm's destinations",
+          "start_line": 58,
+          "end_line": 65,
+          "section_sha256": "26788457e396a4126b7e4565d52027bbe085285bea8863c9d680d12eb8d159c7",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O8 — An entitled Opal user can run the same reports for clients at every firm",
+          "start_line": 66,
+          "end_line": 73,
+          "section_sha256": "6782e62ebc892020699caa74731b08ccdcfbc3c79021eae0a0f670c1e3d93032",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART II — WHERE THE BOUNDARY SITS",
+          "start_line": 74,
+          "end_line": 75,
+          "section_sha256": "bf760645b8160d0f4d56f97321c4fb8c8c767a564c4061003dcca9d73118867e",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### II.1 What this team owns, and what crosses to FE",
+          "start_line": 76,
+          "end_line": 90,
+          "section_sha256": "a76f06815b2c09a070e573e5f722b97bb9ceb97b8a191729a83df6a9d6959384",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### II.2 Shared owners and limits of the consolidation",
+          "start_line": 91,
+          "end_line": 98,
+          "section_sha256": "943c6ba8e31f34ec51aa38d150e46c1eaaa70dec5d753ba304807e1acf2193d3",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### II.3 Shared contract inventory — producer and consumer boundary",
+          "start_line": 99,
+          "end_line": 118,
+          "section_sha256": "8a76b2a219e7b38937a701fe24edc5403103b0e40f5a7e1bfcdb92c9b4384790",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART III — THE QUALITATIVE BAR",
+          "start_line": 119,
+          "end_line": 128,
+          "section_sha256": "0c57900b13b6d566374e403c33af8e95128802855812f3ec65d46ce893647d83",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART IV — SUBSTRATE, SOURCE MAP AND IMPLEMENTATION PATHS",
+          "start_line": 129,
+          "end_line": 130,
+          "section_sha256": "aa9baba57acb57261bcc7ecccfdd696f215d9cdbc5ed77938ef3b6156ef224e2",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.1 All four briefs and five supporting documents",
+          "start_line": 131,
+          "end_line": 146,
+          "section_sha256": "e1577874cd490ef6c762a76cb110b6b7204c1eb225ac84a7f0e7c205319520d8",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.2 Identity, tenant scoping and daily movement",
+          "start_line": 147,
+          "end_line": 172,
+          "section_sha256": "0b50803278a636a7dccbcad678277b1fab9d6fe8a6c9d0815f6d04b1c4b14342",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.3 Performance adapter recipe and evidence limits",
+          "start_line": 173,
+          "end_line": 185,
+          "section_sha256": "1407b7de07de8f5c7a5c818cd003d8941b2045d6f0db413f8941af2dc1ec23e0",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.4 YCharts intake, session library and explicit retrieval instructions",
+          "start_line": 186,
+          "end_line": 219,
+          "section_sha256": "860b64a2ba96aa786e84d0a5fcbf1d8147c9b4eafad245d1590a1cf674e59b2d",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.5 Partner holdings/model joins, classifications and exact paths",
+          "start_line": 220,
+          "end_line": 244,
+          "section_sha256": "8347010edf034cbde590d16716833f99fe7a9f926c1cd68f6feee955a40068db",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.6 Narrative evidence, brand assets and export execution",
+          "start_line": 245,
+          "end_line": 263,
+          "section_sha256": "046f722312360850d81c3e391deec24afedc79928ddd48a3234f3434e79a11e2",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.7 Evidence artifacts and proposed new code homes",
+          "start_line": 264,
+          "end_line": 272,
+          "section_sha256": "6c1cf6c6748daf92ca681f8946aa76ba0df15d3c21527a88b3c8805354a4dd0e",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.8 Required detail coverage in the backend PRD",
+          "start_line": 273,
+          "end_line": 278,
+          "section_sha256": "b0923930432fb7c4a509003c3698b01ed4a6ca2ac83e3eaeb5d636f9491a1596",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART V — WHAT MUST BE TRUE, WITHOUT SCOPING IT NOW",
+          "start_line": 279,
+          "end_line": 290,
+          "section_sha256": "a2e43ad93cd3fb9f013b6f80b070d1d6915335e5002054c31da56250e06a1df7",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART VI — STATUS — NOT OUTCOME-BEARING",
+          "start_line": 291,
+          "end_line": 296,
+          "section_sha256": "528bd26b7071628bf4f58adba4aec691f5619070a67f084921f153a0f71bbdf3",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART VII — WHAT THIS BRIEF DOES NOT CLAIM",
+          "start_line": 297,
+          "end_line": 300,
+          "section_sha256": "85b08f79acd3728764bfb6425ee5221f21dfa2c69970deb69d273846b087dc35",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "## REFS TO CARRY",
+          "start_line": 301,
+          "end_line": 318,
+          "section_sha256": "0e0aff2127d28f5eaf01c8f989d71598decfa6e3fb34aa0a398304078bfa15a4",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        }
+      ]
     }
   ],
   "repository_paths": [
@@ -388,7 +769,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 141
+          "line": 147
         }
       ]
     },
@@ -401,7 +782,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 142
+          "line": 148
         },
         {
           "project": "IR BK",
@@ -419,7 +800,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 142
+          "line": 148
         }
       ]
     },
@@ -432,12 +813,12 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 142
+          "line": 148
         },
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 143
+          "line": 149
         },
         {
           "project": "IR BK",
@@ -455,7 +836,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 143
+          "line": 149
         }
       ]
     },
@@ -468,7 +849,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 143
+          "line": 149
         }
       ]
     },
@@ -481,7 +862,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 144
+          "line": 150
         }
       ]
     },
@@ -494,7 +875,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 144
+          "line": 150
         }
       ]
     },
@@ -507,7 +888,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 145
+          "line": 151
         }
       ]
     },
@@ -520,7 +901,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 145
+          "line": 151
         }
       ]
     },
@@ -533,7 +914,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 146
+          "line": 152
         }
       ]
     },
@@ -546,7 +927,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 146
+          "line": 152
         }
       ]
     },
@@ -559,7 +940,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 147
+          "line": 153
         }
       ]
     },
@@ -572,7 +953,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 147
+          "line": 153
         }
       ]
     },
@@ -585,7 +966,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 147
+          "line": 153
         }
       ]
     },
@@ -598,7 +979,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 148
+          "line": 154
         },
         {
           "project": "IR BK",
@@ -616,7 +997,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 148
+          "line": 154
         },
         {
           "project": "IR BK",
@@ -634,7 +1015,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 148
+          "line": 154
         },
         {
           "project": "IR BK",
@@ -652,7 +1033,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 148
+          "line": 154
         },
         {
           "project": "IR BK",
@@ -670,7 +1051,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 149
+          "line": 155
         }
       ]
     },
@@ -683,7 +1064,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 149
+          "line": 155
         }
       ]
     },
@@ -696,7 +1077,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 149
+          "line": 155
         }
       ]
     },
@@ -709,7 +1090,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 149
+          "line": 155
         }
       ]
     },
@@ -722,7 +1103,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 150
+          "line": 156
         },
         {
           "project": "IR BK",
@@ -740,7 +1121,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 150
+          "line": 156
         },
         {
           "project": "IR BK",
@@ -758,7 +1139,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 150
+          "line": 156
         },
         {
           "project": "IR BK",
@@ -776,7 +1157,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 151
+          "line": 157
         },
         {
           "project": "IR BK",
@@ -794,7 +1175,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 153
+          "line": 159
         }
       ]
     },
@@ -807,7 +1188,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 153
+          "line": 159
         }
       ]
     },
@@ -1603,133 +1984,133 @@
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 99,
-      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md",
-      "exists": true
-    },
-    {
-      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 123,
-      "target": "investor-reporting-unification-brief-20260909.md",
-      "exists": true
-    },
-    {
-      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 124,
-      "target": "investor-reporting-lightweight-brief-20260910.md",
-      "exists": true
-    },
-    {
-      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 125,
-      "target": "investor-reporting-ycharts-brief-20260910.md",
-      "exists": true
-    },
-    {
-      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 126,
-      "target": "investor-reporting-model-overlay-brief-20260910.md",
-      "exists": true
-    },
-    {
-      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 127,
-      "target": "investor-reporting-lightweight-design-20260910.md",
-      "exists": true
-    },
-    {
-      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 128,
-      "target": "investor-reporting-performance-review-20260910.md",
+      "line": 105,
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_192xZ_FWD9_YES_FWD10_IMPOSSIBLE_BY_INGESTION_GATE.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
       "line": 129,
-      "target": "investor-reporting-export-narrative-spec-20260910.md",
+      "target": "investor-reporting-unification-brief-20260909.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
       "line": 130,
-      "target": "investor-reporting-ycharts-design-20260910.md",
+      "target": "investor-reporting-lightweight-brief-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
       "line": 131,
-      "target": "investor-reporting-model-overlay-design-20260910.md",
+      "target": "investor-reporting-ycharts-brief-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 132,
+      "target": "investor-reporting-model-overlay-brief-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 133,
+      "target": "investor-reporting-lightweight-design-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 134,
+      "target": "investor-reporting-performance-review-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 135,
+      "target": "investor-reporting-export-narrative-spec-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 136,
+      "target": "investor-reporting-ycharts-design-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
       "line": 137,
+      "target": "investor-reporting-model-overlay-design-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 143,
       "target": "sources/INVESTOR_REPORTING_FE_BK_SPLIT_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 157,
+      "line": 163,
       "target": "../research/investor_reporting_performance_20260910/presentation-review.html",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 157,
+      "line": 163,
       "target": "sources/INVESTOR_REPORTING_PERFORMANCE_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 158,
+      "line": 164,
       "target": "../research/investor_reporting_export_20260910/performance-export-review.pdf",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 158,
+      "line": 164,
       "target": "../research/investor_reporting_export_20260910/build_export_review.py",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 158,
+      "line": 164,
       "target": "../research/investor_reporting_export_20260910/FONT_LICENSE.txt",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 158,
+      "line": 164,
       "target": "sources/INVESTOR_REPORTING_EXPORT_NARRATIVE_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 159,
+      "line": 165,
       "target": "sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 159,
+      "line": 165,
       "target": "sources/INVESTOR_REPORTING_YCHARTS_HAR_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 159,
+      "line": 165,
       "target": "sources/INVESTOR_REPORTING_YCHARTS_SOURCE_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 160,
+      "line": 166,
       "target": "sources/INVESTOR_REPORTING_MODEL_OVERLAY_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 160,
+      "line": 166,
       "target": "sources/INVESTOR_REPORTING_LIGHTWEIGHT_EVIDENCE_20260910.json",
       "exists": true
     },
@@ -1778,7 +2159,7 @@
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
       "line": 95,
-      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md",
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_192xZ_FWD9_YES_FWD10_IMPOSSIBLE_BY_INGESTION_GATE.md",
       "exists": true
     },
     {
@@ -1948,40 +2329,21 @@
     "l2_distribution_covers_all_eight_once": true,
     "current_distribution_covers_all_eleven_once": true
   },
-  "updated_at_utc": "2026-09-10T19:39:45.336828+00:00",
-  "acceptance_distribution": {
-    "source_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md",
-    "source_commit": "58266dab2d7974bd3e24b469c89c7e5fdb63ae88",
-    "source_blob_sha256": "b78fea1a0f3a752d9e4ba4491e67cf08725c331650ddd9cf3affc70da2b73fb5",
-    "FE": [
-      "FWD-1",
-      "FWD-6"
-    ],
-    "BK": [
-      "FWD-2",
-      "FWD-3",
-      "FWD-4",
-      "FWD-5",
-      "FWD-7",
-      "FWD-8"
-    ],
-    "scope": "Acceptance/grade ownership only, not a measure of work; all cross-project proof retained.",
-    "read_scope": "Committed distribution amendment diff read in full; no fresh review of all other endpoint sections."
-  },
+  "updated_at_utc": "2026-09-10T19:45:34.178379+00:00",
   "forward_endpoints": [
     {
       "project_code": "IRPT_FNTEND",
       "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FNTEND_20260910.md",
-      "source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
-      "sha256": "4c1f4e77aa74f3826a7788c1a05d2e1cd6a810d74f02eaa8aba4c9de0cb4815c",
-      "read_scope": "Full authority record; endpoint FWD-9/10/11 blocks and restoration of the two formerly missing FWD-8 notes."
+      "source_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
+      "sha256": "2a5685e2f0045f5c4e8c7e1c12beb39f2ea03849d843e634f2ebbc18d0ef41b9",
+      "read_scope": "Ownership columns, new FWD-12 block and both coverage/landing sections; latest authority-record diff read in full."
     },
     {
       "project_code": "IRPT_BCKEND",
       "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md",
-      "source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
-      "sha256": "299a2ca75fdee611e021ea9e7c4b521fedb1711b57c4b77b430a6a5df29ecc4f",
-      "read_scope": "Full authority record; endpoint FWD-9/10/11 blocks and restoration of the two formerly missing FWD-8 notes."
+      "source_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
+      "sha256": "7e5c20c6308d32a6d818c55128a8150e412a11b89a20228ea5d42d33ffce3f60",
+      "read_scope": "Ownership columns, new FWD-12 block and both coverage/landing sections; latest authority-record diff read in full."
     }
   ],
   "historical_proposed_unratified_outcomes": {
@@ -2022,22 +2384,23 @@
     }
   ],
   "current_acceptance_distribution": {
-    "source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
+    "source_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
     "IRPT_FNTEND": [
       "FWD-1",
-      "FWD-6"
-    ],
-    "IRPT_BCKEND": [
-      "FWD-2",
       "FWD-3",
       "FWD-4",
       "FWD-5",
-      "FWD-7",
+      "FWD-6",
       "FWD-8",
-      "FWD-9",
-      "FWD-10",
       "FWD-11"
-    ]
+    ],
+    "IRPT_BCKEND": [
+      "FWD-2",
+      "FWD-7",
+      "FWD-9",
+      "FWD-10"
+    ],
+    "rule": "Advisor-facing outcomes owned by FE; machinery by BK. All cross-project source/data/execution proof remains required."
   },
   "additional_source_inspection": [
     {
@@ -2070,5 +2433,91 @@
       ],
       "finding": "Existing /api/scoped/advisor-intelligence routes with CUSTOM authorizer; not a runtime authorization test."
     }
-  ]
+  ],
+  "acceptance_distribution_history": [
+    {
+      "source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
+      "IRPT_FNTEND": [
+        "FWD-1",
+        "FWD-6"
+      ],
+      "IRPT_BCKEND": [
+        "FWD-2",
+        "FWD-3",
+        "FWD-4",
+        "FWD-5",
+        "FWD-7",
+        "FWD-8",
+        "FWD-9",
+        "FWD-10",
+        "FWD-11"
+      ]
+    }
+  ],
+  "historical_acceptance_distribution": {
+    "source_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md",
+    "source_commit": "58266dab2d7974bd3e24b469c89c7e5fdb63ae88",
+    "source_blob_sha256": "b78fea1a0f3a752d9e4ba4491e67cf08725c331650ddd9cf3affc70da2b73fb5",
+    "FE": [
+      "FWD-1",
+      "FWD-6"
+    ],
+    "BK": [
+      "FWD-2",
+      "FWD-3",
+      "FWD-4",
+      "FWD-5",
+      "FWD-7",
+      "FWD-8"
+    ],
+    "scope": "Acceptance/grade ownership only, not a measure of work; all cross-project proof retained.",
+    "read_scope": "Committed distribution amendment diff read in full; no fresh review of all other endpoint sections."
+  },
+  "proposed_unratified_outcomes": {
+    "source_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
+    "FWD-12": {
+      "project": "IRPT_FNTEND",
+      "scope": "Portal component reuse, layout/design and brand conformity",
+      "status": "Proposed at Andrew; not ratified at source cut; IRPT_BCKEND not engaged."
+    }
+  },
+  "forward_endpoint_history": [
+    {
+      "project_code": "IRPT_FNTEND",
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FNTEND_20260910.md",
+      "source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
+      "sha256": "4c1f4e77aa74f3826a7788c1a05d2e1cd6a810d74f02eaa8aba4c9de0cb4815c",
+      "read_scope": "Full authority record; endpoint FWD-9/10/11 blocks and restoration of the two formerly missing FWD-8 notes."
+    },
+    {
+      "project_code": "IRPT_BCKEND",
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md",
+      "source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
+      "sha256": "299a2ca75fdee611e021ea9e7c4b521fedb1711b57c4b77b430a6a5df29ecc4f",
+      "read_scope": "Full authority record; endpoint FWD-9/10/11 blocks and restoration of the two formerly missing FWD-8 notes."
+    }
+  ],
+  "required_prd_coverage": {
+    "authority_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
+    "rule": "Every brief section and every one of nine source documents maps to consumer FWD and cell(s), or explicit NOT CONSUMED with reason. Missing both is a PRD defect. Briefs remain the detailed source; FWDs are acceptance summaries.",
+    "projects": [
+      {
+        "project": "IRPT_FNTEND",
+        "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+        "brief_section_denominator": 25,
+        "supporting_document_denominator": 9,
+        "required_mapping_entries": 34,
+        "mapping_status": "inventory only; PRD/cell mapping not written or certified by this check"
+      },
+      {
+        "project": "IRPT_BCKEND",
+        "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+        "brief_section_denominator": 28,
+        "supporting_document_denominator": 9,
+        "required_mapping_entries": 37,
+        "mapping_status": "inventory only; PRD/cell mapping not written or certified by this check"
+      }
+    ],
+    "scope": "No coverage-complete claim for unwritten PRDs; inventory is the denominator for downstream subtraction."
+  }
 }
