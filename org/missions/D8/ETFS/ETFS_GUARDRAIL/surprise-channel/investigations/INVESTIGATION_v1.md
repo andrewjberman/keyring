@@ -2293,6 +2293,118 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "CLAUDE.md Agent Autonomy: human confirmation is required for S3 deletes and anything unrecoverable. CLAUDE.md's surprise-channel rule: an ARMED hazard disarms via the row's `disarm_owner`. `org/surprise_channel/schemas/investigation_item.schema.json`: `hazard_standing` admits exactly `ARMED` and `INERT`, `additionalProperties` is FALSE, and `.tools/surprise-row-gate.py` refuses any in-place mutation of an existing row -- 'Corrections are NEW items citing the old id; an edited history is a history nobody can audit.'",
     "world_is": "The object is gone and W5-S11's hazard no longer exists. W5-S11's committed row still reads ARMED and cannot be edited to say otherwise without breaking the append-only property the gate enforces.",
     "notes": "⛔ WHY THIS IS A NEW ROW AND NOT AN EDIT TO W5-S11, AND I LEARNED IT BY BEING REFUSED TWICE. My first attempt set W5-S11's `hazard_standing` to `DISARMED` and added a `disarmed_at` field. THE GATE REFUSED IT ON BOTH LIMBS AND WAS RIGHT ON BOTH: the schema's `hazard_standing` enum is exactly ['ARMED','INERT'] so DISARMED is not a value it has, and `additionalProperties: false` means `disarmed_at` is not a field this row type carries. The nested `disarm` object with its `state`/`at` clock -- the one the gate's monotone-advance limb admits -- belongs to `remediation_row.schema.json`, a DIFFERENT plane, and remediation rows are `3.0.0_SA_CVO`'s. I reverted with `git checkout HEAD --` and verified the restore (89 rows, W5-S11 reading ARMED, no stray field) before writing this. THE CONVENTION THE CHANNEL ALREADY USES, read from its own rows rather than assumed: a disarm is recorded in the `disarm_owner` PROSE AT AUTHORING TIME -- `W4-S5` 'DISARMED SAME-TURN by this cell', `W5-S8` 'DISARMED THIS TURN for the instance'. W5-S11 was authored ARMED because at authoring time it WAS armed, so there was no prose to write. A NEW ROW CITING THE OLD ID IS THEREFORE THE ONLY CARRIER, which is the same mechanism `S36` used for the eleven re-pointed rows an hour earlier -- and the gate had already taught me that lesson once today, which is why the second refusal is mine rather than the gate's. READING ORDER FOR A FUTURE SEAT: if you are triaging `W5-S11`, its standing is HERE. Its own row will read ARMED forever and that is what an append-only channel means. DISPOSITION `GRADUATED` rather than `UNDER_INVESTIGATION`: the finding produced an act, the act is complete and verified with a control, and nothing further is owed on it."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W4-S8",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T16:31Z",
+    "one_line": "NO MONTH EXISTS in which a driven refusal can produce the 404 that S21-AC1 arm (d) and FWD-9's ACCEPT both name: a forced class C needs a slice the fixture can REMOVE, and 5 of the 5 months that carry any slice ALREADY SERVE etf_ownership.pdf and .html.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- the accept is the PRD's and the three prior re-cuts of this run's shape (R-EG-6, R-EG-7, R-EG-8) are this seat's. The property arm (d) is reaching for is 'THIS RUN did not publish'; '404' names ONE WORLD-STATE of that property, exactly as the pre-R-EG-8 clause named one WRITER of the egress-ask property. A re-cut to the property (the publish keys are byte-identical before and after the run -- ETag, VersionId and LastModified read on both sides -- OR absent) is satisfiable TODAY on 2026-07 and needs no code, no deploy and no data change. Until that ruling lands the single permitted driven run stays unspent.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/prd/ETFS_GUARDRAIL_PRD.md:566-567 (and the endpoint restatement at :187) @1d62717c65 -- FWD-9 ACCEPT: 'the publish keys for that month stay ABSENT (a 404 beside the refused 200)'.",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-21.the-driven-refusal.md @1d62717c65 -- S21-AC1 arm (d): 'the PUBLISH keys for that month ABSENT (404) beside the refusal artifact's 200'.",
+        "MEASURED 2026-09-10T16:30:40Z, battery EG-s-21_S21-AC1_battery_output.txt arm (e): 275 daily slices scanned across 3 partners; months carrying a slice = ['2026-05','2026-06','2026-07','2026-08','2026-09']; slices OUTSIDE that range = 0. Of 36 served keys under s3://opal-data-etfs/platinum/reports/, all 5 of those months carry BOTH etf_ownership.pdf and etf_ownership.html -- 404-able = False, 0 of 5.",
+        "The candidate set is a SUBTRACTION from a printed denominator, not a forward list (CLAUDE.md rule 24): render_month_end._apply_fixture_remove drops dates from an already-loaded series, so a month with no slice for the forced partner cannot carry a FORCED class C at all -- classifier.py:191-194 @8471f83a18 requires 'no slice' PLUS a probe answering partition present and priced > 0.",
+        "Cross-check on the other arms, so this row is not a general refusal: arms (a),(b),(c),(d),(f) all HOLD in the same run -- the forcing now reaches the verdict (ENGAGED REFUSE, class C on cottonwood; DISENGAGED PUBLISH, same served renderer sha256 ba410ee5c9c4263e8fe37ade171aa4d61f834df246d0f57f30299dbba03a031a) and the rung-3-EQUIVALENT egress ask is written with rung3_ran=false."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "THE CELL: 'Choose the mechanism so that no SERVED artifact of a REAL month is altered -- prefer A MONTH WITH NO SERVED PUBLISH KEYS, or an input fixture the classifier reads.' S21-AC1 arm (d): the run's refusal outputs present '...and the PUBLISH keys for that month ABSENT (404) beside the refusal artifact's 200 -- the discriminating pair'. FWD-9's ACCEPT: 'the publish keys for that month STAY ABSENT (a 404 beside the refused 200)'. Both presuppose that a month exists which (i) can carry a forced class C and (ii) serves no publish key.",
+    "world_is": "No such month exists and none can be created without an S3 delete, which this order forbids absolutely. The two sets are DISJOINT by construction: a forced class C requires an existing slice to remove, and slices exist only for 2026-05..2026-09 (275 of 275); every one of those five months has served etf_ownership.pdf and .html since between 2026-06-25 and 2026-09-10. The two months whose UNFORCED verdict is PUBLISH -- the only ones on which arm (f)'s undo proof can discriminate -- are 2026-07 and 2026-08, and both serve the publish keys. 2026-08 additionally serves coverage_verdict.json (1225 B, 2026-09-10T00:24:44Z), which a run there would OVERWRITE; 2026-07 serves no coverage artifact at all, so a run there alters nothing and writes 7 new keys. The best available month therefore fails exactly ONE clause of arm (d), and it fails it in every month equally."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W4-S9",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T16:33Z",
+    "one_line": "The TERMINAL EMAIL is not covered by the forcing disclosure and states as fact something a shape-1 run did not do: its opening line reads 'could not resolve N date(s) after EVERY RUNG RAN (probe, re-run the producer, re-check)' on a --no-ladder run where remediate_month was never called, and no field of the message says the condition was FORCED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO -- a code cell on lambda_function._build_terminal_email, out of EG-s-21's grant (this face binds NO CODE CHANGE and does not name lambda_function.py). The cell's disclosure requirement (2) is written against 'the produced verdict document'; the artifact satisfies it and the EMAIL is a second surface nothing covers.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lambda_function.py:362-363 on the DEPLOYED bytes (zip member 48612 B sha256 3266c6cced4940f01314652e6d3cf41bcc2f021fdba8d276a2cfe445dc3ebb3c, CodeSha256 5qPTUpaxx+NUvTN6hmXdNfe2pT2xwkHF9Y3Q3fFJVSw=, LastModified 2026-09-10T12:16:53Z): f'The ETF ownership coverage ladder for {month} could not resolve {n} date(s) after every rung ran (probe, re-run the producer, re-check).'",
+        "render_month_end.py:1160-1172 @903c5cba50 (the --no-ladder else-branch; the per-row reason literal is at :1165) (served sha256 ba410ee5c9c4263e8fe37ade171aa4d61f834df246d0f57f30299dbba03a031a): on the --no-ladder branch remediate_month is not called and ladder_result['rungs'] is {'probe': 0, 'rerun': 0, 'recheck': 0} -- zero rungs ran.",
+        "The forcing record exists ONLY on coverage_verdict.json (render_month_end._forcing_record, disclosure_version 2, measured this run: forced=true, ladder_ran=false, run_shape='FORCED ... and LADDER SKIPPED'). _build_terminal_email reads only `unresolved` rows and `ask`; it never reads the verdict document, so no forcing field can reach the message.",
+        "The one field that DOES disclose is per-row: reason='ladder skipped (--no-ladder)' (EG-s-29), which contradicts the header sentence in the same message."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "EG-s-21's cell: '(2) DISCLOSE it ON THE ARTIFACT -- the produced verdict document carries a field naming that this run's condition was FORCED, with the run id, SO NO LATER READER CAN MISTAKE A DRIVEN REFUSAL FOR AN ORGANIC ONE (a driven artifact that looks organic is the confident-wrong shape this project exists to kill).' FWD-10's DONE WHEN: 'the terminal message has been sent ... and READ at Andrew's own inbox'.",
+    "world_is": "The reader FWD-10 names reads the EMAIL, not coverage_verdict.json, and the email is the one surface the disclosure does not reach. Worse than silent: its header asserts every rung ran, which is false for the only run shape (R-EG-6 shape 1) that can produce a driven REFUSE. A person opening 'URGENT: ETF month-end 2026-07 -- 1 date(s) unresolved after remediation' would have to read the per-row reason column to learn that no remediation was attempted, and could not learn from the message at all that the hole was injected on purpose."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W4-S10",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T16:35Z",
+    "one_line": "EG-s-29 records the rung-3-EQUIVALENT egress ask at its own key, and the orchestrator's reader enumerates only rung 3's canonical key -- so on the ladder-skipped branch the ask is WRITTEN but reaches neither the SNS alert nor the terminal email.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lambda_function._read_coverage_artifacts on the DEPLOYED bytes (sha256 3266c6cced4940f01314652e6d3cf41bcc2f021fdba8d276a2cfe445dc3ebb3c) iterates a literal three-tuple: ('coverage_verdict.json','verdict'), ('coverage_unresolved.json','unresolved'), ('coverage_egress_ask.json','ask'). Denominator 3; 'coverage_egress_ask_ladder_skipped.json' appears 0 times in the module.",
+        "render_month_end.LADDER_SKIPPED_ASK_BASENAME = 'coverage_egress_ask_ladder_skipped.json' and _skipped_branch_egress_ask writes to platinum/reports/<month>/<that basename> -- measured this run as the ONLY put_object the forced gate makes (1 of 1 captured, 1182 B).",
+        "Consequence measured, not reasoned: on the captured forced run, artifacts['ask'] would resolve to None (no platinum/reports/2026-07/coverage_egress_ask.json exists), so _build_terminal_email's `if ask and ask.get('asks')` block does not render and the alert's 'Egress ask:' section is absent."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "R-EG-8's reasoning, quoted in the PRD at :658: 'FWD-10's ACCEPT (ii) encodes a real operational property -- an operator reading the terminal alert can tell WHICH PROVIDER FAILED AND WHAT IS OUTSTANDING.' EG-s-29 was cut to make the ladder-skipped branch carry that property.",
+    "world_is": "It carries HALF of it. The provider now reaches the operator through coverage_unresolved.json's rows (measured: 1 of 1 rows carry provider='Black Diamond'), which is the half FWD-10 accept (ii) literally names. The OUTSTANDING half -- the ask, with its per-use authorization string -- is written to a key the orchestrator's reader does not enumerate, so it exists on S3 and is invisible to the person the message is for. Marked INERT rather than ARMED: the ladder-skipped branch is reachable only from a forced TEST invocation (render_month_end is fixed to ladder=True on the scheduled path), so the process's normal operation never reaches this state."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W4-S11",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T16:37Z",
+    "one_line": "The face's <status> line at HEAD still refuses this order for a reason the world has since falsified, so a seat reading the task order rather than the issuer's seating would refuse it on a premise that is no longer true -- while the reason it is ACTUALLY unexecutable (W4-S8) appears nowhere on the face.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ETFS_GUARDRAIL.TO-EG-s-21.the-driven-refusal.md @1d62717c65 <status>: 'S21-AC1 arm (d) requires the ladder's outputs on the refusal branch WITH coverage_egress_ask.json PRESENT ... rung 3 -- the SOLE writer of that artifact (remediate.py:189) -- NEVER FIRES. ... No act by any seat satisfies both.'",
+        "The SAME FILE, same commit, carries the re-cut arm (d): 'RE-CUT 2026-09-10 ~13:3xZ ON RULING R-EG-8 (msg 95151) -- THE ARM NOW NAMES THE PROPERTY, NOT ONE WRITER OF IT ... THE ASK MAY BE WRITTEN BY RUNG 3 *OR* BY EG-s-29's RUNG-3-EQUIVALENT'. The status line (~13:2xZ) pre-dates the arm (~13:3xZ) by minutes and was not revised with it.",
+        "The status line's other cited blocker is also discharged: ETFS_GUARDRAIL.TO-EG-s-29 reads <status>complete ... EGS29-SKIPPED-BRANCH-CARRIES-THE-PROPERTY, and the equivalent ask is measured live in this cell's battery (1182 B captured, rung3_ran=false, provider stated 1 of 1)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The face at HEAD: 'DO NOT FIRE THIS ORDER. THE SINGLE PERMITTED DRIVEN RUN IS UNSPENT AND MUST STAY SO -- firing spends it on a run that cannot meet arm (d) or the accept', with the reason given as rung 3 never firing.",
+    "world_is": "That reason is FALSE at this commit -- arm (d) no longer names rung 3, and EG-s-29's equivalent writes the ask. The instruction it carries is nevertheless STILL CORRECT, for a different reason the face does not state: the 404 clause of the same arm (W4-S8). A right conclusion resting on a falsified premise is the shape that gets overturned by whoever notices the premise, so the ground is restated here rather than left to be rediscovered. This row records the divergence between the face and its issuer's seating message; it does not adjudicate which governs."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W4-S12",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T16:44Z",
+    "one_line": "`.tools/ds-precommit-check.py` reports a FALSE `undefined name` on any variable first bound inside a module-level `while` body, and because Rule 14's commit gate is universal and fail-closed and `--force` does not bypass it, correct Python is UNCOMMITTABLE in that shape -- ruff, on the identical bytes, passes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- `.tools/` is not in this order's `<paths>` (its grant is the deliverables folder, the face, the channel and org/critical_paths/), so no act on the checker is available to this seat, and the face binds NO CODE CHANGE besides. Routing rather than fixing is the correct move here and the row is the carrier. Not the merge's doing: `.tools/ds-precommit-check.py` is NOT among the twelve `.tools/` files 1d62717c65 changed (measured by `git diff --name-only 32ae4ede66 1d62717c65 -- .tools/`), so this pre-dates the cross-fabric reconcile and is estate-wide rather than fabric-local.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "REFUSAL, verbatim, on this cell's own battery at 2026-09-10T16:4xZ: '[commit-gate] .../test_egs21_driven_refusal.py:385: undefined name \\'kw\\'' (and :386 kw, :387 r, :388 r), then 'BLOCKED: ds-precommit-check failed ... (undefined-name / silver-ids / future-annotations)' and 'Fix the reported issue(s) and re-commit. This gate is UNIVERSAL + fail-closed on ALL .py (Rule 14); --force does NOT bypass a gate failure'.",
+        "The flagged lines were a textbook hand-rolled S3 continuation loop: `tok = None` / `while True:` / `kw = {...}` / `if tok: kw['ContinuationToken'] = tok` / `r = _s3.list_objects_v2(**kw)` / ... `if not tok: break`. Both names ARE bound, at :383 and :386, before every use.",
+        "MINIMAL REPRODUCTION, 12 lines, no AWS and no imports, written to .scratch/repro.py: `python .tools/ds-precommit-check.py .scratch/repro.py` -> 4 findings, rc=1; `python -m ruff check --target-version py39 .scratch/repro.py` -> 'All checks passed!', rc=0. TWO INSTRUMENTS ON THE SAME BYTES DISAGREEING is the discriminator -- a single failing checker is a claim about the code, and a second passing checker on the identical file makes it a claim about the checker.",
+        "The script ran to completion three times (16:30:40Z, 16:34:49Z, 16:45:42Z) before the gate ever saw it, so the runtime behaviour of the flagged names is directly observed and not argued."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md Rule 14: 'Every `.py` edit passes `.tools/commit-gate.sh` (py_compile + ds-precommit + ruff py39). Universal.' The gate's own refusal text: 'Fix the reported issue(s) and re-commit ... --force does NOT bypass a gate failure (it only overrides the contamination check).'",
+    "world_is": "The ds-precommit limb and the ruff limb of that same gate contradict each other on the same bytes, and the fail-closed one is wrong. The instruction the gate prints -- 'fix the reported issue(s)' -- therefore asks an author to change CORRECT code to appease a false finding, which is how a checker teaches a codebase to avoid a legal construct. I complied ONLY because the replacement is independently better (the paginator auto-paginates, and a single list_objects_v2 returns a PAGE whose length is not a denominator), and I recorded the reason in a comment at the call site so the next reader does not take the shape for a preference. NOTE FOR WHOEVER PICKS THIS UP: the FALSE-NEGATIVE direction is unmeasured here. I have shown the checker fires where it should not; I have NOT shown it fires everywhere it should, and a positive control bounds under-firing only."
   }
 ]
 ```
