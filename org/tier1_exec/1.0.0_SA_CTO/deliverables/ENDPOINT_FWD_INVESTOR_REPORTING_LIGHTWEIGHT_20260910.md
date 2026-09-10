@@ -115,19 +115,35 @@ per Rule 27's L2 clause. Nothing here waits on an event nobody controls.
          OWNER      WS3
          SOURCE     brief O4, F7; Andrew's "just pulling a report of what YCharts
                     already provides"
-         ⛔ EXPRESSLY QUALIFIED, and this is the ONE human gate in the set.
-                    Current evidence covers ONE OF THREE varietals as a static
-                    report, and NO complete report-generation HAR has been inspected.
-                    The missing evidence -- the generation HAR, the analyst
-                    transcripts and input/result specimens -- is obtained by an ACT,
-                    not by waiting for an event: it is gated on ANDREW'S ANALYST
-                    handing it over, which is a NAMED PERSON'S DECISION and therefore
-                    the expressly-qualified exception Rule 27's L2 clause provides
-                    for. **THIS PARAGRAPH IS THAT QUALIFICATION.** The outcome is NOT
-                    re-cut to what one static varietal can prove; the evidence is
-                    fetched. Until it lands, FWD-4 reads NOT_REALIZED with its reason
-                    NAMED, and no cell may grade it REALIZED on the one captured
-                    varietal
+         ✅ THE EXPRESS QUALIFICATION IS **DISCHARGED**, 2026-09-10. It read: the
+                    evidence is gated on ANDREW'S ANALYST handing it over, a named
+                    person's decision, so FWD-4 reads NOT_REALIZED with its reason
+                    NAMED until it lands. **IT LANDED** -- `4.0.0_SA_CRO`'s WS3
+                    delivery @`129fc4a09d` carries six transcripts, 26 hash-matched
+                    ZIPs, three HARs at 220/403/462 entries, six POST-201 -> exact-URL
+                    GET-200 pairs, and TWELVE cited source hashes re-verified UNCHANGED
+                    AFTER the cross-fabric merge. **That closed one of Andrew's open
+                    calls from this seat.** The qualification is kept verbatim above
+                    rather than deleted: a discharged gate that leaves no trace reads
+                    as a gate that never existed
+         ⚠ WHAT REPLACED IT, and it is an EVIDENCE GAP rather than a human gate:
+                    native section/export parity still needs ACTUAL three-variant PDFs,
+                    and upload multipart is missing. Named here AND on FWD-8's export
+                    half -- ⛔ **name it in both or it gets closed silently in one**
+         ⛔ AND THE REQUEST ARRIVES BY EMAIL, WHICH THIS OUTCOME DID NOT SAY. WS3's
+                    intake is a mailbox poller (Andrew-direct: every day, quarter-hour,
+                    08:00-23:45 ET, actual holdings attachments). The advisor still
+                    OBTAINS and EXPORTS in the tab, so FWD-4's substance holds -- but
+                    the request channel is mail, not a click, and a cell must not
+                    assume a synchronous request path
+         ⛔ UNSUPPORTED POSITIONS ARE NOT SILENTLY REMOVED TO OBTAIN A SUCCESSFUL
+                    REPORT. Lifted to the ACCEPT from `4.0.0_SA_CRO`'s revised O2
+                    because it is the session's recurring failure wearing a client's
+                    money: a report that drops what it could not resolve renders
+                    CLEAN and is WRONG, and no reader can tell it from a complete one.
+                    Clear inputs proceed PROGRAMMATICALLY; review is the EXCEPTION
+                    path and never a gate on every request -- Andrew hoped for
+                    entirely programmatic and the revised brief delivers that shape
          ⛔ AND NO LIVE VENDOR CALL IS AUTHORIZED BY THIS ENDPOINT. Availability is
                     not authorization; a live YCharts, Black Diamond or Orion call
                     needs Andrew's explicit per-use word
