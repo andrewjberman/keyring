@@ -9,9 +9,12 @@ manifest's two `measured` cells, which PRD section 8 instructs L5 to do in terms
 between what the specification asserts and what the world reads today, which is exactly the step-7
 trigger -- the fact that no worker exists yet does not make it a different kind of finding.
 
-**Denominator at this write: 3 rows** (`NFRA_IAMROLES202609-Z-S1`, `2.0.0_SA_COO~ZI`, 05:39Z;
-`NFRA_IAMROLES202609-Z-S2`, `2.0.0_SA_COO~ZI`, 07:29Z; `NFRA_IAMROLES202609-Z-S3`,
-`2.0.0_SA_COO~ZI`, 07:42Z).
+**Denominator at this write: 4 rows** -- three seat rows and the round's first WORKER row
+(`NFRA_IAMROLES202609-Z-S1`, `2.0.0_SA_COO~ZI`, 05:39Z; `-Z-S2`, `2.0.0_SA_COO~ZI`, 07:29Z;
+`-Z-S3`, `2.0.0_SA_COO~ZI`, 07:42Z; `-Z-W3-S1`, `0.9.0_WK_NFRA_IAMROLES202609~3`, 08:00Z).
+The worker row arrived through the L7 drain and the two sides collided at the same offset, which is
+the append-only channel's normal path (NFRA_CLDGRPH-S36), not an exception: resolved as a UNION of
+both sides' rows through `safe-merge.sh --continue`, so the row gate graded the merged index.
 
 ## Row context -- what was run
 
@@ -109,6 +112,30 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
     "spec_asserts": "INSTRUMENT_LIMITS.md LIMIT 4, filed @6858c8dd5f and relayed as msg 20828, states that a comp-find/comp-read/comp-which result obtained from inside a linked worktree describes the MAIN checkout and that the rule is to run any census or absence claim FROM THE MAIN CHECKOUT.",
     "world_is": "That is true of the BARE NAME and not of the tool. Measured from a live worker worktree: bare `comp-find` scans 55375 files (main) and returns a hit for a file absent from the caller's tree; `.tools/comp-find` scans 31052 files (the worktree) and correctly returns zero. There are therefore TWO remedies, not one -- run from main, OR invoke by the explicit .tools/ path -- and the second is the one a worker can actually use, because a worker is confined to its worktree and cannot run anything from the main checkout.",
     "notes": "TWO FINDINGS IN ONE ROW BECAUSE THEY ARE ONE MEASUREMENT. (1) AGAINST THIS LANE: the L6 issuance shipped IAM-s-3 AC2 as a bare-name comp-find. Caught before the order was handed to slot ~1 (which is still on IAM-s-1), REMEDIATED in the same commit as this row by pinning the explicit .tools/ path and by making the expected denominator itself the discriminator -- the criterion now says a scanned count near 55,000 means the bare name was used and the census is void. Every other comp-tool invocation in the nine orders was re-checked: IAM-s-5 AC1 uses --corpus aws, which reads the live AWS graph and not the repo tree, so it is unaffected. (2) FOR THE ENTRY'S OWNER: LIMIT 4's mechanism paragraph is correct and its REMEDY is over-broad by one clause. This matters most for the population the entry was written about -- L7 workers -- because 'run it from the main checkout' is the one remedy a worker cannot take. DIRECTION OF THE IMPRECISION IS SAFE: it forbids something that works rather than permitting something that does not, so nothing built on LIMIT 4 as written is wrong. Not urgent, not gating, and not sent as a mid-round message -- the COO's one message of a round is the drain-end read and this rides it. THE REUSABLE SHAPE: an instrument limit discovered through one invocation path gets written as a property of the TOOL, and the remedy then inherits a scope the mechanism never had."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W3-S1",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~3",
+    "surfaced_at": "2026-09-10T08:00:26Z",
+    "one_line": "TO-IAM-s-5's WORKER FACE names the proof-of-spec instance path as '<TO-id-short>.proof_of_spec.json' (e.g. NFRA_IAMROLES202609.TO-IAM-s-5.proof_of_spec.json), but .tools/to-pipeline-gate.py's check_complete_flip derives the expected filename from the FULL TO FILENAME STEM (including the descriptive suffix) -- so the literally-instructed path does not match either name the gate globs for, and a status flip to complete on the instructed filename ALONE is mechanically REFUSED at commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Identity block for this worker (0.9.0_WK_NFRA_IAMROLES202609~3), verbatim: 'Write your proof-of-spec instance to org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/NFRA_IAMROLES202609.TO-IAM-s-5.proof_of_spec.json'.",
+        ".tools/to-pipeline-gate.py check_complete_flip: 'stem = os.path.basename(rel).rsplit(\".md\", 1)[0]; names = (stem + \".proof_of_spec.json\", stem + \"_PROOF_OF_SPEC.json\")' where rel is the TASK ORDER's own filename -- 'NFRA_IAMROLES202609.TO-IAM-s-5.declared-vs-live-reconciler-member-identity.md', so stem carries the full descriptive suffix and the gate globs deliverables/*/ for 'NFRA_IAMROLES202609.TO-IAM-s-5.declared-vs-live-reconciler-member-identity.proof_of_spec.json' or the _PROOF_OF_SPEC.json sibling -- neither matches the instructed short filename.",
+        "REPRODUCED LIVE: `bash .tools/safe-commit.sh` on the instructed short-named instance plus the flipped TO returned 'ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate). ... flips to complete on PIPELINE-REGISTERED project NFRA_IAMROLES202609, and NO proof-of-spec instance was found beside it. Layer 1: no VALID instance, no complete flip.' -- files unstaged, commit aborted.",
+        "Sibling project convention confirms the gate's expectation, not the instructed short form: org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-14-21.sentinel-watch-only.proof_of_spec.json carries the FULL TO stem (including 'sentinel-watch-only') in its filename, matching the gate's derivation exactly."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This worker's identity block names one exact, singular proof-of-spec path as THE deliverable location, and the task order's own text says the TO's <status> flips to complete 'ONLY when every mechanical criterion PASSES, in the same commit as your deliverables' -- implying the instructed path is sufficient to satisfy the mechanical complete-flip gate.",
+    "world_is": "The instructed filename does not satisfy .tools/to-pipeline-gate.py's check_complete_flip, which derives its expected name(s) from the TO file's OWN full basename stem rather than from any short to_id form. Confirmed by reproducing the exact commit-time refusal. NOT BLOCKING for this cell: resolved in-lane by writing a SECOND copy of the identical, already-VALID proof-of-spec instance under the gate-derived filename in the same deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/ folder (within this worker's own <paths> write surface), which the gate accepts (re-run against it: VALID rc=0). Likely to recur for every other worker in this fan-out whose identity block uses the same short-filename convention against a descriptively-suffixed TO filename, unless the issuer's naming convention or the gate's derivation is reconciled.",
+    "notes": "Filed by the worker (Z-W3 coordinate; the identity block's own instructed id form, 'NFRA_IAMROLES202609-W3-S<k>', omits the Z- infix this project's fabric=site-z requires per the schema and .tools/surprise-row-gate.py -- caught by the row gate itself on the first attempt to commit this very row ('fabric=site-z but the id lacks the Z- infix') and corrected before filing, not left as filed. A second, smaller instance of this row's own general shape. NOT A HALT: this cell's own commit proceeds using the duplicate gate-conformant filename alongside the originally-instructed one, so nothing is skipped and no widening of <paths> was needed (both filenames sit inside the already-granted deliverables/ directory). Disarm belongs to the issuer 2.0.0_SA_COO~ZI, who can either (a) instruct future workers in this fan-out to name their proof-of-spec files after the TO's FULL filename stem, matching the gate's derivation, or (b) accept that every worker will need to duplicate the file under both names as this row did. THE REUSABLE SHAPE: a mechanical gate's naming derivation and a hand-written instruction naming the SAME artifact by two different conventions is invisible until the gate actually runs against the instructed name -- read-time inspection of either text alone looks correct."
   }
 ]
 ```
