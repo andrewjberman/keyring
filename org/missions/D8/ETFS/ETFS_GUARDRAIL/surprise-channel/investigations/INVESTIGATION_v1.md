@@ -2499,3 +2499,41 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
   }
 ]
 ```
+
+
+---
+
+## S38 -- THE FIXTURE IS THE STALE SIDE: disarming W4-S14 by deciding it rather than editing it
+
+Filed by `2.0.0_SA_COO`, the `disarm_owner` named on `ETFS_GUARDRAIL-W4-S14`.
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-S38",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T18:20Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "one_line": "DISARMS ETFS_GUARDRAIL-W4-S14 by deciding the question its author correctly refused to decide: the RENDERER is the newer side and the committed S3 fixture is the stale one, so the remedy is a fixture refresh and never an assertion edit.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE DECIDING READ, on the record rather than the worktree: git show HEAD:data/etfs/scripts/presentation/render_month_end.py extracted to a scratch file (77130 bytes, rc=0, no stderr suppression) and enumerated with comp-read.",
+        "DENOMINATOR PRINTED: 10 hits of 'provider' across 1407 lines / 61 sections scanned; 5 whole-value, 5 substring; bands DOCSTRING=0 COMMENT=6 DEF=0 CODE=4.",
+        "THE HIT THAT ANSWERS IT, line 1164, CODE band, WHOLE-value: {\"date\": d, \"class\": e[\"class\"], \"provider\": provider_for_partner, ...} -- the renderer emits `provider` on unresolved rows.",
+        "AND ITS SINGLE-WRITER PROVENANCE, line 1162: provider_for_partner = remediate._provider_for(p) -- the SAME function remediate_month uses, with the module's own comment at 1156-1159 stating that a second .get(partner, '<no provider mapped>') here would be a SECOND DEFAULT and is deliberately not written. So the key is not an incidental addition; it is EG-s-29's landed one-writer-of-the-property fix.",
+        "W4-S14's own measurement, cited rather than re-run (a re-run of the assignee's command would be repetition, not corroboration): the arm was ALREADY RED at the branch's base commit a6cbb6f3c3, isolated by restoring all three touched files to their base blobs IN PLACE.",
+        "COVERAGE LIMIT STATED: this read establishes what the renderer at HEAD WRITES. It does NOT re-measure that those bytes are the SERVED renderer; that was measured under EG-s-29 at sha256 ba410ee5c9... with a difference control, and is cited here rather than re-derived."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "test_served_artifact_has_the_shape_the_writer_produces asserts that the committed S3 fixture and the renderer produce the same row keys, and offers the fixture as A SECOND AND DIFFERENT INSTRUMENT from the unit assertions.",
+    "world_is": "They no longer agree, because the writer moved and the fixture did not. The fixture is a SNAPSHOT of a served object taken BEFORE EG-s-29 reached the served renderer, so it is a photograph of a superseded shape. The arm's second-instrument claim is false at this commit, and the assignee proved the failure without proving the served object wrong -- a distinction it stated explicitly and was right to.",
+    "notes": "THE DISARM IS A DECISION, NOT AN EDIT, AND THE ASSIGNEE'S REFUSAL IS WHY IT COULD BE MADE CLEANLY. Its disarm_owner note says it could reach the ASSERTION (the test file was in its <paths>) but not the QUESTION, and that 'changing an assertion to match whichever side happens to be newer is how a fixture stops being evidence'. THAT IS EXACTLY RIGHT AND IT IS THE GENERAL RULE: an arm that exists to be a SECOND INSTRUMENT is destroyed by editing it to agree with the FIRST. Had the worker silently relaxed the assertion, the suite would have gone green and the estate would have lost the only check that compares the writer against a real served object. THE REMEDY, AND IT IS NOT A BLOCKER ON THE ROUND: refresh the fixture from a served artifact produced AFTER EG-s-29 landed, then re-run the arm. \u26d4 AND THE REFRESH MUST NOT BE HAND-CARVED -- a fixture edited to carry a `provider` key would be the same defect as the assertion edit, one layer down: it would agree with the writer by construction rather than by observation, and the arm would then be comparing the renderer to a transcription of itself. The fixture is only evidence while it is a COPY OF A SERVED OBJECT. \u2b50 THE SEQUENCING IS FREE: EG-s-21's driven run produces exactly such an artifact, so the refresh is DOWNSTREAM of the run rather than upstream of it, and nothing about this row gates the fire. THE FALSE-NEGATIVE DIRECTION REMAINS UNMEASURED, as W4-S14 said: this row establishes which side is STALE, not that the served object is WRONG. Nobody has shown the served artifact is defective, and this disarm does not claim it. Related: [[ETFS_GUARDRAIL-W4-S14]] (the row this disarms), [[ETFS_GUARDRAIL-W4-S15]] (the same assignee narrowing a line-count proxy onto an ast reachability census -- the same instinct, that a proxy which cannot tell an emitter from a mention is not the property)."
+  }
+]
+```
