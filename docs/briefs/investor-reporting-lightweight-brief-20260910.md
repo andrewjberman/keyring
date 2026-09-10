@@ -10,6 +10,8 @@
 
 ## Direction and relationship to yesterday's brief
 
+**September 10 export extension:** Andrew added a standard branded performance PDF, optional advisor logos/information that he will provide, and a full-width narrative page joining measured performance events to dated market themes. The [export and narrative specification](investor-reporting-export-narrative-spec-20260910.md) and [synthetic PDF](../research/investor_reporting_export_20260910/performance-export-review.pdf) develop this within WS1–WS2. The dashboard remains the default. Historical source mechanisms were inspected; live history coverage has not been measured.
+
 Deliver a small, useful advisor workspace by combining a precomputed client directory, existing silver holdings, and vendor-calculated reports. Selecting a client establishes the relationship and underlying accounts once. Three tabs use that context: **Reporting**, **Analysis**, **Holdings**, in that order. Reporting presents Black Diamond results for 49 Financial and Cottonwood, and Orion results for Inflection. Analysis presents YCharts sensitivity reports. Holdings starts with model allocations and expands into the securities actually held.
 
 Andrew clarified: **one project with four workstreams**, potentially coordinated by separate COO lanes. These are boundaries within one product, not four registrations. Workstream 1 explicitly owns client discovery and entitlement as well as page design. Its scope contract is consumed by the other three.
@@ -34,6 +36,8 @@ Firm and advisor rights govern suggestions, selected account membership, report 
 
 For the selected account or relationship and reporting period, the advisor sees vendor-calculated performance in a common Opal layout and exports a PDF with the same scope, returned dates, values, method basis, source attribution, and approved disclosures. The UI distinguishes TWR/MWR, net/gross, cumulative/annualized, and unavailable fields. A normalizer does not change a provider's methodology to make two numbers look comparable.
 
+Export uses a standard Opal template based on the deck-generation brand guidelines, with optional verified advisor identity and high-definition logo assets supplied by Andrew. The advisor previews the chosen branding and sections before downloading. Branding changes create an export revision while preserving the reviewed performance revision. Missing advisor assets have an explicit outcome.
+
 **Provable act:** compare a captured provider request/response, normalized report, rendered view, and PDF at the same report revision for each supported partner and scope. A deliberately incomplete provider mapping yields a partial/unsupported result rather than a full-client claim. Relationship return uses a vendor calculation for the exact selected account set; summing or averaging account returns is not a substitute. **Owner:** WS2 for semantic content and adapter; WS1 for shared rendering/export infrastructure.
 
 ### O4 — An advisor obtains a YCharts sensitivity analysis in the same client context and exports it
@@ -54,14 +58,20 @@ Client selection and silver-backed holdings remain usable when a report provider
 
 **Provable act:** deliberately delay/fail one provider, switch clients during an outstanding request, expire a cache entry, and complete jobs out of order. Verify that unaffected surfaces work and no response is attached to the wrong selection. **Owner:** WS1 shared lifecycle; WS2–WS4 provider/snapshot status.
 
+### O7 — An advisor explains the reporting period using measured portfolio events and the market themes recorded around those dates
+
+The optional narrative page places the cumulative-return series across a wide page, marks the selected period's maximum drawdown and recovery when present, and annotates a handful of material movements. Dated Trending Topics and Topic Cloud evidence supply the primary context; dated Best/Worst Performers, RSI, Regime and Fear & Greed observations can support it. The prose distinguishes surrounding market discussion from evidence of client-specific return attribution. Missing history remains visible.
+
+**Provable act:** check a known peak/trough/recovery fixture, a flat series, a cash-flow-only value change and an unrecovered decline; verify that event selection precedes news selection. Trace every annotation to dated evidence under its declared cutoff, exclude future articles/current snapshots, preserve conflicting signals, and reject unsupported causal claims. Preview and PDF use identical selected events, evidence and wording. **Owner:** WS2 for events, dated evidence and narrative validation; WS1 for options, page layout and export lifecycle.
+
 # PART II — WHERE THE BOUNDARY SITS
 
 ## II.1 One project, four explicit workstream boundaries
 
 | Workstream | Owns | Provides to siblings | Does not own |
 |---|---|---|---|
-| **WS1 — Page, client discovery, entitlement and shared report presentation** | Header; name search; relationship/account selector; tab order; slim directory projection from silver; firm/advisor policy binding; selected-scope resolution; common state/error model; reusable report/PDF shell | Versioned directory and scope contract; authorization function; shared UI/export components; request/report revision identity | Performance calculation, YCharts analytical mechanics, model-allocation semantics |
-| **WS2 — Performance adapter** | Black Diamond adapters with separate partner configurations for 49F/COT; Orion adapter for INF; provider field and method normalization; performance report view-model and PDF content | Versioned performance contract and partner fixtures; capability/coverage results | A new return engine, approximate household return from account percentages, client authorization policy |
+| **WS1 — Page, client discovery, entitlement and shared report presentation** | Header; name search; relationship/account selector; tab order; slim directory projection from silver; firm/advisor policy binding; selected-scope resolution; common state/error model; reusable report/PDF shell; export options/preview, advisor assets and standard branded template | Versioned directory and scope contract; authorization function; shared UI/export components; separate performance/export revision identities | Performance calculation, YCharts analytical mechanics, model-allocation semantics |
+| **WS2 — Performance adapter and narrative content** | Black Diamond adapters with separate partner configurations for 49F/COT; Orion adapter for INF; provider field and method normalization; performance report view-model and PDF content; measured events, dated market-evidence adaptation and narrative validation | Versioned performance contract and partner fixtures; event/evidence/narrative bundle; capability/coverage results | A new return engine, approximate household return from account percentages, client authorization policy, ownership of existing news producers |
 | **WS3 — YCharts analysis adapter** | Analyst workflow capture; approved report varieties; client input/saved-portfolio resolution; YCharts request/job/result routing; sensitivity view-model and PDF content | Versioned analysis envelope, report variants, provenance, fixture coverage | Rebuilding YCharts analytics or adding uncaptured scenario types |
 | **WS4 — Holdings and model overlays** | Snapshot resolver; three partner adapters; model-first presentation data; securities drilldown; actual/target/residual reconciliation | Versioned holdings/overlay contract with separate holdings/model dates and coverage | Trading, rebalancing, altering model assignments, model history reconstruction |
 
@@ -88,6 +98,7 @@ The source layer remains complete vendor-shaped silver. A slim search directory,
 5. Model targets do not masquerade as observed holdings; unexplained assets stay in the reconciliation.
 6. A second client selection cannot inherit the first client's delayed report.
 7. A coordinator can name the owner of every shared field and every endpoint's scope check.
+8. An advisor can trace each narrative annotation to a measured event and dated source evidence; market context does not masquerade as client attribution.
 
 # PART IV — THE SUBSTRATE
 
@@ -130,7 +141,8 @@ The captured September 9 report census covers **one of three sensitivity varieta
 7. The project defines report/cache retention and invalidation, session failure behavior, request limits, and a bounded synchronous-or-job contract based on measured provider behavior. No made-up latency or TTL is ratified here.
 8. The holdings adapter distinguishes actual positions, actual model/sleeve valuations, model assignments and target allocations, with duplicate/multi-membership controls.
 9. WS1 owns the shared PDF renderer; WS2 and WS3 own their content contracts. PDFs bind to an immutable reviewed report revision, not a fresh provider call during download.
-10. Downstream live vendor validation and production access use the applicable authorization and credential contracts. This research has required no live vendor calls.
+10. Downstream live vendor validation and production access use the applicable authorization and credential contracts. The original repository-only cut made no vendor calls; the separately authorized WS2 follow-up records its bounded live calls in the performance review.
+11. The export extension measures historical news/indicator coverage and vintage fidelity before claiming a year of usable history. Topic Cloud's dated pre-filter report archive is distinct from the final cloud displayed on a given day. Advisor assets, narrative evidence, template and prose versions are bound to the export revision.
 
 # PART VI — STATUS — NOT OUTCOME-BEARING
 
@@ -139,6 +151,8 @@ As of the September 10 source-read window, this is a research/design artifact. W
 The new page, normalizer Lambdas, client directory and PDF flow were not built or deployed in this turn. No latency, current source freshness, API health, or cross-firm security result has been asserted from code inspection. The initial Andrew-direct record was committed as `822f3d7519`; its one-project clarification is included in this delivery. Push state is LOCAL; origin/CLOUD was observed at `71574353645510c3af85a77de3c09fb6f1117159` before delivery, and is re-measured in the delivery receipt.
 
 # PART VII — WHAT THIS BRIEF DOES NOT CLAIM
+
+The following qualifications describe the original repository-only cut. The linked performance follow-up supplies later live evidence; the export extension supplies local HAR/PDF and historical-source findings. Neither implies production implementation or complete partner/history coverage.
 
 1. Repository source proves intended mechanics, not deployed/current behavior. July capture facts and comments keep their original vintage.
 2. No raw HAR was newly parsed, no vendor session used, and no live S3 snapshot read. The response inventory relies on the existing captured research with its stated gaps.

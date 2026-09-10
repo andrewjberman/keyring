@@ -1,0 +1,609 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-09-10T15:10:49.571539+00:00",
+  "author": "4.0.0_SA_CRO",
+  "scope": "WS1–WS2 export specification and synthetic review artifact",
+  "execution": {
+    "vendor_calls_this_followup": 0,
+    "live_aws_history_queries": 0,
+    "public_egress": "Official Google Fonts Lato files and license only",
+    "production_implementation": false
+  },
+  "inputs": {
+    "har": {
+      "filename": "dashboard_exploration_bdpt3.har",
+      "entries": 139,
+      "bytes": 20000206,
+      "sha256": "ae2521d2e823d34f9a53f22615d6e89e607f2521b846872b2e0781895b7fb2f1"
+    },
+    "pdf": {
+      "filename": "6460853.pdf",
+      "pages": [
+        {
+          "page": 1,
+          "width_points": 792.0,
+          "height_points": 612.0
+        },
+        {
+          "page": 2,
+          "width_points": 792.0,
+          "height_points": 612.0
+        },
+        {
+          "page": 3,
+          "width_points": 792.0,
+          "height_points": 612.0
+        },
+        {
+          "page": 4,
+          "width_points": 792.0,
+          "height_points": 612.0
+        },
+        {
+          "page": 5,
+          "width_points": 792.0,
+          "height_points": 612.0
+        },
+        {
+          "page": 6,
+          "width_points": 792.0,
+          "height_points": 612.0
+        },
+        {
+          "page": 7,
+          "width_points": 792.0,
+          "height_points": 612.0
+        },
+        {
+          "page": 8,
+          "width_points": 792.0,
+          "height_points": 612.0
+        },
+        {
+          "page": 9,
+          "width_points": 792.0,
+          "height_points": 612.0
+        },
+        {
+          "page": 10,
+          "width_points": 792.0,
+          "height_points": 612.0
+        },
+        {
+          "page": 11,
+          "width_points": 792.0,
+          "height_points": 612.0
+        },
+        {
+          "page": 12,
+          "width_points": 792.0,
+          "height_points": 612.0
+        },
+        {
+          "page": 13,
+          "width_points": 792.0,
+          "height_points": 612.0
+        },
+        {
+          "page": 14,
+          "width_points": 792.0,
+          "height_points": 612.0
+        },
+        {
+          "page": 15,
+          "width_points": 792.0,
+          "height_points": 612.0
+        }
+      ],
+      "inspection": "All 15 pages text-extracted, rendered and viewed locally",
+      "bytes": 2705638,
+      "sha256": "80093cb6a22f73fce96fc85c84c9c0a337bf57d5db7a1cf8c7b252de8ca3d379"
+    }
+  },
+  "routes": [
+    {
+      "har_index_zero_based": 67,
+      "method": "GET",
+      "path": "/request/report/type/settings",
+      "status": 200,
+      "response_kind": "dict",
+      "response_field_types": {
+        "chartTypeSettings": "dict",
+        "designSettings": "dict",
+        "tableSettings": "dict",
+        "templateSettings": "list",
+        "dataPointTypeSettings": "dict"
+      },
+      "response_item_count": null
+    },
+    {
+      "har_index_zero_based": 69,
+      "method": "GET",
+      "path": "/request/report/design/",
+      "status": 200,
+      "response_kind": "list",
+      "response_field_types": null,
+      "response_item_count": 270
+    },
+    {
+      "har_index_zero_based": 77,
+      "method": "GET",
+      "path": "/request/report/template/",
+      "status": 200,
+      "response_kind": "list",
+      "response_field_types": null,
+      "response_item_count": 10
+    },
+    {
+      "har_index_zero_based": 78,
+      "method": "GET",
+      "path": "/request/report/template/{id}",
+      "status": 200,
+      "response_kind": "dict",
+      "response_field_types": {
+        "id": "str",
+        "description": "str",
+        "hidden": "bool",
+        "locked": "bool",
+        "sharedWithFirm": "bool",
+        "designs": "list",
+        "name": "str",
+        "modifiedBy": "str",
+        "settings": "list",
+        "modifiedDate": "str",
+        "teamExternalIDs": "list",
+        "userIDs": "list",
+        "createdBy": "int",
+        "createdByUserName": "str",
+        "createdDate": "str",
+        "categoryIDs": "list",
+        "objectVersion": "int",
+        "_href": "str",
+        "_type": "str"
+      },
+      "response_item_count": null
+    },
+    {
+      "har_index_zero_based": 106,
+      "method": "GET",
+      "path": "/request/report/type/settings",
+      "status": 200,
+      "response_kind": "dict",
+      "response_field_types": {
+        "chartTypeSettings": "dict",
+        "designSettings": "dict",
+        "tableSettings": "dict",
+        "templateSettings": "list",
+        "dataPointTypeSettings": "dict"
+      },
+      "response_item_count": null
+    },
+    {
+      "har_index_zero_based": 108,
+      "method": "GET",
+      "path": "/request/report/template/{id}",
+      "status": 200,
+      "response_kind": "dict",
+      "response_field_types": {
+        "id": "str",
+        "description": "str",
+        "hidden": "bool",
+        "locked": "bool",
+        "sharedWithFirm": "bool",
+        "designs": "list",
+        "name": "str",
+        "modifiedBy": "str",
+        "settings": "list",
+        "modifiedDate": "str",
+        "teamExternalIDs": "list",
+        "userIDs": "list",
+        "createdBy": "int",
+        "createdByUserName": "str",
+        "createdDate": "str",
+        "categoryIDs": "list",
+        "objectVersion": "int",
+        "_href": "str",
+        "_type": "str"
+      },
+      "response_item_count": null
+    },
+    {
+      "har_index_zero_based": 128,
+      "method": "GET",
+      "path": "/request/report/firmconfiguration",
+      "status": 200,
+      "response_kind": "dict",
+      "response_field_types": {
+        "ratingDisclaimerDesignID": "int",
+        "sinceInceptionIncludeDate": "bool",
+        "useAccountNameAsMailingName": "bool",
+        "allowRunTimeSettings": "bool",
+        "useSVGCharts": "bool",
+        "allowBrandingOption": "bool",
+        "allowInternalUseOnly": "bool",
+        "allowSampleMode": "bool",
+        "allowIgnoreHistory": "bool",
+        "allowFeeType": "bool",
+        "allowSupervisedFilter": "bool",
+        "allowEMVActivityHidingThreshold": "bool",
+        "allowSegmentClassification": "bool",
+        "allowSMAClassification": "bool",
+        "annualizedReturnsFootnote": "bool",
+        "historicalDataFootnote": "bool",
+        "positionOnlyAccountFootnote": "bool"
+      },
+      "response_item_count": null
+    },
+    {
+      "har_index_zero_based": 129,
+      "method": "GET",
+      "path": "/request/report/type/settings/runtime",
+      "status": 200,
+      "response_kind": "list",
+      "response_field_types": null,
+      "response_item_count": 10
+    },
+    {
+      "har_index_zero_based": 130,
+      "method": "POST",
+      "path": "/request/report/package",
+      "status": 200,
+      "response_kind": "dict",
+      "response_field_types": {
+        "accounts": "list",
+        "createdDate": "str",
+        "dateRange": "dict",
+        "description": "str",
+        "fileID": "int",
+        "firmID": "int",
+        "id": "int",
+        "levelID": "int",
+        "levelName": "str",
+        "levelType": "str",
+        "modifiedDate": "str",
+        "name": "str",
+        "percentageComplete": "int",
+        "retryCount": "int",
+        "settings": "list",
+        "shareWithClients": "bool",
+        "shareWithFirmUsers": "bool",
+        "size": "int",
+        "status": "str",
+        "sourceSystem": "str",
+        "internalUseOnly": "bool",
+        "teamID": "int",
+        "template": "dict",
+        "referenceID": "str",
+        "_href": "str",
+        "_type": "str"
+      },
+      "response_item_count": null
+    }
+  ],
+  "package": {
+    "request_field_types": {
+      "additionalSettings": "list",
+      "dateRange": "dict",
+      "levelType": "str",
+      "levelId": "int",
+      "template": "dict"
+    },
+    "response_field_types": {
+      "accounts": "list",
+      "createdDate": "str",
+      "dateRange": "dict",
+      "description": "str",
+      "fileID": "int",
+      "firmID": "int",
+      "id": "int",
+      "levelID": "int",
+      "levelName": "str",
+      "levelType": "str",
+      "modifiedDate": "str",
+      "name": "str",
+      "percentageComplete": "int",
+      "retryCount": "int",
+      "settings": "list",
+      "shareWithClients": "bool",
+      "shareWithFirmUsers": "bool",
+      "size": "int",
+      "status": "str",
+      "sourceSystem": "str",
+      "internalUseOnly": "bool",
+      "teamID": "int",
+      "template": "dict",
+      "referenceID": "str",
+      "_href": "str",
+      "_type": "str"
+    },
+    "selected_design_count": 9,
+    "submitted_design_count": 9,
+    "additional_settings_count": 6,
+    "account_count": 1,
+    "status": "Queued",
+    "percentage_complete": 0,
+    "size": 0,
+    "share_with_clients": false,
+    "share_with_firm_users": false,
+    "supplied_pdf_stem_matches_package_id": true,
+    "completed_poll_download_chain_present": false,
+    "qualification": "Filename association is not a captured download-chain or byte-equivalence proof"
+  },
+  "source_files": [
+    {
+      "path": "deck_generation/brand/opal_brand_guidelines.pdf",
+      "inspected_scope": "All 13 pages text; pages 4, 6, 9, 12 viewed for logo, color and typography",
+      "bytes": 265590,
+      "sha256": "88518b4cfc72e53e7fc5fbd6ef7b02a4f9ad5eeb53ce55b7193527e1676ddcc2"
+    },
+    {
+      "path": "deck_generation/brand_spec/brand.json",
+      "inspected_scope": "Full brand specification",
+      "bytes": 9530,
+      "sha256": "378cd4d8a8d84623f8fd148263f6e40009f8d0572d1b97e543ae27988ffac81f"
+    },
+    {
+      "path": "deck_generation/engine/brand.py",
+      "inspected_scope": "Full PPTX enforcement code; not PDF validation",
+      "bytes": 7257,
+      "sha256": "8f77c4d9233e86aa66fc646dbdf3010124d5ebbb2981e8480431c8dadf7e5a77"
+    },
+    {
+      "path": "portal/src/api/endpoints/trending.ts",
+      "inspected_scope": "Dated topic accessor and headline-first-word approximation",
+      "bytes": 5646,
+      "sha256": "7fe672d370b532de02ed9134d37a75bfeb334a382395db0cc21399d627faa3cc"
+    },
+    {
+      "path": "portal/src/api/portal-proxy.ts",
+      "inspected_scope": "NewsTrend, TopicArticle, dated and latest trending routes",
+      "bytes": 89046,
+      "sha256": "1f1f84b9f2dda4d147e6d8d8f492fbf82873f7f136136169cfa91970e5e60f65"
+    },
+    {
+      "path": "infra/aws/lambda/portal_data_proxy/lambda_function.py",
+      "inspected_scope": "get_trending_topics and latest fallback; dated query does not paginate here",
+      "bytes": 97870,
+      "sha256": "24dc244fb148dbba8988b62ff3684490752312e39501d30cbce63fbc06a879bb"
+    },
+    {
+      "path": "infra/aws/lambda/news_layer3_curation/lambda_function.py",
+      "inspected_scope": "Dated enriched topic persistence via write_to_dynamodb",
+      "bytes": 118238,
+      "sha256": "48d055f79764afae153269660d98be784743da9b68fe1320e43891755ade6da2"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/01_market_overview/lambdas/trending-topics-portal-publisher/lambda_function.py",
+      "inspected_scope": "Full publisher; pagination, display category scores, current output",
+      "bytes": 10772,
+      "sha256": "a11622a821280032d354059b8db9d72fa70bfd7cc9954104ec180895a6c6d6ac"
+    },
+    {
+      "path": "infra/aws/lambda/news_trending_analysis/lambda_function.py",
+      "inspected_scope": "Source constants and save_report_to_s3 archive-before-filter sequence",
+      "bytes": 68625,
+      "sha256": "2aaf6836be3fc55a4bacf7c55959dab116dd1ea470311e9d647077fb2f95aeda"
+    },
+    {
+      "path": "infra/aws/lambda/keyword_drilldown_generator/lambda_function.py",
+      "inspected_scope": "14-day defaults and current keyword history/article output paths",
+      "bytes": 14428,
+      "sha256": "cd0b25bcf7e529f77655107e57c89cac0e02a5b3db84ae20f4f84b296c2bdf6f"
+    },
+    {
+      "path": "portal/src/api/endpoints/sentiment.ts",
+      "inspected_scope": "Full source; composite/history, keyword snapshots, synthetic fallback",
+      "bytes": 29469,
+      "sha256": "65f869663e3b5cf9de40f2380a2b58b9a06b78e335e095b1e5f98d24ad6f08df"
+    },
+    {
+      "path": "portal/src/components/market-performance/SentimentGauge.tsx",
+      "inspected_scope": "Daily Cloud, RSI, Regime and Fear & Greed consumers",
+      "bytes": 16367,
+      "sha256": "aeb92693a3cd67c71fca15fb9ff4fe846c0a9e82e4d851b6595d1baf4d66fa5e"
+    },
+    {
+      "path": "portal/src/components/market-performance/MarketRegimeIndicator.tsx",
+      "inspected_scope": "History and current data consumers",
+      "bytes": 21645,
+      "sha256": "9c41cb5299f92dad11ab36970a9aa496a7ca5db2b9429eeb4a62cb757325b56b"
+    },
+    {
+      "path": "portal/src/api/endpoints/market.ts",
+      "inspected_scope": "getMarketRegimeHistory shape and history route",
+      "bytes": 31945,
+      "sha256": "e4d3e89f95f9348fae0d8bfab3ac9b8836d971d147551fbf363e8a725dcb5d1c"
+    },
+    {
+      "path": "portal/src/hooks/useRSIValues.ts",
+      "inspected_scope": "Tiered RSI sources and fallback values",
+      "bytes": 6341,
+      "sha256": "1b638ad53c680bf9afa45052c943297631a3947079f14403751948cfbe26fb04"
+    },
+    {
+      "path": "portal/src/pages/MarketPerformance/panels/SentimentPanel/SentimentPanel.tsx",
+      "inspected_scope": "Sentiment panel wrapper",
+      "bytes": 446,
+      "sha256": "e251daac5710250ea2b30eb127d66c039509e6e3eb7aeb6f2e2db7905a479041"
+    },
+    {
+      "path": "deck_generation/brand/logo_package/Opal-Capital-Logo-Package/Full Logo/Full Color/Opal-Capital-Logo-Full-Color.svg",
+      "inspected_scope": "Actual full-color horizontal SVG used in prototype",
+      "bytes": 3853,
+      "sha256": "02477c761bbaac4ec4c23e1b0d2f743271c1d94ec6b1f81ed9a31a8e99fe58b3"
+    }
+  ],
+  "font_assets": [
+    {
+      "filename": "Lato-Regular.ttf",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/lato/Lato-Regular.ttf",
+      "bytes": 656568,
+      "sha256": "d636e4683231f931eda222d588e944d082bfd3bdba02f928bee461c0f185b251"
+    },
+    {
+      "filename": "Lato-Light.ttf",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/lato/Lato-Light.ttf",
+      "bytes": 643884,
+      "sha256": "cf2a774503baf418d584f49967bd160e1e03f087c13b25602f28024ec7788f08"
+    },
+    {
+      "filename": "Lato-SemiBold.ttf",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/lato/Lato-SemiBold.ttf",
+      "bytes": 668548,
+      "sha256": "71b8b7decbe75a881ed267be539d402bd1e9420b799658aada4e0d1bd5af803c"
+    },
+    {
+      "filename": "OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/lato/OFL.txt",
+      "bytes": 4407,
+      "sha256": "74ba064d03f1f1c4a952da936c3eb71866c34404916734de3cae73b34357e59e"
+    }
+  ],
+  "review_artifacts": [
+    {
+      "path": "docs/research/investor_reporting_export_20260910/build_export_review.py",
+      "bytes": 21724,
+      "sha256": "53a135f3cbeeb6bc7937e42f8e7055b31cfeb2ca0e242774584d3b2cd734e5b2"
+    },
+    {
+      "path": "docs/research/investor_reporting_export_20260910/profile_export_capture.py",
+      "bytes": 8624,
+      "sha256": "da8178e4b87a165e5b1eedd8c6689d1d92aab69a7500d96345203c5bb4a58631"
+    },
+    {
+      "path": "docs/research/investor_reporting_export_20260910/performance-export-review.pdf",
+      "bytes": 77030,
+      "sha256": "20943fb14bde6453f9ec8d05ef867e9ffca933a5ec09c343192b5f6b697da940"
+    },
+    {
+      "path": "docs/research/investor_reporting_export_20260910/FONT_LICENSE.txt",
+      "bytes": 4407,
+      "sha256": "74ba064d03f1f1c4a952da936c3eb71866c34404916734de3cae73b34357e59e"
+    }
+  ],
+  "prototype_checks": {
+    "classification": "synthetic prototype only",
+    "pages": 4,
+    "series_points": 180,
+    "episode": {
+      "peak_date": "2026-02-12",
+      "trough_date": "2026-03-19",
+      "recovery_date": "2026-05-18",
+      "drawdown": -0.11737089201877937
+    },
+    "checks": {
+      "hand_calculated_episode": "passed",
+      "flat_series": "passed",
+      "rising_series": "passed",
+      "unrecovered_episode": "passed",
+      "earliest_tied_peak": "passed",
+      "invalid_inputs_rejected": 3
+    },
+    "page_errors": [],
+    "font_load": "passed",
+    "logo_load": "passed",
+    "narrative_included": true,
+    "layout": [
+      {
+        "horizontalOverflow": false,
+        "verticalOverflow": false,
+        "contentBottom": 700.265625,
+        "footerTop": 770.015625
+      },
+      {
+        "horizontalOverflow": false,
+        "verticalOverflow": false,
+        "contentBottom": 747.140625,
+        "footerTop": 770.015625
+      },
+      {
+        "horizontalOverflow": false,
+        "verticalOverflow": false,
+        "contentBottom": 701.390625,
+        "footerTop": 770.015625
+      },
+      {
+        "horizontalOverflow": false,
+        "verticalOverflow": false,
+        "contentBottom": 649.53125,
+        "footerTop": 770.015625
+      }
+    ]
+  },
+  "pdf_checks": [
+    {
+      "page": 1,
+      "size": [
+        0.0,
+        0.0,
+        792.0,
+        612.0
+      ],
+      "fonts": [
+        "AAAAAA+Lato-Light",
+        "BAAAAA+Lato-SemiBold",
+        "CAAAAA+Lato-Regular"
+      ],
+      "embedded_font_bytes": 89840,
+      "text_chars": 926,
+      "out_of_page": 0
+    },
+    {
+      "page": 2,
+      "size": [
+        0.0,
+        0.0,
+        792.0,
+        612.0
+      ],
+      "fonts": [
+        "AAAAAA+Lato-Light",
+        "BAAAAA+Lato-SemiBold",
+        "CAAAAA+Lato-Regular"
+      ],
+      "embedded_font_bytes": 89840,
+      "text_chars": 1103,
+      "out_of_page": 0
+    },
+    {
+      "page": 3,
+      "size": [
+        0.0,
+        0.0,
+        792.0,
+        612.0
+      ],
+      "fonts": [
+        "AAAAAA+Lato-Light",
+        "BAAAAA+Lato-SemiBold"
+      ],
+      "embedded_font_bytes": 62584,
+      "text_chars": 1142,
+      "out_of_page": 0
+    },
+    {
+      "page": 4,
+      "size": [
+        0.0,
+        0.0,
+        792.0,
+        612.0
+      ],
+      "fonts": [
+        "AAAAAA+Lato-Light",
+        "BAAAAA+Lato-SemiBold",
+        "CAAAAA+Lato-Regular"
+      ],
+      "embedded_font_bytes": 89840,
+      "text_chars": 1565,
+      "out_of_page": 0
+    }
+  ],
+  "history_coverage": {
+    "live_census": "Not measured",
+    "topic_cloud_archive": "Dated reports exist by source construction; stored before final display filtering",
+    "final_historical_cloud_fidelity": "Not established",
+    "best_worst_historical_universe": "Not certified"
+  },
+  "sanitization": "No raw bodies, headers, cookies, tokens, client/account/firm IDs, names or PDF text retained in this manifest"
+}

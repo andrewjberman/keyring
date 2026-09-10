@@ -169,6 +169,8 @@ Use independent saved custody and model specimens. Reconcile distinct account/se
 
 ## 6. Shared PDF, cache and integration behavior
 
+**September 10 extension:** the [branded export and narrative specification](investor-reporting-export-narrative-spec-20260910.md) refines this section following Andrew's additional BD HAR/PDF and product direction. The dashboard remains the default; Export previews a standard Opal template with optional advisor identity/logo assets supplied by Andrew. A dedicated landscape page joins measured performance events to dated Trending Topics/Topic Cloud evidence, with optional historical indicators. WS1 owns options, branding, rendering and protected downloads; WS2 owns event/evidence/narrative content. This remains the same four-workstream project.
+
 ```mermaid
 flowchart TD
     S[Existing silver snapshots] --> D[WS1: slim client directory]
@@ -191,6 +193,8 @@ The diagram shows proposed data dependencies. It does not sequence work or autho
 WS1 owns the report layout/export mechanism. WS2 and WS3 supply typed content with units, dates and source/disclosure metadata. Prefer a shared report rendering tree with print styling and server-side browser-to-PDF export as a **candidate** based on existing headless-browser precedent; do not claim a client-report PDF service already exists. Choose actual packaging after measuring asset/font requirements, page breaks, renderer runtime and payload sizes.
 
 A report revision binds scope, selected account set, provider input/result, method, template and disclosure versions. Viewing and exporting use that same revision. Re-fetching a provider during export would risk printing a different report from the one reviewed. Report URLs are authorization-protected; vendor cookies/tokens and raw internal IDs are never passed to the browser. A user's report history and another user's cache hits cannot widen visibility.
+
+The export extension separates an immutable **performance revision** from an **export revision** that also binds template/disclosures, advisor assets, selected narrative events, dated evidence, validated prose and renderer version. Branding or narrative edits can therefore change the export without changing the provider result. Preview and download consume the same frozen bundle. Historical retrieval begins after export selection, keeping client discovery independent of narrative generation. The narrative's source coverage, time cutoff and context-versus-causation distinction are specified in the extension.
 
 Each tab has an independent content state. The common selection revision rejects stale responses, and cached responses still carry source dates. An API timeout does not turn cached values into zero or current data. Fixtures can drive outages and cold caches deliberately; there is no acceptance case that waits for an organic outage or next calendar boundary.
 
