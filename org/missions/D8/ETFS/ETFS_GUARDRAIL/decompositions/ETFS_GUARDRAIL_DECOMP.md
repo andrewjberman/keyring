@@ -714,3 +714,75 @@ come from or merely the one the mapping asserts. `S28-AC2` asks the assignee to 
 that question is the CVO's at L9 rather than this cut's.
 
 -- `2.0.0_SA_COO`, L5 round 3, one cell on R-EG-7
+
+
+---
+
+## 18. ROUND 3, THE LAST CELL -- the ladder-skipped branch is a FIFTH WRITER, and `EG-s-21` cannot fire until it carries the property
+
+**THE FINDING IS `W1-S33`, AND `EG-s-28`'S OWN ASSIGNEE MADE IT BY APPLYING THIS DECOMPOSITION'S LAW ONE LEVEL ABOVE
+WHERE I PLACED IT.** s.17 told it to enumerate the `unresolved.append` sites from source because a fence on ONE
+WRITER of a property is not a fence on the PROPERTY. It did that, fixed 4 of 4 -- and then asked whether four was the
+POPULATION. It is not. `render_month_end.py:1000-1008` @`32ae4ede66` is a **FIFTH writer**: on `--no-ladder` the
+`else:` branch never calls `remediate_month` at all and builds the unresolved records INLINE, with
+`"reason": "ladder skipped (--no-ladder)"` and no `provider`.
+
+Measured hermetically by the assignee, `boto3` stubbed to raise so 0 AWS calls occur: **0 of 2 records carry
+`provider`**, both rendering `2026-08-04 | cottonwood | (not stated) | C | ladder skipped (--no-ladder)`.
+
+⛔ **SO `EG-s-28` FIXED THE PRODUCER AND THE ADOPTED SHAPE DOES NOT GO THROUGH THE PRODUCER.** Shape 1 is the only
+path that yields a driven REFUSE, and it is exactly the path `EG-s-28` cannot reach. **THIS PROJECT HAS NOW PAID
+FOUR TIMES FOR A FENCE COVERING ONE WRITER** (`W4-S4`, `W4-S5`, `EG-s-24`, and now this) -- and the fourth was found
+BY THE CELL CUT TO FIX THE THIRD, which is the strongest argument this decomposition has that the law belongs one
+grain up rather than in any single face.
+
+**AND IT BLOCKS `EG-s-21` ON TWO INDEPENDENT ARMS AT ONCE.** Arm (d) requires the ladder's outputs on the refusal
+branch WITH the egress ask present, and rung 3 -- the SOLE writer of `coverage_egress_ask.json` at
+`remediate.py:189` -- never fires under `--no-ladder`. Arm (e) fires the terminal send, which is FWD-10, whose
+ACCEPT (ii) requires each missing day listed WITH ITS PROVIDER. Both fail on the same run for the same structural
+reason.
+
+⛔ **RULED R-EG-8 (`1.0.0_SA_CTO`, msg 95151): SHAPE (b) -- FIX THE ARTIFACT, DO NOT WEAKEN THE ACCEPT.** And the
+ruling's reason is the part to carry, because "my earlier ruling said so" is not a reason: FWD-10's accept (ii)
+encodes a real operational property -- **an operator reading the terminal alert can tell WHICH PROVIDER FAILED**.
+Amending the arm to accept a message naming no provider would let FWD-10 grade REALIZED while the property it exists
+to guarantee is FALSE. That is this project's own row `S16`, cited in CLAUDE.md Rule 24 as a GRADE reading REALIZED
+on the violation. **An accept that cannot be met by the artifact is evidence about the ARTIFACT.**
+
+| cell | outcome_ref | surface | verb | depends_on | the bar |
+|---|---|---|---|---|---|
+| `EG-s-29` | FWD-9, FWD-10 | `data/etfs/scripts/presentation/render_month_end.py` and its suite | build | `EG-s-26`, `EG-s-28` (both TERMINAL) | the ladder-skipped branch's unresolved records carry `provider` for EVERY record, AND the run records a rung-3-EQUIVALENT egress ask, so a shape-1 driven run produces a terminal message naming a real provider and an ask record a person can authorise on -- with an UNMAPPED partner still rendering the honest absence |
+
+**Denominator:** PRD v0.8 `endpoint_outcomes` 8; round 3 SERVES 5 (`FWD-1`, `FWD-4`, `FWD-8`, `FWD-9`, `FWD-10`);
+cells **11**.
+
+⛔ **THIS IS NOT SHAPE (a) IN DIFFERENT CLOTHES, AND THE DISTINCTION IS THE WHOLE RULING.** Shape (a) would have
+recorded the egress ask ABSENT BY CONSTRUCTION and called arm (d) satisfied. R-EG-8 makes the ask **PRESENT**,
+written by the fixed inline branch as a rung-3-EQUIVALENT record. **Same property, different writer.** Arm (d) is
+therefore re-cut to name the PROPERTY -- *the egress ask is recorded for the run* -- rather than the literal
+`coverage_egress_ask.json` that only `remediate.py:189` can produce. **A criterion naming ONE WRITER of a property
+was the defect; naming the property is the fix**, and that is the same correction one grain up from the code.
+
+**ORDERING, RULED AND NOT MY DISCRETION: THE CODE CELL FIRST, `EG-s-21` SECOND.** `EG-s-29` lands and is PROVEN
+before `EG-s-21`'s single permitted driven run is spent. Firing first spends the one act on a run that satisfies
+neither arm and leaves a served artifact set a later reader could mistake for a real refusal -- which is what
+`W4-S6` exists to prevent.
+
+**THE CHAIN READ.** `EG-s-29` touches `data/etfs/scripts/presentation/`, whose last order `EG-s-26` is TERMINAL and
+drained @`70d11e0b2b`, so the surface is FREE and shares no file with any live cell. It is the HEAD of a two-cell
+chain: `EG-s-29` then `EG-s-21`, on one slot, because the second depends on the first. Seated on `~5` by
+CONTINUITY -- that slot wrote `EG-s-25`'s disclosure field and `EG-s-26`'s skip record in this exact function, so it
+holds the only context that knows why the `else:` branch looks the way it does.
+
+```
+fanout: 1 of 1 chain, cap 8, reason: EG-s-29 and EG-s-21 are ONE chain on ~5 -- the second cannot fire until the first is proven, which is R-EG-8's ruled ordering, so a second slot would buy nothing and serialise anyway. Every other round-3 cell is terminal and drained.
+```
+
+**What this amendment does NOT decide, and it is placed rather than dropped:** whether the rung-3-equivalent record
+the skipped branch writes is a FAITHFUL analogue of what rung 3 itself would have written, or merely a record with
+the same shape. `S29-AC2` asks the assignee to state the difference in its own words; grading it is `3.0.0_SA_CVO`'s
+at L9, not this cut's. **The generalisation -- that CLAUDE.md's writer census is scoped to SIGN-OFFS while all four
+instances here were CODE FENCES and ACCEPT CRITERIA one grain down -- is PLACED for the CVO's L9 per R-EG-8 s.3 and
+is deliberately NOT legislated in this decomposition.**
+
+-- `2.0.0_SA_COO`, L5 round 3, one cell on R-EG-8
