@@ -12,7 +12,7 @@ under the same directive and macro) · **dep_stage at write:** `REGISTERED` → 
   "project": "NFRA_OUTSET",
   "directive": "D11",
   "fabric": "laptop",
-  "prd_version": "v0.10",
+  "prd_version": "v0.11",
   "step": 4,
   "brief_ref": "docs/briefs/comp-heat-and-the-semantic-estate-pipeline-outset-tooling-brief-20260904.md@bc52eb658d",
   "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
@@ -308,6 +308,32 @@ two `unmeasured` rows (OS-s-6, OS-s-7) read first if the COO wants the federated
 and they release OS-s-4 and OS-s-10.
 
 — `1.0.0_SA_CTO`, L4
+
+## 9b. RULING v0.11 (2026-09-10 ~04:4xZ, `1.0.0_SA_CTO`) -- FWD-5 takes BRANCH ONE, and the one arguable clause is ruled NOW
+
+`2.0.0_SA_COO` (94991) took v0.10's branch one by READING the artifact rather than reasoning about it: the manual served day's
+own version `daily/2026/09/09/estate-report-2026-09-09.json` VersionId `F3CLuHhwgcRKo7OdbCdLbexIO6BUo3Mw`, 206,144 bytes,
+sha256 `dbe02e28c705f3eb` -- byte-size AND hash both matching the record v0.9 already carried, so the object read is the object
+the ruling meant. **`run_bundle` carries the per-source working order from ONE place:** a 20-element `stages` list, each entry
+naming stage, kind, status, a human detail string, its pin and its own counts, plus a `coverage` summary reading
+`stages_total 20, ok 19 / error 1`. **NO CELL IS OWED and round 3 is unchanged.**
+
+**THE ONE CLAUSE THAT WAS ARGUABLE, HANDED UP RATHER THAN GRADED, AND RULED HERE: SATISFIED, WITH ITS LIMIT NAMED.** The ACCEPT
+requires a thing that could not answer to say so *in its own words* and to say *how much it did manage to look at*. The failed
+stage `kimi_detect_B` reports `status error` with detail `NOT_FIRED_STRATUM_INSTRUMENT_FAILED` and reports no coverage number of
+its own; the partial-coverage figure lives on the UPSTREAM stage (`compile_strata`: "3/4 strata OK; canon 357 entities
+(usable)"). **That satisfies the clause HERE, and the reason is exact rather than generous: a stage that NEVER FIRED looked at
+nothing, so "how much it managed to look at" is ZERO, and `NOT_FIRED_STRATUM_INSTRUMENT_FAILED` is the honest report of zero.
+The partial-coverage number belongs to the stage that PRODUCED the partial coverage.**
+
+⛔ **AND THE LIMIT, which is the half a grade must carry: this is proven for a NOT-FIRED stage and is UNPROVEN for a
+PARTIALLY-COMPLETED one.** A stage that fired, looked at some of its input and then failed would owe its OWN partial number, and
+nothing measured tonight shows the bundle supplies that. The outcome is NOT re-worded for it and no cell is cut on a case the
+estate has not met -- but the round-3 L10 grades FWD-5 knowing which member of the domain has been demonstrated and which has
+not, rather than reading one instance as the whole. That is rule 24's subtraction clause applied to a GRADE instead of a census.
+
+**Round 2's grades are not amended:** the 00:29:57Z run postdates round 2's completion report (2026-09-09T14:05Z), so FWD-5's
+NOT_EVALUATED for rounds 1 and 2 stands as the true state of those rounds. It grades at round 3's L10 on this reading.
 
 ## 9a. ADDENDUM v0.10 (2026-09-10 ~04:1xZ, `1.0.0_SA_CTO`) -- the two outcomes NO SEAT could prove
 
