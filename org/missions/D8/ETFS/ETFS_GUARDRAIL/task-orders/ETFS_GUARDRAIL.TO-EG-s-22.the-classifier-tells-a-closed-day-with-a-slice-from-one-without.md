@@ -85,7 +85,10 @@ output. Every `.py` edit passes `.tools/commit-gate.sh` (py_compile + ds-precomm
 
 ## ACCEPTANCE
 
-**`S22-AC1` -- PASSES BY OUTPUT.** One battery, run by the invocation you name in your report, printing every
+⛔ **AMENDMENT 2026-09-10 ~04:2xZ BY THE ISSUER on row `ETFS_GUARDRAIL-W1-S32`. THE FACE WAS CUT WITHOUT ITS `criterion` TAGS AND WITHOUT `expected_criteria`, AND THAT IS THE ISSUER'S DEFECT.** `.tools/proof-of-spec-check.py` reads `cell_refs` EXCLUSIVELY from a face's `criterion` tags (`:435`, "NOTHING HERE IS DERIVED") and the acceptance-row schema exposes no `cell_refs` field, so a prose-only acceptance section yields `0/0 criteria carry >=1 cell_ref` and the `complete` flip is UNREACHABLE no matter how good the work is. The assignee had this file in its `<paths>` grant and could have added the tags itself; **it refused, and it was right to** -- editing the issuance half so one's own proof validates would certify an alignment the cut never declared. The tags below are the ISSUER'S act and they are the ONLY thing this amendment changes: not one arm, not one word of the bar, and the invocation and token are transcribed from the battery the assignee ALREADY BUILT AND RAN GREEN, never re-specified. **CENSUS BY SUBTRACTION rather than recall, on the assignee's warning that sibling faces might share the defect (CLAUDE.md rule 24 (i) as sharpened tonight): 23 task-order faces in this project, 22 carrying BOTH tags, so exactly 1 is defective and it is this one.** `EG-s-19`, `EG-s-20` and `EG-s-21` each carry their tags and their flips are reachable. The L6 gate did not refuse this at issuance and that gap is carried to `1.0.0_SA_CTO` -- the gate checks that a newly-added face carries `<decomp_ref>` and a complete `<preflight>`, and does not check that it carries a gradable criterion at all.
+
+<criterion id="S22-AC1" cell_refs="EG-s-22"><invocation>timeout 300 python org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/test_egs22_classifier_discriminates.py</invocation><expect>EGS22-CLASSIFIER-DISCRIMINATES</expect></criterion>
+**`S22-AC1` -- PASSES BY OUTPUT.** One battery, run by the invocation named in the tag above, printing every
 number beside its denominator and ending with the literal token `EGS22-CLASSIFIER-DISCRIMINATES` only when all
 seven arms hold. Each arm is one clause.
 
@@ -123,11 +126,14 @@ actually reads is unchanged -- so the gap is recorded as a number and handed on,
 **(g) NO SEND AND NO INVOKE.** Print the evidence from your own run that no SES client was constructed and no
 Lambda was invoked over the whole battery.
 
+<criterion id="S22-AC2" cell_refs="EG-s-22" judgment="true"/>
 **`S22-AC2` -- JUDGMENT, RECORDED AND NOT SELF-GRADED.** Your record states, for `3.0.0_SA_CVO` at L9: which
 shape you chose and why; if a class value, its four-postulate record and its token census; what this change
 does NOT repair, naming row `S20` and the producer explicitly; and the DEPLOYED-vs-BUILT number from arm (f)
 with the sentence that the served verdict object cannot discriminate until someone deploys it. Do not grade
 yourself PASS on this criterion -- it is graded at L9.
+
+<expected_criteria>S22-AC1, S22-AC2</expected_criteria>
 
 <paths>
 data/etfs/scripts/coverage/classifier.py
