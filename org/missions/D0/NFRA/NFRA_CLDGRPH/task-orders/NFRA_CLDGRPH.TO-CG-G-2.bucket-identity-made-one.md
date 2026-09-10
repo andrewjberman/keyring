@@ -66,6 +66,26 @@ The vocabulary call is answered and the default in the section above is SUPERSED
 
 **`SERVED_FROM` IS RE-POINTED, NOT RETIRED**, and the CTO said so explicitly so this ruling is not read as covering the whole seam: 27 keys from a different site, a different node pair (`ServedURL -> S3`, not `S3Key -> S3_BUCKET`), and no measurement offers it a duplicate carrying the same fact. Both families still move in your one fold change.
 
+## ISSUER RULING ON YOUR REPORT (2026-09-10 06:1xZ): THE ACCEPTS ARE MET -- **FLIP AND STOP**. The retirement is NOT yours to finish and it is not this order's to carry.
+
+You held `<status>` at pending on condition 1's STOP instruction, with five readers outside your `<paths>`. That was exactly right and it is the refusal clause working as written. **But the retirement was never a CRITERION of this order** -- it arrived as a ruling's condition on your face, and `G2-AC1..AC5` are the accepts that govern the flip. All four mechanical rows PASS and the instance is VALID. **That gap is MY cut defect: I wrote a ruling onto a face without cutting a criterion to grade it, so the order could not tell you whether the retirement was part of what it accepts. It is not.**
+
+**FLIP `<status>` to complete and report.** Do NOT widen your grant, do NOT touch the five readers, do NOT edit `OWNED_BY`'s definition. The retirement becomes its own cell with its own accepts in the next issuance, where it can be graded instead of merely required.
+
+### WHAT YOU PROVED, and it is the whole cell
+
+`LOCAL_FOLD_STORED_IN_ON_S3_BUCKET=137 of 137` and `LOCAL_FOLD_SERVED_FROM_ON_S3_BUCKET=27 of 27`, `ON_S3_BUCKET_POLICY=0 across both families`, `DERIVES_FROM_RESOLVED=216 of 216`, reconciliation `1790 = 1790, lost 0`, `GRAIN-SENTINEL: PASS` with its own 35-of-59 coverage qualifier carried rather than dropped, and `MAGNITUDES_UNCHANGED=5 of 5`. The mechanism you found is better than the one the cut named: `kuzu_nessie_load.py:204` keys a served node `arn or node_id` and matches endpoints RAW against that space, so a bucket's key is its ARN while a policy node's `arn` column holds the bucket NAME -- **an edge on the name never dangled, it landed on the policy, and every dangling check read clean.** And `resolvable_before=64078 -> after=64080` says the widened admission RECOVERED round 6's two unresolved edges, so 137 is not fan-out.
+
+### WHAT GOES TO THE CTO THIS TICK, WITH YOUR NUMBER AT THE TOP
+
+`MANIFEST_TOOLS_TOUCHING_STORED_IN=0 of 78`. **The manifest-scoped census condition 1 named would have returned EMPTY and AUTHORIZED THE RETIREMENT.** The unscoped sweep over 31,293 tracked files found five real consumers. That is the scoped-check trap sitting inside the remedy written to prevent it, found by the assignee, and it is the most valuable measurement of this round.
+
+Condition 2 is blocked by measurement, not by effort: `OWNED_BY` is consumed as a CONTAINMENT seam by `cse_schema.py:323`, `comp_marker_read.py:121` and `comp_coverage_check.py:523`, so widening its stated intent to absorb location changes what those three readers mean. A retirement whose surviving term cannot absorb the retired one's intent is a deletion, by the CTO's own condition.
+
+Your W1-S39 goes up with it: the served graph lost 124 of 135 `STORED_IN` edges and one `S3_BUCKET_POLICY` node between vintages `03:31:02` and `05:32:57` with snapshot, artifact and marker ALL UNMOVED, while `OWNED_BY`'s 232 correctly-parented edges did not move at all. The seam is unstable as well as wrong, and that is an argument the retirement did not have before.
+
+Both defects your own arms caught before the captures -- the endpoint key set read before the fold extended the graph, and the code arm scanning zero producer lines against an uncommitted range -- are noted and are why the numbers above are worth anything.
+
 ## DELIVERABLE -- in this order
 
 1. **The FOLD's admission** in `derive_runner.py`: when an edge endpoint names a node that carries BOTH an id and an arn, normalize it onto the ARN at admission. Additive and best-effort by the derive's own contract; an endpoint that resolves today must still resolve after.
