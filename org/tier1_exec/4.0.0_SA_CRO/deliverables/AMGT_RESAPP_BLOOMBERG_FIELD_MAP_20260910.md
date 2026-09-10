@@ -146,7 +146,57 @@ Three ways out:
 **REC: (a), with the basis stated beside the number** -- and show Adam the SAP delta table in §1
 before it is decided, because he is the one who has to defend the number.
 
-## 6. NOT MEASURED (so it is not mistaken for coverage)
+## 6. PAYLOAD VOLUME -- the quota precondition, MEASURED
+
+**Andrew-direct 2026-09-10, VERBATIM:** *"test on one security at a time initially to assess the
+actual payload volume so in case it turns out really heavy we dont get in trouble with bloomberg on
+quota."* Measured on exactly that basis: **one security, one call.**
+
+**THE MEASUREMENT.** `SAP GY Equity`, 18 fields, YEARLY, 2016-01-01 -> 2025-12-31:
+
+| | Measured |
+|---|---|
+| Calls | **1** |
+| Rows returned | **14** (for 10 fiscal years -- see below) |
+| Data points returned | **180** = 18 fields x 10 years, **complete, zero gaps** |
+| Response size | **~3.4 KB** of JSON |
+
+**PROJECTION TO THE 89-NAME UNIVERSE** (arithmetic, flagged as arithmetic):
+
+| Leg | Data points | Notes |
+|---|---|---|
+| 10y history, 89 names | **16,020** | 89 x 180 |
+| Header block, 89 names | **1,424** | 89 x 16, reference not historical |
+| **Subtotal** | **~17,400** | **~300 KB JSON for a FULL rebuild** |
+| Peer/`CSC` block | **up to ~10,700** | 89 x ~12 peers x ~10 fields, **before dedup** |
+
+**READ: VOLUME IS NOT THE RISK. UNIQUE SECURITY COUNT IS.**
+A full 89-name rebuild is ~300 KB and well under 20k data points -- small by any measure. But the
+peer block touches **up to ~1,000 additional unique securities** if peers are pulled per-name
+without deduplication, and Bloomberg desktop entitlements are commonly bound by *unique securities
+touched* rather than by payload. **Dedupe the peer set across the 89 before pulling it** -- the
+telecom peers on the SAP sheet will recur across every telecom name in the coverage list.
+
+**THE LIMIT ITSELF IS UNMEASURED AND I AM NOT GUESSING IT.** Nothing in this session establishes
+this terminal's daily or monthly entitlement. The consumption arithmetic above is sound; the
+headroom is unknown. **That number has to come from the terminal's own entitlement or Andrew's
+Bloomberg representative, and it should be obtained before the first multi-security run.**
+
+**CADENCE IS THE MULTIPLIER, not the one-off.** 89 names refreshed daily is 89 unique securities
+per day and unremarkable. The same 89 with an undeduped peer block refreshed daily is a different
+order of exposure. The refresh policy is therefore a quota decision, not only a product one.
+
+**TRAP (b) CONFIRMED AT SCALE, WITH A DENOMINATOR:** the price/fundamentals date split occurred in
+**4 of 10 years** (2016, 2017, 2022, 2023 split into two rows; 2018-2021, 2024-2025 merged) --
+**14 rows for 10 fiscal years.** It is the common case, not an edge case, and any consumer keying
+on the date string will silently drop 40% of this name's price history.
+
+**INSTRUCTION RIDING ON THIS, per the same ruling** (*"make sure that its stored somewhere so we
+dont need to do it twice"*): every response above must land in `opal-data-research` on first pull
+and be served from there afterwards. **The cache is a correctness requirement, not an
+optimisation** -- it is what makes the quota arithmetic a one-time cost rather than a recurring one.
+
+## 7. NOT MEASURED (so it is not mistaken for coverage)
 
 - **One security only.** `SAP GY Equity`. Nothing establishes these mnemonics behave the same on a
   US name, an ADR, or a financial. **The unit conventions in §4(a) are the most likely to vary.**
