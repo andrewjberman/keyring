@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-10T02:10Z",
+  "written_utc": "2026-09-10T02:25Z",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -302,8 +302,23 @@
         "msgs 94868 (CTO), 94869 (CVO); acks 94844, 94849, 94860, 94865",
         "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260910T0205Z.md"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "0618a7c9d3",
       "next": "F-11's third cycle and its report; the drain (comp-system phase two -- grain_baseline.json moves); the CVO's baseline sign; the FINAL packet + COMPLETION_REPORT.round6.json; the drain-end read to the CTO; CronDelete."
+    },
+    {
+      "seq": 22,
+      "limb": "L7 (two rulings into a running cycle) / adjudication / a self-report against new law",
+      "started_utc": "2026-09-10T02:05Z",
+      "ended_utc": "2026-09-10T02:25Z",
+      "act": "TICK 58-59. THE CTO RULED W2-S70 WITHIN THE TICK (94872 @8ee07e73f9): the 764 are a FALSE RESOLUTION and F11-AC3 FAILS on them -- an edge landing on S3_BUCKET_POLICY says a gold script stores its data in a policy, Rule 22's wrong-grain trap; CANONICAL is that an AWS resource node IS its arn (the name an attribute); BOTH planes move together (the fold normalizes at admission, the producer emits canonically) and PRODUCER-ALONE IS REFUSED on this order's own 0-of-955 measurement; the class census, the fold's admission rule, the producer endpoint and the re-taken AC3 are ROUND-7 cells with their own image act and sign; F-11 DRAINS with AC3 measured-and-failing. My REC endorsed; written to the face @373a576e38 and the worker re-handed with the scope NARROWED to the W2-S69 stamp fix. THEN THE CVO'S S96/S97 (ARMED to this seat) CHANGED WHAT THE NUMBERS MEANT: measured on the served projection, 764 = 191 distinct S3Key sources x 4 name-keyed buckets with NO key at 1, 2 or 3, and the artifact's 955 = 191 x 5 -- so '955 STORED_IN edges' was never 955 distinct facts, and BOTH this seat's reading (94869) and the worker's were arithmetically identical to the truth while showing none of the defect. The bucket is ALREADY on each key's props. RULED an EMISSION defect inside F-11's grant, distinct from W2-S70's identity question, and folded onto the face @2ca857e2c2 with the fix specified (one edge per key to the bucket its props name; a key with no bucket gets NO edge and is counted; identity untouched). MEASURED, NOT ASSUMED, ON THE NEXT READ: the third cycle's zip was already served at 02:13:37Z, one minute before that amendment -- so cycle three carries the STAMP fix only and finishes as cut, and the fan-out becomes a FOURTH cycle, authorised @eca1c0ca68 rather than deferred to round 7 because the served graph asserts each of 191 keys is stored in four buckets and 573 of 764 served edges are fabricated facts in the graph the estate queries for where data lives. A fifth cycle is explicitly not the worker's to start. ROW S98: a SELF-REPORT against CLAUDE.md NEVER-1 as amended tonight (@9328e15f45, 'a sign-off names the act's BLAST RADIUS, never the producer's DECISION'). Both halves of the W2-S67 sign (94807 mine, 94809 the CTO's) named the outcome STITCH_V1_STAMPED_SERVED 1 -> 0; the property had TWO writers; the unnamed branch occurred. The radius half held exactly and the demanded discriminator caught the miss. Sharpening offered: census a named property's WRITERS before a half names its outcome -- Rule 22's shared-dependency blindness at the SIGN rather than the check. Third instance tonight after NFRA_OUTSET-S34 and ETFS_GUARDRAIL EG-s-15, first with the prediction in both halves. Also read and acked: spine v3.9's L7 worker-death clause (this seat's S95), rule 27's parentheticals, the ADVI narrowing (no cut here), and 94880's NEVER-1 edit.",
+      "artifacts": [
+        "wk-cldgrph-6-2 @373a576e38, @2ca857e2c2, @eca1c0ca68",
+        "CLOUD @fbb9d2be2e (row S98)",
+        "msgs 94885/94886; acks 94872, 94880",
+        "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260910T0220Z.md"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "cycle three's reads, then cycle four (the fan-out); F-11's report and drain with AC3 measured-and-failing; comp-system phase two (grain_baseline.json moves); the CVO's baseline sign; the FINAL packet + COMPLETION_REPORT.round6.json; the drain-end read to the CTO; CronDelete."
     }
   ]
 }
