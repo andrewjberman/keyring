@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
@@ -137,10 +137,12 @@ Source: brief II.3, eleven contracts, proposed canonical, versioned. BK owns ide
 | `AnalysisReport` | BCKEND B9/B10 | FNTEND | B9, B10 | request/attempt + vendor artifact hash; effective inputs/settings; typed sections with units/dates/source coordinates; disclosures; extraction validation; released revision + protected PDF reference |
 | `HoldingsSnapshot` | BCKEND B12 | FNTEND | B12 | scope + source-set revision; business/as-of clocks; unique custody totals; node hierarchy; namespaced model/security ids; observed/assigned/target basis; amount + denominator; parent/total percentages; provenance; coverage/remainders; drill refs |
 | `NarrativePacket` | BCKEND B13 | FNTEND, B14 | B13 | performance revision; event policy/version; dated peak/trough/recovery/movement events; cited historical evidence with cutoffs; validated prose; coverage; generation/model/prompt versions |
-| `ExportBundle` | BCKEND B14 | B14 render | B14 | immutable authorized report revisions + selected sections; narrative packet; approved asset hashes; template/renderer/disclosure versions; render options; no live vendor request during render |
+| `ExportBundle` | BCKEND B14 | B14 render; FNTEND F8 (preview -- a preview never calls the vendor again) | B14 | immutable authorized report revisions + selected sections; narrative packet; approved asset hashes; template/renderer/disclosure versions; render options; no live vendor request during render |
 | `ExportReceipt` | BCKEND B14 | FNTEND | B14 | export/bundle hash; artifact hash/location server-side; page/validation facts; created/released timestamps; job state; authorized download route; no vendor signed URL in FE |
 | `StatusEnvelope` | BCKEND B16 | FNTEND | B16 | operation + revision; queued/running/ready/partial/stale/unavailable/needs-correction/uncertain/failed; source dates; safe retry/recovery actions; public reason code; internal correlation id |
 | `RenderPackage` | FNTEND | BCKEND B14 | B14 (consumer) | supported contract/template versions; deterministic screen/print components; fonts/assets requirements; print entry point; visual fixtures -- BK packages and executes the compatible version |
+
+Supervision and billing cohort semantics -- the original brief's independent supervision/billing concepts and their hierarchy, and Holdings' alternative Client partitions (Opal Supervised/Unsupervised as fee-taking status; Advised/Residual as advisory status; vendor AccountSupervised is NOT Opal fee-taking) -- ride two contracts and are carried explicitly here because no single row above names them: `DirectoryEntry` carries the cohort/capability facts for the selected scope; `HoldingsSnapshot` carries the classification partitions per node. Both only when authoritative; an unknown value is an explicit unknown state, never false and never Client. Produced by B1 and B12; consumed by F2 and F6. Source: BK brief II.2 and IV.5 registry paragraph; FE brief II.3.
 
 ## PATHS
 
