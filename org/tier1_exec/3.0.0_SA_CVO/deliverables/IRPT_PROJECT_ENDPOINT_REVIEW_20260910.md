@@ -38,3 +38,33 @@ The brief's polling proposal and later OUTSET 15-minute ratification are separat
 ## Delivery
 
 Immediate findings were sent through canonical `codex-send.ps1` to CTO before this record: ACK at 19:14:43Z and FWD-7/FWD-8 correction at 19:15:08Z. No CTO-owned endpoint, registry, PRD, task face or runtime was edited by CVO.
+
+## Re-cut verification -- CTO 95507, `07229339a2`
+
+The principal repairs are verified, but the claim that every ratified note is carried verbatim is still false. This follow-up compares pinned git blobs, not a changing working copy.
+
+Denominator: FRONTEND carries 6 ratified blocks (1/3/4/5/6/8); BACKEND carries 7 (1/2/3/4/5/7/8) plus proposed 9/10. That is 13 ratified occurrences covering the original 8 distinct IDs, not eight blocks in each document.
+
+The independent comparator extracts every FWD block through the next FWD header or closing fence. It compares exact nonblank lines after excluding old OWNER and SOURCE blocks and the new ownership metadata. SOURCE wording/suffixes are outside this comparator's verdict. It rejects a bogus git pin. A control deleting the original FWD-7 failed-refresh/over-age proof line produces a mismatch. The complete comparison is saved at `.runtime/codex-seats/3.0.0_SA_CVO/round8-l9/irpt-recut-07229339a2/comparison.json`; the material results are preserved below.
+
+| Re-cut result | Measured finding |
+|---|---|
+| 9 of 13 ratified occurrences exactly equal on compared lines | FE 1/3/5/6; BK 1/2/3/5/7. This includes FWD-7's original five-arm proof and expiry/fallback requirements. |
+| 2 of 13 retain all compared original lines with additions | Both FWD-4 blocks add a parenthetical referring intake to proposed FWD-9. BK also adds the acknowledged runner-strategy direction. No original compared FWD-4 clause is lost; unsupported positions, programmatic clear inputs and per-use vendor authorization are restored. |
+| 2 of 13 still omit original lines | Both FWD-8 blocks stop after the missing-history note. Their repeatability and missing-history proof requirements are restored, but the following five original lines at `58266dab2d:361-365` are absent. |
+
+```text
+         ? NOT A BI SURFACE. This is a BOUNDED read of DATED signals for the selected
+                    account's own periods. The 2026-09-09 brief's exclusion of broad
+                    BI/agent query capability still stands and this does not reopen it
+         ? PENDING INPUT: the high-definition advisor logos. Andrew supplies them; they
+                    are RECORDED AS PENDING and are neither invented nor scraped
+```
+
+Both endpoint provenance sections cite extraction through line 360, which ends before those notes. Restore the full original block through its closing fence. The existing optional-logo acceptance is retained, but it does not carry the separate provenance/non-invention instruction. This finding does not establish that anyone expanded BI scope or invented assets; it establishes omitted ratified text.
+
+The runner style is explicitly fixed in BACKEND FWD-4 and the corrected WHAT L2 DOES NOT DECIDE section. This matches the already-read BK brief's same-runner/no-OTP direction; the additional CRO relay is attributed rather than independently fetched here. The parenthetical about FWD-9 and runner note should be identified as additions; they are not ownership/source metadata.
+
+The earlier novelty qualifications remain unresolved in this pin: BACKEND lines 353-356 still deny any ratified cross-tenant isolation, despite FWD-2; lines 366-368 still call BK O3 wholly uncovered, despite the original FWD-4 mail/correction clauses now carried immediately above. Correcting the quoted DONE WHEN in FWD-9 does not resolve those broader claims. Both proposals remain explicitly unratified; no new verdict on them is made here.
+
+CTO received the remaining five-line omission at 19:22:51Z, before this record was committed. Verification is confined to the endpoint repairs; it is not PRD approval, implementation acceptance or a project-wide completion grade.
