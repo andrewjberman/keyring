@@ -1,0 +1,143 @@
+{
+  "kind": "COMPLETION_REPORT",
+  "schema_version": "1.0",
+  "project": "NFRA_IAMROLES202609",
+  "round": 2,
+  "written_by": "2.0.0_SA_COO~ZI",
+  "written_utc": "2026-09-10T15:30Z",
+  "decomposition_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/decompositions/NFRA_IAMROLES202609_DECOMP_R2.md@5b460996ee",
+  "denominators": {
+    "fwd_in_prd_header": 8,
+    "cells_in_decomposition": 6,
+    "task_orders": 6,
+    "task_orders_terminal_with_valid_proof": 6
+  },
+  "outcomes": [
+    {
+      "fwd_id": "FWD-1",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "a reviewer has actually answered the question with that evidence attached, rather than an opinion",
+      "cells": [
+        {
+          "cell_id": "IAM-r-2",
+          "task_orders": [
+            {
+              "id": "NFRA_IAMROLES202609.TO-IAM-r-2.what-do-191-208-216-each-count",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~6/NFRA_IAMROLES202609.TO-IAM-r-2.what-do-191-208-216-each-count.proof_of_spec.json@7d7099f4cf"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "ROUND 2 MOVED THIS. IAM-r-2 answered what 191 / 208 / 216 each COUNT and did the harder half correctly: it separated 208/216/219 as ONE INSTRUMENT FAMILY AT THREE VINTAGES from 191 as a STRUCTURALLY DIFFERENT population, and REFUSED to force an arithmetic reconciliation between two planes. ONE QUALIFIER THIS LANE OWES RATHER THAN THE GRADER DISCOVERING IT: the round-2 battery's own 195 was measured from the SHARED MAIN CHECKOUT, which carried five untracked .tf files holding exactly four aws_iam_role blocks; 195 - 4 = 191, the committed figure. The worker's clean-worktree 191 is the right number and the issuer's 195 was the defective one. Carried as row Z-S9 and NOT retro-amended into the frozen decomposition."
+    },
+    {
+      "fwd_id": "FWD-2",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "real roles have been read and their unused permissions named, over a stated lookback",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "UNCOVERED BY ROUND 2'S DECOMPOSITION, NOT UNCOVERED BY THE PROJECT. Round 2 is a RECUT and its six cells serve FWD-1 and FWD-4 only; this outcome's coverage is carried unchanged by COMPLETION_REPORT.round1.json@6851626643 and is restated here so the fwd_in_prd_header denominator of 8 partitions honestly. NO ROUND-2 EVIDENCE IS OFFERED FOR IT and none was gathered."
+    },
+    {
+      "fwd_id": "FWD-3",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "at least one real policy has been surfaced as perfectly scoped and yet requiring nothing of whoever calls it",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "UNCOVERED BY ROUND 2'S DECOMPOSITION, NOT UNCOVERED BY THE PROJECT. Round 2 is a RECUT and its six cells serve FWD-1 and FWD-4 only; this outcome's coverage is carried unchanged by COMPLETION_REPORT.round1.json@6851626643 and is restated here so the fwd_in_prd_header denominator of 8 partitions honestly. NO ROUND-2 EVIDENCE IS OFFERED FOR IT and none was gathered."
+    },
+    {
+      "fwd_id": "FWD-4",
+      "done_when_state": "APPLIED",
+      "done_when_text": "each one is either in code or carries a named owner and a reason",
+      "cells": [
+        {
+          "cell_id": "IAM-r-1",
+          "task_orders": [
+            {
+              "id": "NFRA_IAMROLES202609.TO-IAM-r-1.token-split-declared-vs-adopt",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~5/NFRA_IAMROLES202609.TO-IAM-r-1.token-split-declared-vs-adopt.proof_of_spec.json@1b65eb60d9"
+            }
+          ]
+        },
+        {
+          "cell_id": "IAM-r-3",
+          "task_orders": [
+            {
+              "id": "NFRA_IAMROLES202609.TO-IAM-r-3.true-membership-per-member-resource-block",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~6/NFRA_IAMROLES202609.TO-IAM-r-3.true-membership-per-member-resource-block.proof_of_spec.json@b077f10538"
+            }
+          ]
+        },
+        {
+          "cell_id": "IAM-r-4",
+          "task_orders": [
+            {
+              "id": "NFRA_IAMROLES202609.TO-IAM-r-4.record-the-service-default-class-ruling",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~5/NFRA_IAMROLES202609.TO-IAM-r-4.record-the-service-default-class-ruling.proof_of_spec.json@b1fececea1"
+            }
+          ]
+        },
+        {
+          "cell_id": "IAM-r-5",
+          "task_orders": [
+            {
+              "id": "NFRA_IAMROLES202609.TO-IAM-r-5.production-roles-declared-and-adoption-proved-safe",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~6/NFRA_IAMROLES202609.TO-IAM-r-5.production-roles-declared-and-adoption-proved-safe.proof_of_spec.json@43cc4e7594"
+            }
+          ]
+        },
+        {
+          "cell_id": "IAM-r-6",
+          "task_orders": [
+            {
+              "id": "NFRA_IAMROLES202609.TO-IAM-r-6.a-third-disposition-value-then-the-residue-call",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~5/NFRA_IAMROLES202609.TO-IAM-r-6.a-third-disposition-value-then-the-residue-call.proof_of_spec.json@b23572f84f"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "ROUND 2 EXISTS FOR THIS OUTCOME. Round 1 graded it FAILED on judgment -- the governance token carried two intents -- and five of round 2's six cells serve it. WHAT CHANGED: IAM-r-1 split the token into DECLARED / ADOPT / EXEMPT with the rule-24 four-postulate record; IAM-r-3 measured TRUE membership PER MEMBER on Terraform SOURCE, classing by resource-block presence and never by name mention, and found 1 DECLARED-IN-TF (the confirmed false positive seeking-alpha-scraper-role) and 15 NOT-IN-TF, so THE SETTLED SET OF 16 IS 15; IAM-r-4 recorded the CTO's class ruling against all three AWS service-default roles as ONE decision, taking UNASSIGNED member rows 6 -> 3 on a constant denominator of 16; IAM-r-5 declared both production serving-path roles and PROVED adoption non-destructive (Plan: 2 to import, 0 to add, 2 to change, 0 to DESTROY, both update-in-place on inherited provider default_tags), with a baseline No-changes plan taken FIRST so the delta is attributable, and nothing applied; IAM-r-6 extended the axis with RETIRE and disposed lambda-test-role. CLAIM IS COVERAGE, NOT A GRADE. done_when is APPLIED and the state reached is APPLIED: every one of the 16 is now in code or carries a named owner and a reason. TWO THINGS THE GRADER SHOULD NOT HAVE TO FIND. (1) IAM-r-6's AC1 and AC3 CANNOT FAIL and must not be credited -- AC1's 'measured 0 at the cut' is true only of a case-SENSITIVE instrument while the criterion ships -i, and the document read 3 at the cut; the discriminating measurement the cell actually passes is the case-sensitive word-boundary census, 0 at the parent commit and 17 at the cell's own HEAD, so the hollow bars did NOT hide a no-op. Carried as rows Z-S11 (this lane, filed against its own issuance) and Z-W5-S1 (the worker, independently). (2) IAM-r-5's verbatim-quote bound and its AC5 are MUTUALLY UNSATISFIABLE as written -- terraform's own plan footer emits the string 'terraform apply' unprompted -- and the worker resolved it by rendering with terraform show and proving completeness with an empty diff against the raw plan region. Row Z-W6-S3. Both defects are this issuer's."
+    },
+    {
+      "fwd_id": "FWD-5",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "a real narrowing has been checked in advance and the check was believed",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "UNCOVERED BY ROUND 2'S DECOMPOSITION, NOT UNCOVERED BY THE PROJECT. Round 2 is a RECUT and its six cells serve FWD-1 and FWD-4 only; this outcome's coverage is carried unchanged by COMPLETION_REPORT.round1.json@6851626643 and is restated here so the fwd_in_prd_header denominator of 8 partitions honestly. NO ROUND-2 EVIDENCE IS OFFERED FOR IT and none was gathered."
+    },
+    {
+      "fwd_id": "FWD-6",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "each of the known past plans has been established as done or not done, on evidence",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "UNCOVERED BY ROUND 2'S DECOMPOSITION, NOT UNCOVERED BY THE PROJECT. Round 2 is a RECUT and its six cells serve FWD-1 and FWD-4 only; this outcome's coverage is carried unchanged by COMPLETION_REPORT.round1.json@6851626643 and is restated here so the fwd_in_prd_header denominator of 8 partitions honestly. NO ROUND-2 EVIDENCE IS OFFERED FOR IT and none was gathered."
+    },
+    {
+      "fwd_id": "FWD-7",
+      "done_when_state": "APPLIED",
+      "done_when_text": "the assessment reports the two differently, at permission grain",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "UNCOVERED BY ROUND 2'S DECOMPOSITION, NOT UNCOVERED BY THE PROJECT. Round 2 is a RECUT and its six cells serve FWD-1 and FWD-4 only; this outcome's coverage is carried unchanged by COMPLETION_REPORT.round1.json@6851626643 and is restated here so the fwd_in_prd_header denominator of 8 partitions honestly. NO ROUND-2 EVIDENCE IS OFFERED FOR IT and none was gathered."
+    },
+    {
+      "fwd_id": "FWD-8",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "it has actually been re-run and produced a comparable answer",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "UNCOVERED BY ROUND 2'S DECOMPOSITION, NOT UNCOVERED BY THE PROJECT. Round 2 is a RECUT and its six cells serve FWD-1 and FWD-4 only; this outcome's coverage is carried unchanged by COMPLETION_REPORT.round1.json@6851626643 and is restated here so the fwd_in_prd_header denominator of 8 partitions honestly. NO ROUND-2 EVIDENCE IS OFFERED FOR IT and none was gathered."
+    }
+  ]
+}

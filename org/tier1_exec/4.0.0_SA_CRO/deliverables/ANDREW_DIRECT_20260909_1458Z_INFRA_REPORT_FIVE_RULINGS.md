@@ -267,6 +267,34 @@ stale-instrument qualifier, never `RED`. Website security is `BLIND`, never `OK`
 **every property `CHECKED` on Axis 1 and `OK` on Axis 2. Nothing is green by virtue of not having
 been looked at.**
 
+---
+
+> ### ⛔ FORWARD-POINTER ADDED 2026-09-09 ~19:5xZ BY THE AUTHOR OF THIS TABLE. A RULING RECORD CARRIES NO REFERENCE TO ITS OWN LATER EXTENSION, AND THIS ONE NOW HAS ONE.
+>
+> **THE AXIS-1 ENUM IS BEING EXTENDED, ADDITIVELY, AT L5.** `2.0.0_SA_COO~ZZ` built `RP-s-1`, ran
+> rule 24 against it, and found the enum expresses **neither a PERMANENT blind nor a
+> DESIRED-not-APPLIED row**. `1.0.0_SA_CTO~Z` ruled the widening lands at L5 and directed
+> **`state: desired | applied | exercised`, adopted VERBATIM from CLAUDE.md rule 22** rather than a
+> new synonym (build-ladder rung 2). Nothing in ruling 12 is amended: an orthogonal field redefines
+> neither enum and cannot make the forbidden pair printable.
+>
+> ⭐ **AND THE LIMIT WAS DISCLOSED BY THIS RECORD'S OWN JUSTIFICATION, WHICH IS THE PART WORTH
+> KEEPING.** The paragraph above headed *"WHY THIS IS NOT AN INVENTION -- every Axis-1 value is
+> PROMOTED from a section already running in this estate"* was written as the table's STRENGTH. It
+> is simultaneously the statement of its BOUND: **a vocabulary assembled by HARVESTING the values
+> that happened to exist carries no MECE claim over a domain it never declared**, and rule 24(i)
+> requires a DECLARED domain. So *"the enum cannot express X"* is not a defect in the ruling — it is
+> the ruling's own construction method meeting a state no existing section ever had to name.
+> **The sentence written to justify the table is the same sentence that bounds it**, and a reader who
+> takes only the first half will read a harvest as a taxonomy.
+>
+> ⚠ **AND A NAMING HAZARD THAT IS `1.0.0_SA_CTO~Z`'s TO CARRY, recorded here because this file is
+> where the phrase originates:** Andrew's ratified words are *"the two-axis state model"*. A third
+> orthogonal field neither collapses the two axes nor removes either, **so the ruling stands** — but
+> the moment it lands, any artifact still calling it *"the two-axis model"* diverges from the design
+> it describes. **This record's own "TWO-AXIS" headings are accurate as a record of WHAT WAS RULED
+> and are NOT a description of the current design.** Read them as history, not as spec.
+
 **Ruling 13** -- repairing the 13 non-delivering SNS topics falls INSIDE the brief, as a SECOND
 NAMED WORKSTREAM beside the Terraform one from ruling 10. Basis: 8 topics have 0 confirmed
 subscribers; 3 more have a single SMS subscriber against an SNS SMS sandbox of unknown status and
@@ -334,13 +362,92 @@ author walked into it.
 
 ## RULING 15b -- THE EXCEPTION SET IS NAMED BY GROUP, NOT BY BOX
 
-Andrew: *"should be named separately id say by group (Dashboard, Website, Graph)."* The always-on
-exception set is expressed on the SAME three-property axis as the report itself (ruling: the three
-Opal properties). **moltbot is NOT in it -- it does not exist.**
+Andrew: *"should be named separately id say by group (Dashboard, Website, Graph)."*
+**moltbot is NOT in it -- it does not exist.**
 
-Open sub-item carried to Andrew: no graph-ops box appears in the 27-service manifest, and the
-security sweep reports **7 unused `opal-globgrph-*` security groups** as bulk-deletion candidates.
-The **Graph** group may therefore be EMPTY. Not resolved here.
+> ### ⛔ CORRECTED 2026-09-09 ~21:4xZ BY THIS RECORD'S AUTHOR. THE SENTENCE STRUCK BELOW WAS THIS SEAT'S INFERENCE PRESENTED AS ANDREW'S WORD, AND IT PROPAGATED INTO A PRD.
+>
+> **STRUCK:** ~~"The always-on exception set is expressed on the SAME three-property axis as the
+> report itself (ruling: the three Opal properties)."~~
+>
+> **ANDREW SAID NO SUCH THING. He gave two different third members, for two different questions,
+> and each is coherent on its own axis:**
+>
+> | axis | his words | third member |
+> |---|---|---|
+> | **ATTRIBUTION** -- which property OWNS a problem (brief O4 -> FWD-4) | *"the three Opal properties defined as Dashboard, Website, and Gateway (the opal-gateway mcp server)"* | **Gateway** |
+> | **ALWAYS-ON EXCEPTION SET** -- what is exempt from autoshutdown (brief O9 -> FWD-9) | *"named separately id say by group (Dashboard, Website, Graph)"* | **Graph** |
+>
+> **THERE IS NO REASON THEIR THIRD MEMBERS MUST MATCH, and this seat asserted they did.** The
+> struck sentence adds a claim while reading as a tidy restatement — which is exactly why it was
+> invisible. It is the single load-bearing error in this batch. Found by `1.0.0_SA_CTO~Z` at
+> `a535ae513e` while disarming `NFRA_REPORT-Z-W2-S2`, after a worker refused to guess and left two
+> boxes explicitly UNGROUPED.
+>
+> ⛔ **IT DID NOT STOP HERE.** At L4 the PRD collapsed the two axes into one three-member list and
+> kept the ATTRIBUTION one, dropping Graph — a rule 24(iii) intent-coherence violation downstream of
+> this record's prose. **A false weld in a ruling record does not stay in the record.**
+>
+> **NOW SPECIFIED, not guessed:** FWD-4's attribution axis carries a mandatory rendered `UNGROUPED`
+> value, so a surface with no ratified group is SHOWN rather than omitted.
+>
+> ⛔ **CLOSED 2026-09-09 ~22:4xZ — NOT an open call, and this record briefly said it was.** Andrew,
+> VERBATIM: *"irrelevant already covered this call with CTO~Z."* **The naming was ruled at the
+> `1.0.0_SA_CTO~Z` terminal and that seat carries it.**
+> ⚠ **THIS SEAT HAS NOT READ THE RULING AND ASSERTS NOTHING ABOUT ITS CONTENT** — not whether the
+> third member is Gateway, Graph or both. Recorded as CLOSED-ELSEWHERE rather than answered here,
+> because a record that guesses at a ruling it has not read is worse than one that names the owner.
+> *(The PRD read at v0.5 still shows the item open at line 320; that is `1.0.0_SA_CTO~Z`'s to
+> reconcile, not this seat's to chase.)*
+>
+> ### ⭐ THE CONTENT ARRIVED 2026-09-10 ~03:0xZ. **THE AXIS HAS FOUR MEMBERS: `Dashboard | Website | Gateway | Graph`.**
+>
+> **RELAYED, not read at Andrew's terminal** — via `1.0.0_SA_CTO~Z` msg 20763, whose record is
+> `ANDREW_DIRECT_20260910_025xZ_OPEN_CALLS_ALL_SIX_RECS_APPROVED.md` `@9382d107a3`. Andrew's word on
+> that batch, VERBATIM: *"go with your recs on all six"*. Executed at `NFRA_REPORT` PRD **v0.7**;
+> section 6's open clause is CLOSED and `S13`'s bound amended.
+>
+> **THE REASON, which is the part that generalises:** `opal-gateway` (EC2, MCP server) and
+> `opal-globgrph` (ECS, 3 of 3 running) are both live, both always-on, and **FAIL DIFFERENTLY**.
+> Folding either into `Dashboard` makes `FWD-4`'s own bar — *one problem belongs to one part* —
+> **false by construction.**
+>
+> ⚠ **`UNGROUPED` IS NOT RETIRED.** It now means **a live surface outside all four** — a smaller set,
+> and it must still RENDER rather than vanish. **The ruling names the members; it does NOT promise
+> the four are exhaustive of everything this estate will ever run.** That is ruling 12's own shape
+> one axis over: as it is structurally impossible to print `OK` on a surface nobody looked at, it
+> must be impossible for a surface to disappear for want of a name.
+> `canonical-schwab-si2` remains **`Dashboard`** per Andrew's earlier word.
+>
+> ⛔ **AND THE ARITY ASSUMPTION IS NOW DEAD IN BOTH DIRECTIONS.** The struck sentence above welded
+> two axes on the premise that they shared a third member. The ruling settles that they do not even
+> share an ARITY: **attribution is FOUR, the always-on exception set remains THREE
+> (`Dashboard, Website, Graph`).** Nothing forces two axes to have the same size, and this record is
+> the place that once implied otherwise.
+>
+> **AND THE PROCESS FAILURE IS THIS SEAT'S:** this call was re-listed at 22:3xZ having been carried
+> from 21:5xZ without re-checking whether a ruling had landed at another terminal. `/open-calls`
+> names that as its single most damaging failure — *"a call answered elsewhere is CLOSED, listing it
+> re-opens settled law."* A carried call needs the same inbox sweep as a new one; carrying is not a
+> licence to skip the check.
+
+### ⭐ THE "GRAPH MAY BE EMPTY" SUB-ITEM IS DISCHARGED -- AND THIS RECORD WAS WRONG ABOUT THAT TOO
+
+**Struck:** ~~"no graph-ops box appears in the 27-service manifest ... The Graph group may therefore
+be EMPTY. Not resolved here."~~
+
+**Measured live by `0.9.0_WK_NFRA_REPORT~2`:** `opal-globgrph` is an **ACTIVE ECS Fargate cluster,
+3 of 3 services running** (`globgrph-nessie`, `globgrph-trino`, `globgrph-serving`, `desiredCount=1`
+each). **The Graph group is not empty.**
+
+⚠ **AND THE L1 BRIEF HAD ALREADY FALSIFIED THIS RECORD** — its limits section item 7 names *"the
+Graph group (asserted empty; three ECS services exist)"* as one of two inferences falsified during
+the review, recorded expressly so a reader would discount this author's absence-claims. **The
+correction was sitting in the brief the whole time.** The reason it was missed downstream is named
+by `1.0.0_SA_CTO~Z` against itself: *reading a source for its CONCLUSIONS and not for its
+RETRACTIONS.* ⛔ **The root cause is the same one this record kept hitting all session: the compute
+manifest is EC2-only, so no artifact of this project had ever seen an ECS cluster** — it surfaced
+only because `RP-s-5` was scoped to cover ECS.
 
 ## RULING 16 -- the EC2 manifest backfill is the THIRD NAMED WORKSTREAM, SEQUENCED FIRST
 

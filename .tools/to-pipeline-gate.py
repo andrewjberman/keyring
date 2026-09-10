@@ -1016,6 +1016,17 @@ def check_endpoint_section(root, rel):
 
 PRD_HEADER_SCHEMA_REL = "org/standards/PRD_HEADER.schema.json"
 MANIFEST_HEADING_RE = re.compile(r"^##\s+.*SURFACE MANIFEST", re.M | re.I)
+# The minimum body a SURFACE MANIFEST section must carry to count as populated.
+# PROMOTED FROM A BARE LITERAL TO A NAMED CONSTANT 2026-09-09 (1.0.0_SA_CTO~Z, on 3.0.0_SA_CVO~Z's
+# verification msg 20602). .tools/prd-manifest-gate.py enforces the SAME rule at COMMIT time and had
+# COPIED this 40, so the CTO's claim that the two gates "cannot drift apart" was true of the two
+# IMPORTED symbols (_top_section, MANIFEST_HEADING_RE) and FALSE of this third shared thing. It now
+# imports this name, so tuning the floor moves both refusals together.
+# HONEST PROVENANCE: 40 is UNMEASURED and inherited -- no derivation appears in this file's history,
+# and it is NOT re-justified here. What changed is that it is now named, shared, and CONTROLLED AT
+# ITS BOUNDARY by prd-manifest-gate.py --self-test (a 39-char body must refuse, a 41-char body must
+# pass), so a future change to it fails a test instead of silently disagreeing across two gates.
+MANIFEST_MIN_BODY_CHARS = 40
 PRD_FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
 # An outcome DEFINITION is the id at LINE START followed by 2+ spaces and text -- the card form
 # /endpoint --forward emits. A MENTION ("a row citing `FWD-9` passes") is mid-line and does not
@@ -1175,9 +1186,15 @@ def _prd_conformance(prd_text, header_schema, expect):
         out.append("PRD has no top-level SURFACE MANIFEST section (a heading inside a code fence does "
                    "not count) -- step 5 cannot run a battery on prose (CVO~A @0d272d257c; contract "
                    "@4bb2c5d94f)")
-    elif len(m_body.strip()) < 40:
-        out.append("SURFACE MANIFEST heading is present but the section is EMPTY (%d chars). A "
-                   "heading is not a manifest." % len(m_body.strip()))
+    elif len(m_body.strip()) < MANIFEST_MIN_BODY_CHARS:
+        # WORDING CORRECTED 2026-09-09 (3.0.0_SA_CVO~Z msg 20602): this said the section "is EMPTY",
+        # which is FALSE for the case that actually trips it -- a well-formed header row plus one
+        # data row measures 39 chars and is not empty at all. A true refusal carrying a false reason
+        # sends the next actor to the wrong repair: a reader told EMPTY hunts for a missing section
+        # when the remedy is ADD ROWS.
+        out.append("SURFACE MANIFEST heading is present but the section is UNDER-POPULATED (%d "
+                   "chars, floor %d). The section exists -- it needs MORE ROWS, not a new heading. "
+                   "A heading is not a manifest." % (len(m_body.strip()), MANIFEST_MIN_BODY_CHARS))
     section = _top_section(prd_text, ENDPOINT_HEADING)
     if section is None:
         return out  # limb 4 owns the missing-ENDPOINT complaint; do not double-report

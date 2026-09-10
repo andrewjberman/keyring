@@ -248,12 +248,25 @@ directives:
   D5:
     title: "Alternative Research"
     directive: "docs/architecture/D5_ALT_RESEARCH_PRD.md"
-    placement: "LAPTOP -- RULED (ingest = operator-located as standing; activation builds laptop). ⛔ STANDING, ANDREW-DIRECT 2026-08-27 ~00:0xZ, VERBATIM: 'D0 D2 D3 D5 D10 D11 stay here until I say otherwise. the rest is all on sitez.' This row is one of the SIX NAMED LAPTOP HOLDS. 'UNTIL I SAY OTHERWISE' IS A DURATION CLAUSE, NOT A PERMANENT RULING -- it is his to lift and nobody else's, and no seat may move this directive off laptop on any other basis."
+    placement: "SITEZ -- MOVED 2026-09-10 from LAPTOP by Andrew-direct at the 4.0.0_SA_CRO~Z terminal, VERBATIM: 'We're going to take D5 to this device.' Relayed by 4.0.0_SA_CRO~Z (msg 20967), register act by 0.0.0_AB_MSTR~Z. SUPERSEDES the 2026-08-27 LAPTOP hold preserved verbatim below. THIS IS THE SECOND PLACEMENT ON THIS ROW, BOTH HIS; a reader takes the latest and must not read this flip as reopening the one beneath it. ⛔ THIS IS THE 'OTHERWISE' THE HOLD BENEATH WAS WAITING FOR, AND NOTHING WIDER. The superseded text says 'until I say otherwise' is a duration clause, his to lift and nobody else's. He has lifted it FOR D5. SCOPE -- READ THIS BEFORE MOVING ANYTHING ELSE: the 2026-08-27 word named SIX rows (D0 D2 D3 D5 D10 D11); this word names ONE. D0, D2, D3, D10 and D11 DO NOT MOVE WITH IT and remain LAPTOP under the identical standing clause, which is untouched on each of those five rows. Reading the bundle forwards out of a single-directive sentence would be adjudicating wider, which a relay may not do in either direction -- the same discipline the D8 row records for reading a bundle BACKWARDS. NO SEQUENCING RULING IS CARRIED HERE: unlike the D8 move there is nothing in flight to strand -- this row's member set was empty at the moment of the move, so 'nothing serving moves mid-serve' has no subject and is not restated as though it had been ruled for this one. 1.0.0_SA_CTO~Z sequences if that changes. CREATES ZERO SPAWNS. Placement attaches to the DIRECTIVE, never to a member. --- PRIOR PLACEMENT, PRESERVED VERBATIM AND UNMODIFIED --- LAPTOP -- RULED (ingest = operator-located as standing; activation builds laptop). ⛔ STANDING, ANDREW-DIRECT 2026-08-27 ~00:0xZ, VERBATIM: 'D0 D2 D3 D5 D10 D11 stay here until I say otherwise. the rest is all on sitez.' This row is one of the SIX NAMED LAPTOP HOLDS. 'UNTIL I SAY OTHERWISE' IS A DURATION CLAUSE, NOT A PERMANENT RULING -- it is his to lift and nobody else's, and no seat may move this directive off laptop on any other basis."
     members:
       subgroups: []
-      projects: []
-    stance: "CRO ingest lane continues; the build queue activates on Andrew's prioritization word.
-      No register home yet -- an empty member set is honest where a plausible one is not."
+      projects: [AMGT_RESAPP]
+    stance: "ACTIVATED 2026-09-10. The empty member set this row carried is now populated by its FIRST
+      registered project, AMGT_RESAPP, minted on Andrew-direct at the 4.0.0_SA_CRO~Z terminal, VERBATIM:
+      'this will be a new project under D5, call it AMGT_RESAPP' / 'This is going to be a dashboard portal
+      page called Security Analysis.' / 'The scope of the project will be designing the frontend according
+      to existing patterns.' / 'This will be an internal tool so general API is fine.' Source ask: Adam
+      Muller 'Claude automation' 2026-09-10T13:18:06Z -- automate a single-name research pack (financial
+      model, company description with segments, investment thesis, risks, CEO bio). CRO pre-brief notes
+      @772c796a3f and Bloomberg field map @4ca943547e. ⛔ NO BRIEF IS CUT AND NONE IS IMPLIED BY THIS ROW:
+      Andrew gated /brief-create on a shape discussion that is live at the CRO terminal, so this is a
+      REGISTER MINT ONLY -- the L1 has not begun. The project renders [no-json] until org/projects/
+      AMGT_RESAPP.json exists; that is the honest state and NOT a defect, on the same footing the row at
+      line 109 records. The prior stance -- 'CRO ingest lane continues; the build queue activates on
+      Andrew's prioritization word. No register home yet -- an empty member set is honest where a plausible
+      one is not' -- is SPENT rather than wrong: it described a row awaiting exactly this word, and LD-0454
+      ruled that empty set honest at the time. The ingest lane continues unchanged."
   D6:
     title: "Opal AI"
     directive: "docs/architecture/D6_OPAL_ANALYST_GRAPHQL_PRD.md"
@@ -466,7 +479,7 @@ directives:
       was not derivable from criterion (a) or (b) alone."
     members:
       subgroups: []
-      projects: [PLATFORM_OPS_USERMGMT, D12_PHONE_OTP_ALL_AWS, NFRA_OPSEC202609, NFRA_REPORT]
+      projects: [PLATFORM_OPS_USERMGMT, D12_PHONE_OTP_ALL_AWS, NFRA_OPSEC202609, NFRA_REPORT, NFRA_IAMROLES202609]
     stance: "MINTED 2026-08-31 by 0.0.0_AB_MSTR (register owner) on Andrew-direct ~19:2xZ (a new directive entry
       D12) and 1.0.0_SA_CTO transcript readback @1f6541bf16, sourced from three named Whisper transcripts on
       Andrew Desktop. FIRST PROJECT PLATFORM_OPS_USERMGMT: email/SMS OTP MFA at login with a remembered-device

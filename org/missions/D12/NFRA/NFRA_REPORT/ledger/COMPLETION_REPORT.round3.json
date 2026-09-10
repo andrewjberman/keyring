@@ -1,0 +1,345 @@
+{
+  "kind": "COMPLETION_REPORT",
+  "schema_version": "1.0",
+  "project": "NFRA_REPORT",
+  "round": 3,
+  "written_by": "2.0.0_SA_COO~ZZ",
+  "written_utc": "2026-09-10T10:40:00Z",
+  "decomposition_ref": "org/missions/D12/NFRA/NFRA_REPORT/decompositions/NFRA_REPORT_DECOMP_R3.md@8e5df66ea1",
+  "denominators": {
+    "fwd_in_prd_header": 12,
+    "cells_in_decomposition": 1,
+    "task_orders": 1,
+    "task_orders_terminal_with_valid_proof": 1
+  },
+  "outcomes": [
+    {
+      "fwd_id": "FWD-1",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "it has run on real trading mornings and its verdict has been checked against the underlying rows and found right, INCLUDING at least one morning where the verdict was \"nothing\"",
+      "cells": [
+        {
+          "cell_id": "RP-s-2",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-2.row-structure-and-per-row-delta.proof_of_spec.json@916423527a"
+            }
+          ]
+        },
+        {
+          "cell_id": "RP-s-3",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-3.schedule-and-delivery-trading-days.proof_of_spec.json@916423527a"
+            }
+          ]
+        },
+        {
+          "cell_id": "RP-s-4",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-4.verdict-rule-computed-never-generated.proof_of_spec.json@916423527a"
+            }
+          ]
+        },
+        {
+          "cell_id": "RP-s-16",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-16",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-16.run-on-trading-mornings-and-deliver.proof_of_spec.json@916423527a"
+            }
+          ]
+        },
+        {
+          "cell_id": "RP-s-17",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-17",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-17.verdict-in-a-real-edition.proof_of_spec.json@916423527a"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "cells span round(s) 1,2: RP-s-2(r1), RP-s-3(r1), RP-s-4(r1), RP-s-16(r2), RP-s-17(r2). DENOMINATOR SCOPE, stated because the schema forbids a top-level note: the four denominators describe ROUND 2's decomposition (7 cells / 7 task orders), matching decomposition_ref; this cells[] list is CUMULATIVE across rounds 1 and 2, because an outcome served only in round 1 would otherwise read UNCOVERED and that would be false."
+    },
+    {
+      "fwd_id": "FWD-2",
+      "done_when_state": "APPLIED",
+      "done_when_text": "the distinction is in the report's own vocabulary and a reader does not need to know how the report is built to see it",
+      "cells": [
+        {
+          "cell_id": "RP-s-1",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-1.state-model-two-axis-vocabulary.proof_of_spec.json@916423527a"
+            }
+          ]
+        },
+        {
+          "cell_id": "RP-s-14",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-14",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~3/NFRA_REPORT.TO-RP-s-14.third-axis-explicit-applied-value.proof_of_spec.json@916423527a"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "cells span round(s) 1,2: RP-s-1(r1), RP-s-14(r2). DENOMINATOR SCOPE, stated because the schema forbids a top-level note: the four denominators describe ROUND 2's decomposition (7 cells / 7 task orders), matching decomposition_ref; this cells[] list is CUMULATIVE across rounds 1 and 2, because an outcome served only in round 1 would otherwise read UNCOVERED and that would be false."
+    },
+    {
+      "fwd_id": "FWD-3",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "a reader has used it to tell a new problem from one that has been standing for weeks",
+      "cells": [
+        {
+          "cell_id": "RP-s-2",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-2.row-structure-and-per-row-delta.proof_of_spec.json@916423527a"
+            }
+          ]
+        },
+        {
+          "cell_id": "RP-s-15",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-15",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-15.build-the-composer-and-per-row-delta.proof_of_spec.json@916423527a"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "cells span round(s) 1,2: RP-s-2(r1), RP-s-15(r2). DENOMINATOR SCOPE, stated because the schema forbids a top-level note: the four denominators describe ROUND 2's decomposition (7 cells / 7 task orders), matching decomposition_ref; this cells[] list is CUMULATIVE across rounds 1 and 2, because an outcome served only in round 1 would otherwise read UNCOVERED and that would be false."
+    },
+    {
+      "fwd_id": "FWD-4",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "a real failure has been read and attributed by a person to one part and one owner",
+      "cells": [
+        {
+          "cell_id": "RP-s-1",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-1.state-model-two-axis-vocabulary.proof_of_spec.json@916423527a"
+            }
+          ]
+        },
+        {
+          "cell_id": "RP-s-13",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-13",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-13.attribution-axis-and-ungrouped.proof_of_spec.json@916423527a"
+            }
+          ]
+        },
+        {
+          "cell_id": "RP-s-20",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-20",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-20.attribution-axis-v07-rendered-in-the-edition.proof_of_spec.json@7ca0c3413e"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "cells span round(s) 1,2,3: RP-s-1(r1), RP-s-13(r2), RP-s-20(r3). DENOMINATOR SCOPE, stated because the schema forbids a top-level note: the four denominators describe ROUND 3's decomposition (1 cell / 1 task order); this cells[] list is CUMULATIVE across all three rounds, because an outcome served only in an earlier round would otherwise read UNCOVERED and that would be false. COVERED IS NOT A GRADE. Round 2's report carried this outcome as COVERED while row Z-S10 was open against it; that row's remedy is RP-s-20 and it is now merged at 7ca0c3413e. THE GRADE IS 1.0.0_SA_CTO~Z's AND THIS LANE DOES NOT ASSERT IT. What this lane measured independently at the merged HEAD, not taken from the worker's report: AC1=1, AC2 ROWS=26 WITH_AXIS_VALUE=26, AC3 GATEWAY_ROWS=1/OK=1 and GRAPH_ROWS=1/OK=1, AC4 REFERENT_ROWS=2 STALE_UNGROUPED_ROWS=0, AC5=0, AC6=0 -- every one moved from its RED value at issuance (AC2 was 25/4, AC3 was 0/0 and 1/0, AC4 was 1, AC5 was 1) in the direction the cell required. CARRIED FOR L9, ROW NFRA_REPORT-Z-W1-S6: only 2 of the 26 rendered attribution values are ratified BY NAME (opal-gateway->Gateway, opal-globgrph->Graph at v0.7); 1 more is brief-level (Website); the remaining 23 are the worker's own citation-disciplined judgment (17 UNGROUPED, 6 Dashboard), each traceable per-row in compose_edition.py's ROW_FACTS citation field and none guessed without one. A reader must not take all 26 as equally ratified, and the worker filed that against its own work unprompted."
+    },
+    {
+      "fwd_id": "FWD-5",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "at least one alert that would reach nobody has been identified from the report, before any incident tested it",
+      "cells": [
+        {
+          "cell_id": "RP-s-6",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-6.alert-delivery-read-alarm-anchored.proof_of_spec.json@916423527a"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "cells span round(s) 1: RP-s-6(r1). DENOMINATOR SCOPE, stated because the schema forbids a top-level note: the four denominators describe ROUND 2's decomposition (7 cells / 7 task orders), matching decomposition_ref; this cells[] list is CUMULATIVE across rounds 1 and 2, because an outcome served only in round 1 would otherwise read UNCOVERED and that would be false."
+    },
+    {
+      "fwd_id": "FWD-6",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "one stale thing has been correctly called retired and one correctly called broken, each on evidence rather than age",
+      "cells": [
+        {
+          "cell_id": "RP-s-7",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-7",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-7.deprecation-determination-terminus-walk.proof_of_spec.json@916423527a"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "cells span round(s) 1: RP-s-7(r1). DENOMINATOR SCOPE, stated because the schema forbids a top-level note: the four denominators describe ROUND 2's decomposition (7 cells / 7 task orders), matching decomposition_ref; this cells[] list is CUMULATIVE across rounds 1 and 2, because an outcome served only in round 1 would otherwise read UNCOVERED and that would be false."
+    },
+    {
+      "fwd_id": "FWD-7",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "something has actually been retired and the next edition stopped raising it",
+      "cells": [
+        {
+          "cell_id": "RP-s-8",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-8",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-8.retirement-register-recorded-state.proof_of_spec.json@916423527a"
+            }
+          ]
+        },
+        {
+          "cell_id": "RP-s-18",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-18",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-18.retirement-round-trip-across-editions.proof_of_spec.json@916423527a"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "cells span round(s) 1,2: RP-s-8(r1), RP-s-18(r2). DENOMINATOR SCOPE, stated because the schema forbids a top-level note: the four denominators describe ROUND 2's decomposition (7 cells / 7 task orders), matching decomposition_ref; this cells[] list is CUMULATIVE across rounds 1 and 2, because an outcome served only in round 1 would otherwise read UNCOVERED and that would be false."
+    },
+    {
+      "fwd_id": "FWD-8",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "one real movement has been SURFACED, and ordinary variation over the same window did NOT surface",
+      "cells": [
+        {
+          "cell_id": "RP-s-9",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-9",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~2/NFRA_REPORT.TO-RP-s-9.cost-anomaly-detector-segment-then-box.proof_of_spec.json@916423527a"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "cells span round(s) 1: RP-s-9(r1). DENOMINATOR SCOPE, stated because the schema forbids a top-level note: the four denominators describe ROUND 2's decomposition (7 cells / 7 task orders), matching decomposition_ref; this cells[] list is CUMULATIVE across rounds 1 and 2, because an outcome served only in round 1 would otherwise read UNCOVERED and that would be false. FWD-8's BOX GRAIN limb is OUT OF SCOPE for round 2 by the round-N analysis: blocked on resource-level Cost Explorer being opt-in DISABLED at the payer account, which is Andrew's billing decision. Row Z-S4, disarmed INERT. The SEGMENT limb is served."
+    },
+    {
+      "fwd_id": "FWD-9",
+      "done_when_state": "APPLIED",
+      "done_when_text": "one record covers both kinds of compute and states each unit's duty cycle",
+      "cells": [
+        {
+          "cell_id": "RP-s-5",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~2/NFRA_REPORT.TO-RP-s-5.compute-manifest-substrate-ec2-and-ecs.proof_of_spec.json@916423527a"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "cells span round(s) 1: RP-s-5(r1). DENOMINATOR SCOPE, stated because the schema forbids a top-level note: the four denominators describe ROUND 2's decomposition (7 cells / 7 task orders), matching decomposition_ref; this cells[] list is CUMULATIVE across rounds 1 and 2, because an outcome served only in round 1 would otherwise read UNCOVERED and that would be false."
+    },
+    {
+      "fwd_id": "FWD-10",
+      "done_when_state": "APPLIED",
+      "done_when_text": "every count in the report carries what it counted out of",
+      "cells": [
+        {
+          "cell_id": "RP-s-10",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-10",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-10.coverage-denominator-carrier.proof_of_spec.json@916423527a"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "cells span round(s) 1: RP-s-10(r1). DENOMINATOR SCOPE, stated because the schema forbids a top-level note: the four denominators describe ROUND 2's decomposition (7 cells / 7 task orders), matching decomposition_ref; this cells[] list is CUMULATIVE across rounds 1 and 2, because an outcome served only in round 1 would otherwise read UNCOVERED and that would be false."
+    },
+    {
+      "fwd_id": "FWD-11",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "at least one thing we serve has been found that no instrument covers",
+      "cells": [
+        {
+          "cell_id": "RP-s-11",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-11",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-11.monitored-vs-served-reconciler.proof_of_spec.json@916423527a"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "cells span round(s) 1: RP-s-11(r1). DENOMINATOR SCOPE, stated because the schema forbids a top-level note: the four denominators describe ROUND 2's decomposition (7 cells / 7 task orders), matching decomposition_ref; this cells[] list is CUMULATIVE across rounds 1 and 2, because an outcome served only in round 1 would otherwise read UNCOVERED and that would be false."
+    },
+    {
+      "fwd_id": "FWD-12",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "a real anomaly has produced a breakdown whose named connections were CHECKED and found correct, and a written account that asserts nothing the breakdown does not support",
+      "cells": [
+        {
+          "cell_id": "RP-s-12",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-12",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-12.anomaly-breakdown-computed-plus-account.proof_of_spec.json@916423527a"
+            }
+          ]
+        },
+        {
+          "cell_id": "RP-s-19",
+          "task_orders": [
+            {
+              "id": "NFRA_REPORT.TO-RP-s-19",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-19.anomaly-breakdown-in-a-real-edition.proof_of_spec.json@916423527a"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "cells span round(s) 1,2: RP-s-12(r1), RP-s-19(r2). DENOMINATOR SCOPE, stated because the schema forbids a top-level note: the four denominators describe ROUND 2's decomposition (7 cells / 7 task orders), matching decomposition_ref; this cells[] list is CUMULATIVE across rounds 1 and 2, because an outcome served only in round 1 would otherwise read UNCOVERED and that would be false."
+    }
+  ]
+}

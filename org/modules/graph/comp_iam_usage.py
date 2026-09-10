@@ -15,6 +15,20 @@ existing CTO-gated, Andrew-delete-word disposal path -- no second disposal path.
                    / get-key-policy / get-queue-attributes / get-topic-attributes / lambda get-policy).
   reach-check    : a (principal, action, resource) reachability VERDICT grounded on the live primitive
                    simulate-principal-policy, run with the Rule-22a disciplines (below).
+  permission-cold: PERMISSION grain (NFRA_IAMROLES202609.TO-IAM-s-1, FWD-2 -- role-cold's sibling one
+                   plane down). `--role <name> --lookback <days>`: union the role's Allow actions across
+                   every attached-managed + inline policy (the DESIRED-plane GRANTED set), then classify
+                   each against IAM ACCESS ADVISOR action-level usage telemetry (iam:GenerateService
+                   LastAccessedDetails / iam:GetServiceLastAccessedDetails, Granularity=ACTION_LEVEL) --
+                   used | never-used | unobservable, with a printed DENOMINATOR. ACCESS ADVISOR IS NOT
+                   AWS ACCESS ANALYZER: Access Advisor is free, core-IAM, same API family as role-cold's
+                   own RoleLastUsedDate read (both live on the `iam` boto3 client already used here);
+                   Access Analyzer (the access-analyzer:* unused-access finding type) is a SEPARATE,
+                   PRICED service this tool NEVER calls (C-ANALYZER-PRICED-FIRST stays HELD). A service
+                   AWS does not track at action grain, or an action absent from AWS's own tracked list
+                   for a service that IS tracked, renders unobservable -- NEVER never-used (FWD-7's
+                   discipline, carried to this grain: a permission nobody could observe must never read
+                   as a permission shown clean).
 
 RULE-22a FIX-OR-CARRY (CTO ruling-20 HARD mandate -- NEVER inherit comp-iam's three limits silently;
 this tool NAMES each in its own output, see _LIMITS_BANNER + `comp-iam-usage limits`):
@@ -42,6 +56,7 @@ import datetime as dt
 import json
 import os
 import sys
+import time
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 if _HERE not in sys.path:
@@ -226,6 +241,218 @@ def reach_check(role_name: str, action: str, resource_arn: str, context: list) -
         return {"read": False, "verdict": "UNKNOWN", "error": "simulate failed: %s" % str(e)[:140]}
 
 
+# ---- permission-cold: PERMISSION grain (NFRA_IAMROLES202609.TO-IAM-s-1, FWD-2) --------------------
+_PERM_LIMITS_BANNER = (
+    "  PERMISSION-GRAIN NOTES (NFRA_IAMROLES202609.TO-IAM-s-1):\n"
+    "    GRANTED is the DESIRED plane -- the union of Allow actions across every attached-managed +\n"
+    "    inline policy on the role (a policy DOCUMENT, per C-DESIRED-UNTIL-EXERCISED). A wildcard\n"
+    "    action token ('*' or 'svc:*') is carried VERBATIM, never expanded or dropped, and renders\n"
+    "    unobservable (this tool does not enumerate the concrete actions a wildcard covers).\n"
+    "    USAGE is IAM ACCESS ADVISOR action-level telemetry (iam:GenerateServiceLastAccessedDetails /\n"
+    "    iam:GetServiceLastAccessedDetails, Granularity=ACTION_LEVEL) -- free, core-IAM, the SAME API\n"
+    "    family as role-cold's RoleLastUsedDate. THIS IS NOT AWS ACCESS ANALYZER (access-analyzer:*,\n"
+    "    the PRICED unused-access finding type) -- that stays HELD per C-ANALYZER-PRICED-FIRST and is\n"
+    "    never called by this tool. A service AWS does not track at action grain, or an action absent\n"
+    "    from AWS's own tracked-action list for a service that IS tracked, renders unobservable --\n"
+    "    NEVER never-used (FWD-7's discipline, one grain over: unobservable != clean).\n"
+    "    'never-used' means: tracked by Access Advisor, and either never accessed at all or last\n"
+    "    accessed OUTSIDE the stated --lookback window -- 'unused over the stated lookback', FWD-2's\n"
+    "    own phrasing, not a claim the action was never called at any point in the account's history.")
+
+
+def _actions_from_doc(doc: dict) -> set:
+    """Allow-action tokens out of one IAM policy document. DESIRED plane (C-DESIRED-UNTIL-EXERCISED)
+    -- this is the GRANTED set, never a usage claim. Deny statements are not granted; skipped."""
+    out = set()
+    stmts = doc.get("Statement", []) if isinstance(doc, dict) else []
+    if isinstance(stmts, dict):
+        stmts = [stmts]
+    for st in stmts:
+        if not isinstance(st, dict) or st.get("Effect") != "Allow":
+            continue
+        a = st.get("Action", [])
+        if isinstance(a, str):
+            a = [a]
+        out.update(x for x in a if isinstance(x, str))
+    return out
+
+
+def granted_permissions(iam, role_name: str):
+    """(sorted_actions, read_ok). Union of Allow-actions across attached-managed + inline policies.
+    A read failure is UNKNOWN, never assumed-empty (same discipline as role_last_used: an unread
+    role/policy is BLIND, not clear)."""
+    acts = set()
+    try:
+        for p in iam.list_attached_role_policies(RoleName=role_name).get("AttachedPolicies", []):
+            ver = iam.get_policy(PolicyArn=p["PolicyArn"])["Policy"]["DefaultVersionId"]
+            doc = iam.get_policy_version(PolicyArn=p["PolicyArn"], VersionId=ver)["PolicyVersion"]["Document"]
+            acts |= _actions_from_doc(doc)
+        for name in iam.list_role_policies(RoleName=role_name).get("PolicyNames", []):
+            doc = iam.get_role_policy(RoleName=role_name, PolicyName=name)["PolicyDocument"]
+            acts |= _actions_from_doc(doc)
+        return sorted(acts), True
+    except Exception:  # noqa: BLE001
+        return sorted(acts), False
+
+
+def access_advisor_action_level(iam, role_arn: str, poll_s: float = 2.0, max_polls: int = 30):
+    """(services_by_namespace, read_ok). ACTION_LEVEL Access Advisor job for role_arn. NOT Access
+    Analyzer (see _PERM_LIMITS_BANNER) -- generate/get-service-last-accessed-details is core IAM.
+    A job that does not COMPLETE within the poll budget is UNKNOWN, never 'no usage' (Rule-22a
+    carried: a read failure must never render as its convenient opposite)."""
+    try:
+        job_id = iam.generate_service_last_accessed_details(
+            Arn=role_arn, Granularity="ACTION_LEVEL")["JobId"]
+        res = {}
+        for _ in range(max_polls):
+            res = iam.get_service_last_accessed_details(JobId=job_id)
+            if res.get("JobStatus") in ("COMPLETED", "FAILED"):
+                break
+            time.sleep(poll_s)
+        if res.get("JobStatus") != "COMPLETED":
+            return {}, False
+        by_ns = {}
+        for svc in res.get("ServicesLastAccessed", []):
+            ns = svc.get("ServiceNamespace")
+            if ns:
+                by_ns[ns] = svc
+        return by_ns, True
+    except Exception:  # noqa: BLE001
+        return {}, False
+
+
+def permission_ledger(granted: list, advisor_by_ns: dict, advisor_read_ok: bool, now, lookback_days: int) -> dict:
+    """For each GRANTED permission (service:Action), a status row: used | never-used | unobservable.
+    `now` is timezone-aware UTC. Never renders unobservable as never-used or vice-versa (FWD-7,
+    carried)."""
+    rows = []
+    for perm in granted:
+        if ":" not in perm:
+            rows.append({"permission": perm, "status": "unobservable", "reason": "malformed action token"})
+            continue
+        ns, action = perm.split(":", 1)
+        if action == "*" or ns == "*":
+            rows.append({"permission": perm, "status": "unobservable", "reason": "wildcard-not-expanded"})
+            continue
+        if not advisor_read_ok:
+            rows.append({"permission": perm, "status": "unobservable",
+                         "reason": "access-advisor-job-unreadable (BLIND, not unused)"})
+            continue
+        svc = advisor_by_ns.get(ns)
+        if svc is None:
+            rows.append({"permission": perm, "status": "unobservable",
+                         "reason": "service not present in Access Advisor response"})
+            continue
+        tracked = svc.get("TrackedActionsLastAccessed")
+        if tracked is None:
+            rows.append({"permission": perm, "status": "unobservable",
+                         "reason": "service '%s' has no action-level tracking in Access Advisor" % ns})
+            continue
+        hit = next((t for t in tracked if t.get("ActionName") == action), None)
+        if hit is None:
+            rows.append({"permission": perm, "status": "unobservable",
+                         "reason": "action not in Access Advisor's tracked-action list for '%s'" % ns})
+            continue
+        last = hit.get("LastAccessedTime")
+        if last is None:
+            rows.append({"permission": perm, "status": "never-used", "last_used": None})
+            continue
+        if hasattr(last, "astimezone"):
+            last = last.astimezone(dt.timezone.utc)
+        age_days = (now - last).days
+        if age_days <= lookback_days:
+            rows.append({"permission": perm, "status": "used",
+                         "last_used": last.date().isoformat(), "age_days": age_days})
+        else:
+            rows.append({"permission": perm, "status": "never-used",
+                         "last_used": last.date().isoformat(), "age_days": age_days,
+                         "reason": "last use is %dd ago, outside the %dd lookback" % (age_days, lookback_days)})
+    counts = {"used": 0, "never-used": 0, "unobservable": 0}
+    for r in rows:
+        counts[r["status"]] += 1
+    return {"rows": rows, "counts": counts, "denominator": len(rows)}
+
+
+def _render_permissions(role_name: str, lookback_days: int, led: dict, advisor_read_ok: bool, granted_read_ok: bool) -> str:
+    L = ["comp-iam-usage permission-cold -- PERMISSION-grain usage for role '%s' (ADVISORY; NEVER deletes)"
+         % role_name,
+         "  lookback %d days | granted permissions examined (DENOMINATOR)=%d"
+         % (lookback_days, led["denominator"]),
+         "  counts: used=%d never-used=%d unobservable=%d"
+         % (led["counts"]["used"], led["counts"]["never-used"], led["counts"]["unobservable"])]
+    if not granted_read_ok:
+        L.append("  BLIND: could not fully read the role's attached/inline policies -- the granted set"
+                 " below may be a PARTIAL union, never treat it as complete.")
+    if not advisor_read_ok:
+        L.append("  BLIND: the IAM Access Advisor job did not complete -- every permission below is"
+                 " unobservable, NOT unused.")
+    L.append("")
+    for r in sorted(led["rows"], key=lambda r: (r["status"], r["permission"])):
+        extra = ""
+        if r["status"] == "used":
+            extra = "  last-used=%s (%dd ago)" % (r.get("last_used"), r.get("age_days", 0))
+        elif r["status"] == "never-used" and r.get("last_used"):
+            extra = "  last-used=%s (%dd ago, outside %dd lookback)" % (
+                r.get("last_used"), r.get("age_days", 0), lookback_days)
+        elif r["status"] == "unobservable":
+            extra = "  (%s)" % r.get("reason", "")
+        L.append("    %-14s %-40s%s" % (r["status"], r["permission"], extra))
+    L += ["", _PERM_LIMITS_BANNER]
+    return "\n".join(L)
+
+
+# ---- offline self-test: PERMISSION grain (AC4 -- its own regression bar) --------------------------
+def _self_test_permissions(ok: list, ck) -> None:
+    """Offline mutants for permission_ledger -- no AWS. Appends PASS/FAIL to `ok` via `ck`, same
+    contract as the role-grain block below. Named 'permission' throughout (AC4: self-test now
+    exercises the PERMISSION grain, not just role-grain)."""
+    now = dt.datetime(2026, 9, 10, tzinfo=dt.timezone.utc)
+    lookback = 90
+
+    def ago(days):
+        return now - dt.timedelta(days=days)
+
+    granted = ["s3:GetObject", "s3:PutObject", "s3:*", "logs:CreateLogGroup", "logs:PutLogEvents",
+               "dynamodb:Query", "dynamodb:Scan", "malformed-token"]
+    advisor_by_ns = {
+        # s3 has NO action-level tracking in this fixture -> every s3 action is unobservable.
+        "s3": {"ServiceName": "Amazon S3", "LastAuthenticated": ago(5)},
+        # logs DOES track action-level; CreateLogGroup used recently, CreateLogStream tracked-but-
+        # irrelevant here, PutLogEvents GRANTED but absent from the tracked list -> unobservable.
+        "logs": {"ServiceName": "CloudWatch Logs",
+                 "TrackedActionsLastAccessed": [
+                     {"ActionName": "CreateLogGroup", "LastAccessedTime": ago(5)},
+                     {"ActionName": "CreateLogStream", "LastAccessedTime": ago(5)}]},
+        # dynamodb tracks action-level; Query tracked but never accessed (no LastAccessedTime) ->
+        # never-used; Scan was accessed but 400d ago, outside the 90d lookback -> never-used (stale).
+        "dynamodb": {"ServiceName": "Amazon DynamoDB",
+                     "TrackedActionsLastAccessed": [
+                         {"ActionName": "Query"},
+                         {"ActionName": "Scan", "LastAccessedTime": ago(400)}]},
+    }
+    led = permission_ledger(granted, advisor_by_ns, True, now, lookback)
+    by_perm = {r["permission"]: r for r in led["rows"]}
+
+    ck("permission_denominator_matches_granted_count", led["denominator"] == len(granted),
+       f"denom={led['denominator']} granted={len(granted)}")
+    ck("permission_malformed_token_is_unobservable", by_perm["malformed-token"]["status"] == "unobservable")
+    ck("permission_unobservable_when_service_lacks_action_tracking",
+       by_perm["s3:GetObject"]["status"] == "unobservable" and by_perm["s3:PutObject"]["status"] == "unobservable")
+    ck("permission_wildcard_is_unobservable_not_dropped", by_perm["s3:*"]["status"] == "unobservable")
+    ck("permission_used_within_lookback", by_perm["logs:CreateLogGroup"]["status"] == "used")
+    ck("permission_untracked_action_is_unobservable_not_never_used",
+       by_perm["logs:PutLogEvents"]["status"] == "unobservable")
+    ck("permission_tracked_never_accessed_is_never_used", by_perm["dynamodb:Query"]["status"] == "never-used")
+    ck("permission_stale_beyond_lookback_is_never_used_not_used", by_perm["dynamodb:Scan"]["status"] == "never-used")
+
+    led_blind = permission_ledger(granted, {}, False, now, lookback)
+    ck("permission_blind_advisor_job_is_unobservable_not_unused",
+       all(r["status"] == "unobservable" for r in led_blind["rows"]))
+    # AC4's own fix-or-carry: the permission-grain banner names the Access-Advisor-vs-Access-Analyzer
+    # distinction, so the next extension cannot silently reach for the priced fallback.
+    ck("permission_access_analyzer_distinction_named", "AWS ACCESS ANALYZER" in _PERM_LIMITS_BANNER)
+
+
 # ---- offline self-test ---------------------------------------------------------------------------
 def _self_test() -> int:
     print("=== comp-iam-usage --self-test (offline band mutants + limits-named assertion) ===")
@@ -269,10 +496,14 @@ def _self_test() -> int:
     ck("limits_b_2arn_poisoning_named", "2+-ARN implicitDeny poisoning" in _LIMITS_BANNER)
     ck("limits_c_condition_named", "Condition-block false-deny" in _LIMITS_BANNER)
 
+    # PERMISSION grain (NFRA_IAMROLES202609.TO-IAM-s-1, AC4): its own regression bar, offline.
+    _self_test_permissions(ok, ck)
+
     good = all(ok)
     print("\n" + _LIMITS_BANNER)
+    print("\n" + _PERM_LIMITS_BANNER)
     print("\n" + ("OK: never-used!=cold, break-glass-guard-not-debris, UNKNOWN-band, hold-aware, "
-                  "22a limits NAMED (fix-or-carry) -- all held"
+                  "22a limits NAMED (fix-or-carry), permission-grain unobservable!=never-used -- all held"
                   if good else "ERROR: comp-iam-usage self-test FAILED"))
     return 0 if good else 1
 
@@ -295,6 +526,12 @@ def main() -> int:
     rc.add_argument("action")
     rc.add_argument("resource_arn")
     rc.add_argument("--context", action="append", default=[], help="conditioned-statement key=value (repeatable)")
+    pp = sub.add_parser("permission-cold",
+                        help="PERMISSION grain: which of a role's GRANTED permissions were never used "
+                             "over a stated lookback (IAM Access Advisor ACTION_LEVEL, NOT Access Analyzer)")
+    pp.add_argument("--role", required=True)
+    pp.add_argument("--lookback", type=int, default=90, help="days (default 90)")
+    pp.add_argument("--json", action="store_true")
     sub.add_parser("limits", help="print the Rule-22a fix-or-carry statement (the 3 named limits)")
     sub.add_parser("self-test", help="offline band mutants + limits-named assertion (no AWS)")
     args = ap.parse_args()
@@ -324,6 +561,27 @@ def main() -> int:
         out = reach_check(args.role, args.action, args.resource_arn, args.context)
         print(json.dumps(out, indent=1, default=str))
         print("\n" + _LIMITS_BANNER)
+        return 0
+    if args.cmd == "permission-cold":
+        iam = _iam()
+        try:
+            role_arn = iam.get_role(RoleName=args.role)["Role"]["Arn"]
+        except Exception as e:  # noqa: BLE001
+            print(json.dumps({"role": args.role, "read": False,
+                              "error": "get_role failed: %s" % str(e)[:160],
+                              "note": "role unreadable -> UNKNOWN, never rendered as clean or unused"},
+                             indent=1))
+            return 2
+        granted, granted_ok = granted_permissions(iam, args.role)
+        advisor_by_ns, advisor_ok = access_advisor_action_level(iam, role_arn)
+        now = dt.datetime.now(dt.timezone.utc)
+        led = permission_ledger(granted, advisor_by_ns, advisor_ok, now, args.lookback)
+        if args.json:
+            print(json.dumps({"role": args.role, "role_arn": role_arn, "lookback_days": args.lookback,
+                              "granted_read_ok": granted_ok, "advisor_read_ok": advisor_ok, **led},
+                             indent=1, default=str))
+        else:
+            print(_render_permissions(args.role, args.lookback, led, advisor_ok, granted_ok))
         return 0
     ap.print_help()
     return 0

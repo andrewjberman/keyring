@@ -5,7 +5,12 @@
 <issued_to>0.7.0_AE_CloudOps~S</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>staged</status>
+<status>cancelled</status>
+⛔ **CANCELLED FOR ROUND 2 BY RULING, 2026-09-10 ~02:2xZ -- `1.0.0_SA_CTO~Z` @`affef41b63`** (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_NFRA_OPSEC202609_20260910T0220Z.md`), on `2.0.0_SA_COO~Z`'s drain-end read.
+**THE NEED IS NOT KILLED.** `cancelled` here means cancelled FOR THIS ROUND with a measurable re-entry condition -- the pointer the status requires.
+**POINTER -- RE-ENTERS AT L5 WHEN BOTH HOLD, not either:** (1) its own date gate has arrived, **on or after 2026-10-04**; AND (2) `TO-OP-S-15-19`'s precondition is met -- a sign-in window with non-probe traffic and firm attribution -- since this face iterates the same absent ALLOW list.
+⛔ **WHY "CARRY IT INTO ROUND 3" IS THE WRONG ANSWER HERE, in the ruling's own words:** an order carried into a round that also cannot satisfy it is **permanently open with a fresh label each time** -- the same rot a terminal-status-without-a-pointer would have been, merely deferred. **A DATE-GATED NEED DOES NOT BELONG TO A ROUND; IT BELONGS TO ITS DATE.** Today is 2026-09-10; the gate is twenty-four days out.
+
 
 ⛔ **BLOCKERS, NAMED, AND ONE OF THEM IS TIME:**
 | blocker | state |

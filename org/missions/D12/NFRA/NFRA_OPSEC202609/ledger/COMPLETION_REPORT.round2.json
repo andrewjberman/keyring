@@ -1,0 +1,996 @@
+{
+  "schema_note": "COMPLETION_REPORT for spine v3 L10. Maps every declared outcome to the cells that served it WITH THEIR EVIDENCE, so COMPLETION_GRADES can be written without the grader re-deriving another lane's record.",
+  "project": "NFRA_OPSEC202609",
+  "round": 2,
+  "fabric": "site-z",
+  "directive": "D12",
+  "authored_by": "2.0.0_SA_COO~Z",
+  "authored_at": "2026-09-10T11:0xZ",
+  "authority": "1.0.0_SA_CTO~Z round-2 analysis ledger/ROUND_ANALYSIS.round2.md @5d406ef34a s.3(ii): 'COMPLETION_REPORT.round2.json is owed by 2.0.0_SA_COO~Z'.",
+  "prd_version": "v0.14",
+  "denominators": {
+    "outcomes_declared_in_prd_header": 19,
+    "outcomes_covered": 18,
+    "outcomes_uncovered": 1,
+    "task_orders_round2": 31,
+    "task_orders_complete": 29,
+    "task_orders_cancelled": 2,
+    "proof_instances_on_disk": 29,
+    "criteria_total": 175
+  },
+  "method": "Derived by parsing all 31 round-2 task-order faces UNSCOPED for their FWD references, owned cells, criterion ids and proof-instance paths. NOT derived from any prior summary. Reproduces the round-2 analysis's independent coverage read (18 of 19, FWD-19 uncovered) from a different instrument, which is corroboration rather than repetition.",
+  "outcomes": {
+    "FWD-1": {
+      "served_by": [
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-1",
+          "status": "complete",
+          "cells": [
+            "OP-s-1",
+            "OP-s-14",
+            "OP-s-18",
+            "OP-s-2",
+            "OP-s-24",
+            "OP-s-3",
+            "OP-s-4",
+            "OP-x-1"
+          ],
+          "criteria": 6,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~Z\\NFRA_OPSEC202609.TO-OP-S-1.rest-api-adoption-and-authorizer.proof_of_spec.json"
+        }
+      ],
+      "order_count": 1,
+      "covered": true
+    },
+    "FWD-2": {
+      "served_by": [
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-1",
+          "status": "complete",
+          "cells": [
+            "OP-s-1",
+            "OP-s-14",
+            "OP-s-18",
+            "OP-s-2",
+            "OP-s-24",
+            "OP-s-3",
+            "OP-s-4",
+            "OP-x-1"
+          ],
+          "criteria": 6,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~Z\\NFRA_OPSEC202609.TO-OP-S-1.rest-api-adoption-and-authorizer.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-14-21",
+          "status": "complete",
+          "cells": [
+            "OP-s-1",
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-16",
+            "OP-s-17",
+            "OP-s-18",
+            "OP-s-19",
+            "OP-s-20",
+            "OP-s-21",
+            "OP-s-22",
+            "OP-s-23",
+            "OP-s-3",
+            "OP-s-5",
+            "OP-s-6",
+            "OP-x-1"
+          ],
+          "criteria": 6,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-14-21.sentinel-watch-only.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-2",
+          "status": "complete",
+          "cells": [
+            "OP-s-1",
+            "OP-s-14",
+            "OP-s-18",
+            "OP-s-2",
+            "OP-s-24",
+            "OP-s-3",
+            "OP-s-4",
+            "OP-x-1"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~Z\\NFRA_OPSEC202609.TO-OP-S-2.http-api-authorizer-and-belt-rider.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-3",
+          "status": "complete",
+          "cells": [
+            "OP-s-1",
+            "OP-s-14",
+            "OP-s-2",
+            "OP-s-21",
+            "OP-s-3",
+            "OP-s-5",
+            "OP-x-1"
+          ],
+          "criteria": 6,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~Z\\NFRA_OPSEC202609.TO-OP-S-3.origin-secret-both-gateways.proof_of_spec.json"
+        }
+      ],
+      "order_count": 4,
+      "covered": true
+    },
+    "FWD-3": {
+      "served_by": [
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-2",
+          "status": "complete",
+          "cells": [
+            "OP-s-1",
+            "OP-s-14",
+            "OP-s-18",
+            "OP-s-2",
+            "OP-s-24",
+            "OP-s-3",
+            "OP-s-4",
+            "OP-x-1"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~Z\\NFRA_OPSEC202609.TO-OP-S-2.http-api-authorizer-and-belt-rider.proof_of_spec.json"
+        }
+      ],
+      "order_count": 1,
+      "covered": true
+    },
+    "FWD-4": {
+      "served_by": [
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-4-18",
+          "status": "complete",
+          "cells": [
+            "OP-s-13",
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-18",
+            "OP-s-19",
+            "OP-s-22",
+            "OP-s-4",
+            "OP-s-5",
+            "OP-s-6"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-4-18.web-acls-and-ip-sets.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-6",
+          "status": "complete",
+          "cells": [
+            "OP-s-5",
+            "OP-s-6",
+            "OP-x-1"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~T\\NFRA_OPSEC202609.TO-OP-S-6.login-abuse-alarm.proof_of_spec.json"
+        }
+      ],
+      "order_count": 2,
+      "covered": true
+    },
+    "FWD-5": {
+      "served_by": [
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-16-17-8R2",
+          "status": "complete",
+          "cells": [
+            "OP-s-11",
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-16",
+            "OP-s-17",
+            "OP-s-18",
+            "OP-s-19",
+            "OP-s-25",
+            "OP-s-26",
+            "OP-s-27",
+            "OP-s-5",
+            "OP-s-8",
+            "OP-s-9"
+          ],
+          "criteria": 6,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-16-17-8R2.key-flips-and-demo-import.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-17R-28",
+          "status": "complete",
+          "cells": [
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-16",
+            "OP-s-17",
+            "OP-s-18",
+            "OP-s-19",
+            "OP-s-25",
+            "OP-s-26",
+            "OP-s-27",
+            "OP-s-28",
+            "OP-s-5",
+            "OP-x-4"
+          ],
+          "criteria": 6,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-17R-28.evidence-store-split.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-29",
+          "status": "complete",
+          "cells": [
+            "OP-s-28",
+            "OP-s-29",
+            "OP-s-5"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-29.log-destination-source-conditions.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-4-18",
+          "status": "complete",
+          "cells": [
+            "OP-s-13",
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-18",
+            "OP-s-19",
+            "OP-s-22",
+            "OP-s-4",
+            "OP-s-5",
+            "OP-s-6"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-4-18.web-acls-and-ip-sets.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-5",
+          "status": "complete",
+          "cells": [
+            "OP-s-14",
+            "OP-s-17",
+            "OP-s-20",
+            "OP-s-23",
+            "OP-s-5",
+            "OP-s-6"
+          ],
+          "criteria": 7,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~Z\\NFRA_OPSEC202609.TO-OP-S-5.waf-cloudfront-alb-logging.proof_of_spec.json"
+        }
+      ],
+      "order_count": 5,
+      "covered": true
+    },
+    "FWD-6": {
+      "served_by": [
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-4-18",
+          "status": "complete",
+          "cells": [
+            "OP-s-13",
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-18",
+            "OP-s-19",
+            "OP-s-22",
+            "OP-s-4",
+            "OP-s-5",
+            "OP-s-6"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-4-18.web-acls-and-ip-sets.proof_of_spec.json"
+        }
+      ],
+      "order_count": 1,
+      "covered": true
+    },
+    "FWD-7": {
+      "served_by": [
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-7",
+          "status": "complete",
+          "cells": [
+            "OP-s-4",
+            "OP-s-7",
+            "OP-x-1"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~Z\\NFRA_OPSEC202609.TO-OP-S-7.throttle-fail-open-coverage.proof_of_spec.json"
+        }
+      ],
+      "order_count": 1,
+      "covered": true
+    },
+    "FWD-8": {
+      "served_by": [
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-16-17-8R2",
+          "status": "complete",
+          "cells": [
+            "OP-s-11",
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-16",
+            "OP-s-17",
+            "OP-s-18",
+            "OP-s-19",
+            "OP-s-25",
+            "OP-s-26",
+            "OP-s-27",
+            "OP-s-5",
+            "OP-s-8",
+            "OP-s-9"
+          ],
+          "criteria": 6,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-16-17-8R2.key-flips-and-demo-import.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-8",
+          "status": "complete",
+          "cells": [
+            "OP-s-11",
+            "OP-s-8",
+            "OP-s-9"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-8.identity-and-rbac-table-protection.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-8R2B",
+          "status": "complete",
+          "cells": [
+            "OP-s-11",
+            "OP-s-16",
+            "OP-s-25",
+            "OP-s-8",
+            "OP-s-9"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~W\\NFRA_OPSEC202609.TO-OP-S-8R2B.identity-tables-cmk-alignment.proof_of_spec.json"
+        }
+      ],
+      "order_count": 3,
+      "covered": true
+    },
+    "FWD-9": {
+      "served_by": [
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-8R2B",
+          "status": "complete",
+          "cells": [
+            "OP-s-11",
+            "OP-s-16",
+            "OP-s-25",
+            "OP-s-8",
+            "OP-s-9"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~W\\NFRA_OPSEC202609.TO-OP-S-8R2B.identity-tables-cmk-alignment.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-9-11",
+          "status": "complete",
+          "cells": [
+            "OP-s-10",
+            "OP-s-11",
+            "OP-s-8",
+            "OP-s-9",
+            "OP-x-1"
+          ],
+          "criteria": 8,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~X\\NFRA_OPSEC202609.TO-OP-S-9-11.legacy-users-and-token-binding.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-9C",
+          "status": "complete",
+          "cells": [
+            "OP-s-9"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~X\\NFRA_OPSEC202609.TO-OP-S-9C.trade-role-residual-grant-on-opal-users.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-9D",
+          "status": "complete",
+          "cells": [
+            "OP-s-9"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~X\\NFRA_OPSEC202609.TO-OP-S-9D.opal-users-retirement.proof_of_spec.json"
+        }
+      ],
+      "order_count": 4,
+      "covered": true
+    },
+    "FWD-10": {
+      "served_by": [
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-10",
+          "status": "complete",
+          "cells": [
+            "OP-s-10",
+            "OP-s-2",
+            "OP-s-3"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~V\\NFRA_OPSEC202609.TO-OP-S-10.signing-key-rotation.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-10B",
+          "status": "complete",
+          "cells": [
+            "OP-s-1",
+            "OP-s-10",
+            "OP-s-2",
+            "OP-s-3"
+          ],
+          "criteria": 6,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~V\\NFRA_OPSEC202609.TO-OP-S-10B.two-slot-and-ttl-for-the-jwt-consumers.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-10C",
+          "status": "complete",
+          "cells": [
+            "OP-s-10"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~W\\NFRA_OPSEC202609.TO-OP-S-10C.session-analytics-build-path.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-10D",
+          "status": "complete",
+          "cells": [
+            "OP-s-10"
+          ],
+          "criteria": 6,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~V\\NFRA_OPSEC202609.TO-OP-S-10D.session-analytics-two-slot.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-10E",
+          "status": "complete",
+          "cells": [
+            "OP-s-10",
+            "OP-s-3"
+          ],
+          "criteria": 6,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~V\\NFRA_OPSEC202609.TO-OP-S-10E.signer-key-read-ttl.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-10F",
+          "status": "complete",
+          "cells": [
+            "OP-s-10",
+            "OP-s-11"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~V\\NFRA_OPSEC202609.TO-OP-S-10F.signer-verify-path-two-slot.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-9-11",
+          "status": "complete",
+          "cells": [
+            "OP-s-10",
+            "OP-s-11",
+            "OP-s-8",
+            "OP-s-9",
+            "OP-x-1"
+          ],
+          "criteria": 8,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~X\\NFRA_OPSEC202609.TO-OP-S-9-11.legacy-users-and-token-binding.proof_of_spec.json"
+        }
+      ],
+      "order_count": 7,
+      "covered": true
+    },
+    "FWD-11": {
+      "served_by": [
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-8R2B",
+          "status": "complete",
+          "cells": [
+            "OP-s-11",
+            "OP-s-16",
+            "OP-s-25",
+            "OP-s-8",
+            "OP-s-9"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~W\\NFRA_OPSEC202609.TO-OP-S-8R2B.identity-tables-cmk-alignment.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-9-11",
+          "status": "complete",
+          "cells": [
+            "OP-s-10",
+            "OP-s-11",
+            "OP-s-8",
+            "OP-s-9",
+            "OP-x-1"
+          ],
+          "criteria": 8,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~X\\NFRA_OPSEC202609.TO-OP-S-9-11.legacy-users-and-token-binding.proof_of_spec.json"
+        }
+      ],
+      "order_count": 2,
+      "covered": true
+    },
+    "FWD-12": {
+      "served_by": [
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-12",
+          "status": "complete",
+          "cells": [
+            "OP-s-10",
+            "OP-s-12",
+            "OP-s-3",
+            "OP-s-5"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~Z\\NFRA_OPSEC202609.TO-OP-S-12.gateway-machine-keys-expire.proof_of_spec.json"
+        }
+      ],
+      "order_count": 1,
+      "covered": true
+    },
+    "FWD-13": {
+      "served_by": [
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-13",
+          "status": "complete",
+          "cells": [
+            "OP-s-13",
+            "OP-s-18",
+            "OP-s-4",
+            "OP-s-5",
+            "OP-x-2"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~U\\NFRA_OPSEC202609.TO-OP-S-13.wordpress-edge.proof_of_spec.json"
+        }
+      ],
+      "order_count": 1,
+      "covered": true
+    },
+    "FWD-14": {
+      "served_by": [
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-14-21",
+          "status": "complete",
+          "cells": [
+            "OP-s-1",
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-16",
+            "OP-s-17",
+            "OP-s-18",
+            "OP-s-19",
+            "OP-s-20",
+            "OP-s-21",
+            "OP-s-22",
+            "OP-s-23",
+            "OP-s-3",
+            "OP-s-5",
+            "OP-s-6",
+            "OP-x-1"
+          ],
+          "criteria": 6,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-14-21.sentinel-watch-only.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-15-19",
+          "status": "cancelled",
+          "cells": [
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-16",
+            "OP-s-18",
+            "OP-s-19",
+            "OP-s-22"
+          ],
+          "criteria": 8,
+          "evidence": null
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-2",
+          "status": "complete",
+          "cells": [
+            "OP-s-1",
+            "OP-s-14",
+            "OP-s-18",
+            "OP-s-2",
+            "OP-s-24",
+            "OP-s-3",
+            "OP-s-4",
+            "OP-x-1"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~Z\\NFRA_OPSEC202609.TO-OP-S-2.http-api-authorizer-and-belt-rider.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-20",
+          "status": "complete",
+          "cells": [
+            "OP-s-14",
+            "OP-s-16",
+            "OP-s-17",
+            "OP-s-20",
+            "OP-s-5"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~U\\NFRA_OPSEC202609.TO-OP-S-20.partner-egress-allow-list.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-22",
+          "status": "complete",
+          "cells": [
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-19",
+            "OP-s-22"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~W\\NFRA_OPSEC202609.TO-OP-S-22.sentinel-chain-iam-verdict.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-4-18",
+          "status": "complete",
+          "cells": [
+            "OP-s-13",
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-18",
+            "OP-s-19",
+            "OP-s-22",
+            "OP-s-4",
+            "OP-s-5",
+            "OP-s-6"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-4-18.web-acls-and-ip-sets.proof_of_spec.json"
+        }
+      ],
+      "order_count": 6,
+      "covered": true
+    },
+    "FWD-15": {
+      "served_by": [
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-14-21",
+          "status": "complete",
+          "cells": [
+            "OP-s-1",
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-16",
+            "OP-s-17",
+            "OP-s-18",
+            "OP-s-19",
+            "OP-s-20",
+            "OP-s-21",
+            "OP-s-22",
+            "OP-s-23",
+            "OP-s-3",
+            "OP-s-5",
+            "OP-s-6",
+            "OP-x-1"
+          ],
+          "criteria": 6,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-14-21.sentinel-watch-only.proof_of_spec.json"
+        }
+      ],
+      "order_count": 1,
+      "covered": true
+    },
+    "FWD-16": {
+      "served_by": [
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-16-17-8R2",
+          "status": "complete",
+          "cells": [
+            "OP-s-11",
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-16",
+            "OP-s-17",
+            "OP-s-18",
+            "OP-s-19",
+            "OP-s-25",
+            "OP-s-26",
+            "OP-s-27",
+            "OP-s-5",
+            "OP-s-8",
+            "OP-s-9"
+          ],
+          "criteria": 6,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-16-17-8R2.key-flips-and-demo-import.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-17-16",
+          "status": "complete",
+          "cells": [
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-16",
+            "OP-s-17",
+            "OP-s-18",
+            "OP-s-19",
+            "OP-s-5",
+            "OP-s-8",
+            "OP-x-4"
+          ],
+          "criteria": 7,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-17-16.evidence-store-and-address-table.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-17B",
+          "status": "complete",
+          "cells": [
+            "OP-s-14",
+            "OP-s-17",
+            "OP-s-25",
+            "OP-x-4"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~X\\NFRA_OPSEC202609.TO-OP-S-17B.object-lock-on-cases.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-17R-28",
+          "status": "complete",
+          "cells": [
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-16",
+            "OP-s-17",
+            "OP-s-18",
+            "OP-s-19",
+            "OP-s-25",
+            "OP-s-26",
+            "OP-s-27",
+            "OP-s-28",
+            "OP-s-5",
+            "OP-x-4"
+          ],
+          "criteria": 6,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-17R-28.evidence-store-split.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-25-26-27",
+          "status": "complete",
+          "cells": [
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-16",
+            "OP-s-17",
+            "OP-s-19",
+            "OP-s-25",
+            "OP-s-26",
+            "OP-s-27",
+            "OP-s-8",
+            "OP-x-4",
+            "OP-x-6"
+          ],
+          "criteria": 7,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-25-26-27.project-key-admin-role-logs-target.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-8R2B",
+          "status": "complete",
+          "cells": [
+            "OP-s-11",
+            "OP-s-16",
+            "OP-s-25",
+            "OP-s-8",
+            "OP-s-9"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~W\\NFRA_OPSEC202609.TO-OP-S-8R2B.identity-tables-cmk-alignment.proof_of_spec.json"
+        }
+      ],
+      "order_count": 6,
+      "covered": true
+    },
+    "FWD-17": {
+      "served_by": [
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-15-19",
+          "status": "cancelled",
+          "cells": [
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-16",
+            "OP-s-18",
+            "OP-s-19",
+            "OP-s-22"
+          ],
+          "criteria": 8,
+          "evidence": null
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-22",
+          "status": "complete",
+          "cells": [
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-19",
+            "OP-s-22"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~W\\NFRA_OPSEC202609.TO-OP-S-22.sentinel-chain-iam-verdict.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-25-26-27",
+          "status": "complete",
+          "cells": [
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-16",
+            "OP-s-17",
+            "OP-s-19",
+            "OP-s-25",
+            "OP-s-26",
+            "OP-s-27",
+            "OP-s-8",
+            "OP-x-4",
+            "OP-x-6"
+          ],
+          "criteria": 7,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-25-26-27.project-key-admin-role-logs-target.proof_of_spec.json"
+        }
+      ],
+      "order_count": 3,
+      "covered": true
+    },
+    "FWD-18": {
+      "served_by": [
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-16-17-8R2",
+          "status": "complete",
+          "cells": [
+            "OP-s-11",
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-16",
+            "OP-s-17",
+            "OP-s-18",
+            "OP-s-19",
+            "OP-s-25",
+            "OP-s-26",
+            "OP-s-27",
+            "OP-s-5",
+            "OP-s-8",
+            "OP-s-9"
+          ],
+          "criteria": 6,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-16-17-8R2.key-flips-and-demo-import.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-17-16",
+          "status": "complete",
+          "cells": [
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-16",
+            "OP-s-17",
+            "OP-s-18",
+            "OP-s-19",
+            "OP-s-5",
+            "OP-s-8",
+            "OP-x-4"
+          ],
+          "criteria": 7,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-17-16.evidence-store-and-address-table.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-17B",
+          "status": "complete",
+          "cells": [
+            "OP-s-14",
+            "OP-s-17",
+            "OP-s-25",
+            "OP-x-4"
+          ],
+          "criteria": 5,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~X\\NFRA_OPSEC202609.TO-OP-S-17B.object-lock-on-cases.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-17R-28",
+          "status": "complete",
+          "cells": [
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-16",
+            "OP-s-17",
+            "OP-s-18",
+            "OP-s-19",
+            "OP-s-25",
+            "OP-s-26",
+            "OP-s-27",
+            "OP-s-28",
+            "OP-s-5",
+            "OP-x-4"
+          ],
+          "criteria": 6,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-17R-28.evidence-store-split.proof_of_spec.json"
+        },
+        {
+          "task_order": "NFRA_OPSEC202609.TO-OP-S-25-26-27",
+          "status": "complete",
+          "cells": [
+            "OP-s-14",
+            "OP-s-15",
+            "OP-s-16",
+            "OP-s-17",
+            "OP-s-19",
+            "OP-s-25",
+            "OP-s-26",
+            "OP-s-27",
+            "OP-s-8",
+            "OP-x-4",
+            "OP-x-6"
+          ],
+          "criteria": 7,
+          "evidence": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables\\0.7.0_AE_CloudOps~S\\NFRA_OPSEC202609.TO-OP-S-25-26-27.project-key-admin-role-logs-target.proof_of_spec.json"
+        }
+      ],
+      "order_count": 5,
+      "covered": true
+    },
+    "FWD-19": {
+      "served_by": [],
+      "order_count": 0,
+      "covered": false
+    }
+  },
+  "uncovered": {
+    "FWD-19": {
+      "reason": "Ratified by Andrew at PRD v0.14 on 2026-09-09 ~16:2xZ, AFTER round 2's decomposition was frozen. A frozen decomposition cannot grow a cell mid-round, so the outcome has never had a round. THIS IS THE FREEZE RULE WORKING, NOT DRIFT, and nobody dropped it.",
+      "remedy": "Cell OP3-s-1 in the round-3 rectangle (decompositions/NFRA_OPSEC202609_DECOMP_round3.md @598bca6e96); task order TO-OP3-S-1 issued @2592c485f2.",
+      "no_prd_addendum_owed": "FWD-19 needs no spec change -- already ratified, bounded (C-17/C-18/C-19) and calibrated by Andrew at v0.14. An addendum would restate a settled spec."
+    }
+  },
+  "carried_the_join_that_nothing_else_makes": {
+    "why": "3.0.0_SA_CVO~Z's C-S35 found that NOTHING JOINS A GRADUATED ITEM TO A REMEDIATION ROW. The two documents validate independently and no predicate joins them, so a graduated finding can fail to reach the round's only forward carrier and no gate reports it. It happened, for a full round, on a project whose findings are about credentials and access. The join is recorded HERE so it lives in a record rather than in a seat's memory.",
+    "computed_by": "the gate's own _resolve_latest inputs at HEAD: Z-S19's `adjudicates` list against the id set of each REMEDIATION file.",
+    "round1_graduated_by_Z_S19": [
+      "NFRA_OPSEC202609-Z-S1",
+      "NFRA_OPSEC202609-Z-S10",
+      "NFRA_OPSEC202609-Z-S11",
+      "NFRA_OPSEC202609-Z-S13",
+      "NFRA_OPSEC202609-Z-S14",
+      "NFRA_OPSEC202609-Z-S17",
+      "NFRA_OPSEC202609-Z-S2",
+      "NFRA_OPSEC202609-Z-S3",
+      "NFRA_OPSEC202609-Z-S4",
+      "NFRA_OPSEC202609-Z-S5"
+    ],
+    "reached_slug_v1": [
+      "NFRA_OPSEC202609-Z-S10",
+      "NFRA_OPSEC202609-Z-S14",
+      "NFRA_OPSEC202609-Z-S3",
+      "NFRA_OPSEC202609-Z-S4",
+      "NFRA_OPSEC202609-Z-S5"
+    ],
+    "never_reached_slug_v1": [
+      "NFRA_OPSEC202609-Z-S1",
+      "NFRA_OPSEC202609-Z-S11",
+      "NFRA_OPSEC202609-Z-S13",
+      "NFRA_OPSEC202609-Z-S17",
+      "NFRA_OPSEC202609-Z-S2"
+    ],
+    "recovered_in_slug_v2": [
+      "NFRA_OPSEC202609-Z-S1",
+      "NFRA_OPSEC202609-Z-S11",
+      "NFRA_OPSEC202609-Z-S13",
+      "NFRA_OPSEC202609-Z-S17",
+      "NFRA_OPSEC202609-Z-S2"
+    ],
+    "status": "ALL FIVE LOST ITEMS ARE RECOVERED in REMEDIATION_v2.Z.md. Recovered only because that seat went looking, not because any mechanism reported it."
+  },
+  "what_this_report_does_NOT_assert": [
+    "IT ASSERTS NO GRADE. COMPLETION_GRADES is 1.0.0_SA_CTO~Z's artifact and follows from this one; this report supplies the outcome-to-evidence map and stops there.",
+    "IT DOES NOT ASSERT THE ESTATE IS SAFER. Round 2 graduated 104 items and REMEDIATED ZERO. '0 undispositioned' measures ADJUDICATION COMPLETENESS, never remediation. 65-70 hazards are now precisely described and none is fixed; remediation is round 3's work by design.",
+    "IT DOES NOT CLOSE THE ROUND. Rule 27 needs COMPLETION_REPORT + COMPLETION_GRADES with every grade REALIZED. FWD-19 has only just been cut, so no grades artifact can yet read all-REALIZED."
+  ]
+}

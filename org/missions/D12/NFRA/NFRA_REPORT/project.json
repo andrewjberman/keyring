@@ -8,10 +8,10 @@
   "fabric": "site-z",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "PRD",
+  "dep_stage": "EXECUTING",
   "created": "2026-09-09",
   "registered_under_tree": "2026-09-09",
-  "last_updated": "2026-09-09",
+  "last_updated": "2026-09-10T14:35:00Z",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -30,21 +30,40 @@
     "NFRA_IAMROLES202609",
     "D12_PLATFORM_OPS"
   ],
-  "name": "Global Infrastructure Reporting and Analysis: one morning read that declares whether anything needs Andrew, across three properties (Dashboard, Website, Gateway), with instrument state separable from world state and every number carrying its coverage.",
+  "name": "Global Infrastructure Reporting and Analysis: one morning read that declares whether anything needs Andrew, across every Opal property (third-member naming at Andrew; PRD s.6), with instrument state separable from world state and every number carrying its coverage.",
   "description": "Replace a miscalibrated daily infrastructure report with one whose rows can be trusted. Twelve ratified outcomes: a declarative morning verdict; a vocabulary that separates 'nobody looked' from 'we looked and here is how bad'; per-row deltas; property+owner attribution; whether an alert would reach a human before an incident tests it; broken-vs-retired on consumer evidence rather than age; retirement on the record; cost movement that matters; one compute record spanning EC2 and ECS; counts that carry their denominators; what we publish that nothing watches; and, on an anomaly, the connected resources plus an analysis bounded by C-AI. Andrew-direct commissioning 2026-09-09: 'it has been miscalibrated for a long time and it's time that we fixed that.'",
   "brief": "docs/briefs/global-infrastructure-reporting-brief-20260909.md @37ff80867a (L1, 4.0.0_SA_CRO~Z; handed @5807d05c81 and AMENDED @37ff80867a adding F11a and discharging Part VII item 2). The L2 endpoint is org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_GLOBAL_INFRA_REPORTING_20260909.md.",
   "prds": [
     {
       "path": "org/missions/D12/NFRA/NFRA_REPORT/prd/NFRA_REPORT_PRD.md",
+      "version": "v0.2",
+      "note": "L4, 2026-09-09. v0.1 = PRD_HEADER + the RATIFIED ENDPOINT (FWD-1..FWD-12), territory, acceptance properties, out-of-scope, C-AI and the brief's carried constraints; all twelve DONE WHEN bars confirmed by Andrew. v0.2 @1703e825d0 ADDS section 8 SURFACE MANIFEST (12 engine rows S1..S12) and ENUMERATES section 2 OWNS to twelve items -- the step-4-to-step-5 handoff artifact v0.1 omitted, which Andrew asked after and 2.0.0_SA_COO~ZZ filed at msg 20590; ruled (A) at msg 20591 on a census showing NFRA_REPORT was the SOLE omission among six tree-home L4-spine PRDs. VERSION ROW CORRECTED BY 2.0.0_SA_COO~ZZ at the L5 handoff: it read v0.1 while the file itself read v0.2, and a stale version pointer in the project row is the shape a later citation resolves wrongly."
+    },
+    "org/missions/D12/NFRA/NFRA_REPORT/prd/NFRA_REPORT_PRD_ADDENDUM_01.md"
+  ],
+  "decompositions": [
+    {
+      "path": "org/missions/D12/NFRA/NFRA_REPORT/decompositions/NFRA_REPORT_DECOMP.md",
       "version": "v0.1",
-      "note": "L4, 2026-09-09: PRD_HEADER + the RATIFIED ENDPOINT (FWD-1..FWD-12), territory, acceptance properties, out-of-scope, C-AI and the brief's carried constraints. All twelve DONE WHEN bars confirmed by Andrew."
-    }
+      "note": "L5, 2026-09-09, 2.0.0_SA_COO~ZZ. Twelve cells RP-s-1..12 mirroring the v0.2 manifest's twelve rows; coverage in both directions is the stated invariant and the 12-and-12 is explicitly NOT declared a bijection. Mandatory battery RUN (comp-schedule, comp-iam, comp-adversary) with denominators and two declared blindnesses. Cell ids verified against proof-of-spec-check.py CELL_ID_RE with positive and negative controls, 12/12."
+    },
+    {
+      "path": "org/missions/D12/NFRA/NFRA_REPORT/decompositions/NFRA_REPORT_DECOMP_R2.md",
+      "version": "v0.1",
+      "note": "L5 RECUT, round 2, 2026-09-10, 2.0.0_SA_COO~ZZ. Seven cells RP-s-13..19 off 1.0.0_SA_CTO~Z round-N analysis @9dae635237. Round 1 CLOSED at L10, six of twelve outcomes REALIZED. Centre of gravity is THE RUN: nine of twelve bars are EXERCISED and cannot be met by an engine. Battery re-run at this cut. fanout 3 of 3 chains, cap 8."
+    },
+    {
+      "path": "org/missions/D12/NFRA/NFRA_REPORT/decompositions/NFRA_REPORT_DECOMP_R3.md",
+      "version": "v0.1",
+      "note": "L5 RECUT, round 3, 2026-09-10, 2.0.0_SA_COO~ZZ. ONE cell RP-s-20 off 1.0.0_SA_CTO~Z's round-2 analysis @2b44f4a62b (answering the slug @4fe64b8cac). Round 2 is L10 answered and RECUTS: 11 of 12 outcomes REALIZED, FWD-4 alone cannot. THE FINDING AT THE CUT: the RENDERED edition carries NO attribution axis at all -- EDITION_SPECIMEN.md sec.2 has five columns and compose_edition.py:428 emits them, and a census of the rendered edition for the five axis values returns 10 hits of which ZERO is an axis VALUE -- so RP-s-20 carries BOTH limbs, the law at v0.7 AND the axis rendered per row. The analysis's label R3-1 is REFUSED by proof-of-spec-check.py::CELL_ID_RE (controls: RP-s-20/RP-s-13 MATCH, R3-1/bogus refused), so the cell mints as RP-s-20. The analysis's R3-2 is honoured as an L6 CUT MECHANIC (deliverable folder derived from <issued_to>) rather than cut as a cell, recorded in DECOMP_R3 s.2 and routed to the CTO. All six criteria score the RENDERED edition and were exercised RED before issue. fanout 1 of 1 chains, cap 8. ROUND 3 EXECUTED: RP-s-20 terminal, worker commit 355b61af2b drained at 7ca0c3413e; channel conflict resolved as a UNION BY ROW ID (26 rows, 0 dropped either direction, 0 duplicates)."
+    },
+    "org/missions/D12/NFRA/NFRA_REPORT/decompositions/NFRA_REPORT_DECOMP_R4.md"
   ],
   "leads": [
     "REGISTERED 2026-09-09 on Andrew-direct at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'NFRA_REPORT sits in D12' -- the last open L3 item, which had blocked 2.0.0_SA_COO~ZZ from any legal act since seating."
   ],
-  "phase": "L4 COMPLETE, L5 OPEN. dep_stage PRD. The endpoint is RATIFIED: ten bars confirmed by Andrew's (b)/(c)/(d) on 2026-09-09, and the remaining two (FWD-1's declarative re-cut and FWD-12) confirmed by his 'go with your recs on those two'. 2.0.0_SA_COO~ZZ holds L5.",
-  "blocking": "None on this project. TWO CARRIED FACTS THE DECOMPOSITION MUST NOT LOSE: (1) FWD-2 is the CRITICAL PATH into the NFRA_OPSEC202609 relationship -- until the report can express BLIND, DEGRADED and DESIRED-not-APPLIED, it cannot honestly render ANY OPSEC surface, and every gap becomes either a false OK or a false alarm. (2) The Website property's security row is settled PERMANENTLY, not pending: NFRA_OPSEC202609 C-19 establishes there is no AWS-only route to an edge for opalinvest.com, so that row renders BLIND with its reason attached forever and does NOT wait on TO-OP-S-13.",
+  "phase": "ROUND 4 IS CUT AND ISSUED -- L4 ADDENDUM 01 @20c986bc70 (Andrew-direct, via 1.0.0_SA_CTO~Z) adds FWD-13/14/15 and this lane decomposed it the same tick it landed. THE ROUND EXISTS BECAUSE ANDREW OPENED THE 9AM EMAIL AND SAW NO CHANGE, and he was right: nothing this project built was ever deployed, and the specimen compose_edition.py does ZERO LIVE READS -- deployed as-is it would email the same frozen 9-September snapshot every morning forever and look correct doing it. FOUR CELLS, RP-s-21..24, ONE issuance, fanout 2 of 2 ready roots (1 weakly-connected component, max concurrent width 2), cap 8: RP-s-21 THE PORT (lift compute/render into infra/aws/lambda/infrastructure_monitor/edition.py carrying no ROW_FACTS and no live reads, proven by reproducing the specimen's own edition byte-for-byte); RP-s-22 THE MAPPER (report['sections'] -> row shape over a DENOMINATOR OF 13, not the addendum's named 5, partitioned MAPPED / OMITTED-WITH-REASON / CONDITIONAL-BY-DESIGN); RP-s-23 THE WIRE AND DEPLOY (lambda_function.py:267, C-DEPLOY-PATH artifact->S3->source_code_hash->safe-apply, C-CHANGE-LEDGER opened and closed in-cell, criteria score the DEPLOYED PACKAGE); RP-s-24 THE COMPARISON AND TRIGGER (13-section before/after, no silent removal, one manual invocation). RP-s-23/24 are issued and dependency-blocked, not held -- no second issuance. GRADE STATE CORRECTED MID-CUT: 3.0.0_SA_CVO~Z's Z-S19, UPHELD in full by 1.0.0_SA_CTO~Z @b75e35f36e, re-grades EIGHT outcomes REALIZED -> APPLIED because their bar is EXERCISED and a hard-coded fact list makes an identical verdict every morning BY CONSTRUCTION. REAL STATE: 3 REALIZED, 9 APPLIED of 12, not 11 of 12. That seat's operational line was verbatim 'DECOMPOSE ADDENDUM 01 EXACTLY AS ISSUED. DO NOT WAIT ON THIS AND DO NOT RE-READ THE CUT' -- honoured: no cell, criterion or constraint moved; only this decomposition's postulate record did (R4 s.0c). The same deployment RP-s-23 performs makes all eight re-graded outcomes exercisable at once.",
+  "blocking": "NOTHING BLOCKS THIS LANE. Round 4 is issued; RP-s-21 and RP-s-22 are seated. CARRIED FACTS THE ROUND MUST NOT LOSE: (1) FWD-2 is the CRITICAL PATH into the NFRA_OPSEC202609 relationship -- until the report can express BLIND, DEGRADED and DESIRED-not-APPLIED it cannot honestly render ANY OPSEC surface, and every gap becomes either a false OK or a false alarm. (2) The Website property's security row is settled PERMANENTLY: NFRA_OPSEC202609 C-19 establishes there is no AWS-only route to an edge for opalinvest.com, so that row renders BLIND with its reason attached forever. (3) MAIN-CHECKOUT CENSUS CONSTRAINT (msg 20822, INSTRUMENT_LIMITS.md LIMIT 4/4a): any census or absence claim is run from the MAIN checkout, never from a worker's linked worktree; a comp-rail zero obtained inside a worktree is NOT evidence of absence. Travels in every round-4 worker face. (4) C-MORATORIUM-CLEARED covers THIS WORK ONLY -- Andrew-direct verbatim 'this isnt creating an alarm, it is just swapping out the code of the existing lambda'. NO new alarm, topic, subscription, schedule or notification may be minted by any cell. (5) C-DEPLOY-PATH: NEVER aws lambda update-function-code (the function's own Terraform says so at infra-monitor.tf:7); artifact -> s3://opal-<account>-lambda-artifacts/shared-infra/opal-infrastructure-monitor.zip -> source_code_hash -> safe-apply. And the artifact is LAYER-SHAPED: 40,015 deployed bytes with layers=[anthropic_sdk_deps], so the vendored packages sitting in the source folder do NOT belong in the zip. (6) THE DEPLOYED PRE-STATE, read live at the cut and the red arm for FWD-14: CodeSha256 r/bjjp5dJMcxw4NnzSNFsUCpYlWrH+sJsVJu+JiWxs8=, LastModified 2026-07-08T01:29:08.000+0000, CodeSize 40015. Both MUST differ after RP-s-23. (7) NOT THIS LANE'S AND NOT BLOCKING IT: COMPLETION_GRADES and every FWD grade are 1.0.0_SA_CTO~Z's; FWD-8's box grain is Andrew's payer-account billing setting and stays OUT OF SCOPE; estate-report-0900et belongs to a different directive and is untouched. (8) NO EXERCISED BAR CAN BE CLOSED BY A CELL. FWD-13, FWD-15 and the eight re-graded outcomes all need a real 9AM email READ BY A PERSON. The manual trigger RP-s-24 runs is QA; the scheduled fire remains the acceptance.",
   "threads": [],
   "thread_counter": 0
 }

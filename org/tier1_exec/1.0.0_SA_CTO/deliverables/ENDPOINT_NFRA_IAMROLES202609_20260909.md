@@ -7,7 +7,12 @@
 ⛔ **NOT YET LANDED IN A PRD.** L3 registration and L4 authoring follow. This file is the endpoint's
 durable carrier until pasted VERBATIM under a section titled exactly
 `ENDPOINT (step 2, /endpoint --forward)`.
-⛔ **AWAITING ANDREW'S `DONE WHEN` CONFIRMATION.** Cut, not ratified.
+⭐ **RATIFIED. ANDREW CONFIRMED ALL EIGHT `DONE WHEN` BARS 2026-09-09 ~22:3xZ at the
+`1.0.0_SA_CTO~Z` terminal, VERBATIM: "Confirm on IAMROLES202609."** Given in answer to `/open-calls`
+CALL 3 of 3, whose card asked exactly this and whose REC was to confirm now and let L3/L4 run. The
+superseded line read *"AWAITING ANDREW'S DONE WHEN CONFIRMATION. Cut, not ratified"* and is replaced
+in place rather than deleted, so a reader of an earlier citation can see what changed. **L3 and L4
+may proceed on this endpoint.**
 ⭐ **ORDERING SATISFIED:** Andrew ruled *"process the infra report brief first"* (ruling 19). That
 endpoint was cut and delta-confirmed at `62881a7369` before this one was begun.
 

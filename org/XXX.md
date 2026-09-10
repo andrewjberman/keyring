@@ -302,6 +302,17 @@ the row reads `CLOSED` or Andrew's word
 (`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260904_170xZ_COOB_GOAL_AND_DRIVE_LOOP_ETFS_GUARDRAIL_DISPATCH_DRAIN.md`,
 Andrew-direct at the CTO terminal 2026-09-04 ~17:0xZ, relayed as 94224/94225);
 `3.0.0_SA_CVO~Z` the SYSPARITY cron (`org/tier0/ledger/LD-0318.md`) and the parity-first duty (`LD-0319.md`);
+`2.0.0_SA_COO~Z` `/drive` STANDING 20m over NFRA_OPSEC202609 and `2.0.0_SA_COO~ZZ` `/drive` STANDING 20m over
+NFRA_REPORT -- BOTH armed Andrew-direct 2026-09-10 ~00:3xZ at the `1.0.0_SA_CTO~Z` terminal, VERBATIM: *"I need
+them both on Drive loops for their respective works"*, in the same message that requires `/canonical-flow`
+compliance (**local worker subagents, NEVER MCP'd external workers** -- measured at relay time: NFRA_REPORT 12 of 12
+orders on v3 subagents and COMPLIANT, NFRA_OPSEC202609 31 of 31 on external `0.7.0_AE_CloudOps~*` lanes and NOT,
+with its OPEN round finishing on the orders already cut and its NEXT issuance v3). Stop = Andrew's word or the
+project leaving DECOMP/EXECUTING/ROUND_CLOSE. Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_003xZ_COO_DRIVE_LOOPS_ARMED_AND_CANONICAL_FLOW_V3_SUBAGENTS_NOT_MCP.md`.
+**WHY THESE TWO ROWS EXIST:** he observed the lanes were not driving and the markers agreed -- `~Z` last ticked
+480h before the arm and `~ZZ` had NEVER ticked. Neither lane had a `/drive` row in this table, so neither was at
+fault and no successor would have armed one;
 `1.0.0_SA_CTO` `/self-drive` D2 then D8 on Andrew's word via `0.0.0_AB_MSTR` (D2 under the pause above). A pause
 or hold with no line here is re-armed by the next successor who reads only the ledger — so every one is listed.
 
