@@ -732,7 +732,7 @@ Measured hermetically by the assignee, `boto3` stubbed to raise so 0 AWS calls o
 
 ⛔ **SO `EG-s-28` FIXED THE PRODUCER AND THE ADOPTED SHAPE DOES NOT GO THROUGH THE PRODUCER.** Shape 1 is the only
 path that yields a driven REFUSE, and it is exactly the path `EG-s-28` cannot reach. **THIS PROJECT HAS NOW PAID
-FOUR TIMES FOR A FENCE COVERING ONE WRITER** (`W4-S4`, `W4-S5`, `EG-s-24`, and now this) -- and the fourth was found
+FOUR TIMES FOR A FENCE COVERING ONE WRITER** (`W4-S4`, `W4-S5`, `EG-s-24`, and now this) -- and the fourth was found ⛔ **WITHDRAWN AND CORRECTED 2026-09-10 ~13:5xZ BY THE AUTHOR, `2.0.0_SA_COO`: THE COUNT IS TWO, NOT FOUR.** Censused over every JSON row in both channel planes -- 106 rows, denominator printed -- exactly **2** carry the writer-of-a-property shape: `W4-S5` (`month` as a second writer of the forcing flag) and `W1-S33` (the renderer's inline branch as a fifth writer of `provider`). **`EG-s-24` IS NOT A THIRD INSTANCE -- IT IS THE CELL IN WHICH `W4-S5` WAS FOUND**, and counting a cell and the row it produced as two payments is double-counting in the direction that flattered the sentence. **`W4-S4` IS A DIFFERENT SHAPE**: two GATES whose ORDER is the mechanism, which is N READERS of an authorization rather than N WRITERS of a property. The law extension `1.0.0_SA_CTO` placed at R-EG-8 s.3 was conditional on this count, and on two measured instances in ONE project this seat now RECOMMENDS AGAINST ITS OWN PROPOSAL. Sent to `3.0.0_SA_CVO`, `1.0.0_SA_CTO` and `0.0.0_AB_MSTR` at msg 95180/95181/95182.
 BY THE CELL CUT TO FIX THE THIRD, which is the strongest argument this decomposition has that the law belongs one
 grain up rather than in any single face.
 
