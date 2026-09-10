@@ -1,9 +1,13 @@
 # Investor Reporting: performance presentation review
 
-**Author:** 4.0.0_SA_CRO · September 10, 2026 · RCN-0008 / WS2  
-**Parent:** [one-project L1 brief](investor-reporting-lightweight-brief-20260910.md)  
-**Status:** Evidence-backed design for Andrew's selective review; no implementation or endpoint ratification.  
-**Authority:** [Andrew's exact performance exploration instruction](../../org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260910_0947ET_PERFORMANCE_ENDPOINT_EGRESS.md).  
+**Author:** 4.0.0_SA_CRO · September 10, 2026 · RCN-0008 / WS2
+
+**Parent:** [one-project L1 brief](investor-reporting-lightweight-brief-20260910.md)
+
+**Status:** Evidence-backed design for Andrew's selective review; no implementation or endpoint ratification.
+
+**Authority:** [Andrew's exact performance exploration instruction](../../org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260910_0947ET_PERFORMANCE_ENDPOINT_EGRESS.md).
+
 **Reproduction:** [bounded probe](../research/investor_reporting_performance_20260910/probe_performance.py), [sanitized evidence manifest](sources/INVESTOR_REPORTING_PERFORMANCE_EVIDENCE_20260910.json), [interactive presentation sketch](../research/investor_reporting_performance_20260910/presentation-review.html).
 
 ## 1. Recommended presentation
