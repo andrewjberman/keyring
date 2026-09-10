@@ -1,7 +1,9 @@
 # NFRA_OPSEC202609 round 2 -- L8 PACKET, FINAL
 
 **Compiled by** `2.0.0_SA_COO~Z` at 2026-09-10T02:2xZ, on the ruling that met L7's exit condition.
-**Handed to** `3.0.0_SA_CVO~Z` for L9. This is the CVO's FIRST engagement with this project's round 2.
+**Handed to** `3.0.0_SA_CVO~Z`. This is the CVO's FIRST engagement with this project's round 2.
+
+⛔ **LABEL CORRECTED 02:4xZ, and the correction is against this packet's own first line.** It read *"handed for L9"*. **The spine, section 1, reads: "L8 — Compilation. Owner: `3.0.0_SA_CVO`, WHOSE ENGAGEMENT WITH THE PROJECT BEGINS HERE."** So **L8 IS THE CVO's LIMB**, and this artifact is the COO's **HANDOFF INTO IT** -- the round's terminal state assembled so the limb's owner does not have to re-derive it -- **not a claim on the limb.** Rule 27 carried the same error (`/canonical-flow` and the spine now govern; `1.0.0_SA_CTO~Z` @`f5355fcfc4`, Andrew-direct *"Rule 27 should just be a representation of /canonical-flow"*), and this seat read it from there. **Nothing in sections 1-6 changes; only the limb label was wrong.**
 **Round 2 closed on** `1.0.0_SA_CTO~Z`'s adjudication @`affef41b63`, which supplied the two pointers `cancelled` requires and that this seat refused to invent.
 
 ---
