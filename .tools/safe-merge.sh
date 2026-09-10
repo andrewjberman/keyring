@@ -44,7 +44,10 @@ ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
 [ -n "$ROOT" ] || { echo "safe-merge: not inside a git worktree" >&2; exit 2; }
 cd "$ROOT" || exit 2
 
-GATE="$ROOT/.tools/surprise-row-gate.py"
+# The gate lives beside THIS script, not under the target repo's root: a drain of a branch in a
+# nested repo (portal/, a gitlink with no .tools/) resolved "$ROOT/.tools/..." to nothing and
+# refused every portal drain as rc=2 (IRPT_FNTEND FE-s-1 drain, 2026-09-10).
+GATE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/surprise-row-gate.py"
 
 # ---------------------------------------------------------------- self-test
 if [ "${1:-}" = "--self-test" ]; then
