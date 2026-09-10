@@ -165,8 +165,8 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
   BOTH branches or it is not signed. ⛔ **AND FIRST COUNT THE WRITERS OF THE NAMED PROPERTY: a property with N
   writers needs N rules read, and N is a number the half PRINTS.** Reading one producer's rule on a two-writer
   surface is Rule 22's shared-dependency blindness moved up to the signature. COST: one writer census + one source
-  read per named outcome. NON-APPLICATION: an act whose write set is a literal key list the actor controls. Measured 2026-09-09/10, twice in one night, both halves signed both
-  times: `NFRA_OUTSET`-S34 (the window comes from the schedule mark, not the calendar, so a "tomorrow's keys" run
+  read per named outcome. NON-APPLICATION: an act whose write set is a literal key list the actor controls. Measured 2026-09-09/10, THREE TIMES in one night, both halves
+  signed every time: `NFRA_OUTSET`-S34 (the window comes from the schedule mark, not the calendar, so a "tomorrow's keys" run
   rewrote today's) and `ETFS_GUARDRAIL` EG-s-15 (a class-D hole is carry-and-disclose, not refuse, so a "will
   refuse" run published and mailed); and `NFRA_CLDGRPH` W2-S67/S98, where both halves read the FOLD's rule (the
   stamp writer genuinely retired, `stamped=0` printed) on a property a SECOND writer also set, so the served count
