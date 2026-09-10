@@ -367,6 +367,12 @@ for its proof and the organic case is the negative arm, per Rule 27's L2 clause.
                     advisor and client" above is BOUND by the sender's domain the
                     moment the message arrives, and cannot be changed after. The
                     construction and its proof live in FWD-10
+         ⚠ WHAT HIS WORD FIXES AND WHAT IT DOES NOT (3.0.0_SA_CVO 194256Z): the
+                    sender's DOMAIN fixes the FIRM. It does not by itself fix
+                    WHICH ADVISOR within that firm (the sender? a named
+                    advisor?) or WHICH CLIENT (from the attachment? the subject?).
+                    Those two bindings are resolved at L4 from the brief's intake
+                    design and are NOT read into his sentence here
          ⚠ CADENCE  the brief names a 15-minute poll from 08:00 to 23:45 New
                     York, every day. That is the BRIEF's number, not ratified
                     here; no accept grades on it at L2. Its proof is DRIVEN.
@@ -462,11 +468,13 @@ for its proof and the organic case is the negative arm, per Rule 27's L2 clause.
                     includes his words after the brief, not only the brief
 ```
 
-**COUNT: 11 outcomes carried. 7 ratified ids, text verbatim (`FWD-1`, `2`, `3`, `4`, `5`, `7`, `8`); `FWD-9`
+**COUNT: 10 outcomes carried, MEASURED as ten `FWD-` blocks in this document (`FWD-6` has no block here; the
+reverse subtraction says why). 7 ratified ids, text verbatim (`FWD-1`, `2`, `3`, `4`, `5`, `7`, `8`); `FWD-9`
 RATIFIED; `FWD-10` RE-CUT and ratified on his word; `FWD-11` NEW and ratified on his word. ACCEPT owner AFTER
-THE ~19:3xZ RE-OWN: IRPT_BCKEND 4 (`FWD-2`, `FWD-7`, `FWD-9`, `FWD-10`), IRPT_FNTEND 7 (`FWD-1`, `3`, `4`, `5`,
-`6`, `8`, `11`) contributed to here. `FWD-12` (design) is the counterpart's alone; this project is NOT ENGAGED.**
-NEW (`FWD-9`, `FWD-10`). ACCEPT owner: IRPT_BCKEND 8, IRPT_FNTEND 1 (`FWD-1`, contributed to here).**
+THE ~19:3xZ RE-OWN: IRPT_BCKEND 4 (`FWD-2`, `FWD-7`, `FWD-9`, `FWD-10`); IRPT_FNTEND 6 contributed to here
+(`FWD-1`, `3`, `4`, `5`, `8`, `11`). `FWD-12` (design) is the counterpart's alone; this project is NOT ENGAGED.
+(An earlier count said eleven and an earlier line said BCKEND 8 / FNTEND 1; both were wrong and both are gone —
+caught by `3.0.0_SA_CVO` 194256Z.)**
 
 ---
 
@@ -505,8 +513,9 @@ inside that strategy, never whether to follow it.
 
 Ready to paste under **`## ENDPOINT (step 2, /endpoint --forward)`** in
 `org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md`. **That path does not exist.** Same three
-prerequisites as the counterpart, **`FWD-9`, `FWD-10` and `FWD-11` are on his word at ~19:2xZ and the PRD header may list all
-eleven.** If he reverses any of the three, that id goes vacant and the header drops it — never renumbered.
+prerequisites as the counterpart. **`FWD-9`, `FWD-10` and `FWD-11` are on his word at ~19:2xZ, so the PRD header
+may list all TEN ids this document carries.** If he reverses any of the three, that id goes vacant and the header
+drops it — never renumbered.
 
 ## ⛔ THE BRIEF-COVERAGE OBLIGATION ON L4 — his seventh sentence, answered in writing
 

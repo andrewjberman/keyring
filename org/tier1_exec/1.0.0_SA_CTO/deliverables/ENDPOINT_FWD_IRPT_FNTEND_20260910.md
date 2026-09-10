@@ -342,9 +342,11 @@ sets, two adjudications.
 ACCEPT owner AFTER THE ~19:3xZ RE-OWN: IRPT_FNTEND 8 (`FWD-1`, `3`, `4`, `5`, `6`, `8`, `11`, `12`),
 IRPT_BCKEND 0 here -- its four machinery outcomes (`FWD-2`, `7`, `9`, `10`) live only in the counterpart.**
 
-⛔ **A PROJECT WHOSE "DONE" INCLUDES FOUR OUTCOMES ANOTHER PROJECT GRADES IS NOT A DEFECT; IT IS THE SPLIT
-ANDREW ORDERED, STATED HONESTLY.** IRPT_FNTEND is CLOSED when its two owned outcomes grade REALIZED **and**
-its contribution to the four crossing outcomes is graded as met by IRPT_BCKEND's adjudication.
+⛔ **CLOSURE, AFTER THE ~19:3xZ RE-OWN (the earlier two-plus-four rule is SUPERSEDED, caught by `3.0.0_SA_CVO`
+194256Z).** IRPT_FNTEND is CLOSED when its EIGHT owned outcomes grade REALIZED. **Five of them cross** (`FWD-3`,
+`4`, `5`, `8`, `11`): each of those grades reads BOTH proof halves — this project's view and IRPT_BCKEND's data,
+parity, entitlement or execution half — and is not complete on the frontend's mock alone. The FE brief's own
+Part V: *"neither can certify the other half with its own mock."*
 
 ---
 
