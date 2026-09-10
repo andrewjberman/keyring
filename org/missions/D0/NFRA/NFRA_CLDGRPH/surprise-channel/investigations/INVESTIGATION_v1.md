@@ -7922,3 +7922,34 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-S116 -- the spine's L7 queue hand-off (continue the same subagent) is not achievable on this harness
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T14:22Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S116",
+    "one_line": "THE SPINE'S L7 QUEUE HAND-OFF IS NOT ACHIEVABLE IN THIS HARNESS, AND THE FAILURE IS SILENT UNTIL YOU TRY IT. /dispatch Step 5 says: 'Hand the next task order by CONTINUING the same subagent, context intact. No respawn, no cold start -- a respawned worker re-reads its whole face and loses what it learned.' Measured at this drain: once a worker subagent has reported and gone terminal, resuming it is REFUSED -- 'No transcript found for agent ID' -- and ListAgents no longer lists it. The three still-running slots WERE listed, so the instrument discriminates and the refusal is a real absence rather than a lookup failure. There is no warning at spawn time, nothing in the worker's report says its context is about to be unreachable, and the issuer discovers it only at the moment it needs the continuation. CONSEQUENCE FOR THE SPINE'S OWN DESIGN: any queue of two or more orders on one slot is, on this harness, N COLD STARTS SHARING A WORKTREE -- which is the exact thing Step 5 tells the issuer not to do, and the reason it gives (a respawned worker loses what it learned) is correct and unavoidable rather than a discipline failure.",
+    "spec_asserts": "org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md L7 and .claude/skills/dispatch/SKILL.md Step 5: the issuer hands a slot's next task order by CONTINUING the same subagent with its context intact; no respawn, no cold start.",
+    "world_is": "A terminal worker subagent has no resumable transcript. The hand-off is a fresh spawn into the predecessor's worktree, so the WORKTREE state carries over and the CONTEXT does not. The issuer must therefore transfer, by hand and in the new prompt, whatever the predecessor learned that the successor needs -- which is exactly the transfer the spine wrote the continuation rule to avoid having to trust.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat's attempted continuation of slot ~1 after TO-CG-H-2 went terminal: 'could not be resumed: No transcript found for agent ID'.",
+        "ListAgents at the same moment: 3 subagents listed, all running (slots ~2, ~3, ~4); the terminal slot ~1 absent -- so the listing discriminates running from terminal and the absence is a measurement.",
+        "The successor was spawned cold into the SAME worktree C:/tmp/wk-cldgrph-8-1 at 3f99d48f49, with the predecessor's relevant findings restated by hand in its prompt.",
+        ".claude/skills/dispatch/SKILL.md Step 5, read at HEAD, stating the continuation rule and its rationale."
+      ]
+    },
+    "notes": "ARMED because it is not about this round: EVERY multi-order slot in EVERY v3 round on this harness has been, or will be, a cold start dressed as a continuation -- and an issuer that believes the continuation happened will under-transfer, because it thinks the context is already there. DISARM OWNER is 1.0.0_SA_CTO as the spine's owner; the choice is whether L7's hand-off clause is REWRITTEN to say what the harness does (a fresh worker into the same worktree, with an ISSUER-WRITTEN carry-over block naming what the predecessor did to the shared surfaces) or whether the queue rule itself changes so that a slot holds ONE order. NOT PROPOSED AS A BUILD and nothing here needs code. CHEAPEST HABIT MEANWHILE, which this seat used at this hand-off: treat the second order's prompt as a cold face plus an explicit 'what your predecessor did in this worktree' section, and say in it that the worker is a cold start into a warm worktree so it reads the tree rather than trusting a report it never saw."
+  }
+]
+```
