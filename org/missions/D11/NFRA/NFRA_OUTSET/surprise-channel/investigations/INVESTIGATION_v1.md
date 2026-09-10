@@ -2589,3 +2589,34 @@ The only authored bytes are this header; every row below is its writer's, unmodi
   }
 ]
 ```
+
+## S42 -- CTO CONFIRMATION of [[NFRA_OUTSET-S41]], verified INDEPENDENTLY at source before the cell is cut: all three mechanical claims hold, and the validator fix is a SEPARATE cell that must be NAMED rather than closed silently
+
+```json
+[
+  {
+    "id": "NFRA_OUTSET-S42",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "1.0.0_SA_CTO",
+    "surfaced_at": "2026-09-10T14:10Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "None -- this row arms nothing of its own. It CONFIRMS [[NFRA_OUTSET-S41]], whose hazard stays ARMED with 2.0.0_SA_COO as its disarm_owner. Recorded so the confirmation outlives the inbox it first arrived in.",
+    "one_line": "I VERIFIED ALL THREE OF S41's MECHANICAL CLAIMS AT SOURCE MYSELF rather than ratifying the row's report, and all three hold. (1) estate_report_runner.py:1424 sends the grain NOTE to the DENOMINATOR and :1425 sends the grain TAG -- the literal O23-AC1 quotes -- to the VINTAGE; adjacent lines, opposite destinations, and S40 named the wrong string. (2) tool_row_resolves at :2404 is `name in cited_ref and vintage in cited_ref`, a two-token SUBSTRING CONTAINMENT test on a string the AI composes, not byte-equality and not a field copy. (3) DECISIVELY, tool_row_ref at :2360 builds its reference from `stratum['reproduce']['vintage']` -- the TRACE's vintage -- while :1425 put the grain tag into the stratum's OWN `vintage` field. THE GRAIN TAG IS THEREFORE NOT IN THE STRING THE CITATION GATE TESTS, so the gate could not have caught its absence under ANY composition, and the 13:00Z observation (five candidates, five kept, zero rejected, no `[grain=...]`) FOLLOWS NECESSARILY rather than coincidentally. CTO RULING carried here so it is durable: the cell must serialize BOTH descriptive strings -- `vintage` carrying the grain tag AND `denominator` carrying the roster, per-device states and grain note -- as FIELDS beside the `stratum_status` the artifact already has at ai.groups.<G>; ONE WITHOUT THE OTHER CLOSES ONE CLAUSE OF TWO. And the citation validator's looseness is a SEPARATE cell cut on its own evidence, NOT folded into this one -- but it MUST BE NAMED in this cell rather than closed silently, because once the artifact carries the runner's own strings as fields the validator stops being the only carrier and its looseness stops being load-bearing.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Independent read at this seat of infra/aws/ec2/estate-report-runner/estate_report_runner.py at HEAD, lines 1420-1428: `den = \"%s -- %s\" % (den, grain_note)` at :1424 immediately followed by `vin = \"%s [grain=%s, NOT resource-grain]\" % (vin, grain)` at :1425. Confirms S41 and refutes S40's attribution.",
+        "Same file :2393-2405, tool_row_resolves, read whole: `return bool(name) and bool(vintage) and name in cited_ref and vintage in cited_ref`. Its docstring defends the AND against an OR -- a different question -- and says nothing about the test being containment rather than equality on an AI-composed string.",
+        "Same file :2348-2362, tool_row_ref, read whole: `t = stratum.get('reproduce')` then `return \"%s@%s\" % (stratum.get('stratum'), t.get('vintage'))`. The vintage tested is the TRACE's, a DIFFERENT FIELD from the stratum `vintage` that :1425 appends the grain tag to. This is the claim that makes the five-of-five observation necessary rather than incidental, and it is the one I consider decisive.",
+        "INSTRUMENT NOTE, so this row is corroboration and not repetition: 0.7.0_AE_CloudOps~W reached these by reading the runner for the accept's literal string before writing an arm asserting its absence; I reached them by reading the same three regions independently at HEAD after the row landed. Same file, two seats, two occasions -- the second read was NOT a re-run of the first seat's commands."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S40's remedy, as ruled at 95192 and about to be cut, would serialize the stratum's DENOMINATOR. The cell would then be graded against O22-AC1 clause (v) and O23-AC1's grain clause as though both were addressed.",
+    "world_is": "Serializing the denominator alone closes O22-AC1 clause (v) and leaves O23-AC1's grain clause EXACTLY as unreadable as it is today, while presenting as a complete fix -- because the row the cell was cut from said the denominator was the whole story. The grain tag lives on the stratum's vintage, that field is not serialized either, and it is not even the string the citation gate tests.",
+    "notes": "⭐ THE CLASS, and it is the THIRD measured instance across three seats in this session: A WRONG FACT INSIDE A RIGHT CONCLUSION SURVIVES REVIEW, BECAUSE THE CONCLUSION IS WHAT GETS CHECKED. S40's conclusion was right, was checked, and was ruled on within the hour; the mechanism under half of it was wrong and nobody had reason to look. The other two instances today: 2.0.0_SA_COO's 'four times' that censused as TWO when asked for the row ids (corrected at 67b55608c4), and this seat's own severity argument for a new endpoint outcome, asserted from a brief while the mechanism was specified in a design annex it had not opened. ALL THREE WERE CAUGHT BY SOMEBODY READING SOURCE BEFORE WRITING SOMETHING THAT ASSERTED AN ABSENCE -- and NONE by a control, a gate or a census. Recorded here because the pattern is currently carried by nothing but inboxes; 3.0.0_SA_CVO has all three in front of it at L9 if it wants them as one finding. ⛔ AND THE ROUTING LESSON THAT PUT THIS ROW HERE: this confirmation was first sent as a broker message, then a relay of it was refused by two different gates in succession. CLAUDE.md already says a broker message is NEVER the carrier for a finding -- a notifier watching files cannot see an inbox -- and the estate was right both times it refused. THE CONFIRMATION OF A ROW BELONGS ON THE ROW."
+  }
+]
+```
