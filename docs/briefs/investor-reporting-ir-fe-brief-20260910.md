@@ -2,9 +2,10 @@
 
 **Author:** 4.0.0_SA_CRO · **Date:** September 10, 2026 · **Mode:** NEW project brief consolidating existing research.  
 **Project:** **IR FE**, one of Andrew's two requested projects. Its counterpart is [IR BK](investor-reporting-ir-bk-brief-20260910.md).  
+**Canonical code:** `IRPT_FRONTEND`, assigned by CTO in the [project endpoint](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FRONTEND_20260910.md) at `00af569662`. IR FE remains the requested short name.\
 **Authority:** [Two-project instruction](../../org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260910_IR_FE_IR_BK_SPLIT.md), initial commit `6226b4a680`; [subsequent priority/device direction](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_183xZ_IR_IS_THE_TOP_PROJECT_LAPTOP_AND_SPLITS_FE_BK.md), `c0f5ed8163`. **Both projects run on this laptop. Investor Reporting is the highest-priority work across the board.**  
 **Consumer:** Andrew's product review; CTO's L2/PRD work; frontend delivery team and its backend counterpart.  
-**Organization:** These two briefs supersede the earlier one-project/four-workstream organization. WS1–WS4 remain source labels in the older documents, not a third umbrella project. Andrew subsequently named **IRPT** as the macro in **D9** ([carried direction](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_183xZ_MACRO_IS_IRPT_REGISTER_IN_D9.md), `1f0f1dd3f6`). The single `OPAL_INVRPT` code request was withdrawn by CTO; the two canonical project codes and register bookkeeping are not assigned here. Andrew has also moved **D9 as a whole to laptop** ([subsequent D9 placement direction](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_185xZ_D9_TO_LAPTOP_CLDGRPH_FINISHED_15MIN_RATIFIED.md), `4ff4abd9a4`); MSTR owns the register update. This closes the placement/write-ownership question. These briefs do not close other projects.
+**Organization:** These two briefs supersede the earlier one-project/four-workstream organization. WS1–WS4 remain source labels in the older documents, not a third umbrella project. Andrew subsequently named **IRPT** as the macro in **D9** ([carried direction](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_183xZ_MACRO_IS_IRPT_REGISTER_IN_D9.md), `1f0f1dd3f6`). The single `OPAL_INVRPT` code request was withdrawn by CTO; CTO has now assigned `IRPT_FRONTEND` and `IRPT_BACKEND`; register bookkeeping remains with its owner. Andrew has also moved **D9 as a whole to laptop** ([subsequent D9 placement direction](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_185xZ_D9_TO_LAPTOP_CLDGRPH_FINISHED_15MIN_RATIFIED.md), `4ff4abd9a4`); MSTR owns the register update. This closes the placement/write-ownership question. These briefs do not close other projects.
 
 **IR FE owns the entire advisor-facing Investor Reporting experience:** the route, shared header and client selector, all three tabs, assumptions/input correction views, charts and tables, report preview, branding options and the reusable PDF presentation package. **IR BK owns every ingestion path, authoritative scope decision, calculation/normalization, data projection and execution service behind it.** The browser uses normalized, authorized Opal contracts; it does not connect to vendor sessions or decide which accounts an advisor may see.
 
@@ -86,7 +87,7 @@ IR BK Part II.3 is the common wire/data contract inventory. FE consumes `Directo
 
 FE supplies a versioned **RenderPackage** to BK: supported schema/template versions, deterministic screen/print components, locally packaged fonts and asset requirements, page options and render fixtures. BK supplies the immutable **ExportBundle**, executes that package and returns a protected **ExportReceipt**. Provider retrieval and narrative generation happen before rendering. Render retries reuse the bundle; a preview is not allowed to silently call the vendor again.
 
-The eight permanent FWD IDs remain unchanged. [CTO's L2 distribution](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md) at `58266dab2d` now assigns **FE acceptance ownership for FWD-1 and FWD-6**, and **BK acceptance ownership for FWD-2/3/4/5/7/8**. This resolves the ownership call reserved in the initial briefs. The endpoint names the crossing proof for every outcome: FE supplies the client journey, presentation and RenderPackage; BK supplies authorized data, canonical meaning and execution. FWD-3 and FWD-8 require FE rendering inside BK export execution. Acceptance ownership identifies the deciding artifact, not team workload or a partition of all evidence. The implementation ownership table above remains unchanged.
+The eight permanent FWD IDs remain unchanged. [CTO's L2 distribution](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md) at `58266dab2d` now assigns **FE acceptance ownership for FWD-1 and FWD-6**, and **BK acceptance ownership for FWD-2/3/4/5/7/8**. This resolves the ownership call reserved in the initial briefs. The endpoint names the crossing proof for every outcome: FE supplies the client journey, presentation and RenderPackage; BK supplies authorized data, canonical meaning and execution. FWD-3 and FWD-8 require FE rendering inside BK export execution. Acceptance ownership identifies the deciding artifact, not team workload or a partition of all evidence. The implementation ownership table above remains unchanged. The per-project frontend endpoint at `00af569662` supersedes the umbrella for this project and carries FWD-1/3/4/5/6/8 with no new outcome. The backend counterpart proposes FWD-9 (email intake) and FWD-10 (operator recovery/isolation), both explicitly unratified at that cut; their status does not change these six frontend mappings.
 
 ### II.3 Scope retained and scope deferred
 
@@ -177,13 +178,14 @@ No production frontend, automated release policy, export service, fresh permissi
 
 ```text
 BRIEF          docs/briefs/investor-reporting-ir-fe-brief-20260910.md
-PROJECT        IR FE — canonical register code assigned downstream; no third umbrella
+PROJECT        IR FE / IRPT_FRONTEND; code assigned by CTO at 00af569662; no third umbrella
 COUNTERPART    docs/briefs/investor-reporting-ir-bk-brief-20260910.md
 SOURCE MAP     Part IV.1, S1-S9; all four briefs and five supporting documents
 PATH MAP       Part IV.2-IV.3; companion evidence JSON
 EVIDENCE       docs/briefs/sources/INVESTOR_REPORTING_FE_BK_SPLIT_EVIDENCE_20260910.json
 CONTRACTS      IR BK Part II.3; FE rendering package described in II.2
-PRIOR ENDPOINT org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md
+ENDPOINT       org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FRONTEND_20260910.md
+PRIOR ENDPOINT org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md (historical; distribution provenance)
 SIBLINGS       IR BK; existing portal/authentication, D1 category/Positioning, D2 identity and brand owners
 EXISTING PRD   New FE PRD is CTO-owned; older source PRDs are prior art, not this project's PRD
 EXECUTION      Laptop, explicitly ruled; priority across the entire board

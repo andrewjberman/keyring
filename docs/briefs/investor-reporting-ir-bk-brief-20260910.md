@@ -2,8 +2,9 @@
 
 **Author:** 4.0.0_SA_CRO · **Date:** September 10, 2026 · **Mode:** NEW project brief consolidating existing research.  
 **Project:** **IR BK**, counterpart to [IR FE](investor-reporting-ir-fe-brief-20260910.md). **Two projects, no third umbrella.**  
+**Canonical code:** `IRPT_BACKEND`, assigned by CTO in the [project endpoint](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BACKEND_20260910.md) at `00af569662`. IR BK remains the requested short name.\
 **Authority:** [Andrew's split instruction](../../org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260910_IR_FE_IR_BK_SPLIT.md), initially `6226b4a680`; [priority/device direction](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_183xZ_IR_IS_THE_TOP_PROJECT_LAPTOP_AND_SPLITS_FE_BK.md), `c0f5ed8163`; [IRPT/D9 direction](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_183xZ_MACRO_IS_IRPT_REGISTER_IN_D9.md), `1f0f1dd3f6`. **Both projects run on this laptop; Investor Reporting has highest priority across the board.**  
-**Organization:** Macro **IRPT**, directive **D9**. IR FE and IR BK are the requested project names; canonical codes are assigned downstream. CTO withdrew `OPAL_INVRPT`. These briefs replace the former one-project/WS1–WS4 organization without changing the eight permanent FWD IDs. Andrew subsequently moved **D9 as a whole to laptop** ([subsequent D9 placement direction](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_185xZ_D9_TO_LAPTOP_CLDGRPH_FINISHED_15MIN_RATIFIED.md), `4ff4abd9a4`); MSTR owns the register update. The placement/write-ownership question is closed. This brief closes no other project.  
+**Organization:** Macro **IRPT**, directive **D9**. IR FE and IR BK are the requested project names; CTO has assigned `IRPT_FRONTEND` and `IRPT_BACKEND`. CTO withdrew `OPAL_INVRPT`. These briefs replace the former one-project/WS1–WS4 organization without changing the eight permanent FWD IDs. Andrew subsequently moved **D9 as a whole to laptop** ([subsequent D9 placement direction](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_185xZ_D9_TO_LAPTOP_CLDGRPH_FINISHED_15MIN_RATIFIED.md), `4ff4abd9a4`); MSTR owns the register update. The placement/write-ownership question is closed. This brief closes no other project.\
 **Consumer:** Andrew's design review, CTO's L2/PRD work and the backend delivery team alongside IR FE.
 
 **IR BK owns ingestion, multi-tenant firm/advisor scoping, all ETL and serving operations, provider sessions/retrieval, normalizers, model joins, narrative evidence and export execution.** IR FE owns the client-facing product and the reusable presentation/rendering package. The backend makes the existing data useful: fast directories from Silver and established identity inputs; native BD/Orion performance; native YCharts analysis; current custody holdings with evidenced model overlays. It does not introduce a new return engine, alternate scenario engine or historical holdings product in v1.
@@ -80,7 +81,7 @@ FE owns templates, chart/table layout, print styles and the **RenderPackage**; B
 
 Coordinate source contracts with OPAL_ASSETS/D10, D1_CATVIEWS, ASSETCLASS_TAXONOMY, D3_MODELOVERLAY, ADVI_ECLDAT, WSE_COTMDL and MDPF3FIRMS. Coordinate authentication with PORTAL_AUTHHARD/ADVI_ROLGAT; the runner pattern with ADVI_BDAPIMIG.P1; shared YCharts session compatibility with YALP_MDSRC; historical market/news inputs with their existing producers; and manifests with OPAL_ADVIPOINTERS. Existing shared code owners retain their boundaries. Reusing a pure helper does not authorize widening its existing deployment or IAM role.
 
-IR BK now includes directory ingestion and all multi-tenant security previously grouped under WS1. WS2–WS4 labels in source documents are research boundaries only. The permanent **FWD-1 through FWD-8** remain unchanged. BK contributes service/source/security proof across them; FE contributes the corresponding user-facing proof. [CTO's L2 distribution](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md) at `58266dab2d` now assigns **FE acceptance ownership for FWD-1 and FWD-6**, and **BK acceptance ownership for FWD-2/3/4/5/7/8**, resolving the reserved call. Every endpoint row names its crossing proof; FWD-3 and FWD-8 require FE rendering inside BK export execution. Acceptance ownership identifies the deciding artifact, not relative workload or exclusive ownership of all evidence.
+IR BK now includes directory ingestion and all multi-tenant security previously grouped under WS1. WS2–WS4 labels in source documents are research boundaries only. The permanent **FWD-1 through FWD-8** remain unchanged. BK contributes service/source/security proof across them; FE contributes the corresponding user-facing proof. [CTO's L2 distribution](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md) at `58266dab2d` now assigns **FE acceptance ownership for FWD-1 and FWD-6**, and **BK acceptance ownership for FWD-2/3/4/5/7/8**, resolving the reserved call. Every endpoint row names its crossing proof; FWD-3 and FWD-8 require FE rendering inside BK export execution. Acceptance ownership identifies the deciding artifact, not relative workload or exclusive ownership of all evidence. The per-project backend endpoint at `00af569662` supersedes the umbrella for this project. It carries seven ratified IDs (FWD-1/2/3/4/5/7/8) and proposes **FWD-9 for O3 email intake** and **FWD-10 for O7 operator diagnosis/recovery/isolation**. Those two are **unratified at this cut**, referred to Andrew by CTO, and cannot be listed or decomposed as ratified outcomes. The substantive user requirements remain in this brief; the distinction concerns formal endpoint acceptance. The selected BDAPI/Kimi runner style and no-OTP direction remain explicit user constraints, not optional downstream strategy choices.
 
 S1's vendor retirement, historical cohort reconstruction, full analytical replacement and later agent/BI ambitions remain future context. Preserve independent supervision and billing semantics when authoritative; do not require the held historical return engine to deliver native vendor performance. V1 adds no holdings time series, trades, alternate scenario engine or automatic distribution.
 
@@ -262,7 +263,7 @@ These are dependencies, not sequenced task orders.
 - Source owners provide completion/date semantics and resolve or expose missing identity/model mappings and target units. Canonical taxonomy/cohort rules remain authoritative.
 - Historical sentiment/news evidence meets the chosen date/cutoff policy. Narrative coverage can be partial without blocking a performance-only report.
 - FE supplies a compatible versioned RenderPackage and representative consumer fixtures. BK supplies frozen bundles and source/security/economic proof; both exercise the same real end-to-end revisions.
-- Register owners carry the already-directed IRPT/D9/laptop representation and CTO assigns canonical project codes; formal FWD ACCEPT ownership is now recorded in II.2. This bookkeeping does not reopen the settled two-project scope or delay drafting.
+- Register owners carry the already-directed IRPT/D9/laptop representation and CTO has assigned the canonical project codes; formal FWD ACCEPT ownership and the two pending new endpoint proposals are recorded in II.2. This bookkeeping does not reopen the settled two-project scope or delay drafting.
 
 # PART VI — STATUS — NOT OUTCOME-BEARING
 
@@ -278,14 +279,15 @@ The bounded source profiles do not certify universal account coverage, fresh aut
 
 ```text
 BRIEF          docs/briefs/investor-reporting-ir-bk-brief-20260910.md
-PROJECT        IR BK — canonical register code assigned downstream
+PROJECT        IR BK / IRPT_BACKEND; code assigned by CTO at 00af569662
 MACRO/HOME     IRPT / D9; D9 whole to laptop directed, register edit owned by MSTR
 COUNTERPART    docs/briefs/investor-reporting-ir-fe-brief-20260910.md
 SOURCE MAP     Part IV.1, S1-S9; four briefs and five supporting documents
 PATH MAP       Part IV.2-IV.7; all functions plus companion evidence JSON
 CONTRACTS      Part II.3; FE produces RenderPackage, BK produces serving/export contracts
 EVIDENCE       docs/briefs/sources/INVESTOR_REPORTING_FE_BK_SPLIT_EVIDENCE_20260910.json
-PRIOR ENDPOINT org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md
+ENDPOINT       org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BACKEND_20260910.md
+PRIOR ENDPOINT org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md (historical; distribution provenance)
 SIBLINGS       Part II.2; source/auth/runner/taxonomy/news owners retain shared boundaries
 EXISTING PRD   New BK PRD is CTO-owned; linked source PRDs are bounded prior art
 EXECUTION      Laptop; highest priority across the board; no other-project closures by this seat
