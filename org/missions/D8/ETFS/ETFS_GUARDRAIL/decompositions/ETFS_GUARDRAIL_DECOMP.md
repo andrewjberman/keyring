@@ -1,5 +1,6 @@
 # ETFS_GUARDRAIL -- DECOMPOSITION (L5)
 
+**v0.3** (2026-09-10 ~03:1xZ, `2.0.0_SA_COO`) -- ROUND 3 on PRD **v0.5** @`7ba9b976b0`, cut on TWO Andrew-directs of the same night: his ~02:5xZ approval of the manufactured hole ("yeah try it but make sure no test run hits aj's email") and his ~03:0xZ law that **NO FWD IS A WAIT**, which superseded FWD-2 -> FWD-9 and FWD-7 -> FWD-10 in place. THREE cells, TWO chains: `EG-s-19` the catch-up branch driven on a manufactured hole; `EG-s-20` the send path made CORRECT and TEST-SAFE (the W1-S25/W1-S29 guard at two sites, and no driven run able to reach aj@); `EG-s-21` the DRIVEN REFUSAL that closes both new outcomes. s.12 below.
 **v0.2** (2026-09-09 ~22:4xZ, `2.0.0_SA_COO`, the base COO: `~B` not seated) -- ROUND 2 on PRD **v0.4** @`a830ea1cc0` (the CTO's manual-trigger addendum on Andrew's ~21:4xZ no-waiting word): five cells `EG-s-14`..`EG-s-18` added, 1:1 with rows S14-S18, ONE issuance, three worker slots on Opus in hand-cut worktrees (spine v3.7). Round 2's sections are s.8-s.11 below; s.0-s.7 are LEFT UNEDITED. Cells 14 -> 19; edges 15 -> 17.
 **v0.1.1** (2026-09-04 ~19:0xZ, `2.0.0_SA_COO~B`, in the issuance commit, BEFORE the cut freezes it): three
 amendments on evidence read after v0.1 -- (a) s.7 gains THE DISCRIMINATOR'S PRINCIPAL (the ETFS layer holds no
@@ -357,3 +358,51 @@ fanout: 3 of 3 chains, cap 8, reason: chain A is one orchestrator and one deploy
 - **The CTO's never-widen halves** for S14 and S15: asked in the drive read; slot ~1 does not start without them.
 
 -- `2.0.0_SA_COO`, L5 round 2
+
+## 12. ROUND 3 -- the two superseded outcomes and the approved manufactured hole (PRD v0.5 @`7ba9b976b0`)
+
+**Input, and BOTH halves are Andrew's own words from tonight.** (1) ~02:5xZ, answering seven cards: *"Call 1, yeah try it but make sure no test
+run hits aj's email, that is not appropriate."* -- the manufactured hole is APPROVED and a STANDING CONSTRAINT arrives with it, reaching every
+project and every seat. (2) ~03:0xZ, the law: *"no FWD is ever a 'wait' unless explicitly advised otherwise"* -- an endpoint outcome must be
+PROVABLE BY AN ACT A SEAT CAN TAKE ON DEMAND, and one whose only proof is an event nobody controls is re-cut so its MECHANISM IS DRIVEN
+DELIBERATELY, with the organic case kept as the negative arm. The CTO applied it the same turn (spine v3.10 L2; PRD v0.4 -> v0.5): **FWD-2 ->
+FWD-9** (its only proof was a REFUSE verdict, and the September run produced PUBLISH over two class-D holes because carry-and-disclose IS the
+designed behaviour, so the refusal may never come organically) and **FWD-7 -> FWD-10** (it waited on a terminal failure the PRD itself calls rare,
+AND row `W1-S25` measured that the send cannot fire at all -- the wait would have been permanent and nothing would ever have said so).
+
+**This document invents nothing.** Every cell below serves an outcome the CTO placed in v0.5, and the manufactured hole is the act Andrew approved.
+
+| cell | outcome_ref | surface | verb | depends_on | why this piece |
+|---|---|---|---|---|---|
+| `EG-s-19` | FWD-1 (the recovery mechanism, driven rather than awaited) | `daily/<partner>/` -- ONE slice archived and deleted so a hole OLDER than the newest priced partition exists, then the producer's OWN catch-up fire restores it | verify | -- | the catch-up branch has NEVER been exercised: the estate's only hole was the NEWEST partition, which `_catchup_missing_dates` skips as `skip_date` (`W2-S8`), so `EG-s-17` closed with `CATCHUP-BRANCH-NOT-EXERCISED` printed beside its token. Andrew's approval is what makes the branch reachable |
+| `EG-s-20` | FWD-10 (its precondition) | `infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py` -- the unresolved-document guard at BOTH sites, and a test-invocation recipient path that CANNOT reach aj@ | fix | -- | `W1-S25` + `W1-S29`: the guard at `:435` reads `.get("unresolved")` while the renderer writes a document keyed BY PARTNER, so the terminal send is skipped even on a genuine REFUSE; `:516`'s `terminal_qa` rehearsal reads it identically, so the rehearsal built to catch the defect is BLIND to it. And Andrew's constraint makes the recipient path a precondition for driving anything |
+| `EG-s-21` | FWD-9 + FWD-10 | the orchestrator driven into a REFUSE by a forced class-C-or-worse condition, under a NEVER-2 entry, with the forcing DISCLOSED on the artifact | verify | `EG-s-20` | the outcome the law demands: the refusal ladder and its terminal send proven BY AN ACT rather than awaited. It cannot run before `EG-s-20` -- driving a refusal through a send path that can reach aj@ would break a standing Andrew constraint, and driving it through an unfixed guard would prove nothing about the send |
+
+**Denominator:** PRD v0.5 endpoint_outcomes 8 (`FWD-1,3,4,5,6,8,9,10`); outcomes this round SERVES 3 (`FWD-1` by driving its mechanism, `FWD-9`,
+`FWD-10`); cells 3. The five outcomes this round does not serve are closed or closing on round 2's evidence and are named in the CTO's 94919.
+
+**THE CONSTRAINT IS CUT INTO BOTH SEND-TOUCHING FACES, never left to be inferred.** `EG-s-20` and `EG-s-21` each state: **aj@opalinvest.com is
+NOT a recipient of any driven run**, and `EG-s-21` may not fire until `EG-s-20` has PROVEN, by a read of the DEPLOYED handler and not by intent,
+that a test invocation cannot reach it. `EG-s-19` is clear of the constraint BY CONSTRUCTION and says so on its face: it drives
+`cot-etf-ownership-daily`, which writes a slice and mails nobody.
+
+**THE CHAIN READ.** `EG-s-20 -> EG-s-21` is a real dependency of BOTH kinds -- correctness (an unfixed guard makes the send unprovable) and safety
+(an unfixed recipient path makes the run forbidden). `EG-s-19` shares no file and no producer with either and is independent.
+
+```
+fanout: 2 of 2 chains, cap 8, reason: EG-s-20 -> EG-s-21 is one chain on one slot (the second cannot start until the first has PROVEN its precondition); EG-s-19 is independent -- a different producer, a different bucket prefix, and no mailer at all.
+```
+
+**Seating:** `0.9.0_WK_ETFS_GUARDRAIL~4` takes the `EG-s-20 -> EG-s-21` chain (worktree `/c/tmp/wk-etfs-3-4`, branch `wk-etfs_guardrail-3-4`);
+`0.9.0_WK_ETFS_GUARDRAIL~5` takes `EG-s-19` (worktree `/c/tmp/wk-etfs-3-5`, branch `wk-etfs_guardrail-3-5`). Both Opus at high effort, hand-cut
+worktrees off CLOUD (spine v3.7). **Provisioning that the issuer owes each slot at the hand-off and that round 2 measured the hard way:**
+`.tools/terraform.exe` is gitignored and absent from a fresh worktree, and `safe-apply`'s identity gate FAILS CLOSED there because
+`resolve_actor`'s two real sources are the ISSUER's and not the worker's (`W1-S21`) -- so `~4`'s prompt carries the binary and
+`export OPAL_AGENT_SERIAL=0.9.0_WK_ETFS_GUARDRAIL~4`.
+
+**What this round does NOT decide:** whether the rung-3 ask's under-reporting (`W1-S27`, 1 of 2 unresolved dates named) is repaired here -- it is a
+separate code cell on the same file and is NOT bundled into `EG-s-20`, because a fix cell that quietly grows a second subject is how a cut stops
+being reviewable; it is carried to the CTO's L10. Nor does it decide the durable remedy for the `coverage_unresolved.json` shape disagreement (a
+schema the producer and both consumers share), which is a design question above this round.
+
+-- `2.0.0_SA_COO`, L5 round 3
