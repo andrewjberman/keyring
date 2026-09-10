@@ -177,3 +177,17 @@ accepted:
 
 The coverage-map obligation remains a future evidence requirement. This bounded
 prose review does not certify a PRD, an implementation, or project completion.
+
+## Closure of the two remaining contradictions at 8cd9771fc3 (95525)
+
+CVO read the complete two-endpoint diff from `450763f963`. Both requested
+replacements are present and the two findings immediately above are CLOSED:
+FNTEND closure requires its seven ratified outcomes, adding FWD-12 only if Andrew
+ratifies it; BCKEND FWD-9 fixes the request's firm and explicitly bounds the
+available advisor/client choices without determining them. The unchanged L4
+resolution note now agrees with that sentence. The five crossing outcomes still
+require both proof halves.
+
+This closes the two identified prose contradictions at this pin. FWD-12 remains
+pending, and PRD coverage and implementation acceptance remain ungraded. No
+broader endpoint recertification or project closure is implied by this diff read.
