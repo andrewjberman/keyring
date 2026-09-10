@@ -39,7 +39,42 @@ task orders already cut; the next issuance is v3. The artifact grammar below cov
 | `/canonical-flow <PROJECT_CODE> --report-only` | locate, measure, classify, report; no act |
 
 **Who runs it:** the Tier-1 seat it is sent to (`4.0.0_SA_CRO`, `1.0.0_SA_CTO`, `2.0.0_SA_COO`, `3.0.0_SA_CVO`, or a
-`~lane` of one). `0.0.0_AB_MSTR` owns no limb: it measures, reports and routes to the owner. A v2 Tier-2 seat
+`~lane` of one). `0.0.0_AB_MSTR` owns no limb: it measures, reports and routes to the owner.
+
+> ⛔ **AND IT IS NOT A STOP ON THE WAY, EITHER — THE CTO RUNS L2 THROUGH THE L5 HANDOFF WITHOUT
+> ASKING `0.0.0_AB_MSTR` FOR ANYTHING.** Andrew-direct 2026-09-10 ~20:0xZ/~20:1xZ at the MSTR terminal,
+> VERBATIM: *"moving forward, tree landing needs to be a CTO job"* and *"yeah macros.yaml needs to be
+> CTO too. anything from L2 up to the L5 handoff to COO for decomp needs to be able to be handled by CTO
+> so we dont have this arbitrary mcp'ing which holds up our entire process if you are busy with something
+> else. MCPing is really only to be used when necessary, the more efficient we get the less mcping should
+> be happening."*
+>
+> ⭐ **THE GATE ALREADY SAID SO AND THE DOCTRINE DID NOT — measured on the resolver 2026-09-10 ~20:2xZ,
+> 7 carriers x 4 agents, with `0.0.0_AB_MSTR` REFUSED on `project.json` in the same run as the live
+> discriminator:**
+>
+> | L2–L5 carrier | lane | `1.0.0_SA_CTO` |
+> |---|---|---|
+> | `org/missions/*/*/*/project.json` | TREE_PROJECT_ROW | PERMIT |
+> | `org/missions/DIRECTIVES.yaml` | TIER0_DIRECTIVES_REGISTER | PERMIT |
+> | `org/missions/MACROS.yaml` | TREE_MACROS | PERMIT |
+> | `org/projects/<CODE>.json` | ANY_EXEC_OR_AE | PERMIT |
+> | `org/missions/*/*/*/prd/**` | ANY_CTO | PERMIT |
+>
+> **FIVE OF FIVE WERE ALREADY PERMITTED. NOTHING NEEDED A PERMISSION CHANGE.** What held the process up
+> was PROSE — `.owned-paths.yaml`'s TREE_MACROS note said *"MSTR registers, CTO co-signs"*, and the same
+> shape sits in CLAUDE.md Rule 27, the spine §L3 and `PROJECT_TREE.contract.json`'s `readers`.
+> ⛔ **A DOCTRINE LINE THAT ROUTES AN ACT THROUGH A SEAT THE GATE DOES NOT REQUIRE IS WORSE THAN A
+> PERMISSION BLOCK, BECAUSE NO REFUSAL TEXT EVER PRINTS.** A blocked seat reads a refusal and asks; an
+> obedient seat sends a message and waits, and the wait is invisible to every instrument. Measured the
+> same evening: two IRPT projects sat unregistered across four seats' messages while the CTO held PERMIT
+> on every path involved.
+>
+> **SO: at L2, L3 and L4 the CTO writes the row, the register line, the macro enum, the index and the PRD
+> ITSELF, in its own commit, and tells `0.0.0_AB_MSTR` afterward if at all.** `0.0.0_AB_MSTR` keeps
+> DIRECTIVES.yaml and MACROS.yaml write access as an integrator fallback and holds NO gate over either.
+> **L1 is unchanged and is still `4.0.0_SA_CRO`'s** (TREE_CRO refuses the CTO on `brief/**`, measured in
+> the same run) — Andrew's range starts at L2. **L5 onward is unchanged and is still the COO's.** A v2 Tier-2 seat
 enters a project only through an L6 task order: it measures, reports, and routes to its issuer. A v3 worker
 subagent has no seat, no inbox and no skill tool, and never runs this; its whole context is its task order.
 
