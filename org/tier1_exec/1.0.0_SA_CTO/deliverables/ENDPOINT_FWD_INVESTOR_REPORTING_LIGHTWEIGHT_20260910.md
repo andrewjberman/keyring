@@ -18,6 +18,48 @@ point the canonical loop cycles without him** — his own standing word of 2026-
 
 ⛔ **FWD-n IDS ARE PERMANENT AND NEVER REUSED. A retired outcome leaves its number VACANT.**
 
+---
+
+## ⛔ AMENDMENT 2026-09-10 ~18:3xZ — **ONE PROJECT IS SUPERSEDED. TWO PROJECTS. AND THE DEVICE IS RULED: LAPTOP.**
+
+**Andrew-direct, recorded verbatim at**
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_183xZ_IR_IS_THE_TOP_PROJECT_LAPTOP_AND_SPLITS_FE_BK.md`.
+Independently recorded at the research seat as `ANDREW_DIRECT_20260910_IR_FE_IR_BK_SPLIT.md`.
+
+**THREE RULINGS, ALL HIS:**
+
+1. **PRIORITY.** *"the highest value project on this entire board including all directives."*
+2. **DEVICE — THIS CLOSES MY OPEN CALL.** *"It is going to be handled on this laptop."* ⛔ He named the
+   PROJECT, **not the directive**. D9 does NOT move on this word and the Tax SMA close-out does not
+   travel with it; which register mechanism carries a laptop project under a SITEZ directive is
+   `0.0.0_AB_MSTR`'s, and if the only lawful one moves D9 whole then THAT needs a fresh word.
+3. **SHAPE — THE PLACEMENT LINE ABOVE IS SUPERSEDED.** *"the frontend and client facing investor
+   reporting project and the backend etl/multi-tenant/etc investor reporting project."* **TWO
+   projects**, not one umbrella. `OPAL_INVRPT` as a single code is withdrawn; two codes are assigned
+   once the briefs land.
+
+⛔ **THE EIGHT OUTCOMES SURVIVE THE SPLIT UNCHANGED AND ARE NOT RENUMBERED.** `FWD-1`..`FWD-8` were
+ratified by Andrew at ~17:3xZ and their ids are PERMANENT. A project split redistributes outcomes; it
+never renumbers one. **Nothing below this line changes as an outcome.**
+
+⛔ **AND I AM DELIBERATELY NOT DISTRIBUTING THEM YET — THE BOUNDARY IS THE BRIEFS' TO DECLARE, NOT
+MINE TO RECALL.** `4.0.0_SA_CRO` is condensing four briefs and five supporting documents into the two.
+**Assigning eight outcomes to FE-or-BK before those boundaries exist would invent a split line and then
+read it back as if it had been sourced** — which is precisely the failure this seat committed HOURS
+EARLIER on this same project, writing four workstream names from memory that were all wrong while the
+COUNT was right. The distribution is one L2 amendment, written the moment the two briefs land, READ
+FROM THEM.
+
+⚠ **AND SOME OUTCOMES WILL GENUINELY SPAN BOTH.** `FWD-3`'s proof carries a captured provider response
+all the way to an export; ingestion is backend and the export is frontend. **A forced clean partition
+would be a taxonomy invented for tidiness.** Where an outcome spans, the amendment will name WHICH
+project holds its ACCEPT and say plainly that the proof crosses the boundary, rather than pretending
+the boundary is cleaner than the object.
+
+**WS1–WS4 ARE NOW SOURCE BOUNDARIES TO REDISTRIBUTE, NOT A SURVIVING LAYER** and not a third umbrella.
+
+---
+
 ⛔ **NO FWD BELOW IS A WAIT.** Every one is provable by an act a seat can take ON DEMAND. The single
 place a human gates an act is **FWD-4**, and it is EXPRESSLY QUALIFIED on the outcome with its reason,
 per Rule 27's L2 clause. Nothing here waits on an event nobody controls.
