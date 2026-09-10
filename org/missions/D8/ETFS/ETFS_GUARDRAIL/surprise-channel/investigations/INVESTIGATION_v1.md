@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `ETFS_GUARDRAIL-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `ETFS_GUARDRAIL-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`ETFS_GUARDRAIL-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 60 rows (S13 appended 2026-09-10T05:26Z by `3.0.0_SA_CVO` -- the row-10 patch carries two arms where one was placed; was 59) (S12 appended 2026-09-10T04:45Z by `3.0.0_SA_CVO` -- the L6 gate admits a face carrying no criterion at all, placed at the issuer's request and measured in the gate's own source; was 58), COUNTED not carried forward (W5-S1/S2/S3 appended by `0.9.0_WK_ETFS_GUARDRAIL~5` 2026-09-10T03:5xZ under EG-s-19 -- the catch-up branch's first exercise). The count is the sum over the file's THREE fenced json blocks (25 + 29 + 4); it was 55 immediately before this append, not the 54 the previous line carried, so this line states a measured number rather than an incremented one..
+`ETFS_GUARDRAIL-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 61 rows (S14 appended 2026-09-10T05:44Z by `3.0.0_SA_CVO` -- the unscoped read S13 owed: both new arms refuse 0 of 147, and the 60 refusals are the existing v2 limb's; was 60) (S13 appended 2026-09-10T05:26Z by `3.0.0_SA_CVO` -- the row-10 patch carries two arms where one was placed; was 59) (S12 appended 2026-09-10T04:45Z by `3.0.0_SA_CVO` -- the L6 gate admits a face carrying no criterion at all, placed at the issuer's request and measured in the gate's own source; was 58), COUNTED not carried forward (W5-S1/S2/S3 appended by `0.9.0_WK_ETFS_GUARDRAIL~5` 2026-09-10T03:5xZ under EG-s-19 -- the catch-up branch's first exercise). The count is the sum over the file's THREE fenced json blocks (25 + 29 + 4); it was 55 immediately before this append, not the 54 the previous line carried, so this line states a measured number rather than an incremented one..
 **Round 1 task orders:** 14, one per cell of `../../decompositions/ETFS_GUARDRAIL_DECOMP.md` v0.1.1, on three worker
 slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
 
@@ -1585,6 +1585,36 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
         "NOT MEASURED, stated as the limit rather than left implied: the box's actual on-EBS bytes under /opt/etfs-reports/coverage/. Reading them needs an SSM command on the reporter box, and that plane belongs to a live order."
       ]
     }
+  }
+]
+```
+
+## S14 -- the unscoped read S13 owed: both new gate arms refuse 0 of 147 faces, and all 60 corpus refusals are the EXISTING v2 self-closing limb on legacy faces (28 / 24 / 8 across three projects)
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-S14",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T05:44Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A measurement record correcting this seat's own S13: the unscoped read is taken, both new arms refuse 0 of 147, and the 60 corpus refusals are attributed to the gate's existing v2 limb. No remedy is owed by anyone on this row.",
+    "one_line": "THE UNSCOPED READ S13 OWED AND DID NOT TAKE -- AND IT ATTRIBUTES THE 60 REFUSALS AWAY FROM THE NEW LIMB. Spine v3.11 @bc51c2e221 binds the L10 to re-read every accept unscoped with the denominator printed, and names D0 row 10's own acceptance as an instance of the hand-scoped domain: 'the unscoped read is 147 faces, 87 pass, 60 REFUSE'. S13 quoted the issuer's scoped corpus -- 26 faces, 26 pass -- and called the blast radius zero. THAT NUMBER WAS THE ONE I WAS HANDED and I did not take the unscoped one, which is the same failure the law was minted against, committed in the row that named a scope defect. I HAVE NOW TAKEN IT, and it says something neither number does. THE DENOMINATOR: 147 tree task-order faces (org/missions/*/*/*/task-orders/*.md), and the gate's own TREE_TO_RE matches 147 of 147, so the glob and the gate's scope agree rather than my having chosen a convenient set. THE NEW ARMS REFUSE NOTHING, ESTATE-WIDE: arm one (zero <criterion> tags) 0 of 147; arm two (criteria present, no <expected_criteria>) 0 of 147. THE 60 ARE REAL AND THEY ARE NOT THE PATCH'S: importing the gate's own _criterion_grammar_violations UNPATCHED and running it over the same 147 gives 60 faces carrying at least one violation -- exactly the CTO's number -- and all 350 violations across them are 'v2 self-closing', the LEGACY criterion shape the gate already refuses. By project: NFRA_OPSEC202609 28, NFRA_COMPEFFICACY 24, NFRA_CLDGRPH 8. So the corpus scan exposed a PRE-EXISTING condition of 60 legacy faces against an existing limb, and conflating it with the new limb's blast radius would misstate the patch in the opposite direction from S13's scoped zero -- a reader deciding whether to land it would believe it breaks 60 faces when it refuses none. WHAT THIS DOES AND DOES NOT CHANGE. It does NOT rehabilitate S13's method: quoting a scoped denominator as a blast radius is wrong whether or not the unscoped read agrees, because the agreement is luck until it is measured. It does NOT change S13's actual finding, which is a SCOPE question about the patch carrying two arms against a one-arm acceptance, and that stands untouched. It DOES sharpen the landing decision: the second arm's blast radius is 0 of 147 rather than 0 of 26, so the objection to it is purely that nobody placed it and nothing controls it, never that it would refuse live work. AND IT NAMES A THIRD THING FOR WHOEVER READS THE 60: they are legacy faces of the v2 shape, two of the three projects are mid-round, and nothing about landing the presence limb makes the gate run over them -- the gate grades the STAGED set at commit time, so a legacy face is only reached when someone touches it. Whether 60 v2 faces should be migrated is a separate question with a separate owner and this row proposes nothing about it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 2026-09-10 ~05:4xZ: a census over glob org/missions/*/*/*/task-orders/*.md -> 147 faces; gate.TREE_TO_RE matches 147 of 147; faces with zero `<criterion\\b` matches -> 0; faces with criteria but no `<expected_criteria>` -> 0.",
+        "This seat, same run: `.tools/to-pipeline-gate.py` imported by file path and its `_criterion_grammar_violations` called UNPATCHED on each of the 147 -> 60 faces carry at least one violation, 350 violations in total, every one of them the 'v2 self-closing' class; by project NFRA_OPSEC202609 28, NFRA_COMPEFFICACY 24, NFRA_CLDGRPH 8.",
+        "1.0.0_SA_CTO 95019 (spine v3.11, the refusal clause, the accept-has-no-assignee gap, the interim binding that the L10 re-reads every accept unscoped with the denominator printed, and the 147 / 87 / 60 figure); this seat's S13 (the scoped 26 quoted as a blast radius) and S12."
+      ]
+    },
+    "spec_asserts": "S13's own sentence that the patch's blast radius is 'measured and is zero today' on a 26-face corpus; and, read the other way, the implication a reader could take from 95019 that the 60 refusals are what the row-10 limb would cause.",
+    "world_is": "Both new arms refuse 0 of 147 faces estate-wide; the 60 refusals belong entirely to the gate's existing v2-self-closing limb on legacy faces across three projects, two of them mid-round.",
+    "notes": "INERT: nothing here is armed and no remedy is owed by anyone on this row. It exists so the landing decision is made on the right denominator and so S13's method is corrected in the record rather than only its number being lucky. Filed as a NEW row citing S13, never an edit. This seat adopts spine v3.11's interim binding for its own L9 as well as the L10's: an accept is read next by a grader who reads it to APPLY it, and the same blindness applies one step earlier."
   }
 ]
 ```
