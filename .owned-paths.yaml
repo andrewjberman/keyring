@@ -874,7 +874,7 @@ lanes:
     - 2.0.0_SA_COO
     - 0.0.0_AB_MSTR
     - 1.0.0_SA_CTO
-    description: org/missions/MACROS.yaml -- the per-directive macro enum carrier (PROJECT_TREE.contract.json levels[1].enum_carrier; a sibling DATA file, deliberately NOT inside DIRECTIVES.yaml so the register's FORM tripwire is untouched). COO owns the generator that validates it, MSTR registers, CTO co-signs; Andrew flips `ratification` and a seat records it. COO write set 2026-09-02 21:48Z (b).
+    description: org/missions/MACROS.yaml -- the per-directive macro enum carrier (PROJECT_TREE.contract.json levels[1].enum_carrier; a sibling DATA file, deliberately NOT inside DIRECTIVES.yaml so the register's FORM tripwire is untouched). COO owns the generator that validates it; Andrew flips `ratification` and a seat records it. COO write set 2026-09-02 21:48Z (b). || ANDREW-DIRECT 2026-09-10 ~20:1xZ at the 0.0.0_AB_MSTR terminal, VERBATIM -- "yeah macros.yaml needs to be CTO too. anything from L2 up to the L5 handoff to COO for decomp needs to be able to be handled by CTO so we dont have this arbitrary mcp'ing which holds up our entire process if you are busy with something else." THE PERMITTED SET DID NOT CHANGE AND DID NOT NEED TO -- 1.0.0_SA_CTO was ALREADY permitted here, and the gate resolver was exercised the same turn to prove it (PERMIT for 1.0.0_SA_CTO and 1.0.0_SA_CTO~B on this path, with 0.0.0_AB_MSTR REFUSED on org/missions/*/*/*/project.json in the same run as the live discriminator). WHAT CHANGED IS THIS SENTENCE. It read "MSTR registers, CTO co-signs", which told a CTO holding write permission to send a message and wait -- the arbitrary round trip Andrew named. A DOCTRINE LINE THAT ROUTES AN ACT THROUGH A SEAT THE GATE DOES NOT REQUIRE IS INDISTINGUISHABLE FROM A PERMISSION BLOCK AT THE SEAT THAT OBEYS IT, and it is worse, because no refusal text ever prints. 1.0.0_SA_CTO registers here without asking. 0.0.0_AB_MSTR stays permitted as an integrator fallback and holds no gate over it.
   TREE_COO:
     permitted_agents:
     - 2.0.0_SA_COO
@@ -887,6 +887,11 @@ lanes:
     permitted_agents:
     - 4.0.0_SA_CRO
     description: Project tree, brief/ (step 1). Spec s.6.
+  TREE_PRD_SIGNOFF:
+    permitted_agents:
+    - 4.0.0_SA_CRO
+    - 3.0.0_SA_CVO
+    description: "Project tree, prd/signoff/ (L4-R, spine v3.14; Andrew-direct 2026-09-10 ~21:2xZ 'CRO and CVO should have to sign off on PRD before COO gets it'). The two reviewers' version-bound sign-off files, <serial>.json. SoD: the PRD's author (ANY_CTO on prd/**) CANNOT write here, and this longest-match rule DISPLACES prd/** for the signoff/ subtree; the L6 gate (to-pipeline-gate.py LIMB 6) and the L4 notifier read these files, nobody else writes them. Tilde lanes of each reviewer carry it."
   TREE_PROJECT_ROW:
     permitted_agents:
     - 1.0.0_SA_CTO
@@ -913,6 +918,9 @@ paths:
   org/missions/MACROS.yaml:
     lane: TREE_MACROS
     note: 'Project tree: the macro enum carrier (sibling of DIRECTIVES.yaml; longest-match displaces org/missions/** TIER0_MSTR for this one file).'
+  org/missions/*/*/*/prd/signoff/**:
+    lane: TREE_PRD_SIGNOFF
+    note: 'Project tree: prd/signoff/ (L4-R). Longest match DISPLACES prd/** (ANY_CTO): the author cannot sign its own PRD.'
   org/missions/*/*/*/prd/**:
     lane: ANY_CTO
     note: 'Project tree: prd/ (steps 2-4; the ENDPOINT lives INSIDE the PRD). Spec s.6.'

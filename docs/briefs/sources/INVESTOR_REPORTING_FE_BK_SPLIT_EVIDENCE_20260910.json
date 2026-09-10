@@ -27,7 +27,23 @@
         "IRPT_BACKEND"
       ]
     },
-    "hard_project_split": "Two projects, decompositions, task-order sets and adjudications. One acceptance owner per FWD; shared contracts are handoffs, not jointly owned cells."
+    "hard_project_split": "Two projects, decompositions, task-order sets and adjudications. One acceptance owner per FWD; shared contracts are handoffs, not jointly owned cells.",
+    "register_ownership": {
+      "owner": "1.0.0_SA_CTO",
+      "carriers": [
+        "project tree",
+        "generated index",
+        "DIRECTIVES.yaml members",
+        "MACROS.yaml enum"
+      ],
+      "authority_commits": [
+        "2f13cdbaeb",
+        "08722e8b86"
+      ],
+      "mstr_gate": false,
+      "l1": "4.0.0_SA_CRO",
+      "l5": "2.0.0_SA_COO"
+    }
   },
   "scope_limits": [
     "All nine source document bodies retain their original evidence clocks and limitations.",
@@ -75,6 +91,13 @@
       "sha256": "2544d5626050f65a676838de2eb4f7c4cc6b02154e60829c2b7157d8a48ea690",
       "size_bytes": 10105,
       "read_scope": "Full committed ratification diff read."
+    },
+    {
+      "path": "org/tier0/ledger/LD-0542.md",
+      "source_commit": "2f13cdbaeb",
+      "sha256": "908029be264b0a7d74f98c1fb65d55c6fb08624b039d5f4f97f09433ca4e0ae7",
+      "size_bytes": 5280,
+      "read_scope": "Andrew-direct CTO ownership of all L2-L4/register carriers through L5 handoff; no MSTR gate"
     }
   ],
   "source_documents": [
@@ -371,397 +394,450 @@
     {
       "project": "IR FE",
       "path": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "sha256": "13ff2f296c998c24acfc35931b35556df977d4cbf4498fdd8c4fc1fbffcbb998",
+      "sha256": "603cd1c6b1610d1e57787fd4fe66d446e08439839b371d1a5ab49c4aff89c809",
       "outcomes": 8,
       "parts": 7,
       "source_documents_mapped": 9,
-      "lines": 215,
-      "words": 4299,
+      "lines": 217,
+      "words": 4382,
       "canonical_code": "IRPT_FNTEND",
       "section_inventory": [
         {
           "heading": "# IR FE — Investor Reporting frontend project brief",
           "start_line": 1,
           "end_line": 13,
-          "section_sha256": "bb993d53dec83f89568dd4461434eee0cf09c9c539e86dc06dfa5b7f7fa2bead",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "section_sha256": "8c81078e603caa6a06fa7a842df716b483e3d1f3339ad97960e58a562565f21c",
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 1
         },
         {
           "heading": "# PART I — THE OUTCOME TERRITORY",
           "start_line": 14,
           "end_line": 15,
           "section_sha256": "6bb8f139919add885e2f01acad1ad46897bf2c9ff48b18cfb347f8413a264c79",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 2
         },
         {
           "heading": "### O1 — An advisor finds the right client and keeps that context across the three tabs",
           "start_line": 16,
           "end_line": 23,
           "section_sha256": "a813d986b9020ce2ad5c25ffc04cb917c7c3586bb8c7354b8f71d989676accc5",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 3
         },
         {
           "heading": "### O2 — An advisor reads a clear performance report with the provider's meaning intact",
           "start_line": 24,
           "end_line": 31,
           "section_sha256": "f6297c25729326e9bdb638270bdc19861b54d90aca3dd4eee46758825c17d5d7",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 4
         },
         {
           "heading": "### O3 — An advisor obtains and reviews the requested YCharts analysis in the same client context",
           "start_line": 32,
           "end_line": 39,
           "section_sha256": "a8f9cde0c1c808ff45da1721405c8ca1fdd9a3e862e28803f30104640edb24fa",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 5
         },
         {
           "heading": "### O4 — An advisor reads current holdings through model-led radial drilldowns",
           "start_line": 40,
           "end_line": 47,
           "section_sha256": "64c13d7d384e1c7206497a4820c790e21e0f43ca5182d8e956cfaac25e34fe17",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 6
         },
         {
           "heading": "### O5 — An advisor previews and downloads a branded report that matches the reviewed revision",
           "start_line": 48,
           "end_line": 57,
           "section_sha256": "f8b89badaebf524bc77378f2df00cb383a1529b9c8cc136fbec6197c2aa6eb48",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 7
         },
         {
           "heading": "### O6 — An advisor understands partial, stale or failed results and continues using the rest of the product",
           "start_line": 58,
           "end_line": 65,
           "section_sha256": "7968ff251a30b9a42d56f55619e686ad30ab1a6d47ab59097633810b2724dd79",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 8
         },
         {
           "heading": "### O7 — An entitled Opal user runs reports across all firms from the Global view",
           "start_line": 66,
           "end_line": 73,
           "section_sha256": "d6c3681574606c2112aee810f1574473e36e7e0e60a8dee4f1ee76a809720abc",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 9
         },
         {
           "heading": "### O8 — An advisor finds familiar portal components and consistent design throughout the product",
           "start_line": 74,
           "end_line": 79,
           "section_sha256": "5ff6e15a5e746203b17f212e4c7bc0061bbdf815d1f2837ac8f4492c222a9d09",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 10
         },
         {
           "heading": "# PART II — WHERE THE BOUNDARY SITS",
           "start_line": 80,
           "end_line": 81,
           "section_sha256": "bf760645b8160d0f4d56f97321c4fb8c8c767a564c4061003dcca9d73118867e",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 11
         },
         {
           "heading": "### II.1 Two teams with explicit ownership",
           "start_line": 82,
           "end_line": 98,
           "section_sha256": "0d5e00251ec7512acc3c1488c2feba9d0d4bcc2253e9f35bbfc6edd00b87c5c3",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 12
         },
         {
           "heading": "### II.2 Handoff contracts",
           "start_line": 99,
           "end_line": 106,
           "section_sha256": "4d0c6e67d19d6548c2df5f9c9e46bf7ce71e06d7bf1c64d398d314a2b495edd9",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 13
         },
         {
           "heading": "### II.3 Scope retained and scope deferred",
           "start_line": 107,
           "end_line": 112,
           "section_sha256": "22bc80df1398fd93106a6b36a313239ff54a65d97f3fe01e9f05773f08fe9602",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 14
         },
         {
           "heading": "# PART III — THE QUALITATIVE BAR",
           "start_line": 113,
           "end_line": 122,
           "section_sha256": "6555a17d87f41373e72089a990db665009c80c9595e11e86a6c7ad793c09c4be",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 15
         },
         {
           "heading": "# PART IV — SUBSTRATE, SOURCE MAP AND FRONTEND PATHS",
           "start_line": 123,
           "end_line": 124,
           "section_sha256": "6fd9de28302d2b863d4cb335b665f4255b0b02741aa57572a90456c6da2a34c3",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 16
         },
         {
           "heading": "### IV.1 All nine source documents: what IR FE takes from each",
           "start_line": 125,
           "end_line": 140,
           "section_sha256": "f75965b6e16186a1279c26aebd45d2490f8a79f36fd97ec800410c3acf349ada",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 17
         },
         {
           "heading": "### IV.2 Existing frontend and brand paths to use",
           "start_line": 141,
           "end_line": 160,
           "section_sha256": "3d2c6126d74134b2aa4fbefd66b924fb000540b3e4912abbc7c9ce924d3a0755",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 18
         },
         {
           "heading": "### IV.3 Review artifacts and evidence to carry",
           "start_line": 161,
           "end_line": 167,
           "section_sha256": "d93f0e607dbbc934fcc77589a11341b83fe5c567a770d9ef49af426952df1bbe",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 19
         },
         {
           "heading": "### IV.4 Measured findings relevant to FE",
           "start_line": 168,
           "end_line": 171,
           "section_sha256": "20002d141f4bfd10ec9eb65b7b9456564926ee402d37012c33ae8babdeb2b408",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 20
         },
         {
           "heading": "### IV.5 Required detail coverage in the frontend PRD",
           "start_line": 172,
           "end_line": 177,
           "section_sha256": "138476ca76700512820f9a2f18b729dc88ed0961aa729275b861aa01a9358328",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 21
         },
         {
           "heading": "# PART V — WHAT MUST BE TRUE, WITHOUT SCOPING IT NOW",
           "start_line": 178,
           "end_line": 188,
-          "section_sha256": "6f73cb23162f8bc749086057b9f40b8d3f849e7e8243305f9f5de9fec1dff857",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "section_sha256": "5e979e9defcf7b13c53c4eddc44843d2dbcafb09a77af061121d8fc503fd3b7e",
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 22
         },
         {
           "heading": "# PART VI — STATUS — NOT OUTCOME-BEARING",
           "start_line": 189,
-          "end_line": 194,
-          "section_sha256": "c734a9aa28cc41ccb8bac5df96e48211c7d3bb95e7b0d817a7f2599d37ef2d21",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "end_line": 196,
+          "section_sha256": "e03c6703945b2d69d6e7fe5576bd1d805a3081fe42c6b18b789d8971b1efc2ed",
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 23
         },
         {
           "heading": "# PART VII — WHAT THIS BRIEF DOES NOT CLAIM",
-          "start_line": 195,
-          "end_line": 198,
+          "start_line": 197,
+          "end_line": 200,
           "section_sha256": "d0a188145e42fb643bca18b933e2325fffe78b657cca584647075e3f31a4fe40",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 24
         },
         {
           "heading": "## REFS TO CARRY",
-          "start_line": 199,
-          "end_line": 215,
-          "section_sha256": "f10cb5ff9b619ae61048ef03cc30c4e70465e198f60a3e84247d17f56e5a8a3b",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "start_line": 201,
+          "end_line": 217,
+          "section_sha256": "b610516ed0bb3c8509bb7b8b989dfabcf87188d066b91589e4d04b799715567c",
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 25
         }
       ]
     },
     {
       "project": "IR BK",
       "path": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "sha256": "ded789b6c42c602dc8105399b183fcbfec0fcb96dc0a4cbf450ffb4464790955",
+      "sha256": "7c263bf4ca2a8b46f195ea277cfe46a533071351aefa155f4ea2f00abba485f4",
       "outcomes": 8,
       "parts": 7,
       "source_documents_mapped": 9,
-      "lines": 318,
-      "words": 6717,
+      "lines": 320,
+      "words": 6807,
       "canonical_code": "IRPT_BCKEND",
       "section_inventory": [
         {
           "heading": "# IR BK — Investor Reporting backend project brief",
           "start_line": 1,
           "end_line": 11,
-          "section_sha256": "377161ff4c846ef60a0614a2a2d644a1d27927e3f0a5264b4b2dbbe4bea005c6",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "section_sha256": "059a40f026809a2fcf0b9ececaa55469dabe18c6858c079b4867c0e19a2388a5",
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 1
         },
         {
           "heading": "# PART I — THE OUTCOME TERRITORY",
           "start_line": 12,
           "end_line": 13,
           "section_sha256": "6bb8f139919add885e2f01acad1ad46897bf2c9ff48b18cfb347f8413a264c79",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 2
         },
         {
           "heading": "### O1 — An advisor finds permitted clients quickly and receives only the authorized account population",
           "start_line": 14,
           "end_line": 21,
           "section_sha256": "af102b597185db062cdc28e8e8e580e65c692098b1dd5a5fdb21e13b24a8e337",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 3
         },
         {
           "heading": "### O2 — An advisor receives a comparable performance report without losing vendor semantics",
           "start_line": 22,
           "end_line": 27,
           "section_sha256": "898797e95b969e72a7a58136c530d28280fa3488a986314ba0dd4da7676f5cdd",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 4
         },
         {
           "heading": "### O3 — A submitted holdings email becomes a durable, correctly scoped analysis request",
           "start_line": 28,
           "end_line": 35,
           "section_sha256": "12ecb079a39831bcc170b35be7e258be9016b38a9fdc6bdf04874fdc1abe0da2",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 5
         },
         {
           "heading": "### O4 — An advisor receives the correct YCharts variant and can recover an interrupted generation",
           "start_line": 36,
           "end_line": 43,
           "section_sha256": "d0e6eb999b2377f2dc35b0f789939bcb8b5451f3f4ed72b1a6cb2b1232bac7db",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 6
         },
         {
           "heading": "### O5 — An advisor sees current custody holdings with model percentages that state what they measure",
           "start_line": 44,
           "end_line": 49,
           "section_sha256": "7812e420879b7ef2b39a7262be8ae496d17bd1b8dd2c256611b1b1acad47feed",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 7
         },
         {
           "heading": "### O6 — An advisor exports a branded, reproducible report with evidence-backed market context",
           "start_line": 50,
           "end_line": 57,
           "section_sha256": "700d740a6e04707312774c8393f2567a6dd3b9d9f1b98dfc4cec5807e2ee5b2a",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 8
         },
         {
           "heading": "### O7 — A request is bound to its firm at ingestion and cannot write into another firm's destinations",
           "start_line": 58,
           "end_line": 65,
           "section_sha256": "26788457e396a4126b7e4565d52027bbe085285bea8863c9d680d12eb8d159c7",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 9
         },
         {
           "heading": "### O8 — An entitled Opal user can run the same reports for clients at every firm",
           "start_line": 66,
           "end_line": 73,
           "section_sha256": "6782e62ebc892020699caa74731b08ccdcfbc3c79021eae0a0f670c1e3d93032",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 10
         },
         {
           "heading": "# PART II — WHERE THE BOUNDARY SITS",
           "start_line": 74,
           "end_line": 75,
           "section_sha256": "bf760645b8160d0f4d56f97321c4fb8c8c767a564c4061003dcca9d73118867e",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 11
         },
         {
           "heading": "### II.1 What this team owns, and what crosses to FE",
           "start_line": 76,
           "end_line": 90,
           "section_sha256": "a76f06815b2c09a070e573e5f722b97bb9ceb97b8a191729a83df6a9d6959384",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 12
         },
         {
           "heading": "### II.2 Shared owners and limits of the consolidation",
           "start_line": 91,
           "end_line": 98,
           "section_sha256": "1cf854be21bab13e00a52de580b8355a3b14313b854fcecd9b1b4ce99ad4abbb",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 13
         },
         {
           "heading": "### II.3 Shared contract inventory — producer and consumer boundary",
           "start_line": 99,
           "end_line": 118,
           "section_sha256": "8a76b2a219e7b38937a701fe24edc5403103b0e40f5a7e1bfcdb92c9b4384790",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 14
         },
         {
           "heading": "# PART III — THE QUALITATIVE BAR",
           "start_line": 119,
           "end_line": 128,
           "section_sha256": "0c57900b13b6d566374e403c33af8e95128802855812f3ec65d46ce893647d83",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 15
         },
         {
           "heading": "# PART IV — SUBSTRATE, SOURCE MAP AND IMPLEMENTATION PATHS",
           "start_line": 129,
           "end_line": 130,
           "section_sha256": "aa9baba57acb57261bcc7ecccfdd696f215d9cdbc5ed77938ef3b6156ef224e2",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 16
         },
         {
           "heading": "### IV.1 All four briefs and five supporting documents",
           "start_line": 131,
           "end_line": 146,
           "section_sha256": "e1577874cd490ef6c762a76cb110b6b7204c1eb225ac84a7f0e7c205319520d8",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 17
         },
         {
           "heading": "### IV.2 Identity, tenant scoping and daily movement",
           "start_line": 147,
           "end_line": 172,
           "section_sha256": "0b50803278a636a7dccbcad678277b1fab9d6fe8a6c9d0815f6d04b1c4b14342",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 18
         },
         {
           "heading": "### IV.3 Performance adapter recipe and evidence limits",
           "start_line": 173,
           "end_line": 185,
           "section_sha256": "1407b7de07de8f5c7a5c818cd003d8941b2045d6f0db413f8941af2dc1ec23e0",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 19
         },
         {
           "heading": "### IV.4 YCharts intake, session library and explicit retrieval instructions",
           "start_line": 186,
           "end_line": 219,
           "section_sha256": "860b64a2ba96aa786e84d0a5fcbf1d8147c9b4eafad245d1590a1cf674e59b2d",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 20
         },
         {
           "heading": "### IV.5 Partner holdings/model joins, classifications and exact paths",
           "start_line": 220,
           "end_line": 244,
           "section_sha256": "8347010edf034cbde590d16716833f99fe7a9f926c1cd68f6feee955a40068db",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 21
         },
         {
           "heading": "### IV.6 Narrative evidence, brand assets and export execution",
           "start_line": 245,
           "end_line": 263,
           "section_sha256": "046f722312360850d81c3e391deec24afedc79928ddd48a3234f3434e79a11e2",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 22
         },
         {
           "heading": "### IV.7 Evidence artifacts and proposed new code homes",
           "start_line": 264,
           "end_line": 272,
           "section_sha256": "6c1cf6c6748daf92ca681f8946aa76ba0df15d3c21527a88b3c8805354a4dd0e",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 23
         },
         {
           "heading": "### IV.8 Required detail coverage in the backend PRD",
           "start_line": 273,
           "end_line": 278,
           "section_sha256": "b0923930432fb7c4a509003c3698b01ed4a6ca2ac83e3eaeb5d636f9491a1596",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 24
         },
         {
           "heading": "# PART V — WHAT MUST BE TRUE, WITHOUT SCOPING IT NOW",
           "start_line": 279,
           "end_line": 290,
           "section_sha256": "a2e43ad93cd3fb9f013b6f80b070d1d6915335e5002054c31da56250e06a1df7",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 25
         },
         {
           "heading": "# PART VI — STATUS — NOT OUTCOME-BEARING",
           "start_line": 291,
-          "end_line": 296,
-          "section_sha256": "528bd26b7071628bf4f58adba4aec691f5619070a67f084921f153a0f71bbdf3",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "end_line": 298,
+          "section_sha256": "e340dc59d53190ae7a7aa21f424770c7f02a3adc5498cedf3dddbe2061d9a443",
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 26
         },
         {
           "heading": "# PART VII — WHAT THIS BRIEF DOES NOT CLAIM",
-          "start_line": 297,
-          "end_line": 300,
+          "start_line": 299,
+          "end_line": 302,
           "section_sha256": "85b08f79acd3728764bfb6425ee5221f21dfa2c69970deb69d273846b087dc35",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 27
         },
         {
           "heading": "## REFS TO CARRY",
-          "start_line": 301,
-          "end_line": 318,
-          "section_sha256": "0e0aff2127d28f5eaf01c8f989d71598decfa6e3fb34aa0a398304078bfa15a4",
-          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+          "start_line": 303,
+          "end_line": 320,
+          "section_sha256": "26d7971b8d8b3f53869cf7c37b70fd2b6ea2ef8f7c2098e5d5bff129acb4a79a",
+          "prd_mapping_status": "row present at 62301f71e0; named review findings closed at document level; no universal losslessness certification",
+          "prd_coverage_row": 28
         }
       ]
     }
@@ -1177,7 +1253,7 @@
       "path": "portal/src/pages/InvestorReporting/",
       "proposed": true,
       "exists": false,
-      "kind": "not_present",
+      "kind": "absent",
       "references": [
         {
           "project": "IR FE",
@@ -1190,7 +1266,7 @@
       "path": "portal/src/api/endpoints/investor-reporting.ts",
       "proposed": true,
       "exists": false,
-      "kind": "not_present",
+      "kind": "absent",
       "references": [
         {
           "project": "IR FE",
@@ -1785,6 +1861,11 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 222
+        },
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
           "line": 237
         }
       ]
@@ -1874,6 +1955,11 @@
       "kind": "file",
       "references": [
         {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 164
+        },
+        {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
           "line": 256
@@ -1886,6 +1972,11 @@
       "exists": true,
       "kind": "file",
       "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 164
+        },
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
@@ -1900,6 +1991,11 @@
       "kind": "file",
       "references": [
         {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 164
+        },
+        {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
           "line": 256
@@ -1910,7 +2006,7 @@
       "path": "infra/aws/lambda/investor-reporting/",
       "proposed": true,
       "exists": false,
-      "kind": "not_present",
+      "kind": "absent",
       "references": [
         {
           "project": "IR BK",
@@ -1923,7 +2019,7 @@
       "path": "infra/aws/terraform/investor-reporting/",
       "proposed": true,
       "exists": false,
-      "kind": "not_present",
+      "kind": "absent",
       "references": [
         {
           "project": "IR BK",
@@ -1936,12 +2032,84 @@
       "path": "data/assets/scripts/gold/investor_reporting/",
       "proposed": true,
       "exists": false,
-      "kind": "not_present",
+      "kind": "absent",
       "references": [
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
           "line": 271
+        }
+      ]
+    },
+    {
+      "path": "org/tier0/ledger/LD-0542.md",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 8
+        },
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 7
+        }
+      ]
+    },
+    {
+      "path": "docs/briefs/sources/INVESTOR_REPORTING_L4_COVERAGE_REVIEW_20260910.md",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 195
+        },
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 297
+        }
+      ]
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 195
+        },
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 214
+        }
+      ]
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 297
+        },
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 317
         }
       ]
     }
@@ -1987,6 +2155,12 @@
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
       "line": 8,
       "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_185xZ_D9_TO_LAPTOP_CLDGRPH_FINISHED_15MIN_RATIFIED.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 8,
+      "target": "../../org/tier0/ledger/LD-0542.md",
       "exists": true
     },
     {
@@ -2122,6 +2296,18 @@
       "exists": true
     },
     {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 195,
+      "target": "../../org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 195,
+      "target": "sources/INVESTOR_REPORTING_L4_COVERAGE_REVIEW_20260910.md",
+      "exists": true
+    },
+    {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
       "line": 4,
       "target": "investor-reporting-ir-fe-brief-20260910.md",
@@ -2161,6 +2347,12 @@
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
       "line": 7,
       "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_185xZ_D9_TO_LAPTOP_CLDGRPH_FINISHED_15MIN_RATIFIED.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 7,
+      "target": "../../org/tier0/ledger/LD-0542.md",
       "exists": true
     },
     {
@@ -2300,6 +2492,18 @@
       "line": 269,
       "target": "sources/INVESTOR_REPORTING_FE_BK_SPLIT_EVIDENCE_20260910.json",
       "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 297,
+      "target": "../../org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 297,
+      "target": "sources/INVESTOR_REPORTING_L4_COVERAGE_REVIEW_20260910.md",
+      "exists": true
     }
   ],
   "checks": {
@@ -2334,9 +2538,12 @@
       "limitation": "AWS access-key, bearer-token and Cookie header signatures only; not universal secret detection."
     },
     "l2_distribution_covers_all_eight_once": true,
-    "current_distribution_covers_all_twelve_once": true
+    "current_distribution_covers_all_twelve_once": true,
+    "current_brief_product_sections_unchanged_from_2acf23d8fd": true,
+    "current_nine_source_hashes_unchanged": true,
+    "local_link_count": 65
   },
-  "updated_at_utc": "2026-09-10T19:52:41.305821+00:00",
+  "updated_at_utc": "2026-09-10T20:47:21.120599+00:00",
   "forward_endpoints": [
     {
       "project_code": "IRPT_FNTEND",
@@ -2538,7 +2745,8 @@
         "brief_section_denominator": 25,
         "supporting_document_denominator": 9,
         "required_mapping_entries": 34,
-        "mapping_status": "inventory only; PRD/cell mapping not written or certified by this check"
+        "mapping_status": "all inventory rows verified at 62301f71e0; six named review findings closed at document level",
+        "reviewed_prd_commit": "62301f71e0"
       },
       {
         "project": "IRPT_BCKEND",
@@ -2546,10 +2754,11 @@
         "brief_section_denominator": 28,
         "supporting_document_denominator": 9,
         "required_mapping_entries": 37,
-        "mapping_status": "inventory only; PRD/cell mapping not written or certified by this check"
+        "mapping_status": "all inventory rows verified at 62301f71e0; six named review findings closed at document level",
+        "reviewed_prd_commit": "62301f71e0"
       }
     ],
-    "scope": "No coverage-complete claim for unwritten PRDs; inventory is the denominator for downstream subtraction."
+    "scope": "Actual L4 maps inspected at v0.4; all inventory rows represented and six named findings closed. This bounded review does not certify universal losslessness or implementation."
   },
   "proposal_history": [
     {
@@ -2561,5 +2770,686 @@
       }
     }
   ],
-  "proposed_unratified_outcomes": {}
+  "proposed_unratified_outcomes": {},
+  "l4_coverage_review": {
+    "prd_commit": "d555a334825acce0ece6063d1732f65f3993b7b3",
+    "brief_commit": "2acf23d8fd2a51fdef0b38ff7ef193f0c233661d",
+    "artifact": "docs/briefs/sources/INVESTOR_REPORTING_L4_COVERAGE_REVIEW_20260910.md",
+    "measured_at_utc": "2026-09-10T20:35:07.809356+00:00",
+    "status": "heading/source inventories complete; six concrete semantic/mapping corrections routed to CTO; not lossless-carriage or implementation certification",
+    "findings": [
+      "R1 incorrect Graph/certificate reuse path",
+      "R2 ExportBundle FE preview consumer missing on BK contract",
+      "R3 FWD-4 export missing from render-cell/source mapping",
+      "R4 B12 join/recursion/classification guard detail",
+      "R5 B13 historical evidence selection guard detail",
+      "R6 B9 effective settings/body/response semantics"
+    ],
+    "projects": [
+      {
+        "project": "IRPT_FNTEND",
+        "prd_path": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md",
+        "prd_blob_sha256": "3bd6a8516f99609127bf1792959736a1c4d7f45245139b757a840c898111838f",
+        "source_brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+        "source_brief_blob_sha256": "72d3acf301f1f9b0f61132c8da823ecfa2196fa2bcdaeaf089e23b1e60500a52",
+        "section_denominator": 25,
+        "supporting_document_denominator": 9,
+        "coverage_rows": [
+          {
+            "row_number": 1,
+            "source_label": "title / preamble (ownership paragraph; Reporting -> Analysis -> Holdings; split changes ownership not meaning)",
+            "consumer_or_disposition": "F1, F12 boundaries; every cell's CROSSES",
+            "outcomes": "all"
+          },
+          {
+            "row_number": 2,
+            "source_label": "PART I heading",
+            "consumer_or_disposition": "structural",
+            "outcomes": "--"
+          },
+          {
+            "row_number": 3,
+            "source_label": "O1 right client, context across tabs",
+            "consumer_or_disposition": "F1, F2, F3, F7",
+            "outcomes": "FWD-1"
+          },
+          {
+            "row_number": 4,
+            "source_label": "O2 clear performance report, provider's meaning intact",
+            "consumer_or_disposition": "F4",
+            "outcomes": "FWD-3"
+          },
+          {
+            "row_number": 5,
+            "source_label": "O3 YCharts analysis in the same client context",
+            "consumer_or_disposition": "F5",
+            "outcomes": "FWD-4"
+          },
+          {
+            "row_number": 6,
+            "source_label": "O4 holdings through model-led radial drilldowns",
+            "consumer_or_disposition": "F6",
+            "outcomes": "FWD-5"
+          },
+          {
+            "row_number": 7,
+            "source_label": "O5 branded report matching the reviewed revision",
+            "consumer_or_disposition": "F8, F9, F10",
+            "outcomes": "FWD-8"
+          },
+          {
+            "row_number": 8,
+            "source_label": "O6 partial, stale or failed results; continue",
+            "consumer_or_disposition": "F7, F3, F12",
+            "outcomes": "FWD-6"
+          },
+          {
+            "row_number": 9,
+            "source_label": "O7 Opal user across all firms from the Global view",
+            "consumer_or_disposition": "F11, F2",
+            "outcomes": "FWD-11"
+          },
+          {
+            "row_number": 10,
+            "source_label": "O8 familiar components and consistent design",
+            "consumer_or_disposition": "F13, F2, F3, F6, F9",
+            "outcomes": "FWD-12"
+          },
+          {
+            "row_number": 11,
+            "source_label": "PART II heading",
+            "consumer_or_disposition": "structural",
+            "outcomes": "--"
+          },
+          {
+            "row_number": 12,
+            "source_label": "II.1 two teams with explicit ownership",
+            "consumer_or_disposition": "every cell's CROSSES column; the ownership paragraph above",
+            "outcomes": "all"
+          },
+          {
+            "row_number": 13,
+            "source_label": "II.2 handoff contracts",
+            "consumer_or_disposition": "CONTRACTS table; F9 (RenderPackage), F12, F14",
+            "outcomes": "all"
+          },
+          {
+            "row_number": 14,
+            "source_label": "II.3 scope retained and scope deferred",
+            "consumer_or_disposition": "constraints on F4 and F6 (cohort controls only for supported classifications; unknown is not false; no conflation with Holdings' Client partitions); the NOT-COMMISSIONED list (no Positioning redesign, no BI replacement, no MP rewrite, no new engine, no vendor retirement, no holdings history, no trade entry, no auto distribution) read against every cell",
+            "outcomes": "all"
+          },
+          {
+            "row_number": 15,
+            "source_label": "PART III qualitative bar",
+            "consumer_or_disposition": "the ACCEPT lines of the ENDPOINT section",
+            "outcomes": "all"
+          },
+          {
+            "row_number": 16,
+            "source_label": "PART IV heading",
+            "consumer_or_disposition": "structural",
+            "outcomes": "--"
+          },
+          {
+            "row_number": 17,
+            "source_label": "IV.1 nine source documents",
+            "consumer_or_disposition": "entries 27-35 below",
+            "outcomes": "all"
+          },
+          {
+            "row_number": 18,
+            "source_label": "IV.2 existing frontend and brand paths",
+            "consumer_or_disposition": "PATHS table; F1, F2, F3, F6, F9, F10, F11, F12, F13",
+            "outcomes": "FWD-1, 3, 5, 8, 11, 12"
+          },
+          {
+            "row_number": 19,
+            "source_label": "IV.3 review artifacts and evidence",
+            "consumer_or_disposition": "FIXTURES table; F4, F5, F6, F8, F9",
+            "outcomes": "FWD-3, 4, 5, 8"
+          },
+          {
+            "row_number": 20,
+            "source_label": "IV.4 measured findings relevant to FE",
+            "consumer_or_disposition": "F13 (narrow-viewport repeat on the real route); F5 (PDF parity unresolved); F6 (real partial/stale states required); acceptance reads \"synthetic fixtures cannot close end-to-end product acceptance\"",
+            "outcomes": "FWD-4, 5, 12"
+          },
+          {
+            "row_number": 21,
+            "source_label": "IV.5 required detail coverage in the frontend PRD",
+            "consumer_or_disposition": "this table",
+            "outcomes": "--"
+          },
+          {
+            "row_number": 22,
+            "source_label": "PART V what must be true",
+            "consumer_or_disposition": "F14 + the dependency register: counterpart contracts and fixtures incl. narrowed relationship behaviour and termination vs revocation; paired YCharts PDFs and section schemas before native rendering is accepted; taxonomy/cohort/attribution bases from the counterpart; brand/disclosure content and the RenderPackage available to the counterpart; both projects bind summary, drill, preview and export to one scope/revision and exercise the crossing proof; existing portal/auth/brand owners' integration procedures",
+            "outcomes": "all"
+          },
+          {
+            "row_number": 23,
+            "source_label": "PART VI status",
+            "consumer_or_disposition": "NOT CONSUMED: not outcome-bearing; compilation clock and hashes carried by FIXTURES row 1",
+            "outcomes": "--"
+          },
+          {
+            "row_number": 24,
+            "source_label": "PART VII what this brief does not claim",
+            "consumer_or_disposition": "NOT CONSUMED as work: bounds claims (no production frontend, no release policy, no export service, no fresh permission result, no native fidelity certified by assembly); read as the NOT-CLAIMED list against every cell's acceptance",
+            "outcomes": "--"
+          },
+          {
+            "row_number": 25,
+            "source_label": "REFS TO CARRY",
+            "consumer_or_disposition": "NOT CONSUMED as work: a link list; each referent is consumed through the entry that cites it",
+            "outcomes": "--"
+          },
+          {
+            "row_number": 27,
+            "source_label": "S1 original unification brief",
+            "consumer_or_disposition": "F1, F2, F4, F5 (distinct client-service surface, hierarchy/search, report transparency, cohort semantics, modeled-analysis distinction); broad replacement and history ambitions deferred",
+            "outcomes": "FWD-1, 3, 4"
+          },
+          {
+            "row_number": 28,
+            "source_label": "S2 lightweight brief",
+            "consumer_or_disposition": "F1-F8 (three-tab product, fast client context, view/export behaviour, lifecycle states)",
+            "outcomes": "FWD-1..8"
+          },
+          {
+            "row_number": 29,
+            "source_label": "S3 YCharts brief",
+            "consumer_or_disposition": "F5 (email-request visibility, input inspection/correction, three choices, recovery states, native analysis, released revisions)",
+            "outcomes": "FWD-4"
+          },
+          {
+            "row_number": 30,
+            "source_label": "S4 holdings/model-overlay brief",
+            "consumer_or_disposition": "F6 (advisor-scoped current view, taxonomy/radial drilldowns, basis/denominator/coverage labels; no time series)",
+            "outcomes": "FWD-5"
+          },
+          {
+            "row_number": 31,
+            "source_label": "S5 lightweight design",
+            "consumer_or_disposition": "F2, F3, F4, F8, F12 (header/tab/search components, selected-scope behaviour, normalized envelopes, same-revision export, source/code index)",
+            "outcomes": "FWD-1, 3, 6, 8"
+          },
+          {
+            "row_number": 32,
+            "source_label": "S6 performance review",
+            "consumer_or_disposition": "F4 (summary/chart/account layout, defaults to review, optional sections, autosuggest interaction, synthetic reference)",
+            "outcomes": "FWD-3"
+          },
+          {
+            "row_number": 33,
+            "source_label": "S7 export/narrative specification",
+            "consumer_or_disposition": "F8, F9, F10 (standard branded pages, optional advisor assets, wide narrative chart, freeze/preview/export rules, synthetic PDF); event/data algorithms are the counterpart's",
+            "outcomes": "FWD-8"
+          },
+          {
+            "row_number": 34,
+            "source_label": "S8 YCharts design",
+            "consumer_or_disposition": "F5 (request fields/settings, variant/cardinality/orientation, understandable lifecycle, native section schema, PDF fidelity gap); vendor execution is the counterpart's",
+            "outcomes": "FWD-4"
+          },
+          {
+            "row_number": 35,
+            "source_label": "S9 model-overlay design",
+            "consumer_or_disposition": "F6 (display-node contract, taxonomy/colours, signed values, percentage/drill rules, scope/revision-bound serving); partner joins are the counterpart's",
+            "outcomes": "FWD-5"
+          }
+        ],
+        "row_count": 34,
+        "not_consumed_count": 3,
+        "unchanged_product_sections_verified": true,
+        "changed_metadata_sections": [
+          "# IR FE — Investor Reporting frontend project brief",
+          "# PART V — WHAT MUST BE TRUE, WITHOUT SCOPING IT NOW",
+          "# PART VI — STATUS — NOT OUTCOME-BEARING",
+          "## REFS TO CARRY"
+        ]
+      },
+      {
+        "project": "IRPT_BCKEND",
+        "prd_path": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md",
+        "prd_blob_sha256": "7a286f2a17972569a1152aad8674e0c06fedcb3751e67f7a44d579c062a68429",
+        "source_brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+        "source_brief_blob_sha256": "7e4d21d6b0c79f3aa05782988c737aa392334fd85247f1918edd7a381c04a256",
+        "section_denominator": 28,
+        "supporting_document_denominator": 9,
+        "coverage_rows": [
+          {
+            "row_number": 1,
+            "source_label": "title / preamble (ownership paragraph, v1 exclusions)",
+            "consumer_or_disposition": "B18 (boundaries); v1 exclusions carried as NOT-IN-SCOPE constraints on every cell",
+            "outcomes": "all"
+          },
+          {
+            "row_number": 2,
+            "source_label": "PART I heading",
+            "consumer_or_disposition": "structural",
+            "outcomes": "--"
+          },
+          {
+            "row_number": 3,
+            "source_label": "O1 permitted clients, authorized population",
+            "consumer_or_disposition": "B1, B2, B3",
+            "outcomes": "FWD-1, FWD-2"
+          },
+          {
+            "row_number": 4,
+            "source_label": "O2 comparable performance, vendor semantics",
+            "consumer_or_disposition": "B11",
+            "outcomes": "FWD-3"
+          },
+          {
+            "row_number": 5,
+            "source_label": "O3 holdings email becomes a scoped request",
+            "consumer_or_disposition": "B5, B6, B7",
+            "outcomes": "FWD-9"
+          },
+          {
+            "row_number": 6,
+            "source_label": "O4 correct YCharts variant, recoverable generation",
+            "consumer_or_disposition": "B8, B9, B10",
+            "outcomes": "FWD-4"
+          },
+          {
+            "row_number": 7,
+            "source_label": "O5 current custody holdings, model percentages",
+            "consumer_or_disposition": "B12",
+            "outcomes": "FWD-5"
+          },
+          {
+            "row_number": 8,
+            "source_label": "O6 branded reproducible export, evidence-backed context",
+            "consumer_or_disposition": "B13, B14",
+            "outcomes": "FWD-8"
+          },
+          {
+            "row_number": 9,
+            "source_label": "O7 bound to its firm at ingestion; operations",
+            "consumer_or_disposition": "B5, B16, B17",
+            "outcomes": "FWD-10, FWD-7"
+          },
+          {
+            "row_number": 10,
+            "source_label": "O8 Opal user across every firm",
+            "consumer_or_disposition": "B15, B2",
+            "outcomes": "FWD-11"
+          },
+          {
+            "row_number": 11,
+            "source_label": "PART II heading",
+            "consumer_or_disposition": "structural",
+            "outcomes": "--"
+          },
+          {
+            "row_number": 12,
+            "source_label": "II.1 what this team owns / crosses to FE",
+            "consumer_or_disposition": "every cell's CROSSES column; the ownership split above",
+            "outcomes": "all"
+          },
+          {
+            "row_number": 13,
+            "source_label": "II.2 shared owners and limits",
+            "consumer_or_disposition": "B18 (coordinate with OPAL_ASSETS/D10, D1_CATVIEWS, ASSETCLASS_TAXONOMY, D3_MODELOVERLAY, ADVI_ECLDAT, WSE_COTMDL, MDPF3FIRMS, PORTAL_AUTHHARD/ADVI_ROLGAT, ADVI_BDAPIMIG.P1, YALP_MDSRC, OPAL_ADVIPOINTERS -- reuse never widens deployment or IAM)",
+            "outcomes": "all"
+          },
+          {
+            "row_number": 14,
+            "source_label": "II.3 shared contract inventory",
+            "consumer_or_disposition": "CONTRACTS table; B3 keys",
+            "outcomes": "all"
+          },
+          {
+            "row_number": 15,
+            "source_label": "PART III qualitative bar",
+            "consumer_or_disposition": "the ACCEPT lines of the ENDPOINT section are the bar in plain English",
+            "outcomes": "all"
+          },
+          {
+            "row_number": 16,
+            "source_label": "PART IV heading",
+            "consumer_or_disposition": "structural",
+            "outcomes": "--"
+          },
+          {
+            "row_number": 17,
+            "source_label": "IV.1 four briefs + five supporting documents",
+            "consumer_or_disposition": "entries 30-38 below",
+            "outcomes": "all"
+          },
+          {
+            "row_number": 18,
+            "source_label": "IV.2 identity, tenant scoping, daily movement",
+            "consumer_or_disposition": "B1, B2, B4, B5, B15, B16",
+            "outcomes": "FWD-1, 2, 7, 10, 11"
+          },
+          {
+            "row_number": 19,
+            "source_label": "IV.3 performance adapter recipe and limits",
+            "consumer_or_disposition": "B11; FIXTURES row 3",
+            "outcomes": "FWD-3"
+          },
+          {
+            "row_number": 20,
+            "source_label": "IV.4 YCharts intake, session library, retrieval",
+            "consumer_or_disposition": "B6, B7, B8, B9, B10, B17",
+            "outcomes": "FWD-4, FWD-9, FWD-10"
+          },
+          {
+            "row_number": 21,
+            "source_label": "IV.5 partner joins, classifications, paths",
+            "consumer_or_disposition": "B12",
+            "outcomes": "FWD-5"
+          },
+          {
+            "row_number": 22,
+            "source_label": "IV.6 narrative evidence, brand assets, export execution",
+            "consumer_or_disposition": "B13, B14",
+            "outcomes": "FWD-8"
+          },
+          {
+            "row_number": 23,
+            "source_label": "IV.7 evidence artifacts and new code homes",
+            "consumer_or_disposition": "FIXTURES table; PATHS new rows; B18",
+            "outcomes": "all"
+          },
+          {
+            "row_number": 24,
+            "source_label": "IV.8 required detail coverage in the backend PRD",
+            "consumer_or_disposition": "this table",
+            "outcomes": "--"
+          },
+          {
+            "row_number": 25,
+            "source_label": "PART V what must be true",
+            "consumer_or_disposition": "B18 dependency register: auth/identity contracts and tested tenant routing; provider credentials per tenant; actual YCharts PDFs, upload specimens, forwarded-mail form, mailbox grant, session compatibility; source completion semantics and missing mappings/units; historical news evidence policy; FE RenderPackage + fixtures; register representation (done)",
+            "outcomes": "all"
+          },
+          {
+            "row_number": 26,
+            "source_label": "PART VI status",
+            "consumer_or_disposition": "NOT CONSUMED: not outcome-bearing; records compilation clock and source hashes, which FIXTURES row 1 already carries",
+            "outcomes": "--"
+          },
+          {
+            "row_number": 27,
+            "source_label": "PART VII what this brief does not claim",
+            "consumer_or_disposition": "NOT CONSUMED as work: it bounds claims (no production backend, no release policy, no export service, no fresh permission result, no native fidelity certified by assembly); carried as the NOT-CLAIMED list every cell's acceptance is read against",
+            "outcomes": "--"
+          },
+          {
+            "row_number": 28,
+            "source_label": "REFS TO CARRY",
+            "consumer_or_disposition": "NOT CONSUMED as work: a link list; each referent is consumed through the entry that cites it",
+            "outcomes": "--"
+          },
+          {
+            "row_number": 30,
+            "source_label": "S1 original unification brief",
+            "consumer_or_disposition": "B1, B2, B16, B18 (identity/cohort semantics, provider common shape, business clocks, path manifests, future boundaries)",
+            "outcomes": "FWD-1, 2, 7, 10"
+          },
+          {
+            "row_number": 31,
+            "source_label": "S2 lightweight brief",
+            "consumer_or_disposition": "B1, B2, B3, B11, B9, B12, B16, B13",
+            "outcomes": "FWD-1..8"
+          },
+          {
+            "row_number": 32,
+            "source_label": "S3 YCharts brief",
+            "consumer_or_disposition": "B6, B7, B8, B9, B10",
+            "outcomes": "FWD-4, FWD-9"
+          },
+          {
+            "row_number": 33,
+            "source_label": "S4 model-overlay brief",
+            "consumer_or_disposition": "B12, B16",
+            "outcomes": "FWD-5"
+          },
+          {
+            "row_number": 34,
+            "source_label": "S5 lightweight design",
+            "consumer_or_disposition": "B1, B2, B11, B14, B17 (identity/provider maps, normalizer and serving boundaries, cache/export semantics, 31-path index)",
+            "outcomes": "FWD-1, 2, 3, 8"
+          },
+          {
+            "row_number": 35,
+            "source_label": "S6 performance review",
+            "consumer_or_disposition": "B11 (exact BD/Orion endpoints, units, response traps, proof gaps)",
+            "outcomes": "FWD-3"
+          },
+          {
+            "row_number": 36,
+            "source_label": "S7 export/narrative specification",
+            "consumer_or_disposition": "B13, B14 (logo option, deterministic events, dated evidence, frozen bundle)",
+            "outcomes": "FWD-8"
+          },
+          {
+            "row_number": 37,
+            "source_label": "S8 YCharts design",
+            "consumer_or_disposition": "B6, B7, B8, B9, B10, B17 (mailbox/checkpoint/parse, runner and secrets, endpoint/body recipe, storage/jobs, section shape, missing specimens)",
+            "outcomes": "FWD-4, FWD-9"
+          },
+          {
+            "row_number": 38,
+            "source_label": "S9 model-overlay design",
+            "consumer_or_disposition": "B12 (source grains, partner joins, taxonomy/denominators, ETL/publisher boundary, offline recipe)",
+            "outcomes": "FWD-5"
+          }
+        ],
+        "row_count": 37,
+        "not_consumed_count": 3,
+        "unchanged_product_sections_verified": true,
+        "changed_metadata_sections": [
+          "# IR BK — Investor Reporting backend project brief",
+          "# PART VI — STATUS — NOT OUTCOME-BEARING",
+          "## REFS TO CARRY"
+        ]
+      }
+    ],
+    "verified_reuse_source": {
+      "path": "infra/aws/lambda/ycharts-session-capture/index.mjs",
+      "source_commit": "d555a33482",
+      "blob_sha256": "b5391f7a2b9c1eace4aee68204584272d76e6d8c6b1844f3e04dfb1ada4e81e5",
+      "finding": "Browser login/session capture; not Graph application/certificate mailbox implementation"
+    },
+    "follow_up_reviews": [
+      {
+        "source_message": "95585",
+        "prd_commit": "bde174b1266d255ab87c85a46dc3983787a4215a",
+        "measured_at_utc": "2026-09-10T20:43:20.454423+00:00",
+        "review_artifact": "docs/briefs/sources/INVESTOR_REPORTING_L4_COVERAGE_REVIEW_20260910.md",
+        "artifact_sha256": "04eb4572e96453ed125058031777bc93e505fd2e8b19bd0ca8623b2ca2623329",
+        "result": "R2 and R5 plus coverage pointer closed at document level; R1/R3/R4/R6 principal fixes landed with four residual edits",
+        "findings": [
+          {
+            "id": "R1",
+            "status": "partial",
+            "remaining": "BK PATHS line 166 still assigns cookie-capture/client/pipeline reuse to B6; remove B6"
+          },
+          {
+            "id": "R2",
+            "status": "closed_document_level",
+            "evidence": "BK contract line 140 names FE F8 preview consumer"
+          },
+          {
+            "id": "R3",
+            "status": "partial",
+            "remaining": "FE S3/S8 coverage rows lines 187/192 still name only F5; add applicable F8/F9 render consumers"
+          },
+          {
+            "id": "R4",
+            "status": "partial",
+            "remaining": "B12 needs explicit preservation of Opal wrapper/leaf attribution"
+          },
+          {
+            "id": "R5",
+            "status": "closed_document_level",
+            "evidence": "B13 line 120 carries named historical exclusions and failure fixtures"
+          },
+          {
+            "id": "R6",
+            "status": "partial",
+            "remaining": "B9 needs captured portfolio/items multipart creation with real upload_record_id and correct units"
+          }
+        ],
+        "pointer_defect": "closed_document_level",
+        "projects": [
+          {
+            "project": "IRPT_FNTEND",
+            "prd_path": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md",
+            "prd_blob_sha256": "98941bf157c630692be03d6362982ec5073e1664777b3851c82ab3f7c68e4d2a",
+            "coverage_rows": 34,
+            "candidate_cells": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8",
+              "F9",
+              "F10",
+              "F11",
+              "F12",
+              "F13",
+              "F14"
+            ],
+            "endpoint_unchanged_from_d555a33482": true
+          },
+          {
+            "project": "IRPT_BCKEND",
+            "prd_path": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md",
+            "prd_blob_sha256": "9006c4ffe8c41ce5f62bfcf98c0c5aeb5398c291ca3f094892c513240a6224e6",
+            "coverage_rows": 37,
+            "candidate_cells": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8",
+              "B9",
+              "B10",
+              "B11",
+              "B12",
+              "B13",
+              "B14",
+              "B15",
+              "B16",
+              "B17",
+              "B18"
+            ],
+            "endpoint_unchanged_from_d555a33482": true
+          }
+        ],
+        "limits": "Targeted document follow-up only; not universal losslessness, implementation, runtime, publication or deployment certification"
+      },
+      {
+        "source_message": "95594",
+        "prd_commit": "62301f71e03a0725a7f4bebf0770a438dfc8b371",
+        "measured_at_utc": "2026-09-10T20:47:21.120599+00:00",
+        "review_artifact": "docs/briefs/sources/INVESTOR_REPORTING_L4_COVERAGE_REVIEW_20260910.md",
+        "artifact_sha256": "2efa93e1a78ecbd0df0307d7e5719e0b980d874c0ba85287506c40e5c2bdb6a6",
+        "result": "All six named findings, four residual edits and coverage pointer closed at document level",
+        "findings": [
+          {
+            "id": "R1",
+            "status": "closed_document_level"
+          },
+          {
+            "id": "R2",
+            "status": "closed_document_level"
+          },
+          {
+            "id": "R3",
+            "status": "closed_document_level"
+          },
+          {
+            "id": "R4",
+            "status": "closed_document_level"
+          },
+          {
+            "id": "R5",
+            "status": "closed_document_level"
+          },
+          {
+            "id": "R6",
+            "status": "closed_document_level"
+          }
+        ],
+        "residual_edits_closed": [
+          "R1 PATHS B8 only",
+          "R3 S3/S8 include F8/F9",
+          "R4 Opal wrapper/leaf attribution and fixtures",
+          "R6 real upload_record_id, creation form and units"
+        ],
+        "pointer_defect": "closed_document_level",
+        "projects": [
+          {
+            "project": "IRPT_FNTEND",
+            "prd_path": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md",
+            "prd_blob_sha256": "db100fb7973a8d357a882782173cf16b94e7dc6bfda4bc549e670c14ae855e75",
+            "coverage_rows": 34,
+            "candidate_cells": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8",
+              "F9",
+              "F10",
+              "F11",
+              "F12",
+              "F13",
+              "F14"
+            ],
+            "endpoint_unchanged_from_d555a33482": true,
+            "contracts_unchanged_from_v03": true
+          },
+          {
+            "project": "IRPT_BCKEND",
+            "prd_path": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md",
+            "prd_blob_sha256": "a23ba05823c8f2ca1c8d9eca1518ead8768a3cf76a7b378933aa6d2c1cf1d217",
+            "coverage_rows": 37,
+            "candidate_cells": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8",
+              "B9",
+              "B10",
+              "B11",
+              "B12",
+              "B13",
+              "B14",
+              "B15",
+              "B16",
+              "B17",
+              "B18"
+            ],
+            "endpoint_unchanged_from_d555a33482": true,
+            "contracts_unchanged_from_v03": true
+          }
+        ],
+        "limits": "Bounded document closure; no implementation acceptance, universal losslessness certification, live permission proof, deployment or publication claim"
+      }
+    ],
+    "current_status": "All six named findings, four residual edits and coverage pointer closed at document level"
+  }
 }

@@ -1,0 +1,13 @@
+{
+ "project_code": "IRPT_FNTEND",
+ "home": "org/missions/D9/IRPT/IRPT_FNTEND",
+ "directive": "D9",
+ "macro_code": "IRPT",
+ "fabric": "laptop",
+ "dep_stage": "EXECUTING",
+ "status": "active",
+ "name": "Investor Reporting, the advisor-facing product: entry and client context, the three tabs (Reporting, Analysis, Holdings), the branded export and its preview, the Global view, and design conformity with the Opal portal",
+ "generated_from": "org/missions/D9/IRPT/IRPT_FNTEND/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-09-10T21:14:15Z"
+}

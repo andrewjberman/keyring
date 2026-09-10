@@ -4,7 +4,7 @@
 **Project:** **IR BK**, counterpart to [IR FE](investor-reporting-ir-fe-brief-20260910.md). **Two projects, no third umbrella.**  
 **Canonical code:** `IRPT_BCKEND`, named by Andrew in the [five-message direction](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_192xZ_FWD9_YES_FWD10_IMPOSSIBLE_BY_INGESTION_GATE.md) at `2dcd88091f`; the renamed [project endpoint](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md) carries it. IR BK remains the short name.
 **Authority:** [Andrew's split instruction](../../org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260910_IR_FE_IR_BK_SPLIT.md), initially `6226b4a680`; [priority/device direction](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_183xZ_IR_IS_THE_TOP_PROJECT_LAPTOP_AND_SPLITS_FE_BK.md), `c0f5ed8163`; [IRPT/D9 direction](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_183xZ_MACRO_IS_IRPT_REGISTER_IN_D9.md), `1f0f1dd3f6`. **Both projects run on this laptop; Investor Reporting has highest priority across the board.**  
-**Organization:** Macro **IRPT**, directive **D9**. IR FE and IR BK are the requested project names; Andrew has named `IRPT_FNTEND` and `IRPT_BCKEND`, superseding the withdrawn longer codes. CTO withdrew `OPAL_INVRPT`. These briefs replace the former one-project/WS1–WS4 organization without changing the eight permanent FWD IDs. Andrew subsequently moved **D9 as a whole to laptop** ([subsequent D9 placement direction](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_185xZ_D9_TO_LAPTOP_CLDGRPH_FINISHED_15MIN_RATIFIED.md), `4ff4abd9a4`); MSTR owns the register update. The placement/write-ownership question is closed. This brief closes no other project.\
+**Organization:** Macro **IRPT**, directive **D9**. IR FE and IR BK are the requested project names; Andrew has named `IRPT_FNTEND` and `IRPT_BCKEND`, superseding the withdrawn longer codes. CTO withdrew `OPAL_INVRPT`. These briefs replace the former one-project/WS1–WS4 organization without changing the eight permanent FWD IDs. Andrew subsequently moved **D9 as a whole to laptop** ([subsequent D9 placement direction](../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_185xZ_D9_TO_LAPTOP_CLDGRPH_FINISHED_15MIN_RATIFIED.md), `4ff4abd9a4`); CTO owns every L3 carrier and writes the tree row, generated index, directive members and macro enum in its own commit, with no MSTR gate ([LD-0542](../../org/tier0/ledger/LD-0542.md), `2f13cdbaeb`; Rule 27/spine correction `08722e8b86`). The placement/write-ownership question is closed. This brief closes no other project.\
 **Consumer:** Andrew's design review, CTO's L2/PRD work and the backend delivery team alongside IR FE.
 
 **IR BK owns ingestion, multi-tenant firm/advisor scoping, all ETL and serving operations, provider sessions/retrieval, normalizers, model joins, narrative evidence and export execution.** IR FE owns the client-facing product and the reusable presentation/rendering package. The backend makes the existing data useful: fast directories from Silver and established identity inputs; native BD/Orion performance; native YCharts analysis; current custody holdings with evidenced model overlays. It does not introduce a new return engine, alternate scenario engine or historical holdings product in v1.
@@ -294,6 +294,8 @@ This is a September 10 consolidation after the split/priority/device/macro direc
 
 The previous research produced briefs, profilers, scrubbed evidence and synthetic presentation artifacts. The authorized YCharts login secret was created earlier; that isolated action is not a deployed intake/session/generation service. This brief creates no API, ETL deployment, bucket, scheduler, tenant grant, project row or task order. Documentation validation covers all nine references, local links, path status and FE/BK contract consistency. Publication is reported separately against measured `origin/CLOUD`.
 
+The [IRPT_BCKEND PRD](../../org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md) landed at `d555a33482`, using this brief at `2acf23d8fd`; the project tree landed at `4c5e5fb513`. The [bounded L4 coverage review](sources/INVESTOR_REPORTING_L4_COVERAGE_REVIEW_20260910.md) checks the actual maps and records corrections for CTO. Table coverage alone does not certify lossless requirement carriage or implementation. L1 remains CRO-owned; CTO completes L2 through the L5 handoff; COO owns decomposition. This update changes routing/status references, not the product requirements in the pinned brief.
+
 # PART VII — WHAT THIS BRIEF DOES NOT CLAIM
 
 The bounded source profiles do not certify universal account coverage, fresh authorization, complete historical sentiment, all provider calculation methods, or native YCharts section parity. Proposed defaults and code/resource paths remain labeled. No return engine, vendor retirement, holdings history or broad legacy data migration is silently added. The nine source documents remain evidence authorities with their dated limitations; their former project/workstream ownership is superseded by IR FE and IR BK. FWD IDs remain permanent and formal acceptance assignment belongs to CTO.
@@ -303,7 +305,7 @@ The bounded source profiles do not certify universal account coverage, fresh aut
 ```text
 BRIEF          docs/briefs/investor-reporting-ir-bk-brief-20260910.md
 PROJECT        IR BK / IRPT_BCKEND; code named by Andrew at 2dcd88091f
-MACRO/HOME     IRPT / D9; D9 whole to laptop directed, register edit owned by MSTR
+MACRO/HOME     IRPT / D9; D9 whole to laptop directed, all L3 carriers written by CTO; no MSTR gate (LD-0542)
 COUNTERPART    docs/briefs/investor-reporting-ir-fe-brief-20260910.md
 SOURCE MAP     Part IV.1, S1-S9; four briefs and five supporting documents
 PATH MAP       Part IV.2-IV.7; all functions plus companion evidence JSON
@@ -312,7 +314,7 @@ EVIDENCE       docs/briefs/sources/INVESTOR_REPORTING_FE_BK_SPLIT_EVIDENCE_20260
 ENDPOINT       org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md
 PRIOR ENDPOINT org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md (historical; distribution provenance)
 SIBLINGS       Part II.2; source/auth/runner/taxonomy/news owners retain shared boundaries
-EXISTING PRD   New BK PRD is CTO-owned; linked source PRDs are bounded prior art
+EXISTING PRD   org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md @d555a33482 (CTO-owned)
 EXECUTION      Laptop; highest priority across the board; no other-project closures by this seat
 MEASURED AT    Compilation/path-check clocks in evidence; live findings retain source clocks
 ```

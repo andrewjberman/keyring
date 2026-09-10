@@ -1,0 +1,105 @@
+{
+  "shipped": {
+    "kept": {
+      "OWNED_BY": 2,
+      "READS": 1
+    },
+    "dropped": {
+      "STORED_IN": 2
+    },
+    "refused": {}
+  },
+  "unlicensed_request": {
+    "kept": {
+      "STORED_IN": 2,
+      "OWNED_BY": 2,
+      "READS": 1
+    },
+    "dropped": {},
+    "refused": {
+      "OWNED_BY": 2
+    }
+  },
+  "both_requested": {
+    "kept": {
+      "OWNED_BY": 2,
+      "READS": 1
+    },
+    "dropped": {
+      "STORED_IN": 2
+    },
+    "refused": {
+      "OWNED_BY": 2
+    }
+  },
+  "licence_contains_owned_by": {
+    "kept": {
+      "STORED_IN": 2,
+      "READS": 1
+    },
+    "dropped": {
+      "OWNED_BY": 2
+    },
+    "refused": {}
+  },
+  "new_writer_of_licensed_type": {
+    "kept_count": 0,
+    "dropped": {
+      "STORED_IN": 1
+    },
+    "refused": {}
+  },
+  "runtime_references_evidence": false,
+  "payload_counts": {
+    "org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUNI.P1-A.storage_producer.json": {
+      "owned_by_count": 169,
+      "target_bucket_arn_count": 169
+    },
+    "org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUNI.P1-A.storage_producer_phaseB.json": {
+      "owned_by_count": 63,
+      "target_bucket_arn_count": 63
+    }
+  },
+  "packet": {
+    "bytes": 7316,
+    "sha256": "b7baa5ac00d64fdab915c6df02441eef1d4ede4996c636a1a426c15dde6ba5fe"
+  },
+  "existing_resolver": {
+    "S3_BUCKET": "contains",
+    "MS_USER": "owns"
+  },
+  "container_types": [
+    "S3_BUCKET"
+  ],
+  "notes": [
+    "Exact pinned AST functions/constants only; no producer main or cloud call.",
+    "Licence-input mutant demonstrates a policy-input limit, not the unchanged shipped default.",
+    "Initial phase-B lookup used an incomplete filename and failed; the tracked path above is used.",
+    "An initial extra STORED_IN resolver control assumed a non-null result; that harness assumption failed. The two OWNED_BY target controls above are the relevant completed controls."
+  ],
+  "preconditions": {
+    "head": "213b444ac9b011175a3211663afc0267c364fd2a",
+    "at": "2026-09-10T20:13:53.626841+00:00",
+    "count": 291,
+    "under": [
+      "NFRA_CLDGRPH-S117",
+      "NFRA_CLDGRPH-S118",
+      "NFRA_CLDGRPH-W2-S79",
+      "NFRA_CLDGRPH-W3-S20",
+      "NFRA_CLDGRPH-W4-S10",
+      "NFRA_CLDGRPH-W1-S49",
+      "NFRA_CLDGRPH-W1-S50",
+      "NFRA_CLDGRPH-W1-S51",
+      "NFRA_CLDGRPH-S119",
+      "NFRA_CLDGRPH-W2-S80"
+    ],
+    "unknown": [],
+    "files": 7,
+    "note": "",
+    "orders": [
+      [],
+      49,
+      ""
+    ]
+  }
+}

@@ -207,3 +207,50 @@ explicit, dated eighth-message ratification supersedes that stale summary.
 No remaining FWD-12 decision is inferred from that footer. This verifies the
 recorded ratification and its endpoint propagation; it does not grade the eight
 outcomes as realized or certify the future PRD coverage map.
+
+## Execution-only downstream documents and coverage review (44549508e7, 95535)
+
+CVO read the entire pinned three-message direct record. The implementation
+requirements must survive into the PRDs, decompositions and task orders without
+governance history. COO~B and COO~F are the named backend/frontend issuing lanes;
+the CTO's observation adds no approval step. For L9, read each actual coverage
+table against its printed brief/source denominator, resolve consuming cells and
+FWDs, and inspect the requirements carried into those cells. A missing consumer
+and missing non-consumption reason is a defect. A populated map alone does not
+prove that detailed constraints survived.
+
+One concrete extraction defect needs correction before those PRDs are written:
+the record says the outcome blocks are clean and will be copied verbatim, but
+the pinned endpoints contain governance history INSIDE those blocks. Examples
+include the FWD-3/4/5/8/11 ownership annotations beginning `RE-OWNED on Andrew`,
+and BCKEND FWD-9's `WHY NEW` review attribution and first-cut history. Removing
+only the narrative outside the fenced blocks therefore does not implement the
+new instruction. Extract the operative outcome, acceptance, proof, contribution
+and implementation constraints; retain the exact behavioral bars and required
+mechanisms while excluding history and attribution. Preserve any necessary
+source pin in the citation data rather than copied storytelling. The original
+endpoint remains the comparison source for checking that no substantive clause
+was lost in this transformation.
+
+The cited PRD prose percentages and task-order counts are attributed baseline
+measurements, not independently reproduced here. They do not establish that a
+structured decomposition or task order cannot lose requirements. The requested
+coverage review must check actual content through the chain. No PRD or downstream
+artifact is accepted by this record, and no additional gate is introduced.
+
+## Extraction rule accepted; shape-line follow-on pending (a4495ab419, 95536)
+
+CVO read the committed correction at `a4495ab4192dacbb536065597486f0f93eeff6c2`.
+It preserves the outcome title, DONE WHEN, ACCEPT and PROOF verbatim, carries all
+operative constraints and fixed mechanisms, and removes governance annotations.
+That rule addresses the inner-block extraction defect identified above. Actual
+PRD extraction remains to be checked; accepting the rule does not accept an output.
+
+At measured HEAD `e2bc841263eee66f772f37d60197fcc32d75a513`, the later shape line
+still says to copy outcome blocks verbatim. The working-tree version instead
+names per-FWD bars and operative constraints. The follow-on is therefore written
+but not yet committed at this measurement. MERGE_HEAD is absent and the staged
+path count is zero; the earlier nineteen-file merge obstacle is no longer present.
+These are read-only observations. The CTO's modified source file is not included
+in this review commit. The committed rule is verified, with the known shape-line
+contradiction explicitly awaiting its separate correction.

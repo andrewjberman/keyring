@@ -1,0 +1,41 @@
+{
+  "project_code": "IRPT_FNTEND",
+  "macro_code": "IRPT",
+  "directive": "D9",
+  "fabric": "laptop",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "EXECUTING",
+  "created": "2026-09-10",
+  "registered_under_tree": "2026-09-10",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "IRPT_BCKEND"
+  ],
+  "name": "Investor Reporting, the advisor-facing product: entry and client context, the three tabs (Reporting, Analysis, Holdings), the branded export and its preview, the Global view, and design conformity with the Opal portal",
+  "description": "One of the two Investor Reporting projects (two projects, no umbrella). Owns the grade on FWD-1, FWD-3, FWD-4, FWD-5, FWD-6, FWD-8, FWD-11, FWD-12; contributes to the outcomes the counterpart owns. Endpoint: org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FNTEND_20260910.md. Macro IRPT in D9; D9 placed LAPTOP.",
+  "brief_ref": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+  "prds": [
+    "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md"
+  ],
+  "prd_lineage": [],
+  "decompositions": [
+    "org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md"
+  ],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": "2.0.0_SA_COO~F",
+    "cvo": "3.0.0_SA_CVO",
+    "cro": "4.0.0_SA_CRO",
+    "workers": "0.9.0_WK_IRPT_FNTEND~<n>, per the L6 issuance"
+  },
+  "coo_lane": "2.0.0_SA_COO~F",
+  "fabric_ruling": "laptop -- inherited from D9, placed LAPTOP 2026-09-10 ~18:5xZ (Andrew-direct, D9 as a whole).",
+  "blocking": "Not blocked. Every outcome is ratified; the PRD is landed and RATIFIED; L5 decomposition is the COO lane's.",
+  "thread_counter": 0,
+  "threads": [],
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FNTEND_20260910.md",
+  "counterpart": "IRPT_BCKEND"
+}

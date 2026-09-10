@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **289 rows**. Restated 2026-09-10T19:1xZ by `2.0.0_SA_COO~A` at a round-9 drain, by parsing every fenced json block in the MERGED file (217 blocks, 289 rows). This drain merged two branches that each restated this line for their own side; neither count was true of the union, so the number is re-measured here rather than carried from either.
+**Append-only during the round.** Denominator at this write: **298 rows**. Restated 2026-09-10T22:55Z by `2.0.0_SA_COO~A` on appending NFRA_CLDGRPH-S126, by parsing every fenced json block in this file (226 blocks, 298 rows after this append).
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -8444,6 +8444,291 @@ and its four S3 objects are verified.
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "FOUND AFTER THE STATUS FLIP, by the unscoped `git status` read that should have run before it -- stated plainly rather than back-dated, and the ordering mistake is mine. It is filed anyway because the surprise channel is lane ANY (CLAUDE.md s.2: 'the seat that sees it appends its own row'), which is not gated on this order still being non-terminal, and because an ARMED hazard about a DEPLOY ARTIFACT is exactly what must not go unreported when the whole project's convention is committed-not-deployed. ARMED, and specifically: the deploy of CG-s-41's fix is the process's next normal step for this file, and a deploy that reads the committed zip ships the collision while every repo-plane check reads clean -- the source says fixed, the artifact is not. NOT A CRITERION FAILURE: all four mechanical criteria are PASS-by-output on their own invocations and the instance is VALID at rc=0; this concerns a SECOND artifact none of them measures. NOT REMEDIATED HERE, twice over: the zip and the .pyc are both outside <paths>, and rebuilding a deploy zip is an IMAGE-class act the egress hold forbids outright. THE GENERAL FORM, which is why it is a row rather than a footnote: a write grant expressed as a FILE does not bound the artifacts that file's modification obliges, and a tracked build output beside tracked source is a two-writer surface where only one writer was granted."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S119 -- the READ ack clock is dark at the codex validator seat, so obligation 4's trigger cannot go positive there
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T19:52Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.0.0_AB_MSTR",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S119",
+    "one_line": "THE READ ACK CLOCK IS DARK AT THE CODEX VALIDATOR SEAT, SO THE DRIVE LAW'S OBLIGATION-4 TRIGGER IS KEYED TO A DETECTOR THAT CANNOT GO POSITIVE THERE. 50 of 50 messages to 3.0.0_SA_CVO -- from FOUR different senders across about four and a half hours -- read QUEUED with 'no clock stamps yet', READ COVERAGE 0 of 50 and 0 structurally un-ackable. AND THE SEAT DEMONSTRABLY READS ITS MAIL: REMEDIATION_v4.md cites CTO messages 95382 and 95389 by id and by timestamp and executes both, and BOTH of those rows read QUEUED. So 'no READ ack after N ticks' at this recipient is not weak evidence of a stall -- it is NO evidence either way, and an escalation keyed to it reports the instrument rather than the world.",
+    "spec_asserts": "/drive obligation 4: 'L8 packet at the CVO: no READ ack at one tick -> nudge with path + hash; two ticks -> [STUCK] to 0.0.0_AB_MSTR.' The rule reads a missing READ ack as evidence about the RECIPIENT, which presumes the READ clock can go positive at that recipient.",
+    "world_is": "get_delivery_state(3.0.0_SA_CVO, limit 50) at 2026-09-10T19:5xZ: QUEUED=50, denominator 50, ACKABLE 50 of 50, READ COVERAGE 0 of 50. Senders in that window: 1.0.0_SA_CTO, 2.0.0_SA_COO, 2.0.0_SA_COO~A and 0.0.0_AB_MSTR. The seat is a codex seat and it is working -- it authored df23e32346 at 19:23:56Z, twenty-two seconds after this project's packet was queued. The ack primitive is an MCP tool call; a codex seat's reads arrive by a transport that writes no ack row, which CLAUDE.md already records for codex-send in the other direction ('delivers OFF-LEDGER so no read ack can exist').",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "get_delivery_state(agent_serial=3.0.0_SA_CVO, limit=50): 50 QUEUED, 0 READ, denominator printed by the tool itself.",
+        "get_delivery_state(message_id=95511) at two successive ticks: QUEUED both times, 'no clock stamps yet'.",
+        "REMEDIATION_v4.md (untracked draft at the CVO) cites 'CTO direction 95382' and 'CTO ruling 95389 (2026-09-10T17:53:54Z)' and acts on both -- the positive control that the seat READS what its delivery rows call unread.",
+        "git log: 3.0.0_SA_CVO authored df23e32346 at 2026-09-10T19:23:56Z, 22 s after message 95511 was queued at 19:23:34Z."
+      ]
+    },
+    "notes": "ARMED and routed to 0.0.0_AB_MSTR because the remedy is fabric-level and belongs to no project: either the ack primitive reaches codex seats, or obligation 4's trigger names a DISCRIMINATOR THAT CAN GO POSITIVE at a codex recipient -- the estate already has one, and it is the one used here: an artifact the recipient authored that cites the message. WHAT THIS SEAT DID INSTEAD OF FIRING THE LITERAL RULE: it sent the nudge (harmless, carries path and hash), and it did NOT send a [STUCK] asserting the CVO is unreachable, because that assertion would have been FALSE and would have been made on an instrument that cannot return the other answer. THE GENERAL FORM IS ALREADY IN THIS ESTATE'S TRAP SET: a detector that cannot return non-zero on the positive case is a constant wearing a measurement's clothes -- and the failure mode here is an ESCALATION, which is louder and more expensive than a quiet false green. NOT PROPOSED AS A GATE and this lane edits no skill."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W2-S80 -- the withdrawal's hazard passes through a SECOND gate the record does not name, and it is in the file this cell may only read
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T19:29Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W2-S80",
+    "one_line": "THE WITHDRAWAL'S HAZARD IS REAL BUT IT PASSES THROUGH A SECOND GATE THE RECORD DOES NOT NAME, AND THAT GATE IS WHERE A FUTURE RE-POINT WOULD ACTUALLY BITE. Round 8's analysis s.3 and this order's face both state the mechanism as 'the fold would delete another producer's live OWNED_BY edges every cycle'. derive_stitch's drop runs inside derive_stitch's OWN artifact; derive_runner then folds that artifact through STITCH_EDGE_TYPES = frozenset({ROUTES_TO, WRITES, READS, DERIVES_FROM, STORED_IN}) -- an ALLOW-LIST of five, and OWNED_BY is not in it -- while ingesting graphuni-storage's payloads separately and unconditionally on every derive. So a re-point of the EMIT alone would not reach graphuni's edges at all; the deletion becomes reachable only once OWNED_BY is ALSO added to that allow-list, and then it bites exactly as the withdrawal says. The conclusion is unchanged and the withdrawal was correct; what is incomplete is the stated MECHANISM, and the incompleteness points at the file this cell was told not to edit. Filed because a future cut reading only the round-8 text would look for the hazard in derive_stitch.py and find a licence that now refuses it, and could conclude the hazard was disposed of while the second gate sat one edit away in derive_runner.py.",
+    "spec_asserts": "The TO-CG-I-3 face, quoting round 8's ROUND_ANALYSIS.round8.md s.3: 'a re-point would make the fold delete another producer's live edges every cycle', naming derive_stitch.py:158-159's unconditional drop as the mechanism and derive_runner.py as READ-only surface for an occurrence count.",
+    "world_is": "The drop at derive_stitch.py filters that producer's OWN edge list. derive_runner.py:2276 admits only five edge types from the stitch artifact (STITCH_EDGE_TYPES) and OWNED_BY is not among them, and derive_runner.py:2674 calls ingest_graphuni_producers unconditionally on every derive, re-reading graphuni-storage's 232 OWNED_BY edges from s3://opal-313476888478-globgrph/producers/graphuni/ (four objects present, listed 2026-09-10T19:1xZ). The deletion the withdrawal describes therefore requires TWO edits, not one, and the second is in a file this order may only read.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/globgrph/derive_runner.py:2272-2276 @4ff4abd9a4d6d2f60fd74fef32ce64158c6bd34b (worktree C:/tmp/wk-cldgrph-9-2, branch wk-cldgrph-9-2) -- 'The five inter-system edge types the stitch EXISTS to emit ... ONLY these are folded' then STITCH_EDGE_TYPES = frozenset({\"ROUTES_TO\", \"WRITES\", \"READS\", \"DERIVES_FROM\", \"STORED_IN\"})",
+        "infra/aws/globgrph/derive_runner.py:2669-2676 @4ff4abd9a4 -- ingest_graphuni_producers(graph) called with no flag guard; the flag-gated EXTRACT_PIPELINE_CLOUD replacement at :2686 is default OFF",
+        "infra/aws/globgrph/derive_runner.py:2199-2252 @4ff4abd9a4 -- the ingest lists producers/graphuni/ and folds every producer JSON's edges into graph['edges'] on each run",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/i3_producer_payload_census.json, captured 2026-09-10T19:19:13Z: 6 of 6 payloads under producers/, OWNED_BY totals 232 all from producer 'graphuni-storage', STORED_IN 0 -- read-only aws s3api list-objects-v2 + get-object",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/ROUND_ANALYSIS.round8.md s.3 @2fa5bf1670 -- the withdrawal and its stated mechanism"
+      ]
+    },
+    "notes": "INERT, not ARMED: nothing today performs the re-point, the CTO withdrew the remedy, and CG-s-42 has now made derive_stitch's drop refuse OWNED_BY outright -- so the first gate is closed by construction. The residue is a RECORD defect with a reader-cost, which is the same shape as W2-S79 on the same file. NOT ACTED ON HERE AND THE OMISSION IS DELIBERATE: derive_runner.py is not in this order's <paths>, and widening to it would be an override rather than a row. THE REUSABLE FORM: when a producer and its fold are separate processes, 'the producer deletes X' and 'X disappears from the served graph' are DIFFERENT claims separated by the fold's admission rule, and a mechanism written without that rule reads as one claim. Cheapest next step for whoever holds the retirement: state the re-point as the two-edit act it is, and score both edits, or the second one lands unscored the way round 7's ruling did."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S120 -- the incremental updater's VPC reaches S3 ONLY, so it derives S3_BUCKET and nothing else -- and the SNS page this deploy was authorized to fire has never left the subnet
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-10T21:27Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S120",
+    "one_line": "THE UPDATER IS AN S3-ONLY WRITER IN PRODUCTION AND NOTHING SAYS SO. Over the last 72h of its own log group: 7150 of 7150 successful derives are type=S3_BUCKET and ZERO are any other class, while BOUNDED_DERIVE_FAIL fired 22 times (lambda 20, sns 1, iam 1), every one of them a connect timeout to a PUBLIC AWS endpoint (lambda.us-east-1.amazonaws.com, iam.amazonaws.com, sns.us-east-1.amazonaws.com). The Lambda is in-VPC and the subnet has interface endpoints for S3 and CloudWatch Logs but not for lambda/iam/sns, so bounded_derive_node can only ever complete for the one class whose endpoint exists. THE SHARED DEPENDENCY IS THE FINDING, not any one class: the same missing egress also kills _publish_marker_advance, which logs MARKER_ADVANCE_SNS_FAIL on EVERY marker stamp. That matters tonight beyond the graph, because Andrew's 2026-09-10 ~20:2xZ authorization for this deploy explicitly ACCEPTED the SMS pages it would cause -- and those pages are not being sent. A cost he agreed to pay is silently not being charged, which is exactly the kind of fact that makes a later 'we never heard anything' unreadable.",
+    "spec_asserts": "item2b.tf's ingest filter admits mutating CloudTrail events across 14 services (aws.s3, aws.iam, aws.lambda, aws.ec2, aws.dynamodb, aws.events, aws.sns, aws.sqs, aws.secretsmanager, aws.kms, aws.logs, aws.cloudwatch, aws.cloudfront, aws.states) and its own comment says 'lambda CODE changes ride this via UpdateFunctionCode'. lambda_function.py's bounded_derive_node implements six classes (S3_BUCKET, LAMBDA, IAM_ROLE, DYNAMODB_TABLE, SNS_TOPIC, SQS_QUEUE). _publish_marker_advance is wired to SNS_TOPIC_ARN as a real-time 2b-class signal.",
+    "world_is": "Only S3_BUCKET is reachable. Census over /aws/lambda/opal-globgrph-incremental-updater, last 72h, auto-paginated (403 BATCH_START across 46 pages, 7150 DERIVED across 48 pages, 22 BOUNDED_DERIVE_FAIL across 51 pages): DERIVED by type = {S3_BUCKET: 7150}; BOUNDED_DERIVE_FAIL by cls = {lambda: 20, sns: 1, iam: 1}. Exercised deliberately this turn: a synthetic TagRole event for arn:aws:iam::313476888478:role/opal-ipset-reconciler returned BOUNDED_DERIVE_FAIL cls=iam 'Connect timeout on endpoint URL: https://iam.amazonaws.com/' and wrote nothing. Every marker stamp observed tonight (21:05:17Z, 21:07:01Z, 21:17:38Z) is followed by MARKER_ADVANCE_SNS_FAIL 'Connect timeout on endpoint URL: https://sns.us-east-1.amazonaws.com/'. So four of the five key-collision class pairs (IAM_ROLE+LAMBDA n=8, EVENT_RULE+LAMBDA n=8, CODEBUILD_PROJECT+IAM_ROLE n=1, EVENT_RULE+SSM_DOCUMENT n=1) are not merely unfixed-by-exercise, they are UNREACHABLE by this writer, and were therefore never at risk from it either.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws logs filter-log-events on /aws/lambda/opal-globgrph-incremental-updater, window 72h ending 2026-09-10T21:2xZ, client-side counted after full pagination -- DERIVED type= census {S3_BUCKET: 7150}, BOUNDED_DERIVE_FAIL cls= census {lambda: 20, sns: 1, iam: 1}, denominator 403 BATCH_START",
+        "live invocation 65f31fc9-1d4a-407d-9c2c-86dea1e64792 at 2026-09-10T21:19:36Z -- BOUNDED_DERIVE_FAIL arn=arn:aws:iam::313476888478:role/opal-ipset-reconciler cls=iam, BATCH_END nodes_written=0",
+        "live invocation 888f2c17-3a06-455a-b8ad-63be1cc1b39f at 2026-09-10T21:17:24Z -- MARKER_STAMPED then MARKER_ADVANCE_SNS_FAIL connect timeout to sns.us-east-1.amazonaws.com",
+        "infra/aws/terraform/globgrph/item2b.tf -- aws_cloudwatch_event_rule.cloudtrail_mgmt source list of 14 services; aws_vpc_endpoint.s3 and aws_vpc_endpoint.cloudwatch_logs are the only interface/gateway endpoints refreshed in the targeted plan for this stack",
+        "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py bounded_derive_node -- six implemented classes"
+      ]
+    },
+    "notes": "NOT CAUSED BY TONIGHT'S DEPLOY and the negative control is on the record: BOUNDED_DERIVE_FAIL occurs 13+ times across 2026-09-09 and 2026-09-10 BEFORE the 21:07:39Z apply. NOT ACTED ON, DELIBERATELY: adding VPC interface endpoints is infrastructure outside the four paths this handoff names and outside tonight's authorization, which covers the key-collision fix and the stitch producer only. WHY IT IS FILED AS ONE ROW RATHER THAN THREE: the lambda, iam and sns failures are not three independent faults, they are one missing dependency wearing three names -- CLAUDE.md Rule 22's 'ask what the members have in COMMON', which here arrives as three identical connect-timeout strings to three different public endpoints. CHEAPEST NEXT STEP for whoever holds it: decide whether the updater is MEANT to be S3-only (in which case the 14-service ingest filter and five of the six derive classes are dead weight advertising a capability that does not exist) or whether the endpoints are missing (in which case the graph's incremental layer has been blind to every non-S3 resource change for as long as this has been true). ANDREW-FACING HALF: he agreed to be paged and is not being paged."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S121 -- BATCH_END failed=0 does not count a derive failure, so 403 of 403 batches report clean while classes silently never enter the graph
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-10T21:27Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S121",
+    "one_line": "THE BATCH COUNTER CANNOT REPORT THE ONLY FAILURE THIS FUNCTION ACTUALLY HAS. `failed` counts RECORD_FAIL (an exception while parsing a record) and is what the SQS partial-batch response is built from. A BOUNDED_DERIVE_FAIL -- the derive timing out, so no node is built and nothing is written -- increments nothing. Measured over 72h: 403 BATCH_END lines, 403 of them failed=0, alongside 22 BOUNDED_DERIVE_FAIL warnings in the same window. The summary field is not merely incomplete, it is ANTI-CORRELATED with the real failure mode: the batch reports clean BECAUSE the derive gave up quietly and left nothing to fail on. This is a false-clean of exactly the shape CLAUDE.md warns about -- a clean denominator with confident per-row verdicts, nothing anomalous in the output, and the WARNING that carries the truth sitting one log level away where no counter reads it.",
+    "spec_asserts": "handler() logs BATCH_END with processed_arns/nodes_written/nodes_deleted/failed as the batch's outcome summary, and returns batchItemFailures from failed_ids so SQS can redrive genuinely failed records.",
+    "world_is": "failed_ids is appended to ONLY in the `except Exception` around record parsing (RECORD_FAIL). bounded_derive_node's timeout path logs a WARNING and returns None, the arn is simply absent from node_by_key, and no counter moves. Census over the last 72h of /aws/lambda/opal-globgrph-incremental-updater: 403 BATCH_END lines, 0 with failed>0, against 22 BOUNDED_DERIVE_FAIL lines. A reader consuming BATCH_END -- or any monitor built on it -- sees an unbroken clean run.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py handler() -- failed_ids.append(msg_id) appears only inside the record-level except Exception block; the bounded-derive path logs WARNING and returns None",
+        "aws logs filter-log-events, 72h window ending 2026-09-10T21:2xZ, fully paginated: BATCH_END n=403, failed>0 n=0, BOUNDED_DERIVE_FAIL n=22",
+        "live invocation 65f31fc9-1d4a-407d-9c2c-86dea1e64792 -- BOUNDED_DERIVE_FAIL cls=iam followed by BATCH_END ... failed=0 in the same request"
+      ]
+    },
+    "notes": "PRE-EXISTING, not introduced tonight. FILED SEPARATELY FROM the endpoint row on purpose: that row is why the derive fails, this row is why nobody would ever find out. They have different owners and different remedies -- provisioning an endpoint does not make the counter honest, and making the counter honest does not restore the missing nodes. NO MONITOR IS PROPOSED AND NONE MAY BE BUILT HERE: CLAUDE.md's standing alert/monitor moratorium binds, and a monitor on an unsettled route measures the wrong thing precisely. The finding is the counter's blindness, and the remedy is the counter."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S122 -- the Lambda's vendored _provenance.py is 401 diff lines behind the canonical copy its own comment promises it tracks
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-10T21:27Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S122",
+    "one_line": "A VENDORED COPY WITH A COMMENT PROMISING IT IS REBUILT IN THE SAME DEPLOY, THAT NOTHING REBUILDS. lambda_function.py:26-29 says _provenance.py is the 'Same source that the derive image COPYs, rebuilt in the same deploy'. The copy inside the deployed zip is 27,072 B; the canonical infra/aws/globgrph/_provenance.py is 44,900 B, a 401-line unified diff, and carries round 6's whole CG-s-27 manifest contract (write_manifest gained two REQUIRED kwargs, plus store_content_sha256 / store_bytes_size / store_mtime_iso / cohort_vintage_lines). Nothing in the repo rebuilds the zip on a change to the canonical file -- the only coupling is a human remembering the sentence. THE TRAP FOR THE NEXT DEPLOYER is that the drift is currently HARMLESS and reads as fine: this Lambda's ONLY entry point is stamp_marker, whose body is byte-identical across both copies, so refreshing the vendor today changes nothing this function executes. The day it stops being harmless there is no signal.",
+    "spec_asserts": "lambda_function.py:26-29 -- 'the ONE centralized marker stamp ... VENDORED into this Lambda zip as _provenance.py at the task root ... Same source that the derive image COPYs, rebuilt in the same deploy.' FRESHGUARD leg-4's own ledger entry closed L1 with 'zip vendors _provenance.py' and L2 with the derive image rebuild, treating the two as one act.",
+    "world_is": "Vendored copy in the zip: 27,072 B, sha256 db07a7a6a5201dea..., mtime 2026-07-10. Canonical infra/aws/globgrph/_provenance.py: 44,900 B, sha256 f3358d013f765b9b..., last touched by 1d62717c65 / 3e6be14930 (CG-s-27, round 6). Unified diff = 401 lines. Deliberately NOT refreshed in tonight's rebuild, and the pin is licensed by measurement rather than caution: an AST walk of lambda_function.py finds exactly one _provenance attribute access, stamp_marker; and stamp_marker's body is byte-identical between the two copies (42 lines each, empty diff). Refreshing would have shipped ~17.8 KB this Lambda never executes and made tonight's settle reading un-attributable between the collision fix and a vendor bump. Both facts are asserted in the build script, so the pin fails closed if either stops holding.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "zipfile read of infra/aws/lambda/globgrph/incremental_updater/incremental_updater.zip at HEAD~1 -- member _provenance.py 27072 B, sha256 db07a7a6a5201dea",
+        "infra/aws/globgrph/_provenance.py -- 44900 B, sha256 f3358d013f765b9b; difflib unified diff vs the vendored copy = 401 lines",
+        "git log --full-history -- infra/aws/globgrph/_provenance.py -> 1d62717c65, 8a074ba7ba, f2ddef8deb, 2e0c77dcbd, 3e6be14930 (CG-s-27 manifest contract, round 6)",
+        "AST walk of lambda_function.py: {_provenance.<attr>} == {stamp_marker}; a regex over the same file also returns 'py', matching the filename inside the comment -- the regex answer is wrong and the AST answer is right",
+        "stamp_marker body extracted from both copies: 42 lines each, difflib diff empty"
+      ]
+    },
+    "notes": "THE REUSABLE FORM: a vendored copy whose freshness is guaranteed by a COMMENT is guaranteed by nothing, and it fails in the quietest possible direction because the stale copy keeps working until the day the call site moves. This is the same class as the source_code_hash trap this deploy just closed (W1-S51): in both, the artifact that production actually consumes is coupled to its source only by a step someone has to remember. CHEAPEST NEXT STEP: either make the zip build a real build step that reads the canonical file, or delete the promise from the comment so the next reader does not trust it. Not acted on here -- infra/aws/globgrph/_provenance.py is outside the four paths this handoff names."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S123 -- PORTAL_REPO_PAT is installed with admin/push where the workflow asked for read-only, Andrew-accepted and filed so the swap is not forgotten
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-10T21:45Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S123",
+    "one_line": "PORTAL_REPO_PAT IS NOW SET AND IT IS BROADER THAN THE WORKFLOW ASKED FOR. The workflow's own comment specifies 'a fine-grained PAT or deploy-key-backed token scoped to READ-ONLY on Opal-Capital/portal'. The token installed tonight (AWS Secrets Manager estate-report/github-token) reports permissions {admin: true, maintain: true, push: true, triage: true, pull: true} on that repo. The workflow needs exactly `pull`. Andrew was shown the gap before it was installed and took the trade explicitly at ~21:3xZ, so this row is NOT an objection and NOT a gate -- it exists so a decision made under time pressure with a stated intention to swap does not become permanent by being forgotten, which is the normal fate of a temporary credential.",
+    "spec_asserts": ".github/workflows/stitch-source-push.yml, the 'Checkout portal' step comment: 'this step needs secrets.PORTAL_REPO_PAT (a fine-grained PAT or deploy-key-backed token scoped to read-only on Opal-Capital/portal) provisioned as a repo secret before it will succeed.'",
+    "world_is": "The repo secret PORTAL_REPO_PAT on Opal-Capital/ajb_workspace was set 2026-09-10T21:40:14Z from Secrets Manager estate-report/github-token. Probed live before installation: GET /user -> 200 as andrew-opalinvest; GET /repos/Opal-Capital/portal -> 200, private=true, permissions {'admin': True, 'maintain': True, 'push': True, 'triage': True, 'pull': True}; GET the pinned gitlink commit 5907cbca98 -> 200. So it is write- and admin-capable on portal, and any workflow on ajb_workspace can now use it. The alternative stored candidate, Secrets Manager 'github-token', is a classic ghp_ that returns 401 on /user -- dead, and it is the one whose NAME would have made it the obvious pick without a probe.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "gh secret list --repo Opal-Capital/ajb_workspace -> PORTAL_REPO_PAT 2026-09-10T21:40:14Z (GitHub never reads a secret value back; the timestamp is the only direct artifact)",
+        "GitHub REST probe of both Secrets Manager candidates, run before installation, values never printed: github-token -> 401 on /user; estate-report/github-token -> 200 on /user, 200 on repos/Opal-Capital/portal with admin/maintain/push/triage/pull, 200 on commit 5907cbca98eb091124e38a32debefa355c1d4376",
+        ".github/workflows/stitch-source-push.yml -- the read-only wording in the Checkout portal step comment",
+        "run 34533482494 step 4 completed/success -- the installed token works for the intended read"
+      ]
+    },
+    "notes": "ANDREW-ACCEPTED, NOT AN OPEN OBJECTION: he chose 'use the existing token now' over 'mint a read-only PAT first' after being shown the permission set, at the 0.8.0_AE_CloudComp terminal ~21:3xZ. WHY IT IS STILL FILED: the exposure is not the token existing -- it already sat in Secrets Manager readable by any Opal seat -- it is that a repo secret is reachable by EVERY workflow on ajb_workspace, which is a wider surface than the one step that needs it. CHEAPEST NEXT STEP: mint a fine-grained PAT with Contents:Read on Opal-Capital/portal only and re-run `gh secret set PORTAL_REPO_PAT`; nothing else changes, the workflow is already proven working, and the swap can be verified by re-dispatching and reading step 4. NOT DONE HERE because minting a PAT is Andrew's act, not this seat's. RELATED: the push: trigger was deliberately LEFT AS COMMITTED on his word the same turn -- that was the handoff's section 5.4 open call and it is now answered, not outstanding."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S124 -- I called a DECLARATION an ENFORCEMENT in the round-9 packet, and the L9 grade caught it
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T22:20Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S124",
+    "one_line": "I CALLED A DECLARATION AN ENFORCEMENT IN A PACKET TWO GRADERS READ, AND THE L9 CAUGHT IT. L8_PACKET.round9.final.md s.3 says the CTO's withdrawn remedy is 'now refused BY CONSTRUCTION rather than by memory', and the drain-end read 95545/95546 repeats it. It is not. `drop_prior_cycle_edges` (infra/aws/globgrph/derive_stitch.py:111-135) reads exactly two names -- the caller's `requested` list and the declared `sole_written` allow-list -- and never `SOLE_WRITERSHIP_EVIDENCE`, never the census. ADDING `OWNED_BY` TO THE TABLE LICENSES IT AND ITS EDGES ARE THEN DROPPED WITH NO REFUSAL. The function enforces the DECLARATION, not the TRUTH of the declaration.",
+    "spec_asserts": "L8_PACKET.round9.final.md s.3 (`2.0.0_SA_COO~A`, @041c75bfd5): 'The CTO's withdrawn remedy is now refused BY CONSTRUCTION rather than by memory: adding OWNED_BY to that table is the act the withdrawal refused, and the table makes the assertion explicit and testable instead of implicit.'",
+    "world_is": "AST read at this seat of drop_prior_cycle_edges, derive_stitch.py:111-135. Names referenced in the function body: PRIOR_CYCLE_DROP_REQUEST, SOLE_WRITTEN_EDGE_TYPES, dict, dropped, e, edges, et, kept, licensed, list, refused, requested, sole_written, str, t, tuple, unlicensed. SOLE_WRITERSHIP_EVIDENCE: NOT referenced. census: NOT referenced. The refusal arm fires only for a type that is REQUESTED and NOT LICENSED; widening the licence is unguarded. 3.0.0_SA_CVO reached the same conclusion independently with pinned AST controls and graded I3-AC5 FAIL on it (ADJUDICATION_v4, C-S92, @5a5ae95709).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ast.parse of infra/aws/globgrph/derive_stitch.py at HEAD: drop_prior_cycle_edges lines 111-135, full Name census of the function body printed.",
+        "The function's own source, verbatim: `licensed = {t for t in requested if t in sole_written}` -- membership in the declared table is the ONLY test.",
+        "ADJUDICATION_v4.md C-S92 @5a5ae95709 by 3.0.0_SA_CVO, reaching the same finding with its own pinned AST controls and an exercised fixture.",
+        "L8_PACKET.round9.final.md s.3 @041c75bfd5 -- the claim as I wrote it."
+      ]
+    },
+    "notes": "INERT: nothing is armed by this. No code is wrong, no deploy is at risk, and the four mechanical I-3 grades are untouched -- what is wrong is a SENTENCE I wrote about correct code. \u26d4 AND THE ATTRIBUTION MATTERS, BECAUSE IT IS NOT THE WORKER'S ERROR. The worker's own comment above the table says 'ADDING A TYPE HERE ASSERTS SOLE-WRITERSHIP AND IS A GOVERNED ACT. The falsifier is the emission census in i3_writers.py' and warns that sole-writership is a fact about today rather than a property of the type. IT LABELLED THE THING CORRECTLY AS A GOVERNED DECLARATION WITH AN OFFLINE FALSIFIER. I compressed that into 'refused by construction' when I compiled the packet, which is the one word the evidence does not support. THE GENERAL FORM IS THIS ESTATE'S OWN: an unenforced declaration drifts to unpopulated, and a COMPILER of other seats' work is exactly where a careful qualification gets flattened into a stronger claim -- the compile step has no criterion grading it. REMEDY, and it is a correction rather than code: the packet's claim is corrected to both graders in the same turn as this row, and the accurate statement is that the licence is now an EXPLICIT DECLARATION with an OFFLINE, RE-RUNNABLE FALSIFIER, which is a real improvement over a comment and is NOT a runtime invariant."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S125 -- CORRECTION to S120: four of six derive classes are dead, not five; DynamoDB works and the census measured event mix, not capability
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-10T22:05Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S125",
+    "one_line": "CORRECTION TO S120, NARROWING IT: I wrote that the updater 'derives S3_BUCKET and nothing else'. FOUR of its six classes are dead, not five, and DYNAMODB_TABLE works. Exercised live this turn: a synthetic UpdateTable event for arn:aws:dynamodb:us-east-1:313476888478:table/bd-securities returned DERIVED type=DYNAMODB_TABLE and ICEBERG_COMMIT nodes_written=1. S120's CENSUS was right (7150 of 7150 derives are S3_BUCKET over 72h) and its CONCLUSION over-reached: that census measured the event MIX, not the writer's CAPABILITY, and DynamoDB showed zero only because no mutating DynamoDB management event occurred in the window. I read a capability claim off an outcome count without checking the mechanism per member, which is the exact shape CLAUDE.md Rule 22 names.",
+    "spec_asserts": "NFRA_CLDGRPH-S120, filed by this same seat one hour earlier, states: 'Only S3_BUCKET is reachable' and 'the updater derives S3_BUCKET and nothing else', grounding it on a 72h census of 7150 DERIVED lines all of type S3_BUCKET against 22 BOUNDED_DERIVE_FAIL.",
+    "world_is": "The split is 2 working / 4 dead, and the mechanism is per-class rather than global. The VPC has NO NAT and exactly three endpoints, measured live on vpc-0cc0c6a75e54605e3: com.amazonaws.us-east-1.s3 (Gateway, available), com.amazonaws.us-east-1.dynamodb (Gateway, available), com.amazonaws.us-east-1.logs (Interface, available). So: s3 works because its branch makes NO AWS API CALL AT ALL -- it parses the bucket out of the ARN string and returns a fabricated dict; dynamodb works because describe_table rides the DynamoDB gateway endpoint, now EXERCISED rather than inferred; lambda (get_function), iam (get_role), sns (get_topic_attributes) and sqs (get_queue_attributes) all call public APIs for which no route exists and fail on a 3s connect timeout. The four dead classes still cover THREE of the five key-collision pairs (IAM_ROLE+LAMBDA, EVENT_RULE+LAMBDA, CODEBUILD_PROJECT+IAM_ROLE), so S120's consequence for the collision coverage claim is UNCHANGED.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws ec2 describe-vpc-endpoints on vpc-0cc0c6a75e54605e3 (the VPC of subnet-023db8cbfd99ffff2, the updater's only subnet) -> exactly 3 endpoints: s3 Gateway, dynamodb Gateway, logs Interface. No NAT gateway backing this subnet.",
+        "live invocation a6a42fa7-01a9-4cd0-b121-e7d8f7c74f11 at 2026-09-10T22:01:34Z -- DERIVED arn=arn:aws:dynamodb:us-east-1:313476888478:table/bd-securities type=DYNAMODB_TABLE, ICEBERG_COMMIT nodes_written=1, BATCH_END failed=0, no FunctionError",
+        "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py bounded_derive_node -- the s3 branch returns a dict built from the ARN string with no _boto() call; the lambda/iam/dynamodb/sns/sqs branches each call _boto(svc)",
+        "same file, the comment above _BOTO_CFG: 'Short timeouts: Lambda is in VPC without NAT; only S3+DynamoDB have Gateway endpoints. Other services (lambda/iam/sns/sqs) need public API access -- fail fast (3s) rather than hanging'"
+      ]
+    },
+    "notes": "AND THE AUTHORS ALREADY KNEW. The comment above _BOTO_CFG states the endpoint situation exactly and the 3s connect timeout exists BECAUSE of it -- this was designed around, not overlooked, and S120 should not be read as catching anyone out. What is genuinely missing is that the CONSEQUENCE was never written down anywhere a consumer of the graph would see it: four of six classes can never enter the incremental layer, so any reader treating the incremental layer as covering AWS is wrong for reasons the code comment explains but no contract states. That, plus S121's counter blindness, is the durable finding; 'S3-only' was not. WHY THIS IS A ROW AND NOT AN EDIT: the channel is append-only and S120 is committed at a939c71a25. The wrong sentence stays on the record with this correction pointing at it, which is the whole point of an append-only channel -- a silently narrowed claim would leave the next reader unable to tell which version was ever believed. REUSABLE FORM: an outcome census answers WHAT HAPPENED and is routinely mistaken for WHAT CAN HAPPEN. The discriminator costs one deliberate exercise of the member the census never saw fire. AND THIS ROW DELIBERATELY DOES NOT USE THE `adjudicates` FIELD. My first draft set it to the string 'NFRA_CLDGRPH-S120' and the row gate REFUSED the commit at /adjudicates -- correctly, twice over. It is typed as a LIST (the two prior users, S9 and S25, both carry arrays), and more importantly it carries ADJUDICATION semantics: gate line 377 walks it to apply THIS row's disposition to the named target. Using it would have made me disposition S120, which is 2.0.0_SA_COO~A's act and not mine -- a schema slip that would have silently taken a lane. The correction is carried in prose instead, which names S120 explicitly in three fields."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S126 -- dispositioning the three rows of mine with zero residual work, and naming the nine that stay
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T22:55Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_CLDGRPH-S112",
+      "NFRA_CLDGRPH-S115",
+      "NFRA_CLDGRPH-S124"
+    ],
+    "id": "NFRA_CLDGRPH-S126",
+    "one_line": "DISPOSITIONING THE THREE ROWS OF MINE WHOSE RESIDUAL WORK IS ZERO, AND ONLY THOSE. S112, S115 and S124 are all INERT, all owned by this seat, and each has had its whole content delivered: an ack that carried its instrument trap into the round-8 cell's SURFACES; an instrument error caught before any worker existed whose surviving requirement is correct independently of the false premise; and a wrong sentence of mine in a graded packet whose correction is landed with both graders. NINE OTHER ROWS THIS SEAT OWNS STAY OPEN and are named below with a reason each, because a disposition sweep that closes live work is worse than a backlog.",
+    "spec_asserts": "The channel's dispositioned vocabulary in use is DISMISSED_WITH_REASON, and the row gate treats UNDER_INVESTIGATION, null and empty as NOT dispositioned. Twelve rows carrying disarm_owner 2.0.0_SA_COO~A read UNDER_INVESTIGATION at this write.",
+    "world_is": "Three of the twelve have zero residual act. S112 is an ACK whose instrument trap (read edge_type as a PROPERTY; a binder error is a wrong-form signal, never a count) was carried into the round-8 cell's SURFACES as it said it would be -- and W1-S37, which its text names as the retirement's blocker, IS A DIFFERENT ROW AND IS NOT TOUCHED BY THIS DISPOSITION. S115's requirement (print TREE_READ with a one-file positive control) is correct independently of the false premise that produced it and stayed on every face at the CTO's ask, 95105 and 95133. S124's correction reached both graders at 95635/95636/95637, and the decision NOT to amend the graded packet is made and recorded rather than pending.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Parse of every fenced json block in this file at this write: 297 rows, twelve of them UNDER_INVESTIGATION with disarm_owner 2.0.0_SA_COO~A.",
+        "Each target re-read before minting and asserted INERT + UNDER_INVESTIGATION + owned by this seat; the script REFUSES on any target that is ARMED, already dispositioned, or another seat's.",
+        "surprise-row-gate.py: DISPOSITIONED = ('UNDER_INVESTIGATION', None, ''), and `adjudicates` is walked to apply this row's disposition to the named targets."
+      ]
+    },
+    "notes": "THE NINE THAT STAY OPEN, WITH THE REASON EACH -- this is the half that makes the three defensible. S110 and S111: ACKs that explicitly say NOT DISARMED and carry their hazards forward. S113: CONDITION 4 on the retirement, ruled by the CTO and not this seat's to lift. S118: its remedy has appeared in ONE completion report, and a convention with one instance is the drift shape it exists to record -- the disarm belongs at the SECOND consecutive report carrying it. S119: the remedy is fabric-level with 0.0.0_AB_MSTR as disarm owner. S120: its census claim is corrected by S125, but its DURABLE finding is un-remedied -- four of six derive classes can never enter the incremental layer and NO CONTRACT SAYS SO, and the row is the only place that consequence is written. S121 and S122: un-remedied as filed. S123: the credential trade's un-park condition is ANDREW'S. S125: it is the correction that keeps S120 honest and closes when S120 does. \u26d4 AND THE MECHANISM IS WHY THIS IS DELIBERATE RATHER THAN TIDY: `adjudicates` is a LIST the gate WALKS to apply this row's disposition to every id in it, so a sweep here would close live work silently. 0.8.0_AE_CloudComp paid for that discovery an hour ago when its own draft set the field to a STRING, the gate refused at /adjudicates, and it noticed that using it would have dispositioned a row belonging to this seat. It dropped the field and carried its correction in prose instead.",
+    "dismissal_reason": "CLOSED AS COMPLETE, NOT DISMISSED AS UNFOUNDED -- the vocabulary has one value for 'no residual act' and this is it. Each of the three delivered its whole content and leaves nothing for anyone to do: S112's instrument trap reached the round-8 cell's SURFACES as its own text promised (and W1-S37, which S112 names as the retirement's blocker, is a DIFFERENT ROW and is untouched); S115's surviving requirement -- print TREE_READ with a one-file positive control -- is correct independently of the false premise that produced it and stayed on every face at the CTO's ask 95105/95133; S124's correction reached both graders at 95635/95636/95637 and its 'do not amend the graded packet' decision is made rather than pending. All three are INERT, all three are this seat's own, and NINE other rows this seat owns stay UNDER_INVESTIGATION with a reason each in `notes`."
   }
 ]
 ```

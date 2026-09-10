@@ -1,0 +1,150 @@
+{
+  "kind": "COMPLETION_REPORT",
+  "schema_version": "1.0",
+  "project": "NFRA_CLDGRPH",
+  "round": 9,
+  "written_by": "2.0.0_SA_COO~A",
+  "written_utc": "2026-09-10T20:0xZ",
+  "decomposition_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md v0.12",
+  "prd_version_graded_against": "v0.14",
+  "authorization_note": "Round 9 opened on Andrew's ~17:1xZ hold-lift and ran to L7-complete under his ~18:5xZ word, verbatim: 'CLDGRPH shall be finished I am allowing it' (@4ff4abd9a4, relayed 95477). 1.0.0_SA_CTO had RECOMMENDED closing the project where it stood and records that he decided otherwise. The grant is to FINISH: it lifts neither the EGRESS HOLD (estate-wide law, not a project hold), nor the push hold, nor the requirement that a hand start the site-Z session.",
+  "denominators": {
+    "fwd_in_prd_header": 8,
+    "cells_in_decomposition": 51,
+    "cells_in_decomposition_basis": "counted by SUBTRACTION from the printed table rows of s.1a and s.1b at v0.12 (45 CG-s + 6 CG-x), agreed by a second independent count at the cut",
+    "task_orders_issued_round9": 5,
+    "task_orders_drained": 5,
+    "task_orders_terminal_with_valid_proof": 5,
+    "task_orders_drained_open": 0,
+    "task_orders_open_PROJECT_WIDE": 0,
+    "task_orders_total_PROJECT_WIDE": 49,
+    "why_two_denominators": "S118's remedy, landed. COMPLETION_REPORT.round7.json and .round8.json both printed task_orders_drained_open: 0. Both were TRUE and both were scoped to their own round's order set, while TO-CG-F-11 sat open from round 6 through both. A per-round denominator cannot see a member an earlier round left behind. The project-wide count now sits beside the round-scoped one so a gap between them is visible instead of invisible. No code, no gate.",
+    "proof_instances_revalidated_at_the_issuer": "5 of 5, each IN TREE against the COMMITTED blob (worktree file confirmed identical to HEAD, then the checker run inside that worktree), all VALID rc=0 with 0 violations. Validating a git-show copy under /tmp returns INVALID rc=1 for scope reasons and the checker says so in its own words -- a trap this seat hit at tick 1 and now avoids by construction.",
+    "mechanical_criteria_pass": "20 of 20",
+    "judgment_criteria_for_l9": 5,
+    "channel_rows_at_close": 291,
+    "rows_filed_this_round": 9,
+    "rows_filed_this_round_basis": "7 by workers (W1-S49, W1-S50, W1-S51, W2-S79, W2-S80, W3-S20, W4-S10) + 2 by the issuer (S118 cross-round blindness, S119 the dark READ clock)",
+    "worktrees_remaining": 0,
+    "worker_slots": 4,
+    "egress_acts_performed": "0 across all five orders, each measured by its own AC4-class detector with a planted-positive probe control that FIRED: no ecs run-task, no CodeBuild start, no image push, no terraform apply, no S3 write."
+  },
+  "orders": [
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-I-1",
+      "cell": "CG-s-41",
+      "drained_at": "744e7f110d",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~1",
+      "what": "the key collision SETTLED against the warehouse and then closed AT THE WRITER; the settle needed no grant nobody had, and the collision turned out to be FIVE class pairs rather than one"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-I-2",
+      "cell": "CG-s-43",
+      "drained_at": "95070f76f7",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~2",
+      "what": "the 0-dangling check's key set rebuilt AFTER the collapse so it can finally see the window; the edge-side drop REFUSED on the source's own evidence rather than implemented"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-I-3",
+      "cell": "CG-s-42",
+      "drained_at": "e2bc841263",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~2",
+      "what": "BRANCH=LICENCE_MOVED: the fold's licence moved off a comment onto a checked value with per-member evidence and a refusing function, and OWNED_BY's other writer was NAMED"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-I-4",
+      "cell": "CG-s-44",
+      "drained_at": "2018181896",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~3",
+      "what": "the dated archive key measured as a mutable pointer on an unversioned bucket, and the grammar found to be a RATIFIED spec the producer has never implemented"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-I-5",
+      "cell": "CG-s-45",
+      "drained_at": "ebef40d8f2",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~4",
+      "what": "hop 1's producer home: the committed publish route is NOT unrun -- 855 runs, 8 successes all before the step that packs portal/src, 0 correct publishes ever"
+    }
+  ],
+  "the_round_in_one_line": "Round 9 went at the ROOT and the root moved twice under it: the key collision is five class pairs rather than one, and OWNED_BY's second writer -- established by subtraction in round 8 -- now has a NAME, which took an instrument that reads what a producer DECLARES instead of what code EMITS.",
+  "the_writer_named": {
+    "name": "graphuni-storage",
+    "evidence": "org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUNI.P1-A.storage_producer.json (169) + ...storage_producer_phaseB.json (63) = 232, served from s3://opal-313476888478-globgrph/producers/graphuni/ and re-read on every derive by derive_runner.ingest_graphuni_producers",
+    "corroboration": "232 is the EXACT integer round 8 measured on the served plane, reached here from the repository side by a different instrument",
+    "why_it_hid": "it was never hidden. The string 'Producer=graphuni-storage (~A)' sits at .tools/tool_index.py:4378-4381 and has all along. An emission-shaped census looks for code that WRITES an edge; this writer declares its edges as DATA and is named in PROSE.",
+    "two_open_questions_not_this_round": "its materializer org/projects/NFRA_GRAPHUNI/storage_producer.py is UNTRACKED, and the payloads have not been regenerated since 2026-07-01"
+  },
+  "the_licence_decision": {
+    "branch": "LICENCE_MOVED",
+    "and_both_branches_were_passes": "the cell was cut so that a moved licence and a re-cut remedy both pass, and only an UNSTATED branch fails; I3-AC3 grades the branch taken, never the branch chosen",
+    "what_it_now_refuses": "SOLE_WRITTEN_EDGE_TYPES plus a SOLE_WRITERSHIP_EVIDENCE table carrying each member's claim kind, instrument and vintage, and a function that REFUSES an unlicensed type, dropping only the intersection of what the caller requests and what the licence permits. Adding OWNED_BY -- the act the CTO's withdrawal refused -- is now refused BY CONSTRUCTION rather than by memory.",
+    "proof": "FIXTURE_ARMS=6 of 6 on a 5-edge fixture whose OWNED_BY edges are copied VERBATIM from graphuni-storage's payload: multi-writer term SURVIVES, sole-written term still DROPPED, negative control FIRED",
+    "the_clause_worth_keeping": "the table's own comment states its expiry: sole-writership is a fact about TODAY, not a property of the type, so a new producer can falsify a member without touching that file. The census is a re-runnable falsifier, not a one-time sign-off."
+  },
+  "the_retirement_is_a_two_edit_act": {
+    "row": "NFRA_CLDGRPH-W2-S80",
+    "what": "derive_runner.py:2276 carries STITCH_EDGE_TYPES = frozenset({'ROUTES_TO','WRITES','READS','DERIVES_FROM','STORED_IN'}) -- an ALLOW-LIST that does not contain OWNED_BY. The 94872 remedy, had it survived, needed a second edit in a second file that no cell in any round has named.",
+    "why_it_is_a_row_and_not_an_act": "derive_runner.py was not in that order's <paths>, and a path missing from the grant is a wall rather than an oversight to route around. The grant rule working exactly as written.",
+    "for_the_l10": "every round since round 6 has scored the producer's side of this retirement and none has scored the consumer's allow-list"
+  },
+  "premises_this_seat_put_on_faces_that_came_back_false": {
+    "count": 4,
+    "shape": "unchanged from rounds 7 and 8 -- a docstring, a contract, an inherited count or an open question written onto a face as if it were a census or a run",
+    "instances": [
+      "'exactly one class' (the producer's own docstring) carried onto the I-1 face as the shape of the problem: TRUE of the canonical key space, and NOT a bound on the destruction, which runs in the raw node_id column across FIVE pairs",
+      "'the key grammar is an open choice' on the I-4 face: it is a RATIFIED spec with three sources including an Andrew-ratified retention policy, never implemented since 2026-06-09",
+      "the I-2 face pointed at the line whose TEXT most looks like the defect: derive_stitch.py:144 is DEAD, never read before the rebind",
+      "round 6's inherited 'pushed ONCE by the GH-Action', carried forward unchallenged: the route has fired 855 times with 0 correct publishes ever"
+    ],
+    "the_measured_property": "three rounds running, NOT ONE was caught by a gate, a control or a checker. Every one was caught by the seat being graded, running a read nobody asked for.",
+    "what_worked": "the LABELS, again. Everything marked HELD, NOT MEASURED cost nothing when falsified; the two marked as measured are the two that misdirected a worker.",
+    "the_reading_asked_of_the_l9": "whether a cut discipline that produces four to five false premises per round, all caught downstream by the graded seat, is a defect in the cut or the system working as designed at an acceptable cost"
+  },
+  "issuer_defects_repaired_inside_the_round": [
+    "the append-only channel resolver normalised the mandatory denominator restatement on THEIRS only, so it REFUSED the drain after this seat's own first drain -- correctly, because by then a restatement of mine sat in OURS. The refusal was right and the asymmetry was mine; both sides are now normalised and any other difference still refuses.",
+    "neither side's restated denominator is true of the UNION, so the merged header is now RE-MEASURED from the merged bytes rather than carried from either side",
+    "a rail denial aborted a whole compound call and every earlier segment silently did not run; caught because the output was empty, and the read was re-run in its own call"
+  ],
+  "carried_forward": [
+    {
+      "item": "W1-S51: the corrected source now sits beside a TRACKED deploy artifact carrying its own stale copy of the pre-fix code, so a deploy reading that artifact ships the collision while the source reads clean",
+      "owner": "2.0.0_SA_COO",
+      "why_not_done_in_round": "no cell in this round covers rebuilding a deployment artifact, and inventing one mid-round is the spec-freeze violation the surprise channel exists to prevent",
+      "rows": ["NFRA_CLDGRPH-W1-S51"]
+    },
+    {
+      "item": "W2-S80: the retirement's second edit, the consumer-side STITCH_EDGE_TYPES allow-list, unnamed by any cell in any round",
+      "owner": "1.0.0_SA_CTO to place",
+      "rows": ["NFRA_CLDGRPH-W2-S80"]
+    },
+    {
+      "item": "W4-S10 and its third item: the day the missing publish credential lands, a production input that moved 5 times in 65 days starts moving on every qualifying push -- a NEVER-2 cadence change arriving disguised as a credential, which wants deciding BEFORE the secret",
+      "owner": "0.0.0_AB_MSTR / Andrew",
+      "rows": ["NFRA_CLDGRPH-W4-S10"]
+    },
+    {
+      "item": "graphuni-storage's materializer is UNTRACKED and its payloads have not been regenerated since 2026-07-01",
+      "owner": "1.0.0_SA_CTO to place",
+      "rows": ["NFRA_CLDGRPH-W2-S80"]
+    },
+    {
+      "item": "FWD-7's PERSON half: the site-Z seat is ALLOCATED and not STARTED. An allocation is not a session and no seat may treat that half as unblocked until a site-Z serial registers LIVE.",
+      "owner": "Andrew",
+      "rows": []
+    }
+  ],
+  "armed_rows_with_a_dark_owner": {
+    "rows": ["NFRA_CLDGRPH-W3-S20"],
+    "owners": "0.8.0_AE_CloudComp (NOT REGISTERED at close)",
+    "liveness_basis": "get_live_agents at compile, read rather than assumed",
+    "why_not_re_seated": "re-seating a dark owner is not this seat's act; it is named here so the L9 and L10 readings can see it rather than inherit it"
+  },
+  "channel_conflicts": "5 of 5 drains conflicted on the append-only channel, which NFRA_CLDGRPH-S36 established is the normal path for a concurrent drain rather than the exception. Each resolved as base + ours-tail + theirs-tail under a structural guard that REFUSES if either side is anything but a pure append, then verified on the WRITTEN bytes: 0 markers, 0 duplicate ids, 0 rows lost, union printed each time (285, 286, 289, 291).",
+  "the_l9_asks": "five judgment criteria -- I1-AC5, I2-AC5, I3-AC5, I4-AC5, I5-AC5 -- plus round 8's five, which remain UNGRADED: the round-8 analysis was written on the drain-end read with no CVO slug in existence, and the CTO amended its own L10 to say so @5f1a392332.",
+  "push_state": "MEASURED at this write rather than carried: every hash named in this report is LOCAL. Andrew holds the push and this field ages the moment an integrator runs."
+}

@@ -39,7 +39,42 @@ task orders already cut; the next issuance is v3. The artifact grammar below cov
 | `/canonical-flow <PROJECT_CODE> --report-only` | locate, measure, classify, report; no act |
 
 **Who runs it:** the Tier-1 seat it is sent to (`4.0.0_SA_CRO`, `1.0.0_SA_CTO`, `2.0.0_SA_COO`, `3.0.0_SA_CVO`, or a
-`~lane` of one). `0.0.0_AB_MSTR` owns no limb: it measures, reports and routes to the owner. A v2 Tier-2 seat
+`~lane` of one). `0.0.0_AB_MSTR` owns no limb: it measures, reports and routes to the owner.
+
+> ⛔ **AND IT IS NOT A STOP ON THE WAY, EITHER — THE CTO RUNS L2 THROUGH THE L5 HANDOFF WITHOUT
+> ASKING `0.0.0_AB_MSTR` FOR ANYTHING.** Andrew-direct 2026-09-10 ~20:0xZ/~20:1xZ at the MSTR terminal,
+> VERBATIM: *"moving forward, tree landing needs to be a CTO job"* and *"yeah macros.yaml needs to be
+> CTO too. anything from L2 up to the L5 handoff to COO for decomp needs to be able to be handled by CTO
+> so we dont have this arbitrary mcp'ing which holds up our entire process if you are busy with something
+> else. MCPing is really only to be used when necessary, the more efficient we get the less mcping should
+> be happening."*
+>
+> ⭐ **THE GATE ALREADY SAID SO AND THE DOCTRINE DID NOT — measured on the resolver 2026-09-10 ~20:2xZ,
+> 7 carriers x 4 agents, with `0.0.0_AB_MSTR` REFUSED on `project.json` in the same run as the live
+> discriminator:**
+>
+> | L2–L5 carrier | lane | `1.0.0_SA_CTO` |
+> |---|---|---|
+> | `org/missions/*/*/*/project.json` | TREE_PROJECT_ROW | PERMIT |
+> | `org/missions/DIRECTIVES.yaml` | TIER0_DIRECTIVES_REGISTER | PERMIT |
+> | `org/missions/MACROS.yaml` | TREE_MACROS | PERMIT |
+> | `org/projects/<CODE>.json` | ANY_EXEC_OR_AE | PERMIT |
+> | `org/missions/*/*/*/prd/**` | ANY_CTO | PERMIT |
+>
+> **FIVE OF FIVE WERE ALREADY PERMITTED. NOTHING NEEDED A PERMISSION CHANGE.** What held the process up
+> was PROSE — `.owned-paths.yaml`'s TREE_MACROS note said *"MSTR registers, CTO co-signs"*, and the same
+> shape sits in CLAUDE.md Rule 27, the spine §L3 and `PROJECT_TREE.contract.json`'s `readers`.
+> ⛔ **A DOCTRINE LINE THAT ROUTES AN ACT THROUGH A SEAT THE GATE DOES NOT REQUIRE IS WORSE THAN A
+> PERMISSION BLOCK, BECAUSE NO REFUSAL TEXT EVER PRINTS.** A blocked seat reads a refusal and asks; an
+> obedient seat sends a message and waits, and the wait is invisible to every instrument. Measured the
+> same evening: two IRPT projects sat unregistered across four seats' messages while the CTO held PERMIT
+> on every path involved.
+>
+> **SO: at L2, L3 and L4 the CTO writes the row, the register line, the macro enum, the index and the PRD
+> ITSELF, in its own commit, and tells `0.0.0_AB_MSTR` afterward if at all.** `0.0.0_AB_MSTR` keeps
+> DIRECTIVES.yaml and MACROS.yaml write access as an integrator fallback and holds NO gate over either.
+> **L1 is unchanged and is still `4.0.0_SA_CRO`'s** (TREE_CRO refuses the CTO on `brief/**`, measured in
+> the same run) — Andrew's range starts at L2. **L5 onward is unchanged and is still the COO's.** A v2 Tier-2 seat
 enters a project only through an L6 task order: it measures, reports, and routes to its issuer. A v3 worker
 subagent has no seat, no inbox and no skill tool, and never runs this; its whole context is its task order.
 
@@ -180,7 +215,8 @@ and the next act of any seat must not overwrite it.
 | your seat | limbs you may pick up | what the pickup is |
 |---|---|---|
 | `4.0.0_SA_CRO` | L1 | the brief (`/brief-create`, `--midstream` when the project is already in flight) |
-| `1.0.0_SA_CTO` | L2, L3, L4; the L10 read; the close | `/endpoint --forward` on the brief; registration under the tree; the PRD at the tree home with header, endpoint and manifest; reading a cut slug into `ROUND_ANALYSIS.round<N>.md` (to the COO with the remediations file) or a PRD addendum (a `prd_version` bump, the L4 notifier fires); the grades and the `CLOSED` flip |
+| `1.0.0_SA_CTO` | L2, L3, L4; the L10 read; the close | `/endpoint --forward` on the brief; registration under the tree; the PRD at the tree home with header, endpoint and manifest -- **which is NOT decomposable until L4-R: both reviewers have SIGNED it at its current `prd_version`**; reading a cut slug into `ROUND_ANALYSIS.round<N>.md` (to the COO with the remediations file) or a PRD addendum (a `prd_version` bump, the L4 notifier fires to the reviewers, then to the COO once both re-sign); the grades and the `CLOSED` flip |
+| `4.0.0_SA_CRO` + `3.0.0_SA_CVO` at L4-R | the PRD sign-off gate (spine v3.14) | on every new-or-bumped PRD header: the CRO reads the BRIEF COVERAGE map against the brief for CONTENT carriage by pinned line; the CVO reads the ENDPOINT section against the ratified pins and the CONTRACTS section against the counterpart; each writes `prd/signoff/<serial>.json` (lane `TREE_PRD_SIGNOFF`, verdict SIGNED or REFUSED with a review_ref, version-bound). The notifier withholds the COO delivery until both are SIGNED; `to-pipeline-gate.py` LIMB 6 refuses a TO against an unsigned PRD. The CTO cannot sign its own document. Andrew-direct 2026-09-10 ~21:2xZ. |
 | `2.0.0_SA_COO` | L5, L6, Track A, the recut, the cleaning run | `/atom-decomp` over the manifest and the battery; the one issuance for every cell with its `fanout:` line; the midstream three reads, then re-dispatch of every non-terminal task order to fresh worker slots; merging valid worker branches and discarding orphans; the one-off cleaning run over `UNFINISHED-EDITS` with the CVO validating each fix; the recut from a round-N analysis as one issuance |
 | `3.0.0_SA_CVO` | L8, L9, the slug; validation of the cleaning run | rows, dispositions (judgment criteria graded here), the one slug of the round to `1.0.0_SA_CTO` and to no one else; re-arming its watcher from its watermark; validating each fix the COO finishes from `UNFINISHED-EDITS` against the task order's criteria, as a row |
 | `0.0.0_AB_MSTR`, any v2 Tier-2 seat | none | report and route |

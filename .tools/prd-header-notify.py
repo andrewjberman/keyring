@@ -64,6 +64,45 @@ def _seat(base):
 
 
 RECIPIENT = os.environ.get("PRD_NOTIFY_TO") or _seat("2.0.0_SA_COO")
+# L4-R -- THE PRD SIGN-OFF GATE (Andrew-direct 2026-09-10 ~21:2xZ: "CRO and CVO should have to sign off on PRD
+# before COO gets it"; spine v3.14). On every new-or-bumped header the two REVIEWERS are notified; the COO
+# delivery is WITHHELD until prd/signoff/<serial>.json from EACH reviewer reads SIGNED at that prd_version, and
+# a commit that lands a sign-off re-checks and releases it. The L6 gate (to-pipeline-gate.py LIMB 6) refuses a
+# task order against an unsigned PRD, so this notifier withholding is the FIRST carrier and the gate the second.
+SIGNOFF_REVIEWERS = ("4.0.0_SA_CRO", "3.0.0_SA_CVO")
+SIGNOFF_RE = re.compile(r"^(org/missions/D(?:0|[1-9][0-9]?)/[^/]+/[^/]+/prd)/signoff/[^/]+\.json$")
+
+
+def _signed_serials(files, prd_version):
+    """PURE. `files` = {basename: parsed-json-or-None}. The base serials that SIGNED this exact prd_version;
+    a ~lane of a reviewer signs for its base serial; REFUSED, stale or unreadable files sign nothing."""
+    out = set()
+    for name, doc in files.items():
+        if not isinstance(doc, dict):
+            continue
+        base = str(doc.get("signed_by") or "").split("~", 1)[0]
+        if base in SIGNOFF_REVIEWERS and str(doc.get("verdict") or "").upper() == "SIGNED" \
+                and str(doc.get("prd_version")) == str(prd_version):
+            out.add(base)
+    return out
+
+
+def _signoff_files(root, prd_rel):
+    """The sign-off files beside a PRD, read from the WORKING TREE (post-commit: HEAD is checked out)."""
+    import glob as _glob
+    sdir = os.path.join(root, os.path.dirname(prd_rel), "signoff")
+    files = {}
+    for fp in sorted(_glob.glob(os.path.join(sdir, "*.json"))):
+        try:
+            with open(fp, "r", encoding="utf-8") as fh:
+                files[os.path.basename(fp)] = json.load(fh)
+        except Exception:  # noqa: BLE001
+            files[os.path.basename(fp)] = None
+    return files
+
+
+def _missing_signoffs(root, prd_rel, prd_version):
+    return [r for r in SIGNOFF_REVIEWERS if r not in _signed_serials(_signoff_files(root, prd_rel), prd_version)]
 REOFFER_MINUTES = int(os.environ.get("PRD_NOTIFY_REOFFER_MINUTES", "30"))
 MAX_ATTEMPTS = int(os.environ.get("PRD_NOTIFY_MAX_ATTEMPTS", "6"))
 BROKER = "http://127.0.0.1:%s" % os.environ.get("OPAL_BROKER_PORT", "7800")
@@ -354,12 +393,57 @@ def post_commit(root):
             print("[prd-notify] %s: prd_version %s unchanged vs HEAD~1 -- not notified (bump it for a "
                   "substantive edit; an un-bumped edit is invisible to COO by design)" % (rel, now_h.get("prd_version")))
             continue
-        row = {"kind": "prd", "project": now_h["project"], "directive": now_h.get("directive"),
-               "fabric": now_h.get("fabric"), "prd_version": now_h["prd_version"], "status": now_h.get("status"),
-               "sha": sha, "path": rel, "brief_ref": now_h.get("brief_ref"),
-               "outcomes": now_h.get("endpoint_outcomes"), "to": RECIPIENT,
-               "from": os.environ.get("OPAL_AGENT_SERIAL", ""),
-               "attempts": 0, "msg_id": None, "sent_at": None, "history": []}
+        base_row = {"kind": "prd", "project": now_h["project"], "directive": now_h.get("directive"),
+                    "fabric": now_h.get("fabric"), "prd_version": now_h["prd_version"], "status": now_h.get("status"),
+                    "sha": sha, "path": rel, "brief_ref": now_h.get("brief_ref"),
+                    "outcomes": now_h.get("endpoint_outcomes"),
+                    "from": os.environ.get("OPAL_AGENT_SERIAL", ""),
+                    "attempts": 0, "msg_id": None, "sent_at": None, "history": []}
+        # L4-R: the two reviewers are notified on EVERY bump, unconditionally.
+        for reviewer in SIGNOFF_REVIEWERS:
+            r = dict(base_row, to=_seat(reviewer), history=[], kind="prd-review")
+            sent += _dispatch(root, state, r)
+        # L4-R: the COO is notified ONLY when both sign-offs exist at this prd_version.
+        missing = _missing_signoffs(root, rel, now_h["prd_version"])
+        if missing:
+            print("[prd-notify] %s @%s: COO delivery WITHHELD (L4-R) -- awaiting SIGNED sign-off at %s from %s; "
+                  "the L6 gate refuses a task order against it meanwhile"
+                  % (rel, sha[:10], now_h["prd_version"], ", ".join(missing)))
+        else:
+            sent += _dispatch(root, state, dict(base_row, to=RECIPIENT, history=[]))
+    # ---- L4-R: a sign-off landed in this commit -> re-check its PRD and release the COO delivery if complete ----
+    for so_rel in [f for f in touched if SIGNOFF_RE.match(f)]:
+        prd_dir = SIGNOFF_RE.match(so_rel).group(1)
+        try:
+            so_doc = json.loads(_blob(root, "HEAD", so_rel, must=True))
+        except Exception as exc:  # noqa: BLE001
+            print("[prd-notify] %s: sign-off unreadable at HEAD (%s) -- nothing released" % (so_rel, exc))
+            continue
+        prd_rel = prd_dir + "/" + str(so_doc.get("prd") or "")
+        try:
+            h = _header(_blob(root, "HEAD", prd_rel, must=True))
+        except Exception as exc:  # noqa: BLE001
+            print("[prd-notify] %s: names PRD %s which is unreadable at HEAD (%s)" % (so_rel, prd_rel, exc))
+            continue
+        if not h:
+            continue
+        missing = _missing_signoffs(root, prd_rel, h.get("prd_version"))
+        if missing:
+            print("[prd-notify] %s: sign-off recorded; COO delivery still WITHHELD for %s at %s -- awaiting %s"
+                  % (so_rel, prd_rel, h.get("prd_version"), ", ".join(missing)))
+            continue
+        already = [r for r in state if r.get("kind") == "prd" and r.get("path") == prd_rel
+                   and r.get("prd_version") == h.get("prd_version") and r.get("to") == RECIPIENT]
+        if already:
+            print("[prd-notify] %s: both sign-offs present; COO delivery for %s at %s already recorded (id=%s)"
+                  % (so_rel, prd_rel, h.get("prd_version"), already[-1].get("msg_id")))
+            continue
+        row = {"kind": "prd", "project": h["project"], "directive": h.get("directive"), "fabric": h.get("fabric"),
+               "prd_version": h["prd_version"], "status": h.get("status"), "sha": sha, "path": prd_rel,
+               "brief_ref": h.get("brief_ref"), "outcomes": h.get("endpoint_outcomes"), "to": RECIPIENT,
+               "from": os.environ.get("OPAL_AGENT_SERIAL", ""), "attempts": 0, "msg_id": None, "sent_at": None,
+               "history": [], "released_by": so_rel}
+        print("[prd-notify] %s: BOTH sign-offs present at %s -> COO delivery RELEASED (L4-R)" % (so_rel, h.get("prd_version")))
         sent += _dispatch(root, state, row)
     # ---- R7: remediation rows NEW in this commit, on either root -> the loop_target's owner ----
     for rel in [f for f in touched if REMED_RE.search(f)]:
@@ -501,6 +585,28 @@ def selftest(root):
     ok = "[ROUTE step 2]" in subj and "F0" in body and "FWD-3" in body and "NOTIFICATION" in body
     print("  %-7s _compose(route, loop_target=2) names step 2, F0 re-entry, the outcome_ref, and the NOTIFICATION boundary"
           % ("OK" if ok else "DEFECT"))
+    fails += int(not ok)
+    # ---- L4-R: the sign-off predicate, pure ----
+    _c = {"signed_by": "4.0.0_SA_CRO", "verdict": "SIGNED", "prd_version": "v0.4"}
+    _v = {"signed_by": "3.0.0_SA_CVO~Z", "verdict": "SIGNED", "prd_version": "v0.4"}
+    ok = _signed_serials({}, "v0.4") == set()
+    print("  %-7s _signed_serials: no files -> nobody signed" % ("OK" if ok else "DEFECT"))
+    fails += int(not ok)
+    ok = _signed_serials({"a.json": _c, "b.json": _v}, "v0.4") == {"4.0.0_SA_CRO", "3.0.0_SA_CVO"}
+    print("  %-7s _signed_serials: both SIGNED at v0.4, CVO via ~Z -> both (tilde signs for its base)" % ("OK" if ok else "DEFECT"))
+    fails += int(not ok)
+    ok = _signed_serials({"a.json": _c, "b.json": dict(_v, prd_version="v0.3")}, "v0.4") == {"4.0.0_SA_CRO"}
+    print("  %-7s _signed_serials: CVO signed v0.3, PRD at v0.4 -> only CRO (version-bound)" % ("OK" if ok else "DEFECT"))
+    fails += int(not ok)
+    ok = _signed_serials({"a.json": _c, "b.json": dict(_v, verdict="REFUSED")}, "v0.4") == {"4.0.0_SA_CRO"}
+    print("  %-7s _signed_serials: a REFUSED verdict signs nothing" % ("OK" if ok else "DEFECT"))
+    fails += int(not ok)
+    ok = _signed_serials({"a.json": None, "b.json": _v}, "v0.4") == {"3.0.0_SA_CVO"}
+    print("  %-7s _signed_serials: an unreadable file signs nothing" % ("OK" if ok else "DEFECT"))
+    fails += int(not ok)
+    ok = bool(SIGNOFF_RE.match("org/missions/D9/IRPT/IRPT_BCKEND/prd/signoff/4.0.0_SA_CRO.json")) and \
+        not SIGNOFF_RE.match("org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md")
+    print("  %-7s SIGNOFF_RE matches prd/signoff/*.json and not the PRD itself" % ("OK" if ok else "DEFECT"))
     fails += int(not ok)
     # ---- delivery, LIVE: delivered is not read (the RC7 property) ----
     try:

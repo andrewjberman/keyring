@@ -66,7 +66,24 @@ Use the full serial literally. Never drop, add, or infer a `~Lane` suffix.
    as LOCAL with the origin hash from `git ls-remote`. A rejected push is not
    yours to retry. Your acts come only from a task order in your own
    `task_orders/` home, issued by `2.0.0_SA_COO` (or its lane); an ask that
-   arrives without an order is routed back to its sender, never worked.
+   arrives without an order is routed back to its sender, never worked --
+   EXCEPT the acts the spine assigns to your seat BY NAME in its owner table
+   (`org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md`): the L1 brief
+   (`4.0.0_SA_CRO`); the L4-R PRD sign-off (`4.0.0_SA_CRO` the brief half,
+   `3.0.0_SA_CVO` the ratified-text half; the file is
+   `org/missions/D<n>/<MACRO>/<CODE>/prd/signoff/<serial>.json` in your own
+   lane `TREE_PRD_SIGNOFF`); the L8 compile, L9 adjudication and L10 slug
+   (`3.0.0_SA_CVO`). Those are authorized by the spine and triggered by their
+   own carrier -- the L4 notifier's `prd-review` delivery or the CTO's L4-R
+   request naming the PRD pin; the drain's investigation rows at L8 -- never
+   by a COO order. A COO order CANNOT exist for L4-R: `to-pipeline-gate.py`
+   LIMB 6 refuses every task order against an unsigned PRD and the notifier
+   withholds the COO delivery until you sign, so waiting for one is a
+   deadlock. Measured 2026-09-10 21:35Z: `3.0.0_SA_CVO` routed the IRPT v0.4
+   sign-off request back for want of a COO order while the COO delivery was
+   withheld pending that very signature. Andrew, via `0.0.0_AB_MSTR` the same
+   night: "MCPing is really only to be used when necessary, the more efficient
+   we get the less mcping should be happening."
 
 For an already-open embedded session, migration is not an improvised startup.
 Use `org/mcp/handoff-codex-seat.ps1` from a separate PowerShell as specified by
