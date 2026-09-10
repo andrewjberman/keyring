@@ -10,51 +10,71 @@ independently re-checked by base CRO before this file was written.
 
 ---
 
-## 1. Register on the broker
+> ⛔ **SECTIONS 1–3 WERE REWRITTEN 2026-09-10 by `1.0.0_SA_CTO` (doc-gate act). AS AUTHORED
+> 2026-08-24 THEY WERE ARMED AGAINST YOU.** Old §3 told you to run
+> `bash .tools/inbox-watch <SERIAL> stream`, which `org/mcp/CODEX_INBOX_MONITOR.md:47` and
+> `org/XXX.md`'s Codex block both **FORBID on the Codex path** — it is a CONSUMING watcher.
+> `inbox-watch.sh:120` does `mv "$msg" read/` and only then `:124` echoes the notification. You have
+> no Monitor to receive that echo, so the move — **which commits the theft** — happens and nothing
+> tells you. **You would drain your own mail into `read/` and read healthy on every probe you have.**
+> Old §§1–2 hand-rolled registration and heartbeat in a `python -i` prompt, which the launcher now
+> owns; running your own is the duplicate the doctrine names. Found by `4.0.0_SA_CRO` at its own
+> startup — the only place it was findable.
 
-Registration makes you visible on the live-agent roster. **It is optional for comms and worth doing
-anyway** — filesystem delivery works without it (verified both directions), but a seat absent from
-the roster reads as not-present to every other agent.
+## 1. Registration and heartbeat — THE LAUNCHER OWNS BOTH. Do not hand-roll them.
 
-```
-# Terminal 1, from the workspace root:
-cd C:\Users\AndrewBerman\Desktop\ajb_workspace
-python -i
+**`org/mcp/codex-agent-heartbeat.py` registers your full serial and maintains the broker and liveness
+heartbeats** (`CODEX_INBOX_MONITOR.md:42`). **The launcher starts it.** Your job is to CONFIRM it is
+running under YOUR full suffixed serial, not to start a second one.
 
-# At the Python prompt:
-import asyncio; from org.mcp import server as comms
-print(asyncio.run(comms.register_agent("<YOUR_FULL_SERIAL>", summary="Starting Codex session")))
-```
+⛔ **Registration is NOT optional.** The older text here said it was. It is not: an inbox is a
+per-recipient slice, and a seat that is not on the roster is not merely invisible — mail addressed to
+it gets no bounce, no ack and no staleness signal, and reads as delivered to the sender.
 
-Expected receipt begins `Registered <serial> as live` … `Broker: connected (port 7800)`.
+⛔ **USE YOUR FULL SUFFIXED SERIAL** — `4.0.0_SA_CRO~A`, never the base. Under the base serial your
+lane inbox is never watched and you silently miss every message addressed to you.
 
-⛔ **KEEP THAT PYTHON PROCESS OPEN. Its PID owns the registration.** Close it and you are gone.
+⛔ **DO NOT START A SECOND HEARTBEAT.** If liveness looks wrong, verify which process holds your
+serial before launching anything: two heartbeats on one serial is an identity conflict, not redundancy.
 
-⛔ **USE YOUR FULL SUFFIXED SERIAL** — `4.0.0_SA_CRO~A`, never the base. Registering under the base
-serial means your lane inbox is never watched and you silently miss every message addressed to you.
+**Why liveness is not one-shot — keep this, it was paid for.** `~B` registered, did not heartbeat, and
+went STALE in **187 seconds**. Worse: **once past the liveness threshold, `heartbeat` itself returned
+"not registered"** — recovery required a fresh `register_agent`. A missed heartbeat drops you off *and
+then the obvious recovery call fails*. That is why the launcher owns this and you confirm rather than
+improvise.
 
-## 2. Heartbeat — NOT optional, and this was learned the hard way
+⚠ **A known recovery gap, measured 2026-09-10 by `3.0.0_SA_CVO` under Andrew-direct repair
+authorization:** the shared heartbeat refreshes LOCAL liveness and ignores the broker's response, and
+the broker returns OK even when its UPDATE matched no row — while the Codex companion re-registers
+only when the LOCAL entry is missing. **So a lost BROKER row with surviving LOCAL liveness had no
+recovery path.** Repair was in progress at that date; if your mail stops arriving while every local
+probe reads healthy, this is the shape to suspect.
 
-```
-# Every 30–60s while working, from the SAME Python prompt:
-print(asyncio.run(comms.heartbeat("<YOUR_FULL_SERIAL>", summary="WORKING: <current task>")))
-```
+## 2. Arm the NON-CONSUMING detector — never the stream watcher
 
-**Registration is one-shot; liveness is not.** `~B` registered, did not heartbeat, and went STALE on
-the roster in **187 seconds**. Worse, and this is the part worth knowing: **once past the liveness
-threshold, `heartbeat` itself returned "not registered"** — they had to re-run `register_agent`. So a
-missed heartbeat is not a cosmetic lapse; it drops you off and then the obvious recovery call fails.
+**`org/mcp/codex-inbox-monitor.py` is the REQUIRED detector** (`CODEX_INBOX_MONITOR.md:41`). It emits
+root-level `[HARD-NUDGE] <filename>` **without reading, moving, deleting or ACKing** your mail. **The
+turn bridge starts it; do not launch a duplicate.**
 
-## 3. Arm your inbox watcher
+⛔ **NEVER run any of these on the Codex path** (`CODEX_INBOX_MONITOR.md:47-53`):
 
-```
-# Terminal 2, from the workspace root:
-bash .tools/inbox-watch <YOUR_FULL_SERIAL> stream
-```
+| tool | why |
+|---|---|
+| `org/mcp/inbox-watch.sh ... stream` (and the `.tools/inbox-watch` shim) | CONSUMING — moves mail BEFORE notifying |
+| `org/mcp/check-inbox.sh` | CONSUMING — consumes mail during a check |
+| `org/mcp/agent-poller.py` | Claude lifecycle; its inbox companion is consuming |
+| a second `codex-inbox-monitor.py`, or the old `notify()` / `yield_control()` bridge | duplicate |
 
-`.tools/inbox-watch` is a shim to `org/mcp/inbox-watch.sh`. A serial **with** a `~suffix` watches
-**only** the nested lane dir, strictly isolated from the base and from sibling lanes — so filesystem
-routing alone makes every message in your watched dir unambiguously yours.
+**Your read discipline instead:** at every active turn, sweep your suffixed serial's unread root
+first, read the exact file, ACK, act, then move it to `read/` yourself. **Never infer READ from a
+nudge or from a moved file** — see §6, which is correct as written and unchanged.
+
+## 3. Lane isolation still holds, and it is the useful half of the old §3
+
+A serial **with** a `~suffix` addresses **only** the nested lane dir, strictly isolated from the base
+and from sibling lanes — so filesystem routing alone makes every message in your watched dir
+unambiguously yours. That was true before this rewrite and is unchanged by it; only the tool you point
+at that dir has changed.
 
 ## 4. ⛔ THE INBOX PATH — the one that silently swallows mail
 
@@ -76,6 +96,14 @@ nobody and reported missing by nothing.
 families use opposite forms; do not carry one rule across.*
 
 ## 5. Comp-tools do not resolve bare in PowerShell
+
+> ⚠ **OPEN QUESTION, NOT RESOLVED, 2026-09-10.** `4.0.0_SA_CRO` reported that this section contradicts
+> the launcher's bare comp shims. `1.0.0_SA_CTO` re-measured in a plain PowerShell session on this
+> device and got **0 of 4 sampled bare `comp-*` resolving** — which CORROBORATES the text below rather
+> than contradicting it. The two readings are not in conflict if the LAUNCHER's environment differs
+> from a plain shell, and that environment is not observable from the CTO seat. **Left as written and
+> flagged rather than "fixed" on an unverified report:** the seat that sees the launcher's own PATH
+> should settle it and edit this section. Do not assume either way; run the check in YOUR shell.
 
 Measured by `~B`: **PowerShell resolves 0 of 102 bare `comp-*` tools.** The `~/bin` forwarders reach
 Git-Bash shells, not PowerShell.
@@ -121,3 +149,12 @@ first act; `~B`'s named the three duplication acts. Both closed the clock proper
 *Authored 2026-08-24 by `4.0.0_SA_CRO` from `~B`'s verified sequence plus base re-checks. If a command
 here fails, that is a defect in this file — report it rather than working around it, because the next
 Codex seat will hit the same thing.*
+
+*§§1–3 rewritten 2026-09-10 by `1.0.0_SA_CTO` as a doc-gate act, on `4.0.0_SA_CRO`'s startup finding
+and with `2.0.0_SA_COO`'s disposition (95134 §4) that it lands here rather than as a cell. §5 flagged
+open, not edited. The defect was ARMED — the old §3 pointed the one class of seat that cannot survive
+it at a CONSUMING watcher — and it was found only because a seat followed its own setup file and
+reported the contradiction instead of working around it, which is exactly what the paragraph above
+asks for. **This file is normative for a CRO Codex seat but it is NOT the authority: `org/XXX.md` and
+`org/mcp/CODEX_INBOX_MONITOR.md` are. Where this file disagrees with either, THEY WIN and this file is
+the defect.***
