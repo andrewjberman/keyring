@@ -786,3 +786,56 @@ instances here were CODE FENCES and ACCEPT CRITERIA one grain down -- is PLACED 
 is deliberately NOT legislated in this decomposition.**
 
 -- `2.0.0_SA_COO`, L5 round 3, one cell on R-EG-8
+
+
+---
+
+## 19. ROUND 3, THE LAST CELL BEFORE THE RUN (v0.10) -- the EMAIL asserts every rung ran, on a run where none did
+
+**THE FIRE IS SEQUENCED BEHIND THIS CELL BY THE ISSUER'S OWN CALL, AND THE REASON IS WHO READS THE
+ARTIFACT.** `R-EG-9` (`3d8f3d9725`) unblocked `EG-s-21` by re-cutting FWD-9's ACCEPT off the 404.
+Nothing now stops the driven run except this: **the email it sends would tell a person two things that
+are not true.**
+
+**ROW `W4-S9`, this seat's own, measured by `0.9.0_WK_ETFS_GUARDRAIL~4`:** the terminal message's
+opening line reads *"could not resolve N date(s) after EVERY RUNG RAN (probe, re-run the producer,
+re-check)"* -- **on a `--no-ladder` run where `remediate_month` was never called and ZERO rungs ran** --
+and **no field of the message says the condition was FORCED.**
+
+⛔ **SO A DRIVEN RUN'S EMAIL IS INDISTINGUISHABLE FROM A REAL EMERGENCY, AND WORSE, IT MAKES A POSITIVE
+FALSE CLAIM.** A reader is told the repair ladder was exhausted. It was never entered.
+
+**THIS IS MY CUT'S BLIND SPOT AND I AM NAMING IT AS MINE.** `EG-s-26`'s disclosure requirement covers
+the verdict DOCUMENT. **The EMAIL is the surface FWD-10 actually names** -- *"Andrew finds out"* -- and
+I wrote a disclosure requirement that stops one layer short of the only artifact a person reads. The
+same shape as R-EG-8 and R-EG-9 one more grain out: **the disclosure was placed on an indicator of the
+run rather than on every surface that speaks for it.**
+
+| cell | outcome_ref | surface | verb | depends_on | the bar |
+|---|---|---|---|---|---|
+| `EG-s-30` | FWD-9, FWD-10 | `infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py` and its suite | build | `EG-s-29` (TERMINAL) | the terminal email STOPS asserting rungs that did not run, and CARRIES the forcing disclosure -- so a person reading it can tell a driven run from a real emergency, from the message alone and without opening an artifact |
+
+**Denominator:** PRD v0.8 `endpoint_outcomes` 8; round 3 SERVES 5; cells **12**.
+
+⛔ **SEQUENCING, AND IT IS AN ISSUER'S CALL RATHER THAN A RULING:** `EG-s-30` LANDS AND IS PROVEN
+BEFORE `EG-s-21` SPENDS THE SINGLE PERMITTED RUN. Firing first sends a REAL EMAIL to a REAL PERSON
+carrying a false claim, and the recipient is Andrew. **An artifact you cannot un-send is not a place to
+discover a disclosure gap.** `EG-s-21` is otherwise unblocked and its arm (e) does not require the
+disclosure -- so this sequencing costs one cell and buys the only thing that cannot be rolled back.
+
+**THE CHAIN READ.** `EG-s-30` touches the ORCHESTRATOR, whose last order `EG-s-27` is TERMINAL and
+drained, so the surface is free. `EG-s-29` is terminal on the renderer; no live cell shares a file. It
+is the HEAD of a two-cell chain -- `EG-s-30` then `EG-s-21` -- on one slot, because the second must not
+fire until the first is proven.
+
+```
+fanout: 1 of 1 chain, cap 8, reason: EG-s-30 then EG-s-21 on ~4, sequenced by the issuer because the second sends an un-recallable artifact to a person and the first is what makes that artifact honest.
+```
+
+**What this cell does NOT decide:** whether the email should carry the equivalent-ask block at all on a
+shape-1 run (`W5-S15` measured that `_read_coverage_artifacts` reads a literal three-filename tuple, so
+it does not). That is a content question about what a person needs, not a truthfulness question, and it
+is placed rather than folded in -- fusing them would make one cell answer two questions with different
+evidence.
+
+-- `2.0.0_SA_COO`, L5 round 3, one cell on row `W4-S9` and the sequencing behind `R-EG-9`
