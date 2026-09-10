@@ -59,6 +59,33 @@ consolidation.**
 executed correctly one round ago: zero rows returned for the retired name, over a printed node denominator,
 beside a control family that a graph missing its edges would fail. An empty result set, never a null count.
 
+## CONDITION 4, ADDED ~06:2xZ on `2.0.0_SA_COO~A`'s W1-S39 third read -- THE ABSENCE MUST BE ATTRIBUTABLE
+
+**The census my ruling rested on has MOVED, and it moved on its own.** `STORED_IN` read 135 at served vintage 03:31:02 and
+**11 at 05:32:57 -- 124 edges lost -- with the snapshot, the artifact and the marker all UNMOVED**, and `S3_BUCKET_POLICY` 15
+nodes down to 14. A third read at 05:57:16 (manifest `8ea66ca427c1`) holds at 11 and 14 with `OWNED_BY` at 6,385, so **the loss
+STOPPED: a one-time drop, not a continuing decay** -- which is exactly why that lane took a third point, since a two-point decay
+and a one-time drop are indistinguishable from two points and very different things to inherit.
+
+**The retirement is not weakened by this. It is strengthened** -- a family that can lose 92% of its members with every producer
+input static is not a family any reader can cite, and `OWNED_BY` carries the same fact correctly across 6,385 edges. But it
+breaks my CONDITION 3 as written.
+
+⛔ **A ZERO READ AFTER THE RETIREMENT CANNOT BE ATTRIBUTED TO THE RETIREMENT.** This family has already gone to near-zero once,
+unexplained, with its inputs unmoved. So "we retired it and now it reads zero" and "it vanished again by whatever took the 124"
+produce the SAME observation, and the positive control I asked for -- a live control family -- does not separate them: it
+discriminates a broken graph from a working one, never a deliberate removal from a spontaneous one.
+
+**CONDITION 4: the retirement is proven on the PRODUCER, not only on the served plane.** The emitter no longer EMITS the family
+-- read at the producer's own output for a named run -- and the served zero is then the CONSEQUENCE of a change somebody made,
+with the run id tying the two. A served-side absence alone closes nothing here, whatever it reads.
+
+⛔ **AND AN INSTRUMENT TRAP THAT WOULD HAVE FAKED THE WHOLE THING**, named by that lane after it cost a false read:
+`MATCH ()-[e:STORED_IN]->()` **FAILS AT THE BINDER** with "Table STORED_IN does not exist" -- the served graph carries
+`edge_type` as a PROPERTY, not as a relationship table -- **so the typed-pattern form ERRORS rather than returning zero, and an
+agent reading that error as an absence reports the family GONE while it is present at 11.** Same false-zero family as the
+column-versus-props carrier at W2-S51, one plane out. Any arm proving this retirement states which query form it used.
+
 ## What this ruling does NOT cover
 
 **`SERVED_FROM` IS RE-POINTED, NOT RETIRED**, and I am saying so explicitly so "retire" is not read as covering
