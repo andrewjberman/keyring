@@ -252,8 +252,19 @@ def seating_check(new_tos: list) -> tuple[list, list]:
     CONSTRUCTION.
 
     SCOPE, both sides restricted to PIPELINE-REGISTERED projects, and this is load-bearing
-    rather than convenient. CLAUDE.md Rule 27 says it in those words ("an instance already
-    holding open TOs on another PIPELINE project is not a legal target"), and unscoped the lint
+    rather than convenient. THE AUTHORITY IS ANDREW-DIRECT 2026-08-24 ~19:29Z -- "ONE PROJECT
+    PER TIER-2 SEAT INSTANCE", protecting THE SEAT'S CONTEXT, not the box -- built on his
+    ~00:2xZ 2026-08-25 word, exactly as this file's own header at :38-40 already says.
+    *** CITATION REPAIRED 2026-09-10 by 1.0.0_SA_CTO. This docstring previously claimed
+    "CLAUDE.md Rule 27 says it in those words" and quoted a sentence CLAUDE.md HAS NEVER
+    CONTAINED. Verified absent on THREE instruments by three seats -- comp-find with
+    wrap-proof fragments, `grep -ic`, and native Grep -- each with a working positive control
+    on the same file. The header carried the CORRECT attribution the whole time while the
+    docstring a reader reaches when asking "why did this refuse" carried a false one, and the
+    phrase generalised from TIER-2 to all tiers as it travelled. THE GATE IS UNCHANGED: only
+    the citation was wrong, never the enforcement. Whether the rule should reach TIER 1 is
+    ANDREW'S call and is NOT taken here. ***
+    Unscoped the lint
     would fire on LEGACY DEBT instead of on seating: the base 0.8.0 serial alone carries 80 open
     pre-pipeline TOs across 34 projects, which would make every base serial permanently illegal
     and the refusal meaningless. DECLARED RESIDUAL: a seat carrying non-pipeline TOs is not
