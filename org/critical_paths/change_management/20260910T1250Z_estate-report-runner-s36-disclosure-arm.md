@@ -1,7 +1,10 @@
 # DEPLOY COMPLETION LEDGER -- estate-report-runner S36 DISCLOSURE ARM (NFRA_OUTSET.TO-OS-s-22)
 
-**Opened:** 2026-09-10T12:50Z by `0.7.0_AE_CloudOps~W`
-**Status:** **OPEN**
+**Opened:** 2026-09-10T12:50Z by `0.7.0_AE_CloudOps~W` (committed OPEN at `3a5829083e`)
+**Status:** **CLOSED 2026-09-10T12:56Z** -- all four legs verified. **THE RACE WAS WON:** the
+upload landed at **12:55:13Z**, about five minutes before the 13:00Z fire, so today's scheduled run
+is the first served day carrying the disclosure. **The ACCEPT is NOT claimed here** -- `O22-AC1`
+reads the served day this fire produces, and that reading has not been taken yet.
 **TO:** `org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-22.the-per-device-consumer.md`
 (cell `OS-s-22`, outcome_ref FWD-3; face AMENDED @`221511c4ca`, PRD v0.9)
 **Ordered by:** `2.0.0_SA_COO` 94889 clause 3, carrying `1.0.0_SA_CTO`'s ruling on `NFRA_OUTSET-S36`
@@ -112,17 +115,53 @@ trigger-token runner), in session, no Terraform. Versioning is Enabled and the p
 deleted by an overwrite. **The data plane is untouched in either direction** -- no schedule, no IAM
 grant, no instance, no served report key.
 
-## Legs -- to be verified at the close
+## Legs -- ALL FOUR VERIFIED
 
-1. [ ] Uploaded; instance state read LIVE immediately before; new VersionId + ETag recorded.
-2. [ ] ETag == the HEAD md5; ContentLength recorded.
-3. [ ] **CONTENT diff** (Rule 22a -- deployed bytes against the BUILD INPUT, never by filename):
-       served sha256 == `git show HEAD:<path>` sha256, **with a negative control** proving the
-       comparator can report MISMATCH.
-4. [ ] **THE DISCLOSURE, SHOWN IN THE SERVED BYTES**, with a control per token: the fifth state's
-       tokens present in the new object and absent from the prior one.
+1. [x] Uploaded **2026-09-10T12:55:13Z**. Instance state read LIVE at 12:54:57Z, immediately
+       before: **`stopped`**. New VersionId `Vl2cyFrB8dphstJ8IX2iNt01oDrMt7Sp`, ETag
+       `d9b82ec4578251ed3c335e992e2fbe84`.
+2. [x] ETag `d9b82ec4578251ed3c335e992e2fbe84` **== the HEAD md5**; ContentLength **180,310 B**
+       (from 173,482 B).
+3. [x] **CONTENT diff, the deciding leg** (Rule 22a -- deployed bytes against the BUILD INPUT,
+       never by filename). The served object was RE-DOWNLOADED by its new VersionId rather than
+       trusted from the PUT response: served sha256 `37579654c920ee7a...` ==
+       `git show HEAD:...` sha256 `37579654c920ee7a...`, 180,310 B both.
+       **NEGATIVE CONTROL:** one bit flipped at offset 100 of a copy with the length held fixed ->
+       the same comparator reports MISMATCH, so the match is a measurement and not a tautology.
+       ⚠ The worktree file happened to hash identically to the record here (0 CRLF), so the
+       autocrlf distinction cost nothing today; the BUILD INPUT was still taken from
+       `git show HEAD:` rather than the checkout, because the next file may differ.
+4. [x] **THE DISCLOSURE, SHOWN IN THE SERVED BYTES RATHER THAN ASSERTED**, with a control per
+       token (a census of N tokens is N detectors). New object against the PRIOR served object
+       (VersionId `BUorf3uM3aGvDQRveDn8JvdMvWoPGVK6`):
+
+       | token | prior | new | verdict |
+       |---|---|---|---|
+       | `SeamReadIndistinguishable` | 0 | 4 | ADDED |
+       | `NOT-PUBLISHED-OR-UNREADABLE` | 0 | 4 | ADDED |
+       | `CANNOT DISTINGUISH THE TWO` | 0 | 1 | ADDED |
+       | `ResponseMetadata` (the envelope read) | 0 | 1 | ADDED |
+       | `indistinguishable` | 1 | 7 | 1 -> 7 |
+       | `FIVE PER-DEVICE STATES` | 0 | 1 | ADDED |
+       | `FOUR PER-DEVICE STATES` | **1** | **0** | **RETIRED** |
+
+       The last row is the one that proves the census is a measurement: its detector had a PRIOR
+       count of 1, so it was able to fire. A token that read 0 on both sides would have
+       discriminated nothing.
+
+## POST-STATE
+
+| | value |
+|---|---|
+| Served object | **180,310 B**, ETag `d9b82ec4578251ed3c335e992e2fbe84`, VersionId `Vl2cyFrB8dphstJ8IX2iNt01oDrMt7Sp`, LastModified 2026-09-10T12:55:13Z |
+| Identical to | `git show 0d5c4f083f:infra/aws/ec2/estate-report-runner/estate_report_runner.py`, sha256 `37579654c920ee7a...` |
+| Per-device states it can render | REPORTING, QUIET, SILENT, OUT-OF-CORPUS, **NOT-PUBLISHED-OR-UNREADABLE** |
+| Roster it will read | `laptop`, `site-z`, `_os22_probe_device` |
+| Keys present for it | `outset/laptop/...` (real), `outset/_os22_probe_device/...` (QA fixture); **`outset/site-z/...` absent, and that absence is now the residual's instrument** |
 
 ## Close condition
 
 All four legs checked. Closed in a second commit flipping the Status line.
 ⛔ **THE ACCEPT IS NOT THIS ENTRY.** `O22-AC1` reads a SERVED DAY. This entry closes on the DEPLOY.
+⛔ **AND THE RESIDUAL IS NOT CLAIMED EITHER.** The 13:00Z run supplies the read; until it is taken,
+the OS-s-23 grant stays recorded as **APPLIED, NOT EXERCISED**.
