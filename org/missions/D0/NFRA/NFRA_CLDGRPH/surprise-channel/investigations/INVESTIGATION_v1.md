@@ -8236,3 +8236,56 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S49",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-10T18:36Z",
+    "one_line": "The key collision is FIVE class pairs, not one: the cell and derive_runner's docstring both scope it to S3_BUCKET/S3_BUCKET_POLICY, and that is true of the CANONICAL key space -- but the destruction runs in the RAW node_id column, where 30 strings are claimed by two node types across five pairs, four of them reachable by the incremental updater.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "spec_asserts": "The cell: 'that exact string is S3_BUCKET_POLICY's canonical key for 15 of 15 nodes of the class' and 'two node classes contend for ONE warehouse key'. It quotes derive_runner.py:2306-2308: 'It lands on whatever OTHER node holds that string as ITS canonical key. In this estate exactly one class does -- S3_BUCKET_POLICY'. Both state the collision as ONE pair, and TO-CG-I-1 is cut to close that pair.",
+    "world_is": "Measured this run over all 27,685 rows of globgrph.graph_nodes at vintage 2026-09-10T12:24:50.576632+00:00 (marker-stamped metadata_location, pyiceberg 0.9.1 StaticTable): 27,632 distinct node_id strings, of which 30 are claimed by MORE THAN ONE node_type -- S3_BUCKET+S3_BUCKET_POLICY n=12, IAM_ROLE+LAMBDA n=8, EVENT_RULE+LAMBDA n=8, CODEBUILD_PROJECT+IAM_ROLE n=1, EVENT_RULE+SSM_DOCUMENT n=1. The docstring's claim is CORRECT about the canonical key space (arn-or-id): LAMBDA and IAM_ROLE both carry full ARNs, so their canonical keys differ. But _match_filter (lambda_function.py:391-405 at HEAD) matches the RAW `arn` and `node_id` COLUMNS, not the canonical key -- so the space the destruction actually runs in has five colliding pairs, and four of the five involve a class bounded_derive_node emits. Replayed against the live rows: an S3_BUCKET upsert destroys a foreign row for 12 of 34 buckets, a LAMBDA upsert for 16 of 203, an IAM_ROLE upsert for 9 of 219; DYNAMODB_TABLE, SNS_TOPIC and SQS_QUEUE return 0, so the replay discriminates rather than flagging everything.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "i1_settle.py at this seat, section 'AND THE UNSCOPED READ': DENOMINATOR 27,632 distinct node_id strings over 27,685 rows, 30 multi-claimed, five pairs listed with counts and an updater-reachable flag per pair.",
+        "infra/aws/globgrph/derive_runner.py:2294-2312 @0596d4fc98 -- canonical_node_key and the 'exactly one class does' docstring, which is what this row qualifies rather than contradicts.",
+        "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py:391-405 @0596d4fc98 -- In('arn', arns) Or In('node_id', ids): the match is on the raw columns, which is why the canonical-space claim does not bound the destruction.",
+        "i1_arm.py at this seat: the IAM_ROLE/LAMBDA pair reproduced on a real local Iceberg table -- the pre-fix predicate destroys the IAM_ROLE row on a LAMBDA upsert (DESTROYED_BEFORE=2 across the two pairs), the post-fix predicate destroys 0.",
+        "This was found because a first negative control CHOSE LAMBDA as the uncontended class and the instrument came back non-zero; the control was right and the choice of control was wrong."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED, and the reason is that the other four pairs have not fired only because the incremental updater has written just three rows in its life (all three S3_BUCKET, source='incremental' in the live table). The Lambda fires on CloudTrail automatically, so the first management event on any of the 8 name-sharing LAMBDA/IAM_ROLE pairs destroys a real node row through NORMAL operation. THE FIX THIS ORDER COMMITTED ALREADY CLOSES ALL FIVE -- the key carries its node_type, so a bare name cannot reach across classes in either direction -- but it is COMMITTED, NOT DEPLOYED, like every producer change in this project, so the hazard stands until a deploy this worker cannot make and did not attempt. disarm_owner is the round's issuer as the seat that carries the L10 slug where the deploy decision belongs; the disarming ACT is deploying the committed change, not a further edit. FILED AS FORM, NOT SIGNIFICANCE: a worker judges whether this is a spec-vs-world mismatch, which it is, and never how much it matters."
+  },
+  {
+    "id": "NFRA_CLDGRPH-W1-S50",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-10T18:36Z",
+    "one_line": "graph_nodes has a THIRD writer -- comp_aws_cli.py's `iceberg-commit` subcommand -- and the pa.table it overwrites the whole table with carries 7 columns where the live table carries 9: it has no `source` and no `props`.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-CG-I-1 AC2 requires the writers of the key space to be COUNTED and their rules READ, on the stated ground that 'a property with N writers needs N rules read'. The cell names two writers by implication: the incremental updater (the fix surface) and the derive (whose key rule it quotes).",
+    "world_is": "The census returns THREE writers of globgrph.graph_nodes over an unscoped corpus read (135 hits across 30,050 files; 52 candidate files; 49 subtracted as readers, other tables, DynamoDB delete_item, or records quoting a writer). The third is org/modules/graph/comp_aws_cli.py:3201 `nodes_table.overwrite(pa.table({...}))` -- an UNFILTERED full-table overwrite reached from the `iceberg-commit` CLI subcommand. Its nodes_schema at :3170-3178 declares SEVEN NestedFields (node_id, arn, node_type, name, layer, drift_class, snapshot_ts) and the pa.table at :3201-3209 supplies the same seven. The live table carries NINE columns: `source` (the comp-kuzu discriminator, added by NFRA_MSGRAPH S2) and `props` (added by NFRA_TSGRAPH Leg-B) are both absent from this writer. derive_runner.py:271-280 and lambda_function.py:360-388 both carry all nine.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "i1_layers.py at this seat: 'KEY_SPACE_WRITERS=3 counted', with the unscoped denominator (135 hits / 30,050 files) and the per-file subtraction printed.",
+        "org/modules/graph/comp_aws_cli.py:3168-3209 @0596d4fc98 -- nodes_schema with 7 NestedFields and nodes_table.overwrite with the matching 7 columns.",
+        "infra/aws/globgrph/derive_runner.py:270-280 @0596d4fc98 -- the same table declared with 9 fields including props; :332-345 writes source and props.",
+        "i1_settle.py at this seat: the LIVE table's column list read from the served metadata is ['node_id','arn','node_type','name','layer','drift_class','source','snapshot_ts','props'] -- nine."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT rather than ARMED, deliberately and on the enum's own words: hazard_standing asks whether the item harms through the process's FUTURE NORMAL OPERATION. This path is a manual CLI subcommand requiring in-VPC reachability of nessie.opal-globgrph.local; it is not on any schedule and is not normal operation, so calling it ARMED would overstate what I measured. What I am reporting is the WRITER COUNT and the schema divergence, both measured. NOT IN THIS ORDER'S <paths> and NOT TOUCHED: org/modules/graph/comp_aws_cli.py is outside the write grant, which is why this is a row and not an edit. IT DOES NOT AFFECT THE FIX: this writer has no delete predicate to narrow -- it replaces the whole table -- so it cannot destroy a row selectively and the chosen layer does not depend on it. The reason it is worth a row anyway is the one AC2 is built on: this is the third rule on a property whose writer count was believed to be smaller, and the count is what the cell asked to be printed rather than assumed."
+  }
+]
+```
