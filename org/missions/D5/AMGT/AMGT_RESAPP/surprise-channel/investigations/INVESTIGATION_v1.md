@@ -170,6 +170,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "This worker's task text: 'your proof-of-spec instance at org/.../deliverables/0.9.0_WK_AMGT_RESAPP~3/AMGT_RESAPP.TO-AMGT-s-12.proof_of_spec.json' -- the short to_id form.",
     "world_is": "The mechanical gate that actually decides whether a 'complete' flip is accepted keys on the TASK ORDER FILE'S OWN full basename stem, not the short to_id -- a file named with the short form is invisible to check_complete_flip's glob and the flip is refused with a message that reads as if no instance exists at all, even though a VALID one does, just under the wrong name. Renamed to the full-stem form (permitted -- deliverables/ is broadly granted) and the flip proceeded.",
     "notes": "Non-blocking, caught before any commit landed (safe-commit's pre-commit hook aborted cleanly, files left unstaged, nothing to roll back). Worth fixing at the source that generates worker task text (the short-form path may be a convenience abbreviation that was never cross-checked against the gate it has to pass) so the next worker does not repeat the same round trip."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W7-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~7",
+    "surfaced_at": "2026-09-10T22:40:36Z",
+    "one_line": "16 of the 48 MEASURED bloomberg_ticker values in AMGT-s-12's universe.json are the SAME value, 'AAPL US' -- every one resolved from a 'FactSet Based ONE PAGER' workbook's sheet 'Model', label 'Ticker:', row 2, for a company that is not Apple.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/universe.json read whole: of 89 folders, 48 carry a MEASURED bloomberg_ticker; grouping those 48 values, exactly one value repeats, 'AAPL US', across 16 distinct folders: AstraZeneca AZN, Canadian National Railway CNR, Clorox CLX, Copa CPA, Imperial Brands IMB LN, JD.com 9618 HK, Michelin ML FP, Mitsubishi UFJ Financial Group 8306 JP, Nestle NESN SW, Nokia FH, Orange ORA FP, SAP GY, Sanofi SAN FP, Shopify SHOP CA, Tokyo Marine 8766 JP, Total Energies TTE FP -- none of them Apple",
+        "every one of the 16 entries' bloomberg_ticker.evidence field reads identically in shape: \"...:: sheet 'Model', label 'Ticker:' found, value read from the adjacent cell in the same row (row 2)\", and every one of the 16 entries' one_pager_files names a workbook whose filename contains 'FactSet Based ONE PAGER' (e.g. 'AZN FactSet Based ONE PAGER 2026 06 22_v2.xlsx', 'CNR CA FactSet Based ONE PAGER 2026 06 30_v1.xlsx', 'Nestle FactSet Based ONE PAGER TEMPLATE 2026 05 11_v2.xlsx') -- a single template family, not 16 independent coincidences",
+        "a control case from the SAME universe.json: 'ASML NA' resolves to 'ASML NA' (correct, its own ticker) from a workbook named 'ASML One Pager 2025 07 17_v1.xlsx' -- a DIFFERENT, non-FactSet-based template naming -- so the defect tracks the template family, not the resolver rule in general",
+        "lib/research/identity/build_universe.py's own docstring already names this exact CLASS of hazard for a sibling sheet: \"the 'Model NEW VERSION' sheet ... was found to carry unrelated template residue (Alibaba's copy names Apple's ticker on that sheet) ... EXCLUDED from the scan\" -- the exclusion list covers 'Model NEW VERSION' but not plain 'Model', and these 16 hits are all on sheet 'Model'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-s-12's cell text: each name's bloomberg_ticker is read from that folder's own one-pager workbook and is MEASURED with cited evidence -- a status of MEASURED asserts the value is the SUBJECT company's own ticker, read from that company's own workbook.",
+    "world_is": "16 of 89 covered names (18%) carry status=MEASURED with value='AAPL US' -- Apple's ticker, not their own -- all sourced from the 'Model' sheet of a 'FactSet Based ONE PAGER' template workbook at row 2 beside 'Ticker:'. This reads exactly like the ALREADY-KNOWN template-residue class the resolver's own docstring names and partially guards against (the 'Model NEW VERSION' sheet exclusion), except this instance is on the plain 'Model' sheet, which is not excluded. Every downstream consumer of security_key (this cell's own coverage_freshness.json included) will silently carry 'AAPL_US' as the identity for 16 companies that are not Apple -- and if AMGT-s-1 (raw landing) or any later cell pulls Bloomberg data keyed on these 16 security_keys, it will pull APPLE's model block and attribute it to AstraZeneca, Nestle, SAP, etc. This worker's own coverage_freshness.json rows for these 16 names carry security_key='AAPL_US' as a faithful pass-through of the input -- not corrected here (out of this cell's <paths> and out of its mandate; AMGT-s-12's deliverable is READ, not owned).",
+    "notes": "ARMED because the failure mode is SILENT and COMPOUNDING: nothing in this cell's own battery, nor a naive read of universe.json's per-entry MEASURED/evidence fields, flags it -- it only shows up as a CROSS-ENTRY census (grouping all 48 measured values and counting repeats), which no criterion in either AMGT-s-7 or (as far as this worker can see) AMGT-s-12's own battery runs. Disarm: re-run AMGT-s-12's build_universe.py with the 'Model' sheet's row-2 Ticker cell EXCLUDED (or cross-checked against the folder's own company name) wherever the source workbook filename matches 'FactSet Based ONE PAGER', mirroring the existing 'Model NEW VERSION' exclusion; then re-generate coverage_freshness.json from the corrected universe.json (no code change needed in this cell -- build_view.py already treats security_key as untrusted input past AMGT-s-12's boundary)."
   }
 ]
 ```
