@@ -1,0 +1,81 @@
+# TO NFRA_COMPEFFICACY.TO-CE-E-1 -- THE CRLF-RENDERED MODEL ASSET: a hash-pinned model file that renders CRLF in every fresh linked worktree makes the semantic ranker fail closed and rank LEXICALLY in every worker slot, so a battery run there reads a FALSE RED; the fix is one attribute (or an LF-normalised manifest) and the accept reads a FRESH worktree, not this one
+
+<to_id>NFRA_COMPEFFICACY.TO-CE-E-1</to_id>
+<project>NFRA_COMPEFFICACY</project>
+<issued_to>0.9.0_WK_NFRA_COMPEFFICACY~2</issued_to>
+<issued_by>2.0.0_SA_COO</issued_by>
+<issued_date>2026-09-10</issued_date>
+<status>pending -- GO paired at cut (a seat order is dispatched by its issuance). Authority: PRD **v0.10** @`1ba8b40a8f` (merged @`6aaf7cb20f`) s.9 row **M-4**, the round-7 L10's addendum on row S40; decomposition **v0.4** s.7, cell `CE-e-1`. The CTO's L10 (94836): "recut M-4 and M-5 as ONE issuance (round 8, one worker, CloudComp's paths, under Andrew's edict -- 0.8.0_AE_CloudComp has no session tonight and the rows do not wait for it)".</status>
+
+**Directive:** D11 | **Fabric:** laptop | **PRD:** `../prd/NFRA_COMPEFFICACY_PRD.md` v0.10 (s.9 row M-4; s.6 ruling R-8) | **Decomp cell:** `CE-e-1` (`../decompositions/NFRA_COMPEFFICACY_DECOMP.md` v0.4, s.7) | **outcome_ref:** FWD-9 (a tool cleared here stays cleared from any seat -- the limb a WORKER seat does not yet satisfy)
+
+---
+
+## THE CELL
+
+`CE-e-1` -- **THE ASSET RENDERS THE SAME IN EVERY TREE, OR THE RANKER SAYS SO OUT LOUD.** `org/modules/graph/potion/model/tokenizer.json` is tracked LF and carries no eol attribute; this box runs `core.autocrlf=true`; so the MAIN tree holds the LF bytes (sha256 `e67e803f624fb4d6...`, 683,666 B, measured at this seat at the cut) while **every fresh linked worktree renders it CRLF**. The embedder is hash-pinned and FAIL-CLOSED, so in a worker slot it refuses the asset, `comp-which` falls back to LEXICAL ranking and prints one ALARM line, and a battery that scores ranking quality reads a RED that is a property of the CHECKOUT and not of the code under test. Round 7 measured exactly that: `P4-AC1` read `NOT ENFORCED, 3 of 27` at the main tree while the unpatched and patched blobs ranked identically (0 diff lines, 5 of 5) -- the MIRROR of `W1-S2`'s false GREEN, and the reason FWD-9's "a tool cleared here stays cleared from any seat" is not yet true of a worker seat.
+
+⛔ **THE FIX IS YOURS TO CHOOSE AND YOURS TO JUSTIFY.** PRD M-4 names two shapes and does not pick: (i) `.gitattributes` gains an entry that stops the eol conversion for the model directory (`org/modules/graph/potion/model/* -text`, or `binary`, or a per-file line -- the exact form is yours), or (ii) `org/modules/graph/potion/MANIFEST.json` hashes LF-NORMALISED bytes so the pin holds under either rendering. **State which you took and why in one paragraph**, and state what the other would have cost. A fix that makes the ALARM disappear WITHOUT making the fresh worktree's bytes equal the manifest is the wrong fix and this order refuses it.
+
+⛔ **THE POPULATION IS THE DIRECTORY, NOT THE ONE FILE THE ROW NAMED.** `org/modules/graph/potion/model/` holds TWO tracked files -- `tokenizer.json` (683,666 B) and `model.safetensors` (7,559,256 B, which contains `\r\n` byte pairs as binary content and therefore reads `CRLF=True` in the main tree already). A check scoped to the member the row named cannot see a defect in what the members SHARE, and what they share is the directory's attribute state. **Census EVERY tracked file under that directory in both trees, with the denominator printed**, and say for each whether its two renderings agree. If `model.safetensors` is ALSO being converted in fresh worktrees, that is the same defect at a second member and it is inside this cell; if it is already protected, say by what.
+
+⛔ **THE ACCEPT READS A TREE THIS ONE IS NOT.** Every arm that matters is read from a **FRESH LINKED WORKTREE you cut yourself** (`git worktree add -b <scratch-branch> /c/tmp/<slot> CLOUD`, removed with `git worktree remove --force` and `git branch -D` when you are done -- and say in your record that you removed it). Reading the main tree only cannot see this defect at all: the main tree is where the bytes are already right.
+
+## DELIVERABLE
+
+1. The fix, committed on your branch, with the paragraph naming the shape you chose and why.
+2. `org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~2/test_cee1_model_asset_rendering.py` -- the battery, and `cee1_fresh_worktree_probe.py` -- the standalone probe of `E1-AC2`, and `the-crlf-rendered-model-asset.result.md` -- what you measured, each criterion's invocation and its output verbatim with rc and denominator, and any row you filed.
+3. The proof-of-spec instance (below).
+
+## BOUNDS
+
+- **Your write surface is the `<paths>` block below**, PLUS the two grants the tree convention gives every worker without an entry -- your own `deliverables/<serial>/` folder and this face's `<status>`. A path you need that it does not name is a BLOCKING row, never an override.
+- **NO MODEL BYTES ARE REWRITTEN.** You may change how git RENDERS the asset or how the manifest HASHES it. You may not edit `tokenizer.json` or `model.safetensors` themselves; if the only fix you can see requires rewriting a model file, that is a BLOCKING row and you stop on this cell.
+- **INVOKE EVERY COMP-TOOL BY EXPLICIT PATH FROM THE TREE YOU MEAN** (`python .tools/comp-which ...` from that tree's root), never by the bare PATH name -- `~/bin/comp-which` is baked to the MAIN tree and would run the file you did not change (round-7 row `W1-S2`; it is cell `CE-e-2`'s subject and it is live until that cell lands). **Print the absolute path you ran** beside every comp-tool reading.
+- **A STORED BASELINE NAMES ITS ENVIRONMENT** (ruling R-8, PRD s.6): any hash, ranking or count you compare against says which TREE it was captured in, the ranker mode it ran under, and the rendering of every hashed asset at that moment. A baseline without its environment is not a baseline.
+- **EVERY invocation is bounded.** `timeout 300` on reads; `timeout 600` on a comp-which run; a worktree cut and removed inside the same script.
+- **Scratch:** `<your worktree>/.scratch/` only.
+- **A spec-vs-world divergence is a ROW** at `org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/investigations/INVESTIGATION_v1.md`, minted `NFRA_COMPEFFICACY-W2-S<k>` (append; cite `path@commit`; never edit an existing row).
+- **NEVER `git push`.** Report push state as MEASURED (`git ls-remote origin refs/heads/CLOUD`).
+
+## ACCEPTANCE
+
+One clause per criterion. A mechanical criterion carries exactly one `<invocation>` and one `<expect>`, so its pass is decided by the MATCH and never by your opinion. A `judgment="true"` criterion is RECORDED with its evidence and NO verdict -- `3.0.0_SA_CVO` grades it at L9.
+
+<criterion id="E1-AC1" cell_refs="CE-e-1"><invocation>timeout 900 python org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~2/test_cee1_model_asset_rendering.py</invocation><expect>CEE1-MODEL-ASSET-RENDERS-LF</expect></criterion>
+`E1-AC1` -- a battery you write, printing the token ONLY when every arm holds: (a) THE BASELINE WITH ITS ENVIRONMENT (R-8): `MANIFEST.json`'s declared hash for each model file, the MAIN tree's sha256 of the same file, `git check-attr -a` on it, and `git config core.autocrlf` -- all printed, and the manifest's hash equal to the main tree's bytes; (b) THE FRESH TREE: a linked worktree you cut from CLOUD -- **every tracked file under `org/modules/graph/potion/model/` sha256-EQUAL to the main tree's and to the manifest, denominator printed (files censused of files present)** -- this is the arm the fix exists for and it must FAIL before the fix and PASS after (print both runs); (c) THE RANKER IN THAT TREE: `comp-which` run BY EXPLICIT PATH from the fresh worktree on a real routing question prints NO potion ALARM line and ranks SEMANTICALLY -- named by a discriminator you print, not asserted (the top-N ordering beside the lexical ordering of the same candidates, and they differ); (d) THE NEGATIVE CONTROL, because a detector that cannot return non-zero on the positive case is a constant: a second scratch worktree with the fix REVERTED reproduces the ALARM and the lexical ranking (both printed, then removed); (e) THE ROUND-7 READING RE-TAKEN: `P4-AC1`'s three byte-equality arms (the four `C-S46` regression phrasings) PASS at the main tree AND in the fresh worktree, denominators printed, so the false RED is gone rather than moved; (f) both worktrees REMOVED at the end (`git worktree list` printed as the proof, and the branches deleted). Denominators on every list; every path printed absolute.
+
+<criterion id="E1-AC2" cell_refs="CE-e-1"><invocation>timeout 300 python org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~2/cee1_fresh_worktree_probe.py</invocation><expect>FRESH-WORKTREE-ASSET-MATCHES-MANIFEST</expect></criterion>
+`E1-AC2` -- a STANDALONE probe, separate from the battery so the CVO can re-run the one fact this cell exists to change without running everything: cut a fresh linked worktree from CLOUD, hash every tracked file under the model directory, compare each to `MANIFEST.json`, remove the worktree and its branch, print the token only on a total match with the denominator beside it. It carries its own cleanup and leaves no worktree behind on any exit path.
+
+<criterion id="E1-AC3" cell_refs="CE-e-1" judgment="true"/>
+`E1-AC3` -- graded by the CVO at L9: which fix shape was taken and why (and what the other would have cost); whether the model directory's OTHER member was affected and what that says about scoping a check to the member a row named; what a worker seat now inherits that it did not before, stated against FWD-9's sentence; and what is still not true of a worker seat after this cell. Evidence with vintage. NO VERDICT.
+
+<expected_criteria>E1-AC1, E1-AC2, E1-AC3</expected_criteria>
+
+<paths>
+.gitattributes
+org/modules/graph/potion/MANIFEST.json
+org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~2/
+org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+<decomp_ref>
+<decomp_doc>org/missions/D11/NFRA/NFRA_COMPEFFICACY/decompositions/NFRA_COMPEFFICACY_DECOMP.md</decomp_doc> v0.4, cell `CE-e-1`.
+<owned_cells>CE-e-1</owned_cells>
+</decomp_ref>
+
+<preflight>
+comp-schedule: RUN 2026-09-09 ~22:2xZ, its VINTAGE STATED rather than re-run at this issuance -- WITHIN BUDGET, scanned 5 of 5 carriers, 56.25 s of a 90 s default, GATES ARMED 25, REACHED-DENOMINATORS C1=23 C2=6 C3=12 C4=20 C5=335, and ZERO of the 25 armed gates names NFRA_COMPEFFICACY, `.gitattributes`, the potion model or the comp-tool registry. THE VINTAGE HOLDS BECAUSE: no schedule, rule or gate has been created or changed in this project's surface since that read (this seat's own commits since are task orders, ledgers and logs), and the cells below touch no scheduled surface at all. BLIND SPOT, stated: the gate ledger cannot see a rendering defect in a checkout -- the accept's fresh-worktree arm IS that control.
+comp-iam: DECLARED-NOT-APPLICABLE -- no cloud plane touched, nothing granted, nothing applied.
+comp-adversary: DECLARED-NOT-APPLICABLE at the cut; the assignee's instrument at report time on its own deliverable.
+lane: the `<paths>` block above IS the grant (RULING 1 @`9ef9a40aae`) plus the two tree-convention grants. `.gitattributes` and `org/modules/graph/potion/` belong to no seat holding a session tonight; the CTO's L10 (94836) places the recut here under Andrew's ~22:3xZ edict, and the grant is the paths, stated here and in the decomposition.
+</preflight>
+
+<proof_of_spec>
+Criterion ids minted at cut: `E1-AC1`, `E1-AC2`, `E1-AC3`. Instance at
+`org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~2/NFRA_COMPEFFICACY.TO-CE-E-1.the-crlf-rendered-model-asset.proof_of_spec.json`
+(the TASK ORDER'S OWN BASENAME stem, which `.tools/to-pipeline-gate.py` `check_complete_flip` globs for under `deliverables/*/`), validated with `python .tools/proof-of-spec-check.py <instance> E1-AC1,E1-AC2,E1-AC3` BEFORE the complete flip, which you commit yourself. A `complete` flip WITHDRAWS YOUR OWN GRANT: flip only when the mechanical criteria PASS BY OUTPUT and the instance validates rc=0.
+</proof_of_spec>
+
+**REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape. You cannot send or receive messages -- anything you would ask is a surprise row. `NFRA_COMPEFFICACY.TO-CE-E-2` follows on that report from the same issuer.

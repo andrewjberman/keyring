@@ -11,6 +11,7 @@
 **v0.2.6** (2026-09-03 17:2xZ, `2.0.0_SA_COO`, /drive v2 tick 7, obligation 2's read) -- CE-g-2 and CE-g-3 are NOT cut here: both subjects are OPEN cells of the sibling project NFRA_CLDGRPH's own decomposition (org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md: **CG-s-9** = `kuzu_nessie_load.py` node/edge key asymmetry ALIGNED AT THE PORT, 0.7.0_AE_CloudOps, card @`5da9e7fffc`, 'the port is the moment'; **CG-s-8** = the RETIREMENT of the local copy incl. the `_canonical.py` rebuild/labeled-stale seam and its fallback sink -- CE-g-2's stale-served path). A second writer on the engine a sibling is porting is the class this fabric refuses (S15's handoff @b5d228fe62 is the precedent). Both cells read **HANDED TO NFRA_CLDGRPH** with the cross-reference; FWD-7's grade for THIS project reads through the sibling's cells -- the consequence is PITCHED to 1.0.0_SA_CTO this tick (L4: FWD-7's satisfaction moving to a sibling is his to ratify). Denominator unchanged: 41 cells, 1 RETIRED, 40 live; covered-by-an-order 26, handed 2 (+ S15's).
 **v0.2.7** (2026-09-03 17:3xZ, `2.0.0_SA_COO`, on 1.0.0_SA_CTO's L4 RULING 93837 with 3.0.0_SA_CVO's input 93833) -- **CE-g-3 CARRIED** to NFRA_CLDGRPH CG-s-9 (no order here). **CE-g-2 SPLIT:** its ENGINE half (the `_canonical.py` rebuild/labeled-stale seam and its fallback sink) CARRIED to CG-s-8 + CG-x-7; its DISCLOSURE half is THIS project's and is CUT as **TO-CE-G-2 (disclose-only)** to an idle Codex lane: the served graph's VINTAGE and AGE on every answer's disclosure line across the tools that load the universe (comp-blast, comp-trace; comp-find --corpus aws already prints `VINTAGE: DB ... built: <ts> (age: Nh)`), no engine change, closing on an EXERCISED answer that carries both. Why now: row S31 @ce5c7babea (CVO, 16:56Z) measured the local path UNBOUNDED today -- a `--budget 60` comp-blast call ran the full rebuild ~17 min and was KILLED-OUTSIDE with no line -- and the local path serves for the weeks until CG-s-8's switch-off. **S31's DISARM rides CE-t-6** as the T-6 lane's own act (a budgeted comp-blast call serves the existing graph labeled stale and never runs a rebuild inside the budget -- CE-g-5's `ensure_fresh(wait_for_peer=False)` contract), recorded on TO-CE-T-6's face as addendum criterion T6-AC7. FWD-7 reads at the close on this project's own artifact for the local-path limb and on the sibling's cells for the engine limb; no FWD changed (PRD v0.7). Denominator unchanged: 41 cells, 40 live.
 **v0.2.8** (2026-09-04 ~05:4xZ, `2.0.0_SA_COO`, the L6 coverage read on Andrew's ~05:1xZ word "COOs come online and create all task orders for e2e projects", relayed 94045) -- **NO CELL MOVED, NO ORDER CUT; this entry records a MEASUREMENT and one correction to how this document is read.** ⛔ **THE `status now` COLUMN BELOW IS STALE AGAINST THIS PROJECT'S OWN TASK ORDERS, AND THE ORDERS ARE THE TRUTH.** Measured at HEAD: **41 cells declared** (1 RETIRED `CE-org-1`, 40 live), **25 task-order faces**, **24 distinct cells covered by an order and EVERY covering order TERMINAL** (21 complete, 3 withdrawn -- `TO-CE-DISC-2`, `TO-CE-T-19`, `TO-CE-TP-1`; `CE-t-9` carries `TO-CE-T-9` and `TO-CE-T-9R`, both complete). **Ten cells read `OPEN` in the column while holding a COMPLETE order: `CE-t-5`, `CE-t-10`, `CE-t-11`, `CE-t-14`, `CE-t-17`, `CE-t-18`, `CE-t-20`, `CE-t-21`, `CE-t-23`, `CE-t-24`.** Read the order, not the column, until a round-close bumps it. **Of the 17 uncovered cells, TWELVE need no order** -- `CE-t-4`/`CE-t-15` DOES-NOT-EXIST, `CE-t-16` CLEARED, `CE-enum-1`/`CE-sch-1`/`CE-disc-1`/`CE-tp-2`/`CE-grd-1` DONE, `CE-org-1` RETIRED, and `CE-t-13`/`CE-t-22` (HELD at `1.0.0_SA_CTO`), `CE-g-1` (re-homes to the NFRA_GRAPHS owner), `CE-g-3` (HANDED to NFRA_CLDGRPH `CG-s-9`) which are not this project's to cut. **FOUR ARE GENUINELY OPEN AND NOT ONE IS WORKER-EXECUTABLE:** `CE-q-1` (lane "CVO authors, CTO lands"; its depends_on are now all terminal, so it is unblocked and it is the CVO's pen), `CE-pass-1` (the per-tool half already ran inside each completed order; only the ROLL-UP remains and its closes-on is "read by a NON-FIXER", constitutionally not this COO's worker), `CE-mrq-1` (IN-FLIGHT at the CVO, the decision Andrew's per PRD s.5), and `CE-g-4` -- whose closes-on, *"a rail EXERCISED at a Codex seat"*, **became unreachable at ~21:0xZ when `0.0.0_AB_MSTR` reaped all 19 Codex seats on Andrew's "kill all the codex runtimes" (133 processes, 0 survivors)**; that cell is blocked by a later sovereign word, not by any queue. **CONSEQUENCE, stated so the next L6 does not re-derive it: a v3 issuance over this project's open cells would carry ZERO orders a worker can hold.** The fork and this seat's rec (the worker test runs on NFRA_CLDGRPH; COMPEFFICACY closes on the CVO's roll-up and written answers, then one slug) are with `4.0.0_SA_CRO`, `1.0.0_SA_CTO` and `3.0.0_SA_CVO` as 94053/94054/94055. Nothing here is a spec change; the round's spec stays FROZEN.
+**v0.4** (2026-09-10 ~01:4xZ, `2.0.0_SA_COO`) -- ROUND 8 on PRD **v0.10** @`1ba8b40a8f` (merged @`6aaf7cb20f`), the round-7 L10's addendum: TWO cells, `CE-e-1` (row M-4, the CRLF-rendered model asset) and `CE-e-2` (row M-5, the forwarders baked to the main tree), both FWD-9's subject -- the limb of "a tool cleared here stays cleared from any seat" that a WORKER seat does not satisfy. s.7 below. The CTO's L10 (94836) placed the recut here: "round 8, one worker, CloudComp's paths, under Andrew's edict -- 0.8.0_AE_CloudComp has no session tonight and the rows do not wait for it".
 **v0.3** (2026-09-09 ~22:5xZ, `2.0.0_SA_COO`) -- ROUND 7 on PRD **v0.9** @`1feed4008e` (the CTO's manual-act addendum on Andrew's ~21:4xZ no-waiting word) and the CVO's second cut v3 @`debf661cba`: M-1 and M-2 recorded as owned acts (the CVO's, the CTO lane's), M-3's second limb cut as ONE worker cell `CE-p-4` (comp-which validates a subject's existence), the seat named = `0.9.0_WK_NFRA_COMPEFFICACY~1` spawned tonight; dep_stage ROUND_CLOSE -> EXECUTING. Section 6 below; s.1-s.5 LEFT UNEDITED.
 
 **Home:** `org/missions/D11/NFRA/NFRA_COMPEFFICACY/decompositions/NFRA_COMPEFFICACY_DECOMP.md` (lane TREE_COO; versioned in place).
@@ -239,3 +240,50 @@ ids (found by the worker's census, never invented here); whether the subject che
 (the worker declares it; P-6's inheritance question is answered on the face).
 
 -- `2.0.0_SA_COO`, L5 round 7
+
+## 7. ROUND 8 -- the worker-environment hazards the round-7 criterion found beneath itself (PRD v0.10 s.9, rows M-4 and M-5)
+
+**Input:** PRD **v0.10** @`1ba8b40a8f` (merged @`6aaf7cb20f`; `1.0.0_SA_CTO`, the round-7 L10 on the CVO's slug @`26805a05ee` and this
+seat's `COMPLETION_REPORT.round7.json` @`13c520d296`) and ruling **R-8** in PRD s.6. **This document invents nothing.** Round 7 graded FWD-8
+REALIZED and left FWD-9 NOT_EVALUATED on one live limb: a worker seat on this box **does not run the tools the estate runs**, so "a tool cleared
+here stays cleared from any seat" is not yet true of a worker seat. Round 7 met that limb twice from opposite sides -- a false GREEN (`W1-S2`: the
+bare name ran the file the worker had not changed) and a false RED (`S40`: the fresh worktree's model asset was CRLF, so the ranker failed closed
+and ranked lexically). Both are properties of the ENVIRONMENT a worker is given, not of any tool's code, and neither is disarmable inside the cell
+that met it.
+
+| cell | row | outcome_ref | surface | verb | depends_on | why this piece |
+|---|---|---|---|---|---|---|
+| `CE-e-1` | M-4 | FWD-9 | `.gitattributes` + `org/modules/graph/potion/MANIFEST.json` (the model directory's rendering): the asset a hash-pinned FAIL-CLOSED embedder reads is byte-identical in a fresh linked worktree and in the main tree, and the ranker in a worker slot ranks semantically instead of alarming | fix | -- | the false RED: every battery scoring ranking quality in a worker slot reads a defect of the checkout |
+| `CE-e-2` | M-5 | FWD-9 | `.tools/provision-path-shims.sh` (the 186 forwarders) + `.tools/comp-which-routing-test.py` (its `--out` default and its bound): a forwarder resolves `.tools/<name>` from the CALLER's toplevel and answers `--which`; the harness stops defaulting its output onto a committed baseline and states a bound it has measured | fix | `CE-e-1` | the false GREEN: a worker verifying its own edit by the bare name runs the file it did not change, and passes |
+
+**Denominator:** PRD s.9 addendum rows 2 (M-4, M-5); worker cells 2 (`CE-e-1`, `CE-e-2`); the three earlier addendum rows (M-1, M-2, M-3) are
+unchanged -- M-3 was consumed by round 7 (`CE-p-4`, FWD-8 REALIZED) and M-1 / M-2 remain OWNED ACTS with their owners (Andrew's sitting; the
+Codex-rail exercise on `1.0.0_SA_CTO~X`), recorded in s.6 and not cells. FWD-9's accept reads on the two cells below plus those owned acts.
+
+**THE DEPENDENCY, and it is the reason the fan-out is 1:** both accepts are read FROM A FRESH LINKED WORKTREE RUNNING `comp-which`, and `CE-e-1`
+changes what that reading shows. Cut the other order and `CE-e-2`'s ranker readings are taken in a tree whose model asset still fails closed --
+measuring the second defect through the first. `CE-e-1` lands first; `CE-e-2` states whether it did. That is a real dependency between the cells,
+not a contention guess, and it is what the CTO's "one worker" reads as here.
+
+**Seating and fan-out:** `0.9.0_WK_NFRA_COMPEFFICACY~2` (a fresh slot; round 7's `~1` is terminal and drained, and a new slot keeps the round's
+deliverables folder distinct), Opus at high effort by the worker definition, a hand-cut worktree
+`git worktree add -b wk-nfra_compefficacy-8-1 /c/tmp/wk-compeff-8-1 CLOUD` (spine v3.7). The write surface is each face's `<paths>` (RULING 1);
+the owning lane for all four files is CloudComp (T-1 / T-3), which holds no session tonight, so the grant is the paths, stated here and on both
+faces. `~2` takes `CE-e-1` first and `CE-e-2` on the issuer's continuation of its report.
+
+```
+fanout: 1 of 1 chains, cap 8, reason: two cells, ONE chain -- both accepts read a fresh linked worktree running comp-which and CE-e-1 changes what CE-e-2 would see there, so they run in sequence on one slot; the CTO's L10 named one worker.
+```
+
+**Cut discipline applied at this cut, because three of tonight's rows are one family** (spine v3.8 @`9fc8cb266e`; PRD ruling R-8; `NFRA_OUTSET-S29`,
+`ETFS_GUARDRAIL-W2-S7`, `NFRA_COMPEFFICACY-S40`): every accept below names its instrument's COVERAGE (which tree, which files, the denominator),
+its harness's GRAIN where one is used, and the ENVIRONMENT of every stored baseline it compares against. `CE-e-1` also censuses the model
+directory's OTHER member rather than only the file the row named -- a check scoped to the member a row hit cannot see a defect in what the members
+SHARE, and here they share the directory's attribute state.
+
+**What this round does NOT decide:** the remaining thirteen pieces of the CVO's second-cut list v3 @`debf661cba` (each a later cut once the sitting
+M-1 has read it); whether the fix for M-4 is the attribute or the manifest (the worker chooses and justifies, PRD M-4's own words); what the
+no-toplevel fallback should print beyond being LOUD (the worker builds it and the CVO grades whether it discriminates); and anything about the
+Codex rail (G-4 / M-2), which is the CTO lane's on Andrew's word.
+
+-- `2.0.0_SA_COO`, L5 round 8
