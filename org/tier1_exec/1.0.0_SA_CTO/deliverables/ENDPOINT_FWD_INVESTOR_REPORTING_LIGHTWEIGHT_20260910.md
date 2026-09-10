@@ -185,6 +185,7 @@ per Rule 27's L2 clause. Nothing here waits on an event nobody controls.
                     FAILED refresh, and an OVER-AGE directory request
          OWNER      WS1
          SOURCE     ⭐ **NOT IN THE BRIEF'S SIX. ADDED AT L2** -- see UNCOVERED below.
+         (FWD-7 continues below; FWD-8 follows it.)
                     DONE WHEN and PROOF re-cut on `4.0.0_SA_CRO`'s L2 review (95180):
                     my first form read a HISTORY of consecutive refreshes, which has
                     NO NEGATIVE ARM -- a run of successes cannot show what a missed
@@ -202,6 +203,53 @@ per Rule 27's L2 clause. Nothing here waits on an event nobody controls.
                     and NOTHING about it grades revocation. FWD-2 owns revocation
                     INDEPENDENTLY and the two are not substitutes -- see the
                     correction under UNCOVERED
+
+  FWD-8  An advisor exports a BRANDED Opal report whose narrative page states what
+         was happening in the market at the account's dramatic moves -- as
+         CONTEMPORANEOUS CONTEXT, never as a cause of the return
+         DONE WHEN  EXERCISED -- a KNOWN drawdown window has been replayed against
+                    the dated topic history and the same inputs selected the SAME
+                    inflection points twice
+         ACCEPT     the dashboard stays the DEFAULT view and the export is a separate
+                    act; the export renders the Opal template from the deck-generation
+                    brand guidelines at the SAME performance revision the advisor
+                    reviewed, with advisor logo and information as an OPTIONAL input;
+                    the narrative page shows the performance time series and, at the
+                    max drawdown and other dramatic moves, the Trending Topic and
+                    Topic Cloud terms DATED TO THAT WINDOW, with the other sentiment
+                    signals as supporting context; inflection-point selection is
+                    DETERMINISTIC -- the same series and the same history select the
+                    same moments, every run
+         PROOF      replay one known drawdown window twice and diff the selected
+                    moments; replay a window that PREDATES the news history and
+                    confirm it renders MISSING HISTORY rather than an empty topic list
+         OWNER      WS1 owns the export shell, template and branding; WS2 owns the
+                    performance content and revision binding; the topic/sentiment
+                    retrieval is a NEW seam whose owner is named at L5
+         SOURCE     Andrew-direct 2026-09-10, verbatim: a "narrative arc" using "daily
+                    cloud and trending topics over almost a full year", to "dynamically
+                    assess what was the trending topic or buzz word/phrase from word
+                    cloud that was occuring at that time ... to help qualify what was
+                    happening at that time"
+         ⛔ THE CAUSAL LINE IS IN THE ACCEPT, NOT IN A DISCLAIMER. A page that puts a
+                    client's drawdown and a market topic in ONE VISUAL IS READ AS
+                    CAUSAL by any reader, whatever the footnote says. Andrew's own word
+                    is "QUALIFY WHAT WAS HAPPENING AT THAT TIME" -- contemporaneity --
+                    and `4.0.0_SA_CRO` named the same limit unprompted. **The artifact
+                    must SAY it is contemporaneous context and must not assert, imply
+                    or rank causes.** An export that reads as an explanation of the
+                    return FAILS this outcome even when every date is right
+         ⛔ MISSING HISTORY IS AN ANSWER, NOT AN EMPTY STATE. The news history is
+                    "almost a full year". Any performance period reaching before it has
+                    NO topic data, and a narrative page that silently shows nothing
+                    there reads as "NOTHING NOTABLE HAPPENED" rather than "WE HAVE NO
+                    DATA". The absent-versus-zero distinction is the failure this
+                    estate has paid for repeatedly and it is graded here
+         ⛔ NOT A BI SURFACE. This is a BOUNDED read of DATED signals for the selected
+                    account's own periods. The 2026-09-09 brief's exclusion of broad
+                    BI/agent query capability still stands and this does not reopen it
+         ⚠ PENDING INPUT: the high-definition advisor logos. Andrew supplies them; they
+                    are RECORDED AS PENDING and are neither invented nor scraped
 ```
 
 ---
