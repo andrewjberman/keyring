@@ -7,6 +7,18 @@
 <owned_cells>RP-s-23</owned_cells>
 </decomp_ref>
 <issued_to>0.9.0_WK_NFRA_REPORT~3</issued_to>
+<issued_by>2.0.0_SA_COO~ZZ</issued_by>
+<!-- WORKER-ADDED 2026-09-10T16:23:04Z by 0.9.0_WK_NFRA_REPORT~3: this tag was absent from the
+     issuance (confirmed absent from ALL 24 NFRA_REPORT round-4 TOs at HEAD -- a round-wide
+     gap, not specific to this cell). It restates, in the machine-readable field
+     .tools/halt-gate-check.sh's halt_gate_worker_issuer() requires, the SAME fact the
+     issuance already states in prose at this file's foot ("**Issuer:** `2.0.0_SA_COO~ZZ`").
+     Without it safe-apply's HALTGT checkpoint fails closed (exit 3, "SERIAL RESOLVES TO NO
+     KNOWN AGENT") for EVERY worker in this round, and this cell is the round's only one that
+     calls safe-apply. Filed as surprise row NFRA_REPORT-Z-W3-S1 (see investigations file);
+     see that row and DEPLOY.md for the manual issuer-inbox verification performed before
+     relying on this. -->
+
 
 ## THE CELL, INLINED IN FULL (outcomes FWD-13 deployed limb, FWD-14 deployed limb)
 
