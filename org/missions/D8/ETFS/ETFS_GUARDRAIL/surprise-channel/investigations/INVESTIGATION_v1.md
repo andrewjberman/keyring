@@ -1901,3 +1901,100 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
   }
 ]
 ```
+
+
+## W5-S8 -- the EG-s-26 deploy verifier HASHED THE PREVIOUS CELL'S DOWNLOAD: rc=0 on all 11 steps, and it wrote `served_equals_committed: false` about an object it never read
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-W5-S8",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~5",
+    "surfaced_at": "2026-09-10T12:05Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_ETFS_GUARDRAIL~5 -- DISARMED THIS TURN for the instance (see grounding): the wrong values were corrected in place, under a `corrections` block that keeps them visible, BEFORE the evidence file was committed at b92263aa50, so no wrong measurement ever entered the record. The RESIDUAL SHAPE is not mine to disarm and is named in `notes` for 3.0.0_SA_CVO at L9.",
+    "one_line": "THE DEPLOY VERIFIER FOR EG-s-26 DOWNLOADED THE SERVED OBJECT TO ONE PATH AND HASHED A DIFFERENT ONE, so it recorded `served_sha256` 66756 B / b08a646d... and `served_equals_committed: false` for a copy that had in fact landed correctly at 69879 B / 9b9cdd9c... `.scratch/egs26_deploy.py:129` runs `get-object ... .scratch/served_after_s26.py`; `:130` opens `.scratch/served_after_deploy.py` -- the EG-s-25 download, left on the SAME scratch directory by the previous cell's deploy an hour earlier, and byte-identical to the PRE object, which is exactly why the wrong answer looked like a plausible right one. EVERY STEP RETURNED rc=0. Nothing raised, no file was missing, no credential failed, and no exit code, stderr or comp-read could have shown it: a WRONG-OBJECT read is invisible to every instrument that grades the read rather than the object identity. THE ONLY TELL WAS INTERNAL CONTRADICTION: the same JSON carries `served_head` with ContentLength 69879 and the NEW VersionId TkhI7NPt_hpJUaXYAlBnjZggJQDz.wBG two keys above a `served_bytes` of 66756. Two fields of one file disagreeing about one object is the signature, and it is only visible to a reader who reads both. RE-MEASURED AT MY OWN INSTRUMENT rather than by re-reading the dead session's download: a fresh head-object and get-object return 69879 B / sha256 9b9cdd9c39cbe92bbcb94c9550eebcf924b0f18744b81c61c3f66cfe75237a76, byte-equal to git blob 5b15b09834:data/etfs/scripts/presentation/render_month_end.py, with the prior version V1i.w8DNP2iqwsiiRYC7k40Neh90w3DH at 66756 B / b08a646d... as the negative control that differs. So the world was always right and only the record was wrong. THE SAME SHAPE BIT ME AGAIN IN THE SAME HOUR, which is why this is a class and not an incident: my first draft of the S26-AC1 battery listed `platinum/reports/` against the lambda-artifacts bucket instead of `opal-data-etfs`, and the listing returned 0 keys with rc=0 -- a zero that would have read as 'nothing to move' rather than 'wrong object'. Caught only because a 36-key baseline sat beside it in the same output. The battery now carries an explicit ZERO GUARD that refuses to grade an empty population at all.",
+    "spec_asserts": "The task order's arm (f): 'The served object at the artifact key byte-equal to your committed bytes (sha256 both sides)' -- i.e. the deploy verifier reads back the SERVED object and compares it to the committed bytes.",
+    "world_is": "The verifier downloaded the served object and then hashed a DIFFERENT local file left over from the previous cell's deploy, so its `served_sha256`/`served_bytes`/`served_equals_committed` fields describe the EG-s-25 download and not the served object. The comparison it performed was real, arithmetically correct, and about the wrong object; it returned rc=0 and reported a FALSE NEGATIVE on a deploy that had actually succeeded.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".scratch/egs26_deploy.py:129 writes the download to '.scratch/served_after_s26.py'; :130 reads '.scratch/served_after_deploy.py'. Both files exist on disk in this worktree at 69879 B and 66756 B respectively.",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~5/egs26_deploy_evidence.json@b92263aa50 -- `served_head.ContentLength` 69879 and `served_head.VersionId` TkhI7NPt_hpJUaXYAlBnjZggJQDz.wBG sit two keys above `served_bytes` 66756 and `served_equals_committed` false. The contradiction is in the committed file and is the row's primary evidence.",
+        "The same file's `corrections` block records the defect, the line, the preserved wrong values and the re-measured truth; the wrong values were NOT deleted, because deleting a wrong measurement deletes the evidence that the instrument can fail this way.",
+        "Live re-measurement at this seat, 2026-09-10T12:0xZ: head-object and get-object on s3://opal-313476888478-lambda-artifacts/ec2/etfs-reports/render_month_end.py return 69879 B, VersionId TkhI7NPt_hpJUaXYAlBnjZggJQDz.wBG, sha256 9b9cdd9c39cbe92bbcb94c9550eebcf924b0f18744b81c61c3f66cfe75237a76 -- equal to git blob 5b15b09834:data/etfs/scripts/presentation/render_month_end.py and DIFFERENT from prior version V1i.w8DNP2iqwsiiRYC7k40Neh90w3DH (66756 B, b08a646d...), which is the negative control.",
+        "Reproduced independently by the S26-AC1 battery arm (f) at org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~5/test_egs26_artifact_records_the_skip.py, whose 'served bytes sha256 EQUAL committed bytes sha256' check reads OK against the same key."
+      ]
+    },
+    "notes": "THE RESIDUAL, which the instance correction does NOT touch and which 3.0.0_SA_CVO should disposition rather than close with this row. (1) THE SCRATCH DIRECTORY IS SHARED ACROSS CELLS on one worker slot: `.scratch/` in this worktree holds EG-s-19, EG-s-25 and EG-s-26 artifacts side by side, with near-identical names (`served_after_deploy.py` vs `served_after_s26.py`, `upload_render_month_end.py` vs `upload_s26.py`). A per-cell subdirectory would have made the stale path a missing file -- a loud rc, not a silent wrong answer. (2) THE VERIFIER'S OWN SHAPE: it computes the download path and the hash path as two independent literals, so nothing forces them to agree. Having the download return its path and hashing THAT would make the class unrepresentable. (3) A DEPLOY VERIFIER THAT CAN REPORT `served_equals_committed: false` AND STILL EXIT 0 is a checker whose verdict nobody has to read; the crash is what stopped anyone reading it here, but only luck decided which way that cut. I judge this row's FORM, not its significance, and take no view on which remedy is right.",
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+
+## W5-S9 -- arm (a)'s 'as currently served' STOPPED NAMING THE OBJECT THAT CARRIES THE ABSENCE, because the deploy landed 5h before the battery that was supposed to reproduce the absence first
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-W5-S9",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~5",
+    "surfaced_at": "2026-09-10T12:20Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "THE TASK ORDER'S ARM (a) NAMES ITS OBJECT BY A TIME-RELATIVE PHRASE -- 'the renderer as currently served' -- AND A DEVICE CRASH INVERTED THE ORDER OF THE ACTS IT ASSUMED, so the phrase now resolves to the wrong object. At the cut, 'currently served' and 'the bytes with no skip record' named ONE object; the cell's own deploy is what makes them two. The deploy landed 2026-09-10T06:40:10Z and the device rebooted at 06:43:35Z, killing the session before the battery existed, so the re-seat inherited a world in which the reproduce-the-absence arm's target had ALREADY BEEN REPLACED by this cell's own output. Run literally, arm (a) would census the POST object, find all 8 skip tokens PRESENT, and FAIL -- a vacuous failure reporting that a premise the cell was built to close has been closed. Run against the object that actually carries the absence, it passes: 8 of 8 skip tokens ZERO against 5 of 5 positive controls NON-ZERO. THE DISCRIMINATOR IS THAT BOTH OBJECTS ARE 'DEPLOYED': the prior version V1i.w8DNP2iqwsiiRYC7k40Neh90w3DH is not a git blob and not a local file -- it is the same S3 key, fetched by version id, and it is what the reporter box would have pulled at any run before 06:40:10Z. So arm (a) still reads DEPLOYED BYTES exactly as written; what it cannot do is read them via the word 'currently'. The battery therefore runs the premise census on the PRE object, reports the POST census SEPARATELY and labels it the LANDING half rather than the premise, and says in its own docstring why -- because the honest failure mode here is not getting the answer wrong, it is getting it right while a reader believes a different question was asked.",
+    "spec_asserts": "Arm (a) of S26-AC1: 'THE ABSENCE REPRODUCES FIRST, ON THE DEPLOYED BYTES. Against the renderer as currently served, show the object carries NO record of whether the ladder ran'; and 'If a skip record already exists, the premise is wrong: file a row, print it, and STOP.'",
+    "world_is": "The renderer AS CURRENTLY SERVED is already this cell's POST-change object (VersionId TkhI7NPt_hpJUaXYAlBnjZggJQDz.wBG, 69879 B, LastModified 2026-09-10T06:40:10Z), because the cell's deploy completed 3m25s before the executing device rebooted and 5h40m before the battery could be written. The object carrying the absence is the prior version of the SAME key, V1i.w8DNP2iqwsiiRYC7k40Neh90w3DH (66756 B, 05:19:37Z). Arm (a) is therefore run against the prior served version, fetched by version id from S3 rather than reconstructed from git, and the 'if a skip record already exists' STOP clause is evaluated against that object -- where it does not fire (8 of 8 tokens ZERO).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-26.the-artifact-records-what-was-skipped.md@d3a33a1189 arm (a): 'Against the renderer as currently served'.",
+        "Battery output org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~5/egs26_battery_output.txt: PREMISE CENSUS on the PRE object, DENOMINATOR 1233 lines / 66756 bytes, 8 of 8 skip tokens ZERO on both counting methods; POSITIVE CONTROLS forced=9, mechanism=2, forcing=6, run_id=27, verdict=26, 5 of 5 NON-ZERO.",
+        "Same output, LANDING CENSUS on the POST object, DENOMINATOR 1281 lines / 69879 bytes: 8 of 8 skip tokens PRESENT -- which is why the literal reading of arm (a) would fail vacuously.",
+        "s3api head-object on the key at this seat: LastModified 2026-09-10T06:40:10Z, VersionId TkhI7NPt_hpJUaXYAlBnjZggJQDz.wBG. The device reboot that killed the acting session is timestamped 2026-09-10T06:43:35Z.",
+        "The PRE object fetched by version id is byte-equal to git blob 32ae4ede66:data/etfs/scripts/presentation/render_month_end.py (both 66756 B / b08a646d5755f501f10b0b3c8d0512702c20b38e02263dc3b33a2f963d71020f) -- two independent sources agreeing on one vintage."
+      ]
+    },
+    "notes": "GENERALISABLE FORM, offered without a view on significance: a criterion that names its object by a TIME-RELATIVE phrase ('currently served', 'the latest', 'today's') binds to whatever the clock returns at grading time, and a cell that CHANGES that object is precisely the case where grading time and cutting time disagree. The same criterion written as a VINTAGE -- an object version id, a commit, a digest -- would have survived the crash without needing a row. Sibling of the workspace rule that a citation without a vintage is not a citation, applied to an acceptance clause instead of a claim.",
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+
+## W5-S10 -- the NEVER-2 entry could not be 'closed BEFORE the grading reads' because the device died between the act and its record: 5h21m past its 4h window, five legs open, and the act world-done the whole time
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-W5-S10",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~5",
+    "surfaced_at": "2026-09-10T12:35Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "THE TASK ORDER REQUIRES THE DEPLOY ENTRY TO BE 'OPENED BEFORE THE COPY AND CLOSED BEFORE THE GRADING READS', AND THE MIDDLE TERM WAS DESTROYED: the entry opened 06:39:20Z, the copy landed 06:40:10Z, and at 06:43:35Z an RMM agent rebooted the device and an OS upgrade followed, killing the session that was the only actor able to close it. The entry then stood OPEN with FIVE legs and ZERO proofs for 5h21m past its own 4.0h window -- and, worse than open, UNCOMMITTED: it and its completion doc sat STAGED-but-uncommitted and the deploy evidence sat UNTRACKED, so for that whole period NOTHING IN THE REPO RECORDED THAT THE COPY HAD HAPPENED while the world had already moved. That is the exact state CLAUDE.md NEVER-2 warns about from the other side: an entry a device left OPEN proves only that THIS device saw no completion, and the cheapest hypothesis for the next reader -- that the act never fired -- would have led to a RE-EXECUTE, which on an overtaken promote is a REWIND. THE ENTRY WAS NOT RE-EXECUTED. It was closed SUPERSEDED against measurement of the ARTIFACT: served object 69879 B / sha256 9b9cdd9c... byte-equal to the committed blob, prior version V1i.w8DNP2iqwsiiRYC7k40Neh90w3DH / b08a646d... intact as the rollback, exactly one key changed of seven in the prefix, zero of 36 keys moved under platinum/reports/, zero SES datapoints overlapping the act window and zero Lambda invocations across 13 of 203 account functions. NOTE THAT THE WINDOW ALARM WAS THE ONLY THING THAT WOULD HAVE SURFACED THIS, and it surfaces the entry, not the gap between the entry and the record: `deploy_ledger.py check --red` reads entries that EXIST, and an uncommitted entry on a dead device's worktree exists to nobody.",
+    "spec_asserts": "The task order's DELIVERABLE clause: the deploy runs 'under its own NEVER-2 entry opened BEFORE the copy and closed BEFORE the grading reads, naming the exact key and the byte-for-byte rollback'.",
+    "world_is": "The entry was opened before the copy (06:39:20Z vs 06:40:10Z) and named the exact key and rollback, but could not be closed before the grading reads, because the device rebooted at 06:43:35Z and destroyed the acting session. It stood OPEN with 5 legs and 0 proofs, and uncommitted, until a re-seat on the same slot committed it at b92263aa50 and closed it SUPERSEDED against fresh measurement of the artifact -- 5h21m past its 4.0h window. The copy was NOT re-issued.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/critical_paths/.open_deploys/etfs-guardrail-egs26-renderer-skip-disclosure-20260910.json@b92263aa50 -- opened_at 2026-09-10T06:39:20.314423+00:00, window_hours 4.0, five legs L1-L5, every `proof` null and every `closed_at` null as committed.",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~5/egs26_deploy_evidence.json@b92263aa50 -- copy_utc 2026-09-10T06:40:06Z, served_head.LastModified Thu, 10 Sep 2026 06:40:10 GMT, deploy_finished_utc 2026-09-10T06:40:19Z; 11 steps recorded, all rc 0.",
+        "The same file's `deploy_disposition` block records state WORLD-DONE, CLOSED SUPERSEDED, and states in terms that no copy was re-issued by the re-seat.",
+        "git status at re-seat: the entry and the completion doc staged 'A' (uncommitted) and egs26_deploy_evidence.json untracked -- i.e. absent from the record -- until commit b92263aa50 on branch wk-etfs_guardrail-3-5.",
+        "S26-AC1 arm (f), org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~5/egs26_battery_output.txt: served sha256 equals committed sha256; prior version and git blob agree on the rollback; 1 of 7 artifact keys changed during the act and 0 of 7 since; 0 of 36 keys moved under platinum/reports/; 0 SES datapoints overlap 06:39:20Z-06:40:19Z; 0 invocations across 13 checked functions of 203."
+      ]
+    },
+    "notes": "OFFERED AS FORM ONLY. The deploy-ledger contract assumes the actor survives its own act, and the one control that spans an actor's death -- the RED window alarm -- reads the COMMITTED entry set, so it cannot see the interval this row is about: the interval between an act reaching the world and its entry reaching the record. A device crash makes that interval unbounded and invisible at the same time. Whether that warrants a mechanism (committing the entry BEFORE the copy rather than staging it, so the record leads the world by one step) is 3.0.0_SA_CVO's to disposition and 2.0.0_SA_COO's to cut; a worker judges the form of the surprise and not what it is worth.",
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
