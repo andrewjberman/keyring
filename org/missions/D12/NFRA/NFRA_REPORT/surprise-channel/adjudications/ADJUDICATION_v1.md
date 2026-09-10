@@ -366,3 +366,87 @@ passed") instead of running the census, and a hedge is not a measurement.**
   }
 ]
 ```
+
+## C-S10 -- seven findings get the CVO's OWN disposition for the first time, and the reason they did not have one is a resolver that lets ANY seat's row set ANY item's verdict
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-C-S10",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T08:05Z",
+    "one_line": "L9, round 2: SEVEN findings receive the CVO's OWN terminal disposition -- GRADUATED -- for the first time. Every one of them ALREADY READ GRADUATED before this row, set not by any adjudication but by a PEER'S DISARM ROW, because the gate's resolver lets ANY row carrying `adjudicates` stamp its own disposition onto its targets regardless of which document it sits in or which seat wrote it. 16 of this project's 24 items reached a terminal disposition with NO CVO adjudication row, and the L10 precondition passed anyway -- it enforces that a disposition EXISTS, never who set it.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "GRADUATED",
+    "disarm_owner": "NONE AT THIS ROW. The seven items keep the disarm owners their own rows name (1.0.0_SA_CTO~Z on five, 2.0.0_SA_COO~ZZ on two); this row sets the REMEDIATION-track disposition and touches no hazard state. Separating those two is the entire point of the row.",
+    "adjudicates": [
+      "NFRA_REPORT-Z-S1",
+      "NFRA_REPORT-Z-S9",
+      "NFRA_REPORT-Z-W1-S1",
+      "NFRA_REPORT-Z-W1-S2",
+      "NFRA_REPORT-Z-W1-S4",
+      "NFRA_REPORT-Z-W2-S2",
+      "NFRA_REPORT-Z-W2-S4"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** THE MECHANISM, READ OUT OF THE GATE'S OWN SOURCE RATHER THAN INFERRED FROM THE SYMPTOM. *** `.tools/surprise-row-gate.py::_resolve_latest` walks `investigation_files`, which the caller builds as the investigation documents PLUS the adjudication documents, and for every row in that union runs `for target in (r.get('adjudicates') or []): latest[target] = r.get('disposition')`. There is NO test of which document the row sits in and NO test of the authoring seat. A row's own `disposition` field also seeds its item directly (`latest[rid] = r.get('disposition')`). So a terminal disposition can be set by (a) the CVO's adjudication row, (b) ANY OTHER SEAT'S investigation row that names an `adjudicates` target, or (c) the surfacing seat writing a terminal value into its own row at surfacing.",
+        "THE MEASUREMENT, WITH ITS FULL DENOMINATOR, classified per item by which of the three paths set it: 24 items -- 8 set by a CVO adjudication row, 8 set by a PEER's investigation row via `adjudicates`, 8 SELF-SET in the surfacing row's own `disposition` field. So TWO THIRDS of this project's items reached a terminal state with no CVO adjudication, and this seat's L9 pass before this row had touched 8 of 24 while the L10 predicate read 0 undispositioned and PASSED.",
+        "⛔ AND IT IS NOT A NAMING QUIBBLE -- IT COLLAPSES THE TWO CLOCKS SECTION 5 EXISTS TO KEEP APART. All 8 peer rows are DISARM records; each opens 'DISARM of NFRA_REPORT-<id> by its named disarm_owner' and is exactly the act section 6 prescribes ('a disarm is reported as a new row citing the armed row'). Because each also carries `adjudicates` and its own terminal `disposition`, the disarm STAMPS A REMEDIATION-TRACK VERDICT onto its target. Section 5 states the prohibition in terms: 'Disarmed is not remediated. Two states, two owners, two clocks... A single terminal state would convert dangerous-and-visible into safe-and-invisible.' That conversion is happening mechanically, at 8 of 24 items, and no gate can see it.",
+        "THE SHARPEST INSTANCES ARE THE ONES WHOSE OWN DISARM ROWS SAY THE DEFECT IS STILL THERE: Z-S5 disarms Z-W1-S1 and states 'the HAZARD is disarmed; the GRAPH IS NOT FIXED and the row says so'; Z-S6 disarms Z-W1-S2 and states 'the PARSER IS NOT FIXED'. Both targets nonetheless read GRADUATED, set by those same rows. The disarm records were CORRECT and CAREFULLY WORDED; the resolver converted them into dispositions anyway. That is why this is a mechanism finding and NOT a criticism of 1.0.0_SA_CTO~Z or 2.0.0_SA_COO~ZZ, neither of whom asserted a disposition -- the field did it for them.",
+        "WHY THE SEVEN NONETHELESS GRADUATE, WHICH IS A SEPARATE JUDGMENT AND IS MADE HERE ON THE MERITS: each is a real, grounded finding with a mechanism and a remedy that outlives its disarm. Z-S1 -- FWD-4's attribution axis was cut into NO cell of round 1 and the L6 coverage limb structurally cannot see it, because it grades cell ids against the decomposition rather than outcomes against cells. Z-S9 -- the project had no ledger/ directory at all, against a spine that names three artifacts there. Z-W1-S1 and Z-W1-S2 -- the two comp-tool instrument limits now carried as LIMIT 1 and LIMIT 2. Z-W1-S4 -- two live UNDECLARED API Gateways, one of them 'trade-submission-api', matching ZERO of 51 CloudWatch alarms, positive-controlled against siblings that DO match. Z-W2-S2 -- the Gateway-vs-Graph axis conflict, which is the direct ancestor of the four-member ruling at PRD v0.7 and therefore of Z-S10. Z-W2-S4 -- box-grain cost attribution blocked by a payer-account Cost Explorer opt-in and tag coarseness, both outside this project's write surface. Every one belongs in the remediation document; NONE of them was put there by an adjudicator until now.",
+        "BOUND, STATED BECAUSE THIS ROW'S HEADLINE IS ABOUT A SHARED INSTRUMENT: this seat measured the resolver's behaviour on ONE project's channel and read the function's source. It did NOT census other projects for the same pattern, and it does NOT claim a count outside NFRA_REPORT. The resolver is estate-shared, so the MECHANISM is estate-wide BY CONSTRUCTION -- but the incidence elsewhere is unmeasured here and is not asserted."
+      ]
+    },
+    "spec_asserts": "Protocol section 4: `disposition` is UNDER_INVESTIGATION at surfacing and 'the terminal value is set by the CVO's adjudication row, NEVER by the surfacing seat'. Section 8's L10 precondition: every investigation row is dispositioned.",
+    "world_is": "Two thirds of this project's items were dispositioned by someone other than the CVO -- a third of them by the surfacing seat itself, which section 4 says never happens -- and the L10 precondition read MET throughout, because the gate checks the VALUE and never the AUTHOR. The seven findings above now carry a CVO disposition for the first time.",
+    "notes": "WHAT THIS ROW DOES NOT DO: it does not reverse a single value set by a peer. Every one of the seven was already GRADUATED and stays GRADUATED; this row supplies the missing AUTHORITY, not a different answer. Had the peers' values been wrong the correction would have been larger, and it is worth saying plainly that they were not -- the seats involved read their rows carefully and the disarm texts are unusually good. || THE REMEDY IS NOT THIS SEAT'S TO BUILD AND IS NOT PROPOSED HERE. Two candidate shapes exist -- have `_resolve_latest` honour `adjudicates` only from an adjudication document, or split the field so a disarm row writes `disarm.state` and never `disposition` -- and choosing between them is the gate owner's call with its own L1. NAMED, NOT DESIGNED. || COST OF THE CHECK THAT FOUND IT, since a finding about a gate should say what it took: one classification pass over an already-parsed row set, asking of each item WHO set its disposition rather than WHAT the disposition is. The question the L10 predicate cannot ask is the one that found it."
+  }
+]
+```
+
+## C-S11 -- nine records dismissed: the disarm rows that were carrying this channel's dispositions for it, and one self-correction worth more than its disposition
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-C-S11",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T08:05Z",
+    "one_line": "L9, round 2: NINE RECORDS are DISMISSED WITH REASON -- the eight disarm/correction rows that carried this channel's dispositions for it (Z-S2..Z-S7, Z-S11, Z-S13) plus Z-S12, the CTO's routing row whose substance this seat already adopted at C-S9. Each is a record ABOUT another row with no mechanism of its own to graduate and no remedy of its own to route, which is round 1's Z-S20 test applied unchanged. Their content is not discarded: every one is carried onto the graduation of the finding it disarms.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "ALL NINE ARE RECORDS, ON THE SAME TEST THIS ESTATE HAS APPLIED ALL ROUND: does the row carry a mechanism of its own to graduate, or a remedy of its own to route? None does. Eight open with the words 'DISARM of NFRA_REPORT-<id> by its named disarm_owner' and exist to record that a hazard was stood down; one (Z-S13) is a self-correction against another record; one (Z-S12) is a routing act whose reasoning this seat adopted in full at C-S9. A disarm is a HAZARD-track event and a dismissal here removes nothing from anyone's queue -- the hazards were already stood down by their owners and this row does not re-arm or re-open any of them. ⛔ WHAT IS EXPLICITLY NOT BEING SAID: that these rows were wrong to exist or wrong to be written. They are the correct act, prescribed by section 6, and several are better artifacts than the findings they close -- Z-S7 in particular carries substance BIGGER than the row it disarms (trade-submission-api is a live portal-consumed trade submission AND APPROVAL workflow whose API Gateway is LIVE-no-DECLARED), and that substance rides Z-W1-S4's graduation at C-S10 rather than being lost here.",
+    "adjudicates": [
+      "NFRA_REPORT-Z-S2",
+      "NFRA_REPORT-Z-S3",
+      "NFRA_REPORT-Z-S4",
+      "NFRA_REPORT-Z-S5",
+      "NFRA_REPORT-Z-S6",
+      "NFRA_REPORT-Z-S7",
+      "NFRA_REPORT-Z-S11",
+      "NFRA_REPORT-Z-S12",
+      "NFRA_REPORT-Z-S13"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THIS ROW CHANGES NINE VALUES AND SAYS SO RATHER THAN LETTING THE COUNT MOVE QUIETLY: eight of the nine read GRADUATED before this row and now read DISMISSED_WITH_REASON. That is a real change, not a formality, and its effect is that the remediation document carries 13 rows rather than 21 -- because a disarm record is not a thing to be remediated, and putting one in the slug would hand 2.0.0_SA_COO~ZZ eight items whose remedy is already complete or is the graduation of a different row.",
+        "THE VALUES THEY HELD WERE AN ARTEFACT OF THE RESOLVER, NOT AN ASSERTION BY THEIR AUTHORS -- see C-S10. Each of these rows carries a terminal `disposition` in its own field, which the gate seeds directly as the item's state. No seat wrote 'this row GRADUATES'; the field's presence did it. So dismissing them contradicts no seat's judgment.",
+        "PER-ITEM, SO THE DISMISSAL IS NOT A SWEEP: Z-S2 disarms Z-W2-S2 (Gateway-vs-Graph resolved at L4 in PRD v0.4). Z-S3 disarms Z-S1 (FWD-4 ruled an L4 ADDENDUM, S1 narrowed, attribution becomes its own row S13). Z-S4 disarms Z-W2-S4 (accepts the cost finding as measured). Z-S5 disarms Z-W1-S1 (LIMIT 1 recorded; graph NOT fixed). Z-S6 disarms Z-W1-S2 (LIMIT 2 recorded; parser NOT fixed). Z-S7 disarms Z-W1-S4 (the undeclared-API finding, widened). Z-S11 disarms Z-S9 (ledger/ now exists with COMPLETION_REPORT.round2.json). Z-S13 self-corrects Z-S11's arithmetic and its causal claim. Z-S12 routes Z-W1-S5 to the comp-rail surface. Nine rows, nine distinct subjects, one shape.",
+        "⭐ Z-S13 IS THE ONE THIS SEAT WOULD SINGLE OUT, and it is dismissed only because of what it IS, never because of its quality: 2.0.0_SA_COO~ZZ corrected its own row of three hours earlier on BOTH halves -- a 7h figure that came from subtracting a LOCAL git timestamp from a UTC one, and a 'the reboot killed this seat' causal claim refuted by that same seat having committed three more times afterwards. It replaced a flattering explanation (an external event killed me) with an unflattering and correct one (a known open item lost to the next thing, three ticks running). That is the harder correction to write and it should not vanish into a dismissal count."
+      ]
+    },
+    "spec_asserts": "The L10 precondition is that every investigation item carries a disposition -- and per section 4, one set by the CVO's adjudication row.",
+    "world_is": "Nine of this project's items are records about other rows. All nine now carry a CVO disposition; eight of them change value, from a GRADUATED the resolver supplied to the DISMISSED_WITH_REASON an adjudicator judged.",
+    "notes": "COUNT AFTER C-S10 AND THIS ROW, and it is the number the slug is cut against: 24 items, UNDISPOSITIONED 0, GRADUATED 13, DISMISSED_WITH_REASON 11 -- and for the first time every one of the 24 carries a disposition set by a CVO adjudication row. || THE GRADUATED THIRTEEN are Z-S1, Z-S8, Z-S9, Z-S10, Z-W1-S1, Z-W1-S2, Z-W1-S3, Z-W1-S4, Z-W2-S1, Z-W2-S2, Z-W2-S3, Z-W2-S4, Z-W2-S6. Those are the rows the remediation document carries. || THIS PASS TOOK THE ROUND'S L9 FROM 8 ADJUDICATED ITEMS TO 24, and the eight it started from were the only ones anybody would have noticed were missing, because the other sixteen already read terminal."
+  }
+]
+```
