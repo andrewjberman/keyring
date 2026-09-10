@@ -15,30 +15,42 @@ stable, citations resolve there. DS/AE seats read their sections before touching
 
 ## 1. HOW WE WORK
 
-27. **Every directive/project runs the CANONICAL WORKFLOW L1–L10, ONE OWNER PER STEP, IN ORDER: L1 brief
-    (`4.0.0_SA_CRO` only) → L2 endpoint + L3 register (**`1.0.0_SA_CTO`** — the STEPS are the CTO's and are
-    inseparable from L4, since the tree gate refuses a PRD_HEADER whose project is unregistered; the register
-    FILE `org/missions/DIRECTIVES.yaml` remains **`0.0.0_AB_MSTR`'s** to own and repair. Named 2026-09-10:
-    rule 27 said ONE OWNER PER STEP and named none for L2/L3, so two seats inferred opposite owners from the
-    same silence) → L4 PRD (`1.0.0_SA_CTO` only — no COO, no CVO) →
-    L5 decomp + battery → L6 ONE ISSUANCE covering EVERY cell (`2.0.0_SA_COO` only; fan-out derived from the
-    decomp's dependency chains and stated as `fanout:` data in the issuance commit, default cap 8) → L7
-    execute (WORKER SUBAGENTS of the COO, `0.9.0_WK_<CODE>~<n>`, one worktree each, NO send tool; the TO's
-    WORKER FACE is the worker's whole context — cell text, absolute paths, ONE clause per criterion with its
-    invocation and expectation; the RECORD FACE never travels; a compound criterion is refused at the cut) →
-    L8 compile → L9 adjudicate (`3.0.0_SA_CVO`, its FIRST engagement; JUDGMENT criteria are graded HERE and
-    never self-graded) → L10 ONE SLUG to the CTO, ALWAYS, only after every TO is terminal and every row
-    dispositioned; the CTO answers with a PRD addendum (an FWD no cell served) or the ROUND-N ANALYSIS the
-    COO recuts in ONE issuance; CLOSED when every FWD grades REALIZED.** The three route tokens are RETIRED.
-    Three tracks share FILES, never messages: the CVO's one send is the slug, the CTO's one send is the
-    analysis, a worker cannot be messaged. `0.0.0_AB_MSTR` integrates and never works a project. Mid-round
-    the spec AND the decomposition are FROZEN; the only off-spec act is a surprise ROW (§2 below). Gate:
-    `.tools/to-pipeline-gate.py` (the L6 neck). Spec: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` v3.2
-    — the ONE process document (constitutional; v3 from the CRO's spec @`29bf9265ea` + §13 @`9dc97d860d`).
-    A worker's write surface is exactly the `<paths>` its non-terminal order names (no lane enumerates a worker;
-    `.tools/owned-paths-validate.py`), its rows mint `<CODE>-W<n>-S<k>`, and it writes no telemetry (L7 reads from
-    git). ⚠ The eight v3 carriers are BUILT and refuse (spine §3), and so is the drain's refuser on the merged index
-    (`.tools/safe-merge.sh`); what still binds by reading is spine §4 — the step log's L7 read from git.
+27. **Every directive/project runs the CANONICAL WORKFLOW L1-L10, ONE OWNER PER STEP, IN ORDER.
+    THIS RULE IS A REPRESENTATION OF `/canonical-flow` (Andrew-direct 2026-09-10: "Rule 27 should just be
+    a representation of /canonical-flow") -- it is NOT an independent source. Where this text and that
+    skill differ, THE SKILL WINS and this rule is the defect. The skill's own reference is the spine,
+    `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` section 1 (the limbs and their owners), READ AT HEAD.**
+    ⛔ **NO VERSION IS PINNED HERE, DELIBERATELY.** This rule pinned `v3.2` while the spine had reached
+    v3.6 with three further amendments unreadable on one fabric -- a constitutional pointer aimed at a
+    superseded copy. The skill cites the spine BY PATH ONLY; so does this rule now, and the staleness
+    becomes structurally impossible rather than merely corrected.
+
+    | limb | owner (spine s.1) |
+    |---|---|
+    | L1 brief | `4.0.0_SA_CRO` |
+    | L2 endpoint | `1.0.0_SA_CTO` |
+    | L3 register | `1.0.0_SA_CTO` — and `0.0.0_AB_MSTR` HOLDS the directive register the row must appear in |
+    | L4 PRD | `1.0.0_SA_CTO` (no COO, no CVO) |
+    | L5 decomposition + battery | `2.0.0_SA_COO` |
+    | L6 task orders, ONE ISSUANCE covering EVERY cell | `2.0.0_SA_COO` |
+    | L7 execution | the WORKER named in `<issued_to>`, a subagent of the COO that issued the order |
+    | L8 compilation | `3.0.0_SA_CVO` — **its engagement with the project BEGINS HERE, at L8 and not L9** |
+    | L9 adjudication | `3.0.0_SA_CVO` |
+    | L10 slug / read / recut / close | `3.0.0_SA_CVO` issues the slug; `1.0.0_SA_CTO` routes, ALWAYS; `2.0.0_SA_COO` recuts |
+
+    **L10 HAS TWO STATES AND THE SKILL'S LADDER SEPARATES THEM: `L10 slug` (the slug cut and sent to the
+    CTO) then `L10 answered` (a `ROUND_ANALYSIS.round<N>` or a bumped `prd_version`), and the COO's recut
+    follows. CLOSED IS A THIRD THING AND NEEDS TWO ARTIFACTS: `COMPLETION_REPORT` + `COMPLETION_GRADES`,
+    every grade `REALIZED`.** A round is not closed because every FWD reads REALIZED somewhere.
+    L6 fan-out is derived from the decomposition's dependency chains and stated as `fanout:` in the
+    issuance commit (default cap 8). The TO's WORKER FACE is the worker's whole context -- cell text,
+    absolute paths, ONE clause per criterion with its invocation and expectation; the RECORD FACE never
+    travels; a compound criterion is refused at the cut. A worker's write surface is exactly the `<paths>`
+    its non-terminal order names (`.tools/owned-paths-validate.py`), its rows mint `<CODE>-W<n>-S<k>`, and
+    it writes no telemetry (L7 reads from git). Three tracks share FILES, never messages: the CVO's one
+    send is the slug, the CTO's one send is the analysis, a worker cannot be messaged. `0.0.0_AB_MSTR`
+    integrates and never works a project. Mid-round the spec AND the decomposition are FROZEN; the only
+    off-spec act is a surprise ROW (s.2 below). Gate: `.tools/to-pipeline-gate.py` (the L6 neck).
 
 ## 2. HOW MUCH TO CHECK — the speed governor
 
