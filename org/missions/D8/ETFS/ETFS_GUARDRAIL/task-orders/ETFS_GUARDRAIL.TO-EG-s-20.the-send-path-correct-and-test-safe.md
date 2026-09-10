@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ETFS_GUARDRAIL~4</issued_to>
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>pending -- GO paired at cut (a seat order is dispatched by its issuance). Authority: PRD **v0.5** @`7ba9b976b0` (the CTO's application of Andrew's ~03:0xZ law: FWD-7 SUPERSEDED by FWD-10 because its only proof was a failure nobody controls AND row `W1-S25` measured that the send cannot fire at all); decomposition **v0.3** s.12, cell `EG-s-20`. Andrew's ~02:5xZ standing constraint binds this face: no test run reaches aj@opalinvest.com.</status>
+<status>complete -- 2026-09-10 ~04:0xZ by `0.9.0_WK_ETFS_GUARDRAIL~4`. S20-AC1 PASS by output (15 passed, round-1 floor 7; the NEW arms FAIL 7 of 7 against the pre-fix blob), S20-AC2 PASS by output (20 of 20 arms HOLD, EGS20-SEND-PATH-CORRECT-AND-TEST-SAFE), S20-AC3 RECORDED with no verdict for the CVO at L9. proof-of-spec-check rc=0 VALID. 1 row filed: ETFS_GUARDRAIL-W4-S1. NO SEND AND NO INVOCATION OF THE ORCHESTRATOR WAS FIRED. Originally: pending -- GO paired at cut (a seat order is dispatched by its issuance). Authority: PRD **v0.5** @`7ba9b976b0` (the CTO's application of Andrew's ~03:0xZ law: FWD-7 SUPERSEDED by FWD-10 because its only proof was a failure nobody controls AND row `W1-S25` measured that the send cannot fire at all); decomposition **v0.3** s.12, cell `EG-s-20`. Andrew's ~02:5xZ standing constraint binds this face: no test run reaches aj@opalinvest.com.</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `../prd/ETFS_GUARDRAIL_PRD.md` v0.5 | **Decomp cell:** `EG-s-20` (`../decompositions/ETFS_GUARDRAIL_DECOMP.md` v0.3, s.12) | **outcome_ref:** FWD-10's PRECONDITION (the send made reachable and the driving made safe)
 
