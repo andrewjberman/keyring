@@ -9,7 +9,10 @@ citations behind.*
 **L1 owner:** `4.0.0_SA_CRO~Z` · **L2-L4 owner + author:** `1.0.0_SA_CTO~Z` · **L5-L6:** `2.0.0_SA_COO~ZZ` · **L8-L10:** `3.0.0_SA_CVO~Z` · **Integrator:** `0.0.0_AB_MSTR~Z`
 **Brief (L1):** `docs/briefs/global-infrastructure-reporting-brief-20260909.md` @`37ff80867a`
 **Endpoint (L2):** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_GLOBAL_INFRA_REPORTING_20260909.md`
-**Version:** v0.6, 2026-09-09 ~22:4xZ -- **v0.6 FOLDS ANDREW'S si2 RULING** (VERBATIM: *"I would include si2 under the Dashboard."*): `canonical-schwab-si2` is attributed to **Dashboard** and is no longer an ungrouped surface; the THIRD-MEMBER half of that open call remains OPEN and is marked so. Before it, **v0.5 WAS THE ROUND-1 ADDENDUM FOR AN OUTCOME NO CELL SERVED (rule 27).** ARMED row `NFRA_REPORT-Z-S1` (`2.0.0_SA_COO~ZZ`, msg 20627) measured that `FWD-4` was cut into NO cell: `S1` bundled TWO outcomes, `RP-s-1` mirrored it BY ID and cut only the FWD-2 half, and L6's coverage limb compares row IDS so it passed 12-of-12 while content coverage did not. **`S1` is NARROWED to `FWD-2` and the attribution limb becomes its OWN row `S13`** -- which also makes `RP-s-1` an exact mirror of the narrowed `S1` rather than a deficient cell, so nothing is reopened and no certified work is rewound. Censused: 2 of 12 rows named multiple outcomes; `S2` is deliberately left as is for a stated reason. Before it, **v0.4 DISARMED ARMED ROW `NFRA_REPORT-Z-W2-S2`**: section 6's first ruling collapsed TWO axes into one and dropped `Graph`; `FWD-4` now carries a mandatory rendered `UNGROUPED` value so no live surface leaves the axis silently; and ruling 15b's open sub-item is discharged (the Graph group is NOT empty -- 3 of 3 ECS services running). The member NAMES go to Andrew as an open call. Before it, **v0.3 ADDED SECTION 9, THE ADVERSARY GRID**, on Andrew-direct
+**Version:** v0.7, 2026-09-10 ~03:0xZ -- **v0.7 CLOSES THE LAST OPEN CALL ON THIS PRD: `FWD-4`'s
+attribution axis has FOUR MEMBERS -- `Dashboard | Website | Gateway | Graph`** (Andrew-direct
+2026-09-10, *"go with your recs on all six"*, on the card recommending exactly that). `UNGROUPED`
+survives, re-scoped to a live surface outside all four. Before it, **v0.6 FOLDED ANDREW'S si2 RULING** (VERBATIM: *"I would include si2 under the Dashboard."*): `canonical-schwab-si2` is attributed to **Dashboard** and is no longer an ungrouped surface; the THIRD-MEMBER half of that open call remains OPEN and is marked so. Before it, **v0.5 WAS THE ROUND-1 ADDENDUM FOR AN OUTCOME NO CELL SERVED (rule 27).** ARMED row `NFRA_REPORT-Z-S1` (`2.0.0_SA_COO~ZZ`, msg 20627) measured that `FWD-4` was cut into NO cell: `S1` bundled TWO outcomes, `RP-s-1` mirrored it BY ID and cut only the FWD-2 half, and L6's coverage limb compares row IDS so it passed 12-of-12 while content coverage did not. **`S1` is NARROWED to `FWD-2` and the attribution limb becomes its OWN row `S13`** -- which also makes `RP-s-1` an exact mirror of the narrowed `S1` rather than a deficient cell, so nothing is reopened and no certified work is rewound. Censused: 2 of 12 rows named multiple outcomes; `S2` is deliberately left as is for a stated reason. Before it, **v0.4 DISARMED ARMED ROW `NFRA_REPORT-Z-W2-S2`**: section 6's first ruling collapsed TWO axes into one and dropped `Graph`; `FWD-4` now carries a mandatory rendered `UNGROUPED` value so no live surface leaves the axis silently; and ruling 15b's open sub-item is discharged (the Graph group is NOT empty -- 3 of 3 ECS services running). The member NAMES go to Andrew as an open call. Before it, **v0.3 ADDED SECTION 9, THE ADVERSARY GRID**, on Andrew-direct
 (*"then they run a comp-adversary and include the comp-adversary results in a grid beneath the
 surface_manifest as an extra section for the reference of the COO"*), and folds `2.0.0_SA_COO~ZZ`'s
 msg 20592: the `S1` cell now carries **ruling 12's SIX-value axis verbatim** (v0.2 abbreviated it to
@@ -33,7 +36,7 @@ before landing (see its `CONFIRMED` line).
   "project": "NFRA_REPORT",
   "directive": "D12",
   "fabric": "site-z",
-  "prd_version": "v0.6",
+  "prd_version": "v0.7",
   "step": 4,
   "brief_ref": "docs/briefs/global-infrastructure-reporting-brief-20260909.md@37ff80867a",
   "endpoint_outcomes": [
@@ -316,16 +319,19 @@ field, never age.
   want of a name**. `0.9.0_WK_NFRA_REPORT~2` left `opal-gateway` and `canonical-schwab-si2`
   explicitly ungrouped rather than guessing; **that was correct and is now the specified behaviour
   rather than a worker's judgment call.**
-  ⚠ **THE MEMBER NAMES ARE NOT SETTLED BY THIS RULING AND ARE NOT THIS SEAT'S TO SETTLE** -- naming
-  law is sovereign. Carried to Andrew as an open call: whether the attribution axis's third member is
-  `Gateway`, `Graph`, or **both (a four-member axis)**. ⭐ **THE `canonical-schwab-si2` HALF IS RULED
-  AND CLOSED -- Andrew-direct 2026-09-09 ~22:3xZ, VERBATIM: *"I would include si2 under the
-  Dashboard."*** It is no longer an ungrouped surface and no cell may render it so. **The THIRD-MEMBER
-  half of this call is still open**; it is recorded as still open rather than treated as settled by
-  the same message, because he answered one half of a two-part card and inferring the other half from
-  his silence is exactly the widening this seat is forbidden to do.
-  **The `UNGROUPED` value makes the loop cycle without that answer**, and makes the gap visible in
-  the report instead of hiding it.
+  ⭐ **RULED AND CLOSED AT v0.7 -- THE AXIS HAS FOUR MEMBERS. Andrew-direct 2026-09-10 ~02:5xZ,
+  VERBATIM: "go with your recs on all six"**, given on the `/open-calls` card whose REC read *"Four:
+  Dashboard, Website, Gateway, Graph."* **`FWD-4`'s attribution axis is `Dashboard | Website | Gateway
+  | Graph`**, and the earlier si2 half stands: **`canonical-schwab-si2` is `Dashboard`** (Andrew-direct
+  2026-09-09 ~22:3xZ, *"I would include si2 under the Dashboard."*).
+  **WHY FOUR AND NOT THREE, recorded so it is not re-litigated:** `opal-gateway` (EC2, the MCP server)
+  and `opal-globgrph` (ECS, 3 of 3 services) are BOTH live, BOTH always-on, and FAIL DIFFERENTLY.
+  Folding either into `Dashboard` would make `FWD-4`'s own bar -- *one problem belongs to one part* --
+  false by construction. A fourth member costs a report section.
+  ⛔ **AND `UNGROUPED` IS NOT RETIRED BY THIS RULING.** It now means *a live surface outside all four
+  named members*, which is a smaller set than before and must still RENDER rather than vanish. The
+  ruling names the members; it does not promise the four are exhaustive of everything this estate will
+  ever run.
 
 - **2026-09-09, ruling 15b's open sub-item is DISCHARGED: the `Graph` group is NOT empty.** 15b
   carried *"The **Graph** group may therefore be EMPTY. Not resolved here."* It is resolved.
@@ -452,7 +458,7 @@ not asserted.**
 | S10 | FWD-10 | The COVERAGE / DENOMINATOR carrier -- every count states what it counted out of | absent | brief F3: coverage, not staleness, is the freshness story (`mdpf 0/1`); brief F5: the drift section colours on INSTRUMENT freshness rather than on drift | report lane | wire | S1 | 4, 5 | a thinly-monitored surface must not produce a score that reads as healthy as a thoroughly-monitored one |
 | S11 | FWD-11 | The MONITORED-vs-SERVED reconciler -- what we publish that no instrument covers | absent | brief Part II Owns, verbatim: *"the standing check that NO EXISTING INSTRUMENT PERFORMS"* | report lane | wire | S10 | 5 | the live-plane enumerator is `comp-find --corpus aws`, **REPAIRED 2026-09-09 and re-exercised at the merged head: 757 hits / 2157 nodes, VINTAGE now carried.** No longer a blocked dependency |
 | S12 | FWD-12 | The ANOMALY BREAKDOWN -- connected resources/consumers/generators for an anomalous row -- plus its written account | absent | Andrew-direct 2026-09-09 (the outcome's SOURCE line) | report lane | wire | S1, S11 | 3, 5 | `C-AI` parts 1+2 -- the breakdown is COMPUTED, the account is GENERATED and **may never be the sole carrier of a fact**. **BUILD-LADDER RUNG 2 FIRST:** the graph and its call manifest exist; CLAUDE.md rule 20 says QUERY, NEVER REBUILD |
-| S13 | FWD-4 | The PROPERTY+OWNER ATTRIBUTION axis -- every finding rolled up to a NAMED part of the business with an owner, and the mandatory RENDERED `UNGROUPED` value for a live surface no ratified group covers | absent | ARMED row `NFRA_REPORT-Z-S1` (`2.0.0_SA_COO~ZZ`, msg 20627): `FWD-4` was served by NO cell of round 1. Live surface still ungrouped: `opal-gateway` (`0.9.0_WK_NFRA_REPORT~2`). **`canonical-schwab-si2` is RULED into `Dashboard`** (Andrew-direct 2026-09-09 ~22:3xZ) and is NO LONGER an ungrouped example | report lane | wire | S1 | 2, 3 | `UNGROUPED` is RENDERED, never omitted and never guessed; the MEMBER NAMES are an open call at Andrew and this row must not invent them |
+| S13 | FWD-4 | The PROPERTY+OWNER ATTRIBUTION axis -- every finding rolled up to a NAMED part of the business with an owner, and the mandatory RENDERED `UNGROUPED` value for a live surface no ratified group covers | absent | ARMED row `NFRA_REPORT-Z-S1` (`2.0.0_SA_COO~ZZ`, msg 20627): `FWD-4` was served by NO cell of round 1. Live surface still ungrouped: `opal-gateway` (`0.9.0_WK_NFRA_REPORT~2`). **`canonical-schwab-si2` is RULED into `Dashboard`** (Andrew-direct 2026-09-09 ~22:3xZ) and is NO LONGER an ungrouped example | report lane | wire | S1 | 2, 3 | `UNGROUPED` is RENDERED, never omitted and never guessed. **MEMBERS RULED v0.7: `Dashboard \| Website \| Gateway \| Graph` (four).** `UNGROUPED` now means a live surface outside all four and is NOT retired |
 
 **MECE, BOTH DIRECTIONS, RUN RATHER THAN ASSERTED (at this edit):**
 - **FORWARD -- every OWNS item has at least one row:** (1)->S1 · (2)->S2 · (3)->S3 · (4)->S4 ·
