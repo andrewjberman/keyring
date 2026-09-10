@@ -13,7 +13,7 @@
 
 ## THE CELL
 
-`EG-s-21` has now been refused THREE times by its assignee, each time correctly, and the third refusal found the reason the first two did not: **the forcing cannot survive the ladder.** `coverage_gate` classifies once from the fixture-mutated in-memory series (`render_month_end.py:991`), and with `ladder=True` -- the only path the orchestrator's fixed `--gate` command takes -- **re-classifies from real S3 at `:999` with no `series=` argument**, its own comment reading *"never the in-memory series the ladder itself bypassed"*. Measured hermetically with the arm's own positive control, identical fixture and month and probe, the only difference being the flag:
+`EG-s-21` has now been refused THREE times by its assignee, each time correctly, and the third refusal found the reason the first two did not: **the forcing cannot survive the ladder.** `coverage_gate` classifies once from the fixture-mutated in-memory series (`render_month_end.py:991`), and with `ladder=True` -- the only path the orchestrator's fixed `--gate` command takes -- **re-classifies from real S3 at `:999` with no `series=` argument**, its own comment reading *"never the in-memory series the ladder itself bypassed"*. Measured hermetically with the arm's own DIFFERENCE CONTROL -- identical fixture, month and probe, the only difference being the flag (spine v3.13 qualifier 1: a POSITIVE control bounds under-firing only and would NOT have shown this; what convicts here is what CHANGED when the flag moved):
 
 ```
 ladder=False -> VERDICT REFUSE   C=1  holes ['2026-08-04']
