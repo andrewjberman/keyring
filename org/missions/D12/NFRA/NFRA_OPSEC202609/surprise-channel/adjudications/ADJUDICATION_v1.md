@@ -1619,3 +1619,37 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S42 -- CORRECTION to C-S41: the slug is NOT cuttable and was not when C-S41 said so. 35 orders, one staged. This seat measured the ROUND and asserted the PROJECT
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S42",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T16:52Z",
+    "one_line": "⛔ C-S41's CENTRAL CLAIM IS FALSE AND IT WAS FALSE WHEN WRITTEN, NOT STALE. It stated '3 of 3 TERMINAL', 'BOTH L10 LIMBS ARE NOW MET' and 'the slug is cuttable'. THE PROJECT CARRIES 35 TASK ORDERS AND ONE WAS STAGED AT THAT MOMENT -- `TO-OP3A-S-1.in-lane-liveness-caller-migration`, committed at 16:06Z, THIRTY-TWO MINUTES BEFORE C-S41 landed at 16:38Z. This seat globbed `*OP3-S-*`, measured THE ROUND'S RECTANGLE, and asserted THE PROJECT'S STATE. THE SLUG IS BUILT AND WITHDRAWN, NOT CUT, AND NO OVERRIDE WAS TAKEN.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A CORRECTION RECORD against this seat's own immediately preceding row. It adjudicates no item and opens nothing; rows are immutable and append-only, so a correction to C-S41 cannot be an edit and must be its own row -- the same handling Z-S173 used to correct Z-S151 and Z-S175 used to correct Z-S173.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** THE MEASUREMENT THAT REFUTES IT, AND IT IS THE ONE THIS SEAT SHOULD HAVE RUN. *** An UNSCOPED sweep of `task-orders/*.md` reading each file's own `<status>`: **35 orders, exactly 1 NON-TERMINAL** -- `NFRA_OPSEC202609.TO-OP3A-S-1.in-lane-liveness-caller-migration.md [staged]`. C-S41 said '3 of 3 TERMINAL'. That is TRUE OF THE THREE ORDERS IT LOOKED AT and FALSE OF THE PROJECT, and the L10 precondition is a PROJECT predicate.",
+        "⛔ WRONG WHEN MADE, NOT STALE, AND THE DISTINCTION MATTERS BECAUSE THIS SEAT HAS CLAIMED THE OTHER ONE TODAY. `git log --diff-filter=A` on that order returns @f20bc65d71 by 2.0.0_SA_COO~Z at 16:06Z; C-S41 committed at 16:38Z. THIRTY-TWO MINUTES. Earlier today this seat correctly reported a claim that was TRUE WHEN WRITTEN and had aged (the COMPLETION_REPORT.round2 line); THIS IS NOT THAT. The order was in the tree, committed and readable, before the claim was composed.",
+        "*** THE MECHANISM IS THE ONE THIS SEAT SPENT THE DAY ADJUDICATING IN OTHER SEATS, AND IT IS IN THE LAW VERBATIM. *** The command was `for f in task-orders/*OP3-S-*.md` -- A FILTER THAT EXCLUDES `OP3A` BY CONSTRUCTION, since `OP3A-S-1` does not match `OP3-S-`. CLAUDE.md rule 22: 'A CHECK SCOPED TO THE MEMBERS CANNOT SEE A DEFECT IN WHAT THE MEMBERS SHARE ... re-read the population UNSCOPED once.' ⭐ AND THE SAME CLASS WAS GRADUATED BY THIS SEAT TWICE TODAY: Z-W6-S2 (a SET whose shared label asserts a property one member lacks, C-S9) and Z-S172 (a criterion read at the round's grain while its defect lived at the PRD's, C-S39). Adjudicating a class is not the same as running it on yourself.",
+        "⭐ AND THE CAUSAL LOOP IS EXACT, WHICH IS WHY THIS IS WORTH A ROW RATHER THAN A QUIET REBUILD: Z-S174's finding was that AUTHORISED WORK WAS NEVER CUT, and its disarm condition -- named in the row and endorsed at C-S41 -- was THE CUT ITSELF. `2.0.0_SA_COO~Z` performed it. **THE DISARM OF Z-S174 IS PRECISELY WHAT MADE THE SLUG UNCUTTABLE**, because a new order enters `staged`. C-S41 graduated the row and blessed its remedy in the same breath as declaring the round sluggable, and those two statements were incompatible at the moment they were written.",
+        "THE GATE CAUGHT IT AND THIS SEAT DID NOT, AND ITS REFUSAL CITES ANDREW DIRECTLY: 'NEW remediation row while 1 of 35 task order(s) under NFRA_OPSEC202609 are NOT terminal at HEAD ... The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: We do not route until the job is over).' ⛔ NO OVERRIDE WAS TAKEN AND NONE WOULD HAVE BEEN LEGITIMATE: an override here would route before the job is over, which is the exact act the Andrew-direct ruling forbids. This is not a gate defect and not a boundary problem; it is the gate holding a line this seat walked into.",
+        "WHAT STANDS FROM C-S41, so the correction is not read wider than it is: the LIVE-PLANE VERIFICATION of Andrew's click is unaffected and was independently measured (a real `SubscriptionArn` against `PendingConfirmation` on 12 prior readings); the graduations of Z-S174 and Z-S175 stand; the vintage correction to S2-AC4's FAIL stands; and the three disarm DECLARATIONS stand. ⚠ WHAT DOES NOT STAND IS ONLY THE L10 CONCLUSION AND EVERYTHING DOWNSTREAM OF IT -- 'both limbs met', 'cuttable', and the assertion that the slug follows.",
+        "THE SLUG'S CURRENT STATE, STATED SO NO READER LOOKS FOR IT: `REMEDIATION_v3.Z.md` was BUILT (14 rows, 10 ARMED, 3 disarms recorded, 59,811 bytes, 0 malformed), REFUSED by the gate, and then REMOVED FROM THE WORKTREE by this seat rather than left sitting uncommitted in a shared tree. It was never tracked, and a byte-identical copy is parked outside the repo. IT WILL BE RE-CUT FROM A FRESH CENSUS WHEN `TO-OP3A-S-1` GOES TERMINAL -- not restored from the backup, because the census will have moved by then and restoring a stale slug is how a stale number gets committed."
+      ]
+    },
+    "spec_asserts": "C-S41 asserted that round 3 is 3 of 3 terminal, that both L10 limbs are met, and that the slug is cuttable.",
+    "world_is": "The project carries 35 task orders and one is staged; the L10 precondition is a project predicate, so no slug is cuttable and none was cut.",
+    "notes": "⭐ THE TRANSFERABLE FORM, AND IT IS THE SECOND TIME IN ONE HOUR THIS PROJECT HAS PRODUCED IT AT A DIFFERENT GRAIN: **A ROUND IS NOT A PROJECT, AND A PRECONDITION WRITTEN ABOUT THE PROJECT CANNOT BE DISCHARGED BY A CENSUS OF THE ROUND.** Z-S174 was an omission invisible to every instrument that measures what exists; THIS is the mirror -- a presence invisible to an instrument SCOPED TO EXCLUDE IT. Both are failures of the DENOMINATOR rather than of the reading, and in both cases every figure quoted was individually correct. || ⚠ AND THE SELF-CHECK THAT WOULD HAVE CAUGHT IT COSTS ONE COMMAND: after any filtered census that feeds a PRECONDITION, re-run it UNFILTERED once and compare the denominators. Here that is `task-orders/*.md` against `task-orders/*OP3-S-*.md` -- 35 against 3, a gap large enough that no reading of the smaller number could have survived seeing it."
+  }
+]
+```
