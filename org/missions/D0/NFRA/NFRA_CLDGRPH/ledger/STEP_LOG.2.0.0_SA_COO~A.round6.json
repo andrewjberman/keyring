@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-10T01:04Z",
+  "written_utc": "2026-09-10T01:40Z",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -273,8 +273,23 @@
         "msgs 94807 (CTO), 94808 (CVO), 94809 (the CTO's half)",
         "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260910T0050Z.md"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "a7253d8a29",
       "next": "F-11's second cycle (and the image act if the CTO GOes it); the flip or the OPEN report; the drain (comp-system phase two -- grain_baseline.json moves); the CVO's baseline sign; the FINAL packet + COMPLETION_REPORT.round6.json; the drain-end read to the CTO; CronDelete."
+    },
+    {
+      "seq": 20,
+      "limb": "L7 (a dead worker's deploy measured, then resumed) / NEVER-2",
+      "started_utc": "2026-09-10T01:20Z",
+      "ended_utc": "2026-09-10T01:40Z",
+      "act": "TICKS 53-54 read the second cycle running (the STORED_IN fix @b6c92e3174, the NEVER-2 entry opened 01:15Z, the before-census taken). TICK 55: THE WORKER DIED (HTTP 429, session limit to 03:50Z, model claude-opus-5) SECONDS AFTER THE SEVEN-FAMILY IMAGE RE-PIN. NEVER-2 read first, self-report refused: this seat MEASURED the live plane with describe-task-definition per family -- 7 of 7 on sha256:17ccc9b0... (derive-runner 9, cse 4, comp-learns 4, fedobs 4, resource-summaries 4, projection-worker 6, serving 4), 0 of 7 on the old digest, 0 of 7 on any tag -- and the ONE allowed ad-hoc derive on :9 SUCCEEDED (task e054a78ebc, exit 0, 01:17:09Z -> 01:29:12Z). The record survived: pin, CLOSED entry and censuses committed @9c9b68cb6f, only .build/ untracked. NO ROLLBACK OWED; none taken. The worker's own second-cycle result stands on the branch: STORED_IN both-ends-present 955 of 955 locally (was 0 of 955), DERIVES_FROM 216 of 216, reconciliation 1790 = 1521 + 269 lost 0, GRAIN-SENTINEL PASS, the five magnitudes unchanged; ACT 1's zip re-push served at 01:04:38Z and its ONE ad-hoc build SUCCEEDED (marker git_sha b6c92e3174, 27,745 nodes / 61,304 edges). ROW S95 appended (the mid-order death and the whole deploy, with the ordering lesson: open, act, close AND COMMIT, then read). WORKER RESUMED with the five measured facts handed to it -- the projection pointer, F11-AC2/AC3 re-taken with the CTO's discriminators, the record, the instance, the flip. Andrew's terminal word this tick: 'Proceed'.",
+      "artifacts": [
+        "live describe-task-definition x7 @01:3xZ",
+        "wk-cldgrph-6-2 @9c9b68cb6f",
+        "row S95",
+        "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260910T0135Z.md"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "F-11's reads and flip (the worker, or this seat if the rate limit holds it past the next tick); the drain (comp-system phase two -- grain_baseline.json moves); the CVO's baseline sign; the FINAL packet + COMPLETION_REPORT.round6.json; the drain-end read to the CTO; CronDelete."
     }
   ]
 }
