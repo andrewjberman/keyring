@@ -932,3 +932,33 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-S22",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZZ",
+    "surfaced_at": "2026-09-10T16:52:00Z",
+    "one_line": "THE DEPLOY IS LIVE AND CORRECT -- and TO-RP-s-23's AC3, FWD-14's own bar, WILL FAIL ON IT. AC3 greps the deployed package for the string ROW_FACTS and expects 0; the package returns 2, and all 12 occurrences across both modules are DOCSTRING, COMMENT AND EMITTED-PROSE CITATIONS with ROW_FACTS bound as a NAME in neither module and assigned in neither. A string census cannot separate a citation from a mention, which is this seat's own banked lesson, written into a criterion by the seat that banked it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~ZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE DEPLOY LANDED AND THIS SEAT VERIFIED IT AGAINST THE SERVED ARTIFACT, not the worker's report: aws lambda get-function -> Code.Location -> downloaded zip. CodeSha256 j7lljv8S5efk1KJz0Zh7+pV0+PIfcYbCOVJY2TE0/kE= (was r/bjjp5dJMcxw4NnzSNFsUCpYlWrH+sJsVJu+JiWxs8=), LastModified 2026-09-10T16:35:55Z (was 2026-07-08T01:29:08Z), CodeSize 54,009 (was 40,015). All three moved, so AC1's red arm is genuinely satisfied and this is not a no-op.",
+        "THE PACKAGE IS RIGHT: 4 entries, exactly lambda_function.py + edition.py + edition_rows.py + openai_cost_tracker.py, NO vendored packages -- the layer-shaped constraint held. Handler: format_report calls=0, render_markdown=1, format_report still defined=1 (RP-s-24's reference preserved), DELTA_ATTACHED=2, compute_delta calls=2 -- the loop ruled in at Z-S20 is in the deployed bytes.",
+        "THE DEFECT, MEASURED BY ROLE RATHER THAN BY STRING: edition.py 6 occurrences of ROW_FACTS, edition_rows.py 6. In BOTH modules, `ROW_FACTS bound as a NAME in code? False` and `ROW_FACTS ASSIGNED in this module? False`, tested by walking the AST for ast.Name ids and ast.Assign targets. Every occurrence is a docstring, a comment, or a string literal the renderer EMITS -- three of edition.py's are inside the edition's own prose citing where a fact came from, which is the QUOTED/COMPUTED/GENERATED discipline working as designed.",
+        "SO FWD-14'S SUBSTANCE IS SATISFIED AND ONLY ITS INSTRUMENT IS BROKEN. No transcribed fact table travelled into the deployed package. RP-s-21's own AC3 -- which tested for BIG UPPERCASE DATA LITERALS rather than a substring -- returned BIG_UPPERCASE_DATA_LITERALS=0 against the same module and was right.",
+        "THE RECUT IS STRICTLY STRONGER, WHICH IS WHY IT IS A FIX AND NOT A WIDENING: testing for ROW_FACTS bound as a NAME or ASSIGNED, PLUS any uppercase-named list/dict literal over 400 chars of AST dump, ALSO catches a fact table shipped under a DIFFERENT NAME -- which the string form would have missed entirely. An unparseable module counts as a carrier, so the criterion fails loud rather than passing on a parse error."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "TO-RP-s-23 AC3 asserts that FWD-14 is scored where it must be scored -- the DEPLOYED package -- by requiring ROW_FACTS_CARRIERS=0 over the shipped .py entries.",
+    "world_is": "The deployed package contains no fact table and two modules that CITE the specimen's ROW_FACTS by name in prose. AC3's matcher counts both as carriers, so the criterion fails on a build that fully satisfies the outcome it exists to score.",
+    "notes": "RULED AND DISPATCHED AHEAD OF THIS ROW, because the worker was live and about to run AC3. AC3 is recut to test for a BOUND NAME or an ASSIGNMENT plus a size-guarded uppercase data literal under any name; the worker amends its own copy of the order (a path its <paths> names), cites this row id, re-runs, and records BOTH the original string result and the recut result in its proof instance so L9 can see what moved. ⛔ UNCHANGED: the cell's scope, BOUNDS, write surface, and AC1/AC2/AC4/AC5/AC6 exactly as issued. ⭐ THE CLASS, AND IT IS THE FOURTH THIS ROUND FROM THIS SEAT, ALL ONE SHAPE -- an order CORRECT IN SUBSTANCE and defective in a MACHINE-READ FIELD: Z-S20's AC2 was unsatisfiable by any correct port; the package enumeration named the EXCLUSION and never the INCLUSION (openai_cost_tracker.py is imported at module scope and its omission would have failed at COLD START -- caught by the worker, not by the issuer); Z-S21's issuer was named where a human reads and not where a gate reads; and now a criterion that cannot tell a FACT TABLE from a CITATION OF ONE. ⛔ THE SHARPEST VERSION, RECORDED AGAINST THIS SEAT: 'a string census cannot separate a citation from a mention -- classify by ROLE' is a lesson this seat has ALREADY BANKED, and it wrote a criterion that violates it. Banking a lesson is not applying it, and the gap between the two closed only when a worker ran the thing. Every one of the four was caught by execution, never by authorship."
+  }
+]
+```
