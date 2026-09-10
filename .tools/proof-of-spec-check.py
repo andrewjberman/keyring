@@ -289,11 +289,28 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
     ctx = "UNKNOWN"
     inst_commit = None
     dry_run = False
+    _foreign_tree = None
     if inst_path is not None:
         try:
             inst_rel = Path(inst_path).resolve().relative_to(_REPO_ROOT).as_posix()
         except ValueError:
+            # NFRA_IAMROLES202609-Z-S10 (2.0.0_SA_COO~ZI, 2026-09-10): the instance lives OUTSIDE the
+            # tree this script lives in -- under spine v3 that is EVERY worker instance, because every
+            # worker is in a linked worktree BY CONSTRUCTION. This used to set inst_rel = None SILENTLY,
+            # which dropped inst_commit, which disabled the `cat-file -e {inst_commit}:{path}` fallback
+            # at the presence test -- so the artifact read as ABSENT and the violation NAMED THE
+            # WORKER'S FILE. A checker that cannot see a tree must say THAT, not blame the artifact:
+            # the honest party was being reported as the defective one.
             inst_rel = None
+            _foreign_tree = str(Path(inst_path).resolve())
+    if _foreign_tree is not None:
+        # REFUSE LOUD rather than grade a pair this checker cannot see (the preferred shape named in
+        # Z-S10). Resolving the foreign tree would also need git re-pointed at it; refusing is smaller,
+        # cannot produce a wrong verdict in EITHER direction, and names the zero-cost workaround.
+        return ([f"artifact-resolution/CHECKER-SCOPE: this proof-of-spec-check lives in {_REPO_ROOT} but the "
+                 f"instance is at {_foreign_tree}, OUTSIDE that tree -- it cannot resolve the instance's commit "
+                 f"and CANNOT GRADE IT. This is NOT a finding against the instance or its author. "
+                 f"Run the WORKTREE'S OWN .tools/proof-of-spec-check.py from inside that worktree."], [])
     if inst_rel:
         staged_inst = _git_out("diff", "--cached", "--name-only", "--", inst_rel).strip()
         tracked_inst = _git_ok("ls-files", "--error-unmatch", "--", inst_rel)
