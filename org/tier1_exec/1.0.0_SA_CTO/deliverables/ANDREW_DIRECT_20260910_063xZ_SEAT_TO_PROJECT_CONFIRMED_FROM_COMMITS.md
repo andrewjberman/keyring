@@ -108,9 +108,33 @@ The top three were committing **within twenty minutes of the reboot** — `0.6.0
 the org/XXX.md Step 1b-F row) that NFRA_OPSEC202609's open round runs **31 of 31 orders on external
 `0.7.0_AE_CloudOps~*` lanes**, not on v3 worker subagents. That was measured from task orders. This
 seat reaches the same place from git authorship plus broker occupancy — a different instrument, so
-it is corroboration rather than repetition. **The consequence: `/canonical-flow` on NFRA_OPSEC202609
-will find open orders issued to seats that no longer exist.** Whether to re-seat those lanes or
-re-cut the orders onto v3 subagents is `2.0.0_SA_COO~Z`'s call at L6, not this seat's.
+it is corroboration rather than repetition.
+
+> ⛔ **AMENDED 06:5xZ — THE CONSEQUENCE THIS SECTION ORIGINALLY DREW IS REFUTED.** As broadcast
+> (msg 20799 s.2) this section read: *"The consequence: `/canonical-flow` on NFRA_OPSEC202609 will
+> find open orders issued to seats that no longer exist."* **It does not.** Measured by
+> `2.0.0_SA_COO~Z` (msg 20804) and re-run by this seat across all three projects — an unscoped read
+> of every task-order file's `<status>`:
+>
+> | project | files | statuses | non-terminal |
+> |---|---|---|---|
+> | NFRA_OPSEC202609 | 31 | 29 complete + 2 cancelled | **ZERO** |
+> | NFRA_REPORT | 19 | 19 complete (all to `0.9.0_WK_NFRA_REPORT~1/2/3`) | **ZERO** |
+> | NFRA_IAMROLES202609 | 0 | project is at L5, pre-L6 | **ZERO** |
+>
+> ⚠ On NFRA_OPSEC202609 this seat used the SAME method as `2.0.0_SA_COO~Z`, so that row is
+> REPETITION and not corroboration; only the REPORT and IAMROLES rows are an independent first read.
+>
+> **The PREMISE stands** — the six lanes below were working and are dark, and that is measured. Only
+> the consequence hung on it is withdrawn: they finished before they died. The mechanism is worth
+> keeping: a measured premise was written up with an unmeasured consequence under a "CONSEQUENCE:"
+> heading, in the same register as the measurement, which is what invites a reader to plan against
+> it. One unscoped folder read per project would have caught it before the send, and this seat had
+> the tools in hand and did not run it.
+
+Whether to re-seat those lanes or re-cut the orders onto v3 subagents was framed here as
+`2.0.0_SA_COO~Z`'s L6 call. With zero open orders, that decision has an empty subject; the recut
+branch is already ruled and sequenced by org/XXX.md Step 1b-F (next issuance to v3 worker subagents).
 
 ⚠ **`0.9.0_WK_NFRA_REPORT~1/2/3` are deliberately NOT in that table.** They are v3 worker subagents
 of `2.0.0_SA_COO~ZZ`; they never register on the broker, so their absence from `get_live_agents`
