@@ -35,8 +35,8 @@ dropdown pattern as Model Portfolios."*
 all of this in one massive project."* Every id has EXACTLY ONE `ACCEPT OWNER`. **RE-OWNED ~19:3xZ ON HIS SIXTH
 SENTENCE** — *"how that report actually looks and how the modals and etc work are all frontend"* — **the
 outcome is what the advisor sees and does; the machinery underneath is a contribution.** This project now owns
-the grade on every advisor-facing outcome: `FWD-1`, `3`, `4`, `5`, `6`, `8`, `11`, and `FWD-12` (design, at
-Andrew). `IRPT_BCKEND` owns the four machinery outcomes — `FWD-2` enforcement, `FWD-7` freshness, `FWD-9`
+the grade on every advisor-facing outcome: `FWD-1`, `3`, `4`, `5`, `6`, `8`, `11`, and `FWD-12` (design,
+ratified ~19:5xZ). `IRPT_BCKEND` owns the four machinery outcomes — `FWD-2` enforcement, `FWD-7` freshness, `FWD-9`
 ingestion, `FWD-10` construction — and appears here as a CONTRIBUTOR whose data, parity and execution
 obligations are graded inside each outcome's adjudication. Two projects, two decompositions, two task-order
 sets, two adjudications.
@@ -303,8 +303,9 @@ sets, two adjudications.
   FWD-12 The Investor Reporting screens look and behave like the rest of the
          Opal portal, so an advisor who already uses the portal needs no
          re-learning
-         ** NEW -- cut from Andrew ~19:3xZ and the FE brief IV.2 -- AT ANDREW:
-            he named the GAP, not the outcome; yes / no **
+         ** RATIFIED -- Andrew ~19:5xZ, "Yes  agreed to all of this.", after the
+            full block was read back to him. Cut from his ~19:3xZ words and the
+            FE brief IV.2 **
          DONE WHEN  EXERCISED -- an advisor who already uses another portal page
                     has used all three tabs and the export without being shown
                     anything new to learn
@@ -338,13 +339,13 @@ sets, two adjudications.
                     PROOF has a printed denominator to subtract from
 ```
 
-**COUNT: 8 outcomes carried. 6 of 6 ratified ids verbatim; `FWD-11` on his word; `FWD-12` NEW, at Andrew.
+**COUNT: 8 outcomes carried. 6 of 6 ratified ids verbatim; `FWD-11` on his word; `FWD-12` RATIFIED ~19:5xZ.
 ACCEPT owner AFTER THE ~19:3xZ RE-OWN: IRPT_FNTEND 8 (`FWD-1`, `3`, `4`, `5`, `6`, `8`, `11`, `12`),
 IRPT_BCKEND 0 here -- its four machinery outcomes (`FWD-2`, `7`, `9`, `10`) live only in the counterpart.**
 
 ⛔ **CLOSURE, AFTER THE ~19:3xZ RE-OWN (the earlier two-plus-four rule is SUPERSEDED, caught by `3.0.0_SA_CVO`
-194256Z).** IRPT_FNTEND is CLOSED when its SEVEN RATIFIED owned outcomes grade REALIZED, plus `FWD-12` if and
-when Andrew ratifies it -- closure cannot depend on an outcome he has not confirmed. **Five of them cross** (`FWD-3`,
+194256Z).** IRPT_FNTEND is CLOSED when its EIGHT owned outcomes grade REALIZED -- all eight ratified, `FWD-12` last, at
+~19:5xZ. **Five of them cross** (`FWD-3`,
 `4`, `5`, `8`, `11`): each of those grades reads BOTH proof halves — this project's view and IRPT_BCKEND's data,
 parity, entitlement or execution half — and is not complete on the frontend's mock alone. The FE brief's own
 Part V: *"neither can certify the other half with its own mock."*

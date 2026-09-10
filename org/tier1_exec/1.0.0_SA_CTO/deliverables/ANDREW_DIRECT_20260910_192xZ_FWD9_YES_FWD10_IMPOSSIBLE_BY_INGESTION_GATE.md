@@ -134,6 +134,15 @@ WRITTEN and the pipeline IS lossy between brief and worker unless each PRD carri
 brief section to the cell that consumes it, because a worker's face never opens a brief. That obligation now
 binds L4 in writing.
 
+## EIGHTH MESSAGE — VERBATIM AND ENTIRE, at ~19:5xZ, answering "What is FWD-12?" and its full description
+
+> Yes  agreed to all of this.
+
+**`FWD-12` IS RATIFIED.** The description he agreed to is the block as cut in `ENDPOINT_FWD_IRPT_FNTEND_20260910.md`
+@`8cd9771fc3` — outcome, DONE WHEN, ACCEPT, PROOF, owner, and the brief-IV.2 paths — read back to him in full at
+this terminal immediately before his word. Nothing in the block changes; only its status. `IRPT_FNTEND`'s closure
+now counts EIGHT owned outcomes, all ratified.
+
 ## SCOPE
 
 Answers, two new outcomes (`FWD-11` ratified on his word; `FWD-12` at him), an ownership correction, and a coverage obligation on L4. Not a hold.
