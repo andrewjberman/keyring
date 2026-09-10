@@ -350,7 +350,7 @@ directives:
   D9:
     title: "Opal Workflows"
     directive: "docs/architecture/D9_TAX_SMA_OPS_PRD.md"
-    placement: "SITEZ -- RULED (Andrew): whole item, one seat (assess-first recon + SharePoint local-disk leg, zero applies). Kickoff ferries on CVO clearance."
+    placement: "LAPTOP -- MOVED 2026-09-10 ~18:5xZ by Andrew-direct at the 1.0.0_SA_CTO terminal, VERBATIM: \"D9 as a whole is Laptop now, and directives.yaml should be updated accoridngly.\" 'AS A WHOLE' IS HIS PHRASE and he named its consequence himself: the Tax SMA close-out travels with the directive. Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_185xZ_D9_TO_LAPTOP_CLDGRPH_FINISHED_15MIN_RATIFIED.md. SCOPE: he named D9 AND ONLY D9 -- no other directive moves on this word. || SUPERSEDED, PRESERVED VERBATIM: \"SITEZ -- RULED (Andrew): whole item, one seat (assess-first recon + SharePoint local-disk leg, zero applies). Kickoff ferries on CVO clearance.\" -- that ruling was made about the Tax SMA close-out and stood until this word; it is kept because it is why four OPAL_TAXSMA* members were placed where they were, and deleting it would erase the reason. Placement attaches to the DIRECTIVE, never to a member (LD-0498, LD-0502), which is why this is one row and not five."
     members:
       subgroups: []
       projects: [OPAL_TAXSMA, OPAL_TAXROSTER, OPAL_TAXSMA_PT2, OPAL_TAXSMA_REGISTRY]
