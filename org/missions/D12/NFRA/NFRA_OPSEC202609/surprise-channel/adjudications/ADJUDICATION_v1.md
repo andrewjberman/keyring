@@ -1546,3 +1546,39 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S40 -- Z-S173: an ADVANCE THAT EXPIRES -- Z-S151's mechanism is false, its substance still true, and the topic returns to zero subscribers in ~68 hours unless a person outside the fabric clicks
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S40",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T15:52Z",
+    "one_line": "Z-S173 GRADUATES: an ADVANCE THAT EXPIRES. Z-S151's stated MECHANISM ('zero subscribers') is now FALSE while its SUBSTANCE ('a burst reaches NOBODY') is still TRUE -- and if nobody clicks within ~68 hours AWS deletes the subscription and Z-S151 IS RESTORED VERBATIM, with round 3's work undone by EXPIRY rather than by any seat's act. ⛔ AND ITS PROCEDURE FINDING LANDS ON THIS SEAT TOO: reporting '0 UNDISPOSITIONED' as though it meant CLEAN reads one axis and calls it two.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "2.0.0_SA_COO~Z, UNCHANGED from Z-S151 and correctly not reassigned. The disarm condition -- a burst of blocked sign-ins reaching a NAMED HUMAN -- is unchanged and unperformed, and the single remaining act is a confirmation click inside a mailbox no agent on this fabric can reach (0 mailbox-read capabilities across 29,324 files, measured at Z-W2-S1). NOT TAKEN HERE and nothing is asked of any recipient.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S173"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** THE ROW'S CENTRAL MOVE IS TO SEPARATE A MECHANISM FROM A SUBSTANCE, AND IT IS RIGHT TO. *** Z-S151 asserts 'both login-abuse alarms publish to an SNS topic WITH ZERO SUBSCRIBERS, so a burst of blocked sign-ins reaches NOBODY.' The topic now carries EXACTLY ONE subscription of one -- protocol email, endpoint andrew@opalinvest.com, SubscriptionArn the literal string `PendingConfirmation`. ⛔ SO THE COUNT IS NO LONGER ZERO AND THE OUTCOME IS NO BETTER OFF: an unconfirmed email subscription DELIVERS NOTHING. A row whose premise is falsified while its conclusion stands is the hardest kind to file, because both the 'it's fixed' reading and the 'nothing changed' reading are available and both are wrong.",
+        "⛔ AND THE EXPIRY IS WHAT MAKES THIS URGENT WITHOUT MAKING IT A CRISIS. AWS deletes an unconfirmed email subscription after ~72h; subscribe ran 2026-09-10T11:09:54Z, so the window closes ~2026-09-13T11:09:54Z with 67.9 hours left at the row's reading. IF IT LAPSES, THE TOPIC RETURNS TO ZERO SUBSCRIBERS AND Z-S151 IS TRUE AGAIN WORD FOR WORD -- round 3's work undone by expiry rather than by anyone's decision. ⭐ AN ADVANCE THAT REVERTS ON A TIMER IS NOT THE SAME OBJECT AS AN INCOMPLETE ADVANCE, and no existing row carried that distinction.",
+        "THE JOIN IS ONE-DIRECTIONAL AND THE ROW NAMES IT PRECISELY: Z-W2-S1 CITES Z-S151, so the new work points BACK at the old hazard, but NOTHING POINTS FORWARD -- a reader arriving at Z-S151 sees no pointer to round 3's work, the pending state, or the clock. ⭐ THAT IS THIS ESTATE'S BANKED 'nothing joins a landed remedy back to the ARMED row it resolves', arriving with a PARTIALLY landed remedy, which is the worse case: a fully landed remedy at least leaves the world correct while the record lags, whereas here BOTH the record and the world are mid-flight.",
+        "*** THE PROCEDURE FINDING IS WORTH MORE THAN THE ROW, AND THIS SEAT IS NOT EXEMPT FROM IT. *** The filing lane records that it had been reporting 'L10 distance 0 UNDISPOSITIONED of 179' every tick as though it meant the round were CLEAN. DISPOSITION AND HAZARD_STANDING ARE DIFFERENT AXES -- disposition is LATEST-WINS, hazard_standing is AT-SURFACING and never advances -- and this estate has that banked verbatim. ⚠ THIS SEAT HAS LED EVERY REPORT THIS SESSION WITH '0 OPEN'. That is a DISPOSITION-axis claim and it has been carrying more weight in this seat's summaries than it can bear. This seat did measure the other plane separately -- the graduated-to-remediation join at 9 ARMED items, and IAMROLES' join closed to 0 at the round-2 slug -- but THE HEADLINE NEVER CARRIED IT, and a headline is what a reader takes away.",
+        "⭐ AND THE ROW GUARDS AGAINST ITS OWN FINDING BEING OVER-READ, WHICH IS THE PART THAT MAKES IT SAFE TO GRADUATE: 92 of 218 rows read ARMED at surfacing and 75 name 2.0.0_SA_COO~Z, and the row states in terms that THIS IS NOT 75 LIVE OBLIGATIONS -- most were disarmed long ago by the acts they asked for, and reading an ARMED row as a live hazard is the exact error that produced this project's OP3-s-3 defect SIX DAYS AFTER its remedy had landed. A census that names the wrong way to read itself is rarer than one that is merely correct.",
+        "SCOPE, AS THE ROW STATES IT AND THIS SEAT CONFIRMS: it does NOT disarm Z-S151 (the condition is a burst reaching a named human and that has not happened); does NOT re-grade anything or change any status -- TO-OP3-S-2 stays `staged` under msg 20950's ruling, whose two pre-authorised triggers (window lapses, or Andrew declines) have BOTH NOT FIRED; and does NOT touch FWD-15, which Z-S151 itself excluded. Filed as a NEW ROW rather than an edit because the channel is append-only and per-row immutable -- the correct handling, and the same one Z-S9 and Z-S11 used for frozen material."
+      ]
+    },
+    "spec_asserts": "Z-S151, still ARMED: both login-abuse alarms publish to an SNS topic WITH ZERO SUBSCRIBERS.",
+    "world_is": "The topic carries exactly one subscription, to the C-20 recipient, in PendingConfirmation state -- so zero-subscribers is false, nobody-is-told is still true, and the endpoint self-deletes in about 68 hours unless a human outside this fabric clicks.",
+    "notes": "⛔ THIS ROW SHARPENS WHAT THIS SEAT HAS BEEN REPORTING AS THE ROUND-3 BLOCKER RATHER THAN CHANGING IT. This seat has said the slug is blocked on TO-OP3-S-2's SNS confirmation; Z-S173 adds that the blocker is not merely unmet but PERISHABLE, and that its lapse would silently restore a hazard rather than merely leave one open. ⭐ THE OPERATIONAL DIFFERENCE IS REAL: an unmet blocker can wait; a REVERTING one has a deadline, and the deadline belongs to a person outside the fabric. || NOTHING IS ASKED. 1.0.0_SA_CTO~Z holds the ask with Andrew (msg 20950, REC (a) ADOPTED) and lists the SNS click among three gates in its own standing summary, so this is a record and not an escalation."
+  }
+]
+```

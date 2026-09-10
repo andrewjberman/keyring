@@ -555,3 +555,39 @@ passed") instead of running the census, and a hedge is not a measurement.**
   }
 ]
 ```
+
+## C-S15 -- Z-W2-S7: the Z-S19 class one layer down -- AC4 passes in AGGREGATE while 7 of 10 mapped sections discriminate NOTHING, and the worker refused the change that would have scored 10-for-10
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-C-S15",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T15:52Z",
+    "one_line": "Z-W2-S7 GRADUATES AND IT IS THE Z-S19 CLASS ARRIVING ONE LAYER DOWN, CAUGHT BY THE WORKER BEFORE ANY GRADER SAW IT: AC4 PASSES IN AGGREGATE while SEVEN of TEN mapped sections contribute NO discrimination at all. ⭐ AND THE WORKER REFUSED THE CHANGE THAT WOULD HAVE MADE ITS OWN CRITERION SCORE 10-FOR-10, because that change would have been LESS honest against the real collector -- choosing a worse-looking number over a worse instrument.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "GRADUATED",
+    "disarm_owner": "NONE, AND CORRECTLY SO. The row asks no remedy, threatens no deployed behaviour (the fixture is a test instrument; the real collector always supplies the real field names `edition_rows.py` reads), and its whole function is to bound how a later reader may quote AC4's PASS. An INERT row that exists to prevent an over-reading needs no owner -- it needs to be READ, which is what graduating it into the record does.",
+    "adjudicates": [
+      "NFRA_REPORT-Z-W2-S7"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** THIS IS Z-S19'S CLASS ONE LAYER DOWN, AND THE SAME SENTENCE COVERS BOTH. *** Z-S19 found EIGHT outcomes graded REALIZED against a bar their artifact could not meet, because the grading pass read the ACCEPT paragraph and not the DONE WHEN. Here AC4 diffs the JSON-serialized WHOLE ROW LIST and is satisfied because THREE sections differ -- so the aggregate PASS is TRUE while the per-section reality is 3 of 10. ⛔ THE DISTANCE BETWEEN WHAT A PASS SHOWS AND WHAT A READER TAKES IT TO MEAN IS THE DEFECT IN BOTH CASES; only the grain moved, from an outcome's bar to a criterion's aggregation.",
+        "AND THE MEASUREMENT IS PER-SECTION WITH ITS DENOMINATOR PRINTED, which is what makes it a finding rather than an impression: lambda_health, smartx_pipeline and cost_depth each read OK-run=OK / BREACH-run=BREACH, DIFFERS=True; data_freshness, deploy_drift, producer_drift, sns_egress, graph_head, contract_integrity and security_sweep ALL read UNASSERTED in BOTH runs, DIFFERS=False. 3 of 10, not 10 of 10. The three OMITTED sections (aws_costs, ai_analysis, openai_cost) are omitted BY DESIGN and the row separates them rather than folding them into the seven.",
+        "⛔ THE CAUSE IS A SHAPE MISMATCH THE FIXTURE CANNOT EXPRESS, AND IT WAS READ AT SOURCE RATHER THAN INFERRED: the AC4 fixture builds all thirteen sections from ONE generic dict `{status, probe, functions_with_errors}`, while the real `lambda_function.py` returns `overall_status` for SIX of the seven (check_data_freshness :580, check_deploy_drift :817, check_producer_drift :953, check_sns_egress :1070, check_graph_head :1752, check_contract_integrity :1838) and `critical_issues`/`high_issues`/`medium_issues`/`low_issues` for check_security_sweep (:1429-1432). NEITHER FIELD NAME EXISTS IN THE FIXTURE, so those seven read UNASSERTED correctly -- the module is right and the instrument is narrow.",
+        "*** THE REFUSAL IS THE BEST THING IN THIS ROW AND IT IS THE PART TO CARRY. *** Making the seven extractors fall back to the fixture's generic `status` key would have made AC4 discriminate 10-FOR-10 against this fixture -- a better-looking criterion result -- WHILE BEING LESS HONEST AGAINST THE REAL COLLECTOR OUTPUT, since the real sections do not key on `status`. ⭐ THE WORKER TOOK THE WORSE NUMBER AND THE BETTER INSTRUMENT, and cited the estate's own 'axis2 not defaulted to OK' precedent for it. That is the exact inverse of the pressure C-S9 identified in Z-W6-S3, where a criterion that FAILS ON HONESTY pushes a worker toward trimming evidence; here a criterion that would REWARD a dishonest fallback was declined.",
+        "AND THE ROW WAS ANTICIPATED BY ITS OWN TASK ORDER, WHICH IS WHY IT IS AN OBSERVATION AND NOT A FAILURE: RP-s-22's TO stated the risk in advance -- 'the fixture is an instrument, and an instrument that disagrees with the world is exactly what this project exists to catch' -- and named a real-shape mismatch as a finding worth a surprise row. ⭐ A CELL THAT PREDICTS ITS OWN INSTRUMENT'S LIMIT AND THEN A WORKER THAT MEASURES IT IS THE CHANNEL WORKING AS DESIGNED, and the module's own docstring already carries the DECLARED LIMIT citing this row id before the row was even adjudicated.",
+        "⚠ THE BOUND THE ROW EXISTS TO SET, AND THIS SEAT ADOPTS IT VERBATIM FOR THE ROUND'S GRADING: AC2/AC3/AC4's PASS may NOT be quoted as '13 of 13 sections proven to discriminate real state'. The measured, grounded claim is '3 of 10 mapped sections proven to discriminate against THIS fixture; the other 7's discrimination against REAL collector output is UN-EXERCISED by any criterion in this TO and remains to be proven live.' ⛔ THAT PROOF LANDS AT RP-s-23, whose deployment is the first time these extractors meet real collector output -- so this row is also a live acceptance condition for the cell that follows it, not merely a footnote on the cell that filed it."
+      ]
+    },
+    "spec_asserts": "RP-s-22's AC2/AC3/AC4 assert coverage, reasoned omissions, and that the mapped row set DIFFERS between an all-OK and an all-BREACH synthetic report.",
+    "world_is": "All three hold, and the aggregate DIFFER=True is carried by three of ten mapped sections while the other seven read UNASSERTED in both runs because the fixture never populates the field they key on.",
+    "notes": "⛔ NOT A DEFECT AGAINST THE MODULE'S STATED SPEC AND THIS SEAT IS EXPLICIT ABOUT IT, because an INERT row about a passing criterion is exactly the kind a later reader mistakes for a failure: AC2/AC3/AC4 all genuinely PASS, coverage is 13 of 13 with 0 omissions lacking a reason, and `edition_rows.py` behaves correctly by refusing to invent a value for a field the input does not carry. ⭐ THE FINDING IS ABOUT WHAT THE PASS PROVES, NOT ABOUT WHETHER IT IS EARNED. || THIS CONNECTS FORWARD RATHER THAN BACKWARD: it does not reopen the eight re-graded outcomes or touch FWD-13/14/15's bars, but it names the first thing RP-s-23's deployment will actually exercise for the first time."
+  }
+]
+```
