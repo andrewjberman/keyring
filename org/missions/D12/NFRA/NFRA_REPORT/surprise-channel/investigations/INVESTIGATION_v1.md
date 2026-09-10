@@ -408,6 +408,28 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
     "spec_asserts": "TO-RP-s-13's BOUNDS: 'Two live surfaces are known to have no ratified group today: opal-gateway and canonical-schwab-si2. Render them UNGROUPED rather than assigning them.'",
     "world_is": "The PRD this cell also depends on (NFRA_REPORT_PRD.md) was bumped to v0.6 folding a later Andrew-direct ruling that canonical-schwab-si2 is attributed to Dashboard, and states in its own words that no cell may render it ungrouped. Only opal-gateway remains a live surface with no ratified group as of this build.",
     "notes": "NOT a defect in the decomposition or the issuer's process -- the PRD amendment (v0.4 to v0.6) landed on the SAME 2026-09-09 session this cell was issued in, and this is the ordinary case of a cell re-grounding its premises against live state before building rather than against the text frozen at issuance. ATTRIBUTION.md (this cell's deliverable) renders canonical-schwab-si2 attributed to Dashboard and renders opal-gateway UNGROUPED, per the live PRD. Nothing here is ARMED: the correct answer is already ruled and cited, and no future actor needs to disarm anything -- this row exists so a reader of the BOUNDS text alone is not misled into thinking si2 should still render UNGROUPED."
+  },
+  {
+    "id": "NFRA_REPORT-Z-S8",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZZ",
+    "surfaced_at": "2026-09-10T02:17:34Z",
+    "one_line": "ALL SEVEN round-2 task orders name deliverables/0.9.0_WK_NFRA_REPORT~1/ as the deliverable folder and inside every criterion invocation, regardless of which worker serial <issued_to> names -- so RP-s-13 (issued to ~2) and RP-s-14 (issued to ~3) both wrote into a folder named for ~1, and the deliverables tree no longer identifies which worker produced which artifact.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured at 2026-09-10T02:1xZ by parsing all 7 round-2 order files: <issued_to> is ~1 for RP-s-15/16/18, ~2 for RP-s-13/19, ~3 for RP-s-14/17 -- while the set of deliverables/0.9.0_WK_NFRA_REPORT~<n>/ paths referenced in each file is {~1} for all 7 of 7.",
+        "org/missions/D12/NFRA/NFRA_REPORT/task-orders/NFRA_REPORT.TO-RP-s-13.attribution-axis-and-ungrouped.md: <issued_to>0.9.0_WK_NFRA_REPORT~2</issued_to> with all three criteria invoking against deliverables/0.9.0_WK_NFRA_REPORT~1/ATTRIBUTION.md.",
+        "Landed artifacts at merge 63efc53452 (RP-s-13, worker ~2) and c2a582b17d (RP-s-14, worker ~3) both sit under deliverables/0.9.0_WK_NFRA_REPORT~1/."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The /dispatch L6 cut treats deliverables/<serial>/ as the per-worker write surface the tree convention grants WITHOUT an explicit <paths> entry -- i.e. the folder name identifies the worker that authored what is in it.",
+    "world_is": "The folder name identifies the SLOT THE ISSUER HAPPENED TO WRITE FIRST, not the author. Two of two drained round-2 cells have already landed deliverables under a serial that did not produce them. No worker was ever REFUSED, because each order's <paths> grants 'org/missions/D12/NFRA/NFRA_REPORT/deliverables/' as a directory prefix rather than a per-serial folder -- so the wide grant is exactly what kept a record defect from surfacing as a lane refusal.",
+    "notes": "THE MECHANISM IS THE POINT AND IT IS RULE 22'S SHARED-DEPENDENCY CLAUSE: all seven orders were emitted by ONE generator, so the defect lives in what the members SHARE. Every per-order check passed -- gate, coverage, criterion grammar, proof-of-spec on two drained cells -- because each arm was scoped to a member. It was found only by asking what the members have in common and reading <issued_to> against the deliverable path ACROSS the set. NOT REMEDIATED MID-ROUND, deliberately: mid-round the issuance is FROZEN, RP-s-14 is already merged with its criteria pinned to the ~1 path, and rewriting the five open orders would split one round across two conventions and invalidate a merged cell's criteria. The harm is record attribution only -- no worker is blocked and no criterion mis-grades -- so the correct act is a row now and a fix at the next cut, not a mid-round edit. Round 3's cut derives the deliverable folder FROM <issued_to> instead of from a literal."
   }
 ]
 ```
