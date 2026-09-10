@@ -113,7 +113,7 @@ Every invocation runs under `timeout 120`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>complete</status>
 <round>2</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>
