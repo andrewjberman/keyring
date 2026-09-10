@@ -591,3 +591,39 @@ passed") instead of running the census, and a hedge is not a measurement.**
   }
 ]
 ```
+
+## C-S16 -- Z-S24: ANDREW READ THE EDITION AND IT FAILS. FWD-15 is FAILED on its own bar, the discriminator is the READER, and this is the EXERCISED bar earning its keep four hours after the re-grade
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-C-S16",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T18:34Z",
+    "one_line": "⛔ Z-S24 GRADUATES AND IT IS THE MOST CONSEQUENTIAL ROW THIS SEAT HAS ADJUDICATED TODAY: ANDREW READ THE DELIVERED EDITION AND IT FAILS. 'I look at it and have no idea what it is supposed to mean'; 'we are lacking cost data, we are lacking so many fields the old version had.' ⭐ AND THIS IS THE `EXERCISED` BAR EARNING ITS KEEP AT THE EXACT MOMENT IT EXISTS FOR -- FWD-15's discriminator IS THE READER, the reader is Andrew, and every mechanical criterion in the round PASSED while the outcome failed.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "2.0.0_SA_COO~ZZ at L5, unchanged from the row and correctly placed: the row-shape decision is an L5 act and the remedy is a re-decomposition, not a code fix. NOT TAKEN HERE. ⚠ AND THE DISARM CONDITION IS A READER, NOT A TEST: FWD-15's bar is 'nothing a reader relies on today disappears', so only a reader can discharge it -- the same asymmetry that made this failure invisible to seven green criteria.",
+    "adjudicates": [
+      "NFRA_REPORT-Z-S24"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** THIS IS THE VINDICATION OF Z-S19 AND IT ARRIVED FASTER THAN ANYONE EXPECTED. *** Z-S19 (filed 14:18Z, upheld @b75e35f36e) established that EIGHT outcomes were graded REALIZED against `EXERCISED` bars their artifact could not meet, and the transferable form was A BAR THAT SAYS 'EXERCISED' DOES NOT ENFORCE ITSELF. FWD-13/14/15 were then written as EXERCISED bars precisely so the question could not be absent again. ⛔ THE FIRST REAL EXERCISE FAILED, AND IT FAILED ON EXACTLY THE THING NO MECHANICAL CRITERION COULD SEE. Four hours separate the re-grade from the proof that the re-grade was necessary.",
+        "⛔ THE ROOT CAUSE IS AN L5 SHAPE DECISION AND THE ROW NAMES IT AGAINST ITSELF: the specimen's row shape carries `(state, delta)` AND NOTHING ELSE, so every section was flattened to a status label plus scalars and two were dropped entirely. The decomposition called the join 'one substitution ... the same row shape' AND NEVER ASKED WHETHER THAT SHAPE COULD CARRY WHAT THE OLD REPORT CARRIED. ⭐ THE SUBSTITUTION WAS PERFORMED EXACTLY AS SPECIFIED AND THAT IS THE PROBLEM -- a correct execution of an under-sized spec produces a correct artifact that fails its outcome.",
+        "*** AND C-S15's Z-W2-S7 PREDICTED THE SHAPE OF THIS FOUR HOURS EARLY, WHICH IS WHY IT MATTERED THAT IT WAS FILED. *** That row measured that AC4 passes IN AGGREGATE while SEVEN OF TEN mapped sections discriminate nothing, and bounded its own PASS: 'the other 7's discrimination against REAL collector output is UN-EXERCISED by any criterion in this TO and remains to be proven live.' It named RP-s-23's deployment as the first real test. ⛔ THE DEPLOYMENT HAPPENED AND THE UN-EXERCISED HALF IS WHERE THE CONTENT WENT MISSING. A worker's bound on its own passing criterion turned out to be the round's actual risk register.",
+        "⭐ FWD-15 IS FAILED ON ITS OWN BAR AND THIS SEAT SAYS SO PLAINLY RATHER THAN SOFTENING IT: 'nothing a reader relies on today disappears', EXERCISED against the old edition. The reader relies on cost data and on fields the old version had; both are gone; the reader says so in his own words. ⛔ THE DISCRIMINATOR IS THE READER, NOT THE CODE, and no green criterion is evidence against a reader who cannot read the output. This is the same structure as S2-AC4 on the sibling project -- a criterion that correctly reports an unmet state is not converted by anything else passing.",
+        "⚠ WHAT IS NOT CLAIMED, so the round is not written off: the port itself is sound engineering and the mechanical criteria were honestly met -- coverage 13 of 13, omissions reasoned, the aggregate row-set discriminating, the deploy path respected. NOTHING HERE SAYS THE CELLS FAILED. It says the SHAPE they were told to fill was never sized for the job, which is an L5 finding and is where the row correctly puts it.",
+        "⭐ AND THE ESTATE-LEVEL LESSON IS THE ONE WORTH CARRYING PAST THIS PROJECT: A SPECIMEN PROVES A FORMAT CAN BE RENDERED; IT CANNOT PROVE THE FORMAT IS SUFFICIENT. The specimen was verified against real round-1 findings and every outcome was satisfiable by it -- which is precisely why nobody asked whether the shape could hold a real day's content. THE THING A SPECIMEN IS BEST AT DEMONSTRATING IS THE THING IT IS WORST AT TESTING."
+      ]
+    },
+    "spec_asserts": "The round-4 decomposition asserts the join is 'one substitution ... the same row shape', and FWD-15's DONE WHEN is EXERCISED -- nothing a reader relies on today disappears.",
+    "world_is": "The substitution was performed as specified and the delivered edition loses most of the old report's content; the named reader read it and could not use it.",
+    "notes": "⛔ NO SLUG IS CUT AND NFRA_REPORT CANNOT REACH L10: two orders read `open` on an unscoped census, and this row is ARMED with a live L5 owner. || ⭐ THE ROUND DID ITS JOB EVEN THOUGH THE OUTCOME FAILED, and both facts belong in the record: the project's whole purpose was to make a report a person can act on, and the first time a person acted on it the failure was VISIBLE, ATTRIBUTED AND FILED WITHIN THE HOUR. A round that ships a defect and surfaces it is not the same as one that ships a defect."
+  }
+]
+```

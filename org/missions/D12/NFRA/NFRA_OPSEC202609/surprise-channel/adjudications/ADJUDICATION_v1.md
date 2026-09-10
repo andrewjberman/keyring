@@ -1653,3 +1653,41 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S43 -- Z-S176/Z-S177/Z-W4-S1: the issuing lane made and self-corrected THIS SEAT'S OWN C-S41 ERROR independently in the same hour, and a grant that could not reach its own criteria is discharged BY EXERCISE
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S43",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T18:34Z",
+    "one_line": "ALL THREE GRADUATE. ⭐ Z-S176 IS THE ISSUING LANE MAKING AND SELF-CORRECTING THE IDENTICAL ERROR THIS SEAT MADE AT C-S41 -- a project-level predicate scoped to one round's glob -- INDEPENDENTLY AND IN THE SAME HOUR. And Z-W4-S1/Z-S177 are a finding and its exercised discharge: an order's `<paths>` grant could not reach the artifact its own criteria required editing, the grant was amended, and the disarm is confirmed BY THE SUCCESSOR WRITING THOSE FILES rather than by the edit.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "PER-ROW. Z-W4-S1 -> 2.0.0_SA_COO~Z and ITS CONDITION IS MET (see Z-S177); Z-S176 and Z-S177 are INERT and name none. ⚠ THE DISARM IS DECLARED HERE AND RECORDED WHEN THIS PROJECT'S SLUG CUTS -- which it cannot yet, because TO-OP3A-S-1 is still `staged` on an unscoped read.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S176",
+      "NFRA_OPSEC202609-Z-S177",
+      "NFRA_OPSEC202609-Z-W4-S1"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** Z-S176 IS TWO SEATS REACHING THE SAME ERROR AND THE SAME CORRECTION WITHOUT COORDINATING, WHICH IS WHAT MAKES IT A CLASS RATHER THAN TWO MISTAKES. *** 2.0.0_SA_COO~Z declared the round-3 slug cuttable at 16:10Z while an order IT HAD COMMITTED FOUR MINUTES EARLIER sat `staged`; the check behind it was `for f in task-orders/*OP3-*`, A GLOB THAT EXCLUDES `OP3A` BY CONSTRUCTION. This seat made the identical error at C-S41 at 16:38Z with the glob `*OP3-S-*` and corrected it at C-S42 (@c9c6600e95). ⛔ SAME PREDICATE, SAME PROJECT, SAME HOUR, TWO SEATS, NEITHER READING THE OTHER. The row names this seat's correction and calls it right to have made it.",
+        "⭐ AND THE ROW GOES FURTHER AGAINST ITSELF THAN THIS SEAT'S DID, WHICH IS WORTH RECORDING: the excluded order was one THAT LANE HAD COMMITTED ITSELF, four minutes before the claim. A filter that hides your own most recent act is the hardest kind to notice, because the act is fresh in mind and therefore feels accounted for. THE TRANSFERABLE FORM STANDS FOR BOTH OF US: **A PROJECT-LEVEL PREDICATE CANNOT BE DISCHARGED BY A ROUND-SCOPED CENSUS**, and the one-command self-check is to re-run unfiltered and compare denominators -- 35 against 3 here, a gap no reading of the smaller number survives.",
+        "Z-W4-S1 IS A CLEAN LANE-BOUNDARY FINDING AND ITS MEASUREMENT IS EXACT: S3A-AC4/AC5 demand the diff of `otp-liveness.tf` AND ANY SOURCE FILE IT PACKAGES, but both callers' credential logic lives entirely in the packaged Python -- `otp-liveness.tf:12` packages `../../lambda/m365-otp-liveness/lambda_function.py` and `ms-ingest.tf:23` packages `../../lambda/m365-ms-ingest-liveness/lambda_function.py` (2 of 2 `source_file` references) -- while a `--name '*.py'` census over the GRANTED directory returns 0 hits across 28 files. ⛔ THE ORDER'S OWN CRITERIA REQUIRED EDITING AN ARTIFACT ITS OWN `<paths>` REFUSED, and per `.owned-paths.yaml:45-47` a path the order does not name is a lane refusal. The criteria were unsatisfiable by a compliant worker.",
+        "*** Z-S177 IS THE DISCHARGE AND IT IS CONFIRMED BY EXERCISE RATHER THAN BY THE EDIT, WHICH IS THE DISTINCTION THIS ESTATE KEEPS HAVING TO RELEARN. *** The grant now carries both Lambda directories at `@775e6cf20a` -- that is the EDIT. The EXERCISE is that slot ~5, seated on the amended face, HAS MODIFIED BOTH `lambda_function.py` FILES plus `ms-ingest.tf` and rebuilt both `.build` zips -- work that was mechanically impossible under the old grant. ⭐ A GRANT IS NOT PROVEN BY ITS TEXT BUT BY A WRITE THAT LANDS, and this row waited for the write.",
+        "⚠ AND Z-S177 IS THE FORWARD JOIN THIS ESTATE HAS TWICE MEASURED AS MISSING. Z-S173 recorded that `Z-W2-S1` cited `Z-S151` so the new work pointed BACK at the old hazard while NOTHING POINTED FORWARD. Here the forward pointer EXISTS: a row filed specifically to say 'the condition the earlier row named is met, and here is the exercise'. ⭐ THAT IS THE GAP CLOSING BY PRACTICE RATHER THAN BY A TOOL CHANGE, and it is the second time today a lane wrote the join voluntarily.",
+        "SCOPE: none of the three reopens a round or regrades an outcome. Z-S176 is INERT and explicitly claims nothing beyond the correction; Z-W4-S1's remedy is already performed; Z-S177 records it."
+      ]
+    },
+    "spec_asserts": "TO-OP3A-S-1's criteria require diffing the packaged source files, and its <paths> grant named only the terraform module; and the round-3 L10 precondition holds that every task order under the project is terminal.",
+    "world_is": "The packaged Python lay outside the grant until it was amended, and the project's order census reads 35 with one still staged -- so the precondition is unmet and was unmet when two seats independently declared otherwise.",
+    "notes": "⛔ THIS PROJECT STILL CANNOT CUT ITS SLUG AND THIS ROW DOES NOT CHANGE THAT: `TO-OP3A-S-1` reads `staged` on an unscoped sweep of all 35 orders, so Andrew-direct LD-0521 -- 'we do not route until the job is over' -- still binds. ⭐ THE SLUG IS BUILT AND PARKED OUTSIDE THE REPO (C-S42) AND WILL BE RE-CUT FROM A FRESH CENSUS, NOT RESTORED, because the census has already moved twice since it was built."
+  }
+]
+```
