@@ -1,8 +1,8 @@
 {
-  "generated_scope": 5,
-  "with_prd": 3,
+  "generated_scope": 13,
+  "with_prd": 11,
   "no_prd": 2,
-  "scope_note": "D0 pre-tree sweep, Andrew-direct 2026-09-09 ~22:4xZ: NFRA_COMPTOOLS, NFRA_DEPLOYLEDGER, NFRA_TORECORD (replaces the 2026-07-09 25-project sweep in this file; that sweep stays in git history) | D1 added 2026-09-10 ~00:2xZ on Andrew's word: D1_CATVIEWS, D1_NAMEDISCOVERY",
+  "scope_note": "D0 pre-tree sweep, Andrew-direct 2026-09-09 ~22:4xZ: NFRA_COMPTOOLS, NFRA_DEPLOYLEDGER, NFRA_TORECORD (replaces the 2026-07-09 25-project sweep in this file; that sweep stays in git history) | D1 added 2026-09-10 ~00:2xZ on Andrew's word: D1_CATVIEWS, D1_NAMEDISCOVERY | D2 added 2026-09-10 ~01:4xZ: the eight active D2 members (cross-checked against the CRO's 09-01 member-set index @c236b6ffdb)",
   "results": [
     {
       "code": "NFRA_COMPTOOLS",
@@ -179,6 +179,181 @@
       "registry_mismatch": "dep_stage ROUND_CLOSE is right; the record was two stages stale until the 09-03 sweep and still says the close is a card at Andrew",
       "undocumented_activity": [],
       "rec": "MARK CLOSED (complete). Under the manual-trigger rule the certified round-1 exercise on real partner names IS the smoke; if Andrew wants to see it, one manual run of the matcher over today's partner constituent names with its provenance column is a five-minute act by the DS lane, not a round. No re-home."
+    },
+    {
+      "code": "ADVI_PERFRP",
+      "completeness_pct": 60,
+      "completeness_label": "IN-PROGRESS",
+      "status": "assessed",
+      "items": [
+        {
+          "item": "per-client performance attribution + reporting on the account -> client -> advisor -> firm spine, a Books tab comparable to the Black Diamond performance report",
+          "verdict": "PARTLY LANDED",
+          "evidence": "5 orders: 2 COMPLETE, R1-DE (the shared portal contract) and R1-AE (the publisher) ACTIVE, R2-DS (_read_gold defeats the port) PENDING; the publish-seven never-widen ledger CANCELLED tonight (zero writes); a live regression behind Andrew's DEV screenshot with three causes measured 08-31"
+        }
+      ],
+      "missing": [
+        "the portal contract and the publisher unfinished; the served performance surface not exercised on a scheduled fire",
+        "the HOME of client-level performance reporting is the first question of the D9 Investor Reporting endpoint (Andrew ~21:0xZ: the whole function goes under D9)"
+      ],
+      "registry_mismatch": "active / EXECUTING is right; the 08-28..08-31 phase text is the last measurement",
+      "undocumented_activity": [],
+      "rec": "FOLD INTO D9 INVESTOR REPORTING at its L2/L3 as the product-1 (performance reporting) prior -- no separate D2 tree project; its landed orders and its live regression travel as facts into that endpoint (behind Andrew's transcript)."
+    },
+    {
+      "code": "ADVI_49F",
+      "completeness_pct": 95,
+      "completeness_label": "MOSTLY-COMPLETE",
+      "status": "assessed",
+      "items": [
+        {
+          "item": "the 49F canonical runner chain: TWR-engine defect remediation (in-kind zero-flow root cause, NNA sign fix), the P14 backfill vehicle",
+          "verdict": "LANDED",
+          "evidence": "19 of 20 orders COMPLETE; P14 campaign 534 of 534 (ledger pin 9dd522c50d)"
+        },
+        {
+          "item": "c02 gross-leg re-emit / retire capability",
+          "verdict": "QUEUED",
+          "evidence": "c02-REEMITRETIRE PENDING at 0.7.0_AE_CloudOps~L since 08-30 (seat dead since 09-05)"
+        }
+      ],
+      "missing": [
+        "the 09:46Z gold-chain fire RACES the fact_acc silver write (row ADVI_INSURE-S13, routed 09-03): the schedule must follow its input, in the manual-trigger form",
+        "c02 re-emit / retire"
+      ],
+      "registry_mismatch": null,
+      "undocumented_activity": [],
+      "rec": "INTEGRATE as a D2 tree project on the laptop, MERGED WITH ADVI_BDPARITY (the engine and its parity harness are one story: our 49F numbers match Black Diamond's); round 1 = the fire/silver race + c02, DONE WHEN exercised on a scheduled fire."
+    },
+    {
+      "code": "ADVI_BDPARITY",
+      "completeness_pct": 45,
+      "completeness_label": "IN-PROGRESS",
+      "status": "assessed",
+      "items": [
+        {
+          "item": "the check-our-work harness: our canonical performance outputs vs BD's, classified EXACT / EXACT-SHIFTED / TIGHT / LARGE / MIX",
+          "verdict": "PARTLY LANDED",
+          "evidence": "P1-PROBE COMPLETE 5 of 5; P2-CENSUS ACTIVE (the plan graded PASS; a 2-4 h run); T1-ORACLE and T2-DIMS ACTIVE; P3-EXACT (the drive-to-EXACT loop) PENDING"
+        }
+      ],
+      "missing": [
+        "the full-population census run and read",
+        "the book tie-out oracle and the portfolio-group dims",
+        "the drive-to-EXACT loop on the engine"
+      ],
+      "registry_mismatch": null,
+      "undocumented_activity": [],
+      "rec": "INTEGRATE, merged into the ADVI_49F tree project as its acceptance harness (round 2: census -> EXACT)."
+    },
+    {
+      "code": "ADVI_INSURE",
+      "completeness_pct": 65,
+      "completeness_label": "IN-PROGRESS",
+      "status": "assessed",
+      "items": [
+        {
+          "item": "BD insurance-endpoint snapshot -> bronze/silver under opal-data-assets -> light additive gold in 49financial",
+          "verdict": "LANDED (backend near-live)",
+          "evidence": "5 of 8 orders COMPLETE; the CRO's 09-01 brief: backend near-live, frontend at zero"
+        },
+        {
+          "item": "the act that makes the insurance surface live + the 09:46Z fire ordering",
+          "verdict": "STRANDED",
+          "evidence": "TO-H2-AE and TO-H3-AE PENDING at 0.7.0_AE_CloudOps~U; deploy ledger: advi-insure-gold-chain-membership OPEN 156 h past-window stranded at L4 (author ~R, dead 09-05); advi-insure-iam-insurance-silver-read OPEN 201 h past-window stranded at L4"
+        }
+      ],
+      "missing": [
+        "two half-landed deploys to finish or roll back by measuring the artifact (NEVER-2), the first act of any round",
+        "the frontend (zero)",
+        "the landing of the gold/platinum planes (TO-R1-DS pending)"
+      ],
+      "registry_mismatch": "active / EXECUTING is right; every open order sits at a seat dead since the 09-05 crash",
+      "undocumented_activity": [],
+      "rec": "INTEGRATE as a D2 tree project on the laptop; round 1 opens with the two stranded ledger legs (finish or roll back on the artifact), then the served surface; DONE WHEN the insurance snapshot shows on the portal from a scheduled fire."
+    },
+    {
+      "code": "OPAL_ADVIPOINTERS",
+      "completeness_pct": 62,
+      "completeness_label": "IN-PROGRESS",
+      "status": "assessed",
+      "items": [
+        {
+          "item": "one traceable path from vendor bytes to the portal, single-homed producers, legacy routes decommissioned LAST (P1-P5 per firm)",
+          "verdict": "PARTLY LANDED",
+          "evidence": "13 of 21 orders COMPLETE; 49F: P3-CLOSE, P4-REPOINT (portal firm-config), P4-PUBIAM, P4-PROMOTE (PROD), P5-TEARDOWN PENDING since 08-18; P4-PINS-CERT ACTIVE at the CVO; INF-ONEWRITER and R-WATCH ACTIVE"
+        }
+      ],
+      "missing": [
+        "the 49F repoint -> promote -> teardown chain (a port with a retirement), each a never-widen act",
+        "dep_stage is None on the register row -- off the enum; a register defect to fix at re-home",
+        "the owner's own 08-29 disclosure: every milestone date 6-10 days past"
+      ],
+      "registry_mismatch": "dep_stage None (not on the six-value enum)",
+      "undocumented_activity": [],
+      "rec": "INTEGRATE as a D2 tree project on the laptop -- the pattern program that the 49F and INSURE served-plane acts reference; round 1 = P3-close -> P4 repoint/promote/IAM -> P5 teardown last, with ADVI_COTKEY's remedy (re-key Cottonwood by Portfolio Group) as one of its rows."
+    },
+    {
+      "code": "ADVI_STITCH",
+      "completeness_pct": 40,
+      "completeness_label": "IN-PROGRESS",
+      "status": "assessed",
+      "items": [
+        {
+          "item": "Phase A: the BD history we hold classified and the scope set declared",
+          "verdict": "LANDED",
+          "evidence": "TO-A1-DS delivered + certified 08-26; TO-A1-AE COMPLETE"
+        },
+        {
+          "item": "Phase B: migrate the BD history into opal-data-assets and classify",
+          "verdict": "NOT STARTED, correctly",
+          "evidence": "the register and the CRO's brief: Phase B waits on Phase A close + the Fidelity ingestion (finding 1), which no project owns"
+        }
+      ],
+      "missing": [
+        "Phase B, gated on a Fidelity ingestion that is not a registered project"
+      ],
+      "registry_mismatch": "active / EXECUTING while nothing is executing: Phase A is done and Phase B has no cut",
+      "undocumented_activity": [],
+      "rec": "CLOSE as PHASE-A COMPLETE; Phase B RE-REGISTERS as its own project when the roadmap names the Fidelity ingestion -- under the no-waiting rule an open project with nothing to cut is a wait dressed as a project."
+    },
+    {
+      "code": "ADVI_COTKEY",
+      "completeness_pct": 100,
+      "completeness_label": "COMPLETE",
+      "status": "assessed",
+      "items": [
+        {
+          "item": "the investigation: how Cottonwood's ADVI is keyed today and what the key of record should be",
+          "verdict": "ANSWERED",
+          "evidence": "PRD + atom decomp; Andrew's ruling 2026-08-26 ~20:39Z (key of record = Portfolio Group, BD template 270648, value = advisor, No Advisor = explicit unassigned book); the CRO's 09-01 brief: investigation ANSWERED, remedy unscoped; 0 orders ever cut"
+        }
+      ],
+      "missing": [
+        "the REMEDY (re-key Cottonwood's ADVI by Portfolio Group) is unscoped -- it belongs to the project that owns Cottonwood's canonical path, not to an investigation"
+      ],
+      "registry_mismatch": "active / DECOMP for an investigation that answered its question three weeks ago",
+      "undocumented_activity": [],
+      "rec": "MARK CLOSED (the question is answered, by Andrew's own ruling); the remedy becomes one row in the OPAL_ADVIPOINTERS tree project's round."
+    },
+    {
+      "code": "ADVI_ROSTERCOLS",
+      "completeness_pct": 0,
+      "completeness_label": "NOT-STARTED",
+      "status": "assessed",
+      "items": [
+        {
+          "item": "the six 'Unavailable - no source' columns on the 49F Net Worth roster as a Books/spine producer + a served-contract widening; three tiers, one of code",
+          "verdict": "SPEC ONLY",
+          "evidence": "PRD drafted 08-31/09-01 (9.4 KB); 0 orders; REGISTERED; both holds it might have sat behind discharged 08-31"
+        }
+      ],
+      "missing": [
+        "everything after the PRD"
+      ],
+      "registry_mismatch": null,
+      "undocumented_activity": [],
+      "rec": "FOLD INTO D9 INVESTOR REPORTING with ADVI_PERFRP -- the roster is the client-facing Books surface the proposal wraps; its PRD is prior material for that endpoint, not a project of its own."
     }
   ]
 }
