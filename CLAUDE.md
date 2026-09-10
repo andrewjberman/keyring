@@ -96,6 +96,12 @@ another** — verbatim scope; relay, never adjudicate wider OR narrower; if wide
     in Bash — `grep/rg/egrep/fgrep/findstr/ack/ag` recursive or directory-scoped, `find` with anything — is
     DENIED per SEGMENT (`&&`/`;`/newline split) and routed to `comp-find`; raw-`aws` INSPECTION is classified
     on ITS OWN SEGMENT.** Mechanism: `.tools/hooks/comp-tool-hud.sh` (kill switch `org/mcp/comprail-gate1.enforce`;
+    ⛔ **A RAIL DENIAL ABORTS THE WHOLE BASH CALL, so every LATER SEGMENT is a SILENT NO-OP.** A denied `grep`
+    segment in a compound call does not just lose that segment -- the status flip, the write or the commit chained
+    after it never runs, and nothing says so. Only a VERIFY-AFTER-WRITE catches it. Put a gated read in its OWN
+    call, or verify the later segment's EFFECT rather than its exit. Measured 2026-09-10 by a worker whose
+    believed-completed status flip had not happened. COST: one extra call, or one read-back. NON-APPLICATION: a
+    single-segment call.
     falsifier `.tools/comprail-gate1-fptest.sh`). NOT gated: a pipe-RECEIVER grep (`cmd | grep`),
     `# rail-checked: <why>`, `/freeform`, native `Grep`/`Glob`, `Read`, operational `aws`. `comp-grep` is a
     forwarder onto `comp-find`.
