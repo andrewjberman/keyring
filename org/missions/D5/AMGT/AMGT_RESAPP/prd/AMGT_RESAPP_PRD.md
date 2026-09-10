@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.2",
+  "prd_version": "v0.3",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -373,19 +373,76 @@ his word adds is a NAMED SOURCE, a REQUIRED COMPARISON, and the closing of one o
 those are constraints and surfaces, not a new capability. Inflating the outcome list for a source
 would make the endpoint a list of implementations.
 
-**`C-SA-NAMED-SOURCE`** -- the per-ticker virtual-analyst-report modal is a **named source for
-`FWD-4`**, cited to the record above. It was named nowhere in the brief or in this PRD before.
+> ⛔ **SUPERSEDED BY MEASUREMENT 2026-09-10 ~19:5xZ.** `4.0.0_SA_CRO~Z` investigated the route on
+> Andrew's word and the finding CONTRADICTS the source he named, on evidence:
+> `org/tier1_exec/4.0.0_SA_CRO/deliverables/AMGT_RESAPP_SEEKING_ALPHA_AUTH_INVESTIGATION_20260910.md`
+>
+> **THE MODAL PAGE IS THE WRONG INSTRUMENT.** `seekingalpha.com/symbol/{TICKER}/virtual_analyst_report`
+> is JS-rendered and **its HTML carries none of the content** -- a plain fetch returns *"Javascript is
+> Disabled"*. The content the page displays lives ONLY at the endpoint the page itself calls once.
+> **Scraping that page could never have worked, and no amount of care in a cell would have found that
+> before building it.**
 
-**`C-SA-ROUTE-COMPARISON`** -- ⛔ **A COMPARISON, NOT A REPLACEMENT.** His words are *"explore ...
-versus"*. A cell must establish **both** routes' behaviour -- the authenticated REST route and the
-scrape -- and state which is sound on evidence. **A cell that silently picks one has not done the
-work he asked for.** The credential is located in AWS Secrets Manager **at run time**; ⚠ he named no
-secret, so **no cell may hardcode a secret name** and the record does not carry one.
+**`C-SA-NAMED-SOURCE` (AMENDED)** -- the named source for `FWD-4` is the **API artifact, not the page**:
+`GET /api/v3/symbols/{ticker}` returns the internal `sa_id`, and `GET /api/v3/virtual_analysts/{sa_id}`
+returns the report as JSON (markdown `responseContent` plus a ratings block, each bullet citing an
+article id). Analysis and news reach full bodies via `GET /api/v3/symbols/{t}/analysis|news` ->
+`GET /api/v3/articles/{id}`. ⭐ **NO HTML PARSING ANYWHERE ON THIS PATH.** The report re-generates every
+few days and carries its own `createdAt` and `previousReportDate`, so `FWD-6`'s what-changed axis is
+served by the source itself rather than reconstructed.
+
+**`C-SA-ROUTE-COMPARISON` -- DISCHARGED, NOT PENDING.** Andrew asked to *"explore ... versus"* and
+the comparison HAS BEEN RUN by `4.0.0_SA_CRO~Z` under his own per-use word. ⛔ **NO CELL RE-RUNS IT.**
+The result, measured:
+
+| route | verdict |
+|---|---|
+| authenticated REST with a browser-harvested session | **WORKS** -- 200 on every ticker and every article tried |
+| scraping the modal page | **CANNOT WORK** -- the page is JS-rendered and its HTML holds no content |
+| cookieless unlocker | **CANNOT WORK** -- empty body; an unlocker cannot ride an authenticated session |
+
+**`C-SA-SESSION-SHAPE`** -- the production shape is **harvest in a real browser, park the session, ride
+by REST through the residential proxy, re-harvest on the challenge signal.** Two conditions are
+load-bearing and both were measured one variable apart:
+- **the jar must carry the browser-minted bot-protection cookies AND the request a per-ticker `Referer`.**
+  Identity cookies alone return 403. The full jar with no `Referer` returns **200 with a 2-byte body** --
+  ⚠ **a success status over an empty payload, which is the shape that cost that investigation a round
+  and would silently produce empty rows in production.**
+- **the fetch must egress through the residential proxy.** This device's native IP served ~10 calls and
+  was then blocked for every call including ones that had just worked.
+A short-lived challenge cookie expires; **the re-harvest signal is a small challenge body on a 403, and
+it is NOT an auth failure** -- a cell that treats it as one will re-authenticate instead of re-harvesting.
+
+**`C-SA-NO-POST-THROUGH-PROXY`** -- ⛔ the residential zone **refuses every POST** (`policy_20130`,
+no-KYC access mode). A login is a POST, so **login can never complete through the proxy** and the
+harvest must run somewhere with real browser egress. Andrew is completing the KYC; until it lands the
+proxy carries **reads only**, which is the whole production path anyway.
+
+⚠ **THE CREDENTIAL AND THE SESSION ARE BOTH IN SECRETS MANAGER AND NEITHER NAME IS WRITTEN INTO A
+CELL BY THIS PRD.** They are located at run time. The parked session artifact was created 2026-09-10
+19:29Z by that seat.
 
 **`C-SA-PAYWALL-PRECONDITION-PARTLY-CLOSED`** -- §5's open precondition read *"A decision on
 paywalled sources ... Nobody has decided."* **Somebody now has, in part:** authenticated access is
 IN SCOPE TO EVALUATE. ⚠ **It is NOT thereby ratified for production**, and whether the login is
 captcha-gated remains unmeasured, so the vision-authenticator question stays open.
+
+**`C-SA-UNMEASURED`** -- ⛔ **FIVE THINGS THE INVESTIGATION EXPLICITLY DID NOT ESTABLISH, AND A CELL
+MAY NOT ASSUME ANY OF THEM.** Named by `4.0.0_SA_CRO~Z` against its own work, which is why they are
+usable:
+
+| unmeasured | why it bites |
+|---|---|
+| **session lifetime** | observed ~30 minutes; the TTL is unknown. The re-harvest cadence is a GUESS until measured |
+| **headless / Linux** | every green run was a HEADED real browser on this Windows device. A box deployment must exercise headless FIRST -- it is the likeliest thing to fail |
+| **MFA** | the account showed no OTP step. Whether the vendor forces one on a new device or geography is unknown, and the harvester has no adapter wired |
+| **rate limits** | paced at roughly one call every 1-3 seconds; nothing faster was tried |
+| ⛔ **the vendor's terms on programmatic access** | **NOT READ.** This is the one on the list that is not an engineering question |
+
+⛔ **THE TERMS QUESTION IS ANDREW'S AND IT IS NOT A CELL'S TO SETTLE.** A scheduled consumer reading a
+paid account's content programmatically is a commercial and contractual posture, not a build detail.
+**It is surfaced to him and NOT built around.** Nothing in this PRD authorises a cell to read those
+terms and rule on them.
 
 ⛔ **`C-SA-VENDOR-WORD` -- THE PER-USE EGRESS READING, RULED HERE BECAUSE IT IS L4's AND
 `2.0.0_SA_COO~ZZZ` CORRECTLY DECLINED TO RULE IT.** `C-VENDOR-EGRESS` requires Andrew's explicit
