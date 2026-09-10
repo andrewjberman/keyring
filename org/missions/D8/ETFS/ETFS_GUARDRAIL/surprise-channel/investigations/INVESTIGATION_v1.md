@@ -502,6 +502,249 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "notes": "Remediated same-turn: a supplementary ledger entry is opened and closed immediately after this row, with proof from the SAME final measurements (served-vs-built MATCH, live rehearsal outputs) already gathered post-second-apply, so the deploy history carries a ledger trail for both applies rather than leaving the second one unrecorded. INERT: both applies succeeded, are 0-diff-confirmed, and the underlying resource (aws_lambda_function.orchestrator) is not half-landed by any measure -- the gap is in the LEDGER's bookkeeping order, not in the infrastructure's state."
   },
   {
+    "id": "ETFS_GUARDRAIL-W2-S7",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~2",
+    "surfaced_at": "2026-09-09T23:30:00Z",
+    "one_line": "S17-AC1 arms (c) and (g) name a CloudTrail `Invoke` record as the instrument for the invoker's identity and for the schedules' prior firings -- but lambda:Invoke is a CloudTrail DATA event and 0 of this account's 2 trails select AWS::Lambda::Function data events, so no Invoke record exists for ANY invocation of either producer; the firings were delivered instead from the AssumeRole MANAGEMENT event each fire emits.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this session 2026-09-09T23:16Z: `.tools/aws cloudtrail describe-trails` -> 2 trails (opal-organization-trail, opal-served-key-write-trail); `get-event-selectors` on each -> opal-organization-trail selects management events plus AWS::S3::Object ReadOnly on opal-data-bd/ and opal-data-inf/ only; opal-served-key-write-trail selects eventCategory=Data on AWS::S3::Object under three platinum/firm/ prefixes. NEITHER names AWS::Lambda::Function. Denominator: 2 of 2 trails read.",
+        "POSITIVE CONTROL for the absence: this worker's own probe invoke (2026-09-09T23:15:36Z) and fire invoke (23:15:47Z) DID execute (CloudWatch RequestIds ec6e9232-7247-48ab-a0af-dcdf842ad50a and 0840a0d3-15aa-4884-a12e-20e75cfa6136) and `cloudtrail lookup-events --lookup-attributes AttributeKey=ResourceName,AttributeValue=cot-etf-ownership-daily` over 23:10:47Z..23:20:40Z returned 2 events, eventName=Invoke = 0. A real invocation with a real log leaves no Invoke record -- the instrument, not the act, is missing.",
+        "30-day sweep, both producers: cot-etf-ownership-daily 73 events scanned / Invoke = 0 / AssumeRole = 71; bd-49f-etf-ownership-daily 64 events scanned / Invoke = 0 / AssumeRole = 62 (`lookup-events` 2026-08-10T23:16Z..2026-09-09T23:16Z, paginated by the CLI, counted client-side).",
+        "SUBSTITUTE DELIVERED: the AssumeRole management event Lambda emits on the execution role at each fire instant IS listed per day in the battery's ARM-G output -- cot fired at 10:30:24Z on 30 of 30 days seen, bd at 10:45:05Z on 30 of 30 days seen, with this worker's manual invokes appearing in a separate OFF-CRON column (22:58:18Z, 23:15:36Z). Its userIdentity is {\"type\":\"AWSService\",\"invokedBy\":\"lambda.amazonaws.com\"}, which does NOT discriminate the rule from a person -- the discriminators available are the cron instant, the rule's own ScheduleExpression read live, and (on bd only) the handler's EVENT-IDENTITY line printing source/detail-type/resources from the delivered envelope.",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~2/test_egs17_filled_in_day.py@4155c85a1f arm_c/arm_g"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S17-AC1 (c): 'the invocation's CloudTrail `Invoke` record shows the launching seat's user as the initiator (not the rule)'. S17-AC1 (g): 'CloudTrail `Invoke` events for BOTH daily producers over the last 30 days where the invoking identity is the rule/scheduler role (not a person), listed with dates and a denominator (events scanned)'.",
+    "world_is": "No CloudTrail `Invoke` event exists for either producer in any window, because no trail in account 313476888478 selects AWS::Lambda::Function data events (2 of 2 trails read, selectors printed). The criterion's named instrument is absent, not silent: a positive control (this worker's own two invocations, both with CloudWatch RequestIds) returns 0 Invoke records. The schedules' prior firings ARE listed with denominators -- from the AssumeRole management event instead, a DIFFERENT instrument than the criterion names, and one that cannot by itself distinguish a rule-initiated invoke from a person-initiated one.",
+    "notes": "NOT remediable by this worker: building a data-event trail is an infra act outside this order's <paths> (no code and no ledger path is granted) and would be a monitoring/observability build, which CLAUDE.md HARD STOPS gate behind Andrew's explicit word. What the issuer can do without any build: re-cut arms (c)/(g) onto instruments that exist -- the AssumeRole fire-instant listing plus the rule's live ScheduleExpression for the schedule's own firings, and for the initiator the handler-side EVENT-IDENTITY line (bd-49f prints it at lambda_function.py:221-224; cot-etf-ownership-daily prints NO event-identity line, which is the asymmetry that makes a cot-side initiator claim rest on the off-cron instant alone). INERT: nothing about the producers' operation degrades while this stands; what is missing is the forensic record of WHO invoked them."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W2-S8",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~2",
+    "surfaced_at": "2026-09-09T23:31:00Z",
+    "one_line": "The only REAL class-C hole in the window (cottonwood 2026-09-08) is the NEWEST upstream partition, so the producer's own fire recovers it by the latest-partition path and `_catchup_missing_dates` skips it as `skip_date` -- `catchup_processed` came back EMPTY on a fire that genuinely filled the hole; and the cause of the hole is a measured 76-minute race (cot's schedule fires 10:30Z, the partition for D lands D+1 11:46Z), which makes catchup_processed structurally unreachable for the ordinary one-day cot hole.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE FIRE, verbatim (2026-09-09T23:15:47Z, rule's own payload, RequestId 0840a0d3-15aa-4884-a12e-20e75cfa6136): response {\"status\": \"ok\", \"date\": \"2026-09-08\", \"key\": \"daily/cottonwood/2026-09-08.json\", \"slices\": 4, \"total_ownership\": 53641351.75, \"source_as_of\": \"2026-09-08\", \"catchup_processed\": [], \"catchup_failed\": [], \"catchup_skipped_unpriced\": []}. The hole WAS filled (head-object after: 1345 bytes, LastModified Wed, 09 Sep 2026 23:15:52 GMT; second reader re-downloaded and parsed 4 rows, every row date=2026-09-08) and catchup_processed is EMPTY.",
+        "THE MECHANISM, read at infra/aws/lambda/cot-pipeline/cot-etf-ownership-daily/lambda_function.py@4155c85a1f: :310-316 the no-date path computes day=_latest_partition(), processes it, then calls _catchup_missing_dates(universe, skip_date=day) and sets catchup_processed from that sweep ONLY; :267-269 the sweep `continue`s on `date_str == skip_date`. The newest partition can therefore never appear in catchup_processed. The identical shape is at infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily/lambda_function.py@4155c85a1f:246-251 and :188-190 -- 2 of 2 owned producers.",
+        "THE RACE, measured: cot fact_holdings partition for date D lands D+1 at ~11:46Z on 10 of 10 dates sampled (2026-08-25 -> 26 Aug 11:46:04Z; 08-26 -> 27 Aug 15:39:37Z; 08-27 -> 28 Aug 11:46:01Z; 08-28 -> 29 Aug 11:46:05Z; 08-31 -> 01 Sep 11:46:04Z; 09-01 -> 02 Sep 11:46:05Z; 09-02 -> 03 Sep 11:46:04Z; 09-03 -> 04 Sep 11:46:14Z; 09-04 -> 05 Sep 11:46:04Z; and 09-08 -> 09 Sep 11:46:01Z). The rule cot-etf-ownership-daily-schedule is cron(30 10 * * ? *) and fired at 10:30:24Z on 30 of 30 days seen. The fire on D+1 therefore precedes D's partition by ~76 minutes and the sweep's third skip ('upstream partition absent, never fabricate') takes it.",
+        "THE CONSEQUENCE, measured in the schedule's own log: the 2026-09-09T10:30:25Z scheduled fire logged exactly one write -- 'OK: wrote s3://opal-data-etfs/daily/cottonwood/2026-09-04.json (4 ETF slices, total_ownership=53905394.72, source_as_of=2026-09-04, generated_at=2026-09-09T10:30:29Z)' -- while 2026-09-08's partition landed at 11:46:01Z the SAME morning and its slice stayed absent for the next 11 h 30 m, until this worker's manual fire at 23:15:51Z.",
+        "CATCH-UP HISTORY, unscoped: `logs filter-log-events` over 30 days -- cot-etf-ownership-daily 142 log events scanned, CATCHUP lines = 0, SKIP lines = 0; bd-49f-etf-ownership-daily 103 log events scanned, CATCHUP lines = 0, SKIP lines = 0. Since the round-1 port the sweep has never named a recovered date on either producer.",
+        "THE 49F TWIN IS CLEAN BY MEASUREMENT, not by assumption: daily/49financial/ was ABSENT on 0 of the same 20 trading days (89 keys under the prefix), and its rule bd-49f-etf-ownership-scheduled-floor is cron(45 10 * * ? *), described in its own Terraform as '29 min AFTER the measured monolith fact_rps landing (D+1 10:16Z)' -- the floor sits after its source, so the race is cot-specific."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell EG-s-17 / FWD-1: 'a missed day is caught up by the producer's OWN fire, the recovered date named in `catchup_processed`', and S17-AC1 (d) 'the function's CloudWatch log for THIS invocation names the recovered date in `catchup_processed` (the exact line printed)'; step (ii) directs an invoke with 'ITS RULE'S OWN PAYLOAD SHAPE for that date ... the scheduled payload plus the date field the port honors'.",
+    "world_is": "Three divergences, one mechanism. (1) The rule carries NO Target.Input (1 of 1 target on each of the 2 rules, read live), so the scheduled payload is EventBridge's default envelope and there is no Input to add a date field TO. (2) Adding a date field to it routes the handler to the explicit-date branch (lambda_function.py:304-308), which returns NO catchup_processed key at all -- so 'the scheduled payload PLUS the date field' and 'the recovered date named in catchup_processed' are mutually exclusive on the deployed code. (3) The payload without a date field -- the one this worker fired, byte-equal to what the rule delivers -- DID recover the hole, but by the latest-partition path, because the only real hole in the window IS the newest partition, which the sweep skips as skip_date. The CloudWatch log for the invocation prints no `catchup_processed` token in any case: that name lives in the RESPONSE object, never in a log line; the log's catch-up vocabulary is 'CATCHUP: processed <date>'.",
+    "notes": "ARMED, and the armed part is NOT the criterion wording -- it is the race the criterion exposed: on cot, every trading day's slice is first written by the fire ~48h after the trading day (the D+1 10:30Z fire is too early for D's partition, so D is picked up at D+2 10:30Z), which leaves the newest trading day with NO slice for roughly the 23 hours between its partition landing (D+1 11:46Z) and the next fire (D+2 10:30Z). Any ETF-ownership report rendered in that window is short one day, and the catch-up sweep cannot name the gap because the gap is always at the head of the window. DISARM (issuer's routing call, none of it in this order's <paths>): the direct fix is to move cot-etf-ownership-daily-schedule after the 11:46Z landing (a Terraform act in the DT/AE lane, NOT a code change and NOT this worker's to make), which would ALSO make catchup_processed reachable in the ordinary case by putting a newer partition ahead of any hole. For S17-AC1 itself the issuer may re-cut arm (d) onto the field the mechanism actually populates for a head-of-window hole (response.date + the OK: log line, both printed verbatim in the deliverable) or route a controlled MULTI-DAY hole -- which needs Andrew's word, since a mid-window hole can only be made by removing a served slice and decomposition s.6 bound 1 forbids that here. This worker changed no code, deleted nothing, and wrote exactly one object: the recovered slice, by the producer's own run."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W2-S9",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~2",
+    "surfaced_at": "2026-09-09T23:45:00Z",
+    "one_line": "The cot producer's deployed docstring still declares 2026-07-31 a known upstream gap ('genuinely absent upstream ... Report it; do not fabricate it') -- the deployed PROBE, run against that exact date while building this order's discrimination control, answers partition=true, priced=10960, output_exists=true. The gap was filled upstream at some point after 2026-08-01 and the source's standing warning has not been re-dated.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/cot-pipeline/cot-etf-ownership-daily/lambda_function.py@4155c85a1f:36-38 -- 'Known gap (measured 2026-08-01, NOT fixed by this repoint): 2026-07-31 is genuinely absent upstream -- one of cottonwood's two published roll-forward days. Report it; do not fabricate it.' The same claim is repeated at :116 ('a missing date (07-31, known upstream gap) simply is not in this list') and :129-130.",
+        "this session 2026-09-09T23:40Z, the DEPLOYED function (CodeSha256 21/NtBoTmMsBBSsfwNnA+UP+I3HIzDnZaoeL3lBShFk=, LastModified 2026-09-05T01:39:04Z): `.tools/aws lambda invoke --function-name cot-etf-ownership-daily --payload {\"date\":\"2026-07-31\",\"probe\":true}` -> {\"status\": \"probe\", \"date\": \"2026-07-31\", \"partition\": true, \"priced\": 10960, \"output_exists\": true}. The partition exists, is priced, and a slice was written.",
+        "NEGATIVE CONTROL run in the same minute, so the probe is not answering true to everything: `{\"date\":\"2026-09-06\",\"probe\":true}` (a Sunday) -> {\"status\": \"probe\", \"date\": \"2026-09-06\", \"partition\": false, \"priced\": 0, \"output_exists\": false}."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Not this task order -- TO-EG-s-17 says nothing about 2026-07-31. The asserting artifact is the DEPLOYED producer's own module docstring, which the task order directs this worker to READ for the event shape and the probe mode ('lambda_function.py ... are READ (the event shape, the probe mode, the calendar; never edit)').",
+    "world_is": "2026-07-31's fact_holdings partition is present and priced (10960 positions) and its ETF slice exists, so the documented 'known gap' is closed in the world while the source still warns about it. Filed as FORM, not significance: this worker read a claim in an authoritative file and measured the opposite in the same session.",
+    "notes": "OFF-TASK, surfaced only because the date was chosen as this order's probe DISCRIMINATION control (a date the source calls absent is the natural negative case). No action taken and none is owed by this order: the source is not in this order's <paths> ('NO CODE CHANGE, NO DEPLOY'), the divergence is in a COMMENT and not in behaviour, and the behaviour it documents (_partition_key_for LOUD-fails on an absent explicit date, the sweep's third skip never fabricates) is unaffected either way. INERT: a stale comment harms nothing through the process's future normal operation; it costs the next reader one probe, which is exactly what happened here."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W2-S10",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~2",
+    "surfaced_at": "2026-09-10T00:35:00Z",
+    "one_line": "The 2026-09-09 AMENDMENT's arms (c) and (g) discriminate a rule-initiated fire by 'the rule's role's AssumeRole', naming it from list-targets-by-rule -- but NEITHER daily rule's target carries a RoleArn (0 of 2 read live): EventBridge invokes these Lambdas through the FUNCTION'S RESOURCE POLICY, so no rule role exists, and the only role CloudTrail names for them is the function's EXECUTION role, which Lambda assumes on a COLD START whoever invoked. The arms hold, graded at the finer grain the world supports.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this session 2026-09-10T00:1xZ: `.tools/aws events list-targets-by-rule --rule cot-etf-ownership-daily-schedule` -> one target {\"Id\": \"CotEtfOwnershipDailyLambda\", \"Arn\": \"arn:aws:lambda:us-east-1:313476888478:function:cot-etf-ownership-daily\"} with NO RoleArn key; same shape for bd-49f-etf-ownership-scheduled-floor -> {\"Id\": \"Bd49fEtfOwnershipScheduledFloor\", ...}. Denominator: 2 of 2 targets across 2 of 2 daily rules, 0 carrying RoleArn (and 0 carrying Input/InputPath/InputTransformer).",
+        "WHY there is no role: `lambda get-policy` on each producer returns a resource policy allowing lambda:InvokeFunction to Principal {\"Service\": \"events.amazonaws.com\"} conditioned on AWS:SourceArn = the rule's ARN (Sid ScheduleCotEtfOwnershipDaily / SchedFloorBd49fEtfOwnership). An EventBridge rule targeting a Lambda invokes through that policy, not by assuming a role -- a target RoleArn exists for other target types, not this one.",
+        "WHAT CloudTrail DOES name: `lambda get-function-configuration --query Role` -> arn:aws:iam::313476888478:role/cot-etf-ownership-daily-role and arn:aws:iam::313476888478:role/bd-49f-etf-ownership-daily-role, and every AssumeRole row in the 30-day sweep carries roleArn = that execution role with userIdentity {\"type\": \"AWSService\", \"invokedBy\": \"lambda.amazonaws.com\"} -- identical for a scheduled and a manual invocation, so the event's IDENTITY fields cannot discriminate the initiator.",
+        "THE ASSUMPTION IS A COLD-START ARTIFACT, measured on this order's own fire: AssumeRole 2026-09-09T23:15:36Z (x2) -> INIT_START 23:15:37.757Z -> START RequestId ec6e9232-7247-48ab-a0af-dcdf842ad50a at 23:15:40.735Z (the PROBE). The FIRE's START RequestId 0840a0d3-15aa-4884-a12e-20e75cfa6136 at 23:15:50.560Z has NO preceding INIT_START and NO AssumeRole: it ran WARM and assumed nothing. A literal 'AssumeRole in that minute == 0' therefore reads FALSE (2 events in minute 23:15) for a reason that has nothing to do with who invoked.",
+        "HOW THE ARMS WERE GRADED INSTEAD, both limbs printed by the battery: AssumeRole by the execution role BETWEEN the invoke's own START and END = 0 of 1 in the surrounding window, and AssumeRole AT THE RULE'S CRON INSTANT (10:30Z, read live from the rule's ScheduleExpression) inside the window = 0 -- a scheduled fire would have to land there, and the day's only 10:30:24Z fire is 12 h 45 m away and logged a different date (2026-09-04). Beside it the pin: START RequestId 1 of 1 in the log group read BY TIME over the invocation's own window.",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~2/test_egs17_filled_in_day.py@73e6cd94dc role_assumes_in()/arm_c/arm_g"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The AMENDMENT (face @5507841f04): '(ii) a RULE-INITIATED fire is the scheduler/rule role's AssumeRole MANAGEMENT event (`etfs-reports-scheduler-role` for the monthly schedule; the two daily rules' roles, named from `list-targets-by-rule` / `get-schedule`) in the fire's minute', and arm (c) 'with the rule's role's `AssumeRole` in that minute == 0', arm (g) 'no `AssumeRole` by the rule's role in its minute'.",
+    "world_is": "The two DAILY rules have no role to name: 0 of 2 targets carry a RoleArn, because an EventBridge rule targeting a Lambda invokes through the function's resource policy. (The monthly `etfs-reports-scheduler-role` the amendment also names is an EventBridge SCHEDULER schedule, a different service whose targets DO carry a RoleArn -- the amendment's model is right there and does not transfer to these two rules.) The role CloudTrail does name is the function's EXECUTION role, assumed on cold starts by either initiator, so 'AssumeRole in the minute' is a cold-start signal rather than an initiator signal -- and on this fire it is 2 in the minute (the worker's own probe cold start, 11 s earlier) and 0 inside the invocation itself.",
+    "notes": "NOT BLOCKING and no re-cut requested: arms (c) and (g) both HOLD on the finer grain, which is strictly more discriminating than the minute grain the amendment named -- an invocation-interval count plus a cron-instant count, with the attribution of every event printed rather than a bare number. Filed so the issuer's model is corrected at the source before it is carried to another face: any future face re-using 'the rule's role' for an EventBridge RULE -> Lambda target is naming a field that does not exist, and a battery that read it would get None and could silently grade against nothing. INERT: nothing in the producers' operation depends on this; it is a naming defect in an instrument description, already routed around with the measurement printed."
+  }
+]
+```
+
+## S4 -- deploy_ledger.py re-renders the change entry from the sentinel and DELETES the hand-appended NEVER-2 section (sign-off ids, served keys, archive, rollback); ARMED to 0.2.0_DT_PortfolioAnalytics; filed by the CVO beside W1-S16 so the remediation can be minted tonight
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-S4",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:23Z",
+    "one_line": "THE CHANGE-MANAGEMENT TOOL DELETES THE SECTION THE CHANGE-MANAGEMENT LAW REQUIRES. `.tools/deploy_ledger.py` renders the change_management entry .md WHOLLY from the sentinel state and writes it with write_text (truncate-and-replace) on every `open` / `close-leg` / `close` / `hold` -- `_render_entry` :239-250 says so ('regenerated from state on every mutation THAT GOES THROUGH THIS TOOL'), `_write_entry` :289-291 does it. The sentinel schema has NO field for the content NEVER-2 requires the entry to CARRY (the never-widen sign-off ids, the served keys the run rewrites, the archive table, the rollback recipe), so that content can only be hand-appended to the .md -- and the next tool call deletes it silently, with no diff shown. MEASURED by 0.9.0_WK_ETFS_GUARDRAIL~1 (W1-S16 @wk-etfs_guardrail-2-1): the S14-AC1 arm (a) read 'served keys named 5 of 5; rollback=True' at 23:25:51Z, then 'served keys named 1 of 5; rollback=False' at 23:35Z after three close-leg calls and one hold, then 5 of 5 again after re-appending. The one limb that survived (prior sha256 5 of 5) survived only because the hashes also sit inside a leg's --proof string the sentinel carries -- a partially surviving section reads as a partially intact record. The tool's own docstring names the hand-edit case as 'outside this tool's world' and warns only about the OPPOSITE drift (a hand-edited CLOSED over a live sentinel). The finding is the worker's (W1-S16, on its branch until the drain); this seat re-read the mechanism at the tool and files it as a SEAT row so the remediation the issuer and the CTO named is OWNED tonight (C-S6, 0.2.0_DT_PortfolioAnalytics); the REMEDIATION row with its clocks is minted at the round-2 L9 once every ETFS_GUARDRAIL order is terminal -- the row gate refused it tonight as an L10-shaped act (spine v3: every new remediation row waits for terminality; 5 of 19 orders not terminal at HEAD), rightly; until then the owner, remedy, interim and disarm are recorded on C-S6 and the clocks ride it.",
+    "spec_asserts": "CLAUDE.md NEVER-2: a deploy 'names in that entry EVERY task family that pulls the tag it moves'; TO-EG-s-14 NEVER-2 clause: the entry is 'OPENED FIRST and BOTH never-widen halves are quoted in it ... naming the served keys the run will REWRITE ... the PRIOR objects ARCHIVED ... the ROLLBACK ... and the two sign-off ids'; S14-AC1(a) grades the ENTRY FILE for exactly that content. deploy_ledger.py's own docstring: the entry is 'regenerated from state on every mutation'.",
+    "world_is": "The entry is a rendering of a sentinel that has no field for the content the law requires the entry to carry; every tool call after a hand-append deletes the append silently. Four NEVER-2 entries were opened on this box tonight and a fifth (OS-s-24) is about to be; each carries or will carry a hand-appended section a later close-leg would destroy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.2.0_DT_PortfolioAnalytics",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/deploy_ledger.py at HEAD 104c46c48a (last commit 119ce3a68e, 0.0.0_AB_MSTR~Z, 2026-09-04): :239 `def _render_entry(state)` with the docstring 'regenerated from state on every mutation THAT GOES THROUGH THIS TOOL ... `open` / `close-leg` / `close` / `hold` re-render the entry from the sentinel'; :289-291 `def _write_entry(state): Path(WORKSPACE / state[\"entry_path\"]).write_text(_render_entry(state), encoding=\"utf-8\", newline=\"\\n\")` -- read by this seat (sed), nothing preserved from the existing file.",
+        "ETFS_GUARDRAIL-W1-S16 (0.9.0_WK_ETFS_GUARDRAIL~1, 2026-09-09T23:38Z, on wk-etfs_guardrail-2-1): the three timed reads of the S14-AC1 battery's arm (a) -- 23:25:51Z 5 of 5 / rollback=True; 23:35Z after close-leg L1/L2/L5 (20260909T233249Z) and hold (20260909T233308Z) 1 of 5 / rollback=False; 23:39Z after re-appending 5 of 5 / rollback=True.",
+        "2.0.0_SA_COO 94794 (00:02Z): 'W1-S16 deploy_ledger.py regenerates the entry from the sentinel on every close-leg/hold and silently destroyed the NEVER-2 section (measured 5 of 5 -> 1 of 5 -> 5 of 5) -- ordering clause on the faces; FOR 3.0.0_SA_CVO a remediation row against the tool's lane 0.2.0_DT_PortfolioAnalytics'. 1.0.0_SA_CTO 94796: 'a real tool defect: the CVO's remediation row against 0.2.0_DT_PortfolioAnalytics is right, and the ordering clause on the faces is the interim'.",
+        "EXPOSURE TONIGHT, by census of org/critical_paths/change_management/ (mtime order): 20260909T2355Z outset-drift-publisher-git-head-read-order; 20260909T2243Z estate-report-runner-trigger-token-read (OS-s-26); 20260909T203713Z cldgrph-cgs24 stitch-fold image + seven-family repin; 20260909T184608Z stitch-source-repush; the OS-s-24 manual-served-day entry 20260910T0020Z_estate-report-manual-served-day-09-10.md (two never-widen ids, four protected pins, a rollback recipe) was opened at 00:20Z -- every one a NEVER-2 entry whose hand-carried section a later close-leg would delete.",
+        "Andrew-direct ~00:0xZ (1.0.0_SA_CTO 94801): NFRA_DEPLOYLEDGER CLOSED on the register with a named residue -- this defect postdates that closure and is carried here as a row against the tool's lane, not as a re-opened project."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed by the CVO (lane ANY for investigation rows) beside the worker's W1-S16 so that the REMEDIATION row can be minted now (the remediation document keys on a GRADUATED seat-form item; W1-S16 is worker-form and its clocks ride its C-row at the round-2 L9). Graduated at C-S6; the REMEDIATION row with its clocks is minted at the round-2 L9 once every ETFS_GUARDRAIL order is terminal -- the row gate refused it tonight as an L10-shaped act (spine v3: every new remediation row waits for terminality; 5 of 19 orders not terminal at HEAD), rightly; until then the owner, remedy, interim and disarm are recorded on C-S6 and the clocks ride it. The tool's lane is as the issuer and the CTO named it; the file's last committer was 0.0.0_AB_MSTR~Z."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-S5",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T00:44:00Z",
+    "one_line": "DISARM RECORD FOR ETFS_GUARDRAIL-W1-S11, by its named disarm owner. RULED under the standing re-cut authority @9f4a57262f / @1ced87e810 and confirmed not-wider by 1.0.0_SA_CTO (94795): the renderer's box-side fallback import is fixed at its one place (the except-ImportError branch of data/etfs/scripts/presentation/render_month_end.py resolves _ORION_HERE/coverage and pulls exactly the one vendored file when absent), rehearsed in a box-layout fixture, deployed by the README's own aws s3 cp as a NEW LEG of the SAME held NEVER-2 entry etfs-guardrail-eg-s-14-august-rerender under both halves (COO 4155c85a1f + 5507841f04; CTO 94775), then the orchestrator re-invoked; EG-s-14's <paths> widened by that one file @5507841f04. The 10-01 scheduled fire would have failed identically; Andrew's manual-trigger word found it three weeks early.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The face: org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-14.the-august-re-render.md @5507841f04 (the bound 'NO CODE CHANGE, NO DEPLOY' replaced by the one-change clause; the AMENDMENT paragraph cuts the fix, the rehearsal, the deploy leg, the rollback = git show 4155c85a1f:data/etfs/scripts/presentation/render_month_end.py, and the re-invoke).",
+        "The worker's fix on its branch: wk-etfs_guardrail-2-1 @0c8bdbe5a5 (00:13Z), 'fix(ETFS_GUARDRAIL.TO-EG-s-14 amendment @5507841f04, row W1-S11): the renderer's box-side fallback ...'; the deploy leg and the re-invoke were in progress at this row's time (worktree dirty 3 tracked files at 00:33Z).",
+        "The CTO's reading, message 94795 READ-acked: 'not read wider ... inside EG-s-14's grant as ruled; the :383 precedent applies. No PRD row. No new never-widen half either: a code leg to the artifact prefix is a DEPLOY under NEVER-2, not a served-output move.'",
+        "The defect's mechanism, read at this seat 23:4xZ in data/etfs/scripts/presentation/render_month_end.py:70-76 and :88-109 @7cd25f5998: the fallback inserts os.path.join(_ORION_HERE, '..', 'coverage'); on the box _ORION_HERE is /opt/etfs-reports so that is /opt/coverage, while the coverage self-bootstrap pulls to _ORION_HERE/coverage and runs AFTER the import."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 as cut @4155c85a1f: 'NO CODE CHANGE, NO DEPLOY under this order. The orchestrator and the renderer run AS DEPLOYED by round 1'.",
+    "world_is": "The deployed renderer (byte-equal to repo HEAD) cannot import on the box, so the served-output move the face carries could not be observed without a code leg; after @5507841f04 the face carries that leg inside the same entry and the same halves.",
+    "notes": "Judged on EFFECT: HARDER -- the failed first fire stays in the result verbatim; the re-run must publish with the coverage line, which the first cut could not have reached. NOT ASSERTED by anyone yet: whether the 09-01 scheduled render used a renderer without this import (the alignment landed in EG-s-13 after 09-01) -- the CVO reads it at L9. This row is the disarm act's record (the NFRA_OUTSET-S27 shape): ETFS_GUARDRAIL-W1-S11 itself is not edited; its L9 disposition is 3.0.0_SA_CVO's. Related: [[ETFS_GUARDRAIL-W1-S11]]."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-S6",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T00:44:00Z",
+    "one_line": "DISARM RECORD FOR ETFS_GUARDRAIL-W1-S12, by its named disarm owner. RULED: the archive location the face named (platinum/reports/2026-08/_archive_<UTC>/) sat INSIDE the month prefix _month_csv_keys (lambda_function.py:265-274) enumerates for the report email's attachments, so the letter would have attached three stale duplicate CSVs to the real delivery; the clause is amended @5507841f04 to platinum/reports/_archive/<month>/<UTC>/, the worker's 23:06:36Z archive STANDS as the prior-object record, and the re-run archives again the same way after printing the ETag equality.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-14.the-august-re-render.md @5507841f04, the NEVER-2 paragraph: the copy-object destination replaced in place, the first-cut location and its consequence stated beside it.",
+        "The worker's measurement in W1-S12: list_objects_v2 with no delimiter over platinum/reports/2026-08/ returns every .csv; _build_report_email attaches each by basename -- an archived copy under the month prefix arrives as a second attachment with the same filename; the archive as written sits at platinum/reports/_archive/2026-08/20260909T230636Z/, 5 of 5 sha256 byte-equal to the priors, 5 of 5 ETags on the served objects unchanged."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 as cut: 'copy-object each prior object to platinum/reports/2026-08/_archive_<UTC>/<name>'.",
+    "world_is": "The enumeration the orchestrator uses for the email is prefix-wide; an archive inside it is a delivery defect. After the amendment the archive lives outside the enumerated prefix and nothing about the served keys changes.",
+    "notes": "Judged on EFFECT: HARDER for the delivery the FWD grades (no duplicate attachments); EQUAL for the archive's substance (the same sha256 pairs). This row is the disarm act's record (the NFRA_OUTSET-S27 shape): ETFS_GUARDRAIL-W1-S12 itself is not edited; its L9 disposition is 3.0.0_SA_CVO's. Related: [[ETFS_GUARDRAIL-W1-S12]]."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-S7",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T00:44:00Z",
+    "one_line": "DISARM RECORD FOR ETFS_GUARDRAIL-W1-S14, by its named disarm owner. RULED: the bound 'the orchestrator invoke itself returns in seconds' was false -- _run() blocks through the SSM wait (up to 300 s) and the render poll (up to 720 s) and returns when the run ends, so a bare CLI invoke hits botocore's 60 s read timeout on the success path and RETRIES, starting a second concurrent production run on the same served keys; the bound and arm (b) are amended @5507841f04 to carry --cli-read-timeout 0 --cli-connect-timeout 60 and to record NOT-RETURNED (never re-issue) past 15 minutes; one execution per invoke is proven by 1 of 1 START RequestId in the window. EG-s-15's arm (b) carries the same flags.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-14.the-august-re-render.md @5507841f04, the BOUNDS bullet and arm (b) replaced in place; ETFS_GUARDRAIL.TO-EG-s-15.the-september-refusal.md @5507841f04 arm (b) likewise.",
+        "The worker's measurement in W1-S14: lambda_function.py:386-441 @93264db36c (start_instances -> _wait_ssm_online 300 s -> send_command -> a 15 s poll loop to 720 s -> _email_report -> stop); live Timeout=900; the 23:14:43Z call returned in 41 s ONLY because the render failed at import; the invoke was issued with --cli-read-timeout 0 and exactly one START RequestId exists for the window."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 as cut, BOUNDS: 'the orchestrator invoke itself returns in seconds (it starts the box and returns)'.",
+    "world_is": "The invoke is synchronous end to end; the amended bound says so and names the flags that make a single execution the only possible outcome of a single command.",
+    "notes": "Judged on EFFECT: HARDER -- a double-fire is now impossible from the ordered command, and the arm counts executions. This row is the disarm act's record (the NFRA_OUTSET-S27 shape): ETFS_GUARDRAIL-W1-S14 itself is not edited; its L9 disposition is 3.0.0_SA_CVO's. Related: [[ETFS_GUARDRAIL-W1-S14]]."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-S8",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T00:44:00Z",
+    "one_line": "DISARM RECORD FOR ETFS_GUARDRAIL-W1-S16, by its named disarm owner. RULED IN TWO HALVES: (a) the faces carry an ORDERING CLAUSE @5507841f04 -- the NEVER-2 detail (both halves, the served keys, the archive table, the rollback) is appended to the ledger entry LAST, after the entry's final deploy_ledger.py close-leg/hold, and arm (a) is read AFTER that append; (b) the tool defect itself -- .tools/deploy_ledger.py _render_entry/_write_entry (:239, :289-291) regenerate the whole entry from the sentinel with write_text on every mutation and silently destroy hand-added sections -- is carried to 3.0.0_SA_CVO (94793, 94803) for a remediation row against the tool's lane 0.2.0_DT_PortfolioAnalytics; NFRA_DEPLOYLEDGER was CLOSED tonight on Andrew's word with a named residue (94800), so the remediation is a row, not a project.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-14.the-august-re-render.md and ETFS_GUARDRAIL.TO-EG-s-15.the-september-refusal.md @5507841f04: the W1-S16 ordering clause in each AMENDMENT paragraph.",
+        "The worker's measurement in W1-S16: the same battery read 'served keys named 5 of 5; rollback=True' at 23:25:51Z, '1 of 5; rollback=False' at 23:35Z after three close-leg calls and a hold, and '5 of 5; rollback=True' again at 23:39Z after re-appending -- nothing else changed between the runs.",
+        "The CTO's reading (94795): 'W1-S16 is a real tool defect: the CVO's remediation row against 0.2.0_DT_PortfolioAnalytics is right, and the ordering clause on the faces is the interim.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 as cut requires the entry to CARRY the sign-off block, the served-key list, the archive table and the rollback, and to be mutated by deploy_ledger.py's own verbs; the two instructions collide in the tool's write_text.",
+    "world_is": "Until the tool carries a free-form detail field that _render_entry emits, every NEVER-2 entry in the estate loses hand-added detail on its next ledger call; the ordering clause makes the loss impossible for these faces and the remediation row makes it visible to the tool's owner.",
+    "notes": "Judged on EFFECT: HARDER for these faces (the graded content cannot be destroyed after it is graded); the tool defect is disarmed for this project only, and says so. This row is the disarm act's record (the NFRA_OUTSET-S27 shape): ETFS_GUARDRAIL-W1-S16 itself is not edited; its L9 disposition is 3.0.0_SA_CVO's. Related: [[ETFS_GUARDRAIL-W1-S16]]."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-S9",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T00:44:00Z",
+    "one_line": "DISARM RECORD FOR ETFS_GUARDRAIL-W2-S8, by its named disarm owner. RULED: for a HEAD-OF-WINDOW hole (the newest priced partition, which _catchup_missing_dates skips as skip_date) the producer's own recovery is the main path's `OK: wrote s3://opal-data-etfs/daily/<partner>/<date>.json` line, and arm (d) accepts it @5507841f04 while printing CATCHUP-BRANCH-NOT-EXERCISED beside the token; arm (b) no longer asks for a date field (a date key routes to the explicit-date branch, lambda_function.py:304-308, which never reaches the catch-up path). The CATCH-UP BRANCH ITSELF stays unexercised: it needs a hole older than the newest partition, the estate has none (bd 0 of 20 absent; cot 1 of 20 and that one the newest), and manufacturing one is a served S3 DELETE -- Andrew's word under NEVER-AUTO-DELETE, put to him at this seat's terminal 00:0xZ with the REC (yes, one cot slice, archived first, restored by the producer's own catch-up fire); the CTO concurred (94795). The 76-minute schedule/landing race the row found underneath (the daily fires at 10:30Z/10:45Z run before the D+1 partition lands) is a design finding TAKEN by the CTO for the L10 addendum (94795), not cut here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ETFS_GUARDRAIL.TO-EG-s-17.the-filled-in-day.md @5507841f04: arms (b), (c), (d), (g) replaced in place; the AMENDMENT paragraph names the carried call.",
+        "The worker's second pass @1e995e83b5 (drained @d1b8945948): S17-AC1 PASS by output, 7 of 7 arms, EGS17-FILLED-IN-DAY printed WITH CATCHUP-BRANCH-NOT-EXERCISED; arm (d)'s deciding line '2026-09-09T23:15:51.163Z OK: wrote s3://opal-data-etfs/daily/cottonwood/2026-09-08.json (4 ETF slices, total_ownership=53641351.75, source_as_of=2026-09-08, generated_at=2026-09-09T23:15:51Z)'; the served object byte-identical to the single original write after three battery runs (ETag 5da999e2fbfadfe302df35ef24407372, 1345 B, 23:15:52Z); 0 CATCHUP lines in 152 cot / 103 bd log events over 30 days.",
+        "The CTO's reading (94795): '(3) THE CALL ... Put to him at this terminal now with your REC (yes, one cot slice). Until his word, arm (d) reads CATCHUP-BRANCH-NOT-EXERCISED as cut; nothing is deleted.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-17 as cut: arm (d) 'the function's CloudWatch log for THIS invocation names the recovered date in catchup_processed'; arm (b) 'your invoke's payload equal to it plus the date field'.",
+    "world_is": "The recovery of the estate's one real hole was the producer's own act naming the date, by the main path; the catch-up path is structurally unreachable for that hole's shape, and the only way to exercise it is a served delete no agent may perform.",
+    "notes": "Judged on EFFECT: EQUAL on 'the producer's own act named the date', EXPLICIT where the first cut was silent (the unexercised branch is printed, never implied). The order is terminal @d1b8945948 with that qualifier on its token; the CVO grades what the token does and does not claim. This row is the disarm act's record (the NFRA_OUTSET-S27 shape): ETFS_GUARDRAIL-W2-S8 itself is not edited; its L9 disposition is 3.0.0_SA_CVO's. Related: [[ETFS_GUARDRAIL-W2-S8]]."
+  },
+  {
     "id": "ETFS_GUARDRAIL-W1-S11",
     "project": "ETFS_GUARDRAIL",
     "fabric": "laptop",

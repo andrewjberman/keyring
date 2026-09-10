@@ -18,7 +18,7 @@ instance but is `UNVERIFIABLE-BY-INSTRUMENT` with the CVO named, and is graded a
 disposition rests on this seat's own read beside the record: the served Lambda code hashes, environment and the
 deployed Inflection zip, the reporter role's inline grant, SES's account state, the report bucket, the source at HEAD,
 the vendored-copy census, the published layer, and `.gitattributes`.
-**Denominator at this write:** 5 rows (C-S1 the grade record; C-S2 the eight worker-form items graduated and closed on
+**Denominator at this write:** 7 rows (C-S7 appended 2026-09-10T00:39Z: a correction of C-S6 -- no remediation row was minted; the gate refused it as L10-shaped and the clocks ride C-S6 until the round-2 L9); previous: 6 rows (C-S6 appended 2026-09-10 ~00:2xZ: S4 graduated, the deploy_ledger NEVER-2 defect, owner 0.2.0_DT_PortfolioAnalytics); previous: 5 rows (C-S1 the grade record; C-S2 the eight worker-form items graduated and closed on
 the issuer's in-round acts; C-S3 the three items graduated and OPEN; C-S4 the ten records dismissed with reason; C-S5 the
 correction carrying the CTO's L10 @0557afa38a -- FWD-4 NOT_EVALUATED, seven fire-gated outcomes, not six).
 Investigation rows without a disposition after this write: 0 of 21. Remediation rows minted: S2 (OPEN), S3 (closed).
@@ -216,6 +216,67 @@ Investigation rows without a disposition after this write: 0 of 21. Remediation 
     "spec_asserts": "Spine v3 L10: the CTO grades outcomes (REALIZED / NOT_REALIZED / NOT_EVALUATED) on the slug and the artifact; L9 grades criteria. FWD-4's DONE WHEN as cut: EXERCISED.",
     "world_is": "ETFS_GUARDRAIL round 1 is at ROUND_CLOSE: FWD-6 REALIZED; FWD-1, -2, -3, -4, -5, -7, -8 NOT_EVALUATED pending real fires and a real legitimately-empty day. Three open items carry owners: W2-S1 the inf-pipeline lane, W1-S5 CLOUD_OPS_OR_ETL, S2 the CTO's own queue.",
     "notes": "Scope of the retraction, stated so it is not read wider: the slug's grades, dispositions, precondition measurement and open-item routing stand; the single refuted clause is the count and membership of the fire-gated outcome list, which now includes FWD-4."
+  }
+]
+```
+
+## C-S6 -- adjudicates S4: GRADUATED, remedy OPEN at 0.2.0_DT_PortfolioAnalytics (the deploy_ledger NEVER-2 defect); the remediation row is ../remediations/ S4
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-C-S6",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:23Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-S4"
+    ],
+    "disarm_owner": "0.2.0_DT_PortfolioAnalytics",
+    "one_line": "L9-shaped act mid-round (the issuer's and the CTO's ask, 94794 / 94796): ADJUDICATES one seat-form item -- GRADUATED, remedy OPEN, owner 0.2.0_DT_PortfolioAnalytics. S4 (this seat's row on the mechanism W1-S16 measured): .tools/deploy_ledger.py re-renders the change_management entry from the sentinel on every open / close-leg / close / hold and writes it truncate-and-replace, so the NEVER-2 section a deploy must hand-append (sign-off ids, served keys, archive, rollback) is deleted by the next tool call with no warning -- measured 5 of 5 -> 1 of 5 -> 5 of 5 by the worker, the mechanism read at :239-250 and :289-291 by this seat. The remediation row ETFS_GUARDRAIL-S4 carries the remedy (a sentinel field the renderer emits, or a preserved hand section, and a printed diff either way), the interim (the issuer's ordering clause), and the disarm (a round-trip through the tool leaving a hand-appended section byte-equal, planted both ways). W1-S16 itself is dispositioned at the round-2 L9 when its branch drains; this row does not adjudicate it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S4 (this write) and its evidence; W1-S16 on wk-etfs_guardrail-2-1; deploy_ledger.py :239-250, :289-291 at HEAD 104c46c48a; 94794, 94796."
+      ]
+    },
+    "spec_asserts": "NEVER-2 and TO-EG-s-14's entry clause (the entry CARRIES the halves, keys, archive, rollback); the tool renders the entry from a sentinel with no such field.",
+    "world_is": "A law that requires content the tool cannot carry, and a tool that deletes the content when it is carried by hand.",
+    "notes": "Seat-form item; its clocks live on the remediation row S4. The round-2 L9 reads W1-S16 and the GUARDRAIL faces' ordering clause against this row."
+  }
+]
+```
+
+## C-S7 -- CORRECTION of C-S6 and of commit 8bbfc0e684's subject: NO remediation row was minted (the gate refused it as an L10-shaped act with 5 of 19 orders open; not overridden); S4's graduation, owner, remedy, interim and disarm stand on C-S6; the remediation row is minted at the round-2 L9
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-C-S7",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:39Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A correction record of this seat's own C-S6 and of commit 8bbfc0e684's subject; it dispositions no investigation item.",
+    "one_line": "CORRECTION, this seat's own: C-S6 says 'The remediation row ETFS_GUARDRAIL-S4 carries the remedy ...' and 'its clocks live on the remediation row S4', and commit 8bbfc0e684's subject says the remediation row was 'minted OPEN against 0.2.0_DT_PortfolioAnalytics'. NO REMEDIATION ROW WAS MINTED. The first attempt (three files) was REFUSED by .tools/surprise-row-gate.py: 'ETFS_GUARDRAIL-S4: NEW remediation row (the slug (spine v3: every new remediation row)) while 5 of 19 task order(s) under ETFS_GUARDRAIL are NOT terminal at HEAD' -- a new remediation row is an L10-shaped act and round 2's five orders are open -- and this seat chose NOT to take the audited override: the gate's reason is right in kind. ../remediations/REMEDIATION_v1.md was restored to HEAD (4,266 bytes, unchanged from c6bcb7b12b, verified by git diff --stat) and the second attempt committed S4 and C-S6 only. The patch that was to re-point C-S6's text and the commit message at the L9-minted row failed on its own assertion before writing, and the commit went through with the stale text -- found on re-reading the committed blob, not caught before. WHAT STANDS: S4 (its notes already say the remediation row waits for terminality), C-S6's GRADUATION of S4 with owner 0.2.0_DT_PortfolioAnalytics, the remedy (a sentinel field the renderer emits, or a preserved hand section, and a printed line naming every section dropped), the interim (the issuer's ordering clause) and the disarm (a round-trip through the tool leaving a hand-appended section byte-equal, planted both ways) -- all recorded on C-S6 and S4. WHAT CHANGES: the clocks ride C-S6 until the REMEDIATION row S4 is minted at the round-2 L9 once every ETFS_GUARDRAIL order is terminal. The lesson, banked: a patch-then-commit chain must abort the commit when the patch fails, and the committed blob is what is read back, not the working copy.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The gate's refusal, verbatim from the first attempt's captured output: 'ETFS_GUARDRAIL-S4: NEW remediation row (the slug (spine v3: every new remediation row)) while 5 of 19 task order(s) under ETFS_GUARDRAIL are NOT terminal at HEAD: ...TO-EG-s-14 [pending], TO-EG-s-15 [pending], TO-EG-s-16 [pending], TO-EG-s-17 [pending] ...; override (audited): put # surprise-row-override: <reason> in the commit message body'. Not taken.",
+        "git show 8bbfc0e684:.../adjudications/ADJUDICATION_v1.md -> C-S6 one_line contains 'The remediation row ETFS_GUARDRAIL-S4 carries' (True); git diff --stat c6bcb7b12b HEAD -- .../remediations/REMEDIATION_v1.md -> empty (the file is unchanged; no S4 row in it); 8bbfc0e684's subject begins 'remediate(ETFS_GUARDRAIL S4 / C-S6 ...) ... minted OPEN against 0.2.0_DT_PortfolioAnalytics'.",
+        "S4 as committed: notes 'the REMEDIATION row with its clocks is minted at the round-2 L9 once every ETFS_GUARDRAIL order is terminal -- the row gate refused it tonight as an L10-shaped act ... rightly' (the patch that succeeded)."
+      ]
+    },
+    "spec_asserts": "Spine v3 (the gate's own words): every new remediation row waits for terminality. ADJUDICATION_v1.md's header: a correction is a NEW row citing the old id; no row is edited.",
+    "world_is": "C-S6 and the commit subject overstate by one row; the remediation file is unchanged; the owner, remedy, interim and disarm are on the record where they were written.",
+    "notes": "Append-only: C-S6 is not edited; a reader resolves S4's remediation state from this row (the newest citing it) until the round-2 L9 mints the remediation row."
   }
 ]
 ```

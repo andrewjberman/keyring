@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-09T23:28Z",
+  "written_utc": "2026-09-10T01:04Z",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -243,8 +243,38 @@
         "msgs 94784 (CTO), 94785 (CVO)",
         "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260909T2325Z.md"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "b1fd7df2d3",
       "next": "F-6's flip and drain (union the four W7 rows; my disarm rows W7-S1..S4 at the drain); F-11's flip and drain; the CVO's baseline sign; the FINAL packet; the drain-end read to the CTO; CronDelete."
+    },
+    {
+      "seq": 18,
+      "limb": "L7 (a drain) / L8 (a partial packet) / adjudication (five acks)",
+      "started_utc": "2026-09-09T23:42Z",
+      "ended_utc": "2026-09-09T23:58Z",
+      "act": "TICK 47 (23:41Z) READ NOTHING TERMINAL (both workers active; slot ~7 mid re-run, slot ~2 mid-recert; no broker traffic). TICK 48: TO-CG-F-6 (CG-s-26, the JOIN's LAST cell) TERMINAL on slot ~7 after the re-cut -- re-run 6f0a3af8e7, flip 558f25e77e; six mechanical criteria PASS (AC3 0 of 486 files over the SAME population with the W2-S25 pair excluded by name and printed; AC5 REGISTRY_MENTIONS=2 (row W7-S2) admitted), AC6 judgment recorded; the worker re-grounded the exclusion's premise before applying it (0 stitch/nessie mentions in either spike loader; 6 of 6 excluded basenames unique across the sweep) and re-ran AC1/AC2/AC4 so no capture predates the re-cut. VERIFIED IN-WORKTREE by this seat: checker VALID rc 0, <status>complete at HEAD by git show, tree clean. DRAINED @acf75d72d8 (rc 4 on the channel, union 211 + 4 = 215, --continue under the guards: row gate 4 new rows OK, corpus OK, tree check 0 violations). Slot ~7's chain done: worktree and branch removed (only .scratch untracked). No org/modules/graph path in the merge, so no comp-system phase two. ROWS S90-S94 @88091d4945 (215 -> 220): S90/S91/S92 DISARM W7-S1/S3/S4 (the three cut defects); S93 ACKS W7-S2 and CARRIES it to L8 (graph-call-manifest.yaml:1237 freshness + tool_index.py:2443 mirror naming the deleted store; REC for L10: one entry-grained edit under the manifest owner, then a REGENERATION of the mirror); S94 ACKS THE CVO's S89 (found 23:25Z while re-measuring for the W2-S60 sign: the unified producer emitted every CARRIED member twice, one copy per class list, plus PORTAL_BUNDLE) against the worker's own fix on F-11's branch @22e388d221 (_collapse_stitch_copies, W2-S65: 449 duplicated ids, 269 members against themselves, admitted 3,560 -> 1,790 = 1,521 merged + 269 created, 0 lost, now F11-AC1's own denominator; the nine baseline entries written at the COLLAPSED magnitudes 167/1,217/381/201/125 and not the relayed admitted counts, W2-S64 armed to the CVO) -- the two snapshot vintages (the CVO's 170/1,217/394/201/125 at 80daa1fff6 vs the worker's at 22e388d221: PipelineScript +3, S3Key +13) NAMED for the sign. L8 PARTIAL v2 COMPILED (ledger/L8_PACKET.round6.partial.v2.md, sha256 e87221bb9216e4d5..., 10 of 11 terminal) and SENT to the CVO (94789) with the CTO for the record (94790). F-11 on slot ~2: the zip re-push under the GO ledgered CLOSED 23:49Z (one PutObject, zero task families); the ad-hoc build, derive, projection and served reads running.",
+      "artifacts": [
+        "CLOUD @acf75d72d8 (the F-6 drain)",
+        "CLOUD @88091d4945 (rows S90-S94 + the partial v2 packet)",
+        "msgs 94789 (CVO), 94790 (CTO)",
+        "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260909T2350Z.md"
+      ],
+      "commit": "2a8f9b6571",
+      "next": "F-11's flip and drain (verify in /c/tmp/wk-cldgrph-6-2; union; comp-system phase two -- org/modules/graph/grain_baseline.json moves; remove worktree + branch); the CVO's baseline sign; the FINAL packet + COMPLETION_REPORT.round6.json; the drain-end read to the CTO; CronDelete."
+    },
+    {
+      "seq": 19,
+      "limb": "L7 (a worker report adjudicated) / L6 (BOUNDS widened) / adjudication (one call pitched)",
+      "started_utc": "2026-09-10T00:44Z",
+      "ended_utc": "2026-09-10T01:04Z",
+      "act": "TICKS 49-51 (00:05Z, 00:21Z, 00:41Z) READ NOTHING TERMINAL: the partial v2 packet READ by the CVO 00:01Z and ADJUDICATED @104c46c48a (F6-AC6 PASS on the CVO's own before/after reads; 8 of 8 round-6 judgment criteria graded across ten orders; the tsgraph_spike pair named as the CTO's L10 decision row; S89 kept ARMED until F-11 drains); the CTO's Andrew word closing three D0 pre-tree projects (not this one) read; the worker on ~2 active at every tick. TICK 52: 0.9.0_WK_NFRA_CLDGRPH~2 REPORTED TO-CG-F-11 OPEN @865b7a4b0a with two BLOCKING rows armed to this seat, both inside CG-s-31's own accept (so neither a re-cut). LANDED and measured on the object it made: the nine recertifications; the ledgered zip push (served object 23:49:34Z); ONE ad-hoc opal-stitch-produce build SUCCEEDED (git_sha 22e388d221); ONE ad-hoc derive on globgrph-derive-runner:8 (skipped_unmapped_type=0); the projection pointer 21:05:17 -> 00:08:59; PROVISIONAL_NAMES_SERVED=0 of 4; the five magnitudes 167/1,217/381/201/125 identical across the local run, the cloud artifact, the served graph and the baseline; comp-debt's leg on the unified names; both nightly rules ENABLED from history. W2-S68 RULED (L6, my BOUNDS): F11-AC3 STORED_IN_RESOLVED=0 of 955 -- the edge targets the bucket ARN while the S3_BUCKET node id is the bucket NAME (_index_aws:83/:87 `arn or nid`; the producer's dangling check resolves against ARNs, true and blind); PRE-EXISTING (F-4's artifact: the same 955, 0 resolvable -- STORED_IN never reached the served graph). The fix one line inside the grant; the BOUNDS widened to a SECOND cycle @d5d7d8b6aa on the branch; the worker RE-HANDED (local proof first, then the ledgered zip push, one build, one derive on the pinned runner, the projection, AC3 re-taken). W2-S67 PITCHED to the CTO (94807; the CVO 94808) as the one call: F11-AC2 STITCH_V1_STAMPED_SERVED=1 -- the one node PORTAL_BUNDLE `portal`, stamped by the DEPLOYED fold image :8 (digest sha256:478d0a43, the CG-s-24 seven-family pin) while the code at HEAD retires the stamp (F11-AC4 two instruments; 1,771 -> 1). Closing it is an IMAGE ACT under NEVER-2 (rebuild, seven-family digest re-pin, ledger naming every family, the ad-hoc derive the test, the 02:00Z fire the acceptance); served DELTA not 0 (one props key on one node), so the never-widen sign is both halves: this seat's GIVEN in the pitch, the CTO's asked. REC: GO as a follow-on inside F-11 on the same slot the moment it lands; the order does NOT wait (its second cycle runs now; the GO before the second derive closes AC2 in the same cycle, else AC2's stamp limb reports as measured with the row and the FINAL L9 reads it). THE CTO'S HALF LANDED THE SAME TICK (94809, acked): GO inside F-11 on slot ~2 now and no wider, the discriminators named (a served node diff of exactly {PORTAL_BUNDLE: -vocabulary}; 1 -> 0 with PORTAL_BUNDLE present; 0 of 4 provisional unchanged; the ECR tag digest before/after; the five magnitudes unchanged); EXECUTED as an amendment @f3b17ade51 with the eight image-act paths granted, the act folded into the second cycle so ONE derive tests both rows; the worker re-handed. W2-S68 taken by the CTO for the L10 as a named lesson.",
+      "artifacts": [
+        "wk-cldgrph-6-2 @d5d7d8b6aa (the second-cycle ruling)",
+        "wk-cldgrph-6-2 @f3b17ade51 (the image-act GO)",
+        "msgs 94807 (CTO), 94808 (CVO), 94809 (the CTO's half)",
+        "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260910T0050Z.md"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "F-11's second cycle (and the image act if the CTO GOes it); the flip or the OPEN report; the drain (comp-system phase two -- grain_baseline.json moves); the CVO's baseline sign; the FINAL packet + COMPLETION_REPORT.round6.json; the drain-end read to the CTO; CronDelete."
     }
   ]
 }

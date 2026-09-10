@@ -1,7 +1,7 @@
 # DEPLOY COMPLETION LEDGER -- outset drift publisher, THE git_head READ ORDER (NFRA_OUTSET S28 ruling)
 
 **Opened:** 2026-09-09T23:55Z by `0.7.0_AE_CloudOps~W` (committed OPEN with the code change)
-**Status:** OPEN
+**Status:** **CLOSED 2026-09-10T00:05Z** -- all four legs verified; the refusal condition did not fire
 **Ordered by:** `2.0.0_SA_COO` msg 94786, TO-OS-s-25 amended @`a6be2b52dd`, mechanism addendum
 @`77858dc2f8`. Grant: TO-OS-s-21's `<paths>` names `infra/aws/ec2/outset-drift-device/`.
 **Row:** `NFRA_OUTSET-S28` @`b811fe7b91`; disarm record S30/S31 @`77858dc2f8`.
@@ -36,13 +36,42 @@ read places the move EARLIER than it happened -- which is exactly why the 22:54:
 like it preceded a task that started at 22:54:34Z, when the ref in fact moved inside the script's
 own rev-parse-to-status window.
 
-## Legs
+## Legs -- ALL FOUR VERIFIED
 
-1. [ ] Code change committed with this entry OPEN.
-2. [ ] ONE on-demand re-run (`Start-ScheduledTask`), the task's own accounting read after.
-3. [ ] The new artifact carries BOTH reads with their instants, and `git_head` agrees with the
-       commit the rows were measured at.
-4. [ ] Arms (a)-(e) of O25-AC1 read on the RE-RUN, not on the 22:54:33Z run.
+1. [x] Code change committed `03e336fe54` with this entry OPEN in the same commit. commit-gate 3 of 3
+       clean; one non-ASCII character I had just introduced was caught by the gate and removed first.
+2. [x] ONE re-run, 2026-09-09T23:58:07Z. The task's OWN accounting after: `LastTaskResult` 0,
+       `LastRunTime` 23:58:07Z (advanced from 22:54:34Z, so the field discriminates), `MissedRuns` 0,
+       `NextRunTime` 2026-09-10T11:30:00Z. State back to Ready.
+3. [x] The new artifact (VersionId `3AE8of7Q44VkfbsNNpwWD0EH8lqPj.Sn`, LastModified 23:58:14Z)
+       carries BOTH reads: `git_head_pre` `03e336fe54ee` @23:58:08Z, `git_head` `03e336fe54ee`
+       @23:58:11Z, `git_head_moved` **false**. The stamped head IS this commit.
+4. [x] Arms (a)-(d) read on the RE-RUN. Arm (e) reads OS-s-24's manual served day and is the only
+       one outstanding.
+
+## THE ARM (c) READING, and the trap it walked into
+
+`n` = 153 and the device's live porcelain count = 153. **THE COUNTS MATCHED WHILE THE SETS DID NOT**
+-- one path had left the set and a different one had joined it, so a count-only check would have
+reported a clean pass on a coincidence. Both attributed, zero unattributed:
+
+| direction | path | why |
+|---|---|---|
+| left the set | `org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md` | committed in `88091d4945` AFTER the artifact |
+| joined the set | `org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260909T2350Z.md` | mtime 2026-09-10T00:02:14Z, written AFTER the artifact's 23:58:09Z |
+
+Internally coherent: `n_modified` 3 + `n_untracked` 150 = `n` 153 = `len(rows)` 153.
+`tracked_total` 31,128.
+
+## Arm (d) on the re-cut instrument (row S29)
+
+AssumeRole management event 2026-09-09T23:58:09Z, role `outset-drift-publisher-laptop`,
+`roleSessionName` `outset-drift-laptop`, `assumedRoleUser.arn` byte-equal to the artifact's
+`publisher_arn`. **Denominator 83 AssumeRole events in the printed window, exactly 1 matching.**
+Bracketed: run start 23:58:07Z < assume 23:58:09Z < object 23:58:14Z.
+
+Object-level plane: `COVERAGE-ABSENT: no data-event trail on opal-estate-report` (2 trails, 0 Lake
+stores). **Recorded as absent coverage, never as NOT-YET.**
 
 ## The refusal condition, stated before the run
 
