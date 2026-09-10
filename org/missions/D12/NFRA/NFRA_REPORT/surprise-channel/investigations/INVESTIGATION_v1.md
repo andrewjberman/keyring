@@ -454,6 +454,31 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
     "spec_asserts": "RP-s-19's battery findings: 'ROUND 1 ESTABLISHED TWO INSTRUMENT LIMITS THAT BIND THIS CELL HARDER THAN ANY OTHER ... A breakdown built on an enumerator blind to a whole edge class renders confident, complete-looking and wrong, and a missing EDGE leaves no gap a reader can see. Carry a per-row \"what this query cannot see\" limb.'",
     "world_is": "A THIRD instrument limit of the identical shape (a false zero and a true zero read identically), on an edge/node class neither LIMIT 1 nor LIMIT 2 in org/modules/graph/INSTRUMENT_LIMITS.md names: comp-blast's graph never models a raw SNS destination endpoint (phone number, email) as a node at all -- only Lambda/SQS/etc. protocol targets are graph-typed and extractable. PHANTOM-CONSUMER on an SNS topic is therefore evidence of 'no GRAPH-TYPED subscriber,' never evidence of 'no subscriber.' This generalizes past opal-infrastructure-alerts to any current or future topic whose entire live subscriber set is SMS/email.",
     "notes": "DISARMED THIS TURN, not deferred: LIMIT 3 appended to org/modules/graph/INSTRUMENT_LIMITS.md (the same file LIMIT 1/LIMIT 2 already live in, and a path this cell's task order names) in this same commit, citing the two positive controls above, so a future caller reading that file before treating a comp-blast SNS PHANTOM-CONSUMER zero as an orphan-safe signal is not misled. NOT remediated -- fixing comp-blast's graph-build coverage for raw-endpoint subscriber nodes is comp-tool build-lane work, outside this cell's paths and mandate, exactly as LIMIT 1/LIMIT 2 were left NOT FIXED. Does not weaken ANOMALY_IN_EDITION.md's own central finding: opal-infrastructure-alerts' non-delivery is established by ALERT_DELIVERY.md's live AWS read (RP-s-6), never by this graph's zero -- the limit means the graph's zero cannot be cited as CORROBORATION of that finding, not that the finding is wrong."
+  },
+  {
+    "id": "NFRA_REPORT-Z-S9",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZZ",
+    "surfaced_at": "2026-09-10T02:52:00Z",
+    "one_line": "NFRA_REPORT HAS NO ledger/ DIRECTORY AT ALL. The spine's L10 names three ledger artifacts for a project -- ROUND_ANALYSIS.round<N>.md (CTO), COMPLETION_REPORT.round<N>.json (COO) and COMPLETION_GRADES.round<N>.json (CTO) -- and none exists here. Round 1's round-N analysis was written to the CTO's own deliverables instead, and surprise-channel/remediations/ is EMPTY, so round 1's remediation document (the CVO's one artifact of the round, per spine L10) was never written either.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md at site-Z HEAD, L10 section: 'the CTO writes ledger/ROUND_ANALYSIS.round<N>.md'; '2.0.0_SA_COO ... writes ledger/COMPLETION_REPORT.round<N>.json'; '1.0.0_SA_CTO ... writes ledger/COMPLETION_GRADES.round<N>.json'; 'The CVO writes the round's remediation document, the one artifact of the round'.",
+        "Measured over the tracked corpus (denominator: 31000 tracked files, git ls-files): ROUND_ANALYSIS 7 hits, all under NFRA_CLDGRPH/ledger (3), NFRA_COMPEFFICACY/ledger (1) and NFRA_OUTSET/ledger (2) -- ZERO under NFRA_REPORT. COMPLETION_REPORT 7 hits (one is the schema at org/standards/) -- ZERO under NFRA_REPORT. COMPLETION_GRADES 3 hits -- ZERO under NFRA_REPORT.",
+        "org/missions/D12/NFRA/NFRA_REPORT/ directory listing: decompositions/, deliverables/, prd/, project.json, surprise-channel/, task-orders/ -- no ledger/.",
+        "org/missions/D12/NFRA/NFRA_REPORT/surprise-channel/remediations/ is an existing but EMPTY directory.",
+        "org/standards/COMPLETION_REPORT.schema.json EXISTS (11023 bytes), so the contract the COO limb writes against is present and this is not a missing-contract problem."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Spine L10 gives this project three ledger artifacts and one remediation document, and rule 27 as amended at f5355fcfc4 states that CLOSED requires COMPLETION_REPORT + COMPLETION_GRADES with every grade REALIZED -- a round is not closed because every FWD reads REALIZED somewhere.",
+    "world_is": "None of the four artifacts exists for this project at any round. Three sibling tree projects carry the ledger/ shape, so this is a per-project gap rather than an estate-wide convention difference -- which is what the sibling denominator establishes and a project-scoped check could not have.",
+    "notes": "THREE LIMBS, THREE OWNERS, AND THIS ROW DOES NOT ADJUDICATE THE TWO THAT ARE NOT THIS LANE'S. (a) COMPLETION_REPORT.round<N>.json is the COO's and is NOT YET OWED -- round 2 reads 5 of 7 terminal, and the spine conditions that artifact on the decomposition being SPENT (every cell holding a terminal task order with a valid proof-of-spec). This lane writes it, creating ledger/, when the seventh order goes terminal; that is the disarm. (b) ROUND_ANALYSIS and COMPLETION_GRADES are 1.0.0_SA_CTO~Z's. (c) The round's remediation document is 3.0.0_SA_CVO~Z's. Round 1 was RECUT rather than CLOSED, so its missing COMPLETION_REPORT may be correct by design -- but NFRA_OUTSET carries ROUND_ANALYSIS for both round 1 and round 2, so a recut round does produce one there, and that is the comparison this row rests on rather than an inference about intent. SURFACED, NOT CHASED: this lane does not write another seat's ledger artifact, and CLAUDE.md's no-inferred-gates clause means this row is not a hold on anyone -- round 2 proceeds to its close regardless."
   }
 ]
 ```
