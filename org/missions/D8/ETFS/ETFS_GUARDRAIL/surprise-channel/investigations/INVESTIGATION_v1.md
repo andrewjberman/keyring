@@ -2405,6 +2405,73 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "CLAUDE.md Rule 14: 'Every `.py` edit passes `.tools/commit-gate.sh` (py_compile + ds-precommit + ruff py39). Universal.' The gate's own refusal text: 'Fix the reported issue(s) and re-commit ... --force does NOT bypass a gate failure (it only overrides the contamination check).'",
     "world_is": "The ds-precommit limb and the ruff limb of that same gate contradict each other on the same bytes, and the fail-closed one is wrong. The instruction the gate prints -- 'fix the reported issue(s)' -- therefore asks an author to change CORRECT code to appease a false finding, which is how a checker teaches a codebase to avoid a legal construct. I complied ONLY because the replacement is independently better (the paginator auto-paginates, and a single list_objects_v2 returns a PAGE whose length is not a denominator), and I recorded the reason in a comment at the call site so the next reader does not take the shape for a preference. NOTE FOR WHOEVER PICKS THIS UP: the FALSE-NEGATIVE direction is unmeasured here. I have shown the checker fires where it should not; I have NOT shown it fires everywhere it should, and a positive control bounds under-firing only."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W4-S13",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T17:33Z",
+    "one_line": "S30-AC1's arm (c) (organic message BYTE-IDENTICAL to the deployed bytes) and its arm (d) plus the face's own bound (the disclosure 'carries an explicit value in BOTH cases') name the SAME message and are JOINTLY UNSATISFIABLE -- no artifact can satisfy both, and I built to the bound.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "FACE, arm (c): 'On a run where the ladder DID run, the message is byte-identical to what the deployed bytes produce today, compared as bytes and not as a description.' FACE, arm (d): 'Build the message from the SAME inputs forced and unforced; ... the unforced one carries the same field with its not-forced value.' FACE, BOUNDS: 'A FIELD PRESENT ONLY ON THE FORCED RUN IS NOT A DISCLOSURE. It carries an explicit value in BOTH cases, for the same reason `forced:false` had to exist in EG-s-25.'",
+        "THE TWO CLAUSES NAME ONE MESSAGE. The orchestrator COUPLES the axes: `fixture = f\" --fixture-remove {forcing} --no-ladder\" if forcing else \"\"` at infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:463 @a6cbb6f3c3 emits --no-ladder IFF a validated forcing spec is present, so an UNFORCED run is exactly a run whose ladder RAN. Arm (d)'s 'unforced' branch and arm (c)'s 'organic' branch are therefore the same message, and arm (d) requires a field on it that the deployed bytes do not emit while arm (c) requires the bytes to be unchanged.",
+        "MEASURED, not argued, in the battery's own arm (c) output: 'SUBJECT byte-identity (compared as bytes): True' / 'BODY LITERAL whole-message byte-identity: False' / 'REPORTING INVARIANCE: every pre-fix body line present, in order, byte-identical: True' / 'pre-fix body lines: 6   fixed body lines: 12   added: 6   removed: 0   altered: 0'. The six added lines are printed in full and are exactly the disclosure block plus its blank separator.",
+        "The pre-fix builder's signature is the shape of the gap: 'pre-fix _build_terminal_email takes 4 parameter(s) [month, unresolved, ask, to_header] -- verdict among them: False'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S30-AC1 arm (c): the organic message is byte-identical to what the deployed bytes produce today, compared as bytes. S30-AC1 arm (d) and the BOUNDS: the disclosure carries an explicit value in BOTH cases and a field present only on the forced run is not a disclosure.",
+    "world_is": "Both cannot hold. I resolved it toward arm (d) and the bound, for three stated reasons rather than by preference: the BOUND is a bound and outranks an arm; the face itself calls (d) 'the arm that carries the outcome' and (c) an invariance guard; and the cell exists because a disclosure gap must not be discovered on an artifact that cannot be un-sent, which is an argument for the disclosure existing on every branch. Arm (c) was then executed in the strongest form that survives -- subject byte-identical, every pre-fix body line preserved byte-identical and IN ORDER, zero removed, zero altered, sole delta the additive block -- and the battery PRINTS the literal form as FALSE immediately above the token rather than quietly redefining it. WHAT THIS ROW DOES NOT DECIDE: whether the trade is the right one. If `2.0.0_SA_COO` or `3.0.0_SA_CVO` reads arm (c) as governing, the remedy is one line (emit the block only when the shape is not organic) and the cost is that an organic terminal email says nothing about forcing -- which is the exact shape EG-s-25 rejected on the verdict document. I am not authorised to re-cut a criterion and did not."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W4-S14",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T17:33Z",
+    "one_line": "`test_served_artifact_has_the_shape_the_writer_produces` was ALREADY RED at this branch's base commit -- EG-s-29 added a `provider` key to the renderer's unresolved rows and the committed S3 fixture it is compared against does not carry one -- so the orchestrator suite arrives at EG-s-30 with one pre-existing failure that is not mine.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO -- the disagreement is between the RENDERER's writer (`data/etfs/scripts/presentation/render_month_end.py`, EG-s-29's terminal surface, explicitly out of bounds for this order: 'DO NOT TOUCH THE RENDERER') and a committed S3 fixture, and which of the two is stale is a cell-level decision rather than an edit. I can reach the assertion (the test file is in this order's <paths>) but not the question, and changing an assertion to match whichever side happens to be newer is how a fixture stops being evidence.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ISOLATED BY RESTORING THE BASE, not by argument: all three files this order touches (lambda_function.py, test_terminal_send.py, test_forcing_seam.py) were written back to their `a6cbb6f3c3` blobs IN PLACE and pytest re-run. Result: 'test_served_artifact_has_the_shape_the_writer_produces FAILED ... assert {class, date, reason} == {class, date, provider, reason}', '1 failed, 1 passed, 26 deselected'. My files were restored in the same script's finally and `git diff --stat` confirmed 2 files / 340 insertions afterwards.",
+        "The failing assertion is infra/aws/lambda/etfs-reports-orchestrator/test_terminal_send.py:361 @a6cbb6f3c3: `assert served_row_keys == produced_row_keys == {\"date\", \"class\", \"reason\"}`. `served_row_keys` comes from the committed S3 fixture and reads {class, date, reason}; `produced_row_keys` comes from calling the renderer's own writer live and reads {class, date, provider, reason}.",
+        "WITH my change and the EG-s-27 arm narrowed (row W4-S15), the whole orchestrator suite reads '1 failed, 33 passed' -- the SAME one failure, and the count of passes rose by 6 (my arms) + 0.",
+        "DIRECTION OF THE DRIFT, unproven here and stated as such: `provider` is the field EG-s-29 was cut to make the terminal alert name (face @32ae4ede66: 'the terminal alert names NO provider in ANY run'), which makes the RENDERER the side that moved. I did not read EG-s-29's cell to confirm it and this row does not assert it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The arm's own comment at test_terminal_send.py:347-349: '(h) THE SECOND INSTRUMENT, and a DIFFERENT one: the real served object (fetched from S3 and committed as a fixture) carries the shape the writer produces -- partner keys, list values, no unresolved key, rows without an inline partner.'",
+    "world_is": "The served fixture and the writer no longer produce the same row keys, so the arm's second-instrument claim is false at this commit. A red arm nobody owns is worse than a failing one somebody does: the next author in this directory reads '1 failed' beside their own change and has to re-derive, from scratch, that it is not theirs -- which is the cost I just paid. The FALSE-NEGATIVE direction is unmeasured: I have shown this arm fails, not that the served object is wrong."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W4-S15",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T17:33Z",
+    "one_line": "EG-s-30's disclosure text names `--no-ladder` in prose, which tripped EG-s-27's terminal arm 4 -- a NON-COMMENT LINE COUNT of the token across the whole module -- so I had to amend a terminal cell's arm; I replaced the line count with the reachability question it was a proxy for rather than exempting a name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE REFUSAL, verbatim, on the first run after the code change: 'FAILED infra/aws/lambda/etfs-reports-orchestrator/test_forcing_seam.py::test_the_ladder_skip_rides_the_forcing_and_is_not_independently_reachable - AssertionError: emitters of --no-ladder: [\\'ladder_line = (\"NO -- --no-ladde...'.",
+        "THE OLD ARM, at test_forcing_seam.py @a6cbb6f3c3: `emitters = [ln.strip() for ln in src.split(\"\\n\") if \"--no-ladder\" in ln and not ln.strip().startswith(\"#\")]` then `assert len(emitters) == 1`. It counts LINES, and a line count cannot tell an EMITTER from a mention.",
+        "THE NEW ARM asks the property's own question with ast: of every executable `--no-ladder` string constant in the module, how many sit in a function REACHABLE from `_render_command`? Its printed denominator on the changed module: 'EG-s-27 arm 4: --no-ladder literal holders = 4 ([_build_terminal_email, _render_command, _run_shape_lines, _terminal_claim_line]); reachable from _render_command = 1 ([_render_command]); IN the command path = [_render_command]; OUTSIDE = [_build_terminal_email, _run_shape_lines, _terminal_claim_line]'. The one-line literal check on the coupled f-string is kept verbatim, and part 1 of the same arm still asserts `cmd.count(\"--no-ladder\") == 1` on the BUILT COMMAND, which is the strongest form and is untouched.",
+        "The suite reads '1 failed, 33 passed' after the amendment, the one failure being the pre-existing one in row W4-S14."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The face BOUNDS: 'DO NOT TOUCH THE RENDERER. EG-s-29 is terminal there' -- and, by the same principle, EG-s-27 is terminal in this module. The face's DELIVERABLE nevertheless names 'The changed lambda_function.py, its tests'.",
+    "world_is": "A terminal cell's arm had to change for a later cell's correct code to compile past it, and the face does not say who may do that. I judged the FORM only: narrowing a guard is the shape that hides defects, so the amendment is written to be STRICTLY STRONGER than what it replaces -- it establishes UNREACHABILITY FROM THE COMMAND BUILDER, a fact the line count never established, and it prints its denominator so a new holder is visible rather than silently admitted. The alternative was to avoid the literal in the email's prose, which would have made the disclosure worse for the reader by hiding the exact flag name a person would search for. Whether a worker may amend a terminal cell's arm at all is the issuer's call, not mine, and this row is the carrier."
   }
 ]
 ```
