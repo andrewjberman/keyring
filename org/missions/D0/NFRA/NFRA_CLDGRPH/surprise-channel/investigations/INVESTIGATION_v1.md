@@ -7705,3 +7705,34 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-S115 -- a hash-ancestry test answered 'did this commit land' for a claim that needed 'is the fix present'
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T13:26Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S115",
+    "one_line": "MY OWN INSTRUMENT ERROR, CAUGHT BEFORE A WORKER EXISTED AND WORTH MORE THAN THE VERDICT IT PRODUCED: I asserted on five round-8 faces, under a MEASURED heading, that every worker would run the OLD comp-rail -- on the strength of `git merge-base --is-ancestor 6228c53377 CLOUD` returning NOT-an-ancestor with a passing positive control. The instrument was sound and the QUESTION was wrong. The same fix reached CLOUD under a DIFFERENT hash, 838b963638 (0.0.0_AB_MSTR's drain of mstr-comprail-pick), so a hash test answered 'DID THIS COMMIT LAND' while the claim on the face needed 'IS THE FIX PRESENT'. Re-measured BY CONTENT before any spawn: .tools/_comprail.py carries the caller-tree resolver `cwd=os.getcwd()` at :148 under its :140-145 docstring naming the worktree case, in ALL FOUR round-8 worktrees and in the main tree as the positive control -- 15 caller-tree marker lines in all five checkouts. All five faces were corrected in place before a worker was spawned. THE ESTATE ALREADY HAD THIS TRAP WRITTEN DOWN -- 'a cherry-picked or ephemeral pin is resolved by CONTENT, never merge-base --is-ancestor' -- and I reached for the hash anyway, which is the part worth recording: knowing a trap and being on the branch it catches are different states.",
+    "spec_asserts": "CLAUDE.md Rule 22a, the CODE limb: a cherry-picked or ephemeral pin is resolved by CONTENT (`git show <pin>:<file>` plus a negative control), NEVER by `merge-base --is-ancestor`. And Rule 22 GRAIN: the object read must BE the object claimed -- a commit is not a fix.",
+    "world_is": "A hash-ancestry test measures whether one specific commit object is reachable. When a fix travels by cherry-pick, rebase or a drain of a pick branch, the reachable object has a different hash and the test returns a correct NO to a question nobody asked. Both a true absence and a re-hashed presence render as NOT-an-ancestor, and the positive control does not separate them because it is testing the instrument, not the question.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat's first read: `git merge-base --is-ancestor 6228c53377 HEAD` -> NOT an ancestor; positive control bb08a2ac62 -> ON-BRANCH.",
+        "This seat's re-read: `git merge-base --is-ancestor 838b963638 CLOUD` -> ON local CLOUD; `git log -1 838b963638` -> 0.0.0_AB_MSTR, 'drain: merge mstr-comprail-pick (row gate clean on the merged index)'.",
+        "The CONTENT test, five checkouts: .tools/_comprail.py in wk-cldgrph-8-1..4 and in the main tree each carry 15 caller-tree marker lines, including `cwd=os.getcwd()` at :148.",
+        "The five faces at 217a87a817 carried the wrong premise; corrected in the amendment commit that carries this row."
+      ]
+    },
+    "notes": "INERT because it was caught before it reached a worker and no order shipped with it, and because the requirement it produced -- print TREE_READ with a one-file positive control -- is CORRECT INDEPENDENTLY of the premise and stays on every face at the CTO's ask (95105, 95133). The general form, which is the reason this is a row and not a commit-message line: A FIX AND A COMMIT ARE DIFFERENT OBJECTS, and on an estate that cherry-picks between two fabrics they come apart routinely. Ask what the fix DOES and look for that; use the hash only to date it. Recorded against myself in the same round in which I cut a cell whose entire subject is a census that read the wrong domain -- the shape is identical one axis over, and I produced it while writing the face that warns about it."
+  }
+]
+```
