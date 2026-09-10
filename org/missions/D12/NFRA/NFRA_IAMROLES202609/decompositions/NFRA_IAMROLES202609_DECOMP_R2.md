@@ -28,7 +28,7 @@ grammar wants 1-4 lowercase letters there. Measuring caught it; eyeballing would
 |---|---|---|---|---|
 | `IAM-r-1` | FWD-4 | **THE TOKEN SPLIT.** Split the governance disposition's primary token into its two intents and correct the coverage line it feeds. The round-1 grade failed because one token meant *is declared* for one member and *ought to be declared* for eight others, so a coverage line read as ten-of-sixteen declared when roughly two are. ⛔ **TOUCH NO RESEARCH AND DO NOT RE-OPEN THE SIX EXEMPT LINES** -- they are individually reasoned, non-templated, each naming the decision owed and why no owner could be named. The research is sound; only the vocabulary reporting it is not. | OPEN | iam |
 | `IAM-r-2` | FWD-1 | **WHAT DO 191, 208 AND 216 EACH COUNT.** Three irreconcilable role populations are asserted across the brief, the PRD and the round-1 battery -- two of them inside a single sentence presented as corroboration. Establish, per figure, WHICH INSTRUMENT produced it, at WHAT VINTAGE, and over WHAT POPULATION. ⛔ **DO NOT PICK A WINNER BY PREFERENCE.** They may be three different populations or one misclassification; an unreconciled figure asserted confidently is the defect being repaired. | OPEN | iam |
-| `IAM-r-3` | FWD-4 | **THE TRUE MEMBERSHIP OF THE UNDECLARED SET, PER MEMBER, ON A PLANE THAT DID NOT BUILD IT.** The live graph's drift class carries at least one confirmed false positive. ⛔ **SAME-INSTRUMENT AGREEMENT ACROSS VINTAGES PROVES NOTHING -- THAT IS THE ENTIRE FINDING.** Every member is read against Terraform source directly, one at a time, each with its own citation. | OPEN | iam |
+| `IAM-r-3` | FWD-4 | **THE TRUE MEMBERSHIP OF THE UNDECLARED SET, PER MEMBER, ON A PLANE THAT DID NOT BUILD IT.** The live graph's drift class carries at least one confirmed false positive. ⛔ **SAME-INSTRUMENT AGREEMENT ACROSS VINTAGES PROVES NOTHING -- THAT IS THE ENTIRE FINDING.** Every member is read against Terraform source directly, one at a time, each with its own citation. ⛔⛔ **AND THE DISCRIMINATOR IS A RESOURCE BLOCK, NEVER A NAME MATCH -- MEASURED AT THIS CUT, see 1a.** A role name can appear many times in Terraform and still be undeclared. | OPEN | iam |
 | `IAM-r-4` | FWD-4 | **RECORD THE CLASS RULING FOR THE AWS SERVICE-DEFAULT ROLES.** `ecsTaskExecutionRole`, `rds-monitoring-role`, `vpc-flow-logs-role`. ⛔ **DO NOT HUNT THREE OWNERS.** `1.0.0_SA_CTO~Z` ruled this as architecture: AWS-managed service roles stay outside our Terraform with the reason recorded, and ONE CLASS RULING satisfies the outcome for the whole class. The cell RECORDS that ruling against each member; it does not re-litigate it and does not seek a per-role owner. | OPEN | iam |
 | `IAM-r-5` | FWD-4 | **THE TWO PRODUCTION SERVING-PATH ROLES INTO TERRAFORM.** `portal-auth-lambda-role`, `opal-data-refresh-lambda-role`. Not an ownership question: they serve production and are not in code, so the answer is to declare them. ⛔ **WORLD-CHANGING. SEE THE BOUND AT 2c -- THE APPLY IS GATED ON A PLAN THAT DESTROYS NOTHING.** | OPEN | infra |
 | `IAM-r-6` | FWD-4 | **A THIRD DISPOSITION VALUE, THEN THE RESIDUE CALL.** The round-1 schema is binary and cannot express retirement, so `lambda-test-role`'s honest outcome has nowhere to go. Extend the vocabulary with a retirement value under rule 24, THEN dispose that member. ⛔ **FORCING A RETIREMENT INTO THE EXEMPTION VALUE WOULD REPEAT `IAM-r-1`'S DEFECT ON A DIFFERENT AXIS** -- one axis, two intents. | OPEN | iam |
@@ -36,6 +36,41 @@ grammar wants 1-4 lowercase letters there. Measuring caught it; eyeballing would
 **CELL STATUS VOCABULARY** (rule 24 record at 2a), unchanged from round 1 and adopted rather than
 re-authored: `NOT-EVALUATED | OPEN | IN-FLIGHT | HELD | COMPLETE | CLOSED`. **6 of 6 evaluated at
 this cut; none carries NOT-EVALUATED**, which is a measurement and not a vocabulary lacking the value.
+
+---
+
+## 1a. A RE-GROUNDING THIS CUT PERFORMED, AND IT MOVES TWO CELLS
+
+**The analysis describes the two production serving-path roles as "not in code", and one of them is
+not in code IN A WAY THE PHRASE DOES NOT CAPTURE.** Measured at this cut, on Terraform source:
+
+```
+  portal-auth-lambda-role         0 hit(s) across 569 files    -- absent outright
+  opal-data-refresh-lambda-role   9 hit(s) across 569 files    -- and NOT ONE IS A DECLARATION
+  POSITIVE CONTROL, a role everyone agrees is declared         2 hit(s)
+```
+
+⛔ **ALL NINE ARE REFERENCES.** `infra/aws/terraform/data-refresh/main.tf` contains **ZERO**
+`resource "aws_iam_role"` blocks and **FOUR** `resource "aws_iam_role_policy"` blocks that attach
+inline policies to that role **by name string**, plus hardcoded `role_arn` strings. The file says so
+in its own comment: *"inline policy attached to the pre-existing opal-data-refresh-lambda-role."*
+
+⭐ **SO TERRAFORM MANAGES POLICIES ON A ROLE IT DOES NOT OWN, on a production serving path.** That is
+a THIRD state the round-1 binary vocabulary cannot express, arrived at independently of the
+retirement gap, and it is why two cells change shape:
+
+- **`IAM-r-3`'s discriminator is a RESOURCE BLOCK, never a name match.** A name-grep would have called
+  this role declared. The check is: does a `resource "aws_iam_role"` block exist whose `name` is the
+  member. The confirmed false positive is the POSITIVE control (it sits inside such a block); this
+  role is the NEGATIVE control (nine name hits, no block). **A discriminator that cannot separate
+  these two is not a discriminator.**
+- **`IAM-r-5` is an ADOPTION, not a creation, and the destroy bound is not theoretical.** Four live
+  policy attachments hang off this role by name. A plan that destroys or replaces it would orphan
+  them on a production serving path -- which is precisely the outage `C-NO-ACCESSDENIED` forbids this
+  project from causing.
+
+⚠ **NOT CLAIMED:** that the other fourteen members are correctly classed. This cut measured two roles
+because two cells depend on them; `IAM-r-3` measures all of them.
 
 ---
 
@@ -118,7 +153,7 @@ change that does not yet exist.
 | `IAM-r-3` | ⛔ **PER-MEMBER, AGAINST A PLANE THAT DID NOT BUILD THE SET, ONE CITATION EACH.** Agreement between the live graph at two vintages is NOT evidence. Carry a NEGATIVE CONTROL: a member the estate agrees is genuinely undeclared must read absent on the same probe, or the probe proves nothing. |
 | `IAM-r-4` | ⛔ **RECORD, DO NOT RE-RULE, AND DO NOT SEEK OWNERS.** The class ruling is `1.0.0_SA_CTO~Z`'s and is given. A cell that reopens it is doing L2 work in an L7 cell. |
 | `IAM-r-5` | ⛔⛔ **WORLD-CHANGING, AND THE APPLY IS GATED ON THE PLAN.** `C-NO-ACCESSDENIED` (`D5`): the project must not cause the outage it exists to prevent, and these are PRODUCTION SERVING-PATH roles. The declaration is written and the resource is ADOPTED INTO STATE, then `terraform plan` must show **NO destroy and NO replace** on either role. ⛔ **A PLAN SHOWING DESTROY OR REPLACE IS A HARD STOP AND A BLOCKING ROW -- NEVER AN APPLY.** Any apply opens a change-management entry in `org/critical_paths/change_management/` BEFORE the act, commits the entry AND the sentinel before the grading reads (NEVER-2 ordering, because a worker can die at any instruction boundary), and goes through `safe-apply` -- never bare `terraform apply`. `comp-blast` is owed before the change. |
-| `IAM-r-6` | ⛔ **THE VOCABULARY CHANGE COMES FIRST AND CARRIES ITS RULE-24 RECORD AND ITS TOKEN CENSUS.** Then the member is disposed. Disposing first and naming the value afterwards is how the round-1 defect happened. |
+| `IAM-r-6` | ⛔ **THE VOCABULARY CHANGE COMES FIRST AND CARRIES ITS RULE-24 RECORD AND ITS TOKEN CENSUS.** Then the member is disposed. Disposing first and naming the value afterwards is how the round-1 defect happened. ⚠ **AND THE RETIREMENT VALUE MAY NOT BE THE ONLY ONE OWED:** section 1a found a member that is neither declared nor cleanly undeclared -- Terraform manages POLICIES on a role it does not own. The uncovered-member hunt for this vocabulary must consider that state explicitly and either cover it or record why it does not need a value. |
 | all | ⛔ **G-21 ALERTING MORATORIUM IS ARMED.** No alert, alarm, monitor, schedule or notification. ⛔ **`C-ANALYZER-PRICED-FIRST` + G-25:** no AWS Access Analyzer; availability is not authorization. |
 
 ---
