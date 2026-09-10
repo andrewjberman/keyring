@@ -218,6 +218,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "CLAUDE.md Rule 22: 'A CHECK SCOPED TO THE MEMBERS CANNOT SEE A DEFECT IN WHAT THE MEMBERS SHARE ... Ask what the members have in COMMON, and check THAT on its own; then re-read the population UNSCOPED once.' PRD v0.3 C-SHARED-DEFECT: the unscoped pass over the population is the pass that would have caught a telecom set on 48 non-telecoms. FWD-13's bar: everything on one page is about the same company.",
     "world_is": "The identity layer -- the root four surfaces hang from, cut to remedy F6 -- shipped with the F6 shape inside it: one template's example ticker keyed 16 of 89 covered names to Apple, every per-member criterion passed, and the defect was found by a CONSUMER building on the artifact, not by the issuer or the gate. Remedy taken by the disarm owner the same turn: the order reopened on its own branch with the unscoped criterion the issuance lacked, the worker resumed to regenerate with a placeholder read as UNRESOLVED, and the consumers that already read the keys held off the drain until they regenerate. What this row does NOT claim: that the corrected universe has landed (it lands with the next drain of wk-AMGT_RESAPP-1-3), or that the CVO's disposition of W7-S3 is anything but its own.",
     "notes": "Owner of the remedy: 2.0.0_SA_COO~ZZZ (issuer). The CVO's L9 disposition of AMGT_RESAPP-Z-W7-S3 is not pre-empted by this row; this row records the issuer's act and its evidence so the disposition can be graded against the artifact rather than the message."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W5-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~5",
+    "surfaced_at": "2026-09-10T22:53Z",
+    "one_line": "AMGT-s-15's own two schemas name reviewed_at/review_interval_days once per LIST, never per entry, so rot.py's staleness is list-wide (N is 0 or the full entry count, never partial); and social_accounts.json's entries are keyed by a `security_key` this project has not defined anywhere else, resolved here to AMGT-s-12 universe.json's `folder` value.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_RESAPP.TO-AMGT-s-15...md worker face (a)/(b): publishers.json and social_accounts.json are BOTH given as {owner, owner_status, reviewed_at, review_interval_days, entries: [...]} -- reviewed_at and review_interval_days sit at the list's top level in both named shapes; neither named entry shape ({domain,name,status,added_at,added_by,reason} for publishers, {security_key,platform,handle,status,evidence} for social_accounts) carries a per-entry reviewed_at field",
+        "same worker face (c): 'for each list, entries older than review_interval_days since reviewed_at are STALE' -- read against the schemas in (a)/(b), the only reviewed_at available to compare against is the list's single value, so lib/research/lists/rot.py's is_stale() runs once per list and the result (stale or not) is reported against the whole entries_total (rot_signal.json, entries_stale field is either 0 or equal to entries_total for every list at every run so far)",
+        "python search of lib/research/**/*.py for the literal string 'security_key' before this cell's own build_lists.py existed: 0 hits (rules/, identity/ modules carry no such field)",
+        "AMGT-s-12's universe.json (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/universe.json@074d0d1ebe) names, per entry, folder/one_pager_files/bloomberg_ticker/sa_symbol/ir_domain/social_account -- no field named security_key; folder is the one field MEASURED present and unique across all 89 entries (bloomberg_ticker and sa_symbol are UNRESOLVED for a majority: e.g. Adobe ADBE US, Air Liquide AI FP, America Movil AXMB MM all carry bloomberg_ticker.status UNRESOLVED in the same file), so folder was read as security_key's value in social_accounts.json's 267 entries (89 names x 3 platforms)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell's own (a)/(b) schemas carry reviewed_at/review_interval_days at the list level only, and (c) then describes staleness in terms of 'entries older than review_interval_days since reviewed_at' as if the comparison were per-entry; the cell also names social_accounts.json entries by `security_key` without defining the term or pointing at an existing field it maps from.",
+    "world_is": "No per-entry reviewed_at field exists in either schema the cell itself gives, so this cell's rot.py computes staleness once per list (all-or-nothing over that list's entries) rather than per entry, and security_key was set to AMGT-s-12 universe.json's `folder` value -- the only field measured unique over all 89 names, since bloomberg_ticker/sa_symbol are UNRESOLVED for many of them and would leave holes as a key.",
+    "notes": "Non-blocking: AC1/AC2/AC3 all pass under this reading, and the cell's own (c) text -- 'Prints ONE line per list' -- is itself consistent with a per-list (not per-entry) rot computation. Recorded because a later cell or an owner editing these lists by hand and expecting a per-entry review date, or a per-entry security_key drawn from some other identifier, would find neither and should read this row first."
   }
 ]
 ```
