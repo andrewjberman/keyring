@@ -80,6 +80,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "receiving-check.py @adfbe65590 (1.0.0_SA_CTO~Z msg 21057): 'grade what you were HANDED before you build on it, one command ... six artifact types dispatch to the tool that already owns them ... run as subprocesses with their own output shown verbatim'.",
     "world_is": "For a task order the wrapper dispatches to-pipeline-gate one file at a time, and the gate's coverage limb grades the issuance SET; so on a conforming sixteen-order issuance the wrapper returns HAND BACK sixteen times for a property the set satisfies, and its verdict is the negation of the gate's. The pre-commit hook passes all staged paths together and grades correctly; nothing is blocked. A COO who trusted the wrapper's verdict on an issuance would hand back a correct cut.",
     "notes": "The tool's owner is 1.0.0_SA_CTO~Z. The fix shape is the owner's to choose: dispatch task orders as one set when more than one is handed, or skip the coverage limb per file and say UNCHECKED for it rather than HAND BACK. Same class as the three that seat named in msg 21057 -- a check that exists, reads correct, and cannot reach its subject. Reported to the owner by message after this commit lands."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W7-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~7",
+    "surfaced_at": "2026-09-10T21:08:24Z",
+    "one_line": "AC4's literal string check cannot be satisfied by a correct, documented use of the TO-named ledger tool .tools/deploy_ledger.py -- its cmd_close hardcodes a Status value the check's own patterns never match.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_RESAPP.TO-AMGT-s-6.version-store-opal-data-research.md AC4 invocation, run verbatim against the real closed entry org/critical_paths/change_management/20260910T2059Z_amgt-resapp-opal-data-research-bucket_deploy_completion.md -> 'entries 1 | names safe-apply True | closed False'",
+        ".tools/deploy_ledger.py:436 cmd_close hardcodes state['status'] = 'CLOSED -- nothing stranded' (no CLI flag sets a different status string); :260-263 _render_entry emits '**Status:** ' + status + ' -- closed ' + closed_at, i.e. literally '**Status:** CLOSED -- nothing stranded -- closed <ts>'",
+        "isolated call to deploy_ledger._render_entry() with status='CLOSED -- nothing stranded' and a closed_at set: .upper() checked against AC4's four patterns ('STATUS: CLOSED','STATUS: COMPLETE','CLOSED AT','COMPLETED AT') -> all four False, because '**Status:**' places two markdown asterisks between the colon and the space (breaking 'STATUS: CLOSED' contiguity) and the closed-at phrase reads 'CLOSED <timestamp>' not 'CLOSED AT' or 'COMPLETED AT'",
+        "comp-which \"open a change-management deploy ledger entry\" returned no curated match (score 0.55 top hit comp-schedule); .tools/deploy_ledger.py was located by comp-find --name on 'deploy*ledger*' as the only estate tool matching the TO's own description of what it does (open/close-leg/close/check against org/critical_paths/change_management + .open_deploys)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC4 expects 'closed True' where closed := any(w in t.upper() for w in ('STATUS: CLOSED','STATUS: COMPLETE','CLOSED AT','COMPLETED AT')) after using 'the estate's ledger tool' (TO deliverable (c)) to open and close the entry.",
+    "world_is": "The estate's only matching ledger tool, used exactly as documented (open -> close-leg x2 with proof -> close, no hand-edit), renders a Status line whose markdown bolding and fixed CLOSED-status prose never contain any of AC4's four literal substrings; the criterion is unsatisfiable by a correct, undocumented-route-free use of the named tool. I did not hand-edit the rendered .md to force a match (the tool's own docstring: 'Never hand-edit an entry' -- a hand-edit is also a route this order did not name) and did not repair or widen AC4. AC4 is recorded FAIL against its exact invocation and verbatim output; the order does not flip to complete on this row alone.",
+    "notes": "Worker did everything else the cell specifies: G-16 ordering held (ledger opened before safe-apply, closed+committed before the AC2-AC5 grading reads), the tool named safe-apply in its own manifest text (AC4's other two limbs both read True), and the entry genuinely IS closed (sentinel removed, all legs proven) -- only the literal string match fails. Owner to choose the fix shape: loosen AC4's pattern set to also accept 'CLOSED --' (the tool's actual terminal-status grammar, per deploy_ledger.py:734 _is_terminal_status which already treats a leading CLOSED/COMPLETE token as terminal), or have future TOs check via _is_terminal_status-equivalent logic rather than hand-picked substrings. Not something this worker's <paths> grant licenses fixing (the criterion text stands; repairing it is explicitly out of bounds for the worker who is graded by it)."
   }
 ]
 ```
