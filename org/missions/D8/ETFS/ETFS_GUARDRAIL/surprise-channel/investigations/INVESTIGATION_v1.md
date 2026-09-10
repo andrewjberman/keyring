@@ -1752,6 +1752,30 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "S14's own clause: that the objection to the second arm is 'purely that nobody placed it and nothing controls it'.",
     "world_is": "The gate ships a 30-arm self-test that reads 0 failures at HEAD and 2 with the patch, both attributable to the second arm; the control existed and was not run by this seat.",
     "notes": "Chain: S12 (the gap) -> S13 (the scope defect) -> S14 (the unscoped census) -> S15 (the control S14 said did not exist). Each a NEW row citing the one before. The landing decision is already resolved elsewhere -- the limb does not land tonight pending a vintage boundary, and the second arm is to be split out or dropped -- so this row changes no act; it changes what my own record says about why."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-S34",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T06:02Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "1.0.0_SA_CTO -- this row adds EVIDENCE to S33 and changes no ownership; S33's disarm owner is unchanged and the remedy still edits a surface a live order holds.",
+    "one_line": "S33 STRENGTHENED FROM A SOURCE READ TO A HISTORY READ: the box's renderer RAN TO COMPLETION at 00:24Z and wrote coverage_verdict.json, an object only the coverage package can produce -- so the package WAS importable on the box, the except ImportError bootstrap will not fire again, and the uploaded classifier and remediate bytes are unread. S33's own falsifier is now answered without touching the box.",
+    "spec_asserts": "S33 asserted from SOURCE ONLY that an upload to the artifact prefix does not reach the box, and named its own limit: the box's on-EBS bytes are UNMEASURED because reading them needs an SSM command on a plane a live order owns. Its falsifier: if /opt/etfs-reports/coverage/classifier.py on the box is ABSENT the import fails and the bootstrap DOES deliver, and S33 is wrong; if PRESENT it does not, and S33 is right.",
+    "world_is": "THE FALSIFIER IS ANSWERED BY A READ OF EXISTING HISTORY, which spine v3.10 blesses as an act a seat can take on demand -- no SSM command, no box start, nothing touched. Measured on the served plane: s3://opal-data-etfs/platinum/reports/2026-08/coverage_verdict.json exists at 1,225 bytes, LastModified 2026-09-10T00:24:44Z, beside etf_ownership.html/.pdf and three per-partner CSVs written 00:24:47-00:24:50Z. THAT OBJECT IS PRODUCED BY THE COVERAGE PACKAGE. Its existence proves `from coverage import classifier, remediate` (render_month_end.py:118) RESOLVED on that run, which means /opt/etfs-reports/coverage/ was present and importable on the box at 00:24Z. THE CONCLUSION HOLDS ON BOTH BRANCHES and that is what makes it airtight rather than merely likely: if the import resolved from a pre-existing EBS copy, the directory was already there; if it resolved only after the except-branch bootstrap pulled it, the directory is there NOW because the pull put it there. Either way the box holds the package, so the next run's import SUCCEEDS and the bootstrap does not fire -- and the classifier bytes uploaded to the prefix are never read. S33 is RIGHT.",
+    "notes": "THE RESIDUAL, stated rather than left for someone to find: this proves the package was on the box at 00:24:44Z and that nothing in the observed path removes it, since EBS persists across the stop/start the render command itself documents at lambda_function.py:350. It does NOT cover instance REPLACEMENT -- a new EC2 instance would present an empty /opt and the bootstrap would fire once on its first run. So the honest claim is: on the CURRENT instance the bootstrap will not fire again. Whoever owns the deploy should read the instance id beside the bytes rather than assume continuity. CONSEQUENCE FOR R-EG-5 AS AMENDED (CTO 95024): the sha256 pair is measured on the RUNNING plane, and this row says the running plane cannot be moved by an upload alone -- so no deploy claim for the classifier or the egress ask can be accepted until a delivery path exists that does not depend on an import failing.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 2026-09-10 ~06:0xZ, live read: `aws s3api list-objects-v2 --bucket opal-data-etfs --prefix platinum/reports/2026-08/` returns coverage_verdict.json 1,225 B LastModified 2026-09-10T00:24:44Z, etf_ownership.html 43,376 B and etf_ownership.pdf 252,393 B at 00:24:47-48Z, and three per-partner CSVs at 00:24:48-50Z.",
+        "render_month_end.py:118 at 4d666a0939 -- `from coverage import classifier, remediate` -- is the import the run must pass to reach the verdict writer; :119-127 is the except ImportError bootstrap that pulls the package only when that import RAISES.",
+        "lambda_function.py:350 at 4d666a0939 -- the render command's own text records that the box's state is 'cached on EBS after the 1st run', which is why a directory present at 00:24Z is still present now absent instance replacement.",
+        "NOT MEASURED and named as the residual: the EC2 instance id at 00:24Z versus now. This row's claim is scoped to the CURRENT instance and says so."
+      ]
+    }
   }
 ]
 ```
