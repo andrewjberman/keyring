@@ -363,10 +363,12 @@ for its proof and the organic case is the negative arm, per Rule 27's L2 clause.
                     requests, a genuinely new request with identical holdings not
                     being discarded. That is this outcome's territory.
          ⛔ THE FIRM IS DECIDED FROM THE SENDER'S EMAIL AT INGESTION (Andrew
-                    ~19:2xZ, in his FWD-10 sentence): "attributed to the right
-                    advisor and client" above is BOUND by the sender's domain the
-                    moment the message arrives, and cannot be changed after. The
-                    construction and its proof live in FWD-10
+                    ~19:2xZ, in his FWD-10 sentence): the request's FIRM is fixed
+                    by the sender's domain the moment the message arrives and
+                    cannot be changed after; it BOUNDS which advisors and clients
+                    "attributed to the right advisor and client" above may
+                    resolve to, without itself choosing them. The construction
+                    and its proof live in FWD-10
          ⚠ WHAT HIS WORD FIXES AND WHAT IT DOES NOT (3.0.0_SA_CVO 194256Z): the
                     sender's DOMAIN fixes the FIRM. It does not by itself fix
                     WHICH ADVISOR within that firm (the sender? a named
