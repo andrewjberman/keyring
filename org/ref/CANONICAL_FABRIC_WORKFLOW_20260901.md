@@ -84,7 +84,11 @@ travels to the worker.
   numbers, each disputable; ids are permanent and never reused.
 - ⛔ **NO FWD IS A WAIT.** Every outcome is PROVABLE BY AN ACT A SEAT CAN TAKE ON DEMAND. An outcome whose only proof is an event nobody
   controls -- a failure, a rare condition, a calendar -- is written WRONG, and the remedy is not patience: it is re-cut so its MECHANISM is
-  DRIVEN DELIBERATELY, with the organic case kept as the negative arm. Where a wait is genuinely essential it is EXPRESSLY QUALIFIED on the
+  DRIVEN DELIBERATELY, with the organic case kept as the negative arm. **THE ACT MAY BE A DRIVEN RUN OR A READ OF EXISTING HISTORY** -- driving is
+  one form of proof and reading a record that already exists is another; what is forbidden is WAITING FOR AN EVENT. An outcome whose
+  property is the ABSENCE of something (that nobody triggered it, that no hand enforced it) cannot be driven at all and is proven by the
+  history read, not by qualification. An outcome is SUPERSEDED only when no such act exists; where the substance is provable and only the
+  WORDING names a calendar, the remedy is to re-point the `DONE WHEN` at the on-demand read, KEEPING THE ID. Where a wait is genuinely essential it is EXPRESSLY QUALIFIED on the
   outcome, carrying its reason and Andrew's word, and it is the exception that names itself; the default is not a wait. An outcome already
   written as a wait is SUPERSEDED at the next unused id, its text kept verbatim with the reason beside it, never edited away.
   Andrew-direct 2026-09-10 ~03:0xZ: *"no FWD is ever a 'wait' unless explicitly advised otherwise ... our goal with projects and task

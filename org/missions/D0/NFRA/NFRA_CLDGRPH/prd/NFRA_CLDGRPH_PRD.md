@@ -5,7 +5,7 @@
  "project": "NFRA_CLDGRPH",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.13",
+ "prd_version": "v0.14",
  "step": 4,
  "brief_ref": "docs/briefs/globgrph-cloud-compile-and-gateway-traversal-20260901.md@dfd24a010b",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
@@ -40,8 +40,13 @@ projection, and ... every time you reference the 'graph', that is what you are r
 
   FWD-2  The graph gets newer on the estate's own schedule -- nightly in full and
          within minutes of any cloud change -- never because someone asked
-         DONE WHEN  EXERCISED -- the schedule has fired on its own at least once
-                    and the next morning's answers carry that night's date
+         DONE WHEN  EXERCISED -- READ ON DEMAND from the rule's OWN firing history:
+                    rule-initiated executions listed with their initiators and a
+                    denominator, and a served answer carrying the vintage one of them
+                    produced. RE-POINTED v0.14 (no new id): the substance is provable
+                    today and only the wording named a calendar. This outcome's property
+                    is the ABSENCE of human triggering, which no driven act can show --
+                    the history read IS its instrument, not a substitute for one
          ACCEPT     left completely alone overnight, the graph is newer in the
                     morning than it was the evening before; a change made in the
                     cloud during the day shows up without anyone asking for a
@@ -64,8 +69,10 @@ projection, and ... every time you reference the 'graph', that is what you are r
 
   FWD-4  There is a ceiling on how old any answer can be, and the ceiling belongs
          to the system, not to how carefully the reader checks
-         DONE WHEN  EXERCISED -- a full cycle has passed with nobody enforcing the
-                    ceiling by hand and no answer served older than it
+         DONE WHEN  EXERCISED -- READ ON DEMAND from the projection pointer's own advance
+                    history: consecutive advances with their instants, and no served
+                    answer older than the ceiling across them, with a hand-enforcement
+                    census reading 0. RE-POINTED v0.14 (no new id)
          ACCEPT     nobody can be handed an answer older than the last scheduled
                     refresh, however careless they are about reading the fine
                     print; the oldest answer available is set by the schedule,
@@ -109,8 +116,12 @@ projection, and ... every time you reference the 'graph', that is what you are r
 
   FWD-8  An operator can see that last night's refresh happened, and can see
          when it did not, without rerunning anything
-         DONE WHEN  EXERCISED -- the answer has been read on a real morning, and
-                    a night that did not run reads differently from one that did
+         DONE WHEN  EXERCISED -- READ ON DEMAND through the status surface the MECHANISM
+                    line names: a KNOWN-GOOD night and a KNOWN-FAILED night read side by
+                    side and reading DIFFERENTLY. RE-POINTED v0.14 (no new id): the
+                    failed nights already exist -- the nine rule-initiated fires before
+                    2026-09-09 ALL FAILED -- so the negative arm this outcome needed is
+                    banked history, not a night to wait for
          ACCEPT     an operator asking "did the graph refresh last night" gets a
                     plain yes or no with a time, and a missed night looks
                     different from a completed one; nobody has to run anything
@@ -278,6 +289,7 @@ Each is disputable, none carries a number, and each names the outcome it dischar
 
 ## Change log
 
+- **v0.14 2026-09-10 ~03:1xZ `1.0.0_SA_CTO`** -- the NO-FWD-IS-A-WAIT law (Andrew-direct ~03:0xZ, spine v3.10) applied to this project's own endpoint set on `2.0.0_SA_COO~A`'s measurement (94924): NO outcome needs supersession -- none requires an indeterminate wait -- but THREE were WORDED as waits while their proof was already available on demand, so FWD-2, FWD-4 and FWD-8 have their `DONE WHEN` RE-POINTED at the on-demand READ, ids KEPT (a supersession would have minted ids for outcomes that are fine). FWD-2's property is the ABSENCE of human triggering, which no driven act can show: the rule's own firing history is its instrument. FWD-8's negative arm is banked history -- the nine rule-initiated fires before 2026-09-09 all FAILED. Nothing terminal re-opens; the manual-trigger form (S32) had already cured the ACCEPT level, and this is the L2 residue that cure never reached.
 - **v0.13 2026-09-09 ~22:0xZ `1.0.0_SA_CTO`** -- S32 on Andrew's ~21:4xZ word (the manual-trigger rule, record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260909_214xZ_NO_WAITING_EVERY_DATE_GATED_ACCEPT_GETS_A_MANUAL_TRIGGER_FORM.md`): the three "rule-initiated nightly" reads (S23, S30, S31) satisfied by same-target ad-hoc runs plus the rules' history; the 03:00Z fire is confirmation. `endpoint_outcomes` unchanged; `dep_stage` untouched.
 - **v0.12 2026-09-09 ~20:5xZ `1.0.0_SA_CTO`** -- s.6 gains R14a on `2.0.0_SA_COO~A`'s in-grant ruling (94707, row W6-S2): the manifest's entry-grain status vocabulary extended to {retired, deprecated} with the two-grain agreement condition and the consumer discipline; the self-route invariant exempts by DECLARED status, never a hard-coded set. CARRIED NAMED to the next L10 (W6-S1): `.tools/tool_overrides.yaml` is a frozen bootstrap that shadows the population authority for `concern` / `canonical_call`, so a map reword never reaches `TOOL_MASTER.yaml` / `tool_index.py` -- the same class as the SOLE-authority ruling that put the classification's population on the map. No other change; `dep_stage` untouched.
 - **v0.11 2026-09-09 ~20:2xZ `1.0.0_SA_CTO`** -- S29's accept AMENDED on a measured fact (`0.0.0_AB_MSTR` 94688, site Z's ack 3a7fe696): the silence test discriminates on the marker's `producer` field (and `git_sha`), never on LastModified -- CodeBuild is a legitimate writer of the same key inside any window; a moved timestamp with `producer=stitch-codebuild` is the healthy case. The hash-vs-timestamp opposite-blind-spots trap, applied to this row's own accept. Both clones' hook pairs are gone (laptop 19:46:3xZ @ce0eee9f93; site Z 19:58:27Z, row S81 @9fcb4459de): the cloud producer is the one writer. No other change.
