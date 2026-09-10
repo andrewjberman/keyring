@@ -749,3 +749,67 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+## Z-W7-S1 -- the owner search RAN and returned empty, and the finding is that the LANE EXISTS while the ASK does not
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-W7-S1",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~7",
+    "surfaced_at": "2026-09-10T17:25Z",
+    "one_line": "IAM-t-1's owner search RAN AND RETURNED EMPTY for twelve of the sixteen FWD-4 member rows, and the finding is not the one the cell braced for: the adopting lane EXISTS and is the busiest family in this estate (935 commits by 41 distinct AE serials in 14 days; 1,486 commits by 74 authors on infra/aws/terraform/ all-history, led by 0.7.0_AE_CloudOps at 533), and ZERO of them has ever touched this project (0 of 65 commits on the mission dir, 0 acceptances across 63 files scanned). So what is missing is not capability and not a candidate -- it is an ASK. The ask is an ISSUANCE to a lane member, which no L7 cell can make: a worker holds no send tool and cannot be messaged. ESCALATED per ROUND_ANALYSIS.round2.md section 9, which reserves exactly this escalation for the cell that finds it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI -- the escalation's only legal carrier is an ISSUANCE, and issuance is L6. Round 2's own 'what is owed' table names this seat for the round-3 recut and states that a finding of this shape is raised when a cell finds it, not pre-emptively. NOT ASKED OF THIS SEAT BY THIS WORKER AND NOT TAKEN HERE: a worker cannot send, and naming a disarm owner is not tasking one. WHY IT IS NOT THE ADJUDICATOR: nothing here needs grading -- the twelve rows are correct as written and the value on them is measured; what they need is a seat in the CLOUD_OPS_OR_ETL lane to be ASKED, which is an issuer's act.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CAPABILITY PLANE -- the act is inside a lane and the lane is not empty. .owned-paths.yaml@39fc7680c6:1845-1847 binds 'infra/aws/**' to lane CLOUD_OPS_OR_ETL (note: 'AWS infra (Terraform, IAM, Lambda) - AE 0.5/0.6/0.6.1/0.7 only'); :342-353 enumerates 11 permitted agents (0.5.0_AE_OpalETL, 0.5.0_AE_OpalETL~B, 0.6.0/0.6.1/0.6.2_AE_PartnerETL, 0.7.0_AE_CloudOps + ~A/~B/~C, 0.8.0_AE_CloudComp, 4.0.0_SA_CRO~SWEEP). .tools/owned-paths-validate.py@39fc7680c6:278-287 (RV-0030 F-003) then admits any tilde-suffixed spawn of an enumerated BASE serial, so the lane is wider than its enumeration reads -- which is why '0.7.0_AE_CloudOps~Z is not listed in CLOUD_OPS_OR_ETL' is NOT the finding and is stated here so no reader mistakes it for one.",
+        "ACTIVITY PLANE -- that lane is alive and busy on this fabric. git log --since='14 days ago' --format='%an' over the whole repo: 935 commits by 41 DISTINCT AE serials, against a window denominator of 5,785 commits by 120 distinct authors. On the surface itself, git log --format='%an' -- infra/aws/terraform/ (all history): 1,486 commits by 74 distinct authors, top author 0.7.0_AE_CloudOps with 533 and Andrew Berman second with 231.",
+        "PROJECT-RECORD PLANE -- and none of them has ever been here. git log --format='%an' -- org/missions/D12/NFRA/NFRA_IAMROLES202609/: 65 commits, 10 distinct authors (2.0.0_SA_COO~ZI 26, 3.0.0_SA_CVO~Z 11, 2.0.0_SA_COO 8, 1.0.0_SA_CTO~Z 5, and this project's six worker slots). ZERO commits by any member of the adopting lane. comp-find 'AE_(OpalETL|PartnerETL|CloudOps|CloudComp)' <project> --all -> 6 hit(s) across 63 file(s) scanned, and all six are citations or git vintages (two blame lines in IAM-s-7's HISTORICAL_COMPLETION.md, two path citations to a SIBLING project's deliverable folder, two of the same in this channel). None is an acceptance, a tasking or a reply.",
+        "ACCEPTANCE PLANE, WITH ITS POSITIVE CONTROL so that a true absence and a blind search cannot read alike: comp-find 'accepted' <project> --all -> 9 hit(s) across the same 63 file(s) scanned, and one of the nine IS the acceptance this document already rests on -- ROUND_ANALYSIS.round2.md@39fc7680c6:237-238, 'three rows already name 1.0.0_SA_CTO~Z, and that seat accepted those three'. The instrument surfaces an acceptance for three rows and none for twelve, so the twelve are a MEASURED absence.",
+        "A FIFTH PLACE AN OWNER MIGHT HAVE BEEN WRITTEN, checked because a governance owner need not be an agent: infra/aws/manifests/iam/iam-roles.yaml@39fc7680c6 (hand- maintained, 'Last Updated: 2026-01-02', total_roles: 8) carries exactly ONE owner statement and it is at FILE grain -- '# Owner: Andrew Berman' (:3). Measured against the twelve rows it covers exactly one (opal-smartx-lambda-role, 3 hits) and none of the other eleven. Recorded, NOT converted into an owner field: round 2's table records that nothing is owed by Andrew.",
+        "THE STRUCTURAL HALF NO SEARCH CAN IMPROVE, and it is why this is an escalation rather than a deeper query: the task order states it in terms -- 'YOU HAVE NO SUCH ACCEPTANCE FOR ANYONE ELSE AND YOU CANNOT OBTAIN ONE -- you cannot send a message and nobody can answer you' (NFRA_IAMROLES202609.TO-IAM-t-1...md@39fc7680c6:50-52). The twelve rows could not have been closed to a named seat from inside this cell at any depth of effort.",
+        "WHAT WAS WRITTEN INSTEAD, so the row is not a complaint about an unfinished cell: all twelve rows now carry owner=NO-ACCEPTING-SEAT with a per-row reason, defined and evidenced in the deliverable's new section THE OWNER FINDING (GOVERNANCE_DISPOSITION.md in deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/). Member-row owner census after the edit: 3 owner=1.0.0_SA_CTO~Z + 12 owner=NO-ACCEPTING-SEAT + 1 DECLARED row carrying no owner field = 16 of 16. AC1 moved 9 -> 0 against a denominator of 16 member rows."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IAM-t-1: \"An ADOPT row's owner is whoever would actually do the adoption, or -- if nobody in this fabric would -- an owner value that RECORDS THAT FINDING\", and \"WHETHER THOSE OWNERS EXIST INSIDE THIS FABRIC AT ALL IS THIS CELL'S FINDING\". The cell's framing offers two outcomes: an owner is named, or no owner exists for these rows.",
+    "world_is": "NEITHER OUTCOME IS THE TRUE ONE, AND THE THIRD IS MORE ACTIONABLE THAN EITHER. Owners who COULD do the work exist in quantity and are working in this estate today; what does not exist is any acceptance, any tasking, or any channel by which a worker could obtain one. The binding constraint is the ASK, not the owner -- so the remedy is an ISSUANCE by the L6 owner to a seat in the CLOUD_OPS_OR_ETL lane, and it is cheap. 'No owner exists' would have been the wrong finding to escalate: it invites a search for people, when what is missing is one message a worker is structurally unable to send.",
+    "notes": "NOT BLOCKING AND NOTHING WAS WITHHELD: the cell is complete on its own bar -- every member row carries an owner or a DECLARED disposition, every owner-bearing row carries a reason, both regression bars still read 0, and the three-to-five correction landed re-read at source. || ONE THING A LATER READER SHOULD NOT MISREAD: owner=NO-ACCEPTING-SEAT is not a claim that the rows are unownable, and it is not UNASSIGNED with a longer name. UNASSIGNED says the slot is empty and cannot distinguish 'nobody looked' from 'we looked and found nobody'; NO-ACCEPTING-SEAT is the second of those, with the denominator attached. If an acceptance ever lands, one row's owner field moves to that serial and nothing else in the document moves. || THE CHEAPEST DISARM, named because a row that names no remedy is a complaint: two of the twelve (rows 8 and 10) already have their adopting Terraform written and inert at infra/aws/terraform/data-refresh/zz_adoption_candidate.tf.proposed:29-30 and :66-67, authored by IAM-r-5 with a recorded plan. On those two rows the text is not the blocker; a seat that has accepted is. || SCOPE HELD: nothing in this row touches any role's permissions in either direction (C-TWO-REMEDIES), no Terraform was modified, and nothing was minted that will fire (G-21 untouched)."
+  }
+]
+```
+
+## Z-W7-S2 -- Z-W3-S1 predicted its own recurrence and this is the recurrence, at a second slot, verbatim
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-W7-S2",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~7",
+    "surfaced_at": "2026-09-10T17:47Z",
+    "one_line": "Z-W3-S1 predicted its own recurrence -- 'likely to recur for every other worker in this fan-out whose identity block uses the same short-filename convention' -- and it recurred here VERBATIM, at slot ~7, three cells and nine hours later. THE PREDICTION IS NOW A MEASUREMENT: 2 of 2 workers whose instructed proof-of-spec filename used the short to_id form were refused at commit by to-pipeline-gate.py's check_complete_flip, which derives the expected filename from the TO file's FULL basename stem. This row adds only the recurrence and its denominator; the defect, its source citation and its remedy are Z-W3-S1's and are not restated.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE REFUSAL, REPRODUCED VERBATIM at /c/tmp/wk-iamroles-7 on branch wk-NFRA_IAMROLES202609-7 @39fc7680c6, running `bash .tools/safe-commit.sh --author '0.9.0_WK_NFRA_IAMROLES202609~7 ...' -F <msgfile> -- <5 paths>` with the instance written to the instructed short path: 'ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate). Commit aborted; files unstaged. [to-pipeline-gate] REFUSED -- 1 violation(s) across 0 newly-added TO file(s): ...TO-IAM-t-1...md: flips to complete on PIPELINE-REGISTERED project NFRA_IAMROLES202609, and NO proof-of-spec instance was found beside it. Layer 1: no VALID instance, no complete flip.' Character-for-character the refusal Z-W3-S1 recorded.",
+        "THE INSTRUCTED NAME, verbatim from this worker's own identity block: 'org/missions/D<n>/<MACRO>/<CODE>/deliverables/<serial>/<TO>.proof_of_spec.json', which for this cell resolves to NFRA_IAMROLES202609.TO-IAM-t-1.proof_of_spec.json. The gate derives NFRA_IAMROLES202609.TO-IAM-t-1.close-fwd4-every-row-carries-an-owner-or-a-finding.proof_of_spec.json from the task order's own basename. Neither name is wrong; they are two conventions for one artifact.",
+        "THE INSTANCE WAS VALID BEFORE AND AFTER THE RENAME, so this is a NAMING refusal and not a proof defect: `python .tools/proof-of-spec-check.py <short-named instance> AC1,AC2,AC3,AC4,AC5,AC6` printed 'VALID (rc=0)' with violations=0, 6 acceptance rows and the surprises limb resolving 1 of 1, immediately before the refused commit.",
+        "DENOMINATOR FOR THE RECURRENCE CLAIM, printed rather than implied: this round's fan-out has SEVEN worker slots (~1..~7). Slot ~3 filed Z-W3-S1 on this exact refusal; slot ~7 (this row) hit it identically. The other five slots' identity blocks were not read by this worker and are NOT claimed either way -- 2 of 2 OBSERVED, not 2 of 7 measured. The five sibling instances committed in this project all carry the FULL stem, which is consistent with the gate's derivation but does not tell us what those workers were instructed to write."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This worker's identity block names one exact proof-of-spec path -- 'deliverables/<serial>/<TO>.proof_of_spec.json' -- and instructs that the status flip to complete be committed together with that instance once proof-of-spec-check returns rc 0.",
+    "world_is": "The instructed path is VALID to the checker and INVISIBLE to the commit-time gate, so an instance that satisfies every criterion still cannot carry its own complete flip. Resolved in-lane exactly as Z-W3-S1 resolved it, and deliberately not a third convention: a second, BYTE-IDENTICAL copy of the same instance was written under the gate-derived filename in the same already-granted deliverables/0.9.0_WK_NFRA_IAMROLES202609~7/ folder, both generated by one run of one builder so they cannot drift apart at birth.",
+    "notes": "NOT A NEW HAZARD AND DELIBERATELY NOT RE-ARMED: Z-W3-S1 carries this hazard ARMED with disarm_owner 2.0.0_SA_COO~ZI, and that standing is correct and untouched by this row. Filing a second ARMED row for one hazard would double-count an armed item in every census that reads the channel, so this row is INERT and names no disarm owner -- its whole contribution is the recurrence measurement Z-W3-S1 asked for in its own last clause. || WHAT THE RECURRENCE ADDS TO THE DISARM CHOICE Z-W3-S1 OFFERED: option (b), 'accept that every worker will need to duplicate the file under both names', now has a measured cost -- two workers, two duplicated files, one aborted commit each, and a second copy per cell that a later reader can find and must decide whether to trust. Option (a), instructing the full stem, costs one line per issuance. || NOTHING WAS WITHHELD AND NOTHING WAS SKIPPED: the cell's own work was complete before this refusal, both copies are byte-identical, and the commit proceeded on the second attempt. || NOT A PATH REQUEST: both filenames sit inside the deliverables/ prefix this order already grants, so no widening was needed."
+  }
+]
+```
