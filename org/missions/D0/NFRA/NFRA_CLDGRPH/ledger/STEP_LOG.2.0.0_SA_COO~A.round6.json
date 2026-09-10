@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-10T01:40Z",
+  "written_utc": "2026-09-10T02:10Z",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -288,8 +288,22 @@
         "row S95",
         "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260910T0135Z.md"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "6d5c29aa2e",
       "next": "F-11's reads and flip (the worker, or this seat if the rate limit holds it past the next tick); the drain (comp-system phase two -- grain_baseline.json moves); the CVO's baseline sign; the FINAL packet + COMPLETION_REPORT.round6.json; the drain-end read to the CTO; CronDelete."
+    },
+    {
+      "seq": 21,
+      "limb": "L7 (a second-cycle report adjudicated) / L6 (a third cycle) / adjudication (one call pitched) / law read",
+      "started_utc": "2026-09-10T01:44Z",
+      "ended_utc": "2026-09-10T02:10Z",
+      "act": "TICK 56: the slot RECOVERED on its own (alive 01:44Z, no further 429) -- no seat takeover needed. FOUR LAW/RELAY READS, all acked: 94844 (the CTO: the issuer-measured close SOUND, no rollback owed, S95 TAKEN at two grains); 94849 LAW EDIT spine v3.9 @d8400610bd -- L7 gains the worker-death clause CUT FROM THIS SEAT'S S95 (open the entry, ACT, close AND COMMIT it, THEN read; the issuer sweeps the artifact plane with a DIFFERENT instrument before deciding to finish or roll back; the reads are the issuer's under the dead-seat residue rule and the order does not wait), which now binds this seat's image-act and deploy FACES from the next cut; 94865 LAW EDIT CLAUDE.md rule 27 @f88a07d092 (L2 and L3 both the CTO's; MSTR HOLDS the register); 94860 ANDREW-DIRECT ~01:5xZ narrowing ADVI to firm-admin BI with performance reporting/sensitivity/model overlay moving to a new Investor Reporting page under D9 -- informational for this lane, 'no cut follows tonight', and it touches no NFRA_CLDGRPH cell. TICK 57: THE SECOND CYCLE'S REPORT. BOTH AUTHORISED ACTS LANDED AND BOTH CRITERIA STILL FAIL, each on a cause the act EXPOSED. Bought and kept: the fold's stamp writer retired (stamped=0, was 1); 7 of 7 families on the new digest, 0 on any tag; STORED_IN REACHES the served graph at all (edges 723 -> 1678, exactly +955); the pointer 00:57:32 -> 01:27:30; AC1/AC4/AC5 re-taken PASSING (AC5 isolated 109 -> 96 of 548, thirteen edge-less S3Key nodes connected -- real in count, provisional in meaning). W2-S69 RULED, a THIRD producer cycle inside the existing grant, FIRED NOW, no second image act: the stamp had a SECOND WRITER -- derive_stitch reads the snapshot derive_runner archives (the W2-S61 cycle), that snapshot holds the node the OLD fold stamped, and _collapse_stitch_copies kept the archived copy because its tie-break lost its signal once the snapshot went canonical (retyped_prior_cycle={}). The discrimination worth keeping: the whole-graph node diff (27,663 -> 27,665) shows NO vocabulary key in the delta at all, so a stamp-scoped check would have proved nothing. Remedy ordered: drop the retired key on carry-forward from the archived snapshot + an explicit tie-break, local proof first, then zip/build/derive-on-:9/projection. W2-S70 PITCHED (94868 CTO, 94869 CVO), NOT ruled here: WHICH IDENTITY A BUCKET HAS. The one-line fix moved AC3 from 0 of 955 to 764 of 955 and ALL 764 land on S3_BUCKET_POLICY (191 = the one firm bucket with no policy node). Three planes, two names, no value right at both ends: the producer keys a bucket by NAME; the fold admits the NAME only (0 of 955 with the ARN, 955 with the name -- one variable, both directions); the served graph keys S3_BUCKET by ARN and gives the NAME to the POLICY node. Two planes are outside this order and one remedy is a second image act. MY REC: the served keying is canonical (a bucket IS its ARN), the FOLD rewrites a name endpoint onto the arn at admission -- one change in the plane that knows both values, fixing every class carrying both an id and an arn -- cut as a round-7 cell with its own sign, not a widening of F-11. The order does NOT wait: if the ruling lands before the zip push the worker folds it in, else AC3 reports as measured with the row. The worker also reads the 02:00Z nightly as the confirmation the sign named.",
+      "artifacts": [
+        "wk-cldgrph-6-2 @31e6039cd8 (the third-cycle ruling)",
+        "msgs 94868 (CTO), 94869 (CVO); acks 94844, 94849, 94860, 94865",
+        "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260910T0205Z.md"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "F-11's third cycle and its report; the drain (comp-system phase two -- grain_baseline.json moves); the CVO's baseline sign; the FINAL packet + COMPLETION_REPORT.round6.json; the drain-end read to the CTO; CronDelete."
     }
   ]
 }
