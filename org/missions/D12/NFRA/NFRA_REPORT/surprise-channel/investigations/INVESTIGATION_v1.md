@@ -408,6 +408,30 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
     "spec_asserts": "TO-RP-s-13's BOUNDS: 'Two live surfaces are known to have no ratified group today: opal-gateway and canonical-schwab-si2. Render them UNGROUPED rather than assigning them.'",
     "world_is": "The PRD this cell also depends on (NFRA_REPORT_PRD.md) was bumped to v0.6 folding a later Andrew-direct ruling that canonical-schwab-si2 is attributed to Dashboard, and states in its own words that no cell may render it ungrouped. Only opal-gateway remains a live surface with no ratified group as of this build.",
     "notes": "NOT a defect in the decomposition or the issuer's process -- the PRD amendment (v0.4 to v0.6) landed on the SAME 2026-09-09 session this cell was issued in, and this is the ordinary case of a cell re-grounding its premises against live state before building rather than against the text frozen at issuance. ATTRIBUTION.md (this cell's deliverable) renders canonical-schwab-si2 attributed to Dashboard and renders opal-gateway UNGROUPED, per the live PRD. Nothing here is ARMED: the correct answer is already ruled and cited, and no future actor needs to disarm anything -- this row exists so a reader of the BOUNDS text alone is not misled into thinking si2 should still render UNGROUPED."
+  },
+  {
+    "id": "NFRA_REPORT-Z-W2-S6",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_REPORT~2",
+    "surfaced_at": "2026-09-10T02:32:00Z",
+    "one_line": "RP-s-19 grounding (ANOMALY_IN_EDITION.md, row opal-infrastructure-alerts): comp-blast's SNS-topic downstream check extracts Lambda and SQS protocol subscriber edges (positive-controlled on two other topics) but never models a raw phone-number/email endpoint as a node -- so a topic whose ENTIRE live subscriber set is SMS/email renders PHANTOM-CONSUMER identically whether that endpoint is healthy, broken or genuinely absent, and this edition's own BREACH row is exactly that case.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_NFRA_REPORT~2",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-blast 'arn:aws:sns:us-east-1:313476888478:opal-infrastructure-alerts' --direction downstream --check-consumers, run this session: WITHIN BUDGET, scanned 0 of 0 traversal, PHANTOM-CONSUMER rc=4 -- 'zero dependents IN GRAPH (both directions)' -- while the same node's --direction both --json call, same session, returns 70 of 70 consumers (24 CW_ALARM, 5 LAMBDA, 2 EVENT_RULE, 2 EVENT_SOURCE, 1 C3System, 36 C2Motif) EVERY ONE at direction=upstream (feeds the topic); zero of 70 at direction=downstream (reads the topic).",
+        "POSITIVE CONTROL 1: comp-blast 'inf-otp-alert' --direction downstream --check-consumers, same session -- CONSUMER-OK, 8 of 8 dependents, including LAMBDA node inf-ec2-retry-launch at direction=downstream. ALERT_DELIVERY.md sec.1 (RP-s-6, QUOTED) records this same topic's confirmed subscriptions as exactly 'lambda, sms' -- so the Lambda-protocol leg IS extracted as a downstream edge when one exists; the tool is not broadly blind to SNS subscriptions.",
+        "POSITIVE CONTROL 2: comp-blast 'opal-critical-surface-alerts' --direction downstream --check-consumers, same session -- CONSUMER-OK, 1 of 1 dependent, SQS_QUEUE opal-critical-surface-alerts-coo at direction=downstream, matching ALERT_DELIVERY.md sec.1's 'sqs, sms' confirmed pair for this topic -- the SQS protocol leg is also extracted.",
+        "ALERT_DELIVERY.md sec.4 (RP-s-6, this worktree, QUOTED, live AWS read not this graph): opal-infrastructure-alerts' one confirmed SNS subscription is protocol sms, endpoint +17862617679, sandbox status Pending (registered, not Verified) -- a real subscriber exists and is independently shown non-functional by a live call, entirely outside what comp-blast's graph can see either way."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RP-s-19's battery findings: 'ROUND 1 ESTABLISHED TWO INSTRUMENT LIMITS THAT BIND THIS CELL HARDER THAN ANY OTHER ... A breakdown built on an enumerator blind to a whole edge class renders confident, complete-looking and wrong, and a missing EDGE leaves no gap a reader can see. Carry a per-row \"what this query cannot see\" limb.'",
+    "world_is": "A THIRD instrument limit of the identical shape (a false zero and a true zero read identically), on an edge/node class neither LIMIT 1 nor LIMIT 2 in org/modules/graph/INSTRUMENT_LIMITS.md names: comp-blast's graph never models a raw SNS destination endpoint (phone number, email) as a node at all -- only Lambda/SQS/etc. protocol targets are graph-typed and extractable. PHANTOM-CONSUMER on an SNS topic is therefore evidence of 'no GRAPH-TYPED subscriber,' never evidence of 'no subscriber.' This generalizes past opal-infrastructure-alerts to any current or future topic whose entire live subscriber set is SMS/email.",
+    "notes": "DISARMED THIS TURN, not deferred: LIMIT 3 appended to org/modules/graph/INSTRUMENT_LIMITS.md (the same file LIMIT 1/LIMIT 2 already live in, and a path this cell's task order names) in this same commit, citing the two positive controls above, so a future caller reading that file before treating a comp-blast SNS PHANTOM-CONSUMER zero as an orphan-safe signal is not misled. NOT remediated -- fixing comp-blast's graph-build coverage for raw-endpoint subscriber nodes is comp-tool build-lane work, outside this cell's paths and mandate, exactly as LIMIT 1/LIMIT 2 were left NOT FIXED. Does not weaken ANOMALY_IN_EDITION.md's own central finding: opal-infrastructure-alerts' non-delivery is established by ALERT_DELIVERY.md's live AWS read (RP-s-6), never by this graph's zero -- the limit means the graph's zero cannot be cited as CORROBORATION of that finding, not that the finding is wrong."
   }
 ]
 ```
