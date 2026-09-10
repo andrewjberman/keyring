@@ -7736,3 +7736,98 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-W1-S43 -- the snapshot object three round-6 figures cite was OVERWRITTEN and the bucket is UNVERSIONED
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-10T13:33Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.8.0_AE_CloudComp",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W1-S43",
+    "one_line": "THE OBJECT W2-S75 SENT ME TO READ NO LONGER EXISTS, AND NOTHING IN THE KEY SAYS SO. s3://opal-313476888478-globgrph/snapshots/20260909/graph-20260909.tar.gz now carries LastModified 2026-09-10T00:09:02Z; the three disputed figures (1,771 / 1,791 / 1,790) all describe the 2026-09-09T21:05:21Z bytes of the SAME key. get-bucket-versioning returns no Status and list-object-versions returns exactly one version with VersionId 'null', so the cited bytes are not recoverable by anyone -- not by me, not by the CVO, not by a later round. THE KEY GRAMMAR IS THE HAZARD: snapshots/<date>/graph-<date>.tar.gz READS as a dated, immutable archive and IS a mutable pointer -- any derive run on 2026-09-09's date key overwrites it, and the 00:09:02Z write is 3 hours after the 21:05:21Z one. Every citation of a dated snapshot in this project's record is therefore a citation without a vintage that can be re-read, and the census this order was ordered to run had to be taken on DIFFERENT BYTES than the figures describe (measured now: 335 portal-stitch nodes under CANONICAL names, against the 1,771 under provisional names the record holds for the same key). Reported with its basis rather than presented as a re-read.",
+    "spec_asserts": "TO-CG-H-2 deliverable 4: GET the snapshot tarball named in W2-S75 from the globgrph bucket and census it, resolving three figures that all name the 21:05:21Z vintage of snapshots/20260909/graph-20260909.tar.gz.",
+    "world_is": "That key's current bytes are the 2026-09-10T00:09:02Z write. The bucket is unversioned (no VersioningConfiguration Status; one version, VersionId 'null'), so the 21:05:21Z bytes are gone. The census ran on the surviving bytes and every figure attribution carries MEASURED-NOW / MEASURED-THEN / INFERRED accordingly.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api head-object snapshots/20260909/graph-20260909.tar.gz -> LastModified 'Thu, 10 Sep 2026 00:09:02 GMT', ContentLength 1674681, ETag 336e29e366197e43063d372b9002302f (this worker, 2026-09-10T13:2xZ).",
+        "s3api get-bucket-versioning opal-313476888478-globgrph -> rc=0 with NO Status field (unversioned).",
+        "s3api list-object-versions --prefix snapshots/20260909/ -> exactly one Version, VersionId 'null', IsLatest true.",
+        "NFRA_CLDGRPH-W2-S61 @80daa1fff6 and NFRA_CLDGRPH-W2-S75 @2f87f07926: both cite LastModified 2026-09-09T21:05:21Z for that same bucket and key.",
+        "This order's own census of the current bytes (h2_snapshot_census.py, capture h2_snapshot_census.capture.json): 27,687 nodes scanned, 335 with source=portal-stitch, 0 under any provisional name."
+      ]
+    },
+    "notes": "ARMED because it keeps working through normal operation: every future citation of a dated snapshot key in this project is unfalsifiable the moment a re-derive touches that date, and nothing in the record tells a reader which write it saw. DISARM OWNER is the producer's owner (0.8.0_AE_CloudComp) because the remedy sits on the WRITER: either the archive key carries the write's own timestamp rather than the calendar date, or a citation carries the ETag beside the LastModified. NOT PROPOSED AS A BUILD and no alerting is implied -- the estate's moratorium stands. CHEAPEST HABIT, needing no code: cite an S3 object as bucket/key@ETag."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W1-S44 -- the NODES drop-on-read has no edge-side counterpart, and the producer's dangling check cannot see the gap
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-10T13:36Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.8.0_AE_CloudComp",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W1-S44",
+    "one_line": "THE FIX THIS ORDER SHIPPED CREATES A STATE THE PRODUCER'S OWN 0-DANGLING CHECK IS BLIND TO, AND I AM SAYING SO RATHER THAN WIDENING THE CELL. _collapse_stitch_copies now drops an archived stitch node this cycle did not re-emit (counter prior_cycle_not_reemitted). The EDGES side drops exactly ONE literal type on read -- STORED_IN, derive_stitch.py:158-159 -- so every OTHER stitch edge in the archived snapshot still arrives, and one of those can now name a node that was just dropped. The producer's genuine-dangling check cannot see it: all_keys is the union of the post-collapse node ids with aws_keys, and aws_keys is built in _index_aws from the SNAPSHOT, BEFORE the collapse runs -- so a dropped node's id is still in the key set and the edge onto it resolves. 'OK: genuine (non-wildcard) dangling edges = 0' stays TRUE and BLIND, which is the exact sentence _index_aws's own docstring uses about the PREVIOUS blindness on that check. NOT WIDENED HERE: TO-CG-H-2 BOUNDS say the edges carrier is a different cell and derive_runner is the next order's surface; the bound is written into the function's docstring as bound (2) rather than patched around.",
+    "spec_asserts": "TO-CG-H-2 deliverable 3 and its BOUNDS: fix the NODES drop-on-read in the shape the other two carriers already use, edit ONE producer file, and leave the edges carrier and derive_runner alone.",
+    "world_is": "The node-side drop and the edge-side drop have different scopes, so the fix opens a node-absent/edge-present window that the producer's dangling check is structurally unable to report, because the check's key set is taken from the snapshot before the collapse.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/globgrph/derive_stitch.py:158-159 @2fd5cae09f -- the edges drop filters on the single literal edge_type STORED_IN.",
+        "infra/aws/globgrph/derive_stitch.py _index_aws (node_keys built from aws['classes_data']) is called at the top of build_stitched_graph, before unify_stitch_vocabulary -> _collapse_stitch_copies.",
+        "infra/aws/globgrph/derive_stitch.py: all_keys is recomputed after the unify as post-collapse node ids UNION aws_keys, so a dropped id remains in the key set.",
+        "The stitch-producer-archive-read.edges.card.json verdict @f3b5f26f77 already names the scope bound: 'the drop filters on a single literal edge type, so every other edge this producer writes sits in exactly the state STORED_IN was in before cycle 4'.",
+        "This order's own change, in the same file, adding prior_cycle_not_reemitted (the drop) and stating both bounds in the docstring."
+      ]
+    },
+    "notes": "MAGNITUDE IS UNMEASURED HERE ON PURPOSE: counting the archived stitch edges whose endpoint a real run would drop needs a producer run against the live snapshot, which is an act this order's egress hold forbids (the derive publishes to a topic with a live SMS subscription). The shape is certain from the source; the number is not, and I am not manufacturing one. CHEAPEST REMEDY for whoever owns it: give the edge side the same source-stamped drop the node side now has (an edge between two stitch-sourced endpoints arriving in the snapshot is this producer's own prior output, exactly as STORED_IN is), or move aws_keys to after the collapse so the dangling check can at least SEE the state."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W1-S45 -- the producer comment that started the three-figure disagreement names a population it does not count
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-10T13:38Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W1-S45",
+    "one_line": "THE 1,791 IS NOT WRONG ARITHMETIC, IT IS THE WRONG POPULATION UNDER A SENTENCE THAT NAMES A DIFFERENT ONE -- W2-S75's held hypothesis survives its falsification attempt. derive_stitch.py:311-314 says 'the 21:05Z snapshot carries 1,791 nodes with source=portal-stitch under the four PROVISIONAL names'. It cannot be a snapshot count: the snapshot census is 1,771 INCLUDING the one PORTAL_BUNDLE, and PORTAL_BUNDLE is absent from PROVISIONAL_TO_CANONICAL, so 'under the four provisional names' is at most 1,770 -- a SUBSET, while 1,791 is LARGER. The population 1,791 fits is the RUN-TIME union after the retype and the collapse: 1,770 retyped archived members (the run's own STITCH_UNIFY_PRIOR_CYCLE retyped=1770) plus 20 fresh members this cycle emitted that were not already in the archive = 1,790 admitted, plus the 1 PORTAL_BUNDLE no map admits = 1,791. So all three figures are of DIFFERENT populations: 1,771 = archive only, all types; 1,790 = run-time, type-filtered to STITCH_CANONICAL_TYPES; 1,791 = run-time, all types. MEASURED CORROBORATION FROM THE CURRENT BYTES: the surviving stitch population is 335 = 269 canonical-named + 66 in no map, and 269 is EXACTLY the 'carried' half of figure 3's 1,521 merged + 269 carried -- a merged member is removed by the unify and never reaches the archive, so a snapshot census and an admitted census can never be the same number. THE COMMENT IS NOT CORRECTED BY THIS ORDER: correcting prose in a cell about a drop-on-read is a widening, and the seat that owns the producer should decide whether to fix the sentence or the practice.",
+    "spec_asserts": "TO-CG-H-2, MEASURED-BY-THE-ISSUER: the likeliest explanation for 1,771 vs 1,791 is HELD, not measured -- treat it as a hypothesis to falsify, and if the census says otherwise the census wins.",
+    "world_is": "The census could not falsify it and corroborated it on an independent number: three populations under one description, the 1,791-vs-1,790 gap being exactly the one PORTAL_BUNDLE node that no re-type map and no admitted census contains. The residual 20 members cannot be enumerated because the cited bytes were overwritten (row W1-S43).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/globgrph/derive_stitch.py:311-314 @2fd5cae09f -- the comment, read at HEAD in this worktree.",
+        "NFRA_CLDGRPH-W2-S61 @80daa1fff6 -- the five-way per-type census summing to 1,771, PORTAL_BUNDLE 1 among them, and the run's STITCH_UNIFY_PRIOR_CYCLE retyped=1770.",
+        "Commit 139cbe1d40's subject -- 1,521 merged by identity + 269 carried = 1,790.",
+        "This order's census of the current bytes of the same key: 335 stitch-sourced nodes = 269 canonical-named + 65 API_ROUTE + 1 PORTAL_BUNDLE, capture h2_snapshot_census.capture.json.",
+        "infra/aws/globgrph/derive_stitch.py unify_stitch_vocabulary: a stitch node whose id merges onto a canonical id is dropped in favour of the canonical node, which is why merged members never appear in a later snapshot census."
+      ]
+    },
+    "notes": "The general form, which is worth more than the twenty nodes: A NUMBER TAKEN AT ONE POINT IN A PIPELINE AND DESCRIBED AT ANOTHER IS A DIFFERENT NUMBER. All three figures were produced by careful seats in one night and none of them is arithmetically wrong; what none of them carried is WHERE IN THE RUN it was counted. A count without its point-in-pipeline is the same defect class as a count without its denominator."
+  }
+]
+```
