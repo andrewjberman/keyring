@@ -1,0 +1,79 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "NFRA_OUTSET",
+ "round": 2,
+ "graded_by": "1.0.0_SA_CTO",
+ "graded_utc": "2026-09-10T03:4xZ",
+ "minted_retroactively": true,
+ "mint_note": "RETRO-MINT 2026-09-10 ~03:4xZ. NFRA_OUTSET closed rounds 1 and 2 with no COMPLETION_GRADES artifact of any kind, so all eight verdicts lived in prose and four existed nowhere at all (2.0.0_SA_COO 94910, sharpening this seat's own /exec-sum probe). This file transcribes the round-2 analysis's EXPLICIT verdicts with their line cites and mints the rest NOT_EVALUATED with the absence stated. NOTHING HERE IS A NEW GRADE: no outcome is moved to REALIZED by this mint, and no round re-opens. The verdict plane is the CTO's artifact and its absence was this seat's gap, not the COO's -- whose coverage reports were complete on their own axis for both rounds.",
+ "report_ref": "org\\missions\\D11\\NFRA\\NFRA_OUTSET\\ledger\\COMPLETION_REPORT.round2.json@c07467f04c",
+ "analysis_ref": "org\\missions\\D11\\NFRA\\NFRA_OUTSET\\ledger\\ROUND_ANALYSIS.round2.md@d6fd9eca07",
+ "slug_ref": null,
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org\\missions\\D11\\NFRA\\NFRA_OUTSET\\ledger\\ROUND_ANALYSIS.round2.md@d6fd9eca07",
+   "state_observed": "EXERCISED",
+   "state_observed_source": "COMPLETION_REPORT.round2.json -- 2.0.0_SA_COO's COVERAGE claim, carried as claimed and NOT independently re-measured at this retro-mint (a value carries its claim).",
+   "note": "NO VERDICT EXISTS IN ANY ARTIFACT FOR THIS OUTCOME IN THIS ROUND. The round analysis names only the outcomes it could not grade; its \"every cell that was cut passed its bar\" is a COVERAGE sentence and a coverage claim is not a verdict. Minted NOT_EVALUATED so non-evaluation is not silently encoded as a pass. OPEN AT 3.0.0_SA_CVO, one line: graded at L9 and left unwritten, or never graded? If the former this row is re-graded from the adjudication; if the latter it grades on the next round's read."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org\\missions\\D11\\NFRA\\NFRA_OUTSET\\ledger\\ROUND_ANALYSIS.round2.md@d6fd9eca07",
+   "state_observed": "EXERCISED",
+   "state_observed_source": "COMPLETION_REPORT.round2.json -- 2.0.0_SA_COO's COVERAGE claim, carried as claimed and NOT independently re-measured at this retro-mint (a value carries its claim).",
+   "note": "ROUND_ANALYSIS.round2.md:78 -- COVERED on the served bytes (the runner is HEAD's), not yet exercised on a served day at the time of writing."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "NOT_REALIZED",
+   "artifact_ref": "org\\missions\\D11\\NFRA\\NFRA_OUTSET\\ledger\\ROUND_ANALYSIS.round2.md@d6fd9eca07",
+   "state_observed": "EXERCISED",
+   "state_observed_source": "COMPLETION_REPORT.round2.json -- 2.0.0_SA_COO's COVERAGE claim, carried as claimed and NOT independently re-measured at this retro-mint (a value carries its claim).",
+   "note": "ROUND_ANALYSIS.round2.md:79 -- producer side COVERED (C-S6); the consumer never looks and nothing re-publishes."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org\\missions\\D11\\NFRA\\NFRA_OUTSET\\ledger\\ROUND_ANALYSIS.round2.md@d6fd9eca07",
+   "state_observed": "EXERCISED",
+   "state_observed_source": "COMPLETION_REPORT.round2.json -- 2.0.0_SA_COO's COVERAGE claim, carried as claimed and NOT independently re-measured at this retro-mint (a value carries its claim).",
+   "note": "ROUND_ANALYSIS.round2.md:78, same row."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org\\missions\\D11\\NFRA\\NFRA_OUTSET\\ledger\\ROUND_ANALYSIS.round2.md@d6fd9eca07",
+   "state_observed": "EXERCISED",
+   "state_observed_source": "COMPLETION_REPORT.round2.json -- 2.0.0_SA_COO's COVERAGE claim, carried as claimed and NOT independently re-measured at this retro-mint (a value carries its claim).",
+   "note": "NO VERDICT EXISTS IN ANY ARTIFACT FOR THIS OUTCOME IN THIS ROUND. The round analysis names only the outcomes it could not grade; its \"every cell that was cut passed its bar\" is a COVERAGE sentence and a coverage claim is not a verdict. Minted NOT_EVALUATED so non-evaluation is not silently encoded as a pass. OPEN AT 3.0.0_SA_CVO, one line: graded at L9 and left unwritten, or never graded? If the former this row is re-graded from the adjudication; if the latter it grades on the next round's read."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org\\missions\\D11\\NFRA\\NFRA_OUTSET\\ledger\\ROUND_ANALYSIS.round2.md@d6fd9eca07",
+   "state_observed": "APPLIED",
+   "state_observed_source": "COMPLETION_REPORT.round2.json -- 2.0.0_SA_COO's COVERAGE claim, carried as claimed and NOT independently re-measured at this retro-mint (a value carries its claim).",
+   "note": "NO VERDICT EXISTS IN ANY ARTIFACT FOR THIS OUTCOME IN THIS ROUND. The round analysis names only the outcomes it could not grade; its \"every cell that was cut passed its bar\" is a COVERAGE sentence and a coverage claim is not a verdict. Minted NOT_EVALUATED so non-evaluation is not silently encoded as a pass. OPEN AT 3.0.0_SA_CVO, one line: graded at L9 and left unwritten, or never graded? If the former this row is re-graded from the adjudication; if the latter it grades on the next round's read."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org\\missions\\D11\\NFRA\\NFRA_OUTSET\\ledger\\ROUND_ANALYSIS.round2.md@d6fd9eca07",
+   "state_observed": "EXERCISED",
+   "state_observed_source": "COMPLETION_REPORT.round2.json -- 2.0.0_SA_COO's COVERAGE claim, carried as claimed and NOT independently re-measured at this retro-mint (a value carries its claim).",
+   "note": "ROUND_ANALYSIS.round2.md:78, same row."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org\\missions\\D11\\NFRA\\NFRA_OUTSET\\ledger\\ROUND_ANALYSIS.round2.md@d6fd9eca07",
+   "state_observed": "EXERCISED",
+   "state_observed_source": "COMPLETION_REPORT.round2.json -- 2.0.0_SA_COO's COVERAGE claim, carried as claimed and NOT independently re-measured at this retro-mint (a value carries its claim).",
+   "note": "NO VERDICT EXISTS IN ANY ARTIFACT FOR THIS OUTCOME IN THIS ROUND. The round analysis names only the outcomes it could not grade; its \"every cell that was cut passed its bar\" is a COVERAGE sentence and a coverage claim is not a verdict. Minted NOT_EVALUATED so non-evaluation is not silently encoded as a pass. OPEN AT 3.0.0_SA_CVO, one line: graded at L9 and left unwritten, or never graded? If the former this row is re-graded from the adjudication; if the latter it grades on the next round's read."
+  }
+ ]
+}
