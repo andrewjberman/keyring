@@ -4,7 +4,7 @@
 <project>NFRA_CLDGRPH</project>
 <issued_to>0.9.0_WK_NFRA_CLDGRPH~3</issued_to>
 <issued_by>2.0.0_SA_COO~A</issued_by>
-<status>pending -- GO = the spawn (spine v3 L7): slot ~3 on a fresh worktree cut from CLOUD by the issuer at C:/tmp/wk-cldgrph-8-3. ROUND 8 of NFRA_CLDGRPH; fanout 4 of 4 chains, cap 8. ONLY order of slot ~3's chain. The assignee commits its own status flip after a VALID proof-of-spec instance whose mechanical rows ALL read PASS.</status>
+<status>complete -- 0.9.0_WK_NFRA_CLDGRPH~3, round 8, branch wk-cldgrph-8-3 (LOCAL, never pushed). Four mechanical criteria PASS-by-output and H4-AC5 recorded UNVERIFIABLE-BY-INSTRUMENT for 3.0.0_SA_CVO at L9; proof-of-spec-check rc=0 (VALID, violations=0, 5 acceptance rows) BEFORE this flip. ATTRIBUTED: the 05:32:57 republish is the opal-globgrph-incremental-updater Lambda (request 234a09eb-d30b-5c8f-bc61-6af791bd9ef1) advancing the Nessie branch head after SQS-delivered S3 object writes to opal-data-bd, bound by a 64-hex nessie_commit_hash match, ELIMINATION_USED=false. The edges snapshot never moved; a NODE left and the incremental refresh deleted the 124 edges pointing at it (edges_skipped_missing_endpoint 388 -> 512, the same 124). TWO ROWS: NFRA_CLDGRPH-W3-S18 (the loss did NOT stop -- STORED_IN=0 at vintage 2026-09-10T12:24:50.576632+00:00, and 27 of 27 SERVED_FROM edges stand on the same parent class) and NFRA_CLDGRPH-W3-S19 (the writer's own delete counter cannot see a row its own overwrite filter destroys). Acts commit 55f55e7cca; this flip and the instance in the commit that carries this line.</status>
 
 ## STANDING LAW (inlined)
 
