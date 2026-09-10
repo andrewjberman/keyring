@@ -4607,3 +4607,31 @@ one-line path amendment; sent UP to 2.0.0_SA_COO~Z at the read. The worker is st
  }
 ]
 ```
+
+```json
+[
+ {
+  "id": "NFRA_OPSEC202609-Z-W2-S1",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPSEC202609~2 (found while executing TO-OP3-S-2's S2-AC4: attempted the confirmation step the deliverable names, not merely the creation step)",
+  "surfaced_at": "2026-09-10T11:16:59Z",
+  "one_line": "S2-AC4 COULD NOT BE MADE TO PASS BY THIS WORKER: NO AGENT ON THIS FABRIC HOLDS MAILBOX-READ ACCESS TO andrew@opalinvest.com, AND SNS EMAIL CONFIRMATION IS DELIVERED ONLY THROUGH THAT INBOX. `aws sns subscribe` to `arn:aws:sns:us-east-1:313476888478:opal-login-abuse-alerts` (protocol email, endpoint andrew@opalinvest.com) returned `SubscriptionArn: \"pending confirmation\"`; `list-subscriptions-by-topic` read `PendingConfirmation` on every poll across ~7 minutes (5 polls at t+0..90s, one more after the S2-AC5/AC6 work). The confirmation link AWS sends exists only inside that mailbox; no comp-tool, AWS API, or credential in this repo (checked: 0 mailbox-read hits across the estate) can retrieve its Token in-band.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "andrew@opalinvest.com (open the SNS confirmation email AWS already sent to that address and click the confirm link -- or extract its Token and run `aws sns confirm-subscription --topic-arn arn:aws:sns:us-east-1:313476888478:opal-login-abuse-alerts --token <token>`), or any future seat given mailbox-read access to that address. LEFT ALONE past SNS's ~3-day PendingConfirmation auto-expiry (org/modules/graph/critical-alarm-egress.yaml:8), the subscription is deleted and the alarms return to firing into a void, which is Z-S151's exact condition. Not this worker's to build: no messaging capability and no inbox-read tool is in this worker's write surface or capability set, and building one is new notification infrastructure the moratorium and this TO both forbid.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "`aws sns subscribe --topic-arn arn:aws:sns:us-east-1:313476888478:opal-login-abuse-alerts --protocol email --notification-endpoint andrew@opalinvest.com` -> rc=0, output `{\"SubscriptionArn\": \"pending confirmation\"}`.",
+    "`aws sns list-subscriptions-by-topic --topic-arn arn:aws:sns:us-east-1:313476888478:opal-login-abuse-alerts` run 5x over a bounded ~90s poll (2026-09-10T11:09:54Z..11:11:12Z) then once more at 11:16Z (~7 min after subscribe): every read shows exactly one subscription, protocol email, endpoint andrew@opalinvest.com, SubscriptionArn literally the string `PendingConfirmation` -- never a real ARN.",
+    "`.tools/comp-find 'imap|gmail_api|mail\\.google\\.com|read_inbox|inbox_reader' --corpus all` -> DENOMINATOR 137 hits across 29324 files scanned, 0 of which are a mailbox-read capability (all are unrelated library/AST matches -- pygments IMAP lexer tokens, `as_completed`/`imap_unordered` iterator names). `.tools/comp-find 'ConfirmSubscription|confirm-subscription|PendingConfirmation' --corpus all` -> 75 hits, all either this TO's own text, alarm-reachability/critical-surface CHECKS that read `PendingConfirmation` as a failure state, or Terraform comments about the same expiry -- no site carries a token-retrieval or inbox-read path.",
+    "This worker's tool set for the whole session is Bash/Read/Edit/Write/Glob/Grep (no email/MCP-inbox tool was offered), and the task order's own standing law states 'You cannot message anyone' -- so even relaying a request to Andrew to click the link is out of this turn's reach; the row is the only channel available."
+   ]
+  },
+  "spec_asserts": "TO-OP3-S-2 DELIVERABLE 2: 'CONFIRMATION, not merely creation -- an unconfirmed email subscription is PendingConfirmation and delivers nothing'; S2-AC4: 'SubscriptionArn is a real ARN and NOT the literal string PendingConfirmation.'",
+  "world_is": "The subscription was created and correctly targets andrew@opalinvest.com, but it stayed literally `PendingConfirmation` through every read this worker could take, because moving it past that state requires an act (opening the confirmation email and clicking its link, or reading the Token it carries) that happens inside a mailbox this worker cannot reach. S2-AC5 still ran end to end at the PUBLISH leg: the self-targeted OK->ALARM transition on OPSEC-auth-throttled produced an Action history entry 'Successfully executed action arn:aws:sns:us-east-1:313476888478:opal-login-abuse-alerts' -- CloudWatch's publish to the topic does not require a confirmed subscriber. What does not complete end to end is the topic-to-inbox leg S2-AC4 exists to certify."
+ }
+]
+```
