@@ -1,5 +1,9 @@
 # ETFS_GUARDRAIL -- DECOMPOSITION (L5)
 
+**v0.6** (2026-09-10 ~04:5xZ, `2.0.0_SA_COO`) -- ROUND 3 RE-DECOMPOSED WHERE IT WAS WRONG. `EG-s-21` was cut on a premise the world refuses and the defect is the ISSUER'S: it demanded a forced class-C condition driven through the scheduled target while binding NO CODE CHANGE, and the forcing cannot reach the classifier at all. `0.9.0_WK_ETFS_GUARDRAIL~4` measured it and REFUSED TO FIRE rather than spend the order's one permitted run (row `W4-S2`). TWO enabling cells added, `EG-s-24` and `EG-s-25`; `EG-s-21` is re-pointed to depend on both and stays pending. s.15 below.
+**v0.5** (2026-09-10 ~04:3xZ, `2.0.0_SA_COO`) -- ROUND 3 WIDENED AGAIN BY AMENDMENT, on the ROUND-2 ANALYSIS (94988, `ROUND_ANALYSIS.round2.md` @`f5074019a1`), which graded FWD-8 **NOT_REALIZED** and listed three cells still to place. TWO WERE ALREADY CUT AND ARE NOW TERMINAL OR RUNNING -- the `W1-S25` guard fix is `EG-s-20` (TERMINAL, drained @`5d292ff11f`) and FWD-9's forced-incomplete driven run is `EG-s-21` (running on `~4`). The THIRD, `W1-S27`'s under-reporting ask, had no cell and is added here as `EG-s-23` on the slot `EG-s-22`'s terminal flip just freed. s.14 below.
+**v0.4** (2026-09-10 ~03:5xZ, `2.0.0_SA_COO`) -- ROUND 3 WIDENED BY AMENDMENT on PRD **v0.6**: `1.0.0_SA_CTO` placed row `ETFS_GUARDRAIL-W1-S31` at 94947, ruling the CLASSIFIER half squarely INSIDE this project's surface (s.3 OWNS names "the coverage classifier"; `EG-s-4` is FWD-4's own code row against that file) and the PRODUCER half OUT (PRD row `S20`, leaving as a brief to `4.0.0_SA_CRO` at L1). ONE cell added, `EG-s-22`, on the slot `EG-s-16` just freed. The round is mid-execution and the addition is by AMENDMENT under Andrew's 2026-09-03 scope-change word -- the same mechanism NFRA_OUTSET used for `OS-s-24`/`OS-s-25`/`OS-s-26`. s.13 below.
+**v0.3** (2026-09-10 ~03:1xZ, `2.0.0_SA_COO`) -- ROUND 3 on PRD **v0.5** @`7ba9b976b0`, cut on TWO Andrew-directs of the same night: his ~02:5xZ approval of the manufactured hole ("yeah try it but make sure no test run hits aj's email") and his ~03:0xZ law that **NO FWD IS A WAIT**, which superseded FWD-2 -> FWD-9 and FWD-7 -> FWD-10 in place. THREE cells, TWO chains: `EG-s-19` the catch-up branch driven on a manufactured hole; `EG-s-20` the send path made CORRECT and TEST-SAFE (the W1-S25/W1-S29 guard at two sites, and no driven run able to reach aj@); `EG-s-21` the DRIVEN REFUSAL that closes both new outcomes. s.12 below.
 **v0.2** (2026-09-09 ~22:4xZ, `2.0.0_SA_COO`, the base COO: `~B` not seated) -- ROUND 2 on PRD **v0.4** @`a830ea1cc0` (the CTO's manual-trigger addendum on Andrew's ~21:4xZ no-waiting word): five cells `EG-s-14`..`EG-s-18` added, 1:1 with rows S14-S18, ONE issuance, three worker slots on Opus in hand-cut worktrees (spine v3.7). Round 2's sections are s.8-s.11 below; s.0-s.7 are LEFT UNEDITED. Cells 14 -> 19; edges 15 -> 17.
 **v0.1.1** (2026-09-04 ~19:0xZ, `2.0.0_SA_COO~B`, in the issuance commit, BEFORE the cut freezes it): three
 amendments on evidence read after v0.1 -- (a) s.7 gains THE DISCRIMINATOR'S PRINCIPAL (the ETFS layer holds no
@@ -357,3 +361,229 @@ fanout: 3 of 3 chains, cap 8, reason: chain A is one orchestrator and one deploy
 - **The CTO's never-widen halves** for S14 and S15: asked in the drive read; slot ~1 does not start without them.
 
 -- `2.0.0_SA_COO`, L5 round 2
+
+## 12. ROUND 3 -- the two superseded outcomes and the approved manufactured hole (PRD v0.5 @`7ba9b976b0`)
+
+**Input, and BOTH halves are Andrew's own words from tonight.** (1) ~02:5xZ, answering seven cards: *"Call 1, yeah try it but make sure no test
+run hits aj's email, that is not appropriate."* -- the manufactured hole is APPROVED and a STANDING CONSTRAINT arrives with it, reaching every
+project and every seat. (2) ~03:0xZ, the law: *"no FWD is ever a 'wait' unless explicitly advised otherwise"* -- an endpoint outcome must be
+PROVABLE BY AN ACT A SEAT CAN TAKE ON DEMAND, and one whose only proof is an event nobody controls is re-cut so its MECHANISM IS DRIVEN
+DELIBERATELY, with the organic case kept as the negative arm. The CTO applied it the same turn (spine v3.10 L2; PRD v0.4 -> v0.5): **FWD-2 ->
+FWD-9** (its only proof was a REFUSE verdict, and the September run produced PUBLISH over two class-D holes because carry-and-disclose IS the
+designed behaviour, so the refusal may never come organically) and **FWD-7 -> FWD-10** (it waited on a terminal failure the PRD itself calls rare,
+AND row `W1-S25` measured that the send cannot fire at all -- the wait would have been permanent and nothing would ever have said so).
+
+**This document invents nothing.** Every cell below serves an outcome the CTO placed in v0.5, and the manufactured hole is the act Andrew approved.
+
+| cell | outcome_ref | surface | verb | depends_on | why this piece |
+|---|---|---|---|---|---|
+| `EG-s-19` | FWD-1 (the recovery mechanism, driven rather than awaited) | `daily/<partner>/` -- ONE slice archived and deleted so a hole OLDER than the newest priced partition exists, then the producer's OWN catch-up fire restores it | verify | -- | the catch-up branch has NEVER been exercised: the estate's only hole was the NEWEST partition, which `_catchup_missing_dates` skips as `skip_date` (`W2-S8`), so `EG-s-17` closed with `CATCHUP-BRANCH-NOT-EXERCISED` printed beside its token. Andrew's approval is what makes the branch reachable |
+| `EG-s-20` | FWD-10 (its precondition) | `infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py` -- the unresolved-document guard at BOTH sites, and a test-invocation recipient path that CANNOT reach aj@ | fix | -- | `W1-S25` + `W1-S29`: the guard at `:435` reads `.get("unresolved")` while the renderer writes a document keyed BY PARTNER, so the terminal send is skipped even on a genuine REFUSE; `:516`'s `terminal_qa` rehearsal reads it identically, so the rehearsal built to catch the defect is BLIND to it. And Andrew's constraint makes the recipient path a precondition for driving anything |
+| `EG-s-21` | FWD-9 + FWD-10 | the orchestrator driven into a REFUSE by a forced class-C-or-worse condition, under a NEVER-2 entry, with the forcing DISCLOSED on the artifact | verify | `EG-s-20` | the outcome the law demands: the refusal ladder and its terminal send proven BY AN ACT rather than awaited. It cannot run before `EG-s-20` -- driving a refusal through a send path that can reach aj@ would break a standing Andrew constraint, and driving it through an unfixed guard would prove nothing about the send |
+
+**Denominator:** PRD v0.5 endpoint_outcomes 8 (`FWD-1,3,4,5,6,8,9,10`); outcomes this round SERVES 3 (`FWD-1` by driving its mechanism, `FWD-9`,
+`FWD-10`); cells 3. The five outcomes this round does not serve are closed or closing on round 2's evidence and are named in the CTO's 94919.
+
+**THE CONSTRAINT IS CUT INTO BOTH SEND-TOUCHING FACES, never left to be inferred.** `EG-s-20` and `EG-s-21` each state: **aj@opalinvest.com is
+NOT a recipient of any driven run**, and `EG-s-21` may not fire until `EG-s-20` has PROVEN, by a read of the DEPLOYED handler and not by intent,
+that a test invocation cannot reach it. `EG-s-19` is clear of the constraint BY CONSTRUCTION and says so on its face: it drives
+`cot-etf-ownership-daily`, which writes a slice and mails nobody.
+
+**THE CHAIN READ.** `EG-s-20 -> EG-s-21` is a real dependency of BOTH kinds -- correctness (an unfixed guard makes the send unprovable) and safety
+(an unfixed recipient path makes the run forbidden). `EG-s-19` shares no file and no producer with either and is independent.
+
+```
+fanout: 2 of 2 chains, cap 8, reason: EG-s-20 -> EG-s-21 is one chain on one slot (the second cannot start until the first has PROVEN its precondition); EG-s-19 is independent -- a different producer, a different bucket prefix, and no mailer at all.
+```
+
+**Seating:** `0.9.0_WK_ETFS_GUARDRAIL~4` takes the `EG-s-20 -> EG-s-21` chain (worktree `/c/tmp/wk-etfs-3-4`, branch `wk-etfs_guardrail-3-4`);
+`0.9.0_WK_ETFS_GUARDRAIL~5` takes `EG-s-19` (worktree `/c/tmp/wk-etfs-3-5`, branch `wk-etfs_guardrail-3-5`). Both Opus at high effort, hand-cut
+worktrees off CLOUD (spine v3.7). **Provisioning that the issuer owes each slot at the hand-off and that round 2 measured the hard way:**
+`.tools/terraform.exe` is gitignored and absent from a fresh worktree, and `safe-apply`'s identity gate FAILS CLOSED there because
+`resolve_actor`'s two real sources are the ISSUER's and not the worker's (`W1-S21`) -- so `~4`'s prompt carries the binary and
+`export OPAL_AGENT_SERIAL=0.9.0_WK_ETFS_GUARDRAIL~4`.
+
+**What this round does NOT decide:** whether the rung-3 ask's under-reporting (`W1-S27`, 1 of 2 unresolved dates named) is repaired here -- it is a
+separate code cell on the same file and is NOT bundled into `EG-s-20`, because a fix cell that quietly grows a second subject is how a cut stops
+being reviewable; it is carried to the CTO's L10. Nor does it decide the durable remedy for the `coverage_unresolved.json` shape disagreement (a
+schema the producer and both consumers share), which is a design question above this round.
+
+-- `2.0.0_SA_COO`, L5 round 3
+
+
+## 13. ROUND 3, AMENDED -- the classifier that cannot see the property it checks (PRD v0.6 row `S19`)
+
+**WHY THIS IS A CELL AND NOT A CARRIED FINDING.** `W1-S31` arrived as one symptom with two owners, and this seat
+routed it to `1.0.0_SA_CTO` for placement rather than splitting it on its own judgment. The CTO split it and kept
+half: the partner producer writing PRICED values onto closed days is not an OWNS surface and spine v2.4 forbids
+routing an outside remedy into a running project, so PRD row `S20` PLACES it and it leaves as a brief; but the
+COVERAGE CLASSIFIER is named in PRD s.3 OWNS in as many words, and a defect in the instrument this project owns
+does not become an outside matter because the data that exposed it came from elsewhere.
+
+**THE DEFECT, at `file:line @ commit-ish`.** `data/etfs/scripts/coverage/classifier.py:122-125` @`c866edd324`
+sets class A and `continue`s on a non-trading day BEFORE the presence check at `:128`. The function's own
+docstring says *"only PRESENCE of a key matters here"* -- the check that branch never reaches. A closed day
+carrying a slice and a closed day carrying nothing return the BYTE-IDENTICAL record. FWD-4's only instrument
+cannot discriminate FWD-4's truth from FWD-4's violation, and `daily/inflection/2026-09-07.json` (4 priced rows,
+`value-sha 41d1124f75c3` shared with 09-05/06/08, `LastModified` three days before the September run) is the
+live instance sitting behind it.
+
+| cell | outcome_ref | surface | verb | depends_on | the bar |
+|---|---|---|---|---|---|
+| `EG-s-22` | FWD-4 | `data/etfs/scripts/coverage/classifier.py` and its existing suite | build | -- | the classifier reports a closed day CARRYING a slice DIFFERENTLY from a closed day carrying nothing. The SHAPE is the assignee's (a distinct class value or a populated field); the DISCRIMINATION is the bar. Reproduce the defect FIRST on the producer's own bytes; positive control that a genuinely empty closed day still classifies A and still appears in no partner's holes; `EG-s-4`'s ZERO-vs-MISSING contract undisturbed; the month's verdict re-read before and after with every count identical but the one case, denominator printed |
+
+**Denominator:** PRD v0.6 `endpoint_outcomes` 8 (`FWD-1,3,4,5,6,8,9,10`); round 3 now SERVES 4 (`FWD-1`, `FWD-4`,
+`FWD-9`, `FWD-10`); cells 4.
+
+**THE COST THE ISSUER PRICED INTO THE CUT rather than leaving for the assignee to discover.** `_CLASS_NAMES` is a
+six-member tuple and `summarize` computes `trading_days = COVERED + B + C + D + UNKNOWN` and
+`holes = C + UNKNOWN + D` -- class A is a member of NEITHER sum. A new class value that joins `_CLASS_NAMES`
+without a decision about both sums moves every partner's `trading_days` and every downstream coverage line with
+it, silently. So the face states that a new VALUE triggers CLAUDE.md rule 24 in full (four postulates plus a
+word-boundary token census) while a populated FIELD triggers none of it, and says which is cheaper WITHOUT
+prescribing the choice -- the shape belongs to the seat that will build it.
+
+**THE CHAIN READ.** `EG-s-22` has no `depends_on`. It shares no file with `EG-s-19` (a producer and a bucket
+prefix), none with `EG-s-20`/`EG-s-21` (the mailer and its guard), and no S3 write plane with any of the three --
+it writes nothing to S3 at all. It is independent and adds a third chain.
+
+```
+fanout: 3 of 3 chains, cap 8, reason: EG-s-20 -> EG-s-21 remains one chain on slot ~4; EG-s-19 is independent on slot ~5; EG-s-22 is independent on slot ~1, which EG-s-16's terminal flip just freed and which is the seat that has already read this month's verdict artifact end to end.
+```
+
+**Seating:** `0.9.0_WK_ETFS_GUARDRAIL~1` takes `EG-s-22` by CONTINUATION in its existing worktree
+(`/c/tmp/wk-etfs-2-1`, branch `wk-etfs_guardrail-2-1`) -- already provisioned, already carrying its
+`OPAL_AGENT_SERIAL`, and the seat that measured all three partners' class counts an hour ago. No new worktree is
+cut and no provisioning is owed.
+
+**CLEAR OF THE STANDING CONSTRAINT BY CONSTRUCTION, and the face proves it rather than asserting it.**
+`EG-s-22` constructs no SES client and invokes no Lambda; arm (g) prints that evidence from the run itself.
+Andrew's ~02:5xZ word reaches every seat and this is how a cell that cannot violate it says so.
+
+**What this amendment does NOT decide:** whether the changed classifier is DEPLOYED. It is not, in this cell --
+arm (f) requires the assignee to print `DEPLOYED != BUILT` as a measured sha256 pair and hand the gap on, because
+a project can pass every criterion while the artifact the estate actually reads is unchanged. The deploy is named
+for `1.0.0_SA_CTO`'s L10 with an owner, never left implied.
+
+-- `2.0.0_SA_COO`, L5 round 3 amended
+
+
+## 14. ROUND 3, AMENDED AGAIN -- the stop worked and the ask under-reports (round-2 analysis, FWD-8 NOT_REALIZED)
+
+**WHY THIS IS A CELL AND NOT A CARRIED FINDING.** `W1-S27` was carried out of round 2 deliberately rather than
+bundled into `EG-s-20`: a fix cell that quietly grows a second subject stops being reviewable, and the guard fix
+and the ask defect share a project but not a file. The round-2 analysis then graded FWD-8 NOT_REALIZED on exactly
+this and named it the round's honest half -- **the STOP is real and EXERCISED on real data, and the ASK is
+incomplete** -- so the finding now has a graded outcome behind it and becomes a cell.
+
+**THE MECHANISM, and it is worse than a miscount.** `rung3_stop_and_ask` (`remediate.py:89`) builds its `asks`
+list from EVERY day in the `unresolved` it is handed (`:100-109`), so the function is FAITHFUL to the partner it
+is given. But the key it writes is `platinum/reports/<month>/coverage_egress_ask.json` (`:118`) -- **the MONTH and
+NOT THE PARTNER** -- while `remediate_month` (`:129`) is a PER-PARTNER function. Across the estate's partners each
+ask OVERWRITES the one before it at the same key, and the served artifact is the LAST partner's ask wearing the
+name of the month's ask. An entire partner's outstanding days are ABSENT from an artifact whose whole purpose is
+completeness, and absent in a way that READS AS COMPLETE: the file exists, it is well-formed, its `authorization`
+line is correct, and nothing in it says another partner existed.
+
+| cell | outcome_ref | surface | verb | depends_on | the bar |
+|---|---|---|---|---|---|
+| `EG-s-23` | FWD-8 | `data/etfs/scripts/coverage/remediate.py` and its existing suite | build | -- | a person reading the month's ask can reach EVERY outstanding unresolved day across EVERY partner, OR the artifact says in its own content which partners it does not cover. The SHAPE is the assignee's (per-partner keys, one merged document, a manifest); the COMPLETENESS is the bar, and the arm that carries it is that a PARTIAL ask must read DIFFERENTLY from a complete one |
+
+**Denominator:** PRD v0.6 `endpoint_outcomes` 8 (`FWD-1,3,4,5,6,8,9,10`); round 3 now SERVES 5 (`FWD-1`, `FWD-4`,
+`FWD-8`, `FWD-9`, `FWD-10`); cells 5.
+
+**THE PARTNER LIST IS CUT AS A SUBTRACTION, NOT A LIST, AND THE FACE SAYS SO.** CLAUDE.md rule 24 (i) as
+sharpened tonight at `fe03ddb538`. This project has been bitten by a hand-typed partner list TWICE in one night --
+the CTO's own accept naming two of three, and this issuer's arm (d) naming two of three -- and BOTH PASSED while
+the third partner carried the violation. The face therefore forbids enumerating partners by recall and requires
+the list to come from an artifact that owns it, printed as the denominator. This is the first cut made after that
+rule landed and it is the first place it would have applied.
+
+**THE CHAIN READ.** `EG-s-23` has no `depends_on`. Its file is `data/etfs/scripts/coverage/remediate.py`;
+`EG-s-21` is live on `infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py`. **No shared file, no shared
+S3 write plane** -- `EG-s-23` writes no served key at all -- so the two run concurrently without contention, and
+the face states the boundary rather than leaving it to be discovered.
+
+```
+fanout: 3 of 3 chains, cap 8, reason: EG-s-21 is the tail of the EG-s-20 chain on slot ~4; EG-s-23 is independent on slot ~1, freed by EG-s-22's terminal flip and already inside this same coverage package; the EG-s-19 chain is closed (TERMINAL, drained).
+```
+
+**Seating:** `0.9.0_WK_ETFS_GUARDRAIL~1` takes `EG-s-23` by CONTINUATION in `/c/tmp/wk-etfs-2-1`, branch
+`wk-etfs_guardrail-2-1` -- provisioned, carrying its `OPAL_AGENT_SERIAL`, and the seat that has just edited the
+sibling module in this same package and added permanent regression arms to its suite. No new worktree and no
+provisioning owed.
+
+⛔ **AND THIS FACE CARRIES ITS `criterion` TAGS, which the previous amendment's did not.** `EG-s-22` was cut with
+a prose acceptance section and no tags, and `proof-of-spec-check` reads `cell_refs` exclusively from those tags,
+so its flip was unreachable until the issuer amended the face (`W1-S32`, disarmed @`12f16b46f5`). Census by
+subtraction at that time: 23 faces, 22 carrying both tags, blast radius exactly one. The L6 gate does not check
+that a face carries a gradable criterion at all, and that gap is carried to `1.0.0_SA_CTO`.
+
+**What this amendment does NOT decide:** whether the changed `remediate.py` is DEPLOYED. It is not, in this cell;
+arm (e) requires `DEPLOYED != BUILT` printed as a measured sha256 pair and hands the gap on, because a project can
+pass every criterion while the artifact the estate reads is unchanged. Nor does it touch the producer half at row
+`S20`, which left for `4.0.0_SA_CRO` at L1.
+
+-- `2.0.0_SA_COO`, L5 round 3 amended a second time
+
+
+## 15. ROUND 3 RE-DECOMPOSED -- FWD-9's forced condition is UNREACHABLE, and the two cells that make it reachable
+
+⛔ **THE CELL WAS IMPOSSIBLE AS CUT AND THE DEFECT IS MINE.** `EG-s-21` required (i) a forced class-C condition
+driven through the SAME target the schedule invokes, (ii) that forcing DISCLOSED on the produced verdict with a run
+id, and (iii) the terminal send -- while binding **NO CODE CHANGE** and granting `<paths>` that exclude both the
+orchestrator and the renderer. `0.9.0_WK_ETFS_GUARDRAIL~4` proved each half unreachable and **did not fire**:
+
+| what the face demanded | what the world is |
+|---|---|
+| a forcing that reaches the classifier | `_render_command` (`lambda_function.py:341`) builds a FIXED command at `:368`, handed to SSM at `:563`; an AST census over 3,142 nodes finds the handler reads exactly **4** event keys (`mode`, `month`, `probe`, `test_recipients`). Nothing an invoker sends reaches the classifier |
+| the forcing DISCLOSED on the artifact | on the renderer the box actually pulls (62,880 B, sha256 `55701125e86740f3...`, byte-equal to the repo build input): **10 of 10 disclosure tokens ZERO** against **5 positive controls all non-zero** -- an absence, not a dead read |
+| the terminal send as the oracle | the send exists ONLY in the orchestrator (`:307`, `:605`); the deployed renderer has **0 SES call sites**, so no substitute is available there |
+
+⛔⛔ **AND FIRING ANYWAY WOULD HAVE BREACHED A STANDING ANDREW CONSTRAINT.** `render_month_end.py:963` reads
+`verdict = "REFUSE" if any_c else "PUBLISH"` -- **class C only** -- and the last real run's served verdict reads
+class C = **0 of 3** partners, `PUBLISH`, holes 2. An unforced run would have spent the order's single permitted act
+PUBLISHING served keys and sending the ordinary monthly email **to both recipients, aj@ included**, which is round
+1's measured accident (`W1-S22`/`S23`/`S24`) -- while proving nothing about FWD-9. **The assignee's refusal to fire
+is what prevented that, and it refused on evidence rather than on caution.**
+
+**THE MECHANISM ALREADY EXISTS AND NOBODY THREADED IT.** `--fixture-remove` is declared at
+`render_month_end.py:1022`, parsed by `_parse_fixture_remove` at `:852`, applied at `:1030`/`:1033`/`:1040`/`:1047`.
+It is EG-s-6's QA hook, it removes dates from `series` IN MEMORY, and nothing on S3 is touched by it. This is the
+banked shape of a built primitive connected to nothing looking exactly like a missing one.
+
+| cell | outcome_ref | surface | verb | depends_on | the bar |
+|---|---|---|---|---|---|
+| `EG-s-24` | FWD-9 (enabling) | `infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py` | build | -- | the event can carry a forcing spec and `_render_command` threads it to `--fixture-remove`; **and the SCHEDULED path provably cannot reach it** -- adversarial payloads at 0 of N, and the marker-free command string bit-for-bit unchanged |
+| `EG-s-25` | FWD-9 (honesty) | `data/etfs/scripts/presentation/render_month_end.py` | build | -- | `coverage_verdict.json` records the forcing spec and a run id; **an UNFORCED run writes the same field with an explicit not-forced value**, so a missing field can never pass as "nothing was forced" |
+| `EG-s-21` | FWD-9, FWD-10 | (unchanged) | verify | `EG-s-24`, `EG-s-25` | unchanged; re-pointed only in its dependencies and stays `pending` |
+
+**Denominator:** PRD v0.6 `endpoint_outcomes` 8; round 3 SERVES 5 (`FWD-1`, `FWD-4`, `FWD-8`, `FWD-9`, `FWD-10`);
+cells 7.
+
+⛔ **THE SAFETY PROPERTY IS `EG-s-24`'S REAL SUBJECT, NOT A SIDE CONDITION.** CLAUDE.md states that an override
+letting a scheduled producer run off its own inputs **CREATES A NEW REACHABLE STATE on the manual path, and the
+sign-off covers that state or the override does not land.** This one is worse-shaped than a `--month` override: it
+makes the monthly report **drop its own input data**. A scheduled fire able to reach it would publish over data it
+silently removed. So the default is OFF, the scheduled payload is PROVEN not to reach it by an ADVERSARIAL arm with
+its denominator, and the never-widen sign-off must name that new state in its own words.
+
+**THE CHAIN READ.** `EG-s-24` and `EG-s-25` touch different files with different deploy mechanisms -- Terraform for
+the Lambda, an `aws s3 cp` to the artifact prefix for the renderer the box pulls by key at run time -- and neither
+writes a served report key. They are INDEPENDENT and run in parallel; `EG-s-21` needs BOTH.
+
+```
+fanout: 3 of 3 chains, cap 8, reason: EG-s-24 -> EG-s-21 is one chain on slot ~4 (the seat that owns the orchestrator and just deployed it); EG-s-25 is independent on slot ~5, freed by EG-s-19's terminal flip; EG-s-23 is independent on slot ~1. No two live cells share a file.
+```
+
+**Seating:** `~4` takes `EG-s-24` then `EG-s-21` in `/c/tmp/wk-etfs-3-4`; `~5` takes `EG-s-25` in `/c/tmp/wk-etfs-3-5`.
+Both provisioned, both continuing. ⛔ **The identity-gate operating fact both faces carried is CORRECTED at
+`EG-s-24`'s `<proof_of_spec>` on row `W4-S1`:** `safe-apply.sh:11,50` runs `halt-gate-check.sh` FIRST and that file
+resolves identity ONLY from `org/mcp/sessions/$CLAUDE_CODE_SESSION_ID.serial` (`:56-57`) -- `OPAL_AGENT_SERIAL`
+appears in it ZERO times -- while `safe-apply.sh:152-154` calls `resolve_actor`, which DOES honour it. Two gates, and
+the ORDER is the mechanism.
+
+**What this re-decomposition does NOT decide:** whether `EG-s-21`'s arms need any further change once its
+dependencies land. They are read again at that point against the world the two new cells create, not now.
+
+-- `2.0.0_SA_COO`, L5 round 3 re-decomposed

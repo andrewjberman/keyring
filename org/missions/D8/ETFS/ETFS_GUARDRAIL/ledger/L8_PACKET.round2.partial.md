@@ -1,7 +1,7 @@
-# ETFS_GUARDRAIL round 2 -- L8 PACKET (PARTIAL: 4 of 5 orders terminal; the filename keeps the history of its versions in place)
+# ETFS_GUARDRAIL round 2 -- L8 PACKET (**FINAL: 5 of 5 orders TERMINAL**; the filename keeps `partial` so every version this file has carried stays resolvable at the path the CVO already holds)
 
-**Compiled by** `2.0.0_SA_COO` 2026-09-10 ~00:4xZ at the first drain of round 2 (v1 @`8f7bf86815`), revised ~01:2xZ at the second drain (v2 @`3f1e4de3f3`), revised ~01:2xZ at the third drain (v3 @`66ffa5f6e9`, EG-s-14 terminal), **revised ~03:0xZ at the fourth drain (this version, EG-s-15 terminal)**, on the `/drive` obligation "terminal orders -> L8 compile NOW".
-**For** `3.0.0_SA_CVO` at L9, as a FILE (the spine's three tracks share files, never messages; the one message names this path and its hash). **This is NOT the L10 slug** -- the slug is the CVO's, after L9, once every order of the round is terminal. One order is open on one live worker slot (EG-s-16, running); a sixth cell for the catch-up branch is being cut this tick on Andrew's approval; this packet will be REVISED in place at each drain. The CVO's L9 on v1 landed @`e0ee78e9cd` (S17-AC2 graded PASS; C-S8..C-S10 in `surprise-channel/adjudications/ADJUDICATION_v1.md`).
+**Compiled by** `2.0.0_SA_COO` 2026-09-10 ~00:4xZ at the first drain of round 2 (v1 @`8f7bf86815`), revised ~01:2xZ at the second drain (v2 @`3f1e4de3f3`), revised ~01:2xZ at the third drain (v3 @`66ffa5f6e9`, EG-s-14 terminal), revised ~03:0xZ at the fourth drain (v4 @`6373bfd862`, EG-s-15 terminal), **revised ~03:5xZ at the FIFTH and LAST drain (this version, v5, EG-s-16 terminal @`2a24774603`) -- the round is CLOSED at L7 and this packet is FINAL**, on the `/drive` obligation "terminal orders -> L8 compile NOW".
+**For** `3.0.0_SA_CVO` at L9, as a FILE (the spine's three tracks share files, never messages; the one message names this path and its hash). **This is NOT the L10 slug** -- the slug is the CVO's, after L9, once every order of the round is terminal. NO ORDER OF THIS ROUND IS OPEN. Round 3 is a separate round with its own packet and is named here only where its cells inherit a round-2 finding. The CVO's L9 on v1 landed @`e0ee78e9cd` (S17-AC2 graded PASS; C-S8..C-S10 in `surprise-channel/adjudications/ADJUDICATION_v1.md`).
 
 ---
 
@@ -24,6 +24,7 @@ Re-validated at this seat on the merged tree after each drain, with the expected
 | TO-EG-s-17 | EG-s-17 | `0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-17.the-filled-in-day.proof_of_spec.json` | VALID rc 0 at `d1b8945948`; alignment 2/2 criteria, 1/1 cell; artifact-resolution 2 at pin / 5 PENDING co-committed / 1 s3_object skipped (denominator 8); surprises 4 of 4 resolve | `73e6cd94dc` (pass 1: FAIL by output on the instrument), `1e995e83b5` (pass 2: PASS by output, the flip) | `d1b8945948` (clean merge, 8 paths) -- **L9 landed @`e0ee78e9cd`: S17-AC2 PASS** |
 | TO-EG-s-14 | EG-s-14 | `0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-14.the-august-re-render.proof_of_spec.json` | VALID rc 0 at `4b85a9ae68`; alignment 2/2 criteria, 1/1 cell; artifact-resolution 4 at pin / 3 PENDING co-committed (denominator 7); surprises 9 of 9 resolve | `aadcbc7694` (pass 1: the FAILED first fire, rows W1-S11..S16), `0c8bdbe5a5` (the renderer fix), `45d1a2e4c3` (the deploy leg, the re-invoke, the delivery; rows W1-S17..S19), `5de5bcab7e` (pass 2 on the re-cut arm (f): 7 of 7, the flip) | `4b85a9ae68` (clean merge, 11 paths; EG-s-15's one-line change @`bd0e384890` rides on the same branch with its face pending) |
 | TO-EG-s-15 | EG-s-15 | `0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-15.the-september-refusal.proof_of_spec.json` | VALID rc 0 pre- AND post-commit at `3ee6b6e0d0`; 10 of 10 surprises resolve | `bd0e384890` (the one line + two pytest arms), `8f7229e9f2` (the run's measurements, rows W1-S20..S28), `30be6b2757` (the re-cut re-run: 4 of 4 mechanical criteria, row W1-S29, the flip) | `3ee6b6e0d0` (clean merge, 6 paths) |
+| TO-EG-s-16 | EG-s-16 | `0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-16.the-labor-day-read.proof_of_spec.json` | VALID rc 0 at this seat on the merged tree, criterion ids `S16-AC1,S16-AC2` taken from the ORDER at HEAD; alignment 2/2 criteria and 1/1 cell both directions; 2 of 2 surprises resolve | `2cecbca473` (the battery, the result and the flip, against the RE-CUT face @`005667015a`) | `2a24774603` (clean merge, 4 paths) |
 | TO-EG-s-18 | EG-s-18 | `0.9.0_WK_ETFS_GUARDRAIL~3/ETFS_GUARDRAIL.TO-EG-s-18.the-schedules-from-history.proof_of_spec.json` | VALID rc 0 at `c16eb333cf`; alignment 2/2 criteria, 1/1 cell; artifact-resolution 3 at pin (denominator 3); surprises 3 of 3 resolve | `f6a966f282` (battery, result, rows W3-S3..S5), `2b5b4503dc` (the proof instance + the flip) | `c16eb333cf` (the append-only channel united by ROW UNION: 24 branch rows + 31 CLOUD rows -> 34, none lost; graded 3 new rows) |
 
 **EG-s-17, what the output says.** `S17-AC1` PASS by output on the amended face: `arms holding: 7 of 7`, `EGS17-FILLED-IN-DAY` printed WITH `CATCHUP-BRANCH-NOT-EXERCISED` beside it, rc 0; determinism STABLE; the mutant FIRED-AS-EXPECTED. The one real class-C hole (cottonwood `2026-09-08`, the newest priced partition) was filled by the producer's OWN fire with the rule's byte-equal default envelope (request id `0840a0d3-15aa-4884-a12e-20e75cfa6136`; ONE write, byte-identical after three battery runs, ETag `5da999e2fbfadfe302df35ef24407372`). **Graded PASS by the CVO @`e0ee78e9cd`.**
@@ -36,17 +37,58 @@ Re-validated at this seat on the merged tree after each drain, with the expected
 
 **EG-s-18, what the output says.** `S18-AC1` PASS by output: `EGS18-SCHEDULES-FIRED-FROM-HISTORY`, 5 of 5 arms HOLD, 85 of 85 read-only AWS calls rc 0, no invoke/write/deploy. The configuration reads live (the monthly a Scheduler schedule with `RoleArn etfs-reports-scheduler-role`, `cron(0 10 1 * ? *)` America/New_York, created = last modified 2026-06-25T22:27:48Z; the two daily rules `cron(30 10 * * ? *)` / `cron(45 10 * * ? *)` UTC, Input and RoleArn ABSENT on both); the three history tables (above); artifact-to-fire matches 4 of 4 month prefixes classified, slices 18 of 30 (cot) and 21 of 30 (bd) matched at +5 to +8 s -- bd's unmatched fires are exactly weekends + Labor Day, cot's include five weekday entries that line up with the CRO backfill entry's own `UNDIAGNOSED` missing-date list; the negative-control populations disjoint by request id (both manual fires this round pinned 1 of 1 with 0 scheduler-role `AssumeRole` in their minutes). NOT ASSERTED by the worker: the writer of the 17:38Z August publish (no instrument), the cause of the 2026-07-01T18:00:50Z off-cron scheduler fire (retry the cheapest hypothesis; no discriminator exists -- the orchestrator logs no application line).
 
+**EG-s-16, and the finding is what the arms COULD NOT say as much as what they did.** `S16-AC1` PASSES 6 of 6 on
+the RE-CUT face @`005667015a` (`EGS16-LABOR-DAY-CLASS-A`, rc 0), and **FWD-4's substance holds on real data**: for
+**3 of 3** partners taken from the artifact's own list, the class-A count equals the number of non-trading days the
+battery ENUMERATED from `lib/trading_calendar.py`, `trading_days` equals the trading count, `2026-09-07` is in no
+partner's `holes`, and every hole list is identical with that date removed -- while the month's only holes are the
+class-D `2026-09-09`, so the verdict demonstrably CAN mark a hole and did.
+
+**Three things the CVO should weigh, two of them limits the assignee volunteered.** (i) The artifact carries NO
+per-date classification -- the literal string `2026-09-07` appears 0 times in its 2,705 bytes -- so this arm proves
+a COUNT and an ABSENCE and never a per-date label, and the record says so in those words rather than working
+around it. (ii) `expected_empty` is the class-B count by the classifier's own docstring (`classifier.py:178`,
+`expected_empty = counts["B"]`), and class B is `priced == 0` while class A is `market closed`: DIFFERENT AXES, so
+the original arm could not have passed on a correct world. It is printed with its true meaning named and is
+explicitly NOT graded as a class-A instrument. (iii) Arm (e)'s BEFORE limb is an INFERENCE, not a read -- no
+listing predates the run and a prefix listing is not retrospective -- and the assignee labelled it as such in its
+own output unprompted rather than reporting it as measured.
+
+**The one closed-day slice, adjudicated on WHO WROTE IT AND WHEN.** `daily/inflection/2026-09-07.json`,
+`LastModified 2026-09-07T15:00:41Z`, is OUTSIDE EG-s-15's run window by three days: an upstream-producer fact,
+printed with `rows=4`, its `source_as_of` and `value-sha 41d1124f75c3` beside its neighbours (09-04 differs;
+09-05/06/08 identical), named and NOT graded. **This system backfilled nothing.** The condition itself is placed,
+not carried: PRD v0.6 row `S20` sends the producer out as a brief to `4.0.0_SA_CRO`, and row `S19` keeps the
+classifier defect INSIDE, cut this tick as `EG-s-22` @`eab3712b31` on the slot this order just freed.
+
+⛔ **AND THE DETERMINISM IS ITSELF THE EVIDENCE.** The battery ran three times with every measured number identical
+across all three; only arm VERDICTS moved, each with a named cause (one instrument bug of the assignee's, one
+re-cut of the issuer's). The world never changed -- only what we were entitled to claim about it did.
+
+⛔⛔ **ONE THING THE CVO MUST KNOW BEFORE IT GRADES FWD-5, AND IT IS NOT IN ANY ORDER'S RECORD.** FWD-5's DONE WHEN
+is `EXERCISED -- both people have actually received one`. The evidence exists and it is EG-s-14's: the August
+re-render delivered `Opal ETF Ownership -- Month-End Report (2026-08)` at `2026-09-10T00:25:59Z` with
+`toRecipients` = aj@opalinvest.com AND andrew@opalinvest.com, read at andrew@'s mailbox through the gateway.
+**That act can never be repeated.** Andrew's ~02:5xZ word -- *"make sure no test run hits aj's email, that is not
+appropriate"* -- bars any future driven run from reaching aj@, and the August re-render WAS a manual run. So
+FWD-5's evidence is BANKED AND UNREPEATABLE, and the grading consequence is exact: **aj@'s limb stands at the
+ENVELOPE, not at the MAILBOX.** What was read is that the delivered message was ADDRESSED to both and RECEIVED at
+andrew@; nobody read aj@'s inbox. On Rule 22's STATE axis that is EXERCISED at andrew@ and APPLIED at aj@, and the
+only instruments that would lift aj@'s limb to EXERCISED are a read of aj@'s mailbox or another send -- and the
+send is barred. The issuer states this rather than grading it: if L9 or L10 judges the envelope read insufficient,
+the remedy is a sovereign question at Andrew, NOT a re-take.
+
+
 ## 3. THE JUDGMENT CRITERIA -- THIS IS THE L9 WORK
 
 - **`S17-AC2`** -- graded PASS @`e0ee78e9cd`. Still carried from it: the catch-up branch is unexercised until Andrew's word on a manufactured hole (a served delete; at his terminal; the CTO concurs, 94795).
 - **`S18-AC2`** (judgment, recorded in `the-schedules-from-history.result.md`): whether the fires are regular (the monthly 3 of 3, the dailies 30 of 30, one off-cron scheduler fire on 07-01 named), whether every published artifact and every daily slice maps to a rule-initiated fire or to a person (2026-06 matched; **2026-08 UNMATCHED -- the ad-hoc local render, not a fire**; the unmatched daily fires named), and what CloudTrail's 90-day window cannot show (the object-level writes on `opal-data-etfs`; the Scheduler schedule invisible to `comp-trigger`, W3-S4). Evidence with vintage; NO VERDICT by the worker.
+- **`S16-AC2`** (judgment, recorded in `the-labor-day-read.result.md`): the evidence with vintages for the Labor Day read -- the three limits named above, the closed-day slice's ownership adjudication, and whether a COUNT-and-ABSENCE proof is sufficient for FWD-4 now that PRD v0.6 has moved the outcome's own measurement onto the SLICE PLANE across every partner the artifact lists. NO VERDICT by the worker.
 - The rows the CVO dispositions at L9: **W3-S3** (the daily rules carry no RoleArn -- the same fact as W2-S10, measured independently), **W3-S4** (`comp-trigger` prints `schedule: -` for the Scheduler schedule while the live API returns its cron -- a tool blind spot, the tool's lane), **W3-S5** (2 of 6 scheduler-role `AssumeRole` rows are CreateSchedule validations -- the issuer's "each is a fire" over-counted; the battery joins to a `START` within 60 s), all INERT.
 
-## 4. THE OPEN ORDERS (no grade here; stated so the CVO sees the round's shape)
+## 4. THE OPEN ORDERS -- **NONE. THE ROUND IS CLOSED AT L7.**
 
-| order | slot | state at HEAD `c16eb333cf` | what is in flight |
-|---|---|---|---|
-| TO-EG-s-16 | `~1` | RUNNING; verified clear of Andrew's aj@ constraint independently by the issuer and the assignee | the Labor Day read on EG-s-15's run -- read-only on the plane, no invocation |
+All five orders of round 2 are terminal and drained: `EG-s-14` @`4b85a9ae68`, `EG-s-15` @`3ee6b6e0d0`, `EG-s-16` @`2a24774603`, `EG-s-17` and `EG-s-18` at their own drains recorded in s.2. Nothing in this round waits on a seat, on a schedule, or on a date. The round-3 cells (`EG-s-19`, `EG-s-20`, `EG-s-21`, and `EG-s-22` added by amendment @`eab3712b31`) are a DIFFERENT round with a different packet and are named in this file only where they inherit a round-2 finding.
 
 ## 5. ROWS AND THEIR STANDING AT THIS SEAT (the disarm records S5..S9 landed @`8f7bf86815`)
 
