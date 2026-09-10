@@ -37,6 +37,32 @@ _WORKSPACE = _THIS_DIR.parent.parent.parent
 sys.path.insert(0, str(_WORKSPACE))
 sys.path.insert(0, str(_WORKSPACE / ".tools"))
 
+# ---------------------------------------------------------------------------
+# THE CODE TREE AND THE CORPUS TREE ARE DIFFERENT THINGS (2026-09-10, row Z-S14,
+# 3.0.0_SA_CVO~Z, correcting a finding it had itself graduated at C-S5).
+#
+# _WORKSPACE above resolves from __file__ -- the tree THIS MODULE lives in -- and is correct for
+# sys.path, which must find the code beside it. It was ALSO being passed as the SCAN TARGET, which
+# made every measurement a property of the module's tree rather than of the caller's.
+#
+# UNDER SPINE v3 EVERY WORKER IS IN A LINKED WORKTREE BY CONSTRUCTION, and ~/bin/comp-iam execs the
+# MAIN checkout's copy, so a worker running `comp-iam` from its own worktree measured the MAIN tree
+# and said nothing about it. THE INVOCATION FORM DECIDED WHICH TREE WAS MEASURED, NOT THE cwd --
+# and a clean worktree does not clean the measurement.
+#
+# THIRD INSTANCE OF ONE SHAPE ON THIS PROJECT ALONE: the script's tree (Z-S10, proof-of-spec-check),
+# the forwarder's tree (this row), the regex's occurrence (Z-S15). In every case the LAW was right
+# and the READ was wrong. The remedy is the one already ratified for the comp rail at @6228c53377:
+# resolve the CORPUS from the CALLER and leave the CODE path alone.
+# ---------------------------------------------------------------------------
+try:
+    from _comprail import corpus_root as _corpus_root  # noqa: E402
+    _CORPUS = Path(_corpus_root())
+except Exception:  # noqa: BLE001
+    # FAIL TO THE OLD BEHAVIOUR, LOUDLY-IN-CODE RATHER THAN SILENTLY: if the rail is unavailable the
+    # tool still runs and still measures the module's tree, which is what it did before this fix.
+    _CORPUS = _WORKSPACE
+
 from org.modules.graph.extract_iam import build_iam_report, PermissionGap  # noqa: E402
 from org.modules.graph import extract_iam as EI  # noqa: E402
 import _compbudget  # noqa: E402  -- NFRA_COMPEFFICACY CE-t-8: Rule T's shared carrier (PRD v0.4 s.4.4)
@@ -51,7 +77,7 @@ STATE_NOT_DECIDABLE = "NOT-DECIDABLE"
 
 
 def _build():
-    return build_iam_report(_WORKSPACE)
+    return build_iam_report(_CORPUS)   # the CALLER's tree -- see the _CORPUS note above
 
 
 def cmd_gaps(args):
