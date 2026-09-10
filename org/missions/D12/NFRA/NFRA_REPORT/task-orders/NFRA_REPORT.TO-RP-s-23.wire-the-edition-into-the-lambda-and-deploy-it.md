@@ -18,9 +18,26 @@
 ```
   now      email_body = format_report(report)
   becomes  rows, omissions = edition_rows.rows_from_report(report, _load_prior_report())
+
+           # THE DELTA-ATTACH LOOP -- the CALLER's, and it is not optional.
+           for r in rows:
+               if r["family"] == "watch":
+                   delta, note = edition.compute_delta_watch(r["prev"], r["curr"])
+               else:
+                   delta, note = edition.compute_delta(r["prev"], r["curr"])
+               r["delta"] = delta
+               r["rule_note"] = "(%s)" % note
+
            needs_andrew, breach_rows, worse_rows = edition.compute_verdict(rows)
            email_body = edition.render_markdown(rows, needs_andrew, breach_rows, worse_rows, <vintage>)
 ```
+
+CORRECTED BY ISSUER RULING `NFRA_REPORT-Z-S20`, ADJUDICATING WORKER ROW `Z-W1-S7`. **This order's
+first draft showed three lines and omitted the loop.** `edition.compute_verdict` reads `r["delta"]`
+directly and `rows_from_report` does not attach it -- so without the loop the handler raises
+`KeyError: 'delta'` on the first real invocation. The loop is the specimen's own, at
+`compose_edition.py:549-555`, and it lives in the CALLER by design: `edition.py` is pure functions
+over arguments, `edition_rows.py` is a mapper, and **composing them is this cell's job.**
 
 `send_email(email_body, report)` at :270 is **unchanged**. `archive_report` and `publish_status_feed`
 are **unchanged**. You are replacing a renderer, not a pipeline.
@@ -109,7 +126,7 @@ for n in pys:
     if re.search(r\"ROW_FACTS\", t): hits.append(n)
 print(\"PY_ENTRIES=%d ROW_FACTS_CARRIERS=%d NAMES=%s\" % (len(pys),len(hits),hits))
 " "$D/f.zip"'</invocation><expect>ROW_FACTS_CARRIERS=0 with PY_ENTRIES greater than zero as the denominator -- FWD-14 scored where it must be scored: the transcribed fact list is absent from the DEPLOYED package. The PY_ENTRIES denominator is load-bearing: a zero over an empty or unreadable zip would otherwise pass vacuously</expect></criterion>
-  <criterion id="AC4" cell_refs="RP-s-23"><invocation>cd "C:/Users/Opal Bloomberg/Desktop/ajb_workspace" && timeout 120 python -c "import re;src=open('infra/aws/lambda/infrastructure_monitor/lambda_function.py',encoding='utf-8').read();fr=len(re.findall(r'email_body\s*=\s*format_report\(',src));rm=len(re.findall(r'render_markdown\(',src));df=len(re.findall(r'def format_report\(',src));print('HANDLER_CALLS_format_report=%d HANDLER_CALLS_render_markdown=%d format_report_STILL_DEFINED=%d' % (fr,rm,df))"</invocation><expect>HANDLER_CALLS_format_report=0 AND HANDLER_CALLS_render_markdown of 1 or greater AND format_report_STILL_DEFINED=1 -- the handler is rewired AND the old renderer is still defined for RP-s-24's comparison. All three numbers matter: the third is what stops this cell deleting the reference RP-s-24 needs</expect></criterion>
+  <criterion id="AC4" cell_refs="RP-s-23"><invocation>cd "C:/Users/Opal Bloomberg/Desktop/ajb_workspace" && timeout 120 python -c "import re;src=open('infra/aws/lambda/infrastructure_monitor/lambda_function.py',encoding='utf-8').read();fr=len(re.findall(r'email_body\s*=\s*format_report\(',src));rm=len(re.findall(r'render_markdown\(',src));df=len(re.findall(r'def format_report\(',src));da=len(re.findall(r'\[.delta.\]\s*=',src));cd=len(re.findall(r'compute_delta(_watch)?\(',src));print('HANDLER_CALLS_format_report=%d HANDLER_CALLS_render_markdown=%d format_report_STILL_DEFINED=%d DELTA_ATTACHED=%d COMPUTE_DELTA_CALLS=%d' % (fr,rm,df,da,cd))"</invocation><expect>HANDLER_CALLS_format_report=0 AND HANDLER_CALLS_render_markdown of 1 or greater AND format_report_STILL_DEFINED=1 AND DELTA_ATTACHED of 1 or greater AND COMPUTE_DELTA_CALLS of 2 or greater -- the handler is rewired, the old renderer survives for RP-s-24, AND the delta-attach loop is present calling BOTH compute_delta and compute_delta_watch. The last two numbers were ADDED by issuer ruling NFRA_REPORT-Z-S20: without the loop the handler raises KeyError 'delta' on its first real run, and the original three-number form could not see that</expect></criterion>
   <criterion id="AC5" cell_refs="RP-s-23"><invocation>cd "C:/Users/Opal Bloomberg/Desktop/ajb_workspace" && timeout 120 bash -c 'ls org/critical_paths/change_management/*infra-monitor*edition* 2>/dev/null | wc -l && grep -l -i "closed\|COMPLETE" org/critical_paths/change_management/*infra-monitor*edition* 2>/dev/null | wc -l'</invocation><expect>the first count is 1 or greater AND the second equals the first -- a change-management entry for this deploy exists and every one found is closed. C-CHANGE-LEDGER and NEVER-2: an entry left open is a half-landed deploy by definition</expect></criterion>
   <criterion id="AC6" cell_refs="RP-s-23"><invocation>cd "C:/Users/Opal Bloomberg/Desktop/ajb_workspace" && timeout 120 grep -c -i 'update-function-code' org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~3/DEPLOY.md</invocation><expect>a count of 0 -- the deploy record does not contain the forbidden verb anywhere, including in a transcript of a command that was tried. If the deploy was attempted that way at any point, this criterion is the place it becomes visible rather than a thing only the worker knows</expect></criterion>
 </proof_of_spec>

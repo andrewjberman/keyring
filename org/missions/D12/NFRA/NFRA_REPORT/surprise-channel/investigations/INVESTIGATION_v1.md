@@ -805,3 +805,36 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-S20",
+    "adjudicates": [
+      "NFRA_REPORT-Z-W1-S7"
+    ],
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZZ",
+    "surfaced_at": "2026-09-10T15:20:00Z",
+    "one_line": "ISSUER RULING ON Z-W1-S7, UPHELD IN FULL AND THE DEFECT IS THIS SEAT'S. TO-RP-s-21's AC2 and AC4 ARE UNSATISFIABLE BY ANY CORRECT PORT: compute_verdict reads r['delta'], ROW_FACTS entries never carry it, and only main() -- which the cell explicitly excludes -- ever attaches it. The worker proved it against the UNMODIFIED SPECIMEN, so no port is implicated. AC2/AC4 are RECUT to attach delta the way a real caller must, which makes AC2 STRONGER; and the delta-attach loop is ruled to be the CALLER's, landing in RP-s-23, whose cell text this seat wrote INCOMPLETE.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~ZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "UPHELD WITHOUT AMENDMENT. Z-W1-S7's mechanism is verified at source by this seat rather than taken from the row: compose_edition.py:394 reads r['delta'] with no fallback; a freshly loaded ROW_FACTS entry's keys are ['attribution','citation','curr','evidence','family','prev','property'] with no 'delta'; and main() at :549-555 is the only code that attaches it, in a loop the cell's own BOUNDS exclude with 'main() does NOT travel'.",
+        "THE CONTROL THAT MAKES IT THIS SEAT'S DEFECT AND NOT THE WORKER'S: the worker ran AC2's shape against the UNMODIFIED SPECIMEN with no port involved and got the same KeyError: 'delta'. A criterion that fails on the artifact it was written to imitate is broken as written. AC1/AC3/AC5/AC6 all PASS against the same port, which rules out an absent or malformed module as the explanation.",
+        "THE RULING WAS EXERCISED BEFORE IT WAS ISSUED, which is the discipline this seat skipped at the cut. Run in the main checkout 2026-09-10: attach delta with the specimen's own loop, then compute_verdict, then render_markdown, spec-against-spec -> SPEC_TABLE_LINES=35 SELF_IDENTICAL=True ROWS=26. The corrected harness executes and is non-vacuous, so substituting the port for one side can now produce a real difference.",
+        "THE RECUT MAKES AC2 A STRONGER CRITERION, NOT A WEAKER ONE. The current AC2 never calls compute_delta or compute_delta_watch at all -- two of the six ported functions were unexercised by the criterion that calls itself THE CELL. The corrected form runs the caller's own loop through the PORT's copies of both, so a port that broke either now fails AC2 instead of passing it.",
+        "THE SECOND LIMB, ANSWERING THE QUESTION Z-W1-S7 CORRECTLY REFUSED TO ANSWER ITSELF: the delta-attach loop belongs to the CALLER. edition.py stays pure functions over arguments (the cell's own bound); edition_rows.py stays a mapper; RP-s-23's wiring composes them. RP-s-23's cell text as this seat wrote it shows THREE lines -- rows_from_report, compute_verdict, render_markdown -- and OMITS the loop between the first and the second. That omission is the same defect one layer down and it is corrected in the order by this ruling."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "TO-RP-s-21's AC2 ('THE CELL') and AC4 assert that a faithful port, fed the specimen's own ROW_FACTS at a fixed vintage, reproduces the specimen's edition exactly and discriminates on row-list size.",
+    "world_is": "Both invocations raise KeyError: 'delta' on their first call, on the unmodified specimen as readily as on any port, because they call compute_verdict on rows that no caller has annotated. The assertion was never reachable. The port itself is a faithful one-for-one lift and passes every criterion that does not depend on this.",
+    "notes": "THE RULING, EXECUTABLE AND DISPATCHED: AC2 and AC4 are RECUT to attach delta before calling compute_verdict, using the PORT's own compute_delta/compute_delta_watch, over an independent deepcopy per side so neither module grades rows the other mutated. The worker holds TO-RP-s-21 in its own worktree and amends its own copy under this ruling, citing this row id in both the order and the proof instance -- ONE WRITER PER FILE, so this seat does not edit that order in the main tree and manufacture a drain conflict on it. RP-s-23's order is BLOCKED and held by nobody, so this seat amends THAT one directly in the same commit as this row. ⛔ NOT CHANGED BY THIS RULING: the cell's scope, its BOUNDS, its write surface, the frozen row shape, and the exclusion of main(). The port is not asked to do more; the criterion is asked to call it correctly. ⭐ THE PART THIS SEAT OWNS PLAINLY: TO-RP-s-21's RED ARM section claims AC2 'FAILS (expect IDENTICAL=True)' with the reason 'ModuleNotFoundError on the port' -- an assumed pre-state failure from file-absence. Had this seat actually RUN AC2's shape against the specimen alone at the cut, the KeyError would have surfaced in seconds and the criterion would never have been issued. A red arm that is REASONED rather than RUN certifies nothing, and this project's own law says so: 'run the criterion against the world before handing it over.' The worker did in minutes what the issuer should have done before issuing, and refused the workaround that would have hidden it. ⚠ ONE CONSEQUENCE FOR L9, STATED SO IT IS NOT DISCOVERED LATER: any AC2/AC4 result recorded before this ruling is a result against a broken criterion and grades nothing either way."
+  }
+]
+```
