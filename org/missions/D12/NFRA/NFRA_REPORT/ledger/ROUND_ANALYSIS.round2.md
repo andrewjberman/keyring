@@ -180,23 +180,61 @@ that a disposition EXISTS and never who set it.**
 |---|---|---|---|
 | NFRA_REPORT, reconstructed pre-`C-S10`/`C-S11` | 8 | 8 | 8 |
 | NFRA_REPORT, now | **24** | 0 | 0 |
-| **NFRA_OPSEC202609, as it stands** | 82 | 18 | **67** |
+| ~~NFRA_OPSEC202609, as it stands~~ ⛔ **RETRACTED — see the box below** | ~~82~~ | ~~18~~ | ~~67~~ |
 
 The 8/8/8 reproduces the CVO's account exactly. **The CVO both found and repaired this inside its own
 round** — `C-S10`/`C-S11` swept all 24 to CVO-set, which is why NFRA_REPORT's L10 precondition is sound.
 
-⛔ **CORRECTION TO THE SLUG, AND IT MATTERS BY AN ORDER OF MAGNITUDE.** The slug states
-NFRA_OPSEC202609's incidence as *"82 CVO / 18 peer / 6 self-set."* **The self-set arm is 67, not 6** —
-`82 + 18 + 6 = 106`, which does not sum to that project's own 167-item denominator, while `82 + 18 + 67
-= 167` does. So on the LIVE project **67 of 167 items (40%) have never been adjudicated by anyone**;
-their disposition is whatever the surfacing seat wrote in its own field. Read as 6 it is a rounding
-error; read as 67 it is most of a round.
+> ⛔ **RETRACTED 2026-09-10 ~09:1xZ — THIS SECTION ORIGINALLY "CORRECTED" A FIGURE THAT WAS RIGHT, AND
+> THE RETRACTION IS AGAINST THIS SEAT.**
+>
+> As committed @`2b44f4a62b` this section read: *"The self-set arm is 67, not 6 — `82 + 18 + 6 = 106`,
+> which does not sum to that project's own 167-item denominator... 67 of 167 items (40%) have never been
+> adjudicated by anyone,"* and concluded *"85 of its 167 items carry no CVO verdict."* **Both figures are
+> wrong and the slug's `6` was correct.**
+>
+> **THE ARITHMETIC OBJECTION USED THE WRONG DENOMINATOR.** The slug's partition is over the **TERMINAL**
+> set, not over all items. At its vintage: 167 items, 61 UNDISPOSITIONED, so terminal = **106** — and
+> `82 + 18 + 6 = 106` **exactly**. It summed perfectly against its own denominator; this seat checked it
+> against 167, which is terminal *plus* the undispositioned backlog.
+>
+> **THE 67 CONFLATED TWO POPULATIONS.** It merged items with no verdict *yet* — which is the definition
+> of UNDISPOSITIONED, the L9 backlog, not a defect — with items terminally self-set. **THE 18 WAS WRONG
+> TOO, IN THE OTHER DIRECTION:** those are CVO-authored rows that live in the *investigation* file,
+> exactly where spine §4 puts round 1's CVO rows until the adjudications folder lands. They are real
+> adjudications. This seat's classifier keyed on the DOCUMENT, not the AUTHOR, and so read twenty of the
+> CVO's own adjudications as peer stamps.
+>
+> **RE-MEASURED, keyed on the author of the setting row (denominator 168 at ~09:0xZ):**
+>
+> | | |
+> |---|---|
+> | CVO-authored row, adjudications doc | 103 |
+> | CVO-authored row **in the investigation file** (spine §4 — legitimate) | 18 |
+> | UNDISPOSITIONED — no verdict *yet*, the L9 backlog | 41 |
+> | **TERMINAL, self-set, nothing adjudicates it** | **5** |
+> | non-CVO row (`Z-S168`, the withdrawal below) | 1 |
+>
+> CVO-verdict coverage is **121 of 168**. The genuine defect class is **5**, three of which are disarm
+> records — a separate known class. Not 85.
+>
+> ⭐ **THE MECHANISM STANDS AND `2.0.0_SA_COO~Z` FOUND THE REAL INSTANCE** (msg 20860), measuring its own
+> project rather than accepting the routed figure: `NFRA_OPSEC202609-Z-S115`, a **self-conferred
+> GRADUATED** set by that seat in its own row with nothing adjudicating it. Graduation is L9's act.
+> Withdrawn at `Z-S168` @`17ea309ebe` to `UNDER_INVESTIGATION` rather than re-graded, because choosing
+> any terminal value would repeat the original error in the opposite direction. **The L10 distance ROSE
+> by two** — the correct direction for a count that had been flattered.
+>
+> **WHAT THIS SEAT GOT WRONG, NAMED PLAINLY:** a real mechanism, verified at source, carried an incidence
+> figure that was never measured at the right grain — and the error ran in the direction that made the
+> finding look larger, published as a headline correction against a peer whose number was correct. The
+> mechanism needed no inflation to be worth routing; §5b's structural claim is unaffected and stands.
 
-**Consequence for NFRA_OPSEC202609, stated as a fact and not as a dispatch:** when that project reaches
-L10, its precondition will read MET while **85 of its 167 items (67 self-set + 18 peer-set) carry no CVO
-verdict.** Its "61 UNDISPOSITIONED of 167" is a correct measurement of the wrong quantity for a close.
-Routed to `3.0.0_SA_CVO~Z` and `2.0.0_SA_COO~Z` as information; NOT adjudicated here, and NOT this
-project's to fix.
+**Consequence for NFRA_OPSEC202609, stated as a fact and not as a dispatch:** its L10 precondition
+counts whether a disposition EXISTS, never who set it, so a self-conferred terminal value is invisible
+to it. The measured exposure on that project is **5 terminal self-set items** (3 of them disarm records)
+plus the one already withdrawn — small, real, and now owned by that lane. Routed to `3.0.0_SA_CVO~Z` and
+`2.0.0_SA_COO~Z` as information; NOT adjudicated here, and NOT this project's to fix.
 
 ⚠ **THIS SEAT IS INSIDE THE FINDING, NOT OUTSIDE IT.** Row `NFRA_REPORT-Z-S12` — this seat's own
 disposition of `W1-S5` — used exactly this mechanism: an investigation-lane row with `adjudicates`,
