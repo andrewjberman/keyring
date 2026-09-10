@@ -1,0 +1,141 @@
+{
+  "schema_version": 3.1,
+  "carded_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+  "subject": {
+    "id": "globgrph stitch producer, archive carry-forward -- CARRIER: NODES",
+    "kind": "script",
+    "declared_domain": "The NODE half of one mechanism: derive_stitch.load_aws_layer() reads the nightly AWS snapshot, and derive_runner.archive_snapshot() writes that snapshot AFTER folding this producer's own output into it, so every node this producer emitted last cycle arrives back as INPUT. Covers the nodes carrying source=portal-stitch in the snapshot -- their re-typing, their duplicate copies, and their retirement. Does NOT cover props on those nodes (the props carrier card) or edges between them (the edges carrier card): the same question was answered separately, and differently, on each."
+  },
+  "as_of": {
+    "carded_utc": "2026-09-10T04:37:24Z",
+    "commit_ish": "f3b5f26f77",
+    "graph_vintage": "snapshots/20260909/graph-20260909.tar.gz, LastModified 2026-09-09T21:05:21Z -- the vintage row NFRA_CLDGRPH-W2-S61 read with s3api head-object. NOT RE-READ BY THIS CARD: the round-7 egress hold forbids any act whose effect reaches AWS, so every snapshot number here is read from the record of that read and carries its basis accordingly."
+  },
+  "process": {
+    "methodology": {
+      "how": "derive_stitch builds the portal/pipeline subgraph, unions it with the AWS layer loaded from s3://opal-313476888478-globgrph via snapshots/latest.txt, merges stitch members onto canonical ids, and emits one artifact. The nodes arriving in that AWS layer with source=portal-stitch are not third-party data: they are this producer's own emission from the previous cycle, folded in by derive_runner.ingest_stitch_artifact and archived by derive_runner.archive_snapshot. Two producer-side handlers exist for them, and they answer different failures. _retype_prior_cycle re-types a prior cycle's provisional names by the producer's own source stamp, so a vocabulary change converges in ONE cycle instead of two. _collapse_stitch_copies then keeps one node per id, preferring the object this run emitted -- identified by Python object identity (fresh_objs), taken before the union, because after the union a fresh node and its archived copy are indistinguishable by their data.",
+      "determinism": "deterministic",
+      "composes": [
+        {
+          "id": "derive_runner.archive_snapshot",
+          "note": "the write half of the loop: it writes the snapshot this producer reads"
+        },
+        {
+          "id": "derive_runner.ingest_stitch_artifact",
+          "note": "the fold that puts this producer's output into that snapshot before it is archived"
+        },
+        {
+          "id": "extract_portal_stitch",
+          "note": "step 1, the portal subgraph this producer unions with the AWS layer"
+        }
+      ],
+      "invents": [
+        {
+          "id": "PROVISIONAL_TO_CANONICAL",
+          "note": "the producer's own re-type map for its own prior output; PORTAL_BUNDLE is absent from it"
+        },
+        {
+          "id": "fresh_objs",
+          "note": "an object-identity set standing in for a freshness field no node carries"
+        }
+      ],
+      "materializer_standing": "canonical",
+      "basis": "measured",
+      "evidence": "infra/aws/globgrph/derive_stitch.py:62-72 (load_aws_layer reads snapshots/latest.txt then that key), :118-127 (fresh_objs taken before the union), :311-347 (the carry-forward comment and _retype_prior_cycle), :399-462 (_collapse_stitch_copies) @f3b5f26f77; infra/aws/globgrph/derive_runner.py:484-501 (archive_snapshot writes the dated tarball and the latest.txt pointer) and :2536-2544 (ingest_stitch_artifact runs LAST of the folds, before the archive) @f3b5f26f77.",
+      "owner": "0.8.0_AE_CloudComp"
+    },
+    "cadence": {
+      "declared_rhythm": "Two clocks, 23 hours apart, and the gap between them IS the carry-forward. The producer (CodeBuild opal-stitch-produce) runs on cron(0 3 * * ? *); the derive that folds its artifact in and archives the snapshot runs on cron(0 2 * * ? *). So an emission made at 03:00Z is folded and archived at the NEXT 02:00Z and read back by the producer at the 03:00Z after that.",
+      "actual_trigger": "EventBridge schedule rules, one per side. No success-of-upstream trigger: both sides fire on their own clock, which is why a producer-side removal is not synchronised with the archive that still holds it.",
+      "live_matches_declared": "yes",
+      "live_instance_age": "The 03:00Z rule-initiated nightly of 2026-09-10 succeeded and its artifact is what the round-6 grain baseline was signed on; this card did not re-read the live rule.",
+      "basis": "held",
+      "evidence": "DESIRED plane, measured: infra/aws/terraform/globgrph/stitch-produce.tf:228 -- cron(0 3 * * ? *), with the in-file comment naming 03:00 UTC as after the 02:00Z derive_runner_nightly snapshot -- and infra/aws/terraform/globgrph/item2a.tf:441 -- cron(0 2 * * ? *) @f3b5f26f77. APPLIED plane, HELD not measured here: org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/ROUND_ANALYSIS.round6.md:95 @f3b5f26f77 records the 03:00Z rule-initiated nightly succeeding. No describe-rule call was made -- the egress hold.",
+      "owner": "0.7.0_AE_CloudOps"
+    }
+  },
+  "artifact": {
+    "persistence": {
+      "persisted": true,
+      "authority_role": "projection",
+      "mutation_policy": "replaceable",
+      "form": "A gzip tarball of one JSON graph document in S3, plus the served Iceberg CloudNode table the projection service reads.",
+      "basis": "measured",
+      "evidence": "infra/aws/globgrph/derive_runner.py:484-501 @f3b5f26f77 writes snapshots/<date>/graph-<date>.tar.gz and overwrites snapshots/latest.txt with that key. The overwrite is the mutation policy: each cycle replaces the pointer, and the previous dated tarball stays.",
+      "owner": "0.8.0_AE_CloudComp"
+    },
+    "location": {
+      "home": "s3://opal-313476888478-globgrph/snapshots/<date>/graph-<date>.tar.gz, addressed through s3://opal-313476888478-globgrph/snapshots/latest.txt",
+      "projection_of": [
+        {
+          "id": "portal_stitch_subgraph.current_cycle",
+          "note": "the nodes this run actually emitted"
+        },
+        {
+          "id": "comp_aws_layer.current_cycle",
+          "note": "the AWS-resource half of the snapshot"
+        },
+        {
+          "id": "derive_stitch.previous_emission",
+          "note": "THE LINEAGE ENTRY THAT MAKES THE LOOP A LOOP, and the one a reader of the artifact cannot see from inside it"
+        }
+      ],
+      "co_resident_stores": [
+        {
+          "id": "served_cloudnode_table",
+          "note": "read through the projection service"
+        },
+        {
+          "id": "kuzu_store",
+          "note": "built from the same graph"
+        }
+      ],
+      "basis": "measured",
+      "evidence": "infra/aws/globgrph/derive_stitch.py:62-72 @f3b5f26f77 (the read) against infra/aws/globgrph/derive_runner.py:484-501 @f3b5f26f77 (the write) -- the same bucket and the same key grammar on both sides, which is what closes the loop.",
+      "owner": "0.7.0_AE_CloudOps"
+    }
+  },
+  "trust": {
+    "coverage": {
+      "universe": "Nodes in the archived snapshot carrying source=portal-stitch -- by construction, this producer's own prior output, since nothing else in the estate writes that source stamp.",
+      "denominator": "1,771 of the snapshot's portal-stitch nodes at the 2026-09-09T21:05:21Z vintage, by the row's own type census (GOLD_SCRIPT 1380, S3_DATA_KEY 294, REACT_QUERY_KEY 94, PORTAL_COMPONENT 2, PORTAL_BUNDLE 1); 1,770 of them re-typed in the local run that proved the remedy. A SECOND RECORD OF THE SAME POPULATION DISAGREES BY 20 and this card does not resolve it: the producer's own comment at derive_stitch.py:313 @f3b5f26f77 reads 1,791 for the same 21:05Z snapshot. Filed as NFRA_CLDGRPH-W2-S75 rather than averaged, dropped or silently preferred.",
+      "explicitly_out": [
+        "PORTAL_BUNDLE -- carried in the census but absent from PROVISIONAL_TO_CANONICAL, so the re-type never moves it; it is the node the props carrier's defect landed on",
+        "canonical-named nodes in the same snapshot (source is null on them): they are other producers' members and this handler never touches them",
+        "the SERVED plane: this card measures the producer's input and output, not the projection, which the CVO reads with a different instrument"
+      ],
+      "basis": "measured",
+      "evidence": "NFRA_CLDGRPH-W2-S61 @80daa1fff6 (the row read at the commit that minted it, re-grounded by g2_card_evidence.py: 5 evidence items, GROUNDED, byte-identical at HEAD), carrying the per-type census and the local run's STITCH_UNIFY_PRIOR_CYCLE retyped=1770; contradicted on the total by infra/aws/globgrph/derive_stitch.py:313 @f3b5f26f77.",
+      "owner": "0.8.0_AE_CloudComp"
+    },
+    "key": {
+      "identity_space": "The producer's node id string after unify_stitch_vocabulary rewrites it through the run's idmap -- gold:<path> and gold:<path>:<function> for pipeline members, s3:<key> for data keys, plain names for portal members.",
+      "key_expression": "resolve_stitch_id(node, build_canonical_index(classes_data)), then idmap.get(id, id); the map is built at derive_stitch.py:229 @f3b5f26f77 and lives only for the length of the run.",
+      "key_is_stable": "unstable",
+      "crosses_spaces": true,
+      "declared_mapping": null,
+      "basis": "measured",
+      "evidence": "infra/aws/globgrph/derive_stitch.py:224-231 @f3b5f26f77 -- the unification rewrites node ids AND edge endpoints through one map, and the map is a local variable, not an artifact. Nothing persists the pre-merge id, so a consumer holding yesterday's id cannot resolve it except by re-running the same merge. That is what makes the key unstable rather than merely derived, and why the freshness test at :126 had to fall back to Python object identity: two nodes legitimately share an id across the union.",
+      "owner": "0.8.0_AE_CloudComp"
+    },
+    "failure_mode": {
+      "returns_on_failure": "A COMPLETE-LOOKING GRAPH WITH LAST CYCLE'S NODES IN IT, exit 0, no warning, no count. The union succeeds, the per-class dedup collapses identical copies, every class-level check passes, and the grain sentinel reads counts that are correct for a population nobody meant to keep. The one loud failure in this carrier is the opposite case: when the re-type was ABSENT the four provisional names survived at their carried counts and the grain sentinel REFUSED to publish -- the producer's only mechanical tell, and it fires on a type change, not on a stale carry.",
+      "distinguishable_from_true_negative": "no",
+      "silent_degrade_paths": [
+        "RETIREMENT IS THE OPEN ONE, AND IT IS THE ROUND'S LESSON ON THIS CARRIER: _collapse_stitch_copies drops an archived copy only when the same id is in this run's fresh emission (derive_stitch.py:437-455 @f3b5f26f77). A node the producer STOPS emitting is not in fresh_ids, so nothing drops it and it is served for another cycle -- the nodes-carrier form of silently idempotent under a fixed emission, silently wrong under a shrinking one. There is no node-side equivalent of the edges carrier's drop-on-read.",
+        "A node re-typed by _retype_prior_cycle carries retyped_from, which the collapse USED to read as its freshness signal; the moment the snapshot itself held canonical names nothing was re-typed, the signal went empty, and the tie-break fell to dict iteration order (measured: NFRA_CLDGRPH-W2-S69). The fresh_objs remedy closes this path; the row is kept here because the failure was a SIGNAL going quiet, not a signal going wrong, and the next inferred freshness mark will fail the same way.",
+        "A node whose provisional type is absent from PROVISIONAL_TO_CANONICAL is carried unchanged with no count -- PORTAL_BUNDLE is the live instance."
+      ],
+      "basis": "measured",
+      "evidence": "infra/aws/globgrph/derive_stitch.py:118-127 (a fresh node and its archived copy are indistinguishable by their data, stated by the producer at the site that works around it), :437-455 (the drop condition, which requires the id to be in this run's emission) @f3b5f26f77; NFRA_CLDGRPH-W2-S61 @80daa1fff6 for the grain-sentinel refusal and the carried counts.",
+      "owner": "0.8.0_AE_CloudComp"
+    }
+  },
+  "verdict": {
+    "standing": "QUALIFIED",
+    "why": "Every row is measured and two of the three failures this carrier can produce are closed at the producer: re-typing converges a vocabulary change in one cycle, and the duplicate copy is resolved by an object identity no data field can drift out from under. The third is OPEN and named: a node the producer stops emitting is never dropped on read, so a SHRINKING node population is carried forward silently, with no error and no count. Usable for anything that only ever adds or re-types members; NOT usable, without the named remedy, as evidence that a node the producer no longer emits is gone.",
+    "blocking_defects": [
+      "NO DROP-ON-READ FOR STITCH NODES (owner 0.8.0_AE_CloudComp): derive_stitch.py:437-455 @f3b5f26f77 drops an archived copy only when this run re-emitted the same id. The edges carrier solved exactly this at :141-142 by dropping its own prior-cycle edge type on read and COUNTING what it dropped; the node side has no counterpart. Remedy shape, from the carrier that already did it: drop this producer's own prior-cycle nodes on read and emit the count, so a shrink shows up as a number instead of as nothing."
+    ]
+  }
+}

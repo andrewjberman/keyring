@@ -1,0 +1,133 @@
+{
+  "schema_version": 3.1,
+  "carded_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+  "subject": {
+    "id": "globgrph stitch producer, archive carry-forward -- CARRIER: EDGES",
+    "kind": "script",
+    "declared_domain": "The EDGE half of the same mechanism: edges this producer emitted last cycle, folded into the graph by derive_runner and read back inside the snapshot derive_stitch loads. Covers the boundary edge STORED_IN, which the producer owns outright, and states what the current remedy does NOT reach. Does NOT cover the nodes or the props (their own carrier cards). This is the carrier where the round's lesson was actually seen, because it is the only one where an emission SHRANK."
+  },
+  "as_of": {
+    "carded_utc": "2026-09-10T04:37:24Z",
+    "commit_ish": "f3b5f26f77",
+    "graph_vintage": "The cycle-3 artifact published 2026-09-10T02:15:44Z, sha256 6b9da08cfae31a0d0112e92077b8947be2e079a1391ce198a64240307f38dd32, re-derived by the seat that filed row NFRA_CLDGRPH-W2-S71, and the cycle-4 artifact the round-6 analysis grades. NOT RE-READ BY THIS CARD -- the round-7 egress hold."
+  },
+  "process": {
+    "methodology": {
+      "how": "derive_stitch emits one STORED_IN per firm-relative S3 key, to the bucket the key's OWN props name, and emits none where the key names no bucket (counted, not guessed). Before the fourth cycle the same loop iterated every candidate firm bucket and emitted an edge to each: 191 keys times 5 present buckets. THE ARCHIVE READ IS HANDLED SEPARATELY FROM THE EMISSION, and that separation is the remedy: STORED_IN edges arriving in the AWS layer are DROPPED before this run emits anything, and the number dropped is carried in the run's own stats. The producer's justification is a construction argument, not a heuristic -- STORED_IN is this producer's own edge type and nothing else in the estate writes one, so a STORED_IN arriving in the snapshot is by construction a previous cycle's output.",
+      "determinism": "deterministic",
+      "composes": [
+        {
+          "id": "derive_runner.ingest_stitch_artifact",
+          "note": "with archive_snapshot, the write half of the loop"
+        },
+        {
+          "id": "s3key_node_bucket_props",
+          "note": "the per-key props of the canonical S3Key node the stitch key merges onto: the fact the edge asserts is read from the node, not chosen"
+        }
+      ],
+      "invents": [
+        {
+          "id": "stored_in_prior_cycle_dropped",
+          "note": "a count of this producer's own prior-cycle edges removed on read"
+        },
+        {
+          "id": "stored_in_no_bucket",
+          "note": "a count of keys that get NO edge, so a missing fact is visible as a number"
+        }
+      ],
+      "materializer_standing": "canonical",
+      "basis": "measured",
+      "evidence": "infra/aws/globgrph/derive_stitch.py:128-145 (the archive-carry-forward comment, the drop and its counter) and :199-241 (the one-edge-per-key loop, its population and its target rule) @f3b5f26f77.",
+      "owner": "0.8.0_AE_CloudComp"
+    },
+    "cadence": {
+      "declared_rhythm": "Producer on cron(0 3 * * ? *), archiving derive on cron(0 2 * * ? *) -- the same 23-hour loop. On this carrier the cadence is what HID the defect: while the producer emitted the same triples every night the duplicates collapsed in the dedup and the artifact was indistinguishable from a correct one, night after night.",
+      "actual_trigger": "EventBridge schedule rules. Neither side triggers on the other's success, so nothing in the schedule tells a reader that tonight's edge set is last night's.",
+      "live_matches_declared": "yes",
+      "live_instance_age": "Cycle 4 of round 6 (build started 2026-09-09T22:3xZ-04:00 by its commit stamp) is the emission the round-6 analysis grades at 137; the live rule was not re-read by this card.",
+      "basis": "held",
+      "evidence": "DESIRED plane, measured: infra/aws/terraform/globgrph/stitch-produce.tf:228 and infra/aws/terraform/globgrph/item2a.tf:441 @f3b5f26f77. APPLIED plane, HELD: NFRA_CLDGRPH-W2-S71 @2178066b7d, which timed the cycle-3 zip at 02:13:37Z, its build at 02:14:35Z and the artifact marker at 02:15:44Z, all by s3api and build reads at the time.",
+      "owner": "0.7.0_AE_CloudOps"
+    }
+  },
+  "artifact": {
+    "persistence": {
+      "persisted": true,
+      "authority_role": "projection",
+      "mutation_policy": "replaceable",
+      "form": "Edge objects in the archived graph JSON and rows in the served edge table.",
+      "basis": "measured",
+      "evidence": "NFRA_CLDGRPH-W2-S71 @2178066b7d re-derived the population inside the published artifact itself (955 emitted, 191 distinct sources, 5 distinct targets, per-key distribution 5 for all 191 keys) -- an artifact read, not a report read.",
+      "owner": "0.8.0_AE_CloudComp"
+    },
+    "location": {
+      "home": "s3://opal-313476888478-globgrph/snapshots/<date>/graph-<date>.tar.gz (the archived copy that is read back) and the served edge table; the emitting side also lands in the CodeBuild stitch artifact.",
+      "projection_of": [
+        {
+          "id": "firm_relative_s3_keys.current_cycle",
+          "note": "the 191 keys and their own bucket props"
+        },
+        {
+          "id": "derive_stitch.previous_emission",
+          "note": "until the drop at derive_stitch.py:141-142 removes it"
+        }
+      ],
+      "co_resident_stores": [
+        {
+          "id": "served_edge_table",
+          "note": "read through the projection service"
+        },
+        {
+          "id": "kuzu_store",
+          "note": "built from the same graph"
+        }
+      ],
+      "basis": "measured",
+      "evidence": "infra/aws/globgrph/derive_stitch.py:128-142 @f3b5f26f77 states the path by which last night's edges arrive in this run's edge list, and drops them there.",
+      "owner": "0.7.0_AE_CloudOps"
+    }
+  },
+  "trust": {
+    "coverage": {
+      "universe": "Edges of a type this producer writes that arrive back in the AWS layer from the snapshot. The DROP covers exactly one type: STORED_IN.",
+      "denominator": "955 of 955 STORED_IN edges in the cycle-3 artifact, over 191 distinct source keys and 5 distinct targets, per-key distribution 5 for every one of the 191; 137 of 191 keys answer the question from their own props, 548 of the 955 edges were contradicted by their own source node and 270 belonged to the 54 keys whose props name no bucket at all (137 + 548 + 270 = 955). After the fix: 137 emitted, per-key distribution 1 for all 137, 0 contradicted, 54 no-bucket keys COUNTED rather than guessed.",
+      "explicitly_out": [
+        "EVERY OTHER EDGE TYPE THIS PRODUCER WRITES. The drop at derive_stitch.py:141-142 @f3b5f26f77 filters on the literal STORED_IN, so WRITES, READS, DERIVES_FROM and ROUTES_TO arrive from the snapshot and are NOT dropped; they are saved only by the dedup, which is exactly the condition that makes a shrink invisible.",
+        "edges written by any other producer: the construction argument that licenses the drop applies only to a type nothing else writes, and it would be wrong for a shared type",
+        "the endpoint IDENTITY question -- whether the target should be the bucket name node or the ARN -- which is row W2-S70 and round 7's, not this card's"
+      ],
+      "basis": "measured",
+      "evidence": "NFRA_CLDGRPH-W2-S71 @2178066b7d (6 GROUNDED evidence items, the arithmetic re-derived on the seat's own artifact rather than on the served projection, independently of the CVO's S96/S97 which reached the same numbers by a different instrument); ROUND_ANALYSIS.round6.md:30 @f3b5f26f77 for the after-state; infra/aws/globgrph/derive_stitch.py:141-142 @f3b5f26f77 for what the drop does and does not span.",
+      "owner": "3.0.0_SA_CVO"
+    },
+    "key": {
+      "identity_space": "The edge triple (source node id, edge_type, target node id) -- and the dedup key IS that triple, which is the whole mechanism of the masking on this carrier.",
+      "key_expression": "_e(resolved_key_id, present_firm_buckets[own_bucket], STORED_IN), where resolved_key_id comes through the unification idmap and own_bucket is read from the key's own props -- derive_stitch.py:232-241 @f3b5f26f77.",
+      "key_is_stable": "unstable",
+      "crosses_spaces": true,
+      "declared_mapping": "present_firm_buckets, built in-run from bkt_by_name over the FIRM_DATA_BUCKETS list at derive_stitch.py:57-58 and :221 @f3b5f26f77 -- a name-to-node-id map that exists only for the run, and whose target grain (name node against ARN) is itself the open question of row W2-S70.",
+      "basis": "measured",
+      "evidence": "infra/aws/globgrph/derive_stitch.py:221-241 @f3b5f26f77. The instability is not theoretical: the second cycle of round 6 moved this edge's target from the ARN to the node the graph keys, so the same asserted fact changed key between two cycles of one night.",
+      "owner": "0.8.0_AE_CloudComp"
+    },
+    "failure_mode": {
+      "returns_on_failure": "BEFORE THE FIX: an artifact carrying last night's edge set with this cycle's node set, exit 0, no warning. The dedup collapses identical triples, so an emission identical to yesterday's is indistinguishable from a graph with no carry-forward at all; the failure only becomes visible when this run emits FEWER triples than the archive holds, and then the artifact silently reports the LARGER number. Measured exactly there: 137 emitted, 955 present. AFTER THE FIX, AND THIS IS THE ONE CARRIER WHERE THE ANSWER CHANGED: the drop is unconditional for this edge type and the run prints stored_in_prior_cycle_dropped, so a carry-forward is now a NUMBER in the run's own stats rather than an absence -- a genuine zero and a broken read are distinguishable on this carrier alone.",
+      "distinguishable_from_true_negative": "yes",
+      "silent_degrade_paths": [
+        "THE DROP IS KEYED TO ONE LITERAL EDGE TYPE. Any other type this producer writes still arrives from the snapshot and is still masked by the dedup under a fixed emission -- the identical defect, one rename or one new edge type away.",
+        "The construction argument the drop rests on is a CLAIM ABOUT THE ESTATE, not about this file: it holds only while nothing else writes STORED_IN. A second writer of that type would make the drop delete another producer's edges, silently, with the counter reporting a healthy-looking number.",
+        "stored_in_no_bucket counts keys that get no edge; a key that has LOST its bucket prop is counted identically to one that never had it, so a props-side regression presents on this carrier as an unchanged, honest-looking count."
+      ],
+      "basis": "measured",
+      "evidence": "infra/aws/globgrph/derive_stitch.py:128-145 @f3b5f26f77 -- the producer states the masking mechanism at the site that fixes it, including the measured pair (137 emitted, 955 in the artifact); NFRA_CLDGRPH-W2-S71 @2178066b7d for the pre-fix measurement; commit f9000bd0dd, located by g2_card_evidence.py as the first commit adding stored_in_prior_cycle_dropped to this file, for the fix itself.",
+      "owner": "0.8.0_AE_CloudComp"
+    }
+  },
+  "verdict": {
+    "standing": "QUALIFIED",
+    "why": "This is the strongest of the three carriers and it is still not SOUND. The emission is now one fact per key taken from the key's own props, the prior cycle's edges are dropped unconditionally on read, and the drop COUNTS what it removed -- so on this carrier a stale carry-forward can be seen without a served-plane read, which is true of neither of the other two. What qualifies it is scope: the drop filters on a single literal edge type, so every other edge this producer writes sits in exactly the state STORED_IN was in before cycle 4, protected only by the dedup and therefore only while the emission never shrinks.",
+    "blocking_defects": [
+      "THE DROP-ON-READ SPANS ONE EDGE TYPE OF SEVERAL (owner 0.8.0_AE_CloudComp): derive_stitch.py:141-142 @f3b5f26f77 filters on the literal STORED_IN while the producer also writes WRITES, READS, DERIVES_FROM and ROUTES_TO. Remedy shape: drop by PRODUCER PROVENANCE rather than by type literal -- every edge in the snapshot this producer stands behind is re-emitted below anyway, which is the argument the code already makes for one type and never uses for the rest."
+    ]
+  }
+}

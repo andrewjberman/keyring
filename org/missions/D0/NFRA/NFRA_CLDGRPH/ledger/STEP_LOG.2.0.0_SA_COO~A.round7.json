@@ -1,0 +1,41 @@
+{
+  "kind": "STEP_LOG",
+  "schema_version": "1.0",
+  "project": "NFRA_CLDGRPH",
+  "round": 7,
+  "seat": "2.0.0_SA_COO~A",
+  "opened_utc": "2026-09-10T04:1xZ",
+  "written_utc": "2026-09-10T05:15Z",
+  "rows": [
+    {
+      "seq": 1,
+      "limb": "L10 read -> L5 recut -> L6 ONE ISSUANCE, same tick",
+      "started_utc": "2026-09-10T04:00Z",
+      "ended_utc": "2026-09-10T04:2xZ",
+      "act": "THE ROUND-6 L10 ARRIVED (94962) AND THE ISSUANCE WAS CUT IN THE SAME TICK, which is the loop's first obligation and the one a mis-addressed analysis silently defeats. The slug (@32114f8e9b) and the grades were MEASURED at this seat before the cut rather than taken from either seat's summary. DECOMPOSITION v0.10: CG-s-32..35 added, 37 -> 41 cells. ONE ISSUANCE @f3b5f26f77 cut all four with fanout 3 of 3 chains, cap 8 (G-1 -> G-2 a real dependency; G-3 and G-4 independent). The L6 gate passed all four: 1 owned cell and 5 criterion references each resolving against 43 decomp ids, the PRD's ENDPOINT section OK, complete preflight blocks; coverage not graded because dep_stage is EXECUTING. THE ROUND IS SHAPED AROUND THE EGRESS HOLD: the served re-take of F11-AC3 and any image act are DELIBERATELY NOT CUT, because each needs an ECS derive and every derive pages a personal mobile -- held by the standing exclusion of all egress off Opal infrastructure (CTO 94951), the card RESERVED FOR ANDREW. Every accept in this round is provable without an egressing act, which is the 2026-09-10 L2 law applied at L6, and G2-AC4 PROVES the five held acts were not performed rather than asserting it. Three worktrees cut from CLOUD, three workers spawned on Opus. Four law/relay reads acked in the same window (spine v3.10's no-FWD-is-a-wait and its same-hour refinement on THIS seat's measurement -- the proving act may be a READ OF EXISTING HISTORY, ids kept, no supersession; rule 24's hunt-by-subtraction; the ADVI narrowing, no cut here). The base COO routed the L10 as misdelivered; it was not -- it reached this lane directly and the base copy was one recipient of a four-way send, corrected by both that seat and the CTO within minutes.",
+      "artifacts": [
+        "CLOUD @f3b5f26f77 (the issuance)",
+        "decomposition v0.10",
+        "four faces past the L6 gate",
+        "cron a5b4bd98"
+      ],
+      "commit": "f3b5f26f77",
+      "next": "the three chain-leads' reports."
+    },
+    {
+      "seq": 2,
+      "limb": "L7 (two drains) / L6 (a face amended on its own census) / adjudication (one call pitched)",
+      "started_utc": "2026-09-10T04:4xZ",
+      "ended_utc": "2026-09-10T05:15Z",
+      "act": "TWO OF FOUR DRAINED INSIDE THE FIRST HOUR. TO-CG-G-1 (the census) @15bfeb3a62 and TO-CG-G-3 (the substrate card) @91654ab3c6, both instances VALID rc 0 verified IN THEIR WORKTREES before the merge; slot ~2 closed; no org/modules/graph path in either merge, so no comp-system pass owed. THE CENSUS ANSWERED THE BINDING CONDITION AND NARROWED THE SEAM: 29 of 59 node classes carry two identity strings, but only 15 nodes of 27,665 are KEYED BY the second, and all 15 are the whole of S3_BUCKET_POLICY -- the only place in the estate where an edge built on a resource's other name finds a real node, which is why 135 wrong-class landings read as resolutions. 55 of 55 families swept with a reason each (34 in, 21 out), EDGES_ONLY_COUNTS_PRINTED=0 -- the CTO's condition made falsifiable and held. TWO FINDINGS CHANGED THE NEXT ORDER BEFORE IT RAN, and G-2's face was amended @c4a842b1b9 and handed to the same slot: (a) SERVED_FROM (27 keys, derive_runner.py:1947-1955) lands on the same wrong class, so G2-AC2 now reads BOTH families -- repairing one and leaving the other is the per-member fix on a seam the census has shown is shared; (b) OWNED_BY already carries S3Key -> S3_BUCKET on 232 keys and ALL 135 STORED_IN sources carry one naming the same bucket, so a re-point mints a duplicate and a retirement loses nothing measurable. PITCHED (95002/95003), a VOCABULARY call and not mine under the W2-S45 precedent: RE-POINT or RETIRE STORED_IN. MY REC: RETIRE -- the estate spent round 6 paying for one fact carried in two places and a re-point would mint a third instance of that shape one round after the card wrote the lesson down; an absence is checked once, a duplicate has to agree forever. The order does NOT wait: default re-point, duplication filed as a row. THE CARD CAME BACK AS FOUR FILES (a carrier-SET card plus one row-card per carrier, because the contract's unit is one subject with seven rows and additionalProperties false), 21 of 21 rows with an owner and a distinguishable failure mode, and the shrink probe MASKED on the round's own 955 -> 137 and NOT on a fixed-emission pair with 6 of 6 controls. IT ALSO FOUND A DEFECT THE ROUND HAD NOT: the NODES carrier has NO drop-on-read (derive_stitch.py:437-455 drops an archived copy only when the same id is in this run's emission), so a node the producer STOPS emitting is served another cycle with no error and no count -- the nodes-carrier form of the sentence round 6 closed on, still open, owner 0.8.0_AE_CloudComp. Carried, not chased, and no running order widened with it. MY OWN CUT DEFECT, reported by the worker and owned here: G3-AC2 named .tools/validate-json-schema.py, which DOES NOT EXIST, and the v1 substrate-card schema, which the estate has superseded with v3.1 (const 1 vs const 3.1, mutually exclusive). The worker substituted the estate's real validator, passed 4 of 4 cards with 0 violations, and filed row W2-S73 instead of rescuing the criterion silently. Same class as F-5's .tools/comp-debt (S88): a SURFACES line written from the tool's NAME without a --name census. AND A CRITERION OF MINE WAS REFUTED, correctly: G3-AC5's premise that owner follows CARRIER is false -- owner follows the QUESTION (14 / 6 / 1 across 21 rows). Rule 24(iv) survives on the stronger case, one seat holding three remedies that measurably did not move together across four cycles. A judgment criterion exists to allow exactly that.",
+      "artifacts": [
+        "CLOUD @15bfeb3a62 (G-1 drain)",
+        "CLOUD @91654ab3c6 (G-3 drain)",
+        "wk-cldgrph-7-1 @c4a842b1b9 (the G-2 amendment)",
+        "msgs 95002 (CTO), 95003 (CVO)"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "G-2's local proof and flip on slot ~1; G-4's flip on slot ~3; my disarm rows for W1-S35/S36 and W2-S73/S74/S75; the FINAL packet; the drain-end read; CronDelete."
+    }
+  ]
+}
