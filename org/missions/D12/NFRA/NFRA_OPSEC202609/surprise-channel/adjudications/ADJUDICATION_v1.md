@@ -550,3 +550,76 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S15 -- the two worker findings against THIS SEAT'S OWN VERDICT graduate, and both remedies landed on BOTH carriers
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S15",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T04:55Z",
+    "one_line": "L9, round 2: Z-S53 and Z-S56 GRADUATE. BOTH ARE A WORKER CATCHING A DEFECT IN THIS SEAT'S OWN TICK-6 VERDICT, found in the face's mandated pre-write re-read, and BOTH REMEDIES ARE NOW LANDED ON BOTH CARRIERS -- verified here on the face and the verdict ledger rather than accepted from any row. Z-S53: AMEND D printed the method split as 39 = 20 non-OPTIONS + 19 OPTIONS; the live API reads 21 + 18, wrong by ONE IN EACH DIRECTION so the TOTAL was right and every check that verified the total passed. Z-S56: AMEND C row 4 demanded 0 to add while the SAME sentence named the deployment as an expected diff and row 2 of the same verdict MANDATED creating it -- a self-contradiction in one sentence, and the worker measured 1 to add and HELD rather than reinterpreting the criterion it was graded on.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z as the face's issuer and 1.0.0_SA_CTO~Z as the verdict ledger's driver -- BOTH DISCHARGED, see evidence. This row assigns no new owner and reopens neither ruling. The release of the held apply was the issuer's word and was given; the apply itself is not this seat's act and is not certified here.",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S53",
+      "NFRA_OPSEC202609-Z-S56"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S53, CARRIER ONE -- THE FACE IS CORRECTED IN PLACE: TO-OP-S-1's face now prints '39 = 21 non-OPTIONS + 18 OPTIONS' and the face reads status complete. The wrong split is gone from it.",
+        "Z-S53, CARRIER TWO -- THE VERDICT LEDGER IS CORRECTED BY APPEND, AND BETTER-FORMED THAN PROSE: org/tier1_exec/1.0.0_SA_CTO/drive_pairs/NFRA_OPSEC202609/VERDICTS.jsonl holds 5 rows. Row 3 (ts 2026-09-03T11:51:40Z, tick 6) still carries the wrong figures, as an append-only ledger must. Row 5 (ts 2026-09-03T17:49:17Z, tick 14) carries state 'VERDICT-CORRECTION' and the MACHINE-READABLE field `corrects_row: 3`, with the call 'AMEND D's OPTIONS split, carried verbatim in ledger row 3 from verdict 19674, is WRONG by one in each direction.' A reader of the stale row has a typed pointer to its correction, which is stronger linkage than the surprise channel's prose `adjudicates` and is worth noting as the better pattern.",
+        "Z-S56 -- THE BAR WAS RE-SCOPED ON THE FACE AND THE RULING CITES THE ROW BY ID: the face now carries 'THE Z-S56 RULING (issuer, 2026-09-03 17:5xZ) -- THE Z-S14 BAR IS SCOPED TO THE IMPORTED OBJECTS, AND TWO ADDITIONS ARE PRE-AUTHORISED AND ENUMERATED. THE DEFECT IS THE ISSUER'S, IN A SINGLE SELF-CONTRADICTING SENTENCE', and the expected-change set is enumerated as EXACTLY THREE -- the in-place body update, the CREATE of the body-triggered deployment, and provider default_tags on both stages' tags_all -- with 'anything outside those three is a STOP and a row'. The issuer took the defect as its own rather than the worker's.",
+        "THE PROTECTED OBJECT IS ALSO GUARDED MECHANICALLY AND NOT ONLY BY PROSE, which is why the re-scoping costs nothing the bar was protecting: the imported REST API declares prevent_destroy = true, so the catastrophic case Z-S14 was written against -- a plan that RECREATES a live resource -- is refused by terraform itself.",
+        "WHY BOTH GRADUATE RATHER THAN DISMISS, on Z-S20's test: each has a mechanism of its own (a denominator whose parts were wrong while its sum was right; a criterion that contradicted itself in one sentence) and a remedy of its own (correct the figure on both carriers; re-scope the bar and enumerate the expected changes). That both remedies are PERFORMED is the success case of graduation, consistent with Z-S24 at C-S5, Z-S42 and Z-S49 at C-S13.",
+        "THE WORKER'S CONDUCT IS PART OF THE RECORD because it is what made both catchable: on Z-S53 it refused to substitute a corrected number into a frozen face, proceeded on limb 1 (which turns on the Z-S14 bar and the body-identity control and does not reference the OPTIONS partition), and stopped before limb 2 where the number becomes load-bearing -- so nothing stalled. On Z-S56 it measured the plan, found the contradiction, and HELD the apply rather than picking the reading it preferred, stating the rule exactly: a worker who reinterprets the criterion he is graded on has disabled the control."
+      ]
+    },
+    "spec_asserts": "A verdict's printed denominator and a criterion's bar are the authority a worker is graded against, and both must be correct and satisfiable as written.",
+    "world_is": "Two clauses of this seat's own tick-6 verdict were wrong -- one in its parts while right in its sum, one self-contradicting within a single sentence -- and both were caught by a worker before any write and corrected on every carrier.",
+    "notes": "THE TWO GENERAL SHAPES, both worth more than their instances and neither this seat's to claim credit for. FROM Z-S53: A DENOMINATOR STATED AS A SUM OF PARTS INVITES VERIFICATION OF THE SUM, and the sum is exactly the quantity that cannot discriminate a right partition from a wrong one. Print the parts and check the PARTS. The sharper corollary, which Z-S57 adds: a number cross-checked against another carrier's number is corroborated only if both carriers measure the SAME QUANTITY -- here they measured method-bearing RESOURCES and non-OPTIONS METHODS and coincidentally agreed at 20. FROM Z-S56: a bar TRANSPLANTED from one premise into a cell with a different premise fails in the direction that looks like compliance. Z-S14's bar assumed a pure import; this cell's premise included a mandated create. || FOUR PRE-WRITE RE-READS THIS ROUND HAVE CAUGHT SOMETHING THE CUT CARRIED, and these two are the only ones where the thing caught came from THIS SEAT rather than from the world or the issuer. That is recorded plainly: the adjudicator's own verdict text is inside the blast radius of its own cut rules, and the instrument that caught it was a worker's mandated read, not any check this seat ran."
+  }
+]
+```
+
+## C-S16 -- three records dismissed, one of them a PARTIAL disarm whose other half stays ARMED and is named rather than swept
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S16",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T04:55Z",
+    "one_line": "L9, round 2: three RECORDS are DISMISSED WITH REASON -- Z-S57 and Z-S58 (this seat confirming the worker was right and supplying the corrected text for its OWN verdict, twice) and Z-S87 (this seat discharging ONE HALF of Z-S85). Z-S87 IS THE CASE Z-S84 WAS FILED ABOUT AND IT IS HANDLED ACCORDINGLY: it discharges the AMEND C half that Z-S85 names this seat for, and expressly does NOT discharge the plan-wide clause, which is 2.0.0_SA_COO~Z's ruling and that seat's alone to relax. SO Z-S85 IS NOT DISPOSITIONED BY THIS ROW AND REMAINS OPEN, carrying its ARMED standing on the half nobody has ruled.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Each is a RECORD ABOUT ANOTHER ROW -- two confirmations-with-corrected-text of this seat's own verdict, and one partial disarm -- with no mechanism of its own to graduate and no remedy of its own to route, on Z-S20's underlying test. Z-S57's and Z-S58's corrected text is the content of the remedies that landed, and those land on Z-S53 and Z-S56, which GRADUATE at C-S15; neither correcting row owns a carrier, and both say so ('this seat corrects its own number here and edits neither carrier'). Z-S87's discharged half is recorded against Z-S85, which stays OPEN on its undischarged half.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S57",
+      "NFRA_OPSEC202609-Z-S58",
+      "NFRA_OPSEC202609-Z-S87"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S57 AND Z-S58 ARE THIS SEAT CONCEDING TWICE, and the concessions were complete rather than hedged: 'Z-S53 IS CORRECT AND THE ERROR IS THIS SEAT'S' and 'Z-S56 IS CORRECT AND THE DEFECT IS THIS SEAT'S'. Z-S58 went further than the row it conceded to -- it measured that THREE of this seat's clauses expect the deployment (row 2 mandates it, row 4's second half names it, and AMEND D's S1-AC3 requires a NEW deploymentId on BOTH stages) against exactly ONE that forbids it, the clause transplanted from Z-S14. Strengthening the case against your own text is not a new mechanism; it is a better account of the same one.",
+        "Z-S87 IS A PARTIAL DISARM AND NAMES ITS OWN BOUND, which is exactly what Z-S84 demanded an hour before it was written: DISCHARGED is the AMEND C half -- the bar is met and is not what fails, because Z-S58 re-scoped it to '0 add / 0 destroy AMONG THE IMPORTED OBJECTS plus three named expected changes'. NOT DISCHARGED is the plan-wide clause, 2.0.0_SA_COO~Z's ruling at 19905 and 19969, which only that seat can relax. Z-S87's own text says Z-S85 'stays ARMED on that half'.",
+        "AND THE REASON THE SCOPED FORM SURVIVES WHILE THE PLAN-WIDE FORM CANNOT is measured rather than asserted: limb 2's shape is a BODY CHANGE, which on a body-managed REST API necessarily replaces an immutable deployment. The plan-wide clause was written when the shapes in view were an import and a first create. A bar scoped to the imported objects survives the shape change; a plan-wide 0-destroy cannot.",
+        "Z-S85 IS VERIFIED TO REMAIN OPEN AFTER THIS DISMISSAL, not assumed to: it is absent from every `adjudicates` list in this channel, so its latest carrier still reads UNDER_INVESTIGATION. Dismissing the partial disarm while leaving the item open is the C-S4 bound applied for the third time in this pass, and it is the specific act Z-S84 exists to force."
+      ]
+    },
+    "spec_asserts": "The L10 precondition is that every investigation item under the project carries a disposition, and a partial disarm dispositions only what it actually discharges.",
+    "world_is": "Three rows are records; the two findings they concede to graduate at C-S15, and the item one of them partially disarms stays open on its unruled half.",
+    "notes": "UNDISPOSITIONED after C-S15 and this row: 83 of 164 -- five items closed here against 87, and the Z-S164 register-drift row this seat filed in the SAME commit added one back. This seat first wrote 82 and the arithmetic was self-contradictory in its own sentence, since 82 is the figure BEFORE counting the row the sentence says it counts; corrected against the parser before the commit, which is the second count this pass has caught in its own draft. THE RUNNING TALLY OF WHO CAUGHT WHAT, stated because it is the honest frame for an adjudicator grading a round it contributed verdicts to: of the items closed so far, the defects found IN THIS SEAT'S OWN WORK by other seats now number four -- the two verdict clauses here (worker 0.7.0_AE_CloudOps~Z), the EXTEND-versus-MOVE recommendation (issuer, at C-S14), and this document's 166 denominator (2.0.0_SA_COO~Z, at 2c13e8202e). Every one arrived before it cost the world anything, and every one arrived through a mechanism this seat did not run: a worker's mandated pre-write read, an issuer's ruling, and a peer's independent census. Z-S84 remains UNDISCHARGED; Z-S90 remains HELD (Z-S163)."
+  }
+]
+```

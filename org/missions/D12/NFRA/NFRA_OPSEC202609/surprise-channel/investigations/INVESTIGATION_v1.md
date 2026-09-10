@@ -4454,3 +4454,32 @@ one-line path amendment; sent UP to 2.0.0_SA_COO~Z at the read. The worker is st
  }
 ]
 ```
+
+```json
+[
+ {
+  "id": "NFRA_OPSEC202609-Z-S164",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~Z (carrying a finding 1.0.0_SA_CTO~Z surfaced at msg 20770, re-measured here; filed because a broker message is never the carrier)",
+  "surfaced_at": "2026-09-10T04:55Z",
+  "one_line": "THIS PROJECT'S REGISTER DESCRIBES A STATE SUPERSEDED A WEEK AGO, AND THE FIELD FROZE ON A VERDICT CORRECTION RATHER THAN ON A ROUND. project.json `phase` reads as a VERDICT CORRECTION about AMEND D's 39 = 21 non-OPTIONS + 18 OPTIONS split -- a tick-14 event -- and mentions neither round 2, nor the two cancellations, nor L8, nor the L9 now running. `blocking` is pre-round-2, still reading 'No task order may precede the L5 decomposition'. `last_updated` reads 2026-09-03 while the round it should describe has been executing and is now being adjudicated. THE CONTRAST IS WHAT MAKES IT VISIBLE AND IS THE CONTROL: the sibling NFRA_REPORT's `phase` reads current ('ROUND 2 ISSUED, L7 EXECUTING ... six of twelve outcomes REALIZED'), so the drift is this project's and not a property of the schema or of the field's intent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "NAMED RATHER THAN CHOSEN, because the register's ownership is genuinely split and this seat will not adjudicate a lane boundary to tidy a field: 2.0.0_SA_COO~Z owns the round-progress content the `phase` field tracks (it is the seat whose issuance and drain move the round), while 1.0.0_SA_CTO~Z owns project.json as the L3 register artifact under rule 27. 1.0.0_SA_CTO~Z surfaced it at 20770 and expressly declined to edit it, calling it 'that lane's file and a one-line fix at the next tick'. DISARM = whichever of the two owns the field states the current phase and blocking. NOT THIS SEAT'S: the CVO writes adjudications and remediations, not the register.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "MEASURED AT HEAD by reading the file rather than accepting the report: org/missions/D12/NFRA/NFRA_OPSEC202609/project.json `phase` opens 'VERDICT CORRECTION (3.0.0_SA_CVO~Z 19895, of its OWN verdict 19674; worker row Z-S53; ledger correction row 5): AMEND D's split is 39 = 21 NON-OPTIONS + 18 OPTIONS...'. `blocking` opens 'None. No task order may precede the L5 decomposition (the spine's order, not a hold)'. `last_updated` is 2026-09-03.",
+    "POSITIVE CONTROL ON THE SAME FIELD IN THE SAME SCHEMA, which is what separates a stale value from a field nobody maintains: the sibling project's register at org/missions/D12/NFRA/NFRA_REPORT/project.json reads `phase` 'ROUND 2 ISSUED, L7 EXECUTING. Round 1 CLOSED at L10 with six of twelve outcomes REALIZED' and `dep_stage` ROUND_CLOSE. The field IS maintained elsewhere, so this is drift rather than disuse.",
+    "THE BLAST RADIUS IS BOUNDED AND IS STATED SO NOBODY SIZES IT UP: no gate reads `phase` or `blocking` -- they are not referenced by surprise-row-gate.py, to-pipeline-gate.py or missions-tree-check, and nothing downstream fails. The cost is that any seat or report GROUNDING on that JSON receives a description of a superseded state, which is precisely how 1.0.0_SA_CTO~Z met it: while grounding an /exec-sum for Andrew on both D12 projects.",
+    "`dep_stage` IS NOT PART OF THIS FINDING and is deliberately excluded: it reads EXECUTING, and round 2 has not reached L10, so EXECUTING is defensible. Only the prose fields are stale. Sweeping dep_stage in would be the overcount this channel has been catching all night."
+   ]
+  },
+  "spec_asserts": "A project's register describes the project's current phase and what blocks it, and a seat grounding on that register receives the project's current state.",
+  "world_is": "This project's register describes a tick-14 verdict correction from 2026-09-03 as its phase, and a pre-decomposition constraint as its blocking condition, while round 2 is at L9.",
+  "notes": "WHY THIS ROW EXISTS AT ALL, and it is the second instance tonight of the same carrier gap: 1.0.0_SA_CTO~Z surfaced this finding BY MESSAGE (20770) and edited nothing, correctly. But CLAUDE.md s.2 is explicit that a broker message is NEVER the carrier -- a notifier watching files cannot see an inbox -- so a finding that exists only in one seat's inbox is one compaction away from gone. THE SEAT THAT SEES IT APPENDS ITS OWN ROW, which is what this is. The finding is the CTO's; the row is this seat's; neither is the register's owner. || A MILD IRONY WORTH ONE LINE BECAUSE IT DATES THE DRIFT PRECISELY: the stale `phase` describes THIS SEAT'S OWN verdict correction. The field froze at the moment this seat last gave the project something quotable, which is a fair account of how a prose status field actually ages -- it tracks the last memorable event rather than the current state. || FILED AGAINST THIS SEAT'S OWN BACKLOG rather than netted out: undispositioned goes 82 to 83 of 164, and this row is dispositioned with the rest at the end of the pass, not by its author in the same breath."
+ }
+]
+```
