@@ -1,0 +1,161 @@
+{
+  "schema_version": 3.1,
+  "carded_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+  "subject": {
+    "id": "globgrph stitch producer, THE ARCHIVE-READ CARRY-FORWARD -- carrier SET (nodes | props | edges)",
+    "kind": "other",
+    "declared_domain": "ONE mechanism with THREE carriers, carded as a set of three cards and this one. The mechanism: derive_stitch reads the nightly AWS snapshot as input, and derive_runner folds this producer's output into that snapshot before archiving it, so the producer's input contains its own previous output. The set exists because the same Rule 28 question got three DIFFERENT correct answers on the three carriers, each found in a different cell, and because the seven-question grain of a substrate card is per-subject: three carriers with their own remedies, owners and failure modes are three subjects, not three sentences in one. THE THREE CARRIER CARDS ARE THE ROWS; this card carries the set-level answers and is not a substitute for reading them. Out of domain: everything about the producer that is not the archive read -- its vocabulary map, its grain sentinel, its endpoint identity question (row W2-S70)."
+  },
+  "as_of": {
+    "carded_utc": "2026-09-10T04:37:24Z",
+    "commit_ish": "f3b5f26f77",
+    "graph_vintage": "Three vintages, one per carrier, and they are NOT the same instant -- stated here because a set card taken across vintages is individually correct and jointly meaningless unless the spread is named. NODES: snapshots/20260909/graph-20260909.tar.gz at 2026-09-09T21:05:21Z. PROPS: the served projection projection/2026-09-10T01:27:30.508695+00:00/, read 2026-09-10T01:47:03Z. EDGES: the cycle-3 artifact published 2026-09-10T02:15:44Z and the cycle-4 emission the round-6 analysis grades. Spread about five hours, four producer cycles. NONE re-read by this card: the round-7 egress hold forbids the act, so every one of these is read from the record."
+  },
+  "process": {
+    "methodology": {
+      "how": "The card set was built by re-grounding each carrier from the RECORD rather than from the task-order face that summarised it: for each of the three instances, the surprise row was read AT THE COMMIT THAT MINTED IT (git show of the channel blob at that commit, the row located by parsing every fenced json block), the fixing commit was located by the code token it introduced (git log --full-history -S over the producer path, never a path-simplified log), the visible-making number was taken from the row's own text, and each number was then corroborated on a SECOND object -- the producer source or the round-6 analysis at this worktree's HEAD. The producer was read, never run: no ECS task, no CodeBuild, no S3 read, no derive. Three carrier cards follow the same seven questions at the same grain; the differences between their answers are findings, not formatting.",
+      "determinism": "deterministic",
+      "composes": [
+        {
+          "id": "org/standards/SUBSTRATE_CARD.v3.1.schema.json",
+          "note": "the contract these cards validate against"
+        },
+        {
+          "id": "org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md",
+          "note": "parsed block by block, never grepped"
+        },
+        {
+          "id": "git_object_database",
+          "note": "read with --full-history -S for every provenance question"
+        }
+      ],
+      "invents": [
+        {
+          "id": "carrier_set_card_shape",
+          "note": "three carrier cards plus this set card, because the schema's unit is one subject with seven rows and cannot express three carriers in one file; filed as NFRA_CLDGRPH-W2-S74"
+        },
+        {
+          "id": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/g2_shrink_probe.py",
+          "note": "a probe that turns the round's lesson into a check, exercised on this producer's own 955 to 137 shrink"
+        }
+      ],
+      "materializer_standing": "canonical",
+      "basis": "measured",
+      "evidence": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/g2_card_evidence.py @f3b5f26f77, exercised: INSTANCES_REGROUNDED=3 of 3, EVIDENCE_FROM_RECORD=true, over a channel denominator of 245 rows in 186 fenced blocks; each carrier's row byte-identical between its own commit and HEAD (the append-only control).",
+      "owner": "0.9.0_WK_NFRA_CLDGRPH~2"
+    },
+    "cadence": {
+      "declared_rhythm": "THE ONE ROW WHERE ALL THREE CARRIERS GIVE THE SAME ANSWER, and it is the shared dependency beneath them: the producer runs on cron(0 3 * * ? *) and the derive that folds its output in and archives the snapshot runs on cron(0 2 * * ? *), so every emission returns to the producer as input 23 hours later. One clock pair, one owner, one remedy -- which is what makes the OTHER six rows' divergence a finding rather than an artefact of writing three cards.",
+      "actual_trigger": "Two independent EventBridge schedules. Neither side is triggered by the other's success, so nothing in the trigger graph records that the second reads what the first wrote.",
+      "live_matches_declared": "yes",
+      "live_instance_age": "The 03:00Z rule-initiated nightly of 2026-09-10 succeeded and its artifact is what round 6's grain baseline was signed on. Not re-read here.",
+      "basis": "held",
+      "evidence": "DESIRED plane, measured: infra/aws/terraform/globgrph/stitch-produce.tf:228 (cron(0 3 * * ? *), commented as after the 02:00Z derive_runner_nightly snapshot) and infra/aws/terraform/globgrph/item2a.tf:441 (cron(0 2 * * ? *)) @f3b5f26f77. APPLIED plane, HELD: org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/ROUND_ANALYSIS.round6.md:95 @f3b5f26f77.",
+      "owner": "0.7.0_AE_CloudOps"
+    }
+  },
+  "artifact": {
+    "persistence": {
+      "persisted": true,
+      "authority_role": "evidence",
+      "mutation_policy": "replaceable",
+      "form": "Four JSON cards on disk in the project tree -- this set card and one per carrier -- each validating against the estate's substrate-card contract.",
+      "basis": "measured",
+      "evidence": "org/missions/D0/NFRA/NFRA_CLDGRPH/cards/ @f3b5f26f77 holds stitch-producer-archive-read.card.json, .nodes.card.json, .props.card.json and .edges.card.json; all four exercised through .tools/substrate-card-check.py with 0 violations each.",
+      "owner": "0.9.0_WK_NFRA_CLDGRPH~2"
+    },
+    "location": {
+      "home": "org/missions/D0/NFRA/NFRA_CLDGRPH/cards/stitch-producer-archive-read.card.json",
+      "projection_of": [
+        {
+          "id": "org/missions/D0/NFRA/NFRA_CLDGRPH/cards/stitch-producer-archive-read.nodes.card.json",
+          "note": "CARRIER ROW 1"
+        },
+        {
+          "id": "org/missions/D0/NFRA/NFRA_CLDGRPH/cards/stitch-producer-archive-read.props.card.json",
+          "note": "CARRIER ROW 2"
+        },
+        {
+          "id": "org/missions/D0/NFRA/NFRA_CLDGRPH/cards/stitch-producer-archive-read.edges.card.json",
+          "note": "CARRIER ROW 3"
+        },
+        {
+          "id": "NFRA_CLDGRPH-W2-S61",
+          "note": "the nodes instance, read at 80daa1fff6"
+        },
+        {
+          "id": "NFRA_CLDGRPH-W2-S69",
+          "note": "the props instance, read at 2f87f07926"
+        },
+        {
+          "id": "NFRA_CLDGRPH-W2-S71",
+          "note": "the edges instance, read at 2178066b7d"
+        },
+        {
+          "id": "NFRA_CLDGRPH-S103",
+          "note": "the issuer's pattern row that drew the three together"
+        },
+        {
+          "id": "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/ROUND_ANALYSIS.round6.md",
+          "note": "sections 4 and 7 at f3b5f26f77"
+        }
+      ],
+      "co_resident_stores": [
+        {
+          "id": "org/tier2_senior/0.7.0_AE_CloudOps~K/deliverables/D11_CARDS/derive_stitch.card.json",
+          "note": "an EARLIER card on the same file from the NFRA_SUBSTRATECARDING wave. It cards the script as a producer; this set cards ONE mechanism inside it, the archive read. A reader holding both should treat this set as the narrower and later object, not as a correction of that one."
+        }
+      ],
+      "basis": "measured",
+      "evidence": "comp-find --name card.json over the repo corpus, denominator 39 files across 31,257 scanned, run at f3b5f26f77 -- one prior card on derive_stitch.py, in the wave folder named above, and no card anywhere on the archive-read mechanism.",
+      "owner": "0.9.0_WK_NFRA_CLDGRPH~2"
+    }
+  },
+  "trust": {
+    "coverage": {
+      "universe": "The carriers on which this producer's own prior output can arrive back as input.",
+      "denominator": "3 of 3 carriers carded (nodes, props, edges) = 21 of 21 rows, 7 per carrier, each with its own basis, evidence and owner. The 3 is the population the RECORD names -- rows W2-S61, W2-S69, W2-S71, drawn together by pattern row S103 -- and it is NOT a proof that the population is three. Two candidate fourth carriers are named below and neither is carded.",
+      "explicitly_out": [
+        "EDGE PROPS -- a candidate fourth carrier. Edges carry attributes, the drop-on-read removes whole edges by type and nothing inspects a carried edge's attributes; the props remedy lives on nodes only. Not carded: no instance has been observed.",
+        "NODE AND EDGE DELETIONS as a class -- the shrink case for the carriers whose remedy is a tie-break rather than a drop. Named in the nodes card as its open defect; not a separate card because it is the same carrier's failure mode, and saying so is a claim a reader can reject.",
+        "the fold's own admission decisions (skipped_dup, skipped_unmapped_type, skipped_edge_unresolved): they govern what ENTERS the snapshot, which is the write half of this loop and is derive_runner's card, not this set's.",
+        "the SERVED plane as an independent instrument: this set reads the producer and the record of served reads, never the projection itself -- the egress hold, stated so the coverage is not read wider than the instrument."
+      ],
+      "basis": "measured",
+      "evidence": "The three rows and the pattern row S103 @f3b5f26f77, re-grounded by g2_card_evidence.py (3 of 3, 7 of 7 checks each); the edge-type census of the producer at f3b5f26f77 -- ROUTES_TO at :179, WRITES and READS at :185-191, DERIVES_FROM at :196, STORED_IN at :238, of which exactly one is dropped on read at :142 -- which is the measurement behind the first exclusion.",
+      "owner": "2.0.0_SA_COO~A"
+    },
+    "key": {
+      "identity_space": "CARRIER NAME (nodes | props | edges), a three-value space this card set declares. Each carrier card then declares its own member identity space, and the three do not agree: a node id string, a (node id, prop key) pair, and an edge triple.",
+      "key_expression": "The carrier name is the file infix in cards/stitch-producer-archive-read.<carrier>.card.json and the CARRIER token in each card's subject id -- two carriers of the same value, which is why g2_card_rows.py reads the subject id rather than the filename.",
+      "key_is_stable": "stable",
+      "crosses_spaces": true,
+      "declared_mapping": "This card's artifact.location.projection_of, which names all three carrier cards by path. It is the only place the set is enumerated; nothing derives it, so adding a fourth carrier card without editing this row leaves the set understated.",
+      "basis": "measured",
+      "evidence": "The four files in org/missions/D0/NFRA/NFRA_CLDGRPH/cards/ @f3b5f26f77, and g2_card_rows.py exercised over them: CARD_ROWS=3 of 3 carrier(s), QUESTIONS_PER_ROW=7 of 7, OWNER_PER_ROW=3 of 3.",
+      "owner": "0.9.0_WK_NFRA_CLDGRPH~2"
+    },
+    "failure_mode": {
+      "returns_on_failure": "THE SET'S FAILURE IS AN OMITTED CARRIER, AND IT PRESENTS AS A COMPLETE CARD. A reader asking whether this producer's carry-forward is handled gets three thorough answers and no signal at all that a fourth carrier exists -- the same shape as the defect being carded, one level up: three cells each verified one carrier and the shared dependency beneath them went unseen for four cycles. The set's only tell is this row and the explicitly_out list above; there is no instrument that enumerates carriers, and a carrier with no observed instance cannot be distinguished from one that does not exist.",
+      "distinguishable_from_true_negative": "no",
+      "silent_degrade_paths": [
+        "A new carrier arrives with a new producer feature (edge props, node attributes on a carried edge) and no card is added: the set still reads 3 of 3 because the denominator is the set's own enumeration -- a verifier scoped by the same set as the act cannot see an omission.",
+        "A carrier card ages out of true when the producer changes under it: every citation here carries a commit-ish, so staleness is detectable, but nothing detects it automatically and slot 1 is editing the producer under a different cell in this same round.",
+        "The three carrier cards agree on the cadence row by construction (one clock pair), so a reader sampling one row across the three cards can conclude the carriers are the same thing -- which is the conclusion this set exists to refute. The divergence is in the other six rows."
+      ],
+      "basis": "measured",
+      "evidence": "The producer's own account of how the defect went unseen: infra/aws/globgrph/derive_stitch.py:128-140 @f3b5f26f77 (while the producer emitted the same triples every night the duplicates collapsed in the dedup and nobody could see it); ROUND_ANALYSIS.round6.md:59-82 @f3b5f26f77 (three of four cycles spent discovering a writer the previous cycle's fix had revealed, and the note that this is the shared-dependency limb of Rule 22 arriving from a direction the rule does not name).",
+      "owner": "1.0.0_SA_CTO"
+    }
+  },
+  "verdict": {
+    "standing": "QUALIFIED",
+    "why": "Every row of every carrier is measured or explicitly held with its source named, and the mechanism is now handled on all three carriers -- but not equally, and the differences are the point. The edges carrier drops its prior-cycle output unconditionally and COUNTS what it dropped, so a carry-forward there is a number. The props carrier drops an ENUMERATED list of one key, so it is correct exactly as far as its list. The nodes carrier has NO drop at all: it resolves duplicates and re-types, which handles addition and renaming and does nothing for retirement, so a shrinking node population is still carried forward silently at this vintage. Load-bearing use is licensed for the questions each carrier card names and refused for the three named defects, each of which has a different remedy, a different owner and a different clock -- which is Rule 24(iv) measured rather than asserted.",
+    "blocking_defects": [
+      "NODES: no drop-on-read for this producer's own prior-cycle nodes (owner 0.8.0_AE_CloudComp) -- a node the producer stops emitting survives, with no error and no count.",
+      "PROPS: the retired-key list is a hand-maintained enumeration of one key (owner 0.8.0_AE_CloudComp) -- the next retired prop repeats the instance, and the counter reads 0 while it happens.",
+      "EDGES: the drop-on-read is keyed to one edge-type literal (owner 0.8.0_AE_CloudComp) -- the producer's other four edge types are in the pre-cycle-4 state, protected only by the dedup.",
+      "SET: no instrument enumerates carriers (owner 1.0.0_SA_CTO) -- the set's denominator is its own enumeration, so a fourth carrier is invisible until an instance is observed, which is exactly how the first three were found."
+    ]
+  }
+}
