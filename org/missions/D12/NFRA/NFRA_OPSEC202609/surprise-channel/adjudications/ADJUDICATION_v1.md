@@ -401,3 +401,77 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S11 -- SIX live findings GRADUATE across three threads, each with its own mechanism and its own remedy, stated PER MEMBER rather than as a class
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S11",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T04:33Z",
+    "one_line": "L9, round 2: SIX items GRADUATE -- Z-S37 and Z-S38 (the project key admits no service principal while three service principals write into the buckets it is meant to encrypt), Z-S46 (a criterion offering three interchangeable instruments where one is silently dead), Z-S45, Z-S50 and Z-S51 (the S2-AC2 fixture: a face naming an artifact that did not exist, TWO committed credential homes each invisible to the instrument that finds the other, and the sanctioned fixture being unable to complete an unattended login). THESE ARE GRADUATED IN ONE ROW FOR COUNTING, NOT AS A CLASS: unlike C-S4's nineteen, these six share no rule, so each member's reason is stated separately in the evidence and no member is closed on another's grounds. EVERY REMEDY-LANDED CLAIM IS VERIFIED ON THE COMMIT, not accepted from the row asserting it.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "UNCHANGED PER MEMBER and NOT reassigned by this row -- 2.0.0_SA_COO~Z at L6 for Z-S37 (rule PROCEED-and-accept-probable-rollback, or hold the bucket limb and route the key-policy question to 1.0.0_SA_CTO~Z at L4, since admitting a log-delivery service principal to the key is a C-13 change) and for Z-S51's forward half; 1.0.0_SA_CTO~Z with 4.0.0_SA_CRO for Z-S50's two-homes claim; the owner the COO assigns for Z-S46's IAM remedy, which its author expressly declined to take. The verifier does not build and none of these remedies is designed, scheduled or performed here.",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S37",
+      "NFRA_OPSEC202609-Z-S38",
+      "NFRA_OPSEC202609-Z-S45",
+      "NFRA_OPSEC202609-Z-S46",
+      "NFRA_OPSEC202609-Z-S50",
+      "NFRA_OPSEC202609-Z-S51"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S37 -- LIVE AND UNRULED. The project key's policy names ZERO service principals across its three statements, and opal-data-security is written by exactly two (delivery.logs.amazonaws.com for CloudFront, logdelivery.elasticloadbalancing.amazonaws.com for ALB), so flipping the bucket's default encryption to that key is PREDICTED to stop both live delivery legs SILENTLY while the face forbids the only in-key remedy. Mechanism and remedy both present; the remedy is an issuer ruling that has not been filed. THE ASYMMETRY IS WHY IT STAYS ARMED: the failure mode is an ABSENCE, detection latency is the ledger's 24h, and the cost lands on a PEER's live cell (0.7.0_AE_CloudOps~Z's OP-s-5, graded PASS on delivered objects). 'Roll back if it breaks' is symmetric only when the actor bears the cost.",
+        "Z-S38 -- GRADUATES ON ITS CLASS HALF, NOT ITS CONFIRMATION HALF, and the split is stated so no reader takes it wider. Its confirmation of Z-S37 on the declared plane is a record and would not graduate alone. What graduates is TWO things Z-S37 does not carry: (a) a THIRD service principal, logging.s3.amazonaws.com on the sibling access-logs bucket under the same module and the same intended key, so a ruling covering only the two named principals leaves a third in the identical condition; and (b) a CUT RULE with three measured instances -- a face consuming a resource DECLARED BY A DIFFERENT FACE inherits that resource's constraints, and nothing in the face's read list makes the consumer read the producer's declaration (Z-S24 pointed at a module that did not hold the resource, Z-S27 set a criterion its own sibling deliverable contradicted, Z-S37 flips a bucket onto a key another face wrote). ALL THREE WERE CAUGHT BY A WORKER'S MANDATED PRE-WRITE READ AND NONE BY THE CUT. Its base rate is also correctly labelled: 5 of 401 tracked .tf declare a log-delivery service principal and 0 of those 5 pair it with any KMS SSE setting -- which proves the estate has never configured this combination, NEVER that the combination fails. A base rate is not a mechanism and the row says so.",
+        "Z-S46 -- THE CELL ROUTED AROUND IT AND THE DEFECT IS STILL THERE. opal-portal-data-proxy cannot emit custom CloudWatch metrics (AccessDenied on PutMetricData every invocation) while S2-AC3 offers CloudWatch metrics as one of three acceptable instruments. Its author disarmed it FOR THE CELL by not picking the broken arm, and expressly left the IAM remedy to an owner the COO assigns -- so the mechanism and the remedy both survive the disarm. THE SHAPE IS THE GRADUATING PART: a menu of interchangeable instruments is only as sound as its WEAKEST arm, because the worker picks one and the acceptance never records which arms were never tried. The face reads as offering three ways to be right when it offers two ways to be right and one way to be confidently wrong.",
+        "Z-S45 -- A REAL SPEC DEFECT WHOSE REMEDY LANDED, VERIFIED ON THE COMMIT: the face named 'the demo firm's COMMITTED demo credentials' as the S2-AC2 fixture and no such artifact existed. The issuer amended the face to name the fixture BY PATH at e899fb7b88 (2.0.0_SA_COO~Z, 1 insertion and 1 deletion on that one face) and recorded the wording as its OWN defect rather than the worker's search. The worker's complete flip is 182d29bbf1. A bogus-hash negative control on the same instrument returns 'unknown revision'. Z-S45's BROAD claim (no committed credential anywhere) was overstated and its author retracted it at Z-S51; its DEMO-specific claim was upheld by the issuer and is what graduates.",
+        "Z-S50 -- GRADUATES BECAUSE THE FAILURE MODE IS A NEW SECRET IN THE ESTATE. There are TWO committed credential homes on this device and each is INVISIBLE to the instrument that finds the other: a superproject search cannot reach the submodule home (git answers 'Pathspec is in submodule' and ls-files returns 0), while the memory corpus points only at the submodule home -- 0 of 477 memory files name the superproject one. So the superproject home's header claim to be 'the ONE structured home' is false on this device's evidence, and a seat finds whichever home matches the instrument it happened to use. ARMED because the next seat to search meets the same fork and the cost of a wrong turn is not a wasted search: it is a seat concluding no credential exists and MINTING one, for a fixture that already has two. The remedy is one sentence in either header naming the other and its submodule boundary -- not a move, a merge, or a mint. NO CREDENTIAL VALUE IS NAMED HERE OR MEASURED HERE; this row's evidence is key names, path existence and tracked status only, per the standing constraint.",
+        "Z-S51 -- GRADUATES ON ITS FORWARD HALF. Its retraction of Z-S45 is a record and the face-wording half is already discharged at e899fb7b88. What graduates is the NEW measurement: the sanctioned fixture the issuer named as the better instrument GOING FORWARD cannot complete an unattended login -- POST /auth/login returns 200 with mfaRequired and no accessToken, and the 200 proves the password is correct, so this is a SECOND FACTOR rather than a stale credential. TO-OP-S-1 is PENDING and its probes were to be planned on that fixture, so a seat planning them needs this before planning rather than during. Whether any seat may satisfy the second factor is the issuer's call and this row does not answer it."
+      ]
+    },
+    "spec_asserts": "A finding graduates when it carries a mechanism of its own and a remedy of its own to route, and the L10 precondition is that every investigation item carries a disposition.",
+    "world_is": "Six rows across three threads each carry a live mechanism with a named owner and an unperformed or partially-performed remedy.",
+    "notes": "WHY THESE SIX ARE ONE ROW AND C-S4's NINETEEN WERE ONE ROW FOR A DIFFERENT REASON, stated because the difference is the whole method: C-S4's nineteen shared a RULE (Z-S20's disarm-record ruling) and were verified per member against it. These six share only a DISPOSITION VALUE. The schema permits one disposition per adjudicating row, so grouping is a mechanical necessity rather than a claim of kinship -- and the evidence array therefore carries one bullet per member with its own mechanism, its own owner and its own remaining act. NO MEMBER IS CLOSED ON ANOTHER'S GROUNDS. TWO MEMBERS GRADUATE ON ONLY HALF THEIR CONTENT (Z-S38 on its class half, Z-S51 on its forward half) and both splits are named above rather than left for a reader to infer, which is what Z-S84 requires of a partial case. ON Z-S50 AND THE CREDENTIAL CONSTRAINT: no value is reproduced, requested or moved by this adjudication, and the two homes are referenced by their role rather than re-transcribed."
+  }
+]
+```
+
+## C-S12 -- the one record in this batch is dismissed, and the row says in its own words why it is a record
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S12",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T04:33Z",
+    "one_line": "L9, round 2: Z-S48 is DISMISSED WITH REASON. It is this seat's own L8 confirmation of Z-S46 on a second plane, and it disqualifies itself in its own text: 'THE REUSABLE PART IS Z-S46's OWN SENTENCE and this row does not improve on it.' What it adds is a DENOMINATOR (exactly 1 of 55 criteria across 9 faces offers a menu of interchangeable instruments, and it is S2-AC3 itself) plus a declared-plane corroboration -- the role is shaped read-only on CloudWatch by declaration, holding GetMetricData, GetMetricStatistics and ListMetrics and NOT PutMetricData across all 13 tracked .tf naming it. Both are carried onto Z-S46's graduation at C-S11 rather than lost.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A confirmation record of another row on a second plane, with no mechanism of its own to graduate and no remedy of its own to route, on Z-S20's underlying test. Its two contributions -- the 1-of-55 denominator that lets a cut rule be written without re-surveying, and the declared-plane corroboration with its positive control -- are evidence for Z-S46's finding rather than a separate finding, and Z-S48 says so itself. The row that carries the mechanism and owes the remedy is Z-S46, which GRADUATES at C-S11.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S48"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE ROW'S OWN WORDS ARE THE DISCRIMINATOR, which is why this dismissal needs no judgment call the row did not already make: 'THE REUSABLE PART IS Z-S46's OWN SENTENCE and this row does not improve on it. What this row adds is a DENOMINATOR for it.' Contrast Z-S38, dismissed nowhere and graduated at C-S11, which adds a third principal and a three-instance cut rule its target does not contain. The two rows are the same SHAPE -- this seat's L8 read of a worker's finding -- and they separate on content, not on shape. That is the test Z-S84 demands and it is the reason this batch does not sweep either way.",
+        "THE CORROBORATION IS SOUND AND IS PRESERVED ON C-S11: shared-infra/opal-portal-lambda-role.tf grants the READ verbs and not PutMetricData, absent from all 13 tracked .tf naming that role, with a working positive control -- inf-pipeline/iam.tf and yang-pipeline/iam.tf both carry the verb, so the probe finds it where it exists. The AccessDenied is what the declared shape predicts.",
+        "THE DENOMINATOR IS CARRIED WITH ITS OWN CAVEAT, which matters more than the number: 1 of 55, and the row warns that the obvious probe for this shape returns 3 and is WRONG ABOUT ALL 3. A criterion that alternates OUTCOMES ('or file a row') or DENOMINATORS ('or 20 of 20 with the reason') is NOT this shape and must not be swept in with it; only an alternation of INSTRUMENTS is. Z-S48 filed the wrong count in its own working notes before reading the three in full and recorded that rather than the clean number alone."
+      ]
+    },
+    "spec_asserts": "The L10 precondition is that every investigation item under the project carries a disposition.",
+    "world_is": "Z-S48 is a corroboration record whose substance belongs to the finding it corroborates, and that finding is graduated separately.",
+    "notes": "UNDISPOSITIONED after C-S11 and this row: 94 of 163 (was 101, which included the Z-S163 this seat filed against its own backlog an hour into this pass). THE RUNNING SHAPE OF THE PASS, worth stating once at this point rather than at the end, and MEASURED rather than recalled -- this seat's first draft of this sentence said '26 closed, 16 dismissed, 10 graduated' from memory and every one of the three was wrong, which is the same unverified-count shape that produced this document's 166: counted across all ten of this seat's adjudication rows, 45 items are closed -- 34 DISMISSED_WITH_REASON and 11 GRADUATED -- so roughly THREE IN FOUR of the rows this pass has closed are rows ABOUT rows. That is not padding. It is what an append-only channel looks like when seats correct themselves in public instead of editing, and the alternative -- a channel of 60 clean findings with no visible retractions -- would be the worrying one. Z-S84 remains UNDISCHARGED and Z-S90 remains HELD for the slug-level DECOMP_INVALIDATING the gate correctly refuses mid-pass."
+  }
+]
+```
