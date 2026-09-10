@@ -66,6 +66,33 @@ _convert_if_local() {
 }
 
 args=()
+# MULTI-LINE ARGV GUARD (1.0.0_SA_CTO~Z 2026-09-10, on surprise row NFRA_OPSEC202609-Z-S161 filed by
+# 0.7.0_AE_CloudOps~V AGAINST ITS OWN LANE). A value containing a NEWLINE cannot survive the Windows
+# companion shim: aws.cmd ends in batch `%*`, and cmd.exe terminates command-line parsing at the first
+# newline. The AWS API then returns rc=0 WITH A REAL VersionId and VersionStages ['AWSCURRENT'] for the
+# TRUNCATED value. Measured consequence: a JWT signing key stored as its 27-byte first line, INVALID IN
+# PRODUCTION for 3m52s, caught only by reading the secret BACK.
+# EVERY ORDINARY CONTROL PASSES: rc is 0, a VersionId comes back, the secret exists. So this refuses
+# LOUDLY instead, which is the only signal the failure mode leaves room for.
+# NARROW BY CONSTRUCTION: no legitimate AWS call passes a literal newline in argv -- the CLI's own
+# remedy for multi-line values is file://, which this shim already handles above. Escape hatch:
+# AWS_ALLOW_MULTILINE_ARGV=1 for a caller that genuinely means it.
+if [ -z "${AWS_ALLOW_MULTILINE_ARGV:-}" ]; then
+    for a in "$@"; do
+        case "$a" in
+            *"
+"*)
+                echo "aws shim: BLOCKED -- an argument contains a NEWLINE and would be SILENTLY TRUNCATED" >&2
+                echo "  at the first newline by the Windows companion shim (aws.cmd batch %*), while the API" >&2
+                echo "  returns rc=0 with a real VersionId. A JWT signing key was stored as its first line" >&2
+                echo "  this way and was INVALID IN PRODUCTION for 3m52s (NFRA_OPSEC202609-Z-S161)." >&2
+                echo "  FIX: pass the value as file://<path> (this shim converts it), never as argv." >&2
+                echo "  Override (audited by its presence): AWS_ALLOW_MULTILINE_ARGV=1" >&2
+                exit 2
+                ;;
+        esac
+    done
+fi
 for a in "$@"; do
     case "$a" in
         file:///*|fileb:///*)
