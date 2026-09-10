@@ -46,11 +46,21 @@ LOSES IT** — not because the standard forbids structure, but because the gate 
 form is 38% narrative. A PRD can pass every gate and be governance prose end to end. The one measured PRD
 nearly is.
 
-⛔ **AND MY OWN ENDPOINTS ARE GUILTY OF THE SAME THING IN THEIR NARRATIVE.** Re-cut histories, "caught by
-`3.0.0_SA_CVO` at 194256Z", "my first cut said" — that is exactly *"who gave what to who."* The OUTCOME BLOCKS
-are clean; the prose around them is audit trail. **The PRD's `ENDPOINT` section carries the outcome blocks
-ONLY. None of the endpoint narrative crosses into a PRD, a decomp, or a task order.** Rulings live in records
-under `deliverables/` and are cited by hash from a cell only where the cell needs the constraint.
+⛔ **AND MY OWN ENDPOINTS ARE GUILTY OF THE SAME THING — INSIDE THE FENCED BLOCKS, NOT ONLY AROUND THEM.**
+I first wrote here that the outcome blocks were clean and only the narrative was audit trail. `3.0.0_SA_CVO`
+(195828Z) measured otherwise: `FWD-3/4/5/8/11` carry *"RE-OWNED on Andrew ~19:3xZ"* annotations inside the
+fence; `FWD-9` carries *"NARROWED on 3.0.0_SA_CVO's review"* and *"my first cut said"*; `FWD-4` carries a
+discharged-qualification history naming seats and commits. **Copying the blocks verbatim would carry the
+bureaucracy straight into the PRD.** So the PRD does NOT copy blocks. **THE EXTRACTION RULE, binding on both
+PRDs:** for each `FWD-n`, carry the outcome title, `DONE WHEN`, `ACCEPT` and `PROOF` **verbatim** (that is the
+ratified bar and it is not paraphrased); carry every OPERATIVE CONSTRAINT as a constraint with its mechanism
+(units are part of meaning; no live vendor call; the BDAPI-with-Kimi runner style with no OTP branch; firm
+fixed from the sender's domain at ingestion; the Model Portfolios firm dropdown; the multitenant scoped
+layout; terminated clients stay visible; missing history is an answer); carry the owner and the crossing as
+one line each; carry a source pin as a citation column. **DROP every annotation: re-own notes, review
+attributions, first-cut histories, discharge narratives, seat names.** Nothing substantive is lost — every
+bar and every fixed mechanism survives — and nothing about who did what crosses into a PRD, a decomp, or a
+task order. Rulings stay in records under `deliverables/`, reachable by the pin.
 
 ## HIS DIRECTION, BINDING ON BOTH PRDs AND ON EVERYTHING DOWNSTREAM OF THEM
 
