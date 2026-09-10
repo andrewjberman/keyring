@@ -797,3 +797,68 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+
+## Z-W8-S1 -- AC5's negative token census collides with the cell's own subject matter: one real role's ReadOnlyAccess grant puts the forbidden token in the data
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-W8-S1",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~8",
+    "surfaced_at": "2026-09-10T18:05Z",
+    "one_line": "IAM-t-2's AC5 is a NEGATIVE TOKEN CENSUS whose forbidden token is ALSO A LEGITIMATE DATA VALUE OF THE CELL'S OWN SUBJECT: one real role in the stated population (opal-drift-producer-codebuild-role) holds 16 granted permissions in exactly the priced-unused-access service namespace, 15 of them never-used at 90d -- so the criterion cannot distinguish 'this deliverable REACHED FOR the priced service' from 'this deliverable NAMED a role's granted permission', and requirement (c) orders that permission NAMED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~ZI -- criterion FORM is an L6 act and this row is about the form, not about this run. The disarm is to scope the census to an ACT-shaped pattern (a CLI verb in a command position, an invocation line) rather than a bare service token, OR to exempt a named evidence appendix. NOT taken here: the criterion text and .tools/ are both outside this worker's <paths>.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC5's invocation, verbatim from the worker face of org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-t-2.exercise-the-permission-grain-usage-instrument.md@39fc7680c610aa7ffc73f55d3c276d954cccbd1c : grep -c -i -E over six alternatives, the first of which uses '.' as a regex wildcard and therefore matches the HYPHENATED AWS SERVICE PREFIX exactly as well as it matches the prose product name. Expectation: a count of 0.",
+        "MEASURED against this cell's own output over all 219 roles of the stated population, each run from /c/tmp/wk-iamroles-8 as: timeout 120 bash .tools/comp-iam-usage permission-cold --role <ROLE> --lookback 90 --json . Exactly 16 permission rows across exactly 1 role match that pattern. Role opal-drift-producer-codebuild-role: 15 rows status=never-used (GetAccessPreview, GetAnalyzedResource, GetAnalyzer, GetArchiveRule, GetFinding, GetFindingsStatistics, GetGeneratedPolicy, ListAccessPreviewFindings, ListAccessPreviews, ListAnalyzedResources, ListAnalyzers, ListArchiveRules, ListFindings, ListPolicyGenerations, ValidatePolicy) and 1 row status=unobservable (ListTagsForResource). ZERO role NAMES in the 219 match the pattern, and no other alternative in it (put-role-policy / delete-role / detach-role-policy / terraform apply / safe-apply) collides with any permission or role name in the population -- so the collision is precisely one alternative wide.",
+        "The collision is STRUCTURAL, not incidental: that role's single attached managed policy is arn:aws:iam::aws:policy/ReadOnlyAccess, read live via the aws shim (list-attached-role-policies --role-name opal-drift-producer-codebuild-role, rc=0), and that AWS-managed policy grants read actions across essentially every AWS service. Any role in this estate carrying a broad AWS-managed read policy reproduces the collision, and requirement (c) orders those actions named per role.",
+        "NOTHING WAS REACHED FOR, and the instrument says so in its own bytes: comp_iam_usage.py's permission-grain note states it calls iam:GenerateServiceLastAccessedDetails / iam:GetServiceLastAccessedDetails at Granularity=ACTION_LEVEL and never the priced finding service. That file is at blob 8670fc5025694c942f8a7c725a19e2317cf63c20 and .tools/comp-iam-usage at 5c7f03ba3702d5de5c0edf7a955a72dd20e596f5, both re-read by git hash-object at commit time and both unchanged by this worker. The 16 rows are POLICY CONTENT read out of a role, not an API this worker called.",
+        "DISPOSITION TAKEN IN THE DELIVERABLE, disclosed at the point of use rather than silently: those 16 action names are printed in PERMISSION_USAGE_EXERCISE.md with the SERVICE PREFIX ONLY replaced by the placeholder token PRICED-UNUSED-ACCESS-SVC -- the role, the action names, the per-row status and every count are present and unaltered -- and the UNREDACTED rows ship verbatim in the committed evidence bundle permission-cold-raw-bundle.json beside it, which AC5 does not read. Neither half of the false choice was taken: no data was suppressed and no false FAIL was manufactured."
+      ]
+    },
+    "spec_asserts": "AC5 asserts that a count of 0 over that six-alternative pattern, measured on the deliverable's own text, evidences that no Access-Analyzer-family API was reached for and that nothing was narrowed, detached or applied -- i.e. that the token's PRESENCE would evidence a bound crossing.",
+    "world_is": "The token's presence in this particular deliverable would evidence a bound crossing OR a faithfully reported granted permission, and the census cannot tell the two apart. The cell's own instruction (c) -- NAME the never-used permissions per role -- drives the token into the deliverable for one real role in the population, so full compliance with (c) and a passing AC5 are in direct tension as the two clauses are written.",
+    "notes": "Filed as OBSERVATION and not BLOCKING because a form exists that satisfies both clauses honestly (service-prefix placeholder in the .md, unredacted raw bundle committed beside it) and this worker took it; no criterion was skipped and nothing was withheld. What stays ARMED is the criterion FORM, which any recut of this cell or any sibling negative-token census over IAM subject matter inherits unchanged. || GENERAL SHAPE, stated once: a NEGATIVE census evidences an absence of INTENT only when its pattern cannot be produced by the subject matter itself. Here the subject matter is the set of AWS service namespaces, which contains the forbidden token by construction."
+  }
+]
+```
+
+
+## Z-W8-S2 -- 219 is every live role MINUS TEN: a direct control-plane read returns 229, and both instruments that report 219 exclude the same 10 service-linked roles
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-W8-S2",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~8",
+    "surfaced_at": "2026-09-10T18:05Z",
+    "one_line": "219 IS NOT 'EVERY LIVE ROLE' -- it is every live role MINUS TEN. A direct live read of the IAM control plane returns 229 roles in account 313476888478; 219 is the count at path '/' and the other 10 are AWS service-linked roles at path /aws-service-role/, which the aws-corpus figure the battery carries excludes without saying so.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~ZI -- the disarm is one qualifier travelling with the figure wherever the posture number is rendered ('219 non-service-linked live roles; 10 AWS service-linked roles excluded; 229 total'), which is a cut-time act on FWD-1's cell. NOT taken here: prd/ and the round-3 battery block are not this worker's to rewrite, and this cell REPORTS.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, this worker's own live read, on a DIFFERENT INSTRUMENT AND A DIFFERENT PLANE from the battery's: timeout 120 .tools/aws iam list-roles --output json (auto-paginated, counted client-side, rc=0, 184072 bytes on disk) returns 229 role objects. Partitioned by the Path field: 219 at '/' and 10 at '/aws-service-role/'. 219 + 10 = 229 reconciles exactly, and those two are the ONLY path values present in the response.",
+        "The battery block of the round-3 decomposition (org/missions/D12/NFRA/NFRA_IAMROLES202609/decompositions/NFRA_IAMROLES202609_DECOMP_R3.md@39fc7680c610aa7ffc73f55d3c276d954cccbd1c) states: 'comp-find --corpus aws (vintage 2026-09-10 12:24:50 UTC): 219 IAM_ROLE nodes live, DECLARED=203 ... 219 is the LIVE role population and is the honest ceiling for real roles'. The NUMBER is right and the GLOSS is one qualifier short: 219 is the honest ceiling for ESTATE-MANAGED roles, not for LIVE roles.",
+        "THE AGREEMENT IS ITSELF THE EVIDENCE AND IT IS NOT REPETITION: comp-find --corpus aws reads a built CloudNode DB (kuzu_nessie_db substrate), while this worker read the IAM control plane directly through the aws shim. Two instruments on two planes return the same 219, which corroborates the FIGURE and at the same time localises the omission -- the 10 service-linked roles are absent from BOTH readings, so the exclusion is a property of the POPULATION DEFINITION and not of either tool's freshness or coverage.",
+        "WHY IT MATTERS RATHER THAN BEING PEDANTRY, and why it is filed under THIS cell: the order's own dependency note says six of the eight round-3 outcomes are downstream of IAM-t-2 and that FWD-1's posture number is a rollup of it, so a denominator gloss inherited here reappears as 'N of every live role' in a figure that leaves the project. This channel already carries Z-S1 on exactly this failure mode one vintage earlier -- a denominator inherited without its qualifier -- which is why the qualifier is stated here rather than assumed."
+      ]
+    },
+    "spec_asserts": "The round-3 battery asserts that 219 is THE LIVE ROLE POPULATION and the honest ceiling for 'real roles'.",
+    "world_is": "The live account holds 229 IAM roles. 219 is the non-service-linked subset (Path '/'); the other 10 are AWS service-linked roles (Path '/aws-service-role/') whose policies are AWS-owned and not estate-managed. 219 is the correct population for THIS cell and this worker used it deliberately -- what is missing from the battery text is the word that makes it a subset rather than a total.",
+    "notes": "This worker's deliverable states the qualifier and the 229 explicitly, so the figure leaving THIS cell carries it; the row exists because the battery text does not, and the next reader of that text has nothing to stop the inheritance. || The exclusion of the 10 is the RIGHT call on the merits for a permission-usage cell -- an AWS service-linked role's policy is not narrowable by this estate and naming its unused permissions would be advice nobody can act on -- so this row disputes the GLOSS and not the SELECTION."
+  }
+]
+```
