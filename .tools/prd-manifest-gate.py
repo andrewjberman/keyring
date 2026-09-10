@@ -146,8 +146,32 @@ def _staged_text(path):
         return None
 
 
-def _is_step4(text, tpg):
-    """True only for a document that DECLARES itself a step-4 PRD in its own header."""
+TREE_PRD_RE = re.compile(r"org/missions/D[0-9]+/[^/]+/[^/]+/prd/[^/]*_PRD\.md$", re.I)
+
+
+def _is_step4(text, tpg, path=None):
+    """A step-4 PRD by its own DECLARATION, or by its LOCATION at the canonical home.
+
+    THE LOCATION ARM EXISTS BECAUSE THE DECLARATION ARM SWALLOWED LIMB B. The domain was "declares
+    step:4 in its header"; limb B refuses a PRD with NO header. A file with no header was therefore
+    OUT OF DOMAIN, so the limb that requires a header could never fire on the only case it was
+    written for -- and that is not hypothetical: AMGT_RESAPP's PRD committed CLEAN at @c0b5636ea9
+    with no header, no ENDPOINT heading the matcher could resolve, and ZERO outcome cards.
+
+    FOUND BY receiving-check.py's OWN NEGATIVE CONTROL minutes after that tool was written: it
+    reconstructed that commit's bytes, expected HAND BACK, and got ACCEPT. A GATE WHOSE DOMAIN TEST
+    IS ONE OF ITS OWN LIMBS CANNOT ENFORCE THAT LIMB. The domain has to rest on something the
+    artifact cannot omit, and the canonical PATH is that thing.
+
+    BLAST RADIUS MEASURED BEFORE WIDENING: 8 primary PRDs live under a tree prd/ folder; 0 of 8
+    lack a step-4 header, so nothing legacy newly enters and is refused.
+
+    NOT WIDENED to docs/architecture/*_PRD.md, deliberately -- an architecture doc that merely LOOKS
+    like a PRD is exactly what the declaration arm exists to exclude, and it has no canonical home
+    to rest a location test on.
+    """
+    if path and TREE_PRD_RE.search(str(path).replace("\\", "/")):
+        return True
     m = tpg.PRD_FENCE_RE.search(text)
     if not m:
         return False
@@ -323,7 +347,7 @@ def run(paths):
         if not PRIMARY_RE.search(q):
             continue
         text = _staged_text(p)
-        if text is None or not _is_step4(text, tpg):
+        if text is None or not _is_step4(text, tpg, p):
             continue  # not a step-4 PRD -- not this gate's domain
         graded += 1
         for w in grade(text, tpg):
@@ -534,6 +558,25 @@ def self_test():
               % (verdict, delta, got, expect))
 
     # ---- DOMAIN CONTROLS: the gate must NOT grade what is not a step-4 PRD ----
+    # LOCATION-ARM CONTROLS, both directions -- the arm that makes limb B reachable at all.
+    bare = "## 1. Purpose\n\nno header, no endpoint, no cards.\n"
+    at_home = _is_step4(bare, tpg, "org/missions/D5/AMGT/X/prd/X_PRD.md")
+    print("  [%s] LOCATION-ARM  a headerless PRD at the canonical home IS in domain (%s)"
+          % ("PASS" if at_home else "FAIL", at_home))
+    if not at_home:
+        ok = False
+    elsewhere = _is_step4(bare, tpg, "docs/architecture/SOMETHING_PRD.md")
+    print("  [%s] LOCATION-ARM  a headerless *_PRD.md ELSEWHERE stays OUT of domain (%s)"
+          % ("PASS" if not elsewhere else "FAIL", elsewhere))
+    if elsewhere:
+        ok = False
+    _v = grade(bare, tpg)
+    _fired = any("PRD_HEADER" in x for x in _v)
+    print("  [%s] LIMB-B-REACHABLE  a headerless PRD now REFUSES for the header (%d violations)"
+          % ("PASS" if _fired else "FAIL", len(_v)))
+    if not _fired:
+        ok = False
+
     non_step4 = "## 1. Purpose\n\nan architecture doc named *_PRD.md, no step-4 header.\n"
     in_domain = _is_step4(non_step4, tpg)
     print("  [%s] DOMAIN-CONTROL  a *_PRD.md with no step-4 header is OUT of domain (in_domain=%s)"
