@@ -32,9 +32,14 @@ because the Global view is this project's surface, with his mechanism word for t
 dropdown pattern as Model Portfolios."*
 
 ⛔ **THE CUT IS HARD, ON HIS FOURTH SENTENCE:** *"clearly cut between a FE and BK project … we do not try to wrap
-all of this in one massive project."* Every id has EXACTLY ONE `ACCEPT OWNER`. This project owns the grade on
-`FWD-1` and `FWD-6`; `IRPT_BCKEND` owns every other id and this project appears there only as a CONTRIBUTOR.
-Two projects, two decompositions, two task-order sets, two adjudications.
+all of this in one massive project."* Every id has EXACTLY ONE `ACCEPT OWNER`. **RE-OWNED ~19:3xZ ON HIS SIXTH
+SENTENCE** — *"how that report actually looks and how the modals and etc work are all frontend"* — **the
+outcome is what the advisor sees and does; the machinery underneath is a contribution.** This project now owns
+the grade on every advisor-facing outcome: `FWD-1`, `3`, `4`, `5`, `6`, `8`, `11`, and `FWD-12` (design, at
+Andrew). `IRPT_BCKEND` owns the four machinery outcomes — `FWD-2` enforcement, `FWD-7` freshness, `FWD-9`
+ingestion, `FWD-10` construction — and appears here as a CONTRIBUTOR whose data, parity and execution
+obligations are graded inside each outcome's adjudication. Two projects, two decompositions, two task-order
+sets, two adjudications.
 
 ⛔ **NO FWD BELOW IS A WAIT.**
 
@@ -96,13 +101,12 @@ Two projects, two decompositions, two task-order sets, two adjudications.
                     return uses a VENDOR CALCULATION for the exact selected account
                     set -- summing or averaging account returns is not a substitute
                     and a fabricated aggregate fails this outcome
-         ACCEPT     ** IRPT_BCKEND ** -- a parity claim from capture through export;
-         OWNER      canonical meaning, units and dates are that project's
-         THIS       the common Opal layout; the UI distinguishing TWR/MWR, net/gross,
-         PROJECT    cumulative/annualized, UNITS and UNAVAILABLE; the rendered view
-                    and the PDF template BACKEND executes -- graded against
-                    BACKEND's certified fixture, never against this project's own
-                    reading of the provider
+         ACCEPT     ** IRPT_FNTEND ** -- RE-OWNED on Andrew ~19:3xZ: the outcome is
+         OWNER      the advisor READING the provider's figure here and EXPORTING it
+         CROSSES    IRPT_BCKEND supplies canonical meaning, UNITS, dates, the
+                    vendor-calculation-only rule and the certified fixture this
+                    view is graded against -- the data half of this outcome's
+                    proof, graded inside it; the PDF runs in BCKEND's worker
          SOURCE     brief O3, F2, F3; Andrew's "just generating a frontend view of
                     what Black Diamond/Orion already provide" -- carried; FE brief O2
          ⛔ NOTE    A NORMALIZER DOES NOT CHANGE A PROVIDER'S METHODOLOGY TO MAKE TWO
@@ -121,12 +125,13 @@ Two projects, two decompositions, two task-order sets, two adjudications.
                     attribution; a MODELED comparison is described as modeled;
                     unsupported variants are VISIBLE as unsupported
          PROOF      replay each approved variant end to end
-         ACCEPT     ** IRPT_BCKEND ** -- the chain from validated input to
-         OWNER      certified section is that project's
-         THIS       variant selection, the mapping and comparison review, request
-         PROJECT    history and status, and the Opal-branded native sections as
-                    rendered; "unsupported VISIBLE as unsupported" is this project's
-                    display obligation on BACKEND's release state
+         ACCEPT     ** IRPT_FNTEND ** -- RE-OWNED on Andrew ~19:3xZ: the outcome is
+         OWNER      the advisor OBTAINING the analysis in the tab and EXPORTING it
+         CROSSES    IRPT_BCKEND supplies the chain from validated input through
+                    captured request, job and result to a certified section, and
+                    the release state behind "unsupported VISIBLE as unsupported"
+                    -- graded inside this outcome; the runner style is Andrew's
+                    word and lives in BCKEND's block
          SOURCE     brief O4, F7; Andrew's "just pulling a report of what YCharts
                     already provides" -- carried; FE brief O3; the intake itself is
                     BACKEND's FWD-9, at Andrew
@@ -177,11 +182,12 @@ Two projects, two decompositions, two task-order sets, two adjudications.
                     unmatched join, a blended model and a multi-relationship
                     membership; UNIQUE UNDERLYING HOLDINGS RECONCILE BEFORE AND AFTER
                     THE OVERLAY; coverage and join exceptions carry DENOMINATORS
-         ACCEPT     ** IRPT_BCKEND ** -- the accept turns on join correctness and
-         OWNER      the reconcile-before-and-after control
-         THIS       the model-first view, the drill into accounts and securities,
-         PROJECT    and keeping target / actual / inferred VISIBLY distinct and the
-                    residual visible -- on BACKEND's revision-bound nodes
+         ACCEPT     ** IRPT_FNTEND ** -- RE-OWNED on Andrew ~19:3xZ: the outcome is
+         OWNER      the advisor SEEING holdings by model and drilling through them
+         CROSSES    IRPT_BCKEND supplies join correctness, the reconcile-before-
+                    and-after control, the denominators and the revision-bound
+                    nodes this view draws -- the data half, graded inside this
+                    outcome
          SOURCE     brief O5, F4; Andrew's per-partner overlay mapping, verbatim --
                     carried; FE brief O4; WS4 child brief @4a1d1ed9aa
          ⛔ NOTE    MODEL TARGETS MUST NOT MASQUERADE AS OBSERVED HOLDINGS. A residual
@@ -226,12 +232,17 @@ Two projects, two decompositions, two task-order sets, two adjudications.
          PROOF      replay one known drawdown window twice and diff the selected
                     moments; replay a window that PREDATES the news history and
                     confirm it renders MISSING HISTORY rather than an empty topic list
-         ACCEPT     ** IRPT_BCKEND ** -- deterministic inflection selection,
-         OWNER      evidence validity and export execution are that project's
-         THIS       the Opal template from the brand guidelines, the export shell,
-         PROJECT    the dashboard-stays-default behaviour, placing BACKEND's dated
-                    markers on the series, rendering MISSING HISTORY as such, and
-                    preview-to-PDF parity of the package BACKEND executes
+         ACCEPT     ** IRPT_FNTEND ** -- RE-OWNED on Andrew ~19:3xZ, his words: "the
+         OWNER      branded export is arguably a frontend op, even if a lambda does
+                    it, the lambda part is backend, how that report actually looks
+                    and how the modals and etc work are all frontend." The Opal
+                    template, the export options and modals, the dashboard-stays-
+                    default behaviour, the narrative page's composition, MISSING
+                    HISTORY rendered as such, and preview-to-PDF parity
+         CROSSES    IRPT_BCKEND is the lambda: deterministic inflection selection,
+                    dated evidence and prose validity, the frozen bundle, and
+                    execution of this project's package -- graded inside this
+                    outcome as its evidence half
          SOURCE     Andrew-direct 2026-09-10, verbatim: a "narrative arc" using "daily
                     cloud and trending topics over almost a full year", to "dynamically
                     assess what was the trending topic or buzz word/phrase from word
@@ -260,12 +271,26 @@ Two projects, two decompositions, two task-order sets, two adjudications.
   FWD-11 An Opal user can run reports and analysis on ALL firms from one
          Global view, the way Model Portfolios already does it
          ** NEW -- Andrew ~19:2xZ -- RATIFIED ON HIS WORD, one word reverses **
-         (ACCEPT owned by IRPT_BCKEND -- the entitlement class; full block in
-         the counterpart)
-         THIS       the Global view itself: the firm selector, picking any client
-         PROJECT    at any firm, every tab and export working on them, and the
-                    firm each result belongs to ALWAYS visible; a firm advisor's
-                    session never renders this view
+         DONE WHEN  EXERCISED -- an Opal user has opened the global view, picked
+                    a client at a second firm, and run a report and an export
+         ACCEPT     someone at Opal, signed in as Opal rather than as any firm,
+                    can pick any client from any firm and use every tab and
+                    export on them; a firm's advisor can never reach that view or
+                    see a second firm through it; the global view shows the same
+                    numbers that firm's own advisor would see for that client,
+                    never a recomputed or blended one; which firm each result
+                    belongs to is always visible
+         PROOF      an Opal user opens the global view, selects clients at two
+                    different firms, runs a report and an export on each; replay
+                    the same requests as a firm advisor and confirm refusal;
+                    compare the global-view figures to the firm-scoped figures for
+                    the same client and revision
+         ACCEPT     ** IRPT_FNTEND ** -- RE-OWNED on Andrew ~19:3xZ: the outcome is
+         OWNER      an Opal USER running reports across firms from a VIEW
+         CROSSES    IRPT_BCKEND supplies the cross-firm entitlement CLASS (the same
+                    rule as FWD-2 and FWD-10, GRANTED to an Opal principal) and
+                    the multitenant api/scoped/ layout -- graded inside this
+                    outcome as its entitlement half
          ⛔ MECHANISM IS HIS WORD, THIS SIDE (Andrew ~19:2xZ, third message):
                     "the same firm dropdown pattern as Model Portfolios on the
                     frontend." The MP firm dropdown is FIXED as the pattern; L5
@@ -274,10 +299,48 @@ Two projects, two decompositions, two task-order sets, two adjudications.
                     reads the existing component and cites it
          SOURCE     Andrew-direct ~19:2xZ verbatim; precedent "just like how it's
                     done in Model Portfolios" -- named, NOT READ at L2
+
+  FWD-12 The Investor Reporting screens look and behave like the rest of the
+         Opal portal, so an advisor who already uses the portal needs no
+         re-learning
+         ** NEW -- cut from Andrew ~19:3xZ and the FE brief IV.2 -- AT ANDREW:
+            he named the GAP, not the outcome; yes / no **
+         DONE WHEN  EXERCISED -- an advisor who already uses another portal page
+                    has used all three tabs and the export without being shown
+                    anything new to learn
+         ACCEPT     the page is built from the portal's own header, tabs, client
+                    search box, category tree, model colours, panels and brand --
+                    not look-alikes made for this project; the firm dropdown is
+                    the Model Portfolios one; an advisor who knows another portal
+                    page finds the same controls in the same places doing the
+                    same things; the screen and the exported report share one
+                    brand; it works at a narrow width
+         PROOF      a census of EVERY component the page uses against the portal's
+                    existing component set, denominator printed -- each is REUSED
+                    from a named existing path or is NEW with a stated reason a
+                    reviewer can dispute; a review against the brand guidelines
+                    and the brand spec; the Model Portfolios firm dropdown REUSED,
+                    not rebuilt; the narrow-viewport exercise the brief's sketch
+                    already ran, repeated on the real page
+         ACCEPT     ** IRPT_FNTEND ** -- IRPT_BCKEND is NOT ENGAGED on this outcome
+         OWNER
+         SOURCE     Andrew ~19:3xZ: "following portal patterns and what the
+                    frontend is supposed to look like ... component structure and
+                    design"; FE brief IV.2, the named existing paths --
+                    PageHeaderVariants, PageSurfaceControl, TabNavigation +
+                    useTabNavigation, the catalyst combobox, ClientListPanel,
+                    CategoryViewTree + modelPortfolioColors, the AdvisorIntelligence
+                    radial precedents, brand.json + the brand guidelines + the
+                    official logo package; IV.4, the narrow-viewport exercise
+         ⛔ THE PATHS ARE THE BRIEF'S, NOT RECALLED. IV.2 is a table of existing
+                    paths with intended use, existence-checked in the split
+                    evidence manifest. This outcome names them so the census in
+                    PROOF has a printed denominator to subtract from
 ```
 
-**COUNT: 7 outcomes carried. 6 of 6 ratified ids verbatim, plus `FWD-11` on his word. ACCEPT owner:
-IRPT_FNTEND 2 (`FWD-1`, `FWD-6`), IRPT_BCKEND 5 (`FWD-3`, `FWD-4`, `FWD-5`, `FWD-8`, `FWD-11`).**
+**COUNT: 8 outcomes carried. 6 of 6 ratified ids verbatim; `FWD-11` on his word; `FWD-12` NEW, at Andrew.
+ACCEPT owner AFTER THE ~19:3xZ RE-OWN: IRPT_FNTEND 8 (`FWD-1`, `3`, `4`, `5`, `6`, `8`, `11`, `12`),
+IRPT_BCKEND 0 here -- its four machinery outcomes (`FWD-2`, `7`, `9`, `10`) live only in the counterpart.**
 
 ⛔ **A PROJECT WHOSE "DONE" INCLUDES FOUR OUTCOMES ANOTHER PROJECT GRADES IS NOT A DEFECT; IT IS THE SPLIT
 ANDREW ORDERED, STATED HONESTLY.** IRPT_FNTEND is CLOSED when its two owned outcomes grade REALIZED **and**
@@ -306,6 +369,23 @@ Ready to paste under **`## ENDPOINT (step 2, /endpoint --forward)`** in
 `org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md`. **That path does not exist.** It needs
 `MACROS.yaml` D9 `[IRPT]` landed by `0.0.0_AB_MSTR` (record @`643116f787`, ratification already given), the D9
 `LAPTOP` flip, and the register row.
+
+## ⛔ THE BRIEF-COVERAGE OBLIGATION ON L4 — his seventh sentence, answered in writing
+
+*"Please confirm the FWDs and PRDs are not lossy."* **THE FWDs ARE LOSSY BY DESIGN AND ON HIS OWN WORD** —
+2026-09-01, *"This does not have to be a deliverable contract. It can be qualitative because we will not know
+enough about the quantitative mechanics at this point."* They are the ACCEPTANCE layer: what counts as done,
+in plain English, gradeable by the person the outcome is for. They were never the spec and must not become it.
+
+**THE PIPELINE IS LOSSY BETWEEN BRIEF AND WORKER UNLESS THE PRD CLOSES THE GAP, AND NOTHING ELSE CAN.** A
+worker's face at L7 is *"the worker's whole context — cell text, absolute paths, ONE clause per criterion."* A
+worker never opens a brief. So every one of the brief's detailed sections — and the nine sources its Part IV
+maps — reaches a builder ONLY if the PRD pulls it through into a cell. **BINDING ON THIS PROJECT'S PRD:** a
+BRIEF COVERAGE MAP, by SUBTRACTION with the denominator printed — every section of
+`investor-reporting-ir-fe-brief-20260910.md` (and every source document its §IV.1 maps) → the cell(s) and
+`FWD` that consume it, or an explicit `NOT CONSUMED: <why>`. A section with no consumer and no reason is a PRD
+DEFECT the CVO grades at L9. The brief is the source of truth for detail; the PRD is its index into cells; the
+FWD is what says whether the result counts.
 
 ## PROVENANCE (F5)
 

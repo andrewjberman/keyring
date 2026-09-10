@@ -37,9 +37,13 @@ mechanism word for this side: *"the backend multitenant api/scoped/ layout."* �
 marked RATIFIED ON HIS WORD because his sentences ARE the outcomes; one word reverses either and the id goes vacant.**
 
 ⛔ **THE CUT IS HARD, ON HIS FOURTH SENTENCE:** *"clearly cut between a FE and BK project … we do not try to wrap
-all of this in one massive project."* Every id below has EXACTLY ONE `ACCEPT OWNER`. This project owns the grade
-on ten; `IRPT_FNTEND` owns `FWD-1` and `FWD-6` and appears here only as a CONTRIBUTOR. Two projects, two
-decompositions, two task-order sets, two adjudications; no umbrella is recreated by cross-reference.
+all of this in one massive project."* Every id below has EXACTLY ONE `ACCEPT OWNER`. **RE-OWNED ~19:3xZ ON HIS
+SIXTH SENTENCE** — *"the lambda part is backend, how that report actually looks and how the modals and etc work
+are all frontend"* — **the outcome is what the advisor sees and does; the machinery is a contribution.** This
+project now owns the grade on FOUR machinery outcomes: `FWD-2` enforcement, `FWD-7` freshness, `FWD-9`
+ingestion, `FWD-10` construction. `IRPT_FNTEND` owns every advisor-facing outcome and this project appears
+there as a CONTRIBUTOR whose data, parity and execution obligations are graded inside that outcome. Two
+projects, two decompositions, two task-order sets, two adjudications.
 
 ⛔ **NO FWD BELOW IS A WAIT.** The one genuine cadence — the mailbox poll under `FWD-9` — is DRIVEN on demand
 for its proof and the organic case is the negative arm, per Rule 27's L2 clause.
@@ -134,10 +138,12 @@ for its proof and the organic case is the negative arm, per Rule 27's L2 clause.
                     return uses a VENDOR CALCULATION for the exact selected account
                     set -- summing or averaging account returns is not a substitute
                     and a fabricated aggregate fails this outcome
-         ACCEPT     ** IRPT_BCKEND ** -- canonical meaning, units, dates and the
-         OWNER      vendor-calculation-only rule are this project's
-         CROSSES    IRPT_FNTEND renders it; the PDF is that project's package run
-                    by this project's worker
+         ACCEPT     ** IRPT_FNTEND ** -- RE-OWNED on Andrew ~19:3xZ: the outcome
+         OWNER      is the advisor READING and EXPORTING; see the counterpart
+         THIS       canonical meaning, UNITS, dates, the vendor-calculation-only
+         PROJECT    rule and the normalized contract -- graded INSIDE FWD-3's
+                    adjudication as the data half; the PDF runs in this project's
+                    worker
          SOURCE     brief O3, F2, F3; Andrew's "just generating a frontend view of
                     what Black Diamond/Orion already provide" -- carried; BK brief O2
          ⛔ NOTE    A NORMALIZER DOES NOT CHANGE A PROVIDER'S METHODOLOGY TO MAKE TWO
@@ -156,9 +162,12 @@ for its proof and the organic case is the negative arm, per Rule 27's L2 clause.
                     attribution; a MODELED comparison is described as modeled;
                     unsupported variants are VISIBLE as unsupported
          PROOF      replay each approved variant end to end
-         ACCEPT     ** IRPT_BCKEND ** -- the chain from validated input to
-         OWNER      certified section is this project's
-         CROSSES    IRPT_FNTEND presents the variants and renders the sections
+         ACCEPT     ** IRPT_FNTEND ** -- RE-OWNED on Andrew ~19:3xZ: the outcome
+         OWNER      is the advisor OBTAINING and EXPORTING in the tab; see the
+                    counterpart
+         THIS       the chain from validated input through captured request, job
+         PROJECT    and result to a certified section -- graded INSIDE FWD-4's
+                    adjudication; the runner style is his word (note below)
          SOURCE     brief O4, F7; Andrew's "just pulling a report of what YCharts
                     already provides" -- carried; BK brief O4; the intake's durability
                     is FWD-9 below, at Andrew
@@ -215,10 +224,12 @@ for its proof and the organic case is the negative arm, per Rule 27's L2 clause.
                     unmatched join, a blended model and a multi-relationship
                     membership; UNIQUE UNDERLYING HOLDINGS RECONCILE BEFORE AND AFTER
                     THE OVERLAY; coverage and join exceptions carry DENOMINATORS
-         ACCEPT     ** IRPT_BCKEND ** -- join correctness and the reconcile-before-
-         OWNER      and-after control are this project's
-         CROSSES    IRPT_FNTEND draws the drilldown on this project's
-                    revision-bound nodes
+         ACCEPT     ** IRPT_FNTEND ** -- RE-OWNED on Andrew ~19:3xZ: the outcome
+         OWNER      is the advisor SEEING holdings by model and drilling; see the
+                    counterpart
+         THIS       join correctness, the reconcile-before-and-after control, the
+         PROJECT    denominators and the revision-bound nodes -- graded INSIDE
+                    FWD-5's adjudication as the data half
          SOURCE     brief O5, F4; Andrew's per-partner overlay mapping, verbatim --
                     carried; BK brief O5; WS4 child brief @4a1d1ed9aa
          ⛔ NOTE    MODEL TARGETS MUST NOT MASQUERADE AS OBSERVED HOLDINGS. A residual
@@ -287,13 +298,16 @@ for its proof and the organic case is the negative arm, per Rule 27's L2 clause.
          PROOF      replay one known drawdown window twice and diff the selected
                     moments; replay a window that PREDATES the news history and
                     confirm it renders MISSING HISTORY rather than an empty topic list
-         ACCEPT     ** IRPT_BCKEND ** -- deterministic inflection selection,
-         OWNER      evidence and prose validity, the frozen bundle, and export
-                    execution are this project's
-         CROSSES    IRPT_FNTEND supplies the template and rendering package this
-                    project executes, and the chart composition on which the dated
-                    markers land; the topic/sentiment retrieval is a NEW seam whose
-                    owner is named at L5 (carried from the ratified OWNER line)
+         ACCEPT     ** IRPT_FNTEND ** -- RE-OWNED on Andrew ~19:3xZ, his words:
+         OWNER      "the branded export is arguably a frontend op, even if a
+                    lambda does it, the lambda part is backend, how that report
+                    actually looks and how the modals and etc work are all
+                    frontend." See the counterpart
+         THIS       the lambda: deterministic inflection selection, evidence and
+         PROJECT    prose validity, the frozen bundle, and export execution --
+                    graded INSIDE FWD-8's adjudication; the topic/sentiment
+                    retrieval is a NEW seam whose owner is named at L5 (carried
+                    from the ratified OWNER line)
          SOURCE     Andrew-direct 2026-09-10, verbatim: a "narrative arc" using "daily
                     cloud and trending topics over almost a full year", to "dynamically
                     assess what was the trending topic or buzz word/phrase from word
@@ -421,11 +435,13 @@ for its proof and the organic case is the negative arm, per Rule 27's L2 clause.
                     the same requests as a firm advisor and confirm refusal;
                     compare the global-view figures to the firm-scoped figures for
                     the same client and revision
-         ACCEPT     ** IRPT_BCKEND ** -- a cross-firm entitlement CLASS: the same
-         OWNER      cross-firm rule as FWD-2 and FWD-10, GRANTED to an Opal
-                    principal rather than denied to a firm one
-         CROSSES    IRPT_FNTEND supplies the view, the firm selector and the
-                    always-visible firm attribution
+         ACCEPT     ** IRPT_FNTEND ** -- RE-OWNED on Andrew ~19:3xZ: the outcome
+         OWNER      is an Opal USER running reports across firms from a VIEW; see
+                    the counterpart
+         THIS       the cross-firm entitlement CLASS -- the same rule as FWD-2 and
+         PROJECT    FWD-10, GRANTED to an Opal principal rather than denied to a
+                    firm one -- and the multitenant api/scoped/ layout; graded
+                    INSIDE FWD-11's adjudication as the entitlement half
          SOURCE     Andrew-direct ~19:2xZ, verbatim: "I want a 'Global' view, just
                     like how it's done in Model Portfolios, whereby an Opal User
                     can go through and run reports/analysis on ALL FIRMS"
@@ -447,8 +463,9 @@ for its proof and the organic case is the negative arm, per Rule 27's L2 clause.
 ```
 
 **COUNT: 11 outcomes carried. 7 ratified ids, text verbatim (`FWD-1`, `2`, `3`, `4`, `5`, `7`, `8`); `FWD-9`
-RATIFIED; `FWD-10` RE-CUT and ratified on his word; `FWD-11` NEW and ratified on his word. ACCEPT owner:
-IRPT_BCKEND 10, IRPT_FNTEND 1 (`FWD-1`, contributed to here).**
+RATIFIED; `FWD-10` RE-CUT and ratified on his word; `FWD-11` NEW and ratified on his word. ACCEPT owner AFTER
+THE ~19:3xZ RE-OWN: IRPT_BCKEND 4 (`FWD-2`, `FWD-7`, `FWD-9`, `FWD-10`), IRPT_FNTEND 7 (`FWD-1`, `3`, `4`, `5`,
+`6`, `8`, `11`) contributed to here. `FWD-12` (design) is the counterpart's alone; this project is NOT ENGAGED.**
 NEW (`FWD-9`, `FWD-10`). ACCEPT owner: IRPT_BCKEND 8, IRPT_FNTEND 1 (`FWD-1`, contributed to here).**
 
 ---
@@ -490,6 +507,23 @@ Ready to paste under **`## ENDPOINT (step 2, /endpoint --forward)`** in
 `org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md`. **That path does not exist.** Same three
 prerequisites as the counterpart, **`FWD-9`, `FWD-10` and `FWD-11` are on his word at ~19:2xZ and the PRD header may list all
 eleven.** If he reverses any of the three, that id goes vacant and the header drops it — never renumbered.
+
+## ⛔ THE BRIEF-COVERAGE OBLIGATION ON L4 — his seventh sentence, answered in writing
+
+*"Please confirm the FWDs and PRDs are not lossy."* **THE FWDs ARE LOSSY BY DESIGN AND ON HIS OWN WORD** —
+2026-09-01, *"This does not have to be a deliverable contract. It can be qualitative because we will not know
+enough about the quantitative mechanics at this point."* They are the ACCEPTANCE layer: what counts as done,
+in plain English, gradeable by the person the outcome is for. They were never the spec and must not become it.
+
+**THE PIPELINE IS LOSSY BETWEEN BRIEF AND WORKER UNLESS THE PRD CLOSES THE GAP, AND NOTHING ELSE CAN.** A
+worker's face at L7 is *"the worker's whole context — cell text, absolute paths, ONE clause per criterion."* A
+worker never opens a brief. So every one of the brief's detailed sections — and the nine sources its Part IV
+maps — reaches a builder ONLY if the PRD pulls it through into a cell. **BINDING ON THIS PROJECT'S PRD:** a
+BRIEF COVERAGE MAP, by SUBTRACTION with the denominator printed — every section of
+`investor-reporting-ir-bk-brief-20260910.md` (and every source document its §IV.1 maps) → the cell(s) and
+`FWD` that consume it, or an explicit `NOT CONSUMED: <why>`. A section with no consumer and no reason is a PRD
+DEFECT the CVO grades at L9. The brief is the source of truth for detail; the PRD is its index into cells; the
+FWD is what says whether the result counts.
 
 ## PROVENANCE (F5)
 

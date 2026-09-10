@@ -101,6 +101,39 @@ both are WITHDRAWN. `IRPT_FNTEND` and `IRPT_BCKEND` conform to the contract's pr
 separate projects"* is the fourth message's constraint restated as the register act itself. The two endpoint
 files are renamed to carry his codes.
 
+## SIXTH MESSAGE — VERBATIM AND ENTIRE
+
+> there are a ton of FWDs in backend that should not be there, the branded export is arguably a frontend op,
+> even if a lambda does it, the lambda part is backend, how that report actually looks and how the modals and
+> etc work are all frontned. also i dont see anything about following portal patterns and what the frontend is
+> supposed to look like in fwds, i dont see anything in FWDs for FE that cover component structure and design.
+
+## SEVENTH MESSAGE — VERBATIM AND ENTIRE
+
+> What I am wondering is if we are basically dumbing down PRDs significantly with the FWD layout. I had CRO
+> write tens of pages of highly detailed briefings, 9 of them at this point not including the two primary
+> project briefs, and these are the FWDs? Please confirm the FWDs and PRDs are not lossy
+
+**THE SIXTH MESSAGE CORRECTS THE OWNERSHIP RULE I USED, AND HE IS RIGHT.** I owned each outcome by whichever
+project's ARTIFACT is hardest to prove, so advisor-facing outcomes landed in `IRPT_BCKEND` because the data
+under them is backend's. His principle is the correct one: **the outcome is what the advisor sees and does;
+the machinery underneath is a CONTRIBUTION.** *"the lambda part is backend, how that report actually looks and
+how the modals and etc work are all frontend."* Applied across the set: `FWD-3`, `FWD-4`, `FWD-5`, `FWD-8` and
+`FWD-11` move to `IRPT_FNTEND`. `FWD-2` (enforcement), `FWD-7` (freshness), `FWD-9` (ingestion) and `FWD-10`
+(construction) stay `IRPT_BCKEND` because those outcomes ARE machinery — no advisor sees a directory refresh.
+Nothing in any backend contribution is dropped; every CROSSES line survives, now under the frontend's grade.
+
+**THE DESIGN GAP IS REAL.** No outcome said the product must look and behave like the portal. `FWD-12` is cut
+from his words and the FE brief's §IV.2, which names the actual patterns: `PageHeaderVariants`,
+`TabNavigation` + `useTabNavigation`, the catalyst `combobox`, `CategoryViewTree` + `modelPortfolioColors`,
+`brand.json` + the brand guidelines. **He named the gap, not the outcome, so `FWD-12` goes to him as yes/no.**
+
+**THE SEVENTH MESSAGE IS ANSWERED IN THE ENDPOINTS' LANDING SECTIONS AND AT HIS TERMINAL.** Short form: the
+FWDs are lossy BY DESIGN and on his own 2026-09-01 word (*"It can be qualitative"*); the PRDs are NOT YET
+WRITTEN and the pipeline IS lossy between brief and worker unless each PRD carries a coverage map from every
+brief section to the cell that consumes it, because a worker's face never opens a brief. That obligation now
+binds L4 in writing.
+
 ## SCOPE
 
-Two answers, one new outcome (`FWD-11`) with its two mechanism words, and one constraint on the cut. Not a hold.
+Answers, two new outcomes (`FWD-11` ratified on his word; `FWD-12` at him), an ownership correction, and a coverage obligation on L4. Not a hold.
