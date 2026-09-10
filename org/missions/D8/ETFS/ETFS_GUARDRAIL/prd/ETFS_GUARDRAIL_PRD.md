@@ -184,7 +184,13 @@ cited it** -- which is the only condition under which a renumber is safe.
                     injected under a NEVER-2 entry and restored after) drives a real run of
                     the SAME target the schedule invokes: the verdict object reads REFUSE
                     with the classifier's own class table quoted at file:line, that month's
-                    publish keys stay ABSENT (a 404 beside the refused 200), the refusal
+                    publish keys are UNTOUCHED BY THIS RUN -- head-object each publish key
+                    BEFORE and AFTER, LastModified IDENTICAL (the discriminating field) with
+                    ETag beside it and VersionId reported EXPLICITLY ABSENT on this
+                    unversioned bucket -- beside the refusal artifacts' fresh 200s (R-EG-9;
+                    this read "stay ABSENT (a 404 beside the refused 200)" and NO CANDIDATE
+                    MONTH CAN SATISFY IT: 404-able 0 of 5 over the measured population), the
+                    refusal
                     reaches a person, and the FORCING is disclosed on the artifact so the run
                     is never mistaken for organic. aj@ is not a recipient of any driven run
                     (Andrew-direct 2026-09-10 ~02:5xZ). The measured carry-and-disclose branch
@@ -531,7 +537,7 @@ Round 1 closed with 7 of 8 grades NOT_EVALUATED, every one of them "on the 10-01
 | id | outcome_ref | surface | claim | MEASURED-BY / evidence | lane | verb | depends_on | accept | bound |
 |---|---|---|---|---|---|---|---|---|---|
 | S14 | FWD-3, FWD-5, FWD-6 | THE AUGUST RE-RENDER: the SAME monthly orchestrator (`etfs-reports-monthly-run`'s target, `infra/aws/terraform/etfs-reports/orchestrator.tf`) started by hand for `month=2026-08` with the scheduled payload shape; published to the served key `s3://opal-data-etfs/platinum/reports/2026-08/` WITH the coverage line; delivered to aj@opalinvest.com and andrew@opalinvest.com | absent | the published August CSV ends on its numeric rows and predates the round (ROUND_ANALYSIS.round1, FWD-3); FWD-5 never exercised | AE_CloudOps | verify | -- | 3, 5, 6 | a NEVER-2 entry OPENED FIRST naming the served key and the archived prior object (sha256), never-widen sign-off CTO+COO inside it; the execution's own name on the artifact (`trigger=manual`); the served CSV's last row is `# coverage:` with the month's denominator; `etf_ownership.pdf` at the publish key; DELIVERY at BOTH inboxes read from the mailboxes (message ids), never from the send log; the three partners' as-of aligned on the live render (FWD-6's qualifier re-read); rollback = the archived object restored byte-equal; the 10-01 fire is confirmation |
-| S15 | FWD-2, FWD-7, FWD-8 | THE SEPTEMBER-TO-DATE REFUSAL: the SAME orchestrator started by hand for `month=2026-09` TODAY -- a partial month is incomplete by construction, so the refusal ladder runs on real data | absent | no real refusal has reached a person (FWD-2, FWD-7, FWD-8 all NOT_EVALUATED) | AE_CloudOps | verify | S14 | 2, 7, 8 | the ladder runs to its end on the real data (each rung's output in `coverage_unresolved.json`); the HTML lands under `refused/` and the 2026-09 publish key stays ABSENT (head-object 404 beside the refused object 200); the alert text produced; the terminal email DELIVERED to andrew@ (read at the inbox) -- the ONE send the SES carve-out authorizes, on the terminal path, on a real refusal; `coverage_egress_ask.json` written; vendor egress 0 over the run window (the gateway's egress log and CloudTrail, denominator printed); the run-id on every artifact |
+| S15 | FWD-2, FWD-7, FWD-8 | THE SEPTEMBER-TO-DATE REFUSAL: the SAME orchestrator started by hand for `month=2026-09` TODAY -- a partial month is incomplete by construction, so the refusal ladder runs on real data | absent | no real refusal has reached a person (FWD-2, FWD-7, FWD-8 all NOT_EVALUATED) | AE_CloudOps | verify | S14 | 2, 7, 8 | the ladder runs to its end on the real data (each rung's output in `coverage_unresolved.json`); the HTML lands under `refused/` and the 2026-09 publish key stays ABSENT (head-object 404 beside the refused object 200 -- ⚠ **HISTORICAL, SUPERSEDED BY R-EG-9 AS A RUN REFERENCE:** this row records what WAS OBSERVED on a past September-to-date run, and an observed 404 then is a fact; it is NOT a criterion any future run can be asked to reproduce, because 404-able is 0 of 5 over the measured month population. Cite this row for what happened, never as the test); the alert text produced; the terminal email DELIVERED to andrew@ (read at the inbox) -- the ONE send the SES carve-out authorizes, on the terminal path, on a real refusal; `coverage_egress_ask.json` written; vendor egress 0 over the run window (the gateway's egress log and CloudTrail, denominator printed); the run-id on every artifact |
 | S16 | FWD-4 | THE LEGITIMATELY-EMPTY DAY THAT HAS ALREADY HAPPENED: 2026-09-07 (Labor Day, US market shut) read on S15's run | measured | a real closed-market day inside the month; graded NOT_EVALUATED only because every prior B-class proof was a fixture | AE_CloudOps | verify | S15 | 4 | `coverage_verdict.json` for 2026-09 classifies 2026-09-07 as A (market closed); it appears in no partner's holes; **AMENDED v0.6 -- THE ROW AS WRITTEN PASSED ON THE VIOLATION:** it enumerated `cottonwood or 49financial`, TWO partners, and `ETFS_GUARDRAIL-W1-S31` found FOUR PRICED ROWS on that very date under the THIRD (`daily/inflection/2026-09-07.json`, value-sha identical across 09-05..09-08 = carried forward, LastModified three days before the run). The arm now enumerates EVERY partner FROM THE ARTIFACT'S OWN LIST (never a hand-typed pair), prints that list as its denominator beside the count, and reads each partner's `daily/<partner>/2026-09-07.json` for PRESENCE and, where present, for PRICED ROWS -- a present-and-priced slice on a closed day FAILS the arm. The classifier's class-A reading is retained as CONTEXT and is explicitly NOT the discriminator; `expected_empty` carries it with holes unaffected; CloudTrail PutObject 0 for that day's keys over the run |
 | S17 | FWD-1 | THE FILLED-IN DAY: the daily producer (S1 `cot-etf-ownership-daily` / S2 `bd-49f-etf-ownership-daily`) invoked by hand with the scheduled event payload against a REAL hole (named by S15's coverage read, or by `catchup_processed` on a date the producer missed); if the estate holds no real hole, a CONTROLLED one -- one slice archived to a quarantine key under its own NEVER-2 entry, the producer fired, the slice restored byte-equal after | absent | FWD-1 NOT_EVALUATED: needs a recovered date on the producer's own fire | AE_CloudOps | verify | -- | 1 | the function's CloudWatch log for the manual invocation names the recovered date in `catchup_processed`; the slice exists after with the day's rows; positive control: a date NOT missing is not reported recovered; the invocation record shows the manual initiator; the schedule's own firing proven from the function's prior scheduled invocations (CloudTrail Invoke by the rule), listed with a denominator |
 | S18 | -- (the schedules) | THE SCHEDULE'S FIRING FROM HISTORY: the executions of `etfs-reports-monthly-run` and the two daily rules listed from CloudTrail / the state machine's execution list with their initiators -- the ones that produced the published August artifact and the daily slices | measured | the published August CSV and the daily slices exist, so the fires have fired; never listed as evidence | AE_CloudOps | verify | -- | 1, 5 | the list printed with its denominator and the initiator column showing the rule; 10-01 and the daily crons stay CONFIRMATION, never a gate |
@@ -567,15 +573,29 @@ happened* to *the mechanism was driven deliberately and worked*.
                      each publish key BEFORE and AFTER and show ETag, VersionId and
                      LastModified IDENTICAL, beside the refusal artifacts' fresh 200s
                      (R-EG-9, 2026-09-10: this clause read "stay ABSENT (a 404 beside the
-                     refused 200)" and NO MONTH COULD EVER SATISFY IT -- 275 slices
-                     subtract to {2026-05..2026-09}, 0 outside, and ALL FIVE already serve
-                     both html and pdf, so 404-able is 0 of 5 and NEVER-AUTO-DELETE forbids
-                     the only act that would change it. A 404 NAMES ONE WORLD-STATE OF
-                     "this run did not publish" exactly as the pre-R-EG-8 clause named one
-                     WRITER of the ask property -- the same defect one grain up, and the
-                     SECOND instance of it inside this one order. An unmoved ETag is
-                     STRICTLY STRONGER than a 404: a 404 proves a key NEVER EXISTED, an
-                     unmoved ETag proves THIS RUN did not touch a key that DOES),
+                     refused 200)". 275 slices subtract to {2026-05..2026-09}, 0 outside,
+                     and ALL FIVE already serve both html and pdf, so 404-able is 0 of 5
+                     and NEVER-AUTO-DELETE forbids the only act that would change it.
+                     ⚠ SCOPE OF THAT CLAIM, corrected by `3.0.0_SA_CVO` after my first
+                     wording overstated it: this is CURRENT BOUNDED INFEASIBILITY over the
+                     MEASURED five-month population -- NOT infeasibility "from the day it
+                     was written", and NOT a claim about every possible month. A month
+                     that served no publish key would satisfy the old clause; none exists
+                     in the population the fixture can act on. A 404 NAMES ONE WORLD-STATE
+                     OF "this run did not publish" exactly as the pre-R-EG-8 clause named
+                     one WRITER of the ask property -- the same defect one grain up, and
+                     the SECOND instance inside this one order.
+                     ⚠ AND THE REPLACEMENT'S OWN LIMITS, likewise corrected: a 404 is an
+                     OBSERVATION OF ABSENCE, never proof a key NEVER EXISTED, and my first
+                     wording said the latter. ⛔ **ETag EQUALITY ALONE DOES NOT PROVE ZERO
+                     WRITES** -- identical bytes rewritten yield an identical ETag, which
+                     is why **LastModified IS THE DISCRIMINATING FIELD** and ETag is
+                     corroboration. VersionId is EXPLICITLY ABSENT on this unversioned
+                     bucket and must be reported as absent rather than silently omitted.
+                     This is an ENDPOINT-STATE CONTROL, not an exhaustive intervening-write
+                     audit, and it is not "strictly stronger than every absence test" --
+                     it is the control that fits the world this fixture can actually
+                     produce),
                      the refusal reaches a person, and the FORCING is disclosed on
                      the artifact so the run is never mistaken for organic. The already-
                      measured carry-and-disclose branch (2026-09-10: PUBLISH over two
