@@ -120,23 +120,6 @@ cited it** -- which is the only condition under which a renumber is safe.
                     two weeks later
          SOURCE     brief s.3 (81-129), lag table 93-110
 
-  FWD-2  [SUPERSEDED 2026-09-10 by FWD-9 -- Andrew-direct ~03:0xZ: "anything that we'd have to
-         actually wait for a failure to close out, that FWD should be superseded". The id is
-         PERMANENT and never reused; the text is kept verbatim below and is no longer graded.]
-         The monthly report cannot go out over incomplete data unless a
-         person decides to let it
-         DONE WHEN  EXERCISED -- the check has actually refused a month, and the
-                    refusal reached a person
-         WHY SUPERSEDED  its only proof was a REFUSE verdict, which arrives when the data
-                    happens to carry a class-C-or-worse hole that survives the ladder -- an
-                    event no seat controls. Measured 2026-09-10: the September run produced
-                    PUBLISH over two class-D holes, because carry-and-disclose IS the designed
-                    behaviour there, so the refusal this bar waits for may never come.
-         ACCEPT     when days are genuinely missing, the report does not go out,
-                    and someone is told which days and why -- rather than it
-                    arriving looking normal
-         SOURCE     brief s.4 (130-162), s.5 (163-189)
-
   FWD-3  The report states how complete it is, on its own face
          DONE WHEN  APPLIED -- the statement is in the report itself
          ACCEPT     someone reading the report can tell, without asking anyone
@@ -168,29 +151,6 @@ cited it** -- which is the only condition under which a renumber is safe.
                     the two being a day apart
          SOURCE     brief s.6a (206-232)
 
-  FWD-7  [SUPERSEDED 2026-09-10 by FWD-10 -- same Andrew-direct. Id permanent, never reused;
-         text kept verbatim, no longer graded.]
-         When a gap survives every attempt to repair it, Andrew finds out --
-         and finds out exactly what is missing, without having to ask
-         DONE WHEN  EXERCISED -- such a message has actually been sent and read
-         WHY SUPERSEDED  two reasons, either alone sufficient. (1) Its bar waited on a real
-                    terminal failure the PRD itself calls rare by design -- "he should almost
-                    never receive one" -- so the outcome was written to be proven by an event we
-                    hope never happens. (2) Measured 2026-09-10 (row W1-S25): the terminal send
-                    CANNOT FIRE AT ALL -- lambda_function.py:439 guards it on
-                    (unresolved_doc or {}).get("unresolved") while the renderer writes that
-                    document KEYED BY PARTNER, so the guard reads [] and skips the send on a
-                    genuine refuse; round 1's proof passed on a fixture built to the docstring
-                    rather than to the producer's output. Waiting would have waited forever.
-         ACCEPT     if every attempt to fill a gap has failed, including asking
-                    the outside provider, Andrew receives an urgent message that
-                    lists each day still missing, which partner it belongs to,
-                    and which provider the data should have come from -- and he
-                    can act on it without a follow-up question. He should almost
-                    never receive one; if these become routine, the repair ahead
-                    of it has failed, not succeeded
-         SOURCE     Andrew-direct 2026-09-02, s.0 ruling (3)
-
   FWD-8  Going outside Opal to ask a provider for missing data stays a
          decision a person makes
          DONE WHEN  EXERCISED -- the system has actually stopped and asked,
@@ -199,6 +159,40 @@ cited it** -- which is the only condition under which a renumber is safe.
                     for it, the system stops, names the days it wants, and waits
                     for a person to say yes
          SOURCE     brief s.5 (163-189), ruling card 4
+
+  FWD-9  The monthly report cannot go out over incomplete data unless a person
+         decides to let it -- and the refusal can be DEMONSTRATED on demand
+         DONE WHEN  EXERCISED -- the refusal path has been DRIVEN DELIBERATELY on a
+                    forced incomplete condition, end to end, and the refusal reached a
+                    person; no seat waits for the data to produce one
+         ACCEPT     a forced class-C-or-worse condition (a hole the ladder cannot close,
+                    injected under a NEVER-2 entry and restored after) drives a real run of
+                    the SAME target the schedule invokes: the verdict object reads REFUSE
+                    with the classifier's own class table quoted at file:line, that month's
+                    publish keys stay ABSENT (a 404 beside the refused 200), the refusal
+                    reaches a person, and the FORCING is disclosed on the artifact so the run
+                    is never mistaken for organic. aj@ is not a recipient of any driven run
+                    (Andrew-direct 2026-09-10 ~02:5xZ). The measured carry-and-disclose branch
+                    (PUBLISH over two class-D holes, coverage line "5/6 trading days; 1
+                    carried") is the NEGATIVE arm and is already banked
+         SOURCE     supersedes FWD-2; Andrew-direct 2026-09-10 ~03:0xZ (no FWD is a wait)
+
+  FWD-10 When a gap survives every attempt to repair it, Andrew finds out -- and
+         the path that tells him is PROVEN to work, not presumed
+         DONE WHEN  EXERCISED -- the terminal message has been sent by the DEPLOYED handler
+                    on a deliberately driven terminal condition and READ at Andrew's own
+                    inbox; no seat waits for a real failure
+         ACCEPT     (i) the W1-S25 guard defect is fixed FIRST -- the guard and the renderer
+                    agree on the shape of coverage_unresolved.json, with a test built from the
+                    PRODUCER'S OWN OUTPUT rather than from a docstring; (ii) a driven terminal
+                    condition produces the message, it lists each day still missing with its
+                    partner and the provider the data should have come from, and it is READ at
+                    andrew@ by a gateway read, never a send-log self-report; (iii) the send is
+                    OBSERVABLE afterwards -- the handler records that it fired (W1-S26: today
+                    it emits no log line and no trail selects the SES data plane); (iv) aj@ is
+                    NOT a recipient of any driven run (Andrew-direct 2026-09-10 ~02:5xZ)
+         SOURCE     supersedes FWD-7; Andrew-direct 2026-09-10 ~03:0xZ (no FWD is a wait)
+
 ```
 
 > **WHY FWD-8 SURVIVED THE FOLD, stated because Andrew raised folding it and this seat did not simply comply.**
@@ -576,6 +570,54 @@ happened* to *the mechanism was driven deliberately and worked*.
                      no trail selects the SES data plane); (iv) aj@ IS NOT A RECIPIENT of
                      any driven run (Andrew-direct ~02:5xZ)
           SOURCE     supersedes FWD-7; Andrew-direct 2026-09-10 ~03:0xZ
+```
+
+### The two superseded outcomes, kept VERBATIM (ids permanent, never reused, no longer graded)
+
+They are held here rather than in the ENDPOINT section so that section and `PRD_HEADER.endpoint_outcomes` name exactly the same
+eight live ids -- the L6 gate reads both halves and is right to refuse when they disagree (`2.0.0_SA_COO` 94931). The supersession
+rule requires the text be kept with its reason beside it; it does not require it be kept in the ENDPOINT list.
+
+```
+  FWD-2  [SUPERSEDED 2026-09-10 by FWD-9 -- Andrew-direct ~03:0xZ: "anything that we'd have to
+         actually wait for a failure to close out, that FWD should be superseded". The id is
+         PERMANENT and never reused; the text is kept verbatim below and is no longer graded.]
+         The monthly report cannot go out over incomplete data unless a
+         person decides to let it
+         DONE WHEN  EXERCISED -- the check has actually refused a month, and the
+                    refusal reached a person
+         WHY SUPERSEDED  its only proof was a REFUSE verdict, which arrives when the data
+                    happens to carry a class-C-or-worse hole that survives the ladder -- an
+                    event no seat controls. Measured 2026-09-10: the September run produced
+                    PUBLISH over two class-D holes, because carry-and-disclose IS the designed
+                    behaviour there, so the refusal this bar waits for may never come.
+         ACCEPT     when days are genuinely missing, the report does not go out,
+                    and someone is told which days and why -- rather than it
+                    arriving looking normal
+         SOURCE     brief s.4 (130-162), s.5 (163-189)
+
+  FWD-7  [SUPERSEDED 2026-09-10 by FWD-10 -- same Andrew-direct. Id permanent, never reused;
+         text kept verbatim, no longer graded.]
+         When a gap survives every attempt to repair it, Andrew finds out --
+         and finds out exactly what is missing, without having to ask
+         DONE WHEN  EXERCISED -- such a message has actually been sent and read
+         WHY SUPERSEDED  two reasons, either alone sufficient. (1) Its bar waited on a real
+                    terminal failure the PRD itself calls rare by design -- "he should almost
+                    never receive one" -- so the outcome was written to be proven by an event we
+                    hope never happens. (2) Measured 2026-09-10 (row W1-S25): the terminal send
+                    CANNOT FIRE AT ALL -- lambda_function.py:439 guards it on
+                    (unresolved_doc or {}).get("unresolved") while the renderer writes that
+                    document KEYED BY PARTNER, so the guard reads [] and skips the send on a
+                    genuine refuse; round 1's proof passed on a fixture built to the docstring
+                    rather than to the producer's output. Waiting would have waited forever.
+         ACCEPT     if every attempt to fill a gap has failed, including asking
+                    the outside provider, Andrew receives an urgent message that
+                    lists each day still missing, which partner it belongs to,
+                    and which provider the data should have come from -- and he
+                    can act on it without a follow-up question. He should almost
+                    never receive one; if these become routine, the repair ahead
+                    of it has failed, not succeeded
+         SOURCE     Andrew-direct 2026-09-02, s.0 ruling (3)
 ```
 
 **R-EG-1 (ruling, binding on this PRD and offered to the spine): NO FWD IS A WAIT.** An endpoint outcome is provable by an act a seat can
