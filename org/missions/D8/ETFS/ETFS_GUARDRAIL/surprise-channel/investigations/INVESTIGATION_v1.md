@@ -952,6 +952,220 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "TO-EG-s-14 THE CELL: the reporter box 'publishes the PDF/HTML/CSV to the served key' as the rule's own behaviour, and S14-AC2 asks for the served artifact before vs after with its evidence.",
     "world_is": "The box's own render is brand-less. The comparison artifact (the 09-01 served HTML) was produced by a LOCAL repo run, not by the box, so the served August report has just changed appearance -- logo present before, absent now -- while every number, heading, table row and slide is unchanged. Nothing in this order caused it (the one code change touches only the fallback import); it is what the 10-01 scheduled fire would also produce.",
     "notes": "NOT FIXED HERE: out of this order's one-file grant and not its cell. Cheap remedies for the issuer's next cut, both outside this order: upload the logo beside the renderer on the artifact prefix and resolve it from _ORION_HERE first (the same shape as the W1-S11 fix), or inline the SVG as a constant. ARMED because the next NORMAL fire (10-01) publishes and emails the same brand-less report to both recipients. Cosmetic, not numeric -- stated so the issuer can weigh it, not to claim significance."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S20",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T01:50:00Z",
+    "one_line": "The TO's 'one line' at _run needed a SIGNATURE change too: _run() took no event argument, so the event had to be threaded in via a DEFAULTED parameter (def _run(event: dict | None = None)) before (event or {}).get('month') could exist there at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:382 @bd0e384890 -- def _run(event: dict | None = None) -> None, where the pre-change signature was def _run() -> None",
+        "infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:389 @bd0e384890 -- month = (event or {}).get('month') or _last_month(), the same expression the QA modes carry at :476/:507",
+        "The parameter is DEFAULTED specifically so an argument-less _run() call site keeps working; commit bd0e384890 is 2 files, 62 insertions / 3 deletions"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-15 THE ONE LINE: 'The fix is that same expression at :383 -- month = (event or {}).get(\"month\") or _last_month()', described throughout as ONE line and 'one file changes by one line'.",
+    "world_is": "The expression alone is not sufficient: _run had no `event` in scope. Threading it required editing the function signature as well, so the change is one line of LOGIC but two lines of DIFF plus its call site. Behaviour on the scheduled path is unchanged (no `month` in the payload -> _last_month()), which is what the TO's intent protected.",
+    "notes": "Filed for FORM only, not significance: the deployed behaviour is exactly what the TO specified. Recorded because a future reader comparing 'one line' against a 2-file/62-insertion commit would otherwise read a widening that did not happen (the insertions are overwhelmingly the two pytest arms)."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S21",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T01:50:00Z",
+    "one_line": "safe-apply's HALT-GATE fails CLOSED in any FRESH WORKTREE: it resolves the actor from org/mcp/sessions/<session>.serial, which a new worktree never carries, so the first apply attempt returned rc=3 'IDENTITY UNRESOLVED -- BLOCKED (fail-closed)' for a correctly-authored worker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/critical_paths/change_management/20260910T0112Z_etfs-guardrail-eg-s-15-september-refusal_deploy_completion.md L2 proof @HEAD -- 'the first apply attempt returned rc=3 at the HALT-GATE (IDENTITY UNRESOLVED -- BLOCKED (fail-closed)) because a fresh worktree carries no org/mcp/sessions/<session>.serial'",
+        "The unblock was to write that gitignored runtime path with this worker's serial and re-run; nothing tracked was changed and nothing was committed for it",
+        "Same-class predecessor: the worktree-provisioning gap already recorded for .tools/terraform.exe, which is likewise gitignored and absent in every fresh worktree"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-15 BOUNDS: 'Terraform through .tools/safe-apply.sh only', with the worktree provisioned by the issuer at hand-off (the face provisions .tools/terraform.exe and says nothing about identity state).",
+    "world_is": "safe-apply additionally requires a session->serial mapping file that lives on a gitignored path, so the documented hand-off provisioning is incomplete: a worker that follows the face exactly is blocked at the gate. The gate's refusal is CORRECT in form (it fails closed on unresolved identity) but its input is not part of the provisioned worktree.",
+    "notes": "ARMED because EVERY future v3 worker issued an apply in a fresh worktree hits this, and the natural unblock is a worker hand-writing its own identity file -- which is the input the gate exists to trust. Disarm belongs to the issuer: provision the serial file at hand-off alongside .tools/terraform.exe, or teach safe-apply to fall back to OPAL_AGENT_SERIAL. Not fixed here: .tools/ is outside this order's <paths>."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S22",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T01:50:00Z",
+    "one_line": "THE ORDER'S CENTRAL PREMISE DOES NOT HOLD: an incomplete month does NOT produce a refusal. September-to-date's holes classify D ('carried for missing data'), the pre-publish gate refuses only on class C, and class C = 0 for 3 of 3 partners -- so coverage_verdict.json reads PUBLISH and no refusal ever occurred.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-etfs/platinum/reports/2026-09/coverage_verdict.json, 2705 B, LastModified 2026-09-10T01:20:20Z (s3api, UTC) -- 'verdict': 'PUBLISH', 'holes': 2; per_partner summaries give C=0 and D=1 for 49financial and cottonwood, C=0 and D=0 for inflection; trading_days 6 for all three",
+        "coverage_line values: 49financial '5/6 trading days; 1 carried for missing data', cottonwood '5/6 ... 1 carried', inflection '6/6 trading days; 0 carried'",
+        "The box's own SSM output (command edc0f4fa-49b9-4e93-b411-df1a6c8038c9, Status Success) reads 'VERDICT: PUBLISH holes=2' and then OK: lines for the publish keys",
+        "prefix platinum/reports/2026-09/refused/ -> KeyCount None (0 keys); 0 keys containing 'refused' anywhere under platinum/reports/"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-15 THE CELL: 'A month that is INCOMPLETE BY CONSTRUCTION -- September, run today -- makes the refusal real: the gate (EG-s-6) classifies the missing days, the ladder runs its rungs and stops, the orchestrator writes the refusal HTML under refused/, leaves the 2026-09 publish key ABSENT ... sends the ONE terminal email'.",
+    "world_is": "Incompleteness alone does not drive the gate to REFUSE. The gate's refusal axis is the coverage CLASS, and a missing upstream partition on a trading day inside an open month classifies D, which the gate treats as publishable with a coverage line. The refusal branch was never entered, so FWD-2, FWD-7 and FWD-8 remain NOT_EVALUATED on real data -- exactly the gap this order existed to close.",
+    "notes": "BLOCKING: S15-AC4's token EGS15-REFUSAL-LADDER-RAN cannot be printed, so the order cannot go terminal. ARMED because the same reasoning would be applied to any future month picked for being 'incomplete': the discriminator is class C, not incompleteness, and a C-producing condition (a hole the ladder can neither recover nor classify) is what a real refusal needs. Choosing that condition is an issuer cut, not a worker act."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S23",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T01:50:00Z",
+    "one_line": "The run PUBLISHED a partial-month September report to the SERVED keys and EMAILED it to BOTH recipients -- the two outcomes the order said would not happen. The ONE terminal send to andrew@ fired ZERO times; the ordinary monthly send fired ONCE to two destinations.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api list-objects-v2 on platinum/reports/2026-09/ = 8 of 8 keys: etf_ownership.html 33793 B and etf_ownership.pdf 173126 B, both LastModified 2026-09-10T01:20:23Z UTC, plus three per-partner CSVs at 01:20:23Z and the three coverage artifacts at 01:20:20Z",
+        "infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:418-441 @bd0e384890 -- the terminal branch is guarded by `if status != \"Success\"`; the render exited Success so control fell through to _report_exists then _email_report",
+        "lambda_function.py:289 @bd0e384890 -- _ses.send_raw_email(Source=SES_SENDER, Destinations=EMAIL_RECIPIENTS, ...), i.e. the JOINED recipient list, not TERMINAL_RECIPIENT",
+        "SES SentLast24Hours 82 -> 84 across the run (read 2026-09-10T01:18:29Z and 01:22Z) = ONE send to TWO destinations; LIMIT: the counter is ACCOUNT-WIDE, so +2 is consistent with -- not exclusive to -- this send",
+        "CloudTrail over 01:17-01:23Z: SendRawEmail 0 and SendEmail 0 while same-window POSITIVE CONTROLS are present (StartInstances 1 at 01:19:07Z, StopInstances 1 at 01:20:29Z, both Username etfs-reports-orchestrator) -> SES-PLANE-UNREAD"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-15 RULE (2): 'the 2026-09 publish keys are NOT written (that is the point)', and S15-AC4(e): 'the ONE terminal email ... (the ordinary monthly send does NOT fire on a refusal -- print its count, expected 0)'.",
+    "world_is": "Both halves are inverted. The publish keys ARE written and the ordinary send DID fire, delivering a September report covering 6 trading days (2 of them holes) to aj@ and andrew@ as though it were a completed month. Nothing in the report is fabricated -- it carries the coverage line '5/6 trading days; 1 carried for missing data' -- but it is a partial month presented on the ordinary monthly channel.",
+    "notes": "ARMED and the hazard is REPUTATIONAL, not numeric: a mid-month report reached both recipients on the channel reserved for month-end. This is a consequence of the deployed system behaving correctly on a premise the order got wrong (W1-S22), not of any act outside the grant. The worker did NOT delete or overwrite anything to remedy it (no S3 delete is in this order's bounds); disarm is the issuer's call -- either accept the September objects as a legitimate mid-month publish or have an owner with the grant remove them."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S24",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T01:50:00Z",
+    "one_line": "The remediation ladder WROTE a SERVED daily slice during the run -- daily/inflection/2026-09-09.json, 1209 B, 2026-09-10T01:20:16Z -- the only one of 273 keys under daily/ written in the window, which this order's BOUNDS explicitly forbade.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api list-objects-v2 on prefix daily/ = 273 keys (denominator); exactly 1 of 273 carries LastModified 2026-09-10T01:__ -- daily/inflection/2026-09-09.json, 1209 B, 01:20:16Z UTC",
+        "The write is consistent with the verdict: inflection reads 6/6 trading days covered with 0 holes while 49financial and cottonwood read 5/6 -- rung 1 re-ran inflection's producer successfully and it wrote its slice, whereas the other two producers raised on absent upstream partitions",
+        "S3 object-level PutObject cannot corroborate: the served-key trail names only platinum/firm/ on inf/bd/cot and versioning on opal-data-etfs is DISABLED (W1-S12), so this read prints COVERAGE-ABSENT and the write is read from the object itself"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-15 BOUNDS: 'NO SERVED SLICE IS TOUCHED. The daily slices under daily/<partner>/ are read by the gate, never written by this order'.",
+    "world_is": "A served daily slice WAS written, by the deployed ladder's rung 1 (re-run the producer), which is the ladder's designed behaviour. The bound is therefore unsatisfiable for any run that exercises the ladder: rung 1's whole purpose is to make a producer emit the slice it is missing.",
+    "notes": "ARMED because the bound as written will be violated by EVERY future ladder run, so a reader trusting it will mis-audit the daily prefix. The write itself is benign and correct (a real producer emitting a real slice for a real date, not a fabrication). Disarm is a wording cut at the issuer: the bound should forbid HAND-writing a slice, not forbid the ladder from doing its job."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S25",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T01:50:00Z",
+    "one_line": "LATENT AND SEVERE: the ONE terminal SES send is UNREACHABLE ON REAL DATA. _run reads (unresolved_doc or {}).get('unresolved'), but the renderer writes coverage_unresolved.json keyed BY PARTNER with no 'unresolved' key at all -- so the guard sees [] and skips _send_terminal_unresolved even on a genuine REFUSE. The round-1 EG-s-8 proof passed only because its FIXTURE was built to the docstring's shape.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:439 @bd0e384890 -- unresolved_days = (unresolved_doc or {}).get('unresolved') or [], then `if unresolved_days:` guards the only call to _send_terminal_unresolved",
+        "lambda_function.py:114-117 @bd0e384890 -- the contract COMMENT declares coverage_unresolved.json as {\"month\",\"unresolved\":[{\"date\",\"partner\",\"provider\",\"class\",\"reason\"}...]}",
+        "THE REAL ARTIFACT, s3://opal-data-etfs/platinum/reports/2026-09/coverage_unresolved.json, 1414 B, 2026-09-10T01:20:20Z: top-level keys are '49financial' and 'cottonwood' -- no 'month' key, no 'unresolved' key; each per-date object carries only date, class, reason",
+        "_read_coverage_artifacts (lambda_function.py:122-141) stores the parsed document verbatim under out['unresolved'], so artifacts['unresolved'] IS the partner-keyed doc and .get('unresolved') returns None -> or [] -> falsy",
+        "THE FIXTURE THAT HID IT: infra/aws/lambda/etfs-reports-orchestrator/test_terminal_send.py:118 @bd0e384890 -- 'unresolved': {'unresolved': [{'date','partner','provider','class','reason'}]}, the docstring's shape, which the real renderer does not produce",
+        "SECOND-ORDER: even if the guard passed, _build_terminal_email (:186-206) prints u.get('partner') and u.get('provider') per row, both ABSENT from the real per-date objects -- the email's table would render 'None | None' for every date"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-15 THE CELL and PRD s.7.2 FWD-7: on a REFUSE verdict the orchestrator 'sends the ONE terminal email to andrew@ (the carve-out's send, on a real refusal)', and EG-s-8 graded that path built and proven.",
+    "world_is": "As deployed, that send cannot fire for any real month. The producer of coverage_unresolved.json and its consumer disagree on the document's shape, and the only test covering the consumer supplies the consumer's assumed shape rather than the producer's actual output. FWD-7 is unreachable in production regardless of whether a refusal is ever provoked.",
+    "notes": "This is the most consequential finding of the order and it was reachable ONLY by running on real data -- the exact value the cell was cut for, delivered by the run that failed the cell's own premise. NOT FIXED HERE: lambda_function.py is READ-only for this worker under the AMENDMENT and no criterion authorises the change. ARMED because the next real refusal will silently send nothing while every fixture-based test stays green. Disarm needs a NEW cell: reconcile the two shapes (adapt the reader to the partner-keyed doc, carry partner/provider onto each row) and re-prove EG-s-8 against a REAL artifact rather than a fixture."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S26",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T01:50:00Z",
+    "one_line": "S15-AC4 arm (e)'s log-based send oracle CANNOT EXIST for the TERMINAL branch either: the orchestrator emits ZERO application log lines (4 of 4 events in the window are runtime-generated), and no trail selects the SES data plane. Extends W1-S18 (which measured this for the ORDINARY send) to the branch FWD-7 depends on.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "logs filter-log-events on /aws/lambda/etfs-reports-orchestrator over 01:17-01:23Z: 4 events, nextToken false -- INIT_START, START RequestId 9fbc33e0-174c-4c82-b392-2b1dafe4a835, END, REPORT. Zero application lines, so zero MessageId lines: 0 of 0 possible",
+        "_send_terminal_unresolved (lambda_function.py:180-186 @bd0e384890) calls _ses.send_raw_email and neither prints nor stores the response, exactly as _email_report does not (the W1-S18 finding)",
+        "CloudTrail SendRawEmail = 0 and SendEmail = 0 over the same window WITH live positive controls (StartInstances 1, StopInstances 1, both Username etfs-reports-orchestrator) -> SES-PLANE-UNREAD, the coverage fact the AMENDMENT already ruled for lambda:Invoke",
+        "PRIOR ROW: ETFS_GUARDRAIL-W1-S18 recorded the identical instrument gap for the ORDINARY report send under TO-EG-s-14"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-15 S15-AC4(e): 'the orchestrator's log shows exactly ONE send_raw_email on the terminal branch with Destinations == [\"andrew@opalinvest.com\"] and its SES MessageId'.",
+    "world_is": "No such line can ever appear, for either branch, because the handler logs nothing. The face's own fallback (print SES-PLANE-UNREAD and let the log's MessageId stand as the oracle) is unavailable here precisely because the log carries no MessageId to stand -- the fallback assumes the log limb works when the CloudTrail limb does not, and on this handler NEITHER does.",
+    "notes": "Filed separately from W1-S18 because the consequence is different: combined with W1-S25, FWD-7 has NO available oracle at all -- it cannot fire, and if it did fire nothing would record it. ARMED for that reason. Disarm is the same one-line print the W1-S18 notes propose, extended to the terminal call site; both are outside this order's READ-only grant on lambda_function.py."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S27",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T01:50:00Z",
+    "one_line": "The rung-3 ask under-reports: coverage_egress_ask.json names 1 of the 2 class-D unresolved dates. 49financial/2026-09-09 (provider-facing upstream: Schwab) has NO ask row, while cottonwood/2026-09-09 (Black Diamond) does.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-etfs/platinum/reports/2026-09/coverage_egress_ask.json, 1017 B, 2026-09-10T01:20:20Z -- 'asks' is a 1-element array: date 2026-09-09, partner cottonwood, provider 'Black Diamond', class D",
+        "coverage_unresolved.json (same prefix, 1414 B, same timestamp) carries TWO unresolved dates: 49financial/2026-09-09 and cottonwood/2026-09-09, both class D -- denominator 2, asks 1",
+        "The 49financial hole's own reason names its upstream: producer invoke error (bd-49f-etf-ownership-daily), 'no fact_rps partition for date 2026-09-09 (s3://opal-data-assets/schwab/08242234/silver/fact_rps/date=2026-09-09/data.parquet)'",
+        "Round-1 EG-sb-7's provider map is documented over Black Diamond and Orion (rung-3-stops-and-asks-a-person.result.md section 6), which is consistent with 49financial having no mapped provider"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-15 S15-AC4(f) and BOUNDS: 'rung 3 STOPS and names the dates and the provider', and coverage_egress_ask.json is to be 'written with the dates and the provider named'.",
+    "world_is": "One of the two dates is named. The ask a person would act on is therefore incomplete: a reader resolving every ask still leaves 49financial's 2026-09-09 hole unaddressed, and nothing in the artifact discloses that a second unresolved date was omitted.",
+    "notes": "ARMED because the ask is the stop-and-ask ladder's ONLY output to a human: a silently short list reads as a complete one, and the omission is invisible without cross-reading coverage_unresolved.json. Likely cause is an unmapped provider for 49financial rather than a logic error, which would make it a DECLARED-DOMAIN gap in the provider map (the uncovered member). Not fixed here: data/etfs/scripts/ is READ-only under this order's <paths>."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S28",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T01:50:00Z",
+    "one_line": "S15-AC2's <expect> can only match BEFORE the apply: run now, as the face names it, the targeted plan prints 'No changes. Your infrastructure matches the configuration.', not '1 to change'. The criterion's expectation and its own post-apply 0-diff requirement (S15-AC3) are mutually exclusive on one reading.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "INVOCATION AS THE FACE NAMES IT, run 2026-09-10T01:5xZ: .tools/terraform.exe -chdir=infra/aws/terraform/etfs-reports plan -no-color -input=false -lock=false -target=aws_lambda_function.orchestrator -> rc=0, 'No changes. Your infrastructure matches the configuration.'",
+        ".tools/terraform.exe version -> Terraform v1.9.8 (the estate binary, not the PATH v1.14.5), confirmed before the plan",
+        "THE PRE-APPLY READING THAT DID MATCH, cited not re-derived: ledger entry 20260910T0112Z_..._deploy_completion.md L2 proof -- plan at 2026-09-10T01:13Z read 'Plan: 0 to add, 1 to change, 0 to destroy' with aws_lambda_function.orchestrator the only resource, ~source_code_hash CvFmg9ZmBrSMZSSlplJGd7BWp99FXn5+ODaRbKTe/QI= -> M5Dopbky3W1f1j97cqAB403Kh7IofIv/p0fCtRg7W80=",
+        "S15-AC3 requires the OPPOSITE of S15-AC2's expectation after the apply: 'a 0-diff targeted plan (-detailed-exitcode rc=0) recorded beside it'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-15 S15-AC2: <invocation> the targeted plan, <expect>1 to change</expect> -- 'the TARGETED plan changes EXACTLY aws_lambda_function.orchestrator (source hash): 0 to add, 1 to change, 0 to destroy'.",
+    "world_is": "The criterion is time-dependent and its window closed when the apply it gates succeeded. Re-running the named invocation after the apply necessarily prints 'No changes', so a literal match against <expect> FAILS while the SUBSTANCE the criterion tests (the plan changed exactly one resource, and that resource only) was measured and holds at L2.",
+    "notes": "Recorded as a ROW and NOT re-worded: the worker judges form, and re-cutting a criterion so the world fits it is the issuer's act under the standing re-cut authority, not a worker's. S15-AC2 is reported FAIL-by-output on the literal match with the pre-apply evidence cited beside it; the order stays open on it regardless, since W1-S22 already blocks S15-AC4. INERT: nothing in the world is left armed by this -- it is a grading-window artifact."
   }
 ]
 ```
