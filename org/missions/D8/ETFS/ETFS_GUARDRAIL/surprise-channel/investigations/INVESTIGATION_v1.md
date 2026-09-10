@@ -1972,3 +1972,35 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
   }
 ]
 ```
+
+
+## W1-S33 -- EG-s-28's four sites are 4 of 4, and they are not the whole population: the renderer's `--no-ladder` branch is a FIFTH writer of the unresolved record and names no provider
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-W1-S33",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T07:32Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO -- a PLACEMENT question, not a worker's repair: the remaining writer is data/etfs/scripts/presentation/render_month_end.py, which is EG-s-26's LIVE surface on 0.9.0_WK_ETFS_GUARDRAIL~5, and EG-s-28's own bounds forbid me to touch it. One line at :1004 closes it.",
+    "one_line": "THE UNRESOLVED RECORD HAS A FIFTH WRITER OUTSIDE THIS CELL'S GRANT: the renderer's own `--no-ladder` branch builds unresolved records itself, without remediate.py and without `provider`, so on that path the terminal alert still renders `(not stated)` for every row after EG-s-28 lands.",
+    "spec_asserts": "ETFS_GUARDRAIL.TO-EG-s-28 @32ae4ede66: 'The records are built in data/etfs/scripts/coverage/remediate.py, inside remediate_month, at FOUR SEPARATE unresolved.append(...) SITES' and 'FOUR SITES IS THE POINT OF THIS CELL, NOT A DETAIL. A fix that reaches three of them produces an artifact where SOME dates name a provider and some render the absence ... a fence on ONE WRITER of a property is not a fence on the PROPERTY.' The face also states the renderer 'does not build these records -- it copies them', citing render_month_end.py:1017 and :1138.",
+    "world_is": "The four sites are real, are all four fixed, and the census is N of N -- but they are not the whole population of writers of this property. render_month_end.py:1000-1008 @32ae4ede66 is an `else:` branch on `if ladder:` that CONSTRUCTS its own ladder_result, including `\"unresolved\": [{\"date\": d, \"class\": e[\"class\"], \"reason\": \"ladder skipped (--no-ladder)\"} ...]` at :1003-1006. On the `--no-ladder` path remediate.py is never called at all, so EG-s-28's fix cannot reach those records and the exact mixed artifact the cell warns about becomes reachable: a ladder run naming providers, a --no-ladder run naming none, and a reader unable to tell 'provider unknown' from 'this code path forgot'. This is not hypothetical for this project: W4-S6's remedy (1) for the defeated forcing is to THREAD `--no-ladder` into _render_command, which is precisely the path that renders no provider -- so adopting it would let a driven run be graded against FWD-10 accept (ii) while the message names no provider anywhere.",
+    "notes": "OBSERVATION and not BLOCKING: S28-AC1 passes on its own terms -- the four sites in my grant are 4 of 4, the difference control fires, and nothing here disputes the cell's own bar. ARMED because the harm arrives through the project's next NORMAL act rather than through anything I did: an FWD-10 grade taken on a --no-ladder driven run would read the provider column as `(not stated)` while every repository green stayed green. I DID NOT EDIT THE RENDERER -- it is another worker's live surface and out of my bounds; the probe below is hermetic with every boto3 client stubbed and made ZERO AWS calls. THE GENERALISABLE FINDING is the cell's own law applied one level up: I counted the writers the FACE named. The census that finds this one is 'who assigns a value to a key named unresolved anywhere in the pipeline', not 'who calls unresolved.append inside remediate.py' -- the denominator has to be the property, and the face's own sentence at :1017 ('the renderer copies them') is true of the ladder branch and false of the branch beside it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 2026-09-10 ~07:2xZ, worktree C:/tmp/wk-etfs-2-1 on branch wk-etfs_guardrail-2-1 @32ae4ede66. SOURCE: `git show 32ae4ede66:data/etfs/scripts/presentation/render_month_end.py` lines 1000-1008 -- `else:` / `ladder_result = {` / `\"resolved\": [], \"expected_empty\": [],` / `\"unresolved\": [` / `{\"date\": d, \"class\": e[\"class\"], \"reason\": \"ladder skipped (--no-ladder)\"}` / `for d, e in classes.items() if e[\"class\"] in (\"C\", \"D\", \"UNKNOWN\")`. No `provider` key, and no call into remediate.py on this branch. `git diff --stat` on that path in this worktree is empty, so the committed bytes and the bytes I read are the same object.",
+        "HERMETIC PROBE, zero AWS calls (boto3.client stubbed to a class that RAISES on every method; 'AWS calls attempted: 0' printed): the records that branch builds, passed through the orchestrator's own `_normalize_unresolved` + `_build_terminal_email` (infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py, 47075 B, sha256 8d8cb2c23d7c00d943a985d381e45b96315f7dcf6047fe1bc3cc2234854d801f), render as `2026-08-04 | cottonwood | (not stated) | C | ladder skipped (--no-ladder)` and `2026-08-18 | cottonwood | (not stated) | D | ladder skipped (--no-ladder)` -- 0 of 2 records carry `provider`.",
+        "THE CONTRAST, same instrument, same message builder, from S28-AC1 arm (d) in the same run: records built by the CHANGED remediate.py render `2026-08-04 | cottonwood | Black Diamond | C | ...` for 3 of 3 rows. So the two writers now disagree about the same property in the same artifact.",
+        "ETFS_GUARDRAIL-W4-S6 @32ae4ede66 (0.9.0_WK_ETFS_GUARDRAIL~4) is why this matters now rather than in the abstract: its remedy (1) is 'THREAD `--no-ladder` alongside the forcing in `_render_command`', and it records that the orchestrator never passes --no-ladder today. NOT MEASURED, stated as the limit: whether the COO adopts remedy (1) or remedy (2). Under remedy (2) this row's hazard does not fire and only the latent mixed-artifact case remains."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
