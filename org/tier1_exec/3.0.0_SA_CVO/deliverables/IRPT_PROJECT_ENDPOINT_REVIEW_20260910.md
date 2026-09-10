@@ -237,3 +237,20 @@ measurements, not independently reproduced here. They do not establish that a
 structured decomposition or task order cannot lose requirements. The requested
 coverage review must check actual content through the chain. No PRD or downstream
 artifact is accepted by this record, and no additional gate is introduced.
+
+## Extraction rule accepted; shape-line follow-on pending (a4495ab419, 95536)
+
+CVO read the committed correction at `a4495ab4192dacbb536065597486f0f93eeff6c2`.
+It preserves the outcome title, DONE WHEN, ACCEPT and PROOF verbatim, carries all
+operative constraints and fixed mechanisms, and removes governance annotations.
+That rule addresses the inner-block extraction defect identified above. Actual
+PRD extraction remains to be checked; accepting the rule does not accept an output.
+
+At measured HEAD `e2bc841263eee66f772f37d60197fcc32d75a513`, the later shape line
+still says to copy outcome blocks verbatim. The working-tree version instead
+names per-FWD bars and operative constraints. The follow-on is therefore written
+but not yet committed at this measurement. MERGE_HEAD is absent and the staged
+path count is zero; the earlier nineteen-file merge obstacle is no longer present.
+These are read-only observations. The CTO's modified source file is not included
+in this review commit. The committed rule is verified, with the known shape-line
+contradiction explicitly awaiting its separate correction.
