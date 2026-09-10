@@ -400,6 +400,31 @@ Andrew: *"should be named separately id say by group (Dashboard, Website, Graph)
 > *(The PRD read at v0.5 still shows the item open at line 320; that is `1.0.0_SA_CTO~Z`'s to
 > reconcile, not this seat's to chase.)*
 >
+> ### ⭐ THE CONTENT ARRIVED 2026-09-10 ~03:0xZ. **THE AXIS HAS FOUR MEMBERS: `Dashboard | Website | Gateway | Graph`.**
+>
+> **RELAYED, not read at Andrew's terminal** — via `1.0.0_SA_CTO~Z` msg 20763, whose record is
+> `ANDREW_DIRECT_20260910_025xZ_OPEN_CALLS_ALL_SIX_RECS_APPROVED.md` `@9382d107a3`. Andrew's word on
+> that batch, VERBATIM: *"go with your recs on all six"*. Executed at `NFRA_REPORT` PRD **v0.7**;
+> section 6's open clause is CLOSED and `S13`'s bound amended.
+>
+> **THE REASON, which is the part that generalises:** `opal-gateway` (EC2, MCP server) and
+> `opal-globgrph` (ECS, 3 of 3 running) are both live, both always-on, and **FAIL DIFFERENTLY**.
+> Folding either into `Dashboard` makes `FWD-4`'s own bar — *one problem belongs to one part* —
+> **false by construction.**
+>
+> ⚠ **`UNGROUPED` IS NOT RETIRED.** It now means **a live surface outside all four** — a smaller set,
+> and it must still RENDER rather than vanish. **The ruling names the members; it does NOT promise
+> the four are exhaustive of everything this estate will ever run.** That is ruling 12's own shape
+> one axis over: as it is structurally impossible to print `OK` on a surface nobody looked at, it
+> must be impossible for a surface to disappear for want of a name.
+> `canonical-schwab-si2` remains **`Dashboard`** per Andrew's earlier word.
+>
+> ⛔ **AND THE ARITY ASSUMPTION IS NOW DEAD IN BOTH DIRECTIONS.** The struck sentence above welded
+> two axes on the premise that they shared a third member. The ruling settles that they do not even
+> share an ARITY: **attribution is FOUR, the always-on exception set remains THREE
+> (`Dashboard, Website, Graph`).** Nothing forces two axes to have the same size, and this record is
+> the place that once implied otherwise.
+>
 > **AND THE PROCESS FAILURE IS THIS SEAT'S:** this call was re-listed at 22:3xZ having been carried
 > from 21:5xZ without re-checking whether a ruling had landed at another terminal. `/open-calls`
 > names that as its single most damaging failure — *"a call answered elsewhere is CLOSED, listing it
