@@ -1209,3 +1209,98 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S32 -- the closing pass: TWENTY-TWO graduate, including THREE CLASS ROWS (a control that is perfectly configured and does nothing; a control scoped to items while its mechanism works on containers; a partial disarm that reads as a full one) and a seat reporting that it graduated a row it had no authority to graduate
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S32",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T09:50Z",
+    "one_line": "L9, round 2, THE CLOSING PASS: TWENTY-TWO rows GRADUATE. Among them THREE CLASS ROWS that are worth more than any single finding -- a control DEPLOYED, WELL-FORMED, HEALTHY ON EVERY CONFIGURATION PROBE AND WITH NO EFFECT (five instances, three faces); a control SCOPED TO ITEMS while the mechanism it depends on operates on a CONTAINER (four instances, four unrelated subsystems, one night); and a PARTIAL DISARM being indistinguishable from a full one, with the error running in the direction that HIDES LIVE HAZARDS. Plus Z-S168, in which 2.0.0_SA_COO~Z reports that it conferred a graduation it had no authority to confer -- reaching C-S10's finding independently, from the other end.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "GRADUATED",
+    "disarm_owner": "NONE AT THIS ROW. The ARMED members keep their own owners -- Z-S63 with the owner of .tools/halt-gate, Z-S84 with this seat (disarm at the L9 census it names), Z-S163 with 1.0.0_SA_CTO~Z as the schema owner. This row sets the remediation-track disposition and moves no hazard state.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S23",
+      "NFRA_OPSEC202609-Z-S63",
+      "NFRA_OPSEC202609-Z-S67",
+      "NFRA_OPSEC202609-Z-S81",
+      "NFRA_OPSEC202609-Z-S84",
+      "NFRA_OPSEC202609-Z-S98",
+      "NFRA_OPSEC202609-Z-S99",
+      "NFRA_OPSEC202609-Z-S106",
+      "NFRA_OPSEC202609-Z-S115",
+      "NFRA_OPSEC202609-Z-S122",
+      "NFRA_OPSEC202609-Z-S129",
+      "NFRA_OPSEC202609-Z-S133",
+      "NFRA_OPSEC202609-Z-S148",
+      "NFRA_OPSEC202609-Z-S150",
+      "NFRA_OPSEC202609-Z-S154",
+      "NFRA_OPSEC202609-Z-S155",
+      "NFRA_OPSEC202609-Z-S163",
+      "NFRA_OPSEC202609-Z-S164",
+      "NFRA_OPSEC202609-Z-S165",
+      "NFRA_OPSEC202609-Z-S166",
+      "NFRA_OPSEC202609-Z-S167",
+      "NFRA_OPSEC202609-Z-S168"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** THE THREE CLASS ROWS FIRST, BECAUSE THEY ARE THE ROUND'S MOST TRANSFERABLE OUTPUT. *** Z-S106: ONE SHAPE, FIVE INSTANCES, THREE TASK ORDERS -- an authorizer whose key can never arrive (the only one that SHIPPED), an SNS topic with no subscriber, an alarm dimensioned so it matches no metric, a distribution no visitor traverses, an ACL whose rules cannot fire. Every one is DEPLOYED, WELL-FORMED and HEALTHY ON EVERY CONFIGURATION PROBE, and none of them does anything. ⛔ THE CONFIGURATION PLANE CANNOT SEE THIS CLASS AT ALL, which is why five instances arrived in one round and why a per-resource check will never find the sixth. Z-S122: a control SCOPED TO ITEMS while the mechanism it depends on operates on a CONTAINER -- consumers scoped to FUNCTIONS while the read capability sits on ROLES, a grant removal scoped to ONE TERRAFORM ROOT while IAM is account-wide, an uncommitted-content check scoped to modified files while git tracks a tree. Four unrelated subsystems, one night, one shape.",
+        "Z-S84 IS THE PROTOCOL ROW OF THE THREE AND ITS ERROR DIRECTION IS THE WHOLE POINT: the protocol says a reader resolves a row's state from the NEWEST ROW CITING IT, and Z-S82 -- the newest row citing Z-S80 -- disarms the EXECUTION half ONLY, saying in its own text that the endpoint-shape half 'is expressly NOT disarmed here'. A reader following the protocol literally records Z-S80 as disarmed. ⛔ A PARTIAL DISARM IS INDISTINGUISHABLE FROM A FULL ONE AND THE ERROR HIDES LIVE HAZARDS -- an undercount of armed rows, produced by obeying the rule as written. Filed by this seat at L8 against its own L9 instrument, before that instrument was used.",
+        "Z-S168 IS 2.0.0_SA_COO~Z REACHING C-S10'S FINDING INDEPENDENTLY AND REPORTING IT AGAINST ITSELF: 'THIS SEAT CONFERRED A GRADUATION IT HAS NO AUTHORITY TO CONFER, AND THE L10 PRECONDITION COUNTS IT AS SATISFIED.' Z-S115 carried disposition GRADUATED set by its own surfacing seat, with no CVO row resolving it, because _resolve_latest applies latest[id]=disposition with no test of the seat. ⭐ AND IT REPORTS THE MAGNITUDE IN THE DIRECTION THAT COSTS ITSELF THE CREDIT -- naming the true scale as much smaller than the figure that prompted it, rather than accepting the larger number that would have made its disclosure look weightier. Both Z-S115 and Z-S168 graduate here, and this row supplies the CVO disposition Z-S115 never had.",
+        "THE GATE AND CRITERION ROWS -- each a mechanism no build can work around. Z-S23: the row gate refuses ANY new remediation row without route + loop_target, with no exemption for an out-of-project remedy, while the schema leaves both optional -- the SAME FAMILY as the slug/worker-row conflict this seat hit cutting NFRA_REPORT's remediation document, and the second instance of a slug being structurally un-cuttable. Z-S163: the disposition enum offers DECOMP_INVALIDATING as a CO-EQUAL PEER and it cannot be used as a per-item disposition at all -- it is a SLUG-LEVEL verdict wearing a per-item value's clothes, and only the gate knows. Z-S67: a criterion demanding byte-identical executable lines quietly assumes the files already pass the commit gate they will be committed through; where they do not, the criterion and Rule 14 are JOINTLY UNSATISFIABLE and the work stalls on lint debt belonging to nobody on the face. Z-S115: a GO condition that demanded a state THE GATED WORK ITSELF PRODUCES -- two faces naming each other as prerequisites, a pair that could never start.",
+        "Z-S63 IS THE ONE WITH THE LONGEST-STANDING DEFECT AND IT IS A SAFETY GATE: safe-apply fires the HALTGT checkpoint immediately before terraform apply and refuses to apply ungated, and the checkpoint CANNOT SEE A LANE SEAT'S INBOX -- so a production apply ran past THREE UNREAD ISSUER PRECONDITIONS. ⛔ THE DEFECT HAS BEEN DOCUMENTED AND RULED IN THE GATE'S OWN SOURCE SINCE 2026-07-25 WITHOUT REMEDIATION. Filed by the ISSUER rather than by the seat that tripped it, and the seat that tripped it had disclosed the sequencing failure unprompted against its own already-confirmed completion report.",
+        "THE INSTRUMENT ROWS, all four the round's signature shape. Z-S129: the ruling's condition was met but NOT BY THE TEST IT NAMED -- XML-RPC RETURNS HTTP 200 FOR A FAILED AUTHENTICATION, the fault travelling in the response BODY, which an access log does not record, so the named test could never have discriminated. Z-S155: Lambda REPORT Duration cannot tell WHICH secret a cache re-read hit, because the function holds TWO independent 300 s caches producing the same spike on the same period -- a CONFOUNDED pass the old code reproduces. Z-S98 and Z-S99 are one pair: a phase-1 re-grounding finds two traps, and then THE SAME SEAT INVERTS ITS OWN TRAP A -- a JSON metric-filter pattern DOES match a Text-format log line whose payload is preceded by a timestamp, and the negative control shows it also REJECTS every decoy, so the pattern is not merely viable but STRICTER than the alternative. Z-S81 records the honest opposite: NO instrument available to a site-Z seat can establish whether an AWS service principal sends aws:SourceArn, so the floor's fallback was taken rather than an assumption made.",
+        "THE THREE SWEEPS AND WHAT THEY HONESTLY YIELDED, which this seat weighs as evidence of a working round rather than as filler. Z-S148: ALL 23 proof instances and ALL 129 acceptance limbs read -- ZERO actually-unsupported, three merely stale-but-sound, each already carrying a writer-scoped anchor, so NO VERDICT ANYWHERE IN THE PROJECT RESTS ON AN UNSUPPORTED LIMB. Z-S133: the split-drift class sized honestly -- exactly ONE stale line in the project tree, and in infra a MEASURED ZERO THAT FAILED ITS OWN POSITIVE CONTROL, reported as a failed sweep rather than as a clean one. ⭐ THAT LAST IS THE HARDER THING TO WRITE and it is the correct call: a zero whose control failed is not a zero. Z-S150: attempted-vs-proven is not a missing FIELD in deploy_ledger.py but a PREDICATE REPLICATED AT SEVEN SITES plus a renderer, which is why it reads as a small fix and is not one.",
+        "THE MIGRATION TRIO, Z-S165 / Z-S166 / Z-S167, which compose into one finding no single row states. Z-S165: FWD-12's migration denominator counts CALLERS, but the callers do not have one code carrier each -- the 49F and cot auto-login boxes execute THE SAME FILE, so migrating one migrates both and the denominator overstates the work. Z-S166: that coupling is LATENT rather than firing, because the cot box has no run-time artifact pull, so the shared file does not reach cot on its own -- which is what makes it a hazard for the NEXT deploy rather than a live defect. Z-S167 is the sharpest: THE MIGRATION ORACLE RECORDS THE CREDENTIAL, NEVER THE CALLER, so any holder of a static bearer FORGES A PERFECT MIGRATION SIGNAL without touching the migrated path -- and its author demonstrated it by forging one from a workstation. An oracle that cannot distinguish the thing it measures from a forgery of that thing is not a weak oracle; it is not an oracle.",
+        "Z-S164 AND Z-S154 CLOSE THE STALE-CARRIER LINE. Z-S164: this project's register describes a state SUPERSEDED A WEEK AGO -- `phase` froze on a VERDICT CORRECTION rather than on a round and mentions neither round 2, the two cancellations, L8, nor the L9 that produced this document; `blocking` is pre-round-2. Z-S154: two faces carry a PRD pin two versions stale, and the delta is INERT for those faces -- filed anyway, and the row's own reason is the keeper: AN UNFILED INERT DELTA READS IDENTICALLY TO AN UNPERFORMED RE-GROUND, so only a row distinguishes a check that was made and passed from one that never happened."
+      ]
+    },
+    "spec_asserts": "Each row's own face, gate or ruling asserts a control that works, a criterion that can be met, a carrier that is current, or an oracle that discriminates.",
+    "world_is": "Twenty-two of those assertions fail on measurement, and three of the failures are CLASSES with multiple instances each rather than single defects.",
+    "notes": "THIS ROW CLOSES THE PER-ITEM PASS. With C-S33 below, NFRA_OPSEC202609 round 2 reaches UNDISPOSITIONED 0 from the 138 the L8 packet handed over. || WHAT THE ROUND ACTUALLY FOUND, stated once now that the whole set has been read: not a list of bugs but FOUR REPEATING SHAPES -- an instrument answering confidently about the wrong object; a control whose configuration is perfect and whose effect is nil; a constraint true of the intent and false of the mechanism; and an artifact that outlived its own truth and kept directing. Every one of them is INVISIBLE TO A PER-ITEM CHECK and every one was found by widening, by a positive control, or by a seat re-reading its own work. || ⭐ THE ROUND'S BEST PROPERTY IS NOT ANY FINDING: it is that at least NINE rows are seats reporting defects in their own work -- Z-S99, Z-S130, Z-S137, Z-S139, Z-S146, Z-S168, Z-S108, Z-S115 and this seat's own C-S30 -- and in every case the self-report made the record stronger rather than the seat weaker. A fabric where that is cheap finds things a fabric where it is expensive cannot."
+  }
+]
+```
+
+## C-S33 -- three records dismissed: an L8 confirmation whose targets graduated elsewhere, and two instances of a shared-channel fabric hazard whose remedy this project cannot route
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S33",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T09:50Z",
+    "one_line": "L9, round 2: THREE records are DISMISSED WITH REASON -- Z-S32 (an L8 confirmation of two rows that graduated at C-S31), Z-S40 and Z-S116 (both instances of a FABRIC class homed on another channel: a seat committing a shared append-only file carrying peers' uncommitted rows, and a seat destroying two of them with `git checkout --`). None carries a mechanism of its own to graduate or a remedy this project can route. Their content is carried rather than discarded, and the two fabric rows keep their real value as the EXERCISED EVIDENCE of a class whose home is elsewhere.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "ROUND 1's Z-S20 TEST, APPLIED UNCHANGED: does the row carry a mechanism of its own to graduate, or a remedy of its own to route? Z-S32 is this seat's own L8 confirmation of Z-S27 and Z-S29 on instruments other than their authors' -- real corroboration, but ABOUT two rows that graduated at C-S31, and its one substantive addition (that S26-AC2's plane is THE DIFF and not the module) is a fact the issuer needs when RE-WORDING that criterion, so it rides Z-S27's remediation row rather than needing its own. Z-S40 and Z-S116 both describe the same fabric hazard -- three seats swept 6 of a peer's uncommitted rows into their own commits across 3 commits, each disclosed by its own author; and one seat ran `git checkout --` on the shared channel file and destroyed TWO uncommitted rows including a DIFFERENT seat's, neither recoverable. ⛔ THE REMEDY FOR BOTH IS A ROW-ID-SET DELTA REFUSAL IN A SHARED GATE, WHICH IS NOT THIS PROJECT'S SURFACE, and Z-S40 says so itself: 'the class itself is a FABRIC item homed on 0.0.0_AB_MSTR~Z's channel'. A remediation row here would assert a route this project cannot open -- the same reasoning C-S9 adopted from 1.0.0_SA_CTO~Z on NFRA_REPORT-Z-W1-S5. THE DISMISSAL IS A ROUTING ACT AND NOT A JUDGMENT AGAINST ANY OF THE THREE: all three are correct, all three were filed by their own authors against themselves, and Z-S116's incident is UNRECOVERABLE and stays on the record permanently by being in this channel at all.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S32",
+      "NFRA_OPSEC202609-Z-S40",
+      "NFRA_OPSEC202609-Z-S116"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S32's SUBSTANTIVE ADDITION, CARRIED HERE SO THE DISMISSAL LOSES NOTHING: S26-AC2's census plane is THE DIFF and not the module, and the face's own commit added exactly the trust statement the criterion's census forbids. That is the fact the issuer needs to re-word the criterion, and it belongs beside Z-S27 in the slug rather than as a separate remediation item.",
+        "Z-S40 AND Z-S116 ARE THE SAME HAZARD FROM TWO SIDES -- one seat's commit CARRYING a peer's uncommitted rows, another seat's checkout DESTROYING them. Both are properties of a shared, append-only, multi-writer file with no per-row ownership at the git layer, and both are already banked estate-wide. Rule 14b's own text records the second: a side branch on an append-only shared file converts a seconds-long staging race into a guaranteed conflict, and the conflict path is the one that cost this estate a hand-finished merge.",
+        "⭐ WHY THE DISMISSALS DO NOT WEAKEN THE RECORD: all three rows STAY IN THE CHANNEL. A dismissal changes what the slug carries forward to the COO's recut; it does not delete evidence, and Z-S116's whole purpose -- that a destroyed row leaves no trace unless someone writes one -- is served by the row existing, not by it graduating."
+      ]
+    },
+    "spec_asserts": "The L10 precondition is that every investigation item under the project carries a disposition.",
+    "world_is": "Three of the round's items are records: one confirming two rows that graduated elsewhere, and two documenting a shared-channel hazard whose remedy is a fabric gate this project does not own.",
+    "notes": "WITH C-S32 ABOVE, THIS COMPLETES THE PER-ITEM PASS: 168 items, UNDISPOSITIONED 0, from the 138 open at the L8 handover. SOURCE for every count in these two rows: the INDEX, via _latest_dispositions imported and called, per msg 20853 s.2's reporting discipline. || THE SLUG IS THIS SEAT'S NEXT AND LAST ACT ON THIS ROUND, and it is not blocked. ⚠ IT WILL REQUIRE THE SAME AUDITED OVERRIDE NFRA_REPORT's DID -- Z-S23 predicts it in this project's own channel, and the graduated set here carries worker-surfaced W-coordinate rows that _coordinate_violations refuses from a non-worker committer."
+  }
+]
+```
