@@ -629,6 +629,120 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Filed by the CVO (lane ANY for investigation rows) beside the worker's W1-S16 so that the REMEDIATION row can be minted now (the remediation document keys on a GRADUATED seat-form item; W1-S16 is worker-form and its clocks ride its C-row at the round-2 L9). Graduated at C-S6; the REMEDIATION row with its clocks is minted at the round-2 L9 once every ETFS_GUARDRAIL order is terminal -- the row gate refused it tonight as an L10-shaped act (spine v3: every new remediation row waits for terminality; 5 of 19 orders not terminal at HEAD), rightly; until then the owner, remedy, interim and disarm are recorded on C-S6 and the clocks ride it. The tool's lane is as the issuer and the CTO named it; the file's last committer was 0.0.0_AB_MSTR~Z."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-S5",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T00:44:00Z",
+    "one_line": "DISARM RECORD FOR ETFS_GUARDRAIL-W1-S11, by its named disarm owner. RULED under the standing re-cut authority @9f4a57262f / @1ced87e810 and confirmed not-wider by 1.0.0_SA_CTO (94795): the renderer's box-side fallback import is fixed at its one place (the except-ImportError branch of data/etfs/scripts/presentation/render_month_end.py resolves _ORION_HERE/coverage and pulls exactly the one vendored file when absent), rehearsed in a box-layout fixture, deployed by the README's own aws s3 cp as a NEW LEG of the SAME held NEVER-2 entry etfs-guardrail-eg-s-14-august-rerender under both halves (COO 4155c85a1f + 5507841f04; CTO 94775), then the orchestrator re-invoked; EG-s-14's <paths> widened by that one file @5507841f04. The 10-01 scheduled fire would have failed identically; Andrew's manual-trigger word found it three weeks early.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The face: org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-14.the-august-re-render.md @5507841f04 (the bound 'NO CODE CHANGE, NO DEPLOY' replaced by the one-change clause; the AMENDMENT paragraph cuts the fix, the rehearsal, the deploy leg, the rollback = git show 4155c85a1f:data/etfs/scripts/presentation/render_month_end.py, and the re-invoke).",
+        "The worker's fix on its branch: wk-etfs_guardrail-2-1 @0c8bdbe5a5 (00:13Z), 'fix(ETFS_GUARDRAIL.TO-EG-s-14 amendment @5507841f04, row W1-S11): the renderer's box-side fallback ...'; the deploy leg and the re-invoke were in progress at this row's time (worktree dirty 3 tracked files at 00:33Z).",
+        "The CTO's reading, message 94795 READ-acked: 'not read wider ... inside EG-s-14's grant as ruled; the :383 precedent applies. No PRD row. No new never-widen half either: a code leg to the artifact prefix is a DEPLOY under NEVER-2, not a served-output move.'",
+        "The defect's mechanism, read at this seat 23:4xZ in data/etfs/scripts/presentation/render_month_end.py:70-76 and :88-109 @7cd25f5998: the fallback inserts os.path.join(_ORION_HERE, '..', 'coverage'); on the box _ORION_HERE is /opt/etfs-reports so that is /opt/coverage, while the coverage self-bootstrap pulls to _ORION_HERE/coverage and runs AFTER the import."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 as cut @4155c85a1f: 'NO CODE CHANGE, NO DEPLOY under this order. The orchestrator and the renderer run AS DEPLOYED by round 1'.",
+    "world_is": "The deployed renderer (byte-equal to repo HEAD) cannot import on the box, so the served-output move the face carries could not be observed without a code leg; after @5507841f04 the face carries that leg inside the same entry and the same halves.",
+    "notes": "Judged on EFFECT: HARDER -- the failed first fire stays in the result verbatim; the re-run must publish with the coverage line, which the first cut could not have reached. NOT ASSERTED by anyone yet: whether the 09-01 scheduled render used a renderer without this import (the alignment landed in EG-s-13 after 09-01) -- the CVO reads it at L9. This row is the disarm act's record (the NFRA_OUTSET-S27 shape): ETFS_GUARDRAIL-W1-S11 itself is not edited; its L9 disposition is 3.0.0_SA_CVO's. Related: [[ETFS_GUARDRAIL-W1-S11]]."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-S6",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T00:44:00Z",
+    "one_line": "DISARM RECORD FOR ETFS_GUARDRAIL-W1-S12, by its named disarm owner. RULED: the archive location the face named (platinum/reports/2026-08/_archive_<UTC>/) sat INSIDE the month prefix _month_csv_keys (lambda_function.py:265-274) enumerates for the report email's attachments, so the letter would have attached three stale duplicate CSVs to the real delivery; the clause is amended @5507841f04 to platinum/reports/_archive/<month>/<UTC>/, the worker's 23:06:36Z archive STANDS as the prior-object record, and the re-run archives again the same way after printing the ETag equality.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-14.the-august-re-render.md @5507841f04, the NEVER-2 paragraph: the copy-object destination replaced in place, the first-cut location and its consequence stated beside it.",
+        "The worker's measurement in W1-S12: list_objects_v2 with no delimiter over platinum/reports/2026-08/ returns every .csv; _build_report_email attaches each by basename -- an archived copy under the month prefix arrives as a second attachment with the same filename; the archive as written sits at platinum/reports/_archive/2026-08/20260909T230636Z/, 5 of 5 sha256 byte-equal to the priors, 5 of 5 ETags on the served objects unchanged."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 as cut: 'copy-object each prior object to platinum/reports/2026-08/_archive_<UTC>/<name>'.",
+    "world_is": "The enumeration the orchestrator uses for the email is prefix-wide; an archive inside it is a delivery defect. After the amendment the archive lives outside the enumerated prefix and nothing about the served keys changes.",
+    "notes": "Judged on EFFECT: HARDER for the delivery the FWD grades (no duplicate attachments); EQUAL for the archive's substance (the same sha256 pairs). This row is the disarm act's record (the NFRA_OUTSET-S27 shape): ETFS_GUARDRAIL-W1-S12 itself is not edited; its L9 disposition is 3.0.0_SA_CVO's. Related: [[ETFS_GUARDRAIL-W1-S12]]."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-S7",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T00:44:00Z",
+    "one_line": "DISARM RECORD FOR ETFS_GUARDRAIL-W1-S14, by its named disarm owner. RULED: the bound 'the orchestrator invoke itself returns in seconds' was false -- _run() blocks through the SSM wait (up to 300 s) and the render poll (up to 720 s) and returns when the run ends, so a bare CLI invoke hits botocore's 60 s read timeout on the success path and RETRIES, starting a second concurrent production run on the same served keys; the bound and arm (b) are amended @5507841f04 to carry --cli-read-timeout 0 --cli-connect-timeout 60 and to record NOT-RETURNED (never re-issue) past 15 minutes; one execution per invoke is proven by 1 of 1 START RequestId in the window. EG-s-15's arm (b) carries the same flags.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-14.the-august-re-render.md @5507841f04, the BOUNDS bullet and arm (b) replaced in place; ETFS_GUARDRAIL.TO-EG-s-15.the-september-refusal.md @5507841f04 arm (b) likewise.",
+        "The worker's measurement in W1-S14: lambda_function.py:386-441 @93264db36c (start_instances -> _wait_ssm_online 300 s -> send_command -> a 15 s poll loop to 720 s -> _email_report -> stop); live Timeout=900; the 23:14:43Z call returned in 41 s ONLY because the render failed at import; the invoke was issued with --cli-read-timeout 0 and exactly one START RequestId exists for the window."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 as cut, BOUNDS: 'the orchestrator invoke itself returns in seconds (it starts the box and returns)'.",
+    "world_is": "The invoke is synchronous end to end; the amended bound says so and names the flags that make a single execution the only possible outcome of a single command.",
+    "notes": "Judged on EFFECT: HARDER -- a double-fire is now impossible from the ordered command, and the arm counts executions. This row is the disarm act's record (the NFRA_OUTSET-S27 shape): ETFS_GUARDRAIL-W1-S14 itself is not edited; its L9 disposition is 3.0.0_SA_CVO's. Related: [[ETFS_GUARDRAIL-W1-S14]]."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-S8",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T00:44:00Z",
+    "one_line": "DISARM RECORD FOR ETFS_GUARDRAIL-W1-S16, by its named disarm owner. RULED IN TWO HALVES: (a) the faces carry an ORDERING CLAUSE @5507841f04 -- the NEVER-2 detail (both halves, the served keys, the archive table, the rollback) is appended to the ledger entry LAST, after the entry's final deploy_ledger.py close-leg/hold, and arm (a) is read AFTER that append; (b) the tool defect itself -- .tools/deploy_ledger.py _render_entry/_write_entry (:239, :289-291) regenerate the whole entry from the sentinel with write_text on every mutation and silently destroy hand-added sections -- is carried to 3.0.0_SA_CVO (94793, 94803) for a remediation row against the tool's lane 0.2.0_DT_PortfolioAnalytics; NFRA_DEPLOYLEDGER was CLOSED tonight on Andrew's word with a named residue (94800), so the remediation is a row, not a project.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-14.the-august-re-render.md and ETFS_GUARDRAIL.TO-EG-s-15.the-september-refusal.md @5507841f04: the W1-S16 ordering clause in each AMENDMENT paragraph.",
+        "The worker's measurement in W1-S16: the same battery read 'served keys named 5 of 5; rollback=True' at 23:25:51Z, '1 of 5; rollback=False' at 23:35Z after three close-leg calls and a hold, and '5 of 5; rollback=True' again at 23:39Z after re-appending -- nothing else changed between the runs.",
+        "The CTO's reading (94795): 'W1-S16 is a real tool defect: the CVO's remediation row against 0.2.0_DT_PortfolioAnalytics is right, and the ordering clause on the faces is the interim.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 as cut requires the entry to CARRY the sign-off block, the served-key list, the archive table and the rollback, and to be mutated by deploy_ledger.py's own verbs; the two instructions collide in the tool's write_text.",
+    "world_is": "Until the tool carries a free-form detail field that _render_entry emits, every NEVER-2 entry in the estate loses hand-added detail on its next ledger call; the ordering clause makes the loss impossible for these faces and the remediation row makes it visible to the tool's owner.",
+    "notes": "Judged on EFFECT: HARDER for these faces (the graded content cannot be destroyed after it is graded); the tool defect is disarmed for this project only, and says so. This row is the disarm act's record (the NFRA_OUTSET-S27 shape): ETFS_GUARDRAIL-W1-S16 itself is not edited; its L9 disposition is 3.0.0_SA_CVO's. Related: [[ETFS_GUARDRAIL-W1-S16]]."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-S9",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T00:44:00Z",
+    "one_line": "DISARM RECORD FOR ETFS_GUARDRAIL-W2-S8, by its named disarm owner. RULED: for a HEAD-OF-WINDOW hole (the newest priced partition, which _catchup_missing_dates skips as skip_date) the producer's own recovery is the main path's `OK: wrote s3://opal-data-etfs/daily/<partner>/<date>.json` line, and arm (d) accepts it @5507841f04 while printing CATCHUP-BRANCH-NOT-EXERCISED beside the token; arm (b) no longer asks for a date field (a date key routes to the explicit-date branch, lambda_function.py:304-308, which never reaches the catch-up path). The CATCH-UP BRANCH ITSELF stays unexercised: it needs a hole older than the newest partition, the estate has none (bd 0 of 20 absent; cot 1 of 20 and that one the newest), and manufacturing one is a served S3 DELETE -- Andrew's word under NEVER-AUTO-DELETE, put to him at this seat's terminal 00:0xZ with the REC (yes, one cot slice, archived first, restored by the producer's own catch-up fire); the CTO concurred (94795). The 76-minute schedule/landing race the row found underneath (the daily fires at 10:30Z/10:45Z run before the D+1 partition lands) is a design finding TAKEN by the CTO for the L10 addendum (94795), not cut here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ETFS_GUARDRAIL.TO-EG-s-17.the-filled-in-day.md @5507841f04: arms (b), (c), (d), (g) replaced in place; the AMENDMENT paragraph names the carried call.",
+        "The worker's second pass @1e995e83b5 (drained @d1b8945948): S17-AC1 PASS by output, 7 of 7 arms, EGS17-FILLED-IN-DAY printed WITH CATCHUP-BRANCH-NOT-EXERCISED; arm (d)'s deciding line '2026-09-09T23:15:51.163Z OK: wrote s3://opal-data-etfs/daily/cottonwood/2026-09-08.json (4 ETF slices, total_ownership=53641351.75, source_as_of=2026-09-08, generated_at=2026-09-09T23:15:51Z)'; the served object byte-identical to the single original write after three battery runs (ETag 5da999e2fbfadfe302df35ef24407372, 1345 B, 23:15:52Z); 0 CATCHUP lines in 152 cot / 103 bd log events over 30 days.",
+        "The CTO's reading (94795): '(3) THE CALL ... Put to him at this terminal now with your REC (yes, one cot slice). Until his word, arm (d) reads CATCHUP-BRANCH-NOT-EXERCISED as cut; nothing is deleted.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-17 as cut: arm (d) 'the function's CloudWatch log for THIS invocation names the recovered date in catchup_processed'; arm (b) 'your invoke's payload equal to it plus the date field'.",
+    "world_is": "The recovery of the estate's one real hole was the producer's own act naming the date, by the main path; the catch-up path is structurally unreachable for that hole's shape, and the only way to exercise it is a served delete no agent may perform.",
+    "notes": "Judged on EFFECT: EQUAL on 'the producer's own act named the date', EXPLICIT where the first cut was silent (the unexercised branch is printed, never implied). The order is terminal @d1b8945948 with that qualifier on its token; the CVO grades what the token does and does not claim. This row is the disarm act's record (the NFRA_OUTSET-S27 shape): ETFS_GUARDRAIL-W2-S8 itself is not edited; its L9 disposition is 3.0.0_SA_CVO's. Related: [[ETFS_GUARDRAIL-W2-S8]]."
   }
 ]
 ```
