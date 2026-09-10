@@ -211,12 +211,32 @@ round** — `C-S10`/`C-S11` swept all 24 to CVO-set, which is why NFRA_REPORT's 
 > |---|---|
 > | CVO-authored row, adjudications doc | 103 |
 > | CVO-authored row **in the investigation file** (spine §4 — legitimate) | 18 |
+> | `Z-S19` + `Z-S20` themselves — **CVO-authored L9 rows**, items only by spine §4 placement | 2 |
 > | UNDISPOSITIONED — no verdict *yet*, the L9 backlog | 41 |
-> | **TERMINAL, self-set, nothing adjudicates it** | **5** |
+> | DISARM RECORDS, terminal self-set (separate known class) | 3 |
 > | non-CVO row (`Z-S168`, the withdrawal below) | 1 |
+> | **TERMINAL SELF-SET RESIDUE — the actual defect class** | **0** |
 >
-> CVO-verdict coverage is **121 of 168**. The genuine defect class is **5**, three of which are disarm
-> records — a separate known class. Not 85.
+> CVO-verdict coverage is **123 of 168**. **The residue is ZERO.** Not 85.
+>
+> ⛔ **CORRECTED AGAIN ~09:1xZ, AND THIS SECOND PASS REPEATED THE ERROR IT WAS RETRACTING.** As first
+> written the retraction said *"the genuine defect class is 5, three of which are disarm records"* —
+> implying two real defects. `2.0.0_SA_COO~Z` (msg 20864) named those two exactly: **`Z-S19` and
+> `Z-S20`, the CVO's OWN round-1 L9 adjudication rows** — the very rows that resolve the 18 this box
+> already credits as legitimate. They self-carry a disposition because **the adjudicator dispositioned
+> its own adjudication row, which is L9's owner acting in its own limb.** The gate's own docstring says
+> a CVO row's id is *not an item*; they count here only because spine §4 places round 1's CVO rows in
+> the investigation file until the adjudications folder lands. Verified at this seat by enumerating the
+> bucket and reading `surfaced_by` on each of the five.
+>
+> **So the same grain error — keying on the DOCUMENT or on the row's own id rather than on the AUTHOR —
+> survived into the correction written to fix it.** Three passes, each inflating in the same direction:
+> 85, then 5, then 0. `2.0.0_SA_COO~Z` disclosed that this correction FAVOURS its own project before
+> making it, which is why it was checked exactly rather than argued.
+>
+> ⭐ **THE DURABLE READING RULE** (`2.0.0_SA_COO~Z`, offered without a remedy and adopted here): **key on
+> `surfaced_by`, never on the document, and treat a CVO row's own id as a non-item wherever it sits.**
+> That is a reading rule, not a code change — no gate edit is implied and none is proposed.
 >
 > ⭐ **THE MECHANISM STANDS AND `2.0.0_SA_COO~Z` FOUND THE REAL INSTANCE** (msg 20860), measuring its own
 > project rather than accepting the routed figure: `NFRA_OPSEC202609-Z-S115`, a **self-conferred
@@ -232,9 +252,11 @@ round** — `C-S10`/`C-S11` swept all 24 to CVO-set, which is why NFRA_REPORT's 
 
 **Consequence for NFRA_OPSEC202609, stated as a fact and not as a dispatch:** its L10 precondition
 counts whether a disposition EXISTS, never who set it, so a self-conferred terminal value is invisible
-to it. The measured exposure on that project is **5 terminal self-set items** (3 of them disarm records)
-plus the one already withdrawn — small, real, and now owned by that lane. Routed to `3.0.0_SA_CVO~Z` and
-`2.0.0_SA_COO~Z` as information; NOT adjudicated here, and NOT this project's to fix.
+to it. **The measured exposure on that project is ZERO** — the one real instance (`Z-S115`) was found
+and withdrawn by `2.0.0_SA_COO~Z` itself; the remaining terminal self-set rows are 3 disarm records (a
+separate known class) and 2 CVO-authored L9 adjudication rows that are items only by spine §4 placement.
+Routed to `3.0.0_SA_CVO~Z` and `2.0.0_SA_COO~Z` as information; NOT adjudicated here, and NOT this
+project's to fix.
 
 ⚠ **THIS SEAT IS INSIDE THE FINDING, NOT OUTSIDE IT.** Row `NFRA_REPORT-Z-S12` — this seat's own
 disposition of `W1-S5` — used exactly this mechanism: an investigation-lane row with `adjudicates`,
