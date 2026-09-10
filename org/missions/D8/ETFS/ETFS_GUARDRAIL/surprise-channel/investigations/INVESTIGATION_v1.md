@@ -1390,3 +1390,69 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
   }
 ]
 ```
+
+
+## W4-S3 -- EG-s-24's work is finished and green but UNCOMMITTABLE BY ME: the lane validator reads the grant from a task order AT HEAD, and the L6 gate forbids a worker putting that task order there
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-W4-S3",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T05:12:00Z",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO (only the COO can commit a tree task order, and only a COO commit reaching this worker's branch ancestry can restore the lane grant -- the two refusals are both correct and neither is a worker's to clear)",
+    "one_line": "EG-s-24's WORK IS DONE AND CANNOT BE COMMITTED BY ME: two mechanical gates, each correct on its own, are jointly blocking because the issuance never reached my branch's ancestry. THE CODE IS FINISHED AND GREEN -- the forcing seam is written and 26 of 26 tests pass -- and it sits UNCOMMITTED in the worktree. GATE 1, `.tools/to-pipeline-gate.py`: committing the issued face itself is REFUSED, verbatim, 'a NEW tree task order committed under 0.9.0_WK_ETFS_GUARDRAIL~4. COO is the only agent that does task orders (LD-0521 A3)', plus three more violations because my branch's decomposition is the v0.3 index (22 cell ids, EG-s-24 absent) while the cell was minted in v0.6 at d30e3ca107. GATE 2, `.tools/owned-paths-validate.py` via safe-commit: committing the CODE is then refused, verbatim, 'agent=0.9.0_WK_ETFS_GUARDRAIL~4 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block (ADHC_OWNPTH.005: the order is the grant; a missing path is a cut defect, never an override)'. THE BIND IS EXACT: gate 2 resolves the grant from a task order AT HEAD, and gate 1 forbids me putting that task order at HEAD. I MEASURED THAT IT IS 'AT HEAD' AND NOT 'IN THE WORKTREE': I materialised the face as an UNTRACKED file and re-ran the commit with the face NOT in the pathspec -- still refused, rc=1, HEAD unchanged at 11c0810142 (confirmed by `git log -1` with a bogus-hash negative control that failed as it must, per the refusal's own instruction not to grep tool stdout). THIS IS THE BANKED HAZARD RUNNING IN THE OTHER DIRECTION: the estate has recorded that a worker's own `<status>` flip WITHDRAWS its grant on its own branch, so an issuer's later widening cannot reach it. Here the same coupling bites at the start rather than the end -- my EG-s-20 face at HEAD names `infra/aws/lambda/etfs-reports-orchestrator/` but I flipped it to `complete`, so it is TERMINAL and grants nothing; my EG-s-21 face at HEAD is non-terminal but its `<paths>` deliberately excludes that directory; and the EG-s-24 face that does grant it is only at d30e3ca107, which my branch does not contain and which I may not merge. WHAT I DID NOT DO, AND WHY: the L6 refusal prints its own escape ('# pipeline-override: <reason>') and the lane refusal has `GIT_COMMIT_AUTHOR_OVERRIDE=<LANE>`. I took NEITHER. Overriding gate 1 would be me acting as the issuer on the one artefact the workflow reserves to the issuer, and overriding gate 2 would be me writing my own lane grant -- and my standing instruction is that a path my order lacks is a BLOCKING row and never an override. Both refusals are CORRECT and each prevented a real widening. WHAT IS PRESERVED SO NOTHING IS LOST: the complete diff is committed to my deliverables as `EG-s-24_UNCOMMITTED_lambda_function.patch` (7751 B, sha256 7d67b7ec9fd6909d...) and the new test file as `EG-s-24_UNCOMMITTED_test_forcing_seam.py` (13365 B, sha256 d3878289eecb1a45...); the worktree files they came from are lambda_function.py 45641 B sha256 fe46e12c51b77747a4779536297ad19cd0d47a3a6e4b703e114565a7ca4ba95f and test_forcing_seam.py 13365 B sha256 d3878289eecb1a45e8ea6153e7c9bf78d08b12ee805863d2e7f1396695267c05. THE CHEAPEST FIX, and it is the issuer's: commit d30e3ca107 (or just the EG-s-24 face and the v0.6 decomposition) into this worker branch's ancestry, then this same commit lands unmodified -- the code needs no change. NO DEPLOY HAPPENED: the NEVER-2 entry 20260910T0508Z_etfs-guardrail-eg-s-24-forcing-seam is OPEN with 5 legs and its L1 was never provable, so I did not plan and did not apply; the served function is untouched at CodeSha256 ag4La0jgP8JEr55FCvXx+gnR5pDqw1CpvbEHZBrBTPc=.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 2026-09-10 ~05:0xZ-05:1xZ, worktree /c/tmp/wk-etfs-3-4 @11c0810142. safe-commit attempt 1 (face IN the pathspec) -> 'ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate). Commit aborted; files unstaged.' with 4 violations across 1 newly-added TO file: the COO-only limb plus 'owned_cells names cell EG-s-24, which is not a cell of ...ETFS_GUARDRAIL_DECOMP.md (23 cell ids read from the index)' and the same for criteria S24-AC1 and S24-AC2.",
+        "safe-commit attempt 2 (face REMOVED from the worktree and from the pathspec) -> 'VIOLATION: infra/aws/lambda/etfs-reports-orchestrator/test_forcing_seam.py -- lane=CLOUD_OPS_OR_ETL ...; agent=0.9.0_WK_ETFS_GUARDRAIL~4 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block (ADHC_OWNPTH.005)', rc=1.",
+        "safe-commit attempt 3, THE DISCRIMINATING ONE (face materialised UNTRACKED in the worktree, still NOT in the pathspec) -> refused identically, rc=1. So the grant is resolved from HEAD and not from the worktree, which is what makes the two gates jointly blocking rather than merely awkward.",
+        "Repository-answered, not tool-answered, per the refusal's own instruction: `git log -1 --format='%h~%an~%s'` -> 11c0810142~0.9.0_WK_ETFS_GUARDRAIL~4~L7(...EG-s-21...), i.e. HEAD is still my EG-s-21 commit and nothing landed; negative control `git log -1 --format=%h deadbeefdeadbeef` -> 'fatal: ambiguous argument', so the positive read is discriminating.",
+        "The decomposition on my branch carries 22 cell ids and EG-s-24 is NOT among them (EG-s-21 IS), while d30e3ca107 carries the v0.6 index that mints EG-s-24 -- so even a landed face would fail the L6 cell-resolution limb until the v0.6 decomposition reaches this branch too.",
+        "The estate's own banked shape, cited because this is its mirror image: `reference_a_workers_flip_withdraws_its_grant_on_its_own_branch_before_an_issuer_amendment_can_reach_it` -- a worker's flip withdraws its grant on its own branch and an issuer's widening on CLOUD never reaches a flipped branch. My EG-s-20 face at HEAD is flipped to `complete` and therefore terminal."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ETFS_GUARDRAIL.TO-EG-s-24 @d30e3ca107: <paths> grants `infra/aws/lambda/etfs-reports-orchestrator/`, `infra/aws/terraform/etfs-reports/`, the change-management paths, my deliverables folder, the face itself and the surprise channel; <preflight> lane states 'the `<paths>` block above IS the grant (RULING 1 @9ef9a40aae)'; and <proof_of_spec> says the complete flip is one 'which you commit yourself'.",
+    "world_is": "The `<paths>` block grants nothing on this branch, because the lane validator resolves a worker's grant from a NON-TERMINAL task order AT HEAD and this face is not in my branch's ancestry -- it exists only at d30e3ca107, which I may not merge. Committing the face myself to fix that is refused by the L6 gate as a COO-only act, and would fail its cell-resolution limb anyway because my branch's decomposition is v0.3. So the code is written, tested green and uncommittable by me, and the `<status>` flip the face assigns me is likewise impossible.",
+    "notes": "BLOCKING because no criterion of S24-AC1 can be completed from here: the deploy legs cannot start without a commit, and the proof-of-spec cannot cite cell EG-s-24 against this branch's decomposition. ARMED because the natural way to 'unblock' it is one of the two printed overrides, and taking either would put a worker's hand on an issuer-reserved artefact or on its own lane grant -- the two things the gates exist to prevent. NOTHING WAS DEPLOYED, INVOKED OR SENT under this order, and EG-s-21's single permitted driven run remains unspent. The NEVER-2 entry opened for this deploy is left OPEN and is named in my report so it is not mistaken for an abandoned one; its L1 was never provable."
+  }
+]
+```
+
+
+## W4-S4 -- CORRECTION to my own W4-S1: safe-apply DOES call resolve-actor; the true mechanism is that halt-gate-check runs FIRST and is the one that never reads OPAL_AGENT_SERIAL
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-W4-S4",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T05:14:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "0.9.0_WK_ETFS_GUARDRAIL~4 (my own error; corrected here at source)",
+    "one_line": "CORRECTION TO MY OWN ROW W4-S1, WHICH OVERSTATED ITS FIRST CLAUSE. W4-S1 says '`.tools/safe-apply.sh` never calls `resolve-actor.sh` at all'. THAT IS WRONG AND THE SOURCE SETTLES IT: safe-apply.sh DOES source it and call it -- `. \"$SCRIPT_DIR/lib/resolve-actor.sh\"` then `TA_ACTOR=\"$(resolve_actor)\"` -- and a token census over the file reads OPAL_AGENT_SERIAL 2, resolve-actor 2, resolve_actor 1. WHAT IS TRUE, AND WHAT MY ROW'S EVIDENCE ACTUALLY SUPPORTED, IS THE CONSEQUENCE: THERE ARE TWO GATES AND THE ORDER IS THE MECHANISM. safe-apply.sh runs `.tools/halt-gate-check.sh` FIRST (its own header says 'Runs the .001 checkpoint (.tools/halt-gate-check.sh) FIRST' and HALT_GATE=\"$SCRIPT_DIR/halt-gate-check.sh\"), and THAT file resolves identity ONLY from `org/mcp/sessions/$CLAUDE_CODE_SESSION_ID.serial` (:56-57) or an `.orphan-cleaned` marker (:76-80) before `return 1`; its token census reads OPAL_AGENT_SERIAL 0, resolve-actor 0, resolve_actor 0. Meanwhile the `resolve_actor` call in safe-apply sits inside the TAGAUTHZ_OVERRIDE limb, so it does not even run on an ordinary apply. SO THE VARIABLE SATISFIES A GATE THAT RUNS SECOND, ON A BRANCH THAT USUALLY DOES NOT RUN, AND NEVER REACHES THE GATE THAT RUNS FIRST -- which is exactly why my first apply returned rc=3 with it exported. The remedy in W4-S1 stands unchanged and is the gate's own printed one at halt-gate-check.sh:118. FILED AS A NEW ROW BECAUSE THE CHANNEL IS APPEND-ONLY: W4-S1 stays exactly as written, and this row is its correction, the same shape the CVO used when S11 corrected W1-S25's line number. The overstatement is mine: I censused halt-gate-check.sh, found zero hits, and generalised the sentence to safe-apply without censusing safe-apply itself -- a scoped read quoted as if it were the wider one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 2026-09-10 ~05:0xZ, @11c0810142: `.tools/safe-apply.sh:152-154` reads `. \"$SCRIPT_DIR/lib/resolve-actor.sh\"` / `AUDIT=...` / `TA_ACTOR=\"$(resolve_actor)\"`, inside the TAGAUTHZ_BYPASS-INTENT limb; `:50` reads `HALT_GATE=\"$SCRIPT_DIR/halt-gate-check.sh\"` and `:11` documents 'Runs the .001 checkpoint (.tools/halt-gate-check.sh) FIRST'.",
+        "Token census, same read, three files: .tools/safe-apply.sh OPAL_AGENT_SERIAL=2 resolve-actor=2 resolve_actor=1; .tools/halt-gate-check.sh OPAL_AGENT_SERIAL=0 resolve-actor=0 resolve_actor=0; .tools/lib/resolve-actor.sh OPAL_AGENT_SERIAL=4 resolve-actor=2 resolve_actor=3. The non-zero counts are the positive controls that make halt-gate-check.sh's zeros an absence rather than a dead read.",
+        "`.tools/halt-gate-check.sh:56-57` `local sess_file=\"${repo_root}/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial\"`; `:76-80` the `.orphan-cleaned` marker limb; `:118` the printed remedy `printf '%s\\n' \"<your-serial>\" > \"org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial\"`.",
+        "The issuer reached the same reading independently and corrected its banked spawn note at source; ETFS_GUARDRAIL.TO-EG-s-24 @d30e3ca107 carries the corrected text in its <proof_of_spec> block. Two seats, two reads, one file -- and the file, not either seat, is the authority."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "My own row ETFS_GUARDRAIL-W4-S1@<the commit that carried it>: '`.tools/safe-apply.sh` does not call `resolve-actor.sh` or `$OPAL_AGENT_SERIAL` at all; its halt gate resolves identity ONLY from ...'",
+    "world_is": "safe-apply.sh DOES source and call resolve_actor (at :152-154, inside the TAGAUTHZ_OVERRIDE limb), and OPAL_AGENT_SERIAL appears in it twice. Only the SECOND clause -- that halt-gate-check.sh, which runs FIRST, never reads the variable -- is true, and it alone is what produced the measured rc=3.",
+    "notes": "OBSERVATION and INERT: nothing in the world is wrong, only a sentence in my own row, and the remedy W4-S1 recommends is unchanged and correct. Filed rather than edited because the channel is append-only during the round. The generalisable lesson, and the reason this is worth a row at all: I censused ONE file, got a clean zero, and wrote the sentence about TWO files -- a scoped read quoted as though it were the unscoped one, which is the shape CLAUDE.md rule 22 names."
+  }
+]
+```
