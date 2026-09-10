@@ -80,6 +80,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "receiving-check.py @adfbe65590 (1.0.0_SA_CTO~Z msg 21057): 'grade what you were HANDED before you build on it, one command ... six artifact types dispatch to the tool that already owns them ... run as subprocesses with their own output shown verbatim'.",
     "world_is": "For a task order the wrapper dispatches to-pipeline-gate one file at a time, and the gate's coverage limb grades the issuance SET; so on a conforming sixteen-order issuance the wrapper returns HAND BACK sixteen times for a property the set satisfies, and its verdict is the negation of the gate's. The pre-commit hook passes all staged paths together and grades correctly; nothing is blocked. A COO who trusted the wrapper's verdict on an issuance would hand back a correct cut.",
     "notes": "The tool's owner is 1.0.0_SA_CTO~Z. The fix shape is the owner's to choose: dispatch task orders as one set when more than one is handed, or skip the coverage limb per file and say UNCHECKED for it rather than HAND BACK. Same class as the three that seat named in msg 21057 -- a check that exists, reads correct, and cannot reach its subject. Reported to the owner by message after this commit lands."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W3-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~3",
+    "surfaced_at": "2026-09-10T21:39Z",
+    "one_line": "AMGT-s-12b's cell text names 'that folder's *ONE PAGER*.xlsx workbook' (singular); 5 of 89 folders carry TWO such workbooks that disagree with each other on the peer-set question, so 'the workbook' is not always one file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "os.listdir census over all 89 corpus folders (build_universe.py / f6_remeasure.py, both committed at 074d0d1ebeb31631e871e60b24f84fcd70edae0b): 44 folders carry exactly one *ONE PAGER*.xlsx file, 5 carry two, 40 carry none -- 44 + 5*2 = 54, matching F6's own 'all 54 ... workbooks' population",
+        "the 5 two-file folders: Imperial Brands IMB LN, Nokia FH, Petrobras PETR3 BZ, SAP GY, Total Energies TTE FP",
+        "Imperial Brands IMB LN's two files DISAGREE: 'Imperial Brands FactSet Based ONE PAGER 2026 07 17_v1.xlsx' CSC sheet carries the stale 12-name KPN telecom set; 'Imperial International Dividend One Pagers.xlsx' CSC sheet carries the real analyst set (IMB LN, BATS LN, 2914 JT, PM US, MO US) matching the CRO's cited own-set finding -- read directly, both files, both CSC sheets, at C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Shared - Documents\\Asset Management\\Research\\Imperial Brands IMB LN\\"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-s-12 cell text (b): 'the Bloomberg-format ticker of the SUBJECT company read from that folder's *ONE PAGER*.xlsx workbook' -- singular, one workbook implied per folder entry in universe.json.",
+    "world_is": "5 of 89 folders carry two *ONE PAGER*.xlsx files each, and at least one pair (Imperial Brands) carries materially different content across the two files (a stale copy and a real one). universe.json (one entry per folder, per the cell text) resolved this by trying every matching file in a folder and keeping the first that yields a MEASURED ticker, recording all matching filenames in each entry's `one_pager_files` array -- not specified by the cell text, which named a singular workbook. f6_remeasure.py, whose population the cell text separately names as workbooks not folders ('all 54 ... workbooks'), counts and classifies every file, which is why it reproduces the CRO's 48/4/2 of 54 exactly.",
+    "notes": "Non-blocking: the tie-break did not prevent AC2's partition from closing (89 of 89, MEASURED+INFERRED+UNRESOLVED summing correctly) and did not affect AC3 (workbook-level, unaffected by the ambiguity). Recorded because a later cell reading universe.json's bloomberg_ticker for one of these 5 folders sees only ONE ticker value even though the folder's second workbook may carry a different (or no) identity block -- worth a read before AMGT-s-4/s-8/s-13/s-15 build on this entry for those 5 names specifically."
   }
 ]
 ```
