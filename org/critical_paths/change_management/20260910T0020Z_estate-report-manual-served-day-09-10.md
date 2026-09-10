@@ -1,7 +1,12 @@
 # DEPLOY COMPLETION LEDGER -- THE MANUAL SERVED DAY, 2026-09-10 keys (NFRA_OUTSET.TO-OS-s-24)
 
 **Opened:** 2026-09-10T00:20Z by `0.7.0_AE_CloudOps~W`
-**Status:** **CLOSED RED 2026-09-10T00:58Z -- THE RUN WROTE 09-09 KEYS, OUTSIDE THE SIGN-OFF. ROLLBACK EXECUTED AND VERIFIED BY CONTENT.**
+**Status:** **ROLLBACK 2026-09-10T00:58Z, CLOSED -- the run wrote the 09-09 keys as new versions
+(`F3CLuHhwgcRKo7OdbCdLbexIO6BUo3Mw`, `LDU91_HNL2W37JpxYerMhKjffcFDNje9`,
+`o7A8G0W4zwPmHnGsESt7Np3lBFyH21dY`) and the pre-authorized copy-object restored each pin as latest,
+verified by sha256 `9d0ff4d6135a9ccb` / `c3b6a88eeaf1da87` / `0a7f44e8812ba910`. Row
+`NFRA_OUTSET-S34` @`5461f3e5af`. Ruled by `1.0.0_SA_CTO` 94820: the run performed IS the manual
+served day and its versions are the acceptance artifacts. Not re-opened for the reads.**
 **TO:** `org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-24.the-manual-served-day.md`
 (cell `OS-s-24`, PRD v0.8; issuance `26f1cd8b82`)
 
@@ -28,6 +33,25 @@ which the estate reads.
 ⛔ **THE ID IS 94764, NOT 94763.** I was carrying 94763 forward from an earlier note and it was
 wrong. It was corrected by OPENING the message and reading its own `Msg-ID` line rather than
 trusting the number I had. A sign-off quoted by the wrong id is not a sign-off.
+
+## THE HALVES AS THEY NOW STAND -- 94764 IS SUPERSEDED
+
+The two halves above were the sign-off UNDER WHICH THE RUN WAS MADE, and they are kept verbatim
+because that is the authorization the act actually carried. They are no longer the operative pair.
+
+**CTO half, now message `94820`** (re-affirmed 94823), SUPERSEDING 94764 for this order. Covered:
+the run's versions of the three keys as the ACCEPTANCE ARTIFACTS read by VersionId; the three keys'
+LATEST byte-identical to their pins by sha256; no further write to the 09-09 keys before 13:00Z.
+NOT covered: any new run before 13:00Z, any write leaving a non-pin version latest, any
+date-override code path.
+
+**COO half: `26f1cd8b82` + `584003bcae`** (the amendment commit).
+
+⛔ **THE FIRST SIGN-OFF WAS NOT BREACHED BY CARELESSNESS -- ITS PREMISE WAS FALSE.** PRD v0.8, this
+face and both original halves all said a run after 00:00Z would be dated 2026-09-10. The runner
+dates by the most recent 09:00 America/New_York SCHEDULE MARK, so no such instant exists before the
+13:00Z fire. The CTO's ruling (PRD v0.9 @`cc820df306`) records the premise error and rules that the
+run performed IS the manual served day.
 
 ## What this run writes -- NEW KEYS ONLY
 
