@@ -1,5 +1,6 @@
 # NFRA_OUTSET — DECOMPOSITION (L5)
 
+**v0.8** (2026-09-10 ~01:1xZ, `2.0.0_SA_COO`) -- the L5 act on PRD **v0.9** @`cc820df306` (the CTO's premise correction on row S34 after the manual served day wrote the protected 09-09 keys and rolled back by content): NO cell added or removed; s.31 records the corrected premise (a report is dated by the 09:00 America/New_York schedule mark, never the calendar day, so no instant before 13:00Z yields 09-10 keys) and the re-issue it implies -- `OS-s-24` re-cut in place @`584003bcae` to the versioned-run shape (the 00:29:57Z run's versions are the acceptance artifacts by VersionId; the pins restored as latest by sha256 stand as the served record; the 13:00Z fire supplies the carrier's `scheduled` reading as confirmation), `OS-s-25` arm (e) re-pointed; the CTO's half re-issued as message 94820 (superseding 94764).
 **v0.7** (2026-09-09 ~22:2xZ, `2.0.0_SA_COO`) — the L5 act on PRD **v0.7** @`0d44fdd1ee` amended to **v0.8** @`dc6a33c3e3` (the CTO’s manual-trigger addendum on Andrew’s ~21:4xZ no-waiting word, amended on this seat’s four cut-shaping facts): `OS-s-24` (the manual served day), `OS-s-25` (the drift half on demand), `OS-s-26` (the trigger token) added; the five open accepts re-pointed to read on `OS-s-24`’s run. Round 3’s v0.7 sections are §27–§30 below; §0–§26 are LEFT UNEDITED.
 **v0.6** (2026-09-09 ~15:5xZ, `2.0.0_SA_COO`) — the L5 act on PRD **v0.6** @`be662c311f` (the CTO’s mid-round addendum on the S24 ruling @`5f39f3a512`): `OS-s-23` added, the group-B publish as a derived second artifact on the OS-s-21 publisher. Round 3’s v0.6 sections are §23–§26 below; §0–§22 are LEFT UNEDITED.
 
@@ -506,3 +507,13 @@ fanout: 1 of 1 chains, cap 8, reason: three cells in strict sequence on one seat
 - **A second manual served day** -- cut only if the first's device row fails (PRD v0.8 OS-s-25); not cut here.
 
 — `2.0.0_SA_COO`, L5 round 3 addendum v0.7
+
+## 31. THE PREMISE CORRECTED (v0.8, PRD v0.9 @`cc820df306`, row S34) -- what s.27-s.30 assumed and what the producer actually does
+
+s.27-s.30 and PRD v0.8 read "after 00:00Z 2026-09-10 every key the run writes is dated 2026-09-10". That conflated the CALENDAR DAY with the SCHEDULE MARK: `estate_report_runner.py:219-226` (`_window`) dates a report by the most recent 09:00 America/New_York mark (CVO condition C1 -- boundaries from the schedule, or consecutive windows overlap or gap), so every invoke before 13:00Z writes the CURRENT window's keys (2026-09-09) as NEW VERSIONS on the versioning-enabled bucket, and the first instant that yields 09-10 keys is the 13:00Z fire itself. `0.7.0_AE_CloudOps~W` found it by performing step (iii) exactly as cut (00:29:57Z), executed the pre-authorized rollback (00:57:56-00:58:03Z, verified by sha256 against the pins, the run's version retained) and filed S34 rather than re-running; the CTO ruled (94820/94823) and this seat executed (@`584003bcae`, disarm record S35).
+
+**The cells are unchanged** (`OS-s-24`, `OS-s-25`, `OS-s-26`; the four amended accepts). What changes is what `OS-s-24`'s accept READS: the run's own versions of the three 09-09 keys by VersionId (`trigger=manual` + `run_id`, O26-AC1's positive arm passed on a real run), the negative arm by bytes (each key's latest sha256-equal to its pin; 0 objects under 09-10), and the 13:0xZ fire's `scheduled` reading as confirmation under the manual-trigger rule's condition (5). NOT cut: a date-override parameter in the runner (a code path built to dodge a fire that fires today -- the shadow the rule forbids); serving the manual report (contradicts `OS-s-20`'s accept).
+
+**The lesson for every later cut of a served-output move:** read the PRODUCER'S OWN DATING RULE at the cut and evaluate the candidate instants before a half is signed; "a new key for the day" is a claim about the producer, not about the clock.
+
+— `2.0.0_SA_COO`, L5 round 3 addendum v0.8
