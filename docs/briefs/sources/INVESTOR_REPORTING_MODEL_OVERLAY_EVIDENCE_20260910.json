@@ -1,0 +1,1666 @@
+{
+  "artifact": "Investor Reporting WS4 model overlay: bounded source census and structural joins",
+  "generated_at_utc": "2026-09-10T17:52:05.457641+00:00",
+  "limitations": [
+    "Latest dated partitions selected independently: common completed snapshot and trading-date alignment not certified.",
+    "Counts and key matches do not certify monetary reconciliation, taxonomy coverage, or current authenticated advisor entitlement.",
+    "Four legacy identity prefixes and nineteen named monolithic silver datasets only; no whole-estate absence claim.",
+    "Raw client data and local raw paths excluded. No vendor requests, cloud writes, or production UI tests in this measurement.",
+    "Source hashes fingerprint full files; read_scope records only the portions actually inspected."
+  ],
+  "private_object_integrity": {
+    "objects_verified": 23,
+    "total_bytes": 15753977,
+    "all_size_and_sha256_match": true
+  },
+  "prefix_census": {
+    "measured_at_utc": "2026-09-10T17:27:01.875836+00:00",
+    "bucket": "opal-data-assets",
+    "roots": [
+      {
+        "prefix": "schwab/08335338/silver/",
+        "pages": 1,
+        "dataset_prefixes": [
+          "schwab/08335338/silver/dim_asset/",
+          "schwab/08335338/silver/dim_balance/",
+          "schwab/08335338/silver/dim_position/",
+          "schwab/08335338/silver/dim_transaction/",
+          "schwab/08335338/silver/fact_acc/",
+          "schwab/08335338/silver/fact_fam/",
+          "schwab/08335338/silver/fact_rld/",
+          "schwab/08335338/silver/fact_rlu/",
+          "schwab/08335338/silver/fact_rly/",
+          "schwab/08335338/silver/fact_rps/",
+          "schwab/08335338/silver/fact_rps_s2/",
+          "schwab/08335338/silver/fact_rtu/",
+          "schwab/08335338/silver/fact_rty/",
+          "schwab/08335338/silver/fact_sec/",
+          "schwab/08335338/silver/fact_slm/",
+          "schwab/08335338/silver/fact_trn/",
+          "schwab/08335338/silver/fact_uln/",
+          "schwab/08335338/silver/fact_ult/",
+          "schwab/08335338/silver/fact_upn/",
+          "schwab/08335338/silver/fact_upt/"
+        ]
+      },
+      {
+        "prefix": "smartx/platform/silver/",
+        "pages": 1,
+        "dataset_prefixes": [
+          "smartx/platform/silver/allocation_positions/",
+          "smartx/platform/silver/allocation_valuation/",
+          "smartx/platform/silver/fact_account_allocations/",
+          "smartx/platform/silver/fact_account_detail/",
+          "smartx/platform/silver/fact_allocation_account_map/",
+          "smartx/platform/silver/fact_allocation_positions/",
+          "smartx/platform/silver/fact_allocation_valuation/",
+          "smartx/platform/silver/fact_model_allocation_roster/",
+          "smartx/platform/silver/fact_model_aum_daily/",
+          "smartx/platform/silver/fact_model_changerequests/",
+          "smartx/platform/silver/fact_model_holdings/",
+          "smartx/platform/silver/fact_model_performance/",
+          "smartx/platform/silver/fact_nonzerosleeve/"
+        ]
+      },
+      {
+        "prefix": "orion/inflection/silver/",
+        "pages": 1,
+        "dataset_prefixes": [
+          "orion/inflection/silver/fact_assets/",
+          "orion/inflection/silver/fact_performance/",
+          "orion/inflection/silver/fact_positions/",
+          "orion/inflection/silver/fact_transactions/"
+        ]
+      },
+      {
+        "prefix": "eclipse/inflection/silver/",
+        "pages": 1,
+        "dataset_prefixes": [
+          "eclipse/inflection/silver/fact_model_composition/",
+          "eclipse/inflection/silver/fact_models/",
+          "eclipse/inflection/silver/fact_portfolios_full/",
+          "eclipse/inflection/silver/fact_portfolios_simple/"
+        ]
+      },
+      {
+        "prefix": "blackdiamond/cottonwood/silver/",
+        "pages": 1,
+        "dataset_prefixes": [
+          "blackdiamond/cottonwood/silver/fact_allocations/",
+          "blackdiamond/cottonwood/silver/fact_allocations_s2/",
+          "blackdiamond/cottonwood/silver/fact_holdings/",
+          "blackdiamond/cottonwood/silver/fact_holdings_s2/",
+          "blackdiamond/cottonwood/silver/fact_model_assignment/",
+          "blackdiamond/cottonwood/silver/fact_model_blend/",
+          "blackdiamond/cottonwood/silver/fact_model_definition/",
+          "blackdiamond/cottonwood/silver/fact_model_roster/",
+          "blackdiamond/cottonwood/silver/fact_realized/",
+          "blackdiamond/cottonwood/silver/fact_realized_s2/",
+          "blackdiamond/cottonwood/silver/fact_transactions/",
+          "blackdiamond/cottonwood/silver/fact_transactions_s2/",
+          "blackdiamond/cottonwood/silver/fact_unrealized/",
+          "blackdiamond/cottonwood/silver/fact_unrealized_s2/"
+        ]
+      },
+      {
+        "prefix": "schwab/08242234/silver/",
+        "pages": 1,
+        "dataset_prefixes": [
+          "schwab/08242234/silver/dim_asset/",
+          "schwab/08242234/silver/dim_balance/",
+          "schwab/08242234/silver/dim_position/",
+          "schwab/08242234/silver/dim_transaction/",
+          "schwab/08242234/silver/fact_acc/",
+          "schwab/08242234/silver/fact_rld/",
+          "schwab/08242234/silver/fact_rlu/",
+          "schwab/08242234/silver/fact_rlw/",
+          "schwab/08242234/silver/fact_rly/",
+          "schwab/08242234/silver/fact_rps/",
+          "schwab/08242234/silver/fact_rps_s2/",
+          "schwab/08242234/silver/fact_rtu/",
+          "schwab/08242234/silver/fact_rty/",
+          "schwab/08242234/silver/fact_sec/",
+          "schwab/08242234/silver/fact_trn/",
+          "schwab/08242234/silver/fact_uln/",
+          "schwab/08242234/silver/fact_ult/",
+          "schwab/08242234/silver/fact_upn/",
+          "schwab/08242234/silver/fact_upt/"
+        ]
+      }
+    ],
+    "scope": "Read-only complete delimiter listing of six named silver roots; no holding values read"
+  },
+  "silver_snapshots": {
+    "measured_at_utc": "2026-09-10T17:28:57.101258+00:00",
+    "selection": "Latest observed dated partition <= 2026-09-10, independently per dataset. This does not certify a common completed snapshot or a trading-date alignment.",
+    "bucket": "opal-data-assets",
+    "datasets": [
+      {
+        "prefix": "schwab/08335338/silver/fact_acc/",
+        "dated_partition_count": 547,
+        "selected_partition": "2026-09-09",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "schwab/08335338/silver/fact_acc/date=2026-09-09/data.parquet",
+            "bytes": 756852,
+            "last_modified_utc": "2026-09-10T09:46:36+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "bd7103b24e928476e4cef2d78d4d0f0e79a3300f350e16be630f30be19839a24",
+            "rows": 7442,
+            "schema": {
+              "custdian_id": "string",
+              "mstracct_number": "string",
+              "master_account_name": "string",
+              "business_date": "date32[day]",
+              "account_id": "string",
+              "account_title_line_1": "string",
+              "account_title_line_2": "string",
+              "account_title_line_3": "string",
+              "account_status": "string",
+              "acct_regis": "string",
+              "acct_type": "string",
+              "txpyr_title": "string",
+              "taxpayer_first_name": "string",
+              "taxpayer_middle_name": "string",
+              "taxpayer_last_name": "string",
+              "txpyr_suff": "string",
+              "wh_cd": "string",
+              "primary_contact": "string",
+              "alias_name": "string",
+              "mailing_address_line_1": "string",
+              "mailing_address_line_2": "string",
+              "mailing_address_line_3": "string",
+              "account_mailing_city": "string",
+              "ac_st": "string",
+              "acct_mail_zip": "string",
+              "acct_mailing_ctry_code": "string",
+              "email_address": "string",
+              "phone_nbr": "string",
+              "business_ph": "string",
+              "date_opened": "date32[day]",
+              "schwab_br_cd": "string",
+              "s_s": "string",
+              "ac_cs": "string",
+              "ac_ma": "string",
+              "m_a": "string",
+              "a_r": "string",
+              "a_m": "string",
+              "nr_am": "string",
+              "a_o": "string",
+              "b_f": "string",
+              "nr_bn": "string",
+              "p_c": "string",
+              "p_d": "string",
+              "p_b": "string",
+              "u_m": "string",
+              "f_a": "string",
+              "intbr_cd": "string",
+              "intbr_mm_cd": "string",
+              "intbearing_ticker_symbol": "string",
+              "intbearing_feat_is_id": "string",
+              "int_sf": "string",
+              "p_v": "string",
+              "p_m": "string",
+              "statemnt_pref": "string",
+              "a_t": "string",
+              "dflt_ltsel": "string",
+              "c_m": "string",
+              "cbm_mf": "string",
+              "cbm_nmf": "string",
+              "cb_mthd_date": "date32[day]",
+              "versmrkr_1": "string",
+              "custtype_code": "string",
+              "organization_primary_name": "string",
+              "versmrkr_2": "string",
+              "rstr_rsn1": "string",
+              "rstr_rsn2": "string",
+              "rstr_rsn3": "string",
+              "rstr_rsn4": "string",
+              "rstr_rsn5": "string",
+              "versmrkr_3": "string",
+              "schwab_bank_ic_account": "string",
+              "versmrkr_4": "string",
+              "ssn_tin_number": "string",
+              "versmrkr_5": "string",
+              "p_e": "string",
+              "mngdacct_pltfrmcd": "string",
+              "managed_account_money_manager": "string",
+              "managed_account_investment_strategy": "string",
+              "versmrkr_6": "string",
+              "bank_sweep_display_name": "string",
+              "versmrkr_7": "string",
+              "o_l": "string",
+              "versmrkr_8": "string",
+              "date_of_birth": "date32[day]",
+              "coy_cd": "string",
+              "st_cd": "string",
+              "versmrkr_9": "string",
+              "s_i": "string",
+              "m_t": "string",
+              "mobile_phone_number": "string",
+              "_source_file": "string",
+              "_source_as_of": "string",
+              "_master_observed": "string",
+              "_section": "string",
+              "_schema_version": "string"
+            },
+            "version_id": "mbtYjW9C2M4Wa0eipmgl65ABl.O8AAu9"
+          }
+        ]
+      },
+      {
+        "prefix": "schwab/08335338/silver/fact_rps/",
+        "dated_partition_count": 547,
+        "selected_partition": "2026-09-09",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "schwab/08335338/silver/fact_rps/date=2026-09-09/data.parquet",
+            "bytes": 2959314,
+            "last_modified_utc": "2026-09-10T09:46:37+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "a2cf82129ff90ca526656f5e28e805b2a19664066d5d9e580f63bbcc3f7fd271",
+            "rows": 104807,
+            "schema": {
+              "custdian_id": "string",
+              "mstracct_number": "string",
+              "master_account_name": "string",
+              "business_date": "date32[day]",
+              "account_id": "string",
+              "prod_code": "string",
+              "prodcatg_code": "string",
+              "tax_code": "string",
+              "ly_st": "string",
+              "ticker_symbol": "string",
+              "industry_ticker_symbol": "string",
+              "cusip": "string",
+              "schwab_sec_nbr": "string",
+              "item_issue_id": "string",
+              "rulst_sufid": "string",
+              "isin": "string",
+              "sedol": "string",
+              "options_display_symbol": "string",
+              "security_description_line_1": "string",
+              "security_description_line_2": "string",
+              "security_description_line_3": "string",
+              "scrtydes_line_4": "string",
+              "underlying_ticker_symbol": "string",
+              "underlying_industry_ticker_symbol": "string",
+              "underlyng_cusip": "string",
+              "underly_schwab": "string",
+              "underlying_itm_iss_id": "string",
+              "unrul_sufid": "string",
+              "underlying_isin": "string",
+              "underly_sedol": "string",
+              "mnymk_code": "string",
+              "d_r": "string",
+              "c_g": "string",
+              "closing_price": "decimal128(16, 5)",
+              "secprice_lstupdte": "date32[day]",
+              "quantity_settled_unsettled": "decimal128(15, 5)",
+              "l_s": "string",
+              "market_value_settled_unsettled": "decimal128(17, 4)",
+              "accounting_rule_code": "string",
+              "quantity_settled": "decimal128(15, 5)",
+              "quantity_unsettled_long": "decimal128(15, 5)",
+              "quantity_unsettled_short": "decimal128(15, 5)",
+              "versmrkr_1": "string",
+              "tips_factor": "decimal128(18, 9)",
+              "asset_backed_factor": "decimal128(15, 12)",
+              "versmrkr_2": "string",
+              "closing_price_unfactored": "decimal128(16, 5)",
+              "factor": "decimal128(15, 12)",
+              "factor_date": "date32[day]",
+              "versmrkr_4": "string",
+              "non_tradable_quantity": "decimal128(15, 5)",
+              "versmrkr_5": "string",
+              "a_i": "string",
+              "versmrkr_6": "string",
+              "quantity_cash_settled": "decimal128(15, 5)",
+              "quantity_margin_settled": "decimal128(15, 5)",
+              "quantity_short_settled": "decimal128(15, 5)",
+              "quantity_wheniss_settled": "decimal128(15, 5)",
+              "_source_file": "string",
+              "_source_as_of": "string",
+              "_master_observed": "string",
+              "_section": "string",
+              "_schema_version": "string"
+            },
+            "version_id": "c6TlIA8ug3p3ULqB_J0Hb45VMbxdebsH"
+          }
+        ]
+      },
+      {
+        "prefix": "schwab/08335338/silver/dim_position/",
+        "dated_partition_count": 547,
+        "selected_partition": "2026-09-09",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "schwab/08335338/silver/dim_position/date=2026-09-09/data.parquet",
+            "bytes": 2569216,
+            "last_modified_utc": "2026-09-10T09:46:37+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "7253004b5a8b6b17c30a8e1871d628c594d549b947b5e349d9bb32c4147d377d",
+            "rows": 104807,
+            "schema": {
+              "account_id": "string",
+              "business_date": "date32[day]",
+              "cusip": "string",
+              "l_s": "string",
+              "accounting_rule_code": "string",
+              "ticker_symbol": "string",
+              "industry_ticker_symbol": "string",
+              "isin": "string",
+              "sedol": "string",
+              "tax_code": "string",
+              "quantity_settled_unsettled": "decimal128(15, 5)",
+              "quantity_settled": "decimal128(15, 5)",
+              "quantity_unsettled_long": "decimal128(15, 5)",
+              "quantity_unsettled_short": "decimal128(15, 5)",
+              "quantity_cash_settled": "decimal128(15, 5)",
+              "quantity_margin_settled": "decimal128(15, 5)",
+              "quantity_short_settled": "decimal128(15, 5)",
+              "quantity_wheniss_settled": "decimal128(15, 5)",
+              "non_tradable_quantity": "decimal128(15, 5)",
+              "market_value_settled_unsettled": "decimal128(17, 4)",
+              "closing_price": "decimal128(16, 5)",
+              "closing_price_unfactored": "decimal128(16, 5)",
+              "factor": "decimal128(15, 12)",
+              "asset_backed_factor": "decimal128(15, 12)",
+              "secprice_lstupdte": "date32[day]",
+              "_source_file": "string",
+              "_source_as_of": "string",
+              "_master_observed": "string",
+              "_section": "string",
+              "_schema_version": "string"
+            },
+            "version_id": "qd0gwpb48cmb9rHF6AGxkKY0Ml3iu0YR"
+          }
+        ]
+      },
+      {
+        "prefix": "smartx/platform/silver/fact_allocation_account_map/",
+        "dated_partition_count": 58,
+        "selected_partition": "2026-09-10",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "smartx/platform/silver/fact_allocation_account_map/date=2026-09-10/data.parquet",
+            "bytes": 784427,
+            "last_modified_utc": "2026-09-10T13:19:16+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "2cfd3f14214145a36d683489309a1ecef61e8388ac35aee08bfa8b8684fb85fd",
+            "rows": 7453,
+            "schema": {
+              "model_id": "string",
+              "rmid": "string",
+              "allocation_id": "string",
+              "account_id": "string",
+              "account_number": "string",
+              "account_name": "string",
+              "aum_value": "double",
+              "run_date": "string",
+              "_ingested_at": "string"
+            },
+            "version_id": "X5Y6rqWoRvqtkbx5oYWgFGioHA3rJ1JR"
+          }
+        ]
+      },
+      {
+        "prefix": "smartx/platform/silver/fact_model_allocation_roster/",
+        "dated_partition_count": 59,
+        "selected_partition": "2026-09-10",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "smartx/platform/silver/fact_model_allocation_roster/date=2026-09-10/data.parquet",
+            "bytes": 580286,
+            "last_modified_utc": "2026-09-10T13:19:16+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "c5d11cd2d08137357dfcf978342e236b95b8428d3d773b57da98a56c8b114415",
+            "rows": 9980,
+            "schema": {
+              "model_id": "string",
+              "model_name": "string",
+              "rmid": "string",
+              "allocation_id": "string",
+              "advisor_id": "string",
+              "advisor_name": "string",
+              "advisor_crd": "string",
+              "value": "double",
+              "status": "string",
+              "opened_ts": "int64",
+              "opened_date_friendly": "string",
+              "run_date": "string",
+              "_ingested_at": "string"
+            },
+            "version_id": "qEFZq.4oCPl107HqWaxsuSc0xNv6iM0G"
+          }
+        ]
+      },
+      {
+        "prefix": "smartx/platform/silver/fact_allocation_positions/",
+        "dated_partition_count": 59,
+        "selected_partition": "2026-09-10",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "smartx/platform/silver/fact_allocation_positions/date=2026-09-10/data.parquet",
+            "bytes": 3302802,
+            "last_modified_utc": "2026-09-10T13:19:50+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "984fc1efeb16f203cf1e2ddb80cee37158aa6219ea68b7a5775a5f2d909be21e",
+            "rows": 119644,
+            "schema": {
+              "allocation_id": "string",
+              "owner_id": "string",
+              "as_of": "string",
+              "run_date": "string",
+              "ticker": "string",
+              "symbol_id": "string",
+              "symbol_alias_id": "string",
+              "company": "string",
+              "asset_type": "string",
+              "industry": "string",
+              "quantity": "double",
+              "price": "double",
+              "multiplier": "double",
+              "market_value": "double",
+              "value": "double",
+              "last_seen_date": "string",
+              "_ingested_at": "string"
+            },
+            "version_id": "0ZTV70VvePNk74YPNCEAiZVmp3fRG.UW"
+          }
+        ]
+      },
+      {
+        "prefix": "smartx/platform/silver/fact_allocation_valuation/",
+        "dated_partition_count": 59,
+        "selected_partition": "2026-09-10",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "smartx/platform/silver/fact_allocation_valuation/date=2026-09-10/data.parquet",
+            "bytes": 1198583,
+            "last_modified_utc": "2026-09-10T13:19:51+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "3add3558a0b63f58fc96e9005b583cd2c4b6a1a0d60f744e4ca83f4a4f1c63dc",
+            "rows": 9980,
+            "schema": {
+              "allocation_id": "string",
+              "owner_id": "string",
+              "as_of": "string",
+              "run_date": "string",
+              "equity": "double",
+              "long_equity": "double",
+              "short_equity": "double",
+              "cash": "double",
+              "accrued_dividends": "double",
+              "accrued_fees": "double",
+              "accrued_interest": "double",
+              "long_position_count": "int32",
+              "short_position_count": "int32",
+              "total_count": "int32",
+              "_ingested_at": "string"
+            },
+            "version_id": "8dT6dmZK4y4ez33.dObOom9PynAGK_xs"
+          }
+        ]
+      },
+      {
+        "prefix": "smartx/platform/silver/fact_account_allocations/",
+        "dated_partition_count": 58,
+        "selected_partition": "2026-09-10",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "smartx/platform/silver/fact_account_allocations/date=2026-09-10/data.parquet",
+            "bytes": 9812,
+            "last_modified_utc": "2026-09-10T13:20:25+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "5315a41446fb7514b9bd56cca09121aa8ff4324e4e9296092bce0ba75be601cd",
+            "rows": 0,
+            "schema": {
+              "filing_account_id": "string",
+              "allocation_id": "string",
+              "account_id": "string",
+              "account_name": "string",
+              "advisor_id": "string",
+              "advisor_name": "string",
+              "advisor_crd": "string",
+              "model_id": "string",
+              "model_name": "string",
+              "status": "string",
+              "type": "string",
+              "trading_type": "string",
+              "is_apm_allocation": "bool",
+              "match_model_leverage": "bool",
+              "leverage": "double",
+              "open_ts": "int64",
+              "open_friendly": "string",
+              "close_ts": "int64",
+              "close_friendly": "string",
+              "run_date": "string",
+              "_ingested_at": "string"
+            },
+            "version_id": "4uQvpbb8X03YXnlDbamzfhxg4x2_L062"
+          }
+        ]
+      },
+      {
+        "prefix": "orion/inflection/silver/fact_positions/",
+        "dated_partition_count": 2326,
+        "selected_partition": "2026-09-10",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "orion/inflection/silver/fact_positions/date=2026-09-10/data.parquet",
+            "bytes": 1251298,
+            "last_modified_utc": "2026-09-10T13:05:34+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "fd69b334bf9252114dade90a2fd4fadbe45de2776be676b57519756a78b831e8",
+            "rows": 35974,
+            "schema": {
+              "costBasis": "string",
+              "name": "string",
+              "accountNumber": "string",
+              "ticker": "string",
+              "currentShares": "double",
+              "currentValue": "double",
+              "currentPrice": "double",
+              "isManaged": "bool",
+              "assetClass": "string",
+              "productCategory": "string",
+              "productCategoryAbbreviation": "string",
+              "isCustodialCash": "bool",
+              "secondaryAccountNumber": "string",
+              "productId": "int64",
+              "assetLevelStrategyId": "string",
+              "assetLevelStrategy": "string",
+              "status": "int64",
+              "isStrategyOverride": "bool",
+              "createdBy": "string",
+              "createdDate": "string",
+              "editedBy": "string",
+              "editedDate": "string",
+              "accountId": "int64",
+              "registrationId": "int64",
+              "clientId": "int64",
+              "isActive": "bool",
+              "downloadSymbol": "int64",
+              "accountType": "string",
+              "fundFamily": "string",
+              "custodian": "string",
+              "asOfDate": "string",
+              "registrationName": "string",
+              "managementStyle": "string",
+              "sleeveType": "string",
+              "productType": "string",
+              "productSubType": "string",
+              "isGlobalExcluded": "bool",
+              "isFeeExcluded": "bool",
+              "excludeAmountType": "string",
+              "excludeAmount": "double",
+              "excludePercentOf": "string",
+              "excludeFromMargin": "bool",
+              "isRebalance": "bool",
+              "isAdvisorOnly": "bool",
+              "isAdvReportable": "bool",
+              "is13FReportable": "bool",
+              "mscsFundAccountNumber": "string",
+              "lastReconDate": "string",
+              "isOrionVision": "string",
+              "assetPercentOfAccount": "double",
+              "householdName": "string",
+              "riskCategory": "string",
+              "modelName": "string",
+              "registrationType": "string",
+              "accountStatusId": "int64",
+              "isin": "string",
+              "id": "int64",
+              "isDataSharingEntity": "bool",
+              "snapshot_date": "string",
+              "_source_file": "string",
+              "_source_as_of": "string",
+              "_source": "string",
+              "_feed": "string",
+              "_schema_version": "string"
+            },
+            "version_id": "l97AHhEh6Q7WDBHqz4IenvnNn_49KRWE"
+          }
+        ]
+      },
+      {
+        "prefix": "orion/inflection/silver/fact_assets/",
+        "dated_partition_count": 2327,
+        "selected_partition": "2026-09-10",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "orion/inflection/silver/fact_assets/date=2026-09-10/data.parquet",
+            "bytes": 1251712,
+            "last_modified_utc": "2026-09-10T13:05:33+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "12d21e2235665f33857f7deaa06160bee0c4f6489ef9dfd1c7e4384980309551",
+            "rows": 35974,
+            "schema": {
+              "costBasis": "string",
+              "name": "string",
+              "accountNumber": "string",
+              "ticker": "string",
+              "currentShares": "double",
+              "currentValue": "double",
+              "currentPrice": "double",
+              "isManaged": "bool",
+              "assetClass": "string",
+              "productCategory": "string",
+              "productCategoryAbbreviation": "string",
+              "isCustodialCash": "bool",
+              "secondaryAccountNumber": "string",
+              "productId": "int64",
+              "assetLevelStrategyId": "string",
+              "assetLevelStrategy": "string",
+              "status": "int64",
+              "isStrategyOverride": "bool",
+              "createdBy": "string",
+              "createdDate": "string",
+              "editedBy": "string",
+              "editedDate": "string",
+              "accountId": "int64",
+              "registrationId": "int64",
+              "clientId": "int64",
+              "isActive": "bool",
+              "downloadSymbol": "int64",
+              "accountType": "string",
+              "fundFamily": "string",
+              "custodian": "string",
+              "asOfDate": "string",
+              "registrationName": "string",
+              "managementStyle": "string",
+              "sleeveType": "string",
+              "productType": "string",
+              "productSubType": "string",
+              "isGlobalExcluded": "bool",
+              "isFeeExcluded": "bool",
+              "excludeAmountType": "string",
+              "excludeAmount": "double",
+              "excludePercentOf": "string",
+              "excludeFromMargin": "bool",
+              "isRebalance": "bool",
+              "isAdvisorOnly": "bool",
+              "isAdvReportable": "bool",
+              "is13FReportable": "bool",
+              "mscsFundAccountNumber": "string",
+              "lastReconDate": "string",
+              "isOrionVision": "string",
+              "assetPercentOfAccount": "double",
+              "householdName": "string",
+              "riskCategory": "string",
+              "modelName": "string",
+              "registrationType": "string",
+              "accountStatusId": "int64",
+              "isin": "string",
+              "id": "int64",
+              "isDataSharingEntity": "bool",
+              "_source_file": "string",
+              "_source_as_of": "string",
+              "_source": "string",
+              "_feed": "string",
+              "_schema_version": "string"
+            },
+            "version_id": "sl0ALcxfuD7IdyKWWt9PCcMbq18SRPIS"
+          }
+        ]
+      },
+      {
+        "prefix": "eclipse/inflection/silver/fact_portfolios_full/",
+        "dated_partition_count": 104,
+        "selected_partition": "2026-09-10",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "eclipse/inflection/silver/fact_portfolios_full/date=2026-09-10/data.parquet",
+            "bytes": 111745,
+            "last_modified_utc": "2026-09-10T13:05:36+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "d8864762c45d9c98fa9ccf499dd341fe71724ed5e5b9b8728981b7c79739af5d",
+            "rows": 858,
+            "schema": {
+              "id": "int64",
+              "name": "string",
+              "model": "string",
+              "modelId": "string",
+              "sleevePortfolio": "int64",
+              "team": "string",
+              "managedValue": "double",
+              "excludedValue": "double",
+              "totalValue": "double",
+              "action": "string",
+              "tradesPending": "int64",
+              "percentDeviations": "double",
+              "cashNeedPercentage": "double",
+              "cashNeedAmount": "double",
+              "tags": "string",
+              "tradingInstruction": "string",
+              "taxQualification": "string",
+              "numOfAssociatedAccounts": "int64",
+              "distributionAmt": "double",
+              "reserveCashTarget": "double",
+              "reserveCashActual": "double",
+              "setAsideCashTarget": "double",
+              "setAsideCashActual": "double",
+              "targetCash": "double",
+              "targetCashPercent": "double",
+              "currentCash": "double",
+              "currentCashPercent": "double",
+              "pendingCash": "double",
+              "pendingCashPercent": "double",
+              "cashOverage": "double",
+              "cashOveragePercent": "double",
+              "cashUnderage": "double",
+              "cashUnderagePercent": "double",
+              "pendingValue": "double",
+              "pendingValuePercent": "double",
+              "autoRebalanceOn": "int64",
+              "OUB": "int64",
+              "contribution": "double",
+              "tradeBlocked": "int64",
+              "status": "string",
+              "statusInfo": "string",
+              "TLH": "int64",
+              "style": "string",
+              "lastRebalancedOn": "string",
+              "isDisabled": "int64",
+              "nextAutoRebalanceDate": "string",
+              "isDeleted": "int64",
+              "createdOn": "string",
+              "createdBy": "string",
+              "editedOn": "string",
+              "editedBy": "string",
+              "needAnalyticsStatus": "string",
+              "needAnalyticsToTradeStatus": "string",
+              "portfolioDisabledReason": "string",
+              "needAnalyticsFailedReason": "string",
+              "isMAC": "int64",
+              "fixedIncomeTradeBlockDate": "string",
+              "_source_file": "string",
+              "_source_as_of": "string",
+              "_source": "string",
+              "_feed": "string",
+              "_schema_version": "string"
+            },
+            "version_id": "mtGPqBsgNTQYPZd48gE5jPUSPIm6V6aO"
+          }
+        ]
+      },
+      {
+        "prefix": "eclipse/inflection/silver/fact_portfolios_simple/",
+        "dated_partition_count": 104,
+        "selected_partition": "2026-09-10",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "eclipse/inflection/silver/fact_portfolios_simple/date=2026-09-10/data.parquet",
+            "bytes": 57800,
+            "last_modified_utc": "2026-09-10T13:05:36+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "630a08b3de442893c9f012e2803f6f52d7d0fd079d665a0ce8bcbd9ff8ed2515",
+            "rows": 845,
+            "schema": {
+              "id": "int64",
+              "name": "string",
+              "tags": "string",
+              "custodialAccountNumber": "string",
+              "source": "string",
+              "accountId": "string",
+              "accountNumber": "string",
+              "accountName": "string",
+              "hasDistribution": "int64",
+              "hasContribution": "int64",
+              "modelId": "int64",
+              "sleevePortfolio": "int64",
+              "isDeleted": "int64",
+              "createdOn": "string",
+              "createdBy": "string",
+              "editedOn": "string",
+              "editedBy": "string",
+              "macStatus": "int64",
+              "needAnalytics": "int64",
+              "analyticsEditedDate": "string",
+              "failedReason": "string",
+              "hasTaxLossHarvest": "int64",
+              "_source_file": "string",
+              "_source_as_of": "string",
+              "_source": "string",
+              "_feed": "string",
+              "_schema_version": "string"
+            },
+            "version_id": "ANU4Cn0KGN9cXnkWiUVsxtp_kFqJCj7o"
+          }
+        ]
+      },
+      {
+        "prefix": "eclipse/inflection/silver/fact_models/",
+        "dated_partition_count": 104,
+        "selected_partition": "2026-09-10",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "eclipse/inflection/silver/fact_models/date=2026-09-10/data.parquet",
+            "bytes": 28109,
+            "last_modified_utc": "2026-09-10T13:05:36+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "f9679bc39df8c4fe1d261f2a805aca87bb57a6f58168e4db03475ff9c8811fd6",
+            "rows": 18,
+            "schema": {
+              "id": "int64",
+              "name": "string",
+              "sleeveCount": "int64",
+              "portfolioCount": "int64",
+              "source": "string",
+              "hasSubstitute": "int64",
+              "statusId": "int64",
+              "status": "string",
+              "nameSpace": "string",
+              "currentStatusId": "string",
+              "tags": "string",
+              "isDynamic": "int64",
+              "isSubstitutedForPortfolio": "int64",
+              "description": "string",
+              "ownerUserId": "int64",
+              "ownerUser": "string",
+              "managementStyleId": "int64",
+              "managementStyle": "string",
+              "isCommunityModel": "int64",
+              "communityModelId": "string",
+              "lastSyncDate": "string",
+              "approvedByUserId": "int64",
+              "approvedByUser": "string",
+              "isDeleted": "int64",
+              "createdOn": "string",
+              "editedOn": "string",
+              "createdBy": "string",
+              "editedBy": "string",
+              "hasEditAccess": "int64",
+              "isMAC": "int64",
+              "portfolioFlags": "string",
+              "teams": "string",
+              "_source_file": "string",
+              "_source_as_of": "string",
+              "_source": "string",
+              "_feed": "string",
+              "_schema_version": "string"
+            },
+            "version_id": "YR7hTOnZIDuyf8CqXIyDTkWyaxO_8LdU"
+          }
+        ]
+      },
+      {
+        "prefix": "eclipse/inflection/silver/fact_model_composition/",
+        "dated_partition_count": 104,
+        "selected_partition": "2026-09-10",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "eclipse/inflection/silver/fact_model_composition/date=2026-09-10/data.parquet",
+            "bytes": 39366,
+            "last_modified_utc": "2026-09-10T13:05:36+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "67fa019d884a6b9d286a9ab9e24a5da28c060f71ff324d3383a162815ab69297",
+            "rows": 9,
+            "schema": {
+              "id": "int64",
+              "updateStatus": "string",
+              "needsUpdate": "bool",
+              "name": "string",
+              "description": "string",
+              "nameSpace": "string",
+              "statusId": "int64",
+              "status": "string",
+              "currentStatusId": "string",
+              "currentStatus": "string",
+              "currentTags": "string",
+              "currentName": "string",
+              "currentNameSpace": "string",
+              "currentDescription": "string",
+              "tags": "string",
+              "ownerUserId": "int64",
+              "ownerUser": "string",
+              "managementStyleId": "string",
+              "managementStyle": "string",
+              "isCommunityModel": "int64",
+              "communityModelId": "string",
+              "isSubstitutedForSleeve": "int64",
+              "lastSyncDate": "string",
+              "approvedByUserId": "int64",
+              "approvedByUser": "string",
+              "isDynamic": "int64",
+              "isDeleted": "int64",
+              "createdOn": "string",
+              "editedOn": "string",
+              "createdBy": "string",
+              "editedBy": "string",
+              "hasEditAccess": "string",
+              "macStatus": "int64",
+              "havePendingModel": "bool",
+              "astroEnabled": "int64",
+              "astroTemplateId": "string",
+              "astroUsage": "int64",
+              "syncToAstro": "bool",
+              "isSMA": "int64",
+              "sleeveSuffix": "string",
+              "currentSleeveSuffix": "string",
+              "optionLevel": "string",
+              "primeBrokerage": "string",
+              "marginAgreement": "string",
+              "orionConnectProductClass": "string",
+              "currentOrionConnectProductClass": "string",
+              "orionConnectRiskCategory": "string",
+              "currentOrionConnectRiskCategory": "string",
+              "currentManagementStyleId": "string",
+              "excludeRebalanceSleeve": "bool",
+              "modelTypeId": "int64",
+              "modelDetail": "string",
+              "portfolioCount": "int64",
+              "sleeveCount": "int64",
+              "modelAUM": "double",
+              "canPortfolioAssignToModel": "bool",
+              "_source_file": "string",
+              "_source_as_of": "string",
+              "_source": "string",
+              "_feed": "string",
+              "_schema_version": "string"
+            },
+            "version_id": "VKydxhplXBMf4ILyhi3.QrxHndvPmWiK"
+          }
+        ]
+      },
+      {
+        "prefix": "blackdiamond/cottonwood/silver/fact_holdings/",
+        "dated_partition_count": 69,
+        "selected_partition": "2026-09-09",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-09/data.parquet",
+            "bytes": 442372,
+            "last_modified_utc": "2026-09-10T11:46:14+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "61005a7252d6148e3d7fd1e930eed74e9df5034f1ae59e4c14b0ff0048ffafaa",
+            "rows": 18917,
+            "schema": {
+              "Market Value": "double",
+              "Units": "double",
+              "Unaccrued Market Value": "double",
+              "Accrual": "double",
+              "Relationship ID": "string",
+              "PortfolioID": "string",
+              "AccountID": "string",
+              "Account Number": "string",
+              "Account Supervised": "string",
+              "AssetID": "int64",
+              "Asset Name": "string",
+              "Asset Display Name": "string",
+              "Original Asset Name": "string",
+              "Last Dividend": "double",
+              "Symbol": "string",
+              "Ticker": "string",
+              "CUSIP": "string",
+              "Alternative Identifier": "string",
+              "Expense Ratio": "double",
+              "Cash Equivalent": "string",
+              "Holding Supervised": "string",
+              "_source_file": "string",
+              "_source_as_of": "string",
+              "_source": "string",
+              "_feed": "string",
+              "_schema_version": "string"
+            },
+            "version_id": "LJjEvw54CEqt57KCGrMD2Juty2eSPJvN"
+          }
+        ]
+      },
+      {
+        "prefix": "blackdiamond/cottonwood/silver/fact_model_assignment/",
+        "dated_partition_count": 41,
+        "selected_partition": "2026-08-30",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "blackdiamond/cottonwood/silver/fact_model_assignment/date=2026-08-30/data.parquet",
+            "bytes": 49581,
+            "last_modified_utc": "2026-08-30T06:01:01+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "a1a18addca38bcfe21c448329c785b70885b7c1975364c420697df7583284275",
+            "rows": 950,
+            "schema": {
+              "account_id": "string",
+              "external_id": "string",
+              "account_name": "string",
+              "account_number": "string",
+              "strategy_name": "string",
+              "program_name": "string",
+              "tax_status": "string",
+              "account_type": "string",
+              "custodian_id": "int64",
+              "allow_sma": "bool",
+              "is_sma": "bool",
+              "is_rebalancer_uma": "bool",
+              "is_uma_sleeve_account": "bool",
+              "is_system_sleeve": "bool",
+              "exclude": "bool",
+              "can_rebalance": "bool",
+              "is_closed": "bool",
+              "discretionary": "bool",
+              "is_managed": "bool",
+              "is_in_rebalance_group": "bool",
+              "user_can_view_restricted_plan_team": "bool"
+            },
+            "version_id": "qI8sjsqBH0phghH7ssjOPPrX_EiRo0Nu"
+          }
+        ]
+      },
+      {
+        "prefix": "blackdiamond/cottonwood/silver/fact_model_roster/",
+        "dated_partition_count": 41,
+        "selected_partition": "2026-08-30",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "blackdiamond/cottonwood/silver/fact_model_roster/date=2026-08-30/data.parquet",
+            "bytes": 14111,
+            "last_modified_utc": "2026-08-30T06:01:01+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "4f6a5ec7de1e4cf0404c75a484ea8a55ad6566ace8d9d2f01d3228c40ac87711",
+            "rows": 65,
+            "schema": {
+              "model_id": "string",
+              "model_name": "string",
+              "is_opal": "bool",
+              "rebalance_model_type": "string",
+              "provider": "string",
+              "team": "string",
+              "team_external_id": "string",
+              "account_count": "int64",
+              "rebalance_assignment_count": "int64",
+              "portfolio_count": "int64",
+              "relationship_count": "int64",
+              "is_uma_strategy": "bool",
+              "admin_only_model": "bool",
+              "aggregate_managed_accounts_only": "bool",
+              "last_update": "string"
+            },
+            "version_id": "rNf8CSX_aWgHZo_GMhdPoulZu0YHNaOl"
+          }
+        ]
+      },
+      {
+        "prefix": "blackdiamond/cottonwood/silver/fact_model_blend/",
+        "dated_partition_count": 41,
+        "selected_partition": "2026-08-30",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "blackdiamond/cottonwood/silver/fact_model_blend/date=2026-08-30/data.parquet",
+            "bytes": 10538,
+            "last_modified_utc": "2026-08-30T06:01:04+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "d4e46d5e42c7bbc7cf8a967c46c33a1aec88bb3284f3ca457b7d045ca1d7efbb",
+            "rows": 118,
+            "schema": {
+              "model_id": "string",
+              "model_name": "string",
+              "is_opal": "bool",
+              "child_model_id": "string",
+              "child_model_name": "string",
+              "child_rebalance_model_type": "string",
+              "child_depth": "int64",
+              "absolute_allocation": "double",
+              "relative_allocation": "double"
+            },
+            "version_id": "ei40htMBq3c2JWoz6V76ing1IPDYRYQ4"
+          }
+        ]
+      },
+      {
+        "prefix": "blackdiamond/cottonwood/silver/fact_model_definition/",
+        "dated_partition_count": 41,
+        "selected_partition": "2026-08-30",
+        "partition_parquet_objects": 1,
+        "objects": [
+          {
+            "key": "blackdiamond/cottonwood/silver/fact_model_definition/date=2026-08-30/data.parquet",
+            "bytes": 34448,
+            "last_modified_utc": "2026-08-30T06:01:04+00:00",
+            "status": "PARQUET_READ",
+            "sha256": "598293785cfd337ff9c0706f6eb67108befb5461ea74517d6178042e74ad82b4",
+            "rows": 1595,
+            "schema": {
+              "model_id": "string",
+              "model_name": "string",
+              "is_opal": "bool",
+              "rebalance_model_type": "string",
+              "sleeve_name": "string",
+              "sleeve_depth": "int64",
+              "component_name": "string",
+              "symbol": "string",
+              "asset_id": "string",
+              "absolute_allocation": "double",
+              "relative_allocation": "double"
+            },
+            "version_id": "L2JbXtJ.8arpW7vG53EI6paDI8k3IwBR"
+          }
+        ]
+      }
+    ],
+    "writes_to_aws": 0
+  },
+  "identity_snapshots": {
+    "measured_at_utc": "2026-09-10T17:36:14.177063+00:00",
+    "scope": "Read-only latest observed identity tables at four source-code-declared legacy prefixes; not entitlement validation",
+    "tables": [
+      {
+        "bucket": "opal-data-49financial",
+        "prefix": "gold/advi/dimensions/bridge_group_account/",
+        "dated_partitions": 1,
+        "objects": [
+          {
+            "key": "gold/advi/dimensions/bridge_group_account/date=2026-08-18/data.parquet",
+            "bytes": 197188,
+            "sha256": "36978771eb2a9e745f4b04b9e284dd78b7f2b4aacce4eaa2689beaae5de3dcdf",
+            "rows": 29907,
+            "columns": [
+              "portfolio_group",
+              "accountid",
+              "original_account_number",
+              "silver_rows_backing_membership",
+              "is_primary",
+              "is_primary_status",
+              "group_class",
+              "as_of",
+              "book_basis"
+            ],
+            "field_coverage": {
+              "is_primary": {
+                "non_null": 0,
+                "distinct": 0
+              }
+            }
+          }
+        ],
+        "selected_partition": "2026-08-18"
+      },
+      {
+        "bucket": "opal-data-49financial",
+        "prefix": "gold/advi/dimensions/dim_portfolio_group/",
+        "dated_partitions": 1,
+        "objects": [
+          {
+            "key": "gold/advi/dimensions/dim_portfolio_group/date=2026-08-18/data.parquet",
+            "bytes": 10411,
+            "sha256": "5c957dc95b4c791c3aa0a78bcd031e4aee8f7641741957fc20db36e178244ed6",
+            "rows": 201,
+            "columns": [
+              "portfolio_group",
+              "book_mv_not_additive_across_groups",
+              "member_account_count",
+              "group_class",
+              "as_of",
+              "book_basis",
+              "partition_key_status"
+            ],
+            "field_coverage": {}
+          }
+        ],
+        "selected_partition": "2026-08-18"
+      },
+      {
+        "bucket": "opal-data-inf",
+        "prefix": "silver/api_dims/accounts_v2/",
+        "dated_partitions": 129,
+        "objects": [
+          {
+            "key": "silver/api_dims/accounts_v2/snapshot_date=2026-09-10/data.parquet",
+            "bytes": 80756,
+            "sha256": "f1b299da2caa8a8fd8368c93861cd2882eaf11efe1ba77c0da466be377ce5bd2",
+            "rows": 874,
+            "columns": [
+              "account_id",
+              "account_number",
+              "account_name",
+              "account_type",
+              "account_status",
+              "account_status_id",
+              "is_active",
+              "household_id",
+              "registration_id",
+              "custodian",
+              "custodian_id",
+              "orion_row_created_at",
+              "account_start_date",
+              "account_start_value",
+              "current_value",
+              "representative_name",
+              "is_managed",
+              "is_sweep_account",
+              "is_sleeve_account",
+              "is_original_smc_account",
+              "is_trading_blocked",
+              "management_style",
+              "management_style_id",
+              "model_name",
+              "model_group_number",
+              "fund_family",
+              "fund_family_id",
+              "fee_schedule",
+              "fee_schedule_id",
+              "bill_frequency",
+              "bill_start_date",
+              "master_payout_schedule",
+              "master_payout_schedule_id",
+              "pay_method",
+              "cycle_month",
+              "share_class",
+              "share_class_id",
+              "state",
+              "city",
+              "zip",
+              "last_name",
+              "snapshot_date",
+              "source_system",
+              "advisor_firm",
+              "rep_id",
+              "advisor_of_record_raw"
+            ],
+            "field_coverage": {
+              "account_id": {
+                "non_null": 874,
+                "distinct": 874
+              },
+              "rep_id": {
+                "non_null": 874,
+                "distinct": 5
+              },
+              "household_id": {
+                "non_null": 874,
+                "distinct": 293
+              },
+              "representative_name": {
+                "non_null": 874,
+                "distinct": 5
+              }
+            }
+          }
+        ],
+        "selected_partition": "2026-09-10"
+      },
+      {
+        "bucket": "opal-data-inf",
+        "prefix": "silver/api_dims/representatives/",
+        "dated_partitions": 130,
+        "objects": [
+          {
+            "key": "silver/api_dims/representatives/snapshot_date=2026-09-10/data.parquet",
+            "bytes": 13250,
+            "sha256": "cfc9307651b3b54c8e47c94b0af1c04024af51da5ff8d94d478e951143ce67b4",
+            "rows": 19,
+            "columns": [
+              "rep_id",
+              "rep_no",
+              "full_name",
+              "first_name",
+              "last_name",
+              "is_active",
+              "status",
+              "broker_dealer",
+              "broker_dealer_id",
+              "ria_name",
+              "ria_id",
+              "household_count",
+              "created_date",
+              "edited_date",
+              "start_date",
+              "global_id",
+              "snapshot_date",
+              "source_system"
+            ],
+            "field_coverage": {
+              "rep_id": {
+                "non_null": 19,
+                "distinct": 19
+              }
+            }
+          }
+        ],
+        "selected_partition": "2026-09-10"
+      }
+    ]
+  },
+  "join_measurements": {
+    "measured_at_utc": "2026-09-10T17:52:05.385249+00:00",
+    "scope": "Counts and structural joins on nineteen privately retained latest observed silver partitions; no advisor entitlement or economic reconciliation certified",
+    "49financial": {
+      "account_rows": 7442,
+      "holdings_rows": 104807,
+      "holdings_accounts": 6237,
+      "map_rows": 7453,
+      "map_distinct_allocations": 7453,
+      "map_valid_8_digit_rows": 7434,
+      "map_rows_joining_08335338_accounts": 7431,
+      "map_joined_distinct_accounts": 5856,
+      "map_rows_without_roster_identity": 0,
+      "roster_rows": 9980,
+      "roster_duplicate_allocation_rows": 0,
+      "position_rows_matching_joined_allocations": 113289,
+      "joined_allocations_with_position_rows": 7402,
+      "joined_allocations_with_valuation_rows": 7431,
+      "dates": {
+        "custody": {
+          "business_date": {
+            "valid_rows": 104807,
+            "min": "2026-09-09 00:00:00+00:00",
+            "max": "2026-09-09 00:00:00+00:00"
+          },
+          "_source_as_of": {
+            "valid_rows": 104807,
+            "min": "2026-09-09 00:00:00+00:00",
+            "max": "2026-09-09 00:00:00+00:00"
+          }
+        },
+        "positions": {
+          "as_of": {
+            "valid_rows": 119644,
+            "min": "2026-09-10 13:06:15.636856800+00:00",
+            "max": "2026-09-10 13:08:45.882577300+00:00"
+          },
+          "run_date": {
+            "valid_rows": 119644,
+            "min": "2026-09-10 00:00:00+00:00",
+            "max": "2026-09-10 00:00:00+00:00"
+          }
+        },
+        "valuation": {
+          "as_of": {
+            "valid_rows": 9980,
+            "min": "2026-09-10 13:06:15.636856800+00:00",
+            "max": "2026-09-10 13:08:45.937816900+00:00"
+          },
+          "run_date": {
+            "valid_rows": 9980,
+            "min": "2026-09-10 00:00:00+00:00",
+            "max": "2026-09-10 00:00:00+00:00"
+          }
+        }
+      }
+    },
+    "inflection": {
+      "orion_position_rows": 35974,
+      "orion_distinct_accounts": 953,
+      "orion_duplicate_position_ids": 0,
+      "assets_positions_equal_on_id_account_product_value_shares": true,
+      "simple_rows": 845,
+      "simple_distinct_portfolio_ids": 845,
+      "simple_distinct_accounts": 790,
+      "simple_rows_joining_orion_holdings_accounts": 790,
+      "simple_joined_distinct_accounts": 790,
+      "simple_non_null_model_ids": 663,
+      "simple_rows_model_id_in_models": 256,
+      "simple_rows_model_id_in_composition": 567,
+      "simple_rows_model_id_in_combined_catalog": 658,
+      "full_rows": 858,
+      "full_rows_without_simple_id": 13,
+      "full_multiple_associated_accounts": 13,
+      "full_model_shape": "str",
+      "model_detail_shape": {
+        "childSubstituted": "NoneType",
+        "children": [
+          {
+            "children": [],
+            "hasSubstitute": "bool",
+            "id": "int",
+            "isSubstituted": "NoneType",
+            "leftValue": "int",
+            "lowerModelToleranceAmount": "NoneType",
+            "lowerModelTolerancePercent": "int",
+            "modelDetailId": "int",
+            "modelType": "str",
+            "modelTypeId": "int",
+            "name": "str",
+            "nameSpace": "NoneType",
+            "rank": "NoneType",
+            "rightValue": "int",
+            "securityAsset": {
+              "color": "NoneType",
+              "id": "int",
+              "meId": "int"
+            },
+            "substitutedOf": "NoneType",
+            "targetPercent": "int",
+            "toleranceType": "NoneType",
+            "toleranceTypeValue": "int",
+            "upperModelToleranceAmount": "NoneType",
+            "upperModelTolerancePercent": "int"
+          }
+        ],
+        "id": "int",
+        "leftValue": "int",
+        "level": "str",
+        "modelDetailId": "int",
+        "name": "str",
+        "nameSpace": "str",
+        "rightValue": "int"
+      },
+      "dates": {
+        "asOfDate": {
+          "valid_rows": 35974,
+          "min": "2026-09-10 00:00:00+00:00",
+          "max": "2026-09-10 00:00:00+00:00"
+        },
+        "snapshot_date": {
+          "valid_rows": 35974,
+          "min": "2026-09-10 00:00:00+00:00",
+          "max": "2026-09-10 00:00:00+00:00"
+        },
+        "_source_as_of": {
+          "valid_rows": 35974,
+          "min": "2026-09-10 00:00:00+00:00",
+          "max": "2026-09-10 00:00:00+00:00"
+        }
+      },
+      "catalog_overlap_ids": 1,
+      "catalog_overlap_name_conflicts": 0,
+      "identity": {
+        "account_dimension_rows": 874,
+        "account_dimension_distinct_ids": 874,
+        "identity_accounts_with_holdings": 874,
+        "holdings_accounts_without_account_dimension": 79,
+        "account_dimension_ids_without_holdings": 0,
+        "account_rows_rep_in_roster": 874,
+        "representative_roster_rows": 19,
+        "account_rows_with_household": 874,
+        "distinct_households": 293,
+        "certifies_authenticated_advisor_binding": false
+      }
+    },
+    "cottonwood": {
+      "holdings_rows": 18917,
+      "unique_account_asset_keys": 18817,
+      "duplicate_account_asset_groups": 100,
+      "conflicting_market_values_at_account_asset_key": 0,
+      "holdings_distinct_accounts": 969,
+      "assignment_rows": 950,
+      "assignment_distinct_external_ids": 950,
+      "assignment_rows_matching_holdings_accounts": 946,
+      "holdings_accounts_without_assignment": 23,
+      "named_assignment_rows": 464,
+      "named_assignment_rows_unique_roster_match": 464,
+      "named_assignment_rows_missing_roster_match": 0,
+      "named_assignment_rows_ambiguous_roster_match": 0,
+      "roster_rows": 65,
+      "roster_is_opal_rows": 23,
+      "blend_rows": 118,
+      "definition_rows": 1595,
+      "blend_child_depth_counts": {
+        "1": 118
+      },
+      "relative_allocation_range": [
+        0.015,
+        1.0
+      ],
+      "absolute_allocation_range": [
+        0.015,
+        1.0
+      ],
+      "dates": {
+        "_source_as_of": {
+          "valid_rows": 18917,
+          "min": "2026-09-09 00:00:00+00:00",
+          "max": "2026-09-09 00:00:00+00:00"
+        }
+      }
+    }
+  },
+  "repository_sources": [
+    {
+      "path": "docs/architecture/D1_ASSET_CATEGORY_VIEWS_PRD.md",
+      "read_scope": "Purpose, category tree and acceptance/prior-art sections, first 195 lines; historical design, not live certification",
+      "bytes": 28027,
+      "sha256": "c282c7e734772857ce73f11c19f4cb6170ad35ce6c7064f8e5bc1f1fd068adfd"
+    },
+    {
+      "path": "docs/architecture/D1_CATVIEWS_INCREMENT3_PRD.md",
+      "read_scope": "Targeted opening purpose and classification sections; historical figures not adopted as current",
+      "bytes": 12709,
+      "sha256": "80a3e349179587fa9f87b2661b4e8532cdc0fda2f30172d147b532404c356325"
+    },
+    {
+      "path": "docs/architecture/D1_CATVIEWS_SMA_LIVE_PRD.md",
+      "read_scope": "Opening 80 lines; historical SMA scope, not a current Cottonwood absence claim",
+      "bytes": 17671,
+      "sha256": "3f662c09552d2b11bc0e1d68ab690653e337c1b9ea3f03cf8c9963cca95a3539"
+    },
+    {
+      "path": "docs/architecture/D3_ACCOUNT_MODEL_OVERLAY_PRD.md",
+      "read_scope": "Opening 195 lines, including scope, join grain and section 4b amendment",
+      "bytes": 23852,
+      "sha256": "6a3d3f519506d22d0c8ff84d4cb8769c74a8af57557c9f535d578f66a3a63e51"
+    },
+    {
+      "path": "data/assets/scripts/gold/runners_49f/b04_account_model_membership.py",
+      "read_scope": "Opening 268 lines: source grain, joins, selection, coverage and advisor-unavailable output",
+      "bytes": 19596,
+      "sha256": "1af84f48e3ddba074ffd7fc71ca575e5e7243060a808ab0bb0cb90ea06eed0ca"
+    },
+    {
+      "path": "data/assets/scripts/gold/runners_49f/bd49f_dim_portfolio_group.py",
+      "read_scope": "Targeted source/output-prefix and primary-partition-status search hits; not full implementation review",
+      "bytes": 28274,
+      "sha256": "0a6905a514b3560e60273afef59bf4a3cc13b00ba520c207a1998ab7c0e04f02"
+    },
+    {
+      "path": "data/assets/scripts/silver/silver_registry.py",
+      "read_scope": "Opening 110 lines: vendor-complete silver and canonical paths",
+      "bytes": 13042,
+      "sha256": "6779c01a3d0ed595d13dc834075070c8f625793b119e5f768f80de586f528dfd"
+    },
+    {
+      "path": "data/assets/scripts/silver/rebalancer_schemas.py",
+      "read_scope": "Lines 89-204: model roster, assignments, blends and definitions",
+      "bytes": 12553,
+      "sha256": "06c14cdedf0182ec6d11e8f1d7ee8c487bd72dcd2193c4cbca00f9848b96b366"
+    },
+    {
+      "path": "data/assets/scripts/silver/mirror_schemas.py",
+      "read_scope": "Targeted Eclipse table declaration search hits; live schema independently profiled",
+      "bytes": 24844,
+      "sha256": "1ef7577547ae7af32bead01d198f8f14f2729c7e79573a8cd655d37c32a2c41e"
+    },
+    {
+      "path": "data/mdpf/scripts/gold/mdpf_category_registry.py",
+      "read_scope": "Opening 230 lines: stored categories, display axes, member mapping and unknown-member handling",
+      "bytes": 75096,
+      "sha256": "5cd48e054d9237953c0e186926a589dea15303f099cbf8485b89e2ea50d833a3"
+    },
+    {
+      "path": "data/assets/scripts/gold/build_dim_model_portfolio.py",
+      "read_scope": "Lines 147-274 and 340-415: relationship collapse, account values, recursive decomposition and target-value attribution",
+      "bytes": 29072,
+      "sha256": "e443330e1e4606ba2c8f7eb797d1c09c5cbb113d19dd1f10709f962974b691c3"
+    },
+    {
+      "path": "data/assets/scripts/gold/build_cottonwood_mdpf_pair.py",
+      "read_scope": "Opening 150 lines: shared decomposition, separate source clocks and Cottonwood SMA mapping",
+      "bytes": 48362,
+      "sha256": "30e52bf3c356abebd9c7e9d81ec5f388c8da63279e0d46d547d0c50c0183d967"
+    },
+    {
+      "path": "data/inf/scripts/gold/INF_E_00.eclipse_model_portfolios.py",
+      "read_scope": "Opening 285 lines: legacy schema joins, account/model AUM distinction and identity source",
+      "bytes": 20316,
+      "sha256": "3e972bdec6f32836b295706114633a7677fca0eff961c85da0d68c39cf1b1a06"
+    },
+    {
+      "path": "data/inf/scripts/gold/runners_inf/a00_dim_account.py",
+      "read_scope": "Full file: derived representatives-roster predicate and declared exclusions",
+      "bytes": 4439,
+      "sha256": "4024e5526207e3e1058480615a2af5c7f6023478b4e84e043374f01ef42bd891"
+    },
+    {
+      "path": "data/inf/scripts/gold/runners_inf/runner_common.py",
+      "read_scope": "Targeted SILVER_BUCKET and API_DIMS_PREFIX search hits",
+      "bytes": 9908,
+      "sha256": "ba0a900aa139ed058fc01fc216da84fd3fac517151eafdb4580c5694a00a3949"
+    },
+    {
+      "path": "portal/src/components/CategoryViewTree.tsx",
+      "read_scope": "Opening 150 lines: declared taxonomy tree, panels, unavailable state and canonical model colors",
+      "bytes": 40388,
+      "sha256": "0f5aae72310177e827ff0bcc2c68777d564433d566e5566be0dcceb38901f7c4"
+    },
+    {
+      "path": "portal/src/pages/AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx",
+      "read_scope": "Targeted donut construction and lines 756-802; identified Math.abs behavior not to inherit for signed holdings",
+      "bytes": 69350,
+      "sha256": "3166db1de2a409d72918bff60cc266fe197acaf2ef0427b48695171a1be6bb0d"
+    },
+    {
+      "path": "portal/src/pages/AdvisorIntelligence/_shared/components/PartnerAnalytics.tsx",
+      "read_scope": "Targeted donut/drill interaction search hits only",
+      "bytes": 137020,
+      "sha256": "fbc64cb592dbe06d59d56b9425db6c404515c01f4ac47b9084d955e585a408fe"
+    },
+    {
+      "path": "portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx",
+      "read_scope": "Targeted donut, drill and scope search hits only",
+      "bytes": 218011,
+      "sha256": "25fc325cc0e217521973aaa382d2d85d917232e6ec37348249bbb9867615a906"
+    },
+    {
+      "path": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260910_HOLDINGS_MODEL_OVERLAY_V1.md",
+      "read_scope": "Full current user direction recorded verbatim",
+      "bytes": 1980,
+      "sha256": "f1bdfc96268f7e7a36aaace8aeb180ddc1b123fb6eaed8938b60b02274a2d1e1"
+    },
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md",
+      "read_scope": "Ratification header, opening outcomes and targeted FWD-5/FWD-7 sections; separate CTO inbox ruling 95374 supplies terminated-client visibility",
+      "bytes": 25000,
+      "sha256": "74e0a7d289f562b26f4aeaa56f0f3af85a25930eece61838d56c975dc5122fef"
+    },
+    {
+      "path": "docs/briefs/investor-reporting-lightweight-brief-20260910.md",
+      "read_scope": "Parent outcomes, boundaries and dated child follow-ups",
+      "bytes": 29722,
+      "sha256": "1e49a7528849c7b547f8422fd6b83145edb2b5ee86132659071af95b1b00baa7"
+    },
+    {
+      "path": "docs/briefs/investor-reporting-lightweight-design-20260910.md",
+      "read_scope": "Shared context and identity design, holdings section and dated follow-up references",
+      "bytes": 34945,
+      "sha256": "795d26e2f38fee82704a25d47e765d0821a407460256a3ecc96d5be937696f54"
+    }
+  ]
+}

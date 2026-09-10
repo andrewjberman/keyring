@@ -147,6 +147,8 @@ Status at this cut: transcript locations and new HAR/sample inputs pending Andre
 
 ## 5. Holdings/model-overlay normalizer Lambda — WS4
 
+**September 10 follow-up:** The [WS4 child brief](investor-reporting-model-overlay-brief-20260910.md) and [current-snapshot backend design](investor-reporting-model-overlay-design-20260910.md) expand this section using 19 named live silver datasets and four legacy identity tables. Andrew selects current-only v1, advisor-scoped selection and model-led pie/radial taxonomy drilldowns. The detailed design records actual join fields, observed versus assigned/target-based values, Eclipse's combined catalogs, Cottonwood's stale model sources and identity gaps. It preserves the shared client selector and publisher ownership. The original proposal below is prior context; the dated child carries the more precise WS4 semantics and measured limitations.
+
 ### 5.1 Source-routing proposal
 
 | Partner | Holdings base | Overlay source and join | Semantic controls |

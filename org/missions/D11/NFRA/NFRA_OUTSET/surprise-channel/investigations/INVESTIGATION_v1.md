@@ -2684,3 +2684,42 @@ The only authored bytes are this header; every row below is its writer's, unmodi
   }
 ]
 ```
+
+
+---
+
+## S45 -- AN ORDER ISSUED TO A LANE NOBODY WAS SITTING IN
+
+Filed by `2.0.0_SA_COO`, about its own dispatch of `OS-s-28`.
+
+```json
+[
+  {
+    "id": "NFRA_OUTSET-S45",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T17:55Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "one_line": "OS-s-28 was ISSUED, COMMITTED and reported as dispatched while its assignee lane was NOT REGISTERED -- the GO sat undrained at the top level of the inbox for ~1h40m and the issuer called the cell RUNNING.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BROKER PLANE: get_agent_status('0.7.0_AE_CloudOps~W') at 2026-09-10T17:4xZ returns NOT REGISTERED for the lane.",
+        "FILESYSTEM PLANE: org/mcp/inbox/0.7.0_AE_CloudOps/~W/20260910T161705Z_2.0.0_SA_COO_GO_on_NFRA_OUTSET.TO-OS-s-28__0acccc7f16.md sits at the TOP LEVEL of the lane inbox, never moved to read/, so no watcher ever consumed it.",
+        "PROCESS PLANE: Win32_Process CommandLine scan over claude.exe with an EXACT serial compare (not a substring) returns 0 hits of 5 live processes for 0.7.0_AE_CloudOps~W.",
+        "MARKER PLANE: OPAL_SPAWN_MARKER_v1 scan returns 0 markers for the lane; 1 marker-counted window live of cap 20.",
+        "LIVENESS FILE: org/mcp/liveness.json carries ZERO rows for any 0.7.0_AE_CloudOps lane.",
+        "THE ORDER ITSELF: NFRA_OUTSET.TO-OS-s-28 <status> still read 'pending' at HEAD ~1h40m after the 16:17:05Z GO.",
+        "NEGATIVE CONTROL ON THE ENCUMBRANCE READ: the three other pending CloudOps orders (MDPF_GLOBAL.T2C, NFRA_SUBSTRATECARDING.TO-CARD-R-W4-COX, WSE_COTMDL.WS5) resolve to <issued_to>0.7.0_AE_CloudOps</issued_to>, the BARE BASE, not to ~W -- so the lane is unencumbered and Rule 27 is satisfied for seating."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A seat task order is DISPATCHED BY ITS ISSUANCE -- 'GO paired at cut' -- so committing the order and sending the GO is the whole of delivery, and the cell is thereafter RUNNING.",
+    "world_is": "A GO to an unregistered lane is written to a directory and nothing else happens. There is no bounce, no ack, no staleness signal and no error: the send SUCCEEDS, the file lands, and the order reads as issued from every artifact the issuer would naturally check. The issuer held the cell as RUNNING for ~1h40m and said so to the operator.",
+    "notes": "THIS IS CLAUDE.md's 'QUEUED IF NOT LIVE IS A WISH, NOT A DELIVERY' ARRIVING AT A LANE RATHER THAN A BASE, AND THE RULE'S OWN TEXT DID NOT COVER IT. The rule names the failure as 'a BASE serial with no base session', because the measured instance (five messages unread 6-9 days in 0.7.0_AE_CloudOps) was a base. THE PROPERTY IS NOT BASENESS -- it is that NO SESSION HOLDS THE ADDRESS, and a lane letter satisfies that just as well as a base does. Rule 24(i) by subtraction: the population is ADDRESSES, and the enumeration was written forward as {base} instead of as {every address} MINUS {addresses with a live session}. Filed by the seat that wrote the forward list into its own dispatch habit. WHAT MAKES IT WORSE HERE THAN AT A BASE: /mstr-spawn's pre-flight censuses a lane's PROCESS truth, its MARKERS, its BROKER row and its open TASK ORDERS -- four planes -- and every one of them is a SPAWN-TIME check. NOTHING RE-READS THE ADDRESS AT ISSUANCE TIME. The COO issues to a lane it seated hours earlier and never asks again whether anyone is still there, and the spine's 'the spawn IS the GO' applies to WORKER subagents, whose liveness is guaranteed by the spawn itself. A SEAT ORDER BORROWS THAT CONFIDENCE WITHOUT THE MECHANISM THAT EARNS IT. THE CHEAP REMEDY IS ONE READ AND IT IS NOT A GATE: before reporting a seat cell as RUNNING, read the assignee's registration -- one get_agent_status per seat order, at issuance, not at seating. A worker needs none of this; the distinction is exactly whether the issuer created the executor or merely addressed it. AND THE HARM WAS NOT THE DELAY. The delay was recoverable and cost ~1h40m. The real cost is that 1.0.0_SA_CTO's L4 ruling 46b832a9a3 landed inside that window and WITHDREW two of the three shapes this face offered, one of which named a git hook retired the day before and one of which was the issuer's stated preference. Had the lane been live, an assignee would have held withdrawn text and possibly built to a dead carrier. THE UNDELIVERED STATE IS WHAT MADE THE CORRECTION FREE, which is the same thing sequencing bought on ETFS_GUARDRAIL EG-s-21 arm (d) an hour earlier -- and in neither case was it a control anybody designed. Twice in one night a defective face was repaired only because nobody had read it yet. Related: [[NFRA_OUTSET-S39]] (the drift trigger SKIPPED because its principal was Interactive -- the same shape one layer down: a mechanism that needs a human present, failing silently when none is), [[NFRA_OUTSET-S43]]."
+  }
+]
+```

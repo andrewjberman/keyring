@@ -8236,3 +8236,34 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-S118 -- a round-6 order sat open through two rounds because every completion report was scoped to its own round
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T17:58Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S118",
+    "one_line": "A ROUND-6 TASK ORDER SAT OPEN THROUGH ROUNDS 7 AND 8 CARRYING A KNOWN MECHANICAL FAIL, AND BOTH ROUNDS' COMPLETION REPORTS SAID 'task_orders_drained_open: 0'. Both were TRUE and both were SCOPED TO THEIR OWN ROUND'S ORDER SET. TO-CG-F-11 (cell CG-s-31) has read `pending` since round 6 with an instance carrying one FAIL on F11-AC3; the worker held it open exactly as the standing law requires, so this is the refusal clause working, not a lapse. What nobody had was an instrument that looks at the PROJECT's open orders rather than the ROUND's. Found only because this tick's drive-law limb measurement counts task orders terminal/total across the WHOLE project and printed 43 of 44 -- the one non-terminal being an order two rounds old. A per-round denominator cannot see a member left behind by an earlier round, and my own two reports are the evidence: each printed a zero that was correct about its own set and silent about the project.",
+    "spec_asserts": "COMPLETION_REPORT.round7.json and COMPLETION_REPORT.round8.json, both by this seat, both carrying `task_orders_drained_open: 0` under a `denominators` block scoped by `task_orders_issued_round<N>`.",
+    "world_is": "The project carried an open order throughout. 43 of 44 task orders are terminal at this tick; the 44th is TO-CG-F-11, non-terminal since round 6, with a VALID-shaped instance carrying one mechanical FAIL whose remedy the CTO had already routed to a later round.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This tick's limb measurement over the whole project: task orders terminal/total = 43/44, the one non-terminal being TO-CG-F-11.",
+        "TO-CG-F-11's instance: 6 criterion rows, F11-AC3 status FAIL with output_evidence STORED_IN_RESOLVED=135 of 137 all on S3_BUCKET_POLICY.",
+        "Its own status_reason: 'on the one limb this order is forbidden to touch ... 1.0.0_SA_CTO ruled that seam to round 7'.",
+        "COMPLETION_REPORT.round7.json and .round8.json, both `task_orders_drained_open: 0`, both scoped to their own round."
+      ]
+    },
+    "notes": "ARMED because the blind spot is STRUCTURAL and will recur at every future round close: the report's denominator is the round, and the question a reader asks it is about the project. CHEAPEST REMEDY, and it is this seat's to take at the NEXT close rather than mid-round: the COMPLETION_REPORT gains a PROJECT-WIDE open-order count beside its round-scoped one, so the two denominators sit next to each other and a gap between them is visible instead of invisible. NOT PROPOSED AS A GATE and it needs no code. THE GENERAL FORM IS ONE THIS PROJECT KEEPS PAYING FOR: a check scoped to the members of a set cannot see what the set left out, and a round is a set. Round 8 found it between two CELLS; this is the same shape between two ROUNDS."
+  }
+]
+```

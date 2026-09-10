@@ -10,6 +10,12 @@ sha256 `7c596b6f7f6d2ffd9725a1973add0088f97860d5e803634ba6e111e451925ce2` over 3
 verbatim in `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260910_0919ET_LIGHTWEIGHT_INVESTOR_REPORTING.md`.
 **Placement:** D9 Opal Workflows. ONE umbrella project, FOUR workstreams. Project code assigned at L3.
 
+⛔ **RATIFIED BY ANDREW 2026-09-10 ~17:3xZ — FWD-1 THROUGH FWD-8, ALL EIGHT.** VERBATIM: *"2) Ratify all
+8."* Recorded at `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_173xZ_SEVEN_OPEN_CALLS_ANSWERED.md`.
+**This is the L2 confirmation Rule 27 reserves to him and the last gate before L3 and L4.** The eight ids
+are now PERMANENT; a retired outcome leaves its number VACANT and no id is ever reused. **After this
+point the canonical loop cycles without him** — his own standing word of 2026-09-03 ~05:2xZ.
+
 ⛔ **FWD-n IDS ARE PERMANENT AND NEVER REUSED. A retired outcome leaves its number VACANT.**
 
 ⛔ **NO FWD BELOW IS A WAIT.** Every one is provable by an act a seat can take ON DEMAND. The single
@@ -208,13 +214,16 @@ per Rule 27's L2 clause. Nothing here waits on an event nobody controls.
                     or failed refresh does, and a SCHEDULE is not by itself a
                     MAXIMUM SERVED AGE. The driven form is strictly stronger and is
                     what the L2 "no FWD is a wait" clause actually demands
-         ⛔ OPEN, AND IT IS A PRODUCT DECISION RATHER THAN A CUT DEFECT: a terminated
-                    client or account may still require HISTORICAL reporting, so
-                    DISAPPEARANCE FROM SEARCH MUST NOT BE EQUATED WITH ACCESS
-                    REVOCATION. This outcome names an ELIGIBILITY POLICY and does not
-                    write one; my first form assumed termination implies
-                    disappearance, which is a decision I do not own. Andrew's, or the
-                    project's at L4 with his word. Raised by `4.0.0_SA_CRO`
+         ⛔ RULED BY ANDREW 2026-09-10 ~17:3xZ, VERBATIM "Stay visible." A
+                    terminated client STAYS VISIBLE, MARKED TERMINATED, with access
+                    still governed by ENTITLEMENT. So DISAPPEARANCE FROM SEARCH IS
+                    NEVER EQUATED WITH ACCESS REVOCATION, and a terminated client or
+                    account that still requires HISTORICAL reporting remains
+                    reachable to an entitled viewer. This outcome now NAMES the
+                    eligibility policy rather than deferring it, and L4 writes to
+                    THIS rather than choosing. Raised by `4.0.0_SA_CRO` at 95180;
+                    my first form assumed termination implies disappearance, which
+                    was a decision I did not own and got the wrong way round
          ⛔ WHAT THIS OUTCOME IS **NOT**: it is DIRECTORY FRESHNESS AND ELIGIBILITY,
                     and NOTHING about it grades revocation. FWD-2 owns revocation
                     INDEPENDENTLY and the two are not substitutes -- see the

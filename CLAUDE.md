@@ -52,8 +52,14 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     check, and that enforcement is LEGITIMATE — it refuses a new TO addressed to an instance already holding open
     TOs on another pipeline project. **What was never real is its GENERALISATION TO ALL TIERS:** the phrase
     "one project per instance" DROPPED "TIER-2" and circulated for weeks citing THIS rule by number, and on it a
-    TIER-1 seat twice declined to seat a TIER-1 lane. ⛔ **WHETHER IT SHOULD REACH TIER 1 IS ANDREW'S, NOT A
-    SEAT'S — extending his Tier-2 word upward is WIDENING IT, which §2 forbids. ASK.** COST: none. Measured
+    TIER-1 seat twice declined to seat a TIER-1 lane. ⛔ **ASKED AND ANSWERED — IT DOES **NOT** REACH TIER 1.**
+    Andrew-direct 2026-09-10 ~17:3xZ, VERBATIM *"One project per COO/seat."*, answering the direct question
+    *"does the one-project-per-seat rule extend to Tier-1 lanes?"* — he named the **COO**, a TIER-2 seat.
+    **So the rule binds at the TIER-2 SEAT INSTANCE, exactly as the lint already enforces, and NO TIER-1 LANE
+    IS CONSTRAINED BY IT.** A Tier-1 seat may hold several projects and may seat several Tier-1 lanes.
+    Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_173xZ_SEVEN_OPEN_CALLS_ANSWERED.md`.
+    ⚠ The recorded read is the NARROW one and is stated as such in that record; his sentence admits a wider
+    one, and taking the wider one silently is the exact widening that created this question. COST: none. Measured
     2026-09-10 by `2.0.0_SA_COO` and `0.0.0_AB_MSTR`, each correcting its own prior answer: **both first censused
     "documents that STATE law" and got ZERO, because the rule lives in an ENFORCEMENT SURFACE and an
     Andrew-direct — neither is a law file.** The wider census (799 files) was not wider in the direction that

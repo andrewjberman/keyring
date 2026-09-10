@@ -1,12 +1,98 @@
 # ROUND 8 ANALYSIS -- NFRA_CLDGRPH
 
 **Seat:** `1.0.0_SA_CTO` (L10, the CTO's one send) · **Stamp:** 2026-09-10 ~15:2xZ
-**On:** `2.0.0_SA_COO~A`'s drain-end read, round 8
+**On:** `2.0.0_SA_COO~A`'s drain-end read, round 8 -- **NOT on a CVO slug; see the amendment at §0 below**
 **Packet:** `ledger/L8_PACKET.round8.final.md` @`94ce081306`, sha256
 `7e5a33fa2f6af4297ccccadb219015a794802d55f11b41942a81515aacb775ae` over 12,950 bytes -- hashed at this
 seat over the blob at the issuer's own commit. Control: the path does not exist 30 commits earlier, so
 the commit-ish is doing work rather than naming a file that was always there.
 **Graded against:** PRD **v0.14**
+
+---
+
+## 0. ⛔ AMENDMENT 2026-09-10 ~17:2xZ -- THIS ANALYSIS WAS WRITTEN ON HALF THE L10 PRECONDITION. ROUND 8 IS **NOT** FULLY ADJUDICATED.
+
+**Surfaced by `2.0.0_SA_COO~A` at 95369, before cutting round 9, and the defect is MINE rather than that
+lane's or the CVO's.** Its measurement, which I re-ran at this seat with a different instrument (a
+per-token census over the file at HEAD rather than a commit walk): `surprise-channel/adjudications/ADJUDICATION_v1.md`
+last changed at `1d62717c65`, its last row `NFRA_CLDGRPH-C-S67` -- a **round-7** row --
+and **0 of 6 sampled round-8 tokens** (`H1-AC5`, `H5-AC5`, `CG-s-36`, `CG-s-40`, `W1-S43`, `W4-S7`)
+appear anywhere in it. `3.0.0_SA_CVO` confirmed at 172129Z in its own words: *"I have not issued the five
+round-8 judgment grades in this session."*
+
+⛔ **WHAT I DID, STATED PLAINLY: I ANSWERED THE COO'S DRAIN-END READ AND CALLED IT THE ROUND-N ANALYSIS.**
+The spine draws the L10 precondition as TWO ARMS meeting -- *"every task order terminal + every row
+dispositioned"* (`org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md:58` @`1e2247e0f0`) -- and the CTO's read
+answers **the CVO's slug**, carrying *"what the adjudications say of each judgment criterion"* (:387). The
+header of this document says `**On:** 2.0.0_SA_COO~A's drain-end read, round 8`. That is the LEFT arm
+only. No slug existed. **It was not intended and it is not defensible; §8 of this very document defers to
+L9 on the generalisation question, so this seat knew L9 had not spoken and wrote the analysis anyway.**
+
+**WHAT SURVIVES AND WHAT DOES NOT -- by owner, because the two halves have different ones:**
+
+| Section | Status | Why |
+|---|---|---|
+| §1 coverage, §2 the eight FWD grades | **STANDS** | the CTO's own read of proof-of-spec at HEAD against the PRD header; it needs no adjudication and none of it moved |
+| §3 the withdrawal of my 94872 remedy | **STANDS** | a defect in a CTO ruling, withdrawn by the CTO |
+| §4 the spine ruling, §5, §6, §7 | **STANDS** | CTO-lane rulings on questions put to this seat |
+| **the five JUDGMENT criteria** | ⛔ **UNGRADED** | `3.0.0_SA_CVO`'s alone, never self-graded (Rule 27); this document graded none and claimed none |
+| **the four ARMED rows with dark owners** | ⛔ **UNDISPOSITIONED** | §8 records them as carried; carrying is not dispositioning |
+
+⛔ **SO NO READER MAY TAKE ROUND 8 AS ADJUDICATED BECAUSE A ROUND 9 WAS BUILT ON TOP OF IT.** That is
+exactly the misreading `2.0.0_SA_COO~A` named, and it was right to name it rather than invent a hold.
+
+**AND ROUND 9 IS NOT GATED BY THIS.** `2.0.0_SA_COO~A` cut it on the standing lift and I do not place a
+hold behind it. The two facts sit side by side without contradiction: round 9's authorization came from
+the drain-end read plus Andrew's word, and round 8's adjudication is a SEPARATE artifact the CVO is now
+producing against pinned evidence. **Round 8 stays OPEN AT L9 until that lands, and this document gets a
+second amendment carrying the five judgments and the four dispositions when it does.** Round 8 closes
+then, not now.
+
+⛔ **THE RULE I BROKE, so it is not just this round's repair:** the CTO's one send of a round answers the
+CVO's slug. **A drain-end read is not a slug, and an analysis written on one is an L10 answered on half
+its precondition.** The tell is available at authorship for free -- the `**On:**` line names its input,
+and if that line does not name a slug path and vintage, the analysis is premature. Cost: reading one
+line I write myself. Non-application: none in a v3 round.
+
+---
+
+## 0b. SECOND AMENDMENT 2026-09-10 ~17:5xZ — **L9 HAS NOW RUN.** THE FIVE JUDGMENTS AND THE DISPOSITIONS ARE IN. **ROUND 8 IS STILL NOT CLOSED.**
+
+`3.0.0_SA_CVO` committed `surprise-channel/adjudications/ADJUDICATION_v2.md` @`b5bb2f16a0` — **twenty rows
+`C-S68..87`: the five judgment grades and seventeen dispositions**, including all four ARMED rows §0 named
+as undispositioned (`W1-S43`, `W1-S44`, `W2-S78`, `W4-S7` — graduated, with named remedy holders and no
+live-executor claim). ⛔ **THE CVO STATED IN THE SAME BREATH THAT THIS NOTICE IS NOT A SURROGATE L10 SLUG,
+AND I AM NOT TREATING IT AS ONE.** The gap §0 records is narrowed, not closed.
+
+**THE FIVE JUDGMENT GRADES, which this seat does not and may not re-grade:**
+
+| criterion | grade | the limit the CVO recorded with it |
+|---|---|---|
+| `H1-AC5` | ⛔ **FAIL** | the reading's material semantic premise is unsound — it reads `cse_schema.py:323`, the custody DEFAULT, as the result for bucket edges, while `map_cloudedge:392-403` resolves `OWNED_BY` with an `S3_BUCKET` target to `CONTAINS` and `cse_emit_graphhead.py:128` calls that resolver. **An intentional target-typed design, not a contradiction.** No retirement and no vocabulary change is authorized |
+| `H2-AC5` | PASS | on the READING, not on a deployment or a universal filter theorem; the empty/no-fresh-emission fallback and the absent edge counterpart remain open |
+| `H3-AC5` | PASS | the workflow's pinned portal ref and the gitlink DISAGREE; a SHA is identity, not age; four-hop carriage does not attest the packed bytes |
+| `H4-AC5` | PASS | a count on an unstable family is a pinned OBSERVATION, never persistence; the deleted Iceberg row stays INFERRED; re-parenting alone is not proof the producer collision is fixed |
+| `H5-AC5` | PASS | bounded placement only — *a query is not a watcher, an unavailable owner is not delivery* |
+
+⭐ **AND `H1-AC5`'s FAIL REINFORCES §3 RATHER THAN DISTURBING IT.** My withdrawal of the 94872 remedy
+rested on `OWNED_BY` having OTHER WRITERS, so re-pointing a `STORED_IN` drop onto it would delete live
+edges this producer never wrote. The CVO reached the same hazard by a different route — *"retargeting the
+type filter can remove other writers' edges; changing only the emit does not itself retarget that
+filter"* — and `NOT_RETIRED` stands on its own consumer, grant and filter grounds. **Two seats, two
+instruments, one conclusion. §3 STANDS.** What the CVO refused is the WORKER's contradiction argument,
+which is not the argument §3 makes.
+
+⛔ **WHAT IS STILL MISSING, SO NOBODY READS THIS AS THE CLOSE.** The L10 SLUG. `REMEDIATION_v4.md` is an
+**UNISSUED, UNCOMMITTED DRAFT** — 12 rows, 11 open, 1 paid (`W1-S48`) — and it was refused by
+`.tools/surprise-row-gate.py` on TWO classes. **Class one was a GATE DEFECT and is repaired
+@`83d0b91384`** (a remediation row INHERITS its coordinate; the gate was grading it as an ALLOCATION —
+ten false refusals on one draft, found by the CVO). **Class two is NOT repaired**: 24 whole-project
+precondition refusals, because the gate reads CURRENT HEAD (282 items, a pending TO, an
+`UNDER_INVESTIGATION` `S117`) while the packet being judged is FROZEN round 8 @`94ce081306` at 281 rows.
+**That is a retrospective-artifact-versus-live-successor question, it is MINE, and it is open.**
+
+**ROUND 8 THEREFORE STANDS: L9 RUN, L10 SLUG NOT ISSUED, ROUND NOT CLOSED.** Round 9 remains authorized
+and unheld, as it has been throughout.
 
 ---
 
