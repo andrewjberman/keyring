@@ -1758,3 +1758,42 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S46 -- Z-W5-S1..S4: TO-OP3A-S-1 is complete, the re-seat disarmed by exercise, the two residual findings graduate as owned
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S46",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T20:30Z",
+    "one_line": "ALL FOUR GRADUATE. TO-OP3A-S-1 is now complete (issued_to re-seated ~4 -> ~6 @1f87188985, both liveness Lambdas deployed and live-verified) -- Z-W5-S2/S3 (the stale-issued_to gate blocks) are DISARMED BY EXERCISE, not by the edit alone: slot ~6 committed and deployed clean, CodeSha256 matching the targeted plan, both callers returning ok:true. Z-W5-S1 (shared-root drift) and Z-W5-S4 (proof-of-spec schema gap) are NOT disarmed by this order closing -- both name a residual outside this order's own instance and graduate as owned findings for their named owners. Project census: 35 of 35 task orders terminal (32 complete / 2 cancelled / 1 superseded, independent full-pair status-tag read, not the gate's first-match regex), 0 items left UNDER_INVESTIGATION after this row.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "PER-ROW. Z-W5-S1 -> 0.7.0_AE_CloudOps (the shared-root WAF description drift; residual, not this order's). Z-W5-S2 and Z-W5-S3 -> DISARMED, confirmed by exercise: 2.0.0_SA_COO~Z performed the one-line disarm both rows named (@1f87188985, re-seat ~4 -> ~6, the WHOLE identity block) and the re-seated worker then committed and deployed the migration (@1d103b4651 deploy, @ea5d79c9c1 drain). Z-W5-S4 -> 1.0.0_SA_CTO~Z (proof-of-spec schema/checker surface; P2, no artifact currently rides the gap since ~6's instance never needed the UNCOMMITTED-LANE-GATE-REFUSED encoding).",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-W5-S1",
+      "NFRA_OPSEC202609-Z-W5-S2",
+      "NFRA_OPSEC202609-Z-W5-S3",
+      "NFRA_OPSEC202609-Z-W5-S4"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE RE-SEAT, read at HEAD rather than from the commit message: `git show HEAD:org/missions/D12/NFRA/NFRA_OPSEC202609/task-orders/NFRA_OPSEC202609.TO-OP3A-S-1.in-lane-liveness-caller-migration.md | grep -oE '<issued_to>[^<]*</issued_to>|<status>[^<]*</status>'` -> `<issued_to>0.9.0_WK_NFRA_OPSEC202609~6</issued_to>`, `<status>complete</status>`. The exact field Z-W5-S2/S3 named as the whole block is confirmed moved, and the order is terminal.",
+        "THE DEPLOY, read from the deploy-ledger entry's own 'Live post-deploy state' section (org/critical_paths/change_management/20260910T1714Z_opsec-op3a-s1-liveness-exchange-migration_deploy_completion.md), not from the worker's self-report: opal-otp-liveness CodeSha256 3arS31NYi8MRfT2zpMny1r4xApcR7GffVRf1TWP9+xI=, LastModified 2026-09-10T19:37:07Z, OTP_TOKEN_URL present; opal-ms-ingest-liveness CodeSha256 tsI6QgpY3ODD3CLYdrdZMv6vUleIUpWF7RgEXXVM7i4=, LastModified 2026-09-10T19:37:02Z, MS_TOKEN_URL present. Both hashes equal the entry's own predicted source_code_hash values -- the plan that was promised is the plan that landed. Both invocations returned ok:true with cred_path=exchange in the CloudWatch log itself. NEVER-2 not engaged: 0 of 2 half-landed.",
+        "THE PROJECT CENSUS, independent of the gate's own first-match regex (the exact instrument class Z-S15 found defective earlier this project): a direct Python walk of org/ matching NFRA_OPSEC202609.*.md under task-orders/ only (deliverables/ excluded, 3 same-named files there correctly excluded as non-TO docs) extracting ALL <status> tag occurrences per file, not the first: 35 of 35 files, 32 complete / 2 cancelled / 1 superseded, 0 non-terminal, 0 multi-value conflicts.",
+        "THE OPEN-ITEM COUNT, cross-checked with a second instrument (comp-surprise --project NFRA_OPSEC202609) against my own read of INVESTIGATION_v1.md's four Z-W5-S* blocks directly: both agree on exactly these four ids as the full OPEN set pre-this-row, 0 others.",
+        "Z-W5-S1's residual is NOT this order's to close: the row's own disarm_owner already scopes it to 0.7.0_AE_CloudOps (the WAF IP-set description drift belongs to that lane's TO-OP-S-4-18/TO-OP-S-15-19); nothing in this order's own targeted apply touched waf.tf, so the shared-root condition the row named is unchanged by TO-OP3A-S-1 closing and stays ARMED at the estate level pending that lane's own action.",
+        "Z-W5-S4's schema gap is real and independent of this instance's outcome: slot ~6's own proof-of-spec instance was written AFTER a clean commit+deploy, so it never needed the PENDING-THIS-COMMIT/hex-commit-ish choice Z-W5-S4 found both branches false for -- the gap the row names (no representation for produced-then-refused) is un-exercised by THIS project's eventual success, not resolved by it, and stays a live P2 item for the schema owner."
+      ]
+    },
+    "spec_asserts": "The L10 precondition for this project is 0 items UNDER_INVESTIGATION and every task order terminal; TO-OP3A-S-1, the project's last non-terminal order, carried four such items.",
+    "world_is": "TO-OP3A-S-1 is now complete on an independent full-pair census, the two BLOCKING rows' named one-line disarm was performed and its effect exercised (not merely edited), and the two OBSERVATION rows name residuals outside this order that graduate as owned findings rather than closing. 0 items remain UNDER_INVESTIGATION project-wide after this row.",
+    "notes": "THE DISTINCTION THIS ROW DRAWS, stated once because it recurs across all four: GRADUATED is not 'fixed' -- Z-W5-S2/S3 are graduated AND disarmed (the specific hazard cannot recur on THIS order, since it is terminal), while Z-W5-S1/S4 are graduated and STILL ARMED (the general condition each names is untouched by this order's close and needs its own owner's act). A remediation row for all four carries this distinction forward rather than flattening it to one hazard_standing. This row does not cut the slug -- it clears the L9 precondition; the L10 census and remediation document follow as a separate act."
+  }
+]
+```
