@@ -386,6 +386,28 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
     "spec_asserts": "TO-RP-s-11's cell asks whether an instrument covers each served surface; the row asks whether an ALARM EXISTS AT ALL, upstream of NFRA_OPSEC202609-Z-S151's delivery-leg question on alarms that already exist.",
     "world_is": "Three live surfaces match zero of 51 alarms, positive-controlled. And the largest of them is not archaeological: it is a live, portal-consumed trade submission and approval workflow, fully declared behind an undeclared front door, reachable through a second declared door as well.",
     "notes": "DISARMED AS A RECORDED FINDING, NOT AS A REPAIR. WHAT WAS DELIBERATELY NOT DONE: nothing was built. The standing moratorium forbids minting any alert, alarm, monitor or notification without Andrew's explicit word, so the remedy is NOT 'add alarms' -- it is this record plus a sovereign call, which is carried to Andrew in the same turn rather than waiting on a drain. WHAT THIS ROW DOES NOT CLAIM, because a trade-named finding is exactly where overstating would do damage: NO REQUEST LOGS WERE READ, so nothing here shows the undeclared door is RECEIVING TRAFFIC -- only that it is live, wired and consumed by portal code. And POST /auth carrying authorization NONE while the other six carry CUSTOM + authorizer nfa51m is NORMAL for a login endpoint and is NOT offered as a defect; it is named only so its absence from the finding list is not later read as a missed check. THE OPEN CALL AT ANDREW: whether to declare the gateway in Terraform (a change with a blast radius on a live trade path), whether to consolidate the two front doors, and whether any monitoring is authorized at all. RP-s-11 IS DOING EXACTLY WHAT FWD-11 COMMISSIONED: the monitored-vs-served reconciler found a served surface no instrument covers on its first real pass, and found it because the cell was told to ask that question -- RP-s-6 swept the SAME 51-alarm population for a different question and could not have seen it."
+  },
+  {
+    "id": "NFRA_REPORT-Z-W2-S5",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_REPORT~2",
+    "surfaced_at": "2026-09-10T01:19:20Z",
+    "one_line": "RP-s-13's own issued BOUNDS named canonical-schwab-si2 as still-ungrouped and told this cell to render it UNGROUPED, but the PRD was amended to v0.6 before this build folding Andrew's direct ruling that si2 belongs to Dashboard and stating explicitly that no cell may render it ungrouped; ATTRIBUTION.md is built against the live v0.6 text, not the stale BOUNDS.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D12/NFRA/NFRA_REPORT/prd/NFRA_REPORT_PRD.md@1aae9c43fe, section 6 (Rulings that BIND), verbatim: 'THE canonical-schwab-si2 HALF IS RULED AND CLOSED -- Andrew-direct 2026-09-09 ~22:3xZ, VERBATIM: \\\"I would include si2 under the Dashboard.\\\" It is no longer an ungrouped surface and no cell may render it so.'",
+        "org/missions/D12/NFRA/NFRA_REPORT/prd/NFRA_REPORT_PRD.md@1aae9c43fe, section 8, S13 manifest row, verbatim: 'Live surface still ungrouped: opal-gateway ... canonical-schwab-si2 is RULED into Dashboard (Andrew-direct 2026-09-09 ~22:3xZ) and is NO LONGER an ungrouped example.'",
+        "org/missions/D12/NFRA/NFRA_REPORT/task-orders/NFRA_REPORT.TO-RP-s-13.attribution-axis-and-ungrouped.md (this cell's own issued BOUNDS, worker-face copy): 'Two live surfaces are known to have no ratified group today: opal-gateway and canonical-schwab-si2. Render them UNGROUPED rather than assigning them.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-RP-s-13's BOUNDS: 'Two live surfaces are known to have no ratified group today: opal-gateway and canonical-schwab-si2. Render them UNGROUPED rather than assigning them.'",
+    "world_is": "The PRD this cell also depends on (NFRA_REPORT_PRD.md) was bumped to v0.6 folding a later Andrew-direct ruling that canonical-schwab-si2 is attributed to Dashboard, and states in its own words that no cell may render it ungrouped. Only opal-gateway remains a live surface with no ratified group as of this build.",
+    "notes": "NOT a defect in the decomposition or the issuer's process -- the PRD amendment (v0.4 to v0.6) landed on the SAME 2026-09-09 session this cell was issued in, and this is the ordinary case of a cell re-grounding its premises against live state before building rather than against the text frozen at issuance. ATTRIBUTION.md (this cell's deliverable) renders canonical-schwab-si2 attributed to Dashboard and renders opal-gateway UNGROUPED, per the live PRD. Nothing here is ARMED: the correct answer is already ruled and cited, and no future actor needs to disarm anything -- this row exists so a reader of the BOUNDS text alone is not misled into thinking si2 should still render UNGROUPED."
   }
 ]
 ```
