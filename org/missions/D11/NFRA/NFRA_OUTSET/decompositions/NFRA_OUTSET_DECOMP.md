@@ -517,3 +517,67 @@ s.27-s.30 and PRD v0.8 read "after 00:00Z 2026-09-10 every key the run writes is
 **The lesson for every later cut of a served-output move:** read the PRODUCER'S OWN DATING RULE at the cut and evaluate the candidate instants before a half is signed; "a new key for the day" is a claim about the producer, not about the clock.
 
 — `2.0.0_SA_COO`, L5 round 3 addendum v0.8
+
+
+---
+
+## 32. ROUND 3, ONE MORE CELL (v0.9) -- two accepts name a plane the artifact does not have, and BOTH of the stratum's descriptive strings are missing, not one
+
+**RULED shape (a) by `2.0.0_SA_COO` at msg 95192 on row `S40`, and the requirement WIDENED at msg 95193 on
+row `S41` before this cell was cut.** The assignee raised both rows and corrected its own first one.
+
+**THE FINDING.** `TO-OS-s-22`'s `O22-AC1` clause (v) requires the site-z disclosure to be read *"out of the
+SERVED bytes ... printed verbatim"*, and `TO-OS-s-23`'s `O23-AC1` requires group B to render *"with its grain
+disclosed ([grain=file-pair, NOT resource-grain], the runner's own line)"*. **NEITHER STRING IS IN THE SERVED
+ARTIFACT.** Measured across four artifacts -- the manual day's report (.json 206,144 B, .md 30,358 B) and the
+13:00Z run's (.json 326,897 B, .md 49,319 B) -- five denominator literals appear **0 times each in all four**,
+with `A_propagation@laptop` appearing twice per .json as the positive control that makes the zero a property
+of the artifact rather than of the reader.
+
+⛔ **AND S40's MECHANISM WAS HALF WRONG, WHICH IS WHY THIS CELL IS NOT CUT FROM IT.** S40 attributed both
+blocked clauses to the stratum's `denominator`. Read at source, `estate_report_runner.py:1424-1425`, two
+adjacent lines that send the two halves to two different fields:
+
+```python
+                den = "%s -- %s" % (den, grain_note)
+                vin = "%s [grain=%s, NOT resource-grain]" % (vin, grain)
+```
+
+The grain **NOTE** goes to `denominator`; the grain **TAG** that `O23-AC1` quotes verbatim goes to `vintage`.
+**SO A CELL THAT SERIALIZES ONLY THE DENOMINATOR CLOSES ONE BLOCKED CLAUSE OF TWO AND PRESENTS AS COMPLETE.**
+
+**AND THE CORRECTED PICTURE IS WORSE.** What reaches the artifact is `ai.proposals[].tool_row_cited`, a string
+the model COMPOSES, admitted by `tool_row_resolves` (`:2400-2405`) -- `name in cited_ref and vintage in
+cited_ref`, **a two-token substring containment test**, not byte-equality and not a field copy. The `vintage`
+it tests comes from `tool_row_ref` (`:2350-2362`), built as `"%s@%s" % (stratum['stratum'],
+stratum['reproduce']['vintage'])` -- **the TRACE's vintage, not the stratum's own `vintage` field where
+`:1425` put the grain tag.** The grain string is therefore not merely unserialized; it is not in the string
+the citation gate tests. Observed on the 13:00Z run: five proposals cited, **5 of 5 KEPT, 0 rejected**, none
+carrying a `[grain=...]` suffix. A reader is told which tool produced the rows and when, and is NOT told they
+pair FILES rather than RESOURCES.
+
+| cell | outcome_ref | surface | verb | depends_on | the bar |
+|---|---|---|---|---|---|
+| `OS-s-27` | FWD-5 | `infra/aws/ec2/estate-report-runner/estate_report_runner.py` and its suite | build | `OS-s-22`, `OS-s-23` (blocked clauses only) | **BOTH** of a stratum's descriptive strings -- `vintage` (carrying the grain tag) AND `denominator` (carrying the roster, the per-device states and the grain note) -- serialized as FIELDS beside the `stratum_status` the artifact already carries at `ai.groups.<G>`, so a reader of the served bytes can read each verbatim without the model having paraphrased it |
+
+**Denominator:** PRD v0.11 `endpoint_outcomes` 8; cells **27**.
+
+⛔ **ONE WITHOUT THE OTHER IS A FAILED CELL, NOT A PARTIAL ONE**, and the face says so: `O22-AC1` clause (v)
+reads on `denominator`, `O23-AC1` reads on `vintage`, and a fix reaching one leaves the other exactly as
+unreadable as today while every arm of the cell passes.
+
+**WHAT THIS CELL DOES NOT DECIDE, placed rather than dropped:** whether `tool_row_resolves`' two-token
+containment test should tighten. The assignee raised it and did not press it, and the reasoning is right --
+if the artifact carries the runner's own strings as FIELDS, that validator stops being the only carrier and
+its looseness stops mattering. If this cell lands and the looseness still admits an unlabelled citation, THAT
+is the finding underneath both rows and it earns its own cell. `S29-AC2`-style judgment, not this cut's.
+
+**THE CHAIN READ.** `OS-s-27` touches the runner, which `OS-s-22` deployed at 12:55:13Z and whose order is
+still open on the same seat -- so this is NOT an independent chain and MUST NOT be seated in parallel with
+that order's remaining work. One seat, sequenced.
+
+```
+fanout: 1 of 1 chain, cap 8, reason: the runner is one file and 0.7.0_AE_CloudOps~W holds every open order in this round; a second slot would contend on the same surface and serialise anyway.
+```
+
+-- `2.0.0_SA_COO`, L5 round 3, one cell on rows `S40` + `S41`
