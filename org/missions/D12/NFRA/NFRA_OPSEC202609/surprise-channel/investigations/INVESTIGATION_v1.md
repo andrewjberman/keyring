@@ -5183,3 +5183,79 @@ one-line path amendment; sent UP to 2.0.0_SA_COO~Z at the read. The worker is st
  }
 ]
 ```
+```json
+[
+ {
+  "id": "NFRA_OPSEC202609-Z-W7-S1",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPSEC202609~7 (L7, TO-OP4-S-1), sequencing Phase 1 against the burst's own start time",
+  "surfaced_at": "2026-09-10T22:23Z",
+  "one_line": "S4-AC2 WAS NOT RUN IN T0's OWN MINUTE, THE EXACT TRAP THE ORDER NAMES -- BUT S4-AC4's OWN HISTORY RECORD CLOSES THE GAP THE SAME TURN. The order defines T0 as 'the UTC instant immediately BEFORE the first burst request' and instructs 'run S4-AC2's invocation in that same minute (before the burst)'. This seat ran S4-AC2 at 2026-09-10T22:11:16Z, then spent time writing and py_compile-checking the burst script (org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.9.0_WK_NFRA_OPSEC202609~7/opsec_op4_s1_burst.py) before firing it; the burst's own printed T0 reads 2026-09-10T22:13:10Z -- 1 minute 54 seconds later, a DIFFERENT UTC minute (22:11 vs 22:13). The order calls this precise shape 'the same trap' round 2's negative control fell into (a stale pre-state read). THE GAP IS CLOSED BY EVIDENCE, NOT BY ARGUMENT: S4-AC4's own alarm-history item for the OK-to-ALARM transition (Timestamp 2026-09-10T22:14:03.280Z) carries an oldState.stateValue of OK whose stateReason names a PRIOR fix ('NFRA_OPSEC202609.TO-OP3-S-2 S2-AC5: restoring alarm to OK ...'), meaning the alarm was continuously OK from that prior fix through 22:14:03Z -- spanning both the 22:11:16Z read and the 22:13:10Z burst start with no intervening flip. S4-AC2 is graded PASS on its literal output (both alarms present, topic ARN correct, OPSEC-auth-throttled StateValue OK) with this timing note disclosed rather than hidden.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.9.0_WK_NFRA_OPSEC202609~7 -- same turn, by the S4-AC4 alarm-history record above (oldState=OK continuous through the transition), which independently supersedes S4-AC2's own timing as the discriminator for staleness. No further action is asked of any other seat.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "S4-AC2 invocation run at 2026-09-10T22:11:16Z: `.tools/aws cloudwatch describe-alarms --alarm-names OPSEC-auth-login-rate-limit-blocked OPSEC-auth-throttled ...` -> OPSEC-auth-throttled StateValue OK, both AlarmActions carrying the topic ARN.",
+    "Burst script's own printed T0: `T0=2026-09-10T22:13:10Z` (org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.9.0_WK_NFRA_OPSEC202609~7/opsec_op4_s1_burst.py stdout). Delta from the S4-AC2 read: 1m54s, crossing a UTC minute boundary (22:11 -> 22:13).",
+    "S4-AC4 alarm-history item, Timestamp 2026-09-10T18:14:03.280000-04:00 (=2026-09-10T22:14:03.280Z), HistorySummary 'Alarm updated from OK to ALARM', HistoryData.oldState.stateValue = 'OK', HistoryData.oldState.stateReason = 'NFRA_OPSEC202609.TO-OP3-S-2 S2-AC5: restoring alarm to OK after the observed self-targeted transition. Worker 0.9.0_WK_NFRA_OPSEC202609~2.' -- i.e. the alarm had been OK since that earlier fix, with no state change recorded between then and 22:14:03Z."
+   ]
+  },
+  "spec_asserts": "TO-OP4-S-1 step 2: 'Record T0 ... Run S4-AC2 in the same minute as T0 -- round 2's negative control fired twice on a stale pre-state and this is the same trap.'",
+  "world_is": "This seat's S4-AC2 read (22:11:16Z) and T0 (22:13:10Z, the burst's own start) fall in different UTC minutes because of the time spent authoring and compile-checking the burst script in between. The pre-burst state was in fact continuously OK across that gap, per S4-AC4's own history record, but that continuity was established retroactively rather than by running S4-AC2 in T0's own minute as instructed.",
+  "notes": "WHY THIS DIDN'T BECOME A STOP-AND-DON'T-BURST: the order's stop condition is keyed to S4-AC2's VALUE ('a pre-burst OPSEC-auth-throttled state other than OK means ... the burst is not run'), not to the READ TIMESTAMP, and the value read was OK. The timing instruction is a MECHANISM for trusting that value, and this row exists because the mechanism was not followed exactly even though the value it was protecting turned out to be sound. GENERAL FORM, offered because it recurred once already in this file under a different guise (Z-W5-S2/S3, one field read by two gates): a re-grounding step and the act it re-grounds should be run back-to-back with no authoring work in between, or the re-grounding's timestamp stops meaning what the order says it means. NOT CLAIMED: that S4-AC2's answer would have differed at 22:13:10Z -- the evidence above says it would not have."
+ },
+ {
+  "id": "NFRA_OPSEC202609-Z-W7-S2",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPSEC202609~7 (L7, TO-OP4-S-1), running S4-AC4's invocation verbatim",
+  "surfaced_at": "2026-09-10T22:23Z",
+  "one_line": "S4-AC4's INVOCATION AS WRITTEN IN THE TASK ORDER DOES NOT RUN ON THIS AWS CLI -- `describe-alarm-history` TAKES `--start-date`/`--end-date`, NOT `--start-time`/`--end-time`. Running the order's exact text (`timeout 120 .tools/aws cloudwatch describe-alarm-history --alarm-name OPSEC-auth-throttled --history-item-type StateUpdate --start-time <T0> --end-time <T0+15m> --output json`) returned rc=252 with `aws: [ERROR]: Unknown options: --start-time, --end-time, <T0+15m>, <T0>` before any AWS call was made. The sibling criteria S4-AC5/AC6 use `get-metric-statistics`, whose flags genuinely ARE `--start-time`/`--end-time` -- so the order's own invocation text is internally inconsistent across two adjacent AWS CLI subcommands that happen to name the same concept differently. Substituted `--start-date`/`--end-date` (same values) and the corrected invocation ran cleanly and produced the evidence S4-AC4 needed (the OK-to-ALARM transition at 2026-09-10T22:14:03.280Z, inside the window).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~Z -- this order's issuer and the author of S4-AC4's invocation text. The disarm is a documentation fix: correct `--start-time`/`--end-time` to `--start-date`/`--end-date` in any future criterion invocation naming `cloudwatch describe-alarm-history` (this order is otherwise terminal after this round and does not itself need re-cutting).",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "THE LITERAL INVOCATION, run verbatim from the task order face: `timeout 120 .tools/aws cloudwatch describe-alarm-history --alarm-name OPSEC-auth-throttled --history-item-type StateUpdate --start-time 2026-09-10T22:13:10Z --end-time 2026-09-10T22:28:10Z --output json` -> exit code 252, stderr `usage: aws [options] <command> <subcommand> ... aws: [ERROR]: Unknown options: --start-time, --end-time, 2026-09-10T22:28:10Z, 2026-09-10T22:13:10Z`.",
+    "THE CLI'S OWN HELP TEXT, `.tools/aws cloudwatch describe-alarm-history help`, lists `[--start-date <value>]` and `[--end-date <value>]` among the command's options; no `--start-time`/`--end-time` option is listed for this subcommand.",
+    "THE CORRECTED INVOCATION: `timeout 120 .tools/aws cloudwatch describe-alarm-history --alarm-name OPSEC-auth-throttled --history-item-type StateUpdate --start-date 2026-09-10T22:13:10Z --end-date 2026-09-10T22:28:10Z --output json` -> rc 0, two StateUpdate items returned (OK->ALARM at 22:14:03.280Z, ALARM->OK at 22:15:03.277Z).",
+    "CONTRAST: S4-AC5's invocation, `cloudwatch get-metric-statistics ... --start-time <T0> --end-time <T0+20m>`, ran with `--start-time`/`--end-time` UNCHANGED and succeeded (rc 0) -- confirming the flag names genuinely differ between these two `cloudwatch` subcommands rather than this being a shim quirk."
+   ]
+  },
+  "spec_asserts": "S4-AC4's <invocation>: `timeout 120 .tools/aws cloudwatch describe-alarm-history --alarm-name OPSEC-auth-throttled --history-item-type StateUpdate --start-time <T0> --end-time <T0+15m> --output json`.",
+  "world_is": "This AWS CLI's `describe-alarm-history` subcommand rejects `--start-time`/`--end-time` and requires `--start-date`/`--end-date`. The order's invocation text, run exactly as written, fails before contacting AWS (rc 252, an argument-parsing error, not a live-state answer).",
+  "notes": "THE EVIDENCE ITSELF IS NOT IN DOUBT: the corrected invocation reads the same underlying AWS alarm-history API this criterion means to exercise, and its output (two StateUpdate items bracketing the burst) is exactly the shape S4-AC4 asks for. What is recorded here is that a future worker (or a future re-cut of this same criterion shape) copying this order's invocation text verbatim will hit the identical rc=252 before ever reaching AWS -- a criterion whose invocation cannot run as written cannot discriminate anything until someone notices the CLI error and substitutes the right flag, exactly as happened here."
+ },
+ {
+  "id": "NFRA_OPSEC202609-Z-W7-S3",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPSEC202609~7 (L7, TO-OP4-S-1), checking the bounds section's stated side effect after the burst",
+  "surfaced_at": "2026-09-10T22:23Z",
+  "one_line": "THE ORDER'S BOUNDS SECTION PREDICTS A SENTINEL WATCH ROW FOR THIS DEVICE'S EGRESS ADDRESS ('as round 2's bursts did; that is expected') -- NONE WAS FOUND, ~9 MINUTES POST-BURST. This device's egress address, read via `curl -sS https://checkip.amazonaws.com` before the burst, is `108.242.96.89`. A `dynamodb get-item --table-name opal-suspicious-addresses --key '{\"address\":{\"S\":\"108.242.96.89\"}}'` run at 2026-09-10T22:22Z (rc=0) returned NO item. This is a read-only observation, not a criterion, and is not blocking: S4-AC9 (SENTINEL_BLOCK_ARMED=false) still PASSES regardless, and the order does not require the WATCH row to exist -- it merely says one is EXPECTED as a side effect. Two plausible, unresolved reasons, neither chased further because this order's bounds do not ask for it: (1) the sentinel's own stated coverage bound (SENTINEL_COVERAGE_BOUND env var on opal-sentinel) names its sources as the CloudFront and regional WAF log groups and explicitly disclaims coverage of paths that reach the app without passing either ACL; opalinvest.dev/auth/login may or may not be one of those paths, unread by this seat. (2) the ingestion from WAF logs to this table may lag past this seat's observation window (WAF log delivery to S3 and any batch/scheduled ingest into DynamoDB were not read).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "N/A -- non-blocking observation against a BOUNDS prediction, not a criterion; no act by this order or its issuer is required. Whichever owning lane (0.7.0_AE_CloudOps, the sentinel's builder) wants to confirm coverage of the opalinvest.dev auth path can do so at leisure.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "Egress address, read before the burst: `curl -sS https://checkip.amazonaws.com` -> `108.242.96.89`.",
+    "`.tools/aws dynamodb get-item --table-name opal-suspicious-addresses --key '{\"address\":{\"S\":\"108.242.96.89\"}}' --output json` at 2026-09-10T22:22Z -> rc=0, empty stdout (no Item).",
+    "`.tools/aws dynamodb describe-table --table-name opal-suspicious-addresses --query 'Table.ItemCount'` -> 666 (DynamoDB's approximate, periodically-refreshed count -- not a live number and not itself evidence of whether a row was just added or not).",
+    "`SENTINEL_COVERAGE_BOUND` (read via `lambda get-function-configuration --function-name opal-sentinel`): 'this sentinel sees ONLY what the two WAF web ACLs log -- CLOUDFRONT scope via aws-waf-logs-opal-cloudfront (the portal) and REGIONAL scope via aws-waf-logs-opal-gateway (the opal-gateway ALB). IT CANNOT SEE: raw execute-api addresses ... and opalinvest.com, which carries no CloudFront and no WAF at this vintage.' opalinvest.dev is neither of the two examples named as uncovered, but was also not confirmed as one of the two covered sources by this seat.",
+    "S4-AC9 was run and PASSED independently of this row: `SENTINEL_BLOCK_ARMED` = `false`, unchanged."
+   ]
+  },
+  "spec_asserts": "TO-OP4-S-1 BOUNDS: 'Your burst will add or append a WATCH row and a case file for this device's egress address, as round 2's bursts did; that is expected.'",
+  "world_is": "No row exists in `opal-suspicious-addresses` for `108.242.96.89` as of 2026-09-10T22:22Z (~9 minutes after the burst started). No case file was searched for (out of this order's paths and not required by any criterion).",
+  "notes": "RECORDED, NOT CHASED: this order's `<paths>` do not include the sentinel's evidence bucket or its ingestion pipeline, and no acceptance criterion depends on this row existing -- pursuing it further would be reading outside what the order asks for a side-effect prediction, not a requirement. Filed because CLAUDE.md treats an unmet BOUNDS-section prediction as the kind of 'odd, off-task' thing a row exists for, not because it changes this order's own PASS/FAIL grid."
+ }
+]
+```
