@@ -1,0 +1,340 @@
+{
+  "schema_version": "1.0",
+  "project": "NFRA_CLDGRPH",
+  "round": 6,
+  "seat": "2.0.0_SA_COO~A",
+  "written_utc": "2026-09-10T03:55Z",
+  "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
+  "rows": [
+    {
+      "seq": 1,
+      "limb": "L5/L6",
+      "started_utc": "2026-09-09T17:4xZ",
+      "ended_utc": "2026-09-09T18:0xZ",
+      "act": "ROUND 6 ISSUED AS ONE ISSUANCE (spine v3 L10 -> L5 -> L6, obligation 1 of the drive: the analysis in hand -> the recut the same tick). Decomposition v0.6: CG-s-21..CG-s-28 ADDED (34 cells), the s.2 ROUND 6 block, changelog 0.6 with the two L5 choices recorded (fixed instants for the two-seat 'same moment'; stitch-codebuild as the value of the PRD's stitch-cloud class). EIGHT task orders TO-CG-F-1..F-8 in the v3 grammar, one cell each, every probe name carrying its order id (f1_..f8_), the PATH line in every face, R14/R15 in the two retirement faces, 'together' at the flip named as two commits. Chains per the CTO's ordering: ~1 F-1 (S21) -> F-2 (S22 laptop half, instants T0 19:00Z / T1 20:00Z / T2 21:00Z); ~2 F-3 (S23) -> F-4 (S24) -> F-5 (S25) -> F-6 (S26 LAST); ~3 F-7 (S27); ~4 F-8 (S28). fanout 4 of 4 chains, cap 8. dep_stage ROUND_CLOSE -> EXECUTING on both carriers (project.json + derive --write). THE CUT'S CENSUS (the cost of a v3 round goes into the cut): the tarball head-object (71,671 B, ETag 3925738f...), both stores' sizes and claim cards, derive_stitch.py's exit-2 paths (:246-248 GRAIN_SENTINEL_FAIL), the buildspec's marker literal 'stitch-codebuild', the newest build id and its BUILD-phase failure text, the source zip's date and size, the workflow's zip recipe and the PORTAL_REPO_PAT dependency, write_manifest's 4 call sites (9 hits / 961 files), the REFRESH string re-located from the PRD's :80 to :133 (16 hits / 854 files), the three generated carriers' real paths (.tools/TOOL_CLASSIFICATION.yaml, .tools/tool_index.py, org/modules/graph/TOOL_MASTER.yaml), comp_debt.py's stitch sites by line, the tests dir (15 files), .tools/terraform.exe present in the main tree (copied to slot ~2's worktree at hand-off for F-4's apply). THE WORLD MOVED AT THE CUT: the S3 stitch marker rewritten by a laptop at 17:53:55Z from a clone not in this repository -> row S70 (ARMED to 0.8.0_AE_CloudComp), CG-s-23's face carries it and F3-AC4 discriminates on the producer field. The site-Z half: ONE message to 0.0.0_AB_MSTR naming the fixed question, the three instants, the record path and the census both seats run.",
+      "artifacts": [
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md v0.6",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-F-1..F-8.*.md",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/project.json (dep_stage EXECUTING) + org/projects/NFRA_CLDGRPH.json (derived)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md (S70; 152 rows)"
+      ],
+      "commit": "c6b16d8f04",
+      "next": "spawn the four workers on fresh worktrees wk-cldgrph-6-1..4 from CLOUD (opus; F-4's slot gets .tools/terraform.exe at hand-off); the MSTR message for site Z; the 20-minute cron re-armed; drains through safe-merge.sh; F-2 handed after F-1's drain (its instants are fixed: a late hand-off asks at the remaining instants)."
+    },
+    {
+      "seq": 2,
+      "limb": "L7 (drain + hand-off) / L6 (two rulings) / adjudication",
+      "started_utc": "2026-09-09T18:40Z",
+      "ended_utc": "2026-09-09T18:5xZ",
+      "act": "TO-CG-F-1 (CG-s-21) TERMINAL AND DRAINED. The worker report (0.9.0_WK_NFRA_CLDGRPH~1; acts dcdf0581b1, flip 86b71ad4a3) and the instance re-verified at this seat INSIDE the worktree: checker rc 0 on six ids (F1-AC1..AC5 PASS by output; F1-AC6 recorded UNVERIFIABLE-BY-INSTRUMENT for 3.0.0_SA_CVO); this seat's own read on the main workspace: kuzu_db and kuzu_ac7.db ABSENT by absolute ls -d beside projection_client.py present; kuzu_load.py absent at HEAD after the merge (git show rc 128). MERGED through safe-merge.sh: rc 4 on the channel (CLOUD had moved: the CVO's S71 landed at 18:44Z, 153 rows); the base-independent union resolver produced 154 (ours 153 + the branch's W1-S32), no markers; the first --continue REFUSED because the resolved file was not staged (git add, then --continue rc 0) -- @2c4e462a7b. Worktree and branch KEPT (slot ~1's chain continues). CLOUD merged into wk-cldgrph-6-1 (fast-forward to 2c4e462a7b). TO-CG-F-2 (CG-s-22, the site-Z exercise's LAPTOP half) HANDED at 18:49Z by continuing the same subagent, eleven minutes before T0 19:00Z; the site-Z half is CARRIED by 0.0.0_AB_MSTR over the agentbus (msg 94630, 18:26Z: one message with the six items verbatim; site Z's comp-kuzu blob may lag origin/SITEZ's integrate leg -- the record must name which blob answered; a missing ack before 19:00Z is site Z's MISSED to print). ADJUDICATION (obligation 7) -- ONE call this tick, from the CVO's row S71 (18:44Z): S70's laptop is an INSTALLED POST-COMMIT HOOK at both clones (.tools/git-hooks/stitch-refresh-post-commit.sh -> .tools/stitch-refresh; 552 laptop publishes since 07-07, refused since 09-05 by the grain sentinel; site Z's derive passes so site Z now writes the shared key), carrying an Andrew-direct of 2026-07-07 ('a SOLO contributor whose local working tree IS the canonical state') against PRD v0.6 S23-S26. Classified ADJUDICABLE-SPEC (no NEVER line; the Andrew word is a direction whose premise the fabric no longer meets) -> PITCHED to 1.0.0_SA_CTO with 0.0.0_AB_MSTR copied (msgs 94637/94638) with the REC: the cloud producer holds the key; the hook stops publishing to it (uninstall at every clone as a device act; .tools/stitch-refresh refuses the cloud-owned key) -- as a PRD v0.7 line on S23's accept or a card to Andrew. RULED INSIDE THE GRANT the same tick (recorded on the F-3 and F-4 faces; sent to worker ~2 as a ruling): F3-AC4 read IMMEDIATELY after the ad-hoc build with its UTC instant (perishable; a hook overwrite recorded beside it); the hook and its scripts untouched by every round-6 order; F3-AC1's cause citable from the cloud log S71 carries; F3-AC6's status_reason marks the nightly read perishable; F-4's fold CARRIES the marker's producer into the served vintage and does not refuse on it. Slots ~2/~3/~4 mid-order (F-3 finding commit de590a7d02: derive_stitch's 0-dangling check dropped the AWS layer's wildcard flag; F-7 acts commit 987e920554; F-8 carriers regenerated, uncommitted).",
+      "artifacts": [
+        "CLOUD @2c4e462a7b (the F-1 drain)",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-F-3.*.md + F-4 (the S71 rulings)",
+        "msgs 94637/94638 (the pitch)"
+      ],
+      "commit": "527cd9386d",
+      "next": "F-2's three instants (19/20/21Z); drains of F-3/F-7/F-8 as they flip; F-4 handed to ~2 after F-3 (terraform.exe already in its worktree); the CTO's answer on S71 executed as a ruling when it lands."
+    },
+    {
+      "seq": 3,
+      "limb": "L7 (drain) / L6 (re-cut + mid-round addendum) / adjudication",
+      "started_utc": "2026-09-09T18:5xZ",
+      "ended_utc": "2026-09-09T19:1xZ",
+      "act": "TO-CG-F-7 (CG-s-27) TERMINAL AND DRAINED @3e6be14930 (instance rc 0 in-worktree; 13 of 13 contract tests re-run on CLOUD after the merge; channel union 154 + 3 = 157; slot ~3's worktree and branch removed). TO-CG-F-8 (CG-s-28) reported OPEN with two BLOCKING rows to the issuer: F8-AC3's expect assumed three generators (two scripts write three carriers) and F8-AC4 invoked a --check flag the script does not parse (it silently REGENERATED) -- both issuer defects; RE-CUT on the worker's branch @c722bf8bdc under the standing authority @9f4a57262f (effect not purpose; numbers measured), the grant WIDENED by one manifest string (W4-S1: graph-call-manifest.yaml cloud.cluster.page_panel_drilldown freshness, the source of the last index hit), W4-S4 (six out-of-grant descriptions) carried named to L10; seat rows S72-S74 (the first commit attempt was refused by the index race with the CTO's merge @764439e1d8 and re-run in this commit); the CTO and CVO TOLD (94653/94654); the worker re-runs at HEAD and flips. THE CTO'S RULING ON S71 (msg 94648, PRD v0.7 @a46abe413a merged @764439e1d8): the CLOUD producer holds the stitch keys from its first publish (18:49:23Z, producer=stitch-codebuild -- F-3's ad-hoc build SUCCEEDED); Andrew's 07-07 local-hook word SUPERSEDED by his 09-02 ratification (R16); S29 retires the hook on three planes, SITE Z FIRST; the interim: no seat runs stitch-refresh by hand. EXECUTED AS A RULING THE SAME TICK (obligation 1: an addendum in hand -> one issuance): decomposition v0.7 (CG-s-29, 35 cells), TO-CG-F-9 to a NEW slot ~5 (the instruction plane: the hook script + installer retired with a tombstone, stitch-refresh refuses with exit 3 and the 07-07 words kept verbatim under a SUPERSEDED block; the laptop reads: the hook file after MSTR's act, the 120 s silence test via an in-grant filter-matching pointer file); fanout 5 of 5 chains, cap 8; 0.0.0_AB_MSTR asked for the device act on this laptop NOW and site Z's via the agentbus with the record paths. Verified at the cut: stitch-refresh :6-12 words, :47-50 sentinel exit 2, :82-83 publish; the hook file's pair at :3-4 beside six other entries (the PRD's 'two other hook lines' is the CTO's count; the worker prints the real one); the marker at 18:49:37Z, 330 B, the cloud's.",
+      "artifacts": [
+        "CLOUD @3e6be14930 (the F-7 drain)",
+        "wk-cldgrph-6-4 @c722bf8bdc (the F-8 amendment)",
+        "decompositions/NFRA_CLDGRPH_DECOMP.md v0.7",
+        "task-orders/NFRA_CLDGRPH.TO-CG-F-9.local-stitch-hook-retired.md",
+        "channel rows S72-S74 (160)"
+      ],
+      "commit": "2e8dd90435",
+      "next": "spawn ~5 on wk-cldgrph-6-5; MSTR's device act; F-2's instants; F-3's flip and drain then F-4 to ~2; F-8's re-run and drain (+ comp-system phase two)."
+    },
+    {
+      "seq": 4,
+      "limb": "L7 (two drains + a hand-off) / the two-phase discharge / adjudication",
+      "started_utc": "2026-09-09T19:1xZ",
+      "ended_utc": "2026-09-09T19:3xZ",
+      "act": "TO-CG-F-3 (CG-s-23) TERMINAL AND DRAINED @2e0c77dcbd: instance rc 0 in-worktree; this seat's own read of build opal-stitch-produce:daaedf78-3ea7-4dd4-828b-be1c843f5d4c = SUCCEEDED (initiator Andrew_Berman -- the seat's credentials); channel union 160 + 5 = 165 (W2-S40..S44). The worker's two findings carried: the exit 2 was TWO stacked failure modes (the stale July zip -- 0 portal/src files and a pre-07-25 grain baseline -- and, behind it, derive_stitch's 0-dangling check dropping the AWS layer's own wildcard flag, fixed at de590a7d02 and narrowed to service ssm); F3-AC4's git_sha limb cannot fire because the 'foreign clone' was site Z on this estate (W2-S42 -> S76). W2-S40 (three portal shas, no two agree) ARMED to 0.7.0_AE_CloudOps; W2-S44 (the order's own grant sits inside the hook's trigger regex; the fix commit fired the local publisher in the worktree, refused only because portal/ is empty there) ARMED to 1.0.0_SA_CTO -- both carried to the packet. TO-CG-F-4 (CG-s-24) HANDED to the same subagent with CLOUD merged (2e0c77dcbd) and .tools/terraform.exe verified present in its worktree; the hand-off names F-7's landed writer contract and W3-S14 (no serve path calls format_provenance_header) for the vintage carrier. TO-CG-F-8 (CG-s-28) TERMINAL at pass 2 on the amended face and DRAINED @f2ddef8deb: F8-AC1 0 of 0 hits (the widened one-string grant fixed the last index hit at its source, graph-call-manifest.yaml:1500; the manifest's own invariants PASS after), F8-AC2 4 of 93 all declared retired, F8-AC3 2 commands / 3 carriers / 0 diff, F8-AC4 the generator's silent parity assertion with both controls; channel union 165 + 6 = 171 (W4-S1..S6); slot ~4's worktree and branch removed. THE TWO-PHASE DISCHARGE (W2-S36's pattern): comp-system run once after the merge (grounded-against-live at f2ddef8deb; 0 changed rows across 26 managed regions in 6 files; infra/system/06_current_state.{md,json} regenerated) and committed in this commit. ADJUDICATED: W4-S6 (two more fields of the opened manifest entry describe the dead engine by other words) -> S75, carried named to L10 with W4-S4, not widened again (the accept's letter is met; a field census of every entry is a PRD row's shape); W2-S42 -> S76 (the criterion met by its discriminating limb; the limb that reads the same on both arms named, not deleted). Not yet: MSTR's device act (the hook pair still on this laptop at 19:14Z; 94655 and the nudge 94657 unread); F-2's instants (T0 and T1 reached); F-9 polling.",
+      "artifacts": [
+        "CLOUD @2e0c77dcbd (F-3 drain)",
+        "CLOUD @f2ddef8deb (F-8 drain)",
+        "infra/system/06_current_state.{md,json} (the discharge, this commit)",
+        "channel rows S75, S76 (173)"
+      ],
+      "commit": "55b70c3a54",
+      "next": "F-2's flip after 21:00Z (or earlier if site Z's instants matched); F-4 on ~2 (the image act); F-9 on ~5 after MSTR's device act; the partial L8 packet once F-2 or F-9 lands; MSTR [STUCK] at the two-tick mark if 94655 stays unread."
+    },
+    {
+      "seq": 5,
+      "limb": "L6 (second mid-round addendum) / adjudication",
+      "started_utc": "2026-09-09T19:2xZ",
+      "ended_utc": "2026-09-09T19:4xZ",
+      "act": "PRD v0.8 (row S30, RETIRE the compiler's write paths; msg 94659) arrived at 19:25Z on Andrew's ~19:1xZ word; the CTO's HOLD (94665, 19:28Z) followed within minutes on Andrew's ~19:3xZ word ('effectively deprecate it and pull it off from being surfaced via comp-which. We do not need to gate it') -- NOTHING was cut against the v0.8 row; the cut inputs were gathered while waiting (the CLI seam main :3254-3324, the wrapper, the map's comp-aws entries :397/:650 and its lack of any tool-grain status field, comp-which's tuples :290/:375 and string :1190, comp-tools.yaml :125-143 with the duplicate-key history :691-698, comp-aws-agent-usage.yaml). PRD v0.9 @a10004ecdf merged @6593536bab landed 19:35Z (S30 amended in place: DEPRECATE, no refusal, no exit-code change; a preamble + pulled out of comp-which selection at tool grain; the carriers regenerated; the engine untouched). EXECUTED THE SAME TICK as ONE issuance: decomposition v0.8 (CG-s-30, 36 cells), TO-CG-F-10 to a NEW slot ~6 (the preamble on STDERR so 'as before' is measurable as stdout byte-equality on read-only subcommands; a tool-grain status field declared in the map's schema and honoured by gen_tool_registry; comp-which's tuples repointed and its ranker skipping deprecated tools; the registry text rewritten under a declared phrase domain; the engine byte-checked); fanout 6 of 6 chains, cap 8. MSTR DARK: the CTO's 94651/94662 and this seat's 94655/94656 all OFFER-EXHAUSTED at 19:36Z (0 of 4 read), the hook pair still on this laptop -- the two-tick mark; escalated to the CTO in this tick's telling (MSTR is the seat the rule names for [STUCK], and MSTR is the dark one).",
+      "artifacts": [
+        "decompositions/NFRA_CLDGRPH_DECOMP.md v0.8",
+        "task-orders/NFRA_CLDGRPH.TO-CG-F-10.comp-aws-deprecated-unrouted.md",
+        "project.json phase"
+      ],
+      "commit": "973a20aff9",
+      "next": "spawn ~6; F-2's flip after 21:00Z; F-4 on ~2; F-9's F9-AC3 at its deadline (MSTR); the partial L8 packet at the next drain."
+    },
+    {
+      "seq": 6,
+      "limb": "L7 (the shared plane re-asserted) / adjudication",
+      "started_utc": "2026-09-09T19:4xZ",
+      "ended_utc": "2026-09-09T19:5xZ",
+      "act": "THE CTO ANSWERED THE MSTR ESCALATION (94679 @ce0eee9f93): MSTR is dark by Andrew's design; the CTO took this laptop's device act itself (the two stitch-refresh lines removed from .git/hooks/post-commit at 19:46:3xZ; BEFORE 2 of 21 lines, AFTER 0 of 19; the lane amended on the record to 'the device's live Tier-1 seat or MSTR'); site Z's line stays MSTR's on Andrew's word (row S77 ARMED to MSTR; the CTO put the one line to Andrew at its terminal). AND: at 19:45:44Z this laptop's hook had fired on this seat's own tick-21 commit 6de9b76d93 and OVERWRITTEN the cloud marker (producer stitch-local) -- F-3's repaired derive now PASSES locally, so S71's 'inert by accident' premise expired at F-3's merge. THE ISSUER'S CALL, taken: ONE ad-hoc opal-stitch-produce build (fe7ff348, 19:53:45Z -> SUCCEEDED 19:55:34Z) re-asserted producer=stitch-codebuild on the key (marker 19:55:00Z, git_sha de590a7d02, 29,267 nodes; read 19:55:4xZ) -- so F-4 folds a cloud-made artifact and F-9's marker read is clean; row S78. Worker ~5 (F-9) told by ruling: the laptop pair is gone (re-run F9-AC3 if its poll expired; continue to the silence test; take F9-AC4's marker read after the build; name site Z's half in F9-AC5). Verified at this seat: 0 stitch-refresh lines at 19:52Z.",
+      "artifacts": [
+        "row S78",
+        "build opal-stitch-produce:fe7ff348-819d-4dce-b688-801ae19de95e SUCCEEDED",
+        "the marker at 19:55:00Z (stitch-codebuild)"
+      ],
+      "commit": "c14a7b4366",
+      "next": "F-9's flip; F-2 after 21:00Z; F-4; F-10; the partial L8 packet at the next drain; site Z's hook line (MSTR/Andrew)."
+    },
+    {
+      "seq": 7,
+      "limb": "adjudication (an arch-gate call pitched) / L6 (a face amended)",
+      "started_utc": "2026-09-09T20:0xZ",
+      "ended_utc": "2026-09-09T20:1xZ",
+      "act": "TO-CG-F-4 (CG-s-24) reported OPEN at 9c98dd1e63: the fold and its vintage carrier BUILT and exercised (15 of 15 fixture arms), the image act deliberately NOT taken. W2-S45 (BLOCKING -> the CTO): the live stitch artifact carries FIVE node types absent from derive_runner.NODE_TYPE_LAYER (GOLD_SCRIPT 1,380, S3_DATA_KEY 294, REACT_QUERY_KEY 94, PORTAL_COMPONENT 22, PORTAL_BUNDLE 1) and the COND-2 cert fails the nightly derive CLOSED on any unmapped type; the guarded partial fold drops 100% of the DERIVES_FROM and STORED_IN boundary edges (216/216, 955/955); the rename shortcut is a grain violation (W2-S48: populations differ up to 10x). Classified ADJUDICABLE-ARCH (a CVO-signed frozen taxonomy under a CTO arch-gate) -> PITCHED to the CTO + CVO with the REC (five ADDITIVE entries: GOLD_SCRIPT -> pipeline as a new type, the three portal types -> portal, S3_DATA_KEY the CTO's call between aws and pipeline; the GO stamped in the map's own comment form; the CVO's re-sign; then the issuer widens F-4's grant to the dict and re-hands). Chain ~2 (F-4 -> F-5 -> F-6) IDLE by dependency until ruled. RULED inside the grant: W2-S46 (the served header premise wrong; the worker's appended age_line carrier accepted) -> S79; W2-S47 (F4-AC4's control 1 of 3; GOLD_SCRIPT discriminates) -> in the face; W2-S49 (four family names lack the globgrph- prefix and fail SOFT) -> S80 and the face's names corrected. F-4's face amended on the worker's branch with all four rulings; no re-hand until the gate GO. Perishable: the marker still the cloud's at the worker's 20:04Z read.",
+      "artifacts": [
+        "wk-cldgrph-6-2 F-4 face amendment (this seat's commit on the branch)",
+        "rows S79, S80",
+        "the pitch to the CTO + CVO"
+      ],
+      "commit": "18883309d8",
+      "next": "the CTO's GO + the CVO's re-sign -> widen F-4's grant to NODE_TYPE_LAYER and re-hand; F-2 (21:00Z); F-9's flip; F-10; the partial L8 packet at the next drain."
+    },
+    {
+      "seq": 8,
+      "limb": "L6 (third mid-round addendum; a grant widened by a gate GO) / L7 (a re-hand)",
+      "started_utc": "2026-09-09T20:1xZ",
+      "ended_utc": "2026-09-09T20:2xZ",
+      "act": "THE CTO RULED W2-S45 within the tick (94692; PRD v0.10 @4fc1bcb3e4 merged @04d9942aff; record CTO_ADJUDICATION_NFRA_CLDGRPH_20260909T2015Z_W2_S45_STITCH_VOCABULARY_GATE.md; R17): GO 20260909T2015Z for FIVE ADDITIVE, LABELLED-INTERIM entries in derive_runner.NODE_TYPE_LAYER (GOLD_SCRIPT -> pipeline; REACT_QUERY_KEY, PORTAL_COMPONENT, PORTAL_BUNDLE -> portal; S3_DATA_KEY -> aws at object grain, the COND-A resource count unmoved), every admitted node stamped vocabulary=stitch-v1, four of the five retired later by S31; the CVO re-signs the map at L9. EXECUTED THE SAME TICK: (1) F-4's face on the worker's branch amended with the GO (the grant already holds derive_runner.py; the deliverable gains the five entries + the GO line VERBATIM from the record's :76-80 + the stamp on every admitted node; the fixture gains a stamp arm; the record and F4-AC4's capture gain the stamped count) and F-4 RE-HANDED to the same subagent; (2) decomposition v0.9 (CG-s-31, 37 cells) and TO-CG-F-11 (the vocabulary unified at the PRODUCER by an identity census first, unresolved members carried with origin=stitch, the four map entries retired, the stamp gone, comp-debt's leg re-read) cut onto chain ~2 between F-5 and F-6 (S26 stays LAST); fanout unchanged 6 of 6, cap 8. Also on the record: site Z's hook pair removed 19:58:27Z (MSTR 94689; row S81 disarms S77's site-Z half) -- the cloud producer is the ONE writer of stitch/ on the estate; F-9's F9-AC5 names it; MSTR's note for L9: after the window the discriminator is the producer field (CodeBuild is a legitimate writer inside 120 s), never the timestamp alone.",
+      "artifacts": [
+        "wk-cldgrph-6-2 F-4 face (the GO amendment, this seat's commit)",
+        "decompositions/NFRA_CLDGRPH_DECOMP.md v0.9",
+        "task-orders/NFRA_CLDGRPH.TO-CG-F-11.stitch-vocabulary-unified.md",
+        "project.json phase"
+      ],
+      "commit": "cdb38aeb66",
+      "next": "F-4's image act + derive + projection on ~2; F-2 after 21:00Z; F-9's flip; F-10; the partial L8 packet at the next drain; F-5 -> F-11 -> F-6 in order."
+    },
+    {
+      "seq": 9,
+      "limb": "adjudication (a gate that refused its own outcome) / L6 (a grant widened)",
+      "started_utc": "2026-09-09T20:4xZ",
+      "ended_utc": "2026-09-09T20:5xZ",
+      "act": "TO-CG-F-10 (CG-s-30, worker ~6) reported OPEN at 7cf9c9d4e1 with EVERY mechanical criterion PASSING on its worktree (the preamble first on stderr with stdout byte-identical and rc equal on 3 of 3 read-only subcommands; comp-aws rows 0 of 4 phrasings from ranks 4/42/23/1 of 79, the control still comp-kuzu; curated tuples 2 -> 0 of 90; the map's tool-grain status declared and carried; parity 99 of 99; idempotent regeneration; 0 of 7 laptop-producer phrasings; the engine byte-unchanged) and the acts UNCOMMITTABLE: the pre-existing self-route invariant (registered-implies-reachable over the manifest's tools_index) refuses the commit because comp-aws no longer surfaces in comp-which -- the deliverable's own outcome (W6-S2, BLOCKING). RULED inside the grant (a gate edit in the order's own lane; told to the CTO and CVO 94707/94708): the invariant exempts a tool by DECLARED status (retired | deprecated) read from the map's tool-grain field and the manifest's entry-grain field, printing the exempt set; the manifest's ONE comp-aws tools_index entry gains status: deprecated (R14's entry-grain parallel); the worker's refusal of the gate's suggested workaround (vocabulary routing AWAY) upheld. W6-S1 (the generated carriers read concern/canonical_call from a frozen tool_overrides.yaml bootstrap, so the map reword never reached them): the grant widened to that file's comp-aws entry; the census extended to the generated carriers; the frozen-bootstrap shape carried named to L10. F-10's face amended on its branch and the order re-handed; rows S82/S83.",
+      "artifacts": [
+        "wk-cldgrph-6-6 F-10 face amendment (this seat's commit)",
+        "rows S82, S83",
+        "msgs 94707/94708"
+      ],
+      "commit": "25b4b86904",
+      "next": "F-10's commit under the amended gate, re-run, flip, drain; F-2's flip after 21:00Z; F-4's image act on ~2; the partial L8 packet at the next drain."
+    },
+    {
+      "seq": 10,
+      "limb": "adjudication / L6 (a proxy criterion re-cut)",
+      "started_utc": "2026-09-09T21:0xZ",
+      "ended_utc": "2026-09-09T21:0xZ",
+      "act": "TO-CG-F-2 (CG-s-22, the site-Z exercise's LAPTOP half) reported OPEN at f40467471b with the exercise DONE: three instants KEPT (T0 19:00:00Z offset 0.606 s, T1 20:00:00Z 1.310 s, T2 21:00:00Z 2.081 s; a planted 12.3 s late start caught), three answers recorded whole (58 rows each), the skew against the gateway's Date header max 0.347 s, the judgment reading recorded -- and F2-AC3 FAIL by output: the census pattern counted NAMES and matched kuzu_db.TOMBSTONE.md, the tombstone F-1 ordered the same slot to write (the stores 0 of 3 by ls -d, the control firing). W1-S33 (BLOCKING -> the issuer). RULED and RE-CUT on the worker's branch under the standing authority @9f4a57262f: the pattern matches WHOLE store names (`^(kuzu_nessie_db|kuzu_db|kuzu_ac7|kuzu_ac7\\.db)$`); effect not purpose; re-handed for the re-run and the flip; row S84. FOR L9 (the CVO grades the pair against site Z's record): the served pointer ADVANCED between T1 and T2 (vintage 2026-09-09T14:59:48 -> 20:04:09 -- F-4's derive? no: F-4 has not published; the projection worker's own marker-driven rebuild), same 58-row shape, different sha256 -- the pair is graded on (instant, vintage, sha256). The laptop's values: T0/T1 sha256 3071ef4c...30df under vintage 14:59:48 (manifest 86ea84674078); T2 sha256 50170787...3821 under vintage 20:04:09 (manifest 2ca2ec43cabf).",
+      "artifacts": [
+        "wk-cldgrph-6-1 F-2 face amendment (this seat's commit)",
+        "row S84"
+      ],
+      "commit": "b00f295d5e",
+      "next": "F-2's re-run and flip -> drain -> slot ~1 closed; the partial L8 packet (F-1, F-7, F-3, F-8, F-9 + F-2 once drained) to the CVO; F-4's image act; F-10's commit under the amended gate."
+    },
+    {
+      "seq": 11,
+      "limb": "L7 (a drain) / the two-phase discharge / adjudication",
+      "started_utc": "2026-09-09T21:1xZ",
+      "ended_utc": "2026-09-09T21:2xZ",
+      "act": "TO-CG-F-10 (CG-s-30) TERMINAL at pass 2 on the amended face and DRAINED: instance rc 0 in-worktree; this seat's own reads at CLOUD HEAD after the merge -- `comp-aws classes` rc 0 with the deprecation preamble as the first stderr line; `comp-which` over the first `when:` phrasing returns 0 comp-aws rows. The worker's pass-2 measures: preamble first on 3 of 3 read-only subcommands with stdout byte-identical and rc equal; comp-aws rows 0 of 4 phrasings (from ranks 4/42/23/1 of 79); curated tuples 0 of 90; the map's tool-grain status declared and carried, parity 99 of 99, idempotent regeneration; laptop-producer phrasings 0 of 7 in the registry text; the engine byte-unchanged; the self-route invariant exempting by DECLARED status at either grain with the exempt set printed and four controls fired (map unreadable; neither grain declares -> fail-closed; a planted foreign status not exempted; both grains agree); the manifest's one entry deprecated with R14a cited and its four invariants PASS; the override entry reworded and reaching both carriers by import; SAFE_COMMIT_GATE=PASS. Channel union (W6-S1..S4). Slot ~6's worktree and branch removed. THE TWO-PHASE DISCHARGE run once after the merge (comp-system; infra/system regenerated) and committed in this commit. ADJUDICATED: W6-S3 (a second upstream -- eleven cloud.* manifest entries register comp-aws subcommands with no status; one reaches the generated index) -> S85, carried named to L10 as the instruction plane's remaining residue (a PRD row's shape under R14/R14a); W6-S4 (the addendum's 'merge CLOUD into your branch' declined by the worker under its standing law -- correct; the drain owns the merge) INERT, no ack needed. 6 of 11 terminal.",
+      "artifacts": [
+        "CLOUD (the F-10 drain)",
+        "infra/system/06_current_state.{md,json} (the discharge, this commit)",
+        "row S85"
+      ],
+      "commit": "26ce1163cb",
+      "next": "F-2's flip and drain (slot ~1 closes); F-4's image act on ~2; the PARTIAL L8 packet to the CVO once F-2 drains (six terminal orders); F-5 -> F-11 -> F-6 on ~2."
+    },
+    {
+      "seq": 12,
+      "limb": "L7 (a drain) / L8 (the PARTIAL packet compiled)",
+      "started_utc": "2026-09-09T21:2xZ",
+      "ended_utc": "2026-09-09T21:3xZ",
+      "act": "TO-CG-F-2 (CG-s-22, the site-Z exercise's LAPTOP half) TERMINAL at pass 2 on the amended F2-AC3 and DRAINED @8a074ba7ba: instance rc 0 in-worktree; this seat's own anchored census on the main workspace reads 0 (W1-S34 noted: grep -c's rc 1 IS the pass); three instants kept (offsets 0.606 / 1.310 / 2.081 s), 58 rows each, skew max 0.347 s; the served pointer advanced between T1 and T2 so the pair is graded on (instant, vintage, sha256). Site Z's half COMPLETE per MSTR 94720 (relayed 94721): T0/T1 sha256 3071ef4c under vintage 14:59:48, T2 sha256 50170787 under 20:04:09 -- IDENTICAL to the laptop's per-instant values; site Z's record LOCAL on its tree @d375140694 until a push leg on Andrew's word. Channel union 190 + 2 = 192. Slot ~1's worktree and branch removed; ONE cldgrph worktree remains (slot ~2). SEVEN of eleven orders TERMINAL at HEAD (F-1, F-2, F-3, F-7, F-8, F-9, F-10). L8 (obligation 3, the compile is an act): ledger/L8_PACKET.round6.partial.md compiled with the seven orders' instances, mechanical results, judgment criteria and the channel census (192 rows; the ARMED rows by owner; the residue carried named), and handed to 3.0.0_SA_CVO in this commit's message. Chain ~2 (F-4 -> F-5 -> F-11 -> F-6) runs; the FINAL packet follows its drain.",
+      "artifacts": [
+        "CLOUD @8a074ba7ba (the F-2 drain)",
+        "ledger/L8_PACKET.round6.partial.md"
+      ],
+      "commit": "d1b413f3b0",
+      "next": "the packet's READ ack from the CVO (nudge at one tick); F-4's report (the image act + the derive + the projection); then F-5, F-11, F-6 on ~2; the FINAL packet and the drain-end read to the CTO."
+    },
+    {
+      "seq": 13,
+      "limb": "L7 (a drain + a hand-off) / adjudication",
+      "started_utc": "2026-09-09T21:3xZ",
+      "ended_utc": "2026-09-09T21:4xZ",
+      "act": "TO-CG-F-4 (CG-s-24) TERMINAL AND DRAINED: THE PROJECTION CARRIES THE STITCH SOURCE. Instance rc 0 in-worktree; this seat's own reads after the merge: the thin client answers GOLD_SCRIPT 1380 / S3_DATA_KEY 294 / API_ROUTE 151 with the VINTAGE line 'Built from the estate as of 2026-09-09 21:05:17 UTC. Stitch source: stitch-codebuild built 2026-09-09T19:55:00Z'; 7 of 7 families by describe-task-definition on the new digest sha256:478d0a43...dae20 (derive-runner 8, projection-worker 5, serving 3, the four producers 3); NODE_TYPE_LAYER 65 keys at CLOUD HEAD. The worker's measures: the fold on 21 of 21 fixture arms; the image rebuilt by CodeBuild f8abbe55 over 27e4ac36de and pushed 20:39:50Z; the NEVER-2 entry naming seven families CLOSED; the apply 18 of 18 addresses (E-2's ten was a four-family set; four foreign addresses left as found, W2-S52); the ad-hoc derive on revision 8 (task deee298ca1bd, exit 0) folding 1,844 nodes / 723 edges, 27,423 duplicates skipped by co-key, 1,771 stamped stitch-v1, 0 unmapped; the pointer 20:04:09 -> 21:05:17; three planes agree on 1,771 (the log, the served props count, the CVO's C-S40 census minus the 20 co-keyed PORTAL_COMPONENT ids). Channel union (W2-S50..S54). Worktree KEPT (the chain continues); CLOUD merged into the branch. TO-CG-F-5 (CG-s-25, comp-debt's second leg) HANDED to the same subagent. ADJUDICATED: W2-S51 (the issuer's `n.vocabulary` query form -- not a column; the stamp rides props) -> S86 accepted; W2-S53 (safe-apply's halt gate requires a session-serial file outside any grant) -> S87 carried named to L10 beside W1-S27; W2-S50 (the face's inline GO quotation differs by a clause from the record's -- the worker extracted the record's text programmatically) and W2-S54 (a bare bash in a Python subprocess is the WSL stub -- three silent zeros) INERT, no ack owed. 8 of 11 terminal.",
+      "artifacts": [
+        "CLOUD (the F-4 drain)",
+        "rows S86, S87"
+      ],
+      "commit": "d660609c61",
+      "next": "F-5 on ~2 (the repoint reads a served graph that carries the types); then F-11 (the vocabulary unified; the four interim entries retired) and F-6 (the local stitch store retired, LAST); the FINAL packet and the drain-end read."
+    },
+    {
+      "seq": 14,
+      "limb": "L7 (a drain + a hand-off) / L10 (two words executed) / adjudication",
+      "started_utc": "2026-09-09T21:4xZ",
+      "ended_utc": "2026-09-09T22:1xZ",
+      "act": "TWO WORDS OF ANDREW'S EXECUTED between drains: (a) at this terminal ~21:5xZ, on the question what model the spawned workers use -- measured first from two subagent transcripts (claude-opus-5 at effort high on 459 of 459 and 291 of 291 requests; the definition said sonnet and every Opus worker had come from a per-spawn override) -- his word 'I'm ok with enumerating opus for worker agents ... as opposed to Sonnet': .claude/agents/worker.md `model: sonnet -> opus` @65d7815288, the description naming the hand-cut CLOUD worktree and retiring 'isolation worktree'; broadcast to the CTO, CVO, base COO and MSTR (94731-94734) with push state; the spine's L7 'cheaper model' clause named as the CTO's to move. (b) at the CTO terminal ~21:4xZ (94727), NO WAITING on any scheduled fire: F-11's face amended @6d68da35cd before its hand-off (the 'nightly SUCCEEDED' clause on the manual-trigger form: same-target ad-hoc build + run-task, told apart on the artifact, the rules' history listed; the 03:00Z fires confirmation); the CVO and CTO told (94736/94737) that F3-AC6, F-4's derive and F10-AC6 read on the ad-hoc runs already on the record (daaedf78, fe7ff348, task deee298ca1bd) + the 67-build rule history; PRD v0.13 S32 @8387f0cc21 landed with those very ids, and the CVO's C-S52 graded F3-AC6 PASS on that form. TO-CG-F-5 (CG-s-25) TERMINAL AND DRAINED @b9917bc2e1 (the first attempt REFUSED by safe-merge on a shared index carrying the CTO's in-flight staging -- a correct refusal, retried clean; a premature `git merge CLOUD` on the worker's branch was ABORTED before the retry and left it at 0af7df1d71): instance rc 0 in-worktree; this seat's own census at HEAD: 0 CODE-band hits on kuzu/STITCH_DB/_stitch_freshness in comp_debt.py. comp-debt's second leg answers from the served graph -- nessie 308 + stitch 207 of 1,674 stitch-typed nodes, one connection, 4.8 s inside a 120 s budget imported not retyped, the VINTAGE line with the stitch clause printed once for both legs, 0 local opens with a planted control, the CVO's baseline byte-unchanged (autocrlf nearly accused the worker of editing it -- W2-S58) and the delta +96 residuals / 112 new keys carried to the CVO (W2-S57: the July local store's universe vs the September served graph; S31 changes every key again). Channel union 204 + 5 = 209. CLOUD merged into the branch; TO-CG-F-11 (CG-s-31, the vocabulary unified at the PRODUCER) HANDED to the same subagent -- F-6 stays LAST. ADJUDICATED: W2-S56 -> S88 (comp-debt invisible to comp-which by construction: no shim, no map row, a homonymous package; carried named to L10). 9 of 11 terminal.",
+      "artifacts": [
+        "CLOUD @65d7815288 (.claude/agents/worker.md)",
+        "CLOUD @6d68da35cd (F-11's manual-trigger amendment)",
+        "CLOUD @b9917bc2e1 (the F-5 drain)",
+        "row S88"
+      ],
+      "commit": "ab47e7a5d7",
+      "next": "F-11 on ~2 (the identity census, the producer edits, the map's four entries retired, the derive + projection, comp-debt re-read); then F-6 LAST; the FINAL packet and the drain-end read to the CTO; CronDelete on the send."
+    },
+    {
+      "seq": 15,
+      "limb": "L6 (the edict: a widened fan-out) / adjudication (a certified baseline pitched)",
+      "started_utc": "2026-09-09T22:2xZ",
+      "ended_utc": "2026-09-09T22:5xZ",
+      "act": "ANDREW'S EDICT (~22:3xZ at the CTO terminal; CTO 94766): proceed through /canonical-flow spawning the subagents the cuts need, whatever the rows need, without asking. Executed the one widening the rows admit: TO-CG-F-6 (CG-s-26) depends on S25 ONLY (DONE @b9917bc2e1), so it was RE-ADDRESSED from slot ~2 to a new slot ~7 @f2750f9212 (comp_debt.py removed from its grant -- the refusal at HEAD already names 'served nessie+stitch' at :133-137; the two live orders share no file), the worktree cut from CLOUD and the worker spawned at 22:4xZ -- its transcript reads claude-opus-5 / effort high on 11 of 11 requests; fanout 7 of 7 chains, cap 8. The spine v3.7 law edit (the CTO @cec3d4274d: Opus by the definition; hand-cut worktrees) agrees with the definition @65d7815288. TO-CG-F-11 (CG-s-31) reported OPEN at 8261f08a4b with the unification PROVEN on a local run against the real snapshot and portal source: the identity census 1,790 of 1,790 across four populations (1,330/1,380; 145/294; 20/22; 26/94 resolved; 269 carried with origin=stitch, 24 of them ambiguous-across-firms -- a carry, never a coin flip; LOST=0); admitted 3,560 = merged 3,022 + created 538; DERIVES_FROM 216/216 and STORED_IN 955/955 resolving, 0 dangling; the four provisional names absent from the unified output, PORTAL_BUNDLE kept; the map 65 -> 61 keys with the COND-A resource count unmoved at 32; comp-debt's leg on the canonical names rc 0; three of four census figures reproducing the CVO's C-S40 exactly. BLOCKED at the push: the producer's own grain sentinel refuses because org/modules/graph/grain_baseline.json (CVO-certified) still names the four retired types at non-zero (1260/272/27/85) -- pushing the zip would have made the cloud producer fail as it failed 67 times before F-3. W2-S60 (BLOCKING -> the CTO + CVO). PITCHED (94776/94777) with the REC: recertify the four to 0 in the file's own form (the 2026-07-25 EXTERNAL_ENDPOINT precedent), the CTO's GO + the CVO's sign, then the grant widened to those entries and F-11 re-handed for the push, build, derive, projection and served reads under the manual-trigger form. W2-S61 (the producer's input carries its own prior output -- derive_runner archives the snapshot derive_stitch reads; closed in-grant by a retype pass) -> CloudComp; W2-S63 -> CloudOps; the STORED_IN builder's stale class literal (955 edges would have silently become 0) fixed in-grant.",
+      "artifacts": [
+        "CLOUD @f2750f9212 (F-6 re-addressed)",
+        "wk-cldgrph-6-7 (slot ~7 spawned)",
+        "msgs 94776/94777 (the W2-S60 pitch)"
+      ],
+      "commit": "381eda9ebb",
+      "next": "the CTO's GO + the CVO's sign on W2-S60 -> widen F-11's grant to grain_baseline.json's four entries and re-hand; F-6's report on ~7; the FINAL packet and the drain-end read after both drains; CronDelete on the send."
+    },
+    {
+      "seq": 16,
+      "limb": "L6 (a grant widened by a gate GO) / L7 (a re-hand)",
+      "started_utc": "2026-09-09T23:0xZ",
+      "ended_utc": "2026-09-09T23:0xZ",
+      "act": "THE CTO RULED W2-S60 within the tick (94778; a dated section of the W2-S45 record): GO in two parts under ONE CVO sign -- the four retired provisional types recertified to 0 in grain_baseline.json (the EXTERNAL_ENDPOINT precedent: a baseline that certifies a vocabulary the producer no longer emits is a check reading the old world) AND the five canonical types recertified at their first post-unification magnitudes (PipelineScript 332, PipelineFunction 2,428, S3Key 588, Component 24, ReactQueryKey 188; the CVO re-measuring before signing -- 'not read at L9': a band check against the old magnitudes would refuse the correct output, and leaving the nightly refusing until L9 is the waiting Andrew's word forbids); the GO line 20260909T2305Z verbatim; the COND-A resource-type count unmoved at 32. EXECUTED THE SAME TICK: F-11's face on the worker's branch amended @9495eb15f7 (the grant widened to exactly nine entries of grain_baseline.json; the entries written with the sign field `pending 3.0.0_SA_CVO`; the local derive re-run to GRAIN-SENTINEL PASS; then the zip push, ONE ad-hoc build, ONE ad-hoc derive, the projection and the served reads under the manual-trigger form) and F-11 RE-HANDED to the same subagent; the CVO told (the sign lands on CLOUD after the drain, C-S40's shape). Carried by the CTO to the L10: W2-S61 as a substrate-card question for the stitch producer (Rule 28 q3/q4: a producer that re-archives its own reader's input); W2-S63 to CloudOps; the STORED_IN silent-zero fix as a lesson for the accept's negative arm. F-6 on slot ~7 past its archive and delete (the local store gone from the main workspace; 19 files edited; flip pending).",
+      "artifacts": [
+        "wk-cldgrph-6-2 @9495eb15f7 (the F-11 GO amendment)",
+        "msg to the CVO 23:04Z"
+      ],
+      "commit": "aad0fd7fab",
+      "next": "F-11's flip (the push, build, derive, projection, served reads) and F-6's flip; both drains; the CVO's baseline sign; the FINAL packet; the drain-end read to the CTO; CronDelete."
+    },
+    {
+      "seq": 17,
+      "limb": "L7 (a worker report adjudicated) / L6 (a re-cut under @9f4a57262f)",
+      "started_utc": "2026-09-09T23:22Z",
+      "ended_utc": "2026-09-09T23:28Z",
+      "act": "TICKS 44-45 READ NOTHING TERMINAL (both workers active at 23:10Z and 23:19Z; no broker traffic since the W2-S60 GO; no log written). TICK 46: 0.9.0_WK_NFRA_CLDGRPH~7 REPORTED TO-CG-F-6 OPEN with a VALID instance @98323fe799 and two mechanical FAILs -- the work itself stands @6abd4a9d94 (four archive objects on s3://opal-313476888478-globgrph/archive/NFRA_CLDGRPH.CG-s-26/, ARCHIVE_OBJECTS=4 of 4, SHA256_MATCH=3 of 3 by S3-computed checksum; the tombstone 7 of 7 fields; kuzu_stitch_load.py git rm'd, last hash 8a074ba7ba; the store absent 3 of 3 by absolute path with the control fired; comp-debt rc 0 with no store, refusal naming the served source; no engine opened). ADJUDICATED as THREE CUT DEFECTS, ZERO WORK DEFECTS, and RE-CUT on the worker's branch @6b3aef13a1 under the standing authority: (1) F6-AC3 (W7-S4) -- the face widened the cell's scope to the tool homes and the REAL-WIDE sweep read LOCAL_KUZU_BUILDERS=2 of 486 files (0 parse failures) against 0 of 66 beside the projection; the two hits are tsgraph_spike/load_scratch_kuzu.py:97 and load_clusters_scratch.py:43, each opening its OWN scratch store under tsgraph_spike/out/ -- the population row W2-S25 declared harmless at D-7 pass 3; the pair joins the named exclusion with W2-S25 printed, the wide sweep stays deciding, the planted-builder control unchanged; (2) F6-AC5 (W7-S3) -- the expect hard-coded the W2 row namespace of the slot the order was cut for; the schema binds W{n} to the committing suffix; now W[0-9]+-S[0-9]+, grammar only; (3) W7-S1 -- six deliverables paths named ~2, which the lane gate refuses for serial ~7 (18 ADHC_OWNPTH.005 measured); now ~7. NOT re-cut, carried to the L8 packet: W7-S2 (graph-call-manifest.yaml:1237 freshness and its mirror tool_index.py:2443 still name the deleted store's db-path; outside the grant; the cell's accept met by the row; REC to L10: one entry-grained edit under the manifest owner). The worker RE-HANDED (widen the EXCL, re-run AC3/AC5, re-write the instance, flip in the two-commit shape). The CTO and CVO TOLD (94784, 94785). F-11 on slot ~2 executing the W2-S60 GO, no commit past 9495eb15f7 at 23:19Z.",
+      "artifacts": [
+        "wk-cldgrph-6-7 @6b3aef13a1 (the F-6 re-cut)",
+        "msgs 94784 (CTO), 94785 (CVO)",
+        "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260909T2325Z.md"
+      ],
+      "commit": "b1fd7df2d3",
+      "next": "F-6's flip and drain (union the four W7 rows; my disarm rows W7-S1..S4 at the drain); F-11's flip and drain; the CVO's baseline sign; the FINAL packet; the drain-end read to the CTO; CronDelete."
+    },
+    {
+      "seq": 18,
+      "limb": "L7 (a drain) / L8 (a partial packet) / adjudication (five acks)",
+      "started_utc": "2026-09-09T23:42Z",
+      "ended_utc": "2026-09-09T23:58Z",
+      "act": "TICK 47 (23:41Z) READ NOTHING TERMINAL (both workers active; slot ~7 mid re-run, slot ~2 mid-recert; no broker traffic). TICK 48: TO-CG-F-6 (CG-s-26, the JOIN's LAST cell) TERMINAL on slot ~7 after the re-cut -- re-run 6f0a3af8e7, flip 558f25e77e; six mechanical criteria PASS (AC3 0 of 486 files over the SAME population with the W2-S25 pair excluded by name and printed; AC5 REGISTRY_MENTIONS=2 (row W7-S2) admitted), AC6 judgment recorded; the worker re-grounded the exclusion's premise before applying it (0 stitch/nessie mentions in either spike loader; 6 of 6 excluded basenames unique across the sweep) and re-ran AC1/AC2/AC4 so no capture predates the re-cut. VERIFIED IN-WORKTREE by this seat: checker VALID rc 0, <status>complete at HEAD by git show, tree clean. DRAINED @acf75d72d8 (rc 4 on the channel, union 211 + 4 = 215, --continue under the guards: row gate 4 new rows OK, corpus OK, tree check 0 violations). Slot ~7's chain done: worktree and branch removed (only .scratch untracked). No org/modules/graph path in the merge, so no comp-system phase two. ROWS S90-S94 @88091d4945 (215 -> 220): S90/S91/S92 DISARM W7-S1/S3/S4 (the three cut defects); S93 ACKS W7-S2 and CARRIES it to L8 (graph-call-manifest.yaml:1237 freshness + tool_index.py:2443 mirror naming the deleted store; REC for L10: one entry-grained edit under the manifest owner, then a REGENERATION of the mirror); S94 ACKS THE CVO's S89 (found 23:25Z while re-measuring for the W2-S60 sign: the unified producer emitted every CARRIED member twice, one copy per class list, plus PORTAL_BUNDLE) against the worker's own fix on F-11's branch @22e388d221 (_collapse_stitch_copies, W2-S65: 449 duplicated ids, 269 members against themselves, admitted 3,560 -> 1,790 = 1,521 merged + 269 created, 0 lost, now F11-AC1's own denominator; the nine baseline entries written at the COLLAPSED magnitudes 167/1,217/381/201/125 and not the relayed admitted counts, W2-S64 armed to the CVO) -- the two snapshot vintages (the CVO's 170/1,217/394/201/125 at 80daa1fff6 vs the worker's at 22e388d221: PipelineScript +3, S3Key +13) NAMED for the sign. L8 PARTIAL v2 COMPILED (ledger/L8_PACKET.round6.partial.v2.md, sha256 e87221bb9216e4d5..., 10 of 11 terminal) and SENT to the CVO (94789) with the CTO for the record (94790). F-11 on slot ~2: the zip re-push under the GO ledgered CLOSED 23:49Z (one PutObject, zero task families); the ad-hoc build, derive, projection and served reads running.",
+      "artifacts": [
+        "CLOUD @acf75d72d8 (the F-6 drain)",
+        "CLOUD @88091d4945 (rows S90-S94 + the partial v2 packet)",
+        "msgs 94789 (CVO), 94790 (CTO)",
+        "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260909T2350Z.md"
+      ],
+      "commit": "2a8f9b6571",
+      "next": "F-11's flip and drain (verify in /c/tmp/wk-cldgrph-6-2; union; comp-system phase two -- org/modules/graph/grain_baseline.json moves; remove worktree + branch); the CVO's baseline sign; the FINAL packet + COMPLETION_REPORT.round6.json; the drain-end read to the CTO; CronDelete."
+    },
+    {
+      "seq": 19,
+      "limb": "L7 (a worker report adjudicated) / L6 (BOUNDS widened) / adjudication (one call pitched)",
+      "started_utc": "2026-09-10T00:44Z",
+      "ended_utc": "2026-09-10T01:04Z",
+      "act": "TICKS 49-51 (00:05Z, 00:21Z, 00:41Z) READ NOTHING TERMINAL: the partial v2 packet READ by the CVO 00:01Z and ADJUDICATED @104c46c48a (F6-AC6 PASS on the CVO's own before/after reads; 8 of 8 round-6 judgment criteria graded across ten orders; the tsgraph_spike pair named as the CTO's L10 decision row; S89 kept ARMED until F-11 drains); the CTO's Andrew word closing three D0 pre-tree projects (not this one) read; the worker on ~2 active at every tick. TICK 52: 0.9.0_WK_NFRA_CLDGRPH~2 REPORTED TO-CG-F-11 OPEN @865b7a4b0a with two BLOCKING rows armed to this seat, both inside CG-s-31's own accept (so neither a re-cut). LANDED and measured on the object it made: the nine recertifications; the ledgered zip push (served object 23:49:34Z); ONE ad-hoc opal-stitch-produce build SUCCEEDED (git_sha 22e388d221); ONE ad-hoc derive on globgrph-derive-runner:8 (skipped_unmapped_type=0); the projection pointer 21:05:17 -> 00:08:59; PROVISIONAL_NAMES_SERVED=0 of 4; the five magnitudes 167/1,217/381/201/125 identical across the local run, the cloud artifact, the served graph and the baseline; comp-debt's leg on the unified names; both nightly rules ENABLED from history. W2-S68 RULED (L6, my BOUNDS): F11-AC3 STORED_IN_RESOLVED=0 of 955 -- the edge targets the bucket ARN while the S3_BUCKET node id is the bucket NAME (_index_aws:83/:87 `arn or nid`; the producer's dangling check resolves against ARNs, true and blind); PRE-EXISTING (F-4's artifact: the same 955, 0 resolvable -- STORED_IN never reached the served graph). The fix one line inside the grant; the BOUNDS widened to a SECOND cycle @d5d7d8b6aa on the branch; the worker RE-HANDED (local proof first, then the ledgered zip push, one build, one derive on the pinned runner, the projection, AC3 re-taken). W2-S67 PITCHED to the CTO (94807; the CVO 94808) as the one call: F11-AC2 STITCH_V1_STAMPED_SERVED=1 -- the one node PORTAL_BUNDLE `portal`, stamped by the DEPLOYED fold image :8 (digest sha256:478d0a43, the CG-s-24 seven-family pin) while the code at HEAD retires the stamp (F11-AC4 two instruments; 1,771 -> 1). Closing it is an IMAGE ACT under NEVER-2 (rebuild, seven-family digest re-pin, ledger naming every family, the ad-hoc derive the test, the 02:00Z fire the acceptance); served DELTA not 0 (one props key on one node), so the never-widen sign is both halves: this seat's GIVEN in the pitch, the CTO's asked. REC: GO as a follow-on inside F-11 on the same slot the moment it lands; the order does NOT wait (its second cycle runs now; the GO before the second derive closes AC2 in the same cycle, else AC2's stamp limb reports as measured with the row and the FINAL L9 reads it). THE CTO'S HALF LANDED THE SAME TICK (94809, acked): GO inside F-11 on slot ~2 now and no wider, the discriminators named (a served node diff of exactly {PORTAL_BUNDLE: -vocabulary}; 1 -> 0 with PORTAL_BUNDLE present; 0 of 4 provisional unchanged; the ECR tag digest before/after; the five magnitudes unchanged); EXECUTED as an amendment @f3b17ade51 with the eight image-act paths granted, the act folded into the second cycle so ONE derive tests both rows; the worker re-handed. W2-S68 taken by the CTO for the L10 as a named lesson.",
+      "artifacts": [
+        "wk-cldgrph-6-2 @d5d7d8b6aa (the second-cycle ruling)",
+        "wk-cldgrph-6-2 @f3b17ade51 (the image-act GO)",
+        "msgs 94807 (CTO), 94808 (CVO), 94809 (the CTO's half)",
+        "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260910T0050Z.md"
+      ],
+      "commit": "a7253d8a29",
+      "next": "F-11's second cycle (and the image act if the CTO GOes it); the flip or the OPEN report; the drain (comp-system phase two -- grain_baseline.json moves); the CVO's baseline sign; the FINAL packet + COMPLETION_REPORT.round6.json; the drain-end read to the CTO; CronDelete."
+    },
+    {
+      "seq": 20,
+      "limb": "L7 (a dead worker's deploy measured, then resumed) / NEVER-2",
+      "started_utc": "2026-09-10T01:20Z",
+      "ended_utc": "2026-09-10T01:40Z",
+      "act": "TICKS 53-54 read the second cycle running (the STORED_IN fix @b6c92e3174, the NEVER-2 entry opened 01:15Z, the before-census taken). TICK 55: THE WORKER DIED (HTTP 429, session limit to 03:50Z, model claude-opus-5) SECONDS AFTER THE SEVEN-FAMILY IMAGE RE-PIN. NEVER-2 read first, self-report refused: this seat MEASURED the live plane with describe-task-definition per family -- 7 of 7 on sha256:17ccc9b0... (derive-runner 9, cse 4, comp-learns 4, fedobs 4, resource-summaries 4, projection-worker 6, serving 4), 0 of 7 on the old digest, 0 of 7 on any tag -- and the ONE allowed ad-hoc derive on :9 SUCCEEDED (task e054a78ebc, exit 0, 01:17:09Z -> 01:29:12Z). The record survived: pin, CLOSED entry and censuses committed @9c9b68cb6f, only .build/ untracked. NO ROLLBACK OWED; none taken. The worker's own second-cycle result stands on the branch: STORED_IN both-ends-present 955 of 955 locally (was 0 of 955), DERIVES_FROM 216 of 216, reconciliation 1790 = 1521 + 269 lost 0, GRAIN-SENTINEL PASS, the five magnitudes unchanged; ACT 1's zip re-push served at 01:04:38Z and its ONE ad-hoc build SUCCEEDED (marker git_sha b6c92e3174, 27,745 nodes / 61,304 edges). ROW S95 appended (the mid-order death and the whole deploy, with the ordering lesson: open, act, close AND COMMIT, then read). WORKER RESUMED with the five measured facts handed to it -- the projection pointer, F11-AC2/AC3 re-taken with the CTO's discriminators, the record, the instance, the flip. Andrew's terminal word this tick: 'Proceed'.",
+      "artifacts": [
+        "live describe-task-definition x7 @01:3xZ",
+        "wk-cldgrph-6-2 @9c9b68cb6f",
+        "row S95",
+        "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260910T0135Z.md"
+      ],
+      "commit": "6d5c29aa2e",
+      "next": "F-11's reads and flip (the worker, or this seat if the rate limit holds it past the next tick); the drain (comp-system phase two -- grain_baseline.json moves); the CVO's baseline sign; the FINAL packet + COMPLETION_REPORT.round6.json; the drain-end read to the CTO; CronDelete."
+    },
+    {
+      "seq": 21,
+      "limb": "L7 (a second-cycle report adjudicated) / L6 (a third cycle) / adjudication (one call pitched) / law read",
+      "started_utc": "2026-09-10T01:44Z",
+      "ended_utc": "2026-09-10T02:10Z",
+      "act": "TICK 56: the slot RECOVERED on its own (alive 01:44Z, no further 429) -- no seat takeover needed. FOUR LAW/RELAY READS, all acked: 94844 (the CTO: the issuer-measured close SOUND, no rollback owed, S95 TAKEN at two grains); 94849 LAW EDIT spine v3.9 @d8400610bd -- L7 gains the worker-death clause CUT FROM THIS SEAT'S S95 (open the entry, ACT, close AND COMMIT it, THEN read; the issuer sweeps the artifact plane with a DIFFERENT instrument before deciding to finish or roll back; the reads are the issuer's under the dead-seat residue rule and the order does not wait), which now binds this seat's image-act and deploy FACES from the next cut; 94865 LAW EDIT CLAUDE.md rule 27 @f88a07d092 (L2 and L3 both the CTO's; MSTR HOLDS the register); 94860 ANDREW-DIRECT ~01:5xZ narrowing ADVI to firm-admin BI with performance reporting/sensitivity/model overlay moving to a new Investor Reporting page under D9 -- informational for this lane, 'no cut follows tonight', and it touches no NFRA_CLDGRPH cell. TICK 57: THE SECOND CYCLE'S REPORT. BOTH AUTHORISED ACTS LANDED AND BOTH CRITERIA STILL FAIL, each on a cause the act EXPOSED. Bought and kept: the fold's stamp writer retired (stamped=0, was 1); 7 of 7 families on the new digest, 0 on any tag; STORED_IN REACHES the served graph at all (edges 723 -> 1678, exactly +955); the pointer 00:57:32 -> 01:27:30; AC1/AC4/AC5 re-taken PASSING (AC5 isolated 109 -> 96 of 548, thirteen edge-less S3Key nodes connected -- real in count, provisional in meaning). W2-S69 RULED, a THIRD producer cycle inside the existing grant, FIRED NOW, no second image act: the stamp had a SECOND WRITER -- derive_stitch reads the snapshot derive_runner archives (the W2-S61 cycle), that snapshot holds the node the OLD fold stamped, and _collapse_stitch_copies kept the archived copy because its tie-break lost its signal once the snapshot went canonical (retyped_prior_cycle={}). The discrimination worth keeping: the whole-graph node diff (27,663 -> 27,665) shows NO vocabulary key in the delta at all, so a stamp-scoped check would have proved nothing. Remedy ordered: drop the retired key on carry-forward from the archived snapshot + an explicit tie-break, local proof first, then zip/build/derive-on-:9/projection. W2-S70 PITCHED (94868 CTO, 94869 CVO), NOT ruled here: WHICH IDENTITY A BUCKET HAS. The one-line fix moved AC3 from 0 of 955 to 764 of 955 and ALL 764 land on S3_BUCKET_POLICY (191 = the one firm bucket with no policy node). Three planes, two names, no value right at both ends: the producer keys a bucket by NAME; the fold admits the NAME only (0 of 955 with the ARN, 955 with the name -- one variable, both directions); the served graph keys S3_BUCKET by ARN and gives the NAME to the POLICY node. Two planes are outside this order and one remedy is a second image act. MY REC: the served keying is canonical (a bucket IS its ARN), the FOLD rewrites a name endpoint onto the arn at admission -- one change in the plane that knows both values, fixing every class carrying both an id and an arn -- cut as a round-7 cell with its own sign, not a widening of F-11. The order does NOT wait: if the ruling lands before the zip push the worker folds it in, else AC3 reports as measured with the row. The worker also reads the 02:00Z nightly as the confirmation the sign named.",
+      "artifacts": [
+        "wk-cldgrph-6-2 @31e6039cd8 (the third-cycle ruling)",
+        "msgs 94868 (CTO), 94869 (CVO); acks 94844, 94849, 94860, 94865",
+        "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260910T0205Z.md"
+      ],
+      "commit": "0618a7c9d3",
+      "next": "F-11's third cycle and its report; the drain (comp-system phase two -- grain_baseline.json moves); the CVO's baseline sign; the FINAL packet + COMPLETION_REPORT.round6.json; the drain-end read to the CTO; CronDelete."
+    },
+    {
+      "seq": 22,
+      "limb": "L7 (two rulings into a running cycle) / adjudication / a self-report against new law",
+      "started_utc": "2026-09-10T02:05Z",
+      "ended_utc": "2026-09-10T02:25Z",
+      "act": "TICK 58-59. THE CTO RULED W2-S70 WITHIN THE TICK (94872 @8ee07e73f9): the 764 are a FALSE RESOLUTION and F11-AC3 FAILS on them -- an edge landing on S3_BUCKET_POLICY says a gold script stores its data in a policy, Rule 22's wrong-grain trap; CANONICAL is that an AWS resource node IS its arn (the name an attribute); BOTH planes move together (the fold normalizes at admission, the producer emits canonically) and PRODUCER-ALONE IS REFUSED on this order's own 0-of-955 measurement; the class census, the fold's admission rule, the producer endpoint and the re-taken AC3 are ROUND-7 cells with their own image act and sign; F-11 DRAINS with AC3 measured-and-failing. My REC endorsed; written to the face @373a576e38 and the worker re-handed with the scope NARROWED to the W2-S69 stamp fix. THEN THE CVO'S S96/S97 (ARMED to this seat) CHANGED WHAT THE NUMBERS MEANT: measured on the served projection, 764 = 191 distinct S3Key sources x 4 name-keyed buckets with NO key at 1, 2 or 3, and the artifact's 955 = 191 x 5 -- so '955 STORED_IN edges' was never 955 distinct facts, and BOTH this seat's reading (94869) and the worker's were arithmetically identical to the truth while showing none of the defect. The bucket is ALREADY on each key's props. RULED an EMISSION defect inside F-11's grant, distinct from W2-S70's identity question, and folded onto the face @2ca857e2c2 with the fix specified (one edge per key to the bucket its props name; a key with no bucket gets NO edge and is counted; identity untouched). MEASURED, NOT ASSUMED, ON THE NEXT READ: the third cycle's zip was already served at 02:13:37Z, one minute before that amendment -- so cycle three carries the STAMP fix only and finishes as cut, and the fan-out becomes a FOURTH cycle, authorised @eca1c0ca68 rather than deferred to round 7 because the served graph asserts each of 191 keys is stored in four buckets and 573 of 764 served edges are fabricated facts in the graph the estate queries for where data lives. A fifth cycle is explicitly not the worker's to start. ROW S98: a SELF-REPORT against CLAUDE.md NEVER-1 as amended tonight (@9328e15f45, 'a sign-off names the act's BLAST RADIUS, never the producer's DECISION'). Both halves of the W2-S67 sign (94807 mine, 94809 the CTO's) named the outcome STITCH_V1_STAMPED_SERVED 1 -> 0; the property had TWO writers; the unnamed branch occurred. The radius half held exactly and the demanded discriminator caught the miss. Sharpening offered: census a named property's WRITERS before a half names its outcome -- Rule 22's shared-dependency blindness at the SIGN rather than the check. Third instance tonight after NFRA_OUTSET-S34 and ETFS_GUARDRAIL EG-s-15, first with the prediction in both halves. Also read and acked: spine v3.9's L7 worker-death clause (this seat's S95), rule 27's parentheticals, the ADVI narrowing (no cut here), and 94880's NEVER-1 edit.",
+      "artifacts": [
+        "wk-cldgrph-6-2 @373a576e38, @2ca857e2c2, @eca1c0ca68",
+        "CLOUD @fbb9d2be2e (row S98)",
+        "msgs 94885/94886; acks 94872, 94880",
+        "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260910T0220Z.md"
+      ],
+      "commit": "674b0c35ea",
+      "next": "cycle three's reads, then cycle four (the fan-out); F-11's report and drain with AC3 measured-and-failing; comp-system phase two (grain_baseline.json moves); the CVO's baseline sign; the FINAL packet + COMPLETION_REPORT.round6.json; the drain-end read to the CTO; CronDelete."
+    },
+    {
+      "seq": 23,
+      "limb": "L7 (the last drain) / L8 (the FINAL packet) / adjudication (7 dispositions, 1 RESERVED)",
+      "started_utc": "2026-09-10T03:25Z",
+      "ended_utc": "2026-09-10T03:55Z",
+      "act": "ROUND 6 IS DRAINED, 11 OF 11. TO-CG-F-11 reported with F11-AC2 PASSING (STITCH_V1_STAMPED_SERVED 1 -> 0, the node diff over 27,665 nodes reading exactly {'-vocabulary': 1} on PORTAL_BUNDLE, 0 added/removed/re-typed) and AC3 the only mechanical FAIL, which is exactly what the CTO's 94872 ruled it should drain on. VERIFIED IN-WORKTREE (checker VALID rc 0, 26 artifact rows resolved at pin, 13 surprises resolving to channel rows), DRAINED @d2ee75c98b (rc 4 on the channel, union 224 + 13 = 237, --continue under the guards), worktree and branch REMOVED, and COMP-SYSTEM PHASE TWO run because grain_baseline.json moved (06_current_state written, grounded-against-live at HEAD, 0 changed rows across 26 regions). THE FOURTH CYCLE'S RESULT: 955 emitted STORED_IN -> 137, per-key {5: 191} -> {1: 137}, 0 edges contradicted by their own source node, 54 no-bucket keys counted and not guessed, served edges 1678 -> 860 (exactly the 818 the fan-out had added), pointer 02:28:23 -> 03:02:00. BOTH NIGHTLIES READ as the confirmation the manual-trigger form names: the 02:00Z derive on :9 exit 0 with a STITCH_INGEST line identical to the ad-hoc's, and THE 03:00Z opal-stitch-produce-nightly SUCCEEDED -- the first rule-initiated success in a slot that had failed 67 of 67 times -- building from cycle 4's zip, so tonight the confirmation and the test are the same object. ROWS S99-S105 (channel 237 -> 244): S99/S100/S101 DISARM W2-S67, W2-S69, W2-S71 (the served stamp gone; the stamp's second writer retired; the cross-product cut at the producer); S102 CARRIES W2-S68 + W2-S70 to round 7 under 94872; S103 is the PATTERN row (this producer's input contains its own output, answered separately and differently on nodes, props and edges -- and the edge case is the tell, because duplicates collapsed in the dedup while emission was fixed and only became visible when a run emitted FEWER); S104 CARRIES W2-S72 RESERVED FOR ANDREW with a hold in force (every derive publishes SEV1/SEV2 to a topic carrying a LIVE SMS subscription to a personal mobile, re-measured by this seat before escalating at 94937/94938/94939; nothing unsubscribed, nothing edited); S105 is this seat's SECOND self-correction of the night -- my tick-62 census read 0 send paths over 104 files while scoped to mailer tokens the boto3 publish never uses, and the instrument that saw the SMS page was the run log I had not read. THE FINAL L8 PACKET compiled (ledger/L8_PACKET.round6.final.md) and the COMPLETION_REPORT.round6.json written (11 orders, 37 cells, 8 FWDs, 244 rows, the four outstanding items and the three laws this round produced). The CVO is asked for exactly two things: F11-AC6, and THE GRAIN-BASELINE SIGN on nine entries reading `pending 3.0.0_SA_CVO`.",
+      "artifacts": [
+        "CLOUD @d2ee75c98b (the F-11 drain)",
+        "ledger/L8_PACKET.round6.final.md",
+        "ledger/COMPLETION_REPORT.round6.json",
+        "rows S99-S105",
+        "msgs 94937/94938/94939 (the RESERVED card)"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "the FINAL packet to the CVO; the drain-end read to 1.0.0_SA_CTO; CronDelete 01a64433. Then round 6 is closed at this seat and the L9/L10 are others'."
+    }
+  ]
+}

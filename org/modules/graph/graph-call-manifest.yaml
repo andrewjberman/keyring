@@ -35,6 +35,34 @@
 #   entries below, set to `deprecated`, produced 168 ERROR-class A_deprecated_call findings over
 #   5 files. `deprecated` stays reserved for what it can actually detect -- a whole TOOL superseded.
 
+# WHAT THIS FILE'S DENOMINATOR DOES AND DOES NOT COVER, FOR A RETIREMENT QUESTION
+# -- added 2026-09-10, NFRA_CLDGRPH CG-s-36 (TO-CG-H-1), the remedy row W1-S38 asked for.
+#   THIS FILE IS A DECLARATION OF ROUTED QUERY TOOLS. IT IS NOT A CENSUS OF THE ESTATE'S
+#   CONSUMERS OF THE GRAPH'S EDGE VOCABULARY. Both statements are true at once, and only the
+#   first one is what tools_index/entries were built to be.
+#   SO: this file is a SOUND denominator for "which routed tool answers question X", "is this
+#   call the canonical one", and "does a use-case have a route". It is an UNSOUND denominator
+#   for "may this edge type / node type / vocabulary term be RETIRED" -- a producer, a fixture,
+#   a spike loader, a materialized producer JSON and another project's instrument all consume
+#   the vocabulary while declaring no route, so none of them can appear here, and a census
+#   scoped to this file cannot see them.
+#   MEASURED, not asserted (NFRA_CLDGRPH CG-s-36, rows W1-S38 / S110): asked whether STORED_IN
+#   had readers, the census over this file's 78 tools returned 0 of 78 with 78 of 78 names
+#   resolving to a file -- an HONEST zero for this domain, with the resolution arm present and
+#   passing. The unscoped sweep of the same repository, denominator 29,964 files, returned 15
+#   consumers, and the declared domain held 0 of the 88 files carrying the term: the domain and
+#   the claim's population are DISJOINT. The scoped zero would have authorized a retirement that
+#   broke every one of them.
+#   THE REQUIRED SECOND ARM, therefore: ANY retirement of a vocabulary term censused against
+#   this manifest MUST also run an UNSCOPED sweep of the whole repository corpus, print that
+#   sweep's own denominator beside the manifest's, and print the DELTA between the two counts.
+#   The delta is the finding. Where the two disagree, THE REPOSITORY IS THE DENOMINATOR AND THIS
+#   FILE IS ONE INPUT TO IT. A zero from this file alone never authorizes a retirement.
+#   WHY THIS SENTENCE LIVES HERE RATHER THAN IN THE PROJECT THAT LEARNED IT: the next vocabulary
+#   retirement in this estate will be censused against this manifest, by an agent who has not
+#   read that project, and it will again read clean. CLAUDE.md Rule 22's shared-dependency limb
+#   and Rule 24(i)'s domain clause both land on exactly this file.
+
 # INTENTIONALLY NOT CATALOGED (not graph-access use-cases -> exempt from the mandate, AC1-complete):
 #   comp-learns-status                    -- compiler self-learning/telemetry status (not a graph query). NOTE: comp-learns-run RETIRED 2026-07-08 (NFRA_TOOLCHECK P2, CTO-ruled: un-landed stub superseded by the PROMOTE loop).
 #   comp-perf                             -- tool-perf benchmarking (not a graph query)
@@ -1497,7 +1525,7 @@ entries:
     mode: query
     layer: cloud
     cost: "~1-2s (reads the materialized cluster layer off the canonical Kuzu graph)"
-    freshness: "live canonical Nessie->Kuzu graph (NFRA_TSGRAPH P2-1 extractor emit, P2-2 materialized); prints the comp-kuzu provenance header to stderr (current/BEHIND/UNKNOWN VINTAGE); auto-refreshes on HEAD-advance; Rule 20 QUERY-default -- never rebuilds"
+    freshness: "the SERVED graph projection, cluster layer included (NFRA_TSGRAPH P2-1 extractor emit, P2-2 materialized; served since NFRA_CLDGRPH CG-s-8). Every call ends with a VINTAGE line on stderr stating in plain words how old the answer is. There is NO agent-runnable refresh and no HEAD-advance trigger: the projection is advanced by the marker-driven cloud worker (NFRA_CLDGRPH CG-s-2/3) on the estate's own schedule, never by a call. Rule 20 QUERY-default -- never rebuilds. See cloud.read.served_vintage."
     rebuild_trigger: "n/a -- queries the live graph; the cluster layer re-derives with the graph refresh (P2-1 extractor -> P2-2 derive), not by this tool"
     anti_pattern: "raw grep/Read across portal/src/pages to reconstruct a page's panel->drilldown tree + which components share a data source (text-local; misses the render-subtree nesting + the per-firm cohort fork + cross-panel coupling); comp-cache sees only RQ-key collisions -- comp-cluster generalizes that to the full component<->data-source coupling (the 6-source superset) over the materialized cluster graph"
     status: canonical    # NFRA_TSGRAPH P2-3 (0.4.0_DE 2026-06-30); COO~B GO + CTO inv-2 edge ruling 22cb21116 (CONTAINS_DRILLDOWN->CONTAINS+depth canonical, CLUSTERS/SHARES_SOURCE distinct). Ledger-registered (comp-coverage-map.yaml, ~C). comp-which routing: 'panel/drilldown tree of a page ; which components share a data source ; per-firm cohort component fork' -> comp-cluster (fuzzy backstop auto-includes; curated-rule follow-up).
@@ -1823,7 +1851,8 @@ tools_index:
   comp-state:    { does: "Registry/TO/PRD state linter -- is the registry / a project JSON / a task-order status / a PRD Status line BEHIND the estate's actual git-commit state? BM25-style drift check over git commits (Andrew-direct 2026-07-14). ADVISORY: a BEHIND is a place to LOOK never an auto-edit; CURRENT is absence-of-lexical-evidence not a verified record. --self-test MUST print PASS (its own N/N line; 4/4 since the TIGHTENING-J2 encoding leg) before trusting a report. WS-7 tools_index closure (router-reachable, entry already existed at org.state.registry_drift, was missing from this browsable catalog)", subcommands: ["--project CODE", "--days N", "--all", "--self-test", "--json"], entries: [org.state.registry_drift] }
   comp-keys:     { does: "What S3 keys / partition-dates / per-firm existence EXIST under a prefix -- INVENTORY (what exists), distinct from comp-freshness (is-it-fresh). Live s3api, explicit-Z, denominator-always. NFRA_MSBEFF.R5", subcommands: [prefix, partitions, exists], entries: [pipeline.keys.enumerate] }
   comp-dataflow: { does: "Value-ORIGIN trace + canonical-source assertion: does a served/consumed value come from the CANONICAL source, or from a served/legacy artifact? Flags a producer reading a SERVED (platinum/served/portal-json) artifact as a value source -- the layer grammar BACKWARDS (RF-7 / PSTMRT item-9). SOURCE plane, AST layer-classification, denominator-always. NFRA_MSBEFF.R2", subcommands: [origin, gate], entries: [lineage.dataflow.canonical_source] }
-  comp-aws:      { does: "Live-AWS + Terraform-state cloud-graph compiler (the WRITE-PATH + cert)", subcommands: [derive, score, snapshot, metrics, diff, contract-diff, dual-managed, classes, iceberg-commit], entries: [cloud.derive.refresh, cloud.derive.class, cloud.score.cert, cloud.score.reconcile, cloud.classes.list, cloud.metrics.summary, cloud.diff.snapshot, cloud.contract_diff, cloud.dual_managed.conflict, cloud.snapshot.archive, cloud.iceberg.persist] }
+  # status: deprecated -- R14a (PRD v0.12 @b77a6c3a27, 1.0.0_SA_COO~A ruling on row NFRA_CLDGRPH-W6-S2, cell CG-s-30): ENTRY-grain vocabulary is {retired, deprecated}, absent = live. deprecated = CALLABLE, NOT ROUTED, declared so; only `retired` is do-not-call. Carried here ONLY because the tool is `deprecated` at TOOL grain in comp-coverage-map.yaml -- the two grains never disagree.
+  comp-aws:      { status: deprecated, does: "the ENGINE that derives the cloud graph -- run ESTATE-SIDE by the nightly Fargate derive-runner (in-process) and the incremental updater; DEPRECATED for agent use 2026-09-09, read the result with comp-kuzu", subcommands: [derive, score, snapshot, metrics, diff, contract-diff, dual-managed, classes, iceberg-commit], entries: [cloud.derive.refresh, cloud.derive.class, cloud.score.cert, cloud.score.reconcile, cloud.classes.list, cloud.metrics.summary, cloud.diff.snapshot, cloud.contract_diff, cloud.dual_managed.conflict, cloud.snapshot.archive, cloud.iceberg.persist] }
   comp-trace:    { does: "Bidirectional dependency walk from any repo node (cached)", subcommands: ["<node>", "--direction", "--depth", "--json"], entries: [trace.walk.dependency_chain] }
   comp-blast:    { does: "Downstream blast radius + upstream callers (cached)", subcommands: ["<node|file>", "--function", "--check-consumers"], entries: [trace.blast.what_breaks] }
   comp-platinum: { does: "Full-stack component->gold trace, FIRM-AWARE (cached, NFRA_GRAPHS D2)", subcommands: [page, reverse, tab-audit, summary, "--firm", "--fresh/--force"], entries: [trace.fullstack.component_to_gold, trace.platinum.reverse] }

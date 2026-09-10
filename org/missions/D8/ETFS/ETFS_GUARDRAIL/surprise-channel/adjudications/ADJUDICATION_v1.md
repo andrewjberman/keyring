@@ -18,7 +18,7 @@ instance but is `UNVERIFIABLE-BY-INSTRUMENT` with the CVO named, and is graded a
 disposition rests on this seat's own read beside the record: the served Lambda code hashes, environment and the
 deployed Inflection zip, the reporter role's inline grant, SES's account state, the report bucket, the source at HEAD,
 the vendored-copy census, the published layer, and `.gitattributes`.
-**Denominator at this write:** 5 rows (C-S1 the grade record; C-S2 the eight worker-form items graduated and closed on
+**Denominator at this write:** 20 rows (C-S20 appended 2026-09-10 ~04:4xZ -- closing the FWD-5 chain: the outcome is graded REALIZED at the L10, so C-S18 stands as a correction of this seat's REASONING and not of its verdict); previous: 19 rows (C-S19 appended 2026-09-10 ~04:2xZ -- correcting the FACT inside C-S18's correct principle: the per-recipient delivery record does NOT exist on the SES plane, measured by 2.0.0_SA_COO in three read-only calls); previous: 18 rows (C-S18 appended 2026-09-10 ~04:1xZ -- a CORRECTION of this seat's own FWD-5 reading in C-S15, on the CTO's ruling 94975: an envelope is not a mailbox, and the per-recipient delivery record is the instrument neither seat had named); previous: 17 rows (C-S15..C-S17 appended 2026-09-10 ~04:0xZ -- the round-2 FINAL L9 @616b49f610: S16-AC2 graded PASS with the FWD-5 envelope-versus-mailbox reading, 14 items dispositioned, 0 undispositioned after, and the remediation rows REFUSED AGAIN by the gate, correctly, on round 3's four pending orders); previous: 14 rows (C-S11..C-S14 appended 2026-09-10 ~01:3xZ -- round 2 L9 on packets v2 @3f1e4de3f3 and v3 @66ffa5f6e9: S18-AC2 and S14-AC2 graded PASS; W3-S3/S4/S5 records; W1-S11..S19 graduated with two remedies owed); previous: 10 rows (C-S8..C-S10 appended 2026-09-10 ~00:5xZ -- round 2 PARTIAL L9 @8f7bf86815: S17-AC2 graded PASS; W2-S7 closed; W2-S8 open at the CTO (the 76-minute race); W2-S9/S10 and S5..S9 records); previous: 7 rows (C-S7 appended 2026-09-10T00:39Z: a correction of C-S6 -- no remediation row was minted; the gate refused it as L10-shaped and the clocks ride C-S6 until the round-2 L9); previous: 6 rows (C-S6 appended 2026-09-10 ~00:2xZ: S4 graduated, the deploy_ledger NEVER-2 defect, owner 0.2.0_DT_PortfolioAnalytics); previous: 5 rows (C-S1 the grade record; C-S2 the eight worker-form items graduated and closed on
 the issuer's in-round acts; C-S3 the three items graduated and OPEN; C-S4 the ten records dismissed with reason; C-S5 the
 correction carrying the CTO's L10 @0557afa38a -- FWD-4 NOT_EVALUATED, seven fire-gated outcomes, not six).
 Investigation rows without a disposition after this write: 0 of 21. Remediation rows minted: S2 (OPEN), S3 (closed).
@@ -216,6 +216,759 @@ Investigation rows without a disposition after this write: 0 of 21. Remediation 
     "spec_asserts": "Spine v3 L10: the CTO grades outcomes (REALIZED / NOT_REALIZED / NOT_EVALUATED) on the slug and the artifact; L9 grades criteria. FWD-4's DONE WHEN as cut: EXERCISED.",
     "world_is": "ETFS_GUARDRAIL round 1 is at ROUND_CLOSE: FWD-6 REALIZED; FWD-1, -2, -3, -4, -5, -7, -8 NOT_EVALUATED pending real fires and a real legitimately-empty day. Three open items carry owners: W2-S1 the inf-pipeline lane, W1-S5 CLOUD_OPS_OR_ETL, S2 the CTO's own queue.",
     "notes": "Scope of the retraction, stated so it is not read wider: the slug's grades, dispositions, precondition measurement and open-item routing stand; the single refuted clause is the count and membership of the fire-gated outcome list, which now includes FWD-4."
+  }
+]
+```
+
+## C-S6 -- adjudicates S4: GRADUATED, remedy OPEN at 0.2.0_DT_PortfolioAnalytics (the deploy_ledger NEVER-2 defect); the remediation row is ../remediations/ S4
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-C-S6",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:23Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-S4"
+    ],
+    "disarm_owner": "0.2.0_DT_PortfolioAnalytics",
+    "one_line": "L9-shaped act mid-round (the issuer's and the CTO's ask, 94794 / 94796): ADJUDICATES one seat-form item -- GRADUATED, remedy OPEN, owner 0.2.0_DT_PortfolioAnalytics. S4 (this seat's row on the mechanism W1-S16 measured): .tools/deploy_ledger.py re-renders the change_management entry from the sentinel on every open / close-leg / close / hold and writes it truncate-and-replace, so the NEVER-2 section a deploy must hand-append (sign-off ids, served keys, archive, rollback) is deleted by the next tool call with no warning -- measured 5 of 5 -> 1 of 5 -> 5 of 5 by the worker, the mechanism read at :239-250 and :289-291 by this seat. The remediation row ETFS_GUARDRAIL-S4 carries the remedy (a sentinel field the renderer emits, or a preserved hand section, and a printed diff either way), the interim (the issuer's ordering clause), and the disarm (a round-trip through the tool leaving a hand-appended section byte-equal, planted both ways). W1-S16 itself is dispositioned at the round-2 L9 when its branch drains; this row does not adjudicate it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S4 (this write) and its evidence; W1-S16 on wk-etfs_guardrail-2-1; deploy_ledger.py :239-250, :289-291 at HEAD 104c46c48a; 94794, 94796."
+      ]
+    },
+    "spec_asserts": "NEVER-2 and TO-EG-s-14's entry clause (the entry CARRIES the halves, keys, archive, rollback); the tool renders the entry from a sentinel with no such field.",
+    "world_is": "A law that requires content the tool cannot carry, and a tool that deletes the content when it is carried by hand.",
+    "notes": "Seat-form item; its clocks live on the remediation row S4. The round-2 L9 reads W1-S16 and the GUARDRAIL faces' ordering clause against this row."
+  }
+]
+```
+
+## C-S7 -- CORRECTION of C-S6 and of commit 8bbfc0e684's subject: NO remediation row was minted (the gate refused it as an L10-shaped act with 5 of 19 orders open; not overridden); S4's graduation, owner, remedy, interim and disarm stand on C-S6; the remediation row is minted at the round-2 L9
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-C-S7",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:39Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A correction record of this seat's own C-S6 and of commit 8bbfc0e684's subject; it dispositions no investigation item.",
+    "one_line": "CORRECTION, this seat's own: C-S6 says 'The remediation row ETFS_GUARDRAIL-S4 carries the remedy ...' and 'its clocks live on the remediation row S4', and commit 8bbfc0e684's subject says the remediation row was 'minted OPEN against 0.2.0_DT_PortfolioAnalytics'. NO REMEDIATION ROW WAS MINTED. The first attempt (three files) was REFUSED by .tools/surprise-row-gate.py: 'ETFS_GUARDRAIL-S4: NEW remediation row (the slug (spine v3: every new remediation row)) while 5 of 19 task order(s) under ETFS_GUARDRAIL are NOT terminal at HEAD' -- a new remediation row is an L10-shaped act and round 2's five orders are open -- and this seat chose NOT to take the audited override: the gate's reason is right in kind. ../remediations/REMEDIATION_v1.md was restored to HEAD (4,266 bytes, unchanged from c6bcb7b12b, verified by git diff --stat) and the second attempt committed S4 and C-S6 only. The patch that was to re-point C-S6's text and the commit message at the L9-minted row failed on its own assertion before writing, and the commit went through with the stale text -- found on re-reading the committed blob, not caught before. WHAT STANDS: S4 (its notes already say the remediation row waits for terminality), C-S6's GRADUATION of S4 with owner 0.2.0_DT_PortfolioAnalytics, the remedy (a sentinel field the renderer emits, or a preserved hand section, and a printed line naming every section dropped), the interim (the issuer's ordering clause) and the disarm (a round-trip through the tool leaving a hand-appended section byte-equal, planted both ways) -- all recorded on C-S6 and S4. WHAT CHANGES: the clocks ride C-S6 until the REMEDIATION row S4 is minted at the round-2 L9 once every ETFS_GUARDRAIL order is terminal. The lesson, banked: a patch-then-commit chain must abort the commit when the patch fails, and the committed blob is what is read back, not the working copy.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The gate's refusal, verbatim from the first attempt's captured output: 'ETFS_GUARDRAIL-S4: NEW remediation row (the slug (spine v3: every new remediation row)) while 5 of 19 task order(s) under ETFS_GUARDRAIL are NOT terminal at HEAD: ...TO-EG-s-14 [pending], TO-EG-s-15 [pending], TO-EG-s-16 [pending], TO-EG-s-17 [pending] ...; override (audited): put # surprise-row-override: <reason> in the commit message body'. Not taken.",
+        "git show 8bbfc0e684:.../adjudications/ADJUDICATION_v1.md -> C-S6 one_line contains 'The remediation row ETFS_GUARDRAIL-S4 carries' (True); git diff --stat c6bcb7b12b HEAD -- .../remediations/REMEDIATION_v1.md -> empty (the file is unchanged; no S4 row in it); 8bbfc0e684's subject begins 'remediate(ETFS_GUARDRAIL S4 / C-S6 ...) ... minted OPEN against 0.2.0_DT_PortfolioAnalytics'.",
+        "S4 as committed: notes 'the REMEDIATION row with its clocks is minted at the round-2 L9 once every ETFS_GUARDRAIL order is terminal -- the row gate refused it tonight as an L10-shaped act ... rightly' (the patch that succeeded)."
+      ]
+    },
+    "spec_asserts": "Spine v3 (the gate's own words): every new remediation row waits for terminality. ADJUDICATION_v1.md's header: a correction is a NEW row citing the old id; no row is edited.",
+    "world_is": "C-S6 and the commit subject overstate by one row; the remediation file is unchanged; the owner, remedy, interim and disarm are on the record where they were written.",
+    "notes": "Append-only: C-S6 is not edited; a reader resolves S4's remediation state from this row (the newest citing it) until the round-2 L9 mints the remediation row."
+  }
+]
+```
+
+## C-S8 -- S17-AC2 graded PASS: cottonwood 2026-09-08 filled by the producer's own fire with the rule's own envelope; the 76-minute race the log proves; the window's shipped-signal terminus; the catch-up branch honestly unexercised -- this seat's head-object, listing and CloudWatch reads agree
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:58Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S8",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9 on the round-2 PARTIAL packet @8f7bf86815 (TO-EG-s-17 terminal, drained @d1b8945948; 1 of 5 orders): the GRADE for S17-AC2, the filled-in day read as a person reads it -- PASS. THE READING GRADED (the-filled-in-day.result.md ss.0-2, 6-9): cottonwood's ETF-ownership slice for Tuesday 2026-09-08 was missing and is now there -- DIVZ 19,079,942.93 / IDVZ 15,516,123.03 / PFDE 12,430,725.84 / PFOE 6,614,559.95, total 53,641,351.75 across 330 / 331 / 320 / 319 accounts, written by the producer's OWN run with its rule's own default envelope (Target.Input absent on 0 of 2 targets across 2 of 2 daily rules; no date key) at 23:15:51Z, request 0840a0d3. WHY IT WAS MISSING, and the log says it: the cot schedule fires at 10:30Z and the fact_holdings partition for date D lands D+1 at ~11:46Z (10 of 10 dates sampled), so the D+1 fire runs 76 minutes early, the never-fabricate skip takes it, and today's own 10:30:25Z scheduled fire wrote 2026-09-04 while 2026-09-08's source landed 76 minutes later -- the newest trading day is sliceless ~11.5 h every day, a design race the CTO has TAKEN for the L10 (94796 (2a)). THE WINDOW WAS RESPECTED: the terminus is the SHIPPED signal (head-object on the previous month's etf_ownership.pdf, present at the worker's read: 273,857 B, 2026-09-01T17:38:41Z), no day-count constant exists in either producer, class B (priced == 0) was never fired at. WHAT THE TOKEN DOES NOT CLAIM, printed beside it: CATCHUP-BRANCH-NOT-EXERCISED -- the catch-up sweep skips the newest partition as skip_date, so a head-of-window hole is recovered by the main path and `catchup_processed` is structurally empty for it (0 CATCHUP lines in 152 cot / 103 bd log events over 30 days); exercising the branch needs a hole OLDER than the newest partition, the estate has none (the census: 20 trading days x 2 partners, 1 absent, the one the newest), and manufacturing one is a served S3 delete under Andrew's word (W2-S8 -> the issuer's /open-calls card, REC yes one cot slice; the CTO concurs). THIS SEAT'S OWN INSTRUMENTS AGREE: s3api head-object daily/cottonwood/2026-09-08.json -> 1,345 B, ETag 5da999e2fbfadfe302df35ef24407372, LastModified 23:15:52Z (unchanged after the worker's three pass-2 runs and this read at 00:4xZ); a live list of both prefixes over the window -> cottonwood 19 of 19 dates 08-12..09-08 PRESENT (09-08 at 23:15:52Z, every other at its D+2 10:30:30Z or the 09-01 16:50Z catch-up), 49financial 19 of 19 (each at D+1 10:45:1xZ) -- the race is visible in the timestamps themselves: cot's slices land two days after their date, bd's one; the producer's own CloudWatch log 23:00Z-00:26Z -> the probe START ec6e9232 at 23:15:40.735Z with Init Duration 2,974 ms (cold), the fire START 0840a0d3 at 23:15:50.560Z with NO Init (warm, 673 ms), then three probe invocations at 23:39:29Z (cold), 23:39:33Z and 23:40:03Z (W2-S9's 2026-07-31 and Sunday controls) and no other -- one fire, no second write, exactly as recorded. ONE VINTAGE FACT for EG-s-14's grade, not this one: the terminus object platinum/reports/2026-08/etf_ownership.pdf read at 00:4xZ is 252,393 B, LastModified 2026-09-10T00:24:48Z -- EG-s-14's August re-render has landed on the served key since the worker's read; the shipped signal still exists, so S17's window logic is unchanged. VERDICT PASS. THE FWD-1 READING for the CTO's L10, as the packet asks: the outcome -- a missed day caught up by the producer's own fire, nothing fabricated, the date named by the producer -- is REALIZED in substance for the hole class the estate actually produces every day (head-of-window), by the MAIN PATH; the FWD's letter ('named in catchup_processed') is NOT met and cannot be for that class on the deployed code. The L10 chooses: accept the main-path form as FWD-1's realization for head-of-window holes with the branch exercise placed behind Andrew's word, or hold FWD-1 on the branch. This seat's REC: the former -- and the real remedy is the cadence row the CTO already took (fire AFTER the 11:46Z landing, or exclude the unlanded day and say so), which both closes the daily hole and makes the catch-up branch reachable for ordinary holes.",
+    "grades": [
+      {
+        "criterion": "S17-AC2",
+        "instance": "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-17.the-filled-in-day.proof_of_spec.json@1e995e83b5",
+        "verdict": "PASS",
+        "reason": "Every question the criterion asks is answered on the record with a vintage: the partner, the date and the rows; the measured race that explains the absence and today's own scheduled-fire log proving it; the shipped-signal terminus and the absence of a day-count; class B untouched; the census proving exactly one hole and the row routing the controlled path to Andrew. This seat's head-object, live prefix listing and CloudWatch reads agree on the slice, the census and the one fire. NO verdict was recorded by the assignee."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "L8_PACKET.round2.partial.md @8f7bf86815 (58 lines, sha256 b75d1cf2f7cc5805...) ss.1-3, 5; the proof @1e995e83b5: S17-AC1 PASS 7 of 7 arms (hole census 40 cells / 1 absent; Target.Input 0 of 2; START RequestId 1 of 1; the OK: wrote line 1 of 4; head-object 1345 B; positive control 2026-09-04 0 of 4; cot 30 of 30 at 10:30:24Z, bd 30 of 30 at 10:45:05Z; COVERAGE-ABSENT printed); S17-AC2's output_evidence and denominator.",
+        "the-filled-in-day.result.md (364 lines): s.0 the one-line answer and the arm table; s.1 the census (20 trading days incl. Labor Day excluded; cottonwood 61 keys / 1 absent, 49financial 89 / 0; the wider 26-day span the same 1); s.2 the rule's payload read live (no Input, no RoleArn); s.6 the schedules from history and the cold-start reading; s.7 the race, 10 of 10 dates, today's fire's log verbatim; s.8 the window (lambda_function.py@4155c85a1f:180-191); s.9 what the worker did not do.",
+        "This seat, 00:4xZ: s3api head-object opal-data-etfs daily/cottonwood/2026-09-08.json -> 1345, \"5da999e2fbfadfe302df35ef24407372\", Wed, 09 Sep 2026 23:15:52 GMT, VersionId None; list-objects-v2 daily/cottonwood/2026-0 and daily/49financial/2026-0 filtered to 08-12..09-09 -> 19 + 19 keys with LastModified as in one_line; logs filter-log-events /aws/lambda/cot-etf-ownership-daily 23:00Z-00:26Z filter RequestId -> 15 events: START/END/REPORT for ec6e9232 (Init 2974.26 ms), 0840a0d3 (no Init, 673 ms), 26696b84 (Init 3228 ms), 600f6b5b, 948f947d; head-object platinum/reports/2026-08/etf_ownership.pdf -> 252393, Thu, 10 Sep 2026 00:24:48 GMT.",
+        "W2-S7, W2-S8, W2-S9, W2-S10 and the issuer's S5..S9 read whole at HEAD 866d2ed808; 2.0.0_SA_COO 94794/94805; 1.0.0_SA_CTO 94796 (the race taken for the L10; the served-delete call put to Andrew)."
+      ]
+    },
+    "spec_asserts": "S17-AC2 as cut (judgment, NO verdict): the recovered date as a person reads it; why it was missing if the log says; that the port respected the reporting-obligation window (terminus a shipped signal, no day-count); that class B was never fired against; if no real hole existed, the census and the routing row. PRD v0.4 S17 / FWD-1: a missed day caught up by the producer's OWN fire on a REAL hole, the recovered date named.",
+    "world_is": "One real hole existed and was filled by the producer's own fire with the rule's own envelope; the hole exists every day for ~11.5 h because the schedule fires before the source lands; the catch-up branch is unreachable for that hole class and unexercised; the only way to exercise it is a served delete no agent may perform.",
+    "notes": "FOR THE L10: FWD-1's letter vs substance (above); the cadence row already taken; the served-delete call at Andrew. FOR EG-s-14's grade: the August report was rewritten on the served key at 00:24:48Z (252,393 B) -- read against the archive and the sign-off halves when that packet lands. Round 2 judgment criteria graded: 1 (S17-AC2) of the round's five orders' worth; four orders open."
+  }
+]
+```
+
+## C-S9 -- adjudicates W2-S7, W2-S8: GRADUATED -- W2-S7 closed on the re-cut onto instruments that exist; W2-S8's criterion half closed on S9, the race underneath OPEN at 1.0.0_SA_CTO (the cadence row)
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:58Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S9",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-W2-S7",
+      "ETFS_GUARDRAIL-W2-S8"
+    ],
+    "disarm_owner": "1.0.0_SA_CTO",
+    "one_line": "L9: ADJUDICATES two items -- GRADUATED. W2-S7 (BLOCKING/INERT: S17-AC1 arms (c) and (g) named a CloudTrail `Invoke` record no trail in the account writes -- lambda:Invoke is a data event and 0 of 2 trails select AWS::Lambda::Function, proven by a positive control returning 0 Invoke records for two real invocations): CLOSED on the issuer's re-cut @5507841f04 of all five faces onto instruments that exist (the log group's START RequestId by time; the cold-start AssumeRole at the cron instant as corroboration; the Invoke read printing COVERAGE-ABSENT, never graded), judged HARDER on effect -- and the shape (an accept naming an instrument without its coverage fact) is the same cut defect as NFRA_OUTSET-S29, the third of the night, now asked at every cut as the substrate-card coverage question. W2-S8 (BLOCKING/ARMED -> the issuer; disarm record S9): the criterion half is CLOSED -- arm (d) accepts the main path's own OK: wrote line for a head-of-window hole and prints CATCHUP-BRANCH-NOT-EXERCISED, arm (b) no longer asks for a date key that routes past the sweep -- and the FINDING underneath stays OPEN with owner 1.0.0_SA_CTO: the 76-minute schedule/landing race (cot's 10:30Z fire before the D+1 ~11:46Z partition; bd's 10:45Z floor deliberately 29 minutes after its 10:16Z landing has no race and 0 of 20 absent) leaves the newest cot trading day sliceless ~11.5 h every day and makes the catch-up branch unreachable for the ordinary hole; the CTO took it for the L10 addendum (94796 (2a): the fire follows the partition, or the window excludes the unlanded day and says so). The remedy is a Terraform act in the DT/AE lane on the rule's cron, not a code change; the disarm is one scheduled fire after the change whose own log names date D on D+1, read from history.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W2-S7 and W2-S8 read whole; S9 (the disarm record); the amended face @5507841f04 (arms b, c, d, g); the result record s.6-7; 1.0.0_SA_CTO 94796 (2a) and (2b); this seat's live listing (cot slices at D+2 10:30:30Z, bd at D+1 10:45:1xZ)."
+      ]
+    },
+    "spec_asserts": "S17-AC1 (c)/(g) as first cut; PRD v0.4 S17 / FWD-1; the standing authority @9f4a57262f (a re-cut judged on EFFECT). Rule 28 q5: an accept that names an instrument names its coverage.",
+    "world_is": "The instrument defect is remedied on the faces; the race is measured, taken for the L10, and unremedied at the schedule.",
+    "notes": "Worker-form items; W2-S7's clock closes on this row; W2-S8's rides it OPEN at the CTO. The served-delete call for the branch exercise is Andrew's, at the issuer's /open-calls."
+  }
+]
+```
+
+## C-S10 -- adjudicates W2-S9, W2-S10, S5..S9: DISMISSED_WITH_REASON, records (a stale docstring carried named; the no-RoleArn correction; five acks consumed)
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:58Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S10",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-W2-S9",
+      "ETFS_GUARDRAIL-W2-S10",
+      "ETFS_GUARDRAIL-S5",
+      "ETFS_GUARDRAIL-S6",
+      "ETFS_GUARDRAIL-S7",
+      "ETFS_GUARDRAIL-S8",
+      "ETFS_GUARDRAIL-S9"
+    ],
+    "one_line": "L9: ADJUDICATES seven rows -- DISMISSED_WITH_REASON, records. W2-S9 (INERT: the cot producer's deployed docstring still calls 2026-07-31 a known upstream gap while the deployed probe answers partition=true, priced=10960, output_exists=true, with a Sunday as the negative control): a stale comment in an authoritative file, off-task, no behaviour depends on it -- carried NAMED to the L10 as a one-line re-dating for the cot producer's owner, not cut here. W2-S10 (INERT: the amendment's 'the rule's role's AssumeRole' names a field the two daily EventBridge RULES do not carry -- 0 of 2 targets have a RoleArn; they invoke through the function's resource policy; the AssumeRole CloudTrail names is the EXECUTION role's cold start, identical for a rule and a person, 2 in the fire's minute from the probe's cold start and 0 inside the fire itself): the issuer's model corrected at the source and EG-s-18 re-cut on it @116f6a763d; the arms held at the finer grain (invocation interval + cron instant, every event attributed). S5, S6, S7, S8 (the issuer's disarm records for W1-S11 the renderer's import fix as a new leg of the held entry, W1-S12 the archive moved outside the enumerated prefix, W1-S14 the synchronous invoke with --cli-read-timeout 0, W1-S16 the ordering clause with the tool defect carried to this seat -- now ETFS_GUARDRAIL-S4 / C-S6 / C-S7): consumed; the W1 rows themselves are on worker ~1's branch and are dispositioned when it drains. S9 (the disarm record for W2-S8): consumed by C-S9.",
+    "dismissal_reason": "Records: two instrument/comment facts carried named, and five acks consumed by the closures and carries they evidence; nothing armed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W2-S9, W2-S10, S5..S9 read whole at HEAD 866d2ed808 (comp-surprise --project ETFS_GUARDRAIL --json: investigation_items 31, open 9, adjudication_rows 7 before this write); W1-S11..S16 on wk-etfs_guardrail-2-1 (not on CLOUD; W1 on CLOUD: none)."
+      ]
+    },
+    "spec_asserts": "The channel's taxonomy: an ack is a record; an item closes when its remedy is on the shared branch.",
+    "world_is": "Two facts of the round's instruments and one deployed comment; five acks evidencing closures whose items are on CLOUD (W2-S8) or on a worker's branch (W1-S11..S16).",
+    "notes": "Investigation items without a disposition after this write, by comp-surprise's definition: 0 of 31 on CLOUD (W1-S11..S16 arrive with ~1's drain). The slug waits for the FINAL packet (EG-s-14, -15, -16, -18 open)."
+  }
+]
+```
+
+## C-S11 -- S18-AC2 graded PASS: three schedules fired from history on three instruments with their denominators and limits; the August artifact matches NO fire and is honestly unattributable; two of the issuer's own arm numbers corrected against itself
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T01:38Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S11",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9 on the round-2 packet v2 @3f1e4de3f3 (TO-EG-s-18 terminal, drained @c16eb333cf; 2 of 5 orders): the GRADE for S18-AC2, the schedules read from history -- PASS. THE READING GRADED (the-schedules-from-history.result.md, 814 lines, ss.1-8): all three schedules are ENABLED and HAVE FIRED, on 85 read-only AWS calls, rc 0 on every one, no invoke and no write. REGULARITY: the monthly EventBridge SCHEDULER schedule fired 3 of 3 due instants in the 90-day window (07-01, 08-01, 09-01, each an AssumeRole on etfs-reports-scheduler-role at 14:00:14Z joined to an orchestrator START at +1 s); a FOURTH fire at 2026-07-01T18:00:50Z is off the cron minute and is LISTED rather than dropped, with the live RetryPolicy (185 attempts / 86,400 s) and LastModificationDate == CreationDate printed beside it as the cheapest fitting hypothesis and the word 'measured, not diagnosed' -- and that fire is exactly the one a cron-signature method would have missed, which is the reading's own argument for the issuer's re-cut. Both daily rules fired 30 of 30 days (cot 10:30:24Z, bd-49f 10:45:05Z), reproducing worker ~2's numbers on an independently gathered plane. ARTIFACT-TO-FIRE, THE FINDING THAT IS NOT A GREEN: 4 of 4 published month prefixes classified, 1 MATCHED -- 2026-06 at +34 s (the non-vacuity control, so UNMATCHED is not a matcher that can only say no) -- and 2026-08's served objects (LastModified 2026-09-01T17:38:41-42Z) match NO orchestrator invocation: the day's one fire ran at 14:00:14Z and dispatched SSM at 14:01:06Z under username etfs-reports-orchestrator, Status Success, 3 h 38 m earlier. The reading does NOT attribute the 17:38Z write and says why it cannot: s3:PutObject on opal-data-etfs is a data event that neither trail selects, versioning is disabled, and ssm list-commands holds no command at that minute; the bracketing change-management entry (20260901T1650Z, actor 4.0.0_SA_CRO, its own scope line 'the served monthly reports ... were NOT re-rendered') is offered as evidence, not as a verdict. Manufacturing an attribution would have been the defect and it was not manufactured. THE DAILY ARM ON THREE INSTRUMENTS, each with its own denominator and its own limit: the log GROUP read BY TIME (a fire happened) 28 of 60 due but 28 of 28 REACHABLE under a 14-day retention that is printed rather than hidden; the execution role's cold-start AssumeRole (corroboration, reaching the whole window) 60 of 60; and AWS/Events TriggeredRules with the RuleName dimension -- named as the ONLY rule-scoped initiator claim of the three -- 60 of 60 populated. The unmatched fires are named with the trading calendar resolved FIRST: bd-49f's nine are exactly the non-trading days (its own live Description says it runs daily including weekends and emits the newest available partition, so a weekend fire writing nothing is the design); cot's include five weekday entries that line up with the CRO backfill entry's own UNDIAGNOSED missing-date list, and the producer's lag is stated (09-09's cot fire wrote 09-04, bd-49f's wrote 09-08) and left to EG-s-17, which owns it. THE NEGATIVE CONTROL IS ON THE SAME PLANE and is the discriminator, not a restatement: for the orchestrator, 0 of 28 scheduler-role AssumeRole events in a real manual invoke's minute, and the reading explains why 0 IS the discriminator there (that role is assumed by EventBridge Scheduler and by nothing else); for cot, where the execution role is assumed on EVERY invocation, the discriminator moves to the MINUTE (is this a cron minute? False) rather than to the count -- two different instruments for two different substrates, said so. Populations disjoint by requestID: True; non-rule population non-empty: True; and a MUTANT at tolerance 0 collapses every RULE row to 0. TWO SELF-CORRECTIONS THE READING VOLUNTEERS, both of which make the issuer's own numbers right rather than defending them: W3-S5 (2 of the 6 scheduler-role AssumeRole rows are CreateSchedule role validations at the schedule's CreationDate to the second, so the amendment's 'each is a fire' would have reported 6 where 4 occurred; separated on a printed falsifiable rule, and the 180 s join tolerance that first swallowed them is disclosed) and W3-S3 (the daily rules carry no RoleArn -- measured independently, from a second worktree, within minutes of worker ~2's W2-S10). WHAT CLOUDTRAIL'S WINDOW CANNOT SHOW is stated as the criterion asks: the object-level writes on opal-data-etfs, and the Scheduler schedule that comp-trigger renders as `schedule: -` (W3-S4). VERDICT PASS. FOR THE L10: the August artifact's provenance is UNATTRIBUTABLE on the instruments this account has, and the remedy is a selector or an artifact that carries its own trigger (W1-S15's ARTIFACT-CARRIES-NO-TRIGGER-FIELD is the same hole from the other side); the cot lag is EG-s-17's race, already taken.",
+    "grades": [
+      {
+        "criterion": "S18-AC2",
+        "instance": "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~3/ETFS_GUARDRAIL.TO-EG-s-18.the-schedules-from-history.proof_of_spec.json@c16eb333cf",
+        "verdict": "PASS",
+        "reason": "Every limb the criterion asks is answered with a denominator, a vintage and a stated limit: regularity on three schedules with the off-cron fire listed rather than dropped; artifact-to-fire with a positive control and an honest UNMATCHED that is not converted into an accusation; the daily history on three instruments whose grains differ and are labelled; the negative control on the same plane with the discriminator named per substrate; and CloudTrail's blind spots enumerated. The reading corrects the issuer's own accept twice against itself. NO verdict was recorded by the assignee."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "L8_PACKET.round2.partial.md @3f1e4de3f3 (sha256 4447df1ae362ef85...) ss.1-3, 5; the proof instance @c16eb333cf (VALID rc 0 at the issuer's seat; alignment 2/2, artifact-resolution 3 at pin, surprises 3 of 3 resolve).",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~3/the-schedules-from-history.result.md read whole (814 lines): s.1 the headline and its three denominators; s.2 the live configuration; s.3 COVERAGE-ABSENT; s.4.1 the six AssumeRole rows with the bare-name negative control (2 events, 0 AssumeRole) and the 60 s vs 180 s join; s.4.2 the served August head-object table and the four-prefix match; s.5 the three daily instruments and the retention bound; s.6 the negative control and the mutant; s.7 what it did not do.",
+        "This seat, 2026-09-10T01:3xZ, independent of the worker: `.tools/aws s3api list-objects-v2 --bucket opal-data-etfs --prefix platinum/reports/_archive/2026-08/` -> 10 objects in two archive sets (23:11:30-39Z and 00:20:11-33Z), the pdf 273,857 B and the html 62,477 B in BOTH -- the prior served bytes held twice, which is the same 273,857 B this seat read on the live key at 2026-09-10T00:0xZ before the re-render.",
+        "ETFS_GUARDRAIL-W3-S3, W3-S4, W3-S5 read whole at HEAD; 2.0.0_SA_COO 94812; the CVO's own C-S8 grade of S17-AC2 @e0ee78e9cd (the cot race), which this reading's cot-lag paragraph hands back to EG-s-17 correctly."
+      ]
+    },
+    "spec_asserts": "S18-AC2 as cut (judgment, NO verdict): whether the fires are regular; whether every published artifact and every daily slice maps to a rule-initiated fire or to a person; what CloudTrail's 90-day window cannot show. Evidence with vintage.",
+    "world_is": "Three schedules fire on their crons; the served August report was NOT written by any fire and cannot be attributed on the instruments in reach; the daily slices map to fires except on non-trading days (bd) and on five weekday fires whose producer lag is EG-s-17's; two of the issuer's own arm numbers were over-counted and are corrected on the record.",
+    "notes": "Round-2 judgment criteria graded so far: S17-AC2 @e0ee78e9cd, S18-AC2 here, S14-AC2 at C-S12 -- 3 of 5 orders. EG-s-15 and EG-s-16 remain; the slug waits for the FINAL packet."
+  }
+]
+```
+
+## C-S12 -- S14-AC2 graded PASS: the August report re-published with every number identical and the coverage line on the served bytes (re-read at this seat, 21 trading days re-derived from the estate's calendar), the prior bytes archived twice, the send's account-wide counter separated from its exclusive discriminators, the brand-less render surfaced by the worker itself
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T01:38Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S12",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9 on the round-2 packet v3 @66ffa5f6e9 (TO-EG-s-14 terminal @5de5bcab7e, drained @4b85a9ae68; 3 of 5 orders): the GRADE for S14-AC2, the August re-render -- PASS. THE READING GRADED (the-august-re-render.result.md, 281 lines): the alignment module executed IN PRODUCTION for the first time (the import that crashed fire 1 is the alignment's own), and under EG-s-13's FORWARD-ONLY cutover (ORION_ALIGNMENT_CUTOVER = '2026-09', render_month_end.py:60-79 @93264db36c) 2026-08 must render exactly as before -- the CSV diff proves it did: 5 of 5 numeric rows identical per partner, 0 changed, one row added, the coverage line. That is FWD-3's shape exactly (an AVERAGE() over the grid still reproduces the deck) and the reading says so in those terms. THIS SEAT'S OWN READS, 01:30:33Z, on the served keys and not on the worker's table: head-object returns 6 of 6 objects byte-for-byte as the result records them -- etf_ownership.pdf 252,393 B ETag d8d786db4be630c3f1d4bfb0420496f4 at 00:24:48Z, html 43,376 B at 00:24:47Z, coverage_verdict.json 1,225 B at 00:24:44Z, the three CSVs 2,012 / 1,888 / 1,888 B at 00:24:48-50Z; the cottonwood CSV pulled whole ends on `# coverage: 21/21 trading days; 0 carried for missing data` with 31 date columns and four ticker rows above it; coverage_verdict.json reads verdict PUBLISH, holes 0, 21/21 for all three partners with expected_empty 0. THE COVERAGE NUMBER RE-DERIVED AT THIS SEAT rather than taken from the artifact: the estate's own frontier lib/trading_calendar.py (source NYSE/pandas_market_calendars) answers 21 for 2026-08-01..08-31 on three independent calls (total_trading_days_in_window, trading_days_between, a per-day is_trading_day count), and the same module returns False for 2026-09-07, so the calendar in use is the real one. NOTHING WAS DESTROYED: 10 archive objects in two sets (23:11:30-39Z and 00:20:11-33Z), the prior pdf 273,857 B and html 62,477 B in BOTH -- and 273,857 B is exactly what this seat read on the LIVE key at 00:0xZ before the re-render, so the held bytes are the bytes that were served. WHAT THE READING DOES NOT CLAIM, printed beside what it does: the send is evidenced by an account-wide SES counter (+2 attempts = one raw send to two destinations) whose limit is stated as account-wide and therefore consistent-with rather than exclusive-to, and the exclusive discriminators are named separately -- 0 publishes on the alert topic in the run window beside a live positive control of 1 in the FAILED fire's window (every failure branch publishes there), the deployed EMAIL_RECIPIENT join, and the issuer's own gateway read of the delivered envelope (00:25:59Z, toRecipients aj@ AND andrew@) which the worker CITES and never re-derives; and receipt at aj@opalinvest.com is called UNREAD because no instrument in this order reads that mailbox. A NON-NUMERIC CHANGE THE READING SURFACES ITSELF rather than letting a grader find it: the box render carries 4 SVG blocks where the ad-hoc local render carried 9 -- five inlined Opal logos, 19,044 bytes, gone because opal_logo_svg() resolves to /opt/portal/... on the reporter EC2 -- with headings 4 of 4, table rows 31 of 31, slides 5 of 5 and PFOE occurrences 8 of 8 identical, so no data is missing and the brand bar is empty; pre-existing and structural to EVERY scheduled fire, filed as W1-S19 and named for the CTO's L10. VERDICT PASS. TWO THINGS THIS GRADE CARRIES FORWARD, neither moving it: (a) the served August artifact is now 252,393 B against 273,857 B on 09-01 with every number identical -- the difference is the missing brand bar, and the 10-01 scheduled fire publishes brand-less until W1-S19's cell lands, which is the CTO's placement; (b) the manual-trigger rule is satisfied in its hardest form here -- the fire ran on the REAL plane against the REAL served key, it FAILED, the failure was the finding (the 10-01 fire would have failed identically), the fix was rehearsed against the box layout with a negative control and deployed as a leg of the same NEVER-2 entry, and the second fire is the test while 10-01 remains the acceptance, never a gate.",
+    "grades": [
+      {
+        "criterion": "S14-AC2",
+        "instance": "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-14.the-august-re-render.proof_of_spec.json@5de5bcab7e",
+        "verdict": "PASS",
+        "reason": "The reading answers what the re-render changed and what it did not, on the served bytes, with the forward-only cutover honoured and proved by a printed row-level diff; it separates an account-wide counter from the exclusive discriminators of the send; it names the one non-numeric regression itself and routes it; and it marks the one thing it cannot see (the aj@ mailbox) as unread rather than inferred. This seat's independent head-object, object pull, archive listing and trading-calendar re-derivation agree on every figure checked. NO verdict was recorded by the assignee."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "L8_PACKET.round2.partial.md @66ffa5f6e9 (sha256 e2e3dcfe82265511...); 2.0.0_SA_COO 94832 and 94812; org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/the-august-re-render.result.md read whole (the conclusion, FIRE 1 verbatim, the code change and its deploy, FIRE 2, the served table, the coverage line, both archives, TOLD APART, the SEND table with its stated limit, S14-AC2, the rows, what was not done).",
+        "This seat, 2026-09-10T01:30:33Z: `.tools/aws s3api head-object --bucket opal-data-etfs --key platinum/reports/2026-08/<k>` for 6 keys -> 252393 / 43376 / 1225 / 1888 / 2012 / 1888 B at 00:24:44-50Z with the ETags in one_line; `.tools/aws s3 cp s3://opal-data-etfs/platinum/reports/2026-08/opaletfs_cottonwood_202608.csv` -> the whole object, last line `# coverage: 21/21 trading days; 0 carried for missing data`; the same for coverage_verdict.json -> verdict PUBLISH, per_partner 21/21 holes 0 for 49financial, inflection, cottonwood.",
+        "This seat: `python -c` on lib/trading_calendar.py (calendar_source NYSE/pandas_market_calendars) -> total_trading_days_in_window(2026-08-01, 2026-08-31) = 21, trading_days_between = 21, sum(is_trading_day) over the 31 days = 21, is_trading_day(2026-09-07) = False.",
+        "This seat: list-objects-v2 on platinum/reports/_archive/2026-08/ -> 10 objects, pdf 273,857 B and html 62,477 B in both sets; the 273,857 B figure matches this seat's own head-object read of the LIVE key at 00:0xZ (recorded in C-S8's notes as the vintage fact for this grade).",
+        "W1-S11 .. W1-S19 read whole at HEAD; the face's AMENDMENT @d17b328c1e (arm (f) re-cut on W1-S18) and @5507841f04."
+      ]
+    },
+    "spec_asserts": "S14-AC2 as cut (judgment, NO verdict): what the re-render changed on the served artifact and what it did not, the alignment's first production execution under the forward-only cutover, the coverage line on the served bytes (FWD-3), the send, and what the order cannot see. FWD-6 (the alignment on a live render).",
+    "world_is": "The August report is re-published to the served key with the coverage line, every number unchanged, the prior bytes archived twice, one message sent to the joined recipients and read by the issuer at andrew@, and the brand bar empty on every box render.",
+    "notes": "The vintage note in C-S8 (the terminus rewritten at 00:24:48Z, 252,393 B) is this order's re-render and is now read on its own record. W1-S19's cell is the CTO's to place at the L10."
+  }
+]
+```
+
+## C-S13 -- adjudicates W3-S3, W3-S4, W3-S5: DISMISSED_WITH_REASON, records -- two corrections of the issuer's accept (one an independent second measurement of W2-S10) and comp-trigger's Scheduler-schedule blind spot carried to the round's remediation row
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T01:38Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S13",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-W3-S3",
+      "ETFS_GUARDRAIL-W3-S4",
+      "ETFS_GUARDRAIL-W3-S5"
+    ],
+    "one_line": "L9: ADJUDICATES three items of worker ~3's -- DISMISSED_WITH_REASON, records, all INERT; two are corrections of the issuer's own accept and one is a tool blind spot carried by name. W3-S3 (the amendment named 'the two daily rules' roles from list-targets-by-rule / get-schedule' and neither exists: an EventBridge RULE targeting a Lambda carries no RoleArn and invokes through the function's resource policy, and neither daily rule is a Scheduler schedule): the SAME fact worker ~2 filed as W2-S10 and this seat closed at C-S9, measured INDEPENDENTLY from a second worktree within minutes -- which is the corroboration Rule 22 asks for and almost never gets, two seats, two instruments, one number; the arm was satisfied on the execution role and the naming route corrected at the source @116f6a763d. W3-S4 (comp-trigger prints `schedule: -` and no fired-evidence line for the EventBridge SCHEDULER schedule etfs-reports-monthly-run while the live API returns cron(0 10 1 * ? *) America/New_York; both fields populate correctly for the two RULES in the same run, so the gap is Scheduler-schedule-shaped, not budget or match): a real blind spot in the estate's scheduler-forensics lens, and the shape that matters is that the tool renders ABSENCE where the world has a cron -- a seat reading comp-trigger alone would conclude the monthly has no schedule. It goes to the comp-tool lane; this seat holds it for the round's remediation row alongside the deploy_ledger defects (W1-S16/W1-S17) rather than minting one mid-round, because the channel refuses a NEW remediation row while any order of the project is non-terminal and two orders are open. W3-S5 (2 of the 6 scheduler-role AssumeRole rows are CreateSchedule role validations at the schedule's CreationDate to the second and join to no START inside 60 s, so the amendment's 'each is a rule-initiated fire' would have reported 6 fires where 4 occurred): the worker separated them on a printed falsifiable rule and disclosed that its own first tolerance (180 s) had falsely joined both to a person's invoke 99 s later -- a control that caught its own instrument, and the correction makes the issuer's number right rather than weakening the re-cut.",
+    "dismissal_reason": "Records: two corrections already applied at the source, and one tool blind spot carried by name to the round's remediation row. Nothing armed, nothing owed inside this round's chain.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W3-S3, W3-S4, W3-S5 read whole at HEAD; org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~3/the-schedules-from-history.result.md ss.4.1, 5, 7; the face @116f6a763d; this seat's C-S9 @e0ee78e9cd (W2-S10's disposition, the same fact from worker ~2)."
+      ]
+    },
+    "spec_asserts": "S18-AC1's arms (b) and (c) as amended; the preflight's naming of comp-trigger as the natural second instrument.",
+    "world_is": "The daily rules carry no RoleArn; two of six scheduler-role AssumeRole rows are role validations; comp-trigger cannot render a Scheduler schedule's cron or its fires.",
+    "notes": "W3-S4 rides this row's clock until the round's remediation row can be minted (all orders terminal). Worker-form items take no remediation row of their own."
+  }
+]
+```
+
+## C-S14 -- adjudicates W1-S11..W1-S19: GRADUATED -- seven closed in the world (the renderer import that would have failed the 10-01 fire, the archive location that would have mailed stale duplicates, the synchronous-invoke retry hazard, the two absent instruments), two owed: W1-S19 at the CTO and the deploy_ledger defects at 0.2.0_DT_PortfolioAnalytics
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T01:38Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "id": "ETFS_GUARDRAIL-C-S14",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-W1-S11",
+      "ETFS_GUARDRAIL-W1-S12",
+      "ETFS_GUARDRAIL-W1-S13",
+      "ETFS_GUARDRAIL-W1-S14",
+      "ETFS_GUARDRAIL-W1-S15",
+      "ETFS_GUARDRAIL-W1-S16",
+      "ETFS_GUARDRAIL-W1-S17",
+      "ETFS_GUARDRAIL-W1-S18",
+      "ETFS_GUARDRAIL-W1-S19"
+    ],
+    "disarm_owner": "1.0.0_SA_CTO for W1-S19 (the brand-less box render: the L10 cell placement -- the logo beside the renderer on the artifact prefix resolved from _ORION_HERE, or the SVG inlined); 0.2.0_DT_PortfolioAnalytics for the deploy_ledger.py defects of W1-S16 and W1-S17 (the regenerating entry and the missing add-leg verb), carried to this project's REMEDIATION row when every order is terminal; the remaining seven are CLOSED here",
+    "one_line": "L9: ADJUDICATES nine items of worker ~1's -- GRADUATED, and only TWO remedies are still owed; the other seven closed in the world during the round. CLOSED: W1-S11 (the deployed renderer could not import _orion_vendor_asof on the box, so the manual fire published nothing AND the 10-01 scheduled fire would have failed identically) -- the finding of the round, fixed at its cause @0c8bdbe5a5, rehearsed against a box-layout fixture with a negative control, deployed 00:16:35Z as a leg of the SAME NEVER-2 entry with DEPLOYED == BUILT on two instruments, and the re-invoke published 5 of 5 keys, read back at THIS seat at 01:30:33Z (252,393 B pdf at 00:24:48Z and the coverage line on the served CSV); this is the manual-trigger rule earning its keep -- a real fire on the real plane that failed and was fixed twelve hours before the schedule would have failed silently. W1-S12 (the order's first-cut archive location sat INSIDE the month prefix the orchestrator enumerates to build the email's attachment list, so archiving there would have attached three stale duplicate CSVs to the real delivery to aj@ and andrew@) -- the worker refused the ordered location and wrote outside the enumeration instead, and this seat's own listing confirms 10 archive objects under platinum/reports/_archive/2026-08/ with the prior pdf 273,857 B in both sets and nothing deleted; a cut that would have reached a person's inbox, caught by the worker. W1-S13 (no trail selects Lambda data events, so the ordered CloudTrail Invoke read can never return a row) -- the third of the night in one family (with W2-S7 and NFRA_COMPEFFICACY-W1-S3), re-cut and now passing on instruments that exist. W1-S14 (the BOUNDS said the orchestrator invoke 'returns in seconds'; it blocks through an SSM wait and a render poll, so a default-timeout synchronous CLI invoke would hit botocore's 60 s read timeout and RETRY into a SECOND concurrent production run on the same served key) -- a duplicate-write hazard against a served object, caught before the first fire and cut into the bound (--cli-read-timeout 0 --cli-connect-timeout 60), used on both fires. W1-S15 (no served artifact carries a trigger, run-id or invocation field, so a scheduled fire and a hand-started one cannot be told apart ON THE ARTIFACT) -- INERT and named for the L10, and it is the same hole S18-AC2 hit from the other side when the 2026-09-01 August write could not be attributed to any actor; NFRA_OUTSET's run_bundle.trigger carrier is the shape that answers it, and the L10 should read the two together. W1-S18 (arm (f) named a MessageId the handler never logs and a CloudTrail SES call no trail captures, so it read FAIL on a successful, evidenced send) -- re-cut @d17b328c1e onto (f1)-(f5) and PASSING, with the one-line MessageId print named for the L10 as a cell. STILL OWED: W1-S19 (the box render carries NO Opal logo -- opal_logo_svg() resolves /opt/portal/... on the reporter EC2, so the served HTML lost five inlined SVGs, 19,044 bytes, 62,477 -> 43,376 B, with headings, table rows, slides and every number identical) -- pre-existing and structural to every scheduled fire, RULED NOT CUT by the issuer, ARMED here at 1.0.0_SA_CTO for placement at the L10; until it lands the 10-01 fire publishes a brand-less report, which is a disclosure the CTO should make deliberately rather than discover. W1-S16 and W1-S17 (deploy_ledger.py regenerates the whole change-management entry from its sentinel on every close-leg, silently destroying any hand-added section -- measured on this very entry, 'served keys named 5 of 5; rollback=True' before three close-leg calls and '1 of 5; rollback=False' after -- and it has no add-leg verb, so a second deploy leg on an existing slug can only be appended to the sentinel JSON by hand) -- the ordering clause held for these faces, but the TOOL defect is unremedied and belongs to 0.2.0_DT_PortfolioAnalytics; it is this project's S4 / C-S6 carrier, and the REMEDIATION row it needs is still refused by the channel gate while EG-s-15 and EG-s-16 are open -- minted at the FINAL, with W3-S4's comp-trigger blind spot beside it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W1-S11 .. W1-S19 read whole at HEAD; org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/the-august-re-render.result.md (FIRE 1 verbatim, the code change and its deploy, FIRE 2, the archives, the SEND table, the rows); the disarm records S5..S8 @8f7bf86815 and this seat's C-S10 @e0ee78e9cd (which consumed them).",
+        "This seat, 01:30:33Z: the six head-object reads and the whole cottonwood CSV (the coverage line on the served bytes); the archive listing (10 objects, pdf 273,857 B in both sets); lib/trading_calendar.py answering 21 for August 2026 on three calls.",
+        "ETFS_GUARDRAIL-S4 and C-S6 / C-S7 @563d85794d (the deploy_ledger carrier and its correction); the surprise-row gate's refusal text of 2026-09-09 ~23:5xZ ('NEW remediation row ... while 5 of 19 task order(s) ... NOT terminal'), not overridden then and not now.",
+        "2.0.0_SA_COO 94812 and 94832 (W1-S17 and W3-S4 routed to this seat's remediation carrier; W1-S19 named for the CTO's L10)."
+      ]
+    },
+    "spec_asserts": "TO-EG-s-14's BOUNDS and S14-AC1's arms as first cut (the archive location, the invoke's return, the CloudTrail Invoke read, the MessageId instrument); the NEVER-2 requirement that the entry CARRY its sign-off, served-key list, archive table and rollback recipe.",
+    "world_is": "Seven of the nine are remedied in the world or ruled at the source inside the round; the report renders brand-less on every box fire; and the estate's deploy-ledger tool destroys hand-authored sections of its own entries and cannot add a leg.",
+    "notes": "Investigation items without a disposition after this write: 0 of 43 on CLOUD. Two orders remain (EG-s-15, EG-s-16); the FINAL packet carries the remediation row and the slug."
+  }
+]
+```
+
+## C-S15 -- S16-AC2 graded PASS: Labor Day told apart from a hole for 3 of 3 partners taken from the artifact's own list, with three limits named and two volunteered -- and this seat's own reads showing why FWD-4's measurement had to move to the slice plane; plus the FWD-5 envelope-versus-mailbox reading for the L10
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T04:09Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S15",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record and an outcome reading; it dispositions no investigation item.",
+    "one_line": "L9 on the FINAL packet @616b49f610 (v5, sha256 b3c49c6a499fa56e41819fc2b497764b8d73b97cb8340de908ade87bff6444a1, 24,349 bytes -- re-hashed at this seat and equal to the issuer's, which hashed AFTER its own commit): the GRADE for S16-AC2, the Labor Day read -- PASS. THE READING GRADED: 2026-09-07 is a real closed market day, the deployed classifier told it apart from a hole, and this system backfilled nothing against it -- for 3 of 3 partners taken from THE ARTIFACT'S OWN LIST rather than from a hand-typed one, with the class-A count equal to the non-trading days the battery ENUMERATED from lib/trading_calendar.py, the date in no partner's holes, every hole list identical with that date removed, and the month's only holes the class-D 2026-09-09 -- so the verdict demonstrably CAN mark a hole and did, two days after the target. THIS SEAT'S OWN READS, on the served artifact and the served slices, not on the report: coverage_verdict.json for 2026-09 pulled whole -- partners ['49financial', 'inflection', 'cottonwood'], A=3 for all three, trading_days=6 for all three, holes ['2026-09-09'] for 49financial and cottonwood and [] for inflection, expected_empty 0 -- and the estate's own calendar answers 3 non-trading days (09-05, 09-06, 09-07) and 6 trading days over 09-01..09-09, which is exactly what the artifact's counts say. THE THREE LIMITS ARE THE REASON THIS GRADES PASS RATHER THAN MERELY GREEN, and two of them the assignee volunteered unasked: the artifact carries NO per-date classification at all -- I confirmed the literal string 2026-09-07 occurs ZERO times in the whole document -- so the arm proves a COUNT and an ABSENCE and never a per-date label, and it says so; expected_empty is the class-B count (priced == 0) while class A is market-closed, different axes, printed with its true meaning named and explicitly NOT graded as a class-A instrument; and arm (e)'s BEFORE limb is an inference rather than a read because no listing predates the run, labelled as such in the worker's own output. A criterion that names what its own evidence cannot show is worth more than one that quietly stops at the number it can produce. THE CORRECTION THAT MATTERED, and it is the round's fourth instance of one shape: the issuer's hand-list named TWO non-trading dates where the calendar has THREE, so taking the hand-list would have FAILED the arm against a correct world; the re-cut now FORBIDS a hand-list and requires the battery to enumerate the calendar over the verdict's own window -- the instrument, not a transcription of it. IS COUNT-AND-ABSENCE SUFFICIENT FOR FWD-4? For what S16 is asked, YES: nothing this system did repaired a closed day, and the three arms that would detect such a repair (the count identity, the absence from every hole list, the hole-list equality with the date removed) all hold on three partners. FOR THE OUTCOME ITSELF, NO -- and PRD v0.6 has already moved FWD-4's own measurement onto the SLICE PLANE across every partner the artifact lists, which is the correct response and not this criterion's failure. I MEASURED WHY, on the world rather than the report: daily/inflection/2026-09-07.json EXISTS (1,209 B, written 2026-09-07T15:00:41Z), as do 09-05 and 09-06, while head-object on cottonwood and 49financial for the same day returns 404 -- two partners honestly absent, one carrying a file, and the verdict reads A=3 identically for all three because class A short-circuits before the presence check. The classifier cannot tell an empty closed day from a closed day carrying numbers, which is exactly the property FWD-4 exists to protect and exactly the cell EG-s-22 now carries. VERDICT PASS.",
+    "grades": [
+      {
+        "criterion": "S16-AC2",
+        "instance": "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-16.the-labor-day-read.proof_of_spec.json@2a24774603",
+        "verdict": "PASS",
+        "reason": "The reading answers the Labor Day question on the artifact's own partner list with the calendar as the instrument rather than a transcription of it, names three limits of its own evidence including two nobody asked for, adjudicates the closed-day slice's ownership instead of grading another producer's carry-forward, and answers the sufficiency question honestly in both directions. This seat's independent reads of the served verdict, the estate's calendar and the three partners' closed-day slices agree on every figure and supply the reason the outcome's measurement had to move. NO verdict was recorded by the assignee."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "L8_PACKET.round2.partial.md v5 @616b49f610, hashed at this seat to b3c49c6a499fa56e41819fc2b497764b8d73b97cb8340de908ade87bff6444a1 over 24,349 bytes; s.3 and s.4 (the round closed at L7, 5 of 5 terminal).",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/the-labor-day-read.result.md read whole (ss.0-8) and the instance's S16-AC2 row; 2.0.0_SA_COO 94958.",
+        "This seat, 2026-09-10 ~04:0xZ: `.tools/aws s3 cp s3://opal-data-etfs/platinum/reports/2026-09/coverage_verdict.json` -> month 2026-09, verdict PUBLISH, per_partner keys ['49financial','inflection','cottonwood'], A=3 / trading_days=6 / expected_empty=0 for each, holes ['2026-09-09'] / [] / ['2026-09-09']; the literal '2026-09-07' occurs 0 times in the document.",
+        "This seat: lib/trading_calendar.py (NYSE/pandas_market_calendars) over 2026-09-01..09-09 -> non-trading ['2026-09-05','2026-09-06','2026-09-07'], trading 6; `s3api head-object` daily/inflection/2026-09-{04,05,06,07,08}.json -> all present at 1,209 B written 15:00:4xZ on their own dates, and daily/cottonwood/2026-09-07.json and daily/49financial/2026-09-07.json -> 404 Not Found."
+      ]
+    },
+    "spec_asserts": "S16-AC2 as re-cut @005667015a (judgment, NO verdict): the evidence with vintages for the Labor Day read, the three limits, the closed-day slice's ownership adjudication, and whether COUNT-and-ABSENCE is sufficient for FWD-4 now that PRD v0.6 moved the outcome's measurement onto the slice plane.",
+    "world_is": "The closed day is classified A for all three partners and repaired by nobody; one partner's producer nevertheless writes a priced slice on that day, and the classifier is structurally unable to see it.",
+    "notes": "THE FWD-5 QUESTION THE PACKET PUTS TO L9 AND L10, answered here as a reading and not as a grade, because an outcome's verdict is the L10's: the August delivery of 00:25:59Z was addressed to aj@ AND andrew@ and was READ at andrew@'s mailbox through the gateway, so on Rule 22's STATE axis aj@'s limb stands at the ENVELOPE and andrew@'s at the MAILBOX -- APPLIED and EXERCISED respectively, as the issuer says. THIS SEAT'S REC IS THAT FWD-5 GRADES REALIZED ON THAT EVIDENCE. Three reasons. (1) The outcome's own words are that both people have received one, and a single SES send accepted for two destinations, whose delivered envelope was read in one of them, is the strongest evidence the estate can hold without reading another person's mailbox -- which is not an instrument this fabric has or should acquire. (2) The only two acts that would lift the second limb are a mailbox read or another send, and the send is barred by Andrew's ~02:5xZ standing constraint; holding the outcome short pending an act a standing constraint forbids would make FWD-5 permanently ungradeable, which is precisely what tonight's no-FWD-is-a-wait law (spine v3.10, his ~03:0xZ word) forbids -- and the law's own remedy, drive the mechanism or read banked history, is satisfied by the second: the delivery is banked history, already read. (3) The issuer was right to state it and not grade it, and right that a seat re-sending to firm up a grade would be the very act the constraint forbids. If the L10 disagrees, the question is Andrew's and he is already in direct contact with the other recipient by his own words; it is a sovereign question, never a re-take."
+  }
+]
+```
+
+## C-S16 -- adjudicates nine: GRADUATED -- the unreachable terminal send and its blind rehearsal, the under-reporting ask, the classifier's structural blindness, the missing send observability, the fresh-worktree halt gate, the covered-set breach and the bound that forbade the mechanism under test
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T04:09Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "id": "ETFS_GUARDRAIL-C-S16",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-W1-S25",
+      "ETFS_GUARDRAIL-W1-S29",
+      "ETFS_GUARDRAIL-S11",
+      "ETFS_GUARDRAIL-W1-S27",
+      "ETFS_GUARDRAIL-W1-S31",
+      "ETFS_GUARDRAIL-W1-S26",
+      "ETFS_GUARDRAIL-W1-S21",
+      "ETFS_GUARDRAIL-S10",
+      "ETFS_GUARDRAIL-W1-S24"
+    ],
+    "disarm_owner": "2.0.0_SA_COO for the round-3 cells already cut (EG-s-19 the two-site guard, EG-s-21 the ask's completeness, EG-s-22 the classifier's discrimination) and for the spawn-side halt-gate fix; 0.2.0_DT_PortfolioAnalytics for the deploy_ledger tool defects carried at REMEDIATION S4; 1.0.0_SA_CTO for the MessageId observability cell it named for the L10; ANDREW for S10's served September keys, which stand by the standing rule",
+    "one_line": "L9: ADJUDICATES nine items -- GRADUATED, ARMED, and every one of them already has a named home, which is why the round can close with them open. THE PRODUCTION DEFECT AND ITS SECOND SITE (W1-S25, its own author's correction W1-S29, and this seat's S11): the ONE terminal SES send is unreachable on real data because the guard at lambda_function.py:435 reads a key the renderer never writes -- and the SAME wrong key sits at :516 inside terminal_qa, the send-free rehearsal built to exercise that very branch. Three seats reached it three ways: the worker from the deployed bytes, the issuer from a fetch of the served object, and this seat from the source at HEAD plus its own pull of coverage_unresolved.json (top-level keys ['49financial','cottonwood'], no 'unresolved' key). The QA and the production path share one assumption, so a rehearsal run would have reported healthy on the day a real refusal sent nothing -- a guard sharing a failure mode with the thing it guards. Cut as EG-s-19 with the test built from the PRODUCER'S output; this seat's condition, carried on REMEDIATION S11, is that the rehearsal be re-pointed at the same source of truth and be ABLE TO FAIL -- a terminal_qa run against a month whose document is non-empty must render a non-empty list or refuse. THE UNDER-REPORTING ASK (W1-S27): the rung-3 artifact names one of two class-D dates and discloses no omission, so a person who resolves every ask still leaves a hole unaddressed -- the same family as the two above, an artifact that reads complete while under-reporting; cut as EG-s-21 with its own denominator. THE CLASSIFIER'S BLINDNESS (W1-S31): a priced slice on a closed day for the one partner the criterion did not enumerate, structurally invisible because class A short-circuits before the presence check -- measured independently at this seat (inflection present on 09-05/06/07 at 1,209 B; cottonwood and 49financial 404 on 09-07). The CTO placed it correctly in two halves: the DETECTOR is this project's and is cut as EG-s-22; the PRODUCER's carry-forward leaves as a brief and is not routed into a running project. THE OBSERVABILITY GAP (W1-S26): the terminal branch has no log oracle either -- zero application log lines and no trail selecting the SES data plane -- which extends W1-S18 from the ordinary send to the branch FWD-7 depended on, and is the reason the one-line MessageId print is a named cell rather than a nicety. THE HALT GATE (W1-S21): safe-apply fails CLOSED in any fresh worktree because it resolves the actor from a gitignored session file a new worktree never carries, so a correctly-authored worker is blocked at rc 3 -- the issuer has taken it at the SPAWN rather than on any face, which is the right plane, and it is the same worktree-provisioning family as NFRA_CLDGRPH's W2-S53 and NFRA_COMPEFFICACY's tokenizer. THE COVERED-SET BREACH (S10): ruled a RECORD breach and not a world breach, no rollback owed by the sign, the September keys standing by the standing rule and the clarifying note Andrew's -- and it is the instance that bought CLAUDE.md NEVER-1's amendment, so it is graduated to him with nothing asked. THE BOUND THAT FORBADE THE MECHANISM UNDER TEST (W1-S24): the ladder wrote daily/inflection/2026-09-09.json during the run, which the BOUNDS forbade -- and writing that slice is what rung 1 EXISTS to do; the bound was wrong, the issuer re-cut it, and the write is why inflection reads 6 of 6 while the other two read 5 of 6. A bound that forbids the mechanism under test is a cut defect, not a violation.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The nine rows read whole at HEAD; the FINAL packet ss.2-5; 2.0.0_SA_COO 94891, 94917, 94941, 94958; 1.0.0_SA_CTO 94877, 94909, 94948 (the W1-S31 placement and PRD v0.6), 94920 (the no-FWD-is-a-wait law).",
+        "This seat's own instruments: the source at HEAD (:435 in _run's refusal branch and :515-516 in terminal_qa), the served coverage_unresolved.json for 2026-09, the September coverage_verdict.json, the three partners' closed-day slices, and lib/trading_calendar.py."
+      ]
+    },
+    "spec_asserts": "TO-EG-s-15's premise that an incomplete month refuses; its BOUNDS that no served slice is touched; S15-AC4's log-based send oracle; S16-AC1's arms (b), (c) and (d); the round-1 EG-s-8 proof of the terminal send.",
+    "world_is": "The terminal send cannot fire and its own rehearsal cannot show that; the ask under-reports; the classifier cannot see a slice on a closed day; the terminal branch has no observability; a fresh worktree cannot apply; and two of the round's bounds forbade or mispredicted the mechanisms under test.",
+    "notes": "ARMED because four remedies are live in round 3 and two sit at other seats. Nothing here blocks this round's close: every item is cut, placed or reserved with an owner named."
+  }
+]
+```
+
+## C-S17 -- adjudicates five: DISMISSED_WITH_REASON, records -- one wrong premise read from both ends and closed by re-cuts judged harder, two criterion-versus-criterion defects, and one honest note that the minimal change was not minimal
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T04:09Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S17",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-W1-S20",
+      "ETFS_GUARDRAIL-W1-S22",
+      "ETFS_GUARDRAIL-W1-S23",
+      "ETFS_GUARDRAIL-W1-S28",
+      "ETFS_GUARDRAIL-W1-S30"
+    ],
+    "one_line": "L9: ADJUDICATES five items -- DISMISSED_WITH_REASON, records, all closed in substance inside the round. W1-S22 and W1-S23 are ONE finding read from two ends and they are the round's most consequential pair: the order's central premise was that an incomplete month REFUSES, and it does not -- September's holes classify D, the pre-publish gate refuses only on class C, class C is 0 for 3 of 3 partners, so the verdict reads PUBLISH and no refusal ever occurred (W1-S22); therefore the run published a partial-month report to the served keys and mailed it to both recipients, the two outcomes the order said would not happen, with the ONE terminal send firing zero times (W1-S23). Neither is a producer defect. The system did exactly what carry-and-disclose is built to do, the published report discloses its own state in its coverage line, and what was wrong was the PREDICTION in the face and in both never-widen halves. Both are closed at the source: the arms were re-cut to read the verdict the producer GIVES with its class table verbatim and the classifier's C-vs-D boundary quoted at file:line, and arm (e) now PROVES the send defect rather than asserting a refusal this data cannot produce -- worth more than the pass it replaced. W1-S30: S16-AC1 arms (b) and (c) named evidence the served artifact does not carry, and it is unsatisfiable for ANY month rather than for this one -- the document holds per-class counts and a holes list and no per-date map, and expected_empty is the class-B count on a different axis; re-cut, with the limit recorded rather than papered over, which is why C-S15 could grade the reading at all. W1-S28: S15-AC2's expectation could only match BEFORE the apply it gates and contradicted S15-AC3's post-apply zero-diff requirement -- two criteria of one order that could not both hold; re-cut to PLAN-GATE-HELD, and the three limbs now agree instead of excluding each other. W1-S20: the ordered 'one line' needed a signature change first, because _run took no event argument -- a small honest note that the minimal change was not quite minimal, filed rather than absorbed.",
+    "dismissal_reason": "Records: two ends of one wrong premise, both closed by re-cuts judged harder; two criterion-vs-criterion defects closed the same way; and one note that the ordered minimal change required a signature change. Nothing armed remains among them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The five rows read whole at HEAD; the re-cut face @dc99d82c4d and @005667015a; the FINAL packet s.2 (S15's four mechanical criteria PASS on the re-cut face, S16-AC1 6 of 6); this seat's own read of the September verdict showing class C = 0 and the holes class D."
+      ]
+    },
+    "spec_asserts": "TO-EG-s-15's premise and its S15-AC2/AC4 arms; TO-EG-s-16's S16-AC1 arms (b) and (c); the 'one line at _run' instruction.",
+    "world_is": "The producer carries and discloses rather than refusing on this data; two criteria of one order could not both hold; and one criterion named evidence no month's artifact carries.",
+    "notes": "Investigation items without a disposition after this write: 0 of 57. The round's L10 precondition is met on this axis and the two remediation rows are minted in the same commit."
+  }
+]
+```
+
+## C-S18 -- CORRECTION of C-S15's FWD-5 reading: a recipient list is what the SENDER ASKED FOR, and it reads identically in a world where the second recipient never received it; the per-recipient delivery record already exists and is a read of history, not a run
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-C-S18",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T04:14Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A correction of this seat's own row, in the channel's append-only form: a NEW row citing the old id, never an edit.",
+    "one_line": "CORRECTION OF C-S15's FWD-5 READING, WHICH WAS THIS SEAT'S AND WAS WRONG. C-S15's notes recommended that FWD-5 grade REALIZED on the August delivery -- a message ADDRESSED to aj@ and andrew@ and READ at andrew@'s mailbox -- reasoning that it is the strongest evidence obtainable without reading another person's mailbox, and that holding the outcome short pending an act a standing constraint forbids would make it permanently ungradeable against tonight's no-FWD-is-a-wait law. 1.0.0_SA_CTO ruled otherwise at 94975 and the ruling is RIGHT; this row records that rather than leaving the recommendation to stand. WHAT I MISSED, and it is the axis I have been grading other seats on all night: I applied the no-wait law and never applied Rule 22's DISCRIMINATION question to my own evidence. Asked directly -- if aj@ had never received it, through a bounce, a filter or a bad address, would the evidence look any different? IT WOULD NOT. The envelope read at andrew@'s mailbox is byte-identical in both worlds, so a recipient list cannot separate delivered from not-delivered at the second address. A recipient list is what the SENDER ASKED FOR: better than a send log, and still not a delivery. My reading upgraded SENT to EMITTED and wrote it down as READ, which is exactly the three-state collapse CLAUDE.md 22a names, and I made it while quoting the same rule at other people's work. THE SECOND ERROR IS THE MORE USEFUL ONE: I accepted the frame that the only two instruments were a mailbox read or another send, and then reasoned from that closed set to a conclusion. The set was not closed. The CTO named the instrument neither seat had -- THE MAIL PLATFORM'S OWN PER-RECIPIENT DELIVERY RECORD for that message id, which the transport already wrote and keeps, which exists for the 00:25:59Z message right now, and which is a READ OF EXISTING HISTORY of precisely the kind spine v3.10 blesses. It touches no mailbox, sends nothing, and is clear of Andrew's constraint by construction, because his word bars a test RUN from reaching aj@ and reading a record that already exists is not a run and reaches nobody. That is a two-token enumeration of my own that lost a member silently -- the shape rule 24 was sharpened for one tick before I committed it, which makes this the sixth instance of the night and the first in this seat's own reasoning rather than in a face or a census. THE STANDING POSITION AFTER THIS ROW: FWD-5's state is EXERCISED at andrew@ and APPLIED at aj@, recorded as a split rather than averaged into one verdict; the next act is the delivery-record read, not a sovereign question and not a re-take; and if that record proves unavailable the question that reaches Andrew is 'may we confirm with AJ', never 'may we re-send'. C-S15's grade of S16-AC2 is untouched -- the correction is to the FWD-5 reading in its notes field and to nothing else in that row.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO 94975 s.3 (the ruling, the discrimination question put directly, and the delivery-record instrument), with the same message's s.3 recording the CTO's own correction of its ~02:5xZ report on the same evidence.",
+        "This seat's C-S15 notes field @1ea6da48c4 (the recommendation now corrected) and 2.0.0_SA_COO 94958, which stated the envelope-versus-mailbox split precisely and refused to grade it -- the line both graders should have taken as the answer rather than as the question.",
+        "CLAUDE.md Rule 22 (DISCRIMINATION: could the evidence differ if the claim were false) and 22a (SENT != EMITTED != READ); spine v3.10 (the act may be a driven run OR a read of existing history)."
+      ]
+    },
+    "spec_asserts": "C-S15's own notes: that a delivered envelope addressed to both recipients and read at one of them is sufficient evidence for FWD-5's 'both people have actually received one'.",
+    "world_is": "The envelope proves the send was accepted for two destinations and read at one; it cannot distinguish delivery from non-delivery at the other, and a per-recipient delivery record that can distinguish them already exists and has not been read.",
+    "notes": "Filed as a NEW row citing C-S15 rather than as an edit, which is the discipline this seat has applied to two of its own rows tonight (C-S7 and NFRA_OUTSET-S33) and graded others on. Nothing in the round's coverage or dispositions moves: 0 of 57 investigation items remain undispositioned."
+  }
+]
+```
+
+## C-S19 -- the instrument C-S18 sent a future reader to DOES NOT EXIST on the plane it named, and the substrate fact behind that makes the original ruling stronger: this mailer sends under no configuration set, so a hard bounce would have left no record here either
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-C-S19",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T04:20Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A correction of a FACT inside this seat's own C-S18, filed as a new row rather than an edit; the principle C-S18 carries is unchanged and is not restated here as if it were in doubt.",
+    "one_line": "C-S18'S PRINCIPLE STANDS AND ITS FACT DOES NOT. C-S18 corrected this seat's FWD-5 reading and, in doing so, asserted as world_is that 'a per-recipient delivery record that can distinguish them ALREADY EXISTS and has not been read'. 2.0.0_SA_COO MEASURED THAT PLANE at ~04:1xZ, three read-only calls, and it does not: `ses list-configuration-sets` returns 1 of 1 (trade-pipeline-notifications); `describe-configuration-set` shows that set's ONLY event destinations are COMPLAINT and BOUNCE, not delivery; and `sesv2 get-email-identity opalinvest.dev` carries no ConfigurationSetName key at all, so the mailer names no configuration set and the account has no default. SES publishes per-recipient delivery events only through a configuration set's event destination, so NO delivery event was published for the 2026-09-10T00:25:59Z message under any configuration -- and that conclusion is account-level and therefore does not depend on the deployed bytes, which is why the read was taken there. I INHERITED THE FACT FROM THE RULING I WAS AGREEING WITH AND DID NOT MEASURE IT: 1.0.0_SA_CTO named the instrument at 94975, I wrote it into my own correction as an existing object, and neither seat read the plane before writing it down. That is a wrong FACT inside a right-sounding PRINCIPLE, which is the shape that survives review precisely because the principle is what gets checked -- and I committed it in the row whose whole subject was that I had failed to check my own evidence. THE RULING NEEDS RE-POINTING, NOT REVERSING, and the issuer's framing is exactly right: its logic holds unchanged -- reading a record that already exists is a read of history, touches no mailbox, sends nothing, and is clear of Andrew's constraint by construction -- only the PLANE was wrong. The candidates that remain, in the issuer's order and untaken because the first is a tenant-administrative surface and the second is somebody's mailbox: the Microsoft 365 tenant's message trace for that message id, then the feedback-forwarding destination for the MAIL FROM domain (FeedbackForwardingStatus is TRUE, so a bounce went somewhere AS MAIL rather than to SNS -- an absence on the SES plane is not an absence, and the issuer said so rather than letting its own zero read wider than it measures). AND THE SUBSTRATE FACT THAT FALLS OUT OF THE SAME READ MAKES THE ORIGINAL RULING STRONGER THAN IT ASSUMED: the ETF report mailer sends under NO configuration set, so its bounces and complaints are captured nowhere in this account. If the second recipient had never received that report, not only would the envelope read identically -- A HARD BOUNCE WOULD ALSO HAVE LEFT NO RECORD HERE. The discrimination question 94975 asked is answered even more decisively than when it was asked. STANDING POSITION, unchanged in substance: FWD-5 is EXERCISED at andrew@ and APPLIED at aj@; the next act is a delivery read on a plane that has one; and if none is reachable the question that goes to Andrew is 'may we confirm with AJ', never 'may we re-send'.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "2.0.0_SA_COO 94983 s.2 and s.3: the three read-only SES calls with their results, the reason the read was taken at account level rather than at the source, the explicit refusal to read its own zero as an absence across planes (FeedbackForwardingStatus TRUE), and the no-configuration-set substrate fact.",
+        "This seat's C-S18 @1e5ab92e81 (the world_is now corrected) and 1.0.0_SA_CTO 94975 s.3 (the ruling and the instrument it named).",
+        "CLAUDE.md: a wrong FACT inside a right-sounding PRINCIPLE survives review because the principle is what gets checked; and an absence measured on one plane is not an absence on another."
+      ]
+    },
+    "spec_asserts": "C-S18's world_is: that a per-recipient delivery record capable of distinguishing delivery from non-delivery at the second address already exists and merely had not been read.",
+    "world_is": "No such record exists on the SES plane for that message: one configuration set in the account, publishing complaint and bounce only, and the mailer names none. The instrument, if it exists at all, is on the tenant's transport plane and no tooled read at any seat here reaches it.",
+    "notes": "Third row on this subject and the last one this seat owes: C-S15 carried the wrong recommendation, C-S18 corrected the principle and carried a wrong fact, C-S19 corrects the fact. Each is a NEW row citing the one before, never an edit. Nothing in the round's coverage moves; 0 of 57 investigation items undispositioned. For the L10: the mailer's missing configuration set is 2.0.0_SA_COO's filed substrate fact with no remedy proposed, correctly, under the standing alert moratorium -- it is a placement question, not a build."
+  }
+]
+```
+
+## C-S20 -- closing the FWD-5 chain: the L10 grades it REALIZED on a MEASURED-EMPTY enumeration of closing acts, so C-S18 corrected the reasoning and not the verdict, and the channel's last word now matches the record's
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-C-S20",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T04:40Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A closing record for a three-row chain in this document, so the channel's last word on FWD-5 is not a sentence that now reads backwards.",
+    "one_line": "CLOSING THE FWD-5 CHAIN: THE OUTCOME IS GRADED REALIZED, AND C-S18 CORRECTED MY REASONING RATHER THAN MY VERDICT -- said here because a reader arriving at this channel alone would otherwise stop at C-S18's 'my REC was wrong' and carry away the opposite of the record. 1.0.0_SA_CTO's L10 @f5074019a1 grades FWD-5 REALIZED, adopting the recommendation C-S15 made and reversing its own ruling of forty minutes earlier -- not because the envelope became sufficient, but because the enumeration of acts that could close the outcome was MEASURED and found EMPTY. Three seats measured two planes to establish that: 2.0.0_SA_COO on SES (one configuration set, its only event destinations complaint and bounce, no default ConfigurationSetName), the CTO on the repo (a ConfigurationSetName census over 153,416 files, all three pages, every first-party hit inside a vendored SDK bundle -- no Opal sender names a set). With no delivery record on any plane, the remaining acts are a read of another person's mailbox, which is not an instrument this estate has or should acquire, and another send, which Andrew's standing constraint bars. Holding the outcome short would have made it permanently ungradeable, which is what this night's own law forbids, and the law's remedy -- a read of banked history -- is satisfied by the delivery already read. state_observed records the split, EXERCISED at andrew@ and APPLIED at aj@, so no later reader mistakes an envelope for a mailbox. WHAT STANDS FROM C-S18 AND WHAT DOES NOT: what stands is that my C-S15 recommendation reached its verdict WITHOUT applying Rule 22's discrimination test to my own evidence, and that a recipient list is what the sender asked for and reads identically in a world where the second address never received it -- that is true, it was my error, and the row that recorded it was worth writing. What does not stand is any implication that the verdict itself was wrong: it was right by insufficient reasoning, and the final grade reaches the same place by sufficient reasoning. A correct answer reached badly is still a bad piece of work, and correcting the method rather than flipping the answer is what C-S18 did. THE ONE FACT THAT MAKES THE GRADE MORE HONEST RATHER THAN LESS, carried from C-S19 and now in the L10 too: this mailer sends under NO configuration set, so if the second recipient had never received the report, not only would the envelope read identically -- a hard bounce would also have left no record in this account. The grade is made on the strongest evidence that exists and the record says exactly how strong that is.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO 94989 (the L10: 4 REALIZED / 2 NOT_REALIZED / 2 NOT_EVALUATED; FWD-5 REALIZED with state_observed carrying the split; the repo-side ConfigurationSetName census over 153,416 files across all three pages) and its record ROUND_ANALYSIS.round2.md + COMPLETION_GRADES.round2.json @f5074019a1.",
+        "2.0.0_SA_COO 94983 s.2 (the three read-only SES calls) -- the measurement C-S19 already carries.",
+        "This document's own chain: C-S15 (the recommendation), C-S18 (the reasoning corrected), C-S19 (the fact corrected)."
+      ]
+    },
+    "spec_asserts": "Nothing new; this row asserts about the record rather than about the world. C-S18's sentence 'my FWD-5 reading was wrong' as a reader might carry it forward.",
+    "world_is": "The verdict recommended at C-S15 is the verdict graded at the L10; the reasoning C-S18 corrected was still faulty; and the instrument C-S19 corrected does not exist on any plane three seats have now read.",
+    "notes": "Fourth and final row on this subject from this seat. The chain is C-S15 -> C-S18 -> C-S19 -> C-S20, each a NEW row citing the one before, never an edit. Round-2 coverage is unchanged: 0 of 57 investigation items undispositioned. Also recorded from the L10 for whoever reads this project next: FWD-4 and FWD-8 are NOT_REALIZED, and both are the honest half -- a criterion passing and an outcome holding are different questions, which is the same distinction this seat's C-S15 drew when it graded S16-AC2 PASS and said in the same row why the outcome's measurement had to move."
+  }
+]
+```
+
+
+## Round 3 partial L9 -- pinned packet, corrected count, and three drained judgments
+
+This append records C-S21 through C-S28. Earlier rows and historical denominators remain unchanged.
+The round is open; this is neither its final review nor its L10 slug.
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T13:54Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S21",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Partial L9 grade record for the three newly drained orders; no investigation item is closed by this record.",
+    "one_line": "Round-3 partial L9 on pinned packet 37b78f412c and COO correction 95180: S26-AC2 FAIL, S27-AC2 FAIL, S28-AC2 PASS. These grade the recorded judgments, not the mechanical criteria or FWD outcomes.",
+    "grades": [
+      {
+        "criterion": "S26-AC2",
+        "instance": "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~5/ETFS_GUARDRAIL.TO-EG-s-26.the-artifact-records-what-was-skipped.proof_of_spec.json@70d11e0b2b",
+        "verdict": "FAIL",
+        "reason": "The bar asks the field shape, why a reader can trust it, consumer compatibility and residuals. The explicit skipped/ran keys and additive consumer reasoning are supported. However the same forcing object and its derived run_shape claim actual removals: _forcing_record at 5b15b09834:936,946-947 counts requested dates while _apply_fixture_remove:448 silently ignores missing targets. CVO measured absent-date and absent-partner cases removing 0 but recording 1, beside a present-date control removing 1. The judgment asserts internal trustworthiness without this false-effect residual. This is a failure of the recorded trust argument, not a claim that the skip flag or decision-neutrality arms failed. See C-S27."
+      },
+      {
+        "criterion": "S27-AC2",
+        "instance": "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~4/ETFS_GUARDRAIL.TO-EG-s-27.the-skip-rides-the-forcing.proof_of_spec.json@5ca49e7fdb",
+        "verdict": "FAIL",
+        "reason": "The coupled shape, one production caller and skipped-rung limits are supported. The requested account of what a caller can still do wrong is materially false: it says removed_slice_count would read 0 for a nonexistent target. Exact pinned functions instead report 1 after removing 0 in both absent-target cases. Also REFUSE does not follow merely from a nonempty spec: coverage_gate at 5b15b09834:1056-1062 selects it from class C. The purported diagnostic cannot distinguish the caller mistake it claims to expose. See C-S27."
+      },
+      {
+        "criterion": "S28-AC2",
+        "instance": "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-28.the-unresolved-record-names-its-provider.proof_of_spec.json@466f461b7c",
+        "verdict": "PASS",
+        "reason": "The record answers its three questions: additive dictionary-copy/.get consumers, provider as a static mapping assertion rather than observed provenance, and explicit remaining limits including the fifth writer and deployment gap. Independently read _normalize_unresolved/_read_coverage_artifacts/_build_terminal_email at e94ce02a92 and mapping plus four append sites at 7e544cb4d7. Fresh main-tree comp-find and native Python census corroborate the consumer classification, not the worker's old denominator. The three-entry mapping's Inflection vendor label does not itself prove the vendor is wrong merely because its immediate upstream is a monolith. PASS is limited to the judgment as cut; it is not a served-plane or FWD-10 grade. C-S28 adds a concrete unexamined message contradiction."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Packet raw git blob 37b78f412c:ledger/L8_PACKET.round3.partial.md (full project prefix above): 45,945 bytes, SHA-256 78fcc6b4f4bc8f4e8a7e7157110f800c803ef645dabaef4fad983c3fc0327339. Full 345-line pinned packet read. Earlier revision ~20: 31,902 bytes, SHA-256 2485c30f0cc9f63cebe6a2d920eca01b559ea8b6eeb946c3c613273affd4cf42; 6/7 versus 9/10 terminal.",
+        "Three proof JSON objects equal their drain-commit versions; checker e3a9d207dc re-run with IDs extracted from the current orders: all three VALID rc=0, alignment ENFORCE 2/2 criteria and 1/1 cells each. S26: 4 presence-only pins + 3 co-committed; S27: 2 presence-only + 5 co-committed; S28: 6 content-resolved. These are structural checks, not independent replays of their AWS measurements.",
+        "Current main-tree Python census at C:/Users/AndrewBerman/Desktop/ajb_workspace: 4,301 .py paths from rg --files --hidden -g *.py -g !.git, 0 unreadable; coverage_verdict in 13 files, coverage_unresolved in 11, _render_command in 7. Unrelated graph-recognizer metrics and derive_runner log labels excluded by source read; tests/batteries, writer and production reader classified separately. Exact orchestrator AST at e94ce02a92: 237 Call nodes, one _render_command call at :682.",
+        "comp-find coverage_unresolved --files --all from main root: 163 hits / 153,950 scanned, 68 listed files, all one page read; 104,521 ephemeral-floor exclusions, 7 unreadable, 4,214 binary exclusions explicitly retained. Different corpus from the worker's 161/29,811; not a numerical agreement claim. Current source classification is corroborated, exhaustive absence outside the searched corpus is not asserted."
+      ]
+    },
+    "spec_asserts": "S26-AC2, S27-AC2 and S28-AC2 as cut in their named orders; recorded judgments must be read for truth, not promoted from VALID.",
+    "world_is": "Structural checks pass, but two judgment records rely on an incorrect effect claim. The provider judgment states its limits and its consumer classification is independently corroborated.",
+    "notes": "COO 95180 explicitly directs L9 on the packet without another CVO task order. Later R-EG-8 and EG-s-29 supersede the pinned packet's request for a ruling. EG-s-21 and EG-s-29 were pending in the supplied corpus. No L10 slug, remediation file, round-close claim, invoke, send, deploy or outcome grade is issued here. The corrected v3.13 difference-control labels are read against these orders; no later law is imposed retroactively. No other round-3 judgment is graded by this partial record."
+  },
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T13:54Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S22",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Correction of the packet premise; no law extension is earned by the withdrawn count.",
+    "one_line": "The four-instance claim at pinned packet section 9.3 is withdrawn to two distinct demonstrated writer defects, following COO 95180. EG-s-24 is the cell producing W4-S5, not another instance; W4-S4 is ordered readers, a different mechanism.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Before this append, all JSON blocks under the project channel parse to 106 rows: 84 investigation, 20 adjudication, 2 remediation. This is the row denominator, not 106 independent defects.",
+        "W4-S5 independently reproduced with exact _render_command AST at 0228b9c456: injected month emits --fixture-remove. At e94ce02a92 it raises ValueError. The first probe mistakenly supplied a second positional argument to the old one-argument function; corrected before any result was used.",
+        "W1-S33 independently reproduced with exact coverage_gate and _forcing_record AST at 5b15b09834, supplied classifier stubs returning one C and one D day: 2 unresolved rows, 0 provider fields, REFUSE. This is a pinned-function reproduction, not a live box run.",
+        "COO 95180 withdraws both its 95135 sentence and packet v5 s.9.3. No census of other projects was performed."
+      ]
+    },
+    "spec_asserts": "The proposed law extension was conditional on four independent measured instances and CVO confirmation of the generalisation.",
+    "world_is": "Two cited mechanisms survive deduplication and classification; the stated four-instance premise does not.",
+    "notes": "Recommendation for CTO: do not cut the extension on this evidence. The two new findings below concern false effect disclosure and message wording, and are not added to the writer-defect count to recreate four."
+  },
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T13:54Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S23",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-W4-S5"
+    ],
+    "disposition": "GRADUATED",
+    "one_line": "W4-S5 graduates: month was a second writer of renderer flags, independently reproduced on the before blob and refused on the post-fix blob. Code remedy is present; the packet supplies the historical deployment evidence.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "_render_command@0228b9c456 with month='2026-08 --fixture-remove cottonwood:2026-08-04' emits the flag without a forcing argument.",
+        "_render_command@e94ce02a92 rejects the same input via MONTH_RE at lambda_function.py:435-438; 1 before/after pair, no SSM execution.",
+        "Pinned packet 37b78f412c:101-128 records in-round deploy and disarm; W4-S5 cites fix 3a326438d3."
+      ]
+    },
+    "spec_asserts": "The forcing fence must cover every invoker-writable route into the command.",
+    "world_is": "The historical month route bypassed the dedicated forcing field; post-fix code rejects it.",
+    "notes": "Remedy holder was worker ~4 under EG-s-24. This review verifies code and attributes the live historical deployment to the cited record; it does not freshly certify current AWS bytes."
+  },
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T13:54Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "id": "ETFS_GUARDRAIL-C-S24",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-W1-S33"
+    ],
+    "disposition": "GRADUATED",
+    "disarm_owner": "2.0.0_SA_COO -- EG-s-29 placement and proof before EG-s-21",
+    "one_line": "W1-S33 graduates: the inline no-ladder writer produces provider-less unresolved records independently of the four repaired remediate.py sites. R-EG-8 correctly requires the artifact fix before the driven run.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "coverage_gate@5b15b09834:1043-1051 constructs the inline records; exact function probe returned 0 provider fields in 2 records.",
+        "remediate.py@7e544cb4d7:265-299 has provider at all four append sites; those sites cannot repair a branch that never calls remediate_month.",
+        "COO 95180 cites EG-s-29 issuance f3f3cf23ad and the EG-s-21 recut; their completion is not evidence in this review."
+      ]
+    },
+    "spec_asserts": "FWD-10 requires provider information in each missing-day row; EG-s-28's named sites do not exhaust writers.",
+    "world_is": "The pinned no-ladder branch omits provider; the single driven run must follow proof of its repair.",
+    "notes": "No disarm asserted from issuance alone. Keep the code-before-run gate independent of the law-extension question."
+  },
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T13:54Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S25",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-S35"
+    ],
+    "disposition": "GRADUATED",
+    "one_line": "S35 graduates as a grounded wrong-corpus exposure. This partial review does not reuse the linked-worktree counts: it checks pinned code, re-runs the proof checker and independently corroborates the consumer/caller classification from the main root.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S35 names all three exposed judgment criteria and the tool-install-root mechanism; pinned packet s.9.5 explicitly declines to equate worker and issuer corpus counts.",
+        "C-S21 records the fresh comp-find 163/153950 and native Python 4301-file census, together with exclusions and source classifications.",
+        "Exact git-show reads select 37b78f412c, 5b15b09834, e94ce02a92 and 7e544cb4d7, so these source claims do not depend on compiler worktree routing."
+      ]
+    },
+    "spec_asserts": "A census must describe the intended tree, scope and vintage before its denominator can support a judgment.",
+    "world_is": "The old counts cannot establish their claimed worker-tree scope. New main-tree classification checks corroborate the bounded conclusions without treating different denominators as agreement.",
+    "notes": "COO owns drain-level admissibility. No certification of every earlier round census, excluded file or future linked-worktree invocation is made. S26/S27 FAILs are independent of this tool exposure."
+  },
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T13:54Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S26",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-S36"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Ownership correction is recorded by a new row naming the eleven originals; it is not a disarm of those originals.",
+    "one_line": "S36 is accepted as an append-only ownership correction to COO base for eleven rows. S4 is excluded. Rule 27 binds issuers per round and does not prohibit multiple project workstreams.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S36@f3f3cf23ad names W1-S1/S2/S3/S5, W2-S2/S3/S4/S5/S6, S2 and S3; the original rows remain unchanged.",
+        "CTO 95152 approves re-pointing without disarm; 95165 clarifies Rule 27; COO 95180 reports the append-only correction landed."
+      ]
+    },
+    "spec_asserts": "Ownership changes preserve row history and do not silently close hazards.",
+    "world_is": "The latest correction supplies an actionable owner while preserving each original hazard and class.",
+    "notes": "This closes the ownership-correction record only. It does not determine whether the eleven underlying remedies are complete. No inference of permanent lane unseatability survives the Rule 27 correction."
+  },
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T13:54Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "id": "ETFS_GUARDRAIL-C-S27",
+    "disposition": "GRADUATED",
+    "disarm_owner": "2.0.0_SA_COO -- place the effect-disclosure correction and absent-target control in the owning renderer cell",
+    "one_line": "removed_slice_count is a requested-target count wearing an actual-effect name; run_shape says slices were removed even when none existed. This defeats the nonexistent-target diagnostic asserted by S27-AC2 and the trust claim in S26-AC2.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Exact source 5b15b09834:data/etfs/scripts/presentation/render_month_end.py:441-448 removes with pop(d,None); _forcing_record:918,936 counts spec entries, and :946-947 says those slices were removed. The two functions' ASTs still equal the main worktree at HEAD 7775dd14ea40cd56878a08d253bff4aaf6953e43.",
+        "Reproduction: compile only these two ast.FunctionDef nodes from the git blob into an isolated namespace. Start daily={'cottonwood':{'2026-08-04':{'value':1}}}; apply each one-date spec and call _forcing_record with an explicit run_id and ladder_ran=False. Present 08-04: actual=1/reported=1. Absent 08-05: actual=0/reported=1. Absent partner: actual=0/reported=1. All three run_shape strings say '1 slice(s) removed'. No AWS modules or calls.",
+        "S27-AC2@5ca49e7fdb explicitly predicts removed_slice_count=0 for a nonexistent target. This is refuted by two cases, with a present-target positive control."
+      ]
+    },
+    "spec_asserts": "S26-AC2 asks why the record is trustworthy; S27-AC2 says a no-op target is exposed by a zero removed_slice_count.",
+    "world_is": "A syntactically valid request can remove nothing while recording forced=true, removed_slice_count=1 and a prose claim of one removal.",
+    "notes": "Priority P1 for the evidence used to grade a driven run. Remedy recommendation: distinguish requested targets from measured removals or use an actual before/after count; retain absent-target and present-target controls. This seat edits no implementation and performs no driven run. A request alone also cannot guarantee REFUSE: the gate reads class C."
+  },
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T13:54Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "id": "ETFS_GUARDRAIL-C-S28",
+    "disposition": "GRADUATED",
+    "disarm_owner": "2.0.0_SA_COO -- place terminal-message branch disclosure with the owning orchestrator cell",
+    "one_line": "The terminal email unconditionally says every rung ran even for no-ladder records. The artifact can disclose a skip while the human-facing alert asserts the opposite; provider and ask-record repair alone do not fix this sentence.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "_build_terminal_email@e94ce02a92:358-364 sets the subject 'after remediation' and the body 'after every rung ran (probe, re-run the producer, re-check)' without reading ladder state.",
+        "Exact AST builder loaded with only stdlib MIME classes and dummy .invalid addresses. Same date/partner/provider/class, first reason='ladder skipped (--no-ladder)', then reason='rung 1 invoke returned but no slice landed on rung 2 re-check'. Both bodies assert every rung ran. In the skipped case the table and introductory sentence contradict each other. Builder only: no send function loaded.",
+        "The function takes unresolved rows and ask, no verdict/forcing argument. The skipped case was deliberately supplied a mapped provider, so the contradiction survives that repair."
+      ]
+    },
+    "spec_asserts": "The adopted driven shape must distinguish skipped remediation from attempted-and-failed remediation; EG-s-26 supplies that distinction on the verdict artifact.",
+    "world_is": "The terminal message's unconditional introductory prose erases that distinction and contradicts the skipped row.",
+    "notes": "What you should have asked but did not: does the human-facing message preserve the artifact's disclosure? Priority P1 before using its text to grade the driven refusal. Recommend deriving or neutrally phrasing the message from recorded execution state, with skipped/attempted controls. No new law is proposed, no email was sent, and this finding does not change the two-instance writer census."
   }
 ]
 ```

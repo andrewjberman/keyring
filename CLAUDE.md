@@ -15,42 +15,67 @@ stable, citations resolve there. DS/AE seats read their sections before touching
 
 ## 1. HOW WE WORK
 
-27. **Every directive/project runs the CANONICAL WORKFLOW L1-L10, ONE OWNER PER STEP, IN ORDER.
-    THIS RULE IS A REPRESENTATION OF `/canonical-flow` (Andrew-direct 2026-09-10: "Rule 27 should just be
-    a representation of /canonical-flow") -- it is NOT an independent source. Where this text and that
-    skill differ, THE SKILL WINS and this rule is the defect. The skill's own reference is the spine,
-    `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` section 1 (the limbs and their owners), READ AT HEAD.**
-    ⛔ **NO VERSION IS PINNED HERE, DELIBERATELY.** This rule pinned `v3.2` while the spine had reached
-    v3.6 with three further amendments unreadable on one fabric -- a constitutional pointer aimed at a
-    superseded copy. The skill cites the spine BY PATH ONLY; so does this rule now, and the staleness
-    becomes structurally impossible rather than merely corrected.
-
-    | limb | owner (spine s.1) |
-    |---|---|
-    | L1 brief | `4.0.0_SA_CRO` |
-    | L2 endpoint | `1.0.0_SA_CTO` |
-    | L3 register | `1.0.0_SA_CTO` — and `0.0.0_AB_MSTR` HOLDS the directive register the row must appear in |
-    | L4 PRD | `1.0.0_SA_CTO` (no COO, no CVO) |
-    | L5 decomposition + battery | `2.0.0_SA_COO` |
-    | L6 task orders, ONE ISSUANCE covering EVERY cell | `2.0.0_SA_COO` |
-    | L7 execution | the WORKER named in `<issued_to>`, a subagent of the COO that issued the order |
-    | L8 compilation | `3.0.0_SA_CVO` — **its engagement with the project BEGINS HERE, at L8 and not L9** |
-    | L9 adjudication | `3.0.0_SA_CVO` |
-    | L10 slug / read / recut / close | `3.0.0_SA_CVO` issues the slug; `1.0.0_SA_CTO` routes, ALWAYS; `2.0.0_SA_COO` recuts |
-
-    **L10 HAS TWO STATES AND THE SKILL'S LADDER SEPARATES THEM: `L10 slug` (the slug cut and sent to the
-    CTO) then `L10 answered` (a `ROUND_ANALYSIS.round<N>` or a bumped `prd_version`), and the COO's recut
-    follows. CLOSED IS A THIRD THING AND NEEDS TWO ARTIFACTS: `COMPLETION_REPORT` + `COMPLETION_GRADES`,
-    every grade `REALIZED`.** A round is not closed because every FWD reads REALIZED somewhere.
-    L6 fan-out is derived from the decomposition's dependency chains and stated as `fanout:` in the
-    issuance commit (default cap 8). The TO's WORKER FACE is the worker's whole context -- cell text,
-    absolute paths, ONE clause per criterion with its invocation and expectation; the RECORD FACE never
-    travels; a compound criterion is refused at the cut. A worker's write surface is exactly the `<paths>`
-    its non-terminal order names (`.tools/owned-paths-validate.py`), its rows mint `<CODE>-W<n>-S<k>`, and
-    it writes no telemetry (L7 reads from git). Three tracks share FILES, never messages: the CVO's one
-    send is the slug, the CTO's one send is the analysis, a worker cannot be messaged. `0.0.0_AB_MSTR`
-    integrates and never works a project. Mid-round the spec AND the decomposition are FROZEN; the only
-    off-spec act is a surprise ROW (s.2 below). Gate: `.tools/to-pipeline-gate.py` (the L6 neck).
+27. **Every directive/project runs the CANONICAL WORKFLOW L1–L10, ONE OWNER PER STEP, IN ORDER: L1 brief
+    (`4.0.0_SA_CRO` only) → L2 endpoint (`1.0.0_SA_CTO` only; ⛔ **NO FWD IS A WAIT** — every outcome is provable by
+    an act a seat can take ON DEMAND, and one whose only proof is an event nobody controls is re-cut so its MECHANISM
+    is driven deliberately, the organic case kept as the negative arm; a genuinely essential wait is EXPRESSLY
+    QUALIFIED on the outcome with its reason and Andrew's word. Andrew-direct 2026-09-10: *"no FWD is ever a 'wait'
+    unless explicitly advised otherwise ... sprint, execute, validate, and close"*. Measured the same night:
+    `ETFS_GUARDRAIL` FWD-7 sat NOT_EVALUATED as "a real terminal failure, rare by design" while its send guard could
+    not fire AT ALL — waiting would have waited forever) → L3 register (`1.0.0_SA_CTO` only; `0.0.0_AB_MSTR`
+    HOLDS the directive register the row must appear in — a different act) → L4 PRD (`1.0.0_SA_CTO` only — no COO, no CVO) →
+    L5 decomp + battery → L6 ONE ISSUANCE covering EVERY cell (`2.0.0_SA_COO` only; fan-out derived from the
+    decomp's dependency chains and stated as `fanout:` data in the issuance commit, default cap 8) → L7
+    execute (WORKER SUBAGENTS of the COO, `0.9.0_WK_<CODE>~<n>`, one worktree each, NO send tool; the TO's
+    WORKER FACE is the worker's whole context — cell text, absolute paths, ONE clause per criterion with its
+    invocation and expectation; the RECORD FACE never travels; a compound criterion is refused at the cut) →
+    L8 compile (**`3.0.0_SA_CVO`, AND ITS ENGAGEMENT WITH THE PROJECT BEGINS HERE, NOT AT L9** — spine
+    `:320`, `:475` and `:489`, three places; this line said "L9, its FIRST engagement" until 2026-09-10 and
+    ⛔ **THAT WAS THIS RULE CONTRADICTING ITS OWN SOURCE.** ⚠ AND THE SPINE'S L8 IS THE **CHANNEL** COMPILE
+    — input "new investigation rows … and no others", output the compiled channel and the CVO's watermark.
+    The task-order packet the COO produces at drain-end is a **DIFFERENT ARTIFACT SHARING THIS LABEL** and
+    the spine does not name it; that ambiguity is PLACED, not resolved, and no round changes owner on it) →
+    L9 adjudicate (JUDGMENT criteria are graded HERE and
+    never self-graded) → L10 ONE SLUG to the CTO, ALWAYS, only after every TO is terminal and every row
+    dispositioned; the CTO answers with a PRD addendum (an FWD no cell served) or the ROUND-N ANALYSIS the
+    COO recuts in ONE issuance; CLOSED when every FWD grades REALIZED.** The three route tokens are RETIRED.
+    Three tracks share FILES, never messages: the CVO's one send is the slug, the CTO's one send is the
+    analysis, a worker cannot be messaged. `0.0.0_AB_MSTR` integrates and never works a project. Mid-round
+    the spec AND the decomposition are FROZEN; the only off-spec act is a surprise ROW (§2 below).
+    ⛔ **ONE ISSUER PER ROUND — and a WORKSTREAM IS A SCOPE, NOT A ROUND.** L6's ONE ISSUANCE is cut by ONE
+    COO instance; two instances issuing into the SAME round is the collision (two cuts, two issuances, an
+    ambiguous L8). ⛔ **It binds the ROUND, NEVER THE PROJECT: one project may carry several WORKSTREAMS with
+    DISJOINT boundaries and DISJOINT write surfaces, held by different `~lane` instances** — that is four
+    SCOPES, not four issuers. ⛔ **AND A SEATING RULE DOES EXIST — AT TIER 2 ONLY. DO NOT READ THIS CLAUSE AS
+    "NO SEATING CONSTRAINT."** `ONE PROJECT PER TIER-2 SEAT INSTANCE` (Andrew-direct 2026-08-24 ~19:29Z,
+    protecting THE SEAT'S CONTEXT, not the box) is REAL, is ENFORCED by `.tools/to-decomp-ref-lint.py`'s seating
+    check, and that enforcement is LEGITIMATE — it refuses a new TO addressed to an instance already holding open
+    TOs on another pipeline project. **What was never real is its GENERALISATION TO ALL TIERS:** the phrase
+    "one project per instance" DROPPED "TIER-2" and circulated for weeks citing THIS rule by number, and on it a
+    TIER-1 seat twice declined to seat a TIER-1 lane. ⛔ **WHETHER IT SHOULD REACH TIER 1 IS ANDREW'S, NOT A
+    SEAT'S — extending his Tier-2 word upward is WIDENING IT, which §2 forbids. ASK.** COST: none. Measured
+    2026-09-10 by `2.0.0_SA_COO` and `0.0.0_AB_MSTR`, each correcting its own prior answer: **both first censused
+    "documents that STATE law" and got ZERO, because the rule lives in an ENFORCEMENT SURFACE and an
+    Andrew-direct — neither is a law file.** The wider census (799 files) was not wider in the direction that
+    mattered. ⭐ **AN UNSCOPED READ ONLY FALSIFIES A DOMAIN IF YOU THEN INSPECT WHAT IT FOUND OUTSIDE IT** — the
+    390 unscoped hits included `.tools/`, and nobody looked.
+    COST: none — this names what "ONE ISSUANCE" already implied. NON-APPLICATION: separate rounds; and
+    workstreams whose write surfaces do not intersect. Gate:
+    `.tools/to-pipeline-gate.py` (the L6 neck). Spec: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md`
+    — the ONE process document (constitutional; v3 from the CRO's spec @`29bf9265ea` + §13 @`9dc97d860d`).
+    ⛔ **NO VERSION IS PINNED HERE, DELIBERATELY. CITE THE SPINE BY PATH AND READ IT AT HEAD.** This line
+    pinned `v3.2` until 2026-09-10 while the spine's own ladder had reached **v3.13** — ELEVEN amendments,
+    TWO of them authored by this seat the same day it was still citing v3.2. **A constitutional pointer
+    carrying a version number is a promise to do maintenance nobody remembers, and it is UNFALSIFIABLE AT A
+    GLANCE precisely because the number looks authoritative.** Un-pinning makes the staleness structurally
+    impossible rather than merely corrected. **The catch and the remedy are `0.0.0_AB_MSTR~Z`'s** (site Z's
+    Rule 27 rewrite); it did not survive the 2026-09-10 merge, which took this fabric's side, so it is
+    re-landed here on its own merit. ⚠ **WHERE THIS RULE AND THE SPINE DIFFER, THE SPINE WINS AND THIS RULE
+    IS THE DEFECT** — Rule 27 is a REPRESENTATION of `/canonical-flow`, never an independent source.
+    A worker's write surface is exactly the `<paths>` its non-terminal order names (no lane enumerates a worker;
+    `.tools/owned-paths-validate.py`), its rows mint `<CODE>-W<n>-S<k>`, and it writes no telemetry (L7 reads from
+    git). ⚠ The eight v3 carriers are BUILT and refuse (spine §3), and so is the drain's refuser on the merged index
+    (`.tools/safe-merge.sh`); what still binds by reading is spine §4 — the step log's L7 read from git.
 
 ## 2. HOW MUCH TO CHECK — the speed governor
 
@@ -105,6 +130,12 @@ another** — verbatim scope; relay, never adjudicate wider OR narrower; if wide
     in Bash — `grep/rg/egrep/fgrep/findstr/ack/ag` recursive or directory-scoped, `find` with anything — is
     DENIED per SEGMENT (`&&`/`;`/newline split) and routed to `comp-find`; raw-`aws` INSPECTION is classified
     on ITS OWN SEGMENT.** Mechanism: `.tools/hooks/comp-tool-hud.sh` (kill switch `org/mcp/comprail-gate1.enforce`;
+    ⛔ **A RAIL DENIAL ABORTS THE WHOLE BASH CALL, so every LATER SEGMENT is a SILENT NO-OP.** A denied `grep`
+    segment in a compound call does not just lose that segment -- the status flip, the write or the commit chained
+    after it never runs, and nothing says so. Only a VERIFY-AFTER-WRITE catches it. Put a gated read in its OWN
+    call, or verify the later segment's EFFECT rather than its exit. Measured 2026-09-10 by a worker whose
+    believed-completed status flip had not happened. COST: one extra call, or one read-back. NON-APPLICATION: a
+    single-segment call.
     falsifier `.tools/comprail-gate1-fptest.sh`). NOT gated: a pipe-RECEIVER grep (`cmd | grep`),
     `# rail-checked: <why>`, `/freeform`, native `Grep`/`Glob`, `Read`, operational `aws`. `comp-grep` is a
     forwarder onto `comp-find`.
@@ -151,7 +182,26 @@ no such field → you may NOT treat it as measured. **The consuming half is the 
 unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`.
 
 24. **TAXONOMY LAW — four postulates for ANY schema an agent authors or ADOPTS:** (i) MECE over a DECLARED
-    domain (hunt the uncovered member); (ii) SAME GRAIN; (iii) INTENT COHERENCE (one axis, one intent);
+    domain (hunt the uncovered member); ⛔ **AND HUNT IT BY SUBTRACTION, NEVER BY RECALL: write the
+    enumeration as *the printed denominator MINUS what you exclude*, never as a forward list of what you
+    thought of.** A forward list covers what its author had in mind and omits silently; the same set written
+    as a subtraction from a denominator cannot lose a member without the count disagreeing. COST: one
+    denominator read. NON-APPLICATION: a set whose members are the literal argument you were handed.
+    ⛔ **AND THE SUBTRACTION'S DOMAIN MUST BE THE CLAIM'S POPULATION — CHOOSING THE DOMAIN IS ITSELF A CLAIM,
+    FALSIFIED BEFORE THE SUBTRACTION RUNS:** one UNSCOPED read of the term over the corpus, denominator
+    printed, compared against what the domain holds; a member the domain does not hold VOIDS the subtraction.
+    A subtraction over the wrong domain is BLINDER than recall — it arrives with a printed denominator and so
+    reads as MEASURED, and **a denominator certifies the SWEEP, never the SET.** ⛔ **THE FAILURE MODE IS A
+    GREEN:** a wrong domain returning NON-EMPTY gets argued with; returning EMPTY it gets ACTED ON. Measured
+    2026-09-10, `NFRA_CLDGRPH` W1-S38: a retirement's authorizing census read 0 of 78 over the declared
+    manifest while the unscoped read over 31,293 files found FIVE live consumers — the empty set WAS the
+    authorizing branch, surfaced only because the seat being graded ran the read nobody asked for. COST: one
+    unscoped read with its denominator. NON-APPLICATION: a domain that IS the corpus (nothing was narrowed).
+    Measured 2026-09-10, FIVE instances in one night across five seats: `NFRA_OUTSET`-S36; `NFRA_COMPEFFICACY`-W1-S2;
+    a COO arm naming two partners of three; `ETFS_GUARDRAIL` row S16 doing the same inside an ACCEPT (so a
+    GRADE would have read REALIZED on the violation); and a manual-trigger addendum that enumerated the
+    outcomes it covered instead of subtracting from the outcomes that NAME a date, leaving `NFRA_OUTSET`
+    FWD-5 uncovered. Found by `2.0.0_SA_COO`, which had committed the same shape an hour earlier. (ii) SAME GRAIN; (iii) INTENT COHERENCE (one axis, one intent);
     (iv) STATE COHERENCE (name which values one remedy does NOT move). **Outcome arrays, typed-result sets
     and predicates ARE schemas.** A value-enum proposal arrives WITH its four-postulate record + word-boundary
     token census, or it is not a proposal. `rcg/rulings/RULINGS.jsonl` R-0006/R-0009.
@@ -173,6 +223,22 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
 ## 5. HARD STOPS (NEVER)
 
 - **NEVER** move served output without never-widen sign-off (CTO+COO); verified DELTA=0 needs no hold.
+  ⛔ **A SIGN-OFF NAMES THE ACT'S BLAST RADIUS, NEVER THE PRODUCER'S DECISION.** Both halves cover *what the act
+  MAY touch and the rollback for each key*, so the act stays covered whichever branch the producer takes. Where a
+  half names an EXPECTED OUTCOME ("the publish keys stay absent", "the keys will be dated tomorrow"), that outcome
+  is READ FROM THE PRODUCER'S OWN RULE at signing — never predicted from the input's shape — and the half covers
+  BOTH branches or it is not signed. ⛔ **AND FIRST COUNT THE WRITERS OF THE NAMED PROPERTY: a property with N
+  writers needs N rules read, and N is a number the half PRINTS.** Reading one producer's rule on a two-writer
+  surface is Rule 22's shared-dependency blindness moved up to the signature. COST: one writer census + one source
+  read per named outcome. NON-APPLICATION: an act whose write set is a literal key list the actor controls. Measured 2026-09-09/10, THREE TIMES in one night, both halves
+  signed every time: `NFRA_OUTSET`-S34 (the window comes from the schedule mark, not the calendar, so a "tomorrow's keys" run
+  rewrote today's) and `ETFS_GUARDRAIL` EG-s-15 (a class-D hole is carry-and-disclose, not refuse, so a "will
+  refuse" run published and mailed); and `NFRA_CLDGRPH` W2-S67/S98, where both halves read the FOLD's rule (the
+  stamp writer genuinely retired, `stamped=0` printed) on a property a SECOND writer also set, so the served count
+  did not move — the blast-radius half was correct and complete, and its own discriminator is what caught the miss.
+  ⛔ **And a `--month`-style override that lets a scheduled producer run off its
+  own clock CREATES A NEW REACHABLE STATE on the manual path: the sign-off covers that state or the override does
+  not land.**
 - **NEVER** leave a confirmed deploy half-landed — finish in-session or roll back + escalate loud; ledger
   entry in `org/critical_paths/change_management/` opened at start, closed at completion. **An IMAGE act (a
   build, a push, a tag move) names in that entry EVERY task family that pulls the tag it moves** — a shared
@@ -304,6 +370,12 @@ derived layer is current-day-only; never mint `data/bloomberg/`).
   sibling: verify a substantive send by `wc -c` on the delivered file.
 - **Never "you/your" about a specific seat in a multi-recipient message — name the serial + msg-id**
   (second person resolves per reader).
+- ⛔ **"Queued if not live" is a WISH, not a delivery. A BASE serial with no base session is a silent
+  hole** — an inbox is a per-recipient slice, so mail to a base while only LANES are live gets no bounce,
+  no ack and no staleness signal, and reads as delivered. Address a LIVE recipient, or PARK the item on
+  its own carrier with an OWNER and the CONDITION that un-parks it. Measured 2026-09-10: five messages,
+  all from one seat, unread in `0.7.0_AE_CloudOps` for 6-9 days across a device crash; two carried live
+  scope decisions that were neither working nor waiting.
 - **A commit report states its PUSH STATE as a MEASURED value:** "on origin @hash (ls-remote read)" ·
   "LOCAL @hash (ls-remote read)" · "push state UNREAD" — never a default; the claim is perishable and ages
   the moment an integrator runs.

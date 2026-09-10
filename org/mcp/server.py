@@ -1733,6 +1733,7 @@ async def send_message(
     subject: str = "",
     body: str = "",
     identity_override: str = "",
+    send_override: str = "",
     to_agents: list[str] | None = None,
     ctx: Context = None,
 ) -> str:
@@ -1747,6 +1748,15 @@ async def send_message(
     YOUR registered serial -- a mismatch is refused (audited). Pass from_agent=""
     to auto-fill it. identity_override="<reason>" permits a relay send; the true
     author is then stamped into the delivered message.
+
+    SEND-GATE --force (Andrew-direct 2026-09-10): send_override="<reason>" forces the
+    two ROUTING gates -- the L8 correspondence guard (the CVO's one send goes to the
+    CTO) and LD-0529 (a Tier-2 seat hears an act only as a task order). Use it ONLY
+    when a HUMAN OPERATOR has asked for it, and put THEIR request in the reason.
+    It is audited (SEND_GATE_OVERRIDE) and STAMPED into the delivered message, so the
+    recipient sees the send was forced and why. A blank or whitespace reason is NOT an
+    override and the gate still refuses. It does NOT touch the sender-identity guard
+    (that escape is identity_override) and it cannot make an unresolvable serial resolve.
 
     RECIPIENT LIST (D0_TIGHTENING T1): pass to_agents=["A","B","C"] to address several
     seats in ONE act and get a PER-RECIPIENT result map -- {DELIVERED | QUEUED | REFUSED}
@@ -1832,8 +1842,21 @@ async def send_message(
     # Decision and census live in cvo_send_guard.py so the daemon's HTTP path grades with the same code.
     # subject + body travel so the one other admitted class -- the CVO's same-turn broadcast of an Andrew-direct
     # record (marker + record path; CVO review F1, 94134) -- is APPLIED here, not only described in the guard.
+    # HUMAN-OPERATOR --force (Andrew-direct 2026-09-10 ~12:3xZ, verbatim: "yes we need to be able to --force
+    # that if it is requested by a human operator"). BOTH send gates take it, because both refuse the WHOLE send
+    # and neither had any escape -- and one of them refused the CVO's same-turn broadcast of a recorded
+    # Andrew-direct (95093/aad3e166f8), which org/XXX.md REQUIRES. The decision lives in cvo_send_guard so the
+    # daemon's HTTP path grades identically; here we audit it and STAMP it into the delivered artifact, exactly
+    # as SEND_FORGED_OVERRIDE does above -- an override the recipient cannot see is not a control, it is a hole.
+    _forced = cvo_send_guard.operator_override(send_override)
+    if _forced:
+        _audit_identity("SEND_GATE_OVERRIDE", from_agent, os.getpid(),
+                        _forced, "to=" + ",".join(_recipients))
+        _sender_stamp += (f"**Send-gate override:** the L8 / LD-0529 send gates were FORCED by a human "
+                          f"operator's request; reason: {_forced}\n")
     _l8_refusal = cvo_send_guard.cvo_worker_send_refusal(
-        from_agent, _recipients, cvo_send_guard.executing_tree_projects(_REPO_ROOT), subject=subject, body=body)
+        from_agent, _recipients, cvo_send_guard.executing_tree_projects(_REPO_ROOT), subject=subject, body=body,
+        override=send_override)
     if _l8_refusal:
         _audit_identity("SEND_CVO_WORKER_REFUSED", from_agent, os.getpid(),
                         "to=" + ",".join(_recipients), _l8_refusal[:200])
@@ -1841,7 +1864,8 @@ async def send_message(
     # --- LD-0529 (Andrew-direct 2026-09-03 ~13:1xZ, "Mechanism works"): a Tier-0/Tier-1 -> Tier-2 send that
     # carries an ACT is refused unless it cites a task order assigned to that recipient. The issuer's dispatch
     # passes; acks and act-free information pass. Decision and citation resolver live in cvo_send_guard.py.
-    _t2_refusal = cvo_send_guard.tier2_act_send_refusal(from_agent, _recipients, subject, body, _REPO_ROOT)
+    _t2_refusal = cvo_send_guard.tier2_act_send_refusal(from_agent, _recipients, subject, body, _REPO_ROOT,
+                                                        override=send_override)
     if _t2_refusal:
         _audit_identity("SEND_TIER2_ACT_REFUSED", from_agent, os.getpid(),
                         "to=" + ",".join(_recipients), _t2_refusal[:200])

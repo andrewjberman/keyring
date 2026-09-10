@@ -3,10 +3,10 @@
   "macro_code": "NFRA",
   "name": "comp-tool hardening -- paginated prefix reads (pipescript io) and the runners-registry state scan / atom check",
   "description": "MINTED AT TRUE STATE 2026-08-25 by 0.0.0_AB_MSTR on Andrew-direct ~12:0xZ. D0 member with no project JSON. TWO TOs on disk at 0.8.0_AE_CloudComp, both issued off the CTO ruling set @dfb5fd8f48: REG-SCAN-ATOMCHECK is 'pending -- GO received 2026-08-18T170938Z (COO @dfb5fd8f48)' (staged->pending @541624e822); PREFIX-READS is 'staged -- DATED 2026-08-19, owner named, awaiting spawn'. MINTED active because one TO carries a live GO and the other is staged-awaiting-spawn -- neither is delivered.",
-  "status": "active",
-  "dep_stage": "EXECUTING",
-  "phase": "[2026-08-30T03:3xZ, issuer 2.0.0_SA_COO, on 1.0.0_SA_CTO~Y's /exec-sum surface] UNSEATED-ON-CAPACITY, NOT STALE: the face is live and unsuperseded; its addressee 0.8.0_AE_CloudComp BASE has carried no session since the 08-28 drawdown, ~X/~Y are D11 lanes (Rule 27), and the marker cap reads 19 of 20 with D2/D3/D11 holding the slots; seats on the first AE slot freed by a D2/D11 release or on Andrew's word. || PRIOR: TO-issued; REG-SCAN-ATOMCHECK pending on GO, PREFIX-READS staged awaiting spawn",
-  "blocking": "PREFIX-READS awaits a spawn at 0.8.0_AE_CloudComp. REG-SCAN-ATOMCHECK has its GO and is executable.",
+  "status": "closed",
+  "dep_stage": "CLOSED",
+  "phase": "closed 2026-09-10 -- COMPLETE. Andrew-direct 2026-09-10 ~00:0xZ at the 1.0.0_SA_CTO terminal, verbatim \"agree with the D0 calls, mark all as closed\". Both task orders delivered 2026-08-25 on origin with proof instances (PREFIX-READS @3b789c9d6f; REG-SCAN-ATOMCHECK across two instances whose union covers REG-1,J2-1,J3-1,RSA-VAL); the register had read 'unseated on capacity' since the 08-29 record, three days behind its own faces. The comp-tool subject continues in NFRA_COMPEFFICACY (D11, tree). Evidence org/mcp/prd_delta_results/latest.json@0e9ef40b37; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_000xZ_D0_PRETREE_CLOSURES_COMPTOOLS_DEPLOYLEDGER_TORECORD.md",
+  "blocking": "Not blocked -- closed 2026-09-10 on Andrew's word; nothing waits.",
   "prds": [],
   "pods": [
     "0.8.0_AE_CloudComp"
@@ -17,5 +17,8 @@
   "related": [],
   "thread_counter": 0,
   "threads": [],
-  "directive": "D0"
+  "directive": "D0",
+  "closed": "2026-09-10",
+  "closed_by": "1.0.0_SA_CTO",
+  "closure_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_000xZ_D0_PRETREE_CLOSURES_COMPTOOLS_DEPLOYLEDGER_TORECORD.md"
 }

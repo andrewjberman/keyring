@@ -1,0 +1,74 @@
+# TO ETFS_GUARDRAIL.TO-EG-s-17 -- THE FILLED-IN DAY: a daily producer invoked by hand with its rule's own event payload against a REAL hole, the recovered date named in `catchup_processed` and the slice present after -- and the schedule's own prior firings listed from history
+
+<to_id>ETFS_GUARDRAIL.TO-EG-s-17</to_id>
+<project>ETFS_GUARDRAIL</project>
+<issued_to>0.9.0_WK_ETFS_GUARDRAIL~2</issued_to>
+<issued_by>2.0.0_SA_COO</issued_by>
+<issued_date>2026-09-09</issued_date>
+<status>complete -- S17-AC1 PASSES by output on the AMENDED face @`5507841f04`: 7 of 7 arms, rc=0, `EGS17-FILLED-IN-DAY` printed WITH `CATCHUP-BRANCH-NOT-EXERCISED` beside it. The real class-C hole cottonwood `2026-09-08` (probe partition=true priced=12016 output_exists=false) was recovered by the producer's OWN fire with the rule's own payload (Target.Input ABSENT on 0 of 2 targets across 2 of 2 daily rules; no `date` key), request id `0840a0d3-15aa-4884-a12e-20e75cfa6136` at 2026-09-09T23:15:47Z -- `OK: wrote s3://opal-data-etfs/daily/cottonwood/2026-09-08.json`, 4 slices, total_ownership=53641351.75, source_as_of=2026-09-08; slice after 1345 B at 23:15:52Z, 4 rows by a second reader. Schedules from history: cot 30 of 30 days at 10:30:24Z, bd 30 of 30 at 10:45:05Z. Pass 2 fired NOTHING (ETag unchanged). S17-AC2 RECORDED for the CVO at L9. Rows W2-S7/S8/S9 ruled by the issuer; W2-S10 filed this pass (OBSERVATION/INERT, not blocking). proof-of-spec-check rc=0.</status>
+
+**Directive:** D8 | **Fabric:** laptop | **PRD:** `../prd/ETFS_GUARDRAIL_PRD.md` v0.4 (s.9 row S17; s.6 rulings 1-2 the reporting-obligation window; s.3 the ZERO-vs-MISSING contract) | **Decomp cell:** `EG-s-17` (`../decompositions/ETFS_GUARDRAIL_DECOMP.md` v0.2, s.8-s.11) | **outcome_ref:** FWD-1 | **verb:** verify | **depends_on:** none (round 1 ported the catch-up into both owned producers, `EG-s-1` / `EG-s-2`; this order EXERCISES a port on a real missed date)
+
+---
+
+## THE CELL
+
+`EG-s-17` (PRD s.9 S17): FWD-1 (a missed day is caught up by the producer's OWN fire, the recovered date named in `catchup_processed`) graded NOT_EVALUATED because no producer fire had yet recovered a real date. Under the manual-trigger rule the producer is invoked by hand with the SCHEDULED event payload against a REAL hole; the schedule's own firing is proven from its prior scheduled invocations (CloudTrail `Invoke` by the rule), not by waiting for tomorrow's.
+
+⛔ **FIND THE HOLE BEFORE YOU FIRE, AND FIRE ONLY AT A REAL ONE.** (i) For each owned producer (`cot-etf-ownership-daily` -> cottonwood; the served-writer `bd-49f` twin `EG-s-11` identified -> 49financial), list the last 20 TRADING days per `lib/trading_calendar.py` (print the list) and `list-objects-v2` the partner's `daily/<partner>/` prefix for those dates (denominator = keys under the prefix): a trading day with NO slice is a REAL HOLE (class C candidate) -- BUT run the producer's PROBE first (`{"date": d, "probe": true}`, the non-writing mode `EG-s-1`/`EG-s-2` added; read the handler for the exact shape) and treat `priced == 0` with the partition present as class B (EXPECTED, not a hole -- property 4: NO invoke against it). (ii) A real class-C hole found -> invoke the producer with ITS RULE'S OWN PAYLOAD SHAPE for that date (read the rule's `Target.Input` via `aws events list-targets-by-rule` / `aws scheduler get-schedule`, whichever carries it; the scheduled payload plus the date field the port honors -- read the handler). (iii) NO real hole in the window -> DO NOT MANUFACTURE ONE: a controlled hole means removing a SERVED slice, and decomposition s.6 bound 1 forbids a worker deleting a served object (S3 deletes need a human's word); PRINT `NO-REAL-HOLE-IN-WINDOW` with the census, file the row, and stop the criterion -- the issuer routes the controlled-hole path with its own NEVER-2 entry on Andrew's word. **Never fire against a date whose slice exists** (the positive control below is a READ, never a re-run).
+
+⛔ **RULES THAT BIND THE PORT (decomposition s.6 bound 4):** the reporting-obligation window, its terminus a shipped signal; `CATCHUP_WINDOW_DAYS` is not a thing; the ZERO-vs-MISSING contract is touched, not changed. You change no code.
+
+## DELIVERABLE
+
+`org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~2/test_egs17_filled_in_day.py` (the battery) and `the-filled-in-day.result.md` (criteria verbatim with rc and denominator; the hole census; the probe answers; the invoke's request id and UTC; the log lines; the slice after; the schedule-history table), plus the proof-of-spec instance (below).
+
+## BOUNDS
+
+- **Your write surface is the `<paths>` block below, PLUS the two grants the tree convention gives every worker without an entry** -- your own `deliverables/<serial>/` folder and THIS ORDER'S OWN FILE for the `<status>` flip. A path you need that it does not name is a BLOCKING row, never an override.
+- **YOUR AWS IDENTITY IS THE LAUNCHING SEAT'S** (decomposition s.3 decision 1); every invocation and its output recorded VERBATIM.
+- **NO SERVED OBJECT IS DELETED OR OVERWRITTEN BY YOU.** The producer's own run writes the recovered slice -- that is the mechanism under test and the only write. Nothing else is written to the served bucket.
+- **NO CODE CHANGE, NO DEPLOY.** The producers run AS DEPLOYED by round 1; a defect in the port is a BLOCKING row with the measurement, never a hot fix.
+- **NEVER#1 (cross-firm):** you read `opal-data-etfs` and invoke the FIRM-SCOPED producers; you read no firm bucket yourself (the probe answers for you).
+- **EVERY invocation is bounded.** `timeout 120` on reads; a Lambda invoke `timeout 300`.
+- **Scratch:** `<your worktree>/.scratch/` only.
+- **A spec-vs-world divergence is a ROW** at `org/missions/D8/ETFS/ETFS_GUARDRAIL/surprise-channel/investigations/INVESTIGATION_v1.md`, minted `ETFS_GUARDRAIL-W2-S<k>`.
+- **NEVER `git push`.** Report push state as MEASURED.
+
+## ACCEPTANCE
+
+<criterion id="S17-AC1" cell_refs="EG-s-17"><invocation>timeout 900 python org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~2/test_egs17_filled_in_day.py</invocation><expect>EGS17-FILLED-IN-DAY</expect></criterion>
+`S17-AC1` -- a battery you write, printing the token ONLY when every arm holds: (a) the hole census (20 trading days x 2 partners, present/absent per date, denominator printed) and the probe answers for every absent date (partition present? priced?) -- at least one real class-C hole named; (b) the rule's `Target.Input` read LIVE (ABSENT on both daily rules -- EventBridge's default scheduled envelope IS the payload, W2 measured) and your invoke's payload byte-equal to it WITHOUT a `date` field (a `date` key routes to the explicit-date branch, `lambda_function.py:304-308`, which never reaches the catch-up path -- row W2-S8; both printed); (c) the invocation pinned by `START RequestId` 1 of 1 in the function's log group read by time (the AMENDMENT below), with the rule's role's `AssumeRole` in that minute == 0; (d) the function's CloudWatch log for THIS invocation names the recovered date -- in `catchup_processed` for a hole OLDER than the newest priced partition, or in the main path's own `OK: wrote s3://opal-data-etfs/daily/<partner>/<date>.json` line for a HEAD-OF-WINDOW hole (the newest partition, which `_catchup_missing_dates` skips as `skip_date` -- row W2-S8); the exact line printed, and when the recovery was the main path's, `CATCHUP-BRANCH-NOT-EXERCISED` printed beside the token (the catch-up branch needs a hole older than the newest partition; the estate has none; a manufactured hole is a served DELETE and is Andrew's word, carried by the issuer as a call); (e) the slice exists after (`head-object` on `daily/<partner>/<date>.json`, UTC after the invoke, size > 0, and its rows counted by a second reader -- the file re-downloaded and parsed -- non-zero); (f) POSITIVE CONTROL, a READ: a date NOT missing (a present slice) is NOT reported recovered by that same log (print the line showing it skipped or not listed); (g) THE SCHEDULE'S OWN FIRING FROM HISTORY: the rules' roles' `AssumeRole` management events for BOTH daily producers over the last 30 days (the AMENDMENT below), listed with dates and a denominator (events scanned), beside the manual invoke as the negative control (no `AssumeRole` by the rule's role in its minute; its `START RequestId` a client's) -- rule (4) met from history, the next daily fire being confirmation. Denominators on every list.
+
+<criterion id="S17-AC2" cell_refs="EG-s-17" judgment="true"/>
+`S17-AC2` -- graded by the CVO at L9: the recovered date as a person reads it (which partner, which date, why it was missing if the log says), that the port respected the reporting-obligation window (the terminus a shipped signal, no day-count), that class B was never fired against, and -- if no real hole existed -- the census that proves it and the row that routes the controlled path. Evidence with vintage. NO VERDICT.
+
+AMENDMENT 2026-09-09 ~23:5xZ BY THE ISSUER on rows `ETFS_GUARDRAIL-W1-S13` and `ETFS_GUARDRAIL-W2-S7` (worker branches `wk-etfs_guardrail-2-1` @`aadcbc7694` and `wk-etfs_guardrail-2-2` @`73e6cd94dc`, two workers, two substrates), under the standing re-cut authority @`9f4a57262f` / @`1ced87e810`, told to `1.0.0_SA_CTO` and `3.0.0_SA_CVO` the same tick. **THE SHARED INSTRUMENT:** `lambda:Invoke` is a CloudTrail DATA event and 0 of 2 trails in account 313476888478 select `AWS::Lambda::Function` (both trails' selectors read; positive controls `StartInstances`=1 / `StopInstances`=1 in the same window; the workers' own probes left no `Invoke` row), so EVERY CloudTrail `Invoke` read on this face is RE-CUT: (i) a MANUAL fire is pinned by the function's CloudWatch log GROUP read BY TIME (`logs filter-log-events --log-group-name <group> --start-time <ms> --end-time <ms>`, never one stream picked by its first/last event timestamp -- a warm stream's `lastEventTimestamp` lags the invocation inside it, W2's trap) carrying `START RequestId: <the client's x-amzn-RequestId>` exactly once in the window (1 of 1 printed): the launching seat's call by construction; (ii) a RULE-INITIATED fire is the scheduler/rule role's `AssumeRole` MANAGEMENT event (`etfs-reports-scheduler-role` for the monthly schedule; the two daily rules' roles, named from `list-targets-by-rule` / `get-schedule`) in the fire's minute, `lookup-events` paginated, denominator printed -- the history from history (W2 measured cot 30 of 30 days at 10:30:24Z, bd 30 of 30 at 10:45:05Z); (iii) the CloudTrail `Invoke` read itself prints `COVERAGE-ABSENT: 0 of 2 trails select AWS::Lambda::Function`, never a pass and never a fail. The same coverage fact covers S3 object-level writes on `opal-data-etfs` (the served-key trail names only `platinum/firm/` on inf/bd/cot; versioning on `opal-data-etfs` is DISABLED, W1-S12): a `PutObject` read there prints `COVERAGE-ABSENT`, and a write is read from the object (`s3api head-object` LastModified in UTC + size) beside the producer's own log line. Judged on EFFECT: HARDER -- the old arms could neither pass nor fail; these discriminate (a request id the client did not receive cannot appear as the START line; a rule that did not fire has no `AssumeRole` in the minute). `<invocation>` and `<expect>` UNCHANGED. **W2-S8 (BLOCKING, ruled):** arms (b), (c), (d), (g) re-cut in place. The recovery of cot `2026-09-08` by the producer's own fire (`OK: wrote ... 2026-09-08.json`, 4 ETF slices, `source_as_of=2026-09-08`, request id `0840a0d3-…`) is the producer's own act naming the date, which is what arm (d) was buying; the CATCH-UP BRANCH is recorded NOT-EXERCISED, honestly, beside the token. What the row found underneath -- the 10:30Z / 10:45Z fires run ~76 min before the D+1 partition lands, so the newest trading day is sliceless for ~11.5 h every day and the window's terminus carries no day-count -- is a DESIGN finding for the CTO's L10, named in the drive read, not cut here. **W2-S9 (INERT):** the producer's docstring still calls 2026-07-31 an upstream gap while the probe reads `partition=true, priced=10960` -- carried to L10 as a stale comment, no act. Judged on EFFECT: EQUAL on 'the producer's own act named the date', EXPLICIT where the first cut was silent (the unexercised branch is now printed, never implied). The battery is RE-RUN on the re-cut arms against the SAME fire (its transcript is the record; the pre-fire census cannot be re-measured and is read from `egs17_fire_run.transcript.txt`); no second fire.
+
+<expected_criteria>S17-AC1, S17-AC2</expected_criteria>
+
+<paths>
+org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~2/
+org/missions/D8/ETFS/ETFS_GUARDRAIL/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+No code path and no ledger path is granted: the producer's own run is the one write. `infra/aws/lambda/cot-pipeline/cot-etf-ownership-daily/lambda_function.py`, `infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily*/lambda_function.py` and `lib/trading_calendar.py` are READ (the event shape, the probe mode, the calendar; never edit).
+
+<decomp_ref>
+<decomp_doc>org/missions/D8/ETFS/ETFS_GUARDRAIL/decompositions/ETFS_GUARDRAIL_DECOMP.md</decomp_doc> v0.2, cell `EG-s-17`.
+<owned_cells>EG-s-17</owned_cells>
+</decomp_ref>
+
+<preflight>
+comp-schedule: RUN at this issuance, 2026-09-09 ~22:2xZ -- WITHIN BUDGET, scanned 5 of 5 carriers, 56.25 s of a 90 s default. GATES ARMED: 25. REACHED-DENOMINATORS C1=23, C2=6, C3=12, C4=20, C5=335. ZERO of the 25 armed gates names ETFS_GUARDRAIL, the two daily producers or opal-data-etfs. BLIND SPOT, stated: the gate ledger cannot see a producer's write into the served bucket -- the producer's own log and the slice read are the controls.
+comp-iam: DECLARED-NOT-APPLICABLE -- this order grants nothing; the producers' reach is exercised as deployed. `lambda:InvokeFunction` on the producers by the launching seat's identity is the invoke path.
+comp-adversary: DECLARED-NOT-APPLICABLE -- a verify cell; the controls are the probe, the present-slice positive control and the CloudTrail initiator.
+lane: the `<paths>` block above IS the grant (RULING 1 @`9ef9a40aae`) plus the two tree-convention grants.
+</preflight>
+
+<proof_of_spec>
+Criterion ids minted at cut: `S17-AC1`, `S17-AC2`. Instance at
+`org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-17.the-filled-in-day.proof_of_spec.json`
+(the TASK ORDER'S OWN BASENAME stem), validated with `python .tools/proof-of-spec-check.py <instance> S17-AC1,S17-AC2` BEFORE the complete flip, which you commit yourself. A `complete` flip WITHDRAWS YOUR OWN GRANT: flip only when S17-AC1 PASSES by output -- a `NO-REAL-HOLE-IN-WINDOW` outcome is reported, never flipped.
+</proof_of_spec>
+
+**REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape. You cannot send or receive messages -- anything you would ask is a surprise row.

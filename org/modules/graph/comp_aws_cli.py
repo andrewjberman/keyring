@@ -3251,7 +3251,62 @@ def cmd_iceberg_commit(args):
     return RC_OK
 
 
+DEPRECATION_PREAMBLE = (
+    "comp-aws: DEPRECATED FOR AGENT USE since 2026-09-09 (Andrew-direct; recorded in "
+    "org/tier1_exec/1.0.0_SA_CTO/deliverables/"
+    "ANDREW_DIRECT_20260909_191xZ_NO_LAPTOP_GRAPH_REFRESH_COMP_AWS_WRITE_PATHS_RETIRED.md).\n"
+    "  The cloud graph is SERVED: read it with `comp-kuzu \"<Cypher>\"` -- manifest entry "
+    "cloud.read.served_vintage, which states how old its answer is on every call.\n"
+    "  It is REFRESHED estate-side by the nightly Fargate derive-runner (full reconcile) and by "
+    "the incremental updater. There is no refresh for you to run and no question is ever the "
+    "cause of a rebuild.\n"
+    "  This CLI is NO LONGER ROUTED BY comp-which. It is NOT gated: nothing here refuses, and "
+    "every subcommand's exit code is unchanged.\n"
+)
+
+_PREAMBLE_ENV = "COMP_AWS_PREAMBLE_PRINTED"
+
+
+def print_deprecation_preamble(cmd=None):
+    """Print the deprecation notice ONCE per invocation, on STDERR, BEFORE the subcommand runs.
+
+    STDERR AND NOT STDOUT, DELIBERATELY: stdout is the subcommands' DATA channel (`metrics` and
+    `contract-diff --json` emit JSON that consumers parse). A stderr preamble changes no stdout
+    byte, which is exactly how "then behaves exactly as before" is measured -- byte-identical
+    stdout and an equal rc against a pre-change baseline.
+
+    ONE PRINT PER INVOCATION: the wrapper .tools/comp-aws prints first and exports
+    COMP_AWS_PREAMBLE_PRINTED=1 before exec'ing this module, which this function honours. A direct
+    `python comp_aws_cli.py ...` (no wrapper) has the variable unset and prints here instead. So a
+    caller of EITHER entry sees it exactly once.
+
+    NOT A GATE. It returns; it never refuses, never exits, never changes rc (Andrew: "We do not
+    need to gate it, merely need to pull it out of comp-which selection, that will be enough").
+    """
+    import os   # LOCAL on purpose: this module has no module-level `import os` (it imports argparse,
+    #             sys, json, tarfile, io, glob, re, subprocess, datetime, pathlib). Adding one would
+    #             be an edit OUTSIDE main() + this function, and the engine stays untouched.
+    if os.environ.get(_PREAMBLE_ENV) == "1":
+        return False
+    sys.stderr.write(DEPRECATION_PREAMBLE)
+    if cmd:
+        sys.stderr.write("  -- running %s as before.\n" % cmd)
+    else:
+        sys.stderr.write("  -- running as before.\n")
+    try:
+        sys.stderr.flush()
+    except Exception:
+        pass
+    os.environ[_PREAMBLE_ENV] = "1"
+    return True
+
+
 def main():
+    # BEFORE parse_args(), so `--help` and a usage error (argparse exits inside parse_args) both
+    # carry the notice too. sys.argv[1:] is read only to NAME the subcommand in the last line --
+    # argparse still owns all parsing, and this call cannot change what argparse decides.
+    _cmd = next((a for a in sys.argv[1:] if not a.startswith("-")), None)
+    print_deprecation_preamble(_cmd)
     ap = argparse.ArgumentParser(prog="comp-aws")
     sub = ap.add_subparsers(dest="cmd", required=True)
     d = sub.add_parser("derive")

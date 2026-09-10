@@ -1,9 +1,7 @@
 # Deploy-completion ledger: ADVI_PERFRP -- PUBLISH SEVEN (never-widen, co-signed)
 
-**Status:** ⛔ **OPEN -- BLOCKED-NOT-EXECUTED.** The act's own GO gate refused it. **ZERO S3 writes;
-the publisher was never invoked.** Kept OPEN (not closed) because the act is still sequenced and will
-re-fire on a clean sweep -- there is no half-landed state to roll back, because there is no landed
-state at all.
+**Status:** CANCELLED -- NOT EXECUTED, closed 2026-09-09T19:2xZ by its sequencer `2.0.0_SA_COO`. ZERO S3 writes; the publisher was never invoked; nothing half-landed, nothing to roll back. The sequenced act is WITHDRAWN (see Closure below); it is re-sequenced as a NEW entry if the Investor Reporting L2 keeps client-level performance reporting in ADVI_PERFRP.
+*(Status as first written, 2026-09-01, kept verbatim: "OPEN -- BLOCKED-NOT-EXECUTED. The act's own GO gate refused it. ZERO S3 writes; the publisher was never invoked. Kept OPEN (not closed) because the act is still sequenced and will re-fire on a clean sweep -- there is no half-landed state to roll back, because there is no landed state at all.")*
 **Executor:** `0.7.0_AE_CloudOps~G` · **Sequencer:** `2.0.0_SA_COO` 91125 ·
 **Never-widen co-sign:** `2.0.0_SA_COO` (COO half) + `1.0.0_SA_CTO` 91111 (CTO half, THREE of five;
 two HELD) · **Opened:** 2026-09-01 ~08:5xZ
@@ -110,3 +108,22 @@ fail-open on a shared branch, so its silence will not confirm authorization in e
 
 **This lane re-fires on the same GO the moment a fresh sweep reads 0 STALE.** The co-signature stands
 and the seven-key scoping stands; neither is re-opened by this block.
+
+## Closure -- 2026-09-09 ~19:2xZ, by the sequencer `2.0.0_SA_COO`
+
+**Why now:** the deploy-ledger gate-bypass scan (19:20Z, RED: "UNINDEXED open deploy-completion ledger", 202 h old)
+flagged this entry as non-terminal with no `.open_deploys/` sentinel -- the false-clean class. The entry's own
+"kept OPEN so it re-fires on a clean sweep" premise no longer holds: the executor `0.7.0_AE_CloudOps~G` died in
+the 2026-09-05 device crash, and on 2026-09-09 Andrew put the HOME of client-level performance reporting in
+question at L2 (the Investor Reporting Unification brief, `4.0.0_SA_CRO` @`1be462d9a4`: ADVI_PERFRP's Books tab in
+D2 vs the proposal's distinct Investor Reporting product under a new D14), under his standing "no new work until you
+get my transcript" (~12:5xZ). A publish that re-fires on a sweep while its home is being re-decided is the wrong
+act; a ledger that reads OPEN while nothing ever landed is the wrong record.
+
+**What is true, measured at close:** zero writes under this entry (the Result section: BLOCKED 2026-09-01 ~09:0xZ,
+NOT EXECUTED; the publisher never invoked). Nothing to roll back. The never-widen co-signature (`1.0.0_SA_CTO` 91111,
+three of five; two HELD) is NOT consumed by this closure and does not carry forward by itself: a future publish is a
+NEW sequenced act with its own entry and its own signature read, after the Investor Reporting L2 rules the home.
+
+**Terminal state:** CANCELLED -- NOT EXECUTED. No sentinel is created (there is no leg to prove). Told to
+`1.0.0_SA_CTO` (co-signer) the same turn.

@@ -175,6 +175,25 @@ does not include message contents; reading remains an explicit agent act.
 
 Neither detector nor bridge performs step 5.
 
+## Registration and outbound sender verification
+
+The launcher-owned heartbeat calls `register_agent` with the exact full serial.
+Its stdout records the registration result and broker connection. Subsequent
+beats recover a missing local liveness entry and check the broker's exact
+serial/PID row: a missing row is re-registered through the same guarded path,
+an unavailable broker is retried, and a different PID is reported as a conflict.
+Any consuming poller created by registration is cancelled before proceeding.
+
+`codex-send.ps1` starts a separate one-shot Python process. It checks
+`OPAL_AGENT_SERIAL` and fresh seat liveness, but that process does not inherit
+the heartbeat's in-memory `server._my_serial`. The broker library consequently
+stamps its messages **sender-unverified**. This is an expected process-level
+advisory, not evidence that the seat failed registration. The CLI receipt
+explains this distinction; the message stamp and identity audit remain intact.
+Do not register the send process or launch another heartbeat to remove the
+warning. Use the heartbeat log, exact registration records, and the canonical
+readiness probe when diagnosing an actual registration failure.
+
 ## Why the old bridge did not work
 
 `notify()` plus `yield_control()` injects detector output at a tool boundary of

@@ -12,9 +12,11 @@ tools:
       constraint; exit 0 on any census content)'
     canonical_call: comp-assets [--channel <source[/scope]>] [--probe] [--json]
   comp-aws:
-    concern: IAM-as-graph-nodes -- the live-AWS cloud-graph estate topology (17 node classes; the WRITE-PATH
-      + cert; the LIVE half of the desired-vs-live overlay)
-    canonical_call: 'comp-aws derive --out <path>    # full; or --resource <arn> for bounded'
+    concern: the ENGINE that derives the cloud graph (17 node classes; IAM-as-graph-nodes; the LIVE half
+      of the desired-vs-live overlay). Run ESTATE-SIDE by the nightly Fargate derive-runner and the
+      incremental updater -- DEPRECATED for agent use 2026-09-09 (NFRA_CLDGRPH CG-s-30, R14a PRD v0.12
+      @b77a6c3a27); read the result with comp-kuzu
+    canonical_call: 'comp-kuzu "<Cypher>"    # comp-aws is DEPRECATED for agent use; the engine runs in the nightly derive-runner'
   comp-axes:
     canonical_call: comp-axes [--axes a,b] [--no-snapshot] [--json]
   comp-blast:

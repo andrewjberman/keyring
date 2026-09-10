@@ -1,0 +1,158 @@
+{
+  "author": "4.0.0_SA_CRO",
+  "compiled_at_utc": "2026-09-10T16:02:35.139513+00:00",
+  "scope": "YCharts WS3 source hashes and metadata-only AWS observations",
+  "sources": [
+    {
+      "path": "infra/aws/ec2/bd-49f-auto-login/bd_49f_auto_login.js",
+      "read_scope": "Targeted runner, Kimi, login-state and persistence sections",
+      "bytes": 46900,
+      "sha256": "faf2d74eaa3ad25cd90f5fc1cfea32b231f14d464305eac1b712518f79720795"
+    },
+    {
+      "path": "infra/aws/ec2/bd-49f-auto-login/run-bd-auto-login.sh",
+      "read_scope": "Full wrapper",
+      "bytes": 4160,
+      "sha256": "9aa334758001a1b368deace08d12252bcd35959092f4e82dd2883e51d01d2dd2"
+    },
+    {
+      "path": "infra/aws/terraform/bd-49f-auto-login/iam.tf",
+      "read_scope": "Full IAM source",
+      "bytes": 5773,
+      "sha256": "d0930abd760ab6adc567f2a119cd9ec44f39dbdeecd1062efe12e3cbe89ad91e"
+    },
+    {
+      "path": "infra/aws/lambda/ycharts-market-data-pull/ycharts_client.py",
+      "read_scope": "Transport and legacy cookie contract sections",
+      "bytes": 13958,
+      "sha256": "da9f7c7b7f8caa1c1a7d04e5f37f4f645e006d7164e00a7adad2dce0a2fedba0"
+    },
+    {
+      "path": "infra/aws/lambda/ycharts-session-capture/index.mjs",
+      "read_scope": "Full legacy capture source",
+      "bytes": 6494,
+      "sha256": "b5391f7a2b9c1eace4aee68204584272d76e6d8c6b1844f3e04dfb1ada4e81e5"
+    },
+    {
+      "path": "infra/aws/terraform/ycharts-pipeline/main.tf",
+      "read_scope": "Full module declaration",
+      "bytes": 1436,
+      "sha256": "aa5af237c4e619d3ca6cbdca5c63c9401870922115c119cf1b3177fb5cd4ade4"
+    },
+    {
+      "path": "infra/aws/terraform/ycharts-pipeline/secrets.tf",
+      "read_scope": "Full session resource declaration",
+      "bytes": 1586,
+      "sha256": "9f268922a6afe574a85eeca76a453c14df62270959d0671704042759275de68f"
+    },
+    {
+      "path": "docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json",
+      "read_scope": "Prior static comparison census; not a three-variant request contract",
+      "bytes": 195040,
+      "sha256": "44853788fa6d39c8b6011c2f86fc82ea6906c2e006935df549f153378c950905"
+    },
+    {
+      "path": "docs/briefs/investor-reporting-lightweight-brief-20260910.md",
+      "read_scope": "Parent outcomes and current WS3 extension",
+      "bytes": 28248,
+      "sha256": "6909d6665c60704994889f4914bd98fe32e5429917f7b70ec984c9119d9c51e0"
+    },
+    {
+      "path": "docs/briefs/investor-reporting-lightweight-design-20260910.md",
+      "read_scope": "Parent UI/scope contract and historical WS3 capture gap",
+      "bytes": 34192,
+      "sha256": "a9a3104e4ff9e71cc5f09a05e8a2e81ffa7d82d7ebdfb65315ae1797e5927954"
+    },
+    {
+      "path": "docs/briefs/investor-reporting-export-narrative-spec-20260910.md",
+      "read_scope": "Shared branding/export boundary",
+      "bytes": 24833,
+      "sha256": "ae951efeffc969829a31498ee82a1fcd4f334b20908f00495e31aa5f11496b36"
+    },
+    {
+      "path": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260910_YCHARTS_INTAKE_AND_SERVING.md",
+      "read_scope": "User direction and subsequent clarifications, credential value omitted",
+      "bytes": 4016,
+      "sha256": "1d65a891d6e0d8bbe9b5cada4d9cedaebd80c1f966a03f90e1966af70687673d"
+    }
+  ],
+  "credential_storage_receipt": {
+    "secret_name": "ycharts/login/credentials",
+    "arn": "arn:aws:secretsmanager:us-east-1:313476888478:secret:ycharts/login/credentials-16Ebmj",
+    "version_id": "cf5e7c64-45f6-4460-a91a-a3610c352914",
+    "action": "created",
+    "readback_matches_supplied_credentials": true,
+    "legacy_cookie_secret_modified": false,
+    "region": "us-east-1"
+  },
+  "legacy_secret_contracts": [
+    {
+      "secret_name": "ycharts/credentials",
+      "measured_at_utc": "2026-09-10T16:02:34.238815+00:00",
+      "resource_exists": true,
+      "arn": "arn:aws:secretsmanager:us-east-1:313476888478:secret:ycharts/credentials-2deEMz",
+      "current_value_exists": true,
+      "top_level_keys": [
+        "cookies"
+      ],
+      "version_id": "3ef8f649-7d39-41be-adbb-14f906904afd"
+    },
+    {
+      "secret_name": "ycharts/session/current",
+      "measured_at_utc": "2026-09-10T16:02:35.037696+00:00",
+      "resource_exists": true,
+      "arn": "arn:aws:secretsmanager:us-east-1:313476888478:secret:ycharts/session/current-fxoD1K",
+      "current_value_exists": false,
+      "error_code": "ResourceNotFoundException"
+    }
+  ],
+  "bucket_state": {
+    "measured_at_utc": "2026-09-10T15:41:51.413517+00:00",
+    "bucket": "opal-data-ycharts",
+    "account": "313476888478",
+    "operations": {
+      "head_bucket": {
+        "error_code": "404"
+      },
+      "get_bucket_location": {
+        "error_code": "NoSuchBucket"
+      },
+      "get_bucket_encryption": {
+        "error_code": "NoSuchBucket"
+      },
+      "get_public_access_block": {
+        "error_code": "NoSuchBucket"
+      },
+      "get_bucket_versioning": {
+        "error_code": "NoSuchBucket"
+      }
+    }
+  },
+  "cto_reference": {
+    "messages": [
+      95295,
+      95301
+    ],
+    "sender": "1.0.0_SA_CTO",
+    "reported_snapshot_built_at_utc": "2026-09-10T12:24:50Z",
+    "reported_instance": "i-0fa1846f04ed7e337",
+    "reported_matching_nodes": 5,
+    "independently_remeasured_by_this_seat": false,
+    "own_compiler_attempt": "NO MEASUREMENT: graph bearer acquisition failed; bash AWS shim parsed as Python"
+  },
+  "official_design_references": [
+    "https://docs.aws.amazon.com/scheduler/latest/UserGuide/schedule-types.html",
+    "https://learn.microsoft.com/en-us/graph/api/message-delta?view=graph-rest-1.0",
+    "https://learn.microsoft.com/en-us/graph/api/message-list-attachments?view=graph-rest-1.0",
+    "https://learn.microsoft.com/en-us/graph/api/attachment-get?view=graph-rest-1.0",
+    "https://learn.microsoft.com/en-us/graph/outlook-immutable-id",
+    "https://learn.microsoft.com/en-us/exchange/permissions-exo/application-rbac"
+  ],
+  "execution_limits": {
+    "ycharts_vendor_calls": 0,
+    "mailbox_reads": 0,
+    "bucket_created": false,
+    "runner_deployed": false
+  },
+  "sanitization": "Credential values and cookie values are never emitted; raw client documents and vendor signed URLs excluded"
+}

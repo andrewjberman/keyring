@@ -74,3 +74,34 @@
   annotates and does not invent a disposition.
   Rollback commit 530977130b; deploy served-verified 2026-09-03T07:59:44Z; acceptance ruling 93554;
   channel rows ADVI_INSURE-S12/S13/S14 @a432f0b6de, @3595675047, @15ba87a50b.
+- 20260910T0055Z ANNOTATED by 0.7.0_AE_CloudOps~W -- THE GRANT IS APPLIED, RE-MEASURED ON THE LIVE
+  PLANE. Routed here by 2.0.0_SA_COO's 19:20Z RED scan as item 4, whose routing line attributes to
+  this entry a reading of "the iam.tf grant measured DESIRED-NOT-APPLIED" from 0.0.0_AB_MSTR's 09-07
+  device-death scan. I DID NOT TAKE THAT READING ON TRUST, because it contradicts this entry's own
+  L2, and a contradiction between two records is exactly where a measurement belongs.
+  MEASURED 2026-09-10T00:5xZ, `iam get-role-policy` on bd-exporter-ec2-role / advi-49f-chain-access:
+  TWELVE statements on the applied plane, and `AdviChainBd49fInsuranceSilverRead` is PRESENT with
+  Action ["s3:GetObject"], Condition NONE, and exactly the two intended Resources --
+  opal-data-assets/blackdiamond/49financial/silver/fact_insurance_relationshipaccountdetailsearch/*
+  and .../fact_insurance_insurancerelationshiplist_export/*.
+  So L1/L2/L3 stand as closed and the grant is APPLIED, not DESIRED. The DESIRED-NOT-APPLIED phrase
+  describes a DIFFERENT grant -- MSTR's 09-07 log recorded it of the NFRA_OUTSET `outset/*` statement
+  that was edited-and-uncommitted in the main tree that night, which this seat has since applied under
+  its own orders. Two grants in one iam.tf, one sentence, and the sentence travelled to the wrong one.
+  NEVER-WIDEN STILL HOLDS AT THE RESOURCE LEVEL, by inspection of the applied statement rather than by
+  a simulate: the sibling prefix fact_insurance_relationshipdetail under the same leaf is NOT among
+  the two Resources. Had the grant ever been rewritten to the 49financial/silver/ leaf it would be.
+  THE ENTRY STAYS OPEN AND L4 STAYS STRANDED. Nothing here moves L4: its acceptance is a REAL runner
+  read on a scheduled chain fire, which cannot occur while the insurance_nav_current stage is
+  disarmed. The prior lane's judgement stands -- do NOT close this SUPERSEDED, because the world is
+  not done.
+  ⛔ WHAT ANDREW'S NO-WAITING WORD (~21:4xZ 09-09) DOES AND DOES NOT REACH HERE: L4 is pending a
+  future SCHEDULED run, which is precisely the shape that word says must get a manual trigger. But the
+  manual trigger for L4 is a chain run with the insurance stage RE-ARMED, and that needs the runner
+  import-safety fix first (bd49f_insurance_nav_current.py:88-112 @c08c1bbe99 -- _SILVER_HOME calls
+  _workspace_root() at MODULE level, so the producer dies at import in the flat bundle). That fix is
+  ADVI_INSURE forward work and is not in this seat's hands under any order it holds. So this lane
+  RECORDS the applicable trigger rather than firing one: re-arm, then a manual chain run, then L4.
+  Status: the honest state is HELD on an external gate, not an aged OPEN -- `deploy_ledger.py hold
+  --gate-type external`. That status change is 2.0.0_SA_COO's call, as the prior lane also found; it
+  is surfaced again here and not self-adjudicated.

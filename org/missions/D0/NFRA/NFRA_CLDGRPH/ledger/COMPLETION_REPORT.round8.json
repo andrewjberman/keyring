@@ -1,0 +1,150 @@
+{
+  "kind": "COMPLETION_REPORT",
+  "schema_version": "1.0",
+  "project": "NFRA_CLDGRPH",
+  "round": 8,
+  "written_by": "2.0.0_SA_COO~A",
+  "written_utc": "2026-09-10T15:1xZ",
+  "decomposition_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md v0.11",
+  "prd_version_graded_against": "v0.14",
+  "denominators": {
+    "fwd_in_prd_header": 8,
+    "cells_in_decomposition": 46,
+    "cells_in_decomposition_basis": "counted by SUBTRACTION from the printed table rows of s.1a and s.1b (40 CG-s + 6 CG-x), agreed by a second independent count of distinct any-mention CG- ids. NOT taken from the version headers, which is how this same field sat STALE at 22 from v0.2 through v0.10 while the file carried 41",
+    "task_orders_issued_round8": 5,
+    "task_orders_drained": 5,
+    "task_orders_terminal_with_valid_proof": 5,
+    "task_orders_drained_open": 0,
+    "proof_instances_revalidated_at_the_issuer": "5 of 5, each against the COMMITTED blob via git show rather than the worktree path, all VALID rc=0 violations=0",
+    "channel_rows_at_close": 281,
+    "rows_filed_this_round": 17,
+    "worktrees_remaining": 0,
+    "judgment_criteria_for_l9": 5,
+    "worker_slots": 4,
+    "egress_acts_performed": "0 across all five orders, each measured by its own AC4-class detector with a planted-positive control that FIRED, rather than asserted. Permitted reads were printed as non-zero counts on the same line so that 'took no read' and 'took an allowed read' are distinguishable: S3_READS=11 on H-2, AWS_READS=73 on H-4"
+  },
+  "orders": [
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-H-2",
+      "cell": "CG-s-37",
+      "drained_at": "06ccb217db",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~1",
+      "what": "the NODES carrier's missing drop-on-read, with the arm shown RED on the pre-fix blob first"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-H-3",
+      "cell": "CG-s-38",
+      "drained_at": "4ab0da7983",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~2",
+      "what": "the portal sha travelling all four hops, committed and locally exercised, nothing applied"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-H-4",
+      "cell": "CG-s-39",
+      "drained_at": "1b191aa125",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~3",
+      "what": "the 124-edge loss ATTRIBUTED to a named Lambda by a 64-hex hash match, ELIMINATION_USED=false"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-H-5",
+      "cell": "CG-s-40",
+      "drained_at": "b36333e2cb",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~4",
+      "what": "the scorer disagreement PLACED on a carrier with a verified owner; the consumer population is 28, not 2"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-H-1",
+      "cell": "CG-s-36",
+      "drained_at": "fba1f0b1db",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~1",
+      "what": "BRANCH=NOT_RETIRED, forced three times over, each independently sufficient"
+    }
+  ],
+  "the_round_in_one_line": "Round 8 was cut to make a retirement GRADEABLE and it graded NOT_RETIRED, which is the answer the cell existed to produce. Beneath it the round attributed the 124-edge loss to a named Lambda by a hash match and found the root is a KEY COLLISION rather than a parenting choice -- so the re-point already committed fixes the blast radius and not the collision. The retirement cell then found, on an axis nobody had measured, that the ruled REMEDY would itself break a control this same round landed.",
+  "the_retirement_decision": {
+    "branch": "NOT_RETIRED",
+    "and_it_is_a_pass": "the cell was cut so that both branches pass and only an unstated branch fails; H1-AC3 grades the branch taken, not the outcome",
+    "forced_by_1": "the reader set is NON-EMPTY: 15 consumers over a 29,973-file REPOSITORY denominator against 0 over the 78-tool manifest, DOMAIN_DELTA=15",
+    "forced_by_2": "2 of those 15 lie OUTSIDE this order's <paths>, in slot ~2's live folder, so a RETIRE branch was HALF-LANDED BY CONSTRUCTION regardless of condition 2 (row W1-S46). Both are round-7 deliverables that did not exist when the census the grant was cut from ran",
+    "forced_by_3": "condition 2 blocked on an axis nobody had measured (row W1-S47): the ruling authorizes a RE-POINT onto OWNED_BY; derive_stitch.py:158-159 drops every prior-cycle STORED_IN UNCONDITIONALLY on a licence its own comment grounds in STORED_IN being SOLE-WRITTEN. OWNED_BY is not sole-written: the token appears ZERO times across derive_stitch.py and derive_runner.py against 232 served S3Key-OWNED_BY->S3_BUCKET edges, agreed by two independent instruments. So a re-point would make the fold delete another producer's live edges every cycle and silently break the drop-on-read landed at 06ccb217db in this same round",
+    "why_no_criterion_could_have_caught_it": "the coupling lives BETWEEN two separately graded orders. Each order's criteria close over its own cell; neither can see a remedy on one becoming a defect through the other. This is Rule 22's shared-dependency limb at the ROUND grain rather than the member grain",
+    "the_sharpest_number": "DOMAIN_HOLDS=0 of 94. The manifest's 78 tools resolve to 101 files and NOT ONE is among the 94 files carrying the term. The declared domain and the claim's population are DISJOINT -- so condition 1's census was not a narrow reading of the retirement question, it was a census of a different population whose count happened to read as an answer",
+    "manifest_amendment": "LANDED additively: 28 comment lines, 0 entries changed, PARSED structure identical to the HEAD blob"
+  },
+  "premises_this_seat_put_on_faces_that_came_back_false": {
+    "count": 5,
+    "shape": "unchanged from round 7 -- a name, a contract, a declaration or an inference written into a face as if it were a census or a run",
+    "instances": [
+      "the loss STOPPED: FALSE. STORED_IN is 0; a second drop at 12:01:43 took the remainder and 135->11->11->0 was a PLATEAU BETWEEN TWO DROPS. Row W3-S18",
+      "the projection has a SELF-CADENCE: FALSIFIED. It is event-driven off an EventBridge Pipe; there is no period. Labelled HELD, NOT MEASURED, which is why it cost nothing",
+      "one round-7 PIN HAS MOVED: FALSE. 0 of 4 moved by ast at the same bytes; the correction was the thing that had drifted. Row W2-S76",
+      "the DEPLOY CLOCK: does not exist as described. The scorer's arithmetic reads node_type at runtime; the deploy produces no spike, it silently falsifies a provenance STRING. An owner waiting for the predicted red number sees green. Row W4-S7",
+      "the workers are on the OLD comp-rail: FALSE, caught before any worker existed. A hash-ancestry test answered 'did this commit land' for a claim needing 'is the fix present'. Row S115"
+    ],
+    "the_measured_property": "NOT ONE of the five was caught by a gate, a control or a checker. Every one was caught by the seat being graded, running a read nobody asked for. Round 7 observed this at four rows; round 8 reproduces it at five, which makes it a property of this estate's controls rather than a run of bad luck",
+    "what_worked": "the LABELS. Both premises marked HELD, NOT MEASURED cost nothing when falsified. Both marked MEASURED misdirected a worker. measured/inferred/held/absent is doing the whole job",
+    "the_reading_asked_of_the_l9": "whether five false premises from one issuer in one round, all caught downstream, is a cut-discipline failure at this seat or a controls failure in the estate. This seat has an interest in the second answer and therefore offers neither"
+  },
+  "issuer_defects_repaired_inside_the_round": [
+    "the decomposition's own DENOMINATOR read 22 while the file carried 41, from v0.2 through v0.10; corrected to 46 by subtraction from the printed rows and verified by a second independent count",
+    "s.2's arc had no ROUND 7 block; added retroactively",
+    "the comp-rail premise on all five faces, corrected before a worker existed",
+    "a superseded bullet on H-1's face WITHDRAWN rather than deleted, with what was wrong about it named, because a face that quietly loses a claim teaches its reader nothing",
+    "the comp-system STRUCTURAL override the H-1 face made unavoidable and could not pay: discharged at the drain @d876b8b74a, 06 STALE -> SYSTEM CURRENT with both fingerprints printed"
+  ],
+  "carried_forward": [
+    {
+      "item": "SERVED_FROM=27 with all 27 on the same parent class -- the mechanism that took STORED_IN to zero is still loaded, and this is the same collision on an untouched family rather than a prediction",
+      "rows": ["W3-S18", "W3-S19"]
+    },
+    {
+      "item": "re-parenting does not close the collision: lambda_function.py:271 still writes a bare bucket NAME into a table where that string is S3_BUCKET_POLICY's canonical key, so the overwrite destroys a node on every S3 write",
+      "rows": ["W3-S19"]
+    },
+    {
+      "item": "the node drop has no edge-side counterpart, and the producer's 0-dangling check cannot see the gap because aws_keys is built before the collapse",
+      "rows": ["W1-S44"]
+    },
+    {
+      "item": "a snapshots/<date>/graph-<date>.tar.gz key reads immutable and IS a mutable pointer; the bucket is unversioned, so cited bytes are unrecoverable",
+      "rows": ["W1-S43"]
+    },
+    {
+      "item": "the four-way canonical-shape disagreement, with canon-patterns.yaml as the fourth voice declaring the edge in the OPPOSITE direction; its own 2026-07-18 instruction to trace consumers first was never run until H5-AC1 ran it",
+      "rows": ["W4-S7", "W4-S8", "W4-S9"]
+    },
+    {
+      "item": "hop 1's committed producer exists on both routes but not in a production HOME; the move is an owned item for 1.0.0_SA_CTO to place and 0.7.0_AE_CloudOps to run",
+      "rows": ["W2-S78"]
+    },
+    {
+      "item": "a grant that admits a SOURCE file but not the artifact that source mechanically obliges leaves a worker able to incur a debt and unable to discharge it",
+      "rows": ["W1-S48"]
+    },
+    {
+      "item": "the L6 gate's cell index counts a decomposition's PROSE, not its cell table, so a criterion naming a FOREIGN project's cell would resolve cleanly",
+      "rows": ["S114"]
+    },
+    {
+      "item": "the spine's L7 queue hand-off (continue the same subagent) is not achievable on this harness; every multi-order slot is N cold starts sharing a worktree",
+      "rows": ["S116"]
+    },
+    {
+      "item": "the SERVED re-take of F11-AC3 and G2-AC2, still Andrew-gated; section 2's attribution is what makes it readable when it comes",
+      "rows": ["S102", "S104"]
+    }
+  ],
+  "armed_rows_with_a_dark_owner": {
+    "rows": ["W1-S43", "W1-S44", "W2-S78", "W4-S7"],
+    "owners": "0.8.0_AE_CloudComp (NOT REGISTERED) and 0.7.0_AE_CloudOps (base dark; only ~W is live)",
+    "liveness_basis": "get_live_agents at close, read rather than assumed",
+    "why_not_re_seated": "the drain makes an ARMED row with a dark owner the spawning seat's to re-seat. Acting on any of these needs a CELL; the decomposition was FROZEN while TO-CG-H-1 was in flight, and LD-0529 means a Tier-2 seat hears an act only as a task order, so seating two seats with nothing they may lawfully do is manufactured churn. They ride the drain-end read, which is the carrier the spine provides for exactly this"
+  },
+  "channel_conflicts": "4 of the 5 drains conflicted on the append-only channel, which NFRA_CLDGRPH-S36 already established is the NORMAL path for a concurrent drain. Each resolved as base + ours-tail + theirs-tail under a structural guard that REFUSES if either side is not a pure append onto the merge base, then verified on the WRITTEN bytes: 0 conflict markers, 0 duplicate ids, 0 rows lost, union counts printed each time (272, 275, 278, 281)",
+  "push_state": "MEASURED at this write against a FRESH git fetch, per commit rather than as a single verdict: origin/CLOUD 634255bcc3. ON ORIGIN -- 217a87a817, 2fd5cae09f, 06ccb217db, 4ab0da7983, 1b191aa125, b36333e2cb, 95f9aaa891. LOCAL -- fba1f0b1db (the H-1 drain merge) and d876b8b74a (the comp-system discharge). Negative control run: a known-local object reads LOCAL with the same instrument. The integrator published mid-round, so a single round-level push verdict would have been wrong in both directions. Andrew holds the push and this claim ages the moment the integrator runs again."
+}

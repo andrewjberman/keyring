@@ -1,0 +1,39 @@
+========================================================================
+A. ARM TWO IS GONE -- the scope defect the CVO's S13 found
+   expected_criteria violations across 147 tree faces: 0  (must be 0)
+
+B. UNSCOPED over EVERY tree face -- the population the CTO measured, not one project
+   DENOMINATOR 147 faces | pass 147 | REFUSE 0
+
+C. NEGATIVE CONTROL -- the exact blob this gate PASSED at issuance
+   criterion tags in that blob: 0 | verdict: REFUSED
+
+D. POSITIVE CONTROLS
+   EG-s-22.the-classifier-tells-a-closed-da                   -> PASSES
+   EG-s-19.the-catch-up-branch-driven.md                      -> PASSES
+
+E. SCOPE CONTROL -- a flat/legacy path is not graded
+   flat untagged path -> correctly NOT graded
+
+========================================================================
+F. THE VINTAGE BOUNDARY -- PROVEN STRUCTURAL, no new mechanism added
+   production call sites of the limb: 1
+     -> v.extend(_criterion_grammar_violations(rel, text))
+   targets built as: p for p in dispatched if TO_PATH_RE.search(p) and p in added
+   'p in added' present in targets: True
+   _newly_added contract, verbatim:
+      The set of paths STAGED AS ADDED. Prospective-only scoping lives here.
+      A rename (R) counts as added at its new path -- moving a TO into task_orders/ is an
+      issuance. A modification (M) does not: this gate never refuses an existing TO.
+DENOMINATOR: 147 tree faces
+
+WHOLE-FUNCTION violations across that population, ATTRIBUTED BY LIMB:
+  PRE-EXISTING: v2 self-closing shape      350
+
+  faces carrying >=1 violation of ANY kind: 60 of 147
+
+BASELINE (gate at HEAD, unpatched) over the SAME population:
+  violations: 350 | faces carrying >=1: 60 of 147
+
+DELTA INTRODUCED BY THE SPLIT PATCH: 0 violation(s), 0 face(s)
+  faces newly refused by the patch: NONE

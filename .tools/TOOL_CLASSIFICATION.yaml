@@ -66,21 +66,20 @@ known_limitations:
     81, POSITIVE control is the floor and is what is claimed -- per Andrew-direct, that is enough to start.
 counts:
   classified: 85
-  unclassified: 3
+  unclassified: 4
   unclassified_tools:
   - comp-imgread
   - comp-tagauthz
   - comp-to
+  - comp-v5-composite-test.sh
   profile_rows: 93
-  excluded_not_in_authority: 5
+  excluded_not_in_authority: 4
   excluded_not_in_authority_tools:
   - comp-adapter-audit
   - comp-kuzu-full
   - comp-kuzu-inc
   - comp-surface-check
-  - comp-v5-composite-test.sh
-  excluded_not_declared_retired:
-  - comp-v5-composite-test.sh
+  excluded_not_declared_retired: []
   authority_without_a_profile_row:
   - comp-adversary
   - comp-atomcheck
@@ -96,7 +95,6 @@ counts:
   - comp-read
   - comp-schedule
   - comp-surprise
-  - comp-v5-composite-test
   - pipescript
 tools:
   comp-arity:
@@ -204,7 +202,8 @@ tools:
     - anything not yet ingested into the graph
     - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     control_established: POSITIVE
-    refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
+    refresh_mechanism: served projection; refreshed by the marker-driven cloud worker (NFRA_CLDGRPH CG-s-2/3),
+      never by a call; provenance header (VINTAGE) printed per call
     refresh_is_incremental: true
     bounding:
     - head slice
@@ -288,7 +287,8 @@ tools:
     - anything not yet ingested into the graph
     - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     control_established: POSITIVE
-    refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
+    refresh_mechanism: served projection; refreshed by the marker-driven cloud worker (NFRA_CLDGRPH CG-s-2/3),
+      never by a call; provenance header (VINTAGE) printed per call
     refresh_is_incremental: true
     bounding:
     - json out
@@ -689,7 +689,8 @@ tools:
     - anything not yet ingested into the graph
     - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     control_established: POSITIVE
-    refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
+    refresh_mechanism: served projection; refreshed by the marker-driven cloud worker (NFRA_CLDGRPH CG-s-2/3),
+      never by a call; provenance header (VINTAGE) printed per call
     refresh_is_incremental: true
     bounding:
     - head slice
@@ -1099,7 +1100,8 @@ tools:
     - catalogs not federated
     - in-VPC only; ~3-4 min/call
     control_established: POSITIVE
-    refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
+    refresh_mechanism: served projection; refreshed by the marker-driven cloud worker (NFRA_CLDGRPH CG-s-2/3),
+      never by a call; provenance header (VINTAGE) printed per call
     refresh_is_incremental: true
     bounding:
     - json out
@@ -1211,7 +1213,8 @@ tools:
     - anything not yet ingested into the graph
     - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     control_established: POSITIVE
-    refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
+    refresh_mechanism: served projection; refreshed by the marker-driven cloud worker (NFRA_CLDGRPH CG-s-2/3),
+      never by a call; provenance header (VINTAGE) printed per call
     refresh_is_incremental: true
     bounding:
     - head slice
@@ -1541,7 +1544,8 @@ tools:
     - anything not yet ingested into the graph
     - anything the SERVED projection has not picked up yet -- read the VINTAGE line
     control_established: POSITIVE
-    refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
+    refresh_mechanism: served projection; refreshed by the marker-driven cloud worker (NFRA_CLDGRPH CG-s-2/3),
+      never by a call; provenance header (VINTAGE) printed per call
     refresh_is_incremental: true
     bounding:
     - json out

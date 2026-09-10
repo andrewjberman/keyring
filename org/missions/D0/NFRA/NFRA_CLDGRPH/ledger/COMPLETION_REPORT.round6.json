@@ -1,0 +1,156 @@
+{
+  "kind": "COMPLETION_REPORT",
+  "schema_version": "1.0",
+  "project": "NFRA_CLDGRPH",
+  "round": 6,
+  "written_by": "2.0.0_SA_COO~A",
+  "written_utc": "2026-09-10T03:50Z",
+  "decomposition_ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md v0.9",
+  "prd_version_graded_against": "v0.14",
+  "prd_version_note": "PRD v0.13 -> v0.14 @2c689ef807 DURING this round, on the no-FWD-is-a-wait law: FWD-2, FWD-4 and FWD-8 had their DONE WHEN re-pointed at a READ OF EXISTING HISTORY with their IDS KEPT (no supersession). No grade moves because no substance moved; L9 grades against v0.14's lines.",
+  "denominators": {
+    "fwd_in_prd_header": 8,
+    "cells_in_decomposition": 37,
+    "task_orders_issued_round6": 11,
+    "task_orders_drained": 11,
+    "task_orders_terminal_with_valid_proof": 10,
+    "task_orders_drained_open": 1,
+    "channel_rows_at_close": 244,
+    "judgment_criteria_graded_at_l9": "8 of 8 across the first ten orders (@104c46c48a); F11-AC6 is the eleventh and is asked in the FINAL packet"
+  },
+  "orders": [
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-F-1",
+      "cell": "CG-s-21",
+      "prd_row": "S21",
+      "drained_at": "2c4e462a7b",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~1"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-F-2",
+      "cell": "CG-s-22",
+      "prd_row": "S22",
+      "drained_at": "8a074ba7ba",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~1"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-F-3",
+      "cell": "CG-s-23",
+      "prd_row": "S23",
+      "drained_at": "2e0c77dcbd",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~2"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-F-4",
+      "cell": "CG-s-24",
+      "prd_row": "S24",
+      "drained_at": "20260909T205xZ",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~2"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-F-5",
+      "cell": "CG-s-25",
+      "prd_row": "S25",
+      "drained_at": "b9917bc2e1",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~2"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-F-6",
+      "cell": "CG-s-26",
+      "prd_row": "S26",
+      "drained_at": "acf75d72d8",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~7"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-F-7",
+      "cell": "CG-s-27",
+      "prd_row": "S27",
+      "drained_at": "3e6be14930",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~3"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-F-8",
+      "cell": "CG-s-28",
+      "prd_row": "S28",
+      "drained_at": "f2ddef8deb",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~4"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-F-9",
+      "cell": "CG-s-29",
+      "prd_row": "S29",
+      "drained_at": "96e591c2b7",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~5"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-F-10",
+      "cell": "CG-s-30",
+      "prd_row": "S30",
+      "drained_at": "44082caf9e",
+      "status": "complete",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~6"
+    },
+    {
+      "id": "NFRA_CLDGRPH.TO-CG-F-11",
+      "cell": "CG-s-31",
+      "prd_row": "S31",
+      "drained_at": "d2ee75c98b",
+      "status": "open -- F11-AC3 measured-and-failing (CTO 94872: round 7's identity seam)",
+      "issued_to": "0.9.0_WK_NFRA_CLDGRPH~2"
+    }
+  ],
+  "the_round_in_one_line": "The stitch JOIN was built, served and then made HONEST: the four provisional stitch types unified at the PRODUCER (0 of 4 served), the stitch-v1 stamp retired on both its writers (1,771 -> 0 served), the local per-machine store archived and deleted with a tombstone, comp-debt repointed onto the served graph, comp-aws deprecated and unrouted, and the boundary edges cut from a 191x5 cross-product to one fact per key.",
+  "outstanding_at_close": [
+    {
+      "item": "the grain baseline's nine entries",
+      "state": "written, sign field `pending 3.0.0_SA_CVO`",
+      "owner": "3.0.0_SA_CVO",
+      "note": "the round's one outstanding ACT; re-measured on the artifact the build consumes with its vintage named (CTO 94791/94792), in C-S40's shape"
+    },
+    {
+      "item": "F11-AC3 / the bucket-identity seam (rows W2-S68, W2-S70, S102)",
+      "state": "measured-and-failing: 135 of 137 resolve, all onto S3_BUCKET_POLICY",
+      "owner": "round 7",
+      "note": "CTO 94872: an AWS resource node IS its arn; both planes move together; the class census counts FACTS PER KEY, not edges; its own image act and never-widen sign"
+    },
+    {
+      "item": "the SMS page path (rows W2-S72, S104)",
+      "state": "RESERVED FOR ANDREW; hold in force on further derive/build/push",
+      "owner": "0.0.0_AB_MSTR to Andrew",
+      "note": "every derive publishes SEV1/SEV2 to a topic carrying a live SMS subscription to a personal mobile; standing behaviour of the family, not this round's creation; nothing unsubscribed or edited"
+    },
+    {
+      "item": "the archive carry-forward substrate card (rows W2-S61, W2-S69, W2-S71, S103)",
+      "state": "pattern named across three carriers",
+      "owner": "1.0.0_SA_CTO at L10",
+      "note": "a row PER CARRIER (nodes, props, edges); a producer reading back its own output is silently idempotent under a fixed emission and silently wrong under a shrinking one"
+    }
+  ],
+  "laws_this_round_produced": [
+    {
+      "law": "spine v3.9 @d8400610bd",
+      "clause": "L7's worker-death procedure: open the entry, ACT, close AND COMMIT it, then read; the issuer sweeps the artifact plane with a DIFFERENT instrument before deciding to finish or roll back",
+      "from": "row S95"
+    },
+    {
+      "law": "spine v3.10 L2 @7ba9b976b0, refined @2c689ef807",
+      "clause": "no FWD is a wait; the proving act may be a driven run OR A READ OF EXISTING HISTORY; supersession only where no act can prove it",
+      "from": "the CTO's law, refined on this seat's measurement 94924"
+    },
+    {
+      "law": "CLAUDE.md NEVER-1 @9328e15f45",
+      "clause": "a sign-off names the act's BLAST RADIUS, never the producer's DECISION",
+      "from": "NFRA_OUTSET-S34 and ETFS_GUARDRAIL EG-s-15; this seat's S98 is the third instance and the first with the prediction in both halves"
+    }
+  ],
+  "push_state": "LOCAL at this write; origin/CLOUD @c6bcb7b12b (the CTO's ls-remote 02:29Z, not re-read at this compile). Andrew holds the push."
+}

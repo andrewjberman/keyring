@@ -21,7 +21,9 @@ surface. It performs, deterministically and in order:
      nested inbox routing (base vs ~lane -- the flat form is inexpressible
      here because the library derives the path, never the caller), filesystem
      persistence, broker push to a live recipient, structured receipt.
-  4. RECEIPT -- printed verbatim; rc 0 only if the library reports delivery
+  4. RECEIPT -- preserve the delivery result and sender-unverified warning,
+     but explain the process/seat distinction instead of advising a second
+     registration. rc 0 only if the library reports delivery
      (DELIVERED or QUEUED-for-dead-recipient), rc 1 on any REFUSED.
 
 HONEST LIMIT, stated rather than papered over: the broker stamps sends from
@@ -29,7 +31,8 @@ an unregistered PROCESS "Sender-unverified" (the registered process is the
 heartbeat, not this command). The stamp is TRUE -- this process is not the
 registered one -- and steps 1-2 are the local identity control. Removing the
 stamp would need a seat-token protocol in server.py; deliberately NOT built
-tonight (build-ladder: the stamp is honest, the control is real).
+tonight (build-ladder: the stamp is honest, the control is real). The CLI's
+receipt explains this expected advisory; it does not upgrade sender trust.
 """
 
 from __future__ import annotations
@@ -44,6 +47,16 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import server as comms  # noqa: E402  (the broker library; guarded send lives there)
 
 SERIAL_RE = r"^[0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9]+(~[A-Za-z0-9]+)?$"
+
+
+def explain_receipt(receipt: str) -> str:
+    """Clarify the advisory only after main's identity and presence checks."""
+    return receipt.replace(
+        " [sender unverified -- register_agent to send verified]",
+        " [sender unverified: this one-shot process is unregistered; "
+        "seat identity and fresh launcher liveness checked by codex-send. "
+        "Expected advisory; do not register a second process]",
+    )
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -111,7 +124,7 @@ def main(argv: list[str] | None = None) -> int:
             body=body,
         )
     )
-    print(receipt)
+    print(explain_receipt(receipt))
     # 4. structured verdict: REFUSED anywhere in the receipt = failure.
     return 1 if "REFUSED" in receipt else 0
 

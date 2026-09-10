@@ -276,6 +276,44 @@ def _criterion_grammar_violations(rel, text):
     if not TREE_TO_RE.search(rel):
         return []
     v = []
+
+    # WARN: CRITERION PRESENCE -- D0_INFRA_TIGHTENING s.6 ROW 10 (placed 1.0.0_SA_CTO 94994).
+    #
+    # THE LIMBS BELOW GRADE THE GRAMMAR OF CRITERIA THAT EXIST. Both are `for` loops over
+    # matches, so a face carrying ZERO criteria runs ZERO iterations and produces ZERO
+    # violations -- the gate passes it, and THE ORDER CAN THEN NEVER BE CLOSED.
+    # .tools/proof-of-spec-check.py reads cell_refs EXCLUSIVELY from these tags (":435 --
+    # NOTHING HERE IS DERIVED") and the acceptance-row schema exposes no cell_refs field, so a
+    # prose-only acceptance section yields `0/0 criteria carry >=1 cell_ref` and the `complete`
+    # flip is STRUCTURALLY UNREACHABLE no matter how good the work is.
+    #
+    # MEASURED, and the issuer who added this limb is the one who caused it:
+    # ETFS_GUARDRAIL.TO-EG-s-22 was cut with a prose acceptance section, PASSED THIS GATE at
+    # issuance, and its assignee then finished 7 of 7 arms and could not flip (row
+    # ETFS_GUARDRAIL-W1-S32). The assignee held the face in its own <paths> grant and REFUSED to
+    # add the tags itself -- editing the issuance half so your own proof validates certifies an
+    # alignment the cut never declared -- which is the only reason the defect was visible.
+    #
+    # NOTE: A GATE THAT GRADES ONLY WHAT IS PRESENT CANNOT SEE AN OMISSION. Same class as the
+    # dep_stage enum note below, from the other direction: there a wrong vocabulary hid matching
+    # violations; here an empty set passes vacuously.
+    #
+    # VINTAGE: PROSPECTIVE-ONLY, AND NO NEW MECHANISM IS ADDED FOR IT. This function has ONE
+    # production call site (check_file), and main() calls check_file only over `targets`, which
+    # requires `p in added` -- and _newly_added's own docstring states the contract: "A
+    # modification (M) does not: this gate never refuses an existing TO." So a pre-existing
+    # untagged face is never graded by this limb, and a SECOND vintage mechanism here would be a
+    # duplicate control with its own drift risk on a gate that already solved this and wrote it
+    # down.
+    n_crit = len(re.findall(r"<criterion\b", text))
+    if n_crit == 0:
+        v.append("%s: carries ZERO <criterion> tags. A face with no criterion PASSES every grammar\n"
+                 "  check vacuously and can NEVER be closed: proof-of-spec-check reads cell_refs only\n"
+                 "  from <criterion> tags, so the instance reads '0/0 criteria carry >=1 cell_ref' and\n"
+                 "  the complete flip is unreachable. Add at least one:\n"
+                 "    <criterion id=\"..\" cell_refs=\"..\"><invocation>..</invocation><expect>..</expect></criterion>\n"
+                 "  or a judgment criterion <criterion id=\"..\" cell_refs=\"..\" judgment=\"true\"/>." % rel)
+
     for m in CRITERION_SELFCLOSE_RE.finditer(text):
         attrs = dict(ATTR_RE.findall(m.group(0)))
         if attrs.get("judgment", "").strip().lower() == "true":

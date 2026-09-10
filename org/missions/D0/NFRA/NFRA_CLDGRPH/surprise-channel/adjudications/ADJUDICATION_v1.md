@@ -13,7 +13,12 @@ either plane.
 **Round 5 read, ADDENDUM 1 (2026-09-09 ~16:3xZ):** TO-CG-E-2 terminal; E2-AC7 graded PASS at C-S29 on this seat's live before-and-after read (3 of 7 -> 7 of 7 by digest; the :latest digest unchanged); W1-S29/W1-S31 closed (C-S30), W1-S27/W1-S30 open with owners (C-S31), W1-S28/S64/S65 dismissed (C-S32); E-1 and E-4 executing.
 **Round 5 read, ADDENDUM 2 (2026-09-09 ~17:0xZ):** TO-CG-E-4 terminal; E4-AC6 graded PASS at C-S33 (HOME = JOIN_PROJECTION, on this seat's own census of the producer's 67 of 67 failed builds and its own before/after read of the store); W3-S10/W3-S11 graduated OPEN at CloudComp (C-S34); W3-S12/W3-S13 dismissed (C-S35); E-1 pass 2 executing.
 **Round 5 CLOSE (L9 on the FINAL packet @25040e93f2, 2026-09-09 ~17:3xZ):** 24 of 24 project orders terminal; E1-AC7 graded PASS at C-S36 (4 of 4 round-5 judgment criteria graded); the 14 rows still open at the close dispositioned at C-S37 (4 closed on acks), C-S38 (2 open at CloudComp), C-S39 (8 records, two carrying this seat's rulings: `status: retired` ratified; the retired-record exemption reads alias-name OR entry); S31 closed in REMEDIATION_v3; FWD-7 carried NOT REALIZED two owned acts from REALIZED (the lifted dispositions executed; the site-Z exercise). The slug follows.
-**Denominator at this write:** 39 rows (C-S1 .. C-S39; C-S36..C-S39 appended 2026-09-09 ~17:3xZ; 35 rows (C-S1 .. C-S35; C-S33..C-S35 appended 2026-09-09 ~17:0xZ; 32 rows (C-S1 .. C-S32; C-S29..C-S32 appended 2026-09-09 ~16:3xZ; 28 rows (C-S1 .. C-S28; C-S26..C-S28 appended 2026-09-09 ~16:2xZ; 25 rows (C-S1 .. C-S25; C-S22..C-S25 appended 2026-09-09 ~15:0xZ; 21 rows (C-S1 .. C-S21; C-S21 appended 2026-09-09 ~13:2xZ: CLOSES the crossed corrections with the CTO's CORRECTION 2 @3a404545f2 (file-grain reading is C-S20's, 'executable path back' withdrawn, face line 280, DELETE unchanged) and adds the one instrument neither record ran -- the FILE exercised on a byte-identical copy: as a program it SKIPs and creates nothing; enrich_db() on an absent path creates an EMPTY schema-less store and raises; 20 rows (C-S1 .. C-S20; C-S20 appended 2026-09-09 ~12:5xZ: CORRECTION of C-S19 -- the writer's open is GUARDED (:232-235 SKIP when the store is absent), so it mutates a lingering copy and never builds one; 'manufactures the store' is withdrawn; the CTO's ruling @1266d65641 (DELETE inside the grant, capability PLACED at L10) recorded and concurred in, with how the 0 of 29 will be read at L9; 19 rows (C-S1 .. C-S19; C-S19 appended 2026-09-09 ~12:4xZ: the reading on the COO~A's tick-93 disposition call (94461) -- kuzu_cost_enrich.py is a WRITER that MANUFACTURES the retired store on open, a DECLARE-AS-DEAD row serves FWD-7 only with an accept clause on BEHAVIOUR, and D7-AC2 is graded on OUTPUT so D-7 stays open until the placed row is executed; 18 rows (C-S1 .. C-S18; C-S18 appended 2026-09-06 ~03:1xZ: addendum to C-S17 -- the quoted phrase is the manifest checker's advice (descriptive), the YAML refresh entries are the live path back, the CTO's placement sharpening supersedes 'named'; 17 rows (C-S1 .. C-S17; C-S17 appended 2026-09-06 ~03:2xZ: the reading on the COO~A's FWD-7 scope call -- the two spike loaders do not bind CG-s-8 and travel to L10 named under R7; the manifest's two refresh entries are a live path back and FWD-7 carries an unserved member while they stand; 16 rows (C-S1 .. C-S16; C-S16 appended 2026-09-05 ~22:4xZ: D10-AC5 graded PASS on the pass-3 record -- the ceiling belongs to the schedule on every term, held at 31.0% on a hand-free cycle, coverage 3092 of 3092, the third term ruled at C-S15 binding the next cut; the ninth judgment criterion of round 4, D-7 and D-8 remaining; 15 rows (C-S1 .. C-S15; C-S15 appended 2026-09-05 ~16:3xZ: three rulings on TO-CG-D-10's grading questions -- writers by provenance form, the hands-off counterfactual, the ceiling's measured delivery lag -- W1-S20, W1-S21, W1-S23 graduated and disarmed, the recut the issuer's, D10-AC5 ungraded until the recut; 14 rows (C-S1 .. C-S14; C-S14 appended 2026-09-05 ~15:5xZ: a correction of one clause in C-S13's evidence -- the backslashed-path git show failed rc 128 with a fatal on stderr, not '0 bytes at rc 0'; the grade and the rest of C-S13 stand; 13 rows (C-S1 .. C-S13; C-S13 appended 2026-09-05 ~15:4xZ: D11-AC4 graded PASS, scoped -- the morning read matches D-9's night on both fields; the plant stands for the decision and not for the real miss's in-window path, the second fixture named for the CTO's FWD-8 read; the eighth judgment criterion of round 4, the round not yet terminal; 12 rows (C-S1 .. C-S12; C-S12 appended 2026-09-05 ~15:2xZ: D9-AC6 graded PASS with the STAMP->ANSWER clock ruled to the swap (W1-S17) and POINTER_MOVED_BY_READ ruled to the order's causal property (W1-S19 graduated and closed), the seventh judgment criterion of round 4, the round not yet terminal; 11 rows (C-S1 .. C-S11; C-S11 appended 2026-09-04 ~22:1xZ: D5-AC5 graded PASS on this seat's own timings with the finding that the number is the thin client's fixed cost, the round-4 judgment set now 6 of 6 graded; 10 rows (C-S1 .. C-S10; C-S10 appended 2026-09-04 ~20:5xZ: S39 adjudicated as the disarm ACK on S28, S28 REMEDIATED, DISARMED and closed on this seat's own reads of the ledger, ECR and the seven families; 9 rows (C-S1 .. C-S9; C-S9 appended 2026-09-04 ~20:3xZ: S38 adjudicated as the disarm ACK on S20, S20 DISARMED and closed on the derive's read-state lines read at this seat unscoped over the log group; 8 rows (C-S1 .. C-S8; C-S8 appended ~19:4xZ: the round-4 grade record's first tranche on the issuer's partial packet @5e801703d5 -- D12-AC7, D2-AC10, D3-AC8, D1-AC8 all PASS; 7 rows (C-S1 .. C-S7; C-S7 appended 2026-09-04 ~18:5xZ: the CVO's own discriminating comparison for D6-AC4 taken before TO-CG-D-7, grading it PASS and dismissing S37; 6 rows (C-S1 .. C-S6; C-S6 appended 2026-09-04 ~07:35Z at round 4's first L9 read, adjudicating the issuer's S32 and S33; the investigation document then holds 32 rows, S1-S33 with S11 vacated, items open after that write: 0). At the round-3 slug: 5 rows (C-S1 .. C-S5). The investigation document holds 30 rows (S1-S31, S11 vacated)
+**Round 6 in flight (2026-09-09 ~20:2xZ):** C-S40 = the CVO RE-SIGN of NODE_TYPE_LAYER on the CTO's arch-gate GO 20260909T2015Z (W2-S45; PRD v0.10 S31/R17): 60 -> 65 keys, COND-A resource-type count 32 UNMOVED, five stitch-v1 entries INTERIM, signed on this seat's own census of the 19:55:00Z cloud artifact; the round's L9 follows its packets.
+**Round 6 PARTIAL read (L9 on the PARTIAL packet @d1b413f3b0, 2026-09-09 ~21:4xZ):** 7 of 11 orders terminal; six judgment criteria graded PASS at C-S41..C-S46 (F1-AC6, F2-AC5, F7-AC5, F8-AC5, F9-AC5, F10-AC6), each on this seat's own reads beside the worker's; F3-AC6 waits on the 2026-09-10T03:00Z nightly; the 41 rows open at the packet dispositioned at C-S47 (11 closed), C-S48/C-S49/C-S50 (1 at CloudComp, 1 at CloudOps, 3 carried to the CTO's L10), C-S51 (25 records); site Z's two records are read by S81 and MSTR's relays, not from a branch, and the grades say so. Chain ~2 (F-4, F-5, F-11, F-6) still running; the slug follows the FINAL packet.
+**No-waiting word applied (2026-09-09 ~22:0xZ):** F3-AC6 graded PASS at C-S52 on the manual-trigger form (two ad-hoc same-target builds SUCCEEDED on the real keys; 64 rule-initiated firings in this seat's census; the 03:00Z fire confirmation, never a gate) -- the hold stated in the PARTIAL line above is withdrawn; 7 of 7 judgment criteria of the seven terminal orders graded.
+**W2-S60 sign (2026-09-09 ~23:2xZ):** C-S53 = the CVO sign on grain_baseline.json for the CTO's GO 20260909T2305Z -- the four retired types to 0 and the five canonical types at their MEASURED distinct-id populations (170 / 1,217 / 394 / 201 / 125), not the worker's admission tallies (which refuse on Component at 8.46x, measured); the sentinel passes on the signed baseline; S89 filed for the duplicate carried members the re-measurement found.
+**Round 6 PARTIAL v2 read (L9 on @88091d4945, 2026-09-10 ~00:1xZ):** TO-CG-F-6 terminal; F6-AC6 graded PASS at C-S54 on this seat's own before/after reads and the four S3 archive checksums (8 of 8 round-6 judgment criteria graded across the ten terminal orders; F11-AC6 at the FINAL); the spike-loader decision named for the L10; W7-S1/S3/S4 closed (C-S55), W7-S2 open at the CTO with C-S50's residue (C-S56), S90..S94 records (C-S57); S89 stays ARMED until F-11 drains.
+**Denominator at this write:** 67 rows (C-S67 appended 2026-09-10T06:34Z -- the spine v3.12 boundary recorded IN round 7's grade per v3.13, audited at this seat: 20 criteria = 4 judgment + 16 mechanical, 2 of 16 carrying a difference control in TWO forms, 4 more positive-only, G2-AC2 none while a sibling arm carries its claim; nothing re-graded; was 66); previous: 66 rows (C-S64..C-S66 appended 2026-09-10T06:27Z -- round 7 FINAL L9 @7c2bc76e39: G2-AC5 graded PASS, ten items dispositioned (six GRADUATED, four DISMISSED), 0 of round 7 undispositioned after, and Rule 24 (i)'s subtraction discipline AMENDED to bind the choice of DOMAIN; was 63); previous: 63 rows (C-S62..C-S63 appended 2026-09-10 ~05:3xZ -- round 7 PARTIAL L9 @89705c09ed: G1-AC5, G3-AC5 and G4-AC5 graded PASS, nine items dispositioned, 0 undispositioned after); previous: 61 rows (C-S58..C-S61 appended 2026-09-10 ~03:5xZ -- the round-6 FINAL L9 @aec7dc8cfd: F11-AC6 graded PASS, the grain-baseline SIGN executed, 44 items dispositioned, 0 undispositioned after); previous: 57 rows (C-S1 .. C-S57; C-S54..C-S57 appended 2026-09-10 ~00:1xZ; 53 rows (C-S1 .. C-S53; C-S53 appended 2026-09-09 ~23:2xZ; 52 rows (C-S1 .. C-S52; C-S52 appended 2026-09-09 ~22:0xZ; 51 rows (C-S1 .. C-S51; C-S41..C-S51 appended 2026-09-09 ~21:4xZ; 40 rows (C-S1 .. C-S40; C-S40 appended 2026-09-09 ~20:2xZ; 39 rows (C-S1 .. C-S39; C-S36..C-S39 appended 2026-09-09 ~17:3xZ; 35 rows (C-S1 .. C-S35; C-S33..C-S35 appended 2026-09-09 ~17:0xZ; 32 rows (C-S1 .. C-S32; C-S29..C-S32 appended 2026-09-09 ~16:3xZ; 28 rows (C-S1 .. C-S28; C-S26..C-S28 appended 2026-09-09 ~16:2xZ; 25 rows (C-S1 .. C-S25; C-S22..C-S25 appended 2026-09-09 ~15:0xZ; 21 rows (C-S1 .. C-S21; C-S21 appended 2026-09-09 ~13:2xZ: CLOSES the crossed corrections with the CTO's CORRECTION 2 @3a404545f2 (file-grain reading is C-S20's, 'executable path back' withdrawn, face line 280, DELETE unchanged) and adds the one instrument neither record ran -- the FILE exercised on a byte-identical copy: as a program it SKIPs and creates nothing; enrich_db() on an absent path creates an EMPTY schema-less store and raises; 20 rows (C-S1 .. C-S20; C-S20 appended 2026-09-09 ~12:5xZ: CORRECTION of C-S19 -- the writer's open is GUARDED (:232-235 SKIP when the store is absent), so it mutates a lingering copy and never builds one; 'manufactures the store' is withdrawn; the CTO's ruling @1266d65641 (DELETE inside the grant, capability PLACED at L10) recorded and concurred in, with how the 0 of 29 will be read at L9; 19 rows (C-S1 .. C-S19; C-S19 appended 2026-09-09 ~12:4xZ: the reading on the COO~A's tick-93 disposition call (94461) -- kuzu_cost_enrich.py is a WRITER that MANUFACTURES the retired store on open, a DECLARE-AS-DEAD row serves FWD-7 only with an accept clause on BEHAVIOUR, and D7-AC2 is graded on OUTPUT so D-7 stays open until the placed row is executed; 18 rows (C-S1 .. C-S18; C-S18 appended 2026-09-06 ~03:1xZ: addendum to C-S17 -- the quoted phrase is the manifest checker's advice (descriptive), the YAML refresh entries are the live path back, the CTO's placement sharpening supersedes 'named'; 17 rows (C-S1 .. C-S17; C-S17 appended 2026-09-06 ~03:2xZ: the reading on the COO~A's FWD-7 scope call -- the two spike loaders do not bind CG-s-8 and travel to L10 named under R7; the manifest's two refresh entries are a live path back and FWD-7 carries an unserved member while they stand; 16 rows (C-S1 .. C-S16; C-S16 appended 2026-09-05 ~22:4xZ: D10-AC5 graded PASS on the pass-3 record -- the ceiling belongs to the schedule on every term, held at 31.0% on a hand-free cycle, coverage 3092 of 3092, the third term ruled at C-S15 binding the next cut; the ninth judgment criterion of round 4, D-7 and D-8 remaining; 15 rows (C-S1 .. C-S15; C-S15 appended 2026-09-05 ~16:3xZ: three rulings on TO-CG-D-10's grading questions -- writers by provenance form, the hands-off counterfactual, the ceiling's measured delivery lag -- W1-S20, W1-S21, W1-S23 graduated and disarmed, the recut the issuer's, D10-AC5 ungraded until the recut; 14 rows (C-S1 .. C-S14; C-S14 appended 2026-09-05 ~15:5xZ: a correction of one clause in C-S13's evidence -- the backslashed-path git show failed rc 128 with a fatal on stderr, not '0 bytes at rc 0'; the grade and the rest of C-S13 stand; 13 rows (C-S1 .. C-S13; C-S13 appended 2026-09-05 ~15:4xZ: D11-AC4 graded PASS, scoped -- the morning read matches D-9's night on both fields; the plant stands for the decision and not for the real miss's in-window path, the second fixture named for the CTO's FWD-8 read; the eighth judgment criterion of round 4, the round not yet terminal; 12 rows (C-S1 .. C-S12; C-S12 appended 2026-09-05 ~15:2xZ: D9-AC6 graded PASS with the STAMP->ANSWER clock ruled to the swap (W1-S17) and POINTER_MOVED_BY_READ ruled to the order's causal property (W1-S19 graduated and closed), the seventh judgment criterion of round 4, the round not yet terminal; 11 rows (C-S1 .. C-S11; C-S11 appended 2026-09-04 ~22:1xZ: D5-AC5 graded PASS on this seat's own timings with the finding that the number is the thin client's fixed cost, the round-4 judgment set now 6 of 6 graded; 10 rows (C-S1 .. C-S10; C-S10 appended 2026-09-04 ~20:5xZ: S39 adjudicated as the disarm ACK on S28, S28 REMEDIATED, DISARMED and closed on this seat's own reads of the ledger, ECR and the seven families; 9 rows (C-S1 .. C-S9; C-S9 appended 2026-09-04 ~20:3xZ: S38 adjudicated as the disarm ACK on S20, S20 DISARMED and closed on the derive's read-state lines read at this seat unscoped over the log group; 8 rows (C-S1 .. C-S8; C-S8 appended ~19:4xZ: the round-4 grade record's first tranche on the issuer's partial packet @5e801703d5 -- D12-AC7, D2-AC10, D3-AC8, D1-AC8 all PASS; 7 rows (C-S1 .. C-S7; C-S7 appended 2026-09-04 ~18:5xZ: the CVO's own discriminating comparison for D6-AC4 taken before TO-CG-D-7, grading it PASS and dismissing S37; 6 rows (C-S1 .. C-S6; C-S6 appended 2026-09-04 ~07:35Z at round 4's first L9 read, adjudicating the issuer's S32 and S33; the investigation document then holds 32 rows, S1-S33 with S11 vacated, items open after that write: 0). At the round-3 slug: 5 rows (C-S1 .. C-S5). The investigation document holds 30 rows (S1-S31, S11 vacated)
 after this commit; 5 were OPEN when the read began (S26, S27, S28, S29, S30), S31 is the CVO's own observation appended
 in this commit under lane ANY, and all six are dispositioned below (C-S5 graduates S31). Items OPEN after this write: 0.
 **Round 3 read (L8/L9):** all 8 task orders complete at HEAD. The three round-3 proof instances (C-1 @`028be96aef`,
@@ -1496,6 +1501,1087 @@ written (v1 / v2) because the gate's in-place rule moves clocks only; the round 
     "spec_asserts": "The channel's taxonomy: an item arms a hazard and names a disarm; a record does not. graph-call-manifest.yaml's per-entry schema as amended by E-1: status canonical | deprecated | planned | retired.",
     "world_is": "The retirement value exists and is ratified; the exemption wording is ruled for future faces; the rest are facts of the round's instruments and its landing shape.",
     "notes": "Investigation items without a disposition after this write: 0 of 151 by comp-surprise's definition (14 open before this write, all dispositioned at C-S37..C-S39). Round 5: 4 of 4 orders terminal, 4 of 4 judgment criteria graded, 29 worker rows + 6 acks dispositioned across C-S26..C-S39."
+  }
+]
+```
+
+## C-S40 -- the CVO RE-SIGN of NODE_TYPE_LAYER on arch-gate GO 20260909T2015Z (W2-S45): 60 -> 65 keys, COND-A resource-type count 32 UNMOVED, five stitch-v1 entries INTERIM (R17), signed on this seat's own census of the live cloud artifact -- PORTAL_COMPONENT is a subset of Component by identity, GOLD_SCRIPT mixes two grains
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-C-S40",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T20:26Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A re-sign record; it dispositions no investigation item. W2-S45 and W2-S48 are the worker's rows and are dispositioned at round 6's L9.",
+    "one_line": "THE CVO RE-SIGN OF NODE_TYPE_LAYER on 1.0.0_SA_CTO's arch-gate GO 20260909T2015Z (W2-S45 ruling; PRD v0.10 S31 + R17 @04d9942aff): five stitch-v1 entries enter the frozen map as a LABELLED INTERIM, and this seat signs the counts on its OWN census of the live cloud artifact, not the worker's. THE ARTIFACT READ: stitch/stitch_marker.json at 20:1xZ built_at 2026-09-09T19:55:00Z producer=stitch-codebuild git_sha de590a7d02, stitch_graph.json 38,845,013 B whose sha256 918d825fecd59437... equals the marker's artifact_sha256; 29,267 nodes in 51 classes, 63 distinct node types, 61,275 edges in 58 types. THE FIVE: GOLD_SCRIPT 1,380 / S3_DATA_KEY 294 / REACT_QUERY_KEY 94 / PORTAL_COMPONENT 22 / PORTAL_BUNDLE 1 = 1,791 -- the worker's numbers reproduced exactly on the current artifact, none of the five in the map today (ast read of derive_runner.py at c14a7b4366). THE COUNT QUESTION the GO put to this seat, ANSWERED: the dict has 60 keys -- aws 33 (32 resource types + S3Key), portal 15, ms 7, pipeline 3, semctl 2 -- while the map's own comments still read '31 resource types', '+1 CODEBUILD_PROJECT 31->32 / 59->60 total': S3Key entered aws at GRAPHUNI P1 without a count re-sign, so the comment totals are HISTORICAL and stay verbatim. SIGNED: COND-A resource-type count 32 UNMOVED (S3Key and S3_DATA_KEY are object grain; neither is a COND-A resource type); aws-LAYER key count 33 -> 34; portal 15 -> 18; pipeline 3 -> 4; ms 7; semctl 2; TOTAL 60 -> 65. THE FOUR-POSTULATE RECORD (rule 24), measured on IDENTITIES, not counts: (i) MECE fails for four of five because the classes are already typed -- PORTAL_COMPONENT: 20 of 22 ids are IDENTICAL to Component ids (one scheme, component:portal/src/...; the residue is two files, pages/AdvisorIntelligence/_partners/cottonwood/CottonwoodClientsSection.tsx and pages/TicketCenter/TicketCenter.tsx), so this pair is a SUBSET at one grain and W2-S48's 'counts 10x apart are not one set' does not hold for it -- S31's merge-by-identity is exact here; S3_DATA_KEY: 169 of 294 key-paths equal an S3Key key-part (S3Key 232 = 106 globs + 126 concrete, carrying bucket/attribution/stratum; S3_DATA_KEY carries no bucket -- the 955 STORED_IN edges carry it -- and includes an UNRENDERED FORMAT STRING '%s/date=%s/data.parquet' as a node id, an emitter defect for S31's first act); GOLD_SCRIPT: its 166 script-grain ids share 132 names with PipelineScript's 133; REACT_QUERY_KEY: 26 of 94 equal a ReactQueryKey after stripping the emitter's quotes, the other 68 are whole key-ARRAY expressions (\"'advisor-book-account', advisorid, selectedaccountid, firmoverride\") -- a different grain from ReactQueryKey's first literal, so S31's 'by identity where ids resolve' will resolve ~26 and must carry ~68 under origin=stitch. (ii) SAME GRAIN fails INSIDE GOLD_SCRIPT: 166 script-grain ids ('gold:<script>') + 1,214 function-grain ids ('gold:<script>:<fn>') under ONE type -- extract_gold_compute.py:91 'GOLD_SCRIPT = gold fn/script with a firm' -- which is why R17 admits it INTERIM only and S31 splits it into PipelineScript / PipelineFunction. (iii) INTENT COHERENCE holds for S3_DATA_KEY -> aws: the layer axis is which real source owns the node, and an S3 object is the cloud's whoever wrote it; the producer's own CLASS_LAYER (extract_portal_stitch.py:94) stamps it 'pipeline', and relabel_layers_by_node_type overrides producer stamps by design (:2145-2167). (iv) STATE COHERENCE: S31 moves exactly four; PORTAL_BUNDLE (1 node, id 'portal', the synthetic root keyed by version tag) stays; these populations are the retirement's denominators. BOUNDARY EDGES, reproduced with endpoints resolved by id OR arn: DERIVES_FROM 216 of 216 are S3_DATA_KEY -> GOLD_SCRIPT; STORED_IN 955 of 955 are S3_DATA_KEY -> S3_BUCKET; READS 291 and WRITES 216 more join GOLD_SCRIPT and S3_DATA_KEY; 386 of 61,275 edges have an endpoint unresolved by id or arn, all IAM-wildcard targets ('*:reads', '*:writes'), consistent with the artifact's own genuine_dangling 0 -- so the worker's 'unresolvable without the five' is exact: every DERIVES_FROM and STORED_IN edge has an endpoint in the five. ONE FOLD HAZARD NAMED FOR F-4's RE-HAND, as data: 20 node ids exist under two types (PORTAL_COMPONENT and Component) in the artifact itself; a fold keyed by id inherits one id with two types until S31 merges them, and a query by id returns two nodes -- the vocabulary=stitch-v1 stamp is what makes the pair readable in the meantime. THE RE-SIGN LINE for the map's comment, to be stamped verbatim beside the GO line by the worker holding the widened grant: \"CVO re-sign NFRA_CLDGRPH-C-S40 2026-09-09T20:26Z: NODE_TYPE_LAYER 60 -> 65 keys (aws 33 -> 34 [S3_DATA_KEY, object grain, beside S3Key]; portal 15 -> 18 [REACT_QUERY_KEY, PORTAL_COMPONENT, PORTAL_BUNDLE]; pipeline 3 -> 4 [GOLD_SCRIPT]; ms 7; semctl 2); COND-A resource-type count 32 UNMOVED; all five INTERIM vocabulary=stitch-v1 (R17), four retire under S31 by identity, PORTAL_BUNDLE stays; identity baseline for S31 in C-S40.\"",
+    "spec_asserts": "derive_runner.py:2055-2110 @c14a7b4366: 'Canonical NODE_TYPE_LAYER taxonomy (CTO arch-gate GO 223537Z + CVO sign 224410Z)'; every prior addition names a GO stamp and a CVO re-sign; NodeTypeLayerGap :2116 'COND-2 durability cert (CVO d43b49e61): an OBSERVED node_type is not in NODE_TYPE_LAYER ... a new resource type must force a map update, never silently fall out of the frozen-aws COND-A count'. CLAUDE.md rule 24: MECE over a declared domain, same grain, intent coherence, state coherence; a value-enum proposal arrives with its four-postulate record and a word-boundary token census. PRD v0.10 R17: a second vocabulary for a class the graph already types enters only as a labelled interim with its retirement row placed; a mixed-grain type is never frozen. The GO line, verbatim from 1.0.0_SA_CTO's 94693: 'CTO arch-gate GO 20260909T2015Z (NFRA_CLDGRPH W2-S45 ruling, PRD v0.10 S31): +5 PROVISIONAL stitch-v1 types -- GOLD_SCRIPT -> pipeline; REACT_QUERY_KEY, PORTAL_COMPONENT, PORTAL_BUNDLE -> portal; S3_DATA_KEY -> aws (object grain, the S3Key precedent; COND-A resource-type count unmoved). Every admitted node carries vocabulary=stitch-v1. Four of the five RETIRE under S31 (vocabulary unified at the producer); PORTAL_BUNDLE stays.'",
+    "world_is": "The map at HEAD has 60 keys in five layers and none of the five; the live cloud artifact carries 1,791 nodes under the five with the populations above, four of them re-typing classes the map already carries (a subset by identity for PORTAL_COMPONENT, partial overlaps for S3_DATA_KEY and GOLD_SCRIPT's script grain, a grain difference for REACT_QUERY_KEY), one of them mixing two grains inside itself; relabel_layers_by_node_type fails the derive closed on any of them until the map carries them. With the five added under the GO and this re-sign, the fold can run tonight; the vocabulary is unified by S31 at the producer, not by rename.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api head-object + get-object stitch/stitch_marker.json (LastModified 2026-09-09T19:55:15Z, 330 B): built_at 2026-09-09T19:55:00Z, producer stitch-codebuild, git_sha de590a7d0227fb9c14ce35b96dcec86deb68df60, total_nodes 29267, total_edges 61275; get-object stitch/stitch_graph.json 38,845,013 B (LastModified 19:55:14Z), sha256 918d825fecd59437... == marker artifact_sha256 (prefix match printed). meta.producer derive_stitch, meta.schema 'NFRA_COMPAWS_SCHEMA v3.1 53816378a (frozen)', meta.genuine_dangling 0.",
+        "This seat's census (python over every classes_data[*].nodes entry, type field 'type', identity 'id' and 'arn'): 29,267 nodes, 63 types; the five = 1,380 / 294 / 94 / 22 / 1; PORTAL_COMPONENT ids in Component ids: 20 of 22, residue named; S3_DATA_KEY key-paths equal to S3Key key-parts: 169 of 294 (S3Key ids with '*': 106 of 232); GOLD_SCRIPT ids with one colon 166, with two or more 1,214; script-grain names shared with PipelineScript: 132 of 133; REACT_QUERY_KEY equal to a ReactQueryKey after scheme+quote strip: 26 of 94; PORTAL_BUNDLE id 'portal'. Edges: DERIVES_FROM 216 all (S3_DATA_KEY, GOLD_SCRIPT); STORED_IN 955 all (S3_DATA_KEY, S3_BUCKET); READS 1,191 with 291 (S3_DATA_KEY, GOLD_SCRIPT) + 90 (LAMBDA, S3_DATA_KEY); WRITES 949 with 216 (GOLD_SCRIPT, S3_DATA_KEY) + 93 (LAMBDA, S3_DATA_KEY); unresolved by id or arn 386 of 61,275 (LOGS_TO 196, READS 58, READS_SECRET 52, WRITES 50, ...), sample targets '*:reads' / '*:writes'.",
+        "derive_runner.py at c14a7b4366 (worktree clean, 0 mods): NODE_TYPE_LAYER literal via ast -> 60 keys: aws 33 ['API_GW', ..., 'S3Key', 'S3_BUCKET', ...], ms 7, pipeline 3 ['Pipeline', 'PipelineFunction', 'PipelineScript'], portal 15, semctl 2; none of the five present. Comments :2064-2067 'aws -- 31 resource types ... +LAMBDA_LAYER/SCHEDULE/SSM_DOCUMENT re-sign 2026-07-08, CVO 3c4b9c472', :2077-2078 'CVO count re-sign b9a04eb8f (31->32 aws-resource / 59->60 total, additive-only)', :2095 'S3Key = a storage object under the aws S3_BUCKET -> aws' (no count re-sign named). relabel_layers_by_node_type :2145-2167 raises NodeTypeLayerGap when any observed type is unmapped (sed read).",
+        "extract_portal_stitch.py (comp-read --enumerate, 28 hits / 224 lines): CLASS_LAYER :89-95 stamps PORTAL_BUNDLE/PORTAL_COMPONENT/REACT_QUERY_KEY portal and S3_DATA_KEY/GOLD_SCRIPT pipeline; the rename table :74-77 (COMPONENT -> PORTAL_COMPONENT, S3_ARTIFACT -> S3_DATA_KEY, GOLD_SCRIPT -> GOLD_SCRIPT); emit :117 (PORTAL_BUNDLE), :130 (REACT_QUERY_KEY). extract_gold_compute.py (24 hits / 369 lines): :91 '# which trace nodes are MY compute slice (GOLD_SCRIPT = gold fn/script with a firm)', :94 and :259 select on node_type == 'GOLD_SCRIPT'. WORD-BOUNDARY TOKEN CENSUS (comp-find content, corpus=all, completed in the background after a 180 s foreground timeout): 6,738 hits across 152,588 files scanned (104,511 ephemeral-floor not searched); bands HEAD 2, DEF 6, SURFACED 1,592, CONFIG 4,658, TEST 7, DOC 473. First-party CODE carriers of the five names beyond the two emitters: infra/aws/globgrph/comp_debt.py, debtscan_canon_scorer.py, derive_runner.py (the DROP comment), derive_stitch.py, kuzu_ac_traversals.py, org/modules/graph/comp_recognizers_code.py (DEF band), plus data/yang_pkl/scripts/orchestrate_yang_upload_v2.sh and one COMPILERKIT probe (DEF band, other meaning of the token to be checked at S31). These are the consumers S31's retirement of four names must census before it renames anything.",
+        "The worker's rows W2-S45..W2-S49 read whole from its branch (git show 9c98dd1e63:...INVESTIGATION_v1.md, 170 rows parsed); 1.0.0_SA_CTO's GO 94693 and PRD v0.10 rows S31/R17 at HEAD c6e930079b (comp-read --enumerate: 10 hits, :209 R17, :268 S31, :280 change log)."
+      ]
+    },
+    "notes": "The re-sign travels as a FILE, not a message: the worker holding F-4's widened grant stamps the RE-SIGN LINE above beside the GO line in the map's comment and cites this row id; the map's historical count comments stay verbatim. For round 6's L9: F-4's fold must stamp vocabulary=stitch-v1 on all 1,791 admitted nodes (denominator here); the 20 duplicate ids across PORTAL_COMPONENT/Component are a fold fact, not a defect of the map; S31's first act (identity census with denominators, unresolved members carried under the canonical type with origin=stitch, 0 lost) has its baseline here: ~20 of 22, ~169 of 294, ~132 of 166 script-grain + 1,214 function-grain to split, ~26 of 94. The '%s/date=%s/data.parquet' node id and the six-of-seven-globs shape of S3Key are S31's to reconcile. Nothing in the map or the artifact was changed by this seat."
+  }
+]
+```
+
+## C-S41 -- F1-AC6 graded PASS: the existence clause TRUE on this device (stores, builder gone; archives headed live with S3 checksums); OPEN on site Z (seven pattern matches, S21 had no site-Z half)
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T21:43Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S41",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9 on the round-6 PARTIAL packet @d1b413f3b0 (7 of 11 orders terminal): the GRADE for F1-AC6, TO-CG-F-1's existence reading -- PASS. THE READING GRADED: for the canonical graph on this device the clause 'no second, older copy anyone could still be reading from' is TRUE and the qualifier does real work; the two June stores are gone and so is the BUILDER, which is the half the clause turns on ('absence of a copy is a state, and a state with a one-command path back has a short half-life'); the tarball is REPRODUCIBLE-NOT-PRESENT (recovery material, not a live copy; nothing on this device opens it and the loader is gone); the kuzu_ac7.db archive is unreproducible bytes kept because they cannot be rebuilt; three routes back named in descending likelihood (a builder re-landing by git show, the stitch store still on this device as S26's, a rebuild from the tarball); the limit stated -- THIS DEVICE only. THIS SEAT'S OWN READS AT 21:28Z AGREE: infra/aws/globgrph/kuzu_db, kuzu_ac7.db, kuzu_load.py and kuzu_nessie_db ABSENT; kuzu_stitch_db PRESENT (8,956 KB) with its manifest, as the reading says; kuzu_db.TOMBSTONE.md present; the three archive objects HEADED LIVE with S3's own checksum -- archive/NFRA_GLOBGRPH.ITEM-3/kuzu_ac7.db 4,050,944 B LastModified 18:24:19Z ChecksumSHA256 bN/wStGMStZANcVrVIQY93STFON0Zyhe/Hnkf6EwdM8= (equal to the record's base64 of the pre-upload sha256), its _build_manifest.json 908 B 18:24:24Z, snapshots/20260612/graph-20260612.tar.gz 71,671 B 2026-06-12T02:02:27Z. VERDICT PASS: the reading is honest, scoped and measured, and it names the reversal paths instead of declaring the state permanent. ONE THING THE READING COULD NOT SEE AND THE L10 MUST: the existence clause was EXECUTED ON ONE DEVICE. Site Z's own local-copy census, carried by 0.0.0_AB_MSTR in 94719 for the S22 pair, still reads SEVEN files matching kuzu_nessie_db.* (scratch, 'reported as measured, never re-scoped; loadability not claimed'). S21 had no site-Z half; FWD-7's 'no second, older copy' is therefore TRUE on this laptop and UNDETERMINED on site Z -- the addendum needs S21's act on site Z's device (census by whole store name, disposition, deletion behind a guard), or a ruling that scratch files matching the pattern are not copies.",
+    "grades": [
+      {
+        "criterion": "F1-AC6",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-F-1.lifted-dispositions-executed.proof_of_spec.json@2c4e462a7b",
+        "verdict": "PASS",
+        "reason": "The reading answers the criterion's three questions on measured inputs (0 of 2 stores, 0 readers of 486 files with an empty builder exclusion, 8 of 8 tombstone fields, 2 of 2 archive objects sha256-equal), distinguishes reproducible from present, names what would make it false, and scopes itself to this device. This seat's own filesystem and S3 reads agree on every object named. NO verdict was recorded by the assignee."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "L8_PACKET.round6.partial.md @d1b413f3b0 s.1 row F-1: F1-AC1..AC5 PASS by output (stores 0 of 2 beside a control; tarball 71,671 B + 2 of 2 archive objects sha256-equal; readers 0 of 486 by AST; tombstone 8 of 8 with a planted 7 of 8 caught; kuzu_load.py rc 128 at HEAD).",
+        "CG-s-21.lifted-dispositions-executed.result.md s.1 (order_of_acts 1-7; the artifacts block with before-sha256 and archive_key per store) and s.4 (the reading), read whole; the proof's F1-AC6 output_evidence.",
+        "This seat, 21:28Z: test -e on the five paths (4 ABSENT, kuzu_stitch_db PRESENT); ls of infra/aws/globgrph/ (kuzu_db.TOMBSTONE.md present, kuzu_stitch_db + ._build_manifest.json present, kuzu_load.py absent); s3api head-object --checksum-mode ENABLED on the three keys (values in one_line).",
+        "0.0.0_AB_MSTR 94719 (21:10Z), site Z's S22 half: 'CENSUS on site Z: still 7 files matching the pattern (kuzu_nessie_db.* scratch, reported as measured, never re-scoped; loadability not claimed)'."
+      ]
+    },
+    "spec_asserts": "F1-AC6 as cut (judgment, NO verdict): whether 'no second, older copy anyone could still be reading from' is now TRUE on this device for the canonical graph; what the tarball's presence means; what would make it false. PRD v0.6 S21 (@30027295be): the lifted dispositions executed, nothing deleted before its archive object is verified by head-object.",
+    "world_is": "On this device the canonical graph has no local copy, no builder and a tombstone; the archives exist with S3-computed checksums equal to the pre-upload bytes; the stitch store remains as S26's. On site Z seven names still match the local-copy pattern and no row has dispositioned them.",
+    "notes": "FOR THE L10: FWD-7's existence clause is device-scoped by the act that met it; site Z's seven pattern matches are the open half. Round 6 judgment criteria graded at this write: 6 of 7 (F3-AC6 waits on the 03:00Z nightly)."
+  }
+]
+```
+
+## C-S42 -- F2-AC5 graded PASS: the pair byte-identical at three instants under one vintage each, graded on (instant, vintage, sha256); two seats not two people (the CTO's S22 bar met); site Z's census limb unmet by letter; the site-Z record unread
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T21:43Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S42",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9: the GRADE for F2-AC5, the laptop half of the site-Z exercise read honestly, graded against BOTH records -- PASS on the laptop record and on site Z's values as relayed; the site-Z RECORD itself is unread (LOCAL on site Z @d375140694, an object neither origin/CLOUD nor origin/SITEZ carries at 21:4xZ: git cat-file -t -> not a valid object). THE PAIR ON (instant, vintage, sha256): LAPTOP T0 19:00:00.496Z start (offset 0.606 s) rows_sha256 3071ef4c...30df under vintage 2026-09-09T14:59:48.778469 manifest 86ea84674078, 58 rows; T1 20:00:01.107Z (1.310 s) the SAME sha and vintage; T2 21:00:01.511Z (2.081 s) 50170787...3821 under 20:04:09.034708 manifest 2ca2ec43cabf, 58 rows; max skew 0.347 s against the gateway's Date header. SITE Z (MSTR 94719 relaying MSTR~Z bus 0111cb51): T0 19:00:00.502Z 3071ef4c under 14:59:48; T1 20:00:00.504Z 3071ef4c under 14:59:48; T2 21:00:00.400Z 50170787 under 20:04:09; 58 rows each; skew 0 / -1 / -1 s; executor 2.0.0_SA_COO~ZZ; heads 1a7963cc83 / 7d698685fe / 9e2818276c. IDENTICAL at every instant under one vintage; the T1->T2 change is the served pointer's own rebuild (site Z's row diff: 58 types both sides, one count moved, LAMBDA 203 -> 202, total 27,303 -> 27,302), which is why the pair is graded on the vintage as the join key and never on the clock or the hash alone -- the laptop record's own s.4 predicted exactly this. THE READING GRADED says plainly what the exercise cannot prove: that the two seats were two PEOPLE. FWD-7 is written about 'two people on two machines'; D-8 was faulted for one worker on two machines; S22 as the CTO cut it (PRD v0.6 @30027295be) reads 'two SEATS on two machines' and that is the bar this cell is graded against -- MET. The PERSON reading stays as the CTO's L10 question, unchanged from C-S36. VERDICT PASS. WHAT DOES NOT PASS AS WRITTEN, for the L10 and not for this criterion: S22's accept says 'local-copy census 0 with a control on each'. The laptop's is 0 of 3 stores by whole name (the substring pattern matched F-1's tombstone and was re-cut, S84/W1-S33). Site Z's census is SEVEN names matching kuzu_nessie_db.*; MSTR's argument that a static local file cannot change vintage between reads is right about what ANSWERED (the server did) and silent about what EXISTS (seven files). The accept's census limb is UNMET on site Z by its letter; the seven files are S21-shaped work no row has cut. TWO MORE THINGS FOR THE CUT: (1) site Z's design hazard is real -- a wall-clock instant coordinates the ask, not the server; a vintage-matched pair needs the VINTAGE as its join key, which is what saved this pair at T2; (2) `grep -c` exits 1 on a zero count, so F2-AC3's PASS state carries rc 1 (W1-S34) -- graded on output, as the checker does; nobody should re-run it by rc.",
+    "grades": [
+      {
+        "criterion": "F2-AC5",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-F-2.site-z-exercise-laptop-half.proof_of_spec.json@8a074ba7ba",
+        "verdict": "PASS",
+        "reason": "The half is read honestly: what it proves alone (three instants kept within 5 s on the gateway's clock, three 58-row answers under stated vintages, no local copy of the canonical graph by whole store name), what it cannot prove (that site Z asked, matched, or that the seats were people), and what the L9 needs from site Z, in the order the grading turns on it -- the vintage first. Site Z's relayed values match the laptop's at all three instants under one vintage each. NO verdict was recorded by the assignee. LIMIT: site Z's record is read by relay, not from a branch; if the record when it lands differs from the relay, this grade is revisited by a new row."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CG-s-22.site-z-exercise.laptop-half.result.md s.1 (the JSON record: three instants with start/end/offset/skew/gateway_date/rows_sha256/vintage/manifest/rows_count; local_db_census; what_l9_needs_from_site_z) and s.5 (the reading), read whole; the proof's F2-AC5 output_evidence; F2-AC1..AC4 PASS by output (offsets 0.606 / 1.310 / 2.081 s, a planted 12.3 s caught; 58 rows x 3; census 0 of 3 by whole name with the substring read kept; skew max 0.347 s).",
+        "0.0.0_AB_MSTR 94719 (21:10:03Z) relaying MSTR~Z bus 0111cb51 (21:08:51Z): the three instants, shas, vintages, heads, skews, the row-by-row diff (LAMBDA 203 -> 202), the census (7 files), the design hazard; 'record LOCAL on site Z @d375140694'.",
+        "This seat, 21:4xZ: git fetch origin SITEZ (origin/SITEZ 3054872f2b); git cat-file -t d375140694 -> 'Not a valid object name'; git ls-tree origin/SITEZ deliverables/ shows no MSTR~Z or COO~ZZ slot -- the site-Z record has reached no branch this device can read.",
+        "PRD v0.6 @30027295be S22: 'two SEATS on two machines, byte-identical answers, one vintage, inside D-8's window, local-copy census 0 with a control on each'; S84 (2.0.0_SA_COO~A) re-cut F2-AC3 to whole store names and recorded the T1->T2 pointer advance for the L9; W1-S34 the rc-vs-output anti-correlation."
+      ]
+    },
+    "spec_asserts": "F2-AC5 as cut (judgment, NO verdict): the half read honestly -- what it proves alone, what it cannot, what the CVO needs from site Z. PRD v0.6 S22's accept (two seats, byte-identical under one vintage inside the window, census 0 with a control on each). FWD-7 clause (2): a person on site Z asks D-8's fixed question.",
+    "world_is": "Two seats on two machines read byte-identical rows at three instants, each pair under one vintage; the pointer advanced between the second and third; the laptop has no local copy by whole name; site Z has seven names matching the pattern and its record is on its own tree only.",
+    "notes": "FOR THE L10: S22's identity limbs are met on both halves; its census limb is met on the laptop and unmet by letter on site Z (seven names, stores unknown) -- S21's act on site Z's device is the missing row, the same one C-S41 names from the other side. The person clause stays the CTO's reading."
+  }
+]
+```
+
+## C-S43 -- F7-AC5 graded PASS: a consumer can reject at the manifest, nothing renders the claim on a served surface (confirmed here), the bytes-newer arm false-fires on every S3 copy by default; W3-S16's dead control
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T21:43Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S43",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9: the GRADE for F7-AC5, the manifest contract read -- PASS, and the answer the worker most wanted checked is confirmed at this seat: NOTHING RENDERS THE CLAIM ON A SERVED SURFACE. (3a) A consumer can now REJECT at the manifest on three fields in increasing strength -- artifact_claim != served_projection (the refusal E-3's cards could not give, because absent-vs-nobody-said was indistinguishable; now `!! provenance_claim: absent` renders and edge_count_semantics=absent reads in a field), edge_count_semantics == attempted (the edge count is an UPPER BOUND, so every parity or drift comparison with a stitch store on one side has been silently comparing a bound to a count), and bytes_written_at + content_sha256 (the BINDING between manifest and bytes, the thing that actually goes stale) -- AVAILABLE to a reader, ENFORCED nowhere; S53's consuming half is now possible, not mandatory, and the cell said so. (3b) THE MORNING AFTER F-4: an operator sees what they see today. THIS SEAT'S CENSUS AGREES WITH W3-S14: comp-find 'format_provenance_header' over the corpus -- DEF 1 (_provenance.py), the only first-party SURFACED file is _provenance.py itself (the rest of the band is rail logs and the dedup file), TEST 4; no file under infra/aws/globgrph other than the definer carries the name, so projection_client.py, projection_server.py and kuzu_cli.py call it nowhere. The served VINTAGE line is kuzu_cli._disclosure's four fields over projection_server's scalar vintage (W2-S46, S79), and F-4 carries the stitch vintage through projection_worker._age_line instead. The wiring is a cell no round has cut -- and the record's own caution travels with it: content_sha256 on a large store on EVERY invocation is not free (this writer refuses above 64 MiB and prints the skip); a serve path compares mtime and hashes on demand. (3c) The legacy alias edge_count_claim retires when no manifest on disk carries it -- a TRIGGER, not a date; the two E-3 cards belong to stores F-1 (gone) and F-6 (S26, last in its chain), and the legacy VALUE merge_attempts passes through untranslated beside the vocabulary's attempted, so the closed set is closed only for values this writer produced. (3d) `!! BYTES NEWER THAN MANIFEST` FALSE-FIRES BY DEFAULT on every S3 -> local copy, because `aws s3 cp` stamps the copy's mtime as now; the arm is honest about the producer's disk and wrong about a faithful copy's -- so it must never be wired into a serve path as built; content_sha256 is the binding check that survives a copy, mtime is not. VERDICT PASS: four questions asked, four answered against measurements, the honest limits named (available not enforced; nothing renders; the alias's value drift; the arm's default false fire). BESIDE IT, W3-S16: F7-AC4's named control was DEAD -- test_kuzu_incremental_refresh.py collects ZERO under pytest (a main()-style self-test under __main__), so '10 passed' came from test_projection_worker.py alone, which never calls the writer; the worker proved it by stripping the kwargs and watching the invocation stay green, restored the file byte-for-byte, and delivered an engine-free binding substitute (3 of 3 sites bind; a stripped caller refused 3 of 3; control fired). F7-AC4 is PASS-by-output and VACUOUS as cut; the substitute is the control that can fail. GRADUATED OPEN at 0.8.0_AE_CloudComp (C-S48): the file needs a pytest-collectable surface, which this order's bounds forbade (never open a store with an engine).",
+    "grades": [
+      {
+        "criterion": "F7-AC5",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-F-7.manifest-contract-claim.proof_of_spec.json@3e6be14930",
+        "verdict": "PASS",
+        "reason": "The contract is read at its read site (one dict lookup, no engine), the served-surface answer is NOTHING and this seat's own corpus census confirms no serve-path caller exists, the alias's retirement is named as a trigger, and the bytes-newer arm's default false fire on S3 copies is stated before anyone wires it. Mechanical F7-AC1..AC4 PASS by output, with F7-AC4's control found dead by the worker and replaced in-grant. NO verdict was recorded by the assignee."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CG-s-27.manifest-contract-claim.result.md s.2-3 (3a-3d, :189-275) read whole; the proof's F7-AC5 output_evidence; F7-AC1 13 of 13 contract tests re-run on CLOUD after the merge; F7-AC2 3 of 3 producer call sites stamping (kuzu_load.py excluded, retired by F-1); F7-AC3 five header arms on real renders; F7-AC4 10 of 10 with the split named.",
+        "This seat, 21:4xZ: comp-find 'format_provenance_header' --files --band DEF -> 1 (infra/aws/globgrph/_provenance.py); --band SURFACED -> 38 files of which the first-party ones are _provenance.py and .comp-graph/.comp_dedup, the rest org/audit/archive rail logs; TEST band 4; DENOMINATOR 188-191 hits across 152,711 files.",
+        "W3-S14 (0.9.0_WK_NFRA_CLDGRPH~3, 18:46Z): 0 hits for 'provenance_header|_provenance' across projection_client.py, kuzu_cli.py, comp_cluster_cli.py; projection_server.py:109-187 parses a different manifest schema; _provenance.py:7's docstring claims a kuzu_cli wiring that is not there. W3-S16 (18:46Z): the dead control, the strip-and-restore proof, the substitute f7_signature_bind.py."
+      ]
+    },
+    "spec_asserts": "F7-AC5 as cut (judgment, NO verdict): which field/value/read site a consumer can refuse on; what the served header shows the morning after F-4; what the legacy alias costs and when it retires; whether BYTES NEWER THAN MANIFEST can false-fire on a legitimate copy. PRD v0.6 S27: _provenance.write_manifest stamps the claim for all four producers; the header prints it beside the counts and keeps the '!!' prefix; bytes newer than a manifest read so.",
+    "world_is": "Every manifest this estate writes now carries the claim and the binding fields; the header renders them; no serve path renders the header; the bytes-newer arm fires on any S3 copy by mtime; one legacy key lives on two on-disk cards until their stores go.",
+    "notes": "FOR THE L10: (i) the wiring cell -- a serve-path caller of the claim (mtime compare, hash on demand), since S53's consuming half is possible and unenforced; (ii) the bytes-newer arm must be re-specified for copies before any consumer trusts it; (iii) W3-S16's dead pytest surface at CloudComp. Round-6 judgment criteria graded so far: F1-AC6, F2-AC5, F7-AC5."
+  }
+]
+```
+
+## C-S44 -- F8-AC5 graded PASS: the three refresh phrasings re-run after F-10 route to no rebuild (0 comp-aws rows, 0 refresh-shaped calls); the manifest residue fixed at source and its two sibling fields carried; the normaliser MECE over present suffixes
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T21:43Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S44",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9: the GRADE for F8-AC5, the instruction plane read one last time -- PASS, with the routes RE-RUN at this seat after F-10 landed. THE WORKER'S THREE PHRASINGS AT ITS PASS 2 (lexical routing, POTION down): 'how do I refresh the graph' -> a near-tie whose rank 1 was comp-aws derive --out <path>, the live-AWS WRITE PATH -- not a refresh of the retired local projection, but a rebuild command handed to a seat asking how to refresh; 'my graph is behind, what refreshes it' -> comp-kuzu at 2.00 (a READ whose card states the VINTAGE line), comp-drift, comp-aws at 0.14; 'what refreshes the served graph projection' -> comp-drift, comp-kuzu, comp-describe. THE SAME THREE AT THIS SEAT, 21:4xZ, ON THE DRAINED F-10: 'how do I refresh the graph' -> comp-build 1.50, comp-kuzu 1.50, comp-gitdrill 0.45, comp-aws 0 rows of 79 ranked, refresh-shaped calls 0; 'my graph is behind, what refreshes it' -> comp-kuzu 2.00, comp-drift 1.50, comp-graph 0.47, 0 of 78, 0; 'what refreshes the served graph projection' -> comp-drift 1.50, comp-kuzu 1.50, comp-graph 0.46, 0 of 78, 0. So the one rebuild command a refresh question still surfaced at pass 2 is gone by F-10's act, and no ranked list of the three now carries a call shaped like refresh/rebuild/derive/iceberg/snapshot. THE MANIFEST-SOURCED RESIDUE: one freshness string on cloud.cluster.page_panel_drilldown reached tool_index.py:2936 through MANIFEST_DOC (a verbatim pprint of the parsed manifest), so no regeneration could ever have cleared it -- the issuer widened the grant by that one string (S73) and F8-AC1 reads MANIFEST_SOURCED_HITS=0; the reading then found the same entry's cost: (:1498, 'the canonical Kuzu graph') and rebuild_trigger: (:1501, 'the live graph ... the graph refresh') describing the dead engine in words the three censused phrases do not match (W4-S6), so a phrase census reads 0 while the entry still instructs -- carried named (S75). W4-S4's five out-of-grant descriptions (three comp-module sources, two estate data carriers) carried named (S74). THE NORMALISER: MECE over the suffixes that EXIST today ({.py, .sh} present, {.py, .sh} stripped, unstripped none, the no-suffix name unchanged, control fired) and NOT over a declared domain of possible suffixes -- the worker said so and the docstring now carries the census rather than an assumption, so the next suffix is a re-census, not a silent pass-through; EXCLUDED_NOT_IN_AUTHORITY 5 -> 4 of 93, all four declared retired, and the counter that moved the other way (unclassified 3 -> 4) travels with its cause (W4-S5: comp-v5-composite-test.sh's profile row has an empty primitives list -- THIS SEAT's tool_profile.json, owned here, deferred under Andrew's no-new-work word and named). VERDICT PASS.",
+    "grades": [
+      {
+        "criterion": "F8-AC5",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~4/NFRA_CLDGRPH.TO-CG-F-8.dead-engine-descriptions-and-normaliser.proof_of_spec.json@f2ddef8deb",
+        "verdict": "PASS",
+        "reason": "The three phrasings were run and their routes reported with the instrument caveat first; the manifest-sourced residue was attributed to its source by measurement and its two unphrased siblings named; the normaliser's MECE claim is bounded to the names that exist. This seat re-ran the three phrasings on the drained estate and reads 0 comp-aws rows and 0 refresh-shaped calls in every ranked list, the rebuild route at pass 2 having left with F-10. NO verdict was recorded by the assignee."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The proof's F8-AC5 output_evidence (three phrasings with top-3 and denominators 80/79/79; the residue's path through MANIFEST_DOC; W4-S6's two fields; the MECE bound) and CG-s-28.result.md :150-159; F8-AC1..AC4 PASS by output at pass 2 (0 of 0 hits by source; 4 of 93 excluded all declared retired; 2 commands / 3 carriers / 0 diff LF-normalised; parity 99 = 99 with both controls).",
+        "This seat, 21:4xZ, comp-which x3 on HEAD d1b413f3b0: ranked lists .comp-graph/which/rank-29068.yaml (79 ranked), rank-3256.yaml (78), rank-21952.yaml (78); comp-aws rows 0 / 0 / 0; call strings matching refresh|rebuild|derive|iceberg|snapshot 0 / 0 / 0; top-3 as in one_line.",
+        "S72, S73, S74, S75 (2.0.0_SA_COO~A): the re-cuts of F8-AC3/AC4 under the standing authority, the one-string widening, the L10 carries; W4-S1..W4-S6 read whole."
+      ]
+    },
+    "spec_asserts": "F8-AC5 as cut (judgment, NO verdict): whether any description of the dead engine remains reachable by a seat asking comp-which a refresh question; what the manifest-sourced residue means and whose row it is; whether the normaliser's suffix set is MECE over the map's names. PRD v0.6 S28: the two descriptions and the normaliser, regenerated never hand-edited.",
+    "world_is": "No refresh question routes to a rebuild today; five module and data-carrier descriptions and two fields of one manifest entry still describe the retired engine outside every round-6 grant; the normaliser is MECE over the two suffixes that exist.",
+    "notes": "FOR THE L10 (the addendum's instruction-plane candidates, in one row): W4-S4's five, W4-S6's two fields, W6-S3's eleven cloud.* entries with comp-aws canonical calls (C-S46). Owned here and deferred: a primitives row for comp-v5-composite-test.sh in this seat's tool_profile.json."
+  }
+]
+```
+
+## C-S45 -- F9-AC5 graded PASS: one writer on both clones on the producer field -- the laptop by record and this seat's reads, site Z by S81 and the relayed silence test; the two-writer window inside the order named; the derives disagree by 53 nodes
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T21:43Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S45",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9: the GRADE for F9-AC5, one writer read on both clones under PRD v0.11's producer-field discriminator -- PASS on the laptop by record and this seat's own reads, PASS on site Z by the disarm row S81 in this channel plus the silence test relayed by 0.0.0_AB_MSTR (site Z's record @9d3e69ac45 is LOCAL on site Z: not a valid object on origin/SITEZ at 21:4xZ). THE LAPTOP: .tools/stitch-refresh exits 3 naming opal-stitch-produce before any derive, both keys unchanged 2 of 2 (the issuer's own run agrees); the hook body and its installer ABSENT at HEAD (rc 128), a 6-of-6-field tombstone, the 07-07 words byte-kept under a SUPERSEDED block, the publish path DELETED; the device hook file 0 of 19 lines naming stitch-refresh beside five other entries (this seat at 19:54Z: total 19, stitch 0, missions-refresh 2, closeout-comp-state 2, bash -n OK); the filter commit 66f61f2fbf followed by 137 s with both keys unchanged and MARKER_PRODUCER=stitch-codebuild. THE READING GRADED is the honest one: it names that the estate had TWO live overwriters for roughly the length of the order -- at 19:45:44Z this laptop's hook fired on the issuer's tick-21 commit and published stitch-local (29,320 / 61,835) over the cloud's marker, the 553rd publish, seen in the key's LastModified and the device's own log (S77, W5-S4) -- which is exactly the premise of S71 ('inert by accident') expiring the moment F-3's repaired derive merged; that the residue log's refusal count is 145 at its read, not S71's 143, because a residue file keeps running; and that four routes make the key two-writer again (site Z's hook -- since removed; the installer re-run from a pre-retirement checkout; a git show restore; Andrew's word). SITE Z (S81, 0.0.0_AB_MSTR, 20:14Z, in this channel): the pair removed 19:58:27.757Z, 17 -> 15 lines, stitch-refresh 2 -> 0, four surviving _ws= entries as the control, bash -n AND sh -n (the shebang is /bin/sh), mode 755, 0 CRLF, backup taken; the silence test (94701): trigger 46422191de by 1.0.0_SA_CTO~Z at 20:11:01Z on org/modules/graph/CALLER_CONTRACT_HAZARD.md (a filter match), 0 stitch-refresh processes by a native scan with 'python'=29 as control, the marker unmoved at +111 s and +213 s and POSITIVELY attributed -- producer=stitch-codebuild, git_sha de590a7d02, not the sha just committed -- the stronger form of the test and the one v0.11 asks for. Site Z disclosed two things a grader must keep: the trigger commit is hand-made in timing (real in content), and no pre-removal fire was run (that would mean re-installing a shadow producer). THIS SEAT'S OWN READ OF THE KEY at 21:28Z: LastModified 19:55:15Z, 330 B, producer stitch-codebuild, git_sha de590a7d, 29,267 nodes -- unmoved since the issuer's re-assert (S78) through both silence tests. VERDICT PASS: one writer on both clones, read on the producer field. TWO FACTS FOR THE L10: (1) the laptop and cloud derives DISAGREE -- 29,320 / 61,835 against 29,267 / 61,275, 53 nodes and 560 edges, because the cloud runs the re-pushed zip's HEAD and a laptop runs its own; with one writer the disagreement is moot, but it is what a second writer would have silently folded; (2) both silence tests were made with hand-timed trigger commits, disclosed; the organic test is the next real graph commit on each clone, and the producer field is what reads it.",
+    "grades": [
+      {
+        "criterion": "F9-AC5",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~5/NFRA_CLDGRPH.TO-CG-F-9.local-stitch-hook-retired.proof_of_spec.json@96e591c2b7",
+        "verdict": "PASS",
+        "reason": "The laptop half is proved by the record and re-read here (0 of 19 hook lines beside two controls; the key's producer stitch-codebuild and unmoved through the window); the instruction plane is gone at HEAD with its tombstone; the site-Z half is proved by S81's before/after counts and controls and the relayed silence test attributing the marker positively to the cloud writer; the reading names the two-writer window inside the order and the routes back rather than declaring the state permanent. NO verdict was recorded by the assignee. LIMIT: site Z's record is read by S81 and relay, not from its branch."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CG-s-29.local-stitch-hook-retired.result.md :170-203 (the F9-AC5 section) and the proof's F9-AC5 output_evidence; F9-AC1..AC4 PASS by output (rc 3 naming opal-stitch-produce; both files absent at HEAD; 0 of 19 lines; filter commit 66f61f2fbf + 137 s, MARKER_PRODUCER=stitch-codebuild).",
+        "This seat, 19:54Z: .git/hooks/post-commit total=19 stitch=0 missions-refresh=2 closeout-comp-state=2, bash -n OK, mtime 19:46:42Z; /tmp/stitch-refresh.log 670 runs / 553 published / 146 refused, last publish 19:45:44Z sha 6de9b76d93 with GRAIN-SENTINEL PASS. 21:28Z: s3api head-object + get-object stitch/stitch_marker.json -> LastModified 19:55:15Z, 330 B, producer stitch-codebuild, git_sha de590a7d0227fb9c14ce35b96dcec86deb68df60, total_nodes 29267.",
+        "S81 (0.0.0_AB_MSTR, 20:14Z) with its evidence lines (bus ack 3a7fe696); 0.0.0_AB_MSTR 94701 (20:21Z) relaying MSTR~Z ack 19458543: trigger 46422191de1a64ff6d8b23a7102c30e9a5000feb, +111 s / +213 s head-object in explicit UTC, ETag 00dd8c73... unmoved, producer stitch-codebuild; the two disclosures. git cat-file -t 9d3e69ac45 -> not a valid object on this device after fetching origin/SITEZ.",
+        "PRD v0.11 @c6e930079b S29: the silence test discriminates on the marker's producer field (and git_sha), never on the timestamp. S77 (1.0.0_SA_CTO), S78 (2.0.0_SA_COO~A), W5-S4 (the worker): the 19:45:44Z overwrite, the device act, the 19:55Z re-assert."
+      ]
+    },
+    "spec_asserts": "F9-AC5 as cut (judgment, NO verdict): what the record proves for the laptop and the instruction plane; what only site Z's device record can prove; whether the residue plane is complete; what would make the key two-writer again. PRD v0.11 S29: the hook retired on three planes with the producer-field discriminator.",
+    "world_is": "No clone's post-commit hook writes the stitch keys; the refresh script refuses; the hook body and installer are gone at HEAD; the marker has read producer stitch-codebuild since 19:55:00Z through two silence tests; the two derives that once competed disagree by 53 nodes.",
+    "notes": "S70, S71, S77 close at C-S47 on this grade; S81 is the disarm record (C-S51). FOR THE L10: the derive disagreement as data for S24's vintage carrier; the organic silence read is the next real graph commit on each clone."
+  }
+]
+```
+
+## C-S46 -- F10-AC6 graded PASS: preamble on stderr with stdout unchanged, 0 of 78 in four ranked lists, deprecated at both grains (R14a holds); eleven canonical comp-aws entries confirmed by parse as the carried residue; FWD-2/FWD-6 readings for the L10
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T21:43Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S46",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9: the GRADE for F10-AC6, what the control is and is not for comp-aws deprecated and unrouted with no gate -- PASS, every mechanical claim re-derived at this seat on the drained estate (HEAD d1b413f3b0). THIS SEAT'S READS: `.tools/comp-aws --help` -> rc 0, stderr 723 B beginning 'comp-aws: DEPRECATED FOR AGENT USE since 2026-09-09 (Andrew-direct ...)' naming comp-kuzu, cloud.read.served_vintage, the nightly derive-runner and the incremental updater, 'NO LONGER ROUTED BY comp-which', 'NOT gated ... every subcommand's exit code is unchanged', '-- running as before'; stdout 459 B the unchanged usage line listing all nine subcommands including derive, snapshot and iceberg-commit. comp-which over the four `when:` phrasings -> comp-aws rows 0 of 78 ranked in each of four spilled rank files (rank-32212 / 14768 / 32896 / 31372), the control comp-kuzu present in each (5 lines), and the phrasing that ranked comp-aws FIRST before the order ('Cloud-shape snapshot + diff over time') now ranks comp-chainrun snapshot. comp-coverage-map.yaml tools[comp-aws].status = deprecated (the only tool of 35 with a status key, :676, homed, parity 99 = 99); graph-call-manifest.yaml tools_index[comp-aws].status = deprecated (the only entry of 78 with a status key), so R14a's two-grain agreement condition HOLDS at HEAD; entries: 128 = 125 canonical + 2 retired + 1 absent. THE READING GRADED: (1) what stops a seat running `comp-aws snapshot` tomorrow is three things and nothing else, by Andrew's word -- a preamble read only if stderr is read and only after the decision to type the command; an ABSENT ROUTE (the strongest, because comp-which is where a cloud question starts: 0 rows in the ranked lists, 0 of 90 curated tuples, absent from the AWS-CLOUD drill-down); a registry that says so -- and the residual is a MEMORY risk (a seat carrying the name from an old transcript runs it and succeeds), not a capability one; (2) the nightly's next SUCCEEDED derive proves the IMPORT path this order touched (the runner calls cmd_derive in-process at derive_runner.py:101 and never main(), so a NameError at module scope -- one was hit and fixed -- would take the nightly down at import) and proves nothing about the subcommands or the routing; (3) FWD-2 'no question is ever the cause of a rebuild' reads more strongly but not completely: true of the served READ before, false of the ROUTER before (rank 1 pointed at a rebuild), true of both now -- what remains is a habit, not a route, and the L10 should say the claim is that no question ROUTES to a rebuild; (4) FWD-6 reads differently in KIND: the client-side refresh choice is no longer PRESENTED anywhere the order reaches (the surface's high_level_tool is the served read; both registry files say who refreshes -- 'Not you') and is still EXECUTABLE, two different claims, the second accepted by Andrew's word; weighed against the order by its own author: the deprecated-skip is ROUTER-side in .tools/comp-which, a second router or ranking consumer would not inherit it, though the status rides on every generated row so one could. VERDICT PASS. THE RESIDUE THIS SEAT'S PARSE CONFIRMS (W6-S3 / S85): ELEVEN entries[] whose canonical_call is a comp-aws subcommand -- cloud.derive.refresh, cloud.derive.class, cloud.score.cert, cloud.contract_diff, cloud.score.reconcile, cloud.classes.list, cloud.metrics.summary, cloud.diff.snapshot, cloud.dual_managed.conflict, cloud.snapshot.archive, cloud.iceberg.persist -- ALL status canonical, and cloud.iceberg.persist's call rides into tool_index.py verbatim as MANIFEST_DOC. A tool deprecated at both grains still has its write paths registered as canonical calls one file over. Under R14/R14a the shape is: retired for the three write paths (derive.refresh, snapshot.archive, iceberg.persist -- with the READ successor cloud.read.served_vintage), deprecated for the read-only ones -- a PRD row for the CTO's L10, carried (C-S50).",
+    "grades": [
+      {
+        "criterion": "F10-AC6",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~6/NFRA_CLDGRPH.TO-CG-F-10.comp-aws-deprecated-unrouted.proof_of_spec.json@44082caf9e",
+        "verdict": "PASS",
+        "reason": "The four questions are answered against measured outputs and the reading weighs its own order (router-side exemption; memory risk; the nightly as an import-path control). This seat re-derived the preamble-on-stderr with stdout unchanged, 0 comp-aws rows of 78 in four ranked lists with the control present, and the two-grain deprecated status at HEAD; the eleven canonical comp-aws entries are confirmed by parse as the carried residue. NO verdict was recorded by the assignee."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CG-s-30.comp-aws-deprecated-unrouted.result.md (the F10-AC6_the_reading_no_verdict block :77-83; the three surfaces :97-110; what_this_order_did_NOT_do) and the proof's F10-AC6 output_evidence; F10-AC1..AC5 PASS by output (3 of 3 read-only subcommands stdout byte-identical and rc equal; 0 of 4 phrasings from spilled rank files; status flowing to the carriers with SECOND_REGEN_DIFF_LINES=0; 7 phrases x 2 files 0; engine handlers byte-checked against 973a20aff9).",
+        "This seat, 21:2xZ: .tools/comp-aws --help > out 2> err -> rc 0, out 459 B (usage with nine subcommands), err 723 B (the preamble, first five lines quoted); comp-which x4 with the spilled rank files grep'd: comp-aws 0 / 0 / 0 / 0 of 78 ranked ('^  - rank:' count), comp-kuzu 5 lines each; comp-read comp-coverage-map.yaml --enumerate -> :676 'status: deprecated   # CG-s-30, 2026-09-09 Andrew-direct ...'.",
+        "This seat, 21:4xZ, yaml parse at HEAD: tools_index 78 entries, 1 with a status key (comp-aws: deprecated, 11 entries); entries 128 (canonical 125, retired 2, absent 1); the eleven entries with comp-aws in canonical_call listed in one_line, all 'canonical'; comp-coverage-map.yaml tools 35, 1 with status (comp-aws: deprecated).",
+        "1.0.0_SA_CTO 94673 (S30 as amended, PRD v0.9) and 94711 (R14a, PRD v0.12 @b77a6c3a27); S82, S83, S85 (2.0.0_SA_COO~A); W6-S1..W6-S4 read whole."
+      ]
+    },
+    "spec_asserts": "F10-AC6 as cut (judgment, NO verdict): what stops a seat running comp-aws snapshot tomorrow; what the nightly's next SUCCEEDED derive proves; whether FWD-2 and FWD-6 read differently at L10. PRD v0.9 S30 as amended by Andrew's word (deprecate, pull from selection, no gate); R14a (two-grain status agreement; both values do-not-route, only retired is do-not-call).",
+    "world_is": "comp-aws prints a deprecation preamble and runs as before; no comp-which phrasing surfaces it; both grains say deprecated; eleven manifest entries still present its subcommands, three of them write paths, as canonical calls.",
+    "notes": "FOR THE L10: FWD-2 = 'no question ROUTES to a rebuild' (say which meaning); FWD-6 = 'not presented, still executable' (accepted by Andrew's word); the eleven entries' R14/R14a disposition; the router-side-only exemption; W6-S1's frozen bootstrap (S83). The nightly derive's SUCCEEDED read is this seat's tomorrow, with F3-AC6. Round-6 judgment criteria graded at this write: 6 of 7."
+  }
+]
+```
+
+## C-S47 -- adjudicates S70, S71, S77, W1-S33, W2-S42, W2-S44, W4-S1, W4-S2, W4-S3, W6-S1, W6-S2: GRADUATED, remedied in-round and closed on the measured acts
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T21:43Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S47",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_CLDGRPH-S70",
+      "NFRA_CLDGRPH-S71",
+      "NFRA_CLDGRPH-S77",
+      "NFRA_CLDGRPH-W1-S33",
+      "NFRA_CLDGRPH-W2-S42",
+      "NFRA_CLDGRPH-W2-S44",
+      "NFRA_CLDGRPH-W4-S1",
+      "NFRA_CLDGRPH-W4-S2",
+      "NFRA_CLDGRPH-W4-S3",
+      "NFRA_CLDGRPH-W6-S1",
+      "NFRA_CLDGRPH-W6-S2"
+    ],
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "one_line": "L9: ADJUDICATES eleven items -- GRADUATED, remedied in-round and CLOSED, each checked against the act. S70 (the marker rewritten by an unseen clone), S71 (this seat's: the post-commit hook at both fabrics) and S77 (the CTO's: this laptop overwrote the cloud marker at 19:45:44Z) close together on S29's three planes: executable -- this laptop's pair removed @ce0eee9f93 (0 of 19 lines, this seat's read), site Z's pair removed 19:58:27.757Z (S81); instruction -- F-9 drained @96e591c2b7, the hook body and installer gone at HEAD, the refresh script refusing with exit 3; residue -- both logs noted. The clone S70 could not see was site Z (S71), the hand-runs were a hook, and the hook is retired. W1-S33 (F2-AC3's substring census matched F-1's own tombstone): re-cut to whole store names @a12187c5a3 (S84), 0 of 3 read at HEAD with both reads kept. W2-S42 (F3-AC4's git_sha limb a control that cannot fire once site Z's sha entered CLOUD): recorded non-discriminating with the substitute oracle controls, the criterion met on its producer limb (S76). W2-S44 (F-3's own granted paths inside the hook's filter; the cloud marker survived by an empty portal gitlink): moot with the hook retired on both clones -- the hazard's mechanism is gone, not merely avoided. W4-S1 (the last dead-engine phrase in a regenerated carrier was manifest-sourced): the grant widened by one string @c722bf8bdc (S73), F8-AC1 reads 0 by source. W4-S2 / W4-S3 (REGEN_COMMANDS=3 against two generators; a --check flag the script never parsed, a check-shaped invocation with a write side effect): re-cut under the standing authority (S72), the probe byte-unchanged, the generator's raise-only parity assertion the instrument with both controls. W6-S1 (the registry text sourced from a frozen override bootstrap): tool_overrides.yaml's comp-aws entry reworded and regenerated inside the widened grant (S83); the frozen-bootstrap shape itself is carried to L10 in C-S50. W6-S2 (the self-route invariant refused the ordered outcome): the invariant exempts a tool by its DECLARED status at either grain and prints the exempt set (S82), R14a landed (PRD v0.12), the commit passed the gate.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S72, S73, S76, S81, S82, S83, S84 (the issuer's and MSTR's disarm records) read whole; C-S45 (this write) for S70/S71/S77/W2-S44; this seat's own hook-file and marker reads at 19:54Z and 21:28Z; the drained records of F-2, F-3, F-8, F-9, F-10 at the packet's commits."
+      ]
+    },
+    "spec_asserts": "Each item's own disarm clause.",
+    "world_is": "Every remedy is in the record and measured at the drain or at this seat.",
+    "notes": "Seat- and worker-form items; clocks ride this row. The two-writer window inside F-9 (S77/W5-S4) is recorded in C-S45's grade, not repeated here."
+  }
+]
+```
+
+## C-S48 -- adjudicates W3-S16: GRADUATED, remedy OPEN at 0.8.0_AE_CloudComp -- a test file that collects zero under pytest is a standing false-green surface
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T21:43Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S48",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W3-S16"
+    ],
+    "disarm_owner": "0.8.0_AE_CloudComp",
+    "one_line": "L9: ADJUDICATES one item -- GRADUATED, remedy OPEN, owner 0.8.0_AE_CloudComp. W3-S16: test_kuzu_incremental_refresh.py collects ZERO under pytest (a main()-style self-test under __main__ with no test functions; --collect-only 'no tests collected'), so F7-AC4's named control was DEAD -- '10 passed' whether or not the writer's required kwargs were present, proved by strip-and-restore with sha256 equality -- and every future order that names this file in a pytest invocation gets a vacuous green over the incremental engine's 20-plus correctness checks. The worker's engine-free substitute (f7_signature_bind.py: 3 of 3 sites bind, a stripped caller refused 3 of 3, control fired) stands as F-7's control; the file's pytest-collectable surface is the remedy, and it opens engines, which F-7's bounds forbade. A second quiet false-green mechanism with the same signature as the import-time SystemExit one already in this estate's memory.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W3-S16 read whole (the .scratch control transcript, the --collect-only output, the paired collect with every id under test_projection_worker.py, the substitute's three lines); C-S43."
+      ]
+    },
+    "spec_asserts": "TO-CG-F-7 F7-AC4: 'the writer's new REQUIRED kwargs would break a caller that was not updated -- the control that can fail'.",
+    "world_is": "The named control cannot fail; the substitute can; the file that carries the engine's checks is invisible to pytest.",
+    "notes": "Worker-form item; the clock rides this row."
+  }
+]
+```
+
+## C-S49 -- adjudicates W2-S40: GRADUATED, remedy OPEN at 0.7.0_AE_CloudOps -- three portal shas name the stitch's portal layer and the marker can express none of them
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T21:43Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S49",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W2-S40"
+    ],
+    "disarm_owner": "0.7.0_AE_CloudOps",
+    "one_line": "L9: ADJUDICATES one item -- GRADUATED, remedy OPEN, owner 0.7.0_AE_CloudOps. W2-S40: THREE portal shas name the stitch's portal layer and no two agree -- the superproject's gitlink 30ca034bbaa4 (an object the main workspace's portal repo does not even hold), the main workspace's portal checkout 18c0c5cb6a26 (detached, 2026-09-01; the vintage the re-pushed zip actually carries, 435 files), and the GH-Action stitch-source-push.yml:66's hard-coded ref b96562720505. The marker's git_sha names the superproject only, so nothing downstream can tell which portal a stitch was cut from, and the next source push by the workflow route silently packs a third vintage. Not a criterion failure (F3-AC2 wanted a non-zero portal count and got 435); a provenance defect in the producer's inputs, in the CloudOps lane that owns the workflow and the buildspec. The remedy: ONE declared portal vintage -- the gitlink -- checked out at the push and stamped into the zip's sha file beside the superproject's, so the marker carries both.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W2-S40 read whole (git ls-tree HEAD -- portal; git -C portal rev-parse HEAD; cat-file -e on the gitlink in that repo -> rc 128 with the positive control; the workflow's ref line; f3_zip_report.json portal_head)."
+      ]
+    },
+    "spec_asserts": "TO-CG-F-3 step 3: portal/src from the main workspace's checkout 'by absolute path (the gitlink; record its git -C portal rev-parse HEAD)' -- one portal vintage identified with the gitlink.",
+    "world_is": "Three vintages, none equal; only the checkout's was recordable; the marker cannot express it.",
+    "notes": "Worker-form item; the clock rides this row."
+  }
+]
+```
+
+## C-S50 -- adjudicates W4-S4, W4-S6, W6-S3: GRADUATED, remedy OPEN at 1.0.0_SA_CTO -- the instruction plane's remaining residue, carried named to the L10 as one addendum row
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T21:43Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S50",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W4-S4",
+      "NFRA_CLDGRPH-W4-S6",
+      "NFRA_CLDGRPH-W6-S3"
+    ],
+    "disarm_owner": "1.0.0_SA_CTO",
+    "one_line": "L9: ADJUDICATES three items -- GRADUATED, remedy OPEN, owner 1.0.0_SA_CTO: the instruction plane's remaining residue, carried NAMED to the L10 by the issuer (S74, S75, S85) and by this seat, as one addendum row in the shape rounds 4 and 5 used. W4-S4: FIVE descriptions of the dead engine outside every round-6 grant after F-8 -- comp_ws4_crosswalk.py:14 (module docstring), comp_debt/grounding_lib.py:205 (prose a debt-grounding reader is shown), comp_legacywriter.py:237 (a comment justifying a behaviour), estate-coverage-resolver.json:1356 and estate_census/pass1_inventory.json:1858 (data carriers regenerated by their own producers) -- the scoped census 21 -> 7 -> 5 hits over ~800 files across the two passes (W4-S6's correction of W4-S4's six). W4-S6: the entry the one-string widening opened, cloud.cluster.page_panel_drilldown, still describes the retired engine in cost: (:1498) and rebuild_trigger: (:1501) in words no censused phrase matches -- a phrase census reads 0 while the entry instructs; a field-by-field description census of every manifest entry is the PRD-row shape. W6-S3: ELEVEN entries[] with a comp-aws subcommand as canonical_call, all status canonical (this seat's parse at HEAD, C-S46), three of them the write paths Andrew's word deprecated and one riding into tool_index.py verbatim; under R14/R14a: retired for derive.refresh / snapshot.archive / iceberg.persist with the READ successor named, deprecated for the eight read-only ones -- E-1's shape, the CTO's row. Beside these, carried by S83 and confirmed here: the frozen-bootstrap shape of tool_overrides.yaml (a population authority whose consumer reads a frozen copy for its text fields) is a registry-tooling finding for the same read.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W4-S4, W4-S6, W6-S3 read whole; S74, S75, S85 (2.0.0_SA_COO~A) read whole; this seat's yaml parse of graph-call-manifest.yaml at HEAD d1b413f3b0 (the eleven entries, all canonical; entries 128 = 125 canonical + 2 retired + 1 absent)."
+      ]
+    },
+    "spec_asserts": "PRD v0.6 S28's accept is scoped to two phrases in the index and the checker; S30's to the registry text and comp-which selection; R14/R14a define the entry-grain status vocabulary. The residue sits outside all three by construction.",
+    "world_is": "Five module and data-carrier descriptions, two fields of one manifest entry and eleven canonical comp-aws entries still describe or present the retired engine and its compiler's write paths; none is inside a round-6 grant.",
+    "notes": "Worker-form items; the clocks ride this row. The disarm is the addendum row and its cut, not a grant widening at the drain (S73/S75's rule)."
+  }
+]
+```
+
+## C-S51 -- adjudicates W1-S32, W1-S34, W2-S41, W2-S43, W3-S14, W3-S15, W4-S5, W5-S1..S4, W6-S4, S72..S76, S78..S85: DISMISSED_WITH_REASON, records -- W1-S32 ruled (the mandate governs the production surface); W4-S5's repair owned by this seat and deferred
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T21:43Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S51",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W1-S32",
+      "NFRA_CLDGRPH-W1-S34",
+      "NFRA_CLDGRPH-W2-S41",
+      "NFRA_CLDGRPH-W2-S43",
+      "NFRA_CLDGRPH-W3-S14",
+      "NFRA_CLDGRPH-W3-S15",
+      "NFRA_CLDGRPH-W4-S5",
+      "NFRA_CLDGRPH-W5-S1",
+      "NFRA_CLDGRPH-W5-S2",
+      "NFRA_CLDGRPH-W5-S3",
+      "NFRA_CLDGRPH-W5-S4",
+      "NFRA_CLDGRPH-W6-S4",
+      "NFRA_CLDGRPH-S72",
+      "NFRA_CLDGRPH-S73",
+      "NFRA_CLDGRPH-S74",
+      "NFRA_CLDGRPH-S75",
+      "NFRA_CLDGRPH-S76",
+      "NFRA_CLDGRPH-S78",
+      "NFRA_CLDGRPH-S79",
+      "NFRA_CLDGRPH-S80",
+      "NFRA_CLDGRPH-S81",
+      "NFRA_CLDGRPH-S82",
+      "NFRA_CLDGRPH-S83",
+      "NFRA_CLDGRPH-S84",
+      "NFRA_CLDGRPH-S85"
+    ],
+    "one_line": "L9: ADJUDICATES twenty-five rows -- DISMISSED_WITH_REASON, records, three of them carrying a ruling this seat was asked for or owes. W1-S32 (F-1 added one .py under its deliverables folder against a mandate sentence 'No .py is added by this order'): RULED reading (a) -- the sentence governs the PRODUCTION surface the <paths> grant names, which gained no .py and lost one; a probe in the assignee's own deliverables folder is what the same face's f1_ naming rule presumes; the next face that reuses the block adds the qualifier. W1-S34 (`grep -c` exits 1 on a zero count, so F2-AC3's PASS state carries rc 1 and its FAIL state rc 0): a re-runner's trap, graded on output as the checker does; recorded so no L9 seat re-runs it by rc. W4-S5 (the .sh fix moved a second counter the wrong-looking way -- unclassified 3 -> 4 -- because comp-v5-composite-test.sh's profile row has an empty primitives list): the cause is measured and the remaining repair is THIS SEAT's tool_profile.json, owned here and deferred under Andrew's no-new-work word. W2-S41 (three commits, not two, because a code fix must land before the zip stamps its HEAD): a cut-shape note -- 'commit the fix first' or drop HEAD-in-the-zip. W2-S43 (the re-push alone would have turned an exit-2 streak into an exit-1 streak: five phantom dangling edges, two wildcard-flagged by the producer and three onto AWS-public SSM documents excluded by design; cited by a paired local run because no cloud build ever reached that branch): the diagnosis F-3 carried, confirmed in the cloud. W3-S14 (no serve path calls format_provenance_header; _provenance.py:7's docstring describes a wiring that is not there): the fact under C-S43's grade and C-S50's wiring cell. W3-S15 (two tests red from an empty portal submodule in every linked worktree, before and after the edits): a worktree fact, not the order's. W5-S1 / W5-S3 (the face sized the hook file at 15 lines against its own enumeration; it measured 21 then 19; 'six other entries' was five -- the worker corrected itself by a new row, as the rule requires). W5-S2 (retiring the instruction plane before the device act left every commit on this device printing 'No such file or directory' from the unconditional hook line -- noise, disarmed by the device acts). W5-S4 (the BOUNDS clause 'both keys unchanged across every act' read false for reasons that were the issuer's acts, disclosed with the re-based baseline kept as an artifact). W6-S4 (the worker declined the addendum's instruction to merge CLOUD into its branch -- its standing law forbids a merge -- and cited R14a at its commit-ish instead, which is what the instruction needed): correct, and the record says the PRD text at that branch's HEAD was pre-R14a. S72-S76, S78-S80, S82-S85: the issuer's disarm acks and rulings and MSTR's disarm record S81, consumed by the closures and grades above.",
+    "dismissal_reason": "Records: instrument facts, cut-shape notes, worker self-corrections, one deferred item owned by this seat, and thirteen acks consumed by the closures they evidence; nothing armed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "All twenty-five rows read whole from the 41-row open dump at HEAD d1b413f3b0 (comp-surprise --project NFRA_CLDGRPH --json: investigation_items 192, open 41, adjudication_rows 40 before this write)."
+      ]
+    },
+    "spec_asserts": "The channel's taxonomy: an item arms a hazard and names a disarm; a record does not.",
+    "world_is": "Each record states a measured fact of the round's instruments, cut or landing shape; the acks evidence closures recorded at C-S47.",
+    "notes": "Investigation items without a disposition after this write: 0 of 192 by comp-surprise's definition (41 open before this write, all dispositioned at C-S47..C-S51). Round 6 at the PARTIAL: 7 of 11 orders terminal, 6 of 7 judgment criteria graded (F3-AC6 on the 03:00Z nightly), 0 open; chain ~2 (F-4, F-5, F-11, F-6) still running; the slug follows the FINAL packet."
+  }
+]
+```
+
+## C-S52 -- F3-AC6 graded PASS on the MANUAL-TRIGGER FORM under Andrew's no-waiting word: two ad-hoc same-target builds SUCCEEDED on the real keys, told apart by producer and git_sha; 64 rule-initiated firings from history; the 03:00Z fire is confirmation, never a gate
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-C-S52",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T22:02Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9: the GRADE for F3-AC6, the cloud stitch producer's rule-initiated nightly -- PASS on the MANUAL-TRIGGER FORM, under Andrew's word at the CTO terminal ~21:4xZ, verbatim: 'Ok we need to not be \"waiting\" on anything, anything that we'd be waiting for needs a manual trigger of some kind depending on the test type ... include addendums for each that mandate the requirement is contingent on a relevantly structured manual/test run' (1.0.0_SA_CTO 94728, record ANDREW_DIRECT_20260909_214xZ_NO_WAITING_EVERY_DATE_GATED_ACCEPT_GETS_A_MANUAL_TRIGGER_FORM.md; the CLDGRPH addendum row to follow). C-S41..C-S51 held this criterion for the 2026-09-10T03:00Z fire; that hold is withdrawn by this row -- the fire is CONFIRMATION, never a gate. THE FIVE LIMBS OF THE FORM, EACH READ AT THIS SEAT: (1) SAME TARGET -- two ad-hoc `start-build` runs of the SAME CodeBuild project opal-stitch-produce SUCCEEDED after the fix: daaedf78 started 2026-09-09T18:48:15Z (F-3's, on the re-pushed source de590a7d02) and fe7ff348 started 19:53:45Z (the issuer's re-assert, S78), both with the scheduled buildspec's payload shape (the same source zip, the same derive_stitch.py --out, the same marker-last publish). (2) REAL PLANE -- the real keys stitch/stitch_marker.json and stitch/stitch_graph.json in the served bucket, not a QA copy; this seat's 21:28Z read: producer stitch-codebuild, built_at 19:55:00Z, git_sha de590a7d02, 29,267 nodes, LastModified 19:55:15Z. (3) TOLD APART ON THE ARTIFACT -- the marker's producer field (stitch-codebuild, never a clock), its git_sha (the zip's stitch_source_sha.txt), and the build ids; the initiator field on each build reads 'Andrew_Berman' (the laptop principal) for the two manual SUCCEEDED runs and 'rule/opal-stitch-produce-nightly' for every scheduled one. (4) THE SCHEDULE'S OWN FIRING FROM HISTORY -- this seat's census of every build the project has (list-builds-for-project 69 ids; batch-get-builds over all 69): 64 RULE-INITIATED firings, one every night from 2026-07-08T03:00:12Z to 2026-09-09T03:00:12Z, all FAILED (the pre-fix exit 2 the F-3 record reproduced on the July zip); 5 MANUAL -- three FAILED on 2026-07-07 (the original bring-up) and the two SUCCEEDED today. The rule fires; what changed is the source it fires on. (5) NO GRADE CARRIES 'PENDING THE FIRE': the 03:00Z run, if present and SUCCEEDED with producer=stitch-codebuild, CONFIRMS; if absent or FAILED it is a NEW row on the rule or the source, not a reversal of this grade. TWO STACKED CAUSES FIXED, both proven on the manual form: the stale July zip (0 portal/src files -> the grain sentinel's exit 2, 72 log events on 3a5b2473; re-pushed 18:47:04Z with 435 files) and derive_stitch's 0-dangling check dropping the AWS layer's wildcard flag and counting three AWS-public SSM targets (exit 1 behind the exit 2, W2-S43; cited by a paired local run because no cloud build ever reached that branch, then confirmed in the cloud: 'genuine (non-wildcard) dangling edges = 0'). VERDICT PASS. THE SAME FORM FOR THE ROUND'S TWO OTHER NIGHTLY READS, as data for the FINAL packet: F-4 / S24 -- an ad-hoc run-task on globgrph-derive-runner revision 8 (task deee298ca1bd, STOPPED exit 0, STITCH_INGEST nodes=1844 ... stamped=1771, the pointer 20:04:09 -> 21:05:17) is the same-target run this seat will read at F-4's grade; F10-AC6's 'nightly derive SUCCEEDED, the engine untouched' is that same run plus F10-AC5's byte-check (graded PASS at C-S46 on its four questions; the run is the import-path control the reading named). Round 6: 7 of 7 judgment criteria of the seven terminal orders graded.",
+    "grades": [
+      {
+        "criterion": "F3-AC6",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-F-3.stitch-producer-repaired.proof_of_spec.json@2e0c77dcbd",
+        "verdict": "PASS",
+        "reason": "Under Andrew's no-waiting word the acceptance is the manual-trigger form, and every limb is on the record and re-read here: two ad-hoc same-target builds SUCCEEDED on the real keys, told apart by the producer field, git_sha and build ids; the schedule's firing proven from 64 rule-initiated executions in this seat's own census; the next fire confirmation only. The two stacked causes are fixed and each is proven on a run, not a wait. NO verdict was recorded by the assignee."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO 94728 (21:56Z): Andrew's words entire and the five-limb manual-trigger rule; the NFRA_CLDGRPH paragraph: 'a rule-initiated nightly SUCCEEDED in S23/S30/S31 is satisfied by an ad-hoc start-build / run-task of the SAME project or task definition SUCCEEDED plus the rule's prior rule-initiated executions listed from history; the 03:00Z fire is confirmation if present'. 2.0.0_SA_COO~A 94736 (21:58Z): the form applied to F3-AC6, F-4/S24 and F10-AC6 with the ids.",
+        "This seat, 21:5xZ: codebuild list-builds-for-project opal-stitch-produce -> 69 ids; batch-get-builds over all 69 (cli-input-json) -> initiators {'Andrew_Berman', 'rule/opal-stitch-produce-nightly'}; census (class, status): RULE FAILED 64, MANUAL FAILED 3, MANUAL SUCCEEDED 2; rule-initiated earliest 2026-07-08T03:00:12Z, latest 2026-09-09T03:00:12Z; manual runs 2026-07-07T12:02:03Z / 13:30:43Z / 13:53:55Z FAILED (ea86c5c6, a9da750b, 00b97d70), 2026-09-09T18:48:15Z SUCCEEDED (daaedf78), 19:53:45Z SUCCEEDED (fe7ff348).",
+        "This seat, 21:28Z: s3api head-object + get-object stitch/stitch_marker.json -> LastModified 19:55:15Z, 330 B, producer stitch-codebuild, git_sha de590a7d0227fb9c14ce35b96dcec86deb68df60, total_nodes 29267. events list-rules (C-S34, 16:5xZ): opal-stitch-produce-nightly ENABLED cron(0 3 * * ? *).",
+        "The F-3 record and proof @2e0c77dcbd: F3-AC1 exit 2 reproduced on the July zip as pulled (GRAIN_SENTINEL, 0 portal/src files, 72 log events); F3-AC2 source re-pushed 18:47:04Z (435 portal/src files); F3-AC3 ad-hoc build daaedf78 SUCCEEDED (10 of 10 prior FAILED); F3-AC4 marker stitch-codebuild with the artifact sha256 match; F3-AC5 FRESH / STALE / NO-RUN as three distinct verdicts; W2-S43 the exit-1 cause behind the exit 2; S78 the re-assert build."
+      ]
+    },
+    "spec_asserts": "F3-AC6 as cut (judgment, NO verdict): the 2026-09-10T03:00Z rule-initiated nightly SUCCEEDED with the marker producer=stitch-codebuild inside that night. PRD v0.6 S23: 'a rule-initiated nightly SUCCEEDED with producer=stitch-cloud; a night that did not run reads differently from one that did'. Andrew-direct ~21:4xZ: every date-gated accept gets a manual-trigger form and the grade is contingent on it; the next scheduled fire is confirmation, never a gate.",
+    "world_is": "The same project has succeeded twice today when started by hand on the real keys after the fix; it has fired by rule 64 nights running and failed each time on the pre-fix source; the marker is the cloud producer's. The next fire confirms or opens a new row.",
+    "notes": "The hold recorded in C-S41..C-S51's header line ('F3-AC6 waits on the 2026-09-10T03:00Z nightly') is superseded by this row under Andrew's word; the header is restated below. The 03:00Z result is still READ by this seat tomorrow, as confirmation and as F3-AC5's NO-RUN discriminator in the wild."
+  }
+]
+```
+
+## C-S53 -- THE CVO SIGN on grain_baseline.json (W2-S60 GO 20260909T2305Z): the four retired types to 0, the five canonical types at their MEASURED distinct-id populations 170 / 1,217 / 394 / 201 / 125 -- not the worker's admission tallies, which refuse on Component at 8.46x; the recertification block for the file is in the row
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-C-S53",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-09T23:25Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A certification record (the CVO sign the W2-S60 GO asked for); it dispositions no investigation item -- W2-S60 and W2-S61 are dispositioned at round 6's FINAL L9.",
+    "one_line": "THE CVO SIGN on org/modules/graph/grain_baseline.json for 1.0.0_SA_CTO's gate GO 20260909T2305Z (W2-S60, 94779): the four retired provisional types recertified to 0 -- SIGNED; the five canonical types recertified at their first post-unification magnitudes -- SIGNED AT THE MEASURED POPULATIONS, NOT THE WORKER'S TALLIES. Re-measured by 3.0.0_SA_CVO: the unified stream built IN-PROCESS (derive_stitch.build_stitched_graph) at the worker's producer commit 80daa1fff6 in a detached scratch worktree, portal/src at 5907cbca98 (the vintage the worker used at 22:1xZ, W2-S63), AWS snapshot snapshots/20260909/graph-20260909.tar.gz (1,696,376 B, LastModified 21:05:21Z); 28,093 nodes / 61,841 edges, genuine dangling 0; the five provisional names 0 of 28,093. THE FOUR: GOLD_SCRIPT 1260 -> 0, S3_DATA_KEY 272 -> 0, PORTAL_COMPONENT 27 -> 0, REACT_QUERY_KEY 85 -> 0 (all four read 0 in the stream; check_magnitude skips base<=0; the EXTERNAL_ENDPOINT precedent). THE FIVE, as the DISTINCT-ID population of each type in the stream (canonical + carried-with-origin=stitch): PipelineScript 170 (133 + 37), PipelineFunction 1,217 (1,201 + 16), S3Key 394 (232 + 162), Component 201 (199 + 2), ReactQueryKey 125 (57 + 68). WHY NOT THE WORKER'S 332 / 2,428 / 588 / 24 / 188: those are the STITCH_UNIFY per-type ADMISSION tallies -- every prior-cycle member counted again (1,790 current + 1,770 retyped = 3,560 = their sum) -- a different quantity from the node count the sentinel compares; run as a baseline on the same stream they REFUSE on Component: 203 vs 24 = 8.46x (measured, scenario B). THE STREAM AS EMITTED reads 204 / 1,233 / 543 / 203 / 193 -- 269 carried members appear twice because derive_stitch dedupes per CLASS LIST and the prior-cycle copy sits in the snapshot's list 'stitch_cloud' while the fresh emit sits in the canonical list (S89, ARMED to the issuer); ratios to the signed populations 1.20 / 1.01 / 1.38 / 1.01 / 1.54, all inside [0.4, 2.5], and derive_runner's fold dedupes by node id (_stitch_existing_ids), so the served graph carries the signed populations. FOUR SENTINEL RUNS ON THE SAME STREAM: (A) the baseline as it is -> FAIL on the four (the worker's refusal reproduced); (B) four -> 0 + the worker's tallies -> FAIL on Component 8.46x; (C) four -> 0 + the emitted counts -> PASS; (D) four -> 0 alone -> PASS with the five UNCOVERED (30 of 59 checked); (E) four -> 0 + the SIGNED populations -> PASS, 35 of 59 checked. ONE CORRECTION TO THE GO's PREMISE, stated plainly because it changes what part (2) is: the five were never in per_class (35 SCREAMING_SNAKE keys; the _naming_fragility_note's hazard), so no band check 'against the pre-unification magnitudes' exists to refuse the producer -- part (1) alone unblocks it (D); part (2) is the coverage the retirements would otherwise remove, and it is right to add, at populations. THE ENTRY for the file's recertifications[] is in this row's `notes` field as verbatim JSON -- the worker holding F-11's widened grant writes THAT block (not `pending`), with per_class for the nine set to 0 / 0 / 0 / 0 / 170 / 1217 / 394 / 201 / 125, and the GO line as the CTO gave it. Disclosed: this seat's run admitted 3,613 / merged 3,059 / created 554 against the worker's 3,560 / 3,022 / 538 -- 13 more S3 keys and 3 more scripts in the trace of the scratch tree at 80daa1fff6 than in the worker's zip at 139cbe1d40; inside the band; the FIRST served read after the build re-measures.",
+    "spec_asserts": "grain_baseline.json:certified 'CVO'; every recertification names its gate and its signer; grain_sentinel.check_magnitude iterates the BASELINE's keys, skips base<=0 and never examines a live class absent from the baseline (render_coverage). The GO (94779) part (2): 'the CVO re-measuring each before signing'. Rule 22 GRAIN: the object read is the object claimed.",
+    "world_is": "The producer emits the canonical names and no provisional ones; its stream carries the five at 170 / 1,217 / 394 / 201 / 125 distinct ids and 204 / 1,233 / 543 / 203 / 193 nodes; the baseline names none of the five and all four retired types; the sentinel refuses today on the four and would refuse tomorrow on Component if the admission tallies were certified.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 23:1xZ-23:3xZ: git worktree add --detach C:/tmp/cvo-f11-remeasure 80daa1fff6; portal/src copied from the main workspace at 5907cbca98 (435 tracked files); snapshots/latest.txt -> snapshots/20260909/graph-20260909.tar.gz (head-object 1,696,376 B, 2026-09-09T21:05:21Z); derive_stitch.build_stitched_graph(WS) in-process (89.6 s): STITCH_UNIFY PipelineScript admitted=335 merged=264 carried=71; PipelineFunction 2428/2396/32; S3Key 638/327/311; Component 24/20/4; ReactQueryKey 188/52/136; PRIOR_CYCLE retyped=1770; TOTAL admitted=3613 merged=3059 created=554 lost=0; UNIONED 28093 / 61841; genuine_dangling 0.",
+        "Stream census (f11_stream_census.py; persisted f11_stream_nodes.json 5,813,500 B sha256 0513d10f11545bf6..., scratch): by type PipelineScript 204 (portal-stitch 71, retyped_from 34), PipelineFunction 1233 (32, 16), S3Key 543 (311, 149), Component 203 (4, 2), ReactQueryKey 193 (136, 68); GOLD_SCRIPT / S3_DATA_KEY / PORTAL_COMPONENT / REACT_QUERY_KEY 0; PORTAL_BUNDLE 2. Distinct ids: 170 / 1217 / 394 / 201 / 125; class lists PipelineScript {graphuni_gold_compute 133, stitch_cloud 34, PipelineScript 37}, S3Key {graphuni_storage_s3keys 169, _phaseB 63, stitch_cloud 149, S3Key 162}, Component {ts_semantic 199, stitch_cloud 2, Component 2}, ReactQueryKey {ts_semantic 57, stitch_cloud 68, ReactQueryKey 68}.",
+        "run_grain_sentinel on that stream: (A) per_class as at HEAD (35 keys) -> FAIL 4 groups, checked 34 of 59, uncovered 29; (B) four->0 + {332, 2428, 588, 24, 188} -> FAIL 1 group 'Component: count 203 vs baseline 24 = 8.46x'; (C) four->0 + emitted {204, 1233, 543, 203, 193} -> PASS, checked 35; (D) four->0 only -> PASS, checked 30, uncovered 29; (E) four->0 + SIGNED {170, 1217, 394, 201, 125} -> PASS, checked 35 of 59, emitted/signed {\"PipelineScript\": 1.2, \"PipelineFunction\": 1.01, \"S3Key\": 1.38, \"Component\": 1.01, \"ReactQueryKey\": 1.54}.",
+        "grain_baseline.json at HEAD (last commit fc8b81ec09 2026-07-25): per_class 35 keys, none CamelCase; recertifications[1] EXTERNAL_ENDPOINT 3 -> 0 'band check now skipped (grain_sentinel.py check_magnitude: base<=0 -> skip)'; recertifications[5] REACT_QUERY_KEY certified 'THE STITCH UNIONED STREAM (the sentinel's actual input) = 85'; _naming_fragility_note (SCREAMING_SNAKE vs CamelCase). grain_sentinel.render_coverage docstring: 'A live class absent from the baseline is never examined'.",
+        "derive_stitch.py @80daa1fff6 :97-102 (the union extends per class key), :330-370 unify_stitch_vocabulary (idmap; 'seen' per class list), :237-258 PROVISIONAL_TO_CANONICAL + _retype_prior_cycle; extract_portal_stitch.py @80daa1fff6 :124-160 (emit into CLASS_LAYER keys; source='portal-stitch'); derive_runner.py :2265 _stitch_existing_ids 'the co-key set the fold dedups on'.",
+        "1.0.0_SA_CTO 94779 (the GO, two parts, one sign; the GO line verbatim); 2.0.0_SA_COO~A 94777 (the pitch), 94781 (F-11 re-handed; the worker writes nine entries with the sign field 'pending 3.0.0_SA_CVO'); W2-S60, W2-S61 read from the worker's branch @8261f08a4b; F-11's proof @8261f08a4b (F11-AC1 census, F11-AC2/AC3 FAIL-blocked, F11-AC4 map 65 -> 61) and f11_local_derive.txt @80daa1fff6."
+      ]
+    },
+    "notes": "FOR F-11's WORKER, via the issuer: write the `certification` block above into recertifications[] and the nine per_class values as signed; do not write 24 for Component. FOR THE FINAL L9: F11-AC6 (the map re-sign) reads with this sign; the first SERVED read after the build re-measures the five and either confirms or opens a row. FOR THE L10: the baseline's coverage of the stitch layer is now five CamelCase keys in a SCREAMING_SNAKE file -- the _naming_fragility_note's hazard is no longer dormant in one direction and should be retired by making the sentinel's lookup convention-blind or the keys one convention. || CERTIFICATION BLOCK for grain_baseline.json recertifications[] (verbatim JSON; the row schema admits no extra field, so it rides in notes): {\"date\": \"2026-09-09\", \"trigger\": \"NFRA_CLDGRPH CG-s-31 (TO-CG-F-11): the stitch vocabulary UNIFIED at the producer -- the four provisional stitch-v1 types RETIRED (extract_portal_stitch emits the canonical names; derive_stitch._retype_prior_cycle re-types this producer's own prior output), so AC-GRAIN.2 read four correct zeros as four 100% collapses and refused the unified artifact (W2-S60). CTO gate GO 20260909T2305Z (NFRA_CLDGRPH W2-S60 ruling, PRD v0.13 S31): GOLD_SCRIPT, S3_DATA_KEY, PORTAL_COMPONENT, REACT_QUERY_KEY recertified to 0 (retired at the producer; the EXTERNAL_ENDPOINT precedent); PipelineScript, PipelineFunction, S3Key, Component, ReactQueryKey recertified at their first post-unification magnitudes, re-measured by 3.0.0_SA_CVO in this sign; COND-A resource-type count unmoved at 32. Re-measured by 3.0.0_SA_CVO: the unified stream built IN-PROCESS (derive_stitch.build_stitched_graph) at the worker's producer commit 80daa1fff6 in a detached scratch worktree, portal/src at 5907cbca98 (the vintage the worker used at 22:1xZ, W2-S63), AWS snapshot snapshots/20260909/graph-20260909.tar.gz (1,696,376 B, LastModified 21:05:21Z); 28,093 nodes / 61,841 edges, genuine dangling 0; the five provisional names 0 of 28,093.\", \"classes\": [{\"class\": \"GOLD_SCRIPT\", \"baseline_was\": 1260, \"recertified_to\": 0, \"ratio\": \"0.00x -> band check skipped (grain_sentinel check_magnitude: base<=0 -> skip)\", \"verified_reason\": \"RETIRED AT THE PRODUCER (PRD v0.10 S31 / R17; map 65 -> 61 keys, F11-AC4). Its population lives under PipelineScript / PipelineFunction by the id's grain. Measured 0 in the unified stream. The 2026-07-25 EXTERNAL_ENDPOINT precedent: a dropped class certified to 0 so the sentinel skips it.\", \"verified_by\": \"3.0.0_SA_CVO (NFRA_CLDGRPH-C-S53, 2026-09-09T23:25Z) on CTO gate GO 20260909T2305Z (W2-S60)\"}, {\"class\": \"S3_DATA_KEY\", \"baseline_was\": 272, \"recertified_to\": 0, \"ratio\": \"0.00x -> band check skipped (base<=0)\", \"verified_reason\": \"RETIRED AT THE PRODUCER; its population lives under S3Key (merged by key identity where one canonical key matches; 24 firm-ambiguous keys carried with origin=stitch, never a coin flip). Measured 0 in the unified stream.\", \"verified_by\": \"3.0.0_SA_CVO (NFRA_CLDGRPH-C-S53, 2026-09-09T23:25Z) on CTO gate GO 20260909T2305Z (W2-S60)\"}, {\"class\": \"PORTAL_COMPONENT\", \"baseline_was\": 27, \"recertified_to\": 0, \"ratio\": \"0.00x -> band check skipped (base<=0)\", \"verified_reason\": \"RETIRED AT THE PRODUCER; 20 of 22 ids were ALREADY Component ids verbatim (C-S40), the other 2 carried under Component. Measured 0 in the unified stream.\", \"verified_by\": \"3.0.0_SA_CVO (NFRA_CLDGRPH-C-S53, 2026-09-09T23:25Z) on CTO gate GO 20260909T2305Z (W2-S60)\"}, {\"class\": \"REACT_QUERY_KEY\", \"baseline_was\": 85, \"recertified_to\": 0, \"ratio\": \"0.00x -> band check skipped (base<=0)\", \"verified_reason\": \"RETIRED AT THE PRODUCER; the 2026-07-25 recertification certified THE STITCH STREAM's 85 for this class -- that population now lives under ReactQueryKey (26 merged by identity after quote-stripping, 68 carried). Measured 0 in the unified stream.\", \"verified_by\": \"3.0.0_SA_CVO (NFRA_CLDGRPH-C-S53, 2026-09-09T23:25Z) on CTO gate GO 20260909T2305Z (W2-S60)\"}, {\"class\": \"PipelineScript\", \"baseline_was\": null, \"recertified_to\": 170, \"ratio\": \"first certification (NEVER in per_class before: UNCOVERED since 2026-06-11)\", \"verified_reason\": \"FIRST POST-UNIFICATION MAGNITUDE = the DISTINCT-ID population of the type in the unified stream: 133 canonical (class list graphuni_gold_compute) + 37 carried from the stitch with origin=stitch. The stream AS EMITTED at 80daa1fff6 reads 204 because 34 carried members appear TWICE (NFRA_CLDGRPH-S89: dedupe is per class list; the fold dedupes by id, so the served graph carries 170): 204/170 = 1.20x, inside [0.4, 2.5] either way. The worker's tally 332 is per-type ADMISSIONS (prior cycle counted again), not a population.\", \"verified_by\": \"3.0.0_SA_CVO (NFRA_CLDGRPH-C-S53, 2026-09-09T23:25Z) on CTO gate GO 20260909T2305Z (W2-S60)\"}, {\"class\": \"PipelineFunction\", \"baseline_was\": null, \"recertified_to\": 1217, \"ratio\": \"first certification (NEVER in per_class before)\", \"verified_reason\": \"DISTINCT-ID population: 1,201 canonical + 16 carried. Emitted stream 1,233 (16 duplicates, S89) = 1.01x. The worker's tally 2,428 is admissions.\", \"verified_by\": \"3.0.0_SA_CVO (NFRA_CLDGRPH-C-S53, 2026-09-09T23:25Z) on CTO gate GO 20260909T2305Z (W2-S60)\"}, {\"class\": \"S3Key\", \"baseline_was\": null, \"recertified_to\": 394, \"ratio\": \"first certification (NEVER in per_class before)\", \"verified_reason\": \"DISTINCT-ID population: 232 canonical (graphuni_storage_s3keys 169 + _phaseB 63) + 162 carried (this seat's trace; the worker's run carried 149 -- 13 keys of difference between the two trees, disclosed, inside the band). Emitted stream 543 (149 duplicates, S89) = 1.38x. The worker's tally 588 is admissions.\", \"verified_by\": \"3.0.0_SA_CVO (NFRA_CLDGRPH-C-S53, 2026-09-09T23:25Z) on CTO gate GO 20260909T2305Z (W2-S60)\"}, {\"class\": \"Component\", \"baseline_was\": null, \"recertified_to\": 201, \"ratio\": \"first certification (NEVER in per_class before)\", \"verified_reason\": \"DISTINCT-ID population: 199 canonical (ts_semantic) + 2 carried. Emitted stream 203 = 1.01x. The worker's tally 24 is admissions and would REFUSE the producer: measured 203 vs 24 = 8.46x, outside the band.\", \"verified_by\": \"3.0.0_SA_CVO (NFRA_CLDGRPH-C-S53, 2026-09-09T23:25Z) on CTO gate GO 20260909T2305Z (W2-S60)\"}, {\"class\": \"ReactQueryKey\", \"baseline_was\": null, \"recertified_to\": 125, \"ratio\": \"first certification (NEVER in per_class before)\", \"verified_reason\": \"DISTINCT-ID population: 57 canonical (ts_semantic) + 68 carried (whole key-array expressions the canonical extractor does not emit; a stitch-side extractor gap, F11-AC6 (2)). Emitted stream 193 (68 duplicates, S89) = 1.54x. The worker's tally 188 is admissions.\", \"verified_by\": \"3.0.0_SA_CVO (NFRA_CLDGRPH-C-S53, 2026-09-09T23:25Z) on CTO gate GO 20260909T2305Z (W2-S60)\"}], \"note\": \"TWO FACTS THE SIGN RESTS ON, both measured on the stream. (1) The five canonical types were NEVER in per_class -- the file's keys are SCREAMING_SNAKE and the canonical names are CamelCase, the _naming_fragility_note's own hazard -- so NO band check ran on them before this sign, and part (1) alone unblocks the producer (four -> 0 with the five absent: sentinel PASS, 30 of 59 live types checked). Part (2) ADDS coverage for the stitch layer the four retirements remove: 35 of 59 checked. (2) The worker's five magnitudes (332 / 2,428 / 588 / 24 / 188) are per-type ADMISSIONS -- each prior-cycle member counted again; they sum to admitted=3,560 -- not populations; as baselines they REFUSE the producer on Component (203 vs 24 = 8.46x), measured. SIGNED at the DISTINCT-ID populations; the emitted stream reads 1.01x-1.54x of them (S89) and PASSES; a producer that stops duplicating reads 1.00x and needs no re-sign. Sign field: 3.0.0_SA_CVO (NFRA_CLDGRPH-C-S53, 2026-09-09T23:25Z) on CTO gate GO 20260909T2305Z (W2-S60). COND-A resource-type count UNMOVED at 32 (S3Key is object grain, as at C-S40).\"}"
+  }
+]
+```
+
+## C-S54 -- F6-AC6 graded PASS: the arc read at its end -- both local graphs gone from this device (archives verified by S3 checksums, tombstones naming recovery); the two spike loaders keep 'no machine in the compile business' a SCOPED truth and become the CTO's decision row
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:11Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S54",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9 on the round-6 PARTIAL v2 packet @88091d4945 (TO-CG-F-6 drained @acf75d72d8, 10 of 11 terminal): the GRADE for F6-AC6, the arc read at its end -- PASS. THE READING GRADED answers its three questions on measured inputs: (1) 'no machine is in the compile business' is TRUE on this device for the CANONICAL graph since F-1 and for the STITCH graph as of this order -- and the reading says at once that it is true only SCOPED to the projection's home, because two tracked loaders under org/modules/graph/tsgraph_spike still build a scratch Kuzu store on the same CloudNode/CloudEdge schema, one command each, last run 2026-06-17, the population W2-S25 declared harmless at D-7 pass 3 and W7-S4 met again ('the estate has stepped around them twice'); (2) three routes back in descending likelihood -- the spike loaders, `git show 8a074ba7ba:` of the retired loader (the tombstone names the hash on purpose: a recoverable builder whose recovery is recorded), and a local run of derive_stitch / extract_portal_stitch, which the reading rightly calls NOT a compile (a JSON nobody loads answers no query; the hazard on that pair was PUBLISHING, S70/S71, retired at S29); (3) the four JOIN cells read in order (F-3 grade the cloud build not the artifact; F-4 the served query at a vintage two months younger than the retired store; F-5's F5-AC3 the load-bearing 'opens no local store'; F-6 this instance) and the one thing none of them measured, the spike loaders, left to this seat. THIS SEAT'S OWN READS AGREE: at 21:28Z kuzu_stitch_db was PRESENT on this device (8,956 KB, C-S41's read); at 00:0xZ kuzu_stitch_db, its _build_manifest.json and kuzu_stitch_load.py are ABSENT and kuzu_stitch_db.TOMBSTONE.md is PRESENT; kuzu_stitch_load.py is absent at HEAD 5507841f04 (git cat-file -e rc 128; last commit 6abd4a9d94 23:06Z); the four archive objects under archive/NFRA_CLDGRPH.CG-s-26/ headed live with S3's own checksums -- kuzu_stitch_db 9,170,944 B xgRdkFsynm0wOJg71vG3iWDmYVO+ko8nvsKGQV4nVUc= (equal to the tombstone's sha256_b64 the F6-AC2 record quotes), its manifest 439 B, stitch_graph.json 25,489,187 B, ARCHIVE_MANIFEST.json 4,623 B, all written 22:50:35Z-22:50:49Z. VERDICT PASS. THE CALL THE READING LEFT TO THIS SEAT, made: the two spike loaders do NOT make FWD-7's existence clause false -- the clause is 'no second, older copy anyone could still be reading from' of THE graph, and a portal-AST spike store under tsgraph_spike/out/ is neither a copy of the canonical or stitch graph nor read by anyone (0 readers, W2-S25; 0 of 66 beside the projection) -- but they DO make the PRD's literal sentence 'no machine is in the compile business' a scoped truth on this device, and the estate has now declined to decide about them twice. That is a DECISION ROW for the CTO's L10, not a grade: either retire the two loaders with a tombstone (they have not run in 84 days) or declare tsgraph_spike a NON-ESTATE scratch layer outside the tool homes so the sentence is scoped by law rather than by reading. FOR FWD-7 across the JOIN: F-3, F-4, F-5, F-6 terminal and graded; F-11 (the vocabulary) is the last cell; the existence clause is TRUE on this device for both graphs and OPEN on site Z's seven pattern matches (C-S41) -- FWD-7 reads REALIZED at the FINAL if F-11 serves the unified vocabulary and the CTO's L10 places the site-Z census and the spike-loader decision, and NOT_REALIZED by exactly those two placed acts if it does not.",
+    "grades": [
+      {
+        "criterion": "F6-AC6",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~7/NFRA_CLDGRPH.TO-CG-F-6.local-stitch-store-retired.proof_of_spec.json@558f25e77e",
+        "verdict": "PASS",
+        "reason": "The reading is honest and scoped: it states the sentence true for both graphs on this device, names the population that keeps it scoped (the two spike loaders, met twice and decided never), names three routes back with their likelihood, refuses to call a JSON emit a compile with a reason, and orders the four JOIN cells by what each proves. This seat's before/after reads of the device, HEAD and the four S3 archive checksums agree with every artifact named. NO verdict was recorded by the assignee."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "L8_PACKET.round6.partial.v2.md @88091d4945 (31 lines, sha256 e87221bb9216e4d5...) s.1; the proof @558f25e77e: F6-AC1 store absent 3 of 3 with the control fired; F6-AC2 ARCHIVE_OBJECTS=4 of 4, SHA256_MATCH=3 of 3 by S3-computed checksum vs the pre-upload local hash, negative control rc 255; F6-AC3 LOCAL_KUZU_BUILDERS=0 of 486 files (1,031,935 AST nodes, 0 parse failures; the tsgraph_spike pair excluded by name with W2-S25 on the line; planted builder 1 of 1); F6-AC4 the refusal at comp_debt.py:133-137 naming the served source; F6-AC5 tombstone 7 of 7 fields parsed with a planted 6-of-7 caught.",
+        "CG-s-26.local-stitch-store-retired.result.md s.5 (:329-395) read whole; s.1a-1f the before/archived/after reads with UTC instants; s.2 W3-S11 travelling with the bytes in a field.",
+        "This seat, 00:0xZ: test -e on kuzu_stitch_db, kuzu_stitch_db._build_manifest.json, kuzu_stitch_load.py (ABSENT), kuzu_stitch_db.TOMBSTONE.md (PRESENT); git cat-file -e HEAD:infra/aws/globgrph/kuzu_stitch_load.py -> rc 128; git log -1 on that path -> 6abd4a9d94. s3api list-objects-v2 archive/NFRA_CLDGRPH.CG-s-26/ -> 4 keys; head-object --checksum-mode ENABLED on each: 4623 vnidX1vY..., 9170944 xgRdkFsynm0w..., 439 pJet737F..., 25489187 esEdAV4M.... C-S41's 21:28Z read: kuzu_stitch_db PRESENT 8,956 KB (the before).",
+        "W2-S25 (D-7 pass 3, 2026-09-06): the tsgraph_spike pair declared harmless; W7-S4 (this round): the same pair caught by the tool-homes sweep; S92 the re-cut. PRD v0.6 S26: 'the local stitch store retired LAST with a CG-s-19-shaped disposition'."
+      ]
+    },
+    "spec_asserts": "F6-AC6 as cut (judgment, NO verdict): whether 'no machine is in the compile business' is TRUE on this device for BOTH graphs; what remains that could re-enter; what the CVO reads to grade FWD-7 across the four JOIN cells. FWD-7's existence clause: no second, older copy anyone could still be reading from.",
+    "world_is": "Both local graphs are gone from this device with archives verified by S3's own checksums and tombstones naming the recovery; two spike loaders can still compile a scratch Kuzu store on the same schema and nobody has decided about them; site Z's seven pattern matches are undispositioned; F-11 is the last JOIN cell.",
+    "notes": "FOR THE L10: (i) the spike-loader decision row (retire with tombstone, or declare tsgraph_spike non-estate scratch); (ii) site Z's S21 act (C-S41/C-S42); (iii) W7-S2's manifest freshness residue (C-S56). Round-6 judgment criteria graded: 8 of 8 across the ten terminal orders (F1-AC6, F2-AC5, F3-AC6, F6-AC6, F7-AC5, F8-AC5, F9-AC5, F10-AC6); F11-AC6 at the FINAL."
+  }
+]
+```
+
+## C-S55 -- adjudicates W7-S1, W7-S3, W7-S4: GRADUATED, closed on the issuer's re-cut @6b3aef13a1 (effect unchanged) and acks S90/S91/S92
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:11Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S55",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W7-S1",
+      "NFRA_CLDGRPH-W7-S3",
+      "NFRA_CLDGRPH-W7-S4"
+    ],
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "one_line": "L9: ADJUDICATES three items -- GRADUATED, remedied in-round and CLOSED on the issuer's re-cut @6b3aef13a1 and acks S90/S91/S92, each checked against the act. W7-S1 (the re-address to slot ~7 moved <issued_to> and left six deliverables paths naming ~2, which the lane gate refuses for ~7 -- 18 ADHC_OWNPTH.005 violations measured): the face reads ~7 at all six; the instance at ~7 committed @6abd4a9d94. W7-S3 (F6-AC5's expect hard-coded the W2 namespace): `W[0-9]+-S[0-9]+`, grammar only, the criterion re-run PASS. W7-S4 (the tool-homes sweep caught the tsgraph_spike pair W2-S25 declared harmless): the pair joins the named exclusion with W2-S25 printed on the sweep's own line, the wide sweep over 486 files stays deciding, the planted builder still fires -- EFFECT unchanged, and the pair itself is the L10 decision C-S54 names.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W7-S1, W7-S3, W7-S4 read whole @ce90905534; S90, S91, S92 @88091d4945; the re-cut @6b3aef13a1 and the re-run @6f0a3af8e7 named in the packet; F6-AC3/AC5 PASS at the flip 558f25e77e."
+      ]
+    },
+    "spec_asserts": "Each item's own disarm clause; the standing authority @9f4a57262f (a proxy re-cut judged on EFFECT).",
+    "world_is": "All three remedies are in the record and the criteria re-read PASS on the same bars.",
+    "notes": "Worker-form items; clocks ride this row. A re-address is an addressing act on both limbs (the issuer's own lesson, S90)."
+  }
+]
+```
+
+## C-S56 -- adjudicates W7-S2: GRADUATED, remedy OPEN at 1.0.0_SA_CTO -- a manifest freshness line and its generated mirror name the deleted stitch store; joins C-S50's instruction-plane residue
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:11Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S56",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W7-S2"
+    ],
+    "disarm_owner": "1.0.0_SA_CTO",
+    "one_line": "L9: ADJUDICATES one item -- GRADUATED, remedy OPEN, owner 1.0.0_SA_CTO (the L10; the manifest owner executes). W7-S2: graph-call-manifest.yaml:1237's `freshness:` on xlayer.fullstack.firm_component_to_bucket and its generated mirror .tools/tool_index.py:2443 still name db-path infra/aws/globgrph/kuzu_stitch_db -- a store that no longer exists as of F-6. Outside F-6's grant; the cell's accept ('carried by a row') is met by the row; S93 acks and carries it. It is the same class as C-S50's residue (W4-S4's five, W4-S6's two fields, W6-S3's eleven entries): an instruction surface describing a retired engine, cleared only by an entry-grained edit of the source string under the manifest owner and a REGENERATION of the mirror, never a hand edit of tool_index.py. Joins C-S50's carry as one addendum row.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W7-S2 read whole @ce90905534; S93 @88091d4945 (the issuer's REC: one entry-grained edit then a regeneration, a next-round cell); F6-AC5's registry census (REGISTRY_MENTIONS=2, row W7-S2)."
+      ]
+    },
+    "spec_asserts": "PRD v0.6 S26 / FWD-7: no instruction surface points a reader at a local store; R14/R15 for the manifest's own convention.",
+    "world_is": "Two live registry fields name a deleted store; a reader following them finds nothing and is told nothing.",
+    "notes": "Worker-form item; the clock rides this row. With C-S50: five descriptions, two fields, eleven entries, and now one freshness line -- one CloudComp/manifest-owner cell at the L10."
+  }
+]
+```
+
+## C-S57 -- adjudicates S90..S94: DISMISSED_WITH_REASON, records -- S89's fix is on F-11's branch (collapsed magnitudes 167/1217/381/201/125 written pending this seat's sign, which reads the built artifact at the FINAL)
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:11Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S57",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_CLDGRPH-S90",
+      "NFRA_CLDGRPH-S91",
+      "NFRA_CLDGRPH-S92",
+      "NFRA_CLDGRPH-S93",
+      "NFRA_CLDGRPH-S94"
+    ],
+    "one_line": "L9: ADJUDICATES five rows -- DISMISSED_WITH_REASON, records: S90/S91/S92 the issuer's disarm acks for W7-S1/S3/S4 (consumed by C-S55); S93 the ack carrying W7-S2 (consumed by C-S56); S94 the issuer's disarm ack for this seat's S89 against the worker's _collapse_stitch_copies @22e388d221 on F-11's branch (W2-S65: 449 duplicated ids -> 114, admitted 3,560 -> 1,790 = 1,521 merged + 269 created, 0 lost; the nine baseline entries written at the collapsed stream magnitudes 167 / 1,217 / 381 / 201 / 125 with the sign field `pending 3.0.0_SA_CVO`). S89 itself stays ARMED until the fix is on CLOUD at F-11's drain; it closes at the FINAL L9 with W2-S60, W2-S64 (the worker's own row on the same wrong-grain finding, ARMED to this seat) and W2-S65. THE SIGN'S STATE, stated so nobody waits on it: C-S53 signed the four to 0 and the five at this seat's 80daa1fff6 stream populations (170 / 1,217 / 394 / 201 / 125); the worker's collapsed values differ by 3 (PipelineScript) and 13 (S3Key) -- the same trace-input difference C-S53 disclosed; per 1.0.0_SA_CTO 94791 the final sign reads the ARTIFACT the build actually consumes and names its vintage, which is the FINAL L9's first act on the served stitch_graph.json.",
+    "dismissal_reason": "Records: five acks consumed by the closures and carries they evidence; nothing armed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S90..S94 @88091d4945 read whole; 22e388d221 on wk-cldgrph-6-2 (git show --stat: derive_stitch.py +46, grain_baseline.json +94, INVESTIGATION +56; per_class at that commit 0/0/0/0/167/1217/381/201/125, 40 keys; verified_by '... CVO sign: pending 3.0.0_SA_CVO'); W2-S64 and W2-S65 read whole from that commit; 1.0.0_SA_CTO 94791."
+      ]
+    },
+    "spec_asserts": "The channel's taxonomy: an ack is a record; the item it acks closes when its remedy is on the shared branch.",
+    "world_is": "The acks evidence closures; S89's fix is committed on a branch and not yet drained.",
+    "notes": "Investigation items without a disposition after this write, by comp-surprise's definition, are the F-11 branch's rows not yet on CLOUD plus S89 (ARMED, fix pending drain); the count is printed in the commit's verification."
+  }
+]
+```
+
+## C-S58 -- F11-AC6 graded PASS: the four-cycle reading -- every remaining failure was a second writer or a second copy, because this producer's input contains its own output; the gate's own relayed magnitudes disowned as the wrong quantity
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T03:51Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S58",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9 on the FINAL packet @aec7dc8cfd (11 of 11 orders drained; TO-CG-F-11 @d2ee75c98b): the GRADE for F11-AC6, the vocabulary read after four producer cycles and an image act -- PASS, and it is the strongest judgment record this project has produced. THE READING GRADED, limb by limb against what the criterion asks. (1) WERE THE MERGES BY IDENTITY: yes, and the evidence is structural rather than assertive -- ONE resolver (derive_stitch.resolve_stitch_id) is imported by both the census and the merge, so the two cannot disagree; 1,521 of 1,790 merged onto an existing canonical id, 0 lost, and three of the four resolution rates reproduce THIS SEAT'S independent C-S40 census exactly. (2) WHAT THE 269 CARRIED origin=stitch MEMBERS ARE: 149 S3Key, 68 ReactQueryKey, 34 PipelineScript, 16 PipelineFunction, 2 Component, and the reading separates a producer GAP from a real objection instead of averaging them -- 125 have no canonical S3 key at all, while 24 are ambiguous-across-firms and are carried ON PURPOSE because choosing would INVENT a cross-firm claim. That is R17 applied at the only place it bites, and it is the right answer: a fabricated firm attribution in a served graph is worse than a carried member. (3) MIXED GRAIN: none -- every GOLD_SCRIPT id is split by the grain its own trace id carries (166 script-level, 1,214 function-level) and the two land in different types, so no type holds both. (4) WHAT THE CVO NEEDS TO RE-SIGN: stated as a list with its own numbers (the map at 61 keys from 65, aws 33 from 34, portal 16 from 18, pipeline 3 from 4, ms 7 and semctl 2 unmoved, COND-A resource-type count UNMOVED at 32) plus the nine baseline entries -- and, critically, the reading DISOWNS the numbers the gate itself relayed: 332 / 2,428 / 588 / 24 / 188 are ADMITTED counts, a different quantity from what per_class holds, and Component at 24 against a baseline of 201 would have read 8.46x and REFUSED the very publish the gate existed to allow (W2-S64). A worker telling its own gate that the gate's numbers are the wrong quantity is the single most valuable line in the round. (5) THE READING THE ORDER DID NOT ASK FOR: three planes agree to the unit -- local run, cloud artifact, served graph -- and that agreement is what makes the two failures legible as a DEPLOYMENT fact and a PRE-EXISTING fact rather than vocabulary ones. (6) and (7) THE FOUR-CYCLE READING, which is what the criterion is finally for: EVERY remaining failure was a SECOND WRITER or a SECOND COPY of something the first fix had already handled correctly. The map retired the stamp and the deployed image still wrote it; the image stopped writing it and the producer carried the stamped node forward out of the snapshot the derive archives; the producer stopped fanning STORED_IN five ways and last night's 955 arrived inside that same snapshot. ONE SHAPE: this producer's input contains its own output, so any RETIREMENT -- of a type, a prop, or an edge -- takes effect only when the carry-forward is handled too, and each plane hides the next until the one before it is fixed. THE PART THAT EARNS THE PASS: the reading states that no code read could have found this and only the served graph could, and the round's history proves it -- three of the four cycles were spent discovering a writer the previous cycle's fix had revealed, not repairing the same defect twice. THIS SEAT'S OWN INSTRUMENTS AGREE, and they are not the worker's: through the estate's projection service at three successive served vintages tonight I read the stamp 1 -> 0 (01:27:30Z carried it, 02:28:23Z did not, with PORTAL_BUNDLE present in both and its props reading exactly {file_path, source} after), the boundary edges 764 over 191 keys -> 135 over 135 keys with one edge each, and the five magnitudes unmoved at 167 / 1,217 / 381 / 201 / 125 throughout. VERDICT PASS. NO verdict was recorded by the assignee, which is correct: the instance carries UNVERIFIABLE-BY-INSTRUMENT and says the verdict is this seat's.",
+    "grades": [
+      {
+        "criterion": "F11-AC6",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-F-11.stitch-vocabulary-unified.proof_of_spec.json@d2ee75c98b",
+        "verdict": "PASS",
+        "reason": "All four ordered limbs answered on measured inputs with vintages, plus two the order did not ask for; the carried members are separated into a producer gap and a deliberate refusal to invent a cross-firm claim; the gate's own relayed magnitudes are disowned as the wrong QUANTITY with the refusal they would have caused computed (8.46x); and the four-cycle reading names one mechanism -- the producer's input contains its own output -- that explains every remaining failure without excusing any of them. This seat's independent reads at three served vintages agree on the stamp, the edges and the five magnitudes."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "L8_PACKET.round6.final.md @aec7dc8cfd (66 lines, sha256 6b9c09744d366feb..., re-hashed at this seat) ss.1-5; the instance @d2ee75c98b read whole (F11-AC1/AC2/AC4/AC5 PASS, AC3 FAIL, AC6 UNVERIFIABLE-BY-INSTRUMENT with the reading in output_evidence).",
+        "This seat, 2026-09-10 01:4xZ / 02:4xZ / 03:3xZ, through opal-gateway graph_cypher over the served CloudNode/CloudEdge tables (a different instrument from the worker's local proof and from the issuer's describe-task-definition): vintage 01:27:30.508695Z -> stitch-v1 on 1 node (PORTAL_BUNDLE), STORED_IN 764 edges / 191 keys / 4 targets, all S3_BUCKET_POLICY; vintage 02:28:23.048900Z -> stitch-v1 on 0 nodes, PORTAL_BUNDLE present with props {file_path, source}, STORED_IN unchanged at 764; vintage 03:31:02.025931Z (stitch-codebuild 03:01:17Z, manifest sha256 5361815924ce7afd) -> STORED_IN 135 edges over 135 distinct keys, 2 targets, one edge per key, still S3_BUCKET_POLICY; total nodes 27,665; the five magnitudes 167 / 1,217 / 381 / 201 / 125 identical at all three.",
+        "C-S40 (this seat's own earlier census, which three of the four resolution rates reproduce) and C-S53 (the first sign attempt, superseded by C-S59 in this commit)."
+      ]
+    },
+    "spec_asserts": "F11-AC6 as cut (judgment=true, NO verdict): were the merges by identity everywhere they claim; what the carried origin=stitch members are; whether the grain split leaves a mixed-grain node; what the CVO needs to re-sign. Graded and the map re-signed by 3.0.0_SA_CVO at L9.",
+    "world_is": "The unification merged by identity with 0 lost; the carried members are a producer gap plus a deliberate non-guess; no type holds two grains; and the round's remaining failures are all one mechanism, a producer whose input contains its own output, answered differently on nodes, props and edges.",
+    "notes": "Round-6 judgment criteria graded: 9 of 9 across eleven orders (8 at @104c46c48a, F11-AC6 here). F11-AC3 is not this seat's to grade PASS or FAIL -- the CTO ruled it MEASURED-AND-FAILING at 94872 and the packet drains on that; this seat's S96/S97 are the measurements behind it."
+  }
+]
+```
+
+## C-S59 -- THE GRAIN-BASELINE SIGN EXECUTED: nine entries signed at 167 / 1,217 / 381 / 201 / 125 and four retired names at zero rows, measured on the served graph a RULE-INITIATED nightly built, unchanged across three vintages while the stamp and the edges moved -- W2-S60, W2-S64 and S89 close on it
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T03:51Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S59",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W2-S60",
+      "NFRA_CLDGRPH-W2-S64",
+      "NFRA_CLDGRPH-S89"
+    ],
+    "dismissal_reason": "A certification act with its three attendant items closed on it; it opens no new hazard.",
+    "one_line": "THE GRAIN-BASELINE SIGN, the round's one outstanding ACT, EXECUTED IN THIS COMMIT -- org/modules/graph/grain_baseline.json, the nine recertification entries of 2026-09-09, every one of which read `CVO sign: pending 3.0.0_SA_CVO` and now reads SIGNED with the measurement beside it. WHAT I SIGNED: four retired names to 0 (GOLD_SCRIPT was 1,260, S3_DATA_KEY 272, PORTAL_COMPONENT 27, REACT_QUERY_KEY 85) and five canonical classes at PipelineScript 167, PipelineFunction 1,217, S3Key 381, Component 201, ReactQueryKey 125. HOW I MEASURED IT, and it is not the producer's report: through the estate's own projection service over the SERVED CloudNode table, where the five read exactly those magnitudes and the four retired names return ZERO ROWS -- an empty result set, not a null count -- over 27,665 nodes, with PORTAL_BUNDLE present as the positive control a stitch-free graph would fail. THE VINTAGE IS NAMED, as 94791/94792 require: the certifying read is the served projection 2026-09-10T03:31:02.025931Z, whose own age line declares the artifact it was built from -- stitch-codebuild 2026-09-10T03:01:17Z, manifest sha256 5361815924ce7afd -- and that build is cycle 4's zip consumed by the 03:00Z RULE-INITIATED nightly, the first scheduled success in a slot that had failed 67 of 67 times. So this certification reads a SCHEDULED fire's artifact, not an ad-hoc one, which is the strongest vintage available tonight and better than the one the packet asked for. THE DISCRIMINATION A STATIC NUMBER CANNOT SUPPLY, and the reason this sign is worth more than C-S53's: the five were read UNCHANGED at three successive served vintages (01:27:30Z, 02:28:23Z, 03:31:02Z) ACROSS FOUR PRODUCER CYCLES THAT VISIBLY MOVED OTHER THINGS ON THE SAME PLANE -- the stamp 1 -> 0 between the first two, the boundary edges 764/191 keys -> 135/135 keys between the second and third. The five held while the graph around them changed, rather than holding because nothing was rebuilt; a single read could not tell those apart. WHAT THE SIGN DOES NOT CERTIFY, written into the signature itself because a gate reads this file: not that the STORED_IN endpoints are correct (they land on S3_BUCKET_POLICY; F11-AC3 fails as ruled); not any class outside these nine; and not the artifact's internal counts, which are the producer's own and were read here one hop downstream on the plane the estate serves. THREE ITEMS CLOSE ON IT. W2-S60 (retiring a node type drives its baseline to zero and AC-GRAIN.2 refuses on a zero, so the unified producer could not publish at all) -- CLOSED: the four are recertified to 0 by the code's own designed mechanism for a permanently absent class, and the five classes their members MOVED TO are certified in the same sign, so the file never describes a graph that never existed and the receiving classes stop being unexamined. W2-S64 (the gate relayed 332 / 2,428 / 588 / 24 / 188 -- the worker's ADMITTED counts, a different quantity from per_class, with Component at 8.46x refusing the publish) -- CLOSED AND THE ROW WAS RIGHT: the entries carry the measured magnitudes, not the relayed ones, and each entry states both quantities so the substitution is visible rather than tidy. S89 (the unified producer emitted every carried member twice, 335 duplicate ids under one type) -- CLOSED by _collapse_stitch_copies at @22e388d221 and confirmed by these counts: a population still double-emitting could not read 167 / 1,217 / 381 / 201 / 125 on three planes to the unit.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/modules/graph/grain_baseline.json in this commit: 9 of 9 `; CVO sign: pending 3.0.0_SA_CVO` fields replaced byte-for-byte, the 5 narrative mentions of a pending sign left untouched, line endings unmoved, and per_class re-checked against the recertification on all nine before the write (the writer refuses on any mismatch).",
+        "This seat's served reads at the three vintages named in one_line (opal-gateway graph_cypher; the four retired classes return an empty result set at 03:31:02.025931Z; total_nodes 27,665; PORTAL_BUNDLE 1).",
+        "1.0.0_SA_CTO 94791/94792 (the sign reads the artifact the build consumes and names its vintage); the CTO gate GO 20260909T2305Z carried verbatim in the entry's note; W2-S60, W2-S64 and S89 read whole; the packet @aec7dc8cfd s.2 and s.3."
+      ]
+    },
+    "spec_asserts": "The recertification entry's own contract: every class's verified_by carries a CVO sign, and the file's _naming_fragility_note warns that a SCREAMING_SNAKE baseline key and a CamelCase canonical name are the same concept whose lookup yields 0 and whose ratio is byte-identical to a real collapse.",
+    "world_is": "Signed at the measured magnitudes on a scheduled fire's artifact, with the four retired names returning no rows and the five receiving classes certified in the same act, so no class the members moved to is left uncertified.",
+    "notes": "This sign SUPERSEDES C-S53's numbers (170 / 1,217 / 394 / 201 / 125), which were this seat's scratch-tree run and differed from the built artifact by 3 scripts and 13 S3 keys -- a trace-input difference, named there and resolved here in favour of the artifact the estate serves. The NODE_TYPE_LAYER map's re-sign at 61 keys is NOT part of this act: the packet asks for exactly two things and the map is unchanged in scope since C-S40; if the CTO's L10 wants it re-signed at 61, that is a one-line act and this seat will take it on request."
+  }
+]
+```
+
+## C-S60 -- adjudicates sixteen: GRADUATED -- the round-7 identity seam carried with the census warned to count facts per key, the SMS page reserved for Andrew with the hold in force, the producer's self-consuming cycle at its owner, and six cut-side items closed in substance
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T03:51Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "id": "NFRA_CLDGRPH-C-S60",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W2-S68",
+      "NFRA_CLDGRPH-W2-S70",
+      "NFRA_CLDGRPH-S96",
+      "NFRA_CLDGRPH-S97",
+      "NFRA_CLDGRPH-S102",
+      "NFRA_CLDGRPH-W2-S72",
+      "NFRA_CLDGRPH-S104",
+      "NFRA_CLDGRPH-S106",
+      "NFRA_CLDGRPH-W2-S61",
+      "NFRA_CLDGRPH-W2-S63",
+      "NFRA_CLDGRPH-W2-S45",
+      "NFRA_CLDGRPH-W2-S49",
+      "NFRA_CLDGRPH-W2-S53",
+      "NFRA_CLDGRPH-W2-S56",
+      "NFRA_CLDGRPH-W2-S57",
+      "NFRA_CLDGRPH-W2-S46"
+    ],
+    "disarm_owner": "SPLIT, per item, and named in one_line: 2.0.0_SA_COO~A for the round-7 identity cells (W2-S68/W2-S70/S96/S97/S102) and for the comp-debt and header items; ANDREW for W2-S72/S104/S106 (the SMS page, hold in force); 0.8.0_AE_CloudComp for W2-S61; 0.7.0_AE_CloudOps for W2-S63; 1.0.0_SA_CTO for W2-S45's taxonomy half and W2-S53's halt-gate identity file",
+    "one_line": "L9: ADJUDICATES sixteen items -- GRADUATED, ARMED, with the owners split per item because their remedies do not move together. THE ROUND-7 IDENTITY SEAM (W2-S68, W2-S70, this seat's S96 and S97, and the issuer's carry S102): CARRIED, not closed. W2-S68 found STORED_IN resolving 0 of 955 because the edge named an ARN while the node is keyed by name; the ruled one-line fix moved it to 764 and W2-S70 measured that all 764 landed on S3_BUCKET_POLICY; this seat's S96 confirmed the type on the served plane and S97 added the arithmetic that reframed the population -- 191 keys x 4 targets with no key at 1, 137 of those keys carrying their own bucket in props, so 955 was never 955 facts. The issuer folded the EMISSION half into cycle 4 (one edge per key from the key's own props, prior-cycle edges dropped on read; measured 955 -> 137, and 135 of 137 resolving on the served graph at this seat's own 03:31:02Z read), and the IDENTITY half is round 7's under 94872 with its own image act and sign. The class census that ruling orders MUST COUNT FACTS PER KEY, NOT EDGES, or it re-measures the fan-out and calls it identity. THE SMS PAGE (W2-S72, S104, and S106 correcting S104's ground): RESERVED FOR ANDREW, hold in force, nothing unsubscribed or edited, and this seat concurs with every part of the handling -- including S106, where the CTO declined to widen an Andrew-direct about one recipient into a rule about another and the issuer corrected its own row's basis while leaving the hold's EFFECT untouched. That is the relay-never-adjudicate law working in the direction that costs something. THE PRODUCER'S OWN CYCLE (W2-S61): the input contains the output, the substrate-card question the CTO already took; ARMED at the engine's owner and read for the L10 through S103's pattern row, a row PER CARRIER. THE PORTAL VINTAGE (W2-S63): three shas name the stitch's portal layer and it MOVED AGAIN inside this round (18c0c5cb at F-4's zip, 5907cbca at F-11's) with nothing declaring which; a served artifact whose input vintage is unstated is the same class as an unsigned baseline, and it stays at CloudOps. THE CUT-SIDE ITEMS, each closed in substance and carried only for the record: W2-S45 (five artifact types absent from NODE_TYPE_LAYER -- answered by the unification itself, the taxonomy question resolved at the producer rather than by renaming, and W2-S48 measured why renaming would have been a grain violation); W2-S49 (four of the seven family names the order enumerated do not exist and the wrong names FAIL SOFT -- the image act then used the true names and read 7 of 7, which is the remedy exercised); W2-S53 (a worker cannot apply without writing an identity file its grant does not name; the gate's fail-closed refusal was correct and the remedy belongs at the spawn, which the issuer has since said it is fixing there rather than on any face); W2-S56 and W2-S57 (comp-debt is not at the path the order names, has no curated route, and its baseline's residuals are a different universe from the served graph's -- 112 of 131 keys NEW, not a regression); W2-S46 (the order named a header function no serve path calls). Every one of these is a CUT reading the world wrongly, not the world failing, and together they are the argument for the v3.8 clause the CTO wrote tonight.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The sixteen rows read whole at HEAD; the packet @aec7dc8cfd ss.2-4; 1.0.0_SA_CTO 94872 (the identity ruling and the class census), 94951 (the S104 ground correction); 2.0.0_SA_COO~A 94869, 94886, 94899, 94939, 94944.",
+        "This seat's own served reads: STORED_IN 764/191 keys at 01:27:30Z and 02:28:23Z, 135/135 keys at 03:31:02Z, targets S3_BUCKET_POLICY throughout (124 opal-data-bd, 11 opal-data-inf at the last read)."
+      ]
+    },
+    "spec_asserts": "F11-AC3 (the boundary edge resolves end to end on the served graph); TO-CG-F-4's seven family names and its header claim; the order's SURFACES blocks for comp-debt; the manual-trigger form's separation of a test from a scheduled fire.",
+    "world_is": "The emission half of the edge defect is fixed and the identity half is not; a personal phone is paged by every derive and the hold is Andrew's to lift; the producer's self-consuming cycle is unremedied at its owner; and six cut-side items named instruments or paths that do not exist.",
+    "notes": "ARMED because five of the sixteen carry live remedies at four different owners. Nothing here blocks the L10: every item is either carried by an explicit ruling or closed in substance with its record kept."
+  }
+]
+```
+
+## C-S61 -- adjudicates twenty-five: DISMISSED_WITH_REASON, records -- six disarm acks re-read on the served plane, three self-corrections and a pattern row, and thirteen cut-and-instrument facts including the third CRLF false-red of the night
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T03:51Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S61",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_CLDGRPH-S86",
+      "NFRA_CLDGRPH-S87",
+      "NFRA_CLDGRPH-S88",
+      "NFRA_CLDGRPH-S95",
+      "NFRA_CLDGRPH-S98",
+      "NFRA_CLDGRPH-S99",
+      "NFRA_CLDGRPH-S100",
+      "NFRA_CLDGRPH-S101",
+      "NFRA_CLDGRPH-S103",
+      "NFRA_CLDGRPH-S105",
+      "NFRA_CLDGRPH-W2-S47",
+      "NFRA_CLDGRPH-W2-S48",
+      "NFRA_CLDGRPH-W2-S50",
+      "NFRA_CLDGRPH-W2-S51",
+      "NFRA_CLDGRPH-W2-S52",
+      "NFRA_CLDGRPH-W2-S54",
+      "NFRA_CLDGRPH-W2-S55",
+      "NFRA_CLDGRPH-W2-S58",
+      "NFRA_CLDGRPH-W2-S59",
+      "NFRA_CLDGRPH-W2-S62",
+      "NFRA_CLDGRPH-W2-S65",
+      "NFRA_CLDGRPH-W2-S66",
+      "NFRA_CLDGRPH-W2-S67",
+      "NFRA_CLDGRPH-W2-S69",
+      "NFRA_CLDGRPH-W2-S71"
+    ],
+    "one_line": "L9: ADJUDICATES twenty-five items -- DISMISSED_WITH_REASON, records, all INERT after this write. THREE FAMILIES. (1) THE DISARM RECORDS AND THE ITEMS THEY CLOSE: S99 disarms W2-S67 (the served stamp gone, the whole-graph node diff reading exactly one removed property on one node and nothing else -- re-read at this seat at 02:28:23Z); S100 disarms W2-S69 (the stamp's SECOND writer, carried forward out of the archived snapshot, retired at the producer); S101 disarms W2-S71 (the cross-product cut at the producer, 955 -> 137); S86 disarms W2-S51 (the amendment asked for a column the schema does not have, and the stamp rides the additive props JSON by the seam's own design -- a Binder exception, never a zero, and the worker exercised the column form to show it errors rather than returning 0); S87 disarms W2-S53; S88 disarms W2-S56. Each ack names the measurement that closed it, which is what makes them records rather than assertions. (2) THE TWO SELF-CORRECTIONS THE ISSUER FILED RATHER THAN LET STAND, and this seat records that filing them was right: S98 -- both halves of the image sign named an OUTCOME for a property with two writers and the unnamed branch occurred, with the BLAST RADIUS half correct and complete throughout, which is exactly the distinction the amended NEVER-1 now draws; S105 -- a census scoped to mailer vocabulary read 0 send paths over 104 files while the publisher is reached through boto3's own client, and the instrument that saw the SMS page was the run log. Both are the pattern-list-as-declared-domain trap, committed by the seat that quotes it, and named as such. S95 belongs beside them: a worker died mid-image-act on a session rate limit and the issuer read the artifact plane with a DIFFERENT instrument before deciding to finish rather than roll back -- the act that became spine v3.9. S103 is the round's pattern row and the L10's, a row per CARRIER rather than per producer. (3) THE CUT-AND-INSTRUMENT FACTS, thirteen of them, every one an accept or a bound that described the world wrongly: W2-S47 (a control already satisfied before the act -- the pre-fold answer was 1 of 3, not 0 of 3, so only one limb discriminated); W2-S48 (renaming the five types would have been a grain violation and the populations differ by an order of magnitude -- the measurement that justified unifying at the producer instead); W2-S50 (two carriers of one ruling differing by a clause, with 'copy it, do not retype' instructed beside a retyped inline copy); W2-S52 (a ten-address number carried over from a four-family act into a seven-family one, where the true set is eighteen); W2-S54 (a criterion script reporting a failed fold over a graph that had already succeeded -- the Git-Bash subprocess trap, the same class as tonight's other false reds); W2-S55 and W2-S59 (a budget line the tool does not print, and a registry status the code has outgrown while the leg runs regardless); W2-S58 (BASELINE_EDITED read TRUE on a file nobody opened, because the checkout is CRLF and the record is LF -- the third instance of that trap tonight and the one that would have failed an order on a file nobody touched); W2-S62 (the file the grain rule comes from is not at the path the order names); W2-S65 (the unification made the producer count its own members twice and every per-class check passed, because the fresh copy landed in a different bucket from the carried one); W2-S66 (a criterion that censuses a population its own publish destroys, so it stops being re-readable the moment it succeeds -- and its expect requires a non-zero denominator, so success would have read FAIL). W2-S67, W2-S69 and W2-S71 are recorded here as CLOSED by their disarm acks above rather than left implicit.",
+    "dismissal_reason": "Records: six disarm acks with the measurements that closed them, three self-corrections and a pattern row filed by their own authors, and thirteen cut-side or instrument facts remedied at the source or superseded by the round's own acts. Nothing armed remains among them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "All twenty-five rows read whole at HEAD from the channel file, parsed rather than grepped (245 items, 57 adjudication rows before this write; open-by-census 44, all dispositioned across C-S60 and C-S61).",
+        "This seat's served reads confirming the three disarms: stitch-v1 on 1 node at 01:27:30Z and 0 at 02:28:23Z with PORTAL_BUNDLE present and its props reading {file_path, source}; STORED_IN 764 -> 135 with one edge per key at 03:31:02Z.",
+        "spine v3.8 @9fc8cb266e (an accept names its instrument's coverage, its harness's grain flag and its stored baseline's environment) and v3.9 @d8400610bd (the worker-death ordering), both of which these rows are the evidence for."
+      ]
+    },
+    "spec_asserts": "The several accepts, bounds and SURFACES blocks each row cites; and the channel's own taxonomy, in which a disarm ack is a record and an item closes when its remedy is on the shared branch.",
+    "world_is": "Every one of the twenty-five is either an ack of a remedy this seat has independently re-read on the served plane, a self-correction filed by its own author, or a cut-side defect whose remedy landed inside the round.",
+    "notes": "Investigation items without a disposition after this write: 0 of 245. The L10 precondition is met on this axis; the round's one outstanding ACT (the grain-baseline sign) is executed at C-S59 in the same commit. The slug follows this commit."
+  }
+]
+```
+
+## C-S62 -- G1-AC5, G3-AC5 and G4-AC5 graded PASS: the seam is 15 nodes of one shadow class, a family healthy only by accident is named with the condition that would break it, a card's own premise is REFUTED on a counted distribution, and this seat's grain-baseline stability claim is corrected for a variable it held silently
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T05:35Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S62",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9 on the round-7 PARTIAL packet @89705c09ed (3 of 4 orders drained; sha256 6accd182317cf94fd8adf427cd83a5d2d98ee0ccfd58befd1aa9ce6565c1838e over 7,972 bytes, re-hashed at this seat and equal to the issuer's): THREE judgment criteria graded, all PASS, and one of them corrects this seat's own signature. G1-AC5, THE CENSUS READING -- PASS. It answers all four asked questions on the whole population (59 of 59 node classes, 55 of 55 edge families, 27,665 nodes, 59,683 edges, at the served vintage 03:31:02.025931Z, which is the same vintage this seat signed the grain baseline on) and its most valuable paragraph is one nobody asked for: HEALTHY ONLY BY ACCIDENT. ROUTES_TO resolves 100 percent through the same name-index shape that produced the bucket defect, and is correct today only because a LAMBDA's node_id IS its arn, so 'arn or nid' cannot pick the wrong string -- give that class a second key and the identical failure arrives while the resolution rate stays at 100 percent. A reading that finds the NEXT instance of a defect rather than only explaining this one is worth more than the census it was ordered to produce. Its fourth section is the round's most portable sentence -- a rate measures DANGLING, not CORRECTNESS -- and it applies that to a number this fabric has quoted clean all night: DERIVES_FROM's '216 of 216' is an EDGE rate, 216 edges over 121 keys. I verified both at this seat on the same vintage rather than taking them: DERIVES_FROM 121 distinct source keys against 216 edges; ROUTES_TO 86 keys, 86 edges, 1 destination class. THE ONE LIMIT THE READING DOES NOT NAME ITSELF, and 1.0.0_SA_CTO found it at 95005: the sweep measured who WRITES each family and retirement is a claim about who READS, so 'things that would notice STORED_IN disappearing' is a declared domain whose uncovered member is the reader. The reading names what a reader must not conclude from a rate and does not name that it swept writers. It does not move the grade -- the criterion asked how wide the seam is, which families the fix must reach, which are healthy by accident, and what not to conclude, and all four are answered -- but a reading this good ought to have carried its own coverage sentence, and the L10 should read the retirement's three conditions as supplying it. G3-AC5, THE SUBSTRATE CARD -- PASS, AND THE PREMISE IS REFUTED. Counted over 21 owned rows the owner distribution is 14 / 6 / 1 and the split is NOT by carrier: owner is a function of the QUESTION, because all three carriers ride one clock pair and live in one bucket while every code remedy is one seat's. The face assumed three carriers meant three owners; the worker measured and said otherwise. THAT IS THE OUTCOME A JUDGMENT CRITERION EXISTS TO ALLOW -- a criterion that can only confirm its author is a formality -- and the rule it was defending survives on the stronger case the worker supplied: one seat holding three remedies that measurably did NOT move together across four cycles, cycle 3's props fix not touching the edges, cycle 4's edges fix not touching the nodes, and the nodes remedy still not existing. Its fourth-carrier answer is the honest kind: EDGE ATTRIBUTES is a real candidate the props remedy cannot reach and the edges remedy removes whole edges past, and it is worse than the node case because a served COUNT caught that one and no edge-attribute equivalent exists -- then it refuses to pretend the list is closed, saying nothing enumerates carriers so a fourth will be found the way the first three were, by an instance. G4-AC5, THE PORTAL VINTAGE -- PASS, AND IT CORRECTS THIS SEAT. Its answer to 'misleads today or only could' is exactly graded: today it mostly COULD, because the three names have converged by ACCIDENT on 5907cbca and nothing holds them together, and it DID mislead inside round 6 when the gitlink named 30ca034b -- a sha that was not even an object in the portal clone. The live harm is named as INCOMPARABILITY rather than misdirection, which is the sharper reading: two graph reads four hours apart differ in their portal half and neither answer says so. AND IT NAMES MY OWN SIGN: round 6's stability argument, which this seat wrote into C-S59 and the L10 quoted back -- the five magnitudes held unchanged across three served vintages while things around them changed -- spans a window in which the portal half moved from 18c0c5cb to 5907cbca. I ADOPT THE CORRECTION. It does not overturn the sign, and the reading says so itself for the right reason (the portal/src file count is 435 on both sides and the five are measured quantities, not inferred ones), but 'things changed' did not know it included the portal commit, and a stability claim is stronger when it can name the variables it held constant AND the ones it did not. Mine named the stamp and the boundary edges as the things that moved; it did not name the portal layer as a variable it could not see. That is a real limit on my own certification and it belongs beside it rather than in a reply. VERDICT PASS on all three.",
+    "grades": [
+      {
+        "criterion": "G1-AC5",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-G-1.boundary-edge-class-census.proof_of_spec.json@15bfeb3a62",
+        "verdict": "PASS",
+        "reason": "All four asked questions answered over the whole population with the vintage named; the seam narrowed from a 29-class exposure to 15 nodes of one shadow class, which explains why 135 wrong-class landings read as resolutions; a second family found that the cut never named; one family shown healthy only by accident with the exact condition that would break it; and the rate-versus-correctness distinction applied to the fabric's own clean number. Verified at this seat: DERIVES_FROM 121 keys / 216 edges, ROUTES_TO 86 / 86 / 1 type. The uncovered member the reading does not name -- it swept writers, not readers -- is the CTO's finding at 95005 and rides the retirement's conditions."
+      },
+      {
+        "criterion": "G3-AC5",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-G-3.archive-read-substrate-card.proof_of_spec.json@91654ab3c6",
+        "verdict": "PASS",
+        "reason": "The card's own premise was TESTED rather than assumed and came out REFUTED on a counted distribution (14 / 6 / 1 over 21 rows), with the rule it rested on re-grounded on a stronger case the worker measured; the fourth-carrier answer names a real candidate, explains why it is worse than the case already caught, and refuses to close the list; and the obligations are each traceable to a measured row. A judgment criterion that refutes its author is working, not failing."
+      },
+      {
+        "criterion": "G4-AC5",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-G-4.portal-layer-vintage.proof_of_spec.json@67d7453815",
+        "verdict": "PASS",
+        "reason": "It separates 'misleads today' from 'could mislead' on measured convergence-by-accident, produces the window in round 6 where it DID mislead with a sha naming nothing, names the live harm as incomparability rather than misdirection, splits the plane between display hops and feed hops with the failure mode of getting that split wrong stated, and finds underneath it all that hop 1 has no committed producer for the route that built every round-6 push. It also identifies a variable this seat's own grain-baseline signature held silently, which is adopted here."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "L8_PACKET.round7.partial.md @89705c09ed re-hashed at this seat to 6accd182317cf94fd8adf427cd83a5d2d98ee0ccfd58befd1aa9ce6565c1838e over 7,972 bytes; the three instances read whole, each carrying UNVERIFIABLE-BY-INSTRUMENT on its AC5 with the reading in output_evidence and no assignee verdict.",
+        "This seat, 2026-09-10 ~05:1xZ, through opal-gateway graph_cypher on the served vintage 2026-09-10T03:31:02.025931Z: DERIVES_FROM -> 121 distinct source keys, 216 edges; ROUTES_TO -> 86 keys, 86 edges, 1 distinct destination class. Both figures independently reproduce the census's own reading of them.",
+        "1.0.0_SA_CTO 95005 (the retirement ruling and its condition 1, the reader census) and 94994; 2.0.0_SA_COO~A 95003 and 95009.",
+        "This seat's C-S59 (the grain-baseline sign) and the round-6 L10's restatement of its stability argument -- the claim G4-AC5's part (b) qualifies."
+      ]
+    },
+    "spec_asserts": "G1-AC5, G3-AC5 and G4-AC5 as cut (judgment=true, NO verdict): the seam's width and what a rate does not say; whether three carriers need three owners and what a fourth would look like; whether an undeclared vintage misleads today or only could, and whose plane the fix is on.",
+    "world_is": "The seam is one shadow class of 15 nodes; owner is a function of the question rather than of the carrier; the portal names have converged by accident and did diverge inside round 6; and a stability claim this seat signed held a variable it could not see.",
+    "notes": "Round-7 judgment criteria graded: 3 of 4 (G2-AC5 arrives when TO-CG-G-2 drains). The packet is PARTIAL and the slug waits for the FINAL, as at round 6."
+  }
+]
+```
+
+## C-S63 -- adjudicates nine: DISMISSED_WITH_REASON, records -- six cut defects read back by the seats ordered to execute them, including a MEASURED label filled from a contract document, and one worker credited for refusing to force-fit a comparator into the face's set
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T05:35Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CLDGRPH-C-S63",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W1-S35",
+      "NFRA_CLDGRPH-W1-S36",
+      "NFRA_CLDGRPH-W2-S73",
+      "NFRA_CLDGRPH-W2-S74",
+      "NFRA_CLDGRPH-W2-S75",
+      "NFRA_CLDGRPH-W3-S17",
+      "NFRA_CLDGRPH-S107",
+      "NFRA_CLDGRPH-S108",
+      "NFRA_CLDGRPH-S109"
+    ],
+    "one_line": "L9: ADJUDICATES nine items -- DISMISSED_WITH_REASON, records, and SIX OF THE NINE ARE THE ISSUER'S OWN CUT READ BACK BY THE SEATS THAT HAD TO EXECUTE IT. The issuer put four of them at the TOP of its packet rather than in a footnote and named the shape itself: a NAME or a CONTRACT written into a face as if it were a CENSUS or a RUN. W3-S17 IS THE EXPENSIVE ONE AND ITS LESSON IS THE LABEL, NOT THE BELIEF: the face carried, under the heading MEASURED, that format_provenance_header prints every source_vintage key it is given; exercised, it printed 3 of 7 and dropped 4 in silence because the code hard-codes one branch per source_kind with no loop -- so the FIRST carrier candidate the cut named is the one that must not be chosen, and a fix routed there would have passed its own test and changed nothing a reader sees. The issuer's own reading of it is the one to keep: MEASURED is a field a consumer can reject on, and it was filled from a contract document about a drained cell; had it read ASSUMED the worker would have owed the same exercise and the face would not have pointed at the wrong carrier first. That is 'a value must carry its claim' turned on the CUT rather than on a producer. W2-S73 and W2-S74 are the same family one plane over: a validator path that does not exist, bound to a schema const the estate's real validator contradicts (const 1 against const 3.1, mutually exclusive, so the criterion as written could not have passed on any input), and a card contract whose unit is one subject with seven rows, which cannot express the row-per-carrier shape the face ordered. Both are INERT because the workers reported them and produced the work anyway rather than forcing a shape the contract forbids. W1-S36 is a number carried forward without re-reading: the cut said 54 edge families at a vintage the service does not report, the world reads 55 at the vintage it does, and the node-class count agrees -- a stale figure and a stale vintage travelling together. W1-S35 is the opposite and is a credit: DERIVES_FROM measures OUTSIDE the both-identity population, so rather than force-fit it into the included set to match the face, the worker reported it as the round's NAMED COMPARATOR and negative control. A worker declining to reconcile a face against the world silently is the behaviour every one of these rows depends on. W2-S75 is a records fact worth the L10's eye: two records of the SAME snapshot population disagree by 20, both inside the round-6 record -- neither is this round's work and the discrepancy is now dated rather than inherited. S107, S108 and S109 are the issuer's acks, each naming the measurement that closed its item and each recording the defect as its own; they are consumed by this row. NOTHING HERE IS ARMED AFTER THIS WRITE: W2-S73 and W3-S17 were the two ARMED items and both are disarmed by acks that name what replaced them.",
+    "dismissal_reason": "Records: six cut defects the executing seats read back and reported rather than absorbed, one credit for refusing to force-fit, one dated records discrepancy from a prior round, and three acks consumed. Nothing armed remains among them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The nine rows read whole at HEAD (254 investigation items, 61 adjudication rows before this write; comp-surprise open 9, all dispositioned here); the packet's s.3, which carries four of them at the top rather than in a footnote.",
+        "This seat's own served reads at the same vintage the census used, which reproduce W1-S35's and W1-S36's figures: 55 edge families and the DERIVES_FROM comparator at 121 keys / 216 edges."
+      ]
+    },
+    "spec_asserts": "TO-CG-G-1's included-family set and its 54-family figure; TO-CG-G-3's validator invocation, schema const and row-per-carrier shape; TO-CG-G-4's MEASURED block naming format_provenance_header as a carrier that prints every key.",
+    "world_is": "Four of the round's faces named an instrument, a contract, a count or a vintage that the world contradicts, and each was found by the seat ordered to use it.",
+    "notes": "Investigation items without a disposition after this write: 0 of 254. The round is PARTIAL (TO-CG-G-2 open) and the slug waits for the FINAL."
+  }
+]
+```
+
+## C-S64 -- round 7 FINAL L9 @7c2bc76e39: G2-AC5 PASS, and the limb it answers only in part has its answer sitting in section 7 of the same document
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-C-S64",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T06:27Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9 on the round-7 FINAL packet @7c2bc76e39 (4 of 4 orders drained; sha256 147377ec13e1aa09ac027da6c5c34b929412c9f38881a1ecccf7d46fd541b51c over 7,938 bytes, re-hashed at this seat from the blob at the issuer's own commit and equal to the issuer's): THE LAST judgment criterion, G2-AC5, graded PASS -- and the grade turns on a limb answered only in part, whose answer is sitting in section 7 of the same document. THE READING PROVES A JOIN RULE, NOT AN EDGE-BUILDER BUG: kuzu_nessie_load.py:204 keys a served node `arn or node_id` and :249-251 match endpoints RAW against that key space, `skipped` counting only endpoints ABSENT from it -- so an edge built on a bucket NAME landed on the S3_BUCKET_POLICY node whose own arn column IS the name, never dangled, and every integrity control this project has ever run read clean over 135 wrong-class facts. I verified both lines verbatim at HEAD with a different instrument. THE LIMB THAT IS ONLY HALF ANSWERED is what would make the served re-take FAIL, and its answer is the worker's own 124-edge loss: a re-take reading LOW cannot separate a fix that did not land from a projection that dropped the family again, and the second branch is measured, bounded to one drop and unexplained. That requirement is PLACED here for the deferred pass, not chased. AND THE BEST NUMBER IN THE ANSWER IS AN ABSENCE: by_edge_type={'STORED_IN': 137} carries no SERVED_FROM, which is what proves the producer emitted its 27 canonically at source rather than being rescued at admission.",
+    "grades": [
+      {
+        "criterion": "G2-AC5",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-G-2.bucket-identity-made-one.proof_of_spec.json@baf9e4c839",
+        "verdict": "PASS",
+        "reason": "PASS. THE CRITERION HAS THREE LIMBS AND THEY DO NOT GRADE ALIKE. (a) WHAT A LOCAL FOLD CAN AND CANNOT PROVE -- ANSWERED, AND ANSWERED AGAINST ITSELF. The reading states what it proves (what the NEXT derive would commit, over the real snapshots/20260910 bytes, the real fold_stitch_document and normalize_edge_endpoints, with the join re-implemented from kuzu_nessie_load's own two lines) and states plainly that it does NOT prove the served plane and that nothing in the record is a served claim. It then volunteers TWO limits and absorbs neither: the grain sentinel's PASS is a pass over 35 of 59 live node types with 24 UNCOVERED, carried rather than dropped; and the join re-implementation is the worker's OWN reading of two cited lines whose only available cross-check is that it reproduces the BEFORE figures, which it names as corroboration ON ONE AXIS and not as proof of the loader. That last sentence is the criterion being answered correctly rather than merely at length: it is the difference between 'my model of the join agrees with the world' and 'the join is what I say it is', and the worker took the WEAKER of the two claims available to it. (b) WHAT THE SERVED RE-TAKE WILL NEED AND WHAT WOULD MAKE IT FAIL -- ANSWERED IN PART, AND THE MISSING HALF IS MEASURED IN THE SAME DOCUMENT. The reading names the gate (the deferred pass that already owes F11-AC3's, under the standing egress hold) and section 2 names both halves that must move, but it does not name what would make the re-take FAIL. THE ANSWER IS ITS OWN SECTION 7: between served vintages 03:31:02 and 05:32:57, with the snapshot, the stitch artifact and its marker ALL UNMOVED, the served graph lost 124 of 135 STORED_IN edges and one S3_BUCKET_POLICY node, while the correctly-parented OWNED_BY family moved by zero -- and the issuer's third read at 05:57:16 bounds it as a ONE-TIME drop rather than a decay. SO A SERVED RE-TAKE THAT READS LOW CANNOT DISTINGUISH 'the fix did not reach the served plane' FROM 'the projection dropped the family again', and the second branch is measured, live and unexplained. That is what would make the re-take fail, and it would fail in the shape of a FAILED FIX. The re-take therefore needs, BEFORE it reads a count: the producer's own emission figure for the NAMED run, the projection manifest id and served vintage printed beside the count, the OWNED_BY family read in the SAME tick as the negative control that moved zero across the loss window, and its QUERY FORM stated. I am placing that requirement rather than chasing it: the deferred pass is not this round's to cut. It is the same shape 1.0.0_SA_CTO ruled at 95055 as condition 4 on the retirement -- an absence must be ATTRIBUTABLE -- arriving one step EARLIER, at the re-take of the FIX rather than the proof of the removal, because an unexplained mover on a plane makes every reading of that plane non-attributable IN BOTH DIRECTIONS. (c) DOES NORMALIZING AT ADMISSION RISK A PRODUCER ALREADY EMITTING ARNS -- ANSWERED AND MEASURED RATHER THAN ARGUED. An already-canonical endpoint maps to itself, a one-named node is untouched, and the pass is non-losing BY CONSTRUCTION because it maps one PRESENT key to another PRESENT key, with resolvable_before and resolvable_after counted and printed on every run: 64,078 -> 64,080 on the real snapshot, so the 137 is round 6's two unresolved edges RECOVERED and not a fan-out. Its one real bound is stated with its remedy: 18 short names in this estate are claimed by TWO resources, and the fold REFUSES all 18 rather than guessing, printing both claimants. AND THE STRONGEST NUMBER IN THE ANSWER IS ONE THE REPORT DOES NOT FLAG AS SUCH: by_edge_type={'STORED_IN': 137}. That is a DISCRIMINATOR, not a total. Had the producer half not landed, SERVED_FROM's 27 endpoints would have needed the fold's rewrite too and would appear in that dict. They do not appear. So 'producer and fold each did their own half' is evidenced by the ABSENCE of SERVED_FROM from a dict that would have carried it, and the 27 of 27 on S3_BUCKET is then evidence of emission AT SOURCE rather than of rescue at admission. WHAT I VERIFIED AT THIS SEAT, WITH A DIFFERENT INSTRUMENT FROM THE ASSIGNEE'S (git show of the blob at HEAD, never the worktree): kuzu_nessie_load.py:204 reads `key = graph_key(row.get(\"arn\")) or graph_key(row.get(\"node_id\"))` and :249-251 read `src = graph_key(row.get(\"src_id\"))`, `dst = ...`, `if src not in best or dst not in best: skipped += 1` -- so the quoted key rule is VERBATIM and 'endpoints matched RAW against that key space' is what the code does. The mechanism follows from those two lines without a further assumption: `skipped` counts only endpoints ABSENT from the key space, so a WRONG-CLASS endpoint that is PRESENT is never skipped and never dangles. That is the whole explanation for 135 wrong-class landings surviving every integrity control this project has run, and it is Rule 22's shared-dependency limb exactly: every per-family dangling check passed because they all consulted the SAME key space. I also confirmed at HEAD that the four fold functions the reading names exist and do what it says -- canonical_node_key:2294, _canonical_endpoint_aliases:2315 (whose body sends any alias two canonical keys both claim to `ambiguous` and POPS it from `aliases`, so the refusal is mechanical and not a docstring), normalize_edge_endpoints:2353 with its resolvable pair printed at :2421-2428, and _stitch_endpoint_keys:2441 -- and that the capture reads aliases=1264, ambiguous_aliases=18, endpoints_rewritten=137, edges_touched=137 of 64,466. ONE CAUTION ATTACHED TO A NUMBER RATHER THAN TO THE GRADE, because this number will be quoted: the BEFORE half of the before/after table (STORED_IN 135, SERVED_FROM 27, both on S3_BUCKET_POLICY) is NOT re-derived by this run. The capture says so in its own words at line 7, naming it the stored ENVIRONMENT taken from CG-s-32's served census. So '162 -> 0' reads as one movement while being two readings of DIFFERENT PLANES at DIFFERENT VINTAGES -- a local fold measured now against a served census measured then. The worker disclosed it; I record it because a disclosed substitution that travels without its disclosure becomes a silent one at the second hop. THE VERDICT: the criterion asked for a reading and forbade a verdict. The reading it got is bounded on all three limbs, volunteers two limits against itself, takes the weaker of two claims about its own instrument, and produces one finding -- the join's key rule -- worth more than the fix it was written to justify. The single limb answered in part has its own answer sitting unjoined in section 7 of the same document, and that join is made here."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/L8_PACKET.round7.final.md @7c2bc76e39 -- 7,938 bytes, sha256 147377ec13e1aa09ac027da6c5c34b929412c9f38881a1ecccf7d46fd541b51c, computed at this seat over the blob at the issuer's named commit (0 CRLF pairs), equal to the first 16 hex the issuer published at 95052.",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/CG-s-33.bucket-identity-made-one.result.md @e0255e47db -- the reading under grade, sections 1, 4, 7 and 8.",
+        "This seat at HEAD, git show of the blob and not the worktree: infra/aws/globgrph/kuzu_nessie_load.py:204 and :249-251 read exactly as the reading quotes them; infra/aws/globgrph/derive_runner.py carries canonical_node_key:2294, _canonical_endpoint_aliases:2315, normalize_edge_endpoints:2353 with resolvable_before/after at :2421-2428, and _stitch_endpoint_keys:2441.",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/g2_capture_AC2.txt:43 and :75-76 -- ENDPOINT_CANONICALIZE aliases=1264 endpoints_rewritten=137 edges_touched=137 of 64466 resolvable_before=64078 resolvable_after=64080 by_edge_type={\"STORED_IN\": 137}, ambiguous_aliases=18; :64-71 the after-state (STORED_IN 137 and SERVED_FROM 27 on S3_BUCKET, ON_S3_BUCKET_POLICY=0, DERIVES_FROM_RESOLVED=216 of 216); :7 the disclosure that the BEFORE figures are the stored ENVIRONMENT from CG-s-32's served census and are not re-derived by this run.",
+        "1.0.0_SA_CTO 95055 @5a2d548b85 (condition 4: the retirement's absence must be ATTRIBUTABLE at the producer for a named run) and 2.0.0_SA_COO~A 95045 (the third served read at 05:57:16 bounding the loss as one-time)."
+      ]
+    },
+    "spec_asserts": "TO-CG-G-2 @c16e3a4986 line 111: G2-AC5, judgment=true -- 'what a LOCAL fold can and cannot prove about the served plane; what the served re-take of F11-AC3 will need when the hold lifts and what would make it fail; and whether normalizing at admission risks anything for a producer that already emits arns. A reading act; NO verdict; graded by 3.0.0_SA_CVO at L9.'",
+    "world_is": "All three limbs are answered; one is answered in part, and its missing half is measured in section 7 of the same document and joined to it here. The reading's central claim is verified verbatim at HEAD at this seat with an instrument the worker did not use.",
+    "notes": "ROUND 7's FOUR JUDGMENT CRITERIA NOW READ 4 of 4 PASS: G1-AC5, G3-AC5 and G4-AC5 at C-S62 on the PARTIAL, G2-AC5 here on the FINAL. Nothing in this round is DEPLOYED: both producer files read COMMITTED-NOT-DEPLOY-SCOPE and the served re-take stays bound to the deferred pass under the standing exclusion of all egress off Opal infrastructure from agent autonomy. Every number graded here is a LOCAL fold over real bytes and none is a served claim, which the reading says of itself before I say it."
+  }
+]
+```
+
+## C-S65 -- L9: six items GRADUATED (the retirement's four conditions, and the served plane's unexplained mover) -- and the disposition of W1-S38 AMENDS a rule of mine: a subtraction's DOMAIN must be the population of the claim, and the domain choice is a claim to falsify first
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-C-S65",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T06:27Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "SPLIT, per item, and named in one_line: 2.0.0_SA_COO~A to cut the retirement as its own cell in round 8 carrying all four conditions (W1-S37, W1-S38, S110, S113) and to carry the served re-take's attribution requirement; 0.8.0_AE_CloudComp for the producer half of that cell; OPEN and owned by whoever owns the projection for W1-S39 and S111, where the question is what republished the graph and no seat has yet been shown to own it.",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W1-S37",
+      "NFRA_CLDGRPH-W1-S38",
+      "NFRA_CLDGRPH-W1-S39",
+      "NFRA_CLDGRPH-S110",
+      "NFRA_CLDGRPH-S111",
+      "NFRA_CLDGRPH-S113"
+    ],
+    "one_line": "L9: ADJUDICATES six items -- GRADUATED, ARMED, owners split because their remedies do not move together. TWO CLUSTERS AND ONE AMENDMENT TO A RULE OF MINE. CLUSTER ONE, THE RETIREMENT (W1-S37, W1-S38, S110, S113): the retirement is CORRECTLY NOT DONE and every one of its four conditions now binds, two of them minted by measurements nobody ordered. W1-S37 stands as the blocker on condition 2 and it is a MEASUREMENT rather than an effort limit -- OWNED_BY's meaning is consumed as a CONTAINMENT seam by cse_schema.py:323, comp_marker_read.py:121 and comp_coverage_check.py:523, so widening its stated intent to absorb LOCATION changes what three tools mean, and by the condition's own terms a surviving term that cannot absorb the retired one's intent makes the act a DELETION and not a consolidation. W1-S38 and its ack S110 carry condition 1's own defect: MANIFEST_TOOLS_TOUCHING_STORED_IN=0 of 78 over the declared denominator, against five real consumers found only by an unscoped sweep. S113 carries the CTO's condition 4 at 95055 -- the absence must be proven at the PRODUCER for a NAMED run, because the served plane has already produced this family's near-zero once without anybody acting, so a served absence no longer discriminates a deliberate removal from a spontaneous one. THE DISPOSITION OF W1-S38 IS AN AMENDMENT TO A RULE OF MINE, because the rule it applied is mine and it produced this. Tonight's sharpening of Rule 24 (i) -- HUNT THE UNCOVERED MEMBER BY SUBTRACTION, NEVER BY RECALL -- governs how you SEARCH and says NOTHING about how you CHOOSE THE DOMAIN. A subtraction over a domain that is not the claim's population is exactly as blind as recall, and WORSE than recall, because it arrives with a printed denominator and therefore reads as measured. AMENDED, and this is the operative sentence for round 8's cut and for every cut after it: A SUBTRACTION'S DOMAIN MUST BE THE POPULATION OF THE CLAIM, AND THE CHOICE OF DOMAIN IS ITSELF A CLAIM THAT MUST BE FALSIFIED BEFORE THE SUBTRACTION IS RUN -- by one unscoped read of the term over the corpus with its denominator printed, compared against what the domain contains; if the unscoped read returns a member the domain does not hold, THE DOMAIN IS WRONG AND THE SUBTRACTION IS VOID. No denominator printed beside a subtraction can tell you this, because a denominator certifies the SWEEP and never the SET. AND THE FAILURE MODE IS A GREEN: a wrong domain that returns NON-EMPTY gets argued with, while a wrong domain that returns EMPTY gets ACTED ON -- here the empty set WAS the authorizing branch, so the defect could only ever have surfaced by somebody running the read nobody asked for. CLUSTER TWO, THE UNEXPLAINED MOVER (W1-S39, S111): 124 of 135 served STORED_IN edges and one S3_BUCKET_POLICY node gone between 03:31:02 and 05:32:57 with the snapshot, the artifact and the marker ALL unmoved, and the correctly-parented OWNED_BY family moving by exactly zero -- which is the counterfactual, stated by the world rather than by any seat. S111's third read at 05:57:16 bounds it as ONE DROP and not a decay, and taking that third point was right for the reason given: two points cannot tell a decay from a drop, and the two are different things to inherit. IT STAYS ARMED, AND ITS CONSEQUENCE REACHES PAST ITS OWN ROW: it is also the answer to G2-AC5's half-answered limb, because a served re-take that reads LOW cannot separate a fix that did not land from a projection that dropped the family again. A plane with an unexplained mover on it makes every reading of that plane non-attributable IN BOTH DIRECTIONS, and that is why this row is graduated rather than recorded.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The six rows as filed: W1-S37, W1-S38, W1-S39 (0.9.0_WK_NFRA_CLDGRPH~1, 2026-09-10T05:48Z) and S110, S111, S113 (2.0.0_SA_COO~A, 06:20Z and 06:25Z), in org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md.",
+        "This seat, 2026-09-10 ~06:1xZ at HEAD, re-measuring condition 1's census with a different instrument from the assignee's: org/modules/graph/graph-call-manifest.yaml carries 78 tools_index entries; all 78 names resolved to a file under .tools/ (78 of 78, 0 unresolved -- the arm that separates a true zero from a resolution failure); none of the 78 contains STORED_IN or stored_in. An unscoped comp-find over corpus=all reads 452 hits across 153,590 files scanned. Named REPETITION and not corroboration: it is the assignee's method re-run, and it agrees.",
+        "This seat at HEAD: git show of org/modules/graph/tsgraph_spike/load_scratch_kuzu.py:55-62 -- an edges.append carrying edge_type STORED_IN with resolution 's3:key name->bucket ARN (derive_stitch convention)', which is a WRITER of the term outside the producer entirely; and each of the three round-6 deliverable consumers resolves to exactly one path under 0.9.0_WK_NFRA_CLDGRPH~2/.",
+        "1.0.0_SA_CTO 95055 @5a2d548b85 (condition 4, and why condition 3 stopped discriminating); 2.0.0_SA_COO~A 95043 and 95045; the CTO's adjudication CTO_ADJUDICATION_NFRA_CLDGRPH_20260910T052xZ_RETIRE_STORED_IN_BUT_A_PRODUCER_CENSUS_IS_NOT_A_CONSUMER_CENSUS.md:42-49 for condition 1 as written."
+      ]
+    },
+    "spec_asserts": "Condition 1 of the retirement ruling: that the readers of STORED_IN are enumerable by subtraction from the call manifest, so that an empty result over that printed denominator authorizes the retirement. And CLAUDE.md Rule 24 (i) as sharpened tonight: hunt the uncovered member by subtraction from a printed denominator, never by recall.",
+    "world_is": "The manifest is a REGISTRY of graph-querying tools and not the population of readers of an edge term: 0 of 78 touch it while the repository holds five consumers, one of them a writer. The subtraction discipline is therefore amended -- the domain must be the population of the claim, and the domain choice is a claim to be falsified by one unscoped read BEFORE the subtraction runs. Separately, the served plane has an unexplained one-time mover on it, which makes both the retirement's proof and the fix's re-take non-attributable from that plane alone.",
+    "notes": "ROUND 8's RETIREMENT CELL INHERITS ALL FOUR CONDITIONS AND THE AMENDED DOMAIN RULE, and its reader denominator is the REPOSITORY rather than the manifest. TWO THINGS I AM NOT DOING HERE. I am not re-opening the retirement's merits: the cost asymmetry that decided it -- an absence is checked once, a duplicate has to agree forever -- is untouched by any of this, and the 124-edge loss strengthens it rather than weakening it. And I am not minting remediation rows for these six: each already has a named owner and a cell forming in round 8, and a remediation row whose remedy is 'cut the cell that is being cut' adds a carrier without adding a fact. THE PATTERN ACROSS BOTH CLUSTERS AND WORTH MORE THAN EITHER: every one of the six was surfaced by the seat being GRADED -- the assignee ran the unscoped sweep nobody asked for, and the issuer took the third served read nobody asked for. Neither came from a control, a gate or a census."
+  }
+]
+```
+
+## C-S66 -- L9: four items DISMISSED as records -- three instrument disclosures and a fourth false-zero family found in this L9's own run
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-C-S66",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T06:27Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Records. Each is a disclosure whose value is that it was written down rather than absorbed; no remedy is owed by any seat on any of the four, and the two that touch a face are the issuer's own, already conceded and re-cut.",
+    "adjudicates": [
+      "NFRA_CLDGRPH-W1-S40",
+      "NFRA_CLDGRPH-W1-S41",
+      "NFRA_CLDGRPH-W1-S42",
+      "NFRA_CLDGRPH-S112"
+    ],
+    "one_line": "L9: ADJUDICATES four items -- DISMISSED_WITH_REASON, records, all INERT after this write, AND THREE OF THE FOUR ARE INSTRUMENT DISCLOSURES RATHER THAN DEFECTS. W1-S40: 18 short names in this estate are claimed by TWO resources, and the fold REFUSES all 18 rather than guessing, printing both claimants each time -- the same 'a missing fact is honest, a guess is not' rule this project settled in cycle 4, and the refusal is MECHANICAL (an alias two canonical keys both claim is moved to `ambiguous` and popped from `aliases` at derive_runner.py:2315-2338, verified at HEAD at this seat) rather than a docstring promise. No edge in today's graph is affected, and the row is the reason a future one will not be silently guessed at. W1-S41: G2-AC4 named 'your own shell history' as an instrument and no shell history exists for a worker subagent whose every Bash call runs in a fresh non-interactive shell, so the criterion was met with a STRICTLY STRONGER oracle -- the LastModified of the three surfaces the five held acts cannot avoid moving, all three predating the order's start, plus a static scan of 596 executable lines with 199 comment and docstring lines excluded and counted, plus a planted positive catching 5 of 5. A shell history records what was TYPED; a LastModified records what HAPPENED. The substitution is UPWARD and it is disclosed, which is the whole reason it can be weighed. W1-S42: the STANDING LAW block says every script carries the `g1_` prefix while all four graded invocations name `g2_` files -- a carry-over from TO-CG-G-1, resolved in favour of the invocations, which is what the checker grades. S112: the issuer's ack of those three plus W1-S37, carrying ONE instrument trap of its own that is worth more than the ack -- `MATCH ()-[e:STORED_IN]->()` FAILS AT THE BINDER with 'Table STORED_IN does not exist' because this graph carries edge_type as a PROPERTY and not as a relationship table, so the typed-pattern form ERRORS rather than returning zero and an agent reading that error as an absence reports a family GONE while it sits at 11. THAT MAKES THREE FALSE-ZERO FAMILIES THIS ESTATE HAS NOW MEASURED -- an ERROR, a TIMEOUT and an EMPTY INPUT all rendering as a clean zero to a caller that reads only the count -- and I add a FOURTH from my own run in this same L9: `comp-find <term> --scope all` prints '0 hit(s) across 0 file(s) scanned in scope [corpus=all]' at rc 0, because `--scope` is not a flag and is consumed as a PATHSPEC, so nothing is scanned while the printed scope line still reads corpus=all. The correct flag is `--corpus all`, which reads 452 across 153,590. In all four the only thing separating a mis-typed or broken call from a measured absence is the DENOMINATOR printed beside the number, which is why that is a law here and not a style preference.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The four rows as filed: W1-S40, W1-S41, W1-S42 (0.9.0_WK_NFRA_CLDGRPH~1, 2026-09-10T05:48Z) and S112 (2.0.0_SA_COO~A, 06:20Z).",
+        "This seat at HEAD: infra/aws/globgrph/derive_runner.py:2315-2338 -- _canonical_endpoint_aliases sends any alias two different canonical keys claim to `ambiguous` and pops it from `aliases`, so the 18 refusals are mechanical; g2_capture_AC2.txt:75 reads ambiguous_aliases=18 beside aliases=1264.",
+        "This seat, same tick: `.tools/comp-find \"STORED_IN\" --scope all --limit 80` -> '0 hit(s) across 0 file(s) scanned in scope [corpus=all]', rc 0; `.tools/comp-find \"STORED_IN\" --corpus all --limit 80` -> '452 hit(s) across 153590 file(s) scanned'. Same term, same tick, one mistyped flag.",
+        "1.0.0_SA_CTO 95055, which banks S112's binder trap in the ruling and in memory and names the error/timeout/empty-input triple."
+      ]
+    },
+    "spec_asserts": "TO-CG-G-2's G2-AC4 clause naming 'your own shell history' as a counting instrument, and its STANDING LAW clause requiring the `g1_` prefix; and the general expectation that a query returning no rows has measured an absence.",
+    "world_is": "The shell-history instrument does not exist for this worker and was substituted upward with the substitution printed; the `g1_` clause is a carry-over the invocations override; the fold's 18 refusals are mechanical; and a query form, a timeout, an empty input and a mistyped flag each render as a clean zero to a caller that reads only the count.",
+    "notes": "The fourth false-zero family is MINE, found in this L9's own measurement, and it is filed here rather than as a fifth investigation row on a seam being replaced -- the same call 2.0.0_SA_COO~A made and 1.0.0_SA_CTO ratified for the binder trap. Its general form is the one that travels: a zero is a measurement only when the DENOMINATOR beside it is non-zero and is the denominator you meant."
+  }
+]
+```
+
+## C-S67 -- the spine v3.12 boundary recorded IN round 7's grade (v3.13, non-retroactive): 2 of 16 mechanical criteria carry a difference control, in two different forms, and C-S64's PASS leans on a SIBLING arm's control rather than on its own criterion's
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-C-S67",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T06:34Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A boundary recorded on grades already written, filed as a NEW row because this document is append-only and C-S62 and C-S64 stand exactly as filed. It dispositions no investigation item, re-opens nothing and asks nothing of any seat.",
+    "one_line": "THE SPINE v3.12 BOUNDARY, RECORDED IN ROUND 7's GRADE AS 1.0.0_SA_CTO's v3.13 REQUIRES, AND AUDITED AT THIS SEAT RATHER THAN ADOPTED. v3.12 (a seam proved to DELIVER its input is not a seam proved to have an EFFECT; a criterion names the OUTCOME and proves what must DIFFER when the control is engaged against the same run with it disengaged) landed AFTER round 7 was cut, and v3.13 rules expressly that it does NOT bind retroactively -- a round is graded against the law in force at its cut, a criterion predating the clause is NOT a defect, and where an audit exists the L9 grades WITH IT IN HAND and records the boundary rather than re-opening. This row is that record. MY OWN AUDIT, taken from the four faces at HEAD and not from either peer's report: 20 criteria = 4 JUDGMENT + 16 MECHANICAL; SIX of the sixteen name a control token inside the expect (G1-AC1 CLASS_PROBE_CONTROL, G2-AC1 NEGATIVE_CONTROL, G2-AC4 EGRESS_PROBE_CONTROL, G3-AC4 PROBE_CONTROL, G4-AC2 MOVER_PROBE_CONTROL, G4-AC4 CONTROL) -- which is 2.0.0_SA_COO~A's number, and it is the WRONG number to quote, exactly as the CTO corrected it. FOUR OF THE SIX ARE POSITIVE CONTROLS ONLY: a probe that fires so a zero is not a dead instrument bounds UNDER-firing and never shows what CHANGES. TWO CARRY THE REAL SHAPE, and I can sharpen how: G3-AC4's expect states the flipped pair IN WORDS -- 'SHRINK_MASKED=true on (955 -> 137)' beside 'SHRINK_MASKED=false on the fixed-emission pair' -- the engaged/disengaged form the law describes. G2-AC1's expect carries the same discipline in a DIFFERENT FORM: three contrasting outcomes co-asserted over ONE pass -- NAME_ENDPOINT_REWRITTEN=true, ARN_ENDPOINT_UNCHANGED=true, SINGLE_IDENTITY_UNTOUCHED=true -- so the difference is expressed as OUTCOME-PER-INPUT-CLASS rather than as a flipped flag, and a control that must produce three different results on three input kinds cannot pass by doing nothing. THAT REFINEMENT IS WORTH BANKING PAST THIS ROUND: the difference control has two expressible forms and only one of them LOOKS like running it twice, so a conformance count that recognises only the flipped-flag form will under-count real arms while a count of 'CONTROL' tokens over-counts them. A seat quoting conformance states WHICH FORM IT COUNTED. AND ON G2-AC2, WHICH THE ISSUER NAMED AGAINST ITSELF RATHER THAN LETTING ANYONE FIND IT: my read of its expect at HEAD confirms it -- pure counts (137, 27, ON_S3_BUCKET_POLICY=0, 216, the snapshot named) with NO control token at all. BOTH HALVES OF THE CTO's SENTENCE ARE TRUE AT ONCE: the round's CLAIM is sound and the CRITERION does not carry it. AND THE PART THAT IS MINE TO ADD, BECAUSE IT IS ABOUT MY OWN GRADE: C-S64's PASS on G2-AC5 leans on numbers G2-AC2's arm produced, and it holds ONLY BECAUSE A SIBLING ARM CARRIES THE DIFFERENCE -- G2-AC1's fixture arm 6 (admitted=1 of 1 post-fix against a pre-fix id set admitting 0 of 1) and the worker's own resolvable_before=64078 -> after=64080, both in the same order and both cited in that grade's evidence. A grade that rests on a sibling's control rather than on the criterion's own is still sound and is NOT self-evident, and it becomes invisible at the second hop unless it is written down. It is written down here.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 2026-09-10 ~06:3xZ at HEAD: a parse of all four round-7 faces (org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-G-{1,2,3,4}.*.md) over the <criterion id=...> tags and each one's own <expect> block -> 20 criteria, 4 carrying judgment=\"true\", 16 mechanical; the six expects naming a control token are G1-AC1, G2-AC1, G2-AC4, G3-AC4, G4-AC2, G4-AC4; G3-AC4's expect reads 'SHRINK_MASKED=true on \\(955 -> 137\\)[\\s\\S]*SHRINK_MASKED=false on the fixed-emission pair[\\s\\S]*PROBE_CONTROL=FIRED'; G2-AC1's reads 'NAME_ENDPOINT_REWRITTEN=true[\\s\\S]*ARN_ENDPOINT_UNCHANGED=true[\\s\\S]*SINGLE_IDENTITY_UNTOUCHED=true[\\s\\S]*NEGATIVE_CONTROL=FIRED'; G2-AC2's names no control token.",
+        "1.0.0_SA_CTO 95072 @1e2247e0f0 -- spine v3.13's three qualifiers: a positive control is not a difference control (the honest count is 2 of 16, not 6); a CENSUS is a non-application where the outcome IS the count; and the clause does NOT bind retroactively, with the L9 recording the boundary in the grade rather than re-opening.",
+        "1.0.0_SA_CTO 95062 @9f548bfbc9 -- spine v3.12 as landed, and 2.0.0_SA_COO 95059's carriage of the assignee's sentence that earned it.",
+        "2.0.0_SA_COO~A 95066 -- the self-audit of its own just-drained round against a law that landed an hour after the cut, including G2-AC2 named against itself.",
+        "This document's own C-S62 (G1-AC5, G3-AC5, G4-AC5 PASS) and C-S64 (G2-AC5 PASS), which stand exactly as filed; the round-7 FINAL packet @7c2bc76e39."
+      ]
+    },
+    "spec_asserts": "Spine v3.12: a criterion names the OUTCOME, never only the mechanism, and proves what must DIFFER when the control is engaged against the same run with it disengaged. And the reading a conformance count invites: that a criterion naming a CONTROL token satisfies it.",
+    "world_is": "Round 7 was cut before v3.12 existed and v3.13 rules it non-retroactive, so nothing here is a defect and nothing is re-graded. Measured at this seat: 2 of 16 mechanical criteria carry a difference control, in TWO different forms -- a flipped pair stated in words (G3-AC4) and three contrasting outcomes co-asserted over one pass (G2-AC1) -- while four more name a positive control that bounds under-firing only, and G2-AC2 names none while the claim it asserts is carried by a sibling arm in the same order.",
+    "notes": "WHY THIS IS A NEW ROW AND NOT AN EDIT: the document is append-only and C-S62 and C-S64 are correct as written -- they graded four judgment criteria, and a judgment criterion carries no expect and therefore no control arm by construction, so v3.12 does not reach them at all. What the boundary bounds is what a reader may infer about the SIXTEEN MECHANICAL criteria those grades sit beside, and that inference is the thing worth fixing in the record. TWO THINGS I AM NOT DOING: not re-grading round 7, which the CTO has ruled closed and which I agree is closed; and not treating the audit as a finding against 2.0.0_SA_COO~A, because a seat that measures its own just-closed round against a law that post-dates it, reports the real number, and names the criterion it is least comfortable with before anyone asks, has done the thing the law exists to produce. Round 8's cut carries every mechanical criterion's own control arm inside the expect, which is where this ends."
   }
 ]
 ```

@@ -1,4 +1,10 @@
-# INVESTOR REPORTING & DATA UNIFICATION — STEP-1 BRIEF (L1) — the D14 directive brief
+# INVESTOR REPORTING & DATA UNIFICATION — STEP-1 BRIEF (L1) — a function under D9 Opal Workflows
+
+> ⛔ **PLACEMENT RULED 2026-09-09 ~21:0xZ, Andrew VERBATIM:** *"its ok I think we can basically wrap that whole function into D9 Opal
+> Workflows, because it effectively is going to be a bunch of middlemanning ops that pulls data from some vendor, runs it through
+> some AI/pipeline processes, and becomes a flow on the dashboard."* This supersedes the ~17:2xZ "dedicated D14" word this brief
+> was first cut under. Every "D14" below is left as written where it records history and corrected where it states placement.
+> Record: `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260909_210xZ_INVESTOR_REPORTING_WRAPS_INTO_D9_OPAL_WORKFLOWS_NOT_A_NEW_D14.md`.
 
 **Author:** 4.0.0_SA_CRO (Chief Research Officer)
 **Home:** org/tier1_exec/4.0.0_SA_CRO/
@@ -132,7 +138,7 @@ deliverable and should be cut as a constraint on O7/O8, not as a build. **SOURCE
 
 # PART II — WHERE THE BOUNDARY SITS
 
-**Investor Reporting (D14, Andrew's number) OWNS:**
+**Investor Reporting (a function under D9 Opal Workflows, per Andrew ~21:0xZ; first cut said D14) OWNS:**
 - the advisor client-service workflow as a distinct product surface inside the portal — search, the four-level
   navigation, holdings + model views, the two client actions, PDF export (§05 table row "Investor Reporting — new", §07);
 - its own gold and platinum namespaces, schedules and publication path (§06 D01; §09 "Platinum"; §14 illustrative
@@ -172,8 +178,9 @@ compartmentalization); `SXPL_RESTIN` (inactive — SmartX REST replacement of th
 
 **What "wraps D1 D2 D3" means here, as this brief reads Andrew's word:** D1 supplies the classification registry O2
 reads; D2 supplies the spine, the 49F reference path and the parity oracle O1/O3/O7 stand on; D3 IS O2 at account
-grain. D14 is where those three converge into one advisor-facing product, and §06 D01 is the decision that moves the
-client workflow's HOME out of Advisor Intelligence. Whether any member project re-homes to D14 is a register act
+grain. D9 Opal Workflows is where those three converge into one advisor-facing product (his shape: vendor pull → AI/pipeline → a
+dashboard flow), and §06 D01 is the decision that moves the client workflow's HOME out of Advisor Intelligence. Whether any
+member project re-homes under D9 is a register act
 (MSTR as register owner, CTO at L3) — this brief names the relationship and moves nothing.
 
 ---
@@ -308,12 +315,24 @@ INVENTORY.md` and `MDPF_PIPELINE_TRUTH.md` exist for one page. **Finding:** §14
 as D10's instrument over the D10 taxonomy; the prior per-partner attempt stalled at Phase 0 and the brief cannot say why
 (not chased).
 
-### F-K — The directive register has no D13 and no D14
+### F-K — The directive register has no D13 and no D14; PLACEMENT RULED to D9 at ~21:0xZ
 `comp-read --enumerate 'D1[34]\b'`: 0 hits / 481 lines in `org/missions/DIRECTIVES.yaml`; 0 hits / 44 lines in
-`DIRECTIVES_RETIRED.yaml`. Live: D0–D12 (13 live, 1 retired; `directives-check` 17:17Z). **Finding:** D14 is
-Andrew's number and is unminted; D13 is unexplained by anything read here. The register row is `0.0.0_AB_MSTR`'s cell.
+`DIRECTIVES_RETIRED.yaml`. Live: D0–D12 (13 live, 1 retired; `directives-check` 17:17Z). **Finding:** D14 was
+Andrew's ~17:2xZ number and was never minted; at ~21:0xZ he ruled the function INTO D9 Opal Workflows instead (verbatim at the
+top of this brief). D9 is live on the board with 4 member projects (`OPAL_TAXSMA`, `OPAL_TAXROSTER`, `OPAL_TAXSMA_PT2`,
+`OPAL_TAXSMA_REGISTRY`), PRD `D9_TAX_SMA_OPS_PRD.md`, SITEZ placement. D13 is unexplained by anything read here. The D9
+member-set row is `0.0.0_AB_MSTR`'s cell.
 
-### F-M — What "the current YCharts solution" actually provides, field by field (ADDED 2026-09-09 ~18:2xZ on Andrew's word)
+### F-M — What "the current YCharts solution" provides for PRODUCT 2, SENSITIVITY ANALYSIS: varietal 1 of 3, field by field (ADDED 2026-09-09 ~18:2xZ; RE-CLASSIFIED ~18:4xZ on Andrew's word)
+⛔ **Classification, Andrew VERBATIM ~18:4xZ:** *"THe YCharts artifact is not a performance reporting product, that is a
+sensitivity analysis. The performance reporting asset is product 1, this is a sample of 1 of 3 varietals for product 2."*
+The first cut of this finding read the artifact against product 1 and said it was "not a stress/sensitivity report"; that was
+this seat's mis-framing and is corrected here, not silently. **What stands:** this varietal contains no historical-scenario
+replay; in it, "sensitivity" is a client-portfolio-vs-Opal-model side-by-side on exposures, fundamentals, drawdown windows
+and risk statistics. **What changes:** O4 is NOT greenfield-of-a-kind — the estate now holds a captured field census of the
+incumbent's product-2 surface, at a floor of 1 of 3 varietals; the two uncaptured varietals are where a scenario-replay
+form, if YCharts offers one, would live. F-G's "0 DEF hits for stress tokens in the repo" stands as a statement about the
+ESTATE'S CODE; it says nothing about the vendor's product, which this scrape now partly describes.
 Andrew supplied one YCharts "portfolio vs Opal model" comparison report (33 pages, sha256 `dc824eac…68a90`, client-named file
 kept in Downloads, not committed) and asked for a fine-toothed scrape of its fields as a JSON addition for the CTO. Delivered:
 `docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json` — 33 sections, 176 field-catalog rows, 125
@@ -325,9 +344,10 @@ PERFORMANCE REPORT"; (ii) FOUR as-of clocks coexist in one document (Sep 9, Sep 
 dates back to 2022 — O9's four-facts rule, illustrated by the incumbent; (iii) roughly half the fields are LOOK-THROUGH
 exposures and fundamentals (region/country, style box, sector, bond sector/maturity/credit, weighted P/E etc.) that need a
 licensed fund-holdings + classification feed — RCN-0001 finding 5's moat, again; the return/risk arithmetic is computable
-from a total-return series; (iv) the alpha/beta benchmark is never named; (v) **no stress scenario appears in 33 pages** —
-the nearest fields are Drawdown and Monthly VaR 5% — so if the estate's sensitivity workflow is a different YCharts report
-type, that artifact is NOT yet captured (Part VII.13); (vi) the report carries an Opal factsheet disclosure ("net of the
+from a total-return series; (iv) the alpha/beta benchmark is never named; (v) **no historical-scenario replay appears in this
+varietal** — its sensitivity dimensions are the exposure/risk side-by-side above, plus Drawdown windows and Monthly VaR 5%;
+the proposal's §04 scenario framing (2008, 2016, Aug-2024) must therefore sit in one of the two UNCAPTURED varietals or be
+Opal's own addition — undetermined until those are captured (Part VII.13); (vi) the report carries an Opal factsheet disclosure ("net of the
 highest Opal fee, 1%") that does not reconcile with the report's own 0.30% advisory-fee setting — a disclosure-owner item
 (Part V.12). A PROPOSAL-flagged feasibility read per field group is inside the JSON for the CTO.
 
@@ -342,7 +362,8 @@ object. **Finding:** §03's ambiguity fix is a naming discipline over existing k
 
 Named, not sequenced. Sequencing is L5.
 
-1. **D14 exists on the register** with its member set stated (MSTR, on Andrew's word; §F-K).
+1. **Investor Reporting is entered under D9 Opal Workflows on the register** with its member set stated (MSTR, on Andrew's
+   ~21:0xZ word; §F-K) — no new directive.
 2. **The HOME of client-level performance reporting is decided** — inside Advisor Intelligence's Books tab
    (ADVI_PERFRP as written) or inside Investor Reporting (§06 D01) — and ADVI_PERFRP is amended, re-homed or
    superseded WITH its pointer (XXX.md terminal-status rule). CTO.
@@ -420,9 +441,11 @@ Measured 2026-09-09 17:00Z–17:35Z. Ages; do not cut outcomes from it.
 10. **The `1:69ANNUAL`/`c01` defect's current state in `ADVI_49F` was not re-measured**; F-F carries RCN-0002's naming only.
 11. **"2016 issue" and "Pershing Square"** remain exactly as unresolved as the proposal leaves them.
 12. **D13** — its absence is reported, not explained.
-13. **The YCharts scrape (F-M) covers ONE report type, a portfolio-vs-model comparison.** It says nothing about what YCharts
-    provides for stress/sensitivity analysis; no scenario field exists in that artifact. Per-point coordinates on the 5-year
-    scatter plot were not read (chart-only).
+13. **The YCharts scrape (F-M) covers ONE of THREE varietals of the product-2 (sensitivity analysis) surface**, per Andrew's
+    classification. The other two are uncaptured, so the product-2 field census is a floor, and whether YCharts offers a
+    historical-scenario form is undetermined from this artifact. Per-point coordinates on the 5-year scatter plot were not
+    read (chart-only). This seat's first cut mis-framed the artifact against product 1; corrected in F-M and in the JSON's
+    `_meta.classification_correction`, never silently.
 
 ---
 
@@ -435,7 +458,8 @@ Measured 2026-09-09 17:00Z–17:35Z. Ages; do not cut outcomes from it.
   YCHARTS SCRAPE    docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json (F-M; for the CTO)
                     (source PDF sha256 dc824eacf1ed4920c3c45be988b045850cf086985ee52550373e5a426ba68a90, 858,808 B, 33 pp, Andrew's Downloads, NOT committed)
   ANDREW-DIRECT     org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260909_171xZ_INVESTOR_REPORTING_BRIEF_CREATE_WRAPS_D1_D2_D3_ESTABLISHES_D14.md
-  DIRECTIVE         D14 "Investor Reporting" -- Andrew's number, UNMINTED (F-K); register owner 0.0.0_AB_MSTR
+  DIRECTIVE         D9 Opal Workflows (Andrew ~21:0xZ; supersedes the ~17:2xZ D14 word) -- PRD docs/architecture/D9_TAX_SMA_OPS_PRD.md,
+                    SITEZ; the D9 member-set row is 0.0.0_AB_MSTR's; no new directive is minted
   PROJECT           NONE-YET
   EXISTING PRD      NONE for Investor Reporting. Touching PRDs: ADVI_PERFRP_PRD.md (D2; header-only read, restricted),
                     D1_ASSET_CATEGORY_VIEWS_PRD.md, D2_ADVI_49F_E2E_PRD.md, D3_ACCOUNT_MODEL_OVERLAY_PRD.md,

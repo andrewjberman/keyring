@@ -506,15 +506,24 @@ class BrokerHandler(BaseHTTPRequestHandler):
         # L8 CORRESPONDENCE GUARD (spine v2.1 L8; Andrew-direct 2026-09-03 "Recs approved", CTO /open-calls
         # CALL 1) -- the same decision org/mcp/server.py applies before it posts here. This HTTP path is
         # reachable WITHOUT the server (a direct POST), so it grades on its own; a refused send inserts nothing.
+        # HUMAN-OPERATOR --force (Andrew-direct 2026-09-10): the same escape the server exposes as
+        # send_override. This path is reachable by a direct POST WITHOUT the server, so it must honour the
+        # override with the same predicate -- otherwise a forced send succeeds or fails depending on which
+        # door it came through, which is the two-writers defect this estate keeps paying for.
+        _forced = cvo_send_guard.operator_override(body.get("send_override", ""))
+        if _forced:
+            _log_event("gate-override", from_serial, f"-> {to_serial} send gates FORCED by operator: {_forced[:120]}")
         _l8 = cvo_send_guard.cvo_worker_send_refusal(
-            from_serial, [to_serial], cvo_send_guard.executing_tree_projects(_REPO_ROOT), subject=subject, body=text)
+            from_serial, [to_serial], cvo_send_guard.executing_tree_projects(_REPO_ROOT), subject=subject, body=text,
+            override=_forced)
         if _l8:
             _log_event("refused", from_serial, f"-> {to_serial} L8 guard: {_l8[:160]}")
             db.commit()
             self._json_response({"ok": False, "refused": _l8}, 403)
             return
         # LD-0529 -- the generalised Tier-0/Tier-1 -> Tier-2 act guard, the same decision the server applies.
-        _t2 = cvo_send_guard.tier2_act_send_refusal(from_serial, [to_serial], subject, text, _REPO_ROOT)
+        _t2 = cvo_send_guard.tier2_act_send_refusal(from_serial, [to_serial], subject, text, _REPO_ROOT,
+                                                    override=_forced)
         if _t2:
             _log_event("refused", from_serial, f"-> {to_serial} LD-0529 guard: {_t2[:160]}")
             db.commit()
