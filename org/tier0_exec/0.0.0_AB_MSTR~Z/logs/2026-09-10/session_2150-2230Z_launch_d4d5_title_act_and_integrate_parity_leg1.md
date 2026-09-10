@@ -4,7 +4,7 @@
 
 **Date:** 2026-09-10
 **Task Order:** ad-hoc -- Andrew-direct at this terminal ~21:5xZ (register act + `/integrate parity`)
-**Status:** IN PROGRESS -- leg 1 LANDED and PUSHED; leg 2 is the laptop's and is OUTSTANDING (asked, MessageId named, unACKed)
+**Status:** COMPLETE on this side -- legs 1 and 2 landed, two return merges landed; site Z current; the laptop's closing fast-forward is OUTSTANDING (see AMENDMENT)
 
 ---
 
@@ -109,3 +109,38 @@ register acts today (@15ef14c2ed, @1d9e731ba5); that session did not log.
    named outstanding leg; relay any seating decision on the IAM-roles ask to `1.0.0_SA_CTO~Z`.
 3. **[`1.0.0_SA_CTO~Z`]** steward read of the merged `_coordinate_violations` (possible double guard)
    and the D5 `directive:` pointer decision -- both carried, neither blocking.
+
+---
+
+## AMENDMENT 22:5xZ -- leg 2 landed, a return leg run, and the terminal state
+
+`0.0.0_AB_MSTR` ran leg 2 and landed it @b9ee1966cc (bus MessageId 77c89be2-d2cf-4efb-a94a-b2396a7e4bea,
+22:49:58Z; the truncated tail recovered from the consumer's output file). Their own frame corrected one of
+this seat's numbers by vintage, not by error: CLOUD had advanced 86 commits after my read, and their
+`data/*/scripts/**` ceiling read 1 (a README) where the gate's own `.py` pattern reads 0. **Lesson carried
+into this seat's next leg and into the commit message: measure the deploy ceiling with the gate's pattern,
+never a wider glob.**
+
+**Return leg, this seat:** origin/CLOUD @b9ee1966cc merged into SITEZ @b3050e3096 and pushed (ls-remote
+read). 87 laptop commits brought to site Z; merge-tree rc=0 predicted and delivered; 196 staged / 0
+foreign; ceiling 0 by the gate's pattern, re-read in the same breath as the push; safe-deploy "nothing to
+do"; register gates green with ghosts back to 0 (the D9 IRPT JSONs arrived). Window OPEN/CLOSE lines sent,
+5 of 5 DELIVERED each.
+
+**Measured from the remote at 22:58:15Z:** origin/CLOUD had moved again to d62753fe11 (one commit, the
+laptop's own leg-2 record) while this seat pushed. Both `is-ancestor` reads NO: SITEZ lacked 1, CLOUD lacked
+6. That is the ping-pong the skill's convergence section describes. The laptop declined a push-hold,
+correctly under Andrew's 2026-08-27 redefinition, and this seat did not ask for one.
+
+**Convergence merge, this seat:** local SITEZ was exactly at origin and the incoming commit was record-class,
+so it was absorbed in a second one-commit merge @54435c7ec8, pushed (ls-remote read), 3 paths staged, 0
+foreign, 0 conflicts, ceiling 0, safe-deploy "nothing to do". Window OPEN/CLOSE lines sent, 5 of 5 each.
+
+**Measured from the remote at 23:03:38Z:** `is-ancestor(CLOUD -> SITEZ)` YES; `is-ancestor(SITEZ -> CLOUD)`
+NO, CLOUD lacks 7 -- and d62753fe11 is an ancestor of 54435c7ec8, so the laptop's remaining leg is a pure
+fast-forward.
+
+**Terminal state of this `/integrate parity` run: LEG-OUTSTANDING (laptop), named and dated -- site Z
+carries everything the laptop has pushed; the laptop's leg is `git merge --ff-only origin/SITEZ` plus a push,
+offered on the bus, not asked.** The objective (each fabric carrying the other's work) is met. A both-YES
+read is one laptop fast-forward away and stays so until CLOUD's tip stops being an ancestor of SITEZ's.
