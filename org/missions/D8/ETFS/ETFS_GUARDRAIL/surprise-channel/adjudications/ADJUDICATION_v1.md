@@ -18,7 +18,7 @@ instance but is `UNVERIFIABLE-BY-INSTRUMENT` with the CVO named, and is graded a
 disposition rests on this seat's own read beside the record: the served Lambda code hashes, environment and the
 deployed Inflection zip, the reporter role's inline grant, SES's account state, the report bucket, the source at HEAD,
 the vendored-copy census, the published layer, and `.gitattributes`.
-**Denominator at this write:** 7 rows (C-S7 appended 2026-09-10T00:39Z: a correction of C-S6 -- no remediation row was minted; the gate refused it as L10-shaped and the clocks ride C-S6 until the round-2 L9); previous: 6 rows (C-S6 appended 2026-09-10 ~00:2xZ: S4 graduated, the deploy_ledger NEVER-2 defect, owner 0.2.0_DT_PortfolioAnalytics); previous: 5 rows (C-S1 the grade record; C-S2 the eight worker-form items graduated and closed on
+**Denominator at this write:** 10 rows (C-S8..C-S10 appended 2026-09-10 ~00:5xZ -- round 2 PARTIAL L9 @8f7bf86815: S17-AC2 graded PASS; W2-S7 closed; W2-S8 open at the CTO (the 76-minute race); W2-S9/S10 and S5..S9 records); previous: 7 rows (C-S7 appended 2026-09-10T00:39Z: a correction of C-S6 -- no remediation row was minted; the gate refused it as L10-shaped and the clocks ride C-S6 until the round-2 L9); previous: 6 rows (C-S6 appended 2026-09-10 ~00:2xZ: S4 graduated, the deploy_ledger NEVER-2 defect, owner 0.2.0_DT_PortfolioAnalytics); previous: 5 rows (C-S1 the grade record; C-S2 the eight worker-form items graduated and closed on
 the issuer's in-round acts; C-S3 the three items graduated and OPEN; C-S4 the ten records dismissed with reason; C-S5 the
 correction carrying the CTO's L10 @0557afa38a -- FWD-4 NOT_EVALUATED, seven fire-gated outcomes, not six).
 Investigation rows without a disposition after this write: 0 of 21. Remediation rows minted: S2 (OPEN), S3 (closed).
@@ -277,6 +277,114 @@ Investigation rows without a disposition after this write: 0 of 21. Remediation 
     "spec_asserts": "Spine v3 (the gate's own words): every new remediation row waits for terminality. ADJUDICATION_v1.md's header: a correction is a NEW row citing the old id; no row is edited.",
     "world_is": "C-S6 and the commit subject overstate by one row; the remediation file is unchanged; the owner, remedy, interim and disarm are on the record where they were written.",
     "notes": "Append-only: C-S6 is not edited; a reader resolves S4's remediation state from this row (the newest citing it) until the round-2 L9 mints the remediation row."
+  }
+]
+```
+
+## C-S8 -- S17-AC2 graded PASS: cottonwood 2026-09-08 filled by the producer's own fire with the rule's own envelope; the 76-minute race the log proves; the window's shipped-signal terminus; the catch-up branch honestly unexercised -- this seat's head-object, listing and CloudWatch reads agree
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:58Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S8",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9 on the round-2 PARTIAL packet @8f7bf86815 (TO-EG-s-17 terminal, drained @d1b8945948; 1 of 5 orders): the GRADE for S17-AC2, the filled-in day read as a person reads it -- PASS. THE READING GRADED (the-filled-in-day.result.md ss.0-2, 6-9): cottonwood's ETF-ownership slice for Tuesday 2026-09-08 was missing and is now there -- DIVZ 19,079,942.93 / IDVZ 15,516,123.03 / PFDE 12,430,725.84 / PFOE 6,614,559.95, total 53,641,351.75 across 330 / 331 / 320 / 319 accounts, written by the producer's OWN run with its rule's own default envelope (Target.Input absent on 0 of 2 targets across 2 of 2 daily rules; no date key) at 23:15:51Z, request 0840a0d3. WHY IT WAS MISSING, and the log says it: the cot schedule fires at 10:30Z and the fact_holdings partition for date D lands D+1 at ~11:46Z (10 of 10 dates sampled), so the D+1 fire runs 76 minutes early, the never-fabricate skip takes it, and today's own 10:30:25Z scheduled fire wrote 2026-09-04 while 2026-09-08's source landed 76 minutes later -- the newest trading day is sliceless ~11.5 h every day, a design race the CTO has TAKEN for the L10 (94796 (2a)). THE WINDOW WAS RESPECTED: the terminus is the SHIPPED signal (head-object on the previous month's etf_ownership.pdf, present at the worker's read: 273,857 B, 2026-09-01T17:38:41Z), no day-count constant exists in either producer, class B (priced == 0) was never fired at. WHAT THE TOKEN DOES NOT CLAIM, printed beside it: CATCHUP-BRANCH-NOT-EXERCISED -- the catch-up sweep skips the newest partition as skip_date, so a head-of-window hole is recovered by the main path and `catchup_processed` is structurally empty for it (0 CATCHUP lines in 152 cot / 103 bd log events over 30 days); exercising the branch needs a hole OLDER than the newest partition, the estate has none (the census: 20 trading days x 2 partners, 1 absent, the one the newest), and manufacturing one is a served S3 delete under Andrew's word (W2-S8 -> the issuer's /open-calls card, REC yes one cot slice; the CTO concurs). THIS SEAT'S OWN INSTRUMENTS AGREE: s3api head-object daily/cottonwood/2026-09-08.json -> 1,345 B, ETag 5da999e2fbfadfe302df35ef24407372, LastModified 23:15:52Z (unchanged after the worker's three pass-2 runs and this read at 00:4xZ); a live list of both prefixes over the window -> cottonwood 19 of 19 dates 08-12..09-08 PRESENT (09-08 at 23:15:52Z, every other at its D+2 10:30:30Z or the 09-01 16:50Z catch-up), 49financial 19 of 19 (each at D+1 10:45:1xZ) -- the race is visible in the timestamps themselves: cot's slices land two days after their date, bd's one; the producer's own CloudWatch log 23:00Z-00:26Z -> the probe START ec6e9232 at 23:15:40.735Z with Init Duration 2,974 ms (cold), the fire START 0840a0d3 at 23:15:50.560Z with NO Init (warm, 673 ms), then three probe invocations at 23:39:29Z (cold), 23:39:33Z and 23:40:03Z (W2-S9's 2026-07-31 and Sunday controls) and no other -- one fire, no second write, exactly as recorded. ONE VINTAGE FACT for EG-s-14's grade, not this one: the terminus object platinum/reports/2026-08/etf_ownership.pdf read at 00:4xZ is 252,393 B, LastModified 2026-09-10T00:24:48Z -- EG-s-14's August re-render has landed on the served key since the worker's read; the shipped signal still exists, so S17's window logic is unchanged. VERDICT PASS. THE FWD-1 READING for the CTO's L10, as the packet asks: the outcome -- a missed day caught up by the producer's own fire, nothing fabricated, the date named by the producer -- is REALIZED in substance for the hole class the estate actually produces every day (head-of-window), by the MAIN PATH; the FWD's letter ('named in catchup_processed') is NOT met and cannot be for that class on the deployed code. The L10 chooses: accept the main-path form as FWD-1's realization for head-of-window holes with the branch exercise placed behind Andrew's word, or hold FWD-1 on the branch. This seat's REC: the former -- and the real remedy is the cadence row the CTO already took (fire AFTER the 11:46Z landing, or exclude the unlanded day and say so), which both closes the daily hole and makes the catch-up branch reachable for ordinary holes.",
+    "grades": [
+      {
+        "criterion": "S17-AC2",
+        "instance": "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-17.the-filled-in-day.proof_of_spec.json@1e995e83b5",
+        "verdict": "PASS",
+        "reason": "Every question the criterion asks is answered on the record with a vintage: the partner, the date and the rows; the measured race that explains the absence and today's own scheduled-fire log proving it; the shipped-signal terminus and the absence of a day-count; class B untouched; the census proving exactly one hole and the row routing the controlled path to Andrew. This seat's head-object, live prefix listing and CloudWatch reads agree on the slice, the census and the one fire. NO verdict was recorded by the assignee."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "L8_PACKET.round2.partial.md @8f7bf86815 (58 lines, sha256 b75d1cf2f7cc5805...) ss.1-3, 5; the proof @1e995e83b5: S17-AC1 PASS 7 of 7 arms (hole census 40 cells / 1 absent; Target.Input 0 of 2; START RequestId 1 of 1; the OK: wrote line 1 of 4; head-object 1345 B; positive control 2026-09-04 0 of 4; cot 30 of 30 at 10:30:24Z, bd 30 of 30 at 10:45:05Z; COVERAGE-ABSENT printed); S17-AC2's output_evidence and denominator.",
+        "the-filled-in-day.result.md (364 lines): s.0 the one-line answer and the arm table; s.1 the census (20 trading days incl. Labor Day excluded; cottonwood 61 keys / 1 absent, 49financial 89 / 0; the wider 26-day span the same 1); s.2 the rule's payload read live (no Input, no RoleArn); s.6 the schedules from history and the cold-start reading; s.7 the race, 10 of 10 dates, today's fire's log verbatim; s.8 the window (lambda_function.py@4155c85a1f:180-191); s.9 what the worker did not do.",
+        "This seat, 00:4xZ: s3api head-object opal-data-etfs daily/cottonwood/2026-09-08.json -> 1345, \"5da999e2fbfadfe302df35ef24407372\", Wed, 09 Sep 2026 23:15:52 GMT, VersionId None; list-objects-v2 daily/cottonwood/2026-0 and daily/49financial/2026-0 filtered to 08-12..09-09 -> 19 + 19 keys with LastModified as in one_line; logs filter-log-events /aws/lambda/cot-etf-ownership-daily 23:00Z-00:26Z filter RequestId -> 15 events: START/END/REPORT for ec6e9232 (Init 2974.26 ms), 0840a0d3 (no Init, 673 ms), 26696b84 (Init 3228 ms), 600f6b5b, 948f947d; head-object platinum/reports/2026-08/etf_ownership.pdf -> 252393, Thu, 10 Sep 2026 00:24:48 GMT.",
+        "W2-S7, W2-S8, W2-S9, W2-S10 and the issuer's S5..S9 read whole at HEAD 866d2ed808; 2.0.0_SA_COO 94794/94805; 1.0.0_SA_CTO 94796 (the race taken for the L10; the served-delete call put to Andrew)."
+      ]
+    },
+    "spec_asserts": "S17-AC2 as cut (judgment, NO verdict): the recovered date as a person reads it; why it was missing if the log says; that the port respected the reporting-obligation window (terminus a shipped signal, no day-count); that class B was never fired against; if no real hole existed, the census and the routing row. PRD v0.4 S17 / FWD-1: a missed day caught up by the producer's OWN fire on a REAL hole, the recovered date named.",
+    "world_is": "One real hole existed and was filled by the producer's own fire with the rule's own envelope; the hole exists every day for ~11.5 h because the schedule fires before the source lands; the catch-up branch is unreachable for that hole class and unexercised; the only way to exercise it is a served delete no agent may perform.",
+    "notes": "FOR THE L10: FWD-1's letter vs substance (above); the cadence row already taken; the served-delete call at Andrew. FOR EG-s-14's grade: the August report was rewritten on the served key at 00:24:48Z (252,393 B) -- read against the archive and the sign-off halves when that packet lands. Round 2 judgment criteria graded: 1 (S17-AC2) of the round's five orders' worth; four orders open."
+  }
+]
+```
+
+## C-S9 -- adjudicates W2-S7, W2-S8: GRADUATED -- W2-S7 closed on the re-cut onto instruments that exist; W2-S8's criterion half closed on S9, the race underneath OPEN at 1.0.0_SA_CTO (the cadence row)
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:58Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S9",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-W2-S7",
+      "ETFS_GUARDRAIL-W2-S8"
+    ],
+    "disarm_owner": "1.0.0_SA_CTO",
+    "one_line": "L9: ADJUDICATES two items -- GRADUATED. W2-S7 (BLOCKING/INERT: S17-AC1 arms (c) and (g) named a CloudTrail `Invoke` record no trail in the account writes -- lambda:Invoke is a data event and 0 of 2 trails select AWS::Lambda::Function, proven by a positive control returning 0 Invoke records for two real invocations): CLOSED on the issuer's re-cut @5507841f04 of all five faces onto instruments that exist (the log group's START RequestId by time; the cold-start AssumeRole at the cron instant as corroboration; the Invoke read printing COVERAGE-ABSENT, never graded), judged HARDER on effect -- and the shape (an accept naming an instrument without its coverage fact) is the same cut defect as NFRA_OUTSET-S29, the third of the night, now asked at every cut as the substrate-card coverage question. W2-S8 (BLOCKING/ARMED -> the issuer; disarm record S9): the criterion half is CLOSED -- arm (d) accepts the main path's own OK: wrote line for a head-of-window hole and prints CATCHUP-BRANCH-NOT-EXERCISED, arm (b) no longer asks for a date key that routes past the sweep -- and the FINDING underneath stays OPEN with owner 1.0.0_SA_CTO: the 76-minute schedule/landing race (cot's 10:30Z fire before the D+1 ~11:46Z partition; bd's 10:45Z floor deliberately 29 minutes after its 10:16Z landing has no race and 0 of 20 absent) leaves the newest cot trading day sliceless ~11.5 h every day and makes the catch-up branch unreachable for the ordinary hole; the CTO took it for the L10 addendum (94796 (2a): the fire follows the partition, or the window excludes the unlanded day and says so). The remedy is a Terraform act in the DT/AE lane on the rule's cron, not a code change; the disarm is one scheduled fire after the change whose own log names date D on D+1, read from history.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W2-S7 and W2-S8 read whole; S9 (the disarm record); the amended face @5507841f04 (arms b, c, d, g); the result record s.6-7; 1.0.0_SA_CTO 94796 (2a) and (2b); this seat's live listing (cot slices at D+2 10:30:30Z, bd at D+1 10:45:1xZ)."
+      ]
+    },
+    "spec_asserts": "S17-AC1 (c)/(g) as first cut; PRD v0.4 S17 / FWD-1; the standing authority @9f4a57262f (a re-cut judged on EFFECT). Rule 28 q5: an accept that names an instrument names its coverage.",
+    "world_is": "The instrument defect is remedied on the faces; the race is measured, taken for the L10, and unremedied at the schedule.",
+    "notes": "Worker-form items; W2-S7's clock closes on this row; W2-S8's rides it OPEN at the CTO. The served-delete call for the branch exercise is Andrew's, at the issuer's /open-calls."
+  }
+]
+```
+
+## C-S10 -- adjudicates W2-S9, W2-S10, S5..S9: DISMISSED_WITH_REASON, records (a stale docstring carried named; the no-RoleArn correction; five acks consumed)
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:58Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S10",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-W2-S9",
+      "ETFS_GUARDRAIL-W2-S10",
+      "ETFS_GUARDRAIL-S5",
+      "ETFS_GUARDRAIL-S6",
+      "ETFS_GUARDRAIL-S7",
+      "ETFS_GUARDRAIL-S8",
+      "ETFS_GUARDRAIL-S9"
+    ],
+    "one_line": "L9: ADJUDICATES seven rows -- DISMISSED_WITH_REASON, records. W2-S9 (INERT: the cot producer's deployed docstring still calls 2026-07-31 a known upstream gap while the deployed probe answers partition=true, priced=10960, output_exists=true, with a Sunday as the negative control): a stale comment in an authoritative file, off-task, no behaviour depends on it -- carried NAMED to the L10 as a one-line re-dating for the cot producer's owner, not cut here. W2-S10 (INERT: the amendment's 'the rule's role's AssumeRole' names a field the two daily EventBridge RULES do not carry -- 0 of 2 targets have a RoleArn; they invoke through the function's resource policy; the AssumeRole CloudTrail names is the EXECUTION role's cold start, identical for a rule and a person, 2 in the fire's minute from the probe's cold start and 0 inside the fire itself): the issuer's model corrected at the source and EG-s-18 re-cut on it @116f6a763d; the arms held at the finer grain (invocation interval + cron instant, every event attributed). S5, S6, S7, S8 (the issuer's disarm records for W1-S11 the renderer's import fix as a new leg of the held entry, W1-S12 the archive moved outside the enumerated prefix, W1-S14 the synchronous invoke with --cli-read-timeout 0, W1-S16 the ordering clause with the tool defect carried to this seat -- now ETFS_GUARDRAIL-S4 / C-S6 / C-S7): consumed; the W1 rows themselves are on worker ~1's branch and are dispositioned when it drains. S9 (the disarm record for W2-S8): consumed by C-S9.",
+    "dismissal_reason": "Records: two instrument/comment facts carried named, and five acks consumed by the closures and carries they evidence; nothing armed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W2-S9, W2-S10, S5..S9 read whole at HEAD 866d2ed808 (comp-surprise --project ETFS_GUARDRAIL --json: investigation_items 31, open 9, adjudication_rows 7 before this write); W1-S11..S16 on wk-etfs_guardrail-2-1 (not on CLOUD; W1 on CLOUD: none)."
+      ]
+    },
+    "spec_asserts": "The channel's taxonomy: an ack is a record; an item closes when its remedy is on the shared branch.",
+    "world_is": "Two facts of the round's instruments and one deployed comment; five acks evidencing closures whose items are on CLOUD (W2-S8) or on a worker's branch (W1-S11..S16).",
+    "notes": "Investigation items without a disposition after this write, by comp-surprise's definition: 0 of 31 on CLOUD (W1-S11..S16 arrive with ~1's drain). The slug waits for the FINAL packet (EG-s-14, -15, -16, -18 open)."
   }
 ]
 ```
