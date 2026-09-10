@@ -2592,3 +2592,106 @@ Filed by `2.0.0_SA_COO`, the `disarm_owner` named on `ETFS_GUARDRAIL-W4-S14`.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-W4-S19",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T19:42:00Z",
+    "one_line": "THE TASK ORDER'S PREFERRED SHAPE, TAKEN LITERALLY, IS A RECURSIVE DELETION -- WHICH CLAUDE.md RESERVES TO HUMAN CONFIRMATION. EG-s-31 shape (i) reads 'UPLOAD + FORCE THE RE-PULL BY REMOVING THE BOX-SIDE DIRECTORY', and the spawn message repeats 'force the re-pull by removing the box-side copy'. Removing a directory is `rm -rf`, and CLAUDE.md's Agent Autonomy section lists 'recursive deletion' among the acts requiring human confirmation -- an issuer's order does not lift a CLAUDE.md hard stop. This worker took the NARROWEST variant that produces the identical mechanism: `rm -f` of exactly TWO NAMED FILES, /opt/etfs-reports/coverage/classifier.py and remediate.py, each printed with its sha256 and byte count immediately before removal, plus their two matching .pyc files. `from coverage import classifier, remediate` then raises ImportError exactly as a missing directory would, the self-heal at render_month_end.py:118-129 fires, and the whole prefix is re-pulled -- measured, not predicted. No directory was removed, no wildcard and no -r flag was issued, and no human confirmation was needed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-31.the-box-runs-the-package-its-renderer-expects.md@1daa6d597a s.'THE SHAPE IS YOURS TO CHOOSE AND PRICE' bullet (i): 'UPLOAD + FORCE THE RE-PULL BY REMOVING THE BOX-SIDE DIRECTORY ... it is a DELETE on a box -- name what you remove and prove it is the vendored copy and not something else.'",
+        "CLAUDE.md@1daa6d597a section 'Agent Autonomy': 'Human confirmation ONLY for: recursive deletion, destructive git, dropping tables/S3 deletes, stopping EC2, anything unrecoverable.'",
+        "SSM command ad1788a9-316f-4334-864b-a2aac0936865 (2026-09-10T19:42:42Z) stdout: 'REMOVING /opt/etfs-reports/coverage/classifier.py sha256=23c30889af9e6408ddccdd541eb0e895540165012e3fd7eb0baff2228082fdae bytes=10157' / 'REMOVED' and 'REMOVING /opt/etfs-reports/coverage/remediate.py sha256=3c3ce6c5cfcce654ad3d5794962b6c24bfbee629db49a8f289b00f3979e876d5 bytes=11011' / 'REMOVED'. Both printed hashes equal the artifact prefix's PRE-ACT objects, which is the proof each was the vendored copy and not something else.",
+        "Same command, later stdout: the exercise's own subprocess emitted five 'download: s3://opal-313476888478-lambda-artifacts/ec2/etfs-reports/coverage/... to coverage/...' lines -- the ImportError branch fired and re-pulled all five members, so the narrowed removal reproduced the directory-removal mechanism exactly.",
+        "The removal is a BOX-SIDE LOCAL FILESYSTEM removal and NOT an S3 delete: aws s3api list-object-versions --bucket opal-313476888478-lambda-artifacts --prefix ec2/etfs-reports/coverage/ --query DeleteMarkers returned 'None' after the act, and all four pre-act object versions remain listed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "EG-s-31 shape (i), the issuer's stated preference for this round, is 'UPLOAD + FORCE THE RE-PULL BY REMOVING THE BOX-SIDE DIRECTORY'; the spawn message restates it as 'force the re-pull by removing the box-side copy' and prices it as a delete whose object must be named.",
+    "world_is": "Removing a DIRECTORY is a recursive deletion, which CLAUDE.md's Agent Autonomy section reserves to human confirmation, and a task order cannot lift a CLAUDE.md hard stop. A two-named-file `rm -f` produces the identical ImportError and the identical re-pull, needs no confirmation, and leaves a smaller blast radius -- so the mechanism the shape wanted was obtained without the act the shape named.",
+    "notes": "FORM, NOT SIGNIFICANCE. This row does not argue the order was wrong; shape (i) is the right shape and it worked. It records that its LITERAL act collides with a hard stop and that the collision has a free workaround, so the next order can name the narrow act directly. THE GENERAL POINT FOR THE CUT: 'remove the directory' and 'make the import fail' are not the same instruction -- the second is the PROPERTY the self-heal keys on, the first is one writer of it, and naming the property would have left the assignee no conflict to resolve. Related: [[ETFS_GUARDRAIL-W4-S17]] (this order's authority)."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W4-S20",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T19:43:00Z",
+    "one_line": "THERE IS A SECOND PRESENCE-KEYED SELF-HEAL IN THE SAME FILE, FIFTY LINES ABOVE THE ONE THIS CELL FIXED, AND IT CARRIES THE IDENTICAL DEFECT CLASS. render_month_end.py:118-129 re-pulls the coverage package only `except ImportError` -- that is EG-s-31's whole subject. render_month_end.py:83-92 re-pulls the vendored `_orion_vendor_asof.py` only `if not os.path.exists(os.path.join(_orion_box_dir, '_orion_vendor_asof.py'))`. BOTH KEY ON PRESENCE; NEITHER CAN SEE STALENESS. The orion one is currently harmless ONLY because its box copy happens to be byte-identical to its repo source (sha256 15d28dd8444455e5d4143dca4c62adea109aeb4b50a3ee4e99af0b54890e6f72 on the box, on the artifact prefix, and at data/inf/scripts/silver/_orion_vendor_asof.py). The moment data/inf/scripts/silver/_orion_vendor_asof.py changes, the box will keep importing the old one silently and forever -- the exact failure EG-s-31 exists to repair, on a module that decides Orion date-basis alignment. Same file, same class, different symbol, zero coverage.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/presentation/render_month_end.py@1daa6d597a:83-92 -- `_orion_box_dir = os.path.join(_ORION_HERE, 'coverage')` then `if not os.path.exists(os.path.join(_orion_box_dir, '_orion_vendor_asof.py')):` guards the `aws s3 cp` of that one key. The condition is PRESENCE of the path, never its content.",
+        "data/etfs/scripts/presentation/render_month_end.py@1daa6d597a:118-129 -- `try: from coverage import classifier, remediate / except ImportError:` guards the recursive pull. Also presence, and this one is EG-s-31's subject.",
+        "CURRENTLY-CURRENT, hence latent not live: SSM command da752789-d8da-45f4-b7f0-ea441e730aaf (2026-09-10T19:37:50Z) read /opt/etfs-reports/coverage/_orion_vendor_asof.py sha256=15d28dd8444455e5d4143dca4c62adea109aeb4b50a3ee4e99af0b54890e6f72; local sha256sum of data/inf/scripts/silver/_orion_vendor_asof.py is the same hash; the artifact-prefix object is the same hash. Three-way match.",
+        "THE ASYMMETRY THAT MAKES THIS THE ONLY REMAINING HOLE: infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py@1daa6d597a:652 pulls render_month_end.py UNCONDITIONALLY on every run (`aws s3 cp {ARTIFACT_PREFIX}/render_month_end.py ./render_month_end.py`), so the RENDERER cannot go stale on the box. Only the two presence-keyed pulls beneath it can.",
+        "The failure MODE is not an ImportError: it surfaces as wrong behaviour or an AttributeError deep in the call path, which is precisely how EG-s-31's instance surfaced (AttributeError at render_month_end.py:1162, SSM 7c298036-a828-48d5-b3be-05f486fe3867)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "EG-s-31's S31-AC2 asks, as a judgment criterion, 'whether any OTHER shared dependency of the renderer is in the same condition, censused rather than recalled -- the package has more than one module and this cell was found through one symbol'. The face frames the defect at render_month_end.py:118-129 as THE self-heal.",
+    "world_is": "The census over the renderer's shared dependencies finds a SECOND self-heal, at :83-92, keyed the same way on the same directory, for _orion_vendor_asof.py. It is not stale today, so it fails the 'same condition' test on CONTENT while passing it on MECHANISM -- and the mechanism is what makes the condition recur. Fixing only :118-129 leaves the class alive in the same file.",
+    "notes": "WHY ARMED WITH THE ISSUER AS DISARM OWNER, AND WHY THIS WORKER DID NOT TOUCH IT. It is ARMED because future normal operation is exactly what harms here: an ordinary future edit to data/inf/scripts/silver/_orion_vendor_asof.py lands on the artifact prefix and never reaches the box, with no error at any point. It is NOT disarmed in this order because the remedy edits render_month_end.py, which EG-s-31's BOUNDS forbid without the issuer's written word ('A row and a stop, not an edit') and which is EG-s-29's terminal surface -- so this row IS the stop. WHAT A FIX WOULD COST, since shape (ii) was priced but not authorised: the cheap currency-aware form is to compare a manifest of sha256 over the prefix against the box copies and re-pull on mismatch, which costs one extra list_objects_v2 plus one head_object per member (5 calls) once per run, on a monthly job -- negligible. The cheapest correct form is cheaper still and needs no hashing: make BOTH pulls UNCONDITIONAL, exactly as lambda_function.py:652 already does for the renderer, which costs one `aws s3 cp --recursive` of ~42 KB per run and removes the ability to be stale rather than detecting it. Related: [[ETFS_GUARDRAIL-W4-S17]], [[ETFS_GUARDRAIL-W4-S21]]."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W4-S21",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T19:44:00Z",
+    "one_line": "THE BOX'S BAKED RENDERER WAS ALSO STALE -- AND IT IS NOT A DEFECT, WHICH IS ONLY KNOWABLE BY READING THE ORCHESTRATOR. The pre-act census read /opt/etfs-reports/render_month_end.py at 62880 B, sha256 55701125e86740f3bf51a715aba8f68e8441d3eb7bffc99a43b7d3ff29b973e9, while the served artifact is 77130 B, sha256 ba410ee5c9c4263e8fe37ade171aa4d61f834df246d0f57f30299dbba03a031a -- a 14 KB difference, not a rounding one. Exercising the box AS FOUND would therefore have measured a renderer that contains no `_provider_for` call at all, and would have produced a green that meant nothing. The resolution is at lambda_function.py:652: every run's FIRST shell command is an UNCONDITIONAL `aws s3 cp {ARTIFACT_PREFIX}/render_month_end.py ./render_month_end.py`, so no run ever executes the baked copy. This worker therefore ran that same line, as ec2-user, before each on-box exercise -- an act the order did not name, declared in the ledger's blast radius BEFORE it was taken.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM command da752789-d8da-45f4-b7f0-ea441e730aaf (2026-09-10T19:37:50Z), pre-act, before anything was pulled: '-rw-r--r--. 1 ec2-user ec2-user 62880 Sep 10 00:18 /opt/etfs-reports/render_month_end.py' and '55701125e86740f3bf51a715aba8f68e8441d3eb7bffc99a43b7d3ff29b973e9  /opt/etfs-reports/render_month_end.py'.",
+        "The SERVED artifact: aws s3 cp of s3://opal-313476888478-lambda-artifacts/ec2/etfs-reports/render_month_end.py then local sha256sum = ba410ee5c9c4263e8fe37ade171aa4d61f834df246d0f57f30299dbba03a031a, size 77130, LastModified 2026-09-10T14:09:53Z. IDENTICAL to the repo file data/etfs/scripts/presentation/render_month_end.py (same sha256), which independently confirms EG-s-29's served-renderer finding by content rather than by size.",
+        "infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py@1daa6d597a:652, inside _render_command's `inner`: 'aws s3 cp {ARTIFACT_PREFIX}/render_month_end.py ./render_month_end.py --region {REGION} --only-show-errors' -- unconditional, first in the `set -e` chain, before chromium-ensure and before the python3 invocation at :673.",
+        "AFTER running that same line as ec2-user (SSM 7c298036-a828-48d5-b3be-05f486fe3867): '-rw-r--r--. 1 ec2-user ec2-user 77130 Sep 10 14:09 /opt/etfs-reports/render_month_end.py' with sha256 ba410ee5c9c4263e8fe37ade171aa4d61f834df246d0f57f30299dbba03a031a -- the box now holds the served artifact, which is the state every run puts it in.",
+        "org/critical_paths/change_management/20260910T1933Z_egs31-box-coverage-package-currency_deploy_completion.md section 'BLAST-RADIUS AMENDMENT 1 -- 2026-09-10T19:42Z, BEFORE THE ACT' -- the added act, its justification and its rollback, recorded before the act per NEVER-2."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "EG-s-31's property names 'the renderer artifact it will actually run', and arm (c) requires the on-box exercise to resolve the symbol 'through the same entry point a run uses'. Nothing in the face says the box's own copy of the renderer might not be that artifact, and the BOUNDS forbid editing render_month_end.py.",
+    "world_is": "The box's baked render_month_end.py was two versions behind the served one at 62880 B vs 77130 B. 'The same entry point a run uses' turned out to INCLUDE an unconditional S3 pull of the renderer as its first step, so satisfying arm (c) honestly required performing that pull -- an act the order did not name. Had it been skipped, the exercise would have run a renderer with no _provider_for call site and could not have discriminated anything.",
+    "notes": "THE REASON THIS IS INERT AND THE REASON IT IS STILL WORTH A ROW. Inert: the unconditional pull means the baked copy's staleness can never reach a run, so nothing is harmed by leaving it as it is between runs. Worth recording: the box's filesystem holds THREE artefacts with THREE different currency disciplines -- the renderer (unconditional pull, cannot go stale), the coverage package (ImportError-keyed, went stale, this cell), and _orion_vendor_asof.py (path-existence-keyed, currently current, [[ETFS_GUARDRAIL-W4-S20]]). A reader who checks the box for 'is it current' without knowing which discipline governs which file will draw the wrong conclusion in both directions: alarmed by the renderer, which is fine, and reassured by the package, which was not. THE INSTRUMENT NOTE: this was found only because the pre-act census hashed EVERY file it listed rather than the one file the cell was about. Related: [[ETFS_GUARDRAIL-W4-S20]], [[ETFS_GUARDRAIL-W4-S22]]."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W4-S22",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T19:45:00Z",
+    "one_line": "TWO OF FIVE PACKAGE MEMBERS WERE STALE, NOT ONE -- SO A SECOND COMPLETED CELL'S CODE HAD ALSO NEVER REACHED THE BOX, AND NOBODY WAS LOOKING FOR IT. EG-s-31 was cut around ONE symbol, remediate._provider_for (EG-s-28). The by-content census of the artifact prefix, 5 of 5 members hashed against their repo counterparts, found classifier.py ALSO stale: deployed 23c30889af9e6408ddccdd541eb0e895540165012e3fd7eb0baff2228082fdae / 10157 B vs repo b2ab67fd35362249ae072803b2a6107af1daac483a985d276005ec7cf9736cc2 / 12226 B. That gap is EG-s-22's `slice_on_closed_day` field (FWD-4), committed 2026-09-04 at 8471f83a18 and graded on its own surface. The pattern is now THREE deep: EG-s-22, EG-s-28 and EG-s-29 each verified their own file, each was right, and the code of two of them sat undeployed for days. The DEPLOY STEP FOR data/etfs/scripts/coverage/ IS OWNED BY NO CELL, and that -- not any one stale file -- is the finding.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRE-ACT by-content census of the prefix, denominator 5 of 5 members downloaded and hashed (aws s3 cp --recursive then sha256sum): __init__.py 30995d06f239672ef4e427c989f329468a79d87b217c624870cf4267534564d9 MATCH; _orion_vendor_asof.py 15d28dd8444455e5d4143dca4c62adea109aeb4b50a3ee4e99af0b54890e6f72 MATCH (source data/inf/scripts/silver/_orion_vendor_asof.py); classifier.py 23c30889... vs repo b2ab67fd... MISMATCH; remediate.py 3c3ce6c5... vs repo 401bed2a... MISMATCH; trading_calendar.py 41b1c0c12651c62e59d27537a5bafb5bc34a3bb6562d94d57029a2f77ccac4c6 MATCH (source lib/trading_calendar.py). 2 of 5 stale, 3 of 5 current.",
+        "THE METHOD HAS ITS OWN POSITIVE CONTROL, so the two MISMATCHes are not an artefact of hashing: three of the five members returned MATCH by the same instrument in the same sweep, and `tr -dc '\\r' | wc -c` returned CR=0 on every repo counterpart, ruling out the autocrlf worktree-hash trap that would have made ALL five mismatch.",
+        "The classifier gap is EG-s-22's: git log --oneline -3 -- data/etfs/scripts/coverage/ names 8471f83a18 'L7(ETFS_GUARDRAIL.TO-EG-s-22 ...): the classifier now tells a closed day CARRYING a slice from one carrying nothing -- S22-AC1 passes 7 of 7 by output', and data/etfs/scripts/coverage/classifier.py@1daa6d597a:130-158 carries the `slice_on_closed_day` field that commit added. The deployed 10157-byte object predates it.",
+        "The remediate gap is EG-s-28's: the same git log names 7e544cb4d7 'L7(EG-s-28 FIX + BATTERY): every unresolved record names its provider at 4 of 4 sites', dated 2026-09-10T12:33:05Z, and the deployed object is dated 2026-09-05T06:53:44Z -- five days earlier.",
+        "NO CELL OWNS THE DEPLOY: EG-s-31's own <paths> block is the first in this project to include data/etfs/scripts/coverage/ together with a deploy ledger surface, and it was cut only after ETFS_GUARDRAIL-W4-S17 blocked a driven run. EG-s-22's and EG-s-28's task orders produced commits and batteries, and neither produced an upload to s3://opal-313476888478-lambda-artifacts/ec2/etfs-reports/coverage/."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "EG-s-31's arm (b) says 'each compared to its repo counterpart BY CONTENT (sha256), never by filename. State how many files the package has and how many you moved; if those numbers differ, say why.' The cell's narrative names ONE stale symbol, remediate._provider_for, and describes the shape as 'three cells verified three files that were each current'.",
+    "world_is": "The package has 5 members and 2 were stale, so 2 were moved and 3 were deliberately not re-put. The second stale member, classifier.py, is a different cell's work (EG-s-22, FWD-4) that no part of this cell's narrative predicted, and it had been undeployed since 2026-09-04. So the shape is not 'one missed upload' but 'this project has no owner for the coverage-package deploy step', and the same gap will reopen on the next edit to that directory.",
+    "notes": "WHY ARMED AND WHAT WOULD DISARM IT. ARMED because the harm arrives through future normal operation: the next cell that edits data/etfs/scripts/coverage/ will commit, be graded green on its own file, and not reach the box -- and because of [[ETFS_GUARDRAIL-W4-S20]]'s presence-keyed self-heal, the box will not even error. It is NOT disarmed by this order: EG-s-31 moved the two files that were stale TODAY, which is an instance fix, and the class fix is either an owned deploy step in the decomposition or an unconditional pull in the orchestrator/renderer -- both outside this order's bounds. NOTE FOR THE ADJUDICATION, because it changes what 'complete' meant: EG-s-22 and EG-s-28 are not being re-opened by this row and their batteries were sound -- they verified the source, which is what their orders asked. The gap is between COMMITTED and SERVED, and the CVO may wish to know that both cells' code became live only at 2026-09-10T19:41:50Z and 19:41:53Z respectively, under THIS order. Related: [[ETFS_GUARDRAIL-W4-S17]], [[ETFS_GUARDRAIL-W4-S20]], [[ETFS_GUARDRAIL-W4-S21]]."
+  }
+]
+```
