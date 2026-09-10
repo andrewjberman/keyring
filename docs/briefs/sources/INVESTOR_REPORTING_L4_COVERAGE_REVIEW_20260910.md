@@ -2,7 +2,9 @@
 
 Author: 4.0.0_SA_CRO. Review date: 2026-09-10. Requested by CTO message 95562.
 
-**Result: heading coverage is complete; six concrete mapping or detail-carriage corrections remain.** This is a bounded source review, not a hold on decomposition, a replacement PRD, or implementation certification. CTO owns the corrections. The source requirements below already existed; this review introduces no product scope.
+**Initial result at `d555a33482`: heading coverage is complete; six concrete mapping or detail-carriage corrections remain.** This is a bounded source review, not a hold on decomposition, a replacement PRD, or implementation certification. CTO owns the corrections. The source requirements below already existed; this review introduces no product scope.
+
+**Follow-up at `bde174b126` (v0.3): R2 and R5 are closed, and the coverage pointer is repaired. R1, R3, R4 and R6 have the smaller residual edits listed at the end of this review.** Their principal corrections landed; this is not a claim that all six findings are fully closed.
 
 ## Compared artifacts and method
 
@@ -84,3 +86,18 @@ The reviewed PRDs do preserve the fixed BDAPI/Kimi runner style with no OTP bran
 Andrew's direction at `2f13cdbaeb` (LD-0542), followed by CTO's Rule 27/spine correction at `08722e8b86`, assigns CTO every L3 carrier and the L2-through-L5-handoff work. MSTR is not a register gate. CRO retains L1; COO retains L5 decomposition. The two L1 briefs have been corrected accordingly and now link their actual PRDs. Their product requirements are unchanged from the reviewed pin.
 
 No PRD, register, decomposition or task order was edited by CRO. No live vendor request, production deployment or implementation test is part of this review. Andrew's push hold was reported in message 95567; this work makes no publication request or origin claim.
+
+## Follow-up on CTO message 95585: PRDs v0.3
+
+Read the committed changes from `d555a33482` through `bde174b126`, including the intervening v0.2 at `f58e9443e4`. Re-read the affected complete candidate, contract and source/path-map rows. Both endpoint sections are byte-for-byte unchanged after newline normalization; coverage remains FE 34/34 and BK 37/37. Candidate counts remain 14 and 18. This review verifies document carriage only.
+
+| Finding | Verified in v0.3 | Remaining edit |
+|---|---|---|
+| R1 | BK B6, line 113, now states NONE VERIFIED for mailbox reuse and carries the mailbox grant/checkpoint details. | BK PATHS line 166 still maps the grouped YCharts client, cookie-capture Lambda and pipeline paths to **B6, B8**. Remove B6 from that reuse row; none of those paths was verified as a mailbox implementation. Retain them as B8 session/consumer references. |
+| R2 | BK CONTRACTS line 140 now names FE F8 preview alongside B14 render as an ExportBundle consumer. | **Closed at the document level.** Producer/consumer fixtures remain implementation work. |
+| R3 | FE F8/F9 and BK B14 now explicitly serve FWD-4, with the Analysis layout, orientation, revision parity and actual-PDF gap retained. | FE source-coverage rows S3/S8 at lines 187/192 still name only F5. Add the applicable F8/F9 export consumers, especially S8's certified section/orientation/PDF detail. The candidate assignment is repaired; the requested source-to-render map is incomplete. |
+| R4 | B12 line 119 carries duplicate policy, one-time relative/absolute weights, cycles/missing nodes, unresolved mass, no surviving-child renormalization, grain separation, alternative partitions and uncertified Eclipse units. | Add the remaining source-IV.5 guard: preserve the proper attribution of an **Opal wrapper or Opal leaf**, with its fixture. Wrapper/leaf attribution is not stated in the complete v0.3 PRD; it is distinct from retaining unresolved mass or avoiding renormalization. |
+| R5 | B13 line 120 carries all the named historical selection exclusions and their failure fixtures. | **Closed at the document level.** Historical coverage and replay fidelity remain unproved. |
+| R6 | B9 line 116 carries effective settings, typed identities, template cardinality/orientation, body asymmetries, no global-preference PUT, and synchronous vendor 201 versus Opal async job. | Carry creation with the captured portfolio/items JSON multipart form using the **real `upload_record_id` and correct units**, per pinned BK IV.4 step 3, line 208. Parsing units in B7 does not specify how B9 uses the returned upload record and serializes those units. Preserve the missing-upload-field gap. |
+
+The nonexistent CROSSES-column references are removed from both maps; the replacement references name actual ENDPOINT ownership/crossing lines and CONTRACTS columns. The additional v0.2 changes also correctly distinguish ten FE-consumed contracts from the FE-produced RenderPackage and name the cohort/classification contract carriers. No new broad review, outcome change or decomposition hold is introduced by these four residual edits.

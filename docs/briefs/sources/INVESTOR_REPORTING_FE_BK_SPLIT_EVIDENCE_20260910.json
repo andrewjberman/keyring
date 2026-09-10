@@ -2543,7 +2543,7 @@
     "current_nine_source_hashes_unchanged": true,
     "local_link_count": 65
   },
-  "updated_at_utc": "2026-09-10T20:35:07.809356+00:00",
+  "updated_at_utc": "2026-09-10T20:43:20.454423+00:00",
   "forward_endpoints": [
     {
       "project_code": "IRPT_FNTEND",
@@ -3255,6 +3255,103 @@
       "source_commit": "d555a33482",
       "blob_sha256": "b5391f7a2b9c1eace4aee68204584272d76e6d8c6b1844f3e04dfb1ada4e81e5",
       "finding": "Browser login/session capture; not Graph application/certificate mailbox implementation"
-    }
+    },
+    "follow_up_reviews": [
+      {
+        "source_message": "95585",
+        "prd_commit": "bde174b1266d255ab87c85a46dc3983787a4215a",
+        "measured_at_utc": "2026-09-10T20:43:20.454423+00:00",
+        "review_artifact": "docs/briefs/sources/INVESTOR_REPORTING_L4_COVERAGE_REVIEW_20260910.md",
+        "artifact_sha256": "04eb4572e96453ed125058031777bc93e505fd2e8b19bd0ca8623b2ca2623329",
+        "result": "R2 and R5 plus coverage pointer closed at document level; R1/R3/R4/R6 principal fixes landed with four residual edits",
+        "findings": [
+          {
+            "id": "R1",
+            "status": "partial",
+            "remaining": "BK PATHS line 166 still assigns cookie-capture/client/pipeline reuse to B6; remove B6"
+          },
+          {
+            "id": "R2",
+            "status": "closed_document_level",
+            "evidence": "BK contract line 140 names FE F8 preview consumer"
+          },
+          {
+            "id": "R3",
+            "status": "partial",
+            "remaining": "FE S3/S8 coverage rows lines 187/192 still name only F5; add applicable F8/F9 render consumers"
+          },
+          {
+            "id": "R4",
+            "status": "partial",
+            "remaining": "B12 needs explicit preservation of Opal wrapper/leaf attribution"
+          },
+          {
+            "id": "R5",
+            "status": "closed_document_level",
+            "evidence": "B13 line 120 carries named historical exclusions and failure fixtures"
+          },
+          {
+            "id": "R6",
+            "status": "partial",
+            "remaining": "B9 needs captured portfolio/items multipart creation with real upload_record_id and correct units"
+          }
+        ],
+        "pointer_defect": "closed_document_level",
+        "projects": [
+          {
+            "project": "IRPT_FNTEND",
+            "prd_path": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md",
+            "prd_blob_sha256": "98941bf157c630692be03d6362982ec5073e1664777b3851c82ab3f7c68e4d2a",
+            "coverage_rows": 34,
+            "candidate_cells": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8",
+              "F9",
+              "F10",
+              "F11",
+              "F12",
+              "F13",
+              "F14"
+            ],
+            "endpoint_unchanged_from_d555a33482": true
+          },
+          {
+            "project": "IRPT_BCKEND",
+            "prd_path": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md",
+            "prd_blob_sha256": "9006c4ffe8c41ce5f62bfcf98c0c5aeb5398c291ca3f094892c513240a6224e6",
+            "coverage_rows": 37,
+            "candidate_cells": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8",
+              "B9",
+              "B10",
+              "B11",
+              "B12",
+              "B13",
+              "B14",
+              "B15",
+              "B16",
+              "B17",
+              "B18"
+            ],
+            "endpoint_unchanged_from_d555a33482": true
+          }
+        ],
+        "limits": "Targeted document follow-up only; not universal losslessness, implementation, runtime, publication or deployment certification"
+      }
+    ],
+    "current_status": "R2 and R5 plus coverage pointer closed at document level; R1/R3/R4/R6 principal fixes landed with four residual edits"
   }
 }
