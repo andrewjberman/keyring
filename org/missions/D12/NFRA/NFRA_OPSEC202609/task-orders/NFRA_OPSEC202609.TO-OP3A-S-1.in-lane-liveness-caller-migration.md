@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_OPSEC202609~6</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>staged</status>
+<status>complete</status>
 
 **Directive:** D12 · **Fabric:** site-z · **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` **v0.14** (FWD-12) ·
 **Decomp cell:** `OP3A-s-1` (issuance 3A, v0.1.0) · **Issuance:** 3A.
