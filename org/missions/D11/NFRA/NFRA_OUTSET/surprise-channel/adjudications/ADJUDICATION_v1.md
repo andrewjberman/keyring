@@ -393,3 +393,40 @@ Remediation rows minted: S1, S4, S8 closed; S2, S3, S6, S13, S14 OPEN.
   }
 ]
 ```
+
+
+## C-S10 -- the proposed third instance: related producers, no shared violation established
+
+```json
+[
+  {
+    "id": "NFRA_OUTSET-C-S10",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T14:33Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "NFRA_OUTSET-S42"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Preserved as independently confirmed structural recurrence. The cited order establishes no shared obligation on the harness output, no bypass of a common control was demonstrated, and no harm was measured. No repair or law amendment follows from this evidence alone.",
+    "one_line": "L9 on S42 and COO 95238: two independent producers of a related stratum record shape are confirmed, with the harness omitting the runner's two new descriptive fields. This is recurrence evidence in a second project, not a third demonstrated writer-coverage defect. The ETFS count remains two measured defects; the latent analogy is carried separately.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Source pin 8e4e3ec9d9256678b056c8b22ff338957580da52, both source files text-equal to the worktree at the read. org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/kimi_pipeline.py SHA-256 cbdee741922c4ae93e330acfcbd9564c0ce6cecd041a3cd26883028e21048ba8. infra/aws/ec2/estate-report-runner/estate_report_runner.py SHA-256 ee3bda020b355da6d63285bc910b8214f3e065430b59551de830d264ec51e163.",
+        "Kimi step_detect:641-687 has two dict constructors containing stratum_status, at :648 and :675 (key lines :650 and :681). Both copy c0['strata'][group]['status']. The third cited occurrence at :852 is a print/read, not a third writer. Neither constructor includes stratum_vintage or stratum_denominator.",
+        "Runner group_out_fields:1280-1312 copies the stratum's vintage and denominator; run_report:2935 adds those fields to grec, and :3033 onward carries them into groups_out. This is a different assembly from Kimi's own detect output.",
+        "Independent isolated execution of exact AST FunctionDef nodes from the pinned blobs: Kimi step_detect with canon_usable=False and True returns stratum_status='OK' and neither descriptive field in both cases. build_detect and model_call were stubbed; the latter returned zero candidates. On the same source-stratum fixture, runner group_out_fields returns stratum_vintage='distinct-vintage' and stratum_denominator='distinct-denominator', the field-copy control. No whole module, model call, network call or artifact writer was executed.",
+        "NFRA_OUTSET.TO-OS-s-27.the-stratums-own-strings-reach-the-artifact.md read whole, together with its O27-AC2 proof record. Arms (b)/(c) explicitly name the run artifact ai.groups.<G> and the runner-composed strings; the deliverable and paths scope the runner. Arm (e) requires invariance of other properties; it does not say every similarly shaped record in the repository must adopt this schema.",
+        "S42 read whole in the project investigation file: 1 kimi_pipeline reference row of 105 parsed rows at this read. Its 135 hits / 154114 scanned census is the assignee's measurement, not independently re-run here. This review verifies the two cited producers and their branch behavior, not the global uniqueness of those producers."
+      ]
+    },
+    "spec_asserts": "S42 interprets O27-AC1 arm (e), 'NOTHING ELSE MOVED', as an implicit promise that the added fields appear wherever the block shape occurs. COO 95238 asks that a third latent instance be weighed separately from the two ETFS cases with consequences.",
+    "world_is": "The harness independently builds a related shape and does not receive the runner's field additions. The cited order binds the served report's ai.groups fields, not every occurrence of stratum_status; no shared schema obligation or failed harness accept was established. The structural difference is measured; a control-coverage violation is not.",
+    "notes": "For CTO, recommendation remains no law extension on this evidence. The useful lesson is to enumerate producers and then establish which share the governed property; resemblance alone does not make every producer subject to the same accept. Two ETFS defects plus one cross-project latent analogy is the defensible statement, not three equivalent defects. This is not proof that the harness can never cause harm: a consumer treating its output as the governed report, or an explicit shared contract, would justify reopening. ETFS C-S22's two-defect correction stands. No O27 criterion or NFRA_OUTSET round is graded by this narrow count review, and no L10 slug is issued. What you should have asked but did not: which concrete consumer or contract requires these two writers to obey the same disclosure rule?"
+  }
+]
+```
