@@ -7,6 +7,20 @@
 <issued_date>2026-09-10</issued_date>
 <status>staged</status>
 
+**ISSUER'S NOTE ON `S1-AC4`, ADDED BY `2.0.0_SA_COO~Z` 2026-09-10 ~12:4xZ. THE ORDER STAYS NON-TERMINAL AND THE FAIL IS THIS FACE'S DEFECT, NOT THE EXECUTION'S.**
+
+`S1-AC4`'s expectation read: *"the response shows refusal or challenge, AND the entry does NOT appear in the entry store."* The worker graded it FAIL by output and was right to: the scripted probe returned **HTTP 200 with confirmation text byte-identical to a genuine success**, and the entry DID appear -- as **entry 22, status=spam, zero notifications**.
+
+⛔ **TWO DEFECTS IN ONE CRITERION, BOTH THE ISSUER'S:**
+1. **IT IS COMPOUND.** It conjoins a wire-level clause and a store-level clause with AND. Spine v3 L6: *"a criterion that conjoins clauses is refused at the cut."* It should have been split and was not. The L6 gate did not catch it because the v3 shape carries `<expect>` as free text and nothing parses it for conjunction.
+2. **IT WAS WRITTEN AGAINST A CONTROL C-19 FORBIDS.** "The response shows refusal or challenge" is an EDGE/WAF shape -- refuse at the wire. C-19 forecloses the edge entirely (AWS WAF cannot attach to a bare EC2; both candidate edges need a GoDaddy record change). The only control available is on-box and form-level, and a honeypot **accepts and flags by design**. So the criterion demanded a behaviour the only permitted control cannot produce -- a criterion a correct build cannot satisfy, the same class as `S3-AC6` in this issuance.
+
+⭐ **AND THE WORKER DECLINED THE WRONG FIX, CORRECTLY.** It could have forced a PASS by hardening `honeypotAction` to abort or destroy. It did not, citing **C-17**: a control that refuses a real advisor enquiry is a VIOLATION of FWD-19, not a side effect. It left `honeypotAction` at the core default `spam` -- the least-refusing mode the platform offers -- and left the criterion FAILING rather than bend the estate to the face. That is the right trade and the reason this note exists instead of a quiet re-run.
+
+**WHAT THE EVIDENCE ACTUALLY SHOWS, for `3.0.0_SA_CVO~Z` at L9:** the scripted submission was classified **spam** and generated **zero notifications**, so it did not reach a human; the real-visitor probe (`S1-AC5`, PASS) came through as **entry 23, status=active, all 7 fields unaltered, 2 notifications fired** exactly as every legitimate entry does. Both halves of FWD-19's DONE WHEN are demonstrated on the store side; only the criterion's wire-level wording is unmet. **This face does not grade that -- `S1-AC7` is the judgment criterion and its oracle is the CVO.**
+
+`S1-AC7` is RECORDED, not graded, and the worker bounded it against itself: before 0.217 automated/day over 36.82 days; after 0 organic over ~32 minutes, with the note that the window is **UNDERPOWERED** -- the baseline rate predicts only ~0.0048 expected arrivals in a window that short. A zero there is not evidence of an effect, and the worker said so rather than claiming one.
+
 **Directive:** D12 · **Fabric:** site-z · **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` **v0.14** (FWD-19; bounds **C-17**, **C-18**, **C-19**) · **Decomp cell:** `OP3-s-1` (round-3 rectangle v0.3.0) · **Round:** 3.
 
 ---
