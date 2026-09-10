@@ -264,6 +264,52 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "TO IB-s-1, What L5 adds: \"49F: `a01_dim_relationship`, `a06_dim_identity_crosswalk` with `match_method`/`match_as_of`/`in_0833_universe`, `d08_firm_ownership_map`, `bd49f_dim_portfolio_group`\".",
     "world_is": "a06_dim_identity_crosswalk emits the SmartX allocation crosswalk and carries `in_account_universe` (a different field with a different denominator). The three named fields are emitted by bd49f_dim_conversion.py into dim_account_xref.",
     "notes": "Both artifacts are already in this order's reuse list, so the cell reads both and nothing is blocked. The distinction matters downstream: `in_account_universe` on the crosswalk is membership in the fact_acc universe, whereas `in_0833_universe` on the xref is membership in one custody master's universe. A consumer that treats them as the same predicate gets a different denominator without any error."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S5",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-10T23:16:00Z",
+    "one_line": "IB-s-1 / row IRPT_BCKEND-S4 RESOLVED, BUT NOT IN THE PREDICTED SHAPE, AND THE ACTUAL SHAPE IS A FALSE-GREEN. S4 asked whether .tools/safe-deploy.sh REFUSES a worker serial on a rule-13 gold path. Measured once under the ledger: it does NOT refuse. It ACCEPTED 0.9.0_WK_IRPT_BCKEND~2 by name, resolved the path to code/scripts/assets_gold/investor_reporting/, probed the shared home, found the prefix carries 0 members, and emitted SKIP-NOT-MEMBER -- then exited rc=0 with 'OK: safe-deploy gate PASS'. NOTHING WAS DEPLOYED. The gate says so itself, in the two lines UNDER the OK ('This line is NOT evidence of a deploy ... Measure the artifact, not this sentence'), which is precisely the shape where a caller reading rc alone records a deploy that never happened. A NEW shared-home script first-mints EXPLICITLY in the owning lane; this order does not authorize a first-mint into opal-data-mdpf, so none was attempted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B (the issuer: IB-s-4 owns the runner's production schedule and is where the first-mint belongs, in the lane the shared-home guard names. Disarmed for THIS cell: IB-s-1's face deploys the HANDLER and runs the runner AD HOC for QA -- 'the production schedule for the runner is IB-s-4's' -- so the runner's S3 code deploy is not an IB-s-1 deliverable and arm (f) does not grade it. What is ARMED is the rc=0 reading, for whoever schedules it next.)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-deploy.sh --author '0.9.0_WK_IRPT_BCKEND~2 <...>' data/assets/scripts/gold/investor_reporting/directory_runner.py, run once 2026-09-10T23:1xZ under ledger irpt-bckend-s1 -- verbatim: 'HALT-GATE: worker 0.9.0_WK_IRPT_BCKEND~2 has no inbox; scanning its issuer 2.0.0_SA_COO~B' / '[script] ... (authored by 0.9.0_WK_IRPT_BCKEND~2) -> code/scripts/assets_gold/investor_reporting/' / 'SKIP-NOT-MEMBER [mdpf] ... probed s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/directory_runner.py -> 404; prefix ... carries 0 member(s) (single page). A NEW shared-home script first-mints explicitly, never via the push gate.' / 'OK: safe-deploy gate PASS -- 0 file(s) deployed; 1 SKIPPED (first-mint, 404). NOTHING WAS DEPLOYED.' / 'NOT DEPLOYED data/assets/scripts/gold/investor_reporting/directory_runner.py' ; exit code 0",
+        "CLAUDE.md rule 13 @410f28f7db -- 'shared homes deploy under the S3-membership guard (404 = loud skip, first-mints explicit)': the behaviour is the guard working as designed, and the rc is the part that does not carry it",
+        "IRPT_BCKEND-S4 spec_asserts/world_is -- the hazard was recorded as an unmeasured REFUSAL for a worker serial; the measurement returns a PASS with a no-op instead"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-s-1 BOUNDS: \"The production code deploy of the runner (`safe-deploy.sh`) is a rule-13 act (row `IRPT_BCKEND-S4`): attempt it ONCE under the ledger; a refusal for your serial is a BLOCKING row on arm (f), not an override.\" -- the face anticipates exactly two outcomes, a deploy or a refusal for the serial.",
+    "world_is": "There is a THIRD outcome and it is the one that occurred: neither a deploy nor a refusal, but a first-mint SKIP that exits 0 and prints 'gate PASS' while deploying nothing. The serial was accepted; the PATH was new. A binary deployed-or-refused reading of this run records the wrong one of the two outcomes the face contemplates.",
+    "notes": "The generalisable point, and the reason this is ARMED rather than INERT: safe-deploy's exit code is a gate verdict, NOT a delivery oracle, and the two diverge exactly on first-mint. Any caller that chains on `safe-deploy ... && <record the deploy>` records a deploy that did not happen, and the disclaiming prose sits BELOW the OK line where a tail-read misses it. The sound instrument is the artifact: head-object the target key. This cell did not need it -- the runner ran AD HOC from the worktree, which is permitted for QA -- so nothing here is blocked; IB-s-4 needs it before it can schedule anything."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S6",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-10T23:16:00Z",
+    "one_line": "IB-s-1 acceptance arm (f) requires 'the ledger CLOSED and the sentinel committed (hash)'. Those two clauses cannot BOTH hold at the moment of grading: .tools/deploy_ledger.py close DELETES org/critical_paths/.open_deploys/<slug>.json as the act of closing (its own output line: 'sentinel removed'). A sentinel that exists to be read at grading time is a sentinel for an entry that is still OPEN -- the exact state arm (f) exists to rule out. Graded on the ENTRY instead, three ways: its Status line reads CLOSED with 5 of 5 legs proven, the entry .md is committed (hash printed), and `deploy_ledger.py check` -- the estate's own instrument, which also sweeps for the false-clean BYPASS class -- runs clean.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/deploy_ledger.py close --slug irpt-bckend-s1 2026-09-10 -- verbatim: 'OK: CLOSED deploy ledger irpt-bckend-s1 -- all 5 legs proven; sentinel removed; entry: org/critical_paths/change_management/20260910T2304Z_irpt-bckend-s1_deploy_completion.md'; a following cat of the sentinel path returns 'No such file or directory'",
+        "python .tools/deploy_ledger.py open ... 2026-09-10 -- its REQUIRED COMMIT PATHSPEC names BOTH the sentinel and the entry .md, and its stated reason is that 'a worktree removed without it destroys the OPEN state' -- i.e. the sentinel's purpose is to survive a drain WHILE OPEN, not to be evidence at close",
+        "org/critical_paths/change_management/20260910T2304Z_irpt-bckend-s1_deploy_completion.md @HEAD -- '**Status:** CLOSED -- nothing stranded -- closed 20260910T231318Z', 5 legs each stamped CLOSED with proof",
+        "CLAUDE.md NEVER-2 @410f28f7db -- 'ledger entry in org/critical_paths/change_management/ opened at start, closed at completion': the LAW names the entry; the sentinel is the tool's open-state marker"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-s-1 acceptance arm (f): \"the ledger CLOSED and the sentinel committed (hash)\"; and BOUNDS 4: \"a change-management entry ... closed at completion, the sentinel `org/critical_paths/.open_deploys/<slug>.json` COMMITTED\".",
+    "world_is": "The sentinel is an OPEN-state marker with a delete-on-close contract. Committing it is meaningful across turns while an entry is open (so a drain cannot destroy the open state); at close there is nothing to commit but its removal. This cell opened and closed inside one window, so the sentinel never existed at a commit boundary -- and the bound's own ORDER ('close the entry and commit it BEFORE taking the reads that grade the act') is satisfied by committing the CLOSED entry, which is what happened.",
+    "notes": "Not blocking and not a defect in either the order or the tool -- a clause written for the multi-turn case read literally in the single-turn case. Recorded so a grader who greps for the sentinel path finds this row instead of concluding the NEVER-2 discipline was skipped. If the clause is meant to bind literally, the only way to satisfy it is to commit the sentinel while the entry is OPEN and commit its deletion at close -- worth one line in the next round's face rather than a re-cut here."
   }
 ]
 ```
