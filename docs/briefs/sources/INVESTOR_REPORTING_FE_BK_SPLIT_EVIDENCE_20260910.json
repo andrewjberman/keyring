@@ -13,15 +13,21 @@
     "execution": "laptop",
     "d9_whole_move_directed": true,
     "canonical_codes_assigned_here": false,
-    "permanent_outcome_ids": "FWD-1 through FWD-8 unchanged; L2 58266dab2d assigns FE: 1,6; BK: 2,3,4,5,7,8; crossing proof retained.",
+    "permanent_outcome_ids": "FWD-1 through FWD-11: first eight retained, FWD-9 ratified, FWD-10 recut and FWD-11 added on Andrew words at 2dcd88091f.",
     "canonical_project_codes": {
-      "IR FE": "IRPT_FRONTEND",
-      "IR BK": "IRPT_BACKEND"
+      "IR FE": "IRPT_FNTEND",
+      "IR BK": "IRPT_BCKEND"
     },
     "code_assignment_authority": {
-      "seat": "1.0.0_SA_CTO",
-      "commit": "00af569662b0306d33e49c39a419d9d3a526640f"
-    }
+      "person": "Andrew",
+      "recording_seat": "1.0.0_SA_CTO",
+      "commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
+      "supersedes": [
+        "IRPT_FRONTEND",
+        "IRPT_BACKEND"
+      ]
+    },
+    "hard_project_split": "Two projects, decompositions, task-order sets and adjudications. One acceptance owner per FWD; shared contracts are handoffs, not jointly owned cells."
   },
   "scope_limits": [
     "All nine source document bodies retain their original evidence clocks and limitations.",
@@ -50,6 +56,12 @@
       "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_185xZ_D9_TO_LAPTOP_CLDGRPH_FINISHED_15MIN_RATIFIED.md",
       "sha256": "42ce6890b0504383128c55b719dc1d7b9591241fa888bf66b4c384d714a180ac",
       "size_bytes": 5440
+    },
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_192xZ_FWD9_YES_FWD10_IMPOSSIBLE_BY_INGESTION_GATE.md",
+      "source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
+      "sha256": "bd7a5c1c5ed5ec7c194be93c13b1b29445ad6a652ec74b447c68ada79a509f4f",
+      "size_bytes": 6945
     }
   ],
   "source_documents": [
@@ -346,24 +358,24 @@
     {
       "project": "IR FE",
       "path": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "sha256": "a078953e9e6353f964fa3dafda66e0afacd4660ef3e4de2a28c290350ec1a62d",
-      "outcomes": 6,
+      "sha256": "95722eba7d421421396e08452374218a8dfe55a61037163b15f9555acc7cfd94",
+      "outcomes": 7,
       "parts": 7,
       "source_documents_mapped": 9,
-      "lines": 193,
-      "words": 3685,
-      "canonical_code": "IRPT_FRONTEND"
+      "lines": 203,
+      "words": 4010,
+      "canonical_code": "IRPT_FNTEND"
     },
     {
       "project": "IR BK",
       "path": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "sha256": "9afc30cdf7c1f699dd8846690d515463fa31d813cd8d8a2207d49f2cd291f60a",
-      "outcomes": 7,
+      "sha256": "a36ef3bd7bfd1fd916770df36c1a0ac28435b97a1f1650366cdf60d60de9d350",
+      "outcomes": 8,
       "parts": 7,
       "source_documents_mapped": 9,
-      "lines": 295,
-      "words": 5971,
-      "canonical_code": "IRPT_BACKEND"
+      "lines": 312,
+      "words": 6608,
+      "canonical_code": "IRPT_BCKEND"
     }
   ],
   "repository_paths": [
@@ -376,12 +388,12 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 132
+          "line": 141
         }
       ]
     },
     {
-      "path": "portal/src/components/PageHeaderVariants.tsx",
+      "path": "portal/src/pages/ModelPortfolios.tsx",
       "proposed": false,
       "exists": true,
       "kind": "file",
@@ -389,7 +401,25 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 133
+          "line": 142
+        },
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 171
+        }
+      ]
+    },
+    {
+      "path": "portal/src/hooks/useAuth.ts",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 142
         }
       ]
     },
@@ -402,7 +432,30 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 133
+          "line": 142
+        },
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 143
+        },
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 171
+        }
+      ]
+    },
+    {
+      "path": "portal/src/components/PageHeaderVariants.tsx",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 143
         }
       ]
     },
@@ -415,7 +468,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 133
+          "line": 143
         }
       ]
     },
@@ -428,7 +481,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 134
+          "line": 144
         }
       ]
     },
@@ -441,7 +494,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 134
+          "line": 144
         }
       ]
     },
@@ -454,7 +507,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 135
+          "line": 145
         }
       ]
     },
@@ -467,7 +520,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 135
+          "line": 145
         }
       ]
     },
@@ -480,7 +533,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 136
+          "line": 146
         }
       ]
     },
@@ -493,7 +546,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 136
+          "line": 146
         }
       ]
     },
@@ -506,7 +559,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 137
+          "line": 147
         }
       ]
     },
@@ -519,7 +572,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 137
+          "line": 147
         }
       ]
     },
@@ -532,7 +585,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 137
+          "line": 147
         }
       ]
     },
@@ -545,12 +598,12 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 138
+          "line": 148
         },
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 237
+          "line": 254
         }
       ]
     },
@@ -563,12 +616,12 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 138
+          "line": 148
         },
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 237
+          "line": 254
         }
       ]
     },
@@ -581,12 +634,12 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 138
+          "line": 148
         },
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 237
+          "line": 254
         }
       ]
     },
@@ -599,12 +652,12 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 138
+          "line": 148
         },
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 237
+          "line": 254
         }
       ]
     },
@@ -617,7 +670,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 139
+          "line": 149
         }
       ]
     },
@@ -630,7 +683,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 139
+          "line": 149
         }
       ]
     },
@@ -643,7 +696,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 139
+          "line": 149
         }
       ]
     },
@@ -656,7 +709,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 139
+          "line": 149
         }
       ]
     },
@@ -669,12 +722,12 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 140
+          "line": 150
         },
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 238
+          "line": 255
         }
       ]
     },
@@ -687,12 +740,12 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 140
+          "line": 150
         },
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 238
+          "line": 255
         }
       ]
     },
@@ -705,12 +758,12 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 140
+          "line": 150
         },
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 238
+          "line": 255
         }
       ]
     },
@@ -723,12 +776,12 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 141
+          "line": 151
         },
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 238
+          "line": 255
         }
       ]
     },
@@ -741,7 +794,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 143
+          "line": 153
         }
       ]
     },
@@ -754,7 +807,7 @@
         {
           "project": "IR FE",
           "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-          "line": 143
+          "line": 153
         }
       ]
     },
@@ -767,7 +820,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 138
+          "line": 149
         }
       ]
     },
@@ -780,7 +833,12 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 138
+          "line": 149
+        },
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 171
         }
       ]
     },
@@ -793,7 +851,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 142
+          "line": 153
         }
       ]
     },
@@ -806,7 +864,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 142
+          "line": 153
         }
       ]
     },
@@ -819,7 +877,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 142
+          "line": 153
         }
       ]
     },
@@ -832,7 +890,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 142
+          "line": 153
         }
       ]
     },
@@ -845,7 +903,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 143
+          "line": 154
         }
       ]
     },
@@ -858,7 +916,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 143
+          "line": 154
         }
       ]
     },
@@ -871,7 +929,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 143
+          "line": 154
         }
       ]
     },
@@ -884,7 +942,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 143
+          "line": 154
         }
       ]
     },
@@ -897,7 +955,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 144
+          "line": 155
         }
       ]
     },
@@ -910,7 +968,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 145
+          "line": 156
         }
       ]
     },
@@ -923,7 +981,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 145
+          "line": 156
         }
       ]
     },
@@ -936,7 +994,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 145
+          "line": 156
         }
       ]
     },
@@ -949,7 +1007,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 146
+          "line": 157
         }
       ]
     },
@@ -962,7 +1020,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 147
+          "line": 158
         }
       ]
     },
@@ -975,7 +1033,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 147
+          "line": 158
         }
       ]
     },
@@ -988,7 +1046,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 147
+          "line": 158
         }
       ]
     },
@@ -1001,7 +1059,20 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 148
+          "line": 159
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/terraform/partners-api/api-gateway.tf",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 171
         }
       ]
     },
@@ -1014,7 +1085,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 165
+          "line": 182
         }
       ]
     },
@@ -1027,7 +1098,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 165
+          "line": 182
         }
       ]
     },
@@ -1040,7 +1111,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 165
+          "line": 182
         }
       ]
     },
@@ -1053,7 +1124,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 165
+          "line": 182
         }
       ]
     },
@@ -1066,7 +1137,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 167
+          "line": 184
         }
       ]
     },
@@ -1079,7 +1150,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 179
+          "line": 196
         }
       ]
     },
@@ -1092,7 +1163,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 179
+          "line": 196
         }
       ]
     },
@@ -1105,7 +1176,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 179
+          "line": 196
         }
       ]
     },
@@ -1118,7 +1189,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 180
+          "line": 197
         }
       ]
     },
@@ -1131,7 +1202,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 180
+          "line": 197
         }
       ]
     },
@@ -1144,7 +1215,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 180
+          "line": 197
         }
       ]
     },
@@ -1157,7 +1228,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 181
+          "line": 198
         }
       ]
     },
@@ -1170,7 +1241,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 181
+          "line": 198
         }
       ]
     },
@@ -1183,7 +1254,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 181
+          "line": 198
         }
       ]
     },
@@ -1196,7 +1267,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 201
+          "line": 218
         }
       ]
     },
@@ -1209,7 +1280,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 215
+          "line": 232
         }
       ]
     },
@@ -1222,7 +1293,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 215
+          "line": 232
         }
       ]
     },
@@ -1235,7 +1306,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 216
+          "line": 233
         }
       ]
     },
@@ -1248,7 +1319,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 217
+          "line": 234
         }
       ]
     },
@@ -1261,7 +1332,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 217
+          "line": 234
         }
       ]
     },
@@ -1274,7 +1345,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 218
+          "line": 235
         }
       ]
     },
@@ -1287,7 +1358,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 219
+          "line": 236
         }
       ]
     },
@@ -1300,7 +1371,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 219
+          "line": 236
         }
       ]
     },
@@ -1313,7 +1384,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 220
+          "line": 237
         }
       ]
     },
@@ -1326,7 +1397,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 220
+          "line": 237
         }
       ]
     },
@@ -1339,7 +1410,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 236
+          "line": 253
         }
       ]
     },
@@ -1352,7 +1423,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 236
+          "line": 253
         }
       ]
     },
@@ -1365,7 +1436,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 236
+          "line": 253
         }
       ]
     },
@@ -1378,7 +1449,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 237
+          "line": 254
         }
       ]
     },
@@ -1391,7 +1462,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 237
+          "line": 254
         }
       ]
     },
@@ -1404,7 +1475,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 239
+          "line": 256
         }
       ]
     },
@@ -1417,7 +1488,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 239
+          "line": 256
         }
       ]
     },
@@ -1430,7 +1501,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 239
+          "line": 256
         }
       ]
     },
@@ -1443,7 +1514,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 239
+          "line": 256
         }
       ]
     },
@@ -1456,7 +1527,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 254
+          "line": 271
         }
       ]
     },
@@ -1469,7 +1540,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 254
+          "line": 271
         }
       ]
     },
@@ -1482,7 +1553,7 @@
         {
           "project": "IR BK",
           "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-          "line": 254
+          "line": 271
         }
       ]
     }
@@ -1497,7 +1568,13 @@
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
       "line": 5,
-      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FRONTEND_20260910.md",
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_192xZ_FWD9_YES_FWD10_IMPOSSIBLE_BY_INGESTION_GATE.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 5,
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FNTEND_20260910.md",
       "exists": true
     },
     {
@@ -1526,133 +1603,133 @@
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 90,
+      "line": 99,
       "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 114,
+      "line": 123,
       "target": "investor-reporting-unification-brief-20260909.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 115,
+      "line": 124,
       "target": "investor-reporting-lightweight-brief-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 116,
+      "line": 125,
       "target": "investor-reporting-ycharts-brief-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 117,
+      "line": 126,
       "target": "investor-reporting-model-overlay-brief-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 118,
+      "line": 127,
       "target": "investor-reporting-lightweight-design-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 119,
+      "line": 128,
       "target": "investor-reporting-performance-review-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 120,
+      "line": 129,
       "target": "investor-reporting-export-narrative-spec-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 121,
+      "line": 130,
       "target": "investor-reporting-ycharts-design-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 122,
+      "line": 131,
       "target": "investor-reporting-model-overlay-design-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 128,
+      "line": 137,
       "target": "sources/INVESTOR_REPORTING_FE_BK_SPLIT_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 147,
+      "line": 157,
       "target": "../research/investor_reporting_performance_20260910/presentation-review.html",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 147,
+      "line": 157,
       "target": "sources/INVESTOR_REPORTING_PERFORMANCE_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 148,
+      "line": 158,
       "target": "../research/investor_reporting_export_20260910/performance-export-review.pdf",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 148,
+      "line": 158,
       "target": "../research/investor_reporting_export_20260910/build_export_review.py",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 148,
+      "line": 158,
       "target": "../research/investor_reporting_export_20260910/FONT_LICENSE.txt",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 148,
+      "line": 158,
       "target": "sources/INVESTOR_REPORTING_EXPORT_NARRATIVE_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 149,
+      "line": 159,
       "target": "sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 149,
+      "line": 159,
       "target": "sources/INVESTOR_REPORTING_YCHARTS_HAR_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 149,
+      "line": 159,
       "target": "sources/INVESTOR_REPORTING_YCHARTS_SOURCE_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 150,
+      "line": 160,
       "target": "sources/INVESTOR_REPORTING_MODEL_OVERLAY_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "line": 150,
+      "line": 160,
       "target": "sources/INVESTOR_REPORTING_LIGHTWEIGHT_EVIDENCE_20260910.json",
       "exists": true
     },
@@ -1665,7 +1742,13 @@
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
       "line": 5,
-      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BACKEND_20260910.md",
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_192xZ_FWD9_YES_FWD10_IMPOSSIBLE_BY_INGESTION_GATE.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 5,
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md",
       "exists": true
     },
     {
@@ -1694,139 +1777,139 @@
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 84,
+      "line": 95,
       "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 124,
+      "line": 135,
       "target": "investor-reporting-unification-brief-20260909.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 125,
+      "line": 136,
       "target": "investor-reporting-lightweight-brief-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 126,
+      "line": 137,
       "target": "investor-reporting-ycharts-brief-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 127,
+      "line": 138,
       "target": "investor-reporting-model-overlay-brief-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 128,
+      "line": 139,
       "target": "investor-reporting-lightweight-design-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 129,
+      "line": 140,
       "target": "investor-reporting-performance-review-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 130,
+      "line": 141,
       "target": "investor-reporting-export-narrative-spec-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 131,
+      "line": 142,
       "target": "investor-reporting-ycharts-design-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 132,
+      "line": 143,
       "target": "investor-reporting-model-overlay-design-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 134,
+      "line": 145,
       "target": "sources/INVESTOR_REPORTING_FE_BK_SPLIT_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 205,
+      "line": 222,
       "target": "investor-reporting-model-overlay-design-20260910.md",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 205,
+      "line": 222,
       "target": "../research/investor_reporting_model_overlay_20260910/source-list.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 205,
+      "line": 222,
       "target": "sources/INVESTOR_REPORTING_MODEL_OVERLAY_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 249,
+      "line": 266,
       "target": "sources/INVESTOR_REPORTING_LIGHTWEIGHT_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 249,
+      "line": 266,
       "target": "sources/INVESTOR_REPORTING_UNIFICATION_PROPOSAL_20260909_extracted.txt",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 250,
+      "line": 267,
       "target": "sources/INVESTOR_REPORTING_PERFORMANCE_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 250,
+      "line": 267,
       "target": "sources/INVESTOR_REPORTING_EXPORT_NARRATIVE_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 251,
+      "line": 268,
       "target": "sources/INVESTOR_REPORTING_YCHARTS_SOURCE_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 251,
+      "line": 268,
       "target": "sources/INVESTOR_REPORTING_YCHARTS_HAR_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 251,
+      "line": 268,
       "target": "sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 252,
+      "line": 269,
       "target": "sources/INVESTOR_REPORTING_MODEL_OVERLAY_EVIDENCE_20260910.json",
       "exists": true
     },
     {
       "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "line": 252,
+      "line": 269,
       "target": "sources/INVESTOR_REPORTING_FE_BK_SPLIT_EVIDENCE_20260910.json",
       "exists": true
     }
@@ -1862,9 +1945,10 @@
       "findings": [],
       "limitation": "AWS access-key, bearer-token and Cookie header signatures only; not universal secret detection."
     },
-    "l2_distribution_covers_all_eight_once": true
+    "l2_distribution_covers_all_eight_once": true,
+    "current_distribution_covers_all_eleven_once": true
   },
-  "updated_at_utc": "2026-09-10T19:17:05.073324+00:00",
+  "updated_at_utc": "2026-09-10T19:39:45.336828+00:00",
   "acceptance_distribution": {
     "source_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md",
     "source_commit": "58266dab2d7974bd3e24b469c89c7e5fdb63ae88",
@@ -1886,6 +1970,43 @@
   },
   "forward_endpoints": [
     {
+      "project_code": "IRPT_FNTEND",
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FNTEND_20260910.md",
+      "source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
+      "sha256": "4c1f4e77aa74f3826a7788c1a05d2e1cd6a810d74f02eaa8aba4c9de0cb4815c",
+      "read_scope": "Full authority record; endpoint FWD-9/10/11 blocks and restoration of the two formerly missing FWD-8 notes."
+    },
+    {
+      "project_code": "IRPT_BCKEND",
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md",
+      "source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
+      "sha256": "299a2ca75fdee611e021ea9e7c4b521fedb1711b57c4b77b430a6a5df29ecc4f",
+      "read_scope": "Full authority record; endpoint FWD-9/10/11 blocks and restoration of the two formerly missing FWD-8 notes."
+    }
+  ],
+  "historical_proposed_unratified_outcomes": {
+    "as_of_source_commit": "00af569662b0306d33e49c39a419d9d3a526640f",
+    "FWD-9": "IRPT_BACKEND O3: forwarded holdings email to durable scoped analysis request",
+    "FWD-10": "IRPT_BACKEND O7: operator diagnosis, recovery and tenant isolation",
+    "status": "Both unratified at source cut; CTO reports referred to Andrew. No ratification or decomposition performed by CRO."
+  },
+  "current_additional_outcomes": {
+    "as_of_source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
+    "FWD-9": {
+      "state": "ratified",
+      "scope": "durable email intake"
+    },
+    "FWD-10": {
+      "state": "recut on Andrew words",
+      "scope": "immutable sender-derived firm and pre-enumerated allowed storage destinations"
+    },
+    "FWD-11": {
+      "state": "added on Andrew words",
+      "scope": "Opal Global access; FE Model Portfolios dropdown, BK api/scoped enforcement"
+    }
+  },
+  "historical_forward_endpoints": [
+    {
       "project_code": "IRPT_FRONTEND",
       "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FRONTEND_20260910.md",
       "source_commit": "00af569662b0306d33e49c39a419d9d3a526640f",
@@ -1900,10 +2021,54 @@
       "read_scope": "Full committed endpoint text read at this cut."
     }
   ],
-  "proposed_unratified_outcomes": {
-    "as_of_source_commit": "00af569662b0306d33e49c39a419d9d3a526640f",
-    "FWD-9": "IRPT_BACKEND O3: forwarded holdings email to durable scoped analysis request",
-    "FWD-10": "IRPT_BACKEND O7: operator diagnosis, recovery and tenant isolation",
-    "status": "Both unratified at source cut; CTO reports referred to Andrew. No ratification or decomposition performed by CRO."
-  }
+  "current_acceptance_distribution": {
+    "source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
+    "IRPT_FNTEND": [
+      "FWD-1",
+      "FWD-6"
+    ],
+    "IRPT_BCKEND": [
+      "FWD-2",
+      "FWD-3",
+      "FWD-4",
+      "FWD-5",
+      "FWD-7",
+      "FWD-8",
+      "FWD-9",
+      "FWD-10",
+      "FWD-11"
+    ]
+  },
+  "additional_source_inspection": [
+    {
+      "path": "portal/src/pages/ModelPortfolios.tsx",
+      "sha256": "a63983a7e458ee8b30fe981ecec57611be67edf8c385757a07a1650361368657",
+      "read_ranges": [
+        [
+          1,
+          180
+        ],
+        [
+          231,
+          395
+        ],
+        [
+          1251,
+          1305
+        ]
+      ],
+      "finding": "Global/firm list; internal selector state; PageSurfaceControl dropdown; demo translation and missing-claim fallback are not carried as IR permissions."
+    },
+    {
+      "path": "infra/aws/terraform/partners-api/api-gateway.tf",
+      "sha256": "74884119982bfd4660ac2de59d885ade6cc12ac62e780dd79b032c0acc681e27",
+      "read_ranges": [
+        [
+          1,
+          74
+        ]
+      ],
+      "finding": "Existing /api/scoped/advisor-intelligence routes with CUSTOM authorizer; not a runtime authorization test."
+    }
+  ]
 }
