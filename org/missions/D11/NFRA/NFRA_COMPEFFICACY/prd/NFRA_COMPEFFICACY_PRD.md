@@ -14,7 +14,7 @@ D8 precedent) · **dep_stage:** PRD
   "project": "NFRA_COMPEFFICACY",
   "directive": "D11",
   "fabric": "laptop",
-  "prd_version": "v0.10",
+  "prd_version": "v0.11",
   "step": 4,
   "brief_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260902_1715Z_COMPTOOL_EFFICACY_PROJECT.md@f90ab3936b",
   "endpoint_outcomes": [
@@ -97,7 +97,19 @@ retired"* (condition met — §7 row T-19).
 
   FWD-4  Every tool on the list ends in one of three states -- cleared by the reviewer, retired or
          merged by Andrew's ruling, or elevated to the short list -- and none is left in limbo
-         DONE WHEN  EXERCISED -- the last tool's state has been read by Andrew
+         DONE WHEN  EXERCISED -- READ ON DEMAND from the list's own artifact: EVERY
+                    tool on it carries one of the three states with its evidence, the
+                    denominator printed, and NO tool carrying none -- resolvable by any
+                    reader, at any time, without asking a seat. RE-POINTED v0.11 (no new
+                    id): as written this outcome graded itself on ANDREW'S READING, which
+                    is not an act any seat can take -- not a driven run, not a history
+                    read -- so it was unprovable by the fabric rather than merely slow,
+                    and no amount of work could have closed it. This is the IDENTICAL
+                    defect ruled on NFRA_OUTSET FWD-4 at ~04:1xZ, same number and same
+                    shape in a different project, found only because round 8's slug sent
+                    this seat back to the endpoint. HIS READING IS THE CONSEQUENCE OF THE
+                    PROPERTY HOLDING, NEVER ITS CRITERION -- the ACCEPT below already
+                    described the gradable half and this line now points at it
          ACCEPT     Andrew can ask about any tool on his list and get one of three answers --
                     cleared, retired-or-merged with his ruling cited, or on the short list -- and
                     never "we have not got to it"

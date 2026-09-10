@@ -5,7 +5,7 @@
  "project": "ETFS_GUARDRAIL",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.6",
+ "prd_version": "v0.7",
  "step": 4,
  "brief_ref": "docs/briefs/ETFS_COVERAGE_GUARDRAIL_BUILD_SPEC_20260901.md@1890d7785c",
  "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-8", "FWD-9", "FWD-10"],
@@ -173,6 +173,12 @@ cited it** -- which is the only condition under which a renumber is safe.
          decides to let it -- and the refusal can be DEMONSTRATED on demand
          DONE WHEN  EXERCISED -- the refusal path has been DRIVEN DELIBERATELY on a
                     forced incomplete condition, end to end, and the refusal reached a
+                    person. AMENDED v0.7: the ACCEPT's phrase "a hole the LADDER
+                    CANNOT CLOSE" is replaced by "a hole the ladder DID NOT close,
+                    with the reason recorded on the artifact" -- because NO driven run
+                    can produce the first without REWRITING A SERVED SLICE (R-EG-6),
+                    and an ACCEPT no act can satisfy is how an outcome sits
+                    NOT_EVALUATED forever
                     person; no seat waits for the data to produce one
          ACCEPT     a forced class-C-or-worse condition (a hole the ladder cannot close,
                     injected under a NEVER-2 entry and restored after) drives a real run of
@@ -642,6 +648,20 @@ rule requires the text be kept with its reason beside it; it does not require it
 **(d) THE FORCING MUST NOT BE ABLE TO PERSIST.** Default-off is not the same property as cannot-be-left-on. Prove a forcing value cannot survive into a SUBSEQUENT invocation -- supplied per invocation, cached nowhere, no warm-container residue. A flag that can be left on converts a one-time test into a standing condition, and the artifact that would disclose it is the same artifact nobody re-reads.
 
 **And the never-widen sign-off names the new reachable state IN ITS OWN WORDS** -- *a served monthly report produced over deliberately dropped input data* -- and prints the writer count from (b). This seat's half will say exactly that and will not sign a half that names the producer's decision instead of the act's blast radius.
+
+**R-EG-6 (ruling, `1.0.0_SA_CTO` 2026-09-10 ~06:3xZ, on `2.0.0_SA_COO`'s 95058 and row W4-S6): SHAPE 1 ADOPTED. SHAPE 2 IS REFUSED AND IS NOT GOING TO ANDREW. FWD-9's ACCEPT IS AMENDED SO A DRIVEN RUN CAN SATISFY IT.**
+
+**THE STRUCTURAL FACT, verified at source at this seat and not adopted:** `render_month_end.py:991` classifies from the fixture-mutated in-memory series; `:993` runs the ladder; `:999` RE-CLASSIFIES with `s3=s3` and NO series argument, its own comment saying *"re-classify from REAL current S3 state, never the in-memory series the ladder itself bypassed"*. The fixture never touched S3, so the date returns COVERED, C is 0, and the verdict is PUBLISH. The harness carries its own positive control -- identical fixture, month and probe, the ONLY difference being the flag: `ladder=False` REFUSE C=1 holes `['2026-08-04']`; `ladder=True` PUBLISH C=0 holes `[]` -- so the null is a MEASURED ABSENCE OF EFFECT, not a dead harness.
+
+**FWD-9 as written cannot have BOTH a real ladder and no served write, and that is not a defect in anyone's cut.** It is a property of driving a REPAIR mechanism against a hole you invented: the ladder's function is to repair holes by invoking the producer, and a forced hole is indistinguishable to it from a real one.
+
+**SHAPE 2 IS REFUSED HERE AND NOT CARRIED TO ANDREW, which is a decision and not a deferral.** It rewrites a SERVED daily slice to test a refusal -- NEVER-class, and the `W1-S24` harm BY DESIGN. Asking him to authorise damaging served data in order to demonstrate a guard is a bad trade WHEN A SUFFICIENT NON-DESTRUCTIVE PROOF EXISTS, and one does. Putting it to him anyway would be manufacturing a sovereign call to avoid making a technical one. If shape 1 proves inadequate on evidence, THEN it is his.
+
+**SHAPE 1 ADOPTED with three requirements.** (i) The ladder's absence is DISCLOSED ON THE ARTIFACT, in the SAME field family as `forced: true`, so ONE read tells a reader both what was forced and what was SKIPPED -- `2.0.0_SA_COO`'s own rec, taken as written. (ii) Arm (d) grades THE DISCLOSURE, never the ladder's degenerate outputs. (iii) **THE GRADE CARRIES ITS OWN BOUNDARY:** FWD-9 grades on the GATE's refusal, with the ladder's ORCHESTRATION explicitly NOT covered and its REPAIR MECHANISM covered elsewhere -- `EG-s-19` drove the producer's catch-up against a REAL hole on Andrew's explicit approval, and the ladder's rung 1 invokes that same producer. `2.0.0_SA_COO` stated that boundary precisely rather than claiming the ladder was covered, and I am ratifying the boundary in those terms.
+
+**WHY SHAPE 1 IS SUFFICIENT AND NOT A CONCESSION:** a ladder that RAN and failed to close a hole leaves the re-classification reading the hole still present -- class C, REFUSE -- which is the IDENTICAL code path shape 1 exercises on the identical input state. What `--no-ladder` removes is the ATTEMPT, not the gate. The gate is what FWD-9 is about.
+
+⛔ **AND A DEGENERATE ARM THAT SAYS SO IS WEAKER THAN A REAL ONE AND STRONGER THAN A FORCED ONE NOBODY CAN TELL APART.** That is `2.0.0_SA_COO`'s sentence and it is the principle: a proof that discloses its own gap can be weighed; a proof that closes the gap by damaging the estate cannot be un-run.
 
 **R-EG-5 (ruling, same tick): COMMITTED IS NOT SERVED, and round 3's L10 will not forget it.** `2.0.0_SA_COO` measured THREE `DEPLOYED != BUILT` gaps -- the classifier (EG-s-22), the egress ask (EG-s-23) and the renderer (pending EG-s-25) -- with the deployed bytes hashing EQUAL to their PRE-CHANGE blobs, and each cell says in its own record that its green is a property of the repository and not of the estate. That honesty is exactly right and it does not close the gap. **RULING: no outcome grades REALIZED at round 3's L10 on a repository green.** FWD-4 and FWD-8 each require their fix DEPLOYED and READ, as a measured sha256 pair, with an OWNER NAMED for each of the three deploys.
 

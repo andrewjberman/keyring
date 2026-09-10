@@ -1,5 +1,6 @@
 # ETFS_GUARDRAIL -- DECOMPOSITION (L5)
 
+**v0.7** (2026-09-10 ~06:3xZ, `2.0.0_SA_COO`) -- ROUND 3 RE-DECOMPOSED A SECOND TIME, on `1.0.0_SA_CTO`'s ruling R-EG-6 (95061, PRD v0.7 @`9f548bfbc9`) adopting SHAPE 1 for `EG-s-21`. `0.9.0_WK_ETFS_GUARDRAIL~4` refused to fire a THIRD time and measured why: the forcing `EG-s-24` threaded is DEFEATED BY THE LADDER's re-classify from real S3. TWO cells added, `EG-s-26` (the artifact records what was SKIPPED) and `EG-s-27` (the skip rides the forcing); `EG-s-21` keeps its arms and gains two dependencies. s.16 below.
 **v0.6** (2026-09-10 ~04:5xZ, `2.0.0_SA_COO`) -- ROUND 3 RE-DECOMPOSED WHERE IT WAS WRONG. `EG-s-21` was cut on a premise the world refuses and the defect is the ISSUER'S: it demanded a forced class-C condition driven through the scheduled target while binding NO CODE CHANGE, and the forcing cannot reach the classifier at all. `0.9.0_WK_ETFS_GUARDRAIL~4` measured it and REFUSED TO FIRE rather than spend the order's one permitted run (row `W4-S2`). TWO enabling cells added, `EG-s-24` and `EG-s-25`; `EG-s-21` is re-pointed to depend on both and stays pending. s.15 below.
 **v0.5** (2026-09-10 ~04:3xZ, `2.0.0_SA_COO`) -- ROUND 3 WIDENED AGAIN BY AMENDMENT, on the ROUND-2 ANALYSIS (94988, `ROUND_ANALYSIS.round2.md` @`f5074019a1`), which graded FWD-8 **NOT_REALIZED** and listed three cells still to place. TWO WERE ALREADY CUT AND ARE NOW TERMINAL OR RUNNING -- the `W1-S25` guard fix is `EG-s-20` (TERMINAL, drained @`5d292ff11f`) and FWD-9's forced-incomplete driven run is `EG-s-21` (running on `~4`). The THIRD, `W1-S27`'s under-reporting ask, had no cell and is added here as `EG-s-23` on the slot `EG-s-22`'s terminal flip just freed. s.14 below.
 **v0.4** (2026-09-10 ~03:5xZ, `2.0.0_SA_COO`) -- ROUND 3 WIDENED BY AMENDMENT on PRD **v0.6**: `1.0.0_SA_CTO` placed row `ETFS_GUARDRAIL-W1-S31` at 94947, ruling the CLASSIFIER half squarely INSIDE this project's surface (s.3 OWNS names "the coverage classifier"; `EG-s-4` is FWD-4's own code row against that file) and the PRODUCER half OUT (PRD row `S20`, leaving as a brief to `4.0.0_SA_CRO` at L1). ONE cell added, `EG-s-22`, on the slot `EG-s-16` just freed. The round is mid-execution and the addition is by AMENDMENT under Andrew's 2026-09-03 scope-change word -- the same mechanism NFRA_OUTSET used for `OS-s-24`/`OS-s-25`/`OS-s-26`. s.13 below.
@@ -587,3 +588,74 @@ the ORDER is the mechanism.
 dependencies land. They are read again at that point against the world the two new cells create, not now.
 
 -- `2.0.0_SA_COO`, L5 round 3 re-decomposed
+
+
+## 16. ROUND 3 RE-DECOMPOSED AGAIN -- the forcing is defeated by the ladder, and the honest fix is a DISCLOSED skip
+
+**THE MEASUREMENT, verified at this seat at source rather than adopted.** `coverage_gate` classifies once from the
+fixture-mutated in-memory series (`render_month_end.py:991`); with `ladder=True` -- the only path the orchestrator's
+fixed `--gate` command takes -- it RE-CLASSIFIES at `:999` with `s3=s3` and **no `series=` argument**, its own comment
+reading *"never the in-memory series the ladder itself bypassed"*. The fixture never touched S3, so the date returns
+COVERED, C is 0, and the verdict is PUBLISH.
+
+```
+ladder=False -> REFUSE   C=1  holes ['2026-08-04']     <- the harness's own POSITIVE CONTROL
+ladder=True  -> PUBLISH  C=0  holes []                  <- a MEASURED ABSENCE OF EFFECT
+```
+
+⛔ **THE TRADE IS STRUCTURAL, NOT A CUT DEFECT: FWD-9 as written cannot have BOTH a real ladder and no served write**,
+because the ladder repairs holes by invoking the producer and **a forced hole is indistinguishable to it from a real
+one**. The CTO REFUSED shape 2 at its own seat and did not send it to Andrew -- *"asking him to authorise damaging
+served data to demonstrate a guard is a bad trade when a sufficient non-destructive proof exists"* -- and adopted
+SHAPE 1 with three conditions. FWD-9's ACCEPT is amended in PRD v0.7: *"a hole the ladder CANNOT close"* becomes
+*"a hole the ladder DID NOT close, with the reason recorded on the artifact"*, because an accept no act can satisfy is
+how an outcome sits NOT_EVALUATED forever.
+
+| cell | outcome_ref | surface | verb | depends_on | the bar |
+|---|---|---|---|---|---|
+| `EG-s-26` | FWD-9 (honesty) | `data/etfs/scripts/presentation/render_month_end.py` | build | -- | a ladder-skipped run RECORDS that it skipped, why, and that **rung 3 did not run so `coverage_egress_ask.json` is absent BY CONSTRUCTION** -- in the SAME field family as `forced`, so ONE read tells a reader both. A ladder-RAN run carries the same field with an explicit ran-value |
+| `EG-s-27` | FWD-9 (enabling) | `infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py` | build | -- | the command carries `--no-ladder`, and **the skip RIDES THE FORCING rather than being independently settable**; the forcing now provably REACHES THE VERDICT, with the unforced run as the arm's own positive control |
+| `EG-s-21` | FWD-9, FWD-10 | (unchanged) | verify | `EG-s-26`, `EG-s-27` | unchanged in substance; arm (d) grades THE DISCLOSURE rather than the ladder's degenerate outputs, per the CTO's condition (ii) |
+
+**Denominator:** PRD v0.7 `endpoint_outcomes` 8; round 3 SERVES 5 (`FWD-1`, `FWD-4`, `FWD-8`, `FWD-9`, `FWD-10`);
+cells 9.
+
+⛔ **THE SKIP RIDES THE FORCING, AND THE REASON IS `W4-S5` FOUR HOURS OLD.** A second independently-writable switch on
+a served producer is a NEW REACHABLE STATE that NEVER-1 makes the sign-off cover. A skip that cannot be reached
+without also forcing is self-announcing, because forcing already discloses itself. An INDEPENDENT switch would let a
+caller disable the repair ladder on a real month with nothing forced and nothing disclosed -- strictly worse than the
+injection just fenced. The face offers the coupled shape WITH ITS REASONING and prices the alternative rather than
+forbidding it.
+
+⛔⛔ **AND THE ISSUER'S BOUNDARY WAS TOO NARROW, CORRECTED BY THE ASSIGNEE BEFORE THE CELLS LANDED.** The escalation
+said the ladder's repair MECHANISM is covered by `EG-s-19`'s drive against a real hole. **That reaches rung 1 and not
+rung 3.** `--no-ladder` skips `remediate_month` ENTIRELY (`:1000-1008` builds `ladder_result` inline with every rung
+zero), and rung 3 is not a repair -- `remediate.py:24` calls it *"STOP AND ASK A PERSON ... A DIFFERENT ACTOR"*, it
+has ONE call site at `:284` inside the skipped function, and it is the SOLE WRITER of `coverage_egress_ask.json`. So
+a driven run silently produces one fewer artifact than the organic run it stands for, and `_build_terminal_email`
+emits its egress block only `if ask`, making FWD-10's message materially thinner. **THE CORRECTED BOUNDARY:** rung 1
+is exercised by `EG-s-19` on a real hole; **rung 3 is exercised by `EG-s-15`'s REAL September run** --
+`platinum/reports/2026-09/coverage_egress_ask.json`, 1,017 B, `LastModified 2026-09-10T01:20:20Z`, beside its two
+siblings at the same second, measured at this seat. **What shape 1 removes from the DRIVEN run is the CO-PRESENCE of
+the three artifacts in ONE run, not any mechanism** -- and `EG-s-26`'s disclosure is what makes that legible.
+
+**THE CHAIN READ.** `EG-s-26` (renderer, `aws s3 cp` to the artifact prefix) and `EG-s-27` (orchestrator, Terraform)
+touch different files with different deploy mechanisms and neither writes a served report key. **The ORDERING is
+BLOCKING and it is the same unrepairable-window shape as `EG-s-24`/`EG-s-25`:** if the skip becomes reachable while
+the disclosure does not exist, a run in that window produces a REFUSE nobody can later tell from an organic one.
+`EG-s-27`'s face carries it as a PROOF OBLIGATION -- verify `EG-s-26`'s renderer on the served key by your own sha256,
+printed in the entry BEFORE the apply -- which the CTO ruled a better mechanism than the sequence it originally asked
+for.
+
+```
+fanout: 2 of 2 chains, cap 8, reason: EG-s-26 on slot ~5 and EG-s-27 on slot ~4 run in parallel on different files, but EG-s-27's DEPLOY is gated on EG-s-26's artifact being served, proven by the assignee's own hash rather than by any seat's report; EG-s-21 is the tail of both and stays on ~4.
+```
+
+**Seating:** `~5` takes `EG-s-26` in `/c/tmp/wk-etfs-3-5`; `~4` takes `EG-s-27` then `EG-s-21` in `/c/tmp/wk-etfs-3-4`.
+Both continuations, both provisioned. ⛔ **Both faces name the MERGE at the hand-off** -- the issuer's banked defect,
+which cost each of these two seats a blocked flip earlier tonight.
+
+**What this re-decomposition does NOT decide:** whether `EG-s-21`'s remaining arms need further change once its
+dependencies land. They are read again at that point against the world the two new cells create, not now.
+
+-- `2.0.0_SA_COO`, L5 round 3 re-decomposed a second time
