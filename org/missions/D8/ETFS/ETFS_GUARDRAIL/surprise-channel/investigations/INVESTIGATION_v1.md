@@ -1320,6 +1320,58 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "FWD-7's terminal send: on a genuine refusal the ONE terminal SES send fires to the terminal recipient; and `terminal_qa` is the send-free rehearsal of that path against the month's REAL coverage artifacts (EG-sb-7 / EG-s-8, round 1, graded and delivered).",
     "world_is": "The served coverage_unresolved.json is keyed by PARTNER and carries no `unresolved` key, so both the production guard and its own rehearsal read an empty list: the send cannot fire on real data, and the rehearsal cannot show that it cannot.",
     "notes": "ARMED because the round-3 cell is not cut yet and, as reported, it is scoped to the one production site: a fix there would leave the rehearsal still passing vacuously and the next reader of these artifacts unexamined. Nothing was written, invoked or sent by this seat; both reads above are reads. This row does not re-grade round 1 -- that is the L9/L10's, and the honest statement is that round 1's PASS was earned against every instrument then available, including one that shared the defect."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S30",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T03:40:00Z",
+    "one_line": "S16-AC1 arms (b) and (c) name evidence the served artifact does not carry: coverage_verdict.json holds PER-CLASS COUNTS plus a `holes` date list and NO per-date class map (the literal 2026-09-07 appears 0 times in the whole document), and `expected_empty` is the class B count by the classifier's own definition, so it cannot carry a class-A date. Both limbs are unsatisfiable against the named object for ANY month, not just this one.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SERVED OBJECT, s3://opal-data-etfs/platinum/reports/2026-09/coverage_verdict.json, 2705 B, LastModified 2026-09-10T01:20:20Z (list-objects-v2 ISO rendering): top-level keys ['month','verdict','per_partner','holes','unresolved','generated_at']; each per_partner entry carries ONLY ['summary','coverage_line','holes']; summary keys are ['A','B','C','COVERED','D','UNKNOWN','covered','expected_empty','holes','trading_days'] -- all counts",
+        "MEASURED: json.dumps(verdict).count('2026-09-07') == 0. The date the criterion asks the object to classify does not appear in the object at all, so 'this object classifies 2026-09-07 as class A' is not readable from it",
+        "data/etfs/scripts/coverage/classifier.py:168-170 @c866edd324 -- summarize()'s docstring: 'Counts per class plus trading_days, covered, holes (= C + UNKNOWN + D; B is NOT a hole), expected_empty (= B).' and :178 expected_empty = counts[\"B\"]. MEASURED on the served object: expected_empty == B == 0 for 3 of 3 partners",
+        "classifier.py:122-125 @c866edd324 -- a non-trading day is classified A and `continue`s, so class A and class B are DIFFERENT axes: A is 'market closed (not a trading day)', B is 'upstream present, priced == 0'. A class-A date cannot appear in an expected_empty that counts B, by construction and not by accident",
+        "EQUIVALENT-FIELD HUNT, which the face explicitly allows ('or the verdict's equivalent field, named'): the only per_partner field carrying DATES at all is `holes`, and 2026-09-07 is in none of them (3 of 3 partners)",
+        "WHAT IS READABLE, and it is the substance: 2026-09-07 is in NO partner's holes (3 of 3), the hole list is IDENTICAL with and without the date (3 of 3), and class A == 3 for 3 of 3 partners, exactly matching the calendar's three non-trading days 2026-09-05 (Sat), 2026-09-06 (Sun), 2026-09-07 (Labor Day)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-16 S16-AC1: '(b) platinum/reports/2026-09/coverage_verdict.json (the object EG-s-15's run wrote; its UTC printed) classifies 2026-09-07 as class A (market closed) for EVERY partner it covers' , and '(c) expected_empty (or the verdict's equivalent field, named) carries 2026-09-07 with the partners' hole counts UNAFFECTED by it'.",
+    "world_is": "The persisted verdict drops the per-date class map the classifier computes in memory, keeping only counts plus the `holes` dates. So the object can prove 2026-09-07 is NOT A HOLE, but it cannot prove the date was classified A -- only that the A COUNT equals the number of non-trading days. And `expected_empty` tracks class B, a different axis from class A, so nothing in the object 'carries' 2026-09-07. A count is not a per-date classification, and reporting it as one would be a grain error.",
+    "notes": "BLOCKING because arms (b) and (c) cannot hold as written, so S16-AC1 cannot print its token and the order cannot go terminal. NOT RE-WORDED and NOT WORKED AROUND: the battery could have re-derived the per-date map by running the classifier locally, but that substitutes a DIFFERENT instrument for the one the criterion names ('the object EG-s-15's run wrote'), and choosing the instrument is the issuer's act, not a worker's. ARMED because the gap is standing, not incidental: for any month, no consumer of the served verdict can audit WHICH dates were classified A, B or COVERED -- only how many. Two disarm paths for the issuer, both outside this order's read-only grant: (1) re-cut (b)/(c) onto the evidence the artifact does carry -- 'in no partner's holes', 'hole list identical with and without the date', and 'A count == the calendar's non-trading-day count', all of which this battery already measures and prints; or (2) a code cell having the renderer persist the per-date class map beside the counts, which would also make FWD-4 auditable after the fact for every future month."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S31",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T03:40:00Z",
+    "one_line": "A DAILY SLICE EXISTS ON THE CLOSED-MARKET DAY, for the one partner the criterion does not enumerate: daily/inflection/2026-09-07.json (1209 B, written 2026-09-07T15:00:41Z) carries four priced ETF rows with source_as_of 2026-09-07 -- and 09-05 (Sat) and 09-06 (Sun) too, all three byte-identical in value to 09-08. The classifier is STRUCTURALLY BLIND to this because class A short-circuits before the slice check, and S16-AC1 arm (d) enumerates only cottonwood and 49financial -- the two partners that do NOT do it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api list-objects-v2 on daily/inflection/ -> 122 keys (denominator); 1 of 122 names 2026-09-07. head-object: daily/inflection/2026-09-07.json, ContentLength 1209, LastModified 2026-09-07T15:00:41Z (UTC), ETag de9410b6113e4979ef4c714ddb0b63eb",
+        "ITS CONTENT: four rows, each {schema_version 1.0, partner inflection, date 2026-09-07, etf_ticker, ownership_value, account_count 562, source_artifact s3://opal-data-inf/gold/canonical/holdings_2026-09-07.parquet, source_as_of 2026-09-07} -- i.e. it asserts an as-of date on which the US market was shut",
+        "THE WHOLE CLOSED STRETCH IS PRESENT: daily/inflection/2026-09-05.json and 2026-09-06.json also exist, 1209 B each, written 15:00:41Z on their own dates. A sha256 over each file's (ticker, ownership_value, account_count) tuples is IDENTICAL for 09-05, 09-06, 09-07 AND 09-08 (41d1124f75c3...), and DIFFERENT for 09-04 (e4cb7e34a31c...) -- so the closed-day slices are carried-forward duplicates, not independently priced days",
+        "CONTRAST, measured the same way: daily/cottonwood/ 0 of 62 keys and daily/49financial/ 0 of 89 keys name 2026-09-07. Only inflection writes on closed days",
+        "THE CLASSIFIER CANNOT SEE IT: data/etfs/scripts/coverage/classifier.py:122-125 @c866edd324 -- 'if not tcal.is_trading_day(d): result[date_str] = {\"class\": \"A\", ...}; continue' -- the class-A branch returns BEFORE the 'if date_str in series' slice check at :128, so whether a slice exists on a non-trading day is never examined. inflection's summary reads A=3 exactly like the other two partners",
+        "THE CRITERION'S OWN SCOPE: S16-AC1 arm (d) reads 'NO daily slice exists for 2026-09-07 for cottonwood or 49financial' -- 2 of the 3 partners the verdict covers, and precisely the 2 that are clean"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-16 THE CELL and outcome_ref FWD-4: 'a legitimately-empty day is classified A, not a hole, and nothing is backfilled against it' , with arm (d) checking that no daily slice exists for 2026-09-07 for cottonwood or 49financial.",
+    "world_is": "Something IS written against the legitimately-empty day -- by inflection, every closed day, with carried-forward values and a source_as_of on the closed date. The classification half of FWD-4 holds (class A, not a hole, hole counts unaffected); the 'nothing is backfilled against it' half does not hold for 1 of 3 partners. The criterion as cut cannot detect this because it enumerates the two clean partners, so arm (d) PASSES while the phenomenon FWD-4 forbids sits in the uncovered member.",
+    "notes": "Filed for FORM: a partner-enumerating check is a DECLARED DOMAIN, and the uncovered member is exactly where the defect sits. The battery PRINTS inflection beside the two graded partners, with its denominator, so the reading is visible even though the arm does not grade it -- printing it is not widening the criterion. ARMED for two reasons that need different remedies: (i) the served plane carries priced rows dated to days the market was shut, which any downstream consumer reading daily/ by date will pick up, and (ii) the classifier can never flag it, so no future run will surface it either -- a check scoped to trading days cannot see a defect on the non-trading ones. NOT investigated further and NOT fixed here: data/etfs/scripts/ is READ-only under this order and inflection's producer is outside this project's surface entirely; whether the carry-forward is intended for inflection's feed is a question for the issuer, not a defect this worker should assert."
   }
 ]
 ```
