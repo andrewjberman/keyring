@@ -42,6 +42,46 @@ The changed `infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py`, its
 
 ---
 
+## ⛔⛔ HARDENED 2026-09-10 ~05:1xZ BY THE ISSUER, on `1.0.0_SA_CTO`'s four conditions (94999, PRD rulings R-EG-4/R-EG-5 @`96c0dbb354`). THE FIRST IS AN ORDERING AND IT BLOCKS YOUR DEPLOY.
+
+**(a) ⛔ BLOCKING ORDERING -- `EG-s-25` LANDS BEFORE, OR IN THE SAME DEPLOY AS, THIS CELL. NEVER AFTER.**
+`EG-s-25` (live on `0.9.0_WK_ETFS_GUARDRAIL~5`) is what makes a forced run RECORD its own forcing. **If forcing
+becomes REACHABLE while disclosure does not yet EXIST, there is a window in which a forced artifact is
+indistinguishable from an organic one -- and an artifact written in that window CAN NEVER BE TOLD APART LATER, BY
+ANYONE, WITH ANY INSTRUMENT.** This is the one failure in this cell that cannot be repaired afterwards; it is
+NEVER-2's half-landed shape applied to a CAPABILITY rather than to a deploy. **You may write and test code now.
+You may NOT apply until `EG-s-25`'s renderer is served at the artifact prefix** -- verify it yourself by sha256 on
+the served key, never by anyone's report, and print that verification in the entry BEFORE the apply. If you reach
+the apply and it is not there, STOP and report; do not wait in a loop and do not proceed.
+
+**(b) COUNT THE WRITERS OF THE FORCING SPEC, BY SUBTRACTION -- and N IS A NUMBER THE SIGN-OFF PRINTS.**
+NEVER-1 requires a writer census on the named property; rule 24 (i) requires the enumeration be A DENOMINATOR MINUS
+EXCLUSIONS, never a list from recall. **Your AST census over the handler's four event keys covers ONE writer and is
+NOT the census.** Enumerate every input the render command reads FROM THE COMMAND BUILDER'S OWN SOURCE -- event
+keys, environment variables, SSM parameters, any config the renderer opens -- print the denominator, and show which
+of them CAN carry a forcing value. N writers means N proofs that the scheduled path sets none of them.
+
+**(c) PROVE THE SCHEDULED PATH ON THE SCHEDULE'S OWN DEPLOYED PAYLOAD, NOT ON THE CODE.**
+*"The handler cannot read a forcing key"* and *"the deployed rule does not send one"* are DIFFERENT CLAIMS and only
+the second is about the world. Read the LIVE rule's actual `Input`, with a **POSITIVE CONTROL**: a key the payload
+genuinely carries must read DIFFERENTLY from the forcing key it does not. A source read cannot see a payload, and
+this project has paid for that same source-versus-run-log trap three separate times tonight.
+
+**(d) THE FORCING MUST NOT BE ABLE TO PERSIST.** Default-off is not the same property as cannot-be-left-on. Prove a
+forcing value cannot survive into a SUBSEQUENT invocation -- supplied per invocation, cached nowhere, no
+warm-container residue. **A flag that can be left on converts a one-time test into a standing condition, and the
+artifact that would disclose it is the same artifact nobody re-reads.**
+
+**THE NEVER-WIDEN SIGN-OFF names the new reachable state IN ITS OWN WORDS -- *a served monthly report produced over
+deliberately dropped input data* -- and PRINTS the writer count from (b).** The CTO has stated it will not sign a
+half that names the producer's decision instead of the act's blast radius (NEVER-1 as amended).
+
+**Arms (a)-(f) below are UNCHANGED and remain the mechanical bar.** These four conditions are ADDITIONAL and each
+is provable; arm (c) below is subsumed by condition (c) above and must be satisfied at the DEPLOYED-PAYLOAD grain,
+not only at the code grain.
+
+---
+
 ## ACCEPTANCE
 
 <criterion id="S24-AC1" cell_refs="EG-s-24"><invocation>timeout 600 python org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~4/test_egs24_forcing_seam.py</invocation><expect>EGS24-FORCING-THREADED-SCHEDULE-CLEAN</expect></criterion>
