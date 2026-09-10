@@ -9,7 +9,8 @@ manifest's two `measured` cells, which PRD section 8 instructs L5 to do in terms
 between what the specification asserts and what the world reads today, which is exactly the step-7
 trigger -- the fact that no worker exists yet does not make it a different kind of finding.
 
-**Denominator at this write: 4 rows** -- three seat rows and the round's first WORKER row
+**Denominator at this write: 5 rows** -- four seat rows and the round's first WORKER row
+(`-Z-S4` records this lane DISARMING the worker's row `-Z-W3-S1` and the drain's continuation gap)
 (`NFRA_IAMROLES202609-Z-S1`, `2.0.0_SA_COO~ZI`, 05:39Z; `-Z-S2`, `2.0.0_SA_COO~ZI`, 07:29Z;
 `-Z-S3`, `2.0.0_SA_COO~ZI`, 07:42Z; `-Z-W3-S1`, `0.9.0_WK_NFRA_IAMROLES202609~3`, 08:00Z).
 The worker row arrived through the L7 drain and the two sides collided at the same offset, which is
@@ -136,6 +137,29 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
     "spec_asserts": "This worker's identity block names one exact, singular proof-of-spec path as THE deliverable location, and the task order's own text says the TO's <status> flips to complete 'ONLY when every mechanical criterion PASSES, in the same commit as your deliverables' -- implying the instructed path is sufficient to satisfy the mechanical complete-flip gate.",
     "world_is": "The instructed filename does not satisfy .tools/to-pipeline-gate.py's check_complete_flip, which derives its expected name(s) from the TO file's OWN full basename stem rather than from any short to_id form. Confirmed by reproducing the exact commit-time refusal. NOT BLOCKING for this cell: resolved in-lane by writing a SECOND copy of the identical, already-VALID proof-of-spec instance under the gate-derived filename in the same deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/ folder (within this worker's own <paths> write surface), which the gate accepts (re-run against it: VALID rc=0). Likely to recur for every other worker in this fan-out whose identity block uses the same short-filename convention against a descriptively-suffixed TO filename, unless the issuer's naming convention or the gate's derivation is reconciled.",
     "notes": "Filed by the worker (Z-W3 coordinate; the identity block's own instructed id form, 'NFRA_IAMROLES202609-W3-S<k>', omits the Z- infix this project's fabric=site-z requires per the schema and .tools/surprise-row-gate.py -- caught by the row gate itself on the first attempt to commit this very row ('fabric=site-z but the id lacks the Z- infix') and corrected before filing, not left as filed. A second, smaller instance of this row's own general shape. NOT A HALT: this cell's own commit proceeds using the duplicate gate-conformant filename alongside the originally-instructed one, so nothing is skipped and no widening of <paths> was needed (both filenames sit inside the already-granted deliverables/ directory). Disarm belongs to the issuer 2.0.0_SA_COO~ZI, who can either (a) instruct future workers in this fan-out to name their proof-of-spec files after the TO's FULL filename stem, matching the gate's derivation, or (b) accept that every worker will need to duplicate the file under both names as this row did. THE REUSABLE SHAPE: a mechanical gate's naming derivation and a hand-written instruction naming the SAME artifact by two different conventions is invisible until the gate actually runs against the instructed name -- read-time inspection of either text alone looks correct."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-S4",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-09-10T08:20Z",
+    "one_line": "Two things at the round's first drain: this lane DISARMS Z-W3-S1 (the worker was right, the proof-of-spec filename in my identity block did not match the gate's derivation, and the instruction is corrected for every remaining hand-over), and a mechanism gap is recorded -- a completed worker subagent CANNOT be resumed on this harness, so /dispatch's 'hand the next task order by CONTINUING the same subagent, no respawn, no cold start' is not achievable and a queue is necessarily drained by respawn.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DISARM OF Z-W3-S1, VERIFIED ON THE GATE ITSELF RATHER THAN ON THE WORKER'S REPORT: .tools/to-pipeline-gate.py check_complete_flip sets `stem = os.path.basename(rel).rsplit('.md', 1)[0]` and globs for `<stem>.proof_of_spec.json` / `<stem>_PROOF_OF_SPEC.json` -- the FULL filename stem including the descriptive suffix. My identity block named the SHORT form. The worker's row was correct on every limb.",
+        "DISARM ACT: the corrected full-stem filename and the corrected `-Z-W<n>-S<k>` row-id form (the Z- fabric infix this project requires) are now written into the hand-over for IAM-s-6 and will be written into every remaining hand-over. The worker's in-lane workaround -- a duplicate instance under both names -- is no longer needed by anyone.",
+        "CONTINUATION GAP, MEASURED ON TWO INSTRUMENTS: SendMessage to the completed slot-~3 worker returned 'No transcript found for agent ID', and ListAgents showed only three running subagents, the slots ~1/~2/~4 spawned alongside it. The slot-~3 agent was absent from both. It had a non-empty queue (IAM-s-6) at the moment it ended.",
+        "CONSEQUENCE TAKEN: IAM-s-6 was dispatched by RESPAWNING a fresh worker under the SAME serial into the SAME worktree and branch, told in terms that it is the second holder of the slot, that its predecessor's work is committed at 52c82c7537 and merged at f7292c35e4, and that DECLARED_VS_LIVE.md already sits in its worktree as its input. Continuity is carried by the ARTIFACT rather than by the context."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The /dispatch skill's drain, step 5.5: 'Hand the next task order by CONTINUING the same subagent, context intact. No respawn, no cold start -- a respawned worker re-reads its whole face and loses what it learned.' The spine's L7 drain says the same: the COO 'hands the worker its next task order by continuing the same subagent with its context intact; no respawn, no cold start.'",
+    "world_is": "On this harness an async worker subagent COMPLETES when its task ends and is not resumable thereafter -- its transcript is gone, and it disappears from the running-agent listing. A worker holding a queue of two or more cells therefore cannot be continued into its second cell. Every multi-cell slot is drained by respawn, and the cold start the spine and the skill both forbid is the only path available.",
+    "notes": "NOT A HALT and not a defect in anyone's act -- the round is running and slot ~3 is on IAM-s-6. hazard_standing INERT because both halves are already handled: Z-W3-S1's cause is corrected at the source, and the continuation gap has a working substitute. THE SUBSTITUTE IS NOT FREE AND THE ROW SAYS SO RATHER THAN CLAIMING PARITY: a respawned worker re-reads its whole face, so the cost the skill warns about is real and was paid; what makes it survivable here is that the worker face is REQUIRED to be sufficient on its own, so a cold start loses efficiency and not correctness. That is the design earning its keep in a case it was not written for. THE REUSABLE SHAPE, and it is why the fan-out arithmetic deserves a second look at the next cut: a queue is only cheaper than separate slots if continuation actually works. Where it does not, N cells on one chain cost N cold starts, and the only thing the queue still buys is dependency ordering. The remedy, if one is wanted, is the skill's or the harness's and not this lane's; it is recorded here and carried in the drain-end read rather than raised mid-round."
   }
 ]
 ```
