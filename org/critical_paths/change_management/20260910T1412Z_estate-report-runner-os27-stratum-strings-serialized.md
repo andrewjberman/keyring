@@ -1,7 +1,9 @@
 # DEPLOY COMPLETION LEDGER -- estate-report-runner OS-s-27 STRATUM STRINGS SERIALIZED
 
-**Opened:** 2026-09-10T14:12Z by `0.7.0_AE_CloudOps~W`
-**Status:** **OPEN**
+**Opened:** 2026-09-10T14:12Z by `0.7.0_AE_CloudOps~W` (committed OPEN at `b1dff81db7`)
+**Status:** **CLOSED 2026-09-10T14:18Z** -- all four legs verified. **The ACCEPT is not claimed
+here and neither is the SERVED confirmation**: the first run to serialize these fields is
+2026-09-11 13:00Z.
 **TO:** `org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-27.the-stratums-own-strings-reach-the-artifact.md`
 (cell `OS-s-27`, issued @`c556e21178`, decomposition v0.9 s.32; GO at msg 95206)
 
@@ -83,15 +85,36 @@ Terraform. Versioning is Enabled and the prior object is not deleted by an overw
 plane is untouched in either direction** -- no schedule, no IAM grant, no instance, and no served
 report key.
 
-## Legs -- to be verified at the close
+## Legs -- ALL FOUR VERIFIED
 
-1. [ ] Uploaded; instance state read LIVE immediately before; new VersionId + ETag recorded.
-2. [ ] ETag == the md5 of `git show HEAD:<path>`; ContentLength recorded.
-3. [ ] **CONTENT diff**: the object RE-DOWNLOADED BY ITS NEW VersionId is byte-equal to the
-       committed bytes, with a one-bit negative control at fixed length reporting MISMATCH.
-4. [ ] **NOTHING ELSE MOVED**: the composed strings at `:1421-1425` unchanged; `tool_row_resolves`
-       and `tool_row_ref` BYTE-IDENTICAL between the prior served version and this one; 0 of 6
-       served report/manifest keys moved.
+1. [x] Uploaded **2026-09-10T14:15:40Z**. Instance state read LIVE at 14:15:23Z, immediately
+       before: **`stopped`**. New VersionId `8pG9vs5I4CSGNVC8OcUy2Q9ARArGgumx`, ETag
+       `3468e13b854c5e9af649c90cd1e11c39`.
+2. [x] ETag `3468e13b854c5e9af649c90cd1e11c39` **== the md5 of `git show HEAD:<path>`**;
+       ContentLength **182,986 B** (from 180,310 B).
+3. [x] **CONTENT diff.** The object was **RE-DOWNLOADED BY ITS NEW VersionId** rather than trusted
+       from the PUT response or from `head-object`'s ETag: sha256 `ee3bda020b355da6...` on both
+       sides, 182,986 B both. **NEGATIVE CONTROL:** one bit flipped at offset 100 with the length
+       held fixed -> the comparator reports MISMATCH.
+4. [x] **NOTHING ELSE MOVED**, four separate checks with printed denominators:
+       - the composed strings at `:1421-1425`: **2 of 2** present on both sides, counts unchanged.
+       - `tool_row_resolves` **823 B, sha256 `df759dfcc3cc`** and `tool_row_ref` **590 B, sha256
+         `b36dfc7a4b61`** -- **BYTE-IDENTICAL** between the prior served version and this one.
+         Compared as function bodies, not counted, because a count cannot see an edit that keeps
+         the length.
+       - the 13:00Z run's four group statuses (`A OK, B OK, C INSTRUMENT_FAILED, D OK`) read from
+         the served artifact and rewritten by nothing.
+       - **0 of 6** served report/manifest keys moved: the 09-09 pair and manifest still stamped
+         00:58Z, the 09-10 pair and manifest still 13:34:36Z.
+
+## POST-STATE
+
+| | value |
+|---|---|
+| Served object | **182,986 B**, ETag `3468e13b854c5e9af649c90cd1e11c39`, VersionId `8pG9vs5I4CSGNVC8OcUy2Q9ARArGgumx`, LastModified 2026-09-10T14:15:40Z |
+| Identical to | `git show 22ca10d25e:infra/aws/ec2/estate-report-runner/estate_report_runner.py`, sha256 `ee3bda020b355da6...` |
+| New fields it will serialize | `stratum_vintage`, `stratum_denominator`, at `ai.groups.<G>` |
+| Versions of the code key | **22**, rollback target named from the live list rather than from memory |
 
 ## Close condition
 
