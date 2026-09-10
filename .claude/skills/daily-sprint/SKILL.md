@@ -54,6 +54,48 @@ sentences are yours; every sentence traces to a packet line, a commit, or a reco
       2026-08-30: "however dates are put together for the sprint render ... accurate to calendar"; 3 of 3 reports
       had carried the wrong weekday, each one day early, from a hand-typed field beside the ISO date. **The JSON maps 1:1 to the visual —
       author to the shape checklist below.**
+
+   b-i. ⛔ **EVERY DIRECTIVE IN THE REGISTER GETS A CARD IN `projects[]`, WORKED OR NOT.**
+      Andrew-direct 2026-09-10 ~21:2xZ, VERBATIM: *"we need to display \*ALL\* Directives cards on
+      'Projects' segment, regardless if work was done or not. This is important to see what did not
+      get work done (greyed out with short 'no work on this today'-style bullet\" because it shows
+      priority."*
+      ⭐ **THE ABSENCE IS THE SIGNAL.** A directive with no commits says what did NOT get attention,
+      and a list of only what moved cannot express it — omission and "nothing happened" render
+      identically when the row is simply not there.
+      **`n` IS THE DIRECTIVE NUMBER AND `name` IS ITS CANONICAL TITLE FROM
+      `org/missions/DIRECTIVES.yaml`** — never a sequential index, never a name you invented.
+      A quiet directive carries `"quiet": true` (the templates already style it dashed and greyed,
+      `.card.quiet`, both variants) plus a SHORT no-work line; say WHY it was quiet when the
+      register knows. Build the set BY SUBTRACTION from the register, never by listing what moved.
+      ⚠ **MECHANISM, not convention:** `render_daily_report.check_directive_coverage()` REFUSES a
+      report missing any register directive, and refuses an `n` that is not a directive number. It
+      is FAIL-CLOSED — if it cannot read the register it errors rather than skipping. A scheduled
+      run that has no repo sets `OPAL_DIRECTIVES_YAML` to the copy its packet carries.
+      *Measured 2026-09-10: `projects[]` was authored with a sequential index 0..6 and seven
+      invented names, none of which exists in any register, and it rendered fine.*
+
+   b-ii. ⛔ **DO NOT AUTHOR A `viz` FROM YESTERDAY'S JSON. READ THE CONTRACT.**
+      Andrew-direct 2026-09-10 ~21:2xZ, VERBATIM: *"make sure that whatever it is that causes
+      'undefined' tags in the diagrams, that there is a stable solution provided to that end
+      because it happens almost every single day."*
+      **THE DIAGRAMS ARE BUILT BY JAVASCRIPT IN THE BROWSER** from `templates/_shared_viz.js` at
+      VIEW time, which is why a JSON that renders cleanly can still paint the word `undefined` on
+      the served page. Print the contract before authoring:
+      ```
+      python daily_reports/scripts/viz_contract.py            # every generator's real params
+      python daily_reports/scripts/viz_contract.py --self-test
+      ```
+      It DERIVES each generator's required params, row keys and nested keys from the JS source, so
+      it cannot drift the way the hand-maintained table did. `render_daily_report.py` consumes it
+      and refuses, fail-closed.
+      ⛔ **A WRONG ROW SHAPE IS NOT ALWAYS LOUD.** `compare` rows must be OBJECTS
+      (`{label, before, after}`) — it is a before-to-after BAR CHART, so **an item with no genuine
+      historical pair needs a different diagram, not an invented `before` number.** `steps` rows
+      need `state` in `{done, now, next}`; a wrong value renders every node grey and prints a FALSE
+      "0 of N done", which reads as a measurement and is worse than `undefined`.
+      *Measured 2026-09-10: FIVE of seven diagrams were malformed. Andrew saw the two that printed
+      the word; the other three failed silently.*
    c. `python daily_reports/scripts/render_daily_report.py --date <DAY>` — validates and writes
       **BOTH** `daily_reports/out/Desktop_DAILY_REPORT_<DAY>.html` and
       `daily_reports/out/Mobile_DAILY_REPORT_<DAY>.html` (Andrew-direct 2026-08-28: every render
