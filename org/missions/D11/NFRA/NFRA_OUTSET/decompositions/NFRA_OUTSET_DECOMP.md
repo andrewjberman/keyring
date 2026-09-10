@@ -581,3 +581,73 @@ fanout: 1 of 1 chain, cap 8, reason: the runner is one file and 0.7.0_AE_CloudOp
 ```
 
 -- `2.0.0_SA_COO`, L5 round 3, one cell on rows `S40` + `S41`
+
+
+---
+
+## 33. ROUND 3, ANDREW'S CADENCE RULING (v0.10) -- the drift measure is CONTINUOUS and NEVER hand-triggered
+
+**ANDREW-DIRECT 2026-09-10 ~15:3xZ at the `2.0.0_SA_COO` terminal, answering open call 2 of a
+`/open-calls` card set. His words, verbatim and entire, two messages in order:**
+
+> no this should be a continuously stitched function, maybe every 15 min.
+
+> no hand-drawn anything, no manual trigger anything for something like this
+
+**HE TOOK NONE OF THE THREE SHAPES OFFERED**, and the question was the wrong one. All three -- S4U
+re-principal, move the trigger to an hour a session exists, accept-and-disclose -- preserve a
+ONCE-DAILY timer and argue about how to make that single firing land.
+
+**WHAT IS DEAD.** Moving the trigger dies by name (it makes cadence depend on a human habit).
+Accept-and-disclose dies. ⛔ **AND THE CURRENT ARTIFACT'S PROVENANCE DIES**: the reading the estate
+report serves for this device was produced by a HAND-STARTED run, and a hand-made value that happens
+to be FRESH still violates this instruction. S4U is **not adopted either** -- it answered "how does a
+daily firing survive nobody being logged on", not "make this continuous"; a logged-out principal may
+still be an IMPLEMENTATION CONSEQUENCE, which is the assignee's to price rather than the cut's to
+impose.
+
+⛔ **TWO THINGS THIS CUT DELIBERATELY DOES NOT RESOLVE, AND NEITHER IS RECORDED AS HIS INSTRUCTION.**
+"STITCHED" is ambiguous between this estate's existing stitch mechanism (the post-commit hook that
+republishes a shared marker from every clone) and plain English for "continuously woven in". That is
+a real fork with different builds behind it; `1.0.0_SA_CTO` declined to infer it and so does this
+seat. It is with him as a question. And **"maybe every 15 min" carries his own hedge**, so the number
+is a TARGET and **no accept grades ON the number** until he fixes it.
+
+**THE ENDPOINT DOES NOT MOVE** (`1.0.0_SA_CTO`, msg 95321, reading the outcomes itself): FWD-5 is
+LEGIBILITY of working order and **no outcome in this PRD names a publish frequency**. `OS-s-21`'s ROW
+does move, and that L4 addendum is the CTO's limb, lands after the merge, and explicitly does not
+gate this cut.
+
+| cell | outcome_ref | surface | verb | depends_on | the bar |
+|---|---|---|---|---|---|
+| `OS-s-28` | FWD-5 | `infra/aws/ec2/outset-drift-device/` + the device's scheduling surface | build | `OS-s-21` (TERMINAL) | the device publishes its drift artifact CONTINUOUSLY and AUTOMATICALLY at roughly quarter-hour, with NO human act in the steady-state path, and the artifact says which trigger produced it -- so a hand-made value is visibly a hand-made value |
+
+**Denominator:** PRD v0.11 `endpoint_outcomes` 8; cells **28**.
+
+⛔ **THE MECHANISM IS THE ASSIGNEE'S TO CHOOSE AND PRICE, NOT THIS CUT'S TO IMPOSE**, because the
+issuer cannot resolve his "stitched" fork and will not pretend to. Three shapes are named with what
+each costs, the way `EG-s-27`'s coupled-versus-independent choice was offered: (i) a RECURRING TIMER
+at quarter-hour -- simplest, and it inherits the SAME logged-out principal problem that killed the
+daily firing, so it is not free; (ii) PUBLISH ON COMMIT via the existing hook -- genuinely continuous
+while work happens, needs no scheduler and no session, and **measures at the moment uncommitted work
+is SMALLEST**, which is a real blind spot against a long uncommitted stretch; (iii) BOTH -- on commit
+plus a floor at quarter-hour. **The issuer's preference is (iii) and the reason is the blind spot in
+(ii)**: the case worth catching is exactly a long stretch nobody has committed, and a commit-triggered
+publisher is structurally blind to it. Take another shape and pay for it with the census and the
+adversarial arm the face requires.
+
+**THE CHAIN READ.** `OS-s-28` touches the drift producer and this device's scheduling surface.
+`OS-s-22` and `OS-s-23` remain open at one arm each on the estate-report RUNNER -- a different file
+-- and both are waiting on tomorrow's fire, so no surface intersects. Seated on
+`0.7.0_AE_CloudOps~W`, which authored `publish_drift.py` and holds every open order in this round.
+
+```
+fanout: 1 of 1 chain, cap 8, reason: one device-local producer and one seat holding the round; a second slot would contend on the same surface and serialise anyway.
+```
+
+**What this amendment does NOT decide:** whether the artifact's own `denominators.claim` / vintage
+fields need a TRIGGER field of their own to make a hand-made value visible, or whether the existing
+`argv` and publisher-ARN already do it. `O28-AC2` asks the assignee to state which, measured on a
+real artifact rather than argued.
+
+-- `2.0.0_SA_COO`, L5 round 3, one cell on Andrew's ~15:3xZ word
