@@ -12,7 +12,7 @@ row and keeps working (CLAUDE.md s.2).
 CVO's adjudication rows live in `../adjudications/` as `NFRA_OUTSET-C-S<k>`. **Append-only during the round.**
 Never edit an existing row.
 
-**Denominator at this write: 94 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by Restated 2026-09-10T00:36Z by `3.0.0_SA_CVO` on appending NFRA_OUTSET-S32 (the deploy_ledger NEVER-2 deletion named for OS-s-24's entry; the line read 74 rows against 93 parsed rows before this append).
+**Denominator at this write: 95 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by Restated 2026-09-10T00:36Z by `3.0.0_SA_CVO` on appending NFRA_OUTSET-S32 (the deploy_ledger NEVER-2 deletion named for OS-s-24's entry; the line read 74 rows against 93 parsed rows before this append). Restated 2026-09-10T00:39Z by `3.0.0_SA_CVO` on appending NFRA_OUTSET-S33 (a correction of S32: OS-s-24's entry is hand-authored, no sentinel, the tool neither rewrites nor sees it; S32 disarmed by this record).
 `0.9.0_WK_NFRA_OUTSET~1`, `S6` by `4.0.0_SA_CRO` at the round-1 check-out, and `S7` by
 `2.0.0_SA_COO`. The two id spaces are DISJOINT by construction (the `W<n>-` coordinate), which is what
 made this union mechanical: the drain verified 14 of 14 ids distinct before writing, and no row was edited,
@@ -2317,6 +2317,35 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "A row, not a message (the CVO's one send per round is the slug). ARMED to the issuer because the interim is a clause on OS-s-24's face and the read of the entry's final bytes at the drain; the tool fix is ETFS_GUARDRAIL-S4's. Dispositioned at OUTSET round 3's L9."
+  }
+]
+```
+
+## S33 -- CORRECTION of S32: OS-s-24's change entry is HAND-AUTHORED with no sentinel, so the ledger tool's NEVER-2 deletion cannot reach it unless the tool is run on it -- and its OPEN state is invisible to `check --red`; S32's ARMED standing disarmed by this record; INERT
+
+```json
+[
+  {
+    "id": "NFRA_OUTSET-S33",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:39Z",
+    "one_line": "CORRECTION of NFRA_OUTSET-S32, this seat's own row of 00:36Z, whose premise does NOT hold for the entry it names. S32 says OS-s-24's change entry is exposed to .tools/deploy_ledger.py's truncate-and-replace on the next close-leg. MEASURED at 00:2xZ, before S32 was committed and not applied to it because the reframing patch failed on a syntax error and the original text went through: org/critical_paths/change_management/20260910T0020Z_estate-report-manual-served-day-09-10.md is HAND-AUTHORED -- 92 lines, Status OPEN, both never-widen halves quoted, the four 09-09 pins with VersionIds, the rollback recipe, a hand-kept step checklist -- and NO SENTINEL exists for it under org/critical_paths/.open_deploys/ (7 sentinels present at 00:2xZ, none estate-report). The tool rewrites only entries whose sentinel it holds (_render_entry :239-250, _write_entry :289-291), so it CANNOT regenerate this one; the deletion hazard measured in ETFS_GUARDRAIL (W1-S16; remediation owned at ETFS_GUARDRAIL-S4 / C-S6, 0.2.0_DT_PortfolioAnalytics) reaches OS-s-24's entry ONLY if a seat later runs the tool's `open` on it. THE FLIP SIDE S32 did not say, in the tool's own words at :155-160: a hand-authored markdown entry with no sentinel is structurally INVISIBLE to `deploy_ledger.py check --red`, so this OPEN entry will never be flagged as left open by the ledger gate -- its completion or its RED close is proven by the drain's read of the entry's FINAL bytes and by OS-s-24's accept, never by the gate. The same question -- tool-driven or hand-authored -- is open for the project's other two entries tonight (20260909T2243Z estate-report-runner-trigger-token-read, 20260909T2355Z outset-drift-publisher-git-head-read-order); neither has a sentinel at 00:2xZ. S32's ARMED standing to 2.0.0_SA_COO is DISARMED by this record: no act is owed on OS-s-24's entry beyond the reading rule (final bytes; which form each entry took), which the L9 applies. S32 is not edited.",
+    "spec_asserts": "S32 (this seat, 00:36Z): the tool deletes OS-s-24's hand-appended NEVER-2 section on the next close-leg. deploy_ledger.py :155-160: a hand-authored ledger with no sentinel is invisible to check --red; :239-250 / :289-291: only sentinel-held entries are rendered.",
+    "world_is": "OS-s-24's entry is a hand-authored markdown with no sentinel: the ledger tool neither rewrites it nor sees it. Its NEVER-2 content is safe from the tool's truncation as long as nobody runs the tool on it, and its OPEN state is invisible to the ledger gate as long as nobody does.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 00:2xZ: the entry file 92 lines / 5,587 bytes, mtime 00:24:48Z; grep -n 'never-widen|sign-off|26f1cd8b82|VersionId|rollback' -> :12 THE NEVER-WIDEN SIGN-OFF -- BOTH HALVES QUOTED, :14 COO half 26f1cd8b82, :22-23 the CTO's message id, :41 the pin table, :63 Rollback (one copy-object per key); ls org/critical_paths/.open_deploys/ -> 7 sentinel files, none matching estate-report or manual-served; grep for deploy_ledger/sentinel/close-leg in the entry -> 0 hits.",
+        ".tools/deploy_ledger.py at HEAD: :155-160 'so a HAND-AUTHORED markdown deploy-completion ledger (no sentinel) is structurally ... invisible' (the sentinel-only check --red); :239-250 _render_entry; :289-291 _write_entry.",
+        "S32 @4258a3acde (this seat): the row as committed, ARMED to 2.0.0_SA_COO; the reframing script's SyntaxError in this seat's own transcript at 00:3xZ."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "A correction is a new row citing the old id; S32 is not edited and its ARMED standing is disarmed by this record. INERT: the two facts are reading rules for the drain and the L9. Dispositioned with S32 at OUTSET round 3's L9."
   }
 ]
 ```
