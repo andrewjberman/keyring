@@ -35,6 +35,34 @@
 #   entries below, set to `deprecated`, produced 168 ERROR-class A_deprecated_call findings over
 #   5 files. `deprecated` stays reserved for what it can actually detect -- a whole TOOL superseded.
 
+# WHAT THIS FILE'S DENOMINATOR DOES AND DOES NOT COVER, FOR A RETIREMENT QUESTION
+# -- added 2026-09-10, NFRA_CLDGRPH CG-s-36 (TO-CG-H-1), the remedy row W1-S38 asked for.
+#   THIS FILE IS A DECLARATION OF ROUTED QUERY TOOLS. IT IS NOT A CENSUS OF THE ESTATE'S
+#   CONSUMERS OF THE GRAPH'S EDGE VOCABULARY. Both statements are true at once, and only the
+#   first one is what tools_index/entries were built to be.
+#   SO: this file is a SOUND denominator for "which routed tool answers question X", "is this
+#   call the canonical one", and "does a use-case have a route". It is an UNSOUND denominator
+#   for "may this edge type / node type / vocabulary term be RETIRED" -- a producer, a fixture,
+#   a spike loader, a materialized producer JSON and another project's instrument all consume
+#   the vocabulary while declaring no route, so none of them can appear here, and a census
+#   scoped to this file cannot see them.
+#   MEASURED, not asserted (NFRA_CLDGRPH CG-s-36, rows W1-S38 / S110): asked whether STORED_IN
+#   had readers, the census over this file's 78 tools returned 0 of 78 with 78 of 78 names
+#   resolving to a file -- an HONEST zero for this domain, with the resolution arm present and
+#   passing. The unscoped sweep of the same repository, denominator 29,964 files, returned 15
+#   consumers, and the declared domain held 0 of the 88 files carrying the term: the domain and
+#   the claim's population are DISJOINT. The scoped zero would have authorized a retirement that
+#   broke every one of them.
+#   THE REQUIRED SECOND ARM, therefore: ANY retirement of a vocabulary term censused against
+#   this manifest MUST also run an UNSCOPED sweep of the whole repository corpus, print that
+#   sweep's own denominator beside the manifest's, and print the DELTA between the two counts.
+#   The delta is the finding. Where the two disagree, THE REPOSITORY IS THE DENOMINATOR AND THIS
+#   FILE IS ONE INPUT TO IT. A zero from this file alone never authorizes a retirement.
+#   WHY THIS SENTENCE LIVES HERE RATHER THAN IN THE PROJECT THAT LEARNED IT: the next vocabulary
+#   retirement in this estate will be censused against this manifest, by an agent who has not
+#   read that project, and it will again read clean. CLAUDE.md Rule 22's shared-dependency limb
+#   and Rule 24(i)'s domain clause both land on exactly this file.
+
 # INTENTIONALLY NOT CATALOGED (not graph-access use-cases -> exempt from the mandate, AC1-complete):
 #   comp-learns-status                    -- compiler self-learning/telemetry status (not a graph query). NOTE: comp-learns-run RETIRED 2026-07-08 (NFRA_TOOLCHECK P2, CTO-ruled: un-landed stub superseded by the PROMOTE loop).
 #   comp-perf                             -- tool-perf benchmarking (not a graph query)

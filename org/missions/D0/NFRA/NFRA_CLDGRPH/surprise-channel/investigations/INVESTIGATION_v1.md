@@ -8109,3 +8109,99 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-W1-S46 -- a write grant derived from a census inherits that census's vintage, and nothing in the grant says so
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-10T14:31Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W1-S46",
+    "one_line": "THE WIDENED GRANT WAS CUT FROM ROUND 7'S CONSUMER LIST, AND THE CONSUMER LIST WAS ITSELF SHORT -- so a RETIRE branch was unavailable BY CONSTRUCTION this round, independently of condition 2, and neither the ruling nor the face could have known it. TO-CG-H-1 widened <paths> to reach every consumer round 7 had named: the tsgraph_spike pair, and THREE round-6 files in slot ~2's folder granted individually by name (f11_edges_resolve.sh, f11_test_unified.py, f4_test_stitch_ingest.py) precisely so this order and TO-CG-H-3 could not collide. That grant is exactly the five-consumer set W1-S38 measured. THE REPOSITORY CENSUS THIS CELL RAN FINDS FIFTEEN consumer files, and TWO of them sit in that SAME ~2 folder while being outside the grant: g2_card_evidence.py:67,217,221,222 and g2_shrink_probe.py:45,46,49,93 -- the latter CONSTRUCTS STORED_IN edge triples (FANOUT_EMISSION / ONE_PER_KEY_EMISSION) and is a genuine fixture consumer, not a mention. Both are round-7 deliverables of slot ~2, i.e. they did not exist when the round-7 census that authorized this grant ran. SO THE GRANT IS NOT WRONG, IT IS VINTAGED: a write grant derived from a census is only as current as the census, and a consumer set that grows while the round runs makes the derived grant silently short. The general form, which is the part worth keeping: A GRANT CUT FROM A MEASUREMENT INHERITS THAT MEASUREMENT'S VINTAGE, AND NOTHING IN THE GRANT SAYS SO.",
+    "spec_asserts": "TO-CG-H-1 BOUNDS: 'THREE OF YOUR GRANTED PATHS LIVE IN ANOTHER SLOT'S DELIVERABLES FOLDER, and slot ~2 is working in it RIGHT NOW. You are granted exactly f11_edges_resolve.sh, f11_test_unified.py and f4_test_stitch_ingest.py -- three round-6 files, named individually and not by directory, precisely so that this order and TO-CG-H-3 cannot collide.' And the face's MEASURED bullet: 'the five consumers W1-S38 found outside the manifest all still exist' -- five named, 5 of 5 present at the cut, with the RETIRE branch requiring 'every consumer re-pointed in the same act'.",
+    "world_is": "The repository-denominator census (h1_reader_census.py, 29,964 files swept, 15 consumers surviving every named subtraction) finds TWO consumer files inside deliverables/0.9.0_WK_NFRA_CLDGRPH~2/ that the grant does not name, in addition to the three it does. A RETIRE branch would therefore have been HALF-LANDED BY CONSTRUCTION -- the one outcome the order forbids -- and the worker cannot widen its own grant. This is the SECOND time on this cell that a consumer set measured at one moment was treated as the consumer set at another: W1-S38/S110 caught the manifest-vs-repository gap, and this row is the vintage gap one axis over. NOTE ALSO, so the next reader is not misled by the counts: 15 is not 5 plus 10 new consumers. 15 is what a census that subtracts ONLY prose and this cell's own artifacts returns; round 7's 7 additionally dropped prior-round deliverables as 'this order's own'. Both denominators are honest and they answer different questions -- which is exactly why each is printed here with its subtractions.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "timeout 120 python org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/h1_reader_census.py -> 'REPOSITORY_DENOMINATOR=29964 file(s)', 'REPOSITORY_CONSUMERS=15', '13 inside this order's <paths> and 2 outside'.",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/g2_shrink_probe.py:45,46 @3f99d48f49 -- FANOUT_EMISSION and ONE_PER_KEY_EMISSION construct (key, 'STORED_IN', bucket) triples: a constructing consumer, not a mention.",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/g2_card_evidence.py:67,217 @3f99d48f49 -- the literal inside a compiled regex the script runs.",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-H-1.stored-in-retirement-own-cell.md@3f99d48f49 -- the <paths> block, which names three files in that folder and not these two.",
+        "NFRA_CLDGRPH-W1-S38 and -S110 -- the five-consumer measurement the grant was cut from."
+      ]
+    },
+    "notes": "NOT ACTED ON, DELIBERATELY, AND THE RESTRAINT IS THE POINT: widening a grant is the issuer's act and never the worker's, and slot ~2 is live in that folder this round, so editing either file would be both out-of-grant and a live write collision. THE REMEDY, for whoever cuts the next retirement cell: derive the grant from a census run AT THE CUT rather than from the prior round's row, and state the census's vintage in the <paths> block so a worker can tell whether its grant is current. Cheapest version: the cell that retires a term owns the whole deliverables tree of the rounds that built the term, or it is cut in a round where no sibling slot is working there."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W1-S47 -- a consolidation and a deletion look like the same retirement from the vocabulary's side and are opposite acts from the producer's
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-10T14:31Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W1-S47",
+    "one_line": "THE RULING AUTHORIZES A RE-POINT, AND A RE-POINT IS THE ONE FORM OF THIS RETIREMENT THAT BREAKS A CONTROL LANDED ONE COMMIT AGO -- while a DELETE, which nobody proposed, is safe. derive_stitch.py reads back an archived snapshot carrying OTHER producers' edges (:147 edges.extend(aws['edges'])) and then drops EVERY STORED_IN in it UNCONDITIONALLY (:158-159). Its own comment states the licence: 'STORED_IN is this producer's OWN edge type (nothing else in the estate writes one), so a STORED_IN arriving in the snapshot is by construction a previous cycle's output'. THE UNCONDITIONAL DROP IS SOUND ONLY BECAUSE THE TYPE IS SOLE-WRITTEN. OWNED_BY is not: derive_stitch.py and derive_runner.py contain the token OWNED_BY ZERO times between them, in any form, while the served graph carries 232 S3Key -OWNED_BY-> S3_BUCKET edges -- so by subtraction, and with no guess about which producer, those edges are written by something that is NOT this fold. Re-point the emit onto OWNED_BY and the fold begins deleting other producers' LIVE edges on every cycle, silently, with the rollup seams three named readers traverse among the casualties. The control that would be broken is TO-CG-H-2's own drop-on-read, merged into this worktree's history at 06ccb217db while this order was being cut. NO CRITERION ON EITHER ORDER WOULD HAVE SEEN IT, because the two orders are graded separately and the coupling is between them.",
+    "spec_asserts": "The CTO's ruling 94872, carried onto TO-CG-H-1's face: 'STORED_IN should be retired and SERVED_FROM re-pointed', on two binding conditions; and TO-CG-H-1's RETIRE branch: 'Every consumer re-pointed in the same act, STITCH_EDGE_TYPES updated, the fixtures and instruments moved, and a re-run proving no surviving reader.' Condition 2 as the face states it tests whether OWNED_BY can absorb STORED_IN's INTENT -- a semantic test.",
+    "world_is": "The binding objection is not only semantic, and the mechanical half was never measured. CLAUDE.md NEVER#1 requires counting the WRITERS of a named property before signing an act on it; no census of OWNED_BY's writers exists in this project's record. Measured here: FOLD_OCCURRENCES_OF_OWNED_BY=0 across derive_stitch.py and derive_runner.py, against 232 served S3Key -OWNED_BY-> S3_BUCKET edges. So RETIRE-BY-RE-POINT and RETIRE-BY-DELETE are DIFFERENT ACTS with different safety, and the ruling authorized the unsafe one. A DELETE loses no fact -- CG-s-32 measured that all 135 STORED_IN source keys already carry an OWNED_BY edge to the same bucket, 135 of 135 -- and it does not import STORED_IN's sole-writer premise onto a shared type. THE GENERAL FORM: A CONSOLIDATION AND A DELETION LOOK LIKE THE SAME RETIREMENT FROM THE VOCABULARY'S SIDE AND ARE OPPOSITE ACTS FROM THE PRODUCER'S, and the difference is invisible to any test that only asks whether the surviving term carries the fact.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/globgrph/derive_stitch.py:147,:155-159,:255 @3f99d48f49 -- the archive carry-forward, the sole-writer licence in the comment, the unconditional drop, and the emit, all re-read at HEAD in this worktree after TO-CG-H-2 changed the file.",
+        "cat infra/aws/globgrph/derive_stitch.py | grep -c OWNED_BY -> 0; same for derive_runner.py -> 0.",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/CG-s-32.boundary-edge-class-census.result.md:1506-1508 @3f99d48f49 -- 'OWNED_BY carries S3Key -> S3_BUCKET on 232 keys, {1: 232}, landing on the ARN-keyed bucket node' and 'all 135 STORED_IN source keys also carry an OWNED_BY edge (135 of 135)'.",
+        "infra/aws/globgrph/cse_emit_graphhead.py:125-127 @3f99d48f49 -- 'resolve OWNED_BY by the DST node_type -- S3_BUCKET dst = CONTAINS (container-inverse, the 232 S3Key edges), actor dst = OWNS (custody)': an INDEPENDENT instrument on a different plane agreeing on the same 232, and a FOURTH containment reader the condition never named.",
+        "timeout 120 bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/h1_branch.sh -> 'BRANCH=NOT_RETIRED', 'FOLD_OCCURRENCES_OF_OWNED_BY=0', 'SERVED_OWNED_BY_S3KEY_EDGES=232'.",
+        "NFRA_CLDGRPH-W1-S37 -- the semantic half of condition 2, still open, which this row does not restate and does not replace."
+      ]
+    },
+    "notes": "NOT ACTED ON: this cell's branch is NOT_RETIRED, so nothing was re-pointed and nothing was deleted, and the producer refactor that would make either safe is the upstream remedy TO-CG-H-2 named and deliberately did not take. WHAT THE NEXT RULING NEEDS TO SAY, explicitly, so it is not left to an assignee: (a) DELETE or RE-POINT -- they are not the same act; (b) if RE-POINT, the drop-on-read at derive_stitch.py:158-159 needs a per-cycle PROVENANCE mark instead of a type test, because a type test can only ever be as sound as the type's writer count; (c) if DELETE, say what happens to STITCH_EDGE_TYPES at derive_runner.py:2275, which is a READ of the vocabulary and not a writer. AND THE CHEAPEST CONTROL FOR THE WHOLE CLASS: before any vocabulary retirement, print the WRITER COUNT of the surviving term beside the reader census. This project has now been surprised twice by the same shape -- once on readers (W1-S38) and once on writers (here) -- and both times the missing number was one a script could have printed."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W1-S48 -- a write grant that admits a source file but not the artifact that source obliges leaves the worker able to incur a debt and unable to discharge it
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-10T14:58Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W1-S48",
+    "one_line": "A WRITE GRANT THAT ADMITS A SOURCE FILE BUT NOT THE ARTIFACT THAT SOURCE OBLIGES LEAVES THE WORKER ABLE TO INCUR A DEBT AND UNABLE TO DISCHARGE IT. TO-CG-H-1 grants org/modules/graph/graph-call-manifest.yaml, and touching anything under org/modules/graph/ is a comp-system _SOURCE touch: the pre-commit comp-system-gate refuses with 'SYSTEM BLOCKED-ON-PEER-LANDING: genuine drift (source drift: fingerprint (content-sha256, file_count) ... 260 -> ... 260)' and offers exactly two paths -- regenerate infra/system/06_current_state.{md,json} and stage them, or take the AUDITED override. THE FIRST IS OUT OF GRANT: infra/system/ is not in this order's <paths>, so the discharge is not an act this worker may perform, and the gate's own text says the regen path CANNOT work for an org/modules/graph touch anyway because comp-system would have to compile an uncommitted source. So the override is the only path open, it is the path the gate itself calls 'the legal path, not a lapse' (CTO arch-gate ruling LD-0362), and it was taken with the RESERVED PREFIX system-current-override: STRUCTURAL-TWOPHASE/rule-bank so the monitored rate can tell the two populations apart. BUT THE GATE ALSO SAYS 'DISCHARGE IT IN-SESSION with the recompile commit', and a STRUCTURAL override left undischarged IS a discipline event. THIS WORKER CANNOT DISCHARGE IT. The debt is therefore ARMED at the moment of commit and is owed by whoever drains this branch.",
+    "spec_asserts": "TO-CG-H-1 <paths> grants org/modules/graph/graph-call-manifest.yaml and does NOT grant infra/system/. Its BOUNDS anticipate the obligation but assign it one step downstream: 'This order may touch org/modules/graph/, which means the drain owes a comp-system pass that round 7's four merges did not. Say in your final report whether any org/modules/graph path is in your commit, so the issuer does not have to infer it.' And the standing law: 'Never edit outside the task order's <paths> ... a path you need that it lacks is a BLOCKING row on that criterion, never an override.'",
+    "world_is": "The obligation does not wait for the drain -- it fires at the WORKER'S OWN COMMIT, pre-commit, and blocks it. The order correctly predicted that a comp-system pass would be owed and correctly placed the DISCHARGE with the drain, but the gate's refusal lands on the worker, who must resolve it to commit at all and can only do so by taking an audited override it cannot then discharge. THE DISTINCTION WORTH KEEPING: this is NOT the standing-law case of 'a path you need that the order lacks', because the missing path is not needed for the CELL'S OWN WORK -- the manifest amendment is complete and correct without it. It is needed only to discharge a CONSEQUENCE the grant creates. A grant is normally read as 'what you may change'; this is a case where it also had to be read as 'what your change obliges', and those are different sets. The gate is not wrong, the order is not wrong, and the worker is not blocked -- the override is a real legal path with a reserved prefix built for exactly this two-phase shape. What is left over is an ARMED debt with no owner named at the moment it is incurred.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The comp-system-gate refusal on this worker's first act commit, verbatim: 'ERROR: BLOCKED -- comp-system 06_current_state is STALE and this commit touches a _SOURCE.' and 'IF YOUR COMMIT TOUCHES org/modules/graph/ (the rule bank): THE REGEN FIX ABOVE CANNOT WORK ... Land-then-recompile is TWO-PHASE BY NECESSITY and the override IS the legal path, not a lapse.'",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-H-1.stored-in-retirement-own-cell.md@3f99d48f49 -- the <paths> block (no infra/system/) and the BOUNDS clause assigning the comp-system pass to the drain.",
+        "The override actually taken, in this cell's own act-commit message: 'system-current-override: STRUCTURAL-TWOPHASE/rule-bank -- 28 lines of comment prose added to graph-call-manifest.yaml, 0 entries changed'.",
+        "CTO arch-gate ruling LD-0362, cited by the gate's own refusal text as the authority for the reserved-prefix path."
+      ]
+    },
+    "notes": "NOT A COMPLAINT ABOUT THE GATE, WHICH IS CORRECT, AND NOT A REQUEST TO WIDEN THE GRANT, WHICH IS THE ISSUER'S ACT. The point is narrower and reusable: WHEN A GRANT ADMITS A FILE WHOSE MODIFICATION MECHANICALLY OBLIGES A SECOND ARTIFACT, THE GRANT SHOULD EITHER ADMIT THAT ARTIFACT TOO OR NAME THE OVERRIDE AND ITS OWNER ON THE FACE. This order came one clause short of that: it foresaw the comp-system pass and told the worker to report the org/modules/graph touch, but it did not foresee that the gate fires at the worker's commit rather than at the drain, so the worker had to choose a path the face never named. CHEAPEST REMEDY for the next cut: any order granting a path under org/modules/graph/ carries one line saying 'the comp-system-gate will refuse your commit; take system-current-override: STRUCTURAL-TWOPHASE/rule-bank and the drain discharges it', which converts an unnamed choice into an instructed one. DISCHARGE OWED: recompile infra/system/06_current_state.{md,json} after this branch lands, by a seat whose lane reaches infra/system/."
+  }
+]
+```
