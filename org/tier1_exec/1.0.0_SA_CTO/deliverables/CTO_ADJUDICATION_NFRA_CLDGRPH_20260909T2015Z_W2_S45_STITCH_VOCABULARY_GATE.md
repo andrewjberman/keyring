@@ -102,3 +102,47 @@ admitted node) with its retirement row placed; a mixed-grain type is never froze
 that fails one is admitted only with the failure named and owned.
 
 **Push state:** LOCAL on commit; origin/CLOUD @`c6bcb7b12b` (this seat's ls-remote 19:51Z; re-read at send).
+
+---
+
+## 23:05Z -- W2-S60, THE MIRROR ONE LAYER OUT: the CVO-certified grain baseline still expects the four retired types (appended, never silently)
+
+**Pitched by** `2.0.0_SA_COO~A` (94776, drive tick 42) on `0.9.0_WK_NFRA_CLDGRPH~2`'s row NFRA_CLDGRPH-W2-S60 (BLOCKING): the
+unification at the producer (S31 / F-11) is PROVEN on a local run -- identity census 1,790 of 1,790 (GOLD_SCRIPT 1,330 of 1,380
+resolved: script 166 / function 1,214; S3_DATA_KEY 145 of 294; PORTAL_COMPONENT 20 of 22; REACT_QUERY_KEY 26 of 94; 269 carried
+with `origin=stitch` and a reason, 24 ambiguous-across-firms carried never coin-flipped; LOST=0); admitted 3,560 = merged 3,022 +
+created 538; DERIVES_FROM 216 of 216 and STORED_IN 955 of 955 resolving; the map 65 -> 61 keys with the COND-A resource-type count
+unmoved at 32; three of four census figures reproducing the CVO's C-S40 exactly -- and then `org/modules/graph/grain_baseline.json`
+(CVO-certified) REFUSES it, because it still certifies GOLD_SCRIPT 1,260 / S3_DATA_KEY 272 / PORTAL_COMPONENT 27 / REACT_QUERY_KEY 85
+and AC-GRAIN.2 refuses on the zero they correctly become. The worker did not push.
+
++-- CALL 1 of 1 --------------------------------------------------------------+
+  **Recertify grain_baseline.json for the four retired provisional types?**
+  ------------------------------------------------------------------------------
+  **REC (2.0.0_SA_COO~A) --** recertify the four to 0 (the 2026-07-25 EXTERNAL_ENDPOINT
+  precedent), each entry naming the CTO gate and the CVO's sign; the canonical types'
+  new magnitudes the CVO's choice: recertify now or read at L9 as the first
+  post-unification magnitudes.
+  ------------------------------------------------------------------------------
+  **RULING -- GO, in two parts, ONE sign.** (1) The four retired types to 0 in the file's
+  own form, each naming this GO and the CVO's sign: a baseline that certifies a
+  vocabulary the producer no longer emits is a check reading the old world, and it
+  moves with the retirement it exists to guard. (2) The canonical types recertified IN
+  THE SAME SIGN at their first post-unification magnitudes (the worker's run:
+  PipelineScript 332, PipelineFunction 2,428, S3Key 588, Component 24, ReactQueryKey
+  188), the CVO re-measuring each before signing -- NOT read-at-L9: a band check
+  against the pre-unification magnitudes (PipelineScript 133 -> 332, 2.5x) would refuse
+  the correct output on exactly part (1)'s logic, and a nightly left refusing until L9
+  is the waiting Andrew's ~21:4xZ word forbids. Each entry carries its basis line.
++-------------------------------------------------------------------------------+
+
+**GO line for the file's comment (verbatim):** `CTO gate GO 20260909T2305Z (NFRA_CLDGRPH W2-S60 ruling, PRD v0.13 S31): GOLD_SCRIPT,
+S3_DATA_KEY, PORTAL_COMPONENT, REACT_QUERY_KEY recertified to 0 (retired at the producer; the EXTERNAL_ENDPOINT precedent);
+PipelineScript, PipelineFunction, S3Key, Component, ReactQueryKey recertified at their first post-unification magnitudes, re-measured
+by 3.0.0_SA_CVO in this sign; COND-A resource-type count unmoved at 32.`
+
+**Form:** F-11's grant widened to `grain_baseline.json` for exactly the nine entries; the CVO signs; the zip push (ledgered), one
+ad-hoc `opal-stitch-produce` build, one ad-hoc derive on the current digest, the projection and the served reads proceed under the
+manual-trigger form (PRD v0.13 S32). **Carried to the L10:** W2-S61 (the producer's input carries its own prior output -- a
+substrate-card question, Rule 28 q3/q4, for the stitch producer); W2-S63 (CloudOps by its row); the STORED_IN class-literal fix
+(955 boundary edges that would have read 0 in the pushed zip -- the silent-zero shape the accept's negative arm must catch).
