@@ -1,0 +1,219 @@
+# ENDPOINT (L2, `/endpoint --forward`) — LIGHTWEIGHT INVESTOR REPORTING
+
+**Seat:** `1.0.0_SA_CTO` (L2, CTO only) · **Stamp:** 2026-09-10 ~13:4xZ
+**Brief consumed:** `docs/briefs/investor-reporting-lightweight-brief-20260910.md` @`03c74dc`,
+sha256 `1f20ba5d4e9b17c26479f7d338e4525d0488b437935f7544306a9e847b8ca1cd` over 23,151 bytes —
+computed at this seat over the blob at the author's own commit, not the worktree.
+**Design annex:** `docs/briefs/investor-reporting-lightweight-design-20260910.md` @`03c74dc`,
+sha256 `7c596b6f7f6d2ffd9725a1973add0088f97860d5e803634ba6e111e451925ce2` over 31,172 bytes.
+**Commission:** Andrew-direct 2026-09-10 09:19 ET + his same-turn ONE-PROJECT clarification, both
+verbatim in `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260910_0919ET_LIGHTWEIGHT_INVESTOR_REPORTING.md`.
+**Placement:** D9 Opal Workflows. ONE umbrella project, FOUR workstreams. Project code assigned at L3.
+
+⛔ **FWD-n IDS ARE PERMANENT AND NEVER REUSED. A retired outcome leaves its number VACANT.**
+
+⛔ **NO FWD BELOW IS A WAIT.** Every one is provable by an act a seat can take ON DEMAND. The single
+place a human gates an act is **FWD-4**, and it is EXPRESSLY QUALIFIED on the outcome with its reason,
+per Rule 27's L2 clause. Nothing here waits on an event nobody controls.
+
+---
+
+## THE OUTCOMES
+
+```
+  FWD-1  An advisor finds an authorized client and opens its relationship and
+         accounts without waiting for a vendor report
+         DONE WHEN  EXERCISED -- an advisor who has never used the workspace has
+                    searched, selected, and been shown the relationship and its
+                    permitted accounts
+         ACCEPT     from the header, a search by client name returns an unambiguous
+                    selection; the workspace immediately shows the relationship, its
+                    permitted underlying accounts, cached context and the directory's
+                    as-of; the choice survives a tab switch; an unmapped client stays
+                    VISIBLE to an authorized viewer with an explicit capability gap
+                    rather than silently missing
+         PROOF      a fixture directory carrying duplicate names, an account-only
+                    entry and multiple relationships, compared against the expected
+                    authorized set; cold and warm timings recorded against the whole
+                    captured firm-directory denominator; VENDOR REQUEST COUNT DURING
+                    SEARCH IS ZERO. No latency target is invented at L2
+         OWNER      WS1
+         SOURCE     brief O1; Andrew's "search for Clients by name, this routes the tabs"
+
+  FWD-2  A restricted advisor can use every tab and export ONLY within their
+         permitted client population
+         DONE WHEN  EXERCISED -- an unauthorized request has been replayed and
+                    revealed nothing
+         ACCEPT     firm and advisor rights govern suggestions, selected-account
+                    membership, report retrieval, job polling, cached results AND
+                    PDF download; a relationship containing an account outside the
+                    viewer's permitted population NEVER silently grants that account
+                    or its value; a firm-authorized viewer gets the firm's population
+                    under the same rules
+         PROOF      replay authorized and unauthorized requests with SWAPPED firm,
+                    advisor, account, relationship, report and PDF identifiers,
+                    INCLUDING A REVOKED GRANT AGAINST A WARM CACHE; the negative
+                    requests reveal no protected data
+         OWNER      WS1 owns the policy and scope contract; WS2-WS4 each enforce it
+                    at their own entry points
+         SOURCE     brief O2; CTO 95142 (entitlement is an OUTCOME, not a property of
+                    a search box); CLAUDE.md s.5 cross-firm rule
+         ⛔ NOTE    THIS IS THE HIGHEST-BLAST-RADIUS OUTCOME IN THE SET. A defect here
+                    is a CROSS-FIRM EXPOSURE, and the estate's cross-firm rule is
+                    SUBSTRATE-SHAPED with BOTH SHAPES LIVE (bucket-scoped Deny and
+                    key-prefix + IAM condition). It is graded on its own, never as a
+                    side effect of FWD-1
+
+  FWD-3  An advisor reads the provider's performance result in an Opal report and
+         exports the same result
+         DONE WHEN  EXERCISED -- a captured provider response has been carried to a
+                    rendered view and a PDF at one report revision, for each
+                    supported partner and scope
+         ACCEPT     for the selected account or relationship and period, vendor-
+                    calculated performance appears in a common Opal layout and the
+                    PDF carries the SAME scope, returned dates, values, method basis,
+                    source attribution and approved disclosures; the UI distinguishes
+                    TWR/MWR, net/gross, cumulative/annualized and UNAVAILABLE fields;
+                    a deliberately incomplete provider mapping yields a PARTIAL or
+                    UNSUPPORTED result rather than a full-client claim
+         PROOF      compare captured request/response, normalized report, rendered
+                    view and PDF at one revision per partner and scope; relationship
+                    return uses a VENDOR CALCULATION for the exact selected account
+                    set -- summing or averaging account returns is not a substitute
+                    and a fabricated aggregate fails this outcome
+         OWNER      WS2 semantic content and adapter; WS1 shared render/export
+         SOURCE     brief O3, F2, F3; Andrew's "just generating a frontend view of
+                    what Black Diamond/Orion already provide"
+         ⛔ NOTE    A NORMALIZER DOES NOT CHANGE A PROVIDER'S METHODOLOGY TO MAKE TWO
+                    NUMBERS LOOK COMPARABLE. Making BD and Orion agree by adjusting
+                    one of them fails this outcome even when the layout matches
+
+  FWD-4  An advisor obtains a YCharts sensitivity analysis in the same client
+         context and exports it
+         DONE WHEN  EXERCISED -- an approved report variant has been replayed from an
+                    analyst-approved input through its captured request/job/result
+                    chain to the tab and the PDF
+         ACCEPT     the advisor selects a supported variant, reviews the holdings or
+                    saved-portfolio mapping and comparison model it will use, and
+                    receives an Opal-branded analysis and matching PDF preserving the
+                    input snapshot, configuration, data dates, limitations and vendor
+                    attribution; a MODELED comparison is described as modeled;
+                    unsupported variants are VISIBLE as unsupported
+         PROOF      replay each approved variant end to end
+         OWNER      WS3
+         SOURCE     brief O4, F7; Andrew's "just pulling a report of what YCharts
+                    already provides"
+         ⛔ EXPRESSLY QUALIFIED, and this is the ONE human gate in the set.
+                    Current evidence covers ONE OF THREE varietals as a static
+                    report, and NO complete report-generation HAR has been inspected.
+                    The missing evidence -- the generation HAR, the analyst
+                    transcripts and input/result specimens -- is obtained by an ACT,
+                    not by waiting for an event: it is gated on ANDREW'S ANALYST
+                    handing it over, which is a NAMED PERSON'S DECISION and therefore
+                    the expressly-qualified exception Rule 27's L2 clause provides
+                    for. **THIS PARAGRAPH IS THAT QUALIFICATION.** The outcome is NOT
+                    re-cut to what one static varietal can prove; the evidence is
+                    fetched. Until it lands, FWD-4 reads NOT_REALIZED with its reason
+                    NAMED, and no cell may grade it REALIZED on the one captured
+                    varietal
+         ⛔ AND NO LIVE VENDOR CALL IS AUTHORIZED BY THIS ENDPOINT. Availability is
+                    not authorization; a live YCharts, Black Diamond or Orion call
+                    needs Andrew's explicit per-use word
+
+  FWD-5  An advisor sees current holdings organized by models, with the underlying
+         securities and unassigned assets preserved
+         DONE WHEN  EXERCISED -- dated holdings and model snapshots have been
+                    replayed for all three registry client firms
+         ACCEPT     the view starts at the model breakdown and drills into accounts
+                    and securities; ACTUAL CUSTODY HOLDINGS REMAIN THE TOTAL-VALUE
+                    BASIS; SmartX (49F), Eclipse (INF) or BD Rebalancer (COT)
+                    supplies the overlay; target weights, actual sleeve values and
+                    inferred estimates are DISTINCT; missing attribution stays
+                    VISIBLE without double-counting or redistributing the residual
+         PROOF      replay across all three firms including an unassigned account, an
+                    unmatched join, a blended model and a multi-relationship
+                    membership; UNIQUE UNDERLYING HOLDINGS RECONCILE BEFORE AND AFTER
+                    THE OVERLAY; coverage and join exceptions carry DENOMINATORS
+         OWNER      WS4
+         SOURCE     brief O5, F4; Andrew's per-partner overlay mapping, verbatim
+         ⛔ NOTE    MODEL TARGETS MUST NOT MASQUERADE AS OBSERVED HOLDINGS. A residual
+                    silently redistributed into sleeves fails this outcome even when
+                    every total ties
+
+  FWD-6  An advisor can keep working when one report is unavailable, and can tell
+         the age of each result
+         DONE WHEN  EXERCISED -- a provider has been deliberately failed and a client
+                    switched mid-request, with no response landing on the wrong
+                    selection
+         ACCEPT     client selection and silver-backed holdings stay usable when a
+                    provider is slow or down; each tab distinguishes LOADING, READY,
+                    STALE, PARTIAL, UNAVAILABLE and FAILED; a late response for a
+                    PREVIOUS selection CANNOT populate the current client's tab;
+                    cached reports keep their original as-of and revision
+         PROOF      delay or fail one provider, switch clients during an outstanding
+                    request, expire a cache entry, and complete jobs OUT OF ORDER
+         OWNER      WS1 shared lifecycle; WS2-WS4 provider and snapshot status
+         SOURCE     brief O6
+
+  FWD-7  The client directory cannot go quietly stale, and its ceiling belongs to
+         the system rather than to the advisor's diligence
+         DONE WHEN  EXERCISED -- READ ON DEMAND from the projection's own refresh
+                    history: consecutive refreshes with their instants, and no served
+                    directory older than the ceiling across them
+         ACCEPT     a client added or terminated in the source appears or disappears
+                    in search within the declared refresh window WITHOUT anyone
+                    asking for a refresh; the oldest directory an advisor can be
+                    served is set by the SCHEDULE, not by whether they noticed the
+                    as-of; a refresh that DID NOT RUN reads differently from one that
+                    completed
+         OWNER      WS1
+         SOURCE     ⭐ **NOT IN THE BRIEF'S SIX. ADDED AT L2** -- see UNCOVERED below
+```
+
+---
+
+## THE UNCOVERED PARTITION — hunted BY SUBTRACTION, not by recall
+
+⛔ **THE DOMAIN IS FALSIFIED FIRST, per Rule 24(i) as amended at `b3bc1d7511`.** The domain is not the
+brief's own six outcomes — subtracting a document from itself certifies nothing. The domain is
+**ANDREW'S TWO VERBATIM MESSAGES**, which are the population this endpoint answers to. Subtracting the
+brief's coverage from his words leaves ZERO uncovered: page, search/routing, performance via BD and
+Orion, YCharts sensitivity, holdings with per-partner model overlay, PDF export, the opal-data-assets
+client/relationship/account cache, and firmID/advisorID serving all land on O1-O5. The brief's own
+ownership check says the same and it holds.
+
+**BUT THE BRIEF'S SIX ARE NOT THE ONLY POPULATION.** A second domain — *what must be true for these
+six to keep being true* — yields one member the six do not carry:
+
+**FWD-7, THE DIRECTORY'S OWN FRESHNESS.** The brief makes the directory a **derived product
+projection** and says so plainly (Part II.2: *"calling it a cache does not make it a silver
+transformation... the pilot can avoid a new full analytical pipeline while still owning these small
+projections AND THEIR REFRESH MECHANISM"*). O1 requires the as-of to be **DISPLAYED**. **DISPLAYING
+STALENESS IS NOT BOUNDING IT.** O6 covers the staleness of REPORTS and CACHED RESULTS; nothing covers
+the DIRECTORY. So a directory that silently stops refreshing passes every one of O1-O6: search is
+fast, the as-of renders honestly, entitlement holds, reports and holdings work — while a client
+onboarded last week is INVISIBLE and a terminated one is still selectable.
+
+**That is the FWD-3 versus FWD-4 distinction from `NFRA_CLDGRPH` arriving in a new project** — age
+being *legible* and age having a *ceiling* are different outcomes with different owners, and this
+estate has already paid to learn that they do not travel together. Given entitlement rides on the same
+projection (FWD-2), a stale directory is not merely a stale list: **a terminated advisor's population
+can outlive the termination.** That is why it is an outcome and not a maintenance note.
+
+**NOT ADDED, and I name them so the exclusion is deliberate rather than an omission:** vendor
+retirement, a replacement performance engine, estate-wide pipeline consolidation, BI/agent query
+surfaces and historical model reconstruction. All are the 2026-09-09 unification brief's territory,
+which the brief says remains in force. This endpoint does not cancel it and does not absorb it.
+
+---
+
+## WHAT L2 DOES NOT DECIDE
+
+Project code and register row (L3). Cells, owners-per-cell, sequencing and lane suffixes (L5/L6 — and
+Andrew's proposed COO~N staffing is a pattern for the COO to apply at issuance, not a decision taken
+here). Latency and TTL numbers — **none is ratified at L2 and none may be invented downstream; they
+are MEASURED from provider behavior and then declared.** Which of the three YCharts varietals are
+approved (FWD-4's evidence decides). Any live vendor call.
+
+## PUSH STATE
+Measured at authorship, and it ages the moment an integrator runs.
