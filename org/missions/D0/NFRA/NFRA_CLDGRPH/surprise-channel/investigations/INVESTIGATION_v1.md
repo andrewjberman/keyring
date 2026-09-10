@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **291 rows**. Restated 2026-09-10T19:1xZ by `2.0.0_SA_COO~A` at a round-9 drain, by parsing every fenced json block in the MERGED file (219 blocks, 291 rows). This drain merged two branches that each restated this line for their own side; neither count was true of the union, so the number is re-measured here rather than carried from either.
+**Append-only during the round.** Denominator at this write: **296 rows**. Restated 2026-09-10T22:20Z by `2.0.0_SA_COO~A` on appending NFRA_CLDGRPH-S124, by parsing every fenced json block in this file (224 blocks, 296 rows after this append).
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -8631,6 +8631,37 @@ and its four S3 objects are verified.
       ]
     },
     "notes": "ANDREW-ACCEPTED, NOT AN OPEN OBJECTION: he chose 'use the existing token now' over 'mint a read-only PAT first' after being shown the permission set, at the 0.8.0_AE_CloudComp terminal ~21:3xZ. WHY IT IS STILL FILED: the exposure is not the token existing -- it already sat in Secrets Manager readable by any Opal seat -- it is that a repo secret is reachable by EVERY workflow on ajb_workspace, which is a wider surface than the one step that needs it. CHEAPEST NEXT STEP: mint a fine-grained PAT with Contents:Read on Opal-Capital/portal only and re-run `gh secret set PORTAL_REPO_PAT`; nothing else changes, the workflow is already proven working, and the swap can be verified by re-dispatching and reading step 4. NOT DONE HERE because minting a PAT is Andrew's act, not this seat's. RELATED: the push: trigger was deliberately LEFT AS COMMITTED on his word the same turn -- that was the handoff's section 5.4 open call and it is now answered, not outstanding."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S124 -- I called a DECLARATION an ENFORCEMENT in the round-9 packet, and the L9 grade caught it
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T22:20Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S124",
+    "one_line": "I CALLED A DECLARATION AN ENFORCEMENT IN A PACKET TWO GRADERS READ, AND THE L9 CAUGHT IT. L8_PACKET.round9.final.md s.3 says the CTO's withdrawn remedy is 'now refused BY CONSTRUCTION rather than by memory', and the drain-end read 95545/95546 repeats it. It is not. `drop_prior_cycle_edges` (infra/aws/globgrph/derive_stitch.py:111-135) reads exactly two names -- the caller's `requested` list and the declared `sole_written` allow-list -- and never `SOLE_WRITERSHIP_EVIDENCE`, never the census. ADDING `OWNED_BY` TO THE TABLE LICENSES IT AND ITS EDGES ARE THEN DROPPED WITH NO REFUSAL. The function enforces the DECLARATION, not the TRUTH of the declaration.",
+    "spec_asserts": "L8_PACKET.round9.final.md s.3 (`2.0.0_SA_COO~A`, @041c75bfd5): 'The CTO's withdrawn remedy is now refused BY CONSTRUCTION rather than by memory: adding OWNED_BY to that table is the act the withdrawal refused, and the table makes the assertion explicit and testable instead of implicit.'",
+    "world_is": "AST read at this seat of drop_prior_cycle_edges, derive_stitch.py:111-135. Names referenced in the function body: PRIOR_CYCLE_DROP_REQUEST, SOLE_WRITTEN_EDGE_TYPES, dict, dropped, e, edges, et, kept, licensed, list, refused, requested, sole_written, str, t, tuple, unlicensed. SOLE_WRITERSHIP_EVIDENCE: NOT referenced. census: NOT referenced. The refusal arm fires only for a type that is REQUESTED and NOT LICENSED; widening the licence is unguarded. 3.0.0_SA_CVO reached the same conclusion independently with pinned AST controls and graded I3-AC5 FAIL on it (ADJUDICATION_v4, C-S92, @5a5ae95709).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ast.parse of infra/aws/globgrph/derive_stitch.py at HEAD: drop_prior_cycle_edges lines 111-135, full Name census of the function body printed.",
+        "The function's own source, verbatim: `licensed = {t for t in requested if t in sole_written}` -- membership in the declared table is the ONLY test.",
+        "ADJUDICATION_v4.md C-S92 @5a5ae95709 by 3.0.0_SA_CVO, reaching the same finding with its own pinned AST controls and an exercised fixture.",
+        "L8_PACKET.round9.final.md s.3 @041c75bfd5 -- the claim as I wrote it."
+      ]
+    },
+    "notes": "INERT: nothing is armed by this. No code is wrong, no deploy is at risk, and the four mechanical I-3 grades are untouched -- what is wrong is a SENTENCE I wrote about correct code. \u26d4 AND THE ATTRIBUTION MATTERS, BECAUSE IT IS NOT THE WORKER'S ERROR. The worker's own comment above the table says 'ADDING A TYPE HERE ASSERTS SOLE-WRITERSHIP AND IS A GOVERNED ACT. The falsifier is the emission census in i3_writers.py' and warns that sole-writership is a fact about today rather than a property of the type. IT LABELLED THE THING CORRECTLY AS A GOVERNED DECLARATION WITH AN OFFLINE FALSIFIER. I compressed that into 'refused by construction' when I compiled the packet, which is the one word the evidence does not support. THE GENERAL FORM IS THIS ESTATE'S OWN: an unenforced declaration drifts to unpopulated, and a COMPILER of other seats' work is exactly where a careful qualification gets flattened into a stronger claim -- the compile step has no criterion grading it. REMEDY, and it is a correction rather than code: the packet's claim is corrected to both graders in the same turn as this row, and the accurate statement is that the licence is now an EXPLICIT DECLARATION with an OFFLINE, RE-RUNNABLE FALSIFIER, which is a real improvement over a comment and is NOT a runtime invariant."
   }
 ]
 ```
