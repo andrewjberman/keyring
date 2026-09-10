@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>pending -- handed by 2.0.0_SA_COO~B at the IB-s-18 drain</status>
+<status>complete -- S17-AC1 PASS-by-output (rc=0, IBS17-STORAGE-APPLIED, 5 of 5 arms); S17-AC2 PASS-by-output (plan: No changes); S17-AC3 RECORDED for 3.0.0_SA_CVO at L9, no worker verdict; proof-of-spec-check rc=0; 17 resources applied, ledger closed at f44cab8208; rows W1-S3, W1-S4, W1-S5 filed.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.4 @62301f71e0 | **Decomp cell:** `IB-s-17` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, s.1 + s.2) | **outcome_ref:** FWD-10 (own), FWD-2 (own), FWD-9 | **PRD candidate:** B17
 
