@@ -1,5 +1,6 @@
 # ETFS_GUARDRAIL -- DECOMPOSITION (L5)
 
+**v0.4** (2026-09-10 ~03:5xZ, `2.0.0_SA_COO`) -- ROUND 3 WIDENED BY AMENDMENT on PRD **v0.6**: `1.0.0_SA_CTO` placed row `ETFS_GUARDRAIL-W1-S31` at 94947, ruling the CLASSIFIER half squarely INSIDE this project's surface (s.3 OWNS names "the coverage classifier"; `EG-s-4` is FWD-4's own code row against that file) and the PRODUCER half OUT (PRD row `S20`, leaving as a brief to `4.0.0_SA_CRO` at L1). ONE cell added, `EG-s-22`, on the slot `EG-s-16` just freed. The round is mid-execution and the addition is by AMENDMENT under Andrew's 2026-09-03 scope-change word -- the same mechanism NFRA_OUTSET used for `OS-s-24`/`OS-s-25`/`OS-s-26`. s.13 below.
 **v0.3** (2026-09-10 ~03:1xZ, `2.0.0_SA_COO`) -- ROUND 3 on PRD **v0.5** @`7ba9b976b0`, cut on TWO Andrew-directs of the same night: his ~02:5xZ approval of the manufactured hole ("yeah try it but make sure no test run hits aj's email") and his ~03:0xZ law that **NO FWD IS A WAIT**, which superseded FWD-2 -> FWD-9 and FWD-7 -> FWD-10 in place. THREE cells, TWO chains: `EG-s-19` the catch-up branch driven on a manufactured hole; `EG-s-20` the send path made CORRECT and TEST-SAFE (the W1-S25/W1-S29 guard at two sites, and no driven run able to reach aj@); `EG-s-21` the DRIVEN REFUSAL that closes both new outcomes. s.12 below.
 **v0.2** (2026-09-09 ~22:4xZ, `2.0.0_SA_COO`, the base COO: `~B` not seated) -- ROUND 2 on PRD **v0.4** @`a830ea1cc0` (the CTO's manual-trigger addendum on Andrew's ~21:4xZ no-waiting word): five cells `EG-s-14`..`EG-s-18` added, 1:1 with rows S14-S18, ONE issuance, three worker slots on Opus in hand-cut worktrees (spine v3.7). Round 2's sections are s.8-s.11 below; s.0-s.7 are LEFT UNEDITED. Cells 14 -> 19; edges 15 -> 17.
 **v0.1.1** (2026-09-04 ~19:0xZ, `2.0.0_SA_COO~B`, in the issuance commit, BEFORE the cut freezes it): three
@@ -406,3 +407,60 @@ being reviewable; it is carried to the CTO's L10. Nor does it decide the durable
 schema the producer and both consumers share), which is a design question above this round.
 
 -- `2.0.0_SA_COO`, L5 round 3
+
+
+## 13. ROUND 3, AMENDED -- the classifier that cannot see the property it checks (PRD v0.6 row `S19`)
+
+**WHY THIS IS A CELL AND NOT A CARRIED FINDING.** `W1-S31` arrived as one symptom with two owners, and this seat
+routed it to `1.0.0_SA_CTO` for placement rather than splitting it on its own judgment. The CTO split it and kept
+half: the partner producer writing PRICED values onto closed days is not an OWNS surface and spine v2.4 forbids
+routing an outside remedy into a running project, so PRD row `S20` PLACES it and it leaves as a brief; but the
+COVERAGE CLASSIFIER is named in PRD s.3 OWNS in as many words, and a defect in the instrument this project owns
+does not become an outside matter because the data that exposed it came from elsewhere.
+
+**THE DEFECT, at `file:line @ commit-ish`.** `data/etfs/scripts/coverage/classifier.py:122-125` @`c866edd324`
+sets class A and `continue`s on a non-trading day BEFORE the presence check at `:128`. The function's own
+docstring says *"only PRESENCE of a key matters here"* -- the check that branch never reaches. A closed day
+carrying a slice and a closed day carrying nothing return the BYTE-IDENTICAL record. FWD-4's only instrument
+cannot discriminate FWD-4's truth from FWD-4's violation, and `daily/inflection/2026-09-07.json` (4 priced rows,
+`value-sha 41d1124f75c3` shared with 09-05/06/08, `LastModified` three days before the September run) is the
+live instance sitting behind it.
+
+| cell | outcome_ref | surface | verb | depends_on | the bar |
+|---|---|---|---|---|---|
+| `EG-s-22` | FWD-4 | `data/etfs/scripts/coverage/classifier.py` and its existing suite | build | -- | the classifier reports a closed day CARRYING a slice DIFFERENTLY from a closed day carrying nothing. The SHAPE is the assignee's (a distinct class value or a populated field); the DISCRIMINATION is the bar. Reproduce the defect FIRST on the producer's own bytes; positive control that a genuinely empty closed day still classifies A and still appears in no partner's holes; `EG-s-4`'s ZERO-vs-MISSING contract undisturbed; the month's verdict re-read before and after with every count identical but the one case, denominator printed |
+
+**Denominator:** PRD v0.6 `endpoint_outcomes` 8 (`FWD-1,3,4,5,6,8,9,10`); round 3 now SERVES 4 (`FWD-1`, `FWD-4`,
+`FWD-9`, `FWD-10`); cells 4.
+
+**THE COST THE ISSUER PRICED INTO THE CUT rather than leaving for the assignee to discover.** `_CLASS_NAMES` is a
+six-member tuple and `summarize` computes `trading_days = COVERED + B + C + D + UNKNOWN` and
+`holes = C + UNKNOWN + D` -- class A is a member of NEITHER sum. A new class value that joins `_CLASS_NAMES`
+without a decision about both sums moves every partner's `trading_days` and every downstream coverage line with
+it, silently. So the face states that a new VALUE triggers CLAUDE.md rule 24 in full (four postulates plus a
+word-boundary token census) while a populated FIELD triggers none of it, and says which is cheaper WITHOUT
+prescribing the choice -- the shape belongs to the seat that will build it.
+
+**THE CHAIN READ.** `EG-s-22` has no `depends_on`. It shares no file with `EG-s-19` (a producer and a bucket
+prefix), none with `EG-s-20`/`EG-s-21` (the mailer and its guard), and no S3 write plane with any of the three --
+it writes nothing to S3 at all. It is independent and adds a third chain.
+
+```
+fanout: 3 of 3 chains, cap 8, reason: EG-s-20 -> EG-s-21 remains one chain on slot ~4; EG-s-19 is independent on slot ~5; EG-s-22 is independent on slot ~1, which EG-s-16's terminal flip just freed and which is the seat that has already read this month's verdict artifact end to end.
+```
+
+**Seating:** `0.9.0_WK_ETFS_GUARDRAIL~1` takes `EG-s-22` by CONTINUATION in its existing worktree
+(`/c/tmp/wk-etfs-2-1`, branch `wk-etfs_guardrail-2-1`) -- already provisioned, already carrying its
+`OPAL_AGENT_SERIAL`, and the seat that measured all three partners' class counts an hour ago. No new worktree is
+cut and no provisioning is owed.
+
+**CLEAR OF THE STANDING CONSTRAINT BY CONSTRUCTION, and the face proves it rather than asserting it.**
+`EG-s-22` constructs no SES client and invokes no Lambda; arm (g) prints that evidence from the run itself.
+Andrew's ~02:5xZ word reaches every seat and this is how a cell that cannot violate it says so.
+
+**What this amendment does NOT decide:** whether the changed classifier is DEPLOYED. It is not, in this cell --
+arm (f) requires the assignee to print `DEPLOYED != BUILT` as a measured sha256 pair and hand the gap on, because
+a project can pass every criterion while the artifact the estate actually reads is unchanged. The deploy is named
+for `1.0.0_SA_CTO`'s L10 with an owner, never left implied.
+
+-- `2.0.0_SA_COO`, L5 round 3 amended
