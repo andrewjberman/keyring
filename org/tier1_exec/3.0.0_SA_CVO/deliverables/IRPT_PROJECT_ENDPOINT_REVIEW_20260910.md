@@ -68,3 +68,42 @@ The runner style is explicitly fixed in BACKEND FWD-4 and the corrected WHAT L2 
 The earlier novelty qualifications remain unresolved in this pin: BACKEND lines 353-356 still deny any ratified cross-tenant isolation, despite FWD-2; lines 366-368 still call BK O3 wholly uncovered, despite the original FWD-4 mail/correction clauses now carried immediately above. Correcting the quoted DONE WHEN in FWD-9 does not resolve those broader claims. Both proposals remain explicitly unratified; no new verdict on them is made here.
 
 CTO received the remaining five-line omission at 19:22:51Z, before this record was committed. Verification is confined to the endpoint repairs; it is not PRD approval, implementation acceptance or a project-wide completion grade.
+
+## Follow-up: renamed endpoints at 2dcd88091f (message 95516)
+
+CVO read the entire five-message Andrew-direct record at this pin. The codes are
+now `IRPT_FNTEND` and `IRPT_BCKEND`; FWD-9 is ratified, FWD-10 carries the ingestion
+construction ruling, and FWD-11 carries the new Global view with the named Model
+Portfolios frontend pattern and scoped backend layout. This read confirms the
+record and endpoint text, not the registry rows or the unread implementation.
+
+The exact five-line FWD-8 tail at original `58266dab2d:361-365` occurs contiguously
+in BOTH renamed endpoint blobs. The prior NOT A BI SURFACE / PENDING INPUT omission
+is closed. FWD-9 now acknowledges the original email/correction coverage and
+locates its additional bar in durability; FWD-10 distinguishes access from storage
+isolation. Those prior novelty overclaims are narrowed in the new blocks.
+
+Three residuals need correction before PRD inheritance:
+
+- FNTEND lines 279-284 correctly count seven carried outcomes and five backend-owned
+  contributions, then say closure requires the **four** crossing contributions.
+  FWD-11 made that five. The closure sentence must explicitly include the Global-view
+  contribution; adding it to the display block alone leaves the closure bar stale.
+- BCKEND lines 449-452 claim eleven outcomes and ten backend acceptance owners.
+  The actual block headers are FWD-1,2,3,4,5,7,8,9,10,11: **ten** outcomes, **nine**
+  backend acceptance owners and one frontend owner. A second stale count line at
+  452 still calls FWD-9/10 NEW and gives the old eight-plus-one total. Remove that
+  contradictory leftover and recompute from the actual IDs.
+- BCKEND FWD-9 lines 351-355 bind the quoted phrase "attributed to the right advisor
+  and client" by the sender's domain. Andrew's recorded sentence fixes **firm**
+  assignment from email; it does not establish that a domain identifies an advisor
+  or client. Bind the firm at ingestion while retaining independent advisor/client
+  resolution and the already-required unresolved-owner proof. The record's
+  domain-to-firm generalization is an interpretation of his email example, not an
+  additional verbatim instruction. Do not silently propagate that ambiguity into
+  the shared contract.
+
+The counted populations above come from pinned block-header enumeration, not the
+summary totals. CVO did not rerun all original-block comparisons at this new pin;
+the closure claim here is confined to the exact restored tail and the new blocks
+read. Two projects and one acceptance owner per outcome remain the governing cut.
