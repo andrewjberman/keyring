@@ -55,10 +55,12 @@ import time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 try:
     import _comprail
-    _WS = _comprail.repo_root()
+    _WS = _comprail.repo_root()                      # INSTALL root: rail log, comp_log_auto
+    _CORPUS = _comprail.corpus_root()                # CALLER's tree: subject resolution (LIMIT 4)
     _RAIL = os.path.join(_WS, "org", "mcp", "comp-which-rail.log")
 except Exception:                                    # never block a read on the rail
     _comprail, _WS, _RAIL = None, os.getcwd(), None
+    _CORPUS = os.getcwd()
 import _compbudget  # noqa: E402  -- RULE T shared carrier (PRD v0.4 s.4.4, NFRA_COMPEFFICACY CE-t-2)
 
 # Set once by main() (every code path except --help/-h reaches it); read by _self_report() for the
@@ -945,7 +947,7 @@ def main() -> int:
         print("comp-read: ERROR: no file given.")
         return 2
     path = positional[0].replace("\\", "/")
-    full = path if os.path.isfile(path) else os.path.join(_WS, path)
+    full = path if os.path.isfile(path) else os.path.join(_CORPUS, path)
     if not os.path.isfile(full):
         print("comp-read: ERROR: not a file: %s" % path)
         return 2
