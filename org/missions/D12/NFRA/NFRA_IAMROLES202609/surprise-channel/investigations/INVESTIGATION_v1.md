@@ -749,3 +749,66 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+## Z-W9-S1 -- plan 3 DOES carry a status tag, it reads "complete", and its own text disclaims the work verdict
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-W9-S1",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~9",
+    "surfaced_at": "2026-09-10T17:24Z",
+    "one_line": "TO-IAM-t-3's cell says plan 3 'Carries NO status tag at all'; the file carries <status>complete -- SPRING-CLEAN 2026-08-25 (S2)</status> plus <dispatch_held>true</dispatch_held>, and the status text itself says 'Closed as a record act, not a work verdict'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SPEC HALF, verbatim from the worker face of NFRA_IAMROLES202609.TO-IAM-t-3, describing plan 3: 'Carries NO status tag at all, and sits inside a project whose PRD marks it \"not re-opened\".'",
+        "THE WORLD HALF, read at org/projects/task_orders/PORTAL_AUTHHARD.WS6.least-priv-role-split-secret-dewildcard.md@122947867278df5df44fe9faa84c2dd1cd6fd12f (2026-08-25, 1.0.0_SA_CTO~X), line 8: '<status>complete -- SPRING-CLEAN 2026-08-25 (S2): <project> field repaired from \"PORTAL_AUTHHARD (Portal Auth/Authz + Abuse-Resistance Harden\" to PORTAL_AUTHHARD, which is closed. Closed as a record act, not a work verdict. Prior status: ISSUED -- QUEUED after WS-2b. GROUNDING (the role->Lambda->secret map) is read-only and MAY start in parallel if idle; NO TF change before CTO~B arch-gate + never-widen co-sign on the split.</status>' Line 9 additionally carries '<dispatch_held>true</dispatch_held>'.",
+        "THE DIVERGENCE CUTS TOWARD THE CELL, NOT AGAINST IT, AND THAT IS WHY THIS IS AN OBSERVATION. The cell's whole premise is C-CLOSED-RECORD -- a document's location and status are not its status. A plan carrying no tag is a weak instance of that trap; a plan carrying a tag that reads 'complete' while its own next sentence disclaims the work verdict, and while the artifact reads 1 of 3 items landed, is a far stronger one. The cell is more right than it knew, about a document it described wrongly.",
+        "WHY IT STILL MATTERS TO STATE: a reader of the cell text alone would go looking for an untagged document and, on finding a 'complete' tag, could reasonably conclude the issuer was describing a different file or a different vintage. The tag was written 2026-08-25 by a spring-clean pass that repaired a <project> field; the cell was cut 2026-09-10. Nothing moved the file between those dates -- git log -1 on the path returns the same 122947867278 -- so this is a reading of the document, not drift under the issuer.",
+        "MEASURED, NOT INFERRED, that the tag misleads: this worker's own cell deliverable grades the same document's three deliverable items as 1 LANDED / 2 NOT-LANDED on the artifact (see PRIOR_REMEDIATION_STATUS.md, plan 3 section), and the one item that landed did so on 2026-07-09 under NFRA_TERRAFORM-P2 Phase A -- six weeks before the 'complete' tag was written, by a different seat under a different project."
+      ]
+    },
+    "spec_asserts": "TO-IAM-t-3's inlined cell describes plan 3, org/projects/task_orders/PORTAL_AUTHHARD.WS6.least-priv-role-split-secret-dewildcard.md, as one that 'Carries NO status tag at all'.",
+    "world_is": "The file carries an explicit <status> element reading 'complete -- SPRING-CLEAN 2026-08-25 (S2)', whose own text then says 'Closed as a record act, not a work verdict. Prior status: ISSUED -- QUEUED after WS-2b', alongside <dispatch_held>true</dispatch_held>. At 122947867278, unchanged since 2026-08-25.",
+    "notes": "NO BOUND WAS CROSSED READING THIS. The cell permits reading plan 3 and forbids acting on it, re-opening it, or writing into PORTAL_AUTHHARD; this row records a reading and does none of those. NOTHING IS PROPOSED: whether the spring-clean's 'record act' closure should be visible as 'complete' to a status reader is a PORTAL_AUTHHARD question and is not this worker's to raise there."
+  }
+]
+```
+
+## Z-W9-S2 -- plan 1's "forty policies" is a headline, not an enumeration; the same document also says eight and twenty-two
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-W9-S2",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~9",
+    "surfaced_at": "2026-09-10T17:24Z",
+    "one_line": "TO-IAM-t-3 and its AC4 both say 'plan 1 names FORTY policies' and ask for a denominator against forty; the document names 8 roles, its own timeline table sums to 22 roles, and it enumerates no forty anywhere -- so the forty is not a denominator any worker can check against.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SPEC HALF, two carriers. The cell body: 'plan 1 names FORTY policies'. AC4's expectation: 'plan 1 names forty policies and a verdict over an unstated subset of forty is not a verdict about the plan'.",
+        "THE WORLD HALF, three numbers in one document at infra/security/remediation/active/iam-least-privilege-rollback-plan.md@6aad42da0dffb72c88371b8dbc40349d15c6c3f7 (2026-02-17, Andrew Berman), 506 lines. (a) Line 4, the Overview: 'Replace 40 overly-permissive IAM policies with least-privilege custom policies.' -- a headline count, with no list attached anywhere in the file. (b) Lines 376-405, 'Migration Order (Lowest Risk First)': FOUR tiers naming TWO roles each = 8 roles total (bd-allocation-checker-lambda-role, docker-builder-temp-role, bd-gold-detail-generator-role, trending-image-selector-role, bd-exporter-ec2-role, smartx-ingestion-pipeline-role, opal-portal-data-proxy-role, news-layer3-curation-role). (c) Lines 440-457, the plan's own 'Timeline with Rollback Windows' table: 'Dual-attach Tier 1 (2 roles)', 'Tier 2 (5 roles)', 'Tier 3 (10 roles)', 'Tier 4 (5 roles)' = 22 roles.",
+        "SO THE DOCUMENT DISAGREES WITH ITSELF ABOUT ITS OWN SCOPE, in three places, and the disagreement is not between policies and roles alone: even reading 40 as policies and 22 as roles, the tier bodies name 8 of the 22 and the other 14 appear nowhere. There is no expression of the forty that a worker can enumerate, check, or print a denominator against.",
+        "MEASURED ATTEMPT TO RECOVER IT: comp-find over the repo at HEAD 775e6cf20a for the plan's own artifacts returned 8 hits for 'Opal(Lambda|EC2SSM)LeastPrivilege' across 29409 files and 7 for 'IAMMigrationStatus', every one of them inside the plan document or this project's commentary about it -- so no companion list of forty exists elsewhere in the repo either. This is a MEASURED zero over a printed denominator, not an assumption of absence.",
+        "WHAT THIS DOES TO AC4, STATED SO THE ADJUDICATOR CAN SEE IT: AC4 is mechanically satisfiable (it counts the word 'denominator') and this worker's deliverable prints denominators throughout. But the SPECIFIC denominator AC4's expectation names -- 'how many of the forty were checked' -- is unavailable from the artifact, so the deliverable prints 8-of-8 named roles and 2-of-2 named policies and states in terms that the forty is not recoverable. That is a scoped answer with its scope declared, not a subset silently passed off as the whole.",
+        "THE ONE INSTRUMENT THAT COULD RECOVER IT, NAMED RATHER THAN WISHED FOR: the plan's own Phase 0 script backup-current-iam-state.sh (lines 30-59) was to write a full February IAM snapshot to S3. If that object exists, the forty is reconstructible from it; if it does not, Phase 0 never ran either and the forty is unrecoverable permanently. Not run here -- an S3 sweep for a February backup prefix is outside this cell's named invocations."
+      ]
+    },
+    "spec_asserts": "TO-IAM-t-3's cell text and its AC4 expectation both assert that plan 1 'names forty policies', and AC4 asks for the denominator of how many of those forty were checked.",
+    "world_is": "The plan states 40 only as an unenumerated Overview headline at :4; it names 8 roles at :376-405; its own timeline table at :440-457 sums to 22 roles; and no list of forty policies exists in the document or anywhere else in the repo (comp-find, 8 and 7 hits across 29409 files, all self-referential). The forty is not a checkable denominator.",
+    "notes": "FORM, NOT SIGNIFICANCE. This row does not say the cell should have been cut differently and does not grade AC4 -- the worker judges a surprise's form and never its significance, and AC6 is the CVO's. It exists so that a reader of the deliverable's plan-1 denominator ('8 of 8 named roles; 0 of a headline 40 the document never lists') can see that the shortfall is in the SUBJECT, not in the sweep."
+  }
+]
+```
