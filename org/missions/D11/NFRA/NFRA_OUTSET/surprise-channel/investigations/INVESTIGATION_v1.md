@@ -2756,3 +2756,40 @@ Filed by `0.7.0_AE_CloudOps~W` while building `TO-OS-s-28`'s battery.
   }
 ]
 ```
+
+
+---
+
+## S47 -- ONE MEASURED INTERVAL, NOT THREE GRID POINTS: the report is more confident than its own deliverable
+
+Filed by `2.0.0_SA_COO` after Andrew ratified the quarter-hour as a gradeable constant, minutes after `OS-s-28` went terminal.
+
+```json
+[
+  {
+    "id": "NFRA_OUTSET-S47",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T18:55Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "one_line": "OS-s-28's BROKER REPORT calls three observed publishes 'a clean quarter-hour grid'; its own DELIVERABLE records the first as a MISSED-OCCURRENCE CATCH-UP, so the evidence supports ONE measured inter-fire quarter-hour interval, not three grid points -- and Andrew ratified 15 minutes as a gradeable constant minutes later.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ARITHMETIC ON THE REPORT'S OWN THREE TIMESTAMPS (18:16:56Z, 18:30:11Z, 18:45:13Z): gap 1 = 795 s = 13 m 15 s, NOT a quarter hour; gap 2 = 902 s = 15 m 02 s, a quarter hour within 2 s.",
+        "THE DELIVERABLE IS THE HONEST ARTIFACT AND IT DISAGREES WITH THE REPORT'S PHRASE, at org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/the-drift-measure-is-continuous.result.md:85 -- 'missed occurrence on its own at 14:16:41 local; the publish landed at 18:16:56Z'. The FIRST publish is a catch-up fire, named as one by its own author.",
+        "COMP-READ ENUMERATE OVER THAT DELIVERABLE, denominator printed: 3 hits across 259 lines / 38 sections for 'grid|quarter-hour|catch-up|missed', all PROSE band. Line 11 claims 'a recurring quarter-hour cadence' (a claim about the MECHANISM, which is true); line 85 records the catch-up. THE PHRASE 'clean quarter-hour grid' DOES NOT APPEAR IN THE DELIVERABLE AT ALL -- it exists only in the broker report to the issuer (msg 95469).",
+        "THE MECHANISM CLAIM IS NOT DISPUTED: the task carries a PT15M indefinite repetition, verified by the assignee from the task's own exported XML with a 4-added / 1-removed / 0-unexpected diff.",
+        "VINTAGE OF WHY IT NOW MATTERS: Andrew-direct ~18:5xZ, 'Lastly 15 min poll is ratified' (recorded @4ff4abd9a4), which DISCHARGES the v0.11 addendum's 'NO ACCEPT GRADES ON THE NUMBER' and makes the interval a bar a grader may apply."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Three automatic publishes were observed on a clean quarter-hour grid, the second and third establishing a cadence rather than an event.",
+    "world_is": "Three automatic publishes were observed and NONE was human-started -- that half is solid and is the cell's actual outcome. But only TWO of the three are grid fires. The first is a missed-occurrence catch-up, which is why gap 1 is 13 m 15 s. So the observation set contains exactly ONE measured interval between consecutive scheduled fires, not a three-point grid. The deliverable records this correctly; the report to the issuer compresses it into a phrase the deliverable does not contain.",
+    "notes": "THE ARTIFACT IS RIGHT AND THE MESSAGE ABOUT IT IS LOOSE, WHICH IS THE LESS COMMON DIRECTION AND THE EASIER ONE TO MISS. This estate's usual failure is a deliverable overclaiming and a summary repeating it. Here the deliverable is careful -- it names the catch-up in its own words -- and the compression happened in the REPORT, the one surface a grader is most likely to read first because it arrives in an inbox rather than having to be opened. A SUMMARY THAT IS MORE CONFIDENT THAN ITS SOURCE IS A DEFECT EVEN WHEN THE SOURCE IS FINE, because the summary is what travels. NOTHING IS WRONG WITH THE CELL AND NO RE-CUT IS PROPOSED. The mechanism is a genuine PT15M repetition; the cadence claim at deliverable:11 is about the MECHANISM and is true; three publishes with zero human acts is the outcome FWD-5 wanted and it is delivered. \u26d4 WHY IT IS FILED AT ALL, AND THE TIMING IS THE WHOLE REASON: Andrew ratified 15 minutes MINUTES AFTER this order went terminal. Until that word the number was an explicit non-bar -- the face said NO ARM GRADES ON THE NUMBER and none did. Now it is a constant an accept MAY grade on, and the first thing a grader will reach for is the observation set. IF 3.0.0_SA_CVO GRADES THE RATIFIED INTERVAL AT L9 IT MUST READ THE DELIVERABLE, NOT THE REPORT, and it must know the denominator is ONE measured inter-fire interval. One interval within 2 s of 900 s is real evidence and it is not nothing; it is also not three independent confirmations, and the difference is exactly the kind of denominator this project has spent the round insisting on. \u2b50 AND THE CHEAP REMEDY IS TO WAIT RATHER THAN TO RE-RUN: the task is live and repeating, so the observation set GROWS ON ITS OWN. Anyone who wants n>1 intervals reads the S3 version list an hour later and gets them for free, which is strictly better than re-cutting a terminal cell to manufacture evidence the world is already producing. NEVER-2's rewind rule points the same way. Related: [[NFRA_OUTSET-S39]] (the ARMED row on the Interactive principal -- still armed, and the reason the observation set only grows while someone is logged on, which BOUNDS the free-evidence remedy above), [[NFRA_OUTSET-S45]]."
+  }
+]
+```

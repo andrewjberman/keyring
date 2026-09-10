@@ -157,6 +157,26 @@ what a remedy does not move is the postulate.
 
 ## 5. WHAT IS **NOT** SETTLED, AND IS NOT READ IN FROM HIS WORD
 
+⛔⛔ **VINTAGE POINTER ADDED 2026-09-10 ~18:5xZ, MINUTES AFTER THIS RECORD LANDED @`643116f787`. THE
+PLACEMENT MOVED, AND THE PARAGRAPH BELOW IS NOT REWRITTEN.** Andrew-direct ~18:5xZ, verbatim: *"D9 as a
+whole is Laptop now, and directives.yaml should be updated accoridngly"* (recorded
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_185xZ_D9_TO_LAPTOP_CLDGRPH_FINISHED_15MIN_RATIFIED.md`
+@`4ff4abd9a4`). **"AS A WHOLE" IS HIS PHRASE and he named its consequence himself: the Tax SMA close-out
+moves with it.** The row edit is `0.0.0_AB_MSTR`'s.
+
+**WHAT THAT DOES AND DOES NOT DO TO THIS RECORD.** The paragraph below was a TRUE MEASUREMENT AT ITS
+VINTAGE and its POINT still stands unchanged: **registering a macro in D9 was not, and is not, a device
+move** -- D9 moved on a SEPARATE sovereign word minutes later, which is exactly the separation this
+section insisted on. Only the sentence *"D9's `placement` still reads SITEZ"* is now stale, and rewriting
+it would destroy the record of why this record refused to read a device move into a macro word.
+**The write-ownership consequence flagged below is now MOOT rather than wrong:** with D9 on LAPTOP this
+fabric's register owner may author the D9 row, so no `IRPT_*` membership edit transits the cross-fabric
+reconcile. **Moot by his ruling, not by anyone's argument.**
+⚠ **THE SUBTRACTION IN s.1 IS UNAFFECTED.** D9 changing FABRIC does not put anything into a D9 TREE --
+there is still no `org/missions/D9/` folder -- so the four `OPAL_*` rows remain outside the domain on
+exactly the grounds s.1c states, and `[IRPT]` still covers 2 of 2 in-domain members. **A placement move is
+not a tree registration.**
+
 ⛔ **REGISTERING A MACRO IN D9 IS NOT A DEVICE MOVE FOR D9.** D9's `placement` still reads
 *"SITEZ -- RULED (Andrew): whole item, one seat"*. The two Investor Reporting projects run on the laptop
 on his **separate** ~18:3xZ word (*"It is going to be handled on this laptop"*), which named the PROJECT,
