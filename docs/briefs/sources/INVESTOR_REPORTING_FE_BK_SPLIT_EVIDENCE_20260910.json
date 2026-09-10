@@ -13,7 +13,7 @@
     "execution": "laptop",
     "d9_whole_move_directed": true,
     "canonical_codes_assigned_here": false,
-    "permanent_outcome_ids": "FWD-1 through FWD-11 active on the cited directions; FWD-12 proposed and unratified at 68d8b16a91.",
+    "permanent_outcome_ids": "FWD-1 through FWD-12 ratified; FWD-12 last at 5c18c88826. IRPT_FNTEND owns eight and IRPT_BCKEND four.",
     "canonical_project_codes": {
       "IR FE": "IRPT_FNTEND",
       "IR BK": "IRPT_BCKEND"
@@ -68,6 +68,13 @@
       "source_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
       "sha256": "310a075f509ed884a266ac22ee01fa62efee757d0736600579a7b54105b8a2f8",
       "size_bytes": 9569
+    },
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_192xZ_FWD9_YES_FWD10_IMPOSSIBLE_BY_INGESTION_GATE.md",
+      "source_commit": "5c18c8882631115a4ca0e39971e952690b916953",
+      "sha256": "2544d5626050f65a676838de2eb4f7c4cc6b02154e60829c2b7157d8a48ea690",
+      "size_bytes": 10105,
+      "read_scope": "Full committed ratification diff read."
     }
   ],
   "source_documents": [
@@ -364,12 +371,12 @@
     {
       "project": "IR FE",
       "path": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
-      "sha256": "90666179755178584a64b6bf3891355a3bcc536bcf3d1882ca4ce0113cdc4cae",
+      "sha256": "13ff2f296c998c24acfc35931b35556df977d4cbf4498fdd8c4fc1fbffcbb998",
       "outcomes": 8,
       "parts": 7,
       "source_documents_mapped": 9,
       "lines": 215,
-      "words": 4297,
+      "words": 4299,
       "canonical_code": "IRPT_FNTEND",
       "section_inventory": [
         {
@@ -439,7 +446,7 @@
           "heading": "### O8 — An advisor finds familiar portal components and consistent design throughout the product",
           "start_line": 74,
           "end_line": 79,
-          "section_sha256": "fbbad8fd0a44ed18dee0f9dd14e047b76bac92ecb525c7902165e33acc097743",
+          "section_sha256": "5ff6e15a5e746203b17f212e4c7bc0061bbdf815d1f2837ac8f4492c222a9d09",
           "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
         },
         {
@@ -460,7 +467,7 @@
           "heading": "### II.2 Handoff contracts",
           "start_line": 99,
           "end_line": 106,
-          "section_sha256": "1d78ef1ace7dc5ab57b79c8eb05cbdc78efaf122edbc3f555228ff3c0ab1e928",
+          "section_sha256": "4d0c6e67d19d6548c2df5f9c9e46bf7ce71e06d7bf1c64d398d314a2b495edd9",
           "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
         },
         {
@@ -552,12 +559,12 @@
     {
       "project": "IR BK",
       "path": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
-      "sha256": "4b45472449e9f6d24ef25d4dacb9ace88a455400d38c9349c8f58c0fd97e1698",
+      "sha256": "ded789b6c42c602dc8105399b183fcbfec0fcb96dc0a4cbf450ffb4464790955",
       "outcomes": 8,
       "parts": 7,
       "source_documents_mapped": 9,
       "lines": 318,
-      "words": 6718,
+      "words": 6717,
       "canonical_code": "IRPT_BCKEND",
       "section_inventory": [
         {
@@ -648,7 +655,7 @@
           "heading": "### II.2 Shared owners and limits of the consolidation",
           "start_line": 91,
           "end_line": 98,
-          "section_sha256": "943c6ba8e31f34ec51aa38d150e46c1eaaa70dec5d753ba304807e1acf2193d3",
+          "section_sha256": "1cf854be21bab13e00a52de580b8355a3b14313b854fcecd9b1b4ce99ad4abbb",
           "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
         },
         {
@@ -2327,16 +2334,16 @@
       "limitation": "AWS access-key, bearer-token and Cookie header signatures only; not universal secret detection."
     },
     "l2_distribution_covers_all_eight_once": true,
-    "current_distribution_covers_all_eleven_once": true
+    "current_distribution_covers_all_twelve_once": true
   },
-  "updated_at_utc": "2026-09-10T19:45:34.178379+00:00",
+  "updated_at_utc": "2026-09-10T19:52:41.305821+00:00",
   "forward_endpoints": [
     {
       "project_code": "IRPT_FNTEND",
       "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FNTEND_20260910.md",
-      "source_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
-      "sha256": "2a5685e2f0045f5c4e8c7e1c12beb39f2ea03849d843e634f2ebbc18d0ef41b9",
-      "read_scope": "Ownership columns, new FWD-12 block and both coverage/landing sections; latest authority-record diff read in full."
+      "source_commit": "5c18c8882631115a4ca0e39971e952690b916953",
+      "sha256": "d83ff91a859f5d66126692940e09d084f4ee889d23f3a12a459ff30e34db3c99",
+      "read_scope": "Committed status/closure diff read; FWD-12 substantive block unchanged."
     },
     {
       "project_code": "IRPT_BCKEND",
@@ -2365,6 +2372,11 @@
     "FWD-11": {
       "state": "added on Andrew words",
       "scope": "Opal Global access; FE Model Portfolios dropdown, BK api/scoped enforcement"
+    },
+    "FWD-12": {
+      "state": "ratified",
+      "source_commit": "5c18c8882631115a4ca0e39971e952690b916953",
+      "scope": "FE portal component reuse, design and brand conformity; original outcome and proof unchanged."
     }
   },
   "historical_forward_endpoints": [
@@ -2384,7 +2396,7 @@
     }
   ],
   "current_acceptance_distribution": {
-    "source_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
+    "source_commit": "5c18c8882631115a4ca0e39971e952690b916953",
     "IRPT_FNTEND": [
       "FWD-1",
       "FWD-3",
@@ -2392,7 +2404,8 @@
       "FWD-5",
       "FWD-6",
       "FWD-8",
-      "FWD-11"
+      "FWD-11",
+      "FWD-12"
     ],
     "IRPT_BCKEND": [
       "FWD-2",
@@ -2400,7 +2413,7 @@
       "FWD-9",
       "FWD-10"
     ],
-    "rule": "Advisor-facing outcomes owned by FE; machinery by BK. All cross-project source/data/execution proof remains required."
+    "rule": "FE owns advisor-facing/design outcomes; BK owns machinery. All twelve ratified on the cited directions; both proof halves remain required for crossing outcomes."
   },
   "additional_source_inspection": [
     {
@@ -2452,6 +2465,25 @@
         "FWD-10",
         "FWD-11"
       ]
+    },
+    {
+      "source_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
+      "IRPT_FNTEND": [
+        "FWD-1",
+        "FWD-3",
+        "FWD-4",
+        "FWD-5",
+        "FWD-6",
+        "FWD-8",
+        "FWD-11"
+      ],
+      "IRPT_BCKEND": [
+        "FWD-2",
+        "FWD-7",
+        "FWD-9",
+        "FWD-10"
+      ],
+      "rule": "Advisor-facing outcomes owned by FE; machinery by BK. All cross-project source/data/execution proof remains required."
     }
   ],
   "historical_acceptance_distribution": {
@@ -2473,14 +2505,6 @@
     "scope": "Acceptance/grade ownership only, not a measure of work; all cross-project proof retained.",
     "read_scope": "Committed distribution amendment diff read in full; no fresh review of all other endpoint sections."
   },
-  "proposed_unratified_outcomes": {
-    "source_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
-    "FWD-12": {
-      "project": "IRPT_FNTEND",
-      "scope": "Portal component reuse, layout/design and brand conformity",
-      "status": "Proposed at Andrew; not ratified at source cut; IRPT_BCKEND not engaged."
-    }
-  },
   "forward_endpoint_history": [
     {
       "project_code": "IRPT_FNTEND",
@@ -2495,6 +2519,13 @@
       "source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
       "sha256": "299a2ca75fdee611e021ea9e7c4b521fedb1711b57c4b77b430a6a5df29ecc4f",
       "read_scope": "Full authority record; endpoint FWD-9/10/11 blocks and restoration of the two formerly missing FWD-8 notes."
+    },
+    {
+      "project_code": "IRPT_FNTEND",
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FNTEND_20260910.md",
+      "source_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
+      "sha256": "2a5685e2f0045f5c4e8c7e1c12beb39f2ea03849d843e634f2ebbc18d0ef41b9",
+      "read_scope": "Ownership columns, new FWD-12 block and both coverage/landing sections; latest authority-record diff read in full."
     }
   ],
   "required_prd_coverage": {
@@ -2519,5 +2550,16 @@
       }
     ],
     "scope": "No coverage-complete claim for unwritten PRDs; inventory is the denominator for downstream subtraction."
-  }
+  },
+  "proposal_history": [
+    {
+      "source_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
+      "FWD-12": {
+        "project": "IRPT_FNTEND",
+        "scope": "Portal component reuse, layout/design and brand conformity",
+        "status": "Proposed at Andrew; not ratified at source cut; IRPT_BCKEND not engaged."
+      }
+    }
+  ],
+  "proposed_unratified_outcomes": {}
 }
