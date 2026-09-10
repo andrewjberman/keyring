@@ -79,7 +79,9 @@ task order. Rulings stay in records under `deliverables/`, reachable by the pin.
 
 ```
 PRD_HEADER            json block, first in file           (gate-required)
-## ENDPOINT           the outcome blocks, verbatim, NOTHING ELSE   (gate-required)
+## ENDPOINT           per FWD: title, DONE WHEN, ACCEPT, PROOF verbatim; operative constraints as
+                      constraints; owner + crossing one line each; source pin as a column;
+                      NO annotations, histories or seat names   (gate-required section)
 ## CELL CANDIDATES    one row per cell:  cell id | FWD served | brief section(s) consumed, by line |
                       contracts consumed/produced | paths (existing to reuse, new to create) |
                       fixtures + evidence files | acceptance clause draft (invocation + expectation)
