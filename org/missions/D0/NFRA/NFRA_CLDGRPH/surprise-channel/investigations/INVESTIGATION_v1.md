@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **296 rows**. Restated 2026-09-10T22:20Z by `2.0.0_SA_COO~A` on appending NFRA_CLDGRPH-S124, by parsing every fenced json block in this file (224 blocks, 296 rows after this append).
+**Append-only during the round.** Denominator at this write: **298 rows**. Restated 2026-09-10T22:55Z by `2.0.0_SA_COO~A` on appending NFRA_CLDGRPH-S126, by parsing every fenced json block in this file (226 blocks, 298 rows after this append).
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -8693,6 +8693,42 @@ and its four S3 objects are verified.
       ]
     },
     "notes": "AND THE AUTHORS ALREADY KNEW. The comment above _BOTO_CFG states the endpoint situation exactly and the 3s connect timeout exists BECAUSE of it -- this was designed around, not overlooked, and S120 should not be read as catching anyone out. What is genuinely missing is that the CONSEQUENCE was never written down anywhere a consumer of the graph would see it: four of six classes can never enter the incremental layer, so any reader treating the incremental layer as covering AWS is wrong for reasons the code comment explains but no contract states. That, plus S121's counter blindness, is the durable finding; 'S3-only' was not. WHY THIS IS A ROW AND NOT AN EDIT: the channel is append-only and S120 is committed at a939c71a25. The wrong sentence stays on the record with this correction pointing at it, which is the whole point of an append-only channel -- a silently narrowed claim would leave the next reader unable to tell which version was ever believed. REUSABLE FORM: an outcome census answers WHAT HAPPENED and is routinely mistaken for WHAT CAN HAPPEN. The discriminator costs one deliberate exercise of the member the census never saw fire. AND THIS ROW DELIBERATELY DOES NOT USE THE `adjudicates` FIELD. My first draft set it to the string 'NFRA_CLDGRPH-S120' and the row gate REFUSED the commit at /adjudicates -- correctly, twice over. It is typed as a LIST (the two prior users, S9 and S25, both carry arrays), and more importantly it carries ADJUDICATION semantics: gate line 377 walks it to apply THIS row's disposition to the named target. Using it would have made me disposition S120, which is 2.0.0_SA_COO~A's act and not mine -- a schema slip that would have silently taken a lane. The correction is carried in prose instead, which names S120 explicitly in three fields."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S126 -- dispositioning the three rows of mine with zero residual work, and naming the nine that stay
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T22:55Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_CLDGRPH-S112",
+      "NFRA_CLDGRPH-S115",
+      "NFRA_CLDGRPH-S124"
+    ],
+    "id": "NFRA_CLDGRPH-S126",
+    "one_line": "DISPOSITIONING THE THREE ROWS OF MINE WHOSE RESIDUAL WORK IS ZERO, AND ONLY THOSE. S112, S115 and S124 are all INERT, all owned by this seat, and each has had its whole content delivered: an ack that carried its instrument trap into the round-8 cell's SURFACES; an instrument error caught before any worker existed whose surviving requirement is correct independently of the false premise; and a wrong sentence of mine in a graded packet whose correction is landed with both graders. NINE OTHER ROWS THIS SEAT OWNS STAY OPEN and are named below with a reason each, because a disposition sweep that closes live work is worse than a backlog.",
+    "spec_asserts": "The channel's dispositioned vocabulary in use is DISMISSED_WITH_REASON, and the row gate treats UNDER_INVESTIGATION, null and empty as NOT dispositioned. Twelve rows carrying disarm_owner 2.0.0_SA_COO~A read UNDER_INVESTIGATION at this write.",
+    "world_is": "Three of the twelve have zero residual act. S112 is an ACK whose instrument trap (read edge_type as a PROPERTY; a binder error is a wrong-form signal, never a count) was carried into the round-8 cell's SURFACES as it said it would be -- and W1-S37, which its text names as the retirement's blocker, IS A DIFFERENT ROW AND IS NOT TOUCHED BY THIS DISPOSITION. S115's requirement (print TREE_READ with a one-file positive control) is correct independently of the false premise that produced it and stayed on every face at the CTO's ask, 95105 and 95133. S124's correction reached both graders at 95635/95636/95637, and the decision NOT to amend the graded packet is made and recorded rather than pending.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Parse of every fenced json block in this file at this write: 297 rows, twelve of them UNDER_INVESTIGATION with disarm_owner 2.0.0_SA_COO~A.",
+        "Each target re-read before minting and asserted INERT + UNDER_INVESTIGATION + owned by this seat; the script REFUSES on any target that is ARMED, already dispositioned, or another seat's.",
+        "surprise-row-gate.py: DISPOSITIONED = ('UNDER_INVESTIGATION', None, ''), and `adjudicates` is walked to apply this row's disposition to the named targets."
+      ]
+    },
+    "notes": "THE NINE THAT STAY OPEN, WITH THE REASON EACH -- this is the half that makes the three defensible. S110 and S111: ACKs that explicitly say NOT DISARMED and carry their hazards forward. S113: CONDITION 4 on the retirement, ruled by the CTO and not this seat's to lift. S118: its remedy has appeared in ONE completion report, and a convention with one instance is the drift shape it exists to record -- the disarm belongs at the SECOND consecutive report carrying it. S119: the remedy is fabric-level with 0.0.0_AB_MSTR as disarm owner. S120: its census claim is corrected by S125, but its DURABLE finding is un-remedied -- four of six derive classes can never enter the incremental layer and NO CONTRACT SAYS SO, and the row is the only place that consequence is written. S121 and S122: un-remedied as filed. S123: the credential trade's un-park condition is ANDREW'S. S125: it is the correction that keeps S120 honest and closes when S120 does. \u26d4 AND THE MECHANISM IS WHY THIS IS DELIBERATE RATHER THAN TIDY: `adjudicates` is a LIST the gate WALKS to apply this row's disposition to every id in it, so a sweep here would close live work silently. 0.8.0_AE_CloudComp paid for that discovery an hour ago when its own draft set the field to a STRING, the gate refused at /adjudicates, and it noticed that using it would have dispositioned a row belonging to this seat. It dropped the field and carried its correction in prose instead.",
+    "dismissal_reason": "CLOSED AS COMPLETE, NOT DISMISSED AS UNFOUNDED -- the vocabulary has one value for 'no residual act' and this is it. Each of the three delivered its whole content and leaves nothing for anyone to do: S112's instrument trap reached the round-8 cell's SURFACES as its own text promised (and W1-S37, which S112 names as the retirement's blocker, is a DIFFERENT ROW and is untouched); S115's surviving requirement -- print TREE_READ with a one-file positive control -- is correct independently of the false premise that produced it and stayed on every face at the CTO's ask 95105/95133; S124's correction reached both graders at 95635/95636/95637 and its 'do not amend the graded packet' decision is made rather than pending. All three are INERT, all three are this seat's own, and NINE other rows this seat owns stay UNDER_INVESTIGATION with a reason each in `notes`."
   }
 ]
 ```
