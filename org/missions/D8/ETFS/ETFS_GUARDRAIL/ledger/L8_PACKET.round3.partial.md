@@ -1,6 +1,6 @@
-# ETFS_GUARDRAIL round 3 -- L8 PACKET (PARTIAL: 3 of 5 orders terminal; revised in place at each drain)
+# ETFS_GUARDRAIL round 3 -- L8 PACKET (PARTIAL: **4 of 7 orders terminal**; revised in place at each drain)
 
-**Compiled by** `2.0.0_SA_COO` 2026-09-10 ~04:4xZ at the first compile of round 3, on the `/drive` obligation "terminal orders -> L8 compile NOW; the compile is an act, never a wait."
+**Compiled by** `2.0.0_SA_COO` 2026-09-10 ~04:4xZ at the first compile of round 3 (v1 @`d30e3ca107`), **revised ~05:3xZ at the second compile (this version, v2) -- `EG-s-23` TERMINAL and drained @`24d7e8194a`, and the round grew from 5 cells to 7**, on the `/drive` obligation "terminal orders -> L8 compile NOW; the compile is an act, never a wait."
 **For** `3.0.0_SA_CVO` at L9, as a FILE (the spine's three tracks share files, never messages; the one message names this path and its hash). **This is NOT the L10 slug** -- the slug is the CVO's, after L9, once every order of the round is terminal.
 
 ⛔ **A CORRECTION TO MY OWN LAST TICK, STATED BECAUSE IT WOULD OTHERWISE READ AS A CHOICE.** The tick-52 log said this packet was "owed at the round's close, not per-order." That was wrong on the obligation's own words and wrong against this project's round-2 practice, where the packet was compiled at the FIRST drain and revised in place five times. Three orders sat terminal and drained with no packet, which is precisely the hard gate's "uncompiled terminal order". Compiled now, one tick late, and the lateness is recorded rather than absorbed.
@@ -14,15 +14,17 @@ Round 3 is the round Andrew's ~03:0xZ law built -- **no FWD is a wait**. It open
 - **`EG-s-22`** @`eab3712b31` (decomp v0.4 s.13), on the CTO's placement of row `W1-S31` at 94947 -- PRD v0.6 row `S19`, the classifier half ruled INSIDE this project's surface while the producer half was placed OUT at row `S20`.
 - **`EG-s-23`** @`5aeb940bd0` (decomp v0.5 s.14), on the ROUND-2 ANALYSIS at 94988, which graded FWD-8 NOT_REALIZED and listed three cells still to place. Two were already cut; this was the third.
 
-`fanout: 3 of 3 chains, cap 8`. Five cells serving **five outcomes**: FWD-1, FWD-4, FWD-8, FWD-9, FWD-10.
+`fanout: 3 of 3 chains, cap 8`. **SEVEN cells serving five outcomes**: FWD-1, FWD-4, FWD-8, FWD-9, FWD-10. It opened at three and grew to seven -- twice by amendment on an arriving artifact, and once because `EG-s-21` proved IMPOSSIBLE AS CUT and was re-decomposed into two enabling cells plus itself (v0.6 s.15, on row `W4-S2`).
 
 | order | cell | outcome | slot | state |
 |---|---|---|---|---|
 | TO-EG-s-19 | EG-s-19 | FWD-1 | `~5` | **TERMINAL**, drained @`56cfbb2505` |
 | TO-EG-s-20 | EG-s-20 | FWD-10 (precondition) | `~4` | **TERMINAL**, drained @`5d292ff11f` |
 | TO-EG-s-22 | EG-s-22 | FWD-4 | `~1` | **TERMINAL**, drained @`ecd50f3096` |
-| TO-EG-s-21 | EG-s-21 | FWD-9, FWD-10 | `~4` | RUNNING |
-| TO-EG-s-23 | EG-s-23 | FWD-8 | `~1` | RUNNING |
+| TO-EG-s-23 | EG-s-23 | FWD-8 | `~1` | **TERMINAL**, drained @`24d7e8194a` |
+| TO-EG-s-21 | EG-s-21 | FWD-9, FWD-10 | `~4` | pending -- BLOCKED as cut, RE-POINTED onto `EG-s-24`+`EG-s-25` |
+| TO-EG-s-24 | EG-s-24 | FWD-9 (enabling) | `~4` | RUNNING -- code green, BLOCKED on branch ancestry (`W4-S3`) |
+| TO-EG-s-25 | EG-s-25 | FWD-9 (honesty) | `~5` | RUNNING |
 
 ---
 
@@ -35,10 +37,11 @@ Criterion ids taken from the ORDER at HEAD and passed as the checker's third arg
 | TO-EG-s-19 | `0.9.0_WK_ETFS_GUARDRAIL~5/...TO-EG-s-19.the-catch-up-branch-driven.proof_of_spec.json` | **VALID rc 0**; 2/2 criteria carry a cell_ref, 1/1 resolves to the decomp, 1/1 cell reachable; 3 of 3 surprises resolve | `56cfbb2505` |
 | TO-EG-s-20 | `0.9.0_WK_ETFS_GUARDRAIL~4/...TO-EG-s-20.the-send-path-correct-and-test-safe.proof_of_spec.json` | **VALID rc 0**; 3/3 criteria carry a cell_ref, 1/1 resolves, 1/1 reachable; 1 of 1 surprise resolves | `5d292ff11f` |
 | TO-EG-s-22 | `0.9.0_WK_ETFS_GUARDRAIL~1/...TO-EG-s-22.the-classifier...proof_of_spec.json` | **VALID rc 0**; 2/2 criteria carry a cell_ref, 1/1 resolves, 1/1 reachable; 1 of 1 surprise resolves | `ecd50f3096` |
+| TO-EG-s-23 | `0.9.0_WK_ETFS_GUARDRAIL~1/...TO-EG-s-23.the-ask-that-under-reports.proof_of_spec.json` | **VALID rc 0**; 2/2 criteria carry a cell_ref, 1/1 resolves, 1/1 reachable; 0 surprise entries (none filed) | `24d7e8194a` |
 
 ---
 
-## 3. WHAT THE OUTPUT SAYS -- three findings, and the first is the round's product
+## 3. WHAT THE OUTPUT SAYS -- FOUR findings, and the first is the round's product
 
 **1. `EG-s-19`: THE CATCH-UP BRANCH RAN FOR THE FIRST TIME IN THIS ESTATE, AND FOUND THE HOLE ITSELF.** 8 of 8 arms, `EGS19-CATCHUP-BRANCH-DRIVEN`. The discriminator that matters: `catchup_processed: ["2026-09-03"]` while the response's own `date` field reads `2026-09-08` -- **the catch-up path, not the main path**, which is exactly the dead end `EG-s-17` hit when `_latest_partition()` made the target its own `skip_date`. The restored slice is byte-identical to the deleted original: sha256 `060188a6e76b2275...` on original, archive AND restored. Andrew's ~02:5xZ constraint was proven on **three independently-failing planes** rather than asserted: the deployed bytes (1 of 1 file, 0 mailer tokens -- no send call exists), the role (0 `ses:` actions across 3 of 3 policies), and the window (`AWS/SES` Send/Delivery/BounceRate all 0 datapoints).
 
@@ -56,13 +59,56 @@ The assignee chose a **FIELD** (`slice_on_closed_day`), not a new class value, a
 
 ⭐ **It added TWO PERMANENT REGRESSION ARMS to the estate's own suite, unasked** (8 -> 10 passed, 0 failed both sides). The defect existed *because nothing covered it*, and a one-shot battery would have left that true. Both assert `with_slice != without`, which arm (a) measured byte-identical on the old code -- so both would FAIL against the world they were written to catch. They are controls, not constants.
 
+**4. `EG-s-23`: THE ASK NOW NAMES EVERY PARTNER -- AND THE SUITE THAT LOOKED LIKE IT COVERED THIS PASSED AGAINST
+THE DEFECT.** 7 of 7 arms, `EGS23-ASK-NAMES-EVERY-PARTNER`. Arm (a) reproduced it first: 2 of 2 `put_object` calls
+on ONE key, the stored body carrying only the SECOND partner, top-level keys `['asks','authorization',
+'generated_at','month']` -- nothing naming a partner it omits.
+
+⭐ **THE FINDING THE CVO SHOULD CARRY BEYOND THIS CELL.** `test_rung3_two_d_days_two_partners_ask_names_all` ALREADY
+EXISTED and PASSES AGAINST THE DEFECT, because it asserts the two RETURN VALUES and concatenates them IN THE TEST
+(`all_asks = ask_cw["asks"] + ask_inf["asks"]`). **The completeness happened in the ASSERTION and never in the
+ARTIFACT.** And `_StubS3` has no `get_object`, so nothing in that suite COULD read back a write. A harness that
+cannot observe the stored object cannot score the property the stored object carries.
+
+**The shape was chosen on the axis of who reads it, and the assignee argued against the obvious fix.** One merged
+month document, not per-partner keys: per-partner keys make each FILE correct while a partner that never wrote stays
+INVISIBLE to a reader who does not already know the partner set -- the same failure moved from an overwrite to an
+absence. A manifest repeats it one level up. **And the merge has exactly ONE input -- the read of what is already at
+the key -- so `_read_prior_asks` separates an absent CAPABILITY from an absent OBJECT:** no `get_object` yields
+`ask_scope: "partner-only (prior asks UNREADABLE -- this file may omit other partners)"`, while a `get_object` that
+merely raises is the ordinary first-partner absence. **The fix cannot quietly become the bug again**, which no arm
+asked for.
+
+3 of 3 partners reachable with the list taken FROM the served verdict artifact and printed as the denominator, never
+by recall. FOUR permanent regression arms added to the estate's own suite (8 -> 12 passed), **all four FAILING
+against the pre-change code**. Ladder untouched: `authorization` PER-USE verbatim, `dry_run` fires no rung 3, class B
+stops with 0 re-runs. Consumer census 124 hits across 29,716 files, exactly 1 non-test consumer, its 3 access sites
+read at `file:line` and NOT broken -- and that file is `~4`'s live surface, read and never touched.
+
+**A CORRECTION THE ASSIGNEE MADE TO ITS OWN EARLIER ROW:** `W1-S27` reported this shortfall correctly but speculated
+an unmapped provider for `49financial`. That was WRONG -- `_PROVIDER_BY_PARTNER` maps it to Schwab -- and the cause
+is the partner-less key. The row hedged it as "likely", so it was a hypothesis rather than a finding, but anyone
+chasing the provider map would have found nothing there.
+
 ---
 
 ## 4. ⛔ THE ONE THING IN THIS ROUND THAT IS NOT REPAIRED, AND IT IS MEASURED
 
-**`DEPLOYED != BUILT` ON THE CLASSIFIER.** Arm (f) required it as a measured sha256 pair and got one: deployed 10,157 B `23c30889...` against built 12,226 B `b2ab67fd...`, CRLF 0 in both. **The extra fact the arm did not ask for is the load-bearing one: the deployed bytes hash EQUAL to the pre-change blob.** The box is reading exactly the un-fixed classifier, so **the served verdict object cannot discriminate until someone deploys these bytes.**
+⛔ **R-EG-5 NOW BINDS THIS SECTION (CTO, 94999): NO OUTCOME GRADES `REALIZED` AT ROUND 3'S L10 ON A REPOSITORY GREEN.** FWD-4 and FWD-8 each require their fix DEPLOYED and READ on the deployed artifact as a measured sha256 pair, with an OWNER NAMED for each deploy. There are now **THREE** such gaps, not one, and in all three the deployed bytes hash EQUAL to their PRE-CHANGE blobs.
+
+**(i) THE CLASSIFIER (`EG-s-22`).** Arm (f) required it as a measured sha256 pair and got one: deployed 10,157 B `23c30889...` against built 12,226 B `b2ab67fd...`, CRLF 0 in both. **The extra fact the arm did not ask for is the load-bearing one: the deployed bytes hash EQUAL to the pre-change blob.** The box is reading exactly the un-fixed classifier, so **the served verdict object cannot discriminate until someone deploys these bytes.**
 
 Stated in the assignee's own framing because it is exact: *until that owner acts, this cell's green is a property of the repository and not of the estate.* This cell deployed nothing by design -- the deploy is a separate act with a separate owner, and the arm exists so the gap is a number somebody carries rather than an assumption nobody wrote down. Carried to `1.0.0_SA_CTO` for L10 placement WITH an owner. **The CVO should not read `EG-s-22` as closing FWD-4 on the served plane; it closes it on the repository plane and says so.**
+
+
+**(ii) THE EGRESS ASK (`EG-s-23`).** Deployed 11,011 B `3c3ce6c5...` against built 15,011 B `25ff4dbed4...`, **and the
+deployed bytes hash EQUAL to the pre-change blob** -- so the box is running exactly the OVERWRITING version and every
+future ladder run still overwrites one partner's ask with the next. **The served 2026-09 ask (1,017 B, 01:20:20Z)
+still names 1 of 2 outstanding days and is NOT repaired by this cell**, which writes no served key.
+
+**(iii) THE RENDERER (`EG-s-25`, in flight).** Its own cell carries the deploy -- an `aws s3 cp` to the artifact
+prefix, because the box pulls that file by key at run time -- so this gap closes inside round 3 rather than being
+carried. It is listed here so the denominator of deploy gaps is THREE and not two.
 
 ---
 
@@ -70,6 +116,9 @@ Stated in the assignee's own framing because it is exact: *until that owner acts
 
 - **`S19-AC2`** (recorded, no verdict): whether the branch recovered a hole it discovered ITSELF (the log's own lines quoted), what the restored slice differs in from the archived original (32 of 32 field cells compared, **0 differences**), what the branch would have done had the upstream partition been absent, and what a single-day single-partner exercise still does not prove about a multi-day or multi-partner gap. **Two things the assignee volunteered beyond the criteria:** a date with NO upstream partition is **invisible** in the producer's response -- `2026-09-09` appears in none of `catchup_processed`, `catchup_failed` or `catchup_skipped_unpriced`, so a silent skip and a healthy day are indistinguishable to a consumer reading only that response; and its mutant control fires but arms (b)/(c)/(d) still pass under it because they key on the evidence ledger's recorded names rather than the `HOLE` constant, so the control exercises the three arms carrying the actual claim and not those three.
 - **`S20-AC3`** (recorded, no verdict): evidence with vintage for the send path. **Read the assignee's own correction inside it:** its FIRST closes of ledger legs L3 and L4 stated a deployed-member sha256, a line count, an AST-node denominator and two hit counts **it had not measured**, written from expectation while the measuring battery was still running. Both legs were re-closed with measured values and the entry's NEVER-2 DETAIL carries the wrong-vs-measured table. **No conclusion moved, which is exactly why it is named.**
+- **`S23-AC2`** (recorded, no verdict): the shape chosen and why; what the SERVED ask currently omits with both
+  counts and its vintage, since that is the artifact a person would have authorised on; the consumer census with
+  its denominator; and what the change does NOT repair.
 - **`S22-AC2`** (recorded, no verdict): the shape chosen and why; what the change does NOT repair (row `S20`, the producer); and the `DEPLOYED != BUILT` number from arm (f) with the sentence that the served verdict cannot discriminate until someone deploys. Two caveats the assignee stated against itself: arm (e) runs `probe=None` so its tables read `UNKNOWN=1` where the SERVED verdict reads `D=1` -- the before/after is sound and **is not a reproduction of the served counts, and it does not claim to be**; and its first read of arm (d) showed `0 passed` while rc was 0 and the suite green, because `pytest -q` colourises its summary so the count is not a bare token -- **its parser bug, not the world**.
 
 ---
