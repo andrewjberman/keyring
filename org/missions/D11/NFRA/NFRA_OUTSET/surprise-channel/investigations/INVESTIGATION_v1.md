@@ -2723,3 +2723,36 @@ Filed by `2.0.0_SA_COO`, about its own dispatch of `OS-s-28`.
   }
 ]
 ```
+
+## NFRA_OUTSET-S46 -- `.tools/aws` CANNOT BE EXECUTED BY A WINDOWS PYTHON PARENT: WinError 193, not an aws error and not an empty result, and it took out exactly the three battery arms that shared it
+
+Filed by `0.7.0_AE_CloudOps~W` while building `TO-OS-s-28`'s battery.
+
+```json
+[
+  {
+    "id": "NFRA_OUTSET-S46",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~W",
+    "surfaced_at": "2026-09-10T18:35Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "0.7.0_AE_CloudOps~W",
+    "one_line": "`.tools/aws` IS A BASH SCRIPT, so a WINDOWS PYTHON parent cannot exec it: it raises OSError WinError 193 '%1 is not a valid Win32 application' -- NOT an aws error and NOT an empty result. Three battery arms died at once and the two that survived were the two that never touched AWS, so the failure looked like a defect in the ARMS rather than in the SHIM RESOLUTION.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "REPRODUCED: subprocess.run(['<repo>/.tools/aws', 's3api', ...]) from Python312/python.exe raises OSError [WinError 193]. Arms (a), (b) and (c) of test_os28_drift_is_continuous.py all reported 'ARM RAISED: OSError' in one run.",
+        "POSITIVE CONTROL, same interpreter, same call shape: subprocess.run(['<repo>/.tools/aws.cmd', 'sts', 'get-caller-identity']) returns rc=0 with the expected identity JSON. So the defect is the SHIM VARIANT, not the subprocess call, the arguments, or AWS.",
+        "FILE PLANE: `.tools/aws` is 7213 B mode -rwxr-xr-x (a shell script); `.tools/aws.cmd` is 2271 B. CLAUDE.md's Git section already says the pair ships 'both or neither'.",
+        "NEGATIVE CONTROL ON THE BLAME: arms (d), (e) and (f) HELD in the same run. They are the three arms that read PowerShell and the filesystem and never call the shim."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "CLAUDE.md's Git section names `.tools/aws` as the shim for AWS access and treats `aws.cmd` as its co-shipped sibling, without saying which caller each serves.",
+    "world_is": "The two are NOT interchangeable and the choice is a property of the CALLING PROCESS, not of the repo. A Git Bash caller runs `.tools/aws` transparently; a Win32 parent -- which every `python.exe` battery on this estate is -- can only start `.tools/aws.cmd`. Because the failure is an OSError raised at CreateProcess rather than a non-zero rc or an empty stdout, it does not look like an AWS problem at all, and a battery that wraps its arms in try/except reports it as a defect in each arm.",
+    "notes": "FIXED IN THIS CELL by resolving the shim rather than assuming it: a `_aws_shim()` helper prefers `.tools/aws.cmd` on nt, falls back to `.tools/aws`, and raises loudly naming both candidates if neither exists -- Rule 16's 'resolve it first, fail closed loud' applied to the aws shim the way the estate already applies it to `.tools/jq.exe`. THE CLASS WORTH KEEPING, AND IT IS NOT ABOUT AWS: A WRAPPER'S EXECUTABILITY IS A PROPERTY OF THE PARENT PROCESS, NOT OF THE REPO. The same path is present, readable and correct for one caller and unstartable for another on the same box, so 'the tool is there' is not the question -- 'can THIS process start it' is. AND THE DIAGNOSTIC SHAPE IS THE REUSABLE PART: three arms failed and three held, and the split was not random -- the three that failed were exactly the three that touched the shim. A per-arm exception handler converts one shared-dependency defect into N independent-looking failures, which is CLAUDE.md Rule 22's shared-dependency blindness seen from the other side: verifying each member found three broken members instead of one broken thing they had in common. Reading what the FAILING arms shared, rather than debugging the first one, is what located it in a single step. Related: [[NFRA_OUTSET-S39]], [[NFRA_OUTSET-S44]]."
+  }
+]
+```
