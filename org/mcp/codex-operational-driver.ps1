@@ -401,7 +401,7 @@ Measured state:
 
 Expected next motion: 4.0.0_SA_CRO~Y materializes and indexes the bounded P2-TO-05 post-landing PASS verdict so 02check can advance. Downstream issuance remains held until the indexed verdict is visible.
 "@
-            Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO~Y' -Subject 'DRIVER NUDGE P2-TO-05 PASS verdict index pending' -Body $body -LogPath $LogPath
+            Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO' -Subject 'DRIVER NUDGE P2-TO-05 PASS verdict index pending' -Body $body -LogPath $LogPath
             $lastNudgeState[$key] = $nowEpoch
         }
     }
@@ -421,7 +421,7 @@ Measured state:
 
 Expected next motion: 4.0.0_SA_CRO~Y issues the bounded post-landing validation ruling for P2-TO-05. Downstream issuance remains held until that ruling.
 "@
-            Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO~Y' -Subject 'DRIVER NUDGE P2-TO-05 post-landing validation pending' -Body $body -LogPath $LogPath
+            Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO' -Subject 'DRIVER NUDGE P2-TO-05 post-landing validation pending' -Body $body -LogPath $LogPath
             $lastNudgeState[$key] = $nowEpoch
         }
     }
@@ -510,7 +510,7 @@ Measured state:
 
 Expected next motion: 4.0.0_SA_CRO~Y issues the bounded PASS/FAIL/REPAIR ruling for FI repair commit $($fiGit.Head). CTO holds landing/downstream issuance until that ruling.
 "@
-            Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO~Y' -Subject 'DRIVER NUDGE P2-TO-05 FI repair certification pending' -Body $body -LogPath $LogPath
+            Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO' -Subject 'DRIVER NUDGE P2-TO-05 FI repair certification pending' -Body $body -LogPath $LogPath
             $lastNudgeState[$key] = $nowEpoch
         }
     }
@@ -546,7 +546,7 @@ Measured state:
 
 Expected next motion: 4.0.0_SA_CRO~Y issues the bounded P2-TO-05 handback ruling. CTO holds landing/downstream issuance until that ruling.
 "@
-            Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO~Y' -Subject $subject -Body $body -LogPath $LogPath
+            Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO' -Subject $subject -Body $body -LogPath $LogPath
             $lastNudgeState[$key] = $nowEpoch
         }
     }
@@ -574,13 +574,21 @@ Expected next motion: 4.0.0_SA_CRO~Y issues the bounded P2-TO-05 handback ruling
             $lastEpoch = if ($lastNudgeState.ContainsKey($key)) { [int64]$lastNudgeState[$key] } else { 0 }
             if (($nowEpoch - $lastEpoch) -ge ($NudgeMinutes * 60)) {
                 $body = "DRIVER ALERT: codex-seat-status for $($seatState.Serial) is $($seatState.State) exit $($seatState.Exit). First line: $($seatState.FirstLine)"
-                Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO~Y' -Subject "DRIVER ALERT seat not GREEN $($seatState.Serial)" -Body $body -LogPath $LogPath
+                Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO' -Subject "DRIVER ALERT seat not GREEN $($seatState.Serial)" -Body $body -LogPath $LogPath
                 $lastNudgeState[$key] = $nowEpoch
             }
         }
     }
-    # THE DENOMINATOR, ALWAYS EMITTED -- including when every count is zero. A suppressed population that
-    # leaves no number behind is exactly how seven red seats read as a quiet pass.
+    # THE DENOMINATOR, emitted on every COMPLETED pass -- including when every count is zero. A suppressed
+    # population that leaves no number behind is exactly how seven red seats read as a quiet pass.
+    # ⛔ IT IS *NOT* "EVERY PASS", AND MY FIRST COMMENT HERE SAID SO WRONGLY (corrected on 3.0.0_SA_CVO's
+    # qualification, which used my own restart incident as its evidence). This script runs under
+    # $ErrorActionPreference = 'Stop', so a TERMINATING error earlier in the pass -- a refused codex-send is
+    # the measured case, when OPAL_AGENT_SERIAL disagrees with -DriverSerial -- aborts before this line.
+    # THEREFORE: THE ABSENCE OF THIS LINE DOES NOT DISCRIMINATE OLD CODE FROM AN ABORTED NEW-CODE PASS.
+    # Anyone checking whether this repair is live must read the SUPPRESS reason string too
+    # (`p2_to_05_resolved_incident_seat_only` = repaired; `p2_to_05_resolved_logged_only` = old code),
+    # because that line is emitted BEFORE the sends and survives an abort that kills this one.
     Write-DriverLog -Path $LogPath -Message "red-seat accounting: roster=$($seatStates.Count) red=$($redSeats.Count) suppressed=$suppressedRed alertable=$alertableRed incident_seat=$P2To05IncidentSeat p2_to_05_resolved=$p2To05Resolved"
 
     foreach ($unreadState in $seatUnreadStates) {
