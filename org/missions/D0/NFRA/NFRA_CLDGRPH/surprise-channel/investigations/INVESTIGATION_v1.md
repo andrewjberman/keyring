@@ -8665,3 +8665,34 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-S125 -- CORRECTION to S120: four of six derive classes are dead, not five; DynamoDB works and the census measured event mix, not capability
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-10T22:05Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S125",
+    "one_line": "CORRECTION TO S120, NARROWING IT: I wrote that the updater 'derives S3_BUCKET and nothing else'. FOUR of its six classes are dead, not five, and DYNAMODB_TABLE works. Exercised live this turn: a synthetic UpdateTable event for arn:aws:dynamodb:us-east-1:313476888478:table/bd-securities returned DERIVED type=DYNAMODB_TABLE and ICEBERG_COMMIT nodes_written=1. S120's CENSUS was right (7150 of 7150 derives are S3_BUCKET over 72h) and its CONCLUSION over-reached: that census measured the event MIX, not the writer's CAPABILITY, and DynamoDB showed zero only because no mutating DynamoDB management event occurred in the window. I read a capability claim off an outcome count without checking the mechanism per member, which is the exact shape CLAUDE.md Rule 22 names.",
+    "spec_asserts": "NFRA_CLDGRPH-S120, filed by this same seat one hour earlier, states: 'Only S3_BUCKET is reachable' and 'the updater derives S3_BUCKET and nothing else', grounding it on a 72h census of 7150 DERIVED lines all of type S3_BUCKET against 22 BOUNDED_DERIVE_FAIL.",
+    "world_is": "The split is 2 working / 4 dead, and the mechanism is per-class rather than global. The VPC has NO NAT and exactly three endpoints, measured live on vpc-0cc0c6a75e54605e3: com.amazonaws.us-east-1.s3 (Gateway, available), com.amazonaws.us-east-1.dynamodb (Gateway, available), com.amazonaws.us-east-1.logs (Interface, available). So: s3 works because its branch makes NO AWS API CALL AT ALL -- it parses the bucket out of the ARN string and returns a fabricated dict; dynamodb works because describe_table rides the DynamoDB gateway endpoint, now EXERCISED rather than inferred; lambda (get_function), iam (get_role), sns (get_topic_attributes) and sqs (get_queue_attributes) all call public APIs for which no route exists and fail on a 3s connect timeout. The four dead classes still cover THREE of the five key-collision pairs (IAM_ROLE+LAMBDA, EVENT_RULE+LAMBDA, CODEBUILD_PROJECT+IAM_ROLE), so S120's consequence for the collision coverage claim is UNCHANGED.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws ec2 describe-vpc-endpoints on vpc-0cc0c6a75e54605e3 (the VPC of subnet-023db8cbfd99ffff2, the updater's only subnet) -> exactly 3 endpoints: s3 Gateway, dynamodb Gateway, logs Interface. No NAT gateway backing this subnet.",
+        "live invocation a6a42fa7-01a9-4cd0-b121-e7d8f7c74f11 at 2026-09-10T22:01:34Z -- DERIVED arn=arn:aws:dynamodb:us-east-1:313476888478:table/bd-securities type=DYNAMODB_TABLE, ICEBERG_COMMIT nodes_written=1, BATCH_END failed=0, no FunctionError",
+        "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py bounded_derive_node -- the s3 branch returns a dict built from the ARN string with no _boto() call; the lambda/iam/dynamodb/sns/sqs branches each call _boto(svc)",
+        "same file, the comment above _BOTO_CFG: 'Short timeouts: Lambda is in VPC without NAT; only S3+DynamoDB have Gateway endpoints. Other services (lambda/iam/sns/sqs) need public API access -- fail fast (3s) rather than hanging'"
+      ]
+    },
+    "notes": "AND THE AUTHORS ALREADY KNEW. The comment above _BOTO_CFG states the endpoint situation exactly and the 3s connect timeout exists BECAUSE of it -- this was designed around, not overlooked, and S120 should not be read as catching anyone out. What is genuinely missing is that the CONSEQUENCE was never written down anywhere a consumer of the graph would see it: four of six classes can never enter the incremental layer, so any reader treating the incremental layer as covering AWS is wrong for reasons the code comment explains but no contract states. That, plus S121's counter blindness, is the durable finding; 'S3-only' was not. WHY THIS IS A ROW AND NOT AN EDIT: the channel is append-only and S120 is committed at a939c71a25. The wrong sentence stays on the record with this correction pointing at it, which is the whole point of an append-only channel -- a silently narrowed claim would leave the next reader unable to tell which version was ever believed. REUSABLE FORM: an outcome census answers WHAT HAPPENED and is routinely mistaken for WHAT CAN HAPPEN. The discriminator costs one deliberate exercise of the member the census never saw fire. AND THIS ROW DELIBERATELY DOES NOT USE THE `adjudicates` FIELD. My first draft set it to the string 'NFRA_CLDGRPH-S120' and the row gate REFUSED the commit at /adjudicates -- correctly, twice over. It is typed as a LIST (the two prior users, S9 and S25, both carry arrays), and more importantly it carries ADJUDICATION semantics: gate line 377 walks it to apply THIS row's disposition to the named target. Using it would have made me disposition S120, which is 2.0.0_SA_COO~A's act and not mine -- a schema slip that would have silently taken a lane. The correction is carried in prose instead, which names S120 explicitly in three fields."
+  }
+]
+```
