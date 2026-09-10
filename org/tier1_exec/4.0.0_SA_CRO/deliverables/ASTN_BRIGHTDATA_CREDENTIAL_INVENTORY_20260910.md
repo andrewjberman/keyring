@@ -39,7 +39,89 @@ authenticated source (SA included):**
 > **=> A COOKIELESS UNLOCKER CANNOT READ AUTHENTICATED CONTENT. This is measured, not theoretical,
 > and it is the single most transferable fact in this record.**
 
-## 3. THE CREDENTIAL INVENTORY -- THREE DISTINCT SECRETS, NOT ONE
+## 3a. CORRECTION 2026-09-10, SAME DAY -- s3 BELOW UNDERCOUNTED. THERE ARE SIX.
+
+> ⛔ **s3's "THREE DISTINCT SECRETS" IS WRONG AND IS LEFT STANDING BELOW SO THE ERROR IS LEGIBLE.**
+> **How it happened:** s3 probed **three secret names I guessed at** from reading code, and reported
+> the result as an inventory. **I never enumerated the secret list.** A check scoped to the members
+> I already knew about could not see the members I did not -- and the enumeration changes the
+> recommendation.
+>
+> **TRUE DENOMINATOR: 87 secrets in us-east-1; 6 are Bright Data.** (Counting trap hit and
+> corrected en route, Rule 22a: `list-secrets --query 'length(SecretList)'` auto-paginated and
+> returned PER-PAGE counts -- `10 10 10 10 10 10 10 10 7` -- so the count was re-derived client-side
+> after draining `NextToken`.)
+
+| Secret | Value fp | State |
+|---|---|---|
+| `brightdata-api-key` | `c4..0a` | **ALIVE** (200) |
+| `find-insure/bright-data/api-key` | `c4..0a` -- **SAME VALUE** | **ALIVE** (200) |
+| **`seeking-alpha/bright-data-api-key`** | `c5..18` -- distinct | **DEAD** (401) |
+| `opal/external-apis` -> `bright_data_api_key` | `23..ad` -- distinct | **DEAD** (401) |
+| `astn/brightdata/residential-proxy` | proxy user/pass | not API-testable (s3 correction) |
+| `find-dualbiz/bright-data/serp` | `{api_key_secret, endpoint, zone}` | untested |
+| `find-insure/bright-data/scraping-browser-creds` | `{wss_url}` | connection string |
+
+## 3b. ANDREW-DIRECT 2026-09-10 -- THE ARCHITECTURE RULING THAT SETTLES THIS
+
+> **VERBATIM:** *"there are only 3 types of Bright Data API, the one_shotter, the
+> scraping_browser1, and the serp_opal. we do not need to make more that are target-specific, these
+> are the three archetypes."*
+
+**READ: ONE ACCOUNT CREDENTIAL, THREE ZONES BY PURPOSE. Target-specific Bright Data resources are
+not to be minted.** The three archetypes are the whole API surface:
+
+| Zone | Type | Use |
+|---|---|---|
+| `one_shotter` | unblocker | cookieless fetch of a bot-walled public page (WSJ; SA public pages) |
+| `scraping_browser1` | browser_api | remote browser where a page needs real rendering |
+| `serp_opal` | serp | search-engine results (the IR-page scan; the last-week web search) |
+
+⚠ **`residential_proxy1` is NOT a fourth archetype and is NOT retired by this ruling.** It is a
+PROXY, not an API you call -- our own browser egresses through it (the proven ASTN FT path, s2).
+The ruling is about API types; do not read it as removing the proxy.
+
+**THIS INVERTS THE s5(a)/(b) RECOMMENDATION AND THE CORRECTION IMMEDIATELY BELOW.** This seat
+argued for issuing a SECOND key so SA and ASTN could rotate independently. **That is precisely the
+target-specific proliferation the ruling forbids**, and the measured evidence backs the ruling
+rather than the recommendation: **both target-specific keys are DEAD** (`seeking-alpha/...` and
+`opal/external-apis`) while the **account-level key is ALIVE**, and `find-insure`'s only survives
+because it is a COPY of the account key. A credential one pipeline uses is a credential nobody owns.
+
+**THE REMEDY IS CONSOLIDATION, NOT ROTATION:**
+1. Every consumer reads the ONE account credential (`brightdata-api-key`) and selects a ZONE.
+2. `seeking-alpha/bright-data-api-key`, `opal/external-apis` -> `bright_data_api_key`, and
+   `find-insure/bright-data/api-key` are **retired or become pointers** -- not re-keyed.
+3. **Zone selection moves into the CALLER**, which is where it belongs: the SA scrapers already
+   name `'zone': 'one_shotter'` inline, so the shape is already half-built.
+4. **Nothing needs minting in the portal, so option (b) is withdrawn** and the reason for driving
+   the portal at all has largely evaporated.
+
+⚠ **TWO ZONES WERE AUTO-CREATED THIS SESSION AND THAT WAS MY DOING.** Registering the Bright Data
+MCP server auto-provisioned `mcp_unlocker` and `mcp_browser` on the account (four zones before, six
+after). They are the MCP's own managed zones, not archetypes, and I did not anticipate them --
+recorded because under this ruling an unplanned zone appearing is exactly the thing to notice, and
+whether they should persist is Andrew's call.
+
+**SUPERSEDED BELOW:**
+
+1. ~~**A DEDICATED SA KEY ALREADY EXISTS** -- `seeking-alpha/bright-data-api-key`, so the remedy is
+   a rotation into an existing secret.~~ **WITHDRAWN by 3b:** that secret should not exist. The
+   fact it already exists is the defect, not the solution.
+2. **SA HAS TWO STALE KEYS IN TWO PLACES, AND THE LAMBDA READS THE WRONG ONE OF THE TWO.** It reads
+   `opal/external-apis` -> `bright_data_api_key` (`23..ad`, dead) while a purpose-named
+   `seeking-alpha/bright-data-api-key` (`c5..18`, also dead) sits beside it. **That is the actual
+   mess** -- not one lapsed credential but a split identity where neither half works.
+3. **THE COUPLING I WARNED ABOUT IN s5(a) ALREADY EXISTS.** `find-insure/bright-data/api-key` holds
+   the SAME value as `brightdata-api-key`. ASTN and find-insure already share one credential, so a
+   rotation of the live key breaks find-insure too. **Nobody is tracking that.**
+
+**ZONE LIST GREW DURING THIS SESSION.** At the s4 reading the account carried four zones; after the
+Bright Data MCP server was registered it carries six -- `mcp_unlocker` and `mcp_browser` were
+**auto-provisioned by the MCP registration itself**. Recorded because a zone list is now a moving
+object and any future reading of s4 must carry its own timestamp.
+
+## 3. THE CREDENTIAL INVENTORY -- THREE DISTINCT SECRETS, NOT ONE  [SUPERSEDED BY 3a -- UNDERCOUNT]
 
 Fingerprints differ, so these are genuinely different credentials -- **"update the API key" is not
 one act.**
