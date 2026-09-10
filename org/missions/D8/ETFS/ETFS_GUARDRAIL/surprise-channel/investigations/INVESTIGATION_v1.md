@@ -2211,3 +2211,54 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-W5-S14",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~5",
+    "surfaced_at": "2026-09-10T14:26Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "THE COMMENT THE TERMINAL EMAIL BUILDER USES TO EXPLAIN ITS FALLBACK IS NOW FALSE, AND IT IS THE COMMENT EG-s-28's FACE QUOTED AS EVIDENCE OF THE DEFECT. infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:369-371 reads \"`provider` is NOT written by the producer into coverage_unresolved.json (only coverage_egress_ask.json carries it) -- render the absence as text rather than the literal 'None'\". After EG-s-28 (4 of 4 sites in remediate.py) and EG-s-29 (the fifth, the ladder-skipped branch) the producer DOES write it on both branches. THE CODE IS CORRECT AND UNCHANGED -- `u.get('provider') or '(not stated)'` consumes the new field with no edit and cannot break on it -- so this is a comment that now MISDESCRIBES a live invariant, not a bug. The reason it is worth a row: the next seat to ask 'does the terminal alert name a provider' will read this comment, which says NO, before it reads the two cells that made the answer YES.",
+    "spec_asserts": "lambda_function.py:369-371 asserts that `provider` is not written by the producer into coverage_unresolved.json and that only coverage_egress_ask.json carries it.",
+    "world_is": "data/etfs/scripts/coverage/remediate.py@7e544cb4d7 writes `provider` at 4 of 4 unresolved-record sites, and data/etfs/scripts/presentation/render_month_end.py@903c5cba50 writes it at the fifth (the --no-ladder branch). Measured by AST census over both files: 5 of 5 UNRESOLVED-record sites carry the field, S29-AC1 arm (a).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py@e94ce02a92:368-373 -- the comment and the `u.get('provider') or '(not stated)'` line it explains.",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~5/egs29_battery_output.txt arm (a): 5 UNRESOLVED-record site(s) across both files, 5 of 5 carrying `provider`.",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-28.the-unresolved-record-names-its-provider.md:19-20 quotes this exact comment as the defect's evidence."
+      ]
+    },
+    "notes": "NOT FIXED BY ME AND DELIBERATELY SO: the file is outside this task order's <paths>, and a worker does not fix a neighbouring defect. Offered as form; the fallback itself must STAY, because '<no provider mapped>' and an absent field are different facts and the fallback is what keeps 'None' out of an urgent email.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W5-S15",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~5",
+    "surfaced_at": "2026-09-10T14:28Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "THE ORCHESTRATOR READS EXACTLY THREE ARTIFACT FILENAMES AND THE RUNG-3-EQUIVALENT IS NOT ONE OF THEM, SO A SHAPE-1 RUN'S TERMINAL EMAIL WILL CARRY NO EGRESS-ASK SECTION EVEN THOUGH AN ASK EXISTS. `_read_coverage_artifacts` (lambda_function.py:327-346) fetches coverage_verdict.json, coverage_unresolved.json and coverage_egress_ask.json -- a literal 3-member list -- and `_build_terminal_email` appends its 'Egress ask (per-use only...)' block only `if ask and ask.get(\"asks\")`. On the ladder-skipped branch rung 3's key is absent by construction (that is EG-s-26's whole disclosure) and EG-s-29's equivalent lives at coverage_egress_ask_ladder_skipped.json, which nothing in that function names. WHAT THIS DOES *NOT* BREAK, stated first because it is the load-bearing half: FWD-10's accept (ii) wants each missing day listed WITH ITS PARTNER AND ITS PROVIDER, and those come from the `unresolved` rows, which DO carry `provider` after this cell -- so the accept is satisfiable on a shape-1 run. What is lost is the ask BLOCK, i.e. the reader of the email is not shown that an egress ask was recorded, and must open S3 to find it.",
+    "spec_asserts": "TO-EG-s-29 arm (d) requires a rung-3-EQUIVALENT ask recorded for the run, and TO-EG-s-21 arm (d) as re-cut on R-EG-8 accepts an ask 'written by rung 3 OR by EG-s-29's rung-3-equivalent'. Neither names the terminal EMAIL as a consumer of it.",
+    "world_is": "The ask is recorded and is readable at s3://opal-data-etfs/platinum/reports/<month>/coverage_egress_ask_ladder_skipped.json, so EG-s-21 arm (d) -- which reads the run's OUTPUTS with size and UTC -- is satisfied. The orchestrator's own 3-filename read does not include it, so the email built on a shape-1 run has the unresolved table (with providers) and no ask block.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py@e94ce02a92:333-346 -- the three-member filename tuple.",
+        "infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py@e94ce02a92:376-386 -- the ask block guarded by `if ask and ask.get(\"asks\")`.",
+        "data/etfs/scripts/presentation/render_month_end.py@903c5cba50 -- LADDER_SKIPPED_ASK_BASENAME = 'coverage_egress_ask_ladder_skipped.json'.",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~5/egs29_battery_output.txt arm (d): the equivalent is written and rung 3's own key is NOT written on that branch.",
+        "Consumer census, comp-find 'coverage_egress_ask|coverage_unresolved' --all: DENOMINATOR 413 hit(s) across 29653 file(s) scanned, corpus=all; the only first-party CODE reader of either artifact is this orchestrator (the rest are the two producers, three graph recognizers, a graph derive_runner, docs and task orders)."
+      ]
+    },
+    "notes": "NOT FIXED BY ME: the orchestrator is outside this order's <paths> and widening is not a worker's act. TWO SHAPES EXIST if the CVO/COO want the block back, and they differ in who owns the risk: (i) add the fourth filename to that tuple, which is one line in a lane that is not mine and touches the ONE function that sends mail; (ii) leave it, on the ground that a rehearsal run's ask block in an operator's email is arguably worse than its absence. A worker judges the form, not which.",
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
