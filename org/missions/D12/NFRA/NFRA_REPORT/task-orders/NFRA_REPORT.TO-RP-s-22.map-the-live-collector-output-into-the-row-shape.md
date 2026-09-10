@@ -189,7 +189,7 @@ disagrees with the world is the thing this project keeps catching.
 
 <!-- ============ RECORD FACE -- does NOT travel to the worker ============ -->
 
-<status>open</status>
+<status>complete</status>
 <round>4</round>
 <sub_round>A</sub_round>
 <slot>~2</slot>
