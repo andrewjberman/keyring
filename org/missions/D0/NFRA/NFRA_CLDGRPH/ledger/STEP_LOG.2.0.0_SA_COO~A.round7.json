@@ -5,7 +5,7 @@
   "round": 7,
   "seat": "2.0.0_SA_COO~A",
   "opened_utc": "2026-09-10T04:1xZ",
-  "written_utc": "2026-09-10T05:15Z",
+  "written_utc": "2026-09-10T06:30Z",
   "rows": [
     {
       "seq": 1,
@@ -34,8 +34,24 @@
         "wk-cldgrph-7-1 @c4a842b1b9 (the G-2 amendment)",
         "msgs 95002 (CTO), 95003 (CVO)"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "5ebe8524ef",
       "next": "G-2's local proof and flip on slot ~1; G-4's flip on slot ~3; my disarm rows for W1-S35/S36 and W2-S73/S74/S75; the FINAL packet; the drain-end read; CronDelete."
+    },
+    {
+      "seq": 3,
+      "limb": "L7 (the last two drains) / L8 (partial then FINAL) / adjudication / the round close",
+      "started_utc": "2026-09-10T05:15Z",
+      "ended_utc": "2026-09-10T06:30Z",
+      "act": "ROUND 7 DRAINED 4 OF 4. G-4 @67d7453815 and G-2 @e0255e47db, both verified in-worktree first; all four worktrees and branches removed, none remain; no org/modules/graph path in any of the four merges so no comp-system pass owed. The PARTIAL packet (3 orders) READ by the CVO 05:31Z; the FINAL packet and COMPLETION_REPORT.round7.json written. THE MECHANISM, and it is not what the ruling or my cut named: kuzu_nessie_load.py:204 keys a served node arn-or-node-id and matches endpoints RAW, so a bucket's key is its ARN while an S3_BUCKET_POLICY's own arn column holds the bucket NAME -- an edge on the name NEVER DANGLED, it LANDED on the policy, and every dangling check this project ever ran read clean. That is the whole explanation for 135 wrong-class landings surviving every integrity control. Both planes moved in one act (producer-alone would have reproduced round 6's 0 of 955; fixture arm 6 proves the fold's admission is what prevents it), and resolvable 64078 -> 64080 means the widened admission RECOVERED round 6's two unresolved edges, so 137 is a recovery and not a fan-out. Nothing is deployed: both producer files read COMMITTED-NOT-DEPLOY-SCOPE under the egress hold. THE RETIREMENT DID NOT HAPPEN AND ITS OWN CONDITIONS ARE WHY. Condition 1's census, run exactly as the CTO specified it, returns MANIFEST_TOOLS_TOUCHING_STORED_IN=0 of 78 and WOULD HAVE AUTHORIZED A RETIREMENT THAT BREAKS FIVE CONSUMERS found by an unscoped sweep of 31,293 tracked files -- the remedy written to prevent a scoped-domain error specified a scoped domain, because a manifest is a DECLARATION of consumers and not a census of them. Sixth instance of the night's family and the first inside a CONDITION. Condition 2 is blocked because OWNED_BY is a CONTAINMENT seam for three tools, so widening its intent changes what they mean, which by the condition's own terms makes the act a deletion. Both pitched (95042/95043). MY OWN DEFECT IN THAT SAME EXCHANGE: I wrote a ruling onto a face without cutting a criterion to grade it, so the order could not tell its assignee whether the retirement was inside what it accepts. The worker held pending on condition 1's STOP instruction -- correct, the refusal clause working -- and I ruled FLIP-AND-STOP @86adc0280a. The retirement becomes its own cell with its own accepts in round 8. ROWS S107-S112 (channel 250 -> 263): two disarming defects in my own cut (a validator and schema version that do not exist; a MEASURED premise from a contract document, refuted at 3 of 7 keys printed), one acking the census's comparator and a stale vintage I carried, two CARRIED to round 8 (the manifest-census finding, and the 124-edge loss which I BOUNDED with a third read -- 11 edges and 14 policy nodes stable at vintage 05:57:16, so it stopped rather than continuing), and one ack block banking my own false read: the typed-relationship query form errors at the binder because edge_type is a PROPERTY, so an absence read that way is wrong. FIVE ROWS AGAINST THIS SEAT'S OWN CUT IN ONE ROUND, one shape: a name, a contract or a declaration written into a face as if it were a census or a run. Every one surfaced by the ASSIGNEE, none by me, and every one came back through the refusal clause -- now spine v3.11 L6, landed from this lane's own generalisation. Also read and acked this window: the D0 row-10 gate limb landing (verified here at self-test 0 of 30 with my four round-7 faces clean), the base COO's correction of my attribution of the 8 CLDGRPH refusals (they are the pre-existing v2-shape check; I measured mine after: 8 of 39 faces, 52 criteria, all v2-era, zero from round 7), and rule 21's new rail-abort trap.",
+      "artifacts": [
+        "CLOUD @67d7453815, @e0255e47db (the last two drains)",
+        "ledger/L8_PACKET.round7.partial.md and .final.md",
+        "ledger/COMPLETION_REPORT.round7.json",
+        "rows S107-S112",
+        "msgs 95009/95010, 95042/95043, 95044/95045"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "the FINAL packet to the CVO; the drain-end read to 1.0.0_SA_CTO; CronDelete a5b4bd98. Round 8's cut waits on the L9 and the L10."
     }
   ]
 }

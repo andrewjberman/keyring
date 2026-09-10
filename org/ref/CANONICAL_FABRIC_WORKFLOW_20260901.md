@@ -196,6 +196,30 @@ travels to the worker.
   author's issuance; lane `TREE_PROJECT_ROW` admits the COO to the row for the `EXECUTING` flip.
 - **Handoff:** `dep_stage: EXECUTING`, flipped by the COO in the issuance commit, so the guards that key on the stage
   arm with the act that starts it.
+- ⛔ **A SEAM PROVED TO DELIVER ITS INPUT IS NOT A SEAM PROVED TO HAVE AN EFFECT. A criterion NAMES THE OUTCOME, never only the
+  MECHANISM.** "The value reaches the function" and "the value changes what the function decides" are DIFFERENT CLAIMS, and an
+  arm that proves the first reads exactly like an arm that proves the second. Every criterion asserting a control, a fence, a
+  flag or a threshold states WHAT MUST DIFFER when it is engaged, and proves that difference against the SAME run with the
+  control disengaged -- the arm's own positive control, in one harness. MEASURED 2026-09-10, `ETFS_GUARDRAIL` W4-S6: a forcing
+  spec was proved to REACH the classifier and the schedule proved unable to reach it -- both true, both still true -- and the
+  ladder then RE-CLASSIFIED from real S3 and discarded it entirely, so the run PUBLISHED where the outcome required a refusal.
+  The cut had specified a MECHANISM and never an OUTCOME. Third instance from one seat's cuts in one night (W4-S4, W4-S5, W4-S6).
+  ⛔ **A POSITIVE CONTROL IS NOT A DIFFERENCE CONTROL AND DOES NOT DISCHARGE THIS.** A probe that fires so a zero is not a
+  dead instrument bounds UNDER-FIRING only; it never shows what CHANGES when the control is engaged. Measured on the first
+  audit run against this clause (`2.0.0_SA_COO~A`, its OWN just-drained round): 6 of 20 criteria carry a control arm and
+  only **2 of 16 mechanical criteria carry THIS shape** -- the other four are positive controls. **The adoption cost is
+  therefore real, not bookkeeping**, and a seat reporting conformance states which of the two it counted.
+  COST: one extra arm, run in the same harness with the flag flipped. NON-APPLICATION: a criterion whose subject IS the
+  delivery (a transport, a grant, a route), where arrival is the outcome; and **A CENSUS, where the outcome IS THE COUNT
+  and the DENOMINATOR is the discipline** -- `2.0.0_SA_COO~A`'s argument, adopted in its terms: an arm reading 55 of 55
+  families each with a reason, or facts-per-key with its zero printed, is not proving a control works and owes no flipped
+  twin.
+  ⛔ **AND IT DOES NOT BIND RETROACTIVELY.** A round is graded against the law in force AT ITS CUT (the v3.0 transition
+  rule: an open round finishes under its cut task orders). A criterion that predates the clause is not a defect and is
+  never re-cut for it; where an audit shows which criteria carry the arm, **the L9 and L10 grade WITH that audit in hand
+  and RECORD THE BOUNDARY IN THE GRADE** rather than re-opening. A round's CLAIM can be sound on paired evidence held
+  elsewhere in the same order while the CRITERION does not itself carry it -- that distinction is stated in the grade, and
+  stating it is what makes it weighable.
 - ⛔ **THE REFUSAL CLAUSE -- A CRITERION IS SHAPED SO THAT REFUSING IT IS CHEAPER THAN RESCUING IT, AND THE FACE SAYS SO.**
   Every face instructs its assignee to REFUSE a criterion it cannot satisfy as written and to report the refusal with its
   measurement, never to repair the criterion, widen it, or satisfy it by a route the cut did not name. **A worker that edits
@@ -515,3 +539,5 @@ verdict, read against the last round under the prior text on the same instrument
 | 3.9 | 2026-09-10 | `2.0.0_SA_COO~A`'s row NFRA_CLDGRPH-S95 (message 94841), taken by `1.0.0_SA_CTO` at 94844 | L7 gains the worker-death clause: a worker can die at any instruction boundary, so a world-changing act ORDERS itself open-entry / act / close-and-COMMIT-the-entry / then read, and the ISSUER's obligation on a mid-act death is one artifact-plane sweep with a DIFFERENT instrument than the dead seat's BEFORE deciding to finish or roll back (an entry a dead worker left CLOSED is a self-report, the mirror of NEVER-2's open-entry clause); the remaining reads are measurement the issuer may take at its own seat with the CVO validating. No step, owner or gate changes. |
 | 3.10 | 2026-09-10 | Andrew-direct ~03:0xZ at the `1.0.0_SA_CTO` terminal (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_030xZ_NO_FWD_IS_A_WAIT.md`) | L2 gains **NO FWD IS A WAIT**: every outcome provable by an act a seat can take on demand; one whose only proof is an event nobody controls is re-cut so its mechanism is driven deliberately, the organic case kept as the negative arm; an essential wait is expressly qualified with its reason and his word; an outcome already written as a wait is SUPERSEDED at the next unused id with its text kept. The L2 half of the ~21:4xZ manual-trigger rule that binds accepts at L4/L6. No step, owner or gate changes. |
 | 3.11 | 2026-09-10 | four seats converging in one night, none of it previously written: `2.0.0_SA_COO` 94998 and 95007, `2.0.0_SA_COO~A` 95015, and two worker refusals (EG-s-21 not fired; EG-s-22's assignee refusing to tag its own face). Recorded by `1.0.0_SA_CTO` at `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_20260910T054xZ_THE_REFUSAL_CLAUSE.md` | L6 gains **THE REFUSAL CLAUSE**: a criterion is shaped so refusing it is cheaper than rescuing it and the face says so; the assignee refuses and reports with its measurement, never repairs, widens or re-routes; a worker editing the issuance half so its own proof validates certifies an alignment the cut never declared. It is the only control that has caught a defect in a cut on this estate, and the cut's author cannot be that control. The clause also NAMES ITS OWN GAP -- an acceptance criterion has no assignee, so the refusal path does not protect the artifact that decides whether work counts -- and binds the L10 to re-read every ACCEPT once more UNSCOPED, with the denominator printed, until a mechanism exists. No step, owner or gate changes. |
+| 3.12 | 2026-09-10 | `0.9.0_WK_ETFS_GUARDRAIL~4`'s third refusal to fire and `2.0.0_SA_COO`'s 95058, ruled by `1.0.0_SA_CTO` at R-EG-6 | L6 gains **A SEAM PROVED TO DELIVER ITS INPUT IS NOT A SEAM PROVED TO HAVE AN EFFECT**: a criterion names the OUTCOME, never only the mechanism, and proves what must DIFFER when the control is engaged against the same run with it disengaged. Found when a forcing spec proved to reach the classifier was then discarded by a re-classification, publishing where a refusal was required. No step, owner or gate changes. |
+| 3.13 | 2026-09-10 | `2.0.0_SA_COO~A`'s audit of its OWN just-drained round against v3.12 (95066), an hour after the clause landed and the round closed | v3.12 gains three qualifiers, all from that audit: a POSITIVE control is not a DIFFERENCE control and does not discharge the clause (measured 2 of 16 mechanical criteria carry the real shape, not the 6 of 20 a loose count gives, so the adoption cost is real); a CENSUS is a NON-APPLICATION because its outcome IS its count; and the clause DOES NOT BIND RETROACTIVELY -- a round is graded against the law in force at its cut, the L9 and L10 grade with any audit in hand and RECORD THE BOUNDARY IN THE GRADE, and no drained round is re-cut for a later law. No step, owner or gate changes. |
