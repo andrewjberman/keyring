@@ -23,16 +23,30 @@ of these *"is device-wide and not OPSEC's alone"* and should not be filed as one
 - **CONSEQUENCE, MEASURED NOT ESTIMATED: a JWT signing key was stored as its 27-byte first line and was
   INVALID IN PRODUCTION for 3m52s.** It was caught **only** by reading the secret back from AWS.
 
-**GUARDED 2026-09-10 at `.tools/aws` (the BASH shim):** an argv element containing a newline is now
-**REFUSED with rc=2** and a message naming `file://` as the fix. Exercised -- refuse fixture rc=2,
-positive control (`sts get-caller-identity`) rc=0, override rc=0.
-⚠ **THE GUARD COVERS THE BASH PATH ONLY.** `aws.cmd` is reached by **native-Python callers resolving
-via `shutil.which`** and by PowerShell, and it never sources the bash shim. **A caller on that path is
-still exposed and this document is its only warning.** Escape hatch for a caller that genuinely means
-it: `AWS_ALLOW_MULTILINE_ARGV=1`.
-⭐ **Positive demonstration of the boundary:** with the override set, `AWS_SHIM_DEBUG=1` prints
-`[--secret-string] [a` / `b]` -- **bash carries the newline intact, so the loss is at the `.cmd`
-crossing and nowhere earlier.**
+⛔ **A GUARD WAS ADDED AT `.tools/aws` (the BASH shim) @`4fb9eafdfe` AND REMOVED 20 MINUTES LATER. IT
+WAS WRONG, IT BROKE THE CROSS-DEVICE AGENTBUS, AND IT PROTECTED NOTHING.** Recorded in full because the
+error is more instructive than the guard was.
+
+- **IT BLOCKED THE ONLY LIVE CHANNEL BETWEEN THE TWO FABRICS.** `.tools/agentbus-sqs.sh` passes the
+  message body as ONE argv element to `.tools/aws sqs send-message`, and **every cross-device message
+  this estate sends is multi-line.** `0.0.0_AB_MSTR~Z` hit the refusal on a routine send and reported
+  it the minute it fired.
+- ⛔ **AND THE BASH PATH CANNOT TRUNCATE AT ALL -- ON EITHER BRANCH.** `.tools/aws:157-165` resolves the
+  real entry and then either `MSYS_NO_PATHCONV=1 exec "$REAL" "${args[@]}"` (a direct exec of the
+  native PE) or `exec python "$(cygpath -w "$REAL")" "${args[@]}"`. **Neither goes through cmd.exe, so
+  there is no batch `%*` to terminate at a newline.** Verified with the shim's own debug: the argv
+  arrives as `[a` / `b` / `c]`, intact. Corroborated independently by ~14 multi-line bus messages that
+  night, none truncated -- the far side quoted content from ~20 lines inside their bodies.
+- ⛔ **SO THE GUARD SAT ON THE ONE PATH THAT IS SAFE, WHILE THE PATH THAT TRUNCATED A JWT SIGNING KEY
+  STAYED UNGUARDED. It blocked working traffic and stopped nothing.**
+
+⭐ **THE AUTHOR'S ERROR, NAMED BECAUSE IT REPEATED WITHIN ONE SESSION:** the commit claimed *"narrow by
+construction: no legitimate AWS call passes a literal newline in argv."* **The agentbus does,
+legitimately, on every send, and it works.** That claim was TRUE OF THE SURFACE EXAMINED -- secrets
+writes through `aws.cmd` -- and FALSE OF THE ESTATE. It is the same shape as the same author's
+*"the two gates cannot drift apart"* earlier the same night: **a property verified on the limb in hand,
+asserted over a domain that was never enumerated.** The remedy both times is the same and it is not
+"read more carefully" -- **enumerate the callers before asserting a property over all of them.**
 
 **FIX FOR CALLERS: pass a multi-line value as `file://<path>`, never as argv.** The shim already
 converts `file://` paths.
@@ -71,8 +85,18 @@ success signal in nearly every script here. **A failure mode that returns `rc=0`
 payload defeats the control everything else depends on**, which is why the remedy is a READ-BACK and
 not a better exit-code check.
 
-**NOT FIXED, and the distinction matters:** Mode 1 is guarded on the bash path and open on the `.cmd`
-path; Modes 2 and 3 are documented and unguarded. **This file is a record of measured hazards, not a
+**NOT FIXED -- NONE OF THE THREE, and the distinction matters:** Mode 1's only guard attempt was on
+the BASH path, was wrong, and was removed; the `.cmd` path that actually truncates is UNGUARDED. Modes 2
+and 3 are documented and unguarded.
+⭐ **A CANDIDATE REMEDY FOR THE `.cmd` PATH EXISTS AND THE ESTATE ALREADY OWNS IT** (`3.0.0_SA_CVO~Z`,
+msg 20719, offered as a candidate and NOT a finding): CLAUDE.md already routes Python-spawning-MSYS
+through `.tools/msys_argv_guard.py msys_safe_run()`, whose mechanism is an **ECHO-BACK ROUND-TRIP** --
+send the argument, read it back, compare. **That is exactly the discriminator this defect needs**
+(send `a
+b`, get `a` back, refuse), and it sits ONE CALLER UP from the batch file, at the choke point
+the law already names. ⚠ **UNTESTED against a newline**, and nobody has verified the AWS callers on
+that path route through it rather than calling `subprocess` directly -- if they do not, routing them is
+a different act. **One exercise settles it; build-ladder rung 2 if it holds.** **This file is a record of measured hazards, not a
 repair, and nothing should cite its existence as evidence that `.tools/aws` became safe.**
 
 **Credit, because it is the reason Mode 1 was catchable at all:** `0.7.0_AE_CloudOps~V` reported a
