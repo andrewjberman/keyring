@@ -232,6 +232,90 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "INERT: nothing breaks, and the criterion grades rc=0. Recorded because the warning reads as a failure to a grader reading the log, and every future query-carrying capture in this estate will print it. portal/scripts/ui-smoke.mjs is not in this order's <paths>, so no fix was attempted; the one-line remedy is to compare only the path portion of the route."
+  },
+  {
+    "id": "IRPT_FNTEND-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-10T23:05:00Z",
+    "one_line": "Disarm act for IRPT_FNTEND-W1-S4 assigned by its disarm_owner: TO-FE-s-3 (slot ~1, next in queue) is amended at the FE-s-2 drain to pass PageSurfaceControl the className ModelPortfolios.tsx passes its own firm dropdown (primary text, ring, transparent background), to re-flow the header controls below the title at narrow widths (the 390 clipping recorded under F2-AC7), and to make the drained app-diff test skip when its artifact is absent; proven by F3-AC7, F3-AC8, F3-AC9 and graded at F3-AC10.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/ModelPortfolios.tsx:1268-1275 @5907cbca -- the reference call site passes an explicit className (text-[hsl(var(--primary))], ring-1 ring-inset, bg-transparent, chevron data-URI) that the FE-s-2 FirmDropdown did not pass; W1-S4 measured the control's default dropdown branch computing white on rgba(0,0,0,0)",
+        "portal DEV @b86e6aa2 -- bun test src/pages/InvestorReporting: 86 pass, 1 fail, the failing test being __tests__/fe-s-2/app-diff.test.ts which reads .scratch/app.diff, a file that exists only in the worker's own worktree",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-3.tabs-selection-lifecycle.md -- amended this commit: header/FirmDropdown.tsx and __tests__/fe-s-2/app-diff.test.ts added to <paths>; F3-AC7..F3-AC10 added; expected_criteria 10"
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND-W1-S4: ARMED, disarm_owner 2.0.0_SA_COO~F -- PageSurfaceControl as=dropdown renders white text on the silver canvas; the control is do-not-edit. IRPT_FNTEND-W1-S3 (INERT): the FE-s-2 face named the wrong export path for PageThemeProvider.",
+    "world_is": "The control's own call site in Model Portfolios overrides the dropdown branch's classes with an explicit className; passing the same string is the reuse the decomposition already names (the Model Portfolios pattern) and needs no edit to the shared component. The 390 clipping is the page's placement of controls in a shrink-0 actions slot, fixed by a second row. The app-diff test is a criterion artifact, not a product test, and must not fail the DEV set. W1-S3 needs no act beyond the corrected import path stated in FE-s-3's amendment.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S3",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-10T23:06:00Z",
+    "one_line": "Disarm act for IRPT_FNTEND-W2-S2 assigned by its disarm_owner: TO-FE-s-9 (slot ~1, export) is amended at the FE-s-4 drain to build export/resolveBundle.ts, which turns the counterpart's reference-only ExportBundle into the package's RenderBundle by reading each referenced report at its revision from the query cache (fetching only a missing one), and to route both the preview and render/PrintEntry.tsx through it; proven by F9-AC9. The contract seam itself rides the L10 read to 1.0.0_SA_CTO for the counterpart's B15.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/contracts/index.ts section 9 @0322a04a4d -- ExportBundle.reports: AuthorizedReportRef[]; no payload, no reportKind, no disclosure text; consistent with the counterpart PRD's CONTRACTS row (immutable authorized report revisions plus selected sections, narrative packet, asset hashes, versions, options)",
+        "portal/src/pages/InvestorReporting/render/manifest.ts @7f6236cf -- RenderBundle and RenderPerformanceReport declared additively; PrintEntry refuses a payload-less bundle with MissingPayloadError",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-9.export-options-preview.md -- amended this commit: render/PrintEntry.tsx added to <paths>; F9-AC9 added; expected_criteria 9"
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND-W2-S2: ARMED -- a backend implementing export-preview to the contract as written is refused by the print entry while every FE test stays green.",
+    "world_is": "The contract is reference-shaped by design (an export bundle names authorized revisions; it does not duplicate them). The renderer must resolve references to payloads through the typed client, which is the export cell's act; after it lands, a contract-conformant bundle renders and only an unobtainable revision refuses. Whether the counterpart's bundle should ALSO carry payloads is a contract question carried to L10, not decided here.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S4",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-10T23:07:00Z",
+    "one_line": "Disarm act for IRPT_FNTEND-W2-S4 assigned by its disarm_owner: TO-FE-s-8 (slot ~2, next in queue) is amended at the FE-s-4 drain to declare runtime: 'browser' in render/manifest.ts, so the counterpart's export worker reads from the package itself that charts draw only under a browser layout; proven by F8-AC9. The requirement also rides the L10 read for the counterpart's worker cell.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_FNTEND-W2-S4 @8da0055a94 -- recharts 3.7.0 under renderToStaticMarkup returns a 127-byte empty wrapper, no svg; both print PNGs draw the chart in the browser plane",
+        "docs/briefs/investor-reporting-ir-bk-brief-20260910.md II.1 PDF row -- the counterpart owns 'queue/worker/browser runtime', so a browser layout is the brief's own shape for the export worker",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-8.narrative-page.md -- amended this commit: render/manifest.ts added to <paths>; F8-AC9 added; expected_criteria 9"
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND-W2-S4: ARMED -- a PDF path built on server-side static markup ships chartless reports while every FE test stays green.",
+    "world_is": "The package mitigates in-package (endpoint labels and the full series table are real DOM) and the manifest will state the runtime requirement as data the executing worker reads; a worker that ignores the manifest is the counterpart's defect and is graded inside FWD-8's adjudication.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S5",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-10T23:08:00Z",
+    "one_line": "IRPT_FNTEND-W2-S3 (no Lato binary anywhere on the estate; fetching one is egress) cannot be disarmed by this lane without Andrew's word: it is recorded as a PENDING INPUT beside the advisor logos and carried to the L10 read as an open call; print.css keeps local() first and the fallback stack, and the L9 brand grade on F4-AC9 is read against that fact.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_FNTEND-W2-S3 @8da0055a94 -- no Lato in the repo, deck_generation, or either Windows font store; build_export_review.py always took --font-dir from outside the repo",
+        "CLAUDE.md Agent Autonomy -- egress off Opal infrastructure is excluded from autonomous acts; a font download is egress",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FNTEND_20260910.md FWD-8 -- the advisor logos are already a PENDING INPUT of the same class"
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND-W2-S3: ARMED, disarm_owner 2.0.0_SA_COO~F -- the packaged Lato faces the cell names could not be packaged.",
+    "world_is": "The disarm is a supplied font file, which only Andrew's word can bring onto the estate. Until then the package is correct under its own terms (local() first, licence packaged, fallback stack) and the brand grade at L9 reads the typeface as a pending input, never as a defect of the cut.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

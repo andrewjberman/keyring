@@ -23,6 +23,8 @@
 
 **Status renderer** in `portal/src/pages/InvestorReporting/tabs/StatusPanel.tsx` with its pure mapping in `state/status.ts`: `StatusEnvelope.state` maps one-to-one onto nine distinct labels `LOADING READY STALE PARTIAL UNAVAILABLE RETRYABLE UNCERTAIN NEEDS-CORRECTION FAILED`; the panel shows the source age from `sourceAsOf`, the `safeActions` as buttons and the `publicReasonCode` as text; a `FAILED` envelope on one tab leaves the other tabs' slices untouched; an envelope whose state is `STALE` or whose scope is over-age wins over a cached `READY` result for the same key; an incomplete result (`PARTIAL`) is never rendered through the complete-report path; a stale model map keeps prior assignments labelled with their own `sourceAsOf`.
 
+**Header contrast, narrow reflow, and the drained diff test (AMENDED BY THE ISSUER at the FE-s-2 drain on rows IRPT_FNTEND-W1-S4 and IRPT_FNTEND-W1-S3).** (a) In `header/FirmDropdown.tsx`, pass `PageSurfaceControl` the same `className` string `portal/src/pages/ModelPortfolios.tsx` passes its firm dropdown at lines 1268-1275 (portal `5907cbca`): `text-[hsl(var(--primary))]`, `ring-1 ring-inset ring-[hsl(var(--primary))]`, `bg-transparent`, the chevron data-URI, so the rendered select computes primary-purple text on the silver canvas instead of white; `PageSurfaceControl.tsx` is not edited. (b) In `index.tsx`, render the firm dropdown and the client search in their own full-width row BELOW `PageHeaderCleanBadge` rather than in its `actions` slot, so they re-flow at narrow widths instead of clipping. (c) In `__tests__/fe-s-2/app-diff.test.ts`, make the test SKIP (`test.skip`, printing `SKIPPED: .scratch/app.diff absent`) when `.scratch/app.diff` does not exist, so the DEV test set is green after a drain; nothing else in that file changes. `PageThemeProvider` is imported from `portal/src/contexts/PageThemeContext.tsx`, which is where it lives.
+
 **Smoke maps** `fixtures/smoke/fe-s-3-loading.json` (envelopes `LOADING`) and `fixtures/smoke/fe-s-3-failed.json` (Analysis `FAILED`, others `READY`).
 
 **Tests** under `__tests__/fe-s-3/`: `selection.test.ts` (selection survives a tab change; the out-of-order fixture -- response for scope A arriving after the selection moved to B -- leaves the store holding B and nothing of A, `droppedLate` = 1; `switchScope` clears the five slices and the adapter call log shows the clear before the next request), `status.test.ts` (nine states, nine distinct labels; `FAILED` on `analysis` leaves `holdings` unchanged; `STALE` wins over a warm `READY`; `PARTIAL` never reaches the complete path), `source-bounds.test.ts` (`state/` and `tabs/*.tsx` carry no arithmetic on return fields and no `Date.now` outside `sourceAsOf` formatting).
@@ -47,7 +49,19 @@
 <criterion id="F3-AC6" cell_refs="FE-s-3"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-3/source-bounds.test.ts</invocation><expect>0 fail</expect></criterion>
 `F3-AC6` -- no return arithmetic, no clock reads outside age formatting.
 
-<expected_criteria>F3-AC1, F3-AC2, F3-AC3, F3-AC4, F3-AC5, F3-AC6</expected_criteria>
+<criterion id="F3-AC7" cell_refs="FE-s-3"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-3/dropdown-class.test.ts</invocation><expect>0 fail</expect></criterion>
+`F3-AC7` -- `renderToStaticMarkup` of `FirmDropdown` with the two-firm scope contains `text-[hsl(var(--primary))]` and `ring-1` on the select and contains no `text-white`.
+
+<criterion id="F3-AC8" cell_refs="FE-s-3"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-2/app-diff.test.ts</invocation><expect>0 fail</expect></criterion>
+`F3-AC8` -- the drained diff test skips cleanly when its artifact is absent (record the `SKIPPED:` line).
+
+<criterion id="F3-AC9" cell_refs="FE-s-3"><invocation>cd <WS>/portal && timeout 120 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-3_header_390.png --port <PORT> --width 390 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-2-default.json; echo rc=$?</invocation><expect>rc=0</expect></criterion>
+`F3-AC9` -- the page with the re-flowed header row renders at 390 (record `LOC`).
+
+<criterion id="F3-AC10" cell_refs="FE-s-3" judgment="true"/>
+`F3-AC10` -- graded at L9 from `fe-s-3_header_390.png` and `fe-s-3_failed_1440.png`: the firm control reads dark-on-silver, and at 390 the dropdown and the search box are both fully visible below the title. RECORD; NO VERDICT.
+
+<expected_criteria>F3-AC1, F3-AC2, F3-AC3, F3-AC4, F3-AC5, F3-AC6, F3-AC7, F3-AC8, F3-AC9, F3-AC10</expected_criteria>
 
 ## BOUNDS
 
@@ -71,6 +85,8 @@ portal/src/pages/InvestorReporting/tabs/TabShell.tsx
 portal/src/pages/InvestorReporting/tabs/StatusPanel.tsx
 portal/src/pages/InvestorReporting/fixtures/smoke/
 portal/src/pages/InvestorReporting/__tests__/fe-s-3/
+portal/src/pages/InvestorReporting/header/FirmDropdown.tsx
+portal/src/pages/InvestorReporting/__tests__/fe-s-2/app-diff.test.ts
 org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -83,7 +99,7 @@ org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v
 Criterion ids: `F3-AC1` .. `F3-AC6`. Instance at
 `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-3.tabs-selection-lifecycle.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
-`python .tools/proof-of-spec-check.py <instance> F3-AC1,F3-AC2,F3-AC3,F3-AC4,F3-AC5,F3-AC6` BEFORE the `complete` flip. Result file `tabs-selection-lifecycle.result.md` beside it. Flip only when every criterion PASSES by output.
+`python .tools/proof-of-spec-check.py <instance> F3-AC1,F3-AC2,F3-AC3,F3-AC4,F3-AC5,F3-AC6,F3-AC7,F3-AC8,F3-AC9,F3-AC10` BEFORE the `complete` flip. `F3-AC10` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `tabs-selection-lifecycle.result.md` beside it. Flip only when every criterion PASSES by output.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape. You cannot send or receive messages; anything you would ask is a surprise row.

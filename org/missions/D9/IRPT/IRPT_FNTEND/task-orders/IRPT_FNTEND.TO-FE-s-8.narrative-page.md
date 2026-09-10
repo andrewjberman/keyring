@@ -25,6 +25,8 @@
 - the `MISSING HISTORY` state: when the performance period begins before `packet.historyCutoff`, the page renders a labelled block `Market history is not available before <cutoff date>` for that span and renders no topic list for it.
 Every term, fact and reference on the page comes from `packet.evidence`; `narrative/compose.ts` (pure, tested) selects and orders them and contains no text of its own beyond the fixed statement and the missing-history label.
 
+**Runtime declaration (AMENDED BY THE ISSUER at the FE-s-4 drain on row IRPT_FNTEND-W2-S4).** recharts renders an empty wrapper under `react-dom/server` `renderToStaticMarkup`, so the package's charts draw only under a browser layout. Add `runtime: 'browser'` to `RENDER_PACKAGE` in `render/manifest.ts` with a one-line comment naming that reason, so the counterpart's export worker reads the requirement from the manifest; `assertSupported` and every other export of the manifest are unchanged.
+
 **Fixtures** under `render/fixtures/`: `narrative.two-markers.json`, `narrative.pre-history.json`, `bundle.performance-with-narrative.json`. Smoke map `fixtures/smoke/fe-s-8-narrative.json`.
 
 **Tests** under `__tests__/fe-s-8/`, `renderToStaticMarkup`: `markers.test.ts` (the two-marker fixture renders exactly two markers at the packet's dates), `missing-history.test.ts` (the pre-history fixture renders the missing-history block naming the cutoff and no topic element for the span), `language.test.ts` (the markup contains the fixed statement and none of `caused`, `because`, `drove`, `explains`, `due to`, `as a result`, `led to` -- the list is enumerated in the test), `evidence.test.ts` (every topic term in the markup exists in `packet.evidence`; the test prints `TERMS: n of n`), `determinism.test.ts` (rendered twice, identical).
@@ -55,7 +57,10 @@ Every term, fact and reference on the page comes from `packet.evidence`; `narrat
 <criterion id="F8-AC8" cell_refs="FE-s-8" judgment="true"/>
 `F8-AC8` -- graded at L9 from the PNG: the page reads as contemporaneous context and not as an explanation of the return; missing history reads as absent data, not as nothing notable. RECORD; NO VERDICT.
 
-<expected_criteria>F8-AC1, F8-AC2, F8-AC3, F8-AC4, F8-AC5, F8-AC6, F8-AC7, F8-AC8</expected_criteria>
+<criterion id="F8-AC9" cell_refs="FE-s-8"><invocation>cd <WS>/portal && python -c "s=open('src/pages/InvestorReporting/render/manifest.ts').read(); print('RUNTIME_BROWSER=%s' % (\"runtime: 'browser'\" in s))"</invocation><expect>RUNTIME_BROWSER=True</expect></criterion>
+`F8-AC9` -- the manifest declares the browser runtime requirement.
+
+<expected_criteria>F8-AC1, F8-AC2, F8-AC3, F8-AC4, F8-AC5, F8-AC6, F8-AC7, F8-AC8, F8-AC9</expected_criteria>
 
 ## BOUNDS
 
@@ -74,6 +79,7 @@ Every term, fact and reference on the page comes from `packet.evidence`; `narrat
 <paths>
 portal/src/pages/InvestorReporting/render/narrative/
 portal/src/pages/InvestorReporting/render/fixtures/
+portal/src/pages/InvestorReporting/render/manifest.ts
 portal/src/pages/InvestorReporting/fixtures/smoke/
 portal/src/pages/InvestorReporting/__tests__/fe-s-8/
 org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -88,7 +94,7 @@ org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v
 Criterion ids: `F8-AC1` .. `F8-AC8`. Instance at
 `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-8.narrative-page.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
-`python .tools/proof-of-spec-check.py <instance> F8-AC1,F8-AC2,F8-AC3,F8-AC4,F8-AC5,F8-AC6,F8-AC7,F8-AC8` BEFORE the `complete` flip. `F8-AC8` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `narrative-page.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
+`python .tools/proof-of-spec-check.py <instance> F8-AC1,F8-AC2,F8-AC3,F8-AC4,F8-AC5,F8-AC6,F8-AC7,F8-AC8,F8-AC9` BEFORE the `complete` flip. `F8-AC8` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `narrative-page.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape. You cannot send or receive messages; anything you would ask is a surprise row.

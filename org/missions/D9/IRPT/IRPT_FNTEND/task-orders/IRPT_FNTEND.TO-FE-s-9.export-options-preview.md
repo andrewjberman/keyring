@@ -23,6 +23,8 @@
 
 **Submission and receipt** in `export/submit.ts` (pure, tested) and `export/ReceiptPanel.tsx`: `submitExport` sends the bundle id and options through the typed client; the `ExportReceipt` and `StatusEnvelope` drive the job state (`StatusPanel`) and, on `READY`, a download link to the receipt's `authorizedDownloadRoute` and nothing else (no vendor URL). An Analysis export carries the same `inputRevision`, `configuration` and `artifactHash` the tab shows.
 
+**Bundle resolution (AMENDED BY THE ISSUER at the FE-s-4 drain on row IRPT_FNTEND-W2-S2).** The counterpart's `ExportBundle` (contracts `index.ts` section 9) carries report REFERENCES (`reports: AuthorizedReportRef[]`) and no payloads, while the package's `RenderBundle` in `render/manifest.ts` carries the payloads the templates print. Build `export/resolveBundle.ts`: given an `ExportBundle`, read each referenced `PerformanceReport` or `AnalysisReport` at its referenced revision from the query cache, fetch through the typed client only a report the cache lacks, read the `NarrativePacket` the same way, and return the `RenderBundle`; `MissingPayloadError` is raised only when a referenced revision cannot be obtained. The preview renders through `resolveBundle`, and `render/PrintEntry.tsx` is changed to call it after `assertSupported`, so a bundle implementing the contract as written renders instead of being refused. F9-AC4's no-refetch arm runs with the referenced reports already cached, which is the advisor's state when Export is pressed.
+
 **Fixtures** under `fixtures/fe-s-9/`: `scope.two-assets.json`, `scope.no-assets.json`, `bundle.preview.opal.json`, `bundle.preview.cobranded.json`, `receipt.ready.json`, `receipt.running.json`. Smoke maps `fixtures/smoke/fe-s-9-modal.json`, `fe-s-9-preview.json`.
 
 **Tests** under `__tests__/fe-s-9/`: `default.test.ts` (initial render contains no modal element), `branding.test.ts` (a branding change yields a preview request whose `performanceRevision` equals the previous request's and whose `exportRevision` differs; with `scope.no-assets.json` the applied label is `Opal`), `no-refetch.test.ts` (the adapter call log during a preview contains no `performance`, `analysis` or provider-shaped operation -- printed as `CALLS: <list>`), `receipt.test.ts` (the rendered download route equals the receipt fixture's route; a `running` receipt renders no link; the analysis export request carries the tab's `inputRevision`, `configuration` and `artifactHash`).
@@ -53,7 +55,10 @@
 <criterion id="F9-AC8" cell_refs="FE-s-9" judgment="true"/>
 `F9-AC8` -- graded at L9 from the PNGs and the print PNGs of `FE-s-4` and `FE-s-8`: preview and template agree; the options read as a portal modal; applied branding is stated; nothing light on the silver canvas. RECORD; NO VERDICT.
 
-<expected_criteria>F9-AC1, F9-AC2, F9-AC3, F9-AC4, F9-AC5, F9-AC6, F9-AC7, F9-AC8</expected_criteria>
+<criterion id="F9-AC9" cell_refs="FE-s-9"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-9/resolve.test.ts</invocation><expect>0 fail</expect></criterion>
+`F9-AC9` -- the `ExportBundle` success fixture from FE-s-1 resolves to a `RenderBundle` with every referenced report present (printed `REFS RESOLVED: n of n`); the performance document rendered from it contains the summary values; a bundle referencing a revision the adapter cannot serve raises `MissingPayloadError` naming that revision.
+
+<expected_criteria>F9-AC1, F9-AC2, F9-AC3, F9-AC4, F9-AC5, F9-AC6, F9-AC7, F9-AC8, F9-AC9</expected_criteria>
 
 ## BOUNDS
 
@@ -73,6 +78,7 @@
 <paths>
 portal/src/pages/InvestorReporting/export/
 portal/src/pages/InvestorReporting/index.tsx
+portal/src/pages/InvestorReporting/render/PrintEntry.tsx
 portal/src/pages/InvestorReporting/fixtures/fe-s-9/
 portal/src/pages/InvestorReporting/fixtures/smoke/
 portal/src/pages/InvestorReporting/__tests__/fe-s-9/
@@ -88,7 +94,7 @@ org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v
 Criterion ids: `F9-AC1` .. `F9-AC8`. Instance at
 `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-9.export-options-preview.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
-`python .tools/proof-of-spec-check.py <instance> F9-AC1,F9-AC2,F9-AC3,F9-AC4,F9-AC5,F9-AC6,F9-AC7,F9-AC8` BEFORE the `complete` flip. `F9-AC8` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `export-options-preview.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
+`python .tools/proof-of-spec-check.py <instance> F9-AC1,F9-AC2,F9-AC3,F9-AC4,F9-AC5,F9-AC6,F9-AC7,F9-AC8,F9-AC9` BEFORE the `complete` flip. `F9-AC8` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `export-options-preview.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape. You cannot send or receive messages; anything you would ask is a surprise row.
