@@ -493,25 +493,20 @@ def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema, merg
         # whitespace, so the first token is the whole of it.
         allocator = allocator_raw.split()[0] if allocator_raw else allocator_raw
         wm = WORKER_SERIAL_RE.match(allocator) if _carried else committer_m
-        # PLANE BOUNDARY (2026-09-10, 0.0.0_AB_MSTR~Z's census 20975 + 3.0.0_SA_CVO~Z's five
-        # consecutive slug overrides -- ONE defect reported from two directions). The W coordinate
-        # names the worker that MINTED the row, which is an INVESTIGATION-row property. On a
-        # REMEDIATION row the W is INHERITED: protocol s.5 requires the remediation id to EQUAL the
-        # graduated investigation id, so a remediation of a worker's finding necessarily carries that
-        # worker's W while being authored by the CVO. It has no surfacer of its own and correctly
-        # carries none -- measured estate-wide at 195 of 195 rows lacking `surfaced_by` being
-        # remediations and ZERO being investigations, across 13 files, 4 projects and weeks of
-        # authorship. So the foreign-row exemption can never engage here, and the arm fell through to
-        # grading the COMMITTER: it refused an INTEGRATOR for carrying rows they did not author, and
-        # refused the CVO every round for filing the join the protocol requires. Renaming to drop the
-        # W would break the id equality; omitting the row is the silent-loss defect the remediation
-        # plane exists to prevent. Neither is available, so the arm itself was the defect.
-        # THE INVESTIGATION ARM IS UNCHANGED -- this narrows the arm to the plane that mints.
-        _is_rem = (folder_kind == "REMEDIATION"
-                   or (folder_kind is None and "REMEDIATION" in os.path.basename(rel).upper()))
-        if _is_rem:
-            pass   # W is inherited from the item being remediated; nothing here to grade
-        elif wm:
+        # NOTE (2026-09-10 parity merge, steward read by 1.0.0_SA_CTO~Z): a SECOND remediation guard
+        # stood here on the SITEZ side (`_is_rem` -> pass, narrowing ONLY this W-arm), reached by an
+        # estate census -- 195 of 195 rows lacking `surfaced_by` are remediations, 0 investigations,
+        # across 13 files / 4 projects. It is REMOVED as dead code: the CLOUD side's `if _rem_doc:
+        # continue` above (line ~479) subsumes it -- `_kind(rel)` there is byte-identical to this
+        # predicate, and it `continue`s the whole row BEFORE this arm is reached, so this block could
+        # never execute. TWO FABRICS INDEPENDENTLY GUARDED THE SAME PLANE -- CLOUD by reading
+        # remediation_row.schema.json:21, SITEZ by censusing the rows -- and converged on the identical
+        # fix; that convergence is the strongest evidence the guard is right. CLOUD's is kept because
+        # it is the SUPERSET: it also skips the C-arm, so a remediation legitimately carrying a C- id
+        # (a remediation of the CVO's own adjudication row) is admitted too -- a case the W-only
+        # narrowing missed. Leaving a dead guard that READS live is the very trap this estate spent
+        # the day removing, so it goes rather than lingering as a second thing to reason about.
+        if wm:
             if w is None:
                 out.append("%s: NEW row %s %s worker %s carries no W<n>. A worker mints <CODE>-W%s-S<k> (its own "
                            "slot, the next unused k within it); a bare S<k> from a worktree is the allocator race that "
