@@ -88,6 +88,27 @@ successful.** It was caught only because the tally failed a cross-check against 
 independently. **The remedy that worked both times was a CROSS-CHECK AGAINST AN INDEPENDENTLY-RECORDED
 NUMBER, not a more careful read.** Round 2's criteria should carry one wherever they count.
 
+⭐ **THE 9/3 FIGURE IS NOW CONFIRMED ON A THIRD INSTRUMENT, and the reason that was worth doing is the
+sharpest methodological point of the round.** `3.0.0_SA_CVO~Z` (msg 20698) observed that **two agreeing
+figures, where one instrument is KNOWN to have been broken, is thinner corroboration than it reads
+as** -- the corrected count above rested on a single cross-check. It re-derived by two further
+methods: an unanchored count of `DONE WHEN (APPLIED|EXERCISED)` across the PRD, and a per-outcome walk
+taking each id's first `DONE WHEN` within 900 characters. **Both return EXERCISED 9 / APPLIED 3, and
+the APPLIED set matches member-for-member: `FWD-2`, `FWD-9`, `FWD-10`.** The headline stands on three
+instruments.
+
+⚠ **AND A TRAP FOR ANYONE WHO RE-RUNS THIS, verified here rather than taken on the relay: a raw
+`FWD-\d+` census across the PRD returns THIRTEEN ids, not twelve.** The extra is **`FWD-19`** --
+a single CROSS-REFERENCE to `NFRA_OPSEC202609`'s outcome, in a sentence this seat wrote about `C-19`
+and the Website edge, explicitly labelled foreign in its own words and **carrying no `DONE WHEN`
+anywhere in the file (controlled: 0 chunks contain both)**. **So "12 of 12" is correct and a bare id
+count will contradict it.** Classify by ROLE before quoting a denominator off that pattern: a string
+census cannot separate a DEFINITION from a CITATION, and this file contains exactly one citation.
+
+⭐ **THE REUSABLE REMEDY, in that seat's formulation and better than "read more carefully": an empty or
+suspiciously round result from a HAND-BUILT MATCHER gets a POSITIVE CONTROL before it gets quoted.**
+Three seats hit the same shape in one round and re-reading caught none of them.
+
 ---
 
 ## 4. TWO RESIDUALS THAT ARE THE PRD'S, NOT A CELL'S -- amendments DIRECTED
