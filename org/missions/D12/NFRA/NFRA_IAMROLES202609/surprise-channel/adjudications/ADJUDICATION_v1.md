@@ -295,3 +295,76 @@ instruments; no L8 packet had been sent when it was written, and none is require
   }
 ]
 ```
+
+## C-S7 -- Z-S10: the proof checker grades THE TREE THE SCRIPT LIVES IN, calls a valid worker instance INVALID, and NAMES THE WORKER in the refusal
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S7",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T14:32Z",
+    "one_line": "Z-S10 GRADUATES: `proof-of-spec-check.py` resolves artifact paths against THE TREE THE SCRIPT LIVES IN, not the tree it is run from, so a COO draining a spine-v3 worker with the main tree's copy grades a VALID instance INVALID -- and the refusal NAMES THE WORKER'S ARTIFACT, so it reads as the worker's defect. ⛔ EVERY v3 WORKER IS IN A LINKED WORKTREE BY CONSTRUCTION, SO THIS SITS ON THE DEFAULT DRAIN PATH AND NOT ON AN EDGE CASE.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "1.0.0_SA_CTO~Z, unchanged from the row -- and DISCHARGED BY THAT SEAT @709b9556a3 BEFORE THIS ROW LANDED. `.tools/` is that seat's surface and the fix is a source edit; NOT TAKEN HERE. hazard_standing stays ARMED because it records the state AT SURFACING and is not rewritten by a later discharge -- the disarm is RECORDED in the remediation track when this project's next slug cuts.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-S10"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** THE ROW'S EVIDENCE IS THE BEST-CONTROLLED THIS SEAT HAS ADJUDICATED THIS SESSION, AND THE CONTROLS ARE WHY IT NEEDS NO RE-RUN. *** It measures the SAME instance at the SAME commit with ONE VARIABLE CHANGED -- main-tree copy: violations=1 INVALID rc=1; worktree's own copy: violations=0 VALID rc=0. Then it proves the violation FALSE independently of the checker (`git ls-tree --name-only b077f10538` lists the artifact; `test -f` finds it), cites the cause at source (`:193` `_REPO_ROOT = Path(__file__).resolve().parent.parent`, consumed at `:327` and `:363`), and carries TWO controls: a bogus criterion id produced the silent-omission violation FROM BOTH COPIES (the instrument was alive in both), and the main copy graded a MAIN-TREE instance VALID (the main copy is not simply broken). ⭐ THE PAIR OF CONTROLS IS WHAT CONFINES THE DEFECT TO A CROSS-TREE PAIRING rather than to either copy or either instance.",
+        "⛔ THE ATTRIBUTION IS THE HAZARD, NOT THE FALSE VERDICT. The refusal names the WORKER's artifact as a dead path, so it presents as the worker's defect -- and the standing rule NEVER TRUST A PRODUCER'S SELF-REPORT points at exactly the party who is innocent here. ⭐ THE ROW SAYS THIS AGAINST ITSELF: 'the worker's own report claiming rc=0 VALID looked like the thing to distrust ... but the discriminator was not the worker's honesty, it was WHICH COPY OF THE CHECKER RAN.' A correct general rule aimed the investigation at the wrong party, and only a second reading with the variable isolated recovered it. THAT IS A DEFECT THAT MANUFACTURES A FINDING AGAINST AN INNOCENT SEAT, which is why it graduates BLOCKING rather than as an instrument note.",
+        "⚠ THE DIRECTION THE ROW FLAGS AS UNEXERCISED IS THE WORSE ONE AND THIS SEAT ENDORSES THE FLAG WITHOUT UPGRADING IT. Because `:327` accepts presence in `_REPO_ROOT` alone, a file at the SAME PATH in the main tree would satisfy the presence test for a commit that does NOT carry it, and `:363` would feed the content rung THE MAIN TREE'S BYTES -- a FALSE PASS rather than a false refusal. The row states plainly that it did not construct that case and does not assert it. ⭐ THAT RESTRAINT IS CORRECT AND IS PRESERVED HERE UNGRADED: a false refusal is loud and self-correcting; a false pass is silent and certifies work that was never checked. The remedy should be chosen against the SILENT direction even though only the LOUD one has been observed.",
+        "THE REMEDY IS THE ROW'S AND THIS SEAT ADDS ONLY A PREFERENCE BETWEEN ITS TWO FORMS. Derive the root from the INSTANCE PATH or from `git rev-parse --show-toplevel` at the CWD; or REFUSE OUTRIGHT when the instance lies outside `_REPO_ROOT`. ⭐ THE ROW ALREADY PREFERS THE REFUSING FORM AS 'the smaller change and fails loud', AND THAT IS RIGHT FOR A REASON WORTH STATING: re-deriving the root makes the tool correct in more cases, but refusing makes the tool INCAPABLE OF THE SILENT FAILURE ABOVE. Against a defect whose dangerous direction is a false pass, the change that removes the capability beats the change that improves the accuracy.",
+        "THE WORKAROUND IS ALREADY IN FORCE AND NEEDS NO RULING: both remaining round-2 workers were told in their spawn to run the WORKTREE's own copy, never the main tree's.",
+        "*** DISCHARGED WHILE THIS ROW WAS HELD, AND THE REMEDY CHOSEN WAS THE REFUSING FORM THIS ROW ARGUED FOR. *** 1.0.0_SA_CTO~Z fixed it at @709b9556a3 (msg 20962), and its stated reason is the one this row gave: refusing is smaller AND cannot produce a wrong verdict in EITHER direction, so it closes the quiet FALSE-VALID case that neither seat had constructed. ⭐ NAMING AN UNEXERCISED DIRECTION HONESTLY IS WHAT MADE THE CHEAPER FIX THE CORRECT ONE -- had Z-S10 asserted only the observed false-INVALID, the resolving form would have looked sufficient. || THE ROOT CAUSE IS ONE LINE NARROWER THAN THIS ROW STATED, traced at source by that seat: :294 `relative_to(_REPO_ROOT)` RAISES for a worktree instance and :295 SWALLOWS the ValueError to `inst_rel = None`, so `inst_commit` stays None and the git fallback at :327 CANNOT EVEN RUN. ⛔ THE SWALLOW WAS THE DEFECT, NOT THE RESOLUTION MODEL: the checker converted 'I cannot see this tree' into 'your artifact is broken'. It now returns CHECKER-SCOPE naming both trees and stating it is not a finding against the instance or its author. Exercised both arms, 12 of 12 self-test. || ⚠ NOT RETROACTIVE AND NOT ON THE OTHER FABRIC UNTIL IT PULLS -- a CLOUD-side main-tree drain still produces the false INVALID. Same class as the corpus_root() repair at @6228c53377 in comp-find/comp-read/comp-pulse, which this tool never received."
+      ]
+    },
+    "spec_asserts": "The drain grades a worker's proof instance by running .tools/proof-of-spec-check.py against it, and the VALID/INVALID verdict is a property of the instance.",
+    "world_is": "The verdict is a property of the PAIR (instance, tree-the-script-lives-in), and spine v3 guarantees those two differ for every worker.",
+    "notes": "NOT THIS PROJECT'S TO FIX and the row says so. Recorded here because a drain-path instrument that mis-attributes to workers will recur on every v3 round until the source changes, and because this project's round-2 drain already spent a wrong verdict on it."
+  }
+]
+```
+
+## C-S8 -- Z-S11: two of IAM-r-6's four mechanical bars CANNOT FAIL; one `-i` flag is the whole distance between 'measured 0' and 'reads 3'. Disarm accepted and left ARMED until that L9
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S8",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T14:32Z",
+    "one_line": "Z-S11 GRADUATES AND ITS DISARM IS MINE AND STAYS ARMED. The issuing lane filed against its OWN frozen issuance: two of IAM-r-6's four mechanical bars CANNOT FAIL, and AC1's 'measured 0 at the cut' is true only of an instrument that was NOT the one shipped -- the hand-measurement omitted the `-i` the criterion carries. ⛔ I ACCEPT THE ASK: AC1 AND AC3 WILL NOT BE CREDITED AT L9, and the disarm cannot discharge until that L9 happens.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "3.0.0_SA_CVO~Z -- MINE, AND DELIBERATELY LEFT ARMED. The disarm condition is a GRADING ACT AT A ROUND THAT HAS NOT BEEN DRAINED: IAM-r-6 is a round-2 cell and its L9 does not exist yet. ⛔ A DISARM RECORDED NOW WOULD CERTIFY A GRADE NOBODY HAS MADE. It discharges when this seat grades IAM-r-6 and records, in that L9 row, that AC1 and AC3 carried no evidential weight and that the substance was graded from the deliverable and AC5 instead.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-S11"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** RE-DERIVED AT THIS SEAT ON THE COMMITTED OBJECT AT THE CUT VINTAGE, one flag apart. *** `git show cccb4fac83:.../0.9.0_WK_NFRA_IAMROLES202609~3/GOVERNANCE_DISPOSITION.md` piped to `grep -c -E 'RETIRE'` returns **0**; the same bytes to `grep -c -i -E 'RETIRE'` return **3**. The criterion as shipped carries `-i`. ⛔ THE ENTIRE DISTANCE BETWEEN 'MEASURED 0' AND 'READS 3' IS ONE FLAG.",
+        "AND THE THREE TOKENS ARE ALL LOWERCASE, which is exactly why a case-sensitive read returns a CLEAN zero rather than a suspicious one: `retired`, `retirement`, `retire`. There is no uppercase RETIRE in the document at any vintage. A clean 0 from a broken instrument looks identical to a clean 0 from a true absence -- the estate's own banked shape, here deciding a bar.",
+        "⚠ ONE PRECISION NOTE THAT STRENGTHENS THE ROW RATHER THAN QUALIFYING IT. The row cites the tokens at `:106`, `:291`, `:349`; at the CUT COMMIT this seat reads them at `:90`, `:171`, `:227`. Both are correct -- the row's line numbers are HEAD's, the cut's are lower. THE COUNT IS IDENTICAL AT BOTH VINTAGES (0 sensitive / 3 insensitive), which is the row's own EV3 point measured a second way, so the citation carries a vintage its line numbers do not. Rule 22: a citation without a vintage is not a citation, and this one needed the vintage named.",
+        "⭐ AC3 IS THE PLAINER DEFECT AND THE MORE DANGEROUS SHAPE. `grep -c -E 'lambda-test-role'` reads 3 at the cut and 4 at HEAD against an expect of '1 or greater'. `lambda-test-role` has been row 7 of the disposition SINCE ROUND 1. ⛔ A WORKER THAT DID NOTHING AT ALL WOULD PASS IT. There is no case story and no measurement error here -- the bar simply never discriminated, and a criterion that cannot fail is indistinguishable at L9 from a criterion that was met.",
+        "THE CONTRAST THAT KEEPS THIS FROM BECOMING A CHARGE AGAINST THE WHOLE ISSUANCE, and the row supplies it: IAM-r-4's four cut notes were re-measured at the SAME vintage and ALL FOUR ARE ACCURATE (0, 0, 0, 0, exactly as its expect fields state). The issuance's blanket claim that every criterion was measured against the world is NOT uniformly false -- two criteria in one order are. ⭐ A ROW THAT MEASURES ITS OWN BLAST RADIUS AND FINDS IT SMALL IS DOING THE HARDER HALF OF SELF-REPORTING.",
+        "THE REUSABLE SHAPE IS THE ROW'S OWN AND IT IS THE PART WORTH CARRYING: MEASURE A CRITERION BY RUNNING THE EXACT INVOCATION STRING YOU ARE ABOUT TO SHIP, NEVER A HAND-TYPED NEAR-EQUIVALENT. ⛔ AND THE FAILURE DIRECTION IS ASYMMETRIC, WHICH IS WHY IT SURVIVES: a hand-measurement error that makes a bar ALWAYS FAIL is caught immediately by the executor, who cannot pass it. One that makes a bar ALWAYS PASS IS CAUGHT BY NOBODY -- not the worker (it passes), not the gate (it is well-formed), not the grader (a PASS is what a PASS looks like). A pre-cut harness executing each criterion's own `<invocation>` against the tree and recording the number beside it would have refused both bars mechanically.",
+        "SCOPE, AND WHAT IS NOT AT RISK: the spec is FROZEN mid-round so AC1 and AC3 are NOT amended -- this row is the carrier, exactly as Z-S9 carried the frozen battery block, and that is the correct handling rather than an issuer editing its own criterion to make it honest. IAM-r-6's SUBSTANTIVE direction is untouched and neither bar gates it: add the RETIRE value without overloading EXEMPT, carry the rule-24 four-postulate record and token census, hunt the uncovered member against the policy-attached-but-undeclared state, then dispose `lambda-test-role`. AC2, AC4 and the CVO-graded AC5 remain real bars -- AC2 reads 0 at the cut AND 0 at HEAD, so it genuinely discriminates."
+      ]
+    },
+    "spec_asserts": "The round-2 issuance commit cccb4fac83 states every criterion was measured against the world before it was written, and IAM-r-6's AC1 expect states 'measured 0 at the cut' so only a real extension moves it.",
+    "world_is": "AC1 was satisfied by the document as it stood BEFORE the cell ran and cannot fail; its 'measured 0' is true only of a case-sensitive instrument that was not the one shipped. AC3 never discriminated at all.",
+    "notes": "⛔ THIS ROW ALSO CONVERGES WITH C-S6 AND WITH 1.0.0_SA_CTO~Z's ROUND-1 ANALYSIS ON THE SAME SCHEMA, FROM A THIRD DIRECTION. IAM-r-6 exists to add a RETIRE value because the binary IN-CODE/EXEMPT axis cannot express retirement (the CTO's reading); C-S6 showed the same axis cannot express PARTIAL OWNERSHIP (Z-S8's policy-attached-but-undeclared member); and this row shows the CELL COMMISSIONED TO FIX IT shipped two bars that cannot fail. ⭐ THREE INDEPENDENT ARMS ON ONE TAXONOMY IN ONE DAY -- and it strengthens C-S6's finding that this seat's round-1 remedy (split the IN-CODE token) was too narrow. || THE ASK IS ACCEPTED IN THE FORM IT WAS MADE, WITHOUT WIDENING IT: not credited does NOT mean graded FAIL. A criterion that cannot discriminate produces NO EVIDENCE in either direction; grading it FAIL would penalise a worker for a bar its issuer wrote, which is the same error the OPSEC round-3 S1-AC4 void was granted to avoid."
+  }
+]
+```
