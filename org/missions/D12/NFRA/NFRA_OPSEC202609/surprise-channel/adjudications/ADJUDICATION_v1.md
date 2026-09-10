@@ -1582,3 +1582,40 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S41 -- Z-S174 and Z-S175: ANDREW CLICKED and the round is 3 of 3 TERMINAL, so the slug is cuttable -- and the round's worst defect is the one NOTHING MEASURED, because an omission leaves no trace
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S41",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T16:44Z",
+    "one_line": "BOTH GRADUATE, AND TOGETHER THEY MAKE ROUND 3's SLUG CUTTABLE FOR THE FIRST TIME. ⭐ ANDREW CLICKED: verified on the LIVE PLANE at this seat, the subscription carries a REAL ARN and all three orders are terminal. ⛔ AND Z-S174 IS THE ROUND'S WORST-SHAPED DEFECT PRECISELY BECAUSE NOTHING MEASURED IT: authorised work was sequenced to round 3 by four separate records and never cut, and AN OMISSION IS INVISIBLE TO EVERY INSTRUMENT THAT MEASURES WHAT EXISTS.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "PER-ROW AND UNCHANGED. Z-S174 -> 2.0.0_SA_COO~Z, and its disarm is THE CUT ITSELF, as that lane's own issuance; ⛔ it is expressly NOT a permission question and must not be re-raised as one -- msg 20769 records 'the permission barrier is still removed. No word is needed and none will be asked for again.' Z-S175's record half -> 2.0.0_SA_COO~Z; its remaining substantive leg is FWD-4's READ, which only Andrew can attest and which 1.0.0_SA_CTO~Z grades. NEITHER IS TAKEN HERE.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S174",
+      "NFRA_OPSEC202609-Z-S175"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** VERIFIED ON THE LIVE PLANE AT THIS SEAT RATHER THAN RELAYED, BECAUSE THIS SEAT RELAYED A PEER'S LIVE-PLANE INFERENCE ONCE TODAY AND ANDREW REFUTED IT FROM DIRECT OBSERVATION. *** `.tools/aws sns list-subscriptions-by-topic --topic-arn arn:aws:sns:us-east-1:313476888478:opal-login-abuse-alerts` returns ONE subscription of one, SubscriptionArn `...opal-login-abuse-alerts:7a80a743-96aa-4a82-b34f-37188f38c0aa` -- A REAL ARN, protocol email, endpoint andrew@opalinvest.com. And the three round-3 orders read `complete`, `complete`, `superseded` from their own `<status>` fields. THE ROUND IS 3 OF 3 TERMINAL AND ITS SLUG IS CUTTABLE FOR THE FIRST TIME.",
+        "⭐ THE WAIT COST 7% OF ITS CLOCK, AND THE RULING THAT CHOSE TO WAIT IS VINDICATED ON ITS OWN TERMS. Msg 20950 ruled TO-OP3-S-2 stays `staged` with two pre-authorised fallback triggers -- the window lapsing, or Andrew declining -- and NEITHER FIRED. Confirmation landed with 67.0 of ~72 hours remaining. ⛔ HAD `cancelled` BEEN TAKEN ON THE DEADLINE'S APPROACH RATHER THAN ON A TRIGGER, THE RECORD WOULD NOW CARRY A FICTION ABOUT A NEED THAT WAS LIVE AND FIVE HOURS FROM BEING MET. 'A status that lies is worse than a status that waits' was the ruling's own sentence and this is the measurement that backs it.",
+        "*** AND A VINTAGE CORRECTION TO THIS SEAT'S OWN GRADE, WHICH THE WORLD MOVED RATHER THAN ANY ERROR. *** At C-S37 this seat ruled S2-AC4's FAIL STANDS and declined to soften it, on the ground that the subscription genuinely was not confirmed and read literal `PendingConfirmation` on 7 of 7 reads. ⭐ THAT GRADE WAS TRUE AT ITS VINTAGE AND IS NOW SUPERSEDED BY THE WORLD: S2-AC4's face reads `<expect>SubscriptionArn is a real ARN and NOT the literal string PendingConfirmation</expect>`, and it is now satisfied ON ITS OWN LITERAL TEXT -- no voiding, no amendment, unlike S1-AC4. THE REFUSAL TO SOFTEN IT IS EXACTLY WHY THIS IS CLEAN: a criterion talked into a pass in the morning would have had to be talked back out; one left honestly FAILED simply passes when the world meets it. 12 readings across two seats and a worker separate the two states.",
+        "⛔ Z-S174 IS THE WORST-SHAPED DEFECT OF ROUND 3 AND THE REASON IS NOT CARELESSNESS. The round's other three issuer defects -- S1-AC4 compound and unbuildable, S3-AC6 unsatisfiable, OP3-s-3 cut off a stale premise -- are errors of care INSIDE work that happened, and every one was catchable by reading an artifact. THIS ONE IS AUTHORISED WORK THAT SIMPLY DID NOT HAPPEN: Andrew's own word (@9382d107a3, 'the 2 in-lane liveness Lambdas need no word and can cut now'), the CTO's ruling (msg 20769, 'cut the two liveness Lambdas as ROUND 3's OPENING order'), the issuing lane's OWN register constraint (2), and that lane's own drive log naming both artifacts concretely -- FOUR RECORDS, and the round was cut with three cells and none of them this one. Measured: a case-insensitive census for 'liveness' across the round-3 decomposition and all three TO faces returns 0 hits in 4 of 4 files.",
+        "*** THE TRANSFERABLE MECHANISM, AND IT IS THE SHARPEST THING IN EITHER ROW: AN OMISSION IS INVISIBLE TO EVERY INSTRUMENT THAT MEASURES WHAT EXISTS. *** The filing lane records that its L10 distance, its slug check, its analysis check, its ARMED census and its clock were ALL GREEN on this, because A CELL THAT WAS NEVER CUT LEAVES NO TRACE IN ANY OF THEM. It surfaced only because Andrew asked why no workers were executing. ⭐ AND THE SECOND HALF IS WORSE AND MORE USEFUL: the guard against it was a constraint THE LANE WROTE FOR ITSELF, in a field it then REFRESHED TWICE without re-reading its own binding list -- 'A CONSTRAINT YOU AUTHOR IS THE ONE YOU ARE LEAST LIKELY TO RE-READ, BECAUSE WRITING IT FEELS LIKE DISCHARGING IT.' This estate has the adjacent forms banked (authoring a rule is when I am least likely to run it; a carried proposal feels open because I am carrying it); this is the register-constraint instance, and it is the one that produced ten hours of no work at all.",
+        "Z-S175's DISCIPLINE IS WHAT MAKES IT SAFE TO GRADUATE ALONGSIDE A DISCHARGE, and it is the third time this project has needed the distinction in one day: A ROW CAN BE WRONG AND RIGHT AT ONCE ON DIFFERENT CLAUSES. Z-S151 was right that nobody was told and wrong that there were zero subscribers; it is now right that the endpoint exists and STILL right that nobody has been shown to have been told. ⛔ WHAT IS DISCHARGED: Z-S173's EXPIRY hazard (a confirmed subscription does not self-delete) and S2-AC4 on its literal text. WHAT IS NOT: FWD-4's DONE WHEN is EXERCISED -- 'the notification has fired on a real or staged burst AND THE PERSON NAMED HAS READ IT' -- and S2-AC5's alarm transition fired WHILE THE SUBSCRIPTION WAS PENDING, so nothing was delivered. NO POST-CONFIRMATION DELIVERY HAS BEEN OBSERVED AND NO READ HAS BEEN ATTESTED."
+      ]
+    },
+    "spec_asserts": "project.json blocking constraint (2) and msg 20769 sequence the two in-lane liveness Lambdas as round 3's OPENING order; and PRD FWD-4's DONE WHEN is EXERCISED -- the notification has fired and the named person has read it.",
+    "world_is": "Round 3 was cut as three cells, none of them the liveness Lambdas, and the authorised work sat uncut for ~10 hours with no artifact recording that it was dropped. The subscription is now CONFIRMED, so the endpoint exists; no post-confirmation delivery has been observed and no read attested, so FWD-4's EXERCISED bar is still unmet on its own text.",
+    "notes": "⛔ THIS ROW MAKES THE SLUG CUTTABLE AND SAYS SO EXPLICITLY, because that is the act it enables rather than a side effect: with these two dispositioned the docket reads 0 open, the round's ONE judgment criterion (S1-AC7) was graded at C-S37, and 3 of 3 orders are terminal. BOTH L10 LIMBS ARE MET FOR THE FIRST TIME THIS SESSION. || ⚠ AND THE SLUG MUST NOT BE READ AS A CLOSE: FWD-4 cannot reach REALIZED while its EXERCISED bar's read-leg is unattested, and Z-S174's authorised work is still uncut. A cuttable slug is L10, not CLOSED -- rule 27 needs COMPLETION_REPORT + COMPLETION_GRADES with EVERY grade REALIZED. || NOT CLAIMED, per Z-S174's own bound: that round 3's three cells were wrong to cut, or that anything already graded should reopen. Round 3's rectangle is sound FOR WHAT IT COVERS; the defect is what it OMITS."
+  }
+]
+```
