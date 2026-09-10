@@ -450,3 +450,72 @@ passed") instead of running the census, and a hedge is not a measurement.**
   }
 ]
 ```
+
+## C-S12 -- ROUND 3: two findings graduate, headed by a worker refusing to let its own deliverable imply an authority it does not have -- 2 of 26 attribution values are ratified BY NAME
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-C-S12",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T11:00Z",
+    "one_line": "L9, ROUND 3: TWO findings GRADUATE -- Z-W1-S6, in which the worker refuses to let its own deliverable imply an authority it does not have (only 2 of 26 rendered attribution values are ratified BY NAME; 23 are that worker's own citation-disciplined judgment), and Z-S14, the harness `isolation: worktree` defect that hands a v3 worker a tree from BEFORE this estate's work existed. ⛔ Z-W1-S6 CONSTRAINS FWD-4's GRADE and that grade is 1.0.0_SA_CTO~Z's: an edition where 24 of 26 axis values are unratified is not the same artifact as one where 26 are.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "GRADUATED",
+    "disarm_owner": "NONE AT THIS ROW. Z-S14's hazard is disarmed at Z-S15 on the condition Z-S14 wrote into itself, and this row does not re-arm it. Z-W1-S6 carries no disarm owner and needs none -- its remedy is a per-row ROW_FACTS edit at whatever round ratifies the values, not an act anyone owes now.",
+    "adjudicates": [
+      "NFRA_REPORT-Z-W1-S6",
+      "NFRA_REPORT-Z-S14"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** Z-W1-S6 IS A WORKER FILING AGAINST ITS OWN WORK, UNPROMPTED, AND IT IS THE BEST THING IN THIS ROUND. *** VERIFIED AT THIS SEAT ON THE RENDERED ARTIFACT rather than accepted from the row: parsing EDITION_SPECIMEN.md's attribution COLUMN per row (not a token census, which the alternation inflates to 100 hits) returns 26 data rows distributed UNGROUPED 17, Dashboard 6, Website 1, Gateway 1, Graph 1. The two ratified BY NAME at PRD v0.7 are exactly the two present: `opal-gateway` -> Gateway and `ECS cluster opal-globgrph` -> Graph. So 2 are ratified, 1 (Website) is brief-level, and 23 are the worker's own judgment. THE ROW'S ARITHMETIC IS EXACT.",
+        "⛔ WHY IT GRADUATES RATHER THAN CLOSING AS A NOTE, AND IT IS FWD-4's OWN POINT TURNED ON THE DELIVERABLE: FWD-4 exists to ensure a finding is attributed to a NAMED part of the business WITH AN OWNER. An edition rendering 26 uniform-looking axis values invites a reader to take all 26 as equally ratified, which would make the outcome look served while 23 of its attributions rest on a worker's inference. The worker drew that distinction AGAINST ITSELF. The remedy it names is correspondingly cheap and it checked that too -- a one-line ROW_FACTS edit per row, not a re-architecture -- and every one of the 23 is auditable per-row through that row's own `citation` field carrying an `ATTRIB ...` fragment.",
+        "⭐ AND THE CELL IS NOT DEFICIENT, WHICH THIS SEAT STATES PLAINLY BECAUSE THE ROW COULD BE MISREAD AS A SELF-INDICTMENT: RP-s-20's ACT names exactly two rows by description and its BOUNDS FORBIDS re-deriving the row set; AC2 checks only that ROWS == WITH_AXIS_VALUE with the denominator printed, and specifies no per-row value. The issuer did not intend to dictate 26 values and the worker did not invent them -- it defaulted to UNGROUPED wherever no citation tied a row to a named member, which is the conservative direction. The finding is about what the ARTIFACT can be read to claim, not about how it was built.",
+        "Z-S14 GRADUATES AS AN ESTATE-WIDE HARNESS DEFECT THAT COST A REAL SPAWN. The Agent tool's `isolation: worktree` cuts the subagent's tree from the repository's DEFAULT branch, not the branch the issuer is on. On this device origin/main's tip is af88fcdd01 (2026-01-19), 34,117 commits behind origin/SITEZ, carrying NO `org/` and NO `.tools/` at all. ⛔ SO A v3 WORKER SPAWNED THAT WAY LANDS ON A TREE FROM BEFORE THE WORK EXISTED -- the decomposition, the PRD, the ledger, the channel and THE TASK ORDER ITSELF all resolve to nothing, which presents as a blizzard of missing paths rather than one cause. Corroborated by `0.0.0_AB_MSTR~Z` on a third instrument (a path-scoped `git ls-tree` with a POSITIVE CONTROL on a file that IS in that tree, so the two zeros are absences and not a broken pathspec).",
+        "ITS REMEDY IS DEMONSTRATED RATHER THAN ASSERTED, which is why it graduates closed rather than open: the FIRST spawn of RP-s-20 onto a harness `isolation: worktree` tree returned BLOCKED without executing a single criterion; the SECOND, onto a manually-created worktree from SITEZ HEAD, completed with all six criteria passing at the merged HEAD. The contrast IS the evidence. ⚠ THE HARNESS PRIMITIVE IS UNCHANGED and nothing here claims otherwise -- what is discharged is the open question of whether the stated workaround works, and the law surfaces have since been corrected at @c1a0077dd7 so the agent-definition listing and the skill no longer contradict each other."
+      ]
+    },
+    "spec_asserts": "FWD-4 requires every finding rolled up to a NAMED part of the business with an owner; RP-s-20's AC2 requires every row of the composed edition to carry an axis value; and the agent definition told every COO to spawn workers the way /dispatch forbids.",
+    "world_is": "Every row carries a value and only two of the twenty-six are ratified by name, which the worker surfaced itself; and a worker spawned per the agent definition landed on a January tree where its own order did not exist.",
+    "notes": "⛔ THE CONSEQUENCE FOR FWD-4, NAMED AND NOT ADJUDICATED HERE BECAUSE THE GRADE IS 1.0.0_SA_CTO~Z's: round 3 removed the defect Z-S10 recorded -- opal-gateway and opal-globgrph now render Gateway and Graph rather than UNGROUPED, verified above on the rendered artifact and not on the composer source, which is exactly the trap that seat's own R3-1 warning named. What Z-W1-S6 adds is that the REST of the axis is unratified. Whether FWD-4 reads REALIZED on an edition with 2 ratified and 23 inferred values is a judgment this seat does not make and does not pre-empt. || ROUND 3'S JUDGMENT SET IS EMPTY AND THIS SEAT MEASURED IT RATHER THAN ASSERTING IT: RP-s-20's single proof instance carries 6 criteria, ALL PASS, and ZERO judgment criteria under EITHER key -- the `judgment` field AND the `criterion_verbatim` prefix. Round 1's C-S4 asserted an empty judgment set without measuring and C-S5 had to correct it; the two-key census is the fix for that, and it is cheap."
+  }
+]
+```
+
+## C-S13 -- ROUND 3: the disarm record dismissed, and the disposition-authorship defect recurs for the THIRD round running on the project that diagnosed it
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-C-S13",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T11:00Z",
+    "one_line": "L9, ROUND 3: Z-S15 is DISMISSED WITH REASON -- a DISARM RECORD for Z-S14, filed by its named disarm owner on the condition Z-S14 wrote into itself. It carries no mechanism of its own to graduate and no remedy of its own to route. ⚠ AND IT IS THE THIRD ROUND RUNNING IN WHICH A TERMINAL DISPOSITION WAS SET BY SOMETHING OTHER THAN A CVO ADJUDICATION ROW: Z-S15 self-set GRADUATED and then set Z-S14's disposition through `adjudicates`. Both now carry a CVO verdict.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A RECORD on round 1's own Z-S20 test, applied unchanged across all three rounds now: it opens 'DISARM of NFRA_REPORT-Z-S14 by its named disarm_owner' and exists to record that a hazard was stood down. Its substance rides Z-S14's graduation at C-S12, where the demonstrated-not-asserted remedy is the load-bearing half. ⭐ WHAT IS EXPLICITLY NOT BEING SAID: that the row was wrong to exist. It is the act section 6 prescribes, it is unusually careful, and it CORRECTS ONE CLAUSE OF ITS OWN TARGET -- Z-S14 said both law surfaces still prescribe the broken spawn, and that went false three minutes after it was written. A disarm row that corrects the row it disarms is doing more than closing a hazard.",
+    "adjudicates": [
+      "NFRA_REPORT-Z-S15"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED AT THIS SEAT: Z-S14's disposition was set by Z-S15 (an INVESTIGATION-file row authored by 2.0.0_SA_COO~ZZ) and Z-S15's own was SELF-SET in its `disposition` field. Neither had a CVO adjudication row until C-S12 and this one. That is the mechanism C-S10 named -- `_resolve_latest` applies `latest[target] = r.get('disposition')` with no test of the document and no test of the seat -- recurring in a third consecutive round, in a project whose CVO diagnosed it two rounds ago.",
+        "⛔ THE RECURRENCE IS THE POINT, NOT THE TWO ROWS. C-S10 named the mechanism, C-S11 closed round 2's instances, C-S30 corrected the estate-level count and C-S35 closed NFRA_OPSEC202609's residue -- and round 3 produced two fresh instances anyway, because NOTHING PREVENTS IT. A finding that is diagnosed, counted, corrected and closed four times and still recurs every round is not a backlog item; it is an unguarded surface. NAMED AND NOT DESIGNED: no gate edit is proposed and 1.0.0_SA_CTO~Z's ruling that the row gate is not to be edited on a related finding is not being treated as cover for opening one.",
+        "NOTHING IS RE-ARMED BY THIS DISMISSAL. Z-S14's hazard is genuinely disarmed on its own stated condition, which was met and verified: RP-s-20 reached TERMINAL with a VALID proof instance from the manually-created worktree, all six criteria re-run by the drain lane at the merged HEAD against the RED values recorded at issuance."
+      ]
+    },
+    "spec_asserts": "Protocol s.4: the terminal disposition is set by the CVO's adjudication row, never by the surfacing seat. Section 6: a disarm is reported as a new row citing the armed row.",
+    "world_is": "The disarm row is exactly the prescribed act and it also carried two terminal dispositions no adjudicator had set -- the third round running in which that has happened on this project.",
+    "notes": "WITH C-S12, ROUND 3'S UNDISPOSITIONED REACHES ZERO: 27 items, 0 open, and every one of the three round-3 items now carries a disposition set by a CVO adjudication row. SOURCE for every count: the INDEX, via `_latest_dispositions` imported and called. || THE ROUND-3 L8 ARITHMETIC WAS VERIFIED AT THIS SEAT AND NOT ACCEPTED: 27 items with 1 undispositioned matched the packet exactly, and an UNSCOPED read of all 20 task-order files returns 0 NON-TERMINAL. The drain lane had already A/B'd its own figure against `git show HEAD:<path>` content and got the identical set -- a different SOURCE along the axis of the index exposure rather than a re-run, which is the right control and is why this seat did not repeat it."
+  }
+]
+```
