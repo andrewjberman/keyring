@@ -1,6 +1,6 @@
-# ETFS_GUARDRAIL round 3 -- L8 PACKET (PARTIAL: **6 of 7 orders terminal**; revised in place at each drain)
+# ETFS_GUARDRAIL round 3 -- L8 PACKET (PARTIAL: **9 of 10 orders terminal**; revised in place at each drain)
 
-**Compiled by** `2.0.0_SA_COO` 2026-09-10 ~04:4xZ at the first compile of round 3 (v1 @`d30e3ca107`), revised ~05:3xZ at the second compile (v2 @`665bbd9b5c`), revised ~06:0xZ at the third (v3 @`8e6d41f50a`) -- `EG-s-24` TERMINAL and drained @`43ad639bac`, and its writer census FOUND A LIVE ARGUMENT INJECTION -- **revised ~06:2xZ at the fourth (this version, v4): `EG-s-25` TERMINAL and drained @`f17ea65a20`, leaving `EG-s-21` alone**; the v2 note read -- `EG-s-23` TERMINAL and drained @`24d7e8194a`, and the round grew from 5 cells to 7**, on the `/drive` obligation "terminal orders -> L8 compile NOW; the compile is an act, never a wait."
+**Compiled by** `2.0.0_SA_COO` 2026-09-10 ~04:4xZ at the first compile of round 3 (v1 @`d30e3ca107`), revised ~05:3xZ at the second compile (v2 @`665bbd9b5c`), revised ~06:0xZ at the third (v3 @`8e6d41f50a`) -- `EG-s-24` TERMINAL and drained @`43ad639bac`, and its writer census FOUND A LIVE ARGUMENT INJECTION -- **revised ~06:2xZ at the fourth (this version, v4): `EG-s-25` TERMINAL and drained @`f17ea65a20`, leaving `EG-s-21` alone** -- **revised ~13:1xZ at the FIFTH compile (this version, v5) by a SUCCESSOR SESSION after the 06:43:35Z device crash killed every seat: `EG-s-26`, `EG-s-27` and `EG-s-28` all TERMINAL and drained, and `EG-s-21` is STILL alone and now STRUCTURALLY BLOCKED for a reason this round created -- see s.9**; the v2 note read -- `EG-s-23` TERMINAL and drained @`24d7e8194a`, and the round grew from 5 cells to 7**, on the `/drive` obligation "terminal orders -> L8 compile NOW; the compile is an act, never a wait."
 **For** `3.0.0_SA_CVO` at L9, as a FILE (the spine's three tracks share files, never messages; the one message names this path and its hash). **This is NOT the L10 slug** -- the slug is the CVO's, after L9, once every order of the round is terminal.
 
 ⛔ **A CORRECTION TO MY OWN LAST TICK, STATED BECAUSE IT WOULD OTHERWISE READ AS A CHOICE.** The tick-52 log said this packet was "owed at the round's close, not per-order." That was wrong on the obligation's own words and wrong against this project's round-2 practice, where the packet was compiled at the FIRST drain and revised in place five times. Three orders sat terminal and drained with no packet, which is precisely the hard gate's "uncompiled terminal order". Compiled now, one tick late, and the lateness is recorded rather than absorbed.
@@ -22,9 +22,12 @@ Round 3 is the round Andrew's ~03:0xZ law built -- **no FWD is a wait**. It open
 | TO-EG-s-20 | EG-s-20 | FWD-10 (precondition) | `~4` | **TERMINAL**, drained @`5d292ff11f` |
 | TO-EG-s-22 | EG-s-22 | FWD-4 | `~1` | **TERMINAL**, drained @`ecd50f3096` |
 | TO-EG-s-23 | EG-s-23 | FWD-8 | `~1` | **TERMINAL**, drained @`24d7e8194a` |
-| TO-EG-s-21 | EG-s-21 | FWD-9, FWD-10 | `~4` | pending -- **BOTH DEPENDENCIES NOW SERVED**, dispatched this tick |
+| TO-EG-s-21 | EG-s-21 | FWD-9, FWD-10 | `~4` | **pending -- STRUCTURALLY UNSATISFIABLE AS CUT**, see s.9 |
 | TO-EG-s-24 | EG-s-24 | FWD-9 (enabling) | `~4` | **TERMINAL**, drained @`43ad639bac` |
 | TO-EG-s-25 | EG-s-25 | FWD-9 (honesty) | `~5` | **TERMINAL**, drained @`f17ea65a20` |
+| TO-EG-s-26 | EG-s-26 | FWD-9 (honesty) | `~5` | **TERMINAL**, drained @`70d11e0b2b` |
+| TO-EG-s-27 | EG-s-27 | FWD-9 (enabling) | `~4` | **TERMINAL**, drained @`5ca49e7fdb` |
+| TO-EG-s-28 | EG-s-28 | FWD-10 | `~1` | **TERMINAL**, drained @`466f461b7c` |
 
 ---
 
@@ -40,6 +43,9 @@ Criterion ids taken from the ORDER at HEAD and passed as the checker's third arg
 | TO-EG-s-23 | `0.9.0_WK_ETFS_GUARDRAIL~1/...TO-EG-s-23.the-ask-that-under-reports.proof_of_spec.json` | **VALID rc 0**; 2/2 criteria carry a cell_ref, 1/1 resolves, 1/1 reachable; 0 surprise entries (none filed) | `24d7e8194a` |
 | TO-EG-s-24 | `0.9.0_WK_ETFS_GUARDRAIL~4/...TO-EG-s-24.thread-the-forcing-spec...proof_of_spec.json` | **VALID rc 0** (assignee, re-read at this seat on the merged tree); 10 of 10 arms; hermetic side 27 passed, was 20 | `43ad639bac` |
 | TO-EG-s-25 | `0.9.0_WK_ETFS_GUARDRAIL~5/...TO-EG-s-25.the-verdict-discloses-its-own-forcing.proof_of_spec.json` | **VALID rc 0** re-read at this seat, ids from the ORDER at HEAD; 2/2 criteria carry a cell_ref, 1/1 resolves in a 29-cell index, 1/1 reachable; surprises **ENFORCE 4 of 4** | `f17ea65a20` |
+| TO-EG-s-26 | `0.9.0_WK_ETFS_GUARDRAIL~5/...TO-EG-s-26.the-artifact-records-what-was-skipped.proof_of_spec.json` | **VALID rc 0** re-run at this seat IN THE WORKER'S WORKTREE before the merge, ids from the ORDER at HEAD; 4 resolved at pin / 3 PENDING co-committed; surprises **ENFORCE 3 of 3** | `70d11e0b2b` |
+| TO-EG-s-27 | `0.9.0_WK_ETFS_GUARDRAIL~4/...TO-EG-s-27.the-skip-rides-the-forcing.proof_of_spec.json` | **VALID rc 0** re-run at this seat; 2/2 criteria carry a cell_ref, 1/1 resolves in a 32-cell index, 1/1 reachable; 2 resolved at pin / 5 PENDING co-committed; surprises 0 entries | `5ca49e7fdb` |
+| TO-EG-s-28 | `0.9.0_WK_ETFS_GUARDRAIL~1/...TO-EG-s-28.the-unresolved-record-names-its-provider.proof_of_spec.json` | **VALID rc 0** re-run at this seat; **6 of 6 artifact rows CONTENT-resolved** (`introduces` present at the pin, absent at its parent) -- the strongest resolution class in the checker; surprises **ENFORCE 1 of 1** | `466f461b7c` |
 
 ---
 
@@ -269,3 +275,71 @@ safe-apply.sh:152-154    THEN sources lib/resolve-actor.sh and calls resolve_act
 ## 8. WHAT THE ISSUER DID NOT DO
 
 No served object was deleted or rewritten BY THIS SEAT (the one served delete is `EG-s-19`'s, on Andrew's explicit word, archive-first, with the archive retained as the standing rollback). No deploy by this seat -- the mailer deploy was `~4`'s under its own NEVER-2 entry, and the classifier is deliberately UNDEPLOYED. No send and no invoke of `etfs-reports-orchestrator` in any mode. No push: origin/CLOUD @`c6bcb7b12b` (ls-remote read 02:39:42Z, this seat), and every commit named here is LOCAL. The two running orders were not interrupted to build this packet.
+
+---
+
+## 9. THE v5 COMPILE -- THREE CELLS DRAINED AFTER A DEVICE CRASH, AND THE ROUND'S LAST CELL IS NOW PROVABLY UNSATISFIABLE AS CUT
+
+Compiled by a SUCCESSOR SESSION of `2.0.0_SA_COO`. The 2026-09-10T06:43:35Z double reboot killed every seat on this device; `EG-s-26` and `EG-s-27` had live workers that died mid-flight, and `EG-s-28` had been issued two minutes before the crash and never spawned. All three are now terminal and drained.
+
+⛔ **ONE THING THE RE-SEATS ALMOST GOT WRONG, AND IT IS AN ISSUER-SIDE HAND-OFF DEFECT, NOT A WORKER ONE.** Neither surviving branch carried `d3a33a1189`, the spine-v3.13 correction that relabelled a DIFFERENCE control on BOTH faces -- and on `EG-s-27` that is arm (d), **the arm that carries the outcome**. Both worktrees held the PRE-CORRECTION text. A re-seat that simply resumed would have proved the wrong words with every mechanical arm passing. Each re-seat was therefore told to MERGE CLOUD BEFORE READING ITS FACE, and the corrected text travelled in the prompt. `0.9.0_WK_ETFS_GUARDRAIL~4` did exactly that and then corrected the label its predecessor had written into the battery prose, the commit message AND the old instance.
+
+### 9.1 `EG-s-26` -- the skip is disclosed in ONE read, and the deploy was WORLD-DONE
+
+`S26-AC1` 6 of 6 arms, `EGS26-SKIP-DISCLOSED-IN-ONE-READ`, rc 0. `S26-AC2` RECORDED, no verdict.
+
+**THE DEPLOY WAS NOT RE-EXECUTED, AND THIS IS THE NEVER-2 HALF OF THE CRASH.** The `aws s3 cp` landed `2026-09-10T06:40:10Z`, **3m25s before the reboot**, and its ledger entry was left STAGED-BUT-UNCOMMITTED in a worktree whose worker was dead -- so the world had moved and the repo did not record it. The assignee measured the artifact rather than the entry: VersionId `TkhI7NPt_hpJUaXYAlBnjZggJQDz.wBG`, 69,879 B, sha256 `9b9cdd9c39cbe92b...` equal to blob `5b15b09834`, with the prior version `V1i.w8DNP2iqwsiiRYC7k40Neh90w3DH` (66,756 B, `b08a646d5755f501...`, = blob `32ae4ede66`) as a DIFFERING negative control. Entry CLOSED **SUPERSEDED**, 5 of 5 legs, nothing re-copied. ⛔ **A re-execute here would have been a REWIND.**
+
+**THE RECORD HAS NOW CAUGHT UP TO THE WORLD, measured at this seat after the drain with a real negative control:** `5b15b09834` and `e94ce02a92` both read ANCESTOR of CLOUD, while `c1a0077dd7` and `ae556f5712` -- site-Z commits `0.0.0_AB_MSTR` verified absent -- both read NOT ancestor. My first attempt at this check used the merged branch tip as its control, which was a THIRD POSITIVE and not a control at all; corrected before it was relied on.
+
+**Row `W5-S8`, and it is the sharpest thing in this cell.** The predecessor's own deploy verifier **read the wrong file**: `.scratch/egs26_deploy.py:129` downloads to `served_after_s26.py` and `:130` hashes `served_after_deploy.py` -- **the PREVIOUS cell's download**. rc 0 on all 11 steps. It wrote `served_equals_committed: false` about an object it never opened, and the only tell was two fields of one JSON disagreeing. The successor preserved the wrong values under a `corrections` block rather than deleting them. **The same shape then recurred in the successor's own battery draft an hour later** (a reports listing pointed at the artifacts bucket, 0 keys, rc 0), which is why the battery now carries a zero guard that refuses to grade an empty population.
+
+**Row `W5-S9` -- A CRITERION THAT NAMED ITS OBJECT BY A CLOCK-RELATIVE PHRASE.** Arm (a) says *"the renderer as currently served"*, and **this cell's own deploy is what made that phrase stop naming the object carrying the absence**. Run literally after the deploy it would have passed VACUOUSLY. The assignee ran the premise census against the prior served version by version id and reported the POST census separately as a different claim. **A criterion naming its object by a VINTAGE rather than by a clock-relative phrase would not have needed the workaround** -- and this is a cut lesson, not a worker one.
+
+### 9.2 `EG-s-27` -- the forcing now reaches the VERDICT, which is what `EG-s-24` did not prove
+
+`S27-AC1` 7 of 7 arms, `EGS27-SKIP-RIDES-FORCING-SCHEDULE-CLEAN`, rc 0. `S27-AC2` RECORDED.
+
+The apply landed under its own NEVER-2 entry, and the assignee ran a **rewind check before planning**: served `CodeSha256` still `rCrGrY...` with the member unequal to the build input, so its predecessor's deploy had NOT landed and the apply was a first execution rather than a repeat. Post-apply `5qPTUpaxx+NUvTN6hmXdNfe2pT2xwkHF9Y3Q3fFJVSw=` equal across served / built zip / plan-predicted on three reads, member byte-equal to `git show HEAD:<path>`, 0-diff re-plan rc 0.
+
+**ARM (d) IS THE ONE THAT MATTERS AND IT IS NOW HONESTLY LABELLED.** Same run engaged and disengaged, both printed: forcing present -> `REFUSE` with class C non-zero; forcing absent -> `PUBLISH`. The mechanism was always right; the WORD was wrong, and under spine v3.13 qualifier 1 a positive control bounds under-firing only and does not discharge v3.12.
+
+**TWO NUMBERS CORRECTED RATHER THAN CARRIED**, both the predecessor's: arm (c)'s adversarial denominator read "0 of 27" and **double-counted the 5 scheduled shapes** -- true denominator **20**, now printed with its `5+12+3` breakdown. And a `comp-find` for `_render_command` returned `0 hit(s) across 0 file(s) scanned` in the linked worktree -- **the OUT-OF-CORPUS signal, not an absence** -- so the census was re-taken with the native instrument instead of a zero being converted into a finding.
+
+### 9.3 `EG-s-28` -- provider at 4 of 4 sites, and a FIFTH writer nobody had counted
+
+`S28-AC1` 6 of 6 arms, `EGS28-EVERY-UNRESOLVED-NAMES-ITS-PROVIDER`, rc 0. `S28-AC2` RECORDED. AST census: **0 of 4** `unresolved.append` sites carried `provider` before, **4 of 4** after, count asserted unchanged. Arm (d)'s difference control: 3 of 3 rows `(not stated)` disengaged vs 3 of 3 `Black Diamond` engaged. Suite 12 -> 16 passed, rc 0 both sides.
+
+⛔ **ROW `W1-S33` IS THE ROUND'S MOST IMPORTANT SINGLE FINDING AND IT DEFEATS THE CELL'S OWN PURPOSE ON THE PATH THAT MATTERS.** The cell's law is *a fence on ONE WRITER of a property is not a fence on the PROPERTY*. The assignee applied that law **one level above where the face placed it** and counted the writers the face had named. `data/etfs/scripts/presentation/render_month_end.py:1000-1008` @`32ae4ede66` is a **FIFTH writer**: on `--no-ladder`, `remediate.py` is never called at all and the renderer builds the unresolved records INLINE, with `"reason": "ladder skipped (--no-ladder)"` and no provider. Measured hermetically, boto3 stubbed to raise, 0 AWS calls: **0 of 2 records carry `provider`**, both rendering `2026-08-04 | cottonwood | (not stated) | C | ladder skipped (--no-ladder)`.
+
+**This project has now paid FOUR times for a fence that covered one writer of a property** (`W4-S4`, `W4-S5`, `EG-s-24`, and now this) -- and the fourth was found by the very cell cut to fix the third.
+
+**Two things the CVO should carry into any FWD-10 grade.** `infra/aws/lambda/etfs-reports-orchestrator/test_terminal_send.py` **hand-feeds `provider` into its unresolved fixtures**, so that suite passed for months against an artifact no producer ever wrote -- a fixture that could not represent the failure. And the provider a record now names is **the MAPPING's assertion, not measured provenance**: `_PROVIDER_BY_PARTNER` is a 3-entry literal, 0 of 3 derived from any producer, 1 of 3 carrying a comment conceding its own deployed upstream reads a non-Orion path.
+
+### 9.4 ⛔ `EG-s-21` IS UNSATISFIABLE AS CUT, AND THIS ROUND IS WHAT MADE IT SO -- THE ONE DECISION THIS PACKET CARRIES TO L10
+
+`EG-s-21` is the round's last open order and **it cannot be executed as written**. This is an ISSUER'S CUT DEFECT and it is mine.
+
+`S21-AC1` arm (d) requires, verbatim: *"THE LADDER'S OUTPUTS on the refusal branch: the unresolved document, the refusal artifacts and **the egress ask** each present with size and UTC"*.
+
+The CTO's R-EG-6 adopted **SHAPE 1** -- drive the refusal with the ladder SKIPPED -- and `EG-s-27` has now made that shape reachable and PROVEN it reaches the verdict. But `--no-ladder` does not merely skip the repair attempt: the `else:` branch never calls `remediate_month` at all, so **rung 3 NEVER FIRES**, and rung 3 is the **SOLE WRITER** of `coverage_egress_ask.json` (`remediate.py:189`, its only `put_object`). **So the artifact arm (d) requires PRESENT is absent BY CONSTRUCTION on the only branch that can produce the refusal.**
+
+**The two arms are in direct contradiction and no act by any seat can satisfy both as written.** Arm (c) needs the REFUSE that only shape 1 produces; arm (d) needs the egress ask that shape 1 removes.
+
+**AND `W1-S33` PUTS A SECOND, INDEPENDENT COLLISION ON THE SAME RUN**: arm (e) fires the terminal send, which is FWD-10, whose ACCEPT (ii) requires each missing day listed with its provider. On a shape-1 run those records come from the renderer's inline branch, so **the message names no provider anywhere** even with `EG-s-28` committed. `EG-s-28` fixed the producer; the shape-1 path does not go through the producer.
+
+⛔ **I DID NOT FIRE IT, AND THE SINGLE PERMITTED DRIVEN RUN REMAINS UNSPENT.** Firing now would spend the one act on a run that cannot satisfy arm (d) or FWD-10's accept, and would produce a served artifact set that a later reader could mistake for a real refusal. That is exactly the waste `W4-S6` was filed to prevent.
+
+**WHAT L10 MUST DECIDE, and it is a re-cut question, not a grading one.** Either arm (d) is amended to require what shape 1 CAN produce (the unresolved document and the refusal artifacts, with the egress ask recorded as ABSENT BY CONSTRUCTION and `EG-s-26`'s disclosure field as the evidence that the absence is structural rather than a failure), or the renderer's inline branch gains the provider field and rung-3-equivalent record so that shape 1 becomes a faithful analogue. **The second is a code cell and it is one line at `render_month_end.py:1004` plus the provider.** Mid-round the spec is FROZEN, so I have cut neither; both go to the CTO with this packet.
+
+### 9.5 THE COMP-RAIL EXPOSURE OVER THIS ROUND'S CENSUSES -- row `S35`, and its disarm
+
+All three slots ran in LINKED WORKTREES while the comp-rail resolved its corpus from the TOOL'S INSTALL LOCATION rather than the caller's, so `comp-find` / `comp-read` / `comp-pulse` invoked there **scanned the MAIN TREE and returned a well-formed zero with a real denominator, naming no tree**. All three faces carry a JUDGMENT criterion whose evidence is a repo-wide census, and a judgment criterion is graded by the CVO on the evidence the worker recorded -- so an understated census does not fail loudly at L7, it **arrives at L9 wearing the clothes of a clean measurement**.
+
+**DISARM, executed rather than promised.** The fix landed on CLOUD at `838b963638` (cherry-pick `34c6343a93`) DURING this drain, on Andrew's specific authorization. `EG-s-27`'s assignee hit the defect and it failed LOUDLY for it -- `0 hit(s) across 0 file(s) scanned`, the out-of-corpus signal -- and it re-took the census natively rather than converting the zero into a finding. `EG-s-28`'s consumer census I re-derived MYSELF at the main tree: **139 hits across 153,770 files**, against the worker's 161 across 29,811. ⛔ **THE COUNTS ARE NOT COMPARABLE and I do not present them as agreement** -- the corpus scopes differ by a factor of five. What my read independently CORROBORATES is the CLASSIFICATION, including the two `derive_runner.py` hits the worker named as a log-label false positive. **The conclusion is corroborated; the count is not, and the CVO should grade `S28-AC2` on the classification rather than on the number.**
+
+---
+
+## 10. WHAT THE ISSUER DID NOT DO, v5
+
+No served object was deleted or rewritten by this seat in the v5 window. **No deploy by this seat** -- `EG-s-26`'s was world-done before the crash and closed SUPERSEDED, `EG-s-27`'s was its assignee's under its own entry. **No send and no invoke of `etfs-reports-orchestrator` in any mode**, and `EG-s-21`'s single permitted run is UNSPENT. **No face was amended and no cell re-cut** -- mid-round the spec and the decomposition are FROZEN, so both `W1-S33` and the `EG-s-21` contradiction are carried to L10 as rows and as s.9.4 rather than fixed in place. The three worktrees and branches are removed. Push state, measured at the v5 compile: `origin/CLOUD` @`1e01703e54` by this seat's own `ls-remote`; every commit named in this section is LOCAL, and publication is the integrator's act under Andrew's hold.
