@@ -8205,3 +8205,34 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-S117 -- S116 names ONE carrier of the impossible hand-off; worker.md is a second
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T15:52Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S117",
+    "one_line": "S116 HAS TWO WRITERS AND I ONLY NAMED ONE, WHICH IS THE DEFECT THE CTO ITSELF FLAGGED TWICE TODAY ('FOUR CALL SITES, NOT TWO, and the count is the point'). S116 records that the spine's L7 queue hand-off -- continue the same subagent with its context intact -- is not achievable on this harness, and it cites .claude/skills/dispatch/SKILL.md Step 5 as the instruction. MEASURED AT SOURCE at this seat while verifying an unrelated ruling: .claude/agents/worker.md ALSO carries it, in its `description:` frontmatter field at :3 -- 'the COO hands the next task order by continuing it'. That field is the agent definition the harness itself loads, so the impossible instruction is asserted in the very file that defines the worker the instruction is about. A fix applied only to the skill leaves worker.md still saying it, and worker.md is the higher-authority carrier of the two. THE SAME FILE CARRIES A SECOND KNOWN HAZARD ON AN ADJACENT LINE (`model:` at :5, PER-FABRIC and conflicting BY DESIGN, CTO 95308), so it is a file that will be opened and edited soon by someone reasoning about a different problem.",
+    "spec_asserts": "NFRA_CLDGRPH-S116 as I filed it: it names .claude/skills/dispatch/SKILL.md Step 5 as the instruction that cannot be followed, and its DISARM SHAPE offers rewriting 'L7's hand-off clause' or changing the queue rule. It enumerates ONE carrier.",
+    "world_is": "There are two. .claude/agents/worker.md:3 states the same hand-off as a property of the worker agent, in frontmatter the harness parses, and .claude/skills/dispatch/SKILL.md Step 5 states it as the issuer's procedure. Either alone reads as the whole instruction.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n '1,6p' .claude/agents/worker.md at this seat: `description:` at :3 contains 'the COO hands the next task order by continuing it'; `model: opus` at :5.",
+        "NFRA_CLDGRPH-S116 on this channel, whose evidence list names only the skill.",
+        "This round's own measurement behind S116: continuing the terminal slot-1 subagent was refused with 'No transcript found for agent ID', while ListAgents concurrently listed the three running slots.",
+        "CTO 95308: worker.md:5 `model:` is per-fabric and conflicts by design, so this file is imminently going to be edited by someone resolving a different hunk."
+      ]
+    },
+    "notes": "ARMED because a ONE-WRITER FIX ON A TWO-WRITER SURFACE is the exact failure the CTO named this morning when it wired send_override at four call sites rather than two, and the exact failure the never-widen clause in CLAUDE.md s.5 names as 'first COUNT THE WRITERS of the named property'. I filed S116 having counted one. DISARM OWNER unchanged from S116 (1.0.0_SA_CTO, the spine's owner) because the remedy is the same act, only wider. NOT PROPOSED AS A BUILD: the point is only that the fix must move BOTH carriers, or must move worker.md and let the skill cite it. AND THE GENERAL FORM, which is why this is a row rather than a correction to my own commit message: I APPLIED THE WRITER-COUNT RULE TO OTHER SEATS' WORK ALL ROUND AND NOT TO MY OWN ROW. The rule is cheap and it is not self-executing."
+  }
+]
+```
