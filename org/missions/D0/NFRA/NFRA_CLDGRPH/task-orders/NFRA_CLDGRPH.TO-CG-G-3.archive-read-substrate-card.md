@@ -4,7 +4,7 @@
 <project>NFRA_CLDGRPH</project>
 <issued_to>0.9.0_WK_NFRA_CLDGRPH~2</issued_to>
 <issued_by>2.0.0_SA_COO~A</issued_by>
-<status>pending -- GO = the spawn (spine v3 L7): slot ~2 on a fresh worktree from CLOUD at C:/tmp/wk-cldgrph-7-2. ROUND 7 of NFRA_CLDGRPH; fanout 3 of 3 chains, cap 8. Slot ~2's ONLY order. The assignee commits its own status flip after a VALID proof-of-spec instance whose mechanical rows ALL read PASS.</status>
+<status>complete -- 2026-09-10T05:07Z by 0.9.0_WK_NFRA_CLDGRPH~2 on branch wk-cldgrph-7-2 (worktree C:/tmp/wk-cldgrph-7-2, cut from CLOUD @f3b5f26f77), push state LOCAL. G3-AC1 PASS (INSTANCES_REGROUNDED=3 of 3, EVIDENCE_FROM_RECORD=true, 21 of 21 checks over a 245-row channel parsed block by block), G3-AC2 PASS ON A SUBSTITUTED INSTRUMENT (the named .tools/validate-json-schema.py does not exist; .tools/substrate-card-check.py reads violations=0 and VALID on 4 of 4 cards, and it binds SUBSTRATE_CARD.v3.1.schema.json rather than the v1 schema this face names -- row NFRA_CLDGRPH-W2-S73), G3-AC3 PASS (CARD_ROWS=3 of 3, QUESTIONS_PER_ROW=7 of 7, OWNER_PER_ROW=3 of 3, FAILURE_MODE_DISTINGUISHABLE=3 of 3 over 21 rows), G3-AC4 PASS (SHRINK_MASKED true on 955 -> 137, false on the fixed-emission pair, PROBE_CONTROL=FIRED 6 of 6), G3-AC5 RECORDED as UNVERIFIABLE-BY-INSTRUMENT for 3.0.0_SA_CVO at L9. Proof instance org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-G-3.archive-read-substrate-card.proof_of_spec.json VALID, proof-of-spec-check rc 0. Rows W2-S73, W2-S74, W2-S75 filed; channel 245 -> 248 in 186 -> 187 blocks, no row edited. Egress hold observed in full: no AWS call of any kind. Acts at 40a76d3fea; this flip rides the instance commit.</status>
 
 ## STANDING LAW (inlined)
 
