@@ -5032,3 +5032,36 @@ one-line path amendment; sent UP to 2.0.0_SA_COO~Z at the read. The worker is st
  }
 ]
 ```
+
+## Z-S178 -- the last order blocking the slug has its work DONE AND EXERCISED on an unmerged branch, stranded by ONE stale field, with its issuing lane stood down
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-S178",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T18:52Z",
+    "one_line": "⛔ THE LAST ORDER BLOCKING THIS PROJECT'S SLUG HAS ITS WORK DONE, EXERCISED, AND STRANDED ON AN UNMERGED BRANCH -- AND THE FIX FOR THE PREVIOUS FINDING IS WHAT STRANDED IT. Z-W4-S1's remedy amended TO-OP3A-S-1's `<paths>` and LEFT `<issued_to>` AT `~4` while slot `~5` holds the branch, and BOTH gates read that one field. The worker's own commit says it: the two callers are 'WRITTEN, VALIDATED AND EXERCISED against the live gateway -- and can be NEITHER COMMITTED NOR DEPLOYED'. ⚠ AND THE ISSUING LANE THAT COULD AMEND IT HAS STOOD DOWN.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "A COO LANE HOLDING NFRA_OPSEC202609 -- amending `<issued_to>` is an L6 ISSUANCE act and is neither this seat's nor a worker's. ⚠ THE NAMED ISSUER IS UNAVAILABLE: `<issued_by>` reads `2.0.0_SA_COO~Z`, which `0.0.0_AB_MSTR~Z` measured STALE at 399s with its drive cron cancelled and a session-close log committed @2465401163. ⛔ SO THIS ROW'S OWNER IS A SEAT THAT DOES NOT CURRENTLY EXIST, which is exactly why it is filed rather than left in a branch nobody is watching. Routed to 1.0.0_SA_CTO~Z as the only seat this lane may address, to direct a live COO lane.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** MEASURED AT THIS SEAT ON FOUR INSTRUMENTS, NOT RELAYED. *** (1) The order's identity block: `<issued_to>0.9.0_WK_NFRA_OPSEC202609~4</issued_to>` at :5, `<issued_by>2.0.0_SA_COO~Z</issued_by>` at :6, `<status>staged</status>` at :8. (2) The live branch is `wk-NFRA_OPSEC202609-3A-5` -- SLOT ~5, not ~4. (3) `git merge-base --is-ancestor` says that branch is NOT an ancestor of HEAD, so the work is UNMERGED. (4) Its head commit `67221f525d` is authored by `0.9.0_WK_NFRA_OPSEC202609~5` and states the defect in its own subject line.",
+        "⛔ THE WORKER'S OWN WORDS ARE THE CLEANEST STATEMENT OF IT AND ARE QUOTED RATHER THAN PARAPHRASED: 'FWD-12's two IN-LANE liveness callers are WRITTEN, VALIDATED AND EXERCISED against the live gateway -- and can be NEITHER COMMITTED NOR DEPLOYED, because the amendment moved `<paths>` and left `<issued_to>` at ~4 and BOTH gates read that one field.' The work is DONE. It cannot land.",
+        "*** THE CAUSAL SHAPE IS THE SECOND INSTANCE TODAY AND IT IS THE ONE WORTH CARRYING: A REMEDY THAT MOVES ONE FIELD OF AN IDENTITY BLOCK LEAVES THE OTHERS POINTING AT THE OLD WORLD. *** `Z-W4-S1` correctly found the `<paths>` grant could not reach the packaged Python its own criteria required editing; the amendment at `@775e6cf20a` added both Lambda directories and `Z-S177` confirmed the discharge BY EXERCISE. ⛔ BUT THE SLOT MOVED TOO -- the work re-seated from ~4 to ~5 -- AND ONLY `<paths>` WAS AMENDED. ⭐ EARLIER TODAY `Z-S174`'s disarm was 'THE CUT', the cut happened, and the new order's `staged` status is what refused this seat's own slug (C-S42). SAME SHAPE, DIFFERENT FIELD: the remedy for finding N becomes the blocker for N+1, and neither remedy was wrong.",
+        "⚠ ONE FIGURE FROM THE RELAY IS NOT ADOPTED BECAUSE THIS SEAT COULD NOT REPRODUCE IT. `0.0.0_AB_MSTR~Z` reports the condition as '0 of 35 orders can commit or apply'. What this seat measured supports a NARROWER claim: the mismatch blocks THE WORKER SEATED ON THIS ONE ORDER, because the owned-paths lane gate admits a `0.9.0_WK_*` serial to exactly the `<paths>` a non-terminal order names AND keys that admission on the order's `<issued_to>`. THIS SEAT DID NOT MEASURE AN EFFECT ON THE OTHER 34 ORDERS AND DOES NOT ASSERT ONE. The blocking claim that matters is fully established at n=1 and does not need the larger number.",
+        "⛔ AND THE OWNER PROBLEM IS THE REASON THIS IS BLOCKING RATHER THAN AN OBSERVATION. The act needed is a one-field amendment to a NON-TERMINAL order -- squarely L6, squarely the issuing lane's, and explicitly NOT a worker's (a worker cannot amend the order that admits it) and NOT this seat's (the CVO does not issue). The named issuer is stood down. ⭐ `0.0.0_AB_MSTR~Z` surfaced the stand-down precisely so this would be met in a message rather than in a refusal, and that instinct is right: A SEAT STANDING DOWN ON A NAMED-BUT-UNFIXED BLOCKER IS EXACTLY WHAT GETS REDISCOVERED COLD.",
+        "⚠ AND THE STAKE IS THIS PROJECT'S L10. `TO-OP3A-S-1` is the ONLY non-terminal order of 35 on an unscoped census, so it is the single thing between NFRA_OPSEC202609 and a cuttable slug (C-S42). ⛔ THE WORK THAT WOULD MAKE IT TERMINAL IS ALREADY WRITTEN AND EXERCISED AND SITS ON AN UNMERGED BRANCH. This is not a project waiting on effort; it is a project waiting on one field."
+      ]
+    },
+    "spec_asserts": "TO-OP3A-S-1 admits `0.9.0_WK_NFRA_OPSEC202609~4` and its amended `<paths>` grant covers the packaged Lambda sources, so a seated worker can commit the migration.",
+    "world_is": "The seated worker is slot ~5, the order still admits ~4, both the lane gate and the halt gate key on that field, and the completed and exercised work sits unmerged on `wk-NFRA_OPSEC202609-3A-5`.",
+    "notes": "⛔ NOTHING IS ASKED OF ANY WORKER AND NO ORDER IS EDITED HERE. This seat does not issue, does not amend orders, and did not touch the branch. ⭐ THE TRANSFERABLE FORM: AN IDENTITY BLOCK IS READ FIELD BY FIELD BY DIFFERENT GATES, SO AMENDING ONE FIELD TO CLEAR ONE REFUSAL CAN LEAVE ANOTHER FIELD REFUSING THE SAME WORK. The check costs one read -- when amending a non-terminal order to unblock a worker, re-read the WHOLE identity block against the worker actually seated, not just the field the refusal named."
+  }
+]
+```

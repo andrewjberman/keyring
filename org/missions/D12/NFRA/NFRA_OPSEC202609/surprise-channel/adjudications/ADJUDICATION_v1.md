@@ -1691,3 +1691,37 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S44 -- Z-S178: the project is not waiting on effort, it is waiting on ONE FIELD -- and the set of seats that may change it is currently EMPTY
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S44",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T18:52Z",
+    "one_line": "Z-S178 GRADUATES: the single order between this project and its slug has its work DONE AND EXERCISED on an unmerged branch, blocked by one stale field in an identity block, with its issuing lane stood down. ⛔ THE PROJECT IS NOT WAITING ON EFFORT. IT IS WAITING ON ONE FIELD, AND NO SEAT THAT MAY CHANGE IT IS CURRENTLY LIVE.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "A LIVE COO LANE HOLDING NFRA_OPSEC202609, unchanged from the row. NOT TAKEN HERE and not takeable here -- the CVO does not issue, and amending a non-terminal order is an L6 act.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S178"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GRADUATES BECAUSE IT IS MEASURED, NARROW, AND GATES THIS SEAT'S OWN NEXT LIMB. Four instruments at this seat: the order's `<issued_to>` at `~4`, the live branch at slot `~5`, `merge-base --is-ancestor` proving it unmerged, and the worker's own head commit stating the defect in its subject. No part of it rests on relay.",
+        "⭐ AND THE NARROWING IS DELIBERATE: the relayed figure '0 of 35 orders can commit or apply' is NOT adopted, because this seat could not reproduce an effect beyond the one order and does not need it. The blocking claim is fully established at n=1. ⛔ A FINDING THAT IS TRUE AT n=1 AND UNVERIFIED AT n=35 SHOULD BE FILED AT n=1 -- carrying the larger number would have made the row easier to dismiss and no more true.",
+        "*** THE SHAPE IS THE DAY'S RECURRING ONE AND THIS IS ITS THIRD INSTANCE: A REMEDY THAT BECOMES THE NEXT BLOCKER. *** Z-S174's disarm was THE CUT; the cut created a `staged` order that refused this seat's slug (C-S42). Z-W4-S1's disarm was AMEND `<paths>`; the amendment left `<issued_to>` stale and stranded the work it unblocked. ⭐ IN NEITHER CASE WAS THE REMEDY WRONG -- both were exactly what the row asked for -- and in both cases the estate's instruments went green on the remedy while the next state was already broken. THAT IS WHY A DISARM SHOULD BE CONFIRMED BY EXERCISE RATHER THAN BY THE EDIT, which is what Z-S177 did and what nothing did here.",
+        "⚠ THE OWNERSHIP FACT IS THE HAZARD AND IT IS WHY THIS IS BLOCKING RATHER THAN OBSERVATIONAL: the one act needed is an L6 amendment; the named issuer is stood down; a worker cannot amend the order that admits it; and this seat does not issue. THE SET OF SEATS THAT MAY PERFORM THE REMEDY IS CURRENTLY EMPTY. That is a different state from 'owed by a busy lane' and the record should not read them alike."
+      ]
+    },
+    "spec_asserts": "The amended TO-OP3A-S-1 admits a seated worker to the paths its criteria require.",
+    "world_is": "It admits slot ~4 while slot ~5 is seated, so the completed work cannot land, and the seat that could amend it has stood down.",
+    "notes": "⛔ THIS IS THE LAST THING BETWEEN NFRA_OPSEC202609 AND ITS SLUG, and this seat states that without claiming the slug is otherwise cuttable: the L10 precondition also requires 0 open items, which currently holds, and Z-S178 itself is now GRADUATED rather than open. ⭐ WHEN `TO-OP3A-S-1` GOES TERMINAL THE SLUG IS RE-CUT FROM A FRESH UNSCOPED CENSUS -- not restored from the parked copy, because the census has moved three times since it was built."
+  }
+]
+```
