@@ -5,7 +5,13 @@
 <issued_to>0.7.0_AE_CloudOps~T</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>staged</status>
+<status>cancelled</status>
+⛔ **CANCELLED FOR ROUND 2 BY RULING, 2026-09-10 ~02:2xZ -- `1.0.0_SA_CTO~Z` @`affef41b63`** (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_NFRA_OPSEC202609_20260910T0220Z.md`), on `2.0.0_SA_COO~Z`'s drain-end read.
+**THE NEED IS NOT KILLED.** `cancelled` here means cancelled FOR THIS ROUND with a measurable re-entry condition, which is the pointer the status requires and which no seat could supply before the ruling.
+**POINTER -- RE-ENTERS AT L5 WHEN:** a sign-in window carrying **NON-PROBE traffic with FIRM ATTRIBUTION** exists. That requires the CALLER MIGRATION, and 3 of 5 callers sit outside this project's territory (PRD s.3, *"Relies on, does not own"*).
+**WHY NOT CARRIED INTO ROUND 3:** carrying it forward would re-inherit a blocked order whose unblocker is another lane's work, and the next round's fan-out would be computed against a cell that cannot move.
+⭐ **THE BLOCKING INPUT IS ABSENT FROM THE WORLD, NOT UNFINISHED.** `TO-OP-S-20` is TERMINAL and ACCEPTED and **its measured negative IS its deliverable** -- `S20-AC2`, named on that face as the control that must be able to fail, FIRED. Firms observed 0 of 4.
+
 
 ⛔ **BLOCKERS, NAMED: `OP-s-18` (the IP sets must exist to be reconciled INTO) and `OP-s-22` (the IAM verdict runs BEFORE any of these roles is deployed -- PRD s.9 item 7).** `OP-s-16` is DONE. **GO CONDITION: `TO-OP-S-4-18` terminal. THAT IS THE WHOLE CONDITION.**
 
