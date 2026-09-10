@@ -18,7 +18,7 @@ instance but is `UNVERIFIABLE-BY-INSTRUMENT` with the CVO named, and is graded a
 disposition rests on this seat's own read beside the record: the served Lambda code hashes, environment and the
 deployed Inflection zip, the reporter role's inline grant, SES's account state, the report bucket, the source at HEAD,
 the vendored-copy census, the published layer, and `.gitattributes`.
-**Denominator at this write:** 10 rows (C-S8..C-S10 appended 2026-09-10 ~00:5xZ -- round 2 PARTIAL L9 @8f7bf86815: S17-AC2 graded PASS; W2-S7 closed; W2-S8 open at the CTO (the 76-minute race); W2-S9/S10 and S5..S9 records); previous: 7 rows (C-S7 appended 2026-09-10T00:39Z: a correction of C-S6 -- no remediation row was minted; the gate refused it as L10-shaped and the clocks ride C-S6 until the round-2 L9); previous: 6 rows (C-S6 appended 2026-09-10 ~00:2xZ: S4 graduated, the deploy_ledger NEVER-2 defect, owner 0.2.0_DT_PortfolioAnalytics); previous: 5 rows (C-S1 the grade record; C-S2 the eight worker-form items graduated and closed on
+**Denominator at this write:** 14 rows (C-S11..C-S14 appended 2026-09-10 ~01:3xZ -- round 2 L9 on packets v2 @3f1e4de3f3 and v3 @66ffa5f6e9: S18-AC2 and S14-AC2 graded PASS; W3-S3/S4/S5 records; W1-S11..S19 graduated with two remedies owed); previous: 10 rows (C-S8..C-S10 appended 2026-09-10 ~00:5xZ -- round 2 PARTIAL L9 @8f7bf86815: S17-AC2 graded PASS; W2-S7 closed; W2-S8 open at the CTO (the 76-minute race); W2-S9/S10 and S5..S9 records); previous: 7 rows (C-S7 appended 2026-09-10T00:39Z: a correction of C-S6 -- no remediation row was minted; the gate refused it as L10-shaped and the clocks ride C-S6 until the round-2 L9); previous: 6 rows (C-S6 appended 2026-09-10 ~00:2xZ: S4 graduated, the deploy_ledger NEVER-2 defect, owner 0.2.0_DT_PortfolioAnalytics); previous: 5 rows (C-S1 the grade record; C-S2 the eight worker-form items graduated and closed on
 the issuer's in-round acts; C-S3 the three items graduated and OPEN; C-S4 the ten records dismissed with reason; C-S5 the
 correction carrying the CTO's L10 @0557afa38a -- FWD-4 NOT_EVALUATED, seven fire-gated outcomes, not six).
 Investigation rows without a disposition after this write: 0 of 21. Remediation rows minted: S2 (OPEN), S3 (closed).
@@ -385,6 +385,160 @@ Investigation rows without a disposition after this write: 0 of 21. Remediation 
     "spec_asserts": "The channel's taxonomy: an ack is a record; an item closes when its remedy is on the shared branch.",
     "world_is": "Two facts of the round's instruments and one deployed comment; five acks evidencing closures whose items are on CLOUD (W2-S8) or on a worker's branch (W1-S11..S16).",
     "notes": "Investigation items without a disposition after this write, by comp-surprise's definition: 0 of 31 on CLOUD (W1-S11..S16 arrive with ~1's drain). The slug waits for the FINAL packet (EG-s-14, -15, -16, -18 open)."
+  }
+]
+```
+
+## C-S11 -- S18-AC2 graded PASS: three schedules fired from history on three instruments with their denominators and limits; the August artifact matches NO fire and is honestly unattributable; two of the issuer's own arm numbers corrected against itself
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T01:38Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S11",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9 on the round-2 packet v2 @3f1e4de3f3 (TO-EG-s-18 terminal, drained @c16eb333cf; 2 of 5 orders): the GRADE for S18-AC2, the schedules read from history -- PASS. THE READING GRADED (the-schedules-from-history.result.md, 814 lines, ss.1-8): all three schedules are ENABLED and HAVE FIRED, on 85 read-only AWS calls, rc 0 on every one, no invoke and no write. REGULARITY: the monthly EventBridge SCHEDULER schedule fired 3 of 3 due instants in the 90-day window (07-01, 08-01, 09-01, each an AssumeRole on etfs-reports-scheduler-role at 14:00:14Z joined to an orchestrator START at +1 s); a FOURTH fire at 2026-07-01T18:00:50Z is off the cron minute and is LISTED rather than dropped, with the live RetryPolicy (185 attempts / 86,400 s) and LastModificationDate == CreationDate printed beside it as the cheapest fitting hypothesis and the word 'measured, not diagnosed' -- and that fire is exactly the one a cron-signature method would have missed, which is the reading's own argument for the issuer's re-cut. Both daily rules fired 30 of 30 days (cot 10:30:24Z, bd-49f 10:45:05Z), reproducing worker ~2's numbers on an independently gathered plane. ARTIFACT-TO-FIRE, THE FINDING THAT IS NOT A GREEN: 4 of 4 published month prefixes classified, 1 MATCHED -- 2026-06 at +34 s (the non-vacuity control, so UNMATCHED is not a matcher that can only say no) -- and 2026-08's served objects (LastModified 2026-09-01T17:38:41-42Z) match NO orchestrator invocation: the day's one fire ran at 14:00:14Z and dispatched SSM at 14:01:06Z under username etfs-reports-orchestrator, Status Success, 3 h 38 m earlier. The reading does NOT attribute the 17:38Z write and says why it cannot: s3:PutObject on opal-data-etfs is a data event that neither trail selects, versioning is disabled, and ssm list-commands holds no command at that minute; the bracketing change-management entry (20260901T1650Z, actor 4.0.0_SA_CRO, its own scope line 'the served monthly reports ... were NOT re-rendered') is offered as evidence, not as a verdict. Manufacturing an attribution would have been the defect and it was not manufactured. THE DAILY ARM ON THREE INSTRUMENTS, each with its own denominator and its own limit: the log GROUP read BY TIME (a fire happened) 28 of 60 due but 28 of 28 REACHABLE under a 14-day retention that is printed rather than hidden; the execution role's cold-start AssumeRole (corroboration, reaching the whole window) 60 of 60; and AWS/Events TriggeredRules with the RuleName dimension -- named as the ONLY rule-scoped initiator claim of the three -- 60 of 60 populated. The unmatched fires are named with the trading calendar resolved FIRST: bd-49f's nine are exactly the non-trading days (its own live Description says it runs daily including weekends and emits the newest available partition, so a weekend fire writing nothing is the design); cot's include five weekday entries that line up with the CRO backfill entry's own UNDIAGNOSED missing-date list, and the producer's lag is stated (09-09's cot fire wrote 09-04, bd-49f's wrote 09-08) and left to EG-s-17, which owns it. THE NEGATIVE CONTROL IS ON THE SAME PLANE and is the discriminator, not a restatement: for the orchestrator, 0 of 28 scheduler-role AssumeRole events in a real manual invoke's minute, and the reading explains why 0 IS the discriminator there (that role is assumed by EventBridge Scheduler and by nothing else); for cot, where the execution role is assumed on EVERY invocation, the discriminator moves to the MINUTE (is this a cron minute? False) rather than to the count -- two different instruments for two different substrates, said so. Populations disjoint by requestID: True; non-rule population non-empty: True; and a MUTANT at tolerance 0 collapses every RULE row to 0. TWO SELF-CORRECTIONS THE READING VOLUNTEERS, both of which make the issuer's own numbers right rather than defending them: W3-S5 (2 of the 6 scheduler-role AssumeRole rows are CreateSchedule role validations at the schedule's CreationDate to the second, so the amendment's 'each is a fire' would have reported 6 where 4 occurred; separated on a printed falsifiable rule, and the 180 s join tolerance that first swallowed them is disclosed) and W3-S3 (the daily rules carry no RoleArn -- measured independently, from a second worktree, within minutes of worker ~2's W2-S10). WHAT CLOUDTRAIL'S WINDOW CANNOT SHOW is stated as the criterion asks: the object-level writes on opal-data-etfs, and the Scheduler schedule that comp-trigger renders as `schedule: -` (W3-S4). VERDICT PASS. FOR THE L10: the August artifact's provenance is UNATTRIBUTABLE on the instruments this account has, and the remedy is a selector or an artifact that carries its own trigger (W1-S15's ARTIFACT-CARRIES-NO-TRIGGER-FIELD is the same hole from the other side); the cot lag is EG-s-17's race, already taken.",
+    "grades": [
+      {
+        "criterion": "S18-AC2",
+        "instance": "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~3/ETFS_GUARDRAIL.TO-EG-s-18.the-schedules-from-history.proof_of_spec.json@c16eb333cf",
+        "verdict": "PASS",
+        "reason": "Every limb the criterion asks is answered with a denominator, a vintage and a stated limit: regularity on three schedules with the off-cron fire listed rather than dropped; artifact-to-fire with a positive control and an honest UNMATCHED that is not converted into an accusation; the daily history on three instruments whose grains differ and are labelled; the negative control on the same plane with the discriminator named per substrate; and CloudTrail's blind spots enumerated. The reading corrects the issuer's own accept twice against itself. NO verdict was recorded by the assignee."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "L8_PACKET.round2.partial.md @3f1e4de3f3 (sha256 4447df1ae362ef85...) ss.1-3, 5; the proof instance @c16eb333cf (VALID rc 0 at the issuer's seat; alignment 2/2, artifact-resolution 3 at pin, surprises 3 of 3 resolve).",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~3/the-schedules-from-history.result.md read whole (814 lines): s.1 the headline and its three denominators; s.2 the live configuration; s.3 COVERAGE-ABSENT; s.4.1 the six AssumeRole rows with the bare-name negative control (2 events, 0 AssumeRole) and the 60 s vs 180 s join; s.4.2 the served August head-object table and the four-prefix match; s.5 the three daily instruments and the retention bound; s.6 the negative control and the mutant; s.7 what it did not do.",
+        "This seat, 2026-09-10T01:3xZ, independent of the worker: `.tools/aws s3api list-objects-v2 --bucket opal-data-etfs --prefix platinum/reports/_archive/2026-08/` -> 10 objects in two archive sets (23:11:30-39Z and 00:20:11-33Z), the pdf 273,857 B and the html 62,477 B in BOTH -- the prior served bytes held twice, which is the same 273,857 B this seat read on the live key at 2026-09-10T00:0xZ before the re-render.",
+        "ETFS_GUARDRAIL-W3-S3, W3-S4, W3-S5 read whole at HEAD; 2.0.0_SA_COO 94812; the CVO's own C-S8 grade of S17-AC2 @e0ee78e9cd (the cot race), which this reading's cot-lag paragraph hands back to EG-s-17 correctly."
+      ]
+    },
+    "spec_asserts": "S18-AC2 as cut (judgment, NO verdict): whether the fires are regular; whether every published artifact and every daily slice maps to a rule-initiated fire or to a person; what CloudTrail's 90-day window cannot show. Evidence with vintage.",
+    "world_is": "Three schedules fire on their crons; the served August report was NOT written by any fire and cannot be attributed on the instruments in reach; the daily slices map to fires except on non-trading days (bd) and on five weekday fires whose producer lag is EG-s-17's; two of the issuer's own arm numbers were over-counted and are corrected on the record.",
+    "notes": "Round-2 judgment criteria graded so far: S17-AC2 @e0ee78e9cd, S18-AC2 here, S14-AC2 at C-S12 -- 3 of 5 orders. EG-s-15 and EG-s-16 remain; the slug waits for the FINAL packet."
+  }
+]
+```
+
+## C-S12 -- S14-AC2 graded PASS: the August report re-published with every number identical and the coverage line on the served bytes (re-read at this seat, 21 trading days re-derived from the estate's calendar), the prior bytes archived twice, the send's account-wide counter separated from its exclusive discriminators, the brand-less render surfaced by the worker itself
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T01:38Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S12",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9 on the round-2 packet v3 @66ffa5f6e9 (TO-EG-s-14 terminal @5de5bcab7e, drained @4b85a9ae68; 3 of 5 orders): the GRADE for S14-AC2, the August re-render -- PASS. THE READING GRADED (the-august-re-render.result.md, 281 lines): the alignment module executed IN PRODUCTION for the first time (the import that crashed fire 1 is the alignment's own), and under EG-s-13's FORWARD-ONLY cutover (ORION_ALIGNMENT_CUTOVER = '2026-09', render_month_end.py:60-79 @93264db36c) 2026-08 must render exactly as before -- the CSV diff proves it did: 5 of 5 numeric rows identical per partner, 0 changed, one row added, the coverage line. That is FWD-3's shape exactly (an AVERAGE() over the grid still reproduces the deck) and the reading says so in those terms. THIS SEAT'S OWN READS, 01:30:33Z, on the served keys and not on the worker's table: head-object returns 6 of 6 objects byte-for-byte as the result records them -- etf_ownership.pdf 252,393 B ETag d8d786db4be630c3f1d4bfb0420496f4 at 00:24:48Z, html 43,376 B at 00:24:47Z, coverage_verdict.json 1,225 B at 00:24:44Z, the three CSVs 2,012 / 1,888 / 1,888 B at 00:24:48-50Z; the cottonwood CSV pulled whole ends on `# coverage: 21/21 trading days; 0 carried for missing data` with 31 date columns and four ticker rows above it; coverage_verdict.json reads verdict PUBLISH, holes 0, 21/21 for all three partners with expected_empty 0. THE COVERAGE NUMBER RE-DERIVED AT THIS SEAT rather than taken from the artifact: the estate's own frontier lib/trading_calendar.py (source NYSE/pandas_market_calendars) answers 21 for 2026-08-01..08-31 on three independent calls (total_trading_days_in_window, trading_days_between, a per-day is_trading_day count), and the same module returns False for 2026-09-07, so the calendar in use is the real one. NOTHING WAS DESTROYED: 10 archive objects in two sets (23:11:30-39Z and 00:20:11-33Z), the prior pdf 273,857 B and html 62,477 B in BOTH -- and 273,857 B is exactly what this seat read on the LIVE key at 00:0xZ before the re-render, so the held bytes are the bytes that were served. WHAT THE READING DOES NOT CLAIM, printed beside what it does: the send is evidenced by an account-wide SES counter (+2 attempts = one raw send to two destinations) whose limit is stated as account-wide and therefore consistent-with rather than exclusive-to, and the exclusive discriminators are named separately -- 0 publishes on the alert topic in the run window beside a live positive control of 1 in the FAILED fire's window (every failure branch publishes there), the deployed EMAIL_RECIPIENT join, and the issuer's own gateway read of the delivered envelope (00:25:59Z, toRecipients aj@ AND andrew@) which the worker CITES and never re-derives; and receipt at aj@opalinvest.com is called UNREAD because no instrument in this order reads that mailbox. A NON-NUMERIC CHANGE THE READING SURFACES ITSELF rather than letting a grader find it: the box render carries 4 SVG blocks where the ad-hoc local render carried 9 -- five inlined Opal logos, 19,044 bytes, gone because opal_logo_svg() resolves to /opt/portal/... on the reporter EC2 -- with headings 4 of 4, table rows 31 of 31, slides 5 of 5 and PFOE occurrences 8 of 8 identical, so no data is missing and the brand bar is empty; pre-existing and structural to EVERY scheduled fire, filed as W1-S19 and named for the CTO's L10. VERDICT PASS. TWO THINGS THIS GRADE CARRIES FORWARD, neither moving it: (a) the served August artifact is now 252,393 B against 273,857 B on 09-01 with every number identical -- the difference is the missing brand bar, and the 10-01 scheduled fire publishes brand-less until W1-S19's cell lands, which is the CTO's placement; (b) the manual-trigger rule is satisfied in its hardest form here -- the fire ran on the REAL plane against the REAL served key, it FAILED, the failure was the finding (the 10-01 fire would have failed identically), the fix was rehearsed against the box layout with a negative control and deployed as a leg of the same NEVER-2 entry, and the second fire is the test while 10-01 remains the acceptance, never a gate.",
+    "grades": [
+      {
+        "criterion": "S14-AC2",
+        "instance": "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-14.the-august-re-render.proof_of_spec.json@5de5bcab7e",
+        "verdict": "PASS",
+        "reason": "The reading answers what the re-render changed and what it did not, on the served bytes, with the forward-only cutover honoured and proved by a printed row-level diff; it separates an account-wide counter from the exclusive discriminators of the send; it names the one non-numeric regression itself and routes it; and it marks the one thing it cannot see (the aj@ mailbox) as unread rather than inferred. This seat's independent head-object, object pull, archive listing and trading-calendar re-derivation agree on every figure checked. NO verdict was recorded by the assignee."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "L8_PACKET.round2.partial.md @66ffa5f6e9 (sha256 e2e3dcfe82265511...); 2.0.0_SA_COO 94832 and 94812; org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/the-august-re-render.result.md read whole (the conclusion, FIRE 1 verbatim, the code change and its deploy, FIRE 2, the served table, the coverage line, both archives, TOLD APART, the SEND table with its stated limit, S14-AC2, the rows, what was not done).",
+        "This seat, 2026-09-10T01:30:33Z: `.tools/aws s3api head-object --bucket opal-data-etfs --key platinum/reports/2026-08/<k>` for 6 keys -> 252393 / 43376 / 1225 / 1888 / 2012 / 1888 B at 00:24:44-50Z with the ETags in one_line; `.tools/aws s3 cp s3://opal-data-etfs/platinum/reports/2026-08/opaletfs_cottonwood_202608.csv` -> the whole object, last line `# coverage: 21/21 trading days; 0 carried for missing data`; the same for coverage_verdict.json -> verdict PUBLISH, per_partner 21/21 holes 0 for 49financial, inflection, cottonwood.",
+        "This seat: `python -c` on lib/trading_calendar.py (calendar_source NYSE/pandas_market_calendars) -> total_trading_days_in_window(2026-08-01, 2026-08-31) = 21, trading_days_between = 21, sum(is_trading_day) over the 31 days = 21, is_trading_day(2026-09-07) = False.",
+        "This seat: list-objects-v2 on platinum/reports/_archive/2026-08/ -> 10 objects, pdf 273,857 B and html 62,477 B in both sets; the 273,857 B figure matches this seat's own head-object read of the LIVE key at 00:0xZ (recorded in C-S8's notes as the vintage fact for this grade).",
+        "W1-S11 .. W1-S19 read whole at HEAD; the face's AMENDMENT @d17b328c1e (arm (f) re-cut on W1-S18) and @5507841f04."
+      ]
+    },
+    "spec_asserts": "S14-AC2 as cut (judgment, NO verdict): what the re-render changed on the served artifact and what it did not, the alignment's first production execution under the forward-only cutover, the coverage line on the served bytes (FWD-3), the send, and what the order cannot see. FWD-6 (the alignment on a live render).",
+    "world_is": "The August report is re-published to the served key with the coverage line, every number unchanged, the prior bytes archived twice, one message sent to the joined recipients and read by the issuer at andrew@, and the brand bar empty on every box render.",
+    "notes": "The vintage note in C-S8 (the terminus rewritten at 00:24:48Z, 252,393 B) is this order's re-render and is now read on its own record. W1-S19's cell is the CTO's to place at the L10."
+  }
+]
+```
+
+## C-S13 -- adjudicates W3-S3, W3-S4, W3-S5: DISMISSED_WITH_REASON, records -- two corrections of the issuer's accept (one an independent second measurement of W2-S10) and comp-trigger's Scheduler-schedule blind spot carried to the round's remediation row
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T01:38Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S13",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-W3-S3",
+      "ETFS_GUARDRAIL-W3-S4",
+      "ETFS_GUARDRAIL-W3-S5"
+    ],
+    "one_line": "L9: ADJUDICATES three items of worker ~3's -- DISMISSED_WITH_REASON, records, all INERT; two are corrections of the issuer's own accept and one is a tool blind spot carried by name. W3-S3 (the amendment named 'the two daily rules' roles from list-targets-by-rule / get-schedule' and neither exists: an EventBridge RULE targeting a Lambda carries no RoleArn and invokes through the function's resource policy, and neither daily rule is a Scheduler schedule): the SAME fact worker ~2 filed as W2-S10 and this seat closed at C-S9, measured INDEPENDENTLY from a second worktree within minutes -- which is the corroboration Rule 22 asks for and almost never gets, two seats, two instruments, one number; the arm was satisfied on the execution role and the naming route corrected at the source @116f6a763d. W3-S4 (comp-trigger prints `schedule: -` and no fired-evidence line for the EventBridge SCHEDULER schedule etfs-reports-monthly-run while the live API returns cron(0 10 1 * ? *) America/New_York; both fields populate correctly for the two RULES in the same run, so the gap is Scheduler-schedule-shaped, not budget or match): a real blind spot in the estate's scheduler-forensics lens, and the shape that matters is that the tool renders ABSENCE where the world has a cron -- a seat reading comp-trigger alone would conclude the monthly has no schedule. It goes to the comp-tool lane; this seat holds it for the round's remediation row alongside the deploy_ledger defects (W1-S16/W1-S17) rather than minting one mid-round, because the channel refuses a NEW remediation row while any order of the project is non-terminal and two orders are open. W3-S5 (2 of the 6 scheduler-role AssumeRole rows are CreateSchedule role validations at the schedule's CreationDate to the second and join to no START inside 60 s, so the amendment's 'each is a rule-initiated fire' would have reported 6 fires where 4 occurred): the worker separated them on a printed falsifiable rule and disclosed that its own first tolerance (180 s) had falsely joined both to a person's invoke 99 s later -- a control that caught its own instrument, and the correction makes the issuer's number right rather than weakening the re-cut.",
+    "dismissal_reason": "Records: two corrections already applied at the source, and one tool blind spot carried by name to the round's remediation row. Nothing armed, nothing owed inside this round's chain.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W3-S3, W3-S4, W3-S5 read whole at HEAD; org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~3/the-schedules-from-history.result.md ss.4.1, 5, 7; the face @116f6a763d; this seat's C-S9 @e0ee78e9cd (W2-S10's disposition, the same fact from worker ~2)."
+      ]
+    },
+    "spec_asserts": "S18-AC1's arms (b) and (c) as amended; the preflight's naming of comp-trigger as the natural second instrument.",
+    "world_is": "The daily rules carry no RoleArn; two of six scheduler-role AssumeRole rows are role validations; comp-trigger cannot render a Scheduler schedule's cron or its fires.",
+    "notes": "W3-S4 rides this row's clock until the round's remediation row can be minted (all orders terminal). Worker-form items take no remediation row of their own."
+  }
+]
+```
+
+## C-S14 -- adjudicates W1-S11..W1-S19: GRADUATED -- seven closed in the world (the renderer import that would have failed the 10-01 fire, the archive location that would have mailed stale duplicates, the synchronous-invoke retry hazard, the two absent instruments), two owed: W1-S19 at the CTO and the deploy_ledger defects at 0.2.0_DT_PortfolioAnalytics
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T01:38Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "id": "ETFS_GUARDRAIL-C-S14",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-W1-S11",
+      "ETFS_GUARDRAIL-W1-S12",
+      "ETFS_GUARDRAIL-W1-S13",
+      "ETFS_GUARDRAIL-W1-S14",
+      "ETFS_GUARDRAIL-W1-S15",
+      "ETFS_GUARDRAIL-W1-S16",
+      "ETFS_GUARDRAIL-W1-S17",
+      "ETFS_GUARDRAIL-W1-S18",
+      "ETFS_GUARDRAIL-W1-S19"
+    ],
+    "disarm_owner": "1.0.0_SA_CTO for W1-S19 (the brand-less box render: the L10 cell placement -- the logo beside the renderer on the artifact prefix resolved from _ORION_HERE, or the SVG inlined); 0.2.0_DT_PortfolioAnalytics for the deploy_ledger.py defects of W1-S16 and W1-S17 (the regenerating entry and the missing add-leg verb), carried to this project's REMEDIATION row when every order is terminal; the remaining seven are CLOSED here",
+    "one_line": "L9: ADJUDICATES nine items of worker ~1's -- GRADUATED, and only TWO remedies are still owed; the other seven closed in the world during the round. CLOSED: W1-S11 (the deployed renderer could not import _orion_vendor_asof on the box, so the manual fire published nothing AND the 10-01 scheduled fire would have failed identically) -- the finding of the round, fixed at its cause @0c8bdbe5a5, rehearsed against a box-layout fixture with a negative control, deployed 00:16:35Z as a leg of the SAME NEVER-2 entry with DEPLOYED == BUILT on two instruments, and the re-invoke published 5 of 5 keys, read back at THIS seat at 01:30:33Z (252,393 B pdf at 00:24:48Z and the coverage line on the served CSV); this is the manual-trigger rule earning its keep -- a real fire on the real plane that failed and was fixed twelve hours before the schedule would have failed silently. W1-S12 (the order's first-cut archive location sat INSIDE the month prefix the orchestrator enumerates to build the email's attachment list, so archiving there would have attached three stale duplicate CSVs to the real delivery to aj@ and andrew@) -- the worker refused the ordered location and wrote outside the enumeration instead, and this seat's own listing confirms 10 archive objects under platinum/reports/_archive/2026-08/ with the prior pdf 273,857 B in both sets and nothing deleted; a cut that would have reached a person's inbox, caught by the worker. W1-S13 (no trail selects Lambda data events, so the ordered CloudTrail Invoke read can never return a row) -- the third of the night in one family (with W2-S7 and NFRA_COMPEFFICACY-W1-S3), re-cut and now passing on instruments that exist. W1-S14 (the BOUNDS said the orchestrator invoke 'returns in seconds'; it blocks through an SSM wait and a render poll, so a default-timeout synchronous CLI invoke would hit botocore's 60 s read timeout and RETRY into a SECOND concurrent production run on the same served key) -- a duplicate-write hazard against a served object, caught before the first fire and cut into the bound (--cli-read-timeout 0 --cli-connect-timeout 60), used on both fires. W1-S15 (no served artifact carries a trigger, run-id or invocation field, so a scheduled fire and a hand-started one cannot be told apart ON THE ARTIFACT) -- INERT and named for the L10, and it is the same hole S18-AC2 hit from the other side when the 2026-09-01 August write could not be attributed to any actor; NFRA_OUTSET's run_bundle.trigger carrier is the shape that answers it, and the L10 should read the two together. W1-S18 (arm (f) named a MessageId the handler never logs and a CloudTrail SES call no trail captures, so it read FAIL on a successful, evidenced send) -- re-cut @d17b328c1e onto (f1)-(f5) and PASSING, with the one-line MessageId print named for the L10 as a cell. STILL OWED: W1-S19 (the box render carries NO Opal logo -- opal_logo_svg() resolves /opt/portal/... on the reporter EC2, so the served HTML lost five inlined SVGs, 19,044 bytes, 62,477 -> 43,376 B, with headings, table rows, slides and every number identical) -- pre-existing and structural to every scheduled fire, RULED NOT CUT by the issuer, ARMED here at 1.0.0_SA_CTO for placement at the L10; until it lands the 10-01 fire publishes a brand-less report, which is a disclosure the CTO should make deliberately rather than discover. W1-S16 and W1-S17 (deploy_ledger.py regenerates the whole change-management entry from its sentinel on every close-leg, silently destroying any hand-added section -- measured on this very entry, 'served keys named 5 of 5; rollback=True' before three close-leg calls and '1 of 5; rollback=False' after -- and it has no add-leg verb, so a second deploy leg on an existing slug can only be appended to the sentinel JSON by hand) -- the ordering clause held for these faces, but the TOOL defect is unremedied and belongs to 0.2.0_DT_PortfolioAnalytics; it is this project's S4 / C-S6 carrier, and the REMEDIATION row it needs is still refused by the channel gate while EG-s-15 and EG-s-16 are open -- minted at the FINAL, with W3-S4's comp-trigger blind spot beside it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W1-S11 .. W1-S19 read whole at HEAD; org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/the-august-re-render.result.md (FIRE 1 verbatim, the code change and its deploy, FIRE 2, the archives, the SEND table, the rows); the disarm records S5..S8 @8f7bf86815 and this seat's C-S10 @e0ee78e9cd (which consumed them).",
+        "This seat, 01:30:33Z: the six head-object reads and the whole cottonwood CSV (the coverage line on the served bytes); the archive listing (10 objects, pdf 273,857 B in both sets); lib/trading_calendar.py answering 21 for August 2026 on three calls.",
+        "ETFS_GUARDRAIL-S4 and C-S6 / C-S7 @563d85794d (the deploy_ledger carrier and its correction); the surprise-row gate's refusal text of 2026-09-09 ~23:5xZ ('NEW remediation row ... while 5 of 19 task order(s) ... NOT terminal'), not overridden then and not now.",
+        "2.0.0_SA_COO 94812 and 94832 (W1-S17 and W3-S4 routed to this seat's remediation carrier; W1-S19 named for the CTO's L10)."
+      ]
+    },
+    "spec_asserts": "TO-EG-s-14's BOUNDS and S14-AC1's arms as first cut (the archive location, the invoke's return, the CloudTrail Invoke read, the MessageId instrument); the NEVER-2 requirement that the entry CARRY its sign-off, served-key list, archive table and rollback recipe.",
+    "world_is": "Seven of the nine are remedied in the world or ruled at the source inside the round; the report renders brand-less on every box fire; and the estate's deploy-ledger tool destroys hand-authored sections of its own entries and cannot add a leg.",
+    "notes": "Investigation items without a disposition after this write: 0 of 43 on CLOUD. Two orders remain (EG-s-15, EG-s-16); the FINAL packet carries the remediation row and the slug."
   }
 ]
 ```
