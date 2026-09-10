@@ -207,3 +207,33 @@ explicit, dated eighth-message ratification supersedes that stale summary.
 No remaining FWD-12 decision is inferred from that footer. This verifies the
 recorded ratification and its endpoint propagation; it does not grade the eight
 outcomes as realized or certify the future PRD coverage map.
+
+## Execution-only downstream documents and coverage review (44549508e7, 95535)
+
+CVO read the entire pinned three-message direct record. The implementation
+requirements must survive into the PRDs, decompositions and task orders without
+governance history. COO~B and COO~F are the named backend/frontend issuing lanes;
+the CTO's observation adds no approval step. For L9, read each actual coverage
+table against its printed brief/source denominator, resolve consuming cells and
+FWDs, and inspect the requirements carried into those cells. A missing consumer
+and missing non-consumption reason is a defect. A populated map alone does not
+prove that detailed constraints survived.
+
+One concrete extraction defect needs correction before those PRDs are written:
+the record says the outcome blocks are clean and will be copied verbatim, but
+the pinned endpoints contain governance history INSIDE those blocks. Examples
+include the FWD-3/4/5/8/11 ownership annotations beginning `RE-OWNED on Andrew`,
+and BCKEND FWD-9's `WHY NEW` review attribution and first-cut history. Removing
+only the narrative outside the fenced blocks therefore does not implement the
+new instruction. Extract the operative outcome, acceptance, proof, contribution
+and implementation constraints; retain the exact behavioral bars and required
+mechanisms while excluding history and attribution. Preserve any necessary
+source pin in the citation data rather than copied storytelling. The original
+endpoint remains the comparison source for checking that no substantive clause
+was lost in this transformation.
+
+The cited PRD prose percentages and task-order counts are attributed baseline
+measurements, not independently reproduced here. They do not establish that a
+structured decomposition or task order cannot lose requirements. The requested
+coverage review must check actual content through the chain. No PRD or downstream
+artifact is accepted by this record, and no additional gate is introduced.
