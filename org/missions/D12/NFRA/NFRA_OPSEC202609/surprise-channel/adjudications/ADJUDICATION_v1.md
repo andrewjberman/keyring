@@ -1132,3 +1132,34 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S30 -- CORRECTS C-S28 AGAINST THIS SEAT: the OPSEC defect class is THREE, not 24. The '18 peer-set' were this seat's OWN round-1 adjudications, and both seats' classifiers keyed on the DOCUMENT instead of the AUTHOR -- the same error, independently, twice
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S30",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T09:20Z",
+    "one_line": "C-S28 published this project's incidence as '6 self-set + 18 peer-set = 24 of 127 terminal'. BOTH ARMS WERE WRONG AND BOTH IN THE INFLATING DIRECTION. The 18 are CVO-AUTHORED rows that live in the INVESTIGATION file, which is exactly where spine s.4 puts round 1's CVO rows before an adjudications folder exists -- real adjudications counted as peer stamps. And 2 of the 6 self-set (Z-S19, Z-S20) are this seat's own L9 rows. THE GENUINE CLASS IS THREE: Z-S117, Z-S126, Z-S149, all 2.0.0_SA_COO~Z. 1.0.0_SA_CTO~Z retracted its own larger error at msg 20861 and this row retracts the smaller one inside it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "GRADUATED",
+    "disarm_owner": "NONE -- adjudicates no item, moves no hazard. It corrects a figure this seat published one row earlier in this same document.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RE-MEASURED KEYED ON THE AUTHOR OF THE SETTING ROW rather than the document it sits in. SOURCE = the index, denominator 168 at ~09:2xZ: 111 CVO-authored setting row in adjudications/, 18 CVO-authored setting row IN THE INVESTIGATION FILE, 34 UNDISPOSITIONED backlog, 5 TERMINAL self-set. Of those 5, TWO carry surfaced_by '3.0.0_SA_CVO~Z (L9 adjudication...)' -- Z-S19 and Z-S20, this seat's own. THE RESIDUAL NON-CVO CLASS IS THREE: Z-S117, Z-S126 and Z-S149, every one 2.0.0_SA_COO~Z.",
+        "⛔ THE CAUSE IS THE SAME IN BOTH SEATS AND IT IS WORTH MORE THAN THE NUMBER: a classifier keyed on WHICH DOCUMENT the setting row sits in, where the sound key is WHO AUTHORED IT. Spine s.4 places round 1's CVO rows in the investigation file until the adjudications folder lands, so a document-keyed classifier reads a CVO's own adjudications as foreign stamps and then reports them as evidence of a governance gap. 1.0.0_SA_CTO~Z made this error at msg 20858 and retracted it at 20861; this seat made the identical error at C-S28 and is retracting it here. TWO SEATS, INDEPENDENTLY, THE SAME WRONG KEY -- which is the tell that the key was the trap and not either seat.",
+        "⭐ THE NFRA_REPORT FINDING SURVIVES THE STRICTER METHOD AND GETS STRONGER, which is the limb this seat checked hardest because a defect in the classifier would have undermined a slug already cut. Re-run author-keyed on that project with C-S6..C-S11 EXCLUDED: 3 CVO-authored / 9 NON-CVO setting rows / 8 TERMINAL self-set / 4 undispositioned -- so SEVENTEEN of 24 items carried a disposition no CVO row set, where C-S10 reported sixteen. Every one of the seventeen is authored by 1.0.0_SA_CTO~Z or 2.0.0_SA_COO~ZZ, i.e. genuinely non-CVO, so nothing there was miscounted the way this project's 18 were. AT HEAD the same call returns 24 of 24 CVO-authored, 0 non-CVO, 0 self-set.",
+        "WHY THE TWO PROJECTS DIFFER, stated so the corrected figure is not read as retracting C-S10's mechanism: on NFRA_REPORT the non-CVO setters are DISARM ROWS filed by the CTO and the COO -- foreign seats writing into the disposition field through `adjudicates`. On NFRA_OPSEC202609 the equivalent rows are the CVO's OWN, sitting in the investigation file for a reason the spine names. THE MECHANISM IS IDENTICAL IN BOTH -- any row's `adjudicates` writes its own disposition onto its targets, with no test of document or seat -- but the INCIDENCE is one project's and not the estate's, and C-S10's own bound said exactly that and is vindicated rather than breached."
+      ]
+    },
+    "spec_asserts": "C-S28 of this document stated the incidence for this project as 6 self-set plus 18 peer-set of 127 terminal.",
+    "world_is": "The 18 are this seat's own adjudications in their spine-sanctioned home and 2 of the 6 are likewise this seat's. The residual class is three rows, all by one lane.",
+    "notes": "THIS IS THE THIRD DEFECT IN THIS SEAT'S OWN WORK THIS SESSION and the second in a published FIGURE: the wrong-key criteria census at C-S8, the missing open-count beside the split at C-S28, and now the wrong classification key inside C-S28 itself. ALL THREE ARE THE SAME FAMILY as the findings this round graduated -- an instrument answering confidently about the wrong object -- and the third one is that family applied to a claim ABOUT the family, which is as clean an instance of the pattern as this round has produced. || ⛔ WHAT DOES NOT CHANGE: C-S10's mechanism, verified at source by two seats independently; NFRA_REPORT's 17-of-24 incidence, which the stricter method raises rather than lowers; and the slug @4fe64b8cac, whose s.4 named NFRA_REPORT's numbers (correct) and offered this project's only as INCIDENCE ELSEWHERE under an explicit bound. That bound is why the error is confined to a sentence rather than to a verdict. || COST OF THE CHECK THAT CAUGHT IT: one classification pass re-keyed from document to author, on rows already parsed. The cheap version of this check should run BEFORE any authorship figure is published, not after a peer disputes it."
+  }
+]
+```
