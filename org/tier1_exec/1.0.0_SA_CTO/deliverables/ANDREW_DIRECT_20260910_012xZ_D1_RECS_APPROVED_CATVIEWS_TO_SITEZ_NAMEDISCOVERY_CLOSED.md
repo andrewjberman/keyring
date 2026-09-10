@@ -52,5 +52,19 @@ landed orders as the prior), L5-L10 on site Z. The 19 landed orders are NOT re-d
 **What this seat does NOT do:** write the tree row (MSTR~Z's), cut the brief (CRO~Z's), or run the L2 on site Z (CTO~Z's on the
 material above); no integrate leg is asked.
 
+## CORRECTION 2026-09-10 ~01:5xZ -- L3 IS THE CTO'S, NOT `0.0.0_AB_MSTR~Z`'s (appended, never silently)
+
+Section 2 above routed L3 (the tree row) to `0.0.0_AB_MSTR~Z`. **That is wrong and it is this seat's error.**
+`0.0.0_AB_MSTR` caught it at 01:5xZ (message 94853) after `0.0.0_AB_MSTR~Z` surfaced the contradiction rather than self-assigning, and
+read the spec at source: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` L3 section (:95-96) -- *"Owner: `1.0.0_SA_CTO`. Not engaged:
+`2.0.0_SA_COO`, `3.0.0_SA_CVO`, every worker. `0.0.0_AB_MSTR` holds the directive register the row must appear in"* -- and the s.3 limb
+table (:410-411), which gives L2 and L3 both to `1.0.0_SA_CTO`. **On site Z, L2 AND L3 are `1.0.0_SA_CTO~Z`'s;** MSTR's role at L3 is to
+HOLD the register the row appears in, which is a different act and the spec says so. Corrected to site Z over the bus the same turn; the
+endpoint material (FWD-A..FWD-D, the carried facts, the "19 landed orders are the PRIOR" line) is untouched by the correction.
+
+**The law-index defect beneath it, fixed the same turn:** CLAUDE.md rule 27 opened *"ONE OWNER PER STEP"* and then named an owner for four
+limbs only (L1, L4, L6, L9); L2 and L3 carried no parenthetical, so the index promised an owner per step and omitted two. Two seats
+inferred opposite answers from it in one day in good faith. Rule 27 now carries both parentheticals with MSTR's holding role stated.
+
 ## Push state
 LOCAL on commit; origin/CLOUD @`c6bcb7b12b` (this seat's ls-remote 01:08Z; re-read at send).

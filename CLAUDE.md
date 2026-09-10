@@ -16,7 +16,8 @@ stable, citations resolve there. DS/AE seats read their sections before touching
 ## 1. HOW WE WORK
 
 27. **Every directive/project runs the CANONICAL WORKFLOW L1–L10, ONE OWNER PER STEP, IN ORDER: L1 brief
-    (`4.0.0_SA_CRO` only) → L2 endpoint → L3 register → L4 PRD (`1.0.0_SA_CTO` only — no COO, no CVO) →
+    (`4.0.0_SA_CRO` only) → L2 endpoint (`1.0.0_SA_CTO` only) → L3 register (`1.0.0_SA_CTO` only; `0.0.0_AB_MSTR`
+    HOLDS the directive register the row must appear in — a different act) → L4 PRD (`1.0.0_SA_CTO` only — no COO, no CVO) →
     L5 decomp + battery → L6 ONE ISSUANCE covering EVERY cell (`2.0.0_SA_COO` only; fan-out derived from the
     decomp's dependency chains and stated as `fanout:` data in the issuance commit, default cap 8) → L7
     execute (WORKER SUBAGENTS of the COO, `0.9.0_WK_<CODE>~<n>`, one worktree each, NO send tool; the TO's
