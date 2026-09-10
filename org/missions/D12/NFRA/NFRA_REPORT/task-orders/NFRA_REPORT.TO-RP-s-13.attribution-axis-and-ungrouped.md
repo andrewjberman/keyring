@@ -84,7 +84,7 @@ letting the grep stand in for the work.
 
 <!-- ============ RECORD FACE -- does NOT travel to the worker ============ -->
 
-<status>staged</status>
+<status>complete</status>
 <round>2</round>
 <sub_round>A</sub_round>
 <slot>~2</slot>
