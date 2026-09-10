@@ -33,8 +33,8 @@
   "prds": [
     {
       "path": "org/missions/D5/AMGT/AMGT_RESAPP/prd/AMGT_RESAPP_PRD.md",
-      "version": "v0.1",
-      "note": "L4, 2026-09-10, 1.0.0_SA_CTO~Z. Carries the L2 ENDPOINT block (FWD-1..FWD-14), 16 constraints and a 15-row surface manifest. Authored and staged at .../1.0.0_SA_CTO/deliverables/AMGT_RESAPP_PRD_STAGED_20260910.md @449a7c8fc2 before this tree existed, and moved here UNCHANGED."
+      "version": "v0.2",
+      "note": "L4, 2026-09-10, 1.0.0_SA_CTO~Z. Carries the L2 ENDPOINT block (FWD-1..FWD-14), 16 constraints and a 15-row surface manifest. Authored and staged at .../1.0.0_SA_CTO/deliverables/AMGT_RESAPP_PRD_STAGED_20260910.md @449a7c8fc2 before this tree existed, and moved here UNCHANGED. VERSION CORRECTED 2026-09-10 ~19:3xZ: this row read v0.1 while the PRD header read v0.2 after the L4 FIX @8019bf6433. Flagged by 2.0.0_SA_COO~ZZZ at the L5 landing and not edited by that lane, correctly -- the row is L3's and L3 is this seat's. The HEADER is the primary and this field follows it."
     }
   ],
   "decompositions": [
