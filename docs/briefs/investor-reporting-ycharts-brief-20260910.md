@@ -1,5 +1,7 @@
 # Investor Reporting — YCharts Analysis intake and serving brief
 
+> **Organization update, September 10, 2026:** Andrew has replaced the former project/workstream structure with two projects: [IR FE](investor-reporting-ir-fe-brief-20260910.md) for the complete client-facing product and [IR BK](investor-reporting-ir-bk-brief-20260910.md) for ingestion, tenant scoping, transformations and operations. Both briefs map all four source briefs and five supporting documents. The body below remains dated research; its former ownership labels are historical. Permanent FWD IDs are unchanged. Macro IRPT, directive D9, laptop execution.
+
 **Author:** 4.0.0_SA_CRO. **Date:** September 10, 2026. **Mode:** NEW child brief within the existing Lightweight Investor Reporting umbrella, D9 Opal Workflows, WS3. This does not register another project. **Recon:** RCN-0008 follow-up. **Consumer:** CTO for endpoint formulation; umbrella coordinator for downstream workstream boundaries.
 
 **Commission:** [Andrew's direction and subsequent clarifications](../../org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260910_YCHARTS_INTAKE_AND_SERVING.md). **Parent outcome:** O4 in the [umbrella brief](investor-reporting-lightweight-brief-20260910.md). Child outcome numbers below are local to this brief; they do not replace parent or permanent endpoint numbers.

@@ -2405,6 +2405,190 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "CLAUDE.md Rule 14: 'Every `.py` edit passes `.tools/commit-gate.sh` (py_compile + ds-precommit + ruff py39). Universal.' The gate's own refusal text: 'Fix the reported issue(s) and re-commit ... --force does NOT bypass a gate failure (it only overrides the contamination check).'",
     "world_is": "The ds-precommit limb and the ruff limb of that same gate contradict each other on the same bytes, and the fail-closed one is wrong. The instruction the gate prints -- 'fix the reported issue(s)' -- therefore asks an author to change CORRECT code to appease a false finding, which is how a checker teaches a codebase to avoid a legal construct. I complied ONLY because the replacement is independently better (the paginator auto-paginates, and a single list_objects_v2 returns a PAGE whose length is not a denominator), and I recorded the reason in a comment at the call site so the next reader does not take the shape for a preference. NOTE FOR WHOEVER PICKS THIS UP: the FALSE-NEGATIVE direction is unmeasured here. I have shown the checker fires where it should not; I have NOT shown it fires everywhere it should, and a positive control bounds under-firing only."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W4-S13",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T17:33Z",
+    "one_line": "S30-AC1's arm (c) (organic message BYTE-IDENTICAL to the deployed bytes) and its arm (d) plus the face's own bound (the disclosure 'carries an explicit value in BOTH cases') name the SAME message and are JOINTLY UNSATISFIABLE -- no artifact can satisfy both, and I built to the bound.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "FACE, arm (c): 'On a run where the ladder DID run, the message is byte-identical to what the deployed bytes produce today, compared as bytes and not as a description.' FACE, arm (d): 'Build the message from the SAME inputs forced and unforced; ... the unforced one carries the same field with its not-forced value.' FACE, BOUNDS: 'A FIELD PRESENT ONLY ON THE FORCED RUN IS NOT A DISCLOSURE. It carries an explicit value in BOTH cases, for the same reason `forced:false` had to exist in EG-s-25.'",
+        "THE TWO CLAUSES NAME ONE MESSAGE. The orchestrator COUPLES the axes: `fixture = f\" --fixture-remove {forcing} --no-ladder\" if forcing else \"\"` at infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:463 @a6cbb6f3c3 emits --no-ladder IFF a validated forcing spec is present, so an UNFORCED run is exactly a run whose ladder RAN. Arm (d)'s 'unforced' branch and arm (c)'s 'organic' branch are therefore the same message, and arm (d) requires a field on it that the deployed bytes do not emit while arm (c) requires the bytes to be unchanged.",
+        "MEASURED, not argued, in the battery's own arm (c) output: 'SUBJECT byte-identity (compared as bytes): True' / 'BODY LITERAL whole-message byte-identity: False' / 'REPORTING INVARIANCE: every pre-fix body line present, in order, byte-identical: True' / 'pre-fix body lines: 6   fixed body lines: 12   added: 6   removed: 0   altered: 0'. The six added lines are printed in full and are exactly the disclosure block plus its blank separator.",
+        "The pre-fix builder's signature is the shape of the gap: 'pre-fix _build_terminal_email takes 4 parameter(s) [month, unresolved, ask, to_header] -- verdict among them: False'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S30-AC1 arm (c): the organic message is byte-identical to what the deployed bytes produce today, compared as bytes. S30-AC1 arm (d) and the BOUNDS: the disclosure carries an explicit value in BOTH cases and a field present only on the forced run is not a disclosure.",
+    "world_is": "Both cannot hold. I resolved it toward arm (d) and the bound, for three stated reasons rather than by preference: the BOUND is a bound and outranks an arm; the face itself calls (d) 'the arm that carries the outcome' and (c) an invariance guard; and the cell exists because a disclosure gap must not be discovered on an artifact that cannot be un-sent, which is an argument for the disclosure existing on every branch. Arm (c) was then executed in the strongest form that survives -- subject byte-identical, every pre-fix body line preserved byte-identical and IN ORDER, zero removed, zero altered, sole delta the additive block -- and the battery PRINTS the literal form as FALSE immediately above the token rather than quietly redefining it. WHAT THIS ROW DOES NOT DECIDE: whether the trade is the right one. If `2.0.0_SA_COO` or `3.0.0_SA_CVO` reads arm (c) as governing, the remedy is one line (emit the block only when the shape is not organic) and the cost is that an organic terminal email says nothing about forcing -- which is the exact shape EG-s-25 rejected on the verdict document. I am not authorised to re-cut a criterion and did not."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W4-S14",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T17:33Z",
+    "one_line": "`test_served_artifact_has_the_shape_the_writer_produces` was ALREADY RED at this branch's base commit -- EG-s-29 added a `provider` key to the renderer's unresolved rows and the committed S3 fixture it is compared against does not carry one -- so the orchestrator suite arrives at EG-s-30 with one pre-existing failure that is not mine.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO -- the disagreement is between the RENDERER's writer (`data/etfs/scripts/presentation/render_month_end.py`, EG-s-29's terminal surface, explicitly out of bounds for this order: 'DO NOT TOUCH THE RENDERER') and a committed S3 fixture, and which of the two is stale is a cell-level decision rather than an edit. I can reach the assertion (the test file is in this order's <paths>) but not the question, and changing an assertion to match whichever side happens to be newer is how a fixture stops being evidence.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ISOLATED BY RESTORING THE BASE, not by argument: all three files this order touches (lambda_function.py, test_terminal_send.py, test_forcing_seam.py) were written back to their `a6cbb6f3c3` blobs IN PLACE and pytest re-run. Result: 'test_served_artifact_has_the_shape_the_writer_produces FAILED ... assert {class, date, reason} == {class, date, provider, reason}', '1 failed, 1 passed, 26 deselected'. My files were restored in the same script's finally and `git diff --stat` confirmed 2 files / 340 insertions afterwards.",
+        "The failing assertion is infra/aws/lambda/etfs-reports-orchestrator/test_terminal_send.py:361 @a6cbb6f3c3: `assert served_row_keys == produced_row_keys == {\"date\", \"class\", \"reason\"}`. `served_row_keys` comes from the committed S3 fixture and reads {class, date, reason}; `produced_row_keys` comes from calling the renderer's own writer live and reads {class, date, provider, reason}.",
+        "WITH my change and the EG-s-27 arm narrowed (row W4-S15), the whole orchestrator suite reads '1 failed, 33 passed' -- the SAME one failure, and the count of passes rose by 6 (my arms) + 0.",
+        "DIRECTION OF THE DRIFT, unproven here and stated as such: `provider` is the field EG-s-29 was cut to make the terminal alert name (face @32ae4ede66: 'the terminal alert names NO provider in ANY run'), which makes the RENDERER the side that moved. I did not read EG-s-29's cell to confirm it and this row does not assert it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The arm's own comment at test_terminal_send.py:347-349: '(h) THE SECOND INSTRUMENT, and a DIFFERENT one: the real served object (fetched from S3 and committed as a fixture) carries the shape the writer produces -- partner keys, list values, no unresolved key, rows without an inline partner.'",
+    "world_is": "The served fixture and the writer no longer produce the same row keys, so the arm's second-instrument claim is false at this commit. A red arm nobody owns is worse than a failing one somebody does: the next author in this directory reads '1 failed' beside their own change and has to re-derive, from scratch, that it is not theirs -- which is the cost I just paid. The FALSE-NEGATIVE direction is unmeasured: I have shown this arm fails, not that the served object is wrong."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W4-S15",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T17:33Z",
+    "one_line": "EG-s-30's disclosure text names `--no-ladder` in prose, which tripped EG-s-27's terminal arm 4 -- a NON-COMMENT LINE COUNT of the token across the whole module -- so I had to amend a terminal cell's arm; I replaced the line count with the reachability question it was a proxy for rather than exempting a name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE REFUSAL, verbatim, on the first run after the code change: 'FAILED infra/aws/lambda/etfs-reports-orchestrator/test_forcing_seam.py::test_the_ladder_skip_rides_the_forcing_and_is_not_independently_reachable - AssertionError: emitters of --no-ladder: [\\'ladder_line = (\"NO -- --no-ladde...'.",
+        "THE OLD ARM, at test_forcing_seam.py @a6cbb6f3c3: `emitters = [ln.strip() for ln in src.split(\"\\n\") if \"--no-ladder\" in ln and not ln.strip().startswith(\"#\")]` then `assert len(emitters) == 1`. It counts LINES, and a line count cannot tell an EMITTER from a mention.",
+        "THE NEW ARM asks the property's own question with ast: of every executable `--no-ladder` string constant in the module, how many sit in a function REACHABLE from `_render_command`? Its printed denominator on the changed module: 'EG-s-27 arm 4: --no-ladder literal holders = 4 ([_build_terminal_email, _render_command, _run_shape_lines, _terminal_claim_line]); reachable from _render_command = 1 ([_render_command]); IN the command path = [_render_command]; OUTSIDE = [_build_terminal_email, _run_shape_lines, _terminal_claim_line]'. The one-line literal check on the coupled f-string is kept verbatim, and part 1 of the same arm still asserts `cmd.count(\"--no-ladder\") == 1` on the BUILT COMMAND, which is the strongest form and is untouched.",
+        "The suite reads '1 failed, 33 passed' after the amendment, the one failure being the pre-existing one in row W4-S14."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The face BOUNDS: 'DO NOT TOUCH THE RENDERER. EG-s-29 is terminal there' -- and, by the same principle, EG-s-27 is terminal in this module. The face's DELIVERABLE nevertheless names 'The changed lambda_function.py, its tests'.",
+    "world_is": "A terminal cell's arm had to change for a later cell's correct code to compile past it, and the face does not say who may do that. I judged the FORM only: narrowing a guard is the shape that hides defects, so the amendment is written to be STRICTLY STRONGER than what it replaces -- it establishes UNREACHABILITY FROM THE COMMAND BUILDER, a fact the line count never established, and it prints its denominator so a new holder is visible rather than silently admitted. The alternative was to avoid the literal in the email's prose, which would have made the disclosure worse for the reader by hiding the exact flag name a person would search for. Whether a worker may amend a terminal cell's arm at all is the issuer's call, not mine, and this row is the carrier."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W4-S16",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T17:55Z",
+    "one_line": "`ses:GetSendStatistics` RE-KEYS its 15-minute buckets on every call (the grid is anchored to the REQUEST time), so a bucket-keyed before/after diff reports 62 dropped and 70 new on an account that saw at most 3 sends between the two reads -- and the counter is account-wide besides, so it cannot bound ONE function's sends at zero.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TWO READS, 31 MINUTES APART, SAME REGION, SAME COMMAND (`.tools/aws ses get-send-statistics --region us-east-1 --output json`): BEFORE 2026-09-10T17:24:08Z -> 62 buckets, 91 DeliveryAttempts, latest bucket 2026-09-10T15:39:00Z. AFTER ~17:52Z -> 70 buckets, 94 DeliveryAttempts, latest bucket 2026-09-10T17:32:00Z.",
+        "BUCKET KEYS ALL MOVED. The BEFORE read's grid lands on :09/:24/:39/:54 past the hour; the AFTER read's lands on :02/:17/:32/:47 -- a shift of about 8 minutes, matching the 28 minutes between the calls modulo 15. Diffing by Timestamp therefore reports 70 of 70 'after' keys as NEW and 62 of 62 'before' keys as DROPPED, e.g. '2026-08-28T10:54:00Z 3 -> 0' beside '2026-08-28T11:02:00Z 0 -> 3' -- the SAME three sends from thirteen days earlier, counted once as a disappearance and once as an arrival.",
+        "SO A BUCKET-KEYED DELTA HAS A ~100% FALSE-CHANGE RATE HERE: 132 'changed' bucket lines on an account where the true new-send count over the interval is 3.",
+        "THE ONLY READS THAT SURVIVE are the SERIES TOTAL (91 -> 94, and even that erodes as the 14-day window slides off the back) and the FRONT of the series (the one bucket later than the previous read's latest: 2026-09-10T17:32:00Z, 3 attempts).",
+        "AND THE COUNTER IS ACCOUNT-WIDE. Those 3 attempts at ~17:32Z are NOT this function's: logs:FilterLogEvents on /aws/lambda/etfs-reports-orchestrator over a 6 h window CONTAINING that bucket returned 0 events and 0 START RequestId, against a NON-ZERO positive control (2026-09-10T01:00Z-01:30Z, EG-s-15's known driven run: 4 events, 1 START).",
+        "CONSISTENT WITH THE ESTATE'S EXISTING FINDING that no first-party sender names an SES configuration set, so no per-recipient / per-sender delivery plane exists to read."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S30-AC1 arm (f): 'Print evidence of 0 SES sends, 0 orchestrator invokes, with the denominator of what you checked.'",
+    "world_is": "A zero-delta test on this counter is not available and would not have meant what it says even if it had read zero. My battery originally gated arm (f) on `DELTA == 0` and FAILED -- correctly, and for the wrong reason: the delta was 3 and none of it was mine. THE ARM WAS RE-CUT ONTO THE ORACLE THAT IS SOUND FOR THE CLAIM: every `_ses` call site in the deployed module is inside a function reachable only from `handler` (censused by ast on the deployed bytes, denominator printed), so ZERO handler invocations over a window spanning the whole order bounds THIS FUNCTION's sends at zero; the SES plane is reported beside it as corroboration with its limit named, and it can only ever FAIL to exonerate, never acquit on its own. WHAT IS STILL UNMEASURED: whose the 3 attempts at 17:32Z are. I did not chase it -- it is another seat's traffic on a shared account and off this order."
+  }
+]
+```
+
+
+---
+
+## S38 -- THE FIXTURE IS THE STALE SIDE: disarming W4-S14 by deciding it rather than editing it
+
+Filed by `2.0.0_SA_COO`, the `disarm_owner` named on `ETFS_GUARDRAIL-W4-S14`.
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-S38",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T18:20Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "one_line": "DISARMS ETFS_GUARDRAIL-W4-S14 by deciding the question its author correctly refused to decide: the RENDERER is the newer side and the committed S3 fixture is the stale one, so the remedy is a fixture refresh and never an assertion edit.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE DECIDING READ, on the record rather than the worktree: git show HEAD:data/etfs/scripts/presentation/render_month_end.py extracted to a scratch file (77130 bytes, rc=0, no stderr suppression) and enumerated with comp-read.",
+        "DENOMINATOR PRINTED: 10 hits of 'provider' across 1407 lines / 61 sections scanned; 5 whole-value, 5 substring; bands DOCSTRING=0 COMMENT=6 DEF=0 CODE=4.",
+        "THE HIT THAT ANSWERS IT, line 1164, CODE band, WHOLE-value: {\"date\": d, \"class\": e[\"class\"], \"provider\": provider_for_partner, ...} -- the renderer emits `provider` on unresolved rows.",
+        "AND ITS SINGLE-WRITER PROVENANCE, line 1162: provider_for_partner = remediate._provider_for(p) -- the SAME function remediate_month uses, with the module's own comment at 1156-1159 stating that a second .get(partner, '<no provider mapped>') here would be a SECOND DEFAULT and is deliberately not written. So the key is not an incidental addition; it is EG-s-29's landed one-writer-of-the-property fix.",
+        "W4-S14's own measurement, cited rather than re-run (a re-run of the assignee's command would be repetition, not corroboration): the arm was ALREADY RED at the branch's base commit a6cbb6f3c3, isolated by restoring all three touched files to their base blobs IN PLACE.",
+        "COVERAGE LIMIT STATED: this read establishes what the renderer at HEAD WRITES. It does NOT re-measure that those bytes are the SERVED renderer; that was measured under EG-s-29 at sha256 ba410ee5c9... with a difference control, and is cited here rather than re-derived."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "test_served_artifact_has_the_shape_the_writer_produces asserts that the committed S3 fixture and the renderer produce the same row keys, and offers the fixture as A SECOND AND DIFFERENT INSTRUMENT from the unit assertions.",
+    "world_is": "They no longer agree, because the writer moved and the fixture did not. The fixture is a SNAPSHOT of a served object taken BEFORE EG-s-29 reached the served renderer, so it is a photograph of a superseded shape. The arm's second-instrument claim is false at this commit, and the assignee proved the failure without proving the served object wrong -- a distinction it stated explicitly and was right to.",
+    "notes": "THE DISARM IS A DECISION, NOT AN EDIT, AND THE ASSIGNEE'S REFUSAL IS WHY IT COULD BE MADE CLEANLY. Its disarm_owner note says it could reach the ASSERTION (the test file was in its <paths>) but not the QUESTION, and that 'changing an assertion to match whichever side happens to be newer is how a fixture stops being evidence'. THAT IS EXACTLY RIGHT AND IT IS THE GENERAL RULE: an arm that exists to be a SECOND INSTRUMENT is destroyed by editing it to agree with the FIRST. Had the worker silently relaxed the assertion, the suite would have gone green and the estate would have lost the only check that compares the writer against a real served object. THE REMEDY, AND IT IS NOT A BLOCKER ON THE ROUND: refresh the fixture from a served artifact produced AFTER EG-s-29 landed, then re-run the arm. \u26d4 AND THE REFRESH MUST NOT BE HAND-CARVED -- a fixture edited to carry a `provider` key would be the same defect as the assertion edit, one layer down: it would agree with the writer by construction rather than by observation, and the arm would then be comparing the renderer to a transcription of itself. The fixture is only evidence while it is a COPY OF A SERVED OBJECT. \u2b50 THE SEQUENCING IS FREE: EG-s-21's driven run produces exactly such an artifact, so the refresh is DOWNSTREAM of the run rather than upstream of it, and nothing about this row gates the fire. THE FALSE-NEGATIVE DIRECTION REMAINS UNMEASURED, as W4-S14 said: this row establishes which side is STALE, not that the served object is WRONG. Nobody has shown the served artifact is defective, and this disarm does not claim it. Related: [[ETFS_GUARDRAIL-W4-S14]] (the row this disarms), [[ETFS_GUARDRAIL-W4-S15]] (the same assignee narrowing a line-count proxy onto an ast reachability census -- the same instinct, that a proxy which cannot tell an emitter from a mention is not the property)."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W4-S17",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T18:48Z",
+    "one_line": "EG-s-21 WAS NOT FIRED AND THE ROUND'S SINGLE PERMITTED DRIVEN RUN IS STILL UNSPENT. The reporter box's `coverage` package is STALE against the renderer that box will pull: the deploy artifact s3://opal-313476888478-lambda-artifacts/ec2/etfs-reports/coverage/remediate.py (LastModified 2026-09-05T06:53:44Z) has NO `_provider_for`, while the SERVED renderer artifact render_month_end.py (LastModified 2026-09-10T14:09:53Z, byte-identical to repo HEAD) calls `remediate._provider_for(p)` at render_month_end.py:1162 -- inside the `--no-ladder` branch, which R-EG-6 shape 1 makes the ONLY path that yields a driven REFUSE. EXERCISED, not reasoned: running that exact branch against the DEPLOYED coverage package raises AttributeError: module 'coverage.remediate' has no attribute '_provider_for' inside coverage_gate, BEFORE any verdict object exists; the same exercise against the REPO coverage package returns VERDICT: REFUSE holes=1 with C=1 and writes the ladder-skipped egress ask. Firing would therefore spend the irreplaceable run on an SSM status=Failed that writes NO coverage_verdict.json, NO refusal artifacts and fires NO terminal send -- 2026-08's coverage_unresolved.json is a measured 404 and `_normalize_unresolved(None)` returns [], so the terminal send guard evaluates False on the deployed handler. That is precisely the waste row W4-S6 was filed to prevent, so this seat did not invoke.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda get-function-configuration etfs-reports-orchestrator (us-east-1, read 2026-09-10 ~18:3xZ): CodeSha256 njvsszkhJI4d+Xj9SOmWZy4Q0NAYKQvHTvBglbd2i5U= LastModified 2026-09-10T17:44:50.000+0000 -- the EG-s-30 bytes the face names. The zip downloaded from Code.Location hashes to the same base64 digest (sha256 hex 9e3becb33921248e1df978fd48e996672e10d0d018290bc74ef06095b7768b95), and its single member lambda_function.py is BYTE-IDENTICAL to infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py at a6e2031ff8 LF-normalized (both sha256 9337c58c31a04e0b845d72b583c1a7f6250a3ae03455576275ff037d9bacfd4f).",
+        "aws s3api list-objects-v2 --bucket opal-313476888478-lambda-artifacts --prefix ec2/etfs-reports (7 objects, denominator printed): render_month_end.py 77130 B 2026-09-10T14:09:53.000Z; coverage/classifier.py 10157 B 2026-09-05T06:53:40.000Z; coverage/remediate.py 11011 B 2026-09-05T06:53:44.000Z; coverage/__init__.py 89 B; coverage/trading_calendar.py 6979 B; coverage/_orion_vendor_asof.py; probe.sh.",
+        "Byte comparison of each artifact against repo HEAD a6e2031ff8 (LF-normalized): render_month_end.py IDENTICAL (sha256 ba410ee5c9c4263e...), __init__.py IDENTICAL, trading_calendar.py IDENTICAL -- and classifier.py DIFFERS (deployed 10157 vs repo 12226) and remediate.py DIFFERS (deployed 11011 vs repo 16550). So the renderer is current and the package beneath it is not: a SHARED DEPENDENCY defect that a per-file check of the renderer alone certifies clean.",
+        "Enumerated top-level defs: DEPLOYED coverage/remediate.py = ['_slice_exists','rung3_stop_and_ask','remediate_month','_main']; REPO = ['_provider_for','_slice_exists','_read_prior_asks','rung3_stop_and_ask','remediate_month','_main']. `_provider_for` and `_read_prior_asks` are ABSENT from the deployed artifact.",
+        "EXERCISE with a DIFFERENCE CONTROL, .scratch/exercise_provider_for.py, zero AWS calls (stub probe, supplied series, module `s3` replaced by a capturing stub): the SERVED render_month_end.py laid out box-style over the DEPLOYED coverage package -> 'coverage_gate RAISED: AttributeError: module coverage.remediate has no attribute _provider_for' at render_month_end.py:1162; the SAME file over the REPO coverage package -> 'VERDICT: REFUSE holes=1', per_partner C count 1, put_object keys ['platinum/reports/2026-08/coverage_egress_ask_ladder_skipped.json']. DIFFERENCE CONTROL DISCRIMINATES: True.",
+        "The staleness cannot have been repaired on the box, by subtraction over the only two branches: (1) the box i-070477bf35fc54409 is STOPPED, StateTransitionReason 'User initiated (2026-09-10 01:20:29 GMT)', LaunchTime 2026-09-10T01:19:07Z, and describe-instance-information returns EMPTY -- a stopped instance's filesystem cannot be written; `_provider_for` first entered the repo at 7e544cb4d7 committer-date 2026-09-10T08:33:05-04:00 = 12:33:05Z, ELEVEN HOURS after the box stopped, so no pre-stop copy can contain it; and (2) if /opt/etfs-reports/coverage/ is absent, render_month_end.py:120-129's self-bootstrap pulls from THE SAME stale artifact prefix. Both branches land on a remediate.py with no `_provider_for`, so the unknown is CLOSED rather than assumed.",
+        "The bootstrap at render_month_end.py:118-129 fires ONLY on ImportError, so an EXISTING box copy is never refreshed by a run -- uploading fresh coverage/*.py to the artifact prefix is NECESSARY BUT NOT SUFFICIENT unless the box's own directory is removed or re-pulled. Two acts, not one.",
+        "Downstream cost measured on the deployed handler bytes: aws s3api head-object platinum/reports/2026-08/coverage_unresolved.json -> 'An error occurred (404) when calling the HeadObject operation: Not Found'; `_normalize_unresolved(None)` -> [] and `_normalize_unresolved({})` -> [] on .scratch/deployed_lambda_function.py. lambda_function.py:906-916 gates the ONE terminal send on `if unresolved_days:`, so on the crash branch FWD-10's send does not fire at all.",
+        "SCOPE OF THE BREAK, stated so it is not read wider than measured: the SCHEDULED (ladder-ON) fire is NOT broken by this. `remediate_month`'s signature is character-identical between the deployed and repo copies, and classifier.py's def list is identical, so the 1st-of-month production path still runs. Only the `--no-ladder` branch -- this order's sole path to a driven REFUSE -- crashes. A second, non-blocking consequence: the deployed remediate_month predates EG-s-28, so an ORGANIC refusal rendered from this box would still carry unresolved rows with no `provider`.",
+        "THE aj@ PRECONDITION IS SEPARATELY CLEAN AND THIS ROW IS NOT ABOUT IT: on the deployed bytes with the live EMAIL_RECIPIENT='aj@opalinvest.com,andrew@opalinvest.com', 8 of 8 adversarial TEST-branch resolutions (including test_recipients ['aj@opalinvest.com'], mixed-case 'AJ@OpalInvest.COM' and a joined string) returned ZERO aj@ hits in header or envelope, while the SCHEDULED negative control returned ['aj@opalinvest.com','andrew@opalinvest.com'] -- the instrument discriminates. Corroborated on the RUNNING function by a live send-free recipients_qa invoke: test.report=['andrew@opalinvest.com'], test.terminal=['andrew@opalinvest.com'], scheduled.report=['aj@opalinvest.com','andrew@opalinvest.com']."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ETFS_GUARDRAIL.TO-EG-s-21 dispatches the driven run as executable NOW: its status line says the gate is OPEN because EG-s-30's fix is SERVED at CodeSha256 njvsszkhJI4d+Xj9SOmWZy4Q0NAYKQvHTvBglbd2i5U=, and its 'TWO THINGS LANDED AFTER THIS FACE WAS CUT' section tells the assignee not to re-derive the served state. S21-AC1 arm (c) requires a REFUSE verdict read from coverage_verdict.json and arm (d) requires an egress ask recorded for the run -- both produced only by the `--no-ladder` branch under R-EG-6 shape 1.",
+    "world_is": "SERVED-ness was established for the ORCHESTRATOR and for render_month_end.py, and both are genuinely current -- but the renderer is not self-contained. It imports `coverage.classifier` and `coverage.remediate` from a package the box holds separately, and that package is two commits behind on the exact symbol the shape-1 branch added at EG-s-29. The `--no-ladder` branch therefore raises AttributeError inside coverage_gate before a verdict exists, so arms (b) through (g) are unreachable by ANY invocation this order permits, on ANY month. No month choice rescues it: the fault is in the code path, not the data.",
+    "notes": "WHAT THIS SEAT DID AND DID NOT DO. It did NOT invoke the orchestrator, did NOT write or delete any S3 object, did NOT open a NEVER-2 change-management entry (an entry names an act's blast radius, and there was no act -- an entry opened and never closed is itself the hazard CLAUDE.md NEVER-2 names), and made NO code change: the fix is a DEPLOY of coverage/*.py plus a box-side re-pull, which is outside this order's <paths> and outside its NO CODE CHANGE bound. THE FORCING DESIGN IS READY AND IS RECORDED SO THE RE-CUT DOES NOT HAVE TO REDERIVE IT: month 2026-08 (served coverage_verdict.json at 2026-09-10T00:24:43Z reads PUBLISH holes=0 with 21 of 21 trading days COVERED for all three partners -- an unambiguous prior verdict for the arm (f) before/after), partner cottonwood (probe-capable per render_month_end.py:847-850, so its non-covered days can reach class C rather than UNKNOWN), one slice 2026-08-14, spec 'cottonwood:2026-08-14'. Exercised against the REPO package that spec yields exactly REFUSE holes=1, C=1, and writes coverage_egress_ask_ladder_skipped.json -- the arm (d) ask, by EG-s-29's rung-3-EQUIVALENT writer. HOW TO CONFIRM THE DISARM rather than assume it: after the coverage package is redeployed AND the box re-pulls, re-run .scratch/exercise_provider_for.py's DEPLOYED arm and require it to print 'VERDICT: REFUSE holes=1' instead of the AttributeError -- the difference control is already built and already discriminates. THE GENERAL SHAPE, which is CLAUDE.md Rule 22's shared-dependency clause landing exactly as written: EG-s-29 and EG-s-30 each verified THEIR OWN served file and each was right; the defect lives in what those files SHARE, and no per-file check could see it. Related: [[ETFS_GUARDRAIL-W4-S6]] (the waste this refusal-to-fire prevents), [[ETFS_GUARDRAIL-W1-S33]] (the fifth writer of `provider` whose fix is the very symbol that is missing on the box), [[ETFS_GUARDRAIL-W4-S14]]/[[ETFS_GUARDRAIL-S38]] (the stale fixture, which stays stale because the run that would refresh it did not happen)."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W4-S18",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~4",
+    "surfaced_at": "2026-09-10T19:05Z",
+    "one_line": "A SERVED ARTIFACT THE ISSUER DELETED HAS REAPPEARED, AND IT SITS ON THE EXACT KEY EG-s-21's ARM (d) READS. The prior EG-s-21 execution's re-grounding table (a02bc48b98, ~16:3xZ) records the premise '2026-08 has 6 keys, ask deleted by the issuer' and its own confirmation 'confirmed: 6 keys, coverage_egress_ask_ladder_skipped.json absent'. Reading the same prefix at ~18:3xZ I get SEVEN keys, including platinum/reports/2026-08/coverage_egress_ask_ladder_skipped.json, 7867 B, LastModified 2026-09-10T17:28:01.000Z, whose body carries generated_at 2026-09-10T17:28:00.106557+00:00 and 40 asks across partners ['49financial','cottonwood'] -- on a month whose served coverage_verdict.json reads PUBLISH holes=0 with 21 of 21 trading days COVERED for all three partners. Some writer produced a 40-ask egress ask for a month that has no holes, roughly 90 minutes after a seat deleted that key. This seat did not write it (it fired no invocation and no S3 write) and does not attribute it: S3 alone cannot name a writer and no CloudTrail read was taken.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~4/the-driven-refusal.result.md@a02bc48b98 s.1 re-grounding table, row: '`2026-08` has 6 keys, ask deleted by the issuer | confirmed: 6 keys, `coverage_egress_ask_ladder_skipped.json` absent | HOLDS' -- the PRIOR state, measured by the prior execution of this same order at ~16:3xZ.",
+        "aws s3api list-objects-v2 --bucket opal-data-etfs --prefix platinum/reports/ read 2026-09-10 ~18:3xZ, denominator 37 objects: platinum/reports/2026-08/ now carries SEVEN keys -- coverage_egress_ask_ladder_skipped.json 7867 2026-09-10T17:28:01.000Z, coverage_verdict.json 1225 2026-09-10T00:24:44.000Z, etf_ownership.html 43376 2026-09-10T00:24:47.000Z, etf_ownership.pdf 252393 2026-09-10T00:24:48.000Z, and the three opaletfs_*_202608.csv at 00:24:48-00:24:50.",
+        "Body of the reappeared object (aws s3api get-object): written_by 'render_month_end.coverage_gate on the --no-ladder branch (ETFS_GUARDRAIL.TO-EG-s-29) -- a RUNG-3-EQUIVALENT. RUNG 3 DID NOT RUN and did not write this.', rung3_ran false, month '2026-08', generated_at '2026-09-10T17:28:00.106557+00:00', ask_scope 'month-complete (merged across partners at this key)', partners_covered ['49financial','cottonwood'], 40 asks.",
+        "The month it describes has NO holes: platinum/reports/2026-08/coverage_verdict.json (LastModified 2026-09-10T00:24:44 GMT, ETag 6d13a29621407b94c876b9a60677ea4b, generated_at 2026-09-10T00:24:43.743827+00:00) reads verdict PUBLISH holes 0, with summary A=10 COVERED=21 B=0 C=0 D=0 UNKNOWN=0 for each of 49financial, inflection and cottonwood, and forcing = null.",
+        "NOT THIS SEAT: this execution of EG-s-21 fired no orchestrator invocation, no ssm send-command, no s3 put and no s3 delete. Its only mutating-capable call was a send-free lambda invoke in mode=recipients_qa, whose handler branch (lambda_function.py:983-1004 @a6e2031ff8) resolves and returns with no _ses and no _s3 call site reachable on it.",
+        "ATTRIBUTION LIMIT, STATED RATHER THAN GUESSED: an S3 listing carries no principal, so this row names WHAT changed and WHEN, never WHO. A CloudTrail lookup over the 17:2x-17:3xZ window would answer it and was not run -- it would not have changed this order's outcome, which is blocked for an unrelated reason (ETFS_GUARDRAIL-W4-S17)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S21-AC1 arm (d), as re-cut on R-EG-8, requires 'AN EGRESS ASK RECORDED FOR THE RUN ... present with size and UTC', and states the ask 'MAY BE WRITTEN BY RUNG 3 *OR* BY EG-s-29's RUNG-3-EQUIVALENT ON THE LADDER-SKIPPED BRANCH; both satisfy this arm and the record must say WHICH WROTE IT.' The face's premise, carried into the prior execution's grounding, is that this key is ABSENT for 2026-08.",
+    "world_is": "The key is PRESENT for 2026-08 and pre-dates any run this order could fire, with LastModified 2026-09-10T17:28:01Z and a body describing 40 asks for a month whose verdict is PUBLISH holes=0. So on this month PRESENCE of the ask no longer discriminates a run that wrote one from a run that wrote nothing, and 'the record must say WHICH WROTE IT' cannot be answered from the key's existence -- the arm would be satisfied by an artifact somebody else left there.",
+    "notes": "WHY THIS IS INERT AND STILL WORTH THE ROW. It harms nothing through normal operation -- the key is the ladder-SKIPPED equivalent, deliberately NOT rung 3's canonical coverage_egress_ask.json, and render_month_end.py:1011-1021 gives two reasons that separation exists, the first being that a rehearsal must never merge into the document a person authorises real egress on. Nothing downstream consumes it on a schedule. It is filed because it silently weakens an ACCEPT: arm (d) asks the run to have RECORDED an ask, and on 2026-08 that is now true before the run starts. THE CHEAP FIX FOR THE RE-CUT, and it is the same shape arm (d) already uses one clause later for the publish keys: require the ask key's LastModified to MOVE across the run and its body's forcing.run_id to equal the run's own printed RUN-ID line (render_month_end.py:1264-1266 mints and prints it, and _forcing_record carries it). Presence is a state; the pair is an event. Related: [[ETFS_GUARDRAIL-W4-S17]] (the blocking finding of this same execution, which is why no run was fired to disturb this key), [[ETFS_GUARDRAIL-W4-S6]] (the waste this order's refusals keep protecting)."
   }
 ]
 ```

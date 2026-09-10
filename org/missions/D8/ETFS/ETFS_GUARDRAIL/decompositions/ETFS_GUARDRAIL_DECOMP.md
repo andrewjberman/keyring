@@ -839,3 +839,68 @@ is placed rather than folded in -- fusing them would make one cell answer two qu
 evidence.
 
 -- `2.0.0_SA_COO`, L5 round 3, one cell on row `W4-S9` and the sequencing behind `R-EG-9`
+
+
+---
+
+## 20. ROUND 3, THE CELL BELOW ALL THE OTHERS (v0.11) -- three cells verified three files and the defect is in what they SHARE
+
+**`EG-s-21` DID NOT FIRE AND THE SINGLE PERMITTED DRIVEN RUN IS STILL UNSPENT.** Row
+`ETFS_GUARDRAIL-W4-S17`, BLOCKING, filed by the assignee while refusing to spend it, owned by this seat.
+
+**WHAT IT MEASURED.** The served renderer calls `remediate._provider_for(p)` at
+`render_month_end.py:1162`, inside the `--no-ladder` branch -- which `R-EG-6` shape 1 makes the ONLY
+path yielding a driven REFUSE. The `coverage` package the box holds separately does not define it:
+the deploy artifact is **11011 B at 2026-09-05T06:53:44Z** against a **16550 B** repo file. Exercised
+with a difference control rather than argued: the DEPLOYED package raises `AttributeError` inside
+`coverage_gate` before a verdict object exists; the REPO package returns `VERDICT: REFUSE holes=1 C=1`.
+
+**RE-DERIVED AT THE ISSUER'S SEAT WITH A DIFFERENT INSTRUMENT**, because the provenance claim was the
+load-bearing one: `git log -S'_provider_for' -- data/etfs/scripts/coverage/remediate.py` returns exactly
+ONE commit, `7e544cb4d7` at `2026-09-10 12:33:05Z` -- the `EG-s-28` fix, **five days after** the deployed
+artifact and **eleven hours after** the box was last stopped.
+
+⛔ **THE SELF-HEAL IS KEYED ON PRESENCE, NOT CURRENCY.** `render_month_end.py:118-129` re-pulls the
+package only `except ImportError`. A stale-but-importable package imports cleanly, the bootstrap never
+fires, and the failure surfaces as an `AttributeError` deep in the call path instead of a missing module
+at import. **A self-heal that cannot tell "absent" from "old" heals one of the two and is silent about
+the other.**
+
+⛔ **AND THIS IS RULE 22's SHARED-DEPENDENCY BLINDNESS, MEASURED.** `EG-s-29` verified the served
+RENDERER and was right. `EG-s-30` verified the served ORCHESTRATOR and was right. `EG-s-21`'s prior
+execution verified its own surface and was right. **EVERY PER-MEMBER ARM PASSED.** The renderer is not
+self-contained; it imports from a package the box holds separately, and no per-file check could see it.
+⚠ **AND THE PRIOR BATTERY CARRIED A GRAIN ERROR UNDERNEATH THAT:** it loaded the served renderer INSIDE
+THE CHECKOUT, where the import resolves to the REPO's `coverage` package -- exercising
+served-renderer-plus-repo-dependencies, **a hybrid that exists on no machine.**
+
+| cell | outcome_ref | surface | verb | depends_on | the bar |
+|---|---|---|---|---|---|
+| `EG-s-31` | FWD-9, FWD-10 | `data/etfs/scripts/coverage/` + the box's copy | deploy | none (`EG-s-21` OPEN, blocked ON this) | the box EXECUTES a `coverage` package whose symbols satisfy the renderer artifact it will actually run -- proven by EXERCISING the call path, never by an upload receipt |
+
+**Denominator:** PRD v0.8 `endpoint_outcomes` 8; round 3 SERVES 5; cells **13**.
+
+⛔ **THE PROPERTY IS NAMED, NOT THE ACT, AND THE REASON IS THIS ROUND'S OWN HISTORY.** An upload is ONE
+WRITER of "the box runs current code"; `R-EG-8` and `R-EG-9` both turned on exactly that confusion. So
+the accept requires an EXERCISE ON THE BOX and explicitly refuses an `s3 cp` rc, an ETag match and a
+directory listing as satisfying evidence.
+
+**THREE SHAPES, PRICED, THE CHOICE THE ASSIGNEE'S:** force the re-pull by removing the box-side copy
+(needs the box running, and it is a delete on a box); make the self-heal CURRENCY-AWARE (**the only shape
+that fixes the CLASS**, but it touches `EG-s-29`'s terminal surface and needs this seat's written word
+first, as a row and a stop); or upload alone (**the issuer's read is that this cannot work** given
+`:118-129`, and it is offered so a contrary finding can be worth more than the cell).
+
+⚠ **ONE LIMB IS ANDREW'S AND IT IS NAMED AT THE CUT RATHER THAN DISCOVERED MID-CELL:** the box is
+STOPPED. Starting it is ordinary; **STOPPING AN EC2 IS A HUMAN-CONFIRMATION ACT**, so a cell that starts
+it LEAVES IT RUNNING and reports the instance id and state as a measured value.
+
+```
+fanout: 1 of 1 chain, cap 8, reason: EG-s-31 alone on slot ~4; EG-s-21 is OPEN and sequenced behind it, and nothing else in this round shares the coverage package.
+```
+
+**What this cell does NOT decide:** whether the OTHER modules of that package are in the same condition.
+`S31-AC2` asks for that census rather than folding it in -- this cell was found through ONE symbol, and a
+remedy scoped to the symbol that happened to be called would repeat the defect it is fixing.
+
+-- `2.0.0_SA_COO`, L5 round 3, one cell on BLOCKING row `W4-S17`

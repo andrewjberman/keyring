@@ -2684,3 +2684,112 @@ The only authored bytes are this header; every row below is its writer's, unmodi
   }
 ]
 ```
+
+
+---
+
+## S45 -- AN ORDER ISSUED TO A LANE NOBODY WAS SITTING IN
+
+Filed by `2.0.0_SA_COO`, about its own dispatch of `OS-s-28`.
+
+```json
+[
+  {
+    "id": "NFRA_OUTSET-S45",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T17:55Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "one_line": "OS-s-28 was ISSUED, COMMITTED and reported as dispatched while its assignee lane was NOT REGISTERED -- the GO sat undrained at the top level of the inbox for ~1h40m and the issuer called the cell RUNNING.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BROKER PLANE: get_agent_status('0.7.0_AE_CloudOps~W') at 2026-09-10T17:4xZ returns NOT REGISTERED for the lane.",
+        "FILESYSTEM PLANE: org/mcp/inbox/0.7.0_AE_CloudOps/~W/20260910T161705Z_2.0.0_SA_COO_GO_on_NFRA_OUTSET.TO-OS-s-28__0acccc7f16.md sits at the TOP LEVEL of the lane inbox, never moved to read/, so no watcher ever consumed it.",
+        "PROCESS PLANE: Win32_Process CommandLine scan over claude.exe with an EXACT serial compare (not a substring) returns 0 hits of 5 live processes for 0.7.0_AE_CloudOps~W.",
+        "MARKER PLANE: OPAL_SPAWN_MARKER_v1 scan returns 0 markers for the lane; 1 marker-counted window live of cap 20.",
+        "LIVENESS FILE: org/mcp/liveness.json carries ZERO rows for any 0.7.0_AE_CloudOps lane.",
+        "THE ORDER ITSELF: NFRA_OUTSET.TO-OS-s-28 <status> still read 'pending' at HEAD ~1h40m after the 16:17:05Z GO.",
+        "NEGATIVE CONTROL ON THE ENCUMBRANCE READ: the three other pending CloudOps orders (MDPF_GLOBAL.T2C, NFRA_SUBSTRATECARDING.TO-CARD-R-W4-COX, WSE_COTMDL.WS5) resolve to <issued_to>0.7.0_AE_CloudOps</issued_to>, the BARE BASE, not to ~W -- so the lane is unencumbered and Rule 27 is satisfied for seating."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A seat task order is DISPATCHED BY ITS ISSUANCE -- 'GO paired at cut' -- so committing the order and sending the GO is the whole of delivery, and the cell is thereafter RUNNING.",
+    "world_is": "A GO to an unregistered lane is written to a directory and nothing else happens. There is no bounce, no ack, no staleness signal and no error: the send SUCCEEDS, the file lands, and the order reads as issued from every artifact the issuer would naturally check. The issuer held the cell as RUNNING for ~1h40m and said so to the operator.",
+    "notes": "THIS IS CLAUDE.md's 'QUEUED IF NOT LIVE IS A WISH, NOT A DELIVERY' ARRIVING AT A LANE RATHER THAN A BASE, AND THE RULE'S OWN TEXT DID NOT COVER IT. The rule names the failure as 'a BASE serial with no base session', because the measured instance (five messages unread 6-9 days in 0.7.0_AE_CloudOps) was a base. THE PROPERTY IS NOT BASENESS -- it is that NO SESSION HOLDS THE ADDRESS, and a lane letter satisfies that just as well as a base does. Rule 24(i) by subtraction: the population is ADDRESSES, and the enumeration was written forward as {base} instead of as {every address} MINUS {addresses with a live session}. Filed by the seat that wrote the forward list into its own dispatch habit. WHAT MAKES IT WORSE HERE THAN AT A BASE: /mstr-spawn's pre-flight censuses a lane's PROCESS truth, its MARKERS, its BROKER row and its open TASK ORDERS -- four planes -- and every one of them is a SPAWN-TIME check. NOTHING RE-READS THE ADDRESS AT ISSUANCE TIME. The COO issues to a lane it seated hours earlier and never asks again whether anyone is still there, and the spine's 'the spawn IS the GO' applies to WORKER subagents, whose liveness is guaranteed by the spawn itself. A SEAT ORDER BORROWS THAT CONFIDENCE WITHOUT THE MECHANISM THAT EARNS IT. THE CHEAP REMEDY IS ONE READ AND IT IS NOT A GATE: before reporting a seat cell as RUNNING, read the assignee's registration -- one get_agent_status per seat order, at issuance, not at seating. A worker needs none of this; the distinction is exactly whether the issuer created the executor or merely addressed it. AND THE HARM WAS NOT THE DELAY. The delay was recoverable and cost ~1h40m. The real cost is that 1.0.0_SA_CTO's L4 ruling 46b832a9a3 landed inside that window and WITHDREW two of the three shapes this face offered, one of which named a git hook retired the day before and one of which was the issuer's stated preference. Had the lane been live, an assignee would have held withdrawn text and possibly built to a dead carrier. THE UNDELIVERED STATE IS WHAT MADE THE CORRECTION FREE, which is the same thing sequencing bought on ETFS_GUARDRAIL EG-s-21 arm (d) an hour earlier -- and in neither case was it a control anybody designed. Twice in one night a defective face was repaired only because nobody had read it yet. Related: [[NFRA_OUTSET-S39]] (the drift trigger SKIPPED because its principal was Interactive -- the same shape one layer down: a mechanism that needs a human present, failing silently when none is), [[NFRA_OUTSET-S43]]."
+  }
+]
+```
+
+## NFRA_OUTSET-S46 -- `.tools/aws` CANNOT BE EXECUTED BY A WINDOWS PYTHON PARENT: WinError 193, not an aws error and not an empty result, and it took out exactly the three battery arms that shared it
+
+Filed by `0.7.0_AE_CloudOps~W` while building `TO-OS-s-28`'s battery.
+
+```json
+[
+  {
+    "id": "NFRA_OUTSET-S46",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~W",
+    "surfaced_at": "2026-09-10T18:35Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "0.7.0_AE_CloudOps~W",
+    "one_line": "`.tools/aws` IS A BASH SCRIPT, so a WINDOWS PYTHON parent cannot exec it: it raises OSError WinError 193 '%1 is not a valid Win32 application' -- NOT an aws error and NOT an empty result. Three battery arms died at once and the two that survived were the two that never touched AWS, so the failure looked like a defect in the ARMS rather than in the SHIM RESOLUTION.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "REPRODUCED: subprocess.run(['<repo>/.tools/aws', 's3api', ...]) from Python312/python.exe raises OSError [WinError 193]. Arms (a), (b) and (c) of test_os28_drift_is_continuous.py all reported 'ARM RAISED: OSError' in one run.",
+        "POSITIVE CONTROL, same interpreter, same call shape: subprocess.run(['<repo>/.tools/aws.cmd', 'sts', 'get-caller-identity']) returns rc=0 with the expected identity JSON. So the defect is the SHIM VARIANT, not the subprocess call, the arguments, or AWS.",
+        "FILE PLANE: `.tools/aws` is 7213 B mode -rwxr-xr-x (a shell script); `.tools/aws.cmd` is 2271 B. CLAUDE.md's Git section already says the pair ships 'both or neither'.",
+        "NEGATIVE CONTROL ON THE BLAME: arms (d), (e) and (f) HELD in the same run. They are the three arms that read PowerShell and the filesystem and never call the shim."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "CLAUDE.md's Git section names `.tools/aws` as the shim for AWS access and treats `aws.cmd` as its co-shipped sibling, without saying which caller each serves.",
+    "world_is": "The two are NOT interchangeable and the choice is a property of the CALLING PROCESS, not of the repo. A Git Bash caller runs `.tools/aws` transparently; a Win32 parent -- which every `python.exe` battery on this estate is -- can only start `.tools/aws.cmd`. Because the failure is an OSError raised at CreateProcess rather than a non-zero rc or an empty stdout, it does not look like an AWS problem at all, and a battery that wraps its arms in try/except reports it as a defect in each arm.",
+    "notes": "FIXED IN THIS CELL by resolving the shim rather than assuming it: a `_aws_shim()` helper prefers `.tools/aws.cmd` on nt, falls back to `.tools/aws`, and raises loudly naming both candidates if neither exists -- Rule 16's 'resolve it first, fail closed loud' applied to the aws shim the way the estate already applies it to `.tools/jq.exe`. THE CLASS WORTH KEEPING, AND IT IS NOT ABOUT AWS: A WRAPPER'S EXECUTABILITY IS A PROPERTY OF THE PARENT PROCESS, NOT OF THE REPO. The same path is present, readable and correct for one caller and unstartable for another on the same box, so 'the tool is there' is not the question -- 'can THIS process start it' is. AND THE DIAGNOSTIC SHAPE IS THE REUSABLE PART: three arms failed and three held, and the split was not random -- the three that failed were exactly the three that touched the shim. A per-arm exception handler converts one shared-dependency defect into N independent-looking failures, which is CLAUDE.md Rule 22's shared-dependency blindness seen from the other side: verifying each member found three broken members instead of one broken thing they had in common. Reading what the FAILING arms shared, rather than debugging the first one, is what located it in a single step. Related: [[NFRA_OUTSET-S39]], [[NFRA_OUTSET-S44]]."
+  }
+]
+```
+
+
+---
+
+## S47 -- ONE MEASURED INTERVAL, NOT THREE GRID POINTS: the report is more confident than its own deliverable
+
+Filed by `2.0.0_SA_COO` after Andrew ratified the quarter-hour as a gradeable constant, minutes after `OS-s-28` went terminal.
+
+```json
+[
+  {
+    "id": "NFRA_OUTSET-S47",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T18:55Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "one_line": "OS-s-28's BROKER REPORT calls three observed publishes 'a clean quarter-hour grid'; its own DELIVERABLE records the first as a MISSED-OCCURRENCE CATCH-UP, so the evidence supports ONE measured inter-fire quarter-hour interval, not three grid points -- and Andrew ratified 15 minutes as a gradeable constant minutes later.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ARITHMETIC ON THE REPORT'S OWN THREE TIMESTAMPS (18:16:56Z, 18:30:11Z, 18:45:13Z): gap 1 = 795 s = 13 m 15 s, NOT a quarter hour; gap 2 = 902 s = 15 m 02 s, a quarter hour within 2 s.",
+        "THE DELIVERABLE IS THE HONEST ARTIFACT AND IT DISAGREES WITH THE REPORT'S PHRASE, at org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/the-drift-measure-is-continuous.result.md:85 -- 'missed occurrence on its own at 14:16:41 local; the publish landed at 18:16:56Z'. The FIRST publish is a catch-up fire, named as one by its own author.",
+        "COMP-READ ENUMERATE OVER THAT DELIVERABLE, denominator printed: 3 hits across 259 lines / 38 sections for 'grid|quarter-hour|catch-up|missed', all PROSE band. Line 11 claims 'a recurring quarter-hour cadence' (a claim about the MECHANISM, which is true); line 85 records the catch-up. THE PHRASE 'clean quarter-hour grid' DOES NOT APPEAR IN THE DELIVERABLE AT ALL -- it exists only in the broker report to the issuer (msg 95469).",
+        "THE MECHANISM CLAIM IS NOT DISPUTED: the task carries a PT15M indefinite repetition, verified by the assignee from the task's own exported XML with a 4-added / 1-removed / 0-unexpected diff.",
+        "VINTAGE OF WHY IT NOW MATTERS: Andrew-direct ~18:5xZ, 'Lastly 15 min poll is ratified' (recorded @4ff4abd9a4), which DISCHARGES the v0.11 addendum's 'NO ACCEPT GRADES ON THE NUMBER' and makes the interval a bar a grader may apply."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Three automatic publishes were observed on a clean quarter-hour grid, the second and third establishing a cadence rather than an event.",
+    "world_is": "Three automatic publishes were observed and NONE was human-started -- that half is solid and is the cell's actual outcome. But only TWO of the three are grid fires. The first is a missed-occurrence catch-up, which is why gap 1 is 13 m 15 s. So the observation set contains exactly ONE measured interval between consecutive scheduled fires, not a three-point grid. The deliverable records this correctly; the report to the issuer compresses it into a phrase the deliverable does not contain.",
+    "notes": "THE ARTIFACT IS RIGHT AND THE MESSAGE ABOUT IT IS LOOSE, WHICH IS THE LESS COMMON DIRECTION AND THE EASIER ONE TO MISS. This estate's usual failure is a deliverable overclaiming and a summary repeating it. Here the deliverable is careful -- it names the catch-up in its own words -- and the compression happened in the REPORT, the one surface a grader is most likely to read first because it arrives in an inbox rather than having to be opened. A SUMMARY THAT IS MORE CONFIDENT THAN ITS SOURCE IS A DEFECT EVEN WHEN THE SOURCE IS FINE, because the summary is what travels. NOTHING IS WRONG WITH THE CELL AND NO RE-CUT IS PROPOSED. The mechanism is a genuine PT15M repetition; the cadence claim at deliverable:11 is about the MECHANISM and is true; three publishes with zero human acts is the outcome FWD-5 wanted and it is delivered. \u26d4 WHY IT IS FILED AT ALL, AND THE TIMING IS THE WHOLE REASON: Andrew ratified 15 minutes MINUTES AFTER this order went terminal. Until that word the number was an explicit non-bar -- the face said NO ARM GRADES ON THE NUMBER and none did. Now it is a constant an accept MAY grade on, and the first thing a grader will reach for is the observation set. IF 3.0.0_SA_CVO GRADES THE RATIFIED INTERVAL AT L9 IT MUST READ THE DELIVERABLE, NOT THE REPORT, and it must know the denominator is ONE measured inter-fire interval. One interval within 2 s of 900 s is real evidence and it is not nothing; it is also not three independent confirmations, and the difference is exactly the kind of denominator this project has spent the round insisting on. \u2b50 AND THE CHEAP REMEDY IS TO WAIT RATHER THAN TO RE-RUN: the task is live and repeating, so the observation set GROWS ON ITS OWN. Anyone who wants n>1 intervals reads the S3 version list an hour later and gets them for free, which is strictly better than re-cutting a terminal cell to manufacture evidence the world is already producing. NEVER-2's rewind rule points the same way. Related: [[NFRA_OUTSET-S39]] (the ARMED row on the Interactive principal -- still armed, and the reason the observation set only grows while someone is logged on, which BOUNDS the free-evidence remedy above), [[NFRA_OUTSET-S45]]."
+  }
+]
+```

@@ -1,0 +1,279 @@
+{
+  "schema_version": 1,
+  "checked_at_utc": "2026-09-10T19:24:52.271678+00:00",
+  "reviewer": "4.0.0_SA_CRO",
+  "request_message_id": "95508",
+  "original": {
+    "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md",
+    "commit": "58266dab2d7974bd3e24b469c89c7e5fdb63ae88",
+    "sha256": "b78fea1a0f3a752d9e4ba4491e67cf08725c331650ddd9cf3affc70da2b73fb5"
+  },
+  "method": "Extract FWD blocks from fenced text at exact git commits. Compare all nonblank original title/core/note lines byte-for-character after excluding replaced OWNER and SOURCE fields; separately exclude successor ACCEPT OWNER/CROSSES/THIS PROJECT fields. Preserve indentation and wording, enumerate additions, and compare DONE WHEN/ACCEPT/PROOF fields independently. No original NOTE text is excluded.",
+  "controls": {
+    "identity_comparison_passes": true,
+    "deleted_proof_line_detected": true,
+    "changed_proof_line_detected": true,
+    "invalid_pin_refused": true,
+    "invalid_pin_exit": 128
+  },
+  "results": [
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FRONTEND_20260910.md",
+      "commit": "07229339a21d176d9d31559d0601a27ebe8453d1",
+      "sha256": "bd1034fabc4998dac98269179e077066085922e1b73ebc2d01e3f39b9658af34",
+      "carried_ratified_ids": [
+        "FWD-1",
+        "FWD-3",
+        "FWD-4",
+        "FWD-5",
+        "FWD-6",
+        "FWD-8"
+      ],
+      "new_unratified_ids": [],
+      "comparison": [
+        {
+          "id": "FWD-1",
+          "original_immutable_line_count": 16,
+          "core_fields_equal": {
+            "DONE WHEN": true,
+            "ACCEPT": true,
+            "PROOF": true
+          },
+          "missing_or_changed": [],
+          "additive_successor_lines": []
+        },
+        {
+          "id": "FWD-3",
+          "original_immutable_line_count": 32,
+          "core_fields_equal": {
+            "DONE WHEN": true,
+            "ACCEPT": true,
+            "PROOF": true
+          },
+          "missing_or_changed": [],
+          "additive_successor_lines": []
+        },
+        {
+          "id": "FWD-4",
+          "original_immutable_line_count": 44,
+          "core_fields_equal": {
+            "DONE WHEN": true,
+            "ACCEPT": true,
+            "PROOF": true
+          },
+          "missing_or_changed": [],
+          "additive_successor_lines": [
+            "                    (this cut: the intake itself is now BACKEND's FWD-9, at Andrew)"
+          ]
+        },
+        {
+          "id": "FWD-5",
+          "original_immutable_line_count": 17,
+          "core_fields_equal": {
+            "DONE WHEN": true,
+            "ACCEPT": true,
+            "PROOF": true
+          },
+          "missing_or_changed": [],
+          "additive_successor_lines": []
+        },
+        {
+          "id": "FWD-6",
+          "original_immutable_line_count": 12,
+          "core_fields_equal": {
+            "DONE WHEN": true,
+            "ACCEPT": true,
+            "PROOF": true
+          },
+          "missing_or_changed": [],
+          "additive_successor_lines": []
+        },
+        {
+          "id": "FWD-8",
+          "original_immutable_line_count": 38,
+          "core_fields_equal": {
+            "DONE WHEN": true,
+            "ACCEPT": true,
+            "PROOF": true
+          },
+          "missing_or_changed": [
+            {
+              "operation": "delete",
+              "original": [
+                "         ⛔ NOT A BI SURFACE. This is a BOUNDED read of DATED signals for the selected",
+                "                    account's own periods. The 2026-09-09 brief's exclusion of broad",
+                "                    BI/agent query capability still stands and this does not reopen it",
+                "         ⚠ PENDING INPUT: the high-definition advisor logos. Andrew supplies them; they",
+                "                    are RECORDED AS PENDING and are neither invented nor scraped"
+              ],
+              "successor": []
+            }
+          ],
+          "additive_successor_lines": []
+        }
+      ]
+    },
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BACKEND_20260910.md",
+      "commit": "07229339a21d176d9d31559d0601a27ebe8453d1",
+      "sha256": "8cc14fabd70bac698eb3c640f7d5eca8570e903d9018776cd829aab6f6bf2b55",
+      "carried_ratified_ids": [
+        "FWD-1",
+        "FWD-2",
+        "FWD-3",
+        "FWD-4",
+        "FWD-5",
+        "FWD-7",
+        "FWD-8"
+      ],
+      "new_unratified_ids": [
+        "FWD-9",
+        "FWD-10"
+      ],
+      "comparison": [
+        {
+          "id": "FWD-1",
+          "original_immutable_line_count": 16,
+          "core_fields_equal": {
+            "DONE WHEN": true,
+            "ACCEPT": true,
+            "PROOF": true
+          },
+          "missing_or_changed": [],
+          "additive_successor_lines": []
+        },
+        {
+          "id": "FWD-2",
+          "original_immutable_line_count": 19,
+          "core_fields_equal": {
+            "DONE WHEN": true,
+            "ACCEPT": true,
+            "PROOF": true
+          },
+          "missing_or_changed": [],
+          "additive_successor_lines": []
+        },
+        {
+          "id": "FWD-3",
+          "original_immutable_line_count": 32,
+          "core_fields_equal": {
+            "DONE WHEN": true,
+            "ACCEPT": true,
+            "PROOF": true
+          },
+          "missing_or_changed": [],
+          "additive_successor_lines": []
+        },
+        {
+          "id": "FWD-4",
+          "original_immutable_line_count": 44,
+          "core_fields_equal": {
+            "DONE WHEN": true,
+            "ACCEPT": true,
+            "PROOF": true
+          },
+          "missing_or_changed": [],
+          "additive_successor_lines": [
+            "                    (this cut: the intake itself is FWD-9 below, at Andrew)",
+            "         ⛔ RUNNER STYLE IS ANDREW'S WORD, NOT A BUILD CHOICE (this cut, on",
+            "                    4.0.0_SA_CRO 191505Z): \"use the exact same style of runner, that",
+            "                    strategy works very well. I do not believe they send OTP so dont",
+            "                    need that part.\" The BDAPI-with-Kimi runner style and the absence",
+            "                    of an OTP branch are FIXED; L5 chooses YCharts-specific details",
+            "                    inside that strategy, never whether to honor it"
+          ]
+        },
+        {
+          "id": "FWD-5",
+          "original_immutable_line_count": 17,
+          "core_fields_equal": {
+            "DONE WHEN": true,
+            "ACCEPT": true,
+            "PROOF": true
+          },
+          "missing_or_changed": [],
+          "additive_successor_lines": []
+        },
+        {
+          "id": "FWD-7",
+          "original_immutable_line_count": 37,
+          "core_fields_equal": {
+            "DONE WHEN": true,
+            "ACCEPT": true,
+            "PROOF": true
+          },
+          "missing_or_changed": [],
+          "additive_successor_lines": []
+        },
+        {
+          "id": "FWD-8",
+          "original_immutable_line_count": 38,
+          "core_fields_equal": {
+            "DONE WHEN": true,
+            "ACCEPT": true,
+            "PROOF": true
+          },
+          "missing_or_changed": [
+            {
+              "operation": "delete",
+              "original": [
+                "         ⛔ NOT A BI SURFACE. This is a BOUNDED read of DATED signals for the selected",
+                "                    account's own periods. The 2026-09-09 brief's exclusion of broad",
+                "                    BI/agent query capability still stands and this does not reopen it",
+                "         ⚠ PENDING INPUT: the high-definition advisor logos. Andrew supplies them; they",
+                "                    are RECORDED AS PENDING and are neither invented nor scraped"
+              ],
+              "successor": []
+            }
+          ],
+          "additive_successor_lines": []
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "carried_block_occurrences": 13,
+    "unique_ratified_ids": [
+      "FWD-1",
+      "FWD-2",
+      "FWD-3",
+      "FWD-4",
+      "FWD-5",
+      "FWD-6",
+      "FWD-7",
+      "FWD-8"
+    ],
+    "original_immutable_line_occurrences": 362,
+    "core_fields_equal_for_all_occurrences": true,
+    "blocks_with_missing_ratified_notes": [
+      {
+        "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FRONTEND_20260910.md",
+        "id": "FWD-8"
+      },
+      {
+        "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BACKEND_20260910.md",
+        "id": "FWD-8"
+      }
+    ],
+    "runner_constraint_restored": true,
+    "overall_note_carriage_claim": "FAIL at 07229339a2: two original FWD-8 notes, five lines, absent from both successor files.",
+    "correction_routed_to": "1.0.0_SA_CTO at 20260910T192335Z",
+    "scope": "Document-carriage verification only; not outcome realization, ratification, deployment or fresh provider evidence."
+  },
+  "follow_up_resolution": {
+    "checked_at_utc": "2026-09-10T19:39:45.336828+00:00",
+    "results": [
+      {
+        "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FNTEND_20260910.md",
+        "source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
+        "all_five_previously_missing_lines_restored": true
+      },
+      {
+        "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md",
+        "source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
+        "all_five_previously_missing_lines_restored": true
+      }
+    ],
+    "scope": "The two previously missing FWD-8 notes only; prior full comparison remains historical at 07229339a2. New FWD-9/10/11 content is not certified by this five-line restoration check."
+  }
+}

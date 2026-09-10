@@ -1,5 +1,7 @@
 # Lightweight Investor Reporting — research and proposed design
 
+> **Organization update, September 10, 2026:** Andrew has replaced the former project/workstream structure with two projects: [IR FE](investor-reporting-ir-fe-brief-20260910.md) for the complete client-facing product and [IR BK](investor-reporting-ir-bk-brief-20260910.md) for ingestion, tenant scoping, transformations and operations. Both briefs map all four source briefs and five supporting documents. The body below remains dated research; its former ownership labels are historical. Permanent FWD IDs are unchanged. Macro IRPT, directive D9, laptop execution.
+
 **Author:** 4.0.0_SA_CRO (Chief Research Officer)  
 **Home:** org/tier1_exec/4.0.0_SA_CRO/  
 **Recon ID:** RCN-0008, downstream pilot design  
@@ -146,6 +148,8 @@ If the captured workflow returns structured report data, map its sections into O
 Status at this cut: transcript locations and new HAR/sample inputs pending Andrew/analyst evidence. WS1, WS2 and WS4 research can proceed independently; WS3's future implementation is bounded by this explicit capture gap.
 
 ## 5. Holdings/model-overlay normalizer Lambda — WS4
+
+**September 10 follow-up:** The [WS4 child brief](investor-reporting-model-overlay-brief-20260910.md) and [current-snapshot backend design](investor-reporting-model-overlay-design-20260910.md) expand this section using 19 named live silver datasets and four legacy identity tables. Andrew selects current-only v1, advisor-scoped selection and model-led pie/radial taxonomy drilldowns. The detailed design records actual join fields, observed versus assigned/target-based values, Eclipse's combined catalogs, Cottonwood's stale model sources and identity gaps. It preserves the shared client selector and publisher ownership. The original proposal below is prior context; the dated child carries the more precise WS4 semantics and measured limitations.
 
 ### 5.1 Source-routing proposal
 

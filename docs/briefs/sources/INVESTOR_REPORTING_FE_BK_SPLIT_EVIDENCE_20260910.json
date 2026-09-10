@@ -1,0 +1,2565 @@
+{
+  "schema_version": 1,
+  "compiled_at_utc": "2026-09-10T18:57:35.872937+00:00",
+  "author": "4.0.0_SA_CRO",
+  "purpose": "Two-project source coverage and local path verification; no fresh runtime or live data certification",
+  "organization": {
+    "projects": [
+      "IR FE",
+      "IR BK"
+    ],
+    "macro": "IRPT",
+    "directive": "D9",
+    "execution": "laptop",
+    "d9_whole_move_directed": true,
+    "canonical_codes_assigned_here": false,
+    "permanent_outcome_ids": "FWD-1 through FWD-12 ratified; FWD-12 last at 5c18c88826. IRPT_FNTEND owns eight and IRPT_BCKEND four.",
+    "canonical_project_codes": {
+      "IR FE": "IRPT_FNTEND",
+      "IR BK": "IRPT_BCKEND"
+    },
+    "code_assignment_authority": {
+      "person": "Andrew",
+      "recording_seat": "1.0.0_SA_CTO",
+      "commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
+      "supersedes": [
+        "IRPT_FRONTEND",
+        "IRPT_BACKEND"
+      ]
+    },
+    "hard_project_split": "Two projects, decompositions, task-order sets and adjudications. One acceptance owner per FWD; shared contracts are handoffs, not jointly owned cells."
+  },
+  "scope_limits": [
+    "All nine source document bodies retain their original evidence clocks and limitations.",
+    "Existing path verification is not a fresh full-file behavior review.",
+    "No live AWS, vendor, production UI or authorization probe in this consolidation.",
+    "Proposed local paths and bucket layout are not deployed implementation.",
+    "No raw client payload, HAR, cookie or credential is included."
+  ],
+  "authority_records": [
+    {
+      "path": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260910_IR_FE_IR_BK_SPLIT.md",
+      "sha256": "350e1c22673b4d56b4ac3a402af404cf0c62a44fd2ae25188556a522f7ccc447",
+      "size_bytes": 4652
+    },
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_183xZ_IR_IS_THE_TOP_PROJECT_LAPTOP_AND_SPLITS_FE_BK.md",
+      "sha256": "93168c0564362c6b8a93bf92a8ce4bf8add8bca83fda709bd57096a7add91ef9",
+      "size_bytes": 4599
+    },
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_183xZ_MACRO_IS_IRPT_REGISTER_IN_D9.md",
+      "sha256": "ba4b0aadffb3b152cc6f0a2474872113b8ad5c92ee7e6978fa02fe44bf281b43",
+      "size_bytes": 4285
+    },
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_185xZ_D9_TO_LAPTOP_CLDGRPH_FINISHED_15MIN_RATIFIED.md",
+      "sha256": "42ce6890b0504383128c55b719dc1d7b9591241fa888bf66b4c384d714a180ac",
+      "size_bytes": 5440
+    },
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_192xZ_FWD9_YES_FWD10_IMPOSSIBLE_BY_INGESTION_GATE.md",
+      "source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
+      "sha256": "bd7a5c1c5ed5ec7c194be93c13b1b29445ad6a652ec74b447c68ada79a509f4f",
+      "size_bytes": 6945
+    },
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_192xZ_FWD9_YES_FWD10_IMPOSSIBLE_BY_INGESTION_GATE.md",
+      "source_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
+      "sha256": "310a075f509ed884a266ac22ee01fa62efee757d0736600579a7b54105b8a2f8",
+      "size_bytes": 9569
+    },
+    {
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_192xZ_FWD9_YES_FWD10_IMPOSSIBLE_BY_INGESTION_GATE.md",
+      "source_commit": "5c18c8882631115a4ca0e39971e952690b916953",
+      "sha256": "2544d5626050f65a676838de2eb4f7c4cc6b02154e60829c2b7157d8a48ea690",
+      "size_bytes": 10105,
+      "read_scope": "Full committed ratification diff read."
+    }
+  ],
+  "source_documents": [
+    {
+      "id": "S1",
+      "path": "docs/briefs/investor-reporting-unification-brief-20260909.md",
+      "kind": "brief",
+      "sha256_before_organization_notice": "54aa4249f82c5bdfb0aa307530c378c86a27d7d2da6077a9dd7507a7c400d198",
+      "sha256": "3e4993a314fa7b5e24678585318a52aff043f8845d17e1298e0875d8b58e1f17",
+      "size_bytes": 43549,
+      "headings": [
+        "# INVESTOR REPORTING & DATA UNIFICATION — STEP-1 BRIEF (L1) — a function under D9 Opal Workflows\r",
+        "## 0. HOW THE SIBLINGS WERE HANDLED, AND WHERE IT BENT\r",
+        "# PART I — THE OUTCOME TERRITORY\r",
+        "### O1 — An advisor finds a client by name or account and lands in the right scope, without walking the tree\r",
+        "### O2 — An advisor answers \"what does this client own, and which Opal models are involved\" in one place, at every level\r",
+        "### O3 — An advisor produces a client-ready performance report for an account or relationship, and the PDF says what it is\r",
+        "### O4 — From the same client context, an advisor runs an approved stress scenario and takes the result out as a PDF\r",
+        "### O5 — A firm principal slices everything by supervision and by billing, independently, from the top down, and the slice survives\r",
+        "### O6 — A partner sees only its own data, and a book-restricted user cannot widen their view by any route\r",
+        "### O7 — Every partner gets the same product regardless of custodian or vendor; a new partner is a mapping, not a product\r",
+        "### O8 — An engineer can draw the Investor Reporting dependency boundary and show that a change to a legacy page's gold does not reach it\r",
+        "### O9 — It is there each morning at 9 Eastern, and late data is visible as late, never relabelled current\r",
+        "### O10 — An engineer or an agent reads one manifest and knows, for every path, what it is and whether it may be used\r",
+        "### O11 — Opal can retire a vendor at a partner only when a named checklist says the replacement covers what the vendor supplied\r",
+        "### O12 — An analyst or an agent later works over the same governed gold without re-deriving it (horizon-bearing)\r",
+        "# PART II — WHERE THE BOUNDARY SITS\r",
+        "# PART III — THE QUALITATIVE BAR\r",
+        "# PART IV — THE SUBSTRATE: IS THIS IN A CANONICAL PATTERN?\r",
+        "### F-A — The three legacy pages exist as three routes; there is no Investor Reporting route\r",
+        "### F-B — Gold is SIX per-firm-or-per-domain trees, not one contract; THREE bucket generations are live\r",
+        "### F-C — Supervision and billing exist as per-firm gold FIELDS, at account grain with a current-flags caveat, not as a two-axis cohort dimension\r",
+        "### F-D — Tenant isolation is measured SOUND and is a reuse\r",
+        "### F-E — The spine and the account→model join exist; account-grain membership is D3's live deliverable\r",
+        "### F-F — The performance method is further along than §04 says: a pinned method, a written contract, two teardowns, a held build, a live engine, a parity harness\r",
+        "### F-G — Sensitivity / stress analysis is GREENFIELD in the estate; the only YCharts assets are a session-capture path and gateway read tools\r",
+        "### F-H — PDF generation as a client artifact does not exist; headless-browser tooling does\r",
+        "### F-I — Scheduling is two mechanisms and mostly UTC; event-driven silver→gold already exists for two partners; the 9 a.m. ET problem is a ruled direction, not a new idea\r",
+        "### F-J — The path manifest has been attempted before and is dormant; D10 is its owner\r",
+        "### F-K — The directive register has no D13 and no D14; PLACEMENT RULED to D9 at ~21:0xZ\r",
+        "### F-M — What \"the current YCharts solution\" provides for PRODUCT 2, SENSITIVITY ANALYSIS: varietal 1 of 3, field by field (ADDED 2026-09-09 ~18:2xZ; RE-CLASSIFIED ~18:4xZ on Andrew's word)\r",
+        "### F-L — The proposal's terminology map already has an estate object: one firm enumeration, and ADVI_ROLGAT's role tiers\r",
+        "# PART V — WHAT MUST BE TRUE, WITHOUT SCOPING IT NOW\r",
+        "# PART VI — STATUS SCOPING — NOT OUTCOME-BEARING\r",
+        "# PART VII — WHAT THIS BRIEF DOES NOT CLAIM\r",
+        "## REFS TO CARRY\r"
+      ],
+      "scope": "Body retains original dated research; only organization notice added in consolidation.",
+      "body_preserved_vs_pre_split_head": true
+    },
+    {
+      "id": "S2",
+      "path": "docs/briefs/investor-reporting-lightweight-brief-20260910.md",
+      "kind": "brief",
+      "sha256_before_organization_notice": "1e49a7528849c7b547f8422fd6b83145edb2b5ee86132659071af95b1b00baa7",
+      "sha256": "698411ae2ebb2a85624364635e892c3bfdbb1c6f226f1bea178d3c6feae84424",
+      "size_bytes": 30476,
+      "headings": [
+        "# Lightweight Investor Reporting — L1 brief\r",
+        "## Direction and relationship to yesterday's brief\r",
+        "# PART I — THE OUTCOME TERRITORY\r",
+        "### O1 — An advisor finds an authorized client and opens its relationship and accounts without waiting for a vendor report\r",
+        "### O2 — A restricted advisor can use every tab and export only within their permitted client population\r",
+        "### O3 — An advisor reads the provider's performance result in an Opal report and exports the same result\r",
+        "### O4 — An advisor obtains a YCharts sensitivity analysis in the same client context and exports it\r",
+        "### O5 — An advisor sees current holdings organized by models, with the underlying securities and unassigned assets preserved\r",
+        "### O6 — An advisor can continue using the workspace when one report is unavailable and can tell the age of each result\r",
+        "### O7 — An advisor explains the reporting period using measured portfolio events and the market themes recorded around those dates\r",
+        "# PART II — WHERE THE BOUNDARY SITS\r",
+        "## II.1 One project, four explicit workstream boundaries\r",
+        "## II.2 Reuse and sibling boundaries\r",
+        "# PART III — THE QUALITATIVE BAR\r",
+        "# PART IV — THE SUBSTRATE\r",
+        "### F1 — The portal already has the structural UI pieces\r",
+        "### F2 — A reusable 49F Black Diamond performance request builder already exists\r",
+        "### F3 — Orion has a different request model, and the inspected existing pull is not the requested live client report\r",
+        "### F4 — All three model-source families have repository substrates, but they have different meanings\r",
+        "### F5 — Client identity and advisor population are partner-specific\r",
+        "### F6 — Existing authentication is reusable, but the new route needs deliberate coverage\r",
+        "### F7 — YCharts is one analytical provider; report routing remains an evidence gap\r",
+        "# PART V — WHAT MUST BE TRUE, WITHOUT SCOPING IT NOW\r",
+        "# PART VI — STATUS — NOT OUTCOME-BEARING\r",
+        "# PART VII — WHAT THIS BRIEF DOES NOT CLAIM\r",
+        "## REFS TO CARRY\r"
+      ],
+      "scope": "Body retains original dated research; only organization notice added in consolidation.",
+      "body_preserved_vs_pre_split_head": true
+    },
+    {
+      "id": "S3",
+      "path": "docs/briefs/investor-reporting-ycharts-brief-20260910.md",
+      "kind": "brief",
+      "sha256_before_organization_notice": "9f908e6d2697858de6a0ed273bbe1a5437292f1ba5eda0f92a9945621417e1ec",
+      "sha256": "fab7b7e696abd40aa587d4457ab107b1d6eacae7d7ae551258310a71998703ce",
+      "size_bytes": 18819,
+      "headings": [
+        "# Investor Reporting — YCharts Analysis intake and serving brief\r",
+        "# PART I — THE OUTCOME TERRITORY\r",
+        "### O1 — An advisor submits holdings by email and can identify the resulting request\r",
+        "### O2 — An advisor or analyst can inspect and correct the holdings and choices the program inferred\r",
+        "### O3 — An advisor obtains the requested Overview, Comparison or Multi-Comp analysis\r",
+        "### O4 — An advisor obtains the same requested analysis after a recoverable session interruption\r",
+        "### O5 — An authorized advisor reads and exports the validated analysis in Opal's presentation\r",
+        "### O6 — An advisor receives a validated revision and can recover its evidence later\r",
+        "# PART II — WHERE THE BOUNDARY SITS\r",
+        "# PART III — THE QUALITATIVE BAR\r",
+        "# PART IV — THE SUBSTRATE\r",
+        "# PART V — DEPENDENCIES\r",
+        "# PART VI — CURRENT STATUS\r",
+        "# PART VII — WHAT THIS BRIEF DOES NOT CLAIM\r",
+        "## REFS TO CARRY\r"
+      ],
+      "scope": "Body retains original dated research; only organization notice added in consolidation.",
+      "body_preserved_vs_pre_split_head": true
+    },
+    {
+      "id": "S4",
+      "path": "docs/briefs/investor-reporting-model-overlay-brief-20260910.md",
+      "kind": "brief",
+      "sha256_before_organization_notice": "95077580f1c4e6f520eab75207bd251daa552aec7bc07ef83ceb65b5ec331b02",
+      "sha256": "f9a8960303658b9f2796f34d4cf58078c68781c993fecaa7fd3a77e36899cea1",
+      "size_bytes": 22996,
+      "headings": [
+        "# Investor Reporting — Holdings and model overlay — WS4 child brief\r",
+        "# PART I — THE OUTCOME TERRITORY\r",
+        "### O1 — An advisor opens current holdings for the authorized client or account already selected\r",
+        "### O2 — An advisor reads model and asset-category percentages with a clear value basis\r",
+        "### O3 — An advisor drills from a category into its models, accounts and securities without losing context\r",
+        "### O4 — An advisor accounts for assets outside the resolved model overlay\r",
+        "### O5 — An advisor can use current holdings while recognizing an older or incomplete model overlay\r",
+        "### O6 — An operator explains a displayed allocation and resolves a failed join from its source evidence\r",
+        "# PART II — WHERE THE BOUNDARY SITS\r",
+        "### II.1 Ownership within the one umbrella\r",
+        "### II.2 Named prior art and adjacent owners\r",
+        "# PART III — THE QUALITATIVE BAR\r",
+        "# PART IV — THE SUBSTRATE\r",
+        "### F1 — Current holdings and model sources are present, but their clocks differ\r",
+        "### F2 — SmartX provides a substantial join and an observed-allocation substrate\r",
+        "### F3 — Eclipse needs both catalogs and explicit account scope\r",
+        "### F4 — Cottonwood's existing overlay is target-based, with a stale assignment source\r",
+        "### F5 — The taxonomy and radial UI can be reused with explicit semantics\r",
+        "# PART V — WHAT MUST BE TRUE, WITHOUT SCOPING IT NOW\r",
+        "# PART VI — STATUS — NOT OUTCOME-BEARING\r",
+        "# PART VII — WHAT THIS BRIEF DOES NOT CLAIM\r",
+        "## REFS TO CARRY\r"
+      ],
+      "scope": "Body retains original dated research; only organization notice added in consolidation.",
+      "body_preserved_vs_pre_split_head": true
+    },
+    {
+      "id": "S5",
+      "path": "docs/briefs/investor-reporting-lightweight-design-20260910.md",
+      "kind": "supporting_document",
+      "sha256_before_organization_notice": "795d26e2f38fee82704a25d47e765d0821a407460256a3ecc96d5be937696f54",
+      "sha256": "d486d43ce3938b9f12617aca33543edd4dd048b84b8787cc1e4f7eaa0d6a1833",
+      "size_bytes": 35757,
+      "headings": [
+        "# Lightweight Investor Reporting — research and proposed design\r",
+        "## 1. Page and shared interaction contract — WS1\r",
+        "### 1.1 Proposed page layout\r",
+        "### 1.2 Shared scope and response envelopes — proposed, not existing endpoints\r",
+        "## 2. Client discovery and silver-cache methodology — WS1\r",
+        "### 2.1 Build a small index from existing snapshots\r",
+        "### 2.2 Per-partner identity map\r",
+        "### 2.3 Denominators and measurement plan\r",
+        "## 3. Performance shaper/normalizer Lambda — WS2\r",
+        "### 3.1 Routing and execution proposal\r",
+        "### 3.2 Endpoint evidence and limits\r",
+        "### 3.3 Proposed consolidated performance shape\r",
+        "## 4. YCharts backend routing — WS3\r",
+        "### 4.1 What is known\r",
+        "### 4.2 Evidence needed from analyst transcripts, HARs and samples\r",
+        "### 4.3 Proposed adapter behavior pending capture\r",
+        "## 5. Holdings/model-overlay normalizer Lambda — WS4\r",
+        "### 5.1 Source-routing proposal\r",
+        "### 5.2 Proposed common holdings shape\r",
+        "### 5.3 On-demand validation design\r",
+        "## 6. Shared PDF, cache and integration behavior\r",
+        "## 7. Evidence index and reproduction scope\r"
+      ],
+      "scope": "Body retains original dated research; only organization notice added in consolidation.",
+      "body_preserved_vs_pre_split_head": true
+    },
+    {
+      "id": "S6",
+      "path": "docs/briefs/investor-reporting-performance-review-20260910.md",
+      "kind": "supporting_document",
+      "sha256_before_organization_notice": "b6f326e0ba5cc7f7eedeec2b458aa96e7ce7d89d5c4388bf72038eb02e406ec6",
+      "sha256": "afefbeb5aa013187fc87a733647808a9aae1100713ab97fbfc12fcbac16573ec",
+      "size_bytes": 20532,
+      "headings": [
+        "# Investor Reporting: performance presentation review\r",
+        "## 1. Recommended presentation\r",
+        "## 2. What the supplied references actually show\r",
+        "## 3. Live findings and minimum vendor calls\r",
+        "### The Orion response-size experiment\r",
+        "## 4. The consolidated shape\r",
+        "### A failed value-chart shortcut worth preserving\r",
+        "## 5. The autosuggest seam with WS1\r",
+        "## 6. What is established, and what the build still needs\r",
+        "## 7. Reproduction and review checks\r"
+      ],
+      "scope": "Body retains original dated research; only organization notice added in consolidation.",
+      "body_preserved_vs_pre_split_head": true
+    },
+    {
+      "id": "S7",
+      "path": "docs/briefs/investor-reporting-export-narrative-spec-20260910.md",
+      "kind": "supporting_document",
+      "sha256_before_organization_notice": "ae951efeffc969829a31498ee82a1fcd4f334b20908f00495e31aa5f11496b36",
+      "sha256": "81b3d64ab986a032b0a437e89c84d8c76e185786fdb8f5cc6e2704639a54c592",
+      "size_bytes": 25572,
+      "headings": [
+        "# Performance Reporting: branded PDF and narrative arc\r",
+        "## 1. The product\r",
+        "## 2. Branding is a generation option\r",
+        "## 3. What the new Black Diamond capture establishes\r",
+        "## 4. Narrative arc: select the performance events first\r",
+        "## 5. Historical evidence retrieval\r",
+        "### Time alignment and phrase selection\r",
+        "## 6. Narrative generation and report contract\r",
+        "## 7. Workstream ownership and proof\r",
+        "## 8. Evidence and reproduction\r"
+      ],
+      "scope": "Body retains original dated research; only organization notice added in consolidation.",
+      "body_preserved_vs_pre_split_head": true
+    },
+    {
+      "id": "S8",
+      "path": "docs/briefs/investor-reporting-ycharts-design-20260910.md",
+      "kind": "supporting_document",
+      "sha256_before_organization_notice": "186da8efc9adc246a8734d600b00aff1becc17a31ffd337fdb64b80b4072832e",
+      "sha256": "78963dae3368ab1e812d99850030752a7b7bbed4b5dcca80ae9aacd224b78137",
+      "size_bytes": 39222,
+      "headings": [
+        "# YCharts Analysis — intake, retrieval and serving design\r",
+        "## 1. Product and execution flow\r",
+        "## 2. Cloud email intake\r",
+        "### 2.1 Schedule and destination\r",
+        "### 2.2 Mailbox authentication and reads\r",
+        "### 2.3 Checkpoints, duplicates and failure recovery\r",
+        "## 3. Input contract and programmatic interpretation\r",
+        "## 4. Session library and exact BDAPI runner adaptation\r",
+        "### 4.1 Reuse the chosen implementation\r",
+        "### 4.2 Secret separation — measured current state\r",
+        "### 4.3 Browser context, shared login and recovery\r",
+        "## 5. Explicit vendor retrieval instructions\r",
+        "### 5.1 Evidence and configuration fixtures\r",
+        "### 5.2 Resolve holdings, upload and create\r",
+        "### 5.3 Build and submit the requested report\r",
+        "### 5.4 Retry decisions\r",
+        "## 6. Encrypted records and durable job state\r",
+        "## 7. Analysis tab and branded output\r",
+        "## 8. Dependency sequence and remaining evidence\r",
+        "## 9. Verification and reproduction\r"
+      ],
+      "scope": "Body retains original dated research; only organization notice added in consolidation.",
+      "body_preserved_vs_pre_split_head": true
+    },
+    {
+      "id": "S9",
+      "path": "docs/briefs/investor-reporting-model-overlay-design-20260910.md",
+      "kind": "supporting_document",
+      "sha256_before_organization_notice": "62532b62eb957c928e33343c9cb493800946f421c9bd0b873b27217295acb98c",
+      "sha256": "56baf6ca149b460d9ec1d08fd4cf8413b434bc2e8df6b45ffcb74ab7f88b892a",
+      "size_bytes": 29242,
+      "headings": [
+        "# Investor Reporting WS4 — current holdings and model-overlay design\r",
+        "## 1. Product shape and scope\r",
+        "## 2. Common data shape: separate custody facts from attribution\r",
+        "## 3. 49 Financial: Schwab 08335338 + SmartX\r",
+        "### 3.1 Exact current inputs and joins\r",
+        "### 3.2 Attribution and reuse\r",
+        "## 4. Inflection: Orion + Eclipse\r",
+        "### 4.1 Exact inputs and catalog behavior\r",
+        "### 4.2 Account assignment is not portfolio headline value\r",
+        "### 4.3 Advisor/household substrate is partly in the legacy bucket\r",
+        "## 5. Cottonwood: Black Diamond + Rebalancer\r",
+        "### 5.1 Holdings grain and assignment bridge\r",
+        "### 5.2 Target-based attribution and recursive composition\r",
+        "## 6. Taxonomy, percentages and radial presentation\r",
+        "### 6.1 Reuse the registry, not a label heuristic\r",
+        "### 6.2 Percentages and signed values\r",
+        "### 6.3 Component reuse\r",
+        "## 7. Movement and fast serving\r",
+        "## 8. Validation and remaining dependencies\r",
+        "## 9. Evidence and reproduction\r"
+      ],
+      "scope": "Body retains original dated research; only organization notice added in consolidation.",
+      "body_preserved_vs_pre_split_head": true
+    }
+  ],
+  "new_briefs": [
+    {
+      "project": "IR FE",
+      "path": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "sha256": "13ff2f296c998c24acfc35931b35556df977d4cbf4498fdd8c4fc1fbffcbb998",
+      "outcomes": 8,
+      "parts": 7,
+      "source_documents_mapped": 9,
+      "lines": 215,
+      "words": 4299,
+      "canonical_code": "IRPT_FNTEND",
+      "section_inventory": [
+        {
+          "heading": "# IR FE — Investor Reporting frontend project brief",
+          "start_line": 1,
+          "end_line": 13,
+          "section_sha256": "bb993d53dec83f89568dd4461434eee0cf09c9c539e86dc06dfa5b7f7fa2bead",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART I — THE OUTCOME TERRITORY",
+          "start_line": 14,
+          "end_line": 15,
+          "section_sha256": "6bb8f139919add885e2f01acad1ad46897bf2c9ff48b18cfb347f8413a264c79",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O1 — An advisor finds the right client and keeps that context across the three tabs",
+          "start_line": 16,
+          "end_line": 23,
+          "section_sha256": "a813d986b9020ce2ad5c25ffc04cb917c7c3586bb8c7354b8f71d989676accc5",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O2 — An advisor reads a clear performance report with the provider's meaning intact",
+          "start_line": 24,
+          "end_line": 31,
+          "section_sha256": "f6297c25729326e9bdb638270bdc19861b54d90aca3dd4eee46758825c17d5d7",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O3 — An advisor obtains and reviews the requested YCharts analysis in the same client context",
+          "start_line": 32,
+          "end_line": 39,
+          "section_sha256": "a8f9cde0c1c808ff45da1721405c8ca1fdd9a3e862e28803f30104640edb24fa",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O4 — An advisor reads current holdings through model-led radial drilldowns",
+          "start_line": 40,
+          "end_line": 47,
+          "section_sha256": "64c13d7d384e1c7206497a4820c790e21e0f43ca5182d8e956cfaac25e34fe17",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O5 — An advisor previews and downloads a branded report that matches the reviewed revision",
+          "start_line": 48,
+          "end_line": 57,
+          "section_sha256": "f8b89badaebf524bc77378f2df00cb383a1529b9c8cc136fbec6197c2aa6eb48",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O6 — An advisor understands partial, stale or failed results and continues using the rest of the product",
+          "start_line": 58,
+          "end_line": 65,
+          "section_sha256": "7968ff251a30b9a42d56f55619e686ad30ab1a6d47ab59097633810b2724dd79",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O7 — An entitled Opal user runs reports across all firms from the Global view",
+          "start_line": 66,
+          "end_line": 73,
+          "section_sha256": "d6c3681574606c2112aee810f1574473e36e7e0e60a8dee4f1ee76a809720abc",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O8 — An advisor finds familiar portal components and consistent design throughout the product",
+          "start_line": 74,
+          "end_line": 79,
+          "section_sha256": "5ff6e15a5e746203b17f212e4c7bc0061bbdf815d1f2837ac8f4492c222a9d09",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART II — WHERE THE BOUNDARY SITS",
+          "start_line": 80,
+          "end_line": 81,
+          "section_sha256": "bf760645b8160d0f4d56f97321c4fb8c8c767a564c4061003dcca9d73118867e",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### II.1 Two teams with explicit ownership",
+          "start_line": 82,
+          "end_line": 98,
+          "section_sha256": "0d5e00251ec7512acc3c1488c2feba9d0d4bcc2253e9f35bbfc6edd00b87c5c3",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### II.2 Handoff contracts",
+          "start_line": 99,
+          "end_line": 106,
+          "section_sha256": "4d0c6e67d19d6548c2df5f9c9e46bf7ce71e06d7bf1c64d398d314a2b495edd9",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### II.3 Scope retained and scope deferred",
+          "start_line": 107,
+          "end_line": 112,
+          "section_sha256": "22bc80df1398fd93106a6b36a313239ff54a65d97f3fe01e9f05773f08fe9602",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART III — THE QUALITATIVE BAR",
+          "start_line": 113,
+          "end_line": 122,
+          "section_sha256": "6555a17d87f41373e72089a990db665009c80c9595e11e86a6c7ad793c09c4be",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART IV — SUBSTRATE, SOURCE MAP AND FRONTEND PATHS",
+          "start_line": 123,
+          "end_line": 124,
+          "section_sha256": "6fd9de28302d2b863d4cb335b665f4255b0b02741aa57572a90456c6da2a34c3",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.1 All nine source documents: what IR FE takes from each",
+          "start_line": 125,
+          "end_line": 140,
+          "section_sha256": "f75965b6e16186a1279c26aebd45d2490f8a79f36fd97ec800410c3acf349ada",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.2 Existing frontend and brand paths to use",
+          "start_line": 141,
+          "end_line": 160,
+          "section_sha256": "3d2c6126d74134b2aa4fbefd66b924fb000540b3e4912abbc7c9ce924d3a0755",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.3 Review artifacts and evidence to carry",
+          "start_line": 161,
+          "end_line": 167,
+          "section_sha256": "d93f0e607dbbc934fcc77589a11341b83fe5c567a770d9ef49af426952df1bbe",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.4 Measured findings relevant to FE",
+          "start_line": 168,
+          "end_line": 171,
+          "section_sha256": "20002d141f4bfd10ec9eb65b7b9456564926ee402d37012c33ae8babdeb2b408",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.5 Required detail coverage in the frontend PRD",
+          "start_line": 172,
+          "end_line": 177,
+          "section_sha256": "138476ca76700512820f9a2f18b729dc88ed0961aa729275b861aa01a9358328",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART V — WHAT MUST BE TRUE, WITHOUT SCOPING IT NOW",
+          "start_line": 178,
+          "end_line": 188,
+          "section_sha256": "6f73cb23162f8bc749086057b9f40b8d3f849e7e8243305f9f5de9fec1dff857",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART VI — STATUS — NOT OUTCOME-BEARING",
+          "start_line": 189,
+          "end_line": 194,
+          "section_sha256": "c734a9aa28cc41ccb8bac5df96e48211c7d3bb95e7b0d817a7f2599d37ef2d21",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART VII — WHAT THIS BRIEF DOES NOT CLAIM",
+          "start_line": 195,
+          "end_line": 198,
+          "section_sha256": "d0a188145e42fb643bca18b933e2325fffe78b657cca584647075e3f31a4fe40",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "## REFS TO CARRY",
+          "start_line": 199,
+          "end_line": 215,
+          "section_sha256": "f10cb5ff9b619ae61048ef03cc30c4e70465e198f60a3e84247d17f56e5a8a3b",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        }
+      ]
+    },
+    {
+      "project": "IR BK",
+      "path": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "sha256": "ded789b6c42c602dc8105399b183fcbfec0fcb96dc0a4cbf450ffb4464790955",
+      "outcomes": 8,
+      "parts": 7,
+      "source_documents_mapped": 9,
+      "lines": 318,
+      "words": 6717,
+      "canonical_code": "IRPT_BCKEND",
+      "section_inventory": [
+        {
+          "heading": "# IR BK — Investor Reporting backend project brief",
+          "start_line": 1,
+          "end_line": 11,
+          "section_sha256": "377161ff4c846ef60a0614a2a2d644a1d27927e3f0a5264b4b2dbbe4bea005c6",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART I — THE OUTCOME TERRITORY",
+          "start_line": 12,
+          "end_line": 13,
+          "section_sha256": "6bb8f139919add885e2f01acad1ad46897bf2c9ff48b18cfb347f8413a264c79",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O1 — An advisor finds permitted clients quickly and receives only the authorized account population",
+          "start_line": 14,
+          "end_line": 21,
+          "section_sha256": "af102b597185db062cdc28e8e8e580e65c692098b1dd5a5fdb21e13b24a8e337",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O2 — An advisor receives a comparable performance report without losing vendor semantics",
+          "start_line": 22,
+          "end_line": 27,
+          "section_sha256": "898797e95b969e72a7a58136c530d28280fa3488a986314ba0dd4da7676f5cdd",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O3 — A submitted holdings email becomes a durable, correctly scoped analysis request",
+          "start_line": 28,
+          "end_line": 35,
+          "section_sha256": "12ecb079a39831bcc170b35be7e258be9016b38a9fdc6bdf04874fdc1abe0da2",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O4 — An advisor receives the correct YCharts variant and can recover an interrupted generation",
+          "start_line": 36,
+          "end_line": 43,
+          "section_sha256": "d0e6eb999b2377f2dc35b0f789939bcb8b5451f3f4ed72b1a6cb2b1232bac7db",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O5 — An advisor sees current custody holdings with model percentages that state what they measure",
+          "start_line": 44,
+          "end_line": 49,
+          "section_sha256": "7812e420879b7ef2b39a7262be8ae496d17bd1b8dd2c256611b1b1acad47feed",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O6 — An advisor exports a branded, reproducible report with evidence-backed market context",
+          "start_line": 50,
+          "end_line": 57,
+          "section_sha256": "700d740a6e04707312774c8393f2567a6dd3b9d9f1b98dfc4cec5807e2ee5b2a",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O7 — A request is bound to its firm at ingestion and cannot write into another firm's destinations",
+          "start_line": 58,
+          "end_line": 65,
+          "section_sha256": "26788457e396a4126b7e4565d52027bbe085285bea8863c9d680d12eb8d159c7",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### O8 — An entitled Opal user can run the same reports for clients at every firm",
+          "start_line": 66,
+          "end_line": 73,
+          "section_sha256": "6782e62ebc892020699caa74731b08ccdcfbc3c79021eae0a0f670c1e3d93032",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART II — WHERE THE BOUNDARY SITS",
+          "start_line": 74,
+          "end_line": 75,
+          "section_sha256": "bf760645b8160d0f4d56f97321c4fb8c8c767a564c4061003dcca9d73118867e",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### II.1 What this team owns, and what crosses to FE",
+          "start_line": 76,
+          "end_line": 90,
+          "section_sha256": "a76f06815b2c09a070e573e5f722b97bb9ceb97b8a191729a83df6a9d6959384",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### II.2 Shared owners and limits of the consolidation",
+          "start_line": 91,
+          "end_line": 98,
+          "section_sha256": "1cf854be21bab13e00a52de580b8355a3b14313b854fcecd9b1b4ce99ad4abbb",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### II.3 Shared contract inventory — producer and consumer boundary",
+          "start_line": 99,
+          "end_line": 118,
+          "section_sha256": "8a76b2a219e7b38937a701fe24edc5403103b0e40f5a7e1bfcdb92c9b4384790",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART III — THE QUALITATIVE BAR",
+          "start_line": 119,
+          "end_line": 128,
+          "section_sha256": "0c57900b13b6d566374e403c33af8e95128802855812f3ec65d46ce893647d83",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART IV — SUBSTRATE, SOURCE MAP AND IMPLEMENTATION PATHS",
+          "start_line": 129,
+          "end_line": 130,
+          "section_sha256": "aa9baba57acb57261bcc7ecccfdd696f215d9cdbc5ed77938ef3b6156ef224e2",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.1 All four briefs and five supporting documents",
+          "start_line": 131,
+          "end_line": 146,
+          "section_sha256": "e1577874cd490ef6c762a76cb110b6b7204c1eb225ac84a7f0e7c205319520d8",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.2 Identity, tenant scoping and daily movement",
+          "start_line": 147,
+          "end_line": 172,
+          "section_sha256": "0b50803278a636a7dccbcad678277b1fab9d6fe8a6c9d0815f6d04b1c4b14342",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.3 Performance adapter recipe and evidence limits",
+          "start_line": 173,
+          "end_line": 185,
+          "section_sha256": "1407b7de07de8f5c7a5c818cd003d8941b2045d6f0db413f8941af2dc1ec23e0",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.4 YCharts intake, session library and explicit retrieval instructions",
+          "start_line": 186,
+          "end_line": 219,
+          "section_sha256": "860b64a2ba96aa786e84d0a5fcbf1d8147c9b4eafad245d1590a1cf674e59b2d",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.5 Partner holdings/model joins, classifications and exact paths",
+          "start_line": 220,
+          "end_line": 244,
+          "section_sha256": "8347010edf034cbde590d16716833f99fe7a9f926c1cd68f6feee955a40068db",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.6 Narrative evidence, brand assets and export execution",
+          "start_line": 245,
+          "end_line": 263,
+          "section_sha256": "046f722312360850d81c3e391deec24afedc79928ddd48a3234f3434e79a11e2",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.7 Evidence artifacts and proposed new code homes",
+          "start_line": 264,
+          "end_line": 272,
+          "section_sha256": "6c1cf6c6748daf92ca681f8946aa76ba0df15d3c21527a88b3c8805354a4dd0e",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "### IV.8 Required detail coverage in the backend PRD",
+          "start_line": 273,
+          "end_line": 278,
+          "section_sha256": "b0923930432fb7c4a509003c3698b01ed4a6ca2ac83e3eaeb5d636f9491a1596",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART V — WHAT MUST BE TRUE, WITHOUT SCOPING IT NOW",
+          "start_line": 279,
+          "end_line": 290,
+          "section_sha256": "a2e43ad93cd3fb9f013b6f80b070d1d6915335e5002054c31da56250e06a1df7",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART VI — STATUS — NOT OUTCOME-BEARING",
+          "start_line": 291,
+          "end_line": 296,
+          "section_sha256": "528bd26b7071628bf4f58adba4aec691f5619070a67f084921f153a0f71bbdf3",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "# PART VII — WHAT THIS BRIEF DOES NOT CLAIM",
+          "start_line": 297,
+          "end_line": 300,
+          "section_sha256": "85b08f79acd3728764bfb6425ee5221f21dfa2c69970deb69d273846b087dc35",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        },
+        {
+          "heading": "## REFS TO CARRY",
+          "start_line": 301,
+          "end_line": 318,
+          "section_sha256": "0e0aff2127d28f5eaf01c8f989d71598decfa6e3fb34aa0a398304078bfa15a4",
+          "prd_mapping_status": "awaiting actual PRD consumer/disposition map"
+        }
+      ]
+    }
+  ],
+  "repository_paths": [
+    {
+      "path": "portal/src/App.tsx",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 147
+        }
+      ]
+    },
+    {
+      "path": "portal/src/pages/ModelPortfolios.tsx",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 148
+        },
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 171
+        }
+      ]
+    },
+    {
+      "path": "portal/src/hooks/useAuth.ts",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 148
+        }
+      ]
+    },
+    {
+      "path": "portal/src/components/ui/PageSurfaceControl.tsx",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 148
+        },
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 149
+        },
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 171
+        }
+      ]
+    },
+    {
+      "path": "portal/src/components/PageHeaderVariants.tsx",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 149
+        }
+      ]
+    },
+    {
+      "path": "portal/src/ui/components/panels/",
+      "proposed": false,
+      "exists": true,
+      "kind": "directory",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 149
+        }
+      ]
+    },
+    {
+      "path": "portal/src/components/TabNavigation.tsx",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 150
+        }
+      ]
+    },
+    {
+      "path": "portal/src/hooks/useTabNavigation.ts",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 150
+        }
+      ]
+    },
+    {
+      "path": "portal/src/ui/components/catalyst/combobox.tsx",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 151
+        }
+      ]
+    },
+    {
+      "path": "portal/src/pages/AdvisorIntelligence/_shared/panels/ClientListPanel.tsx",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 151
+        }
+      ]
+    },
+    {
+      "path": "portal/src/components/CategoryViewTree.tsx",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 152
+        }
+      ]
+    },
+    {
+      "path": "portal/src/lib/modelPortfolioColors.ts",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 152
+        }
+      ]
+    },
+    {
+      "path": "portal/src/pages/AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 153
+        }
+      ]
+    },
+    {
+      "path": "portal/src/pages/AdvisorIntelligence/_shared/components/PartnerAnalytics.tsx",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 153
+        }
+      ]
+    },
+    {
+      "path": "portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 153
+        }
+      ]
+    },
+    {
+      "path": "portal/src/api/portal-proxy.ts",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 154
+        },
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 254
+        }
+      ]
+    },
+    {
+      "path": "portal/src/api/endpoints/market.ts",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 154
+        },
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 254
+        }
+      ]
+    },
+    {
+      "path": "portal/src/api/endpoints/sentiment.ts",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 154
+        },
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 254
+        }
+      ]
+    },
+    {
+      "path": "portal/src/api/endpoints/trending.ts",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 154
+        },
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 254
+        }
+      ]
+    },
+    {
+      "path": "portal/src/components/market-performance/MarketRegimeIndicator.tsx",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 155
+        }
+      ]
+    },
+    {
+      "path": "portal/src/components/market-performance/SentimentGauge.tsx",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 155
+        }
+      ]
+    },
+    {
+      "path": "portal/src/hooks/useRSIValues.ts",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 155
+        }
+      ]
+    },
+    {
+      "path": "portal/src/pages/MarketPerformance/panels/SentimentPanel/SentimentPanel.tsx",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 155
+        }
+      ]
+    },
+    {
+      "path": "deck_generation/brand/opal_brand_guidelines.pdf",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 156
+        },
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 255
+        }
+      ]
+    },
+    {
+      "path": "deck_generation/brand_spec/brand.json",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 156
+        },
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 255
+        }
+      ]
+    },
+    {
+      "path": "deck_generation/engine/brand.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 156
+        },
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 255
+        }
+      ]
+    },
+    {
+      "path": "deck_generation/brand/logo_package/Opal-Capital-Logo-Package/Full Logo/Full Color/Opal-Capital-Logo-Full-Color.svg",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 157
+        },
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 255
+        }
+      ]
+    },
+    {
+      "path": "portal/src/pages/InvestorReporting/",
+      "proposed": true,
+      "exists": false,
+      "kind": "not_present",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 159
+        }
+      ]
+    },
+    {
+      "path": "portal/src/api/endpoints/investor-reporting.ts",
+      "proposed": true,
+      "exists": false,
+      "kind": "not_present",
+      "references": [
+        {
+          "project": "IR FE",
+          "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+          "line": 159
+        }
+      ]
+    },
+    {
+      "path": "data/firm_registry.json",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 149
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/lambda-edge/auth-validator-edge/index.mjs",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 149
+        },
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 171
+        }
+      ]
+    },
+    {
+      "path": "data/assets/scripts/silver/silver_registry.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 153
+        }
+      ]
+    },
+    {
+      "path": "data/assets/scripts/silver/mirror_schemas.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 153
+        }
+      ]
+    },
+    {
+      "path": "data/assets/scripts/silver/rebalancer_schemas.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 153
+        }
+      ]
+    },
+    {
+      "path": "data/assets/scripts/silver/bd49f_dim_conversion.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 153
+        }
+      ]
+    },
+    {
+      "path": "data/assets/scripts/gold/runners_49f/a01_dim_relationship.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 154
+        }
+      ]
+    },
+    {
+      "path": "data/assets/scripts/gold/runners_49f/a06_dim_identity_crosswalk.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 154
+        }
+      ]
+    },
+    {
+      "path": "data/assets/scripts/gold/runners_49f/d08_firm_ownership_map.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 154
+        }
+      ]
+    },
+    {
+      "path": "data/assets/scripts/gold/runners_49f/bd49f_dim_portfolio_group.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 154
+        }
+      ]
+    },
+    {
+      "path": "data/black_diamond/scripts/bronze/build_schwab_bd_account_xref.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 155
+        }
+      ]
+    },
+    {
+      "path": "data/inf/scripts/gold/runners_inf/a00_dim_account.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 156
+        }
+      ]
+    },
+    {
+      "path": "data/inf/scripts/gold/runners_inf/a01_dim_relationship.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 156
+        }
+      ]
+    },
+    {
+      "path": "data/inf/scripts/gold/runners_inf/runner_common.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 156
+        }
+      ]
+    },
+    {
+      "path": "data/cot/scripts/gold/runners_cot/a01_dim_relationship.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 157
+        }
+      ]
+    },
+    {
+      "path": "portal/src/pages/AdvisorIntelligence/_partners/49financial/roles.ts",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 158
+        }
+      ]
+    },
+    {
+      "path": "portal/src/pages/AdvisorIntelligence/_partners/inflection/roles.ts",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 158
+        }
+      ]
+    },
+    {
+      "path": "portal/src/pages/AdvisorIntelligence/_partners/cottonwood/roles.ts",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 158
+        }
+      ]
+    },
+    {
+      "path": "lib/trading_calendar.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 159
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/terraform/partners-api/api-gateway.tf",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 171
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/lambda_function.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 182
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/lambda/inf-pipeline/inf-performance-daily/pull_inflection_performance_dim.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 182
+        }
+      ]
+    },
+    {
+      "path": "docs/research/bd_dashboard_teardown/BD_DASHBOARD_HAR_TEARDOWN_20260721.md",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 182
+        }
+      ]
+    },
+    {
+      "path": "docs/research/competitive_recon/orion_20260722/ORION_TEARDOWN_20260722.md",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 182
+        }
+      ]
+    },
+    {
+      "path": "docs/research/investor_reporting_performance_20260910/probe_performance.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 184
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/ec2/bd-49f-auto-login/bd_49f_auto_login.js",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 196
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/ec2/bd-49f-auto-login/run-bd-auto-login.sh",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 196
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/ec2/bd-49f-auto-login/package.json",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 196
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/terraform/bd-49f-auto-login/iam.tf",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 197
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/terraform/bd-49f-auto-login/instance.tf",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 197
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/terraform/bd-49f-auto-login/main.tf",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 197
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/lambda/ycharts-market-data-pull/ycharts_client.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 198
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/lambda/ycharts-session-capture/index.mjs",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 198
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/terraform/ycharts-pipeline/",
+      "proposed": false,
+      "exists": true,
+      "kind": "directory",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 198
+        }
+      ]
+    },
+    {
+      "path": "docs/research/investor_reporting_ycharts_20260910/profile_handoff.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 218
+        }
+      ]
+    },
+    {
+      "path": "data/assets/scripts/gold/runners_49f/b04_account_model_membership.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 232
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/lambda/opal-assets/opal-assets-silver-smartx/smartx_conversion.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 232
+        }
+      ]
+    },
+    {
+      "path": "data/inf/scripts/gold/INF_E_00.eclipse_model_portfolios.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 233
+        }
+      ]
+    },
+    {
+      "path": "data/assets/scripts/gold/build_dim_model_portfolio.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 234
+        }
+      ]
+    },
+    {
+      "path": "data/assets/scripts/gold/build_cottonwood_mdpf_pair.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 234
+        }
+      ]
+    },
+    {
+      "path": "data/mdpf/scripts/gold/mdpf_category_registry.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 235
+        }
+      ]
+    },
+    {
+      "path": "docs/architecture/D1_ASSET_CATEGORY_VIEWS_PRD.md",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 236
+        }
+      ]
+    },
+    {
+      "path": "docs/architecture/D3_ACCOUNT_MODEL_OVERLAY_PRD.md",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 236
+        }
+      ]
+    },
+    {
+      "path": "docs/research/investor_reporting_model_overlay_20260910/profile_snapshot.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 237
+        }
+      ]
+    },
+    {
+      "path": "docs/research/investor_reporting_model_overlay_20260910/source-list.json",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 237
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/lambda/news_layer3_curation/lambda_function.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 253
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/lambda/news_trending_analysis/lambda_function.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 253
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/lambda/keyword_drilldown_generator/lambda_function.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 253
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/lambda/portal_data_proxy/lambda_function.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 254
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/01_market_overview/lambdas/trending-topics-portal-publisher/lambda_function.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 254
+        }
+      ]
+    },
+    {
+      "path": "docs/research/investor_reporting_export_20260910/profile_export_capture.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 256
+        }
+      ]
+    },
+    {
+      "path": "docs/research/investor_reporting_export_20260910/build_export_review.py",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 256
+        }
+      ]
+    },
+    {
+      "path": "docs/research/investor_reporting_export_20260910/performance-export-review.pdf",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 256
+        }
+      ]
+    },
+    {
+      "path": "docs/research/investor_reporting_export_20260910/FONT_LICENSE.txt",
+      "proposed": false,
+      "exists": true,
+      "kind": "file",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 256
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/",
+      "proposed": true,
+      "exists": false,
+      "kind": "not_present",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 271
+        }
+      ]
+    },
+    {
+      "path": "infra/aws/terraform/investor-reporting/",
+      "proposed": true,
+      "exists": false,
+      "kind": "not_present",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 271
+        }
+      ]
+    },
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/",
+      "proposed": true,
+      "exists": false,
+      "kind": "not_present",
+      "references": [
+        {
+          "project": "IR BK",
+          "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+          "line": 271
+        }
+      ]
+    }
+  ],
+  "local_links": [
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 4,
+      "target": "investor-reporting-ir-bk-brief-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 5,
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_192xZ_FWD9_YES_FWD10_IMPOSSIBLE_BY_INGESTION_GATE.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 5,
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FNTEND_20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 6,
+      "target": "../../org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260910_IR_FE_IR_BK_SPLIT.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 6,
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_183xZ_IR_IS_THE_TOP_PROJECT_LAPTOP_AND_SPLITS_FE_BK.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 8,
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_183xZ_MACRO_IS_IRPT_REGISTER_IN_D9.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 8,
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_185xZ_D9_TO_LAPTOP_CLDGRPH_FINISHED_15MIN_RATIFIED.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 105,
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_192xZ_FWD9_YES_FWD10_IMPOSSIBLE_BY_INGESTION_GATE.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 129,
+      "target": "investor-reporting-unification-brief-20260909.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 130,
+      "target": "investor-reporting-lightweight-brief-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 131,
+      "target": "investor-reporting-ycharts-brief-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 132,
+      "target": "investor-reporting-model-overlay-brief-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 133,
+      "target": "investor-reporting-lightweight-design-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 134,
+      "target": "investor-reporting-performance-review-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 135,
+      "target": "investor-reporting-export-narrative-spec-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 136,
+      "target": "investor-reporting-ycharts-design-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 137,
+      "target": "investor-reporting-model-overlay-design-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 143,
+      "target": "sources/INVESTOR_REPORTING_FE_BK_SPLIT_EVIDENCE_20260910.json",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 163,
+      "target": "../research/investor_reporting_performance_20260910/presentation-review.html",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 163,
+      "target": "sources/INVESTOR_REPORTING_PERFORMANCE_EVIDENCE_20260910.json",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 164,
+      "target": "../research/investor_reporting_export_20260910/performance-export-review.pdf",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 164,
+      "target": "../research/investor_reporting_export_20260910/build_export_review.py",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 164,
+      "target": "../research/investor_reporting_export_20260910/FONT_LICENSE.txt",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 164,
+      "target": "sources/INVESTOR_REPORTING_EXPORT_NARRATIVE_EVIDENCE_20260910.json",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 165,
+      "target": "sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 165,
+      "target": "sources/INVESTOR_REPORTING_YCHARTS_HAR_EVIDENCE_20260910.json",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 165,
+      "target": "sources/INVESTOR_REPORTING_YCHARTS_SOURCE_EVIDENCE_20260910.json",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 166,
+      "target": "sources/INVESTOR_REPORTING_MODEL_OVERLAY_EVIDENCE_20260910.json",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+      "line": 166,
+      "target": "sources/INVESTOR_REPORTING_LIGHTWEIGHT_EVIDENCE_20260910.json",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 4,
+      "target": "investor-reporting-ir-fe-brief-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 5,
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_192xZ_FWD9_YES_FWD10_IMPOSSIBLE_BY_INGESTION_GATE.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 5,
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 6,
+      "target": "../../org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260910_IR_FE_IR_BK_SPLIT.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 6,
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_183xZ_IR_IS_THE_TOP_PROJECT_LAPTOP_AND_SPLITS_FE_BK.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 6,
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_183xZ_MACRO_IS_IRPT_REGISTER_IN_D9.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 7,
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_185xZ_D9_TO_LAPTOP_CLDGRPH_FINISHED_15MIN_RATIFIED.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 95,
+      "target": "../../org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_192xZ_FWD9_YES_FWD10_IMPOSSIBLE_BY_INGESTION_GATE.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 135,
+      "target": "investor-reporting-unification-brief-20260909.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 136,
+      "target": "investor-reporting-lightweight-brief-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 137,
+      "target": "investor-reporting-ycharts-brief-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 138,
+      "target": "investor-reporting-model-overlay-brief-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 139,
+      "target": "investor-reporting-lightweight-design-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 140,
+      "target": "investor-reporting-performance-review-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 141,
+      "target": "investor-reporting-export-narrative-spec-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 142,
+      "target": "investor-reporting-ycharts-design-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 143,
+      "target": "investor-reporting-model-overlay-design-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 145,
+      "target": "sources/INVESTOR_REPORTING_FE_BK_SPLIT_EVIDENCE_20260910.json",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 222,
+      "target": "investor-reporting-model-overlay-design-20260910.md",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 222,
+      "target": "../research/investor_reporting_model_overlay_20260910/source-list.json",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 222,
+      "target": "sources/INVESTOR_REPORTING_MODEL_OVERLAY_EVIDENCE_20260910.json",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 266,
+      "target": "sources/INVESTOR_REPORTING_LIGHTWEIGHT_EVIDENCE_20260910.json",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 266,
+      "target": "sources/INVESTOR_REPORTING_UNIFICATION_PROPOSAL_20260909_extracted.txt",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 267,
+      "target": "sources/INVESTOR_REPORTING_PERFORMANCE_EVIDENCE_20260910.json",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 267,
+      "target": "sources/INVESTOR_REPORTING_EXPORT_NARRATIVE_EVIDENCE_20260910.json",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 268,
+      "target": "sources/INVESTOR_REPORTING_YCHARTS_SOURCE_EVIDENCE_20260910.json",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 268,
+      "target": "sources/INVESTOR_REPORTING_YCHARTS_HAR_EVIDENCE_20260910.json",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 268,
+      "target": "sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 269,
+      "target": "sources/INVESTOR_REPORTING_MODEL_OVERLAY_EVIDENCE_20260910.json",
+      "exists": true
+    },
+    {
+      "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+      "line": 269,
+      "target": "sources/INVESTOR_REPORTING_FE_BK_SPLIT_EVIDENCE_20260910.json",
+      "exists": true
+    }
+  ],
+  "checks": {
+    "all_nine_in_each_brief": true,
+    "initial_design_path_index_total": 31,
+    "initial_design_paths_carried": 31,
+    "shared_contract_names": [
+      "DirectoryEntry",
+      "ResolvedScope",
+      "PerformanceReport",
+      "AnalysisRequest",
+      "AnalysisReport",
+      "HoldingsSnapshot",
+      "NarrativePacket",
+      "ExportBundle",
+      "ExportReceipt",
+      "StatusEnvelope",
+      "RenderPackage"
+    ],
+    "proposed_paths": [
+      "data/assets/scripts/gold/investor_reporting/",
+      "infra/aws/lambda/investor-reporting/",
+      "infra/aws/terraform/investor-reporting/",
+      "portal/src/api/endpoints/investor-reporting.ts",
+      "portal/src/pages/InvestorReporting/"
+    ],
+    "errors": [],
+    "path_comparison": "Canonical repository paths including resolved relative Markdown links",
+    "narrow_credential_signature_scan": {
+      "files": 3,
+      "findings": [],
+      "limitation": "AWS access-key, bearer-token and Cookie header signatures only; not universal secret detection."
+    },
+    "l2_distribution_covers_all_eight_once": true,
+    "current_distribution_covers_all_twelve_once": true
+  },
+  "updated_at_utc": "2026-09-10T19:52:41.305821+00:00",
+  "forward_endpoints": [
+    {
+      "project_code": "IRPT_FNTEND",
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FNTEND_20260910.md",
+      "source_commit": "5c18c8882631115a4ca0e39971e952690b916953",
+      "sha256": "d83ff91a859f5d66126692940e09d084f4ee889d23f3a12a459ff30e34db3c99",
+      "read_scope": "Committed status/closure diff read; FWD-12 substantive block unchanged."
+    },
+    {
+      "project_code": "IRPT_BCKEND",
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md",
+      "source_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
+      "sha256": "7e5c20c6308d32a6d818c55128a8150e412a11b89a20228ea5d42d33ffce3f60",
+      "read_scope": "Ownership columns, new FWD-12 block and both coverage/landing sections; latest authority-record diff read in full."
+    }
+  ],
+  "historical_proposed_unratified_outcomes": {
+    "as_of_source_commit": "00af569662b0306d33e49c39a419d9d3a526640f",
+    "FWD-9": "IRPT_BACKEND O3: forwarded holdings email to durable scoped analysis request",
+    "FWD-10": "IRPT_BACKEND O7: operator diagnosis, recovery and tenant isolation",
+    "status": "Both unratified at source cut; CTO reports referred to Andrew. No ratification or decomposition performed by CRO."
+  },
+  "current_additional_outcomes": {
+    "as_of_source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
+    "FWD-9": {
+      "state": "ratified",
+      "scope": "durable email intake"
+    },
+    "FWD-10": {
+      "state": "recut on Andrew words",
+      "scope": "immutable sender-derived firm and pre-enumerated allowed storage destinations"
+    },
+    "FWD-11": {
+      "state": "added on Andrew words",
+      "scope": "Opal Global access; FE Model Portfolios dropdown, BK api/scoped enforcement"
+    },
+    "FWD-12": {
+      "state": "ratified",
+      "source_commit": "5c18c8882631115a4ca0e39971e952690b916953",
+      "scope": "FE portal component reuse, design and brand conformity; original outcome and proof unchanged."
+    }
+  },
+  "historical_forward_endpoints": [
+    {
+      "project_code": "IRPT_FRONTEND",
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FRONTEND_20260910.md",
+      "source_commit": "00af569662b0306d33e49c39a419d9d3a526640f",
+      "sha256": "72da4f6d73a652559f85d13f1118717eb50a99cae92d936d77b6bc4415c3e5ca",
+      "read_scope": "Full committed endpoint text read at this cut."
+    },
+    {
+      "project_code": "IRPT_BACKEND",
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BACKEND_20260910.md",
+      "source_commit": "00af569662b0306d33e49c39a419d9d3a526640f",
+      "sha256": "c012d1eb25970a12928812fce694186af79836811eb8ad99351b1403ce6d137e",
+      "read_scope": "Full committed endpoint text read at this cut."
+    }
+  ],
+  "current_acceptance_distribution": {
+    "source_commit": "5c18c8882631115a4ca0e39971e952690b916953",
+    "IRPT_FNTEND": [
+      "FWD-1",
+      "FWD-3",
+      "FWD-4",
+      "FWD-5",
+      "FWD-6",
+      "FWD-8",
+      "FWD-11",
+      "FWD-12"
+    ],
+    "IRPT_BCKEND": [
+      "FWD-2",
+      "FWD-7",
+      "FWD-9",
+      "FWD-10"
+    ],
+    "rule": "FE owns advisor-facing/design outcomes; BK owns machinery. All twelve ratified on the cited directions; both proof halves remain required for crossing outcomes."
+  },
+  "additional_source_inspection": [
+    {
+      "path": "portal/src/pages/ModelPortfolios.tsx",
+      "sha256": "a63983a7e458ee8b30fe981ecec57611be67edf8c385757a07a1650361368657",
+      "read_ranges": [
+        [
+          1,
+          180
+        ],
+        [
+          231,
+          395
+        ],
+        [
+          1251,
+          1305
+        ]
+      ],
+      "finding": "Global/firm list; internal selector state; PageSurfaceControl dropdown; demo translation and missing-claim fallback are not carried as IR permissions."
+    },
+    {
+      "path": "infra/aws/terraform/partners-api/api-gateway.tf",
+      "sha256": "74884119982bfd4660ac2de59d885ade6cc12ac62e780dd79b032c0acc681e27",
+      "read_ranges": [
+        [
+          1,
+          74
+        ]
+      ],
+      "finding": "Existing /api/scoped/advisor-intelligence routes with CUSTOM authorizer; not a runtime authorization test."
+    }
+  ],
+  "acceptance_distribution_history": [
+    {
+      "source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
+      "IRPT_FNTEND": [
+        "FWD-1",
+        "FWD-6"
+      ],
+      "IRPT_BCKEND": [
+        "FWD-2",
+        "FWD-3",
+        "FWD-4",
+        "FWD-5",
+        "FWD-7",
+        "FWD-8",
+        "FWD-9",
+        "FWD-10",
+        "FWD-11"
+      ]
+    },
+    {
+      "source_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
+      "IRPT_FNTEND": [
+        "FWD-1",
+        "FWD-3",
+        "FWD-4",
+        "FWD-5",
+        "FWD-6",
+        "FWD-8",
+        "FWD-11"
+      ],
+      "IRPT_BCKEND": [
+        "FWD-2",
+        "FWD-7",
+        "FWD-9",
+        "FWD-10"
+      ],
+      "rule": "Advisor-facing outcomes owned by FE; machinery by BK. All cross-project source/data/execution proof remains required."
+    }
+  ],
+  "historical_acceptance_distribution": {
+    "source_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md",
+    "source_commit": "58266dab2d7974bd3e24b469c89c7e5fdb63ae88",
+    "source_blob_sha256": "b78fea1a0f3a752d9e4ba4491e67cf08725c331650ddd9cf3affc70da2b73fb5",
+    "FE": [
+      "FWD-1",
+      "FWD-6"
+    ],
+    "BK": [
+      "FWD-2",
+      "FWD-3",
+      "FWD-4",
+      "FWD-5",
+      "FWD-7",
+      "FWD-8"
+    ],
+    "scope": "Acceptance/grade ownership only, not a measure of work; all cross-project proof retained.",
+    "read_scope": "Committed distribution amendment diff read in full; no fresh review of all other endpoint sections."
+  },
+  "forward_endpoint_history": [
+    {
+      "project_code": "IRPT_FNTEND",
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FNTEND_20260910.md",
+      "source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
+      "sha256": "4c1f4e77aa74f3826a7788c1a05d2e1cd6a810d74f02eaa8aba4c9de0cb4815c",
+      "read_scope": "Full authority record; endpoint FWD-9/10/11 blocks and restoration of the two formerly missing FWD-8 notes."
+    },
+    {
+      "project_code": "IRPT_BCKEND",
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md",
+      "source_commit": "2dcd88091f087c089ef8547452803d7b3285eaf4",
+      "sha256": "299a2ca75fdee611e021ea9e7c4b521fedb1711b57c4b77b430a6a5df29ecc4f",
+      "read_scope": "Full authority record; endpoint FWD-9/10/11 blocks and restoration of the two formerly missing FWD-8 notes."
+    },
+    {
+      "project_code": "IRPT_FNTEND",
+      "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FNTEND_20260910.md",
+      "source_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
+      "sha256": "2a5685e2f0045f5c4e8c7e1c12beb39f2ea03849d843e634f2ebbc18d0ef41b9",
+      "read_scope": "Ownership columns, new FWD-12 block and both coverage/landing sections; latest authority-record diff read in full."
+    }
+  ],
+  "required_prd_coverage": {
+    "authority_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
+    "rule": "Every brief section and every one of nine source documents maps to consumer FWD and cell(s), or explicit NOT CONSUMED with reason. Missing both is a PRD defect. Briefs remain the detailed source; FWDs are acceptance summaries.",
+    "projects": [
+      {
+        "project": "IRPT_FNTEND",
+        "brief": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md",
+        "brief_section_denominator": 25,
+        "supporting_document_denominator": 9,
+        "required_mapping_entries": 34,
+        "mapping_status": "inventory only; PRD/cell mapping not written or certified by this check"
+      },
+      {
+        "project": "IRPT_BCKEND",
+        "brief": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md",
+        "brief_section_denominator": 28,
+        "supporting_document_denominator": 9,
+        "required_mapping_entries": 37,
+        "mapping_status": "inventory only; PRD/cell mapping not written or certified by this check"
+      }
+    ],
+    "scope": "No coverage-complete claim for unwritten PRDs; inventory is the denominator for downstream subtraction."
+  },
+  "proposal_history": [
+    {
+      "source_commit": "68d8b16a917de0c2062aff328bd83034073962f6",
+      "FWD-12": {
+        "project": "IRPT_FNTEND",
+        "scope": "Portal component reuse, layout/design and brand conformity",
+        "status": "Proposed at Andrew; not ratified at source cut; IRPT_BCKEND not engaged."
+      }
+    }
+  ],
+  "proposed_unratified_outcomes": {}
+}

@@ -453,12 +453,31 @@ def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema, merg
     the worker that minted it -- and a seat's row riding the merge is graded as a seat's. The first drain refused 15 of
     15 lawful W rows on the committer read while its own co-worker sweep admitted every one of them."""
     committer_m = WORKER_SERIAL_RE.match(str(committer or "").strip())
+    # A REMEDIATION ROW *INHERITS* ITS COORDINATE; IT DOES NOT ALLOCATE ONE. This limb is the
+    # ALLOCATOR discipline (see the docstring) and applying it to a remediation row asks the wrong
+    # question of the wrong actor: `remediation_row.schema.json:21` says the id IS "the graduated
+    # investigation item's id ... including the allocator coordinate", so a remediation for a
+    # worker-minted <CODE>-W1-S43 legitimately carries W1 while being WRITTEN BY THE CVO, and a
+    # remediation for the CVO's own <CODE>-C-S69 legitimately carries C- while living in
+    # remediations/ rather than adjudications/. Both then refused as if the writer had minted them.
+    # Measured 2026-09-10 by 3.0.0_SA_CVO on NFRA_CLDGRPH round 8: TEN coordinate refusals on one
+    # 12-row REMEDIATION_v4 draft -- one C- "outside adjudications/" and nine carried W* ids -- with
+    # the gate and the schema in direct contradiction on the same field. The CVO preserved the ids
+    # and called it a repository contract defect rather than renumbering; it was right, and
+    # renumbering would have BROKEN graduation, which resolves an item to its remediation BY ID.
+    # The id/graduation tie is a DIFFERENT limb's job (_resolve_latest over rem_ids) and is untouched.
+    # Ruled by 1.0.0_SA_CTO 2026-09-10 ~17:5xZ. COST: none -- one branch on a kind the gate already
+    # computes. NON-APPLICATION: INVESTIGATION and ADJUDICATION documents, where a row IS minted.
+    _rem_doc = (folder_kind == "REMEDIATION"
+                or (folder_kind is None and _kind(rel) == "REMEDIATION"))
     out = []
     for r in added:
         rid = str(r.get("id", ""))
         m = ID_RE.match(rid)
         if not m:
             continue   # the grammar refusal is check_file's own
+        if _rem_doc:
+            continue   # inherited coordinate -- nothing here is an allocation claim
         w, c = m.group("w"), m.group("c")
         # BOUNDARY (b): read the ROW's surfacer only for a row a PARENT carried. A row minted IN
         # this merge is the committer's act and is graded against the COMMITTER, on a merge or off.
@@ -1695,6 +1714,19 @@ def _self_test(root):
          lambda: any("slot is 2" in x for x in
                      _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W3-S1", "surfaced_by": "0.9.0_WK_X_PRJ~2"}],
                                             "2.0.0_SA_COO~A", False, merging=True, parent_ids=_DRAIN_PIDS))),
+        # A REMEDIATION ROW INHERITS ITS COORDINATE (1.0.0_SA_CTO 2026-09-10, on 3.0.0_SA_CVO's
+        # NFRA_CLDGRPH round-8 refusals). The two arms the gate refused, and their negative controls
+        # in the SAME shape -- the discriminator is the DOCUMENT KIND and nothing else about the row.
+        ("remediation: the CVO's row inheriting a WORKER's X_PRJ-W1-S43 -> ADMITTED (inherited, not allocated)",
+         lambda: cv([{"id": "X_PRJ-W1-S43"}], "3.0.0_SA_CVO", "REMEDIATION") == []),
+        ("remediation: a C- row living in remediations/ -> ADMITTED (C- names the ORIGINAL allocator)",
+         lambda: cv([{"id": "X_PRJ-C-S69"}], "3.0.0_SA_CVO", "REMEDIATION") == []),
+        ("remediation MUTANT, the negative control: the SAME two rows in an INVESTIGATION document still REFUSE",
+         lambda: any("is not a worker" in x for x in cv([{"id": "X_PRJ-W1-S43"}], "3.0.0_SA_CVO", "INVESTIGATION"))
+         and any("outside adjudications/" in x for x in cv([{"id": "X_PRJ-C-S69"}], "3.0.0_SA_CVO", "INVESTIGATION"))),
+        ("remediation: the FLAT document form (folder_kind None, kind read from the FILENAME) -> ADMITTED, and a flat INVESTIGATION name still refuses",
+         lambda: _coordinate_violations("org/surprise_channel/X_PRJ/REMEDIATION_v4.md", None, [{"id": "X_PRJ-W1-S43"}], "3.0.0_SA_CVO", False) == []
+         and _coordinate_violations("org/surprise_channel/X_PRJ/INVESTIGATION_v1.md", None, [{"id": "X_PRJ-W1-S43"}], "3.0.0_SA_CVO", False) != []),
         ("identity half: X_PRJ-W2-S1 with project X_PRJ agrees; X_PRJ-Z-W2-S1 reads site-z",
          lambda: not any("project=" in x for x in _check_row({"id": "X_PRJ-W2-S1", "project": "X_PRJ", "fabric": "laptop"}, "INVESTIGATION", {"properties": {"id": {}, "project": {}, "fabric": {}}, "required": []}))
          and any("site-z" in x for x in _check_row({"id": "X_PRJ-Z-W2-S1", "project": "X_PRJ", "fabric": "laptop"}, "INVESTIGATION", {"properties": {"id": {}, "project": {}, "fabric": {}}, "required": []}))),
