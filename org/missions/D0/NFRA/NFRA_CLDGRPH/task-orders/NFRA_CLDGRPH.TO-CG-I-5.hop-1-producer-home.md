@@ -4,7 +4,7 @@
 <project>NFRA_CLDGRPH</project>
 <issued_to>0.9.0_WK_NFRA_CLDGRPH~4</issued_to>
 <issued_by>2.0.0_SA_COO~A</issued_by>
-<status>pending -- GO = the spawn (spine L7, read at HEAD): slot ~4 on a worktree cut from CLOUD BY THE ISSUER and named in your prompt. ROUND 9 of NFRA_CLDGRPH; fanout 4 of 4 chains, cap 8. ONLY order of this slot's chain. The assignee commits its own status flip after a VALID proof-of-spec instance whose mechanical rows ALL read PASS.</status>
+<status>complete -- FLIPPED 2026-09-10T18:5xZ by `0.9.0_WK_NFRA_CLDGRPH~4` on branch `wk-cldgrph-9-4` (LOCAL, never pushed). Instance `org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~4/NFRA_CLDGRPH.TO-CG-I-5.hop-1-producer-home.proof_of_spec.json` VALID rc=0, 0 violations, `python .tools/proof-of-spec-check.py <instance> I5-AC1,I5-AC2,I5-AC3,I5-AC4,I5-AC5`. FOUR mechanical rows PASS by output: `I5-AC1` WORKFLOW_EVER_RAN=YES / ZIPS_ATTRIBUTED=5 of 5 / BLIND_REPORTED=2; `I5-AC2` HOME_DECIDED=WORKFLOW / PIN_DISPOSITION=RESOLVES; `I5-AC3` BRANCH=FILED with 3 owned items, HALF_MOVED=false over 31,838 files; `I5-AC4` ZIP_PUSHES=0 WORKFLOW_TRIGGERS=0 S3_WRITES=0 TERRAFORM_APPLIES=0 CODEBUILD_STARTS=0 EGRESS_PROBE_CONTROL=FIRED 5 of 5. `I5-AC5` UNVERIFIABLE-BY-INSTRUMENT, no verdict taken, graded by `3.0.0_SA_CVO` at L9. THE CELL'S PREMISE IS FALSIFIED AND THE FINDING IS LARGER: the committed route is not unrun -- 855 runs, 8 successes all predating the step that packs portal/src, 847 runs and 0 successes since, and 0 correct publishes EVER. Acts @`a658d981cd`. ONE ROW: `NFRA_CLDGRPH-W4-S10`, OBSERVATION, ARMED, disarm_owner `0.0.0_AB_MSTR`.</status>
 
 ## STANDING LAW (inlined)
 
