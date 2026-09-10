@@ -479,6 +479,30 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
     "spec_asserts": "Spine L10 gives this project three ledger artifacts and one remediation document, and rule 27 as amended at f5355fcfc4 states that CLOSED requires COMPLETION_REPORT + COMPLETION_GRADES with every grade REALIZED -- a round is not closed because every FWD reads REALIZED somewhere.",
     "world_is": "None of the four artifacts exists for this project at any round. Three sibling tree projects carry the ledger/ shape, so this is a per-project gap rather than an estate-wide convention difference -- which is what the sibling denominator establishes and a project-scoped check could not have.",
     "notes": "THREE LIMBS, THREE OWNERS, AND THIS ROW DOES NOT ADJUDICATE THE TWO THAT ARE NOT THIS LANE'S. (a) COMPLETION_REPORT.round<N>.json is the COO's and is NOT YET OWED -- round 2 reads 5 of 7 terminal, and the spine conditions that artifact on the decomposition being SPENT (every cell holding a terminal task order with a valid proof-of-spec). This lane writes it, creating ledger/, when the seventh order goes terminal; that is the disarm. (b) ROUND_ANALYSIS and COMPLETION_GRADES are 1.0.0_SA_CTO~Z's. (c) The round's remediation document is 3.0.0_SA_CVO~Z's. Round 1 was RECUT rather than CLOSED, so its missing COMPLETION_REPORT may be correct by design -- but NFRA_OUTSET carries ROUND_ANALYSIS for both round 1 and round 2, so a recut round does produce one there, and that is the comparison this row rests on rather than an inference about intent. SURFACED, NOT CHASED: this lane does not write another seat's ledger artifact, and CLAUDE.md's no-inferred-gates clause means this row is not a hold on anyone -- round 2 proceeds to its close regardless."
+  },
+  {
+    "id": "NFRA_REPORT-Z-W1-S5",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_REPORT~1",
+    "surfaced_at": "2026-09-10T02:40:00Z",
+    "one_line": "RP-s-16: the comp-rail (comp-find/comp-read/comp-which) resolves its search corpus by the TOOL SCRIPT'S OWN on-disk location, not the caller's cwd -- every invocation from inside a linked worktree (rule 14b's mandated pattern) silently scans the MAIN ajb_workspace checkout instead, with no error and no warning that the corpus excludes the worktree the worker is standing in.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "~/bin/comp-find:16 and ~/bin/comp-read:16, read this session: both forwarders hardcode _t=\"/c/Users/Opal Bloomberg/Desktop/ajb_workspace/.tools/comp-<tool>\" and exec it verbatim regardless of the invoking shell's cwd or which worktree it sits in.",
+        ".tools/comp-find@1443d20f78:77 'WS = _comprail.repo_root()'; .tools/_comprail.py@1443d20f78:125-128 'def repo_root(): ... subprocess.run([\"git\", \"rev-parse\", \"--show-toplevel\"], cwd=_HERE, ...)' where _HERE is os.path.dirname(os.path.abspath(__file__)) of the SCRIPT ITSELF -- never PWD, never the caller's cwd, so repo_root() always resolves to whichever tree the shim's hardcoded _t points at.",
+        "EMPIRICAL, this worktree (C:/Users/Opal Bloomberg/Desktop/wk-NR2-1, branch wk-NR2-1, HEAD 1443d20f78): wrote an untracked canary file inside this cell's OWN write surface (org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/.canary_grain_test.md) carrying a unique token; comp-find '<token>' (default corpus=all) returned 'DENOMINATOR: 0 hit(s) across 53245 file(s) scanned' -- a MEASURED zero that never covered this worktree's own new file. File removed after the test, never committed.",
+        "Re-run at --corpus raw (the maximal scope, 501365 files scanned): still 0 hits on the canary's actual content. The only 2 hits returned there were comp-find's OWN telemetry echo of the search TERM as a logged invocation argument (org/mcp/comp-tool-runs.jsonl:6535, org/mcp/comp-which-rail.log:6518) -- and org/mcp/inbox/, org/mcp/comp-tool-runs.jsonl and org/mcp/comp-which-rail.log do not exist under this worktree at all (confirmed by direct ls of org/mcp/ here), so those two hits could only have come from the MAIN tree's disk. The corpus scanned was never this worktree's, at any width."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md rule 21: 'a comp-tool is the DEFAULT for search + inspection, raw grep the exception' -- the reflex for wherever an agent is working; rule 14b mandates a worker commit and edit inside its OWN linked worktree ('a linked worktree carries its OWN index... which is why /dispatch already mandates one per worker slot').",
+    "world_is": "The two mandates combine into a silent GRAIN mismatch: a worker in a linked worktree who follows rule 21's reflex gets comp-find/comp-read/comp-which answers about the MAIN ajb_workspace checkout's disk state, never about its own worktree's uncommitted or worktree-local content -- and the tool's own output ('a MEASURED zero... not a claim the term is absent from the estate') reads as authoritative with no signal that the corpus excluded the very tree the worker is standing in.",
+    "notes": "Not remediated here -- .tools/_comprail.py and the ~/bin shims are outside this cell's paths entirely. Filed ARMED because every other worktree active this session (ajb_s10_v, wk-NR2-2, wk-NR2-3) inherits the identical defect on every comp-find/comp-read/comp-which call it makes, and a future worker trusting a comp-rail zero about its own uncommitted deliverable would be citing the wrong tree's content while the tool's own denominator language gives no hint of that. This cell's own earlier reads of SCHEDULE.md/PRD.md/COMPOSER.md via comp-read returned correct text only because those are tracked files unchanged since this worktree's branch point and so are byte-identical in both trees by coincidence, not because comp-read was reading this worktree -- which is exactly why the mismatch went unnoticed until tested with a canary unique to this worktree."
   }
 ]
 ```
