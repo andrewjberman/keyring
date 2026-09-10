@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>pending -- GO paired at cut (the spawn is the GO). First order of slot ~1.</status>
+<status>complete -- S18-AC1 PASS-by-output (rc=0, IBS18-FOUNDATION-COMPLETE, 5 of 5 arms); S18-AC2 RECORDED for 3.0.0_SA_CVO at L9, no worker verdict; proof-of-spec-check rc=0; rows IRPT_BCKEND-W1-S1 and W1-S2 filed. Nothing deployed.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.4 @62301f71e0 | **Decomp cell:** `IB-s-18` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, s.1 + s.2) | **outcome_ref:** all ten (FWD-1, 2, 3, 4, 5, 7, 8, 9, 10, 11) | **PRD candidate:** B18
 
