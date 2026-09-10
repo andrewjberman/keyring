@@ -5,7 +5,7 @@
  "project": "ETFS_GUARDRAIL",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.7",
+ "prd_version": "v0.8",
  "step": 4,
  "brief_ref": "docs/briefs/ETFS_COVERAGE_GUARDRAIL_BUILD_SPEC_20260901.md@1890d7785c",
  "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-8", "FWD-9", "FWD-10"],
@@ -648,6 +648,26 @@ rule requires the text be kept with its reason beside it; it does not require it
 **(d) THE FORCING MUST NOT BE ABLE TO PERSIST.** Default-off is not the same property as cannot-be-left-on. Prove a forcing value cannot survive into a SUBSEQUENT invocation -- supplied per invocation, cached nowhere, no warm-container residue. A flag that can be left on converts a one-time test into a standing condition, and the artifact that would disclose it is the same artifact nobody re-reads.
 
 **And the never-widen sign-off names the new reachable state IN ITS OWN WORDS** -- *a served monthly report produced over deliberately dropped input data* -- and prints the writer count from (b). This seat's half will say exactly that and will not sign a half that names the producer's decision instead of the act's blast radius.
+
+**R-EG-7 (ruling, `1.0.0_SA_CTO` 2026-09-10 ~06:4xZ, following the R-EG-6 correction at 95071 and read at source before ruling): FWD-10's ACCEPT (ii) CANNOT BE SATISFIED BY A SHAPE-1 DRIVEN RUN, AND THE REMEDY IS TO FIX THE ARTIFACT, NOT TO WEAKEN THE ACCEPT.**
+
+`2.0.0_SA_COO` reported that a `--no-ladder` run's terminal message is *materially thinner* and concluded *"the send still fires so FWD-10 stays provable"*. **The first half is right, the second half is right only about the SEND, and I read the builder rather than the report.** `lambda_function.py:348` `_build_terminal_email` carries its own comment at the per-date row:
+
+```
+# `provider` is NOT written by the producer into coverage_unresolved.json
+# (only coverage_egress_ask.json carries it) -- render the absence as text
+# rather than the literal "None" a bare .get() puts into an urgent email.
+```
+
+So the per-date table's `provider` column renders `(not stated)` in EVERY case, organic or driven, and **the ONLY place a provider is ever named is the rung-3 egress-ask block** -- the block gated on `if ask and ask.get("asks")`, which shape 1 removes by construction. **Under shape 1 the terminal message names NO PROVIDER ANYWHERE.**
+
+FWD-10's ACCEPT (ii) requires the message to list each missing day *"with its partner AND THE PROVIDER the data should have come from"*. **That is unsatisfiable on a shape-1 run, and it is the SAME structural collision as FWD-9's, one outcome along** -- discovered because the R-EG-6 correction sent me to the builder.
+
+⛔ **AND THE ACCEPT IS RIGHT, SO IT DOES NOT MOVE.** A person receiving an URGENT terminal alert about unrecoverable data SHOULD be told which provider the data should have come from -- that is the whole point of telling them at all. The defect is NOT in the acceptance criterion; it is that `coverage_unresolved.json` DOES NOT CARRY THE PROVIDER, and the render layer papers over the gap with `(not stated)`.
+
+**RULING: the producer writes `provider` into `coverage_unresolved.json`, and the terminal message then names it in EVERY case, organic or driven, with or without a ladder.** A code cell for round 3, not a wait, not an accept amendment, and not a reason to reconsider shape 2. Acceptance: the field is present per unresolved date on the producer's OWN output; the terminal message renders a real provider rather than `(not stated)` for every row; a date whose provider is genuinely unknown still renders the honest absence, so the fix does not INVENT one (the positive control); and a shape-1 driven run's message is then materially EQUAL to an organic run's on this axis, which is what makes FWD-10 gradeable on it at all.
+
+⛔ **THE SHAPE OF THE ORIGINAL DEFECT IS WORTH MORE THAN THE FIX.** Somebody already NOTICED the provider was missing and handled it AT THE RENDER LAYER -- turning a missing value into polite text instead of writing the value. That is the same family `3.0.0_SA_CVO` refused an hour earlier in another project when it declined to normalise inside a comparator: **a gap papered at the point of DISPLAY leaves the ARTIFACT wrong and makes the wrongness read as intentional.** The comment is honest and careful and it still hid a missing field from every reader of the email for as long as the email has existed.
 
 **R-EG-6 (ruling, `1.0.0_SA_CTO` 2026-09-10 ~06:3xZ, on `2.0.0_SA_COO`'s 95058 and row W4-S6): SHAPE 1 ADOPTED. SHAPE 2 IS REFUSED AND IS NOT GOING TO ANDREW. FWD-9's ACCEPT IS AMENDED SO A DRIVEN RUN CAN SATISFY IT.**
 
