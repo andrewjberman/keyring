@@ -241,6 +241,50 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The cell's own (a)/(b) schemas carry reviewed_at/review_interval_days at the list level only, and (c) then describes staleness in terms of 'entries older than review_interval_days since reviewed_at' as if the comparison were per-entry; the cell also names social_accounts.json entries by `security_key` without defining the term or pointing at an existing field it maps from.",
     "world_is": "No per-entry reviewed_at field exists in either schema the cell itself gives, so this cell's rot.py computes staleness once per list (all-or-nothing over that list's entries) rather than per entry, and security_key was set to AMGT-s-12 universe.json's `folder` value -- the only field measured unique over all 89 names, since bloomberg_ticker/sa_symbol are UNRESOLVED for many of them and would leave holes as a key.",
     "notes": "Non-blocking: AC1/AC2/AC3 all pass under this reading, and the cell's own (c) text -- 'Prints ONE line per list' -- is itself consistent with a per-list (not per-entry) rot computation. Recorded because a later cell or an owner editing these lists by hand and expecting a per-entry review date, or a per-entry security_key drawn from some other identifier, would find neither and should read this row first."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W1-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~1",
+    "surfaced_at": "2026-09-10T22:35Z",
+    "one_line": "AMGT-s-12's universe.json carries a measurement defect: 16 of its 48 MEASURED bloomberg_ticker values -- unrelated folders from AstraZeneca to Total Energies, including the CRO's own control folder 'SAP GY' -- all read the identical string 'AAPL US'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/universe.json, read via select_securities.py: 48 of 89 entries carry bloomberg_ticker.status=='MEASURED'; grouping those 48 by bloomberg_ticker.value shows the single value 'AAPL US' shared by 16 distinct folders (AstraZeneca AZN, Canadian National Railway CNR, Clorox CLX, Copa CPA, Imperial Brands IMB LN, JD.com 9618 HK, Michelin ML FP, Mitsubishi UFJ Financial Group 8306 JP, Nestle NESN SW, Nokia FH, Orange ORA FP, Sanofi SAN FP, Shopify SHOP CA, Tokyo Marine 8766 JP, Total Energies TTE FP, and SAP GY) while every one of the remaining 32 MEASURED entries carries a value unique to its own folder",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/select_securities.py run (this worker's own build), dup_report={'AAPL US': 16}, clean_unique_entries=32",
+        "The SAP GY folder's own universe.json entry -- the CRO's control security -- carries bloomberg_ticker.value=='AAPL US', which does not match the CRO's own field-map deliverable's control ticker 'SAP GY Equity' (org/tier1_exec/4.0.0_SA_CRO/deliverables/AMGT_RESAPP_BLOOMBERG_FIELD_MAP_20260910.md, throughout): the folder's own resolver output disagrees with the CRO's independently-measured value for the identical company"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This cell's bound (d): 'a US name and an ADR, both chosen from the coverage universe by a rule you state ... AMGT-s-12's universe.json enumerates them if it has landed' -- implying universe.json's bloomberg_ticker.value entries are each an independent, per-folder MEASURED read this worker could select from directly.",
+    "world_is": "16 of the 48 MEASURED entries are not independent per-folder reads -- they share one identical string that is correct for at most one folder (at most one company is genuinely 'AAPL US Equity') and wrong for the other 15, including the control company SAP GY itself. This worker's selection rule (select_securities.py) drops every duplicate-valued entry before picking a US-domiciled name and an ADR, so the defect did not propagate into AMGT-s-1's own security choices (Boeing BA US Equity, Alibaba BABA US Equity) or into the SAP GY Equity control (taken directly from the task order text/CRO brief, never from this universe.json row). Not fixed here: AMGT-s-12's resolver.py and build_universe.py are outside this worker's <paths> grant, and repairing another cell's deliverable is out of bounds regardless.",
+    "notes": "Worth the identity-layer owner's attention before AMGT-s-2/-3/-5/-9 (this cell's downstream dependents per the DEPENDENCIES section) build on universe.json for a folder OTHER than the 3 this worker touched -- any of the 16 affected folders would silently resolve to Apple's ticker if consumed without the uniqueness check this worker applied. The shape (one recurring constant value across unrelated keys) looks like a resolver bug that returns a previous/cached result on a failure path rather than a per-folder read; not diagnosed further here (outside this cell's write surface)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W1-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~1",
+    "surfaced_at": "2026-09-10T23:05Z",
+    "one_line": "For the ADR (BABA US Equity, fiscal year end 31 March), Bloomberg's raw HistoricalDataRequest response never carries a single row with BOTH a price field and a fundamentals field -- 100% of its rows split fiscal-period-end (March) fundamentals from calendar-year-end (December) price/ratios, so the fiscal-year join (grouping by the calendar year of `date`) merges each fiscal year's fundamentals with a price observation roughly nine months later, not one from the fiscal period end itself.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "raw/bloomberg/BABA_US_Equity/20260910T224407Z/histdata.json (S3, opal-data-research): all 20 raw rows for BABA US Equity split cleanly into 10 fundamentals-only rows dated '<year>-03-31' and 10 price/ratio-only rows dated '<year>-12-31' -- zero rows carry both a fundamentals field and PX_LAST/PE_RATIO together. SAP GY Equity and BA US Equity (both December-FYE issuers), by contrast, merge most years into one row (SAP: 6 of 10 years single-row, matching the CRO's own 'F5' 14-rows-for-10-years finding).",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/build_field_map.py detect_reporting_currency_mismatch(), run against the fiscal-year-merged groups: fiscal-year-2025-merged naive PE (PX_LAST/IS_EPS = 2.6593) vs Bloomberg's own PE_RATIO (15.7545) for the same fiscal-year label on BABA US Equity, ratio 0.1688 -- outside the 0.8-1.25 plausible-reconciliation band. The identical check on SAP GY Equity's FY2025 (both December-FYE, same-year rows) reconciles to 1.0000007 (positive control: the method is sound and the SAP case shows no such gap).",
+        "field_map.json cross_security_findings[0] (this worker's own committed artifact): the finding is recorded as consistent with a currency difference AND/OR the ~9-month fiscal-vs-calendar timing gap AND/OR an ADR share-ratio effect -- explicitly NOT isolated to one cause"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This cell's bound (e)/C-FISCAL-YEAR-JOIN: 'Fiscal year is the join key ... Join on fiscal year, never the date string' and AC4's bar: 'JOIN: 3 of 3 securities at 10 FY rows; orphan price rows 0'.",
+    "world_is": "Grouping by the calendar year of `date` (date[:4]) satisfies AC4's MECHANICAL bar exactly -- 10 distinct fiscal-year labels, 0 raw rows left un-merged, for all three securities including BABA -- but for a non-December-FYE issuer this calendar-year grouping is not the same thing as grouping by the ISSUER'S OWN FISCAL PERIOD: it pairs each fiscal year's fundamentals (reported as of the true period end, 31 March) with a price/ratio observation from nine months later in the same calendar-year label (31 December), rather than one from at or near the fiscal period end. AC4's row-count-and-orphan-count bar cannot detect this, because it counts rows, not temporal alignment. This worker did not attempt a deeper fix (e.g. sourcing a price observation nearer the fiscal period end would need an additional Bloomberg field/call this order's F2/G-24 three-security cap does not budget for) -- the finding is disclosed in field_map.json, in every affected figure's `currency_caveat` (model_block_pull.py), and in README.md, per AC8's own question about what the deliverable could not resolve and said so.",
+    "notes": "Downstream cells building fiscal-year-keyed ratios for a non-December-FYE covered name (this universe includes several: KDDI, Hon Hai 2317 TT, Mitsubishi UFJ 8306 JP among the ~89, though this order touched none of them besides BABA) should re-derive rather than assume the calendar-year grouping is fiscal-period-aligned. A more precise fix (e.g. reading a Bloomberg fiscal-period-end price via an override, or accepting the March-dated sub-row's own trailing PX_LAST if one exists) is a candidate for whichever cell next builds ratio-bearing figures on a non-calendar-FYE name; not attempted here to stay inside the three-security cost cap and because it was not established which route Bloomberg actually supports without a further, uncosted call."
   }
 ]
 ```
