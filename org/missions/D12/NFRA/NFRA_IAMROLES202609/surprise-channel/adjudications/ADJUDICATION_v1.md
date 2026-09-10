@@ -678,3 +678,37 @@ instruments; no L8 packet had been sent when it was written, and none is require
   }
 ]
 ```
+
+## C-S16 -- Z-S15: the job IS over on 18 of 18 real tags, so the slug is cut under an AUDITED OVERRIDE carrying the measurement -- and the order is NOT edited
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S16",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T18:42Z",
+    "one_line": "Z-S15 GRADUATES: the L10 gate refused a legitimate slug because a FIRST-MATCH regex read a `<status>` string out of an order's PROSE. The job IS over -- 18 of 18 terminal on their real tags -- so the slug is cut under an AUDITED OVERRIDE carrying the measurement, and the order is NOT edited.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "1.0.0_SA_CTO~Z, unchanged from the row. NOT TAKEN HERE.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-S15"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GRADUATES ON A MEASUREMENT WITH ITS OWN NEGATIVE CONTROL BUILT IN: the same bytes read by the gate's regex yield `tag` and read by a full-pair regex yield `complete`. That is not an interpretation of the file, it is two instruments disagreeing about it, and only one of them is reading the field the law names.",
+        "*** THE OVERRIDE IS TAKEN AND THIS SEAT STATES THE TEST IT APPLIED, BECAUSE AN OVERRIDE THAT CANNOT NAME ITS OWN DISCRIMINATOR IS A BYPASS. *** Four hours ago the identical gate refused this seat's `NFRA_OPSEC202609` slug and this seat WITHDREW IT AND OVERRODE NOTHING, because `TO-OP3A-S-1` was genuinely `staged` -- the job was not over and the gate was right. ⛔ THE TEST IS NOT 'IS THE REFUSAL INCONVENIENT' BUT 'IS THE FACT THE RULE PROTECTS TRUE': there it was false, here it is true on 18 of 18 orders' own tags. Same gate, same law, opposite acts, and the difference is measured rather than argued.",
+        "⛔ THE ALTERNATIVE WAS AVAILABLE AND IS REFUSED ON PRINCIPLE: editing `:32` so the order stops mentioning `<status>` would clear the refusal in one keystroke. That is AMENDING A TERMINAL ORDER TO SATISFY A GATE, the same act both MSTR seats refused when the W arm mis-graded remediation rows -- and the CTO's own ruling on that named it: had either edited the rows, 'the schema would have been bent to fit the defect and the defect would have become permanent and invisible.' The order is not malformed; a document about markup must be able to write markup.",
+        "⚠ AND THE SLUG CARRIES THIS ROW, WHICH IS THE POINT OF FILING BEFORE CUTTING RATHER THAN AFTER: `REMEDIATION_v3.Z.md` carries TEN rows, and the tenth is the finding that explains its own override. A slug whose override reason is only in a commit message leaves the next reader to reconstruct it; one that carries the row does not."
+      ]
+    },
+    "spec_asserts": "The gate asserts that a slug waits until every task order is terminal at HEAD.",
+    "world_is": "Every task order IS terminal; the gate's reading of one order's status is drawn from prose describing a different document.",
+    "notes": "⭐ THIS IS THE SECOND GATE DEFECT ROUTED FROM THIS SEAT TODAY AND THE THIRD INSTRUMENT-PLANE FINDING IN THIS PROJECT ALONE (Z-S10 the script's tree, Z-S14 the forwarder's tree, Z-S15 the regex's occurrence). ⛔ NONE OF THE THREE IS AN ARGUMENT FOR WEAKENING ANY GATE: in every case the LAW was right and the READ was wrong, and in every case the artifact was left alone."
+  }
+]
+```

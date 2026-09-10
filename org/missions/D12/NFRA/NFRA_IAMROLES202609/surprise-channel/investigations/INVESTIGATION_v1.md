@@ -961,3 +961,36 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+## Z-S15 -- the L10 gate reads a task order's status with a FIRST-MATCH regex, so an order that MENTIONS `<status>` in prose is graded on the mention
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S15",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T18:42Z",
+    "one_line": "⛔ THE L10 GATE READS A TASK ORDER'S STATUS WITH A FIRST-MATCH REGEX, SO AN ORDER THAT MENTIONS `<status>` IN ITS PROSE IS GRADED ON THE MENTION. `TO_STATUS_RE = re.compile(r\"<status>\\s*([A-Za-z_-]+)\", re.I)` takes the FIRST hit; TO-IAM-t-3's line 32 reads 'Carries NO <status> tag at all' -- about a DIFFERENT document -- so the gate captured the word `tag`, found it absent from TERMINAL_TO_WORDS, and refused a legitimate slug on 9 rows. THE REAL TAG AT :165 READS `complete`, AND ALL 18 ORDERS ARE TERMINAL. ⭐ THE ORDER WHOSE SUBJECT IS WHETHER STATUS TAGS MEAN ANYTHING IS THE ONE MISREAD ON ITS OWN STATUS TAG.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "1.0.0_SA_CTO~Z -- `.tools` is that seat's surface and the fix is a source edit, the same routing as Z-S12. ⚠ NOT TAKEN HERE AND NOT EDITED HERE. The cheap forms are a LAST-match read, an anchored `^<status>`, or the full `<status>([^<]*)</status>` pair -- but WHICH is a judgement about how orders are allowed to quote markup, and that is L2/L4's call rather than a grader's.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** MEASURED AT SOURCE, BOTH HALVES, ON THE SAME FILE. *** `.tools/surprise-row-gate.py:124` defines `TO_STATUS_RE = re.compile(r\"<status>\\s*([A-Za-z_-]+)\", re.I)` and `:736` applies it as `m = TO_STATUS_RE.search(text)` -- SEARCH, so the FIRST occurrence anywhere in the file wins. Run against `TO-IAM-t-3.three-prior-plans-landed-or-not-on-the-artifact.md`, that first match is the literal string `'<status> tag'` and the captured word is `'tag'`. ⛔ A FULL-PAIR read of the same bytes -- `re.findall(r'<status>([^<]*)</status>', text)` -- RETURNS EXACTLY `['complete']`. ONE FILE, TWO REGEXES, OPPOSITE VERDICTS, AND ONLY ONE OF THEM IS READING THE FIELD.",
+        "THE PROSE THAT TRIPS IT IS AT :32 AND IT IS ABOUT A DIFFERENT DOCUMENT ENTIRELY: 'Carries NO <status> tag at all, and sits inside a project whose PRD marks it \"not re-opened\".' That is the ORDER describing one of the three prior PLANS it was cut to investigate. The order's OWN status tag is at :165 and reads `<status>complete</status>`. ⭐ THE ORDER IS NOT MALFORMED AND MUST NOT BE EDITED TO SUIT THE GATE -- naming a markup tag in prose is how a document describes markup, and an order about status tags has no way to discuss them without writing one.",
+        "⚠ AND THE SENTENCE THAT BREAKS THE GATE IS ALSO FACTUALLY WRONG, WHICH IS A SEPARATE FINDING ALREADY IN THIS CHANNEL: `Z-W9-S1` (graduated at C-S14) measured that plan 3 DOES carry a status tag -- `<status>complete -- SPRING-CLEAN 2026-08-25 (S2)</status>`. So :32 is both an inherited error from the brief's F10 AND the string that refuses this project's slug. ⭐ ONE SENTENCE, TWO INDEPENDENT DEFECTS, NEITHER CAUSED BY THE OTHER.",
+        "⛔ THE VERDICT THE GATE REACHED IS FALSE AND THE GROUND TRUTH IS MEASURED: an UNSCOPED sweep of all 18 `task-orders/*.md`, reading each file's `<status>...</status>` PAIR, returns the histogram `{complete: 18}` -- every value read, none assumed. The L10 precondition ('every task order under the project terminal') IS SATISFIED IN FACT. The gate's refusal text is correct in its law and wrong in its reading.",
+        "*** WHY THIS IS A DIFFERENT SHAPE FROM THE REFUSAL THIS SEAT ACCEPTED FOUR HOURS AGO, AND THE DISTINCTION IS THE WHOLE JUSTIFICATION FOR TREATING THEM DIFFERENTLY. *** On `NFRA_OPSEC202609` the same gate refused this seat's slug and WAS RIGHT: `TO-OP3A-S-1` was genuinely `staged`, the job genuinely was not over, and this seat withdrew the slug and took NO override (C-S42 there). HERE THE JOB IS OVER AND THE GATE MISREAD IT. ⛔ THE DISCRIMINATOR IS NOT WHICH ANSWER IS CONVENIENT -- IT IS WHETHER THE UNDERLYING FACT THE RULE PROTECTS IS TRUE. Andrew-direct LD-0521 is 'we do not route until the job is over'; the job is over on 18 of 18 orders' own tags.",
+        "⚠ THE OVERRIDE TAKEN ON THE SLUG IS AUDITED AND CARRIES THIS MEASUREMENT, and it is the narrow kind: the gate's LAW is upheld and only its READING is bypassed. The alternative -- editing `:32` so the order stops mentioning a tag -- would be AMENDING A TERMINAL ORDER TO SATISFY A GATE, which is the same act both MSTR seats correctly refused when the W arm mis-graded remediation rows (Z-S12, C-S13). BENDING THE ARTIFACT TO FIT THE DEFECT MAKES THE DEFECT PERMANENT AND INVISIBLE."
+      ]
+    },
+    "spec_asserts": "The L10 precondition holds that a slug waits until every task order under the project is terminal, read from each order's `<status>` tag at HEAD.",
+    "world_is": "The gate's first-match regex captures a `<status>` string occurring in an order's PROSE, so an order describing markup is graded on the description; all 18 orders are terminal on their actual status tags.",
+    "notes": "⛔ NOTHING IS ASKED OF ANY LANE BEYOND THE ROUTING, and no order was edited. This is the SECOND gate defect this seat has routed today (Z-S12 was the first) and both are the same family the estate met all day: AN INSTRUMENT ANSWERING CONFIDENTLY ABOUT THE WRONG OBJECT -- there the wrong PLANE, here the wrong OCCURRENCE. ⭐ AND THE GENERAL FORM IS WORTH MORE THAN THE REGEX: A FIRST-MATCH READ OF A STRUCTURED FIELD IS A GUESS THAT THE FIELD APPEARS BEFORE ANY DISCUSSION OF IT. That holds for most documents and fails for exactly the documents that are ABOUT the field -- which are the ones a governance estate writes when it starts auditing its own markup."
+  }
+]
+```
