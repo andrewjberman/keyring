@@ -192,7 +192,18 @@ if [ "$N_FILES" -eq 0 ]; then
 fi
 
 # --- Run the suite -------------------------------------------------------------
-OUT="$ROOT/.git/pipescript-suite-last-run.out"
+# STRUCTURAL FALSE RED, measured 2026-09-10 by 0.0.0_AB_MSTR and confirmed at 1.0.0_SA_CTO (95122):
+# "$ROOT/.git" is a DIRECTORY only in the MAIN tree. In a LINKED WORKTREE .git is an 86-byte POINTER
+# FILE, so `>"$OUT"` dies with "Not a directory", the whole `if` takes the failure branch, and the gate
+# reports the suite RED with an EMPTY failing-test list -- pytest's verdict never entered it. The suite
+# was never actually red. Rule 14b directs every seat into a linked worktree while other seats are live,
+# so the BROKEN shape was the NORMAL one, and a gate that cries wolf teaches seats to bypass it.
+# rev-parse --absolute-git-dir resolves to a real writable directory in BOTH shapes (main tree ->
+# <root>/.git; linked worktree -> <root>/.git/worktrees/<name>), measured on both before this change.
+# The fallback keeps a broken resolution from re-creating the same false red by another route.
+GITDIR="$(git -C "$ROOT" rev-parse --absolute-git-dir 2>/dev/null)"
+[ -n "$GITDIR" ] && [ -d "$GITDIR" ] || GITDIR="${TMPDIR:-/tmp}"
+OUT="$GITDIR/pipescript-suite-last-run.out"
 echo "[pipescript-suite-gate] watched path staged -- running the comp-pipescript suite ($N_FILES files) ..." >&2
 if (cd "$ROOT" && python -m pytest $SUITE_FILES -q --color=no >"$OUT" 2>&1); then
     SUMMARY="$(tail -1 "$OUT" | tr -d '\r' | sed 's/\x1b\[[0-9;]*m//g')"
