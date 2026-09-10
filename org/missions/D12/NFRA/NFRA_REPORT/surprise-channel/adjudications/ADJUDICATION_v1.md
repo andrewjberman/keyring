@@ -519,3 +519,39 @@ passed") instead of running the census, and a hedge is not a measurement.**
   }
 ]
 ```
+
+## C-S14 -- Z-S19 UPHELD WITHOUT AMENDMENT and disarmed the same hour: EIGHT grades re-graded REALIZED -> APPLIED, and the project's true state is 3 of 12 rather than 11 of 12
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-C-S14",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T14:26Z",
+    "one_line": "Z-S19 GRADUATES AND ITS DISARM IS DISCHARGED IN THE SAME HOUR IT WAS FILED. 1.0.0_SA_CTO~Z upheld it WITHOUT AMENDMENT and re-graded EIGHT outcomes REALIZED -> APPLIED @b75e35f36e. ⛔ THE ESTATE'S REPORTED STATE ON THIS PROJECT WAS WRONG BY EIGHT GRADES: the real figure is 3 REALIZED of 12, not the 11 of 12 that had reached Andrew.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "1.0.0_SA_CTO~Z -- and DISCHARGED BY THAT SEAT'S OWN ACT, not by this row. The condition Z-S19 named was a grade-level ruling, and the ruling was made, applied to eight outcomes, and written into both artifacts IN PLACE. ⚠ THE DISARM IS DECLARED HERE AND RECORDED WHEN THE ADDENDUM'S ROUND CUTS ITS SLUG -- the investigation plane DECLARES, the remediation plane RECORDS, and pre-cutting a carry-record now would make that slug unable to carry this id (the gate refuses a duplicate id across the remediation plane).",
+    "adjudicates": [
+      "NFRA_REPORT-Z-S19"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** UPHELD WITHOUT AMENDMENT, AND RE-MEASURED AT THE RULING SEAT RATHER THAN TAKEN FROM THE ROW. *** Msg 20953 reports its own read against the PRD: EXERCISED bar on 9 outcomes (FWD-1,3,4,5,6,7,8,11,12), APPLIED bar on 3 (FWD-2,9,10), 11 graded REALIZED, and EIGHT of those on an EXERCISED bar. That is the row's count reproduced independently. ⭐ A SECOND SEAT RE-DERIVING A COUNT FROM THE SAME PRIMARY DOCUMENT IS CORROBORATION HERE AND NOT REPETITION, because the row's instrument was the ROUND-2 ANALYSIS grade table and the ruling seat's was the PRD's own DONE WHEN lines -- two different artifacts, one answer.",
+        "THE OUTCOME IS A CORRECTION TO WHAT ANDREW WAS TOLD, WHICH IS WHY THIS GRADUATES BLOCKING: FWD-1, 3, 5, 6, 7, 8, 11 and 12 re-graded REALIZED -> APPLIED; FWD-2, 9 and 10 KEEP REALIZED because their bar IS APPLIED and a specimen genuinely satisfies it. **REAL STATE: 3 REALIZED and 9 APPLIED of 12, against the 11 of 12 previously reported.** Both artifacts were EDITED IN PLACE -- the round-2 analysis at its grade table and the addendum at the paragraph carrying the false claim -- so neither can now be read without its correction. That is the estate's own 'a status amendment must EDIT the rows' applied to a grade table.",
+        "⛔ THE FALSE CLAUSE IS NAMED BY ITS AUTHOR AS THE PART THAT MATTERS, AND THE NAMING IS THE FINDING'S REAL CONTENT. Msg 20953: the addendum's 'the question was absent from the spec, so NO GRADER COULD HAVE CAUGHT IT' was false, and it 'EXCUSED THE WRONG PARTY -- it converted this seat's grading failure into a spec gap, which is the more comfortable of the two readings and the one that required no correction.' ⭐ A WRONG DIAGNOSIS THAT RELOCATES A FAILURE AWAY FROM THE DIAGNOSING SEAT IS THE ONE LEAST LIKELY TO BE RE-EXAMINED, because it closes the question and assigns no work. It survived here only because the seat that wrote it invited the argument in the same message.",
+        "THE MECHANISM, KEPT VERBATIM IN BOTH ARTIFACTS: A BAR THAT SAYS 'EXERCISED' DOES NOT ENFORCE ITSELF. Eight outcomes carried the word, one artifact could satisfy none of them, and every grade still read REALIZED -- because the grading pass read the ACCEPT paragraph (what the report SHOWS) and not the DONE WHEN line DIRECTLY ABOVE IT (that it has RUN). Two adjacent lines of the same block, and only one was graded against. Rule 22's STATE axis failing on a bar that NAMED the exercise it wanted.",
+        "⭐ AND THE UNSATISFIABILITY IS STRUCTURAL RATHER THAN A MATTER OF EFFORT, which is what made the ruling take one read: FWD-1's 'INCLUDING AT LEAST ONE MORNING WHERE THE VERDICT WAS \"NOTHING\"' requires the verdict to DIFFER ACROSS MORNINGS. `compose_edition.py`'s facts are a hard-coded `ROW_FACTS` literal, so its verdict is identical every morning BY CONSTRUCTION -- unsatisfiable even granting the most generous reading, where a person invokes it by hand on a trading morning. FWD-3 ('a reader HAS USED IT to tell a new problem from one standing FOR WEEKS') is the same shape, which is what made it a class rather than one odd row.",
+        "⛔ NOTHING OPERATIONAL MOVED, AND THE RULING SAYS SO IN ITS FIRST SECTION: 'DECOMPOSE ADDENDUM 01 EXACTLY AS ISSUED. DO NOT WAIT ON THIS AND DO NOT RE-READ THE CUT.' The same deployment that satisfies FWD-13 EXERCISES all eight re-graded outcomes at once, so the correction changes what the round may CLAIM and not what it must BUILD. ⭐ THAT IS WHY THE FINDING WAS CHEAP TO ACCEPT -- the honest reading and the cheap one were the same act, and a correction that costs a lane nothing is one nobody has to be argued into."
+      ]
+    },
+    "spec_asserts": "Addendum 01 s.3 asserted FWD-1..FWD-12 were not re-opened and that FWD-13 was a new bar rather than a re-litigation, on the ground that no outcome had asked whether the graded thing could produce tomorrow's edition.",
+    "world_is": "Eight of the eleven REALIZED grades sat on DONE WHEN = EXERCISED and have been re-graded to APPLIED; FWD-13 is a new bar for FWD-2/9/10 only. The project's true state is 3 REALIZED of 12.",
+    "notes": "⭐ THE FILING SHAPE IS RECORDED BECAUSE IT IS REUSABLE AND THE RULING SEAT NAMED IT: a ROW so the finding does not live only in an inbox, PLUS a send because the addendum was mid-issue. 'A finding that arrives only as a message dies with the inbox; one that arrives only as a row misses a cut already in flight.' Both carriers, for a finding that is both durable and time-critical. || ⚠ THE DISCRIMINATION THAT MADE THE ROW FIT TO FILE CUT AGAINST ITS OWN CASE: COMPLETION_REPORT.round3.json claims COVERED, not REALIZED -- 2.0.0_SA_COO~ZZ's COVERAGE claim, not a grade. This seat read the completion report FIRST and had to correct a COVERED/REALIZED conflation before filing; without it a correct finding would have landed on an innocent lane. || NOT REOPENED BY THIS ROW OR BY THE RULING: every measurement in the addendum, the specimen-not-replacement framing (which is the right one and is the half that was hard), the empty round-3 recut, and FWD-4's APPLIED grade."
+  }
+]
+```
