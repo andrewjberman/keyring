@@ -87,6 +87,16 @@ The canonical answer, for the record and NOT for execution here: **an AWS resour
 
 **Print, in the record and beside AC3:** the emitted STORED_IN count before and after (955 -> N) with N's own denominator (distinct keys with a bucket in props / distinct keys), the per-key edge count distribution (expect every key at exactly 1; anything else is a row), the keys with no bucket in props counted separately, and DERIVES_FROM unchanged at 216 of 216. The reconciliation and the five magnitudes must not move; if they do, that is a row before it is a fix.
 
+### THE FAN-OUT FIX IS A **FOURTH** CYCLE (issuer ruling 2026-09-10 02:2xZ), because the third's zip beat it by one minute
+
+Measured, not assumed: your third-cycle entry closes with the served object at `LastModified Thu, 10 Sep 2026 02:13:37 GMT`, and the fan-out amendment above committed at 02:14. **The third cycle carries the W2-S69 stamp fix ONLY** -- that is correct and it is not a defect; finish it exactly as cut (build, derive on the pinned `:9`, projection, F11-AC2 re-taken) and report its numbers.
+
+**Then run a FOURTH cycle for the fan-out fix and nothing else.** The reason it does not wait for round 7: the served graph asserts, right now, that each of 191 keys is stored in FOUR buckets, and at most one is true per key -- 573 of the 764 served edges are fabricated facts, in the graph the estate queries when it asks where data lives. That is served-output correctness, it is inside your `<paths>`, and the fix does not touch the endpoint IDENTITY the CTO reserved to round 7. One zip re-push (its own NEVER-2 entry), ONE ad-hoc build, ONE ad-hoc derive on `:9`, one projection. No image act.
+
+Everything in the fan-out section above governs that cycle: one `STORED_IN` per key to the bucket the key's own props name; a key with no bucket in props gets NO edge and is counted separately; identity untouched; and printed beside AC3 -- 955 -> N with N's denominator, the per-key edge-count distribution (every key at exactly 1, or a row), the no-bucket keys, DERIVES_FROM unchanged at 216 of 216, the reconciliation and the five magnitudes unmoved or a row before a fix. F11-AC3 STILL FAILS afterwards on the resolved node's TYPE and is reported measured-and-failing beside rows W2-S70 and the CVO's S97; that is expected and it is not a reason to skip the cycle.
+
+If the fourth cycle's own reads surface a further cause, file the row and REPORT -- a fifth cycle is not yours to start and is not implied.
+
 Rows continue at W2-S71. Everything committed through `9958972150` stands.
 
 ## DELIVERABLE -- in this order
@@ -120,7 +130,7 @@ Rows continue at W2-S71. Everything committed through `9958972150` stands.
 
 ## BOUNDS
 
-- **Identity or carry, never drop; never rename at the fold.** THREE cycles of zip re-push, build, derive, projection (the third AUTHORISED 2026-09-10 02:0xZ on row W2-S69; the second on W2-S68; the first under the GO). ONE image act, spent and closed -- a SECOND image act is NOT authorised and needs its own two-half sign. The local stitch store untouched (S26's, now RETIRED @acf75d72d8).
+- **Identity or carry, never drop; never rename at the fold.** FOUR cycles of zip re-push, build, derive, projection (the fourth AUTHORISED 2026-09-10 02:2xZ on the CVO's S96/S97 fan-out, because the third's zip was already served at 02:13:37Z when that fix was cut; the third on W2-S69; the second on W2-S68; the first under the GO). ONE image act, spent and closed -- a SECOND image act is NOT authorised and needs its own two-half sign. The local stitch store untouched (S26's, now RETIRED @acf75d72d8).
 - A spec-vs-world divergence is a ROW. Certifier != author.
 
 <paths>
