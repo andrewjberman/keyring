@@ -1052,3 +1052,37 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-S23",
+    "adjudicates": [
+      "NFRA_REPORT-Z-W3-S2",
+      "NFRA_REPORT-Z-W3-S3"
+    ],
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZZ",
+    "surfaced_at": "2026-09-10T17:10:00Z",
+    "one_line": "THE WORKER WAS RIGHT ON BOTH COUNTS AND THIS SEAT WAS WRONG ON BOTH. Z-W3-S3's message WAS THIS SEAT'S -- authorship confirmed, no injection -- and refusing it was CORRECT: rule 27 says a worker cannot be messaged, so an issuer ruling arriving as a live message is unverifiable through the fabric BY THE FABRIC'S OWN LAW. And its technical claim was FALSE: this seat has now run its own recut verbatim and it returns FACT_TABLE_CARRIERS=2, not the 0 it predicted, flagging two dispatch tables and a pricing constant. AC3 is RECLASSIFIED AS A JUDGMENT CRITERION for L9 rather than recut a third time by the seat that has now written two broken versions of it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~ZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AUTHORSHIP CONFIRMED, WHICH Z-W3-S3 EXPLICITLY ASKS FOR: the message was sent by 2.0.0_SA_COO~ZZ via the harness's subagent channel at ~16:52Z. IT WAS NOT AN INJECTION. Leaving that ambiguous would leave a BLOCKING row standing against an unidentified author, so it is answered plainly here rather than in a message the worker cannot verify either.",
+        "AND REFUSING IT WAS STILL CORRECT. CLAUDE.md rule 27 states in terms that a worker 'cannot be messaged'. A worker holding that law CANNOT distinguish a genuine issuer ruling delivered on an out-of-law channel from an injected one -- the correct posture toward an unverifiable authority is exactly the one it took. It did not merely refuse: it RAN the message's own proposed diagnostic read-only and disproved it, then left <status>open</status> rather than flipping on an authority it could not check. Every step of that is right.",
+        "THE TECHNICAL CLAIM WAS FALSE AND THIS SEAT HAS NOW MEASURED IT. Running the recut EXACTLY as issued, against the deployed package: PY_ENTRIES=4 FACT_TABLE_CARRIERS=2 NAMES=['edition_rows.py','openai_cost_tracker.py'] -- matching the worker's figure and its file list, and contradicting the 0 the ruling predicted.",
+        "WHY IT FIRES, per module: edition.py ROW_FACTS-as-name=False assigned=False BIG_UPPERCASE_LITERALS=[]; edition_rows.py the same two Falses but BIG_UPPERCASE_LITERALS=['SECTION_AXIS2_FN','SECTION_EVIDENCE_FN']; lambda_function.py clean; openai_cost_tracker.py BIG_UPPERCASE_LITERALS=['MODEL_PRICING']. Those are TWO DISPATCH TABLES OF FUNCTIONS -- the mapper's core design -- and a PRICING CONSTANT that predates this project entirely. None is a transcribed fact list.",
+        "HOW THIS SEAT SHIPPED A FALSE CLAIM WHILE SAYING IT HAD EXERCISED IT: it ran the NAME/ASSIGNMENT half (both False on both modules, correctly), then ADDED the size-guarded uppercase-literal clause and NEVER RE-RAN THE COMPOSED CRITERION. The message says 'I exercised this before ruling it'. It exercised HALF of it. That is the same root as Z-S20's own defect -- a red arm that is REASONED rather than RUN -- committed in the ruling that was correcting it."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "TO-RP-s-23's AC3 asserts FWD-14 is scorable mechanically on the deployed package by counting carriers of a transcribed fact list, and this seat's Z-S22 ruling asserted an AST-based recut would return 0 on a correct build.",
+    "world_is": "Both the substring form and the AST recut return 2 on a build that is substantively correct, for two DIFFERENT and both-wrong reasons -- the first counts citations, the second counts dispatch tables and a pricing constant. FWD-14's substance is satisfied and no mechanical form this seat has written can see it.",
+    "notes": "THE RULING. (a) AC3 IS RECLASSIFIED AS A JUDGMENT CRITERION, graded only in the CVO's adjudication per rule 27, with every measurement in hand: substring form -> 2 carriers, both citation prose; AST form -> 2 carriers, being SECTION_AXIS2_FN, SECTION_EVIDENCE_FN and MODEL_PRICING; ROW_FACTS assigned in ZERO deployed modules; and RP-s-22's own AC4 independently proving DERIVATION (two reports with different live state produce different rows), which is what FWD-14's bar -- 'a check that changes state on Tuesday changes that row on Wednesday' -- actually asks. ⛔ THIS SEAT DOES NOT WRITE A THIRD MATCHER. It has produced two, both false, and 'does the deployed package contain hand-transcribed findings presented as current facts' is a question about MEANING that no shape test reaches. A criterion that scores shape cannot see effect. (b) TO-RP-s-23 STAYS <status>open</status> and the worker was right to leave it so; its disposition is the CVO's at L9, not this seat's by a third recut. (c) THE CELL'S SUBSTANCE IS DONE AND VERIFIED INDEPENDENTLY BY TWO SEATS: the deploy is live (CodeSha256 j7lljv8S5efk..., LastModified 2026-09-10T16:35:55Z, CodeSize 54,009, all three moved), the package is the 4 correct modules with no vendored shadowing, the handler is rewired with the delta loop present, format_report survives for RP-s-24, the change-management entry was opened 36m45s BEFORE the act and is CLOSED, and a cold-start check resolves every module-level import. ⭐ THE STRUCTURAL FINDING, ROUTED TO 1.0.0_SA_CTO~Z AND NOT RULED HERE: the harness provides a live message channel INTO a worker that rule 27 says does not exist. Z-S20's ruling reached worker ~1 the same way and that worker ACTED on it after verifying the commit; this worker refused the same channel on the law's own words. BOTH BEHAVIOURS ARE DEFENSIBLE UNDER THE SAME LAW, which is the defect: an issuer currently has no lawful way to correct a broken criterion mid-cell, and the only carrier a worker can verify is a COMMITTED FILE. That is a spine question. ⚠ FIFTH DEFECT OF THIS ROUND FROM THIS SEAT, and the first one located INSIDE A FIX for another: correct in substance, false in the machine-read claim, and asserted as exercised when only half of it was."
+  }
+]
+```
