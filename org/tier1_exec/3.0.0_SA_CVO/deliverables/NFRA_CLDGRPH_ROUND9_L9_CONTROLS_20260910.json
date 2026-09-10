@@ -1,0 +1,138 @@
+{
+  "i1_predicate_control.json": {
+    "method": "Exact pinned function AST; installed pyiceberg evaluator; synthetic three-row fixtures across five pairs; no table overwrite or cloud reads",
+    "harness_errors_before_results": [
+      "wrong old filter argument shape",
+      "missing evaluator case_sensitive argument"
+    ],
+    "results": [
+      {
+        "pair": [
+          "S3_BUCKET",
+          "S3_BUCKET_POLICY"
+        ],
+        "old_foreign": true,
+        "new_foreign": false,
+        "new_own": true,
+        "old_distinct": false,
+        "new_distinct": false
+      },
+      {
+        "pair": [
+          "IAM_ROLE",
+          "LAMBDA"
+        ],
+        "old_foreign": true,
+        "new_foreign": false,
+        "new_own": true,
+        "old_distinct": false,
+        "new_distinct": false
+      },
+      {
+        "pair": [
+          "EVENT_RULE",
+          "LAMBDA"
+        ],
+        "old_foreign": true,
+        "new_foreign": false,
+        "new_own": true,
+        "old_distinct": false,
+        "new_distinct": false
+      },
+      {
+        "pair": [
+          "CODEBUILD_PROJECT",
+          "IAM_ROLE"
+        ],
+        "old_foreign": true,
+        "new_foreign": false,
+        "new_own": true,
+        "old_distinct": false,
+        "new_distinct": false
+      },
+      {
+        "pair": [
+          "EVENT_RULE",
+          "SSM_DOCUMENT"
+        ],
+        "old_foreign": true,
+        "new_foreign": false,
+        "new_own": true,
+        "old_distinct": false,
+        "new_distinct": false
+      }
+    ]
+  },
+  "i2_key_controls.json": [
+    {
+      "pin": "efbddbccd6^",
+      "lines": [
+        259
+      ],
+      "keys": [
+        "current-id",
+        "stale-id"
+      ]
+    },
+    {
+      "pin": "efbddbccd6",
+      "lines": [
+        272,
+        273
+      ],
+      "keys": [
+        "current-arn",
+        "current-id"
+      ]
+    }
+  ],
+  "i5_resolver_controls.json": {
+    "source_pin": "a658d981cd",
+    "positive": "unmodified YAML run block against current HEAD gitlink",
+    "negatives": "same block with only ls-tree path changed",
+    "results": [
+      {
+        "case": "positive",
+        "rc": 0,
+        "output": "sha=5907cbca98eb091124e38a32debefa355c1d4376",
+        "stdout": "OK: portal gitlink resolved from the superproject tree: 5907cbca98eb091124e38a32debefa355c1d4376"
+      },
+      {
+        "case": "non_gitlink",
+        "rc": 1,
+        "output": "",
+        "stdout": "ERROR: the portal gitlink did not resolve to a 40-hex sha (got: '').\nERROR: refusing to hand actions/checkout an empty ref, which it would\nERROR: silently resolve to the portal default branch and publish."
+      },
+      {
+        "case": "absent",
+        "rc": 1,
+        "output": "",
+        "stdout": "ERROR: the portal gitlink did not resolve to a 40-hex sha (got: '').\nERROR: refusing to hand actions/checkout an empty ref, which it would\nERROR: silently resolve to the portal default branch and publish."
+      }
+    ]
+  },
+  "preconditions.json": {
+    "head": "be7049b38003fee0fcbc899ec0d635fa0098d8bd",
+    "investigation_count": 289,
+    "under": [
+      "NFRA_CLDGRPH-S117",
+      "NFRA_CLDGRPH-S118",
+      "NFRA_CLDGRPH-W2-S79",
+      "NFRA_CLDGRPH-W3-S20",
+      "NFRA_CLDGRPH-W4-S10",
+      "NFRA_CLDGRPH-W1-S49",
+      "NFRA_CLDGRPH-W1-S50",
+      "NFRA_CLDGRPH-W1-S51"
+    ],
+    "unknown": [],
+    "files_read": 6,
+    "note": "",
+    "open_tos": [
+      [
+        "NFRA_CLDGRPH.TO-CG-I-3.the-folds-licence.md [pending]"
+      ],
+      49,
+      ""
+    ]
+  }
+}
