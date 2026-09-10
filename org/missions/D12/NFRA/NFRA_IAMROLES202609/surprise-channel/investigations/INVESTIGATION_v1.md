@@ -489,6 +489,32 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
     "spec_asserts": "The undeclared roles are 'not written down in our code', and the remedy for a production serving-path member is to bring it into Terraform. The governance vocabulary partitions members into in-code and exempt.",
     "world_is": "One member is neither. Terraform owns FOUR policy attachments on opal-data-refresh-lambda-role and does not own the role, so the estate's code depends on a resource it cannot create and could not restore if the role were deleted. A binary in-code/exempt axis cannot express that, and a membership check keyed on a NAME MATCH would call the role declared on 9 hits when none of them declares it.",
     "notes": "FOUND WHILE MEASURING CRITERIA BASELINES FOR THE ROUND-2 CUT, before the issuance, which is why it changes the cut rather than being carried past it. TWO CELLS MOVED ON IT: IAM-r-3's discriminator is now a RESOURCE BLOCK and never a name match, with the confirmed false positive as its positive control and this role as its negative control -- a discriminator that cannot separate those two is not one. IAM-r-5 is re-framed as an ADOPTION and its destroy bound stops being theoretical: four live policy attachments hang off this role by name, so a plan that destroyed or replaced it would orphan them on a production serving path, which is the outage C-NO-ACCESSDENIED forbids this project from causing. IAM-r-6's uncovered-member hunt must now consider this state explicitly. NOT CLAIMED: that the other fourteen members are correctly classed -- this cut measured two roles because two cells depend on them, and IAM-r-3 measures all of them. disarm_owner is 1.0.0_SA_CTO~Z as the architecture owner; whether a role Terraform policies but does not declare is acceptable, and whether the vocabulary needs a value for it, is a ruling and not a worker's call. THE REUSABLE SHAPE: A REFERENCE IS NOT A DECLARATION, and a census keyed on an identifier's PRESENCE cannot tell the two apart -- it will read a heavily-referenced absent thing as present, which is the opposite error from the false positive this round already found, on the same question."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W6-S1",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~6",
+    "surfaced_at": "2026-09-10T13:22Z",
+    "one_line": "The L5 decomposition's own round-2 battery citation of '195 TF roles' from comp-iam (also independently repeated by row Z-S1) does NOT reproduce -- a fresh re-run of the identical instrument against the identical committed Terraform tree returns 191, twice, matching round 1's figure instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D12/NFRA/NFRA_IAMROLES202609/decompositions/NFRA_IAMROLES202609_DECOMP_R2.md@5b460996ee section 2b: 'comp-iam -- RUN. 195 TF roles / 188 services / 1084 operations / 304 gaps'.",
+        "This project's own row NFRA_IAMROLES202609-Z-S1 (surfaced 2026-09-10T05:39Z by 2.0.0_SA_COO~ZI) independently repeats the same reading: 'A THIRD figure exists on the DECLARED plane and is NOT part of this finding: comp-iam stats parses 195 IAM roles from Terraform.'",
+        "MEASURED by this worker: `.tools/comp-iam stats` and `.tools/comp-iam roles`, run twice back-to-back at this worktree's HEAD cccb4fac8351dbcdf547382b0c733f20ffc62667 (branch wk-NFRA_IAMROLES202609-6, cut from SITEZ HEAD), both times print 'IAM roles parsed: 191' / 'IAM ROLES (191 found)' with 191 tf_resource lines -- while Services scanned (188), Total operations (1084) and Permission gaps (304) match the decomposition's '195' citation exactly.",
+        "MEASURED: `git log --since=2026-09-10T05:00:00Z --until=2026-09-10T13:30:00Z -- infra/aws/terraform/` returns 0 commits -- the committed Terraform tree did not move across the span from Z-S1's own vintage (05:39Z) through the decomposition's commit (5b460996ee, 2026-09-10T12:45:53Z) to this worker's HEAD (12:58:12Z).",
+        "MEASURED: `git log -- org/modules/graph/extract_iam.py` shows no commit since 2026-07-25T09:35:44-04:00 -- the role-counting logic itself has not changed today.",
+        "MEASURED: `git status --short -- infra/aws/terraform/` in this worktree is clean (no output); `git ls-files infra/aws/terraform/ | grep -c '\\.tf$'` = 415."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IAM-r-2's own bound names this exact pair as 'THE ARITHMETIC TRAP' and states as fact that 'the round-2 battery run of the same tool reports 195' -- a real, reproducible measurement this cell is instructed to reconcile against 191/208/216 by establishing whether the four-apart gap is a vintage, scope or parser difference.",
+    "world_is": "195 is not reproducible against any committed state this worker can find: the identical instrument, run twice by this worker against the identical (unchanged, clean) Terraform tree the decomposition itself was cut against, returns 191 both times, with every other sub-figure (188 services / 1084 operations / 304 gaps) matching the 195-citation exactly -- so the discrepancy is isolated to the role count alone, not a wider drift. Neither a Terraform commit nor a comp-iam code change exists in the window that could explain a genuine vintage-driven 191-to-195 move.",
+    "notes": "NOT A HALT: this cell's own deliverable (org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~6/DENOMINATOR_RECONCILIATION.md) already carries this finding in full and treats 191 as `measured` (this worker's own reproducible run) and 195 as `held` with this worker's reproduction attempt recorded as FAILED, rather than citing 195 further. Filed because the decomposition itself (a committed L5 artifact other cells and a later L9 grader read) still states 195 as a plain battery result with no caveat, and this worker cannot edit the decomposition (a READ-only surface on this cell's <paths>) to add one. Disarm routed to 2.0.0_SA_COO~ZI as the decomposition's author and the only lane that can amend it; the fix is either a correction note on the battery section or a re-run transcript that actually reproduces 195 -- this worker could not find one."
   }
 ]
 ```
