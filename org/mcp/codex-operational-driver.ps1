@@ -353,6 +353,9 @@ function Invoke-DriverPass {
         Write-DriverLog -Path $LogPath -Message "cto_unread_names=$((($ctoUnread | Sort-Object Name | Select-Object -ExpandProperty Name) -join ', '))"
     }
     $p2To05Resolved = $croRulingPresent -and $repairPassRuling -and $p2To05Landed
+    # The ONE seat the P2-TO-05 incident concerns. Named ONCE so a suppression cannot silently widen to the
+    # whole roster again: every use of $p2To05Resolved as a suppressor must AND against this serial.
+    $P2To05IncidentSeat = '4.0.0_SA_CRO~Y'
 
     $nowEpoch = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
     $lastNudgeState = $state['last_nudge']
@@ -548,12 +551,25 @@ Expected next motion: 4.0.0_SA_CRO~Y issues the bounded P2-TO-05 handback ruling
         }
     }
 
+    # RED-SEAT ACCOUNTING (repaired 2026-09-10 by 1.0.0_SA_CTO on 3.0.0_SA_CVO's finding, relayed 95239).
+    # THE DEFECT: `if ($p2To05Resolved)` suppressed the red alert for EVERY seat in the roster, so ONE
+    # incident's completion flag silenced the whole population -- seven RED seats suppressed in the observed
+    # window, SIX of them with zero unread and nothing to do with P2-TO-05. An alerter that goes quiet about
+    # seats the incident never touched is not suppressing noise; it is blind, and it reads identical to healthy.
+    # THE FIX IS THE SHAPE THIS FILE ALREADY USES CORRECTLY at the unread block below: scope the suppression
+    # to the EXACT INCIDENT SEAT. The same flag was written scoped there and unscoped here, in one file.
+    # COUNTS ARE EMITTED so a suppressed population can never again be invisible in the log.
+    $redSeats = @($seatStates | Where-Object { $_.State -ne 'GREEN' })
+    $suppressedRed = 0
+    $alertableRed = 0
     foreach ($seatState in $seatStates) {
         if ($seatState.State -ne 'GREEN') {
-            if ($p2To05Resolved) {
-                Write-DriverLog -Path $LogPath -Message "suppress red-seat alert serial=$($seatState.Serial) reason=p2_to_05_resolved_logged_only"
+            if ($p2To05Resolved -and $seatState.Serial -eq $P2To05IncidentSeat) {
+                $suppressedRed++
+                Write-DriverLog -Path $LogPath -Message "suppress red-seat alert serial=$($seatState.Serial) reason=p2_to_05_resolved_incident_seat_only"
                 continue
             }
+            $alertableRed++
             $key = "SEAT-RED-$($seatState.Serial)"
             $lastEpoch = if ($lastNudgeState.ContainsKey($key)) { [int64]$lastNudgeState[$key] } else { 0 }
             if (($nowEpoch - $lastEpoch) -ge ($NudgeMinutes * 60)) {
@@ -563,6 +579,9 @@ Expected next motion: 4.0.0_SA_CRO~Y issues the bounded P2-TO-05 handback ruling
             }
         }
     }
+    # THE DENOMINATOR, ALWAYS EMITTED -- including when every count is zero. A suppressed population that
+    # leaves no number behind is exactly how seven red seats read as a quiet pass.
+    Write-DriverLog -Path $LogPath -Message "red-seat accounting: roster=$($seatStates.Count) red=$($redSeats.Count) suppressed=$suppressedRed alertable=$alertableRed incident_seat=$P2To05IncidentSeat p2_to_05_resolved=$p2To05Resolved"
 
     foreach ($unreadState in $seatUnreadStates) {
         if ($unreadState.Serial -eq $Driver -or $unreadState.Count -le 0) {
@@ -571,7 +590,7 @@ Expected next motion: 4.0.0_SA_CRO~Y issues the bounded P2-TO-05 handback ruling
         if ($unreadState.OldestAgeSeconds -lt ($NudgeMinutes * 60)) {
             continue
         }
-        if ($p2To05Resolved -and $unreadState.Serial -eq '4.0.0_SA_CRO~Y') {
+        if ($p2To05Resolved -and $unreadState.Serial -eq $P2To05IncidentSeat) {
             Write-DriverLog -Path $LogPath -Message "suppress unread-inbox nudge serial=$($unreadState.Serial) count=$($unreadState.Count) oldest=$($unreadState.OldestAgeSeconds)s reason=p2_to_05_resolved_cro_green_path"
             continue
         }
