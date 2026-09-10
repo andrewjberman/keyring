@@ -1509,3 +1509,40 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S39 -- Z-S172: the void's ORIGIN, one level up, caught BEFORE the grade -- and the wording is in FWD-19's HEADLINE as well as its bar
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S39",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T15:02Z",
+    "one_line": "Z-S172 GRADUATES AND IT IS THE FIRST TIME THIS CLASS HAS PREVENTED A WRONG GRADE RATHER THAN CORRECTED ONE. FWD-19's DONE WHEN carries the SAME unsatisfiable clause this seat voided in S1-AC4 four hours ago -- so the criterion was FAITHFUL and the defect is the PRD's, one level up. ⛔ AND IT IS WORSE THAN THE ROW STATES: the wording is load-bearing in the OUTCOME'S OWN HEADLINE as well as its bar, so amending the DONE WHEN alone would leave FWD-19's NAME still asserting a behaviour its own constraints forbid.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "1.0.0_SA_CTO~Z, unchanged and correctly routed. L4 owns the PRD; an issuer amending the bar its own round was measured against is the same fabrication this seat refused when it declined to let that lane void its own criterion, and the symmetry is exact. NOT TAKEN HERE.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S172"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** VERIFIED AT THIS SEAT ON THE PRD ITSELF, AND THE CLAUSE COUNT IS THREE. *** `prd/NFRA_OPSEC202609_PRD.md` :218-:225, DONE WHEN EXERCISED, three clauses joined by `and`: (1) 'a scripted submission to the contact form has been REFUSED OR CHALLENGED without a human acting'; (2) 'a real submission made by a person in a browser has succeeded unchanged in the same window'; (3) 'the volume of automated submissions reaching the entry store has been measured before and after'. The row's clause-by-clause verdict is confirmed: 2 of 3 met, clause 1 NOT met and unbuildable.",
+        "⛔ AND THE FINDING IS ONE STEP WIDER THAN THE ROW CLAIMS FOR ITSELF, WHICH IS WHY THE REMEDY MUST NOT BE SCOPED TO THE BAR. `comp-read --enumerate 'refused or challenged'` over the PRD returns 2 whole-value hits across 728 lines: **:219 IS THE OUTCOME'S OWN HEADLINE** ('Automated submissions and scraping against the marketing site are REFUSED OR CHALLENGED, and a real visitor is never stopped') and :221 is DONE WHEN clause 1. The row cited the count and read it as corroboration that the phrase ORIGINATES in the PRD -- correct -- but the two hits are not two mentions of a bar. ONE OF THEM IS THE OUTCOME'S NAME. Amend the DONE WHEN alone and FWD-19 still ASSERTS IN ITS TITLE the behaviour C-19 and C-17 forbid, leaving the name and the bar to disagree.",
+        "*** THE ADJUDICATIVE CONSEQUENCE, STATED SO THE L4 DECISION IS FRAMED RATHER THAN LEFT OPEN. *** If clause 1 stands unamended, FWD-19 CANNOT REACH REALIZED: its bar is EXERCISED, one of its three clauses is unsatisfiable by a correct build, and an unsatisfiable clause is not met by not being attempted. THE HONEST GRADE WOULD BE APPLIED. ⭐ THAT IS EXACTLY THE Z-S19 PRECEDENT RUN FORWARD INSTEAD OF BACKWARD -- there, eight outcomes sat on EXERCISED bars, were graded REALIZED against their ACCEPT paragraphs, and had to be re-graded to APPLIED after the fact. Here the same arithmetic is available BEFORE the grade exists. Which of the three routes the L4 seat takes is its own call; what this row establishes is that DOING NOTHING is not one of them, because doing nothing produces a REALIZED grade on an unsatisfiable bar.",
+        "⭐ THIS IS THE CLASS OPERATING AS AN INSTRUMENT ACROSS PROJECTS, AND THAT IS THE DURABLE PART. `2.0.0_SA_COO~Z` states its own method in its `surfaced_by`: it found this 'by taking a SIBLING PROJECT's regrade as a class and running it against this project's own PRD, NOT by re-reading this project's artifacts'. The class is `1.0.0_SA_CTO~Z`'s @b75e35f36e re-grade of NFRA_REPORT, whose transferable form -- A BAR THAT SAYS EXERCISED DOES NOT ENFORCE ITSELF -- came out of this seat's Z-S19 ninety minutes earlier. ⛔ A FINDING THAT TRAVELS TO A PROJECT ITS AUTHOR WAS NOT WORKING, CARRIED BY A THIRD SEAT, AND ARRIVES BEFORE THE DAMAGE, is the only shape in which a lesson is actually worth more than the incident that produced it. Re-reading this project's artifacts would NOT have surfaced it; the artifacts are consistent with the bar. Only the bar-versus-constraints read does.",
+        "⚠ AND THIS SEAT'S OWN VOID STOPPED ONE LEVEL SHORT, WHICH IS THE HALF THAT ACCUSES ME. At C-S37 (@9cae36a5f0) this seat ruled S1-AC4 VOID BY CONSTRUCTION on the ground that its literal text would require choosing the less safe design. That reasoning was right and transfers here intact -- the row quotes it and it needs no amendment. BUT THIS SEAT ATTRIBUTED THE DEFECT TO THE CRITERION AND NEVER ASKED WHERE THE WORDING CAME FROM. Z-S169 called it the issuer's defect; the issuer accepted that; both of us were one level short. The census settles it: 'refused or challenged' appears 2x in the PRD and 2x in TO-OP3-S-1, and 'refusal or challenge' 0x in the PRD and 3x in the order. THE CRITERION WAS FAITHFUL TO ITS SPEC. A void granted at the criterion is the right act and an incomplete diagnosis, and voiding it is precisely what removed the pressure to look upward.",
+        "⭐ THE ISSUER'S SELF-CORRECTION IS THE SAME FAILURE IN MINIATURE AND IT DISCLOSED IT UNPROMPTED: `L8_PACKET.round3.md` @7f7006b9fb says 'BOTH HALVES of FWD-19's DONE WHEN are demonstrated on the store side.' The DONE WHEN has THREE clauses. The two it named ARE genuinely met, so the error is invisible from the evidence side -- it read the bar as the pair it had evidence for. THAT IS 'READING A BAR FOR WHAT THE WORK SHOWS RATHER THAN FOR WHAT THE BAR SAYS', which is the identical mechanism as the eight NFRA_REPORT grades, occurring in a COUNT rather than a verdict. The same defect at three grains in one day: a criterion (S1-AC4), a packet's clause count (this), and eight outcome grades (Z-S19).",
+        "SCOPE, NARROW AND EXPLICIT: this does NOT reopen round 3, does NOT disturb S1-AC7's PASS -- that grade was made against the v0.14 ACCEPT calibration and the labeled mechanism pair, neither of which this row touches -- and does NOT change any status. ⭐ AND THE ACCEPT PARAGRAPH MAY BE THE CLAUSE THAT SHOULD GOVERN: it carries Andrew's own v0.14 calibration ('Naive majority is fine for now'; a sophisticated bot still getting through is NOT a failure), it is satisfiable as written, and round 3 demonstrably serves it. The row proposes no binding remedy and is right not to."
+      ]
+    },
+    "spec_asserts": "PRD v0.14 FWD-19, in both its headline and its DONE WHEN clause 1, asserts that automated submissions are REFUSED OR CHALLENGED without a human acting.",
+    "world_is": "The only control the same PRD's own constraints permit cannot refuse or challenge -- C-19 forecloses the edge, C-17 requires the least-refusing mode because refusing a real enquiry would violate FWD-19 itself, and a honeypot in that mode accepts and flags silently. Clause 1 is unsatisfiable by a correct build; clauses 2 and 3 were met.",
+    "notes": "⛔ THE ASK IS ABOUT TIMING AND THIS ROW ENDORSES THAT FRAMING WITHOUT WIDENING IT: decide BEFORE FWD-19 is graded whether clause 1 is amended, read as satisfied-by-a-different-mechanism, or left standing with FWD-19 recorded APPLIED. The whole value of the row is that it exists before the grade rather than after, and that value EXPIRES the moment FWD-19 is graded -- which is the one property that makes this urgent while nothing about it is a crisis. || ⚠ WHICHEVER ROUTE IS TAKEN, THE HEADLINE AT :219 MUST TRAVEL WITH THE BAR AT :221. A remedy scoped to the DONE WHEN leaves the outcome's own name asserting the forbidden behaviour, and a later reader who reads only the headline inherits exactly the claim this row exists to retire."
+  }
+]
+```
