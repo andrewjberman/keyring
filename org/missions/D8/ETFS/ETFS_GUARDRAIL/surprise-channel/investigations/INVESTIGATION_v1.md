@@ -2136,3 +2136,78 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-W5-S11",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~5",
+    "surfaced_at": "2026-09-10T14:10Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "one_line": "A UNIT TEST RUN PUT A REAL OBJECT INTO THE SERVED REPORTS PREFIX, AND EVERY ASSERTION STILL PASSED. `pytest data/etfs/scripts/presentation/tests/` at 2026-09-10T13:54:44Z wrote s3://opal-data-etfs/platinum/reports/2026-08/coverage_egress_ask_ladder_skipped.json (1878 B, ETag 647e565208eccd9a0d4b4a08159c082b, VersionId `null` -- the bucket is NOT versioned). THE MECHANISM IS A SHARED-DEPENDENCY BLIND SPOT, not carelessness: three arms of that suite (test_a, test_b, test_f) drive `coverage_gate(..., ladder=False)` WITHOUT patching `rme.s3`, and they were correct to, because until EG-s-29 the ladder-skipped branch touched S3 on NO path at all -- the arms' shared premise was a property of the CODE, and the moment this cell gave that branch a write the premise died for all three at once while each arm's own assertions kept passing. A test suite that can reach the world is a hazard whatever it asserts. REMEDIED IN THE SAME COMMIT for recurrence: an autouse `_no_real_s3` fixture now stubs `rme.s3` for EVERY test in the module, so no arm has to remember. THE OBJECT ITSELF IS NOT REMEDIED BY ME: deleting it is an S3 delete on an UNVERSIONED bucket, which CLAUDE.md reserves for Andrew's explicit confirmation, so it is named here with its exact removal command rather than removed. NOTHING WAS OVERWRITTEN -- the key did not exist before (a NEW key, 0 of 8 prior keys in that prefix touched), and its content declares `rung3_ran: false` and `written_by ... RUNG 3 DID NOT RUN`, so a reader who opens it is told what it is; what the content does NOT say is that it came from a unit test and not from a run.",
+    "spec_asserts": "TO-EG-s-29 BOUNDS: 'NO SEND, NO ORCHESTRATOR INVOKE, NO BOX RUN, NO WRITE UNDER platinum/reports/.' The deliverable also names 'coverage in its own suite', and the renderer suite's own header asserts 'Offline and deterministic: ZERO AWS calls. Every producer invoke ... and every S3 call is stubbed'.",
+    "world_is": "One `pytest` run of that suite, made to check the change compiled, wrote one real object under platinum/reports/ at 2026-09-10T13:54:44Z. The suite header's ZERO-AWS claim was FALSE for that run: three arms had no `rme.s3` stub and the run took 4.66 s against 1.79 s once the autouse fixture was added -- the network round trips are visible in the wall clock. The cell's own bound was breached by its own author, inside its own test step, and no assertion could see it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3api list-objects-v2 --bucket opal-data-etfs --prefix platinum/reports/2026-08/ -- Key platinum/reports/2026-08/coverage_egress_ask_ladder_skipped.json, LastModified 2026-09-10T13:54:44.000Z, Size 1878, ETag 647e565208eccd9a0d4b4a08159c082b.",
+        "aws s3api list-object-versions on that key -- a single version, VersionId 'null', IsLatest true; aws s3api get-bucket-versioning --bucket opal-data-etfs returns EMPTY, i.e. the bucket is not versioned and a delete is not recoverable.",
+        "The object body (downloaded) carries month 2026-08, partners_covered ['cottonwood'], 5 asks dated 2026-08-25..2026-08-31 with provider 'Black Diamond' -- the fixture partner and fixture dates of test_a/test_f, not a real coverage state.",
+        "data/etfs/scripts/presentation/tests/test_coverage_gate.py@2a672685b9 lines 105-128 (test_a) and 257-271 (test_f): `rme.coverage_gate(..., ladder=False, probe=probe)` with five holes and no monkeypatch of `rme.s3`.",
+        "data/etfs/scripts/presentation/render_month_end.py, this cell's change: the ladder-skipped branch calls `_skipped_branch_egress_ask`, which calls `client.put_object` on the module-level `s3`."
+      ]
+    },
+    "notes": "DISARM, one command, for the owner named above once Andrew's confirmation is in hand (an S3 delete is his call, not a worker's): `.tools/aws s3api delete-object --bucket opal-data-etfs --key platinum/reports/2026-08/coverage_egress_ask_ladder_skipped.json`. IT IS NOT URGENT AND IT IS NOT SILENT: the object names itself as a rung-3-equivalent and 2026-08 is a CLOSED month whose report was published 2026-09-10T00:24Z. THE STANDING HAZARD, stated for the reader who has to decide: an operator opening that key could read it as an outstanding egress ask for cottonwood and authorise egress that nothing needs. A SECOND CONSUMER MATTERS MORE -- EG-s-21's arm (g) enumerates 'every key the run wrote with the rung that caused it', and this key exists in that prefix with a 13:54Z timestamp that belongs to no run; whoever grades EG-s-21 must subtract it. GENERAL FORM, offered without weighing it: an arm's premise can be a property of the code under test rather than of the arm, and then one change kills the premise for every arm at once while each arm keeps passing.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W5-S12",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~5",
+    "surfaced_at": "2026-09-10T14:12Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "THE FACE'S CITATION FOR THE PROVIDER DEFAULT POINTS AT THE WRONG LINE, AND THE LINE IT POINTS AT IS A DIFFERENT `.get` WITH A DIFFERENT MEANING. TO-EG-s-29 BOUNDS say \"`remediate.py:130`'s `.get(partner, \\\"<no provider mapped>\\\")` is the established shape -- import or mirror it\". At HEAD (7e544cb4d7, EG-s-28 terminal) that expression is at remediate.py:91 inside `_provider_for`; remediate.py:130 is `asks = doc.get(\"asks\")` inside `_read_prior_asks`, a different function about a different property. The SHAPE the bound names is unambiguous and present, so the cell is executable and the work was done against `_provider_for` -- but a citation without a vintage that resolves is not a citation, and a seat that navigated to :130 and read what was there would have imported the ASK-MERGE's read, not the provider default.",
+    "spec_asserts": "TO-EG-s-29 BOUNDS: \"`remediate.py:130`'s `.get(partner, \\\"<no provider mapped>\\\")` is the established shape -- import or mirror it, do not re-implement a second default\".",
+    "world_is": "data/etfs/scripts/coverage/remediate.py@7e544cb4d7 line 91 is `return _PROVIDER_BY_PARTNER.get(partner, \"<no provider mapped>\")` (in `_provider_for`, added by EG-s-28). Line 130 is `asks = doc.get(\"asks\")` (in `_read_prior_asks`, added by EG-s-23). The named expression exists; the named LINE holds something else.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/coverage/remediate.py@7e544cb4d7:79-91 -- `_provider_for(partner)` with the documented honest-absence default at :91.",
+        "data/etfs/scripts/coverage/remediate.py@7e544cb4d7:129-132 -- `asks = doc.get(\"asks\")` inside `_read_prior_asks`.",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-29.the-skipped-branch-carries-the-property.md@2a672685b9, BOUNDS bullet 3."
+      ]
+    },
+    "notes": "NO WORK WAS BLOCKED. The cell was executed against `_provider_for`, which is what the bound's own words describe, and the battery's arm (b) compares the value against remediate's OUTPUT rather than against either line. Filed because the same face's other citation (`render_month_end.py:1000-1008`, the fifth writer) resolves exactly, so a reader has no way to tell which of the two to trust without checking both.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W5-S13",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~5",
+    "surfaced_at": "2026-09-10T14:14Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "THE VERDICT ARTIFACT CANNOT POINT AT THE ASK THIS CELL ADDS, BECAUSE THE ARM THAT PROTECTS EG-s-26's RECORD FREEZES THE ONLY FIELD FAMILY THAT COULD CARRY THE POINTER. coverage_verdict.json's `forcing` block tells a ladder-skipped run's reader that coverage_egress_ask.json is ABSENT BY CONSTRUCTION. After this cell that is still TRUE -- the equivalent is written to a DIFFERENT key precisely so it stays true -- but the block says nothing about the equivalent, so a reader who opens ONLY coverage_verdict.json concludes that no egress ask exists for the run when one does. Adding a pointer field would have moved EG-s-25/EG-s-26's record, which S29-AC1 arm (e) requires 'still present and unchanged', and mid-round the spec is FROZEN, so the cheap fix is not a worker's to take. THE TWO SURFACES THAT DO CARRY IT: the run's stdout prints the key with an explanation, and the object itself declares `written_by`/`rung3_ran: false`. RECORDED TO S29-AC2 for 3.0.0_SA_CVO as 'what a reader still cannot tell from a shape-1 run after this change', which is what that criterion asks for.",
+    "spec_asserts": "TO-EG-s-29 arm (e): \"`EG-s-26`'s skip record and `EG-s-25`'s forcing record both still present and unchanged on their respective branches\"; and the cell's premise that EG-s-26's record 'STAYS -- it is the honesty half and it is correct'.",
+    "world_is": "Both hold as written: 12 of 12 `forcing` fields are present and 0 of 12 moved on BOTH ladder branches (battery arm (e)). The cost is that the verdict artifact has no field naming the rung-3-equivalent ask, so completeness for a verdict-only reader and invariance of the frozen record cannot both be had inside this cell.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/presentation/render_month_end.py, `_forcing_record` -- `coverage_egress_ask_possible: bool(ladder_ran)` and the ladder-skipped `skip_note` naming coverage_egress_ask.json ABSENT BY CONSTRUCTION; unchanged by this cell.",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~5/egs29_battery_output.txt arm (e): 'ladder=True present 12 of 12 field(s); moved 0 of 12' and the same for ladder=False.",
+        "The same battery arm (d): the equivalent is written to platinum/reports/<month>/coverage_egress_ask_ladder_skipped.json and rung 3's own key is NOT written on that branch.",
+        "ETFS_GUARDRAIL.TO-EG-s-21 arm (d) as re-cut on R-EG-8: an ask 'written by rung 3 OR by EG-s-29's rung-3-equivalent' satisfies it, 'and the record must say WHICH WROTE IT' -- which the object does and the verdict does not."
+      ]
+    },
+    "notes": "FORM ONLY; the CVO dispositions and the COO cuts. If a pointer is wanted, the cheapest shape that does not touch the frozen fields is a NEW sibling key in the verdict (e.g. `egress_ask_equivalent`), added by a later cell whose arm (e) is written to expect it -- an addition to `forcing` and a change to it are the same thing to an arm that compares the block byte for byte.",
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
