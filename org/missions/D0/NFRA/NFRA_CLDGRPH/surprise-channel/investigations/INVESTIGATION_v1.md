@@ -7736,3 +7736,376 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-W1-S43 -- the snapshot object three round-6 figures cite was OVERWRITTEN and the bucket is UNVERSIONED
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-10T13:33Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.8.0_AE_CloudComp",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W1-S43",
+    "one_line": "THE OBJECT W2-S75 SENT ME TO READ NO LONGER EXISTS, AND NOTHING IN THE KEY SAYS SO. s3://opal-313476888478-globgrph/snapshots/20260909/graph-20260909.tar.gz now carries LastModified 2026-09-10T00:09:02Z; the three disputed figures (1,771 / 1,791 / 1,790) all describe the 2026-09-09T21:05:21Z bytes of the SAME key. get-bucket-versioning returns no Status and list-object-versions returns exactly one version with VersionId 'null', so the cited bytes are not recoverable by anyone -- not by me, not by the CVO, not by a later round. THE KEY GRAMMAR IS THE HAZARD: snapshots/<date>/graph-<date>.tar.gz READS as a dated, immutable archive and IS a mutable pointer -- any derive run on 2026-09-09's date key overwrites it, and the 00:09:02Z write is 3 hours after the 21:05:21Z one. Every citation of a dated snapshot in this project's record is therefore a citation without a vintage that can be re-read, and the census this order was ordered to run had to be taken on DIFFERENT BYTES than the figures describe (measured now: 335 portal-stitch nodes under CANONICAL names, against the 1,771 under provisional names the record holds for the same key). Reported with its basis rather than presented as a re-read.",
+    "spec_asserts": "TO-CG-H-2 deliverable 4: GET the snapshot tarball named in W2-S75 from the globgrph bucket and census it, resolving three figures that all name the 21:05:21Z vintage of snapshots/20260909/graph-20260909.tar.gz.",
+    "world_is": "That key's current bytes are the 2026-09-10T00:09:02Z write. The bucket is unversioned (no VersioningConfiguration Status; one version, VersionId 'null'), so the 21:05:21Z bytes are gone. The census ran on the surviving bytes and every figure attribution carries MEASURED-NOW / MEASURED-THEN / INFERRED accordingly.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api head-object snapshots/20260909/graph-20260909.tar.gz -> LastModified 'Thu, 10 Sep 2026 00:09:02 GMT', ContentLength 1674681, ETag 336e29e366197e43063d372b9002302f (this worker, 2026-09-10T13:2xZ).",
+        "s3api get-bucket-versioning opal-313476888478-globgrph -> rc=0 with NO Status field (unversioned).",
+        "s3api list-object-versions --prefix snapshots/20260909/ -> exactly one Version, VersionId 'null', IsLatest true.",
+        "NFRA_CLDGRPH-W2-S61 @80daa1fff6 and NFRA_CLDGRPH-W2-S75 @2f87f07926: both cite LastModified 2026-09-09T21:05:21Z for that same bucket and key.",
+        "This order's own census of the current bytes (h2_snapshot_census.py, capture h2_snapshot_census.capture.json): 27,687 nodes scanned, 335 with source=portal-stitch, 0 under any provisional name."
+      ]
+    },
+    "notes": "ARMED because it keeps working through normal operation: every future citation of a dated snapshot key in this project is unfalsifiable the moment a re-derive touches that date, and nothing in the record tells a reader which write it saw. DISARM OWNER is the producer's owner (0.8.0_AE_CloudComp) because the remedy sits on the WRITER: either the archive key carries the write's own timestamp rather than the calendar date, or a citation carries the ETag beside the LastModified. NOT PROPOSED AS A BUILD and no alerting is implied -- the estate's moratorium stands. CHEAPEST HABIT, needing no code: cite an S3 object as bucket/key@ETag."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W1-S44 -- the NODES drop-on-read has no edge-side counterpart, and the producer's dangling check cannot see the gap
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-10T13:36Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.8.0_AE_CloudComp",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W1-S44",
+    "one_line": "THE FIX THIS ORDER SHIPPED CREATES A STATE THE PRODUCER'S OWN 0-DANGLING CHECK IS BLIND TO, AND I AM SAYING SO RATHER THAN WIDENING THE CELL. _collapse_stitch_copies now drops an archived stitch node this cycle did not re-emit (counter prior_cycle_not_reemitted). The EDGES side drops exactly ONE literal type on read -- STORED_IN, derive_stitch.py:158-159 -- so every OTHER stitch edge in the archived snapshot still arrives, and one of those can now name a node that was just dropped. The producer's genuine-dangling check cannot see it: all_keys is the union of the post-collapse node ids with aws_keys, and aws_keys is built in _index_aws from the SNAPSHOT, BEFORE the collapse runs -- so a dropped node's id is still in the key set and the edge onto it resolves. 'OK: genuine (non-wildcard) dangling edges = 0' stays TRUE and BLIND, which is the exact sentence _index_aws's own docstring uses about the PREVIOUS blindness on that check. NOT WIDENED HERE: TO-CG-H-2 BOUNDS say the edges carrier is a different cell and derive_runner is the next order's surface; the bound is written into the function's docstring as bound (2) rather than patched around.",
+    "spec_asserts": "TO-CG-H-2 deliverable 3 and its BOUNDS: fix the NODES drop-on-read in the shape the other two carriers already use, edit ONE producer file, and leave the edges carrier and derive_runner alone.",
+    "world_is": "The node-side drop and the edge-side drop have different scopes, so the fix opens a node-absent/edge-present window that the producer's dangling check is structurally unable to report, because the check's key set is taken from the snapshot before the collapse.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/globgrph/derive_stitch.py:158-159 @2fd5cae09f -- the edges drop filters on the single literal edge_type STORED_IN.",
+        "infra/aws/globgrph/derive_stitch.py _index_aws (node_keys built from aws['classes_data']) is called at the top of build_stitched_graph, before unify_stitch_vocabulary -> _collapse_stitch_copies.",
+        "infra/aws/globgrph/derive_stitch.py: all_keys is recomputed after the unify as post-collapse node ids UNION aws_keys, so a dropped id remains in the key set.",
+        "The stitch-producer-archive-read.edges.card.json verdict @f3b5f26f77 already names the scope bound: 'the drop filters on a single literal edge type, so every other edge this producer writes sits in exactly the state STORED_IN was in before cycle 4'.",
+        "This order's own change, in the same file, adding prior_cycle_not_reemitted (the drop) and stating both bounds in the docstring."
+      ]
+    },
+    "notes": "MAGNITUDE IS UNMEASURED HERE ON PURPOSE: counting the archived stitch edges whose endpoint a real run would drop needs a producer run against the live snapshot, which is an act this order's egress hold forbids (the derive publishes to a topic with a live SMS subscription). The shape is certain from the source; the number is not, and I am not manufacturing one. CHEAPEST REMEDY for whoever owns it: give the edge side the same source-stamped drop the node side now has (an edge between two stitch-sourced endpoints arriving in the snapshot is this producer's own prior output, exactly as STORED_IN is), or move aws_keys to after the collapse so the dangling check can at least SEE the state."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W1-S45 -- the producer comment that started the three-figure disagreement names a population it does not count
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-10T13:38Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W1-S45",
+    "one_line": "THE 1,791 IS NOT WRONG ARITHMETIC, IT IS THE WRONG POPULATION UNDER A SENTENCE THAT NAMES A DIFFERENT ONE -- W2-S75's held hypothesis survives its falsification attempt. derive_stitch.py:311-314 says 'the 21:05Z snapshot carries 1,791 nodes with source=portal-stitch under the four PROVISIONAL names'. It cannot be a snapshot count: the snapshot census is 1,771 INCLUDING the one PORTAL_BUNDLE, and PORTAL_BUNDLE is absent from PROVISIONAL_TO_CANONICAL, so 'under the four provisional names' is at most 1,770 -- a SUBSET, while 1,791 is LARGER. The population 1,791 fits is the RUN-TIME union after the retype and the collapse: 1,770 retyped archived members (the run's own STITCH_UNIFY_PRIOR_CYCLE retyped=1770) plus 20 fresh members this cycle emitted that were not already in the archive = 1,790 admitted, plus the 1 PORTAL_BUNDLE no map admits = 1,791. So all three figures are of DIFFERENT populations: 1,771 = archive only, all types; 1,790 = run-time, type-filtered to STITCH_CANONICAL_TYPES; 1,791 = run-time, all types. MEASURED CORROBORATION FROM THE CURRENT BYTES: the surviving stitch population is 335 = 269 canonical-named + 66 in no map, and 269 is EXACTLY the 'carried' half of figure 3's 1,521 merged + 269 carried -- a merged member is removed by the unify and never reaches the archive, so a snapshot census and an admitted census can never be the same number. THE COMMENT IS NOT CORRECTED BY THIS ORDER: correcting prose in a cell about a drop-on-read is a widening, and the seat that owns the producer should decide whether to fix the sentence or the practice.",
+    "spec_asserts": "TO-CG-H-2, MEASURED-BY-THE-ISSUER: the likeliest explanation for 1,771 vs 1,791 is HELD, not measured -- treat it as a hypothesis to falsify, and if the census says otherwise the census wins.",
+    "world_is": "The census could not falsify it and corroborated it on an independent number: three populations under one description, the 1,791-vs-1,790 gap being exactly the one PORTAL_BUNDLE node that no re-type map and no admitted census contains. The residual 20 members cannot be enumerated because the cited bytes were overwritten (row W1-S43).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/globgrph/derive_stitch.py:311-314 @2fd5cae09f -- the comment, read at HEAD in this worktree.",
+        "NFRA_CLDGRPH-W2-S61 @80daa1fff6 -- the five-way per-type census summing to 1,771, PORTAL_BUNDLE 1 among them, and the run's STITCH_UNIFY_PRIOR_CYCLE retyped=1770.",
+        "Commit 139cbe1d40's subject -- 1,521 merged by identity + 269 carried = 1,790.",
+        "This order's census of the current bytes of the same key: 335 stitch-sourced nodes = 269 canonical-named + 65 API_ROUTE + 1 PORTAL_BUNDLE, capture h2_snapshot_census.capture.json.",
+        "infra/aws/globgrph/derive_stitch.py unify_stitch_vocabulary: a stitch node whose id merges onto a canonical id is dropped in favour of the canonical node, which is why merged members never appear in a later snapshot census."
+      ]
+    },
+    "notes": "The general form, which is worth more than the twenty nodes: A NUMBER TAKEN AT ONE POINT IN A PIPELINE AND DESCRIBED AT ANOTHER IS A DIFFERENT NUMBER. All three figures were produced by careful seats in one night and none of them is arithmetically wrong; what none of them carried is WHERE IN THE RUN it was counted. A count without its point-in-pipeline is the same defect class as a count without its denominator."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W2-S76 -- the round-8 face's CORRECTION of a round-7 line citation is the thing that had drifted
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T13:46Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W2-S76",
+    "one_line": "TO-CG-H-3's MEASURED block opens by telling the worker that one pin in the round-7 record HAS MOVED -- 'CG-s-35's four-hop table cites hop 3 as kuzu_nessie_load.py:71-77 ... At HEAD :68-78 is its RETURN DICT' -- and instructs that every round-7 line number be treated as a stale baseline. MEASURED at the same bytes: the return dict of read_stitch_vintage IS :71-77, exactly as round 7 recorded it. :68-70 is the `if not m.get(\"built_at\")` guard with its early `return {}`, and :78 is the `except` line. All FOUR round-7 pin claims still held at the cut base: PINS_MOVED_SINCE_ROUND7=0 of 4. The instruction to re-derive by CONTENT is correct and this row does not touch it; what it records is that the re-read performed to justify the instruction produced the only wrong line citation of the five, and that a correction carries no more authority than the record it corrects.",
+    "spec_asserts": "TO-CG-H-3 MEASURED block: 'CG-s-35's four-hop table cites hop 3 as kuzu_nessie_load.py:71-77. At HEAD read_stitch_vintage is defined at :51; :68-78 is its RETURN DICT ... Treat every line number in a round-7 record as a stored baseline from another vintage and re-derive it.'",
+    "world_is": "At the commit this worktree was cut from (2fd5cae09f, byte-identical to the issuer's own measurement commit de3970331f on all six files this order reads), ast.parse puts the Return's Dict literal at lines 71-77. The round-7 citation was exact. The order's own re-citation, :68-78, spans the guard above the return and the except below it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "h3_hops.py at this worktree: 'BASE: the returned dict literal is at :71-77 carrying 5 key(s)' and 'ROUND-7 CITED :71-77 ... MATCH=true', by ast.parse over the BASE blob, not over the working tree.",
+        "The same run: 'hop 3 COPY  kuzu_nessie_load.py:71-77 ... HELD_AT_BASELINE=true' and 'PINS_MOVED_SINCE_ROUND7=0 of 4' across all four hops.",
+        "git diff --name-only de3970331f 2fd5cae09f -- <each of the six files> is EMPTY, so the issuer's numbers and this baseline are the same bytes: 'BYTE-IDENTICAL BETWEEN THE TWO: 6 of 6 hop file(s)'.",
+        "infra/aws/globgrph/kuzu_nessie_load.py:68-70 and :78 read directly at 2fd5cae09f: the built_at guard and the except clause."
+      ]
+    },
+    "notes": "INERT because the instruction it accompanies (re-derive by content, never trust a stored line) is right regardless, and this worker followed it -- which is the only reason the discrepancy was visible at all. THE GENERAL FORM, which is why this is a row and not a footnote: a CORRECTION is a measurement and ages the same way the record does. Round 7's own S115 records the sibling case one axis over -- a hash test answering a question nobody asked. Here a line re-read answered 'where is the function's body' when the claim needed 'where is the return dict'. Both are the right instrument on the wrong object. NOT CHASED: no criterion was changed for it and the order proceeded exactly as cut."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W2-S77 -- a SECOND assembler of the stitch vintage vocabulary exists, and its only call site throws the dict away
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T13:46Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W2-S77",
+    "one_line": "THE FOUR-HOP TABLE NAMES ONE HOP-3 WRITER; THERE ARE TWO SITES THAT BUILD THE stitch_* VINTAGE VOCABULARY AND THE SECOND ONE'S OUTPUT GOES NOWHERE. derive_runner.fold_stitch_document returns a TEN-key dict (stitch_built_at, stitch_producer, stitch_git_sha, stitch_artifact_sha256, stitch_aws_snapshot, stitch_nodes_folded, stitch_v1_stamped, stitch_edges_folded, stitch_nodes_skipped_dup, stitch_nodes_skipped_unmapped_type) at :2567-2578. Its only call site, :2736-2742, assigns it to `stitch_vintage`, tests it for None, prints an INFO line and never reads it again -- the name appears exactly three times in the file and none of the three is a write into a manifest. So the DERIVE plane computes a stitch vintage and discards it, while the ENGINE plane (kuzu_nessie_load.read_stitch_vintage) independently re-reads the same marker from S3 to build a five-key subset that DOES reach source_vintage. CONSEQUENCE FOR THIS CELL, and the reason a worker had to look: CLAUDE.md's sign-off clause says count the WRITERS of a named property before acting on it. Counted: two assemblers, ONE writer. The portal key added by CG-s-38 therefore needs only the engine site, and this row is the printed denominator behind that 'only'.",
+    "spec_asserts": "TO-CG-H-3 and CG-s-35's four-hop table name hop 3 as infra/aws/globgrph/kuzu_nessie_load.py, 'one line beside the five marker fields it already copies' -- one site, one change.",
+    "world_is": "Two sites assemble the stitch_* vocabulary. The second, derive_runner.fold_stitch_document:2567-2578, is not named anywhere in this order, is not in its <paths>, and is a CONCURRENT surface this round (the decomposition assigns derive_runner.py to slot ~1 for CG-s-36/37). Its ten keys reach no manifest, no marker and no served field.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'stitch_built_at' over this worktree, 31403 files scanned, corpus=all, with the branch-only control file h3_tree_control.txt appearing in the hits: two first-party assembly sites, derive_runner.py:2568 and kuzu_nessie_load.py:72.",
+        "cat infra/aws/globgrph/derive_runner.py | grep -n 'stitch_vintage' at 2fd5cae09f returns exactly three lines: 2736 (the assignment), 2738 (the call), 2741 (the None test). There is no fourth use.",
+        "infra/aws/globgrph/kuzu_nessie_load.py:291-303 at 2fd5cae09f: source_vintage is built in ONE place, and read_stitch_vintage() is splatted into it at :302 -- the single writer that reaches the manifest.",
+        "infra/aws/globgrph/derive_runner.py:2567-2578 read directly: the ten-key return literal."
+      ]
+    },
+    "notes": "INERT: nothing is currently wrong for a reader -- the served vintage keys all come from the engine site and are correct. What is recorded is a SHAPE: two sites owning one vocabulary, one of them dead, which is exactly the configuration in which a future key gets added to the wrong one and the change reads as landed while nothing moves. FOUND OFF-TASK and NOT CHASED: derive_runner.py is outside this order's <paths> and is another slot's live surface this round, so no edit was attempted and none should be attempted from a second worktree mid-round. OWNER: the globgrph engine owner via 1.0.0_SA_CTO, as a question -- is the derive-plane assembler meant to feed something that was never wired, or is it residue to retire?"
+  }
+]
+```
+
+## NFRA_CLDGRPH-W2-S78 -- the committed source route's portal pin is not the gitlink it says it is, and nothing updates it
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T13:46Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W2-S78",
+    "one_line": "THE COMMENT IS THE SPEC AND THE WORLD DISAGREES WITH IT. .github/workflows/stitch-source-push.yml:61 says the portal checkout is 'Pinned at the gitlink SHA (not a floating DEV ref) for a HEAD-consistent snapshot'. At HEAD the repo's portal gitlink is 5907cbca98eb091124e38a32debefa355c1d4376; the pin at :66 is b96562720505fa143aad7cc5dd75115e6c609912. They are different objects, and the pin is a LITERAL that no step in the workflow, no hook and no tool updates when the gitlink moves. The stated design -- pin to the gitlink so the zip is a HEAD-consistent snapshot -- is sound; the MECHANISM that would keep it true is simply absent, so the property decays every time the portal gitlink advances and nothing anywhere reports it. This is why the same file's 'HEAD-consistent snapshot' claim cannot be read as a state: it is a description, and a description is never a state.",
+    "spec_asserts": ".github/workflows/stitch-source-push.yml:61 (comment, at 2fd5cae09f): 'Pinned at the gitlink SHA (not a floating DEV ref) for a HEAD-consistent snapshot.' TO-CG-H-3 carries the same line forward as MEASURED and describes the pin as deliberate.",
+    "world_is": "git ls-tree HEAD portal -> 160000 commit 5907cbca98eb091124e38a32debefa355c1d4376. The workflow's ref at :66 is b96562720505fa143aad7cc5dd75115e6c609912. PIN_EQUALS_GITLINK=false. No step in the file reads the gitlink; the value is typed in.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "h3_hops.py in this worktree, hop 1: 'the LITERAL portal pin is still at :66 -> b96562720505fa143aad7cc5dd75115e6c609912', 'the repo's own portal GITLINK at HEAD -> 5907cbca98eb091124e38a32debefa355c1d4376', 'PIN_EQUALS_GITLINK=false'.",
+        "git ls-tree HEAD portal in C:/tmp/wk-cldgrph-8-2, read directly.",
+        ".github/workflows/stitch-source-push.yml:53-68 read whole at 2fd5cae09f: the pin is a literal in a `with: ref:` block and appears nowhere else in the file.",
+        "CG-s-35 (deliverables/0.9.0_WK_NFRA_CLDGRPH~3/CG-s-35.portal-layer-vintage.result.md:157) recorded the same pin as stale against the portal head 5907cbca that actually built round 6's served zip."
+      ]
+    },
+    "notes": "ARMED, and the arming condition is worth stating precisely because it is CONDITIONAL: this route has never been observed to run (it needs secrets.PORTAL_REPO_PAT, unprovisioned). While that is true the stale pin harms nobody. The moment the PAT lands -- which is the very fix that would retire the hand route -- the workflow starts packing portal bytes from a commit nobody chose, silently, on every push to CLOUD. So the hazard is armed by the REMEDY to a different item, which is the shape worth recording. DISARM OWNER 0.7.0_AE_CloudOps, the same owner rows W2-S40 and W2-S63 already carry for this route. NOT FIXED HERE and deliberately so: the file is in this order's <paths> but changing a production route's checkout ref is not this cell's change (the cell's change is to write portal_sha into the archive, which was done), and under the egress hold no run of the altered route could be exercised -- an unexercised behaviour change to a production route is exactly what this estate keeps paying for. CG-s-38's record files it as owned item 2 with this row as its citation. CHEAPEST REMEDY, not proposed as a build: derive the ref from the gitlink in the job (git ls-tree HEAD portal) instead of typing it, which makes the comment's claim true by construction."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S116 -- the spine's L7 queue hand-off (continue the same subagent) is not achievable on this harness
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-10T14:22Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-S116",
+    "one_line": "THE SPINE'S L7 QUEUE HAND-OFF IS NOT ACHIEVABLE IN THIS HARNESS, AND THE FAILURE IS SILENT UNTIL YOU TRY IT. /dispatch Step 5 says: 'Hand the next task order by CONTINUING the same subagent, context intact. No respawn, no cold start -- a respawned worker re-reads its whole face and loses what it learned.' Measured at this drain: once a worker subagent has reported and gone terminal, resuming it is REFUSED -- 'No transcript found for agent ID' -- and ListAgents no longer lists it. The three still-running slots WERE listed, so the instrument discriminates and the refusal is a real absence rather than a lookup failure. There is no warning at spawn time, nothing in the worker's report says its context is about to be unreachable, and the issuer discovers it only at the moment it needs the continuation. CONSEQUENCE FOR THE SPINE'S OWN DESIGN: any queue of two or more orders on one slot is, on this harness, N COLD STARTS SHARING A WORKTREE -- which is the exact thing Step 5 tells the issuer not to do, and the reason it gives (a respawned worker loses what it learned) is correct and unavoidable rather than a discipline failure.",
+    "spec_asserts": "org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md L7 and .claude/skills/dispatch/SKILL.md Step 5: the issuer hands a slot's next task order by CONTINUING the same subagent with its context intact; no respawn, no cold start.",
+    "world_is": "A terminal worker subagent has no resumable transcript. The hand-off is a fresh spawn into the predecessor's worktree, so the WORKTREE state carries over and the CONTEXT does not. The issuer must therefore transfer, by hand and in the new prompt, whatever the predecessor learned that the successor needs -- which is exactly the transfer the spine wrote the continuation rule to avoid having to trust.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat's attempted continuation of slot ~1 after TO-CG-H-2 went terminal: 'could not be resumed: No transcript found for agent ID'.",
+        "ListAgents at the same moment: 3 subagents listed, all running (slots ~2, ~3, ~4); the terminal slot ~1 absent -- so the listing discriminates running from terminal and the absence is a measurement.",
+        "The successor was spawned cold into the SAME worktree C:/tmp/wk-cldgrph-8-1 at 3f99d48f49, with the predecessor's relevant findings restated by hand in its prompt.",
+        ".claude/skills/dispatch/SKILL.md Step 5, read at HEAD, stating the continuation rule and its rationale."
+      ]
+    },
+    "notes": "ARMED because it is not about this round: EVERY multi-order slot in EVERY v3 round on this harness has been, or will be, a cold start dressed as a continuation -- and an issuer that believes the continuation happened will under-transfer, because it thinks the context is already there. DISARM OWNER is 1.0.0_SA_CTO as the spine's owner; the choice is whether L7's hand-off clause is REWRITTEN to say what the harness does (a fresh worker into the same worktree, with an ISSUER-WRITTEN carry-over block naming what the predecessor did to the shared surfaces) or whether the queue rule itself changes so that a slot holds ONE order. NOT PROPOSED AS A BUILD and nothing here needs code. CHEAPEST HABIT MEANWHILE, which this seat used at this hand-off: treat the second order's prompt as a cold face plus an explicit 'what your predecessor did in this worktree' section, and say in it that the worker is a cold start into a warm worktree so it reads the tree rather than trusting a report it never saw."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W3-S18 -- the loss did not stop: a fourth reading finds the family at zero and the mechanism still loaded
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~3",
+    "surfaced_at": "2026-09-10T14:04Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W3-S18",
+    "one_line": "THE LOSS DID NOT STOP -- STORED_IN reached 0 at a fourth reading, the second drop is in the projection worker's own log at 12:01, and 27 of 27 SERVED_FROM edges still hang off the same volatile parent class.",
+    "spec_asserts": "TO-CG-H-4 / CG-s-39: 'The issuer took a THIRD read at 05:57:16 ... STORED_IN still 11 ... The loss STOPPED. It is a one-time drop inside that window, not a draining family.' The order's HELD block adds that 'the 11 survivors are a stable remainder' is held, not measured.",
+    "world_is": "At served vintage 2026-09-10T12:24:50.576632+00:00 (manifest aebbd9cef8c4cfd5515c42dc75793cf4ffcee1f57ad91f444d01be8ea968d5da) STORED_IN is 0 and the family has no rows at all -- it is absent from the 54 edge families present. S3_BUCKET_POLICY nodes are 12, not 14. The drop from 11 to 0 happened at 12:01:43, six and a half hours after the window this cell was cut to explain, by the SAME mechanism on a DIFFERENT bucket (opal-data-inf rather than opal-data-bd). 135 -> 11 -> 11 -> 0 is a plateau between two drops, and three points cannot tell that from a halt when the process is event-driven rather than periodic.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "h4_fourth_point.py at 2026-09-10T12:24:50.576632+00:00: STORED_IN=0, S3_BUCKET_POLICY_NODES=12, TOTAL_NODES=27662, TOTAL_EDGES=59548, OWNED_BY=6385 (POSITIVE_CONTROL=FIRED), NEGATIVE_CONTROL=RAISED on the banked wrong form.",
+        "/aws/ecs/opal-globgrph-projection-worker 2026-09-10T12:01:42Z: 'INFO: INCR_NODE_DELTA head=27662 cur=27663 upsert=1 delete=1' and 12:01:43Z: 'INFO: INCR_EDGE_DELTA head=59548 cur=59559 upsert=0 delete=11'.",
+        "/aws/lambda/opal-globgrph-incremental-updater 2026-09-10T12:01:00Z request 4f19e9b4-986d-56d1-9891-8aa8058c39ed: DERIVED arn=arn:aws:s3:::opal-data-inf type=S3_BUCKET plus its platinum/firm object keys.",
+        "h4_fourth_point.py, same run, same vintage: SERVED_FROM=27 and its target-class census is S3_BUCKET_POLICY 27 -- 27 of 27, denominator printed.",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-H-4.what-republished-the-projection.md@2fd5cae09f, THE CELL section, for the quoted premise."
+      ]
+    },
+    "notes": "ARMED and the arming is measured, not argued: the mechanism is unchanged and the next family is already standing on it. Every one of the 27 SERVED_FROM edges targets one of the 12 remaining S3_BUCKET_POLICY nodes, and any S3 object write to the corresponding bucket removes that node -- with no derive, no deploy and no schedule involved. disarm_owner is the issuer because the disarm is a CUT, not an act available to this worker: this order is READ ONLY on everything and holds no grant to deploy the re-parenting round 7 committed. FORM, not significance: the order asserted a stopped drop and the world shows a resumed one; what that is worth is the CVO's to say. The general shape is worth more than the instance -- THREE READS OF AN EVENT-DRIVEN QUANTITY MEASURE THE GAPS BETWEEN EVENTS, NOT THE PROCESS; a plateau is the expected appearance of an interval in which nobody happened to write to the right bucket."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W3-S19 -- the writer's own delete counter cannot see a row its own overwrite filter destroys
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~3",
+    "surfaced_at": "2026-09-10T14:04Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W3-S19",
+    "one_line": "THE WRITER'S OWN DELETE COUNTER CANNOT SEE A ROW ITS OWN OVERWRITE FILTER DESTROYS -- both invocations behind the republish logged nodes_deleted=0 while the consumer measured node delete=1 and edge delete=124.",
+    "spec_asserts": "TO-CG-H-4 directs this cell to attribute the republish from the reads available, and the estate's own instrument for what the incremental_updater changed is its BATCH_END line -- 'processed_arns=N nodes_written=N nodes_deleted=N'. A producer that reports zero deletions is read as having deleted nothing.",
+    "world_is": "Both invocations behind the 05:32:57 republish logged 'BATCH_END processed_arns=3 nodes_written=1 nodes_deleted=0 failed=0', and the projection worker reading the resulting branch head measured 'INCR_NODE_DELTA ... delete=1' and 'INCR_EDGE_DELTA ... delete=124'. The counter is computed at lambda_function.py from the DELETE-KEY list alone, while the commit is a single overwrite whose filter spans upsert keys AND delete keys and re-appends only the upsert rows -- so any row matched by an UPSERT key and not re-appended is removed WITHOUT being counted. The deletion is invisible on the writing side and visible only on the reading side, hours later, as an edge family that stopped loading.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "/aws/lambda/opal-globgrph-incremental-updater 2026-09-10T05:32:57Z request 60326a16-529f-5d32-9049-090a10350f6b and 05:33:01Z request 234a09eb-d30b-5c8f-bc61-6af791bd9ef1: both 'BATCH_END processed_arns=3 nodes_written=1 nodes_deleted=0 failed=0'.",
+        "/aws/ecs/opal-globgrph-projection-worker 2026-09-10T05:33:20Z: 'INCR_NODE_DELTA head=27664 cur=27665 upsert=1 delete=1' and 'INCR_EDGE_DELTA head=59559 cur=59683 upsert=0 delete=124'.",
+        "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py@2fd5cae09f :441 'One filter spans upsert keys + delete keys' and :501 'table.overwrite(pa_table, overwrite_filter=combined_filter)' with the comment at :500 'overwrite = delete(filter) + append(pa_table), atomic'; the returned count is built at :483 from del_arns/del_ids only.",
+        "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py@2fd5cae09f :271 \"'id': bucket, 'arn': bucket_arn, 'type': 'S3_BUCKET'\" -- the derived node_id is the BARE BUCKET NAME.",
+        "infra/aws/globgrph/derive_runner.py@2fd5cae09f :2307 -- in this estate exactly one class uses a short name string as its canonical key, S3_BUCKET_POLICY.",
+        "h4_fourth_point.py, served vintage 2026-09-10T12:24:50.576632+00:00: S3_BUCKET node ids are ARNs (34 of them, arn:aws:s3:::opal-data-bd present), S3_BUCKET_POLICY node ids are bare names (12 of them, opal-data-bd ABSENT), and no node with node_id 'opal-data-bd' exists at all."
+      ]
+    },
+    "notes": "GROUNDED on the two counters and the source; the LAST LINK -- that the row the overwrite removed was specifically the S3_BUCKET_POLICY row keyed 'opal-data-bd' -- is INFERRED and labelled as such in CG-s-39.what-republished-the-projection.result.md s.3. WHAT WOULD CONFIRM IT: a direct read of globgrph.graph_nodes for node_id='opal-data-bd' through Trino or Athena, an instrument this order has no grant to run. ARMED because the blind counter is what makes the next occurrence silent as well: no dangling check can fire, since the edges are removed along with their endpoint, and the producer reports a clean zero. disarm_owner is the issuer for the same reason as W3-S18 -- this order is READ ONLY on every producer and infrastructure file. NOT PROPOSED AS A BUILD, and deliberately not: the standing moratorium forbids standing up a checker for this, and the remedy the round already holds (re-parenting the boundary edges) shrinks the blast radius without touching the counter. GENERAL FORM: A PRODUCER'S PROGRESS COUNTER COUNTS THE INTENT IT WAS GIVEN, NEVER THE EFFECT ITS COMMIT HAD -- when intent and effect are joined by one filter, the difference is exactly the invisible part."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W4-S7 -- the '100 percent outlier rate' the census predicted for the morning after the re-point is NOT reproducible against the scorer as written -- the failure is silent, not loud
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~4",
+    "surfaced_at": "2026-09-10T14:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W4-S7",
+    "one_line": "CG-s-32's census record and TO-CG-H-5's cell both state that when CG-s-33's re-point reaches the served plane, `debtscan_canon_scorer.py`'s dominant shape FLIPS, its outlier threshold moves with it, and 'its census reads a 100 percent outlier rate the morning after'. Re-running score_auth_canon's OWN arithmetic (:160-177) on both sides of the deploy, against today's served counts, says otherwise: shapes are {API_ROUTE-ROUTES_TO->LAMBDA: 86, ServedURL-SERVED_FROM->S3_BUCKET_POLICY: 27} before and {...->LAMBDA: 86, ServedURL-SERVED_FROM->S3_BUCKET: 27} after; the dominant is API_ROUTE-ROUTES_TO->LAMBDA at 86 BOTH TIMES, the threshold is int(86*0.10)=8 BOTH TIMES, and the outlier candidate list is EMPTY BOTH TIMES. The served leg is 27, more than three times the threshold, so it is not a candidate before or after. What actually breaks is not a number at all: S3_BUCKET_POLICY appears in that file ONLY as PROSE -- the SCORED_FROM per-class source-provenance string at :48 and the docstring at :144 -- and :48 is copied verbatim into the emitted scorecard (debtscan_scorecard_latest.json :5 and :26, scored_from). After the deploy the audit record keeps asserting a source shape that no longer describes the graph it scored, with nothing raising and no count moving.",
+    "spec_asserts": "CG-s-32.boundary-edge-class-census.result.md s.2 (@15bfeb3a62), restated on this order's face: 'A re-point that moves SERVED_FROM onto S3_BUCKET will change debtscan's dominant shape and its outlier threshold, and that consumer must move in the same act or its census reads a 100 percent outlier rate the morning after.'",
+    "world_is": "The dominant shape and the threshold are both UNCHANGED by the re-point, and the outlier set is empty on both sides. The scorer's arithmetic reads t.node_type from the graph at runtime and is class-agnostic; only its two literal PROSE declarations carry the class. The re-point therefore produces a SILENT false provenance line in a scored artifact, not a visible outlier spike -- which is the harder failure to notice, and an owner who waits for the predicted red number will see green and conclude nothing broke.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "h5_disagreement.py output at org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~4/h5_ac2_capture.txt: BEFORE dominant=('API_ROUTE-ROUTES_TO->LAMBDA', 86) threshold=8 outliers=[]; AFTER dominant=('API_ROUTE-ROUTES_TO->LAMBDA', 86) threshold=8 outliers=[].",
+        "infra/aws/globgrph/debtscan_canon_scorer.py:160-177 @2fd5cae09f -- shape_counts is built from t.node_type at runtime; dominant = max(shape_counts); threshold = max(1, int(dominant[1]*outlier_frac)).",
+        "The only occurrences of S3_BUCKET_POLICY in that file at 2fd5cae09f are :48 and :144, both prose, over a 377-line denominator.",
+        "org/modules/graph/canon-patterns.yaml:147 @2fd5cae09f -- outlier_frac: 0.10.",
+        "Served counts read live at vintage 2026-09-10T12:24:50Z: ServedURL-SERVED_FROM-> S3_BUCKET_POLICY 27; API_ROUTE-ROUTES_TO-> LAMBDA 86; positive control OWNED_BY-> S3_BUCKET 232 / MS_USER 6153; negative control on a non-existent edge_type -> 0."
+      ]
+    },
+    "notes": "ARMED because the harm arrives through the process's future normal operation: the deploy lands, every instrument reads clean, and the scorecard's audited source line is false from that morning on. Disarm owner is the scorer's owner (0.7.0_AE_CloudOps, verified from NFRA_DEBTSCAN.TO-D3 assigned_to and the 2026-07-10 message To-header), because the disarm is a declaration change on a surface this project is forbidden to touch. The general form is worth more than the instance: A PREDICTION OF A LOUD FAILURE, INHERITED AND NOT RE-DERIVED, BECOMES A DETECTOR NOBODY BUILT -- the next reader looks for the spike, does not find it, and reads the absence as safety. The census that wrote the prediction was measuring PRODUCERS, and a producer census cannot see that its consumer's arithmetic does not depend on the thing being changed."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W4-S8 -- a READ-ONLY surface the task order names is UNTRACKED and therefore absent from every linked worktree; it was reachable only from the main tree
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~4",
+    "surfaced_at": "2026-09-10T14:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W4-S8",
+    "one_line": "TO-CG-H-5's SURFACES block names org/mcp/inbox/0.7.0_AE_CloudOps/~C/read/20260710T202210Z_0.8.0_AE_CloudComp_CLEAR_TO_DELETE_debtscan_canon_scorer.py.md (READ ONLY) and makes reading it a deliverable and part of H5-AC3. The path does not exist in this worktree: org/mcp/inbox/ is absent entirely, because the whole inbox tree is UNTRACKED in this repository (git check-ignore -v org/mcp/inbox returns rc=1 -- not ignored, simply never added), and a linked worktree materialises only what git tracks. cat on the ordered path returned 'No such file or directory'. The message was read in place from the MAIN worktree by absolute path, derived rather than hardcoded (dirname of git rev-parse --git-common-dir), which is inspection and not a drain: nothing was moved, copied into this tree, or committed.",
+    "spec_asserts": "TO-CG-H-5 SURFACES: the inbox message is listed as a repository-relative READ ONLY surface of this order, alongside tracked files, with no note that it is unreachable from the worktree the order is executed in.",
+    "world_is": "The inbox is untracked, so every one of the round-8 worker worktrees is missing it. A worker that took the ordered path at face value and used 2>/dev/null, or that read the empty result as 'the message does not exist', would have reported the premise refuted rather than the message read. The reachable copy lives only in the main tree and is therefore outside the worktree that the write-grant and every census denominator are scoped to.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "In C:/tmp/wk-cldgrph-8-4: ls org/mcp/inbox/ -> 'No such file or directory'; git check-ignore -v org/mcp/inbox -> rc=1 (NOT ignored).",
+        "In the main tree C:/Users/AndrewBerman/Desktop/ajb_workspace the same relative path exists and holds the 2026-07-10 message, quoted verbatim in PARKED_scorer-canonical-shape-disagreement.md.",
+        "h5_placement.sh resolves the main root as dirname(git rev-parse --git-common-dir) and prints the absolute path it actually read, so the capture names the tree rather than assuming it."
+      ]
+    },
+    "notes": "INERT: nothing worsens by being left alone and the order's own criterion was met by reading the file where it lives. Recorded because the FORM recurs -- A PATH THAT IS REPO-RELATIVE IS NOT THEREBY WORKTREE-RELATIVE, and an untracked one is invisible to exactly the workers a v3 round spawns. A cut that names an untracked surface should say so, or the surface should be tracked. Disarm owner is the issuing seat because the remedy is a line on the face, not an act in this tree."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W4-S9 -- the face's row-id instruction says 'from S1 for this slot' while six W4 rows already exist under this coordinate
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~4",
+    "surfaced_at": "2026-09-10T14:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W4-S9",
+    "one_line": "TO-CG-H-5's standing-law block instructs this worker to mint surprise rows as NFRA_CLDGRPH-W4-S<k>, 'from S1 for this slot'. Parsing every fenced json block in INVESTIGATION_v1.md at 2fd5cae09f gives 195 blocks and 266 rows, of which SIX already carry the W4 coordinate: NFRA_CLDGRPH-W4-S1 through -W4-S6, minted by an earlier round's slot ~4. Taken literally the instruction mints a duplicate id at the first row. The rows in this commit start at S7, per the general rule ('the next unused within your coordinate'), and the id sequence is unbroken.",
+    "spec_asserts": "TO-CG-H-5, STANDING LAW: 'Surprise = ONE ROW (NFRA_CLDGRPH-W4-S<k>, from S1 for this slot ...)'.",
+    "world_is": "W4-S1 through W4-S6 already exist in the project's investigation file. The allocator coordinate W{n} is per-WORKTREE-SLOT, not per-ROUND, and slot ~4 has been used before; the schema's own note says {k} restarts at 1 per COORDINATE, not per order. The face's shorthand and the schema disagree, and the schema is the one the gate enforces.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Parsed org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md @2fd5cae09f: 195 fenced json blocks, 266 rows total; ids matching -W4- = S1,S2,S3,S4,S5,S6.",
+        "org/surprise_channel/schemas/investigation_item.schema.json, id description: '{k} restarts at 1 per coordinate ... the gate requires W{n} to equal the committing worker's suffix'."
+      ]
+    },
+    "notes": "INERT and cheap, filed because a duplicate id is precisely the failure the W{n} coordinate was introduced to stop (schema note: 'measured 2026-09-04: two allocators minted one S34') and because the shorthand is likely to be copied onto the next round's faces. The fix is one clause on the face template: 'the next unused k in your coordinate', never 'from S1'."
+  }
+]
+```

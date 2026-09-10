@@ -746,3 +746,229 @@ Investigation rows without a disposition after this write: 0 of 21. Remediation 
   }
 ]
 ```
+
+
+## Round 3 partial L9 -- pinned packet, corrected count, and three drained judgments
+
+This append records C-S21 through C-S28. Earlier rows and historical denominators remain unchanged.
+The round is open; this is neither its final review nor its L10 slug.
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T13:54Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S21",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Partial L9 grade record for the three newly drained orders; no investigation item is closed by this record.",
+    "one_line": "Round-3 partial L9 on pinned packet 37b78f412c and COO correction 95180: S26-AC2 FAIL, S27-AC2 FAIL, S28-AC2 PASS. These grade the recorded judgments, not the mechanical criteria or FWD outcomes.",
+    "grades": [
+      {
+        "criterion": "S26-AC2",
+        "instance": "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~5/ETFS_GUARDRAIL.TO-EG-s-26.the-artifact-records-what-was-skipped.proof_of_spec.json@70d11e0b2b",
+        "verdict": "FAIL",
+        "reason": "The bar asks the field shape, why a reader can trust it, consumer compatibility and residuals. The explicit skipped/ran keys and additive consumer reasoning are supported. However the same forcing object and its derived run_shape claim actual removals: _forcing_record at 5b15b09834:936,946-947 counts requested dates while _apply_fixture_remove:448 silently ignores missing targets. CVO measured absent-date and absent-partner cases removing 0 but recording 1, beside a present-date control removing 1. The judgment asserts internal trustworthiness without this false-effect residual. This is a failure of the recorded trust argument, not a claim that the skip flag or decision-neutrality arms failed. See C-S27."
+      },
+      {
+        "criterion": "S27-AC2",
+        "instance": "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~4/ETFS_GUARDRAIL.TO-EG-s-27.the-skip-rides-the-forcing.proof_of_spec.json@5ca49e7fdb",
+        "verdict": "FAIL",
+        "reason": "The coupled shape, one production caller and skipped-rung limits are supported. The requested account of what a caller can still do wrong is materially false: it says removed_slice_count would read 0 for a nonexistent target. Exact pinned functions instead report 1 after removing 0 in both absent-target cases. Also REFUSE does not follow merely from a nonempty spec: coverage_gate at 5b15b09834:1056-1062 selects it from class C. The purported diagnostic cannot distinguish the caller mistake it claims to expose. See C-S27."
+      },
+      {
+        "criterion": "S28-AC2",
+        "instance": "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-28.the-unresolved-record-names-its-provider.proof_of_spec.json@466f461b7c",
+        "verdict": "PASS",
+        "reason": "The record answers its three questions: additive dictionary-copy/.get consumers, provider as a static mapping assertion rather than observed provenance, and explicit remaining limits including the fifth writer and deployment gap. Independently read _normalize_unresolved/_read_coverage_artifacts/_build_terminal_email at e94ce02a92 and mapping plus four append sites at 7e544cb4d7. Fresh main-tree comp-find and native Python census corroborate the consumer classification, not the worker's old denominator. The three-entry mapping's Inflection vendor label does not itself prove the vendor is wrong merely because its immediate upstream is a monolith. PASS is limited to the judgment as cut; it is not a served-plane or FWD-10 grade. C-S28 adds a concrete unexamined message contradiction."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Packet raw git blob 37b78f412c:ledger/L8_PACKET.round3.partial.md (full project prefix above): 45,945 bytes, SHA-256 78fcc6b4f4bc8f4e8a7e7157110f800c803ef645dabaef4fad983c3fc0327339. Full 345-line pinned packet read. Earlier revision ~20: 31,902 bytes, SHA-256 2485c30f0cc9f63cebe6a2d920eca01b559ea8b6eeb946c3c613273affd4cf42; 6/7 versus 9/10 terminal.",
+        "Three proof JSON objects equal their drain-commit versions; checker e3a9d207dc re-run with IDs extracted from the current orders: all three VALID rc=0, alignment ENFORCE 2/2 criteria and 1/1 cells each. S26: 4 presence-only pins + 3 co-committed; S27: 2 presence-only + 5 co-committed; S28: 6 content-resolved. These are structural checks, not independent replays of their AWS measurements.",
+        "Current main-tree Python census at C:/Users/AndrewBerman/Desktop/ajb_workspace: 4,301 .py paths from rg --files --hidden -g *.py -g !.git, 0 unreadable; coverage_verdict in 13 files, coverage_unresolved in 11, _render_command in 7. Unrelated graph-recognizer metrics and derive_runner log labels excluded by source read; tests/batteries, writer and production reader classified separately. Exact orchestrator AST at e94ce02a92: 237 Call nodes, one _render_command call at :682.",
+        "comp-find coverage_unresolved --files --all from main root: 163 hits / 153,950 scanned, 68 listed files, all one page read; 104,521 ephemeral-floor exclusions, 7 unreadable, 4,214 binary exclusions explicitly retained. Different corpus from the worker's 161/29,811; not a numerical agreement claim. Current source classification is corroborated, exhaustive absence outside the searched corpus is not asserted."
+      ]
+    },
+    "spec_asserts": "S26-AC2, S27-AC2 and S28-AC2 as cut in their named orders; recorded judgments must be read for truth, not promoted from VALID.",
+    "world_is": "Structural checks pass, but two judgment records rely on an incorrect effect claim. The provider judgment states its limits and its consumer classification is independently corroborated.",
+    "notes": "COO 95180 explicitly directs L9 on the packet without another CVO task order. Later R-EG-8 and EG-s-29 supersede the pinned packet's request for a ruling. EG-s-21 and EG-s-29 were pending in the supplied corpus. No L10 slug, remediation file, round-close claim, invoke, send, deploy or outcome grade is issued here. The corrected v3.13 difference-control labels are read against these orders; no later law is imposed retroactively. No other round-3 judgment is graded by this partial record."
+  },
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T13:54Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S22",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Correction of the packet premise; no law extension is earned by the withdrawn count.",
+    "one_line": "The four-instance claim at pinned packet section 9.3 is withdrawn to two distinct demonstrated writer defects, following COO 95180. EG-s-24 is the cell producing W4-S5, not another instance; W4-S4 is ordered readers, a different mechanism.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Before this append, all JSON blocks under the project channel parse to 106 rows: 84 investigation, 20 adjudication, 2 remediation. This is the row denominator, not 106 independent defects.",
+        "W4-S5 independently reproduced with exact _render_command AST at 0228b9c456: injected month emits --fixture-remove. At e94ce02a92 it raises ValueError. The first probe mistakenly supplied a second positional argument to the old one-argument function; corrected before any result was used.",
+        "W1-S33 independently reproduced with exact coverage_gate and _forcing_record AST at 5b15b09834, supplied classifier stubs returning one C and one D day: 2 unresolved rows, 0 provider fields, REFUSE. This is a pinned-function reproduction, not a live box run.",
+        "COO 95180 withdraws both its 95135 sentence and packet v5 s.9.3. No census of other projects was performed."
+      ]
+    },
+    "spec_asserts": "The proposed law extension was conditional on four independent measured instances and CVO confirmation of the generalisation.",
+    "world_is": "Two cited mechanisms survive deduplication and classification; the stated four-instance premise does not.",
+    "notes": "Recommendation for CTO: do not cut the extension on this evidence. The two new findings below concern false effect disclosure and message wording, and are not added to the writer-defect count to recreate four."
+  },
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T13:54Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S23",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-W4-S5"
+    ],
+    "disposition": "GRADUATED",
+    "one_line": "W4-S5 graduates: month was a second writer of renderer flags, independently reproduced on the before blob and refused on the post-fix blob. Code remedy is present; the packet supplies the historical deployment evidence.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "_render_command@0228b9c456 with month='2026-08 --fixture-remove cottonwood:2026-08-04' emits the flag without a forcing argument.",
+        "_render_command@e94ce02a92 rejects the same input via MONTH_RE at lambda_function.py:435-438; 1 before/after pair, no SSM execution.",
+        "Pinned packet 37b78f412c:101-128 records in-round deploy and disarm; W4-S5 cites fix 3a326438d3."
+      ]
+    },
+    "spec_asserts": "The forcing fence must cover every invoker-writable route into the command.",
+    "world_is": "The historical month route bypassed the dedicated forcing field; post-fix code rejects it.",
+    "notes": "Remedy holder was worker ~4 under EG-s-24. This review verifies code and attributes the live historical deployment to the cited record; it does not freshly certify current AWS bytes."
+  },
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T13:54Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "id": "ETFS_GUARDRAIL-C-S24",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-W1-S33"
+    ],
+    "disposition": "GRADUATED",
+    "disarm_owner": "2.0.0_SA_COO -- EG-s-29 placement and proof before EG-s-21",
+    "one_line": "W1-S33 graduates: the inline no-ladder writer produces provider-less unresolved records independently of the four repaired remediate.py sites. R-EG-8 correctly requires the artifact fix before the driven run.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "coverage_gate@5b15b09834:1043-1051 constructs the inline records; exact function probe returned 0 provider fields in 2 records.",
+        "remediate.py@7e544cb4d7:265-299 has provider at all four append sites; those sites cannot repair a branch that never calls remediate_month.",
+        "COO 95180 cites EG-s-29 issuance f3f3cf23ad and the EG-s-21 recut; their completion is not evidence in this review."
+      ]
+    },
+    "spec_asserts": "FWD-10 requires provider information in each missing-day row; EG-s-28's named sites do not exhaust writers.",
+    "world_is": "The pinned no-ladder branch omits provider; the single driven run must follow proof of its repair.",
+    "notes": "No disarm asserted from issuance alone. Keep the code-before-run gate independent of the law-extension question."
+  },
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T13:54Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S25",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-S35"
+    ],
+    "disposition": "GRADUATED",
+    "one_line": "S35 graduates as a grounded wrong-corpus exposure. This partial review does not reuse the linked-worktree counts: it checks pinned code, re-runs the proof checker and independently corroborates the consumer/caller classification from the main root.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S35 names all three exposed judgment criteria and the tool-install-root mechanism; pinned packet s.9.5 explicitly declines to equate worker and issuer corpus counts.",
+        "C-S21 records the fresh comp-find 163/153950 and native Python 4301-file census, together with exclusions and source classifications.",
+        "Exact git-show reads select 37b78f412c, 5b15b09834, e94ce02a92 and 7e544cb4d7, so these source claims do not depend on compiler worktree routing."
+      ]
+    },
+    "spec_asserts": "A census must describe the intended tree, scope and vintage before its denominator can support a judgment.",
+    "world_is": "The old counts cannot establish their claimed worker-tree scope. New main-tree classification checks corroborate the bounded conclusions without treating different denominators as agreement.",
+    "notes": "COO owns drain-level admissibility. No certification of every earlier round census, excluded file or future linked-worktree invocation is made. S26/S27 FAILs are independent of this tool exposure."
+  },
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T13:54Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S26",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-S36"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Ownership correction is recorded by a new row naming the eleven originals; it is not a disarm of those originals.",
+    "one_line": "S36 is accepted as an append-only ownership correction to COO base for eleven rows. S4 is excluded. Rule 27 binds issuers per round and does not prohibit multiple project workstreams.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S36@f3f3cf23ad names W1-S1/S2/S3/S5, W2-S2/S3/S4/S5/S6, S2 and S3; the original rows remain unchanged.",
+        "CTO 95152 approves re-pointing without disarm; 95165 clarifies Rule 27; COO 95180 reports the append-only correction landed."
+      ]
+    },
+    "spec_asserts": "Ownership changes preserve row history and do not silently close hazards.",
+    "world_is": "The latest correction supplies an actionable owner while preserving each original hazard and class.",
+    "notes": "This closes the ownership-correction record only. It does not determine whether the eleven underlying remedies are complete. No inference of permanent lane unseatability survives the Rule 27 correction."
+  },
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T13:54Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "id": "ETFS_GUARDRAIL-C-S27",
+    "disposition": "GRADUATED",
+    "disarm_owner": "2.0.0_SA_COO -- place the effect-disclosure correction and absent-target control in the owning renderer cell",
+    "one_line": "removed_slice_count is a requested-target count wearing an actual-effect name; run_shape says slices were removed even when none existed. This defeats the nonexistent-target diagnostic asserted by S27-AC2 and the trust claim in S26-AC2.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Exact source 5b15b09834:data/etfs/scripts/presentation/render_month_end.py:441-448 removes with pop(d,None); _forcing_record:918,936 counts spec entries, and :946-947 says those slices were removed. The two functions' ASTs still equal the main worktree at HEAD 7775dd14ea40cd56878a08d253bff4aaf6953e43.",
+        "Reproduction: compile only these two ast.FunctionDef nodes from the git blob into an isolated namespace. Start daily={'cottonwood':{'2026-08-04':{'value':1}}}; apply each one-date spec and call _forcing_record with an explicit run_id and ladder_ran=False. Present 08-04: actual=1/reported=1. Absent 08-05: actual=0/reported=1. Absent partner: actual=0/reported=1. All three run_shape strings say '1 slice(s) removed'. No AWS modules or calls.",
+        "S27-AC2@5ca49e7fdb explicitly predicts removed_slice_count=0 for a nonexistent target. This is refuted by two cases, with a present-target positive control."
+      ]
+    },
+    "spec_asserts": "S26-AC2 asks why the record is trustworthy; S27-AC2 says a no-op target is exposed by a zero removed_slice_count.",
+    "world_is": "A syntactically valid request can remove nothing while recording forced=true, removed_slice_count=1 and a prose claim of one removal.",
+    "notes": "Priority P1 for the evidence used to grade a driven run. Remedy recommendation: distinguish requested targets from measured removals or use an actual before/after count; retain absent-target and present-target controls. This seat edits no implementation and performs no driven run. A request alone also cannot guarantee REFUSE: the gate reads class C."
+  },
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T13:54Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "id": "ETFS_GUARDRAIL-C-S28",
+    "disposition": "GRADUATED",
+    "disarm_owner": "2.0.0_SA_COO -- place terminal-message branch disclosure with the owning orchestrator cell",
+    "one_line": "The terminal email unconditionally says every rung ran even for no-ladder records. The artifact can disclose a skip while the human-facing alert asserts the opposite; provider and ask-record repair alone do not fix this sentence.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "_build_terminal_email@e94ce02a92:358-364 sets the subject 'after remediation' and the body 'after every rung ran (probe, re-run the producer, re-check)' without reading ladder state.",
+        "Exact AST builder loaded with only stdlib MIME classes and dummy .invalid addresses. Same date/partner/provider/class, first reason='ladder skipped (--no-ladder)', then reason='rung 1 invoke returned but no slice landed on rung 2 re-check'. Both bodies assert every rung ran. In the skipped case the table and introductory sentence contradict each other. Builder only: no send function loaded.",
+        "The function takes unresolved rows and ask, no verdict/forcing argument. The skipped case was deliberately supplied a mapped provider, so the contradiction survives that repair."
+      ]
+    },
+    "spec_asserts": "The adopted driven shape must distinguish skipped remediation from attempted-and-failed remediation; EG-s-26 supplies that distinction on the verdict artifact.",
+    "world_is": "The terminal message's unconditional introductory prose erases that distinction and contradicts the skipped row.",
+    "notes": "What you should have asked but did not: does the human-facing message preserve the artifact's disclosure? Priority P1 before using its text to grade the driven refusal. Recommend deriving or neutrally phrasing the message from recorded execution state, with skipped/attempted controls. No new law is proposed, no email was sent, and this finding does not change the two-instance writer census."
+  }
+]
+```

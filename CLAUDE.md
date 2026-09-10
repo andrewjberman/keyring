@@ -40,11 +40,19 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     COO instance; two instances issuing into the SAME round is the collision (two cuts, two issuances, an
     ambiguous L8). ⛔ **It binds the ROUND, NEVER THE PROJECT: one project may carry several WORKSTREAMS with
     DISJOINT boundaries and DISJOINT write surfaces, held by different `~lane` instances** — that is four
-    SCOPES, not four issuers. ⛔ **THERE IS NO ONE-PROJECT-PER-INSTANCE RULE AND THERE NEVER WAS.** That phrase
-    circulated for weeks citing THIS rule by number: 192 corpus hits, every first-party one authored by a single
-    seat, which then read its own phrase back as canon — a citation repeated with a rule number attached is
-    unfalsifiable at a glance. Measured and WITHDRAWN BY ITS AUTHOR `2.0.0_SA_COO` 2026-09-10 (zero hits across
-    CLAUDE.md, the spine, the ANNEX and `RULINGS.jsonl`), after it had twice declined to seat a lane on it.
+    SCOPES, not four issuers. ⛔ **AND A SEATING RULE DOES EXIST — AT TIER 2 ONLY. DO NOT READ THIS CLAUSE AS
+    "NO SEATING CONSTRAINT."** `ONE PROJECT PER TIER-2 SEAT INSTANCE` (Andrew-direct 2026-08-24 ~19:29Z,
+    protecting THE SEAT'S CONTEXT, not the box) is REAL, is ENFORCED by `.tools/to-decomp-ref-lint.py`'s seating
+    check, and that enforcement is LEGITIMATE — it refuses a new TO addressed to an instance already holding open
+    TOs on another pipeline project. **What was never real is its GENERALISATION TO ALL TIERS:** the phrase
+    "one project per instance" DROPPED "TIER-2" and circulated for weeks citing THIS rule by number, and on it a
+    TIER-1 seat twice declined to seat a TIER-1 lane. ⛔ **WHETHER IT SHOULD REACH TIER 1 IS ANDREW'S, NOT A
+    SEAT'S — extending his Tier-2 word upward is WIDENING IT, which §2 forbids. ASK.** COST: none. Measured
+    2026-09-10 by `2.0.0_SA_COO` and `0.0.0_AB_MSTR`, each correcting its own prior answer: **both first censused
+    "documents that STATE law" and got ZERO, because the rule lives in an ENFORCEMENT SURFACE and an
+    Andrew-direct — neither is a law file.** The wider census (799 files) was not wider in the direction that
+    mattered. ⭐ **AN UNSCOPED READ ONLY FALSIFIES A DOMAIN IF YOU THEN INSPECT WHAT IT FOUND OUTSIDE IT** — the
+    390 unscoped hits included `.tools/`, and nobody looked.
     COST: none — this names what "ONE ISSUANCE" already implied. NON-APPLICATION: separate rounds; and
     workstreams whose write surfaces do not intersect. Gate:
     `.tools/to-pipeline-gate.py` (the L6 neck). Spec: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` v3.2
