@@ -376,6 +376,10 @@ would make the endpoint a list of implementations.
 > ⛔ **SUPERSEDED BY MEASUREMENT 2026-09-10 ~19:5xZ.** `4.0.0_SA_CRO~Z` investigated the route on
 > Andrew's word and the finding CONTRADICTS the source he named, on evidence:
 > `org/tier1_exec/4.0.0_SA_CRO/deliverables/AMGT_RESAPP_SEEKING_ALPHA_AUTH_INVESTIGATION_20260910.md`
+> @`b1656bbebc` -- **the vintage matters and this citation was written without one.** At this
+> seat's read the file was STAGED AND UNCOMMITTED, so the only reference available was a
+> working-tree path, which is not a citation. `4.0.0_SA_CRO~Z` landed it minutes later and the
+> hash is verified here with a negative control (a bogus path in the same tree returns empty).
 >
 > **THE MODAL PAGE IS THE WRONG INSTRUMENT.** `seekingalpha.com/symbol/{TICKER}/virtual_analyst_report`
 > is JS-rendered and **its HTML carries none of the content** -- a plain fetch returns *"Javascript is
