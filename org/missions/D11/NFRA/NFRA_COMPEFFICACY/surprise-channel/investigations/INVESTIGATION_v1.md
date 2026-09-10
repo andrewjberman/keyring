@@ -1258,3 +1258,35 @@ per the pitch 93644) is not pre-empted.
   }
 ]
 ```
+
+## W1-S4 -- the AMENDED arm (g) carries `timeout 600`, and the harness it names measured 680 s and 826 s on two consecutive WORKING runs: the literal amended command returns rc 124
+
+```json
+[
+  {
+    "id": "NFRA_COMPEFFICACY-W1-S4",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_COMPEFFICACY~1",
+    "surfaced_at": "2026-09-10T00:31Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.8.0_AE_CloudComp (the harness's runtime is the harness lane's, carried with W1-S3's three defects); the criterion-bound half is 2.0.0_SA_COO's at the next cut",
+    "one_line": "The face amended @2fbb844173 re-cut P4-AC1 clause (g) to `timeout 600 python .tools/comp-which-routing-test.py --binary-ref WORKING --out <in-grant>` -- the GRAIN and GRANT halves of row W1-S3 correctly fixed, and the TERMINATION half (W1-S3 defect 3) carried forward into the new bound. This seat's two consecutive WORKING runs of that exact harness took 680 s (2026-09-09T23:54:57Z -> 2026-09-10T00:06:17Z) and 826 s (00:07:30Z -> 00:21:16Z), both rc 0 with 'VERDICT: PASS' and the WORKING-TREE header naming blob 810fad08478a27fcac5a5f8d54ee13ab6a79e0ce. Both exceed 600 s, so the literal amended command cannot return anything but rc 124 on this box. Run at its literal bound to measure rather than infer it, and recorded in cep4_amended_bound_probe.json and printed by the battery BESIDE the arm's verdict, never as it -- the same treatment the issuer ruled for the bare form. Arm (g) is scored on the un-truncated recorded run under a grain control (the blob the harness says it measured must equal `git hash-object .tools/comp-which` at battery time), because P4-AC1's OWN invocation is also `timeout 600` and a harness that needs 826 s cannot run inside it either way.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-CE-P-4.comp-which-subject-existence.md@2fbb844173, P4-AC1 clause (g) as amended: '`timeout 600 python .tools/comp-which-routing-test.py --binary-ref WORKING --out org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~1/cep4_routing_test_report.json` passes after the change'.",
+        "Run 1, this seat: 2026-09-09T23:54:57Z -> 2026-09-10T00:06:17Z = 680 s, rc 0, 'VERDICT: PASS -- controls held, zero pollution, and comp-which ABSTAINED on 100% of generated gibberish', header 'SUBJECT : .tools/comp-which @ WORKING-TREE / blob 810fad08478a27fcac5a5f8d54ee13ab6a79e0ce'.",
+        "Run 2, this seat, via the committed runner cep4_run_routing_test.py: started 2026-09-10T00:07:30Z, ended 00:21:16Z = 826 s, rc 0, same verdict and same blob; recorded at org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~1/cep4_routing_test.rc.json.",
+        "The literal amended command at its literal bound, this seat, started 2026-09-10T00:25:56Z: recorded rc and window in cep4_amended_bound_probe.json and printed by the battery's arm (g).",
+        "W1-S3's defect 3 at 0e9ef40b37 (the bare form, rc 124 at a 580 s bound on the UNPATCHED HEAD bytes, 23:42:21Z -> 23:52:01Z) -- the same non-termination, which the amendment addressed on its other two limbs."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "P4-AC1 clause (g) as amended @2fbb844173: the parameterised harness invocation, prefixed `timeout 600`, passes after the change.",
+    "world_is": "The harness passes after the change (rc 0, twice, on the correct blob) but needs 680-826 s to do it, so the 600 s prefix truncates it to rc 124. The bound is below the instrument's runtime; the instrument's verdict is not in dispute.",
+    "notes": "NOT a defect of the change and not a request to relax the arm: the harness passes, and the arm is scored on a run that was allowed to finish, under a blob-equality grain control so a stale record cannot pass. What is ARMED is the bound travelling to the next cut that names this harness -- and a `timeout 600` that always returns 124 reads as a failing subject rather than an exhausted clock. The durable remedy is the harness lane's runtime, or a bound stated from a measured distribution; neither is this worker's."
+  }
+]
+```
