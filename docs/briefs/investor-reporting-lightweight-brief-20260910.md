@@ -6,7 +6,7 @@
 **Mode:** NEW, one umbrella project under D9 Opal Workflows; four workstreams. Project code not assigned by this brief.  
 **Commission:** Andrew-direct, September 10, 2026, this seat; [verbatim direction and clarification](../../org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260910_0919ET_LIGHTWEIGHT_INVESTOR_REPORTING.md).  
 **Consumer:** CTO `/endpoint --forward` at L2; COO coordination and workstream staffing downstream.  
-**Evidence:** repository code inspected September 10, 09:19–09:29 ET; July captured-vendor research; September 9 YCharts report census. See the [research and proposed design](investor-reporting-lightweight-design-20260910.md) and [source manifest](sources/INVESTOR_REPORTING_LIGHTWEIGHT_EVIDENCE_20260910.json). No vendor calls or live S3 reads performed.
+**Original evidence cut:** repository code inspected September 10, 09:19–09:29 ET; July captured-vendor research; September 9 YCharts report census. See the [research and proposed design](investor-reporting-lightweight-design-20260910.md) and [source manifest](sources/INVESTOR_REPORTING_LIGHTWEIGHT_EVIDENCE_20260910.json). No vendor calls or live S3 reads were performed for that original cut. **September 10 WS2 follow-up:** Andrew then authorized live BD/Orion performance exploration; the [performance presentation review](investor-reporting-performance-review-20260910.md) records successful calls, exact normalization findings and a proposed common report for his review. No live S3 read or endpoint ratification is claimed.
 
 ## Direction and relationship to yesterday's brief
 
@@ -69,7 +69,7 @@ Client selection and silver-backed holdings remain usable when a report provider
 
 Andrew proposes separate COO lanes for the boundaries. The project coordinator must name those lanes at issuance and name one integration owner. This brief does not create task orders, choose serial suffixes, sequence work, or register separate projects. Boundary issues and unexpected findings route to the umbrella project's coordinator; architecture/method questions route to CTO, with Andrew deciding product semantics where needed.
 
-Coordination rule relayed by CTO in message 95164, commit `c51baedac8`: **one issuer per round**; multiple lanes may own disjoint workstream scopes within one project. WS1 owns shared contracts and presentation files; WS2–WS4 own their adapter/content modules and submit shared-contract changes through that owner. Actual write-path assignments are named at issuance. No one-project-per-instance restriction applies.
+Coordination rule relayed by CTO in message 95164, commit `c51baedac8`: **one issuer per round**; multiple lanes may own disjoint workstream scopes within one project. WS1 owns shared contracts and presentation files; WS2–WS4 own their adapter/content modules and submit shared-contract changes through that owner. Actual write-path assignments are named at issuance. The one-project-per-instance rule does not restrict these Tier-1 COO workstream boundaries. **Scope correction, COO message 95189:** the rule does exist for Tier-2 seats in `.tools/to-decomp-ref-lint.py`; this brief does not waive or change it.
 
 ## II.2 Reuse and sibling boundaries
 

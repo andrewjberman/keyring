@@ -6,6 +6,8 @@
 **Parent:** [L1 brief](investor-reporting-lightweight-brief-20260910.md)  
 **Status:** PROPOSAL grounded in source inspection and prior captured evidence. This annex supports the brief; it is not a task-order decomposition or a claim of deployed behavior. Source IDs E01–E31 resolve in §7 and the fingerprint manifest.
 
+**September 10 WS2 update:** the [performance presentation review](investor-reporting-performance-review-20260910.md) supersedes the original performance evidence gaps below where explicitly tested. Andrew supplied three HARs/four screenshots and authorized live exploration. BD period/series and Orion household/account calculations succeeded. Orion summary and breakdown returns use different units; daily vendor factors support the proposed cumulative chart, while a derived dollar-value series failed an independent valuation check. The review supplies the concrete common layout, mapping, source manifest and synthetic sketch. This does not change the other workstream evidence or constitute product/endpoint ratification.
+
 ## 1. Page and shared interaction contract — WS1
 
 ### 1.1 Proposed page layout
@@ -78,6 +80,8 @@ For each of the **three registry client firms**, a directory build must report: 
 Exercise cold and warm lookup, common/duplicate/no-match names, a large authorized book, multiple tabs, directory refresh and permission revocation. Record directory bytes/rows, index-build time, server lookup time, network time, visible-render time, memory use and vendor calls. Give measured results and distributions for the captured population before setting a responsiveness target. Missing live counts are findings to collect; they are not filled with historical counts from code comments.
 
 ## 3. Performance shaper/normalizer Lambda — WS2
+
+Read this section as the original proposal alongside the dated [WS2 findings and revised presentation](investor-reporting-performance-review-20260910.md). In particular, Orion's captured/live performance-response gap is now closed for one household/two-account specimen. The broader tenant, scope and method coverage limits remain.
 
 ### 3.1 Routing and execution proposal
 
