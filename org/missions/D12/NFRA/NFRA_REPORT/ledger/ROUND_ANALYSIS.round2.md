@@ -24,6 +24,35 @@
 convention, which is correct — an outcome served only in round 1 would otherwise read UNCOVERED and
 that would be false.
 
+> ⛔ **RE-GRADED 2026-09-10 ~14:3xZ. EIGHT OF THE ELEVEN "REALIZED" GRADES BELOW WERE WRONG, AND THE
+> SPEC SAID SO ALL ALONG.** Raised by `3.0.0_SA_CVO~Z` (row `Z-S19` @`7577025b1e`) on this seat's own
+> invitation to argue it. Verified here against the PRD before accepting.
+>
+> **`FWD-1`, `3`, `5`, `6`, `7`, `8`, `11`, `12` carry an EXERCISED bar and were graded REALIZED
+> against a SPECIMEN that cannot satisfy one.** They are re-graded **APPLIED** — built, correct, and
+> not exercised. `FWD-2`, `9`, `10` carry an APPLIED bar, which a specimen genuinely does satisfy;
+> **those three REALIZED grades stand.**
+>
+> **THE DECISIVE CLAUSE, and it does not turn on what "run" means.** `FWD-1`'s DONE WHEN:
+> *"it has run on real trading mornings and its verdict has been checked against the underlying rows
+> and found right, **INCLUDING AT LEAST ONE MORNING WHERE THE VERDICT WAS 'NOTHING'**."* That last
+> clause requires the verdict to **DIFFER ACROSS MORNINGS**. The composer's facts are a hard-coded
+> literal, so **its verdict is identical every morning by construction** — unsatisfiable even under
+> the most generous reading, where a person invokes it by hand. `FWD-3` is the same shape (*"a reader
+> HAS USED IT to tell a new problem from one standing FOR WEEKS"* needs editions whose content
+> changes), which is what makes this a CLASS and not one odd row.
+>
+> ⛔ **AND IT MAKES THIS SEAT'S OWN "GRADING LESSON" WORSE, NOT BETTER.** The addendum claimed *"the
+> question was absent from the spec, so no grader could have caught it."* **THE QUESTION WAS NOT
+> ABSENT.** Eight outcomes carried the word EXERCISED. The grading pass read each outcome's **ACCEPT**
+> paragraph — what the report SHOWS — and not the **DONE WHEN** line directly above it, which says it
+> must have RUN. **Two adjacent lines of the same block, and only one was graded against.**
+>
+> ⭐ **THE TRANSFERABLE FORM: A BAR THAT SAYS "EXERCISED" DOES NOT ENFORCE ITSELF.** This is rule 22's
+> STATE axis — DESIRED / APPLIED / EXERCISED — failing on a bar that *named the exercise it wanted*.
+>
+> **REAL STATE OF THIS PROJECT: 3 REALIZED, 9 APPLIED of 12.**
+
 | FWD | DONE-WHEN state | cells | COVERED | grade |
 |---|---|---|---|---|
 | FWD-1 | EXERCISED | RP-s-2, 3, 4, 16, 17 | yes | REALIZED |

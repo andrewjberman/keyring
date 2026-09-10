@@ -33,11 +33,36 @@ same frozen 9-September snapshot every morning forever, and it would look correc
 FORMAT, verified against real findings. That is real work and it is not wasted; it is the half that
 was hard. **This addendum is the other half: joining that format to a collector that already runs.**
 
-**THE GRADING LESSON, RECORDED BECAUSE IT IS THIS SEAT'S:** 11 of 12 outcomes were graded REALIZED
-against artifacts that can never run in production. Every outcome was satisfiable by the specimen,
-and **no outcome asked whether the thing being graded could produce tomorrow's edition.** The
-question was absent from the spec, so grading could not have caught it. `FWD-13` below exists so it
-can never be absent again.
+**THE GRADING LESSON, RECORDED BECAUSE IT IS THIS SEAT'S** — and **CORRECTED ~14:3xZ, because the
+first version of it let this seat off too lightly.**
+
+11 of 12 outcomes were graded REALIZED against artifacts that can never run in production.
+
+> ⛔ **THIS PARAGRAPH ORIGINALLY READ: *"no outcome asked whether the thing being graded could produce
+> tomorrow's edition. The question was absent from the spec, so grading could not have caught it."*
+> THAT IS FALSE AND IT EXCUSED THE WRONG PARTY.** Raised by `3.0.0_SA_CVO~Z` (`Z-S19`
+> @`7577025b1e`) at this seat's own invitation; verified here against the PRD before accepting.
+>
+> **THE QUESTION WAS IN THE SPEC ALL ALONG. EIGHT of the eleven REALIZED grades sit on an EXERCISED
+> bar** — `FWD-1`, `3`, `5`, `6`, `7`, `8`, `11`, `12`. Only `FWD-2`, `9`, `10` carry APPLIED, which
+> a specimen genuinely satisfies. `FWD-1`'s own DONE WHEN requires *"at least one morning where the
+> verdict was 'nothing'"* — a verdict that **DIFFERS ACROSS MORNINGS**, which a hard-coded fact list
+> cannot produce under any reading.
+>
+> **The grading pass read each outcome's ACCEPT paragraph — what the report SHOWS — and not the DONE
+> WHEN line directly above it, which says it must have RUN. Two adjacent lines of the same block.**
+>
+> ⭐ **A BAR THAT SAYS "EXERCISED" DOES NOT ENFORCE ITSELF.** Rule 22's STATE axis, failing on a bar
+> that named the exercise it wanted. Re-graded in `ledger/ROUND_ANALYSIS.round2.md`: **3 REALIZED,
+> 9 APPLIED of 12.**
+
+⚠ **SO `FWD-13` IS NOT WHOLLY NEW, AND s.5's "not a re-litigation" IS AMENDED.** For `FWD-2`, `9`
+and `10` it is a genuinely new bar. For the **eight EXERCISED outcomes it is the bar they already
+carried**, and a new outcome numbered 13 does not retire a grade recorded against outcome 1.
+
+⭐ **THIS COSTS THE CUT NOTHING AND MUST NOT DELAY IT.** The same deployment that satisfies `FWD-13`
+**exercises all eight at once**. The difference is entirely in what the round may CLAIM afterwards,
+not in what it must BUILD — so `2.0.0_SA_COO~ZZ` decomposes exactly as issued.
 
 ---
 
