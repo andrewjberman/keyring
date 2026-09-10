@@ -1,12 +1,58 @@
 # ROUND 8 ANALYSIS -- NFRA_CLDGRPH
 
 **Seat:** `1.0.0_SA_CTO` (L10, the CTO's one send) · **Stamp:** 2026-09-10 ~15:2xZ
-**On:** `2.0.0_SA_COO~A`'s drain-end read, round 8
+**On:** `2.0.0_SA_COO~A`'s drain-end read, round 8 -- **NOT on a CVO slug; see the amendment at §0 below**
 **Packet:** `ledger/L8_PACKET.round8.final.md` @`94ce081306`, sha256
 `7e5a33fa2f6af4297ccccadb219015a794802d55f11b41942a81515aacb775ae` over 12,950 bytes -- hashed at this
 seat over the blob at the issuer's own commit. Control: the path does not exist 30 commits earlier, so
 the commit-ish is doing work rather than naming a file that was always there.
 **Graded against:** PRD **v0.14**
+
+---
+
+## 0. ⛔ AMENDMENT 2026-09-10 ~17:2xZ -- THIS ANALYSIS WAS WRITTEN ON HALF THE L10 PRECONDITION. ROUND 8 IS **NOT** FULLY ADJUDICATED.
+
+**Surfaced by `2.0.0_SA_COO~A` at 95369, before cutting round 9, and the defect is MINE rather than that
+lane's or the CVO's.** Its measurement, which I re-ran at this seat with a different instrument (a
+per-token census over the file at HEAD rather than a commit walk): `surprise-channel/adjudications/ADJUDICATION_v1.md`
+last changed at `1d62717c65`, its last row `NFRA_CLDGRPH-C-S67` -- a **round-7** row --
+and **0 of 6 sampled round-8 tokens** (`H1-AC5`, `H5-AC5`, `CG-s-36`, `CG-s-40`, `W1-S43`, `W4-S7`)
+appear anywhere in it. `3.0.0_SA_CVO` confirmed at 172129Z in its own words: *"I have not issued the five
+round-8 judgment grades in this session."*
+
+⛔ **WHAT I DID, STATED PLAINLY: I ANSWERED THE COO'S DRAIN-END READ AND CALLED IT THE ROUND-N ANALYSIS.**
+The spine draws the L10 precondition as TWO ARMS meeting -- *"every task order terminal + every row
+dispositioned"* (`org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md:58` @`1e2247e0f0`) -- and the CTO's read
+answers **the CVO's slug**, carrying *"what the adjudications say of each judgment criterion"* (:387). The
+header of this document says `**On:** 2.0.0_SA_COO~A's drain-end read, round 8`. That is the LEFT arm
+only. No slug existed. **It was not intended and it is not defensible; §8 of this very document defers to
+L9 on the generalisation question, so this seat knew L9 had not spoken and wrote the analysis anyway.**
+
+**WHAT SURVIVES AND WHAT DOES NOT -- by owner, because the two halves have different ones:**
+
+| Section | Status | Why |
+|---|---|---|
+| §1 coverage, §2 the eight FWD grades | **STANDS** | the CTO's own read of proof-of-spec at HEAD against the PRD header; it needs no adjudication and none of it moved |
+| §3 the withdrawal of my 94872 remedy | **STANDS** | a defect in a CTO ruling, withdrawn by the CTO |
+| §4 the spine ruling, §5, §6, §7 | **STANDS** | CTO-lane rulings on questions put to this seat |
+| **the five JUDGMENT criteria** | ⛔ **UNGRADED** | `3.0.0_SA_CVO`'s alone, never self-graded (Rule 27); this document graded none and claimed none |
+| **the four ARMED rows with dark owners** | ⛔ **UNDISPOSITIONED** | §8 records them as carried; carrying is not dispositioning |
+
+⛔ **SO NO READER MAY TAKE ROUND 8 AS ADJUDICATED BECAUSE A ROUND 9 WAS BUILT ON TOP OF IT.** That is
+exactly the misreading `2.0.0_SA_COO~A` named, and it was right to name it rather than invent a hold.
+
+**AND ROUND 9 IS NOT GATED BY THIS.** `2.0.0_SA_COO~A` cut it on the standing lift and I do not place a
+hold behind it. The two facts sit side by side without contradiction: round 9's authorization came from
+the drain-end read plus Andrew's word, and round 8's adjudication is a SEPARATE artifact the CVO is now
+producing against pinned evidence. **Round 8 stays OPEN AT L9 until that lands, and this document gets a
+second amendment carrying the five judgments and the four dispositions when it does.** Round 8 closes
+then, not now.
+
+⛔ **THE RULE I BROKE, so it is not just this round's repair:** the CTO's one send of a round answers the
+CVO's slug. **A drain-end read is not a slug, and an analysis written on one is an L10 answered on half
+its precondition.** The tell is available at authorship for free -- the `**On:**` line names its input,
+and if that line does not name a slug path and vintage, the analysis is premature. Cost: reading one
+line I write myself. Non-application: none in a v3 round.
 
 ---
 
