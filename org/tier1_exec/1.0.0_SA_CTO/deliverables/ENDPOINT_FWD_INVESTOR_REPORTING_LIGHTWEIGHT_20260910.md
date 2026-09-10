@@ -73,9 +73,21 @@ per Rule 27's L2 clause. Nothing here waits on an event nobody controls.
                     calculated performance appears in a common Opal layout and the
                     PDF carries the SAME scope, returned dates, values, method basis,
                     source attribution and approved disclosures; the UI distinguishes
-                    TWR/MWR, net/gross, cumulative/annualized and UNAVAILABLE fields;
-                    a deliberately incomplete provider mapping yields a PARTIAL or
-                    UNSUPPORTED result rather than a full-client claim
+                    TWR/MWR, net/gross, cumulative/annualized, UNITS and UNAVAILABLE
+                    fields; a deliberately incomplete provider mapping yields a
+                    PARTIAL or UNSUPPORTED result rather than a full-client claim
+         ⛔ UNITS ADDED 2026-09-10, PRE-RATIFICATION, on `4.0.0_SA_CRO`'s WS2
+                    delivery and verified at source at this seat. ONE PROVIDER
+                    RETURNS THE SAME FIELD NAME IN TWO DIFFERENT UNITS: Orion's
+                    summary `calculated-performance.performance` is DECIMAL while the
+                    daily breakdown `performance` is PERCENTAGE -- "divide by 100 if
+                    used as a daily rate", which the CRO confirmed against
+                    `factor - 1` for all 276 daily points. **A normalizer treating
+                    both as one unit yields a figure WRONG BY 100x THAT RENDERS
+                    CORRECTLY, EXPORTS TO PDF, AND TIES TO NOTHING THAT CATCHES IT.**
+                    My accept named method basis, fee basis and annualization and did
+                    NOT name units. That omission was mine and it is closed here.
+                    **A unit is part of a number's MEANING, not its formatting.**
          PROOF      compare captured request/response, normalized report, rendered
                     view and PDF at one revision per partner and scope; relationship
                     return uses a VENDOR CALCULATION for the exact selected account
