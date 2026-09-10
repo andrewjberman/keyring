@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>blocked</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.4 @62301f71e0 (candidates F1, F2; PATHS reuse rows 1-5) | **Decomp cell:** `FE-s-2` | **outcome_ref:** FWD-1, FWD-11, FWD-12 | **depends_on:** `FE-s-1` (terminal) | **slot:** ~1, queue position 2
 
