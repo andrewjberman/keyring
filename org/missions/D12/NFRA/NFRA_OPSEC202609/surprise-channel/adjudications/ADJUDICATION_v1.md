@@ -699,3 +699,42 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S19 -- the round's most serious security packet GRADUATES WHOLE: four rows, four DIFFERENT surfaces, nothing remediated and nothing touched
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S19",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T05:20Z",
+    "one_line": "L9, round 2: Z-S127, Z-S140, Z-S141 and Z-S142 GRADUATE AS ONE PACKET AND FOUR DISTINCT SURFACES. A symmetric HMAC signing secret sits in CLEARTEXT Lambda environment variables on the trade pipeline's auth path, identical 60-character value on both trade-auth-handler and trade-authorizer, while the estate deliberately chose custody for the equivalent portal secret one path over -- TWO DIFFERENT ANSWERS TO THE SAME QUESTION ON TWO AUTH PATHS. It MINTS AND VERIFIES on a publicly reachable API whose prod stage has DisableExecuteApiEndpoint FALSE and six of seven routes CUSTOM-authorized by that same authorizer; it is readable by a MEASURED 14 of 231 principals including three human IAM users; abuse is UNCOMPUTABLE beyond 14 days because stage access logging was never enabled; and the same value is ALSO in remote Terraform state, a second read path reachable with no Lambda permission at all. NONE OF THE FOUR IS DISMISSIBLE: each names a different thing an owner must act on -- custody, reachability, detectability, and a second path any remediation must cover.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z at L4, routed by 2.0.0_SA_COO~Z per ruling 20224 -- no manifest row covers the trade pipeline's signing secret, minting one is an L4 act, and mid-round the spec is FROZEN. Andrew is named on Z-S141 by 20248 as being surfaced in the same turn. 2.0.0_SA_COO~Z holds the placement question on Z-S127 (this project's round 3, or the trade pipeline's owner). UNCHANGED BY THIS ROW. NOTHING IS REMEDIATED, ROTATED, MOVED OR RE-CONFIGURED HERE, and this seat neither designs the remediation nor sets its schedule.",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S127",
+      "NFRA_OPSEC202609-Z-S140",
+      "NFRA_OPSEC202609-Z-S141",
+      "NFRA_OPSEC202609-Z-S142"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S127 -- THE FINDING, and it was filed the way the law prescribes: found off-task while closing a gap in a DIFFERENT face's evidence (a deployed-byte scan cannot see a table name supplied by configuration, so all seven functions' environments had to be read, and JWT_SECRET was simply there), then ONE ROW AND KEEP WORKING. Its author expressly did not rotate it, did not read its plaintext into any committed artifact, and did not open a remediation, on the correct ground that a symmetric secret shared by two functions is consumed by whatever validates the tokens it signs, and rotating without that consumer census is how an auth path goes dark.",
+        "Z-S140 -- THE SIZING, AND IT IS THE WORST OF THE ISSUER'S THREE BRANCHES: FORGEABLE AND REACHABLE. The 129-day dormancy was ABSENCE OF TRAFFIC, NOT ABSENCE OF WIRING -- an unauthenticated probe WOKE the authorizer and its log stream advanced from 129 days stale to now. DORMANCY LOWERS THE URGENCY AND NOT THE EXPOSURE: the first call after a year accepts a token forged today.",
+        "Z-S140's METHOD IS THE PART WORTH CARRYING, because its author's own first sweep was wrong IN BOTH DIRECTIONS and it says so: (a) it simulated only GetFunctionConfiguration, while FIVE of eleven roles hold the capability solely via GetFunction, which also returns the environment -- they would have scored DENIED; (b) its script reported '0 IAM users' and nearly stood, because `bash .tools/aws iam list-users` invoked from a python subprocess CRASHES with a Windows ACCESS_VIOLATION (rc 3221225477) returning EMPTY stdout AND EMPTY stderr -- BYTE-IDENTICAL to 'this account has no users'. It was caught ONLY by a guard comparing the enumeration against the census user_count, and had it stood it would have dropped all three human principals, including both of Andrew's, out of the finding. A CRASHED PROCESS AND AN EMPTY POPULATION ARE THE SAME BYTES. A DOCUMENT SCAN ANSWERS 'WHICH POLICIES MENTION THIS' AND THE QUESTION WAS 'WHO CAN DO THIS'.",
+        "Z-S141 -- A FINDING, NOT A DEMONSTRATED INCIDENT, AND EXPLICITLY NOT A DEMONSTRATED NON-INCIDENT EITHER, because no instrument reaches. The API HAS been successfully authenticated against: on 2026-01-07 it served 105 requests with ZERO 4xx and ZERO 5xx while the authorizer ran 18 times, and an authorizer DENY is a 4xx, so all 18 were ALLOW. Lifetime before the probe: 272 requests, ~237 non-error, 55 authorizer runs, 28 mint-path runs. BUT abuse detection is UNCOMPUTABLE beyond 14 days -- stage access logging was NEVER enabled, the authorizer's log group is 14-day retention, and no CloudTrail records this API's data events. That is its own surface with its own owner decision, not a restatement of Z-S140.",
+        "Z-S142 -- THE SECOND READ PATH, and it LEADS WITH THE GOOD HALF for a reason: JWT_SECRET is assigned at trade-pipeline/lambdas.tf:59 and :90 as a VAR REFERENCE, so it is NOT a literal in the repo and there is NO GIT-HISTORY EXPOSURE. That rules out the worst available branch -- a signing secret in git history cannot be rotated by any AWS action and is readable by everyone who has ever cloned the repo. But terraform writes RESOLVED variable values into state in plaintext and this root's state is remote, so the reachable set is 'principals with s3:GetObject on that bucket' UNION the measured 14, and the first half is UNMEASURED. IT IS BOUNDED, NOT OPEN: that bucket returns BlockPublicAcls, IgnorePublicAcls, BlockPublicPolicy and RestrictPublicBuckets ALL TRUE with SSE-AES256, so this is authenticated-internal reach rather than public. ANY REMEDIATION SIZED ON 14 IS SIZED ON ONE PATH OF TWO.",
+        "WHY ALL FOUR GRADUATE AND NONE IS SWEPT AS A MEASUREMENT-OF-ANOTHER: Z-S140, Z-S141 and Z-S142 were COMMISSIONED by the issuer's rulings (20224, 20248) as the measurements the routing was waiting on, and each returned a fact the others do not carry. Dismissing any one would delete a surface a remediation must cover -- and Z-S142 exists precisely because a remediation verified only against the Lambda-config path would PASS while state still carried the value. It adds a CRITERION rather than work: moving the value into a secret store referenced at runtime removes it from the Lambda config AND from state in one act."
+      ]
+    },
+    "spec_asserts": "A signing secret is held in custody, not in cleartext configuration, and a control's exposure is sized over every path that reaches the value.",
+    "world_is": "One symmetric secret mints and verifies on a live public API, sits in cleartext on two Lambdas and in plaintext Terraform state, is readable by a measured 14 of 231 principals plus an unmeasured state-read set, and its abuse is undetectable beyond 14 days.",
+    "notes": "WHAT NONE OF THE FOUR CLAIMS, preserved verbatim from their authors because the restraint is the reason the packet is usable: none claims the secret HAS LEAKED, that any of the fourteen HAS read it, that the trade API HAS been abused, or that HS256 is wrong for this pipeline. The claim is that the secret is live, mints and verifies on a publicly reachable authorized API, and is readable by a measured set on two paths. || THIS IS THE SEVENTH INSTANCE OF THE Z-S122 SHAPE and Z-S142 names it as such: a count scoped to one MECHANISM while the value is reachable by another. Z-S136 was the sharpest previous case -- terraform as a second WRITER that no principal census could see because it needs no fourth principal. Z-S142 is its MIRROR: terraform as a second READ PATH, invisible for the same structural reason. A SEAT THAT HAS JUST RUN A 231-PRINCIPAL SIMULATION HAS EVERY REASON TO BELIEVE THE QUESTION IS ANSWERED, WHICH IS EXACTLY WHEN THE SECOND PATH GOES UNASKED. || NOTHING IN THIS ADJUDICATION TOUCHES THE WORLD: no rotation, no configuration edit, no state read, no probe. The one probe that exists is Z-S140's, taken by its author under the issuer's ruling, and it is cited rather than repeated."
+  }
+]
+```
