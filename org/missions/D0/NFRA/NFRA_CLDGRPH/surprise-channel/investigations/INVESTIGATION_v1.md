@@ -7736,3 +7736,94 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-W4-S7 -- the '100 percent outlier rate' the census predicted for the morning after the re-point is NOT reproducible against the scorer as written -- the failure is silent, not loud
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~4",
+    "surfaced_at": "2026-09-10T14:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W4-S7",
+    "one_line": "CG-s-32's census record and TO-CG-H-5's cell both state that when CG-s-33's re-point reaches the served plane, `debtscan_canon_scorer.py`'s dominant shape FLIPS, its outlier threshold moves with it, and 'its census reads a 100 percent outlier rate the morning after'. Re-running score_auth_canon's OWN arithmetic (:160-177) on both sides of the deploy, against today's served counts, says otherwise: shapes are {API_ROUTE-ROUTES_TO->LAMBDA: 86, ServedURL-SERVED_FROM->S3_BUCKET_POLICY: 27} before and {...->LAMBDA: 86, ServedURL-SERVED_FROM->S3_BUCKET: 27} after; the dominant is API_ROUTE-ROUTES_TO->LAMBDA at 86 BOTH TIMES, the threshold is int(86*0.10)=8 BOTH TIMES, and the outlier candidate list is EMPTY BOTH TIMES. The served leg is 27, more than three times the threshold, so it is not a candidate before or after. What actually breaks is not a number at all: S3_BUCKET_POLICY appears in that file ONLY as PROSE -- the SCORED_FROM per-class source-provenance string at :48 and the docstring at :144 -- and :48 is copied verbatim into the emitted scorecard (debtscan_scorecard_latest.json :5 and :26, scored_from). After the deploy the audit record keeps asserting a source shape that no longer describes the graph it scored, with nothing raising and no count moving.",
+    "spec_asserts": "CG-s-32.boundary-edge-class-census.result.md s.2 (@15bfeb3a62), restated on this order's face: 'A re-point that moves SERVED_FROM onto S3_BUCKET will change debtscan's dominant shape and its outlier threshold, and that consumer must move in the same act or its census reads a 100 percent outlier rate the morning after.'",
+    "world_is": "The dominant shape and the threshold are both UNCHANGED by the re-point, and the outlier set is empty on both sides. The scorer's arithmetic reads t.node_type from the graph at runtime and is class-agnostic; only its two literal PROSE declarations carry the class. The re-point therefore produces a SILENT false provenance line in a scored artifact, not a visible outlier spike -- which is the harder failure to notice, and an owner who waits for the predicted red number will see green and conclude nothing broke.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "h5_disagreement.py output at org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~4/h5_ac2_capture.txt: BEFORE dominant=('API_ROUTE-ROUTES_TO->LAMBDA', 86) threshold=8 outliers=[]; AFTER dominant=('API_ROUTE-ROUTES_TO->LAMBDA', 86) threshold=8 outliers=[].",
+        "infra/aws/globgrph/debtscan_canon_scorer.py:160-177 @2fd5cae09f -- shape_counts is built from t.node_type at runtime; dominant = max(shape_counts); threshold = max(1, int(dominant[1]*outlier_frac)).",
+        "The only occurrences of S3_BUCKET_POLICY in that file at 2fd5cae09f are :48 and :144, both prose, over a 377-line denominator.",
+        "org/modules/graph/canon-patterns.yaml:147 @2fd5cae09f -- outlier_frac: 0.10.",
+        "Served counts read live at vintage 2026-09-10T12:24:50Z: ServedURL-SERVED_FROM-> S3_BUCKET_POLICY 27; API_ROUTE-ROUTES_TO-> LAMBDA 86; positive control OWNED_BY-> S3_BUCKET 232 / MS_USER 6153; negative control on a non-existent edge_type -> 0."
+      ]
+    },
+    "notes": "ARMED because the harm arrives through the process's future normal operation: the deploy lands, every instrument reads clean, and the scorecard's audited source line is false from that morning on. Disarm owner is the scorer's owner (0.7.0_AE_CloudOps, verified from NFRA_DEBTSCAN.TO-D3 assigned_to and the 2026-07-10 message To-header), because the disarm is a declaration change on a surface this project is forbidden to touch. The general form is worth more than the instance: A PREDICTION OF A LOUD FAILURE, INHERITED AND NOT RE-DERIVED, BECOMES A DETECTOR NOBODY BUILT -- the next reader looks for the spike, does not find it, and reads the absence as safety. The census that wrote the prediction was measuring PRODUCERS, and a producer census cannot see that its consumer's arithmetic does not depend on the thing being changed."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W4-S8 -- a READ-ONLY surface the task order names is UNTRACKED and therefore absent from every linked worktree; it was reachable only from the main tree
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~4",
+    "surfaced_at": "2026-09-10T14:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W4-S8",
+    "one_line": "TO-CG-H-5's SURFACES block names org/mcp/inbox/0.7.0_AE_CloudOps/~C/read/20260710T202210Z_0.8.0_AE_CloudComp_CLEAR_TO_DELETE_debtscan_canon_scorer.py.md (READ ONLY) and makes reading it a deliverable and part of H5-AC3. The path does not exist in this worktree: org/mcp/inbox/ is absent entirely, because the whole inbox tree is UNTRACKED in this repository (git check-ignore -v org/mcp/inbox returns rc=1 -- not ignored, simply never added), and a linked worktree materialises only what git tracks. cat on the ordered path returned 'No such file or directory'. The message was read in place from the MAIN worktree by absolute path, derived rather than hardcoded (dirname of git rev-parse --git-common-dir), which is inspection and not a drain: nothing was moved, copied into this tree, or committed.",
+    "spec_asserts": "TO-CG-H-5 SURFACES: the inbox message is listed as a repository-relative READ ONLY surface of this order, alongside tracked files, with no note that it is unreachable from the worktree the order is executed in.",
+    "world_is": "The inbox is untracked, so every one of the round-8 worker worktrees is missing it. A worker that took the ordered path at face value and used 2>/dev/null, or that read the empty result as 'the message does not exist', would have reported the premise refuted rather than the message read. The reachable copy lives only in the main tree and is therefore outside the worktree that the write-grant and every census denominator are scoped to.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "In C:/tmp/wk-cldgrph-8-4: ls org/mcp/inbox/ -> 'No such file or directory'; git check-ignore -v org/mcp/inbox -> rc=1 (NOT ignored).",
+        "In the main tree C:/Users/AndrewBerman/Desktop/ajb_workspace the same relative path exists and holds the 2026-07-10 message, quoted verbatim in PARKED_scorer-canonical-shape-disagreement.md.",
+        "h5_placement.sh resolves the main root as dirname(git rev-parse --git-common-dir) and prints the absolute path it actually read, so the capture names the tree rather than assuming it."
+      ]
+    },
+    "notes": "INERT: nothing worsens by being left alone and the order's own criterion was met by reading the file where it lives. Recorded because the FORM recurs -- A PATH THAT IS REPO-RELATIVE IS NOT THEREBY WORKTREE-RELATIVE, and an untracked one is invisible to exactly the workers a v3 round spawns. A cut that names an untracked surface should say so, or the surface should be tracked. Disarm owner is the issuing seat because the remedy is a line on the face, not an act in this tree."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W4-S9 -- the face's row-id instruction says 'from S1 for this slot' while six W4 rows already exist under this coordinate
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~4",
+    "surfaced_at": "2026-09-10T14:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W4-S9",
+    "one_line": "TO-CG-H-5's standing-law block instructs this worker to mint surprise rows as NFRA_CLDGRPH-W4-S<k>, 'from S1 for this slot'. Parsing every fenced json block in INVESTIGATION_v1.md at 2fd5cae09f gives 195 blocks and 266 rows, of which SIX already carry the W4 coordinate: NFRA_CLDGRPH-W4-S1 through -W4-S6, minted by an earlier round's slot ~4. Taken literally the instruction mints a duplicate id at the first row. The rows in this commit start at S7, per the general rule ('the next unused within your coordinate'), and the id sequence is unbroken.",
+    "spec_asserts": "TO-CG-H-5, STANDING LAW: 'Surprise = ONE ROW (NFRA_CLDGRPH-W4-S<k>, from S1 for this slot ...)'.",
+    "world_is": "W4-S1 through W4-S6 already exist in the project's investigation file. The allocator coordinate W{n} is per-WORKTREE-SLOT, not per-ROUND, and slot ~4 has been used before; the schema's own note says {k} restarts at 1 per COORDINATE, not per order. The face's shorthand and the schema disagree, and the schema is the one the gate enforces.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Parsed org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md @2fd5cae09f: 195 fenced json blocks, 266 rows total; ids matching -W4- = S1,S2,S3,S4,S5,S6.",
+        "org/surprise_channel/schemas/investigation_item.schema.json, id description: '{k} restarts at 1 per coordinate ... the gate requires W{n} to equal the committing worker's suffix'."
+      ]
+    },
+    "notes": "INERT and cheap, filed because a duplicate id is precisely the failure the W{n} coordinate was introduced to stop (schema note: 'measured 2026-09-04: two allocators minted one S34') and because the shorthand is likely to be copied onto the next round's faces. The fix is one clause on the face template: 'the next unused k in your coordinate', never 'from S1'."
+  }
+]
+```
