@@ -167,6 +167,7 @@ Every invocation runs under `timeout 120`. A timeout is recorded AS the output -
 <slot>~9</slot>
 <fabric>site-z</fabric>
 <dep_stage>EXECUTING</dep_stage>
+<issued_by>2.0.0_SA_COO~ZI</issued_by>
 
 **Issuer:** `2.0.0_SA_COO~ZI` (L5+L6, round 3) - **Project:** NFRA_IAMROLES202609 - **PRD:** v0.2, amended at six sites @3cadaf52ca
 **Authority chain:** round-2 slug @d076801ecf -> `ROUND_ANALYSIS.round2.md` @3cadaf52ca section 8 (R3-C) -> L5 round-3 decomp -> this issuance.

@@ -1,0 +1,114 @@
+{
+  "kind": "COMPLETION_REPORT",
+  "schema_version": "1.0",
+  "project": "NFRA_IAMROLES202609",
+  "round": 3,
+  "written_by": "2.0.0_SA_COO~ZI",
+  "written_utc": "2026-09-10T18:05Z",
+  "decomposition_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/decompositions/NFRA_IAMROLES202609_DECOMP_R3.md@39fc7680c6",
+  "denominators": {
+    "fwd_in_prd_header": 8,
+    "cells_in_decomposition": 3,
+    "task_orders": 3,
+    "task_orders_terminal_with_valid_proof": 3
+  },
+  "outcomes": [
+    {
+      "fwd_id": "FWD-1",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "a reviewer has actually answered the question with that evidence attached, rather than an opinion",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "UNCOVERED BY ROUND 3'S DECOMPOSITION, NOT UNCOVERED BY THE PROJECT. Round 3's rectangle held cells for FWD-2, FWD-4 and FWD-6 only. FWD-5 and FWD-8 sit BEHIND FWD-2 and the round-2 analysis says cutting either before it would idle a lane against a dependency; FWD-1, FWD-3 and FWD-7 are DOWNSTREAM OF FWD-2's exercise -- FWD-1's posture number is a rollup of it and FWD-7's vocabulary a rendering of it -- and this round produced that exercise for the first time, so they become cuttable at round 4 and were not cuttable before it. Prior coverage is carried by COMPLETION_REPORT.round2.json@baa5705269 and its predecessors. NO ROUND-3 EVIDENCE IS OFFERED HERE and none was gathered."
+    },
+    {
+      "fwd_id": "FWD-2",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "real roles have been read and their unused permissions named, over a stated lookback",
+      "cells": [
+        {
+          "cell_id": "IAM-t-2",
+          "task_orders": [
+            {
+              "id": "NFRA_IAMROLES202609.TO-IAM-t-2.exercise-the-permission-grain-usage-instrument",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~8/NFRA_IAMROLES202609.TO-IAM-t-2.exercise-the-permission-grain-usage-instrument.proof_of_spec.json@00fcaa6c4a"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "THE ROOT OUTCOME, EXERCISED FOR THE FIRST TIME. IAM-t-2 ran the permission-grain instrument over 219 of 219 live roles at a STATED 90-day lookback -- 219 bounded invocations, 219 rc=0, zero timeouts against a 120 s bound. Over 5494 granted permissions: NEVER-USED 1437, USED 421, UNOBSERVABLE 3636 (66 percent). THE HEADLINE IS THE UNOBSERVABLE COLUMN, NOT THE NEVER-USED ONE: more permissions are unobservable than never-used and used combined, 27 roles are WHOLLY unobservable and are named under an explicit statement that they must not read as clean, and 21 roles have zero never-used with at least one observed use, each printed with its unobservable count beside its used count. That is FWD-7's discipline held one grain over, inside FWD-2's deliverable, and it is what makes the number honest. ONE ROLE DISTORTS EVERY AGGREGATE AND THE DELIVERABLE SAYS SO TWICE: opal-drift-producer-codebuild-role carries 2918 of 5494 granted permissions (53 percent) and 742 of 1437 never-used rows (52 percent) off a SINGLE AWS-managed ReadOnlyAccess attachment, so every aggregate is printed with AND without it and the reader is told to take the second row first. THE INSTRUMENT WAS RUN, NOT REWRITTEN, and that is pinned rather than asserted: both blob hashes of .tools/comp-iam-usage and org/modules/graph/comp_iam_usage.py are byte-identical to the cut, re-read post-commit and re-derived independently by this issuer at the drain. THE POPULATION CARRIES A QUALIFIER THIS ISSUER'S OWN BATTERY TEXT DID NOT: 219 is every live role MINUS TEN AWS service-linked roles -- iam list-roles returns 229, 219 at path / and 10 service-linked. The cell states it; the round-3 decomposition's battery block says only '219 IAM_ROLE nodes'. Carried as worker row Z-W8-S2, disarm owner this lane, and it matters because FWD-1's posture number will be a rollup of exactly this denominator."
+    },
+    {
+      "fwd_id": "FWD-3",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "at least one real policy has been surfaced as perfectly scoped and yet requiring nothing of whoever calls it",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "UNCOVERED BY ROUND 3'S DECOMPOSITION, NOT UNCOVERED BY THE PROJECT. Round 3's rectangle held cells for FWD-2, FWD-4 and FWD-6 only. FWD-5 and FWD-8 sit BEHIND FWD-2 and the round-2 analysis says cutting either before it would idle a lane against a dependency; FWD-1, FWD-3 and FWD-7 are DOWNSTREAM OF FWD-2's exercise -- FWD-1's posture number is a rollup of it and FWD-7's vocabulary a rendering of it -- and this round produced that exercise for the first time, so they become cuttable at round 4 and were not cuttable before it. Prior coverage is carried by COMPLETION_REPORT.round2.json@baa5705269 and its predecessors. NO ROUND-3 EVIDENCE IS OFFERED HERE and none was gathered."
+    },
+    {
+      "fwd_id": "FWD-4",
+      "done_when_state": "APPLIED",
+      "done_when_text": "each one is either in code or carries a named owner and a reason",
+      "cells": [
+        {
+          "cell_id": "IAM-t-1",
+          "task_orders": [
+            {
+              "id": "NFRA_IAMROLES202609.TO-IAM-t-1.close-fwd4-every-row-carries-an-owner-or-a-finding",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~7/NFRA_IAMROLES202609.TO-IAM-t-1.proof_of_spec.json@7b0c9bb404"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "COVERAGE, AND THE HEADLINE MUST NOT BE READ AS CLOSURE. Every one of the 16 member rows now carries an owner field or a DECLARED disposition -- the mechanical bar this issuer set (AC1) moved 9 to 0, re-derived at the drain on the COMMITTED blob, denominator held at 16. The stale attachment count was corrected at source (AC5, 1 to 0). All three regression bars held at 0. BUT THE OWNER CENSUS IS 1 DECLARED + 3 owner=1.0.0_SA_CTO~Z + 12 owner=NO-ACCEPTING-SEAT, AND NO-ACCEPTING-SEAT IS A FINDING VALUE, NOT A NAME. FWD-4's bar reads 'either in code or carries a NAMED owner and a reason'. On that bar the honest count is 4 of 16 -- UNCHANGED from where round 2 left it -- and this lane states that here rather than letting '16 of 16' travel. Whether the finding value satisfies the outcome is 3.0.0_SA_CVO~Z's judgment at AC6 and this report does not pre-empt it. THE CELL'S REAL PRODUCT IS THE ESCALATION THE ROUND-2 ANALYSIS SAID TO RAISE WHEN IT AROSE, AND IT IS SHARPER THAN 'NO OWNER EXISTS'. Worker row Z-W7-S1: the adopting lane EXISTS and is BUSY -- 935 commits by 41 distinct AE serials in 14 days, 1486 commits by 74 authors on infra/aws/terraform/, led by 0.7.0_AE_CloudOps at 533 -- and ZERO of them has ever touched this project: 0 of 65 mission-directory commits, 0 acceptances across 63 files scanned, against a positive control that surfaces the ONE acceptance that does exist. THE BINDING CONSTRAINT IS THE ASK, WHICH IS AN ISSUANCE NO L7 WORKER CAN MAKE. THE BOUND HELD UNDER PRESSURE AND THE WORKER RECORDED THE TEMPTATION RATHER THAN HIDING IT: naming 0.7.0_AE_CloudOps would have been the review-surviving forgery, and the deliverable says so in terms -- AUTHORSHIP IS NOT ACCEPTANCE. No seat was named anywhere. TWO OF THE TWELVE ARE NOT BLOCKED ON TEXT AT ALL: rows 8 and 10 already have their adopting Terraform written and INERT at data-refresh/zz_adoption_candidate.tf.proposed, from round 2's IAM-r-5. On those two an ACCEPTANCE is the only missing thing."
+    },
+    {
+      "fwd_id": "FWD-5",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "a real narrowing has been checked in advance and the check was believed",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "UNCOVERED BY ROUND 3'S DECOMPOSITION, NOT UNCOVERED BY THE PROJECT. Round 3's rectangle held cells for FWD-2, FWD-4 and FWD-6 only. FWD-5 and FWD-8 sit BEHIND FWD-2 and the round-2 analysis says cutting either before it would idle a lane against a dependency; FWD-1, FWD-3 and FWD-7 are DOWNSTREAM OF FWD-2's exercise -- FWD-1's posture number is a rollup of it and FWD-7's vocabulary a rendering of it -- and this round produced that exercise for the first time, so they become cuttable at round 4 and were not cuttable before it. Prior coverage is carried by COMPLETION_REPORT.round2.json@baa5705269 and its predecessors. NO ROUND-3 EVIDENCE IS OFFERED HERE and none was gathered."
+    },
+    {
+      "fwd_id": "FWD-6",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "each of the known past plans has been established as done or not done, on evidence",
+      "cells": [
+        {
+          "cell_id": "IAM-t-3",
+          "task_orders": [
+            {
+              "id": "NFRA_IAMROLES202609.TO-IAM-t-3.three-prior-plans-landed-or-not-on-the-artifact",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~9/NFRA_IAMROLES202609.TO-IAM-t-3.proof_of_spec.json@a2da4d4a81"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "ESTABLISHED ON THE ARTIFACT, WHICH IS THE WHOLE OF THIS OUTCOME'S BAR. Three plans, three verdicts from the closed set, one negative control per verdict, denominators printed where a plan enumerates items. PLAN 1 (iam-least-privilege-rollback-plan) NOT-LANDED: neither named policy appears in a COMPLETE 30-name iam list-policies --scope Local, 5 of its 8 roles return NoSuchEntity and the 3 survivors return empty for IAMMigrationStatus, and each of its three scripts scores 0 of 31192. PLAN 2 (SOC2-FULL-REMEDIATION-MASTER-PLAN) PARTIALLY-LANDED, 7 of 9 limbs graded: EBS encryption and CloudFront WAF landed; IMDSv2 and DynamoDB partial; API-GW logging and secret rotation not landed. THE PHASE THAT LANDED IS THE ONE WITH NO IAM IN IT -- its Phase 2 IS plan 1. PLAN 3 (PORTAL_AUTHHARD.WS6) PARTIALLY-LANDED, 1 of 3: the role split did not land (12 of 203 live Lambdas still share opal-portal-lambda-role, two of them the public authorizers) and LeadingKeys appears in 0 .tf files -- BUT THE SECRET DE-WILDCARDING DID LAND, on 2026-07-09 under NFRA_TERRAFORM-P2 Phase A, BY A DIFFERENT SEAT UNDER A DIFFERENT PROJECT, SIX WEEKS BEFORE THIS PLAN'S OWN 'complete' TAG. That is C-CLOSED-RECORD demonstrated rather than cited: the document's own tag was neither the reason it was done nor evidence that it was. A CONFOUNDER WAS NAMED AND RESOLVED RATHER THAN PASSED OVER: '32 of 32 volumes encrypted' looks identical whether or not plan 2's Phase 1 ran, because EbsEncryptionByDefault=true produces it either way. It was resolved on the one asymmetry default encryption has -- it CANNOT retro-encrypt an existing volume -- plus a six-volume mint burst on 2026-02-17. TWO CORRECTIONS TO THE BRIEF'S OWN F10, WHICH THIS ISSUER INLINED VERBATIM INTO THE WORKER FACE: plan 3 DOES carry a <status> tag and it reads 'complete' (F10 says it carries none), and plan 1's 'forty policies' is an unenumerated headline -- the document also says 8 and 22. Worker rows Z-W9-S1 and Z-W9-S2, both INERT."
+    },
+    {
+      "fwd_id": "FWD-7",
+      "done_when_state": "APPLIED",
+      "done_when_text": "the assessment reports the two differently, at permission grain",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "UNCOVERED BY ROUND 3'S DECOMPOSITION, NOT UNCOVERED BY THE PROJECT. Round 3's rectangle held cells for FWD-2, FWD-4 and FWD-6 only. FWD-5 and FWD-8 sit BEHIND FWD-2 and the round-2 analysis says cutting either before it would idle a lane against a dependency; FWD-1, FWD-3 and FWD-7 are DOWNSTREAM OF FWD-2's exercise -- FWD-1's posture number is a rollup of it and FWD-7's vocabulary a rendering of it -- and this round produced that exercise for the first time, so they become cuttable at round 4 and were not cuttable before it. Prior coverage is carried by COMPLETION_REPORT.round2.json@baa5705269 and its predecessors. NO ROUND-3 EVIDENCE IS OFFERED HERE and none was gathered."
+    },
+    {
+      "fwd_id": "FWD-8",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "it has actually been re-run and produced a comparable answer",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "UNCOVERED BY ROUND 3'S DECOMPOSITION, NOT UNCOVERED BY THE PROJECT. Round 3's rectangle held cells for FWD-2, FWD-4 and FWD-6 only. FWD-5 and FWD-8 sit BEHIND FWD-2 and the round-2 analysis says cutting either before it would idle a lane against a dependency; FWD-1, FWD-3 and FWD-7 are DOWNSTREAM OF FWD-2's exercise -- FWD-1's posture number is a rollup of it and FWD-7's vocabulary a rendering of it -- and this round produced that exercise for the first time, so they become cuttable at round 4 and were not cuttable before it. Prior coverage is carried by COMPLETION_REPORT.round2.json@baa5705269 and its predecessors. NO ROUND-3 EVIDENCE IS OFFERED HERE and none was gathered."
+    }
+  ]
+}
