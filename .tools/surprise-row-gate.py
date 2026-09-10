@@ -447,7 +447,15 @@ def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema, merg
         # this merge is the committer's act and is graded against the COMMITTER, on a merge or off.
         _carried = bool(merging and parent_ids is not None
                         and str(r.get("id") or "").strip() in parent_ids)
-        allocator = str(r.get("surfaced_by") or "").strip() if _carried else str(committer or "").strip()
+        allocator_raw = str(r.get("surfaced_by") or "").strip() if _carried else str(committer or "").strip()
+        # SEAM (2026-09-10, 2.0.0_SA_COO~Z's stuck drain): `surfaced_by` legitimately carries
+        # "<serial> (why it was surfaced)" -- every seat row in every channel already has that shape.
+        # WORKER_SERIAL_RE is anchored ^...$, so the annotation made a WORKER's row read as a SEAT's
+        # and the row became LEGAL WHERE WRITTEN (commit path grades the bare --author committer) and
+        # ILLEGAL WHERE IT LANDS (drain path grades the annotated field). Grade the LEADING SERIAL,
+        # which is what the docstring above always said this limb reads. A serial never contains
+        # whitespace, so the first token is the whole of it.
+        allocator = allocator_raw.split()[0] if allocator_raw else allocator_raw
         wm = WORKER_SERIAL_RE.match(allocator) if _carried else committer_m
         if wm:
             if w is None:
