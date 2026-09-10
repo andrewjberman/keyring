@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "recorded_at_utc": "2026-09-10T15:10:49.571539+00:00",
+  "recorded_at_utc": "2026-09-10T15:14:05.909191+00:00",
   "author": "4.0.0_SA_CRO",
   "scope": "WS1–WS2 export specification and synthetic review artifact",
   "execution": {
@@ -467,8 +467,8 @@
     },
     {
       "path": "docs/research/investor_reporting_export_20260910/profile_export_capture.py",
-      "bytes": 8624,
-      "sha256": "da8178e4b87a165e5b1eedd8c6689d1d92aab69a7500d96345203c5bb4a58631"
+      "bytes": 8732,
+      "sha256": "98ede2afc065ede7f6e1330cdb4c148e3eda29f04324c9f9ab1a8f2052689229"
     },
     {
       "path": "docs/research/investor_reporting_export_20260910/performance-export-review.pdf",
@@ -477,10 +477,11 @@
     },
     {
       "path": "docs/research/investor_reporting_export_20260910/FONT_LICENSE.txt",
-      "bytes": 4407,
-      "sha256": "74ba064d03f1f1c4a952da936c3eb71866c34404916734de3cae73b34357e59e"
+      "bytes": 4499,
+      "sha256": "fcb0bbd7c73754accfc72de282426529f1a272cfdc601d6f945bc1f3ee80ba56"
     }
   ],
+  "font_license_copy": "OFL wording preserved; trailing whitespace normalized in the committed copy",
   "prototype_checks": {
     "classification": "synthetic prototype only",
     "pages": 4,
