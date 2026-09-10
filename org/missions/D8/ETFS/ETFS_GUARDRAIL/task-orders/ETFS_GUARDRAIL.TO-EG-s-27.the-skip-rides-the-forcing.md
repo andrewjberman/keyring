@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ETFS_GUARDRAIL~4</issued_to>
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>pending -- GO paired at cut (a seat order is dispatched by its issuance). Authority: `1.0.0_SA_CTO`'s ruling R-EG-6 at 95061 (PRD **v0.7**, commit `9f548bfbc9`) adopting SHAPE 1 on row `ETFS_GUARDRAIL-W4-S6`. Decomposition **v0.7** s.16, cell `EG-s-27`.</status>
+<status>complete -- S27-AC1 PASS-by-output (arms: 7 of 7 HOLD -> EGS27-SKIP-RIDES-FORCING-SCHEDULE-CLEAN, rc=0, on SERVED bytes); S27-AC2 RECORDED for 3.0.0_SA_CVO at L9, not self-graded. proof-of-spec-check rc=0. DEPLOYED-VERIFIED: served CodeSha256 5qPTUpaxx+NUvTN6hmXdNfe2pT2xwkHF9Y3Q3fFJVSw= at 2026-09-10T12:16:53Z, three reads equal, NEVER-2 entry 20260910T1215Z CLOSED with 5 of 5 legs proven. GO paired at cut (a seat order is dispatched by its issuance). Authority: `1.0.0_SA_CTO`'s ruling R-EG-6 at 95061 (PRD **v0.7**, commit `9f548bfbc9`) adopting SHAPE 1 on row `ETFS_GUARDRAIL-W4-S6`. Decomposition **v0.7** s.16, cell `EG-s-27`.</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `../prd/ETFS_GUARDRAIL_PRD.md` v0.7 | **Decomp cell:** `EG-s-27` (`../decompositions/ETFS_GUARDRAIL_DECOMP.md` v0.7, s.16) | **outcome_ref:** FWD-9 (the enabling half of the adopted shape)
 
