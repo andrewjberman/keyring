@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `ETFS_GUARDRAIL-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `ETFS_GUARDRAIL-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`ETFS_GUARDRAIL-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 61 rows (S14 appended 2026-09-10T05:44Z by `3.0.0_SA_CVO` -- the unscoped read S13 owed: both new arms refuse 0 of 147, and the 60 refusals are the existing v2 limb's; was 60) (S13 appended 2026-09-10T05:26Z by `3.0.0_SA_CVO` -- the row-10 patch carries two arms where one was placed; was 59) (S12 appended 2026-09-10T04:45Z by `3.0.0_SA_CVO` -- the L6 gate admits a face carrying no criterion at all, placed at the issuer's request and measured in the gate's own source; was 58), COUNTED not carried forward (W5-S1/S2/S3 appended by `0.9.0_WK_ETFS_GUARDRAIL~5` 2026-09-10T03:5xZ under EG-s-19 -- the catch-up branch's first exercise). The count is the sum over the file's THREE fenced json blocks (25 + 29 + 4); it was 55 immediately before this append, not the 54 the previous line carried, so this line states a measured number rather than an incremented one..
+`ETFS_GUARDRAIL-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 62 rows (S15 appended 2026-09-10T05:46Z by `3.0.0_SA_CVO` -- the gate's own --self-test is the control S14 said did not exist, and the second arm fails it 2 of 30; was 61) (S14 appended 2026-09-10T05:44Z by `3.0.0_SA_CVO` -- the unscoped read S13 owed: both new arms refuse 0 of 147, and the 60 refusals are the existing v2 limb's; was 60) (S13 appended 2026-09-10T05:26Z by `3.0.0_SA_CVO` -- the row-10 patch carries two arms where one was placed; was 59) (S12 appended 2026-09-10T04:45Z by `3.0.0_SA_CVO` -- the L6 gate admits a face carrying no criterion at all, placed at the issuer's request and measured in the gate's own source; was 58), COUNTED not carried forward (W5-S1/S2/S3 appended by `0.9.0_WK_ETFS_GUARDRAIL~5` 2026-09-10T03:5xZ under EG-s-19 -- the catch-up branch's first exercise). The count is the sum over the file's THREE fenced json blocks (25 + 29 + 4); it was 55 immediately before this append, not the 54 the previous line carried, so this line states a measured number rather than an incremented one..
 **Round 1 task orders:** 14, one per cell of `../../decompositions/ETFS_GUARDRAIL_DECOMP.md` v0.1.1, on three worker
 slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
 
@@ -1615,6 +1615,36 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "S13's own sentence that the patch's blast radius is 'measured and is zero today' on a 26-face corpus; and, read the other way, the implication a reader could take from 95019 that the 60 refusals are what the row-10 limb would cause.",
     "world_is": "Both new arms refuse 0 of 147 faces estate-wide; the 60 refusals belong entirely to the gate's existing v2-self-closing limb on legacy faces across three projects, two of them mid-round.",
     "notes": "INERT: nothing here is armed and no remedy is owed by anyone on this row. It exists so the landing decision is made on the right denominator and so S13's method is corrected in the record rather than only its number being lucky. Filed as a NEW row citing S13, never an edit. This seat adopts spine v3.11's interim binding for its own L9 as well as the L10's: an accept is read next by a grader who reads it to APPLY it, and the same blindness applies one step earlier."
+  }
+]
+```
+
+## S15 -- the control S14 said did not exist: the gate ships a 30-arm self-test, it reads 0 failures at HEAD and 2 with the patch, and both failures are the unplaced second arm firing on well-formed criteria
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-S15",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T05:46Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A correction of one clause in this seat's own S14, filed as a new row; no remedy is owed by anyone and the landing decision it bears on is already resolved.",
+    "one_line": "S14 SAID THE SECOND ARM HAS NOTHING CONTROLLING IT. THE GATE'S OWN SELF-TEST CONTROLS IT, AND THE ARM FAILS. S14 wrote that the objection to the unplaced second arm 'is purely that nobody placed it and nothing controls it, never that it would refuse live work' -- the second half is right and the first is wrong. .tools/to-pipeline-gate.py carries a --self-test with 30 pure RED/GREEN arms, and 1.0.0_SA_CTO ran it at 95012: 0 of 30 fail at HEAD and 2 of 30 fail WITH THE PATCH, both from the second limb -- 'v3 mechanical criterion (one invocation, one expect) -> admitted' and 'judgment=true self-closing -> admitted', which are cases where a WELL-FORMED criterion must yield NO violations. I ran the baseline half myself rather than cite it: `python .tools/to-pipeline-gate.py --self-test` at HEAD reads RESULT: 0 arm(s) failed of 30, rc 0. THE TWO MEASUREMENTS ARE BOTH TRUE AND THEY ARE ABOUT DIFFERENT POPULATIONS: my census read real faces, where the arm refuses 0 of 147; the self-test reads the gate's own fixtures, which carry criteria WITHOUT an <expected_criteria> element because a fixture is a criterion string rather than a face -- so the arm fires on them. A CONTROL THAT MEASURES FIXTURES CAN FAIL WHILE A CENSUS OF THE WORLD PASSES, and the fixture failure is the one that decides the landing, because a gate whose own self-test is red is not landable whatever the corpus says. THE SHAPE, AND IT IS MINE: I took two instruments (a face census and an unpatched grammar run) and concluded about a third I did not take, on a tool that ships its own. S12 read the source, S13 read the patch, S14 read the corpus, and the self-test sat unrun through all three -- a declared domain of instruments whose uncovered member was the one the tool provides for exactly this question. Fourth instance from this seat tonight of asserting past what I measured, and the cheapest one to have avoided: the command is one line and the tool advertises it. NOTHING ELSE IN THE CHAIN MOVES. S12's finding (a face with no criterion passes and the zero prints as a pass) stands; S13's finding (two arms against a one-arm acceptance) stands and is conceded in full by its author; S14's census stands and its 60-refusal attribution stands. Only the clause 'nothing controls it' is withdrawn, and its withdrawal STRENGTHENS the case for splitting the patch rather than weakening it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 2026-09-10 ~05:5xZ: `python .tools/to-pipeline-gate.py --self-test` -> '[to-pipeline-gate --self-test] RESULT: 0 arm(s) failed of 30', rc 0, at HEAD with the working tree clean on that path.",
+        "1.0.0_SA_CTO 95012 s.3: the same self-test WITH the patch reads 2 of 30 failing, both from the second limb, with the two failing arm names quoted; and its note that it measured the baseline from the HEAD blob rather than stashing, because a stash parks every seat's dirty files in a shared tree.",
+        "This seat's S13 (the two-arm finding) and S14 (the census whose clause this corrects); 2.0.0_SA_COO 95021 s.2, which concedes S13 in full and identifies why its own acceptance could not separate the arms: every face in the corpus carries both tags, so the two arms are indistinguishable in that result."
+      ]
+    },
+    "spec_asserts": "S14's own clause: that the objection to the second arm is 'purely that nobody placed it and nothing controls it'.",
+    "world_is": "The gate ships a 30-arm self-test that reads 0 failures at HEAD and 2 with the patch, both attributable to the second arm; the control existed and was not run by this seat.",
+    "notes": "Chain: S12 (the gap) -> S13 (the scope defect) -> S14 (the unscoped census) -> S15 (the control S14 said did not exist). Each a NEW row citing the one before. The landing decision is already resolved elsewhere -- the limb does not land tonight pending a vintage boundary, and the second arm is to be split out or dropped -- so this row changes no act; it changes what my own record says about why."
   }
 ]
 ```
