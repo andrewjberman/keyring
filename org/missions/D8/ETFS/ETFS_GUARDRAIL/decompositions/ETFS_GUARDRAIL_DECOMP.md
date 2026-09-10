@@ -1,5 +1,6 @@
 # ETFS_GUARDRAIL -- DECOMPOSITION (L5)
 
+**v0.6** (2026-09-10 ~04:5xZ, `2.0.0_SA_COO`) -- ROUND 3 RE-DECOMPOSED WHERE IT WAS WRONG. `EG-s-21` was cut on a premise the world refuses and the defect is the ISSUER'S: it demanded a forced class-C condition driven through the scheduled target while binding NO CODE CHANGE, and the forcing cannot reach the classifier at all. `0.9.0_WK_ETFS_GUARDRAIL~4` measured it and REFUSED TO FIRE rather than spend the order's one permitted run (row `W4-S2`). TWO enabling cells added, `EG-s-24` and `EG-s-25`; `EG-s-21` is re-pointed to depend on both and stays pending. s.15 below.
 **v0.5** (2026-09-10 ~04:3xZ, `2.0.0_SA_COO`) -- ROUND 3 WIDENED AGAIN BY AMENDMENT, on the ROUND-2 ANALYSIS (94988, `ROUND_ANALYSIS.round2.md` @`f5074019a1`), which graded FWD-8 **NOT_REALIZED** and listed three cells still to place. TWO WERE ALREADY CUT AND ARE NOW TERMINAL OR RUNNING -- the `W1-S25` guard fix is `EG-s-20` (TERMINAL, drained @`5d292ff11f`) and FWD-9's forced-incomplete driven run is `EG-s-21` (running on `~4`). The THIRD, `W1-S27`'s under-reporting ask, had no cell and is added here as `EG-s-23` on the slot `EG-s-22`'s terminal flip just freed. s.14 below.
 **v0.4** (2026-09-10 ~03:5xZ, `2.0.0_SA_COO`) -- ROUND 3 WIDENED BY AMENDMENT on PRD **v0.6**: `1.0.0_SA_CTO` placed row `ETFS_GUARDRAIL-W1-S31` at 94947, ruling the CLASSIFIER half squarely INSIDE this project's surface (s.3 OWNS names "the coverage classifier"; `EG-s-4` is FWD-4's own code row against that file) and the PRODUCER half OUT (PRD row `S20`, leaving as a brief to `4.0.0_SA_CRO` at L1). ONE cell added, `EG-s-22`, on the slot `EG-s-16` just freed. The round is mid-execution and the addition is by AMENDMENT under Andrew's 2026-09-03 scope-change word -- the same mechanism NFRA_OUTSET used for `OS-s-24`/`OS-s-25`/`OS-s-26`. s.13 below.
 **v0.3** (2026-09-10 ~03:1xZ, `2.0.0_SA_COO`) -- ROUND 3 on PRD **v0.5** @`7ba9b976b0`, cut on TWO Andrew-directs of the same night: his ~02:5xZ approval of the manufactured hole ("yeah try it but make sure no test run hits aj's email") and his ~03:0xZ law that **NO FWD IS A WAIT**, which superseded FWD-2 -> FWD-9 and FWD-7 -> FWD-10 in place. THREE cells, TWO chains: `EG-s-19` the catch-up branch driven on a manufactured hole; `EG-s-20` the send path made CORRECT and TEST-SAFE (the W1-S25/W1-S29 guard at two sites, and no driven run able to reach aj@); `EG-s-21` the DRIVEN REFUSAL that closes both new outcomes. s.12 below.
@@ -524,3 +525,65 @@ pass every criterion while the artifact the estate reads is unchanged. Nor does 
 `S20`, which left for `4.0.0_SA_CRO` at L1.
 
 -- `2.0.0_SA_COO`, L5 round 3 amended a second time
+
+
+## 15. ROUND 3 RE-DECOMPOSED -- FWD-9's forced condition is UNREACHABLE, and the two cells that make it reachable
+
+⛔ **THE CELL WAS IMPOSSIBLE AS CUT AND THE DEFECT IS MINE.** `EG-s-21` required (i) a forced class-C condition
+driven through the SAME target the schedule invokes, (ii) that forcing DISCLOSED on the produced verdict with a run
+id, and (iii) the terminal send -- while binding **NO CODE CHANGE** and granting `<paths>` that exclude both the
+orchestrator and the renderer. `0.9.0_WK_ETFS_GUARDRAIL~4` proved each half unreachable and **did not fire**:
+
+| what the face demanded | what the world is |
+|---|---|
+| a forcing that reaches the classifier | `_render_command` (`lambda_function.py:341`) builds a FIXED command at `:368`, handed to SSM at `:563`; an AST census over 3,142 nodes finds the handler reads exactly **4** event keys (`mode`, `month`, `probe`, `test_recipients`). Nothing an invoker sends reaches the classifier |
+| the forcing DISCLOSED on the artifact | on the renderer the box actually pulls (62,880 B, sha256 `55701125e86740f3...`, byte-equal to the repo build input): **10 of 10 disclosure tokens ZERO** against **5 positive controls all non-zero** -- an absence, not a dead read |
+| the terminal send as the oracle | the send exists ONLY in the orchestrator (`:307`, `:605`); the deployed renderer has **0 SES call sites**, so no substitute is available there |
+
+⛔⛔ **AND FIRING ANYWAY WOULD HAVE BREACHED A STANDING ANDREW CONSTRAINT.** `render_month_end.py:963` reads
+`verdict = "REFUSE" if any_c else "PUBLISH"` -- **class C only** -- and the last real run's served verdict reads
+class C = **0 of 3** partners, `PUBLISH`, holes 2. An unforced run would have spent the order's single permitted act
+PUBLISHING served keys and sending the ordinary monthly email **to both recipients, aj@ included**, which is round
+1's measured accident (`W1-S22`/`S23`/`S24`) -- while proving nothing about FWD-9. **The assignee's refusal to fire
+is what prevented that, and it refused on evidence rather than on caution.**
+
+**THE MECHANISM ALREADY EXISTS AND NOBODY THREADED IT.** `--fixture-remove` is declared at
+`render_month_end.py:1022`, parsed by `_parse_fixture_remove` at `:852`, applied at `:1030`/`:1033`/`:1040`/`:1047`.
+It is EG-s-6's QA hook, it removes dates from `series` IN MEMORY, and nothing on S3 is touched by it. This is the
+banked shape of a built primitive connected to nothing looking exactly like a missing one.
+
+| cell | outcome_ref | surface | verb | depends_on | the bar |
+|---|---|---|---|---|---|
+| `EG-s-24` | FWD-9 (enabling) | `infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py` | build | -- | the event can carry a forcing spec and `_render_command` threads it to `--fixture-remove`; **and the SCHEDULED path provably cannot reach it** -- adversarial payloads at 0 of N, and the marker-free command string bit-for-bit unchanged |
+| `EG-s-25` | FWD-9 (honesty) | `data/etfs/scripts/presentation/render_month_end.py` | build | -- | `coverage_verdict.json` records the forcing spec and a run id; **an UNFORCED run writes the same field with an explicit not-forced value**, so a missing field can never pass as "nothing was forced" |
+| `EG-s-21` | FWD-9, FWD-10 | (unchanged) | verify | `EG-s-24`, `EG-s-25` | unchanged; re-pointed only in its dependencies and stays `pending` |
+
+**Denominator:** PRD v0.6 `endpoint_outcomes` 8; round 3 SERVES 5 (`FWD-1`, `FWD-4`, `FWD-8`, `FWD-9`, `FWD-10`);
+cells 7.
+
+⛔ **THE SAFETY PROPERTY IS `EG-s-24`'S REAL SUBJECT, NOT A SIDE CONDITION.** CLAUDE.md states that an override
+letting a scheduled producer run off its own inputs **CREATES A NEW REACHABLE STATE on the manual path, and the
+sign-off covers that state or the override does not land.** This one is worse-shaped than a `--month` override: it
+makes the monthly report **drop its own input data**. A scheduled fire able to reach it would publish over data it
+silently removed. So the default is OFF, the scheduled payload is PROVEN not to reach it by an ADVERSARIAL arm with
+its denominator, and the never-widen sign-off must name that new state in its own words.
+
+**THE CHAIN READ.** `EG-s-24` and `EG-s-25` touch different files with different deploy mechanisms -- Terraform for
+the Lambda, an `aws s3 cp` to the artifact prefix for the renderer the box pulls by key at run time -- and neither
+writes a served report key. They are INDEPENDENT and run in parallel; `EG-s-21` needs BOTH.
+
+```
+fanout: 3 of 3 chains, cap 8, reason: EG-s-24 -> EG-s-21 is one chain on slot ~4 (the seat that owns the orchestrator and just deployed it); EG-s-25 is independent on slot ~5, freed by EG-s-19's terminal flip; EG-s-23 is independent on slot ~1. No two live cells share a file.
+```
+
+**Seating:** `~4` takes `EG-s-24` then `EG-s-21` in `/c/tmp/wk-etfs-3-4`; `~5` takes `EG-s-25` in `/c/tmp/wk-etfs-3-5`.
+Both provisioned, both continuing. ⛔ **The identity-gate operating fact both faces carried is CORRECTED at
+`EG-s-24`'s `<proof_of_spec>` on row `W4-S1`:** `safe-apply.sh:11,50` runs `halt-gate-check.sh` FIRST and that file
+resolves identity ONLY from `org/mcp/sessions/$CLAUDE_CODE_SESSION_ID.serial` (`:56-57`) -- `OPAL_AGENT_SERIAL`
+appears in it ZERO times -- while `safe-apply.sh:152-154` calls `resolve_actor`, which DOES honour it. Two gates, and
+the ORDER is the mechanism.
+
+**What this re-decomposition does NOT decide:** whether `EG-s-21`'s arms need any further change once its
+dependencies land. They are read again at that point against the world the two new cells create, not now.
+
+-- `2.0.0_SA_COO`, L5 round 3 re-decomposed
