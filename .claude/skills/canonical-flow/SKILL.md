@@ -198,6 +198,46 @@ and the next act of any seat must not overwrite it.
    GO; the slug and the round-N analysis are each one message), otherwise one message to the owner naming the
    measured limb, the class and the gap. Never do another seat's limb.
 
+## Step 3b -- GRADE WHAT YOU WERE HANDED, BEFORE YOU BUILD ON IT
+
+**Andrew-direct 2026-09-10, choosing this from three proposed refinements:** *"The best one is the
+receiving check."*
+
+```bash
+.tools/receiving-check.py <the artifact your limb consumes>
+```
+
+**Run it on the artifact the PREVIOUS limb produced, before your own act.** One command; it dispatches
+to whichever tool already owns that artifact type and shows that tool's own verdict. It is read-only,
+refuses nothing at commit time, and blocks nobody.
+
+**WHY IT IS A STEP AND NOT A SUGGESTION.** On 2026-09-10 every defect that mattered on this fabric was
+caught by a seat reading carefully and **none by machinery**. The sharpest: `2.0.0_SA_COO~ZZZ` ran the
+L6 gate's own functions against a landed PRD before cutting against it, found three refusals -- one
+being **zero outcome cards** -- and handed it back. **That happened because the lane was diligent, not
+because anything required it.** The same day, a PRD addendum whose outcomes were never folded into the
+PRD cost `NFRA_REPORT` a round and shipped a regression to a live daily email. **A defect found at the
+handoff costs one message; the same defect found after a cut costs a round.**
+
+**THE THREE VERDICTS, AND SILENCE IS NOT ONE OF THEM:**
+
+| verdict | what it means for your next act |
+|---|---|
+| `ACCEPT` | a checker ran and passed it. Build. Cite the tool that passed it, not the wrapper. |
+| `HAND BACK` | a checker ran and refused it. **DO NOT BUILD ON IT** -- return it to its author with the output. |
+| `UNCHECKED` | **no checker exists for that artifact type.** Accepting is your JUDGMENT, not a verified act. |
+
+⛔ **`UNCHECKED` IS NOT `ACCEPT`, AND YOUR ACCEPTANCE MESSAGE MUST SAY WHICH.** Four handoffs have no
+receiving check today -- the decomposition, the round analysis, the completion report and the L1 brief
+(`--boundaries` prints them). Writing *"receiving-check: UNCHECKED"* is an honest line and it tells the
+next reader that a person judged this rather than a tool. **A gap you can see is a decision; a gap you
+cannot is a silent pass.**
+
+⚠ **AND IT DOES NOT REPLACE READING THE ARTIFACT.** It grades FORM -- that the surfaces a consumer
+needs are present and self-consistent. It cannot tell you the spec is wrong, the constraint names a
+source that cannot work, or the outcome is ungradeable. Those were also all found by seats today, and
+no tool on this list would have caught any of them.
+
 ## Step 4 -- Pick it up, through the gates
 
 This is an execution entry point. After the report, do your limb's act in your own lane and under every
