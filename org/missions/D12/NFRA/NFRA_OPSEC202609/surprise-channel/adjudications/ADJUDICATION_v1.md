@@ -1163,3 +1163,49 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S31 -- nine rows graduate on THE CRITERION THAT CANNOT BE SATISFIED AS WRITTEN: an outcome graded COMPLETE whose alarms reach nobody, a face that contradicts itself, a status string absent from its own schema enum, and a plan-wide bind an immutable resource can never honour
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S31",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T09:35Z",
+    "one_line": "L9, round 2: NINE rows GRADUATE -- Z-S151, Z-S158, Z-S97, Z-S90, Z-S101, Z-S85, Z-S33, Z-S29, Z-S27. Seven are a REQUIREMENT THAT CANNOT BE MET AS WRITTEN and two are the measurements that bound them. The headline is Z-S151: FWD-4 is graded COMPLETE and cannot be satisfied, because both login-abuse alarms publish to a topic with ZERO subscribers -- and EVERY CHECK ON THE ALARM'S OWN SIDE PASSES, which is precisely why nothing surfaced it. The defect sits one hop past where anyone was looking.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "GRADUATED",
+    "disarm_owner": "NONE AT THIS ROW. All nine keep 2.0.0_SA_COO~Z, named on every one as the issuer who owns the criterion wording and the routing. Z-S101's disarm additionally routes to Andrew (the registrar account is outside this fabric entirely) and Z-S97's open leg is a NAME nobody in the project holds.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S151",
+      "NFRA_OPSEC202609-Z-S158",
+      "NFRA_OPSEC202609-Z-S97",
+      "NFRA_OPSEC202609-Z-S90",
+      "NFRA_OPSEC202609-Z-S101",
+      "NFRA_OPSEC202609-Z-S85",
+      "NFRA_OPSEC202609-Z-S33",
+      "NFRA_OPSEC202609-Z-S29",
+      "NFRA_OPSEC202609-Z-S27"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** Z-S151 IS THE HEADLINE AND IT IS THE SCOPED-CHECK CLAUSE ON AN OUTCOME RATHER THAN A RESOURCE. *** TO-OP-S-6.login-abuse-alarm reads `complete` and THE ALARM SIDE IS ENTIRELY CORRECT -- the alarms exist among 51 in the account, ActionsEnabled is true, and the action ARN resolves to a real topic. The defect is ONE HOP FURTHER: the topic has ZERO subscribers, so a burst of blocked sign-ins reaches nobody. Every question askable of the alarm returns a clean answer and FWD-4's DONE WHEN -- that a human receives it -- is still false. ⛔ THE ROW REFUSES TO RE-GRADE THE CELL and says so: the grade is this seat's at L9 and the row's author owns L4. That boundary is why the finding is usable.",
+        "Z-S158 SPLITS Z-S151'S QUESTION RATHER THAN ANSWERING IT, and the widening is the value: the AWS account is in the SNS SMS SANDBOX, so every SMS-protocol subscriber ACROSS ALL FOUR 'confirmed' topics resolves to an UNVERIFIED destination regardless of how the console renders it -- including opal-infrastructure-alerts, the infrastructure monitor's own escalation channel. So 'zero subscribers' and 'subscribers that cannot receive' are two different failures reaching the same place, and only one of them is visible as an absence. ⭐ IT ALSO NAMES WHY IT IS A ROW RATHER THAN AN EDIT: the channel is append-only and `adjudicates` is the CVO's field, so a worker widening an earlier finding files beside it. That is the protocol working as designed.",
+        "Z-S27 AND Z-S29 ARE FACES THAT REFUSE THEMSELVES. Z-S27: S26-AC2 requires 'a census of the diff for arn:aws:iam::313476888478:user/ reads 0' while DELIVERABLE 2 AND C-14 OF THE SAME FACE REQUIRE exactly that ARN as the role's single trust principal by Andrew's word. Both cannot hold -- a role cannot trust a principal it does not name -- and the measured diff carries 3 occurrences, 2 in comments and 1 in the mandated trust policy. Z-S29: S27-AC2 prescribes filing the empty-delivery case as 'UNCOMPUTABLE-BY-TIME', which is NOT a member of PROOF_OF_SPEC.schema.json's status enum, and proof-of-spec-check REFUSES the instance carrying it -- so the branch the face designed for its own EXPECTED case cannot be filed at all.",
+        "⭐ AND BOTH REFUSED TO SELF-RULE, WHICH IS THE BEHAVIOUR WORTH REWARDING RATHER THAN THE FINDING. Z-S27's author writes that grading it PASS against 'the reading this seat finds more sensible -- without saying so -- would be the assignee choosing its own criterion'. That is exactly right, and it is the difference between a worker that surfaces a spec defect and one that quietly absorbs it. The intent of both criteria is obvious and correct; the WORDING is what fails, and only the issuer may re-word it.",
+        "Z-S85 IS A BIND AN IMMUTABLE RESOURCE CAN NEVER HONOUR: aws_api_gateway_deployment is immutable and its trigger is the BODY HASH, so every body change REPLACES it -- an add plus a destroy. The plan-wide '0 destroy, 0 forces-replacement' bind therefore cannot survive ANY body change on a body-managed REST API. Measured before any apply: '4 to add, 3 to change, 1 to destroy', forces-replacement 1, and the single replacement IS that deployment. The SCOPED bar passes exactly -- 0 imported objects created, replaced or destroyed -- so the two bars disagree by construction rather than by accident. A RECOMMENDATION IS OFFERED AND NOT TAKEN, which is the correct lane discipline.",
+        "Z-S90 AND Z-S101 ARE GO CONDITIONS THAT FAIL ON MEASUREMENT, and Z-S90 carries the better instrument lesson of the two. Its window is FINE -- 19.7 days, 111,904 WAF records -- and the SIGN-IN TRAFFIC IN IT IS TWO EVENTS: exact-path /auth/login = 2, forgot-password = 0, reset-password = 0. ⛔ THE DANGEROUS PART IS THE COUNTERFACTUAL THE ROW MEASURED: a SUBSTRING match on 'auth' returns 2,990 records across 60 distinct clients, dominated by internet scanner probes. A naive census would have reported a healthy population and built an allow list out of attack traffic. Z-S101: opalinvest.com is not in Route53 and not in the account at all -- delegated to GoDaddy, no ACM certificate, and an apex A record CloudFront structurally cannot target -- with the Route53 denominator printed (2 zones, IsTruncated ABSENT, so a true denominator and not a page).",
+        "Z-S97 IS AN ABSENCE FILED BEFORE THE BUILD RATHER THAN DISCOVERED AFTER IT, and the face itself declares the gap: 'This face does NOT name that person, because the issuer does not have the name. DO NOT PICK ONE, DO NOT USE A ROLE AD[DRESS]'. Everything else in TO-OP-S-6 is buildable and was built; the SNS subscription is a single named open leg. Filing it before the build is what makes the missing subscription legible as a decision rather than as an oversight -- and it composes exactly with Z-S151, which measures what that absence costs.",
+        "Z-S33 IS A PARTIAL ENUMERATION CARRIED FORWARD AS A COMPLETE ONE, found AT A CUT rather than by a worker. get-stages on opal-portal-api returns TWO live stages -- `prod` (deploymentId 5vm7lc) and `production` (c2zxm8) -- where brief F1, PRD s.8 row S1 and the decomposition all name ONE. The edge fronts `prod` only. ⭐ THE ROW'S OWN CHARACTERISATION IS THE PRECISE ONE: 'the spec's stage name is not wrong, it is INCOMPLETE'. A wrong name fails loudly at the first call; an incomplete enumeration passes every check aimed at the member it does name."
+      ]
+    },
+    "spec_asserts": "FWD-4's DONE WHEN is that a human receives the login-abuse alarm; S26-AC2, S27-AC2, the plan-wide 0-destroy bind, TO-OP-S-20's GO condition and TO-OP-S-13's deliverables 4 and 5 each state a requirement their face treats as satisfiable.",
+    "world_is": "Seven of those requirements cannot be met as written -- the alarms reach a topic nobody is subscribed to and whose SMS plane is sandboxed account-wide, the face's criterion forbids the ARN its own deliverable mandates, the prescribed status string is not in the schema, the immutable deployment must be replaced on every body change, the sign-in population is two events, the DNS control point is outside the account, and the recipient's name is held by nobody.",
+    "notes": "WHAT THE NINE SHARE: A REQUIREMENT WHOSE INTENT IS RIGHT AND WHOSE WORDING OR PREMISE THE WORLD CANNOT SATISFY. In every case the intent survives -- alert a human, grant no user principal, file the empty case, change nothing destructive, restrict /wp-admin, front the site -- and in every case the text or the input fails. THE REPAIR IS ALMOST ALWAYS ONE SENTENCE AT THE ISSUER AND NEVER A BUILD, which is why all nine correctly route to 2.0.0_SA_COO~Z rather than being worked around by their assignees. || ⭐ THE PATTERN THIS ROUND SHOULD KEEP IS THE REFUSAL TO SELF-RULE. Z-S27, Z-S29, Z-S85 and Z-S90 each had an obvious sensible reading available and each declined to grade against it silently; Z-S85 went further and offered a recommendation it explicitly did not take. A worker that absorbs a spec defect leaves no trace and the next round inherits it; a worker that files one costs the issuer a sentence. || Z-S151 AND Z-S97 ARE ONE OUTCOME SEEN FROM BOTH ENDS -- the absent name and what the absence costs -- filed by different lanes at different times, and neither is complete without the other."
+  }
+]
+```
