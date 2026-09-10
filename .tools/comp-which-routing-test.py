@@ -172,6 +172,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 import tempfile
 import threading
 import types
@@ -190,6 +191,22 @@ GRAPH_MODS = os.path.join(WS, "org", "modules", "graph")
 _DELIV = os.path.join(WS, "org", "tier2_senior", "0.8.0_AE_CloudComp", "deliverables")
 FROZEN = os.path.join(_DELIV, "comp-which-routing-cohort.frozen.json")
 BASELINE = os.path.join(_DELIV, "comp-which-routing-baseline.json")
+
+# THE TIMEOUT BOUND, STATED FROM MEASURED RUNTIMES (NFRA_COMPEFFICACY CE-e-2, 2026-09-10, on
+# round-7 rows W1-S3 / W1-S4). A bound smaller than the runtime it bounds is not a bound, it is a
+# scheduled false negative: round 7 ran this harness under `timeout 600` and got rc 124 TWICE at
+# ~601 s -- a timeout recorded as the harness's verdict -- then rc 0 at 680 s and again at 826 s on
+# the same tree. Those three rc-0/rc-124 readings are the whole measured population and it is
+# small; the spread between the two completions alone is 146 s (21%), so a bound set at the
+# maximum observed would fail on the next slow run.
+# BOUND = 1200 s: the largest MEASURED completion (826 s) plus ~45% headroom. It is stated here so
+# a caller does not have to guess, it names the measurements it came from, and it names its own
+# denominator (2 completions, 2 timeouts, 4 runs). RE-STATE IT, do not re-guess it, when the
+# runtime moves: any caller that measures a completion outside this bound should raise it here
+# with its own number rather than lowering the ambition of the run.
+MEASURED_RUNTIME_S = (680, 826)          # rc 0 completions, round 7 (rows W1-S3 / W1-S4)
+MEASURED_TIMEOUT_S = (601, 601)          # rc 124 under a 600 s bound, same round
+RECOMMENDED_TIMEOUT_S = 1200             # max(MEASURED_RUNTIME_S) + ~45% headroom
 
 GIBBERISH_SEED = 7
 GIBBERISH_N = 40
@@ -1136,13 +1153,28 @@ def main():
     ap.add_argument("--mutate", choices=("zero", "nine"),
                     help="run ONLY the mutation test (prove the harness CAN fail)")
     ap.add_argument("--out", metavar="PATH", default=None,
-                    help="write the report JSON here instead of the committed TO-1 baseline "
-                         "artifact. A LATER VINTAGE MUST NOT CLOBBER A COMMITTED BASELINE: the "
-                         "default path IS the blob-pinned PRE record, and the first post-fix "
-                         "run of this harness overwrote it in the working tree (caught at "
-                         "git-status, restored from HEAD -- NFRA_COMPCLOSE 2026-07-14). "
-                         "Regression runs pass --out; only a deliberate re-baseline omits it.")
+                    help="write the report JSON here. DEFAULT (since NFRA_COMPEFFICACY CE-e-2, "
+                         "2026-09-10): a timestamped file under <WS>/.comp-graph/routing-test/, "
+                         "which is gitignored -- NOT the committed TO-1 baseline. A LATER VINTAGE "
+                         "MUST NOT CLOBBER A COMMITTED BASELINE, and until this cell the DEFAULT "
+                         "did exactly that: the default path WAS the blob-pinned PRE record, so a "
+                         "bare regression run overwrote it in the working tree (caught at "
+                         "git-status, restored from HEAD -- NFRA_COMPCLOSE 2026-07-14) and this "
+                         "same --help text told the reader the opposite of what the code did. "
+                         "Writing the baseline now needs --rebaseline, said out loud.")
+    ap.add_argument("--rebaseline", action="store_true",
+                    help="THE ONLY WAY TO WRITE THE COMMITTED BASELINE "
+                         "(org/tier2_senior/0.8.0_AE_CloudComp/deliverables/"
+                         "comp-which-routing-baseline.json). A deliberate re-baseline is a real "
+                         "act and it now has a real name; every other run leaves that file "
+                         "untouched. Refuses to combine with --out.")
     args = ap.parse_args()
+
+    # THE DEFAULT MUST NOT BE THE COMMITTED BASELINE, AND --out MUST NOT REACH IT BY ACCIDENT.
+    if args.rebaseline and args.out:
+        ap.error("--rebaseline and --out are mutually exclusive: name ONE destination.")
+    if args.out and os.path.abspath(args.out) == os.path.abspath(BASELINE):
+        ap.error("--out names the COMMITTED baseline. That is what --rebaseline is for.")
 
     if args.freeze:
         c = freeze(args.freeze)
@@ -1650,7 +1682,19 @@ def main():
         "no_pollution": dict(poll, training_delta=td),
         "row_tag_tally": cohort.get("row_tag_tally", {}),
     }
-    out_path = args.out or BASELINE
+    # CE-e-2: the bare run no longer resolves to the committed baseline. `args.out or BASELINE`
+    # is what made a regression run a re-baseline by default -- the one line the --help text
+    # above had been contradicting since NFRA_COMPCLOSE.
+    if args.rebaseline:
+        out_path = BASELINE
+    elif args.out:
+        out_path = args.out
+    else:
+        out_path = os.path.join(WS, ".comp-graph", "routing-test",
+                                "routing-report-%s.json"
+                                % time.strftime("%Y%m%dT%H%M%SZ", time.gmtime()))
+        print("NOTE: no --out given -> writing %s (gitignored). The committed baseline is NOT "
+              "touched; use --rebaseline to write it." % os.path.relpath(out_path, WS))
     os.makedirs(os.path.dirname(os.path.abspath(out_path)), exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as fh:
         json.dump(baseline, fh, indent=1, ensure_ascii=True)
@@ -1677,12 +1721,16 @@ def main():
         print("         This is THE DEFECT, faithfully reported. It is NOT a harness bug.")
         print("         TO-2 (the abstain) is what flips this to exit 0. Until it lands,")
         print("         every question this fabric cannot answer gets a confident answer.")
-        print("         baseline -> %s" % os.path.relpath(args.out or BASELINE, WS))
+        print("         report   -> %s%s" % (os.path.relpath(out_path, WS),
+              "   (THE COMMITTED BASELINE)" if os.path.abspath(out_path) == os.path.abspath(BASELINE)
+              else "   (the committed baseline was NOT written)"))
         print("=" * 78)
         return 1
     print("VERDICT: PASS -- controls held, zero pollution, and comp-which ABSTAINED on")
     print("         100%% of generated gibberish.")
-    print("         baseline -> %s" % os.path.relpath(args.out or BASELINE, WS))
+    print("         report   -> %s%s" % (os.path.relpath(out_path, WS),
+          "   (THE COMMITTED BASELINE)" if os.path.abspath(out_path) == os.path.abspath(BASELINE)
+          else "   (the committed baseline was NOT written)"))
     print("=" * 78)
     return 0
 

@@ -196,6 +196,27 @@ travels to the worker.
   author's issuance; lane `TREE_PROJECT_ROW` admits the COO to the row for the `EXECUTING` flip.
 - **Handoff:** `dep_stage: EXECUTING`, flipped by the COO in the issuance commit, so the guards that key on the stage
   arm with the act that starts it.
+- ⛔ **THE REFUSAL CLAUSE -- A CRITERION IS SHAPED SO THAT REFUSING IT IS CHEAPER THAN RESCUING IT, AND THE FACE SAYS SO.**
+  Every face instructs its assignee to REFUSE a criterion it cannot satisfy as written and to report the refusal with its
+  measurement, never to repair the criterion, widen it, or satisfy it by a route the cut did not name. **A worker that edits
+  the issuance half so its own proof validates certifies an alignment the cut never declared**, which is why the refusal is an
+  instruction and not a permission. **This is the only control that has ever caught a defect in a cut on this estate**, and the
+  cut's author is structurally unable to be that control: an issuer checking its own criteria is reading them to agree with them.
+  MEASURED 2026-09-10, one night, four seats, every instance surfaced by the assignee and none by the author: `2.0.0_SA_COO`
+  three ticks running (W2-S2; W1-S30/S31; W5-S1/S3), each an expectation named without reading the code path that would have to
+  produce it; `2.0.0_SA_COO~A` four (a validator path and a card-schema version that do not exist, a premise labelled MEASURED
+  that came from a contract document rather than a run, a count carried from an earlier vintage, a comparator force-fitted into
+  a population it sits outside); a worker that REFUSED TO FIRE rather than spend its order's one permitted run, whose two
+  measurements showed the run could not have recorded its own forcing and WOULD have published served keys and mailed a
+  recipient a standing Andrew-direct protects; and a worker that held its own face in its grant and refused to add the criterion
+  tags that would have let it close. COST: none -- the clause is text on a face. NON-APPLICATION: none at L6.
+  ⛔ **AND THE GAP THIS CLAUSE DOES NOT CLOSE, named because it is where the same defects keep landing unseen: AN ACCEPTANCE
+  CRITERION HAS NO ASSIGNEE.** An `ACCEPT` at L4 and a `DONE WHEN` at L2 are read next by the GRADER, who reads them to apply
+  them rather than to refuse them, so the refusal path that catches a task order's defects does not exist for the artifact that
+  decides whether the task order's work COUNTS. `1.0.0_SA_CTO` committed three instances of the same hand-scoped-domain family
+  in one night and TWO WERE IN ACCEPTS -- one would have graded an outcome REALIZED on a live violation, and one scoped an
+  estate-wide gate's acceptance to a single project. Until a mechanism exists, the L10 reads every ACCEPT it grades against
+  ONCE MORE UNSCOPED before the grade, and prints the denominator it used.
 
 ### L7 — Execution
 
@@ -493,3 +514,4 @@ verdict, read against the last round under the prior text on the same instrument
 | 3.8 | 2026-09-10 | `1.0.0_SA_CTO`'s NFRA_COMPEFFICACY round-7 L10 ruling R-8 (slug `3.0.0_SA_CVO` 94834, row S40), with its two siblings of the same night (`NFRA_OUTSET`-S29, `ETFS_GUARDRAIL` W2-S7) | L6 cut discipline gains one clause: **an accept that names an INSTRUMENT names its COVERAGE fact, an accept that names a HARNESS names its GRAIN flag (which vintage it scores), and an accept that compares a STORED BASELINE names the ENVIRONMENT the baseline was captured in** (the tree, the ranker mode, the rendering of every hashed asset). Measured cause: three criteria in one night could neither pass nor fail, and a fourth read a FALSE RED because its baseline was captured in a linked worktree whose CRLF-rendered model asset silently put the ranker in lexical fallback. No step, owner or gate changes. |
 | 3.9 | 2026-09-10 | `2.0.0_SA_COO~A`'s row NFRA_CLDGRPH-S95 (message 94841), taken by `1.0.0_SA_CTO` at 94844 | L7 gains the worker-death clause: a worker can die at any instruction boundary, so a world-changing act ORDERS itself open-entry / act / close-and-COMMIT-the-entry / then read, and the ISSUER's obligation on a mid-act death is one artifact-plane sweep with a DIFFERENT instrument than the dead seat's BEFORE deciding to finish or roll back (an entry a dead worker left CLOSED is a self-report, the mirror of NEVER-2's open-entry clause); the remaining reads are measurement the issuer may take at its own seat with the CVO validating. No step, owner or gate changes. |
 | 3.10 | 2026-09-10 | Andrew-direct ~03:0xZ at the `1.0.0_SA_CTO` terminal (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_030xZ_NO_FWD_IS_A_WAIT.md`) | L2 gains **NO FWD IS A WAIT**: every outcome provable by an act a seat can take on demand; one whose only proof is an event nobody controls is re-cut so its mechanism is driven deliberately, the organic case kept as the negative arm; an essential wait is expressly qualified with its reason and his word; an outcome already written as a wait is SUPERSEDED at the next unused id with its text kept. The L2 half of the ~21:4xZ manual-trigger rule that binds accepts at L4/L6. No step, owner or gate changes. |
+| 3.11 | 2026-09-10 | four seats converging in one night, none of it previously written: `2.0.0_SA_COO` 94998 and 95007, `2.0.0_SA_COO~A` 95015, and two worker refusals (EG-s-21 not fired; EG-s-22's assignee refusing to tag its own face). Recorded by `1.0.0_SA_CTO` at `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_20260910T054xZ_THE_REFUSAL_CLAUSE.md` | L6 gains **THE REFUSAL CLAUSE**: a criterion is shaped so refusing it is cheaper than rescuing it and the face says so; the assignee refuses and reports with its measurement, never repairs, widens or re-routes; a worker editing the issuance half so its own proof validates certifies an alignment the cut never declared. It is the only control that has caught a defect in a cut on this estate, and the cut's author cannot be that control. The clause also NAMES ITS OWN GAP -- an acceptance criterion has no assignee, so the refusal path does not protect the artifact that decides whether work counts -- and binds the L10 to re-read every ACCEPT once more UNSCOPED, with the denominator printed, until a mechanism exists. No step, owner or gate changes. |
