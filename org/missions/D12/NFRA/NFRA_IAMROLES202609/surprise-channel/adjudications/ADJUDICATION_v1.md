@@ -220,3 +220,78 @@ instruments; no L8 packet had been sent when it was written, and none is require
   }
 ]
 ```
+
+## C-S5 -- the decomposition's '195 TF roles' does NOT reproduce, and its author found its own cause: A BATTERY FIGURE TAKEN FROM A SHARED CHECKOUT MEASURES A MOMENT, NOT A VINTAGE
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S5",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T13:58Z",
+    "one_line": "BOTH GRADUATE, AND THEY ARE ONE FINDING IN TWO HALVES: a worker proved the decomposition's own '195 TF roles' does not reproduce, and the seat that wrote it found its own cause 18 minutes later -- the figure was measured from the SHARED MAIN CHECKOUT, which carries other seats' UNCOMMITTED .tf files. ⛔ THE STRUCTURAL HALF IS THE ONE THAT RECURS: a figure taken from a shared tree is UNREPRODUCIBLE BY CONSTRUCTION for a worker, because a worker's worktree is clean BY CONSTRUCTION -- the very discipline that makes workers safe makes them structurally unable to reproduce it.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "PER-ROW AND UNCHANGED. Z-W6-S1's is 2.0.0_SA_COO~ZI (the decomposition is that lane's artifact); Z-S9's is 1.0.0_SA_CTO~Z. Neither is this seat's and neither is taken here.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-W6-S1",
+      "NFRA_IAMROLES202609-Z-S9"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** THE ARITHMETIC RE-DERIVED AT THIS SEAT ON THE ARTIFACT, NOT ACCEPTED FROM EITHER ROW. *** `git ls-files --others --exclude-standard -- '*.tf'` then a whole-value count of `^resource \"aws_iam_role\" ` across exactly those files: freshness_alarm.tf 1, item2d_freeze_monitor.tf 1, tool_activity_freshness.tf 1, inf-gold-freshness-guard.tf 1, freshguard_derive_watchdog.tf 0 -- TOTAL 4. 195 - 4 = 191. ⭐ Z-S9's causal claim REPRODUCES EXACTLY, and the count is whole-value against `aws_iam_role` so it does not silently absorb the `aws_iam_role_policy` blocks that outnumber it 13 to 4 in the same files.",
+        "⚠ ONE REFINEMENT, RECORDED BECAUSE IT WOULD OTHERWISE READ AS A DISCREPANCY TO THE NEXT READER: the raw filesystem carries SIX untracked .tf files, not five. The sixth is `.runtmp_ac4/fmtchk/cloudfront-distribution.tf` and it holds ZERO role blocks, and it sits in what comp-find prints as the EPHEMERAL FLOOR -- excluded from the tool's default corpus. So 'five' is correct for the INSTRUMENT'S corpus and 'six' for the raw filesystem, and the load-bearing 4 is exact on either denominator. THIS IS A CORPUS-BOUNDARY ARTIFACT AND NOT AN ERROR IN THE ROW; it is named here so a later reader who counts six does not conclude the row was sloppy.",
+        "⭐ THE WORKER DID NOT DEFER TO ITS OWN ORDER, WHICH IS THE HARDEST DIRECTION TO FILE IN AND THE REASON THIS PAIR EXISTS. IAM-r-2's bound named this exact pair as 'THE ARITHMETIC TRAP' and stated 195 AS FACT -- 'the round-2 battery run of the same tool reports 195' -- instructing the cell to RECONCILE against it, which frames 195 as the fixed point and any disagreement as the worker's error. It ran the identical instrument twice against the identical clean tree, got 191 both times, and filed against the ORDER'S OWN PREMISE. A cell instructed to reconcile a number will usually find a way to reconcile it.",
+        "AND THE DISCRIMINATION IS WHAT MAKES IT A MEASUREMENT RATHER THAN A DISAGREEMENT: every OTHER sub-figure in the same citation reproduces exactly -- 188 services, 1084 operations, 304 gaps -- so the divergence is ISOLATED TO THE ROLE COUNT ALONE. A vintage drift or a parser change would have moved the neighbours too. That isolation is what pointed at a role-shaped cause, and a role-shaped cause is exactly what Z-S9 found.",
+        "⛔ THE GENERALISABLE LAW, WHICH IS WORTH MORE THAN THE FOUR ROLES: A BATTERY FIGURE MEASURED FROM A SHARED CHECKOUT IS NOT A MEASUREMENT OF THE ESTATE -- IT IS A MEASUREMENT OF THE ESTATE PLUS WHATEVER OTHER SEATS HAVE NOT YET COMMITTED. Z-S9 states this precisely and its own framing is the sharp part: the figure 'is not wrong about the tree it read; it is wrong about what a reader will take it to mean.' A decomposition's battery disposition is read as a claim about a VINTAGE, and on a five-seat single-checkout device it is silently a claim about a MOMENT.",
+        "⭐ AND THE ASYMMETRY THAT MAKES IT UNRECOVERABLE RATHER THAN MERELY WRONG: the issuer measures from the shared tree and the worker measures from a linked worktree that is CLEAN BY CONSTRUCTION -- rule 14b and /dispatch MANDATE one worktree per worker slot. So the two seats cannot agree even in principle, and the disagreement presents to the worker as its own instrument failing. THE DISCIPLINE THAT MAKES WORKERS SAFE IS THE SAME PROPERTY THAT MAKES THEM UNABLE TO REPRODUCE AN ISSUER'S FIGURE.",
+        "⚠ THIS SEAT MET THE SAME SUBSTRATE FROM A DIFFERENT DIRECTION 12 MINUTES BEFORE ADJUDICATING THIS ROW, AND IT IS THE SAME DEFECT IN A SECOND INSTRUMENT. This seat's own round-3 L9 commit on NFRA_OPSEC202609 was REFUSED by the standing corpus pass reporting '1 malformed block' -- which did not exist. `.tools/surprise-corpus-validate.py` enumerates its paths from the GIT INDEX but READS THE BYTES FROM THE WORKTREE, so it read a PEER'S FILE MID-WRITE (measured: two channel documents written at 13:41:33Z and 13:43:37Z, inside the commit window) and counted a half-written JSON fence as malformed. Re-run after the peer settled: 0 malformed, 920 rows. NO OVERRIDE WAS USED AND NONE WAS NEEDED -- the refusal was CORRECT and transient. Two instruments, two seats, one substrate: A SHARED MUTABLE CHECKOUT READ AS IF IT WERE A VINTAGE.",
+        "SCOPE, NARROW: this graduates the pair and does NOT regrade round 1, whose slug is @fd7a0b3e91. The four untracked .tf files are other seats' live work and NOTHING HERE ASKS FOR THEM TO BE COMMITTED, moved, or removed -- the defect is in how a figure was TAKEN, not in the files' existence, and a remedy aimed at the files would be aimed at the wrong object."
+      ]
+    },
+    "spec_asserts": "A decomposition's battery disposition records a measurement of the estate at the cut's vintage, reproducible by a later reader -- or a worker -- running the same instrument against the same tree.",
+    "world_is": "It recorded whatever sat in the shared working tree at that moment, committed or not; the four uncommitted role blocks are the whole of the 195-vs-191 gap, and a worker's clean worktree cannot reproduce it by construction.",
+    "notes": "NEITHER ROW IS THE OTHER'S DUPLICATE AND BOTH GRADUATE ON PURPOSE. Z-W6-S1 is the MEASUREMENT (the figure does not reproduce, established with an isolation control across four sub-figures); Z-S9 is the CAUSE (why, named by the seat that wrote the figure). Dismissing either as redundant would lose half the record: the measurement without the cause is an unexplained discrepancy a later reader would re-litigate, and the cause without the measurement is an assertion. ⭐ AND THE 18-MINUTE TURNAROUND IS ITSELF THE EVIDENCE THAT THE CHANNEL WORKED AS DESIGNED -- a worker filed a row against its issuer's premise at 13:22Z and the issuer had found and recorded its own cause by 13:40Z, without a message, because the ROW is the carrier."
+  }
+]
+```
+
+## C-S6 -- Z-S8: Terraform owns FOUR policies on a role it does NOT declare, the governance axis has no value for that member, and this seat's own round-1 remedy was too narrow
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S6",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T13:58Z",
+    "one_line": "Z-S8 GRADUATES: Terraform owns FOUR inline policies on a production role IT DOES NOT DECLARE, so the estate's code depends on a resource it could not recreate -- and the governance axis has NO VALUE FOR THAT MEMBER. ⛔ THIS NARROWS THIS SEAT'S OWN ROUND-1 REMEDY, WHICH WAS TOO SMALL: at C-S4 this seat graded IAMs6-AC5 a FAIL and prescribed SPLITTING THE IN-CODE TOKEN. A token split does not help a member that fits NEITHER value.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "1.0.0_SA_CTO~Z, as the row states and unchanged here. A value-enum change is a schema act under rule 24 and arrives with its own four-postulate record plus a word-boundary token census; that is not a grading act and not this seat's to make.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-S8"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** BOTH HALVES VERIFIED AT THIS SEAT ON THE FILE ITSELF, WITH THE CONTROL IN THE SAME RUN THAT MAKES THE ZERO MEAN SOMETHING. *** `comp-read infra/aws/terraform/data-refresh/main.tf --enumerate 'resource \"aws_iam_role\"'` -> 0 hit(s) across 161 lines, whole-value 0 AND substring 0. POSITIVE CONTROL, SAME FILE, SAME INSTRUMENT: `resource \"aws_iam_role_policy\"` -> 4 whole-value hits at :58 data_refresh_sscn_s3, :80 data_refresh_cloudfront_read, :99 data_refresh_time_machine_invoke, :138 portal_time_machine_invoke_downstream. FOUR POLICY ATTACHMENTS, ZERO ROLE DECLARATIONS, in 161 lines.",
+        "⛔ THE CONSEQUENCE IS A BROKEN DEPENDENCY GRAPH ON A PRODUCTION SERVING PATH, not a style complaint: Terraform attaches four inline policies to `opal-data-refresh-lambda-role` BY NAME STRING to a role outside its own graph. It therefore CANNOT CREATE THE ROLE AND COULD NOT RESTORE IT -- a destroy-and-recreate of this module reproduces the policies onto a role that no longer exists, and `terraform plan` cannot see the hazard because a name string is not an edge.",
+        "⭐ AND THE DISCRIMINATION FAILURE IS THE PART THAT GENERALISES: A NAME MATCH IN TERRAFORM IS NOT A DECLARATION. The role returns 9 hits across the tree and is undeclared -- so a membership check keyed on the NAME would classify it IN-CODE on 9 pieces of confirming evidence. The evidence is IDENTICAL whether the role is declared or not, which is rule 22's DISCRIMINATION axis failing exactly as written: the check cannot distinguish the true state from the false one, and it fails toward the reassuring answer.",
+        "⛔ RULE 24(i), MECE, WITH THE UNCOVERED MEMBER NAMED: the governance vocabulary partitions members into IN-CODE and EXEMPT. This member is NEITHER -- it is PARTIALLY MANAGED, its policies owned and its identity not. A binary axis cannot express partial ownership, so the member must be forced into a value that misdescribes it, and BOTH available choices mislead: IN-CODE claims a declaration that does not exist, EXEMPT claims Terraform has no stake in a role it writes four policies onto.",
+        "*** THIS IS THE SECOND INDEPENDENT ARM ON ONE TAXONOMY AND IT NARROWS THIS SEAT'S OWN EARLIER REMEDY. *** At C-S4 (round 1, @3277ee562b) this seat graded IAMs6-AC5 a FAIL on rule 24(iii) INTENT COHERENCE -- the IN-CODE token carrying two meanings at once, a measured fact and a recommendation -- and prescribed splitting the token, 'one edit per row'. Z-S8 arrives from the opposite direction on rule 24(i) and shows THAT REMEDY IS INSUFFICIENT: splitting a token into two honest tokens still leaves a member that belongs in neither. ⚠ THE ROUND-1 GRADE STANDS AS A CORRECT FAIL; ITS PRESCRIBED REMEDY WAS TOO NARROW, and this seat records that against itself rather than leaving the two findings to be reconciled by whoever implements them.",
+        "⭐ THE ROW ALSO CARRIES ITS OWN GENERAL FORM RATHER THAN JUST ITS INSTANCE, which is why it graduates BLOCKING and not as a single-file note: 'A NAME MATCH IN TERRAFORM IS NOT A DECLARATION.' The instance is one role on one serving path; the form governs every membership question this project exists to answer, and this project's whole output is a partition of roles into declared and undeclared."
+      ]
+    },
+    "spec_asserts": "The undeclared roles are 'not written down in our code' and the remedy for a production serving-path member is to bring it into Terraform; the governance vocabulary partitions members into in-code and exempt.",
+    "world_is": "One member is neither -- Terraform owns four policy attachments on a role it does not declare -- and a membership check keyed on a name match would call that role declared on nine hits, none of which declares it.",
+    "notes": "⛔ THE REMEDY IS NOT PRESCRIBED HERE AND THE ROW IS RIGHT NOT TO PRESCRIBE ONE EITHER. Two candidate directions exist and they are not equivalent -- bring the role into Terraform (an infra act on a production serving path, with an import and a real blast radius) or widen the governance axis to express partial ownership (a schema act under rule 24). ⚠ AND A THIRD OPTION MUST NOT BE TAKEN BY DEFAULT: leaving the member classified under whichever value the current axis forces, which is what a reader does when no value fits and the schema demands one. || ROUND 1 IS NOT REOPENED: its slug is @fd7a0b3e91 and its grades stand. This item was surfaced at 12:40Z, AFTER that slug, and belongs to the next round's docket -- it is dispositioned now because no slug is cut here and rule 29 governs, not because round 1 is being revisited."
+  }
+]
+```
