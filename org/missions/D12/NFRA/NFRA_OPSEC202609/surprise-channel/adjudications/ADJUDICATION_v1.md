@@ -623,3 +623,79 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S17 -- FIVE findings graduate, including the one that would have taken down a live data surface and the one that shows the same defect ALREADY SHIPPED on a different API
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S17",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T05:10Z",
+    "one_line": "L9, round 2: FIVE GRADUATE. Z-S80 -- FWD-1 AS SPECIFIED WOULD TAKE DOWN A LIVE DATA SURFACE: 20 of f61h681z9g's 39 methods have NO CloudFront route, so the edge-injected header can never reach them and attaching the authorizer makes them PERMANENTLY UNREACHABLE, five live POST writes among them. Z-S83 -- THE SAME DEFECT ALREADY SHIPPED five hours earlier on a different API, where GET /metadata/yang was gated on a header with no ordered behavior at any depth, and S2-AC1 could not have caught it because its denominator measures ATTACHMENT and never REACHABILITY. Z-S60 -- C-16 asserts four condition slots on the log destination's two service grants and exactly ONE exists. Z-S62 -- limb 2 names a module that does not exist and a Lambda that structurally cannot serve a REST authorizer. Z-S64 -- graduates on its SEPARABLE half: a criterion pins a live CodeSha256 with NO vintage.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "UNCHANGED PER MEMBER AND NOT REASSIGNED. 2.0.0_SA_COO~Z as issuer for Z-S80 (its ENDPOINT half, which Z-S82 expressly left armed while disarming only the EXECUTION half), for Z-S83, and for Z-S62's limb-2 choice among A/B/C; with 3.0.0_SA_CVO~Z named alongside on Z-S80 and Z-S62 where FWD-1's SHAPE is touched. 1.0.0_SA_CTO~Z at L4 for C-16's wording on Z-S60, with 2.0.0_SA_COO~Z owning the S28-AC1 criterion text. Z-S64's vintage half is the criterion's owner at L6. NOTHING IS BUILT, CHOSEN OR APPLIED HERE.",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S60",
+      "NFRA_OPSEC202609-Z-S62",
+      "NFRA_OPSEC202609-Z-S64",
+      "NFRA_OPSEC202609-Z-S80",
+      "NFRA_OPSEC202609-Z-S83"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S80 -- THE SHARPEST FINDING OF THE ROUND, and it was caught at a DESIGN READ before a line was written. A control keyed on a property the EDGE injects can only protect paths that traverse the edge, so THE COVERAGE OF THE CONTROL IS BOUNDED BY THE COVERAGE OF THE ROUTING -- and nothing in the face or the decomposition checks that the two sets match. The face measured 39 methods and 1 authorizer; nobody measured how many of the 39 have a path along which the key can arrive. Option C (attach to all 39 as written) is a 20-method outage including five live writes. PARTIALLY DISARMED ONLY: Z-S82 disarmed the EXECUTION half and its own text says the endpoint-shape half 'is expressly NOT disarmed here'. This graduation carries the ENDPOINT half, still live.",
+        "Z-S83 -- THE SAME GRAIN SPLIT, ONE API OVER AND ONE PLANE EARLIER, IN A FACE THAT IS COMPLETE, ACCEPTED AND APPLIED. Eight of TO-OP-S-2's nine attached routes sit under the /v1/* behavior; the ninth, GET /metadata/yang, has NO ordered CloudFront behavior at any depth. TO-OP-S-2 IS NOT RE-GRADED AND S2-AC1 STAYS PASS -- it claimed attachment on 9 of 9 and the live plane reads 9 of 9; nothing in that instance is false. THE GAP IS THAT ATTACHED AND REACHABLE ARE TWO PROPERTIES AND THE FACE ONLY EVER HAD A CRITERION FOR THE FIRST. This is CLAUDE.md rule 22's shared-dependency clause with a live specimen: nine per-member checks all passed while the property they SHARED -- an edge-injected key with no edge path for one of them -- went unmeasured.",
+        "Z-S83's DISARM IS KNOWN TO BE UNRUNNABLE and that is carried here rather than left for the owner to discover: the row named the disarm as a caller enumeration over the access-log plane, and 2.0.0_SA_COO~Z measured that get-stages on 7k3ed8px20 returns AccessLogSettings.DestinationArn null and DetailedMetricsEnabled false. THERE IS NO ACCESS-LOG PLANE ON THAT API, and the API-wide 4xx series is confounded by this round's own probe traffic. So 'does a caller exist' is not merely unmeasured, it is UNANSWERABLE with the instruments that exist. The owner needs a different disarm, and the row's own author established that at Z-S86.",
+        "Z-S60 -- AN ALIGN LIMB FINDING WHAT AN ALIGN IS FOR. C-16 and S28-AC1 describe opal-data-security's two service-principal grants as 'each with SourceAccount + SourceArn'. Measured on the applied plane: AllowCloudFrontAccessLogDelivery carries SourceAccount and NO SourceArn; AllowALBAccessLogDelivery carries NEITHER. ONE of four asserted condition slots exists. The DECLARATION AGREES WITH THE WORLD, so the plan is legitimately 0 changes and the face's STOP does not fire -- what disagrees is the SPEC'S TEXT against both. A BUILD compares the world to nothing and a plan compares the world to the DECLARATION; when those agree, only a human-written criterion quoting the spec back at the applied plane can catch it.",
+        "Z-S62 -- A PLAUSIBLE NAME STANDING WHERE THE WORLD HAS SOMETHING ELSE, for the third time on this one face. The face requires the new authorizer to REUSE opal-portal-authorizer's secret-read module and forbids a second copy; there IS no module (the read is inline in a single 358-line index.mjs, confirmed on this seat's own repo read), and that Lambda answers in HTTP-API v2 shape, which a REST REQUEST authorizer structurally cannot consume -- policyDocument 0, principalId 0, Statement 0, Effect 0, execute-api:Invoke 0, against generateSimpleResponse 5. All three obvious paths are blocked by the face's own words, and the issuer must choose among A, B and C. This row does not choose.",
+        "Z-S64 -- GRADUATES ON ITS SEPARABLE HALF ONLY, and the split is named so no reader takes it wider. Its confirmation of Z-S62 is a record. What graduates is the finding its own text calls out as surviving the A/B/C decision: exactly ONE of the project's 8 filed proof instances pins a CodeSha256 and its evidence carries NO ISO VINTAGE. A criterion asserting a live equality without recording WHEN it was read cannot distinguish 'still true' from 'was true' -- the exact distinction this project has spent the day on in three other places."
+      ]
+    },
+    "spec_asserts": "A control attached to a method protects that method, a criterion describes the resource it grades, and a face names artifacts that exist.",
+    "world_is": "Two of these five are the same defect -- a control gated on an edge-injected property with no edge path -- one caught before the write and one already applied; the other three are a spec overstating a resource's controls, a face naming a module that does not exist, and a pin with no vintage.",
+    "notes": "THE ONE THAT SHOULD REACH L10 AHEAD OF THE OTHERS is Z-S83's closing point, because it is about method rather than about a route: A RULE STATED FORWARD AT THE MOMENT IT IS LEARNED LEAVES EVERY ACT ALREADY TAKEN UNDER THE OLD UNDERSTANDING UNEXAMINED -- and those are exactly the acts nobody revisits, because they are CLOSED and their criteria all read PASS. When a round promotes a finding to an issuance rule, THE SAME TURN should ask which COMPLETED faces the new rule would have failed. Here that cost ten minutes of reading and found one route on two faces. || WHAT IS NOT CLAIMED, per Z-S83's own disclosure: no probe was run against either endpoint (the OP-x-1 list is CLOSED at seven and an eighth is not on it), no access log was read, and NOBODY CAN SAY WHETHER ANYTHING IS ACTUALLY BROKEN -- only that a route is gated on a key that cannot reach it. It is a latent trap, not a demonstrated outage, and it is filed ARMED because the harm from being wrong is asymmetric: if a caller exists it has been failing since 16:24:34Z, and if none exists the disarm is cheap."
+  }
+]
+```
+
+## C-S18 -- three records dismissed, one of which retracted a limit this seat had only ASSERTED was closable
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S18",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T05:10Z",
+    "one_line": "L9, round 2: three RECORDS are DISMISSED WITH REASON -- Z-S61 (this seat's second-plane confirmation of Z-S60), Z-S86 (this seat withdrawing both the disarm AND the framing of its own Z-S83, after the issuer supplied what it had missed) and Z-S95 (the worker correcting its own Z-S80 headline from four live POST writes to FIVE). None has a mechanism of its own; each refines a finding that graduates at C-S17. Z-S95's corrected number is the one a decision will be made on, so it is carried onto Z-S80's graduation rather than left in a dismissed row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Each is a RECORD ABOUT ANOTHER ROW -- a second-plane confirmation, a double withdrawal by an author, and a headline correction by an author -- with no mechanism of its own to graduate and no remedy of its own to route, on Z-S20's underlying test. Every operative contribution is carried on C-S17: Z-S61's fix-direction question and its gating unknown onto Z-S60; Z-S86's finding that Z-S83's named disarm is UNRUNNABLE onto Z-S83; Z-S95's corrected count of five live POST writes onto Z-S80. Z-S95 says of itself that it 'corrects a RECORD, not a state' and that no remediation is needed for the applied world.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S61",
+      "NFRA_OPSEC202609-Z-S86",
+      "NFRA_OPSEC202609-Z-S95"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S86 CARRIES THE INSTRUMENT LESSON OF THE NIGHT AND IT IS THIS SEAT'S OWN ERROR: 'A STATED LIMIT ASSERTS THAT THE MISSING INSTRUMENT EXISTS. Naming a limit honestly is not the same as verifying the limit is closable, and I did the first while believing I had done the second.' Z-S83 disclosed, as a limit, that it had not read the access-log plane -- which reads as scrupulous and quietly asserts that reading it is possible. One get-stages call established there is no such plane. The disclosure was honest and the inference behind it was not checked.",
+        "AND Z-S86 WITHDRAWS A FRAMING, WHICH IS THE HARDER HALF: Z-S83 treated the deliberately-public state of /v1/metadata/yang as a BASELINE whose loss counts as harm. The issuer's correction, accepted in full: that public state is EXACTLY WHAT THIS PROJECT WAS COMMISSIONED TO CHANGE, and reverting a data route to public on an unmeasured suspicion, using an instrument that cannot confirm the suspicion, would undo the outcome to protect a caller nobody can find. THE FRAMING SILENTLY MADE THE PRE-PROJECT STATE THE THING TO PRESERVE. That is a bias an adjudicator is particularly placed to introduce and particularly unlikely to notice.",
+        "Z-S95 IS A CORRECTION WITH ITS LINKAGE ALREADY BUILT, which is why nothing is owed beyond the dismissal: Z-S80's EVIDENCE enumerated all five POST writes correctly and only its one_line summary dropped POST /api/portfolio/export; the face's S1-AC3 amendment and a commit message both inherited the undercount. The worker's TO-OP-S-1 proof instance now states five with the enumeration AND CITES THIS ROW ID, so the corrected number and the wrong one are not both loose in the record without a link. THE APPLIED WORLD WAS NEVER WRONG: the 20 methods were identified by ENUMERATION, never by the summary count, so the attachment scope was right and only the headline was wrong.",
+        "Z-S61'S CONTRIBUTION IS A QUESTION RATHER THAN A FINDING, which is why it records rather than graduates, and the question is carried: the repair direction for Z-S60 turns on an unknown NEITHER SEAT MEASURED -- whether those two delivery service principals SUPPORT aws:SourceAccount and aws:SourceArn at all. If they do, tightening the grants is this project's own purpose and the text then describes a stronger world. If a key is unsupported, C-16 must say WHICH and WHY, so a later reader does not read the absence as an oversight and re-add something that cannot work. Settle the support question FIRST, because it determines which repairs exist."
+      ]
+    },
+    "spec_asserts": "The L10 precondition is that every investigation item under the project carries a disposition.",
+    "world_is": "Three rows refine findings that graduate elsewhere; two of the three are a seat withdrawing or correcting its own committed text.",
+    "notes": "UNDISPOSITIONED after C-S17 and this row: 75 of 164 -- counted with the parser rather than by arithmetic, after two draft counts earlier in this pass were wrong. THE STANDING COUNT OF DEFECTS FOUND IN THIS SEAT'S OWN WORK BY OTHERS OR BY ITSELF now reaches six: two verdict clauses (worker), the EXTEND-versus-MOVE recommendation (issuer), the 166 denominator (peer census), Z-S83's unrunnable disarm and its preserve-the-baseline framing (issuer, both at Z-S86). AN ADJUDICATOR GRADING A ROUND IT SUPPLIED VERDICTS TO SHOULD KEEP THAT NUMBER VISIBLE, because the alternative is a record in which the certifier is the only seat that never erred."
+  }
+]
+```
