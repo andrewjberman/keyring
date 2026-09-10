@@ -9,7 +9,7 @@ manifest's two `measured` cells, which PRD section 8 instructs L5 to do in terms
 between what the specification asserts and what the world reads today, which is exactly the step-7
 trigger -- the fact that no worker exists yet does not make it a different kind of finding.
 
-**Denominator at this write: 8 rows** -- 4 seat, 4 worker. Ids and authors: `-Z-S1` 2.0.0_SA_COO~ZI; `-Z-S2` 2.0.0_SA_COO~ZI; `-Z-S3` 2.0.0_SA_COO~ZI; `-Z-W3-S1` 0.9.0_WK_NFRA_IAMROLES202609~3; `-Z-S4` 2.0.0_SA_COO~ZI; `-W2-S1` 0.9.0_WK_NFRA_IAMROLES202609~2; `-Z-W1-S1` 0.9.0_WK_NFRA_IAMROLES202609~1; `-Z-W1-S2` 0.9.0_WK_NFRA_IAMROLES202609~1.
+**Denominator at this write: 9 rows** -- 4 seat, 5 worker. Ids and authors: `-Z-S1` 2.0.0_SA_COO~ZI; `-Z-S2` 2.0.0_SA_COO~ZI; `-Z-S3` 2.0.0_SA_COO~ZI; `-Z-W3-S1` 0.9.0_WK_NFRA_IAMROLES202609~3; `-Z-S4` 2.0.0_SA_COO~ZI; `-W2-S1` 0.9.0_WK_NFRA_IAMROLES202609~2; `-Z-W1-S1` 0.9.0_WK_NFRA_IAMROLES202609~1; `-Z-W1-S2` 0.9.0_WK_NFRA_IAMROLES202609~1; `-Z-W4-S1` 0.9.0_WK_NFRA_IAMROLES202609~4.
 The channel is append-only and conflicts on EVERY concurrent drain (NFRA_CLDGRPH-S36); each drain is resolved as a UNION BY ROW ID through `safe-merge.sh --continue`, so the row gate grades the merged index. No foreign row is ever edited here -- a worker's row is graded at its own authorship.
 
 ## Row context -- what was run
@@ -226,6 +226,30 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
     "spec_asserts": "The dispatching prompt asserts the row-id grammar for this worker's surprise-channel entries is '<PROJECT>-W<n>-S<k>'.",
     "world_is": "The live gate that actually accepts or refuses a new row requires '<PROJECT>-Z-W<n>-S<k>' on this project because its registered fabric is site-z; the grammar the dispatch prompt names is REJECTED outright, not merely non-preferred. The same worker's own first row (Z-W1-S1, above) hit this exact refusal before being corrected.",
     "notes": "NOT A HALT: caught before any commit landed; this lane corrected both this row's and the sibling row's ids to carry the Z- infix before committing. Same root shape as Z-W1-S1 (a dispatch-prompt literal that a live gate does not accept) but a DIFFERENT gate and a DIFFERENT field, filed separately rather than folded in, since class is judged on form and these are two distinct mechanical facts. If the same dispatch-prompt template is reused for IAM-s-3 / IAM-s-2 / IAM-s-9 or other site-z worker spawns, it reproduces the identical refusal on their first surprise row, if any."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W4-S1",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~4",
+    "surfaced_at": "2026-09-10T08:25Z",
+    "one_line": "The worker identity message for TO-IAM-s-7 named the proof-of-spec instance path as '<TO-id>.proof_of_spec.json' (dropping the TO's descriptive suffix), but .tools/to-pipeline-gate.py's check_complete_flip derives the required filename from the FULL TO basename stem (including the suffix) and refuses the 'complete' flip -- rc!=0, 'NO proof-of-spec instance was found beside it' -- when the two disagree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Identity instructions (this worker's spawn prompt) named the write path as org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~4/NFRA_IAMROLES202609.TO-IAM-s-7.proof_of_spec.json.",
+        "First safe-commit.sh attempt with that exact filename, plus the TO's status flip to complete, was REFUSED by .tools/to-pipeline-gate.py: 'org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-s-7.historical-remediation-completion-on-the-artifact.md: flips to complete on PIPELINE-REGISTERED project NFRA_IAMROLES202609, and NO proof-of-spec instance was found beside it. Layer 1: no VALID instance, no complete flip.'",
+        "Read .tools/to-pipeline-gate.py:1385-1393 (check_complete_flip): stem = os.path.basename(rel).rsplit('.md', 1)[0] -- the FULL TO filename minus '.md', i.e. 'NFRA_IAMROLES202609.TO-IAM-s-7.historical-remediation-completion-on-the-artifact', not the shorter '<project>.<cell-id>' form the identity message specified. A local glob reproduction of the gate's own lookup against the shorter filename returned zero candidates.",
+        "Sibling instances elsewhere in the estate (e.g. org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-D-10.close-fwd4-ceiling-holds.proof_of_spec.json) DO carry the full descriptive TO stem, consistent with the gate's expectation and inconsistent with this TO's identity-message instruction."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This worker's identity/spawn instructions stated verbatim: 'Write your proof-of-spec instance to org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~4/NFRA_IAMROLES202609.TO-IAM-s-7.proof_of_spec.json' -- a filename that omits the TO's own descriptive suffix ('historical-remediation-completion-on-the-artifact').",
+    "world_is": "The mechanical L6/L7 completion gate (.tools/to-pipeline-gate.py check_complete_flip) requires the proof-of-spec filename to equal the GOVERNING TO'S FULL basename (including its descriptive suffix) plus '.proof_of_spec.json', and refuses the 'complete' status flip on a pipeline-registered project when no file at that exact derived name exists on disk. The two naming rules do not agree, and this worker's write silently satisfied neither the WORKER FACE's own path text nor the gate until renamed to match the gate.",
+    "notes": "NOT A HALT: this worker renamed its own already-written instance (same content, byte-for-byte) to the gate-derived filename 'NFRA_IAMROLES202609.TO-IAM-s-7.historical-remediation-completion-on-the-artifact.proof_of_spec.json' and re-ran the commit, staying entirely inside its own granted deliverables/ path. Filed because the SAME identity-message pattern was very likely issued to all four fan-out slots (~1..~4) of this TO's cell, so siblings following the identity message literally will hit the identical gate refusal unless the issuer's next fan-out states the gate-derived filename directly. hazard_standing ARMED because nothing in the identity-message TEMPLATE itself changed; the next round's issuance would reproduce the same mismatch for a future worker on a future cell unless the COO's template is corrected. This worker does not propose which of the two forms is 'correct' -- only that they disagree today and the mechanical gate is the one that actually blocks a commit. SECOND INSTANCE OF THE SAME CLASS, folded into this row rather than opened as a new one: the TO's own WORKER FACE text also states this worker's surprise-row id verbatim as 'NFRA_IAMROLES202609-W4-S<k>' (no Z- infix), but .tools/surprise-row-gate.py refused exactly that id on this row's first attempt -- 'fabric=site-z but the id lacks the Z- infix, which means laptop. site-z iff the id carries Z-' -- because org/missions/D12/NFRA/NFRA_IAMROLES202609/project.json declares fabric=site-z and org/surprise_channel/schemas/investigation_item.schema.json:id requires the Z- infix whenever fabric is site-z, composing fabric-first ({PROJECT}-Z-W{n}-S{k}). Corrected in place, pre-commit, to 'NFRA_IAMROLES202609-Z-W4-S1' before this row ever landed -- no committed row's id was ever changed. Both mismatches share one root: text authored for this TO (the identity message's file path, and its own worked example of this row's id) was written without checking it against the mechanical gate that actually enforces the naming, for two DIFFERENT gates in the same task order."
   }
 ]
 ```
