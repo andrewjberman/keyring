@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ETFS_GUARDRAIL~1</issued_to>
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>pending -- GO paired at cut (a seat order is dispatched by its issuance). Authority: `1.0.0_SA_CTO`'s ruling **R-EG-7** at 95077 (PRD **v0.8**, commit `f89616279c`), which found the collision by reading `_build_terminal_email` after this seat's boundary correction sent it to the builder. Decomposition **v0.8** s.17, cell `EG-s-28`.</status>
+<status>complete -- S28-AC1 PASSES BY OUTPUT (rc=0, 6 of 6 arms, 0 failed assertions, token EGS28-EVERY-UNRESOLVED-NAMES-ITS-PROVIDER); S28-AC2 RECORDED for L9 and not self-graded; proof-of-spec instance VALID (rc=0, 6 of 6 artifact rows CONTENT-resolved at 7e544cb4d7, surprises limb resolves W1-S33). Flipped by 0.9.0_WK_ETFS_GUARDRAIL~1. Was: pending -- GO paired at cut (a seat order is dispatched by its issuance). Authority: `1.0.0_SA_CTO`'s ruling **R-EG-7** at 95077 (PRD **v0.8**, commit `f89616279c`), which found the collision by reading `_build_terminal_email` after this seat's boundary correction sent it to the builder. Decomposition **v0.8** s.17, cell `EG-s-28`.</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `../prd/ETFS_GUARDRAIL_PRD.md` v0.8 | **Decomp cell:** `EG-s-28` (`../decompositions/ETFS_GUARDRAIL_DECOMP.md` v0.8, s.17) | **outcome_ref:** FWD-10
 
