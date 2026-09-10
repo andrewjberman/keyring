@@ -14,7 +14,11 @@
 
 **September 10 YCharts extension:** The [WS3 child brief](investor-reporting-ycharts-brief-20260910.md) and [retrieval/intake design](investor-reporting-ycharts-design-20260910.md) now cover the supplied six transcripts, request manifest and three HARs. Andrew added every-day email attachment intake, the BDAPI Kimi runner without OTP, accepted session takeovers and encrypted generation records. This remains one umbrella project. All three template-generation routes are captured; actual paired output PDFs and section extraction remain required for native Opal presentation. The supplied login was stored and read-back verified in a separate AWS secret; no production reporting service is claimed.
 
-Deliver a small, useful advisor workspace by combining a precomputed client directory, existing silver holdings, and vendor-calculated reports. Selecting a client establishes the relationship and underlying accounts once. Three tabs use that context: **Reporting**, **Analysis**, **Holdings**, in that order. Reporting presents Black Diamond results for 49 Financial and Cottonwood, and Orion results for Inflection. Analysis presents YCharts sensitivity reports. Holdings starts with model allocations and expands into the securities actually held.
+**September 10 Holdings extension:** The [WS4 child brief](investor-reporting-model-overlay-brief-20260910.md) and [partner joins/design](investor-reporting-model-overlay-design-20260910.md) develop advisor-scoped current holdings, model-first pie/radial taxonomy drilldowns and explicit observed-versus-target attribution. Andrew excludes time-series views from v1. Read-only inspection covered 19 named silver datasets and four legacy identity tables; the follow-up records current join coverage, Cottonwood's August 30 model-source lag and unresolved advisor/identity bindings. Its measured evidence supersedes the original unmeasured WS4 claims only within that scope. This remains the fourth workstream in the same umbrella.
+
+**September 10 ratification relay:** CTO Base message 95374 reports Andrew ratified all eight permanent FWD outcomes. Terminated clients stay visible and marked terminated under entitlement; revocation remains separate. Missing advisor logos do not block the performance export. The stamped endpoint remains CTO-owned; the child briefs do not renumber it.
+
+Deliver a small, useful advisor workspace by combining a precomputed client directory, existing silver holdings, and vendor-calculated reports. Selecting a client establishes the relationship and underlying accounts once. Three tabs use that context: **Reporting**, **Analysis**, **Holdings**, in that order. Reporting presents Black Diamond results for 49 Financial and Cottonwood, and Orion results for Inflection. Analysis presents YCharts sensitivity reports. Holdings starts with model allocations and expands into the securities actually held, distinguishing target constituents from observed model-attributed positions.
 
 Andrew clarified: **one project with four workstreams**, potentially coordinated by separate COO lanes. These are boundaries within one product, not four registrations. Workstream 1 explicitly owns client discovery and entitlement as well as page design. Its scope contract is consumed by the other three.
 
@@ -50,7 +54,7 @@ The advisor selects a supported analysis/report variant, reviews the client hold
 
 ### O5 — An advisor sees current holdings organized by models, with the underlying securities and unassigned assets preserved
 
-The advisor starts with the selected client's model breakdown and drills into accounts and securities. Actual custody holdings remain the total-value basis. SmartX, Eclipse, or Black Diamond Rebalancer supplies the partner's assignment/model overlay. Target weights, actual sleeve values, and inferred estimates are distinct; missing attribution remains visible without double-counting or redistributing the residual.
+The advisor starts with the selected client's model breakdown and drills into accounts and securities using the existing category taxonomy and pie/radial presentation. V1 is current snapshot only. Actual custody holdings remain the total-value basis. SmartX, Eclipse, or Black Diamond Rebalancer supplies the partner's assignment/model overlay. Target weights, assigned-account values, actual sleeve values, and inferred estimates are distinct; missing attribution remains visible without double-counting or redistributing the residual. The WS4 child brief supplies the detailed current source and attribution contracts.
 
 **Provable act:** replay dated holdings and model snapshots for all three registry client firms, including an unassigned account, an unmatched join, a blended model, and a multi-relationship membership. Unique underlying holdings reconcile before and after the overlay; coverage and join exceptions carry denominators. **Owner:** WS4.
 
@@ -154,7 +158,7 @@ The new page, normalizer Lambdas, client directory and PDF flow were not built o
 
 # PART VII — WHAT THIS BRIEF DOES NOT CLAIM
 
-The following qualifications describe the original repository-only cut. The linked performance follow-up supplies later live evidence; the export extension supplies local HAR/PDF and historical-source findings. Neither implies production implementation or complete partner/history coverage.
+The following qualifications describe the original repository-only cut. The linked performance follow-up supplies later live evidence; the export extension supplies local HAR/PDF and historical-source findings; WS3 adds the supplied analyst/capture evidence; WS4 adds bounded live S3 snapshot and identity measurements. None implies production implementation or complete partner/history coverage.
 
 1. Repository source proves intended mechanics, not deployed/current behavior. July capture facts and comments keep their original vintage.
 2. No raw HAR was newly parsed, no vendor session used, and no live S3 snapshot read. The response inventory relies on the existing captured research with its stated gaps.
