@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "EXECUTING",
+  "dep_stage": "ROUND_CLOSE",
   "created": "2026-09-02",
   "pods": [],
   "related": [
