@@ -172,6 +172,98 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "PRD PATHS reuse rows at 62301f71e0 name 'deck_generation/brand/opal_brand_guidelines.pdf, deck_generation/brand_spec/brand.json, deck_generation/engine/brand.py, ... Opal-Capital-Logo-Full-Color.svg | B14 | brand authority; official logo' and the portal roles.ts / ModelPortfolios.tsx / portal/src/api rows, as sources later cells reuse.",
     "world_is": "3 of those 4 brand tokens are gitignored and absent from every fresh worktree; 9 portal tokens are inside an unchecked-out submodule. 12 of 74 tokens are unreadable where the worker that needs them will run, and both states look identical to a naive os.path.exists() check.",
     "notes": "IB-s-18 needed none of them, so this is not blocking today. The manifest distinguishes the two states from a true absence, which is the whole point of recording presence with a measured instrument rather than a boolean."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S1",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-10T23:00:54Z",
+    "one_line": "IB-s-1: the face's reuse list writes the INF and COT identity runners as `runners_inf/a00_dim_account.py`, `runners_inf/a01_dim_relationship.py`, `runners_inf/runner_common.py` and `runners_cot/a01_dim_relationship.py` in a PATHS row whose other tokens all resolve under data/assets/scripts/gold/. All four are ABSENT there. They live in the per-firm trees data/inf/scripts/gold/runners_inf/ and data/cot/scripts/gold/runners_cot/, where they exist and are current. Read from the real homes and recorded in PATH_MANIFEST.json with a note on each row. NOT blocking: the sibling-token resolution the face intends is unambiguous once the tree is read. Named because an os.path.exists() against the implied prefix returns False, and a false absence on an identity source is how a directory silently loses a firm.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls -f of the four implied paths under data/assets/scripts/gold/ @410f28f7db -- MISSING 4 of 4 (runners_inf/{a00_dim_account,a01_dim_relationship,runner_common}.py, runners_cot/a01_dim_relationship.py); the four 49F tokens in the same PRD row resolve there, EXISTS 4 of 4",
+        "comp-find --name a00_dim_account.py --all @410f28f7db -- DENOMINATOR 3 hits across 32,100 files scanned: data/assets/scripts/gold/runners_49f/, data/cot/scripts/gold/runners_cot/, data/inf/scripts/gold/runners_inf/",
+        "wc -l of the four real paths @410f28f7db -- EXISTS 4 of 4 (data/inf/.../a00_dim_account.py 101, a01_dim_relationship.py 96, runner_common.py 252; data/cot/.../a01_dim_relationship.py 173)",
+        "data/inf/scripts/gold/runners_inf/runner_common.py:36 @410f28f7db -- SILVER_BUCKET = os.environ.get('INF_S3_BUCKET', 'opal-data-inf'); data/cot/scripts/gold/runners_cot/runner_common.py:41-42 @410f28f7db -- ASSETS_BUCKET / SILVER_PREFIX 'blackdiamond/cottonwood/silver/'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-s-1 THE CELL, PRD row `paths: reuse`: \"`runners_49f/a01_dim_relationship.py`, `a06_dim_identity_crosswalk.py`, `d08_firm_ownership_map.py`, `bd49f_dim_portfolio_group.py`; `runners_inf/a00_dim_account.py`, `a01_dim_relationship.py`, `runner_common.py`; `runners_cot/a01_dim_relationship.py`\" -- one row whose resolved siblings sit under data/assets/scripts/gold/.",
+    "world_is": "The 49F runners are under data/assets/scripts/gold/runners_49f/. The INF and COT runners are NOT siblings of them: they are under data/inf/scripts/gold/runners_inf/ and data/cot/scripts/gold/runners_cot/. The three firms each ship a module spelled `runner_common.py` with DIFFERENT bucket constants.",
+    "notes": "SECOND-ORDER HAZARD, measured while fixing this: because all three firms name their harness `runner_common`, a bare `import runner_common` after a sys.path insert binds whichever firm imported FIRST and then serves 49F's GOLD_BUCKET to INF. Here it failed LOUD (AttributeError on list_api_dim_partitions) because the APIs differ; where two firms' APIs agree it would fail SILENTLY against the wrong bucket. directory_runner._import_runner loads each by file path under a unique module name and says why in its docstring. Any later cell importing more than one firm's runner family inherits this and should do the same."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S2",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-10T23:00:54Z",
+    "one_line": "IB-s-1 / IB-s-18 contract: DirectoryEntry.schema.json types `ids.relationship_id` as bare {\"type\": \"string\"} while its OWN description for that property says \"an account-only entry carries null\". A null therefore FAILS the schema the description promises it satisfies -- measured, not reasoned: the first build emitted 263 account-only 49F entries with null and jsonschema rejected every one. Account-only entries are an EXPLICIT acceptance case of this cell, so the contradiction is on the acceptance path, not a corner. IB-s-1 omits the key instead (valid: relationship_id is absent from ids.required) and does not edit the contract, which is IB-s-18's surface and outside this order's <paths>. A FNTEND consumer reading `entry.ids.relationship_id === null` as the account-only tell will read `undefined` instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B (the issuer: the fix is a one-token contract edit -- [\"string\",\"null\"] -- owned by IB-s-18's surface, and it must land on BOTH sides at once because IRPT_FNTEND consumes this contract. Disarmed for THIS cell by omission: 5,062 of 5,062 emitted entries validate at 410f28f7db+, and the omitted-key form carries the same meaning under the schema as written.)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json @410f28f7db -- properties.ids.properties.relationship_id = {\"type\": \"string\", \"description\": \"... opaque relationship id; an account-only entry carries null\"}; properties.ids.required = [firm_id, client_id, account_ids] -- relationship_id is NOT required",
+        "first live QA build 2026-09-10 ~22:3xZ -- jsonschema Draft202012Validator over 4,509 49F entries: 4,246 valid, 263 errors, every one '$.ids.relationship_id: None is not of type string'; the 263 are exactly the dim_relationship rows with mapped=false",
+        "re-run after omitting the key -- 5,062 of 5,062 entries valid across three firms (49F 4,509 + INF 293 + COT 260)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DirectoryEntry.schema.json ids.relationship_id description: \"opaque relationship id; an account-only entry carries null\"; and TO IB-s-1 acceptance arm (b): \"a fixture directory carrying ... an account-only entry ...\".",
+    "world_is": "The property's TYPE is \"string\" with no null member, so the null the description prescribes is refused by the same file that prescribes it. The description and the type are both AUTHORITATIVE regions of a generated contract and they disagree.",
+    "notes": "This is the contract-generation shape worth naming beyond this row: the schema is GENERATED from the PRD's CONTRACTS table and its descriptions QUOTE that table verbatim, but the TYPES are chosen by the generator. A generator that quotes its source into the description and infers the type separately can emit a file whose prose and whose validator disagree, and the IB-s-18 battery -- which checks that each description's quoted string APPEARS in the table -- passes on exactly that defect, because the quote is genuine. Worth one pass over the other ten contracts for the same pattern (a described-null on a bare-typed property); IB-s-1 did not do that pass, which is out of its cell."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S3",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-10T23:00:54Z",
+    "one_line": "IB-s-1 acceptance arm (c): the face names \"the 79 unmapped INF accounts carry a reason each\" and \"INF 874-of-953 identity fixture\". At the live vintage the INF population is 874 accounts of which 874 are IN-UNIVERSE and 874 are MAPPED: ZERO unmapped, and 953 is not the account count on any snapshot this cell read. The arm's own escape clause (\"or the live count with its denominator\") covers it, but 0 of 0 unmapped carrying a reason is a VACUOUS pass that renders identically to a real one. The battery therefore prints the vacuity out loud AND runs a constructed positive control (a frame with 3 unmapped accounts -> 3 of 3 carry a reason, both SELF-FAMILY reasons plus the EXCLUDED-LOUD roster reason exercised), so the reason machinery is graded on a population that exists.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "silver/api_dims/accounts_v2 snapshot_date=2026-09-10 read via data/inf/scripts/gold/runners_inf/runner_common.read_api_dim @410f28f7db -- 874 rows, 874 distinct account_id",
+        "a00_dim_account.py IN-UNIVERSE predicate (rep_id in the representatives roster) applied to that frame -- 874 of 874 IN-UNIVERSE, 0 EXCLUDED-LOUD; the roster carries 19 rep_ids @ snapshot 2026-09-10",
+        "a01_dim_relationship.py disposition applied -- MAPPED 874 of 874, SELF-FAMILY 0; household_rep_mapping carries 318 rows / 318 distinct households and the accounts reference 293 of them",
+        "IB-s-1 battery arm (c) output 2026-09-10 -- 'INF live: unmapped 0 of 874 accounts; 0 of 0 unmapped carry a reason' + 'POSITIVE CONTROL: constructed INF frame with 3 unmapped accounts -> 3 of 3 carry a reason'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-s-1, What L5 adds: \"the 79 unmapped INF accounts carry a reason each\"; fixtures/evidence: \"INF 874-of-953 identity fixture\"; acceptance arm (c): \"INF unmapped accounts each carry a reason (print `79 of 79` or the live count with its denominator)\".",
+    "world_is": "INF accounts_v2 @2026-09-10 carries 874 accounts; 874 of 874 are in-universe and 874 of 874 are MAPPED. The unmapped population is EMPTY. 874 appears in the face's fixture as the NUMERATOR of 874-of-953, and it is the live DENOMINATOR -- which is the coincidence that makes this worth writing down rather than assuming the fixture simply aged.",
+    "notes": "Two readings fit and this cell cannot separate them: (i) the fixture is stale and the 79 closed between its vintage and today, or (ii) 953 was a different population (a wider account universe before the rep-roster predicate, or a pre-v2 accounts endpoint) and 874 was always the in-universe count. Whoever grades FWD-1 should not read the live 0 as evidence that the gap-reasoning requirement was met -- it is untested by the live arm, which is why the positive control exists."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S4",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-10T23:00:54Z",
+    "one_line": "IB-s-1: the face attributes `match_method` / `match_as_of` / `in_0833_universe` to the 49F runner `a06_dim_identity_crosswalk`. That runner emits none of the three; its columns are smartx_allocation_uuid, smartx_account_uuid, schwab_account_number, account_id, in_account_universe, map_date, map_carried. The three named fields are the BD account xref's, written by data/assets/scripts/silver/bd49f_dim_conversion.resolve_bridge and landed at blackdiamond/49f/silver/dim_account_xref -- a path the same PRD row already names, so nothing is missing, only mis-attributed. Read from the xref and carried as RECONCILIATION PRIOR ART. Named because the two artifacts differ in KIND, not just in location: the crosswalk is a vendor-uuid join aid and the xref is a reconciliation between two custodial key spaces whose `unresolved` rows are reported in-band.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "gold/advi/dimensions/dim_identity_crosswalk/date=2026-09-09/data.parquet read 2026-09-10 -- 7,446 rows, columns [smartx_allocation_uuid, smartx_account_uuid, schwab_account_number, account_id, in_account_universe, schema_version, map_date, map_carried, source_pipeline, _ingested_at]; match_method 0 of 10, match_as_of 0 of 10, in_0833_universe 0 of 10",
+        "blackdiamond/49f/silver/dim_account_xref/date=2026-09-09/data.parquet read 2026-09-10 -- 6,202 rows, columns include match_method, match_as_of, in_0833_universe (3 of 3 present)",
+        "data/assets/scripts/silver/bd49f_dim_conversion.py:149 @410f28f7db -- XREF_SCHEMA carries (\"match_method\", _S), (\"match_as_of\", _S), (\"in_0833_universe\", _B); :282-305 resolve_bridge sets seed-xref / direct-acct10 / unresolved",
+        "comp-find 'match_method|match_as_of|in_0833_universe' --all @410f28f7db -- 652 hits across 30,317 files; the DEF-band writer is bd49f_dim_conversion.py, and a06_dim_identity_crosswalk.py is not among the writers"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-s-1, What L5 adds: \"49F: `a01_dim_relationship`, `a06_dim_identity_crosswalk` with `match_method`/`match_as_of`/`in_0833_universe`, `d08_firm_ownership_map`, `bd49f_dim_portfolio_group`\".",
+    "world_is": "a06_dim_identity_crosswalk emits the SmartX allocation crosswalk and carries `in_account_universe` (a different field with a different denominator). The three named fields are emitted by bd49f_dim_conversion.py into dim_account_xref.",
+    "notes": "Both artifacts are already in this order's reuse list, so the cell reads both and nothing is blocked. The distinction matters downstream: `in_account_universe` on the crosswalk is membership in the fact_acc universe, whereas `in_0833_universe` on the xref is membership in one custody master's universe. A consumer that treats them as the same predicate gets a different denominator without any error."
   }
 ]
 ```
