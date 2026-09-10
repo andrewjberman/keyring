@@ -1,8 +1,8 @@
 {
-  "generated_scope": 3,
-  "with_prd": 1,
+  "generated_scope": 5,
+  "with_prd": 3,
   "no_prd": 2,
-  "scope_note": "D0 pre-tree sweep, Andrew-direct 2026-09-09 ~22:4xZ: NFRA_COMPTOOLS, NFRA_DEPLOYLEDGER, NFRA_TORECORD (replaces the 2026-07-09 25-project sweep in this file; that sweep stays in git history)",
+  "scope_note": "D0 pre-tree sweep, Andrew-direct 2026-09-09 ~22:4xZ: NFRA_COMPTOOLS, NFRA_DEPLOYLEDGER, NFRA_TORECORD (replaces the 2026-07-09 25-project sweep in this file; that sweep stays in git history) | D1 added 2026-09-10 ~00:2xZ on Andrew's word: D1_CATVIEWS, D1_NAMEDISCOVERY",
   "results": [
     {
       "code": "NFRA_COMPTOOLS",
@@ -91,6 +91,94 @@
       "registry_mismatch": "none (REGISTERED is accurate) -- but the phase text names a next step (the COO's purpose-level PRD) that happened 08-26 and was never recorded back",
       "undocumented_activity": [],
       "rec": "MARK CLOSED / SUPERSEDED by spine v3.0-3.7 and the tree gates. No re-home: its residual population (legacy free-prose faces) is retired by this sweep, not by a project."
+    },
+    {
+      "code": "D1_CATVIEWS",
+      "completeness_pct": 85,
+      "completeness_label": "MOSTLY-COMPLETE",
+      "status": "assessed",
+      "items": [
+        {
+          "item": "category registry module (the ONE source of membership)",
+          "verdict": "LANDED",
+          "evidence": "TO-D1b, TO-R1-DS COMPLETE; D1-a-1 carried"
+        },
+        {
+          "item": "gold projection emitting category_views with the L0/L1/L2 tree",
+          "verdict": "LANDED",
+          "evidence": "TO-D1c, TO-P1-DS, TO-M1-DS, TO-L2-DS COMPLETE"
+        },
+        {
+          "item": "portal global view rendering the tree (DEV), the three render defects, formatting, per-client row suppression, the dev proxy",
+          "verdict": "LANDED",
+          "evidence": "TO-D1d, TO-R1-DE, TO-F1-DE, TO-Q1-DE, TO-S1-DE, TO-X1-DE COMPLETE"
+        },
+        {
+          "item": "Cottonwood display acceptance and the tax-SMA population measurement",
+          "verdict": "LANDED",
+          "evidence": "TO-D1e, TO-A3-DS COMPLETE"
+        },
+        {
+          "item": "path to live: the two code channels enumerated, the gold-Lambda re-pin + Terraform apply, the reland + refire on Andrew's word, the scheduled run to served category views",
+          "verdict": "LANDED",
+          "evidence": "TO-I1-DS, TO-V1-AE, TO-R1-AE, TO-P1-AE COMPLETE; a Saturday scheduled fire wrote cottonwood/category-views/2026-08-28.json trigger=scheduled"
+        },
+        {
+          "item": "the SMA L0 unreachable branch / the false served sentence (TO-N1-DS)",
+          "verdict": "BUILT, NOT EXERCISED",
+          "evidence": "face: built, on origin, 7 of 8 scored; AC7 gated on 49financial's frontier advancing past the manual reland's 08-27 key, or a reserved delete of that conflict-held served key (CTO+COO never-widen or Andrew's word)"
+        },
+        {
+          "item": "every L2 node under Models carries a dollar value (TM1-AC1)",
+          "verdict": "OPEN ON DATA",
+          "evidence": "cottonwood 08-28 content-clean 15 of 15 but Models>Custom 1 of 4 non-null (the CVO~Z's read, 08-29); a newer fire does not fix it"
+        },
+        {
+          "item": "the global view emitted by the scheduled fire",
+          "verdict": "OPEN",
+          "evidence": "the 13:30Z fire on 08-29 REFUSED to emit global (a cross-axis coherence check); no later record"
+        }
+      ],
+      "missing": [
+        "Whether the scheduled producer now writes all three firms AND global without conflict or refusal -- the register's last measurement is 08-29 and the served keys were not re-read tonight (the listing prefix this seat tried was wrong; the recut measures the real one)",
+        "Models>Custom L2 dollar values: 1 of 4 non-null on cottonwood -- a data gap, not a trigger gap",
+        "TO-N1-DS AC7: 49financial's served 2026-08-27 key still the manual reland's bytes as of 08-29; a scheduled fire conflicts unless the feed advances or the key is deleted on a signed-off word",
+        "Surprise channel: 16 rows, 9 under investigation, 3 ARMED, untouched since 09-03"
+      ],
+      "registry_mismatch": "status active / dep_stage EXECUTING is right; the 08-29 blocking text is the last measurement and names 2026-08-31 as its own discriminator -- ten days stale",
+      "undocumented_activity": [
+        "2026-09-03: site-Z seats (COO~Z, CVO~Z, MSTR~Z) filed disarm records and gate fixes under this code -- record hygiene, no new deliverable"
+      ],
+      "rec": "INTEGRATE into /canonical-flow: re-home as a D1 tree project on site Z (the D1 placement) with ONE round whose DONE WHEN is EXERCISED on the served plane -- a scheduled fire writes all three firms and global without refusal, the portal tree renders from that fire, Custom L2 carries dollars or discloses why, the SMA L0 sentence is true on every firm; the 19 landed orders are the endpoint's prior. The manual-trigger rule applies to the fire."
+    },
+    {
+      "code": "D1_NAMEDISCOVERY",
+      "completeness_pct": 100,
+      "completeness_label": "COMPLETE",
+      "status": "assessed",
+      "items": [
+        {
+          "item": "the token set and variant grammar declared as data, the open population stated, the Opal-side naming discriminator, the v1 coverage set (ND-a/b)",
+          "verdict": "LANDED",
+          "evidence": "TO-1 COMPLETE -- ROUND 1 ACCEPTED + CERTIFIED (08-27)"
+        },
+        {
+          "item": "the fuzzy discovery matcher with word-boundary matching on common-noun tokens and the registry-absence trap (ND-c)",
+          "verdict": "LANDED",
+          "evidence": "TO-2 COMPLETE, certified by the CVO~Z"
+        },
+        {
+          "item": "the provenance surface: UNKNOWN distinguishable from NO-MATCH, the enforcement policy declared, fuzzy at discovery / exact at the served key (ND-d/e/f)",
+          "verdict": "LANDED",
+          "evidence": "TO-3 COMPLETE"
+        }
+      ],
+      "missing": [
+        "Nothing in the decomposition is uncovered: all 20 cells map to the three orders. The close has waited since 08-29 on a 'smoke-and-done' card at Andrew (card 1 of the COO~Z open-call register), i.e. on his word, not on work"
+      ],
+      "registry_mismatch": "dep_stage ROUND_CLOSE is right; the record was two stages stale until the 09-03 sweep and still says the close is a card at Andrew",
+      "undocumented_activity": [],
+      "rec": "MARK CLOSED (complete). Under the manual-trigger rule the certified round-1 exercise on real partner names IS the smoke; if Andrew wants to see it, one manual run of the matcher over today's partner constituent names with its provenance column is a five-minute act by the DS lane, not a round. No re-home."
     }
   ]
 }
