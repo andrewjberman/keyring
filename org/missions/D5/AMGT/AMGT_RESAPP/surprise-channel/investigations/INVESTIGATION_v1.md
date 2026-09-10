@@ -170,6 +170,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "This worker's task text: 'your proof-of-spec instance at org/.../deliverables/0.9.0_WK_AMGT_RESAPP~3/AMGT_RESAPP.TO-AMGT-s-12.proof_of_spec.json' -- the short to_id form.",
     "world_is": "The mechanical gate that actually decides whether a 'complete' flip is accepted keys on the TASK ORDER FILE'S OWN full basename stem, not the short to_id -- a file named with the short form is invisible to check_complete_flip's glob and the flip is refused with a message that reads as if no instance exists at all, even though a VALID one does, just under the wrong name. Renamed to the full-stem form (permitted -- deliverables/ is broadly granted) and the flip proceeded.",
     "notes": "Non-blocking, caught before any commit landed (safe-commit's pre-commit hook aborted cleanly, files left unstaged, nothing to roll back). Worth fixing at the source that generates worker task text (the short-form path may be a convenience abbreviation that was never cross-checked against the gate it has to pass) so the next worker does not repeat the same round trip."
+  },
+  {
+   "id": "AMGT_RESAPP-Z-W9-S1",
+   "project": "AMGT_RESAPP",
+   "fabric": "site-z",
+   "surfaced_by": "0.9.0_WK_AMGT_RESAPP~9",
+   "surfaced_at": "2026-09-10T23:15:24Z",
+   "one_line": "16 of 89 folders in AMGT-s-12's universe.json carry bloomberg_ticker.value == 'AAPL US' with status MEASURED even though their folder names name distinct companies -- an identity-layer data-quality anomaly this cell's ticker selection had to route around.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "python census over org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/universe.json's 'names' array (89 entries): collections.Counter over bloomberg_ticker.value where status=='MEASURED' -> 33 unique values, one of which ('AAPL US') accounts for 16 of the 48 MEASURED entries; the 16 folders include AstraZeneca AZN, Canadian National Railway CNR, Clorox CLX, Copa CPA, Imperial Brands IMB LN, JD.com 9618 HK, Michelin ML FP, Mitsubishi UFJ Financial Group 8306 JP, Nestle NESN SW, Nokia FH, Orange ORA FP, SAP GY, Sanofi SAN FP, Shopify SHOP CA, Tokyo Marine 8766 JP, Total Energies TTE FP",
+     "AMGT_RESAPP-Z-W3-S1 (this same investigation file) already recorded a related identity-layer defect (5 of 89 folders carrying two disagreeing *ONE PAGER*.xlsx workbooks) found by the same worker who produced universe.json -- this is a second, distinct anomaly in the same artifact, not yet recorded",
+     "This worker's stated ticker-selection rule for AMGT-s-b4's AC1/AC4 (run_manifest.json in this worker's deliverables) explicitly excludes the 'AAPL US' value and picks the first three array-order MEASURED, ' US'-suffixed, non-anomalous entries (BABA, BA, COST) precisely to avoid resting the test on a non-discriminating identity"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "AMGT-s-12's universe.json entry per folder carries a MEASURED bloomberg_ticker.value that uniquely identifies that folder's subject company (the identity layer's whole purpose, per AMGT-s-12's cell text and STORE_CONTRACT.md section 2: 'there is exactly one identity axis in this bucket').",
+   "world_is": "16 of 89 folders' bloomberg_ticker.value is the identical literal 'AAPL US' at status MEASURED, which cannot be true for 16 distinct companies (AstraZeneca, Boeing peers, etc. are not Apple); the resolver measured SOMETHING at those folders but not each folder's own identity. This worker did not fix or re-run AMGT-s-12's resolver (out of this cell's <paths> and BOUNDS) and instead selected its 3 test tickers by a rule that provably avoids the anomalous value.",
+   "notes": "Non-blocking for AMGT-s-b4: the stated selection rule (run_manifest.json) sidesteps the anomaly entirely and BABA/BA/COST are independently confirmed real, distinct, US-listed tickers. Worth AMGT-s-12's owner re-reading build_universe.py/resolver.py for whichever code path defaults to 'AAPL US' (possibly a template/placeholder cell read from a workbook whose real ticker cell was blank or unreadable, silently falling back to a literal in the script rather than refusing) before any other cell trusts universe.json's bloomberg_ticker column at face value for one of these 16 folders."
+  },
+  {
+   "id": "AMGT_RESAPP-Z-W9-S2",
+   "project": "AMGT_RESAPP",
+   "fabric": "site-z",
+   "surfaced_by": "0.9.0_WK_AMGT_RESAPP~9",
+   "surfaced_at": "2026-09-10T23:15:24Z",
+   "one_line": "astn/brightdata/residential-proxy currently TLS-intercepts every HTTPS GET with an untrusted 'Bright Data Proxy Root CA' leaf that no standard client can verify, so this run's 9 attempted GETs (3 tickers) all failed at the TLS handshake before reaching Seeking Alpha, and AC1 reads 0 of 3 landed -- not a defect in this order's fetcher, detectors, or logging (AC2-AC6 all pass).",
+   "class": "BLOCKING",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "curl_cffi.requests.Session(impersonate='chrome', proxies={http/https: the astn/brightdata/residential-proxy secret's host:port with a fresh per-request random sticky-session username, as sa_rest_fetch.py's own build_session() constructs it}).get('https://example.com') -> curl_cffi.requests.exceptions.CertificateVerifyError 'SSL certificate problem: unable to get local issuer certificate'; the identical Session with no proxy set against the same URL succeeded 200/559 bytes, and the identical Session with verify=False against the proxy also succeeded 200/559 bytes (diagnostic only, not used in the shipped fetcher, which never sets verify=False)",
+     "openssl s_client -connect example.com:443 -proxy <secret host>:<secret port> -proxy_user <sticky-session id> -proxy_pass env:<var> -servername example.com -showcerts: exactly 1 certificate returned in the chain -- '0 s:CN=*.example.com' / 'i:C=IL, ST=IL, O=Bright Data, CN=Bright Data Proxy Root CA' -- no intermediate or root sent, verify return code 21 (unable to verify the first certificate)",
+     "A second, independent TLS stack (native Windows Schannel via curl.exe 8.21.0, which trusts the OS root store, distinct from curl_cffi's bundled certifi store) reproduces the same rejection through the same proxy: 'curl: (60) schannel: SEC_E_UNTRUSTED_ROOT -- The certificate chain was issued by an authority that is not trusted'",
+     "Reproduced on 3 independent per-invocation sticky-session identifiers, one per ticker (BABA, BA, COST), each generating its own fresh random suffix per sa_rest_fetch.py's username convention -- all 9 GET attempts (symbol/analysis/news x3 tickers) failed identically, logged in this worker's deliverables/request_log.json with classification TRANSPORT_ERROR and the curl error text (no secret value in any entry)",
+     "The reference (@b1656bbebc section 2b) measured 'the proxy is GET-capable today ... never challenged once the PX cookies were present' at 19:4x-19:5xZ 2026-09-10 through the same secret, same default verify=True code path; this run (23:0x-23:1xZ, same day, same secret, same session-building code) reproduces the interception on every attempt with no code difference in how the session or proxy is built"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The cell's mechanism for AC1 (carried from the reference, section 2b): 'the fetch MUST egress through the residential proxy ... The proxy is GET-capable today,' i.e. that egressing through astn/brightdata/residential-proxy with the parked jar produces vendor HTTP responses this ETL can classify and land.",
+   "world_is": "The proxy zone is currently terminating and re-signing HTTPS with its own 'Bright Data Proxy Root CA' rather than passing the origin's real certificate through, and does not include that root/intermediate in the handshake -- so no standard TLS client (tested: curl_cffi/certifi AND native Windows Schannel) can complete verification without either disabling certificate verification (a security-posture change this cell's BOUNDS do not authorize) or being supplied that specific root CA out of band, which this worker does not have and did not seek from Bright Data (no vendor API/dashboard call made). verify stayed at its safe default for every real attempt in this run, so no part of the parked session's 65-cookie jar was ever transmitted to the intercepting party -- the TLS handshake aborted before any HTTP request left the client. AC1 reads 'raw objects 0 across 3 keys; symbol+report present for 0 of 3; sa_ids MEASURED 0' -- a genuine, reproduced, non-rescued finding, recorded rather than routed around.",
+   "notes": "Not this worker's <paths>/BOUNDS to fix: resolving it means either obtaining Bright Data's specific proxy root CA (an out-of-band vendor artifact, e.g. from their account dashboard or support) and pinning it as a scoped trust anchor for this proxy only, or toggling off whatever zone-level SSL-interception feature is enabled, or an explicit Andrew-authorized decision to disable verification for this specific proxy -- all security-posture calls outside this cell's granted authority. The rest of the module is built and exercised as far as the transport layer allows: AC2 (4 fixture tests), AC3 (referer/proxy/method/pacing census), AC4 (3 tickers, 1 run), AC5 and AC6 (structural bans) all pass against this exact run's real output; only AC1 (the live landing) is blocked by this transport-layer finding."
   }
 ]
 ```
