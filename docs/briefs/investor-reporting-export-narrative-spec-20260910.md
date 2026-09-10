@@ -8,6 +8,8 @@
 
 **Status:** Proposed specification and synthetic PDF prototype for review. No production generator, historical coverage census, vendor report execution or report distribution is claimed in this follow-up.
 
+**Shared-export dependency, September 10 WS3 follow-up:** the [YCharts child design](investor-reporting-ycharts-design-20260910.md) reuses the brand assets and export lifecycle described here. Its three generation routes are captured, but the HARs omit PDF bodies and the upload multipart request. Native YCharts section/tab/PDF parity therefore still requires paired Overview, Comparison and Multi-Comp output fixtures and verified section extraction. A working performance PDF template does not close that Analysis-export dependency. WS2's performance/narrative content and permanent endpoint numbering remain separate.
+
 ## 1. The product
 
 An advisor selects a client, account scope and period, reviews the dashboard, then chooses **Export report**. A small options panel offers advisor branding, the market-narrative page and optional detail sections. The advisor previews the rendered report and downloads its PDF. The export contains the performance result already reviewed; a change of period, account scope or performance methodology first creates a new report revision.

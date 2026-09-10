@@ -129,6 +129,8 @@ E25's existing YCharts client handles indices/table_data, charts/general_data.js
 
 ### 4.2 Evidence needed from analyst transcripts, HARs and samples
 
+**September 10 follow-up:** The [YCharts child brief](investor-reporting-ycharts-brief-20260910.md) and [explicit intake/retrieval design](investor-reporting-ycharts-design-20260910.md) now incorporate six transcripts, the example manifest and all three supplied HARs. They establish the Overview, Comparison and Multi-Comp request/response routes, email attachment intake, the selected BDAPI Kimi runner and session recovery. The paragraphs below preserve the original capture specification. Current remaining gaps are the missing upload multipart body, live runner/intake validation and paired vendor PDFs/section extraction; the report-generation flow is no longer wholly uncaptured.
+
 For **each of the three varietals**, record the analyst's starting screen and exact purpose; input holdings/account aggregation and weights; cash treatment; security identifier mapping; benchmark/comparison model; dates/rebalance/fee settings; manual overrides; and the resulting report sections. Distinguish steps that create/change a saved vendor portfolio from read-only report retrieval.
 
 Pair the workflow with a sanitized HAR covering the complete operation: selected input → generate → any job polling → data/report retrieval → PDF download. Preserve request method/path, relevant non-secret parameters, response bodies, content types, status transitions, report/portfolio identifiers mapped to anonymous placeholders and the causal order. Retain a source hash and a field mapping back to the report. Credentials, cookies and raw client information stay outside committed research.

@@ -18,6 +18,12 @@ In response to whether forwarded requests contain actual holdings attachments or
 
 > yes it will have the holdings attachments
 
+Andrew then specified the existing runner pattern:
+
+> Yeah i would use the same pattern as BDAPI with Kimi
+
+> use the exact same style of runner, that strategy works very well. I don't believe they send OTP so dont need that part
+
 ## Scope to carry
 
 Create a separate citable WS3 brief under the existing Investor Reporting umbrella, with explicit generation/retrieval instructions, email attachment intake, Analysis-tab serving, encrypted generation records and cloud session reuse. Poll every day at quarter-hour intervals from 08:00 through 23:45 America/New_York; midnight ends the requested window. Automatic login takeover and interruption by Alyssa are accepted; resumable jobs must prevent duplicate portfolios/reports. The packet's earlier manual-session scheduling preferences do not override this current direction. Actual holdings attachments are the intake contract.
