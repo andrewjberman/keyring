@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_OPSEC202609~2</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>staged</status>
+<status>complete</status>
 
 **Directive:** D12 · **Fabric:** site-z · **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` **v0.14** (FWD-4; **C-20 FWD-4-RECIPIENT**) · **Decomp cell:** `OP3-s-2` (round-3 rectangle v0.3.0) · **Round:** 3.
 
@@ -48,7 +48,27 @@
 
 **`S2-AC4`'s FAIL STANDS.** `3.0.0_SA_CVO~Z` declined to soften it and `1.0.0_SA_CTO~Z` agrees without reservation: **a criterion that correctly reports an unmet state is not converted to a pass by the fact that nobody on this fabric could have met it.** That refusal is what kept this legible. Rounds 1 and 2 are not reopened.
 
----
+
+**TERMINAL FLIP BY THE ISSUER, 2026-09-10 ~16:1xZ. ANDREW CONFIRMED THE SUBSCRIPTION. The ruling above is EXECUTED, not superseded -- `1.0.0_SA_CTO~Z` msg 20950 said in terms what would happen: *"If he confirms, S2-AC4 flips on the next read, the order completes ON ITS OWN MERITS, the slug becomes cuttable and FWD-4 reaches EXERCISED rather than being carried."* That is what happened.**
+
+**THE MEASUREMENT, taken live at `2.0.0_SA_COO~Z` and not relayed:**
+
+```
+aws sns list-subscriptions-by-topic --topic-arn arn:aws:sns:us-east-1:313476888478:opal-login-abuse-alerts
+-> 1 subscription of 1
+   SubscriptionArn  arn:aws:sns:us-east-1:313476888478:opal-login-abuse-alerts:7a80a743-96aa-4a82-b34f-37188f38c0aa
+   Protocol email | Endpoint andrew@opalinvest.com
+```
+
+**`S2-AC4`'s expect clause, verbatim: *"`SubscriptionArn` is a real ARN and NOT the literal string `PendingConfirmation`."*** It is a real ARN. **The criterion is satisfied on its own literal text** -- no voiding, no amendment, no reading-in.
+
+⛔ **THE WORKER'S PROOF INSTANCE STILL RECORDS `S2-AC4` FAIL AND THAT ENTRY IS NOT EDITED. It was CORRECT AT ITS VINTAGE** -- `PendingConfirmation` on 7 of 7 reads across ~7 minutes, plus 4 further reads by this seat between 13:36Z and 15:29Z, 11 in total. **A worker's instance is a dated observation, not a live dashboard, and rewriting one to match a later world would destroy the evidence of what was true when it was graded.** The other five criteria (`S2-AC1`, `S2-AC2`, `S2-AC3`, `S2-AC5`, `S2-AC6`) read PASS in that same instance and are untouched by this flip.
+
+**WHAT THIS DOES NOT CLAIM.** It does not re-grade `S2-AC4` -- grading is `3.0.0_SA_CVO~Z`'s at L9, and that seat expressly declined to soften the FAIL on the ground that *"it is TRUE -- the subscription is not confirmed."* **That ground has now expired on the artifact.** This face records the measurement and the flip; the grade is the CVO's to restate or leave.
+
+⭐ **AND THE ATTRIBUTION THE CVO ASKED FOR IS NOW DISCHARGED RATHER THAN CARRIED.** Its L9 said the FAIL should read as *"an ABSENT EXTERNAL INPUT ending at a mailbox no agent on this fabric can read."* The input is no longer absent. **Nobody on this fabric could have produced it, and nobody on this fabric had to be waited on for it.**
+
+**THE TWO PRE-AUTHORISED FALLBACK TRIGGERS NEVER FIRED AND ARE NOW MOOT.** The window did not lapse (67.0 hours remained at the confirming read, of ~72) and Andrew did not decline. **`cancelled`-with-a-re-entry-pointer was never taken, so no fiction was recorded** -- which is exactly what msg 20950 was protecting when it ruled *"a status that lies is worse than a status that waits."*
 
 ## THE CELL
 
