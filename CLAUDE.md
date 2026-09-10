@@ -29,7 +29,13 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     execute (WORKER SUBAGENTS of the COO, `0.9.0_WK_<CODE>~<n>`, one worktree each, NO send tool; the TO's
     WORKER FACE is the worker's whole context — cell text, absolute paths, ONE clause per criterion with its
     invocation and expectation; the RECORD FACE never travels; a compound criterion is refused at the cut) →
-    L8 compile → L9 adjudicate (`3.0.0_SA_CVO`, its FIRST engagement; JUDGMENT criteria are graded HERE and
+    L8 compile (**`3.0.0_SA_CVO`, AND ITS ENGAGEMENT WITH THE PROJECT BEGINS HERE, NOT AT L9** — spine
+    `:320`, `:475` and `:489`, three places; this line said "L9, its FIRST engagement" until 2026-09-10 and
+    ⛔ **THAT WAS THIS RULE CONTRADICTING ITS OWN SOURCE.** ⚠ AND THE SPINE'S L8 IS THE **CHANNEL** COMPILE
+    — input "new investigation rows … and no others", output the compiled channel and the CVO's watermark.
+    The task-order packet the COO produces at drain-end is a **DIFFERENT ARTIFACT SHARING THIS LABEL** and
+    the spine does not name it; that ambiguity is PLACED, not resolved, and no round changes owner on it) →
+    L9 adjudicate (JUDGMENT criteria are graded HERE and
     never self-graded) → L10 ONE SLUG to the CTO, ALWAYS, only after every TO is terminal and every row
     dispositioned; the CTO answers with a PRD addendum (an FWD no cell served) or the ROUND-N ANALYSIS the
     COO recuts in ONE issuance; CLOSED when every FWD grades REALIZED.** The three route tokens are RETIRED.
@@ -55,8 +61,17 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     390 unscoped hits included `.tools/`, and nobody looked.
     COST: none — this names what "ONE ISSUANCE" already implied. NON-APPLICATION: separate rounds; and
     workstreams whose write surfaces do not intersect. Gate:
-    `.tools/to-pipeline-gate.py` (the L6 neck). Spec: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` v3.2
+    `.tools/to-pipeline-gate.py` (the L6 neck). Spec: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md`
     — the ONE process document (constitutional; v3 from the CRO's spec @`29bf9265ea` + §13 @`9dc97d860d`).
+    ⛔ **NO VERSION IS PINNED HERE, DELIBERATELY. CITE THE SPINE BY PATH AND READ IT AT HEAD.** This line
+    pinned `v3.2` until 2026-09-10 while the spine's own ladder had reached **v3.13** — ELEVEN amendments,
+    TWO of them authored by this seat the same day it was still citing v3.2. **A constitutional pointer
+    carrying a version number is a promise to do maintenance nobody remembers, and it is UNFALSIFIABLE AT A
+    GLANCE precisely because the number looks authoritative.** Un-pinning makes the staleness structurally
+    impossible rather than merely corrected. **The catch and the remedy are `0.0.0_AB_MSTR~Z`'s** (site Z's
+    Rule 27 rewrite); it did not survive the 2026-09-10 merge, which took this fabric's side, so it is
+    re-landed here on its own merit. ⚠ **WHERE THIS RULE AND THE SPINE DIFFER, THE SPINE WINS AND THIS RULE
+    IS THE DEFECT** — Rule 27 is a REPRESENTATION of `/canonical-flow`, never an independent source.
     A worker's write surface is exactly the `<paths>` its non-terminal order names (no lane enumerates a worker;
     `.tools/owned-paths-validate.py`), its rows mint `<CODE>-W<n>-S<k>`, and it writes no telemetry (L7 reads from
     git). ⚠ The eight v3 carriers are BUILT and refuse (spine §3), and so is the drain's refuser on the merged index
