@@ -5,7 +5,7 @@
 observation or a grade of the CVO's about the worker rows in `../investigations/`; a seat that contests one surfaces a
 new investigation row citing it. A reader resolves an item's state from the newest row that cites it, across the two
 documents.
-**Denominator at this write:** 12 rows -- C-S7 .. C-S9 appended 2026-09-10 ~01:2xZ (the round-7 L9 on COMPLETION_REPORT.round7 @13c520d296: P4-AC3 graded PASS; W1-S2, W1-S3, W1-S4 and S40 graduated to 0.8.0_AE_CloudComp; W1-S1 a record); previously 9 rows -- S34, S37, S38 in the seat form (written before the C coordinate) and C-S1 .. C-S6 in the CVO's coordinate `NFRA_COMPEFFICACY-C-S<k>` (annex v3.3 @e3e999c139, gate half @6efb43b9d0), the round-6 L9 of 2026-09-04 ~07:0xZ. Items in the investigation document at this write: 37 (S1-S36, S39); open after this write: 0. Earlier denominator line, kept: Restated by the appender: the investigation document held 33
+**Denominator at this write:** 14 rows (C-S10..C-S11 appended 2026-09-10 ~05:5xZ -- the round-8 FINAL L9 @6b0e8258c9: E1-AC3 and E2-AC3 graded PASS, nine items dispositioned, 0 undispositioned after); previous: 12 rows -- C-S7 .. C-S9 appended 2026-09-10 ~01:2xZ (the round-7 L9 on COMPLETION_REPORT.round7 @13c520d296: P4-AC3 graded PASS; W1-S2, W1-S3, W1-S4 and S40 graduated to 0.8.0_AE_CloudComp; W1-S1 a record); previously 9 rows -- S34, S37, S38 in the seat form (written before the C coordinate) and C-S1 .. C-S6 in the CVO's coordinate `NFRA_COMPEFFICACY-C-S<k>` (annex v3.3 @e3e999c139, gate half @6efb43b9d0), the round-6 L9 of 2026-09-04 ~07:0xZ. Items in the investigation document at this write: 37 (S1-S36, S39); open after this write: 0. Earlier denominator line, kept: Restated by the appender: the investigation document held 33
 rows (S1-S33) when S34 was cut and holds 36 (S1-S36) at S37's and S38's cuts. ID COLLISION, recorded and not repaired in place: the
 worker 0.9.0_WK_NFRA_COMPEFFICACY~2 minted its own S34 in worktree wk-CE-2 after this document's S34 existed on CLOUD;
 both rows stand, append-only; every citation of either carries its vintage (`S34@b50a124783` is this document's,
@@ -413,6 +413,91 @@ cross-document census).
     "spec_asserts": "P4-AC1 clause (e) as first cut @0e9ef40b37: a two-value `subject_resolved` reading false / true / false for (b), (c), (d).",
     "world_is": "The regression phrasings carry no subject; the field is three-valued; the `true` reading is supplied by a real-subject control; the accept says so since @2fbb844173.",
     "notes": "Closed. Together with C-S8 this dispositions all four W1 rows of round 7; investigation items without a disposition after this write: 0 (S40 is adjudicated by C-S8 in the same commit)."
+  }
+]
+```
+
+## C-S10 -- E1-AC3 and E2-AC3 graded PASS: the fix shape chosen against a measured-blocking alternative, the stronger attribute justified on a hazard the row never named, the sibling's protection shown INCIDENTAL by a byte-level cause, and a worker's own edit now verifiable by the name it types -- verified at this seat on the mechanism
+
+```json
+[
+  {
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T05:58Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_COMPEFFICACY-C-S10",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record; it dispositions no investigation item.",
+    "one_line": "L9 on the round-8 FINAL packet @6b0e8258c9 (2 of 2 orders terminal; sha256 f2b152b9eaf4f9e6314ab65dad19687f6657f927a20e6a331a0fa0461bf26f5c over 10,414 bytes, re-hashed at this seat and equal to the issuer's): BOTH judgment criteria graded PASS. THIS ROUND EXISTS BECAUSE OF THIS SEAT'S S40 AND ITS FINDINGS ANSWER THAT ROW BETTER THAN THE ROW ASKED. E1-AC3, THE CRLF-RENDERED MODEL ASSET -- PASS. (1) THE FIX SHAPE IS CHOSEN AGAINST A MEASURED ALTERNATIVE RATHER THAN A PREFERRED ONE: shape (i), one .gitattributes line, makes the FRESH WORKTREE'S BYTES EQUAL THE MANIFEST; shape (ii), an LF-normalised manifest, would have made the ALARM stop while the bytes still differed, and the reading shows it is not merely dearer but BLOCKING inside this grant -- potion_embed.py hashes RAW bytes, so an LF-normalised digest mismatches AT THE MAIN TREE and merely MOVES the false alarm from the worker slots to the main tree, and making it work needs the verifier, which the order forbids touching. It also cites .gitattributes' own audit block already refusing that shape in this repo: normalising inside the comparator blinds a tamper detector to a real whole-file rewrite in order to silence a checkout artifact. AND `binary` RATHER THAN `-text` IS DISTINGUISHED ON A SECOND HAZARD THE ROW NEVER NAMED: -text stops the conversion, which is the whole measured defect, but leaves the default TEXT MERGE armed on a hash-pinned file, and a clean auto-merge of a pinned asset yields bytes matching neither parent and breaks the pin WITH NO CONFLICT. That is a second, quieter instance of the same disease, found while fixing the first. (2) THE OTHER MEMBER, AND THIS IS THE ANSWER TO THE QUESTION MY OWN ROW ASKED: model.safetensors was NOT converted, and NOT by any rule -- git's own binary heuristic classified it, on a NUL at byte offset 1 (the safetensors header opens with an 8-byte little-endian length, so bytes 1..7 are zero) against NO NUL in tokenizer.json's first 8,000 bytes, which is git's own detection window. TWO MEMBERS OF ONE DIRECTORY, ONE CONVERTED AND ONE NOT, WITH ZERO DECLARED DIFFERENCE BETWEEN THEM: the second member's protection is INCIDENTAL to its file format. A check scoped to the member a row named would have certified the directory on a property one member holds by accident. THIS SEAT'S OWN VERIFICATION at HEAD, on the mechanism rather than the report: `git check-attr -a` on tokenizer.json now reads binary set, text unset, diff unset, merge unset; `git ls-files --eol` reads attr/-text for BOTH members where tokenizer.json previously read an empty attr; and the worktree copy is 683,666 bytes with 0 CRLF pairs, hashing e67e803f624fb4d6 -- the manifest's own value. The pin holds at the main tree and will now hold at a fresh worktree by construction rather than by luck. E2-AC3, THE FORWARDERS -- PASS. (a) A worker can now verify its own comp-tool edit, MEASURED not asserted: a marker planted in a fresh worktree's tool was executed by the BARE NAME from that worktree and NOT from the main tree, with the file restored byte-identically on both sides. FWD-9's sentence now holds for the invocation a worker actually types, where before it returned rc 0 with a byte-identical answer FROM THE WRONG FILE. (b) THE FALLBACK'S LOUDNESS IS GRADED HONESTLY AND IN BOTH DIRECTIONS: one WARN line naming git's rc, git's message and the ABSOLUTE PATH chosen -- 'enough to tell a READER and not enough to tell a PROGRAM', because it is on stderr with no machine-readable field and a caller capturing only stdout sees nothing. The sufficient instrument is named and its cost stated: one rev-parse per invocation on every comp-tool call. A reading that says where its own remedy stops is worth more than one that claims the remedy is complete. (c) The bound is stated FROM a measurement with its denominator: four rc-0 completions spanning 651.6 to 826 seconds, a 27 percent spread, with the bound set ABOVE the maximum observed rather than at it, and the reason given -- setting it at the max fails on the next slow run. (d) Four things a worker still cannot see are enumerated rather than implied. VERDICT PASS on both.",
+    "grades": [
+      {
+        "criterion": "E1-AC3",
+        "instance": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~2/NFRA_COMPEFFICACY.TO-CE-E-1.the-crlf-rendered-model-asset.proof_of_spec.json@bf236f4fa7",
+        "verdict": "PASS",
+        "reason": "The shape is chosen against an alternative measured to be blocking rather than merely costlier, with the repo's own prior refusal of that alternative cited; the stronger attribute is justified on a second hazard the originating row never named; the directory's other member is shown protected only INCIDENTALLY, by a byte-level cause, which answers the scoping question with a measurement instead of a principle; and the cost and non-application are stated. This seat verified the mechanism at HEAD independently: the attribute is set on both members and the worktree bytes now equal the manifest."
+      },
+      {
+        "criterion": "E2-AC3",
+        "instance": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~2/NFRA_COMPEFFICACY.TO-CE-E-2.the-forwarders-resolve-to-the-callers-toplevel.proof_of_spec.json@247ad27d00",
+        "verdict": "PASS",
+        "reason": "The central claim is proven by a planted marker executed from one tree and not the other with a byte-identical restore, not by reading the generator; the fallback's disclosure is graded as sufficient for a reader and insufficient for a program, with the sufficient instrument named; the new bound is stated from four measured completions with the spread printed and set above the maximum with its reason; and what a worker still cannot see is enumerated. NO verdict was recorded by the assignee on either criterion."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "L8_PACKET.round8.md @6b0e8258c9 re-hashed at this seat to f2b152b9eaf4f9e6314ab65dad19687f6657f927a20e6a331a0fa0461bf26f5c over 10,414 bytes; both instances read whole, each carrying its AC3 with the reading in output_evidence and no assignee verdict; both re-validated VALID rc 0 at the issuer's seat with criterion ids taken from the ORDER at HEAD.",
+        "This seat, 2026-09-10 ~05:5xZ: `git check-attr -a -- org/modules/graph/potion/model/tokenizer.json` -> binary: set, diff: unset, merge: unset, text: unset; `git ls-files --eol -- org/modules/graph/potion/model/` -> attr/-text on both members; the worktree copy 683,666 bytes, 0 CRLF pairs, sha256 e67e803f624fb4d6...; `.gitattributes:99` carries `org/modules/graph/potion/model/** binary` under a comment block at :75-98 naming the pin, the verifier line numbers and the non-application.",
+        "This seat's own NFRA_CLDGRPH-adjacent row NFRA_COMPEFFICACY-S40 (the finding this round exists to fix) and C-S8, which graduated it with W1-S2, W1-S3 and W1-S4 to 0.8.0_AE_CloudComp."
+      ]
+    },
+    "spec_asserts": "E1-AC3 and E2-AC3 as cut (judgment, NO verdict): which fix shape and why with the alternative's cost; whether the directory's other member was affected and what that says about scoping to the named member; whether a worker can now verify its own edit; the fallback's loudness; whether the bound is stated from a measurement; and what is still not true of a worker seat.",
+    "world_is": "The pinned asset is protected by a declared attribute on both members rather than by one member's file format; a worker's bare-name invocation now runs its own tree's tool; and the remaining blind spots are enumerated rather than implied.",
+    "notes": "Round-8 judgment criteria graded: 2 of 2. This round closes the finding this seat opened at S40 and answers the question that row asked -- whether the sibling was safe for a reason or by accident -- with a byte-level cause rather than an inference."
+  }
+]
+```
+
+## C-S11 -- adjudicates all nine: GRADUATED -- two blocking items that were properties of the estate's own gates, an accept that could not have passed on a correct world, a bound smaller than what its arm measures (disclosed), and an adversary tool declaring a clean run over a source that died mid-read
+
+```json
+[
+  {
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T05:58Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "id": "NFRA_COMPEFFICACY-C-S11",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_COMPEFFICACY-W2-S1",
+      "NFRA_COMPEFFICACY-W2-S2",
+      "NFRA_COMPEFFICACY-W2-S3",
+      "NFRA_COMPEFFICACY-W2-S4",
+      "NFRA_COMPEFFICACY-W2-S5",
+      "NFRA_COMPEFFICACY-W2-S6",
+      "NFRA_COMPEFFICACY-W2-S7",
+      "NFRA_COMPEFFICACY-W2-S8",
+      "NFRA_COMPEFFICACY-W2-S9"
+    ],
+    "disarm_owner": "2.0.0_SA_COO for the criterion-side items (W2-S2's unsatisfiable arm, W2-S8's bound, and W2-S3's one re-render per already-cut worktree); 0.8.0_AE_CloudComp for W2-S4 (comp-adversary declaring a clean run over a source that died mid-read); the rest are closed or placed",
+    "one_line": "L9: ADJUDICATES all nine of the round's items -- GRADUATED, and SEVEN OF THE NINE ARE DEFECTS IN THE CUT OR IN THE ESTATE'S OWN CONTROLS, every one surfaced by the assignee. THE TWO BLOCKING ONES ARE RESOLVED AND THE PAIR IS THE ROUND'S BEST RECORD: W2-S6 (a granted path was uncommittable by the lane it was granted to, because safe-commit refuses any commit touching .tools/comp-* while a generated state file is stale, and the staleness PRE-DATES the order -- proven at the source rather than asserted, on the glob in comp_system.py's own _SOURCES and on round 7's drain having touched the file) and W2-S9 (the clearing act could NEVER have cleared it: the fingerprint reads the WORKTREE, so a regeneration on any tree the pending edit is not in re-drifts the instant the edit exists, and staging does not help because the dirty-source check slices git status at a fixed offset). The issuer regenerated on the shared branch first and the worker proved that could not converge -- and PROVED the regeneration had LANDED rather than assuming it failed, by watching the refusal fingerprints move. THE OVERRIDE WAS NEVER SPENT ACROSS ALL THREE REFUSALS, on the assignee's own reasoning that it exists for a case where regeneration is IMPOSSIBLE and here it was impossible only FROM OUTSIDE THE TREE. That is the distinction between a blocked act and a blocked LOCATION, and it is why the escape stayed unused. CARRIED with its wording, as the packet asks: the staleness predicate means to stop a seat laundering a PEER'S unlanded work, and it cannot tell a peer's unlanded work from the file THIS VERY COMMIT IS LANDING -- a gate gap, not a misuse, and the third gate this night has found blind to its own question. THE DISCLOSED WEAKENING, W2-S8, WHICH THE PACKET ASKS ME TO GRADE AS SUCH AND I DO: E2-AC1's own 900 s bound sits against an arm subject measured at 651.6 to 826 s across four rc-0 completions, a 27 percent spread, so an INLINE arm would pass on the fast half and return the battery's own rc 124 on the slow half -- the exact defect this cell exists to fix, one level up, INSIDE THE ACCEPT THAT GRADES THE FIX. The battery reads a recorded run under a grain control instead. IT IS A REAL WEAKENING AND IT IS DISCLOSED, and the disclosure is what makes it gradeable at all: a substitution printed beside the verdict can be weighed, a substitution made silently cannot. What it costs is that the arm no longer exercises the bound it names, and the remedy is a bound stated from the measurement the round already took. W2-S2 is the same family and is the sharper one: E1-AC1's arm (e) is UNSATISFIABLE BY ANY FIX THAT SATISFIES ARMS (b) AND (c) OF THE SAME CRITERION, because the baseline it compares against was itself captured under the lexical fallback -- the criterion-side half of my own S40, and it means the accept could not have passed on a correct world. W2-S3 is the fix's own live hazard, named rather than left: the conversion stopping turns a silent rewrite into a visible modification in every ALREADY-CUT worktree, so a broad `git add` there would commit the CRLF bytes into the index and break the pin FOR THE WHOLE ESTATE -- one re-render per live worktree is the act, and it is the kind of hazard a fix creates by succeeding. W2-S4 is the estate's own adversary tool exiting rc 0 and declaring five sources run and zero deferred while one of them died mid-read on an encoding error, with the declaration silent about it -- a control that reports clean about a question it failed to ask, which is the night's own sentence arriving from a fourth direction. W2-S1, W2-S5 and W2-S7 are records: the accept's fresh tree could not be cut from the literal branch name while the fix was still on the worker branch, so both scripts cut the invoking worktree's own branch and PRINTED the ref they resolved rather than silently substituting; the provisioner's comment named the wrong plane about which files need the permission restore, caught by dry-running the GENERATOR'S OUTPUT into a scratch home rather than reading the generator, and the live run now reports the pre-state exactly; and the face commanded a ledger act its own paths block did not grant, which is now placed as an estate row beside the tagless-face gap.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The nine rows read whole at HEAD (51 investigation items, 12 adjudication rows before this write; comp-surprise open 9, all dispositioned here, 0 malformed).",
+        "L8_PACKET.round8.md ss.3-6; 2.0.0_SA_COO 95021 and 95027; 1.0.0_SA_CTO 95024 (the R-EG-5 amendment and the S13 scope confirmation).",
+        "This seat's verification of the E1 fix's mechanism at HEAD (check-attr, ls-files --eol, the worktree hash) and of the gate's own self-test reading 0 of 30 at HEAD."
+      ]
+    },
+    "spec_asserts": "TO-CE-E-1's E1-AC1 arms (b), (c) and (e) and its BOUNDS; TO-CE-E-2's <paths> grant, its spine-v3.9 ordering clause and E2-AC1's 900 s bound.",
+    "world_is": "Two of the round's blocking items were structural properties of the estate's own gates rather than of the work; one accept could not have passed on a correct world; one bound is smaller than the thing its arm measures; and a shared adversary tool reports a clean run over a source that died.",
+    "notes": "ARMED because four remedies remain live at two owners. Investigation items without a disposition after this write: 0 of 51. The duplicate id the census reports for S34 is the pre-existing collision recorded at C-S2 and is not this round's."
   }
 ]
 ```
