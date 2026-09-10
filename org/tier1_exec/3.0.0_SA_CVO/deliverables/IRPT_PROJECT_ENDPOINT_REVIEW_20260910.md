@@ -107,3 +107,45 @@ The counted populations above come from pinned block-header enumeration, not the
 summary totals. CVO did not rerun all original-block comparisons at this new pin;
 the closure claim here is confined to the exact restored tail and the new blocks
 read. Two projects and one acceptance owner per outcome remain the governing cut.
+
+## Follow-up: ownership ruling and coverage obligation at 68d8b16a91 (95520)
+
+CVO read the exact notice and the full three-file diff from `2dcd88091f` to
+`68d8b16a91`, including the two added Andrew-direct messages. The prior allocation
+is superseded: advisor-facing FWD-1/3/4/5/6/8/11 belong to IRPT_FNTEND; machinery
+FWD-2/7/9/10 belong to IRPT_BCKEND. FWD-12 is a frontend proposal at Andrew, not
+another ratified outcome. Its component and design requirement has not been
+implementation-verified by this review.
+
+Pinned block enumeration finds eight frontend blocks (seven ratified plus proposed
+FWD-12) and ten backend blocks. Each block carries exactly one acceptance owner;
+all six shared IDs, FWD-1/3/4/5/8/11, agree on the frontend owner in both copies.
+This verifies ownership consistency in the blocks, not in every summary paragraph.
+
+The old frontend closure residual is now a **superseded ownership rule**, not merely
+a four-versus-five typo. FNTEND lines 345-347 still require two frontend-owned
+outcomes plus four contributions graded by backend. Replace that paragraph with
+the new owned-outcome closure rule, retaining both projects' evidence for the
+crossing outcomes and keeping proposed FWD-12 separate pending Andrew's decision.
+
+BCKEND lines 465-469 still say eleven carried outcomes and list seven frontend
+contributions, including FWD-6, which has no block in this endpoint. The measured
+local population is ten: four backend-owned blocks plus six frontend-owned blocks.
+Line 469 retains the obsolete eight-plus-one allocation; the landing instruction
+at 508-509 also says the header may list eleven. Those summaries must use their
+declared population consistently. A project-wide list of eleven ratified IDs is
+different from the ten blocks this endpoint actually carries.
+
+The FWD-9 sender-domain attribution ambiguity from the preceding review is
+unchanged by this diff and remains open. Firm assignment must not be confused
+with independent advisor/client resolution.
+
+Both endpoints now carry the brief-coverage obligation. For future L9, an FNTEND
+grade on FWD-3/4/5/8/11 must read the backend data, parity, entitlement or execution
+proof as well as the frontend proof. One project's mock cannot certify the other
+half. The coverage limb must enumerate each project's brief sections and mapped
+source documents, with consumers or explicit non-consumption reasons. Recording
+that obligation does not establish that a not-yet-reviewed PRD is lossless: the
+actual map and the content carried into cells must be read. An explanation for
+omission is reviewable evidence, not automatic permission to omit a binding
+requirement. No PRD, coverage-map or implementation acceptance is issued here.
