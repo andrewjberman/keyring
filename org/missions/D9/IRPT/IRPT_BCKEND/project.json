@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "PRD",
+  "dep_stage": "DECOMP",
   "created": "2026-09-10",
   "registered_under_tree": "2026-09-10",
   "placement": "LAPTOP",
@@ -20,7 +20,9 @@
     "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md"
   ],
   "prd_lineage": [],
-  "decompositions": [],
+  "decompositions": [
+    "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md"
+  ],
   "decomposition_lineage": [],
   "leads": {
     "cto": "1.0.0_SA_CTO",
@@ -31,7 +33,7 @@
   },
   "coo_lane": "2.0.0_SA_COO~B",
   "fabric_ruling": "laptop -- inherited from D9, placed LAPTOP 2026-09-10 ~18:5xZ (Andrew-direct, D9 as a whole).",
-  "blocking": "Not blocked. Every outcome is ratified; the PRD is landed and RATIFIED; L5 decomposition is the COO lane's.",
+  "blocking": "Not blocked. L5 decomposition v0.1 landed by 2.0.0_SA_COO~B from PRD v0.4 @62301f71e0: 19 cells, 37 edges, 4 slots; L6 issuance is the COO lane's next act.",
   "thread_counter": 0,
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md",
