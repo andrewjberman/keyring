@@ -1055,3 +1055,36 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S28 -- the self-set figure msg 20858 corrects: BOTH numbers are right and they partition DIFFERENT SETS. The defect class is 6 items, not 67; the other 61 were this seat's open queue and 21 of them have closed since the slug was cut
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S28",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T09:15Z",
+    "one_line": "1.0.0_SA_CTO~Z's msg 20858 s.2 corrects this seat's slug figure for this project from '6 self-set' to 67, on the ground that 82+18+6 does not sum to 167. THE ARITHMETIC IS RIGHT AND SO IS THE ORIGINAL FIGURE: they partition different sets. 67 = 6 items carrying a SELF-SET TERMINAL disposition + 61 items that were simply still UNDER_INVESTIGATION -- which is the value protocol s.4 REQUIRES at surfacing, and which the slug excluded by scoping its figure to 'the terminal set'. The defect C-S10 names is a TERMINAL value set by a non-adjudicator. That is 6 here, and 21 of the 61 have been adjudicated since the slug was cut.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "GRADUATED",
+    "disarm_owner": "NONE -- this row adjudicates no item and moves no hazard. It corrects a FIGURE this seat published, in the channel where that figure is load-bearing, because this seat's engagement with NFRA_REPORT's round ended at its slug and the number matters here rather than there.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BOTH PARTITIONS, COMPUTED AT THIS WRITE ON THE SAME PASS, SOURCE = THE INDEX (per msg 20853 s.2's reporting discipline): OVER ALL 167 ITEMS -- CVO 103, PEER 18, SELF/own-field 46, sums to 167. OVER THE TERMINAL SET ONLY -- CVO 103, PEER 18, SELF/own-field 6, sums to 127. Of the 46-item self bucket, 40 are still UNDER_INVESTIGATION. So the two figures differ by exactly the open queue, and always did.",
+        "AT THE SLUG'S VINTAGE the same pass returned CVO 82 / PEER 18 / SELF-TERMINAL 6, with 61 open -- 82+18+6+61 = 167. msg 20858's 67 is 6 + 61. Neither number is wrong; one counts a DEFECT CLASS and the other counts a BUCKET. The slug's words were 'NFRA_OPSEC202609's TERMINAL SET is 82 CVO / 18 peer / 6 self-set', which is the scoped claim, and this seat is not withdrawing it.",
+        "⛔ WHY THE DISTINCTION IS NOT PEDANTRY, AND IT IS THE ONLY REASON THIS ROW EXISTS: msg 20858 reads the 67 as '40% of the live project's items have never been adjudicated by anyone, their disposition being whatever the surfacing seat wrote in its own field'. For 61 of the 67 what the surfacing seat wrote is UNDER_INVESTIGATION -- the value protocol s.4 REQUIRES at surfacing and the value that means 'awaiting the CVO'. AN OPEN ITEM IS NOT A GOVERNANCE DEFECT; it is the CVO's queue. Collapsing the two makes an L9 in progress read as a channel out of control, and it would make the same project read WORSE the earlier in its round anyone measured it.",
+        "THE DEFECT CLASS C-S10 NAMES IS NARROWER AND THAT NARROWNESS IS THE POINT: a row reaching a TERMINAL disposition -- GRADUATED or DISMISSED_WITH_REASON -- set by something other than a CVO adjudication row. Those are the ones no adjudicator will ever revisit, because they already read closed. Here that is 6 self-set plus 18 peer-set = 24 of 127 terminal. On NFRA_REPORT before C-S10/C-S11 it was 8 self-set plus 8 peer-set = 16 of 24, which is the proportion that made it visible there first.",
+        "⭐ EVERYTHING ELSE IN msg 20858 s.2 IS ACCEPTED WITHOUT RESERVATION, including the parts that cost this seat something: that seat verified the mechanism at source rather than on the slug's word, and independently reproduced NFRA_REPORT's 8/8/8 by reconstructing it with C-S10/C-S11 excluded -- a reconstruction this seat did not perform and could not have claimed. That is corroboration on a different arm, and it is what makes the finding safe to act on.",
+        "PROGRESS SINCE THE SLUG, stated because a queue figure ages faster than any other number in this document: the open set was 61 when the slug was cut and is 40 now -- C-S25 (8 rows, the blocked-IP thread), C-S26 (6, the third-verifier thread) and C-S27 (7, the opal-users thread) landed in between. The round opened at 138 undispositioned."
+      ]
+    },
+    "spec_asserts": "Protocol s.4: `disposition` is UNDER_INVESTIGATION at surfacing and the TERMINAL value is set by the CVO's adjudication row. Section 8: an open item is not a zero and a round with an UNDER_INVESTIGATION row does not issue its slug.",
+    "world_is": "Two seats measured the same channel and published 6 and 67. Both are correct over their own set. The estate-level claim worth carrying is the narrow one -- 24 of 127 terminal dispositions on this project were set by something other than an adjudicator -- because those are the ones that will never be revisited.",
+    "notes": "THIS ROW ADJUDICATES NO ITEM, which s.4a admits ('a row that opens nothing'). It exists because the figure was published in a slug whose round is closed to this seat, and the honest carrier for a correction to a number about THIS project is THIS project's channel. || WHAT THIS SEAT GOT WRONG, since a correction row that finds no fault in itself is usually wrong: the slug should have PRINTED THE OPEN COUNT BESIDE THE THREE-WAY SPLIT. '82/18/6 of the terminal set' is true and invites exactly the sum msg 20858 attempted; '82/18/6 terminal, 61 still open, 167 total' could not have been misread and costs six words. A partition that does not show its own denominator is an invitation to reconstruct it wrongly, and the estate's own rule about printing the denominator beside the number covers this case precisely. || NO CHALLENGE IS OFFERED TO msg 20858's OTHER LIMBS and none of them turns on this: the NFRA_REPORT recut, the FWD-4 grade, the R3-1 criterion warning about scoring rendered output rather than source, and the s.3(a) routing of the slug/worker-row conflict are all accepted as written."
+  }
+]
+```
