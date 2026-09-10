@@ -7831,3 +7831,94 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-W2-S76 -- the round-8 face's CORRECTION of a round-7 line citation is the thing that had drifted
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T13:46Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W2-S76",
+    "one_line": "TO-CG-H-3's MEASURED block opens by telling the worker that one pin in the round-7 record HAS MOVED -- 'CG-s-35's four-hop table cites hop 3 as kuzu_nessie_load.py:71-77 ... At HEAD :68-78 is its RETURN DICT' -- and instructs that every round-7 line number be treated as a stale baseline. MEASURED at the same bytes: the return dict of read_stitch_vintage IS :71-77, exactly as round 7 recorded it. :68-70 is the `if not m.get(\"built_at\")` guard with its early `return {}`, and :78 is the `except` line. All FOUR round-7 pin claims still held at the cut base: PINS_MOVED_SINCE_ROUND7=0 of 4. The instruction to re-derive by CONTENT is correct and this row does not touch it; what it records is that the re-read performed to justify the instruction produced the only wrong line citation of the five, and that a correction carries no more authority than the record it corrects.",
+    "spec_asserts": "TO-CG-H-3 MEASURED block: 'CG-s-35's four-hop table cites hop 3 as kuzu_nessie_load.py:71-77. At HEAD read_stitch_vintage is defined at :51; :68-78 is its RETURN DICT ... Treat every line number in a round-7 record as a stored baseline from another vintage and re-derive it.'",
+    "world_is": "At the commit this worktree was cut from (2fd5cae09f, byte-identical to the issuer's own measurement commit de3970331f on all six files this order reads), ast.parse puts the Return's Dict literal at lines 71-77. The round-7 citation was exact. The order's own re-citation, :68-78, spans the guard above the return and the except below it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "h3_hops.py at this worktree: 'BASE: the returned dict literal is at :71-77 carrying 5 key(s)' and 'ROUND-7 CITED :71-77 ... MATCH=true', by ast.parse over the BASE blob, not over the working tree.",
+        "The same run: 'hop 3 COPY  kuzu_nessie_load.py:71-77 ... HELD_AT_BASELINE=true' and 'PINS_MOVED_SINCE_ROUND7=0 of 4' across all four hops.",
+        "git diff --name-only de3970331f 2fd5cae09f -- <each of the six files> is EMPTY, so the issuer's numbers and this baseline are the same bytes: 'BYTE-IDENTICAL BETWEEN THE TWO: 6 of 6 hop file(s)'.",
+        "infra/aws/globgrph/kuzu_nessie_load.py:68-70 and :78 read directly at 2fd5cae09f: the built_at guard and the except clause."
+      ]
+    },
+    "notes": "INERT because the instruction it accompanies (re-derive by content, never trust a stored line) is right regardless, and this worker followed it -- which is the only reason the discrepancy was visible at all. THE GENERAL FORM, which is why this is a row and not a footnote: a CORRECTION is a measurement and ages the same way the record does. Round 7's own S115 records the sibling case one axis over -- a hash test answering a question nobody asked. Here a line re-read answered 'where is the function's body' when the claim needed 'where is the return dict'. Both are the right instrument on the wrong object. NOT CHASED: no criterion was changed for it and the order proceeded exactly as cut."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W2-S77 -- a SECOND assembler of the stitch vintage vocabulary exists, and its only call site throws the dict away
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T13:46Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W2-S77",
+    "one_line": "THE FOUR-HOP TABLE NAMES ONE HOP-3 WRITER; THERE ARE TWO SITES THAT BUILD THE stitch_* VINTAGE VOCABULARY AND THE SECOND ONE'S OUTPUT GOES NOWHERE. derive_runner.fold_stitch_document returns a TEN-key dict (stitch_built_at, stitch_producer, stitch_git_sha, stitch_artifact_sha256, stitch_aws_snapshot, stitch_nodes_folded, stitch_v1_stamped, stitch_edges_folded, stitch_nodes_skipped_dup, stitch_nodes_skipped_unmapped_type) at :2567-2578. Its only call site, :2736-2742, assigns it to `stitch_vintage`, tests it for None, prints an INFO line and never reads it again -- the name appears exactly three times in the file and none of the three is a write into a manifest. So the DERIVE plane computes a stitch vintage and discards it, while the ENGINE plane (kuzu_nessie_load.read_stitch_vintage) independently re-reads the same marker from S3 to build a five-key subset that DOES reach source_vintage. CONSEQUENCE FOR THIS CELL, and the reason a worker had to look: CLAUDE.md's sign-off clause says count the WRITERS of a named property before acting on it. Counted: two assemblers, ONE writer. The portal key added by CG-s-38 therefore needs only the engine site, and this row is the printed denominator behind that 'only'.",
+    "spec_asserts": "TO-CG-H-3 and CG-s-35's four-hop table name hop 3 as infra/aws/globgrph/kuzu_nessie_load.py, 'one line beside the five marker fields it already copies' -- one site, one change.",
+    "world_is": "Two sites assemble the stitch_* vocabulary. The second, derive_runner.fold_stitch_document:2567-2578, is not named anywhere in this order, is not in its <paths>, and is a CONCURRENT surface this round (the decomposition assigns derive_runner.py to slot ~1 for CG-s-36/37). Its ten keys reach no manifest, no marker and no served field.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'stitch_built_at' over this worktree, 31403 files scanned, corpus=all, with the branch-only control file h3_tree_control.txt appearing in the hits: two first-party assembly sites, derive_runner.py:2568 and kuzu_nessie_load.py:72.",
+        "cat infra/aws/globgrph/derive_runner.py | grep -n 'stitch_vintage' at 2fd5cae09f returns exactly three lines: 2736 (the assignment), 2738 (the call), 2741 (the None test). There is no fourth use.",
+        "infra/aws/globgrph/kuzu_nessie_load.py:291-303 at 2fd5cae09f: source_vintage is built in ONE place, and read_stitch_vintage() is splatted into it at :302 -- the single writer that reaches the manifest.",
+        "infra/aws/globgrph/derive_runner.py:2567-2578 read directly: the ten-key return literal."
+      ]
+    },
+    "notes": "INERT: nothing is currently wrong for a reader -- the served vintage keys all come from the engine site and are correct. What is recorded is a SHAPE: two sites owning one vocabulary, one of them dead, which is exactly the configuration in which a future key gets added to the wrong one and the change reads as landed while nothing moves. FOUND OFF-TASK and NOT CHASED: derive_runner.py is outside this order's <paths> and is another slot's live surface this round, so no edit was attempted and none should be attempted from a second worktree mid-round. OWNER: the globgrph engine owner via 1.0.0_SA_CTO, as a question -- is the derive-plane assembler meant to feed something that was never wired, or is it residue to retire?"
+  }
+]
+```
+
+## NFRA_CLDGRPH-W2-S78 -- the committed source route's portal pin is not the gitlink it says it is, and nothing updates it
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T13:46Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W2-S78",
+    "one_line": "THE COMMENT IS THE SPEC AND THE WORLD DISAGREES WITH IT. .github/workflows/stitch-source-push.yml:61 says the portal checkout is 'Pinned at the gitlink SHA (not a floating DEV ref) for a HEAD-consistent snapshot'. At HEAD the repo's portal gitlink is 5907cbca98eb091124e38a32debefa355c1d4376; the pin at :66 is b96562720505fa143aad7cc5dd75115e6c609912. They are different objects, and the pin is a LITERAL that no step in the workflow, no hook and no tool updates when the gitlink moves. The stated design -- pin to the gitlink so the zip is a HEAD-consistent snapshot -- is sound; the MECHANISM that would keep it true is simply absent, so the property decays every time the portal gitlink advances and nothing anywhere reports it. This is why the same file's 'HEAD-consistent snapshot' claim cannot be read as a state: it is a description, and a description is never a state.",
+    "spec_asserts": ".github/workflows/stitch-source-push.yml:61 (comment, at 2fd5cae09f): 'Pinned at the gitlink SHA (not a floating DEV ref) for a HEAD-consistent snapshot.' TO-CG-H-3 carries the same line forward as MEASURED and describes the pin as deliberate.",
+    "world_is": "git ls-tree HEAD portal -> 160000 commit 5907cbca98eb091124e38a32debefa355c1d4376. The workflow's ref at :66 is b96562720505fa143aad7cc5dd75115e6c609912. PIN_EQUALS_GITLINK=false. No step in the file reads the gitlink; the value is typed in.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "h3_hops.py in this worktree, hop 1: 'the LITERAL portal pin is still at :66 -> b96562720505fa143aad7cc5dd75115e6c609912', 'the repo's own portal GITLINK at HEAD -> 5907cbca98eb091124e38a32debefa355c1d4376', 'PIN_EQUALS_GITLINK=false'.",
+        "git ls-tree HEAD portal in C:/tmp/wk-cldgrph-8-2, read directly.",
+        ".github/workflows/stitch-source-push.yml:53-68 read whole at 2fd5cae09f: the pin is a literal in a `with: ref:` block and appears nowhere else in the file.",
+        "CG-s-35 (deliverables/0.9.0_WK_NFRA_CLDGRPH~3/CG-s-35.portal-layer-vintage.result.md:157) recorded the same pin as stale against the portal head 5907cbca that actually built round 6's served zip."
+      ]
+    },
+    "notes": "ARMED, and the arming condition is worth stating precisely because it is CONDITIONAL: this route has never been observed to run (it needs secrets.PORTAL_REPO_PAT, unprovisioned). While that is true the stale pin harms nobody. The moment the PAT lands -- which is the very fix that would retire the hand route -- the workflow starts packing portal bytes from a commit nobody chose, silently, on every push to CLOUD. So the hazard is armed by the REMEDY to a different item, which is the shape worth recording. DISARM OWNER 0.7.0_AE_CloudOps, the same owner rows W2-S40 and W2-S63 already carry for this route. NOT FIXED HERE and deliberately so: the file is in this order's <paths> but changing a production route's checkout ref is not this cell's change (the cell's change is to write portal_sha into the archive, which was done), and under the egress hold no run of the altered route could be exercised -- an unexercised behaviour change to a production route is exactly what this estate keeps paying for. CG-s-38's record files it as owned item 2 with this row as its citation. CHEAPEST REMEDY, not proposed as a build: derive the ref from the gitlink in the job (git ls-tree HEAD portal) instead of typing it, which makes the comment's claim true by construction."
+  }
+]
+```
