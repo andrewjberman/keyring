@@ -812,3 +812,77 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S22 -- the rotation gate GRADUATES: FWD-10 is impossible as the system stands, the consumer set is FOUR not two, and ONE OF THE FOUR IS THE SIGNER
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S22",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T05:45Z",
+    "one_line": "L9, round 2: Z-S100, Z-S107 and Z-S109 GRADUATE. Z-S100 is a GATE THAT WAS WORTH MORE THAN THE BUILD IT BLOCKED -- both modelled consumers of the login signing key are SINGLE-SLOT, so FWD-10's no-sign-out rotation is impossible as the system stands, and the authorizer's cache has NO TTL AT ALL, making S10-AC2's 'wait for both consumers to be serving the new key' UNSATISFIABLE AT ANY WAIT LENGTH. Z-S107 then measures that THE CONSUMER SET IS FOUR, NOT TWO, AND ONE OF THE FOUR IS THE SIGNER ITSELF -- opalinvest-auth-handler reads the PRIVATE and PUBLIC key in the same artifact, and the face does not mention it at all. A rotation that teaches two verifiers a second slot and never touches the signer HAS NOT BEEN DESIGNED. Z-S109 is separable and standing: the edge role's prefix wildcard lets FIVE functions read the PRIVATE signing key when exactly ONE needs the public key.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z on all three, UNCHANGED. Z-S100's remedy is explicitly 'a separate cut' in the face's own deliverable 1, so it is an L6 re-cut. Z-S107's S10B-AC0 reserves the re-cut to the issuer in terms. Z-S109 is ROUTED and expressly NOT acted on, on that seat's own direction that the wildcard must NOT be narrowed inside a rotation face -- coupling a signing-key rotation to an unrelated IAM change on a LIVE, REPLICATED edge role means a rotation failure and an IAM failure become indistinguishable. NOTHING WAS TAUGHT, BUILT, DEPLOYED, ROTATED OR NARROWED, by those seats or by this one.",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S100",
+      "NFRA_OPSEC202609-Z-S107",
+      "NFRA_OPSEC202609-Z-S109"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S100 -- THE FINDING IS THE PRODUCT, not a failure to deliver: the face states that deliverable 1 IS a gate and the single-slot finding is what it was for. Nothing was rotated, no secret written, no Terraform run, and NO LEDGER OPENED -- an opened ledger would have asserted an act that must not begin. Confirmed on THREE PLANES: source at 998c79b970, the DEPLOYED bundles (exactly one occurrence of the secret id in each), and THE SECRET ITSELF, a bare 452-char PEM with exactly one BEGIN block.",
+        "Z-S100's SECOND DEFECT IS SHARPER THAN ITS HEADLINE AND IS NOT A RESTATEMENT: even if both consumers were taught two slots tomorrow, opal-portal-authorizer's cache at index.mjs:25-28 has NO TTL -- 'if (publicKey) return publicKey;' -- so a warm execution environment holds the pre-rotation key for the life of that environment, and Lambda does not bound that lifetime. YOU CANNOT WAIT OUT A CACHE THAT NEVER EXPIRES. The remedy is therefore TWO changes, a second slot AND a TTL, and the project has already written both -- for the ORIGIN secret, in the same file tree, in the same authorizer. THE EDGE, the one the face warned would be forgotten, is the BETTER-behaved of the two: it has a 300s TTL and would converge. The authorizer, which looks more ordinary, is the one that cannot.",
+        "Z-S100's DECISIVE READ WAS THE CHEAPEST AND MOST SKIPPABLE ONE, and the row says so: fetching the secret's own VALUE. Source and deployed bytes both say 'one scalar', but a scalar holding a JSON envelope with two keys inside would have made every one of those readings TRUE and the conclusion WRONG. The envelope check separates 'the code holds one variable' from 'the system knows one key' -- and it only counted because a KNOWN-TWO-SLOT secret was run through the same probe in a separate invocation to prove the probe could see slots at all.",
+        "Z-S107 -- MEASURED, NOT INHERITED, AND IT IS A STOP RATHER THAN A WIDENING: 5 roles grant the read across 221 roles scanned (not 2); the upper bound is 31 live functions (not 25); 4 of 29 scannable deployed artifacts carry the secret id; CloudTrail shows 3 of them calling GetSecretValue in a 30-hour window and all 4 invoked within the last 10 minutes. The two the face does NOT name are opal-session-analytics and opalinvest-auth-handler -- THE ISSUER.",
+        "Z-S107's SHAPE IS THE SAME SHAPE TWICE IN ONE FACE, AND THE SECOND INSTANCE IS THIS SEAT'S: a check scoped to the MEMBERS cannot see a defect in what the members SHARE. TO-OP-S-10 read two FUNCTIONS while the capability sat on the ROLES beneath them -- that was Z-S105's correction. Z-S105 then read two ROLES while the granting set was never censused -- so the bound it derived EXCLUDED lambda-edge-execution-role, the role carrying auth-validator-edge, one of the face's OWN two named consumers. The unscoped read that fixes both is get-account-authorization-details over all 221 roles, and it cost ONE CALL.",
+        "Z-S107's INSTRUMENT LESSON, which is why it ran two planes: they disagreed on exactly ONE member and that disagreement is the whole value of running both. A source census alone calls opal-session-analytics a consumer with no evidence it ever runs; a CloudTrail census alone omits it entirely and would have shipped a three-consumer answer that LOOKED measured. The log-group timestamp reconciles them and is a THIRD instrument neither plane contains.",
+        "Z-S109 -- SEPARABLE, STANDING, AND CORRECTLY NOT COUPLED: lambda-edge-execution-role's inline policy allows GetSecretValue on the PREFIX WILDCARD opal/auth/*, covering the PRIVATE key and the origin-verify secret as well as the public key. The role carries FIVE functions and the code-plane census shows exactly ONE reads any opal/auth secret at all -- auth-validator-edge, which needs the public key only. WHY IT IS INERT rather than merely deferred, and the reasoning is sound: the wildcard grants READ, not WRITE, no function on that role reads the private key today, so THE GAP DOES NOT WIDEN AT ROTATION and nothing about this face makes it more dangerous than it already is."
+      ]
+    },
+    "spec_asserts": "FWD-10 requires a signing-key rotation with no sign-out, which requires every consumer to hold two keys and to converge onto the new one.",
+    "world_is": "Both modelled consumers hold one key, one of them forever; the real consumer set is four including the token issuer, which no face names; and a shared edge role grants five functions read access to the private key when one needs the public one.",
+    "notes": "THE THIRD LEVEL OF ONE SHAPE, and Z-S109 names it: this project has now met the shared-dependency defect at THREE levels in one night -- functions under roles (Z-S105 correcting Z-S100), roles under a granting set (Z-S107 correcting Z-S105), and now permissions under a shared role (Z-S109). Whoever narrows the wildcard should ask whether five functions sharing one role is itself the question. || WHAT NONE OF THE THREE CLAIMS: Z-S100 does not claim the consumer population is two and says so in terms; Z-S107 does not claim opalinvest-auth-handler is the live login issuer, only that it read the public key 90 times in 30 hours and logged 10 minutes ago, so it is not dormant either way; Z-S109 does not claim the four functions have read anything. || THE RE-CUT THAT FOLLOWS IS THE ISSUER'S AND IS NOT DESIGNED HERE, but Z-S107's shape is recorded because it is measurement rather than preference: settle whether the issuer is live or legacy, decide whether the analytics consumer needs a slot or merely tolerates the rotation, and SIZE the deliverables against the resulting set rather than against 2."
+  }
+]
+```
+
+## C-S23 -- two records dismissed: this seat's bound, and this seat withdrawing it after a matcher that COULD NOT MATCH produced a false absence
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S23",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T05:45Z",
+    "one_line": "L9, round 2: Z-S105 and Z-S108 are DISMISSED WITH REASON -- this seat's upper bound of 25, and this seat's own withdrawal of it after Z-S107 measured 31. THE WITHDRAWAL NAMES A FAILURE MODE WORTH MORE THAN THE NUMBER: the bound was derived from a LITERAL-STRING search for 'jwt-public-key' across terraform, and lambda-edge-execution-role grants the read on the PREFIX WILDCARD opal/auth/*, which does not contain that string. THE MATCHER WAS STRUCTURALLY INCAPABLE OF MATCHING IT -- a FALSE ABSENCE produced by an instrument that could not match, not by a gap in coverage. And the role it missed carries one of the two consumers the face itself names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Both are RECORDS ABOUT Z-S100 and Z-S107 -- an intake bound and its withdrawal -- with no mechanism of their own to graduate and no remedy of their own to route, on Z-S20's underlying test. Z-S105's disarm as framed (that the re-cut STATE its consumer denominator and how it derived it) is exactly what Z-S107 then did, which is why that row is the better answer and why this one closes rather than graduating. Z-S105's central number is WITHDRAWN by its own author at Z-S108; what stands from it -- the DIRECTION that the surface is materially wider than 2, the arithmetic on the two roles examined, the clearing of ticket-center and partners-api as COMMENTS rather than grants, and the composition with the shared single-scalar Python module -- is carried onto Z-S107's graduation at C-S22.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S105",
+      "NFRA_OPSEC202609-Z-S108"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE FALSE ABSENCE IS THE KEEPER AND IT IS THIS SEAT'S OWN: a literal-string probe for 'jwt-public-key' cannot see a grant written as the prefix wildcard opal/auth/*. The instrument did not MISS the role -- it was incapable of matching it, which is a different defect from incomplete coverage and is invisible to every completeness check, because the probe reports a clean scan over a full denominator. THE ESTATE ALREADY BANKS THIS CLASS (a name search cannot enumerate wildcard grants) and this is a measured instance of it against a live IAM plane.",
+        "AND THE COST WAS NOT ABSTRACT: the bound this seat published EXCLUDED lambda-edge-execution-role, which carries auth-validator-edge -- ONE OF THE TWO CONSUMERS THE FACE ITSELF NAMES. A row written to widen the face's denominator omitted a component already inside it.",
+        "Z-S107'S METHOD IS THE RIGHT ONE AND IS CHEAP, which is what makes the failure worth recording rather than excusing: get-account-authorization-details over all 221 roles, evaluating EVERY statement with wildcard expansion on BOTH action and resource. One call. The instrument that answers 'who can do this' is a simulation or an authorization-details walk; a text search answers 'which files mention this'.",
+        "Z-S108 IS A CLEAN WITHDRAWAL AND SEPARATES WHAT FALLS FROM WHAT STANDS, which is why nothing is lost by closing it: WITHDRAWN are the number 25 and the claim that the bound was derived from the granting set. STANDING are the direction, the reproducible arithmetic on the two roles examined, the two cleared terraform references, and the disarm as framed. It also names the part that is NOT its author's to carry further, correctly: the fourth reader is the SIGNER, and that belongs to Z-S107."
+      ]
+    },
+    "spec_asserts": "The L10 precondition is that every investigation item under the project carries a disposition.",
+    "world_is": "Two rows are this seat's bound and its withdrawal; the finding they bounded graduates at C-S22 on a peer's better measurement.",
+    "notes": "UNDISPOSITIONED after C-S22 and this row: 62 of 165 -- the denominator moved because 0.5.0_AE_OpalETL~Z filed Z-S165 during this write (FWD-12's migration denominator counts callers, but two of the five execute THE SAME FILE, so migrating one migrates both). That row is NOT dispositioned here and is carried into the remaining pass. THE RUNNING COUNT OF DEFECTS IN THIS SEAT'S OWN WORK reaches seven with Z-S105's false absence. Six of the seven were caught by another seat's measurement rather than by this seat's re-reading, which is the honest shape of it: this seat's corrections have mostly been ACCEPTANCES of someone else's better instrument, not independent catches."
+  }
+]
+```
