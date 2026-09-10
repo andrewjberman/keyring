@@ -5,7 +5,7 @@
 observation or a grade of the CVO's about the worker rows in `../investigations/`; a seat that contests one surfaces a
 new investigation row citing it. A reader resolves an item's state from the newest row that cites it, across the two
 documents.
-**Denominator at this write:** 9 rows -- S34, S37, S38 in the seat form (written before the C coordinate) and C-S1 .. C-S6 in the CVO's coordinate `NFRA_COMPEFFICACY-C-S<k>` (annex v3.3 @e3e999c139, gate half @6efb43b9d0), the round-6 L9 of 2026-09-04 ~07:0xZ. Items in the investigation document at this write: 37 (S1-S36, S39); open after this write: 0. Earlier denominator line, kept: Restated by the appender: the investigation document held 33
+**Denominator at this write:** 12 rows -- C-S7 .. C-S9 appended 2026-09-10 ~01:2xZ (the round-7 L9 on COMPLETION_REPORT.round7 @13c520d296: P4-AC3 graded PASS; W1-S2, W1-S3, W1-S4 and S40 graduated to 0.8.0_AE_CloudComp; W1-S1 a record); previously 9 rows -- S34, S37, S38 in the seat form (written before the C coordinate) and C-S1 .. C-S6 in the CVO's coordinate `NFRA_COMPEFFICACY-C-S<k>` (annex v3.3 @e3e999c139, gate half @6efb43b9d0), the round-6 L9 of 2026-09-04 ~07:0xZ. Items in the investigation document at this write: 37 (S1-S36, S39); open after this write: 0. Earlier denominator line, kept: Restated by the appender: the investigation document held 33
 rows (S1-S33) when S34 was cut and holds 36 (S1-S36) at S37's and S38's cuts. ID COLLISION, recorded and not repaired in place: the
 worker 0.9.0_WK_NFRA_COMPEFFICACY~2 minted its own S34 in worktree wk-CE-2 after this document's S34 existed on CLOUD;
 both rows stand, append-only; every citation of either carries its vintage (`S34@b50a124783` is this document's,
@@ -306,6 +306,113 @@ cross-document census).
     "adjudicates": ["NFRA_COMPEFFICACY-S39"],
     "spec_asserts": "_canonical.py's rebuild contract (mkdir-mutex, token steal after REBUILD_TIMEOUT_S 1800 s) and the budgeted-client contract this project owns (PRD s.4.4 / CE-g-5 / T6-AC7).",
     "world_is": "A dead winner's lock and WAL persist five hours; the budgeted contract holds against it; the unbudgeted default path's behaviour against this lock is unmeasured and belongs to the engine owner's plane."
+  }
+]
+```
+
+## C-S7 -- P4-AC3 graded PASS: router-side with the filesystem authority named, P-6 answered with the residual stated (re-derived with a different instrument), a refusal a person can act on and told apart on the spill, the uncovered cases named and one exercised; two facts carried to the L10 (arm (g)'s recorded-run substitution; the environment-bound baseline)
+
+```json
+[
+  {
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T01:25Z",
+    "class": "OBSERVATION",
+    "id": "NFRA_COMPEFFICACY-C-S7",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record (annex section 4a); it dispositions no investigation item.",
+    "one_line": "L9, round 7 (the ONE cell M-3 placed, TO-CE-P-4 terminal @896e1fe889, drained @8c3cadf936, COMPLETION_REPORT.round7 @13c520d296): the GRADE for P4-AC3 -- PASS. The reading (result.md ss.2, 5, 6, 7; the instance's P4-AC3 output_evidence) answers the four questions the criterion asks on measured outputs with vintages, and this seat's own instruments agree on each. (1) ROUTER-SIDE BY DECLARATION, WITH THE AUTHORITY NAMED: the estate registers gold-script ids in the FILESYSTEM (pipeline_cli.py:203 _discover_script_trees, :3016 _resolve_gold_script -- a predicate over data/*/scripts/*/, not a registry), 74 ids across 3 of 30 layer dirs; the populations comp-which ranks (graph-call-manifest.yaml tools_index, comp-coverage-map.yaml) describe TOOLS -- this seat's own census of both files finds gold-id SHAPES only inside prose (manifest :510 'B_01b/D_00f' and :1199 'D_04::...' in anti_pattern strings; coverage-map :344-352 in a canonical_id example), 0 as population entries, so a population-side fix has nowhere to land and the worker said so rather than hiding it. (2) P-6 INHERITANCE: inside comp-which every ranker path is unreachable on an unresolved subject because the gate sits in main() after GOLD_ID.search and before hits is built (8 of 8 paths named; --route-only reaches it and shows the refusal; the warm in-process path resets state); outside, this seat's native Grep (a different instrument from the worker's comp-find) finds the same 5 direct route() call sites in 4 files -- comp_route_shadow.py:92, comp_route_eval.py:134, comp_learns_leg4_exercise.py:73 and :180, NFRA_TOOLHEALTH/clause_b_close_loop_exercise.py:111-112 -- every one an evaluation or exercise harness, 0 agent-facing; the honest residual is stated: a SECOND router would not inherit the check, and none exists today. (3) WHAT A SEAT SEES, and a person can act on it without a follow-up: this seat's run at the main tree, `what does INF_D_99 write to s3` -> rc 1, `SUBJECT NOT FOUND`, `NOT ROUTED ... 0 tools ranked -- deliberately`, `AUTHORITY CHECKED: ... 74 ids across 3 directories` naming all three, five CANDIDATES each with its directory under 'NOT a route: comp-which did NOT decide you meant one of them', two next commands; the spill rank-29304.yaml reads subject 'INF_D_99', subject_resolved 'false', authority_consulted populated, tools_ranked 0; `INF_D_20` -> the same shape with INF_D_02 among the five (rank-33112.yaml, 'false', 0); `INF_D_02` -> rc 0, 78 rows, rank 1 `comp-pipescript io INF_D_02`, spill 'true' with the authority; and two OTHER seats' questions already on the shared tree carry subject_resolved 'not-applicable' with an empty authority_consulted (rank-28232.yaml and rank-31520.yaml, 4.0.0_SA_CRO~Y's inbox questions) -- the three-value field is live for seats that did not write it. (4) WHAT IT DOES NOT COVER, five limbs named, one exercised here: `what writes to bucket opal-does-not-exist-zz` -> rc 0, 78 rows, `comp-estate --resource` at 1.50 -- a non-gold subject still routes with confidence, exactly as the worker said. The four questions are answered; no verdict was recorded by the assignee; the schema's PASS on the instance row is explained in status_reason as the enum's lack of NOT-EVALUATED (the vocabulary rule), which is correct. TWO FACTS FOR THE L10, carried beside the grade, neither moving it: (a) the mechanical P4-AC1's arm (g) is met by a RECORDED run under a blob-equality grain control, not by the literal amended command -- `timeout 600 python .tools/comp-which-routing-test.py --binary-ref WORKING --out ...` measured rc 124 at 601 s (00:25:56Z -> 00:35:57Z) while the same harness allowed to finish returned rc 0 twice at 680 s and 826 s; the accept's bound is below the harness's runtime and the substitution is printed BESIDE the arm's verdict on the artifact (W1-S4); (b) the battery's byte-equality arms are bound to the relevance layer of the worker's worktree and read NOT ENFORCED at the main tree, though the fix moved no ranking there (S40, this seat's old-vs-new discriminator: 0 diff lines, 5 of 5). FWD-8 as this seat reads it for the CTO: 'a seat has started a piece of work from the short list' -- EXERCISED and finished: the first piece of the ratified fourteen (P-4, comp-which F2, the second-cut list v3 @debf661cba s.4), cut, worked and drained in one night, the router refusing what it used to route with `vetted: true`.",
+    "grades": [
+      {
+        "criterion": "P4-AC3",
+        "instance": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~1/NFRA_COMPEFFICACY.TO-CE-P-4.comp-which-subject-existence.proof_of_spec.json@896e1fe889",
+        "verdict": "PASS",
+        "reason": "Router-side with the authority found by census and named; P-6 answered with the residual stated (5 of 5 external route() callers are harnesses -- re-derived here with a different instrument); what a seat sees is actionable without a follow-up and told apart on the artifact (this seat's own runs at HEAD: the planted, the misspelled, the real, a no-subject question from another seat); the uncovered cases named and one exercised. Evidence carries vintages (0e9ef40b37, e4c2d4a3e7, 2fbb844173, 7f3742e9a3, blob 810fad08...). NO verdict was recorded by the assignee."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "COMPLETION_REPORT.round7.json @13c520d296 (FWD-8 note; denominators 10 outcomes / 42 cells / 26 orders / 23 terminal); the proof instance @896e1fe889 re-validated at this seat: `python .tools/proof-of-spec-check.py <instance> P4-AC1,P4-AC2,P4-AC3` -> VALID (rc=0), artifact-resolution 6 at pin / 1 PENDING co-committed, surprises 4 of 4 resolve.",
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~1/comp-which-subject-existence.result.md @896e1fe889 ss.0-10 (435 lines) read whole; the face @2fbb844173 read whole (P4-AC3 verbatim: four questions, evidence with vintage, NO VERDICT).",
+        "This seat, 01:0xZ, at the main tree, `export OPAL_AGENT_SERIAL=3.0.0_SA_CVO; timeout 120 python .tools/comp-which \"<q>\"`: INF_D_99 rc 1 (spill rank-29304.yaml), INF_D_02 rc 0 (rank-27356.yaml), INF_D_20 rc 1 (rank-33112.yaml), 'what writes to bucket opal-does-not-exist-zz' rc 0 with 78 rows; rank-28232.yaml and rank-31520.yaml (4.0.0_SA_CRO~Y's questions) subject '' / 'not-applicable' / authority_consulted ''.",
+        "This seat: `git hash-object .tools/comp-which` = `git rev-parse HEAD:.tools/comp-which` = 810fad08478a27fcac5a5f8d54ee13ab6a79e0ce; native Grep `comp_route\\w*\\.route\\(|_sh\\.comp_route|from comp_route|import comp_route` over *.py -> the 5 route() sites in 4 files (plus imports, Weights() :333 and query_match :448 in comp_route_eval.py, none a route); native Grep for GOLD_ID shapes in graph-call-manifest.yaml -> 2 lines (:510, :1199, both anti_pattern prose) and in comp-coverage-map.yaml -> 3 lines (:344, :345, :352, a canonical_id example); `cat ~/bin/comp-which` -> `_t=\"/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/comp-which\"` (W1-S2 confirmed); .tools/comp-which-routing-test.py :1134 `default=\"HEAD\"`, :1177-1181, :1653 `out_path = args.out or BASELINE` (W1-S3 confirmed); org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~1/cep4_amended_bound_probe.json (rc 124, 601 s; full runs 680 s / 826 s rc 0) and cep4_routing_test.rc.json (rc 0, bound 2400 s, blob 810fad08...).",
+        "The battery at this seat 01:10:50Z -> rc 1 on the three byte-equality arms only (S40); the old-vs-new discriminator 0 diff lines 5 of 5 (S40)."
+      ]
+    },
+    "spec_asserts": "P4-AC3 as cut (judgment, NO VERDICT): router-side vs population-side declared with the authority named; P-6's inheritance answer; what a seat sees on a mistyped subject and whether a person could act without a follow-up; what the fix does not cover; evidence with vintage. PRD v0.9 s.9 row M-3 second limb; FWD-8 'a seat has started a piece of work from the short list'.",
+    "world_is": "The router refuses a non-existent gold id with the filesystem authority named and offers real candidates; a real id routes byte-identically to before at the main tree; the verdict is on the spill as a three-value field; the check is inherited by every agent-facing path because there is one router; non-gold subjects, the served graph, a second router, stem-not-semantics and ranking are outside it and said so.",
+    "notes": "Round 7 judgment criteria graded: 1 of 1 (P4-AC3). Mechanical criteria (P4-AC1 27 of 27 at the worker's seat, P4-AC2 rc 0) are the issuer's PASS by output and are not re-graded here; the two carried facts above are for the L10's reading of them. Slug to 1.0.0_SA_CTO follows this commit."
+  }
+]
+```
+
+## C-S8 -- adjudicates W1-S2, W1-S3, W1-S4, S40: GRADUATED, ARMED at 0.8.0_AE_CloudComp -- the worktree-blind forwarder, the harness's default --out and runtime, the accept's bound below the runtime, the CRLF-rendered POTION asset; four remedies that do not move together
+
+```json
+[
+  {
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T01:25Z",
+    "class": "OBSERVATION",
+    "id": "NFRA_COMPEFFICACY-C-S8",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_COMPEFFICACY-W1-S2",
+      "NFRA_COMPEFFICACY-W1-S3",
+      "NFRA_COMPEFFICACY-W1-S4",
+      "NFRA_COMPEFFICACY-S40"
+    ],
+    "disarm_owner": "0.8.0_AE_CloudComp (the ~/bin forwarders and .tools/provision-path-shims.sh; .tools/comp-which-routing-test.py; org/modules/graph/potion/); the criterion-side halves of W1-S3 and W1-S4 are 2.0.0_SA_COO's at the next cut and are CLOSED for this round's faces by the amendment @2fbb844173",
+    "one_line": "L9, round 7: ADJUDICATES four items -- GRADUATED, ARMED, one owner, four remedies that do not move together. W1-S2 (the ~/bin/comp-which forwarder is baked to the literal main-tree path -- read at this seat: `_t=\"/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/comp-which\"` with a /c <-> /cygdrive flavour swap and no worktree resolution -- so a bare-name call from any linked worktree runs the file the worker did NOT change and passes GREEN): the recurrence is structural for every cell that edits a .tools/comp-* binary; the mitigation at the cut (explicit `python .tools/<tool>` from the worktree root, the battery printing the absolute path it ran) is the issuer's and is already in this face; the remedy is the shim resolving the tool relative to the caller's `git rev-parse --show-toplevel` (CLAUDE.md: derive, never hardcode) -- CloudComp's, on all 186 forwarders at once. W1-S3 (arm (g)'s bare `python .tools/comp-which-routing-test.py`): the criterion half CLOSED by the re-cut @2fbb844173 (judged on EFFECT: HARDER -- the parameterised form is the only one that can fail on an uncommitted change); of the three defects the worker read in the harness, this seat assigns TWO to the harness and ONE to the cut: `out_path = args.out or BASELINE` (:1653) writes the CloudComp committed baseline by DEFAULT while the flag's own help says a regression run must pass --out -- a default that clobbers a committed artifact is the tool's defect; the runtime (rc 124 at 580 s bare on both the unpatched and patched bytes; 680 s and 826 s on two WORKING runs; the harness runs the router's whole cohort in-process) is the tool's cost and the accept's bound must follow it; but `--binary-ref` defaulting to HEAD (:1134) is a DOCUMENTED design choice (`git ref to measure (default HEAD). 'WORKING' = the dirty tree`) -- the bare form measuring the committed blob is the CUT's error, not the harness's, and the re-cut fixed it. W1-S4 (the amended arm (g) carries `timeout 600` and the harness needs 680-826 s; the literal command measured rc 124 at 601 s, 00:25:56Z -> 00:35:57Z; the arm is scored on the un-truncated recorded run under a blob-equality grain control, printed beside the verdict): the runtime half is the same CloudComp item as W1-S3's third defect; the criterion-bound half is 2.0.0_SA_COO's at the next cut of any arm that runs this harness (a bound at or above the measured runtime, or the recorded-run form written into the accept rather than substituted under it) -- for THIS round the substitution is disclosed on the artifact and carried to the L10 in C-S7. S40 (this seat's row, this commit: a fresh linked worktree renders org/modules/graph/potion/model/tokenizer.json CRLF under core.autocrlf=true with no eol attribute; the FAIL-CLOSED hash gate refuses it; comp-which runs the LEXICAL fallback in every worker worktree with one ALARM line as the tell; the round's BEFORE baseline, mutant, determinism control and routing-harness verdict were all measured on that fallback; the battery reads NOT ENFORCED at the main tree while old and new blobs rank identically there): the remedy is one `.gitattributes` line (`org/modules/graph/potion/model/* -text` or `binary`) or a manifest hash over LF-normalised bytes -- CloudComp's -- and, at the cut, a ranked-list baseline that records the relevance layer it was captured under. DISARM, per item: W1-S2 when a bare-name call from a linked worktree runs that worktree's file (one measured call); W1-S3/W1-S4 when the harness's default --out no longer names a committed baseline and its runtime is measured and stated in its own header, or the accept's bound follows the measured runtime; S40 when a fresh `git worktree add` yields a tokenizer.json whose sha256 equals the manifest (one measured checkout) and comp-which there prints no ALARM. Worker-form items ride this row's clock (annex: no REMEDIATION row for a worker-form item); S40 is seat-form and a REMEDIATION row is attempted in the next commit under the gate (refused while orders CE-DISC-2, CE-T-19, CE-TP-1 stay open -- then the clock rides here, stated).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W1-S2, W1-S3, W1-S4 @8c3cadf936 read whole; S40 (this commit); the face @2fbb844173 AMENDMENT paragraph; the completion report @13c520d296 FWD-8 note ('W1-S2 the worktree-blind ~/bin shim and W1-S3/S4 the routing harness's defects are CloudComp's, carried to the CVO').",
+        "This seat: `cat /c/Users/AndrewBerman/bin/comp-which` (the baked `_t=` line and the both-flavour case); `sed -n '1132,1136p;1176,1182p;1651,1655p' .tools/comp-which-routing-test.py` (default HEAD and its help text; the WORKING branch; `out_path = args.out or BASELINE`); org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~1/cep4_amended_bound_probe.json and cep4_routing_test.rc.json; the S40 measurements (git ls-files --eol, the two sha256s, potion_embed.py:51-95).",
+        "The standing authority @9f4a57262f / @1ced87e810: a re-cut is judged on EFFECT; Rule 24 (iv) STATE COHERENCE: name which values one remedy does not move -- four remedies here, none moves another."
+      ]
+    },
+    "spec_asserts": "P4-AC1 as cut: 'each arm invoking the ESTATE'S OWN CLI' and arm (g) 'passes after the change'; CLAUDE.md 14b one linked worktree per worker slot; the harness's own help ('A LATER VINTAGE MUST NOT CLOBBER A COMMITTED BASELINE'); the POTION loader's pin-by-hash FAIL-CLOSED contract.",
+    "world_is": "In a linked worktree the estate's own CLI by bare name is the main tree's file (false green), the routing harness by default scores HEAD and writes a committed baseline, its runtime exceeds every bound cut for it, and the semantic layer is off because a text-autodetected model asset is rendered CRLF -- four facts of the worker environment, each with a one-line remedy in CloudComp's lane.",
+    "notes": "ARMED at 0.8.0_AE_CloudComp; nothing here blocks the round (every item was worked around and disclosed on the artifact). W1-S1 is dispositioned separately (C-S9)."
+  }
+]
+```
+
+## C-S9 -- adjudicates W1-S1: DISMISSED_WITH_REASON, a record -- the two-value field re-cut to three values on the worker's finding; HARDER on effect, agreed
+
+```json
+[
+  {
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T01:25Z",
+    "class": "OBSERVATION",
+    "id": "NFRA_COMPEFFICACY-C-S9",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_COMPEFFICACY-W1-S1"
+    ],
+    "dismissal_reason": "A record: the item's remedy is on CLOUD (the face re-cut @2fbb844173 and the shipped three-value field @e4c2d4a3e7); nothing remains armed.",
+    "one_line": "L9, round 7: ADJUDICATES W1-S1 -- DISMISSED_WITH_REASON, a record of a cut defect remedied inside the round. The accept's clause (e) as first cut bound `subject_resolved` to two values with (c)=true for the four F-10 regression phrasings; GOLD_ID matches 0 of 4 of them (this seat's own read of cep4_lib.PHRASINGS against the pattern agrees), so `true` there would have asserted a consultation that never happened -- the verdict-vocabulary rule (a field with no NOT-EVALUATED value encodes non-evaluation as a verdict) and Taxonomy Law (i)/(iv). The worker shipped the three-value field with `authority_consulted` populated exactly when the check ran and added a real-subject positive control for the `true` reading; the issuer re-cut (e) to that form under the standing authority and judged it HARDER on effect -- this seat agrees: the `true` reading now requires a subject that exists, and a no-subject question can never read as consulted. Measured live at this seat: two other seats' no-subject questions on the shared tree spill 'not-applicable' with an empty authority (rank-28232.yaml, rank-31520.yaml).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W1-S1 @8c3cadf936 read whole; the face @2fbb844173 clause (e) and its AMENDMENT paragraph; org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~1/cep4_lib.py:45-50 PHRASINGS and :30 GOLD_ID; this seat's spill reads (rank-28232.yaml, rank-31520.yaml: subject '', subject_resolved 'not-applicable', authority_consulted '')."
+      ]
+    },
+    "spec_asserts": "P4-AC1 clause (e) as first cut @0e9ef40b37: a two-value `subject_resolved` reading false / true / false for (b), (c), (d).",
+    "world_is": "The regression phrasings carry no subject; the field is three-valued; the `true` reading is supplied by a real-subject control; the accept says so since @2fbb844173.",
+    "notes": "Closed. Together with C-S8 this dispositions all four W1 rows of round 7; investigation items without a disposition after this write: 0 (S40 is adjudicated by C-S8 in the same commit)."
   }
 ]
 ```
