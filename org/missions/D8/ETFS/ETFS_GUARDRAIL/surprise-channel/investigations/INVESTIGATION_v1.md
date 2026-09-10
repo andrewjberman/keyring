@@ -808,6 +808,215 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "TO-EG-s-17 as cut: arm (d) 'the function's CloudWatch log for THIS invocation names the recovered date in catchup_processed'; arm (b) 'your invoke's payload equal to it plus the date field'.",
     "world_is": "The recovery of the estate's one real hole was the producer's own act naming the date, by the main path; the catch-up path is structurally unreachable for that hole's shape, and the only way to exercise it is a served delete no agent may perform.",
     "notes": "Judged on EFFECT: EQUAL on 'the producer's own act named the date', EXPLICIT where the first cut was silent (the unexercised branch is printed, never implied). The order is terminal @d1b8945948 with that qualifier on its token; the CVO grades what the token does and does not claim. This row is the disarm act's record (the NFRA_OUTSET-S27 shape): ETFS_GUARDRAIL-W2-S8 itself is not edited; its L9 disposition is 3.0.0_SA_CVO's. Related: [[ETFS_GUARDRAIL-W2-S8]]."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S11",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-09T23:26Z",
+    "one_line": "EG-s-14's manual fire of the monthly orchestrator FAILED on the box: the DEPLOYED render_month_end.py cannot import _orion_vendor_asof, so no August artifact was rendered, nothing was published to the served key and no report email was sent. The failure is in the renderer's own module-level import, not in the invoke, the payload, the schedule, the box or the coverage package -- which means the 10-01 SCHEDULED fire fails identically unless the renderer's box-side import is fixed and re-deployed.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM command c935cadb-1e84-473a-a6ca-ab068f89f564 ('ETFS month-end render 2026-08', requested 2026-09-09T23:15:09Z, instance i-070477bf35fc54409) Status=Failed, ResponseCode=1, Output verbatim: 'Traceback (most recent call last): File \"/opt/etfs-reports/render_month_end.py\", line 72, in <module> from _orion_vendor_asof import orion_normalize_as_of ... ModuleNotFoundError: No module named '_orion_vendor_asof' / During handling of the above exception, another exception occurred: ... line 75 ... ModuleNotFoundError: No module named '_orion_vendor_asof' / failed to run commands: exit status 1' (.tools/aws ssm list-command-invocations --command-id c935cadb-1e84-473a-a6ca-ab068f89f564 --details)",
+        "data/etfs/scripts/presentation/render_month_end.py:70-76 @93264db36c -- primary import inserts <repo>/data/inf/scripts/silver on sys.path; the ImportError fallback inserts os.path.join(_ORION_HERE, '..', 'coverage'), which on the box is /opt/coverage, while the coverage package's own self-bootstrap (:88-109) pulls the artifact prefix's coverage/ to _ORION_HERE/coverage = /opt/etfs-reports/coverage AND runs AFTER this import -- so on a box without a pre-existing /opt/coverage the module-level import at :72/:75 raises before any bootstrap can help",
+        "DEPLOYED-vs-BUILT: s3://opal-313476888478-lambda-artifacts/ec2/etfs-reports/render_month_end.py (LastModified 2026-09-05T06:52:22Z) sha256 6c3c963e693724be848d55511d81d374cb3fd455dca84513afb62603fd7893f7, 61699 bytes == git show HEAD:data/etfs/scripts/presentation/render_month_end.py sha256 6c3c963e693724be848d55511d81d374cb3fd455dca84513afb62603fd7893f7 -- BYTE-EQUAL, so this is a SOURCE defect, not a stale deploy",
+        "The vendored module IS on the artifact prefix and IS correct: s3://opal-313476888478-lambda-artifacts/ec2/etfs-reports/coverage/_orion_vendor_asof.py sha256 15d28dd8444455e5d4143dca4c62adea109aeb4b50a3ee4e99af0b54890e6f72 (6979 B) == git show HEAD:data/inf/scripts/silver/_orion_vendor_asof.py, same sha256 -- the bytes are fine; only the box-side path/ordering is wrong",
+        "Lambda execution RequestId 2be062b2-6642-4092-852a-7dc4c0b714b5 (StatusCode 200, response payload {\"mode\": \"run\", \"ok\": true}) ran 37101.01 ms and printed NOTHING but START/END/REPORT -- the handler's status!=Success branch returns None and the handler still returns ok:true, so the invoke's own 200/ok is NOT a success oracle (infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:405-424,:513 @93264db36c)",
+        "WORLD AFTER: 5 of 5 served objects under s3://opal-data-etfs/platinum/reports/2026-08/ still carry LastModified 2026-09-01T17:38:41/42Z and the same ETags read BEFORE the invoke; no coverage_verdict.json, no coverage_unresolved.json, no refused/ prefix; 0 SES MessageId lines in the run's log; box i-070477bf35fc54409 State.Name=stopped (CloudTrail StopInstances 2026-09-09T23:15:24Z by etfs-reports-orchestrator)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 THE CELL: 'The reporter box starts, renders with --gate (EG-s-8's seam, S8-AC9), publishes the PDF/HTML/CSV to the served key, SES-sends the report to the JOINED recipients ... and stops', and BOUNDS: 'NO CODE CHANGE, NO DEPLOY under this order. The orchestrator and the renderer run AS DEPLOYED by round 1; if the deployed renderer does NOT carry the coverage line ... that is a FINDING against round 1's deploy -- a BLOCKING row naming the served vs built hashes -- never a hot fix.'",
+    "world_is": "The deployed renderer DOES carry the coverage line (the '# coverage:' writerow is present in the deployed bytes, which are byte-equal to repo HEAD), but it never executes: the module-level _orion_vendor_asof import at render_month_end.py:72/:75 raises ModuleNotFoundError on the reporter box, the SSM render command exits 1, and the orchestrator returns from _run()'s status!=Success branch after alerting -- nothing rendered, nothing published, nothing sent. S14-AC1 arms (d) and (f) FAIL by output on a WORLD condition this order is forbidden to fix.",
+    "notes": "NOT FIXED HERE: this order grants no code path and forbids a deploy, so the one-line path/ordering repair (import the vendored module from _ORION_HERE/coverage after a bootstrap, or copy _orion_vendor_asof.py to the box beside render_month_end.py in the orchestrator's _render_command) plus its artifact re-upload belongs to the issuer's next cut. ARMED because, left alone, the NEXT NORMAL FIRE (the 10-01 scheduled run) takes the identical path and fails identically -- the schedule is ENABLED, cron(0 10 1 * ? *) America/New_York, Target.Input {\"mode\":\"run\"}, read live this turn. The ledger entry for this move is HELD on exactly this gate, not left OPEN. NO S3 OBJECT WAS DELETED and no rollback was needed: the served state is bit-identical to its pre-invoke state."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S12",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-09T23:26Z",
+    "one_line": "The order's named archive location (platinum/reports/2026-08/_archive_<UTC>/<name>) sits INSIDE the month prefix that the orchestrator enumerates to build the report email's attachment list -- so archiving there would have attached 3 stale duplicate CSVs (identical filenames) to the real delivery to aj@ and andrew@. The archive was written to platinum/reports/_archive/2026-08/<UTC>/ instead: same bucket, outside that enumeration, nothing deleted, sha256 pairs unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:265-274 (_month_csv_keys) @93264db36c -- list_objects_v2(Bucket=ETFS_BUCKET, Prefix='platinum/reports/2026-08/') with NO delimiter, returning every key ending .csv; :283-298 (_build_report_email) attaches each with filename=key.rsplit('/',1)[-1], so an archived copy under the month prefix arrives as a SECOND attachment with the SAME filename",
+        "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/etfs_month_csv_harness_ZERO_S3_WRITE.py:33 @93264db36c -- 'the real run enumerates platinum/reports/{month}/', the same reading from a different author",
+        "Archive as written: platinum/reports/_archive/2026-08/20260909T230636Z/{etf_ownership.html,etf_ownership.pdf,opaletfs_49financial_202608.csv,opaletfs_cottonwood_202608.csv,opaletfs_inflection_202608.csv}, 5 of 5 copy-object rc=0, 5 of 5 sha256 byte-equal to the priors (table in the ledger entry and in deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/archive_table.json)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 NEVER-2 clause: 'if not [versioned], copy-object each prior object to platinum/reports/2026-08/_archive_<UTC>/<name> and record both sha256s -- byte-equal'.",
+    "world_is": "opal-data-etfs has versioning DISABLED (get-bucket-versioning returned an EMPTY document, rc=0), so the copy-object limb applies; but the named destination is inside the prefix the orchestrator enumerates for the email's CSV attachments, so following the letter would have corrupted the very served DELIVERY that FWD-5 grades. The CTO's sign-off half (broker 94775) names 'the prior objects archived before the run with sha256 pairs' without naming a location, so the substance was preserved and only the location moved.",
+    "notes": "Disarmed FOR THIS EXECUTION by the relocation; ARMED for the issuer because the clause, left as written, would harm the next normal execution of this same cell (an EG-s-14 re-run after the S11 renderer fix). Disarm = one amendment to the face's archive-location clause. NOTHING WAS DELETED: the archive is additive, and no object under platinum/reports/2026-08/ was modified by the archive step (5 of 5 ETags unchanged)."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S13",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-09T23:26Z",
+    "one_line": "S14-AC1(e)'s named instrument does not exist in this account: neither CloudTrail trail captures Lambda DATA events, so a 'CloudTrail Invoke for the function in the run's minute' can never return a row -- the lookup returns 0 while a same-window positive control returns 1, which is an INSTRUMENT ABSENCE and not evidence about who invoked.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/aws cloudtrail lookup-events --lookup-attributes AttributeKey=EventName,AttributeValue=Invoke --start-time 2026-09-09T23:14:00Z --end-time 2026-09-09T23:25:00Z -> Events: [] (0 events)",
+        "POSITIVE CONTROL, same window, same command shape: AttributeValue=StartInstances -> 1 event, 2026-09-09T23:14:48Z, Username=etfs-reports-orchestrator; AttributeValue=StopInstances -> 1 event, 2026-09-09T23:15:24Z -- management events ARE recorded for this window",
+        ".tools/aws cloudtrail get-event-selectors --trail-name opal-organization-trail -> DataResources cover only AWS::S3::Object on opal-data-bd/ and opal-data-inf/ (ReadOnly); --trail-name opal-served-key-write-trail -> AdvancedEventSelectors match only S3 Data writes under opal-data-{inf,bd,cot}/platinum/firm/ -- NO AWS::Lambda::Function data resource on either trail (2 of 2 trails read)",
+        "SUBSTITUTE ORACLE USED (recorded, not asserted as the named one): the client's response header x-amzn-RequestId 2be062b2-6642-4092-852a-7dc4c0b714b5 from the caller identity arn:aws:iam::313476888478:user/Andrew_Berman appears as 'START RequestId: 2be062b2-6642-4092-852a-7dc4c0b714b5' in /aws/lambda/etfs-reports-orchestrator log stream 2026/09/09/[$LATEST]ee4d9f0f57b4424183ff917619bf011f -- the execution is the launching seat's, and the scheduler role etfs-reports-scheduler-role could not have fired it (cron(0 10 1 * ? *), next fire 2026-10-01)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 S14-AC1(e): 'TOLD APART: CloudTrail Invoke for the function in the run's minute shows the invoking identity = the launching seat's user (not etfs-reports-scheduler-role)'.",
+    "world_is": "lambda:Invoke is a CloudTrail DATA event and no trail in account 313476888478 selects Lambda data events, so lookup-events returns 0 for Invoke in ANY window -- a true absence and a logging gap are indistinguishable on that instrument, which is why the positive control and the request-id join are printed beside it. The arm is recorded FAIL by the battery's own literal reading rather than converted to a pass by the substitute oracle.",
+    "notes": "No new trail, selector, alarm or monitor was created (moratorium; nothing in this order's paths). If the issuer wants the named oracle for future orders, that is a trail/selector change with its own ledger, not a worker act."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S14",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-09T23:26Z",
+    "one_line": "The order's BOUNDS state the orchestrator invoke 'returns in seconds (it starts the box and returns)'; it does not -- _run() blocks through the SSM wait (up to 300 s) and the render poll (up to 720 s), so a default-timeout synchronous CLI invoke would hit botocore's 60 s read timeout and RETRY, starting a SECOND concurrent production run on the same served key.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:386-441 @93264db36c -- _run() calls start_instances, then _wait_ssm_online(deadline = now + WAIT_ONLINE_BUDGET 300), then send_command, then a while-loop of time.sleep(15) + get_command_invocation until RUN_BUDGET 720 s elapses, THEN _email_report, THEN stop in finally; :74-75 WAIT_ONLINE_BUDGET=300, RUN_BUDGET=720; live get-function-configuration Timeout=900",
+        "THIS RUN returned in 41 s ONLY because the render failed at import (row W1-S11): invoke 2026-09-09T23:14:43Z -> 23:15:24Z, Lambda Duration 37101.01 ms. On the success path the same call blocks for minutes.",
+        "DISARMED FOR THIS EXECUTION: the invoke was issued as '.tools/aws lambda invoke --function-name etfs-reports-orchestrator --payload {\"mode\":\"run\"} --cli-read-timeout 0 --cli-connect-timeout 60 --debug', i.e. with the client read timeout removed so no client-side retry could double-fire; exactly one execution exists in the log group for the window (1 of 1 START RequestId lines)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 BOUNDS: 'the orchestrator invoke itself returns in seconds (it starts the box and returns); the RUN takes minutes on the box -- poll the served key and the box state with bounded reads'.",
+    "world_is": "The orchestrator is SYNCHRONOUS end to end: it starts the box, waits for SSM, runs the render, emails, stops, and only then returns. A worker who follows the bound literally with a bare `aws lambda invoke` gets a 60 s client read timeout on the success path, and the CLI's default retry then issues a SECOND RequestResponse invoke -- two concurrent renders writing the same served keys and two report emails.",
+    "notes": "Form only, no significance claimed: the fix is one clause in the face (state the flags, or name --invocation-type Event and expect StatusCode 202 instead of 200). Recorded because the next slot on this cell inherits the same bound."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S15",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-09T23:26Z",
+    "one_line": "ARTIFACT-CARRIES-NO-TRIGGER-FIELD: no served August artifact carries a trigger, run-id or invocation field, so a scheduled fire and a hand-started one cannot be told apart ON THE ARTIFACT -- only from CloudWatch/CloudTrail, which for lambda:Invoke this account does not log (row W1-S13).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The battery printed the literal token ARTIFACT-CARRIES-NO-TRIGGER-FIELD after scanning the served CSVs and HTML fetched this turn for the run's request id, 'run-id' and 'trigger' (0 hits across 4 of 4 text artifacts read; the PDF is binary and was not scanned)",
+        "data/etfs/scripts/presentation/render_month_end.py:793-806 (write_month_csvs) and :599-664 (_html) @93264db36c -- the CSV's only non-numeric row is the '# coverage:' comment and the HTML carries the coverage note; neither emits a run id, a trigger name or an invocation timestamp",
+        "infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:196-232 (_render_command) @93264db36c -- the SSM command passes only --month/--pdf/--gate/--s3-out; nothing about the trigger reaches the renderer"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 S14-AC1(e): 'if any served artifact carries a trigger/run-id field, print it; if none does, PRINT ARTIFACT-CARRIES-NO-TRIGGER-FIELD and file the row (the OUTSET carrier's shape is a cut question for the issuer)'.",
+    "world_is": "None does. The artifacts the run publishes carry month, numbers and the coverage line only; the sole trigger evidence lives off-artifact (the Lambda log's RequestId), and the CloudTrail limb that would name the invoking identity is not captured in this account.",
+    "notes": "Filed exactly as the criterion instructs; the carrier's shape (a trigger/run-id field in coverage_verdict.json, or a CSV comment row) is the issuer's cut question, not a worker act. This row is the criterion's own required output, not a defect claim."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S16",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-09T23:38Z",
+    "one_line": "deploy_ledger.py REGENERATES the whole change_management entry from the sentinel on every close-leg/hold, so any hand-added section -- here the NEVER-2 never-widen sign-off block, the served-key list, the archive table and the rollback recipe the order requires the entry to CARRY -- is silently destroyed by the next ledger call, with no warning and no diff shown. Measured: the S14-AC1 battery's arm (a) read 'served keys named 5 of 5; rollback=True' before the close-legs and 'served keys named 1 of 5; rollback=False' after, with nothing but three close-leg calls in between.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/deploy_ledger.py:239 (_render_entry) and :289-291 (_write_entry -> Path(WORKSPACE / state['entry_path']).write_text(_render_entry(state), ...)) @93264db36c -- the entry file is rendered wholly from the sentinel state and written with write_text, i.e. truncated and replaced; nothing reads or preserves pre-existing file content",
+        "MEASURED, same file, same battery, nothing else changed: run at 2026-09-09T23:25:51Z -> 'ARM a PASS ... served keys named 5 of 5; prior sha256 named 5 of 5; rollback=True'; run at 2026-09-09T23:35Z, after close-leg L1/L2/L5 (20260909T233249Z) and hold (20260909T233308Z) -> 'ARM a FAIL ... served keys named 1 of 5; prior sha256 named 5 of 5; rollback=False'; after re-appending the section, run at 2026-09-09T23:39Z -> 'ARM a PASS ... 5 of 5 ... rollback=True' again",
+        "The prior-sha256 limb survived only by accident: those hashes also appear inside the L1 leg's own --proof string, which the sentinel does carry -- a partially-surviving section reads as a partially-intact record"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 NEVER-2 clause: the entry is 'OPENED FIRST and BOTH never-widen halves are quoted in it', 'naming the served keys the run will REWRITE ... the PRIOR objects ARCHIVED before the run ... the ROLLBACK ... and the two sign-off ids' -- and S14-AC1(a) grades the ENTRY FILE for exactly those contents. The order also prescribes close-leg/hold calls on the same entry AFTER the run.",
+    "world_is": "The two instructions collide: the content the criterion grades can only live in the entry .md (the sentinel schema has no field for it), and every subsequent deploy_ledger.py mutation rewrites that .md from the sentinel. Following the order in its natural sequence (open -> append the NEVER-2 detail -> run -> close legs) DELETES the sign-off block, and the deletion is visible only if something re-reads the file afterwards.",
+    "notes": "WORKED AROUND, NOT FIXED: the section was re-appended AFTER the last ledger mutation of this order, and the re-appended text says so in its first paragraph so the next reader knows the ordering constraint. No change was made to .tools/deploy_ledger.py -- out of this order's <paths> and not its cell. ARMED for the issuer because the next NEVER-2 entry in this estate hits the same trap; the durable fixes are either a sentinel field for free-form detail that _render_entry emits, or an explicit 'append your detail LAST' clause in the face. Form only; no significance claimed."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S17",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T00:45Z",
+    "one_line": "The amendment orders the fix deploy recorded 'as a NEW LEG of the SAME NEVER-2 entry (resume it, do not open a second)', but .tools/deploy_ledger.py has no add-leg verb and `open` on an existing slug REFUSES -- the manifest is fixed at open time. The three new legs (deploy, archive-2, re-invoke) were therefore appended to the entry's SENTINEL JSON by hand, which is in this order's <paths> and is the only input _render_entry rebuilds the .md from.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/deploy_ledger.py:356-358 (cmd_open) @93264db36c -- `if _state_path(args.slug).exists(): sys.exit(\"ERROR: deploy ledger '<slug>' is already OPEN ...\")`; the argparse subcommand set is {open, close-leg, close, hold, check, list} (:--help output, read this turn) with no add-leg / amend verb",
+        "org/critical_paths/.open_deploys/etfs-guardrail-eg-s-14-august-rerender.json -- legs L6 (s3-prefix, the renderer deploy), L7 (verify, archive-2) and L8 (activation, the re-invoke) appended by this worker at 2026-09-10T00:04Z with proof=null, then closed through the tool's own close-leg verb (rc=0 each: 'OK: leg L6 closed', 'L7', 'L8', 'L3', 'L4'), and the entry CLOSED by the tool ('all 8 legs proven; sentinel removed')",
+        "The append is recorded in the entry's own Log line 20260910T0004Z, so the hand edit is visible in the artifact a reader sees, not only in git"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 AMENDMENT @5507841f04: 'THE DEPLOY: aws s3 cp ... as a NEW LEG of the SAME NEVER-2 entry etfs-guardrail-eg-s-14-august-rerender (HELD on W1-S11 -- resume it, do not open a second)'.",
+    "world_is": "The tool cannot add a leg to an existing entry: open refuses on an existing sentinel and no other verb touches the manifest. The instruction is satisfiable only by editing the sentinel JSON directly (in <paths>) or by opening a second entry (explicitly forbidden). The former was done; every subsequent state change went through the tool.",
+    "notes": "Form only. Two durable fixes for whoever owns the tool: an `add-leg` verb, or an `open --resume` that appends. INERT: nothing about the world is left armed by this -- the entry is CLOSED with all 8 legs carrying proof, and the same class of hand edit is already how W1-S16's ordering clause is satisfied."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S18",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T00:45Z",
+    "one_line": "S14-AC1 arm (f) names two instruments that cannot show a send in this estate -- the orchestrator prints NOTHING on the success path (no MessageId is ever logged) and CloudTrail captures no SES call (the same COVERAGE-ABSENT class the amendment already ruled for lambda:Invoke) -- so arm (f) reads FAIL on a successful, evidenced send and is the ONLY failing arm of seven.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:405-441 @93264db36c -- _run()'s success path calls _email_report(month) and returns with the comment 'rendered + delivered -> quiet success (no alert)'; _email_report (:296-300) calls _ses.send_raw_email(...) and neither prints nor stores the response, so no MessageId can reach CloudWatch: 0 of 0 possible",
+        "MEASURED on the successful re-run (request id a027eeb0-e954-4dde-9c4f-1d91cad77f67): `logs filter-log-events` over 2026-09-10T00:20:57Z-00:29:57Z returned 4 events -- INIT_START, START, END, REPORT -- and 0 lines containing 'MessageId'",
+        "CloudTrail `SendRawEmail` in the same window = 0 events, with the same-window POSITIVE CONTROL showing management events ARE logged (StartInstances 00:23:06Z, StopInstances 00:24:57Z, both Username etfs-reports-orchestrator); `get-event-selectors` on both trails (2 of 2) shows only management events + S3 object data on other buckets -- no SES data plane, exactly the COVERAGE-ABSENT fact the amendment ruled for lambda:Invoke",
+        "THE SEND IS EVIDENCED BY TWO OTHER INSTRUMENTS: (i) SES's own counter, get-send-statistics, rose +2 DeliveryAttempts across the run (total 80 -> 82; the data point covering the run carries attempts=2) -- one send_raw_email to TWO destinations, which is the JOIN; (ii) the etfs-reports-alerts SNS topic published 0 messages in the run window while the SAME metric shows 1 publish in the FAILED first fire's window (2026-09-09T23:15:00Z) -- every failure branch of _run, including 'report rendered but EMAIL FAILED', publishes there, so 0 beside a live positive control says the send did not fail",
+        "LIMIT, stated: get-send-statistics is ACCOUNT-WIDE, so +2 in a 15-minute bucket is consistent with -- not exclusive to -- this send; the exclusive discriminator is the alert-absence with its positive control, plus the code path (the send is the last act before the quiet return)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 S14-AC1(f): 'the SEND: the orchestrator's log shows the report send with its SES MessageId(s) and Destinations naming BOTH aj@opalinvest.com and andrew@opalinvest.com (JOIN, ruling 3), and CloudTrail SendRawEmail in the run's minute'.",
+    "world_is": "Neither limb can return a row for ANY send by this deployed handler: nothing logs a MessageId, and no trail selects the SES data plane. The arm can therefore neither pass on a real send nor fail on a missed one -- the precise condition the amendment named when it re-cut arm (e) ('the old arms could neither pass nor fail; these discriminate'). The send did happen and is evidenced by two other instruments; arm (f) is nevertheless graded literally and reads FAIL, which is why S14-AC1 is 6 of 7 and the order's <status> is NOT flipped.",
+    "notes": "BLOCKING because it is the only thing standing between this cell and a PASS, and a worker cannot re-cut its own criterion. INERT: nothing in the world is left armed -- the August report IS re-published with the coverage line and IS sent. Two disarm paths for the issuer, both outside this order's grant: (1) re-cut arm (f) the way arm (e) was re-cut -- SES get-send-statistics delta + the alert-topic 0-with-positive-control + the deployed EMAIL_RECIPIENT JOIN, with the CloudTrail limb printing COVERAGE-ABSENT; or (2) a one-line code change in _email_report to print the returned MessageId, which is a NEW cell (lambda_function.py is READ-only here). The issuer's own inbox read at both recipients is the third, and is already assigned to it."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S19",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T00:45Z",
+    "one_line": "The report the BOX renders carries NO Opal logo: opal_logo_svg() reads <renderer dir>/../../../../portal/public/logos/opal-logo-white.svg, which on the reporter EC2 resolves to /opt/portal/... and does not exist, so the brand bar renders empty -- the served August HTML lost 5 inlined logo SVGs (19,044 bytes, 62,420 -> 43,376 chars) versus the ad-hoc LOCAL render it replaced. Pre-existing and structural: every scheduled monthly fire has this shape; this order's fire is what made it visible.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/presentation/render_month_end.py:114-126 (opal_logo_svg) @93264db36c -- root = dirname(__file__)/../../../.. then portal/public/logos/opal-logo-white.svg, wrapped in try/except returning \"\" on any failure (a silent empty string, no WARN)",
+        "MEASURED on the two served HTMLs: the 2026-09-01T17:38Z object (an ad-hoc LOCAL repo render, per org/critical_paths/change_management/20260901T1738Z_etfs-served-reports-regenerate_completion.md) carries 9 <svg> blocks -- five of them the 3868-byte logo, one per slide -- while the 2026-09-10T00:24:47Z BOX render carries 4, all charts (2825/7854/2271/5501 bytes). Headings 4 of 4 identical, table rows 31 of 31 identical, slides 5 of 5 -- no DATA is missing; the delta is exactly the five logo copies",
+        "The box layout makes it structural: the renderer lives at /opt/etfs-reports/render_month_end.py, so the computed root is /opt and /opt/portal/public/logos/ has never existed there; the orchestrator's _render_command (lambda_function.py:196-232) pulls only render_month_end.py and coverage/*.py"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 THE CELL: the reporter box 'publishes the PDF/HTML/CSV to the served key' as the rule's own behaviour, and S14-AC2 asks for the served artifact before vs after with its evidence.",
+    "world_is": "The box's own render is brand-less. The comparison artifact (the 09-01 served HTML) was produced by a LOCAL repo run, not by the box, so the served August report has just changed appearance -- logo present before, absent now -- while every number, heading, table row and slide is unchanged. Nothing in this order caused it (the one code change touches only the fallback import); it is what the 10-01 scheduled fire would also produce.",
+    "notes": "NOT FIXED HERE: out of this order's one-file grant and not its cell. Cheap remedies for the issuer's next cut, both outside this order: upload the logo beside the renderer on the artifact prefix and resolve it from _ORION_HERE first (the same shape as the W1-S11 fix), or inline the SVG as a constant. ARMED because the next NORMAL fire (10-01) publishes and emails the same brand-less report to both recipients. Cosmetic, not numeric -- stated so the issuer can weigh it, not to claim significance."
   }
 ]
 ```
