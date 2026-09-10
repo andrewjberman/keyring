@@ -407,3 +407,41 @@ instruments; no L8 packet had been sent when it was written, and none is require
   }
 ]
 ```
+
+## C-S10 -- the two IAM-r-6 worker rows: a second independent arrival at C-S8's defect that SUPPLIES THE MISSING GRADING INSTRUMENT, and an independent confirmation of C-S9's 'five, not four' that adds a THIRD count
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S10",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T15:24Z",
+    "one_line": "BOTH GRADUATE, AND EACH ARRIVES INDEPENDENTLY AT A FINDING THIS SEAT MADE SEPARATELY TODAY -- from the WORKER side, on different instruments. ⭐ Z-W5-S1 SUPPLIES WHAT C-S8 COULD NOT: the DISCRIMINATING measurement to grade AC1 by, converting this seat's negative commitment (do not credit AC1) into a positive grading path. And Z-W5-S2 reaches the SAME 'five, not four' this seat published at C-S9 -- while adding a THIRD number, so one state has now been counted 3, 4 and 5 by three cells.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "PER-ROW AND UNCHANGED. Z-W5-S1's is 2.0.0_SA_COO~ZI -- criteria are cut at L6 and the remaining exposure is the CUTTING PATTERN, not this cell; Z-W5-S2 is INERT and names no owner, correctly. ⭐ AND THE SPLIT BETWEEN Z-W5-S1 AND Z-S11 IS EXACTLY RIGHT THOUGH THEY NAME THE SAME CRITERION: Z-S11 routed the GRADING limb to 3.0.0_SA_CVO~Z (do not credit AC1 at L9) and Z-W5-S1 routes the ISSUANCE limb to the lane that cuts criteria. One defect, two limbs, two owners, neither duplicating the other.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-W5-S1",
+      "NFRA_IAMROLES202609-Z-W5-S2"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** Z-W5-S1 IS THE SECOND INDEPENDENT ARRIVAL AT C-S8'S DEFECT, FROM THE OPPOSITE SIDE, AND IT IS CORROBORATION RATHER THAN REPETITION. *** C-S8 reached it from the ISSUER's row (Z-S11) and re-derived it at the CUT COMMIT with `git show cccb4fac83`. Z-W5-S1 reached it by running the criterion's own verbatim invocation IN ITS OWN WORKTREE BEFORE EDITING ANYTHING (`/c/tmp/wk-iamroles-5` @772c796a3f), printing 3 against the expect clause's cited 'measured 0 at the cut'. Two seats, two planes, two vintages, same answer. ⭐ AND THE WORKER'S FIRST ACT IS THE HABIT THAT FOUND IT: it re-grounded the baseline before editing rather than inheriting the cut's cited 0, which is the estate's 'run the criterion against the world before handing it over' executed from the receiving end.",
+        "*** AND IT SUPPLIES THE THING C-S8 EXPLICITLY COULD NOT. *** C-S8 committed this seat to a NEGATIVE -- AC1 and AC3 will not be credited -- and said the substance must be graded 'from the deliverable and from AC5', without naming the instrument. Z-W5-S1 names it: a WORD-BOUNDARY, CASE-SENSITIVE PER-TOKEN census over the same 350-line file reading RETIRE 0, RETIRED 0, RETIREMENT 0 before the cell's edit, against DECLARED 23 / ADOPT 24 / EXEMPT 10. ⛔ THAT is the measurement the TO's own rule-24 clause asks for and it IS the number the cell moved. THIS SEAT ADOPTS IT AS THE GRADING PATH FOR AC1 AT L9: grade the case-SENSITIVE per-token census recorded in the artifact and the proof instance, never AC1's own case-insensitive count. A negative commitment with no substitute instrument is an invitation to grade nothing.",
+        "ITS NEGATIVE CONTROL CONFINES THE DEFECT AND KEEPS IT FROM BECOMING A CHARGE AGAINST THE TOOL: sibling criterion AC2 -- same `-i`, same file, same pre-edit baseline -- measured 0 and therefore DOES discriminate. So the defect is specific to AC1's bare word-stem meeting a word the document already used in prose, not to grep and not to the cut's instrument generally. ⭐ AND A SECOND INSTANCE IS NAMED IN THE SAME ROUND: IAM-r-1's proof instance records its AC2 baseline re-measuring 12 against a cited 13. TWO CELLS, SO THIS IS A CUTTING PATTERN AND NOT ONE MIS-TYPED NUMBER -- which is precisely why the disarm sits with the issuing lane.",
+        "⚠ AND THE EXPOSURE IS THE READING, NOT THE WORK -- a distinction this row preserves because losing it would penalise a worker who did everything asked. The cell did the substantive work regardless: the fourth value is defined, the four-postulate record and token census are written, the member is disposed, and AC1 now reads 33. The hazard is that a grader reads AC1's PASS as evidence of the extension WHEN THAT OUTPUT PREDATES THE CELL. A cell that changed nothing would have printed the same PASS-shaped output.",
+        "*** Z-W5-S2 INDEPENDENTLY REACHES THE CORRECTION THIS SEAT PUBLISHED AT C-S9, AND BY A DIFFERENT INSTRUMENT. *** This seat corrected C-S6's 'FOUR inline policies' to FIVE at C-S9 via an exhaustive per-file sweep of the module's only two .tf files. Z-W5-S2 reached FIVE at 14:05Z via `comp-find 'opal-data-refresh-lambda-role' infra/aws/terraform --all` -> 9 hits across a PRINTED denominator of 516 files, of which five are `role = ...` attachment lines, EACH READ AT SOURCE so an attachment and a mention cannot read alike. ⭐ NEITHER SEAT COULD SEE THE OTHER -- that row was surfaced at 14:05Z and reached the index only at its drain, after C-S9 was written. Same number, two instruments, no contact.",
+        "⛔ AND IT ADDS THE THIRD NUMBER, WHICH IS THE PART NEITHER THIS SEAT NOR THE CUT HAD: round 1's GOVERNANCE_DISPOSITION.md row 8 says 'THREE aws_iam_role_policy attachments'. So ONE STATE HAS BEEN COUNTED 3, 4 AND 5 BY THREE DIFFERENT CELLS OF ONE PROJECT, and this seat produced the 4. THE ROW'S DIAGNOSIS IS EXACT AND GENERALISES: 'a per-member count taken from the file where the member obviously lives is not a tree-wide count, AND THE TWO RENDER IDENTICALLY IN A BATTERY BLOCK.' Nothing in the number's presentation carries its scope, which is why three cells disagreed without any of them being careless.",
+        "AND BOTH ROWS PROTECT THE FINDING THE COUNT SITS ON, WHICH IS WHY NEITHER IS BLOCKING: the zero-declarations half reproduced EXACTLY on Z-W5-S2's own instrument -- `comp-find 'resource \"aws_iam_role\"' infra/aws/terraform/data-refresh --all` -> 0 hits across a 4-file denominator. ⭐ SO THE MAGNITUDE MOVED AND THE STATE DID NOT: Terraform genuinely manages policies on a role it does not declare, which is C-S6's finding and IAM-r-6's decision input, and NO DISPOSITION TURNS ON WHETHER IT IS FOUR OR FIVE. The row says so itself and is right to mark itself INERT."
+      ]
+    },
+    "spec_asserts": "IAM-r-6's AC1 expect cites a baseline of 0 at the cut so 'only a real extension moves it'; and its BATTERY FINDINGS block states Terraform carries FOUR aws_iam_role_policy blocks attaching to opal-data-refresh-lambda-role by name.",
+    "world_is": "AC1's own verbatim invocation returned 3 before any edit, so a cell that did nothing would have passed it; and a whole-tree re-measurement returns FIVE attachments, not four, with round 1 having recorded three.",
+    "notes": "⭐ FOUR SEATS REACHED PARTS OF ONE DEFECT TODAY WITHOUT COORDINATING, AND THE OVERLAP IS THE EVIDENCE THAT IT IS STRUCTURAL RATHER THAN ANECDOTAL: the issuing lane (Z-S11, against its own frozen issuance), a worker (Z-W5-S1, from its pre-edit baseline), this seat (C-S8, at the cut vintage), and a second worker plus this seat converging on the policy count (Z-W5-S2 and C-S9). ⛔ NONE OF THEM FOUND IT BY RE-READING A DELIVERABLE. Every one found it by RUNNING AN INVOCATION AND COMPARING THE NUMBER TO WHAT THE DOCUMENT CLAIMED -- which is the one act a green proof instance never performs on itself. || THE FROZEN-SPEC HANDLING IS CORRECT AND IS NOT DISTURBED: the round-2 decomposition and its task orders are frozen mid-round and are NOT retro-amended; these rows are the carrier, exactly as Z-S9 carried the frozen battery block and Z-S11 carried AC1. The whole-tree figure of record is FIVE."
+  }
+]
+```
