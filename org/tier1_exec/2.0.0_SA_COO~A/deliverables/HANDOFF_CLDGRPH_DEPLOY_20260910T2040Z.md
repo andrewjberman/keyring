@@ -186,6 +186,32 @@ fine-grained token scoped READ-ONLY on the private `Opal-Capital/portal` repo, a
 `PORTAL_REPO_PAT`. It is needed because `portal/` is a bare gitlink rather than a registered submodule, so
 the default `GITHUB_TOKEN` cannot read a separate private repo.
 
+#### 5.2a ⛔ THE EXISTING `github-token` SECRET DOES NOT SATISFY THIS, ON TWO INDEPENDENT GROUNDS
+
+Andrew noted a GitHub token already sits in AWS Secrets Manager. **It exists — and it does not close this.**
+
+**GROUND 1 — WRONG PLACE, and this one holds even if the value is perfect.** The workflow reads
+`${{ secrets.PORTAL_REPO_PAT }}` at line 107, which is **GitHub's own secret store**. A value in AWS
+Secrets Manager is not visible to that expression. And the step order forecloses the obvious workaround:
+`Checkout portal` is **step 3 (line 102)** while `Configure AWS (OIDC)` is **step 4 (line 110)** — the job
+has no AWS credentials yet when it needs the token. A runtime fetch would require reordering the steps AND
+granting `secretsmanager:GetSecretValue` on that secret to `opal-stitch-source-gha-role`. Precedent exists
+(the freshness-alarm role got exactly that grant on 2026-07-08), so it is possible — it is just a workflow
+change plus an IAM change, not a lookup.
+
+**GROUND 2 — THE VALUE HAS NEVER BEEN A REAL PAT, and the estate measured this already.**
+`org/mcp/inbox/0.7.0_AE_CloudOps/read/20260708T205825Z_...` records the secret tested live against GitHub
+and returning **401 Bad credentials**, and the follow-up records **Andrew's own words at the time**:
+*"there is no PAT from Git, i never provisioned one"* — the value was never a GitHub PAT to begin with.
+⚠ **That 401 is another seat's measurement in July, not mine.** What I measured this turn is the fact that
+makes it still relevant: `describe-secret` returns `CreatedDate` **2025-12-23T21:53:12Z** and
+`LastChangedDate` **2025-12-23T21:53:12Z** — **identical, so the value has not been modified since the day
+it was created.** The bytes that failed in July are the bytes there now. (Value NOT read; metadata only.)
+
+**SO A WORKING TOKEN STILL HAS TO BE MINTED.** The vault entry saves nothing except a place to put it.
+Simplest path, and the one this document assumes: mint it and add it to **GitHub** as `PORTAL_REPO_PAT`.
+Do not report act B as unblocked because a secret with a plausible name exists.
+
 ### 5.3 So act B has two routes, and the choice is yours to make and state
 
 - **B-1, the committed route.** Wait for the secret, then `workflow_dispatch` the workflow on `CLOUD`. The
