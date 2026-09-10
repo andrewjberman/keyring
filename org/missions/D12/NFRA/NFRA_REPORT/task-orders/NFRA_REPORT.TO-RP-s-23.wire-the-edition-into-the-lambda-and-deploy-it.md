@@ -169,7 +169,7 @@ measured cannot tell a real deploy from a no-op.
 
 <!-- ============ RECORD FACE -- does NOT travel to the worker ============ -->
 
-<status>blocked</status>
+<status>open</status>
 <round>4</round>
 <sub_round>B</sub_round>
 <slot>~3</slot>
@@ -177,6 +177,18 @@ measured cannot tell a real deploy from a no-op.
 <dep_stage>EXECUTING</dep_stage>
 
 <preflight>
+SEATED 2026-09-10 ~15:40Z. Both dependencies are TERMINAL AND VERIFIED AT HEAD: RP-s-21 drained
+@4e9d016fae (edition.py, 258 lines), RP-s-22 drained @30b690d33a (edition_rows.py, 548 lines); both
+task orders read <status>complete</status> at HEAD; both proof instances VALID rc=0 read by their own
+WORKTREE's checker, not by their author's report; both worktrees and branches reaped, 0 wk- branches.
+ISSUER PRE-FLIGHT RUN BEFORE SEATING -- THE JOIN THE PARALLEL CUT RISKED, EXERCISED END TO END in the
+main checkout against a synthetic 13-section report:
+  rows_from_report      -> rows=10 omissions=3
+  delta-attach loop     -> OK, 10 rows annotated (edition.compute_delta / compute_delta_watch)
+  compute_verdict       -> needs_andrew=False breach=0 worse=0
+  render_markdown       -> 9,984 chars, 19 table lines
+The two cells COMPOSE. This cell is wiring, packaging and deploying -- not debugging an interface.
+The frozen row shape held, which was the one assumption DECOMP_R4 s.1a named as able to fail.
 comp-schedule: RUN at the round-4 cut -- 5 of 5 carriers, 17.328 s; REACHED-DENOMINATORS C1=23 C2=6 C3=12 C4=20 C5=335; GATES ARMED 25 (C1 7 + C2 6 + C3 12 POSITIVE_RESULT; C4/C5 are NOT-DECIDABLE and are listed, never counted). NOT COMPARABLE to round 3's '2 ARMED (G-3, G-7)': that figure named two gates this seat then judged relevant, this one is the tool's own POSITIVE_RESULT count over its five carriers. Stated as measured now rather than diffed against a number that counted something else. C3 MORATORIA denominator=12 is the one that touches this round and it is discharged in the cell, not here: C-MORATORIUM-CLEARED covers the code swap ONLY.
 comp-iam: RUN at the round-4 cut (`comp-iam stats`) -- 195 IAM roles parsed, 188 services scanned (167 Lambda, 21 EC2), 1084 operations, 304 permission gaps. The tool's own NOTE at this run: TF role labels 'orchestrator' and 'scheduler' are reused across modules (astn-wsjft / estate-report / etfs-reports) and are now module-namespaced -- pre-fix this silently mis-linked inline policies into FALSE-MISSING. Recorded because `estate-report-*` appears in it and is explicitly OUT OF SCOPE for this round (a different directive, addendum s.5).
 comp-adversary: RUN on NFRA_REPORT_DECOMP_R4.md at the cut (`comp-adversary compose ... --no-packet`), rc=0, validation_context_declaration produced. DECLARED EXCLUSIONS carried rather than hidden: (a) T11 decomposition-neighborhood NOT RESOLVED -- a decomposition carries no <decomp_ref>, so filesystem adjacency stood in as the neighborhood; (b) comp-blast/comp-trace CODE-graph expansion is not wired in v1, so the neighborhood is never a blast radius. A validator reading this round is told what the author's evidence context was NOT.
