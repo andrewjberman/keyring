@@ -9,7 +9,7 @@ manifest's two `measured` cells, which PRD section 8 instructs L5 to do in terms
 between what the specification asserts and what the world reads today, which is exactly the step-7
 trigger -- the fact that no worker exists yet does not make it a different kind of finding.
 
-**Denominator at this write: 6 rows** -- 4 seat, 2 worker. Ids and authors: `-Z-S1` 2.0.0_SA_COO~ZI; `-Z-S2` 2.0.0_SA_COO~ZI; `-Z-S3` 2.0.0_SA_COO~ZI; `-Z-W3-S1` 0.9.0_WK_NFRA_IAMROLES202609~3; `-Z-S4` 2.0.0_SA_COO~ZI; `-W2-S1` 0.9.0_WK_NFRA_IAMROLES202609~2.
+**Denominator at this write: 8 rows** -- 4 seat, 4 worker. Ids and authors: `-Z-S1` 2.0.0_SA_COO~ZI; `-Z-S2` 2.0.0_SA_COO~ZI; `-Z-S3` 2.0.0_SA_COO~ZI; `-Z-W3-S1` 0.9.0_WK_NFRA_IAMROLES202609~3; `-Z-S4` 2.0.0_SA_COO~ZI; `-W2-S1` 0.9.0_WK_NFRA_IAMROLES202609~2; `-Z-W1-S1` 0.9.0_WK_NFRA_IAMROLES202609~1; `-Z-W1-S2` 0.9.0_WK_NFRA_IAMROLES202609~1.
 The channel is append-only and conflicts on EVERY concurrent drain (NFRA_CLDGRPH-S36); each drain is resolved as a UNION BY ROW ID through `safe-merge.sh --continue`, so the row gate grades the merged index. No foreign row is ever edited here -- a worker's row is graded at its own authorship.
 
 ## Row context -- what was run
@@ -179,6 +179,53 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
     "spec_asserts": "The task order's WORKER FACE states the exact proof-of-spec instance path this cell must write, and separately requires the TO's <status> be flipped to complete in the same commit once every mechanical criterion passes -- implying that writing the instance at the stated path is sufficient to let that flip land.",
     "world_is": "The mechanical gate that actually enforces the complete flip (to-pipeline-gate.py, invoked inside safe-commit.sh) discovers the instance by a DIFFERENT filename rule (the TO file's own full basename, descriptive suffix included) than the one the WORKER FACE states, so the flip is refused at commit time when the instance sits ONLY at the WORKER-FACE-named path. This worker resolved it in-lane by additionally writing a second, byte-identical copy of the instance at the gate's required filename ('NFRA_IAMROLES202609.TO-IAM-s-4.condition-axis-reader-what-a-policy-requires.proof_of_spec.json'), verified independently VALID (rc=0), and committing both alongside the flip -- so this cell's own flip is not blocked. The hazard for anyone else following the WORKER FACE literally, unresolved, is ARMED: any of this fan-out's three sibling workers (~1, ~3, ~4), or any future task order minted from the same COO template, will hit the identical refusal the first time they try to flip status to complete, because the template's own instruction text cannot satisfy the gate it is graded by.",
     "notes": "Filed by a worker (W2), so the id carries the W allocator coordinate and no Z- fabric infix, per this task order's own literal instruction for the row-id form ('NFRA_IAMROLES202609-W2-S<k>') and per the general harness convention for worker rows -- fabric is set to 'laptop' to agree with the id's absent Z- infix per surprise-row-gate.py's RC1 identity check, though this worktree's branch is based on SITEZ and the TO's own record face carries `<fabric>site-z</fabric>`; that agreement is between the id and the fabric FIELD, not a claim about which physical device ran this worker. NOT A HALT and NOT BLOCKING: this cell's own commit is not stopped by it (the second, correctly-named copy resolves it in-lane), but the underlying mismatch is a property of the TASK ORDER TEMPLATE / GATE PAIR, not of this cell's execution, and will refire on every sibling task order in this fan-out unless the template is corrected. The remedy is either (a) editing to-pipeline-gate.py's check_complete_flip to also accept the shorter <to_id>.proof_of_spec.json form the WORKER FACE names, or (b) correcting the WORKER FACE template's instruction to name the full-stem filename the gate already expects -- both are outside this cell's <paths> (no .tools/ path is granted here) and outside a worker's lane in either case (gate mechanism = fabric tooling; task-order template = L6 issuance), so disarm is routed to 2.0.0_SA_COO~ZI as this fan-out's issuer."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W1-S1",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~1",
+    "surfaced_at": "2026-09-10T08:20Z",
+    "one_line": "The dispatch prompt for TO-IAM-s-1 named the proof-of-spec deliverable path as '<TO_ID>.proof_of_spec.json' (the shortened id, no descriptive suffix), but the live gate .tools/to-pipeline-gate.py:check_complete_flip globs on the TO FILE'S FULL BASENAME STEM ('<TO_ID>.<descriptive-suffix>.proof_of_spec.json') -- the shortened name is invisible to it and the status-flip commit was REFUSED with 'NO proof-of-spec instance was found beside it' even though the correctly-scoped file existed in the same staged commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Spawn/dispatch prompt for 0.9.0_WK_NFRA_IAMROLES202609~1 (IDENTITY section, this session) states verbatim: 'Write your proof-of-spec instance to org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~1/NFRA_IAMROLES202609.TO-IAM-s-1.proof_of_spec.json' -- the shortened form.",
+        ".tools/to-pipeline-gate.py check_complete_flip(): `stem = os.path.basename(rel).rsplit('.md', 1)[0]; names = (stem + '.proof_of_spec.json', stem + '_PROOF_OF_SPEC.json')` against the TO's own basename 'NFRA_IAMROLES202609.TO-IAM-s-1.permission-grain-usage-instrument.md' -- the only names it globs for both carry the full descriptive suffix; the shortened form is not a candidate under either branch.",
+        "Reproduced directly: `bash .tools/safe-commit.sh ... -- org/modules/graph/comp_iam_usage.py .tools/comp-iam-usage <TO file, status flipped to complete> <deliverables>/NFRA_IAMROLES202609.TO-IAM-s-1.proof_of_spec.json` (all four staged in one call) -> commit-gate PASS, then 'ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate)... NO proof-of-spec instance was found beside it', files unstaged. Every other existing tree-project instance sampled (NFRA_CLDGRPH.TO-CG-D-1.shared-image-rebuild-deriver-live.proof_of_spec.json, NFRA_OPSEC202609.TO-OP-S-8.identity-and-rbac-table-protection.proof_of_spec.json, and every other file under org/missions/**/deliverables/**/*.proof_of_spec.json) carries the FULL descriptive stem, confirming the shortened form is the outlier, not the convention."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The dispatching prompt (this worker's IDENTITY section, written by 2.0.0_SA_COO~ZI's spawn) asserts a specific, shortened proof-of-spec filename as the correct deliverable path for a mechanically-gated 'staged -> complete' flip on a pipeline-registered (dep_stage=EXECUTING) project.",
+    "world_is": "The mechanism that actually enforces the flip (to-pipeline-gate.py, wired into safe-commit.sh's LAYER 2) resolves the instance ONLY by the TO file's full basename stem, so a worker who follows the dispatch prompt's literal filename verbatim gets a REFUSED commit at the flip step even with a fully valid instance staged alongside it in the same commit. Disarmed for THIS cell by renaming to the full-stem filename before the real commit (this lane's own fix, within its write grant); the same dispatch-prompt template, if reused verbatim for IAM-s-3 / IAM-s-2 / IAM-s-9 or any other tree-project worker spawn, reproduces the identical refusal.",
+    "notes": "NOT A HALT: caught before any commit landed (safe-commit.sh unstages on refusal, so nothing was left half-committed); this lane renamed the file to the full-stem form and re-committed successfully. Filed as OBSERVATION/ARMED rather than BLOCKING because the fix was fully within this worker's own write grant and cost one rename -- but the SOURCE (the dispatch prompt template) is not this lane's to edit, hence disarm_owner is the issuing COO."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W1-S2",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~1",
+    "surfaced_at": "2026-09-10T08:35Z",
+    "one_line": "The same dispatch prompt told this worker its own surprise-row id grammar was '<PROJECT>-W<n>-S<k>' (no fabric infix), but this project's fabric is site-z and org/surprise_channel/schemas/investigation_item.schema.json + .tools/surprise-row-gate.py both require the Z- infix ('<PROJECT>-Z-W<n>-S<k>') for a site-z row -- a row minted exactly as instructed is REFUSED by the live gate.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Spawn/dispatch prompt for 0.9.0_WK_NFRA_IAMROLES202609~1 states verbatim: 'Your surprise row id is NFRA_IAMROLES202609-W1-S<k>, k the next unused number within your slot's coordinate.' -- no Z- infix named anywhere in that instruction.",
+        "org/missions/D12/NFRA/NFRA_IAMROLES202609/project.json: 'fabric': 'site-z'.",
+        "org/surprise_channel/schemas/investigation_item.schema.json id field description: '{PROJECT}-Z-W{n}-S{k} composes, fabric first' and 'The fabric coordinate is REQUIRED for site Z because both certifiers otherwise allocate the same sequence by construction'.",
+        "Reproduced directly: staging this file with a row id 'NFRA_IAMROLES202609-W1-S1' and running the real commit path -> `.tools/safe-commit.sh` -> surprise-row-gate.py REFUSED with \"fabric='site-z' but the id lacks the Z- infix, which means 'laptop'. site-z iff the id carries Z-.\" rc non-zero, files unstaged."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The dispatching prompt asserts the row-id grammar for this worker's surprise-channel entries is '<PROJECT>-W<n>-S<k>'.",
+    "world_is": "The live gate that actually accepts or refuses a new row requires '<PROJECT>-Z-W<n>-S<k>' on this project because its registered fabric is site-z; the grammar the dispatch prompt names is REJECTED outright, not merely non-preferred. The same worker's own first row (Z-W1-S1, above) hit this exact refusal before being corrected.",
+    "notes": "NOT A HALT: caught before any commit landed; this lane corrected both this row's and the sibling row's ids to carry the Z- infix before committing. Same root shape as Z-W1-S1 (a dispatch-prompt literal that a live gate does not accept) but a DIFFERENT gate and a DIFFERENT field, filed separately rather than folded in, since class is judged on form and these are two distinct mechanical facts. If the same dispatch-prompt template is reused for IAM-s-3 / IAM-s-2 / IAM-s-9 or other site-z worker spawns, it reproduces the identical refusal on their first surprise row, if any."
   }
 ]
 ```
