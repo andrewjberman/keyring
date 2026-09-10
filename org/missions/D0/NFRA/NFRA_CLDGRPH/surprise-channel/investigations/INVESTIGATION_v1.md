@@ -7736,3 +7736,68 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-W3-S18 -- the loss did not stop: a fourth reading finds the family at zero and the mechanism still loaded
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~3",
+    "surfaced_at": "2026-09-10T14:04Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W3-S18",
+    "one_line": "THE LOSS DID NOT STOP -- STORED_IN reached 0 at a fourth reading, the second drop is in the projection worker's own log at 12:01, and 27 of 27 SERVED_FROM edges still hang off the same volatile parent class.",
+    "spec_asserts": "TO-CG-H-4 / CG-s-39: 'The issuer took a THIRD read at 05:57:16 ... STORED_IN still 11 ... The loss STOPPED. It is a one-time drop inside that window, not a draining family.' The order's HELD block adds that 'the 11 survivors are a stable remainder' is held, not measured.",
+    "world_is": "At served vintage 2026-09-10T12:24:50.576632+00:00 (manifest aebbd9cef8c4cfd5515c42dc75793cf4ffcee1f57ad91f444d01be8ea968d5da) STORED_IN is 0 and the family has no rows at all -- it is absent from the 54 edge families present. S3_BUCKET_POLICY nodes are 12, not 14. The drop from 11 to 0 happened at 12:01:43, six and a half hours after the window this cell was cut to explain, by the SAME mechanism on a DIFFERENT bucket (opal-data-inf rather than opal-data-bd). 135 -> 11 -> 11 -> 0 is a plateau between two drops, and three points cannot tell that from a halt when the process is event-driven rather than periodic.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "h4_fourth_point.py at 2026-09-10T12:24:50.576632+00:00: STORED_IN=0, S3_BUCKET_POLICY_NODES=12, TOTAL_NODES=27662, TOTAL_EDGES=59548, OWNED_BY=6385 (POSITIVE_CONTROL=FIRED), NEGATIVE_CONTROL=RAISED on the banked wrong form.",
+        "/aws/ecs/opal-globgrph-projection-worker 2026-09-10T12:01:42Z: 'INFO: INCR_NODE_DELTA head=27662 cur=27663 upsert=1 delete=1' and 12:01:43Z: 'INFO: INCR_EDGE_DELTA head=59548 cur=59559 upsert=0 delete=11'.",
+        "/aws/lambda/opal-globgrph-incremental-updater 2026-09-10T12:01:00Z request 4f19e9b4-986d-56d1-9891-8aa8058c39ed: DERIVED arn=arn:aws:s3:::opal-data-inf type=S3_BUCKET plus its platinum/firm object keys.",
+        "h4_fourth_point.py, same run, same vintage: SERVED_FROM=27 and its target-class census is S3_BUCKET_POLICY 27 -- 27 of 27, denominator printed.",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-H-4.what-republished-the-projection.md@2fd5cae09f, THE CELL section, for the quoted premise."
+      ]
+    },
+    "notes": "ARMED and the arming is measured, not argued: the mechanism is unchanged and the next family is already standing on it. Every one of the 27 SERVED_FROM edges targets one of the 12 remaining S3_BUCKET_POLICY nodes, and any S3 object write to the corresponding bucket removes that node -- with no derive, no deploy and no schedule involved. disarm_owner is the issuer because the disarm is a CUT, not an act available to this worker: this order is READ ONLY on everything and holds no grant to deploy the re-parenting round 7 committed. FORM, not significance: the order asserted a stopped drop and the world shows a resumed one; what that is worth is the CVO's to say. The general shape is worth more than the instance -- THREE READS OF AN EVENT-DRIVEN QUANTITY MEASURE THE GAPS BETWEEN EVENTS, NOT THE PROCESS; a plateau is the expected appearance of an interval in which nobody happened to write to the right bucket."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W3-S19 -- the writer's own delete counter cannot see a row its own overwrite filter destroys
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~3",
+    "surfaced_at": "2026-09-10T14:04Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W3-S19",
+    "one_line": "THE WRITER'S OWN DELETE COUNTER CANNOT SEE A ROW ITS OWN OVERWRITE FILTER DESTROYS -- both invocations behind the republish logged nodes_deleted=0 while the consumer measured node delete=1 and edge delete=124.",
+    "spec_asserts": "TO-CG-H-4 directs this cell to attribute the republish from the reads available, and the estate's own instrument for what the incremental_updater changed is its BATCH_END line -- 'processed_arns=N nodes_written=N nodes_deleted=N'. A producer that reports zero deletions is read as having deleted nothing.",
+    "world_is": "Both invocations behind the 05:32:57 republish logged 'BATCH_END processed_arns=3 nodes_written=1 nodes_deleted=0 failed=0', and the projection worker reading the resulting branch head measured 'INCR_NODE_DELTA ... delete=1' and 'INCR_EDGE_DELTA ... delete=124'. The counter is computed at lambda_function.py from the DELETE-KEY list alone, while the commit is a single overwrite whose filter spans upsert keys AND delete keys and re-appends only the upsert rows -- so any row matched by an UPSERT key and not re-appended is removed WITHOUT being counted. The deletion is invisible on the writing side and visible only on the reading side, hours later, as an edge family that stopped loading.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "/aws/lambda/opal-globgrph-incremental-updater 2026-09-10T05:32:57Z request 60326a16-529f-5d32-9049-090a10350f6b and 05:33:01Z request 234a09eb-d30b-5c8f-bc61-6af791bd9ef1: both 'BATCH_END processed_arns=3 nodes_written=1 nodes_deleted=0 failed=0'.",
+        "/aws/ecs/opal-globgrph-projection-worker 2026-09-10T05:33:20Z: 'INCR_NODE_DELTA head=27664 cur=27665 upsert=1 delete=1' and 'INCR_EDGE_DELTA head=59559 cur=59683 upsert=0 delete=124'.",
+        "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py@2fd5cae09f :441 'One filter spans upsert keys + delete keys' and :501 'table.overwrite(pa_table, overwrite_filter=combined_filter)' with the comment at :500 'overwrite = delete(filter) + append(pa_table), atomic'; the returned count is built at :483 from del_arns/del_ids only.",
+        "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py@2fd5cae09f :271 \"'id': bucket, 'arn': bucket_arn, 'type': 'S3_BUCKET'\" -- the derived node_id is the BARE BUCKET NAME.",
+        "infra/aws/globgrph/derive_runner.py@2fd5cae09f :2307 -- in this estate exactly one class uses a short name string as its canonical key, S3_BUCKET_POLICY.",
+        "h4_fourth_point.py, served vintage 2026-09-10T12:24:50.576632+00:00: S3_BUCKET node ids are ARNs (34 of them, arn:aws:s3:::opal-data-bd present), S3_BUCKET_POLICY node ids are bare names (12 of them, opal-data-bd ABSENT), and no node with node_id 'opal-data-bd' exists at all."
+      ]
+    },
+    "notes": "GROUNDED on the two counters and the source; the LAST LINK -- that the row the overwrite removed was specifically the S3_BUCKET_POLICY row keyed 'opal-data-bd' -- is INFERRED and labelled as such in CG-s-39.what-republished-the-projection.result.md s.3. WHAT WOULD CONFIRM IT: a direct read of globgrph.graph_nodes for node_id='opal-data-bd' through Trino or Athena, an instrument this order has no grant to run. ARMED because the blind counter is what makes the next occurrence silent as well: no dangling check can fire, since the edges are removed along with their endpoint, and the producer reports a clean zero. disarm_owner is the issuer for the same reason as W3-S18 -- this order is READ ONLY on every producer and infrastructure file. NOT PROPOSED AS A BUILD, and deliberately not: the standing moratorium forbids standing up a checker for this, and the remedy the round already holds (re-parenting the boundary edges) shrinks the blast radius without touching the counter. GENERAL FORM: A PRODUCER'S PROGRESS COUNTER COUNTS THE INTENT IT WAS GIVEN, NEVER THE EFFECT ITS COMMIT HAD -- when intent and effect are joined by one filter, the difference is exactly the invisible part."
+  }
+]
+```
