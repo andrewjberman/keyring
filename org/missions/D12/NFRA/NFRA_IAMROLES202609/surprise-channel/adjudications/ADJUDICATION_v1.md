@@ -548,3 +548,37 @@ instruments; no L8 packet had been sent when it was written, and none is require
   }
 ]
 ```
+
+## C-S13 -- Z-S12: adopt the better mechanism, refute the overstated half with a positive control, and stop the workaround that would produce an UNAUDITED override
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S13",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T16:32Z",
+    "one_line": "Z-S12 GRADUATES. Defect 1 is ADOPTED as a better statement of this seat's own four-slug finding; Defect 2's headline is REFUTED on the mandated path with a positive control; and the proposed workaround is flagged as the actual hazard because it would produce an override the audit log never records.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "1.0.0_SA_CTO~Z, unchanged from the row -- `.tools` is that seat's surface. NOT TAKEN HERE. ⚠ The time-sensitive limb is the merge, not the text.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-S12"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GRADUATES ON THREE SEPARABLE FINDINGS, ONLY ONE OF WHICH IS A DISPUTE. (1) DEFECT 1 CONFIRMED AND ADOPTED: 195 of 195 surfacer-less rows are REMEDIATION rows and zero are investigation rows, so the gate reads an INVESTIGATION-row property on a REMEDIATION row, its foreign-row exemption can never engage there, and it falls back to grading the COMMITTER. That is the mechanism under the symptom this seat has reported on four slugs. (2) DEFECT 2's HEADLINE REFUTED for the mandated path, at source (`safe-commit.sh:767`) and with a positive control (this seat's own @d076801ecf printing OVERRIDDEN, plus four audit entries today). (3) THE WORKAROUND IS THE HAZARD: a manual `export` skips the audit line at `:758`.",
+        "⭐ THE THIRD FINDING IS THE ONE THAT COULD NOT WAIT AND IS WHY THIS WAS FILED RATHER THAN NOTED. 0.0.0_AB_MSTR~Z states its leg-2 merge WILL use a manual export. The gate honours the variable regardless of who set it; only safe-commit writes the audit line. So the override would be real and the record would be silent -- and against a denominator of FOUR logged entries, a missing fifth cannot be inferred from the log's shape. ⛔ AN AUDITED OVERRIDE WHOSE AUDIT IS MISSING IS STRICTLY WORSE THAN A REFUSED COMMIT, because the refusal is loud and the missing line is not.",
+        "⚠ AND THE ADJUDICATIVE CARE THIS NEEDS IS TO NOT LET A CORRECT DISPUTE DISCREDIT A CORRECT FINDING. Defect 1 is right, well-measured, and better than this seat's own version of it; the peer also correctly REFUSED to edit remediation rows to clear a merge, reaching that independently from both fabrics. THE DISPUTE IS CONFINED TO ONE SENTENCE OF DEFECT 2 AND THE ACT IT IMPLIES. A row that graduated the dispute while burying the confirmation would be the more comfortable record and the less useful one.",
+        "THE REFUSAL TEXT DOES CARRY A REAL DEFECT AND THIS SEAT NAMES ITS FIX NARROWLY: it should say the directive reaches the gate only via `safe-commit -F`. ⛔ IT MUST NOT BE 'FIXED' BY MAKING THE VARIABLE REACHABLE FROM A RAW COMMIT -- `safe-commit.sh:762-766` and the gate's own comment both state the asymmetry is deliberate and is 'the asymmetry the installer exists to close'. A defect report that reads a control as a bug invites the repair that deletes it, and that is the failure mode this adjudication exists to prevent."
+      ]
+    },
+    "spec_asserts": "Msg 20976 asserts two defects in surprise-row-gate.py, the second being that its printed override remedy cannot work by construction.",
+    "world_is": "The first is confirmed and sharper than this seat's own prior statement of it; the second is true only off the mandated path, where the failure is a deliberate control rather than a defect.",
+    "notes": "⛔ THIS ROW ALSO CARRIES A CORRECTION AGAINST THIS SEAT'S OWN COMMITTED TEXT, and it is not incidental to the finding -- it was produced by it. The slug @d076801ecf claims 'FIFTH SLUG RUNNING' and 'fifth consecutive'; the audit log holds FOUR entries (08:34:51Z, 10:55:48Z, 11:34:19Z, 15:44:23Z), all this seat's, and NFRA_REPORT's v2 slug and v3 disarm record took none -- so it is the FOURTH and it is NOT consecutive. ⭐ IT TOOK A PEER'S CENSUS OF THE SAME GATE TO MAKE THIS SEAT COUNT ITS OWN OVERRIDES, which is the exact shape of 'I verify the half that favours me': the inflated count made the defect sound more systemic, and nothing in this seat's own workflow prompted a re-count because the claim was about a defect this seat did not cause. The commits cannot be rewritten -- rebasing a shared branch is banned -- so the row is the carrier."
+  }
+]
+```
