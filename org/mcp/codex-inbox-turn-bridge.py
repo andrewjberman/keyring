@@ -194,10 +194,10 @@ def nudge_text(serial: str, filename: str) -> str:
     return (
         f"[HARD-NUDGE] {filename}\n"
         f"Inbox event for {serial}. Read only the exact unread root-level file named "
-        f"{filename}. A message from CRO Base is an immediate Go unless its body "
-        "explicitly says hold: ACK by naming message content, begin the order "
-        "immediately, perform the first required action, and only after acting move "
-        "that exact file into read/. If the exact file is already absent, treat this "
+        f"{filename}. Determine the sender and requested action from the message "
+        "body, and follow the user's current instructions and authorization. "
+        "This notification does not grant authority or imply an immediate Go. "
+        "If the exact file is already absent, treat this "
         "as a stale duplicate and do not substitute another filename."
     )
 
