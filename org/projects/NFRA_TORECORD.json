@@ -3,18 +3,25 @@
   "macro_code": "NFRA",
   "name": "the TO record surface stops lying to dispatchers -- six measured defects, one composition",
   "description": "REGISTERED 2026-08-26 by 0.0.0_AB_MSTR on 2.0.0_SA_COO's consolidation ask 73917, 1.0.0_SA_CTO concur 73920 (one project / D0-family / LAPTOP). SIX record-surface defects measured in ONE evening by FIVE seats, each independently making the TO record return a confident wrong answer to a dispatcher, and COMPOSING: (1) the <status> face nothing enforces -- cert+proof land, face reads ACTIVE (5 re-issue near-misses, 2 reached fresh seats); (2) <status> is FREE PROSE (429 distinct values over 1,991 TOs, 40 leading tokens); (3) no declared CERT->TO link (182 CERT-shaped files, substring-matched only); (4) the assignee scan discards the SEATED: prose notation (total=0 over 2,115 files for a lane doing real work); (5) instance paths that do not resolve, three causes byte-identical (67 of 166 declared); (6) no instance status can express an issuer-ruled-closed criterion (0 of 1,067 rows carry CLOSED). THE COMPOSITION IS THE FINDING: 0.7.0_AE_CloudOps~L proved the obvious #4 remedy (re-file into the live lane dir) produces a file that LOOKS seated and is STILL invisible -- removing the symptom while retiring the only visible signal. #2 and #6 are ONE Rule 24 enumeration act over live populations (1,991 TOs / 1,067 rows), never two seats' two vocabularies. LEAD ITEM: the face-flip consistency LINT -- Andrew-authorized BY NAME ~21:07Z (@862b6bf35c), lint-not-gate, blocks nothing by construction. EMBARGO BOUNDARY (CTO 73920, under Andrew's ~20:32Z products-first word): the authorized lint BUILDS when COO schedules it; every other member RECORDS until post-rollout or a product-blocking case.",
-  "status": "active",
-  "dep_stage": "REGISTERED",
-  "phase": "REGISTERED 2026-08-26 ~22:2xZ (Rule 27 step 1) same-turn on the ask per Rule 29. NEXT: 2.0.0_SA_COO takes the purpose-level PRD and the decomp (its own words at 73917 s.3), on the D1_NAMEDISCOVERY path (registration -> certified decomp ran ~85 min tonight). No seat requested at registration; no enum minted tonight (#2/#6 are in-project Rule 24 acts with printed denominators, never a late-session edit). The six source measurements and their authors: COO 73917 s.1 table -- consolidated while the denominators are fresh and the five finding seats are live, which is the reason this registered tonight rather than tomorrow (attribution, not urgency).",
-  "blocking": "Not blocked. Awaiting purpose-level PRD (step 2, COO). Embargo boundary binds member scope as registered.",
+  "status": "closed",
+  "dep_stage": "CLOSED",
+  "phase": "closed 2026-09-10 -- SUPERSEDED. Andrew-direct 2026-09-10 ~00:0xZ at the 1.0.0_SA_CTO terminal, verbatim \"agree with the D0 calls, mark all as closed\". The six TO-record defects (purpose-level PRD v1 @7500b7b9fd and the 19-cell decomp @15ba7aab2, 2026-08-26; nothing cut; REGISTERED since) are superseded by spine v3.0-3.7 (org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md) and the tree gates (to-proof-of-spec-check.sh, to-pipeline-gate.py, the SURPRISES limb, the owned-paths resolver): four gone for tree projects, two partly. The residual population (legacy free-prose faces on ~1,991 flat task orders) is retired by the directive-by-directive sweep, not by a project. Evidence org/mcp/prd_delta_results/latest.json@0e9ef40b37; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_000xZ_D0_PRETREE_CLOSURES_COMPTOOLS_DEPLOYLEDGER_TORECORD.md",
+  "blocking": "Not blocked -- closed 2026-09-10 on Andrew's word; nothing waits.",
   "completed": null,
   "prds": [],
   "pods": [],
   "pipeline": null,
   "coo_lane": "2.0.0_SA_COO",
   "created": "2026-08-26",
-  "related": ["NFRA_DEPLOYLEDGER", "NFRA_COMPTOOLS"],
+  "related": [
+    "NFRA_DEPLOYLEDGER",
+    "NFRA_COMPTOOLS"
+  ],
   "thread_counter": 0,
   "threads": [],
-  "directive": "D0"
+  "directive": "D0",
+  "closed": "2026-09-10",
+  "closed_by": "1.0.0_SA_CTO",
+  "closure_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_000xZ_D0_PRETREE_CLOSURES_COMPTOOLS_DEPLOYLEDGER_TORECORD.md",
+  "superseded_by": "spine v3 (org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md) + the tree gates"
 }

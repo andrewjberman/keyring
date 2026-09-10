@@ -3,7 +3,7 @@
   "project": "NFRA_CLDGRPH",
   "round": 6,
   "seat": "2.0.0_SA_COO~A",
-  "written_utc": "2026-09-09T22:5xZ",
+  "written_utc": "2026-09-09T23:58Z",
   "trigger": "1.0.0_SA_CTO's L10 read of round 5 (msg 94610, records @30027295be: ROUND_CLOSE, COMPLETION_GRADES 7 REALIZED / FWD-7 NOT_REALIZED by TWO OWNED ACTS, PRD addendum v0.6 rows S21-S28 + R14/R15); Andrew's allocation at the CTO terminal ~17:3xZ 'Recs approved' (@7caee0ad5d: the site-Z exercise ALLOCATED FIRST, the ONE act his word starts today); Andrew's standing word at this terminal 2026-09-09 ~13:1xZ '/drive NFRA_CLDGRAPH to completion'.",
   "rows": [
     {
@@ -216,8 +216,50 @@
         "wk-cldgrph-6-7 (slot ~7 spawned)",
         "msgs 94776/94777 (the W2-S60 pitch)"
       ],
-      "commit": "PENDING-THIS-COMMIT",
+      "commit": "381eda9ebb",
       "next": "the CTO's GO + the CVO's sign on W2-S60 -> widen F-11's grant to grain_baseline.json's four entries and re-hand; F-6's report on ~7; the FINAL packet and the drain-end read after both drains; CronDelete on the send."
+    },
+    {
+      "seq": 16,
+      "limb": "L6 (a grant widened by a gate GO) / L7 (a re-hand)",
+      "started_utc": "2026-09-09T23:0xZ",
+      "ended_utc": "2026-09-09T23:0xZ",
+      "act": "THE CTO RULED W2-S60 within the tick (94778; a dated section of the W2-S45 record): GO in two parts under ONE CVO sign -- the four retired provisional types recertified to 0 in grain_baseline.json (the EXTERNAL_ENDPOINT precedent: a baseline that certifies a vocabulary the producer no longer emits is a check reading the old world) AND the five canonical types recertified at their first post-unification magnitudes (PipelineScript 332, PipelineFunction 2,428, S3Key 588, Component 24, ReactQueryKey 188; the CVO re-measuring before signing -- 'not read at L9': a band check against the old magnitudes would refuse the correct output, and leaving the nightly refusing until L9 is the waiting Andrew's word forbids); the GO line 20260909T2305Z verbatim; the COND-A resource-type count unmoved at 32. EXECUTED THE SAME TICK: F-11's face on the worker's branch amended @9495eb15f7 (the grant widened to exactly nine entries of grain_baseline.json; the entries written with the sign field `pending 3.0.0_SA_CVO`; the local derive re-run to GRAIN-SENTINEL PASS; then the zip push, ONE ad-hoc build, ONE ad-hoc derive, the projection and the served reads under the manual-trigger form) and F-11 RE-HANDED to the same subagent; the CVO told (the sign lands on CLOUD after the drain, C-S40's shape). Carried by the CTO to the L10: W2-S61 as a substrate-card question for the stitch producer (Rule 28 q3/q4: a producer that re-archives its own reader's input); W2-S63 to CloudOps; the STORED_IN silent-zero fix as a lesson for the accept's negative arm. F-6 on slot ~7 past its archive and delete (the local store gone from the main workspace; 19 files edited; flip pending).",
+      "artifacts": [
+        "wk-cldgrph-6-2 @9495eb15f7 (the F-11 GO amendment)",
+        "msg to the CVO 23:04Z"
+      ],
+      "commit": "aad0fd7fab",
+      "next": "F-11's flip (the push, build, derive, projection, served reads) and F-6's flip; both drains; the CVO's baseline sign; the FINAL packet; the drain-end read to the CTO; CronDelete."
+    },
+    {
+      "seq": 17,
+      "limb": "L7 (a worker report adjudicated) / L6 (a re-cut under @9f4a57262f)",
+      "started_utc": "2026-09-09T23:22Z",
+      "ended_utc": "2026-09-09T23:28Z",
+      "act": "TICKS 44-45 READ NOTHING TERMINAL (both workers active at 23:10Z and 23:19Z; no broker traffic since the W2-S60 GO; no log written). TICK 46: 0.9.0_WK_NFRA_CLDGRPH~7 REPORTED TO-CG-F-6 OPEN with a VALID instance @98323fe799 and two mechanical FAILs -- the work itself stands @6abd4a9d94 (four archive objects on s3://opal-313476888478-globgrph/archive/NFRA_CLDGRPH.CG-s-26/, ARCHIVE_OBJECTS=4 of 4, SHA256_MATCH=3 of 3 by S3-computed checksum; the tombstone 7 of 7 fields; kuzu_stitch_load.py git rm'd, last hash 8a074ba7ba; the store absent 3 of 3 by absolute path with the control fired; comp-debt rc 0 with no store, refusal naming the served source; no engine opened). ADJUDICATED as THREE CUT DEFECTS, ZERO WORK DEFECTS, and RE-CUT on the worker's branch @6b3aef13a1 under the standing authority: (1) F6-AC3 (W7-S4) -- the face widened the cell's scope to the tool homes and the REAL-WIDE sweep read LOCAL_KUZU_BUILDERS=2 of 486 files (0 parse failures) against 0 of 66 beside the projection; the two hits are tsgraph_spike/load_scratch_kuzu.py:97 and load_clusters_scratch.py:43, each opening its OWN scratch store under tsgraph_spike/out/ -- the population row W2-S25 declared harmless at D-7 pass 3; the pair joins the named exclusion with W2-S25 printed, the wide sweep stays deciding, the planted-builder control unchanged; (2) F6-AC5 (W7-S3) -- the expect hard-coded the W2 row namespace of the slot the order was cut for; the schema binds W{n} to the committing suffix; now W[0-9]+-S[0-9]+, grammar only; (3) W7-S1 -- six deliverables paths named ~2, which the lane gate refuses for serial ~7 (18 ADHC_OWNPTH.005 measured); now ~7. NOT re-cut, carried to the L8 packet: W7-S2 (graph-call-manifest.yaml:1237 freshness and its mirror tool_index.py:2443 still name the deleted store's db-path; outside the grant; the cell's accept met by the row; REC to L10: one entry-grained edit under the manifest owner). The worker RE-HANDED (widen the EXCL, re-run AC3/AC5, re-write the instance, flip in the two-commit shape). The CTO and CVO TOLD (94784, 94785). F-11 on slot ~2 executing the W2-S60 GO, no commit past 9495eb15f7 at 23:19Z.",
+      "artifacts": [
+        "wk-cldgrph-6-7 @6b3aef13a1 (the F-6 re-cut)",
+        "msgs 94784 (CTO), 94785 (CVO)",
+        "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260909T2325Z.md"
+      ],
+      "commit": "b1fd7df2d3",
+      "next": "F-6's flip and drain (union the four W7 rows; my disarm rows W7-S1..S4 at the drain); F-11's flip and drain; the CVO's baseline sign; the FINAL packet; the drain-end read to the CTO; CronDelete."
+    },
+    {
+      "seq": 18,
+      "limb": "L7 (a drain) / L8 (a partial packet) / adjudication (five acks)",
+      "started_utc": "2026-09-09T23:42Z",
+      "ended_utc": "2026-09-09T23:58Z",
+      "act": "TICK 47 (23:41Z) READ NOTHING TERMINAL (both workers active; slot ~7 mid re-run, slot ~2 mid-recert; no broker traffic). TICK 48: TO-CG-F-6 (CG-s-26, the JOIN's LAST cell) TERMINAL on slot ~7 after the re-cut -- re-run 6f0a3af8e7, flip 558f25e77e; six mechanical criteria PASS (AC3 0 of 486 files over the SAME population with the W2-S25 pair excluded by name and printed; AC5 REGISTRY_MENTIONS=2 (row W7-S2) admitted), AC6 judgment recorded; the worker re-grounded the exclusion's premise before applying it (0 stitch/nessie mentions in either spike loader; 6 of 6 excluded basenames unique across the sweep) and re-ran AC1/AC2/AC4 so no capture predates the re-cut. VERIFIED IN-WORKTREE by this seat: checker VALID rc 0, <status>complete at HEAD by git show, tree clean. DRAINED @acf75d72d8 (rc 4 on the channel, union 211 + 4 = 215, --continue under the guards: row gate 4 new rows OK, corpus OK, tree check 0 violations). Slot ~7's chain done: worktree and branch removed (only .scratch untracked). No org/modules/graph path in the merge, so no comp-system phase two. ROWS S90-S94 @88091d4945 (215 -> 220): S90/S91/S92 DISARM W7-S1/S3/S4 (the three cut defects); S93 ACKS W7-S2 and CARRIES it to L8 (graph-call-manifest.yaml:1237 freshness + tool_index.py:2443 mirror naming the deleted store; REC for L10: one entry-grained edit under the manifest owner, then a REGENERATION of the mirror); S94 ACKS THE CVO's S89 (found 23:25Z while re-measuring for the W2-S60 sign: the unified producer emitted every CARRIED member twice, one copy per class list, plus PORTAL_BUNDLE) against the worker's own fix on F-11's branch @22e388d221 (_collapse_stitch_copies, W2-S65: 449 duplicated ids, 269 members against themselves, admitted 3,560 -> 1,790 = 1,521 merged + 269 created, 0 lost, now F11-AC1's own denominator; the nine baseline entries written at the COLLAPSED magnitudes 167/1,217/381/201/125 and not the relayed admitted counts, W2-S64 armed to the CVO) -- the two snapshot vintages (the CVO's 170/1,217/394/201/125 at 80daa1fff6 vs the worker's at 22e388d221: PipelineScript +3, S3Key +13) NAMED for the sign. L8 PARTIAL v2 COMPILED (ledger/L8_PACKET.round6.partial.v2.md, sha256 e87221bb9216e4d5..., 10 of 11 terminal) and SENT to the CVO (94789) with the CTO for the record (94790). F-11 on slot ~2: the zip re-push under the GO ledgered CLOSED 23:49Z (one PutObject, zero task families); the ad-hoc build, derive, projection and served reads running.",
+      "artifacts": [
+        "CLOUD @acf75d72d8 (the F-6 drain)",
+        "CLOUD @88091d4945 (rows S90-S94 + the partial v2 packet)",
+        "msgs 94789 (CVO), 94790 (CTO)",
+        "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260909T2350Z.md"
+      ],
+      "commit": "PENDING-THIS-COMMIT",
+      "next": "F-11's flip and drain (verify in /c/tmp/wk-cldgrph-6-2; union; comp-system phase two -- org/modules/graph/grain_baseline.json moves; remove worktree + branch); the CVO's baseline sign; the FINAL packet + COMPLETION_REPORT.round6.json; the drain-end read to the CTO; CronDelete."
     }
   ]
 }
