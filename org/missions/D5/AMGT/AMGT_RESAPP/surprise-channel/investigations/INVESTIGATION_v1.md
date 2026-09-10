@@ -170,6 +170,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "This worker's task text: 'your proof-of-spec instance at org/.../deliverables/0.9.0_WK_AMGT_RESAPP~3/AMGT_RESAPP.TO-AMGT-s-12.proof_of_spec.json' -- the short to_id form.",
     "world_is": "The mechanical gate that actually decides whether a 'complete' flip is accepted keys on the TASK ORDER FILE'S OWN full basename stem, not the short to_id -- a file named with the short form is invisible to check_complete_flip's glob and the flip is refused with a message that reads as if no instance exists at all, even though a VALID one does, just under the wrong name. Renamed to the full-stem form (permitted -- deliverables/ is broadly granted) and the flip proceeded.",
     "notes": "Non-blocking, caught before any commit landed (safe-commit's pre-commit hook aborted cleanly, files left unstaged, nothing to roll back). Worth fixing at the source that generates worker task text (the short-form path may be a convenience abbreviation that was never cross-checked against the gate it has to pass) so the next worker does not repeat the same round trip."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W5-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~5",
+    "surfaced_at": "2026-09-10T22:53Z",
+    "one_line": "AMGT-s-15's own two schemas name reviewed_at/review_interval_days once per LIST, never per entry, so rot.py's staleness is list-wide (N is 0 or the full entry count, never partial); and social_accounts.json's entries are keyed by a `security_key` this project has not defined anywhere else, resolved here to AMGT-s-12 universe.json's `folder` value.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_RESAPP.TO-AMGT-s-15...md worker face (a)/(b): publishers.json and social_accounts.json are BOTH given as {owner, owner_status, reviewed_at, review_interval_days, entries: [...]} -- reviewed_at and review_interval_days sit at the list's top level in both named shapes; neither named entry shape ({domain,name,status,added_at,added_by,reason} for publishers, {security_key,platform,handle,status,evidence} for social_accounts) carries a per-entry reviewed_at field",
+        "same worker face (c): 'for each list, entries older than review_interval_days since reviewed_at are STALE' -- read against the schemas in (a)/(b), the only reviewed_at available to compare against is the list's single value, so lib/research/lists/rot.py's is_stale() runs once per list and the result (stale or not) is reported against the whole entries_total (rot_signal.json, entries_stale field is either 0 or equal to entries_total for every list at every run so far)",
+        "python search of lib/research/**/*.py for the literal string 'security_key' before this cell's own build_lists.py existed: 0 hits (rules/, identity/ modules carry no such field)",
+        "AMGT-s-12's universe.json (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/universe.json@074d0d1ebe) names, per entry, folder/one_pager_files/bloomberg_ticker/sa_symbol/ir_domain/social_account -- no field named security_key; folder is the one field MEASURED present and unique across all 89 entries (bloomberg_ticker and sa_symbol are UNRESOLVED for a majority: e.g. Adobe ADBE US, Air Liquide AI FP, America Movil AXMB MM all carry bloomberg_ticker.status UNRESOLVED in the same file), so folder was read as security_key's value in social_accounts.json's 267 entries (89 names x 3 platforms)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell's own (a)/(b) schemas carry reviewed_at/review_interval_days at the list level only, and (c) then describes staleness in terms of 'entries older than review_interval_days since reviewed_at' as if the comparison were per-entry; the cell also names social_accounts.json entries by `security_key` without defining the term or pointing at an existing field it maps from.",
+    "world_is": "No per-entry reviewed_at field exists in either schema the cell itself gives, so this cell's rot.py computes staleness once per list (all-or-nothing over that list's entries) rather than per entry, and security_key was set to AMGT-s-12 universe.json's `folder` value -- the only field measured unique over all 89 names, since bloomberg_ticker/sa_symbol are UNRESOLVED for many of them and would leave holes as a key.",
+    "notes": "Non-blocking: AC1/AC2/AC3 all pass under this reading, and the cell's own (c) text -- 'Prints ONE line per list' -- is itself consistent with a per-list (not per-entry) rot computation. Recorded because a later cell or an owner editing these lists by hand and expecting a per-entry review date, or a per-entry security_key drawn from some other identifier, would find neither and should read this row first."
   }
 ]
 ```
