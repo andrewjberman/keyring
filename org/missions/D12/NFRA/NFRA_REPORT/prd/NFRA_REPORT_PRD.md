@@ -33,27 +33,36 @@ before landing (see its `CONFIRMED` line).
 
 ```json
 {
-  "project": "NFRA_REPORT",
-  "directive": "D12",
-  "fabric": "site-z",
-  "prd_version": "v0.7",
-  "step": 4,
-  "brief_ref": "docs/briefs/global-infrastructure-reporting-brief-20260909.md@37ff80867a",
-  "endpoint_outcomes": [
-    "FWD-1",
-    "FWD-2",
-    "FWD-3",
-    "FWD-4",
-    "FWD-5",
-    "FWD-6",
-    "FWD-7",
-    "FWD-8",
-    "FWD-9",
-    "FWD-10",
-    "FWD-11",
-    "FWD-12"
-  ],
-  "status": "RATIFIED"
+ "project": "NFRA_REPORT",
+ "directive": "D12",
+ "fabric": "site-z",
+ "prd_version": "v0.8",
+ "step": 4,
+ "brief_ref": "docs/briefs/global-infrastructure-reporting-brief-20260909.md@37ff80867a",
+ "endpoint_outcomes": [
+  "FWD-1",
+  "FWD-2",
+  "FWD-3",
+  "FWD-4",
+  "FWD-5",
+  "FWD-6",
+  "FWD-7",
+  "FWD-8",
+  "FWD-9",
+  "FWD-10",
+  "FWD-11",
+  "FWD-12",
+  "FWD-13",
+  "FWD-14",
+  "FWD-15",
+  "FWD-16",
+  "FWD-17",
+  "FWD-18",
+  "FWD-19",
+  "FWD-20",
+  "FWD-21"
+ ],
+ "status": "RATIFIED"
 }
 ```
 *PRD_HEADER block (`org/standards/PRD_HEADER.schema.json`; limb 5 of `.tools/to-pipeline-gate.py`).
