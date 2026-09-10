@@ -1278,6 +1278,161 @@ _STOP = {
 
 GOLD_ID = re.compile(r"(?<![\w])(INF_)?[A-DIS]_-?\d{1,2}[a-z]?(?![\w])")
 
+# --- SUBJECT EXISTENCE (NFRA_COMPEFFICACY CE-p-4, 0.9.0_WK_NFRA_COMPEFFICACY~1, 2026-09-09) ------
+# THE DEFECT (T-3 audit finding F2, the CVO's second cut s.4): GOLD_ID above validates a subject's
+# SHAPE and never its EXISTENCE. Measured on this file before the change: `comp-which "what does
+# INF_D_99 write to s3"` -> rank 1 `comp-pipescript io INF_D_99`, score 2.00, `vetted: true`,
+# rc 0, 78 ranked rows -- a gold id NO script tree carries, handed to a seat as a vetted route.
+# A mistyped subject is the wrong-object error one step before every downstream read, and the
+# router is where every subject question starts.
+#
+# THE AUTHORITY, FOUND NOT INVENTED (census 2026-09-09, worktree @0e9ef40b37):
+#   * `comp-find 'GOLD_ID' .tools --all` -> 2 hits, BOTH in this file (:1279 def, :2236 use).
+#     The pattern has no second consumer, so there is no competing id-space to reconcile.
+#   * The estate registers gold-script ids IN THE FILESYSTEM, not in a registry file.
+#     org/modules/graph/pipeline_cli.py:203 `_discover_script_trees` is explicit -- "re-derive
+#     the script-tree universe from the FILESYSTEM at call time -- NOT a frozen list ... A longer
+#     hand-list would have gone stale the next time someone adds a tree; a predicate cannot" --
+#     and :3016 `_resolve_gold_script` resolves an id by globbing the gold directories. Those
+#     two ARE the estate's resolvers for exactly this id-space, and both read directories.
+#   * Measured universe: 30 `data/*/scripts/<layer>/` directories on disk, 3 of them carrying
+#     GOLD_ID-shaped stems -- black_diamond/gold 29, cot/gold 28, inf/gold 43 -> 74 distinct ids.
+#
+# So this check is a PREDICATE OVER THE SAME SUBSTRATE the estate's own resolver uses, never a
+# hand-kept list in this file: a new firm tree or a new script is covered the day it lands. It
+# scans EVERY layer (not only gold) deliberately -- refusing a real id that happens to live in a
+# silver tree would be an OVER-refusal, and an over-refusal on the enforcing rail is worse than
+# the confident mis-route it replaces.
+_SUBJECT_UNKNOWN = "not-applicable"   # the question carries no gold id -- nothing to resolve
+_SUBJECT_STATE = {"resolved": _SUBJECT_UNKNOWN, "authority": "", "subject": ""}
+_SUBJECT_CACHE = None
+
+
+def _gold_subject_universe():
+    """(ids -> [relative dirs that carry it], [dirs consulted]) from `data/*/scripts/*/*.py`.
+
+    Cached per process: main() consults it at most once, but _spill_full_ranking reads the
+    census line too. Any OSError yields an EMPTY universe, and an empty universe DISABLES the
+    check (see _resolve_gold_subject) -- a filesystem this cannot read must never become
+    "no registry carries it", which would refuse every real id at once.
+    """
+    global _SUBJECT_CACHE
+    if _SUBJECT_CACHE is not None:
+        return _SUBJECT_CACHE
+    ids, dirs = {}, []
+    data_root = os.path.join(WS, "data")
+    try:
+        trees = sorted(os.listdir(data_root))
+    except OSError:
+        trees = []
+    for tree in trees:
+        scripts = os.path.join(data_root, tree, "scripts")
+        if not os.path.isdir(scripts):
+            continue
+        try:
+            layers = sorted(os.listdir(scripts))
+        except OSError:
+            continue
+        for layer in layers:
+            layer_dir = os.path.join(scripts, layer)
+            if layer.startswith("__") or not os.path.isdir(layer_dir):
+                continue
+            try:
+                names = os.listdir(layer_dir)
+            except OSError:
+                continue
+            rel = "data/%s/scripts/%s" % (tree, layer)
+            carried = False
+            for name in names:
+                if not name.endswith(".py") or name.startswith("__"):
+                    continue
+                stem = name.split(".")[0]
+                if GOLD_ID.fullmatch(stem):
+                    ids.setdefault(stem, [])
+                    if rel not in ids[stem]:
+                        ids[stem].append(rel)
+                    carried = True
+            if carried:
+                dirs.append(rel)
+    _SUBJECT_CACHE = (ids, dirs)
+    return _SUBJECT_CACHE
+
+
+def _authority_line(dirs, ids):
+    """The AUTHORITY, named in one line with its denominator. Printed AND spilled."""
+    if not dirs:
+        return "data/*/scripts/*/*.py stems matching GOLD_ID (0 directories readable)"
+    return ("data/*/scripts/*/*.py stems matching GOLD_ID -- %d ids across %d directories: %s"
+            % (len(ids), len(dirs), ", ".join(dirs)))
+
+
+def _resolve_gold_subject(subject):
+    """(state, authority_line, homes, candidates).
+
+    state is 'true' when the id is carried by a script tree, 'false' when it is not, and
+    _SUBJECT_UNKNOWN when the universe could not be read at all (fail-OPEN: an unreadable
+    substrate is NOT evidence of absence, so the router behaves exactly as it did before).
+    Candidates come from difflib against the SAME universe -- never a hand-written alias map.
+    """
+    ids, dirs = _gold_subject_universe()
+    auth = _authority_line(dirs, ids)
+    if not ids:
+        return _SUBJECT_UNKNOWN, auth, [], []
+    if subject in ids:
+        return "true", auth, ids[subject], []
+    lower = {k.lower(): k for k in ids}
+    if subject.lower() in lower:                      # case-insensitive, as _ci_lookup does
+        hit = lower[subject.lower()]
+        return "true", auth, ids[hit], []
+    return "false", auth, [], _nearest_ids(subject, sorted(ids))
+
+
+def _edit1(a, b):
+    """True when b is ONE substitution, insertion, deletion or ADJACENT TRANSPOSITION from a.
+
+    The transposition limb is why this is not just difflib. difflib.SequenceMatcher ranks
+    INF_D_20 closer to INF_D_10 (0.875) than to INF_D_02 (0.75), so the single most likely
+    real intent behind a transposed id -- the exact negative control this check was built for --
+    was ABSENT from a pure-difflib candidate list. Measured on this tool, 2026-09-09.
+    """
+    la, lb = len(a), len(b)
+    if abs(la - lb) > 1:
+        return False
+    if la == lb:
+        diff = [i for i in range(la) if a[i] != b[i]]
+        if len(diff) <= 1:
+            return True
+        if len(diff) == 2 and diff[1] == diff[0] + 1:
+            i, j = diff
+            return a[i] == b[j] and a[j] == b[i]
+        return False
+    short, longer = (a, b) if la < lb else (b, a)
+    for i in range(len(longer)):
+        if longer[:i] + longer[i + 1:] == short:
+            return True
+    return False
+
+
+def _nearest_ids(subject, universe, n=5):
+    """Nearest real ids: every edit-distance-1 neighbour FIRST, then difflib fills the list.
+
+    Two passes because they fail differently -- edit-1 is exact and can return nothing at all
+    (a subject two typos away); difflib always returns something but orders by a similarity
+    ratio that does not model a transposition. Neither alone is a candidate list.
+    """
+    from difflib import get_close_matches
+    out = [u for u in universe if _edit1(subject, u)]
+    if len(out) < n:
+        for cutoff in (0.6, 0.4):
+            for c in get_close_matches(subject, universe, n=n * 2, cutoff=cutoff):
+                if c not in out:
+                    out.append(c)
+                if len(out) >= n:
+                    break
+            if len(out) >= n:
+                break
+    return out[:n]
+
 
 def _tokens(s: str):
     return set(re.findall(r"[a-z0-9_]+", s.lower()))
@@ -1884,6 +2039,15 @@ def _spill_full_ranking(ranked_all, call_of, concern_of, q):
             fh.write("# score = token/prior OVERLAP, NOT a confidence.\n")
             fh.write("# score >= 1.0 => a CURATED (vetted) rule fired. < 1.0 => a fuzzy base-band guess.\n")
             fh.write("question: %s\n" % _yq(q))
+            # CE-p-4: THE VERDICT, TOLD APART ON THE ARTIFACT. A measurement that reads only
+            # `tools_ranked` cannot tell "0 rows because nothing fit" from "0 rows because the
+            # subject does not exist" -- two different failures with two different remedies.
+            # THREE values, not two: `true` / `false` / `not-applicable`. The third is not
+            # padding -- most questions carry no gold id at all, and calling those `true` would
+            # record a check that never ran as a check that passed.
+            fh.write("subject: %s\n" % _yq(_SUBJECT_STATE.get("subject") or ""))
+            fh.write("subject_resolved: %s\n" % _yq(_SUBJECT_STATE.get("resolved")))
+            fh.write("authority_consulted: %s\n" % _yq(_SUBJECT_STATE.get("authority") or ""))
             fh.write("shown_in_terminal: %d\n" % _TOPK)
             fh.write("tools_ranked: %d\n" % len(ranked_all))
             fh.write("tools:\n")
@@ -2231,9 +2395,71 @@ def main() -> int:
         return _print_surfaces()
     q = " ".join(sys.argv[1:]).strip()
     qtok = _tokens(q)
+    # CE-p-4: RESET THE PER-QUESTION SUBJECT STATE. Module-level state is safe in the cold CLI
+    # (one question per process) and is NOT safe on the WARM in-process path -- comp-which-
+    # routing-test.py:411 `_run_comp_which_warm` calls this main() repeatedly inside ONE
+    # interpreter to avoid paying 68 interpreter startups, so a subject left here by question N
+    # would be spilled as question N+1's verdict. The id-space CACHE is deliberately NOT reset:
+    # it is a property of the tree, not of the question.
+    _SUBJECT_STATE["subject"] = ""
+    _SUBJECT_STATE["resolved"] = _SUBJECT_UNKNOWN
+    _SUBJECT_STATE["authority"] = ""
 
     hits = []  # (score, label, calls, why)
     gid = GOLD_ID.search(q)
+    # --- SUBJECT EXISTENCE GATE (CE-p-4) --------------------------------------------------------
+    # POSITION IS THE WHOLE INHERITANCE ANSWER (P-6). This sits at the router's ENTRY: after the
+    # subject is extracted and BEFORE `hits` is built, before _default_router's DR2 posterior,
+    # before the LEGACY cascade, before the surface-first drill, before the grep/glob fallback and
+    # before the --json emitters. An unresolved subject RETURNS from here, so no ranker path can
+    # inherit the omission -- not because each was patched, but because none is reached. The one
+    # residual is named in the deliverable: a caller that imports org/modules/graph/comp_route.py
+    # directly bypasses this file entirely (censused: 0 such callers outside this router today).
+    if gid:
+        _subject = gid.group(0)
+        _state, _auth, _homes, _cands = _resolve_gold_subject(_subject)
+        _SUBJECT_STATE["subject"] = _subject
+        _SUBJECT_STATE["resolved"] = _state
+        _SUBJECT_STATE["authority"] = _auth
+        if _state == "false":
+            # A REFUSAL IS NOT A CRASH. This is comp-which's existing ABSTAIN, in its own voice:
+            # rc 1, the same code the no-fit posterior already returns (:2170 "The BANNER lets an
+            # AGENT see doubt. rc lets a PROGRAM see it"), whose ONLY consumer is
+            # comp-tool-hud.sh:424 `... || _route_out=""` -- a nonzero blanks the nudge, which is
+            # that hook's documented intent. rc 2 is this tool's ARGUMENT-error code and is not
+            # what this is: the question is well-formed, the subject is not there.
+            # `term` is not computed until after the RULES loop; the SUBJECT is the term here.
+            _log_rail("SUBJECT-UNRESOLVED", "gold-id-absent", _subject, q)
+            _spill_full_ranking([], {}, {}, q)
+            if _JSON:
+                import json as _json
+                print(_json.dumps({"query": q, "kind": "subject-unresolved", "routed": [],
+                                   "subject": _subject, "subject_resolved": False,
+                                   "authority_consulted": _auth,
+                                   "candidates": _cands}, ensure_ascii=True, indent=2))
+                return 1
+            print('comp-which -- SUBJECT NOT FOUND: "%s"\n' % _subject)
+            print("  NOT ROUTED. This question names a gold-script id that matches the id SHAPE")
+            print("  but exists in no script tree, so every tool below it would be pointed at an")
+            print("  object that is not there. 0 tools ranked -- deliberately, not for want of a")
+            print("  match.")
+            print("")
+            print("  AUTHORITY CHECKED: %s" % _auth)
+            print("")
+            if _cands:
+                print("  CANDIDATES -- nearest real ids by edit distance. These are CANDIDATES,")
+                print("  NOT a route: comp-which did NOT decide you meant one of them.")
+                for _c in _cands:
+                    _ch = _gold_subject_universe()[0].get(_c, [])
+                    print("    ? %s   [%s]" % (_c, ", ".join(_ch) or "?"))
+            else:
+                print("  CANDIDATES: none within edit distance of %s." % _subject)
+            print("")
+            print("  Re-ask with a real id, or list the id space:")
+            print("    comp-find --name '*.py' data/*/scripts/gold")
+            print("    comp-estate --definitions")
+            print("  Verdict on the artifact: subject_resolved: false in the spilled rank file.")
+            return 1
     if gid:
         hits.append((6, "gold-script id " + gid.group(0),
                      ["comp-pipescript io %s" % gid.group(0), "comp-pipescript feeds/consumers %s" % gid.group(0),
