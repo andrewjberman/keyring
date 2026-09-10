@@ -1,5 +1,34 @@
 # AMGT_RESAPP -- PRD (L4)
 
+```json
+{
+  "project": "AMGT_RESAPP",
+  "directive": "D5",
+  "fabric": "site-z",
+  "prd_version": "v0.2",
+  "step": 4,
+  "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
+  "endpoint_outcomes": [
+    "FWD-1",
+    "FWD-2",
+    "FWD-3",
+    "FWD-4",
+    "FWD-5",
+    "FWD-6",
+    "FWD-7",
+    "FWD-8",
+    "FWD-9",
+    "FWD-10",
+    "FWD-11",
+    "FWD-12",
+    "FWD-13",
+    "FWD-14"
+  ],
+  "status": "RATIFIED"
+}
+```
+
+
 **archetype:** SCRIBE (spec) · **author** `1.0.0_SA_CTO~Z` (L4 owner: CTO, no COO, no CVO)
 **status:** `LANDED` -- L3 + L4 registered 2026-09-10 ~18:3xZ
 
@@ -32,7 +61,7 @@ citing the brief cites `@19ce7d5b4d` explicitly** and reads from the working tre
 
 ---
 
-## 1. ENDPOINT (step 2, `/endpoint --forward`)
+## ENDPOINT (step 2, /endpoint --forward)
 
 **The fourteen outcomes are reproduced VERBATIM from the L2 endpoint @`3bc8f5f2c4` and are NOT
 re-authored here.** `FWD-1`..`FWD-12` derive from brief `O1`-`O12`; `FWD-13` and `FWD-14` were added
@@ -41,10 +70,147 @@ at L2 and **accepted without reservation by `4.0.0_SA_CRO~Z`** (msg 21001) as it
 ⛔ **`FWD-n` IDS ARE PERMANENT AND NEVER REUSED.** A new outcome takes the next unused number; a
 retired one leaves its number vacant forever. The round-N analysis and any addendum cite them back.
 
-> **The block lives at `AMGT_RESAPP_ENDPOINT_20260910.md` s.2 and is transcribed into this section
-> unchanged when this file lands in the tree.** It is not duplicated here in the staged copy,
-> deliberately: **two carriers of one obligation drift from the minute the second is written**, and
-> until this file is in the tree the endpoint artifact is primary.
+*Phase 0 output. `FWD-n` ids are PERMANENT and never reused; a retired outcome leaves its number
+vacant. `DONE WHEN` is the BAR, not the current state. ACCEPT lines are plain English and
+disputable, by rule, and carry no technical language.*
+
+```
+
+  FWD-1  An analyst gets a first-draft pack for a covered name without opening
+         a spreadsheet or a data terminal
+         DONE WHEN  EXERCISED -- an analyst has actually done it, not merely could
+         ACCEPT     An analyst opens a company the firm already covers and the
+                    model numbers, the business description and the segment
+                    breakdown are already on screen. They did not open a
+                    spreadsheet or a data terminal to get them.
+         SOURCE     brief O1; III-B bar 1
+
+  FWD-2  An analyst gets the same pack for a company the firm has never covered,
+         by typing its ticker
+         DONE WHEN  EXERCISED -- a real uncovered name has been pulled and read
+         ACCEPT     An analyst types the ticker of a company the firm has never
+                    covered and gets the same assembled page -- and the page says
+                    plainly that it is being fetched now rather than shown from
+                    an earlier save.
+         SOURCE     brief O2
+
+  FWD-3  An analyst can defend every number on the page in a meeting
+         DONE WHEN  EXERCISED -- a figure has actually been challenged and
+                    answered from the page
+         ACCEPT     Someone asks where a figure came from, on what basis, and as
+                    of when. The analyst answers by pointing at the screen --
+                    not from a spreadsheet and not from memory.
+         SOURCE     brief O3; III-B bar 2; F3 (state the basis beside the number)
+
+  FWD-4  An analyst reads what has recently been said about the company without
+         leaving the page
+         DONE WHEN  EXERCISED -- an analyst has read one and followed it out
+         ACCEPT     Recent commentary about the company is on the same page --
+                    news, analyst writing, and mentions from the company's own
+                    investor channel -- ordered by how recent and how often it
+                    came up, each item clickable through to the original.
+         SOURCE     brief O4
+
+  FWD-5  Adam forwards a printed pack without reformatting it
+         DONE WHEN  EXERCISED -- Adam has actually forwarded one
+         ACCEPT     Adam prints a pack and sends it on unchanged. It replaces the
+                    document he circulates today, rather than looking like a
+                    screenshot of a dashboard.
+         SOURCE     brief O5; III-B bar 3 (the displacement test)
+
+  FWD-6  An analyst returning to a company can say what changed
+         DONE WHEN  EXERCISED -- someone has actually compared two versions
+         ACCEPT     An analyst returns to a company researched before and can say
+                    what moved, naming the earlier version that shows it.
+                    Refreshing adds a version; it does not overwrite the old one.
+         SOURCE     brief O6; III-B bar 5
+
+  FWD-7  Adam can see which covered companies have gone stale
+         DONE WHEN  EXERCISED -- Adam has used it to find a stale name
+         ACCEPT     Adam looks in one place, sees every company the team covers
+                    with the date its research was last refreshed, and finds one
+                    that has gone stale without opening any folders.
+         SOURCE     brief O7
+
+  FWD-8  The comparison block is about the company on the page
+         DONE WHEN  EXERCISED -- an analyst who distrusted it has stopped
+         ACCEPT     The list of comparable companies is genuinely about the
+                    company being shown. Where a sensible comparison cannot be
+                    worked out, the page says so rather than showing another
+                    company's list.
+         SOURCE     brief O8; III-B bar 4; F6 (48 of 54 measured wrong today)
+
+  FWD-9  Machine-written prose is never mistaken for a firm view
+         DONE WHEN  APPLIED -- the marking is in place and sits beside the
+                    evidence the sentence was drawn from
+         ACCEPT     An analyst can tell at a glance which sentences a machine
+                    wrote and which the firm owns, and the machine-written ones
+                    sit next to the evidence behind them. They are a starting
+                    point someone edits, not a finished claim.
+         SOURCE     brief O9; III-B bar 6
+
+  FWD-10 A figure that failed its check is visible as failed
+         DONE WHEN  EXERCISED -- a check has actually refused something and the
+                    refusal was seen on the page
+         ACCEPT     A figure that failed or skipped its check looks different
+                    from one that passed, and the analyst can tell which. A
+                    failure shows as a marked value -- never as a blank, a zero,
+                    or a row that quietly disappeared.
+         SOURCE     brief O10; III-B ("a check that cannot FAIL is not a check")
+
+  FWD-11 An analyst sees social discussion admitted by a written rule
+         DONE WHEN  EXERCISED -- an analyst has read the feed and can point at
+                    why an item was admitted
+         ACCEPT     Recent social discussion about the company is on the page --
+                    its own official accounts and the wider conversation -- and
+                    each item is there because it met a written rule the analyst
+                    can read, not because it contained the ticker letters.
+         SOURCE     brief O11; F12 (the surface is reachable); F13 (the
+                    cashtag-native venue is absent, so the feed's own limits
+                    are part of what the rule must state)
+
+  FWD-12 An analyst can see where each input came from and re-run any one alone
+         DONE WHEN  EXERCISED -- one input has actually been re-run by itself
+                    while the others stayed where they were
+         ACCEPT     For each kind of input -- market data, filings, news, social,
+                    web -- the page shows where it came from, when it last ran,
+                    and whether that run worked; and any one can be re-run on its
+                    own. A single button that refreshes everything under one
+                    timestamp does not count.
+         SOURCE     brief O12
+
+  FWD-13 Everything on one page is about the same company
+         DONE WHEN  EXERCISED -- checked on a name that more than one business
+                    uses, and found not mixed
+         ACCEPT     The numbers, the recent commentary, the comparison list and
+                    the social posts on a page are all about the same company.
+                    Where the page cannot confirm that two sources describe the
+                    same company, it says so rather than showing them together.
+         SOURCE     brief III-B ("An identity" as its own class); PART V (the
+                    ticker, the symbol and the investor-page identity are three
+                    different keys; the social layer has no shared identifier);
+                    F6 (the measured instance of exactly this failure)
+
+  FWD-14 The lists the page depends on do not rot in silence
+         DONE WHEN  EXERCISED -- a list has actually gone out of date and
+                    somebody was told by the system rather than by a wrong page
+         ACCEPT     The list of publishers the page will quote, and the map of
+                    companies to their official social accounts, each have a
+                    named person responsible; and when one goes out of date
+                    somebody is told.
+         SOURCE     brief PART V ("an enumerated list with no owner lapses
+                    silently ... the same failure that left two keys dead")
+```
+
+> ⛔ **TRANSCRIBED HERE 2026-09-10 ~19:1xZ, AND THE OMISSION IS RECORDED RATHER THAN QUIETLY
+> FIXED.** The staged copy of this PRD carried a POINTER to the L2 endpoint artifact instead of
+> these cards, with a note saying the block "is transcribed into this section when this file lands
+> in the tree." **The landing was byte-for-byte, so the transcription never happened**, and for
+> roughly an hour the fourteen outcomes existed only in a deliverable while the PRD that cites them
+> held none. `FWD_DEF_RE` measured **0 outcomes defined**. ⛔ **THIS IS THE SAME TWO-CARRIER SHAPE
+> THAT COST `NFRA_REPORT` A ROUND THIS MORNING, COMMITTED AGAIN BY THE SAME SEAT HOURS AFTER
+> WRITING THE CORRECTION.** Found by `2.0.0_SA_COO~ZZZ` running the L6 gate's own functions with a
+> positive control, not by its author. **This section is now the only carrier.**
 
 **BAR DISTRIBUTION: 13 of 14 are `EXERCISED`; only `FWD-9` is `APPLIED`.**
 
@@ -187,6 +353,54 @@ own precedent gates it in exactly these terms.
 
 **`C-NO-CONTACT`** -- ⛔ **NO SEAT CONTACTS ADAM MULLER.** Andrew-ruled. Requirements reach him
 through Andrew and no other route.
+
+---
+
+### 3a. SEEKING ALPHA -- ANDREW-DIRECT 2026-09-10 ~18:4xZ
+
+**His words, verbatim and complete**, typed at the `2.0.0_SA_COO~ZZZ` terminal and relayed
+(record `ANDREW_DIRECT_20260910_184xZ_COOZZZ_SEEKING_ALPHA_IN_THE_TOS_...md` @`ee0eacab07`):
+
+> *"Something I want to fold in to your TOs, there should be a section somewhere in there on Seeking
+> Alpha, pulling info from it and testing SA etl. I want to note that this is a good page to scrape a
+> modal popup `https://seekingalpha.com/symbol/{TICKER}/virtual_analyst_report`. I also want to
+> explore actually hitting their REST API with an authenticated bundle versus doing all this scraping
+> bullshit, hence why we have my user info in AWS Secrets Manager."*
+
+⛔ **THIS ADDS NO OUTCOME AND THE id LIST IS UNCHANGED.** Analyst commentary on the page is already
+`FWD-4`; the Seeking Alpha symbol is already one of the four keys `C-IDENTITY-RESOLVED` names. **What
+his word adds is a NAMED SOURCE, a REQUIRED COMPARISON, and the closing of one open precondition** --
+those are constraints and surfaces, not a new capability. Inflating the outcome list for a source
+would make the endpoint a list of implementations.
+
+**`C-SA-NAMED-SOURCE`** -- the per-ticker virtual-analyst-report modal is a **named source for
+`FWD-4`**, cited to the record above. It was named nowhere in the brief or in this PRD before.
+
+**`C-SA-ROUTE-COMPARISON`** -- ⛔ **A COMPARISON, NOT A REPLACEMENT.** His words are *"explore ...
+versus"*. A cell must establish **both** routes' behaviour -- the authenticated REST route and the
+scrape -- and state which is sound on evidence. **A cell that silently picks one has not done the
+work he asked for.** The credential is located in AWS Secrets Manager **at run time**; ⚠ he named no
+secret, so **no cell may hardcode a secret name** and the record does not carry one.
+
+**`C-SA-PAYWALL-PRECONDITION-PARTLY-CLOSED`** -- §5's open precondition read *"A decision on
+paywalled sources ... Nobody has decided."* **Somebody now has, in part:** authenticated access is
+IN SCOPE TO EVALUATE. ⚠ **It is NOT thereby ratified for production**, and whether the login is
+captcha-gated remains unmeasured, so the vision-authenticator question stays open.
+
+⛔ **`C-SA-VENDOR-WORD` -- THE PER-USE EGRESS READING, RULED HERE BECAUSE IT IS L4's AND
+`2.0.0_SA_COO~ZZZ` CORRECTLY DECLINED TO RULE IT.** `C-VENDOR-EGRESS` requires Andrew's explicit
+per-use word and says a cell may neither spend nor assume it. His sentence names **the vendor, the
+route, the authentication and the credential's location, in the imperative**, which is far past
+"availability".
+
+| | |
+|---|---|
+| **AUTHORIZED** | the EXPLORATION and the COMPARISON -- calling the route to establish whether it works, and how it compares to the scrape |
+| **NOT AUTHORIZED** | recurring or production use of that route. **A word for an evaluation is not a standing right**, and `C-VENDOR-EGRESS` is per-use by construction |
+
+⚠ **THIS READING IS THIS SEAT'S AND ANDREW MAY CORRECT IT.** It is recorded so a cell does not have
+to guess, and so that if it is wrong it is wrong in ONE place with a name on it rather than in every
+cell that touches the vendor.
 
 ---
 
