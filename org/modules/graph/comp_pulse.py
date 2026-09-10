@@ -60,6 +60,23 @@ from collections import Counter, defaultdict
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _WS = os.path.normpath(os.path.join(_HERE, "..", "..", ".."))
+
+
+def _caller_root() -> str:
+    """The tree the CALLER is standing in. _WS resolves from _HERE (this file's own location),
+    which is right for the danger map and the logs and WRONG for repository SUBJECTS: a commit
+    from a linked worktree resolved its staged paths against the MAIN checkout, found them
+    'missing', and returned SUBJECT_ABSENT_FROM_CORPUS *before* risk_reflex() ever ran -- so the
+    whole commit skipped the reflex, including files that would have flagged. INSTRUMENT_LIMITS.md
+    LIMIT 4a. Falls back to _WS, so a caller in the main tree is unchanged."""
+    try:
+        out = subprocess.run(["git", "rev-parse", "--show-toplevel"], cwd=os.getcwd(),
+                             capture_output=True, text=True, timeout=15)
+        if out.returncode == 0 and out.stdout.strip():
+            return os.path.normpath(out.stdout.strip())
+    except Exception:
+        pass
+    return _WS
 sys.path.insert(0, _HERE)
 _TOOLS = os.path.join(_WS, ".tools")
 if _TOOLS not in sys.path:
@@ -662,7 +679,7 @@ def _self_test() -> int:
 
 def _staged_files() -> list:
     try:
-        out = subprocess.run(["git", "diff", "--cached", "--name-only"], cwd=_WS,
+        out = subprocess.run(["git", "diff", "--cached", "--name-only"], cwd=_caller_root(),
                              capture_output=True, text=True, timeout=20)
         return [ln.strip() for ln in out.stdout.splitlines() if ln.strip()]
     except Exception:  # noqa: BLE001
@@ -675,7 +692,7 @@ def _missing_subject_paths(paths: list[str]) -> list[str]:
     result, so test it before consulting the danger map."""
     missing = []
     for path in paths:
-        candidate = path if os.path.isabs(path) else os.path.join(_WS, path)
+        candidate = path if os.path.isabs(path) else os.path.join(_caller_root(), path)
         if not os.path.exists(candidate):
             missing.append(str(path))
     return missing

@@ -151,6 +151,34 @@ treating the graph's zero as "no subscriber" in either direction.
 
 ## LIMIT 4 -- the whole `comp-rail` resolves its CORPUS from the TOOL SCRIPT'S location, not the caller's tree
 
+> ⭐ **FIXED AND EXERCISED 2026-09-10 ~11:0xZ by `1.0.0_SA_CTO~Z`. LIMIT 4 AND LIMIT 4a BOTH.**
+> Kept in full below because the *reasoning* is still load-bearing and because a limits register that
+> deletes its fixed entries teaches nobody. **The remedy: SPLIT ONE ROOT INTO TWO.**
+>
+> | | resolves from | serves |
+> |---|---|---|
+> | `_comprail.repo_root()` (unchanged) | the script's own location | the rail's logs, `comp_log_auto`, the danger map — one install, one log |
+> | `_comprail.corpus_root()` (**new**) | **the caller's cwd**, falling back to `repo_root()` | what a search SCANS, and how a subject path resolves |
+>
+> Wired at `comp-find` (scan root), `comp-read` (subject resolution; its rail + log paths stay on the
+> install root), and `comp_pulse.py` (`_caller_root()`, at subject resolution AND the staged-set read).
+> `comp-imgread` needed no change — its only use was the log path.
+>
+> **EXERCISED, BOTH ARMS, IN A THROWAWAY WORKTREE — not asserted from the diff:**
+>
+> | | before | after |
+> |---|---|---|
+> | canary search **from a worktree** | 9 hits / **53,541** files — canary ABSENT, only the tool's own telemetry | **1 hit / 29,311** files — **the canary**, and only it |
+> | same search **from the main tree** | 53,545 files | **53,545 files, unchanged** |
+> | `comp-pulse diff` **from a worktree** | `SUBJECT_ABSENT_FROM_CORPUS`, reflex skipped | **`PRESENT_WITH_ZERO_RESULTS`, "REFLEX CLEAN — a MEASURED result"** |
+> | `comp-pulse diff` **from the main tree** | scores normally | **scores normally, real `[HOLD]` with 13 claims** |
+>
+> The denominator moving 53,541 → 29,311 is the discriminator: the corpus followed the caller. The
+> main-tree arm is what shows nothing regressed. Worktree and canary torn down, verified four ways.
+>
+> ⚠ **STILL TRUE AND NOT FIXED:** the `~/bin` shims still hardcode the tool's own path — that is
+> CORRECT and deliberate (one installed copy), and was never the defect. Only corpus resolution was.
+
 **Consequence, stated as the caller must apply it:** a `comp-find` / `comp-read` / `comp-which` result
 obtained from inside a **linked git worktree** describes the MAIN `ajb_workspace` checkout, not the tree
 the caller is standing in. A zero is therefore **not evidence of absence** in the caller's own tree, and
@@ -262,18 +290,38 @@ findable, citable record, and the three ARMED rows (`NFRA_REPORT-Z-W1-S1`, `NFRA
 `DISMISSED_WITH_REASON` (`NFRA_REPORT-Z-S12` @`73ffb25e28`), which is a ROUTING act: its remedy edits
 `~/bin` forwarders and `.tools/_comprail.py`, so under spine amendment 2.4 it leaves that project's
 chain rather than being disarmed, and amendment 2.6 would refuse it as a route-less remediation row.
-The finding is TRUE, ENDORSED and **LIVE at HEAD**. This entry is its durable carrier, not its closure.
+That routing act was correct and stands as the record of how the item left that project's chain.
 
-⛔ **NOT FIXED, AND THE DISTINCTION IS THE POINT.** The graph still models no `GOLD_SCRIPT` ->
-`Lambda`/`ReactComponent` edge, the parser still misses both dynamic-key patterns, the graph still
-carries no node type for a raw SNS phone-number/email endpoint, and **the comp-rail still resolves its
-corpus from the tool script's own location.** **Repairing any of the four is comp-tool build-lane work,
-owned by `1.0.0_SA_CTO~Z`, SIZED AND NOT DONE.** A document that warns about a gap is not a graph that
-models the edge, and nothing here should be cited as though any instrument improved.
+> ⭐ **UPDATE 2026-09-10 ~11:0xZ — THE UNDERLYING DEFECT IS NOW FIXED AND EXERCISED**, so the
+> "LIVE at HEAD" this paragraph originally asserted is no longer true. `W1-S5`'s disposition does not
+> change (it was a routing act, not a grade), and this entry remains its durable carrier — but the
+> hazard it carried is repaired, not merely recorded. ⚠ **The repair is NOT a retroactive warrant:**
+> any comp-tool result quoted from a worktree *before* this fix was still measured over the wrong
+> tree, and no figure already published becomes sound because the instrument later improved.
 
-⚠ **`LIMIT 4` HAS NO OWNED L1 EITHER.** Opening the comp-rail's own project at L1 needs a CRO, and none
-is live on this fabric (`4.0.0_SA_CRO~Z` dead) -- a standing open call at Andrew. Named here so the gap
-is recorded rather than implied.
+⛔ **LIMITS 1-3 ARE NOT FIXED, AND THE DISTINCTION IS THE POINT.** The graph still models no
+`GOLD_SCRIPT` -> `Lambda`/`ReactComponent` edge, the parser still misses both dynamic-key patterns, and
+the graph still carries no node type for a raw SNS phone-number/email endpoint. **Repairing those three
+is comp-tool build-lane work, owned by `1.0.0_SA_CTO~Z`, SIZED AND NOT DONE.** A document that warns
+about a gap is not a graph that models the edge, and nothing about LIMITS 1-3 should be cited as though
+an instrument improved.
+
+⭐ **LIMIT 4 AND 4a ARE THE EXCEPTION: THOSE TWO ARE FIXED AND EXERCISED** (2026-09-10, see the banner
+on LIMIT 4). The rail now resolves its corpus from the caller's tree. Their entries stay for the
+reasoning, not as live warnings.
+
+⭐ **AND THE PROCESS READING THAT DELAYED THEM IS CORRECTED, BY ANDREW, AT THE `1.0.0_SA_CTO~Z`
+TERMINAL.** This seat had recorded LIMIT 4 as needing an L1 brief and therefore blocked on there being
+no live CRO. Andrew's question -- *"Is the comp-tool work really necessary to write a whole brief on or
+is it just one surgical fix"* -- was the correction, and it was right. **Measured after the challenge:
+the code surface was THREE files; a 17-hit census had looked larger only because 14 of the hits were
+PROSE ABOUT the defect** (messages, rows, a `blocking` field) rather than code. The remedy was one new
+function and four lines. ⛔ **THE GENERAL FORM, worth more than this instance: a finding that arrives
+through a project's channel picks up that channel's ceremony, and the remedy inherits a weight the WORK
+never had.** Size the remedy on its own, after the finding is understood.
+
+⚠ **The missing-CRO gap is real but was never what blocked this.** It blocks genuinely NEW work --
+a directive with no project under it -- and not a surgical repair inside an existing surface.
 
 ⚠ **A STRONGER CARRIER EXISTS AND WAS DELIBERATELY NOT TAKEN TONIGHT:** a one-line stderr banner in
 `.tools/comp-blast` and `.tools/comp-pipescript` would reach a caller who never opens this file, which
