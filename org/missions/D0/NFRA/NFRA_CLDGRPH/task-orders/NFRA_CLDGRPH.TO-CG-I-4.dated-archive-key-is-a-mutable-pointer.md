@@ -4,7 +4,7 @@
 <project>NFRA_CLDGRPH</project>
 <issued_to>0.9.0_WK_NFRA_CLDGRPH~3</issued_to>
 <issued_by>2.0.0_SA_COO~A</issued_by>
-<status>pending -- GO = the spawn (spine L7, read at HEAD): slot ~3 on a worktree cut from CLOUD BY THE ISSUER and named in your prompt. ROUND 9 of NFRA_CLDGRPH; fanout 4 of 4 chains, cap 8. ONLY order of this slot's chain. The assignee commits its own status flip after a VALID proof-of-spec instance whose mechanical rows ALL read PASS.</status>
+<status>complete -- flipped by 0.9.0_WK_NFRA_CLDGRPH~3 2026-09-10, ROUND 9, after `python .tools/proof-of-spec-check.py <instance> I4-AC1,I4-AC2,I4-AC3,I4-AC4,I4-AC5` returned VALID (rc 0) and all FOUR mechanical rows read PASS-by-output: I4-AC1 CITATIONS_FOUND=118 of 539 file(s) / STILL_VALID=21 OVERWRITTEN=12 UNDECIDABLE=85 with TREE_READ=WORKTREE and TREE_POSITIVE_CONTROL=FIRED; I4-AC2 REMEDIES_COMPARED=2 of 2, CHOSEN=WRITER_KEY; I4-AC3 BRANCH=FILED with two blockers, three owner seats and six acts held; I4-AC4 S3_WRITES=0 / ECS_RUN_TASK_CALLS=0 / CODEBUILD_STARTS=0 / TERRAFORM_APPLIES=0 / S3_READS=45 (permitted) / EGRESS_PROBE_CONTROL=FIRED. I4-AC5 is UNVERIFIABLE-BY-INSTRUMENT and left for 3.0.0_SA_CVO at L9 -- no verdict offered here. ONE ROW FILED: NFRA_CLDGRPH-W3-S20 (OBSERVATION, ARMED, disarm_owner 0.8.0_AE_CloudComp) -- the key grammar is a ratified spec the producer has never implemented, and the versioning-off decision is premised on the property it lacks. Acts at e9c3c737f1; instance and this flip in the following commit. LOCAL on wk-cldgrph-9-3, never pushed.</status>
 
 ## STANDING LAW (inlined)
 
