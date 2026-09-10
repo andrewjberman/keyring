@@ -1,0 +1,302 @@
+{
+  "author": "4.0.0_SA_CRO",
+  "recon_id": "RCN-0008",
+  "kind": "source_fingerprint_manifest",
+  "captured_at_utc": "2026-09-10T13:30:34.185278+00:00",
+  "workspace_head_at_fingerprinting": "c51baedac8ef2baf127bebdab0d84f2e64875d19",
+  "portal_head_at_fingerprinting": "5907cbca98eb091124e38a32debefa355c1d4376",
+  "denominator": {
+    "sources_fingerprinted": 31,
+    "client_firms": 3,
+    "vendor_calls_this_review": 0,
+    "live_s3_reads_this_review": 0,
+    "new_raw_hars_parsed": 0
+  },
+  "limitations": [
+    "Hashes captured after targeted reads; shared working tree can advance.",
+    "Code and prior recon are evidence of recorded/source behavior, not current deployment or vendor health.",
+    "Analyst transcripts and report-generation HARs were not supplied or inspected.",
+    "Prior YCharts report census covers one of three sensitivity varietals."
+  ],
+  "sources": [
+    {
+      "id": "E01",
+      "path": "portal/src/App.tsx",
+      "sha256": "9e19e75750b0cb99a51cbb1266774dc325dcc27741289dcbd62c22bb25a88228",
+      "bytes": 23668,
+      "lines": 583,
+      "review_scope": "Lazy page imports and navigation configuration",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E02",
+      "path": "portal/src/components/PageHeaderVariants.tsx",
+      "sha256": "14178f684128facf12718cd53f93a6d7da3addc8d2dbc4c22f4d9479efcfeb7f",
+      "bytes": 1970,
+      "lines": 63,
+      "review_scope": "PageHeaderCleanBadge",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E03",
+      "path": "portal/src/components/TabNavigation.tsx",
+      "sha256": "2de467ebe245e7c814963820ea208e20f80988fddd0e4ed9bbc60669b98dac30",
+      "bytes": 3063,
+      "lines": 96,
+      "review_scope": "Full-width tab component",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E04",
+      "path": "portal/src/hooks/useTabNavigation.ts",
+      "sha256": "e5f118a88d20f9856ceff4c4a03680b1c5616d560a5b7fc2615c2563a198240f",
+      "bytes": 1551,
+      "lines": 55,
+      "review_scope": "Tab state and analytics",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E05",
+      "path": "portal/src/components/ui/PageSurfaceControl.tsx",
+      "sha256": "4e9f631f64d2b497c84fe639b0136a95fcdd6351e25e5469a838b07a78f835c3",
+      "bytes": 5882,
+      "lines": 165,
+      "review_scope": "Page-level controls",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E06",
+      "path": "portal/src/ui/components/catalyst/combobox.tsx",
+      "sha256": "a1cf33e43041a1163e3f437891863258c83dbe11c2179be144d21b7232bb432e",
+      "bytes": 8229,
+      "lines": 188,
+      "review_scope": "Option filtering and virtual list",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E07",
+      "path": "portal/src/pages/AdvisorIntelligence/_shared/panels/ClientListPanel.tsx",
+      "sha256": "c372b17f86935a58922bfca3c3ead56b14721e38d51273c6111ec7edfdeb0df1",
+      "bytes": 18354,
+      "lines": 382,
+      "review_scope": "Client names, client_key and drill callback",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E08",
+      "path": "docs/research/bd_dashboard_teardown/BD_DASHBOARD_HAR_TEARDOWN_20260721.md",
+      "sha256": "f435bbaa0aeb168a0d85aa7e77bddca9b147a9d379c031f048322c66b1b3d3e4",
+      "bytes": 35088,
+      "lines": 414,
+      "review_scope": "\u00a72, \u00a73.1 and performance field inventory",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E09",
+      "path": "infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/lambda_function.py",
+      "sha256": "c1278acb257e05b9f18b4ba194c6cae754976dbb55b149b4eaa79985ad483fb6",
+      "bytes": 28533,
+      "lines": 492,
+      "review_scope": "Performance body, request range index, endpoints, raw landing",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E10",
+      "path": "docs/research/competitive_recon/orion_20260722/ORION_TEARDOWN_20260722.md",
+      "sha256": "d25df01d63a629b7a0b97738c8521faa8e758fb2f833a20cc9cdd2ee29850eec",
+      "bytes": 23985,
+      "lines": 329,
+      "review_scope": "\u00a74 documented performance graph; \u00a76 entity hierarchy",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E11",
+      "path": "infra/aws/lambda/inf-pipeline/inf-performance-daily/pull_inflection_performance_dim.py",
+      "sha256": "47bf5cf982c24788c622e71724a6976d08298f6e3290cc477f6b81917a6a401b",
+      "bytes": 12718,
+      "lines": 361,
+      "review_scope": "Saved query catalog/generation preparation",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E12",
+      "path": "data/assets/scripts/silver/silver_registry.py",
+      "sha256": "6779c01a3d0ed595d13dc834075070c8f625793b119e5f768f80de586f528dfd",
+      "bytes": 13042,
+      "lines": 245,
+      "review_scope": "Canonical bucket/keyspace, masters and layer contract",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E13",
+      "path": "data/assets/scripts/silver/mirror_schemas.py",
+      "sha256": "1ef7577547ae7af32bead01d198f8f14f2729c7e79573a8cd655d37c32a2c41e",
+      "bytes": 24844,
+      "lines": 637,
+      "review_scope": "Orion/Eclipse/BD declared fields",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E14",
+      "path": "data/assets/scripts/silver/rebalancer_schemas.py",
+      "sha256": "06c14cdedf0182ec6d11e8f1d7ee8c487bd72dcd2193c4cbca00f9848b96b366",
+      "bytes": 12553,
+      "lines": 234,
+      "review_scope": "Roster/definition/blend/assignment fields and provenance",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E15",
+      "path": "data/assets/scripts/silver/bd49f_dim_conversion.py",
+      "sha256": "dbbd41e488eba20b67d91422f01a7d1470bcc9b70c7af79f8c3368238c60e763",
+      "bytes": 41479,
+      "lines": 830,
+      "review_scope": "Monolith advisor and account-crosswalk schemas",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E16",
+      "path": "data/black_diamond/scripts/bronze/build_schwab_bd_account_xref.py",
+      "sha256": "0a3a4252716369e44cccce6de151271cf3707f6bdb8e9f30e72fb57eea92b2a9",
+      "bytes": 13197,
+      "lines": 325,
+      "review_scope": "Legacy crosswalk output and attribution fallback",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E17",
+      "path": "data/assets/scripts/gold/runners_49f/a01_dim_relationship.py",
+      "sha256": "4c302f3bc7954e46b05d3152834b15efcce39b99eea83a38d35ee7a30426fe16",
+      "bytes": 15921,
+      "lines": 277,
+      "review_scope": "fact_fam household derivation and BD coverage tail",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E18",
+      "path": "data/assets/scripts/gold/runners_49f/a06_dim_identity_crosswalk.py",
+      "sha256": "417b152fb2f9bf433724b77a34ce354b464e00b50188ef943807d53f51feb8e6",
+      "bytes": 11148,
+      "lines": 206,
+      "review_scope": "SmartX account mapping and map vintage",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E19",
+      "path": "data/assets/scripts/gold/runners_49f/d08_firm_ownership_map.py",
+      "sha256": "8280032341045a95ce0b488bccc9f6f869d34a4ee5c446ea06097371be86cd40",
+      "bytes": 9234,
+      "lines": 188,
+      "review_scope": "Current advisor roles and canonical/served ID distinction",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E20",
+      "path": "data/inf/scripts/gold/runners_inf/a00_dim_account.py",
+      "sha256": "4024e5526207e3e1058480615a2af5c7f6023478b4e84e043374f01ef42bd891",
+      "bytes": 4439,
+      "lines": 101,
+      "review_scope": "Account identity and roster-derived rep population",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E21",
+      "path": "data/inf/scripts/gold/runners_inf/a01_dim_relationship.py",
+      "sha256": "0c7b84432c9505927056720788c1eabe6fa91ef9febda61dcf40e7889d6c3e7c",
+      "bytes": 4406,
+      "lines": 96,
+      "review_scope": "Household/rep mapping and singleton gaps",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E22",
+      "path": "data/cot/scripts/gold/runners_cot/a01_dim_relationship.py",
+      "sha256": "b18767183d58bf07809393ffd0bcdf8a4bd51c2716f661e1bc1eee6b84cb1118",
+      "bytes": 8555,
+      "lines": 173,
+      "review_scope": "Native membership grain and relationship labels",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E23",
+      "path": "data/inf/scripts/gold/INF_E_00.eclipse_model_portfolios.py",
+      "sha256": "3e972bdec6f32836b295706114633a7677fca0eff961c85da0d68c39cf1b1a06",
+      "bytes": 20316,
+      "lines": 435,
+      "review_scope": "Account join and model/account value distinction",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E24",
+      "path": "infra/aws/lambda/opal-assets/opal-assets-silver-smartx/smartx_conversion.py",
+      "sha256": "8808dff307c933c0db6cd0fbd55c22c95e5f8ef3d94a79645fc1aa3468430f62",
+      "bytes": 15643,
+      "lines": 313,
+      "review_scope": "Model, allocation and account table assembly",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E25",
+      "path": "infra/aws/lambda/ycharts-market-data-pull/ycharts_client.py",
+      "sha256": "da9f7c7b7f8caa1c1a7d04e5f37f4f645e006d7164e00a7adad2dce0a2fedba0",
+      "bytes": 13958,
+      "lines": 309,
+      "review_scope": "Existing endpoint inventory and transport",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E26",
+      "path": "docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json",
+      "sha256": "44853788fa6d39c8b6011c2f86fc82ea6906c2e006935df549f153378c950905",
+      "bytes": 195040,
+      "lines": 6778,
+      "review_scope": "Metadata, product classification, counts and as-of clocks",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E27",
+      "path": "infra/aws/lambda-edge/auth-validator-edge/index.mjs",
+      "sha256": "2fe5d7010661c6ec3b9cae50b73513c6da95aaada7dbde8fcaf4322cb422b17d",
+      "bytes": 20842,
+      "lines": 449,
+      "review_scope": "Explicit advisor/account/relationship route patterns and checks",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E28",
+      "path": "data/firm_registry.json",
+      "sha256": "38ad04b2c25e96387b2614e9f4caba4316978924d5647d0e8d229093cdefd539",
+      "bytes": 5094,
+      "lines": 135,
+      "review_scope": "Three client firms; legacy bucket references",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E29",
+      "path": "portal/src/pages/AdvisorIntelligence/_partners/49financial/roles.ts",
+      "sha256": "4e9a522c32e5351782e3f385c53b9265b649d9ba578a2bd9d932cc3c3966b295",
+      "bytes": 1328,
+      "lines": 16,
+      "review_scope": "Five role names",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E30",
+      "path": "portal/src/pages/AdvisorIntelligence/_partners/inflection/roles.ts",
+      "sha256": "481494d9afb22d782c5cf0d3186ae19ae420a367c5ab5e598658636bd70d9271",
+      "bytes": 577,
+      "lines": 12,
+      "review_scope": "Rep/firm display vocabulary",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    },
+    {
+      "id": "E31",
+      "path": "portal/src/pages/AdvisorIntelligence/_partners/cottonwood/roles.ts",
+      "sha256": "7498e04f45e19379beaa4fc36b832a4d414dc279c33c398a7040f1afe2bb28b1",
+      "bytes": 808,
+      "lines": 15,
+      "review_scope": "Joint-coverage placeholder and missing segmentable advisor dimension",
+      "read_mode": "targeted sections; not a full-file or runtime audit"
+    }
+  ]
+}

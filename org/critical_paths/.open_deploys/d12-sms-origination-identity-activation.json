@@ -39,7 +39,7 @@
   },
   "owner_note": "D12 is expected to STAY ON THE SITE-Z FABRIC (Andrew, 2026-09-02). SMS backend surface owner: 0.7.0_AE_CloudOps (SB legs, sms.ts, sms-iam.tf). Client surface: 0.4.0_DE_ClientPlatform. Gate: 1.0.0_SA_CTO. Whoever holds D12 on site Z inherits this watch.",
   "held_at": "2026-09-02T14:12:01.387471+00:00",
-  "last_held_nudge_at": "2026-09-02T14:12:01.387471+00:00",
+  "last_held_nudge_at": "2026-09-09T19:20:58.292755+00:00",
   "deferred_apply": {
     "id": "SP-2",
     "kind": "terraform",

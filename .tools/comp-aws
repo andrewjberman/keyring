@@ -1,6 +1,26 @@
 #!/bin/bash
 # comp-aws -- comprehensive AWS cloud compiler (ADHC_CMPAWS); per-class derive + F1 score vs certified oracles
+#
+# DEPRECATED FOR AGENT USE 2026-09-09 (Andrew-direct; NFRA_CLDGRPH CG-s-30). The notice below is
+# printed on STDERR before the CLI runs, and then the CLI runs EXACTLY as before -- no gate, no
+# refusal, no exit-code change. stdout is untouched (it is the subcommands' data channel).
+#
+# ONE PRINT PER INVOCATION: this wrapper prints, then exports COMP_AWS_PREAMBLE_PRINTED=1, which
+# comp_aws_cli.print_deprecation_preamble() honours. A direct `python comp_aws_cli.py ...` prints
+# from the CLI instead. Either entry, exactly once.
 WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+_sub=""
+for _a in "$@"; do
+  case "$_a" in -*) ;; *) _sub="$_a"; break ;; esac
+done
+{
+  echo "comp-aws: DEPRECATED FOR AGENT USE since 2026-09-09 (Andrew-direct; recorded in org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260909_191xZ_NO_LAPTOP_GRAPH_REFRESH_COMP_AWS_WRITE_PATHS_RETIRED.md)."
+  echo "  The cloud graph is SERVED: read it with \`comp-kuzu \"<Cypher>\"\` -- manifest entry cloud.read.served_vintage, which states how old its answer is on every call."
+  echo "  It is REFRESHED estate-side by the nightly Fargate derive-runner (full reconcile) and by the incremental updater. There is no refresh for you to run and no question is ever the cause of a rebuild."
+  echo "  This CLI is NO LONGER ROUTED BY comp-which. It is NOT gated: nothing here refuses, and every subcommand's exit code is unchanged."
+  if [ -n "${_sub}" ]; then echo "  -- running ${_sub} as before."; else echo "  -- running as before."; fi
+} 1>&2
+export COMP_AWS_PREAMBLE_PRINTED=1
 python "$WORKSPACE/org/modules/graph/comp_aws_cli.py" "$@"
 _exit=$?
 python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-aws" "$*" $_exit 2>/dev/null

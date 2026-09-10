@@ -1,0 +1,770 @@
+{
+  "kind": "COMPLETION_REPORT",
+  "schema_version": "1.0",
+  "project": "NFRA_COMPEFFICACY",
+  "round": 7,
+  "written_by": "2.0.0_SA_COO",
+  "written_utc": "2026-09-10T01:05Z",
+  "decomposition_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/decompositions/NFRA_COMPEFFICACY_DECOMP.md@e0ee78e9cda4118dc06ed6a6db790d240f78d7cd",
+  "denominators": {
+    "fwd_in_prd_header": 10,
+    "cells_in_decomposition": 42,
+    "task_orders": 26,
+    "task_orders_terminal_with_valid_proof": 23
+  },
+  "outcomes": [
+    {
+      "fwd_id": "FWD-1",
+      "done_when_state": "APPLIED",
+      "done_when_text": "the list is in the PRD",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "UNCOVERED on the coverage axis and the outcome is nonetheless SERVED: cell CE-enum-1 is DONE, APPLIED in the PRD at L4 (the s.7 MECE block, 25 names -> 24 rows, 0 uncovered, both directions run). No TASK ORDER ever served it because the list was a decision landed by the L4 owner, not worker work. The claim records what an order covered, not whether the outcome is met -- that is the CTO's verdict axis. || ROUND 7: unchanged since round 6 (round-6 grade: REALIZED); no cell of this round serves it."
+    },
+    {
+      "fwd_id": "FWD-2",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "at least one account has been filled by the executor and read by the reviewer, and the shape survived the reading",
+      "cells": [
+        {
+          "cell_id": "CE-t-1",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/NFRA_COMPEFFICACY.TO-CE-T-1.comp-find-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-10",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-10",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~L/NFRA_COMPEFFICACY.TO-CE-T-10.comp-pipescript-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-11",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-11",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~E/NFRA_COMPEFFICACY.TO-CE-T-11.comp-denytest-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-12",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-12",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~F/NFRA_COMPEFFICACY.TO-CE-T-12.comp-similar-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-14",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-14",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~G/NFRA_COMPEFFICACY.TO-CE-T-14.comp-drift-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-17",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-17",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~H/NFRA_COMPEFFICACY.TO-CE-T-17.comp-estate-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-18",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-18",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~M/NFRA_COMPEFFICACY.TO-CE-T-18.comp-pulse-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-2",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-2.comp-read-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-20",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-20",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~I/NFRA_COMPEFFICACY.TO-CE-T-20.comp-heat-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-21",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-21",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~N/NFRA_COMPEFFICACY.TO-CE-T-21.comp-system-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-23",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-23",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~J/NFRA_COMPEFFICACY.TO-CE-T-23.comp-cache-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-24",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-24",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~L/NFRA_COMPEFFICACY.TO-CE-T-24.comp-platinum-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-3",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-3.comp-which-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-5",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~K/NFRA_COMPEFFICACY.TO-CE-T-5.comp-schedule-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-6",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~G/NFRA_COMPEFFICACY.TO-CE-T-6.comp-blast-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-7",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-7",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-7.comp-dataflow-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-8",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-8",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/NFRA_COMPEFFICACY.TO-CE-T-8.comp-iam-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-9",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-9",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/NFRA_COMPEFFICACY.TO-CE-T-9.comp-trigger-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            },
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-9R",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/NFRA_COMPEFFICACY.TO-CE-T-9R.comp-trigger-four-distinguishable-states.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "ROUND 7: unchanged since round 6 (round-6 grade: REALIZED); no cell of this round serves it."
+    },
+    {
+      "fwd_id": "FWD-3",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "a real run's output has been read against its stated disclosure",
+      "cells": [
+        {
+          "cell_id": "CE-t-1",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/NFRA_COMPEFFICACY.TO-CE-T-1.comp-find-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-10",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-10",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~L/NFRA_COMPEFFICACY.TO-CE-T-10.comp-pipescript-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-11",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-11",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~E/NFRA_COMPEFFICACY.TO-CE-T-11.comp-denytest-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-12",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-12",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~F/NFRA_COMPEFFICACY.TO-CE-T-12.comp-similar-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-17",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-17",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~H/NFRA_COMPEFFICACY.TO-CE-T-17.comp-estate-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-18",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-18",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~M/NFRA_COMPEFFICACY.TO-CE-T-18.comp-pulse-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-2",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-2.comp-read-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-20",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-20",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~I/NFRA_COMPEFFICACY.TO-CE-T-20.comp-heat-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-21",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-21",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~N/NFRA_COMPEFFICACY.TO-CE-T-21.comp-system-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-23",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-23",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~J/NFRA_COMPEFFICACY.TO-CE-T-23.comp-cache-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-24",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-24",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~L/NFRA_COMPEFFICACY.TO-CE-T-24.comp-platinum-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-3",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-3.comp-which-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-5",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~K/NFRA_COMPEFFICACY.TO-CE-T-5.comp-schedule-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-6",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~G/NFRA_COMPEFFICACY.TO-CE-T-6.comp-blast-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-7",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-7",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-7.comp-dataflow-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-8",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-8",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/NFRA_COMPEFFICACY.TO-CE-T-8.comp-iam-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-9",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-9",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/NFRA_COMPEFFICACY.TO-CE-T-9.comp-trigger-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            },
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-9R",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/NFRA_COMPEFFICACY.TO-CE-T-9R.comp-trigger-four-distinguishable-states.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "ROUND 7: unchanged since round 6 (round-6 grade: REALIZED); no cell of this round serves it."
+    },
+    {
+      "fwd_id": "FWD-4",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "the last tool's state has been read by Andrew",
+      "cells": [
+        {
+          "cell_id": "CE-g-5",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-G-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/NFRA_COMPEFFICACY.TO-CE-G-5.freshness-layer-under-a-budgeted-client.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-1",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/NFRA_COMPEFFICACY.TO-CE-T-1.comp-find-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-10",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-10",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~L/NFRA_COMPEFFICACY.TO-CE-T-10.comp-pipescript-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-11",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-11",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~E/NFRA_COMPEFFICACY.TO-CE-T-11.comp-denytest-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-12",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-12",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~F/NFRA_COMPEFFICACY.TO-CE-T-12.comp-similar-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-14",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-14",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~G/NFRA_COMPEFFICACY.TO-CE-T-14.comp-drift-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-17",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-17",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~H/NFRA_COMPEFFICACY.TO-CE-T-17.comp-estate-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-18",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-18",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~M/NFRA_COMPEFFICACY.TO-CE-T-18.comp-pulse-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-2",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-2.comp-read-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-20",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-20",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~I/NFRA_COMPEFFICACY.TO-CE-T-20.comp-heat-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-21",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-21",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~N/NFRA_COMPEFFICACY.TO-CE-T-21.comp-system-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-23",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-23",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~J/NFRA_COMPEFFICACY.TO-CE-T-23.comp-cache-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-24",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-24",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~L/NFRA_COMPEFFICACY.TO-CE-T-24.comp-platinum-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-3",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-3.comp-which-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-5",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~K/NFRA_COMPEFFICACY.TO-CE-T-5.comp-schedule-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-6",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~G/NFRA_COMPEFFICACY.TO-CE-T-6.comp-blast-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-7",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-7",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-7.comp-dataflow-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-8",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-8",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/NFRA_COMPEFFICACY.TO-CE-T-8.comp-iam-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-9",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-9",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/NFRA_COMPEFFICACY.TO-CE-T-9.comp-trigger-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            },
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-9R",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/NFRA_COMPEFFICACY.TO-CE-T-9R.comp-trigger-four-distinguishable-states.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "ROUND 7 (M-1): the sitting is an OWNED ACT, not a cell -- Andrew's read of the packet at any terminal he names, 3.0.0_SA_CVO's /estate-pull on his go; recorded in decomposition v0.3 s.6 with its owner so the loop does not wait on it. No worker cell; the outcome's state is unchanged by this round. Round-6 grade: NOT_EVALUATED."
+    },
+    {
+      "fwd_id": "FWD-5",
+      "done_when_state": "APPLIED",
+      "done_when_text": "each question has a written answer he can dispute",
+      "cells": [
+        {
+          "cell_id": "CE-t-14",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-14",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~G/NFRA_COMPEFFICACY.TO-CE-T-14.comp-drift-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "COVERED IS MECHANICALLY TRUE AND WOULD MISLEAD WITHOUT THIS LINE. The only cell here carrying a complete, proved order is CE-t-14 (comp-drift), which CONTRIBUTES EVIDENCE to one of the seven questions. The cell that actually DELIVERS this outcome is CE-q-1, whose seven written answers were authored by 3.0.0_SA_CVO as deliverables/3.0.0_SA_CVO/CE-q-1.seven-answers.md and landed in the PRD as s.5a at v0.8 -- with NO task order, because 'CVO authors, CTO lands' is its stated lane and a certification act is not a worker's. Grade FWD-5 against s.5a and that deliverable, not against CE-t-14. || ROUND 7: unchanged since round 6 (round-6 grade: REALIZED); no cell of this round serves it."
+    },
+    {
+      "fwd_id": "FWD-6",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "the last finding has a disposition someone other than the fixer read",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "UNCOVERED on the coverage axis and the outcome is nonetheless SERVED: the per-tool half of CE-pass-1 (s.4.5's eight moves, the twelve shapes) ran INSIDE each per-tool order's deliverable, and the ROLL-UP -- whose closes-on is 'the last finding's disposition read by a NON-FIXER' -- was written by 3.0.0_SA_CVO as deliverables/3.0.0_SA_CVO/CE-pass-1.rollup.md under Andrew's 'a' (2026-09-04 ~07:0xZ), not as a task order. A certification act cannot be a worker's, so no order could have carried it. || ROUND 7: unchanged since round 6 (round-6 grade: REALIZED); no cell of this round serves it."
+    },
+    {
+      "fwd_id": "FWD-7",
+      "done_when_state": "APPLIED",
+      "done_when_text": "each of its asks is in the plan with an owner, or ruled out with a reason",
+      "cells": [
+        {
+          "cell_id": "CE-g-2",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-G-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~2/NFRA_COMPEFFICACY.TO-CE-G-2.disclose-only.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-g-5",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-G-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/NFRA_COMPEFFICACY.TO-CE-G-5.freshness-layer-under-a-budgeted-client.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-12",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-12",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~F/NFRA_COMPEFFICACY.TO-CE-T-12.comp-similar-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-17",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-17",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~H/NFRA_COMPEFFICACY.TO-CE-T-17.comp-estate-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "ROUND 7: unchanged since round 6 (round-6 grade: REALIZED); no cell of this round serves it."
+    },
+    {
+      "fwd_id": "FWD-8",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "a seat has started a piece of work from the short list",
+      "cells": [
+        {
+          "cell_id": "CE-t-14",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-14",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~G/NFRA_COMPEFFICACY.TO-CE-T-14.comp-drift-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-p-4",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-P-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~1/NFRA_COMPEFFICACY.TO-CE-P-4.comp-which-subject-existence.proof_of_spec.json@e0ee78e9cda4118dc06ed6a6db790d240f78d7cd"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "ROUND 7 (PRD v0.9 s.9 row M-3, two limbs): limb 1, the CVO's second-cut list v3 is WRITTEN @debf661cba; limb 2, ONE seat named and ONE piece started and finished -- 0.9.0_WK_NFRA_COMPEFFICACY~1 on CE-p-4 (the CVO's P-4: comp-which validates a subject's EXISTENCE against the filesystem authority, 74 gold ids in 3 dirs; a planted non-existent id refused with rc 1 and 0 ranked rows, the authority named; a transposed real id offered 5 real candidates; the four C-S46 phrasings byte-equal; subject_resolved a three-value field on the spill). P4-AC1 PASS by output 27 of 27 arms; P4-AC2 rc 0; P4-AC3 recorded for the CVO. Worker commits e4c2d4a3e7 + 896e1fe889, drained @8c3cadf936; the instance re-validated at this seat on the merged tree (VALID rc 0). Round-6 grade for this outcome: NOT_EVALUATED. Rows W1-S1..S4 ruled @2fbb844173 (W1-S2 the worktree-blind ~/bin shim and W1-S3/S4 the routing harness's defects are CloudComp's, carried to the CVO)."
+    },
+    {
+      "fwd_id": "FWD-9",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "a cleared tool has been used from a seat other than the one that fixed it, and behaved as cleared",
+      "cells": [
+        {
+          "cell_id": "CE-t-1",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/NFRA_COMPEFFICACY.TO-CE-T-1.comp-find-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-12",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-12",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~F/NFRA_COMPEFFICACY.TO-CE-T-12.comp-similar-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "CE-t-2",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-2.comp-read-s4-audit.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "COVERED on three cleared tools (CE-t-1, CE-t-2, CE-t-12), each with a complete, proved order. STATED SO THE GRADER IS NOT SURPRISED: the fourth cell declaring FWD-9, CE-g-4 (the Codex-runtime rail), is HELD per 1.0.0_SA_CTO's L4 adjudication @6b21ce6010 -- its DESIGN half is COVERED by deliverables/3.0.0_SA_CVO/CE-g-4.codex-rail-design.md, and its EXERCISE half is UNCOVERED because the acceptance requires a rail exercised AT A CODEX SEAT and all 19 were reaped ~21:0xZ on Andrew's 'kill all the codex runtimes' (133 processes, 0 survivors). The exercise limb of this outcome therefore has no artifact in this round. || ROUND 7 (M-2): the Codex-rail exercise CE-g-4 on 1.0.0_SA_CTO~X the day Andrew's word allocates it (its shared-branch limb already MET by the 09-09 push) -- an OWNED ACT of the CTO lane, recorded in decomposition v0.3 s.6, not a cell. Round-6 grade: NOT_EVALUATED."
+    },
+    {
+      "fwd_id": "FWD-10",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "a budget-cut sweep of a verdict-bearing tool has been read by an rc-only consumer (a hook, a script, an `&&`) as NOT clean, and its resume cursor has been followed to completion",
+      "cells": [
+        {
+          "cell_id": "CE-t-25",
+          "task_orders": [
+            {
+              "id": "NFRA_COMPEFFICACY.TO-CE-T-25",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-25.comp-dataflow-gate-under-fwd10.proof_of_spec.json@8623a92a704ae5f7662298e2f5ce0cb8757a20c8"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "ROUND 7: unchanged since round 6 (round-6 grade: REALIZED); no cell of this round serves it."
+    }
+  ]
+}

@@ -62,6 +62,12 @@ if [ "${1:-}" = "--self-test" ]; then
       "python '$GATE' 2>&1 | grep -q '0 dispatched path'"
   chk "the script feeds the gate from the staged set, never bare"  \
       "grep -q 'STAGED_ARR\[@\]' '$0'"
+  # REGRESSION ARM (94639): above the ~32 KB argv cliff the list goes through the STAGED
+  # environment, and rc=126/127 is named as "the gate did not run", never as a collision.
+  chk "the script hands the gate its list through STAGED above the argv cliff" \
+      "grep -q 'exceed the ~32 KB Windows cliff' '$0'"
+  chk "an rc=126 launch failure is reported as NOT a row-gate verdict"  \
+      "grep -q 'THE ROW GATE DID NOT RUN' '$0'"
   # REGRESSION ARM: the drain commit must name the draining seat, never the git-config identity.
   chk "the merge commit carries --author (no silent git-config attribution)" \
       "grep -q 'git commit --no-edit --author' '$0'"
@@ -270,15 +276,36 @@ if [ "${#STAGED_ARR[@]}" -eq 0 ]; then
   exit 1
 fi
 echo "safe-merge: grading the MERGED index -- ${#STAGED_ARR[@]} staged path(s)"
-if python "$GATE" "${STAGED_ARR[@]}"; then
-  :
+# ⛔ THE ~32 KB ARGV CLIFF (0.0.0_AB_MSTR 94338, then 94639 on site Z's 440-path reconcile):
+# Windows caps a command line near 32,767 chars, so above it python NEVER STARTS -- bash prints
+# "Argument list too long" and returns rc=126 -- and the refusal text below used to read that as
+# a row-id collision. The gate's own bisect on this box: 300 paths / 29,098 B rc 0; 400 paths /
+# 38,798 B rc 126. Above a 28,000-char margin the list goes through the STAGED environment,
+# which surprise-row-gate.py reads ONLY when argv is empty and whose SOURCE it prints (so the
+# pass is never vacuous); below it, argv stays the contract this script's regression arm checks.
+_argv_chars=0
+for _f in "${STAGED_ARR[@]}"; do _argv_chars=$(( _argv_chars + ${#_f} + 1 )); done
+_gate_rc=0
+if [ "$_argv_chars" -gt 28000 ]; then
+  echo "safe-merge: ${_argv_chars} argv chars exceed the ~32 KB Windows cliff -- feeding the gate through the STAGED environment (${#STAGED_ARR[@]} paths)"
+  STAGED="$(printf '%s\n' "${STAGED_ARR[@]}")" python "$GATE" || _gate_rc=$?
 else
-  rc=$?
-  echo "safe-merge: *** REFUSED BY THE ROW GATE ON THE MERGED INDEX (rc=$rc). ***" >&2
-  echo "            This is the collision the drain exists to catch: a row id minted in the" >&2
-  echo "            worker's index that already exists at the main index. Aborting the merge." >&2
-  echo "            FIX ON THE BRANCH (re-mint the row), then re-run -- a collision found" >&2
-  echo "            here is a re-mint; found after the merge it is PERMANENT." >&2
+  python "$GATE" "${STAGED_ARR[@]}" || _gate_rc=$?
+fi
+if [ "$_gate_rc" -ne 0 ]; then
+  rc=$_gate_rc
+  if [ "$rc" -eq 126 ] || [ "$rc" -eq 127 ]; then
+    echo "safe-merge: *** THE ROW GATE DID NOT RUN (rc=$rc = 'cannot execute' / 'not found'; NOT a row-gate verdict). ***" >&2
+    echo "            An argv cliff or a missing interpreter -- never a row-id collision. NOTHING WAS GRADED." >&2
+    echo "            Aborting the merge. Fix the launch and re-run; do NOT reach for --no-verify, which" >&2
+    echo "            discards every other gate too (the 94639 shape)." >&2
+  else
+    echo "safe-merge: *** REFUSED BY THE ROW GATE ON THE MERGED INDEX (rc=$rc). ***" >&2
+    echo "            This is the collision the drain exists to catch: a row id minted in the" >&2
+    echo "            worker's index that already exists at the main index. Aborting the merge." >&2
+    echo "            FIX ON THE BRANCH (re-mint the row), then re-run -- a collision found" >&2
+    echo "            here is a re-mint; found after the merge it is PERMANENT." >&2
+  fi
   git merge --abort 2>/dev/null || true
   exit 1
 fi

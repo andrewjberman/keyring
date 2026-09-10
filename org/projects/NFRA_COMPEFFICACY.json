@@ -4,10 +4,10 @@
  "directive": "D11",
  "macro_code": "NFRA",
  "fabric": "laptop",
- "dep_stage": "ROUND_CLOSE",
+ "dep_stage": "EXECUTING",
  "status": "active",
  "name": "Comp-tool efficacy -- every comp-tool Andrew named ends cleared, retired or merged by his ruling, or on the short list; each tool has one written account (purpose, how it is called, what happens when it runs long, how it pages) and says in its own output what it counted and could not see; the passcraft findings are used up; the cloud-compile and gateway-traversal brief is addressed inside this work",
  "generated_from": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-04T07:35:46Z"
+ "generated_at": "2026-09-10T01:33:22Z"
 }

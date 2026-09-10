@@ -90,11 +90,29 @@ def executing_tree_projects(repo_root) -> tuple[list[str] | None, str]:
     return codes, "%d tree project(s) read" % n
 
 
-def cvo_worker_send_refusal(from_agent: str, recipients, executing: tuple, subject=None, body=None) -> str | None:
+def operator_override(reason) -> str:
+    """PURE. The HUMAN-OPERATOR ESCAPE for both send gates (Andrew-direct 2026-09-10 ~12:3xZ, verbatim:
+    "yes we need to be able to --force that if it is requested by a human operator").
+
+    Returns the NORMALISED reason when the override is validly claimed, else "" (no override).
+
+    ⛔ A REASON IS THE WHOLE MECHANISM AND WHITESPACE IS NOT A REASON. `override=" "` must NOT admit --
+    an override with no stated cause is indistinguishable in the audit log from a gate that never fired,
+    which is the one outcome that would make these gates worse than not having them. The caller audits
+    and STAMPS the delivered message with what this returns, so the reason reaches the recipient too:
+    an override the recipient cannot see is the estate's recurring defect (a value that carries no claim).
+    """
+    return (reason or "").strip()
+
+
+def cvo_worker_send_refusal(from_agent: str, recipients, executing: tuple, subject=None, body=None,
+                            override: str = "") -> str | None:
     """PURE. spine v3.1 L8: a send from the CVO (any ~lane) is admitted only when EVERY recipient is the CTO
     (any ~lane), at every dep_stage. Any other recipient -- the COO, a Tier-2 seat, MSTR, the CRO -- refuses the
     WHOLE send. `executing` is read for context only; a census that cannot run does not change the verdict,
     because the verdict no longer depends on the stage."""
+    if operator_override(override):
+        return None  # human-operator --force, audited and stamped by the caller
     if base_serial(from_agent) != CVO_SERIAL:
         return None
     recips = [r for r in (recipients or []) if (r or "").strip()]
@@ -196,8 +214,14 @@ def cited_orders_for(recipient: str, subject: str, body: str, repo_root) -> tupl
     return assigned, cited
 
 
-def tier2_act_send_refusal(from_agent: str, recipients, subject: str, body: str, repo_root) -> str | None:
-    """The generalised guard. None admits; a refusal text refuses the WHOLE send (nothing written for anyone)."""
+def tier2_act_send_refusal(from_agent: str, recipients, subject: str, body: str, repo_root,
+                           override: str = "") -> str | None:
+    """The generalised guard. None admits; a refusal text refuses the WHOLE send (nothing written for anyone).
+
+    `override` is the human-operator --force (see operator_override): a non-blank reason admits the send,
+    and the caller is responsible for auditing it and stamping it into the delivered message."""
+    if operator_override(override):
+        return None  # human-operator --force, audited and stamped by the caller
     sender = base_serial(from_agent)
     if not sender or not TIER01_RE.match(sender):
         return None  # a Tier-2 sender is out of scope: its route up is the point
@@ -322,6 +346,35 @@ def _self_test() -> int:
          lambda: tier2_act_send_refusal("0.8.0_AE_CloudComp", ["0.7.0_AE_CloudOps"], "x", "Please apply the fix now.", root) is None),
         ("a Tier-1 -> Tier-1 act -> out of scope",
          lambda: tier2_act_send_refusal("1.0.0_SA_CTO", ["2.0.0_SA_COO"], "x", "2.0.0_SA_COO cuts the order NOW.", root) is None),
+        # ---- the HUMAN-OPERATOR --force (Andrew-direct 2026-09-10 ~12:3xZ). Both gates, both directions. ----
+        # Each pair is a DIFFERENCE control, not a positive one: the SAME call refused without the override and
+        # admitted with it, so the arm shows what the override CHANGES rather than only that a refusal can happen.
+        ("LD-0529 gate, no override: REFUSED (the unforced baseline this pair is measured against)",
+         lambda: tier2_act_send_refusal("1.0.0_SA_CTO", ["0.7.0_AE_CloudOps"], "x",
+                                        "0.7.0_AE_CloudOps applies the fix NOW.", root) is not None),
+        ("LD-0529 gate, --force with a reason: ADMITTED (the same call, overridden)",
+         lambda: tier2_act_send_refusal("1.0.0_SA_CTO", ["0.7.0_AE_CloudOps"], "x",
+                                        "0.7.0_AE_CloudOps applies the fix NOW.", root,
+                                        override="Andrew at the terminal 12:3xZ") is None),
+        ("L8 gate, no override: REFUSED (baseline)",
+         lambda: ref("3.0.0_SA_CVO", ["2.0.0_SA_COO"], exe) is not None),
+        ("L8 gate, --force with a reason: ADMITTED (the same call, overridden)",
+         lambda: ref("3.0.0_SA_CVO", ["2.0.0_SA_COO"], exe, override="operator relay of a blocked Andrew-direct") is None),
+        # ---- MUTANTS: a blank reason is NOT an override. This is the arm that carries the outcome. ----
+        ("MUTANT: LD-0529 with override='' -> still REFUSED (absent is not forced)",
+         lambda: tier2_act_send_refusal("1.0.0_SA_CTO", ["0.7.0_AE_CloudOps"], "x",
+                                        "0.7.0_AE_CloudOps applies the fix NOW.", root, override="") is not None),
+        ("MUTANT: LD-0529 with override='   ' (whitespace) -> still REFUSED (whitespace is not a reason)",
+         lambda: tier2_act_send_refusal("1.0.0_SA_CTO", ["0.7.0_AE_CloudOps"], "x",
+                                        "0.7.0_AE_CloudOps applies the fix NOW.", root, override="   ") is not None),
+        ("MUTANT: L8 with override='\\t\\n' (whitespace) -> still REFUSED",
+         lambda: ref("3.0.0_SA_CVO", ["2.0.0_SA_COO"], exe, override="\t\n") is not None),
+        ("MUTANT: L8 with override=None -> still REFUSED (a caller passing nothing cannot force by accident)",
+         lambda: ref("3.0.0_SA_CVO", ["2.0.0_SA_COO"], exe, override=None) is not None),
+        ("an ALREADY-ADMITTED send with an override is still admitted (the override never refuses)",
+         lambda: ref("3.0.0_SA_CVO", ["1.0.0_SA_CTO"], exe, override="whatever") is None),
+        ("operator_override normalises: '  x  ' -> 'x'; '' and '   ' -> '' (the predicate itself)",
+         lambda: operator_override("  x  ") == "x" and operator_override("") == "" and operator_override("   ") == ""),
     ]
     failed = 0
     for name, fn in arms:

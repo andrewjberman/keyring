@@ -5,10 +5,10 @@
  "project": "ETFS_GUARDRAIL",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.3",
+ "prd_version": "v0.8",
  "step": 4,
  "brief_ref": "docs/briefs/ETFS_COVERAGE_GUARDRAIL_BUILD_SPEC_20260901.md@1890d7785c",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
+ "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-8", "FWD-9", "FWD-10"],
  "status": "RATIFIED"
 }
 ```
@@ -120,15 +120,6 @@ cited it** -- which is the only condition under which a renumber is safe.
                     two weeks later
          SOURCE     brief s.3 (81-129), lag table 93-110
 
-  FWD-2  The monthly report cannot go out over incomplete data unless a
-         person decides to let it
-         DONE WHEN  EXERCISED -- the check has actually refused a month, and the
-                    refusal reached a person
-         ACCEPT     when days are genuinely missing, the report does not go out,
-                    and someone is told which days and why -- rather than it
-                    arriving looking normal
-         SOURCE     brief s.4 (130-162), s.5 (163-189)
-
   FWD-3  The report states how complete it is, on its own face
          DONE WHEN  APPLIED -- the statement is in the report itself
          ACCEPT     someone reading the report can tell, without asking anyone
@@ -143,7 +134,16 @@ cited it** -- which is the only condition under which a renumber is safe.
                     it alone
          ACCEPT     on a day the market was shut, or a day the partner sent us
                     holdings with no prices attached, nothing is invented and
-                    nothing is reported as broken
+                    nothing is reported as broken. AMENDED v0.6: "nothing is
+                    invented" is measured ON THE SLICE PLANE ACROSS EVERY PARTNER
+                    THE ARTIFACT ITSELF LISTS -- never by the classifier's own class,
+                    and never against a hand-typed partner list. The classifier's
+                    class-A branch returns BEFORE it looks at whether a slice exists
+                    (`classifier.py:122-125` ahead of `:128` @`c866edd324`), so its
+                    class A on a closed day is SILENT about invention and cannot
+                    discriminate this outcome's truth from its violation. A closed
+                    day carrying priced rows FAILS this outcome even when every
+                    classifier arm reads clean
          SOURCE     brief s.2 (63-80), s.5 (185-189)
 
   FWD-5  Andrew and AJ both receive the monthly report automatically
@@ -160,18 +160,6 @@ cited it** -- which is the only condition under which a renumber is safe.
                     the two being a day apart
          SOURCE     brief s.6a (206-232)
 
-  FWD-7  When a gap survives every attempt to repair it, Andrew finds out --
-         and finds out exactly what is missing, without having to ask
-         DONE WHEN  EXERCISED -- such a message has actually been sent and read
-         ACCEPT     if every attempt to fill a gap has failed, including asking
-                    the outside provider, Andrew receives an urgent message that
-                    lists each day still missing, which partner it belongs to,
-                    and which provider the data should have come from -- and he
-                    can act on it without a follow-up question. He should almost
-                    never receive one; if these become routine, the repair ahead
-                    of it has failed, not succeeded
-         SOURCE     Andrew-direct 2026-09-02, s.0 ruling (3)
-
   FWD-8  Going outside Opal to ask a provider for missing data stays a
          decision a person makes
          DONE WHEN  EXERCISED -- the system has actually stopped and asked,
@@ -180,6 +168,52 @@ cited it** -- which is the only condition under which a renumber is safe.
                     for it, the system stops, names the days it wants, and waits
                     for a person to say yes
          SOURCE     brief s.5 (163-189), ruling card 4
+
+  FWD-9  The monthly report cannot go out over incomplete data unless a person
+         decides to let it -- and the refusal can be DEMONSTRATED on demand
+         DONE WHEN  EXERCISED -- the refusal path has been DRIVEN DELIBERATELY on a
+                    forced incomplete condition, end to end, and the refusal reached a
+                    person. AMENDED v0.7: the ACCEPT's phrase "a hole the LADDER
+                    CANNOT CLOSE" is replaced by "a hole the ladder DID NOT close,
+                    with the reason recorded on the artifact" -- because NO driven run
+                    can produce the first without REWRITING A SERVED SLICE (R-EG-6),
+                    and an ACCEPT no act can satisfy is how an outcome sits
+                    NOT_EVALUATED forever
+                    person; no seat waits for the data to produce one
+         ACCEPT     a forced class-C-or-worse condition (a hole the ladder cannot close,
+                    injected under a NEVER-2 entry and restored after) drives a real run of
+                    the SAME target the schedule invokes: the verdict object reads REFUSE
+                    with the classifier's own class table quoted at file:line, that month's
+                    publish keys are UNTOUCHED BY THIS RUN -- head-object each publish key
+                    BEFORE and AFTER, LastModified IDENTICAL (the discriminating field) with
+                    ETag beside it and VersionId reported EXPLICITLY ABSENT on this
+                    unversioned bucket -- beside the refusal artifacts' fresh 200s (R-EG-9;
+                    this read "stay ABSENT (a 404 beside the refused 200)" and NO CANDIDATE
+                    MONTH CAN SATISFY IT: 404-able 0 of 5 over the measured population), the
+                    refusal
+                    reaches a person, and the FORCING is disclosed on the artifact so the run
+                    is never mistaken for organic. aj@ is not a recipient of any driven run
+                    (Andrew-direct 2026-09-10 ~02:5xZ). The measured carry-and-disclose branch
+                    (PUBLISH over two class-D holes, coverage line "5/6 trading days; 1
+                    carried") is the NEGATIVE arm and is already banked
+         SOURCE     supersedes FWD-2; Andrew-direct 2026-09-10 ~03:0xZ (no FWD is a wait)
+
+  FWD-10 When a gap survives every attempt to repair it, Andrew finds out -- and
+         the path that tells him is PROVEN to work, not presumed
+         DONE WHEN  EXERCISED -- the terminal message has been sent by the DEPLOYED handler
+                    on a deliberately driven terminal condition and READ at Andrew's own
+                    inbox; no seat waits for a real failure
+         ACCEPT     (i) the W1-S25 guard defect is fixed FIRST -- the guard and the renderer
+                    agree on the shape of coverage_unresolved.json, with a test built from the
+                    PRODUCER'S OWN OUTPUT rather than from a docstring; (ii) a driven terminal
+                    condition produces the message, it lists each day still missing with its
+                    partner and the provider the data should have come from, and it is READ at
+                    andrew@ by a gateway read, never a send-log self-report; (iii) the send is
+                    OBSERVABLE afterwards -- the handler records that it fired (W1-S26: today
+                    it emits no log line and no trail selects the SES data plane); (iv) aj@ is
+                    NOT a recipient of any driven run (Andrew-direct 2026-09-10 ~02:5xZ)
+         SOURCE     supersedes FWD-7; Andrew-direct 2026-09-10 ~03:0xZ (no FWD is a wait)
+
 ```
 
 > **WHY FWD-8 SURVIVED THE FOLD, stated because Andrew raised folding it and this seat did not simply comply.**
@@ -493,3 +527,242 @@ avoid minting a fifth instance of that same defect.**
 ⚠ **These are step-4 PROPOSALS placed so step 5 has an address to run a lens against; they are NOT measured.
 A decomp finding may overturn any of them** -- and S11 (which of the two `bd-49f` twins actually writes the
 served slices) is the one most likely to move S2's address out from under this table.
+
+## 9. ADDENDUM v0.4 (2026-09-09 ~22:0xZ, `1.0.0_SA_CTO`) -- every date-gated grade made contingent on a manual/test run
+
+**THE MANUAL-TRIGGER RULE** (Andrew-direct 2026-09-09 ~21:4xZ at the `1.0.0_SA_CTO` terminal, verbatim in `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260909_214xZ_NO_WAITING_EVERY_DATE_GATED_ACCEPT_GETS_A_MANUAL_TRIGGER_FORM.md`: *"we need to not be 'waiting' on anything, anything that we'd be waiting for needs a manual trigger of some kind depending on the test type ... include addendums for each that mandate the requirement is contingent on a relevantly structured manual/test run"*). A manual run is the EXERCISED form of an outcome only when all five hold: (1) SAME TARGET, not a copy -- the rule's own target invoked with the scheduled payload shape; (2) REAL PLANE -- real keys, catalogs, inboxes, devices; a by-hand write to a SERVED key is a served-output move (NEVER-2 entry + never-widen sign-off CTO+COO, rollback named); (3) TOLD APART ON THE ARTIFACT -- a run-id / trigger field, never the clock; (4) the schedule's OWN firing proven from HISTORY (prior rule-initiated executions listed with a denominator), never by waiting -- a rule that has never fired gets a one-off near-term `at()` on the same rule, then restored; (5) the next scheduled fire is CONFIRMATION, never a gate -- no grade carries "pending the fire" again.
+
+Round 1 closed with 7 of 8 grades NOT_EVALUATED, every one of them "on the 10-01 fire" or "a rare real event". Under the rule, the grades below read on the manual runs; the 10-01 fire confirms. Rows S14-S18 are the round-2 cells `2.0.0_SA_COO~B` cuts as ONE issuance; the CTO grades FWD-1..FWD-8 on their records.
+
+| id | outcome_ref | surface | claim | MEASURED-BY / evidence | lane | verb | depends_on | accept | bound |
+|---|---|---|---|---|---|---|---|---|---|
+| S14 | FWD-3, FWD-5, FWD-6 | THE AUGUST RE-RENDER: the SAME monthly orchestrator (`etfs-reports-monthly-run`'s target, `infra/aws/terraform/etfs-reports/orchestrator.tf`) started by hand for `month=2026-08` with the scheduled payload shape; published to the served key `s3://opal-data-etfs/platinum/reports/2026-08/` WITH the coverage line; delivered to aj@opalinvest.com and andrew@opalinvest.com | absent | the published August CSV ends on its numeric rows and predates the round (ROUND_ANALYSIS.round1, FWD-3); FWD-5 never exercised | AE_CloudOps | verify | -- | 3, 5, 6 | a NEVER-2 entry OPENED FIRST naming the served key and the archived prior object (sha256), never-widen sign-off CTO+COO inside it; the execution's own name on the artifact (`trigger=manual`); the served CSV's last row is `# coverage:` with the month's denominator; `etf_ownership.pdf` at the publish key; DELIVERY at BOTH inboxes read from the mailboxes (message ids), never from the send log; the three partners' as-of aligned on the live render (FWD-6's qualifier re-read); rollback = the archived object restored byte-equal; the 10-01 fire is confirmation |
+| S15 | FWD-2, FWD-7, FWD-8 | THE SEPTEMBER-TO-DATE REFUSAL: the SAME orchestrator started by hand for `month=2026-09` TODAY -- a partial month is incomplete by construction, so the refusal ladder runs on real data | absent | no real refusal has reached a person (FWD-2, FWD-7, FWD-8 all NOT_EVALUATED) | AE_CloudOps | verify | S14 | 2, 7, 8 | the ladder runs to its end on the real data (each rung's output in `coverage_unresolved.json`); the HTML lands under `refused/` and the 2026-09 publish key stays ABSENT (head-object 404 beside the refused object 200 -- ⚠ **HISTORICAL, SUPERSEDED BY R-EG-9 AS A RUN REFERENCE:** this row records what WAS OBSERVED on a past September-to-date run, and an observed 404 then is a fact; it is NOT a criterion any future run can be asked to reproduce, because 404-able is 0 of 5 over the measured month population. Cite this row for what happened, never as the test); the alert text produced; the terminal email DELIVERED to andrew@ (read at the inbox) -- the ONE send the SES carve-out authorizes, on the terminal path, on a real refusal; `coverage_egress_ask.json` written; vendor egress 0 over the run window (the gateway's egress log and CloudTrail, denominator printed); the run-id on every artifact |
+| S16 | FWD-4 | THE LEGITIMATELY-EMPTY DAY THAT HAS ALREADY HAPPENED: 2026-09-07 (Labor Day, US market shut) read on S15's run | measured | a real closed-market day inside the month; graded NOT_EVALUATED only because every prior B-class proof was a fixture | AE_CloudOps | verify | S15 | 4 | `coverage_verdict.json` for 2026-09 classifies 2026-09-07 as A (market closed); it appears in no partner's holes; **AMENDED v0.6 -- THE ROW AS WRITTEN PASSED ON THE VIOLATION:** it enumerated `cottonwood or 49financial`, TWO partners, and `ETFS_GUARDRAIL-W1-S31` found FOUR PRICED ROWS on that very date under the THIRD (`daily/inflection/2026-09-07.json`, value-sha identical across 09-05..09-08 = carried forward, LastModified three days before the run). The arm now enumerates EVERY partner FROM THE ARTIFACT'S OWN LIST (never a hand-typed pair), prints that list as its denominator beside the count, and reads each partner's `daily/<partner>/2026-09-07.json` for PRESENCE and, where present, for PRICED ROWS -- a present-and-priced slice on a closed day FAILS the arm. The classifier's class-A reading is retained as CONTEXT and is explicitly NOT the discriminator; `expected_empty` carries it with holes unaffected; CloudTrail PutObject 0 for that day's keys over the run |
+| S17 | FWD-1 | THE FILLED-IN DAY: the daily producer (S1 `cot-etf-ownership-daily` / S2 `bd-49f-etf-ownership-daily`) invoked by hand with the scheduled event payload against a REAL hole (named by S15's coverage read, or by `catchup_processed` on a date the producer missed); if the estate holds no real hole, a CONTROLLED one -- one slice archived to a quarantine key under its own NEVER-2 entry, the producer fired, the slice restored byte-equal after | absent | FWD-1 NOT_EVALUATED: needs a recovered date on the producer's own fire | AE_CloudOps | verify | -- | 1 | the function's CloudWatch log for the manual invocation names the recovered date in `catchup_processed`; the slice exists after with the day's rows; positive control: a date NOT missing is not reported recovered; the invocation record shows the manual initiator; the schedule's own firing proven from the function's prior scheduled invocations (CloudTrail Invoke by the rule), listed with a denominator |
+| S18 | -- (the schedules) | THE SCHEDULE'S FIRING FROM HISTORY: the executions of `etfs-reports-monthly-run` and the two daily rules listed from CloudTrail / the state machine's execution list with their initiators -- the ones that produced the published August artifact and the daily slices | measured | the published August CSV and the daily slices exist, so the fires have fired; never listed as evidence | AE_CloudOps | verify | -- | 1, 5 | the list printed with its denominator and the initiator column showing the rule; 10-01 and the daily crons stay CONFIRMATION, never a gate |
+| S19 | FWD-4 | **THE CLASSIFIER ORDERING DEFECT** -- `data/etfs/scripts/coverage/classifier.py:122-125` returns class A and `continue`s on a non-trading day BEFORE the presence check at `:128`, so a slice sitting on a closed day is UNREACHABLE by the classifier whose whole job is to tell a legitimately-empty day from a repaired one. The docstring's own words -- "only PRESENCE of a key matters here" -- describe the check the class-A branch skips. This is INSIDE this project: s.3 OWNS names "the coverage classifier" and S4 is FWD-4's own code row against this exact file | measured (`W1-S31`, re-read by `1.0.0_SA_CTO` at the cited lines) | FWD-4's only instrument cannot see FWD-4's violation | DS_ClientPlatform | classify | -- | 4 | the non-trading-day branch reports a closed day carrying a slice DIFFERENTLY from a closed day carrying nothing (a distinct class or a populated field -- the SHAPE is the assignee's, the DISCRIMINATION is the bar); a test built from the PRODUCER'S OWN OUTPUT on 2026-09-07 rather than from the docstring; the ZERO-vs-MISSING contract S4 protects is not disturbed (positive control: a genuinely empty closed day still classifies A and still appears in no partner's holes); and the month's verdict object re-read after the change still classifies every ordinary closed day exactly as it did before, denominator printed |
+| S20 | FWD-4 | **THE OUTSIDE HALF, PLACED NOT ADOPTED** -- a partner producer writes PRICED values onto non-trading days (`daily/inflection/` for 09-05, 09-06, 09-07, one value-sha across all four days and 09-08, differing from 09-04): carried-forward duplicates, standing behaviour predating this project's work. That PRODUCER is not this project's surface (s.3 OWNS names the catch-up inside `cot-etf-ownership-daily` and `bd-49f-etf-ownership-daily`, not this one), and spine v2.4 forbids routing an outside remedy into a running project | measured (`W1-S31`) | -- | -- | -- | -- | 4 | **NOT A CELL OF THIS PROJECT.** This row exists so the finding is placed rather than carried: the DETECTION is S19's and lands here; the REMEDY on the producer leaves as a brief to `4.0.0_SA_CRO` and enters at L1 as its own project. Until then the condition is DISCLOSED by S19's discriminator rather than repaired, and FWD-4 grades on the disclosure, never on the producer's silence. **BRIEF REQUEST SENT AND ITS DELIVERY STATE MEASURED, 2026-09-10 ~03:5xZ:** msg 94954 to `4.0.0_SA_CRO` returned **QUEUED -- no live session**, so the request is written and waiting, NOT delivered. Per the law this seat landed the same night ("queued if not live" is a WISH, not a delivery; a BASE serial with no base session is a silent hole), THIS ROW is that request's durable home and the relay is held by `0.0.0_AB_MSTR` (register owner, DELIVERED 94956) -- never by the queued message. If no brief exists when round 3 closes, the L10 says so rather than letting the placement lapse into a carry |
+
+## 10. ENDPOINT ADDENDUM v0.5 (2026-09-10 ~03:1xZ, `1.0.0_SA_CTO`) -- the two WAIT outcomes superseded
+
+**Andrew-direct ~03:0xZ at the `1.0.0_SA_CTO` terminal, VERBATIM:** *"Anything that we'd have to actually wait for a failure to close
+out, that FWD should be superseded, because otherwise we might be waiting forever. It is not good to write FWDs in a manner that cannot
+be proven or that requires waiting some indeterminate time to be proven. Our goal with projects and task orders is not to sit on them for
+weeks, it is to sprint, execute, validate, and close. We should almost never be waiting unless it is truly essential to the project in some
+crucial way to do so, the likes of which should be expressly qualified. I think the way it should work actually is that no FWD is ever a
+'wait' unless explicitly advised otherwise."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_030xZ_NO_FWD_IS_A_WAIT.md`.
+
+**Applied here:** of the eight, SIX were provable by an act a seat can take and are proven or in flight. TWO waited on a failure mode
+nobody controls -- FWD-2 (a REFUSE verdict) and FWD-7 (a terminal failure the PRD itself calls rare by design). Both are superseded in
+place above; their ids are permanent and never reused. The successors keep the OUTCOME he wants and move the proof from *the event
+happened* to *the mechanism was driven deliberately and worked*.
+
+```
+  FWD-9   The monthly report cannot go out over incomplete data unless a person
+          decides to let it -- and we can DEMONSTRATE the refusal on demand
+          DONE WHEN  EXERCISED -- the refusal path has been DRIVEN DELIBERATELY on a
+                     forced incomplete condition, end to end, and the refusal reached
+                     a person; no seat waits for the data to produce one
+          ACCEPT     a forced class-C-or-worse condition (a hole the ladder cannot close,
+                     injected under a NEVER-2 entry and restored after) drives a real run
+                     of the SAME target the schedule invokes: the verdict object reads
+                     REFUSE with the classifier's own class table quoted at file:line, the
+                     publish keys for that month are UNTOUCHED BY THIS RUN -- head-object
+                     each publish key BEFORE and AFTER and show ETag, VersionId and
+                     LastModified IDENTICAL, beside the refusal artifacts' fresh 200s
+                     (R-EG-9, 2026-09-10: this clause read "stay ABSENT (a 404 beside the
+                     refused 200)". 275 slices subtract to {2026-05..2026-09}, 0 outside,
+                     and ALL FIVE already serve both html and pdf, so 404-able is 0 of 5
+                     and NEVER-AUTO-DELETE forbids the only act that would change it.
+                     ⚠ SCOPE OF THAT CLAIM, corrected by `3.0.0_SA_CVO` after my first
+                     wording overstated it: this is CURRENT BOUNDED INFEASIBILITY over the
+                     MEASURED five-month population -- NOT infeasibility "from the day it
+                     was written", and NOT a claim about every possible month. A month
+                     that served no publish key would satisfy the old clause; none exists
+                     in the population the fixture can act on. A 404 NAMES ONE WORLD-STATE
+                     OF "this run did not publish" exactly as the pre-R-EG-8 clause named
+                     one WRITER of the ask property -- the same defect one grain up, and
+                     the SECOND instance inside this one order.
+                     ⚠ AND THE REPLACEMENT'S OWN LIMITS, likewise corrected: a 404 is an
+                     OBSERVATION OF ABSENCE, never proof a key NEVER EXISTED, and my first
+                     wording said the latter. ⛔ **ETag EQUALITY ALONE DOES NOT PROVE ZERO
+                     WRITES** -- identical bytes rewritten yield an identical ETag, which
+                     is why **LastModified IS THE DISCRIMINATING FIELD** and ETag is
+                     corroboration. VersionId is EXPLICITLY ABSENT on this unversioned
+                     bucket and must be reported as absent rather than silently omitted.
+                     This is an ENDPOINT-STATE CONTROL, not an exhaustive intervening-write
+                     audit, and it is not "strictly stronger than every absence test" --
+                     it is the control that fits the world this fixture can actually
+                     produce),
+                     the refusal reaches a person, and the FORCING is disclosed on
+                     the artifact so the run is never mistaken for organic. The already-
+                     measured carry-and-disclose branch (2026-09-10: PUBLISH over two
+                     class-D holes, coverage line "5/6 trading days; 1 carried") is the
+                     NEGATIVE arm and is already banked
+          SOURCE     supersedes FWD-2; Andrew-direct 2026-09-10 ~03:0xZ
+
+  FWD-10  When a gap survives every attempt to repair it, Andrew finds out -- and
+          the path that tells him is PROVEN to work, not presumed
+          DONE WHEN  EXERCISED -- the terminal message has been sent by the deployed
+                     handler on a DELIBERATELY driven terminal condition and READ at
+                     Andrew's own inbox; no seat waits for a real failure
+          ACCEPT     (i) the W1-S25 guard defect is fixed FIRST -- the guard and the
+                     renderer agree on the shape of coverage_unresolved.json, with a test
+                     built from the PRODUCER'S OWN OUTPUT rather than from a docstring;
+                     (ii) a driven terminal condition produces the message, it lists each
+                     day still missing with its partner and the provider the data should
+                     have come from, and it is read at andrew@ by a gateway read (never a
+                     send-log self-report); (iii) the send is OBSERVABLE afterwards -- the
+                     handler records that it fired (W1-S26: today it emits no log line and
+                     no trail selects the SES data plane); (iv) aj@ IS NOT A RECIPIENT of
+                     any driven run (Andrew-direct ~02:5xZ)
+          SOURCE     supersedes FWD-7; Andrew-direct 2026-09-10 ~03:0xZ
+```
+
+### The two superseded outcomes, kept VERBATIM (ids permanent, never reused, no longer graded)
+
+They are held here rather than in the ENDPOINT section so that section and `PRD_HEADER.endpoint_outcomes` name exactly the same
+eight live ids -- the L6 gate reads both halves and is right to refuse when they disagree (`2.0.0_SA_COO` 94931). The supersession
+rule requires the text be kept with its reason beside it; it does not require it be kept in the ENDPOINT list.
+
+```
+  FWD-2  [SUPERSEDED 2026-09-10 by FWD-9 -- Andrew-direct ~03:0xZ: "anything that we'd have to
+         actually wait for a failure to close out, that FWD should be superseded". The id is
+         PERMANENT and never reused; the text is kept verbatim below and is no longer graded.]
+         The monthly report cannot go out over incomplete data unless a
+         person decides to let it
+         DONE WHEN  EXERCISED -- the check has actually refused a month, and the
+                    refusal reached a person
+         WHY SUPERSEDED  its only proof was a REFUSE verdict, which arrives when the data
+                    happens to carry a class-C-or-worse hole that survives the ladder -- an
+                    event no seat controls. Measured 2026-09-10: the September run produced
+                    PUBLISH over two class-D holes, because carry-and-disclose IS the designed
+                    behaviour there, so the refusal this bar waits for may never come.
+         ACCEPT     when days are genuinely missing, the report does not go out,
+                    and someone is told which days and why -- rather than it
+                    arriving looking normal
+         SOURCE     brief s.4 (130-162), s.5 (163-189)
+
+  FWD-7  [SUPERSEDED 2026-09-10 by FWD-10 -- same Andrew-direct. Id permanent, never reused;
+         text kept verbatim, no longer graded.]
+         When a gap survives every attempt to repair it, Andrew finds out --
+         and finds out exactly what is missing, without having to ask
+         DONE WHEN  EXERCISED -- such a message has actually been sent and read
+         WHY SUPERSEDED  two reasons, either alone sufficient. (1) Its bar waited on a real
+                    terminal failure the PRD itself calls rare by design -- "he should almost
+                    never receive one" -- so the outcome was written to be proven by an event we
+                    hope never happens. (2) Measured 2026-09-10 (row W1-S25): the terminal send
+                    CANNOT FIRE AT ALL -- lambda_function.py:439 guards it on
+                    (unresolved_doc or {}).get("unresolved") while the renderer writes that
+                    document KEYED BY PARTNER, so the guard reads [] and skips the send on a
+                    genuine refuse; round 1's proof passed on a fixture built to the docstring
+                    rather than to the producer's output. Waiting would have waited forever.
+         ACCEPT     if every attempt to fill a gap has failed, including asking
+                    the outside provider, Andrew receives an urgent message that
+                    lists each day still missing, which partner it belongs to,
+                    and which provider the data should have come from -- and he
+                    can act on it without a follow-up question. He should almost
+                    never receive one; if these become routine, the repair ahead
+                    of it has failed, not succeeded
+         SOURCE     Andrew-direct 2026-09-02, s.0 ruling (3)
+```
+
+**R-EG-4 (ruling, `1.0.0_SA_CTO` 2026-09-10 ~05:1xZ, answering `2.0.0_SA_COO`'s 94998 request for a harder arm THIS TICK): YES -- FOUR CONDITIONS ON EG-s-24, AND THE FIRST IS AN ORDERING.** The cell threads a forcing spec into the render command. CLAUDE.md's NEVER-1 says an override that lets a scheduled producer run off its own inputs creates a NEW REACHABLE STATE the sign-off must cover, and `2.0.0_SA_COO` is right that this one is worse-shaped than the `--month` override that rule was written about: **it makes the monthly report DROP ITS OWN INPUT DATA.** Default-off plus an adversarial arm is necessary and is not sufficient.
+
+**(a) ORDER THE PAIR. EG-s-25 lands BEFORE, or in the SAME deploy as, EG-s-24 -- never after.** EG-s-25 is what makes a forced run record its own forcing (with an unforced run writing the same field with an explicit not-forced value, because a field absent in both cases discloses nothing). If forcing becomes REACHABLE while disclosure does not yet EXIST, there is a window in which a forced artifact is indistinguishable from an organic one -- which is precisely the state this whole cell exists to prevent. That is NEVER-2's half-landed shape applied to a CAPABILITY rather than to a deploy, and it is the one failure here that cannot be repaired afterwards: an artifact written in that window can never be told apart later.
+
+**(b) COUNT THE WRITERS OF THE FORCING SPEC, BY SUBTRACTION.** NEVER-1 requires a writer census on the named property and rule 24 (i) now requires the enumeration be derived as a denominator MINUS exclusions rather than listed from recall. Enumerate every input the render command reads FROM THE COMMAND BUILDER'S OWN SOURCE -- event keys, environment, SSM parameters, any config the renderer opens -- and show which can carry a forcing value. **N writers means N proofs that the scheduled path sets none of them, and N is a number the sign-off PRINTS.** The AST census over the handler's four event keys covers ONE writer; it is not the census.
+
+**(c) PROVE THE SCHEDULED PATH ON THE SCHEDULE'S OWN DEPLOYED PAYLOAD, NOT ON THE CODE.** "The handler cannot read a forcing key" and "the deployed rule does not send one" are DIFFERENT CLAIMS and only the second is about the world. Read the live rule's actual Input, with a POSITIVE CONTROL: a key the payload genuinely carries must read differently from the forcing key it does not. A source read cannot see a payload -- that is the same source-versus-run-log trap this project has now paid for three times in one night.
+
+**(d) THE FORCING MUST NOT BE ABLE TO PERSIST.** Default-off is not the same property as cannot-be-left-on. Prove a forcing value cannot survive into a SUBSEQUENT invocation -- supplied per invocation, cached nowhere, no warm-container residue. A flag that can be left on converts a one-time test into a standing condition, and the artifact that would disclose it is the same artifact nobody re-reads.
+
+**And the never-widen sign-off names the new reachable state IN ITS OWN WORDS** -- *a served monthly report produced over deliberately dropped input data* -- and prints the writer count from (b). This seat's half will say exactly that and will not sign a half that names the producer's decision instead of the act's blast radius.
+
+**R-EG-8 (ruling, `1.0.0_SA_CTO` 2026-09-10 ~13:3xZ, on `2.0.0_SA_COO`'s drain-end read 95134/95135 and row W1-S33): EG-s-21 TAKES SHAPE (b) -- FIX THE ARTIFACT. ARM (d) IS RE-CUT TO NAME THE PROPERTY RATHER THAN ONE WRITER OF IT. THE CODE CELL LANDS BEFORE THE SINGLE PERMITTED RUN IS SPENT.**
+
+**EG-s-21 CANNOT BE EXECUTED AS CUT, and the contradiction is real rather than a reading error.** Arm (c) requires the REFUSE that only shape 1 (`--no-ladder`) produces. Arm (d) requires the ladder's outputs on the refusal branch WITH THE EGRESS ASK PRESENT -- but `--no-ladder` never calls `remediate_month` at all, so **RUNG 3 NEVER FIRES, and rung 3 is the SOLE writer of `coverage_egress_ask.json` at `remediate.py:189`.** The two arms contradict and no act by any seat satisfies both. `2.0.0_SA_COO` did NOT fire the single permitted run, which was correct: firing would have spent the one act on a run that can satisfy neither arm.
+
+**AND W1-S33 PUTS A SECOND, INDEPENDENT COLLISION ON THE SAME RUN.** EG-s-28 landed R-EG-7's fix at 4 of 4 producer append sites. Its assignee then applied that cell's own law one level up -- *a fence on ONE WRITER of a property is not a fence on the PROPERTY* -- and found a **FIFTH writer: on `--no-ladder` the RENDERER builds the unresolved records INLINE at `render_month_end.py:1000-1008` with no provider**, bypassing the producer's append sites entirely. Measured hermetically with boto3 stubbed to raise: **0 of 2 records carry the field.** So a shape-1 run's terminal message names no provider anywhere EVEN WITH EG-s-28 COMMITTED, and FWD-10's ACCEPT (ii) is unsatisfiable on it. **R-EG-7 fenced the producer; the renderer was never behind that fence.**
+
+⛔ **RULING: SHAPE (b). THE PRIORITY IS THE ARTIFACT, NOT THE ACCEPT** -- consistent with R-EG-7 above, and reached independently by `2.0.0_SA_COO` before it read that ruling, which is corroboration rather than agreement. The alternative on the table, shape (a), would amend arm (d) to record the egress ask **ABSENT BY CONSTRUCTION** and accept a terminal message naming no provider. **REFUSED, and the reason is not consistency with an earlier ruling.** FWD-10's ACCEPT (ii) encodes a real operational property -- *an operator reading the terminal alert can tell which provider failed* -- and under shape (a) **FWD-10 would grade REALIZED while that property is FALSE.** That is this project's own row S16 shape, cited in CLAUDE.md Rule 24: a GRADE reading REALIZED on the violation. **An accept the artifact cannot meet is evidence about the ARTIFACT.**
+
+**THE CODE CELL:** the renderer's inline branch carries the provider field and a rung-3-EQUIVALENT egress-ask record -- roughly one line at `:1004` plus the mapping read.
+
+**ARM (d) IS RE-CUT TO NAME THE PROPERTY: *the egress ask is RECORDED for the run*,** rather than the literal `coverage_egress_ask.json` that only rung 3 can produce. ⛔ **THIS IS NOT SHAPE (a) IN DIFFERENT CLOTHES, and the distinction is the whole ruling: (a) records the ask ABSENT; this makes the ask PRESENT, written by a different writer.** Same property, different producer. **A criterion naming ONE WRITER of a property was the defect; naming the PROPERTY is the fix.**
+
+**ORDERING, and it is part of the ruling rather than advice: THE CODE CELL LANDS AND IS PROVEN FIRST; EG-s-21 FIRES SECOND.** The single permitted driven run stays UNSPENT until the artifact can satisfy the arms. A run fired first would publish a served artifact set that a later reader could mistake for a real refusal -- the exact waste W4-S6 exists to prevent.
+
+⭐ **THE PATTERN WAS PLACED FOR A LAW EDIT AND THE LAW EDIT IS NOW DEAD. THE COUNT WAS TWO, NOT FOUR.**
+
+This block originally carried `2.0.0_SA_COO`'s sentence -- *"this project has now paid FOUR TIMES for a fence covering one writer"* -- and placed a CLAUDE.md extension on it for `3.0.0_SA_CVO`'s L9. **When asked for the four row ids as a list the RECORD produces rather than one it recalled, `2.0.0_SA_COO` censused its own claim and WITHDREW IT** (95181). Unscoped domain, denominator printed: **106 rows across both surprise-channel planes; rows carrying the writer-of-a-property idea at all: 2 of 106.**
+
+| | row | shape |
+|---|---|---|
+| REAL | `W4-S5` | `month` was a SECOND writer able to set the very forcing flag EG-s-24's fence covered |
+| REAL | `W1-S33` | the renderer's `--no-ladder` branch is a FIFTH writer of the unresolved record, no `provider` |
+
+**WHERE THE OTHER TWO WENT, and the error is worth more than the number.** `EG-s-24` was counted as a third instance when it is **THE CELL IN WHICH `W4-S5` WAS FOUND** — its own completion status says its writer census found that second writer. Counting a cell AND the row it produced is double-counting, and it inflated the number in the direction that flattered the sentence. `W4-S4` was folded in but is **A DIFFERENT SHAPE**: `safe-apply.sh` runs two gates and the ORDER is the mechanism — that is **N READERS of an authorization, not N WRITERS of a property.** A principle stated broadly enough catches both; presenting them as one instance is **how a count becomes an argument.**
+
+⛔ **RULING: THE EXTENSION DOES NOT LAND** — and it survives a THIRD instance found after this ruling was written.
+
+**UPDATED 2026-09-10 ~14:3xZ.** Ninety minutes after arguing the count down to two, `2.0.0_SA_COO` reported a THIRD from `NFRA_OUTSET.TO-OS-s-27`'s `O27-AC2` consumer census — the arm it had insisted on. `comp-find 'stratum_status' --all`: **135 hits across 154,114 files**, SURFACED 44 / CONFIG 38 / TEST 17 / DOC 36; resolving the SURFACED band to first-party non-scratch source leaves TWO files carrying the stratum block shape, the second being `kimi_pipeline.py:650,681,852`, which builds its own record from `c0['strata'][group]['status']`. **A second writer of a shape, in a DIFFERENT PROJECT.**
+
+**THE HONEST FIGURE IS THEREFORE ASYMMETRIC, and the asymmetry is the ruling:** TWO measured **WITH HARM** in `ETFS_GUARDRAIL` — a fence that could be bypassed, and a served alert rendering `(not stated)` on every row — plus ONE **LATENT, COST UNMEASURED** in `NFRA_OUTSET`, where the second producer is a harness rather than a served one, the cell cannot break it, and nothing claims its output carries the new fields.
+
+**CROSS-PROJECT RECURRENCE IS A BETTER GENERALISATION ARGUMENT THAN A HIGHER COUNT IN ONE PROJECT WOULD HAVE BEEN** — and it still does not land, because **A SHAPE RECURRING IS NOT A COST RECURRING.** CLAUDE.md's own change rule requires a new verification rule to state its COST and NON-APPLICATION; a ratchet bought with a latent divergence states neither. Two harms in one project plus one harmless echo in another is a pattern worth watching, and the existing writer census already covers sign-offs. `3.0.0_SA_CVO` weighs the generalisation at L9 **on the two that cost something, treating the third as recurrence evidence only** — `2.0.0_SA_COO`'s own framing, and it declined to press the proposal a second time on the instance that would have flattered it. **`2.0.0_SA_COO` recommended against its own proposal rather than defending the number that made it attractive, and that is the disposition adopted here.** The drain-end read 95135 and L8 packet v5 §9.3 both say "four times"; **both are WITHDRAWN to two on this evidence**, and their other claims are unaffected.
+
+**WHAT DOES NOT CHANGE: every gate of R-EG-8 above.** The two REAL instances are real, `W1-S33` is exactly why arm (d) is re-cut, and the code-before-run ordering stands. **The law question was always conditional on the count; the ruling never was.**
+
+**R-EG-7 (ruling, `1.0.0_SA_CTO` 2026-09-10 ~06:4xZ, following the R-EG-6 correction at 95071 and read at source before ruling): FWD-10's ACCEPT (ii) CANNOT BE SATISFIED BY A SHAPE-1 DRIVEN RUN, AND THE REMEDY IS TO FIX THE ARTIFACT, NOT TO WEAKEN THE ACCEPT.**
+
+`2.0.0_SA_COO` reported that a `--no-ladder` run's terminal message is *materially thinner* and concluded *"the send still fires so FWD-10 stays provable"*. **The first half is right, the second half is right only about the SEND, and I read the builder rather than the report.** `lambda_function.py:348` `_build_terminal_email` carries its own comment at the per-date row:
+
+```
+# `provider` is NOT written by the producer into coverage_unresolved.json
+# (only coverage_egress_ask.json carries it) -- render the absence as text
+# rather than the literal "None" a bare .get() puts into an urgent email.
+```
+
+So the per-date table's `provider` column renders `(not stated)` in EVERY case, organic or driven, and **the ONLY place a provider is ever named is the rung-3 egress-ask block** -- the block gated on `if ask and ask.get("asks")`, which shape 1 removes by construction. **Under shape 1 the terminal message names NO PROVIDER ANYWHERE.**
+
+FWD-10's ACCEPT (ii) requires the message to list each missing day *"with its partner AND THE PROVIDER the data should have come from"*. **That is unsatisfiable on a shape-1 run, and it is the SAME structural collision as FWD-9's, one outcome along** -- discovered because the R-EG-6 correction sent me to the builder.
+
+⛔ **AND THE ACCEPT IS RIGHT, SO IT DOES NOT MOVE.** A person receiving an URGENT terminal alert about unrecoverable data SHOULD be told which provider the data should have come from -- that is the whole point of telling them at all. The defect is NOT in the acceptance criterion; it is that `coverage_unresolved.json` DOES NOT CARRY THE PROVIDER, and the render layer papers over the gap with `(not stated)`.
+
+**RULING: the producer writes `provider` into `coverage_unresolved.json`, and the terminal message then names it in EVERY case, organic or driven, with or without a ladder.** A code cell for round 3, not a wait, not an accept amendment, and not a reason to reconsider shape 2. Acceptance: the field is present per unresolved date on the producer's OWN output; the terminal message renders a real provider rather than `(not stated)` for every row; a date whose provider is genuinely unknown still renders the honest absence, so the fix does not INVENT one (the positive control); and a shape-1 driven run's message is then materially EQUAL to an organic run's on this axis, which is what makes FWD-10 gradeable on it at all.
+
+⛔ **THE SHAPE OF THE ORIGINAL DEFECT IS WORTH MORE THAN THE FIX.** Somebody already NOTICED the provider was missing and handled it AT THE RENDER LAYER -- turning a missing value into polite text instead of writing the value. That is the same family `3.0.0_SA_CVO` refused an hour earlier in another project when it declined to normalise inside a comparator: **a gap papered at the point of DISPLAY leaves the ARTIFACT wrong and makes the wrongness read as intentional.** The comment is honest and careful and it still hid a missing field from every reader of the email for as long as the email has existed.
+
+**R-EG-6 (ruling, `1.0.0_SA_CTO` 2026-09-10 ~06:3xZ, on `2.0.0_SA_COO`'s 95058 and row W4-S6): SHAPE 1 ADOPTED. SHAPE 2 IS REFUSED AND IS NOT GOING TO ANDREW. FWD-9's ACCEPT IS AMENDED SO A DRIVEN RUN CAN SATISFY IT.**
+
+**THE STRUCTURAL FACT, verified at source at this seat and not adopted:** `render_month_end.py:991` classifies from the fixture-mutated in-memory series; `:993` runs the ladder; `:999` RE-CLASSIFIES with `s3=s3` and NO series argument, its own comment saying *"re-classify from REAL current S3 state, never the in-memory series the ladder itself bypassed"*. The fixture never touched S3, so the date returns COVERED, C is 0, and the verdict is PUBLISH. The harness carries its own positive control -- identical fixture, month and probe, the ONLY difference being the flag: `ladder=False` REFUSE C=1 holes `['2026-08-04']`; `ladder=True` PUBLISH C=0 holes `[]` -- so the null is a MEASURED ABSENCE OF EFFECT, not a dead harness.
+
+**FWD-9 as written cannot have BOTH a real ladder and no served write, and that is not a defect in anyone's cut.** It is a property of driving a REPAIR mechanism against a hole you invented: the ladder's function is to repair holes by invoking the producer, and a forced hole is indistinguishable to it from a real one.
+
+**SHAPE 2 IS REFUSED HERE AND NOT CARRIED TO ANDREW, which is a decision and not a deferral.** It rewrites a SERVED daily slice to test a refusal -- NEVER-class, and the `W1-S24` harm BY DESIGN. Asking him to authorise damaging served data in order to demonstrate a guard is a bad trade WHEN A SUFFICIENT NON-DESTRUCTIVE PROOF EXISTS, and one does. Putting it to him anyway would be manufacturing a sovereign call to avoid making a technical one. If shape 1 proves inadequate on evidence, THEN it is his.
+
+**SHAPE 1 ADOPTED with three requirements.** (i) The ladder's absence is DISCLOSED ON THE ARTIFACT, in the SAME field family as `forced: true`, so ONE read tells a reader both what was forced and what was SKIPPED -- `2.0.0_SA_COO`'s own rec, taken as written. (ii) Arm (d) grades THE DISCLOSURE, never the ladder's degenerate outputs. (iii) **THE GRADE CARRIES ITS OWN BOUNDARY:** FWD-9 grades on the GATE's refusal, with the ladder's ORCHESTRATION explicitly NOT covered and its REPAIR MECHANISM covered elsewhere -- `EG-s-19` drove the producer's catch-up against a REAL hole on Andrew's explicit approval, and the ladder's rung 1 invokes that same producer. `2.0.0_SA_COO` stated that boundary precisely rather than claiming the ladder was covered, and I am ratifying the boundary in those terms.
+
+**WHY SHAPE 1 IS SUFFICIENT AND NOT A CONCESSION:** a ladder that RAN and failed to close a hole leaves the re-classification reading the hole still present -- class C, REFUSE -- which is the IDENTICAL code path shape 1 exercises on the identical input state. What `--no-ladder` removes is the ATTEMPT, not the gate. The gate is what FWD-9 is about.
+
+⛔ **AND A DEGENERATE ARM THAT SAYS SO IS WEAKER THAN A REAL ONE AND STRONGER THAN A FORCED ONE NOBODY CAN TELL APART.** That is `2.0.0_SA_COO`'s sentence and it is the principle: a proof that discloses its own gap can be weighed; a proof that closes the gap by damaging the estate cannot be un-run.
+
+**R-EG-5 (ruling, same tick): COMMITTED IS NOT SERVED, and round 3's L10 will not forget it.** `2.0.0_SA_COO` measured THREE `DEPLOYED != BUILT` gaps -- the classifier (EG-s-22), the egress ask (EG-s-23) and the renderer (pending EG-s-25) -- with the deployed bytes hashing EQUAL to their PRE-CHANGE blobs, and each cell says in its own record that its green is a property of the repository and not of the estate. That honesty is exactly right and it does not close the gap. **RULING: no outcome grades REALIZED at round 3's L10 on a repository green.** FWD-4 and FWD-8 each require their fix DEPLOYED and READ, as a measured sha256 pair, with an OWNER NAMED for each of the three deploys.
+
+⛔ **AMENDED ~05:5xZ ON ROW `ETFS_GUARDRAIL-S33`, AND THE AMENDMENT IS TO A FALSE-GREEN RUNG IN MY OWN RULING.** As first written this ruling said "read on the DEPLOYED ARTIFACT", which names the S3 artifact prefix. **S33 measures that an upload to that prefix DOES NOT REACH THE BOX** (asserted from source at `4d666a0939`): `_render_command` copies exactly ONE object from it -- `render_month_end.py` at `:348` -- and the coverage package appears nowhere in the command; the renderer self-bootstraps that package ONLY inside an `except ImportError` branch at `:117-128`, so once `/opt/etfs-reports/coverage/` exists on EBS (which the render command's own text says persists across stop/start) the import succeeds and **the pull never runs again.** So a future upload would make DEPLOYED == BUILT AT THE PREFIX while the RUNNING BYTES STAYED UNCHANGED, and every rung of the ladder I wrote would read CLEAN. **The sha256 pair is therefore measured on the RUNNING PLANE -- the bytes on the box -- and a prefix read closes NOTHING.** This is COMMITTED-is-not-SERVED one level deeper than the law states it: committed, deployed-to-the-prefix and RUNNING are THREE states, not two, and my ruling collapsed the last two exactly as the FWD-5 envelope collapsed EMITTED and READ six hours earlier. **THE LIMIT IS THE ROW'S OWN AND IS KEPT:** the box's on-EBS bytes are UNMEASURED -- reading them needs an SSM command on the reporter box and that plane belongs to a live order -- and the falsifier is exact and written down: if the file is ABSENT on the box the bootstrap does deliver and the row is wrong; if PRESENT it does not. **THE FALSIFIER IS RUN BEFORE ANY DEPLOY CLAIM IS ACCEPTED AT L10**, and no cell is cut for the remedy this tick because it edits `render_month_end.py`, which is a LIVE worker's grant -- `2.0.0_SA_COO` was right to name it as a dependency rather than write into a running worker's surface. A decomposition that covers every code cell can still leave the deploy step unowned; that is how a project passes every criterion while the artifact the estate reads is unchanged. The deploys are placement work, they are placed here, and the L10 grades against them.
+
+**R-EG-3 (measurement-surface fact, recorded by `1.0.0_SA_CTO` 2026-09-10 ~04:2xZ on `2.0.0_SA_COO`'s carried item; NOT a ruling, nothing to remedy): THIS PROJECT'S `daily/` CENSUS DENOMINATOR IS PERMANENTLY +1.** EG-s-19's controlled hole required archiving one slice, and `opal-data-etfs` has **versioning DISABLED**, so that archive object IS the standing rollback for the delete and cannot be removed; the order's bounds forbid a second delete besides. The one enumerator inside this project whose printed denominator already moved (273 -> 274) was ruled INERT on the assignee's own reasoning -- its only arm filters on a `LastModified` prefix of `2026-09-10T01:` and the archive is stamped 03:45:24Z, so the key cannot reach it.
+
+**Why this is written HERE and not only in the message that found it.** It is a fact about the project's measurement surface that OUTLIVES the order that created it: every FUTURE bare-`daily/` census inherits the +1, and a later seat reading 274 against a record that says 273 will be reading a CORRECT number against a STALE one -- a discrepancy that looks exactly like drift and is not. **No remedy is proposed and none should be: the archive must stay.** A census that wants the pre-archive number SUBTRACTS A KNOWN KEY; it never deletes one. This is Rule 28's questions 5 (coverage + denominator) and 7 (a failure mode distinguishable from a genuine negative) answered in advance, for a resource this project is now load-bearing on. The second enumerator the same census found (`estate_report_runner.py:1031`) reads a DIFFERENT bucket and is out of scope, stated with its own denominator: 16 hits across 153,347 files.
+
+**R-EG-2 (ruling, `1.0.0_SA_CTO` 2026-09-10 ~03:3xZ, on `2.0.0_SA_COO`'s 94940 request for PLACEMENT): THE FINDING SPLITS, AND THE HALF THAT IS OURS IS THE DETECTOR, NOT THE DATA.** The COO routed W1-S31 to this seat as "outside ETFS_GUARDRAIL's surface". Half of it is: the partner producer that carries priced values onto closed days is not an OWNS surface and does not enter this project (S20 places it; the remedy leaves as a brief at L1). **The other half is squarely INSIDE** -- s.3 OWNS names *the coverage classifier* in as many words, and S4 is FWD-4's own row against `classifier.py`. A defect in the instrument this project OWNS does not become an outside matter because the data that exposed it came from elsewhere. It goes to round 3 as S19.
+
+**AND THE HALF THAT IS MINE, stated first because it is the one that would have cost a false grade.** FWD-4 was one row from being graded REALIZED on a violation. S16 -- FWD-4's ONLY grading row, written and ratified at this seat -- enumerates `cottonwood or 49financial`, and the four priced rows sit under `inflection`. Its other arm reads the classifier's class A for 2026-09-07, and the class-A branch is precisely the one that returns before it can see a slice. So every arm of S16 would have passed while a closed day carried numbers nobody measured, which is the exact property FWD-4 exists to protect. This is Rule 22's ordering in one row: DISCRIMINATION passing inside a wrong COVERAGE, with a second instrument agreeing about the same wrong thing. It is the FOURTH instance tonight of the uncovered member of a hand-typed domain (`NFRA_OUTSET-S36`, `NFRA_COMPEFFICACY-W1-S2`, the COO's own arm (d), this) and the first one found in an ACCEPT rather than in a worker's arm -- which is worse, because an accept is the thing a grade is read against. **A partner list typed by a human is a DECLARED DOMAIN and must be read from the artifact that owns it.** v0.6 amends both S16 and FWD-4's endpoint ACCEPT accordingly; nothing terminal re-opens.
+
+**R-EG-1 (ruling, binding on this PRD and offered to the spine): NO FWD IS A WAIT.** An endpoint outcome is provable by an act a seat can
+take ON DEMAND. An outcome whose only proof is an event nobody controls is written wrong: it is re-cut so its MECHANISM is driven
+deliberately, with the organic case kept as the negative arm. Where a wait is genuinely essential it is EXPRESSLY QUALIFIED on the
+outcome, with the reason and Andrew's word, and it is the exception that names itself.

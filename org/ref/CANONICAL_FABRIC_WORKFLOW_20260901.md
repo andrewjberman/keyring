@@ -82,6 +82,20 @@ travels to the worker.
 - **Owner:** `1.0.0_SA_CTO`. **Not engaged:** `2.0.0_SA_COO`, `3.0.0_SA_CVO`, every worker.
 - **Input:** the brief. **Output:** numbered qualitative outcomes `FWD-1..n`, each citing a brief line, carrying no
   numbers, each disputable; ids are permanent and never reused.
+- ⛔ **NO FWD IS A WAIT.** Every outcome is PROVABLE BY AN ACT A SEAT CAN TAKE ON DEMAND. An outcome whose only proof is an event nobody
+  controls -- a failure, a rare condition, a calendar -- is written WRONG, and the remedy is not patience: it is re-cut so its MECHANISM is
+  DRIVEN DELIBERATELY, with the organic case kept as the negative arm. **THE ACT MAY BE A DRIVEN RUN OR A READ OF EXISTING HISTORY** -- driving is
+  one form of proof and reading a record that already exists is another; what is forbidden is WAITING FOR AN EVENT. An outcome whose
+  property is the ABSENCE of something (that nobody triggered it, that no hand enforced it) cannot be driven at all and is proven by the
+  history read, not by qualification. An outcome is SUPERSEDED only when no such act exists; where the substance is provable and only the
+  WORDING names a calendar, the remedy is to re-point the `DONE WHEN` at the on-demand read, KEEPING THE ID. Where a wait is genuinely essential it is EXPRESSLY QUALIFIED on the
+  outcome, carrying its reason and Andrew's word, and it is the exception that names itself; the default is not a wait. An outcome already
+  written as a wait is SUPERSEDED at the next unused id, its text kept verbatim with the reason beside it, never edited away.
+  Andrew-direct 2026-09-10 ~03:0xZ: *"no FWD is ever a 'wait' unless explicitly advised otherwise ... our goal with projects and task
+  orders is not to sit on them for weeks, it is to sprint, execute, validate, and close"*. This is the L2 half of his ~21:4xZ
+  manual-trigger word (which binds the ACCEPT at L4/L6): the accept rule is the cure, this is the prevention. **Measured the same night:**
+  `ETFS_GUARDRAIL` FWD-7 sat NOT_EVALUATED as "a real terminal failure, rare by design" while the terminal send guard read a key the
+  renderer never writes and COULD NOT FIRE AT ALL -- the wait would have been permanent and nothing would ever have said so.
 - **Tool:** `/endpoint --forward <brief>`. Andrew confirms the `DONE WHEN` line of every outcome here; it is his last
   touch point, and after L2 no limb waits on him. The same skill re-enters here from the CTO's own L10 read, when the
   coverage read finds an outcome no cell served or a grade the artifact cannot settle: the CTO adjudicates by running
@@ -169,7 +183,8 @@ travels to the worker.
   line. Two task orders on one chain belong to one worker's queue; two chains may take two workers. No cell is left
   for a later round; a later round exists only when the CTO's round-N analysis sends work back.
 - **Tool:** the task-order protocol; then, per worker slot, the harness's subagent call with the worker agent type and
-  worktree isolation, its prompt the worker face of the slot's first task order verbatim plus the identity line of
+  a HAND-CUT worktree off CLOUD (`git worktree add -b wk-<code>-<round>-<n> /c/tmp/<slot> CLOUD`, its path in the prompt;
+  never the harness's own isolation option, which bases on origin/main with no `org/` or `.tools/`), its prompt the worker face of the slot's first task order verbatim plus the identity line of
   L7. The spawn is the GO; no broker message carries it and no inbox receives it.
 - **Gate:** at commit, `.tools/git-hooks/to-proof-of-spec-check.sh` refuses a new task order without `<proof_of_spec>`
   or without `<decomp_ref>`; `.tools/to-pipeline-gate.py` refuses a new task order whose project row is absent, whose
@@ -181,6 +196,51 @@ travels to the worker.
   author's issuance; lane `TREE_PROJECT_ROW` admits the COO to the row for the `EXECUTING` flip.
 - **Handoff:** `dep_stage: EXECUTING`, flipped by the COO in the issuance commit, so the guards that key on the stage
   arm with the act that starts it.
+- ⛔ **A SEAM PROVED TO DELIVER ITS INPUT IS NOT A SEAM PROVED TO HAVE AN EFFECT. A criterion NAMES THE OUTCOME, never only the
+  MECHANISM.** "The value reaches the function" and "the value changes what the function decides" are DIFFERENT CLAIMS, and an
+  arm that proves the first reads exactly like an arm that proves the second. Every criterion asserting a control, a fence, a
+  flag or a threshold states WHAT MUST DIFFER when it is engaged, and proves that difference against the SAME run with the
+  control disengaged -- the arm's own positive control, in one harness. MEASURED 2026-09-10, `ETFS_GUARDRAIL` W4-S6: a forcing
+  spec was proved to REACH the classifier and the schedule proved unable to reach it -- both true, both still true -- and the
+  ladder then RE-CLASSIFIED from real S3 and discarded it entirely, so the run PUBLISHED where the outcome required a refusal.
+  The cut had specified a MECHANISM and never an OUTCOME. Third instance from one seat's cuts in one night (W4-S4, W4-S5, W4-S6).
+  ⛔ **A POSITIVE CONTROL IS NOT A DIFFERENCE CONTROL AND DOES NOT DISCHARGE THIS.** A probe that fires so a zero is not a
+  dead instrument bounds UNDER-FIRING only; it never shows what CHANGES when the control is engaged. Measured on the first
+  audit run against this clause (`2.0.0_SA_COO~A`, its OWN just-drained round): 6 of 20 criteria carry a control arm and
+  only **2 of 16 mechanical criteria carry THIS shape** -- the other four are positive controls. **The adoption cost is
+  therefore real, not bookkeeping**, and a seat reporting conformance states which of the two it counted.
+  COST: one extra arm, run in the same harness with the flag flipped. NON-APPLICATION: a criterion whose subject IS the
+  delivery (a transport, a grant, a route), where arrival is the outcome; and **A CENSUS, where the outcome IS THE COUNT
+  and the DENOMINATOR is the discipline** -- `2.0.0_SA_COO~A`'s argument, adopted in its terms: an arm reading 55 of 55
+  families each with a reason, or facts-per-key with its zero printed, is not proving a control works and owes no flipped
+  twin.
+  ⛔ **AND IT DOES NOT BIND RETROACTIVELY.** A round is graded against the law in force AT ITS CUT (the v3.0 transition
+  rule: an open round finishes under its cut task orders). A criterion that predates the clause is not a defect and is
+  never re-cut for it; where an audit shows which criteria carry the arm, **the L9 and L10 grade WITH that audit in hand
+  and RECORD THE BOUNDARY IN THE GRADE** rather than re-opening. A round's CLAIM can be sound on paired evidence held
+  elsewhere in the same order while the CRITERION does not itself carry it -- that distinction is stated in the grade, and
+  stating it is what makes it weighable.
+- ⛔ **THE REFUSAL CLAUSE -- A CRITERION IS SHAPED SO THAT REFUSING IT IS CHEAPER THAN RESCUING IT, AND THE FACE SAYS SO.**
+  Every face instructs its assignee to REFUSE a criterion it cannot satisfy as written and to report the refusal with its
+  measurement, never to repair the criterion, widen it, or satisfy it by a route the cut did not name. **A worker that edits
+  the issuance half so its own proof validates certifies an alignment the cut never declared**, which is why the refusal is an
+  instruction and not a permission. **This is the only control that has ever caught a defect in a cut on this estate**, and the
+  cut's author is structurally unable to be that control: an issuer checking its own criteria is reading them to agree with them.
+  MEASURED 2026-09-10, one night, four seats, every instance surfaced by the assignee and none by the author: `2.0.0_SA_COO`
+  three ticks running (W2-S2; W1-S30/S31; W5-S1/S3), each an expectation named without reading the code path that would have to
+  produce it; `2.0.0_SA_COO~A` four (a validator path and a card-schema version that do not exist, a premise labelled MEASURED
+  that came from a contract document rather than a run, a count carried from an earlier vintage, a comparator force-fitted into
+  a population it sits outside); a worker that REFUSED TO FIRE rather than spend its order's one permitted run, whose two
+  measurements showed the run could not have recorded its own forcing and WOULD have published served keys and mailed a
+  recipient a standing Andrew-direct protects; and a worker that held its own face in its grant and refused to add the criterion
+  tags that would have let it close. COST: none -- the clause is text on a face. NON-APPLICATION: none at L6.
+  ⛔ **AND THE GAP THIS CLAUSE DOES NOT CLOSE, named because it is where the same defects keep landing unseen: AN ACCEPTANCE
+  CRITERION HAS NO ASSIGNEE.** An `ACCEPT` at L4 and a `DONE WHEN` at L2 are read next by the GRADER, who reads them to apply
+  them rather than to refuse them, so the refusal path that catches a task order's defects does not exist for the artifact that
+  decides whether the task order's work COUNTS. `1.0.0_SA_CTO` committed three instances of the same hand-scoped-domain family
+  in one night and TWO WERE IN ACCEPTS -- one would have graded an outcome REALIZED on a live violation, and one scoped an
+  estate-wide gate's acceptance to a single project. Until a mechanism exists, the L10 reads every ACCEPT it grades against
+  ONCE MORE UNSCOPED before the grade, and prints the denominator it used.
 
 ### L7 — Execution
 
@@ -189,8 +249,10 @@ travels to the worker.
 - **The worker.** It starts with fresh context: the worker face of its task order, the standing law, and nothing else.
   It runs as the worker agent type, whose tools are the shell, the file tools and the search tools and nothing else:
   no broker tool, so it cannot register, send or receive; no subagent tool, so it cannot nest; no skill, gateway or
-  browser tool. Its model is the cheaper one unless the task order's preflight marks the cell hard and the COO
-  overrides per task order. It exports its serial in every shell call and commits under it through `safe-commit.sh`
+  browser tool. Its model is Opus at high effort, declared by the worker agent type's own definition
+  (`.claude/agents/worker.md`, Andrew-direct 2026-09-09 ~21:5xZ at the `2.0.0_SA_COO~A` terminal: "All spawned workers for
+  /canonical-flow should be subagents in the same session box using Opus with effort high"), never chosen per task order
+  and never left to a per-spawn override. It exports its serial in every shell call and commits under it through `safe-commit.sh`
   with that serial as author; the serial reads as Tier-2 to every guard and is registered nowhere. Its write surface
   is its task order: no lane enumerates a worker, and the lane resolver admits it to exactly the paths its order
   names in `<paths>` while that order is non-terminal at HEAD, to `deliverables/<serial>/` by convention, and to
@@ -199,6 +261,18 @@ travels to the worker.
   that the worktree carries the tree the order names, and one that does not is a `BLOCKING` row and a stop, never a
   reconstruction. Every invocation it runs is bounded, and a timeout is the recorded output. A capability it lacks
   that a task order needs is a surprise row, never a tool request.
+- **A worker can die at ANY instruction boundary, so the ONLY residue it cannot take with it is what is COMMITTED or what
+  is TRUE IN THE WORLD.** Two consequences, both procedure and neither judgement. (1) **ORDERING on any act that changes the
+  world** (a deploy, an image act, a served write): open the change-management entry, ACT, then CLOSE THE ENTRY AND COMMIT IT
+  BEFORE taking the reads that grade the act -- a death after the act and before the commit leaves the world changed and the
+  record silent, which is the expensive shape. (2) **THE ISSUER'S OBLIGATION on a mid-act death:** one sweep of the ARTIFACT
+  PLANE with a DIFFERENT instrument than the dead seat's, taken BEFORE any decision to finish or roll back -- an entry a dead
+  worker left CLOSED is a self-report exactly as an entry a dead device left OPEN is (CLAUDE.md NEVER-2, read in both
+  directions). The reads that remain after such a death are MEASUREMENT on a plane that already exists: the issuer takes them
+  at its own seat under the dead-seat residue rule and the CVO validates whoever took them; the order does not wait for the
+  slot to come back. Measured instance: NFRA_CLDGRPH round 6, row W2-S67/S95 -- a worker died on an API rate limit seconds
+  after a seven-family digest re-pin; the issuer read all seven families live with `describe-task-definition` (7 of 7 on the
+  new digest, 0 of 7 on any tag) and no rollback was owed.
 - **Input:** the worker face of the task order. **Output:** the deliverables and the proof-of-spec instance at
   `org/missions/D<n>/<MACRO>/<CODE>/deliverables/<serial>/<TO>.proof_of_spec.json`, one acceptance row per criterion
   carrying the invocation the task order named and the output it produced, and for a judgment criterion the output
@@ -460,3 +534,10 @@ verdict, read against the last round under the prior text on the same instrument
 | 3.4 | 2026-09-04 | `4.0.0_SA_CRO`'s check-out of the drain refuser's deciding arm (message 94094): a real cross-document collision at the merged index did not land, rc 1, but by the pre-commit hook and not by the script -- `safe-merge.sh` calls the row gate with no paths, grades nothing, and exits with the merge open; the green arm merges correctly | section 4's drain clause states the exercised state: the script's own abort has not passed, the hook is what refuses today, the merge is left open, and the clause leaves this section when the script grades the merged index's changed paths and the arm passes at check-out |
 | 3.5 | 2026-09-04 | `2.0.0_SA_COO`'s fix of the drain refuser @747a0b23c3 (the gate fed the merged index's staged paths; an empty set refused; the merge aborted on refusal; two regression arms) and `4.0.0_SA_CRO`'s check-out of its deciding arm on its own instrument (message 94105): the collision refused by the script's own grade and aborted with no merge left open, the non-colliding branch merged | the drain clause leaves section 4: the L7 drain merges through `safe-merge.sh`, which grades the merged index and aborts on a refusal; section 4 holds one clause, the step log's L7 read from git |
 | 3.6 | 2026-09-04 | `3.0.0_SA_CVO`'s constitutional review of v3.2-v3.5 (message 94134, record `org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_CONSTITUTIONAL_REVIEW_SPINE_v3.2-v3.5_20260904T0740Z.md` @5c965cfcdb; ACCEPT all four; finding F1: the narrowed L8 guard and the same-turn broadcast law contradicted at the CVO's terminal); the gate's owner's ruling and build, `org/mcp/cvo_send_guard.py` with both callers @8623a92a70 | L8's silence and its guard take one exception, the law's own carrier: the CVO's same-turn broadcast of an Andrew-direct record, admitted by its marker and the record's path under the CVO's own home, either alone still refused; section 2 says the broadcast is not a message of the round |
+| 3.7 | 2026-09-09 | Andrew-direct ~21:5xZ at the `2.0.0_SA_COO~A` terminal (workers on Opus at high effort; "I'm ok with enumerating opus for worker agents"), the agent definition edit `.claude/agents/worker.md` @65d7815288 and its broadcast (message 94731); `1.0.0_SA_CTO` moves the two spine clauses the edit contradicted | L7: the worker's model is Opus at high effort by the agent type's definition, never per task order and never a per-spawn override (was "the cheaper one unless the preflight marks the cell hard"); L6 tool clause: the spawn uses a hand-cut worktree off CLOUD with its path in the prompt, never the harness's isolation option (which bases on origin/main with no `org/` or `.tools/` -- the trap the first exercised spawn hit for 51 minutes). No step, owner or gate changes. |
+| 3.8 | 2026-09-10 | `1.0.0_SA_CTO`'s NFRA_COMPEFFICACY round-7 L10 ruling R-8 (slug `3.0.0_SA_CVO` 94834, row S40), with its two siblings of the same night (`NFRA_OUTSET`-S29, `ETFS_GUARDRAIL` W2-S7) | L6 cut discipline gains one clause: **an accept that names an INSTRUMENT names its COVERAGE fact, an accept that names a HARNESS names its GRAIN flag (which vintage it scores), and an accept that compares a STORED BASELINE names the ENVIRONMENT the baseline was captured in** (the tree, the ranker mode, the rendering of every hashed asset). Measured cause: three criteria in one night could neither pass nor fail, and a fourth read a FALSE RED because its baseline was captured in a linked worktree whose CRLF-rendered model asset silently put the ranker in lexical fallback. No step, owner or gate changes. |
+| 3.9 | 2026-09-10 | `2.0.0_SA_COO~A`'s row NFRA_CLDGRPH-S95 (message 94841), taken by `1.0.0_SA_CTO` at 94844 | L7 gains the worker-death clause: a worker can die at any instruction boundary, so a world-changing act ORDERS itself open-entry / act / close-and-COMMIT-the-entry / then read, and the ISSUER's obligation on a mid-act death is one artifact-plane sweep with a DIFFERENT instrument than the dead seat's BEFORE deciding to finish or roll back (an entry a dead worker left CLOSED is a self-report, the mirror of NEVER-2's open-entry clause); the remaining reads are measurement the issuer may take at its own seat with the CVO validating. No step, owner or gate changes. |
+| 3.10 | 2026-09-10 | Andrew-direct ~03:0xZ at the `1.0.0_SA_CTO` terminal (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_030xZ_NO_FWD_IS_A_WAIT.md`) | L2 gains **NO FWD IS A WAIT**: every outcome provable by an act a seat can take on demand; one whose only proof is an event nobody controls is re-cut so its mechanism is driven deliberately, the organic case kept as the negative arm; an essential wait is expressly qualified with its reason and his word; an outcome already written as a wait is SUPERSEDED at the next unused id with its text kept. The L2 half of the ~21:4xZ manual-trigger rule that binds accepts at L4/L6. No step, owner or gate changes. |
+| 3.11 | 2026-09-10 | four seats converging in one night, none of it previously written: `2.0.0_SA_COO` 94998 and 95007, `2.0.0_SA_COO~A` 95015, and two worker refusals (EG-s-21 not fired; EG-s-22's assignee refusing to tag its own face). Recorded by `1.0.0_SA_CTO` at `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_20260910T054xZ_THE_REFUSAL_CLAUSE.md` | L6 gains **THE REFUSAL CLAUSE**: a criterion is shaped so refusing it is cheaper than rescuing it and the face says so; the assignee refuses and reports with its measurement, never repairs, widens or re-routes; a worker editing the issuance half so its own proof validates certifies an alignment the cut never declared. It is the only control that has caught a defect in a cut on this estate, and the cut's author cannot be that control. The clause also NAMES ITS OWN GAP -- an acceptance criterion has no assignee, so the refusal path does not protect the artifact that decides whether work counts -- and binds the L10 to re-read every ACCEPT once more UNSCOPED, with the denominator printed, until a mechanism exists. No step, owner or gate changes. |
+| 3.12 | 2026-09-10 | `0.9.0_WK_ETFS_GUARDRAIL~4`'s third refusal to fire and `2.0.0_SA_COO`'s 95058, ruled by `1.0.0_SA_CTO` at R-EG-6 | L6 gains **A SEAM PROVED TO DELIVER ITS INPUT IS NOT A SEAM PROVED TO HAVE AN EFFECT**: a criterion names the OUTCOME, never only the mechanism, and proves what must DIFFER when the control is engaged against the same run with it disengaged. Found when a forcing spec proved to reach the classifier was then discarded by a re-classification, publishing where a refusal was required. No step, owner or gate changes. |
+| 3.13 | 2026-09-10 | `2.0.0_SA_COO~A`'s audit of its OWN just-drained round against v3.12 (95066), an hour after the clause landed and the round closed | v3.12 gains three qualifiers, all from that audit: a POSITIVE control is not a DIFFERENCE control and does not discharge the clause (measured 2 of 16 mechanical criteria carry the real shape, not the 6 of 20 a loose count gives, so the adoption cost is real); a CENSUS is a NON-APPLICATION because its outcome IS its count; and the clause DOES NOT BIND RETROACTIVELY -- a round is graded against the law in force at its cut, the L9 and L10 grade with any audit in hand and RECORD THE BOUNDARY IN THE GRADE, and no drained round is re-cut for a later law. No step, owner or gate changes. |

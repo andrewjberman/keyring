@@ -311,15 +311,29 @@ function Invoke-DriverPass {
         $ctoUnread = @(Get-ChildItem -LiteralPath $ctoInbox -File -Filter '*.md')
     }
 
+    # THE ALERT ROSTER IS AN EXPECTATION, NOT AN OBSERVATION. A seat stays here while somebody expects it
+    # to be running, and its ABSENCE is then an outage worth reporting. It is deliberately NOT derived from
+    # live registration: a seat that goes dark must not vanish from the roster, because that is precisely
+    # how an eight-day outage stayed invisible (see the retirement note below).
+    #
+    # RETIRED 2026-09-10 by 1.0.0_SA_CTO, on the charter issuer 1.0.0_SA_CTO~Y's answer relayed at 95289:
+    # Phase 2 is DONE in canonical 02 and its execution round is RETIRED, NOT PAUSED. The continuous-run
+    # expectation for all six producer lanes is WITHDRAWN; 1.2.0_SA_A0 explicitly released; 1.1.0_SA_KJ's
+    # P3-TO-05-PREQ-02 landed and closed. No spawn was requested and none was performed.
+    #   1.1.0_SA_KJ~Y  1.2.0_SA_A0~Y  1.3.0_SA_ADP~Y  1.4.0_SA_GATE~Y  1.5.0_SA_FI~Y  1.6.0_SA_TRN~Y
+    #
+    # ⛔ REMOVING A LANE FROM THIS ROSTER IS NOT DELETING THE SEAT. Charters, history, deliverables and
+    # worktrees are PRESERVED by the issuer's explicit instruction; only the running EXPECTATION is gone.
+    # ⛔ AND THIS IS NOT "DROP A ROW BECAUSE IT IS QUIET" -- that is the failure mode the paragraph above
+    # guards. These rows are retired because their EXPECTATION WAS WITHDRAWN BY THE SEAT THAT HOLDS IT.
+    # The two acts look identical in a diff and are opposites in kind; a future edit here must say which.
+    #
+    # WHY THEY WERE MEASURED AT ALL: until b2a9f0b255 one incident flag suppressed the red alert for the
+    # WHOLE roster, hiding six dark seats -- four of which stopped at the SAME SECOND, 2026-09-02T12:13:56Z,
+    # by the driver's own pass log over 1,179 passes. Scoping the suppression is what surfaced them.
     $seats = @(
         '1.0.0_SA_CTO~Y',
-        '4.0.0_SA_CRO~Y',
-        '1.1.0_SA_KJ~Y',
-        '1.2.0_SA_A0~Y',
-        '1.3.0_SA_ADP~Y',
-        '1.4.0_SA_GATE~Y',
-        '1.5.0_SA_FI~Y',
-        '1.6.0_SA_TRN~Y'
+        '4.0.0_SA_CRO~Y'
     )
     $seatStates = @($seats | ForEach-Object { Get-SeatStatus -Root $Root -Serial $_ })
     $seatSummary = ($seatStates | ForEach-Object { "$($_.Serial)=$($_.State)/$($_.Exit)" }) -join ', '
@@ -353,6 +367,9 @@ function Invoke-DriverPass {
         Write-DriverLog -Path $LogPath -Message "cto_unread_names=$((($ctoUnread | Sort-Object Name | Select-Object -ExpandProperty Name) -join ', '))"
     }
     $p2To05Resolved = $croRulingPresent -and $repairPassRuling -and $p2To05Landed
+    # The ONE seat the P2-TO-05 incident concerns. Named ONCE so a suppression cannot silently widen to the
+    # whole roster again: every use of $p2To05Resolved as a suppressor must AND against this serial.
+    $P2To05IncidentSeat = '4.0.0_SA_CRO~Y'
 
     $nowEpoch = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
     $lastNudgeState = $state['last_nudge']
@@ -398,7 +415,7 @@ Measured state:
 
 Expected next motion: 4.0.0_SA_CRO~Y materializes and indexes the bounded P2-TO-05 post-landing PASS verdict so 02check can advance. Downstream issuance remains held until the indexed verdict is visible.
 "@
-            Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO~Y' -Subject 'DRIVER NUDGE P2-TO-05 PASS verdict index pending' -Body $body -LogPath $LogPath
+            Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO' -Subject 'DRIVER NUDGE P2-TO-05 PASS verdict index pending' -Body $body -LogPath $LogPath
             $lastNudgeState[$key] = $nowEpoch
         }
     }
@@ -418,7 +435,7 @@ Measured state:
 
 Expected next motion: 4.0.0_SA_CRO~Y issues the bounded post-landing validation ruling for P2-TO-05. Downstream issuance remains held until that ruling.
 "@
-            Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO~Y' -Subject 'DRIVER NUDGE P2-TO-05 post-landing validation pending' -Body $body -LogPath $LogPath
+            Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO' -Subject 'DRIVER NUDGE P2-TO-05 post-landing validation pending' -Body $body -LogPath $LogPath
             $lastNudgeState[$key] = $nowEpoch
         }
     }
@@ -507,7 +524,7 @@ Measured state:
 
 Expected next motion: 4.0.0_SA_CRO~Y issues the bounded PASS/FAIL/REPAIR ruling for FI repair commit $($fiGit.Head). CTO holds landing/downstream issuance until that ruling.
 "@
-            Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO~Y' -Subject 'DRIVER NUDGE P2-TO-05 FI repair certification pending' -Body $body -LogPath $LogPath
+            Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO' -Subject 'DRIVER NUDGE P2-TO-05 FI repair certification pending' -Body $body -LogPath $LogPath
             $lastNudgeState[$key] = $nowEpoch
         }
     }
@@ -543,26 +560,50 @@ Measured state:
 
 Expected next motion: 4.0.0_SA_CRO~Y issues the bounded P2-TO-05 handback ruling. CTO holds landing/downstream issuance until that ruling.
 "@
-            Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO~Y' -Subject $subject -Body $body -LogPath $LogPath
+            Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO' -Subject $subject -Body $body -LogPath $LogPath
             $lastNudgeState[$key] = $nowEpoch
         }
     }
 
+    # RED-SEAT ACCOUNTING (repaired 2026-09-10 by 1.0.0_SA_CTO on 3.0.0_SA_CVO's finding, relayed 95239).
+    # THE DEFECT: `if ($p2To05Resolved)` suppressed the red alert for EVERY seat in the roster, so ONE
+    # incident's completion flag silenced the whole population -- seven RED seats suppressed in the observed
+    # window, SIX of them with zero unread and nothing to do with P2-TO-05. An alerter that goes quiet about
+    # seats the incident never touched is not suppressing noise; it is blind, and it reads identical to healthy.
+    # THE FIX IS THE SHAPE THIS FILE ALREADY USES CORRECTLY at the unread block below: scope the suppression
+    # to the EXACT INCIDENT SEAT. The same flag was written scoped there and unscoped here, in one file.
+    # COUNTS ARE EMITTED so a suppressed population can never again be invisible in the log.
+    $redSeats = @($seatStates | Where-Object { $_.State -ne 'GREEN' })
+    $suppressedRed = 0
+    $alertableRed = 0
     foreach ($seatState in $seatStates) {
         if ($seatState.State -ne 'GREEN') {
-            if ($p2To05Resolved) {
-                Write-DriverLog -Path $LogPath -Message "suppress red-seat alert serial=$($seatState.Serial) reason=p2_to_05_resolved_logged_only"
+            if ($p2To05Resolved -and $seatState.Serial -eq $P2To05IncidentSeat) {
+                $suppressedRed++
+                Write-DriverLog -Path $LogPath -Message "suppress red-seat alert serial=$($seatState.Serial) reason=p2_to_05_resolved_incident_seat_only"
                 continue
             }
+            $alertableRed++
             $key = "SEAT-RED-$($seatState.Serial)"
             $lastEpoch = if ($lastNudgeState.ContainsKey($key)) { [int64]$lastNudgeState[$key] } else { 0 }
             if (($nowEpoch - $lastEpoch) -ge ($NudgeMinutes * 60)) {
                 $body = "DRIVER ALERT: codex-seat-status for $($seatState.Serial) is $($seatState.State) exit $($seatState.Exit). First line: $($seatState.FirstLine)"
-                Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO~Y' -Subject "DRIVER ALERT seat not GREEN $($seatState.Serial)" -Body $body -LogPath $LogPath
+                Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO' -Subject "DRIVER ALERT seat not GREEN $($seatState.Serial)" -Body $body -LogPath $LogPath
                 $lastNudgeState[$key] = $nowEpoch
             }
         }
     }
+    # THE DENOMINATOR, emitted on every COMPLETED pass -- including when every count is zero. A suppressed
+    # population that leaves no number behind is exactly how seven red seats read as a quiet pass.
+    # ⛔ IT IS *NOT* "EVERY PASS", AND MY FIRST COMMENT HERE SAID SO WRONGLY (corrected on 3.0.0_SA_CVO's
+    # qualification, which used my own restart incident as its evidence). This script runs under
+    # $ErrorActionPreference = 'Stop', so a TERMINATING error earlier in the pass -- a refused codex-send is
+    # the measured case, when OPAL_AGENT_SERIAL disagrees with -DriverSerial -- aborts before this line.
+    # THEREFORE: THE ABSENCE OF THIS LINE DOES NOT DISCRIMINATE OLD CODE FROM AN ABORTED NEW-CODE PASS.
+    # Anyone checking whether this repair is live must read the SUPPRESS reason string too
+    # (`p2_to_05_resolved_incident_seat_only` = repaired; `p2_to_05_resolved_logged_only` = old code),
+    # because that line is emitted BEFORE the sends and survives an abort that kills this one.
+    Write-DriverLog -Path $LogPath -Message "red-seat accounting: roster=$($seatStates.Count) red=$($redSeats.Count) suppressed=$suppressedRed alertable=$alertableRed incident_seat=$P2To05IncidentSeat p2_to_05_resolved=$p2To05Resolved"
 
     foreach ($unreadState in $seatUnreadStates) {
         if ($unreadState.Serial -eq $Driver -or $unreadState.Count -le 0) {
@@ -571,7 +612,7 @@ Expected next motion: 4.0.0_SA_CRO~Y issues the bounded P2-TO-05 handback ruling
         if ($unreadState.OldestAgeSeconds -lt ($NudgeMinutes * 60)) {
             continue
         }
-        if ($p2To05Resolved -and $unreadState.Serial -eq '4.0.0_SA_CRO~Y') {
+        if ($p2To05Resolved -and $unreadState.Serial -eq $P2To05IncidentSeat) {
             Write-DriverLog -Path $LogPath -Message "suppress unread-inbox nudge serial=$($unreadState.Serial) count=$($unreadState.Count) oldest=$($unreadState.OldestAgeSeconds)s reason=p2_to_05_resolved_cro_green_path"
             continue
         }

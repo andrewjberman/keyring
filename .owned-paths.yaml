@@ -521,6 +521,14 @@ lanes:
       - 2.0.0_SA_COO
     description: "Workspace-wide CRO home (org/tier1_exec/4.0.0_SA_CRO/**) -- Chief Research Officer, Tier-1 exec established Andrew-direct 2026-07-22 ('Let's make you an exec agent. make your serial 4.0.0_SA_CRO (chief research officer), that way you can work freely as an exec'). Mandate: competitive recon + external research + translation into buildable specs; owns the append-only RECON_REGISTER.md. CTO + COO retain write access to author gate-review reports into the CRO home, mirroring CVO_WORKSPACE. Added 2026-07-22 by 0.0.0_AB_MSTR as GRANTOR -- the CRO is the GRANTEE and did not commit its own grant (Andrew SoD ruling, carried on this file's own ANY_EXEC_OR_AE lane). Exact CVO_WORKSPACE precedent: a new exec's home must be enumerated or safe-commit returns UNDEFINED. LD-0331. >> 2026-08-07: ADDED 4.0.0_SA_CRO~A by 1.0.0_SA_CTO as GRANTOR (CRO is grantee; SoD held -- the base CTO seat, precedent 1.0.0_SA_CTO~D @fc830fe26). Andrew-direct at the base CTO terminal: a dedicated ~A lane to audit the ATOM_DECOMP corpus. A TILDE LANE IS ENUMERATED SEPARATELY -- without this line the new seat cannot write its OWN session log or deliverable, which presents as a broken agent rather than a missing grant; this file already documents that identical gap for DE~B, RD~B, RD~C and DE~A, and 4.0.0_SA_CRO~SWEEP is likewise enumerated on five lanes. Verified-not-assumed by 2.0.0_SA_COO before spawn. Scope note, deliberate: this grants the lane, not a sub-path -- ~A can write anywhere in the CRO home including base's charter/prompt. Narrower would need a NEW lane, and the house pattern is tilde-onto-existing-lane; the wider read is accepted rather than invented around."
 
+  KRN_WORKSPACE:
+    permitted_agents:
+      - 1.7.0_SA_KRN
+      - 1.0.0_SA_CTO~Y
+      - 3.0.0_SA_CVO~Y
+      - 0.0.0_AB_MSTR
+    description: "Home for 1.7.0_SA_KRN (org/tier1_exec/1.7.0_SA_KRN/**) -- C3 boundary / deterministic-kernel producer seat on the Y fabric, live lane 1.7.0_SA_KRN~Y. Minted 2026-09-10 by 0.0.0_AB_MSTR as GRANTOR on 1.0.0_SA_CTO~Y's concrete provisioning request (msg 95303), under Andrew's standing grant the same day ('yes you can give them their agents (1.0.0_SA_CTO~Y)') and his direct follow-up ('I need the agent for 1.0.0_SA_CTO~Y, you never minted it for them'). THE GRANTEE DID NOT COMMIT ITS OWN GRANT -- Andrew's SoD ruling, carried on this file's own ANY_EXEC_OR_AE lane; exact CRO_WORKSPACE precedent where MSTR was likewise grantor. 1.0.0_SA_CTO~Y is the issuer and integration owner and 3.0.0_SA_CVO~Y the validator, both enumerated so they can author task orders and review records into the home -- mirroring CRO_WORKSPACE, where CTO+COO retain write access for gate-review reports. The base serial alone covers its tilde lanes (this file's agent side strips one tilde, header ~line 43), so ~Y needs no separate member. ⛔ NOT A REVIVAL of the six Phase 2 lanes (KJ, A0, ADP, GATE, FI, TRN) retired by 1.0.0_SA_CTO~Y the same day; the issuer asked explicitly for a fresh serial and their charters stay untouched. ⛔ AND THE HOME RULE IS PART OF MINTING, NOT A FOLLOW-UP: the seat's runtime came up fine without it because codex-seat-load resolves off the filesystem, but the commit gate refused its scaffolding with UNDEFINED -- a seat that can run and cannot commit is a seat whose output dies with its window. LD-0331's lesson restated: a new exec's home must be ENUMERATED or safe-commit returns UNDEFINED."
+
   RCG_OPERATOR:
     permitted_agents:
       - 4.0.0_SA_CRO
@@ -1129,6 +1137,23 @@ paths:
   "org/tier1_exec/2.0.0_SA_COO~*/**":
     lane: BASE_EXEC
     note: "COO tilde-lane homes — same lane as the base COO home above. See the tilde-lane block."
+
+  # 1.7.0_SA_KRN — minted 2026-09-10 by 0.0.0_AB_MSTR on 1.0.0_SA_CTO~Y's provisioning
+  # request (msg 95303), under Andrew's standing grant the same day: "yes you can give them
+  # their agents (1.0.0_SA_CTO~Y)". C3 boundary / deterministic-kernel producer lane on the
+  # Y fabric; issuer and integration owner 1.0.0_SA_CTO~Y, validation 3.0.0_SA_CVO~Y.
+  # ⛔ THE HOME RULE IS PART OF MINTING A SEAT, not an afterthought. The seat's runtime came
+  # up fine without it — codex-seat-load resolves off the FILESYSTEM — but the commit gate
+  # refused the scaffolding with "UNDEFINED (no matching path rule)". Directory on disk and
+  # ownership in this file are two different acts and only the second makes the seat's work
+  # committable. Both belong in the same turn as the spawn.
+  "org/tier1_exec/1.7.0_SA_KRN/**":
+    lane: KRN_WORKSPACE
+    note: "1.7.0_SA_KRN home — C3/kernel producer seat. Minted 2026-09-10; see the block above."
+
+  "org/tier1_exec/1.7.0_SA_KRN~*/**":
+    lane: KRN_WORKSPACE
+    note: "1.7.0_SA_KRN tilde-lane homes (~Y is the live lane at mint) — same lane as its base."
 
   "org/tier1_exec/1.1.0_SA_CTO/**":
     lane: COMP_LEARNS

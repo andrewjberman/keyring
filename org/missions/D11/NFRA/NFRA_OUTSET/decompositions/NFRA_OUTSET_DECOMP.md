@@ -1,5 +1,7 @@
 # NFRA_OUTSET — DECOMPOSITION (L5)
 
+**v0.8** (2026-09-10 ~01:1xZ, `2.0.0_SA_COO`) -- the L5 act on PRD **v0.9** @`cc820df306` (the CTO's premise correction on row S34 after the manual served day wrote the protected 09-09 keys and rolled back by content): NO cell added or removed; s.31 records the corrected premise (a report is dated by the 09:00 America/New_York schedule mark, never the calendar day, so no instant before 13:00Z yields 09-10 keys) and the re-issue it implies -- `OS-s-24` re-cut in place @`584003bcae` to the versioned-run shape (the 00:29:57Z run's versions are the acceptance artifacts by VersionId; the pins restored as latest by sha256 stand as the served record; the 13:00Z fire supplies the carrier's `scheduled` reading as confirmation), `OS-s-25` arm (e) re-pointed; the CTO's half re-issued as message 94820 (superseding 94764).
+**v0.7** (2026-09-09 ~22:2xZ, `2.0.0_SA_COO`) — the L5 act on PRD **v0.7** @`0d44fdd1ee` amended to **v0.8** @`dc6a33c3e3` (the CTO’s manual-trigger addendum on Andrew’s ~21:4xZ no-waiting word, amended on this seat’s four cut-shaping facts): `OS-s-24` (the manual served day), `OS-s-25` (the drift half on demand), `OS-s-26` (the trigger token) added; the five open accepts re-pointed to read on `OS-s-24`’s run. Round 3’s v0.7 sections are §27–§30 below; §0–§26 are LEFT UNEDITED.
 **v0.6** (2026-09-09 ~15:5xZ, `2.0.0_SA_COO`) — the L5 act on PRD **v0.6** @`be662c311f` (the CTO’s mid-round addendum on the S24 ruling @`5f39f3a512`): `OS-s-23` added, the group-B publish as a derived second artifact on the OS-s-21 publisher. Round 3’s v0.6 sections are §23–§26 below; §0–§22 are LEFT UNEDITED.
 
 **v0.5** (2026-09-09 ~15:3xZ, `2.0.0_SA_COO`) — the L5 act on PRD **v0.5** @`1ac8679844` (the CTO’s mid-round addendum on the S23 ruling @`98722f9355`): `OS-s-21` re-worded to the ruling (its face already re-cut @`2e1d755943`), `OS-s-22` added. Round 3’s addendum sections are §19–§22 below; §0–§18 are LEFT UNEDITED.
@@ -432,3 +434,220 @@ fanout: 1 of 1 chains, cap 8, reason: OS-s-23 is a second artifact on the publis
   search order of `OUTSET_GROUP_B_SOURCES` (resource grain first) stays.
 
 — `2.0.0_SA_COO`, L5 round 3 addendum v0.6
+
+## 27. ROUND 3, ADDENDUM v0.7 — the manual served day, cut mid-round on Andrew's no-waiting word
+
+**Input:** PRD **v0.7** @`0d44fdd1ee` amended to **v0.8** @`dc6a33c3e3` (`1.0.0_SA_CTO`, on Andrew's ~21:4xZ word at the CTO
+terminal -- *"we need to not be 'waiting' on anything, anything that we'd be waiting for needs a manual trigger of some
+kind depending on the test type"* -- and on this seat's four cut-shaping facts 94739, all four adopted 94751). **This
+document invents nothing.** The manual-trigger rule's five conditions (same target; real plane; told apart on the
+artifact; the schedule's firing from history; the next fire is confirmation) bind every accept in round 3 from this
+addendum on. Three cells:
+
+| cell | outcome | verb | lane | depends_on | why it exists |
+|---|---|---|---|---|---|
+| `OS-s-26` | FWD-3 (rule (3)'s carrier) | build | CloudOps (the orchestrator, the two exact-key grants) with CloudComp's half (the runner's stamp) seated on the same CloudOps seat by owned-paths | -- | THE TRIGGER TOKEN. The served report's `run_bundle` carries no trigger or run id and the orchestrator ignores its event, so a manual run and a scheduled run are told apart by nothing but the clock. The orchestrator writes `config/last-trigger.json` `{trigger, run_id, invoked_at}` before `StartInstances`; the runner stamps `run_bundle.trigger` / `run_bundle.run_id` from it; domain `{scheduled, manual, UNKNOWN}`, absent or stale reads `UNKNOWN`. FIRST of the three. |
+| `OS-s-25` | FWD-3 | verify | CloudOps~W (the task) | `OS-s-21` (built), `OS-s-22` (served) | THE DRIFT HALF ON DEMAND. The installed task run by its own action (`Start-ScheduledTask`), the artifact under the scoped role; rule (4) for a never-fired task = the configuration read + its first scheduled run recorded as history. SECOND: before OS-s-24 so ONE manual day reads the device row. |
+| `OS-s-24` | FWD-2, FWD-3, FWD-4, FWD-7 | verify | CloudOps (host + publisher; the orchestrator invoked with the rule's own payload) | `OS-s-26`, `OS-s-25`, `OS-s-19`, `OS-s-20`, `OS-s-21`, `OS-s-22`, `OS-s-23` | THE MANUAL SERVED DAY, AFTER 00:00Z on 09-10 keys (nothing overwritten; the 09-09 pins protected in the NEVER-2 entry; never-widen sign-off CTO + COO on the entry): the freshness build by hand (same project), the orchestrator invoked with the rule's own payload, the report on the same served keys with `trigger=manual`; every round-3 accept read on that run before 13:00Z; the 13:00Z fire confirms. THIRD. |
+
+**Denominator:** PRD s.7 + s.9 manifest rows now 26 (`OS-s-1`..`OS-s-26`); decomposition cells 26; 0 either way. The
+five open accepts (`OS-s-19`, `OS-s-20`, `OS-s-21`, `OS-s-22`, `OS-s-23`) are RE-POINTED by amendment on their faces
+to read on `OS-s-24`'s run; their `<invocation>`/`<expect>` are unchanged, so the L6 gate's coverage read is unmoved.
+
+⛔ **THE FOUR FACTS THAT SHAPED THE CUT, measured by the assignee (94738) and adopted by the CTO (94751):** (1) no
+trigger field exists and no channel reaches the runner -- so the carrier is a CELL, not a line; (2) rule (4) is
+unsatisfiable by construction for a schedule created today (the 08:30 ET rule and the laptop task have ZERO
+rule-initiated executions), so its form for a never-fired schedule is the configuration read plus the first fire as
+history; (3) a manual run dated 09-09 would OVERWRITE the only artifact proving OS-s-20, so the day runs after 00:00Z
+on 09-10 keys; (4) rule (2) covers the served output the estate reads (`daily/`, `manifest/`) and not the `outset/`
+seam prefix -- today's five hand-written seam keys stand as the QA their faces said, not retroactive.
+
+## 28. THE CHAIN READ — round 3 with v0.7
+
+```
+  M (dependency-independent chains) = 1
+    chain F  7 cells   OS-s-26 -> OS-s-25 -> OS-s-24 -> { the five re-read accepts }
+      OS-s-26  BUILD tonight: orchestrator mapping + token, two exact-key grants under safe-apply, the runner's stamp
+               deployed under its own NEVER-2 entry (the OS-s-19 shape); no host replace
+      OS-s-25  RUN tonight, before OS-s-24: Start-ScheduledTask; configuration read as (4)'s form; artifact under the role
+      OS-s-24  RUN after 00:00Z 2026-09-10: entry OPEN with both sign-off halves -> start-build by hand -> the orchestrator
+               invoked with {"mode":"daily-run","trigger":"manual"} -> the report on 09-10 keys with trigger=manual ->
+               every accept of OS-s-19/20/21/22/23 read on it before 13:00Z -> the 13:00Z fire confirms
+
+  longest dependency depth = 3; the whole chain is one seat's, in sequence, tonight
+```
+
+**Nothing waits.** No accept in this project reads "pending the fire" after this addendum; 09-10 13:00Z and the task's
+first scheduled run at 09-10 11:30Z are CONFIRMATION, recorded if present, never a gate.
+
+## 29. SEATING AND FAN-OUT — one CloudOps seat, width 1, the CloudComp half seated by owned-paths
+
+**All three cells to `0.7.0_AE_CloudOps~W`** (continuity: it holds OS-s-20/21/22/23, built the publisher, the role and
+the task, and measured the four facts). The PRD names CloudComp for the runner's stamp in OS-s-26 and OS-s-24; the
+runner directory (`infra/aws/ec2/estate-report-runner/`) resolved PERMITTED for `0.7.0_AE_CloudOps~W` at this cut and
+it edited the runner today under OS-s-22, so the half is seated on the same seat rather than on a CloudComp seat that
+is not live; stated here, not silent. The seam module (`org/modules/heatmap/outset_seam.py`, lane NFRA_HEATMAP) read
+VIOLATION for that serial as the negative control and is not touched by any of the three.
+
+```
+fanout: 1 of 1 chains, cap 8, reason: three cells in strict sequence on one seat -- the token carrier must exist before
+        the manual day can be told apart on the artifact, and the drift run must precede the manual day so one day reads
+        the device row; a second seat would edit the same orchestrator, iam.tf and runner. Width 1, cut mid-round on
+        the addendum, executed tonight. Workers are not spawned (a Tier-2 seat holds the round, already open on v2).
+```
+
+## 30. WHAT THIS ADDENDUM'S DECOMPOSITION DOES NOT DECIDE
+
+- **The token's `run_id` format and how the runner reads its boot instant** (for the STALE test) -- the assignee's,
+  inside OS-s-26's accept; the domain `{scheduled, manual, UNKNOWN}` and "absent or stale reads UNKNOWN" are fixed.
+- **Whether the 08:30 ET CodeBuild rule takes a one-off `at()` or the configuration-read form** for rule (4) -- the
+  assignee's call under TO-OS-s-21's amendment, stated in its deliverable; either satisfies the rule as adopted.
+- **The CTO's half of the never-widen sign-off** -- asked in the drive read that carries this issuance; OS-s-24's step
+  (iii) does not start until the entry quotes both halves.
+- **A second manual served day** -- cut only if the first's device row fails (PRD v0.8 OS-s-25); not cut here.
+
+— `2.0.0_SA_COO`, L5 round 3 addendum v0.7
+
+## 31. THE PREMISE CORRECTED (v0.8, PRD v0.9 @`cc820df306`, row S34) -- what s.27-s.30 assumed and what the producer actually does
+
+s.27-s.30 and PRD v0.8 read "after 00:00Z 2026-09-10 every key the run writes is dated 2026-09-10". That conflated the CALENDAR DAY with the SCHEDULE MARK: `estate_report_runner.py:219-226` (`_window`) dates a report by the most recent 09:00 America/New_York mark (CVO condition C1 -- boundaries from the schedule, or consecutive windows overlap or gap), so every invoke before 13:00Z writes the CURRENT window's keys (2026-09-09) as NEW VERSIONS on the versioning-enabled bucket, and the first instant that yields 09-10 keys is the 13:00Z fire itself. `0.7.0_AE_CloudOps~W` found it by performing step (iii) exactly as cut (00:29:57Z), executed the pre-authorized rollback (00:57:56-00:58:03Z, verified by sha256 against the pins, the run's version retained) and filed S34 rather than re-running; the CTO ruled (94820/94823) and this seat executed (@`584003bcae`, disarm record S35).
+
+**The cells are unchanged** (`OS-s-24`, `OS-s-25`, `OS-s-26`; the four amended accepts). What changes is what `OS-s-24`'s accept READS: the run's own versions of the three 09-09 keys by VersionId (`trigger=manual` + `run_id`, O26-AC1's positive arm passed on a real run), the negative arm by bytes (each key's latest sha256-equal to its pin; 0 objects under 09-10), and the 13:0xZ fire's `scheduled` reading as confirmation under the manual-trigger rule's condition (5). NOT cut: a date-override parameter in the runner (a code path built to dodge a fire that fires today -- the shadow the rule forbids); serving the manual report (contradicts `OS-s-20`'s accept).
+
+**The lesson for every later cut of a served-output move:** read the PRODUCER'S OWN DATING RULE at the cut and evaluate the candidate instants before a half is signed; "a new key for the day" is a claim about the producer, not about the clock.
+
+— `2.0.0_SA_COO`, L5 round 3 addendum v0.8
+
+
+---
+
+## 32. ROUND 3, ONE MORE CELL (v0.9) -- two accepts name a plane the artifact does not have, and BOTH of the stratum's descriptive strings are missing, not one
+
+**RULED shape (a) by `2.0.0_SA_COO` at msg 95192 on row `S40`, and the requirement WIDENED at msg 95193 on
+row `S41` before this cell was cut.** The assignee raised both rows and corrected its own first one.
+
+**THE FINDING.** `TO-OS-s-22`'s `O22-AC1` clause (v) requires the site-z disclosure to be read *"out of the
+SERVED bytes ... printed verbatim"*, and `TO-OS-s-23`'s `O23-AC1` requires group B to render *"with its grain
+disclosed ([grain=file-pair, NOT resource-grain], the runner's own line)"*. **NEITHER STRING IS IN THE SERVED
+ARTIFACT.** Measured across four artifacts -- the manual day's report (.json 206,144 B, .md 30,358 B) and the
+13:00Z run's (.json 326,897 B, .md 49,319 B) -- five denominator literals appear **0 times each in all four**,
+with `A_propagation@laptop` appearing twice per .json as the positive control that makes the zero a property
+of the artifact rather than of the reader.
+
+⛔ **AND S40's MECHANISM WAS HALF WRONG, WHICH IS WHY THIS CELL IS NOT CUT FROM IT.** S40 attributed both
+blocked clauses to the stratum's `denominator`. Read at source, `estate_report_runner.py:1424-1425`, two
+adjacent lines that send the two halves to two different fields:
+
+```python
+                den = "%s -- %s" % (den, grain_note)
+                vin = "%s [grain=%s, NOT resource-grain]" % (vin, grain)
+```
+
+The grain **NOTE** goes to `denominator`; the grain **TAG** that `O23-AC1` quotes verbatim goes to `vintage`.
+**SO A CELL THAT SERIALIZES ONLY THE DENOMINATOR CLOSES ONE BLOCKED CLAUSE OF TWO AND PRESENTS AS COMPLETE.**
+
+**AND THE CORRECTED PICTURE IS WORSE.** What reaches the artifact is `ai.proposals[].tool_row_cited`, a string
+the model COMPOSES, admitted by `tool_row_resolves` (`:2400-2405`) -- `name in cited_ref and vintage in
+cited_ref`, **a two-token substring containment test**, not byte-equality and not a field copy. The `vintage`
+it tests comes from `tool_row_ref` (`:2350-2362`), built as `"%s@%s" % (stratum['stratum'],
+stratum['reproduce']['vintage'])` -- **the TRACE's vintage, not the stratum's own `vintage` field where
+`:1425` put the grain tag.** The grain string is therefore not merely unserialized; it is not in the string
+the citation gate tests. Observed on the 13:00Z run: five proposals cited, **5 of 5 KEPT, 0 rejected**, none
+carrying a `[grain=...]` suffix. A reader is told which tool produced the rows and when, and is NOT told they
+pair FILES rather than RESOURCES.
+
+| cell | outcome_ref | surface | verb | depends_on | the bar |
+|---|---|---|---|---|---|
+| `OS-s-27` | FWD-5 | `infra/aws/ec2/estate-report-runner/estate_report_runner.py` and its suite | build | `OS-s-22`, `OS-s-23` (blocked clauses only) | **BOTH** of a stratum's descriptive strings -- `vintage` (carrying the grain tag) AND `denominator` (carrying the roster, the per-device states and the grain note) -- serialized as FIELDS beside the `stratum_status` the artifact already carries at `ai.groups.<G>`, so a reader of the served bytes can read each verbatim without the model having paraphrased it |
+
+**Denominator:** PRD v0.11 `endpoint_outcomes` 8; cells **27**.
+
+⛔ **ONE WITHOUT THE OTHER IS A FAILED CELL, NOT A PARTIAL ONE**, and the face says so: `O22-AC1` clause (v)
+reads on `denominator`, `O23-AC1` reads on `vintage`, and a fix reaching one leaves the other exactly as
+unreadable as today while every arm of the cell passes.
+
+**WHAT THIS CELL DOES NOT DECIDE, placed rather than dropped:** whether `tool_row_resolves`' two-token
+containment test should tighten. The assignee raised it and did not press it, and the reasoning is right --
+if the artifact carries the runner's own strings as FIELDS, that validator stops being the only carrier and
+its looseness stops mattering. If this cell lands and the looseness still admits an unlabelled citation, THAT
+is the finding underneath both rows and it earns its own cell. `S29-AC2`-style judgment, not this cut's.
+
+**THE CHAIN READ.** `OS-s-27` touches the runner, which `OS-s-22` deployed at 12:55:13Z and whose order is
+still open on the same seat -- so this is NOT an independent chain and MUST NOT be seated in parallel with
+that order's remaining work. One seat, sequenced.
+
+```
+fanout: 1 of 1 chain, cap 8, reason: the runner is one file and 0.7.0_AE_CloudOps~W holds every open order in this round; a second slot would contend on the same surface and serialise anyway.
+```
+
+-- `2.0.0_SA_COO`, L5 round 3, one cell on rows `S40` + `S41`
+
+
+---
+
+## 33. ROUND 3, ANDREW'S CADENCE RULING (v0.10) -- the drift measure is CONTINUOUS and NEVER hand-triggered
+
+**ANDREW-DIRECT 2026-09-10 ~15:3xZ at the `2.0.0_SA_COO` terminal, answering open call 2 of a
+`/open-calls` card set. His words, verbatim and entire, two messages in order:**
+
+> no this should be a continuously stitched function, maybe every 15 min.
+
+> no hand-drawn anything, no manual trigger anything for something like this
+
+**HE TOOK NONE OF THE THREE SHAPES OFFERED**, and the question was the wrong one. All three -- S4U
+re-principal, move the trigger to an hour a session exists, accept-and-disclose -- preserve a
+ONCE-DAILY timer and argue about how to make that single firing land.
+
+**WHAT IS DEAD.** Moving the trigger dies by name (it makes cadence depend on a human habit).
+Accept-and-disclose dies. ⛔ **AND THE CURRENT ARTIFACT'S PROVENANCE DIES**: the reading the estate
+report serves for this device was produced by a HAND-STARTED run, and a hand-made value that happens
+to be FRESH still violates this instruction. S4U is **not adopted either** -- it answered "how does a
+daily firing survive nobody being logged on", not "make this continuous"; a logged-out principal may
+still be an IMPLEMENTATION CONSEQUENCE, which is the assignee's to price rather than the cut's to
+impose.
+
+⛔ **TWO THINGS THIS CUT DELIBERATELY DOES NOT RESOLVE, AND NEITHER IS RECORDED AS HIS INSTRUCTION.**
+"STITCHED" is ambiguous between this estate's existing stitch mechanism (the post-commit hook that
+republishes a shared marker from every clone) and plain English for "continuously woven in". That is
+a real fork with different builds behind it; `1.0.0_SA_CTO` declined to infer it and so does this
+seat. It is with him as a question. And **"maybe every 15 min" carries his own hedge**, so the number
+is a TARGET and **no accept grades ON the number** until he fixes it.
+
+**THE ENDPOINT DOES NOT MOVE** (`1.0.0_SA_CTO`, msg 95321, reading the outcomes itself): FWD-5 is
+LEGIBILITY of working order and **no outcome in this PRD names a publish frequency**. `OS-s-21`'s ROW
+does move, and that L4 addendum is the CTO's limb, lands after the merge, and explicitly does not
+gate this cut.
+
+| cell | outcome_ref | surface | verb | depends_on | the bar |
+|---|---|---|---|---|---|
+| `OS-s-28` | FWD-5 | `infra/aws/ec2/outset-drift-device/` + the device's scheduling surface | build | `OS-s-21` (TERMINAL) | the device publishes its drift artifact CONTINUOUSLY and AUTOMATICALLY at roughly quarter-hour, with NO human act in the steady-state path, and the artifact says which trigger produced it -- so a hand-made value is visibly a hand-made value |
+
+**Denominator:** PRD v0.11 `endpoint_outcomes` 8; cells **28**.
+
+⛔ **THE MECHANISM IS THE ASSIGNEE'S TO CHOOSE AND PRICE, NOT THIS CUT'S TO IMPOSE**, because the
+issuer cannot resolve his "stitched" fork and will not pretend to. Three shapes are named with what
+each costs, the way `EG-s-27`'s coupled-versus-independent choice was offered: (i) a RECURRING TIMER
+at quarter-hour -- simplest, and it inherits the SAME logged-out principal problem that killed the
+daily firing, so it is not free; (ii) PUBLISH ON COMMIT via the existing hook -- genuinely continuous
+while work happens, needs no scheduler and no session, and **measures at the moment uncommitted work
+is SMALLEST**, which is a real blind spot against a long uncommitted stretch; (iii) BOTH -- on commit
+plus a floor at quarter-hour. **The issuer's preference is (iii) and the reason is the blind spot in
+(ii)**: the case worth catching is exactly a long stretch nobody has committed, and a commit-triggered
+publisher is structurally blind to it. Take another shape and pay for it with the census and the
+adversarial arm the face requires.
+
+**THE CHAIN READ.** `OS-s-28` touches the drift producer and this device's scheduling surface.
+`OS-s-22` and `OS-s-23` remain open at one arm each on the estate-report RUNNER -- a different file
+-- and both are waiting on tomorrow's fire, so no surface intersects. Seated on
+`0.7.0_AE_CloudOps~W`, which authored `publish_drift.py` and holds every open order in this round.
+
+```
+fanout: 1 of 1 chain, cap 8, reason: one device-local producer and one seat holding the round; a second slot would contend on the same surface and serialise anyway.
+```
+
+**What this amendment does NOT decide:** whether the artifact's own `denominators.claim` / vintage
+fields need a TRIGGER field of their own to make a hand-made value visible, or whether the existing
+`argv` and publisher-ARN already do it. `O28-AC2` asks the assignee to state which, measured on a
+real artifact rather than argued.
+
+-- `2.0.0_SA_COO`, L5 round 3, one cell on Andrew's ~15:3xZ word

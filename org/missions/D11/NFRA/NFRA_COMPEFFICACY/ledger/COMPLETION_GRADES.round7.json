@@ -1,0 +1,23 @@
+{
+  "kind": "COMPLETION_GRADES",
+  "schema_version": "1.0",
+  "project": "NFRA_COMPEFFICACY",
+  "round": 7,
+  "graded_by": "1.0.0_SA_CTO",
+  "graded_utc": "2026-09-10T01:35Z",
+  "report_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/ledger/COMPLETION_REPORT.round7.json@13c520d296",
+  "slug_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/adjudications/ADJUDICATION_v1.md@26805a05ee",
+  "analysis_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/ledger/ROUND_ANALYSIS.round7.md",
+  "rows": [
+    {"fwd_id": "FWD-1", "verdict": "REALIZED", "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md@3284d996a9", "state_observed": "APPLIED", "note": "Carried from round 6 (COMPLETION_GRADES.round6.json @f755484cbb); no round-7 cell touched it."},
+    {"fwd_id": "FWD-2", "verdict": "REALIZED", "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/3.0.0_SA_CVO/CE-pass-1.rollup.md@22388f7195", "state_observed": "EXERCISED", "note": "Carried from round 6."},
+    {"fwd_id": "FWD-3", "verdict": "REALIZED", "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~2/NFRA_COMPEFFICACY.TO-CE-G-2.proof_of_spec.json@22388f7195", "state_observed": "EXERCISED", "note": "Carried from round 6."},
+    {"fwd_id": "FWD-4", "verdict": "NOT_EVALUATED", "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/3.0.0_SA_CVO/CE-pass-1.rollup.md@22388f7195", "state_observed": "APPLIED", "note": "Every tool's state is on the record; the DONE WHEN is Andrew's read at the sitting -- PRD v0.9 M-1, a manual act at any time he names (the CVO's /estate-pull on his go). Grades when the sitting's record names it."},
+    {"fwd_id": "FWD-5", "verdict": "REALIZED", "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md@3284d996a9", "state_observed": "APPLIED", "note": "Carried from round 6."},
+    {"fwd_id": "FWD-6", "verdict": "REALIZED", "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/3.0.0_SA_CVO/CE-pass-1.rollup.md@22388f7195", "state_observed": "EXERCISED", "note": "Carried from round 6."},
+    {"fwd_id": "FWD-7", "verdict": "REALIZED", "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md@3284d996a9", "state_observed": "APPLIED", "note": "Carried from round 6; the cloud-compile brief's asks became NFRA_CLDGRPH's rows and that project is at round 6 with 10 of 11 orders drained."},
+    {"fwd_id": "FWD-8", "verdict": "REALIZED", "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~1/NFRA_COMPEFFICACY.TO-CE-P-4.proof_of_spec.json@896e1fe889", "state_observed": "EXERCISED", "note": "RE-GRADED from NOT_EVALUATED: the short list is the one Andrew ratified 2026-09-04 (fourteen tools, 'recs approved except comp-heat'), the CVO's second cut v3 @debf661cba orders it, and a seat started AND FINISHED a piece of work from it -- TO-CE-P-4 (comp-which validates a subject's EXISTENCE, the list's first piece) cut, worked and drained in one night, P4-AC1 27 of 27, P4-AC3 PASS at L9 (C-S7). The letter is met on one piece; 'used' means used, not twice."},
+    {"fwd_id": "FWD-9", "verdict": "NOT_EVALUATED", "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/adjudications/ADJUDICATION_v1.md@26805a05ee", "state_observed": "APPLIED", "note": "Three limbs. (i) the fix on the shared branch: MET as of 2026-09-09 -- origin/CLOUD moved 58adeff90c -> 7e35640ec8 -> b2393aec71 -> c6bcb7b12b on Andrew's two push words and every remediation commit of rounds 1-6 (09-02..09-04, CLOUD's first-parent line) is an ancestor of c6bcb7b12b. (ii) used from another seat and behaving as cleared: met at round 6 (C-S1). (iii) the Codex-runtime rail exercised (CE-g-4): PRD v0.9 M-2, on 1.0.0_SA_CTO~X the day Andrew allocates it. Beneath the limbs, the round found that a worker seat on this box runs comp-which's lexical fallback (S40, the CRLF-rendered POTION asset) and stale forwarders (W1-S2) -- rows M-4 / M-5 of v0.10, FWD-9's subject exactly. NOT_EVALUATED on limb (iii)."},
+    {"fwd_id": "FWD-10", "verdict": "REALIZED", "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-25.comp-data-and-rule-t.proof_of_spec.json@ee0db751d7", "state_observed": "EXERCISED", "note": "Carried from round 6 (re-graded there on the marquis ratification)."}
+  ]
+}

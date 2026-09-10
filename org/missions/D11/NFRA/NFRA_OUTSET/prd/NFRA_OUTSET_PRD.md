@@ -12,7 +12,7 @@ under the same directive and macro) · **dep_stage at write:** `REGISTERED` → 
   "project": "NFRA_OUTSET",
   "directive": "D11",
   "fabric": "laptop",
-  "prd_version": "v0.6",
+  "prd_version": "v0.11",
   "step": 4,
   "brief_ref": "docs/briefs/comp-heat-and-the-semantic-estate-pipeline-outset-tooling-brief-20260904.md@bc52eb658d",
   "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
@@ -71,7 +71,20 @@ round-N analysis and any addendum cite these ids back into this list.*
                     facts and names the tools only in passing)
 
   FWD-4  Andrew decides a day's proposals on evidence he can argue with
-         DONE WHEN  EXERCISED -- one day has been decided that way
+         DONE WHEN  EXERCISED -- READ ON DEMAND from a real served day's own
+                    artifact: every proposal on it carries a RESOLVABLE reference to
+                    the finding it came from, resolved by a reader who did not write
+                    it, with the denominator printed and a negative control (a
+                    proposal whose reference does not resolve reads DIFFERENTLY).
+                    RE-POINTED v0.10 (no new id): the outcome as written graded
+                    itself on ANDREW'S DECISION -- "one day has been decided that
+                    way" -- and no seat can take that act, neither a driven run nor a
+                    history read, so the outcome was unprovable by anyone in the
+                    fabric rather than merely slow. This seat REFUSED a ninth id
+                    earlier for having exactly this relationship backwards. His
+                    sitting is the CONSEQUENCE of the property holding, never its
+                    criterion; the ACCEPT below already described the gradable half
+                    and this line now points at it
          ACCEPT     at a sitting each proposal points at the finding it came
                     from, so the argument is about whether that finding is right
                     -- never about whether the thing proposing it had looked at
@@ -82,8 +95,19 @@ round-N analysis and any addendum cite these ids back into this list.*
 
   FWD-5  Anyone can see which of the things feeding the daily analysis worked
          today, and one that failed says so
-         DONE WHEN  EXERCISED -- the working order has been read from one place
-                    on a real day
+         DONE WHEN  EXERCISED -- READ ON DEMAND from the MANUAL SERVED DAY that has
+                    already happened (the 2026-09-10 00:29:57Z run, run_bundle.trigger
+                    = manual, run_id proven end to end, artifacts already written and
+                    read on their own VersionIds): that run's bundle carries the
+                    per-source working order FROM ONE PLACE -- which feeds answered,
+                    which did not, and how much each managed to look at. RE-POINTED
+                    v0.10 (no new id). IF THE BUNDLE DOES NOT CARRY IT, THAT GAP IS A
+                    CELL, not a wait, and it is cut into round 3 by amendment on the
+                    same mechanism OS-s-24/25/26 used. This outcome named a real day
+                    while NO cell's manual-trigger form reached it: OS-s-24 carries
+                    FWD-2/3/4/7 and OS-s-25 and OS-s-26 carry FWD-3, so FWD-5 appeared
+                    in none of them -- found by 2.0.0_SA_COO's done-when read, not by
+                    the addendum that should have covered it
          ACCEPT     a person can tell in one look which of the things that feed
                     the day's analysis answered and which did not; one that
                     could not answer says so in its own words and says how much
@@ -284,3 +308,59 @@ two `unmeasured` rows (OS-s-6, OS-s-7) read first if the COO wants the federated
 and they release OS-s-4 and OS-s-10.
 
 — `1.0.0_SA_CTO`, L4
+
+## 9b. RULING v0.11 (2026-09-10 ~04:4xZ, `1.0.0_SA_CTO`) -- FWD-5 takes BRANCH ONE, and the one arguable clause is ruled NOW
+
+`2.0.0_SA_COO` (94991) took v0.10's branch one by READING the artifact rather than reasoning about it: the manual served day's
+own version `daily/2026/09/09/estate-report-2026-09-09.json` VersionId `F3CLuHhwgcRKo7OdbCdLbexIO6BUo3Mw`, 206,144 bytes,
+sha256 `dbe02e28c705f3eb` -- byte-size AND hash both matching the record v0.9 already carried, so the object read is the object
+the ruling meant. **`run_bundle` carries the per-source working order from ONE place:** a 20-element `stages` list, each entry
+naming stage, kind, status, a human detail string, its pin and its own counts, plus a `coverage` summary reading
+`stages_total 20, ok 19 / error 1`. **NO CELL IS OWED and round 3 is unchanged.**
+
+**THE ONE CLAUSE THAT WAS ARGUABLE, HANDED UP RATHER THAN GRADED, AND RULED HERE: SATISFIED, WITH ITS LIMIT NAMED.** The ACCEPT
+requires a thing that could not answer to say so *in its own words* and to say *how much it did manage to look at*. The failed
+stage `kimi_detect_B` reports `status error` with detail `NOT_FIRED_STRATUM_INSTRUMENT_FAILED` and reports no coverage number of
+its own; the partial-coverage figure lives on the UPSTREAM stage (`compile_strata`: "3/4 strata OK; canon 357 entities
+(usable)"). **That satisfies the clause HERE, and the reason is exact rather than generous: a stage that NEVER FIRED looked at
+nothing, so "how much it managed to look at" is ZERO, and `NOT_FIRED_STRATUM_INSTRUMENT_FAILED` is the honest report of zero.
+The partial-coverage number belongs to the stage that PRODUCED the partial coverage.**
+
+⛔ **AND THE LIMIT, which is the half a grade must carry: this is proven for a NOT-FIRED stage and is UNPROVEN for a
+PARTIALLY-COMPLETED one.** A stage that fired, looked at some of its input and then failed would owe its OWN partial number, and
+nothing measured tonight shows the bundle supplies that. The outcome is NOT re-worded for it and no cell is cut on a case the
+estate has not met -- but the round-3 L10 grades FWD-5 knowing which member of the domain has been demonstrated and which has
+not, rather than reading one instance as the whole. That is rule 24's subtraction clause applied to a GRADE instead of a census.
+
+**Round 2's grades are not amended:** the 00:29:57Z run postdates round 2's completion report (2026-09-09T14:05Z), so FWD-5's
+NOT_EVALUATED for rounds 1 and 2 stands as the true state of those rounds. It grades at round 3's L10 on this reading.
+
+## 9a. ADDENDUM v0.10 (2026-09-10 ~04:1xZ, `1.0.0_SA_CTO`) -- the two outcomes NO SEAT could prove
+
+- **v0.10 2026-09-10 ~04:1xZ `1.0.0_SA_CTO`** -- the two outcomes `2.0.0_SA_COO`'s done-when read (94960) found open across all sixteen live outcomes, both re-pointed with IDS KEPT and neither superseded. FWD-4 graded itself on a PERSON'S DECISION, which is not an act any seat can take -- worse than a wait, because patience could never have closed it; it now grades on the day's artifact carrying resolvable references, which its own ACCEPT already described, and Andrew's sitting becomes the consequence rather than the criterion. FWD-5 named a real day that NO cell's manual-trigger form reached -- the v0.8 addendum enumerated the outcomes it covered instead of subtracting from the outcomes that NAME a date -- and now grades on the 00:29:57Z manual served day's own bundle, with the cell condition stated if the bundle does not carry the per-source working order. Neither round re-opens.
+
+## 9. ADDENDUM v0.7 (2026-09-09 ~22:0xZ, `1.0.0_SA_CTO`) -- "on a served day" made contingent on a manual served day
+
+**AMENDED v0.9 (2026-09-10 ~01:1xZ) on row NFRA_OUTSET-S34 (NEVER-2 RED, `0.7.0_AE_CloudOps~W`): the v0.8 premise "after 00:00Z every key is dated 09-10" conflated the calendar day with the schedule mark -- the runner dates the report by the most recent 09:00 ET mark, so no instant before the 13:00Z fire yields new keys. The manual served day is the run already performed at 00:29:57Z, read on its own VersionIds with the protected pins restored as latest by content; the 13:00Z fire confirms. The CTO's error as much as the COO's; recorded, never silently.**
+
+**AMENDED v0.8 (22:1xZ) on `2.0.0_SA_COO`'s four cut-shaping facts (94739), all four RECs ADOPTED:** the manual served day runs after 00:00Z on 09-10 keys and overwrites nothing; a trigger token is a cell (OS-s-26) because the served artifact has no trigger field and the clock is forbidden; rule (4) for never-fired schedules is the configuration read plus the first fire as history; rule (2) covers the served output the estate reads and not the `outset/` seam prefix, and is not retroactive. The rule clarifications are in the record file.
+
+**THE MANUAL-TRIGGER RULE** (Andrew-direct 2026-09-09 ~21:4xZ at the `1.0.0_SA_CTO` terminal, verbatim in `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260909_214xZ_NO_WAITING_EVERY_DATE_GATED_ACCEPT_GETS_A_MANUAL_TRIGGER_FORM.md`: *"we need to not be 'waiting' on anything, anything that we'd be waiting for needs a manual trigger of some kind depending on the test type ... include addendums for each that mandate the requirement is contingent on a relevantly structured manual/test run"*). A manual run is the EXERCISED form of an outcome only when all five hold: (1) SAME TARGET, not a copy -- the rule's own target invoked with the scheduled payload shape; (2) REAL PLANE -- real keys, catalogs, inboxes, devices; a by-hand write to a SERVED key is a served-output move (NEVER-2 entry + never-widen sign-off CTO+COO, rollback named); (3) TOLD APART ON THE ARTIFACT -- a run-id / trigger field, never the clock; (4) the schedule's OWN firing proven from HISTORY (prior rule-initiated executions listed with a denominator), never by waiting -- a rule that has never fired gets a one-off near-term `at()` on the same rule, then restored; (5) the next scheduled fire is CONFIRMATION, never a gate -- no grade carries "pending the fire" again.
+
+Round 3's four open accepts all read "on a served day" and would wait for 09-10 and 09-11. Under the rule they read on the manual served day below; the scheduled fires confirm. Rows OS-s-24 and OS-s-25 are the cells `2.0.0_SA_COO` cuts into round 3 by amendment (the round is mid-execution; Andrew's 2026-09-03 scope-change word).
+
+| id | outcome_ref | surface | claim | evidence at the brief's vintage | lane | verb | depends_on | accept |
+|---|---|---|---|---|---|---|---|---|
+| OS-s-24 | FWD-2, FWD-3, FWD-4, FWD-7 | THE MANUAL SERVED DAY (AMENDED v0.9 on 0.7.0_AE_CloudOps~W's NEVER-2 RED, row NFRA_OUTSET-S34 @5461f3e5af: THE v0.8 PREMISE WAS WRONG -- `estate_report_runner.py:219-226 _window` dates the report by the most recent 09:00 America/New_York schedule MARK, never by the calendar day (CVO condition C1: boundaries from the schedule, or windows overlap or gap), so EVERY invoke before 13:00Z writes the CURRENT window's keys, and the first instant that yields 09-10 keys is the 13:00Z fire itself; the CTO and the COO conflated the calendar day with the schedule mark in v0.8, in the face and in both never-widen halves). THE SHAPE THAT HOLDS: a manual run before the fire writes the current window's keys as NEW VERSIONS on a versioning-enabled bucket; the protected record (the 15:32:41Z creation-boot report OS-s-20's accept reads) is preserved by versioning and its pinned VersionIds are RESTORED AS LATEST after the run, verified by sha256 of the bytes (a copy-object mints a new id, so the id proves the call and nothing about the content); the five accepts (OS-s-19/20/21/22/23) are read ON THE RUN'S OWN VERSIONS by VersionId, told apart from the scheduled fire by `run_bundle.trigger=manual` and `run_bundle.run_id` (OS-s-26's carrier, proven end to end on the 00:29:57Z run). THE 00:29:57Z RUN IS THAT MANUAL SERVED DAY: invoked with the rule's own payload plus the manual marker under an OPEN entry quoting both halves, booted 00:30:08Z, ran every stage, wrote 00:52:49Z, self-stopped, rolled back 00:57:56-00:58:03Z with all three pins byte-identical and the run's own versions (.json dbe02e28c705f3eb, 206,144 B) retrievable. NO RE-RUN before 13:00Z; the 13:00Z fire CONFIRMS on the 09-10 keys with `trigger=scheduled`. ORDER as before: drift task on demand (OS-s-25), the freshness build by hand, the orchestrator invoked with the rule's own payload. Rule (2)'s scope unchanged (daily/ + manifest/, not the outset/ seam prefix; not retroactive) | measured | the 00:29:57Z run: run_bundle.trigger=manual, run_id a588a7ea-8ad2-4f03-a814-4f02668a66d6 byte-equal to the token written 00:30:07Z (O26-AC1's positive arm PASSED on a real run); the three protected keys received new versions and were restored to their pins by sha256 (9d0ff4d6135a9ccb / c3b6a88eeaf1da87 / 0a7f44e8812ba910); 0 objects under daily/2026/09/10/ (0.7.0_AE_CloudOps~W, 94815) | CloudOps (host, orchestrator, publisher) with CloudComp (the runner's fields) | verify | OS-s-19, OS-s-20, OS-s-21, OS-s-22, OS-s-23, OS-s-25, OS-s-26 | the NEVER-2 entry names the pins, the run's VersionIds and the restore, both halves quoted; the five accepts read on the run's VersionIds with `run_bundle.trigger=manual` and the run_id on the artifact; the three protected keys' LATEST read byte-identical to their pins after the run (sha256, never VersionId); the seam artifacts' vintages precede the run's start (head-object, UTC); group A reads OK from the seam with each device's vintage; group B renders from its seam artifact with its grain disclosed; the host self-stopped; the 13:00Z fire on the 09-10 keys is confirmation read if present, `run_bundle.trigger=scheduled`. A date-override parameter (shape (b) in S34) is NOT cut: a new code path to dodge a fire that fires today is the shadow the rule forbids |
+| OS-s-25 | FWD-3 | THE LAPTOP DRIFT HALF ON DEMAND (AMENDED v0.8): the drift publisher's scheduled task INSTALLED on this laptop now (Andrew's ~21:4xZ word is the heads-up the S25 ruling asked for -- stated in the record so no seat waits on a second one) and RUN ON DEMAND (`schtasks /run`, the same action the schedule runs) BEFORE OS-s-24's run, so ONE manual served day reads the device row; a second manual day only if the first's device row fails. Rule (4) for this never-fired task: the CONFIGURATION READ (`schtasks /query /v`: state, trigger, action, next run time in UTC) at the manual run, plus its FIRST scheduled run recorded as the history the next accept cites -- a Windows task has no `at()` form | absent | the task has 0 runs (LastTaskResult 267011 = SCHED_S_TASK_HAS_NOT_RUN); the device row would read INSTRUMENT_FAILED until a scheduled run | CloudOps~W (the task) | verify | OS-s-21, OS-s-22 | the task exists (`schtasks /query`, action and trigger printed) and its configuration read is on the record; one on-demand run publishes `outset/<device>/comp_heat_drift.json` under the scoped role (head-object with the run's UTC; the role's session name in CloudTrail); OS-s-24's group A shows this device by name with that vintage inside its ceiling, a silent device still reading INSTRUMENT_FAILED as the negative arm; the task's first scheduled run is recorded as confirmation |
+| OS-s-26 | FWD-3 (rule (3)'s carrier) | THE TRIGGER TOKEN: the orchestrator Lambda writes one small object before `StartInstances` (`s3://opal-estate-report/config/last-trigger.json` carrying `{trigger, run_id, invoked_at}`, `trigger` from the rule's payload for a scheduled fire and `manual` for a hand invoke); the runner reads it at boot and stamps `run_bundle.trigger` and `run_bundle.run_id`; the field's domain is {scheduled, manual, UNKNOWN} and an ABSENT or stale token reads UNKNOWN, never scheduled. Not an instance tag (a stale tag reads fresh), not CloudTrail inference (a second system, lagging). Cost: orchestrator code, one Put and one Get grant (exact key), a runner read | absent | no channel exists from the invoke to the runner: the Lambda ignores its event and the rule's `Target.Input` is decoration on both paths (94738) | CloudOps (the orchestrator, the grants) with CloudComp (the runner's stamp; one S3 upload of the runner, the OS-s-19 shape) | build | -- | a manual invoke yields `run_bundle.trigger=manual` with a `run_id`; the next scheduled fire yields `scheduled` (confirmation, read if present); a run with the token deleted beforehand reads UNKNOWN (the negative arm, planted and restored); the stale-token case (a token older than the boot) reads UNKNOWN; the grants are exact-key and change-managed; the runner upload under its own NEVER-2 entry |
+
+**ADDENDUM v0.11, 2026-09-10 ~17:1xZ, `1.0.0_SA_CTO` at L4, on Andrew-direct ~15:3xZ recorded by `2.0.0_SA_COO` @`c64cc4f345`. `OS-s-21`'s DRIFT half is RE-POINTED. `endpoint_outcomes` UNCHANGED and `dep_stage` stays EXECUTING.** His words, verbatim and entire, two messages in order: *"no this should be a continuously stitched function, maybe every 15 min."* and *"no hand-drawn anything, no manual trigger anything for something like this."* ⛔ **HE TOOK NONE OF THE THREE SHAPES PUT TO HIM AND THE QUESTION WAS THE WRONG ONE** — re-principalling to S4U, moving the trigger to an hour a session exists, and accept-and-disclose all preserved a ONCE-DAILY timer and argued about how to make one firing land. The measure is CONTINUOUS. So: moving the trigger dies BY NAME (it makes cadence depend on a human habit); accept-and-disclose dies; and **the CURRENT ARTIFACT'S PROVENANCE DIES TOO** — the served laptop drift reading was produced by a HAND-STARTED run, and a hand-made value that happens to be fresh still violates this instruction even inside the consumer's 26 h ceiling. **S4U IS NOT ADOPTED EITHER:** it answered *"how does a daily firing survive nobody being logged on"*, which is not the same question as *"make this continuous"*; a principal that runs logged-out may still be an IMPLEMENTATION CONSEQUENCE of his design, and that is L5's rather than this document's.
+
+⛔ **THE ENDPOINT DOES NOT MOVE, AND I READ THE OUTCOMES RATHER THAN ASSUMING IT.** FWD-5 is *"anyone can see which of the things feeding the daily analysis worked today"* — LEGIBILITY of working order. **No outcome in this PRD names a publish frequency at all**, so a cadence change of any size touches none of them. `2.0.0_SA_COO` reached the same read independently and asked rather than assuming; the cut proceeds under unchanged outcomes.
+
+⛔ **AND TWO OF HIS WORDS ONLY LOOK LIKE THEY COLLIDE.** The 2026-09-09 ~21:4xZ manual-trigger rule (§ THE MANUAL-TRIGGER RULE, above) requires a manual form for every date-gated accept so nothing waits; this one forbids a manual trigger. **THEY NAME DIFFERENT OBJECTS: the first governs the EXERCISE FORM, the second the PRODUCTION STEADY STATE.** A manual run may still PROVE an outcome; it may no longer BE how the thing operates. R16's later-word-governs rule applies only where two words name ONE object, so **NEITHER IS SUPERSEDED AND BOTH BIND**. The manual-trigger rule's own clause (5) already agrees — *"the next scheduled fire is CONFIRMATION, never a gate"* — and clause (3)'s trigger field is exactly what makes a hand-made steady state visible as one. **`OS-s-21`'s accept already said the sharp part** — *"a hand publish is QA and never the exercise"* — so no AUTOMATIC-DRIFT-CADENCE grade rested on the hand-started artifact; its provenance is a STEADY-STATE defect.
+
+⚠ **AND THAT SENTENCE MUST NOT GENERALISE TO ALL HAND-PUBLISHED DRIFT — corrected by `3.0.0_SA_CVO`, which re-read the whole O21 proof at this pin after my first wording said "never a grading one".** HAND-PRODUCED DRIFT **DID** SUPPORT CONSUMER-FRESHNESS ARMS AND THOSE STAND: `O21-AC1` is recorded PASS at 72, and its arm (e) uses the laptop drift produced 2026-09-09T23:58:09Z in the served group-A freshness/age check with the same-object 26 h versus 0.001 h negative arm, while arm (f) reads that artifact's age; exclusion 114 states arm (e) grades the per-device DRIFT READER, not `comp_heat_freshness_tools`. The proof honestly excludes automatic drift cadence at 101-102 and records cadences exercised **1 of 2** at 80. ⛔ **SO THE PRECISE STATEMENT IS: the hand artifact supports NO automatic drift-cadence grade, AND it legitimately supported the consumer-freshness arms, which are NOT retroactively invalidated.** A blanket "never a grading one" would have either voided good checks or read as claiming the whole drift-production requirement proven — and it is neither.
+
+⚠ **TWO THINGS THIS ADDENDUM DELIBERATELY DOES NOT DECIDE, AND NO CELL MAY ASSUME EITHER.** (1) **"STITCHED" IS NOT GLOSSED HERE.** This estate already has a stitch mechanism (the post-commit hook that republishes a shared marker from every clone), so he may mean the drift publish RIDES it, or he may mean "continuously woven in" as plain English. That is a real fork with different builds behind it and neither reading is his instruction. **It returns to him as a question.** `2.0.0_SA_COO` declined to guess and was right to. (2) **THE 15 MINUTES IS A "MAYBE".** His word is *"maybe every 15 min"* — a TARGET, not a ratified constant. A cell may implement quarter-hour; **no accept grades ON the number** until he fixes it.

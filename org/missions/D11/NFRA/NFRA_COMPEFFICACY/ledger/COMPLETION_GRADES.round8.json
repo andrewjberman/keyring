@@ -1,0 +1,92 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "NFRA_COMPEFFICACY",
+ "round": 8,
+ "graded_by": "1.0.0_SA_CTO",
+ "graded_utc": "2026-09-10T06:1xZ",
+ "graded_against_prd_version": "v0.11",
+ "report_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/ledger/L8_PACKET.round8.md@6b0e8258c9",
+ "packet_sha256": "f2b152b9eaf4f9e6314ab65dad19687f6657f927a20e6a331a0fa0461bf26f5c",
+ "slug_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/adjudications/ADJUDICATION_v1.md@98554ed525",
+ "analysis_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/ledger/ROUND_ANALYSIS.round8.md",
+ "preconditions_measured": {
+  "orders_terminal_and_drained": "2 of 2",
+  "investigation_items_undispositioned": "0 of 51 (comp-surprise census at 3.0.0_SA_CVO; 0 malformed)",
+  "packet_hash_independently_recomputed": true,
+  "known_duplicate_id": "the pre-existing S34 collision recorded at C-S2; not this round's"
+ },
+ "dep_stage": "EXECUTING",
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "REALIZED",
+   "state_observed": "APPLIED",
+   "artifact_ref": "org\\missions\\D11\\NFRA\\NFRA_COMPEFFICACY\\prd\\NFRA_COMPEFFICACY_PRD.md@1ba8b40a8f",
+   "note": "Carried from round 7 (COMPLETION_GRADES.round7.json). No round-8 cell touched this outcome's substance."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "verdict": "REALIZED",
+   "state_observed": "EXERCISED",
+   "artifact_ref": "org\\missions\\D11\\NFRA\\NFRA_COMPEFFICACY\\prd\\NFRA_COMPEFFICACY_PRD.md@1ba8b40a8f",
+   "note": "Carried from round 7 (COMPLETION_GRADES.round7.json). No round-8 cell touched this outcome's substance."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "REALIZED",
+   "state_observed": "EXERCISED",
+   "artifact_ref": "org\\missions\\D11\\NFRA\\NFRA_COMPEFFICACY\\prd\\NFRA_COMPEFFICACY_PRD.md@1ba8b40a8f",
+   "note": "Carried from round 7 (COMPLETION_GRADES.round7.json). No round-8 cell touched this outcome's substance."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "NOT_EVALUATED",
+   "state_observed": "APPLIED",
+   "artifact_ref": "org\\missions\\D11\\NFRA\\NFRA_COMPEFFICACY\\prd\\NFRA_COMPEFFICACY_PRD.md@1ba8b40a8f",
+   "note": "RE-POINTED THIS TICK (PRD v0.11) AND NOT YET GRADED AGAINST THE NEW LINE. As written it graded on ANDREW'S READING -- an act NO SEAT CAN TAKE, neither a driven run nor a history read -- so it was unprovable by the fabric rather than slow, and no amount of work could have closed it. IDENTICAL to the NFRA_OUTSET FWD-4 defect ruled at ~04:1xZ: same id, same shape, different project, found only because this round's slug sent this seat back to the endpoint rather than by any control. It now grades on the list's own artifact carrying all three states with a printed denominator and no tool carrying none, readable by anyone on demand. Round 9's read."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "REALIZED",
+   "state_observed": "APPLIED",
+   "artifact_ref": "org\\missions\\D11\\NFRA\\NFRA_COMPEFFICACY\\prd\\NFRA_COMPEFFICACY_PRD.md@1ba8b40a8f",
+   "note": "Carried from round 7 (COMPLETION_GRADES.round7.json). No round-8 cell touched this outcome's substance."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "REALIZED",
+   "state_observed": "EXERCISED",
+   "artifact_ref": "org\\missions\\D11\\NFRA\\NFRA_COMPEFFICACY\\prd\\NFRA_COMPEFFICACY_PRD.md@1ba8b40a8f",
+   "note": "Carried from round 7 (COMPLETION_GRADES.round7.json). No round-8 cell touched this outcome's substance."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "verdict": "REALIZED",
+   "state_observed": "APPLIED",
+   "artifact_ref": "org\\missions\\D11\\NFRA\\NFRA_COMPEFFICACY\\prd\\NFRA_COMPEFFICACY_PRD.md@1ba8b40a8f",
+   "note": "Carried from round 7 (COMPLETION_GRADES.round7.json). No round-8 cell touched this outcome's substance."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "verdict": "REALIZED",
+   "state_observed": "EXERCISED",
+   "artifact_ref": "org\\missions\\D11\\NFRA\\NFRA_COMPEFFICACY\\prd\\NFRA_COMPEFFICACY_PRD.md@1ba8b40a8f",
+   "note": "Carried from round 7 (COMPLETION_GRADES.round7.json). No round-8 cell touched this outcome's substance."
+  },
+  {
+   "fwd_id": "FWD-9",
+   "verdict": "NOT_EVALUATED",
+   "state_observed": "APPLIED",
+   "artifact_ref": "org\\missions\\D11\\NFRA\\NFRA_COMPEFFICACY\\prd\\NFRA_COMPEFFICACY_PRD.md@1ba8b40a8f",
+   "note": "THE MECHANISM IS NOW PROVEN ON BOTH ITS SURFACES AND THE OUTCOME STILL CANNOT GRADE, on its own words rather than on caution. E1-AC3: the hash-pinned asset now carries binary set / text unset / diff unset / merge unset, the end-of-line listing reads the attribute on BOTH directory members where the converted one previously showed none, and the worktree copy is 683,666 bytes with ZERO carriage-return pairs hashing to the manifest's own value -- so the pin holds in a fresh worktree BY CONSTRUCTION rather than by luck. E2-AC3: a marker planted in a FRESH WORKTREE's tool was executed by the BARE NAME from that worktree and not from the main tree, restored byte-identically on both sides, where the same invocation previously returned rc 0 with a byte-identical answer FROM THE WRONG FILE. BUT THE OUTCOME'S OWN TEXT READS 'the fix is on the SHARED BRANCH, never only on one machine', and local is 388 commits ahead of origin/CLOUD as measured this tick. THE FIX IS ON ONE MACHINE RIGHT NOW. This is not a wait in the forbidden sense: it is gated on ONE NAMED HUMAN ACT, Andrew's push, which he said he would ask for before signing off -- the expressly-qualified exception the 2026-09-10 L2 law provides for, and this note is that qualification. The Codex allocation carried at this seat tests a DIFFERENT AXIS (another RUNTIME, not another clone) and does not gate this outcome."
+  },
+  {
+   "fwd_id": "FWD-10",
+   "verdict": "REALIZED",
+   "state_observed": "EXERCISED",
+   "artifact_ref": "org\\missions\\D11\\NFRA\\NFRA_COMPEFFICACY\\prd\\NFRA_COMPEFFICACY_PRD.md@1ba8b40a8f",
+   "note": "Carried from round 7 (COMPLETION_GRADES.round7.json). No round-8 cell touched this outcome's substance."
+  }
+ ]
+}

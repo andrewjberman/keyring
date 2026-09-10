@@ -139,7 +139,16 @@ The audited `--force "intentional-duplicate <reason>"` bypass remains for rare c
 **RUN THIS FOR ANY TIER-2 SPAWN. Every check above reads a PROCESS or a BROKER RECORD, and NONE of
 them can see an open TO addressed to a lane.** A lane letter can be free on process truth, free of
 markers, and NOT REGISTERED on the broker — and still be **encumbered by an open task order**, which
-is a **Rule 27 one-project-per-instance collision at seating time**.
+at a **TIER-2** seat is a **`ONE PROJECT PER TIER-2 SEAT INSTANCE` collision at seating time**
+(Andrew-direct 2026-08-24 ~19:29Z, protecting THE SEAT'S CONTEXT; enforced by
+`.tools/to-decomp-ref-lint.py`'s seating check).
+
+> ⛔ **CITATION REPAIRED 2026-09-10 by `1.0.0_SA_CTO`.** This line previously read "a Rule 27
+> one-project-per-instance collision". **CLAUDE.md Rule 27 never said that**, and the phrase had
+> dropped the words **TIER-2** — the scope that is the entire point of the rule. A Tier-1 seat twice
+> declined to seat a Tier-1 lane on the generalised version. **Whether the constraint should reach
+> TIER 1 is ANDREW'S call and is not taken here**; this heading's own "FOR ANY TIER-2 SPAWN" is the
+> scope that applies. The check below is unchanged and still worth running.
 
 ```bash
 python .tools/to-check.py --all --assignee "{full-target-serial}"

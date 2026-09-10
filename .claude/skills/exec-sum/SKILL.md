@@ -45,6 +45,15 @@ recollected; the human-readable half is the deliverable; the instruments are how
 - **Honor any sovereign hold on a member** (parked / suspended): report it as its own stage card
   in the state it is in; never re-open or re-close.
 
+⛔ **THE ONE NAMING EXCEPTION (Andrew-direct, 2026-09-10, after reading a report that described
+NFRA_OUTSET's whole night without ever naming it): "it is ok to mention the macro_project code,
+that is an exception."** The DIRECTIVE code (`D11`) and the MACRO / PROJECT code (`NFRA_OUTSET`,
+`ADVI_INSURE`, ...) MAY be named anywhere in Parts 1-5, and the report's own header SHOULD carry
+them. They are the reader's handle on the thing — without one, a correct plain-language report
+leaves him unable to say which of five live programs he just read about, and he has to ask. Nothing
+else is admitted by this exception: serials, TO ids, criterion ids, commit hashes, tool names and
+fabric jargon stay out of Parts 1-5 and appear once, in Part 6.
+
 ## Step 1 — Ground it (the same two instruments, every run)
 
 ### 1a. Activity — who is actually working, from telemetry + git (never the broker's prose alone)
@@ -95,8 +104,9 @@ an "active" with month-old commits and a finished phase, is drift to name, not a
 Map every stage to plain words BEFORE writing: what the stage produces (a noun a reader can
 picture), where it stands (done / running / built-not-yet-live / queued-behind-X / waiting on the
 human / parked), and the one thing that moves it. Then re-read every sentence and strike anything
-that is a serial, a TO id, a hash, a tool name, or fabric jargon ("face", "cell", "ledger row",
-"arm-(a)"). Those go to the grounding appendix.
+that is a serial, a TO id, a criterion id, a hash, a tool name, or fabric jargon ("face", "cell",
+"ledger row", "arm-(a)"). Those go to the grounding appendix. **KEEP the directive code and the
+macro/project code** — they are the exception above, and the header is where they belong.
 
 ## Step 2 — Surface (optional, one message, coordinator-routed)
 
@@ -112,8 +122,10 @@ hashes, tool names in Parts 1-5.** They appear once, in Part 6.
 
 ```
 +=======================================================================+
-|  <DIRECTIVE / PROGRAM NAME> -- WHERE THIS IS AT              <UTC>    |
+|  <PLAIN NAME> (<D-CODE> / <MACRO_PROJECT>) -- WHERE THIS IS AT <UTC>  |
 +=======================================================================+
+   the header CARRIES the codes: the plain name tells him what it is,
+   the codes tell him WHICH of the live programs he is reading about.
 
 +-- 1. WHAT IT IS --------------------------------------------------------+
 |  - <one plain sentence: the product/outcome, for whom>                   |
@@ -212,7 +224,10 @@ full report (the reader may be cold).
 ## Discipline / risk notes
 
 - **Plain language or it is broken.** The #1 failure is the draw's jargon in prose. If a reader
-  needs to know what a serial, a TO, a "face" or a "cell" is, rewrite the sentence.
+  needs to know what a serial, a TO, a "face" or a "cell" is, rewrite the sentence. **The directive
+  and macro/project codes are the exception and are NOT jargon here** — they are the name of the
+  thing, and a report that withholds them makes him ask "is this NFRA_OUTSET?", which is a question
+  the report should never have left open. Measured 2026-09-10: it did.
 - **Ground it, never recollect it.** Every card claim comes from Step 1; a report asserted from
   memory is the stale-record failure this skill exists to avoid.
 - **comp-state self-test is a gate**; no PASS -> say so, lean on 1a/1c.
