@@ -10,7 +10,17 @@ row `NFRA_REPORT-Z-W2-S6`.** Found the same way as LIMIT 1/LIMIT 2 -- while GROU
 connected-resources breakdown for a real edition, not while testing the tool -- and estate-wide rather
 than specific to the one row (`opal-infrastructure-alerts`) that surfaced it.
 
-> ⛔ **THE SHARED FAILURE MODE: A FALSE ZERO AND A TRUE ZERO READ IDENTICALLY.** All three limits below
+**ADDENDUM 2026-09-10, `LIMIT 4` below, filed by `1.0.0_SA_CTO~Z` dispositioning ARMED row
+`NFRA_REPORT-Z-W1-S5` (`0.9.0_WK_NFRA_REPORT~1` at `RP-s-16`).** Found the same way as the other three
+-- while GROUNDING a cell's own work rather than while testing the tool. ⛔ **IT IS THE ONE ENTRY HERE
+WHOSE ROW IS `DISMISSED_WITH_REASON` RATHER THAN DISARMED, AND IT IS THE ONE THAT BINDS EVERY OTHER
+LIMIT ON THIS PAGE** -- a caller who reads LIMIT 1, 2 or 3 from inside a linked worktree is reading
+about instruments that were not looking at the caller's tree in the first place. It was filed here
+because that dismissal removed the row from one project's L10 predicate and would otherwise have left
+a live, estate-wide, unowned hazard recorded only in `NFRA_REPORT`-scoped places, where no seat on any
+other project could find it. Gap measured and raised by `2.0.0_SA_COO~ZZ` at msg 20823.
+
+> ⛔ **THE SHARED FAILURE MODE: A FALSE ZERO AND A TRUE ZERO READ IDENTICALLY.** All four limits below
 > produce an EMPTY RESULT rather than an error, and an empty result from a dependency tool is exactly
 > what a deprecation, decommissioning or blast-radius decision treats as permission to proceed.
 
@@ -127,18 +137,78 @@ treating the graph's zero as "no subscriber" in either direction.
 
 ---
 
+## LIMIT 4 -- the whole `comp-rail` resolves its CORPUS from the TOOL SCRIPT'S location, not the caller's tree
+
+**Consequence, stated as the caller must apply it:** a `comp-find` / `comp-read` / `comp-which` result
+obtained from inside a **linked git worktree** describes the MAIN `ajb_workspace` checkout, not the tree
+the caller is standing in. A zero is therefore **not evidence of absence** in the caller's own tree, and
+a non-zero may be reporting files the caller's tree does not contain. ⛔ **THIS IS WORSE THAN THE OTHER
+THREE, because the tool prints a large, confident, MEASURED denominator over the wrong tree** -- the
+output carries every mark of rigour this estate trains its seats to look for. **Run any census or
+absence claim from the MAIN checkout.**
+
+⛔ **AND IT IS PRODUCED BY TWO OF THIS ESTATE'S OWN RULES ACTING TOGETHER.** CLAUDE.md rule 14b
+**MANDATES** that a seat commit non-trivial work from its own linked worktree; rule 21 makes a comp-tool
+the **DEFAULT** instrument for search and inspection. Read together they point a worker at an instrument
+that cannot see the tree those same rules put it in. Neither rule is wrong on its own; the defect is in
+the seam, which is why no reader of either rule would go looking for it.
+
+**Mechanism (`0.9.0_WK_NFRA_REPORT~1` at `RP-s-16`, re-read at HEAD by `1.0.0_SA_CTO~Z` 2026-09-10 07:2xZ):**
+
+- `~/bin/comp-find:16` and `~/bin/comp-read:16` both hardcode
+  `_t="/c/Users/Opal Bloomberg/Desktop/ajb_workspace/.tools/comp-<tool>"` and exec it verbatim,
+  regardless of the invoking shell's cwd or which worktree it sits in.
+- `.tools/_comprail.py::repo_root()` runs `git rev-parse --show-toplevel` with **`cwd=_HERE`** -- the
+  directory of the SCRIPT ITSELF -- never `PWD`, never the caller's cwd. So `repo_root()` always resolves
+  to whichever tree the shim's hardcoded `_t` points at.
+
+**Measured, arm 1 -- a canary the tool could not see (`0.9.0_WK_NFRA_REPORT~1`, worktree
+`C:/Users/Opal Bloomberg/Desktop/wk-NR2-1` @ `1443d20f78`):** wrote an untracked file carrying a unique
+token inside that cell's own write surface, then searched for the token. `comp-find` at the default
+`corpus=all` returned **`DENOMINATOR: 0 hit(s) across 53245 file(s) scanned`** -- a measured zero over
+53,245 files that never covered the worktree's own new file. Re-run at `--corpus raw` (**501,365** files,
+the maximal scope): still **0** hits on the canary's content. ⭐ **THE DISCRIMINATOR:** the only 2 hits at
+`raw` were `comp-find`'s own telemetry echo of the search TERM in `org/mcp/comp-tool-runs.jsonl` and
+`org/mcp/comp-which-rail.log` -- **and neither file exists under that worktree at all** (confirmed by
+direct `ls`). The corpus scanned could only have been the main tree's disk, at any width.
+
+**Measured, arm 2 -- a second run, a DIFFERENT project (`1.0.0_SA_CTO~Z`, prior session):** `comp-find`
+invoked from a linked worktree returned **`0 hit(s) across 173 file(s)`** -- a real, non-zero file
+denominator -- for a token that returned **8 hits** when the identical query was run from the main tree.
+Two empirical arms, two projects, two seats.
+
+**Exposure is CURRENT, not theoretical (`git worktree list`, 2026-09-10 07:2xZ):** FOUR linked worktrees
+live besides the main checkout, two of them belonging to seats mid-work -- `2.0.0_SA_COO~ZI`'s
+`coo-zi-iamroles-l6` and `2.0.0_SA_COO~Z`'s `coo-z-drive-t1`.
+
+⚠ **SCOPE HONESTLY BOUNDED:** the arms above exercise `comp-find`. `comp-read` and `comp-which` share the
+same shim shape and the same `repo_root()`, so the mechanism covers them by construction -- but they have
+**not** been separately exercised from a worktree, and this entry does not claim they were.
+
+---
+
 ## What disarms these, and what does not
 
 **DISARMED:** the hazard was that a future caller reads a zero as evidence. These limits are now a
 findable, citable record, and the three ARMED rows (`NFRA_REPORT-Z-W1-S1`, `NFRA_REPORT-Z-W1-S2`,
 `NFRA_REPORT-Z-W2-S6`) are dispositioned against it.
 
+⛔ **`LIMIT 4` IS THE EXCEPTION AND MUST NOT BE READ AS A FOURTH DISARM.** `NFRA_REPORT-Z-W1-S5` is
+`DISMISSED_WITH_REASON` (`NFRA_REPORT-Z-S12` @`73ffb25e28`), which is a ROUTING act: its remedy edits
+`~/bin` forwarders and `.tools/_comprail.py`, so under spine amendment 2.4 it leaves that project's
+chain rather than being disarmed, and amendment 2.6 would refuse it as a route-less remediation row.
+The finding is TRUE, ENDORSED and **LIVE at HEAD**. This entry is its durable carrier, not its closure.
+
 ⛔ **NOT FIXED, AND THE DISTINCTION IS THE POINT.** The graph still models no `GOLD_SCRIPT` ->
-`Lambda`/`ReactComponent` edge, the parser still misses both dynamic-key patterns, and the graph still
-carries no node type for a raw SNS phone-number/email endpoint. **Repairing any of the three is
-comp-tool build-lane work, owned by `1.0.0_SA_CTO~Z`, SIZED AND NOT DONE.** A document that warns about
-a gap is not a graph that models the edge, and nothing here should be cited as though any instrument
-improved.
+`Lambda`/`ReactComponent` edge, the parser still misses both dynamic-key patterns, the graph still
+carries no node type for a raw SNS phone-number/email endpoint, and **the comp-rail still resolves its
+corpus from the tool script's own location.** **Repairing any of the four is comp-tool build-lane work,
+owned by `1.0.0_SA_CTO~Z`, SIZED AND NOT DONE.** A document that warns about a gap is not a graph that
+models the edge, and nothing here should be cited as though any instrument improved.
+
+⚠ **`LIMIT 4` HAS NO OWNED L1 EITHER.** Opening the comp-rail's own project at L1 needs a CRO, and none
+is live on this fabric (`4.0.0_SA_CRO~Z` dead) -- a standing open call at Andrew. Named here so the gap
+is recorded rather than implied.
 
 ⚠ **A STRONGER CARRIER EXISTS AND WAS DELIBERATELY NOT TAKEN TONIGHT:** a one-line stderr banner in
 `.tools/comp-blast` and `.tools/comp-pipescript` would reach a caller who never opens this file, which
@@ -150,6 +220,11 @@ changes two shared tools' OUTPUT, and anything parsing their stderr is an unmeas
 via the tools that do model the edge, and treated every unresolved candidate as NOT deprecated rather
 than as dead. **Discovering an instrument's blindness while grounding a claim is the cell working, not
 failing.**
+
+**Nor does LIMIT 4 invalidate `TO-RP-s-16`.** That cell surfaced the blindness by writing a canary into
+its own write surface and testing whether its own instrument could see it -- then re-ran at the maximal
+corpus and identified the two telemetry hits as main-tree artifacts rather than accepting them as
+coverage. A cell that measures what its instrument cannot see, and says so, is the cell working.
 
 **Nor does LIMIT 3 invalidate `TO-RP-s-19`.** That cell's central finding for `opal-infrastructure-alerts`
 (24 alarms, one confirmed subscriber, zero working delivery leg) rests on `ALERT_DELIVERY.md`'s live
