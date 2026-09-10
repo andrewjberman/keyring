@@ -28,7 +28,14 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     ANY OF THEM. Andrew-direct 2026-09-10 ~20:1xZ: *"anything from L2 up to the L5 handoff to COO for decomp needs to be
     able to be handled by CTO so we dont have this arbitrary mcp'ing"* — the round trip is retired; measured that night:
     five of five L2–L5 carriers were already PERMIT for the CTO and two IRPT projects sat unregistered across four seats'
-    messages anyway, because the blocker was this sentence, not a lane) → L4 PRD (`1.0.0_SA_CTO` only — no COO, no CVO) →
+    messages anyway, because the blocker was this sentence, not a lane) → L4 PRD (`1.0.0_SA_CTO` only — no COO, no CVO) → **L4-R SIGN-OFF GATE: `4.0.0_SA_CRO` signs the coverage map for
+    CONTENT carriage and `3.0.0_SA_CVO` signs the ENDPOINT section against the ratified pins, both as files in lane
+    `TREE_PRD_SIGNOFF` the CTO cannot write; the L4 notifier WITHHOLDS the COO delivery until both are SIGNED at the
+    current `prd_version` and `.tools/to-pipeline-gate.py` LIMB 6 REFUSES a task order against an unsigned PRD.
+    Andrew-direct 2026-09-10 ~21:2xZ: *"CRO and CVO should have to sign off on PRD before COO gets it."* Measured
+    the same night: thirteen corrections in three unrequested passes on two PRDs the flow had declared decomposable.
+    COST: two reads per PRD version, on the critical path by design. NON-APPLICATION: a header-only bump is signed
+    on the header; an L10 addendum that changes no cell is signed on the ENDPOINT delta** →
     L5 decomp + battery → L6 ONE ISSUANCE covering EVERY cell (`2.0.0_SA_COO` only; fan-out derived from the
     decomp's dependency chains and stated as `fanout:` data in the issuance commit, default cap 8) → L7
     execute (WORKER SUBAGENTS of the COO, `0.9.0_WK_<CODE>~<n>`, one worktree each, NO send tool; the TO's

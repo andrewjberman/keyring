@@ -887,6 +887,11 @@ lanes:
     permitted_agents:
     - 4.0.0_SA_CRO
     description: Project tree, brief/ (step 1). Spec s.6.
+  TREE_PRD_SIGNOFF:
+    permitted_agents:
+    - 4.0.0_SA_CRO
+    - 3.0.0_SA_CVO
+    description: "Project tree, prd/signoff/ (L4-R, spine v3.14; Andrew-direct 2026-09-10 ~21:2xZ 'CRO and CVO should have to sign off on PRD before COO gets it'). The two reviewers' version-bound sign-off files, <serial>.json. SoD: the PRD's author (ANY_CTO on prd/**) CANNOT write here, and this longest-match rule DISPLACES prd/** for the signoff/ subtree; the L6 gate (to-pipeline-gate.py LIMB 6) and the L4 notifier read these files, nobody else writes them. Tilde lanes of each reviewer carry it."
   TREE_PROJECT_ROW:
     permitted_agents:
     - 1.0.0_SA_CTO
@@ -913,6 +918,9 @@ paths:
   org/missions/MACROS.yaml:
     lane: TREE_MACROS
     note: 'Project tree: the macro enum carrier (sibling of DIRECTIVES.yaml; longest-match displaces org/missions/** TIER0_MSTR for this one file).'
+  org/missions/*/*/*/prd/signoff/**:
+    lane: TREE_PRD_SIGNOFF
+    note: 'Project tree: prd/signoff/ (L4-R). Longest match DISPLACES prd/** (ANY_CTO): the author cannot sign its own PRD.'
   org/missions/*/*/*/prd/**:
     lane: ANY_CTO
     note: 'Project tree: prd/ (steps 2-4; the ENDPOINT lives INSIDE the PRD). Spec s.6.'

@@ -560,7 +560,25 @@ def _self_test():
     comp = '<criterion id="C2" cell_refs="CE-a-1"><invocation>a</invocation><expect>x</expect><expect>y</expect></criterion>'
     judg = '<criterion id="C3" cell_refs="CE-a-1" judgment="true"/>'
     noexp = '<criterion id="C4" cell_refs="CE-a-1"><invocation>a</invocation></criterion>'
+    SO = lambda files, ver="v0.4", last="abc123def456": _signoff_violations("t", "X_PRJ", "prd/X_PRJ_PRD.md", ver, last, files)  # noqa: E731
+    _cro = {"signed_by": "4.0.0_SA_CRO", "verdict": "SIGNED", "prd_version": "v0.4", "prd_pin": "abc123de"}
+    _cvo = {"signed_by": "3.0.0_SA_CVO~Z", "verdict": "SIGNED", "prd_version": "v0.4", "prd_pin": "abc123de"}
     arms = [
+        # LIMB 6 -- the PRD sign-off gate (L4-R), pure arms; the tilde signer counts for its base serial
+        ("signoff RED: no files -> refused naming BOTH reviewers",
+         lambda: len(SO({})) == 2 and all("NO sign-off" in x for x in SO({}))),
+        ("signoff RED: CRO signed, CVO missing -> refused naming the CVO only",
+         lambda: SO({"4.0.0_SA_CRO.json": _cro}) and len(SO({"4.0.0_SA_CRO.json": _cro})) == 1 and "3.0.0_SA_CVO" in SO({"4.0.0_SA_CRO.json": _cro})[0]),
+        ("signoff RED: one verdict REFUSED -> refused, review_ref named",
+         lambda: any("not SIGNED" in x for x in SO({"4.0.0_SA_CRO.json": _cro, "3.0.0_SA_CVO.json": dict(_cvo, verdict="REFUSED", review_ref="r@1")}))),
+        ("signoff RED: STALE version (signed v0.3, PRD v0.4) -> refused as version-bound",
+         lambda: any("VERSION-BOUND" in x for x in SO({"4.0.0_SA_CRO.json": dict(_cro, prd_version="v0.3"), "3.0.0_SA_CVO.json": _cvo}))),
+        ("signoff RED: pin mismatch (PRD changed after signing without a bump) -> refused",
+         lambda: any("reviewed bytes" in x for x in SO({"4.0.0_SA_CRO.json": _cro, "3.0.0_SA_CVO.json": _cvo}, last="ffff0000eeee"))),
+        ("signoff GREEN: both SIGNED at the current version and pin, CVO via a ~Z lane -> admitted",
+         lambda: SO({"4.0.0_SA_CRO.json": _cro, "3.0.0_SA_CVO~Z.json": _cvo}) == []),
+        ("signoff RED: an unreadable sign-off file is NOT a sign-off",
+         lambda: any("not readable" in x for x in SO({"4.0.0_SA_CRO.json": None, "3.0.0_SA_CVO.json": _cvo}))),
         ("coverage RED: two orders own a-1, a-2 of three -> refused naming CE-a-3",
          lambda: any("MISSING: CE-a-3" in x for x in grade(["CE-a-1", "CE-a-2"])[0])),
         ("coverage GREEN: three cells owned -> admitted, coverage noted 3 of 3",
@@ -1139,6 +1157,129 @@ def _top_section(text, heading):
     return text[end:] if not nxt else text[end:nxt.start()]
 
 
+# ---------------------------------------------------------------------------------------------
+# LIMB 6 -- THE PRD SIGN-OFF GATE (L4-R). Andrew-direct 2026-09-10 ~21:2xZ at the 1.0.0_SA_CTO
+# terminal, VERBATIM: "I dont want to ask shit this should be entirely automatic and gated, CRO and
+# CVO should have to sign off on PRD before COO gets it." Spine v3.14. A task order is REFUSED unless
+# its project's PRD carries, at the PRD's CURRENT prd_version, a SIGNED sign-off file from EACH of
+# 4.0.0_SA_CRO (the brief half) and 3.0.0_SA_CVO (the ratified-text half), at
+#   org/missions/D<n>/<MACRO>/<CODE>/prd/signoff/<serial>.json
+# in lane TREE_PRD_SIGNOFF, which the PRD's author (ANY_CTO on prd/**) cannot write. A sign-off is
+# VERSION-BOUND: a bump re-opens both. Measured cause: 13 corrections in three unrequested review
+# passes on two PRDs the flow had already declared decomposable (CVO d0e72ccd56; CRO e975e96fc0,
+# 637b2f8178). No new owner; two mechanical carriers (this limb, and the notifier withholding the
+# COO delivery). Non-retroactive per v3.13 for rounds already cut.
+# ---------------------------------------------------------------------------------------------
+SIGNOFF_REVIEWERS = ("4.0.0_SA_CRO", "3.0.0_SA_CVO")
+
+
+def _base_serial_of(s):
+    s = str(s or "").strip()
+    return s.split("~", 1)[0]
+
+
+def _signoff_violations(rel, code, prd_rel, prd_version, prd_last_commit, files):
+    """PURE. `files` = {basename: parsed-json-or-None} for every *.json under prd/signoff/.
+    Returns the refusal lines for ONE PRD. A tilde lane of a reviewer signs for its base serial."""
+    out = []
+    by_serial = {}
+    for name, doc in sorted(files.items()):
+        if not isinstance(doc, dict):
+            out.append("%s: project %s sign-off %s is not readable JSON -- an unreadable sign-off is NOT a sign-off"
+                       % (rel, code, name))
+            continue
+        b = _base_serial_of(doc.get("signed_by"))
+        if b in SIGNOFF_REVIEWERS:
+            by_serial.setdefault(b, []).append((name, doc))
+    for who in SIGNOFF_REVIEWERS:
+        got = by_serial.get(who) or []
+        if not got:
+            out.append("%s: project %s PRD %s has NO sign-off from %s at prd/signoff/ -- L4-R (spine v3.14): "
+                       "both reviewers sign the PRD at its current prd_version before any task order is cut; "
+                       "the CTO cannot sign its own document" % (rel, code, prd_rel, who))
+            continue
+        # the newest sign-off by that reviewer for THIS prd_version wins; older versions are stale by definition
+        current = [(n, d) for n, d in got if str(d.get("prd_version")) == str(prd_version)]
+        if not current:
+            seen = ", ".join(sorted(set(str(d.get("prd_version")) for _, d in got)))
+            out.append("%s: project %s PRD %s is at prd_version %s but %s signed only %s -- a sign-off is VERSION-BOUND; "
+                       "a bump re-opens it" % (rel, code, prd_rel, prd_version, who, seen))
+            continue
+        n, d = current[-1]
+        verdict = str(d.get("verdict") or "").upper()
+        if verdict != "SIGNED":
+            out.append("%s: project %s PRD %s sign-off %s from %s reads %s, not SIGNED (review: %s)"
+                       % (rel, code, prd_rel, n, who, verdict or "ABSENT", d.get("review_ref") or "no review_ref"))
+            continue
+        pin = str(d.get("prd_pin") or "").strip()
+        if pin and prd_last_commit and not (prd_last_commit.startswith(pin) or pin.startswith(prd_last_commit)):
+            out.append("%s: project %s PRD %s sign-off %s from %s names pin %s but the PRD last changed at %s "
+                       "without a prd_version bump -- the reviewed bytes are not the current bytes"
+                       % (rel, code, prd_rel, n, who, pin[:12], prd_last_commit[:12]))
+    return out
+
+
+def check_prd_signoff(root, rel):
+    """LIMB 6 wrapper: resolve the TO's project the way limb 4 does, then grade every named PRD's sign-offs."""
+    import json
+    import glob as _glob
+    code, rel_json, err = _project_row_rel(root, rel)
+    if not code or err:
+        return [], []
+    p = os.path.join(root, rel_json)
+    if not os.path.isfile(p):
+        return [], []
+    try:
+        with open(p, "r", encoding="utf-8") as fh:
+            doc = json.load(fh)
+    except Exception:  # noqa: BLE001
+        return [], []
+    if doc.get("dep_stage") is None or doc.get("dep_stage") == "REGISTERED":
+        return [], []
+    paths = _prd_paths(doc)
+    if not paths:
+        return [], []
+    v, notes = [], []
+    for rp in paths:
+        rp = rp.replace("\\", "/")
+        ap = os.path.join(root, rp)
+        if not os.path.isfile(ap):
+            continue  # limb 4 already names a missing PRD
+        try:
+            with open(ap, "r", encoding="utf-8", errors="replace") as fh:
+                text = fh.read()
+        except Exception:  # noqa: BLE001
+            continue
+        m = PRD_FENCE_RE.search(text)
+        try:
+            hdr = json.loads(m.group(1)) if m else {}
+        except Exception:  # noqa: BLE001
+            hdr = {}
+        version = hdr.get("prd_version")
+        if not version:
+            continue  # limb 5 refuses a header-less PRD; do not double-report
+        last = ""
+        try:
+            r = subprocess.run(["git", "log", "-1", "--format=%H", "--", rp], cwd=root, capture_output=True, text=True)
+            last = (r.stdout or "").strip()
+        except Exception:  # noqa: BLE001
+            last = ""
+        sdir = os.path.join(os.path.dirname(ap), "signoff")
+        files = {}
+        for fp in sorted(_glob.glob(os.path.join(sdir, "*.json"))):
+            try:
+                with open(fp, "r", encoding="utf-8") as fh:
+                    files[os.path.basename(fp)] = json.load(fh)
+            except Exception:  # noqa: BLE001
+                files[os.path.basename(fp)] = None
+        sv = _signoff_violations(rel, code, rp, version, last, files)
+        if sv:
+            v.extend(sv)
+        else:
+            notes.append("%s: L4-R sign-offs OK for %s at %s (%s)" % (rel, rp, version, ", ".join(SIGNOFF_REVIEWERS)))
+    return v, notes
+
+
 def _prd_conformance(prd_text, header_schema, expect):
     """LIMB 5 core, pure: complaints about ONE PRD's step-4 SHAPE. `expect` = {project, directive,
     fabric} from the project JSON (missing keys are not compared). Returns [] when conformant.
@@ -1352,6 +1493,11 @@ def check_file(root, rel):
     pc_v, pc_notes = check_prd_conformance(root, rel)
     v.extend(pc_v)
     notes.extend(pc_notes)
+    # LIMB 6 -- the PRD sign-off gate (Andrew-direct 2026-09-10 ~21:2xZ; spine v3.14 L4-R): both reviewers
+    # SIGNED at the PRD's current prd_version, or no task order is cut against it.
+    so_v, so_notes = check_prd_signoff(root, rel)
+    v.extend(so_v)
+    notes.extend(so_notes)
 
     pm = PREFLIGHT_RE.search(text)
     if not pm:
