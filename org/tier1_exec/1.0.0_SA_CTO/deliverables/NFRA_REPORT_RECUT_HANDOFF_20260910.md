@@ -106,6 +106,15 @@ Every decision this recut needed has been given: all thirteen sections; the exis
 than a new one; OpenAI and `gpt 5.6`; OPSEC findings distributed into the thirteen; clinical voice;
 no alarm vocabulary in the subject. **The cut proceeds without another word from him.**
 
+⭐ **RULED 2026-09-10 ~21:1xZ AND NO LONGER OPEN.** Andrew-direct, verbatim: **"all recs approved
+but call 3, dont need alarm."** He was asked whether *"runs every day without fail"* also meant being
+told when it **breaks**. It did not. ⛔ **NO ALARM, NO DEAD-LETTER QUEUE AND NO FAILURE NOTIFICATION
+IS AUTHORISED FOR THIS REPORT** -- not in this round, and not in a later one on the strength of a seat
+re-noticing that the gap exists. The gap is known, named, and accepted by the only party who could
+accept it.
+
+**SUPERSEDED, PRESERVED AS WRITTEN:**
+
 ⚠ **The one thing he has NOT ruled on**, carried from earlier and still open: whether *"runs every
 day without fail"* also means he wants to be told when it **breaks**. That would be an alarm, which
 the standing moratorium reserves to his explicit word. **It is not in this round and must not be

@@ -448,6 +448,18 @@ paid account's content programmatically is a commercial and contractual posture,
 **It is surfaced to him and NOT built around.** Nothing in this PRD authorises a cell to read those
 terms and rule on them.
 
+> ⭐ **RULED 2026-09-10 ~21:1xZ. ANDREW-DIRECT, VERBATIM: "all recs approved but call 3, dont need
+> alarm."** -- approving this seat's recommendation on the terms card. **THE RULING: the vendor's
+> terms are READ BEFORE ANY SCHEDULED CONSUMER SHIPS. The exploration and comparison he already
+> authorised do NOT need them.**
+>
+> **`C-SA-TERMS-BEFORE-SCHEDULE` (new, binding):** no cell may stand up a RECURRING or SCHEDULED
+> read of this vendor until the terms on programmatic access have been read and the finding
+> recorded. ⛔ **A one-off exploratory fetch is NOT a scheduled consumer and is not gated by this.**
+> ⛔ **AND NO CELL READS THE TERMS AND RULES ON THEM** -- the reading is a task, the ruling is
+> Andrew's, and a cell that does both has taken a commercial decision it does not hold.
+
+
 ⛔ **`C-SA-VENDOR-WORD` -- THE PER-USE EGRESS READING, RULED HERE BECAUSE IT IS L4's AND
 `2.0.0_SA_COO~ZZZ` CORRECTLY DECLINED TO RULE IT.** `C-VENDOR-EGRESS` requires Andrew's explicit
 per-use word and says a cell may neither spend nor assume it. His sentence names **the vendor, the

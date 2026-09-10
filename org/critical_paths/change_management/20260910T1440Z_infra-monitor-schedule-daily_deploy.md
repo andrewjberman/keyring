@@ -55,6 +55,22 @@ Measured on the live function at 14:4xZ:
 Andrew noticing an email did not arrive — which is precisely the "an alert that reaches nobody"
 class this very report exists to find, sitting on the report itself.
 
+> ⭐ **RULED 2026-09-10 ~21:1xZ. ANDREW-DIRECT, VERBATIM: "all recs approved but call 3, dont
+> need alarm."** Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_211xZ_OPEN_CALLS_ALL_RECS_APPROVED_EXCEPT_NO_ALARM.md`
+>
+> **THE FAILURE-VISIBILITY LIMB IS DECLINED, NOT DEFERRED.** He was asked directly whether "without
+> fail" also meant telling him when the report BREAKS. It did not. The ambiguity this seat refused
+> to resolve on its own is now resolved by the only party who could.
+>
+> ⚠ **THE CONSEQUENCE STANDS AND IS NOT HIDDEN BY THE RULING:** the function still has NO
+> dead-letter queue and ZERO alarms, so if the report fails to run, nothing tells anybody. **He has
+> decided that is acceptable.**
+>
+> ⛔ **NO SEAT MAY BUILD FAILURE-VISIBILITY FOR THIS REPORT ON THE STRENGTH OF RE-DISCOVERING THE
+> GAP.** Noticing it again is not a finding; it is this line.
+
+**THE TEXT BELOW IS PRESERVED AS WRITTEN AND IS NOW SUPERSEDED:**
+
 ⚠ **Closing that limb means an alarm, which the standing moratorium reserves to Andrew's explicit
 word.** His "without fail" is not read as that word — it is ambiguous between *"schedule it daily"*
 and *"tell me when it breaks"*, and the receiving agent does not adjudicate scope. **Surfaced to him
