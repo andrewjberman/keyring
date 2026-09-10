@@ -153,6 +153,16 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
     thought of.** A forward list covers what its author had in mind and omits silently; the same set written
     as a subtraction from a denominator cannot lose a member without the count disagreeing. COST: one
     denominator read. NON-APPLICATION: a set whose members are the literal argument you were handed.
+    ⛔ **AND THE SUBTRACTION'S DOMAIN MUST BE THE CLAIM'S POPULATION — CHOOSING THE DOMAIN IS ITSELF A CLAIM,
+    FALSIFIED BEFORE THE SUBTRACTION RUNS:** one UNSCOPED read of the term over the corpus, denominator
+    printed, compared against what the domain holds; a member the domain does not hold VOIDS the subtraction.
+    A subtraction over the wrong domain is BLINDER than recall — it arrives with a printed denominator and so
+    reads as MEASURED, and **a denominator certifies the SWEEP, never the SET.** ⛔ **THE FAILURE MODE IS A
+    GREEN:** a wrong domain returning NON-EMPTY gets argued with; returning EMPTY it gets ACTED ON. Measured
+    2026-09-10, `NFRA_CLDGRPH` W1-S38: a retirement's authorizing census read 0 of 78 over the declared
+    manifest while the unscoped read over 31,293 files found FIVE live consumers — the empty set WAS the
+    authorizing branch, surfaced only because the seat being graded ran the read nobody asked for. COST: one
+    unscoped read with its denominator. NON-APPLICATION: a domain that IS the corpus (nothing was narrowed).
     Measured 2026-09-10, FIVE instances in one night across five seats: `NFRA_OUTSET`-S36; `NFRA_COMPEFFICACY`-W1-S2;
     a COO arm naming two partners of three; `ETFS_GUARDRAIL` row S16 doing the same inside an ACCEPT (so a
     GRADE would have read REALIZED on the violation); and a manual-trigger addendum that enumerated the
