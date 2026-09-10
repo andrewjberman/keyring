@@ -6,6 +6,8 @@ Author: 4.0.0_SA_CRO. Review date: 2026-09-10. Requested by CTO message 95562.
 
 **Follow-up at `bde174b126` (v0.3): R2 and R5 are closed, and the coverage pointer is repaired. R1, R3, R4 and R6 have the smaller residual edits listed at the end of this review.** Their principal corrections landed; this is not a claim that all six findings are fully closed.
 
+**Current result at `62301f71e0` (v0.4): all six named review findings, their four residual edits, and the coverage pointer are closed at the document level.** The earlier results above remain the dated review history.
+
 ## Compared artifacts and method
 
 - Frontend PRD: `org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md` at `d555a33482`.
@@ -101,3 +103,18 @@ Read the committed changes from `d555a33482` through `bde174b126`, including the
 | R6 | B9 line 116 carries effective settings, typed identities, template cardinality/orientation, body asymmetries, no global-preference PUT, and synchronous vendor 201 versus Opal async job. | Carry creation with the captured portfolio/items JSON multipart form using the **real `upload_record_id` and correct units**, per pinned BK IV.4 step 3, line 208. Parsing units in B7 does not specify how B9 uses the returned upload record and serializes those units. Preserve the missing-upload-field gap. |
 
 The nonexistent CROSSES-column references are removed from both maps; the replacement references name actual ENDPOINT ownership/crossing lines and CONTRACTS columns. The additional v0.2 changes also correctly distinguish ten FE-consumed contracts from the FE-produced RenderPackage and name the cohort/classification contract carriers. No new broad review, outcome change or decomposition hold is introduced by these four residual edits.
+
+## Closure on CTO message 95594: PRDs v0.4
+
+Compared the complete v0.3-to-v0.4 diff and rechecked the affected committed rows at `62301f71e0`:
+
+| Residual | Verified correction |
+|---|---|
+| R1 mailbox reuse path | BK PATHS line 166 assigns the grouped YCharts client/cookie-capture/pipeline paths to B8 alone; B6 still correctly states that no mailbox implementation has been verified. |
+| R3 Analysis source-to-render mapping | FE S3/S8 coverage rows at lines 187/192 now name F8/F9 beside F5. F8/F9 and B14 retain their explicit FWD-4 assignments and Analysis-specific rendering constraints. |
+| R4 wrapper/leaf attribution | BK B12 line 119 now preserves an Opal wrapper or leaf's proper attribution and requires both wrapper-over-non-Opal-children and leaf-under-non-Opal-wrapper fixtures. |
+| R6 upload creation semantics | BK B9 line 116 now specifies the captured portfolio/items JSON multipart form, real upload_record_id, correct units and 201 model_portfolio_id response. Unknown upload field names remain a proof gap. |
+
+R2's FE preview consumer and R5's historical-evidence controls remain intact; both CONTRACTS sections and the complete B13 row are unchanged from the already-reviewed v0.3. Both ENDPOINT sections remain unchanged from v0.1. Coverage remains 34/34 and 37/37, with 14 frontend and 18 backend candidates. The nonexistent coverage pointer remains removed.
+
+**No named review finding remains open at this PRD revision.** This closes the bounded document review, not implementation acceptance or universal source-losslessness certification. Actual mailbox permissions, upload fields, three-variant PDF evidence, model-unit certification and the required execution fixtures still need the proof already assigned in the PRDs. The review adds no hold or further review gate to CTO's v0.4 handoff. Push remains held; no publication is claimed.
