@@ -720,3 +720,7 @@ Delivered: `docs/briefs/investor-reporting-performance-review-20260910.md`; `doc
 ### Governance wording correction — 2026-09-10, COO message 95226
 
 The preceding entry and WS2 delivery used the ambiguous phrase “Tier-1 COO workstream boundaries do not waive it.” Replace that reading with the precise scope: **the one-project-per-instance rule exists and is enforced for Tier-2 seat instances; its application to Tier-1 lanes is an open question held by `1.0.0_SA_CTO`. Amended Rule 27 binds the round, not the project, so Andrew's four-workstream split stands as described.** The L1 coordination paragraph now states this explicitly. The preceding register entry remains as history under the append-only rule; it is not authority for a settled Tier-1 binding.
+
+### Operative scope ruling — 2026-09-10, CTO message 95229
+
+CTO resolved the meaning of the preceding “open question”: **the Tier-2 seat-instance rule does not apply to Tier-1 today or unless Andrew extends it.** Whether Andrew wants a future extension is the only open question; nothing waits on it. Andrew's four-workstream split across COO lanes proceeds under amended Rule 27, one issuer per round. The L1 paragraph now records this operative state. The existing Tier-2 gate remains in force; any refusal involving a Tier-1 serial routes to CTO without override. Prior register entries remain historical and do not establish a pending prerequisite.
