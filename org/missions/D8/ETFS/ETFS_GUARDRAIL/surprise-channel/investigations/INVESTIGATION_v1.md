@@ -2695,3 +2695,41 @@ Filed by `2.0.0_SA_COO`, the `disarm_owner` named on `ETFS_GUARDRAIL-W4-S14`.
   }
 ]
 ```
+
+
+---
+
+## S39 -- THE CLOSE: what closes proven, what closes ungraded, and what survives with no owner
+
+Filed by `2.0.0_SA_COO` on Andrew's closing word.
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-S39",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-10T20:25Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "UNOWNED AT CLOSE -- this seat is the disarm_owner of the two carried rows and is recording that it CANNOT discharge them: the project that would have held their remedy is closed on Andrew's word. Re-owning them needs a successor project or his word; nobody is working them and this row exists so that is FINDABLE rather than implied.",
+    "one_line": "ETFS_GUARDRAIL CLOSED on Andrew-direct 2026-09-10 ~20:2xZ ('CLose it we're done here') with the single permitted driven run UNSPENT -- so FWD-9 and FWD-10 close UNGRADED rather than NOT_REALIZED, and two ARMED rows survive the close with no owner.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ANDREW-DIRECT 2026-09-10 ~20:2xZ at the 2.0.0_SA_COO terminal, VERBATIM AND ENTIRE: 'CLose it we're done here'. Given in direct answer to this seat's statement that closing without the run would close FWD-9 and FWD-10 ungraded, and that the run was one dispatch away -- so the consequence was named to him BEFORE the word, not discovered after it.",
+        "EG-s-21 was OPEN and its S21-AC1 was FAIL at close. Its blocker W4-S17 had been CLEARED on its stated cause by EG-s-31, so the run was fireable and was not fired.",
+        "EG-s-31 TERMINAL at 213b444ac9, S31-AC1 PASS by output 5 of 5 arms, token conditional (a mutant withheld it at 3 of 5), proof instance VALID rc=0.",
+        "TWO ARMED ROWS CARRIED: W4-S20 (a SECOND presence-keyed self-heal at render_month_end.py:83-92 for _orion_vendor_asof.py -- current today only by luck) and W4-S22 (2 of 5 coverage members were stale, so the DEPLOY STEP for data/etfs/scripts/coverage/ is owned by no cell).",
+        "BOX i-070477bf35fc54409 was STARTED by EG-s-31 and LEFT RUNNING deliberately; stopping an EC2 is a human-confirmation act and was not taken.",
+        "SPINE STATE AT CLOSE, stated rather than implied: no L8 packet, no CVO slug and no L10 round analysis exist for round 3. The close is a SOVEREIGN act, not the loop reaching CLOSED through L9/L10."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rule 27: a project is CLOSED when every FWD grades REALIZED, after L10, and L10 runs only once every task order is terminal and every row dispositioned.",
+    "world_is": "This project is closed by Andrew's word with one task order not terminal, two rows ARMED and undispositioned, no L8 packet, no CVO slug and no L10 analysis. THAT IS A LEGITIMATE OUTCOME AND NOT A DEFECT -- a sovereign close outranks the loop, and he was told the cost before he gave the word. But the loop's own closing artifacts do not exist, so nothing downstream should read this project's state as having been GRADED.",
+    "notes": "WHAT CLOSES PROVEN AND WHAT CLOSES UNPROVEN, so a later reader does not have to reconstruct it. PROVEN BY ACT during this round: the ladder-skipped branch carries the provider property (EG-s-29); the terminal email stops asserting rungs that never ran and carries a forcing disclosure on both branches (EG-s-30, deployed and served); the box runs the coverage package its renderer expects (EG-s-31, proven by exercise on the box rather than by a receipt). UNPROVEN AND NOW UNPROVABLE WITHOUT A NEW PROJECT: FWD-9, that a forced refusal does not write to the publish keys, and FWD-10, that the terminal send reaches a person. \u26d4 THESE ARE UNGRADED, NOT FAILED. Nobody measured them and nobody may record them as NOT_REALIZED on the strength of this close -- an unrun test is not a failing test, and the distinction is the whole reason FWD-7 sat NOT_EVALUATED earlier in this project's life rather than being scored. \u2b50 THE ROUND'S MOST TRANSFERABLE FINDING IS NOT ABOUT ETFS AT ALL AND IT SURVIVES THE CLOSE: three cells each verified their own served file, each was right, and the defect lived in what they SHARED -- a coverage package the renderer imports but no cell owned the deploy of. The instrument that found it was a worker REFUSING to spend an irreplaceable run and asking what the passing checks had in common. Rule 22 already names that failure mode; what this round adds is a measured instance and the observation that A SELF-HEAL KEYED ON PRESENCE CANNOT SEE STALENESS, which is a class and appears at least TWICE in this one file. \u26a0 AND THE ISSUER'S OWN DEFECT IS ON THE RECORD BECAUSE IT IS THE SAME ONE: EG-s-31's face named the property correctly in one section and then, two paragraphs later, wrote a shape as 'remove the box-side DIRECTORY' -- ONE WRITER of the property rather than the property, in the very document that forbade exactly that. The assignee caught it, narrowed the act to two named files with each sha256 printed before removal, and observed that the bound should have read 'make the import fail'. Related: [[ETFS_GUARDRAIL-W4-S17]] (the refusal that found it), [[ETFS_GUARDRAIL-W4-S20]], [[ETFS_GUARDRAIL-W4-S22]], [[ETFS_GUARDRAIL-S38]]."
+  }
+]
+```
