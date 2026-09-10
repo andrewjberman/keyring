@@ -106,6 +106,9 @@ class HeartbeatLostRegistrationRecovery(unittest.IsolatedAsyncioTestCase):
         class FakeComms:
             _poll_task = None
 
+            def _broker_fetch(self, path):
+                return [{"serial": SERIAL, "pid": os.getpid()}]
+
             def __init__(self):
                 self.registrations = 0
                 self.beats = 0
