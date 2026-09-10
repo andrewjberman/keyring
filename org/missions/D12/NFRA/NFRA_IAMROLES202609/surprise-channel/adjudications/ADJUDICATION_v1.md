@@ -132,3 +132,91 @@ instruments; no L8 packet had been sent when it was written, and none is require
   }
 ]
 ```
+
+## C-S4 -- the NINE judgment grades: eight PASS, one FAIL. `IN-CODE` is defined as a FACT and applied to eight members measured ABSENT, so '10 IN-CODE' reads as ten declared roles when two are
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S4",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T11:40Z",
+    "one_line": "L9, round 1: the round's NINE judgment criteria are graded -- EIGHT PASS and ONE FAIL. The FAIL is IAM-s-6's AC5 and it is a TOKEN defect, not a research defect: `IN-CODE` is defined in the document as 'a FACT, not a recommendation' and then applied to EIGHT members the same document measured as ABSENT from every first-party Terraform file. The coverage line reads '10 IN-CODE', and a governance reader takes that as ten declared roles when roughly TWO are. The six EXEMPT dispositions are exemplary and the per-member research is sound throughout.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A GRADE RECORD, per the `grades` field's own contract: a row carrying grades that adjudicates no item and opens nothing carries DISMISSED_WITH_REASON with its reason naming it as one. This row adjudicates no investigation item; its content is the nine verdicts in `grades`, which is the field a consumer can reject on. The dismissal disposes of THIS ROW only -- all nine grades stand as the round's L9 verdicts.",
+    "grades": [
+      {
+        "criterion": "IAMs1-AC5",
+        "instance": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~1/NFRA_IAMROLES202609.TO-IAM-s-1.permission-grain-usage-instrument.proof_of_spec.json@d0c36abcc8f5",
+        "verdict": "PASS",
+        "reason": "THE BAR -- 'pick any role, a reviewer can see which of the things it is allowed to do it has never actually done, and over what period' -- is met on the RENDERED output. The instrument prints, unaided: the ROLE, the PERIOD ('lookback 90 days') in the units FWD-2 asks for, a DENOMINATOR on the same line (22 granted permissions examined), and per permission exactly one of three states. ⚠ BASIS OF THIS GRADE, STATED SO IT IS NOT OVER-READ: this seat did NOT re-run comp-iam-usage. It graded the RENDERED SPECIMEN quoted in the instance plus the TWO DOWNSTREAM DELIVERABLES THAT CONSUME IT -- COVERAGE_VOCABULARY.md and POSTURE_NUMBER.md -- both of which render the same live figures (22 / 6 / 2 / 14) coherently. A downstream artifact that consumes an instrument and renders consistent numbers is corroboration of the instrument's output, not of its internals."
+      },
+      {
+        "criterion": "IAMs2-AC5",
+        "instance": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~1/NFRA_IAMROLES202609.TO-IAM-s-2.posture-number-with-denominator-and-vintage.proof_of_spec.json@cb93354362df",
+        "verdict": "PASS",
+        "reason": "IT IS AN ANSWER, AND WHAT MAKES IT ONE IS THAT IT REFUSES THE FLATTERING READING. 'POSTURE: 8 of 22 granted permissions on opal-data-refresh-lambda-role carried an observed usage verdict under a 90-day lookback, vintage 2026-09-10' -- a numerator, a denominator, a window and a vintage, marked `claim: measured` and read live at render time. ⭐ THE DELIVERABLE THEN NARROWS ITS OWN HEADLINE AGAINST ITSELF: the outcome text says 'the estate's' posture and the file says in terms that this is 'a posture number for the ONE ROLE IAM-s-1 exercised, not for the estate's role population', citing A VALUE MUST CARRY ITS CLAIM. AND THE LARGEST BAND IS THE ONE IT REFUSES TO HIDE -- `unobservable` at 14 of 22 (64%) is never folded into the numerator and never silently dropped. 'Nobody has measured it' does stop being the answer for this role; the file is equally clear that it has not become the answer for the estate."
+      },
+      {
+        "criterion": "IAMs3-AC5",
+        "instance": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~1/NFRA_IAMROLES202609.TO-IAM-s-3.coverage-vocabulary-unused-vs-unobservable.proof_of_spec.json@26cb49f072ab",
+        "verdict": "PASS",
+        "reason": "SOMETHING NOBODY LOOKED AT NEVER READS AS SOMETHING LOOKED AT AND FOUND CLEAN, and the vocabulary is built to hold that line rather than merely to state it. The `unobservable` row of the vocabulary table carries an explicit means-NOT column: '**NEVER** clean, safe, probably unused or any other reading that credits an inspection that did not happen.' The renderer prints all three bands UNCONDITIONALLY including zero counts, so a role with only unobservable rows still prints `used=0 never-used=0` rather than omitting the bands nobody hit -- SILENCE IS THE THIRD WAY A NON-INSPECTION CAN READ AS CLEAN, and it is closed. ⭐ THE LIVE SPECIMEN CARRIES THE DISCRIMINATION THE BAR REQUIRES: s3:GetObject is granted and this account has NO action-level tracking for s3, so it renders `unobservable` with the reason on the row; cloudfront:GetInvalidation IS tracked and shows no access, so it renders `never-used`. A genuinely unobservable permission beside a genuinely completed inspection, distinguishable by a reader. And the largest band on the role is the unobservable one -- the most flattering number to hide."
+      },
+      {
+        "criterion": "IAMs4-AC5",
+        "instance": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~2/NFRA_IAMROLES202609.TO-IAM-s-4.condition-axis-reader-what-a-policy-requires.proof_of_spec.json@6135bb93f6ff",
+        "verdict": "PASS",
+        "reason": "TIGHT SCOPING IS PREVENTED FROM HIDING THE ABSENCE OF A SECOND FACTOR, and the exhibit is chosen adversarially rather than conveniently. The displayed statement is `aws_iam_role_policy.runner_selfstop` / Sid=SelfStopThisInstanceOnly -- ARN-pinned to exactly ONE EC2 instance for exactly ONE action, which is the TIGHTEST POSSIBLE (action, resource) scoping short of a deny-everything default -- and the reader renders it `REQUIRES-NOTHING`. THAT IS THE BAR EXACTLY: the most tightly scoped rule in the set is the one displayed as requiring nothing of the caller, so scope cannot buy silence on the condition axis. The document says so in terms -- 'REQUIRES-NOTHING is the token that makes that absence VISIBLE' -- and the same token appears on further statements (scheduler, orchestrator StartRunnerInstanceOnly, capture_writer), so it is a rendered axis rather than a single worked example."
+      },
+      {
+        "criterion": "IAMs5-AC6",
+        "instance": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/NFRA_IAMROLES202609.TO-IAM-s-5.declared-vs-live-reconciler-member-identity.proof_of_spec.json@52c82c753767",
+        "verdict": "PASS",
+        "reason": "THE TWO PLANES ARE SEPARATED IN TERMS AND NEITHER IS PRESENTED AS EVIDENCE ABOUT THE OTHER. The deliverable's INSTRUMENT AND VINTAGE section states: 'This is one plane only. comp-iam ... reports 195 roles from that source plane. 195-vs-203 or 195-vs-219 is NOT a DECLARED-vs-LIVE delta about this cell's question -- it is comp-iam's own parser reach on a different plane ... and is not presented here as evidence about the undeclared set.' ⭐ THAT IS THE HARDER HALF OF THE BAR: the tempting move is to quote the cross-plane difference as a finding, because it looks like a governance number. The cell names it as an instrument artefact instead, and does so BEFORE anyone could mistake it. The DRIFT figures it does use are all read from the one plane it declares."
+      },
+      {
+        "criterion": "IAMs6-AC5",
+        "instance": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/NFRA_IAMROLES202609.TO-IAM-s-6.governance-disposition-of-undeclared-roles.proof_of_spec.json@ffcc39967ad0",
+        "verdict": "FAIL",
+        "reason": "⛔ THE DISPOSITION DOES NOT FIT ITS MEMBER FOR EIGHT OF THE SIXTEEN, AND THE DEFECT IS THE TOKEN RATHER THAN THE RESEARCH. The document defines its primary token in terms -- 'Where step 1 or 2 found the role genuinely declared, the disposition is IN-CODE AS A FACT, NOT A RECOMMENDATION' -- and then applies IN-CODE to members it measured as ABSENT. Item 1, verbatim: '`bd-merge-daily-lambda-role` -- IN-CODE. Absent from the fresh 191-role comp-iam parse and from EVERY FIRST-PARTY TERRAFORM FILE in this repo'. Items 2, 5, 6, 9, 11, 14 and 16 carry the same shape. The reconciling sentence exists ('dispositioned IN-CODE -- the ordinary default state FWD-4 asks for absent any reason to except them') but it sits in a DIFFERENT PARAGRAPH and gives the SAME TOKEN a second, incompatible intent: IN-CODE means 'is declared' for item 13 (`seeking-alpha-scraper-role`, where the file itself says 'this one is FACTUALLY already declared') and 'ought to be declared' for the eight. || ⛔ WHY THIS FAILS THE BAR RATHER THAN BEING A WORDING NIT: AC5 asks whether a READER WOULD ACCEPT THESE AS DECISIONS. The coverage line reads '10 IN-CODE, 6 exempt', and a governance reader taking that at face value concludes TEN of the sixteen undeclared roles are declared. Roughly TWO are. The token that is supposed to carry the finding is the one that erases it, and nothing in the document flags the dual use -- this seat searched for a self-disclosure and found none. It is rule 24(iii) INTENT COHERENCE: one axis, one intent, and this axis carries two. || ⭐ WHAT IS EXPLICITLY NOT WRONG, because the grade should not be read as condemning the cell: the SIX EXEMPT lines are exemplary -- individually reasoned, non-templated, each naming the decision owed AND why no owner could be named, and the cell correctly refused to invent one. The per-member research is sound throughout, including the seeking-alpha correction that contradicts the drift instrument on evidence. THE REMEDY IS SMALL AND DOES NOT TOUCH THE RESEARCH: split the token -- IN-CODE-DECLARED for the members a source read found, ADOPT-RECOMMENDED (or equivalent) for the default -- which is a one-line edit per row and a corrected coverage line."
+      },
+      {
+        "criterion": "IAMs7-AC5",
+        "instance": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~4/NFRA_IAMROLES202609.TO-IAM-s-7.historical-remediation-completion-on-the-artifact.proof_of_spec.json@ff86d57e03a1",
+        "verdict": "PASS",
+        "reason": "A READER LEARNS WHETHER THE WORK WAS FINISHED, AND THE FOLDER IS EXPLICITLY EXCLUDED FROM THE METHOD -- which is the exact failure mode FWD-6 names. The document's method paragraph states: 'Verdicts are never drawn from which subfolder a plan document sits in (active/ vs completed/); a plan's folder is not consulted anywhere in this analysis.' ⭐ AND THE HARDEST CASE PROVES IT: Plan 1 sits in `active/` and is verdicted NOT-LANDED on the artifact -- the two named custom policies return 10 hits, ALL inside the plan document and the worker's own tool logs, with ZERO in infra/aws/terraform/ across 569 files scanned; a live `list-policies` returns []; FIVE of the plan's eight named target roles return NoSuchEntity; and the three that survive carry no IAMMigrationStatus tag. Each verdict token (NOT-LANDED / PARTIAL, split into three independently-verdicted phases / LANDED) is grounded in a citation the reader can re-run. The pinned vintage is re-confirmed at grading time so nothing moved mid-round."
+      },
+      {
+        "criterion": "IAMs8-AC5",
+        "instance": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~2/NFRA_IAMROLES202609.TO-IAM-s-8.pre-flight-blast-radius-exercised.proof_of_spec.json@aafee3fc572a",
+        "verdict": "PASS",
+        "reason": "SOMEONE CAN FIND OUT WHAT WOULD STOP WORKING AND BE RIGHT, and 'be right' is carried by the right instrument. The cell reaches EXERCISED through `simulate-principal-policy` -- a read-only API and the simulate battery the PRD's D3 named as never yet run for this project -- rather than by reading policy text and inferring. ⛔ AND IT APPLIED NOTHING: the deliverable states that no mutating IAM call and no IaC application occurred at any point, which is what keeps 'nothing breaks because we tidied up' honest as a PREDICTION rather than demonstrated by breaking something. The prediction names 6 concrete caller paths, TWO of them traced to real call sites at named lines (data_refresh/lambda_function.py:373 and :528). ⭐ BUILD-LADDER DISCIPLINE IS VISIBLE AND IS PART OF WHY THE ANSWER IS TRUSTWORTHY: it COMPOSES IAM-s-1's reach-check and permission-cold and SHELLS OUT to IAM-s-4's condition-axis-reader rather than re-implementing either, so the blast-radius answer inherits those instruments' own disciplines instead of a second copy's drift."
+      },
+      {
+        "criterion": "IAMs9-AC5",
+        "instance": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~1/NFRA_IAMROLES202609.TO-IAM-s-9.re-run-harness-composed-not-scheduled.proof_of_spec.json@9f594243400a",
+        "verdict": "PASS",
+        "reason": "A STRANGER CAN RE-RUN IT, AND THE HARNESS IS BUILT SO IT CANNOT QUIETLY STOP. It resolves its own repo root via `git rev-parse --show-toplevel` with no hardcoded device path -- which matters on THIS fabric, where the committed docs hardcode the other machine -- takes only --role/--lookback/--dry-run with stated defaults matching IAM-s-1/s-2's own, carries a --dry-run that touches nothing, and reproduced IAM-s-2's exact figures (22 / 6 / 2 / 14) on a live re-read. ⭐ THE PART THAT ANSWERS 'WITHOUT IT QUIETLY STOPPING BECAUSE ONLY ONE PERSON KNEW HOW' IS THE CARRIED CAVEAT: IAM-s-2's one-role scope limit is quoted VERBATIM in the header under 'DO NOT DROP ON A RE-RUN', so the next runner inherits the bound rather than the number alone -- the single most losable thing in a re-run. ⛔ AND IT HONOURS TWO STANDING ESTATE CONSTRAINTS BY NOT ACQUIRING ANYTHING: it mints no timer, notification or monitor of any kind (the standing alerting moratorium 'honoured by never acquiring one', re-run cadence left a human decision), and it never calls Access Analyzer, naming the reason as price-unread and stating that availability is not authorization."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SET IS NINE, DE-DUPLICATED, AND THE DE-DUPLICATION MATTERS: a census over the instance FILES returns ELEVEN judgment rows because TO-IAM-s-4 and TO-IAM-s-5 each carry a BYTE-IDENTICAL DUPLICATE instance (C-S1). Keyed on `to_id` the set is NINE, one per order. Grading eleven would have graded two criteria twice and reported a coverage figure two too high.",
+        "EVERY GRADE WAS TAKEN AGAINST THE DECIDING ARTIFACT, NOT THE WORKER'S ACCOUNT OF IT. The deliverables were opened at this seat -- COVERAGE_VOCABULARY.md, POSTURE_NUMBER.md, GOVERNANCE_DISPOSITION.md, HISTORICAL_COMPLETION.md, DECLARED_VS_LIVE.md, CONDITION_AXIS.md, BLAST_RADIUS.md and rerun-assessment.sh -- and the one FAIL was found by reading the disposition table row by row against the document's own definition of its token, which no summary would have surfaced. ⚠ THE ONE GRADE NOT TAKEN ON A PRIMARY ARTIFACT IS IAMs1-AC5 and its reason says so: the instrument was not re-run, and the grade rests on the rendered specimen plus two downstream consumers rendering the same figures coherently.",
+        "⭐ EVERY ONE OF THE NINE WAS LEFT UNGRADED BY ITS OWN ASSIGNEE, correctly, and several said so in terms ('Whether that constitutes an ANSWER ... is graded by 3.0.0_SA_CVO~Z at L9'). A worker that assembles the evidence for a bar it may not score is the behaviour that makes a judgment criterion worth having, and this round is nine for nine on it.",
+        "⛔ THE GRADES ARE TAKEN AGAINST THE DELIVERED BAR WHERE THE TWO DIVERGE, WHICH IS Z-S7'S FINDING APPLIED RATHER THAN CITED. Four of four respawn hand-overs delivered a worker face RICHER than the committed order, so grading AC5 from the committed file alone would score against a narrower bar than the worker was held to. Z-S7 carries the delivered text for IAM-s-9's AC5 and this grade uses it. THAT ROW NAMED THIS SEAT AS ITS DISARM OWNER AND THIS IS THE ACT THAT DISCHARGES IT.",
+        "THE FAIL IS NARROW AND ITS REMEDY DOES NOT TOUCH THE RESEARCH: split the token into IN-CODE-DECLARED (members a source read actually found) and a distinct recommendation value for the default, plus a corrected coverage line. One edit per affected row. NOTHING in the cell's per-member evidence is disturbed, including the seeking-alpha-scraper-role correction that contradicts the drift instrument on a direct Terraform citation and which this seat verified independently at C-S2."
+      ]
+    },
+    "spec_asserts": "L10 requires every judgment criterion of every proof-of-spec instance under the project to be graded in the CVO's adjudication, never self-graded by its executor.",
+    "world_is": "The project carries nine distinct judgment criteria, all correctly left ungraded by their assignees; eight are met and one is not.",
+    "notes": "⛔ L10 IS NOW REACHABLE ON BOTH LIMBS BUT THE ROUND DOES NOT CLOSE: 18 of 18 items dispositioned (C-S2/C-S3) and 9 of 9 judgment criteria graded (here). Rule 27 needs COMPLETION_REPORT + COMPLETION_GRADES with EVERY GRADE REALIZED, and IAMs6-AC5 is a FAIL -- so the round is slug-ready and NOT close-ready, and there is no COMPLETION_REPORT at any round of this project besides. || THE FAIL IS NOT A BLOCKER ON THE SLUG and this seat does not treat it as one: a failed judgment criterion is a graded outcome, not an open item, and it rides the slug as a finding with a named remedy. || WHAT THIS ROW DOES NOT DO: it does not re-grade the 46 command-method PASS criteria, which reduce to an invocation and an expectation and are the executor's to self-report and the checker's to read; and it does not grade FWD outcomes, which are 1.0.0_SA_CTO~Z's at L10."
+  }
+]
+```
