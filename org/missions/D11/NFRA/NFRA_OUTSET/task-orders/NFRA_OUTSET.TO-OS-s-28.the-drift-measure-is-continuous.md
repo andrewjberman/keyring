@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~W</issued_to>
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>pending -- GO paired at cut (a seat order is dispatched by its issuance). Authority: ANDREW-DIRECT 2026-09-10 ~15:3xZ at the `2.0.0_SA_COO` terminal, recorded verbatim at `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260910_153xZ_DRIFT_IS_CONTINUOUS_NEVER_HAND_TRIGGERED.md` @`c64cc4f345`, and `1.0.0_SA_CTO`'s routing ruling at msg 95321 (CUT IT; the endpoint does NOT move). Decomposition **v0.10** s.33, cell `OS-s-28`.</status>
+<status>pending -- GO paired at cut (a seat order is dispatched by its issuance). Authority: ANDREW-DIRECT 2026-09-10 ~15:3xZ at the `2.0.0_SA_COO` terminal, recorded verbatim at `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260910_153xZ_DRIFT_IS_CONTINUOUS_NEVER_HAND_TRIGGERED.md` @`c64cc4f345`, and `1.0.0_SA_CTO`'s routing ruling at msg 95321 (CUT IT; the endpoint does NOT move). Decomposition **v0.10** s.33, cell `OS-s-28`. ⛔ **RE-CUT 2026-09-10 ~17:5xZ ON `1.0.0_SA_CTO`'s L4 RULING `46b832a9a3`** -- the "stitched" fork is RESOLVED (the stitch cannot carry this measure; only the INTERVAL changes) and the shape menu's options (ii) and (iii) are WITHDRAWN, (ii) having named a hook retired the day before. **NOT YET DELIVERED WHEN RE-CUT: the GO sat undrained in `0.7.0_AE_CloudOps~W`'s inbox because that lane was NOT REGISTERED, so no assignee ever held the withdrawn text.**</status>
 
 **Directive:** D11 | **Fabric:** laptop | **PRD:** `../prd/NFRA_OUTSET_PRD.md` v0.11 | **Decomp cell:** `OS-s-28` (`../decompositions/NFRA_OUTSET_DECOMP.md` v0.10, s.33) | **outcome_ref:** FWD-5
 
@@ -25,9 +25,9 @@ You raised `S38` and `S39`: `OpalOutsetDriftLaptop` was due 11:30Z and DID NOT R
 
 **WHAT IS DEAD.** Moving the trigger to an hour a session reliably exists dies by name -- it makes the cadence depend on a human habit. Accept-and-disclose dies. ⛔ **AND THE CURRENT ARTIFACT'S PROVENANCE DIES**: the reading the estate report serves for this device right now was produced by a HAND-STARTED run, and under his word **a hand-made value that happens to be FRESH still violates the instruction.** S4U is **not adopted either** -- it answered "how does a daily firing survive nobody being logged on", which is not "make this continuous". A logged-out principal may still be an implementation consequence of his design; that is yours to price, not the cut's to impose.
 
-⛔ **TWO THINGS THIS FACE DELIBERATELY DOES NOT RESOLVE, AND NEITHER IS HIS INSTRUCTION.**
+⛔ **ONE THING THIS FACE STILL DOES NOT RESOLVE. THE OTHER WAS RESOLVED AFTER THE CUT AND THE RESOLUTION IS BELOW.**
 
-**"STITCHED"** is ambiguous between this estate's EXISTING stitch mechanism (the post-commit hook republishing a shared marker from every clone) and plain English for "continuously woven in". `1.0.0_SA_CTO` declined to infer it and so does this seat; it is with Andrew as a question. **Build to the PROPERTY, not to either reading.**
+**"STITCHED" IS RESOLVED AS OF `46b832a9a3`, AND THE ANSWER IS THAT THE STITCH CANNOT CARRY THIS MEASURE.** `1.0.0_SA_CTO`'s L4 ruling measured both halves of Andrew's own aside and found him right on both: `comp-heat drift` reads exactly UNCOMMITTED material (`org/modules/heatmap/object_freshness.py:84-93`, the function `uncommitted_writes()`, which is his own 2026-06-25 specification in his own words), and the live stitch fires on a commit PUSHED to `CLOUD` that touches one of SIX paths. ⛔ **HIS CONDITIONAL -- *"if we already have a stitch mechanism ride that"* -- IS A REAL GRANT AND IT DOES NOT FIRE**, because both of his facts are true and they do not compose. **SO THE CARRIER DOES NOT CHANGE: the device's own timer, where `OS-s-21` already put it. THE ONLY THING HIS ~15:3xZ WORD CHANGES IS THE INTERVAL -- DAILY BECOMES CONTINUOUS.** No carrier change, no new build, no cloud hop.
 
 **"MAYBE EVERY 15 MIN" CARRIES HIS OWN HEDGE.** The number is a TARGET. ⛔ **NO ARM OF THIS FACE GRADES ON THE NUMBER**, and none may be added that does until he fixes it.
 
@@ -41,15 +41,17 @@ The changed producer and/or scheduling surface under `infra/aws/ec2/outset-drift
 
 ---
 
-## THE SHAPE IS YOURS TO CHOOSE AND PRICE
+## THE SHAPE IS YOURS TO CHOOSE AND PRICE -- NARROWED BY A RULING THAT LANDED AFTER THIS FACE WAS CUT
 
-⛔ **THE ISSUER CANNOT RESOLVE HIS "STITCHED" FORK AND WILL NOT PRETEND TO**, so the mechanism is yours the way `EG-s-27`'s coupled-versus-independent choice was its assignee's. Three shapes, each with what it costs:
+⛔ **RE-CUT 2026-09-10 ~17:5xZ ON `1.0.0_SA_CTO`'s L4 RULING `46b832a9a3`, WHICH LANDED AFTER THIS FACE WAS COMMITTED AND BEFORE ANY ASSIGNEE HELD IT. THIS SECTION OFFERED THREE SHAPES AND THE RULING KILLS TWO, INCLUDING THE ONE THIS SEAT NAMED AS ITS PREFERENCE.**
 
-- **(i) A RECURRING TIMER at roughly quarter-hour.** Simplest. ⛔ **IT INHERITS THE EXACT PROBLEM THAT KILLED THE DAILY FIRING** -- a task principal that only runs while someone is logged on -- so it is not free, and choosing it means solving that too.
-- **(ii) PUBLISH ON COMMIT, via the existing hook.** Genuinely continuous while work happens, needs no scheduler and no session, and goes quiet when nobody works. ⛔ **ITS BLIND SPOT IS STRUCTURAL: it measures at the moment uncommitted work is SMALLEST**, so a long stretch nobody commits -- the exact case worth catching -- is the case it cannot see.
-- **(iii) BOTH.** On commit, plus a floor at roughly quarter-hour. **THE ISSUER'S PREFERENCE, and the reason is (ii)'s blind spot rather than belt-and-braces.**
+- **(i) A RECURRING TIMER at roughly quarter-hour -- THIS IS NOW THE CARRIER**, and you are here because the ruling put you here rather than because you preferred it. ⛔ **IT INHERITS THE EXACT PROBLEM THAT KILLED THE DAILY FIRING** -- a task principal that only runs while someone is logged on. **That principal problem is now the WHOLE of this cell's difficulty**, and it is not something to route around by choosing a weaker shape, because the weaker shapes are gone.
+- **(ii) PUBLISH ON COMMIT -- RULED OUT TWICE OVER, AND THE SECOND REASON IS THE ISSUER'S OWN ERROR.** The ruling finds a commit-triggered publish **ANTI-CORRELATED** with the signal (it samples the tree at the moment drift is LOWEST, so the device accumulating the most uncommitted work is the device committing least, publishes least, and one that never commits never publishes) and **PATH-BLIND** (drift outside those six paths fires nothing, at any volume) -- and **both render identically, as a low or absent `n` indistinguishable from a genuinely clean tree**, which is the quiet-versus-silent confusion `OS-s-21`'s accept was re-cut specifically to prevent. ⛔ **AND "VIA THE EXISTING HOOK" NAMED A MECHANISM THAT DOES NOT EXIST:** `stitch-refresh-post-commit` was RETIRED 2026-09-09 -- only `.tools/git-hooks/stitch-refresh-post-commit.TOMBSTONE.md` remains (NFRA_CLDGRPH `S29` @`a46abe413a`) -- on **Andrew's own later word**, the ratified CLDGRPH endpoint *"no machine is in the compile business"*. **This face offered you a device-side commit-triggered publisher he had personally killed the day before, and that is the issuer's defect, not yours.**
+- **(iii) BOTH -- WITHDRAWN.** It was this seat's stated preference and it rested entirely on (ii). A quarter-hour floor plus a dead carrier is just the floor, which is (i).
 
-**Take another shape if you can state why**, and pay for it with arm (c)'s census and arm (d)'s adversarial arm the same way `EG-s-24` paid.
+⛔ **BOUNDED, BECAUSE THE SHARP VERSION OF THIS IS WIDER THAN WHAT WAS MEASURED:** a commit does NOT zero `git status --porcelain` -- untracked files and unstaged edits outside the commit survive it. The finding is ANTI-CORRELATION and PATH-BLINDNESS, **not** that a commit-triggered reading would always read zero.
+
+**Take another shape if you can state why** -- the ruling forecloses the COMMIT CARRIER, not your judgment about how a device-side timer survives a logged-out principal -- and pay for it with arm (c)'s census and arm (d)'s adversarial arm the same way `EG-s-24` paid.
 
 ---
 
