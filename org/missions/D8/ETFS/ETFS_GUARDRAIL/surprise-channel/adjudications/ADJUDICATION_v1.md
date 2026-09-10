@@ -18,7 +18,7 @@ instance but is `UNVERIFIABLE-BY-INSTRUMENT` with the CVO named, and is graded a
 disposition rests on this seat's own read beside the record: the served Lambda code hashes, environment and the
 deployed Inflection zip, the reporter role's inline grant, SES's account state, the report bucket, the source at HEAD,
 the vendored-copy census, the published layer, and `.gitattributes`.
-**Denominator at this write:** 14 rows (C-S11..C-S14 appended 2026-09-10 ~01:3xZ -- round 2 L9 on packets v2 @3f1e4de3f3 and v3 @66ffa5f6e9: S18-AC2 and S14-AC2 graded PASS; W3-S3/S4/S5 records; W1-S11..S19 graduated with two remedies owed); previous: 10 rows (C-S8..C-S10 appended 2026-09-10 ~00:5xZ -- round 2 PARTIAL L9 @8f7bf86815: S17-AC2 graded PASS; W2-S7 closed; W2-S8 open at the CTO (the 76-minute race); W2-S9/S10 and S5..S9 records); previous: 7 rows (C-S7 appended 2026-09-10T00:39Z: a correction of C-S6 -- no remediation row was minted; the gate refused it as L10-shaped and the clocks ride C-S6 until the round-2 L9); previous: 6 rows (C-S6 appended 2026-09-10 ~00:2xZ: S4 graduated, the deploy_ledger NEVER-2 defect, owner 0.2.0_DT_PortfolioAnalytics); previous: 5 rows (C-S1 the grade record; C-S2 the eight worker-form items graduated and closed on
+**Denominator at this write:** 19 rows (C-S19 appended 2026-09-10 ~04:2xZ -- correcting the FACT inside C-S18's correct principle: the per-recipient delivery record does NOT exist on the SES plane, measured by 2.0.0_SA_COO in three read-only calls); previous: 18 rows (C-S18 appended 2026-09-10 ~04:1xZ -- a CORRECTION of this seat's own FWD-5 reading in C-S15, on the CTO's ruling 94975: an envelope is not a mailbox, and the per-recipient delivery record is the instrument neither seat had named); previous: 17 rows (C-S15..C-S17 appended 2026-09-10 ~04:0xZ -- the round-2 FINAL L9 @616b49f610: S16-AC2 graded PASS with the FWD-5 envelope-versus-mailbox reading, 14 items dispositioned, 0 undispositioned after, and the remediation rows REFUSED AGAIN by the gate, correctly, on round 3's four pending orders); previous: 14 rows (C-S11..C-S14 appended 2026-09-10 ~01:3xZ -- round 2 L9 on packets v2 @3f1e4de3f3 and v3 @66ffa5f6e9: S18-AC2 and S14-AC2 graded PASS; W3-S3/S4/S5 records; W1-S11..S19 graduated with two remedies owed); previous: 10 rows (C-S8..C-S10 appended 2026-09-10 ~00:5xZ -- round 2 PARTIAL L9 @8f7bf86815: S17-AC2 graded PASS; W2-S7 closed; W2-S8 open at the CTO (the 76-minute race); W2-S9/S10 and S5..S9 records); previous: 7 rows (C-S7 appended 2026-09-10T00:39Z: a correction of C-S6 -- no remediation row was minted; the gate refused it as L10-shaped and the clocks ride C-S6 until the round-2 L9); previous: 6 rows (C-S6 appended 2026-09-10 ~00:2xZ: S4 graduated, the deploy_ledger NEVER-2 defect, owner 0.2.0_DT_PortfolioAnalytics); previous: 5 rows (C-S1 the grade record; C-S2 the eight worker-form items graduated and closed on
 the issuer's in-round acts; C-S3 the three items graduated and OPEN; C-S4 the ten records dismissed with reason; C-S5 the
 correction carrying the CTO's L10 @0557afa38a -- FWD-4 NOT_EVALUATED, seven fire-gated outcomes, not six).
 Investigation rows without a disposition after this write: 0 of 21. Remediation rows minted: S2 (OPEN), S3 (closed).
@@ -539,6 +539,180 @@ Investigation rows without a disposition after this write: 0 of 21. Remediation 
     "spec_asserts": "TO-EG-s-14's BOUNDS and S14-AC1's arms as first cut (the archive location, the invoke's return, the CloudTrail Invoke read, the MessageId instrument); the NEVER-2 requirement that the entry CARRY its sign-off, served-key list, archive table and rollback recipe.",
     "world_is": "Seven of the nine are remedied in the world or ruled at the source inside the round; the report renders brand-less on every box fire; and the estate's deploy-ledger tool destroys hand-authored sections of its own entries and cannot add a leg.",
     "notes": "Investigation items without a disposition after this write: 0 of 43 on CLOUD. Two orders remain (EG-s-15, EG-s-16); the FINAL packet carries the remediation row and the slug."
+  }
+]
+```
+
+## C-S15 -- S16-AC2 graded PASS: Labor Day told apart from a hole for 3 of 3 partners taken from the artifact's own list, with three limits named and two volunteered -- and this seat's own reads showing why FWD-4's measurement had to move to the slice plane; plus the FWD-5 envelope-versus-mailbox reading for the L10
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T04:09Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S15",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record and an outcome reading; it dispositions no investigation item.",
+    "one_line": "L9 on the FINAL packet @616b49f610 (v5, sha256 b3c49c6a499fa56e41819fc2b497764b8d73b97cb8340de908ade87bff6444a1, 24,349 bytes -- re-hashed at this seat and equal to the issuer's, which hashed AFTER its own commit): the GRADE for S16-AC2, the Labor Day read -- PASS. THE READING GRADED: 2026-09-07 is a real closed market day, the deployed classifier told it apart from a hole, and this system backfilled nothing against it -- for 3 of 3 partners taken from THE ARTIFACT'S OWN LIST rather than from a hand-typed one, with the class-A count equal to the non-trading days the battery ENUMERATED from lib/trading_calendar.py, the date in no partner's holes, every hole list identical with that date removed, and the month's only holes the class-D 2026-09-09 -- so the verdict demonstrably CAN mark a hole and did, two days after the target. THIS SEAT'S OWN READS, on the served artifact and the served slices, not on the report: coverage_verdict.json for 2026-09 pulled whole -- partners ['49financial', 'inflection', 'cottonwood'], A=3 for all three, trading_days=6 for all three, holes ['2026-09-09'] for 49financial and cottonwood and [] for inflection, expected_empty 0 -- and the estate's own calendar answers 3 non-trading days (09-05, 09-06, 09-07) and 6 trading days over 09-01..09-09, which is exactly what the artifact's counts say. THE THREE LIMITS ARE THE REASON THIS GRADES PASS RATHER THAN MERELY GREEN, and two of them the assignee volunteered unasked: the artifact carries NO per-date classification at all -- I confirmed the literal string 2026-09-07 occurs ZERO times in the whole document -- so the arm proves a COUNT and an ABSENCE and never a per-date label, and it says so; expected_empty is the class-B count (priced == 0) while class A is market-closed, different axes, printed with its true meaning named and explicitly NOT graded as a class-A instrument; and arm (e)'s BEFORE limb is an inference rather than a read because no listing predates the run, labelled as such in the worker's own output. A criterion that names what its own evidence cannot show is worth more than one that quietly stops at the number it can produce. THE CORRECTION THAT MATTERED, and it is the round's fourth instance of one shape: the issuer's hand-list named TWO non-trading dates where the calendar has THREE, so taking the hand-list would have FAILED the arm against a correct world; the re-cut now FORBIDS a hand-list and requires the battery to enumerate the calendar over the verdict's own window -- the instrument, not a transcription of it. IS COUNT-AND-ABSENCE SUFFICIENT FOR FWD-4? For what S16 is asked, YES: nothing this system did repaired a closed day, and the three arms that would detect such a repair (the count identity, the absence from every hole list, the hole-list equality with the date removed) all hold on three partners. FOR THE OUTCOME ITSELF, NO -- and PRD v0.6 has already moved FWD-4's own measurement onto the SLICE PLANE across every partner the artifact lists, which is the correct response and not this criterion's failure. I MEASURED WHY, on the world rather than the report: daily/inflection/2026-09-07.json EXISTS (1,209 B, written 2026-09-07T15:00:41Z), as do 09-05 and 09-06, while head-object on cottonwood and 49financial for the same day returns 404 -- two partners honestly absent, one carrying a file, and the verdict reads A=3 identically for all three because class A short-circuits before the presence check. The classifier cannot tell an empty closed day from a closed day carrying numbers, which is exactly the property FWD-4 exists to protect and exactly the cell EG-s-22 now carries. VERDICT PASS.",
+    "grades": [
+      {
+        "criterion": "S16-AC2",
+        "instance": "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-16.the-labor-day-read.proof_of_spec.json@2a24774603",
+        "verdict": "PASS",
+        "reason": "The reading answers the Labor Day question on the artifact's own partner list with the calendar as the instrument rather than a transcription of it, names three limits of its own evidence including two nobody asked for, adjudicates the closed-day slice's ownership instead of grading another producer's carry-forward, and answers the sufficiency question honestly in both directions. This seat's independent reads of the served verdict, the estate's calendar and the three partners' closed-day slices agree on every figure and supply the reason the outcome's measurement had to move. NO verdict was recorded by the assignee."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "L8_PACKET.round2.partial.md v5 @616b49f610, hashed at this seat to b3c49c6a499fa56e41819fc2b497764b8d73b97cb8340de908ade87bff6444a1 over 24,349 bytes; s.3 and s.4 (the round closed at L7, 5 of 5 terminal).",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/the-labor-day-read.result.md read whole (ss.0-8) and the instance's S16-AC2 row; 2.0.0_SA_COO 94958.",
+        "This seat, 2026-09-10 ~04:0xZ: `.tools/aws s3 cp s3://opal-data-etfs/platinum/reports/2026-09/coverage_verdict.json` -> month 2026-09, verdict PUBLISH, per_partner keys ['49financial','inflection','cottonwood'], A=3 / trading_days=6 / expected_empty=0 for each, holes ['2026-09-09'] / [] / ['2026-09-09']; the literal '2026-09-07' occurs 0 times in the document.",
+        "This seat: lib/trading_calendar.py (NYSE/pandas_market_calendars) over 2026-09-01..09-09 -> non-trading ['2026-09-05','2026-09-06','2026-09-07'], trading 6; `s3api head-object` daily/inflection/2026-09-{04,05,06,07,08}.json -> all present at 1,209 B written 15:00:4xZ on their own dates, and daily/cottonwood/2026-09-07.json and daily/49financial/2026-09-07.json -> 404 Not Found."
+      ]
+    },
+    "spec_asserts": "S16-AC2 as re-cut @005667015a (judgment, NO verdict): the evidence with vintages for the Labor Day read, the three limits, the closed-day slice's ownership adjudication, and whether COUNT-and-ABSENCE is sufficient for FWD-4 now that PRD v0.6 moved the outcome's measurement onto the slice plane.",
+    "world_is": "The closed day is classified A for all three partners and repaired by nobody; one partner's producer nevertheless writes a priced slice on that day, and the classifier is structurally unable to see it.",
+    "notes": "THE FWD-5 QUESTION THE PACKET PUTS TO L9 AND L10, answered here as a reading and not as a grade, because an outcome's verdict is the L10's: the August delivery of 00:25:59Z was addressed to aj@ AND andrew@ and was READ at andrew@'s mailbox through the gateway, so on Rule 22's STATE axis aj@'s limb stands at the ENVELOPE and andrew@'s at the MAILBOX -- APPLIED and EXERCISED respectively, as the issuer says. THIS SEAT'S REC IS THAT FWD-5 GRADES REALIZED ON THAT EVIDENCE. Three reasons. (1) The outcome's own words are that both people have received one, and a single SES send accepted for two destinations, whose delivered envelope was read in one of them, is the strongest evidence the estate can hold without reading another person's mailbox -- which is not an instrument this fabric has or should acquire. (2) The only two acts that would lift the second limb are a mailbox read or another send, and the send is barred by Andrew's ~02:5xZ standing constraint; holding the outcome short pending an act a standing constraint forbids would make FWD-5 permanently ungradeable, which is precisely what tonight's no-FWD-is-a-wait law (spine v3.10, his ~03:0xZ word) forbids -- and the law's own remedy, drive the mechanism or read banked history, is satisfied by the second: the delivery is banked history, already read. (3) The issuer was right to state it and not grade it, and right that a seat re-sending to firm up a grade would be the very act the constraint forbids. If the L10 disagrees, the question is Andrew's and he is already in direct contact with the other recipient by his own words; it is a sovereign question, never a re-take."
+  }
+]
+```
+
+## C-S16 -- adjudicates nine: GRADUATED -- the unreachable terminal send and its blind rehearsal, the under-reporting ask, the classifier's structural blindness, the missing send observability, the fresh-worktree halt gate, the covered-set breach and the bound that forbade the mechanism under test
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T04:09Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "id": "ETFS_GUARDRAIL-C-S16",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-W1-S25",
+      "ETFS_GUARDRAIL-W1-S29",
+      "ETFS_GUARDRAIL-S11",
+      "ETFS_GUARDRAIL-W1-S27",
+      "ETFS_GUARDRAIL-W1-S31",
+      "ETFS_GUARDRAIL-W1-S26",
+      "ETFS_GUARDRAIL-W1-S21",
+      "ETFS_GUARDRAIL-S10",
+      "ETFS_GUARDRAIL-W1-S24"
+    ],
+    "disarm_owner": "2.0.0_SA_COO for the round-3 cells already cut (EG-s-19 the two-site guard, EG-s-21 the ask's completeness, EG-s-22 the classifier's discrimination) and for the spawn-side halt-gate fix; 0.2.0_DT_PortfolioAnalytics for the deploy_ledger tool defects carried at REMEDIATION S4; 1.0.0_SA_CTO for the MessageId observability cell it named for the L10; ANDREW for S10's served September keys, which stand by the standing rule",
+    "one_line": "L9: ADJUDICATES nine items -- GRADUATED, ARMED, and every one of them already has a named home, which is why the round can close with them open. THE PRODUCTION DEFECT AND ITS SECOND SITE (W1-S25, its own author's correction W1-S29, and this seat's S11): the ONE terminal SES send is unreachable on real data because the guard at lambda_function.py:435 reads a key the renderer never writes -- and the SAME wrong key sits at :516 inside terminal_qa, the send-free rehearsal built to exercise that very branch. Three seats reached it three ways: the worker from the deployed bytes, the issuer from a fetch of the served object, and this seat from the source at HEAD plus its own pull of coverage_unresolved.json (top-level keys ['49financial','cottonwood'], no 'unresolved' key). The QA and the production path share one assumption, so a rehearsal run would have reported healthy on the day a real refusal sent nothing -- a guard sharing a failure mode with the thing it guards. Cut as EG-s-19 with the test built from the PRODUCER'S output; this seat's condition, carried on REMEDIATION S11, is that the rehearsal be re-pointed at the same source of truth and be ABLE TO FAIL -- a terminal_qa run against a month whose document is non-empty must render a non-empty list or refuse. THE UNDER-REPORTING ASK (W1-S27): the rung-3 artifact names one of two class-D dates and discloses no omission, so a person who resolves every ask still leaves a hole unaddressed -- the same family as the two above, an artifact that reads complete while under-reporting; cut as EG-s-21 with its own denominator. THE CLASSIFIER'S BLINDNESS (W1-S31): a priced slice on a closed day for the one partner the criterion did not enumerate, structurally invisible because class A short-circuits before the presence check -- measured independently at this seat (inflection present on 09-05/06/07 at 1,209 B; cottonwood and 49financial 404 on 09-07). The CTO placed it correctly in two halves: the DETECTOR is this project's and is cut as EG-s-22; the PRODUCER's carry-forward leaves as a brief and is not routed into a running project. THE OBSERVABILITY GAP (W1-S26): the terminal branch has no log oracle either -- zero application log lines and no trail selecting the SES data plane -- which extends W1-S18 from the ordinary send to the branch FWD-7 depended on, and is the reason the one-line MessageId print is a named cell rather than a nicety. THE HALT GATE (W1-S21): safe-apply fails CLOSED in any fresh worktree because it resolves the actor from a gitignored session file a new worktree never carries, so a correctly-authored worker is blocked at rc 3 -- the issuer has taken it at the SPAWN rather than on any face, which is the right plane, and it is the same worktree-provisioning family as NFRA_CLDGRPH's W2-S53 and NFRA_COMPEFFICACY's tokenizer. THE COVERED-SET BREACH (S10): ruled a RECORD breach and not a world breach, no rollback owed by the sign, the September keys standing by the standing rule and the clarifying note Andrew's -- and it is the instance that bought CLAUDE.md NEVER-1's amendment, so it is graduated to him with nothing asked. THE BOUND THAT FORBADE THE MECHANISM UNDER TEST (W1-S24): the ladder wrote daily/inflection/2026-09-09.json during the run, which the BOUNDS forbade -- and writing that slice is what rung 1 EXISTS to do; the bound was wrong, the issuer re-cut it, and the write is why inflection reads 6 of 6 while the other two read 5 of 6. A bound that forbids the mechanism under test is a cut defect, not a violation.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The nine rows read whole at HEAD; the FINAL packet ss.2-5; 2.0.0_SA_COO 94891, 94917, 94941, 94958; 1.0.0_SA_CTO 94877, 94909, 94948 (the W1-S31 placement and PRD v0.6), 94920 (the no-FWD-is-a-wait law).",
+        "This seat's own instruments: the source at HEAD (:435 in _run's refusal branch and :515-516 in terminal_qa), the served coverage_unresolved.json for 2026-09, the September coverage_verdict.json, the three partners' closed-day slices, and lib/trading_calendar.py."
+      ]
+    },
+    "spec_asserts": "TO-EG-s-15's premise that an incomplete month refuses; its BOUNDS that no served slice is touched; S15-AC4's log-based send oracle; S16-AC1's arms (b), (c) and (d); the round-1 EG-s-8 proof of the terminal send.",
+    "world_is": "The terminal send cannot fire and its own rehearsal cannot show that; the ask under-reports; the classifier cannot see a slice on a closed day; the terminal branch has no observability; a fresh worktree cannot apply; and two of the round's bounds forbade or mispredicted the mechanisms under test.",
+    "notes": "ARMED because four remedies are live in round 3 and two sit at other seats. Nothing here blocks this round's close: every item is cut, placed or reserved with an owner named."
+  }
+]
+```
+
+## C-S17 -- adjudicates five: DISMISSED_WITH_REASON, records -- one wrong premise read from both ends and closed by re-cuts judged harder, two criterion-versus-criterion defects, and one honest note that the minimal change was not minimal
+
+```json
+[
+  {
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T04:09Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "ETFS_GUARDRAIL-C-S17",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "ETFS_GUARDRAIL-W1-S20",
+      "ETFS_GUARDRAIL-W1-S22",
+      "ETFS_GUARDRAIL-W1-S23",
+      "ETFS_GUARDRAIL-W1-S28",
+      "ETFS_GUARDRAIL-W1-S30"
+    ],
+    "one_line": "L9: ADJUDICATES five items -- DISMISSED_WITH_REASON, records, all closed in substance inside the round. W1-S22 and W1-S23 are ONE finding read from two ends and they are the round's most consequential pair: the order's central premise was that an incomplete month REFUSES, and it does not -- September's holes classify D, the pre-publish gate refuses only on class C, class C is 0 for 3 of 3 partners, so the verdict reads PUBLISH and no refusal ever occurred (W1-S22); therefore the run published a partial-month report to the served keys and mailed it to both recipients, the two outcomes the order said would not happen, with the ONE terminal send firing zero times (W1-S23). Neither is a producer defect. The system did exactly what carry-and-disclose is built to do, the published report discloses its own state in its coverage line, and what was wrong was the PREDICTION in the face and in both never-widen halves. Both are closed at the source: the arms were re-cut to read the verdict the producer GIVES with its class table verbatim and the classifier's C-vs-D boundary quoted at file:line, and arm (e) now PROVES the send defect rather than asserting a refusal this data cannot produce -- worth more than the pass it replaced. W1-S30: S16-AC1 arms (b) and (c) named evidence the served artifact does not carry, and it is unsatisfiable for ANY month rather than for this one -- the document holds per-class counts and a holes list and no per-date map, and expected_empty is the class-B count on a different axis; re-cut, with the limit recorded rather than papered over, which is why C-S15 could grade the reading at all. W1-S28: S15-AC2's expectation could only match BEFORE the apply it gates and contradicted S15-AC3's post-apply zero-diff requirement -- two criteria of one order that could not both hold; re-cut to PLAN-GATE-HELD, and the three limbs now agree instead of excluding each other. W1-S20: the ordered 'one line' needed a signature change first, because _run took no event argument -- a small honest note that the minimal change was not quite minimal, filed rather than absorbed.",
+    "dismissal_reason": "Records: two ends of one wrong premise, both closed by re-cuts judged harder; two criterion-vs-criterion defects closed the same way; and one note that the ordered minimal change required a signature change. Nothing armed remains among them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The five rows read whole at HEAD; the re-cut face @dc99d82c4d and @005667015a; the FINAL packet s.2 (S15's four mechanical criteria PASS on the re-cut face, S16-AC1 6 of 6); this seat's own read of the September verdict showing class C = 0 and the holes class D."
+      ]
+    },
+    "spec_asserts": "TO-EG-s-15's premise and its S15-AC2/AC4 arms; TO-EG-s-16's S16-AC1 arms (b) and (c); the 'one line at _run' instruction.",
+    "world_is": "The producer carries and discloses rather than refusing on this data; two criteria of one order could not both hold; and one criterion named evidence no month's artifact carries.",
+    "notes": "Investigation items without a disposition after this write: 0 of 57. The round's L10 precondition is met on this axis and the two remediation rows are minted in the same commit."
+  }
+]
+```
+
+## C-S18 -- CORRECTION of C-S15's FWD-5 reading: a recipient list is what the SENDER ASKED FOR, and it reads identically in a world where the second recipient never received it; the per-recipient delivery record already exists and is a read of history, not a run
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-C-S18",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T04:14Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A correction of this seat's own row, in the channel's append-only form: a NEW row citing the old id, never an edit.",
+    "one_line": "CORRECTION OF C-S15's FWD-5 READING, WHICH WAS THIS SEAT'S AND WAS WRONG. C-S15's notes recommended that FWD-5 grade REALIZED on the August delivery -- a message ADDRESSED to aj@ and andrew@ and READ at andrew@'s mailbox -- reasoning that it is the strongest evidence obtainable without reading another person's mailbox, and that holding the outcome short pending an act a standing constraint forbids would make it permanently ungradeable against tonight's no-FWD-is-a-wait law. 1.0.0_SA_CTO ruled otherwise at 94975 and the ruling is RIGHT; this row records that rather than leaving the recommendation to stand. WHAT I MISSED, and it is the axis I have been grading other seats on all night: I applied the no-wait law and never applied Rule 22's DISCRIMINATION question to my own evidence. Asked directly -- if aj@ had never received it, through a bounce, a filter or a bad address, would the evidence look any different? IT WOULD NOT. The envelope read at andrew@'s mailbox is byte-identical in both worlds, so a recipient list cannot separate delivered from not-delivered at the second address. A recipient list is what the SENDER ASKED FOR: better than a send log, and still not a delivery. My reading upgraded SENT to EMITTED and wrote it down as READ, which is exactly the three-state collapse CLAUDE.md 22a names, and I made it while quoting the same rule at other people's work. THE SECOND ERROR IS THE MORE USEFUL ONE: I accepted the frame that the only two instruments were a mailbox read or another send, and then reasoned from that closed set to a conclusion. The set was not closed. The CTO named the instrument neither seat had -- THE MAIL PLATFORM'S OWN PER-RECIPIENT DELIVERY RECORD for that message id, which the transport already wrote and keeps, which exists for the 00:25:59Z message right now, and which is a READ OF EXISTING HISTORY of precisely the kind spine v3.10 blesses. It touches no mailbox, sends nothing, and is clear of Andrew's constraint by construction, because his word bars a test RUN from reaching aj@ and reading a record that already exists is not a run and reaches nobody. That is a two-token enumeration of my own that lost a member silently -- the shape rule 24 was sharpened for one tick before I committed it, which makes this the sixth instance of the night and the first in this seat's own reasoning rather than in a face or a census. THE STANDING POSITION AFTER THIS ROW: FWD-5's state is EXERCISED at andrew@ and APPLIED at aj@, recorded as a split rather than averaged into one verdict; the next act is the delivery-record read, not a sovereign question and not a re-take; and if that record proves unavailable the question that reaches Andrew is 'may we confirm with AJ', never 'may we re-send'. C-S15's grade of S16-AC2 is untouched -- the correction is to the FWD-5 reading in its notes field and to nothing else in that row.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO 94975 s.3 (the ruling, the discrimination question put directly, and the delivery-record instrument), with the same message's s.3 recording the CTO's own correction of its ~02:5xZ report on the same evidence.",
+        "This seat's C-S15 notes field @1ea6da48c4 (the recommendation now corrected) and 2.0.0_SA_COO 94958, which stated the envelope-versus-mailbox split precisely and refused to grade it -- the line both graders should have taken as the answer rather than as the question.",
+        "CLAUDE.md Rule 22 (DISCRIMINATION: could the evidence differ if the claim were false) and 22a (SENT != EMITTED != READ); spine v3.10 (the act may be a driven run OR a read of existing history)."
+      ]
+    },
+    "spec_asserts": "C-S15's own notes: that a delivered envelope addressed to both recipients and read at one of them is sufficient evidence for FWD-5's 'both people have actually received one'.",
+    "world_is": "The envelope proves the send was accepted for two destinations and read at one; it cannot distinguish delivery from non-delivery at the other, and a per-recipient delivery record that can distinguish them already exists and has not been read.",
+    "notes": "Filed as a NEW row citing C-S15 rather than as an edit, which is the discipline this seat has applied to two of its own rows tonight (C-S7 and NFRA_OUTSET-S33) and graded others on. Nothing in the round's coverage or dispositions moves: 0 of 57 investigation items remain undispositioned."
+  }
+]
+```
+
+## C-S19 -- the instrument C-S18 sent a future reader to DOES NOT EXIST on the plane it named, and the substrate fact behind that makes the original ruling stronger: this mailer sends under no configuration set, so a hard bounce would have left no record here either
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-C-S19",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T04:20Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A correction of a FACT inside this seat's own C-S18, filed as a new row rather than an edit; the principle C-S18 carries is unchanged and is not restated here as if it were in doubt.",
+    "one_line": "C-S18'S PRINCIPLE STANDS AND ITS FACT DOES NOT. C-S18 corrected this seat's FWD-5 reading and, in doing so, asserted as world_is that 'a per-recipient delivery record that can distinguish them ALREADY EXISTS and has not been read'. 2.0.0_SA_COO MEASURED THAT PLANE at ~04:1xZ, three read-only calls, and it does not: `ses list-configuration-sets` returns 1 of 1 (trade-pipeline-notifications); `describe-configuration-set` shows that set's ONLY event destinations are COMPLAINT and BOUNCE, not delivery; and `sesv2 get-email-identity opalinvest.dev` carries no ConfigurationSetName key at all, so the mailer names no configuration set and the account has no default. SES publishes per-recipient delivery events only through a configuration set's event destination, so NO delivery event was published for the 2026-09-10T00:25:59Z message under any configuration -- and that conclusion is account-level and therefore does not depend on the deployed bytes, which is why the read was taken there. I INHERITED THE FACT FROM THE RULING I WAS AGREEING WITH AND DID NOT MEASURE IT: 1.0.0_SA_CTO named the instrument at 94975, I wrote it into my own correction as an existing object, and neither seat read the plane before writing it down. That is a wrong FACT inside a right-sounding PRINCIPLE, which is the shape that survives review precisely because the principle is what gets checked -- and I committed it in the row whose whole subject was that I had failed to check my own evidence. THE RULING NEEDS RE-POINTING, NOT REVERSING, and the issuer's framing is exactly right: its logic holds unchanged -- reading a record that already exists is a read of history, touches no mailbox, sends nothing, and is clear of Andrew's constraint by construction -- only the PLANE was wrong. The candidates that remain, in the issuer's order and untaken because the first is a tenant-administrative surface and the second is somebody's mailbox: the Microsoft 365 tenant's message trace for that message id, then the feedback-forwarding destination for the MAIL FROM domain (FeedbackForwardingStatus is TRUE, so a bounce went somewhere AS MAIL rather than to SNS -- an absence on the SES plane is not an absence, and the issuer said so rather than letting its own zero read wider than it measures). AND THE SUBSTRATE FACT THAT FALLS OUT OF THE SAME READ MAKES THE ORIGINAL RULING STRONGER THAN IT ASSUMED: the ETF report mailer sends under NO configuration set, so its bounces and complaints are captured nowhere in this account. If the second recipient had never received that report, not only would the envelope read identically -- A HARD BOUNCE WOULD ALSO HAVE LEFT NO RECORD HERE. The discrimination question 94975 asked is answered even more decisively than when it was asked. STANDING POSITION, unchanged in substance: FWD-5 is EXERCISED at andrew@ and APPLIED at aj@; the next act is a delivery read on a plane that has one; and if none is reachable the question that goes to Andrew is 'may we confirm with AJ', never 'may we re-send'.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "2.0.0_SA_COO 94983 s.2 and s.3: the three read-only SES calls with their results, the reason the read was taken at account level rather than at the source, the explicit refusal to read its own zero as an absence across planes (FeedbackForwardingStatus TRUE), and the no-configuration-set substrate fact.",
+        "This seat's C-S18 @1e5ab92e81 (the world_is now corrected) and 1.0.0_SA_CTO 94975 s.3 (the ruling and the instrument it named).",
+        "CLAUDE.md: a wrong FACT inside a right-sounding PRINCIPLE survives review because the principle is what gets checked; and an absence measured on one plane is not an absence on another."
+      ]
+    },
+    "spec_asserts": "C-S18's world_is: that a per-recipient delivery record capable of distinguishing delivery from non-delivery at the second address already exists and merely had not been read.",
+    "world_is": "No such record exists on the SES plane for that message: one configuration set in the account, publishing complaint and bounce only, and the mailer names none. The instrument, if it exists at all, is on the tenant's transport plane and no tooled read at any seat here reaches it.",
+    "notes": "Third row on this subject and the last one this seat owes: C-S15 carried the wrong recommendation, C-S18 corrected the principle and carried a wrong fact, C-S19 corrects the fact. Each is a NEW row citing the one before, never an edit. Nothing in the round's coverage moves; 0 of 57 investigation items undispositioned. For the L10: the mailer's missing configuration set is 2.0.0_SA_COO's filed substrate fact with no remedy proposed, correctly, under the standing alert moratorium -- it is a placement question, not a build."
   }
 ]
 ```
