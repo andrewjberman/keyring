@@ -7196,3 +7196,35 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## W3-S17 -- format_provenance_header prints a hard-coded SUBSET of source_vintage, not every key it is given
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W3-S17",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~3",
+    "surfaced_at": "2026-09-10T04:55Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "format_provenance_header DOES NOT PRINT EVERY source_vintage KEY IT IS GIVEN -- IT PRINTS A HARD-CODED SUBSET AND DROPS THE REST IN SILENCE. TO-CG-G-4's MEASURED block offers this function as the first carrier candidate for a portal vintage on the ground that it 'prints every source_vintage key it is given (CG-s-27's contract)'. EXERCISED at HEAD f3b5f26f77: handed a nessie manifest whose source_vintage carried 7 non-empty keys, the function printed 3 (nodes_snapshot_id, edges_snapshot_id, nodes_metadata_key) and DROPPED 4 (stitch_built_at, stitch_producer, stitch_git_sha, and the fabricated stitch_portal_sha) with no warning line. The drop is structural, not a fixture artifact: :800-812 hard-codes one branch per source_kind (tarball -> tarball_key; nessie -> the three above; stitch -> stitch_path/stitch_mtime) and there is no loop over the dict anywhere in the function. So the five stitch keys read_stitch_vintage already injects into a kind='nessie' manifest are invisible there TODAY, and a SIXTH portal key added for CG-s-35 would be equally invisible. ARMED because the premise is on the face of an open order: a round-8 cut that routes the portal-vintage remedy to this function on the strength of that sentence would ship a change that passes its own test and alters nothing a reader sees. This is DISTINCT from W3-S14 (which found that no serve path CALLS the function): W3-S14 says a reader never reaches it; this row says that even if a reader did, the new key would not be there. Both hold, and each alone would leave the other undiscovered. The carrier this order recommends instead is projection_worker._age_line, EXERCISED in the same run and shown to render the stitch clause it is fed.",
+    "spec_asserts": "NFRA_CLDGRPH.TO-CG-G-4 'MEASURED BY THE ISSUER AT THE CUT', third bullet: '`_provenance.format_provenance_header` prints every `source_vintage` key it is given (CG-s-27's contract, drained @3e6be14930) -- so the carrier may already exist and simply not be fed.'",
+    "world_is": "It prints a hard-coded subset selected by source_kind and drops every other key silently -- measured 3 printed of 7 given. The 'carrier exists and is unfed' conclusion is still TRUE, but of a different carrier (projection_worker._age_line plus the source_vintage dict that feeds it), and routing the remedy to the function the face names would not reach a reader.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/globgrph/_provenance.py:753-857 @f3b5f26f77 -- format_provenance_header; the kind branches are at :800-812 and there is no iteration over source_vintage in the function body.",
+        "EXERCISED by org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/g3_carrier.py candidate C3: a temp DB with a schema_version 1 manifest, source_kind 'nessie', source_vintage carrying nodes_snapshot_id, edges_snapshot_id, nodes_metadata_key, stitch_built_at, stitch_producer, stitch_git_sha and stitch_portal_sha; the header was searched for each value. Output: 'EXERCISED: handed 7 non-empty source_vintage keys; it PRINTED 3 and DROPPED 4'.",
+        "infra/aws/globgrph/kuzu_nessie_load.py:71-77 @f3b5f26f77 -- read_stitch_vintage returns stitch_built_at / stitch_producer / stitch_git_sha / stitch_artifact_sha256 / stitch_marker_last_modified into source_vintage; every one of the first three is in the DROPPED set above.",
+        "infra/aws/globgrph/projection_worker.py:245-247 @f3b5f26f77 -- the producer's own docstring: 'No serve path calls _provenance.format_provenance_header (W3-S14), so this is where a stitch vintage becomes readable at all.' The independent second reason, recorded a round earlier by this slot.",
+        "POSITIVE CONTROL in the same call: the three nessie keys WERE found in the header, so the search that reports the drops can find a key that is printed."
+      ]
+    },
+    "notes": "Filed, not chased. The function is producer code and this order is READ ONLY on it; nothing was edited. The remedy this order recommends does not touch it at all -- the four named hops are the zip packer, stitch-produce.tf's marker dict, kuzu_nessie_load.read_stitch_vintage and projection_worker._age_line, with owners, in CG-s-35.portal-layer-vintage.result.md. Whether format_provenance_header should ALSO loop over the dict it is handed is a separate question with a separate owner and is not proposed here."
+  }
+]
+```
