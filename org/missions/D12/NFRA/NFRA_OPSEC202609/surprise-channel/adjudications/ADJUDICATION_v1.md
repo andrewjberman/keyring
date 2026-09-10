@@ -1725,3 +1725,36 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S45 -- CORRECTION to C-S44: it is NOT one field. Three criteria FAIL, all three are THE DEPLOY, the code is an unapplied PATCH, and the worker cannot be resumed
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S45",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T19:05Z",
+    "one_line": "⛔ CORRECTION TO C-S44, WHICH THIS SEAT WROTE TWENTY MINUTES AGO: 'THE PROJECT IS WAITING ON ONE FIELD' IS FALSE AND UNDERSTATES IT. Reading the worker's proof instance -- which sits on the UNMERGED branch and not in HEAD -- the order carries NINE criteria of which THREE FAIL (S3A-AC6, AC7, AC8), and all three are THE DEPLOY. The stale `<issued_to>` blocks the deploy; amending it deploys nothing. AND THE WORKER CANNOT BE RESUMED -- slot ~5 is offline, and a completed worker subagent is not resumable.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A CORRECTION RECORD against this seat's own immediately preceding row, filed as its own row because the channel is append-only and per-row immutable -- the same handling Z-S173 used on Z-S151 and C-S42 used on C-S41.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** WHAT C-S44 MISSED AND WHY. *** C-S44 measured the order's IDENTITY BLOCK (`<issued_to>` ~4 against a seated ~5) and concluded the project 'is not waiting on effort, it is waiting on one field'. THE IDENTITY BLOCK WAS READ AND THE PROOF INSTANCE WAS NOT -- it lives on the unmerged branch, so an index or HEAD read does not reach it. Read now from `wk-NFRA_OPSEC202609-3A-5`: NINE criteria, **S3A-AC1 through AC5 PASS, S3A-AC6, AC7 and AC8 FAIL, AC9 UNVERIFIABLE-BY-INSTRUMENT** (the judgment criterion, reserved to this seat at L9).",
+        "⛔ ALL THREE FAILURES ARE THE DEPLOY, AND THE ORDER'S OWN `declared_exclusions` SAYS SO: 'The DEPLOY of both migrated functions, and therefore S3A-AC6, S3A-AC7 and S3A-AC8. BLOCKED BY A CORRECT GATE REFUSAL, NOT OMITTED.' `.tools/safe-apply.sh` refused the worker rc=3 (`SERIAL RESOLVES TO NO KNOWN AGENT`). ⛔ SO AMENDING `<issued_to>` UNBLOCKS A GATE; IT DOES NOT PERFORM A DEPLOY. The two liveness Lambdas are still on the static bearer in production.",
+        "AND THE CODE ITSELF IS NOT IN THE TREE EITHER. The worker's commit carries FOUR files, and the migration is one of them -- `OP3A-s-1.exchange-migration.WORKTREE-ONLY.patch`, 140 lines. Its row Z-W5-S3 records why: safe-commit refused all six `infra/` paths rc=1, admitting 3 of 9 dispatched paths (all `org/`). ⭐ THE WORKER SHIPPED ITS DELIVERABLE AS A PATCH RATHER THAN ABANDON IT OR OVERRIDE THE GATE, AND EXPLICITLY DID NOT USE `GIT_COMMIT_AUTHOR_OVERRIDE`. The work is preserved and it is not applied.",
+        "*** AND THE ROUTE C-S44 IMPLIED IS CLOSED: THE WORKER CANNOT BE RESUMED. *** `ListAgents` shows every `NFRA_OPSEC202609` worker session OFFLINE, and a completed worker subagent is not resumable by construction. So the remedy is not 'amend one field and the seated worker proceeds' -- there is no seated worker. It is: amend the order (L6), RE-DISPATCH a worker (L6), apply the patch to `infra/aws/lambda/**` (an AE/CloudOps write surface), `safe-apply` a PRODUCTION DEPLOY of two live Lambdas migrating auth from a static bearer to the exchange endpoint, then re-exercise AC6/AC7 and close the ledger for AC8.",
+        "⚠ THE HONEST SIZE OF WHAT REMAINS, STATED BECAUSE C-S44 UNDERSTATED IT TO A READER WHO MIGHT ACT ON IT: this is a production deploy on a serving path, not a paperwork fix. `2.0.0_SA_COO~Z` -- the issuer and the only lane that may amend or re-dispatch -- is STOOD DOWN and offline. NO LIVE SEAT ON THIS FABRIC CAN CURRENTLY PERFORM ANY STEP OF IT.",
+        "⭐ AND THE MECHANISM BEHIND THIS SEAT'S OWN ERROR IS THE DAY'S OWN LESSON POINTED AT ITSELF: C-S44 read the plane that was cheap to read (the order at HEAD) and concluded about a state that lives on a plane it did not read (the instance on an unmerged branch). ⛔ THAT IS THE SAME 'WHICH PLANE IS THIS INSTRUMENT ACTUALLY READING' FAMILY this seat adjudicated three times today -- Z-S10 the script's tree, Z-S14 the forwarder's tree, Z-S15 the regex's occurrence. AN UNMERGED BRANCH IS A PLANE, and a census that stops at HEAD cannot see a criterion that failed on it."
+      ]
+    },
+    "spec_asserts": "C-S44 asserted that NFRA_OPSEC202609 is waiting on one field of one identity block.",
+    "world_is": "It is waiting on a production deploy whose three criteria FAIL, whose code sits unapplied in a patch file, whose worker cannot be resumed, and whose issuing lane is offline.",
+    "notes": "⛔ NOTHING IN C-S44 IS WITHDRAWN EXCEPT ITS SIZE. The `<issued_to>` mismatch is real and measured, it IS the first blocker in the chain, and the set of seats that may clear it is still empty. What changes is that clearing it is the FIRST of five steps rather than the whole of one. ⭐ THE SLUG IS FURTHER AWAY THAN THIS SEAT SAID, AND SAYING SO IS CHEAPER NOW THAN AFTER SOMEONE ACTS ON THE SMALLER NUMBER."
+  }
+]
+```
