@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `ETFS_GUARDRAIL-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `ETFS_GUARDRAIL-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`ETFS_GUARDRAIL-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 58 rows, COUNTED not carried forward (W5-S1/S2/S3 appended by `0.9.0_WK_ETFS_GUARDRAIL~5` 2026-09-10T03:5xZ under EG-s-19 -- the catch-up branch's first exercise). The count is the sum over the file's THREE fenced json blocks (25 + 29 + 4); it was 55 immediately before this append, not the 54 the previous line carried, so this line states a measured number rather than an incremented one..
+`ETFS_GUARDRAIL-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 61 rows, COUNTED not carried forward (W5-S4/S5/S6 appended by `0.9.0_WK_ETFS_GUARDRAIL~5` 2026-09-10T05:3xZ under EG-s-25; summed over the file's 3 fenced json blocks).
 **Round 1 task orders:** 14, one per cell of `../../decompositions/ETFS_GUARDRAIL_DECOMP.md` v0.1.1, on three worker
 slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
 
@@ -1390,6 +1390,76 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "S19-AC1 arm (d): 'the payload byte-equal to the rule's delivered envelope with NO `date` key (both printed)'.",
     "world_is": "The rule's delivered envelope carries a per-delivery UUID `id` and a per-delivery `time`, so it is not byte-equal even to another delivery of itself; and the producer never logs its event, so no delivered envelope is observable at this seat. The provable and proven substitute is that the target carries no Input/InputPath/InputTransformer (1 of 1 target), so the default scheduled envelope is what the rule delivers, and the payload fired is shape-equal to it and branch-equivalent in the handler.",
     "notes": "No verdict is offered on whether the substitute satisfies arm (d) -- that is the CVO's at L9, and S19-AC2 is the judgment criterion where it belongs. Recorded because a proof-of-spec line reading 'byte-equal' would have been false, and a line reading 'equal' without saying in WHAT would have been a summary field no consumer could reject on."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W5-S4",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~5",
+    "surfaced_at": "2026-09-10T05:30Z",
+    "one_line": "THE FACE REQUIRES A NEVER-WIDEN SIGN-OFF ON AN ACT IT SIMULTANEOUSLY RULES IS NOT SERVED OUTPUT, AND A WORKER CANNOT OBTAIN ONE EITHER WAY. EG-s-25's DELIVERABLE clause says the deploy 'lands under its own NEVER-2 entry with a never-widen sign-off'. Two things make that unsatisfiable as written, and neither is a shortfall in the execution. FIRST, CLAUDE.md's never-widen rule triggers on MOVING SERVED OUTPUT and requires the sign-off of CTO+COO -- two SEATS. A worker subagent has no send tool by construction (spine v3 L7: 'WORKER SUBAGENTS of the COO ... NO send tool'), so it cannot ask for, receive or evidence a two-seat sign-off; the only authorities reachable at this seat are the ones already written into the face. SECOND, THE SAME FACE RULES THE TRIGGER DOES NOT FIRE: its BOUNDS say 'NO SERVED REPORT KEY IS WRITTEN OR DELETED. The artifact prefix is a code location, not served output; platinum/reports/ is untouched by this cell.' If the prefix is not served output, the never-widen rule does not reach the act, and the clause asks for a ceremony its own document has just declared inapplicable. WHAT THIS WORKER DID INSTEAD OF RESOLVING IT IN EITHER DIRECTION, because a worker judges a surprise's FORM and never its significance: it deployed, and it wrote into the NEVER-2 entry exactly what authority exists and what does not. What exists is the COO half in substance -- the L6 issuance at d30e3ca107 names the act, the exact key and the rollback, which is precisely what CLAUDE.md says a sign-off must name ('A SIGN-OFF NAMES THE ACT'S BLAST RADIUS, NEVER THE PRODUCER'S DECISION'), and the entry restates the blast radius measured rather than predicted: 1 of 7 artifact keys changed, 0 of 36 platinum/reports/ keys changed. What does NOT exist is a CTO half, and the entry says so in those words rather than implying coverage. MEASURED BLAST RADIUS BEYOND THE KEY, since a sign-off covers what the act MAY touch: the deployed file is pulled fresh by the box on every fire, so the act reaches the next monthly cron render and EG-s-21's one permitted driven run -- and the change is additive and backward compatible (one new key inside coverage_verdict.json, no new flag, no changed flag), so an OLD orchestrator against these NEW bytes behaves exactly as before, which is the coupling question that matters while EG-s-24 deploys the orchestrator in parallel on another slot.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-25.the-verdict-discloses-its-own-forcing.md@d30e3ca107 -- DELIVERABLE: 'THE DEPLOY IS IN THIS CELL and it is an aws s3 cp to the artifact prefix, NOT Terraform ... It lands under its own NEVER-2 entry with a never-widen sign-off, opened BEFORE the copy and closed BEFORE the grading reads'; and BOUNDS: 'NO SERVED REPORT KEY IS WRITTEN OR DELETED. The artifact prefix is a code location, not served output'.",
+        "CLAUDE.md HARD STOPS: 'NEVER move served output without never-widen sign-off (CTO+COO); verified DELTA=0 needs no hold' and 'A SIGN-OFF NAMES THE ACT'S BLAST RADIUS, NEVER THE PRODUCER'S DECISION' -- the trigger is MOVING SERVED OUTPUT, and the signatories are two seats.",
+        "org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md via CLAUDE.md rule 27: worker subagents of the COO carry NO send tool, so a two-seat sign-off is not reachable from this seat by any means.",
+        "org/critical_paths/change_management/20260910T0518Z_etfs-guardrail-egs25-renderer-forcing-disclosure-20260910_deploy_completion.md@9b8a50c6cd -- the entry, whose title states the blast radius and the rollback and whose CARRIED DETAIL states the authority gap in the same words as this row.",
+        "The blast radius as MEASURED at this seat 05:19Z, not predicted: ec2/etfs-reports/ 7 keys before and 7 after with exactly 1 changed (render_month_end.py, 62880 -> 66756 B); s3://opal-data-etfs/platinum/reports/ 36 keys before and 36 after with 0 differing on Size, ETag or LastModified."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "EG-s-25's DELIVERABLE: the deploy 'lands under its own NEVER-2 entry with a never-widen sign-off'.",
+    "world_is": "A never-widen sign-off is a TWO-SEAT act (CTO+COO) triggered by moving SERVED OUTPUT. This worker has no send and cannot obtain one; and the same face rules the artifact prefix a code location and not served output, so the trigger does not fire on this act at all. The deploy proceeded with the entry naming the authority that does exist (the issuance's blast radius and per-key rollback = the COO half in substance) and stating plainly that no CTO half exists.",
+    "notes": "INERT: nothing is left wrong in the world by this. The act is reversible from two independently verified sources, the bucket has versioning ENABLED, the blast radius was measured on both prefixes, and the change is backward compatible. The item is a CUT-SHAPE question for the CVO at L9 -- whether a cell that both mandates a deploy and rules it out of never-widen scope should ask for the sign-off at all, and if it should, how a seat with no send is expected to obtain it."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W5-S5",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~5",
+    "surfaced_at": "2026-09-10T05:31Z",
+    "one_line": "THE ROW THIS ORDER'S AUTHORITY RESTS ON IS NOT READABLE AT THIS SEAT, AND THE ISSUER'S QUOTED CONTROL NUMBERS REPRODUCE ONLY UNDER ONE OF TWO COUNTING METHODS. EG-s-25's <status> names its authority as 'row ETFS_GUARDRAIL-W4-S2, filed by 0.9.0_WK_ETFS_GUARDRAIL~4 when EG-s-21 proved UNSATISFIABLE AS CUT'. That row does not exist in the project channel at CLOUD: read at 05:0xZ (64 rows, CLOUD @911f9a0ba4) and again at 04:5xZ (63 rows, CLOUD @d30e3ca107), W4-S1 is present both times and W4-S2 is absent both times -- ~4 is live and has evidently not drained it yet. So the cited authority could not be re-grounded at its cited location; the premise was re-derived from the face's own inline restatement and, more importantly, from the deployed bytes directly. THE RE-DERIVATION HELD, and this is the part worth the issuer's attention: the face quotes five positive controls as generated_at 1, fixture_remove 22, verdict 23, unresolved 13, per_partner 6. Re-taken at this seat on the same 62,880-byte object (sha256 55701125...b973e9, byte-equal to the repo build input), those five reproduce EXACTLY under SUBSTRING counting -- 1/22/23/13/6, 5 of 5 -- and do NOT reproduce under WORD-BOUNDARY counting, which gives 1/17/19/6/5. The qualitative conclusion is identical on both methods (all five controls non-zero, all ten disclosure tokens zero), so nothing about the premise changes; but the NUMBERS are method-dependent, and a later reader comparing a word-boundary census against the face's quoted figures would see a discrepancy that is not one. This worker therefore prints BOTH methods in its battery rather than picking the one that agrees.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-25.the-verdict-discloses-its-own-forcing.md@d30e3ca107 <status>: 'Authority: row ETFS_GUARDRAIL-W4-S2, filed by 0.9.0_WK_ETFS_GUARDRAIL~4 when EG-s-21 proved UNSATISFIABLE AS CUT -- the issuer's defect.'",
+        "This seat, two reads of org/missions/D8/ETFS/ETFS_GUARDRAIL/surprise-channel/investigations/INVESTIGATION_v1.md via git show: at CLOUD @d30e3ca107 the fenced arrays parse to 63 rows and the W4/W5 ids present are exactly [W4-S1, W5-S1, W5-S2, W5-S3]; at CLOUD @911f9a0ba4 they parse to 64 rows and the same four ids. W4-S2 appears in neither.",
+        "This seat 05:0xZ, the census re-taken on the DEPLOYED pre-change bytes (s3api get-object of s3://opal-313476888478-lambda-artifacts/ec2/etfs-reports/render_month_end.py, 62880 B, sha256 55701125e86740f3bf51a715aba8f68e8441d3eb7bffc99a43b7d3ff29b973e9): SUBSTRING counts generated_at 1, fixture_remove 22, verdict 23, unresolved 13, per_partner 6 -- 5 of 5 identical to the face; WORD-BOUNDARY counts 1, 17, 19, 6, 5. Ten disclosure tokens (forcing, forced, fixture_remove_spec, removed_slice_count, run_id, run_id_source, RUN-ID, disclosure_version, _forcing_record, _mint_run_id) read 0 on BOTH methods.",
+        "CLAUDE.md rule 21's own warning, which is the shape of this: 'Traps before quoting any comp-find number (case, substring, denominator certifies the SWEEP not the pattern)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's authority is row ETFS_GUARDRAIL-W4-S2, and the deployed renderer carries 5 positive controls reading generated_at 1, fixture_remove 22, verdict 23, unresolved 13, per_partner 6.",
+    "world_is": "W4-S2 is absent from the project channel at CLOUD on two reads at two different tips, so the cited authority is unreadable at this seat and the premise was re-grounded from the deployed bytes instead. Those bytes reproduce the five quoted control numbers EXACTLY under substring counting and not under word-boundary counting (1/17/19/6/5); both methods agree that all five controls are non-zero and all ten disclosure tokens are zero.",
+    "notes": "INERT and NOT blocking: the face restates its premise inline, and the premise was verified directly against the object that matters (the deployed bytes) rather than against the row, which is the stronger instrument anyway. Filed because an authority a reader cannot open is a citation without a resolvable target, and because the control numbers are method-dependent in a way that would read as a discrepancy to the next seat that re-takes the census differently."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W5-S6",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~5",
+    "surfaced_at": "2026-09-10T05:32Z",
+    "one_line": "THE FACE'S CITATION FOR 'THE BOX PULLS THIS FILE BY KEY AT RUN TIME' POINTS AT AN EMAIL BODY. EG-s-25 justifies the s3-cp deploy shape with 'the box pulls this file by key at run time (lambda_function.py:348)'. At CLOUD, infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:348 is a line of prose inside the Orion label-correction email body ('single monthly rebate-basis file currently has inflection dated one day EARLIER'), not the pull. The actual pull is at :207 inside _render_command -- 'aws s3 cp {ARTIFACT_PREFIX}/render_month_end.py ./render_month_end.py --region {REGION} --only-show-errors' -- with ARTIFACT_PREFIX bound at :48 to s3://opal-313476888478-lambda-artifacts/ec2/etfs-reports, and the renderer is then run at :227 as 'python3 render_month_end.py --month {month} --pdf --gate --s3-out {out}'. THE CLAIM IS TRUE AND THE LINE NUMBER IS STALE: the orchestrator has been edited twice tonight by adjacent cells (EG-s-20's guard fix and EG-s-24, live on ~4 right now), so a line number cited without a commit-ish drifts within hours in this project. The substance the citation was carrying is CONFIRMED at the corrected location, and the deploy shape the face chose is the right one -- which is exactly why the stale pointer is worth a row rather than a correction in passing: the next reader who opens :348 to check the deploy mechanism will find an email and have no way to tell whether the claim or the pointer is wrong.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-25.the-verdict-discloses-its-own-forcing.md@d30e3ca107 DELIVERABLE: 'the box pulls this file by key at run time (lambda_function.py:348)'.",
+        "infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:348 @CLOUD(911f9a0ba4) reads: 'single monthly rebate-basis file currently has inflection dated one day EARLIER ' -- inside _build_correction_email's body string, 521 lines in the file.",
+        "The same file :200-229 @CLOUD: def _render_command(month), with :207 'aws s3 cp {ARTIFACT_PREFIX}/render_month_end.py ./render_month_end.py' and :227 'python3 render_month_end.py --month {month} --pdf --gate --s3-out {out}'; :48 binds ARTIFACT_PREFIX to s3://opal-313476888478-lambda-artifacts/ec2/etfs-reports. Located by comp-read --enumerate over the file (11 hits across 521 lines, bands DOCSTRING 4 / COMMENT 1 / CODE 6), not by guessing.",
+        "CLAUDE.md rule 22: 'cite file:line @ <commit-ish> (a citation without a vintage is not a citation)' -- and this file was moved twice tonight by EG-s-20 and EG-s-24, which is why the drift happened within hours."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "'the box pulls this file by key at run time (lambda_function.py:348)'.",
+    "world_is": "At CLOUD, :348 is prose inside an email body. The pull is at :207 in _render_command and the renderer is invoked at :227; ARTIFACT_PREFIX is bound at :48. The CLAIM is correct and was confirmed at the corrected lines; only the line number is stale, because the orchestrator has been edited twice tonight by adjacent cells.",
+    "notes": "INERT: the deploy shape the citation justifies is correct and was verified at the true location before the deploy was made. Filed for form -- a line number without a commit-ish is not a citation, and in this file it decayed within hours."
   }
 ]
 ```
