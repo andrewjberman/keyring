@@ -503,6 +503,31 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
     "spec_asserts": "CLAUDE.md rule 21: 'a comp-tool is the DEFAULT for search + inspection, raw grep the exception' -- the reflex for wherever an agent is working; rule 14b mandates a worker commit and edit inside its OWN linked worktree ('a linked worktree carries its OWN index... which is why /dispatch already mandates one per worker slot').",
     "world_is": "The two mandates combine into a silent GRAIN mismatch: a worker in a linked worktree who follows rule 21's reflex gets comp-find/comp-read/comp-which answers about the MAIN ajb_workspace checkout's disk state, never about its own worktree's uncommitted or worktree-local content -- and the tool's own output ('a MEASURED zero... not a claim the term is absent from the estate') reads as authoritative with no signal that the corpus excluded the very tree the worker is standing in.",
     "notes": "Not remediated here -- .tools/_comprail.py and the ~/bin shims are outside this cell's paths entirely. Filed ARMED because every other worktree active this session (ajb_s10_v, wk-NR2-2, wk-NR2-3) inherits the identical defect on every comp-find/comp-read/comp-which call it makes, and a future worker trusting a comp-rail zero about its own uncommitted deliverable would be citing the wrong tree's content while the tool's own denominator language gives no hint of that. This cell's own earlier reads of SCHEDULE.md/PRD.md/COMPOSER.md via comp-read returned correct text only because those are tracked files unchanged since this worktree's branch point and so are byte-identical in both trees by coincidence, not because comp-read was reading this worktree -- which is exactly why the mismatch went unnoticed until tested with a canary unique to this worktree."
+  },
+  {
+    "id": "NFRA_REPORT-Z-S10",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZZ",
+    "surfaced_at": "2026-09-10T03:10:00Z",
+    "one_line": "RP-s-13's MERGED deliverable ATTRIBUTION.md renders both `opal-gateway` and `opal-globgrph` as UNGROUPED, which was correct when it was built and is STALE as of PRD v0.7: Andrew-direct settled FWD-4's axis at FOUR members (Dashboard | Website | Gateway | Graph), and those two surfaces are the referents of the two new members. FWD-4 cannot grade REALIZED against the v0.7 bar while its own deliverable renders two NAMED members as ungrouped.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/ATTRIBUTION.md at site-Z HEAD, parsed by row: `opal-gateway` (MCP server) -> `UNGROUPED`; `opal-globgrph` (ECS Fargate cluster) -> `UNGROUPED`. 2 of 2 of the rows the ruling moves.",
+        "org/missions/D12/NFRA/NFRA_REPORT/prd/NFRA_REPORT_PRD.md at site-Z HEAD, line 13: \"attribution axis has FOUR MEMBERS -- `Dashboard | Website | Gateway | Graph`\" (Andrew-direct).",
+        "Same PRD, line 295, naming the referent explicitly rather than leaving it to inference: \"Website, Gateway (the opal-gateway MCP server)\".",
+        "Same PRD, lines 327-328, the four-member reasoning: \"`opal-gateway` (EC2, the MCP server) and `opal-globgrph` (ECS, 3 of 3 services) are BOTH live, BOTH always-on, and FAIL DIFFERENTLY\" -- which is why neither folds into Dashboard and why Graph's referent is opal-globgrph.",
+        "1.0.0_SA_CTO~Z msg 20761 carrying the Andrew-direct at record 9382d107a3: \"UNGROUPED IS NOT RETIRED. It now means a live surface outside all four.\""
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S13/FWD-4 requires every finding rolled up to a NAMED part of the business with an owner, plus a mandatory RENDERED UNGROUPED value for a live surface no ratified member covers. Under v0.7 the ratified members are four, so UNGROUPED is a strictly smaller set than it was at v0.6.",
+    "world_is": "The deliverable was built against the v0.6 axis, where the third member was an OPEN CALL at Andrew and UNGROUPED was the only defensible rendering for both surfaces. It is unchanged since it merged at 63efc53452. The world moved at v0.7; the artifact did not.",
+    "notes": "NOT REMEDIATED MID-ROUND, AND NOT A DEFECT IN THE CELL. RP-s-13 is TERMINAL and the round-2 issuance is FROZEN; the worker's rendering was the correct one at its vintage and it said so explicitly. The remedy is a round-3 recut after 1.0.0_SA_CTO~Z's round-2 analysis, which is this lane's limb and this row's disarm. THE PATTERN IS THE PART WORTH KEEPING, BECAUSE THIS IS THE SECOND TIME TONIGHT ON THIS SAME MANIFEST ROW: v0.6's si2 amendment overtook RP-s-13's issued BOUNDS while the cell was being built (row W2-S5, caught by the worker re-grounding on the live PRD), and now v0.7's axis ruling overtakes the finished deliverable. S13 kept being RIGHT-AT-CUT and STALE-AT-GRADE. The remedy is NOT 'read the PRD harder' -- both readings were correct when taken. It is that FWD-4 was under ACTIVE ANDREW ADJUDICATION for the whole window in which its cell was cut, built and merged, and a cell whose governing outcome is mid-adjudication should be expected to need a recut rather than treated as a miss. ONE PROPERTY OF THE DELIVERABLE MAKES THIS CHEAP AND IT WAS A DELIBERATE CHOICE BY THE WORKER: it RENDERED opal-globgrph rather than omitting it, on the reasoning that a live always-on surface must appear even when its group is unnamed. Because both surfaces are already present as rows, the round-3 fix is a two-value reassignment, not a rediscovery of what runs."
   }
 ]
 ```
