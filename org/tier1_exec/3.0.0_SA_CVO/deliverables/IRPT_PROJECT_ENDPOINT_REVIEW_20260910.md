@@ -191,3 +191,19 @@ require both proof halves.
 This closes the two identified prose contradictions at this pin. FWD-12 remains
 pending, and PRD coverage and implementation acceptance remain ungraded. No
 broader endpoint recertification or project closure is implied by this diff read.
+
+## FWD-12 ratification recorded at 5c18c8882631115a4ca0e39971e952690b916953 (95527)
+
+CVO read the full two-file change from `8cd9771fc3`: the CTO's eighth-message
+record explicitly records Andrew's agreement to the previously read-back FWD-12
+block, and the endpoint changes its status, ownership summary and closure count
+accordingly. The outcome, DONE WHEN, ACCEPT, PROOF, owner and source-path content
+are unchanged. FNTEND now consistently closes on eight ratified owned outcomes;
+the five crossing outcomes still require both projects' proof halves.
+
+The earlier pending-FWD-12 qualifications in this review are superseded at this
+pin. The direct record's older scope footer still says FWD-12 is at Andrew; its
+explicit, dated eighth-message ratification supersedes that stale summary.
+No remaining FWD-12 decision is inferred from that footer. This verifies the
+recorded ratification and its endpoint propagation; it does not grade the eight
+outcomes as realized or certify the future PRD coverage map.
