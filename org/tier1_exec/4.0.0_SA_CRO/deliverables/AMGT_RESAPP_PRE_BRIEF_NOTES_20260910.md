@@ -195,9 +195,17 @@ local scrapers under `data/seeking-alpha/scripts/`.
   `seeking-alpha/analysis/batches/{date_str}/{batch_id}.json`, batches of 10, fed by a coordinator
   on a date listing. Output lands in S3 + DynamoDB keyed `article_date` + `url_hash`.
 - **=> The gap is a thin ticker-addressable wrapper, not a scraper build.**
-- **SA articles ARE ticker-tagged.** `data/seeking-alpha/scripts/edge_scraper_enhanced.py:293-338`
+- ~~**SA articles ARE ticker-tagged.** `data/seeking-alpha/scripts/edge_scraper_enhanced.py:293-338`
   builds a validated per-article `tickers` array and emits it on the record
-  (enumerate: 7 hits / 589 lines, all CODE band, 0 docstring/comment).
+  (enumerate: 7 hits / 589 lines, all CODE band, 0 docstring/comment).~~
+  ⛔ **FALSE OF THE LANDED CORPUS -- CORRECTED SAME DAY, see
+  `AMGT_RESAPP_SA_CORPUS_STALENESS_20260910.md` s1/s3.** Measured **0 of 200** landed articles carry
+  a populated `tickers` field. The line I cited is the LOCAL Edge scraper; the corpus was produced
+  by the DEPLOYED Lambdas, and `tickers` is **absent from both** (`seeking-alpha-analysis-scraper`
+  0 hits / 401 lines; `seeking-alpha-news-scraper` 0 hits / 296 lines). **I read the producer's CODE
+  and wrote down a property of the ARTIFACT** -- the citation made a code-reading look like a
+  measurement. Superseded by design anyway: Andrew ruled the source is the SA **symbol page**, not
+  extraction over article bodies.
 
 **The RSS/NewsAPI news corpus is NOT ticker-tagged at article level.**
 `tools/news_scanner/` -- 4 layers, 600+ articles/day from 17-28 RSS feeds + NewsAPI, lands

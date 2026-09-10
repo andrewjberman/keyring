@@ -80,7 +80,7 @@ needs entity extraction." **Corrected: neither works today without a spend decis
 
 | Source | Ticker-tagged? | Available today? |
 |---|---|---|
-| SA corpus (already scraped, in S3 + DynamoDB) | **YES** | **YES -- historical only, nothing new lands** |
+| SA corpus (already scraped, in S3 + DynamoDB) | ~~YES~~ **NO -- 0 of 200 measured** | ~~YES~~ **NO -- articles stop 2026-04** |
 | SA corpus (fresh / on-demand one-shot) | YES | **NO -- credential dead** |
 | RSS + NewsAPI corpus | **NO** (topic-level `affected_tickers` only) | yes, but needs an entity-extraction leg |
 
