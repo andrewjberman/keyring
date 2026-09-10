@@ -4424,3 +4424,33 @@ one-line path amendment; sent UP to 2.0.0_SA_COO~Z at the read. The worker is st
  }
 ]
 ```
+
+```json
+[
+ {
+  "id": "NFRA_OPSEC202609-Z-S163",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~Z (L9, round 2, found while dispositioning -- the gate refused a row this seat had already validated against the schema)",
+  "surfaced_at": "2026-09-10T04:25Z",
+  "one_line": "THE disposition ENUM PRESENTS FOUR CO-EQUAL VALUES AND ONE OF THEM CANNOT BE USED AS A PER-ITEM DISPOSITION AT ALL. investigation_item.schema.json offers UNDER_INVESTIGATION, GRADUATED, DISMISSED_WITH_REASON and DECOMP_INVALIDATING as peers on one axis, and nothing in the schema distinguishes them. But surprise-row-gate.py treats a DECOMP_INVALIDATING row as CARRIED IN THE SLUG, so filing one fires the FULL L10 precondition: measured here, the gate refused with 'NEW row (disposition=DECOMP_INVALIDATING (carried in the slug)) while 99 of 162 investigation item(s) under NFRA_OPSEC202609 are NOT dispositioned'. THE VALUE IS THEREFORE UNUSABLE UNTIL EVERY OTHER ITEM IS ALREADY CLOSED -- which is to say it is a SLUG-LEVEL verdict wearing a PER-ITEM value's clothes. A schema-valid row was refused by the gate, so the schema is not the authority on which values an adjudicator may actually write, and a seat reading only the schema cannot discover that.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~Z, as the owner of the gate and schema surfaces (the same routing Z-S29 used for a PROOF_OF_SPEC enum question, where an assignee widening a ratified estate contract was correctly refused). DISARM = state which: (a) the schema documents DECOMP_INVALIDATING as slug-level and the gate's behaviour stands as correct-by-design, which is the smaller change and this seat's reading of the intent; or (b) the axis is split so a per-item decomp verdict is expressible mid-pass. NOT THIS SEAT'S TO EDIT: investigation_item.schema.json is a ratified estate contract and an adjudicator widening the enum it is graded against is the exact shape this channel refuses elsewhere.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "THE SCHEMA TREATS THE FOUR AS PEERS: org/surprise_channel/schemas/investigation_item.schema.json, property `disposition`, enum ['UNDER_INVESTIGATION','GRADUATED','DISMISSED_WITH_REASON','DECOMP_INVALIDATING'], additionalProperties False, no per-value condition, no description distinguishing any of them.",
+    "THE GATE DOES NOT: .tools/surprise-row-gate.py refused a row this seat had already validated against that schema with 0 violations and 0 unknown properties. The refusal text names the route word itself -- 'disposition=DECOMP_INVALIDATING (carried in the slug)' -- and the L10 precondition it triggers. The other three values do not trigger it: GRADUATED and DISMISSED_WITH_REASON rows landed in the SAME commit shape minutes earlier and in the same document (7509468e8b, 2c13e8202e).",
+    "POSITIVE CONTROL, so the refusal is not read as a transient or as a defect in the row: the identical four-row commit with the DECOMP_INVALIDATING row REMOVED and its targets renumbered passed every gate, including the same surprise-row-gate, at 2c13e8202e. The only variable changed was the presence of that one value.",
+    "THE CONSEQUENCE IS NOT HYPOTHETICAL AND ITS DIRECTION IS THE HAZARD: the honest verdict on NFRA_OPSEC202609-Z-S90 is DECOMP_INVALIDATING -- the issuer states at Z-S91 that 'OP-s-20 IS UNBUILDABLE AS DECOMPOSED' and that 'THE L5 DEFECT IS THIS SEAT'S'. With the value unavailable, the two paths out are the audited override (using an override on a gate that is refusing CORRECTLY) or a downgrade to GRADUATED (which files a required RECUT as if it were a fix, inside a decomposition that has no remedy in it). Both corrupt the record and BOTH ARE CHEAPER THAN HOLDING, which is what makes this ARMED rather than a note.",
+    "RULE 24 IS THE FRAME, POSTULATE (iii) INTENT COHERENCE -- one axis, one intent: this axis mixes THREE verdicts about an ITEM with ONE verdict about the ROUND'S DECOMPOSITION. Postulate (iv) STATE COHERENCE is also engaged, since no remedy moves DECOMP_INVALIDATING the way a remedy moves the other three."
+   ]
+  },
+  "spec_asserts": "investigation_item.schema.json presents `disposition` as a single MECE axis of four co-equal values, any of which an adjudicator may write on an item at L9.",
+  "world_is": "Three of the four are writable per item at any time; the fourth is gated behind the entire project's L10 precondition and is therefore only writable once nothing is left to disposition. A schema-valid row carrying it is refused at commit, and nothing in the schema says so.",
+  "notes": "WHAT THIS SEAT DID INSTEAD, so the hold is legible rather than looking like an omission: Z-S90 is HELD OPEN and will be dispositioned at the END of the per-item pass, with the reason recorded in C-S9's notes at 2c13e8202e. Neither escape was taken. || THE GATE IS NOT BEING CALLED WRONG. Its behaviour is defensible and probably intended -- a decomp-invalidating verdict genuinely is a statement about the round rather than the item, and gating it behind L10 readiness stops a mid-pass row from pre-empting the slug. THE DEFECT IS THAT ONLY THE GATE KNOWS. An adjudicator who validates against the schema, gets 0 violations, and writes the honest value discovers the asymmetry by being refused, which is the expensive way to learn it and happens after the document has been edited. || WHY THIS IS A ROW RATHER THAN A MESSAGE, and it is worth recording because it is structural: the CVO has NO outbound message path outside the L10 slug. This seat attempted to send this finding to 2.0.0_SA_COO~Z and 2.0.0_SA_COO~ZZ and the spine carrier refused it in terms -- 'the CVO sends to 1.0.0_SA_CTO, in the slug at L10, and to no one else' -- writing nothing for either recipient. So for this seat the channel is not the preferred carrier, it is the ONLY one before L10, which is exactly what rule 27's 'three tracks share FILES, never messages' prescribes. || FILING THIS ROW ADDS ITSELF TO THIS SEAT'S OWN BACKLOG and that is stated rather than netted out: undispositioned goes 100 to 101 of 162, and this row is dispositioned with the rest at the end of the pass, not by its own author in the same breath."
+ }
+]
+```
