@@ -563,8 +563,20 @@ happened* to *the mechanism was driven deliberately and worked*.
                      injected under a NEVER-2 entry and restored after) drives a real run
                      of the SAME target the schedule invokes: the verdict object reads
                      REFUSE with the classifier's own class table quoted at file:line, the
-                     publish keys for that month stay ABSENT (a 404 beside the refused
-                     200), the refusal reaches a person, and the FORCING is disclosed on
+                     publish keys for that month are UNTOUCHED BY THIS RUN -- head-object
+                     each publish key BEFORE and AFTER and show ETag, VersionId and
+                     LastModified IDENTICAL, beside the refusal artifacts' fresh 200s
+                     (R-EG-9, 2026-09-10: this clause read "stay ABSENT (a 404 beside the
+                     refused 200)" and NO MONTH COULD EVER SATISFY IT -- 275 slices
+                     subtract to {2026-05..2026-09}, 0 outside, and ALL FIVE already serve
+                     both html and pdf, so 404-able is 0 of 5 and NEVER-AUTO-DELETE forbids
+                     the only act that would change it. A 404 NAMES ONE WORLD-STATE OF
+                     "this run did not publish" exactly as the pre-R-EG-8 clause named one
+                     WRITER of the ask property -- the same defect one grain up, and the
+                     SECOND instance of it inside this one order. An unmoved ETag is
+                     STRICTLY STRONGER than a 404: a 404 proves a key NEVER EXISTED, an
+                     unmoved ETag proves THIS RUN did not touch a key that DOES),
+                     the refusal reaches a person, and the FORCING is disclosed on
                      the artifact so the run is never mistaken for organic. The already-
                      measured carry-and-disclose branch (2026-09-10: PUBLISH over two
                      class-D holes, coverage line "5/6 trading days; 1 carried") is the
