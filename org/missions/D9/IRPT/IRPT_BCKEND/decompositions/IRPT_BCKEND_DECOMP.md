@@ -1,4 +1,6 @@
-# IRPT_BCKEND -- L5 decomposition -- round 1 -- v0.1
+# IRPT_BCKEND -- L5 decomposition -- round 1 -- v0.1.1
+
+**v0.1.1** (2026-09-10 ~21:2xZ, `2.0.0_SA_COO~B`, amended BEFORE the cut, in the issuance commit) -- s.8 item 1: the live vendor arm is an express qualification in the face and an L10 read, never a mechanical criterion on the order. Cells, ids and edges unchanged.
 
 ```json
 {
@@ -6,7 +8,7 @@
  "directive": "D9",
  "fabric": "laptop",
  "round": 1,
- "decomp_version": "v0.1",
+ "decomp_version": "v0.1.1",
  "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@62301f71e0",
  "prd_version": "v0.4",
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
@@ -193,7 +195,7 @@ Lambdas: the `infra/aws/terraform/modules/yang-lambda` module, artifacts at `opa
 
 ## 8. BOUNDS THAT BIND EVERY ORDER, inlined at L6 where they touch a cell
 
-1. **NO LIVE VENDOR CALL** (endpoint, verbatim: *"NO LIVE VENDOR CALL is authorized by this document -- availability is not authorization; a live YCharts, Black Diamond or Orion call needs Andrew's explicit per-use word"*; CLAUDE.md G-24). Four cells carry a live arm (`IB-s-6` the mailbox read, `IB-s-8` the YCharts login, `IB-s-9` the YCharts calls, `IB-s-11` the BD/Orion calls). Each proves its MECHANISM against recorded fixtures through a transport stub with a difference control, and carries the live arm as a NAMED criterion whose instance row reads `UNCOMPUTABLE-BY-CONSTRUCTION` naming the run it rides: *fires on Andrew's per-use word, recorded under `deliverables/`*. This is the EXPRESS QUALIFICATION Rule 27 requires, on the outcome and with his word, and it is not a wait: the organic case is the negative arm.
+1. **NO LIVE VENDOR CALL** (endpoint, verbatim: *"NO LIVE VENDOR CALL is authorized by this document -- availability is not authorization; a live YCharts, Black Diamond or Orion call needs Andrew's explicit per-use word"*; CLAUDE.md G-24). Four cells carry a live arm (`IB-s-6` the mailbox read, `IB-s-8` the YCharts login, `IB-s-9` the YCharts calls, `IB-s-11` the BD/Orion calls). Each proves its MECHANISM against recorded fixtures through a transport stub with a difference control, and NAMES the live arm in its face as an express qualification: *fires on Andrew's per-use word, recorded under `deliverables/`, and is read by the CTO at L10 against the exercised artifact*. It is deliberately NOT a mechanical criterion on the order (v0.1.1): the worker flips an order complete only when every mechanical criterion passes by output, so a live arm cut as a criterion would hold the order open on an act the worker is forbidden to take. This is the EXPRESS QUALIFICATION Rule 27 requires, on the outcome and with his word, and it is not a wait: the organic case is the negative arm, and a NOT_EVALUATED grade on that arm at the first close is the honest state (the ETFS_GUARDRAIL precedent).
 2. **NO MONITOR, ALARM, SNS OR SES SEND** (G-20). The intake scheduler is the product's poller, not a monitor, and is applied `DISABLED`; enabling it is part of the qualified arm. Nothing in this project notifies anyone.
 3. **CROSS-FIRM, both shapes** (G-23): per-firm prefixes + IAM conditions in the shared `opal-data-ycharts` bucket; the FIRM's own bucket for directory and holdings PLATINUM (finding 1); the `FirmDestinationPolicy` with a named owner; the firm fixed from the sender's domain at ingestion and immutable after; Global GRANTED to an Opal principal, never to a firm one; no new all-firm financial aggregate.
 4. **Deploys** (NEVER-2, NEVER-9): `safe-apply.sh` only; ledger entry + committed sentinel; `CodeSha256` vs the zip; one root per slot; `aws lambda update-function-code` never. Every deploying order grants `org/critical_paths/change_management/` AND `org/critical_paths/.open_deploys/<slug>.json`.
