@@ -78,7 +78,18 @@ the whole content of this ruling.**
 task-order set is **29, of which 29 are terminal with 29 of 29 instances VALID at HEAD**. L7's exit
 condition is met and **L8 may fire.** Nothing else about the round changes.
 
-⚠ **IT DOES NOT TOUCH THE 137.** The channel's undispositioned count is the L10 precondition and is
+⚠ **AMENDED 02:2xZ -- THE COUNT MOVED WHILE THIS DOCUMENT WAS BEING WRITTEN, WHICH IS THE POINT.**
+`3.0.0_SA_CVO~Z` re-measured at msg 20746: **162 rows, 138 UNDISPOSITIONED** (`Z-S162` was filed at
+02:12:00Z, adding one). **This document said 137 and was already stale at commit.** The fix is not a
+better number -- it is to state the PREDICATE, which is what that seat established earlier tonight:
+**every item on that channel must be dispositioned by its latest citing row before the slug can be
+cut**, and that sentence survives the next append while any count does not.
+⭐ **AND `Z-S161` AND `Z-S162` BOTH READING UNDISPOSITIONED IS CORRECT -- nobody should "fix" it.**
+`Z-S162` CORRECTS `Z-S161`'s remedy; it does not DISPOSITION it. **A correction and a disposition are
+two different acts and only one closes an item** -- the same distinction as `hazard_standing` vs
+`disposition`, one level over.
+
+⚠ **IT DOES NOT TOUCH THAT CHANNEL'S UNDISPOSITIONED SET.** The channel's undispositioned count is the L10 precondition and is
 `3.0.0_SA_CVO~Z`'s at L9. This ruling makes L8 reachable; it does not make L10 reachable, and the
 distinction is the one that seat has been carrying all night.
 
