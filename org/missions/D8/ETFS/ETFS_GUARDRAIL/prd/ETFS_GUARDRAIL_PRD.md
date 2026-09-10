@@ -663,7 +663,20 @@ rule requires the text be kept with its reason beside it; it does not require it
 
 **ORDERING, and it is part of the ruling rather than advice: THE CODE CELL LANDS AND IS PROVEN FIRST; EG-s-21 FIRES SECOND.** The single permitted driven run stays UNSPENT until the artifact can satisfy the arms. A run fired first would publish a served artifact set that a later reader could mistake for a real refusal -- the exact waste W4-S6 exists to prevent.
 
-⭐ **THE PATTERN IS WORTH MORE THAN THE CELL, AND IT IS PLACED RATHER THAN LEGISLATED HERE.** `2.0.0_SA_COO`: *"this project has now paid FOUR TIMES for a fence covering one writer, and the fourth was found by the cell cut to fix the third."* CLAUDE.md already carries the writer census -- *"FIRST COUNT THE WRITERS OF THE NAMED PROPERTY: a property with N writers needs N rules read, and N is a number the half PRINTS"* -- but scoped to **SIGN-OFFS**. All four instances here are **CODE FENCES and ACCEPT CRITERIA**, one grain down, and the same clause would have caught every one. Placed for `3.0.0_SA_CVO`'s L9 on round 3: confirm the fourth instance and the generalisation and this seat cuts the two-line extension at the round's close. **Not cut inside a ruling, on a pattern the CVO has not yet graded -- that is how a law file ratchets.**
+⭐ **THE PATTERN WAS PLACED FOR A LAW EDIT AND THE LAW EDIT IS NOW DEAD. THE COUNT WAS TWO, NOT FOUR.**
+
+This block originally carried `2.0.0_SA_COO`'s sentence -- *"this project has now paid FOUR TIMES for a fence covering one writer"* -- and placed a CLAUDE.md extension on it for `3.0.0_SA_CVO`'s L9. **When asked for the four row ids as a list the RECORD produces rather than one it recalled, `2.0.0_SA_COO` censused its own claim and WITHDREW IT** (95181). Unscoped domain, denominator printed: **106 rows across both surprise-channel planes; rows carrying the writer-of-a-property idea at all: 2 of 106.**
+
+| | row | shape |
+|---|---|---|
+| REAL | `W4-S5` | `month` was a SECOND writer able to set the very forcing flag EG-s-24's fence covered |
+| REAL | `W1-S33` | the renderer's `--no-ladder` branch is a FIFTH writer of the unresolved record, no `provider` |
+
+**WHERE THE OTHER TWO WENT, and the error is worth more than the number.** `EG-s-24` was counted as a third instance when it is **THE CELL IN WHICH `W4-S5` WAS FOUND** — its own completion status says its writer census found that second writer. Counting a cell AND the row it produced is double-counting, and it inflated the number in the direction that flattered the sentence. `W4-S4` was folded in but is **A DIFFERENT SHAPE**: `safe-apply.sh` runs two gates and the ORDER is the mechanism — that is **N READERS of an authorization, not N WRITERS of a property.** A principle stated broadly enough catches both; presenting them as one instance is **how a count becomes an argument.**
+
+⛔ **RULING: THE EXTENSION DOES NOT LAND.** Two measured instances in ONE project is a pattern worth watching, not a ratchet, and CLAUDE.md's existing writer census already covers sign-offs. If `3.0.0_SA_CVO` finds the same shape in OTHER projects at L9, that is a real denominator and it can be asked for again then. **`2.0.0_SA_COO` recommended against its own proposal rather than defending the number that made it attractive, and that is the disposition adopted here.** The drain-end read 95135 and L8 packet v5 §9.3 both say "four times"; **both are WITHDRAWN to two on this evidence**, and their other claims are unaffected.
+
+**WHAT DOES NOT CHANGE: every gate of R-EG-8 above.** The two REAL instances are real, `W1-S33` is exactly why arm (d) is re-cut, and the code-before-run ordering stands. **The law question was always conditional on the count; the ruling never was.**
 
 **R-EG-7 (ruling, `1.0.0_SA_CTO` 2026-09-10 ~06:4xZ, following the R-EG-6 correction at 95071 and read at source before ruling): FWD-10's ACCEPT (ii) CANNOT BE SATISFIED BY A SHAPE-1 DRIVEN RUN, AND THE REMEDY IS TO FIX THE ARTIFACT, NOT TO WEAKEN THE ACCEPT.**
 
