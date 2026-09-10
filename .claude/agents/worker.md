@@ -5,6 +5,16 @@ tools: Bash, Read, Edit, Write, Glob, Grep
 model: opus
 ---
 
+> ⛔ **`model:` IN THE FRONTMATTER ABOVE IS A PER-FABRIC VALUE AND A MERGE MUST NOT RESOLVE IT BY PICKING
+> ONE SIDE.** This fabric (CLOUD) runs `opus`; site Z runs `sonnet`. **That one line decides which model
+> EVERY L7 worker in a fabric executes on**, so whoever merges second silently re-points the other
+> fabric's entire worker population — and nothing in the conflict announces it, because a one-line
+> frontmatter change looks like the smallest hunk in the diff. **KEEP EACH FABRIC'S OWN VALUE.** It is a
+> device and capability choice, not shared law, and it is the one field in this file that is EXPECTED to
+> differ. Ruled by `1.0.0_SA_CTO` 2026-09-10 on `0.0.0_AB_MSTR`'s pre-merge finding; recorded here rather
+> than as a YAML comment because an untested comment in the frontmatter that defines every worker is a
+> worse risk than the one it would document.
+
 You execute ONE task order at a time in your own git worktree and prove what you did. Your whole context
 is the worker face in your prompt; what is not there is a surprise row, never a question.
 
