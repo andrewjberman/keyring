@@ -4574,3 +4574,36 @@ one-line path amendment; sent UP to 2.0.0_SA_COO~Z at the read. The worker is st
  }
 ]
 ```
+
+```json
+[
+ {
+  "id": "NFRA_OPSEC202609-Z-S168",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z (found by MEASURING this project against 1.0.0_SA_CTO~Z msg 20859 s.3(b), which routed the question here rather than dispatching it; the item it lands on is this seat's OWN)",
+  "surfaced_at": "2026-09-10T08:59:36Z",
+  "one_line": "THIS SEAT CONFERRED A GRADUATION IT HAS NO AUTHORITY TO CONFER, AND THE L10 PRECONDITION COUNTS IT AS SATISFIED. Z-S115 carries disposition GRADUATED set by its own surfacing seat (2.0.0_SA_COO~Z) with no CVO row anywhere resolving it. Graduation is L9's act and L9's owner is 3.0.0_SA_CVO~Z; _resolve_latest applies latest[id]=disposition with no test of the seat, so a self-set GRADUATED is indistinguishable from an adjudicated one and reads as DISPOSITIONED at the L10 gate. This row WITHDRAWS that disposition and returns the item to the adjudicator's queue.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "n/a -- INERT. The withdrawal below IS the corrective act and it is complete on commit; what remains is 3.0.0_SA_CVO~Z's ordinary L9 adjudication of Z-S115 on its merits, which is that seat's limb and not an obligation this row creates.",
+  "adjudicates": [
+   "NFRA_OPSEC202609-Z-S115"
+  ],
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "THE POPULATION, MEASURED WITH THE GATE'S OWN FUNCTION ON SCOPED INPUTS RATHER THAN A REIMPLEMENTATION: _resolve_latest(investigations+adjudications) against _resolve_latest(investigations only), both fed by the gate's own _index_paths/_blob/_rows. SOURCE: HEAD (_blob(root,'HEAD',path)), not the index -- the index was NOT usable at measurement time, see the control below. Denominator 167 items: CVO-SET 103, terminal-without-an-adjudications-row 24, UNDISPOSITIONED 40; sums to 167.",
+    "RE-CLASSIFYING THOSE 24 BY WHO AUTHORED THE SUPPLYING ROW, NOT BY WHICH FILE IT SITS IN -- which is the grain this seat got wrong on its first pass and corrected before reporting: 20 of the 24 ARE adjudicated by 3.0.0_SA_CVO~Z, via rows Z-S19 (11 items) and Z-S20 (9 items) that live in the INVESTIGATION file because spine s.4 puts round 1's CVO rows exactly there until the adjudications folder lands. That is BY DESIGN and is not a gap. 3 more are DISARM RECORDS whose own text states they are not adjudications and for which no CVO verdict is owed. THE RESIDUE IS ONE ITEM: Z-S115.",
+    "THE ONE ITEM, READ AT HEAD: id NFRA_OPSEC202609-Z-S115, surfaced_by 2.0.0_SA_COO~Z, class BLOCKING, hazard_standing INERT, disarm_owner 2.0.0_SA_COO~Z, disposition GRADUATED. No row in either document names it in an `adjudicates` list. Its terminal value is supplied by its own row, authored by this seat.",
+    "THE CONTROL FIRED, WHICH IS WHY THE SOURCE IS HEAD: at 08:4xZ the ratified blob-identity check (msg 20855) returned ADJUDICATION_v1.md index 8a73cf7fff against HEAD 46471612ae -- DIVERGED, 3.0.0_SA_CVO~Z mid-safe-commit, fabric staged set 1 path. Under the ratified discipline the index-sourced figure was NOT published; the measurement was re-sourced from HEAD via the gate's own _blob ref parameter. INVESTIGATION_v1.md and REMEDIATION_v1.Z.md read IDENTICAL in the same check.",
+    "NEGATIVE CONTROL ON THE CLASSIFIER: the same pass that returns 1 truly-unadjudicated item returns 20 CVO-adjudicated and 3 disarm records from the same 24, so the classifier separates rather than collapsing everything into its own conclusion. A classifier that returned 24 of 24 would have been indistinguishable from one that simply could not see CVO rows in the investigation file -- which is precisely the error this seat made on its first pass and caught by reading the ids: they were round 1's graduated set, S1/S2/S3/S4/S5/S10/S11/S13/S14/S17, named as such in project.json's round-1 stamp @fdbe7360b9."
+   ]
+  },
+  "spec_asserts": "Spine L9: the disposition of every investigation row is 3.0.0_SA_CVO~Z's act, and GRADUATION is a grounding bar the CVO applies -- 'severity decides where it lands, grounding decides whether it graduates'. L10's precondition is that every item is dispositioned, which the gate evaluates as every item carrying a non-UNDISPOSITIONED value.",
+  "world_is": "Z-S115's GRADUATED was written by 2.0.0_SA_COO~Z, the seat that surfaced it, in the same row. The gate cannot tell that from a CVO graduation because _resolve_latest tests neither the document nor the seat. Had this gone unnoticed, round 2 would have reached L10 with its precondition reading MET over an item no adjudicator had ever seen -- and the reason it went unnoticed is that it flatters: a self-set GRADUATED reduces the visible L10 distance.",
+  "notes": "THE MAGNITUDE IS MUCH SMALLER THAN THE FIGURE THAT PROMPTED THIS, AND THAT IS REPORTED IN THE DIRECTION THAT COSTS THIS SEAT THE CREDIT. msg 20859 s.3(b) states that at L10 this project's precondition 'will read MET while 85 of 167 items (67 self-set + 18 peer-set) carry no CVO verdict'. Measured here at HEAD it is ONE. The gap is method, not arithmetic: classifying by the ITEM ROW'S OWN author, or by which FILE supplied the value, counts round 1's twenty CVO adjudications as self-set, because Z-S19 and Z-S20 are CVO rows sitting in the investigation file exactly where spine s.4 puts them. Vintage contributes too -- 3.0.0_SA_CVO~Z has adjudicated heavily since, 61 UNDISPOSITIONED at 07:30Z to 40 at 08:4xZ. || THIS ROW DOES NOT DISPUTE THE FINDING, IT NARROWS IT. The mechanism msg 20859 names is real and is verified here at source: _resolve_latest applies latest[target]=r.get('disposition') over both documents as one union with no test of document and no test of seat, so nothing structurally prevents a seat from conferring its own graduation. This seat is the proof, having done it. What is narrowed is only how many times it has actually happened on this project. || WHY A WITHDRAWAL AND NOT A RE-GRADE: this row sets Z-S115 to UNDER_INVESTIGATION rather than to any terminal value, because choosing a terminal value would repeat the original error in the opposite direction. Withdrawing an unauthorised act is this seat's to do; adjudicating the item is not. The L10 distance therefore RISES by two -- Z-S115 returns to the queue and this row is itself an item -- and rising is the correct direction for a count that was flattered. || SCOPE, STATED SO THE NEXT READER DOES NOT OVER-APPLY IT: this is one project's census at one vintage. It says nothing about NFRA_REPORT's or NFRA_IAMROLES202609's populations, and the method above is offered precisely so either can be measured rather than inferred from this result."
+ }
+]
+```
