@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **286 rows**. Restated 2026-09-10T19:1xZ by `2.0.0_SA_COO~A` at a round-9 drain, by parsing every fenced json block in the MERGED file (215 blocks, 286 rows). This drain merged two branches that each restated this line for their own side; neither count was true of the union, so the number is re-measured here rather than carried from either.
+**Append-only during the round.** Denominator at this write: **289 rows**. Restated 2026-09-10T19:1xZ by `2.0.0_SA_COO~A` at a round-9 drain, by parsing every fenced json block in the MERGED file (217 blocks, 289 rows). This drain merged two branches that each restated this line for their own side; neither count was true of the union, so the number is re-measured here rather than carried from either.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -8361,6 +8361,89 @@ and its four S3 objects are verified.
       ]
     },
     "notes": "ARMED, and the armed thing is not the 846 red runs -- those are inert, they publish nothing. What is armed is the consequence: THE ONLY WORKING PRODUCER OF A PRODUCTION INPUT TO THE SERVED GRAPH IS A SCRIPT IN A MISSION DELIVERABLE FOLDER, RUN BY HAND, AND THAT FOLDER IS ARCHIVED WHEN NFRA_CLDGRPH CLOSES. On that day the estate has no producer at all and the source zip freezes exactly as it froze for 17 days in July, with nothing to say so. DISARM, cheapest first: (1) provision secrets.PORTAL_REPO_PAT -- a fine-grained or deploy-key-backed token, READ-ONLY on Opal-Capital/portal, as a repo secret on Opal-Capital/ajb_workspace. That single act converts 846 consecutive failures into a working leg and makes f3_build_source_zip.py retirable by disuse. disarm_owner is 0.0.0_AB_MSTR because a repository credential is outside every agent lane here and needs Andrew's word (CG-s-38 item 3 named 0.7.0_AE_CloudOps with 0.0.0_AB_MSTR for the secret; the naming is inverted here because the SECRET is the disarming act and the verification is the follow-up). (2) If (1) is refused, 1.0.0_SA_CTO rules a production home for the hand script -- and that path buys a home without buying a trigger, so it does not disarm this row, it only slows it. AND ONE THING TO DECIDE BEFORE (1), NOT AFTER: the day the secret lands, a production input that has moved 5 times in 65 days starts moving on EVERY push to CLOUD touching portal/src, data/**/scripts, org/modules/graph or the two stitch scripts. That is a cadence change to a served surface arriving disguised as a credential, and it wants a NEVER-2 ledger entry with a named blast radius. EXPLICITLY NOT PROPOSED, under the standing moratorium: any alarm, alert, SNS, SES, notification, freshness checker or monitor on this workflow, on its run history or on the zip's age. This row was found by reading run history on demand, which is an act any seat can take at any time and needs nothing built. NOT FILED AS BLOCKING: the cell was completable without it -- it is what the cell FOUND, and the reason it is a row rather than only a result line is that its scope is the whole 2-leg stitch pipeline, which is NFRA_GLOBGRPH's surface and not this project's."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S49",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-10T18:36Z",
+    "one_line": "The key collision is FIVE class pairs, not one: the cell and derive_runner's docstring both scope it to S3_BUCKET/S3_BUCKET_POLICY, and that is true of the CANONICAL key space -- but the destruction runs in the RAW node_id column, where 30 strings are claimed by two node types across five pairs, four of them reachable by the incremental updater.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "spec_asserts": "The cell: 'that exact string is S3_BUCKET_POLICY's canonical key for 15 of 15 nodes of the class' and 'two node classes contend for ONE warehouse key'. It quotes derive_runner.py:2306-2308: 'It lands on whatever OTHER node holds that string as ITS canonical key. In this estate exactly one class does -- S3_BUCKET_POLICY'. Both state the collision as ONE pair, and TO-CG-I-1 is cut to close that pair.",
+    "world_is": "Measured this run over all 27,685 rows of globgrph.graph_nodes at vintage 2026-09-10T12:24:50.576632+00:00 (marker-stamped metadata_location, pyiceberg 0.9.1 StaticTable): 27,632 distinct node_id strings, of which 30 are claimed by MORE THAN ONE node_type -- S3_BUCKET+S3_BUCKET_POLICY n=12, IAM_ROLE+LAMBDA n=8, EVENT_RULE+LAMBDA n=8, CODEBUILD_PROJECT+IAM_ROLE n=1, EVENT_RULE+SSM_DOCUMENT n=1. The docstring's claim is CORRECT about the canonical key space (arn-or-id): LAMBDA and IAM_ROLE both carry full ARNs, so their canonical keys differ. But _match_filter (lambda_function.py:391-405 at HEAD) matches the RAW `arn` and `node_id` COLUMNS, not the canonical key -- so the space the destruction actually runs in has five colliding pairs, and four of the five involve a class bounded_derive_node emits. Replayed against the live rows: an S3_BUCKET upsert destroys a foreign row for 12 of 34 buckets, a LAMBDA upsert for 16 of 203, an IAM_ROLE upsert for 9 of 219; DYNAMODB_TABLE, SNS_TOPIC and SQS_QUEUE return 0, so the replay discriminates rather than flagging everything.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "i1_settle.py at this seat, section 'AND THE UNSCOPED READ': DENOMINATOR 27,632 distinct node_id strings over 27,685 rows, 30 multi-claimed, five pairs listed with counts and an updater-reachable flag per pair.",
+        "infra/aws/globgrph/derive_runner.py:2294-2312 @0596d4fc98 -- canonical_node_key and the 'exactly one class does' docstring, which is what this row qualifies rather than contradicts.",
+        "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py:391-405 @0596d4fc98 -- In('arn', arns) Or In('node_id', ids): the match is on the raw columns, which is why the canonical-space claim does not bound the destruction.",
+        "i1_arm.py at this seat: the IAM_ROLE/LAMBDA pair reproduced on a real local Iceberg table -- the pre-fix predicate destroys the IAM_ROLE row on a LAMBDA upsert (DESTROYED_BEFORE=2 across the two pairs), the post-fix predicate destroys 0.",
+        "This was found because a first negative control CHOSE LAMBDA as the uncontended class and the instrument came back non-zero; the control was right and the choice of control was wrong."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED, and the reason is that the other four pairs have not fired only because the incremental updater has written just three rows in its life (all three S3_BUCKET, source='incremental' in the live table). The Lambda fires on CloudTrail automatically, so the first management event on any of the 8 name-sharing LAMBDA/IAM_ROLE pairs destroys a real node row through NORMAL operation. THE FIX THIS ORDER COMMITTED ALREADY CLOSES ALL FIVE -- the key carries its node_type, so a bare name cannot reach across classes in either direction -- but it is COMMITTED, NOT DEPLOYED, like every producer change in this project, so the hazard stands until a deploy this worker cannot make and did not attempt. disarm_owner is the round's issuer as the seat that carries the L10 slug where the deploy decision belongs; the disarming ACT is deploying the committed change, not a further edit. FILED AS FORM, NOT SIGNIFICANCE: a worker judges whether this is a spec-vs-world mismatch, which it is, and never how much it matters."
+  },
+  {
+    "id": "NFRA_CLDGRPH-W1-S50",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-10T18:36Z",
+    "one_line": "graph_nodes has a THIRD writer -- comp_aws_cli.py's `iceberg-commit` subcommand -- and the pa.table it overwrites the whole table with carries 7 columns where the live table carries 9: it has no `source` and no `props`.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-CG-I-1 AC2 requires the writers of the key space to be COUNTED and their rules READ, on the stated ground that 'a property with N writers needs N rules read'. The cell names two writers by implication: the incremental updater (the fix surface) and the derive (whose key rule it quotes).",
+    "world_is": "The census returns THREE writers of globgrph.graph_nodes over an unscoped corpus read (135 hits across 30,050 files; 52 candidate files; 49 subtracted as readers, other tables, DynamoDB delete_item, or records quoting a writer). The third is org/modules/graph/comp_aws_cli.py:3201 `nodes_table.overwrite(pa.table({...}))` -- an UNFILTERED full-table overwrite reached from the `iceberg-commit` CLI subcommand. Its nodes_schema at :3170-3178 declares SEVEN NestedFields (node_id, arn, node_type, name, layer, drift_class, snapshot_ts) and the pa.table at :3201-3209 supplies the same seven. The live table carries NINE columns: `source` (the comp-kuzu discriminator, added by NFRA_MSGRAPH S2) and `props` (added by NFRA_TSGRAPH Leg-B) are both absent from this writer. derive_runner.py:271-280 and lambda_function.py:360-388 both carry all nine.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "i1_layers.py at this seat: 'KEY_SPACE_WRITERS=3 counted', with the unscoped denominator (135 hits / 30,050 files) and the per-file subtraction printed.",
+        "org/modules/graph/comp_aws_cli.py:3168-3209 @0596d4fc98 -- nodes_schema with 7 NestedFields and nodes_table.overwrite with the matching 7 columns.",
+        "infra/aws/globgrph/derive_runner.py:270-280 @0596d4fc98 -- the same table declared with 9 fields including props; :332-345 writes source and props.",
+        "i1_settle.py at this seat: the LIVE table's column list read from the served metadata is ['node_id','arn','node_type','name','layer','drift_class','source','snapshot_ts','props'] -- nine."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT rather than ARMED, deliberately and on the enum's own words: hazard_standing asks whether the item harms through the process's FUTURE NORMAL OPERATION. This path is a manual CLI subcommand requiring in-VPC reachability of nessie.opal-globgrph.local; it is not on any schedule and is not normal operation, so calling it ARMED would overstate what I measured. What I am reporting is the WRITER COUNT and the schema divergence, both measured. NOT IN THIS ORDER'S <paths> and NOT TOUCHED: org/modules/graph/comp_aws_cli.py is outside the write grant, which is why this is a row and not an edit. IT DOES NOT AFFECT THE FIX: this writer has no delete predicate to narrow -- it replaces the whole table -- so it cannot destroy a row selectively and the chosen layer does not depend on it. The reason it is worth a row anyway is the one AC2 is built on: this is the third rule on a property whose writer count was believed to be smaller, and the count is what the cell asked to be printed rather than assumed."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S51",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-10T19:02Z",
+    "one_line": "Editing the ONE granted producer file mechanically obliges TWO tracked artifacts beside it that the grant does not name: a committed deploy zip that still carries the PRE-FIX lambda_function.py, and a committed __pycache__ .pyc that any import of the module rewrites. The repo now holds fixed source next to an unfixed deploy artifact.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "spec_asserts": "TO-CG-I-1's BOUNDS: 'IF A PATH YOU NEED IS NOT IN <paths>, THAT IS A BLOCKING ROW AND A REPORT, NEVER AN OVERRIDE. And if a granted path's modification mechanically OBLIGES a second artifact, this face names the override and its owner below -- if it does not and you hit one, that omission is itself the row.' The <paths> block grants the FILE infra/aws/lambda/globgrph/incremental_updater/lambda_function.py and names no second artifact and no override.",
+    "world_is": "That directory has FOUR tracked files, not one (git ls-files): lambda_function.py, .gitignore, incremental_updater.zip and __pycache__/lambda_function.cpython-312.pyc. (1) THE ZIP IS A TRACKED DEPLOY ARTIFACT CONTAINING A COPY OF THE SOURCE. Read at HEAD c7de3661d5 with zipfile: 2 entries, lambda_function.py and _provenance.py; its lambda_function.py still declares `def _match_filter(arns` and contains neither ids_by_type nor MATCH_KEY_UNUSABLE. So after this order's fix, the repo carries FIXED source and an UNFIXED deploy artifact side by side, and the zip was last committed 2026-07-15 @03e6ed3bd3, long before this change. (2) THE .pyc IS TRACKED AND IS REWRITTEN BY THE ACT THE CELL ASKS FOR: i1_arm.py and i1_served_from.py import lambda_function to exercise the post-fix predicate against the pre-fix one, and CPython writes the bytecode cache as a side effect. `git status --porcelain` shows ' M .../__pycache__/lambda_function.cpython-312.pyc' -- a MODIFIED TRACKED FILE outside the write grant, produced by no edit of mine. It was last committed 2026-06-15 @d17d45be07. It is NOT committed by either of this order's two commits and it was NOT reverted, because a worker may not `checkout --`.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-files infra/aws/lambda/globgrph/incremental_updater/ at this seat: 4 tracked paths, of which the order's <paths> names exactly 1.",
+        "zipfile read of infra/aws/lambda/globgrph/incremental_updater/incremental_updater.zip @c7de3661d5: 2 entries; the contained lambda_function.py matches 'def _match_filter(arns' and does NOT contain ids_by_type or MATCH_KEY_UNUSABLE -- i.e. it is the PRE-FIX source.",
+        "git log -1 -- .../incremental_updater.zip -> 03e6ed3bd3 2026-07-15; git log -1 -- .../__pycache__/lambda_function.cpython-312.pyc -> d17d45be07 2026-06-15.",
+        "git status --porcelain at this seat after the two flip commits: the ONLY tracked modification outside the write grant is that .pyc; every other path this order touched is inside <paths> or the worker's own deliverables folder.",
+        "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py @c7de3661d5 carries the fix (ids_by_type, MATCH_KEY_UNUSABLE, del_typed_ids, EqualTo -- all four measured absent at e86c4fb778~1 and present at e86c4fb778 by the proof checker's content rung)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "FOUND AFTER THE STATUS FLIP, by the unscoped `git status` read that should have run before it -- stated plainly rather than back-dated, and the ordering mistake is mine. It is filed anyway because the surprise channel is lane ANY (CLAUDE.md s.2: 'the seat that sees it appends its own row'), which is not gated on this order still being non-terminal, and because an ARMED hazard about a DEPLOY ARTIFACT is exactly what must not go unreported when the whole project's convention is committed-not-deployed. ARMED, and specifically: the deploy of CG-s-41's fix is the process's next normal step for this file, and a deploy that reads the committed zip ships the collision while every repo-plane check reads clean -- the source says fixed, the artifact is not. NOT A CRITERION FAILURE: all four mechanical criteria are PASS-by-output on their own invocations and the instance is VALID at rc=0; this concerns a SECOND artifact none of them measures. NOT REMEDIATED HERE, twice over: the zip and the .pyc are both outside <paths>, and rebuilding a deploy zip is an IMAGE-class act the egress hold forbids outright. THE GENERAL FORM, which is why it is a row rather than a footnote: a write grant expressed as a FILE does not bound the artifacts that file's modification obliges, and a tracked build output beside tracked source is a two-writer surface where only one writer was granted."
   }
 ]
 ```

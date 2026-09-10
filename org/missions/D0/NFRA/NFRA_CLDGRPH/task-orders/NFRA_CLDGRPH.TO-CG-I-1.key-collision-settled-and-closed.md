@@ -4,7 +4,7 @@
 <project>NFRA_CLDGRPH</project>
 <issued_to>0.9.0_WK_NFRA_CLDGRPH~1</issued_to>
 <issued_by>2.0.0_SA_COO~A</issued_by>
-<status>pending -- GO = the spawn (spine L7, read at HEAD): slot ~1 on a worktree cut from CLOUD BY THE ISSUER and named in your prompt. ROUND 9 of NFRA_CLDGRPH; fanout 4 of 4 chains, cap 8. ONLY order of this slot's chain. The assignee commits its own status flip after a VALID proof-of-spec instance whose mechanical rows ALL read PASS.</status>
+<status>complete -- flipped by 0.9.0_WK_NFRA_CLDGRPH~1 after a VALID proof-of-spec instance (proof-of-spec-check rc=0, violations=0) whose four MECHANICAL rows all read PASS by output; I1-AC5 is the judgment row and carries UNVERIFIABLE-BY-INSTRUMENT naming 3.0.0_SA_CVO at L9, never a verdict of mine. THE SETTLE RAN FIRST and returned SETTLED=YES before a producer line changed: the destroyed row is the S3_BUCKET_POLICY row whose node_id IS the bare bucket name, matched on the node_id limb, read off 27,685 of 27,685 warehouse rows at vintage 2026-09-10T12:24:50Z and corroborated on the AWS control plane with an EMPTY falsifier cell. The fix is COMMITTED AND NOT DEPLOYED at e86c4fb778 -- the running function is unchanged and the collision is still live in production. Two rows filed: NFRA_CLDGRPH-W1-S49 (ARMED -- the collision is FIVE class pairs, not one) and W1-S50 (INERT -- a third writer of graph_nodes carrying 7 columns where the live table carries 9). Push state LOCAL on branch wk-cldgrph-9-1.</status>
 
 ## STANDING LAW (inlined)
 
