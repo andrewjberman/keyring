@@ -169,7 +169,90 @@ by rule, and carry no technical language.*
                     and a few sentences on what appears to be happening. Nobody has
                     to go and assemble that picture themselves before they can judge
                     it.
+
+  FWD-13 The morning email a person actually receives carries the new edition's
+         structure with TODAY's live numbers
+         DONE WHEN  EXERCISED -- a real 9 AM email has arrived carrying live collected
+                    values, and a person has checked at least one row's state and
+                    delta against the underlying data and found it right
+         ACCEPT     Andrew opens the morning email and sees per-row state, per-row
+                    delta and attribution over real numbers. NOT a specimen, NOT a
+                    file in the repo -- the email.
+
+  FWD-14 The report's facts come from the live collection, never from a literal
+         DONE WHEN  APPLIED -- the deployed path contains no hand-written fact list;
+                    a check that changes state on Tuesday changes that row on
+                    Wednesday
+         ACCEPT     Two mornings in a row differ wherever the world differed, and
+                    nothing on the page was typed in by hand.
+
+  FWD-15 Nothing a reader relies on today disappears in the swap
+         DONE WHEN  EXERCISED -- the first new edition has been compared against a
+                    saved copy of the last old one, and every section the old email
+                    carried is present in the new one or its removal is recorded
+                    with a reason
+         ACCEPT     A named before/after comparison exists and no section vanishes
+                    silently.
+
+  FWD-16 Every section is in the email, every morning
+         DONE WHEN  EXERCISED -- a morning has passed in which a section had nothing
+                    pass-or-fail to say and it still appeared, carrying its numbers
+         ACCEPT     All thirteen things the report checks appear every day. A section
+                    is never left out because its numbers do not fit a pass-or-fail
+                    shape: a cost total shows the cost, a ranked list shows the list,
+                    a written analysis shows the writing.
+
+  FWD-17 Each section opens with one line saying what matters in it today
+         DONE WHEN  EXERCISED -- a reader has used those lines alone to decide where
+                    to look, and was right
+         ACCEPT     Every section starts with a single sentence naming the most
+                    important thing in it that morning. Reading only those sentences
+                    tells you where to look. They are clinical -- they state what is
+                    so and do not raise their voice.
+
+  FWD-18 A person can act on the email without being an expert in it
+         DONE WHEN  EXERCISED -- Andrew has read a morning edition and said what it
+                    told him to do
+         ACCEPT     Someone opens the email and knows within seconds whether anything
+                    needs them, and where. A list of thirty things each marked with a
+                    status word is not an answer: if a reader cannot say what they
+                    are meant to take away from a section, that section has failed
+                    even if every value in it is correct.
+
+  FWD-19 The full day's findings are kept where they can be handed to someone else
+         DONE WHEN  EXERCISED -- someone has taken one day's file and answered a
+                    question from it that the email did not answer
+         ACCEPT     Every morning's complete findings are saved as one file, and that
+                    file carries a plain explanation of what each term means and how
+                    each number is worked out. Where the email summarises, the file
+                    has the rest -- and it can be handed to someone who was not there
+                    without a conversation about how it was built.
+
+  FWD-20 The subject line tells the truth without shouting
+         DONE WHEN  APPLIED -- the alarm words are gone, and what replaces them still
+                    separates a morning that needs attention from one that does not
+         ACCEPT     The subject line says whether the morning needs attention, in
+                    ordinary words. A routine morning does not arrive dressed as an
+                    emergency. Someone who saw yesterday's subject and today's can
+                    tell whether anything changed.
+
+  FWD-21 The security work the firm has done is visible in the daily read
+         DONE WHEN  EXERCISED -- a finding from that work has appeared in a morning
+                    edition and a reader has acted on it or set it aside knowingly
+         ACCEPT     What the security review established shows up inside the sections
+                    it belongs to, as part of the morning picture -- not in a separate
+                    report that nobody opens.
 ```
+
+> ⛔ **CARRIER CORRECTION, 2026-09-10 ~18:5xZ -- THIS IS THE ROOT-CAUSE FIX AND NOT A FORMATTING
+> TIDY-UP.** `FWD-13`, `FWD-14` and `FWD-15` were authored on 2026-09-10 in a SEPARATE FILE
+> (`NFRA_REPORT_PRD_ADDENDUM_01.md`) and **were never folded into this section.** Round 4 was cut
+> from that addendum, so what stood in the room was 3 outcomes and 6 constraints instead of this
+> PRD's 12 outcomes and its full constraint set. **`C-COST-15` -- Andrew's own verbatim cost
+> detector -- was therefore not in the room at all.** Measured: this PRD carries "15%" twice; the
+> addendum carries it zero times. **The rule is that a PRD addendum edits THIS section, same turn,
+> and nothing routes onward until it does.** That rule was broken by `1.0.0_SA_CTO~Z` and this
+> correction closes it. **The addendum is now a POINTER; this section is the only carrier.**
 
 **PROVENANCE:** `FWD-1`..`FWD-10` are the brief's `O1`..`O10`. **`FWD-11` was ADDED at L2** against
 the brief's Part II *Owns* line -- monitored-vs-served reconciliation, *"the standing check that no
@@ -287,6 +370,102 @@ field, never age.
 **`C-ALARM-ANCHORED` -- `FWD-5`'s check is anchored on the ALARM and reads CONFIRMED delivery**, never
 "subscribed" and never the alarm's own configuration.
 > binds `FWD-5` · violated by: grading delivery from an alarm's configuration
+
+### 5a. THE RECUT CONSTRAINTS (Andrew-direct 2026-09-10 ~18:2xZ, after reading the shipped edition)
+
+**His words, verbatim, and they are the whole basis of this subsection:** *"This output is
+completely inexplicable. I look at it and have no idea what it is supposed to mean. Also we are
+lacking cost data, we are lacking so many fields the old version had."* Then: *"If i see thirty
+lambdas listed with 'applied' or some shit, I have absolutely no idea what information im supposed
+to take away from that."*
+
+**`C-ALL-THIRTEEN`** -- ⛔ **EVERY ONE OF THE THIRTEEN COLLECTOR SECTIONS RENDERS, EVERY MORNING.**
+No section may be omitted from the email because its values are not gradeable. The thirteen:
+lambda health, smartx pipeline, data freshness, deploy drift, producer drift, SNS egress, graph
+head, contract integrity, AWS costs, cost depth, security sweep, AI analysis, OpenAI cost.
+*(Andrew-direct: "I want all thirteen sections in th list.")*
+
+**`C-VALUE-NOT-STATUS`** -- ⛔ **THIS IS THE DEFECT THAT PRODUCED THE REGRESSION, STATED AS A RULE.**
+A dollar total is not a status. A ranked list is not a status. A paragraph of analysis is not a
+status. **The renderer must carry VALUES alongside state and delta, and a section that has no
+severity signal is rendered as what it is rather than dropped.** The round-4 shape admitted only
+`(state, delta)` and the two cost sections were correctly-reasoned casualties of it.
+
+**`C-DEPTH-TO-FILE`** -- volume goes to the day's file, never into the body. **Tens or hundreds of
+resources are a file, not an email.** The body carries what a person would act on.
+
+**`C-LEGEND-TRAVELS`** -- ⛔ the day's file **carries its own legend and methodology**: what every
+term means, how every number is derived, and what each assumption is. *(Andrew-direct: "the full
+archived list including legend and methodology for all definitions and assumptions.")* **A file that
+needs its author present to be understood does not satisfy `FWD-19`.**
+
+**`C-EXISTING-HOME`** -- ⛔ **NO NEW BUCKET.** Andrew-direct, after being shown that
+`opal-data-infrareports` does not exist (measured: 0 hits across 2,382 live AWS nodes): *"if there is
+a folder inside opal-data-portal-v2 where they are collecting, that is ok im fine with that we dont
+need to do a new bucket if there is already a home."* **There is: `REPORT_BUCKET =
+"opal-data-portal-v2"`, `REPORT_PREFIX = "infrastructure/reports/"` (`lambda_function.py:105-106`),
+and `archive_report()` already writes there every run.** The cell EXTENDS that archive to carry the
+legend and methodology; it does not mint storage.
+⚠ **ONE THING THE CUT MUST CHECK RATHER THAN ASSUME:** that bucket is fronted by a CloudFront
+distribution (measured on the live plane). **Whether the `infrastructure/reports/` prefix is
+reachable through it was NOT measured and must not be assumed either way.** A cell that touches this
+path establishes the answer before adding anything, because the file is about to carry a legend that
+makes every finding in it legible to whoever can read it.
+
+**`C-NO-ALARM-VOCAB`** -- ⛔ **THE SUBJECT LINE DOES NOT SHOUT.** Andrew-direct: *"no more 'red
+breach' bullshit in the subject line, its alarmist."* Measured, the two live subject builders at
+`lambda_function.py:2548` and `:2550` emit `[Opal][RED] ... CRITICAL Security Issue(s)` and
+`[Opal][RED] Infrastructure Report - blind/breach signal (action)`. **Both go.** What replaces them
+must still DISCRIMINATE -- a subject that reads identically on a quiet morning and a bad one has
+solved the wrong half of the problem.
+
+**`C-CLINICAL-VOICE`** -- the per-section lead line is **clinical and has no personality**.
+Andrew-direct: *"Doesnt need a personality, just clinical and not overalarming."* It states what is
+so. It does not editorialise, does not reassure, and does not escalate.
+
+**`C-OPSEC-PLACED`** -- what the security work established is **distributed into the thirteen
+sections it belongs to, not added as a fourteenth.** Andrew-direct: *"All that shit we developed in
+OPSEC should have a place somewhere in those 13 line items."*
+
+### 5b. THE AI CALL -- PROVIDER SWITCH, AND THE FOOTGUN NAMED IN ADVANCE
+
+⛔ **THE REPORT'S AI ANALYSIS TODAY IS ANTHROPIC, NOT OPENAI.** Measured:
+`ANTHROPIC_MODEL = "claude-sonnet-4-6"`, `ANTHROPIC_MAX_TOKENS = 1500`, `import anthropic`, via the
+firm's existing anthropic-api-key secret and the `anthropic-sdk-deps` layer (`lambda_function.py`,
+15 anthropic references, 0 openai call sites). **The `openai_cost` section tracks OpenAI spend
+ELSEWHERE in the estate and is not this function.**
+
+**`C-OPENAI-SWITCH`** -- Andrew-direct 2026-09-10, having been shown the above: *"Ok we need to be
+using openai and gpt 5.6, look up openai docs and make sure call shape is corect."* **The AI analysis
+moves to OpenAI.** That is a new SDK, a new secret, and a layer change -- it is a cell, not an edit.
+
+**`C-TOKEN-PARAM`** -- ⛔ **THE FOOTGUN ANDREW NAMED, CONFIRMED AGAINST THE DOCS:**
+
+| | |
+|---|---|
+| Chat Completions request | **`max_completion_tokens`** -- `max_tokens` is DEPRECATED and is REJECTED by reasoning models |
+| Responses API request | `max_output_tokens` -- a THIRD name; do not carry one endpoint's parameter to the other |
+| response `usage` object | `completion_tokens`, `prompt_tokens`, `total_tokens`, plus `completion_tokens_details` (carrying `reasoning_tokens`) and `prompt_tokens_details` (carrying `cached_tokens`) |
+
+**The current code passes `max_tokens` (4 sites), which is CORRECT for Anthropic and is exactly what
+breaks first on the switch.** ⚠ And for the cost section specifically: **reasoning tokens are
+billed and live inside `completion_tokens_details`** -- a cost line reconstructed from response
+length rather than read from `usage` will understate it silently.
+
+**`C-MODEL-STRING-VERIFIED`** -- ⛔ **THE MODEL IDENTIFIER IS VERIFIED LIVE BEFORE IT IS
+HARDCODED.** Andrew named `gpt 5.6`. **This seat could not confirm that exact identifier in the
+reachable OpenAI documentation** (the reference pages returned 403 and 404 to an unauthenticated
+fetch; the search surfaced `gpt-5.2` family names). **That is an ABSENCE OF CONFIRMATION, NOT
+EVIDENCE OF ABSENCE, and no seat may downgrade his instruction on it.** The cell resolves the exact
+string against the live models endpoint, states what it found, and uses his identifier if it
+resolves. ⛔ **A wrong model string does not fail at build time -- it fails at 9 AM in front of the
+reader.**
+
+**`C-ONE-CALL`** -- **one AI call per edition, returning all thirteen lead lines**, not thirteen
+calls. The function's timeout is 300s and a live run has already hit 174.6s against the old 180s
+limit; thirteen sequential calls is a timeout, and the cost lands on a line this same report prints.
+
+---
 
 ## 6. Rulings that BIND
 
@@ -487,6 +666,29 @@ breaks nothing here. What L5 must preserve is COVERAGE IN BOTH DIRECTIONS, never
 `S9`'s box grain are coupled and `D3` says so; that the `lane` column is a seat assignment (it is a
 lane; `2.0.0_SA_COO~ZZ` seats workers at L6); or that `absent` means unexamined -- every `absent` row
 names what was measured about the CURRENT state's failure to serve it.
+
+---
+
+### 8a. RECUT SURFACES (2026-09-10) -- one row per ENGINE, serving `FWD-16`..`FWD-21`
+
+| id | outcome | surface | claim | verb | depends on | bound |
+|---|---|---|---|---|---|---|
+| S21 | `FWD-16`, `FWD-14` | THE THIRTEEN-SECTION RENDERER -- every section renders, values as values | **BROKEN TODAY** -- 2 of 13 dropped, measured | rebuild | -- | `C-ALL-THIRTEEN`, `C-VALUE-NOT-STATUS` |
+| S22 | `FWD-18` | THE READABLE EDITION -- formatted HTML a person scans in seconds | absent -- SES sends plain text only today | build | S21 | `C-DEPTH-TO-FILE`; **`Html` appears 0 times in the send path** |
+| S23 | `FWD-17` | THE LEAD LINES -- one clinical sentence per section, from one AI call | absent | build | S21 | `C-ONE-CALL`, `C-CLINICAL-VOICE`, `C-OPENAI-SWITCH`, `C-TOKEN-PARAM`, `C-MODEL-STRING-VERIFIED` |
+| S24 | `FWD-19` | THE DAY'S FILE -- the full findings plus legend and methodology, at the existing home | **PARTIAL** -- `archive_report()` already writes the findings; legend and methodology absent | extend | S21 | `C-EXISTING-HOME`, `C-LEGEND-TRAVELS`. ⛔ **EXTEND, do not mint a bucket** |
+| S25 | `FWD-20` | THE SUBJECT LINE -- discriminating, not alarmist | **BROKEN TODAY** -- `[Opal][RED]` at `:2548` and `:2550` | rewrite | S21 | `C-NO-ALARM-VOCAB`. Must still separate a quiet morning from a bad one |
+| S26 | `FWD-21` | THE SECURITY PLACEMENT -- the security work's findings inside the thirteen | absent | wire | S21 | `C-OPSEC-PLACED`. **Not a fourteenth section** |
+
+⭐ **S21 IS THE ROOT AND EVERY OTHER RECUT SURFACE DEPENDS ON IT.** The lead lines, the HTML, the
+subject line and the security placement all render *through* the section renderer. **Cutting S22,
+S23, S25 or S26 before S21 builds them onto the shape that caused the regression.**
+
+⚠ **WHAT IS SOUND AND MUST NOT BE RE-DONE.** Round 4's port is faithful (35 spec lines / 35 port
+lines / identical), the 13-way section partition is complete with every omission reasoned, the
+deploy path was correct, and the prior-report loader that feeds delta already works. **THE
+ENGINEERING WAS GOOD AND THE SPECIFICATION IT WAS BUILT TO IS WHAT FAILED.** The recut replaces the
+row SHAPE and the spec around it -- it does not re-litigate the port, the partition or the deploy.
 
 ---
 
