@@ -133,6 +133,27 @@ def repo_root() -> str:
     return os.path.dirname(_HERE)
 
 
+def corpus_root() -> str:
+    """The tree the CALLER is standing in -- i.e. what a search should SCAN.
+
+    repo_root() resolves from _HERE, this file's own on-disk location. That is CORRECT for the
+    rail's own logs and data (one install, one log) and WRONG for the corpus: a caller inside a
+    linked worktree gets the MAIN checkout scanned and a MEASURED denominator over the wrong tree,
+    where a false zero is indistinguishable from a true absence. Recorded as LIMIT 4 in
+    org/modules/graph/INSTRUMENT_LIMITS.md; rule 14b mandates the worktree that provokes it.
+
+    Falls back to repo_root(), so a caller outside any worktree behaves exactly as before.
+    """
+    try:
+        out = subprocess.run(["git", "rev-parse", "--show-toplevel"],
+                             cwd=os.getcwd(), capture_output=True, text=True, timeout=15)
+        if out.returncode == 0 and out.stdout.strip():
+            return out.stdout.strip()
+    except Exception:
+        pass
+    return repo_root()
+
+
 def _utc_ts() -> str:
     try:
         return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")

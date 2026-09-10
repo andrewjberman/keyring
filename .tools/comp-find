@@ -74,8 +74,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import _comprail  # noqa: E402
 import _compbudget  # noqa: E402  -- RULE T shared carrier (PRD v0.4 s.4.4, NFRA_COMPEFFICACY CE-t-1)
 
-WS = _comprail.repo_root()
-RAIL_LOG = os.path.join(WS, "org", "mcp", "comp-which-rail.log")
+WS = _comprail.corpus_root()          # what we SCAN -- follows the CALLER (LIMIT 4)
+RAIL_LOG = os.path.join(_comprail.repo_root(), "org", "mcp", "comp-which-rail.log")
 
 PAGE_DEFAULT = 25
 _CONFIG_EXT = {".json", ".yaml", ".yml", ".toml", ".ini", ".cfg", ".conf", ".env", ".lock", ".xml"}
