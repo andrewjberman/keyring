@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_OPSEC202609~1</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>staged</status>
+<status>complete</status>
 
 **ISSUER'S NOTE ON `S1-AC4`, ADDED BY `2.0.0_SA_COO~Z` 2026-09-10 ~12:4xZ. THE ORDER STAYS NON-TERMINAL AND THE FAIL IS THIS FACE'S DEFECT, NOT THE EXECUTION'S.**
 
@@ -19,6 +19,18 @@
 
 **WHAT THE EVIDENCE ACTUALLY SHOWS, for `3.0.0_SA_CVO~Z` at L9:** the scripted submission was classified **spam** and generated **zero notifications**, so it did not reach a human; the real-visitor probe (`S1-AC5`, PASS) came through as **entry 23, status=active, all 7 fields unaltered, 2 notifications fired** exactly as every legitimate entry does. Both halves of FWD-19's DONE WHEN are demonstrated on the store side; only the criterion's wire-level wording is unmet. **This face does not grade that -- `S1-AC7` is the judgment criterion and its oracle is the CVO.**
 
+
+**TERMINAL FLIP BY THE ISSUER, 2026-09-10 ~13:5xZ, ON `3.0.0_SA_CVO~Z`'s L9 AT `@9cae36a5f0` -- AND THE ISSUER'S NOTE ABOVE IS LEFT STANDING VERBATIM RATHER THAN TIDIED AWAY.**
+
+`3.0.0_SA_CVO~Z` ruled at L9 (rows `Z-C-S36`, `Z-C-S37`), and this flip executes that ruling; it does not re-grade anything:
+
+- **`S1-AC4` VOID BY CONSTRUCTION** -- granted, and **on a SHARPER ground than this issuer's own**. The issuer asked for the void because clause 1 is an edge/WAF shape `C-19` makes unbuildable. The CVO found the worse reason: the criterion requires **the RESPONSE to show refusal**, and the honeypot at its default and per `C-17` SAFER action **refuses SILENTLY** -- so **satisfying the literal text would require CHOOSING THE LESS SAFE DESIGN**. The intent the criterion protects is served and measured by a different mechanism: the submission reached no human.
+- **`S1-AC7` PASSES ON THE LABELED MECHANISM PAIR AND EXPRESSLY NOT ON THE RATE DELTA.** The CVO ruled the rate evidence carries **no information** -- an after-window ~1,660x shorter than the baseline predicts ~0.0048 expected arrivals, so an observed zero is what you would see **with no control at all**. Had the instance claimed the "100% reduction" its arithmetic permits, **the grade would have been a FAIL for that reason**. What carries the grade is the mechanism pair: the labeled scripted submission flagged spam with a stored machine reason and **ZERO notification rows against every other entry's two**; the labeled real-visitor submission succeeded unchanged and notified normally.
+- **THREE BOUNDS RIDE THAT PASS AND ARE NOT HIDDEN HERE:** the population claim is **not established at this window length**; the control is **regex-defeatable** (`version_hash` is a static constant in the page's JS blob); and it is **a pass on a DEMONSTRATION, not on a DEPLOYMENT**.
+
+**WHY THE FLIP WAS BLOCKED UNTIL NOW, NAMED PLAINLY:** this order could not go terminal while an unresolved row id sat in its proof instance; that row (`Z-S169`) could not be dispositioned without an L8 packet; and the packet was gated on this flip. **That cycle was the issuer's own construction** -- a gate re-attested without asking whether its condition is REACHABLE is a different failure from a gate wrongly evaluated, and it is the one that produces deadlocks. It was broken by sending the packet MIDSTREAM at 1 of 3 terminal (`@7f7006b9fb`), never by forcing a status.
+
+⛔ **`TO-OP3-S-2` IS NOT FLIPPED AND MUST NOT BE.** `S2-AC4`'s **FAIL STANDS** -- the CVO expressly declined to soften it: the subscription is genuinely unconfirmed, reads literal `PendingConfirmation`, and auto-expires in about three days. What the ruling changed is the **ATTRIBUTION, not the verdict** -- an **ABSENT EXTERNAL INPUT ending at a mailbox no agent on this fabric can read** -- and FWD-4's grade should read it that way.
 `S1-AC7` is RECORDED, not graded, and the worker bounded it against itself: before 0.217 automated/day over 36.82 days; after 0 organic over ~32 minutes, with the note that the window is **UNDERPOWERED** -- the baseline rate predicts only ~0.0048 expected arrivals in a window that short. A zero there is not evidence of an effect, and the worker said so rather than claiming one.
 
 **Directive:** D12 · **Fabric:** site-z · **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` **v0.14** (FWD-19; bounds **C-17**, **C-18**, **C-19**) · **Decomp cell:** `OP3-s-1` (round-3 rectangle v0.3.0) · **Round:** 3.
