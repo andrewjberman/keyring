@@ -794,7 +794,11 @@ if [ ${#PATHSPEC[@]} -gt 0 ] && [ -f "$SCRIPT_DIR/prd-manifest-gate.py" ]; then
   PMGATE_FILES=()
   for _pf in "${PATHSPEC[@]}"; do
     case "$_pf" in
-      *_PRD.md) PMGATE_FILES+=("$_pf") ;;
+      # 2026-09-10: the ADDENDUM shape is included DELIBERATELY. The gate's limb F (an addendum may
+      # define no outcome absent from its PRD) was unreachable in production while this filter took
+      # *_PRD.md alone -- the gate held the domain and the CALLER filtered it out, so the limb could
+      # never fire. That is the same class the limb itself exists to catch: a rule nothing enforces.
+      *_PRD.md|*_PRD_ADDENDUM*.md) PMGATE_FILES+=("$_pf") ;;
     esac
   done
   if [ "${#PMGATE_FILES[@]}" -gt 0 ]; then
