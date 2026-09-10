@@ -8763,3 +8763,32 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-S128 -- S120's severity corrected: all six classes ARE populated nightly; the defect is freshness asymmetry, not missing coverage
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-10T23:06Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S128",
+    "one_line": "S120'S SEVERITY IS LOWER THAN ITS WORDING INVITES, AND THE OWNER SHOULD SIZE OFF THIS ROW. Read quickly, S120 suggests the graph does not carry lambdas or roles. It does. Measured over the whole table at vintage 2026-09-10T22:49:42Z: LAMBDA 203 rows, IAM_ROLE 219, SNS_TOPIC 16, SQS_QUEUE 19, DYNAMODB_TABLE 41, S3_BUCKET 36 -- every one of the six classes is POPULATED. They are written by the NIGHTLY FULL DERIVE, a different writer that does not run under the incremental updater's VPC constraint, newest rows stamped 2026-09-10 02:50Z. So the real defect is a FRESHNESS ASYMMETRY, not missing coverage: an S3 or DynamoDB change reaches the graph in about a minute, and a lambda/role/topic/queue change waits for the next nightly, up to roughly 24 hours. That is a materially different thing to fix and a materially different urgency.",
+    "spec_asserts": "NFRA_CLDGRPH-S120 notes: 'the graph's incremental layer has been blind to every non-S3 resource change for as long as this has been true', and its one_line calls the updater 'an S3-ONLY WRITER IN PRODUCTION'. Both are true OF THE INCREMENTAL LAYER and neither says what the table actually holds.",
+    "world_is": "All six classes are populated, and the incremental layer is a marginal contributor to the table overall. 27,691 rows across 59 node types. By source: full-derive 14,838; semctl-c2c3-compose 6,288; ms 6,173; portal-stitch 335; semctl-c2c3-materialize 46; incremental ELEVEN. So source='incremental' accounts for 11 of 27,691 rows, about 0.04 percent. Per class, writer and newest row: S3_BUCKET 36 (full-derive 30, incremental 6) newest 22:49Z; DYNAMODB_TABLE 41 (full-derive 36, incremental 5) newest 22:49Z; LAMBDA 203 (full-derive 203) newest 02:50Z; IAM_ROLE 219 (full-derive 219) newest 02:50Z; SNS_TOPIC 16 (full-derive 16) newest 02:50Z; SQS_QUEUE 19 (full-derive 19) newest 02:50Z. The 5 incremental DYNAMODB_TABLE rows are independent confirmation of S125: that class writes incrementally and did so before tonight's probe.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pyiceberg StaticTable over the metadata_location the writer itself stamped into warehouse/_branch_head.main.json, vintage 2026-09-10T22:49:42.634203+00:00 -- whole table, no filter, 27691 rows; counts grouped by node_type x source and max(snapshot_ts) per type",
+        "the 02:50Z stamp on all four never-incremental classes matches the nightly derive-runner window, and the 22:49Z stamp on S3_BUCKET/DYNAMODB_TABLE matches live incremental traffic"
+      ]
+    },
+    "notes": "THIS IS A SEVERITY CORRECTION TO MY OWN ROW, not a new hazard, which is why it is INERT. It is filed because S120 is ARMED and its disarm_owner will size remediation off its wording -- and its wording supports a reading ('the graph does not track lambdas') that the table falsifies. I wrote S120 about the WRITER and a reader will take it as being about the GRAPH; naming the writer is not the same as scoping the claim, and only the second protects the reader. REUSABLE FORM: when a component is one of several writers to a shared store, a finding about that component says nothing about the store until someone counts the store. Cost: one grouped read. WHAT SURVIVES UNCHANGED: S121's counter blindness, S127's finding that the event payload already carries the missing fields, and Act A's coverage conclusion (four of five collision pairs unreachable by this writer). What changes is only the urgency of provisioning any new path -- this is staleness between nightlies, not absence."
+  }
+]
+```
