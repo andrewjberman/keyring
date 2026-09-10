@@ -9,8 +9,9 @@ manifest's two `measured` cells, which PRD section 8 instructs L5 to do in terms
 between what the specification asserts and what the world reads today, which is exactly the step-7
 trigger -- the fact that no worker exists yet does not make it a different kind of finding.
 
-**Denominator at this write: 2 rows** (`NFRA_IAMROLES202609-Z-S1`, `2.0.0_SA_COO~ZI`, 05:39Z;
-`NFRA_IAMROLES202609-Z-S2`, `2.0.0_SA_COO~ZI`, 07:29Z).
+**Denominator at this write: 3 rows** (`NFRA_IAMROLES202609-Z-S1`, `2.0.0_SA_COO~ZI`, 05:39Z;
+`NFRA_IAMROLES202609-Z-S2`, `2.0.0_SA_COO~ZI`, 07:29Z; `NFRA_IAMROLES202609-Z-S3`,
+`2.0.0_SA_COO~ZI`, 07:42Z).
 
 ## Row context -- what was run
 
@@ -82,6 +83,32 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
     "spec_asserts": "Spine v3.7, as relayed, asserts that the L7 worker's model is Opus at high effort and that this is fixed by the worker agent type's own definition at .claude/agents/worker.md, never chosen per task order and never overridden per spawn.",
     "world_is": "On the site-Z fabric .claude/agents/worker.md declares `model: sonnet` at HEAD, and the spine here is v3.6 at 462 lines with no v3.7 clause at all. Workers spawned here therefore run sonnet. Passing an Opus override at spawn WOULD violate the same amendment's explicit mechanism, so the divergence cannot be closed by the spawning seat and was not.",
     "notes": "Filed by a seat at L6/L7, not by a worker, so the id carries the site-Z coordinate and no W allocator coordinate. NOT A HALT: round 1's spawn proceeds on the agent type's own definition, whatever it says, and the round runs. This row records a DIVERGENCE, not a defect in anyone's act -- the relay was honest about being relay-grade and told this lane to re-read the spine once the amendments land. The remedy is the cross-fabric landing of v3.7-v3.9 plus whatever worker.md edit that implies, which is process law (1.0.0_SA_CTO~Z as the spine's scribe) carried across fabrics by the integrator (0.0.0_AB_MSTR~Z); it is not this lane's to make and this lane does not propose the model value. THE REUSABLE SHAPE, which is why this is worth a row rather than a shrug: an amendment that fixes a VALUE by pointing at a DEFINITION travels only as far as that definition does. Relaying the amendment's text across a fabric boundary carries the constraint and leaves the value behind, and the two halves then disagree with nothing able to fail -- the spawn succeeds, the worker runs, and only a reader who checks the definition against the relay can see it."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-S3",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-09-10T07:42Z",
+    "one_line": "This lane's own L6 cut carried one defective criterion -- IAM-s-3 AC2 invoked comp-find BY BARE NAME, which from a worker's worktree censuses the MAIN checkout and would have returned a large confident denominator over a tree that does not contain the worker's extension; fixed before the order was handed out. The same measurement REFINES INSTRUMENT_LIMITS.md LIMIT 4: the limit belongs to the BARE NAME, not to the tool, because the explicit .tools/comp-find path honours the caller's worktree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DISCRIMINATOR USED, chosen so a false zero and a true absence cannot read alike: `catviews-cottonwood-inflection.json` exists ONLY in the main checkout (untracked there, absent from every fresh worktree; `ls` confirms both halves).",
+        "BARE NAME, run from /c/tmp/wk-iamroles-1: `comp-find --name 'catviews-cottonwood-inflection.json'` returns 1 hit across 55375 file(s) scanned -- a HIT for a file that does not exist in the caller's tree, with a denominator byte-identical to the main tree's. It read the MAIN checkout regardless of PWD.",
+        "EXPLICIT PATH, same worktree, same query: `.tools/comp-find --name 'catviews-cottonwood-inflection.json'` returns 0 hit(s) across 31052 file(s) scanned -- the WORKTREE's own denominator, and a correct absence. Positive control from the main tree: 1 hit across 55377 scanned.",
+        "MECHANISM, re-derived rather than assumed: `command -v comp-find` resolves to /c/Users/Opal Bloomberg/bin/comp-find, a ~/bin forwarder whose own script directory is the MAIN checkout -- so _comprail.repo_root()'s script-relative resolution lands on main. Invoked as .tools/comp-find from a worktree, that same script-relative rule lands on the worktree. Both behaviours follow from ONE rule; the entry states the rule and draws only one of its two consequences.",
+        "SIBLING FORWARDER CHECKED AND IT IS SOUND, which is why this round's other criteria stand: .tools/comp-iam-usage sets WORKSPACE=\"$(cd \"$(dirname \"$0\")/..\" && pwd)\" and, re-derived from /c/tmp/wk-iamroles-1, resolves to /c/tmp/wk-iamroles-1 -- so a worker invoking it by explicit path exercises ITS OWN edited module. IAM-s-1's AC1-AC4 and IAM-s-3's AC3 are therefore correct as cut.",
+        "SCOPE NOT CLAIMED: comp-read and comp-which share the shim shape and were NOT separately exercised here, exactly as msg 20828 declares of its own arms. This row claims comp-find only."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "INSTRUMENT_LIMITS.md LIMIT 4, filed @6858c8dd5f and relayed as msg 20828, states that a comp-find/comp-read/comp-which result obtained from inside a linked worktree describes the MAIN checkout and that the rule is to run any census or absence claim FROM THE MAIN CHECKOUT.",
+    "world_is": "That is true of the BARE NAME and not of the tool. Measured from a live worker worktree: bare `comp-find` scans 55375 files (main) and returns a hit for a file absent from the caller's tree; `.tools/comp-find` scans 31052 files (the worktree) and correctly returns zero. There are therefore TWO remedies, not one -- run from main, OR invoke by the explicit .tools/ path -- and the second is the one a worker can actually use, because a worker is confined to its worktree and cannot run anything from the main checkout.",
+    "notes": "TWO FINDINGS IN ONE ROW BECAUSE THEY ARE ONE MEASUREMENT. (1) AGAINST THIS LANE: the L6 issuance shipped IAM-s-3 AC2 as a bare-name comp-find. Caught before the order was handed to slot ~1 (which is still on IAM-s-1), REMEDIATED in the same commit as this row by pinning the explicit .tools/ path and by making the expected denominator itself the discriminator -- the criterion now says a scanned count near 55,000 means the bare name was used and the census is void. Every other comp-tool invocation in the nine orders was re-checked: IAM-s-5 AC1 uses --corpus aws, which reads the live AWS graph and not the repo tree, so it is unaffected. (2) FOR THE ENTRY'S OWNER: LIMIT 4's mechanism paragraph is correct and its REMEDY is over-broad by one clause. This matters most for the population the entry was written about -- L7 workers -- because 'run it from the main checkout' is the one remedy a worker cannot take. DIRECTION OF THE IMPRECISION IS SAFE: it forbids something that works rather than permitting something that does not, so nothing built on LIMIT 4 as written is wrong. Not urgent, not gating, and not sent as a mid-round message -- the COO's one message of a round is the drain-end read and this rides it. THE REUSABLE SHAPE: an instrument limit discovered through one invocation path gets written as a property of the TOOL, and the remedy then inherits a scope the mechanism never had."
   }
 ]
 ```
