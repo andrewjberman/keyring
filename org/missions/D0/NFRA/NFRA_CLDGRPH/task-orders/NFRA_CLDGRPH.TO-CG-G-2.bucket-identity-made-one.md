@@ -48,6 +48,24 @@ Your own G-1 census (record `CG-s-32.boundary-edge-class-census.result.md` @71a2
 
 **ALSO CARRIED, NOT YOURS TO FIX:** the census found `debtscan_canon_scorer.py:48` and `:144` declaring `ServedURL-[SERVED_FROM]->S3_BUCKET_POLICY` as AUTH_CANON's live shape while `canon_motif_scorer.py:131` declares the intended `(ServedURL)-[SERVED_FROM]->(S3)`. **The wrong-class landing is already adopted as canon in a scored artifact, and two scorers in one estate disagree about the same edge.** That is pitched with the rest. Do NOT edit either scorer. If your fold change would alter what either scores, say so in your record with the measurement, and file a row.
 
+## RULED WITHIN THE TICK: **RETIRE `STORED_IN`** -- the CTO's 95004 @f4bd6c6093, with THREE CONDITIONS, and the first one says my census measured the wrong set
+
+The vocabulary call is answered and the default in the section above is SUPERSEDED: **`STORED_IN` is RETIRED, not re-pointed.** The CTO adopted the recommendation on the cost asymmetry rather than on the duplication count: *"an absence is checked ONCE, a duplicate has to agree FOREVER"*, inside a producer whose input contains its own output, one round after the substrate card wrote that lesson down. Explicitly recorded against the weaker argument: **extensional equality on today's data is not identity of meaning** -- 135 of 135 is real and is not by itself enough, because two relations can agree on every current row and still be different assertions.
+
+**CONDITION 1 -- A PRODUCER CENSUS IS NOT A CONSUMER CENSUS. This is the one that could still make retiring WRONG, and it is my cut defect, not yours.** Your G-1 sweep measured 55 of 55 edge families and WHO WRITES THEM, which is exactly right for the question it was asked. **Retirement is a claim about WHO READS**, and that set has not been measured. So, before any retirement: **CENSUS THE READERS BY SUBTRACTION** (rule 24(i) as amended tonight) -- every consumer of the graph's edge vocabulary from `org/modules/graph/graph-call-manifest.yaml`, **printed denominator**, MINUS those proven not to touch `STORED_IN`. Never a forward list of the ones you thought of.
+- **EMPTY reader set -> RETIRE.**
+- **NON-EMPTY -> every reader is re-pointed at `OWNED_BY` IN THE SAME ACT**, or the retirement is HALF-LANDED and a query returns silence where it used to return an edge.
+- **AT LEAST ONE READER IS ALREADY KNOWN BEFORE YOU START:** the substrate card measured that `derive_stitch`'s own edges drop-on-read is keyed to the LITERAL `STORED_IN` while the producer writes five edge types. Start from that one and subtract.
+- **IF A READER LIVES OUTSIDE YOUR `<paths>`: STOP, file a BLOCKING row naming the file and the line, and report.** Do not edit it and do not widen your own grant -- that widening is mine to make and I will make it in the tick your report lands.
+
+**CONDITION 2 -- `OWNED_BY`'s INTENT MUST ABSORB `STORED_IN`'s, IN WORDS** (Rule 24(iii)). State in `OWNED_BY`'s own definition that it carries LOCATION as well as ownership for this node pair, so the next edge author who needs to say "the bytes live here" finds one term and knows it is the right one. **Without this the act is a DELETION, not a CONSOLIDATION**, and the term gets re-minted in six months by someone who found no word for it.
+
+**CONDITION 3 -- PROVE IT AS AN ABSENCE, WITH A POSITIVE CONTROL:** zero ROWS for the retired name over a printed node denominator, beside a control family that a graph missing its edges would fail. An empty result set, never a null count.
+
+**HOW CONDITION 3 LANDS UNDER THE EGRESS HOLD, and this is my reading, told to the CTO in the same tick rather than asked:** the SERVED form of that absence needs a deployed producer, which needs an ECS derive, which the standing egress law holds. **So condition 3 executes HERE in its LOCAL form -- the absence proven on your local fold over the real snapshot, with the positive control -- and its SERVED form is bound to the SAME deferred pass that already owes the served re-take of `F11-AC3`.** One served proof covers both when the hold lifts. Nothing in this order waits, and no accept here needs an act the hold forbids. If the CTO reads condition 3 as requiring the served plane before the retirement counts, that arrives as an amendment and the retirement's served limb moves with it.
+
+**`SERVED_FROM` IS RE-POINTED, NOT RETIRED**, and the CTO said so explicitly so this ruling is not read as covering the whole seam: 27 keys from a different site, a different node pair (`ServedURL -> S3`, not `S3Key -> S3_BUCKET`), and no measurement offers it a duplicate carrying the same fact. Both families still move in your one fold change.
+
 ## DELIVERABLE -- in this order
 
 1. **The FOLD's admission** in `derive_runner.py`: when an edge endpoint names a node that carries BOTH an id and an arn, normalize it onto the ARN at admission. Additive and best-effort by the derive's own contract; an endpoint that resolves today must still resolve after.
@@ -87,6 +105,7 @@ Your own G-1 census (record `CG-s-32.boundary-edge-class-census.result.md` @71a2
 <paths>
 infra/aws/globgrph/derive_runner.py
 infra/aws/globgrph/derive_stitch.py
+org/modules/graph/graph-call-manifest.yaml
 org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/
 org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-G-2.bucket-identity-made-one.md
