@@ -16,7 +16,11 @@ stable, citations resolve there. DS/AE seats read their sections before touching
 ## 1. HOW WE WORK
 
 27. **Every directive/project runs the CANONICAL WORKFLOW L1–L10, ONE OWNER PER STEP, IN ORDER: L1 brief
-    (`4.0.0_SA_CRO` only) → L2 endpoint → L3 register → L4 PRD (`1.0.0_SA_CTO` only — no COO, no CVO) →
+    (`4.0.0_SA_CRO` only) → L2 endpoint + L3 register (**`1.0.0_SA_CTO`** — the STEPS are the CTO's and are
+    inseparable from L4, since the tree gate refuses a PRD_HEADER whose project is unregistered; the register
+    FILE `org/missions/DIRECTIVES.yaml` remains **`0.0.0_AB_MSTR`'s** to own and repair. Named 2026-09-10:
+    rule 27 said ONE OWNER PER STEP and named none for L2/L3, so two seats inferred opposite owners from the
+    same silence) → L4 PRD (`1.0.0_SA_CTO` only — no COO, no CVO) →
     L5 decomp + battery → L6 ONE ISSUANCE covering EVERY cell (`2.0.0_SA_COO` only; fan-out derived from the
     decomp's dependency chains and stated as `fanout:` data in the issuance commit, default cap 8) → L7
     execute (WORKER SUBAGENTS of the COO, `0.9.0_WK_<CODE>~<n>`, one worktree each, NO send tool; the TO's
