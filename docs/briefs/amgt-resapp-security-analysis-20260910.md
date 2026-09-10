@@ -56,6 +56,25 @@ Per Andrew's ruling, the AI drafts Adam's five limbs first and summarises the ev
 met when generated prose is visibly marked as generated, sits beside the evidence it was drawn from,
 and is a starting point an analyst edits rather than a finished claim.
 
+## O10 -- An analyst can tell, per figure, whether it passed its checks or is provisional
+Every value on the page is either verified against a stated rule or it is not, and the analyst can
+see which. O10 is met when a figure that failed or skipped its check is visibly distinguishable from
+one that passed -- **and when a failed check surfaces as a marked value rather than as a blank, a
+zero, or a silently-omitted row.** The failure mode this exists to prevent is a page that looks
+complete because its broken parts are invisible.
+
+## O11 -- An analyst sees what is being said about the name on social, filtered to what qualifies
+O11 is met when the page carries recent social discussion of the security -- the company's own
+official accounts and the wider conversation -- with each item admitted by a stated qualification
+rule rather than by keyword match alone, so an analyst is reading signal rather than every post that
+happened to contain the ticker string.
+
+## O12 -- An analyst can tell where a pack's inputs came from and re-run any one of them
+O12 is met when each input class on a pack -- market data, filings, news, social, web -- shows its
+source, its last successful run and its outcome, and can be re-run independently. **A single
+"Refresh" that moves everything at once, under one timestamp, does not meet this**: the subtrees
+refresh on different clocks and a page that hides that misleads.
+
 ---
 
 # PART II -- WHERE THE BOUNDARY SITS
@@ -108,6 +127,43 @@ project drafts toward them, it does not replace them.**
    "revenue guidance moved and here is the prior snapshot that says so."
 6. **A machine-drafted paragraph is never mistaken for a firm view.** An analyst can tell at a
    glance which sentences they must own before the pack leaves the building.
+
+## III-B -- WHAT QUALIFIES: the validation territory
+
+**Andrew, 2026-09-10, VERBATIM:** *"all of this would have to be deeply tested and validated, with
+specific criterion for what qualifies, and how the associated pipelines would work."*
+
+⛔ **NO THRESHOLD IS SET HERE, DELIBERATELY.** A number invented at L1 is treated as ratified by
+every later stage because it is sitting in a document. **What this part fixes is that a
+qualification rule must EXIST, be STATED, and be VISIBLE per item** -- the values are L4's.
+
+**The classes that must each carry a stated rule:**
+
+| Class | The question its rule must answer |
+|---|---|
+| **A figure** | is this the field we meant, on the basis we meant, from the vintage we meant? |
+| **A peer** | is this comparable to THIS company -- and by what test? (measured: 88.9% of the corpus fails this today) |
+| **An identity** | is this SA symbol / IR domain / social account the same company as this Bloomberg ticker? |
+| **A news or social item** | is this ABOUT the security, or does it merely contain the string? |
+| **A source** | is this publisher admissible -- and who decided? |
+| **A generated sentence** | is every factual claim in it traceable to an admitted item? |
+
+**THE BAR THAT BINDS ALL SIX:** a check that cannot FAIL is not a check. **Each rule must name an
+input that makes it refuse**, and a refusal must be visible on the page (O10) rather than absorbed
+into a blank. ⛔ **And a check scoped to each item cannot see a defect the items SHARE** -- the
+stale peer set (F6) passed every per-name look for months precisely because nothing ever asked what
+the 54 workbooks had in common.
+
+**PIPELINE SHAPE -- constraints, NOT a design.** Sequencing and cells are L5's and are not set here:
+- **Every stage persists its own output** and is independently re-runnable (O12). The ASTN_WSJFT
+  staged shape -- fetch, then enrich, then compile, then emit, each persisted -- is the estate's
+  precedent and it exists because a monolithic run cannot be debugged.
+- **Raw vendor bytes land before anything derives from them**, so a rule change is re-derivable
+  without re-spending quota.
+- **A verbatim gate where the output quotes a source.** ASTN_WSJFT proved the machine-checkable
+  form: a quoted bullet must be an exact normalised substring of the fetched text, non-verbatim is
+  rejected and regenerated. **That is a gate, not trust-the-model**, and it transfers directly.
+- **A failed stage must not silently degrade a pack to a thinner pack.** It marks the pack.
 
 ---
 
@@ -170,6 +226,25 @@ results for one name. **The `link` field is an obfuscated Google redirect; `disp
 the real domain.** An enumerator built on the obvious field stores unresolvable URLs and looks like
 it worked.
 
+**F12 -- Social is reachable, and it is a FOURTH SURFACE rather than a fourth zone.** Measured on
+the live account: `api.brightdata.com/datasets/list` returns **HTTP 200 and 1,763 datasets**,
+including post-level sources -- **X (formerly Twitter) - Posts** (`gd_lwxkxvnf1cynvib9co`),
+**Reddit - Posts** (`gd_lvz8ah06191smkebj4`), **Reddit - Comments** (`gd_lvzdpsdlw09j6t702`),
+**YouTube - Videos posts / Comments**, plus **LinkedIn company information**
+(`gd_l1vikfnt1wgvvqz95w`) for a company's own official presence and **Yahoo Finance business
+information** (`gd_lmrpz3vxmz972ghd7`).
+⚠ **This does NOT mint a new zone and so does not cross Andrew's three-archetype ruling** -- it is
+the same account credential against a different API surface (`datasets/*` rather than a zone
+request). **But it IS a fourth surface and the brief says so rather than filing it under one of the
+three**, because a reader who assumes "everything is one of three zones" will look for a zone that
+does not exist.
+
+**F13 -- The obvious finance-social source is the one that is absent.** **StockTwits: 0 datasets**
+on this account, against 4 Reddit, 5 X/Twitter and 10 YouTube. The cashtag-native venue is the one
+Bright Data does not carry here, so a "what is the market saying" feed built on this account is
+**general-social plus finance-adjacent, not cashtag-native**. Whether that gap matters is a product
+question; that it exists is measured.
+
 ---
 
 # PART V -- WHAT MUST BE TRUE (named, deliberately NOT sequenced)
@@ -188,6 +263,16 @@ it worked.
   authenticator pattern and `seeking-alpha/credentials` are the route; if public pages suffice,
   neither is needed.
 - **The design spec is approved before .tsx is written**, per the F10 precedent.
+- **A social ACCOUNT identity layer exists**, distinct from the ticker layer above. A company's own
+  X / LinkedIn / YouTube presence must be resolved to the security, and an impostor or fan account
+  must be distinguishable from the official one. **This is the identity problem again on a surface
+  with no ISIN.**
+- **A qualification rule exists for every class in III-B before that class is displayed.** An input
+  with no stated rule is not shipped dark; it is either ruled on or held back.
+- **Every check names the input that makes it refuse**, and a refusal is renderable (O10).
+- **Someone owns the source allowlist and the social account map** as living lists. Both rot -- IR
+  domains move, handles are renamed -- and an enumerated list with no owner lapses silently. This is
+  the same failure that left two Bright Data keys dead.
 
 ---
 
@@ -223,6 +308,13 @@ it worked.
   and cites a path from the other device.
 - **CapIQ's `IQ_*` line items were never mapped** -- only FactSet's, and only via cached workbook
   values read with `data_only=True`.
+- **Nothing about the social datasets has been EXERCISED.** F12 measured that they are LISTED and
+  reachable on this account. **No dataset was triggered, no record was returned, and no cost, field
+  schema, latency or freshness was observed.** Whether "X - Posts" can be queried BY CASHTAG at all,
+  and what a delivery looks like, is unknown -- a listing is a catalogue entry, not a capability.
+- **No qualification THRESHOLD is proposed anywhere in this brief**, only the requirement that each
+  class in III-B carry one. Anyone reading a number into III-B is reading something that is not
+  there.
 - **No decomposition, no sequencing, no task orders.** That is L5 and it is not this seat's.
 
 ---
