@@ -8603,3 +8603,34 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-S123 -- PORTAL_REPO_PAT is installed with admin/push where the workflow asked for read-only, Andrew-accepted and filed so the swap is not forgotten
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-10T21:45Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S123",
+    "one_line": "PORTAL_REPO_PAT IS NOW SET AND IT IS BROADER THAN THE WORKFLOW ASKED FOR. The workflow's own comment specifies 'a fine-grained PAT or deploy-key-backed token scoped to READ-ONLY on Opal-Capital/portal'. The token installed tonight (AWS Secrets Manager estate-report/github-token) reports permissions {admin: true, maintain: true, push: true, triage: true, pull: true} on that repo. The workflow needs exactly `pull`. Andrew was shown the gap before it was installed and took the trade explicitly at ~21:3xZ, so this row is NOT an objection and NOT a gate -- it exists so a decision made under time pressure with a stated intention to swap does not become permanent by being forgotten, which is the normal fate of a temporary credential.",
+    "spec_asserts": ".github/workflows/stitch-source-push.yml, the 'Checkout portal' step comment: 'this step needs secrets.PORTAL_REPO_PAT (a fine-grained PAT or deploy-key-backed token scoped to read-only on Opal-Capital/portal) provisioned as a repo secret before it will succeed.'",
+    "world_is": "The repo secret PORTAL_REPO_PAT on Opal-Capital/ajb_workspace was set 2026-09-10T21:40:14Z from Secrets Manager estate-report/github-token. Probed live before installation: GET /user -> 200 as andrew-opalinvest; GET /repos/Opal-Capital/portal -> 200, private=true, permissions {'admin': True, 'maintain': True, 'push': True, 'triage': True, 'pull': True}; GET the pinned gitlink commit 5907cbca98 -> 200. So it is write- and admin-capable on portal, and any workflow on ajb_workspace can now use it. The alternative stored candidate, Secrets Manager 'github-token', is a classic ghp_ that returns 401 on /user -- dead, and it is the one whose NAME would have made it the obvious pick without a probe.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "gh secret list --repo Opal-Capital/ajb_workspace -> PORTAL_REPO_PAT 2026-09-10T21:40:14Z (GitHub never reads a secret value back; the timestamp is the only direct artifact)",
+        "GitHub REST probe of both Secrets Manager candidates, run before installation, values never printed: github-token -> 401 on /user; estate-report/github-token -> 200 on /user, 200 on repos/Opal-Capital/portal with admin/maintain/push/triage/pull, 200 on commit 5907cbca98eb091124e38a32debefa355c1d4376",
+        ".github/workflows/stitch-source-push.yml -- the read-only wording in the Checkout portal step comment",
+        "run 34533482494 step 4 completed/success -- the installed token works for the intended read"
+      ]
+    },
+    "notes": "ANDREW-ACCEPTED, NOT AN OPEN OBJECTION: he chose 'use the existing token now' over 'mint a read-only PAT first' after being shown the permission set, at the 0.8.0_AE_CloudComp terminal ~21:3xZ. WHY IT IS STILL FILED: the exposure is not the token existing -- it already sat in Secrets Manager readable by any Opal seat -- it is that a repo secret is reachable by EVERY workflow on ajb_workspace, which is a wider surface than the one step that needs it. CHEAPEST NEXT STEP: mint a fine-grained PAT with Contents:Read on Opal-Capital/portal only and re-run `gh secret set PORTAL_REPO_PAT`; nothing else changes, the workflow is already proven working, and the swap can be verified by re-dispatching and reading step 4. NOT DONE HERE because minting a PAT is Andrew's act, not this seat's. RELATED: the push: trigger was deliberately LEFT AS COMMITTED on his word the same turn -- that was the handoff's section 5.4 open call and it is now answered, not outstanding."
+  }
+]
+```
