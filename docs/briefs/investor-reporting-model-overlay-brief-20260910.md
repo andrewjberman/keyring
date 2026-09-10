@@ -1,5 +1,7 @@
 # Investor Reporting — Holdings and model overlay — WS4 child brief
 
+> **Organization update, September 10, 2026:** Andrew has replaced the former project/workstream structure with two projects: [IR FE](investor-reporting-ir-fe-brief-20260910.md) for the complete client-facing product and [IR BK](investor-reporting-ir-bk-brief-20260910.md) for ingestion, tenant scoping, transformations and operations. Both briefs map all four source briefs and five supporting documents. The body below remains dated research; its former ownership labels are historical. Permanent FWD IDs are unchanged. Macro IRPT, directive D9, laptop execution.
+
 **Author:** 4.0.0_SA_CRO  
 **Mode:** NEW child capability brief within the existing Lightweight Investor Reporting umbrella, D9 Opal Workflows; no separate project registration.  
 **Commission:** Andrew's [September 10 direction](../../org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260910_HOLDINGS_MODEL_OVERLAY_V1.md), recorded at `f9761f444f`.  

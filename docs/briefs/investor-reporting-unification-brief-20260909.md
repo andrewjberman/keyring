@@ -1,5 +1,7 @@
 # INVESTOR REPORTING & DATA UNIFICATION — STEP-1 BRIEF (L1) — a function under D9 Opal Workflows
 
+> **Organization update, September 10, 2026:** Andrew has replaced the former project/workstream structure with two projects: [IR FE](investor-reporting-ir-fe-brief-20260910.md) for the complete client-facing product and [IR BK](investor-reporting-ir-bk-brief-20260910.md) for ingestion, tenant scoping, transformations and operations. Both briefs map all four source briefs and five supporting documents. The body below remains dated research; its former ownership labels are historical. Permanent FWD IDs are unchanged. Macro IRPT, directive D9, laptop execution.
+
 > ⛔ **PLACEMENT RULED 2026-09-09 ~21:0xZ, Andrew VERBATIM:** *"its ok I think we can basically wrap that whole function into D9 Opal
 > Workflows, because it effectively is going to be a bunch of middlemanning ops that pulls data from some vendor, runs it through
 > some AI/pipeline processes, and becomes a flow on the dashboard."* This supersedes the ~17:2xZ "dedicated D14" word this brief

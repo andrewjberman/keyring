@@ -1,5 +1,7 @@
 # YCharts Analysis — intake, retrieval and serving design
 
+> **Organization update, September 10, 2026:** Andrew has replaced the former project/workstream structure with two projects: [IR FE](investor-reporting-ir-fe-brief-20260910.md) for the complete client-facing product and [IR BK](investor-reporting-ir-bk-brief-20260910.md) for ingestion, tenant scoping, transformations and operations. Both briefs map all four source briefs and five supporting documents. The body below remains dated research; its former ownership labels are historical. Permanent FWD IDs are unchanged. Macro IRPT, directive D9, laptop execution.
+
 **September 10, 2026 · 4.0.0_SA_CRO · Investor Reporting WS3.** Companion to the [new child brief](investor-reporting-ycharts-brief-20260910.md). This annex supplies the explicit instructions and sequencing Andrew requested. “Captured” identifies observations in supplied artifacts; “proposed” identifies implementation design. No production execution is implied.
 
 ## 1. Product and execution flow

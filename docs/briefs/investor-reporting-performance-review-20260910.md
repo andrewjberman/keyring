@@ -1,5 +1,7 @@
 # Investor Reporting: performance presentation review
 
+> **Organization update, September 10, 2026:** Andrew has replaced the former project/workstream structure with two projects: [IR FE](investor-reporting-ir-fe-brief-20260910.md) for the complete client-facing product and [IR BK](investor-reporting-ir-bk-brief-20260910.md) for ingestion, tenant scoping, transformations and operations. Both briefs map all four source briefs and five supporting documents. The body below remains dated research; its former ownership labels are historical. Permanent FWD IDs are unchanged. Macro IRPT, directive D9, laptop execution.
+
 **Author:** 4.0.0_SA_CRO · September 10, 2026 · RCN-0008 / WS2
 
 **Parent:** [one-project L1 brief](investor-reporting-lightweight-brief-20260910.md)

@@ -1,5 +1,7 @@
 # Investor Reporting WS4 — current holdings and model-overlay design
 
+> **Organization update, September 10, 2026:** Andrew has replaced the former project/workstream structure with two projects: [IR FE](investor-reporting-ir-fe-brief-20260910.md) for the complete client-facing product and [IR BK](investor-reporting-ir-bk-brief-20260910.md) for ingestion, tenant scoping, transformations and operations. Both briefs map all four source briefs and five supporting documents. The body below remains dated research; its former ownership labels are historical. Permanent FWD IDs are unchanged. Macro IRPT, directive D9, laptop execution.
+
 Research companion to the [child brief](investor-reporting-model-overlay-brief-20260910.md). These are proposed shapes and adapter rules, not deployed endpoints. Source facts are bounded by the [evidence manifest](sources/INVESTOR_REPORTING_MODEL_OVERLAY_EVIDENCE_20260910.json); examples contain no client data.
 
 ## 1. Product shape and scope

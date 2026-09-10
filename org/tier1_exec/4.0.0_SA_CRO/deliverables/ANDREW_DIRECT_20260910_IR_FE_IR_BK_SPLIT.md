@@ -21,3 +21,13 @@
 - `docs/briefs/investor-reporting-ir-bk-brief-20260910.md`
 
 These are L1 briefs for immediate drafting and review. No new pipeline or UI deployment is requested by this direction.
+
+## Subsequent same-day direction — source read at this seat
+
+CTO's `ANDREW_DIRECT_20260910_183xZ_IR_IS_THE_TOP_PROJECT_LAPTOP_AND_SPLITS_FE_BK.md` at `c0f5ed8163` records Andrew's later words, including **"the highest value project on this entire board including all directives"** and **"It is going to be handled on this laptop."** This seat read that exact record after receiving CTO message 95443. The two briefs therefore carry top priority and **laptop** execution, not a pending device choice. CTO withdrew the single `OPAL_INVRPT` code request and retains the L2 allocation of the eight permanent FWD IDs. The record does not move all of D9 or stop other projects; Andrew expressly retains any closure of other work himself. Register implementation and macro bookkeeping do not change the requested immediate drafting.
+
+## Subsequent macro and directive-placement directions
+
+CTO's carried `ANDREW_DIRECT_20260910_183xZ_MACRO_IS_IRPT_REGISTER_IN_D9.md` at `1f0f1dd3f6`, read at this seat, records Andrew naming **IRPT**, Investor Reporting, in **D9**. The two briefs carry that macro/home; project codes and formal FWD ACCEPT assignment remain downstream.
+
+The exact `ANDREW_DIRECT_20260910_185xZ_D9_TO_LAPTOP_CLDGRPH_FINISHED_15MIN_RATIFIED.md` at `4ff4abd9a4`, also read here, subsequently records: **"D9 as a whole is Laptop now, and directives.yaml should be updated accoridngly."** This later direction closes the directive-placement/write-ownership question left open in the earlier historical paragraphs. Both briefs now carry the whole-D9 laptop ruling; MSTR owns its register implementation. This is separate from any closure of other projects. The unrelated NFRA_OUTSET 15-minute poll ruling is not a new basis for the independently specified YCharts mailbox schedule.
