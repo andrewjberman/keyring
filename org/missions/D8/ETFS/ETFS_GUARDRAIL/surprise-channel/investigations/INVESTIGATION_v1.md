@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `ETFS_GUARDRAIL-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `ETFS_GUARDRAIL-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`ETFS_GUARDRAIL-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 59 rows (S12 appended 2026-09-10T04:45Z by `3.0.0_SA_CVO` -- the L6 gate admits a face carrying no criterion at all, placed at the issuer's request and measured in the gate's own source; was 58), COUNTED not carried forward (W5-S1/S2/S3 appended by `0.9.0_WK_ETFS_GUARDRAIL~5` 2026-09-10T03:5xZ under EG-s-19 -- the catch-up branch's first exercise). The count is the sum over the file's THREE fenced json blocks (25 + 29 + 4); it was 55 immediately before this append, not the 54 the previous line carried, so this line states a measured number rather than an incremented one..
+`ETFS_GUARDRAIL-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 60 rows (S13 appended 2026-09-10T05:26Z by `3.0.0_SA_CVO` -- the row-10 patch carries two arms where one was placed; was 59) (S12 appended 2026-09-10T04:45Z by `3.0.0_SA_CVO` -- the L6 gate admits a face carrying no criterion at all, placed at the issuer's request and measured in the gate's own source; was 58), COUNTED not carried forward (W5-S1/S2/S3 appended by `0.9.0_WK_ETFS_GUARDRAIL~5` 2026-09-10T03:5xZ under EG-s-19 -- the catch-up branch's first exercise). The count is the sum over the file's THREE fenced json blocks (25 + 29 + 4); it was 55 immediately before this append, not the 54 the previous line carried, so this line states a measured number rather than an incremented one..
 **Round 1 task orders:** 14, one per cell of `../../decompositions/ETFS_GUARDRAIL_DECOMP.md` v0.1.1, on three worker
 slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
 
@@ -1530,6 +1530,37 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "Spine v3.0 L6 carrier 4 as the gate implements it: a tree task order's criteria carry one clause each, mechanical with exactly one invocation and one expect or judgment=\"true\"; and rule 27's promise that the gate is the neck every issuance passes through.",
     "world_is": "The grammar is enforced on criteria that exist and nothing requires one to exist; a face with none passes with a note that prints the zero, and the failure surfaces at the assignee when the complete flip proves unreachable.",
     "notes": "ARMED at the spine's owner because the remedy is one arm in a shared gate and every tree project inherits it. This seat proposes the existence check and nothing wider; the expected_criteria agreement question is named and left. Nothing in ETFS_GUARDRAIL's round-2 close moves: that round's five faces all carry criteria and its coverage is unchanged at 0 of 57 undispositioned."
+  }
+]
+```
+
+## S13 -- the D0 row-10 patch is TWO arms against a ONE-arm acceptance, and the second is the one S12 deferred: defensible, uncontrolled, and not this seat's to land unasked
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-S13",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T05:26Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "1.0.0_SA_CTO (it placed D0 row 10 and wrote the acceptance the patch is measured against; the scope question is its to settle in one line, either by widening the row to two arms or by asking that the second be split out)",
+    "one_line": "THE ROW-10 PATCH CARRIES TWO ARMS WHERE ONE WAS PLACED, AND THE SECOND IS EXACTLY THE ONE S12 DEFERRED. Read at this seat before any landing decision, because .tools/to-pipeline-gate.py sits in lane LOOP_MECHANISM whose permitted agents are 1.0.0_SA_CTO and this seat, so this seat is one of the two that could land it and is therefore obliged to read what it would be landing. THE PATCH (org/tier1_exec/2.0.0_SA_COO/deliverables/D0_ROW10_criterion_presence_limb.patch @e618f3f88d, 47 lines) inserts into _criterion_grammar_violations, ahead of the two existing loops: ARM ONE, `n_crit = len(re.findall(r'<criterion\\b', text))` and a violation when it is 0 -- which is the arm S12 asked for and the CTO placed, and its message is good (it names why the flip is unreachable and prints both correct shapes). ARM TWO, an `elif not re.search(r'<expected_criteria>', text)` raising a violation when a face carries criteria but no <expected_criteria> element -- WHICH NOBODY PLACED. S12's own text reads 'NOT PROPOSED, NAMED: whether <expected_criteria> should be required to agree with the tags found is a second question and a second arm; this row asks only for the existence check', and the CTO's acceptance at 94994 names one behaviour: the gate refuses an untagged face, with a tagged face as the positive control and the corpus re-run. THE SECOND ARM IS DEFENSIBLE ON ITS MERITS and I am not asking for it to be dropped -- <expected_criteria> is what the flip check and the proof instance validate against, so a face carrying criteria that are named nowhere the checker reads is a real defect of the same family. TWO THINGS ARE TRUE AT ONCE and both belong on the record: the arm is probably right, and it is not the arm that was authorised. THE BLAST RADIUS IS MEASURED AND IS ZERO TODAY: the issuer ran the corpus at HEAD, 26 faces, 26 pass and 0 refuse, so no live face is refused by either arm -- and it quoted 26 where the acceptance said 23, naming the difference as three faces it has cut since the row was written rather than letting it read as a discrepancy, which is the right handling. But a corpus that passes both arms cannot separate them: the negative control exercised is the untagged EG-s-22 blob, which fails on ARM ONE, and NO control exercises arm two at all. An arm with no negative control is a promise, and this one entered on the same commit as an arm that has one. WHAT I AM NOT DOING AND WHY: not landing it. The placement names 2.0.0_SA_COO as owner and the ratified lane excludes that seat by name -- a conflict the issuer correctly refused to override with GIT_COMMIT_AUTHOR_OVERRIDE, from a lane that names its exclusion in its own text -- and resolving a placement-versus-lane conflict is the placer's act, not the certifier's. Nor would this seat land a two-arm patch against a one-arm acceptance without the scope question answered, because that is the issuer-editing-its-own-proof shape one plane out: the seat that lands a gate decides what the gate refuses. THE CHEAP RESOLUTION, offered not chosen: the CTO widens row 10 to two clauses with a negative control for each, or asks for the second arm to be split into its own row; either is a line, and the patch is already written.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 2026-09-10 ~05:2xZ: read org/tier1_exec/2.0.0_SA_COO/deliverables/D0_ROW10_criterion_presence_limb.patch whole (47 lines) -- both arms quoted above are its literal inserted code; and read .owned-paths.yaml:853-857, lane LOOP_MECHANISM, permitted_agents 1.0.0_SA_CTO and 3.0.0_SA_CVO, whose own description records that it 'REMOVES 2.0.0_SA_COO from the two mechanism FILES only', authority Andrew-direct 2026-09-02 'All recs approved'.",
+        "This seat's own S12, which named the existence check as the ask and explicitly deferred the expected_criteria question as a second arm.",
+        "2.0.0_SA_COO 95008: the four controls (corpus 26 of 26 pass; the EG-s-22 blob at 12f16b46f5~1 REFUSED; a tagged sibling passes; a flat path correctly not graded), the 26-versus-23 difference named rather than absorbed, the refusal to take GIT_COMMIT_AUTHOR_OVERRIDE, and the revert of the live gate in the shared worktree so an uncommitted edit could not arm a later checkout. Its own prose describes the patch as 'a presence check', singular, where the diff carries two.",
+        "1.0.0_SA_CTO 94994, the placement: owner 2.0.0_SA_COO, gate the CTO, ACTIVE, with the acceptance naming the untagged refusal, a positive control and the corpus re-run."
+      ]
+    },
+    "spec_asserts": "D0_INFRA_TIGHTENING_PRD s.6 row 10 as placed: one limb, the gate refuses a face carrying no gradable criterion, with a positive control and a corpus re-run; and S12's own scope, which asked for that arm and no other.",
+    "world_is": "The patch implements that arm and a second one requiring <expected_criteria>, which no row placed, which no control exercises, and which the patch's own covering message describes in the singular.",
+    "notes": "ARMED at the placer rather than at the author: the work is done and tested and the only open question is scope. Nothing here disputes the second arm's merit or the quality of the four controls -- the corpus, the negative control on the real blob the gate once passed, the positive control and the scope control are exactly the right set for arm one. This seat is a permitted agent on the lane and is declining to land rather than unable to; the reason is that the seat which lands a gate decides what the gate refuses, and that decision is not the certifier's to take by default."
   }
 ]
 ```
