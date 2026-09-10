@@ -640,6 +640,75 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "TO-EG-s-14 NEVER-2 clause: the entry is 'OPENED FIRST and BOTH never-widen halves are quoted in it', 'naming the served keys the run will REWRITE ... the PRIOR objects ARCHIVED before the run ... the ROLLBACK ... and the two sign-off ids' -- and S14-AC1(a) grades the ENTRY FILE for exactly those contents. The order also prescribes close-leg/hold calls on the same entry AFTER the run.",
     "world_is": "The two instructions collide: the content the criterion grades can only live in the entry .md (the sentinel schema has no field for it), and every subsequent deploy_ledger.py mutation rewrites that .md from the sentinel. Following the order in its natural sequence (open -> append the NEVER-2 detail -> run -> close legs) DELETES the sign-off block, and the deletion is visible only if something re-reads the file afterwards.",
     "notes": "WORKED AROUND, NOT FIXED: the section was re-appended AFTER the last ledger mutation of this order, and the re-appended text says so in its first paragraph so the next reader knows the ordering constraint. No change was made to .tools/deploy_ledger.py -- out of this order's <paths> and not its cell. ARMED for the issuer because the next NEVER-2 entry in this estate hits the same trap; the durable fixes are either a sentinel field for free-form detail that _render_entry emits, or an explicit 'append your detail LAST' clause in the face. Form only; no significance claimed."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S17",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T00:45Z",
+    "one_line": "The amendment orders the fix deploy recorded 'as a NEW LEG of the SAME NEVER-2 entry (resume it, do not open a second)', but .tools/deploy_ledger.py has no add-leg verb and `open` on an existing slug REFUSES -- the manifest is fixed at open time. The three new legs (deploy, archive-2, re-invoke) were therefore appended to the entry's SENTINEL JSON by hand, which is in this order's <paths> and is the only input _render_entry rebuilds the .md from.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/deploy_ledger.py:356-358 (cmd_open) @93264db36c -- `if _state_path(args.slug).exists(): sys.exit(\"ERROR: deploy ledger '<slug>' is already OPEN ...\")`; the argparse subcommand set is {open, close-leg, close, hold, check, list} (:--help output, read this turn) with no add-leg / amend verb",
+        "org/critical_paths/.open_deploys/etfs-guardrail-eg-s-14-august-rerender.json -- legs L6 (s3-prefix, the renderer deploy), L7 (verify, archive-2) and L8 (activation, the re-invoke) appended by this worker at 2026-09-10T00:04Z with proof=null, then closed through the tool's own close-leg verb (rc=0 each: 'OK: leg L6 closed', 'L7', 'L8', 'L3', 'L4'), and the entry CLOSED by the tool ('all 8 legs proven; sentinel removed')",
+        "The append is recorded in the entry's own Log line 20260910T0004Z, so the hand edit is visible in the artifact a reader sees, not only in git"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 AMENDMENT @5507841f04: 'THE DEPLOY: aws s3 cp ... as a NEW LEG of the SAME NEVER-2 entry etfs-guardrail-eg-s-14-august-rerender (HELD on W1-S11 -- resume it, do not open a second)'.",
+    "world_is": "The tool cannot add a leg to an existing entry: open refuses on an existing sentinel and no other verb touches the manifest. The instruction is satisfiable only by editing the sentinel JSON directly (in <paths>) or by opening a second entry (explicitly forbidden). The former was done; every subsequent state change went through the tool.",
+    "notes": "Form only. Two durable fixes for whoever owns the tool: an `add-leg` verb, or an `open --resume` that appends. INERT: nothing about the world is left armed by this -- the entry is CLOSED with all 8 legs carrying proof, and the same class of hand edit is already how W1-S16's ordering clause is satisfied."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S18",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T00:45Z",
+    "one_line": "S14-AC1 arm (f) names two instruments that cannot show a send in this estate -- the orchestrator prints NOTHING on the success path (no MessageId is ever logged) and CloudTrail captures no SES call (the same COVERAGE-ABSENT class the amendment already ruled for lambda:Invoke) -- so arm (f) reads FAIL on a successful, evidenced send and is the ONLY failing arm of seven.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:405-441 @93264db36c -- _run()'s success path calls _email_report(month) and returns with the comment 'rendered + delivered -> quiet success (no alert)'; _email_report (:296-300) calls _ses.send_raw_email(...) and neither prints nor stores the response, so no MessageId can reach CloudWatch: 0 of 0 possible",
+        "MEASURED on the successful re-run (request id a027eeb0-e954-4dde-9c4f-1d91cad77f67): `logs filter-log-events` over 2026-09-10T00:20:57Z-00:29:57Z returned 4 events -- INIT_START, START, END, REPORT -- and 0 lines containing 'MessageId'",
+        "CloudTrail `SendRawEmail` in the same window = 0 events, with the same-window POSITIVE CONTROL showing management events ARE logged (StartInstances 00:23:06Z, StopInstances 00:24:57Z, both Username etfs-reports-orchestrator); `get-event-selectors` on both trails (2 of 2) shows only management events + S3 object data on other buckets -- no SES data plane, exactly the COVERAGE-ABSENT fact the amendment ruled for lambda:Invoke",
+        "THE SEND IS EVIDENCED BY TWO OTHER INSTRUMENTS: (i) SES's own counter, get-send-statistics, rose +2 DeliveryAttempts across the run (total 80 -> 82; the data point covering the run carries attempts=2) -- one send_raw_email to TWO destinations, which is the JOIN; (ii) the etfs-reports-alerts SNS topic published 0 messages in the run window while the SAME metric shows 1 publish in the FAILED first fire's window (2026-09-09T23:15:00Z) -- every failure branch of _run, including 'report rendered but EMAIL FAILED', publishes there, so 0 beside a live positive control says the send did not fail",
+        "LIMIT, stated: get-send-statistics is ACCOUNT-WIDE, so +2 in a 15-minute bucket is consistent with -- not exclusive to -- this send; the exclusive discriminator is the alert-absence with its positive control, plus the code path (the send is the last act before the quiet return)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 S14-AC1(f): 'the SEND: the orchestrator's log shows the report send with its SES MessageId(s) and Destinations naming BOTH aj@opalinvest.com and andrew@opalinvest.com (JOIN, ruling 3), and CloudTrail SendRawEmail in the run's minute'.",
+    "world_is": "Neither limb can return a row for ANY send by this deployed handler: nothing logs a MessageId, and no trail selects the SES data plane. The arm can therefore neither pass on a real send nor fail on a missed one -- the precise condition the amendment named when it re-cut arm (e) ('the old arms could neither pass nor fail; these discriminate'). The send did happen and is evidenced by two other instruments; arm (f) is nevertheless graded literally and reads FAIL, which is why S14-AC1 is 6 of 7 and the order's <status> is NOT flipped.",
+    "notes": "BLOCKING because it is the only thing standing between this cell and a PASS, and a worker cannot re-cut its own criterion. INERT: nothing in the world is left armed -- the August report IS re-published with the coverage line and IS sent. Two disarm paths for the issuer, both outside this order's grant: (1) re-cut arm (f) the way arm (e) was re-cut -- SES get-send-statistics delta + the alert-topic 0-with-positive-control + the deployed EMAIL_RECIPIENT JOIN, with the CloudTrail limb printing COVERAGE-ABSENT; or (2) a one-line code change in _email_report to print the returned MessageId, which is a NEW cell (lambda_function.py is READ-only here). The issuer's own inbox read at both recipients is the third, and is already assigned to it."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S19",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T00:45Z",
+    "one_line": "The report the BOX renders carries NO Opal logo: opal_logo_svg() reads <renderer dir>/../../../../portal/public/logos/opal-logo-white.svg, which on the reporter EC2 resolves to /opt/portal/... and does not exist, so the brand bar renders empty -- the served August HTML lost 5 inlined logo SVGs (19,044 bytes, 62,420 -> 43,376 chars) versus the ad-hoc LOCAL render it replaced. Pre-existing and structural: every scheduled monthly fire has this shape; this order's fire is what made it visible.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/presentation/render_month_end.py:114-126 (opal_logo_svg) @93264db36c -- root = dirname(__file__)/../../../.. then portal/public/logos/opal-logo-white.svg, wrapped in try/except returning \"\" on any failure (a silent empty string, no WARN)",
+        "MEASURED on the two served HTMLs: the 2026-09-01T17:38Z object (an ad-hoc LOCAL repo render, per org/critical_paths/change_management/20260901T1738Z_etfs-served-reports-regenerate_completion.md) carries 9 <svg> blocks -- five of them the 3868-byte logo, one per slide -- while the 2026-09-10T00:24:47Z BOX render carries 4, all charts (2825/7854/2271/5501 bytes). Headings 4 of 4 identical, table rows 31 of 31 identical, slides 5 of 5 -- no DATA is missing; the delta is exactly the five logo copies",
+        "The box layout makes it structural: the renderer lives at /opt/etfs-reports/render_month_end.py, so the computed root is /opt and /opt/portal/public/logos/ has never existed there; the orchestrator's _render_command (lambda_function.py:196-232) pulls only render_month_end.py and coverage/*.py"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-14 THE CELL: the reporter box 'publishes the PDF/HTML/CSV to the served key' as the rule's own behaviour, and S14-AC2 asks for the served artifact before vs after with its evidence.",
+    "world_is": "The box's own render is brand-less. The comparison artifact (the 09-01 served HTML) was produced by a LOCAL repo run, not by the box, so the served August report has just changed appearance -- logo present before, absent now -- while every number, heading, table row and slide is unchanged. Nothing in this order caused it (the one code change touches only the fallback import); it is what the 10-01 scheduled fire would also produce.",
+    "notes": "NOT FIXED HERE: out of this order's one-file grant and not its cell. Cheap remedies for the issuer's next cut, both outside this order: upload the logo beside the renderer on the artifact prefix and resolve it from _ORION_HERE first (the same shape as the W1-S11 fix), or inline the SVG as a constant. ARMED because the next NORMAL fire (10-01) publishes and emails the same brand-less report to both recipients. Cosmetic, not numeric -- stated so the issuer can weigh it, not to claim significance."
   }
 ]
 ```
