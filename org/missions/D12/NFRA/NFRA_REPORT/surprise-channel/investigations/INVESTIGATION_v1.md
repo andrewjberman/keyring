@@ -408,6 +408,30 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
     "spec_asserts": "TO-RP-s-13's BOUNDS: 'Two live surfaces are known to have no ratified group today: opal-gateway and canonical-schwab-si2. Render them UNGROUPED rather than assigning them.'",
     "world_is": "The PRD this cell also depends on (NFRA_REPORT_PRD.md) was bumped to v0.6 folding a later Andrew-direct ruling that canonical-schwab-si2 is attributed to Dashboard, and states in its own words that no cell may render it ungrouped. Only opal-gateway remains a live surface with no ratified group as of this build.",
     "notes": "NOT a defect in the decomposition or the issuer's process -- the PRD amendment (v0.4 to v0.6) landed on the SAME 2026-09-09 session this cell was issued in, and this is the ordinary case of a cell re-grounding its premises against live state before building rather than against the text frozen at issuance. ATTRIBUTION.md (this cell's deliverable) renders canonical-schwab-si2 attributed to Dashboard and renders opal-gateway UNGROUPED, per the live PRD. Nothing here is ARMED: the correct answer is already ruled and cited, and no future actor needs to disarm anything -- this row exists so a reader of the BOUNDS text alone is not misled into thinking si2 should still render UNGROUPED."
+  },
+  {
+    "id": "NFRA_REPORT-Z-W1-S5",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_REPORT~1",
+    "surfaced_at": "2026-09-10T02:40:00Z",
+    "one_line": "RP-s-16: the comp-rail (comp-find/comp-read/comp-which) resolves its search corpus by the TOOL SCRIPT'S OWN on-disk location, not the caller's cwd -- every invocation from inside a linked worktree (rule 14b's mandated pattern) silently scans the MAIN ajb_workspace checkout instead, with no error and no warning that the corpus excludes the worktree the worker is standing in.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "~/bin/comp-find:16 and ~/bin/comp-read:16, read this session: both forwarders hardcode _t=\"/c/Users/Opal Bloomberg/Desktop/ajb_workspace/.tools/comp-<tool>\" and exec it verbatim regardless of the invoking shell's cwd or which worktree it sits in.",
+        ".tools/comp-find@1443d20f78:77 'WS = _comprail.repo_root()'; .tools/_comprail.py@1443d20f78:125-128 'def repo_root(): ... subprocess.run([\"git\", \"rev-parse\", \"--show-toplevel\"], cwd=_HERE, ...)' where _HERE is os.path.dirname(os.path.abspath(__file__)) of the SCRIPT ITSELF -- never PWD, never the caller's cwd, so repo_root() always resolves to whichever tree the shim's hardcoded _t points at.",
+        "EMPIRICAL, this worktree (C:/Users/Opal Bloomberg/Desktop/wk-NR2-1, branch wk-NR2-1, HEAD 1443d20f78): wrote an untracked canary file inside this cell's OWN write surface (org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/.canary_grain_test.md) carrying a unique token; comp-find '<token>' (default corpus=all) returned 'DENOMINATOR: 0 hit(s) across 53245 file(s) scanned' -- a MEASURED zero that never covered this worktree's own new file. File removed after the test, never committed.",
+        "Re-run at --corpus raw (the maximal scope, 501365 files scanned): still 0 hits on the canary's actual content. The only 2 hits returned there were comp-find's OWN telemetry echo of the search TERM as a logged invocation argument (org/mcp/comp-tool-runs.jsonl:6535, org/mcp/comp-which-rail.log:6518) -- and org/mcp/inbox/, org/mcp/comp-tool-runs.jsonl and org/mcp/comp-which-rail.log do not exist under this worktree at all (confirmed by direct ls of org/mcp/ here), so those two hits could only have come from the MAIN tree's disk. The corpus scanned was never this worktree's, at any width."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md rule 21: 'a comp-tool is the DEFAULT for search + inspection, raw grep the exception' -- the reflex for wherever an agent is working; rule 14b mandates a worker commit and edit inside its OWN linked worktree ('a linked worktree carries its OWN index... which is why /dispatch already mandates one per worker slot').",
+    "world_is": "The two mandates combine into a silent GRAIN mismatch: a worker in a linked worktree who follows rule 21's reflex gets comp-find/comp-read/comp-which answers about the MAIN ajb_workspace checkout's disk state, never about its own worktree's uncommitted or worktree-local content -- and the tool's own output ('a MEASURED zero... not a claim the term is absent from the estate') reads as authoritative with no signal that the corpus excluded the very tree the worker is standing in.",
+    "notes": "Not remediated here -- .tools/_comprail.py and the ~/bin shims are outside this cell's paths entirely. Filed ARMED because every other worktree active this session (ajb_s10_v, wk-NR2-2, wk-NR2-3) inherits the identical defect on every comp-find/comp-read/comp-which call it makes, and a future worker trusting a comp-rail zero about its own uncommitted deliverable would be citing the wrong tree's content while the tool's own denominator language gives no hint of that. This cell's own earlier reads of SCHEDULE.md/PRD.md/COMPOSER.md via comp-read returned correct text only because those are tracked files unchanged since this worktree's branch point and so are byte-identical in both trees by coincidence, not because comp-read was reading this worktree -- which is exactly why the mismatch went unnoticed until tested with a canary unique to this worktree."
   }
 ]
 ```
