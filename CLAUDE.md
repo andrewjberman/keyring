@@ -35,7 +35,18 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     COO recuts in ONE issuance; CLOSED when every FWD grades REALIZED.** The three route tokens are RETIRED.
     Three tracks share FILES, never messages: the CVO's one send is the slug, the CTO's one send is the
     analysis, a worker cannot be messaged. `0.0.0_AB_MSTR` integrates and never works a project. Mid-round
-    the spec AND the decomposition are FROZEN; the only off-spec act is a surprise ROW (§2 below). Gate:
+    the spec AND the decomposition are FROZEN; the only off-spec act is a surprise ROW (§2 below).
+    ⛔ **ONE ISSUER PER ROUND — and a WORKSTREAM IS A SCOPE, NOT A ROUND.** L6's ONE ISSUANCE is cut by ONE
+    COO instance; two instances issuing into the SAME round is the collision (two cuts, two issuances, an
+    ambiguous L8). ⛔ **It binds the ROUND, NEVER THE PROJECT: one project may carry several WORKSTREAMS with
+    DISJOINT boundaries and DISJOINT write surfaces, held by different `~lane` instances** — that is four
+    SCOPES, not four issuers. ⛔ **THERE IS NO ONE-PROJECT-PER-INSTANCE RULE AND THERE NEVER WAS.** That phrase
+    circulated for weeks citing THIS rule by number: 192 corpus hits, every first-party one authored by a single
+    seat, which then read its own phrase back as canon — a citation repeated with a rule number attached is
+    unfalsifiable at a glance. Measured and WITHDRAWN BY ITS AUTHOR `2.0.0_SA_COO` 2026-09-10 (zero hits across
+    CLAUDE.md, the spine, the ANNEX and `RULINGS.jsonl`), after it had twice declined to seat a lane on it.
+    COST: none — this names what "ONE ISSUANCE" already implied. NON-APPLICATION: separate rounds; and
+    workstreams whose write surfaces do not intersect. Gate:
     `.tools/to-pipeline-gate.py` (the L6 neck). Spec: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` v3.2
     — the ONE process document (constitutional; v3 from the CRO's spec @`29bf9265ea` + §13 @`9dc97d860d`).
     A worker's write surface is exactly the `<paths>` its non-terminal order names (no lane enumerates a worker;
