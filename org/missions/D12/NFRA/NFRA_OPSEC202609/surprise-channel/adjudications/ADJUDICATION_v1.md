@@ -21,7 +21,20 @@ count ages the moment the next cell files:** the L8 compile verification (`C-S1`
 > **under-selected by 1 of 20**; no member of the nineteen is disturbed and every one of those dismissals stands.
 > `C-S6` carries the measurement, including the two further candidates a scope scan raised and a READ refuted.
 
-⛔ **L10 IS NOT REACHABLE AND NOTHING HERE CLAIMS IT IS.** At the `C-S4` write the L10 distance measured **119 of 166
+> **CORRECTION TO THIS HEADER'S DENOMINATOR, raised by `2.0.0_SA_COO~Z` at msg 20765 and VERIFIED HERE ON THE
+> GATE ITSELF.** This header read **166**; that figure was that seat's, published in its tick-8 drive log and
+> inherited here, while this document's OWN rows (`C-S4`, `C-S6`) already carried **162**. Two carriers in one
+> document, divergent, and the inherited one was in the headline. Re-measured NOT with either seat's parser but
+> by importing the gate's own builder -- `.tools/surprise-row-gate.py` `_latest_dispositions(root, code)` --
+> which returns **ITEMS 162**, `files_read=3`, no `unknown`, and the histogram **GRADUATED 16 /
+> DISMISSED_WITH_REASON 32 / UNDER_INVESTIGATION 114**. `138` was and remains correct (119 + `C-S4`'s 19).
+> **AND THE EARLIER AGREEMENT BETWEEN THE TWO SEATS WAS NOT CORROBORATION:** both struck their figure while
+> `adjudications/` was EMPTY -- the one window in which two parsers cannot disagree, because the grain defect
+> (counting each adjudication row as a NEW item rather than as one CLOSING an item) has nothing to act on.
+> The period of agreement was exactly the period with no information in it. **The instrument is the gate; a
+> hand-rolled copy of a predicate drifts from it silently and this seat will call the gate from here.**
+
+⛔ **L10 IS NOT REACHABLE AND NOTHING HERE CLAIMS IT IS.** At the `C-S4` write the L10 distance measured **119 of 162
 undispositioned**, down from 138. The remainder is the per-item pass: 37 standalone observations and 60 ARMED items --
 **including the 19 targets of the records `C-S4` dismissed, which that row explicitly does NOT disposition.** Sizing
 note carried from this seat's own correction: a partition on `hazard_standing` answers whether a row is a hazard, not
@@ -239,6 +252,152 @@ whether one row can close it; the groupable share is ~41, not 78.
     "spec_asserts": "An adjudication document's header states what the document carries, and the L10 precondition is that every investigation item under the project carries a disposition.",
     "world_is": "Four rows of the Z-S24 thread are records with no independent mechanism, and the disarm-record class this seat closed at C-S4 had twenty members rather than the nineteen a lexical marker selected.",
     "notes": "THE DOCUMENT HEADER IS AMENDED IN THE SAME COMMIT, deliberately, and this is the one in-place edit this row makes. The header is the document's most-read surface and it carried the overstated predicate; a correction sitting two hundred lines below a wrong headline is the failure mode this seat has already banked -- a quotable formulation outruns its correction. NO ROW IS EDITED: C-S4's own text stands exactly as committed, because a row whose author rewrites its wrong half teaches nothing and the gate refuses it. WHAT THE MARKER FAILURE COST: nothing in the world and one row's worth of coverage, caught before the per-item pass consumed it -- but the method error was real, and it was made in the same row that cited Z-S84 against it. CITING A RULE IS NOT APPLYING IT. THE DISCIPLINE THAT CAUGHT IT was reading Z-S28's disarm_owner field while dispositioning Thread A for an unrelated reason, which is an argument for the per-item scope pass Z-S84 mandates and against any further class-level sweep keyed on wording. UNDISPOSITIONED after C-S5 and this row: 114 of 162 (was 119). Z-S84 remains UNDISCHARGED and discharges only when the per-item pass completes."
+  }
+]
+```
+
+## C-S7 -- the ACL 0-diff finding GRADUATES in its CORRECTED form: four seats proposed a cause, all four were withdrawn by their own authors, and the honest remainder is UNKNOWN
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S7",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T04:02Z",
+    "one_line": "L9, round 2: Z-S68 and Z-S75 GRADUATE AS ONE FINDING, and the operative form is Z-S75's, not Z-S68's. THE SURVIVING FACT IS NARROW AND MEASURED: infra/aws/terraform/portal-auth does not re-plan clean after THREE applies, while opal-gateway carries the identical pre-apply churn on the same idiom and converges after ONE. THE CAUSE IS UNKNOWN AND STAYS UNKNOWN HERE. Z-S68's stated mechanism (state carrying empty attributes the config does not produce) is FALSE and its own author measured it away; the converging root carries byte-identical empty attributes on the two rules that churned. THEY ARE GRADUATED TOGETHER RATHER THAN ONE DISMISSED BECAUSE THEY ARE ONE FINDING IN TWO ROWS -- Z-S75 says in terms that it 'narrows and corrects that row, it does not re-open the ruling', and carries Z-S68's disarm_owner unchanged. Graduating Z-S68 alone would leave a reader holding the false cause; dismissing Z-S75 would dismiss the row that carries the live condition.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z, unchanged from Z-S68 and Z-S75 and NOT reassigned by this adjudication. The open remedy is the issuer-authorised apply-based diagnostic -- remove the lifecycle block, APPLY rather than plan, restore the block afterwards regardless of outcome -- which is an edit to a live edge ACL's configuration for diagnostic purposes and is the issuer's call, not the assignee's. This row does not run it, authorise it further, or set its schedule.",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S68",
+      "NFRA_OPSEC202609-Z-S75"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE ACCEPTANCE CONSEQUENCE IS FILED AND CORRECT ON THE ARTIFACT, read here rather than accepted from any row: TO-OP-S-4-18's proof instance carries S418-AC3 at status UNVERIFIABLE-BY-INSTRUMENT (not PASS, not FAIL), method live_read, with the three substitute evidences enumerated and the denominator printed as '2 roots x (1 baseline plan + at least 1 post-apply plan) = 6 unscoped plans'. The other four criteria of that instance read S18-AC1 PASS, S18-AC2 PASS, S4-AC1 PASS, S4-AC2 UNCOMPUTABLE.",
+        "Z-S77'S ONE LIVE INSTRUCTION IS DISCHARGED, and this was the specific thing worth checking rather than assuming: that row required S418-AC3's substitute evidence be stated as THREE APPLIES followed by a re-plan returning rc=2, NOT as three consecutive plans, because plan-count is the wrong instrument for a convergence claim. The filed instance carries exactly that, and carries the correction visibly: 'The ruling first stated the substitute as three consecutive plans. THAT IS THE WRONG INSTRUMENT, and opal-gateway is the proof: its pre-apply plan carried the identical churn and it converged anyway.'",
+        "THE WORLD IS CORRECT AND NOTHING RODE, which is why this is a detection cost and not a protection cost: get-web-acl reads exactly the specified six-rule array; the plan's structure shows only + priority lines at 0, 3, 4 and 5 with NO ~ priority line anywhere, so no existing rule was touched; and 0-to-destroy plus 0-forces-replacement held plan-wide on BOTH roots on every plan.",
+        "WHY GRADUATED RATHER THAN DISMISSED, on Z-S20's own test: the finding has a mechanism -- one Terraform root that will not converge, so a real future drift there must be spotted inside a diff that is never empty -- and a remedy to route, the authorised apply-based diagnostic. Both belong to a named owner. THE STANDING COST IS BOUNDED TO ONE ROOT: Z-S68 framed it as a property of aws_wafv2_web_acl rule sets generally, and Z-S75 measured it down to infra/aws/terraform/portal-auth alone."
+      ]
+    },
+    "spec_asserts": "S418-AC3 requires a 0-diff re-plan as the measure of 'nothing else rode', and a finding graduates when it carries a mechanism of its own and a remedy of its own to route.",
+    "world_is": "One Terraform root does not converge after three applies for reasons nobody has established; every other limb of the criterion passes on both roots, and the acceptance files UNVERIFIABLE-BY-INSTRUMENT with enumerated substitute evidence rather than a claimed PASS.",
+    "notes": "AN OPEN LEDGER ENTRY IS CARRIED FORWARD RATHER THAN CLOSED HERE: the filed instance records 'Ledger opsec-s418-cloudfront-acl open on its soak leg only, all other legs closed with rollback named'. NEVER-2 governs an entry left open -- it proves only that THIS device saw no completion -- and Z-S47 already carries the contract gap behind it. This row neither closes that entry nor treats it as evidence of anything. WHAT THIS ROW DOES NOT DO: it does not re-grade S418-AC3 (the issuer ruled it at 19968 and the assignee filed it; both are read here, neither re-run), does not adopt any cause, and does not authorise the diagnostic apply. WHAT THE THREAD SHOULD BE REMEMBERED FOR, and it is not the ACL: FOUR seats proposed a cause on real evidence and every one was withdrawn by its own author within the hour -- the worker's config-versus-state, the issuer's clean-sibling control, and two of this seat's own. A thread that converges on an honest UNKNOWN in an hour is a better outcome than one that converges on a confident wrong answer, and Z-S75's refusal to supply a third guess is the best act in it."
+  }
+]
+```
+
+## C-S8 -- the ACL thread's FIVE correction records are dismissed, including three of this seat's own successive withdrawals
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S8",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T04:02Z",
+    "one_line": "L9, round 2: the ACL thread's five RECORDS are DISMISSED WITH REASON -- Z-S69 (this seat's L8 read of Z-S68), Z-S71 and Z-S76 (this seat withdrawing its own claims, twice), Z-S78 (this seat's consolidation, filed expressly as the LAST it would write on the thread), and Z-S77 (the issuer correcting its OWN disarm record Z-S70). THREE OF THE FIVE ARE THIS SEAT WITHDRAWING ITS OWN WORK and that is stated rather than smoothed: Z-S69 asserted a two-plane relation from a one-plane read, Z-S71 relayed a peer's hypothesis into a conclusion, and Z-S76 withdrew the relay. None of the five has a mechanism of its own to graduate; every one is a record about Z-S68, Z-S70 or Z-S75, all of which are dispositioned elsewhere.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Each is a RECORD ABOUT ANOTHER ROW -- a read, a withdrawal, a consolidation, or a correction of a disarm record -- with no mechanism of its own to graduate and no remedy of its own to route, on Z-S20's underlying test. Their substance is carried on C-S7, which graduates Z-S68 and Z-S75 in the corrected form these five produced, and their one live instruction (Z-S77's, on how S418-AC3 must state its substitute evidence) is DISCHARGED and verified in the filed proof instance. Z-S78 says of itself that it is the last row this seat files on the thread and that 'the practical dispositions are settled and unaffected'; dismissing it takes it at its word after checking the word.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S69",
+      "NFRA_OPSEC202609-Z-S71",
+      "NFRA_OPSEC202609-Z-S76",
+      "NFRA_OPSEC202609-Z-S77",
+      "NFRA_OPSEC202609-Z-S78"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S77'S ONE OPERATIVE ASK IS DISCHARGED ON THE ARTIFACT: S418-AC3's status_reason in the assignee's proof instance states the substitute as THREE APPLIES plus a re-plan returning rc=2 and names 'three consecutive plans' as the wrong instrument. Checked directly rather than inferred from the row that asked for it.",
+        "NOTHING IN THE FIVE IS LEFT UNCARRIED. Z-S69's one surviving contribution -- the DATING, that the three managed-rule groups entered waf-cloudfront.tf at 7987571c9a in TO-OP-S-4-18's OWN commit, so the face that found the instability introduced it -- is preserved on C-S7's record of the finding. Z-S69's forward-exposure scoping (any criterion whose 0-diff covers portal-auth is unsatisfiable as written) was verified independently by the issuer at portal-auth/lambdas.tf:51 and acted on by amending S1-AC5 at bc0d0ed2bd BEFORE the limb-2a apply, per Z-S71.",
+        "THE WITHDRAWALS ARE REAL WITHDRAWALS AND ARE NOT BEING QUIETLY RESTORED: Z-S69's 'exactly the config-versus-state asymmetry' sentence is withdrawn, and so is Z-S71's successor clause 'the config shape is NECESSARY AND NOT SUFFICIENT and the deciding difference is in STATE'. Both were inferred from Z-S70's control, which Z-S77's own author has since measured to be a POST-apply reading presented as a general one. This adjudication adopts neither.",
+        "C-S4 ALREADY DISMISSED Z-S70 as a disarm record, and this row does not disturb that. Z-S70 being WRONG is a fact about Z-S68's disposition, not about Z-S70's: a disarm record still has no mechanism of its own to graduate. That the bound C-S4 drew -- dismiss the RECORD, never the ITEM it records -- is what keeps Z-S68 open long enough to graduate correctly here is the clearest vindication of that bound so far."
+      ]
+    },
+    "spec_asserts": "The L10 precondition is that every investigation item under the project carries a disposition.",
+    "world_is": "Five rows of the ACL thread are records of reading, withdrawing and consolidating, with no independent mechanism; the finding they refined is graduated at C-S7.",
+    "notes": "THE SELF-ASSESSMENT IS PART OF THE RECORD BECAUSE THREE OF THE FIVE ARE THIS SEAT'S OWN WITHDRAWALS. The shapes were distinct rather than one repeated: Z-S69 was a one-plane read written as a two-plane claim; Z-S71 was a RELAY -- a peer's hypothesis, correctly attributed in the notes, promoted to a conclusion in the summary line where attribution does not travel; Z-S76 withdrew that relay. The estate rule each violates is different, and a hypothesis that changes hands should keep the word that marks it as one. NONE OF THIS CHANGES A DISPOSITION -- it is recorded because an adjudicator dismissing five rows, three of them its own retractions, should say what they cost: one issuer cycle and no world change."
+  }
+]
+```
+
+## C-S9 -- two findings the TO-OP-S-20 thread produced that Z-S90 does not carry: the upstream header defect behind TWO cells, and a log the project contaminated by measuring it
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S9",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T04:02Z",
+    "one_line": "L9, round 2: Z-S91 and Z-S118 GRADUATE, because each carries a finding Z-S90 does not and each has its own remedy. Z-S91's is UPSTREAM AND SHARED: /auth/* forwards no CloudFront-* headers, one defect that independently breaks OP-s-7's login throttle (IP-blind) and OP-s-20's census (tenant-blind), surfaced only because both cells crossed one seat within hours. Z-S118's is SHARPER THAN Z-S90's AND SURVIVES THE PRESCRIBED FIX: the CloudFront group is NOT empty as the handoff assumed -- 2,771 records and 695 exact-path /auth/login against the gateway's 2 -- but 680 of those 695, 97.8%, carry User-Agent opal-s6-probe or opal-s7-probe and are THIS PROJECT'S OWN SYNTHETIC BURSTS FROM TONIGHT. An allow list built from the only window that exists would allow-list 108.242.96.89, the fabric's own egress, into the control C-4 exists to protect.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z holds the open C-4 per-firm-expressibility question that both rows feed, and 2.0.0_SA_COO~Z holds the L6 placement of the header-forwarding remedy and of the standing probe-agent exclusion. UNCHANGED from the rows themselves and NOT reassigned here. Neither remedy is designed, scheduled or implemented by this row: the verifier does not build.",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S91",
+      "NFRA_OPSEC202609-Z-S118"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S91 IS NOT MERELY AN ISSUER RECORD, which is why it graduates rather than being dismissed with the thread's other records: it performed a verified corrective act -- TO-OP-S-14-21's GO condition at 522b777935, confirmed on the artifact (2.0.0_SA_COO~Z, 3 insertions and 1 deletion on that one face) with a bogus-hash negative control returning 'unknown revision' -- and it NAMES A DEFECT NEITHER THE ASSIGNEE NOR ANY OTHER ROW NAMES: the single upstream cause behind two independently-failing cells. Without that GO-condition fix the project's largest cell would have been parked behind one that may never complete in its current shape.",
+        "Z-S118'S TRAP SURVIVES THE REMEDY PRESCRIBED FOR Z-S90'S, and that is the whole reason it is a separate finding: Z-S90's trap is a substring filter and the fix is exact-path matching. Z-S118 USED exact-path matching -- the filter is right, the path is right, the events are genuine HTTP POSTs to the real sign-in endpoint, and the resulting list is small, clean and plausible. Only a User-Agent census or a time-distribution check separates the estate's own probes from a partner's traffic. Doing the prescribed correct thing produces a more trustworthy-looking wrong answer than the loose filter does.",
+        "WHY Z-S118 IS ARMED AND MUST TRAVEL WHOLE: its first half -- the CloudFront group is live and carries 347x the gateway's sign-in traffic -- reads on its own as GOOD NEWS that unblocks the face. A seat acting on that half alone builds the list from this window and allow-lists the fabric's own egress at the edge, permanently. The two halves are one finding.",
+        "THE REMEDY Z-S118 OWES IS STANDING, NOT ONE-OFF: any future census on this surface must exclude the estate's own probe user-agents or it will re-measure tonight's bursts every time. The probes are self-identifying precisely so this is possible, which is a good property of how they were built and is worth preserving in the recut."
+      ]
+    },
+    "spec_asserts": "C-4 requires a per-firm allow list built from observed partner traffic, and a cell's evidence source must be able to answer the question the cell asks of it.",
+    "world_is": "One upstream header-forwarding defect breaks two cells at once, and the only log carrying the portal's sign-in traffic is 97.8% this project's own acceptance probes.",
+    "notes": "Z-S90 ITSELF IS DELIBERATELY LEFT OPEN BY THIS ROW AND THE REASON IS A GATE REFUSAL WORTH RECORDING. This seat drafted Z-S90 as DECOMP_INVALIDATING -- the honest value, since the issuer states at Z-S91 that 'OP-s-20 IS UNBUILDABLE AS DECOMPOSED' and 'THE L5 DEFECT IS THIS SEAT'S' -- and surprise-row-gate.py REFUSED the commit: a DECOMP_INVALIDATING row is treated as CARRIED IN THE SLUG, so filing one triggers the full L10 precondition and it cannot land while 99 items remain open. The gate is right and the refusal is instructive: a decomp-invalidating verdict is a SLUG-LEVEL statement, not a mid-pass one. Z-S90 is therefore held and will be dispositioned at the END of the per-item pass. NEITHER ESCAPE WAS TAKEN: not the audited '# surprise-row-override' (the gate is refusing correctly), and not a downgrade to GRADUATED to slip past it -- that is the assignee-reinterprets-its-own-criterion shape this seat dismissed elsewhere in this very channel. THE ESTATE-LEVEL POINT, carried to L10 as a property of exercise-based acceptance rather than a defect in any face: A PROJECT THAT MEASURES A SURFACE CAN CONTAMINATE THE ONLY EVIDENCE ABOUT IT. A later analyst reading this window without knowing tonight happened would conclude the portal's login traffic comes overwhelmingly from one synthetic agent."
+  }
+]
+```
+
+## C-S10 -- the census thread's FIVE records are dismissed, and the one question that CANNOT be answered is named rather than left for the next reader to rediscover
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S10",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T04:02Z",
+    "one_line": "L9, round 2: the census thread's five RECORDS are DISMISSED WITH REASON -- Z-S92 (this seat's L8 intake on Z-S90), Z-S93 (this seat correcting a sharpening on its own Z-S92), Z-S94 (the worker correcting its own Z-S90 headline), Z-S96 (this seat measuring a plane Z-S94 named but did not read) and Z-S120 (this seat withdrawing Z-S92's remedy on Z-S118's measurement). Four of the five are a seat correcting itself. None has a mechanism of its own to graduate: every operative consequence they produced is carried on C-S9's two graduations or on Z-S90, which stays OPEN and un-swept.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Each is a RECORD ABOUT ANOTHER ROW -- an intake read, a self-correction, a correction of a correction, or the measurement of a plane a sibling row named -- with no mechanism of its own to graduate and no remedy of its own to route, on Z-S20's underlying test. Their corrected content is carried forward rather than lost: Z-S92's measurement (the CloudFront group is live and captures the sign-in surface) is carried on C-S9 via Z-S118's confirmation at scale, while Z-S92's REMEDY ('the remedy is TIME, not construction') is WITHDRAWN by its own author at Z-S120 and is NOT adopted here, because waiting does not clear a contaminated window. Z-S94's self-correction attaches to Z-S90, which this row does NOT disposition: dismissing the correction record while leaving the corrected item open is the bound C-S4 established and it is applied here deliberately.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S92",
+      "NFRA_OPSEC202609-Z-S93",
+      "NFRA_OPSEC202609-Z-S94",
+      "NFRA_OPSEC202609-Z-S96",
+      "NFRA_OPSEC202609-Z-S120"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE ONE RESIDUAL THAT IS UNANSWERABLE IS NAMED SO THE NEXT READER DOES NOT SPEND THE CALLS: Z-S94 measures that 176.125.242.75 requested Opal's OWN Entra authorize path 2,357 times in about five minutes on 2026-08-18, and expressly declines to rule between a redirect loop and automated probing. Z-S96 then measures that the ALB access-log plane -- access_logs.s3.enabled TRUE, bucket opal-data-security, prefix waf-logs/alb-opal-gateway -- has its EARLIEST OBJECT at 2026-09-03T09:43:36Z, sixteen days AFTER the burst, and excludes the rival explanation by measurement rather than argument: the bucket's single lifecycle rule on waf-logs/ expires at 400 days, so a 16-day-old object could not have expired. It was never written. INTENT IS THEREFORE UNRESOLVABLE FROM THE AVAILABLE EVIDENCE and no further reading will change that. Dismissing these records does NOT resolve it and does not claim to.",
+        "Z-S94'S CORRECTION IS SUBSTANTIVE AND IS PRESERVED ON THE ITEM IT CORRECTS: Z-S90 identified its headline address from a sample belonging to a DIFFERENT address, and the real mechanism is sharper than the row said -- the substring filter matched because 'auth' is a substring of 'oauth2', so it swept the estate's own OAuth flow rather than merely probe noise. A filter that cannot distinguish authentication from OAuth is a worse instrument than one that merely admits scanners, because its false positives look exactly like the thing being censused. Z-S90's core finding is unchanged and stronger for it, and Z-S90 remains open to be dispositioned on the corrected evidence.",
+        "THE INSTRUMENT FACT Z-S93 ESTABLISHES IS PRESERVED because it will otherwise be rediscovered the hard way: storedBytes exists at TWO GRAINS that answer oppositely in ONE API response -- group-level reads 84,723,696 for aws-waf-logs-opal-gateway and 0 for aws-waf-logs-opal-cloudfront, while stream-level reads 0 for ALL THREE streams including one demonstrably holding 111,904 records. Neither is a DELIVERY oracle; lastEventTimestamp is. Say WHICH object every byte count came from.",
+        "NOTHING OPERATIVE IS LOST BY DISMISSING THESE. Z-S92's practical recommendation -- do not build, wait -- was never acted on, so nothing was built on the wrong basis; Z-S120 says so in terms. Its REASON was wrong and reasons travel, which is why Z-S120 exists and why the corrected instruction (exclude the self-identifying probe agents FIRST, then judge the residual) is carried on C-S9 rather than left in a dismissed row. All five were read in full at their own scope before dismissal, per Z-S84."
+      ]
+    },
+    "spec_asserts": "The L10 precondition is that every investigation item under the project carries a disposition.",
+    "world_is": "Five rows of the census thread are records of reading and self-correction with no independent mechanism, and one question the thread raised is unanswerable because the plane that would settle it began sixteen days after the event.",
+    "notes": "THE PATTERN ACROSS BOTH THREADS DISPOSITIONED IN THIS COMMIT IS THE SAME AND IS WORTH THE L10 SLUG: of the ten records dismissed at C-S8 and here, SEVEN are a seat correcting its own committed row, usually within the hour, usually with the falsifier already sitting inside its own evidence. Z-S71 found its refutation three paragraphs above the claim it refuted. Z-S94 sampled one record from a 60-row set and described the whole population from it. THE RECORD SHOULD SHOW THAT THIS IS WHAT WORKING CORRECTLY LOOKS LIKE, not a defect rate: every one was caught by its author, before anything was built on it, and the world changed in none of them. A channel with no correction rows is not a channel with no errors."
   }
 ]
 ```
