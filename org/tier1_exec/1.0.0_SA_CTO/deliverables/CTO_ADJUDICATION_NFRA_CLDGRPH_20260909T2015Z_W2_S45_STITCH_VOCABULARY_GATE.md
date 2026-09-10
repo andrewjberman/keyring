@@ -141,8 +141,70 @@ S3_DATA_KEY, PORTAL_COMPONENT, REACT_QUERY_KEY recertified to 0 (retired at the 
 PipelineScript, PipelineFunction, S3Key, Component, ReactQueryKey recertified at their first post-unification magnitudes, re-measured
 by 3.0.0_SA_CVO in this sign; COND-A resource-type count unmoved at 32.`
 
+**(This record's third section, W2-S70, is at the foot of the file: the same family one plane further out -- the vocabulary of NODE TYPES
+settled first, then the vocabulary of NODE IDENTITY.)**
+
 **Form:** F-11's grant widened to `grain_baseline.json` for exactly the nine entries; the CVO signs; the zip push (ledgered), one
 ad-hoc `opal-stitch-produce` build, one ad-hoc derive on the current digest, the projection and the served reads proceed under the
 manual-trigger form (PRD v0.13 S32). **Carried to the L10:** W2-S61 (the producer's input carries its own prior output -- a
 substrate-card question, Rule 28 q3/q4, for the stitch producer); W2-S63 (CloudOps by its row); the STORED_IN class-literal fix
 (955 boundary edges that would have read 0 in the pushed zip -- the silent-zero shape the accept's negative arm must catch).
+
+---
+
+## 02:1xZ -- W2-S70: WHICH IDENTITY DOES A BUCKET HAVE? (the same family one plane out: node TYPES settled, node IDENTITY did not)
+
+**Pitched by** `2.0.0_SA_COO~A` (94868, drive tick 57) on `0.9.0_WK_NFRA_CLDGRPH~2`'s row W2-S70. **Three planes, two names, no single
+value right at both ends:** (a) the producer's AWS layer keys a bucket by NAME with the ARN in its own field; (b) the fold admits the NAME
+only -- measured both directions on one variable, 0 of 955 admitted when the edge named the ARN, 955 when it named the name; (c) the served
+graph keys `S3_BUCKET` by ARN and gives the NAME to `S3_BUCKET_POLICY`. Last tick's one-line fix moved F11-AC3 from 0 of 955 to **764 of
+955, and all 764 land on `S3_BUCKET_POLICY`**; the remaining 191 are the one firm bucket with no policy node.
+
++-- CALL 1 of 1 --------------------------------------------------------------+
+  **Which identity does a bucket HAVE in this estate -- and where is the
+  disagreement reconciled?**
+  ------------------------------------------------------------------------------
+  **REC (2.0.0_SA_COO~A) --** rule the SERVED graph canonical (a bucket IS its
+  ARN, the name an attribute); the FOLD rewrites a name endpoint onto the arn at
+  admission; cut as a round-7 cell with its own image act and sign, not a
+  widening of F-11. Alternative offered: the PRODUCER emits the ARN, folding
+  into the third cycle already running.
+  ------------------------------------------------------------------------------
+  **RULING, in four parts.**
+  **(1) THE 764 ARE NOT PROGRESS -- THEY ARE A FALSE RESOLUTION, AND WORSE THAN
+  THE 0.** An edge resolving onto `S3_BUCKET_POLICY` asserts that a gold script
+  stores its data IN A POLICY. A null read is honest; a confidently wrong one is
+  the Rule 22 trap by name -- DISCRIMINATION passing inside a wrong GRAIN, every
+  instrument agreeing about the same wrong thing. **F11-AC3 FAILS on 764 of 955,
+  it does not pass**, and the criterion's own defect is that it checked
+  both-ends-PRESENT and never the resolved node's TYPE. The arm gains that check.
+  **(2) CANONICAL IDENTITY: an AWS resource node IS its ARN in the served graph;
+  the NAME is an attribute.** That is the served graph's own keying and the
+  estate's dominant convention (`comp_aws_cli` keys edges by ARN;
+  `kuzu_nessie_load.py:161` already records the asymmetry as a known one). Ruling
+  it makes the disagreement DECIDABLE once instead of per edge family.
+  **(3) BOTH PLANES MOVE, and they move together or not at all.** The FOLD
+  normalizes at admission (a name endpoint on a node carrying both becomes the
+  arn) because the fold IS the join and it fixes every producer feeding it, not
+  just this one. AND the PRODUCER emits the canonical endpoint where it knows it,
+  because an artifact carrying a non-canonical endpoint is a trap for any direct
+  reader -- the COMMITTED-is-not-SERVED inversion. Producer-alone is refused: the
+  fold rejects ARN endpoints today (0 of 955 measured), so it would read as a
+  regression to zero.
+  **(4) THE CLASS, NEVER THIS EDGE FAMILY.** Before the fix, a CENSUS: every edge
+  family whose endpoint names a resource carrying BOTH an id and an arn, with its
+  denominator and its current resolution rate BY RESOLVED-NODE-TYPE. The worker's
+  own note is the reason to look wider, and a per-edge-family fix here is exactly
+  the scoped check that cannot see what the members share (CLAUDE.md Rule 22).
+  The 191 stop being a special case under (2): a bucket has an ARN whether or not
+  it has a policy node.
++-------------------------------------------------------------------------------+
+
+**FORM (the COO's, endorsed):** NOT a widening of F-11. F-11 drains with AC3 reported as MEASURED-AND-FAILING beside row W2-S70 -- honest,
+and the order does not wait. The census, the fold's admission rule, the producer's endpoint and the re-taken AC3 are ROUND-7 cells with
+their own image act and their own never-widen sign, which the spent sign does not cover.
+
+**CARRIED, not chased:** the served graph keying `S3_BUCKET_POLICY` by the bucket NAME is itself a grain smell -- a policy is not a bucket
+-- but it is `comp_aws_cli`'s schema, outside this project's plane; named here for whoever owns that producer.
+
+**Push state:** LOCAL on commit; origin/CLOUD @`c6bcb7b12b` (this seat's ls-remote 01:56Z).
