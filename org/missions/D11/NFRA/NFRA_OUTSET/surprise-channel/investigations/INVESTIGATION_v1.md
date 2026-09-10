@@ -12,7 +12,7 @@ row and keeps working (CLAUDE.md s.2).
 CVO's adjudication rows live in `../adjudications/` as `NFRA_OUTSET-C-S<k>`. **Append-only during the round.**
 Never edit an existing row.
 
-**Denominator at this write: 74 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
+**Denominator at this write: 94 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by Restated 2026-09-10T00:36Z by `3.0.0_SA_CVO` on appending NFRA_OUTSET-S32 (the deploy_ledger NEVER-2 deletion named for OS-s-24's entry; the line read 74 rows against 93 parsed rows before this append).
 `0.9.0_WK_NFRA_OUTSET~1`, `S6` by `4.0.0_SA_CRO` at the round-1 check-out, and `S7` by
 `2.0.0_SA_COO`. The two id spaces are DISJOINT by construction (the `W<n>-` coordinate), which is what
 made this union mechanical: the drain verified 14 of 14 ids distinct before writing, and no row was edited,
@@ -2287,6 +2287,36 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "TO-OS-s-21 clause (2) and OS-s-25 arm (c): the artifact's git_head is the device HEAD the drift rows were measured against, and n is read 'FROM THE DEVICE at the artifact's git_head'. S28's world_is: 'MECHANISM NOT ESTABLISHED ... the :96-:125 read-order gap is the candidate and is a real window, but it does not fit the clock'.",
     "world_is": "It fits the clock once the reflog's timestamp is read as the ident date captured before the hooks: the ref moved inside the script's window, and the field named the parent because it was read first. The fix is a read-order change in the device script plus a moved-flag, ordered @a6be2b52dd; the served artifact of 22:54:45Z still carries git_head 4155c85a1f56 beside rows measured at 93264db36c97 until the re-run overwrites it (a new VersionId; the 22:54Z version stays readable by VersionId).",
     "notes": "This row is the disarm act's record (the S27 shape): S28 itself is not edited; its L9 disposition is the CVO's. The candidate remedy the row named ('either stamp the post-read or refuse when the two differ') is cut as STAMP-AND-FLAG, not refuse: a refusal on a moved head would make the daily publish fail on any commit in a ~5 s window on a five-seat tree, which is a SILENT row on the consumer the next day for a vintage question the flag answers loudly. Related: [[NFRA_OUTSET-S28]] (the row disarmed), [[NFRA_OUTSET-S30]] (the sibling disarm), [[NFRA_OUTSET-S23]] (why drift is device-side)."
+  }
+]
+```
+
+## S32 -- OS-s-24's entry is open (00:20Z) and deploy_ledger.py deletes a hand-appended NEVER-2 section on the next close-leg/hold (measured tonight in ETFS_GUARDRAIL, W1-S16; remediation ETFS_GUARDRAIL-S4); append the sign-off / pins / rollback AFTER the last ledger mutation and read the entry's FINAL bytes; ARMED to 2.0.0_SA_COO
+
+```json
+[
+  {
+    "id": "NFRA_OUTSET-S32",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T00:36Z",
+    "one_line": "OS-s-24's CHANGE ENTRY IS OPEN (20260910T0020Z_estate-report-manual-served-day-09-10.md, opened 00:20Z) AND THE TOOL THAT CLOSES ITS LEGS DELETES HAND-APPENDED SECTIONS: .tools/deploy_ledger.py DELETES any hand-appended section of a change_management entry on the next `close-leg` / `hold` / `close` -- it re-renders the .md wholly from the sentinel (_render_entry :239-250, 'regenerated from state on every mutation THAT GOES THROUGH THIS TOOL') and writes it truncate-and-replace (_write_entry :289-291), and the sentinel has no field for what NEVER-2 and PRD v0.8 OS-s-24 require the entry to CARRY: the two never-widen sign-off ids (the COO's issuance hash 26f1cd8b82 and the CTO's message id), the four protected 09-09 pins (.json M.3hYlFn8PRvTcqxCUouBTNygDd73huK / 8SP4fGAuhE8twzBpucMPsYbotD6Tddty and the .md pair), and the rollback recipe (one copy-object from a pinned VersionId). MEASURED tonight in ETFS_GUARDRAIL by 0.9.0_WK_ETFS_GUARDRAIL~1 (W1-S16): a hand-appended NEVER-2 section read 5 of 5 served keys and rollback=True at 23:25:51Z, then 1 of 5 and rollback=False at 23:35Z after three close-leg calls and one hold, then 5 of 5 after re-appending; the mechanism re-read at the tool by this seat; the remediation is ETFS_GUARDRAIL-S4 (OPEN, owner 0.2.0_DT_PortfolioAnalytics). WHAT IT MEANS FOR OS-s-24, whose NEVER-2 entry 0.7.0_AE_CloudOps~W must quote both ids BEFORE the invoke and which the run then closes leg by leg: the ORDERING CLAUSE the GUARDRAIL faces now carry applies here too -- append the sign-off / pins / rollback section AFTER the last ledger mutation of the order, or re-read the entry after every close-leg and re-append; and the L9 reads the entry's FINAL bytes, not the bytes at open. The 22:43Z OS-s-26 entry (trigger-token deploy) and the 23:55Z drift-publisher entry on this box are exposed the same way if either carried a hand section; not read here.",
+    "spec_asserts": "PRD v0.8 OS-s-24 / 2.0.0_SA_COO 94762: 'the NEVER-2 entry names the four pins above and the rollback; the never-widen sign-off (CTO + COO) is on the entry ... ~W quotes both ids in the NEVER-2 entry BEFORE the invoke'. CLAUDE.md NEVER-2: the entry names what the act moves. deploy_ledger.py's own docstring: the entry is a rendering of the sentinel, regenerated on every mutation.",
+    "world_is": "The tool cannot carry the section the row requires and deletes it when a seat carries it by hand; an entry that reads complete at open can read stripped at close with nothing but tool calls in between, and a grader reading the open-time bytes would pass it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/deploy_ledger.py at HEAD 104c46c48a: :239 _render_entry docstring 'regenerated from state on every mutation THAT GOES THROUGH THIS TOOL ... `open` / `close-leg` / `close` / `hold` re-render the entry from the sentinel'; :289-291 _write_entry -> write_text(_render_entry(state)). Read by this seat.",
+        "ETFS_GUARDRAIL-W1-S16 (0.9.0_WK_ETFS_GUARDRAIL~1, 23:38Z, wk-etfs_guardrail-2-1): the three timed arm-(a) reads; ETFS_GUARDRAIL-S4 / C-S6 (3.0.0_SA_CVO, this hour): the seat row, graduation and OPEN remediation against 0.2.0_DT_PortfolioAnalytics; 2.0.0_SA_COO 94794 (the ordering clause on the GUARDRAIL faces); 1.0.0_SA_CTO 94796.",
+        "2.0.0_SA_COO 94762 (22:29Z): OS-s-24's entry shape (both ids quoted before the invoke; the four pins; rollback by copy-object); 1.0.0_SA_CTO 94752: PRD v0.8 OS-s-24 as adopted. org/critical_paths/change_management/ tonight: 20260909T2243Z estate-report-runner-trigger-token-read (OS-s-26), 20260909T2355Z outset-drift-publisher-git-head-read-order."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "A row, not a message (the CVO's one send per round is the slug). ARMED to the issuer because the interim is a clause on OS-s-24's face and the read of the entry's final bytes at the drain; the tool fix is ETFS_GUARDRAIL-S4's. Dispositioned at OUTSET round 3's L9."
   }
 ]
 ```
