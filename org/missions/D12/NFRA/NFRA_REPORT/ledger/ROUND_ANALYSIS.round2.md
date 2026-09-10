@@ -66,6 +66,31 @@ The artifact and its governing spec disagree, measured on both sides by `2.0.0_S
 An attribution surface that renders the two newest axis members as UNGROUPED cannot satisfy *"attributed
 to one part and one owner"* for a failure in either of them.
 
+> ⛔ **AMENDED ~09:2xZ — THE GRADE STANDS, THE REASON WAS UNDERSTATED AND MIS-ATTRIBUTED.** Found by
+> `2.0.0_SA_COO~ZZ` at the round-3 cut (msg 20868) and verified here on this seat's own instrument.
+>
+> This section located the defect in `ATTRIBUTION.md`'s **staleness** — rendering the two referents as
+> UNGROUPED against a v0.7 four-member axis. **The rendered edition carries no attribution axis AT ALL.
+> Not stale — ABSENT.** Measured: `EDITION_SPECIMEN.md` §2's table header is
+> `Property | Previous state | This edition | Delta | Citation` — **five columns, none of them
+> attribution**; and a census of the five axis values across the rendered edition returns 10 hits over
+> 104 lines with **ZERO of them an axis VALUE** ("Website security" is a row subject, "API Gateway" a
+> service name, the only "Dashboard" inside a function name).
+>
+> **So FWD-4's bar is not served by the artifact a reader actually reads, and bringing `ATTRIBUTION.md`
+> to v0.7 alone would have left it unserved.** `RP-s-20` correctly carries BOTH limbs — the law at v0.7
+> *and* the axis rendered per row.
+>
+> ⭐ **AND NEITHER ROUND-2 CELL IS AT FAULT — THIS IS A GAP *BETWEEN* TWO CORRECTLY-EXECUTED CELLS.**
+> `ATTRIBUTION.md` says so in its own words at :77 and :128 — the per-row rendering *"is the composer's
+> act (`RP-s-15`, `S2`), not this cell's."* `RP-s-13` deferred it explicitly and correctly; `RP-s-15`
+> was never told to do it. The seam between two well-executed orders is where the outcome fell, which is
+> a decomposition finding and not a worker finding — sharper than this section's original reading, and
+> it strengthens rather than weakens the "cell is not deficient" ruling below.
+>
+> ⚠ **THIS SECTION'S OWN WARNING WAS RIGHT AND ONE STEP UNDERSTATED:** §3 warns a grep of the composer
+> would pass "while the rendered artifact still shows UNGROUPED." The rendered artifact shows **neither**.
+
 ⭐ **THE CELL IS NOT DEFICIENT AND IS NOT GRADED AS ONE.** Both the COO and the CVO asked for this
 explicitly and this seat agrees on the evidence: `RP-s-13` was cut, built and merged **inside the window
 in which FWD-4 was under active Andrew adjudication**, and was overtaken **twice** — v0.6's si2 amendment
@@ -89,6 +114,24 @@ an open item: it is out of scope by a prior round-N analysis and nothing has cha
 ## 3. WHAT THE RECUT MUST CARRY — `2.0.0_SA_COO~ZZ`, ONE ISSUANCE
 
 Two cells. Both derive from rows the slug names; neither is new scope.
+
+> ⛔ **§3 AMENDED ~09:2xZ ON TWO POINTS, BOTH RAISED BY `2.0.0_SA_COO~ZZ` AT THE CUT (msg 20868).**
+>
+> **(a) THE LABELS `R3-1`/`R3-2` ARE NOT VALID CELL IDS AND MUST NOT BE CUT VERBATIM.**
+> `proof-of-spec-check.py::CELL_ID_RE`, imported and applied: `RP-s-20` MATCH, `RP-s-13` MATCH
+> (positive controls), **`R3-1` REFUSED**, a bogus id REFUSED (so the matcher discriminates). **A cell
+> cut as `R3-1` would have failed its own proof instance at L7.** They were written here as prose
+> handles, but a reader could reasonably have cut them as ids, and this seat should have checked the id
+> grammar before minting labels that look like ids. The round-3 cell is **`RP-s-20`**, continuing
+> unbroken from `RP-s-19`.
+>
+> **(b) R3-2 IS AN L6 CUT MECHANIC, NOT A CELL — RATIFIED.** This section named two cells; the
+> decomposition cuts ONE, and that is CORRECT. This section's own text says of R3-2 *"this is an L6
+> mechanic and is cheap at the cut; it is expensive to retrofit"* — which rules out the only worker acts
+> it could contain: it is not a build, retrofit is ruled out by cost, and a worker verifying the folder
+> its own order named would be circular. `Z-S8`'s remedy is **honoured by construction**: `RP-s-20` is
+> issued to `0.9.0_WK_NFRA_REPORT~1` and its deliverable folder is derived from `<issued_to>`. The
+> reading of this seat's own §7 "one issuance covering both" is superseded: one issuance, one order.
 
 **R3-1 — FWD-4's attribution surface, from `Z-S10`.** Bring `ATTRIBUTION.md` to PRD v0.7: the axis has
 four members, `opal-gateway` and `opal-globgrph` are the referents of the two new ones and must not
