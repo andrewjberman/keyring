@@ -1,0 +1,169 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "NFRA_OPSEC202609",
+ "round": 3,
+ "graded_by": "1.0.0_SA_CTO",
+ "graded_utc": "2026-09-10T21:3xZ",
+ "graded_against_prd_version": "v0.14",
+ "first_grades_artifact_for_this_project": true,
+ "mint_note": "This project had NO COMPLETION_GRADES artifact for rounds 1 or 2 either; this is the project's first CTO grades, written on Andrew-direct 'tell CTO~Z to grade it and close it out' (2026-09-10T21:23Z, record @9e1d2f700f).",
+ "report_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/ledger/COMPLETION_REPORT.round3.json@62624c2ccf",
+ "packet_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/ledger/L8_PACKET.round3.md",
+ "packet_sha256_prefix": "d4df586539a63504",
+ "slug_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/surprise-channel/adjudications/ADJUDICATION_v1.md@b47b1b8697",
+ "analysis_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/ledger/ROUND_ANALYSIS.round3.md",
+ "preconditions_measured": {
+  "orders_terminal": "35 of 35",
+  "orders_with_valid_proof": "33 of 33 non-cancelled",
+  "investigation_items_undispositioned": "0 of 190",
+  "slug": "REMEDIATION_v3.Z.md@b47b1b8697"
+ },
+ "dep_stage": "EXECUTING",
+ "grade_summary": {
+  "REALIZED": 16,
+  "NOT_REALIZED": 3,
+  "NOT_EVALUATED": 0,
+  "not_realized_ids": [
+   "FWD-4",
+   "FWD-15",
+   "FWD-19"
+  ],
+  "close_note": "NOT CLOSED. 16 of 19 REALIZED. The three NOT_REALIZED share ONE shape -- a notification delivered to a human (FWD-4 burst->read, FWD-15 auto-block->one email received) or a temporal window (FWD-19 volume before/after). Each residue is a LIVE EVENT waiting to occur, NOT missing build. The register R6 gate correctly refuses dep_stage CLOSED until all three reach EXERCISED; that is the honest state."
+ },
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "EXERCISED",
+   "note": "Direct-address unauthenticated write refused; portal path admitted. CVO L10 precondition: instance VALID at cut vintage. Self-contained technical exercise, no off-artifact limb."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "EXERCISED",
+   "note": "Valid login replayed at the raw API address refused; same login through the portal admitted. S1-AC4's compound wording was VOID BY CONSTRUCTION (C-S37) but the mechanism pair (401 no-header, 403 junk-header invoking the authorizer) is exercised. VALID."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "EXERCISED",
+   "note": "Anonymous request for a never-seen keyword produced no paid computation -- served-or-refused, never a paid answer. VALID at cut."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "NOT_REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "APPLIED",
+   "note": "EXERCISED NOT REACHED. Alarm + topic + subscription are all APPLIED (S6-AC4: 2 alarms, 1 topic created). BUT S6-AC3 measured 0 SUBSCRIPTIONS at grade time -- the staged burst (S6-AC2) fired into a topic with NO subscriber, so no notification was delivered and none could be read. The subscription confirmed only LATER this session (andrew@opalinvest.com, measured CONFIRMED 2026-09-10). RESIDUE, NOT MISSING WORK: stage or await one burst now that delivery is live; nothing else is owed. The bar's 'the person named has read it' limb is off-artifact and now reachable."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "APPLIED",
+   "note": "Blocked/suspicious traffic written to durable storage; the APPLIED bar (records being written to durable storage) is met. VALID."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "EXERCISED",
+   "note": "WAF ran watch-only long enough to characterize false positives, then switched to blocking; ordinary portal use undisturbed. Exercised."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "EXERCISED",
+   "note": "Throttle bookkeeping made unavailable on purpose; sign-in slowed rather than became unlimited (fail-closed). Exercised."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "APPLIED",
+   "note": "Deletion protection switched on for every login/partner-role table; PITR restore available. APPLIED bar met."
+  },
+  {
+   "fwd_id": "FWD-9",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "EXERCISED",
+   "note": "Legacy opal-users table retired; no sign-in or partner feature changed behaviour when it went. Exercised end to end."
+  },
+  {
+   "fwd_id": "FWD-10",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "EXERCISED",
+   "note": "One deliberate signing-key rotation; users stayed signed in through it (two-slot). Exercised."
+  },
+  {
+   "fwd_id": "FWD-11",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "EXERCISED",
+   "note": "Deleted account re-created on the same email did not carry its old session back. Exercised."
+  },
+  {
+   "fwd_id": "FWD-12",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "APPLIED",
+   "note": "Gateway request logging on; the two IN-LANE liveness callers moved off the static bearer onto the capability-token exchange endpoint (OP3A-S-1, safe-apply 19:37Z, dual-accept intact). The three CROSS-LANE callers are outside this project's boundary by Andrew @9382d107a3 s.1 and are not claimed. APPLIED bar met."
+  },
+  {
+   "fwd_id": "FWD-13",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "EXERCISED",
+   "note": "Known-bad request to the marketing site refused before WordPress handled it; the site still loads for visitors. Exercised."
+  },
+  {
+   "fwd_id": "FWD-14",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "EXERCISED",
+   "note": "Staged burst from a test address blocked with nobody acting; a normal partner office signing in at the same time was not caught. Exercised (S14 counter-increment arms A/B, opposite results)."
+  },
+  {
+   "fwd_id": "FWD-15",
+   "verdict": "NOT_REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "APPLIED",
+   "note": "EXERCISED NOT REACHED. The block MECHANISM is exercised (S14 sentinel counter-increment; OP3-s-3 IP-set add/remove live), but the sentinel is WATCH-ONLY by design (block_armed false, coverage bound recorded) and no AUTOMATIC block has fired exactly one email that Andrew received. RESIDUE, NOT MISSING WORK: arm the sentinel and let one real block fire one email; the one-email dedup path is built. Off-artifact receipt limb, reachable once armed."
+  },
+  {
+   "fwd_id": "FWD-16",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "APPLIED",
+   "note": "The blocked/watched list and per-address case files exist and are being written under a predictable path. APPLIED bar met."
+  },
+  {
+   "fwd_id": "FWD-17",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "EXERCISED",
+   "note": "An authorised person removed a block and the address reached us again within minutes; an unrenewed block lapsed by itself (TTL). Exercised."
+  },
+  {
+   "fwd_id": "FWD-18",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "APPLIED",
+   "note": "Evidence store exists under a predictable path, encrypted, object-lock/versioning on -- cannot be quietly altered or deleted. APPLIED bar met."
+  },
+  {
+   "fwd_id": "FWD-19",
+   "verdict": "NOT_REALIZED",
+   "artifact_ref": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md@c0003e75cf",
+   "state_observed": "APPLIED",
+   "note": "EXERCISED NOT REACHED, and the grain is ALREADY RULED (@c0003e75cf): 'refused' is graded at the entry store, and the scripted submission WAS flagged spam with zero notifications while a real visitor's submission landed unaltered -- that half is exercised. What is NOT reachable is the bar's third limb, 'the volume measured BEFORE AND AFTER... say by how much it changed': baseline 0.217 automated/day against an AFTER-WINDOW of ~32 min (~1,660x shorter, predicting ~0.0048 expected arrivals), which the worker itself flagged as underpowered and on which the CVO expressly did NOT rest S1-AC7. An observed zero there is what you would see with no control at all. RESIDUE, NOT MISSING WORK: let the after-window fill (days), then recompute the delta. The control is built and demonstrably flags scripted submissions."
+  }
+ ]
+}

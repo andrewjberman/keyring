@@ -555,3 +555,75 @@ passed") instead of running the census, and a hedge is not a measurement.**
   }
 ]
 ```
+
+## C-S15 -- Z-W2-S7: the Z-S19 class one layer down -- AC4 passes in AGGREGATE while 7 of 10 mapped sections discriminate NOTHING, and the worker refused the change that would have scored 10-for-10
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-C-S15",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T15:52Z",
+    "one_line": "Z-W2-S7 GRADUATES AND IT IS THE Z-S19 CLASS ARRIVING ONE LAYER DOWN, CAUGHT BY THE WORKER BEFORE ANY GRADER SAW IT: AC4 PASSES IN AGGREGATE while SEVEN of TEN mapped sections contribute NO discrimination at all. ⭐ AND THE WORKER REFUSED THE CHANGE THAT WOULD HAVE MADE ITS OWN CRITERION SCORE 10-FOR-10, because that change would have been LESS honest against the real collector -- choosing a worse-looking number over a worse instrument.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "GRADUATED",
+    "disarm_owner": "NONE, AND CORRECTLY SO. The row asks no remedy, threatens no deployed behaviour (the fixture is a test instrument; the real collector always supplies the real field names `edition_rows.py` reads), and its whole function is to bound how a later reader may quote AC4's PASS. An INERT row that exists to prevent an over-reading needs no owner -- it needs to be READ, which is what graduating it into the record does.",
+    "adjudicates": [
+      "NFRA_REPORT-Z-W2-S7"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** THIS IS Z-S19'S CLASS ONE LAYER DOWN, AND THE SAME SENTENCE COVERS BOTH. *** Z-S19 found EIGHT outcomes graded REALIZED against a bar their artifact could not meet, because the grading pass read the ACCEPT paragraph and not the DONE WHEN. Here AC4 diffs the JSON-serialized WHOLE ROW LIST and is satisfied because THREE sections differ -- so the aggregate PASS is TRUE while the per-section reality is 3 of 10. ⛔ THE DISTANCE BETWEEN WHAT A PASS SHOWS AND WHAT A READER TAKES IT TO MEAN IS THE DEFECT IN BOTH CASES; only the grain moved, from an outcome's bar to a criterion's aggregation.",
+        "AND THE MEASUREMENT IS PER-SECTION WITH ITS DENOMINATOR PRINTED, which is what makes it a finding rather than an impression: lambda_health, smartx_pipeline and cost_depth each read OK-run=OK / BREACH-run=BREACH, DIFFERS=True; data_freshness, deploy_drift, producer_drift, sns_egress, graph_head, contract_integrity and security_sweep ALL read UNASSERTED in BOTH runs, DIFFERS=False. 3 of 10, not 10 of 10. The three OMITTED sections (aws_costs, ai_analysis, openai_cost) are omitted BY DESIGN and the row separates them rather than folding them into the seven.",
+        "⛔ THE CAUSE IS A SHAPE MISMATCH THE FIXTURE CANNOT EXPRESS, AND IT WAS READ AT SOURCE RATHER THAN INFERRED: the AC4 fixture builds all thirteen sections from ONE generic dict `{status, probe, functions_with_errors}`, while the real `lambda_function.py` returns `overall_status` for SIX of the seven (check_data_freshness :580, check_deploy_drift :817, check_producer_drift :953, check_sns_egress :1070, check_graph_head :1752, check_contract_integrity :1838) and `critical_issues`/`high_issues`/`medium_issues`/`low_issues` for check_security_sweep (:1429-1432). NEITHER FIELD NAME EXISTS IN THE FIXTURE, so those seven read UNASSERTED correctly -- the module is right and the instrument is narrow.",
+        "*** THE REFUSAL IS THE BEST THING IN THIS ROW AND IT IS THE PART TO CARRY. *** Making the seven extractors fall back to the fixture's generic `status` key would have made AC4 discriminate 10-FOR-10 against this fixture -- a better-looking criterion result -- WHILE BEING LESS HONEST AGAINST THE REAL COLLECTOR OUTPUT, since the real sections do not key on `status`. ⭐ THE WORKER TOOK THE WORSE NUMBER AND THE BETTER INSTRUMENT, and cited the estate's own 'axis2 not defaulted to OK' precedent for it. That is the exact inverse of the pressure C-S9 identified in Z-W6-S3, where a criterion that FAILS ON HONESTY pushes a worker toward trimming evidence; here a criterion that would REWARD a dishonest fallback was declined.",
+        "AND THE ROW WAS ANTICIPATED BY ITS OWN TASK ORDER, WHICH IS WHY IT IS AN OBSERVATION AND NOT A FAILURE: RP-s-22's TO stated the risk in advance -- 'the fixture is an instrument, and an instrument that disagrees with the world is exactly what this project exists to catch' -- and named a real-shape mismatch as a finding worth a surprise row. ⭐ A CELL THAT PREDICTS ITS OWN INSTRUMENT'S LIMIT AND THEN A WORKER THAT MEASURES IT IS THE CHANNEL WORKING AS DESIGNED, and the module's own docstring already carries the DECLARED LIMIT citing this row id before the row was even adjudicated.",
+        "⚠ THE BOUND THE ROW EXISTS TO SET, AND THIS SEAT ADOPTS IT VERBATIM FOR THE ROUND'S GRADING: AC2/AC3/AC4's PASS may NOT be quoted as '13 of 13 sections proven to discriminate real state'. The measured, grounded claim is '3 of 10 mapped sections proven to discriminate against THIS fixture; the other 7's discrimination against REAL collector output is UN-EXERCISED by any criterion in this TO and remains to be proven live.' ⛔ THAT PROOF LANDS AT RP-s-23, whose deployment is the first time these extractors meet real collector output -- so this row is also a live acceptance condition for the cell that follows it, not merely a footnote on the cell that filed it."
+      ]
+    },
+    "spec_asserts": "RP-s-22's AC2/AC3/AC4 assert coverage, reasoned omissions, and that the mapped row set DIFFERS between an all-OK and an all-BREACH synthetic report.",
+    "world_is": "All three hold, and the aggregate DIFFER=True is carried by three of ten mapped sections while the other seven read UNASSERTED in both runs because the fixture never populates the field they key on.",
+    "notes": "⛔ NOT A DEFECT AGAINST THE MODULE'S STATED SPEC AND THIS SEAT IS EXPLICIT ABOUT IT, because an INERT row about a passing criterion is exactly the kind a later reader mistakes for a failure: AC2/AC3/AC4 all genuinely PASS, coverage is 13 of 13 with 0 omissions lacking a reason, and `edition_rows.py` behaves correctly by refusing to invent a value for a field the input does not carry. ⭐ THE FINDING IS ABOUT WHAT THE PASS PROVES, NOT ABOUT WHETHER IT IS EARNED. || THIS CONNECTS FORWARD RATHER THAN BACKWARD: it does not reopen the eight re-graded outcomes or touch FWD-13/14/15's bars, but it names the first thing RP-s-23's deployment will actually exercise for the first time."
+  }
+]
+```
+
+## C-S16 -- Z-S24: ANDREW READ THE EDITION AND IT FAILS. FWD-15 is FAILED on its own bar, the discriminator is the READER, and this is the EXERCISED bar earning its keep four hours after the re-grade
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-C-S16",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T18:34Z",
+    "one_line": "⛔ Z-S24 GRADUATES AND IT IS THE MOST CONSEQUENTIAL ROW THIS SEAT HAS ADJUDICATED TODAY: ANDREW READ THE DELIVERED EDITION AND IT FAILS. 'I look at it and have no idea what it is supposed to mean'; 'we are lacking cost data, we are lacking so many fields the old version had.' ⭐ AND THIS IS THE `EXERCISED` BAR EARNING ITS KEEP AT THE EXACT MOMENT IT EXISTS FOR -- FWD-15's discriminator IS THE READER, the reader is Andrew, and every mechanical criterion in the round PASSED while the outcome failed.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "2.0.0_SA_COO~ZZ at L5, unchanged from the row and correctly placed: the row-shape decision is an L5 act and the remedy is a re-decomposition, not a code fix. NOT TAKEN HERE. ⚠ AND THE DISARM CONDITION IS A READER, NOT A TEST: FWD-15's bar is 'nothing a reader relies on today disappears', so only a reader can discharge it -- the same asymmetry that made this failure invisible to seven green criteria.",
+    "adjudicates": [
+      "NFRA_REPORT-Z-S24"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** THIS IS THE VINDICATION OF Z-S19 AND IT ARRIVED FASTER THAN ANYONE EXPECTED. *** Z-S19 (filed 14:18Z, upheld @b75e35f36e) established that EIGHT outcomes were graded REALIZED against `EXERCISED` bars their artifact could not meet, and the transferable form was A BAR THAT SAYS 'EXERCISED' DOES NOT ENFORCE ITSELF. FWD-13/14/15 were then written as EXERCISED bars precisely so the question could not be absent again. ⛔ THE FIRST REAL EXERCISE FAILED, AND IT FAILED ON EXACTLY THE THING NO MECHANICAL CRITERION COULD SEE. Four hours separate the re-grade from the proof that the re-grade was necessary.",
+        "⛔ THE ROOT CAUSE IS AN L5 SHAPE DECISION AND THE ROW NAMES IT AGAINST ITSELF: the specimen's row shape carries `(state, delta)` AND NOTHING ELSE, so every section was flattened to a status label plus scalars and two were dropped entirely. The decomposition called the join 'one substitution ... the same row shape' AND NEVER ASKED WHETHER THAT SHAPE COULD CARRY WHAT THE OLD REPORT CARRIED. ⭐ THE SUBSTITUTION WAS PERFORMED EXACTLY AS SPECIFIED AND THAT IS THE PROBLEM -- a correct execution of an under-sized spec produces a correct artifact that fails its outcome.",
+        "*** AND C-S15's Z-W2-S7 PREDICTED THE SHAPE OF THIS FOUR HOURS EARLY, WHICH IS WHY IT MATTERED THAT IT WAS FILED. *** That row measured that AC4 passes IN AGGREGATE while SEVEN OF TEN mapped sections discriminate nothing, and bounded its own PASS: 'the other 7's discrimination against REAL collector output is UN-EXERCISED by any criterion in this TO and remains to be proven live.' It named RP-s-23's deployment as the first real test. ⛔ THE DEPLOYMENT HAPPENED AND THE UN-EXERCISED HALF IS WHERE THE CONTENT WENT MISSING. A worker's bound on its own passing criterion turned out to be the round's actual risk register.",
+        "⭐ FWD-15 IS FAILED ON ITS OWN BAR AND THIS SEAT SAYS SO PLAINLY RATHER THAN SOFTENING IT: 'nothing a reader relies on today disappears', EXERCISED against the old edition. The reader relies on cost data and on fields the old version had; both are gone; the reader says so in his own words. ⛔ THE DISCRIMINATOR IS THE READER, NOT THE CODE, and no green criterion is evidence against a reader who cannot read the output. This is the same structure as S2-AC4 on the sibling project -- a criterion that correctly reports an unmet state is not converted by anything else passing.",
+        "⚠ WHAT IS NOT CLAIMED, so the round is not written off: the port itself is sound engineering and the mechanical criteria were honestly met -- coverage 13 of 13, omissions reasoned, the aggregate row-set discriminating, the deploy path respected. NOTHING HERE SAYS THE CELLS FAILED. It says the SHAPE they were told to fill was never sized for the job, which is an L5 finding and is where the row correctly puts it.",
+        "⭐ AND THE ESTATE-LEVEL LESSON IS THE ONE WORTH CARRYING PAST THIS PROJECT: A SPECIMEN PROVES A FORMAT CAN BE RENDERED; IT CANNOT PROVE THE FORMAT IS SUFFICIENT. The specimen was verified against real round-1 findings and every outcome was satisfiable by it -- which is precisely why nobody asked whether the shape could hold a real day's content. THE THING A SPECIMEN IS BEST AT DEMONSTRATING IS THE THING IT IS WORST AT TESTING."
+      ]
+    },
+    "spec_asserts": "The round-4 decomposition asserts the join is 'one substitution ... the same row shape', and FWD-15's DONE WHEN is EXERCISED -- nothing a reader relies on today disappears.",
+    "world_is": "The substitution was performed as specified and the delivered edition loses most of the old report's content; the named reader read it and could not use it.",
+    "notes": "⛔ NO SLUG IS CUT AND NFRA_REPORT CANNOT REACH L10: two orders read `open` on an unscoped census, and this row is ARMED with a live L5 owner. || ⭐ THE ROUND DID ITS JOB EVEN THOUGH THE OUTCOME FAILED, and both facts belong in the record: the project's whole purpose was to make a report a person can act on, and the first time a person acted on it the failure was VISIBLE, ATTRIBUTED AND FILED WITHIN THE HOUR. A round that ships a defect and surfaces it is not the same as one that ships a defect."
+  }
+]
+```

@@ -1546,3 +1546,254 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S40 -- Z-S173: an ADVANCE THAT EXPIRES -- Z-S151's mechanism is false, its substance still true, and the topic returns to zero subscribers in ~68 hours unless a person outside the fabric clicks
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S40",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T15:52Z",
+    "one_line": "Z-S173 GRADUATES: an ADVANCE THAT EXPIRES. Z-S151's stated MECHANISM ('zero subscribers') is now FALSE while its SUBSTANCE ('a burst reaches NOBODY') is still TRUE -- and if nobody clicks within ~68 hours AWS deletes the subscription and Z-S151 IS RESTORED VERBATIM, with round 3's work undone by EXPIRY rather than by any seat's act. ⛔ AND ITS PROCEDURE FINDING LANDS ON THIS SEAT TOO: reporting '0 UNDISPOSITIONED' as though it meant CLEAN reads one axis and calls it two.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "2.0.0_SA_COO~Z, UNCHANGED from Z-S151 and correctly not reassigned. The disarm condition -- a burst of blocked sign-ins reaching a NAMED HUMAN -- is unchanged and unperformed, and the single remaining act is a confirmation click inside a mailbox no agent on this fabric can reach (0 mailbox-read capabilities across 29,324 files, measured at Z-W2-S1). NOT TAKEN HERE and nothing is asked of any recipient.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S173"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** THE ROW'S CENTRAL MOVE IS TO SEPARATE A MECHANISM FROM A SUBSTANCE, AND IT IS RIGHT TO. *** Z-S151 asserts 'both login-abuse alarms publish to an SNS topic WITH ZERO SUBSCRIBERS, so a burst of blocked sign-ins reaches NOBODY.' The topic now carries EXACTLY ONE subscription of one -- protocol email, endpoint andrew@opalinvest.com, SubscriptionArn the literal string `PendingConfirmation`. ⛔ SO THE COUNT IS NO LONGER ZERO AND THE OUTCOME IS NO BETTER OFF: an unconfirmed email subscription DELIVERS NOTHING. A row whose premise is falsified while its conclusion stands is the hardest kind to file, because both the 'it's fixed' reading and the 'nothing changed' reading are available and both are wrong.",
+        "⛔ AND THE EXPIRY IS WHAT MAKES THIS URGENT WITHOUT MAKING IT A CRISIS. AWS deletes an unconfirmed email subscription after ~72h; subscribe ran 2026-09-10T11:09:54Z, so the window closes ~2026-09-13T11:09:54Z with 67.9 hours left at the row's reading. IF IT LAPSES, THE TOPIC RETURNS TO ZERO SUBSCRIBERS AND Z-S151 IS TRUE AGAIN WORD FOR WORD -- round 3's work undone by expiry rather than by anyone's decision. ⭐ AN ADVANCE THAT REVERTS ON A TIMER IS NOT THE SAME OBJECT AS AN INCOMPLETE ADVANCE, and no existing row carried that distinction.",
+        "THE JOIN IS ONE-DIRECTIONAL AND THE ROW NAMES IT PRECISELY: Z-W2-S1 CITES Z-S151, so the new work points BACK at the old hazard, but NOTHING POINTS FORWARD -- a reader arriving at Z-S151 sees no pointer to round 3's work, the pending state, or the clock. ⭐ THAT IS THIS ESTATE'S BANKED 'nothing joins a landed remedy back to the ARMED row it resolves', arriving with a PARTIALLY landed remedy, which is the worse case: a fully landed remedy at least leaves the world correct while the record lags, whereas here BOTH the record and the world are mid-flight.",
+        "*** THE PROCEDURE FINDING IS WORTH MORE THAN THE ROW, AND THIS SEAT IS NOT EXEMPT FROM IT. *** The filing lane records that it had been reporting 'L10 distance 0 UNDISPOSITIONED of 179' every tick as though it meant the round were CLEAN. DISPOSITION AND HAZARD_STANDING ARE DIFFERENT AXES -- disposition is LATEST-WINS, hazard_standing is AT-SURFACING and never advances -- and this estate has that banked verbatim. ⚠ THIS SEAT HAS LED EVERY REPORT THIS SESSION WITH '0 OPEN'. That is a DISPOSITION-axis claim and it has been carrying more weight in this seat's summaries than it can bear. This seat did measure the other plane separately -- the graduated-to-remediation join at 9 ARMED items, and IAMROLES' join closed to 0 at the round-2 slug -- but THE HEADLINE NEVER CARRIED IT, and a headline is what a reader takes away.",
+        "⭐ AND THE ROW GUARDS AGAINST ITS OWN FINDING BEING OVER-READ, WHICH IS THE PART THAT MAKES IT SAFE TO GRADUATE: 92 of 218 rows read ARMED at surfacing and 75 name 2.0.0_SA_COO~Z, and the row states in terms that THIS IS NOT 75 LIVE OBLIGATIONS -- most were disarmed long ago by the acts they asked for, and reading an ARMED row as a live hazard is the exact error that produced this project's OP3-s-3 defect SIX DAYS AFTER its remedy had landed. A census that names the wrong way to read itself is rarer than one that is merely correct.",
+        "SCOPE, AS THE ROW STATES IT AND THIS SEAT CONFIRMS: it does NOT disarm Z-S151 (the condition is a burst reaching a named human and that has not happened); does NOT re-grade anything or change any status -- TO-OP3-S-2 stays `staged` under msg 20950's ruling, whose two pre-authorised triggers (window lapses, or Andrew declines) have BOTH NOT FIRED; and does NOT touch FWD-15, which Z-S151 itself excluded. Filed as a NEW ROW rather than an edit because the channel is append-only and per-row immutable -- the correct handling, and the same one Z-S9 and Z-S11 used for frozen material."
+      ]
+    },
+    "spec_asserts": "Z-S151, still ARMED: both login-abuse alarms publish to an SNS topic WITH ZERO SUBSCRIBERS.",
+    "world_is": "The topic carries exactly one subscription, to the C-20 recipient, in PendingConfirmation state -- so zero-subscribers is false, nobody-is-told is still true, and the endpoint self-deletes in about 68 hours unless a human outside this fabric clicks.",
+    "notes": "⛔ THIS ROW SHARPENS WHAT THIS SEAT HAS BEEN REPORTING AS THE ROUND-3 BLOCKER RATHER THAN CHANGING IT. This seat has said the slug is blocked on TO-OP3-S-2's SNS confirmation; Z-S173 adds that the blocker is not merely unmet but PERISHABLE, and that its lapse would silently restore a hazard rather than merely leave one open. ⭐ THE OPERATIONAL DIFFERENCE IS REAL: an unmet blocker can wait; a REVERTING one has a deadline, and the deadline belongs to a person outside the fabric. || NOTHING IS ASKED. 1.0.0_SA_CTO~Z holds the ask with Andrew (msg 20950, REC (a) ADOPTED) and lists the SNS click among three gates in its own standing summary, so this is a record and not an escalation."
+  }
+]
+```
+
+## C-S41 -- Z-S174 and Z-S175: ANDREW CLICKED and the round is 3 of 3 TERMINAL, so the slug is cuttable -- and the round's worst defect is the one NOTHING MEASURED, because an omission leaves no trace
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S41",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T16:44Z",
+    "one_line": "BOTH GRADUATE, AND TOGETHER THEY MAKE ROUND 3's SLUG CUTTABLE FOR THE FIRST TIME. ⭐ ANDREW CLICKED: verified on the LIVE PLANE at this seat, the subscription carries a REAL ARN and all three orders are terminal. ⛔ AND Z-S174 IS THE ROUND'S WORST-SHAPED DEFECT PRECISELY BECAUSE NOTHING MEASURED IT: authorised work was sequenced to round 3 by four separate records and never cut, and AN OMISSION IS INVISIBLE TO EVERY INSTRUMENT THAT MEASURES WHAT EXISTS.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "PER-ROW AND UNCHANGED. Z-S174 -> 2.0.0_SA_COO~Z, and its disarm is THE CUT ITSELF, as that lane's own issuance; ⛔ it is expressly NOT a permission question and must not be re-raised as one -- msg 20769 records 'the permission barrier is still removed. No word is needed and none will be asked for again.' Z-S175's record half -> 2.0.0_SA_COO~Z; its remaining substantive leg is FWD-4's READ, which only Andrew can attest and which 1.0.0_SA_CTO~Z grades. NEITHER IS TAKEN HERE.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S174",
+      "NFRA_OPSEC202609-Z-S175"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** VERIFIED ON THE LIVE PLANE AT THIS SEAT RATHER THAN RELAYED, BECAUSE THIS SEAT RELAYED A PEER'S LIVE-PLANE INFERENCE ONCE TODAY AND ANDREW REFUTED IT FROM DIRECT OBSERVATION. *** `.tools/aws sns list-subscriptions-by-topic --topic-arn arn:aws:sns:us-east-1:313476888478:opal-login-abuse-alerts` returns ONE subscription of one, SubscriptionArn `...opal-login-abuse-alerts:7a80a743-96aa-4a82-b34f-37188f38c0aa` -- A REAL ARN, protocol email, endpoint andrew@opalinvest.com. And the three round-3 orders read `complete`, `complete`, `superseded` from their own `<status>` fields. THE ROUND IS 3 OF 3 TERMINAL AND ITS SLUG IS CUTTABLE FOR THE FIRST TIME.",
+        "⭐ THE WAIT COST 7% OF ITS CLOCK, AND THE RULING THAT CHOSE TO WAIT IS VINDICATED ON ITS OWN TERMS. Msg 20950 ruled TO-OP3-S-2 stays `staged` with two pre-authorised fallback triggers -- the window lapsing, or Andrew declining -- and NEITHER FIRED. Confirmation landed with 67.0 of ~72 hours remaining. ⛔ HAD `cancelled` BEEN TAKEN ON THE DEADLINE'S APPROACH RATHER THAN ON A TRIGGER, THE RECORD WOULD NOW CARRY A FICTION ABOUT A NEED THAT WAS LIVE AND FIVE HOURS FROM BEING MET. 'A status that lies is worse than a status that waits' was the ruling's own sentence and this is the measurement that backs it.",
+        "*** AND A VINTAGE CORRECTION TO THIS SEAT'S OWN GRADE, WHICH THE WORLD MOVED RATHER THAN ANY ERROR. *** At C-S37 this seat ruled S2-AC4's FAIL STANDS and declined to soften it, on the ground that the subscription genuinely was not confirmed and read literal `PendingConfirmation` on 7 of 7 reads. ⭐ THAT GRADE WAS TRUE AT ITS VINTAGE AND IS NOW SUPERSEDED BY THE WORLD: S2-AC4's face reads `<expect>SubscriptionArn is a real ARN and NOT the literal string PendingConfirmation</expect>`, and it is now satisfied ON ITS OWN LITERAL TEXT -- no voiding, no amendment, unlike S1-AC4. THE REFUSAL TO SOFTEN IT IS EXACTLY WHY THIS IS CLEAN: a criterion talked into a pass in the morning would have had to be talked back out; one left honestly FAILED simply passes when the world meets it. 12 readings across two seats and a worker separate the two states.",
+        "⛔ Z-S174 IS THE WORST-SHAPED DEFECT OF ROUND 3 AND THE REASON IS NOT CARELESSNESS. The round's other three issuer defects -- S1-AC4 compound and unbuildable, S3-AC6 unsatisfiable, OP3-s-3 cut off a stale premise -- are errors of care INSIDE work that happened, and every one was catchable by reading an artifact. THIS ONE IS AUTHORISED WORK THAT SIMPLY DID NOT HAPPEN: Andrew's own word (@9382d107a3, 'the 2 in-lane liveness Lambdas need no word and can cut now'), the CTO's ruling (msg 20769, 'cut the two liveness Lambdas as ROUND 3's OPENING order'), the issuing lane's OWN register constraint (2), and that lane's own drive log naming both artifacts concretely -- FOUR RECORDS, and the round was cut with three cells and none of them this one. Measured: a case-insensitive census for 'liveness' across the round-3 decomposition and all three TO faces returns 0 hits in 4 of 4 files.",
+        "*** THE TRANSFERABLE MECHANISM, AND IT IS THE SHARPEST THING IN EITHER ROW: AN OMISSION IS INVISIBLE TO EVERY INSTRUMENT THAT MEASURES WHAT EXISTS. *** The filing lane records that its L10 distance, its slug check, its analysis check, its ARMED census and its clock were ALL GREEN on this, because A CELL THAT WAS NEVER CUT LEAVES NO TRACE IN ANY OF THEM. It surfaced only because Andrew asked why no workers were executing. ⭐ AND THE SECOND HALF IS WORSE AND MORE USEFUL: the guard against it was a constraint THE LANE WROTE FOR ITSELF, in a field it then REFRESHED TWICE without re-reading its own binding list -- 'A CONSTRAINT YOU AUTHOR IS THE ONE YOU ARE LEAST LIKELY TO RE-READ, BECAUSE WRITING IT FEELS LIKE DISCHARGING IT.' This estate has the adjacent forms banked (authoring a rule is when I am least likely to run it; a carried proposal feels open because I am carrying it); this is the register-constraint instance, and it is the one that produced ten hours of no work at all.",
+        "Z-S175's DISCIPLINE IS WHAT MAKES IT SAFE TO GRADUATE ALONGSIDE A DISCHARGE, and it is the third time this project has needed the distinction in one day: A ROW CAN BE WRONG AND RIGHT AT ONCE ON DIFFERENT CLAUSES. Z-S151 was right that nobody was told and wrong that there were zero subscribers; it is now right that the endpoint exists and STILL right that nobody has been shown to have been told. ⛔ WHAT IS DISCHARGED: Z-S173's EXPIRY hazard (a confirmed subscription does not self-delete) and S2-AC4 on its literal text. WHAT IS NOT: FWD-4's DONE WHEN is EXERCISED -- 'the notification has fired on a real or staged burst AND THE PERSON NAMED HAS READ IT' -- and S2-AC5's alarm transition fired WHILE THE SUBSCRIPTION WAS PENDING, so nothing was delivered. NO POST-CONFIRMATION DELIVERY HAS BEEN OBSERVED AND NO READ HAS BEEN ATTESTED."
+      ]
+    },
+    "spec_asserts": "project.json blocking constraint (2) and msg 20769 sequence the two in-lane liveness Lambdas as round 3's OPENING order; and PRD FWD-4's DONE WHEN is EXERCISED -- the notification has fired and the named person has read it.",
+    "world_is": "Round 3 was cut as three cells, none of them the liveness Lambdas, and the authorised work sat uncut for ~10 hours with no artifact recording that it was dropped. The subscription is now CONFIRMED, so the endpoint exists; no post-confirmation delivery has been observed and no read attested, so FWD-4's EXERCISED bar is still unmet on its own text.",
+    "notes": "⛔ THIS ROW MAKES THE SLUG CUTTABLE AND SAYS SO EXPLICITLY, because that is the act it enables rather than a side effect: with these two dispositioned the docket reads 0 open, the round's ONE judgment criterion (S1-AC7) was graded at C-S37, and 3 of 3 orders are terminal. BOTH L10 LIMBS ARE MET FOR THE FIRST TIME THIS SESSION. || ⚠ AND THE SLUG MUST NOT BE READ AS A CLOSE: FWD-4 cannot reach REALIZED while its EXERCISED bar's read-leg is unattested, and Z-S174's authorised work is still uncut. A cuttable slug is L10, not CLOSED -- rule 27 needs COMPLETION_REPORT + COMPLETION_GRADES with EVERY grade REALIZED. || NOT CLAIMED, per Z-S174's own bound: that round 3's three cells were wrong to cut, or that anything already graded should reopen. Round 3's rectangle is sound FOR WHAT IT COVERS; the defect is what it OMITS."
+  }
+]
+```
+
+## C-S42 -- CORRECTION to C-S41: the slug is NOT cuttable and was not when C-S41 said so. 35 orders, one staged. This seat measured the ROUND and asserted the PROJECT
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S42",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T16:52Z",
+    "one_line": "⛔ C-S41's CENTRAL CLAIM IS FALSE AND IT WAS FALSE WHEN WRITTEN, NOT STALE. It stated '3 of 3 TERMINAL', 'BOTH L10 LIMBS ARE NOW MET' and 'the slug is cuttable'. THE PROJECT CARRIES 35 TASK ORDERS AND ONE WAS STAGED AT THAT MOMENT -- `TO-OP3A-S-1.in-lane-liveness-caller-migration`, committed at 16:06Z, THIRTY-TWO MINUTES BEFORE C-S41 landed at 16:38Z. This seat globbed `*OP3-S-*`, measured THE ROUND'S RECTANGLE, and asserted THE PROJECT'S STATE. THE SLUG IS BUILT AND WITHDRAWN, NOT CUT, AND NO OVERRIDE WAS TAKEN.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A CORRECTION RECORD against this seat's own immediately preceding row. It adjudicates no item and opens nothing; rows are immutable and append-only, so a correction to C-S41 cannot be an edit and must be its own row -- the same handling Z-S173 used to correct Z-S151 and Z-S175 used to correct Z-S173.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** THE MEASUREMENT THAT REFUTES IT, AND IT IS THE ONE THIS SEAT SHOULD HAVE RUN. *** An UNSCOPED sweep of `task-orders/*.md` reading each file's own `<status>`: **35 orders, exactly 1 NON-TERMINAL** -- `NFRA_OPSEC202609.TO-OP3A-S-1.in-lane-liveness-caller-migration.md [staged]`. C-S41 said '3 of 3 TERMINAL'. That is TRUE OF THE THREE ORDERS IT LOOKED AT and FALSE OF THE PROJECT, and the L10 precondition is a PROJECT predicate.",
+        "⛔ WRONG WHEN MADE, NOT STALE, AND THE DISTINCTION MATTERS BECAUSE THIS SEAT HAS CLAIMED THE OTHER ONE TODAY. `git log --diff-filter=A` on that order returns @f20bc65d71 by 2.0.0_SA_COO~Z at 16:06Z; C-S41 committed at 16:38Z. THIRTY-TWO MINUTES. Earlier today this seat correctly reported a claim that was TRUE WHEN WRITTEN and had aged (the COMPLETION_REPORT.round2 line); THIS IS NOT THAT. The order was in the tree, committed and readable, before the claim was composed.",
+        "*** THE MECHANISM IS THE ONE THIS SEAT SPENT THE DAY ADJUDICATING IN OTHER SEATS, AND IT IS IN THE LAW VERBATIM. *** The command was `for f in task-orders/*OP3-S-*.md` -- A FILTER THAT EXCLUDES `OP3A` BY CONSTRUCTION, since `OP3A-S-1` does not match `OP3-S-`. CLAUDE.md rule 22: 'A CHECK SCOPED TO THE MEMBERS CANNOT SEE A DEFECT IN WHAT THE MEMBERS SHARE ... re-read the population UNSCOPED once.' ⭐ AND THE SAME CLASS WAS GRADUATED BY THIS SEAT TWICE TODAY: Z-W6-S2 (a SET whose shared label asserts a property one member lacks, C-S9) and Z-S172 (a criterion read at the round's grain while its defect lived at the PRD's, C-S39). Adjudicating a class is not the same as running it on yourself.",
+        "⭐ AND THE CAUSAL LOOP IS EXACT, WHICH IS WHY THIS IS WORTH A ROW RATHER THAN A QUIET REBUILD: Z-S174's finding was that AUTHORISED WORK WAS NEVER CUT, and its disarm condition -- named in the row and endorsed at C-S41 -- was THE CUT ITSELF. `2.0.0_SA_COO~Z` performed it. **THE DISARM OF Z-S174 IS PRECISELY WHAT MADE THE SLUG UNCUTTABLE**, because a new order enters `staged`. C-S41 graduated the row and blessed its remedy in the same breath as declaring the round sluggable, and those two statements were incompatible at the moment they were written.",
+        "THE GATE CAUGHT IT AND THIS SEAT DID NOT, AND ITS REFUSAL CITES ANDREW DIRECTLY: 'NEW remediation row while 1 of 35 task order(s) under NFRA_OPSEC202609 are NOT terminal at HEAD ... The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: We do not route until the job is over).' ⛔ NO OVERRIDE WAS TAKEN AND NONE WOULD HAVE BEEN LEGITIMATE: an override here would route before the job is over, which is the exact act the Andrew-direct ruling forbids. This is not a gate defect and not a boundary problem; it is the gate holding a line this seat walked into.",
+        "WHAT STANDS FROM C-S41, so the correction is not read wider than it is: the LIVE-PLANE VERIFICATION of Andrew's click is unaffected and was independently measured (a real `SubscriptionArn` against `PendingConfirmation` on 12 prior readings); the graduations of Z-S174 and Z-S175 stand; the vintage correction to S2-AC4's FAIL stands; and the three disarm DECLARATIONS stand. ⚠ WHAT DOES NOT STAND IS ONLY THE L10 CONCLUSION AND EVERYTHING DOWNSTREAM OF IT -- 'both limbs met', 'cuttable', and the assertion that the slug follows.",
+        "THE SLUG'S CURRENT STATE, STATED SO NO READER LOOKS FOR IT: `REMEDIATION_v3.Z.md` was BUILT (14 rows, 10 ARMED, 3 disarms recorded, 59,811 bytes, 0 malformed), REFUSED by the gate, and then REMOVED FROM THE WORKTREE by this seat rather than left sitting uncommitted in a shared tree. It was never tracked, and a byte-identical copy is parked outside the repo. IT WILL BE RE-CUT FROM A FRESH CENSUS WHEN `TO-OP3A-S-1` GOES TERMINAL -- not restored from the backup, because the census will have moved by then and restoring a stale slug is how a stale number gets committed."
+      ]
+    },
+    "spec_asserts": "C-S41 asserted that round 3 is 3 of 3 terminal, that both L10 limbs are met, and that the slug is cuttable.",
+    "world_is": "The project carries 35 task orders and one is staged; the L10 precondition is a project predicate, so no slug is cuttable and none was cut.",
+    "notes": "⭐ THE TRANSFERABLE FORM, AND IT IS THE SECOND TIME IN ONE HOUR THIS PROJECT HAS PRODUCED IT AT A DIFFERENT GRAIN: **A ROUND IS NOT A PROJECT, AND A PRECONDITION WRITTEN ABOUT THE PROJECT CANNOT BE DISCHARGED BY A CENSUS OF THE ROUND.** Z-S174 was an omission invisible to every instrument that measures what exists; THIS is the mirror -- a presence invisible to an instrument SCOPED TO EXCLUDE IT. Both are failures of the DENOMINATOR rather than of the reading, and in both cases every figure quoted was individually correct. || ⚠ AND THE SELF-CHECK THAT WOULD HAVE CAUGHT IT COSTS ONE COMMAND: after any filtered census that feeds a PRECONDITION, re-run it UNFILTERED once and compare the denominators. Here that is `task-orders/*.md` against `task-orders/*OP3-S-*.md` -- 35 against 3, a gap large enough that no reading of the smaller number could have survived seeing it."
+  }
+]
+```
+
+## C-S43 -- Z-S176/Z-S177/Z-W4-S1: the issuing lane made and self-corrected THIS SEAT'S OWN C-S41 ERROR independently in the same hour, and a grant that could not reach its own criteria is discharged BY EXERCISE
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S43",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T18:34Z",
+    "one_line": "ALL THREE GRADUATE. ⭐ Z-S176 IS THE ISSUING LANE MAKING AND SELF-CORRECTING THE IDENTICAL ERROR THIS SEAT MADE AT C-S41 -- a project-level predicate scoped to one round's glob -- INDEPENDENTLY AND IN THE SAME HOUR. And Z-W4-S1/Z-S177 are a finding and its exercised discharge: an order's `<paths>` grant could not reach the artifact its own criteria required editing, the grant was amended, and the disarm is confirmed BY THE SUCCESSOR WRITING THOSE FILES rather than by the edit.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "PER-ROW. Z-W4-S1 -> 2.0.0_SA_COO~Z and ITS CONDITION IS MET (see Z-S177); Z-S176 and Z-S177 are INERT and name none. ⚠ THE DISARM IS DECLARED HERE AND RECORDED WHEN THIS PROJECT'S SLUG CUTS -- which it cannot yet, because TO-OP3A-S-1 is still `staged` on an unscoped read.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S176",
+      "NFRA_OPSEC202609-Z-S177",
+      "NFRA_OPSEC202609-Z-W4-S1"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** Z-S176 IS TWO SEATS REACHING THE SAME ERROR AND THE SAME CORRECTION WITHOUT COORDINATING, WHICH IS WHAT MAKES IT A CLASS RATHER THAN TWO MISTAKES. *** 2.0.0_SA_COO~Z declared the round-3 slug cuttable at 16:10Z while an order IT HAD COMMITTED FOUR MINUTES EARLIER sat `staged`; the check behind it was `for f in task-orders/*OP3-*`, A GLOB THAT EXCLUDES `OP3A` BY CONSTRUCTION. This seat made the identical error at C-S41 at 16:38Z with the glob `*OP3-S-*` and corrected it at C-S42 (@c9c6600e95). ⛔ SAME PREDICATE, SAME PROJECT, SAME HOUR, TWO SEATS, NEITHER READING THE OTHER. The row names this seat's correction and calls it right to have made it.",
+        "⭐ AND THE ROW GOES FURTHER AGAINST ITSELF THAN THIS SEAT'S DID, WHICH IS WORTH RECORDING: the excluded order was one THAT LANE HAD COMMITTED ITSELF, four minutes before the claim. A filter that hides your own most recent act is the hardest kind to notice, because the act is fresh in mind and therefore feels accounted for. THE TRANSFERABLE FORM STANDS FOR BOTH OF US: **A PROJECT-LEVEL PREDICATE CANNOT BE DISCHARGED BY A ROUND-SCOPED CENSUS**, and the one-command self-check is to re-run unfiltered and compare denominators -- 35 against 3 here, a gap no reading of the smaller number survives.",
+        "Z-W4-S1 IS A CLEAN LANE-BOUNDARY FINDING AND ITS MEASUREMENT IS EXACT: S3A-AC4/AC5 demand the diff of `otp-liveness.tf` AND ANY SOURCE FILE IT PACKAGES, but both callers' credential logic lives entirely in the packaged Python -- `otp-liveness.tf:12` packages `../../lambda/m365-otp-liveness/lambda_function.py` and `ms-ingest.tf:23` packages `../../lambda/m365-ms-ingest-liveness/lambda_function.py` (2 of 2 `source_file` references) -- while a `--name '*.py'` census over the GRANTED directory returns 0 hits across 28 files. ⛔ THE ORDER'S OWN CRITERIA REQUIRED EDITING AN ARTIFACT ITS OWN `<paths>` REFUSED, and per `.owned-paths.yaml:45-47` a path the order does not name is a lane refusal. The criteria were unsatisfiable by a compliant worker.",
+        "*** Z-S177 IS THE DISCHARGE AND IT IS CONFIRMED BY EXERCISE RATHER THAN BY THE EDIT, WHICH IS THE DISTINCTION THIS ESTATE KEEPS HAVING TO RELEARN. *** The grant now carries both Lambda directories at `@775e6cf20a` -- that is the EDIT. The EXERCISE is that slot ~5, seated on the amended face, HAS MODIFIED BOTH `lambda_function.py` FILES plus `ms-ingest.tf` and rebuilt both `.build` zips -- work that was mechanically impossible under the old grant. ⭐ A GRANT IS NOT PROVEN BY ITS TEXT BUT BY A WRITE THAT LANDS, and this row waited for the write.",
+        "⚠ AND Z-S177 IS THE FORWARD JOIN THIS ESTATE HAS TWICE MEASURED AS MISSING. Z-S173 recorded that `Z-W2-S1` cited `Z-S151` so the new work pointed BACK at the old hazard while NOTHING POINTED FORWARD. Here the forward pointer EXISTS: a row filed specifically to say 'the condition the earlier row named is met, and here is the exercise'. ⭐ THAT IS THE GAP CLOSING BY PRACTICE RATHER THAN BY A TOOL CHANGE, and it is the second time today a lane wrote the join voluntarily.",
+        "SCOPE: none of the three reopens a round or regrades an outcome. Z-S176 is INERT and explicitly claims nothing beyond the correction; Z-W4-S1's remedy is already performed; Z-S177 records it."
+      ]
+    },
+    "spec_asserts": "TO-OP3A-S-1's criteria require diffing the packaged source files, and its <paths> grant named only the terraform module; and the round-3 L10 precondition holds that every task order under the project is terminal.",
+    "world_is": "The packaged Python lay outside the grant until it was amended, and the project's order census reads 35 with one still staged -- so the precondition is unmet and was unmet when two seats independently declared otherwise.",
+    "notes": "⛔ THIS PROJECT STILL CANNOT CUT ITS SLUG AND THIS ROW DOES NOT CHANGE THAT: `TO-OP3A-S-1` reads `staged` on an unscoped sweep of all 35 orders, so Andrew-direct LD-0521 -- 'we do not route until the job is over' -- still binds. ⭐ THE SLUG IS BUILT AND PARKED OUTSIDE THE REPO (C-S42) AND WILL BE RE-CUT FROM A FRESH CENSUS, NOT RESTORED, because the census has already moved twice since it was built."
+  }
+]
+```
+
+## C-S44 -- Z-S178: the project is not waiting on effort, it is waiting on ONE FIELD -- and the set of seats that may change it is currently EMPTY
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S44",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T18:52Z",
+    "one_line": "Z-S178 GRADUATES: the single order between this project and its slug has its work DONE AND EXERCISED on an unmerged branch, blocked by one stale field in an identity block, with its issuing lane stood down. ⛔ THE PROJECT IS NOT WAITING ON EFFORT. IT IS WAITING ON ONE FIELD, AND NO SEAT THAT MAY CHANGE IT IS CURRENTLY LIVE.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "A LIVE COO LANE HOLDING NFRA_OPSEC202609, unchanged from the row. NOT TAKEN HERE and not takeable here -- the CVO does not issue, and amending a non-terminal order is an L6 act.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-S178"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GRADUATES BECAUSE IT IS MEASURED, NARROW, AND GATES THIS SEAT'S OWN NEXT LIMB. Four instruments at this seat: the order's `<issued_to>` at `~4`, the live branch at slot `~5`, `merge-base --is-ancestor` proving it unmerged, and the worker's own head commit stating the defect in its subject. No part of it rests on relay.",
+        "⭐ AND THE NARROWING IS DELIBERATE: the relayed figure '0 of 35 orders can commit or apply' is NOT adopted, because this seat could not reproduce an effect beyond the one order and does not need it. The blocking claim is fully established at n=1. ⛔ A FINDING THAT IS TRUE AT n=1 AND UNVERIFIED AT n=35 SHOULD BE FILED AT n=1 -- carrying the larger number would have made the row easier to dismiss and no more true.",
+        "*** THE SHAPE IS THE DAY'S RECURRING ONE AND THIS IS ITS THIRD INSTANCE: A REMEDY THAT BECOMES THE NEXT BLOCKER. *** Z-S174's disarm was THE CUT; the cut created a `staged` order that refused this seat's slug (C-S42). Z-W4-S1's disarm was AMEND `<paths>`; the amendment left `<issued_to>` stale and stranded the work it unblocked. ⭐ IN NEITHER CASE WAS THE REMEDY WRONG -- both were exactly what the row asked for -- and in both cases the estate's instruments went green on the remedy while the next state was already broken. THAT IS WHY A DISARM SHOULD BE CONFIRMED BY EXERCISE RATHER THAN BY THE EDIT, which is what Z-S177 did and what nothing did here.",
+        "⚠ THE OWNERSHIP FACT IS THE HAZARD AND IT IS WHY THIS IS BLOCKING RATHER THAN OBSERVATIONAL: the one act needed is an L6 amendment; the named issuer is stood down; a worker cannot amend the order that admits it; and this seat does not issue. THE SET OF SEATS THAT MAY PERFORM THE REMEDY IS CURRENTLY EMPTY. That is a different state from 'owed by a busy lane' and the record should not read them alike."
+      ]
+    },
+    "spec_asserts": "The amended TO-OP3A-S-1 admits a seated worker to the paths its criteria require.",
+    "world_is": "It admits slot ~4 while slot ~5 is seated, so the completed work cannot land, and the seat that could amend it has stood down.",
+    "notes": "⛔ THIS IS THE LAST THING BETWEEN NFRA_OPSEC202609 AND ITS SLUG, and this seat states that without claiming the slug is otherwise cuttable: the L10 precondition also requires 0 open items, which currently holds, and Z-S178 itself is now GRADUATED rather than open. ⭐ WHEN `TO-OP3A-S-1` GOES TERMINAL THE SLUG IS RE-CUT FROM A FRESH UNSCOPED CENSUS -- not restored from the parked copy, because the census has moved three times since it was built."
+  }
+]
+```
+
+## C-S45 -- CORRECTION to C-S44: it is NOT one field. Three criteria FAIL, all three are THE DEPLOY, the code is an unapplied PATCH, and the worker cannot be resumed
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S45",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T19:05Z",
+    "one_line": "⛔ CORRECTION TO C-S44, WHICH THIS SEAT WROTE TWENTY MINUTES AGO: 'THE PROJECT IS WAITING ON ONE FIELD' IS FALSE AND UNDERSTATES IT. Reading the worker's proof instance -- which sits on the UNMERGED branch and not in HEAD -- the order carries NINE criteria of which THREE FAIL (S3A-AC6, AC7, AC8), and all three are THE DEPLOY. The stale `<issued_to>` blocks the deploy; amending it deploys nothing. AND THE WORKER CANNOT BE RESUMED -- slot ~5 is offline, and a completed worker subagent is not resumable.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A CORRECTION RECORD against this seat's own immediately preceding row, filed as its own row because the channel is append-only and per-row immutable -- the same handling Z-S173 used on Z-S151 and C-S42 used on C-S41.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** WHAT C-S44 MISSED AND WHY. *** C-S44 measured the order's IDENTITY BLOCK (`<issued_to>` ~4 against a seated ~5) and concluded the project 'is not waiting on effort, it is waiting on one field'. THE IDENTITY BLOCK WAS READ AND THE PROOF INSTANCE WAS NOT -- it lives on the unmerged branch, so an index or HEAD read does not reach it. Read now from `wk-NFRA_OPSEC202609-3A-5`: NINE criteria, **S3A-AC1 through AC5 PASS, S3A-AC6, AC7 and AC8 FAIL, AC9 UNVERIFIABLE-BY-INSTRUMENT** (the judgment criterion, reserved to this seat at L9).",
+        "⛔ ALL THREE FAILURES ARE THE DEPLOY, AND THE ORDER'S OWN `declared_exclusions` SAYS SO: 'The DEPLOY of both migrated functions, and therefore S3A-AC6, S3A-AC7 and S3A-AC8. BLOCKED BY A CORRECT GATE REFUSAL, NOT OMITTED.' `.tools/safe-apply.sh` refused the worker rc=3 (`SERIAL RESOLVES TO NO KNOWN AGENT`). ⛔ SO AMENDING `<issued_to>` UNBLOCKS A GATE; IT DOES NOT PERFORM A DEPLOY. The two liveness Lambdas are still on the static bearer in production.",
+        "AND THE CODE ITSELF IS NOT IN THE TREE EITHER. The worker's commit carries FOUR files, and the migration is one of them -- `OP3A-s-1.exchange-migration.WORKTREE-ONLY.patch`, 140 lines. Its row Z-W5-S3 records why: safe-commit refused all six `infra/` paths rc=1, admitting 3 of 9 dispatched paths (all `org/`). ⭐ THE WORKER SHIPPED ITS DELIVERABLE AS A PATCH RATHER THAN ABANDON IT OR OVERRIDE THE GATE, AND EXPLICITLY DID NOT USE `GIT_COMMIT_AUTHOR_OVERRIDE`. The work is preserved and it is not applied.",
+        "*** AND THE ROUTE C-S44 IMPLIED IS CLOSED: THE WORKER CANNOT BE RESUMED. *** `ListAgents` shows every `NFRA_OPSEC202609` worker session OFFLINE, and a completed worker subagent is not resumable by construction. So the remedy is not 'amend one field and the seated worker proceeds' -- there is no seated worker. It is: amend the order (L6), RE-DISPATCH a worker (L6), apply the patch to `infra/aws/lambda/**` (an AE/CloudOps write surface), `safe-apply` a PRODUCTION DEPLOY of two live Lambdas migrating auth from a static bearer to the exchange endpoint, then re-exercise AC6/AC7 and close the ledger for AC8.",
+        "⚠ THE HONEST SIZE OF WHAT REMAINS, STATED BECAUSE C-S44 UNDERSTATED IT TO A READER WHO MIGHT ACT ON IT: this is a production deploy on a serving path, not a paperwork fix. `2.0.0_SA_COO~Z` -- the issuer and the only lane that may amend or re-dispatch -- is STOOD DOWN and offline. NO LIVE SEAT ON THIS FABRIC CAN CURRENTLY PERFORM ANY STEP OF IT.",
+        "⭐ AND THE MECHANISM BEHIND THIS SEAT'S OWN ERROR IS THE DAY'S OWN LESSON POINTED AT ITSELF: C-S44 read the plane that was cheap to read (the order at HEAD) and concluded about a state that lives on a plane it did not read (the instance on an unmerged branch). ⛔ THAT IS THE SAME 'WHICH PLANE IS THIS INSTRUMENT ACTUALLY READING' FAMILY this seat adjudicated three times today -- Z-S10 the script's tree, Z-S14 the forwarder's tree, Z-S15 the regex's occurrence. AN UNMERGED BRANCH IS A PLANE, and a census that stops at HEAD cannot see a criterion that failed on it."
+      ]
+    },
+    "spec_asserts": "C-S44 asserted that NFRA_OPSEC202609 is waiting on one field of one identity block.",
+    "world_is": "It is waiting on a production deploy whose three criteria FAIL, whose code sits unapplied in a patch file, whose worker cannot be resumed, and whose issuing lane is offline.",
+    "notes": "⛔ NOTHING IN C-S44 IS WITHDRAWN EXCEPT ITS SIZE. The `<issued_to>` mismatch is real and measured, it IS the first blocker in the chain, and the set of seats that may clear it is still empty. What changes is that clearing it is the FIRST of five steps rather than the whole of one. ⭐ THE SLUG IS FURTHER AWAY THAN THIS SEAT SAID, AND SAYING SO IS CHEAPER NOW THAN AFTER SOMEONE ACTS ON THE SMALLER NUMBER."
+  }
+]
+```
+
+## C-S46 -- Z-W5-S1..S4: TO-OP3A-S-1 is complete, the re-seat disarmed by exercise, the two residual findings graduate as owned
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S46",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T20:30Z",
+    "one_line": "ALL FOUR GRADUATE. TO-OP3A-S-1 is now complete (issued_to re-seated ~4 -> ~6 @1f87188985, both liveness Lambdas deployed and live-verified) -- Z-W5-S2/S3 (the stale-issued_to gate blocks) are DISARMED BY EXERCISE, not by the edit alone: slot ~6 committed and deployed clean, CodeSha256 matching the targeted plan, both callers returning ok:true. Z-W5-S1 (shared-root drift) and Z-W5-S4 (proof-of-spec schema gap) are NOT disarmed by this order closing -- both name a residual outside this order's own instance and graduate as owned findings for their named owners. Project census: 35 of 35 task orders terminal (32 complete / 2 cancelled / 1 superseded, independent full-pair status-tag read, not the gate's first-match regex), 0 items left UNDER_INVESTIGATION after this row.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "PER-ROW. Z-W5-S1 -> 0.7.0_AE_CloudOps (the shared-root WAF description drift; residual, not this order's). Z-W5-S2 and Z-W5-S3 -> DISARMED, confirmed by exercise: 2.0.0_SA_COO~Z performed the one-line disarm both rows named (@1f87188985, re-seat ~4 -> ~6, the WHOLE identity block) and the re-seated worker then committed and deployed the migration (@1d103b4651 deploy, @ea5d79c9c1 drain). Z-W5-S4 -> 1.0.0_SA_CTO~Z (proof-of-spec schema/checker surface; P2, no artifact currently rides the gap since ~6's instance never needed the UNCOMMITTED-LANE-GATE-REFUSED encoding).",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-W5-S1",
+      "NFRA_OPSEC202609-Z-W5-S2",
+      "NFRA_OPSEC202609-Z-W5-S3",
+      "NFRA_OPSEC202609-Z-W5-S4"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE RE-SEAT, read at HEAD rather than from the commit message: `git show HEAD:org/missions/D12/NFRA/NFRA_OPSEC202609/task-orders/NFRA_OPSEC202609.TO-OP3A-S-1.in-lane-liveness-caller-migration.md | grep -oE '<issued_to>[^<]*</issued_to>|<status>[^<]*</status>'` -> `<issued_to>0.9.0_WK_NFRA_OPSEC202609~6</issued_to>`, `<status>complete</status>`. The exact field Z-W5-S2/S3 named as the whole block is confirmed moved, and the order is terminal.",
+        "THE DEPLOY, read from the deploy-ledger entry's own 'Live post-deploy state' section (org/critical_paths/change_management/20260910T1714Z_opsec-op3a-s1-liveness-exchange-migration_deploy_completion.md), not from the worker's self-report: opal-otp-liveness CodeSha256 3arS31NYi8MRfT2zpMny1r4xApcR7GffVRf1TWP9+xI=, LastModified 2026-09-10T19:37:07Z, OTP_TOKEN_URL present; opal-ms-ingest-liveness CodeSha256 tsI6QgpY3ODD3CLYdrdZMv6vUleIUpWF7RgEXXVM7i4=, LastModified 2026-09-10T19:37:02Z, MS_TOKEN_URL present. Both hashes equal the entry's own predicted source_code_hash values -- the plan that was promised is the plan that landed. Both invocations returned ok:true with cred_path=exchange in the CloudWatch log itself. NEVER-2 not engaged: 0 of 2 half-landed.",
+        "THE PROJECT CENSUS, independent of the gate's own first-match regex (the exact instrument class Z-S15 found defective earlier this project): a direct Python walk of org/ matching NFRA_OPSEC202609.*.md under task-orders/ only (deliverables/ excluded, 3 same-named files there correctly excluded as non-TO docs) extracting ALL <status> tag occurrences per file, not the first: 35 of 35 files, 32 complete / 2 cancelled / 1 superseded, 0 non-terminal, 0 multi-value conflicts.",
+        "THE OPEN-ITEM COUNT, cross-checked with a second instrument (comp-surprise --project NFRA_OPSEC202609) against my own read of INVESTIGATION_v1.md's four Z-W5-S* blocks directly: both agree on exactly these four ids as the full OPEN set pre-this-row, 0 others.",
+        "Z-W5-S1's residual is NOT this order's to close: the row's own disarm_owner already scopes it to 0.7.0_AE_CloudOps (the WAF IP-set description drift belongs to that lane's TO-OP-S-4-18/TO-OP-S-15-19); nothing in this order's own targeted apply touched waf.tf, so the shared-root condition the row named is unchanged by TO-OP3A-S-1 closing and stays ARMED at the estate level pending that lane's own action.",
+        "Z-W5-S4's schema gap is real and independent of this instance's outcome: slot ~6's own proof-of-spec instance was written AFTER a clean commit+deploy, so it never needed the PENDING-THIS-COMMIT/hex-commit-ish choice Z-W5-S4 found both branches false for -- the gap the row names (no representation for produced-then-refused) is un-exercised by THIS project's eventual success, not resolved by it, and stays a live P2 item for the schema owner."
+      ]
+    },
+    "spec_asserts": "The L10 precondition for this project is 0 items UNDER_INVESTIGATION and every task order terminal; TO-OP3A-S-1, the project's last non-terminal order, carried four such items.",
+    "world_is": "TO-OP3A-S-1 is now complete on an independent full-pair census, the two BLOCKING rows' named one-line disarm was performed and its effect exercised (not merely edited), and the two OBSERVATION rows name residuals outside this order that graduate as owned findings rather than closing. 0 items remain UNDER_INVESTIGATION project-wide after this row.",
+    "notes": "THE DISTINCTION THIS ROW DRAWS, stated once because it recurs across all four: GRADUATED is not 'fixed' -- Z-W5-S2/S3 are graduated AND disarmed (the specific hazard cannot recur on THIS order, since it is terminal), while Z-W5-S1/S4 are graduated and STILL ARMED (the general condition each names is untouched by this order's close and needs its own owner's act). A remediation row for all four carries this distinction forward rather than flattening it to one hazard_standing. This row does not cut the slug -- it clears the L9 precondition; the L10 census and remediation document follow as a separate act."
+  }
+]
+```

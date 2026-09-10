@@ -226,3 +226,10 @@ fact SATISFIED (parity green in-commit), not an owed item. Exception to MSTR RET
 LESSON (banked): during active multi-lane integration, comp-system --check can read a producer's in-flight
 commit window as STALE; before surfacing a drift, `git show --stat` the causing commit to check it did not
 already carry the regen. Same "check the RESOLUTION not just the cause" class.
+
+## cycle-159 (2026-09-10, gate-watch resumed post-close): eng-currentstate-current CONFIRMED, one file, no risk
+Full grounding: `cvoz_sysparity_cycle159_eng_currentstate_current.md` @4b41811146. Exact drift = ONE file in
+_SOURCES (`.tools/comp-iam-usage`, commit d0c36abcc8, NFRA_IAMROLES202609.TO-IAM-s-1's `permission-cold` mode
+addition) since the last regen (d876b8b74, 09-10 11:07:06 -0400). `git status --porcelain` on the fingerprinted
+scope = empty (no in-flight risk). Routine, no nudge. `ont-rulebank-version-current` stays skipped (CTO~Z-ruled
+MIS-SCOPED, cycle-27).

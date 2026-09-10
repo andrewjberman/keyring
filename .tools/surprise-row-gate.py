@@ -121,7 +121,24 @@ OVERRIDE_RE = re.compile(r"^#\s*surprise-row-override:\s*(\S.*)$", re.M)
 # by CVO") is the SECOND LIMB below (Andrew-direct 2026-09-03 ~04:5xZ "Recs approved", CTO /open-calls CALL 2).
 # Terminal words are the TO protocol's (complete / superseded / cancelled) plus the withdrawn state an issuer
 # writes on a mis-seated dispatch.
-TO_STATUS_RE = re.compile(r"<status>\s*([A-Za-z_-]+)", re.I)
+# ANCHORED AT LINE START 2026-09-10 (3.0.0_SA_CVO~Z, row Z-S15 graduated at C-S16). The bare
+# form was applied with .search(), so it took the FIRST occurrence anywhere in the file --
+# INCLUDING INSIDE PROSE. TO-IAM-t-3's text reads "Carries NO <status> tag at all" while
+# DESCRIBING A DIFFERENT DOCUMENT, so the gate captured "tag", failed to find it among the
+# terminal words, and declared a COMPLETE order non-terminal. The order whose subject is
+# whether status tags mean anything is the one misread on its own status tag.
+# GENERAL FORM: A FIRST-MATCH READ OF A STRUCTURED FIELD ASSUMES THE FIELD APPEARS BEFORE ANY
+# DISCUSSION OF IT. True of most documents; false for exactly the documents that are ABOUT the
+# field -- which are the ones this estate writes when it audits its own markup.
+# WHY ANCHORED AND NOT PAIRED, MEASURED OVER 208 TASK ORDERS BEFORE CHOOSING:
+#   requiring </status>  -> REGRESSES 131 of 208. Most orders never close the tag; the "obvious"
+#                          fix would have been far worse than the defect.
+#   last-match           -> works, but changes the verdict on 2 files for the benefit of 1.
+#   LINE-ANCHORED        -> 0 regressions, and disagrees with the old form on EXACTLY ONE file:
+#                          the defective one. A real tag starts its line; a prose mention does not.
+# DUPLICATED IN .tools/owned-paths-validate.py AS _TO_STATUS_RE -- two carriers of one pattern,
+# fixed identically in the same commit. Naming it because the next edit must move both.
+TO_STATUS_RE = re.compile(r"^\s*<status>\s*([A-Za-z_-]+)", re.I | re.M)
 TERMINAL_TO_WORDS = ("complete", "completed", "closed", "done", "superseded", "cancelled", "canceled", "withdrawn")
 
 # GATE (iii), SECOND LIMB -- record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_045xZ_RECS_
@@ -250,7 +267,7 @@ def _foreign_row_violations(rel, kind, added, committer, coworkers=None, merging
     OPEN ORDER on that project. A cross-fabric integrator carries rows from seats with no order on this fabric at all,
     so every one reads foreign. The two cases need different admissions and only one of them existed.
 
-    ⛔ CONSEQUENCE WORTH STATING BECAUSE IT IS NOT OBVIOUS: safe-merge.sh grades the MERGED INDEX by calling this gate
+    BLOCKED: CONSEQUENCE WORTH STATING BECAUSE IT IS NOT OBVIOUS: safe-merge.sh grades the MERGED INDEX by calling this gate
     while MERGE_HEAD is present, so the sweep is skipped there too. That is acceptable and it is not silent -- the
     DUPLICATE-ID limb, which is the reason the drain grades the merged index at all, is untouched, and the co-worker
     admission already covered the drain case. The residual is a branch on which no hook ever ran, which is the same
@@ -476,7 +493,25 @@ def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema, merg
         # whitespace, so the first token is the whole of it.
         allocator = allocator_raw.split()[0] if allocator_raw else allocator_raw
         wm = WORKER_SERIAL_RE.match(allocator) if _carried else committer_m
-        if wm:
+        # PLANE BOUNDARY (2026-09-10, 0.0.0_AB_MSTR~Z's census 20975 + 3.0.0_SA_CVO~Z's five
+        # consecutive slug overrides -- ONE defect reported from two directions). The W coordinate
+        # names the worker that MINTED the row, which is an INVESTIGATION-row property. On a
+        # REMEDIATION row the W is INHERITED: protocol s.5 requires the remediation id to EQUAL the
+        # graduated investigation id, so a remediation of a worker's finding necessarily carries that
+        # worker's W while being authored by the CVO. It has no surfacer of its own and correctly
+        # carries none -- measured estate-wide at 195 of 195 rows lacking `surfaced_by` being
+        # remediations and ZERO being investigations, across 13 files, 4 projects and weeks of
+        # authorship. So the foreign-row exemption can never engage here, and the arm fell through to
+        # grading the COMMITTER: it refused an INTEGRATOR for carrying rows they did not author, and
+        # refused the CVO every round for filing the join the protocol requires. Renaming to drop the
+        # W would break the id equality; omitting the row is the silent-loss defect the remediation
+        # plane exists to prevent. Neither is available, so the arm itself was the defect.
+        # THE INVESTIGATION ARM IS UNCHANGED -- this narrows the arm to the plane that mints.
+        _is_rem = (folder_kind == "REMEDIATION"
+                   or (folder_kind is None and "REMEDIATION" in os.path.basename(rel).upper()))
+        if _is_rem:
+            pass   # W is inherited from the item being remediated; nothing here to grade
+        elif wm:
             if w is None:
                 out.append("%s: NEW row %s %s worker %s carries no W<n>. A worker mints <CODE>-W%s-S<k> (its own "
                            "slot, the next unused k within it); a bare S<k> from a worktree is the allocator race that "
@@ -1656,6 +1691,29 @@ def _self_test(root):
          lambda: any("is not a worker" in x for x in _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W2-S1", "surfaced_by": "3.0.0_SA_CVO"}], "2.0.0_SA_COO~A", False, merging=True, parent_ids=_DRAIN_PIDS))),
         ("drain MUTANT: the same lawful W2 row graded NOT merging under the COO~A committer -> refused (the first drain's defect, kept as the negative control)",
          lambda: _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W2-S1", "surfaced_by": "0.9.0_WK_X_PRJ~2"}], "2.0.0_SA_COO~A", False, merging=False) != []),
+        # THE REMEDIATION PLANE (2026-09-10): W is INHERITED there, so the arm must not grade it.
+        # The three REFUSALS below are the point -- a fix that only proves the new case is half a test.
+        ("remediation: the CVO files a W row in remediations/ (the id EQUALS the graduated worker id) -> ADMITTED",
+         lambda: _coordinate_violations("org/missions/D0/NFRA/X/surprise-channel/remediations/REMEDIATION_v2.Z.md",
+                                        "REMEDIATION", [{"id": "X_PRJ-W2-S1"}], "3.0.0_SA_CVO~Z", False) == []),
+        ("remediation AT A DRAIN: a carried W row with NO surfaced_by, merged by the integrator -> ADMITTED (the 18-row refusal)",
+         lambda: _coordinate_violations("org/missions/D0/NFRA/X/surprise-channel/remediations/REMEDIATION_v2.Z.md",
+                                        "REMEDIATION", [{"id": "X_PRJ-W2-S1", "surfaced_by": ""}], "0.0.0_AB_MSTR~Z",
+                                        False, merging=True, parent_ids=_DRAIN_PIDS) == []),
+        ("remediation LEGACY FLAT: folder_kind None + REMEDIATION in the basename -> ADMITTED (the 6 flat rows)",
+         lambda: _coordinate_violations("org/surprise_channel/X_PRJ/REMEDIATION_v1.Z.md", None,
+                                        [{"id": "X_PRJ-W2-S1"}], "3.0.0_SA_CVO~Z", False) == []),
+        ("NEGATIVE CONTROL: the SAME W row in the INVESTIGATION plane, seat committer -> STILL REFUSED (the narrowing did not leak)",
+         lambda: any("is not a worker" in x for x in
+                     _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W2-S1"}], "3.0.0_SA_CVO~Z", False))),
+        ("NEGATIVE CONTROL: flat INVESTIGATION_v1.md, folder_kind None, seat's W row -> STILL REFUSED (basename match is REMEDIATION-only)",
+         lambda: any("is not a worker" in x for x in
+                     _coordinate_violations("org/surprise_channel/X_PRJ/INVESTIGATION_v1.Z.md", None,
+                                            [{"id": "X_PRJ-W2-S1"}], "3.0.0_SA_CVO~Z", False))),
+        ("NEGATIVE CONTROL: wrong-slot discipline survives in the INVESTIGATION plane at a drain -> STILL REFUSED",
+         lambda: any("slot is 2" in x for x in
+                     _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W3-S1", "surfaced_by": "0.9.0_WK_X_PRJ~2"}],
+                                            "2.0.0_SA_COO~A", False, merging=True, parent_ids=_DRAIN_PIDS))),
         # A REMEDIATION ROW INHERITS ITS COORDINATE (1.0.0_SA_CTO 2026-09-10, on 3.0.0_SA_CVO's
         # NFRA_CLDGRPH round-8 refusals). The two arms the gate refused, and their negative controls
         # in the SAME shape -- the discriminator is the DOCUMENT KIND and nothing else about the row.
@@ -1747,8 +1805,19 @@ def main(argv):
         # never has it, so an un-audited override is still impossible. The variable carries the reason, never a bare flag.
         _ovr = os.environ.get("SURPRISE_ROW_OVERRIDE", "").strip()
         if _ovr:
-            print("[surprise-row-gate] OVERRIDDEN (audited by safe-commit): %s -- %d violation(s) on NEW rows follow as WARN:"
+            # BLOCKED: THIS LINE USED TO READ "(audited by safe-commit)" UNCONDITIONALLY (found 2026-09-10 by
+            # 1.0.0_SA_CTO~Z while measuring 0.0.0_AB_MSTR~Z's 20975, which announced it would set this
+            # variable BY HAND for a merge). The gate cannot see who set the variable. safe-commit writes
+            # the audit line at safe-commit.sh:758 and THEN exports; a hand-exported variable is honoured
+            # identically and leaves NO audit line -- so the gate was printing a provenance claim it had
+            # not verified, and an unaudited override wore the name of an audited one. State the reason,
+            # name where the audit must be, and do not certify an auditor this process never observed.
+            print("[surprise-row-gate] OVERRIDDEN (reason given): %s -- %d violation(s) on NEW rows follow as WARN."
                   % (_ovr, len(all_v)), file=sys.stderr)
+            print("    PROVENANCE NOT VERIFIED BY THIS GATE: safe-commit writes an audit line to "
+                  "org/git-author-override-audit.log before exporting. If this override did not come "
+                  "from safe-commit, NO audit line exists and this is an UNAUDITED override.",
+                  file=sys.stderr)
             for x in all_v:
                 print("    WARN: %s" % x, file=sys.stderr)
             return 0
@@ -1756,8 +1825,19 @@ def main(argv):
               file=sys.stderr)
         for x in all_v:
             print("    %s" % x, file=sys.stderr)
-        print("    override (audited): put '# surprise-row-override: <reason>' in the commit "
-              "message body", file=sys.stderr)
+        # THE REMEDY IS PATH-SPECIFIC AND SAYING SO IS THE WHOLE FIX (2026-09-10, 0.0.0_AB_MSTR~Z 20975:
+        # a seat spent THREE commits on the printed instruction, including one with --cleanup=verbatim).
+        # MEASURED: safe-commit.sh:767 exports SURPRISE_ROW_OVERRIDE after auditing the message line, so
+        # the message-body form WORKS on the commit path exactly as printed. safe-merge.sh has ZERO hits
+        # for that variable across 315 lines -- so on a MERGE there is no override limb at all, and the
+        # printed instruction could never fire there. One remedy, two paths, only one of them reachable.
+        print("    override (audited) ON A COMMIT: put '# surprise-row-override: <reason>' in the "
+              "commit message body and commit via .tools/safe-commit.sh -- it audits the line, then "
+              "exports SURPRISE_ROW_OVERRIDE for the hook.", file=sys.stderr)
+        print("    ON A MERGE (safe-merge.sh) THERE IS NO OVERRIDE PATH: the merged index is graded "
+              "BEFORE a merge commit message exists, and safe-merge sets no override variable. Fix "
+              "the state the violation names, or route it to the gate's owner (1.0.0_SA_CTO).",
+              file=sys.stderr)
         return 1
     print("[surprise-row-gate] OK: %d file(s), all new rows carry their step-7/step-10 fields."
           % len(targets))

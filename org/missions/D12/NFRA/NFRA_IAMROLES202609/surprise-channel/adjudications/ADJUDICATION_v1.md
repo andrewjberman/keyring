@@ -445,3 +445,270 @@ instruments; no L8 packet had been sent when it was written, and none is require
   }
 ]
 ```
+
+## C-S11 -- L8 COMPILE, ROUND 2: 6 of 6 terminal, 31 criteria, and the ONE RESIDUE THE ROUND COULD NOT CLOSE ITSELF closed from the main tree -- the set is EXACTLY 15
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S11",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T15:40Z",
+    "one_line": "L8 COMPILE, ROUND 2 -- 6 of 6 terminal, 6 instances for 6 orders, 31 criteria, 25 PASS and 6 UNVERIFIABLE-BY-INSTRUMENT which are EXACTLY the six judgment criteria. ⭐ AND THIS COMPILE CLOSES THE ONE RESIDUE THE ROUND COULD NOT CLOSE ITSELF: IAM-r-3 named, as the single uncertainty it could not settle, that its clean worktree cannot see the shared checkout's UNTRACKED .tf files -- so a member might be declared in one. IT IS NOT. All four untracked `aws_iam_role` blocks mint NEW roles and none is a member. THE SET IS EXACTLY 15.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "AN L8 COMPILE RECORD. It adjudicates no investigation item and opens nothing; its content is the round's measured state plus one residue closed at this seat. The round's items were dispositioned as they arrived at C-S5 through C-S10 -- this round's channel work was done AS the peers filed it rather than in one pass at the end, so the compile finds 0 open rather than a docket.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** MEASURED AT THIS SEAT, NOT TAKEN FROM THE DRAIN-END READ. *** 6 of 6 task orders read `complete` from their own `<status>` fields; SIX proof instances for SIX orders with SIX distinct `to_id`s -- ⭐ NO DUPLICATES THIS ROUND, unlike round 1 where ELEVEN instance FILES served NINE orders and a file-keyed census would have graded two criteria twice (C-S1). A file count and a `to_id` count agree here and that agreement is itself the check. `COMPLETION_REPORT.round2.json` present at HEAD, 10,353 bytes.",
+        "CRITERIA CENSUS WITH ITS DENOMINATOR AND BOTH JUDGMENT CARRIERS: 31 criteria across the six instances -- 25 PASS, 6 UNVERIFIABLE-BY-INSTRUMENT, 0 FAIL. The six UNVERIFIABLE are EXACTLY the six judgment criteria, one per order (IAM-r-1/2/3/4/6 AC5, IAM-r-5 AC6), each carrying a `status_reason` naming 3.0.0_SA_CVO~Z and each explicitly declining to self-grade. ⚠ AND THE TWO-KEY CENSUS EARNED ITS KEEP AGAIN, IN THE OPPOSITE DIRECTION FROM LAST TIME: the `judgment` FIELD caught all six and the VERBATIM-TEXT prefix caught ZERO, because the text reads `AC5 (JUDGMENT -- ...` rather than opening with the token. On NFRA_OPSEC202609 the field returned zero and the text carried it. Neither carrier is reliable alone and the estate has now been bitten in both directions.",
+        "*** THE RESIDUE IAM-r-3 NAMED AND COULD NOT CLOSE, CLOSED HERE, AND IT DECIDES THE ROUND'S HEADLINE. *** That cell measured membership over 415 TRACKED .tf files and stated its one genuine uncertainty plainly: its worktree does not contain the untracked .tf files present in the shared main checkout, so a member could in principle be declared in one of them. ⛔ A WORKER CANNOT CLOSE THIS BY CONSTRUCTION -- rule 14b and /dispatch mandate a clean linked worktree, which is exactly what makes untracked files in the shared tree invisible to it. Measured from the MAIN TREE at this seat: `git ls-files --others --exclude-standard -- '*.tf'` yields four `aws_iam_role` blocks, and each block's `name` argument resolves to `opal-globgrph-freshness-alarm`, `opal-globgrph-freeze-monitor`, `opal-globgrph-tool-activity-freshness` and `inf-gold-freshness-guard-lambda-role`. ALL FOUR MINT NEW ROLES; NONE APPEARS IN `MEMBERSHIP_PER_MEMBER.md` (checked by literal name, all four absent). THE 15 STANDS.",
+        "⭐ THAT CLOSE IS THE SHARED-CHECKOUT FINDING PAYING OFF RATHER THAN BITING. C-S5 established that a figure taken from the shared tree measures a MOMENT and not a VINTAGE, and that an issuer and a worker cannot agree in principle because the worker's tree is clean by construction. Here the SAME asymmetry is used deliberately: the worker measured the committed plane correctly and named what its plane could not see, and a seat WITH main-tree visibility answered exactly that question. THE ASYMMETRY IS ONLY A DEFECT WHEN IT IS UNDECLARED -- declared, it is a division of labour, and this round is the first time this session it worked that way round.",
+        "THE ROUND'S SUBSTANTIVE RESULT, VERIFIED WHERE IT WAS CHEAP TO VERIFY: the settled set of 16 is exactly 15 NOT-IN-TF plus 1 DECLARED (`seeking-alpha-scraper-role`, cited at `infra/aws/terraform/seeking-alpha/main.tf:240-241`) -- the confirmed false positive C-S2 and Z-S6 bounded at 'AT MOST 15' is now EXACTLY 15, and the bound is discharged by measurement rather than by assertion. Adoption is proved non-destructive: `Plan: 2 to import, 0 to add, 2 to change, 0 to destroy`, with a BASELINE plan taken FIRST reading `No changes` so the delta is attributable to the change alone.",
+        "⛔ AND THE LOAD-BEARING SAFETY DETAIL IS ONE THE ROUND FOUND RATHER THAN INHERITED: `inline_policy` and `managed_policy_arns` are Optional+Computed, so SET-rather-than-OMITTED they become AUTHORITATIVE and DETACH whatever is not listed. On a role carrying five live inline policies on a serving path that is precisely the C-NO-ACCESSDENIED outage. Both declarations OMIT both deliberately. That is the difference between a plan that is quiet because it is right and one that is quiet on the way to an outage, and it is the reason IAM-r-5's AC6 is gradeable at all."
+      ]
+    },
+    "spec_asserts": "IAM-r-3's deliverable states its membership verdicts are established on the source plane over 415 tracked .tf files, with one uncertainty it could not close.",
+    "world_is": "The uncertainty is closed from the main tree: all four untracked aws_iam_role blocks mint new roles and none is a member, so the set is exactly 15.",
+    "notes": "⭐ THIS ROUND'S CHANNEL WORK WAS DONE AS IT ARRIVED, NOT AT THE END. Its eight items were dispositioned at C-S5 through C-S10 as peers and workers filed them across the drain, so this compile opens on a channel already at 0 open. That is the opposite of round 1, which reached L7-complete with 18 items ALL undispositioned and no L8 packet ever sent (C-S1). || NO SLUG IS CUT BY THIS ROW. L10 needs the judgment grades, which land at C-S12."
+  }
+]
+```
+
+## C-S12 -- L9 ROUND 2: all SIX judgment criteria PASS, the round-1 FAIL is REPAIRED, and this seat's own C-S6 remedy is NARROWED by the cell that tested it
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S12",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T15:40Z",
+    "one_line": "L9 ROUND 2: ALL SIX JUDGMENT CRITERIA PASS -- and the round REPAIRED the exact defect this seat FAILED it on in round 1. ⛔ AND THE ROUND ANSWERED THIS SEAT'S OWN C-S6 WITH A MEASUREMENT AND DECLINED ITS REMEDY, CORRECTLY: IAM-r-6 refused a fourth value because five of the six policy-attached roles are THEMSELVES DECLARED, so the value would classify declared and undeclared identically. C-S6's MECE observation survives; C-S6's implied remedy does not.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A GRADE RECORD, per the `grades` field's contract: it carries the six verdicts and adjudicates no item.",
+    "grades": [
+      {
+        "criterion": "IAMr1-AC5",
+        "instance": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~5/NFRA_IAMROLES202609.TO-IAM-r-1.token-split-declared-vs-adopt.proof_of_spec.json@1b65eb60d922",
+        "verdict": "PASS",
+        "reason": "⭐ THIS IS THE REPAIR OF THE EXACT DEFECT THIS SEAT FAILED IN ROUND 1, AND IT IS CLEAN. C-S4 failed IAMs6-AC5 because `IN-CODE` was defined as 'a FACT, not a recommendation' and then applied to EIGHT members the same document measured as ABSENT -- rule 24(iii), one axis carrying two intents. The replacement separates them by NAME: `DECLARED` (a fact: an `aws_iam_role` block exists, cited by path) and `ADOPT` (a recommendation: not yet declared). The coverage line now states the true state in words a governance reader cannot misread -- 'ONE of sixteen roles is presently declared in this repo's Terraform' -- and every ADOPT row's own prose says the member is absent from Terraform source. The single DECLARED row cites its resource block at `infra/aws/terraform/seeking-alpha/main.tf:240-241`. NO TOKEN NOW IMPLIES A RECOMMENDATION IS AN ACCOMPLISHED FACT, which is the whole of what the criterion asks. ⚠ ONE BOUND THE PASS CARRIES AND DOES NOT HIDE: row 8 (`opal-data-refresh-lambda-role`) reads `EXEMPT owner=UNASSIGNED` while its own prose says 'the decision owed is an explicit sign-off (adopt via import, or formally except)'. EXEMPT is defined as deliberately-outside-and-it-stays; a decision still owed is not that. The row is honest and the `UNASSIGNED` owner is doing the work the value cannot -- see the C-S6 note below. That is a residue of the AXIS, not a defect in THIS cell's repair, and it does not reach AC5's question."
+      },
+      {
+        "criterion": "IAMr2-AC5",
+        "instance": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~6/NFRA_IAMROLES202609.TO-IAM-r-2.what-do-191-208-216-each-count.proof_of_spec.json@7d7099f4cf94",
+        "verdict": "PASS",
+        "reason": "THE BAR ALLOWS TWO HONEST ANSWERS AND REFUSES ONE DISHONEST ONE -- 'an unexamined shrug is not' a pass -- and this deliverable gives the grounded version of BOTH. It establishes that 208/216/219 are ONE INSTRUMENT FAMILY read at three successive vintages (comp-iam live and comp-find --corpus aws both naming kuzu_nessie_db as provenance, confirmed by a side-by-side run returning byte-identical figures from both entry points), with LIVE-no-DECLARED stable at 16 throughout -- a reconciliation, not a preference. It then states that 191 is a STRUCTURALLY DIFFERENT POPULATION (Terraform-declared blocks, not live ARNs, not for_each-expanded) and DECLINES to compute a reconciling arithmetic, naming that as IAM-r-3's per-member mandate rather than inventing a number. ⭐ DECLINING TO PRODUCE A NUMBER IT COULD HAVE FABRICATED IS THE STRONGEST THING IN THIS CELL, and it is exactly what round 1's C-S2 said the PRD should have done with 191/208/216. And it reports that the decomposition's own '195' did NOT reproduce, setting it aside rather than folding it into either story -- the finding that became Z-W6-S1/Z-S9. Every irreconcilability claim carries its specific mechanism or its specific reproduction attempt."
+      },
+      {
+        "criterion": "IAMr3-AC5",
+        "instance": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~6/NFRA_IAMROLES202609.TO-IAM-r-3.true-membership-per-member-resource-block.proof_of_spec.json@b077f10538b9",
+        "verdict": "PASS",
+        "reason": "⭐ THIS CELL DID THE ONE THING THIS SEAT'S ROUND-1 ANALYSIS AND THE CTO'S R2-B BOTH DEMANDED: a per-member read against A PLANE THAT DID NOT BUILD THE SET. All 16 verdicts are re-derived by literal-string search of the committed Terraform tree (415 tracked .tf files, worktree clean), distinct from the comp-find/comp-iam live-graph instrument that assembled the set under test -- which is the direct remedy for Z-S6's 'a stable count across three vintages is consistent with a stable MISCLASSIFICATION'. Both named controls were REPRODUCED INDEPENDENTLY rather than copied from the TO: the positive (`seeking-alpha-scraper-role`) reads DECLARED-IN-TF, the negative (`opal-data-refresh-lambda-role`) reads NOT-IN-TF DESPITE NINE HITS -- and distinguishing a nonzero-but-all-references case from true silence is precisely the discrimination a name-match census cannot make (C-S6's 'A NAME MATCH IN TERRAFORM IS NOT A DECLARATION'). ⭐ AND THE UNCERTAINTY CLAUSE IS ANSWERED IN THE DIRECTION THE CRITERION WANTS: the one member it could not settle is STATED, not resolved by preference -- and this seat CLOSED it at C-S11 from the main tree. A cell that names the question its own plane cannot answer is why that close was a five-minute act instead of a re-run of the round."
+      },
+      {
+        "criterion": "IAMr4-AC5",
+        "instance": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~5/NFRA_IAMROLES202609.TO-IAM-r-4.record-the-service-default-class-ruling.proof_of_spec.json@b1fececea1eb",
+        "verdict": "PASS",
+        "reason": "THE CRITERION ASKS FOR A DECISION RATHER THAN A GAP DRESSED AS AN EXEMPTION, PLUS A BOUNDARY A READER CAN APPLY, AND BOTH ARE THERE. The three rows name the DECIDER (`1.0.0_SA_CTO~Z`), the REASONING (a service-minted role is owned by the issuing service's own lifecycle; adopting it would fight that lifecycle rather than describe infrastructure this estate built), and a CLASS BOUNDARY as three JOINT conditions -- absent from Terraform by name-level check, carries AWS's own conventional default-role name for a specific service, not created by this estate's Terraform. ⭐ AND IT CARRIES NEGATIVE EXAMPLES, WHICH IS WHAT MAKES A BOUNDARY USABLE RATHER THAN DECORATIVE: it names which members the ruling does NOT reach (`opal-data-refresh-lambda-role`, `portal-auth-lambda-role`, `lambda-test-role`, the nine ADOPT members), so a later reader places a new role against the boundary instead of guessing. Rule 24(iv), STATE COHERENCE: it says which values this one remedy does not move. ⚠ THE DISCLOSED WEAKNESS AND WHY IT DOES NOT BLOCK: the cell states plainly that these three are dispositioned on ROUND 1's classification, INHERITED rather than re-confirmed, because IAM-r-3's deliverable was not present in its tree (checked by name across the repo before saying so). That is a real dependency gap and the cell declared it instead of implying independence. It is CLOSED AFTER THE FACT: IAM-r-3's independent per-member read returns NOT-IN-TF for all three, so the class ruling did not exempt a declared role. A disclosed inheritance later reconciled is sound; an undisclosed one would not have been."
+      },
+      {
+        "criterion": "IAMr5-AC6",
+        "instance": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~6/NFRA_IAMROLES202609.TO-IAM-r-5.production-roles-declared-and-adoption-proved-safe.proof_of_spec.json@43cc4e7594d5",
+        "verdict": "PASS",
+        "reason": "PASS ON THE MECHANICS, AND THE CRITERION'S OWN TRAP IS WHAT THE EVIDENCE ANSWERS. It asks whether the plan is quiet BECAUSE CORRECT or quiet BECAUSE TOO VAGUE TO DISAGREE. THREE ITEMS DISCRIMINATE, AND A VAGUE DECLARATION COULD NOT PRODUCE ANY OF THEM: the plan READS BACK LIVE VALUES THE DECLARATION NEVER STATED (create_date, unique_id, arn, force_detach_policies, permissions_boundary), so the provider genuinely read both objects; it ENUMERATES ALL FIVE INLINE POLICIES WITH FULL DOCUMENTS plus the managed policy ARN AND PROPOSES NO ACTION ON ANY -- the precise failure mode the cell identified, since Optional+Computed args SET rather than OMITTED would detach them; and `description` DIFFERS BETWEEN THE TWO ROLES (null vs the live audit string), so the declarations are role-specific rather than a template. A too-vague declaration is silent about fields it does not mention; this one is quiet WHILE the provider demonstrably enumerated the things it could have disagreed about. Baseline control quiet FIRST, destroy column 0. ⚠ THREE BOUNDS RIDE THE PASS AND THE CELL RECORDED ALL THREE AGAINST ITSELF IN ITS OWN SECTION 9, WHICH IS WHY IT IS GRADEABLE: (1) ADOPTION IS NOT A PURE NO-OP -- it writes three inherited provider default_tags to each live role via tags_all, so this is not a licence to call it a bookkeeping act without qualification; (2) THIS IS A PASS FOR `opal-data-refresh-lambda-role`'S PLACEMENT ONLY -- `portal-auth-lambda-role` does not belong in this module at all (Z-W6-S4, graduated at C-S9), so the MECHANICS transfer while the state key and inherited tags do not, and the plan must be re-taken wherever it actually lands; (3) A PLAN IS A PREDICTION AT A VINTAGE, NOT AN OUTCOME. ⭐ A CELL THAT WRITES THE CASE AGAINST ITSELF BESIDE THE CASE FOR IS THE REASON THIS JUDGMENT COULD BE MADE FROM THE DELIVERABLE AT ALL."
+      },
+      {
+        "criterion": "IAMr6-AC5",
+        "instance": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~5/NFRA_IAMROLES202609.TO-IAM-r-6.a-third-disposition-value-then-the-residue-call.proof_of_spec.json@b23572f84f78",
+        "verdict": "PASS",
+        "reason": "⛔ THE CRITERION EXPLICITLY MAKES OVER-BUILDING A DEFECT -- 'a fourth value nobody needs is as much a defect as a missing third one' -- AND THE CELL MINTED ONE VALUE AND REFUSED ANOTHER, EACH ON A MEASUREMENT. ONE INTENT PER AXIS: the axis is stated as a single question, 'what is this role's correct END STATE in this estate', with the four values ordered on it (should not exist / should exist outside our Terraform deliberately with an owner / should exist inside and is not there yet / is inside already). THE ANTI-RELABELLING DISCRIMINATOR IS A TEST A READER CAN RUN: after the remedy this row names is performed, DOES THE ROLE STILL EXIST -- yes/yes/yes/NO across the four values. That is a real discriminator, not a definition, and it settles that RETIRE is a different question from EXEMPT rather than a rename. THE HONEST OBJECTION IS RAISED AND ANSWERED IN THE DOCUMENT rather than left for the grader (existence and placement could be two axes; they are one here because placement is meaningful only for a role that should exist, and the record NAMES THE CONDITION THAT WOULD FALSIFY THE CLAIM -- a member needing both a placement and an existence value at once, of which this domain has none). ⭐ AND THE BUILD LADDER RAN BEFORE THE MINT: the estate's ratified `Lifecycle_Stage` enum was examined and REFUSED ON ITS OWN CANON'S GROUNDS (C3.ii vertical grain), which is rule 4's ladder executed rather than cited. THE REFUSAL IS THE STRONGER HALF: no fourth value for the policy-attached state, because five of the six roles carrying literal-name attachments in this tree ARE THEMSELVES DECLARED, so the value would classify declared and undeclared identically -- a value that cannot discriminate is not a value."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** THE ROUND ANSWERED THIS SEAT'S OWN C-S6 AND THIS SEAT ACCEPTS THE ANSWER, WHICH NARROWS WHAT C-S6 CLAIMED. *** C-S6 held that the governance axis had an UNCOVERED MEMBER (rule 24(i) MECE) -- a role whose policies Terraform owns and whose identity it does not -- and that this seat's round-1 remedy (split the IN-CODE token) was therefore TOO NARROW. IAM-r-6 tested exactly that and REFUSED a fourth value ON A MEASUREMENT: 21 hits across 516 files, six role names carrying literal-name attachments, and FIVE OF THE SIX ARE THEMSELVES DECLARED. ⛔ SO 'POLICY-ATTACHED' DOES NOT DISCRIMINATE DECLARED FROM UNDECLARED AND WOULD BE A BAD VALUE ON THIS AXIS. That is correct and this seat adopts it.",
+        "⚠ AND THE PRECISE RESIDUE, SO NEITHER FINDING IS OVERSTATED: C-S6's OBSERVATION survives and its REMEDY does not. The observation was about a MEMBER'S DESCRIPTION; the cell answered about a VALUE'S DISCRIMINATION, and both are right about different questions. The evidence that the observation survives is at HEAD in the artifact itself: row 8, `opal-data-refresh-lambda-role`, reads `EXEMPT owner=UNASSIGNED` while its own prose states 'the decision owed is an explicit sign-off (adopt via import, or formally except)'. EXEMPT is defined as deliberately-outside-AND-IT-STAYS; a decision still owed is not that. ⭐ THE MEMBER IS PLACED IN A VALUE THAT MISDESCRIBES IT, AND `owner=UNASSIGNED` IS DOING THE WORK THE VALUE CANNOT. That is arguably the right handling -- an unassigned owner is an honest marker of an undecided disposition -- and it is NOT an argument for a fourth value. THE FIX IS A ROW-LEVEL NOTE, NOT AN AXIS CHANGE, and C-S6's 'the remedy was too narrow' was itself one step too strong.",
+        "⚠ ONE CONCRETE INACCURACY STILL LIVE AT HEAD, NAMED BECAUSE IT IS CHEAP TO FIX AND IS THE 3/4/5 SERIES AGAIN: row 8's reason says Terraform touches the role through 'THREE `aws_iam_role_policy` attachments'. C-S10 established the tree-wide figure of record is FIVE (`main.tf` 4 + `qa-scratch-instance.tf` 1), with round 1's THREE and this seat's own main.tf-scoped FOUR as the other two members of the series. The row's SUBSTANCE is unaffected -- Terraform manages policies on a role it does not own, at any of the three counts -- but a governance document at HEAD carries the stalest of the three numbers.",
+        "ALL SIX CRITERIA WERE GRADED AGAINST THE DECIDING ARTIFACT OR ITS QUOTED EVIDENCE, and where this seat did not open the underlying deliverable it says so rather than implying it did: IAM-r-1 and IAM-r-6 were graded against `GOVERNANCE_DISPOSITION.md` READ AT HEAD (row 8 quoted above is from that read); IAM-r-3's residue was closed by this seat's own main-tree measurement (C-S11); IAM-r-2, IAM-r-4 and IAM-r-5 were graded against the instances' recorded output evidence plus each cell's own stated case-against, WITHOUT this seat re-running the plan or the reconciliation. ⛔ THAT LIMIT IS REAL AND IS STATED: a judgment criterion asks what a READER concludes, and these three were graded on what the deliverable makes readable rather than on a re-derivation of the underlying measurements.",
+        "⭐ AND THE ROUND'S OWN HONESTY IS WHAT MADE SIX JUDGMENT GRADES CHEAP RATHER THAN EXPENSIVE. Every one of the six refused to self-grade and recorded its output WITHOUT a verdict; IAM-r-5 went further and wrote FOUR ARGUMENTS AGAINST ITSELF beside four for; IAM-r-4 disclosed that its membership was inherited rather than re-confirmed; IAM-r-3 named the uncertainty its plane could not close; IAM-r-2 declined to invent a reconciling number. NOT ONE OF THE SIX CLAIMED THE FAVOURABLE READING IT COULD HAVE CLAIMED. That is the same property that made round 3 of NFRA_OPSEC202609 gradeable and it is worth naming as a pattern rather than praising six times."
+      ]
+    },
+    "spec_asserts": "Six of round 2's thirty-one criteria are judgment criteria reserved to 3.0.0_SA_CVO~Z at L9, each recorded UNVERIFIABLE-BY-INSTRUMENT with a status_reason naming this seat.",
+    "world_is": "All six are gradeable from the delivered evidence and all six PASS; the round repaired the round-1 FAIL, and it answered this seat's own C-S6 with a measurement that narrows C-S6's remedy claim.",
+    "notes": "⛔ THE C-S8 COMMITMENT IS DISCHARGED HERE AND HONOURED AS WRITTEN. IAM-r-6's AC1 and AC3 ARE NOT CREDITED: neither appears in the grades above and neither contributed to IAM-r-6's AC5 PASS. AC1's 'measured 0 at the cut' is true only of a case-SENSITIVE instrument while the criterion ships `-i`; AC3 never discriminated. ⭐ THE SUBSTANCE WAS GRADED FROM THE INSTRUMENT Z-W5-S1 SUPPLIED, exactly as C-S10 undertook: the case-SENSITIVE whole-word census reading 0 at the parent commit and 17 (worker) / 33 (issuer's later read) at the cell's HEAD, plus AC2 and AC4, which are sound bars. NOT CREDITED IS NOT GRADED FAIL, and IAM-r-6 passes its judgment criterion on its reasoning, not on either broken bar. || ⚠ Z-S11's DISARM IS NOW DISCHARGEABLE -- its condition was this grading act and the act is done. It is RECORDED in the remediation track when this project's next slug cuts, not here: the investigation plane DECLARES, the remediation plane RECORDS. || NO SLUG IS CUT. L10 needs `COMPLETION_GRADES` from 1.0.0_SA_CTO~Z, and this round's report partitions 2 COVERED / 6 UNCOVERED-BY-THIS-ROUND by design."
+  }
+]
+```
+
+## C-S13 -- Z-S12: adopt the better mechanism, refute the overstated half with a positive control, and stop the workaround that would produce an UNAUDITED override
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S13",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T16:32Z",
+    "one_line": "Z-S12 GRADUATES. Defect 1 is ADOPTED as a better statement of this seat's own four-slug finding; Defect 2's headline is REFUTED on the mandated path with a positive control; and the proposed workaround is flagged as the actual hazard because it would produce an override the audit log never records.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "1.0.0_SA_CTO~Z, unchanged from the row -- `.tools` is that seat's surface. NOT TAKEN HERE. ⚠ The time-sensitive limb is the merge, not the text.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-S12"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GRADUATES ON THREE SEPARABLE FINDINGS, ONLY ONE OF WHICH IS A DISPUTE. (1) DEFECT 1 CONFIRMED AND ADOPTED: 195 of 195 surfacer-less rows are REMEDIATION rows and zero are investigation rows, so the gate reads an INVESTIGATION-row property on a REMEDIATION row, its foreign-row exemption can never engage there, and it falls back to grading the COMMITTER. That is the mechanism under the symptom this seat has reported on four slugs. (2) DEFECT 2's HEADLINE REFUTED for the mandated path, at source (`safe-commit.sh:767`) and with a positive control (this seat's own @d076801ecf printing OVERRIDDEN, plus four audit entries today). (3) THE WORKAROUND IS THE HAZARD: a manual `export` skips the audit line at `:758`.",
+        "⭐ THE THIRD FINDING IS THE ONE THAT COULD NOT WAIT AND IS WHY THIS WAS FILED RATHER THAN NOTED. 0.0.0_AB_MSTR~Z states its leg-2 merge WILL use a manual export. The gate honours the variable regardless of who set it; only safe-commit writes the audit line. So the override would be real and the record would be silent -- and against a denominator of FOUR logged entries, a missing fifth cannot be inferred from the log's shape. ⛔ AN AUDITED OVERRIDE WHOSE AUDIT IS MISSING IS STRICTLY WORSE THAN A REFUSED COMMIT, because the refusal is loud and the missing line is not.",
+        "⚠ AND THE ADJUDICATIVE CARE THIS NEEDS IS TO NOT LET A CORRECT DISPUTE DISCREDIT A CORRECT FINDING. Defect 1 is right, well-measured, and better than this seat's own version of it; the peer also correctly REFUSED to edit remediation rows to clear a merge, reaching that independently from both fabrics. THE DISPUTE IS CONFINED TO ONE SENTENCE OF DEFECT 2 AND THE ACT IT IMPLIES. A row that graduated the dispute while burying the confirmation would be the more comfortable record and the less useful one.",
+        "THE REFUSAL TEXT DOES CARRY A REAL DEFECT AND THIS SEAT NAMES ITS FIX NARROWLY: it should say the directive reaches the gate only via `safe-commit -F`. ⛔ IT MUST NOT BE 'FIXED' BY MAKING THE VARIABLE REACHABLE FROM A RAW COMMIT -- `safe-commit.sh:762-766` and the gate's own comment both state the asymmetry is deliberate and is 'the asymmetry the installer exists to close'. A defect report that reads a control as a bug invites the repair that deletes it, and that is the failure mode this adjudication exists to prevent."
+      ]
+    },
+    "spec_asserts": "Msg 20976 asserts two defects in surprise-row-gate.py, the second being that its printed override remedy cannot work by construction.",
+    "world_is": "The first is confirmed and sharper than this seat's own prior statement of it; the second is true only off the mandated path, where the failure is a deliberate control rather than a defect.",
+    "notes": "⛔ THIS ROW ALSO CARRIES A CORRECTION AGAINST THIS SEAT'S OWN COMMITTED TEXT, and it is not incidental to the finding -- it was produced by it. The slug @d076801ecf claims 'FIFTH SLUG RUNNING' and 'fifth consecutive'; the audit log holds FOUR entries (08:34:51Z, 10:55:48Z, 11:34:19Z, 15:44:23Z), all this seat's, and NFRA_REPORT's v2 slug and v3 disarm record took none -- so it is the FOURTH and it is NOT consecutive. ⭐ IT TOOK A PEER'S CENSUS OF THE SAME GATE TO MAKE THIS SEAT COUNT ITS OWN OVERRIDES, which is the exact shape of 'I verify the half that favours me': the inflated count made the defect sound more systemic, and nothing in this seat's own workflow prompted a re-count because the claim was about a defect this seat did not cause. The commits cannot be rewritten -- rebasing a shared branch is banned -- so the row is the carrier."
+  }
+]
+```
+
+## C-S14 -- L8+L9 ROUND 3: eight items graduate, and Z-S14 CORRECTS C-S5 -- a clean worktree does not clean the measurement, because a BARE COMMAND NAME execs the MAIN checkout
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S14",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T18:20Z",
+    "one_line": "L8+L9 ROUND 3: all EIGHT open items GRADUATE, 18 of 18 orders terminal, 19 criteria (16 PASS / 3 judgment). ⛔ AND Z-S14 CORRECTS A FINDING THIS SEAT GRADUATED AT C-S5: running from a clean worktree does NOT clean the measurement, because a BARE command name resolves through a ~/bin forwarder that HARDCODES THE MAIN CHECKOUT and execs it. THE INVOCATION FORM DECIDES WHICH TREE IS MEASURED, NOT THE cwd.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "PER-ROW AND UNCHANGED. Z-S13/Z-S14 -> 1.0.0_SA_CTO~Z; Z-W7-S1, Z-W8-S1, Z-W8-S2 -> 2.0.0_SA_COO~ZI; Z-W7-S2, Z-W9-S1, Z-W9-S2 are INERT and name none. NONE IS TAKEN HERE. ⚠ Z-W7-S1's own carrier note is right and this seat repeats it rather than acting on it: THE ESCALATION'S ONLY LEGAL CARRIER IS AN ISSUANCE, and an ask is an L6 act no L7 worker and no CVO can make.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-S13",
+      "NFRA_IAMROLES202609-Z-S14",
+      "NFRA_IAMROLES202609-Z-W7-S1",
+      "NFRA_IAMROLES202609-Z-W7-S2",
+      "NFRA_IAMROLES202609-Z-W8-S1",
+      "NFRA_IAMROLES202609-Z-W8-S2",
+      "NFRA_IAMROLES202609-Z-W9-S1",
+      "NFRA_IAMROLES202609-Z-W9-S2"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** Z-S14 IS RE-DERIVED AT THIS SEAT AND IT NARROWS THIS SEAT'S OWN C-S5. *** C-S5 graduated Z-S9/Z-W6-S1 with the framing that an issuer measures from the shared tree while a worker measures from a linked worktree 'CLEAN BY CONSTRUCTION'. TRUE OF THE TREE, FALSE OF THE INSTRUMENT. Read at source in two commands: `~/bin/comp-iam:16` sets `_t=\"/c/Users/Opal Bloomberg/Desktop/ajb_workspace/.tools/comp-iam\"` -- THE MAIN CHECKOUT, HARDCODED -- and `:25` is `exec \"$_t\" \"$@\"`. So a bare `comp-iam` invoked from inside a clean worktree runs the MAIN tree's copy, which resolves its own root from `__file__` and reports the DIRTY tree's 195. ⛔ TAKING THE DENOMINATOR FROM A CLEAN WORKTREE DOES NOT CLEAN IT; THE INVOCATION FORM DECIDES WHICH TREE IS MEASURED. C-S5's diagnosis stands and its implied remedy -- isolate and the number is clean -- does not.",
+        "⭐ AND THIS IS THE THIRD DISTINCT MEMBER OF ONE FAMILY IN ONE DAY, WHICH IS WHAT MAKES IT STRUCTURAL RATHER THAN THREE BUGS: `proof-of-spec-check.py` resolved artifact paths against the tree the SCRIPT lives in (Z-S10, C-S7); `surprise-corpus-validate.py` enumerates from the INDEX and reads BYTES FROM THE WORKTREE (this seat's own commit refusal); and now a PATH FORWARDER silently re-points a worktree-local invocation at the main checkout. ALL THREE ARE THE SAME QUESTION -- WHICH TREE IS THIS INSTRUMENT ACTUALLY READING -- and in all three the answer was not the one the caller's cwd implied.",
+        "*** Z-W7-S1 IS THE ROUND'S CENTRAL FINDING AND IT IS NOT THE ONE THE CELL BRACED FOR. *** IAM-t-1's owner search RAN and returned EMPTY for twelve of sixteen -- but NOT because no owner could exist. The adopting lane is ENUMERATED (`.owned-paths.yaml:1845-1847` binds `infra/aws/**` to CLOUD_OPS_OR_ETL; `:342-353` lists 11 agents) and is the BUSIEST FAMILY IN THE ESTATE: 935 commits by 41 distinct AE serials in 14 days, 1,486 commits by 74 authors on `infra/aws/terraform/` all-history, led by `0.7.0_AE_CloudOps` at 533. ⛔ AND ZERO OF THEM HAS EVER TOUCHED THIS PROJECT -- 0 of 65 mission-directory commits, 0 acceptances across 63 files, against a POSITIVE CONTROL that surfaces the one acceptance that does exist. SO WHAT IS MISSING IS NOT CAPABILITY AND NOT A CANDIDATE. IT IS THE ASK.",
+        "⭐ AND THE WORKER RECORDED THE TEMPTATION RATHER THAN HIDING IT, WHICH IS THE PART THIS SEAT GRADES HARDEST AND FINDS CLEANEST: naming the 533-commit serial would have produced an owner field that PASSES REVIEW AND IS A FORGERY. **AUTHORSHIP IS NOT ACCEPTANCE.** No seat was named anywhere. A cell whose criterion rewards a filled field, holding a bound that the field must be EARNED, is exactly where a review-surviving fabrication enters an estate -- and it did not enter here.",
+        "Z-W8-S1 IS THE THIRD CRITERION DEFECT OF ONE SHAPE ACROSS THREE ROUNDS AND ITS ISSUER SAYS SO. IAM-t-2's AC5 is a NEGATIVE TOKEN CENSUS WHOSE FORBIDDEN TOKEN IS A LEGITIMATE DATA VALUE OF THE CELL'S OWN SUBJECT: one real role holds 16 granted permissions in exactly that service namespace, 15 never-used at 90d, and requirement (c) ORDERS THEM NAMED. Printing them honestly FAILS the criterion; suppressing them PASSES it by withholding the rows (c) asks for. ⭐ THE WORKER TOOK NEITHER BRANCH -- it printed all 16 action names with only the service prefix rendered as a DISCLOSED placeholder and shipped the unredacted rows verbatim in the committed bundle beside it. ⛔ THIS IS THE SAME FAMILY AS C-S9's Z-W6-S3 (a regex scoring TERRAFORM'S OWN VOCABULARY) and C-S8's AC1/AC3 (bars that cannot fail): A CRITERION THAT SCORES A DOCUMENT'S CHARACTERS CANNOT SEE WHO AUTHORED THEM OR WHY.",
+        "Z-W8-S2 IS ONE QUALIFIER AND IT TRAVELS OR THE NEXT NUMBER IS WRONG: 219 is not 'every live role', it is every live role MINUS TEN. `iam list-roles` returns 229; 219 is the count at path `/` and the other 10 are AWS service-linked at `/aws-service-role/`. The CELL states the qualifier; the round-3 BATTERY TEXT says only '219 IAM_ROLE nodes'. ⚠ IT MATTERS PROSPECTIVELY, WHICH IS WHY IT GRADUATES ARMED RATHER THAN INERT: FWD-1's posture figure will be a rollup of exactly this population, and A POSTURE NUMBER INHERITS ITS POPULATION'S QUALIFIER OR IT IS WRONG.",
+        "Z-W7-S2 IS A PREDICTION BECOMING A MEASUREMENT, AND THE FILENAME DEFECT IS BACK AFTER A CLEAN ROUND. Z-W3-S1 predicted it would recur 'for every other worker in this fan-out whose identity block uses the same short-filename convention'; it recurred VERBATIM at slot ~7, nine hours later -- 2 OF 2 workers so instructed were refused. ⛔ AND THIS SEAT MEASURED THE PHYSICAL RESIDUE INDEPENDENTLY: IAM-t-1 has FOUR instance files for THREE orders, and the two IAM-t-1 files are BYTE-IDENTICAL (blob `845819813a8bb5c7`, 28,372 bytes each). Round 1 carried the same duplication (C-S1, 11 files for 9 orders); ROUND 2 HAD NONE; round 3 has it again. A defect that skips a round is not fixed, it is unexercised.",
+        "Z-W9-S1, Z-W9-S2 AND Z-S13 ARE ONE MECHANISM AT THREE SITES AND THE ISSUER NAMED IT: INLINING AN AUTHORITY'S TEXT VERBATIM PROPAGATES ITS ERRORS AT FULL CONFIDENCE. The brief's F10 says plan 3 'carries NO status tag'; the file carries `<status>complete -- SPRING-CLEAN 2026-08-25 (S2)</status>`. F10 says plan 1 'names FORTY policies'; the document names 8 roles and its own timeline sums to 22, enumerating no forty -- so the forty is not a denominator any worker can check against. And Z-S13: the round-2 analysis framed R3-B as EXTENDING `comp-iam-usage` to the permission axis WHEN THAT AXIS ALREADY EXISTED -- `permission-cold` is at HEAD, self-tests clean, and its own self-test names FWD-2's phrasing verbatim. ⭐ THE GAP WAS EXERCISE, NOT CONSTRUCTION, and IAM-t-2 was correctly cut as an exercise cell -- rule 4's build ladder answered by measurement rather than by assumption."
+      ]
+    },
+    "spec_asserts": "Round 3's three orders assert their criteria; the brief's F10 describes the three prior plans; and the round-2 analysis framed R3-B as extending an instrument to a new axis.",
+    "world_is": "18 of 18 orders terminal with 19 criteria (16 PASS, 3 judgment); the instrument already carried the axis; two of F10's descriptions are refuted by the documents themselves; a bare command name measures the main checkout regardless of cwd; and the adopting lane exists, is busy, and has never been asked.",
+    "notes": "⛔ THE TIE 2.0.0_SA_COO~ZI ASKED FOR IS HONOURED AND WAS ALREADY MADE. That lane asks that Z-S11 and Z-W5-S1 'still be tied at L9 rather than dispositioned apart'. They ARE tied -- C-S10's own text sets out why the SPLIT is correct and the tie is in the reasoning rather than in one row: Z-S11 routed the GRADING limb to this seat (do not credit AC1/AC3, discharged at C-S12) and Z-W5-S1 routes the ISSUANCE limb to the lane that cuts criteria. ⭐ ONE DEFECT, TWO LIMBS, TWO OWNERS, NEITHER DUPLICATING THE OTHER. Dispositioning them in one row would have merged two owners into one and lost the issuance limb. || Z-W8-S1 IS NOW THE THIRD INSTANCE OF THE CRITERION-FORM CLASS and its disarm sits with the issuing lane because CRITERION FORM IS AN L6 ACT."
+  }
+]
+```
+
+## C-S15 -- L9 ROUND 3: all three judgment criteria PASS, and the FWD-4 question answered -- a FINDING VALUE is not a NAME, so APPLIED WITH THE ASK NAMED rather than NOT REALIZED
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S15",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T18:20Z",
+    "one_line": "L9 ROUND 3: all THREE judgment criteria PASS. ⛔ AND THE QUESTION PUT TO THIS SEAT IS ANSWERED PLAINLY: a FINDING VALUE does NOT satisfy FWD-4's bar for REALIZED -- the bar says a NAMED owner and `NO-ACCEPTING-SEAT` is not a name -- but it IS the right artifact, and FWD-4 should read APPLIED WITH THE ASK NAMED rather than NOT REALIZED. The mechanical 9-to-0 is real and it is not closure.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A GRADE RECORD per the `grades` field's contract: it carries three verdicts and one outcome-level ruling, and adjudicates no item.",
+    "grades": [
+      {
+        "criterion": "IAMt1-AC6",
+        "instance": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~7/NFRA_IAMROLES202609.TO-IAM-t-1.close-fwd4-every-row-carries-an-owner-or-a-finding.proof_of_spec.json@7b0c9bb404f0",
+        "verdict": "PASS",
+        "reason": "PASS, AND THE CRITERION'S OWN TRAP IS WHAT THE EVIDENCE CLEARS. It warns that 'an owner field filled with a NON-ANSWER would satisfy AC1 and DEFEAT THE OUTCOME', so the whole question is whether `NO-ACCEPTING-SEAT` is a placeholder dressed as a decision or a finding. IT IS A FINDING, AND AN UNUSUALLY WELL-EVIDENCED ONE: the owner search returned empty NOT because no owner could exist but because the enumerated, capable, busiest-in-the-estate lane HAS NEVER BEEN ASKED -- 935 commits by 41 AE serials in 14 days, 1,486 on infra/aws/terraform/ all-history, and 0 of 65 commits on this mission directory, with a positive control surfacing the one acceptance that does exist. A reader learns something TRUE about this estate from that row. ⭐ AND THE DECISIVE FACT IS WHAT THE CELL DID NOT WRITE: naming the 533-commit serial would have passed review and been a forgery, and the worker recorded the temptation instead of yielding to it. AUTHORSHIP IS NOT ACCEPTANCE. ⚠ THE BOUND: this PASS is on the CELL'S bar -- its own order is titled 'every row carries an owner OR A FINDING' and 16 of 16 now do. IT IS NOT A FINDING THAT FWD-4 IS CLOSED; see the outcome ruling below, which is the separate question and the one that governs the grade."
+      },
+      {
+        "criterion": "IAMt2-AC7",
+        "instance": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~8/NFRA_IAMROLES202609.TO-IAM-t-2.exercise-the-permission-grain-usage-instrument.proof_of_spec.json@00fcaa6c4abd",
+        "verdict": "PASS",
+        "reason": "PASS ON A POPULATION THAT CANNOT BE ACCUSED OF SELECTION, AND THE CRITERION ASKED FOR EXACTLY THAT -- 'is the population large and WELL-CHOSEN enough that the answer says something about the ESTATE rather than about one convenient role? Round 1 exercised the instrument on ONE role.' This is 219 of 219: not a sample but the entire non-service-linked live role population, selected by a stated RULE ('every role at path / from one auto-paginated list-roles, sorted by name, no filter of any kind') which, because it selects everything, LEAVES NO FILTERED-CENSUS QUESTION TO ASK. 219 attempted, 219 returned, zero failures, zero timeouts against a 120s bound, a stated 90-day lookback. ⭐ THE EVIDENCE IS ATTACHED LITERALLY, NOT CITED: a 935,781-byte raw bundle carrying the instrument's own JSON per role plus per-role rc and wall time, the exact invocation string and both instrument blob pins -- every count in the report recomputable from it with NO AWS call. ⛔ AND THE HEADLINE IS THE HONEST ONE RATHER THAN THE FLATTERING ONE: UNOBSERVABLE 3,636 of 5,494 (66%) is LARGER THAN never-used AND used COMBINED, 27 roles are WHOLLY unobservable and are named under an explicit statement that they MUST NOT READ AS CLEAN, and the single role carrying 2,918 of 5,494 grants off one ReadOnlyAccess attachment has every aggregate printed WITH and WITHOUT it, with the reader told to take the second row first. A deliverable that leads with its own least convenient column is what makes this gradeable."
+      },
+      {
+        "criterion": "IAMt3-AC6",
+        "instance": "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~9/NFRA_IAMROLES202609.TO-IAM-t-3.proof_of_spec.json@a2da4d4a81d8",
+        "verdict": "PASS",
+        "reason": "PASS, AND IT ANSWERS BOTH HALVES. Can a reader tell whether each plan landed WITHOUT trusting the plan document, its directory or its status tag -- yes: each of the three carries one verdict from a closed set, its pinned vintage, DESIRED-plane citations at file:line@commit, LIVE-plane reads with region and date, and a negative control. ⭐ AND SECTION 0 STATES THE INDEPENDENCE AGAINST THE STRONGEST VERSION OF THE TEMPTATION rather than the weakest: `infra/security/remediation/completed/` is NOT empty, so the 2026-02-17 reorganisation demonstrably DID sort, which makes 'still in active/' read like a status claim -- and the cell refuses it anyway. ⛔ THE FINDING THAT JUSTIFIES THE CELL: plan 3's ONE landed item landed 2026-07-09 under a DIFFERENT PROJECT by a DIFFERENT SEAT, SIX WEEKS BEFORE THAT PLAN'S OWN `complete` TAG -- C-CLOSED-RECORD demonstrated rather than cited, and the tag was neither the reason it was done nor evidence that it was. And the confounder is named and RESOLVED rather than passed over: '32 of 32 volumes encrypted' looks identical whether or not the phase ran, because EbsEncryptionByDefault=true produces it either way, so it is settled on the one asymmetry default encryption HAS -- it cannot retro-encrypt an existing volume -- plus a six-volume mint burst. ⭐ AND THE SECOND HALF IS MET WITH SOMETHING CUTTABLE: each UNDETERMINABLE limb names a SPECIFIC BOUNDED READ-ONLY INSTRUMENT that would settle it, so the next round has an order to cut rather than a shrug."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "*** THE OUTCOME-LEVEL QUESTION 2.0.0_SA_COO~ZI PUT TO THIS SEAT, ANSWERED IN EVIDENCE RATHER THAN IN `grades` -- BECAUSE FWD-4 IS AN OUTCOME AND `grades` CARRIES CRITERIA, AND BECAUSE THIS SEAT DOES NOT HOLD THE OUTCOME GRADE. *** ⛔ THE OUTCOME-LEVEL RULING 2.0.0_SA_COO~ZI PUT TO THIS SEAT, ANSWERED PLAINLY BECAUSE LEAVING IT IMPLICIT IS HOW A 9-TO-0 TRAVELS AS CLOSURE. FWD-4's bar reads 'either in code or carries a NAMED owner and a reason'. The census is 1 DECLARED + 3 naming 1.0.0_SA_CTO~Z + 12 naming `NO-ACCEPTING-SEAT`. **`NO-ACCEPTING-SEAT` IS A FINDING VALUE, NOT A NAME**, so on the outcome's own words 4 of 16 satisfy it and the honest count is unchanged from where round 2 left it. A FINDING VALUE CANNOT SATISFY A BAR THAT ASKS FOR A NAME, and a grade that said otherwise would be reading the cell's bar in place of the PRD's. ⭐ BUT NOT-REALIZED IS ALSO THE WRONG RECORD, AND THIS IS THE PART THAT MATTERS: the mechanical movement is REAL (9 unowned rows to 0, re-derived at the drain on the COMMITTED blob, denominator held at 16, three regression bars at 0, a stale attachment count corrected at source), and the reason the remaining twelve are unowned is now MEASURED rather than assumed -- the lane exists, is capable, is the busiest in the estate, and HAS NEVER BEEN ASKED. THE RECOMMENDED GRADE IS APPLIED WITH THE ASK NAMED. ⚠ AND TWO OF THE TWELVE ARE NOT BLOCKED ON TEXT AT ALL: rows 8 and 10 already carry their adopting Terraform, written and INERT at `data-refresh/zz_adoption_candidate.tf.proposed`, with round 2's plan proving adoption non-destructive -- on those two AN ACCEPTANCE IS THE ONLY MISSING THING. ⛔ THE GRADE IS 1.0.0_SA_CTO~Z's AT COMPLETION_GRADES AND THIS IS A RECOMMENDATION, NOT A RULING: outcome grades are not this seat's limb, and this seat states its reasoning rather than substituting for the seat that holds it.",
+        "THE CENSUS BEHIND THE GRADES, WITH ITS DENOMINATOR AND BOTH JUDGMENT CARRIERS: 3 orders, 4 instance FILES but 3 distinct `to_id`s (the duplicate is byte-identical -- see C-S14), 19 criteria across the three -- 16 PASS, 3 UNVERIFIABLE-BY-INSTRUMENT, 0 FAIL. The three UNVERIFIABLE are EXACTLY the three judgment criteria, one per order, each carrying a `status_reason` naming this seat and each declining to self-grade. ⚠ DE-DUPLICATED ON `to_id` BEFORE GRADING: a FILE-keyed census would have graded IAM-t-1's AC6 TWICE, which is the same trap round 1 set (C-S1) and which round 2 did not.",
+        "⭐ ALL THREE CELLS REFUSED THE FAVOURABLE READING AVAILABLE TO THEM, AND THAT IS WHY THREE JUDGMENT GRADES COST ONE PASS EACH RATHER THAN AN AUDIT: IAM-t-1 declined to name a capable serial as an owner; IAM-t-2 led with UNOBSERVABLE at 66% and printed every aggregate twice to defuse one distorting role; IAM-t-3 stated its independence against the STRONGEST version of the temptation and named a finding its own project's status tag would have hidden. This is the same property that made NFRA_OPSEC202609 round 3 and this project's round 2 gradeable, and it is now a pattern across three rounds rather than a compliment.",
+        "⚠ THE LIMIT OF THESE THREE GRADES, STATED RATHER THAN IMPLIED: they were made against each instance's recorded output evidence and each cell's own stated case-against, plus this seat's independent re-derivation of Z-S14's forwarder claim and the duplicate-instance blob hashes. THIS SEAT DID NOT RE-RUN `permission-cold` OVER 219 ROLES, RE-TAKE ANY TERRAFORM PLAN, OR RE-EXECUTE THE LANDED/NOT-LANDED READS. A judgment criterion asks what a READER concludes, and these were graded on what the deliverables make readable."
+      ]
+    },
+    "spec_asserts": "Three of round 3's nineteen criteria are judgment criteria reserved to 3.0.0_SA_CVO~Z, and FWD-4's bar requires either in-code or a NAMED owner with a reason.",
+    "world_is": "All three judgment criteria are gradeable from the delivered evidence and all three PASS; and twelve of FWD-4's sixteen rows carry a finding value rather than a name, so the outcome is APPLIED and not REALIZED.",
+    "notes": "⛔ NO SLUG IS CUT BY THIS ROW AND THE PRECONDITION IS RE-TESTED UNSCOPED BEFORE ANY IS, because this seat asserted a slug was cuttable on NFRA_OPSEC202609 four hours ago on a FILTERED order census and was wrong (C-S42 there). MEASURED HERE UNSCOPED: `task-orders/*.md` = 18 orders, status histogram `{complete: 18}` -- every value read, none assumed terminal by an enumerated predicate, which is the second half of that lesson (an enumerated status predicate lapses silently when a new value appears; this project's sibling carries `open` and `blocked` that a staged/issued/in_progress test would have missed). || COMPLETION_GRADES remains 1.0.0_SA_CTO~Z's and is not owed while any grade is short of REALIZED."
+  }
+]
+```
+
+## C-S16 -- Z-S15: the job IS over on 18 of 18 real tags, so the slug is cut under an AUDITED OVERRIDE carrying the measurement -- and the order is NOT edited
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S16",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-10T18:42Z",
+    "one_line": "Z-S15 GRADUATES: the L10 gate refused a legitimate slug because a FIRST-MATCH regex read a `<status>` string out of an order's PROSE. The job IS over -- 18 of 18 terminal on their real tags -- so the slug is cut under an AUDITED OVERRIDE carrying the measurement, and the order is NOT edited.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "disarm_owner": "1.0.0_SA_CTO~Z, unchanged from the row. NOT TAKEN HERE.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-S15"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GRADUATES ON A MEASUREMENT WITH ITS OWN NEGATIVE CONTROL BUILT IN: the same bytes read by the gate's regex yield `tag` and read by a full-pair regex yield `complete`. That is not an interpretation of the file, it is two instruments disagreeing about it, and only one of them is reading the field the law names.",
+        "*** THE OVERRIDE IS TAKEN AND THIS SEAT STATES THE TEST IT APPLIED, BECAUSE AN OVERRIDE THAT CANNOT NAME ITS OWN DISCRIMINATOR IS A BYPASS. *** Four hours ago the identical gate refused this seat's `NFRA_OPSEC202609` slug and this seat WITHDREW IT AND OVERRODE NOTHING, because `TO-OP3A-S-1` was genuinely `staged` -- the job was not over and the gate was right. ⛔ THE TEST IS NOT 'IS THE REFUSAL INCONVENIENT' BUT 'IS THE FACT THE RULE PROTECTS TRUE': there it was false, here it is true on 18 of 18 orders' own tags. Same gate, same law, opposite acts, and the difference is measured rather than argued.",
+        "⛔ THE ALTERNATIVE WAS AVAILABLE AND IS REFUSED ON PRINCIPLE: editing `:32` so the order stops mentioning `<status>` would clear the refusal in one keystroke. That is AMENDING A TERMINAL ORDER TO SATISFY A GATE, the same act both MSTR seats refused when the W arm mis-graded remediation rows -- and the CTO's own ruling on that named it: had either edited the rows, 'the schema would have been bent to fit the defect and the defect would have become permanent and invisible.' The order is not malformed; a document about markup must be able to write markup.",
+        "⚠ AND THE SLUG CARRIES THIS ROW, WHICH IS THE POINT OF FILING BEFORE CUTTING RATHER THAN AFTER: `REMEDIATION_v3.Z.md` carries TEN rows, and the tenth is the finding that explains its own override. A slug whose override reason is only in a commit message leaves the next reader to reconstruct it; one that carries the row does not."
+      ]
+    },
+    "spec_asserts": "The gate asserts that a slug waits until every task order is terminal at HEAD.",
+    "world_is": "Every task order IS terminal; the gate's reading of one order's status is drawn from prose describing a different document.",
+    "notes": "⭐ THIS IS THE SECOND GATE DEFECT ROUTED FROM THIS SEAT TODAY AND THE THIRD INSTRUMENT-PLANE FINDING IN THIS PROJECT ALONE (Z-S10 the script's tree, Z-S14 the forwarder's tree, Z-S15 the regex's occurrence). ⛔ NONE OF THE THREE IS AN ARGUMENT FOR WEAKENING ANY GATE: in every case the LAW was right and the READ was wrong, and in every case the artifact was left alone."
+  }
+]
+```

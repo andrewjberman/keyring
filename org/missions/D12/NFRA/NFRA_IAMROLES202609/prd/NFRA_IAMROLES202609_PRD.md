@@ -68,6 +68,9 @@ lines are plain English and disputable, by rule, and carry no technical language
                     when. "Nobody has measured it" stops being the honest answer.
          SOURCE     brief Part I, O1; Part II Owns (the over-grant question, its
                     census and its coverage). Today the coverage is zero of 208
+                    -- QUOTING THE BRIEF. 208 is one reading of a family (208/216/
+                    219, one instrument at three vintages); 191 counts a DIFFERENT
+                    population. No single denominator is ratified. See section 7.
 
   FWD-2  For any role, a reviewer can see which of its permissions it has never used
          DONE WHEN  EXERCISED -- real roles have been read and their unused
@@ -101,10 +104,11 @@ lines are plain English and disputable, by rule, and carry no technical language
          SOURCE     brief Part I, O4; Part II Owns. F2/F3: 16 of 208 are governable
                     and undeclared, and are therefore invisible to every check that
                     reads our code
-                    ⛔ FIGURES CORRECTED 2026-09-10 -- the set is AT MOST 15 (one
-                    confirmed false positive) and the 208 denominator is UNRECONCILED
-                    against 216 and 191. See the correction box at section 7 and
-                    ledger/ROUND_ANALYSIS.round1.md; do not cite 16-of-208.
+                    ⛔ FIGURES CORRECTED 2026-09-10 -- the set is EXACTLY 15,
+                    MEASURED (one confirmed false positive), and no single denominator
+                    is ratified: 208/216/219 are ONE instrument family at three
+                    vintages, 191 is a different population. See the correction box at
+                    section 7 and ledger/ROUND_ANALYSIS.round2.md; never cite 16-of-208.
          BOUND BY   brief Part II -- these are TWO remedies, not one. Whether a role
                     should be in code at all is a different question from whether it
                     is over-granted, and a single cell doing both will do one badly
@@ -255,7 +259,8 @@ comp-tool build lane); the website IAM identity and its Terraform (`NFRA_WEBSITE
   per-role price has been read by anyone.** If it is ever taken off the shelf, pricing it is the
   first act -- and that is a VENDOR call requiring Andrew's explicit word, never an inherited
   assumption.
-- **`C-TWO-REMEDIES` (`D6`).** The 16 undeclared roles are a GOVERNANCE question and a PERMISSIONS
+- **`C-TWO-REMEDIES` (`D6`).** The **15** undeclared roles (⛔ **not 16** -- corrected 2026-09-10,
+  measured per-member by `IAM-r-3`; see section 7) are a GOVERNANCE question and a PERMISSIONS
   question. **They do not move together, and one cell doing both will do one of them badly.**
 - **`C-NO-ACCESSDENIED` (`D5`).** `CONTROLS_OVER_CARE.md:512` names the failure mode. This constrains
   HOW grants are narrowed and is a design input, not a sequencing note.
@@ -302,7 +307,19 @@ commissioned not to do.**
 > BELOW IS WITHDRAWN AS WRITTEN.** It asserted a settled set and a settled denominator; **neither is
 > settled**, and this PRD is the artifact that has been directing on both.
 >
-> **THE SET IS AT MOST 15, NOT 16.** `seeking-alpha-scraper-role` was classed LIVE-no-DECLARED and
+> ⭐ **UPDATED 2026-09-10 ~16:0xZ AFTER ROUND 2: THE BOUND BELOW IS DISCHARGED AND THE SET IS
+> EXACTLY 15, MEASURED.** `IAM-r-3` read membership PER MEMBER on Terraform SOURCE, classed by
+> `resource "aws_iam_role"` BLOCK PRESENCE and never by name mention -- the read against a plane that
+> did not build the set, which is the only method that could settle this: **1 DECLARED-IN-TF + 15
+> NOT-IN-TF.** Its negative control read NOT-IN-TF DESPITE NINE NAME HITS, which is the discrimination
+> the finding turns on. **"At most 15" is superseded by "exactly 15".**
+>
+> ⛔ **THE DENOMINATOR IS STILL NOT A SINGLE NUMBER, AND ROUND 2 DELIBERATELY DID NOT INVENT ONE.**
+> `IAM-r-2` established 208/216/219 as **ONE INSTRUMENT FAMILY AT THREE VINTAGES** (LIVE-no-DECLARED
+> stable at 16 across them) and **191 as a structurally different population**, then DECLINED to
+> compute a reconciling arithmetic. That refusal is correct and is not to be undone by a later editor.
+>
+> **THE SET IS EXACTLY 15, NOT 16.** `seeking-alpha-scraper-role` was classed LIVE-no-DECLARED and
 > **is declared** at `infra/aws/terraform/seeking-alpha/main.tf:241` — confirmed on a second
 > instrument (pathspec-scoped Terraform read, 1 hit / 569 files) with a negative control (an
 > undisputedly undeclared role, 0 hits / same 569). Rows `Z-S6`, `Z-W3-S2`.
@@ -318,7 +335,8 @@ commissioned not to do.**
 >
 > | reading | where it appears | instrument |
 > |---|---|---|
-> | **208** | `:70`, `:101`, and below | the brief's F2/F3 |
+> | **208** | the `FWD-1` and `FWD-4` SOURCE blocks, and below | the brief's F2/F3 |
+> | **219** | `IAM-r-2`'s third vintage | the SAME instrument as 208/216 -- one family, three vintages |
 > | **216** | below, in the same sentence as 208 | a merged-head re-measure (`216 hit(s) / 216 aws node(s)`) |
 > | **191** | the round-1 governance disposition | a fresh `comp-iam` parse |
 >
@@ -359,10 +377,11 @@ enumerate. **MECE is RUN below, not asserted.**
 | id | outcome | surface (engine) | claim | MEASURED-BY / evidence | lane | verb | depends_on | accept | bound |
 |---|---|---|---|---|---|---|---|---|---|
 | S1 | FWD-2 | The PERMISSION-GRAIN usage instrument -- for a given role, which granted permissions have never been used | measured | brief F5 (CORRECTED): `.tools/comp-iam-usage` is BUILT, tracked, executable, self-test passing -- and answers the ROLE axis (`role-cold`), not the PERMISSION axis. F4: the estate's tooling is pointed at what a role MAY do, never what it DOES | iam lane | port | -- | 1, 3 | `C-EXTEND-NOT-BUILD` (ruling 20) -- EXTEND the working tool; **a cell written as greenfield re-buys working code**. `C-ANALYZER-PRICED-FIRST`: Access Analyzer is the FALLBACK and pricing it is a VENDOR call at Andrew |
-| S2 | FWD-1 | The POSTURE NUMBER -- one figure for the estate's least-privilege standing, carrying its denominator and its vintage | absent | brief F2: 208 roles is the population and the limit on the number; brief Part I O1 requires a PRINTED denominator and a vintage | iam lane | wire | S1, S3 | 1 | a rollup of S1 and NOTHING ELSE; `C-COVERAGE-OVER-COUNT` -- a smaller number that states what it could not see beats a larger one that does not |
+| S2 | FWD-1 | The POSTURE NUMBER -- one figure for the estate's least-privilege standing, carrying its denominator and its vintage | absent | brief F2 (⛔ **QUALIFIED 2026-09-10:** 208 is one member of the 208/216/219 instrument family, not a ratified population -- section 7):
+208 roles is the brief's reading of the population and the limit on the number; brief Part I O1 requires a PRINTED denominator and a vintage | iam lane | wire | S1, S3 | 1 | a rollup of S1 and NOTHING ELSE; `C-COVERAGE-OVER-COUNT` -- a smaller number that states what it could not see beats a larger one that does not |
 | S3 | FWD-7 | The COVERAGE vocabulary -- `unused` rendered distinctly from `unobservable`, at the grain the claim is made | absent | brief F7: AWS's native unused-access finder is STILL not enabled, measured the same day; F5's `UNKNOWN` band is the existing seed | iam lane | wire | S1 | 2, 5 | **a grant nobody looked at must NEVER render as a grant shown clean.** This outranks `FWD-1`'s tidiness |
 | S4 | FWD-3 | The CONDITION AXIS reader -- what a policy REQUIRES of a caller (MFA, source, tags), not only what it scopes | absent | brief F8: least privilege has TWO axes and the estate measures ONE. The exhibit is F8's own worked policy | iam lane | wire | -- | 3 | bounded by brief Part VII item 5; `C-DESIRED-UNTIL-EXERCISED` -- read from a DOCUMENT, so DESIRED until a simulate battery runs |
-| S5 | FWD-4 | The DECLARED-vs-LIVE RECONCILER -- which live roles exist in code and which do not | **UNRECONCILED** | ⛔ **CORRECTED 2026-09-10:** this cell read *"16 of 208 undeclared is a SETTLED COUNT AND A SETTLED SET, corroborated across two substrates"*. **It is AT MOST 15** (one confirmed false positive, `Z-S6`/`Z-W3-S2`), the **denominator is unreconciled across 208 / 216 / 191**, and the "two substrates" **shared the classifier under test** — same instrument, two vintages, which shows consistency and never correctness. Reconciliation is round 2's cell **R2-B**. F3's substance stands: undeclared roles are invisible to the estate's own analysis. | iam lane | verify | -- | 1 | `D1` is RESOLVED -- `comp-find --corpus aws` works and carries its VINTAGE. **`C-TWO-REMEDIES`: this row RECONCILES only; it does not dispose** |
+| S5 | FWD-4 | The DECLARED-vs-LIVE RECONCILER -- which live roles exist in code and which do not | **UNRECONCILED** | ⛔ **CORRECTED 2026-09-10:** this cell read *"16 of 208 undeclared is a SETTLED COUNT AND A SETTLED SET, corroborated across two substrates"*. **It is EXACTLY 15** (⭐ **round 2, `IAM-r-3`: 1 DECLARED-IN-TF + 15 NOT-IN-TF, measured per member against a plane that did not build the set** -- superseding the round-1 bound of "at most 15", `Z-S6`/`Z-W3-S2`), the **denominator remains a family and no single figure is ratified** (208/216/219 = one instrument at three vintages; 191 = a different population; `IAM-r-2` declined to reconcile them arithmetically and was right to), and the "two substrates" **shared the classifier under test** — same instrument, two vintages, which shows consistency and never correctness. **`R2-B` IS LANDED; see `ledger/ROUND_ANALYSIS.round2.md`.** F3's substance stands: undeclared roles are invisible to the estate's own analysis. | iam lane | verify | -- | 1 | `D1` is RESOLVED -- `comp-find --corpus aws` works and carries its VINTAGE. **`C-TWO-REMEDIES`: this row RECONCILES only; it does not dispose** |
 | S6 | FWD-4 | The GOVERNANCE DISPOSITION of undeclared roles -- for each, in-code or a recorded, owned exemption | absent | brief Part II Owns (the disposition clause); F9: the instance is discharged and the CLASS re-arms on onboarding | iam lane | classify | S5 | 1 | ⛔ **`C-TWO-REMEDIES` (`D6`) -- governance and permissions DO NOT MOVE TOGETHER. This row is SEPARATE from S1 by contract, and one cell doing both will do one of them badly** |
 | S7 | FWD-6 | The HISTORICAL REMEDIATION completion evidence -- did a past least-privilege clean-up actually land | absent | brief F10: **THREE prior remediation plans exist with UNKNOWN status** | iam lane | verify | -- | 1 | landed-or-not on the ARTIFACT, never on the plan document's own say-so; `C-CLOSED-RECORD` -- a closed record is a snapshot, not an oracle |
 | S8 | FWD-5 | The PRE-FLIGHT BLAST RADIUS -- what a narrowing would break, known BEFORE the change | absent | brief F11: **the APPLIED-plane instrument already exists**; `D3`: no `simulate-principal-policy` battery has been run | iam lane | wire | S1, S4 | 4 | ⛔ `C-NO-ACCESSDENIED` (`D5`, `CONTROLS_OVER_CARE.md:512`) -- **the project must not cause the outage it exists to prevent.** `FWD-5`'s bar is EXERCISED for this reason and APPLIED would defeat it |

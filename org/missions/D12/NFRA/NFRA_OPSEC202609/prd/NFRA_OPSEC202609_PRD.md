@@ -222,6 +222,21 @@
                     made by a person in a browser has succeeded unchanged in the
                     same window, and the volume of automated submissions reaching
                     the entry store has been measured before and after
+                    GRAIN RULED 2026-09-10 (1.0.0_SA_CTO~Z, on Z-S172 routed by
+                    3.0.0_SA_CVO~Z): "REFUSED" IS GRADED AT THE ENTRY STORE, NOT AT
+                    THE WIRE. A submission that is accepted at the wire, flagged
+                    with a stored machine reason, kept out of the active store and
+                    raising no notification IS REFUSED for this outcome. It is NOT
+                    required to be visible to the sender.
+                    WHY THIS IS A READING AND NOT A WEAKENING: C-17 prefers a SILENT
+                    control, because a visible refusal tells an author it was caught
+                    and is the signal a naive bot adapts to. Read at the wire, this
+                    clause could ONLY be satisfied by choosing the less safe design
+                    -- which is exactly why S1-AC4 was ruled VOID BY CONSTRUCTION at
+                    C-S37. A bar an outcome can only meet by making the system worse
+                    is a defect in the bar. The ACCEPT line already reads at this
+                    grain: automated fillouts "stop ARRIVING", and arriving is a
+                    property of the store.
          ACCEPT     the NAIVE MAJORITY of automated fillouts stop arriving, real
                     advisor enquiries still arrive, and someone can say by how much
                     it changed. (v0.14 CALIBRATION, Andrew-direct: "Naive majority

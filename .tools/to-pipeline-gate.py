@@ -94,6 +94,8 @@ FABRIC_ENUM = ("laptop", "site-z")
 # A `~lane` suffix is stripped before the tier is read (a lane of an exec is still an exec). A value that
 # is not a serial at all (an executor CLASS, prose) is not this limb's -- the seating clause owns that shape.
 ISSUED_TO_RE = re.compile(r"<issued_to>\s*([^<\n]+?)\s*</issued_to>", re.I)
+ISSUED_BY_RE = re.compile(r"<issued_by>\s*([^<\n]+?)\s*</issued_by>", re.I)
+ISSUER_PROSE_RE = re.compile(r"^\s*[*_`]*\s*Issuer\s*[*_`]*\s*:", re.I | re.M)
 SERIAL_RE = re.compile(r"^\d+\.\d+\.\d+_[A-Z]{2}_[A-Za-z0-9]+")
 TIER01_RE = re.compile(r"^(?:0\.0\.\d+_[A-Z]{2}_|\d+\.\d+\.\d+_SA_)")
 # THE GRANT CANNOT BE EMPTY (Andrew-direct 2026-09-04 ~04:58Z at this terminal, "recs approved" on /open-calls CALL 1 REC (c),
@@ -599,6 +601,19 @@ def _self_test():
          lambda: any("exactly one of each" in x for x in _criterion_grammar_violations(tree, noexp))),
         ("grammar: a flat-root order is not graded (legacy population)",
          lambda: _criterion_grammar_violations("org/tier2_senior/A/task_orders/X.TO-1.md", v2) == []),
+        # GATE (vii): <issued_by> -- the field a DOWNSTREAM gate reads (2026-09-10, msg 20981).
+        # The FOUR refusals are the point; an arm that only proves the green case is half a test.
+        ("issued_by GREEN: tag present and non-empty -> admitted",
+         lambda: _issued_by_violations(tree, "<issued_by>2.0.0_SA_COO~ZZ</issued_by>" + chr(10) + v3) == []),
+        ("issued_by RED: no tag at all -> refused, and the refusal NAMES the downstream gate",
+         lambda: any("HALTGT" in x and "issued_by" in x for x in _issued_by_violations(tree, v3))),
+        ("issued_by RED: tag present but EMPTY -> refused (halt-gate CONTINUES past an empty match)",
+         lambda: _issued_by_violations(tree, "<issued_by></issued_by>" + chr(10) + v3) != []),
+        ("issued_by RED: a markdown Issuer: line ALONE -> still refused, and the refusal says the prose is MACHINE-INVISIBLE",
+         lambda: any("MACHINE-INVISIBLE" in x for x in
+                     _issued_by_violations(tree, "**Issuer:** 2.0.0_SA_COO~ZZ" + chr(10) + v3))),
+        ("issued_by: a flat-root order is NOT graded (same scope as every other gate in this file)",
+         lambda: _issued_by_violations("org/tier2_senior/A/task_orders/X.TO-1.md", v3) == []),
         # GATE (v): the grant cannot be empty (RULING 1 @9ef9a40aae)
         ("grant RED: a worker order with NO <paths> block -> refused, names the ruling",
          lambda: any("NO <paths> block" in x for x in _worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\n" + v3))),
@@ -683,6 +698,49 @@ def _self_test():
         failed += 0 if ok else 1
     print("[to-pipeline-gate --self-test] RESULT: %d arm(s) failed of %d" % (failed, len(arms)))
     return 1 if failed else 0
+
+
+def _issued_by_violations(rel, text):
+    """GATE (vii): a NEW tree task order carries a machine-readable <issued_by>.
+
+    ROUTED 2026-09-10 by 2.0.0_SA_COO~ZZ (msg 20981), found by worker 0.9.0_WK_NFRA_REPORT~3 on
+    NFRA_REPORT RP-s-23 and filed as that lane's Z-S21: safe-apply, the deploy path the order
+    itself MANDATES in NEVER-class terms, was mechanically blocked because
+    .tools/halt-gate-check.sh:142-160 halt_gate_worker_issuer() greps the order for the
+    <issued_by> tag to admit the worker on a gated verb -- and CONTINUES past an empty match, so
+    with no tag anywhere the worker-admission path at :172 cannot resolve an issuer at all.
+
+    WHY THE DEFECT COULD SURVIVE L6: this gate already enforces <decomp_ref>, <issued_to>, the
+    <paths> grant, the preflight batteries, cell-id resolution and criterion grammar -- and NOT the
+    one field a DOWNSTREAM gate needs. An order could be fully L6-conformant and still unable to
+    seat its worker on any gated verb. It surfaced at exactly ONE cell because the missing tag does
+    not block ordinary worker action: it blocks the HALTGT checkpoint, and RP-s-23 was the only
+    cell in its round calling a gated verb. On a round with no deploy cell it never appears.
+
+    MEASURED BEFORE LANDING, 163 tree task orders: 122 carry the tag, 41 do not, and only FOUR of
+    those 41 are NON-TERMINAL -- so this refuses new defects without stranding a live population.
+    The convention is settled and wide: 2.0.0_SA_COO~A carries it at line 6 of every NFRA_CLDGRPH
+    order, beside <issued_to>. Refusing at AUTHORSHIP stops it being discovered at a deploy.
+
+    THE MARKDOWN SPELLING IS REFUSED ON PURPOSE. 2.0.0_SA_COO~ZZ offered a second shape -- teach
+    halt-gate-check to also read a prose Issuer: line. DECLINED: two accepted spellings for one
+    machine contract is how a convention drifts, and the estate has already settled on the tag at
+    122 of 163. The prose line is NAMED in the refusal instead, because that is the exact mistake
+    being made and the author is otherwise looking straight at what they believe is an issuer.
+    """
+    rel = rel.replace("\\", "/")
+    if not TREE_TO_RE.search(rel):
+        return []   # flat-root legacy population, out of scope like every other gate in this file
+    m = ISSUED_BY_RE.search(text)
+    if m and m.group(1).strip():
+        return []
+    prose = "" if not ISSUER_PROSE_RE.search(text) else (
+        " This order DOES carry a human Issuer: line -- that is a RECORD-FACE line and it is "
+        "MACHINE-INVISIBLE; the downstream gate greps the tag, never the prose.")
+    return ["%s: NEW tree task order carries no non-empty <issued_by>. halt-gate-check.sh's HALTGT "
+            "checkpoint resolves the worker's issuer from that tag, so without it the worker CANNOT "
+            "BE ADMITTED on a gated verb (safe-apply / safe-deploy) -- including one this order's "
+            "own cell mandates.%s Add the <issued_by> tag beside <issued_to>." % (rel, prose)]
 
 
 def _issued_to_tier_violations(rel, text):
@@ -1466,6 +1524,9 @@ def check_file(root, rel):
 
     # GATE (i) -- Tier-0/1 in <issued_to> on a NEW tree TO is refused (2026-09-03, @716a9bc7ce call 3).
     v.extend(_issued_to_tier_violations(rel, text))
+    # GATE (vii) -- a NEW tree TO carries the machine-readable <issued_by> that a DOWNSTREAM
+    # gate needs to seat its worker (2026-09-10, 2.0.0_SA_COO~ZZ msg 20981 / that lane's Z-S21).
+    v.extend(_issued_by_violations(rel, text))
     # GATE (v) -- a NEW tree TO issued to a worker carries its grant, the <paths> block (RULING 1 @9ef9a40aae).
     v.extend(_worker_grant_violations(rel, text))
     # GATE (iv) -- a NEW tree TO commits only under 2.0.0_SA_COO (LD-0521 A3).

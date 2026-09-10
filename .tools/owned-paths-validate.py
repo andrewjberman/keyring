@@ -121,7 +121,24 @@ def _owns_tree_deliverables(agent_norm: str, agent_base: str, path: str) -> bool
 # A census that cannot run admits nothing (fail-closed). Rationale, measured: v3's first drain (worker ~2, 2026-09-04
 # 03:5xZ) committed both real surfaces its order named through the audited override because no lane admitted it.
 _WORKER_SERIAL_RE = re.compile(r"^0\.9\.0_WK_(?P<code>[A-Z0-9_]+?)[~_](?P<n>[0-9]+)$")
-_TO_STATUS_RE = re.compile(r"<status>\s*([A-Za-z_-]+)", re.I)
+# ANCHORED AT LINE START 2026-09-10 (3.0.0_SA_CVO~Z, row Z-S15 graduated at C-S16). The bare
+# form was applied with .search(), so it took the FIRST occurrence anywhere in the file --
+# INCLUDING INSIDE PROSE. TO-IAM-t-3's text reads "Carries NO <status> tag at all" while
+# DESCRIBING A DIFFERENT DOCUMENT, so the gate captured "tag", failed to find it among the
+# terminal words, and declared a COMPLETE order non-terminal. The order whose subject is
+# whether status tags mean anything is the one misread on its own status tag.
+# GENERAL FORM: A FIRST-MATCH READ OF A STRUCTURED FIELD ASSUMES THE FIELD APPEARS BEFORE ANY
+# DISCUSSION OF IT. True of most documents; false for exactly the documents that are ABOUT the
+# field -- which are the ones this estate writes when it audits its own markup.
+# WHY ANCHORED AND NOT PAIRED, MEASURED OVER 208 TASK ORDERS BEFORE CHOOSING:
+#   requiring </status>  -> REGRESSES 131 of 208. Most orders never close the tag; the "obvious"
+#                          fix would have been far worse than the defect.
+#   last-match           -> works, but changes the verdict on 2 files for the benefit of 1.
+#   LINE-ANCHORED        -> 0 regressions, and disagrees with the old form on EXACTLY ONE file:
+#                          the defective one. A real tag starts its line; a prose mention does not.
+# DUPLICATED IN .tools/owned-paths-validate.py AS _TO_STATUS_RE -- two carriers of one pattern,
+# fixed identically in the same commit. Naming it because the next edit must move both.
+_TO_STATUS_RE = re.compile(r"^\s*<status>\s*([A-Za-z_-]+)", re.I | re.M)
 _TO_ISSUED_TO_RE = re.compile(r"<issued_to>\s*([^<\n]+?)\s*</issued_to>", re.I)
 # line-anchored (94157 gap (a)): the tag alone on its line opens the block; a prose mention is not the block
 _TO_PATHS_RE = re.compile(r"^[ \t]*<paths>[ \t]*\r?\n(.*?)^[ \t]*</paths>[ \t]*$", re.S | re.I | re.M)
