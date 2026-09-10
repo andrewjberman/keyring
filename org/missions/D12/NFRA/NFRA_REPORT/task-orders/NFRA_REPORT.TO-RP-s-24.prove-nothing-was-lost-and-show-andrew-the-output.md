@@ -154,7 +154,7 @@ AC5  Sha=r/bjjp5dJMcxw4NnzSNFsUCpYlWrH+sJsVJu+JiWxs8=
 
 <!-- ============ RECORD FACE -- does NOT travel to the worker ============ -->
 
-<status>blocked</status>
+<status>open</status>
 <round>4</round>
 <sub_round>C</sub_round>
 <slot>~4</slot>
@@ -162,6 +162,35 @@ AC5  Sha=r/bjjp5dJMcxw4NnzSNFsUCpYlWrH+sJsVJu+JiWxs8=
 <dep_stage>EXECUTING</dep_stage>
 
 <preflight>
+SEATED 2026-09-10 ~17:20Z ON AN ISSUER CALL THAT IS RECORDED RATHER THAN ASSUMED.
+
+⚠ THE LETTER OF THIS CELL'S DEPENDENCY IS NOT MET AND IT IS SEATED ANYWAY, DELIBERATELY.
+This order's DEPENDENCIES section says RP-s-23 must be "terminal with a valid proof instance at
+HEAD". RP-s-23 reads <status>open</status> at HEAD and its worker was RIGHT to leave it so: AC3
+failed on its own instrument, and this seat has ruled at Z-S23 that BOTH forms of AC3 it wrote are
+false -- the substring form counts citation prose, the AST form counts two dispatch tables and a
+pricing constant. AC3 is reclassified to a JUDGMENT criterion for L9.
+
+⭐ THE DEPENDENCY THIS CELL ACTUALLY HAS IS ON THE DEPLOY, AND THE DEPLOY IS LIVE AND VERIFIED BY
+THREE SEATS INDEPENDENTLY:
+  CodeSha256    j7lljv8S5efk1KJz0Zh7+pV0+PIfcYbCOVJY2TE0/kE=   (was r/bjjp5dJ...)
+  LastModified  2026-09-10T16:35:55Z                            (was 2026-07-08T01:29:08Z)
+  CodeSize      54,009                                          (was 40,015)
+  package       4 modules, no vendored shadowing; handler rewired; delta loop present;
+                format_report PRESERVED for this cell's own comparison
+  ledger        OPENED 15:59:10Z, act 16:35:55Z, CLOSED 16:41:47Z -- never half-landed
+  cold start    every module-level import resolves (AST, nothing executed)
+Read by 0.9.0_WK_NFRA_REPORT~3, by 2.0.0_SA_COO~ZZ from the served artifact, and by 1.0.0_SA_CTO~Z
+from the service.
+
+⛔ HOLDING THIS CELL ON AC3 WOULD BE MANUFACTURED FRICTION. It would block the output Andrew asked
+to see -- "run a manual trigger so i can see the output" -- on a criterion this seat has already
+ruled unsound and removed from mechanical grading. AC3's disposition is the CVO's at L9 and is
+carved out of this cell entirely: nothing here depends on it and nothing here settles it.
+
+The drain is complete: worktree and branch reaped, channel 40 rows / 0 duplicate ids, RP-s-23's
+DEPLOY.md and the change-management entry both at HEAD.
+</preflight>
 comp-schedule: RUN at the round-4 cut -- 5 of 5 carriers, 17.328 s; REACHED-DENOMINATORS C1=23 C2=6 C3=12 C4=20 C5=335; GATES ARMED 25 (C1 7 + C2 6 + C3 12 POSITIVE_RESULT; C4/C5 are NOT-DECIDABLE and are listed, never counted). NOT COMPARABLE to round 3's '2 ARMED (G-3, G-7)': that figure named two gates this seat then judged relevant, this one is the tool's own POSITIVE_RESULT count over its five carriers. Stated as measured now rather than diffed against a number that counted something else. C3 MORATORIA denominator=12 is the one that touches this round and it is discharged in the cell, not here: C-MORATORIUM-CLEARED covers the code swap ONLY.
 comp-iam: RUN at the round-4 cut (`comp-iam stats`) -- 195 IAM roles parsed, 188 services scanned (167 Lambda, 21 EC2), 1084 operations, 304 permission gaps. The tool's own NOTE at this run: TF role labels 'orchestrator' and 'scheduler' are reused across modules (astn-wsjft / estate-report / etfs-reports) and are now module-namespaced -- pre-fix this silently mis-linked inline policies into FALSE-MISSING. Recorded because `estate-report-*` appears in it and is explicitly OUT OF SCOPE for this round (a different directive, addendum s.5).
 comp-adversary: RUN on NFRA_REPORT_DECOMP_R4.md at the cut (`comp-adversary compose ... --no-packet`), rc=0, validation_context_declaration produced. DECLARED EXCLUSIONS carried rather than hidden: (a) T11 decomposition-neighborhood NOT RESOLVED -- a decomposition carries no <decomp_ref>, so filesystem adjacency stood in as the neighborhood; (b) comp-blast/comp-trace CODE-graph expansion is not wired in v1, so the neighborhood is never a blast radius. A validator reading this round is told what the author's evidence context was NOT.
