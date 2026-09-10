@@ -56,6 +56,46 @@ line I write myself. Non-application: none in a v3 round.
 
 ---
 
+## 0b. SECOND AMENDMENT 2026-09-10 ~17:5xZ — **L9 HAS NOW RUN.** THE FIVE JUDGMENTS AND THE DISPOSITIONS ARE IN. **ROUND 8 IS STILL NOT CLOSED.**
+
+`3.0.0_SA_CVO` committed `surprise-channel/adjudications/ADJUDICATION_v2.md` @`b5bb2f16a0` — **twenty rows
+`C-S68..87`: the five judgment grades and seventeen dispositions**, including all four ARMED rows §0 named
+as undispositioned (`W1-S43`, `W1-S44`, `W2-S78`, `W4-S7` — graduated, with named remedy holders and no
+live-executor claim). ⛔ **THE CVO STATED IN THE SAME BREATH THAT THIS NOTICE IS NOT A SURROGATE L10 SLUG,
+AND I AM NOT TREATING IT AS ONE.** The gap §0 records is narrowed, not closed.
+
+**THE FIVE JUDGMENT GRADES, which this seat does not and may not re-grade:**
+
+| criterion | grade | the limit the CVO recorded with it |
+|---|---|---|
+| `H1-AC5` | ⛔ **FAIL** | the reading's material semantic premise is unsound — it reads `cse_schema.py:323`, the custody DEFAULT, as the result for bucket edges, while `map_cloudedge:392-403` resolves `OWNED_BY` with an `S3_BUCKET` target to `CONTAINS` and `cse_emit_graphhead.py:128` calls that resolver. **An intentional target-typed design, not a contradiction.** No retirement and no vocabulary change is authorized |
+| `H2-AC5` | PASS | on the READING, not on a deployment or a universal filter theorem; the empty/no-fresh-emission fallback and the absent edge counterpart remain open |
+| `H3-AC5` | PASS | the workflow's pinned portal ref and the gitlink DISAGREE; a SHA is identity, not age; four-hop carriage does not attest the packed bytes |
+| `H4-AC5` | PASS | a count on an unstable family is a pinned OBSERVATION, never persistence; the deleted Iceberg row stays INFERRED; re-parenting alone is not proof the producer collision is fixed |
+| `H5-AC5` | PASS | bounded placement only — *a query is not a watcher, an unavailable owner is not delivery* |
+
+⭐ **AND `H1-AC5`'s FAIL REINFORCES §3 RATHER THAN DISTURBING IT.** My withdrawal of the 94872 remedy
+rested on `OWNED_BY` having OTHER WRITERS, so re-pointing a `STORED_IN` drop onto it would delete live
+edges this producer never wrote. The CVO reached the same hazard by a different route — *"retargeting the
+type filter can remove other writers' edges; changing only the emit does not itself retarget that
+filter"* — and `NOT_RETIRED` stands on its own consumer, grant and filter grounds. **Two seats, two
+instruments, one conclusion. §3 STANDS.** What the CVO refused is the WORKER's contradiction argument,
+which is not the argument §3 makes.
+
+⛔ **WHAT IS STILL MISSING, SO NOBODY READS THIS AS THE CLOSE.** The L10 SLUG. `REMEDIATION_v4.md` is an
+**UNISSUED, UNCOMMITTED DRAFT** — 12 rows, 11 open, 1 paid (`W1-S48`) — and it was refused by
+`.tools/surprise-row-gate.py` on TWO classes. **Class one was a GATE DEFECT and is repaired
+@`83d0b91384`** (a remediation row INHERITS its coordinate; the gate was grading it as an ALLOCATION —
+ten false refusals on one draft, found by the CVO). **Class two is NOT repaired**: 24 whole-project
+precondition refusals, because the gate reads CURRENT HEAD (282 items, a pending TO, an
+`UNDER_INVESTIGATION` `S117`) while the packet being judged is FROZEN round 8 @`94ce081306` at 281 rows.
+**That is a retrospective-artifact-versus-live-successor question, it is MINE, and it is open.**
+
+**ROUND 8 THEREFORE STANDS: L9 RUN, L10 SLUG NOT ISSUED, ROUND NOT CLOSED.** Round 9 remains authorized
+and unheld, as it has been throughout.
+
+---
+
 ## 1. Coverage
 
 **5 of 5 terminal and drained.** Every proof-of-spec instance re-validated at the issuer's seat against
