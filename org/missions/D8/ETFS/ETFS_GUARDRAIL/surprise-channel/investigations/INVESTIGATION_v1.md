@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `ETFS_GUARDRAIL-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `ETFS_GUARDRAIL-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`ETFS_GUARDRAIL-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 54 rows (S11 appended by `3.0.0_SA_CVO` 2026-09-10T02:32Z -- the terminal-send guard's wrong key is at TWO sites, the second being the `terminal_qa` rehearsal; was 53).
+`ETFS_GUARDRAIL-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 66 rows (W4-S2, W4-S3 and W4-S4 appended by `0.9.0_WK_ETFS_GUARDRAIL~4` 2026-09-10T05:1xZ and merged with CLOUD by the same seat; was 59)
 **Round 1 task orders:** 14, one per cell of `../../decompositions/ETFS_GUARDRAIL_DECOMP.md` v0.1.1, on three worker
 slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
 
@@ -1320,6 +1320,152 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "FWD-7's terminal send: on a genuine refusal the ONE terminal SES send fires to the terminal recipient; and `terminal_qa` is the send-free rehearsal of that path against the month's REAL coverage artifacts (EG-sb-7 / EG-s-8, round 1, graded and delivered).",
     "world_is": "The served coverage_unresolved.json is keyed by PARTNER and carries no `unresolved` key, so both the production guard and its own rehearsal read an empty list: the send cannot fire on real data, and the rehearsal cannot show that it cannot.",
     "notes": "ARMED because the round-3 cell is not cut yet and, as reported, it is scoped to the one production site: a fix there would leave the rehearsal still passing vacuously and the next reader of these artifacts unexamined. Nothing was written, invoked or sent by this seat; both reads above are reads. This row does not re-grade round 1 -- that is the L9/L10's, and the honest statement is that round 1's PASS was earned against every instrument then available, including one that shared the defect."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W5-S1",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~5",
+    "surfaced_at": "2026-09-10T03:52Z",
+    "one_line": "S19-AC1's arm (g) and arm (d) CANNOT BOTH HOLD AS WRITTEN, and the reason is structural, not incidental. Arm (d) requires the fire to be the RULE'S OWN SHAPE (no `date` key), and arm (g) requires that 'no other key under daily/ changed in the window'. But the rule's shape enters `lambda_handler` at the tail: `day = _latest_partition()` then `_process_date(day, universe)` (lambda_function.py:310-311) ALWAYS re-computes and re-PUTs the NEWEST partition's slice BEFORE `_catchup_missing_dates` is ever called at :312. So any scheduled-shape fire necessarily writes a second key -- here `daily/cottonwood/2026-09-08.json` -- and a criterion that forbids that forbids the very invocation shape the same criterion mandates. MEASURED, and the distinction is the whole point: that key's ETag is `5da999e2fbfadfe302df35ef24407372` BEFORE the fire (LastModified 2026-09-09T23:15:52.000Z) and `5da999e2fbfadfe302df35ef24407372` AFTER it (LastModified 2026-09-10T03:45:38.000Z) -- IDENTICAL bytes, a touched timestamp. Across the whole `daily/` prefix (denominator 273 before, 274 after) the count of keys whose CONTENT changed is ZERO; the count whose LastModified moved is 2 (the hole itself, restored, and 09-08); the one ADDED key is this order's own archive copy, named in the change-management entry before the act. HOW THIS WORKER RESOLVED IT rather than silently re-cutting: arm (g) is reported on CONTENT (ETag/size/sha256), which is what 'moved' can mean without contradicting arm (d), and the timestamp touch on 09-08 is PRINTED and named as the rule's own idempotent main-path rewrite rather than omitted. The literal sub-clause 'no other key changed' is FALSE if 'changed' means LastModified and TRUE if it means bytes; the worker does not get to pick which the criterion meant, so both numbers are printed and the CVO decides at L9.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/cot-pipeline/cot-etf-ownership-daily/lambda_function.py:304-317 @ea47e92a72 -- the handler's tail: :304-308 the explicit-date branch (unreachable without a `date` key), :310 `day = _latest_partition()`, :311 `result = _process_date(day, universe)` (the unconditional main-path WRITE), :312 `catchup_results = _catchup_missing_dates(universe, skip_date=day)`. The main-path write is not conditional on the slice being absent -- `_process_date` calls `s3.put_object` at :245 every time.",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~5/egs19_evidence.json@abba4a2d68 -- key `daily_delta`: 3 entries over a before/after denominator of 273/274 keys; `daily/cottonwood/2026-09-08.json` CHANGED with before.ETag == after.ETag == \"5da999e2fbfadfe302df35ef24407372\" and Size 1345 both sides; `daily/cottonwood/2026-09-03.json` CHANGED with before.ETag == after.ETag == \"212d7da63d847fd3f25facd6a651b481\"; `daily/_archive/cottonwood/2026-09-03.20260910T034042Z.json` ADDED.",
+        "The producer's own log for request fdc655fd-08fd-4b1b-b58f-ad6199f9396e, /aws/lambda/cot-etf-ownership-daily read BY TIME: 03:45:37.943Z `OK: wrote s3://opal-data-etfs/daily/cottonwood/2026-09-08.json (4 ETF slices, total_ownership=53641351.75, source_as_of=2026-09-08, ...)` -- the main-path write, 0.45 s BEFORE the catch-up write at 03:45:38.389Z.",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-19.the-catch-up-branch-driven.md@ea47e92a72 -- S19-AC1 arm (d) 'the payload byte-equal to the rule's delivered envelope with NO `date` key' and arm (g) 'no other key under `daily/` changed in the window'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S19-AC1 arm (g): 'NOTHING ELSE MOVED: the partner's slice count before and after are equal (denominator printed) and no other key under `daily/` changed in the window' -- while arm (d) simultaneously mandates that the fire be the rule's own scheduled shape with no `date` key.",
+    "world_is": "The rule's shape ALWAYS re-processes and re-PUTs the newest partition's slice at lambda_function.py:310-311 before the catch-up sweep runs at :312, so a second key under `daily/` is written by construction on every scheduled-shape fire. Measured here on `daily/cottonwood/2026-09-08.json`: identical ETag and size before and after, LastModified moved -- byte-identical idempotent rewrite. Content-changed keys under `daily/`: 0 of 273.",
+    "notes": "INERT, and the reasoning is stated so it can be overturned: nothing is damaged or left wrong by this -- the second write is byte-identical and is the producer's designed idempotence, and the partner's slice count is unchanged at 62 before and after. The item is a CRITERION-SHAPE finding for the CVO's L9 read of arm (g), not a defect in the producer and not a hazard in the world. It also generalises beyond this order: any future cell that fires ANY of these daily producers in the rule's shape and then asserts 'nothing else moved' will hit the same wall."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W5-S2",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~5",
+    "surfaced_at": "2026-09-10T03:53Z",
+    "one_line": "THE ARCHIVE PREFIX IS NOT INVISIBLE TO EVERY ENUMERATION IN THIS PROJECT, and this worker checked BEFORE writing into it rather than after. The face reasons that `daily/_archive/<partner>/` is 'a prefix OUTSIDE `daily/<partner>/` so no producer, consumer, census or month-end enumeration can ever see it as a slice'. The producer half is exact and re-derived: `cot-etf-ownership-daily`'s role can only List `opal-data-etfs` under the prefixes `daily/cottonwood/*` and `config/*` and can only PutObject under `daily/cottonwood/*`, so the producer structurally cannot see or touch the archive; `_output_exists` and `_catchup_missing_dates` build keys as `OUTPUT_PREFIX + day + '.json'` and never enumerate. The CENSUS half is where the world differs: a census over the repo for code that paginates the BARE `daily/` prefix returns 16 hits over 153347 files, of which one is a LIVE first-party consumer on a DIFFERENT bucket (estate_report_runner.py:1031, BUCKET = os.environ['ESTATE_REPORT_BUCKET'] -- not opal-data-etfs, so it is out of scope) and one is INSIDE THIS VERY PROJECT on THIS bucket: `0.9.0_WK_ETFS_GUARDRAIL~1`'s round-1 battery does `list-objects-v2 --bucket opal-data-etfs --prefix daily/` and prints `daily/ denominator: %d key(s) total`. That denominator was 273 before this order and is 274 after it, and the extra key is this order's archive. WHY THIS IS RECORDED AS INERT rather than ARMED, stated so it can be overturned: the sibling battery's only ARM over that listing filters on `LastModified` starting `2026-09-10T01:` and the archive is stamped 03:45:24Z, so it falls outside the arm and cannot flip it; the bare count is printed as context, not asserted as a verdict; and no month-end enumerator, no consumer of this bucket and no producer reads the bare prefix. The archive also CANNOT be removed to make the point moot -- it is the standing rollback for a delete made against a bucket with versioning DISABLED, and this order's BOUNDS forbid a second delete of any kind.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find over the corpus for code paginating the bare `daily/` prefix, this seat 2026-09-10 ~03:3xZ: DENOMINATOR 16 hit(s) across 153347 file(s) scanned, bands SURFACED=11 CONFIG=2 TEST=2 DOC=1 -- 6 of the 11 SURFACED hits are copies under `.scratch_os19/`, 1 is a smartx-bucket probe, 2 build `daily/ + partner + /` (partner-scoped, cannot see `_archive`), and 1 is estate_report_runner.py.",
+        "infra/aws/ec2/estate-report-runner/estate_report_runner.py:1031 @ea47e92a72 `for page in paginator.paginate(Bucket=BUCKET, Prefix=\"daily/\")` with :56 `BUCKET = os.environ[\"ESTATE_REPORT_BUCKET\"]` (comp-read --enumerate 'BUCKET\\s*=': 1 of 1 whole-value hit, band CODE) -- a DIFFERENT bucket, therefore out of scope; and its selection is `sorted(keys)[-1]`, for which `daily/_archive/` (0x5F) would in any case sort below `daily/cottonwood/` (0x63).",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/test_egs15_september_refusal.py:271 @ea47e92a72 `rc, dl, raw = aws_json([\"s3api\", \"list-objects-v2\", \"--bucket\", BUCKET, \"--prefix\", \"daily/\"])` with :33 `BUCKET = \"opal-data-etfs\"`, and :283-284 printing `daily/ denominator: %d key(s) total, %d written in the run window`; the run-window filter at :272 is `str(c[\"LastModified\"]).startswith(\"2026-09-10T01:\")`.",
+        "IAM re-derived at this seat: role `cot-etf-ownership-daily-role`, inline policy `s3-etf-ownership`, Sid `ListEtfsOwnPrefixes` conditions s3:prefix on ['daily/cottonwood/*', 'config/*'] and Sid `WriteCottonwoodOwnershipSliceOnly` grants PutObject on arn:aws:s3:::opal-data-etfs/daily/cottonwood/* only -- the producer cannot list or write the archive prefix.",
+        "org/critical_paths/change_management/20260910T0340Z_etfs-guardrail-egs19-catchup-driven-20260910_deploy_completion.md@abba4a2d68 -- the archive named as the standing rollback, and the BOUNDS clause forbidding a second delete."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The face: archive to `daily/_archive/<partner>/<date>.<UTC>.json`, 'a prefix OUTSIDE `daily/<partner>/` so no producer, consumer, census or month-end enumeration can ever see it as a slice'.",
+    "world_is": "True for every producer and consumer measured, and for the one live first-party bare-`daily/` enumerator (which reads a different bucket). NOT true for one census inside this same project: `0.9.0_WK_ETFS_GUARDRAIL~1`'s round-1 battery lists the bare `daily/` prefix on opal-data-etfs and prints its count, which moved 273 -> 274 because of this order's archive key.",
+    "notes": "Filed for FORM, not significance -- the worker judges whether a spec-vs-world mismatch exists, not whether it matters. Nothing was done differently because of it: the archive went exactly where the face named, because the face's prefix IS the order and a path choice is not the worker's to widen. If the COO or CVO wants the count restored, the disposition is to remove the archive object AFTER the round is terminal, which is an act this order explicitly forbids this worker from taking."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W5-S3",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~5",
+    "surfaced_at": "2026-09-10T03:54Z",
+    "one_line": "'BYTE-EQUAL TO THE RULE'S DELIVERED ENVELOPE' IS NOT A SATISFIABLE TEST FOR ANY PAYLOAD, INCLUDING ANOTHER DELIVERY OF THE SAME RULE. S19-AC1 arm (d) asks for 'the payload byte-equal to the rule's delivered envelope with NO `date` key (both printed)'. Two things make the literal form unreachable, and neither is a shortfall in the execution. FIRST, the envelope is not a constant: EventBridge's scheduled envelope carries a per-delivery `id` (a fresh UUID) and a per-delivery `time`, so two consecutive deliveries of the SAME rule are not byte-equal to EACH OTHER, and no constructed payload can be byte-equal to one that has not happened yet. SECOND, the delivered bytes are UNOBSERVABLE at this seat: `cot-etf-ownership-daily` never logs its `event` -- the handler goes straight to `_load_universe()` at :298 -- so no past scheduled delivery left its envelope anywhere readable, and the Lambda data-plane invoke is not a CloudTrail management event. WHAT IS ACTUALLY PROVABLE, and what this worker proved instead: `list-targets-by-rule --rule cot-etf-ownership-daily-schedule` returns 1 of 1 target with NO `Input`, NO `InputPath` and NO `InputTransformer` key, which is exactly the condition under which EventBridge delivers its default scheduled envelope unmodified; the payload fired carries the same 9 top-level fields of that documented envelope with the rule's own ARN in `resources`; and -- the part that actually decides the branch -- `event.get(\"probe\")` is falsy and `event.get(\"date\")` is None for it, so `lambda_handler` could not reach the probe branch at :300-302 or the explicit-date branch at :304-308 and had to fall through to :310. The claim that survives is SHAPE-EQUAL PLUS BRANCH-EQUIVALENT, not BYTE-EQUAL, and this row exists so the difference is on the record rather than smoothed over in a proof-of-spec line.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`.tools/aws events list-targets-by-rule --rule cot-etf-ownership-daily-schedule --output json`, this seat 2026-09-10 ~03:3xZ, rc 0: Targets = [{Id: CotEtfOwnershipDailyLambda, Arn: arn:aws:lambda:us-east-1:313476888478:function:cot-etf-ownership-daily}] -- 1 of 1 target, and the object carries no Input, InputPath or InputTransformer key at all.",
+        "`.tools/aws events describe-rule --name cot-etf-ownership-daily-schedule`, rc 0: ScheduleExpression cron(30 10 * * ? *), State ENABLED, EventBusName default; and `lambda get-policy --function-name cot-etf-ownership-daily` rc 0: 1 of 1 statement, Sid ScheduleCotEtfOwnershipDaily, Principal events.amazonaws.com, Condition ArnLike AWS:SourceArn arn:aws:events:us-east-1:313476888478:rule/cot-etf-ownership-daily-schedule -- exactly one invoker, that rule.",
+        "infra/aws/lambda/cot-pipeline/cot-etf-ownership-daily/lambda_function.py:297-312 @ea47e92a72 -- `lambda_handler` never prints or persists `event`; the only reads of it are `event.get(\"probe\")` at :300 and `event.get(\"date\")` at :304.",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~5/egs19_evidence.json@abba4a2d68 -- keys `fire_payload` (the 9-field envelope actually sent), `fire_payload_has_date_key` false, `fire_payload_has_probe_key` false, and `invoke_meta` StatusCode 200 for request fdc655fd-08fd-4b1b-b58f-ad6199f9396e."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S19-AC1 arm (d): 'the payload byte-equal to the rule's delivered envelope with NO `date` key (both printed)'.",
+    "world_is": "The rule's delivered envelope carries a per-delivery UUID `id` and a per-delivery `time`, so it is not byte-equal even to another delivery of itself; and the producer never logs its event, so no delivered envelope is observable at this seat. The provable and proven substitute is that the target carries no Input/InputPath/InputTransformer (1 of 1 target), so the default scheduled envelope is what the rule delivers, and the payload fired is shape-equal to it and branch-equivalent in the handler.",
+    "notes": "No verdict is offered on whether the substitute satisfies arm (d) -- that is the CVO's at L9, and S19-AC2 is the judgment criterion where it belongs. Recorded because a proof-of-spec line reading 'byte-equal' would have been false, and a line reading 'equal' without saying in WHAT would have been a summary field no consumer could reject on."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S30",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T03:40:00Z",
+    "one_line": "S16-AC1 arms (b) and (c) name evidence the served artifact does not carry: coverage_verdict.json holds PER-CLASS COUNTS plus a `holes` date list and NO per-date class map (the literal 2026-09-07 appears 0 times in the whole document), and `expected_empty` is the class B count by the classifier's own definition, so it cannot carry a class-A date. Both limbs are unsatisfiable against the named object for ANY month, not just this one.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SERVED OBJECT, s3://opal-data-etfs/platinum/reports/2026-09/coverage_verdict.json, 2705 B, LastModified 2026-09-10T01:20:20Z (list-objects-v2 ISO rendering): top-level keys ['month','verdict','per_partner','holes','unresolved','generated_at']; each per_partner entry carries ONLY ['summary','coverage_line','holes']; summary keys are ['A','B','C','COVERED','D','UNKNOWN','covered','expected_empty','holes','trading_days'] -- all counts",
+        "MEASURED: json.dumps(verdict).count('2026-09-07') == 0. The date the criterion asks the object to classify does not appear in the object at all, so 'this object classifies 2026-09-07 as class A' is not readable from it",
+        "data/etfs/scripts/coverage/classifier.py:168-170 @c866edd324 -- summarize()'s docstring: 'Counts per class plus trading_days, covered, holes (= C + UNKNOWN + D; B is NOT a hole), expected_empty (= B).' and :178 expected_empty = counts[\"B\"]. MEASURED on the served object: expected_empty == B == 0 for 3 of 3 partners",
+        "classifier.py:122-125 @c866edd324 -- a non-trading day is classified A and `continue`s, so class A and class B are DIFFERENT axes: A is 'market closed (not a trading day)', B is 'upstream present, priced == 0'. A class-A date cannot appear in an expected_empty that counts B, by construction and not by accident",
+        "EQUIVALENT-FIELD HUNT, which the face explicitly allows ('or the verdict's equivalent field, named'): the only per_partner field carrying DATES at all is `holes`, and 2026-09-07 is in none of them (3 of 3 partners)",
+        "WHAT IS READABLE, and it is the substance: 2026-09-07 is in NO partner's holes (3 of 3), the hole list is IDENTICAL with and without the date (3 of 3), and class A == 3 for 3 of 3 partners, exactly matching the calendar's three non-trading days 2026-09-05 (Sat), 2026-09-06 (Sun), 2026-09-07 (Labor Day)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-16 S16-AC1: '(b) platinum/reports/2026-09/coverage_verdict.json (the object EG-s-15's run wrote; its UTC printed) classifies 2026-09-07 as class A (market closed) for EVERY partner it covers' , and '(c) expected_empty (or the verdict's equivalent field, named) carries 2026-09-07 with the partners' hole counts UNAFFECTED by it'.",
+    "world_is": "The persisted verdict drops the per-date class map the classifier computes in memory, keeping only counts plus the `holes` dates. So the object can prove 2026-09-07 is NOT A HOLE, but it cannot prove the date was classified A -- only that the A COUNT equals the number of non-trading days. And `expected_empty` tracks class B, a different axis from class A, so nothing in the object 'carries' 2026-09-07. A count is not a per-date classification, and reporting it as one would be a grain error.",
+    "notes": "BLOCKING because arms (b) and (c) cannot hold as written, so S16-AC1 cannot print its token and the order cannot go terminal. NOT RE-WORDED and NOT WORKED AROUND: the battery could have re-derived the per-date map by running the classifier locally, but that substitutes a DIFFERENT instrument for the one the criterion names ('the object EG-s-15's run wrote'), and choosing the instrument is the issuer's act, not a worker's. ARMED because the gap is standing, not incidental: for any month, no consumer of the served verdict can audit WHICH dates were classified A, B or COVERED -- only how many. Two disarm paths for the issuer, both outside this order's read-only grant: (1) re-cut (b)/(c) onto the evidence the artifact does carry -- 'in no partner's holes', 'hole list identical with and without the date', and 'A count == the calendar's non-trading-day count', all of which this battery already measures and prints; or (2) a code cell having the renderer persist the per-date class map beside the counts, which would also make FWD-4 auditable after the fact for every future month."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S31",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T03:40:00Z",
+    "one_line": "A DAILY SLICE EXISTS ON THE CLOSED-MARKET DAY, for the one partner the criterion does not enumerate: daily/inflection/2026-09-07.json (1209 B, written 2026-09-07T15:00:41Z) carries four priced ETF rows with source_as_of 2026-09-07 -- and 09-05 (Sat) and 09-06 (Sun) too, all three byte-identical in value to 09-08. The classifier is STRUCTURALLY BLIND to this because class A short-circuits before the slice check, and S16-AC1 arm (d) enumerates only cottonwood and 49financial -- the two partners that do NOT do it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api list-objects-v2 on daily/inflection/ -> 122 keys (denominator); 1 of 122 names 2026-09-07. head-object: daily/inflection/2026-09-07.json, ContentLength 1209, LastModified 2026-09-07T15:00:41Z (UTC), ETag de9410b6113e4979ef4c714ddb0b63eb",
+        "ITS CONTENT: four rows, each {schema_version 1.0, partner inflection, date 2026-09-07, etf_ticker, ownership_value, account_count 562, source_artifact s3://opal-data-inf/gold/canonical/holdings_2026-09-07.parquet, source_as_of 2026-09-07} -- i.e. it asserts an as-of date on which the US market was shut",
+        "THE WHOLE CLOSED STRETCH IS PRESENT: daily/inflection/2026-09-05.json and 2026-09-06.json also exist, 1209 B each, written 15:00:41Z on their own dates. A sha256 over each file's (ticker, ownership_value, account_count) tuples is IDENTICAL for 09-05, 09-06, 09-07 AND 09-08 (41d1124f75c3...), and DIFFERENT for 09-04 (e4cb7e34a31c...) -- so the closed-day slices are carried-forward duplicates, not independently priced days",
+        "CONTRAST, measured the same way: daily/cottonwood/ 0 of 62 keys and daily/49financial/ 0 of 89 keys name 2026-09-07. Only inflection writes on closed days",
+        "THE CLASSIFIER CANNOT SEE IT: data/etfs/scripts/coverage/classifier.py:122-125 @c866edd324 -- 'if not tcal.is_trading_day(d): result[date_str] = {\"class\": \"A\", ...}; continue' -- the class-A branch returns BEFORE the 'if date_str in series' slice check at :128, so whether a slice exists on a non-trading day is never examined. inflection's summary reads A=3 exactly like the other two partners",
+        "THE CRITERION'S OWN SCOPE: S16-AC1 arm (d) reads 'NO daily slice exists for 2026-09-07 for cottonwood or 49financial' -- 2 of the 3 partners the verdict covers, and precisely the 2 that are clean"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-16 THE CELL and outcome_ref FWD-4: 'a legitimately-empty day is classified A, not a hole, and nothing is backfilled against it' , with arm (d) checking that no daily slice exists for 2026-09-07 for cottonwood or 49financial.",
+    "world_is": "Something IS written against the legitimately-empty day -- by inflection, every closed day, with carried-forward values and a source_as_of on the closed date. The classification half of FWD-4 holds (class A, not a hole, hole counts unaffected); the 'nothing is backfilled against it' half does not hold for 1 of 3 partners. The criterion as cut cannot detect this because it enumerates the two clean partners, so arm (d) PASSES while the phenomenon FWD-4 forbids sits in the uncovered member.",
+    "notes": "Filed for FORM: a partner-enumerating check is a DECLARED DOMAIN, and the uncovered member is exactly where the defect sits. The battery PRINTS inflection beside the two graded partners, with its denominator, so the reading is visible even though the arm does not grade it -- printing it is not widening the criterion. ARMED for two reasons that need different remedies: (i) the served plane carries priced rows dated to days the market was shut, which any downstream consumer reading daily/ by date will pick up, and (ii) the classifier can never flag it, so no future run will surface it either -- a check scoped to trading days cannot see a defect on the non-trading ones. NOT investigated further and NOT fixed here: data/etfs/scripts/ is READ-only under this order and inflection's producer is outside this project's surface entirely; whether the carry-forward is intended for inflection's feed is a question for the issuer, not a defect this worker should assert."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S32",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-10T04:40:00Z",
+    "one_line": "The EG-s-22 face carries ZERO <criterion> tags and NO <expected_criteria> element, so proof-of-spec-check's alignment limb reads '0/0 criteria carry >=1 cell_ref' and refuses the instance with 'declared cell EG-s-22 ... NO criterion references it'. S22-AC1 PASSES BY OUTPUT (7 of 7 arms, token printed, rc=0) and the work is complete, but the `complete` flip is blocked by the ISSUANCE HALF alone.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED on the face at eab3712b31: `grep -c '<criterion'` on org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-22.the-classifier-tells-a-closed-day-with-a-slice-from-one-without.md returns 0, and a grep for <expected_criteria> returns nothing -- the face carries <owned_cells>EG-s-22</owned_cells> and no machine-readable criterion element at all",
+        "CONTRAST, same project, same issuer: the EG-s-16 face carries 2 <criterion id=... cell_refs=...> tags and an <expected_criteria> element, and its instance validated VALID rc=0 twice (pre- and post-commit)",
+        ".tools/proof-of-spec-check.py:664-677 -- criteria are parsed ONLY from CRITERION_TAG_RE over the TO's text ('NOTHING HERE IS DERIVED. cell_refs are read as DECLARED in the TO's issuance half', :435), and the acceptance-row schema has NO cell_refs property, so an instance cannot supply what the face omits",
+        "THE RUN, with every other violation cleared: 'alignment-forward-1 (criterion -> cell): 0/0 criteria carry >=1 cell_ref'; 'alignment-backward: 0/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion'; 'artifact-resolution: 0 resolved at pin / 4 PENDING co-committed (PRE-COMMIT: staged in this commit)'; single remaining VIOLATION: \"alignment: declared cell 'EG-s-22' is named in the TO's <owned_cells> but NO criterion references it -- the TO claims a cell it never discharges\"; INVALID (rc=1)",
+        "THE WORK ITSELF IS DONE AND MEASURED: the battery prints 'ARMS 7 of 7 PASS' then EGS22-CLASSIFIER-DISCRIMINATES at rc=0, and .tools/commit-gate.sh reports 'pre-commit gate clean for 2 of 2 file(s)' on both .py edits"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-22 <proof_of_spec>: 'Criterion ids minted at cut: S22-AC1, S22-AC2 ... validated with python .tools/proof-of-spec-check.py <instance> S22-AC1,S22-AC2 BEFORE the complete flip, which you commit yourself. Flip only when S22-AC1 PASSES by output.' -- i.e. the face expects the instance to be validatable and the flip to follow a passing S22-AC1.",
+    "world_is": "S22-AC1 does pass by output, but the instance cannot be made VALID from the assignee's side: the checker reads cell_refs exclusively from <criterion> tags in the TO, the face has none, and the proof-of-spec schema exposes no cell_refs field on an acceptance row. So the completion flip is unreachable no matter what the worker produces. The face's acceptance is stated in bold prose (**S22-AC1** ... **S22-AC2** ...), which is human-readable and machine-invisible.",
+    "notes": "NOT WORKED AROUND, and the reason is the same one that produced W1-S30 and W1-S29: <paths> does grant this worker the task-order file, so adding <criterion id=\"S22-AC1\" cell_refs=\"EG-s-22\"> tags and an <expected_criteria> element was mechanically available -- but that is EDITING THE ISSUANCE HALF so the worker's own proof validates, which is the issuer's act and not the assignee's. A flip bought that way would certify alignment the cut never declared. INERT: nothing in the world is left armed -- no deploy, no write, no send; the code change and its two regression arms are committed and green, and the only casualty is the <status> field. DISARM (issuer, one edit): add the two <criterion id=... cell_refs=\"EG-s-22\"> elements and an <expected_criteria>S22-AC1, S22-AC2</expected_criteria> to the face, exactly as EG-s-15 and EG-s-16 carry them; the instance then validates unchanged and this worker commits the flip. WORTH A WIDER LOOK than this one face: any round-3 face cut in the same prose style has the same unreachable flip, and the L6 gate did not refuse it at issuance -- the denominator of faces carrying zero <criterion> tags is a census the issuer can run in one pass."
   }
 ]
 ```
@@ -1357,6 +1503,36 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
 ]
 ```
 
+## S12 -- the L6 gate has no arm requiring a task order to carry ANY gradable criterion: every check is scoped to the criteria that exist, and the success note prints '0 criterion reference(s) resolve' as a pass
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-S12",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-10T04:45Z",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "1.0.0_SA_CTO (the spine's L6 neck: .tools/to-pipeline-gate.py is rule 27's named mechanism and the criterion grammar it enforces is spine v3.0 L6 carrier 4); the instance that exposed it is 2.0.0_SA_COO's and is already fixed at the face",
+    "one_line": "THE L6 GATE ADMITS A TASK ORDER THAT CARRIES NO GRADABLE CRITERION AT ALL, AND ITS SUCCESS NOTE PRINTS THE ZERO AS A PASS. Placed here at 2.0.0_SA_COO's request (94992 s.4: 'the L6 gate did not refuse it -- it checks decomp_ref and preflight and does not check that a face carries a gradable criterion at all. That gap is yours to place and I propose nothing'), and MEASURED at this seat in the gate's own source before writing the row rather than taken from the report. THE MECHANISM, read at .tools/to-pipeline-gate.py: :178 CRITERION_TAG_RE, :232 `for tag in CRITERION_TAG_RE.finditer(text)` building the `crit` list, so a face with no tags yields an EMPTY list; the two validation loops at :237 and :256 iterate `owned + crit`, so with `crit` empty only owned_cells is graded; and _criterion_grammar_violations (:267-296) iterates the tags it finds, so zero tags produce zero violations. Every arm of the gate is SCOPED TO THE CRITERIA THAT EXIST and none asks whether any exists. Worse than silent: :262 emits the SUCCESS note '%d owned cell(s) and %d criterion reference(s) resolve against %s' -- so a face with no criteria prints '1 owned cell(s) and 0 criterion reference(s) resolve' and the zero reads as a clean pass. That is the confident-zero shape this estate has paid for four times tonight, this time inside the gate that exists to catch cut defects. THE INSTANCE, measured on the commits: TO-EG-s-22 as issued @eab3712b31 carries 0 occurrences of `<criterion`; the same face after the fix @12f16b46f5 carries 2. The order passed L6, was seated, and the defect surfaced at the ASSIGNEE, which is the expensive end -- the worker held the file in its grant, REFUSED to add the tags itself, and was right that editing the issuance half so its own proof validates would certify an alignment the cut never declared. WHY IT IS BLOCKING RATHER THAN AN OBSERVATION: a face with no criterion cannot reach `complete` at all, because the proof-of-spec check needs criterion ids to validate against, so the cost is a whole cell's work done before anyone learns the order could never close -- and the seat that learns it is the one with the least authority to fix it. THE REMEDY IS ONE ARM, and it is the same shape as the clause the gate already enforces: a TREE task order carries at least one <criterion>, mechanical or judgment, or it is refused with the grammar named -- the arm the gate's own RED/GREEN self-test section (:515-540) would extend by one case. NOT PROPOSED, NAMED: whether `<expected_criteria>` should be required to agree with the tags found is a second question and a second arm; this row asks only for the existence check, because a gate that cannot fail on an empty set is not a gate. THE DENOMINATOR THE ISSUER ALREADY TOOK, by subtraction rather than recall on its assignee's own warning: 23 faces, 22 carrying both tags, blast radius exactly one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat, 2026-09-10 ~04:4xZ, reading .tools/to-pipeline-gate.py at HEAD: :178 CRITERION_TAG_RE; :232-236 the crit build; :237 and :256 the two loops over `owned + crit`; :262 the success note carrying the criterion count; :267-296 _criterion_grammar_violations iterating the tags present; :274 the TREE_TO_RE guard; :515-540 the pure RED/GREEN arms for carriers 1 and 4, which test grammar on criteria that exist and have no case for none existing.",
+        "The instance, measured on the commits rather than reported: `git show eab3712b31:<TO-EG-s-22 path> | grep -c '<criterion'` -> 0; the same at 12f16b46f5 -> 2.",
+        "2.0.0_SA_COO 94992 s.4, which named the gap, owned the cut defect, recorded the assignee's refusal to fix the issuance half, and explicitly proposed no remedy.",
+        "CLAUDE.md rule 27 (the gate is the L6 neck) and Rule 22's clause that a check scoped to the members cannot see a defect in what the members share -- here the members are the criteria and what they share is existing at all."
+      ]
+    },
+    "spec_asserts": "Spine v3.0 L6 carrier 4 as the gate implements it: a tree task order's criteria carry one clause each, mechanical with exactly one invocation and one expect or judgment=\"true\"; and rule 27's promise that the gate is the neck every issuance passes through.",
+    "world_is": "The grammar is enforced on criteria that exist and nothing requires one to exist; a face with none passes with a note that prints the zero, and the failure surfaces at the assignee when the complete flip proves unreachable.",
+    "notes": "ARMED at the spine's owner because the remedy is one arm in a shared gate and every tree project inherits it. This seat proposes the existence check and nothing wider; the expected_criteria agreement question is named and left. Nothing in ETFS_GUARDRAIL's round-2 close moves: that round's five faces all carry criteria and its coverage is unchanged at 0 of 57 undispositioned."
+  }
+]
+```
 
 ## W4-S2 -- EG-s-21 is UNEXECUTABLE AS CUT: no forcing can reach the classifier through an orchestrator invocation, and the verdict artifact has no field to disclose one -- both closable only by code changes the order forbids and excludes
 
@@ -1390,8 +1566,6 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
   }
 ]
 ```
-
-
 ## W4-S3 -- EG-s-24's work is finished and green but UNCOMMITTABLE BY ME: the lane validator reads the grant from a task order AT HEAD, and the L6 gate forbids a worker putting that task order there
 
 ```json
@@ -1424,8 +1598,6 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
   }
 ]
 ```
-
-
 ## W4-S4 -- CORRECTION to my own W4-S1: safe-apply DOES call resolve-actor; the true mechanism is that halt-gate-check runs FIRST and is the one that never reads OPAL_AGENT_SERIAL
 
 ```json
