@@ -1,5 +1,6 @@
 # ETFS_GUARDRAIL -- DECOMPOSITION (L5)
 
+**v0.5** (2026-09-10 ~04:3xZ, `2.0.0_SA_COO`) -- ROUND 3 WIDENED AGAIN BY AMENDMENT, on the ROUND-2 ANALYSIS (94988, `ROUND_ANALYSIS.round2.md` @`f5074019a1`), which graded FWD-8 **NOT_REALIZED** and listed three cells still to place. TWO WERE ALREADY CUT AND ARE NOW TERMINAL OR RUNNING -- the `W1-S25` guard fix is `EG-s-20` (TERMINAL, drained @`5d292ff11f`) and FWD-9's forced-incomplete driven run is `EG-s-21` (running on `~4`). The THIRD, `W1-S27`'s under-reporting ask, had no cell and is added here as `EG-s-23` on the slot `EG-s-22`'s terminal flip just freed. s.14 below.
 **v0.4** (2026-09-10 ~03:5xZ, `2.0.0_SA_COO`) -- ROUND 3 WIDENED BY AMENDMENT on PRD **v0.6**: `1.0.0_SA_CTO` placed row `ETFS_GUARDRAIL-W1-S31` at 94947, ruling the CLASSIFIER half squarely INSIDE this project's surface (s.3 OWNS names "the coverage classifier"; `EG-s-4` is FWD-4's own code row against that file) and the PRODUCER half OUT (PRD row `S20`, leaving as a brief to `4.0.0_SA_CRO` at L1). ONE cell added, `EG-s-22`, on the slot `EG-s-16` just freed. The round is mid-execution and the addition is by AMENDMENT under Andrew's 2026-09-03 scope-change word -- the same mechanism NFRA_OUTSET used for `OS-s-24`/`OS-s-25`/`OS-s-26`. s.13 below.
 **v0.3** (2026-09-10 ~03:1xZ, `2.0.0_SA_COO`) -- ROUND 3 on PRD **v0.5** @`7ba9b976b0`, cut on TWO Andrew-directs of the same night: his ~02:5xZ approval of the manufactured hole ("yeah try it but make sure no test run hits aj's email") and his ~03:0xZ law that **NO FWD IS A WAIT**, which superseded FWD-2 -> FWD-9 and FWD-7 -> FWD-10 in place. THREE cells, TWO chains: `EG-s-19` the catch-up branch driven on a manufactured hole; `EG-s-20` the send path made CORRECT and TEST-SAFE (the W1-S25/W1-S29 guard at two sites, and no driven run able to reach aj@); `EG-s-21` the DRIVEN REFUSAL that closes both new outcomes. s.12 below.
 **v0.2** (2026-09-09 ~22:4xZ, `2.0.0_SA_COO`, the base COO: `~B` not seated) -- ROUND 2 on PRD **v0.4** @`a830ea1cc0` (the CTO's manual-trigger addendum on Andrew's ~21:4xZ no-waiting word): five cells `EG-s-14`..`EG-s-18` added, 1:1 with rows S14-S18, ONE issuance, three worker slots on Opus in hand-cut worktrees (spine v3.7). Round 2's sections are s.8-s.11 below; s.0-s.7 are LEFT UNEDITED. Cells 14 -> 19; edges 15 -> 17.
@@ -464,3 +465,62 @@ a project can pass every criterion while the artifact the estate actually reads 
 for `1.0.0_SA_CTO`'s L10 with an owner, never left implied.
 
 -- `2.0.0_SA_COO`, L5 round 3 amended
+
+
+## 14. ROUND 3, AMENDED AGAIN -- the stop worked and the ask under-reports (round-2 analysis, FWD-8 NOT_REALIZED)
+
+**WHY THIS IS A CELL AND NOT A CARRIED FINDING.** `W1-S27` was carried out of round 2 deliberately rather than
+bundled into `EG-s-20`: a fix cell that quietly grows a second subject stops being reviewable, and the guard fix
+and the ask defect share a project but not a file. The round-2 analysis then graded FWD-8 NOT_REALIZED on exactly
+this and named it the round's honest half -- **the STOP is real and EXERCISED on real data, and the ASK is
+incomplete** -- so the finding now has a graded outcome behind it and becomes a cell.
+
+**THE MECHANISM, and it is worse than a miscount.** `rung3_stop_and_ask` (`remediate.py:89`) builds its `asks`
+list from EVERY day in the `unresolved` it is handed (`:100-109`), so the function is FAITHFUL to the partner it
+is given. But the key it writes is `platinum/reports/<month>/coverage_egress_ask.json` (`:118`) -- **the MONTH and
+NOT THE PARTNER** -- while `remediate_month` (`:129`) is a PER-PARTNER function. Across the estate's partners each
+ask OVERWRITES the one before it at the same key, and the served artifact is the LAST partner's ask wearing the
+name of the month's ask. An entire partner's outstanding days are ABSENT from an artifact whose whole purpose is
+completeness, and absent in a way that READS AS COMPLETE: the file exists, it is well-formed, its `authorization`
+line is correct, and nothing in it says another partner existed.
+
+| cell | outcome_ref | surface | verb | depends_on | the bar |
+|---|---|---|---|---|---|
+| `EG-s-23` | FWD-8 | `data/etfs/scripts/coverage/remediate.py` and its existing suite | build | -- | a person reading the month's ask can reach EVERY outstanding unresolved day across EVERY partner, OR the artifact says in its own content which partners it does not cover. The SHAPE is the assignee's (per-partner keys, one merged document, a manifest); the COMPLETENESS is the bar, and the arm that carries it is that a PARTIAL ask must read DIFFERENTLY from a complete one |
+
+**Denominator:** PRD v0.6 `endpoint_outcomes` 8 (`FWD-1,3,4,5,6,8,9,10`); round 3 now SERVES 5 (`FWD-1`, `FWD-4`,
+`FWD-8`, `FWD-9`, `FWD-10`); cells 5.
+
+**THE PARTNER LIST IS CUT AS A SUBTRACTION, NOT A LIST, AND THE FACE SAYS SO.** CLAUDE.md rule 24 (i) as
+sharpened tonight at `fe03ddb538`. This project has been bitten by a hand-typed partner list TWICE in one night --
+the CTO's own accept naming two of three, and this issuer's arm (d) naming two of three -- and BOTH PASSED while
+the third partner carried the violation. The face therefore forbids enumerating partners by recall and requires
+the list to come from an artifact that owns it, printed as the denominator. This is the first cut made after that
+rule landed and it is the first place it would have applied.
+
+**THE CHAIN READ.** `EG-s-23` has no `depends_on`. Its file is `data/etfs/scripts/coverage/remediate.py`;
+`EG-s-21` is live on `infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py`. **No shared file, no shared
+S3 write plane** -- `EG-s-23` writes no served key at all -- so the two run concurrently without contention, and
+the face states the boundary rather than leaving it to be discovered.
+
+```
+fanout: 3 of 3 chains, cap 8, reason: EG-s-21 is the tail of the EG-s-20 chain on slot ~4; EG-s-23 is independent on slot ~1, freed by EG-s-22's terminal flip and already inside this same coverage package; the EG-s-19 chain is closed (TERMINAL, drained).
+```
+
+**Seating:** `0.9.0_WK_ETFS_GUARDRAIL~1` takes `EG-s-23` by CONTINUATION in `/c/tmp/wk-etfs-2-1`, branch
+`wk-etfs_guardrail-2-1` -- provisioned, carrying its `OPAL_AGENT_SERIAL`, and the seat that has just edited the
+sibling module in this same package and added permanent regression arms to its suite. No new worktree and no
+provisioning owed.
+
+⛔ **AND THIS FACE CARRIES ITS `criterion` TAGS, which the previous amendment's did not.** `EG-s-22` was cut with
+a prose acceptance section and no tags, and `proof-of-spec-check` reads `cell_refs` exclusively from those tags,
+so its flip was unreachable until the issuer amended the face (`W1-S32`, disarmed @`12f16b46f5`). Census by
+subtraction at that time: 23 faces, 22 carrying both tags, blast radius exactly one. The L6 gate does not check
+that a face carries a gradable criterion at all, and that gap is carried to `1.0.0_SA_CTO`.
+
+**What this amendment does NOT decide:** whether the changed `remediate.py` is DEPLOYED. It is not, in this cell;
+arm (e) requires `DEPLOYED != BUILT` printed as a measured sha256 pair and hands the gap on, because a project can
+pass every criterion while the artifact the estate reads is unchanged. Nor does it touch the producer half at row
+`S20`, which left for `4.0.0_SA_CRO` at L1.
+
+-- `2.0.0_SA_COO`, L5 round 3 amended a second time
