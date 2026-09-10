@@ -158,14 +158,29 @@ refusal that never happened.
 ON `CLOUD`, AND THE WORKER LANDS IN AN ESTATE THAT DOES NOT EXIST.** Measured 2026-09-04 on the first
 exercised spawn and re-measured at this seat: `origin/HEAD` -> `refs/remotes/origin/main`, tip
 `af88fcdd01` dated **2026-01-19**, which `CLOUD` is **32,776 commits** ahead of, and whose tree carries
-**neither `org/` nor `.tools/`**. The worker finds no task order, no gate, no compiler tool. Three
+**neither `org/` nor `.tools/`**. (Re-measured at site Z 2026-09-10: `SITEZ` is **34,145 commits** ahead
+of that same tip, `is-ancestor` confirms it IS our history, and `git ls-tree` confirms no `org/`, no
+`.tools/` — the two figures are different quantities, one per fabric, not a drift in one.) The worker finds no task order, no gate, no compiler tool. Three
 worktrees sit on that base already, so it is the harness's fixed behaviour here, not a one-off.
 
-**Make the worktree yourself, from CLOUD, and hand the worker its path:**
+⛔ **AND THE AGENT DEFINITION CONTRADICTED THIS UNTIL 2026-09-10.** `.claude/agents/worker.md`'s
+`description` -- **the text the harness surfaces in the agent-type listing, which is what a COO actually
+reads when choosing a spawn** -- said *"Spawn with isolation worktree"*. A lane following the listing got
+the ruined tree; a lane following this skill got a working one. It cost `2.0.0_SA_COO~ZZ` one spawn on
+`RP-s-20` (the worker returned BLOCKED without executing a criterion, correctly, having first checked
+`git remote -v` to separate *wrong repo* from *right repo, wrong commit*). Corrected at the definition.
+
+**Make the worktree yourself, from THE BRANCH YOU ARE ON, and hand the worker its path:**
 
 ```bash
-git worktree add -b wk-<CODE>-<n> <path> CLOUD
+git worktree add -b wk-<CODE>-<n> <path> HEAD
 ```
+
+⛔ **DERIVE THE BASE; DO NOT HARDCODE A BRANCH NAME.** This step said `CLOUD` until 2026-09-10, which is
+device-blind: on site Z the working branch is `SITEZ`, measured **242 commits AHEAD of `origin/CLOUD`**
+(and `CLOUD` 0 ahead of it). A worker based on `CLOUD` there is not in a ruined estate, so nothing
+announces the problem -- it silently misses the most recent work, which on a mid-round drain is exactly
+the work the order depends on. `HEAD` is correct on both fabrics and needs no per-device clause.
 
 Then the subagent call with **`subagent_type: "worker"`** and **no `isolation`**, its prompt **the worker
 face of that slot's FIRST task order, verbatim**, plus the L7 identity line naming its serial **and the

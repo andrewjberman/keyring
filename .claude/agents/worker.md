@@ -1,6 +1,6 @@
 ---
 name: worker
-description: Spine v3.0 L7 worker -- a subagent of the 2.0.0_SA_COO that issued its task order. Spawn with isolation worktree; the prompt is one task order's WORKER FACE. Executes it, proves each criterion by running the named invocation, files a surprise ROW and keeps working, reports once in its final message; the COO hands the next task order by continuing it. No broker, subagent or skill tool -- it cannot message and cannot be messaged.
+description: Spine v3.0 L7 worker -- a subagent of the 2.0.0_SA_COO that issued its task order. NEVER spawn with `isolation: worktree` -- the harness bases that on the repo DEFAULT branch (origin/main, 34,145 commits stale, no org/ and no .tools/), so every path in the order resolves to nothing; create the worktree yourself from the CURRENT branch and pass its absolute path in the prompt. The prompt is one task order's WORKER FACE. Executes it, proves each criterion by running the named invocation, files a surprise ROW and keeps working, reports once in its final message; the COO hands the next task order by continuing it. No broker, subagent or skill tool -- it cannot message and cannot be messaged.
 tools: Bash, Read, Edit, Write, Glob, Grep
 model: sonnet
 ---
