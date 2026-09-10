@@ -1,15 +1,22 @@
-# AMGT_RESAPP -- L5 decomposition (COO) -- v0.1
+# AMGT_RESAPP -- L5 decomposition (COO) -- v0.2
 
 **Seat:** `2.0.0_SA_COO~ZZZ`, spawned by Andrew 2026-09-10 ~17:4xZ at the `1.0.0_SA_CTO~Z` terminal for this
 project (seating brief msg 21003; `project.json` `seats.coo`). **Directive:** D5 Alternative Research.
-**Fabric:** site-z. **Consumes:** PRD v0.2 section 4 SURFACE MANIFEST at
-`org/missions/D5/AMGT/AMGT_RESAPP/prd/AMGT_RESAPP_PRD.md` @8019bf6433 -- the L4 FIX. The first landing
+**Fabric:** site-z. **Consumes:** PRD v0.3 section 4 SURFACE MANIFEST at
+`org/missions/D5/AMGT/AMGT_RESAPP/prd/AMGT_RESAPP_PRD.md` @f68818832b -- v0.3. The first landing
 @c0b5636ea9 carried no fenced PRD_HEADER block, a numbered ENDPOINT heading the gate's whole-line match
 cannot see, and ZERO outcome cards; measured by importing `.tools/to-pipeline-gate.py` and running
 `_prd_conformance`, `_top_section` and `FWD_DEF_RE` on the file's bytes with the sibling PRD that passed L6
 the same day as the positive control; handed back (msg 21037) and fixed by L4 within the hour. **At
-@8019bf6433 the same three functions read True / 14 defined / 1 block / 0 complaints**, and the working
-tree under the project is clean, so the bytes graded are the bytes committed.
+@8019bf6433 the same three functions read True / 14 defined / 1 block / 0 complaints**, and at v0.3 @f68818832b
+they read the same (header `prd_version: v0.3`, `status: RATIFIED`, 14 outcomes) on the committed blob.
+
+**v0.2 OF THIS DECOMPOSITION IS AN L5 RE-ENTRY, NOT A RECUT.** L4 bumped the PRD to v0.3 (s.3a rewritten on
+`4.0.0_SA_CRO~Z`'s SA auth investigation @b1656bbebc) and Andrew released the SA hold at this terminal
+(@d09e26e1b1). MEASURED at this edit: no outcome moved (`FWD-1`..`FWD-14`), no manifest row moved (15), no
+cell was added or removed (16). **What moved: the `AMGT-s-b4` row's act, state and bounds; section 5's
+rounds (nine chains, all open); section 9's holds. Nothing else.** Rule 24 (iv) in section 2 says exactly
+that release would move that cell and nothing else; this edit is the measurement of it.
 
 **The rectangle is RECEIVED, not derived here.** L4 wrote the manifest; L5 mirrors it, re-grounds what it
 can at its own vintage, adds the dependency edges, the placement axis and the battery. **This file does not
@@ -20,7 +27,8 @@ carries TWO cells, because Andrew held the task orders specific to Seeking Alpha
 
 ⛔ **ANDREW'S TWO WORDS THIS HOUR, BOTH RECORDED VERBATIM AND BOTH BINDING ON THIS FILE:**
 - `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260910_184xZ_COOZZZ_SEEKING_ALPHA_IN_THE_TOS_VIRTUAL_ANALYST_REPORT_MODAL_AND_REST_API_VS_SCRAPING.md` @ee0eacab07 -- Seeking Alpha belongs in the task orders; the `virtual_analyst_report` modal; explore the authenticated REST API versus scraping; his credential is in AWS Secrets Manager. **Folded into the PRD at s.3a as `C-SA-NAMED-SOURCE`, `C-SA-ROUTE-COMPARISON`, `C-SA-PAYWALL-PRECONDITION-PARTLY-CLOSED` and `C-SA-VENDOR-WORD` @8019bf6433.**
-- `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260910_185xZ_COOZZZ_HOLD_ON_SEEKING_ALPHA_BACKEND_TASK_ORDERS_PROCEED_OTHERWISE.md` @8c609decf7 -- *"Hold on the Task orders specific to Seeking Alpha backend design, i may provide updated information to this end before you cut those but proceed otherwise."*
+- `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260910_185xZ_COOZZZ_HOLD_ON_SEEKING_ALPHA_BACKEND_TASK_ORDERS_PROCEED_OTHERWISE.md` @8c609decf7 -- *"Hold on the Task orders specific to Seeking Alpha backend design, i may provide updated information to this end before you cut those but proceed otherwise."* **RELEASED** by the third word below.
+- `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260910_194xZ_COOZZZ_SEEKING_ALPHA_CASE_FIGURED_OUT_HOLD_RELEASED_AUTH_INVESTIGATION_IS_THE_REFERENCE_NO_PRD_RECUT.md` @d09e26e1b1 -- *"We have figured out the Seeking Alpha case"* / *"I think you can just review the brief here: ...AMGT_RESAPP_SEEKING_ALPHA_AUTH_INVESTIGATION_20260910.md"* / *"Shouldnt need to recut the details on the PRD, it is right here, this is just what should be referenced for any TOs associated with SA news procural for this project."* The hold's release condition is met; the investigation @b1656bbebc is THE REFERENCE for every SA-procurement order.
 
 ---
 
@@ -62,7 +70,7 @@ authoring one does:
 | `AMGT-s-2` | S2 | FWD-2 | THE ON-DEMAND PULL -- a ticker outside coverage, from the page. **FIRST deliverable: THE SEAM DESIGN** -- how a browser request served from AWS reaches a loopback-only DAPI on this device (section 1b: the estate has no precedent). **SECOND: the build on the approved design**, the page stating it is fetching now. Touches NEW securities, the binding cost axis. | OPEN (design) | 2 | API GW -> this box -> S3 |
 | `AMGT-s-3` | S3 | FWD-3 | THE PROVENANCE FACE -- source, basis and vintage beside every figure, WIRED from the raw and derived records `AMGT-s-1` persists; never composed from a second read. | OPEN | 2 | portal |
 | `AMGT-s-4` | S4 | FWD-4 | THE COVERAGE READER, NON-SA SOURCES -- the company's investor-relations channel located by SERP (the real domain is in `display_link`; `link` is an obfuscated redirect -- F11, re-measured first) and trusted publications per the allowlist `AMGT-s-15` owns; ranked by recency and frequency; each item admitted by the news rule `AMGT-s-11` states, PLUS one unscoped pass over the whole population per name. | OPEN | 2 | SERP zone -> S3 |
-| `AMGT-s-b4` | S4 | FWD-4 | THE SEEKING ALPHA BACKEND -- the fetch path for SA content: the `virtual_analyst_report` modal page (a scrape) VERSUS the authenticated REST API using the `seeking-alpha/credentials` secret, EXPLORED and COMPARED with the basis stated; the SA ETL and its test. Bound by PRD s.3a: `C-SA-NAMED-SOURCE` (the modal is a named source for FWD-4); `C-SA-ROUTE-COMPARISON` (BOTH routes established and which is sound stated on evidence -- a cell that silently picks one has not done the work; the credential located in Secrets Manager at run time, no secret name hardcoded because he named none); `C-SA-PAYWALL-PRECONDITION-PARTLY-CLOSED` (authenticated access IN SCOPE TO EVALUATE, not ratified for production; captcha unmeasured); `C-SA-VENDOR-WORD` (L4's ruling, with its author and Andrew's correction reserved: the exploration and the comparison are AUTHORIZED, recurring or production use is NOT). The seven-Lambda SA estate is an ARCHIVE PRODUCER and is not this fetch path (brief PART II, Andrew's one-shot ruling). | **HELD** -- Andrew: *"i may provide updated information to this end before you cut those"* | 2, on release | SA -> S3 |
+| `AMGT-s-b4` | S4 | FWD-4 | THE SEEKING ALPHA BACKEND -- the ETL that procures SA content for a ticker by the MEASURED route (`C-SA-NAMED-SOURCE` as amended at v0.3; the reference @b1656bbebc): `GET /api/v3/symbols/{ticker}` -> `sa_id`; `GET /api/v3/virtual_analysts/{sa_id}` (the report as JSON, carrying `createdAt` and `previousReportDate`); `GET /api/v3/symbols/{t}/analysis|news` -> `GET /api/v3/articles/{id}`. NO HTML parsing on the path. Rides the parked session through the residential proxy with the full browser-minted cookie jar AND a per-ticker `Referer` (`C-SA-SESSION-SHAPE`); a 200 with a 2-byte body is a FAILURE, a small-challenge 403 is a RE-HARVEST signal and never an auth failure; no POST through the proxy (`C-SA-NO-POST-THROUGH-PROXY`); the credential and the session are LOCATED in Secrets Manager at run time and no name is hardcoded. Raw JSON lands in the version store before any derivation. Tested ONCE on a stated small ticker set inside the exploration word; NOT scheduled and NOT served in production (`C-SA-VENDOR-WORD`); the comparison is DISCHARGED and not re-run (`C-SA-ROUTE-COMPARISON`); the five unmeasured limits are carried, not assumed (`C-SA-UNMEASURED`), and the terms question is Andrew's. The seven-Lambda archive estate is not this fetch path. | OPEN (released @d09e26e1b1) | 2 | SA API via residential proxy -> S3 |
 | `AMGT-s-5` | S5 | FWD-5 | THE PRINT RENDERER -- Adam's artifact. **FIRST: THE DESIGN SPEC** for the Security Analysis page, in the form the F10 precedent gated (*"no .tsx files written until approved"*). **SECOND, HELD on that approval: the PDF-in-modal render** reproducing the template's four blocks (F1) so the printed output replaces the circulated document. | OPEN (spec); the .tsx phase HELD on approval | 3 | portal |
 | `AMGT-s-6` | S6 | FWD-6 | THE VERSION STORE -- `opal-data-research`, MEASURED ABSENT at two vintages (section 1a), created by Terraform through `safe-apply` under a change-management entry opened BEFORE the act; snapshots ACCUMULATE, never overwrite; raw before derived. | OPEN | 1 | Terraform -> AWS |
 | `AMGT-s-7` | S7 | FWD-7 | THE COVERAGE-FRESHNESS VIEW -- every covered name with its last-refreshed date, in one place a person OPENS. A view, never a monitor, alarm or scheduled checker. | OPEN | 2 | portal |
@@ -93,7 +101,11 @@ substrate is DOWN at this vintage. Everything else stays CITED and is a cell's t
 PART V measured it absent on the LIVE plane 13:30-16:00Z (a different instrument, a later vintage). Two
 instruments, two vintages, one answer. `AMGT-s-6` creates it.
 
-**The Seeking Alpha substrate (`AMGT-s-b4`, held) -- EXISTS AND IS NOT THE FETCH PATH.**
+**The Seeking Alpha substrate (`AMGT-s-b4`) -- EXISTS, IS NOT THE FETCH PATH, AND THE FETCH PATH IS NOW MEASURED.**
+At v0.2: `4.0.0_SA_CRO~Z` measured the route under Andrew's word (@b1656bbebc): authenticated REST with a browser-
+harvested session parked in Secrets Manager (created 19:29Z, 65 cookies) returns 200 on every ticker and article tried
+through the residential proxy; the modal page cannot work (JS-rendered); the cookieless unlocker cannot work. That
+document is THE REFERENCE for the cell (Andrew's third word) and this lane does not restate its measurements here.
 ```
   comp-find 'seeking-alpha' --corpus aws   34 hit(s) / 2382 nodes, same vintage
   LAMBDA=7 (all LIVE-no-DECLARED)  EVENT_RULE=2  IAM_ROLE=1 (LIVE-no-DECLARED)  SECRET=1  DYNAMODB_TABLE=1
@@ -163,7 +175,7 @@ sibling's cell-status vocabulary (2a); it adds the round axis (section 5) and th
 - **(iv) STATE COHERENCE -- which values one remedy does NOT move.** `AMGT-s-12` landing releases
   `AMGT-s-4`, `-8`, `-13`, `-15` (and the held `-b4`) from their root dependency; it does **not** move
   `AMGT-s-1`'s chain (`-2`, `-3`, `-5`, `-9`), `AMGT-s-6`'s (`-7`, `-14`) or `AMGT-s-11`'s (`-10`).
-  **Andrew's release of the hold moves `AMGT-s-b4` from HELD to OPEN and nothing else.** The design-spec
+  **Andrew's release of the hold (@d09e26e1b1) MOVED `AMGT-s-b4` from HELD to OPEN and nothing else -- v0.2 of this file is the measurement: one row, one bounds line, the rounds, the holds.** The design-spec
   approval moves `AMGT-s-5`'s .tsx phase and nothing else. A repaired terminal sign-in moves the L6
   pre-spawn check on `AMGT-s-1`'s slot and no cell's state.
 - **TOKEN CENSUS (word-boundary), owed with any value-enum proposal:** the only enum this file AUTHORS is the
@@ -246,7 +258,7 @@ project writes to a new bucket outside `data/*/scripts/`.
 |---|---|---|
 | `AMGT-s-1`, `AMGT-s-2` | ⛔ **`integrations/bloomberg/READ_HERE.md` BINDS.** First act `bloomberg_health`; on `ok: false` the worker does NOT sign in (the 2-attempt budget is `0.0.3_BG_BBGTerminal`'s); credentials reach a process ONLY through `bbg_credentials.py --` and are never written anywhere; derived fields are CURRENT-DAY-ONLY with no backfill, so raw bytes land first; `data/bloomberg/` is never minted. **`G-24`:** `AMGT-s-2` touches NEW securities -- the manifest's own bound; the cell carries the word's question and does not spend it. | READ_HERE · comp-schedule C3 |
 | `AMGT-s-2` | ⛔ **THE SEAM HAS NO PRECEDENT** (section 1b). The request path from API Gateway to a process on this box is a DESIGN deliverable with its own criterion, before any build; the daily pull's push shape and the README's planned local-terminating SSM tunnel are the nearest prior art and neither is the answer. **`G-21`:** whatever crosses the seam is derived, never hardcoded to this device. | comp-routes · README |
-| `AMGT-s-b4` | ⛔ **HELD on Andrew's word** (section 9). When released: both his SA words bind verbatim; the archive-producer estate is not the fetch path; **`G-24` is RULED at L4 as `C-SA-VENDOR-WORD` (PRD s.3a, the CTO's name on it, Andrew's correction reserved): the exploration and the comparison AUTHORIZED, recurring or production use NOT -- the cell's criterion cites that constraint and spends nothing beyond it**; the secret is LOCATED by name at run time and never printed. | Andrew-direct · comp-schedule C3 · comp-iam |
+| `AMGT-s-b4` | **RELEASED @d09e26e1b1; THE REFERENCE IS @b1656bbebc (Andrew's third word).** PRD v0.3 s.3a binds in full: `C-SA-NAMED-SOURCE` (amended -- the API artifact, never the page: the page is JS-rendered and its HTML holds no content); `C-SA-ROUTE-COMPARISON` (DISCHARGED -- no cell re-runs it); `C-SA-SESSION-SHAPE` (harvest in a real browser, park, ride by REST through the residential proxy, re-harvest on the challenge signal; the jar carries the bot-protection cookies AND a per-ticker Referer; **a 200 with a 2-byte body is a failure**); `C-SA-NO-POST-THROUGH-PROXY` (the zone refuses every POST; a login never completes through it; reads only); `C-SA-UNMEASURED` (session lifetime, headless/Linux, MFA, rate limits, and the vendor's terms -- **the terms are Andrew's and no cell rules on them**); `C-SA-VENDOR-WORD` (L4's ruling: exploration and comparison AUTHORIZED, recurring or production use NOT -- the cell tests ONCE on a stated set and does not schedule or serve). The harvester `sa_harvest_session.py` and the fetcher `sa_rest_fetch.py` exist at the CRO's scripts folder: EXTEND, never rebuild (the build ladder). **`G-24`** is carried through `C-SA-VENDOR-WORD`. | PRD v0.3 s.3a · the reference @b1656bbebc · comp-schedule C3 |
 | `AMGT-s-6` | ⛔ **`G-16` + `G-22` + `G-19`.** A change-management entry in `ledger/` BEFORE the apply, closed and committed BEFORE the grading reads; `safe-apply`, never bare `terraform apply`; no second output path beside the one bucket. `C-RAW-BEFORE-DERIVED`: the raw prefix exists before any derived one. | comp-schedule C3 |
 | `AMGT-s-7`, `AMGT-s-15` | ⛔ **`G-20` (the alerting moratorium) IS ARMED.** A freshness VIEW a person opens and a rot SIGNAL a person reads are the bar; a schedule, an alarm, an SNS topic or an SES send would be the thing the moratorium forbids and would need Andrew's explicit word. | comp-schedule C3 |
 | `AMGT-s-5`, `AMGT-s-3`, `-7`, `-9`, `-10`, `-14` | ⛔ **`C-DESIGN-SPEC-FIRST`:** `AMGT-s-5` owns the design spec and NO `.tsx` is written on any portal cell until it is approved -- the F10 precedent's own wording. **`G-21`:** no device-specific logic in `portal/`. Cache keys namespaced under the page; `comp-cache collisions` clean at commit. The page rides the `/*` SPA default. | comp-cache · comp-routes · comp-schedule C3 |
@@ -285,7 +297,7 @@ Read from the manifest's own `depends on` column. `AMGT-s-b4` inherits row S4's 
   AMGT-s-9   <- AMGT-s-1, AMGT-s-4
 
   AMGT-s-4   <- AMGT-s-12
-  AMGT-s-b4  <- AMGT-s-12          (and Andrew's release, section 9)
+  AMGT-s-b4  <- AMGT-s-12          (released @d09e26e1b1; an ordinary edge now)
   AMGT-s-8   <- AMGT-s-12
   AMGT-s-15  <- AMGT-s-12
   AMGT-s-13  <- AMGT-s-11, AMGT-s-12
@@ -311,15 +323,17 @@ re-sequenced around the hold; the hold removes one cell from round 2.
 
 - **ROUND 1 (4 cells):** `AMGT-s-1` (the model block -- the head of the longest chain), `AMGT-s-6` (the
   store), `AMGT-s-11` (the rules -- what every check face reads), `AMGT-s-12` (identity -- the root).
-- **ROUND 2 (10 cells, 9 OPEN + 1 HELD):** on `-1`: `-2`, `-3`; on `-6`: `-7`, `-14`; on `-11`: `-10`; on
-  `-12`: `-4`, `-8`, `-15`; on `-11`+`-12`: `-13`; **on `-12` + Andrew's release: `-b4` (HELD)**.
+- **ROUND 2 (10 cells, all OPEN):** on `-1`: `-2`, `-3`; on `-6`: `-7`, `-14`; on `-11`: `-10`; on `-12`: `-4`,
+  `-8`, `-15`, `-b4`; on `-11`+`-12`: `-13`.
 - **ROUND 3 (2 cells):** `AMGT-s-5` on `-1`+`-3`; `AMGT-s-9` on `-1`+`-4`.
 
-⛔ **MAX OPEN ROUND WIDTH IS NINE, OUTSIDE THE DEFAULT FAN-OUT CAP OF EIGHT.** The `fanout:` line in the L6
-issuance commit is DERIVED from these chains, never chosen, and it states the cap and which chain waits a
-slot; this section is the INPUT to that derivation and is not itself the fan-out. The natural deferral is
-one of the two `-6` dependants (`-7`, `-14`): they are `wire` verbs on a store that lands in round 1 and
-nothing in round 3 depends on them.
+⛔ **NINE CHAINS, ALL OPEN, AGAINST THE DEFAULT FAN-OUT CAP OF EIGHT.** A chain is a worker's queue -- a maximal
+path with every cell in exactly one queue: `-1 -> -3 -> -5` · `-2` · `-12 -> -4 -> -9` · `-8` · `-15` · `-13` ·
+`-6 -> -7 -> -14` · `-11 -> -10` · `-b4` (3+1+3+1+1+1+3+2+1 = 16, the partition closes). Four chains start at
+issuance (the roots); five more start as their root lands. **The `fanout:` line in the L6 issuance commit is
+DERIVED from these chains, never chosen: 8 of 9, cap 8** -- the natural deferral is `-15` (the list register: a
+`build` with no dependants), which takes the first freed slot. This section is the INPUT to that derivation and
+is not itself the fan-out.
 
 ⚠ **THE ROUNDS ARE A READING OF THE EDGES, NOT A SECOND SOURCE OF TRUTH.** If a cell lands early the next
 round's cells become cuttable early; the edges govern, the round numbers describe.
@@ -356,7 +370,8 @@ section 1 gives: this document is indexed by the L6 coverage limb.
 functions; the brief at @19ce7d5b4d read in full from the working tree; the endpoint at @3bc8f5f2c4 read in
 full; the spine's L4/L5/section 3 read at HEAD; the tree contract; the cell-id convention; the Bloomberg
 READ_HERE and README; the live AWS graph at 12:24:50Z; `bloomberg_health` live; `comp-schedule` to completion;
-`comp-iam`, `comp-routes`, `comp-cache` run; both of Andrew's words this hour, verbatim; PRD s.3a and L4's egress ruling read from the committed blob.
+`comp-iam`, `comp-routes`, `comp-cache` run; all three of Andrew's words this hour, verbatim; PRD v0.3 s.3a read from the committed blob @f68818832b; the CRO's SA auth
+investigation @b1656bbebc read in full.
 
 **What it was NOT:** ⛔ this lane did not read the SharePoint corpus, the 54 workbooks, or any pack -- F1, F6
 and the template facts are the brief's, cited. ⛔ It did not call Bright Data (every such call is a vendor
@@ -378,8 +393,8 @@ focused L5 records the omission as a boundary rather than a certification.
 - **That any social dataset can be queried by cashtag.** Listed, never exercised; `AMGT-s-13` finds out.
 - **That `bloomberg_health: true` means data flows.** Necessary, not sufficient; a reference read confirms.
 - **That the seam has a precedent.** It does not (section 1b); `AMGT-s-2` designs it.
-- **That the seven SA Lambdas are reusable.** An archive producer for a parked estate; the held cell explores
-  the modal and the API, not the archive.
+- **That the seven SA Lambdas are reusable.** An archive producer for a parked estate; the SA cell builds on the
+  measured API route, not the archive -- and does not re-explore the modal, which is measured unworkable.
 - **That the per-use egress word extends past the evaluation.** L4 ruled it as `C-SA-VENDOR-WORD`:
   exploration and comparison authorized, recurring or production use not; this file adopts that ruling as
   written, with its author, and adds nothing to it.
@@ -391,11 +406,11 @@ focused L5 records the omission as a boundary rather than a certification.
 
 ## 9. Holds, and whose they are
 
-- ⛔ **`AMGT-s-b4` is HELD by Andrew.** Verbatim: *"Hold on the Task orders specific to Seeking Alpha backend
-  design, i may provide updated information to this end before you cut those but proceed otherwise."*
-  Release = his updated information, or his word that there is none. **Its task order is NOT cut at L6 until
-  then.** The L6 issuance covers every OTHER cell; the coverage gap this leaves is deliberate, cites the
-  record, and is the one exemption the issuance commit names.
+- **`AMGT-s-b4` WAS HELD by Andrew (@8c609decf7) and IS RELEASED (@d09e26e1b1).** Verbatim, the release: *"We have
+  figured out the Seeking Alpha case"*, with the CRO's investigation @b1656bbebc named as THE REFERENCE for every
+  SA-procurement order and *"Shouldnt need to recut the details on the PRD"*. The cell is `OPEN`, its order is cut
+  in the one issuance like every other, and its slot spawns when `AMGT-s-12` lands. **No coverage exemption is
+  needed and none is taken.**
   ⚠ **If his updated information bears on the IDENTITY of an SA symbol rather than the fetch route,
   `AMGT-s-12` becomes in-scope after all** -- named so it reads as his word widening, never as a defect
   in this cut (`1.0.0_SA_CTO~Z` msg 21044, confirming both readings).
@@ -406,6 +421,6 @@ focused L5 records the omission as a boundary rather than a certification.
   playbook, on this device, live. L6 checks; L5 does not wait.
 - **`C-VENDOR-EGRESS` words are NOT held for `AMGT-s-2` (new securities), `AMGT-s-13` (a dataset trigger) or
   `AMGT-s-b4` (the API route).** Each cell carries the question in its criterion; none spends or assumes it.
-- **NONE held by this lane.** Fourteen cells are `OPEN`, one is `OPEN` with a held second phase, one is
-  `HELD` at Andrew. Round 1 is cuttable now.
+- **NONE held by this lane, and none at Andrew.** Sixteen cells are `OPEN` (one, `AMGT-s-5`, with its .tsx phase
+  held on the design spec's approval). Round 1 is cuttable now.
 - **PUSH STATE: this lane's commits are LOCAL.** `0.0.0_AB_MSTR~Z` holds the push window.
