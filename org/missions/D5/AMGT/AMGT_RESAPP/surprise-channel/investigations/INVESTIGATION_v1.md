@@ -125,6 +125,51 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The launch prompt's own dictated deliverable path is authoritative for where the proof-of-spec instance lives.",
     "world_is": "That path is the correct GRAIN and CONTENT and fully valid on its own (proof-of-spec-check.py passes it standalone) but is invisible to the estate's own complete-flip gate, which resolves the instance ONLY by the task order's full filename stem. A worker following the launch prompt literally for the entire session (as this one did through AC1-AC7 and the first AC4 amendment) would discover the mismatch only at the flip attempt, not before -- fixed in-session by renaming (git records add+delete) rather than widening this worker's <paths> grant, which already covers the deliverables/ folder either name lives in.",
     "notes": "Owner to choose the fix shape: correct the launch-prompt-generation template (COO's L6 issuance tooling) to emit the full-stem filename, or relax to-pipeline-gate.py's discovery glob to also accept a <to_id>.proof_of_spec.json short form. Not this worker's to repair -- the gate and the launch prompt are both outside this worker's <paths> grant to edit; the deliverable itself was moved, not the tool or the prompt template."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W3-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~3",
+    "surfaced_at": "2026-09-10T21:39Z",
+    "one_line": "AMGT-s-12b's cell text names 'that folder's *ONE PAGER*.xlsx workbook' (singular); 5 of 89 folders carry TWO such workbooks that disagree with each other on the peer-set question, so 'the workbook' is not always one file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "os.listdir census over all 89 corpus folders (build_universe.py / f6_remeasure.py, both committed at 074d0d1ebeb31631e871e60b24f84fcd70edae0b): 44 folders carry exactly one *ONE PAGER*.xlsx file, 5 carry two, 40 carry none -- 44 + 5*2 = 54, matching F6's own 'all 54 ... workbooks' population",
+        "the 5 two-file folders: Imperial Brands IMB LN, Nokia FH, Petrobras PETR3 BZ, SAP GY, Total Energies TTE FP",
+        "Imperial Brands IMB LN's two files DISAGREE: 'Imperial Brands FactSet Based ONE PAGER 2026 07 17_v1.xlsx' CSC sheet carries the stale 12-name KPN telecom set; 'Imperial International Dividend One Pagers.xlsx' CSC sheet carries the real analyst set (IMB LN, BATS LN, 2914 JT, PM US, MO US) matching the CRO's cited own-set finding -- read directly, both files, both CSC sheets, at C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Shared - Documents\\Asset Management\\Research\\Imperial Brands IMB LN\\"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-s-12 cell text (b): 'the Bloomberg-format ticker of the SUBJECT company read from that folder's *ONE PAGER*.xlsx workbook' -- singular, one workbook implied per folder entry in universe.json.",
+    "world_is": "5 of 89 folders carry two *ONE PAGER*.xlsx files each, and at least one pair (Imperial Brands) carries materially different content across the two files (a stale copy and a real one). universe.json (one entry per folder, per the cell text) resolved this by trying every matching file in a folder and keeping the first that yields a MEASURED ticker, recording all matching filenames in each entry's `one_pager_files` array -- not specified by the cell text, which named a singular workbook. f6_remeasure.py, whose population the cell text separately names as workbooks not folders ('all 54 ... workbooks'), counts and classifies every file, which is why it reproduces the CRO's 48/4/2 of 54 exactly.",
+    "notes": "Non-blocking: the tie-break did not prevent AC2's partition from closing (89 of 89, MEASURED+INFERRED+UNRESOLVED summing correctly) and did not affect AC3 (workbook-level, unaffected by the ambiguity). Recorded because a later cell reading universe.json's bloomberg_ticker for one of these 5 folders sees only ONE ticker value even though the folder's second workbook may carry a different (or no) identity block -- worth a read before AMGT-s-4/s-8/s-13/s-15 build on this entry for those 5 names specifically."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W3-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~3",
+    "surfaced_at": "2026-09-10T21:57Z",
+    "one_line": "The worker face names the proof-of-spec path as '<PROJECT>.TO-<cell>.proof_of_spec.json', but .tools/to-pipeline-gate.py's check_complete_flip requires the FULL task-order-filename stem ('...identity-layer-the-root.proof_of_spec.json') or the complete flip is refused.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First attempt: committed the status flip alongside a file named AMGT_RESAPP.TO-AMGT-s-12.proof_of_spec.json -> safe-commit ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate); [to-pipeline-gate] REFUSED: '...flips to complete on PIPELINE-REGISTERED project AMGT_RESAPP, and NO proof-of-spec instance was found beside it.'",
+        ".tools/to-pipeline-gate.py check_complete_flip(): `stem = os.path.basename(rel).rsplit('.md', 1)[0]` (the FULL task-order filename, e.g. 'AMGT_RESAPP.TO-AMGT-s-12.identity-layer-the-root'), then `names = (stem + '.proof_of_spec.json', ...)`, globbed under deliverables/*/",
+        "Renamed to org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/AMGT_RESAPP.TO-AMGT-s-12.identity-layer-the-root.proof_of_spec.json; re-ran python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3,AC4,AC5,AC6 -> VALID (rc=0), 0 violations, identical to the pre-rename read",
+        "Sibling instances on other projects use the full-stem convention already, e.g. org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~5/ETFS_GUARDRAIL.TO-EG-s-25.the-verdict-discloses-its-own-forcing.proof_of_spec.json"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This worker's task text: 'your proof-of-spec instance at org/.../deliverables/0.9.0_WK_AMGT_RESAPP~3/AMGT_RESAPP.TO-AMGT-s-12.proof_of_spec.json' -- the short to_id form.",
+    "world_is": "The mechanical gate that actually decides whether a 'complete' flip is accepted keys on the TASK ORDER FILE'S OWN full basename stem, not the short to_id -- a file named with the short form is invisible to check_complete_flip's glob and the flip is refused with a message that reads as if no instance exists at all, even though a VALID one does, just under the wrong name. Renamed to the full-stem form (permitted -- deliverables/ is broadly granted) and the flip proceeded.",
+    "notes": "Non-blocking, caught before any commit landed (safe-commit's pre-commit hook aborted cleanly, files left unstaged, nothing to roll back). Worth fixing at the source that generates worker task text (the short-form path may be a convenience abbreviation that was never cross-checked against the gate it has to pass) so the next worker does not repeat the same round trip."
   }
 ]
 ```
