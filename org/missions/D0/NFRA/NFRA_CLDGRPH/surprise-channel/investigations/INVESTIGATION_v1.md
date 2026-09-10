@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **290 rows**. Restated 2026-09-10T19:52Z by `2.0.0_SA_COO~A` on appending NFRA_CLDGRPH-S119, by parsing every fenced json block in this file (218 blocks, 290 rows after this append).
+**Append-only during the round.** Denominator at this write: **291 rows**. Restated 2026-09-10T19:1xZ by `2.0.0_SA_COO~A` at a round-9 drain, by parsing every fenced json block in the MERGED file (219 blocks, 291 rows). This drain merged two branches that each restated this line for their own side; neither count was true of the union, so the number is re-measured here rather than carried from either.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -8475,6 +8475,37 @@ and its four S3 objects are verified.
       ]
     },
     "notes": "ARMED and routed to 0.0.0_AB_MSTR because the remedy is fabric-level and belongs to no project: either the ack primitive reaches codex seats, or obligation 4's trigger names a DISCRIMINATOR THAT CAN GO POSITIVE at a codex recipient -- the estate already has one, and it is the one used here: an artifact the recipient authored that cites the message. WHAT THIS SEAT DID INSTEAD OF FIRING THE LITERAL RULE: it sent the nudge (harmless, carries path and hash), and it did NOT send a [STUCK] asserting the CVO is unreachable, because that assertion would have been FALSE and would have been made on an instrument that cannot return the other answer. THE GENERAL FORM IS ALREADY IN THIS ESTATE'S TRAP SET: a detector that cannot return non-zero on the positive case is a constant wearing a measurement's clothes -- and the failure mode here is an ESCALATION, which is louder and more expensive than a quiet false green. NOT PROPOSED AS A GATE and this lane edits no skill."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W2-S80 -- the withdrawal's hazard passes through a SECOND gate the record does not name, and it is in the file this cell may only read
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-10T19:29Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_CLDGRPH-W2-S80",
+    "one_line": "THE WITHDRAWAL'S HAZARD IS REAL BUT IT PASSES THROUGH A SECOND GATE THE RECORD DOES NOT NAME, AND THAT GATE IS WHERE A FUTURE RE-POINT WOULD ACTUALLY BITE. Round 8's analysis s.3 and this order's face both state the mechanism as 'the fold would delete another producer's live OWNED_BY edges every cycle'. derive_stitch's drop runs inside derive_stitch's OWN artifact; derive_runner then folds that artifact through STITCH_EDGE_TYPES = frozenset({ROUTES_TO, WRITES, READS, DERIVES_FROM, STORED_IN}) -- an ALLOW-LIST of five, and OWNED_BY is not in it -- while ingesting graphuni-storage's payloads separately and unconditionally on every derive. So a re-point of the EMIT alone would not reach graphuni's edges at all; the deletion becomes reachable only once OWNED_BY is ALSO added to that allow-list, and then it bites exactly as the withdrawal says. The conclusion is unchanged and the withdrawal was correct; what is incomplete is the stated MECHANISM, and the incompleteness points at the file this cell was told not to edit. Filed because a future cut reading only the round-8 text would look for the hazard in derive_stitch.py and find a licence that now refuses it, and could conclude the hazard was disposed of while the second gate sat one edit away in derive_runner.py.",
+    "spec_asserts": "The TO-CG-I-3 face, quoting round 8's ROUND_ANALYSIS.round8.md s.3: 'a re-point would make the fold delete another producer's live edges every cycle', naming derive_stitch.py:158-159's unconditional drop as the mechanism and derive_runner.py as READ-only surface for an occurrence count.",
+    "world_is": "The drop at derive_stitch.py filters that producer's OWN edge list. derive_runner.py:2276 admits only five edge types from the stitch artifact (STITCH_EDGE_TYPES) and OWNED_BY is not among them, and derive_runner.py:2674 calls ingest_graphuni_producers unconditionally on every derive, re-reading graphuni-storage's 232 OWNED_BY edges from s3://opal-313476888478-globgrph/producers/graphuni/ (four objects present, listed 2026-09-10T19:1xZ). The deletion the withdrawal describes therefore requires TWO edits, not one, and the second is in a file this order may only read.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/globgrph/derive_runner.py:2272-2276 @4ff4abd9a4d6d2f60fd74fef32ce64158c6bd34b (worktree C:/tmp/wk-cldgrph-9-2, branch wk-cldgrph-9-2) -- 'The five inter-system edge types the stitch EXISTS to emit ... ONLY these are folded' then STITCH_EDGE_TYPES = frozenset({\"ROUTES_TO\", \"WRITES\", \"READS\", \"DERIVES_FROM\", \"STORED_IN\"})",
+        "infra/aws/globgrph/derive_runner.py:2669-2676 @4ff4abd9a4 -- ingest_graphuni_producers(graph) called with no flag guard; the flag-gated EXTRACT_PIPELINE_CLOUD replacement at :2686 is default OFF",
+        "infra/aws/globgrph/derive_runner.py:2199-2252 @4ff4abd9a4 -- the ingest lists producers/graphuni/ and folds every producer JSON's edges into graph['edges'] on each run",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/i3_producer_payload_census.json, captured 2026-09-10T19:19:13Z: 6 of 6 payloads under producers/, OWNED_BY totals 232 all from producer 'graphuni-storage', STORED_IN 0 -- read-only aws s3api list-objects-v2 + get-object",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/ROUND_ANALYSIS.round8.md s.3 @2fa5bf1670 -- the withdrawal and its stated mechanism"
+      ]
+    },
+    "notes": "INERT, not ARMED: nothing today performs the re-point, the CTO withdrew the remedy, and CG-s-42 has now made derive_stitch's drop refuse OWNED_BY outright -- so the first gate is closed by construction. The residue is a RECORD defect with a reader-cost, which is the same shape as W2-S79 on the same file. NOT ACTED ON HERE AND THE OMISSION IS DELIBERATE: derive_runner.py is not in this order's <paths>, and widening to it would be an override rather than a row. THE REUSABLE FORM: when a producer and its fold are separate processes, 'the producer deletes X' and 'X disappears from the served graph' are DIFFERENT claims separated by the fold's admission rule, and a mechanism written without that rule reads as one claim. Cheapest next step for whoever holds the retirement: state the re-point as the two-edit act it is, and score both edits, or the second one lands unscored the way round 7's ruling did."
   }
 ]
 ```

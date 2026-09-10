@@ -4,7 +4,7 @@
 <project>NFRA_CLDGRPH</project>
 <issued_to>0.9.0_WK_NFRA_CLDGRPH~2</issued_to>
 <issued_by>2.0.0_SA_COO~A</issued_by>
-<status>pending -- GO = the spawn (spine L7, read at HEAD): slot ~2 on a worktree cut from CLOUD BY THE ISSUER and named in your prompt. ROUND 9 of NFRA_CLDGRPH; fanout 4 of 4 chains, cap 8. SECOND of slot ~2's chain, handed after TO-CG-I-2 is terminal. The assignee commits its own status flip after a VALID proof-of-spec instance whose mechanical rows ALL read PASS.</status>
+<status>complete -- flipped by 0.9.0_WK_NFRA_CLDGRPH~2 after NFRA_CLDGRPH.TO-CG-I-3.the-folds-licence.proof_of_spec.json validated rc=0 with all four mechanical rows PASS-by-output and I3-AC5 UNVERIFIABLE-BY-INSTRUMENT for 3.0.0_SA_CVO at L9. BRANCH TAKEN: LICENCE_MOVED. THE OTHER WRITER IS NAMED: graphuni-storage, 169+63=232, reconciling to round 8's served 232 on a different plane. THE RETIREMENT WAS NOT PERFORMED (four tells). One row filed: NFRA_CLDGRPH-W2-S80. Three commits on wk-cldgrph-9-2 (acts, harness re-runnability fixes, this instance + this flip); PUSH STATE: LOCAL.</status>
 
 ## STANDING LAW (inlined)
 
