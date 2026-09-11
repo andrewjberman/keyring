@@ -961,6 +961,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Rule 13: DS owns commit-to-QA-deploy for data/*/scripts/gold/*.py; safe-deploy.sh: first-mints stay explicit. IB-s-12 / IB-s-4 issuer amendment: the first-mint is attempted through the guard's explicit mechanism and verified by artifact.",
     "world_is": "The explicit mechanism has no declared target for this project's gold home, so no worker in this round can land the shared-home copy; the served code prefix reads 404 for both scripts while the Lambdas that run them are converged. The directory and holdings id spaces coincide for one firm of three.",
     "notes": "Two decisions recorded here rather than made silently: (1) the issuer does NOT declare the bundle mid-round -- it is a tooling edit under another lane and the only off-spec act available to this seat is a row; (2) IB-s-4's arm (h) is read as BLOCKED-BY-W1-S8 rather than re-filed, so the channel carries one BLOCKING row for one defect. Carried to L10 with the sequencing defect of S9 and the execution-role trust question of W3-S3."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S11",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T03:55:59Z",
+    "one_line": "A THIRD ID SPELLING, AND IT MAKES ROW W1-S7 LOOK WORSE THAN IT IS. The holdings snapshot NAMESPACES its account ids -- scope.account_ids reads `49f:acct:acc_e57c30bb3e2ba80252fa0bd4` -- while the directory carries the bare `acc_...` tail that directory_runner.opaque_id emits. A consumer joining the two artifacts on the id AS WRITTEN gets 0 of N for ALL THREE firms and would conclude the directory and the holdings population share no id space anywhere. That is NOT what W1-S7 says and it is not true: after stripping the `<firm>:acct:` prefix, 49financial resolves 5,856 of 5,873 against a directory refreshed in the same run, while inflection stays 0 of 790 and cottonwood 0 of 946 -- which is exactly the W1-S7 shape. So there are TWO different problems wearing one symptom: a PREFIX difference that affects every firm and is cosmetic, and a RAW-KEY difference that affects INF and COT only and is real. This cell measured it because its arm (i) carried a positive control: 0 of 3 firms resolving non-zero is a broken instrument, not a finding, since W1-S7 records 49financial resolving 7,431 of 7,453. The first run of the arm DID read 0 of 3 and the control is what caught it. RESIDUAL, stated: 17 of 5,873 49F holdings ids do not resolve even after normalisation (0.3 percent), unexplained by this cell.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-bd/investor-reporting/qa/holdings/2026-09-11/snapshot.json scope.account_ids -- read live by this cell: 5873 ids, sample 49f:acct:acc_0010de3a921e3e1fbb55bd28",
+        "data/assets/scripts/gold/investor_reporting/directory_runner.py:367 @ b873f64de3 -- account_ids = [opaque_id(account, firm_id, a[account_number]) ...]; the directory carries the bare opaque tail with no namespace prefix",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_s_4.py arm (i) (this commit) -- first run 49financial 0 of 5873; after prefix normalisation 5856 of 5873, inflection 0 of 790, cottonwood 0 of 946, all against directories rebuilt in the same run",
+        "row IRPT_BCKEND-W1-S7 (issuer amendment carried on this face) -- 7,431 of 7,453 for 49financial, 0 of 790 INF, 0 of 946 COT, measured at IB-s-12: the same shape from a different instrument on a different snapshot"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "Arm (i), issuer amendment: print per firm how many of the latest holdings snapshot account ids resolve against the refreshed directory (N of M); and W1-S7: the directory opaque account ids for INF and COT do not resolve against the holdings join keys.",
+    "world_is": "They do not resolve for a SECOND reason as well, and that reason applies to all three firms: the two artifacts spell the same id differently (namespaced vs bare). Measured naively the gap reads 3 of 3 firms; measured correctly it is 2 of 3, and the 49F arm is the control that tells them apart.",
+    "notes": "ARMED because the two causes are indistinguishable in the SYMPTOM and the wrong one is the cheaper conclusion: a reader who sees 0 of N everywhere will look for a broken id space instead of a missing prefix, and a reader who fixes only the prefix will believe INF and COT are cured. NO JOIN WAS EDITED here -- the spec is frozen and whether one id space is owed is the CTO's L10 read. The disarm act is a decision about which spelling is canonical between the two artifacts, alongside the same question W2-S9 raises for the FIRM id: this estate now has THREE id spellings in play (registry vs opaque firm, namespaced vs bare account) and each was found only where two cells JOIN."
   }
 ]
 ```
