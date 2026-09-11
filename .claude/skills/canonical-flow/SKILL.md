@@ -151,6 +151,7 @@ Measure each of these; ABSENT is a value, not a guess. Print the table.
 | proof instances | `deliverables/<serial>/<TO>.proof_of_spec.json` at HEAD, each run through `.tools/proof-of-spec-check.py`; VALID at HEAD is the only terminal read -- a `<status>` field is the stalest carrier in its own document; a criterion the task order flags as judgment is graded only in the CVO's adjudication, never by the instance's own verdict |
 | worker branches | `git worktree list` + `git branch --list 'worktree-*'`; each unmerged branch is a worker that died mid-task-order |
 | **unfinished edits** | `git status --porcelain -- org/missions/D*/<MACRO>/<CODE>/` AND every path the project's open task orders name in `<paths>` (or cite in their bodies), plus `git stash list`; a modified, staged or untracked file under those paths with no commit is a dead seat's unfinished work -- the outage residue. Print the file list with its denominator; never `git checkout --` or `git clean` anything here |
+| **live production (THE PROBE)** | ⛔ **THE READ ABOVE IS BLIND TO THE ONE THING THAT DISTINGUISHES STALLED FROM WORKING.** `git status` runs in THE RUNNING TREE, so another seat's in-flight output -- in ITS worktree, or untracked under `deliverables/<its serial>/` -- is INVISIBLE to it. So probe the plane the owner's output actually lands on, before assigning any class: `git worktree list` then `git status --porcelain` in EACH other seat's worktree, plus mtimes under `deliverables/<serial>/` for the owner of the next limb. **Print the newest mtime and its age.** Output written in the last few minutes is the discriminator; absence of it is what earns a stalled reading. **NEVER touch what this finds** -- it is another seat's live work, not residue |
 | surprise channel | `comp-surprise --project <CODE>` (both roots); the latest row citing each item decides its state; the CVO's heartbeat watermark (rows seen / undispositioned / watch pid) against the channel's row count |
 | the slug and the CTO's answer | `surprise-channel/remediations/REMEDIATION_v<N>.md` (present = the slug is cut); `ledger/ROUND_ANALYSIS.round<N>.md` or a bumped `prd_version` (present = the CTO has answered it) |
 | step logs / compilation | tree `ledger/STEP_LOG.*`; the compiled log's share of acts outside the limbs is the round's own instrument |
@@ -195,7 +196,8 @@ grantor for a flat row) and it goes into the report; it never overrides the meas
 
 | class | meaning | owner of the next act |
 |---|---|---|
-| `STALLED-AT-OWNER` | the next limb's input exists and conforms; its owner has not acted | the next limb's owner |
+| `IN-PROGRESS` | the next limb's input exists and conforms AND **the probe above found the owner's output moving** -- the limb is being worked RIGHT NOW | the next limb's owner; **nobody nudges, escalates, kills or respawns** |
+| `STALLED-AT-OWNER` | the next limb's input exists and conforms; its owner has not acted **AND the probe found nothing moving**. ⛔ **THE PROBE IS PART OF THE TEST, NOT A COURTESY: without it this value is unfalsifiable** and every actively-working limb reads STALLED | the next limb's owner |
 | `ARTIFACT-GAP` | the next limb's input is missing or non-conforming (a PRD without an endpoint section or manifest; a decomp without its record or edges; a TO without a proof block or with a compound criterion; an issuance that does not cover every cell) | the limb that should have produced it |
 | `PRE-TREE` | exists only in the flat register; no tree home | `1.0.0_SA_CTO` (L3 under the tree, then L4 at the tree home) |
 | `DEAD-SEAT` | v2 only: open task orders whose broker-registered assignee is not live | `2.0.0_SA_COO` (re-address, or seat a fresh lane; or recut under v3 at the next issuance) |
@@ -205,6 +207,21 @@ grantor for a flat row) and it goes into the report; it never overrides the meas
 | `SLUG-UNREAD` | the slug is cut and the CTO has written neither a round-N analysis nor an addendum | `1.0.0_SA_CTO` (the L10 read) |
 | `ROUND-UNCUT` | the CTO's answer exists and no issuance has been cut from it | `2.0.0_SA_COO` (the recut, one issuance) or, after an addendum, `2.0.0_SA_COO` at L5 on the bumped PRD |
 | `SEQUENCED-BEHIND` | a named hold blocks the next limb (a register phase, a directive placement, an Andrew-direct record) | nobody: report the hold's carrier; only Andrew lifts a hold |
+
+⛔ **WHY `IN-PROGRESS` EXISTS, AND WHY IT ARRIVES WITH A TEST RATHER THAN AS A LABEL** (row
+`AMGT_RESAPP-Z-S22` @`651ffd4f16`, filed by `2.0.0_SA_COO~ZZZ` under this skill's own Rules clause that
+an unclassifiable case is a defect in the CLASS SET). **All ten original classes assume ABSENCE OF
+WORK. None named a limb whose owner was ACTIVELY PRODUCING.** Measured 2026-09-11: `1.0.0_SA_CTO~Z`
+and `2.0.0_SA_COO~ZZZ` ran this skill minutes apart and hit the SAME uncovered member -- two seats,
+two runs, which is the tell that it is the set and not either reading. In the same hour
+`0.0.0_AB_MSTR~Z` measured `3.0.0_SA_CVO~Z` writing **189 KB of L9 evidence in five minutes**, so at
+the exact moment both runs would have said STALLED, the owner was mid-adjudication.
+⛔ **AND IT IS NOT COSMETIC. A LABEL THAT IS MERELY IMPRECISE IN A REPORT BECOMES A WRONG PREMISE WHEN
+A LATER SEAT ACTS ON IT** -- the natural next act on `STALLED-AT-OWNER` is a nudge, then an
+escalation, then a kill, and `2.0.0_SA_COO~ZZZ` had already fired that ladder to `[STUCK]` before a
+worktree probe overturned it. A kill on that reading would have destroyed 189 KB of uncommitted work.
+⭐ **THE TWO HALVES ARE ONE CHANGE:** without the probe the value is unfalsifiable; without the value
+the probe has nowhere to report. Neither lands alone.
 
 A project can carry more than one class; list all, the blocking one first. `UNFINISHED-EDITS` and
 `ORPHAN-WORKTREE` are always listed when present, whatever the limb: they are work that exists nowhere durable
@@ -295,6 +312,7 @@ LOCATE   home: {tree path | flat only}   placement: {laptop | site-z} ({carrier}
          TOs {n open / m terminal; issuance {commit | v2 piecemeal}; fanout {N of M, cap K | ABSENT}}
          proof instances {v valid / t total at HEAD}   worker branches {k unmerged}
          unfinished edits {f file(s) under the project's paths | none}   stash {s | none}
+         live-production probe {newest output on the next limb's owner: <path> <age> | NOTHING MOVING}
          rows {n items, k undispositioned; watermark {ahead | BEHIND by d | ABSENT}}
          slug {REMEDIATION_v<N>@vintage | ABSENT}   answer {ROUND_ANALYSIS.round<N> | addendum v{..} | ABSENT}
          dep_stage (claimed): {..}
@@ -332,6 +350,13 @@ Then the act itself, or the handoff message, or nothing (report-only).
   the issuance, the proof instances at HEAD, worker branches, the slug and the CTO's answer; the classes gain
   `ORPHAN-WORKTREE`, `SLUG-UNREAD` and `ROUND-UNCUT` and lose `ROUTED-UNPICKED` with the route tokens; the
   COO's midstream read of spine L7 is this skill's Step 1 and 2.
+- `IN-PROGRESS` + the live-production probe added by `1.0.0_SA_CTO~Z` 2026-09-11 on row
+  `AMGT_RESAPP-Z-S22` @`651ffd4f16` (`2.0.0_SA_COO~ZZZ`), under this skill's own Rules clause. The class
+  set assumed absence of work and had no value for a limb being worked; two seats hit the same
+  uncovered member minutes apart, and the wrong label had already driven a `[STUCK]` escalation against
+  a seat writing 189 KB of live L9 evidence. ⚠ The gap was in the LADDER as much as the SET -- the
+  `unfinished edits` read runs `git status` in the RUNNING tree and cannot see another seat's worktree,
+  so the instrument that distinguishes stalled from working was the one the ladder never ran.
 - Hardened against seats dying mid-work by `1.0.0_SA_CTO` on Andrew's word at the MSTR terminal 2026-09-03
   ~20:0xZ (LD-0532, relayed as message 93908): the `unfinished edits` read, the `UNFINISHED-EDITS` class owned by
   the COO with the CVO validating, the decide-order step that protects those files from every other seat, and
