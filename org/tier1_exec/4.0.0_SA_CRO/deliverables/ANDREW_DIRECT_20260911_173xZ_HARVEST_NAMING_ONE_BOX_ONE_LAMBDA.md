@@ -128,6 +128,56 @@ seat's reading of "primary feeder", offered for approval, NOT a ruling** -- the 
 and app is exactly the kind of boundary he may want drawn differently, and it is cheap to move now
 and expensive to move after the module exists.
 
+## THE APPROVAL AND THE SIXTH DIRECTIVE, 2026-09-11 ~18:3xZ -- VERBATIM AND ENTIRE
+
+Answering `/open-calls` (3 cards: harvest box location; GO on the architecture; portal route rename).
+
+> all recs approved aside from the local box comment. this box is sitez. it is a local server at Opal,
+> not an aws cloud box. accordingly it is not terraformed nor included in the aws resource cloud.
+
+### WHAT IS NOW SETTLED
+
+9. ⭐ **THE DRAW IS APPROVED. The GO is given** (card 2's REC approved): execute module consolidation
+   and renames FIRST while both stores are empty, then the backfill, then the box and lambda.
+10. **Card 3 approved: the portal hold STANDS and the route rename is DEFERRED.**
+    `/api/private/research/pull` keeps its path; the estate is canonical everywhere else. No portal
+    promote, PROD or DEV.
+11. **The lane-override decision was put to him as DECIDED-not-asked and drew no objection** --
+    terraform commits go under an audited `GIT_COMMIT_AUTHOR_OVERRIDE`, one per lane, naming his
+    grant as the reason. No permanent lane amendment to `.owned-paths.yaml`.
+12. ⛔ **CARD 1'S REC IS REJECTED, AND THE REASON IS THE CORRECTION THAT MATTERS:** site-Z is a
+    **LOCAL SERVER AT OPAL**, not an AWS cloud box -- **NOT terraformed and NOT part of the AWS
+    resource estate.**
+
+### THIS SEAT'S READING OF (12), STATED AS A READING SO HE CAN STOP IT
+
+He rejected the local box WITH A REASON THAT RULES IT OUT rather than merely preferring EC2: a
+harvester box on site-Z could not be terraformed and could not sit inside the harvest estate, which
+would defeat directive 2's "canonical and self-contained" outright and directive 8's "the harvester tf
+is the primary feeder resources". **So the harvester box is an EC2 INSTANCE, declared in the harvest
+module.** Site-Z keeps the BACKFILL, which is unchanged and uncontradicted -- his earlier word
+*"backfilling should be handled on this local box rather than delegated to a cloud process"* describes
+a one-shot operator PROCESS, not a provisioned resource, so it never needed to be in the estate.
+
+⚠ **THIS SEAT'S OWN ERROR, NAMED:** card 1 recommended site-Z as THE harvest box on IP-reputation
+evidence. That reasoning was sound about bot walls and WRONG about the estate -- it would have put the
+feeder's compute outside terraform while the whole directive was to make the estate canonical and
+self-contained. **A correct local fact (residential IP clears PerimeterX) was allowed to decide a
+question it does not govern.**
+
+### ⚠ THE PROBLEM THAT MOVES RATHER THAN DISAPPEARS -- carried into the build, not re-litigated
+
+The bot-wall evidence stands: this seat's own harvest screenshots show three consecutive `BOT_WALL`
+steps before `LOGGED_IN` from a residential IP, and an EC2 datacenter range is a worse signal for
+PerimeterX. **That is now an ENGINEERING PROBLEM INSIDE THE EC2 DESIGN, not a reason to move the
+box.** Two routes exist and both are already in this estate's vocabulary: the proven
+`press_and_hold_lib.py` mechanism with more retries, or routing sessions through the Bright Data Web
+Unlocker path WSJ already uses.
+⛔ **NOT ASSUMED: extending Web Unlocker from WSJ to the three SESSION harvesters is a NEW per-use
+vendor question.** `C-VENDOR-WORD-HARVESTERS` covers egress TO Seeking Alpha, FT, Bloomberg and WSJ
+for this project's harvesters; it does not silently authorise a new PROXY VENDOR for platforms that
+did not use one. If the EC2 IP proves unworkable, that is a call for Andrew, not an inference.
+
 ## NOT DONE HERE
 
 No PRD edit, no decomposition edit, no task-order edit, no rename, no gate. This seat holds L1 and
