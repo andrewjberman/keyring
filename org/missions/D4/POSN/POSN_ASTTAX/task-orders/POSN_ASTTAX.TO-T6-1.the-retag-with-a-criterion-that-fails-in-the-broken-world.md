@@ -8,8 +8,14 @@
 <status>staged</status>
 
 **Directive:** D4 · **Macro:** POSN · **Fabric:** site-z · **PRD:** `../prd/POSN_ASTTAX_PRD.md` **v0.5**
-@`49ddcc481d` · **Decomp cell:** `AT3-s-6` · **Issuance:** round 3.
+@`3832ac543c` · **Decomp cell:** `AT3-s-6` · **Issuance:** round 3.
 **DEPENDS ON `AT3-s-5` (the bar, must read GO), `AT3-s-2` and `AT3-s-3` (both terminal).**
+
+> **RE-CUT 2026-09-11 ~22:4xZ, BEFORE ANY WORKER RAN THIS ORDER**, against PRD `3832ac543c`. TWO
+> substantive changes, both from cells that have since landed: step (3) now requires **BOTH STORES**
+> (`AT3-s-4`'s durability fix makes a DynamoDB-only retag ANNOUNCED AND REFUSED at `rc=3`), and the
+> bar's clause (b) now reads **LABEL-GROUPED** weight, because the allocation-dict entry does not
+> discriminate. Re-pinned from `49ddcc481d`, which is two amendments stale.
 
 ---
 
@@ -39,8 +45,12 @@ it goes wrong on VXX.
    NO-GO; that is the whole sequence.
 2. **Record each member's PRE-retag served value and weight** (`T6-AC2`). You cannot assert "equal to
    its pre-retag weight" later without capturing it now.
-3. **Retag, per ticker, each with its ratified target and a stated reason** (`T6-AC3`). Not a bulk set.
-4. **Read back from the SERVED artifact and assert BOTH halves** (`T6-AC4`).
+3. **Retag, per ticker, each with its ratified target and a stated reason, IN BOTH STORES**
+   (`T6-AC3`). Not a bulk set. ⛔ **A DYNAMODB-ONLY RETAG IS NOT A RETAG** -- it is ANNOUNCED AND
+   REFUSED (`rc=3`) by `AT3-s-4`'s durability fix, so the value must ALSO land in
+   `ETF_CLASSIFICATIONS`. This is PRD step (3) at `3832ac543c` and row `W13-S1`.
+4. **Read back from the SERVED artifact and assert BOTH halves** (`T6-AC4`), (b) on the LABEL-GROUPED
+   weight and NOT the allocation dict.
 5. Instance, checker, `complete`, one commit, one report.
 
 ## BOUNDS
@@ -50,8 +60,14 @@ it goes wrong on VXX.
   Satellites 70/80/90/98 via the MODELS path. POSN retags the served top-level `asset_class` ONLY.
 - ⛔ **DO NOT MINT A SIXTH CLASS.** Five are ratified.
 - ⛔ **DO NOT DEPLOY** and do not touch portal.
-- ⚠ `AT3-s-4` may have changed how the registry resists a re-seed. Do not undo it; if your write and
-  its mechanism disagree, that is a ROW and you stop.
+- ⚠ `AT3-s-4` HAS changed how the registry resists a re-seed -- it is terminal @`9ca2aef5db`, not a
+  maybe. Do not undo it; if your write and its mechanism disagree, that is a ROW and you stop.
+- ⚠ **THE REVERT HAZARD WAS MASKED, AND KNOWING THAT CHANGES WHAT A SUCCESSFUL RUN MEANS.** The
+  seeder at the round's base **could not complete a run at all** -- `sub_asset_class=""` for 16 of 136
+  tickers, and that is the hash key of GSI `sub-asset-class-index`, so the first offender sorts to
+  index 0, batch 1 is rejected and ZERO items are written. ⭐ **Anyone who fixed only the crash would
+  have converted a dead script into a working revert.** If you find the seeder running cleanly now,
+  that is `AT3-s-4`'s work and the revert path is LIVE -- treat it as armed, not as reassurance.
 - A divergence is a ROW at `../surprise-channel/investigations/INVESTIGATION_v1.md`, ids
   `POSN_ASTTAX-Z-W15-S<n>`, ONE new fenced ```json block appended at the END; then keep working.
 - Commit under your own serial via `safe-commit.sh`, msgfile by the Write tool, PURE ASCII, never `-m`.
@@ -63,9 +79,9 @@ it goes wrong on VXX.
 
 <criterion id="T6-AC2" cell_refs="AT3-s-6"><invocation>timeout 180 python &lt;your pre-retag capture&gt;</invocation><expect>per member: the PRE-retag served asset_class value and allocation weight, read from the served artifact with its vintage (URI/path, LastModified, size) pasted verbatim. This is the baseline AC4 compares against; without it "equal to its pre-retag weight" is unassertable.</expect></criterion> `T6-AC2` -- THE BASELINE, CAPTURED BEFORE THE WRITE.
 
-<criterion id="T6-AC3" cell_refs="AT3-s-6"><invocation>timeout 180 python &lt;your per-ticker retag script&gt;</invocation><expect>one line per ticker written: ticker, old asset_class, new ratified label, and the one-sentence reason. No ticker written without a reason. No bulk set. The write's own return value is NOT evidence -- AC4 is.</expect></criterion> `T6-AC3` -- THE RETAG, PER TICKER, EACH ON ITS OWN BASIS.
+<criterion id="T6-AC3" cell_refs="AT3-s-6"><invocation>timeout 180 python &lt;your per-ticker retag script&gt;</invocation><expect>one line per ticker written: ticker, old asset_class, new ratified label, the one-sentence reason, and BOTH STORE WRITES confirmed separately -- the DynamoDB item AND the ETF_CLASSIFICATIONS entry. No ticker written without a reason. No bulk set. State the rc of the durability guard: an rc=3 ANNOUNCED-AND-REFUSED means you wrote only one store and the retag did NOT land. The write's own return value is NOT evidence -- AC4 is.</expect></criterion> `T6-AC3` -- THE RETAG, PER TICKER, IN BOTH STORES. A ONE-STORE RETAG IS REFUSED BY DESIGN.
 
-<criterion id="T6-AC4" cell_refs="AT3-s-6"><invocation>timeout 300 python &lt;your served read-back, both halves&gt;</invocation><expect>after a regenerate, read the SERVED artifact and assert per member, as TWO separate results: (a) served asset_class/assetClass == the ratified five-class label, (b) allocation weight NON-ZERO and EQUAL to the AC2 baseline. Both numbers shown per member. A member rendering 'Unknown', or carrying a zeroed weight, is a FAIL -- and a FAIL here is a REGRESSION to be rolled back and rowed, not a note.</expect></criterion> `T6-AC4` -- ⭐ **THE CRITERION THAT FAILS IN THE BROKEN WORLD.** This replaces `S2-AC5`. "The page still renders" is true in both worlds and grades nothing; the served VALUE and the WEIGHT separate them.
+<criterion id="T6-AC4" cell_refs="AT3-s-6"><invocation>timeout 300 python &lt;your served read-back, both halves&gt;</invocation><expect>after a regenerate, read the SERVED artifact and assert per member, as TWO separate results: (a) served asset_class/assetClass == the ratified five-class label, (b) the LABEL-GROUPED weight NON-ZERO and EQUAL to the AC2 baseline. ⛔ Show the allocation-dict entry BESIDE it as a NEGATIVE CONTROL that is expected NOT to move -- grading (b) on that column is the `S2-AC5` shape for the third time and it reads identically in both worlds. Three numbers per member. A member rendering 'Unknown', or carrying a zeroed weight, is a FAIL -- and a FAIL here is a REGRESSION to be rolled back and rowed, not a note.</expect></criterion> `T6-AC4` -- ⭐ **THE CRITERION THAT FAILS IN THE BROKEN WORLD.** This replaces `S2-AC5`. "The page still renders" is true in both worlds and grades nothing; the served VALUE and the WEIGHT separate them.
 
 <criterion id="T6-AC5" cell_refs="AT3-s-6" judgment="true"/> `T6-AC5` -- **JUDGMENT, GRADED BY `3.0.0_SA_CVO~Z` AT L9.** Whether the retag is safe at the SERVED grain for a real viewer, including the consumer paths `AT3-s-2` and `AT3-s-3` measured. **Record the readings and offer NO verdict.**
 
