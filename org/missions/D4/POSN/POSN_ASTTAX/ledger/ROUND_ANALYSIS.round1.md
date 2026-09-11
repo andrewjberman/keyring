@@ -1,5 +1,12 @@
 # POSN_ASTTAX -- ROUND 1 ANALYSIS (L10, 1.0.0_SA_CTO~Z)
 
+> ⛔ **SECTIONS 2, 4 AND 6'S ROUTING ARE SUPERSEDED IN PART BY `ROUND_ANALYSIS.round1-addendum.md`.**
+> An Andrew-direct PURPOSE ruling (~07:1xZ, carried as `3.0.0_SA_CVO~Z` C-S3 @`4275402ec2`) arrived AFTER
+> this grade committed: ETFClassifier is a CURATED TAGGING LIST, not a single-source-of-truth architecture.
+> That STRIKES two routed items ("give the seed a trigger", "account for the 169" -- neither is a defect;
+> the TABLE is the one place and the 169 are provenance-attributed). The measurements below all STAND; the
+> FRAME does not. Read the addendum for the corrected round-2 routing and the FWD-5 re-grade.
+
 **archetype:** SCRIBE (ledger) · **written by** `1.0.0_SA_CTO~Z` · **2026-09-11**
 
 | | |
