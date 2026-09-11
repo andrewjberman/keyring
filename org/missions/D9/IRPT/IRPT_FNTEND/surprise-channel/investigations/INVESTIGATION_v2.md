@@ -344,6 +344,54 @@
     "spec_asserts": "Round-2 BOUNDS (decomp v0.2 R2.2): the producer's artifact is the authority and the consumer conforms; every order's whole set reads 0 fail on its branch. v1 CONTRACT.md: v1 is IMMUTABLE once IB-rt-1 completes; adding an optional field or a handler is not breaking.",
     "world_is": "The consumer's bar pinned bytes, not content, so a non-breaking producer extension reads as a consumer failure the moment the workspace moves. The branch was green at its pin; DEV is green under tsc; six tests are red on the main checkout until the next order refreshes the pin. No push is affected (portal is frozen by Andrew).",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S22",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T22:53:01Z",
+    "one_line": "Round 2 resumed after the managed wind-down and seated two orders in parallel on fresh worktree pairs: FE-s-15 (slot ~1, port 5181, pair /c/tmp/wk-irpt_fntend-2-5-fe-s-15 plus its portal worktree, branch wk-irpt_fntend-2-5-fe-s-15 in both repos) and FE-s-16 (slot ~3, port 5183, pair /c/tmp/wk-irpt_fntend-2-6-fe-s-16, branch wk-irpt_fntend-2-6-fe-s-16 in both repos). Both cut from workspace HEAD 7d6db9bcfa and portal DEV 84a86c10; both verified 14 of 14 ordered paths present, because an object-DB check alone cannot distinguish a half-provisioned worktree. node_modules is a junction to the main portal's in both. The v1 contract artifact resolves at d9c940244a in both pairs, which is the vintage FE-s-15's R2 names, so the re-pin's target is present at the cut. Authority: Andrew-direct ~22:25Z relayed by 1.0.0_SA_CTO as msg-id 96020, which lifts MSTR's START NOTHING NEW for this lane and lifts nothing else. The portal freeze stands: both workers commit to LOCAL branches, no DEV push, no workspace gitlink bump.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git worktree add -b wk-irpt_fntend-2-5-fe-s-15 /c/tmp/wk-irpt_fntend-2-5-fe-s-15 HEAD, plus the paired `git -C portal worktree add ... DEV`; same shape for wk-irpt_fntend-2-6-fe-s-16. Verified after the fact: workspace HEAD 7d6db9bcfa and portal HEAD 84a86c10 in BOTH pairs.",
+        "Ordered-path existence check over 14 paths each (tabs/analysis, export, render/narrative, index.tsx, fixtures/smoke, contracts, __tests__/fe-s-13, src/api/endpoints/investor-reporting.ts, scripts/ui-smoke.mjs, node_modules/.bin, docs/contracts/investor-reporting/v1, INVESTIGATION_v2.md, .tools/proof-of-spec-check.py, .tools/safe-commit.sh): 14 of 14 present in BOTH pairs.",
+        "`git log -1 --format=%h -- docs/contracts/investor-reporting/v1` run INSIDE each pair: d9c940244a in both.",
+        "node_modules junctions created with PowerShell `New-Item -ItemType Junction` after `mklink /J` failed with 'The filename, directory name, or volume label syntax is incorrect' -- MSYS rewrote the /J switch into a path. Recorded so the next seat does not repeat it.",
+        "Seating preconditions read from the faces themselves: FE-s-15 depends_on FE-s-13, FE-s-14; FE-s-16 depends_on FE-s-13, FE-s-14. FE-s-12/13/14/17 all read <status>complete with a proof instance at HEAD (status census over all 18 task orders: 15 complete, 3 blocked)."
+      ]
+    },
+    "spec_asserts": "Both faces' Seating lines: 'seated when FE-s-13 is terminal and drained, fresh worktree pair from HEAD'. MSTR 95996/95993 instruction 2 (START NOTHING NEW) was in force until 22:25Z.",
+    "world_is": "FE-s-13 and FE-s-14 are both terminal and drained, so both seating conditions are met, and the GO lifts the wind-down for this lane. Both pairs are cut and verified. ARMED because two live worker branches now exist outside HEAD: until each is drained or discarded its work exists nowhere durable to any other seat, and a successor that does not read this row would not know the pairs are there. Disarmed by this seat at each drain.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S23",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T22:53:01Z",
+    "one_line": "The R2 amendment this seat added to FE-s-15 at the FE-s-14 drain created a dependency edge the FROZEN decomposition v0.2 @430c5fcb4a does not carry: FE-s-16's F16-AC9 ('bun test src/pages/InvestorReporting' expecting '0 fail') cannot pass until FE-s-15's v1 re-pin lands, because six tests are red on portal DEV 84a86c10 and every one of them lives OUTSIDE FE-s-16's grant. FE-s-16's declared depends_on is FE-s-13, FE-s-14 only, so by the frozen edge set the two cells sit on disjoint chains and may run at once -- and by the amended world they may not. Seated in parallel anyway with the criterion left UNWEAKENED: F16-AC9 is expected to read exactly those six failures until the FE-s-15 drain, at which point this seat re-runs it on the merged tree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured on the main checkout at portal DEV 84a86c10 this turn: `bun test src/pages/InvestorReporting` -> 376 pass, 1 skip, 6 fail, 383 tests across 60 files. The six are fe-s-13 (4), fe-s-14 (1), fe-s-1 (1) per row IRPT_FNTEND-S21's own itemised measurement.",
+        "FE-s-16's <paths> block, read in full: portal export/, render/narrative/, index.tsx, fixtures/smoke/, __tests__/fe-s-16/, and INVESTIGATION_v2.md. It names NONE of __tests__/fe-s-13/, __tests__/fe-s-14/, __tests__/fe-s-1/, contracts/, or src/api/endpoints/investor-reporting.ts -- the five surfaces the re-pin touches.",
+        "FE-s-15's R2 grant, read in full, names exactly those five: 'src/api/endpoints/investor-reporting.ts, contracts/, fixtures/, __tests__/fe-s-13/, __tests__/fe-s-14/, __tests__/fe-s-1/'.",
+        "Decomposition v0.2 @430c5fcb4a is FROZEN for the round (CLAUDE.md Rule 27), so the edge set is not re-cut to carry this; the amendment that created the edge is recorded in row IRPT_FNTEND-S21.",
+        "NEGATIVE CONTROL on the blast radius: F16-AC3 runs __tests__/fe-s-11/colour-law.test.ts, which is NOT among the six failures, so the edge reaches F16-AC9 and no other FE-s-16 criterion. One of ten, not ten of ten."
+      ]
+    },
+    "spec_asserts": "Decomposition v0.2 @430c5fcb4a gives FE-s-16 depends_on FE-s-13, FE-s-14 -- not FE-s-15. The spine's L6 rule is that two cells on one chain never run at once, and the dependency edges are what decide a chain. F16-AC9's expectation is the bare string '0 fail'.",
+    "world_is": "An issuer amendment made mid-round (R2 on FE-s-15) silently moved a cell onto another cell's chain without the edge set being able to say so, because the edge set is frozen and the amendment is not part of it. The general shape, which is the part worth carrying to L10: AN ISSUER AMENDMENT CAN CREATE A DEPENDENCY EDGE AND NOTHING IN THE ROUND'S GRAMMAR RECORDS IT -- the decomposition is frozen, the face carries depends_on as prose written at the cut, and no gate compares the two. Same family as the design finding in S21 (a consumer bar pinned to bytes rather than content): both are cases where a legitimate upstream change invalidates a downstream bar that had no way to express what it actually depended on. Not repaired here and not a reason to re-cut: the criterion stands as written, FE-s-16 is instructed by its own BOUNDS to file a BLOCKING row rather than repair anything outside its grant, and this seat re-runs F16-AC9 on the merged tree after the FE-s-15 drain. Disarmed when that re-run reads 0 fail.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
