@@ -91,6 +91,36 @@ vendor call (per-use word rule).
 
 ---
 
+## 4b. THE THIRD WORD, ~01:1xZ -- `ajb2` was not defined in a fresh window, and the fix is the PROFILE
+
+Andrew ran `ajb2 3.0.0_SA_CVO~X` in a fresh PowerShell 5.1 window at `C:\Users\Opal Bloomberg` and got
+`CommandNotFoundException`, then, verbatim at this terminal:
+
+> **"ask mstr base if need be, this needs to be consistent across devices."**
+
+**Cause, measured:** `ajb2` is a FUNCTION defined only by dot-sourcing `.tools\ajb2.ps1`. This device's
+PowerShell 5.1 profile (`...\OneDrive - Opal Capital\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1`,
+device-local, 8.3 short paths by design) dot-sources `.tools\ajb.ps1` at its line 24-25 and had NO line
+for `ajb2.ps1`. The repo launcher was never the problem.
+
+**Act:** inserted, directly under the `ajb` line and in the SAME SHAPE, a `$ajb2 = '<short-path>\.tools\ajb2.ps1'`
++ `if (Test-Path $ajb2) { . $ajb2 } else { Write-Warning ... }` block with a comment naming this word.
+Dot-sourcing `ajb2.ps1` at load defines the function and `$Global:Ajb2RepoRoot` and launches nothing
+(every executable line sits inside `function ajb2 {` at :61 onward; scanned before wiring).
+
+**Verified** by starting a fresh `powershell.exe` (profile loads) with the registry-composed PATH a new
+window receives: `ajb2` = Function, `codex` resolves to `%APPDATA%\npm\codex.ps1`, root derives to the
+workspace, a non-existent name does not resolve, exit 0.
+
+**Consistency across devices:** asked `0.0.0_AB_MSTR` on the bus (MessageId ffdd224b-83e4-4ad2-bf99-a65d7db08430)
+for the laptop profile's exact `ajb2` wiring and its codex PATH mechanism (bun shim vs persistent PATH);
+site Z aligns to the laptop's text if it differs. The two profiles are device-local by design (different
+user homes, one with a space), so "consistent" means same function name, same dot-source shape, same
+guard -- with each device's own path. The profile is outside the repo, which is where a device path belongs.
+
+**Not done:** no seat launched. A window opened BEFORE 01:0xZ lacks `%APPDATA%\npm` on its PATH and will
+fail at the app-server start even after dot-sourcing; a NEW window has both.
+
 ## 5. RELAYED, NOT ADJUDICATED
 
 Same-turn broadcast to the live site-Z seats (`1.0.0_SA_CTO~Z` as the launcher chain's steward on this
