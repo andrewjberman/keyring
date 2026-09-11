@@ -1,4 +1,4 @@
-# AMGT_RESAPP -- L5 decomposition (COO) -- v0.5
+# AMGT_RESAPP -- L5 decomposition (COO) -- v0.6
 
 **Seat:** `2.0.0_SA_COO~ZZZ`, spawned by Andrew 2026-09-10 ~17:4xZ at the `1.0.0_SA_CTO~Z` terminal for this
 project (seating brief msg 21003; `project.json` `seats.coo`). **Directive:** D5 Alternative Research.
@@ -683,3 +683,161 @@ law commit f8337502a9) -- no sign-off cycle, no prd_version bump.
 
 *(v0.5 amended 2026-09-11 by 2.0.0_SA_COO~ZZZ -- the L10 round-4 recut from @38948db85c; rounds 1-3 sections
 1-11 unchanged.)*
+
+---
+
+## 13. ROUND 5 (v5) -- THE SURFACE ROUND, from the L10 round-4 analysis @959ba3e947 (`1.0.0_SA_CTO~Z`)
+
+**v0.6 IS THE SURFACE CUT, AND IT IS THE FIRST ROUND OF THIS PROJECT WHOSE DECLARED DOMAIN IS NOT A REMEDY
+SET.** Rounds 1-4 were pre-surface correctness work: round 4 graded 2 PASS / 0 FAIL, closed `C-S16` with
+its children `C-S19`/`C-S20`, and is terminal at L10. **28 of 28 orders terminal, 0 open, 0 of 15 FWD
+REALIZED** -- correct, because no surface is built and fourteen of the fifteen outcomes carry `EXERCISED`
+bars that no build can close. This section ADDS the eight round-5 cells; sections 1-12 are FROZEN.
+
+**THE DOMAIN IS ANDREW'S APPROVED SURFACE, NOT THIS LANE'S READING OF WHAT IS LEFT.** PRD s.3b
+(ANDREW-DIRECT 2026-09-11 ~12:1xZ, "Recs approved") plus the S16 manifest row. `C-DESIGN-SPEC-FIRST` IS
+LIFTED for this project, so `.tsx` is authorized in this round and the `AMGT-s-5` .tsx phase is released.
+
+**HIS STATED ORDER IS A BOUND, NOT A SUGGESTION: "the box + both tables, TABLES FIRST."** The edges below
+encode it; no cell may be re-sequenced ahead of it by a worker.
+
+### 13a. What the L4-R gate said at this cut, because this round is the first to pass through it
+
+`python .tools/prd-signoff.py status AMGT_RESAPP` -> **ADMITTED** at `@f0ff95cfac`; ratified-text SIGNED
+`3.0.0_SA_CVO~Z` half `4eb997ed71ee`; brief SIGNED `4.0.0_SA_CRO~Z` half `26f942429c6a`.
+
+BUT: **`ADMITTED` ALONE DID NOT AUTHORIZE THIS CUT AND MUST NOT AUTHORIZE THE NEXT ONE.** Row
+`AMGT_RESAPP-Z-S6` (`1.0.0_SA_CTO~Z` @`65ab345826`) measured the gate printing "brief SIGNED current" while
+the brief half's bytes had moved, because `prd_signoff_lib.evaluate()` falls back to `prd_version` equality
+for any record carrying no `half_hash`. This lane therefore cut only after a SECOND, independent limb:
+a `prd/signoff/4.0.0_SA_CRO*.json` record carrying a `half_hash` **equal to the brief half's CURRENT hash**
+(`26f942429c6a`), found in the LANE file `4.0.0_SA_CRO~Z.json`. The BASE file `4.0.0_SA_CRO.json` is still
+old-format and still returns MATCH=False -- a base-path-only check would have refused this cut.
+WARN: **The general defect is NOT fixed and is NOT claimed fixed** (`prd_signoff_lib` untouched by anyone;
+2 of this project's 3 signoff records are old-format; the estate-wide census is uncounted). The instance is
+repaired BY ADDITION -- the defective carrier is still in the directory and would decide again if the lane
+file were removed, renamed, or written under a different serial spelling.
+
+### 13b. The eight round-5 cells
+
+**M = FOUR dependency chains. `fanout: 2 of 4 chains, cap 8`** -- the two TABLE cells are the only roots and
+both spawn at issuance (his "TABLES FIRST"); the other two chains become cuttable as their root lands.
+
+| cell | row | outcome | act (the engine, and what binds it) | state | deps |
+|---|---|---|---|---|---|
+| `AMGT-s5-1` | S4, S13 | FWD-4, FWD-11 | **THE ARTICLE STORE.** NEW DynamoDB table `opal-amgt-articles`, shaped like `opal-news-articles` (title/source/url/published_at/sentiment) PLUS `ticker`/`security_key` (via S12) and `platform`. Terraform in `infra/aws/terraform/amgt-resapp/` via `safe-apply`, change-management entry OPENED BEFORE the act and closed before the grading read. **GENUINELY SEPARATE** from `opal-news-articles` (not that table with a filter) and from `opal-data-research`. MEASURED ABSENT on the live plane at this cut (row `Z-S5`: 0 hits across 2445 aws nodes) -- a genuine create, not an integration. | OPEN | -- (ROOT) |
+| `AMGT-s5-2` | S16 | FWD-15 | **THE METRICS STORE.** NEW DynamoDB table `opal-amgt-security-metrics` holding PRE-COMPUTED per-ticker ranking rows, mirroring the proven `opal-news-articles` / `opal-news-trending-daily` split. Same Terraform module, same `safe-apply` + ledger discipline. MEASURED ABSENT at this cut. The Lead Panel READS it and never re-derives a ranking at render time (`C-SERVER-SIDE-RANKING`). | OPEN | -- (ROOT) |
+| `AMGT-s5-3` | S16 | FWD-15 | **THE HARVESTER BOX + ITS OWN IAM ROLE.** NEW EC2 box in `infra/aws/terraform/amgt-resapp/` following the ASTN_WSJFT SHAPE (stopped-between-runs, SSM-woken) but with **AMGT_RESAPP's OWN IAM role** and write access to `opal-amgt-articles` -- **explicitly NOT the ASTN_WSJFT box and not its role.** ONE shared box for all four harvesters. Refresh MUST WAKE the stopped box (SSM / `inf-jwt-trigger` shape) or it silently no-ops -- the wake is part of the cell, not a follow-up. `comp-iam service` at Phase 1 and `comp-iam gaps` at Phase 2 (auto-rule 3; `iam.tf` changes). | OPEN | `s5-1` |
+| `AMGT-s5-4` | S4, S13 | FWD-4, FWD-11 | **THE FOUR HARVESTERS** (Seeking Alpha, FT, Bloomberg, WSJ) writing per-ticker article content into `opal-amgt-articles`. Each admits an item by the news/social rule `AMGT-s-11` states, and resolves the platform's OWN identifier through S12 BEFORE dispatch (SA symbol-slug, Bloomberg `"TICKER US Equity"`, FT id) -- never a bare ticker. Raw vendor bytes land before derivation. | OPEN | `s5-3` |
+| `AMGT-s5-5` | S16 | FWD-15 | **THE CHATTER AXIS WRITER.** A SCHEDULED PRODUCER computing the chatter ranking daily and writing pre-computed rows to `opal-amgt-security-metrics`. Axis = the committed chatter gate: 30-day window, 0-100 normalized, `TOP_N=10`. | OPEN | `s5-2` |
+| `AMGT-s5-6` | S16 | FWD-15 | **THE PRICE AXIS ENGINE, BOX-SIDE.** The price ranking reads Bloomberg historical/intraday and therefore runs in the **BOX-SIDE puller shape** (the ETF-daily-pull shape), **NOT a Lambda calling Bloomberg** (`C-PRICE-RANKING-BOXSIDE`). 30-day window, matching chatter -- Andrew unified both to 30. Writes pre-computed rows to the same metrics table. | OPEN | `s5-2`, `s5-3` |
+| `AMGT-s5-7` | S16 | FWD-15 | **THE STARRED WATCHLIST.** SHARED ACROSS THE FIRM -- both PMs see the same starred names, keyed PER-FIRM, not per-user (`C-STARRED-PER-FIRM`, Andrew-ruled, reversible to per-user on his word). **Starring is a PURE MARKER:** it triggers NO refresh and queues NO harvester. Refresh is its own explicit action and the cell must prove the two are not wired together. | OPEN | `s5-2` |
+| `AMGT-s5-8` | S16 | FWD-15 | **THE SURFACE ITSELF.** The `.tsx`: a persistent **Lead Panel** (universe discovery -- Trending/Breakout x Price/Chatter, List/Chart, Security overlay, Starred) above **three tabs: Thesis / Peers / Coverage**. **Print is a header export action**, not a tab. **The Model tab is CUT and its figures REHOMED** into Thesis and the Security overlay. Reads pre-computed rows from `opal-amgt-security-metrics`; never re-derives a ranking at render time. | OPEN | `s5-5`, `s5-6`, `s5-7` |
+
+### 13c. Rule 24 record for what v0.6 ADDS (the eight round-5 cells)
+
+- **(i) MECE over the DECLARED domain, BY SUBTRACTION from a printed denominator -- not by recall.** The
+  domain is the SIX named constraints of PRD s.3b plus the S16 manifest row. Subtracting what each cell
+  covers: `C-AMGT-ARTICLES-STORE` -> `s5-1`; `C-SERVER-SIDE-RANKING` -> `s5-2` (the store) + `s5-5` (its
+  writer); `C-PRICE-RANKING-BOXSIDE` -> `s5-6`; `C-HARVESTER-COMPUTE` -> `s5-3` (box + role) + `s5-4` (the
+  four harvesters); `C-STARRED-PER-FIRM` -> `s5-7`; the approved page shape + S16 -> `s5-8`. **REMAINDER
+  ZERO.** `C-VENDOR-WORD-HARVESTERS` is the sixth constraint and is deliberately NOT a cell -- it is a
+  time-scoped BOUND on `s5-4`, carried in 13d. A constraint that is a bound rather than a cell is named
+  here so the subtraction balances visibly rather than by silence.
+- **(ii) SAME GRAIN:** each cell is one engine with one home. The two stores are separate cells because
+  they are separate tables with separate consumers, not one "make the tables" cell.
+- **(iii) INTENT COHERENCE:** one axis per cell. Storage (`s5-1`, `s5-2`), compute host (`s5-3`),
+  acquisition (`s5-4`), ranking production (`s5-5`, `s5-6`), marker state (`s5-7`), presentation (`s5-8`).
+  No cell mixes another's concern; notably the BOX is separated from the HARVESTERS that run on it, because
+  a box that exists and a harvester that runs are different proofs.
+- **(iv) STATE COHERENCE -- what these do NOT move:** they build the surface, so for the first time an
+  `EXERCISED` bar becomes REACHABLE -- but **REACHABLE IS NOT REALIZED.** No cell may grade its own FWD
+  REALIZED on the strength of its own artifact; fourteen of fifteen outcomes need a PERSON to have used the
+  thing, which is L9's to grade and never L7's. They do NOT close `FWD-9` (APPLIED, the drafting face) and
+  do NOT touch rounds 1-4's landed correctness work.
+
+### 13d. BOUNDS carried onto the round-5 cells
+
+- **`C-VENDOR-WORD-HARVESTERS` IS TIME-SCOPED AND ITS CLOCK IS THE BOX.** Andrew gave the per-use word for
+  Seeking Alpha, FT, Bloomberg and WSJ for THIS project's harvesters, **effective when the harvester box is
+  stood up and ready to run -- NOT before.** So `s5-4` may not egress to any of the four until `s5-3` has
+  landed. It is NOT a blanket grant: `C-VENDOR-EGRESS` still binds every other vendor and every other use,
+  and "availability is not authorization" is unchanged.
+- **NO MONITOR, NO ALARM, NO FRESHNESS-CHECKER** (standing moratorium; `comp-schedule` carrier C3 counts 12
+  standing NEVER clauses). `s5-5` and `s5-6` are SCHEDULED PRODUCERS, which is not only permitted but
+  required ("production pipelines MUST be scheduled"); a producer that computes a ranking is not a monitor.
+  STOP: neither cell may add an alert, an SNS topic, an SES send or a freshness checker on top of its output.
+- **`opal-data-research` IS AN EXISTING DECLARED RESOURCE AND IS NOT RE-CREATED** (rows `Z-S5` -> `Z-S8`).
+  Measured at this cut: versioning **Enabled**, SSE AES256 (SSE-C blocked), **no lifecycle** (accumulation is
+  not silently truncated), **no bucket policy** (IAM-only), us-east-1, and list access PROVEN by a successful
+  `list-objects-v2` -- existence and access measured separately. Created by this project's own `AMGT-s-6`
+  @`20260910T2059Z` via `safe-apply`. A round-5 cell touching it INTEGRATES; it must not re-create,
+  re-declare or re-configure it.
+- **S12 RESOLVES EACH PLATFORM'S OWN IDENTIFIER BEFORE DISPATCH.** `s5-4` never dispatches on a bare ticker.
+  This is the direct carry-forward of F6 (48 of 54 packs with a foreign peer set) -- **cutting an
+  acquisition cell ahead of identity rebuilds that defect on a new axis.**
+- **EVERY INFRA CELL: change-management entry OPENED BEFORE the act and CLOSED before the grading read;
+  `safe-apply`, never bare `terraform apply`; no second output path beside the one table.**
+- **NO NON-ASCII** in code, logs or AWS. Every F-number is CITED, not CONFIRMED -- a cell relying on one
+  re-measures it first and its criterion says so.
+
+### 13e. Round-4 lessons absorbed into this cut
+
+- **A cut may not rest on a gate's green when a row says the gate lies.** 13a is this lesson applied to the
+  cut itself: the two-limb precondition exists because `Z-S6` measured a false green THIS ROUND, and
+  `to-pipeline-gate` LIMB 6 reads the same false green, so it could not have been the backstop.
+- **An id is minted from a RE-READ, never from recall.** Row `Z-S7` was minted by this lane from "S5 mine,
+  S6 the CTO's, so S7 next" and collided with `4.0.0_SA_CRO~Z`'s committed `Z-S7`. Re-enumerating at write
+  time gives the lowest free id; recall does not. The same applies to cell ids in this table.
+- **An uncommitted channel row is an ESTATE-WIDE OUTAGE, not a personal todo** -- the standing-corpus pass
+  reads the WORKTREE and is fail-closed, so it blocked a peer's unrelated drain. The window between
+  appending a row and committing it is a shared-resource window.
+- **An invented schema field is a violation even when it looks harmless** (`additionalProperties: false`
+  rejects the KEY, and no value satisfies it). Rule 24 binds a schema ADOPTED as hard as one authored.
+- Carried from prior rounds: every criterion DISCRIMINATES; the proof instance uses the FULL task-order stem
+  filename; a criterion names the instrument that OBSERVES the artifact; an integration cell's `<paths>`
+  names the CONSUMER's home.
+
+### 13f. The round axis, updated
+
+- **ROUNDS 1-4:** terminal, frozen. 28 of 28 orders complete; round 4 CLOSED at L10 @`959ba3e947`.
+- **ROUND 5 (v5, THE SURFACE ROUND, 8 cells, 4 chains):** roots `AMGT-s5-1` and `AMGT-s5-2` spawn at
+  issuance (TABLES FIRST). Then `s5-1` -> `s5-3` -> `s5-4`; `s5-2` -> `s5-5`; `s5-2` + `s5-3` -> `s5-6`;
+  `s5-2` -> `s5-7`; and `s5-5` + `s5-6` + `s5-7` -> `s5-8`. **`fanout: 2 of 4 chains, cap 8.`**
+- WARN: **THE ROUNDS ARE A READING OF THE EDGES, NOT A SECOND SOURCE OF TRUTH.** If a cell lands early the
+  next becomes cuttable early; the edges govern, the round numbers describe.
+- **AFTER ROUND 5:** `REALIZED` still requires a PERSON to have exercised each surface. Round 5 makes that
+  reachable and does not achieve it; the project closes when every FWD grades REALIZED at L9.
+
+**PREFLIGHT for the surface round -- the mandatory core battery WAS RE-RUN, and this is the first round
+since v0.2 that could not carry the prior run forward:** round 4 declared it not-re-run because both cells
+edited landed consumer modules; round 5 creates two DynamoDB tables, an EC2 box and a NEW IAM role, adds
+server-side ranking routes and introduces new portal query keys, so every lens becomes applicable again.
+- `comp-schedule --drift` -- RUN. 5 of 5 carriers scanned; REACHED-DENOMINATORS C1=23 C2=6 C3=12 C4=20
+  C5=334. 2 gates ARMED as drift candidates (`G-3` owner CTO, `G-7` owner POD4) -- **neither is this
+  project's and neither blocks this cut.** C3's 12 standing NEVER clauses are the source of 13d's
+  no-monitor bound.
+- `comp-iam gaps` -- RUN. 836 call(s) verdicted across 96 mapped role(s); 12 missing, 291 deny-present, 1
+  coverage-unknown, 2 resource-mismatch across 31 services. **No AMGT role exists yet**, which is the honest
+  baseline for `s5-3` (the cell creates the first one). WARN -- COVERAGE LIMIT carried, not cleared: 630
+  UNRESOLVABLE-RESOURCE, 266 calls in 26 role-UNMAPPED services NOT resource-checked, and 51 GRANTED-BROAD
+  rows EXCLUDED rather than cleared -- a wildcard grant cannot be falsified by a resource check.
+- `comp-cache collisions` -- RUN. 415 of 415 files scanned. Every existing collision is on another surface
+  (market-performance, model-portfolio, partner-analytics, positioning); **no AMGT/research key exists**, so
+  `s5-8` enters a clean namespace and its new keys must be checked at Phase 1 (auto-rule 2).
+- `comp-routes behaviors` -- RUN. 27 behaviors; the auth-gated `/api/scoped/*` + `auth-validator-edge`
+  viewer-request pattern is the precedent `s5-8`'s reads follow.
+- `comp-blast` -- DECLARED-NOT-APPLICABLE AT THE CUT, with the reason: round 5 CREATES resources rather than
+  modifying shared ones, and no live served artifact moves at L5. STOP: it becomes APPLICABLE inside
+  `s5-8`, which edits the portal shell, and that cell carries it at Phase 1.
+- `comp-adversary` -- RUN on this file; the declaration at section 7 stands and is extended by 13a's
+  statement of what the gate could and could not tell this lane.
+
+**AUTHORITY:** the L10 round-4 analysis @`959ba3e947` (the CTO's one send) answering the CVO's slug
+`REMEDIATION_v4`@`b97837e7fe`, plus PRD s.3b (ANDREW-DIRECT 2026-09-11 ~12:1xZ) and the L4-R ADMITTED gate
+at `@f0ff95cfac` with the second limb of 13a. Cited in each order's authority chain.
+
+**PUSH STATE: this amendment is LOCAL.** `0.0.0_AB_MSTR~Z` holds the push window.
+
+*(v0.6 cut 2026-09-11 by `2.0.0_SA_COO~ZZZ` -- the SURFACE round from @959ba3e947; sections 1-12 unchanged
+and FROZEN.)*
