@@ -136,45 +136,65 @@ travels to the worker.
 - **Gate:** lane `ANY_CTO` refuses any other author's write to `prd/`. At L6 the L6 gate refuses a task order whose
   PRD lacks the header, fails its schema, disagrees with the row on identity, lacks the endpoint section, or lacks the
   surface manifest.
-- **Notifier:** `.tools/prd-header-notify.py` (post-commit) delivers a new or bumped header to `4.0.0_SA_CRO` and
-  `3.0.0_SA_CVO` on every bump, and to `2.0.0_SA_COO` ONLY once both have SIGNED it at that `prd_version` (L4-R
-  below); it re-offers until READ. The handoff to L5 is the COO notification, never a dispatch.
-- **Handoff:** `dep_stage: PRD` **and** both sign-off files present at the current version.
+- **Notifier:** `.tools/prd-header-notify.py` (post-commit) delivers each HALF of a new or bumped PRD that is not
+  already signed at its current bytes to the reviewer ROUTED for it (L4-R below), and delivers to `2.0.0_SA_COO`
+  ONLY once both halves are SIGNED; it re-offers until READ, nudges an overdue half with the CTO copied, and
+  re-routes an overdue brief half to a live COO. The handoff to L5 is the COO notification, never a dispatch.
+- **Handoff:** `dep_stage: PRD` **and** both halves SIGNED at the PRD's current bytes (`python .tools/prd-signoff.py
+  status <CODE>` reads ADMITTED).
 
-### L4-R — The PRD sign-off gate
+### L4-R — The PRD sign-off gate (v3.15)
 
-- **Owner:** `4.0.0_SA_CRO` signs the BRIEF half; `3.0.0_SA_CVO` signs the RATIFIED-TEXT half. **Not engaged:**
-  `1.0.0_SA_CTO` (the author under review; it cannot sign), `2.0.0_SA_COO` (it does not receive the PRD until both
-  signatures exist), every worker. Andrew-direct 2026-09-10 ~21:2xZ, verbatim: *"I dont want to ask shit this
-  should be entirely automatic and gated, CRO and CVO should have to sign off on PRD before COO gets it."*
-- **Trigger:** the L4 notifier, on every new or bumped header, to both reviewers.
-- **Input:** the PRD at its committed pin; the brief at the pin `brief_ref` names; the endpoint at the pins the
-  ENDPOINT section cites; the counterpart PRD where the project has one.
-- **The BRIEF half** (`4.0.0_SA_CRO`): every entry of the BRIEF COVERAGE map carries its section's CONTENT into
-  the consuming cell -- fields, units, paths, guards, proof gaps -- not a pointer; the heading denominator matches
-  the brief at the named pin. Corrections return BY PINNED LINE; a REFUSED verdict carries the review record.
-- **The RATIFIED-TEXT half** (`3.0.0_SA_CVO`): every DONE WHEN, ACCEPT and PROOF in the ENDPOINT section is
-  verbatim from the ratified pins; every operative constraint is present; no annotation, history or seat name is
-  inside it; the CONTRACTS section agrees with the counterpart PRD.
-- **Output, the sign-off:** `org/missions/D<n>/<MACRO>/<CODE>/prd/signoff/<serial>.json`, written by the reviewer
-  in lane `TREE_PRD_SIGNOFF` (the two reviewers and their tilde lanes; nobody else):
-  `{ "prd", "prd_version", "prd_pin", "verdict": "SIGNED" | "REFUSED", "review_ref", "signed_by", "signed_at" }`.
-  A sign-off is VERSION-BOUND: a `prd_version` bump re-opens both; the notifier re-fires to the reviewers and
-  withholds the COO again until both re-sign.
-- **Gate, two carriers, both mechanical:** (1) the notifier withholds the COO delivery without both SIGNED files
-  at the current version, and a commit landing a sign-off re-checks and releases it; (2)
-  `.tools/to-pipeline-gate.py` LIMB 6 refuses a task order whose PRD lacks a SIGNED file from each reviewer at
-  the PRD's current `prd_version`, carries a REFUSED one, or whose sign-off names a pin older than the PRD's last
-  change (seven self-test arms). **Separation of duties:** `prd/**` is lane `ANY_CTO` and `prd/signoff/**` is
-  lane `TREE_PRD_SIGNOFF`; measured on the resolver: the CTO is REFUSED on a sign-off path, both reviewers and a
-  `~Z` lane PERMIT, a COO lane is REFUSED.
-- **Non-retroactivity** (v3.13): a round is graded against the law at its cut. A PRD already decomposed before
-  this limb landed is not re-cut; where the ad hoc review already happened, its reviewers sign it as the lane's
-  first act, and the gate binds from the next `prd_version`.
-- **Cost:** two reads per PRD version, on the critical path by design. Measured 2026-09-10: thirteen corrections
-  in three unrequested passes on two PRDs the flow had already declared decomposable.
-- **Non-application:** a `prd_version` bump that touches only the header is signed on the header alone; an L10
-  addendum that changes no cell row is signed on the ENDPOINT delta alone.
+- **Owner:** two HALVES, one reviewer each. `3.0.0_SA_CVO` signs the RATIFIED-TEXT half (the ENDPOINT and CONTRACTS
+  sections) -- always, nobody substitutes. `4.0.0_SA_CRO` signs the BRIEF half (every other section); when no CRO
+  session is live, or the CRO is overdue, a live `2.0.0_SA_COO` instance that is NOT this project's round holder
+  signs in its stead and the file records `substitute_for`. **Not engaged:** `1.0.0_SA_CTO` (the author; it cannot
+  sign), the COO lane that will decompose this PRD (it cannot sign the brief half it decomposes), every worker.
+  Andrew-direct 2026-09-10 ~21:2xZ: *"CRO and CVO should have to sign off on PRD before COO gets it"*; 2026-09-11
+  ~05:3xZ: *"CVO should always be included. If CRO is not online, can do COO in their stead."*
+- **Binding:** a sign-off binds to the HASH of its half's sections at HEAD (`half_hash`), never to `prd_version`. A
+  bump that leaves a half byte-identical keeps that half's signature; a bump re-opens ONLY the half whose bytes
+  changed. Measured cause: thirteen PRD versions on 2026-09-10/11, the brief half unchanged across three of them and
+  re-signed each time because the file was version-bound. Sign-off files written before v3.15 (no `half_hash`)
+  bind to `prd_version` and re-open on any bump, as they did.
+- **Trigger:** the L4 notifier, on every new or bumped header, for each half still owed at the current bytes; the
+  message names the half, the review it asks for, the stamp command and the window.
+- **Input:** the PRD at HEAD; the brief at the pin `brief_ref` names; the endpoint at the pins the ENDPOINT section
+  cites; the counterpart PRD where the project has one.
+- **The RATIFIED-TEXT half** (`3.0.0_SA_CVO`): every DONE WHEN, ACCEPT and PROOF in the ENDPOINT section is verbatim
+  from the ratified pins; every operative constraint is present; no annotation, history or seat name is inside the
+  SECTION (heading to next heading -- the gate's own `_top_section`); the CONTRACTS section agrees with the
+  counterpart PRD.
+- **The BRIEF half** (`4.0.0_SA_CRO`, or the substitute): every entry of the BRIEF COVERAGE map (and any supplement
+  map) carries its section's CONTENT into the consuming cell -- fields, units, paths, guards, proof gaps -- not a
+  pointer; the heading denominator matches the brief at the named pin; cell rows name the right counterpart cells.
+  Corrections return BY PINNED LINE in the review record.
+- **The stamp:** `python .tools/prd-signoff.py sign|refuse <CODE> --half brief|ratified-text --review <path>@<pin>
+  [--reason "..."] [--for <primary>]`. It writes `org/missions/D<n>/<MACRO>/<CODE>/prd/signoff/<serial>.json` in lane
+  `TREE_PRD_SIGNOFF` -- `{prd, prd_version, prd_pin, half, half_hash, verdict, review_ref, signed_by, signed_at
+  [, substitute_for, reason]}` -- bound to HEAD's bytes (it refuses an uncommitted PRD edit), commits it through
+  `safe-commit` under the signer's serial, and prints the gate's verdict. A REFUSED verdict carries the pinned
+  review and one-line reason and lands the same way; the CTO answers a REFUSED with a bump that touches only what
+  the review named. `python .tools/prd-signoff.py status [<CODE>]` is the one read of what is owed and by whom;
+  nobody asks a seat what it is doing.
+- **Window and escalation, automatic:** a half is OVERDUE `REVIEW_WINDOW_MINUTES` (60) after its delivery. The
+  notifier (commit-driven, so it runs on every seat's commit) then re-sends the half as an OVERDUE nudge to the
+  routed reviewer with `1.0.0_SA_CTO` copied; after two windows a brief half still owed is offered to a live COO
+  instead; the ratified-text half is only ever re-asked of the CVO. READ is not SIGNED: a read ack retires the
+  delivery row, never the half.
+- **Gate, two carriers, both mechanical, ONE rule** (`.tools/prd_signoff_lib.py`, called by both and by the stamp):
+  (1) the notifier withholds the COO delivery until both halves are SIGNED at the current bytes and releases it on
+  the sign-off commit; (2) `.tools/to-pipeline-gate.py` LIMB 6 refuses a task order whose PRD has a half MISSING,
+  STALE, REFUSED, NOT-PERMITTED or unreadable, naming the half. Separation of duties: `prd/**` is lane `ANY_CTO`,
+  `prd/signoff/**` is lane `TREE_PRD_SIGNOFF`; the author and the round-holding COO lane are refused by the lib.
+- **Multi-round (L10 -> L4):** an addendum is a bump and re-enters here; one that changes ENDPOINT only re-opens the
+  ratified-text half only, one that changes cells re-opens the brief half only, and the notifier asks the reviewer
+  who holds the context -- the CVO whose slug produced the addendum is always one of them.
+- **Vintage:** a PRD last committed before the L4-R law commit (`f8337502a9`) is grandfathered until its next
+  `prd_version` bump (v3.13 non-retroactivity), and `status` says so.
+- **Cost:** two reads per changed half, on the critical path by design; a half's re-review is scoped to its delta.
+- **Non-application:** a header-only bump re-opens nothing (the header is in neither half); an L10 addendum that
+  changes no cell row re-opens the ratified-text half only.
 
 ### L5 — Decomposition and battery
 
@@ -506,8 +526,8 @@ measured channel backlog says otherwise.
 | L1 brief | `4.0.0_SA_CRO` | none | — | — | — |
 | L2 endpoint | `1.0.0_SA_CTO` | none | — | — | — |
 | L3 register | `1.0.0_SA_CTO` | `REGISTERED` | `missions-tree-check.sh` | — | — |
-| L4 PRD | `1.0.0_SA_CTO` | `PRD` | lane `ANY_CTO` | — | `prd-header-notify.py` to the two reviewers on every bump |
-| L4-R sign-off | `4.0.0_SA_CRO` (brief half), `3.0.0_SA_CVO` (ratified-text half) | `PRD` | lane `TREE_PRD_SIGNOFF` (the CTO is REFUSED) | `to-pipeline-gate.py` LIMB 6 refuses a TO against an unsigned PRD | `prd-header-notify.py` withholds the COO delivery until both SIGNED, releases on the sign-off commit |
+| L4 PRD | `1.0.0_SA_CTO` | `PRD` | lane `ANY_CTO` | — | `prd-header-notify.py` to the routed reviewer of each half still owed, on every bump |
+| L4-R sign-off | `3.0.0_SA_CVO` (ratified-text half, always); `4.0.0_SA_CRO` (brief half) or a live `2.0.0_SA_COO` not holding the round in its stead | `PRD` | lane `TREE_PRD_SIGNOFF` (the CTO and the round-holding COO lane are REFUSED); the stamp is `prd-signoff.py` | `to-pipeline-gate.py` LIMB 6 refuses a TO against a PRD with a half not SIGNED at its current bytes | `prd-header-notify.py` withholds the COO delivery until both halves SIGNED, nudges an overdue half (CTO copied), re-routes an overdue brief half, releases on the sign-off commit |
 | L5 decomposition | `2.0.0_SA_COO` | `DECOMP` | lane `TREE_COO` | — | — |
 | L6 issuance | `2.0.0_SA_COO` | `EXECUTING` | `to-proof-of-spec-check.sh`, `to-pipeline-gate.py` (coverage, criterion grammar, the worker's `<paths>`), lane `TREE_COO` | — | — |
 | L7 execution | a worker subagent | `EXECUTING` | `surprise-row-gate.py` (rows: halves, uniqueness, coordinate); `owned-paths-validate.py` (the order's `<paths>`); at the drain, `safe-merge.sh` (the row gate on the merged index) | `proof-of-spec-check.py` (the expectation match); the terminal-flip limb of `to-pipeline-gate.py` | — |
@@ -581,3 +601,4 @@ verdict, read against the last round under the prior text on the same instrument
 | 3.12 | 2026-09-10 | `0.9.0_WK_ETFS_GUARDRAIL~4`'s third refusal to fire and `2.0.0_SA_COO`'s 95058, ruled by `1.0.0_SA_CTO` at R-EG-6 | L6 gains **A SEAM PROVED TO DELIVER ITS INPUT IS NOT A SEAM PROVED TO HAVE AN EFFECT**: a criterion names the OUTCOME, never only the mechanism, and proves what must DIFFER when the control is engaged against the same run with it disengaged. Found when a forcing spec proved to reach the classifier was then discarded by a re-classification, publishing where a refusal was required. No step, owner or gate changes. |
 | 3.13 | 2026-09-10 | `2.0.0_SA_COO~A`'s audit of its OWN just-drained round against v3.12 (95066), an hour after the clause landed and the round closed | v3.12 gains three qualifiers, all from that audit: a POSITIVE control is not a DIFFERENCE control and does not discharge the clause (measured 2 of 16 mechanical criteria carry the real shape, not the 6 of 20 a loose count gives, so the adoption cost is real); a CENSUS is a NON-APPLICATION because its outcome IS its count; and the clause DOES NOT BIND RETROACTIVELY -- a round is graded against the law in force at its cut, the L9 and L10 grade with any audit in hand and RECORD THE BOUNDARY IN THE GRADE, and no drained round is re-cut for a later law. No step, owner or gate changes. |
 | 3.14 | 2026-09-10 | Andrew-direct ~21:2xZ at the `1.0.0_SA_CTO` terminal, VERBATIM *"I dont want to ask shit this should be entirely automatic and gated, CRO and CVO should have to sign off on PRD before COO gets it"* (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_212xZ_PRD_SIGNOFF_IS_A_GATE_CRO_AND_CVO_BEFORE_COO.md`); measured cause: `3.0.0_SA_CVO` d0e72ccd56 and `4.0.0_SA_CRO` e975e96fc0 / 637b2f8178 on the two IRPT PRDs, thirteen corrections in three unrequested passes | L4 gains **THE PRD SIGN-OFF GATE (L4-R)**: the brief's author signs the coverage map for CONTENT carriage, the verifier signs the ENDPOINT section against the ratified pins and the CONTRACTS section against the counterpart; both sign-offs are files in the reviewers' own lane `TREE_PRD_SIGNOFF`, version-bound to the PRD; `prd-header-notify.py` withholds the COO delivery until both exist and `to-pipeline-gate.py` LIMB 6 refuses a task order from an unsigned PRD. The CTO cannot sign its own document. Two mechanical carriers, one new lane, no new owner; non-retroactive for rounds already cut. |
+| 3.15 | 2026-09-11 | Andrew-direct ~05:2xZ-05:3xZ at the `1.0.0_SA_CTO` terminal: "look critically at the sign-off process ... it is very loose right now and unclear. I want to tighten it up. How do we move the gating process along naturally so i dont have to be buzzing around asking agents what theyre doing?"; "CVO should always be included. If CRO is not online, can do COO in their stead"; "make sure the spine operation works properly, that the scripts work properly and the agents know how to use them to do their stamp. make sure there are clear expectations here". Measured: thirteen PRD versions in one night, the brief half re-signed three times unchanged; the notifier never triggered on a sign-off commit (fixed 973ad3770f); the reviewers were nudged by Andrew by hand | L4-R tightened: TWO HALVES bound to their bytes (`half_hash`), not to `prd_version`; ONE rule in `.tools/prd_signoff_lib.py` called by the gate, the notifier and the new stamp `.tools/prd-signoff.py` (`sign` / `refuse` / `status`); reviewers ROUTED per half (CVO always; CRO or a live COO not holding the round in its stead); a 60-minute window with automatic OVERDUE nudges (CTO copied) and re-routing; the addendum path re-opens only the half it changed; the vintage boundary (`f8337502a9`) in code; reviewer expectations stated. No new owner. |
