@@ -769,6 +769,175 @@
     "spec_asserts": "TO-FE-s-10 F10-AC8 face: the DID-NOT-LAND print is an artifact of a route carrying a query string; a firm-scoped session renders the Investor Reporting page with one firm and no dropdown.",
     "world_is": "The print is a real client-side redirect from the firm access matrix, reproduced without the query string; no partner firm can reach the route today. The mechanical bar (rc=0) held and the PNG is faithful evidence of what a firm session gets, so the criterion stands as recorded; the face's explanation was wrong and the onboarding step is unowned.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S15",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T08:05:00Z",
+    "one_line": "FE-s-11 reported non-terminal (status blocked) with rows W1-S11 and W1-S12 ARMED, disarm_owner 3.0.0_SA_CVO. The issuer verified both by its own instruments and found a third defect the worker recorded but did not row: (a) W1-S12's crash is a resolve-scope ping-pong -- index.tsx keys the query on firmId, useFirmContext's [scope] effect fires while the re-keyed query is loading, resolves the undefined scope to 'global', which re-keys back to the cached one-firm answer, forever; two-firm scopes are stable, matching 3-of-3 / 2-of-2; (b) W1-S11's light tokens sit in a component nothing mounts; (c) the print route's smoke PNG reads 'rev-000401 is absent' because since FE-s-9 PrintEntry resolves reports through the typed client and fe-s-8-narrative.json serves only export-preview -- F9's print route was verified by bun test on resolveBundle, never by a smoke render, and F11-AC8's rc=0 bar could not see it. TO-FE-s-11 is amended (the round's only non-terminal order) to repair all three inside a three-file grant, with F11-AC5..AC8 re-barred on the instrument's own printed lines (CLICKED: <name>; CONSOLE[log]: REFS RESOLVED: 1 of 1) and F11-AC10 the whole set green. The ARMED standing of W1-S11 and W1-S12 is not disarmed by this row: the amendment retires their world_is condition on the worker's branch; the DISARM is the CVO's remediation row at L8 once the drain lands.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal (worker branch wk-irpt_fntend-1-7-fe-s-11 @c5c02964) src/pages/InvestorReporting/index.tsx:53-54 -- useQuery keyed on irKey('resolve-scope', ..., firmId); global/useFirmContext.ts effect deps [scope], resolveFirmSelection(candidate, undefined) returns 'global' (firms.ts: zero permitted firms -> 'global')",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-11_analysis_390.png @44e591e624 -- the portal's generic error boundary ('Something went wrong'), read by the issuer; fe-s-11_print_390.png -- 'This bundle was not rendered ... rev-000401 is absent'",
+        "fixtures/smoke/fe-s-8-narrative.json and fe-s-4-performance.json carry rev-000401 only INLINE under one key (investor-reporting/export-preview); export/resolveBundle.ts:148-195 fetches api.getPerformanceReport / api.getNarrativePacket and logs 'REFS RESOLVED: n of n'; scripts/ui-smoke.mjs:137 prints CONSOLE[<type>]: for --console matches, :257 CLICKED:, :275 CLICK-FAIL:",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-9.export-options-preview.md F9-AC9 -- the print path proven by bun test on resolveBundle, no smoke invocation of investor-reporting/print after the amendment",
+        "TO-FE-s-11 amended on the worker's branch this turn: <paths> + global/useFirmContext.ts, export/AppliedBranding.tsx, fixtures/smoke/fe-s-11-print.json; expected_criteria F11-AC1..AC10"
+      ]
+    },
+    "spec_asserts": "Issuer faces F11-AC5..AC8 (and F9's print-route coverage): rc=0 from ui-smoke is the mechanical bar for 'the <screen> at 390'. Spine mid-round: the sanctioned repair of a defect is an issuer amendment to a NON-TERMINAL order; an ARMED row disarms via its disarm_owner.",
+    "world_is": "rc=0 from ui-smoke is met by the error boundary and by the not-rendered panel alike -- a bar that cannot fail on the defect it was cut to catch (four criteria across two faces, this issuer's). The instrument prints discriminating lines (CLICKED:, CLICK-FAIL:, CONSOLE[log]: REFS RESOLVED) that the faces did not key on; the amendment keys on them. The crash reaches any real one-firm scope, not only the fixtures.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S16",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T09:35:00Z",
+    "one_line": "FE-s-11's second report: the three repairs of the first amendment hold (colour-law 4 of 4, Analysis and Export tabs CLICKED, the print route resolves REFS RESOLVED: 1 of 1, whole set 322 pass 0 fail) and two criteria still fail -- (a) F11-AC8's amended expect `CONSOLE[log]: ...` is graded by .tools/proof-of-spec-check.py as a REGEX, so `[log]` is a character class and the bar is unsatisfiable by construction (W1-S14, this issuer's defect, second in the same criterion); (b) F11-AC6's fixture fe-s-7-smartx.json serves an envelope-only performance-report (no method, lineage, dates, returns) while the contract requires them and the Reporting tab, default-mounted since FE-s-5's drain, reads method.currency -- the page crashes before Holdings can be clicked (W1-S13; FE-s-7's fixture predates the default mount, which is why FE-s-7's own smoke passed). Second amendment on the worker's branch @feb4266016: AC8's bar loses the bracketed tag; fe-s-7-smartx.json is granted so its report body becomes fe-s-6-ready.json's contract-conformant one. No component is edited by this amendment.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/proof-of-spec-check.py:83-103 @HEAD -- `expect` is 'the pattern its output must match'; a non-compiling expect is a violation and PASS requires the pattern to match output_evidence (read by the issuer after the worker's re.search reproduction)",
+        "portal (worker branch @ffdae260) contracts/index.ts:397-409 -- PerformanceReport requires method: PerformanceMethod (348-354); tabs/reporting/ReportingTab.tsx:109 reads report.method.currency; tabs/reporting/MethodAndSources.tsx:32-43 destructures method",
+        "fixtures/smoke/fe-s-7-smartx.json performance-report keys: availability, revision, schemaVersion, scope, sourceTimestamps -- vs fe-s-6-ready.json, fe-s-5-49f-bd.json, fe-s-9-modal.json, fe-s-10-global.json, each carrying the full report with method (issuer's own read of five fixtures)",
+        "worker report (second): F11-AC6 CLICK-FAIL: Holdings after the useFirmContext repair; F11-AC10 322 pass, 1 skip, 0 fail across 48 files; rows W1-S13 (INERT) and W1-S14 (ARMED, disarm_owner 3.0.0_SA_CVO)"
+      ]
+    },
+    "spec_asserts": "Issuer face F11-AC8 (first amendment): the bar is the printed line `CONSOLE[log]: REFS RESOLVED: 1 of 1`. FE-s-7's fixture map serves what the Holdings tab needs; the default tab's needs were not part of FE-s-7's cut.",
+    "world_is": "A bar written as prose that the checker reads as a regex; and a fixture map cut for one tab that the page's later default mount made insufficient -- each fixture map is a snapshot of the page's needs at its cut, and every later mount widens those needs silently. The second amendment fixes both in data and in the face; W1-S14's ARMED standing is retired on the worker's branch and the DISARM is the CVO's remediation row at L8.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S11",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-11T06:10:00Z",
+    "one_line": "Two FE-s-9 export components (`export/AppliedBranding.tsx`, `export/ReceiptPanel.tsx`) are exported but imported by NOTHING under pages/InvestorReporting/** or portal/src/App.tsx -- confirmed by the FE-s-11 component census's own edge scan -- and AppliedBranding.tsx's own light text has no dark ancestor in its own file, so colour-law.test.ts (F11-AC3) genuinely fails on it: `export/AppliedBranding.tsx:43 -- text-white` with no same-file Panel/variant=\"dark\" ancestor and no self-contained dark background.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/component-census.json@PENDING-THIS-COMMIT -- `definedButNotImported`: [{file: export/AppliedBranding.tsx, component: AppliedBranding}, {file: export/ReceiptPanel.tsx, component: ReceiptPanel}], produced by census.ts's edge scan of every import under the tree plus portal/src/App.tsx",
+        "portal (worker branch wk-irpt_fntend-1-7-fe-s-11) src/pages/InvestorReporting/export/AppliedBranding.tsx -- grep-equivalent census confirms 'AppliedBranding' appears only in its own file (interface, function, default export); no other .tsx file under the tree or App.tsx contains the substring",
+        "same for 'ReceiptPanel' -- appears only in export/ReceiptPanel.tsx itself; ReceiptPanel.tsx DOES import and render StatusPanel as JSX (a real edge, captured normally in the census), it is ReceiptPanel ITSELF that is never mounted",
+        "portal bun test src/pages/InvestorReporting/__tests__/fe-s-11/colour-law.test.ts (this order's own new test) -- 3 pass, 1 fail: 'export/AppliedBranding.tsx:43 -- text-white', with the other two known-good self-dark-button patterns (export/ExportButton.tsx, export/ExportModal.tsx) explicitly asserted NOT flagged in the same run",
+        "export/AppliedBranding.tsx:38-45 @ this worktree HEAD -- `<div className=\"text-xs text-white/80\" ...>Branding applied: <span className=\"font-medium text-white\">{label}</span>...</div>` -- no `bg-*` utility anywhere in the file and no `<Panel>`/`variant=\"dark\"` element anywhere in the file"
+      ]
+    },
+    "spec_asserts": "FWD-12's CONSTRAINT: 'a new component requires a stated need the existing set cannot meet; matching appearance alone is not reuse' and its PROOF: 'a census of EVERY component the page uses... each is REUSED... or is NEW with a stated reason'; F11-AC3's colour law: 'no light-on-canvas class outside a dark container'. AppliedBranding.tsx's own header states its need (show what branding was ACTUALLY applied, from the preview bundle) but nothing in the tree ever renders it to meet that need.",
+    "world_is": "Both components are dead code today: built (presumably at the FE-s-9 drain, per their 'FE-s-9' header comments) but never wired into ExportModal.tsx, ExportButton.tsx or Preview.tsx, so an advisor's export flow never actually shows 'what branding was applied' or a receipt/download panel with job-state tracking -- and because AppliedBranding.tsx was never mounted inside ExportModal's dark Panel (the only place its light text would be legal), its colour-law compliance was never exercised or caught. hazard_standing ARMED: if a future cell imports AppliedBranding.tsx as-is without ALSO wrapping it in a dark container, the light-on-canvas defect ships live; disarm_owner is whichever cell/order next wires either component in, or 3.0.0_SA_CVO at L9 if no such cell is planned.",
+    "disarm_owner": "3.0.0_SA_CVO",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S12",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-11T06:25:00Z",
+    "one_line": "F11-AC5/AC6/AC7's own named fixtures (fe-s-6-ready.json, fe-s-7-smartx.json, fe-s-9-modal.json) each crash the WHOLE /investor-reporting page with React's 'Maximum update depth exceeded' before any tab/modal content renders (rc=0 still, PNG is the portal's generic error boundary) -- reproducible on plain page load, not just after --click; isolated to every fixture whose resolve-scope response carries exactly ONE permitted firm (3 of 3 one-firm fixtures crash; the two-firm fixtures tested, fe-s-10-global.json and fe-s-2-default.json, do not).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "node scripts/ui-smoke.mjs investor-reporting ... --fixtures fe-s-6-ready.json --click Analysis --console Error: CONSOLE[error] 'Error: Maximum update depth exceeded...' and '[ErrorBoundary] Caught error: ...'; CLICK-FAIL: Analysis -- locator.click timeout (the error page has no Analysis control); PNG shows 'Something went wrong'",
+        "same crash reproduced with the SAME fixture and NO --click at all (plain page load) -- rules out the click as the trigger",
+        "node scripts/ui-smoke.mjs investor-reporting ... --fixtures fe-s-7-smartx.json --click Holdings: identical crash/PNG",
+        "node scripts/ui-smoke.mjs investor-reporting ... --fixtures fe-s-9-modal.json --click Export: identical crash/PNG",
+        "node scripts/ui-smoke.mjs investor-reporting ... --fixtures fe-s-10-global.json --click Analysis: 'CLICKED: Analysis', no crash, PNG shows the Analysis tab body -- and the SAME route with fe-s-10-global.json (no click) and fe-s-2-default.json (no click) both render normally",
+        "resolve-scope fixture comparison (this worker's own reading): fe-s-6-ready.json/fe-s-7-smartx.json/fe-s-9-modal.json each declare exactly ONE entry in `permittedFirms`; fe-s-10-global.json declares two (49financial, cottonwood) with scope.firmId null; fe-s-2-default.json declares two (firm-op1, firm-op2) -- the one-firm/two-firm split lines up 3-for-3 and 2-for-2 with crash/no-crash",
+        "portal/src/pages/InvestorReporting/global/useFirmContext.ts @ this worktree HEAD -- the ONLY code path this cell's own docstring says engages for a one-firm catalogue ('a one-firm catalogue is still corrected to its single firm even though the control itself renders nothing', per FirmDropdown.tsx's header, amended at the FE-s-10 drain); the hook's own effect comment names the exact risk this crash matches: 're-validating on [value/onChange]'s identity change (rather than only on scope) would loop with the onChange call above'",
+        "FE-s-6's and FE-s-7's OWN earlier deliverables (fe-s-6_analysis_ready_1440.png, fe-s-7_holdings_smartx_1440.png), captured before FE-s-10 introduced useFirmContext, mount the SAME tabs successfully against similarly-shaped scopes -- consistent with this being a regression introduced at the FE-s-10 drain rather than a pre-existing condition"
+      ]
+    },
+    "spec_asserts": "This order's WORKER FACE names these exact invocations (fixture + --click) as producing 'the Analysis tab at 390' / 'the Holdings tab at 390' / 'the export modal at 390', with only rc=0 as the stated expectation.",
+    "world_is": "rc=0 is met (ui-smoke's own process succeeds and saves a PNG) but the PNG is the portal's generic error boundary in all three cases, not the named tab/modal -- a page-breaking infinite render loop, not a design-conformity question this cell's own record can be silent about. hazard_standing ARMED: any real advisor session whose resolve-scope answer carries exactly one permitted firm would crash the whole Investor Reporting page today, not just this smoke instrument; disarm_owner is whoever next owns global/useFirmContext.ts (outside this order's <paths>, which grants only portal/src/pages/InvestorReporting/__tests__/fe-s-11/) or 3.0.0_SA_CVO at L9.",
+    "disarm_owner": "3.0.0_SA_CVO",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S13",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-11T07:05:00Z",
+    "one_line": "After the issuer's useFirmContext.ts repair (W1-S12) fixed the one-firm infinite loop, F11-AC6's own named fixture (fe-s-7-smartx.json) STILL fails to reach the Holdings tab -- a DIFFERENT, previously-masked crash: `tabs/reporting/ReportingTab.tsx:36`'s `toRenderPerformanceReport` reads `report.method.currency` on the fixture's `performance-report` response, which carries no `method` field at all (a 5-field stub: schemaVersion/scope/revision/availability/sourceTimestamps only) -- the DEFAULT-mounted Reporting tab throws before Holdings can ever be clicked.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "node scripts/ui-smoke.mjs investor-reporting ... --fixtures fe-s-7-smartx.json --click Holdings --console Error (post-repair): CONSOLE[error] 'TypeError: Cannot read properties of undefined (reading \\'currency\\') at toRenderPerformanceReport (tabs/reporting/ReportingTab.tsx:36:65)'; CLICK-FAIL: Holdings -- locator.click timeout; PNG is the portal's error boundary",
+        "reproduced identically on a second run (byte-identical CLICK-FAIL/PNG/fixture-match count)",
+        "F11-AC5 (fe-s-6-ready.json) and F11-AC7 (fe-s-9-modal.json), run with the SAME post-repair code, both now succeed ('CLICKED: Analysis' / 'CLICKED: Export', no crash) -- isolating the defect to this ONE fixture's data shape, not to the repair or to the Analysis/Export/Holdings tabs themselves",
+        "python read of src/pages/InvestorReporting/fixtures/smoke/fe-s-7-smartx.json's 'investor-reporting/performance-report' key: {schemaVersion, scope, revision, availability, sourceTimestamps} -- no 'method' key at all",
+        "same read of fe-s-6-ready.json and fe-s-9-modal.json's own performance-report fixtures: both carry a full method object ({currency: 'USD', returnMethod: ..., feeBasis: ..., accrualBasis: ..., annualization: ...})",
+        "portal/src/pages/InvestorReporting/tabs/reporting/ReportingTab.tsx:36 @ this worktree HEAD -- its own toRenderPerformanceReport reads `report.method.currency` unconditionally (a local copy of export/resolveBundle.ts's near-identical helper of the same name, per that file's own header comment)",
+        "portal bun test src/pages/InvestorReporting (full suite, post-repair): 322 pass, 1 skip, 0 fail, 1496 expect() calls across 48 files -- no EXISTING test exercises ReportingTab against a performance-report payload lacking `method`, so this gap was never caught by the suite either"
+      ]
+    },
+    "spec_asserts": "F11-AC6 (AMENDED): 'the bar is the printed CLICKED: Holdings'; this order's grant (BOUNDS) names exactly three portal files for repair (global/useFirmContext.ts, export/AppliedBranding.tsx, fixtures/smoke/fe-s-11-print.json) and states 'any other defect found is a surprise row on its cell.'",
+    "world_is": "F11-AC6 still does not print CLICKED: Holdings -- it fails on a DIFFERENT defect than the one this amendment repaired, in a file (tabs/reporting/ReportingTab.tsx) outside this order's grant. hazard_standing INERT: the DEFAULT Reporting tab crashing on a performance-report payload with no `method` field is a fixture-authoring gap (fe-s-7-smartx.json was built for FE-s-7's own Holdings-focused smoke test, before Reporting-tab rendering was exercised against it), not a live-data shape any REAL resolve-scope/performance-report pairing has been shown to produce; disarm_owner is whoever next touches fe-s-7-smartx.json or tabs/reporting/ReportingTab.tsx's defensive handling.",
+    "disarm_owner": "3.0.0_SA_CVO",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S14",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-11T07:25:00Z",
+    "one_line": "F11-AC8's amended <expect> text, 'CONSOLE[log]: REFS RESOLVED: 1 of 1', is carried verbatim into the proof_of_spec instance per schema convention and graded by proof-of-spec-check.py as a raw Python regex (re.search, DOTALL) -- '[log]' parses as a CHARACTER CLASS (one of l/o/g), not the three literal characters, so the pattern can never match a real console line (which always has a literal '[' there), even though the actual printed line is character-for-character correct.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python: re.search('CONSOLE[log]: REFS RESOLVED: 1 of 1', 'CONSOLE[log]: REFS RESOLVED: 1 of 1\\nLOC   : ...', re.S|re.M) -> None",
+        "python: re.search(re.escape('CONSOLE[log]: REFS RESOLVED: 1 of 1'), same text, re.S|re.M) -> matches at span (0, 35)",
+        ".tools/proof-of-spec-check.py:94 -- `matched = _re_x.search(exp, row.get('output_evidence', '') or '', _re_x.S | _re_x.M) is not None` (no escaping, no literal-substring fallback)",
+        "python .tools/proof-of-spec-check.py <instance> F11-AC1..F11-AC10 with F11-AC8's row set to status=PASS: 'VIOLATION: acceptance[F11-AC8]: status=PASS but output_evidence does NOT match expect ... INVALID' -- reproduced directly against this order's own real output_evidence text (the actual ui-smoke capture, not a fabricated string)",
+        "the ui-smoke instrument's own console-line format (scripts/ui-smoke.mjs) is literally `'CONSOLE[' + m.type() + ']:' ...` -- the source of the '[log]' substring the amended <expect> quotes"
+      ]
+    },
+    "spec_asserts": "F11-AC8 (AMENDED): '<expect>CONSOLE[log]: REFS RESOLVED: 1 of 1</expect>'; <proof_of_spec>: 'validated with python .tools/proof-of-spec-check.py <instance> F11-AC1..F11-AC10 BEFORE the complete flip'; the PROOF_OF_SPEC.schema.json's own field description: 'the PATTERN (Python regex, searched with DOTALL) the deciding output must match; the checker grades a mechanical criterion by this match, not by the worker.'",
+    "world_is": "No output_evidence containing a literal 'CONSOLE[log]:' prefix (the ONLY form ui-smoke's --console flag ever produces for a console.log line) can satisfy this pattern under regex search, because '[log]' consumes one literal bracket-class character instead of three literal bracket/l/o/g characters -- the criterion is UNSATISFIABLE BY CONSTRUCTION for any correct output in this exact printed form, not just for this worker's capture. hazard_standing ARMED: any future worker or re-run against this exact <expect> string hits the identical mechanical FAIL regardless of whether the underlying repair/fixture is correct, and the task order can never mechanically reach F11-AC8 PASS as currently worded; disarm_owner is whoever next amends this task order's <expect> text (to the escaped form or an unambiguous substring with no regex metacharacters) or 3.0.0_SA_CVO at L9 if the judgment layer treats this as a known instrument limitation instead.",
+    "disarm_owner": "3.0.0_SA_CVO",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S17",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T10:20:00Z",
+    "one_line": "FE-s-11 drained in both repos (portal DEV edab15b5, workspace ad959f08ce); eleven of eleven orders complete; the whole Investor Reporting test set reads 322 pass, 1 skip, 0 fail on DEV by the issuer's run. ONE RED THE ROUND LEAVES ON DEV: `bun run typecheck` (tsc -b --noEmit) exits 2 with 8 errors, all in this order's two new test files -- census.test.ts uses `test.each` and `toMatch`, colour-law.test.ts imports `statSync` from node:fs -- members the repo's ambient `bun:test` / `node:fs` shims under __tests__/fe-s-1/ and __tests__/fe-s-3/ do not declare; bun runs the tests green because bun does not typecheck. TO-FE-s-11 carried no typecheck criterion (every earlier order did: F10-AC1 was `bun run typecheck` rc=0) -- this issuer's face defect. The order is terminal and its grant withdrawn, so no amendment can carry the repair; it goes to L10 as the first item, for an addendum cell in the round-2 issuance (eight lines inside __tests__/fe-s-11/). Nothing shipped by the round is affected at runtime; the red is the type gate every portal seat runs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal DEV @edab15b5, issuer's run: `bun run typecheck` rc=2; error lines: census.test.ts(85,8) TS2339 'each' on typeof test; (87,6)/(87,13)/(140,97)/(140,101) TS7006 implicit any; (95,30) TS2339 'toMatch' on Matchers; (140,8) TS2339 'each'; colour-law.test.ts(39,37) TS2305 node:fs has no 'statSync' -- 8 of 8 errors under __tests__/fe-s-11/, 0 elsewhere",
+        "portal DEV @787015e8 (before this drain): F10-AC1 `bun run typecheck` rc=0 proven by the FE-s-10 worker and the issuer's instance re-run -- the red is introduced by the FE-s-11 merge alone",
+        "portal DEV @edab15b5, issuer's run: `bun test src/pages/InvestorReporting` 322 pass, 1 skip, 0 fail, 48 files -- bun's runner does not typecheck",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-11.design-conformity-census.md @ad959f08ce -- ten criteria, none invokes typecheck; F10-AC1 in TO-FE-s-10 does"
+      ]
+    },
+    "spec_asserts": "Portal DEV carries every drained cell with `bun run typecheck` rc=0 (F10-AC1's bar on the cell before this one, and the standing bar of every earlier order); the census order's product is the record and its tests run under bun.",
+    "world_is": "The test files typecheck against ambient shims narrower than bun's real API surface, and the one order that did not carry the typecheck bar is the one whose tests exceed the shims. DEV is green under bun and red under tsc. ARMED: any portal seat or gate that runs typecheck on DEV reads red until an order with __tests__/fe-s-11/ in its grant lands the eight-line repair; disarm_owner is this issuer via the round-2 issuance (addendum cell requested at L10).",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

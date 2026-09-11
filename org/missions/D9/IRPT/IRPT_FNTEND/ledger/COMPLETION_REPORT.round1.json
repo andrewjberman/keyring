@@ -1,0 +1,100 @@
+{
+  "kind": "COMPLETION_REPORT",
+  "schema_version": "1.0",
+  "project": "IRPT_FNTEND",
+  "round": 1,
+  "written_by": "2.0.0_SA_COO~F",
+  "written_utc": "2026-09-11T11:40Z",
+  "decomposition_ref": "org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md@8ace3a2596",
+  "denominators": {
+    "fwd_in_prd_header": 8,
+    "cells_in_decomposition": 11,
+    "task_orders": 11,
+    "task_orders_terminal_with_valid_proof": 11
+  },
+  "outcomes": [
+    {
+      "fwd_id": "FWD-1",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- an advisor who has never used the workspace has searched, selected, and been shown the relationship and its permitted accounts",
+      "cells": [
+        {"cell_id": "FE-s-1", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-1", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-1.contracts-client-adapter-fixtures.proof_of_spec.json@314f8e1259"}]},
+        {"cell_id": "FE-s-2", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-2", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-2.route-shell-header-search.proof_of_spec.json@62f80c26fb"}]},
+        {"cell_id": "FE-s-3", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-3", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-3.tabs-selection-lifecycle.proof_of_spec.json@4664ba9bd2"}]}
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-3",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- a captured provider response has been carried to a rendered view and a PDF at one report revision, for each supported partner and scope",
+      "cells": [
+        {"cell_id": "FE-s-4", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-4", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-4.render-package-templates-print.proof_of_spec.json@73752f9238"}]},
+        {"cell_id": "FE-s-5", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-5", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-5.reporting-tab.proof_of_spec.json@3ab6275f9f"}]}
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-4",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- an approved report variant has been replayed from an analyst-approved input through its captured request/job/result chain to the tab and the PDF",
+      "cells": [
+        {"cell_id": "FE-s-4", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-4", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-4.render-package-templates-print.proof_of_spec.json@73752f9238"}]},
+        {"cell_id": "FE-s-6", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-6", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/IRPT_FNTEND.TO-FE-s-6.analysis-tab.proof_of_spec.json@854594d51a"}]},
+        {"cell_id": "FE-s-9", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-9", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-9.export-options-preview.proof_of_spec.json@7db8bed41b"}]}
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-5",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- dated holdings and model snapshots have been replayed for all three registry client firms",
+      "cells": [
+        {"cell_id": "FE-s-7", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-7", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-7.holdings-tab.proof_of_spec.json@277a7199ac"}]}
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-6",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- a provider has been deliberately failed and a client switched mid-request, with no response landing on the wrong selection",
+      "cells": [
+        {"cell_id": "FE-s-1", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-1", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-1.contracts-client-adapter-fixtures.proof_of_spec.json@314f8e1259"}]},
+        {"cell_id": "FE-s-3", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-3", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-3.tabs-selection-lifecycle.proof_of_spec.json@4664ba9bd2"}]}
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-8",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- a KNOWN drawdown window has been replayed against the dated topic history and the same inputs selected the SAME inflection points twice",
+      "cells": [
+        {"cell_id": "FE-s-4", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-4", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-4.render-package-templates-print.proof_of_spec.json@73752f9238"}]},
+        {"cell_id": "FE-s-8", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-8", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-8.narrative-page.proof_of_spec.json@24c4b211b2"}]},
+        {"cell_id": "FE-s-9", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-9", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-9.export-options-preview.proof_of_spec.json@7db8bed41b"}]}
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-11",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- an Opal user has opened the global view, picked a client at a second firm, and run a report and an export",
+      "cells": [
+        {"cell_id": "FE-s-2", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-2", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-2.route-shell-header-search.proof_of_spec.json@62f80c26fb"}]},
+        {"cell_id": "FE-s-10", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-10", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-10.global-view.proof_of_spec.json@e1314eb32b"}]}
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-12",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "EXERCISED -- an advisor who already uses another portal page has used all three tabs and the export without being shown anything new to learn",
+      "cells": [
+        {"cell_id": "FE-s-2", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-2", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-2.route-shell-header-search.proof_of_spec.json@62f80c26fb"}]},
+        {"cell_id": "FE-s-4", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-4", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-4.render-package-templates-print.proof_of_spec.json@73752f9238"}]},
+        {"cell_id": "FE-s-11", "task_orders": [{"id": "IRPT_FNTEND.TO-FE-s-11", "status": "complete", "proof_of_spec_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-11.design-conformity-census.proof_of_spec.json@74f846345f"}]}
+      ],
+      "claim": "COVERED"
+    }
+  ]
+}

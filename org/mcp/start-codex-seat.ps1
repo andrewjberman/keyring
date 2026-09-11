@@ -337,6 +337,9 @@ $codexPermissionArgs = @(
 try {
     $appServerArgs = ($codexPermissionArgs + @('app-server', '--listen', $endpoint)) |
       ForEach-Object { ConvertTo-ProcessArgument $_ }
+    # Start-Process WITH -Redirect* goes through raw CreateProcess and takes the EXACT-NAME file first, so 'codex' must be a REAL .exe on PATH
+    # (bun's codex.exe). An npm global install ships an extensionless POSIX 'codex' beside codex.cmd/.ps1: Get-Command, --version and `which`
+    # all PASS on it while this line dies with '%1 is not a valid Win32 application' (site Z, 2026-09-11). The check that passes is not the call that runs.
     $appServer = Start-Process -FilePath 'codex' -ArgumentList $appServerArgs `
       -WorkingDirectory $Workspace -WindowStyle Hidden -PassThru `
       -RedirectStandardOutput $appServerOut -RedirectStandardError $appServerErr

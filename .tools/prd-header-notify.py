@@ -98,12 +98,21 @@ def _signed_serials(files, prd_version):
     return out
 
 
-def _coo_lane_of(root, prd_rel):
+def _project_doc_of(root, prd_rel):
     try:
         with open(os.path.join(root, os.path.dirname(os.path.dirname(prd_rel)), "project.json"), "r", encoding="utf-8") as fh:
-            return json.load(fh).get("coo_lane")
+            return json.load(fh)
     except Exception:  # noqa: BLE001
-        return None
+        return {}
+
+
+def _coo_lane_of(root, prd_rel):
+    return _project_doc_of(root, prd_rel).get("coo_lane")
+
+
+def _designated_of(root, prd_rel):
+    """The brief half's DESIGNATED signer from the project row (lib.designated_brief_signer), else None."""
+    return _lib().designated_brief_signer(_project_doc_of(root, prd_rel))[0]
 
 
 def _evaluate_prd(root, prd_rel, prd_text=None):
@@ -113,7 +122,7 @@ def _evaluate_prd(root, prd_rel, prd_text=None):
         with open(os.path.join(root, prd_rel), "r", encoding="utf-8", errors="replace") as fh:
             prd_text = fh.read()
     files = lib.read_signoff_files(os.path.join(root, os.path.dirname(prd_rel), lib.SIGNOFF_DIR))
-    return lib.evaluate(prd_text, files, coo_lane_of_project=_coo_lane_of(root, prd_rel))
+    return lib.evaluate(prd_text, files, coo_lane_of_project=_coo_lane_of(root, prd_rel), designated=_designated_of(root, prd_rel))
 
 
 def _signoff_files(root, prd_rel):
@@ -475,7 +484,7 @@ def post_commit(root, at=None):
         live = lib.live_serials(root)
         coo_lane = _coo_lane_of(root, rel)
         for half in lib.missing_halves(ev):
-            to, why = lib.route_half(half, live, coo_lane_of_project=coo_lane)
+            to, why = lib.route_half(half, live, coo_lane_of_project=coo_lane, designated=_designated_of(root, rel))
             r = dict(base_row, to=to, history=[], kind="prd-review", half=half, half_hash=ev["hashes"][half],
                      route_reason=why)
             if lib.base_serial(to) == lib.SUBSTITUTE.get(half):
@@ -511,15 +520,19 @@ def post_commit(root, at=None):
             print("[prd-notify] %s: sign-off recorded; COO delivery still WITHHELD for %s at %s -- still owed: %s"
                   % (so_rel, prd_rel, h.get("prd_version"), ", ".join(missing)))
             continue
+        # The release goes to the project's ROUND HOLDER (project.json coo_lane) when the tree row names one; the base
+        # serial is a hole when only lanes are live (measured 2026-09-11: ten IRPT rows QUEUED to 2.0.0_SA_COO, attempts=6,
+        # while ~B/~F did the work off the CTO's own messages; DSGN_REBRND's release UNSENT to the base).
+        recipient = _coo_lane_of(root, prd_rel) or RECIPIENT
         already = [r for r in state if r.get("kind") == "prd" and r.get("path") == prd_rel
-                   and r.get("prd_version") == h.get("prd_version") and r.get("to") == RECIPIENT]
+                   and r.get("prd_version") == h.get("prd_version") and r.get("to") == recipient]
         if already:
             print("[prd-notify] %s: both sign-offs present; COO delivery for %s at %s already recorded (id=%s)"
                   % (so_rel, prd_rel, h.get("prd_version"), already[-1].get("msg_id")))
             continue
         row = {"kind": "prd", "project": h["project"], "directive": h.get("directive"), "fabric": h.get("fabric"),
                "prd_version": h["prd_version"], "status": h.get("status"), "sha": sha, "path": prd_rel,
-               "brief_ref": h.get("brief_ref"), "outcomes": h.get("endpoint_outcomes"), "to": RECIPIENT,
+               "brief_ref": h.get("brief_ref"), "outcomes": h.get("endpoint_outcomes"), "to": recipient,
                "from": os.environ.get("OPAL_AGENT_SERIAL", ""), "attempts": 0, "msg_id": None, "sent_at": None,
                "history": [], "released_by": so_rel}
         print("[prd-notify] %s: BOTH sign-offs present at %s -> COO delivery RELEASED (L4-R)" % (so_rel, h.get("prd_version")))
@@ -614,7 +627,7 @@ def _overdue_halves(root, state, now):
             continue
         row["nudged_windows"] = windows
         coo_lane = _coo_lane_of(root, row["path"])
-        to, why = lib.route_half(half, live, coo_lane_of_project=coo_lane, overdue=(half == "brief" and windows >= 2))
+        to, why = lib.route_half(half, live, coo_lane_of_project=coo_lane, overdue=(half == "brief" and windows >= 2), designated=_designated_of(root, row["path"]))
         nudge = dict(row, kind="prd-nudge", to=to, route_reason=why, overdue_min=int(age_min), history=[],
                      attempts=0, msg_id=None, sent_at=None)
         if lib.base_serial(to) == lib.SUBSTITUTE.get(half):

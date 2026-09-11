@@ -1,0 +1,51 @@
+{
+  "project_code": "DSGN_REBRND",
+  "macro_code": "DSGN",
+  "directive": "D13",
+  "fabric": "laptop",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "EXECUTING",
+  "created": "2026-09-11",
+  "registered_under_tree": "2026-09-11",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "IRPT_FNTEND"
+  ],
+  "name": "Portal Visual Elevation: the portal's visual layer brought onto the firm's measured design system -- light canvas, Lato numerals, ordered-scale ramps, one accent per view, visible focus, one written contract (portal/DESIGN.md) a reviewer can fail a page against, status and data colour separated, one charting system",
+  "description": "D13 Design's first client-facing-surface member. Endpoint: org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_D13_PORTAL_VISUAL_ELEVATION_20260911.md (FWD-1..9, one to one with the brief's O1-O9; FWD-9 graded by Andrew). Andrew's rulings 2026-09-11: canvas #F4F6FA with #0A1733 as deliberate inverted bands (supersedes the 2026-07-15 silver-canvas archetype); the charts keep their colour; unlicensed third-party skill code gitignored under a pinned manifest, nothing vendored. Macro DSGN ratified on his word (LD-0552). Lead 2.0.0_SA_COO~D, promoted from 0.1.1_RD_MarketPerformance on his word to lead this project.",
+  "brief_ref": "docs/briefs/portal-visual-elevation-brief-20260911.md",
+  "prds": [
+    "org/missions/D13/DSGN/DSGN_REBRND/prd/DSGN_REBRND_PRD.md"
+  ],
+  "prd_lineage": [
+    "org/missions/D13/DSGN/DSGN_REBRND/prd/DSGN_REBRND_PRD.md@v0.1",
+    "org/missions/D13/DSGN/DSGN_REBRND/prd/DSGN_REBRND_PRD.md@v0.2"
+  ],
+  "decompositions": [
+    "org/missions/D13/DSGN/DSGN_REBRND/decompositions/DSGN_REBRND_DECOMP.md"
+  ],
+  "decomposition_lineage": [
+    "org/missions/D13/DSGN/DSGN_REBRND/decompositions/DSGN_REBRND_DECOMP.md@v1"
+  ],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": "2.0.0_SA_COO~D",
+    "cvo": "3.0.0_SA_CVO",
+    "cro": "4.0.0_SA_CRO",
+    "workers": "0.9.0_WK_DSGN_REBRND~<n>, per the L6 issuance"
+  },
+  "coo_lane": "2.0.0_SA_COO~D",
+  "l4r_brief_signer": {
+    "serial": "2.0.0_SA_COO~D",
+    "authority": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_080xZ_DSGN_REBRND_COO_D_SIGNS_CVO_ADVERSARIAL_SELF_DRIVE_WIDENED.md@2daf4d8b85",
+    "quoted": "get the signoff from 2.0.0_SA_COO~D specifically"
+  },
+  "fabric_ruling": "laptop -- D13 Design placed LAPTOP; Andrew-direct 2026-09-11 'it will be laptop fabric' (brief V.4), confirming the register owner's default.",
+  "blocking": "Not blocked. L6 ISSUANCE landed 2026-09-11: 15 task orders RB-s-1..RB-s-15 covering every decomp cell, fanout 3 of 3 chains cap 8. 81 criteria, 0 grammar violations; all 30 mechanical census criteria EXERCISED against the live tree before issuing -- 29 detect a real defect, 1 (RB8-AC4) is a declared no-regression guard. ALL WORK CONFINED TO feature/d13-visual-elevation in both repos (Andrew-direct); no cell writes DEV or CLOUD. Next: L7 spawn 3 worker slots.",
+  "thread_counter": 0,
+  "threads": [],
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_D13_PORTAL_VISUAL_ELEVATION_20260911.md",
+  "counterpart": null
+}

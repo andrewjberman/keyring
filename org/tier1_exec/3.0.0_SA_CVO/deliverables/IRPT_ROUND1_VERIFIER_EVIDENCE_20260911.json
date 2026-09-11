@@ -1,0 +1,1467 @@
+{
+  "measured_at": "2026-09-11T10:46:47Z",
+  "workspace_head": "6560583fd5ee22bb395c5ee3245e6c95ed549d63",
+  "portal_head": "edab15b54f8fd2e2c3da2eaed87dd64a215785c9",
+  "limit": "Offline source/fixture comparison; no live authorization or deployment claim. Different fixture failures identify absent agreement or translation, not which vocabulary should win.",
+  "routes": {
+    "client": {
+      "path": "portal/src/api/endpoints/investor-reporting.ts",
+      "repository": "portal",
+      "pin": "0322a04a4d144db9bf3211eca5c1bcd05f8099b9",
+      "sha256": "fff54f2c18e155296e8b4dfe62b1349f70548371e6045684a934032f345fe0e6"
+    },
+    "backend": {
+      "path": "infra/aws/terraform/investor-reporting/api/routes.json",
+      "repository": "workspace",
+      "pin": "bef9b459f3962b228f6ac032c9c4cae5cb90efcc",
+      "sha256": "f7e9bd2b11064455c7f24d3e7483fd003c37fd59ee060b7ad1a1a83a58a8bc01"
+    },
+    "frontend_count": 11,
+    "backend_declared_count": 11,
+    "backend_unimplemented_count": 1,
+    "comparisons": [
+      {
+        "operation": "directory-search",
+        "frontend_route": "POST /api/scoped/investor-reporting/directory-search",
+        "declared_backend_matches": []
+      },
+      {
+        "operation": "resolve-scope",
+        "frontend_route": "POST /api/scoped/investor-reporting/resolve-scope",
+        "declared_backend_matches": []
+      },
+      {
+        "operation": "performance-report",
+        "frontend_route": "POST /api/scoped/investor-reporting/performance-report",
+        "declared_backend_matches": []
+      },
+      {
+        "operation": "analysis-requests",
+        "frontend_route": "POST /api/scoped/investor-reporting/analysis-requests",
+        "declared_backend_matches": []
+      },
+      {
+        "operation": "analysis-report",
+        "frontend_route": "POST /api/scoped/investor-reporting/analysis-report",
+        "declared_backend_matches": []
+      },
+      {
+        "operation": "submit-correction",
+        "frontend_route": "POST /api/scoped/investor-reporting/submit-correction",
+        "declared_backend_matches": []
+      },
+      {
+        "operation": "holdings-snapshot",
+        "frontend_route": "POST /api/scoped/investor-reporting/holdings-snapshot",
+        "declared_backend_matches": []
+      },
+      {
+        "operation": "narrative-packet",
+        "frontend_route": "POST /api/scoped/investor-reporting/narrative-packet",
+        "declared_backend_matches": []
+      },
+      {
+        "operation": "export-preview",
+        "frontend_route": "POST /api/scoped/investor-reporting/export-preview",
+        "declared_backend_matches": []
+      },
+      {
+        "operation": "submit-export",
+        "frontend_route": "POST /api/scoped/investor-reporting/submit-export",
+        "declared_backend_matches": []
+      },
+      {
+        "operation": "export-receipt",
+        "frontend_route": "POST /api/scoped/investor-reporting/export-receipt",
+        "declared_backend_matches": []
+      }
+    ]
+  },
+  "contract_pairs": [
+    {
+      "contract": "AnalysisReport",
+      "backend_positive_valid": true,
+      "frontend_success_valid_against_backend_schema": false,
+      "error_count": 19,
+      "error_keywords": [
+        "additionalProperties",
+        "required",
+        "type"
+      ],
+      "missing_required_top_level": [
+        "request_ref",
+        "vendor_artifact",
+        "effective_inputs",
+        "extraction_validation",
+        "release"
+      ],
+      "schema": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.schema.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "84b3c9dde3935adfe060c4de155bdd564801c85be4506c2346eacb4b37776875"
+      },
+      "backend_fixture": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisReport.valid.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "8809a8580d58e9022363b33ac64f94abc1c1b8394ea99039ea152837857b52d3"
+      },
+      "frontend_fixture": {
+        "path": "portal/src/pages/InvestorReporting/fixtures/analysisReport.success.json",
+        "repository": "portal",
+        "pin": "0322a04a4d144db9bf3211eca5c1bcd05f8099b9",
+        "sha256": "6e828b6f92bd957835a67fae414c0646638986662d26376dc72ca5c74a36f20c"
+      }
+    },
+    {
+      "contract": "AnalysisRequest",
+      "backend_positive_valid": true,
+      "frontend_success_valid_against_backend_schema": false,
+      "error_count": 21,
+      "error_keywords": [
+        "additionalProperties",
+        "enum",
+        "required"
+      ],
+      "missing_required_top_level": [
+        "identity",
+        "sender_evidence",
+        "message_refs",
+        "attachment_refs",
+        "normalized_holdings",
+        "release"
+      ],
+      "schema": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/AnalysisRequest.schema.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "eb5e6fd61b640ad37eebde11b3a67f34c2a6d0a3fce71a5e20a064772ee566f3"
+      },
+      "backend_fixture": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisRequest.valid.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "ba22b2ed303370b09a3d7a4db1076be079e99644dda594e544ccf3784cfbf8a1"
+      },
+      "frontend_fixture": {
+        "path": "portal/src/pages/InvestorReporting/fixtures/analysisRequest.success.json",
+        "repository": "portal",
+        "pin": "0322a04a4d144db9bf3211eca5c1bcd05f8099b9",
+        "sha256": "b744e5a68379b3a29b924eb3299ff1b24d748dd07c452b46d404fdc9e480509d"
+      }
+    },
+    {
+      "contract": "DirectoryEntry",
+      "backend_positive_valid": true,
+      "frontend_success_valid_against_backend_schema": false,
+      "error_count": 16,
+      "error_keywords": [
+        "additionalProperties",
+        "enum",
+        "required"
+      ],
+      "missing_required_top_level": [
+        "ids",
+        "display_name",
+        "masked_discriminator",
+        "permitted_scope",
+        "permitted_capabilities",
+        "cohort"
+      ],
+      "schema": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json",
+        "repository": "workspace",
+        "pin": "33351469c282680f1fa497fc913e1c5b627f6945",
+        "sha256": "2bef7e3979155c62afcbcd5489669b3f9594b564ffe7adeaf6dc3e39fe3a340e"
+      },
+      "backend_fixture": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/fixtures/DirectoryEntry.valid.json",
+        "repository": "workspace",
+        "pin": "33351469c282680f1fa497fc913e1c5b627f6945",
+        "sha256": "8a501b18f012e4314656a7aea6170b74d8e6f5031aff7338e024309a84f2aa37"
+      },
+      "frontend_fixture": {
+        "path": "portal/src/pages/InvestorReporting/fixtures/directoryEntry.success.json",
+        "repository": "portal",
+        "pin": "0322a04a4d144db9bf3211eca5c1bcd05f8099b9",
+        "sha256": "7c8641429333ef8e2883b7c3a216e0e171c4bd140895c0b0ac9a3ac9fd9d6033"
+      }
+    },
+    {
+      "contract": "ExportBundle",
+      "backend_positive_valid": true,
+      "frontend_success_valid_against_backend_schema": false,
+      "error_count": 8,
+      "error_keywords": [
+        "additionalProperties",
+        "required"
+      ],
+      "missing_required_top_level": [
+        "authorized_report_revisions",
+        "selected_sections",
+        "narrative_packet_ref",
+        "approved_assets",
+        "versions",
+        "render_options",
+        "live_vendor_request_during_render"
+      ],
+      "schema": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/ExportBundle.schema.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "d83716e3f0f0055cda8d749d1532c5e41575761be4db8edd2869c62202b4436b"
+      },
+      "backend_fixture": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/fixtures/ExportBundle.valid.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "38c4699f7849eb7a042e00caa185a96ca227252a4c4598dffc57d0efb0dbfc12"
+      },
+      "frontend_fixture": {
+        "path": "portal/src/pages/InvestorReporting/fixtures/exportBundle.success.json",
+        "repository": "portal",
+        "pin": "0322a04a4d144db9bf3211eca5c1bcd05f8099b9",
+        "sha256": "5dd70d3467b454d39d1fdbbf8dff43a6fe90cc72cf687fba77d85c1843b8dd6f"
+      }
+    },
+    {
+      "contract": "ExportReceipt",
+      "backend_positive_valid": true,
+      "frontend_success_valid_against_backend_schema": false,
+      "error_count": 8,
+      "error_keywords": [
+        "additionalProperties",
+        "required"
+      ],
+      "missing_required_top_level": [
+        "export_ref",
+        "artifact",
+        "facts",
+        "timestamps",
+        "job_state",
+        "download_route",
+        "vendor_signed_url_exposed"
+      ],
+      "schema": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/ExportReceipt.schema.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "09885c4eb25595de5967d7e5ee11f4967d67f04b57871082eb8b775077bd13a6"
+      },
+      "backend_fixture": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/fixtures/ExportReceipt.valid.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "60920dc42daa7662256cd11efa8486450e799dd2f1c2fd872a026461f930cffb"
+      },
+      "frontend_fixture": {
+        "path": "portal/src/pages/InvestorReporting/fixtures/exportReceipt.success.json",
+        "repository": "portal",
+        "pin": "0322a04a4d144db9bf3211eca5c1bcd05f8099b9",
+        "sha256": "c4fe25ed8299010f9b5b8350419f7e32d7a10bfb4387ea94ba940791157b24fc"
+      }
+    },
+    {
+      "contract": "HoldingsSnapshot",
+      "backend_positive_valid": true,
+      "frontend_success_valid_against_backend_schema": false,
+      "error_count": 114,
+      "error_keywords": [
+        "additionalProperties",
+        "enum",
+        "required",
+        "type"
+      ],
+      "missing_required_top_level": [
+        "source_set_revision",
+        "clocks",
+        "custody_totals"
+      ],
+      "schema": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/HoldingsSnapshot.schema.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "a900dd25452f2aec6689b5b6554b72836ab084e245621591acf73d2faa9b49aa"
+      },
+      "backend_fixture": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/fixtures/HoldingsSnapshot.valid.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "f55ba1d072698bd7be085b1b3543477feeb8104b2857ddd4f747e58a1d9a31d1"
+      },
+      "frontend_fixture": {
+        "path": "portal/src/pages/InvestorReporting/fixtures/holdingsSnapshot.success.json",
+        "repository": "portal",
+        "pin": "0322a04a4d144db9bf3211eca5c1bcd05f8099b9",
+        "sha256": "3f735296c6046048b264acf9bfeaa0790c10d4ad95400dc9df45716da9ea2016"
+      }
+    },
+    {
+      "contract": "NarrativePacket",
+      "backend_positive_valid": true,
+      "frontend_success_valid_against_backend_schema": false,
+      "error_count": 19,
+      "error_keywords": [
+        "additionalProperties",
+        "required",
+        "type"
+      ],
+      "missing_required_top_level": [
+        "performance_revision",
+        "event_policy",
+        "cited_evidence",
+        "coverage",
+        "versions"
+      ],
+      "schema": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/NarrativePacket.schema.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "76b43567163a94dade061baac0b83109f56db1d5bd64cd16b5cae729ffd93fd7"
+      },
+      "backend_fixture": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/fixtures/NarrativePacket.valid.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "47ef1fa3208802925bd781b6961483533936108b9b27f1206eb1f85fcdb16c4e"
+      },
+      "frontend_fixture": {
+        "path": "portal/src/pages/InvestorReporting/fixtures/narrativePacket.success.json",
+        "repository": "portal",
+        "pin": "0322a04a4d144db9bf3211eca5c1bcd05f8099b9",
+        "sha256": "1d44820053f11bd76830798518b5ad994a1c3c27c3c397ee1d3c0b3787b753b5"
+      }
+    },
+    {
+      "contract": "PerformanceReport",
+      "backend_positive_valid": true,
+      "frontend_success_valid_against_backend_schema": false,
+      "error_count": 10,
+      "error_keywords": [
+        "additionalProperties",
+        "required"
+      ],
+      "missing_required_top_level": [
+        "dates",
+        "measurement_basis",
+        "returns",
+        "optional_facts"
+      ],
+      "schema": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/PerformanceReport.schema.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "ad8dfd580fb57b93029fe92be1ab47414ef01a85fc7eb453500eb062689eb694"
+      },
+      "backend_fixture": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/fixtures/PerformanceReport.valid.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "7a10b2632861721ec952a9c1d9bff344276d0881b032e2f4875ffb7b5c9480f0"
+      },
+      "frontend_fixture": {
+        "path": "portal/src/pages/InvestorReporting/fixtures/performanceReport.success.json",
+        "repository": "portal",
+        "pin": "0322a04a4d144db9bf3211eca5c1bcd05f8099b9",
+        "sha256": "b93d983a7187f7fbeadd001bac32c829816b94084064b5105fdc082deefb663d"
+      }
+    },
+    {
+      "contract": "RenderPackage",
+      "backend_positive_valid": true,
+      "frontend_pair": "NO_SAME_NAMED_CONSUMER_JSON_FIXTURE",
+      "schema": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/RenderPackage.schema.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "dc1958c881ab4adc0e2168950499ded701edd2fe44478f845db4aafe522303df"
+      },
+      "backend_fixture": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/fixtures/RenderPackage.valid.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "12797df504f2f43f2a50929e6a716937aa8602765c0ebcabe1c4bbed5e6ab4f0"
+      }
+    },
+    {
+      "contract": "ResolvedScope",
+      "backend_positive_valid": true,
+      "frontend_success_valid_against_backend_schema": false,
+      "error_count": 10,
+      "error_keywords": [
+        "additionalProperties",
+        "required"
+      ],
+      "missing_required_top_level": [
+        "viewer_policy",
+        "principal_class",
+        "entitlement_revision",
+        "verified_request_firm_id",
+        "permitted_account_set",
+        "permitted_account_set_fingerprint",
+        "requested_scope",
+        "resolved_scope",
+        "partial_reason"
+      ],
+      "schema": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/ResolvedScope.schema.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "f978d261f23aab22e82f9ceee21a6b278ff0b065fcf8de0da9297e7f9fa0acf9"
+      },
+      "backend_fixture": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/fixtures/ResolvedScope.valid.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "9a18920dc682ba69cd3056ddd09a3138360cf4e421c935b0d2780dc74dedc79c"
+      },
+      "frontend_fixture": {
+        "path": "portal/src/pages/InvestorReporting/fixtures/resolvedScope.success.json",
+        "repository": "portal",
+        "pin": "0322a04a4d144db9bf3211eca5c1bcd05f8099b9",
+        "sha256": "cdb2ad33a7c17bdd1fdec62a68b9c5c6f7f2efa1650270e35c4c136ea5ed98ce"
+      }
+    },
+    {
+      "contract": "StatusEnvelope",
+      "backend_positive_valid": true,
+      "frontend_success_valid_against_backend_schema": false,
+      "error_count": 6,
+      "error_keywords": [
+        "additionalProperties",
+        "required",
+        "type"
+      ],
+      "missing_required_top_level": [
+        "source_dates",
+        "actions",
+        "public_reason_code",
+        "internal_correlation_id"
+      ],
+      "schema": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/StatusEnvelope.schema.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "69361d2b9a58ac51ef240846abf5a24b85edad1b87ee1dc09956268cf39dfe8f"
+      },
+      "backend_fixture": {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/fixtures/StatusEnvelope.valid.json",
+        "repository": "workspace",
+        "pin": "c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "sha256": "096190445e361f3cd8b03185777f72752314181fd7b9b3aa6ef2a473e126ed9b"
+      },
+      "frontend_fixture": {
+        "path": "portal/src/pages/InvestorReporting/fixtures/statusEnvelope.success.json",
+        "repository": "portal",
+        "pin": "0322a04a4d144db9bf3211eca5c1bcd05f8099b9",
+        "sha256": "efacc81a605196270c122c65b365e28f2f609ce9e92bb3f5e514931725a5c259"
+      }
+    }
+  ],
+  "commands": [
+    {
+      "cwd": "portal",
+      "argv": [
+        "bun",
+        "test",
+        "src/pages/InvestorReporting"
+      ],
+      "exit_code": 0,
+      "output_sha256": "b52758c8fc58473d66537bcd06e45934133df9055f6dfcec3f7dd269e4ac5183",
+      "summary_lines": [
+        "\u001b[0m\u001b[32m 322 pass\u001b[0m",
+        " \u001b[0m\u001b[33m1 skip\u001b[0m",
+        "\u001b[0m\u001b[2m 0 fail\u001b[0m",
+        " 1496 expect() calls",
+        "Ran 323 tests across 48 files. \u001b[0m\u001b[2m[\u001b[1m1083.00ms\u001b[0m\u001b[2m]\u001b[0m"
+      ]
+    },
+    {
+      "cwd": "portal",
+      "argv": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "-b",
+        "--noEmit"
+      ],
+      "exit_code": 2,
+      "output_sha256": "77c76c15b38d9a4bb717fcc647e905ca39c254217280d2e032114121b8d32d9b",
+      "summary_lines": [
+        "src/pages/InvestorReporting/__tests__/fe-s-11/census.test.ts(85,8): error TS2339: Property 'each' does not exist on type 'typeof test'.",
+        "src/pages/InvestorReporting/__tests__/fe-s-11/census.test.ts(87,6): error TS7006: Parameter '_name' implicitly has an 'any' type.",
+        "src/pages/InvestorReporting/__tests__/fe-s-11/census.test.ts(87,13): error TS7006: Parameter 'row' implicitly has an 'any' type.",
+        "src/pages/InvestorReporting/__tests__/fe-s-11/census.test.ts(95,30): error TS2339: Property 'toMatch' does not exist on type 'Matchers'.",
+        "src/pages/InvestorReporting/__tests__/fe-s-11/census.test.ts(140,8): error TS2339: Property 'each' does not exist on type 'typeof test'.",
+        "src/pages/InvestorReporting/__tests__/fe-s-11/census.test.ts(140,97): error TS7006: Parameter '_n' implicitly has an 'any' type.",
+        "src/pages/InvestorReporting/__tests__/fe-s-11/census.test.ts(140,101): error TS7006: Parameter 'r' implicitly has an 'any' type.",
+        "src/pages/InvestorReporting/__tests__/fe-s-11/colour-law.test.ts(39,37): error TS2305: Module '\"node:fs\"' has no exported member 'statSync'."
+      ]
+    }
+  ],
+  "screenshots_visually_read": [
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-10_firm_refused_1440.png",
+      "repository": "workspace",
+      "pin": "e1314eb32b337a8e4602190fa30ce1ce88a0d316",
+      "sha256": "40c6cf02bd49d500482db198abfc932ebd3a252efcf5eb287b709be20473e9ca"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-10_global_1440.png",
+      "repository": "workspace",
+      "pin": "e1314eb32b337a8e4602190fa30ce1ce88a0d316",
+      "sha256": "642362a673381701f9dabbc1a9efb26972af307974bed690067901d90c4fb9df"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-11_analysis_390.png",
+      "repository": "workspace",
+      "pin": "96315a69eb8ae6765bd350f147afb240b309087a",
+      "sha256": "2ca5db1009991198e4525e548d0567dd6f0b30581563eafc78b11e4df5c59923"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-11_export_390.png",
+      "repository": "workspace",
+      "pin": "96315a69eb8ae6765bd350f147afb240b309087a",
+      "sha256": "16460b178023f58a327dfc2b0eda732f3df2f782e55c1637ff556d1124db517c"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-11_holdings_390.png",
+      "repository": "workspace",
+      "pin": "3e0eb0fcee8d297446eb73e9536b26cd32e559ef",
+      "sha256": "e169372262d7e97a2a8c022f182819d3326dd20bfeb4cbe37f98a4d85dc12e44"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-11_page_390.png",
+      "repository": "workspace",
+      "pin": "9e0370009f61d756ee2ee59a117fd2ee71165d1c",
+      "sha256": "4c7417f691884c4f66ef12c8507885320c196da94564cc45b9cfa7d8b00cb717"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-11_print_390.png",
+      "repository": "workspace",
+      "pin": "96315a69eb8ae6765bd350f147afb240b309087a",
+      "sha256": "a53cbff9ad8cb9aa08820c19a85f103aceee2fd5fba6ae981b3dd56da96dd01f"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-2_page_1440.png",
+      "repository": "workspace",
+      "pin": "62f80c26fb032223648994f9755cbe06f28ddbc5",
+      "sha256": "20d348e3097aef878fc55145cf2b5d6801992a36f739aab42d196783f7654e4a"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-2_page_1440_one_firm.png",
+      "repository": "workspace",
+      "pin": "62f80c26fb032223648994f9755cbe06f28ddbc5",
+      "sha256": "7b6520e866f6068b699c07ee8bd067b0e3493db5cd18d48ab86d4db150b93568"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-2_page_390.png",
+      "repository": "workspace",
+      "pin": "62f80c26fb032223648994f9755cbe06f28ddbc5",
+      "sha256": "3a96bd13307d98e29cf1ed92e39951183879aa4ed5d448838e5f6f533b489ccf"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-3_failed_1440.png",
+      "repository": "workspace",
+      "pin": "4664ba9bd2af0f52013fb2e0c044a84a8132adee",
+      "sha256": "96b9ac06c9be969e69fb43845859347c0ac726675c1e968b29f15dff2fdc660d"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-3_header_390.png",
+      "repository": "workspace",
+      "pin": "4664ba9bd2af0f52013fb2e0c044a84a8132adee",
+      "sha256": "737dab2f101b7b205045dc4105008ccdad326d0ea9d57514d4cc721d24b3f3cc"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-3_loading_390.png",
+      "repository": "workspace",
+      "pin": "4664ba9bd2af0f52013fb2e0c044a84a8132adee",
+      "sha256": "55e85a00a03221cdbc04d76fa734f503805ada92bccb3a731502267bfa344665"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-5_reporting_49f_1440.png",
+      "repository": "workspace",
+      "pin": "3ab6275f9f9aba603571e87c573e3ed21fc1eb98",
+      "sha256": "2e3406cb5d3c0bb6c830fa76d306c3af5930b46f1b6ece8bc30d698732b7318d"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-5_reporting_orion_390.png",
+      "repository": "workspace",
+      "pin": "3ab6275f9f9aba603571e87c573e3ed21fc1eb98",
+      "sha256": "b4eb628d39a39bf6c2196af15a60a3b4cbd4aebfdd42e51ef8000a2e35a9b785"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-9_export_modal_1440.png",
+      "repository": "workspace",
+      "pin": "7db8bed41ba4ce4e9739d15ce3bc13e959848bad",
+      "sha256": "e4de11639f7423029adb0cbfcc6ea4db02fc32b616fd1645db1013275c9b7e38"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-9_export_modal_390.png",
+      "repository": "workspace",
+      "pin": "7db8bed41ba4ce4e9739d15ce3bc13e959848bad",
+      "sha256": "b5209fc68246571d33815db846672f3647a8d7f01171d64ae68e5001de572caf"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/fe-s-4_print_analysis_1440.png",
+      "repository": "workspace",
+      "pin": "73752f923887e071c8dc9dcf1d06306f80098257",
+      "sha256": "3242061d240d5a155df4d0921f8085dd8e8e52d21eeec25fe52f5785efe3cff8"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/fe-s-4_print_performance_1440.png",
+      "repository": "workspace",
+      "pin": "73752f923887e071c8dc9dcf1d06306f80098257",
+      "sha256": "b9073a31d29e534d2a372fb072cf31f9bbb3f74ba778d49150837048605f16e5"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/fe-s-8_print_narrative_1440.png",
+      "repository": "workspace",
+      "pin": "24c4b211b2b296e21a046d05353a852c5e40f8d8",
+      "sha256": "a6b42a8aaedda52aa10e4978bed6018c10f9d45e4fa4c4e3d454f4162ff97e4b"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/fe-s-6_analysis_correction_390.png",
+      "repository": "workspace",
+      "pin": "854594d51a6ba1accb25d8d965b1c188ea3121dd",
+      "sha256": "fe49531504dec6b73567bf1e0ca4a58c90718e3d4dcae41880bf646ee97640d1"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/fe-s-6_analysis_ready_1440.png",
+      "repository": "workspace",
+      "pin": "854594d51a6ba1accb25d8d965b1c188ea3121dd",
+      "sha256": "83c79e993eee8d04946c6c7390b7f62e140f67f2708dfd79deb1f17da6cbb3de"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/fe-s-7_holdings_cottonwood_390.png",
+      "repository": "workspace",
+      "pin": "277a7199ac4cccc82977dd33dd07f3bedcf89076",
+      "sha256": "89c2557e064d8ee3ec549f9954cedf92e371f795e7b4069897218ff29320be18"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/fe-s-7_holdings_smartx_1440.png",
+      "repository": "workspace",
+      "pin": "277a7199ac4cccc82977dd33dd07f3bedcf89076",
+      "sha256": "b459c267d25b2071779ff226245153bd7931fdbeaa90fbfab014ed4aebb7f7ea"
+    }
+  ],
+  "proof_of_spec_checks": {
+    "snapshot": "eb6f7068db3da5bc67bfb7567d5a13ccdb32447b",
+    "valid": 30,
+    "total": 30,
+    "results": [
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-s-1.the-directory-runner-and-the-search-resolve-handler.proof_of_spec.json",
+        "expected": [
+          "S1-AC1",
+          "S1-AC2",
+          "S1-AC3"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=3 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit f61edc41fc RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-s-1.the-directory-runner-and-the-search-resolve-handler.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 3/3 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 11 resolved at pin / 2 PENDING co-committed (POST-COMMIT: touched by the instance commit 5155aedbb1) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 4 s3_object (not a git ref; skipped) -- denominator 17 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 11 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 6 entries; 6 open with a row id; 6 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-1.the-directory-runner-and-the-search-resolve-handler.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-s-10.section-extraction-certified-against-a-paired-pdf.proof_of_spec.json",
+        "expected": [
+          "S10-AC1",
+          "S10-AC2"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=2 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit f61edc41fc RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-s-10.section-extraction-certified-against-a-paired-pdf.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 2/2 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 7 resolved at pin / 3 PENDING co-committed (POST-COMMIT: touched by the instance commit f60d0ff103) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 1 s3_object (not a git ref; skipped) -- denominator 11 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 7 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 3 entries; 3 open with a row id; 3 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-10.section-extraction-certified-against-a-paired-pdf.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-s-11.performance-adapters-black-diamond-orion-normalizer.proof_of_spec.json",
+        "expected": [
+          "S11-AC1",
+          "S11-AC2",
+          "S11-AC3"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=3 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 522ec57a5d88e24fc59c09691c1b41ddb0779105 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-s-11.performance-adapters-black-diamond-orion-normalizer.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 3/3 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 26 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 116da64695) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 1 s3_object (not a git ref; skipped) -- denominator 27 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 26 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 4 entries; 4 open with a row id; 4 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-11.performance-adapters-black-diamond-orion-normalizer.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-s-12.holdings-snapshot-three-partner-joins-reconciled.proof_of_spec.json",
+        "expected": [
+          "S12-AC1",
+          "S12-AC2"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=2 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 95a34541f896b883056be2855cfe1cb37ffc9661 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-s-12.holdings-snapshot-three-partner-joins-reconciled.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 2/2 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 5 resolved at pin / 7 PENDING co-committed (POST-COMMIT: touched by the instance commit 2c67545daf) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 12 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 6 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 2 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-12.holdings-snapshot-three-partner-joins-reconciled.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-s-13.narrative-events-dated-evidence-contemporaneity.proof_of_spec.json",
+        "expected": [
+          "S13-AC1",
+          "S13-AC2",
+          "S13-AC4",
+          "S13-AC3"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=4 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit b3050e30960c9726cf429788008b58fe6799424f RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-s-13.narrative-events-dated-evidence-contemporaneity.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 4/4 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 31 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 1555b17893) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 2 s3_object (not a git ref; skipped) -- denominator 33 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 31 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 4 entries; 4 open with a row id; 4 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-13.narrative-events-dated-evidence-contemporaneity.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-s-14.export-bundle-freeze-render-worker-receipt.proof_of_spec.json",
+        "expected": [
+          "S14-AC1",
+          "S14-AC2",
+          "S14-AC3"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=3 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit f8c76bd3a43608fb10bad953174707d083ed2715 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-s-14.export-bundle-freeze-render-worker-receipt.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 3/3 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 21 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 43331be3f1) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 2 s3_object (not a git ref; skipped) -- denominator 23 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 21 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 5 entries; 5 open with a row id; 5 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-14.export-bundle-freeze-render-worker-receipt.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-s-15.scoped-routes-opal-principal-and-the-cloudfront-behavior.proof_of_spec.json",
+        "expected": [
+          "S15-AC1",
+          "S15-AC2",
+          "S15-AC3"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=3 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit f61edc41fc RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-s-15.scoped-routes-opal-principal-and-the-cloudfront-behavior.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 3/3 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 13 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit a7659fa6af) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 13 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 13 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-15.scoped-routes-opal-principal-and-the-cloudfront-behavior.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-s-16.operations-status-envelope-and-per-tenant-recovery.proof_of_spec.json",
+        "expected": [
+          "S16-AC1",
+          "S16-AC2",
+          "S16-AC3"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=3 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 5fa4a113107af2d884a1fe101c135584852586e8 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-s-16.operations-status-envelope-and-per-tenant-recovery.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 3/3 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 12 resolved at pin / 7 PENDING co-committed (POST-COMMIT: touched by the instance commit f8176b2c8e) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 19 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 16 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-16.operations-status-envelope-and-per-tenant-recovery.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-s-17.tenant-scoped-storage-keys-and-queues.proof_of_spec.json",
+        "expected": [
+          "S17-AC1",
+          "S17-AC2",
+          "S17-AC3"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=3 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 410f28f7db89da51953eba34402394cdfee6ae23 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-s-17.tenant-scoped-storage-keys-and-queues.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 3/3 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 10 resolved at pin / 8 PENDING co-committed (POST-COMMIT: touched by the instance commit 5d0003fc49) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 18 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 12 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 2 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 3 entries; 3 open with a row id; 3 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-17.tenant-scoped-storage-keys-and-queues.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-s-18.the-foundation-contracts-homes-manifest-roots.proof_of_spec.json",
+        "expected": [
+          "S18-AC1",
+          "S18-AC2"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=2 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 261c8d2080cd5fce4fe7bdc6d8f5cdd1d262e11c RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-s-18.the-foundation-contracts-homes-manifest-roots.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 2/2 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 52 PENDING co-committed (POST-COMMIT: touched by the instance commit c4214773c9) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 52 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 24 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-18.the-foundation-contracts-homes-manifest-roots.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-s-2.resolved-scope-from-the-validators-headers.proof_of_spec.json",
+        "expected": [
+          "S2-AC1",
+          "S2-AC2"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=2 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit f61edc41fc RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-s-2.resolved-scope-from-the-validators-headers.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 2/2 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 9 resolved at pin / 2 PENDING co-committed (POST-COMMIT: touched by the instance commit 9b364959ac) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 11 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 9 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-2.resolved-scope-from-the-validators-headers.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-s-3.the-enforcement-library-reauthorize-before-serve.proof_of_spec.json",
+        "expected": [
+          "S3-AC1",
+          "S3-AC2"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=2 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit f61edc41fc RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-s-3.the-enforcement-library-reauthorize-before-serve.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 2/2 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 5 resolved at pin / 2 PENDING co-committed (POST-COMMIT: touched by the instance commit 81d8ed0bb3) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 7 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 5 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-3.the-enforcement-library-reauthorize-before-serve.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-s-4.directory-freshness-driven-on-a-controlled-clock.proof_of_spec.json",
+        "expected": [
+          "S4-AC1",
+          "S4-AC2",
+          "S4-AC3"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=3 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit f61edc41fc RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-s-4.directory-freshness-driven-on-a-controlled-clock.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 3/3 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 9 resolved at pin / 2 PENDING co-committed (POST-COMMIT: touched by the instance commit ccd36eb434) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 1 s3_object (not a git ref; skipped) -- denominator 12 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 9 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-4.directory-freshness-driven-on-a-controlled-clock.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-s-5.firm-destination-policy-and-the-ingestion-gate.proof_of_spec.json",
+        "expected": [
+          "S5-AC1",
+          "S5-AC2",
+          "S5-AC3"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=3 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 68003374034f5c1da5b282e0587d4c0129712c4e RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-s-5.firm-destination-policy-and-the-ingestion-gate.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 3/3 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 7 resolved at pin / 9 PENDING co-committed (POST-COMMIT: touched by the instance commit 6de109da7d) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 16 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 10 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 2 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-5.firm-destination-policy-and-the-ingestion-gate.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-s-6.mailbox-intake-durable-checkpointed-idempotent.proof_of_spec.json",
+        "expected": [
+          "S6-AC1",
+          "S6-AC2",
+          "S6-AC3"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=3 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 95a34541f8 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-s-6.mailbox-intake-durable-checkpointed-idempotent.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 3/3 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 14 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit 2857f226b7) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 1 s3_object (not a git ref; skipped) -- denominator 16 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 14 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-6.mailbox-intake-durable-checkpointed-idempotent.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-s-7.holdings-parse-validate-and-the-correction-state.proof_of_spec.json",
+        "expected": [
+          "S7-AC1",
+          "S7-AC2"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=2 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 5236a7603d RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-s-7.holdings-parse-validate-and-the-correction-state.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 2/2 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 6 resolved at pin / 2 PENDING co-committed (POST-COMMIT: touched by the instance commit 9d6aab3855) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 8 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 6 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-7.holdings-parse-validate-and-the-correction-state.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-s-8.the-ycharts-session-library-and-runner-host.proof_of_spec.json",
+        "expected": [
+          "S8-AC1",
+          "S8-AC2",
+          "S8-AC3"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=3 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 7d7f33569a RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-s-8.the-ycharts-session-library-and-runner-host.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 3/3 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 11 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit b1b3ef04b4) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 12 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 11 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-8.the-ycharts-session-library-and-runner-host.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-s-9.the-ycharts-generation-chain-as-an-opal-async-job.proof_of_spec.json",
+        "expected": [
+          "S9-AC1",
+          "S9-AC2",
+          "S9-AC3"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=3 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit f61edc41fc RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-s-9.the-ycharts-generation-chain-as-an-opal-async-job.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 3/3 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 15 resolved at pin / 2 PENDING co-committed (POST-COMMIT: touched by the instance commit 183d5241d0) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 1 s3_object (not a git ref; skipped) -- denominator 18 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 15 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 3 entries; 3 open with a row id; 3 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-9.the-ycharts-generation-chain-as-an-opal-async-job.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-sb-3.the-replay-battery-across-every-deployed-route.proof_of_spec.json",
+        "expected": [
+          "SB3-AC1",
+          "SB3-AC2"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=2 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_BCKEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 845cb2b6acc5bbd4f510efe473d5a5efc69a8024 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_BCKEND\\task-orders\\IRPT_BCKEND.TO-IB-sb-3.the-replay-battery-across-every-deployed-route.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md)\n  alignment-frame: decomp id space = 19 distinct cell id(s) in org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 2/2 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 2 resolved at pin / 3 PENDING co-committed (POST-COMMIT: touched by the instance commit cc376392ba) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 5 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 3 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_BCKEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-sb-3.the-replay-battery-across-every-deployed-route.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-1.contracts-client-adapter-fixtures.proof_of_spec.json",
+        "expected": [
+          "F1-AC1",
+          "F1-AC2",
+          "F1-AC3",
+          "F1-AC4",
+          "F1-AC5",
+          "F1-AC6"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_FNTEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 8ace3a2596 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_FNTEND\\task-orders\\IRPT_FNTEND.TO-FE-s-1.contracts-client-adapter-fixtures.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md)\n  alignment-frame: decomp id space = 11 distinct cell id(s) in org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit 314f8e1259) / 0 pending-on-worktree (instance path unknown; presence only) / 5 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 6 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_FNTEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-1.contracts-client-adapter-fixtures.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-10.global-view.proof_of_spec.json",
+        "expected": [
+          "F10-AC1",
+          "F10-AC2",
+          "F10-AC3",
+          "F10-AC4",
+          "F10-AC5",
+          "F10-AC6",
+          "F10-AC7",
+          "F10-AC8",
+          "F10-AC9",
+          "F10-AC10",
+          "F10-AC11"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=11 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_FNTEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 8ace3a2596 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_FNTEND\\task-orders\\IRPT_FNTEND.TO-FE-s-10.global-view.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md)\n  alignment-frame: decomp id space = 11 distinct cell id(s) in org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 11/11 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 2 PENDING co-committed (POST-COMMIT: touched by the instance commit e1314eb32b) / 0 pending-on-worktree (instance path unknown; presence only) / 23 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 25 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_FNTEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-10.global-view.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-11.design-conformity-census.proof_of_spec.json",
+        "expected": [
+          "F11-AC1",
+          "F11-AC2",
+          "F11-AC3",
+          "F11-AC4",
+          "F11-AC5",
+          "F11-AC6",
+          "F11-AC7",
+          "F11-AC8",
+          "F11-AC9",
+          "F11-AC10"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=10 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_FNTEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 8ace3a2596 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_FNTEND\\task-orders\\IRPT_FNTEND.TO-FE-s-11.design-conformity-census.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md)\n  alignment-frame: decomp id space = 11 distinct cell id(s) in org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 10/10 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 9 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 74f846345f) / 0 pending-on-worktree (instance path unknown; presence only) / 6 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 15 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 9 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 4 entries; 4 open with a row id; 4 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_FNTEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-11.design-conformity-census.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-2.route-shell-header-search.proof_of_spec.json",
+        "expected": [
+          "F2-AC1",
+          "F2-AC2",
+          "F2-AC3",
+          "F2-AC4",
+          "F2-AC5",
+          "F2-AC6",
+          "F2-AC7",
+          "F2-AC8",
+          "F2-AC9"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=9 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_FNTEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 8ace3a2596 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_FNTEND\\task-orders\\IRPT_FNTEND.TO-FE-s-2.route-shell-header-search.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md)\n  alignment-frame: decomp id space = 11 distinct cell id(s) in org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 9/9 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 1 resolved at pin / 3 PENDING co-committed (POST-COMMIT: touched by the instance commit 62f80c26fb) / 0 pending-on-worktree (instance path unknown; presence only) / 10 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 14 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 1 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_FNTEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-2.route-shell-header-search.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-3.tabs-selection-lifecycle.proof_of_spec.json",
+        "expected": [
+          "F3-AC1",
+          "F3-AC2",
+          "F3-AC3",
+          "F3-AC4",
+          "F3-AC5",
+          "F3-AC6",
+          "F3-AC7",
+          "F3-AC8",
+          "F3-AC9",
+          "F3-AC10"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=10 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_FNTEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 8ace3a2596 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_FNTEND\\task-orders\\IRPT_FNTEND.TO-FE-s-3.tabs-selection-lifecycle.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md)\n  alignment-frame: decomp id space = 11 distinct cell id(s) in org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 10/10 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 1 resolved at pin / 3 PENDING co-committed (POST-COMMIT: touched by the instance commit 4664ba9bd2) / 0 pending-on-worktree (instance path unknown; presence only) / 11 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 15 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 1 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_FNTEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-3.tabs-selection-lifecycle.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-4.render-package-templates-print.proof_of_spec.json",
+        "expected": [
+          "F4-AC1",
+          "F4-AC2",
+          "F4-AC3",
+          "F4-AC4",
+          "F4-AC5",
+          "F4-AC6",
+          "F4-AC7",
+          "F4-AC8",
+          "F4-AC9"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=9 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_FNTEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 8ace3a2596 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_FNTEND\\task-orders\\IRPT_FNTEND.TO-FE-s-4.render-package-templates-print.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md)\n  alignment-frame: decomp id space = 11 distinct cell id(s) in org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 9/9 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 73752f9238) / 0 pending-on-worktree (instance path unknown; presence only) / 16 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 16 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 5 entries; 5 open with a row id; 5 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_FNTEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-4.render-package-templates-print.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-5.reporting-tab.proof_of_spec.json",
+        "expected": [
+          "F5-AC1",
+          "F5-AC2",
+          "F5-AC3",
+          "F5-AC4",
+          "F5-AC5",
+          "F5-AC6",
+          "F5-AC7",
+          "F5-AC8",
+          "F5-AC9"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=9 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_FNTEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 8ace3a2596 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_FNTEND\\task-orders\\IRPT_FNTEND.TO-FE-s-5.reporting-tab.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md)\n  alignment-frame: decomp id space = 11 distinct cell id(s) in org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 9/9 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 1 resolved at pin / 2 PENDING co-committed (POST-COMMIT: touched by the instance commit 3ab6275f9f) / 0 pending-on-worktree (instance path unknown; presence only) / 9 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 12 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 1 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_FNTEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-5.reporting-tab.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/IRPT_FNTEND.TO-FE-s-6.analysis-tab.proof_of_spec.json",
+        "expected": [
+          "F6-AC1",
+          "F6-AC2",
+          "F6-AC3",
+          "F6-AC4",
+          "F6-AC5",
+          "F6-AC6",
+          "F6-AC7",
+          "F6-AC8"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=8 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_FNTEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 8ace3a2596 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_FNTEND\\task-orders\\IRPT_FNTEND.TO-FE-s-6.analysis-tab.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md)\n  alignment-frame: decomp id space = 11 distinct cell id(s) in org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 8/8 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 3 PENDING co-committed (POST-COMMIT: touched by the instance commit 854594d51a) / 0 pending-on-worktree (instance path unknown; presence only) / 14 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 17 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_FNTEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-6.analysis-tab.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-7.holdings-tab.proof_of_spec.json",
+        "expected": [
+          "F7-AC1",
+          "F7-AC2",
+          "F7-AC3",
+          "F7-AC4",
+          "F7-AC5",
+          "F7-AC6",
+          "F7-AC7"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=7 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_FNTEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 8ace3a2596 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_FNTEND\\task-orders\\IRPT_FNTEND.TO-FE-s-7.holdings-tab.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md)\n  alignment-frame: decomp id space = 11 distinct cell id(s) in org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 7/7 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 1 resolved at pin / 2 PENDING co-committed (POST-COMMIT: touched by the instance commit 277a7199ac) / 0 pending-on-worktree (instance path unknown; presence only) / 9 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 12 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 1 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_FNTEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-7.holdings-tab.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-8.narrative-page.proof_of_spec.json",
+        "expected": [
+          "F8-AC1",
+          "F8-AC2",
+          "F8-AC3",
+          "F8-AC4",
+          "F8-AC5",
+          "F8-AC6",
+          "F8-AC7",
+          "F8-AC8",
+          "F8-AC9"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=9 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_FNTEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 8ace3a2596 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_FNTEND\\task-orders\\IRPT_FNTEND.TO-FE-s-8.narrative-page.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md)\n  alignment-frame: decomp id space = 11 distinct cell id(s) in org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 9/9 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 2 PENDING co-committed (POST-COMMIT: touched by the instance commit 24c4b211b2) / 0 pending-on-worktree (instance path unknown; presence only) / 8 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 10 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_FNTEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-8.narrative-page.md)\nVALID (rc=0)\n"
+      },
+      {
+        "path": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-9.export-options-preview.proof_of_spec.json",
+        "expected": [
+          "F9-AC1",
+          "F9-AC2",
+          "F9-AC3",
+          "F9-AC4",
+          "F9-AC5",
+          "F9-AC6",
+          "F9-AC7",
+          "F9-AC8",
+          "F9-AC9",
+          "F9-AC10",
+          "F9-AC11"
+        ],
+        "rc": 0,
+        "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=11 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=IRPT_FNTEND dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 8ace3a2596 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D9\\IRPT\\IRPT_FNTEND\\task-orders\\IRPT_FNTEND.TO-FE-s-9.export-options-preview.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md)\n  alignment-frame: decomp id space = 11 distinct cell id(s) in org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 11/11 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 3 PENDING co-committed (POST-COMMIT: touched by the instance commit 7db8bed41b) / 0 pending-on-worktree (instance path unknown; presence only) / 16 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 19 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for IRPT_FNTEND; mode ENFORCE -- governing TO is under the TREE root (org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-9.export-options-preview.md)\nVALID (rc=0)\n"
+      }
+    ]
+  },
+  "l9_census": {
+    "IRPT_BCKEND": {
+      "items": 71,
+      "dispositioned": 71,
+      "undispositioned": 0,
+      "orders_valid": 19,
+      "original_graduated": 23,
+      "original_dismissed": 48,
+      "cvo_new_findings": 6,
+      "remediations_open": 25,
+      "remediations_closed": 4,
+      "grades": {
+        "PASS": 18,
+        "FAIL": 1
+      },
+      "adjudication": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v1.md",
+      "remediation": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v1.md"
+    },
+    "IRPT_FNTEND": {
+      "items": 41,
+      "dispositioned": 41,
+      "undispositioned": 0,
+      "orders_valid": 11,
+      "original_graduated": 19,
+      "original_dismissed": 22,
+      "cvo_new_findings": 2,
+      "remediations_open": 8,
+      "remediations_closed": 13,
+      "grades": {
+        "NOT_EVALUATED": 4,
+        "FAIL": 5,
+        "PASS": 1
+      },
+      "adjudication": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/adjudications/ADJUDICATION_v1.md",
+      "remediation": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v1.md"
+    }
+  },
+  "review_source_snapshot": "eb6f7068db3da5bc67bfb7567d5a13ccdb32447b",
+  "watcher": {
+    "serial": "3.0.0_SA_CVO",
+    "command": "bash org/surprise_channel/surprise-watch.sh 3.0.0_SA_CVO stream",
+    "processes_observed": [
+      {
+        "pid": 34864,
+        "parent_pid": 31264
+      },
+      {
+        "pid": 20124,
+        "parent_pid": 34864
+      }
+    ],
+    "banner": "parent-tied OFF; wait=no-spawn/15s",
+    "watermark_file": ".tools/state/surprise-watch/3.0.0_SA_CVO.tsv",
+    "rows_seen": {
+      "IRPT_BCKEND": 71,
+      "IRPT_FNTEND": 41
+    },
+    "rows_undispositioned": {
+      "IRPT_BCKEND": 0,
+      "IRPT_FNTEND": 0
+    },
+    "limitation": "Canonical launcher heartbeat derives readiness from bridge-state and has only a launch-time --note; it does not expose a documented dynamic L8 watermark input. This review records the measured watermark without changing or restarting launcher helpers."
+  },
+  "proof_surprise_reference_resolution": {
+    "instances": 30,
+    "references": 72,
+    "unresolved": 0,
+    "results": [
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-s-1.the-directory-runner-and-the-search-resolve-handler.proof_of_spec.json@5155aedbb1ec80297dc91deaaca92c1bd74c35d7",
+        "refs": [
+          "IRPT_BCKEND-S4",
+          "IRPT_BCKEND-W2-S1",
+          "IRPT_BCKEND-W2-S2",
+          "IRPT_BCKEND-W2-S3",
+          "IRPT_BCKEND-W2-S4",
+          "IRPT_BCKEND-W2-S5",
+          "IRPT_BCKEND-W2-S6"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-s-10.section-extraction-certified-against-a-paired-pdf.proof_of_spec.json@f60d0ff103bbdf07430a974384204a40b88e7c4a",
+        "refs": [
+          "IRPT_BCKEND-W3-S10",
+          "IRPT_BCKEND-W3-S11",
+          "IRPT_BCKEND-W3-S12"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-s-11.performance-adapters-black-diamond-orion-normalizer.proof_of_spec.json@116da64695d004be888d210e495abdadb07ef621",
+        "refs": [
+          "IRPT_BCKEND-W4-S1",
+          "IRPT_BCKEND-W4-S2",
+          "IRPT_BCKEND-W4-S3",
+          "IRPT_BCKEND-W4-S4"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-s-12.holdings-snapshot-three-partner-joins-reconciled.proof_of_spec.json@2c67545daf449937b75cd6cea001c62d5d1134cb",
+        "refs": [
+          "IRPT_BCKEND-W1-S7",
+          "IRPT_BCKEND-W1-S8"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-s-13.narrative-events-dated-evidence-contemporaneity.proof_of_spec.json@1555b178930fb4a47d0b275a3337491b7a5cadab",
+        "refs": [
+          "IRPT_BCKEND-W4-S5",
+          "IRPT_BCKEND-W4-S6",
+          "IRPT_BCKEND-W4-S7",
+          "IRPT_BCKEND-W4-S8"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-s-14.export-bundle-freeze-render-worker-receipt.proof_of_spec.json@43331be3f1f432f53c5c10557b6110b0978317c1",
+        "refs": [
+          "IRPT_BCKEND-W4-S10",
+          "IRPT_BCKEND-W4-S11",
+          "IRPT_BCKEND-W4-S12",
+          "IRPT_BCKEND-W4-S13",
+          "IRPT_BCKEND-W4-S9"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-s-15.scoped-routes-opal-principal-and-the-cloudfront-behavior.proof_of_spec.json@a7659fa6affc70c6cb052f3347312c1fa5b5efd9",
+        "refs": [
+          "IRPT_BCKEND-W2-S12"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-s-16.operations-status-envelope-and-per-tenant-recovery.proof_of_spec.json@f8176b2c8eb4f59683fd6676751bd8b98895b20b",
+        "refs": [
+          "IRPT_BCKEND-W1-S9"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-s-17.tenant-scoped-storage-keys-and-queues.proof_of_spec.json@5d0003fc499fe35ea1381884ca66a53f5d26468d",
+        "refs": [
+          "IRPT_BCKEND-W1-S3",
+          "IRPT_BCKEND-W1-S4",
+          "IRPT_BCKEND-W1-S5"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-s-18.the-foundation-contracts-homes-manifest-roots.proof_of_spec.json@c4214773c9d84fa11f5641d3a28f9f503e784692",
+        "refs": [
+          "IRPT_BCKEND-W1-S1",
+          "IRPT_BCKEND-W1-S2"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-s-2.resolved-scope-from-the-validators-headers.proof_of_spec.json@9b364959ac9f6c58af209319cd4f573b8ef8d3d6",
+        "refs": [
+          "IRPT_BCKEND-W2-S7",
+          "IRPT_BCKEND-W2-S8"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-s-3.the-enforcement-library-reauthorize-before-serve.proof_of_spec.json@81d8ed0bb34d50976b7e64b9bc9801b3e0e8e10e",
+        "refs": [
+          "IRPT_BCKEND-W2-S10",
+          "IRPT_BCKEND-W2-S9"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-s-4.directory-freshness-driven-on-a-controlled-clock.proof_of_spec.json@ccd36eb434dd171f56bac202f28c2eaaa3af13e3",
+        "refs": [
+          "IRPT_BCKEND-W2-S11"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-s-5.firm-destination-policy-and-the-ingestion-gate.proof_of_spec.json@6de109da7dbfbda9d8705b6d16a3d484cb9b8048",
+        "refs": [
+          "IRPT_BCKEND-W1-S6"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-s-6.mailbox-intake-durable-checkpointed-idempotent.proof_of_spec.json@2857f226b75d938399f2c1c869b6a8deabc5a335",
+        "refs": [
+          "IRPT_BCKEND-W3-S3",
+          "IRPT_BCKEND-W3-S4"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-s-7.holdings-parse-validate-and-the-correction-state.proof_of_spec.json@9d6aab3855611cfd9125ea1b849bf2983bb96d44",
+        "refs": [
+          "IRPT_BCKEND-W3-S5",
+          "IRPT_BCKEND-W3-S6"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-s-8.the-ycharts-session-library-and-runner-host.proof_of_spec.json@b1b3ef04b4b21d17eae19dacdb1bcae32c33fe9b",
+        "refs": [
+          "IRPT_BCKEND-W3-S1",
+          "IRPT_BCKEND-W3-S2"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-s-9.the-ycharts-generation-chain-as-an-opal-async-job.proof_of_spec.json@183d5241d05155424f0a40c636663980121d0154",
+        "refs": [
+          "IRPT_BCKEND-W3-S7",
+          "IRPT_BCKEND-W3-S8",
+          "IRPT_BCKEND-W3-S9"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-sb-3.the-replay-battery-across-every-deployed-route.proof_of_spec.json@cc376392bab41e762581f5712ab01e7dcbd6a010",
+        "refs": [
+          "IRPT_BCKEND-W1-S10"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-1.contracts-client-adapter-fixtures.proof_of_spec.json@314f8e1259ed0cbdf1238b8ce81cb42151dd0c5f",
+        "refs": [
+          "IRPT_FNTEND-W1-S1",
+          "IRPT_FNTEND-W1-S2"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-10.global-view.proof_of_spec.json@e1314eb32b337a8e4602190fa30ce1ce88a0d316",
+        "refs": [
+          "IRPT_FNTEND-W1-S10",
+          "IRPT_FNTEND-W1-S9"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-11.design-conformity-census.proof_of_spec.json@74f846345fe1e332d3050b5035a2f8ce44acd0fb",
+        "refs": [
+          "IRPT_FNTEND-W1-S11",
+          "IRPT_FNTEND-W1-S12",
+          "IRPT_FNTEND-W1-S13",
+          "IRPT_FNTEND-W1-S14"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-2.route-shell-header-search.proof_of_spec.json@62f80c26fb032223648994f9755cbe06f28ddbc5",
+        "refs": [
+          "IRPT_FNTEND-W1-S3",
+          "IRPT_FNTEND-W1-S4"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-3.tabs-selection-lifecycle.proof_of_spec.json@4664ba9bd2af0f52013fb2e0c044a84a8132adee",
+        "refs": [
+          "IRPT_FNTEND-W1-S5",
+          "IRPT_FNTEND-W1-S6"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-4.render-package-templates-print.proof_of_spec.json@73752f923887e071c8dc9dcf1d06306f80098257",
+        "refs": [
+          "IRPT_FNTEND-W2-S1",
+          "IRPT_FNTEND-W2-S2",
+          "IRPT_FNTEND-W2-S3",
+          "IRPT_FNTEND-W2-S4",
+          "IRPT_FNTEND-W2-S5"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-5.reporting-tab.proof_of_spec.json@3ab6275f9f9aba603571e87c573e3ed21fc1eb98",
+        "refs": [
+          "IRPT_FNTEND-W1-S7"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/IRPT_FNTEND.TO-FE-s-6.analysis-tab.proof_of_spec.json@854594d51a6ba1accb25d8d965b1c188ea3121dd",
+        "refs": [
+          "IRPT_FNTEND-W3-S1",
+          "IRPT_FNTEND-W3-S2"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-7.holdings-tab.proof_of_spec.json@277a7199ac4cccc82977dd33dd07f3bedcf89076",
+        "refs": [
+          "IRPT_FNTEND-W4-S1",
+          "IRPT_FNTEND-W4-S2"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-8.narrative-page.proof_of_spec.json@24c4b211b2b296e21a046d05353a852c5e40f8d8",
+        "refs": [
+          "IRPT_FNTEND-W2-S6"
+        ],
+        "unresolved": []
+      },
+      {
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-9.export-options-preview.proof_of_spec.json@7db8bed41ba4ce4e9739d15ce3bc13e959848bad",
+        "refs": [
+          "IRPT_FNTEND-W1-S8"
+        ],
+        "unresolved": []
+      }
+    ]
+  },
+  "additional_primary_sources": [
+    {
+      "path": "infra/aws/lambda/investor-reporting/directory/handler.py",
+      "repository": "workspace",
+      "pin": "36541971074c7e7bb9b3925a7181ddcffa9f6bac",
+      "sha256": "c940745d0a7c9d50e050cfbb9f626ddbceaa8dea966bf7b87c3598b265410c04"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/directory/refresh.py",
+      "repository": "workspace",
+      "pin": "24f6c0e88a79b89becac8f8d848a822785d2c0ee",
+      "sha256": "ec9bba30cfece380574d05792ed1dcb02ac100994ce5d2616f4693372eb5be18"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/intake/parse.py",
+      "repository": "workspace",
+      "pin": "5708161e8ebc825e52798656dc9201cb4d3ca95e",
+      "sha256": "7c00c4ebfbbdb70b6ecc89d5c97b39d5876c71f52fca7979c6bfde91930f6c6f"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/intake/fixtures/holdings/FIXTURE_MANIFEST.json",
+      "repository": "workspace",
+      "pin": "5708161e8ebc825e52798656dc9201cb4d3ca95e",
+      "sha256": "5e0ce34af0b61c26f84095e169650170c9fd6f3e0f416b8ff403f48a176364d1"
+    },
+    {
+      "path": ".claude/agents/worker.md",
+      "repository": "workspace",
+      "pin": "ea764aecc6c71eb30b89d2ca79739f1f56a610c6",
+      "sha256": "dbad76a3863ef29042c3e60bd5db8e9ddac0d529381f0c519060035295fd271b"
+    },
+    {
+      "path": "portal/src/pages/InvestorReporting/export/AppliedBranding.tsx",
+      "repository": "portal",
+      "pin": "ffdae2605c3dde2ac62e89bd68b206ea0b05bab3",
+      "sha256": "ebefe988cad569d99527ed2a6de049e1fc9dfef1e388c9cad369aa10b46ed654"
+    },
+    {
+      "path": "portal/src/pages/InvestorReporting/export/ReceiptPanel.tsx",
+      "repository": "portal",
+      "pin": "5d5f366d3e4b4b9d431a4ffaa542b7d011c71d3c",
+      "sha256": "5388b51d313ce7cabec3e0fec39d75352f546a758d80ae06ef27be64439e78d7"
+    },
+    {
+      "path": "portal/src/pages/InvestorReporting/export/ExportModal.tsx",
+      "repository": "portal",
+      "pin": "5d5f366d3e4b4b9d431a4ffaa542b7d011c71d3c",
+      "sha256": "286653c8715811e6d1568cfc024b19a9aa60a682812482f456fc9f4162bedcf9"
+    },
+    {
+      "path": "portal/src/pages/InvestorReporting/global/useFirmContext.ts",
+      "repository": "portal",
+      "pin": "ffdae2605c3dde2ac62e89bd68b206ea0b05bab3",
+      "sha256": "8af316035d439720c00c2331ef00e3131e1306e76e6c78ef5b35e8eb5cf84090"
+    },
+    {
+      "path": "portal/src/pages/InvestorReporting/render/brand.tokens.json",
+      "repository": "portal",
+      "pin": "7f6236cf476ed5ca35074c65ab0d0e38de82bdbb",
+      "sha256": "9f68f2d7e9dae0c315f433e353b1c381c74e2d048be903fe4c7c553e8dda233f"
+    },
+    {
+      "path": "portal/src/lib/firmAccess.ts",
+      "repository": "portal",
+      "pin": "5907cbca98eb091124e38a32debefa355c1d4376",
+      "sha256": "dd15092f203e09c53dad8b02b6b441874dd48b119000c46ae35acc3bfc1c6c59"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IB-sb-3_SB3-AC1_battery_output.txt",
+      "repository": "workspace",
+      "pin": "cc376392bab41e762581f5712ab01e7dcbd6a010",
+      "sha256": "591d53f0638e64400b1bd27b11838ef92fc466f784d21d6339864c47edbe8802"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IB-s-10_S10-AC1_battery_output.txt",
+      "repository": "workspace",
+      "pin": "f60d0ff103bbdf07430a974384204a40b88e7c4a",
+      "sha256": "271966cf5e58a96955f57ee56c3e61d2d417f7819c0a3eacae1ce01a8aaffc86"
+    }
+  ],
+  "brand_source": {
+    "path": "deck_generation/brand_spec/brand.json",
+    "gitignored": true,
+    "sha256": "378cd4d8a8d84623f8fd148263f6e40009f8d0572d1b97e543ae27988ffac81f",
+    "font_family": "Lato"
+  },
+  "date_holdout_correction": {
+    "source": "IRPT_BCKEND-W3-S11 grounding and S10-AC1",
+    "comparison": {
+      "dated": 47,
+      "undated": 34,
+      "total": 81
+    },
+    "multicomp": {
+      "dated": 57,
+      "undated": 51,
+      "total": 108
+    },
+    "note": "The original row one_line misstates 57 emitted for Comparison; use the explicit date-claim census."
+  },
+  "final_artifact_validation": {
+    "counts": {
+      "IRPT_BCKEND": {
+        "checked": 71,
+        "judgments": 19,
+        "grades": {
+          "PASS": 18,
+          "FAIL": 1
+        },
+        "open_remediations": 25,
+        "closed_remediations": 4,
+        "schema_errors": 0
+      },
+      "IRPT_FNTEND": {
+        "checked": 41,
+        "judgments": 10,
+        "grades": {
+          "NOT_EVALUATED": 4,
+          "FAIL": 5,
+          "PASS": 1
+        },
+        "open_remediations": 8,
+        "closed_remediations": 13,
+        "schema_errors": 0
+      }
+    },
+    "bound_input_drift": [],
+    "portal_reviewed_path_drift": [],
+    "proof_surprise_references_unresolved": 0
+  }
+}

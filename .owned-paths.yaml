@@ -2002,6 +2002,10 @@ paths:
 
   ".tools/**":
     lane: ANY
+
+  "design/**":
+    lane: ANY
+    note: "The workspace DESIGN repository (brand captures, DESIGN.md drafts, design tokens) -- D13 Design (LAPTOP), Andrew-direct 2026-09-11 at the 0.1.1_RD_MarketPerformance terminal. Had NO path rule until 2026-09-11 (lane UNDEFINED; d4b20a28ba needed an audited BASE_EXEC override to land). Not a served surface: writers are scoped by the D13 project's task orders once cut; until then ANY, like .tools/**. 1.0.0_SA_CTO 2026-09-11 on 0.1.1_RD_MarketPerformance 95899 gate gap B."
     note: "Shared .tools/ — any agent may contribute tooling (in PATH via .bashrc)"
 
   "ajb.ps1":

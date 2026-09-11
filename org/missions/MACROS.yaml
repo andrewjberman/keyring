@@ -61,3 +61,32 @@ directives:
     macros: [NFRA]
     ratification: "RATIFIED org/tier0_exec/0.0.0_AB_MSTR/deliverables/MACRO_ENUM_RULE24_D12_20260903.md 2026-09-03 -- Andrew APPROVED [NFRA] FOR D12 IN ADVANCE, verbatim: 'All recs approved, ratify D0 and D8' (~01:5xZ at the laptop COO terminal), answering an /open-calls card 3 that read 'Ratify D12s enum when MSTR~Zs proposal lands? Expected [NFRA]' with the rec '[NFRA], one word when the record is in front of you'; relayed by 2.0.0_SA_COO standing in for 0.0.0_AB_MSTR at bus id e8421d1a-4e33-4b7d-a6d3-0558bab6a752, whose instruction was to cite BOTH records and that no further word is needed for [NFRA]. ANY WIDER D12 LIST NEEDS A FRESH WORD. Record authored by 0.0.0_AB_MSTR~Z as site-Z register owner (lane TREE_MACROS)."
     census: "3 of 3 rows with directive D12, read 2026-09-03 ~02:0xZ over 354 flat rows parsed of 354 files, 0 parse errors. NFRA_SECURITY202609 carries macro_code NFRA and conforms. D12_PHONE_OTP_ALL_AWS and PLATFORM_OPS_USERMGMT carry PLATFORM_OPS, 12 characters, which CANNOT match the ratified macro grammar ^[A-Z]{4}$ -- not a macro this enum declines to list, not a macro at all; both are pre-macro flat rows outside the domain (spec s.8, prospective only). FORWARD CONSEQUENCE: neither can enter the D12 tree while it carries PLATFORM_OPS; a tree home needs a ratified 4-char macro first. SEPARATELY, NFRA_SECURITY202609 is barred by refusal R1 -- SECURITY202609 is 14 chars against ^[A-Z]{4}_[A-Z0-9]{4,12}$ -- an INDEPENDENT constraint, recorded because a reader checking only the macro would call it tree-ready. UNCOVERED MEMBER NAMED (postulate i): D12s remaining named scope (remembered-device policy, onboarding redesign, front-end admin UI, partner-admin delegated user-add) is platform/user-management, which NFRA does NOT describe; not yet in the domain because no such project is entering the tree, and the first that does needs a new macro, a new Rule 24 record and a fresh word. || RESOLVED 2026-09-03 ~06:5xZ, Andrew-direct at the 1.0.0_SA_CTO~Z terminal, verbatim 'Call it NFRA_OPSEC202609': the D12 member formerly NFRA_SECURITY202609 is NFRA_OPSEC202609 (macro NFRA, name OPSEC202609 = 11 chars, conforms to ^[A-Z]{4}_[A-Z0-9]{4,12}$) and entered the tree at org/missions/D12/NFRA/NFRA_OPSEC202609/ the same hour (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_065xZ_CTOZ_CALL_IT_NFRA_OPSEC202609.md). The R1 sentence above is a measurement at its vintage and stands as written; the two PLATFORM_OPS rows are unchanged. || VINTAGE POINTER ADDED 2026-09-10 by 0.0.0_AB_MSTR (file owner), surfaced by 1.0.0_SA_CTO. THE PROJECT-CODE UPPER BOUND HAS MOVED SINCE THIS CENSUS WAS TAKEN. This line cites ^[A-Z]{4}_[A-Z0-9]{4,12}$; org/standards/PROJECT_TREE.contract.json now carries ^[A-Z]{4}_[A-Z0-9]{3,18}$, WIDENED 12 -> 18 on 2026-09-09T19:29Z by 1.0.0_SA_CTO~Z because Andrew ratified NFRA_IAMROLES202609 (tail 14) and a bound of 12 could not express it. THIS CENSUS IS NOT CORRECTED AND ITS R1 SENTENCE STILL STANDS: it was a true measurement on 2026-09-03, six days before the widening, and rewriting it would destroy the record of why NFRA_SECURITY202609 was refused at the time. IT IS A STALE CITATION, NOT A WRONG REASON. ⛔ FORWARD: a reader checking a NEW code must read the CONTRACT, never this line -- the tool compiles its regexes from the contract (missions-tree-index.py:88-91) and carries none of its own, so a bound quoted from prose can refuse a code the gate would admit. The lower bound also differs (4 here, 3 in the contract) and that change is UNDOCUMENTED in the contract's note; not investigated here."
+  D13:
+    macros: [DSGN]
+    ratification: "RATIFIED by Andrew-direct 2026-09-11 ~07:1xZ at the 0.0.0_AB_MSTR terminal, VERBATIM:
+      'First macro will be DSGN, obviously', with the directive's scope given in the same breath one message
+      later, VERBATIM: 'It is design system, branding, aesthetic frontend'. Record org/tier0/ledger/LD-0552.md.
+      HIS WORD IS THE RATIFICATION AND NO SECOND WORD IS NEEDED -- this string cites it rather than a
+      deliverable authored after the fact, which is the D9 shape (his word preceded that record too).
+      Rule 24 (iv) STATE COHERENCE, the value this flip does NOT move: it moves D13 ONLY. It does not
+      touch D13's placement (LAPTOP, and that is 0.0.0_AB_MSTR's DEFAULT per LD-0551, still not his
+      ruling), it mints no project, it writes no PRD, and it grants nothing to any seat."
+    census: "1 candidate over a printed denominator, and the denominator is the whole corpus rather than a
+      chosen domain. comp-find '\bDSGN\b' -i UNSCOPED returned 0 hits across 167,325 files scanned
+      [corpus=all], with 104,647 ephemeral-floor, 4,444 binary and 11 unreadable files DISCLOSED AS NOT
+      COVERED by that zero. So DSGN collides with nothing this instrument can see, and the three
+      uncovered classes are named rather than silently folded into a clean number. Grammar read from
+      org/standards/PROJECT_TREE.contract.json levels[1].regex at HEAD and never from prose: ^[A-Z]{4}$;
+      DSGN conforms. IN DOMAIN 0 of 0 -- D13 has NO members (DIRECTIVES.yaml D13.members.projects is empty
+      and directives-check flags it NO-MEMBERS), so this enum governs a population that does not yet exist.
+      Rule 24 (i) UNCOVERED MEMBER, hunted by SUBTRACTION from that empty population rather than by recall:
+      there is no member to be uncovered, and the first registrant under D13 is therefore the FIRST TEST of
+      whether [DSGN] is wide enough. If his 'design system, branding, aesthetic frontend' later cuts into
+      projects that do not all sit under one macro, this enum RE-OPENS with a fresh word and its own record;
+      it is not widened silently."
+    alternative_named: "[DSGN, BRND] -- considered on the scope word alone ('branding' is named separately
+      from 'design system') and REJECTED here. He said FIRST macro will be DSGN, which is a statement about
+      ORDER and leaves room for a second, and an enum is a measurement of what is entering rather than a
+      wish list -- nothing is entering under BRND today and minting a macro no project uses is the
+      self-granting shape this file already refuses at D8. BRND costs one word and one record when a brand
+      project actually appears."

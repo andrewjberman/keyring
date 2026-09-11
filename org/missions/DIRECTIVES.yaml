@@ -507,13 +507,12 @@ directives:
       member (LD-0498, LD-0502), so a move is one row and not N."
     members:
       subgroups: []
-      projects: []
-      members_note: "EMPTY AT MINT and that is a STATE, not a gap. directives-check will flag NO-MEMBERS,
-        which is the same flag D10 has carried since it was minted. A project enters here by the canonical
-        route -- L1 brief, L2 endpoint, L3 register -- and the first registrant also needs a ratified macro
-        in MACROS.yaml directives.D13.macros, which does NOT yet exist. Until that macro is ratified by
-        Andrew no tree project can legally register under D13 (PROJECT_TREE.contract.json refusal R2), and
-        that is a real bar rather than a formality."
+      projects: [DSGN_REBRND]
+      members_note: "First member registered 2026-09-11 by 1.0.0_SA_CTO at L3 (Rule 27 L3 clause: the CTO writes every
+        carrier itself): DSGN_REBRND (Portal Visual Elevation; minted DSGN_PORTALVIS at L3, renamed the same hour on Andrew's word 'DSGN_REBRND (what i would call this project)'), macro DSGN ratified on Andrew's word (LD-0552), lead
+        2.0.0_SA_COO~D (promoted from 0.1.1_RD_MarketPerformance on his word ~07:5xZ). Brief
+        docs/briefs/portal-visual-elevation-brief-20260911.md; endpoint
+        org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_D13_PORTAL_VISUAL_ELEVATION_20260911.md."
     stance: "MINTED BY ANDREW 2026-09-11 ~07:0xZ at the 0.0.0_AB_MSTR terminal, VERBATIM and entire:
       'I need a new directive, D13 which will be Design. Get that into directives.yaml'. That is the whole
       of his word; everything else in this row is the register owner supplying REQUIRED FIELDS and is
@@ -521,5 +520,11 @@ directives:
       directive's scope, its DONE definition, its macro, its first project, and whether Design means the
       portal's visual system, a design-system package, brand, or the estate's own report surfaces. NO PRD
       EXISTS -- the `directive` path above is the canonical slot the L1/L2 owners will write into, and
-      directives-check reports prd_exists false for it, which is legal and expected at mint. THE NEXT ACT
-      IS ANDREW'S OR THE CRO'S, not this seat's: a directive with no scope cannot be briefed."
+      directives-check reports prd_exists false for it, which is legal and expected at mint. SCOPE GIVEN BY HIM 2026-09-11 ~07:1xZ, one message after the mint and quoted VERBATIM AND
+      ENTIRE: 'It is design system, branding, aesthetic frontend'. That closes the scope gap this row
+      opened at mint and it is HIS WORDS, not a paraphrase. FIRST MACRO RATIFIED IN THE SAME BREATH,
+      VERBATIM: 'First macro will be DSGN, obviously' -- MACROS.yaml directives.D13.macros [DSGN],
+      record LD-0552. STILL NOT RULED BY HIM AND STILL NOT INFERRED HERE: the DONE definition, the
+      first project, and whether those three words are three projects or one. NO PRD EXISTS -- the
+      `directive` path above is the slot the L1/L2 owners write into, and directives-check reports
+      prd_exists false, which is legal at this stage. THE NEXT ACT IS 4.0.0_SA_CRO's L1 brief."
