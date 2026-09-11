@@ -1,0 +1,11 @@
+{
+  "prd": "AMGT_RESAPP_PRD.md",
+  "prd_version": "v0.4",
+  "prd_pin": "b9723b43e54c75244bed08710ccf668c4d5e71c4",
+  "half": "brief",
+  "half_hash": "e6d845289611605d976f43bef9b9e202f9939f0b6f79eccd95c75248b136a665",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/AMGT_RESAPP_v04_BRIEF_HALF_RESIGN_REVIEW_20260911_Z.md@680be1c4ad",
+  "signed_by": "4.0.0_SA_CRO~Z",
+  "signed_at": "2026-09-11T16:16:11Z"
+}
