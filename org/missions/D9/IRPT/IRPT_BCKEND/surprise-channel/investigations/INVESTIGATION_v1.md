@@ -1709,6 +1709,156 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Issuer amendment @812bbec0e9: every handler this cell ships is wrapped by _authz.guard(); IB-s-3 S3-AC2: whether the wrapper can be bypassed by a handler that forgets to use it -- and how a reader would detect that.",
     "world_is": "The detector IB-s-3 shipped found what it was built to find: three handlers written before the route table existed were mapped to routes after the fact and never revisited. Measured, not repaired, at the last cell of the round.",
     "notes": "The drain is closed: every worktree removed, every branch merged, HEAD f8860a4a4b. The drain-end read to the CTO follows this commit; the slug is the CVO's."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S13",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T13:09:09Z",
+    "one_line": "THE RULING NAMED ONE LEAKY KEY CONSTRUCTOR; THE CENSUS FOUND TWO, AND THE SECOND IS THE WORSE ONE. CTO ruling 4 closes row W3-S12, which named `_keys.s3_evidence_key` for accepting a client display name as a path segment. Censusing EVERY public constructor against all four negatives -- which is what the face's own bound 'verify all constructors, not one' asks for -- found SIX accepted pairs of twenty-four at round-1 HEAD, not two: s3_evidence_key accepted a display name and a raw upstream key, and `quarantine_key` accepted ALL FOUR, including an e-mail address and a firm token. QUARANTINE IS THE WORSE OF THE TWO TO HAVE LEFT OPEN, and the reason is what quarantine IS: a message is written there precisely when its origin could NOT be verified, so its components are the least trusted input this system handles -- an unverified sender's own text, going into a durable S3 key that appears in access logs, CloudTrail, Inventory and every ListObjects response. quarantine_key also carries NO firm in its path by design, so nothing else in its construction constrains what a segment may be. FIXED IN THIS CELL: both constructors now run the same positive allowlist of segment shapes and the twelve round-1 keys still build byte-identically. THE POINT OF THE ROW IS THE METHOD, NOT THE FIX: had this cell verified the one constructor the ruling named, quarantine_key would have passed untouched and the round would have recorded W3-S12 as closed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~3 -- DISARMED SAME TURN for both constructors: _check_segment now admits a segment only by declared SHAPE (digits, ISO date, 64-hex fingerprint, namespaced opaque id, enum token, structural word, file name) and then refuses a firm token, and the battery drives all 7 constructors x 4 negatives with a 0-occurrence census over 7 renderings. WHAT IS NOT MINE: whether any quarantine key ALREADY WRITTEN carries a name-shaped segment -- the face's bound is that no key already written is renamed by this cell, so the existing objects are listed for the CVO at L9 and moving them is a served-surface act for 1.0.0_SA_CTO at L10.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured at round-1 HEAD (7478fdf144) under this serial, 7 constructors x 4 negatives: s3_evidence_key ACCEPTED 'Whitfield Family' -> firms/49financial/generations/Whitfield Family/attempts/0/x.json and ACCEPTED 'AAMkAGI2THVSAAA='; quarantine_key ACCEPTED all four -> quarantine/Whitfield Family/msg.json, quarantine/advisor@49financial.com/msg.json, quarantine/AAMkAGI2THVSAAA=/msg.json, quarantine/49financial/msg.json",
+        "keys.py at round-1 HEAD, quarantine_key body: the only per-segment check is `if not isinstance(seg, str) or not seg or '/' in seg` -- no shape ladder and no firm-token check at all",
+        "Its own docstring says quarantine 'carries NO firm in its path ON PURPOSE: a message reaches quarantine precisely when its firm could not be established' -- which is the same sentence that makes the input untrusted",
+        "After the fix: 27 of 28 trials REFUSED with 0 occurrences of the refused value across str(), repr(), '%s', '%r', an f-string, exc.args and the public log line; the 28th is TenantBinding's tenant position, where a firm id belongs",
+        "battery_ib_rt_4.py arm (a) prints the denominator as '11 public callables - 4 readers = 7 constructors', read off the module by AST rather than from a written list"
+      ]
+    },
+    "spec_asserts": "CTO ruling 4 (ROUND_ANALYSIS.round1.md @0d57ceb2f9): 'Typed, issued identifiers at every key-builder boundary and the name/email controls rejected (W3-S12)', and the face's bound 'Verify all constructors, not one (the CVO's remedy): the census of public builders IS the denominator of arm (a)'.",
+    "world_is": "Two public constructors accepted a display name, and one of them -- quarantine_key, the one handling the least trusted input in the system -- accepted an e-mail address, a raw upstream key and a firm token as well. The ruling and the row it closes named only the other one.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The CVO's remedy ('verify all constructors, not one') is what found this, and it is worth noting that the remedy was written before anyone knew there was a second one. A fix scoped to the named function would have been indistinguishable from a complete one in every artifact this round produces."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S14",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T13:09:09Z",
+    "one_line": "THE EXPORT DOWNLOAD ROUTE IS DEAD IN THE DEPLOYED FUNCTION: IT IMPORTS A MODULE THE ZIP DOES NOT CONTAIN. infra/aws/lambda/investor-reporting/export/download.py does `import enforce as _authz` at MODULE level, and `enforce.py` has never been in irpt-export-render's packaged file list -- verified at round-1 HEAD 7478fdf144, where the list is the nine members assets/bundle/download/handler/receipt/render plus three fixtures. export/handler.py imports `download` LAZILY (its header says so and gives the reason), so the function imports fine at cold start and fails only when the download path is first exercised -- which is why nothing has noticed. FOUND BY AN IMPORT-CLOSURE CHECK, not by reading: each built zip is extracted and every packaged module imported with the worktree EXCLUDED from sys.path, which is the /var/task layout. THE REASON THAT CHECK EXISTS AT ALL is the point: CodeSha256 equality proves the bytes AWS serves are the bytes we built and says NOTHING about whether they can be imported, so a function missing one shared module passes CodeSha256, passes the post-apply plan, passes the ledger, and returns an error to every caller.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO at L10 with 2.0.0_SA_COO~B to route, and NOT this cell: adding enforce.py (and its own imports) to irpt-export-render's zip would take a code path from dead to live, which is a served-surface behaviour change CTO ruling 4 did not order, and the export root cannot be applied by this cell in any case (row W3-S17). What this cell contributes is the INSTRUMENT: _authz/error_path_census.py's sibling check lives in .scratch here, but the battery runs it in a clean subprocess every run and prints N of N, so the next cell to touch any of these functions inherits the measurement.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "build_and_verify_zips.py over the six impacted functions: 'irpt-export-render 33531 B 10 members import 6 of 7 OPEN' with 'IMPORT FAILED download ModuleNotFoundError: No module named enforce'; the other five read CLOSED",
+        "git show 7478fdf144:infra/aws/lambda/investor-reporting/export/download.py line 31 -- 'import enforce as _authz  # noqa: E402', at module level",
+        "git show 7478fdf144:infra/aws/lambda/ci/lambda-source-map.json -- irpt-export-render files = ['assets.py','bundle.py','download.py','handler.py','receipt.py','render.py', 3 fixtures]; 'enforce.py' in that list: False",
+        "export/handler.py's own header: '`_authz`, `_keys` AND `download` ARE IMPORTED LAZILY, INSIDE THE FUNCTIONS THAT USE THEM. The deployed zip is closed over THIS directory' -- correct about the zip, and the consequence for download.py was not followed through",
+        "git status shows download.py is untouched by this cell, so the state is pre-existing and not introduced here"
+      ]
+    },
+    "spec_asserts": "The PRD's B14/B15 rows and IB-s-14's own deliverable treat the signed-download route as a shipped capability of irpt-export-render, and the estate's CodeSha256 verification treats a served-bytes match as evidence the function is deployed correctly.",
+    "world_is": "The deployed irpt-export-render cannot execute its download route: the first call into it raises ModuleNotFoundError for `enforce`, because that module is not in the zip. Every deploy-time check the estate runs -- CodeSha256, the post-apply plan, the ledger -- passes on this function.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The general lesson is worth more than this instance: an import-closure check is cheap, and it is the only rung that can distinguish 'the right bytes are deployed' from 'the deployed bytes work'. It also caught a FALSE GREEN in this cell's own battery, which ran the same check in-process and reported 6 of 6 because a leftover sys.modules entry satisfied the import -- a saved and restored sys.modules is not isolation, only a new interpreter is."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S15",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T13:09:09Z",
+    "one_line": "ARM (c)'s DENOMINATOR IS EXCEPT HANDLERS, AND A PUBLIC REASON CAN BE BUILT WITHOUT ONE. The face's arm (c) says 'census the handler error paths ... str(exc) appears in 0 of them (AST census)', and the census built for it reads `except` blocks -- 49 of them across 25 modules, of which 10 rendered the caught exception. That is where the ruling pointed and it is where the leaks were. It is NOT the same set as 'every path that builds a public reason': directory/handler.py returned `\"ERROR: unsupported op \" + repr(op) + \" (search|resolve)\"` on an ORDINARY RETURN, outside any except block, reflecting caller-controlled input straight back into a public reason. The AST census cannot see it and never could. It surfaced only because a directory test asserting the old prose contract failed against the neighbouring change and the branch was read while fixing it. SO THE ARM IS SOUND AND ITS DENOMINATOR IS NARROWER THAN ITS NAME: '0 of 49 except handlers render the exception' is true and is not the same claim as 'no public reason carries caller data'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~3 for the ONE instance found -- the branch now returns the code UNSUPPORTED_OPERATION with the supported set as a constant, and the directory test was STRENGTHENED rather than relaxed: it now asserts the caller's own value does not appear in the response at all. THE DENOMINATOR ITSELF is the issuer's and the CVO's: whether arm (c) should be re-cut over 'every expression that reaches a public reason field' -- which is a dataflow question, not an except-handler question, and a much larger instrument -- is 2.0.0_SA_COO~B's to scope and 3.0.0_SA_CVO's to grade at L9. This cell did not widen the arm on its own authority.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "_authz/error_path_census.py census over the six families: modules 25, except handlers 49, handlers binding the exception 18, handlers rendering it 10 before the fix and 0 after",
+        "directory/handler.py at 7478fdf144: 'return {\"ok\": False, \"op\": op, \"result\": None, \"reason\": \"ERROR: unsupported op \" + repr(op) + \" (search|resolve)\"}' -- an ordinary return, no except block, `op` taken from the event",
+        "The same file's `_bucket_for` raised RuntimeError whose message embedded str(firm_token), also caller-controlled, reaching the response through the except block's str(exc)[:200]",
+        "Both are now codes from the closed PUBLIC_REASONS enum; the directory tests assert 'delete' not in out['reason'] and 'stranger' not in json.dumps(out)"
+      ]
+    },
+    "spec_asserts": "Arm (c) of RT4-AC1: 'Census the handler error paths (denominator printed); each returns a public reason from the closed enum and a correlation id; str(exc) appears in 0 of them (AST census).'",
+    "world_is": "The census's population is `except` handlers. At least one public reason was built on a normal return path from caller-controlled input, and no AST census of except handlers can include it.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed because the number arm (c) prints is going to be read as 'no error path leaks', and it means something narrower. A denominator certifies the sweep and not the set -- the sweep here is except handlers, and the set the reader cares about is public reasons."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S16",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T13:09:09Z",
+    "one_line": "THE RULING SAYS TWELVE %r MESSAGE SITES; THE MODULE CARRIED EIGHTEEN PLACEHOLDERS ACROSS SIXTEEN CONSTRUCTION SITES. CTO ruling 4 and the L5 note both say 'twelve %r message sites become zero'. Measured by AST over _keys/keys.py at round-1 HEAD: 24 `KeyComponentRefused` construction sites, 16 of which interpolate at least one %r, carrying 18 placeholders in total (one site carries two: 'parameter %r value %r'), plus 8 more %r elsewhere in the module. The twelve was presumably true when row W2-S10 was written and _keys has grown since. NOTHING IS WRONG WITH THE FIX -- all 18 are now zero -- but the NUMBER in the ruling is a measurement with a vintage and no vintage attached, and a later reader checking 'did twelve become zero' against a file that had eighteen has no way to tell whether six were missed or six never existed. This cell defines the fix by the CENSUS and prints both numbers beside each other.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "3.0.0_SA_CVO at L9 -- the discrepancy is between a ruling's stated count and the file's measured one, and grading which is authoritative is the CVO's. INERT rather than ARMED because the remedy this cell applied (drive the fix from the census, print the denominator) satisfies both readings: 18 of 18 placeholders inside refusal constructions are gone, which is a superset of any twelve. Nothing downstream depends on the number itself.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AST census over git show 7478fdf144:infra/aws/lambda/investor-reporting/_keys/keys.py -- 24 KeyComponentRefused call sites, 16 containing %r, 18 %r placeholders inside them, 26 %r in the module overall",
+        "The sites: L184, L206, L217, L222, L225 (x2), L242, L253, L273, L289 (x2), L320, L358, L369, L371, L374, L398, L419",
+        "CTO ruling 4 / decomposition v0.2 s.2, verbatim: 'twelve %r message sites become zero'",
+        "battery_ib_rt_4.py arm (a) now prints '%r PLACEHOLDERS INSIDE A REFUSAL CONSTRUCTION: 0' beside the note that the module carried eighteen, so both numbers are in the record",
+        "The 6 %r that remain in the module are inside verify_against_layout, comparing the module's own constants to core/layout.json -- config against config, no caller data"
+      ]
+    },
+    "spec_asserts": "The CTO's round-1 analysis, ruling 4, and the L5 decomposition note both state that twelve %r message sites in _keys become zero.",
+    "world_is": "The module carried eighteen %r placeholders across sixteen refusal-construction sites when this cell measured it, not twelve.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "This is the same shape as a stale manifest (row W3-S9): a count recorded at one moment and read later as though it were current. The cheap habit that prevents it is attaching the vintage to the number -- 'twelve at <commit>' -- which costs nothing at writing time and removes the ambiguity entirely."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S17",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T13:09:09Z",
+    "one_line": "THE EXPORT TERRAFORM ROOT CANNOT BE APPLIED WITHOUT DESTROYING THREE LIVE RESOURCES THIS RULING DID NOT ORDER, SO irpt-export-render's CODE CHANGE IS COMMITTED AND ITS APPLY IS WITHHELD. Before any change of this cell's, `terraform plan` on infra/aws/terraform/investor-reporting/export reads '0 to add, 1 to change, 3 to destroy'. The three are aws_iam_role_policy.export_render_dispatch, aws_iam_role_policy.export_render_evidence and aws_ssm_document.export_render_run -- each 'is not in configuration' and each present in state, left that way when IB-s-14 removed them from the .tf at 1beda4bf49 without applying. TWO OF THEM ARE IAM ROLE POLICIES ON A LIVE FUNCTION. The face's own condition for this cell's deploy is that 'plans show only the code changes'; this plan does not, and applying it would be a served-surface act (bound 7) with a blast radius nobody signed. The other four roots applied cleanly -- 0 added, N changed, 0 destroyed, with s3_object_version and source_code_hash the only differing attributes -- and five of the six impacted functions are deployed and CodeSha256-verified. ARM (e) OF RT4-AC1 THEREFORE FAILS AND THIS ORDER STAYS OPEN, which is the honest outcome rather than a green bought by an unordered destroy. A SECOND WRITER IS ALSO ON THAT ROOT: irpt-export-render's served CodeSha256 moved from 11ZotLOJLP5xWjGU to iq1u0SatjV0+OtFJ at 2026-09-11 12:57:39Z, during this cell's run and by no act of this cell's.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B to route and 1.0.0_SA_CTO at L10 to decide, with 3.0.0_SA_CVO grading at L9. THREE DISTINCT DECISIONS ARE NEEDED AND NONE IS THIS CELL'S: (1) whether the three orphans should be destroyed -- IB-s-14 evidently intended least privilege, and its iam.tf says 'ONE ROLE PER ROOT ... CloudWatch Logs and NOTHING ELSE' -- or re-declared in configuration; (2) who owns finishing IB-s-14's half-landed change, which is a NEVER-2 item in its own right; (3) the concurrent writer on that root, since two agents applying one root is the collision the round-2 issuance is supposed to prevent. Until then irpt-export-render serves round-1 bytes for the error-path fix while the other five functions serve the new ones, and that split is itself worth the issuer's attention.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan -chdir=infra/aws/terraform/investor-reporting/export -> 'Plan: 0 to add, 1 to change, 3 to destroy' with '# aws_iam_role_policy.export_render_dispatch will be destroyed (because ... is not in configuration)' and the same for export_render_evidence and aws_ssm_document.export_render_run",
+        "terraform state list on that root shows all three present; the root's configuration is three files (iam.tf, lambda.tf, main.tf) and iam.tf declares one role with logs only",
+        "git log on infra/aws/terraform/investor-reporting/export/ -- last change 1beda4bf49 'IB-s-14: the export package, the completed export root, and the ledger opened'",
+        "git status shows this cell touched no .tf at all, so the drift is pre-existing",
+        "The other four roots: directory 'Apply complete! Resources: 0 added, 2 changed, 0 destroyed', intake/ycharts/ops 0 added 1 changed 0 destroyed, and all four post-apply plans read 'No changes. Your infrastructure matches the configuration.'",
+        "irpt-export-render CodeSha256 read 11ZotLOJLP5xWjGUW+WQD9IKSQnEhoOTuJzR3HEGXww= at ~12:40Z and iq1u0SatjV0+OtFJUPqkV7hwJMmpl0wfyFVbhqViWxU= (LastModified 2026-09-11T12:57:39Z) at ~13:0xZ, with no apply of the export root by this cell"
+      ]
+    },
+    "spec_asserts": "RT4-AC1 arm (e): 'CodeSha256 equality per changed function; each root's post-apply plan No changes; ledgers CLOSED, sentinels committed', and the L5 note: 'functions whose code changes are rebuilt and applied under ledger entries per root; CodeSha256 verified; plans show only the code changes.'",
+    "world_is": "One of the five roots holds three resources in state and not in configuration, so its plan carries three destroys before this cell changes anything, and applying it would remove two IAM role policies and an SSM document from a live function. The apply is withheld and arm (e) fails.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Recorded as BLOCKING rather than OBSERVATION because it stops a criterion of this order rather than merely informing a later one. The deploy that COULD be done was done and verified; what is left is a decision about someone else's half-landed change, and taking that decision unilaterally is exactly the widening the bounds forbid."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S18",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T13:09:09Z",
+    "one_line": "THE SOURCE MAP'S REGISTERED HASH FOR irpt-export-render AGREES WITH NEITHER S3 NOR THE LIVE FUNCTION, AND NOTHING IN THE ESTATE CATCHES THAT. lambda-source-map.json records artifact_sha256 = HSuSKsWzsnqS4tIO... for irpt-export-render. The S3 artifact's Metadata.content-sha256 and the function's live CodeSha256 were BOTH 11ZotLOJLP5xWjGU... when measured -- consistent with each other and different from the registration. So the registry that the estate's own CodeSha256 checks compare against is the one that is wrong. THE FAILURE MODE IS THE DANGEROUS DIRECTION: a later reader running the standard check sees MISMATCH on a correctly-deployed function and the obvious remedy -- redeploy from the source map -- would push whatever that stale hash describes over a function that was fine. This cell deliberately did NOT register a new hash for irpt-export-render, because it is not deploying it (row W3-S17) and registering bytes that will not be served is how this drift is created in the first place.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B to route with 1.0.0_SA_CTO at L10 -- correcting a registration for a function this cell is not deploying would be writing a number I cannot verify by serving it. The general remedy is a cheap estate-wide check nobody currently runs: for every function in lambda-source-map.json, compare artifact_sha256 against the S3 object's Metadata.content-sha256 and the live CodeSha256, and print N of N. This cell did that for its own six functions as part of arm (e) and it is the reason the discrepancy was visible at all; making it a standing gate is not this order's to build.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lambda-source-map.json at 7478fdf144, irpt-export-render.artifact_sha256 = HSuSKsWzsnqS4tIO... (unchanged by this cell)",
+        "aws s3api head-object --bucket opal-313476888478-lambda-artifacts --key investor-reporting/irpt-export-render.zip -> Metadata.content-sha256 = 11ZotLOJLP5xWjGUW+WQD9IKSQnEhoOTuJzR3HEGXww=, ContentLength 35220",
+        "aws lambda get-function-configuration --function-name irpt-export-render -> CodeSha256 = 11ZotLOJLP5xWjGUW+WQD9IKSQnEhoOTuJzR3HEGXww= at the same reading -- S3 and Lambda agree with each other and not with the registration",
+        "The other five impacted functions all read served == registered both before and after this cell's deploy, so the drift is specific to this function and not an artifact of how this cell builds zips",
+        "battery_ib_rt_4.py arm (e) prints served and registered side by side per function, which is the comparison that surfaced it"
+      ]
+    },
+    "spec_asserts": "The estate verifies a deploy by comparing the served CodeSha256 against the built zip and against lambda-source-map.json's artifact_sha256, treating the source map as the record of what should be serving.",
+    "world_is": "For irpt-export-render the source map's registered hash matches neither the S3 artifact nor the live function, while those two match each other. The record disagrees with the world, and the check that would notice is run per-cell by whoever happens to touch the function rather than standing anywhere.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Worth pairing with row W3-S14: that function's zip is ALSO missing a module its code imports. Two independent defects on one function, both invisible to every deploy-time check the estate runs, both found by comparing two instruments rather than trusting one."
   }
 ]
 ```
