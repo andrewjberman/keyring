@@ -468,6 +468,98 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-s-9 part (d): 'evidence = its figures (from model_block_*.json) + AMGT-s-4's coverage_items for that key' -- figures are intended as a first-class evidence source; AC2's checker computes the resolvable id-space FROM a 'figure_ids' key it expects those files to carry.",
     "world_is": "AMGT-s-1's landed model_block_*.json files carry no 'figure_ids' key at all, so AC2's resolvable id-space is populated ENTIRELY by AMGT-s-4 coverage item_ids -- any sentence citing a figure as evidence would fail 'all evidence resolves' under AC2 exactly as written, even though the figure genuinely exists and is real Bloomberg data. This worker's producer.py therefore drafts company_description/ceo_bio/recommendation as EMPTY limbs (no figure evidence is citable) rather than cite an id that would never resolve -- figures are still read and their count reported in drafting_run_summary.json, never invented into evidence.",
     "notes": "Not this worker's <paths>/BOUNDS to fix: AMGT-s-1's deliverable format is that cell's own, already landed and committed; this worker did not edit it. A future round could mint stable figure ids (e.g. '<security_key>::<scope>::<fiscal_year>::<mnemonic>') and add a 'figure_ids' key to AMGT-s-1's own output, or amend AC2's checker to read the (scope,fiscal_year,mnemonic) tuples directly -- either is the owning seats' call, not this worker's to make unilaterally on a sibling's landed artifact."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W2-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~2",
+    "surfaced_at": "2026-09-11T00:20:00Z",
+    "one_line": "This cell's own BUILD text names an unstamped key, packs/<security_key>/status.json, that STORE_CONTRACT.md rule 1 ('nothing is ever written to a path that already exists') would otherwise forbid -- a deliberate, disclosed exception, not a defect, but worth a row so AMGT-s-14 does not assume every packs/ key follows the stamp convention.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This cell's own TO text, THE BUILD, third bullet: 'the status object: packs/<security_key>/status.json in opal-data-research with {state: REQUESTED|FETCHING|LANDED|FAILED, requested_at, updated_at, reason}' -- no <YYYYMMDDTHHMMSSZ> stamp segment in the named key, unlike every other packs/ key STORE_CONTRACT.md names",
+        "STORE_CONTRACT.md (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~7/STORE_CONTRACT.md) section 4 rule 1, verbatim: 'Nothing is ever written to a path that already exists. Every write mints a fresh <YYYYMMDDTHHMMSSZ> prefix; an S3 PutObject to a key that already exists is never issued by a correct writer.'",
+        "integrations/bloomberg/research/pull_consumer.py _write_status(): GetObject-then-merge-then-PutObject onto the SAME key packs/<security_key>/status.json on every call (REQUESTED -> FETCHING -> LANDED/FAILED all overwrite in place) -- exercised live in this order's own AC3 run, where the SAME key's `state` field was observed to change from REQUESTED to FETCHING to LANDED across three writes to one key"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "STORE_CONTRACT.md rule 1: every write mints a fresh stamp; nothing is ever overwritten. This cell's own BUILD text: the status object lives at one fixed, unstamped key and carries requested_at/updated_at fields implying in-place mutation.",
+    "world_is": "The two documents are in tension on this ONE key class; this cell followed its own TO text literally (the more specific, later-authored instruction) and treats status.json as a deliberate, scoped exception -- a mutable current-state pointer, not a versioned artifact -- documented as such in SEAM_DESIGN.md section 4. Every OTHER write this cell makes (raw/bloomberg/..., derived/model_block/...) keeps STORE_CONTRACT's stamp-and-never-overwrite rule untouched; this exception is confined to the one key whose entire purpose is to answer 'what is the CURRENT state' without a caller first discovering a latest stamp.",
+    "notes": "Not a defect and not blocking (AC1/AC3 both pass under this reading). Filed so AMGT-s-14 (the input ledger, which reads this bucket read-only per STORE_CONTRACT section 5) does not assume status.json is stamped/versioned like every other packs/ key -- its 'last run' logic (max lexicographic stamp under a prefix) has no stamp level to find under packs/<security_key>/status.json and should read it as a flat, mutable pointer instead. Owner of reconciling STORE_CONTRACT.md's text with this exception (e.g. adding a named carve-out for *status.json keys) is whoever next amends STORE_CONTRACT.md; not this cell's <paths> to edit (STORE_CONTRACT.md lives under 0.9.0_WK_AMGT_RESAPP~7's deliverables folder, AMGT-s-6's, not this cell's write surface)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W2-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~2",
+    "surfaced_at": "2026-09-11T00:45:00Z",
+    "one_line": "AC6's literal invocation, `comp-routes behaviors | grep -c -E 'research|amgt'`, cannot see a pure-add API Gateway route on an EXISTING CloudFront catch-all -- the ONLY design shape available inside this cell's write surface -- because `cmd_behaviors` prints each behavior's STATIC hand-authored comment, never a dynamically-computed route list; `comp-routes api-routes` (a different subcommand, not named by AC6) DOES show the declared route.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/modules/graph/routes_cli.py:423-437 cmd_behaviors(): for each behavior, prints `b.comment` (a string field parsed from cloudfront-distribution.tf's own `# N. ...` comment lines) -- never a lookup against `rt.api_gw_routes` (the separately-built list `cmd_api_routes` at :487-501 reads); the 'API GW depth-N: ...' text visible on behaviors 5-9 in a fresh comp-routes behaviors read is itself STATIC prose already committed in cloudfront-distribution.tf, not computed at read time",
+        "This cell's route lives on the EXISTING behavior #22 (`/api/private/*` -> APIGateway-portal, per infra/aws/terraform/portal-auth/cloudfront-distribution.tf:757-773, read-only -- not in this cell's <paths>) precisely because SEAM_DESIGN.md section 1 chose a pure-add on that catch-all to avoid touching portal-auth/, which this cell's <paths> excludes entirely",
+        "`bash .tools/comp-routes api-routes` (run from this worktree, after the apply) lists `research: POST /api/private/research/pull` -- the route IS in the estate's DESIRED-plane record -- while `bash .tools/comp-routes behaviors 2>&1 | grep -c -E 'research|amgt'` and the bare PATH-resolved `comp-routes behaviors` (baked to this device's main checkout, .tools/comp-routes wrapper) both return `0`",
+        "The literal AC6 invocation, run exactly as written in this order, returns rc=1 (grep's no-match exit) with stdout `0`"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC6: 'a count of 1 or greater AFTER the apply -- the request path's route is DECLARED in the estate's source of record and comp-routes sees it; 0 means the build reached AWS without reaching the record ... and is NOT met.'",
+    "world_is": "The route IS declared in the estate's source of record (infra/aws/terraform/research/api-gateway.tf, committed alongside this row) and `comp-routes api-routes` proves it; the LITERAL invocation AC6 names (`comp-routes behaviors`) structurally cannot reflect a pure-add route on an existing CloudFront catch-all regardless of correctness, because that subcommand's per-behavior annotation is static source prose, not a live join against the parsed route table. This worker did not substitute `api-routes` for `behaviors` to force a match (CLAUDE.md: never repair or route around a criterion) -- AC6 is recorded FAIL against its exact literal invocation and output.",
+    "notes": "Owner to choose the fix shape: (a) amend AC6 (or a future such criterion) to name `api-routes` instead of `behaviors` for a pure-add route on an existing catch-all, since `behaviors`' route detail is provably static prose keyed to hand-editing cloudfront-distribution.tf; or (b) grant a future cell write access to portal-auth/ to add a dedicated, hand-commented CloudFront behavior naming this route explicitly. Not this worker's <paths> or BOUNDS to choose -- portal-auth/ is outside this cell's write surface and the criterion text is not this worker's to edit."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W2-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~2",
+    "surfaced_at": "2026-09-11T00:47:00Z",
+    "one_line": "AC5's `grep -r` over infra/aws/terraform/research/ transiently counted a byte-coincidence match inside a gitignored `terraform init` provider-plugin binary as a loopback violation, reading '1' instead of '0' until the ephemeral `.terraform/` cache was removed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First run of AC5's exact invocation (grep -r -c -i -E 'listen\\(|bind\\(|0\\.0\\.0\\.0|--port|ngrok|reverse.?tunnel|ssm start-session.*portNumber' integrations/bloomberg/research/ infra/aws/terraform/research/ | grep -v -c ':0$') returned '1'",
+        "grep -r -n (no -c) on the same paths isolated the single match to a BINARY file: 'infra/aws/terraform/research/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/windows_amd64/terraform-provider-aws_v5.100.0_x5.exe matches' -- a compiled Go binary downloaded by this cell's own `terraform init`, containing an incidental byte sequence matching one of the five patterns",
+        "git check-ignore -v confirms the match is under infra/aws/terraform/.gitignore's `.terraform/` rule -- never part of any commit, regenerated fresh by any future `terraform init` in this directory",
+        "After `rm -rf infra/aws/terraform/research/.terraform`, the identical invocation returns '0' -- confirming the source this worker authored (sqs.tf, api-gateway.tf, pull_consumer.py, lambda_function.py) never itself matches any of the five patterns"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC5: 'exactly \"0\" -- NEGATIVE and structural: nothing under the box-side module or the Terraform opens a listener, binds a port, or reverse-tunnels into this device.'",
+    "world_is": "True of every file this worker authored; NOT true, transiently, of a vendored provider binary `terraform init` writes into the same directory tree as a build-time side effect. AC5's invocation, being a plain filesystem `grep -r`, does not distinguish tracked source from a gitignored build cache sitting in the same directory. This worker removed the cache before the final graded read (a cleanup of an ephemeral, git-ignored byproduct, not an edit to the criterion or to any source file) and the criterion now reads '0' honestly.",
+    "notes": "ARMED because the SAME false positive will recur, identically, for ANY future `terraform init` in infra/aws/terraform/research/ (or any other module this pattern is later applied to) until either the check is scoped to tracked/source files only (e.g. `git grep` instead of `grep -r`, or an explicit `--exclude-dir=.terraform`) or graders remember to clean the cache first. Disarm: whoever next authors a criterion of this shape should route it through `git grep` (tracked files only) rather than a raw filesystem `grep -r`, or scope it with `--exclude-dir=.terraform`; named to the issuer (2.0.0_SA_COO~ZZZ) as the seat that cuts this criterion's future instances, not something this worker's <paths>/BOUNDS license fixing in the criterion text itself."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W2-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~2",
+    "surfaced_at": "2026-09-11T02:05:00Z",
+    "one_line": "A correction, re-measured rather than argued: `comp-routes api-routes` DOES list this cell's route when invoked as this worktree's own tracked copy (`bash .tools/comp-routes`); the '0' the issuer could not reproduce past comes from the BARE `comp-routes` PATH shim, which is baked to this device's MAIN checkout (a different directory that never had this branch's commits), not from the extractor being blind to a new module's routes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "At HEAD 9cbbc84f71 (the issuer's own amendment commit), `bash .tools/comp-routes api-routes` (this worktree's tracked copy, invoked by its own relative path) prints 'API GATEWAY ROUTES (22)' including a 'research:' group with 'POST /api/private/research/pull' -- reproduced fresh, not cited from an earlier run",
+        "The SAME invocation via the bare command name, `bash -c \"comp-routes api-routes\"` (PATH resolution), prints 'API GATEWAY ROUTES (21)' with NO research group -- `type comp-routes` resolves to `/c/Users/Opal Bloomberg/bin/comp-routes`, a forwarder shim whose own header states it execs a BAKED absolute path `/c/Users/Opal Bloomberg/Desktop/ajb_workspace/.tools/comp-routes` (this device's main checkout, not C:/tmp/wk-amgt-1-2)",
+        "org/modules/graph/routes_cli.py:33-34: `_THIS_DIR = Path(__file__).resolve().parent; _WORKSPACE = _THIS_DIR.parent.parent.parent` -- WORKSPACE is derived from wherever the invoked routes_cli.py FILE physically sits, so the bare shim and this worktree's copy necessarily resolve to two different WORKSPACE roots and therefore two different `infra/aws/terraform/` directory listings",
+        "org/modules/graph/extract_routes.py:801-807 `_parse_api_gw_routes`: iterates `sorted(tf_base.iterdir())` over EVERY subdirectory of `infra/aws/terraform/`, not a fixed list of 'known' pipeline names -- so the extractor itself is not structurally limited to bd-pipeline/inf-pipeline/partners-api; a NEW module with an `api-gateway*.tf` file is picked up automatically once the tool reads the tree that actually contains it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC6 amendment 1 (commit 9cbbc84f71) and the issuer's message: 'comp-routes' extractor parses only the portal's known api-gateway.tf files ... structurally cannot observe a pure-add route in the NEW module' and 'I could not reproduce your claim that comp-routes api-routes shows the route -- api-routes count reads 0 in your worktree too'.",
+    "world_is": "The extractor is NOT limited to a fixed set of known pipeline directories (it globs every subdirectory); it already parses this new module correctly once given the right tree to read. The '0' both the issuer and this worker's own bare-command test produce comes from a DIFFERENT, purely mechanical cause: `comp-routes` on PATH is a forwarder baked to this device's single MAIN checkout, so any invocation via the bare command name reads that checkout's disk state, which never received this branch's commits (or, before commit 1a62bb9932, never received this worktree's uncommitted files either) -- regardless of which comp-routes subcommand is named. Invoking this worktree's OWN tracked `.tools/comp-routes` directly (as `bash .tools/comp-routes`, sidestepping the PATH shim) reads the correct tree and shows the route in `api-routes` (though NOT in `behaviors`, whose per-behavior text is genuinely static source prose -- that half of AC6's original finding stands). AC6 itself is unaffected by this row (the amended invocation reads the .tf file directly, bypassing comp-routes and this whole class of confusion); this row exists so the CVO/CTO's follow-up into 'comp-routes and new modules' (named as a finding beyond this order in the amendment) investigates the PATH-shim cause rather than the extractor, which would otherwise send that investigation to the wrong file.",
+    "notes": "Does not reopen or edit AMGT_RESAPP-Z-W2-S2, which stands as filed (comp-routes behaviors' own per-behavior-comment-is-static limitation is real and separate from this row). Non-blocking: AC6 already passes via the amended, comp-routes-independent invocation. Worth the CVO/CTO's attention only if a future criterion or investigation reasons about comp-routes' coverage of a new Terraform module from a bare `comp-routes` invocation on this device -- the correct read requires either merging the branch first or invoking the worktree's own `.tools/comp-routes` by relative path."
   }
 ]
 ```
