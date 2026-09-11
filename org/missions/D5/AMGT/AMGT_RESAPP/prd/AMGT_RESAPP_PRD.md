@@ -725,12 +725,22 @@ neither is the box or the lambda), `rd-7`, `rd-8`. Round 5's coverage drops from
 - ⛔ **THE PORTAL HOLD STANDS.** `/api/private/research/pull` keeps its path and the route rename is
   DEFERRED; nothing portal promotes, PROD or DEV, until Andrew names it. `rd-8` stays commit-yes,
   promote-no.
-- ⛔ **NO RETROACTIVE RENAME of the two live tables or of `opal-data-research`**, absent Andrew naming
-  the retroactive case. A DynamoDB rename is DESTROY/RECREATE against two TERMINAL cells whose tables
-  `rd-5`/`rd-6` are writing into now; an S3 rename is create-copy-delete on live VERSIONED data, and a
-  copy does not carry version history -- **the act would destroy the two-snapshot evidence that
-  `FWD-6`'s accumulate bar was followed.** Harvest naming applies PROSPECTIVELY. Three seats reached
-  this independently.
+- ⭐ **SUPERSEDED 2026-09-11 ~18:5xZ -- ANDREW NAMED THE RETROACTIVE CASE AND RULED RENAME.** Verbatim:
+  *"call 2 no it should actuall be a rename there is no data in there anyway, better to have all of
+  this stuff grouped by name right from the start."* This clause previously read NO RETROACTIVE RENAME
+  absent his word; **his word has arrived.** `opal-data-research` IS renamed into harvest naming.
+  ⛔ **BUT HIS PREMISE IS FALSE AND THE ACT IS BIGGER THAN HIS SENTENCE DESCRIBES.** Measured
+  `2026-09-11T18:55:29Z` before anything moved: **53 objects, 60 versions** -- `derived/model_block/`
+  (BABA x4, BA x4, NVDA x2, SAP_GY x4), `derived/model_block_fye/` (3 tickers), `packs/*/input_ledger.json`.
+  S3 has no rename primitive. **This is a DATA MIGRATION OF 53 OBJECTS, executed as copy -> VERIFY
+  count and key grammar -> only then delete the source.** Surfaced to him; the ruling stands meanwhile.
+  ⛔ **AND THIS PRD'S EARLIER CLAIM IS WITHDRAWN AS OVERSTATED:** it said the rename "would destroy the
+  two-snapshot evidence that `FWD-6`'s accumulate bar was followed." **It would not.** That evidence
+  lives in the KEY GRAMMAR -- distinct timestamped paths -- which a copy PRESERVES. What is lost is the
+  S3 VERSION HISTORY (60 -> 53, the ~7 versions of overwritten keys), and `FWD-6` does not read those.
+  **The rename is more expensive than his sentence assumes and much cheaper than this PRD claimed.**
+  ⚠ **The two DynamoDB tables remain a SEPARATE case, unaffected:** genuinely empty (0 items measured)
+  and already approved for rename in the ~18:3xZ draw.
 - **Terraform commits ride an audited `GIT_COMMIT_AUTHOR_OVERRIDE`** naming Andrew's grant, one per
   lane. **No `.owned-paths.yaml` edit** -- the AE-only lane rule is overridden per-commit with an audit
   line, not amended.
