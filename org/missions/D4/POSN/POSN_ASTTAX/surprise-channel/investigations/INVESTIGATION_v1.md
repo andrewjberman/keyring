@@ -1485,3 +1485,34 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S8",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-12T00:00:00Z",
+    "one_line": "MY OWN CELL'S FINDING STRANDED MY OWN REMAINING ORDER, FOR THE SECOND TIME THIS ROUND. TO-T6-1 sits `staged` pinned to 3832ac543c, two amendments behind the PRD, still describing the retag's failure as 'a weight silently at zero' -- and its acceptance criterion T6-AC4 CANNOT FIRE AT THE SERVED PLANE, because in production the generator RAISES and never rewrites the artifact the criterion reads. A FAIL and a CRASH are different states and AC4 conflates them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE PIN, read at HEAD: POSN_ASTTAX.TO-T6-1 line 11 carries '@`3832ac543c`'. The PRD's current commit is f9458a7e43 (signed half 870456bd09). Two amendments behind: 3832ac543c -> f9458a7e43, the second of which REVERSED C-RETAG-SAFETY's mechanism outright.",
+        "THE REVERSED PREMISE, still in the order at HEAD, line 31: '...`'Unknown'` and a weight silently at zero.' That sentence describes the mechanism AT HEAD POST-DEPLOY. It is not what production does. Row W14-S1 measured the served plane: the deployed generator was built 2026-08-18 and RAISES KeyError: 'Structured' at calculate_allocations():239 for 11 of 11 members.",
+        "THE CRITERION THAT CANNOT FIRE, and this is the load-bearing half: T6-AC4 says 'after a regenerate, read the SERVED artifact and assert per member ... A member rendering 'Unknown', or carrying a zeroed weight, is a FAIL.' In production the generator DIES before writing, so positioning_data.json is NOT REWRITTEN and there is no post-retag artifact to read. The criterion has no object. It can return neither PASS nor FAIL -- it returns an ERROR indistinguishable from a harness fault, and a worker reading the pre-retag artifact instead would find the OLD values unchanged and could record that as 'no regression'.",
+        "SO THE ORDER IS UNSAFE IN BOTH DIRECTIONS AT ONCE: it tells a worker to expect a QUIET failure while production's is LOUD and total (the page blanks for all four partner firms), and it grades with an instrument that the loud failure destroys before it can run.",
+        "PROVENANCE, stated because it matters more than the defect: this order was RE-CUT by this seat at ~22:4xZ specifically to track PRD 3832ac543c, and T6-AC4 was written to replace S2-AC5 -- the criterion that could not fail in the broken world. AT3-s-5's W14-S1 then moved the plane underneath it. THE S2-AC5 SHAPE, FOURTH INSTANCE IN THIS PROJECT, INSIDE THE CRITERION WRITTEN TO FIX THE SECOND.",
+        "SCOPE LIMIT, stated rather than implied: TO-T7-1 was checked at HEAD by the same read and carries NEITHER the silent-zeroing text NOR a KeyError dependency, so this row does not reach it. Only TO-T6-1 is stranded. Neither order has ever been spawned."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.5 C-RETAG-SAFETY at f9458a7e43 states that the KeyError/page-blank mechanism is LIVE AT THE SERVED PLANE and that the silent-zeroing text describes THE MECHANISM AT HEAD, POST-DEPLOY. Step (3) retags only after step (2)'s bar is MET.",
+    "world_is": "TO-T6-1, the order that would execute step (3), is pinned two amendments behind at 3832ac543c and still carries the pre-reversal premise in its cell text, while its acceptance criterion T6-AC4 assumes a generator that completes and serves an artifact. Against production neither holds: the failure is a crash, not a zero, and the artifact AC4 reads is never written.",
+    "notes": "NOT RE-CUT, AND THE RESTRAINT IS DELIBERATE. The gate reads ADMITTED right now, so a re-cut is mechanically permitted -- I am declining it anyway. The round-close ruling is pending with 1.0.0_SA_CTO~Z and Andrew, round 4 is expected to re-decompose around a DEPLOY cell that does not exist yet, and the PRD has moved FOUR times tonight (49ddcc481d -> 71a376b98e -> 3832ac543c -> f9458a7e43). Cutting against bytes that can still move is the error this round has already paid for twice, and the second time I caught it only because a message arrived mid-write. A row is the durable carrier; an order re-cut into a spec that is about to move again is not. WHAT THE ROW EXISTS TO PREVENT: a round-4 recut reusing this file blind because its <status> still reads `staged` and nothing in it announces that its premise was reversed. ARMED rather than INERT because the file is live on disk, is addressed to a worker serial, and reads as ready. disarm_owner is this seat: the disarm is the re-cut, once the round-close ruling fixes what round 4 is FOR. AT3-s-6 remains unspawned on AT3-s-5's NO-GO independently of this row -- this is not the thing blocking the retag, it is the thing that would have made the retag measure the wrong failure if the NO-GO had not already stopped it."
+  }
+]
+```
