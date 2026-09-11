@@ -413,3 +413,44 @@ at the drain. Measured after his question: one commit by `0.9.0_WK_POSN_ASTTAX~1
   live bytes AFTER ACT 2 lands, or the invoker treating a fresh chain's first mint as a re-baseline. Doing it
   before ACT 2 is pointless (the pin source is the shared baseline until then).
 - Also pushed this hour: AMGT_RESAPP round-2b drains and cuts, the CTO's self-drive tick, the CVO's C-S10 close.
+
+---
+
+## AMENDMENT 10 -- 10:4x-10:5xZ: the CTO's ruling on the audit-archive re-baseline, PARKED on a named condition -- successor, execute this verbatim
+
+**archetype:** SCRIBE (park record)
+
+`1.0.0_SA_CTO` ruled (laptop msg 95951, relayed by `0.0.0_AB_MSTR` on bus 1e9b8549-16df-48c6-8e37-26a4487ae819,
+10:45Z): (b) DURABLE is landed in `.tools/audit-archive-invoker.py` @6560583fd5 (782 lines; on top of ACT 2
+@83b202ed7b, 756 lines) -- a device chain whose only snapshot is the seeded copy of the shared legacy baseline
+mints its FIRST snapshot as a re-baseline (every log refreshed from that device's live bytes, nothing pinned)
+and writes `.rebaseline` inside the snapshot as the record; (a) THE REPAIR for a chain already seeded the wrong
+way (site Z) -- an operator marker `archive/<device>/.rebaseline-once` (its text = the reason) makes the NEXT
+mint a re-baseline and is consumed in that mint's own commit (`:486 marker.unlink()`, deletion committed via
+`:487`; verified at source by the laptop -- one-time by construction). Detection is untouched.
+
+**PARK CONDITION, measured at 10:5xZ and NOT MET:** origin/CLOUD @bed01b226a carries the invoker at 744 lines;
+`83b202ed7b` and `6560583fd5` are both NOT on origin/CLOUD (Andrew holds the laptop's push cadence). The
+marker limb does not exist on this device; writing the marker early does nothing. A background watcher on
+origin/CLOUD notifies this seat when 6560583fd5 lands.
+
+**THE RECIPE, verbatim from the ruling, for whoever holds this seat when the condition is met:**
+1. Run the leg that carries 6560583fd5 to SITEZ (a normal `/integrate` leg; confirm
+   `.tools/audit-archive-invoker.py` reads 782 lines and `git merge-base --is-ancestor 6560583fd5 HEAD` = YES).
+2. Write `org/audit/archive/sitez/.rebaseline-once` with EXACTLY this text (it becomes the permanent record
+   inside the snapshot):
+   `CTO ruling 2026-09-11 on MSTR 95950: chain seeded from the laptop-origin legacy root; re-baseline from this device's live bytes`
+3. Commit it on this serial via safe-commit (lane GOVERNANCE_AUDIT admits `0.0.0_AB_MSTR~Z`; proven @fcf093325f).
+4. Run `python .tools/audit-archive-invoker.py` LIVE **once, after 2026-09-11T22:32Z**. ⛔ THE TIMING TRAP: the
+   12-hour snapshot interval check (`:424`, "newest <ts> is < 12.0h old") runs BEFORE the marker is read
+   (`:435`); the newest site-Z snapshot is 2026-09-11T103259Z, so a run before ~22:32Z SKIPs, does not consume
+   the marker and does not re-baseline. A skip before then is CORRECT, not a failed repair -- do not loop, do not
+   hand-edit.
+5. Report the mint line. It MUST read re-baseline with **0 pinned**. Any non-zero pin count is a finding to
+   stop on and report, not a retry.
+⛔ Nothing in any snapshot directory is hand-edited; the repair is the marker plus one live run.
+
+**Attribution as the CTO recorded it:** the instruction was the CTO's ruling (95944) before it was the laptop's
+relay; the laptop holds the recipe's file-count-vs-content-provenance half; this seat's contribution was
+executing and then MEASURING (the three sha256 triples). The laptop needs no marker (its seed was its own
+history: 19 refreshed / 0 pinned, closure bar 7 of 7).
