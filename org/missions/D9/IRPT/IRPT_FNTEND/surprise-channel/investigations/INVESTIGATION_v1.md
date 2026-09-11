@@ -572,6 +572,49 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S9",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T01:35:00Z",
+    "one_line": "Disarm act for IRPT_FNTEND-W3-S1 and IRPT_FNTEND-W4-S1 assigned by their disarm_owner: the tab shell FE-s-3 built has no mount seam, so the Analysis and Holdings tabs are built and tested but unreachable; TO-FE-s-10, which already holds tabs/ in its grant and depends on every tab cell, is amended to mount AnalysisTab and HoldingsTab in the shell and to prove it (F10-AC10). W3-S2 (contract fields inputRevision and parity the cell text named) is the same contract-inventory question as W2-S2 and W2-S6 and rides the L10 read. W4-S2 (CategoryViewTree is bound to the AUM-domain contract and drops non-positive amounts; used only as a coarse overview adapter, every holdings rule implemented in the cell) is a reuse finding for the FE-s-11 census and the L10 read: the PRD's reuse row for it is NOT USED as the drill component, with that reason.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/TabShell.tsx @65a37017 -- header comment lines 10-13: every tab body is filled with StatusPanel and nothing else; no props or slot for a body component",
+        "row IRPT_FNTEND-W3-S1 @854594d51a (worker branch) -- both ui-smoke captures show the generic status panel after --click Analysis while the AnalysisTab unit renders pass 19 of 19",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-10.global-view.md -- amended this commit: tab mounting paragraph, F10-AC10, expected_criteria 10; tabs/ was already in its grant",
+        "row IRPT_FNTEND-W4-S1 @277a7199ac (worker branch) -- both Holdings captures show the generic status panel while 32 of 32 unit renders pass; row W4-S2 -- CategoryViewTree.tsx is hard-wired to MdpfCategoryViewsResult and drops non-positive aum"
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND-W3-S1 and W4-S1: ARMED -- AnalysisTab and HoldingsTab are not reachable from the running app; TO-FE-s-6 and TO-FE-s-7 said each mounts in the shell's body and neither grant included the shell.",
+    "world_is": "The FE-s-3 face said each tab body is a mount point the shell fills with StatusPanel until later cells arrive, and the worker built exactly that with no seam for those cells. FE-s-5 holds the shell in its grant and mounts its own tab; FE-s-6 and FE-s-7 do not. The integration cell mounts both remaining tabs before the Global view exercise, which needs every tab reachable anyway.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S10",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T02:45:00Z",
+    "one_line": "Disarm act for IRPT_FNTEND-W1-S7 finding (1) assigned by its disarm_owner: the root tsconfig alias mapping FE-s-5 landed makes FE-s-3's dropdown-class.test.ts per-file mock.module registrations intercept the real modules, and its two tests fail on portal DEV @5b959f63 (184 tests, 2 fail, 1 error); TO-FE-s-9 (slot ~1, next) is amended to remove those registrations and re-state the assertions against the real markup (F9-AC11). Findings (2)-(4) are adaptations inside the cell's own grant and need no act; they ride the L10 read as face notes (MethodsAndSources takes a bundle the tab never holds; PerformanceReport has no supported.* flags; the status-panel wording contradicted isCompleteState).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal DEV @5b959f63 -- bun test src/pages/InvestorReporting: 184 tests, 2 fail, both in __tests__/fe-s-3/dropdown-class.test.ts: 'Export named PageSurfaceControl not found in module .../PageSurfaceControl.tsx'",
+        "row IRPT_FNTEND-W1-S7 @3ab6275f9f (worker branch) -- A/B controlled: the same test file passes 2 of 2 with the pre-amendment tsconfig and fails 0 of 2 with the mapping, no fe-s-5 file involved",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-9.export-options-preview.md -- amended this commit: the test file added to <paths>; F9-AC11 added; expected_criteria 11"
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND-W1-S7 (1): ARMED -- F5-AC9's required edit regresses the already-terminal F3-AC7; the DEV test set is red until one of them moves.",
+    "world_is": "The mock registrations were the workaround for the alias gap; once the gap is closed they are the defect. The fix is the removal of the workaround and a real render, in the next order on the same slot, before FE-s-10 exercises the whole page. The alias mapping stays: it retires the workaround class for every remaining cell, which is why it was granted.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
