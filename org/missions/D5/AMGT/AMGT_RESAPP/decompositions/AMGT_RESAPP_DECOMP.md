@@ -732,7 +732,7 @@ are the only roots, they are the two chains' heads, and both spawn at issuance (
 | `AMGT-rd-5` | S16 | FWD-15 | **THE CHATTER AXIS WRITER.** A SCHEDULED PRODUCER computing the chatter ranking daily and writing pre-computed rows to `opal-amgt-security-metrics`. Axis = the committed chatter gate: 30-day window, 0-100 normalized, `TOP_N=10`. | OPEN | `rd-2` |
 | `AMGT-rd-6` | S16 | FWD-15 | **THE PRICE AXIS ENGINE, BOX-SIDE.** The price ranking reads Bloomberg historical/intraday and therefore runs in the **BOX-SIDE puller shape** (the ETF-daily-pull shape), **NOT a Lambda calling Bloomberg** (`C-PRICE-RANKING-BOXSIDE`). 30-day window, matching chatter -- Andrew unified both to 30. Writes pre-computed rows to the same metrics table. **The BOX-SIDE host is the BLOOMBERG TERMINAL box (loopback DAPI, the ETF-daily-pull shape), NOT the new harvester EC2 box of `rd-3`** -- the harvester box hosts the four ARTICLE harvesters, which is a different machine and a different concern. | OPEN | `rd-2` |
 | `AMGT-rd-7` | S16 | FWD-15 | **THE STARRED WATCHLIST.** SHARED ACROSS THE FIRM -- both PMs see the same starred names, keyed PER-FIRM, not per-user (`C-STARRED-PER-FIRM`, Andrew-ruled, reversible to per-user on his word). **Starring is a PURE MARKER:** it triggers NO refresh and queues NO harvester. Refresh is its own explicit action and the cell must prove the two are not wired together. | OPEN | `rd-2` |
-| `AMGT-rd-8` | S16 | FWD-15 | **THE SURFACE ITSELF.** The `.tsx`: a persistent **Lead Panel** (universe discovery -- Trending/Breakout x Price/Chatter, List/Chart, Security overlay, Starred) above **three tabs: Thesis / Peers / Coverage**. **Print is a header export action**, not a tab. **The Model tab is CUT and its figures REHOMED** into Thesis and the Security overlay. Reads pre-computed rows from `opal-amgt-security-metrics`; never re-derives a ranking at render time. | OPEN | `rd-5`, `rd-6`, `rd-7` |
+| `AMGT-rd-8` | S16 | FWD-15 | **THE SURFACE ITSELF.** The `.tsx`: a persistent **Lead Panel** (universe discovery -- Trending/Breakout x Price/Chatter, List/Chart, Security overlay, Starred) above **three tabs: Thesis / Peers / Coverage**. **Print is a header export action**, not a tab. **The Model tab is CUT and its figures REHOMED** into Thesis and the Security overlay. Reads pre-computed rows from **`opal-harvest-security-metrics`** (RENAMED 2026-09-11 ~20:1xZ from `opal-amgt-security-metrics`, which is DROPPED -- 42 rows migrated and verified on FULL ITEM EQUALITY; env knob `HARVEST_METRICS_TABLE`); never re-derives a ranking at render time. | OPEN | `rd-5`, `rd-6`, `rd-7` |
 
 ### 13c. Rule 24 record for what v0.6 ADDS (the eight round-5 cells)
 
@@ -794,11 +794,21 @@ are the only roots, they are the two chains' heads, and both spawn at issuance (
   standing NEVER clauses). `rd-5` and `rd-6` are SCHEDULED PRODUCERS, which is not only permitted but
   required ("production pipelines MUST be scheduled"); a producer that computes a ranking is not a monitor.
   STOP: neither cell may add an alert, an SNS topic, an SES send or a freshness checker on top of its output.
-- **`opal-data-research` -- PARTLY SUPERSEDED 2026-09-11 ~19:0xZ: IT IS BEING RENAMED.** Andrew ruled at
-  ~18:5xZ that harvest naming DOES reach this bucket ("better to have all of this stuff grouped by name
-  right from the start"), so it is no longer a stable existing resource -- it is one that is about to move,
-  under `4.0.0_SA_CRO~Z`'s execute-and-oversee authority over the harvest estate. Amended here rather than
-  left contradicting a live ruling.
+- **`opal-data-research` -- SUPERSEDED AND NOW LANDED. THE RENAME IS DONE: IT IS `opal-data-harvest`.**
+  Andrew ruled at ~18:5xZ that harvest naming reaches this bucket ("better to have all of this stuff grouped
+  by name right from the start"); `4.0.0_SA_CRO~Z` executed the migration and closed its ledger at
+  ~20:1xZ -- 53 objects copied with the key grammar preserved and verified, the five live consumers flipped,
+  the source dropped. THE EARLIER TEXT HERE SAID "about to move" AND THAT IS NOW THE STALE HALF; it is
+  corrected rather than left, because a round-6 cutter reading a bound that says a resource is MOVING learns
+  nothing about where it went.
+  ⛔ **THE CURRENT NAMES, so no cell has to re-derive them** (`4.0.0_SA_CRO~Z`'s map, msg 21608):
+  `opal-data-research` -> **`opal-data-harvest`**; `opal-amgt-articles` -> **`opal-harvest-articles`**;
+  `opal-amgt-security-metrics` -> **`opal-harvest-security-metrics`**;
+  `infra/aws/terraform/research/s3.tf` -> `infra/aws/terraform/harvest/s3.tf` (the old module is RETIRED, so
+  a citation to it resolves to nothing). Env knobs: `HARVEST_BUCKET`, `HARVEST_ARTICLES_TABLE`,
+  `HARVEST_METRICS_TABLE`.
+  WHAT STILL HOLDS UNCHANGED: no cell of this project re-creates, re-declares or re-configures any of them,
+  and none performs a migration -- those acts belong to the harvest estate.
   WHAT STILL HOLDS UNCHANGED: no round-5 cell re-creates, re-declares or re-configures it, and none of them
   performs the migration -- that act is the harvest estate's.
   Measured at the round-5 cut and still true of the source bucket: versioning **Enabled**, SSE AES256

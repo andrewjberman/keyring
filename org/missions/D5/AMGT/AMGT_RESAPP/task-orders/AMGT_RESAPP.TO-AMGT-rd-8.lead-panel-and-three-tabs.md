@@ -22,7 +22,7 @@ THREE SHAPE DECISIONS ARE ANDREW'S AND ARE NOT YOURS TO REOPEN:
   - THE LEAD PANEL IS PERSISTENT -- it stays while the tabs change beneath it.
 
 IT READS PRE-COMPUTED ROWS AND NEVER RE-DERIVES A RANKING AT RENDER TIME (`C-SERVER-SIDE-RANKING`). The
-rankings come from `opal-amgt-security-metrics`, written by `AMGT-rd-5` (chatter) and `AMGT-rd-6` (price).
+rankings come from **`opal-harvest-security-metrics`** -- RENAMED 2026-09-11 ~20:1xZ from `opal-amgt-security-metrics`, WHICH IS DROPPED AND NO LONGER RESOLVES (42 rows migrated, verified on full item equality; env knob `HARVEST_METRICS_TABLE`) -- written by `AMGT-rd-5` (chatter) and `AMGT-rd-6` (price).
 A client-side sort, a score computed on load, or a scan-then-rank is the defect this constraint exists to
 prevent -- the page must be able to render the ranked set without doing the ranking.
 
