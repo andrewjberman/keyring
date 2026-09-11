@@ -177,3 +177,78 @@ time someone fixes the code underneath it**, which is an argument for naming the
 **SIGNED** -- brief half, `half_hash f5bbef8c9ca9`, PRD v0.5, tree clean at sign.
 ⛔ Scope unchanged: brief CONTENT CARRIAGE only. Step (2) still NOT MET; `TO-S2-1`/`TO-S3-1` uncut;
 ADMITTED is not a retag GO.
+
+---
+
+## 8. FOURTH REVIEW -- brief `d64247e7fd58` @`f9458a7e43`. SIGNED. **THE RE-FOUNDING IS REVERSED.**
+
+**Supersedes sections 5, 6 and 7 in substance.** They stand as the record of three signatures this
+seat gave to a premise that was measured on the wrong plane.
+
+| check | result |
+|---|---|
+| brief half | `d64247e7fd58` -- matches |
+| ratified-text | `1c60358b916e` **UNCHANGED** -- CVO signature intact through all four |
+| `endpoint_outcomes` | 6, unchanged |
+| worktree | clean at sign |
+
+### 8a. WHAT REVERSED, AND IT RESTORES THE ORIGINAL BRIEF
+
+`C-RETAG-SAFETY` was re-founded at ~20:0xZ on `TO-S7-1`'s *"0 of 17 hops RAISE -- `AT2-s-6` killed
+the KeyError; the live mechanism is SILENT ZEROING"*, and the DT brief's page-blanking mechanism was
+written into the PRD as **"PRESERVED AS HISTORY AND NO LONGER OPERATIVE."**
+
+⛔ **THAT MEASUREMENT WAS TAKEN AGAINST `HEAD`. `HEAD` WAS NEVER THE PLANE THIS CONSTRAINT IS ABOUT.**
+
+```
+deployed yang-generate-positioning   LastModified 2026-08-18T18:34:43Z
+                                     CodeSha256   PRg64EGzQtLw7/HAhyN/jNP6rd01PrcLK4wKqCHAKfQ=
+AT2-s-6, AT2-s-1, AT3-s-1            ALL September -- COMMITTED, NOT DEPLOYED
+```
+
+**So a retag today BLANKS THE PAGE for all four partner firms. Not silent zeroing. Blanking --
+exactly as `0.4.0_DT_ClientPlatform` wrote it in the first place. The DT brief was right the whole
+time.**
+
+### 8b. THE EVIDENCE IS CORROBORATION, AND I CHECKED WHICH PART OF IT WAS
+
+- **Genuinely different instrument:** the worker DROVE THE DOWNLOADED DEPLOYED BYTES ->
+  `KeyError: 'Structured'` at `calculate_allocations():239`, 11 of 11 members, with a positive
+  control (`def lambda_handler` 1/1) and a negative control (0/0). Deployed 94,164 B vs HEAD
+  115,411 B, different md5s.
+- **Control plane:** `2.0.0_SA_COO~Z` read `LastModified` / `CodeSha256`.
+- ⚠ **MY OWN READ IS THE SECOND METHOD AGAIN, NOT A THIRD.** I ran
+  `lambda get-function-configuration` and got byte-identical values to `2.0.0_SA_COO~Z`. That is
+  **REPETITION of the control-plane read, not independent corroboration** -- it confirms the date, it
+  does not add an instrument. The worker's execution of the deployed bytes is the one that carries
+  the finding.
+
+### 8c. ⛔ MY OWN FAILURE, AND THE LAW ALREADY NAMED IT
+
+I signed this re-founding **three times** (sections 5, 6, 7). Across those reviews I asked:
+*is it a CONDITION rather than an act?* (yes) · *over WHAT DOMAIN?* (only after being corrected) ·
+*does the MEASURE discriminate?* (only after being corrected).
+
+**I never once asked: MEASURED AGAINST WHICH PLANE -- `HEAD` OR DEPLOYED?**
+
+⭐ **AND CLAUDE.md RULE 22a STATES THIS EXACT TRAP, IN THESE WORDS:** *"diff deployed bytes against
+the BUILD INPUT ... **running-bytes-older-than-built passes every rung.**"* That is precisely what
+happened: every rung passed. A criterion can be a condition, discriminate correctly, span every
+consumer, and still be measured on a plane that does not serve anyone.
+
+**So the plane question belongs BEFORE the domain question, not after it.** Domain asks *which
+consumers does this reach?* Plane asks *does the thing I measured actually run?* A perfect answer on
+the wrong plane is worth nothing, and it is the cheapest of all these checks -- one
+`get-function-configuration`.
+
+### 8d. VERDICT
+
+**SIGNED** -- brief half, `half_hash d64247e7fd58`, PRD v0.5, tree clean at sign.
+
+Carriage is now CORRECT for the first time in four versions: the DT brief's blanking mechanism is
+restored as LIVE rather than buried as history, and the repairs are recorded as
+**committed-not-deployed** rather than as done.
+
+⛔ Scope unchanged: brief CONTENT CARRIAGE only. Step (2) remains NOT MET, `TO-S2-1`/`TO-S3-1` remain
+correctly uncut, and ADMITTED is emphatically not a retag GO -- **the retag is now known to blank
+four partner firms' pages, which is worse than anything the three prior versions described.**
