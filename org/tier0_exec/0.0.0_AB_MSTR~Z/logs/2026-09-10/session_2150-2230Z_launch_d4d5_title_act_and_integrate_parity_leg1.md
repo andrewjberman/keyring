@@ -382,3 +382,34 @@ at the drain. Measured after his question: one commit by `0.9.0_WK_POSN_ASTTAX~1
 - Fabric-health class from `2.0.0_SA_COO~Z` (21293): a DELIVERED receipt decays silently when the recipient
   restarts; routed to `1.0.0_SA_CTO~Z` as a one-line B.0 candidate with the shared root named (delivery
   state lives only at the broker); banked in memory; not built.
+
+---
+
+## AMENDMENT 9 -- 09:2x-10:4xZ: C-S10 handed to its lane; the audit-archive device chain seeded on the CTO's ruling; one measured consequence held for the tool's steward
+
+**archetype:** VALIDATE + DEPLOY (repo state) + SCRIBE
+
+- **C-S10 (.gitignore `lib/`)**: measured (273 tracked files in 13 lib homes, 2 excepted; a new file in the cot gold
+  lib deploy home invisible to status), fixed and control-tested in place (a first attempt without venv rules
+  FAILED its own `.venv` control -- no venv rule existed anywhere; corrected), then the commit was REFUSED by the
+  owned-paths gate: `.gitignore` is lane BASE_EXEC. No override spent; patch + note handed at @f7c726c454;
+  `1.0.0_SA_CTO~Z` applied it @b750649397; verified from the bytes at HEAD and pushed. Disarm rides that commit.
+- **Audit archive, ACT 1 on 1.0.0_SA_CTO's ruling** (relayed by the laptop, bus 6337ff81): the invoker had
+  minted nothing in 533 hours on either device because `archive/<DEVICE>/` was never created. Seeded
+  `org/audit/archive/sitez/2026-08-20T042433Z/` byte-identical to the legacy baseline snapshot (17 of 17
+  sha256), wrote `sitez/.baseline` the invoker's own way (CRLF, 20 bytes), left the shared pointer untouched
+  (LF, 19 bytes here), verified trackability by `git status` (rule 497 is a negation; `check-ignore` misreads it).
+  Commit fcf093325f under GOVERNANCE_AUDIT. Invoker live: rc=1, 21 findings (7 ERROR-FAILCLOSED, 5
+  NON-APPEND-EDIT, 1 STALE-BASELINE -- expected while ACT 2 @83b202ed7b sits unpushed on the laptop),
+  **snapshot 2026-09-11T103259Z MINTED, 8 refreshed, 10 pinned**, self-commits 433017947f / c7fc28384b. All on
+  origin/SITEZ @15dd12638b. The deadlock is cleared.
+- **The consequence, measured and HELD (not fixed):** the 10 pinned files in the new snapshot are byte-identical
+  to the laptop-origin legacy copies, not to this device's live logs (git-author-override 92cfe6be==92cfe6be vs
+  live 0705faec, 469,740 bytes; agent-spawn f9d5077d vs live ead5b074; ledger-hook 384ecb51 vs live 543272c6),
+  while a refreshed log equals live. Site Z's device-local logs never descended from the laptop-origin baseline,
+  so detection flags them and the pin branch carries the baseline copy forward -- and after ACT 2 the per-device
+  pointer's pinned files are still laptop bytes, so the pins persist and this device's live audit logs are never
+  archived. Proposed to the steward via the laptop: a one-time CTO-ruled re-baseline of the sitez chain from
+  live bytes AFTER ACT 2 lands, or the invoker treating a fresh chain's first mint as a re-baseline. Doing it
+  before ACT 2 is pointless (the pin source is the shared baseline until then).
+- Also pushed this hour: AMGT_RESAPP round-2b drains and cuts, the CTO's self-drive tick, the CVO's C-S10 close.
