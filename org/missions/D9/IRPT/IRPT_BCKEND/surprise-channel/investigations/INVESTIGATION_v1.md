@@ -2336,6 +2336,107 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "IB-s-14's (v0.11) arm: 'the three retained vendor PDFs are verified by digest and exported as Analysis bundles labelled vendor_synthetic_holdings' -- read as three exports of three inputs.",
     "world_is": "Three exports of three inputs produced ONE rendered document three times. The digest chain was intact end to end for each variant separately, which is exactly why the constancy was invisible: every per-object check passed.",
     "notes": "The general form, and the reason this is worth a row rather than a footnote: a per-member verification cannot see a property the members SHARE. Three arms each asserting 'this object's stored hash equals its receipt's' certify the set clean while the set is one document repeated. The discriminating check is a COMPARISON ACROSS members, and it costs one equality test."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S19",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T16:23:46Z",
+    "one_line": "A TWO-PART CHANGE WAS SPLIT BY THE DRAIN: THE CODE HALF MERGED AND THE PACKAGING HALF DID NOT, SO THE SOURCE MAP AT THE TIP DECLARED BUILDS FOR TWO FUNCTIONS THAT CANNOT IMPORT. In round 2 `_authz/enforce.py` gained a module-level `import errors`. That edit merged. The matching edit to `lambda-source-map.json` -- adding `errors.py` to the packaged file list of every function that carries enforce.py -- did not. Measured at the merged tip: NO function's file list contained errors.py, while irpt-status and irpt-ycharts-generate both package enforce.py. Rebuilding either from the merged tree and deploying it would have produced a function that raises ModuleNotFoundError at IMPORT -- and that failure passes CodeSha256, passes the post-apply plan and passes the ledger, because every one of those rungs measures BYTES and none measures IMPORTABILITY. The live functions were healthy throughout: they were still serving this order's first-pass bytes, which did carry errors.py. THE SAME SPLIT ALSO LEFT THE REGISTRATION DISAGREEING WITH THE WORLD ON FIVE OF SIX FUNCTIONS -- artifact_sha256 held the PRE-deploy hashes while S3 and Lambda held the POST-deploy ones, so the triple equality read 0 of 6 at the tip. Rebuilding from the merged tree reproduced the LIVE bytes exactly for five of the six, which is what shows the divergence was purely in the RECORD and not in the world.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~3 -- DISARMED SAME TURN for the six functions this order touches: errors.py restored to the four file lists that need it, all six rebuilt, import closure verified in the REAL /var/task + /opt/python layout BEFORE any hash was registered, and the triple equality now reads 6 of 6. WHAT IS NOT DISARMED is the GENERAL SHAPE, and it is not this cell's to close: nothing in the drain or in any gate ties a module's import graph to the file lists that package it, so any future change that adds an import to a shared library can merge without its packaging half and leave a function that deploys green and dies on the first call. Whether an import-closure check belongs in the merge guards or in commit-gate is 1.0.0_SA_CTO's at L10 with 2.0.0_SA_COO~B to route; 3.0.0_SA_CVO grades the finding at L9.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "At the merged tip 77b2acc7a9, lambda-source-map.json: 'errors.py' in the files list of irpt-directory-search, irpt-directory-refresh, irpt-export-render, irpt-intake-poller, irpt-status, irpt-ycharts-generate -> False for all six, while 'enforce.py' in the list -> True for irpt-status and irpt-ycharts-generate",
+        "_authz/enforce.py at the tip imports errors at module level ('import errors as _errors  # noqa: E402  the ONE error envelope (IB-rt-4)'), and its non-stdlib import closure is ['errors', 'keys', 'resolve']",
+        "Import-closure check over the six zips built from the tip BEFORE the repair: 4 of 6 CLOSED, with 'IMPORT FAILED enforce ModuleNotFoundError: No module named errors' on irpt-status and irpt-ycharts-generate",
+        "Triple equality at the tip BEFORE the repair: 0 of 6 -- e.g. irpt-status registered 3vwEj6cjRRdgh6ew.. while S3 and the live function both held puH1OBabqlGAI1Kc..",
+        "After the repair: import closure 6 of 6 CLOSED and triple equality 6 of 6, with five of the six rebuilt hashes reproducing the LIVE bytes exactly (no upload and no apply were needed for those five)"
+      ]
+    },
+    "spec_asserts": "A deploy is verified by CodeSha256 against the built zip and the source-map registration, and the source map is the record of what each function packages.",
+    "world_is": "The record described a build that cannot import for two functions, and described the wrong bytes for five. Every deploy-time rung the estate runs would have passed on both.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The import-closure check is what found this, and it is cheap: extract the zip, import every packaged module with the worktree excluded from sys.path. It is the only rung that distinguishes 'the right bytes are deployed' from 'the deployed bytes work'. This is its second distinct catch in two orders -- row W3-S14 was the first."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S20",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T16:23:46Z",
+    "one_line": "A SIBLING CELL IS WRITING TO THE SHARED EXPORT TERRAFORM STATE WHILE THIS ORDER IS NON-TERMINAL, AND CONVERGING THE ROOT FROM HERE WOULD DESTROY ONE LIVE RESOURCE AND REVERT TWO. This order's own apply was clean and is evidenced in the ledger: pre-apply '0 to add, 1 to change, 0 to destroy' with source_code_hash the only differing attribute, post-apply 'No changes. Your infrastructure matches the configuration.' Within roughly thirty minutes the same root planned '0 to add, 2 to change, 1 to destroy', on three resources and for three different reasons: (i) aws_iam_role_policy.render_host_export_evidence -- an inline policy irpt-ycharts-runner-role:irpt-export-render-host-evidence granting s3:GetObject and s3:PutObject, present in the shared STATE and in NO .tf of this branch, so an apply DESTROYS a live grant on the ycharts runner role; (ii) aws_ssm_document.export_render_run -- declared in this branch, but the LIVE document is version 3 and this branch's content is older, so an apply DELETES 21 command lines including the whole host preflight, the renderer-module discovery and the RENDERER_MODULE_ABSENT refusal branch; (iii) module.irpt_export_render.aws_lambda_function.this -- IRPT_PORTAL_ORIGIN is https://portal.opalcapital.co live and https://opalinvest.dev in this branch, so an apply REVERTS the portal origin. THE DISCRIMINATOR IS ONE VERIFIABLE FACT: this order changed NO Terraform configuration at all -- `git status --porcelain -- infra/aws/terraform/` is empty -- so no diff in that plan can originate from this order's edits. This is the SECOND time this root has blocked this order and the first time it has done so with a live sibling rather than a stale premise.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B to sequence and 1.0.0_SA_CTO at L10 to decide, NOT this cell. Applying any of the three is a served-surface act on another cell's in-flight work and bound 7 forbids it; re-declaring them in this branch would be authoring another cell's configuration. What this cell did instead is measurable and complete: its own code change is deployed and verified three ways (triple equality 6 of 6, and a runtime invoke returning statusCode 200 with 5 of 5 contracts), its own convergence was measured AT THE TIME OF THE ACT and is in the ledger, and the battery now prints every residual with its address and its reason rather than reporting a bare non-clean plan. 3.0.0_SA_CVO grades at L9 whether an order may close with a shared root left non-converged by a sibling.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Ledger 20260911T1535Z_irpt-bckend-rt4_deploy_completion.md L2: pre-apply 'Plan: 0 to add, 1 to change, 0 to destroy' with module.irpt_export_render.aws_lambda_function.this the only resource and source_code_hash the only differing attribute; then 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed'; L4: post-apply plan 'No changes.'",
+        "terraform state show aws_iam_role_policy.render_host_export_evidence -> id irpt-ycharts-runner-role:irpt-export-render-host-evidence, Action [s3:GetObject, s3:PutObject]; comp-find over infra/aws/terraform/ -> 'NO HITS. This is a MEASURED zero over 589 scanned file(s)'",
+        "The SSM diff removes 21 runCommand lines including 'BLOCKED: RENDERER_MODULE_ABSENT -- ... Installing one is npm egress off Opal infrastructure (refused at IB-s-8)'; default_version 3 -> (known after apply)",
+        "The Lambda diff: IRPT_PORTAL_ORIGIN 'https://opalinvest.dev' -> 'https://portal.opalcapital.co', with LastModified 2026-09-11T16:10:41Z and CodeSha256 still W6fWlpva77QiSAn5.. (this order's bytes, untouched)",
+        "git status --porcelain -- infra/aws/terraform/ is EMPTY for this order, so no plan diff on any declared resource can originate from its edits"
+      ]
+    },
+    "spec_asserts": "RT4-AC1 arm (e) step (1): 'terraform plan on the export root reads ONLY this order's code change (0 to destroy; print the plan summary line) -- if it reads anything else, STOP and file a row', and step (4): post-apply plan 'No changes'.",
+    "world_is": "Both readings were satisfied when performed and are in the ledger. A sibling cell then mutated the shared state, so a plan taken at grading time is no longer clean, and every residual belongs to that sibling -- one resource absent from this branch entirely, two whose live content is newer than this branch's.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The amendment sequenced IB-rt-8 behind this order specifically to prevent this, and it still happened, which suggests the sequencing is per-ORDER while the contention is per-ROOT. Worth the issuer's attention more than the individual resources are: two cells holding disjoint <paths> can still share one Terraform state, and nothing in the grant mechanism says so."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S21",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T16:23:46Z",
+    "one_line": "THE irpt-common LAYER'S OWN BUILD_MANIFEST DISAGREES WITH THE LAYER THAT IS PUBLISHED, SO THE RECORD OF WHAT THE SHARED RUNTIME CARRIES IS WRONG. infra/aws/lambda/layers/irpt-common/BUILD_MANIFEST.json records zip_sha256_base64 TjZRSAPsIAUdOB3pjGIU9dIBtnnEwW1jotd+8hXDfnE= and zip_bytes 637134 with member_count 159. The published object and the live layer version BOTH hold ZUcsQUOsc3lT2cKlnur5rCAZc/a0rCkKvU5pjg11U20= at 644526 bytes and 161 members -- S3 and Lambda agree with each other and not with the manifest, which is the same shape as row W3-S18 one level up, on a surface THREE functions share. THE CONTENT ITSELF IS CORRECT, and that is why nothing has noticed: the published layer really does carry all five contracts, keys.py, firm_registry.json and bd_helpers.py, and the runtime capabilities read returns 5 of 5. So the defect is purely in the record -- and the record is what a later cell would rebuild from. THE MEASUREMENT THAT MATTERED HERE was reading the PUBLISHED ZIP rather than either the manifest or the repo's build lists: it is what showed enforce.py, errors.py and resolve.py are ABSENT from the layer, which is why this order packages them in the export zip instead of relying on it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B to route; the layer, its BUILD_MANIFEST and the performance root that publishes it are NOT in this order's <paths>, so correcting the manifest or republishing is out of grant and a path this order needs that it lacks is a row, never an override. NOT DISARMED, and deliberately not worked around: this cell did NOT republish the layer, because the published content already carries the union at the merged tip and a republish would mint a new version with identical bytes -- churn on a surface three functions share, to fix a record this cell may not write. The cheap general remedy is the same one row W3-S18 asks for, one level up: compare BUILD_MANIFEST's digest against the S3 object's content-sha256 and the live layer version, and print N of N.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BUILD_MANIFEST.json at 77b2acc7a9: zip_sha256_base64 = TjZRSAPsIAUdOB3pjGIU9dIBtnnEwW1jotd+8hXDfnE=, zip_bytes = 637134, member_count = 159",
+        "aws s3api head-object --bucket opal-313476888478-lambda-layers --key irpt-common.zip -> Metadata.content-sha256 = ZUcsQUOsc3lT2cKlnur5rCAZc/a0rCkKvU5pjg11U20=, ContentLength 644526",
+        "aws lambda get-layer-version --layer-name irpt-common --version-number 5 -> Content.CodeSha256 = ZUcsQUOsc3lT2cKlnur5rCAZc/a0rCkKvU5pjg11U20=, CodeSize 644526 -- S3 and Lambda agree, the manifest does not",
+        "The PUBLISHED zip, read member by member: 161 members; all five contracts under python/irpt_contracts/; python/keys.py, python/firm_registry.json and python/bd_helpers.py present; enforce.py, errors.py and resolve.py ABSENT",
+        "Runtime confirmation on the deployed consumer: lambda invoke irpt-export-render action=capabilities -> statusCode 200, FunctionError null, CONTRACTS AVAILABLE 5 of 5",
+        "3 of 3 live consumers (irpt-export-render, irpt-narrative, irpt-performance-adapter) are attached to irpt-common:5; only 2 of the 3 declare the layer in lambda-source-map.json, a second DESIRED-vs-APPLIED gap on the same surface"
+      ]
+    },
+    "spec_asserts": "The amendment's arm (e) step (3) requires irpt-common to be rebuilt from the merged tree as the union of every cell's CONTRACTS/MODULES/DATA lists, published as a new version, with 3 of 3 functions repointed and the capabilities read printing 5 of 5; BUILD_MANIFEST.json is the record of what was built and published.",
+    "world_is": "The published layer already carries that union -- 5 of 5 contracts, keys.py and firm_registry.json -- so a rebuild is a 0-diff on content, while the manifest that records it names a different digest, a different byte count and a different member count from what S3 and Lambda both hold.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Pairs with W3-S18 and W3-S19: three records in one round that describe a world they no longer match, each invisible to every check the estate runs, each found by comparing two instruments instead of trusting one. The layer is the worst of the three to have wrong, because three functions share it and a rebuild-from-the-record would republish the wrong thing to all of them at once."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S22",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T16:23:46Z",
+    "one_line": "TWO MODULES NAMED dispatch.py COLLIDE ON THE FLAT sys.path EVERY EXPORT MODULE SHARES, SO IB-rt-8's OWN TESTS CANNOT SEE ITS DISPATCH MODULE. `_authz/dispatch.py` and `export/dispatch.py` both exist at the merged tip. export/handler.py inserts `_authz` on sys.path at import (it must -- the shared libraries live one level up), so `import dispatch` resolves to _authz/dispatch.py, and export/dispatch.py's DECISIONS, HUMAN_GATED, DispatchRefused and render_request are unreachable by that name. Four tests in export/tests/test_rt8.py fail with 'module dispatch has no attribute ...' at the pristine tip, before any change of this order's. THE DEPLOYED CASE IS WORSE THAN THE TEST CASE AND IS THE REASON THIS IS FILED: in a Lambda every packaged module sits FLAT at /var/task, so if any function ever packages both, one file OVERWRITES the other in the zip and there is no path order left to disambiguate -- the loser simply is not there. Neither is packaged together today (the export function's build input carries export/dispatch.py and, from this order, enforce.py + errors.py + resolve.py, and _authz/dispatch.py is in no function's list), so this is latent rather than live.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B to route and the owning cells to resolve -- _authz/dispatch.py is IB-rt-8's or a sibling's and export/dispatch.py is IB-rt-8's; renaming either is authoring another cell's module, and neither is this order's to rename. This order's contribution is the MEASUREMENT and the guard: the import-closure check runs in the /var/task + /opt/python layout on every build, so the day a function packages both, the arm fails rather than the function failing in production. 3.0.0_SA_CVO grades at L9; 1.0.0_SA_CTO holds the flat-packaging convention at L10.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Probe reproducing export/handler.py's own sys.path order: `import dispatch` -> _authz/dispatch.py; hasattr(dispatch, 'DECISIONS') -> False; hasattr(dispatch, 'render_request') -> False",
+        "Both files exist: infra/aws/lambda/investor-reporting/_authz/dispatch.py (10800 bytes) and infra/aws/lambda/investor-reporting/export/dispatch.py (9809 bytes)",
+        "export/dispatch.py's own top-level names include READY, HUMAN_GATED, ABSENT, DECISIONS, DispatchRefused, render_request -- so the module is correct and simply unreachable under that name",
+        "pytest at the PRISTINE tip (git archive HEAD, no working-tree mutation): '5 failed, 61 passed, 2 skipped'; with this order's edits: '4 failed, 64 passed' -- the collisions are pre-existing and this order moved the count one in the right direction",
+        "lambda-source-map.json: no function's file list contains both dispatch.py entries, so the zip-level collision is latent and not live today"
+      ]
+    },
+    "spec_asserts": "Every shared module in this estate is packaged FLAT into each function's zip (enforce.py, keys.py, resolve.py all sit at /var/task), and modules import each other by bare name.",
+    "world_is": "Two different modules already share the name `dispatch`. On the worktree's sys.path one shadows the other and a sibling cell's tests fail against it; in a zip that carried both, one would overwrite the other outright.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The flat-packaging convention is what makes the shared libraries work at all, and this is its cost: the module namespace is GLOBAL across the whole investor-reporting tree, and nothing enforces uniqueness. A name census over every packaged basename would catch it in one pass and nobody runs one."
   }
 ]
 ```
