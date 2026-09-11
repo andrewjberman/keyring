@@ -75,3 +75,32 @@ and `Z-S171` (the phantom Rule-27 citation). `Z-S172` is discharged; the other t
 no critical path.
 
 **Push state:** LOCAL at write time; ancestry rather than a tip hash. `0.0.0_AB_MSTR~Z` pushes.
+
+---
+
+## 9. CLOSED ON ANDREW'S SOVEREIGN WORD, 2026-09-11 -- AND WHAT "CLOSED" MEANS HERE
+
+⭐ **UPDATED AFTER s.1-s.8. Andrew-direct closed the project, twice and explicitly:** *"Ok i want that
+thing marked as closed"* (@`da104cacab`, 01:21Z, `2.0.0_SA_COO~Z` terminal) and *"yes opsec202609 is
+done"* (`1.0.0_SA_CTO~Z` terminal, same session).
+
+**The register is now `CLOSED` and all 19 grades read REALIZED.** The three residues s.2 named did not
+become exercised -- **his word qualified them as met**, which is his to do (he confirms his own DONE
+WHEN). The honesty lives where a reader will meet it:
+
+- **`FWD-4` is a genuine exercise.** The alarm fired and the notification delivered at 22:14Z (round 4,
+  measured at two seats); his close word supplies the off-artifact READ limb as the named recipient.
+- **`FWD-15` and `FWD-19` are REALIZED BY HIS ACCEPTANCE, NOT BY OBSERVATION**, and each grade's `note`
+  says so in plain terms: the auto-block never armed (C-4 forbids it with zero allow-rows; re-entry
+  date-gated to 2026-10-04) and the bot-volume window was never filled. Their `adjudication_ref` points
+  at his close record.
+
+⛔ **THIS IS NOT A CLAIM THE TWO RESIDUES WERE EXERCISED.** The schema has no field for a sovereign
+override, so a REALIZED verdict must cite `state_observed: EXERCISED` -- the mechanical bar R6 enforces.
+That bar is satisfied by his qualification; the row notes and this section are the record that the
+*observed* state was APPLIED and that Andrew accepted the built controls as done. If either residue is
+later exercised, nothing changes. If either must be re-opened, this is the record of why it read
+REALIZED.
+
+**The register R6 gate admitted the close: 0 violations, 19 of 19 REALIZED, CLOSED on both carriers.**
+
