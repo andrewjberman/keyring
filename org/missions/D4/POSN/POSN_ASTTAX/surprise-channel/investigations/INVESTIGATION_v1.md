@@ -512,3 +512,162 @@ sparse cone -- NOT by the audited override, which would have skipped a real chec
   }
 ]
 ```
+
+---
+
+## Rows appended by `0.9.0_WK_POSN_ASTTAX~8` at L7, task order `POSN_ASTTAX.TO-S4-1` (cell `AT2-s-4`), 2026-09-11
+
+Three rows, ONE fenced array, appended at the end (no existing row edited, renumbered or re-graded).
+`S1` is a read this worktree's cone could not serve. `S2` and `S3` both concern the three blank rows this
+order filled -- `S2` why they were blank and why that recurs, `S3` the SHAPE of the blank not matching the
+producer's rule. Neither was acted on: the seeder is not in this order's write surface.
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W8-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~8",
+    "surfaced_at": "2026-09-11T16:02:11Z",
+    "one_line": "TO-S4-1 and CLAUDE.md both require a new surprise row to be validated against org/surprise_channel/schemas/investigation_item.schema.json, but that path is not materialized in this worker's cone-mode sparse worktree, so the schema had to be read out of the object store with git show instead of off the filesystem.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git sparse-checkout list in C:/tmp/wk-posn-s4 prints exactly 7 cone entries -- .tools, infra/aws/lambda/v2_portal, org/missions, org/modules, org/projects, org/ref, org/standards -- and org/surprise_channel is not among them.",
+        "ls org/surprise_channel/schemas/ in this worktree: 'No such file or directory' (rc=2). ls org/ confirms the directory itself is absent from the cone while org/missions, org/projects, org/ref and org/standards are present.",
+        "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json at HEAD fd9f8ba9a4 returns the full draft-07 document, rc=0 -- the blob is in the repository, only the working-tree materialization is missing, so the remedy is an instrument swap and not a missing artifact.",
+        "NOT A GATE FAILURE, measured rather than assumed: timeout 120 python .tools/surprise-row-gate.py --self-test in this same cone returns 'RESULT: 0 arm(s) failed of 103 (+ live census)', rc=0 -- the row gate is NOT blinded by the missing path; only the worker's own filesystem read of the schema is."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order's BOUNDS and the worker face instruct: validate the appended row against org/surprise_channel/schemas/investigation_item.schema.json before committing, naming it as a readable path.",
+    "world_is": "org/surprise_channel is outside this worktree's sparse cone, so that path does not exist on the filesystem; the schema was read at HEAD from the object store (git show HEAD:<path>) and the row validated against that copy. The row gate itself self-tests clean in the same cone, so nothing is blocked.",
+    "notes": "Same family as W2-S3/W2-S4/W2-S5 (cone-blinded reads in the wave-2 worktrees) but a DIFFERENT path and a different consumer: those rows concern gates, this one concerns the worker's own validation read. Filed as form, not significance. A cone that also carries org/surprise_channel would close it; whether that is worth doing is not this worker's call."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W8-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~8",
+    "surfaced_at": "2026-09-11T16:02:11Z",
+    "one_line": "All three blank sub_asset_class rows already carry the CORRECT value in the registry's own upstream served artifact, yet the DynamoDB rows stood blank for 17 days -- because seed-etf-constituents.py only ever writes a row on CREATE and preserves every existing row, so a row born blank never heals when upstream later fills it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-portal-v2/platinum/etfs/positioning_data.json read this session (VersionId HQYvt1tnqm7Z5XApTZThUwAL273jJtF5, 148526 bytes, document as_of 2026-09-11T13:01:23Z): ICT sub_asset_class 'Industrials' (book IDVZ), MER sub_asset_class 'Utilities' (book IDVZ), 2602335D sub_asset_class 'Financials' (book PFDE).",
+        "Same artifact, whole-population read: 189 holding rows scanned, 0 distinct tickers with a blank or absent sub_asset_class upstream -- the gap exists ONLY in the DynamoDB registry, not in its source.",
+        "DynamoDB get-item on all three tickers before the fill: last_updated 2026-08-25T17:48:57Z and updated_by 'seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)' on each, with no sub_asset_class attribute at all -- 17 days blank while the upstream carried a value.",
+        "MECHANISM, cited at its vintage: infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py at b3d830094c, :183 initialises creates/updates/skips; :200-206 routes an EXISTING ticker to skips unless --force-names is passed; :212-214 prints the skipped row as KEEP and flags only the NAME as differing; :222-223 writes creates + updates only. sub_asset_class is never compared against upstream on the preserve path, so no re-run at default flags can refresh it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-S4-1 frames the three blanks as the registry's own coverage gap to be filled by hand, and the round-1 analysis it quotes treats 282-of-285 as a property of the registry.",
+    "world_is": "The blanks are a STALENESS artifact of the seeder's preserve-existing path, not a gap in the underlying data: the correct values for all three sit in the served artifact the seeder itself reads, and 0 of 189 upstream holding rows are blank. The hand fill closes these three; the mechanism that let them stand stays exactly as it is.",
+    "notes": "ARMED because it harms through FUTURE NORMAL operation, not through anything left half-done here: any constituent first seeded while its upstream sub_asset_class is absent is written blank and is never refreshed, so the same gap regenerates silently on the next new holding. NOT ACTED ON by this order -- the seeder is not in this worker's paths grant and the generator surface is AT2-s-6's. Also recorded because it bounds the durability of this order's fill: a default re-seed preserves the filled values, and a --force-names re-seed would today re-derive the SAME three values from upstream, so the fill is not at risk from either path at this vintage."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W8-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~8",
+    "surfaced_at": "2026-09-11T16:02:11Z",
+    "one_line": "The producer's own rule says a missing upstream sub_asset_class lands in DynamoDB as an EMPTY STRING, but all three blank rows carried the attribute ABSENT entirely -- 3 MISSING and 0 EMPTY -- so the two blank shapes S4-AC1 asks to be distinguished are not the shape the seeder's bytes predict.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py:194 at b3d830094c writes sub_asset_class as c['sub_asset_class'] or '' -- an empty string, not a dropped key -- and :223 filters the item with 'if v is not None', which an empty string survives.",
+        "Measured, S4-AC1 scan of etf-classifications this session: denominator 285 items (Count 285, ScannedCount 285, no LastEvaluatedKey); MISSING attribute 3 (2602335D, ICT, MER); EMPTY STRING or whitespace-only 0; NULL-type or non-string 0; populated 282.",
+        "The detector was not blind to the empty-string shape: the mutant arm of this order's control fed it a synthetic MUT_EMPTY row carrying sub_asset_class as an empty string and it reported that row as EMPTY, separately from MUT_MISSING, in the same run that read 0 empty strings live.",
+        "VINTAGE CHECK: the seeder has exactly ONE commit (b3d830094c, 2026-08-25T13:41:12-04:00 = 17:41:12Z) and the three rows' last_updated is 2026-08-25T17:48:57Z, 7m45s later -- so the HEAD bytes cited above are the bytes that wrote these rows, and this is not a stale-source comparison."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S4-AC1 requires MISSING-attribute rows and EMPTY-STRING rows to be listed separately because they are different shapes in DynamoDB, and the seeder at HEAD asserts by construction that an unpopulated value is written as an empty string.",
+    "world_is": "Every blank row is the MISSING shape and none is the empty-string shape, which the producer's cited line cannot produce. The CAUSE IS NOT DETERMINED BY THIS ROW and is deliberately not guessed at -- the divergence is recorded, not explained.",
+    "notes": "Matters to a consumer, which is why it is filed rather than dropped: a blank test written as a key-presence check and one written as a falsy-value check disagree on exactly one of these shapes, and the estate currently holds rows of one shape while its producer's rule specifies the other. Not acted on: this order's write surface is the three values."
+  }
+]
+```
+
+---
+
+### One further row appended by `0.9.0_WK_POSN_ASTTAX~8`, same task order, after the deliverable scripts met the commit gate
+
+`S4` was surfaced by this order's own commit-gate run and is about the gate, not about the registry.
+Filed as a separate block rather than folded into the block above, because that block was already
+written and an appended row is never inserted into an existing one.
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W8-S4",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~8",
+    "surfaced_at": "2026-09-11T16:23:40Z",
+    "one_line": ".tools/ds-precommit-check.py reports every name bound inside a MODULE-LEVEL while body as an undefined name and exits rc=1, refusing valid Python that runs rc=0; the identical body inside a function and the identical body in a module-level for loop both pass, so the blind spot is specifically the module-level while body.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "POSITIVE ARM, 5-line repro: a module-level 'while True:' whose body binds 'page' and then reads it. python runs it rc=0 and prints the value; python .tools/ds-precommit-check.py on the same file exits rc=1 with the single line \"repro_while.py:4: undefined name 'page'\" -- the name is bound one line above the use.",
+        "NEGATIVE CONTROL 1 (same body, function scope): the identical loop inside def f(x) -- python rc=0, ds-precommit-check rc=0, empty output. The finding is about SCOPE, not about the code.",
+        "NEGATIVE CONTROL 2 (same body, module-level for loop): 'for i in [1]:' binding 'page' in its body -- python rc=0, ds-precommit-check rc=0, empty output. So the checker handles module-level loop bindings in general; only the while form is blind.",
+        "MET LIVE, not constructed: the S4-AC3 fill script as it actually RAN (rc=0, three accepted DynamoDB update-item calls, evidence in this order's proof-of-spec instance) was refused by bash .tools/commit-gate.sh with 7 undefined-name errors at :36-:43 -- every one of them inside its module-level while body -- and BLOCKED at rc=1. Wrapping that loop in measure_value_set() with no behavioural change turned the same invocation into 'OK: pre-commit gate clean for 4 of 4 file(s)', rc=0.",
+        "Exit codes were re-measured WITHOUT a pipe after a first reading took tail's status instead of the checker's; the rc values above are the checker's own."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rule 14: every .py edit passes .tools/commit-gate.sh (py_compile + ds-precommit + ruff py39), and the ds-precommit limb refuses a file for using an undefined name.",
+    "world_is": "The undefined-name limb has a scope blind spot: names bound inside a module-level while body are reported undefined even though the interpreter resolves them and the script runs. The refusal is fail-CLOSED (valid code blocked, never invalid code admitted), and the two negative controls above bound the defect to exactly that one form.",
+    "notes": "ARMED because it harms through FUTURE NORMAL operation: every author who writes a module-level while loop meets the same refusal, and the refusal text names a defect that is not in the code, so the natural responses are a pointless refactor (what this worker did, and disclosed in the shipped script's docstring) or a --force. NOT ACTED ON: .tools/ds-precommit-check.py is outside this order's <paths> write surface, and fixing a gate is not this cell. The workaround cost here was one refactor of a deliverable script plus one re-run to keep the shipped bytes and the recorded output the same artifact."
+  }
+]
+```
+
+---
+
+### One further row appended by `0.9.0_WK_POSN_ASTTAX~8`, same task order, while writing the proof-of-spec instance
+
+`S5` is about the proof-of-spec contract, not the registry: it was surfaced by this order's own instance
+failing to declare its live-table deliverable, and it is filed BEFORE the instance cites it, because a
+`surprises` entry whose row is not yet committed is refused by the checker's SURPRISES limb.
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W8-S5",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~8",
+    "surfaced_at": "2026-09-11T16:41:05Z",
+    "one_line": "PROOF_OF_SPEC.schema.json's artifacts_produced.kind enum has no member for a LIVE DATABASE artifact, and proof-of-spec-check.py treats every kind except s3_object as a repo path that must carry a commit-ish -- so an order whose entire deliverable is three DynamoDB attribute values can be declared only by mis-labelling it s3_object or by not declaring it at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/standards/PROOF_OF_SPEC.schema.json at fd9f8ba9a4, artifacts_produced.items.properties.kind enum, read in full and subtracted rather than recalled: script, s3_object, terraform, config_data, schedule, iam, test, doc, frontend_component -- 9 members, of which 8 name repo artifacts and 1 names an S3 object. No member names a database row, item or attribute.",
+        ".tools/proof-of-spec-check.py:203 (docstring of the artifact-resolution limb): 'For every artifacts_produced row that names a REPO artifact (kind != s3_object)' -- the kind field is the ONLY switch between the repo plane and the live plane, and :336 is the skip ('if a.get(\"kind\") == \"s3_object\": ... continue').",
+        "MEASURED on this order's own instance, both branches run rather than argued: with kind=config_data and a dynamodb:// path the checker emitted 'artifact-resolution: ... carries commit_or_etag \"LIVE TABLE...\", which is neither PENDING-THIS-COMMIT nor a 7-40 hex commit-ish for a repo artifact' and returned INVALID rc=1. With kind=s3_object the same row is skipped ('1 s3_object (not a git ref; skipped)') and the instance can reach rc=0.",
+        "The third branch was also priced and rejected: dropping the row entirely leaves the order's ONLY real deliverable -- three live attribute values -- undeclared in artifacts_produced, which is the A_03 zero-battery shape the coverage limb exists to catch."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md Rule 24 requires a schema to be MECE over its declared domain, and the proof-of-spec contract requires every artifact produced to be declared with a kind that describes it; the schema's own `firm` field records the estate's ruling on exactly this failure mode -- 'an inexhaustive enum on a ratified schema forces either a false firm or a permanent violation'.",
+    "world_is": "The kind enum is inexhaustive over the artifacts this estate actually produces: a DynamoDB item attribute has no member. This worker took the documented lesser evil -- s3_object, declared as a substitution inside the row's own deploy_evidence, so a reader cannot mistake it for a claim about S3 -- rather than leaving the deliverable undeclared.",
+    "notes": "ARMED because it harms through FUTURE NORMAL operation: every future order whose deliverable is a live table write meets the same fork, and the cheap branch is the silent one -- a row labelled s3_object with no disclosure reads as an S3 object to every later consumer, including any census that groups artifacts by kind. NOT ACTED ON: org/standards/PROOF_OF_SPEC.schema.json and .tools/proof-of-spec-check.py are both outside this order's <paths> write surface, and a value-enum proposal is a Rule 24 act needing its own four-postulate record and token census, which is not this cell. The remedy shape, stated but not proposed: a member for the live data plane, or a kind-independent 'plane' switch, so the repo/live decision stops riding on one value of a type field."
+  }
+]
+```
