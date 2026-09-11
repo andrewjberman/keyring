@@ -364,14 +364,32 @@ COOs answered those on the merits, one accepting and one declining, and both wer
 "dress a recommendation I chose to accept in the authority of an Andrew-direct arm record" -- exactly right. Chosen
 rows are landed HERE, by the CTO, naming the chooser and citing the message that evidences the choice.
 
-`2.0.0_SA_COO~Z` **[FABRIC: SITE-Z]** **`/drive` CHOSEN-ARM 20m over POSN_ASTTAX ONLY** (cron `701a388d`, `11,31,51`;
+`2.0.0_SA_COO~Z` **[FABRIC: SITE-Z]** **`/drive` DIRECTED 10m over POSN_ASTTAX ONLY** -- **RE-CLASSED
+CHOSEN -> DIRECTED and RE-TIMED 20m -> 10m on ANDREW-DIRECT 2026-09-11 ~22:2xZ at the
+`1.0.0_SA_CTO~Z` terminal, VERBATIM: *"Both COOs need to be on 10m /drive loops for their projects
+where they're checking explicitly for project stage in /canonical-flow to either drive forward,
+parallelize more labor, or assess a dropped ball and nudge the responsible agent"*
+(record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_222xZ_COO_DRIVE_10M_CANONICAL_FLOW_STAGE_CHECK_AND_REBRAND.md`).
+"NEED TO BE" is a DIRECTIVE; his ~15:4xZ word on the same subject was "I would also recommend", which
+is why this row stood as CHOSEN for an hour. THE CLASS IS THE THING THAT MOVED.*
+⛔ **EVERY TICK RUNS AN EXPLICIT `/canonical-flow` PROJECT-STAGE CHECK with three outcomes, his own:
+DRIVE FORWARD | PARALLELIZE MORE LABOR | ASSESS A DROPPED BALL AND NUDGE THE RESPONSIBLE AGENT.**
+⚠ **A NUDGE UNDER THE THIRD IS AUTHORIZED ONLY AFTER `/canonical-flow`'s LIVE-PRODUCTION PROBE
+REPORTS NOTHING MOVING ACROSS ALL FOUR PLANES** (commits, `deliverables/<serial>/`, the seat's own
+worktree, `.runtime/codex-seats/<serial>/`) -- and "nothing moving" is still not proof of stalled.
+That precondition exists because this exact path fired a `[STUCK]` at a seat writing 189 KB.
+⚠ The arm is the COO's own act; this row RECORDS the authorization, it does not perform it.
+PRIOR STATE, kept: CHOSEN-ARM 20m (cron `701a388d`, `11,31,51`;
 AMGT and the harvest surface EXPLICITLY EXCLUDED in the job body). **AUTHORITY: CHOSEN, not directed** -- that seat
 re-armed on Andrew's ~20:0xZ "all agents MAY unpause" (a permission, not an order) and reported it in msg 21613.
 Landed here by `1.0.0_SA_CTO~Z` on its routing (21639/21640) because a seat may not author its own chosen row.
 STOP-CONDITION: `POSN_ASTTAX` `status: complete` per the register, or Andrew's stand-down.
 
-`2.0.0_SA_COO~ZZZ` **[FABRIC: SITE-Z]** **`/drive` over AMGT_RESAPP ONLY** (cron `04145241`,
-`3,23,43 * * * *` recurring, session-only). **AUTHORITY: CHOSEN** -- RESOLVED 2026-09-11 21:26Z, the
+`2.0.0_SA_COO~ZZZ` **[FABRIC: SITE-Z]** **`/drive` DIRECTED 10m over AMGT_RESAPP ONLY** -- **RE-CLASSED
+CHOSEN -> DIRECTED and RE-TIMED to 10m on the SAME Andrew-direct ~22:2xZ recorded on the row above;
+the same three-outcome `/canonical-flow` stage check and the same probe precondition bind here.**
+PRIOR STATE, kept because the reclass is the record: (cron `04145241`,
+`3,23,43 * * * *` recurring, session-only). **AUTHORITY WAS: CHOSEN** -- RESOLVED 2026-09-11 21:26Z, the
 transient closed in 6 minutes by `2.0.0_SA_COO~ZZZ` reading out msg 21428, which it holds (it was
 addressed to that seat, which is why this seat's own inbox search correctly found nothing).
 **ANDREW ~15:4xZ, VERBATIM:** *"I would also recommend that the respective COOs have /drive loops
