@@ -69,15 +69,15 @@ Runtime limitation: the canonical surprise watcher was exercised in `once` mode;
     "owner": "1.0.0_SA_CTO~Z to route to repository owner",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z to route to repository owner",
       "round": "v2"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO~Z to route to repository owner",
-      "at": null
+      "at": "2026-09-11T09:30:24Z"
     }
   },
   {
@@ -212,3 +212,7 @@ Runtime limitation: the canonical surprise watcher was exercised in `once` mode;
   }
 ]
 ```
+
+## C-S10 closure verification, 2026-09-11
+
+CTO source fix `b750649397d413a62bc4ad2d4103fc9035a5f6cc` independently passed seven visible-source and seven ignored-dependency controls at `2026-09-11T09:30:24Z`. C-S10 alone advances to DISARMED / REMEDIATED / closed. Evidence: `org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_C_S10_CLOSURE_20260911.md`. Historical row evidence remains unchanged; the bundled round-1 W1-S3 row is not closed by this act.
