@@ -2949,6 +2949,57 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "The amendment: 'if the run refuses SESSION_ABSENT, that refusal IS the recorded output -- arm (a) then reads SESSION-GATED naming IB-rtb-1'.",
     "world_is": "Exactly that branch, reached on the first send that got past the infrastructure gaps. The render pipeline is complete except for authentication.",
     "notes": "Four earlier sends in the same authorization each produced a NAMED refusal before this one -- MODULE_NOT_FOUND playwright, MODULE_NOT_FOUND @aws-sdk/client-s3, RENDERER_MODULE_ABSENT, and a TLS error on a hostname the estate does not own. Each was a real gap between a host half that was written and a host it had never run on."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S24",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T17:52Z",
+    "one_line": "W2-S21's PREMISE DOES NOT HOLD AS WRITTEN, AND ACTING ON IT LITERALLY WOULD STRIP THE SHARED LIBRARIES OUT OF irpt-ycharts-generate. The amendment says the function declares 25 build inputs in lambda-source-map.json of which 7 have never existed in the tree, and instructs that a build input absent from the tree is REMOVED, never invented. Measured instead of taken on faith, because the removal is destructive: the function declares 26 inputs, and 26 of 26 RESOLVE to a real file -- 0 are genuinely absent. The 8 that do not sit under the entry's own source_dir (enforce.py, errors.py, gate.py, keys.py, resolve.py, firm_destination_policy.json, firm_registry.json, settings.json) all exist elsewhere in the tree and are packaged FLAT by this estate's Lambda convention, which is the whole reason they appear in the list by bare name: every module lands at /var/task, so a shared library is declared by basename and resolved from its home package at build time. A naive 'does source_dir/<name> exist' check is what returns 7 or 8 absent. Removing those entries would delete enforce, gate, keys and resolve -- the modules the deployed job.py imports at module scope -- and firm_registry.json, which keys.py reads. That is the W3-S19 failure class (a two-part change whose packaging half is missing), self-inflicted, and it would read GREEN at every deploy-time rung because the zip would build, upload and register cleanly and only die at cold start. NOTHING WAS REMOVED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B -- the issuer owns the amendment text. The correction is to the PREMISE, not to a file: any later cell handed the same sentence, on this function or another, will run the same naive resolution and get the same 7-or-8 and, lacking the flat-packaging fact, will do the removal this cell declined to do. The estate has no resolver that encodes the flat convention; every reader re-derives it. 1.0.0_SA_CTO if the fix is to give lambda-source-map.json an explicit source path per entry so the convention stops being tacit.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/lambda-source-map.json @684e7eb90a, the irpt-ycharts-generate entry's files array -- 26 entries before this cell's edit, not 25",
+        "measured by .scratch/verify_ycharts_inputs.py (this worker, flat-packaging resolver), verbatim: 'declared inputs: 26 | RESOLVE to a real file: 26 | genuinely absent: 0'",
+        "the 8 outside source_dir resolve to infra/aws/lambda/investor-reporting/_authz/enforce.py and errors.py, _gate/gate.py, _keys/keys.py, _scope/resolve.py, infra/aws/terraform/investor-reporting/core/firm_destination_policy.json, data/firm_registry.json and infra/aws/lambda/investor-reporting/intake/settings.json -- each present at 684e7eb90a",
+        "registered artifact_sha256 == S3 object content-sha256 == live CodeSha256 == hiVUThOsWCSe304UfRug466Oqv6tqvL/8fjKskUUpoo= , read live this turn: the RECORD AGREES WITH THE WORLD, which is not what a record carrying 7 phantom inputs would look like",
+        "a rebuild from the declared list yields IdFoLLRZqJpHP9ISk8amWypuoH2dMCwUIh+dyzV/YcA= (89,789 bytes) before this cell's edit -- the tree is AHEAD of the deploy, which is a separate and expected fact, not an absence"
+      ]
+    },
+    "spec_asserts": "The IB-rt-9 issuer amendment (W2-S21 half), verbatim: irpt-ycharts-generate declares 25 build inputs in lambda-source-map.json of which 7 have never existed in the tree: register the truth (a build input absent from the tree is REMOVED, never invented).",
+    "world_is": "26 declared inputs, 26 resolving, 0 absent. The 7-of-25 figure is an artifact of resolving every name under the entry's source_dir, which the estate's flat Lambda packaging does not do.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed rather than obeyed, and filed rather than argued: the face's rule is that a premise which does not hold is ONE row and then keep working. The half of W2-S21 that DID hold -- register the truth, verify the triple equality -- was executed: the triple equality is printed above, and the declaration was corrected in the only direction the measurement supports, which is the ADDITION recorded in row W3-S25, not a removal."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S25",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T17:52Z",
+    "one_line": "_scope/resolve.py GAINED A MODULE-LEVEL 'import ids' AND THE PACKAGING HALF DID NOT FOLLOW FOR ANY OF THE THREE FUNCTIONS THAT SHIP IT. resolve.py at 684e7eb90a carries 'import ids as _ids' at line 81 (IB-rt-3's typed identifiers, _ids/ids.py), but lambda-source-map.json declared ids.py in ZERO of the three functions whose build inputs include resolve.py: irpt-export-render, irpt-status and irpt-ycharts-generate. Measured in the /var/task layout with the worktree excluded from sys.path: 'import closure in the /var/task layout: 6 of 8 OPEN [enforce: ModuleNotFoundError, resolve: ModuleNotFoundError]' -- enforce fails transitively because enforce.py imports resolve. The three LIVE functions still serve OLDER bytes and work today, so every deploy-time rung reads green and nothing is currently broken in production; the harm is armed for the NEXT rebuild-and-deploy of any of the three, which would upload, register, match its hash three ways and then die at cold start on ModuleNotFoundError. This is exactly the two-part-change split of row W3-S19, at a new tip, introduced by a different cell -- which is the tell that the estate has no mechanism tying an import to a build input, only workers who happen to check. REPAIRED IN THE DECLARATION HALF ONLY, inside this order's grant: ids.py is added to all three file lists and closure now reads 9 of 9 CLOSED for irpt-ycharts-generate. artifact_sha256 is DELIBERATELY NOT MOVED -- it still equals the S3 object and the live CodeSha256, and under the managed wind-down this order deploys nothing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B to route the rebuild-and-deploy that makes the served bytes match the corrected declaration -- three functions (irpt-export-render, irpt-status, irpt-ycharts-generate), each needing a ledger entry, a safe-apply and a registered-equals-S3-equals-live re-read per W3-S18. Deferred here and ONLY here because the wind-down instruction from 0.0.0_AB_MSTR relayed 2026-09-11 17:30Z forbids opening a change-management ledger, applying, publishing or deploying for the rest of this session. The DECLARATION is fixed and committed; the DEPLOY is the successor session's first act and is written down as such in WIP_IB-rt-9_winddown.md.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_scope/resolve.py:81 @684e7eb90a -- 'import ids as _ids  # noqa: E402'",
+        "infra/aws/lambda/investor-reporting/_ids/ids.py exists at 684e7eb90a (git cat-file -e rc 0); IB-rt-3 introduced it",
+        "per-function read of lambda-source-map.json @684e7eb90a: irpt-export-render resolve=True enforce=True ids.py=False; irpt-status resolve=True enforce=True ids.py=False; irpt-ycharts-generate resolve=True enforce=True ids.py=False -- 3 of 3 ship resolve.py, 0 of 3 declared ids.py",
+        "import closure measured in a /var/task extraction with every repo path stripped from sys.path, BEFORE the fix: '6 of 8 OPEN [enforce: ModuleNotFoundError, resolve: ModuleNotFoundError]'; AFTER adding ids.py: 'import closure in the /var/task layout: 9 of 9 CLOSED'",
+        "registered == S3 == live == hiVUThOsWCSe304UfRug466Oqv6tqvL/8fjKskUUpoo= read live this turn, so the CURRENTLY SERVED bytes predate the resolve.py change and are not affected",
+        "row IRPT_BCKEND-W3-S19 -- the same class of split, recorded earlier in this project by this worker"
+      ]
+    },
+    "spec_asserts": "The IB-rt-9 amendment (W2-S21 half) treats the build-input list as a record to be trued up, and W3-S18 requires artifact_sha256 == S3 content-sha256 == live CodeSha256 for every function a cell touches.",
+    "world_is": "The build-input list was missing a module that three functions' declared code imports at module scope. The record and the world agreed on the HASH while disagreeing on IMPORTABILITY, because a hash certifies bytes and nothing in the deploy path ever imports them.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The general shape is worth more than this instance: CodeSha256 equality is the estate's standard deploy proof and it CANNOT see this defect, by construction. The only instrument that catches it is an extract-and-import in the flat layout with the repo off sys.path, which this worker runs from .scratch and which no gate runs anywhere. A candidate disarm that outlives these three functions is to make that check a commit-time gate over lambda-source-map.json; proposing is legal, implementing it is outside this order."
   }
 ]
 ```
