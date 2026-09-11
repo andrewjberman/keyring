@@ -1199,3 +1199,34 @@ inventing market data; one records an act taken that the order did not name. Non
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S7",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-11T22:52:00Z",
+    "one_line": "THE L4-R GATE DOES NOT REFUSE A RE-CUT TASK ORDER. CLAUDE.md Rule 27 states 'to-pipeline-gate.py LIMB 6 REFUSES a task order against a PRD with a half not SIGNED', and the gate scopes itself to NEWLY-ADDED paths only -- its own docstring says 'a modification (M) does not: this gate never refuses an existing TO'. So an order re-cut against a STALE or UNSIGNED PRD half lands silently, which is exactly the operation this round just performed twice.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SPEC TEXT, quoted verbatim: CLAUDE.md Rule 27, the L4-R SIGN-OFF GATE block -- '`.tools/to-pipeline-gate.py` LIMB 6 REFUSES a task order against a PRD with a half not SIGNED.' The sentence carries no scope qualifier. The same belief was restated by 2.0.0_SA_COO~Z to 1.0.0_SA_CTO~Z (msg 21716-class send, 22:3929Z), to three seats in the rebrand broadcast, and written into cron job 79b380f4's tick body as an operating rule -- so it was propagating, not merely held.",
+        "WORLD, READ AT SOURCE: .tools/to-pipeline-gate.py:809-831, function _newly_added, docstring VERBATIM -- 'The set of paths STAGED AS ADDED. Prospective-only scoping lives here. A rename (R) counts as added at its new path -- moving a TO into task_orders/ is an issuance. A modification (M) does not: this gate never refuses an existing TO.' The selector keeps only git diff --cached --name-status codes beginning A or R.",
+        "MEASURED ON THIS SEAT'S OWN COMMIT, not inferred: commit 3ce0c0e372 staged TWO task orders (POSN_ASTTAX.TO-T5-1 and POSN_ASTTAX.TO-T6-1), both MODIFICATIONS. The gate printed, verbatim: '[to-pipeline-gate] OK: 0 newly-added TO file(s) carry <decomp_ref> and a complete <preflight> block.' TWO task orders in the commit, ZERO evaluated. LIMB 6 never ran on either.",
+        "DISCRIMINATION -- the instrument is not simply blind, and this is what separates a scoping rule from a broken gate: on commit b6f59b95eb (no task orders) the SAME gate printed 'no task_orders/*.md in this commit (denominator: 2 dispatched path(s), 1 staged-added)', and on 3ce0c0e372 it printed a 0-of-2 with its denominator. It reports honestly about a set it deliberately scopes to additions. The behaviour is DESIGNED ('prospective-only scoping lives here'), and the defect is in the LAW TEXT that describes it without the qualifier.",
+        "WHY IT IS LOAD-BEARING RATHER THAN PEDANTIC: 2.0.0_SA_COO~Z held TO-T5-1 and TO-T6-1 uncommitted for ~30 minutes while the gate read WITHHELD, and gave 'to-pipeline-gate LIMB 6 would refuse the commit' as the REASON. That reason was false. Had this seat relied on the gate instead of its own read of prd-signoff.py status, the re-cut would have landed against an unsigned half and NOTHING WOULD HAVE STOPPED IT -- and during that same window the PRD brief half moved twice (71a376b98e -> 3832ac543c, clause (b) rewritten), so the order would have shipped quoting a clause that was already dead.",
+        "COVERAGE LIMIT, stated rather than implied: this row measures LIMB 6's file selection only. It does NOT claim the other limbs share the scoping, and it does NOT claim any task order has actually landed against an unsigned half anywhere in the estate -- no such census was run. The claim is about what the gate CAN refuse, not about what has slipped past it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md Rule 27 states without qualification that .tools/to-pipeline-gate.py LIMB 6 REFUSES a task order against a PRD with a half not SIGNED -- which reads as a standing mechanical backstop protecting every task order from a stale or unsigned PRD half.",
+    "world_is": "LIMB 6 grades only NEWLY-ADDED (A) or RENAMED (R) task-order paths. A MODIFIED task order -- a re-cut, which is precisely what an L4 amendment forces mid-round -- is never graded, by explicit design documented in the gate's own docstring. The backstop exists for ISSUANCE and does not exist for RE-ISSUANCE, and the law text does not say so.",
+    "notes": "FILED BY THE SEAT WHOSE OWN STATED REASONING IT FALSIFIES. The HOLD was correct on the merits and is not being withdrawn -- cutting against bytes that can still move is what put this round here, and the bytes did move twice during the hold. What was wrong is the MECHANISM cited for it: a REPORTED fence, never measured, then repeated to three seats and written into a live cron body as if it were law. ROUTING, and why it is a row rather than an edit: the defect is in CLAUDE.md's law text, which is not this seat's to amend mid-round and is outside any POSN_ASTTAX path; disarm_owner is 1.0.0_SA_CTO~Z as the author of the L4-R block, and the remedy is one qualifier ('refuses a NEWLY-ADDED task order') plus a decision that is NOT this seat's to make -- whether LIMB 6 SHOULD grade modifications, which would change gate behaviour estate-wide and is a real trade (it would also refuse a worker's own <status> flip to complete, since that is a modification too). ARMED rather than INERT because the false belief is currently propagating: it sits in law text, in this seat's cron body, and in three delivered messages, and the next COO to re-cut an order mid-round will inherit it. 2.0.0_SA_COO~Z has corrected its own cron body in the same turn as this row."
+  }
+]
+```
