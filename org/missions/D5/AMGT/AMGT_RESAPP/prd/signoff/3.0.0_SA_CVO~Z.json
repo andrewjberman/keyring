@@ -1,0 +1,12 @@
+{
+  "prd": "AMGT_RESAPP_PRD.md",
+  "prd_version": "v0.4",
+  "prd_pin": "bbbf35c38e5e0e3af2feabb912366b2074d612f9",
+  "half": "ratified-text",
+  "half_hash": "f576e011be53c4894539d07f2fcc54b038eba909b93f431a27ffc9c6eb9405a6",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_v04_RATIFIED_TEXT_REVIEW_20260911_Z.md@cfaa24b7b8",
+  "signed_by": "3.0.0_SA_CVO~Z",
+  "signed_at": "2026-09-11T15:26:35Z",
+  "reason": "ENDPOINT contains seat names, dated incident and version annotations at pinned lines 67-69, 214-217, 220-236; move commentary outside the section while preserving ratified bars."
+}
