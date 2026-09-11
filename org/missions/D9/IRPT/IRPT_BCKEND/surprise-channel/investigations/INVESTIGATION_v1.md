@@ -1733,6 +1733,34 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "The CTO's ruling 4 as this face carries it: 'Directory, holdings and performance ids through one admitted transformation (W1-S7, W1-S9, W2-S11)' -- three id-shape disagreements are named (the duplicate definition, the missing normaliser, the <firm>:acct: prefix).",
     "world_is": "There was a FOURTH, unnamed disagreement in the same id space: the resolver's own shape check, and the fixture that documented it, both described a bare 24-hex id that no producer has ever emitted. It is closed by this cell because it sits inside this order's <paths> and is the same defect class the ruling names -- but it was not on the ruling's list, and it was invisible precisely because the test fixture asserted the wrong shape.",
     "notes": "INERT: the branch is unreachable for any id the directory DOES hold, so no served answer was ever affected -- only the reason string on an already-missing id. Filed rather than fixed silently because the mechanism by which it hid (a fixture stating a shape as fact, so every test agreed) is worth the record independently of the one-line repair."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S12",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-11T13:10:00Z",
+    "one_line": "TWO ROUND-2 CELLS ARE REBUILDING THE SAME SHARED LAYER CONCURRENTLY, and `aws_lambda_layer_version` REPLACES rather than appends, so each publish DESTROYS the other's version. Measured: at this cell's cut `irpt-common` was :2; by the time IB-rt-3 had built its zip the live layer was :4, published 2026-09-11T12:55:55Z (one minute before this cell's ledger opened) by a peer cell adding python/keys.py and the three export contracts (row W4-S10's item), with :1-:3 already deleted. Publishing THIS cell's zip as built would have silently REVERTED that peer's landed deploy -- NEVER-2's half-landed-deploy hazard pointed at a neighbour. AVOIDED, not merely noticed: IB-rt-3 measured the live :4 zip member-by-member, found all four peer members BYTE-EQUAL to blobs already committed in its own ancestry, declared them in build_layer.py as CARRIED_FORWARD_MEMBERS with that measurement cited, and published a UNION -- verified against the live :4 as 0 members regressed, exactly 2 added (python/ids.py, python/raw_keys.json), 0 common members differing. Both consumer functions are on :5 and both roots plan clean. THE REMAINING HAZARD IS THE MERGE, NOT THE BUILD: both cells edited infra/aws/lambda/layers/irpt-common/build_layer.py on separate branches, in the same region of the file, and whoever merges SECOND owns the member declaration -- if the peer's edit lands after this one without carrying IDS_MEMBERS, the next build of that file drops the normalizer from the layer and every handler's `import ids` fails at cold start, which no source diff of either branch would show.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B (the drain owns the build_layer.py merge: the merged file must carry BOTH cells' member declarations -- IDS_MEMBERS and the peer's export-contract/keys members -- and the merged layer must be rebuilt and re-applied ONCE afterwards, with the zip's member list compared against the live version before the apply. Neither worker can see the other's branch, so neither can do this.)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured at this cell's cut: `aws lambda list-layer-versions --layer-name irpt-common` returned ONLY {V:2, Created 2026-09-11T01:27:24Z}, and both functions carried layer:irpt-common:2",
+        "measured ~40 minutes later, mid-build: the same call returned ONLY {V:4, Created 2026-09-11T12:55:55.881Z} -- versions 1-3 gone -- and both functions already carried :4",
+        "get-layer-version :4 CodeSha256=TjZRSAPsIAUdOB3pjGIU9dIBtnnEwW1jotd+8hXDfnE= Size=637134, DIFFERENT from this cell's build (ZvfLP5IwnaROdfP0nplUZxzci13k2A8b3Abd/pmJ+2Q=, 631060) -- so :4 was not this cell's bytes",
+        "member diff of the downloaded :4 zip against this cell's first build: IN :4 ONLY = python/keys.py + python/irpt_contracts/{ExportBundle,ExportReceipt,RenderPackage}.schema.json; IN MINE ONLY = python/ids.py + python/raw_keys.json; 0 common members differing",
+        "each of the four peer members verified byte-equal to `git show HEAD:<path>` in this worktree (21320 / 9849 / 8351 / 11074 bytes) BEFORE being declared as carried-forward",
+        "the union build: 161 members, sha ZUcsQUOsc3lT2cKlnur5rCAZc/a0rCkKvU5pjg11U20=; verified against live :4 as REGRESSED=[] ADDED=['python/ids.py','python/raw_keys.json'] common-differing=0",
+        "terraform plan on the performance root read 'Plan: 1 to add, 1 to change, 1 to destroy' -- the DESTROY is the peer's :4; the apply published :5 and moved both functions onto it in the same act",
+        "after the apply: get-layer-version :5 sha matches the built zip; 2 of 2 functions on :5; both roots 'No changes.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's DELIVERABLE: 'the layer rebuilt to carry `_ids` (its root re-applied under a ledger entry, `irpt-common:3`)' -- the face names the next version as 3 and assumes this cell is the only one rebuilding it.",
+    "world_is": "The next version was 5, not 3: a peer cell had already taken 3 and 4 while this cell worked, and `aws_lambda_layer_version` destroys the prior version on every publish, so the two cells' builds are mutually destructive by construction rather than by mistake. This cell published a measured UNION so nothing regressed, but the shared BUILD SCRIPT still has two independent edits on two branches and only the drain can reconcile them.",
+    "notes": "BLOCKING is for the MERGE, not for this cell's own acceptance: arm (f) is satisfied and verified on the live plane (irpt-common:5, 2 of 2 functions, both roots 0-diff). The reason it is ARMED rather than INERT is that the failure mode is SILENT and DELAYED -- a merged build_layer.py missing one cell's member list produces a layer that imports cleanly in every test that runs from the repo path and fails only at a deployed cold start."
   }
 ]
 ```
