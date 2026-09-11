@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 90 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-2-ds and CLOUD resolved as a strict UNION of both sides (84 ours + 77 theirs, 71 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 91 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-2-2 and CLOUD resolved as a strict UNION of both sides (90 ours + 79 theirs, 78 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -1403,6 +1403,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Row IRPT_BCKEND-W2-S16 (this cell's own, committed at 173349a652) asserts: 'TWO SCHEMAS ARE NOT RESPONSES BY CONSTRUCTION: AnalysisRequest ... and FirmDestinationPolicy is firm configuration'. The same sentence appears in this cell's battery result and proof-of-spec instance.",
     "world_is": "FirmDestinationPolicy is not one of the eleven published schemas. The eleventh is RenderPackage. THE SUBSTANTIVE CLAIM SURVIVES THE SUBSTITUTION -- RenderPackage is the package handed to the export renderer, never an HTTP response body -- so 'two of the eleven can never be a response' remains true with RenderPackage in place of FirmDestinationPolicy, and arm (b)'s 0 of 11 is unaffected. What is NOT merely a naming slip: RenderPackage's x-contract names the PRODUCER as FNTEND and the CONSUMER as BCKEND. For that one contract this cell's governing bound -- THE PRODUCER DEFINES, THE CONSUMER CONFORMS -- points the OTHER WAY, and this cell published it under a directory whose CONTRACT.md says the producer is IRPT_BCKEND. The per-schema x-contract block states the true direction and was published unedited, so the artifact is not wrong; the directory-level prose over-generalises for 1 of 11.",
     "notes": "WHY A NEW ROW AND NOT AN EDIT: the channel is append-only and W2-S16 is already committed. Editing it would leave no trace that the correction happened, which is the failure mode the append-only rule exists for. W2-S16 stands as filed; this row is its correction and any reader of one must read the other. HOW IT HAPPENED, stated so the shape is reusable: the eleven schemas were enumerated CORRECTLY everywhere they were DERIVED (the publisher globbed the directory, the instance's artifact rows glob it, the battery counts 11 of 11) and WRONGLY in the one place they were RECALLED -- a sentence in prose. A derived list and a recalled list disagreed and only the recalled one was wrong. FIXED IN THIS COMMIT: the PATH_MANIFEST gains its RenderPackage entry (the dead FirmDestinationPolicy entry is left, per the manifest's own append-only contract, and this row is its notice); the battery result and the proof-of-spec instance -- neither append-only -- are corrected in place and say so. CARRIED FORWARD: whether the directory-level CONTRACT.md should name RenderPackage's inverted direction is a v2 question, because v1 is immutable from this cell's complete flip -- which has not happened, since RT1-AC1 is a FAIL."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S18",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T13:40Z",
+    "one_line": "THE RE-CUT NAMES TWO DENOMINATORS FOR THE SAME SET: 'one per route in routes.json' is 12 and 'the eleven response schemas ... 11 of 11' is 11. Both hold only if the NO-HANDLER-AT-HEAD route gets none. That is how it was built, and BOTH numbers are printed rather than one being quietly chosen.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the amended face at c8189bb6ae, arm (b): 'one per route in `routes.json` (the denominator printed)' and, in the same clause, 'The eleven response schemas exist, validate as schemas, and each `data` `$ref` resolves to a document schema (`11 of 11`)'",
+        "docs/contracts/investor-reporting/v1/routes.json at this commit: 12 routes = 11 DECLARED + 1 NO-HANDLER-AT-HEAD (GET /api/scoped/investor-reporting/holdings/{accountSetId})",
+        "docs/contracts/investor-reporting/v1/responses/ at this commit: 11 files, one per DECLARED route; the battery prints 'denominator: 12 route(s) ... = 11 DECLARED + 1 NO-HANDLER-AT-HEAD' and then 'published ... 11 of 11 DECLARED'",
+        "test_every_declared_route_has_a_response_contract_whose_refs_resolve asserts BOTH directions: 11 of 11 DECLARED routes have one, and the NO-HANDLER route has NONE"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-1 arm (b) as re-cut: response schemas are published 'one per route in routes.json (the denominator printed)', and separately 'The eleven response schemas exist ... (11 of 11)'.",
+    "world_is": "routes.json carries TWELVE routes, so 'one per route' and 'eleven' cannot both be satisfied by the same reading. The reading taken: the 11 DECLARED routes each get a response contract and the 1 NO-HANDLER-AT-HEAD route gets NONE -- because a route with no handler answers nothing, and a response contract for it would describe a response that cannot exist while adding a twelfth file that makes '11 of 11' read as a shortfall. Both denominators are printed side by side by the battery and stated in routes.json and CONTRACT.md, and the absence is asserted by test rather than merely left empty.",
+    "notes": "FILED AS FORM, NOT SIGNIFICANCE: the worker had to choose between two readings the face gives equal standing, and a choice made silently is indistinguishable from not noticing. Nothing is blocked -- arm (b) passes on either reading's evidence because both counts are printed. IF THE OTHER READING WAS MEANT, the remedy is one more file (holdings-snapshot.response.schema.json) and a one-line change to the assertion that currently requires its ABSENCE; v1 is not frozen until this order's complete flip, so it is cheap now and a v2 afterwards."
   },
   {
     "id": "IRPT_BCKEND-W3-S1",
