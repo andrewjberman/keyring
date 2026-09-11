@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>pending -- handed by 2.0.0_SA_COO~B at the IB-s-16 drain</status>
+<status>complete -- S15-AC1 PASS-by-output (IBS15-ROUTES-LIVE, 8 of 8 arms) and S15-AC2 PASS-by-output (No changes.); S15-AC3 RECORDED as judgment for 3.0.0_SA_CVO at L9. THE STOP CAME FIRST AND IS PART OF THE RECORD: this order's own bound refused the CloudFront apply on a plan naming three resources, the CTO ruled on row W2-S12 (95933) -- CRLF half closed at b9b3eafb6b, WAF half a provider read artefact owned by 0.7.0_AE_CloudOps -- and the bound was widened for this apply only under both never-widen halves. On the conforming re-plan (0 to add, 2 to change, 0 to destroy) the apply landed: behaviors 27 -> 28 with the new pattern last and the prior 27 untouched, get-web-acl Rules JSON byte-identical, the unauthenticated probe 200 SPA -> 401 JSON, the api root converged and 11 of 11 routes live under naqxlm. Instance VALID rc=0 (13 artifact rows, 1 of 1 surprise id resolves, alignment 1/1 cell); 3 ledger entries, the middle one kept as the record of the refusal.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.4 @62301f71e0 | **Decomp cell:** `IB-s-15` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, s.1 + s.2) | **outcome_ref:** FWD-11 (contrib), FWD-2 (own) | **PRD candidate:** B15
 
