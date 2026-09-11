@@ -241,6 +241,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The cell's own (a)/(b) schemas carry reviewed_at/review_interval_days at the list level only, and (c) then describes staleness in terms of 'entries older than review_interval_days since reviewed_at' as if the comparison were per-entry; the cell also names social_accounts.json entries by `security_key` without defining the term or pointing at an existing field it maps from.",
     "world_is": "No per-entry reviewed_at field exists in either schema the cell itself gives, so this cell's rot.py computes staleness once per list (all-or-nothing over that list's entries) rather than per entry, and security_key was set to AMGT-s-12 universe.json's `folder` value -- the only field measured unique over all 89 names, since bloomberg_ticker/sa_symbol are UNRESOLVED for many of them and would leave holes as a key.",
     "notes": "Non-blocking: AC1/AC2/AC3 all pass under this reading, and the cell's own (c) text -- 'Prints ONE line per list' -- is itself consistent with a per-list (not per-entry) rot computation. Recorded because a later cell or an owner editing these lists by hand and expecting a per-entry review date, or a per-entry security_key drawn from some other identifier, would find neither and should read this row first."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W7-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~7",
+    "surfaced_at": "2026-09-10T23:59:24Z",
+    "one_line": "build_view.py's security_key derivation omitted the Bloomberg yellow key ('Equity'), so it matched NOTHING in the store even for correctly-resolved names -- invisible while the store was empty, caught once AMGT-s-1 landed real data; fixed in-session (own bug, own <paths>).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live boto3 read of opal-data-research at this vintage: 18 keys now present (previously 0), under raw/bloomberg/{BABA_US_Equity,BA_US_Equity,SAP_GY_Equity}/ and derived/model_block/{same three}/ -- AMGT-s-1 has landed real Bloomberg pulls",
+        "raw/bloomberg/BABA_US_Equity/20260910T224407Z/refdata.json read directly (get_object): its own top-level JSON key is literally 'BABA US Equity' -- the FULL Bloomberg security identifier including the yellow key, confirming the store's actual key grammar rather than assuming it",
+        "universe.json's bloomberg_ticker.value for the same name is 'BABA US' (no yellow key) -- this cell's original security_key_for() did `value.replace(' ','_')` -> 'BABA_US', which never matches 'raw/bloomberg/BABA_US_Equity/' -- regenerating coverage_freshness.json BEFORE the fix showed 89 of 89 rows NEVER even though 2 of those 89 names (Alibaba BABA, Boeing BA) had real, fresh Bloomberg data landed under a key one underscore-segment away from what this module looked up",
+        "fix: security_key_for() now appends '_Equity' before replacing spaces; re-run after the fix: 2 of 89 rows now read a real timestamp (20260910T224407Z, 20260910T224406Z) matching the store's own object timestamps; re-ran AC1/AC2/AC3/AC4/AC5 against the fixed module, all PASS-by-output"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This cell's own STORE_CONTRACT.md (AMGT-s-6 deliverable) section 2 worked example already showed the full identifier ('AAPL US Equity' -> 'AAPL_US_Equity'), implying <security_key> always carries the yellow key.",
+    "world_is": "AMGT-s-12's universe.json (the identity layer this cell is told to read security_key FROM) never carries the yellow key in bloomberg_ticker.value -- only '<TICKER> <EXCH>'. Bridging that gap (appending 'Equity') was left implicit in the contract's own text and this cell's first draft did not do it, so the freshness view was silently wrong (100% false-NEVER) for any name with real store data, for as long as the store was empty to hide it. Fixed in this cell's own module (lib/research/freshness/build_view.py, in <paths>) and amended into STORE_CONTRACT.md (also in <paths>: deliverables/ broadly granted) so AMGT-s-14 (the next consumer in this chain) does not repeat it.",
+    "notes": "Secondary, related observation, not separately filed: SAP GY still reads NEVER in the regenerated view even though real SAP data is landed under raw/bloomberg/SAP_GY_Equity/ -- because AMGT-s-12's shared-template-placeholder fix (AC7) downgraded SAP GY's bloomberg_ticker to UNRESOLVED (it was one of the 16 folders that shared the 'AAPL US' placeholder), and this cell correctly treats UNRESOLVED as no-key rather than re-deriving one from the store. SAP GY's TRUE ticker ('SAP GY') is now independently confirmed by the store's own successful landing under that exact key -- a fact AMGT-s-12's own re-resolution pass could use, but re-resolving identity from a downstream store write is AMGT-s-12's call, not this cell's to make."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W7-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~7",
+    "surfaced_at": "2026-09-11T00:08:37Z",
+    "one_line": "The issuer's instruction ('AMGT-s-7 stays COMPLETE... regenerate coverage_freshness.json') is jointly unsatisfiable with the owned-paths lane gate: lib/research/freshness/ is granted ONLY by AMGT-s-7's own order, and a TERMINAL (complete) order is not a live grant, so this worker cannot commit the code fix its own regenerate required.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~ZZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'lib/research/freshness' across all 16 task-orders/*.md in this project -> 5 hits, ALL inside AMGT_RESAPP.TO-AMGT-s-7.coverage-freshness-view-one-place.md (its own WHAT-TO-PRODUCE text, its own <paths> line, its own AC4/AC5 invocations) -- no OTHER task order, including the already-staged AMGT_RESAPP.TO-AMGT-s-14.input-ledger-per-class-rerun-alone.md (issued_to this same serial, <paths> = lib/research/ledger/, two named integrations/ scripts, deliverables/, the investigation file, its own TO file), names this path",
+        "AMGT-s-7's own task-order file at HEAD reads <status>complete</status> (this worker's own prior commit, cc3961a3ce)",
+        "bash .tools/safe-commit.sh --author \"0.9.0_WK_AMGT_RESAPP~7 ...\" -F <msgfile> -- lib/research/freshness/build_view.py <3 other paths> -> 'ERROR: owned-paths lane violation(s) detected (block mode): VIOLATION: lib/research/freshness/build_view.py -- lane=BASE_EXEC (Base workspace execs -- CTO + COO + CVO...); agent=0.9.0_WK_AMGT_RESAPP~7 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block (ADHC_OWNPTH.005: the order is the grant; a missing path is a cut defect, never an override)' -- rc 1, nothing committed (files left unstaged, verified via git status immediately after)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The issuer's message, verbatim: 'The order AMGT-s-7 stays COMPLETE; this is its own deliverable refreshed on the correction of its input, not a reopen' -- paired with 'Re-run the generator... Commit the regenerated deliverable and the instance on your branch via safe-commit'.",
+    "world_is": "Those two instructions cannot both hold under ADHC_OWNPTH.005 as gated: the code fix to lib/research/freshness/build_view.py this regenerate REQUIRED (surprise row AMGT_RESAPP-Z-W7-S4 -- security_key_for() needed the yellow-key fix or the regenerated coverage_freshness.json would still misreport BABA/BA as NEVER) sits in a directory ONLY AMGT-s-7's own order ever granted, and that order is now terminal by the issuer's own explicit instruction. This worker did NOT force an override (GIT_COMMIT_AUTHOR_OVERRIDE=<LANE> is an audited escape for a LANE HOLDER, not a route for a worker to widen its own grant past what an order names -- CLAUDE.md 14a's own text, and this order's own bound: 'you cannot ask for one to be added') and did NOT commit the regenerated coverage_freshness.json without its generating code, which would have landed a data artifact with no committed code to justify it -- a worse state than reporting the block. Every fix (build_view.py's yellow-key correction, the regenerated JSON, the STORE_CONTRACT.md amendment, this row) exists in the worktree, verified correct (AC1-AC5 all re-run PASS against the fixed module), and is UNCOMMITTED pending the issuer's resolution: reopen AMGT-s-7 briefly for this one write, amend AMGT-s-14 (or a new order) to add lib/research/freshness/ to its <paths> before it is formally handed, or name an explicit route this order did not anticipate.",
+    "notes": "This worker treats this the same as an unsatisfiable proof-of-spec criterion: refuse the action as instructed, record the measurement, and report -- never repair the gate, never self-authorize an override, never widen the grant. Nothing was rolled back; the worktree carries the complete, correct, verified fix, uncommitted, exactly as the gate left it."
   }
 ]
 ```
