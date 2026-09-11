@@ -35,7 +35,8 @@ the above"*):
 
 ## PART I — THE OUTCOME TERRITORY
 
-Nine outcomes. Each is one thing a named kind of person can DO.
+Eleven outcomes. Each is one thing a named kind of person can DO. O11 is the one Andrew
+grades directly; the other ten are how it gets there.
 
 ### O1 — A prospect moving from the website into the portal does not experience a change of firm
 
@@ -83,9 +84,24 @@ between them, and a reviewer can demonstrate the separation.
 O8 is complete when a screen's charts come from one rendering system, so that visual conventions
 are a property of the product rather than of whichever library that page happened to import.
 
-### O9 — Andrew can put the portal on screen beside an institutional competitor and the difference is not that ours looks generated
+### O9 — An advisor's screen is filled by the work, not by the space around it
 
-O9 is the outcome the other eight serve, and it is the one Andrew can grade directly. It is
+Every route rendered for this brief devotes roughly its lower third to empty canvas while the
+content above it is tightly packed. O9 is complete when the density gradient runs the other
+way — generous inside a data container, disciplined between sections — and a page that has run
+out of content says so rather than trailing off.
+
+### O10 — An advisor meeting a panel with no data still sees a designed surface
+
+Six distinct "nothing here" treatments were observed across three routes: a centred grey
+sentence, a two-line grey sentence, a bordered red error, a duplicated error string on the raw
+canvas, an em-dash-filled table, and a panel that renders its header and then nothing. O10 is
+complete when empty, loading, error and no-permission are four designed states rather than
+whatever each component's author reached for.
+
+### O11 — Andrew can put the portal on screen beside an institutional competitor and the difference is not that ours looks generated
+
+O11 is the outcome the other ten serve, and it is the one Andrew can grade directly. It is
 complete when the comparison turns on capability rather than on finish.
 
 ---
@@ -248,6 +264,84 @@ instead of its own defaults. A first draft has been written to `portal/DESIGN.md
 
 ---
 
+### IV.9 - What three rendered routes actually showed
+
+**Measured:** `/market`, `/positioning` and `/portfolio-management` rendered headless at 1440x900
+against the dev server on :5173, 2026-09-11, and read as images. All three resolved canvas
+`rgb(195,202,218)`. This section is the visual half of the evidence; SS IV.3 is the code half.
+
+**The single structural finding: the product is a dark-mode dashboard placed on a light-mode
+page.** Dark navy panels float on a mid-silver field. That is not a palette problem a token swap
+fixes by itself - it is an unresolved decision about which mode the product is in, and it is what
+makes every other defect read as carelessness. Andrew's light-canvas ruling (SS V.3) resolves it;
+until the surfaces follow, they will keep fighting each other.
+
+**`/positioning` - five button idioms on one screen.** Counted in a single viewport: a filled
+accent pill group (MODELS / ETFS / SATELLITES); a second, smaller filled accent pill group
+(Portfolio / Benchmark / Relative / Custom); a **five-hue segmented control** (UST orange, ST
+orange, INT filled green, LT blue, ULT red); a third filled accent pair (Characteristics /
+Performance); and an outlined ghost button (EXPAND DETAILS). **The five-hue control encodes a
+strictly ordered duration ladder in unordered hue** - the defect O3 exists for, and a direct
+violation of the estate's own precedent (`deck_generation/DESIGN_BIBLE.md` rule B1,
+*dark-to-light traversal*). The same page underlines its column headers, which that same document
+bans by name as a generated-design tell.
+
+**`/market` - the loudest colour on the page is not a brand colour.** The Global RSI bars render
+chartreuse `#ADFF2F` (`src/index.css:69`). The Fear & Greed gauge is a red-orange-yellow-green
+rainbow arc, a consumer-crypto convention. Bullish/Bearish and Top/Bottom panels are marked with
+saturated green and red left-borders drawn from the template palette. Below the fold a duplicated
+error string - *"Failed to load market data: Failed to load market data: Error: ..."* - renders in
+red directly on the silver canvas, which violates the portal's own documented colour law.
+
+**`/portfolio-management` - the numerals problem is visible, not theoretical.** Figures render as
+`0.00`, `0.0`, `0` in a code-editor face beside Inter labels, with em-dashes for absent values.
+The Fund selector is a **native unstyled `<select>` with an OS chevron**, which is what
+`color-scheme: dark` (`src/index.css:132`) produces on a light page. A filled accent "Upload
+Portfolio" button sits in the same header as two outlined ghost buttons.
+
+**Common to all three:** three nested rounded containers deep, each a different navy; roughly the
+lower third of the page empty; and no visible focus affordance anywhere.
+
+### IV.10 - The design toolchain now exists and did not before
+
+**Measured:** 29 skills installed to `.claude/skills/` on 2026-09-11 from seven repositories,
+pinned by commit SHA at `design/SKILLS_MANIFEST.md`. None are vendored (SS V.6).
+
+Relevant to this project, with what each is authoritative FOR:
+
+| Skill | Source | Use it for |
+|---|---|---|
+| `taste` | senlindesign | Reverse-engineering a URL into measured tokens. Produced SS IV.2. |
+| `impeccable` v4.3.1 | pbakaus | The design work itself. Its **Operate** mode is written for dashboards; `critique`, `typeset`, `colorize` and `distill` are separable passes. Reads `DESIGN.md` as its authority. |
+| `web-design-guidelines` | vercel-labs | The review gate. Fetches current Web Interface Guidelines each run; would flag `outline: none` immediately. |
+| `theme-factory` | anthropics | Token-set generation and coherence. |
+| `ui-ux-pro-max` | nextlevelbuilder | **Reference lookup only** - 25 chart types, accessibility guidance, 22 stacks. It generates a design system from its own 192 palettes, which this project must not let it do. |
+| `frontend-design` | anthropics | Baseline direction; smallest surface, already in use. |
+| `redesign-existing-projects`, `high-end-visual-design`, `minimalist-ui` | leonxlnx | Redesign-audit framing. Biased toward bold/expressive; usable for critique, not for direction on an Operate surface. |
+
+**Finding:** the tooling gap is closed. What remains uncovered is not capability but AUTHORITY -
+every one of these skills proposes its own visual system unless a `DESIGN.md` tells it not to,
+which is exactly what SS IV.8 and O6 address.
+
+### IV.11 - The comparator set, so "expensive" is not left abstract
+
+Andrew's bar is *"much more elevated, much more expensive"* and *"a minimal expensive look with
+more mature concepts."* Those words need referents or L2 cannot cut a gradeable outcome from them.
+This brief offers the category's two poles as **reference, not as a target to copy**:
+
+- **Light institutional** - Addepar, Canoe, Orion. Near-white field, hairline rules, restrained
+  accent, type doing the ranking. This is the pole `opalinvest.com` already occupies and the pole
+  Andrew's light-canvas ruling points at.
+- **Dark terminal** - Bloomberg, Koyfin, YCharts. Dark field, high chart chroma, dense grids.
+  Considered and NOT chosen (SS V.3), though the existing dark theme survives as a toggle.
+
+**What both poles share, and what the portal has none of:** one typeface family; a single accent
+rationed hard; ordered data encoded in ordered colour; and empty states that look designed. The
+"expensive" quality in this category is consistently produced by SUBTRACTION, not addition - which
+is why O1 through O10 are almost entirely removals.
+
+---
+
 ## PART V — WHAT MUST BE TRUE, WITHOUT SCOPING IT NOW
 
 Named, not sequenced. Sequencing is L5.
@@ -353,8 +447,58 @@ Do not cut outcomes from this part. It is a snapshot and it ages.
    as input to L4 and carries no authority until then.
 9. **No estimate of effort or duration appears anywhere in this brief**, deliberately. A number
    invented at L1 is treated as ratified by every later stage.
+10. **⛔ THE COMPARATOR SET IN §IV.11 IS NOT MEASURED.** Addepar, Canoe, Orion, Bloomberg, Koyfin
+    and YCharts were named from category knowledge. **No competitor site was captured, and no
+    number in §IV.11 came from an instrument** — contrast that with §IV.2, where every value is a
+    measurement with a denominator. If the endpoint is going to be graded against "looks as
+    considered as Addepar", somebody must run `taste` against those URLs first. Until then §IV.11
+    is orientation, not evidence, and it is the one part of this brief that would fail its own
+    §IV.2 standard.
+11. **The six empty-state treatments counted in O10 come from three routes.** The true count across
+    twenty-six routes is unknown and is almost certainly higher.
+12. **The defect inventory in Appendix A mixes two grains.** A1–A6, A11–A16, A22–A23 are code-wide
+    censuses; A7–A10, A17–A21 were observed on one or three rendered pages. A per-page observation
+    is not a claim about the product, and Appendix A does not assert one.
 
 ---
+
+---
+
+## APPENDIX A - MEASURED DEFECT INVENTORY
+
+**NOT A DECOMPOSITION AND NOT A SEQUENCE.** This is the evidence set, listed so L2 can cut outcomes
+against it and L5 can decompose from it. It is deliberately unordered: nothing here asserts what is
+done first, in what batch, or by whom. Sequencing is L5's and is not this brief's to make.
+
+| # | Defect | Evidence | Outcome it blocks |
+|---|---|---|---|
+| A1 | Inter imported and set as body face | `src/index.css:16`, `:142` | O1, O2 |
+| A2 | 222 `font-mono` occurrences; no `--font-mono` defined anywhere | import census, `src/` | O2 |
+| A3 | Canvas is mid-silver `#C3CADA`, not near-white | `src/index.css:52` | O1, O9 |
+| A4 | Navy used as panel surface, not as text | three-tier navy nesting | O1 |
+| A5 | Creative Tim "Argon" template status palette | `src/index.css:40-43` | O7 |
+| A6 | `--chart-1..5` aliased onto status colours | `src/index.css:111-115` | O7 |
+| A7 | Chartreuse `#ADFF2F` is the loudest colour rendered | `src/index.css:69`, `/market` | O4 |
+| A8 | Rainbow gauge arc, consumer convention | `/market` render | O4, O11 |
+| A9 | Five-hue control for an ordered duration ladder | `/positioning` render | O3 |
+| A10 | Five button idioms on one screen | `/positioning` render | O4 |
+| A11 | `outline: none !important` on every element | `src/index.css:166` | O5 |
+| A12 | `color-scheme: dark` on a light canvas; native `<select>` unstyled | `src/index.css:132`, `/portfolio-management` | O1 |
+| A13 | Four charting libraries: recharts 36, apexcharts 4, nivo 1, visx 1 files | import census | O8 |
+| A14 | Two icon sets: lucide-react 102, phosphor-react 1 files | import census | O1 |
+| A15 | Two animation libraries: `framer-motion` and `motion` | `package.json` | - (cleanup) |
+| A16 | Uniform 6-8px radius against the site's 2-4px | `--radius: 0.5rem` | O1 |
+| A17 | Three nested rounded containers, three different navies | all three renders | O1, O9 |
+| A18 | Lower third of every rendered page is empty canvas | all three renders | O9 |
+| A19 | Six distinct empty/error treatments across three routes | all three renders | O10 |
+| A20 | Duplicated error string rendered on the raw canvas | `/market` render | O10 |
+| A21 | Underlined column headers (banned by `DESIGN_BIBLE.md` C4) | `/positioning` render | O11 |
+| A22 | `tailwind.config.js` dead under Tailwind v4 (no `@config`; `primary-500` in 0 files) | config read + census | - (cleanup, NOT causal) |
+| A23 | `::selection` uses `--warning` orange, off-palette | `src/index.css:171` | O4 |
+
+**23 defects. 20 bear on an outcome; 3 are cleanup that bears on none** and are listed so the
+decomp does not mistake them for work that earns an outcome.
+
 
 ## REFS TO CARRY
 
