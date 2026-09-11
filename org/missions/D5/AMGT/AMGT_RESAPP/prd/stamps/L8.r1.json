@@ -1,0 +1,10 @@
+{
+ "note": "Channel compile VERIFIED at this seat, not accepted: 24 investigation rows, 24 UNDER_INVESTIGATION, 3 ARMED (all disarm_owner 2.0.0_SA_COO~ZZZ), 4 BLOCKING (W7-S1/W9-S2/W7-S5/W2-S2, all hazard INERT), 0 defects, 0 malformed, 0 adjudication and 0 remediation rows. Agrees with the COO drain-end packet (msg 21137 via 21143). Read at a vintage containing the drain: b176e4b074 is an ancestor of HEAD. L9 dispositions follow; L10 waits on AMGT-s-b4, which is not this seat's gate.",
+ "prd_pin": "52617ed23982",
+ "prd_version": "v0.3",
+ "project": "AMGT_RESAPP",
+ "round": 1,
+ "signed_by": "3.0.0_SA_CVO~Z",
+ "stage": "L8",
+ "utc": "2026-09-11T02:53Z"
+}
