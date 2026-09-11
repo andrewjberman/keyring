@@ -67,7 +67,14 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     the spine does not name it; that ambiguity is PLACED, not resolved, and no round changes owner on it) →
     L9 adjudicate (JUDGMENT criteria are graded HERE and
     never self-graded) → L10 ONE SLUG to the CTO, ALWAYS, only after every TO is terminal and every row
-    dispositioned; the CTO answers with a PRD addendum (an FWD no cell served) or the ROUND-N ANALYSIS the
+    dispositioned; ⛔ **AND THE L10 ORDER -- slug -> the CTO's ROUND-N ANALYSIS -> the COO's recut --
+    IS LOAD-BEARING, NOT STYLISTIC. A ROUND N+1 ISSUANCE CUT BEFORE ROUND N's SLUG DEADLOCKS ROUND
+    N's L10 UNTIL N+1 FULLY DRAINS**, because the refuser counts open orders PER PROJECT and never
+    per round (LD-0521). Measured 2026-09-11 on AMGT_RESAPP, by the seat that did it: round 6 was cut
+    straight off the L9 adjudication at 22:24Z, flipping `rd-8` superseded and opening `re-1` staged
+    IN THE SAME COMMIT -- so the open count never reached zero, and `3.0.0_SA_CVO~Z`, already
+    correctly gated and having NAMED `rd-8` as its blocker, silently acquired a different one. ⚠ The
+    cost lands on ANOTHER SEAT and is invisible to the one that caused it; the CTO answers with a PRD addendum (an FWD no cell served) or the ROUND-N ANALYSIS the
     COO recuts in ONE issuance; CLOSED when every FWD grades REALIZED.** The three route tokens are RETIRED.
     Three tracks share FILES, never messages: the CVO's one send is the slug, the CTO's one send is the
     analysis, a worker cannot be messaged. `0.0.0_AB_MSTR` integrates and never works a project. Mid-round

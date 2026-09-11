@@ -235,6 +235,23 @@ plane (2) says COLD about every v3 worker producing at full rate -- not sometime
 CONSTRUCTION, for the entire class, until the drain. It did no harm only because plane (3) outvoted
 it, which means **the exposure was bounded by a DIFFERENT plane rather than by this one being
 right.**
+⛔ **AND BEFORE ANY OF THE FOUR PLANES: READ WHETHER THE OWNER HAS NAMED ITS OWN BLOCKER. THE
+PLANES MEASURE PRODUCTION; THEY CANNOT MEASURE ENTITLEMENT TO BE IDLE.** A seat that is CORRECTLY
+WAITING on a named, measured blocker reads IDENTICAL on all four planes to a seat that has dropped
+the ball -- cold commits, cold deliverables, cold artifacts -- and the nudge ladder fires on it.
+**`BLOCKED` IS A THIRD CLASS BESIDE `IN-PROGRESS` AND `STALLED-AT-OWNER`, AND ITS TEST IS THE
+OWNER'S OWN ARTIFACT, NOT A LIVENESS PLANE:** read the limb's output document for a stated blocker,
+then RE-MEASURE that blocker at HEAD.
+Measured 2026-09-11 by `2.0.0_SA_COO~Z`/`~ZZZ` on the case that would have produced the second wrong
+nudge of the night: `3.0.0_SA_CVO~Z` read 3 planes COLD and 1 structurally blind, LIVE, summary
+"READY" -- and its own `ADJUDICATION_v5.md:13` said, at 21:41Z, *"L10 remains blocked. The production
+gate's read ... sees 1 of 36 orders nonterminal: rd8 is staged."* **It had named its blocker and was
+correctly waiting.** No plane could see that; one `grep` of its own document could.
+⚠ **AND RE-MEASURE THE BLOCKER RATHER THAN TRUSTING THE SEAT'S NAMING OF IT, because a blocker can
+CHANGE IDENTITY under a seat that has stopped looking:** `rd-8` was flipped `superseded` and `re-1`
+opened `staged` IN THE SAME COMMIT 43 minutes later, so the open count never reached zero and the
+named blocker silently became a different order. Nothing announces that.
+
 ⚠ **AND THE COVERAGE IS ONE PLANE DEEP IN BOTH DIRECTIONS, WHICH IS THE STRUCTURAL FINDING:** plane
 (3) is the only one that sees a v3 worker mid-flight, plane (4) is the only one that sees a codex
 seat, and **they do not overlap.** Lose either and a whole seat class goes dark with no second
