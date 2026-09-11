@@ -50,6 +50,9 @@
 
 `_authz` with `guard()`, `FirmBinding`, `unguarded_routes()` and the refusal envelope (IB-s-3, 3cca035c66); the eleven live routes and the CloudFront path; `_scope` with the resolver, `id_projection`, `global.py` and the roster path; the round-1 replay's measurement 6 of 11 unguarded (three known: IB-s-1 directory x2, IB-s-11 performance; three new: analysis, narrative, export status).
 
+**ISSUER AMENDMENT (2.0.0_SA_COO~B, 2026-09-11 ~12:3xZ, at IB-rt-1's first drain -- the second half of ROW W2-S16's disarm; channel row `IRPT_BCKEND-S26`):**
+- **EVERY DISPATCHED HANDLER RETURNS THE v1 RESPONSE ENVELOPE.** IB-rt-1 publishes `docs/contracts/investor-reporting/v1/responses/<operation>.response.schema.json` -- ONE envelope `{contract_version, operation, firm_id, data, status?}` with `data` the producer document -- and measured that the six handlers answer in three ad-hoc envelopes (0 of 11 validate). This cell, which owns and deploys the six, makes each handler's response validate against its response schema and its `data` against the document schema; the `X-Contract-Version` check is SERVED (a mismatched version refused `CONTRACT_VERSION` on the deployed function). The refusal envelope of `_authz` and the response envelope are two shapes of one family: `status` carries the `StatusEnvelope` on both.
+
 ---
 
 ## DELIVERABLE
@@ -91,6 +94,7 @@ The guarded entry points in `directory/`, `performance/`, `ycharts/generate/` (t
 **(c) THE FIRM COMES FROM THE PRINCIPAL.** A request whose body or path carries a different firm than the verified principal is refused `FIRM_BINDING`; a reconciling pair is served; printed.
 **(d) THE PROJECTION IS ON THE SERVED PATH.** Through the real directory dispatcher: a grant present with no projection -> `UNPROJECTED-ID` refusal; a grant with the projection -> the narrowed intersection (`N of M` accounts, printed).
 **(e) DEPLOYED AND VERIFIED.** For each function changed: `get-function-configuration` `CodeSha256` equals the built zip's; each root's plan after the apply reads `No changes` (printed per root); ledgers CLOSED with sentinels committed (hashes).
+**(g) ENVELOPE CONFORMANCE, SERVED (amendment, row W2-S16).** IB-rt-1's paired producer-to-consumer test re-run against the DEPLOYED functions (invoke by name with the validator's injected header set): `11 of 11` responses validate against their response schema and `data` against the document schema; a mismatched `X-Contract-Version` refused `CONTRACT_VERSION` on `11 of 11`; printed per operation.
 **(f) THE PRINCIPAL.** Either: one authenticated request through the real path served and one swapped-firm request refused, the principal minted through the named existing path (secret names only, no values); or: the `HUMAN-GATED` record printed verbatim naming the operator's exact act -- and the arm reads `HUMAN-GATED`, which is admitted by this criterion as a PASS of the arm's own rule, never as a skip.
 
 <criterion id="RT2-AC2" cell_refs="IB-rt-2" judgment="true"/>

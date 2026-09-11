@@ -1850,6 +1850,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "S14-AC1 (g): 'ExportReceipt validates and its artifact_hash equals the stored object's; the object key is under the bound firm's exports prefix'. BOUNDS 7: 'No served output is touched ... except where THIS order's cell says it ADDS a resource' -- and the cell text names 'the protected artifact under firms/<id>/generations/<id>/attempts/<a>/exports/<revision>/report.pdf'.",
     "world_is": "Proving the receipt against a STORED object means storing one, and the only admissible prefixes are real firms'. The write is labelled twice (an unmistakable generation id and object metadata) rather than hidden, so a later reader can tell it from client evidence without reading this row.",
     "notes": "No client data is in any of the four: the performance/analysis content is the cell's own fixture sections, and the three vendor-input exports are rendered from the CRO's synthetic portfolio 2332257 (SPY/AGG), which the PRD already calls real vendor output on synthetic holdings."
+  },
+  {
+    "id": "IRPT_BCKEND-S26",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T13:14:24Z",
+    "one_line": "DISARM of IRPT_BCKEND-W2-S16 (BLOCKING, disarm_owner 2.0.0_SA_COO~B) by a CRITERION RE-CUT at IB-rt-1's first drain (0e60e9645b). The finding: the eleven v1 schemas are DOCUMENT contracts, two can never be an HTTP response (AnalysisRequest is a queue message; RenderPackage is the frontend's package -- W2-S17), and the six handlers answer in three ad-hoc envelopes, so RT1-AC1 (b) 'the response validates against the producer schema' read 0 of 11 and its remedy lies in handler directories the seam order does not grant. FOUR-PART TEST for the re-cut: (1) the criterion was a PROXY -- it measured handler conformance on the cell that publishes contracts; (2) the substance is preserved -- the seam cell now PUBLISHES the response contracts (responses/<operation>.response.schema.json, one envelope {contract_version, operation, firm_id, data, status?} with data the producer document; CONTRACT.md with a producer column, the operation<->route table as the one authority, the casing rule) and its paired test validates response and data, printing N of 11 conforming with BLOCKED-BY-W2-S16 per non-conforming operation and the token not withheld by that count; (3) the proof moves to the cell that OWNS the surface -- IB-rt-2 gains arm (g): 11 of 11 deployed handlers conform and the X-Contract-Version check is served; (4) nothing is widened -- v1 grows only before its own complete flip, no handler is edited by the seam cell, no schema is loosened. Also recorded: W2-S13 (11 consumer paths ROUTE_UNKNOWN; two orphan consumer operations, three orphan producer routes -- CONTRACT.md's table is the authority, the counterpart regenerates), W2-S14 (casing disjoint 194 snake vs 139 camel; the counterpart's client camelizes at the wire boundary, no meaning moves), W2-S15 (ops/status.py reaches AWS in-process; DEPLOYED-ONLY, graded at IB-rtb-1), W2-S17 (the eleventh schema is RenderPackage, producer FNTEND; W2-S16 stands as filed).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (re-cut applied on the open IB-rt-1 face and the staged IB-rt-2 face; slot ~2 resumed to finish IB-rt-1 on the re-cut arm)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W2-S13..S17 @0e60e9645b",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_rt_1.result.md @0e60e9645b -- 7 of 8 arms, arm (b) 0 of 11, the three envelopes",
+        "docs/contracts/investor-reporting/v1/ @0e60e9645b -- routes.json, 11 document schemas, CONTRACT.md (304 lines)",
+        "memory: feedback_four_part_test_lets_a_coo_lane_recut_a_proxy_criterion_without_a_round_trip -- the standing authority applied",
+        "the two faces (this commit): IB-rt-1 <status> pending with the re-cut arm (b); IB-rt-2 <status> staged with arm (g)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-rt-1 RT1-AC1 (b) as cut: 'the response validates against the producer schema; print 11 of 11'. CTO ruling 1: a paired producer-to-consumer test per operation runs the real dispatcher against the consumer's request.",
+    "world_is": "The contract artifact exists and is one carrier; the responses do not yet have a contract and the handlers do not yet conform. The seam cell defines the response; the guards cell, which deploys the handlers, makes them conform; the replay grades the deployed whole.",
+    "notes": "The proxy-criterion shape recurs from round 1 (S13's routes.json fallback): a criterion that names an artifact another cell produces must name that cell. Carried for the round-2 analysis as an L5 lesson of this seat."
   }
 ]
 ```
