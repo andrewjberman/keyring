@@ -1,12 +1,13 @@
-# IRPT_FNTEND -- L5 decomposition -- round 1 -- v0.1
+# IRPT_FNTEND -- L5 decomposition -- rounds 1 and 2 -- v0.2
 
 ```json
 {
  "project": "IRPT_FNTEND",
  "directive": "D9",
  "fabric": "laptop",
- "round": 1,
- "decomp_version": "v0.1",
+ "round": 2,
+ "decomp_version": "v0.2",
+ "round_1_header_retained_below": true,
  "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@62301f71e0",
  "prd_version": "v0.4",
  "brief_ref": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md@2acf23d8fd",
@@ -499,3 +500,278 @@ PROOF     the census file lists N components with N printed and every row REUSED
 ## 8. HOLDS
 
 None. Every cell is cuttable or dependency-blocked. No live vendor call is authorized. No PROD promote is in scope. The high-definition advisor logos are a pending input and never block a cell (`FE-s-9` renders the Opal template without them).
+
+
+---
+---
+
+# ROUND 2 -- v0.2 -- the recut on the CTO's ROUND-2 ANALYSIS
+
+```json
+{
+ "round": 2,
+ "decomp_version": "v0.2",
+ "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@d1479bc5f0",
+ "prd_version": "v0.6",
+ "analysis_ref": "org/missions/D9/IRPT/IRPT_FNTEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
+ "slug_ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v1.md@27e67fa6a5",
+ "round1_cells": "FE-s-1..FE-s-11, all COMPLETE (11 terminal task orders, 11 VALID instances; portal DEV edab15b5, workspace 2e50d2e129)",
+ "cells": 7,
+ "cell_id_shape": "FE-s-<n> continuing from 12",
+ "code_repo": "portal (nested git repo, gitlink in the workspace; branch DEV @edab15b5)",
+ "record_repo": "workspace (branch CLOUD)",
+ "producer_pins": {
+  "routes": "infra/aws/terraform/investor-reporting/api/routes.json@bef9b459f3 (11 DECLARED + 1 NO-HANDLER-AT-HEAD = 12)",
+  "schemas": "infra/aws/lambda/investor-reporting/_contracts/*.schema.json@33351469c2 (11) with fixtures/*.valid.json",
+  "backend_prd": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@e6ba5d9878 (CONTRACTS: BK owns identity, economic meaning, units, dates and wire compatibility)",
+  "ui_contract": "docs/research/investor_reporting_ycharts_variants_20260911/UI_CONTRACT.md@72acd16e66 (S10, the Generate request half)"
+ }
+}
+```
+
+Round 1 delivered the parts (analysis section 2: shell, header, tabs, package, export, Global, census; 322 tests). The seam between the parts and the backend does not exist, no partner firm can reach the route, the export flow is unmounted, the composer is at v0.4's shape, the fonts are absent and DEV is red under tsc. Round 2 is those seven things, in the order the analysis ruled, as ONE issuance. The round-1 rectangle above is unchanged and its cells stay COMPLETE; the round-2 cells are additive (a re-decomposition of the affected surfaces, recorded here as the COO's choice per spine L10 "the recut").
+
+## R2.1 THE RECTANGLE -- seven cells, the analysis's seven rulings
+
+| cell | ruling | write surface (portal unless stated) | serves | slug rows | wave | slot |
+|---|---|---|---|---|---|---|
+| `FE-s-12` | 1 DEV green first | `src/pages/InvestorReporting/__tests__/fe-s-11/` | every outcome (the shared branch) | S17 | A | ~1 |
+| `FE-s-13` | 2 the seam | `src/api/endpoints/investor-reporting.ts`; `src/pages/InvestorReporting/contracts/` (+ `wire/`); `.../fixtures/` (wire, requests, smoke); `.../__tests__/fe-s-1/`, `__tests__/fe-s-13/` | FWD-1, FWD-6 (and the data half of every crossing outcome) | C-S42, W3-S2 (the wire half), W2-S2 | B | ~1 |
+| `FE-s-14` | 3 the route reachable by a partner firm | `src/lib/firmAccess.ts` (three entries); `.../global/`; `.../header/`; `.../__tests__/fe-s-14/`; smoke fixtures `fe-s-14-*.json` | FWD-1, FWD-11 | W1-S10 | C | ~2 |
+| `FE-s-15` | 5 the Generate composer (F5 at v0.6, S10) | `.../tabs/analysis/`; `.../__tests__/fe-s-15/`; smoke fixtures `fe-s-15-*.json` | FWD-4 | W3-S2 (the meaning half), C-S43 (clean/correction) | C | ~1 |
+| `FE-s-16` | 6 mount the export flow; narrative meaning | `.../export/`; `.../render/narrative/`; `.../index.tsx` (the two ExportAnchorSlot mounts only); `.../__tests__/fe-s-16/`; smoke fixtures `fe-s-16-*.json` | FWD-8, FWD-4 | W1-S11, W2-S6 | C | ~3 |
+| `FE-s-17` | 4 Lato is a packaging input | `.../render/assets/fonts/`; `.../render/print.css`; `.../render/manifest.ts`; `.../__tests__/fe-s-17/` | FWD-8, FWD-12, FWD-3 | W2-S3 | B | ~2 |
+| `FE-s-18` | 7 evidence rules; mobile | layout-only edits under `.../tabs/`, `.../header/`, `.../export/`, `.../global/`, `.../render/`; `.../__tests__/fe-s-18/`; smoke fixtures `fe-s-18-*.json`; the deliverables folder | FWD-3, FWD-5, FWD-8, FWD-11, FWD-12 (the NOT_EVALUATED surfaces) | C-S43, W3-S1, W4-S1, W1-S12 (the retained one-firm control) | D | ~1 |
+
+**Coverage by subtraction, three domains.** (1) The analysis's seven rulings (denominator 7) minus the seven cells above = 0 uncovered. (2) The slug's OPEN rows (denominator 8: W2-S3, W2-S6, W3-S2, W1-S10, W1-S11, S17, C-S42, C-S43) minus the rows the table names = 0 uncovered. (3) The PRD header's outcomes (denominator 8) minus the outcomes the cells serve: FWD-1 {13,14}, FWD-3 {17,18}, FWD-4 {15,16}, FWD-5 {18}, FWD-6 {13}, FWD-8 {16,17,18}, FWD-11 {14,18}, FWD-12 {17,18} = 0 uncovered. Open items OUTSIDE the recut stay where the analysis put them (Lato 700 and the pushes at Andrew; ui-smoke query-string at the smoke-tool owner; R3 runtime at the COO runtime owner; the WAF diff at CloudOps) and no cell here writes into them.
+
+## R2.2 BOUNDS -- ALL ROUND-2 CELLS (in addition to round 1's, which stand)
+
+```
+producer    routes.json@bef9b459f3 is the method/path authority; _contracts/*.schema.json@33351469c2
+            are the shapes; where a field's MEANING differs, the backend PRD's definition wins and
+            the frontend changes. No casing translator without economic meaning: a wire->view adapter
+            RENAMES and RESTRUCTURES, never derives, averages, infers or defaults a value.
+no-route    an operation with no DECLARED route does not exist on the live client; the view renders
+            the envelope state UNAVAILABLE with public reason code no-declared-route and a surprise
+            row names the route for the counterpart. The one NO-HANDLER-AT-HEAD route (holdings) is
+            typed and marked not-yet-exercisable; its adapter path is fixture-only.
+resolved    the browser never sends and never receives the server-only resolved envelope; a test in
+            every cell that composes a request prints RESOLVED-KEY LEAKS: 0.
+typecheck   EVERY order carries `cd <WS>/portal && timeout 180 bun run typecheck; echo rc=$?` -> rc=0.
+evidence    every smoke criterion keys on a printed discriminator (CLICKED: <name>, DID NOT LAND,
+            CONSOLE[log]: REFS RESOLVED: n of n via --console) and never on rc alone; every <expect> is
+            a plain token with no regex metacharacter; a fixture map names the WHOLE page's needs
+            (resolve-scope, the default Reporting tab's performance-report, the tab under test); a
+            capture claim names a unique file recorded with its sha256 in the order's captures
+            manifest; paired screen/preview/print views come from ONE frozen report fixture.
+channel     round-2 rows go to surprise-channel/investigations/INVESTIGATION_v2.md (created by the
+            first row; the row gate refuses an empty file); ids continue each slot's sequence
+            (W1 from S15, W2 from S7, W3 from S3).
+gitlink     never stage `portal` in the workspace repo.
+```
+
+## R2.3 THE CELLS
+
+### `FE-s-12` -- DEV green first
+```
+ACT       Clear the eight TypeScript errors under __tests__/fe-s-11/ (test.each, toMatch, statSync,
+          four implicit any) by editing those two test files only: loop instead of test.each,
+          a regex test instead of toMatch, an existing shim member instead of statSync, typed
+          parameters. The ambient shims are not edited; strictness is not lowered; no file is
+          excluded from tsc.
+SERVES    every outcome (the shared branch is never pushed red).   SLUG  S17.
+DEPENDS   none (READY ROOT).
+PROOF     bun run typecheck rc 0; bun test __tests__/fe-s-11 0 fail; whole set 0 fail; files
+          changed outside the folder = 0.
+```
+
+### `FE-s-13` -- the seam: producer defines, consumer conforms
+```
+ACT       contracts/wire/: one TypeScript type per producer schema (11), generated from
+          _contracts/*.schema.json by a script under __tests__/fe-s-13/ (committed output, the
+          generator's input pinned by sha256 in the output header). The client's operation table
+          becomes routes.json: every DECLARED route is exactly one operation with its method, path
+          template and parameter binding (GET with path params and query; POST with a JSON body);
+          LiveClient sends exactly that; the holdings route is typed and marked
+          not-yet-exercisable; analysis-requests (no list route) and export-preview (no route) are
+          RETIRED from the live client under the no-route bound -- the preview is composed
+          client-side from the selected options and report refs into the wire ExportBundle and
+          submitted through POST export. contracts/adapt.ts: wire -> view adapters for the ten
+          consumed contracts and view -> wire for the two produced request shapes, each field of
+          the view type mapped from a named wire path in an exported FIELD_MAP (view field <-
+          wire path, kind RENAME | RESTRUCTURE | CARRIED-AS-IS); no arithmetic. fixtures/wire/:
+          the eleven producer .valid.json copied byte-for-byte with their source sha256;
+          fixtures/wire/requests/: one request record per DECLARED route (method, path with the
+          fixture's own ids bound, query, body) -- the corpus the counterpart's paired test
+          replays into its real handlers; fixtures/smoke/: re-based so the page's whole needs
+          are served at the declared paths in wire shape (fe-s-13-wire.json). FixtureAdapter
+          serves the wire fixtures through the same adapters the live client uses.
+SERVES    FWD-1, FWD-6; the data half of FWD-3/4/5/8/11.   SLUG  C-S42, W2-S2, W3-S2 (wire half).
+CROSSES   the counterpart publishes the contract as one versioned artifact (its ruling 1); if that
+          lands before this cell is seated the face pins it instead of the two raw pins.
+DEPENDS   FE-s-12.
+PROOF     routes parity 11 of 11 declared (test reads routes.json); producer fixtures adapted 11
+          of 11; request corpus 11 of 11 with RESOLVED-KEY LEAKS 0; field map N of N view fields
+          mapped, 0 derived; the fe-s-1 negatives (stale dropped, revocation clears) still pass;
+          smoke of the page with fe-s-13-wire.json reaches Holdings (CLICKED: Holdings);
+          typecheck; whole set.
+```
+
+### `FE-s-14` -- the route reachable by a partner firm; the Global proof recut
+```
+ACT       portal/src/lib/firmAccess.ts: add '/investor-reporting' to the 49financial, inflection
+          and cottonwood sets and nothing else (demo unchanged; no other path). The F10 proof
+          recut: a firm session (ui-smoke --firm <id>) reaches /investor-reporting and renders the
+          Holdings tab; it sees only its own scope (the wire resolve-scope fixture for that firm
+          carries one permitted firm; the dropdown is absent; ?firm=global, a persisted 'global'
+          and a forced selector value each resolve to that firm); a non-registry firm id is still
+          refused (DID NOT LAND, /market). Global with two firms still renders.
+SERVES    FWD-1, FWD-11.   SLUG  W1-S10.
+DEPENDS   FE-s-13 (the wire smoke fixtures).
+PROOF     allowlist test 3 of 3 registry firms admitted, demo and an unknown id refused; smoke
+          --firm 49financial CLICKED: Holdings (repeat for inflection, cottonwood); smoke --firm
+          nonregistry DID NOT LAND; GLOBAL PATH: absent printed by the one-firm header test;
+          two-firm Global smoke CLICKED: Holdings; typecheck; whole set; judgment: the firm sees
+          only its own scope (PNGs at 1440 for the three firms).
+```
+
+### `FE-s-15` -- the Generate composer (F5 at v0.6, S10)
+```
+ACT       tabs/analysis/: the composer produces AnalysisRequest's browser request half, in this
+          order and nothing else: client from the header's selection; account(s) with a
+          confirmable default, shown as labels; the holdings snapshot preselected WITH its as-of
+          (an immutable snapshot_id from the wire HoldingsSnapshot; never re-fetched mid-job); 0-5
+          ORDERED comparisons by opaque catalog keys; optional title; prepared-for/by prefilled
+          from the profile fields the wire scope carries, overrides only where the wire policy
+          allows; the variant resolved by count and DISPLAYED (0 Overview, 1 Comparison, 2-5
+          Multi-Comp), variant 'auto' sent unless picked, an inconsistent explicit pick refused
+          client-side; request_id a stable per-click idempotency key preserved across transport
+          retries; changed inputs = a new request_id. Submit through POST analysis; job states
+          queued / preparing / generating / ready / needs attention polled from GET status/{jobId}
+          (the Opal job record); a WAF-refresh or reconciliation state renders needs attention
+          with the request preserved. W3-S2: revision identity and section support are read from
+          the wire fields the schemas name (AnalysisRequest.identity / corrections / stage;
+          AnalysisReport.extraction_validation / release); parity.ts's local derivation is
+          removed. Sections and the native/PDF preview render as round 1 built them, from the
+          wire report through the adapter.
+SERVES    FWD-4.   SLUG  W3-S2, C-S43 (clean/correction).
+DEPENDS   FE-s-13.
+PROOF     composer test: request body keys exactly the seven S10 keys; RESOLVED-KEY LEAKS 0;
+          variant by count 0/1/2/5 and refusals (inconsistent pick; 6 comparisons); request_id
+          stable across a retry (call log 2 sends, 1 id) and new on changed inputs; job-state test
+          5 of 5 states rendered from status fixtures, needs-attention preserves the request;
+          REVISION IDENTITY: preserved on a clean request and its correction; smoke Analysis
+          clean and needs-correction at 390 (CLICKED: Analysis); typecheck; whole set; judgment.
+```
+
+### `FE-s-16` -- mount the export flow; the narrative's meaning is the backend's
+```
+ACT       export/: AppliedBranding and ReceiptPanel mounted inside ExportModal's dark Panel and
+          wired to the composed wire ExportBundle and the ExportReceipt / StatusEnvelope the
+          typed client returns; the ExportAnchorSlot mounts in index.tsx pass the tab's real
+          report refs and revision (the two mount lines only). Five states proven on the MOUNTED
+          flow: no-assets, approved-assets, running, failed, ready/download (the download route
+          the receipt carries). render/narrative/: the page reads NarrativePacket's wire fields
+          (events, cited_evidence, prose, coverage) through the adapter; absent history renders
+          MISSING HISTORY naming coverage's cutoff; the placeholder is gone.
+SERVES    FWD-8, FWD-4.   SLUG  W1-S11, W2-S6.
+DEPENDS   FE-s-13.
+PROOF     STATES RENDERED: 5 of 5 on the mounted modal; colour-law 0 fail; MARKERS: 2 and MISSING
+          HISTORY: rendered from wire narrative fixtures; smoke Export at 1440 and 390 (CLICKED:
+          Export); print narrative-on smoke REFS RESOLVED: 1 of 1; typecheck; whole set; judgment.
+```
+
+### `FE-s-17` -- Lato is a packaging input
+```
+ACT       Copy the three OFL 1.1 files from .runtime/codex-seats/4.0.0_SA_CRO/performance-export-
+          recon/fonts/ into render/assets/fonts/ (Lato-Regular.ttf d636e468..., Lato-Light.ttf
+          cf2a7745..., Lato-SemiBold.ttf 71b8b7de...) beside the FONT_LICENSE.txt already there,
+          with fonts.manifest.json recording name, bytes, sha256, weight, licence and the stand-in
+          rule; print.css declares faces 300, 400 and 700 with 700 served by Lato-SemiBold (600)
+          and a comment naming the stand-in; no italic face (none is on the box); every url() is
+          local. manifest.ts declares the packaged fonts and the stand-in. No new source is
+          fetched; the 700 weight stays Andrew's carried call.
+SERVES    FWD-8, FWD-12, FWD-3.   SLUG  W2-S3.
+DEPENDS   FE-s-12.
+PROOF     FONTS: 3 of 3 hashes match the manifest; EXTERNAL FONT HOSTS: 0 in print.css; STAND-IN
+          DECLARED: 700<-600 in manifest.ts; a smoke of the print route with --netlog shows the
+          local ttf requests served and EXTERNAL: 0; LICENCE: OFL-1.1 present; typecheck; whole
+          set; print performance recaptured at 1440 with the font (REFS RESOLVED: 1 of 1).
+```
+
+### `FE-s-18` -- evidence rules; mobile clipping fixed and captured
+```
+ACT       Layout-only edits (class and structure, no behaviour, no data) so the page, the three
+          tabs, the export modal and the print route do not clip or overlap at 390: the Holdings
+          summary card and firm attribution, the slice table (horizontal scroll container), the
+          Reporting period columns, the header actions. Captures under the evidence rules: paired
+          screen / preview / print from ONE frozen performance report (fe-s-18-frozen.json, one
+          revision served to the tab, the modal preview and the print route); the four
+          NOT_EVALUATED surfaces on the mounted views -- Analysis clean and needs-correction,
+          Holdings observed / target / missing-attribution, print narrative-on and pre-history;
+          Global at 1440; every PNG named uniquely and recorded with sha256 in
+          captures.manifest.json. Census and colour-law re-run on the round-2 tree.
+SERVES    FWD-3, FWD-5, FWD-8, FWD-11, FWD-12.   SLUG  C-S43, W3-S1, W4-S1, W1-S12 (control).
+DEPENDS   FE-s-14, FE-s-15, FE-s-16, FE-s-17.
+PROOF     PAIRED: 1 report, 3 views (one performance-report body hash across the three fixture
+          maps); UNIQUE FILES: n of n in the manifest; each capture's smoke prints its
+          discriminator (CLICKED: Reporting / Analysis / Holdings / Export; REFS RESOLVED: 1 of 1);
+          COMPONENTS: N re-censused; colour-law 0 fail; typecheck; whole set; judgment: no clipping
+          at 390 and one Opal product (L9, from the manifest's PNGs).
+```
+
+## R2.4 DEPENDENCY EDGES, SLOTS, FAN-OUT
+
+```
+  FE-s-12 <- (none)                         READY ROOT
+  FE-s-13 <- FE-s-12
+  FE-s-17 <- FE-s-12
+  FE-s-14 <- FE-s-13
+  FE-s-15 <- FE-s-13
+  FE-s-16 <- FE-s-13
+  FE-s-18 <- FE-s-14, FE-s-15, FE-s-16, FE-s-17
+
+  weakly connected components:  M = 1      ready roots at issuance: R = 1
+  waves by depth:  A={12}  B={13,17}  C={14,15,16}  D={18}     max concurrent width: 3 (wave C)
+
+  ~1  FE-s-12 -> FE-s-13 -> FE-s-15 -> FE-s-18
+  ~2  FE-s-17 -> FE-s-14        (17 seated when 12 is terminal; 14 when 13 is terminal)
+  ~3  FE-s-16                   (seated when 13 is terminal)
+```
+
+**Fan-out: `1 of 1 ready root at issuance, 3 slots, cap 8`.** All seven orders are issued in the one issuance; six carry `blocked` until their dependency is terminal.
+
+## R2.5 RULE 24 RECORD (round 2)
+
+| postulate | how |
+|---|---|
+| (i) MECE | three domains by subtraction in R2.1: rulings 7-7=0; slug OPEN rows 8-8=0; outcomes 8-8=0. Cells partition the write surfaces: FE-s-13 owns contracts/, the client and fixtures; FE-s-14 firmAccess.ts, global/, header/; FE-s-15 tabs/analysis/; FE-s-16 export/, render/narrative/, the two mount lines; FE-s-17 render/assets/fonts/, print.css, manifest.ts; FE-s-18 layout-only edits across tabs/header/export/global/render AFTER every other cell is terminal, so no write surface is shared concurrently; FE-s-12 the fe-s-11 test folder. |
+| (ii) same grain | (write region, ruling) per cell; FE-s-18 is the record-and-layout grain, stated. |
+| (iii) intent | one axis: the frontend conforms to the producer and proves it on mounted, reachable views. No cell carries a backend intent; the counterpart's half of the seam is its own cell. |
+| (iv) state | moves FWD-1/6 toward APPLIED on the real seam and every crossing outcome's view half to EXERCISABLE on a reachable route. Does NOT move: any grade to REALIZED (the CTO's read on the exercised artifact); the backend's routes, handlers, renderer or contract artifact; the 700 weight; the pushes. |
+
+## R2.6 BATTERY DISPOSITION (round 2)
+
+| lens | disposition | denominator / reason |
+|---|---|---|
+| comp-schedule / comp-iam | DECLARED-NOT-APPLICABLE | no scheduled producer, no IAM resource written; firmAccess.ts is a client-side allow-list read by ProtectedRoute |
+| comp-adversary | RUN at L4 on v0.6 (both halves SIGNED, ADMITTED under v3.15 per 95828/95889) | carried; no new complement source |
+| producer pins | RUN | routes.json@bef9b459f3 resolves (12 routes: 11 DECLARED, 1 NO-HANDLER); 11 of 11 schemas and 11 of 11 .valid.json fixtures exist at 33351469c2; required-field sets read (all `additionalProperties: false`) |
+| fonts on box | RUN | 3 of 3 ttf present with sha256 equal to sources.json; OFL.txt 4407 bytes; FONT_LICENSE.txt already under render/assets/fonts/ |
+| typecheck at the base | RUN | DEV @edab15b5: rc=2, 8 errors, all under __tests__/fe-s-11/ (FE-s-12's whole input); tests 322 pass 0 fail |
+| firm matrix | RUN | FIRM_ALLOWED_PATHS: 4 entries (49financial, inflection, cottonwood, demo); /investor-reporting in 0 of 4 |
+| instrument | RUN | ui-smoke prints CLICKED:/CLICK-FAIL:/DID NOT LAND/CONSOLE[type]: (--console)/--netlog; proof-of-spec-check grades expect as a regex (S16) |
+
+## R2.7 REFUSES TO ASSUME (round 2)
+
+1. That a wire->view adapter may compute. It renames and restructures; a value the wire does not carry renders as the envelope's unknown, never a default.
+2. That the counterpart's versioned contract artifact exists at this cut. It does not; the two raw pins are the authority until it lands, and a face pins it when it does.
+3. That an operation without a declared route may keep a client method. It may not (no-route bound); the view says UNAVAILABLE and a row names the route.
+4. That rc=0 from an instrument proves a render. Every smoke bar is a printed discriminator.
+5. That a fixture map cut for one tab serves the page. Every map names the whole page's needs.
+6. That the 700 weight can be fetched. It cannot without Andrew's word; 600 stands in and says so.
+7. That a partner-firm session's reachability is anyone else's cell. The CTO ruled firmAccess.ts in scope for FE-s-14 (three entries, nothing else).
+
+## R2.8 HOLDS
+None. The typecheck cell is the ready root; nothing waits on a push.
