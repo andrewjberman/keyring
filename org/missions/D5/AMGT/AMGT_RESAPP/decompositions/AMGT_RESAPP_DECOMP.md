@@ -1,4 +1,4 @@
-# AMGT_RESAPP -- L5 decomposition (COO) -- v0.2
+# AMGT_RESAPP -- L5 decomposition (COO) -- v0.3
 
 **Seat:** `2.0.0_SA_COO~ZZZ`, spawned by Andrew 2026-09-10 ~17:4xZ at the `1.0.0_SA_CTO~Z` terminal for this
 project (seating brief msg 21003; `project.json` `seats.coo`). **Directive:** D5 Alternative Research.
@@ -424,3 +424,82 @@ focused L5 records the omission as a boundary rather than a certification.
 - **NONE held by this lane, and none at Andrew.** Sixteen cells are `OPEN` (one, `AMGT-s-5`, with its .tsx phase
   held on the design spec's approval). Round 1 is cuttable now.
 - **PUSH STATE: this lane's commits are LOCAL.** `0.0.0_AB_MSTR~Z` holds the push window.
+
+
+---
+
+## 10. ROUND 2 (RECUT) -- from the L10 round-1 analysis @4d31cf4caa (1.0.0_SA_CTO~Z)
+
+**v0.3 IS AN L10 RECUT, NOT A NEW DECOMPOSITION.** Round 1 graded 0 of 14 REALIZED (a strong build:
+16/16 terminal, valid instances, 24/0 channel, 13/16 judgment PASS) -- but 13 of 14 FWD bars are
+EXERCISED (an analyst used a SERVED surface) and the surfaces are UNSERVED because every .tsx waits on
+Andrew's DESIGN_SPEC approval (C-DESIGN-SPEC-FIRST), which measured EMPTY. So the exercise is
+systematically unmet and the gap is EXERCISE, not a missing outcome -- coverage read: every FWD has a
+cell, 0 uncovered, no PRD addendum. The round-1 cells (AMGT-s-1..15, AMGT-s-b4) are FROZEN and terminal;
+this section ADDS the remediation cells the analysis's s.4 sends back. Nothing round-1 moves.
+
+**THE TRUE CRITICAL PATH IS ANDREW'S, AND IT IS A ROUND-3 GATE, NOT THIS ROUND'S:** the DESIGN_SPEC
+approval (moves 12 of 14 outcomes at once), plus four per-use/decision words (social vendor -- FWD-11;
+drafting model -- FWD-9; peer-universe quota -- FWD-8; the two lists' owners -- FWD-14). The SURFACE
+EXERCISE of every FWD is ROUND 3, expressly qualified per Rule 27 as the essential wait the analysis
+s.4 names (a UI serving before its design is approved is the failure C-DESIGN-SPEC-FIRST exists to
+prevent). This round is the MECHANICAL work that does NOT wait on the spec.
+
+⛔ **DO NOT RE-CUT AMGT-s-b4** -- W9-S2 is disarmed by the completed re-run (18 objects / 3 tickers,
+all six mechanical criteria PASS, drained @3be9d03962); its world-fact stands and the cell is terminal.
+
+### 10a. The five round-2 cells -- ALL INDEPENDENT (fanout 5 of 5, cap 8, no deferral)
+
+Each cell fixes ONE landed round-1 cell's named defect; none depends on another (AMGT-r-4 rides the SA
+raw for tickers AMGT-s-b4 already resolved, so it does not wait on AMGT-r-12's coverage). Ids match
+CELL_ID_RE (AMGT-r-<n>, verified against the enforcer's pattern).
+
+| cell | fixes | FWD | the defect (analysis s.2) | the engine, and its bound |
+|---|---|---|---|---|
+| `AMGT-r-1` | `AMGT-s-1` / W1-S2 | FWD-1, FWD-3 | the fiscal-year join groups by the CALENDAR year of `date`, so a non-December filer's period-end fundamentals pair with a price ~9 months off (BABA, FYE 31 March: 100% of rows split). A served-correctness defect the mechanical AC4 could not see (a December-heavy sample passes). | THE FISCAL-YEAR JOIN, SERVED-CORRECT. Re-key the join to the ISSUER'S fiscal period so a period-end fundamental pairs with the price AT that period-end, never the calendar-year price. EXERCISE a CONTROL on BABA US Equity (FYE 31 March, ALREADY landed by AMGT-s-1 -- no new unique security, F2): the control FAILS under calendar-year grouping and PASSES under fiscal-period grouping (the difference arm). Home: `integrations/bloomberg/research/`. Bound: NO new unique security; the control MUST discriminate, not merely pass. |
+| `AMGT-r-4` | `AMGT-s-4` | FWD-4 | s-4 AC7 was NOT_EVALUATED at grade time -- SA raw had 0 keys then; AMGT-s-b4 has since landed 18 objects / 3 tickers (BABA/RTX/+1). The reader was never exercised on real SA content. | THE SA COVERAGE RE-EXERCISE (RIDE, not re-write). Re-run the landed coverage reader over the SA raw AMGT-s-b4 landed under `raw/seekingalpha/`, so coverage_items carry real SA-class items keyed by the identity layer, ranked, admitted PROVISIONAL by the held-back item rule. AC: `sa_raw_keys_found` >= 3 (not 0), the F11 redirect trap still 0, the identity gate still refuses an UNRESOLVED-source attachment. Home: `lib/research/coverage/` + reads the store. Bound: NO new vendor call (reads LANDED raw); no HTML parse (C-SA-NAMED-SOURCE). |
+| `AMGT-r-10` | `AMGT-s-10` | FWD-10 | s-10 AC6 FAIL: '12345 [PROVISIONAL]' skims as "a number, fine" -- the held-back verdict lives in the DATA and is absent in the READING, so an unchecked figure ships looking checked. | THE CHECK-FACE MARKER, IN THE READING. Add a machine-readable per-verdict MARKER (a colour token AND an icon name) to the check-face render and SPEC_SECTION_checkface.md, so PASS / REFUSE / PROVISIONAL are visually distinct and the later .tsx binds it -- land it BEFORE PROVISIONAL figures serve. AC: the render carries a distinct marker per verdict and a PROVISIONAL figure's marker != a PASS figure's, exercised on the fixture (the difference arm). Home: `lib/research/checkface/`. Bound: NO .tsx (C-DESIGN-SPEC-FIRST) -- the marker is a data+spec artifact the .tsx reads. |
+| `AMGT-r-12` | `AMGT-s-12` | FWD-8, FWD-13 | after W7-S3's remediation the identity layer is 32 MEASURED / 32 distinct, with 57 UNRESOLVED residual (coverage, not a regression) -- four surfaces hang off it. | THE IDENTITY COVERAGE PASS. Resolve UNRESOLVED bloomberg_ticker cells WHERE A LEGITIMATE MEASURED SOURCE EXISTS (the SA sa_ids AMGT-s-b4 landed; a workbook cell that is NOT the shared template placeholder; a coverage-universe cross-reference) -- and SURFACE the folder-name fallback as an identity-layer DESIGN QUESTION for Andrew, do NOT code it. AC: MEASURED rises from 32 by the count legitimately resolvable, distinct still == MEASURED (no new shared value -- the AC7 unscoped pass still reads 0 shared), the residual UNRESOLVED count is printed with a per-name reason, and the folder-name-fallback trade-off is stated. Home: `lib/research/identity/`. Bound: NO folder-name fallback coded; NO new vendor call. |
+| `AMGT-r-15` | `AMGT-s-15` | FWD-14 | s-15 AC6 FAIL: the official-vs-impostor test is a bare OR of three unequal checks, so an impostor beats the weakest (a copied "official account of <domain>" bio admits on check 3 alone). | THE IMPOSTOR AND-CLAUSE. Require check (3) (the bio/self-description) to CO-OCCUR with check (1) OR check (2) (the stronger signals) in the official-vs-impostor test in `social_accounts.json`'s schema and the rule. AC: the predicate REFUSES a fixture passing ONLY check 3 (the impostor) and ADMITS one passing check 3 AND (1 or 2) (the difference arm); the schema states the AND-clause. Home: `lib/research/lists/`. Bound: NO vendor call (the test is a rule); the owner stays UNASSIGNED (C-NO-CONTACT -- Andrew's). |
+
+### 10b. Rule 24 record for what v0.3 ADDS (the five round-2 cells)
+
+- **(i) MECE over the DECLARED domain = the analysis s.4's remediation set.** Written as a SUBTRACTION,
+  not a recall: the analysis names FIVE mechanical items + the surface exercise (round 3) + do-not-recut
+  s-b4. This section is exactly those five; the surface exercise is round 3 (Andrew's gate) and s-b4 is
+  excluded by name. No sixth cell, no dropped item.
+- **(ii) SAME GRAIN:** each is one cell fixing one landed cell's named defect.
+- **(iii) INTENT COHERENCE:** one axis -- served-correctness / reading-not-data / real-content re-exercise
+  / coverage / the AND-clause. No cell mixes remediation with new scope.
+- **(iv) STATE COHERENCE -- what these cells do NOT move:** they fix the mechanical defects; they do NOT
+  make any EXERCISED bar REALIZED. That needs the SERVED surface, which needs the .tsx, which needs
+  Andrew's DESIGN_SPEC approval -- round 3. A round-2 cell landing complete does not close its FWD.
+
+### 10c. Round-1 lessons absorbed into this cut (analysis s.5)
+
+The round-1 cut carried defects every one of which a worker caught by RUNNING the criterion. This cut:
+- Every criterion DISCRIMINATES -- a difference arm (fails one input, passes its twin), never an
+  always-pass or always-fail; run the EXACT invocation against the world before handing it over.
+- The proof-of-spec instance uses the FULL task-order stem filename (`<PROJECT>.TO-<cell>.<slug>.proof_of_spec.json`)
+  -- the flip gate's discovery glob requires it (W7-S2 / W3-S2).
+- A criterion names the instrument that can OBSERVE the artifact (W2-S2/W2-S4: comp-routes reads its own
+  checkout; a bare comp-tool on a branch answers from the main checkout -- read the declared source directly).
+- The write grant is live only while the order is NON-TERMINAL: the order is committed before the spawn,
+  and the worker's flip rides in a commit whose parent still carries the order open (W7-S5).
+
+### 10d. The round axis, updated
+
+- **ROUND 2 (RECUT, 5 cells, all INDEPENDENT):** `AMGT-r-1`, `AMGT-r-4`, `AMGT-r-10`, `AMGT-r-12`,
+  `AMGT-r-15`. Five chains of one; `fanout: 5 of 5, cap 8` (no deferral -- 5 < 8). Each spawns at issuance.
+- **ROUND 3 (deferred on Andrew's gate):** the SURFACE EXERCISE of every FWD -- the .tsx that serves each
+  surface, cut only after the DESIGN_SPEC approval and the four words land. NOT cut now.
+
+**PREFLIGHT for the recut:** the mandatory core battery is NOT re-run -- v0.2's run (comp-schedule 25
+armed none this project's; comp-iam 195/188/1084/304; comp-adversary 10/10) stands at its vintage and no
+round-2 cell touches a new gate/IAM/adversary surface (all five are edits to landed modules against
+landed data). The authority for the recut is the L10 analysis @4d31cf4caa (the CTO's one send), cited in
+each round-2 order's authority chain. comp-blast DECLARED-NOT-APPLICABLE (no infra act; no served-output move).
+
+**PUSH STATE: this amendment is LOCAL.** 0.0.0_AB_MSTR~Z holds the push window.
+
+*(v0.3 amended 2026-09-11T05:30Z by 2.0.0_SA_COO~ZZZ -- the L10 recut from @4d31cf4caa; round-1 sections 1-9 unchanged.)*
