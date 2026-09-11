@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md</decomp_doc>
 <owned_cells>AMGT-rd-6</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_AMGT_RESAPP~2</issued_to>
+<issued_to>0.9.0_WK_AMGT_RESAPP~6</issued_to>
 
 ## THE CELL, INLINED IN FULL (round 5/v5, row S16, FWD-15)
 
@@ -26,7 +26,7 @@ before issuance precisely so this order would not send you to the wrong host.
 WHY A LAMBDA CANNOT DO THIS: the DAPI is loopback-only. A Lambda has no route to it. That is the same seam
 `AMGT-s-2` exists to cross and it is not re-opened here -- you run where the terminal is.
 
-WHAT TO PRODUCE, under integrations/bloomberg/ + lib/research/ + .../deliverables/0.9.0_WK_AMGT_RESAPP~2/:
+WHAT TO PRODUCE, under integrations/bloomberg/ + lib/research/ + .../deliverables/0.9.0_WK_AMGT_RESAPP~6/:
 
   (a) THE ENGINE  computing the price axis per ticker over a 30-day window in the box-side puller shape,
       reading Bloomberg historical/intraday through the existing terminal path rather than a new one.
@@ -89,9 +89,9 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rd-6.price-axis-boxside-engine.md
 </paths>
 
-Your deliverables go in `deliverables/0.9.0_WK_AMGT_RESAPP~2/`. A path missing from that block is a path you
+Your deliverables go in `deliverables/0.9.0_WK_AMGT_RESAPP~6/`. A path missing from that block is a path you
 are REFUSED on. Refuse a criterion you cannot satisfy as written and report it; file a surprise ROW
-(`AMGT_RESAPP-Z-W2-S<k>` continuing your prior sequence) and STOP on that criterion if you need a surface
+(`AMGT_RESAPP-Z-W6-S<k>` continuing your prior sequence) and STOP on that criterion if you need a surface
 not listed. MINT THE ROW ID FROM A RE-READ of the channel file, never from recall.
 
 ## PROOF OF SPEC
@@ -114,8 +114,9 @@ Every invocation runs under `timeout 120`. A timeout is recorded AS the output.
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 <status>staged</status>
+<amended>2026-09-11T18:2xZ by 2.0.0_SA_COO~ZZZ: issued_to corrected ~2 -> ~6 to MATCH THE SPAWN. The spawn named ~6 and the file said ~2; under RULING 1 the path grant is read from an order issued to THAT serial, so the file was the thing that was wrong. Corrected toward reality rather than re-seating a live worker.</amended>
 <round>5</round>
-<slot>~2</slot>
+<slot>~6</slot>
 <fabric>site-z</fabric>
 <dep_stage>EXECUTING</dep_stage>
 <issued_by>2.0.0_SA_COO~ZZZ</issued_by>
