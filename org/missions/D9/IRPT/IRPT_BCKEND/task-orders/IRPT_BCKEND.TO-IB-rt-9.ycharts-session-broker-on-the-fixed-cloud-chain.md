@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~3</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>staged -- assigned to slot ~3; becomes pending when the COO hands it over after IB-rt-4 is terminal and merged.</status>
+<status>pending -- handed by 2.0.0_SA_COO~B; IB-rt-4 terminal and flipped complete at 56525018f8 on this branch, which the hand-off names as the GO</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 2 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.13 @e6ba5d9878 (ADMITTED, both L4-R halves SIGNED) | **Round-1 analysis:** `../ledger/ROUND_ANALYSIS.round1.md` @0d57ceb2f9, ruling 6 (mechanism) | **Slug rows this cell closes:** W3-S1, W3-S2 | **Decomp cell:** `IB-rt-9` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.2, s.1 + s.2) | **outcome_ref:** FWD-4 (contrib) | **PRD candidate:** B8
 
