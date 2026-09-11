@@ -1273,6 +1273,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "CLAUDE.md Git section: AWS via the `.tools/aws` shim (+`aws.cmd`, both or neither); never bare MSYS_NO_PATHCONV=1 aws.",
     "world_is": "The two faces of the shim are not interchangeable by caller. From bash either works; from a Windows Python only the .cmd does, and the bash one fails with an error that points away from the cause.",
     "notes": "Recorded because it costs a cycle every time. Same family as the existing memory note that Python spawning an MSYS binary must go through .tools/msys_argv_guard.py -- this is the AWS-shim instance of it."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S9",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-11T06:21:55Z",
+    "one_line": "IB-s-16's hand-off (issuer amendment 812bbec0e9 + 902ea877dc, fact 4) asserts 'IB-s-4's one normaliser' strips the `<firm>:acct:` namespace prefix where a holdings id crosses the directory seam, and names it as living under infra/aws/lambda/investor-reporting/directory/. Measured: no such function exists anywhere under that path. Every top-level def in handler.py, refresh.py and expiry.py was enumerated (handler.py: normalize() is an unrelated lowercase-ASCII text-search folder used for search tokens, plus tokens/load_directory/etc; refresh.py: manifest_key, new_manifest, compute_delta, reason_for_delta, missed_business_dates, refresh_firm, serve_read, lambda_handler, _firm_ids_from_env; expiry.py: _as_date, resolve_calendar, age_in_trading_days, _source_of, evaluate, status_envelope, fallback_answer) -- none strips or normalises an account-id namespace prefix. `git show 624a60e4fc --stat` (IB-s-4's actual merged commit) confirms its file list is lambda-source-map.json, PATH_MANIFEST.json, directory/{expiry.py,refresh.py,tests/test_refresh_expiry.py,schedule.tf} plus deploy/proof/battery/investigation artifacts -- no normalizer file was ever added. Row IRPT_BCKEND-W2-S11 (which this amendment cites as disarmed by IB-s-4) names the SAME prefix ('<firm>:acct:') but its own grounding evidence never names a shipped normaliser function either -- it reads as a manual prefix-strip performed inline by whoever measured that row, not a shared library call.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B (a shared account-id namespace-prefix normaliser for the holdings/directory seam either needs to be built and declared as the ONE normaliser future cells import, or the amendment's citation needs correcting to point at wherever the prefix-strip logic actually lives; until then this cell builds its own minimal, clearly-labelled inline stripper for its own second-firm hash census rather than importing a function that does not exist, and that inline copy is NOT the shared normaliser the amendment describes)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-read/enumeration of every top-level `def` in infra/aws/lambda/investor-reporting/directory/handler.py, refresh.py and expiry.py at this worktree's HEAD (5fa4a113107af2d884a1fe101c135584852586e8) -- zero functions named or shaped like a namespace-prefix strip or account-id normaliser",
+        "git show 624a60e4fc --stat -> file list is infra/aws/lambda/ci/lambda-source-map.json, infra/aws/lambda/investor-reporting/PATH_MANIFEST.json, infra/aws/lambda/investor-reporting/directory/{expiry.py,refresh.py,tests/test_refresh_expiry.py,schedule.tf} plus deploy-completion/proof-of-spec/battery/adversary-declaration/investigation artifacts -- no normalizer file",
+        "handler.py's only def named normalize() is a lowercase-ASCII text-search token folder (used for search matching), unrelated to account-id namespaces -- read in full at this worktree's HEAD",
+        "row IRPT_BCKEND-W2-S11's own grounding text (this file, this project) describes the `<firm>:acct:` prefix mismatch and a post-normalisation count but does not cite a shipped shared function as the mechanism used to strip it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-s-16 hand-off, fact (4): 'the second-firm hash census reads the firm buckets and the shared bucket under both prefixes, normalised through IB-s-4's one normaliser where an id crosses the holdings/directory seam, both counts printed.'",
+    "world_is": "No such normaliser exists anywhere in the repo under infra/aws/lambda/investor-reporting/directory/ (or, by the same enumeration, anywhere else this cell's search reached) -- IB-s-4's actual merged commit (624a60e4fc) added expiry.py/refresh.py/schedule.tf/tests only. This cell proceeds by writing its own minimal, explicitly-labelled inline prefix-stripper (citing this row) for its own second-firm hash census, rather than importing a function that is not present.",
+    "notes": "OBSERVATION, not BLOCKING: this cell can still satisfy its own acceptance criteria by building the minimal stripper inline and printing both as-written and after-normalisation counts, which is the literal ask. ARMED because a FUTURE cell that trusts the hand-off's citation and tries to `import` a shared normaliser from directory/ will fail, and because the underlying id-space mismatch for INF/COT (rows W1-S7, W2-S11) is a raw-key difference no prefix-stripper reconciles."
   }
 ]
 ```
