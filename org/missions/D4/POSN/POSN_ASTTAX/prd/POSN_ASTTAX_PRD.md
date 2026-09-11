@@ -150,26 +150,51 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
   `docs/briefs/positioning-gld-vxx-satellites-20260911.md@46f7e03df8`; Andrew-direct 2026-09-11 ~07:2xZ to
   fold into POSN_ASTTAX, via `0.0.0_AB_MSTR` msg 21263) -- ⛔ **THE RETAG OF THE COMMODITY/HEDGE TICKERS IS
   A PRODUCTION LANDMINE UNTIL THE POSITIONING GENERATOR IS HARDENED; the round-2 SEQUENCE is load-bearing.**
-  `yang-generate-positioning/lambda_function.py` buckets weight into FIXED-KEY dicts --
-  `management_allocations = {'active','passive'}` (:228, :242-243) and an `asset_class` chain summing into
-  `{cash, fixed_income, equity, hedge}` (:368-369). A classification VALUE the dict lacks raises `KeyError`
-  in `calculate_allocations()` (called unconditionally at :1917/:1926 per model book): the generator dies,
-  `positioning_data.json` is not rewritten, and the page BLANKS FOR ALL FOUR PARTNER FIRMS.
+  ⛔ **RE-FOUNDED 2026-09-11 ON THE MEASUREMENT THIS CONSTRAINT ITSELF ORDERED. THE CONSTRAINT STILL
+  BINDS; ITS STATED MECHANISM DOES NOT.** What follows is the mechanism as measured, then the original
+  as history. A constraint whose stated mechanism is dead will be mis-applied by the next cell that
+  reads it -- and the dead one below invites exactly the check that cannot see the live failure.
+  **THE LIVE MECHANISM (measured by `TO-S7-1`, round 2): SILENT ZEROING, NOT BLANKING.**
+  `AT2-s-6` hardened the generator and KILLED the KeyError -- **0 of 17 hops RAISE**. A retag today
+  does NOT blank the page. It renders `Commodities`/`Structured` as the literal string `'Unknown'`
+  **and silently zeroes the weight.** ⛔ **THE HAZARD GOT QUIETER, NOT SAFER** -- strictly WORSE for
+  detection than the blanking it replaced, because a blank page is noticed in seconds and a zeroed
+  allocation line looks like a real allocation. The retag remains UNSAFE; the reason changed.
+  ⚠ **VINTAGE:** the 17-hop figures are pinned to `TO-S7-1`'s run and `3.0.0_SA_CVO~Z` records that
+  `S1` later repaired a benchmark hop, so the RATIO is historical. **The VERDICT is not** -- the CVO
+  re-confirmed against current controls that both classes still display as `Unknown`.
+  **THE ORIGINAL MECHANISM, PRESERVED AS HISTORY AND NO LONGER OPERATIVE** (true when the DT brief was
+  written, falsified by `AT2-s-6`): `yang-generate-positioning/lambda_function.py` bucketed weight into
+  FIXED-KEY dicts -- `management_allocations = {'active','passive'}` (:228, :242-243) and an
+  `asset_class` chain summing into `{cash, fixed_income, equity, hedge}` (:368-369) -- so a value the
+  dict lacked raised `KeyError` in `calculate_allocations()` (:1917/:1926), the generator died,
+  `positioning_data.json` was not rewritten, and the page BLANKED FOR ALL FOUR PARTNER FIRMS.
   - **`management_style` half -- ARMED and LATENT.** `management_style="unknown"` is a TRUTHY placeholder the
     default-to-passive guard (:72 `value if value else default`, :81) CANNOT fire on; 187 of 285 rows carry
     it, 0 of the 30 currently-held tickers do (the only reason the page works today). GLD, IAU, SLV, USO,
     DBC, GSG -- every commodity/hedge instrument -- trip=TRUE; VXX is `passive` (trip=FALSE), which is
     precisely why VXX works today. (`2.0.0_SA_COO~Z` independently verified: the unsafe six ARE the six
     Commodities moves; VIXY, the Structured move, is the safe one.)
-  - **`asset_class` half -- the SAME shape, NOT yet measured.** Moving GLD `hedge`->Commodities or VXX
-    `equity`->Structured introduces asset_class VALUES the four-key chain may not carry. DT measured the
-    management_style KeyError; the asset_class KeyError is the same fixed-key pattern and a round-2 cell MUST
-    measure it against the generator before retagging, never assume it.
+  - **`asset_class` half -- MEASURED, and the prediction was WRONG.** This bullet used to say the
+    asset_class KeyError "is the same fixed-key pattern" and ordered a round-2 cell to measure it
+    "never assume it". `TO-S7-1` did exactly that and returned **NO-GO with 0 of 17 hops RAISING**:
+    the hardening removed the raise, so moving GLD `hedge`->Commodities or VXX `equity`->Structured
+    yields `'Unknown'` and a **zeroed weight**, not a crash. ⭐ **THE PRD ASKED FOR THE MEASUREMENT
+    THAT CONTRADICTED IT, AND GOT IT** -- that is the instruction working, not failing. The reason
+    the wrong mechanism survived is that prose predates its own instrument's answer, so a spec that
+    orders a measurement must be re-read WHEN THE ANSWER LANDS.
   ⛔ **SEQUENCE (round 2): (0) HARDEN the generator -- treat `"unknown"` as falsy in the guard AND make both
   allocation dicts tolerate an unexpected key (DT Step 3, the durable class fix); (1) set the affected
   tickers' `management_style` to the factually-correct value (passive for a bullion trust) -- DT Step 1;
-  (2) verify the asset_class allocation chain carries the ratified FIVE-class vocabulary; ONLY THEN
-  (3) retag.** A retag before (0)-(2) leaves rows one allocation decision from blanking the page. This is
+  (2) **THE BAR, stated as a CONDITION and not as an act:** for EVERY ticker in the retag set, the
+  SERVED `asset_class` value equals its ratified five-class label AND its allocation weight is
+  NON-ZERO and equal to its pre-retag weight, read from the served artifact. ⛔ **WRITTEN AS AN ACT
+  ("verify the chain") THIS STEP INVITED A READER TO TREAT A COMPLETED VERIFICATION CELL AS A PASSED
+  ONE -- an error this seat made and withdrew.** A step that names a TASK is satisfied by doing the
+  task; a step that names a CONDITION is satisfied only by the world. **Step (2) is currently NOT
+  MET: `TO-S7-1` measured it and returned NO-GO.** ONLY THEN
+  (3) retag.** A retag before (0)-(2) serves `'Unknown'` at a ZEROED weight on a page that still
+  renders -- which is why "confirm the page still renders" can never discharge this step. This is
   the SAME defect class as C-CLASSIFIER-PURPOSE(c) -- a placeholder value indistinguishable from a real one
   -- at the `management_style` grain. ⭐ VXX is ALREADY correctly flowing into Satellites 70/80/90/98 via the
   MODELS path (LT 1.5% / ULT 2.0%, `sub_asset_class` Volatility); POSN only retags VXX's served top-level
@@ -208,6 +233,9 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
   on POSN_ASTTAX"* -- the `0.4.0_DT_ClientPlatform` GLD/VXX positioning brief
   (`docs/briefs/positioning-gld-vxx-satellites-20260911.md@46f7e03df8`), folded at v0.5 as
   **C-RETAG-SAFETY** (s.4). It names a production landmine the round-2 retag must sequence behind.
+  ⚠ **The constraint was RE-FOUNDED 2026-09-11 on `TO-S7-1`'s measurement** -- still binding, and the
+  brief's KeyError/page-blank mechanism is preserved there as history rather than as the live reason.
+  Andrew's ruling and the DT brief are UNCHANGED; only the mechanism the round-3 cells will read.
 - **2026-09-11, Andrew-direct, VERBATIM:** *"Confirmed, just note that Philosophy/CMA are the same page
   now. Also this should likely be heavily involved with ETFClassifier."* -- confirming the six DONE WHEN
   bars (his reserved L2 step), and adding the two refinements now carried as C-TWO-SURFACES and
