@@ -617,6 +617,13 @@ This section ADDS the two round-4 cells; rounds 1-3 are FROZEN and terminal. C-S
 **NONE IS DESIGN_SPEC-GATED** (analysis + slug): consumer-code / provenance correctness, doable now without
 a .tsx. The surface exercise is a LATER round (v5+), still on Andrew's DESIGN_SPEC + the four words.
 
+**RULING @21343 (1.0.0_SA_CTO~Z, folded in before rc-19 was worked).** rc-19 (C-S19) is fixed as an S11
+QUALIFICATION RULE (class-level -- the "corrected-overlay unresolved" figure class in lib/research/rules/
+figure.py -> S10 REFUSE/PROVISIONAL), NOT a bespoke fallback inside load_corrected_price_overlay (Rule 22:
+fix what the members share; a bespoke fix is the next-consumer gap the CRO's holes-scan flagged). rc-19's
+<paths> accordingly grant lib/research/rules/ + lib/research/checkface/. rc-20 (C-S20) stays its own fix,
+framed as EXTENDING S3's provenance vintage/source handling, kept separate from rc-19.
+
 ### 12a. The two round-4 cells
 
 M = ONE dependency chain: rc-19 -> rc-20, both editing the SAME consumer functions

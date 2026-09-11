@@ -119,6 +119,7 @@ Every invocation runs under `timeout 120`. A timeout is recorded AS the output.
 **Authority chain:** L10 round-3 analysis @38948db85c (answering CVO slug REMEDIATION_v3 @13ae38f3f89b, finding C-S20) -> L5 recut decomposition v0.5 @06d72ff757 (section 12, AMGT-rc-20) -> this round-4 issuance.
 **Chain:** round 4 (v4), the SECOND of a two-cell chain (AMGT-rc-19 -> AMGT-rc-20), one worker slot (~1); worked AFTER rc-19 lands (its worktree is cut fresh from the HEAD carrying rc-19).
 **Provenance:** decomposition v0.5 section 12a's AMGT-rc-20 row; the finding is C-S20 (rb-2 collapses observation date/vintage/derivation identity and hardcodes the source) per the CVO evidence @13ae38f3f89b.
+> **NOTE (2.0.0_SA_COO~ZZZ, CTO ruling @21343).** rc-20 stays its own fix (distinct from rc-19's class-level qualification rule). Frame it as EXTENDING S3's provenance vintage/source handling (render_print.py IS the S3 provenance render) -- carry observation date + derivation identity as distinct fields and emit fig.source -- rather than minting a bespoke field. Keep it separate from rc-19.
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- v0.2's run stands; G-14 binds AC4 (judgment never self-graded).
 comp-iam: DECLARED-NOT-APPLICABLE -- no IAM touched.
