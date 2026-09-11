@@ -2336,6 +2336,151 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "IB-s-14's (v0.11) arm: 'the three retained vendor PDFs are verified by digest and exported as Analysis bundles labelled vendor_synthetic_holdings' -- read as three exports of three inputs.",
     "world_is": "Three exports of three inputs produced ONE rendered document three times. The digest chain was intact end to end for each variant separately, which is exactly why the constancy was invisible: every per-object check passed.",
     "notes": "The general form, and the reason this is worth a row rather than a footnote: a per-member verification cannot see a property the members SHARE. Three arms each asserting 'this object's stored hash equals its receipt's' certify the set clean while the set is one document repeated. The discriminating check is a COMPARISON ACROSS members, and it costs one equality test."
+  },
+  {
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_BCKEND-W4-S20",
+    "surfaced_at": "2026-09-11T15:05:00Z",
+    "one_line": "'DELETED' ON A VERSIONED BUCKET MEANS 'HIDDEN FROM EVERY ORDINARY READ', NOT 'THE BYTES ARE GONE' -- and the difference is invisible in the receipt. opal-data-ycharts has versioning ENABLED (get-bucket-versioning: Status=Enabled, read in the same pass as the pre-act inventory). `delete-object` without `--version-id` writes a DELETE MARKER: head-object 404s, list-objects-v2 returns 0, every production reader stops finding the object -- and the four noncurrent versions (wl2x4Z9vSi31..., Jg9agZs3W5xchqyD..., NO5Dioo.m.mOZs4J..., arZTAfWafyUSzIQR...) remain retrievable by VersionId to anyone with s3:GetObjectVersion. The four delete responses SAY SO -- DeleteMarker:true on 4 of 4 -- which is the bucket telling the operator what kind of delete it just performed. The permanent form is a per-version delete, is UNRECOVERABLE, and was NOT taken: the word said 'yes on synthetic exports', and reading a one-line yes as authorization for the irreversible variant of an act is exactly the widening a relay must not do. This row exists so the estate does not later believe those bytes are gone because a report said 'deleted'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B -- EITHER carry the question back to Andrew (do the noncurrent versions go too, which is unrecoverable), OR record that delete-marker semantics satisfy the intent and close it. Until one of those, any statement that the four synthetic PDFs are 'gone' must carry this qualifier",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api get-bucket-versioning --bucket opal-data-ycharts -> {\"Status\": \"Enabled\"}, read immediately before the act",
+        "the four delete-object responses, verbatim: {\"DeleteMarker\": true, \"VersionId\": \"04OM8jGc8DHS0zMtKePd0CBx_XLv7m.s\"} and three siblings -- DeleteMarker true on 4 of 4",
+        "the pre-act head-object reads carry the object VersionIds that still exist: wl2x4Z9vSi31.i.TUVq__pjfcz0U4qFK, Jg9agZs3W5xchqyD8bH3UCQTCMQ8Z2HS, NO5Dioo.m.mOZs4JjR2GsZHXKmhI6nVE, arZTAfWafyUSzIQRYcctzEswDuMxmOlv",
+        "after the act: head-object 404 on 4 of 4 and list-objects-v2 under the whole GENIBS14SYN/ generation returns 0 objects -- the ORDINARY-read view is empty, which is what every production reader sees",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/RT8-g_delete_receipts.json @this commit -- _meta.delete_grain states this in the artifact itself"
+      ]
+    },
+    "spec_asserts": "Arm (g): 'delete-object per key (four literal keys, never a prefix delete, never --recursive), each response captured; head-object reads 404 on 4 of 4 after'.",
+    "world_is": "Both of those happened exactly as written, AND the bytes still exist as noncurrent versions. The arm's own acceptance text is satisfied by the weaker act, so nothing in the criterion would have surfaced the difference.",
+    "notes": "The general shape: a delete verb on a versioned store is a VISIBILITY change, and the only instrument that distinguishes it from destruction is the response field nobody reads. Both halves are printed in the battery."
+  },
+  {
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_BCKEND-W4-S21",
+    "surfaced_at": "2026-09-11T15:35:00Z",
+    "one_line": "A RENDER ON THE SHARED BROWSER HOST NEEDED A GRANT THAT HOST'S OWN ROOT DOES NOT HAVE, so this cell declared it from ITS root against ANOTHER cell's role. irpt-ycharts-runner-role (IB-s-8, ycharts/iam.tf) grants Secrets Manager on three YCharts names, one DynamoDB lease item, KMS for that table, and the YCharts artifact prefix -- and NOTHING on opal-data-ycharts. A render under that role can neither READ the frozen bundle nor WRITE the PDF, so 'start the host and send the document' would have produced an AccessDenied and nothing else; the README's option A, as written, was not executable. The issuer's amendment permits exactly two edits to the ycharts root (its header and one output description) and 'no other change to that root', so aws_iam_role_policy.render_host_export_evidence is declared in the EXPORT root and attached BY NAME to irpt-ycharts-runner-role. It is additive, reversible (deleting it returns the role to exactly what IB-s-8 declared), scoped to the SAME exports prefix the controller itself uses, and adds NO vendor reach. THE SHAPE IS STILL WORTH A ROW: one role now has two roots writing policies onto it, and a reader of ycharts/iam.tf cannot see the second.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B -- either fold this grant into the ycharts root at the next round (one role, one declaring root) or record the cross-root attachment as the estate's accepted pattern for a shared host. Until then, an IAM census that reads the ycharts root alone UNDERSTATES what that instance role can reach",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/investor-reporting/ycharts/iam.tf @77b2acc7a9 -- aws_iam_role_policy.runner has five statements: three YCharts secrets, the lease item, the system CMK, the YCharts artifact prefix and its conditioned ListBucket. No s3 statement names opal-data-ycharts",
+        "infra/aws/terraform/investor-reporting/export/iam.tf @this commit -- data.aws_iam_role.render_host + aws_iam_role_policy.render_host_export_evidence, five statements, all prefix- or ViaService-conditioned",
+        "terraform apply on the export root: 'aws_iam_role_policy.render_host_export_evidence: Creation complete after 1s [id=irpt-ycharts-runner-role:irpt-export-render-host-evidence]'",
+        "the host then downloaded 3 of 3 files from the export artifact prefix under its instance role, printed by its own 'ls -la /opt/investor-reporting-export' in the SSM output -- the grant is EXERCISED, not merely declared"
+      ]
+    },
+    "spec_asserts": "The amendment: 'no other change to that root'; and the README's option A, which lists start / send / stop and nothing about permissions.",
+    "world_is": "The act needed a permission neither the amendment nor the README mentions, on a role this cell does not own. The minimal legal form puts a second writer on one role.",
+    "notes": "The operator act was written from the CONTROLLER's side (what the Lambda needs to send) and never from the HOST's side (what the box needs to do the work). That asymmetry is why the gap survived being written out verbatim twice."
+  },
+  {
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_BCKEND-W4-S22",
+    "surfaced_at": "2026-09-11T16:08:00Z",
+    "one_line": "THE PORTAL ORIGIN THIS CELL HAS BEEN CARRYING SINCE ROUND 2 IS A HOSTNAME THE ESTATE DOES NOT OWN, and only a browser could find out. local.portal_origin read `https://portal.opalcapital.co`; it is in the export root, in the Lambda's environment as IRPT_PORTAL_ORIGIN, and in the SSM document's parameter. The first real render opened it and Chromium answered net::ERR_SSL_UNRECOGNIZED_NAME_ALERT -- the name is not served, and infra/aws/terraform/website/iam.tf:68 records Andrew-direct 2026-07-13 that the estate does not even own opalcapital.com. The served portal is the portal-auth distribution, aliases opalinvest.dev and www.opalinvest.dev. NOTHING COULD HAVE CAUGHT IT EARLIER BY ITS OWN DESIGN: a controller whose whole job is to pass an origin STRING to a host that is never started cannot discover that the string is fiction, every test asserts the value it was given, and terraform validates a string as a string. The corrected value is applied and the render reached the real origin on the next send.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM command output, verbatim: 'page.goto: net::ERR_SSL_UNRECOGNIZED_NAME_ALERT at https://portal.opalcapital.co/investor-reporting/print?bundle=EXP-184aaa5454d45e8eb6312fe2a175fa01&kind=performance'",
+        "infra/aws/terraform/website/iam.tf:68 @77b2acc7a9 -- 'NOT opalcapital.com (Andrew-direct 2026-07-13: \"We do not even own opalcapital.com\")'",
+        "infra/aws/terraform/portal-auth/cloudfront-distribution.tf:110 @77b2acc7a9 -- aliases = [\"opalinvest.dev\", \"www.opalinvest.dev\"]",
+        "infra/aws/terraform/investor-reporting/export/main.tf @this commit -- portal_origin = \"https://opalinvest.dev\", applied; the next send reached the route and got a sign-in screen rather than a TLS error"
+      ]
+    },
+    "spec_asserts": "The round-2 face: the host 'runs the counterpart's RenderPackage print entry point', served from the portal origin the controller supplies.",
+    "world_is": "The origin was a plausible-looking string that resolved to nothing. It sat in a deployed Lambda's environment and in an SSM document for two rounds.",
+    "notes": "The class is worth naming: a CONFIGURATION VALUE ONLY USED BY A STEP THAT NEVER RUNS is unfalsifiable by every instrument that does run. The gated arm was not just unproven -- it was hiding a wrong value."
+  },
+  {
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_BCKEND-W4-S23",
+    "surfaced_at": "2026-09-11T16:20:00Z",
+    "one_line": "'0 EXTERNAL CONNECTIONS DURING THE RENDER' IS NOT ACHIEVABLE AGAINST THE PORTAL AS BUILT, and the guard is what proved it: 12 requests, opalinvest.dev 10, fonts.googleapis.com 1, fonts.gstatic.com 1 -- 2 FOREIGN of 12, 0 VENDOR of 12. The page the render reached pulls WEBFONTS FROM GOOGLE. That is not a vendor call and it breaches no bound this project carries, but it does falsify the criterion's own phrase, and it connects to the font finding in RT8-AC2: the package DECLARES Lato and the app FETCHES its faces from a third party at render time, so the document's typography depends on an origin outside Opal being reachable. A render host firewalled to Opal origins only -- the obvious hardening -- would render with substituted fonts and no error. The battery now prints the measured figure and refuses to print 'zero'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "3.0.0_SA_CVO at L9 for the criterion's wording, and IRPT_FNTEND for the substance: either self-host the webfonts (which also fixes the 0-of-3-embedded finding) or the acceptance text becomes '0 VENDOR connections' with the foreign-origin count printed beside it",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the host's own guard line, verbatim: GUARD: {\"requests_total\":12,\"requests_by_origin\":{\"opalinvest.dev\":10,\"fonts.googleapis.com\":1,\"fonts.gstatic.com\":1},\"foreign_origin_requests\":2,\"vendor_requests\":0,\"allowed_origin\":\"opalinvest.dev\",\"denominator\":\"2 foreign of 12 request(s); vendor hosts checked: ycharts.com,api.ycharts.com,bd3.bdreporting.com,api.cloud.orionadvisor.com\",\"outcome\":\"REFUSED\"}",
+        "RT8-AC1 (a) verbatim: '0 external connections during the render (host guard log, denominator printed)'",
+        "RT8-AC2_judgment.md s.2 -- 0 of 3 declared fonts embedded in 4 of 4 round-1 artifacts; the same typography question from the other end",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/RT8-a_render_record.json @this commit -- network_guard"
+      ]
+    },
+    "spec_asserts": "RT8-AC1 (a): '0 external connections during the render (host guard log, denominator printed)'.",
+    "world_is": "2 of 12 requests left Opal, both to Google Fonts, 0 to any vendor. The criterion's number is unreachable against this page; the number it was protecting -- vendor calls -- is zero.",
+    "notes": "The guard was moved OFF the success path for this run (it used to write only beside a PDF), which is the only reason this measurement exists: the run that refused is the run where 'what did the page talk to' was most worth knowing."
+  },
+  {
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_BCKEND-W4-S24",
+    "surfaced_at": "2026-09-11T15:10:00Z",
+    "one_line": "TWO CELLS' MODULES SHARE ONE NAME ON ONE IMPORT PATH, and `import dispatch` silently answered with the OTHER cell's file. Round 2's IB-rt-2 added infra/aws/lambda/investor-reporting/_authz/dispatch.py beside this cell's export/dispatch.py; the RT8 battery puts both directories on sys.path, the later insert wins, and the import resolved to _authz. THE ATTRIBUTE ERROR WAS THE LUCKY OUTCOME -- the modules happen not to share a symbol, so it crashed on HUMAN_GATED. Had they shared a function name with different semantics, the battery would have measured the wrong module and PASSED. Census of the four directories on that path: 'dispatch' is the only collision today (export has 10 modules, _authz 4, _keys 1). Fixed by loading every export module BY PATH rather than by name; the name collision itself is untouched and belongs to whoever owns the two packages.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B -- the two packages are flat directories deployed into separate Lambda zips, so nothing fails in PRODUCTION today; what is armed is every TEST, battery and tool that puts both on one path. The durable fix is a package namespace (irpt_export.dispatch / irpt_authz.dispatch), which is a cross-cell change",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the battery's traceback, verbatim: AttributeError: module 'dispatch' has no attribute 'HUMAN_GATED', raised at the arm (a) assertion",
+        "infra/aws/lambda/investor-reporting/export/dispatch.py @77b2acc7a9 defines HUMAN_GATED at line 40; the module that answered did not",
+        "module-name census over the four directories the battery puts on sys.path: export {assets,bundle,dispatch,download,exclusion,handler,identity,package,receipt,render}, _authz {dispatch,enforce,error_path_census,errors}, _authz/tests {fixtures,test_enforce}, _keys {keys} -- intersection with export: ['dispatch'], 1 of 10",
+        "battery_ib_rt_8.py @this commit -- _load() resolves by spec_from_file_location, with the incident recorded at the function"
+      ]
+    },
+    "spec_asserts": "Bound 12 and the battery's own docstring: 'THE SUBJECT IS THE REAL ARTIFACT, NEVER A COPY THIS FILE WRAPS'.",
+    "world_is": "An import by NAME does not name an artifact. The subject was decided by sys.path insertion order, which is a property of the test harness rather than of the thing being tested.",
+    "notes": "Generalisable: bound 12 is usually read as 'do not wrap the subject in a fixture'. This is the same defect through a different door -- the harness silently SUBSTITUTED the subject, and no amount of care about fixtures would have caught it."
+  },
+  {
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_BCKEND-W4-S25",
+    "surfaced_at": "2026-09-11T16:20:00Z",
+    "one_line": "THE RENDER IS NO LONGER HOST-GATED AND IS NOW SESSION-GATED: with the host authorized and started, Chromium reached https://opalinvest.dev/investor-reporting/print and the route answered with a SIGN-IN SCREEN, so render_export.cjs refused SESSION_ABSENT and never signed in. Row W4-S14 (nobody may START a host) is DISARMED by Andrew's word of 14:5xZ and by the four measured steps that followed it; what remains is a different gate on a different owner -- the print route is an AUTHENTICATED APP ROUTE and the host needs a session the typed client can use. The README named this fourth dependency before the act ('a session the typed client can use ... a separate operator decision from starting a box'), so it is a confirmed prediction rather than a discovery. Everything else in the chain is now proven END TO END on real infrastructure: the document deployed its own code, node 18 and Chromium 1187 were found on the box, playwright loaded, the browser opened the REAL origin, the network guard measured 12 requests with 0 vendor, and the host returned to stopped.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "IB-rtb-1 (the authenticated replay across every deployed route) -- the amendment names it as the owner of the session. The concrete need: a non-interactive session for a machine principal that the portal's typed client accepts on the print route, OR a print route that accepts a signed, short-lived render grant instead of a user session",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM command output, verbatim: 'BLOCKED: SESSION_ABSENT -- the print route answered with a sign-in screen. This script never signs in; an authenticated session for the host is an OPERATOR ACT.'",
+        "the same run's guard line proves the page LOADED before the refusal: 10 requests to opalinvest.dev, 2 to Google Fonts, 12 total",
+        "infra/aws/ec2/investor-reporting-export/README.md @77b2acc7a9 -- 'a fourth thing is still missing and is named here so it is not discovered at the console: the print route is an authenticated app route'",
+        "the issuer's amendment, which names SESSION-GATED and IB-rtb-1 for exactly this branch",
+        "ec2 describe-instances after the cycle: State.Name=stopped, re-read LIVE by the battery's arm (a)"
+      ]
+    },
+    "spec_asserts": "The amendment: 'if the run refuses SESSION_ABSENT, that refusal IS the recorded output -- arm (a) then reads SESSION-GATED naming IB-rtb-1'.",
+    "world_is": "Exactly that branch, reached on the first send that got past the infrastructure gaps. The render pipeline is complete except for authentication.",
+    "notes": "Four earlier sends in the same authorization each produced a NAMED refusal before this one -- MODULE_NOT_FOUND playwright, MODULE_NOT_FOUND @aws-sdk/client-s3, RENDERER_MODULE_ABSENT, and a TLS error on a hostname the estate does not own. Each was a real gap between a host half that was written and a host it had never run on."
   }
 ]
 ```
