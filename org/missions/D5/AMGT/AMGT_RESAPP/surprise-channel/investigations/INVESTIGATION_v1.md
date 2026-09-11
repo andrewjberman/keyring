@@ -584,6 +584,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "This cell's task text: 'Also present: ... the F10 precedent portal/src/pages/SecurityScanner/DESIGN_SPEC.md (READ)' -- implying the file is reachable in this worktree at the pinned vintage.",
     "world_is": "The portal submodule cannot be populated in this worktree at all (no .gitmodules mapping), so the file was read from a DIFFERENT, unrelated checkout of the same repo at a DIFFERENT commit than this worktree's own gitlink pins -- a substitution this worker discloses rather than silently treats as equivalent. The line count (560) matching the task order's own citation is the only corroboration that the substitute is faithful; the commit hash itself was not, and could not be, verified to be the same content.",
     "notes": "Not this worker's <paths>/BOUNDS to fix -- .gitmodules is not in this cell's write surface (lib/research/print/, deliverables/, the investigation file, this cell's own task-order file). This worker used the substitute read only for STYLE/GRAMMAR guidance (DESIGN_SPEC.md's section structure), not as a data source whose exact bytes are reproduced verbatim into this cell's own criteria, which limits how much a vintage mismatch here could actually mislead the deliverable. Whoever owns this fabric's submodule wiring may want a populated .gitmodules on this worktree class generally, not just for this cell."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W2-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~2",
+    "surfaced_at": "2026-09-11T07:53:10Z",
+    "one_line": "This cell's own task text and battery-findings note both name the landed SA tickers as BABA/RTX/+1 (sa_ids MEASURED for BABA 137271, RTX, +1); the live store and the merged sa_ids.json both show BABA/BA/COST instead -- no RTX object exists anywhere under raw/seekingalpha/.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live S3 read (boto3 ListObjectsV2, Prefix='raw/seekingalpha/', run by this worker): 18 keys total, exactly 3 top-level folders -- BABA_US/ (6 objects), BA_US/ (6 objects), COST_US/ (6 objects); zero keys under any RTX_US/ or similarly-named prefix",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~9/sa_ids.json (merged at commit 3be9d03962, this worktree's own ancestor per `git merge-base --is-ancestor 3be9d03962 HEAD`) carries exactly three keys: BABA (sa_id 137271, MEASURED), BA (sa_id 769, MEASURED), COST (sa_id 58, MEASURED) -- no RTX key",
+        "git log --oneline --all -- 'org/missions/D5/AMGT/AMGT_RESAPP/deliverables/*/sa_ids.json' shows exactly two commits touching that file (ca7c0a28f1, 513ae51e23), both worker 0.9.0_WK_AMGT_RESAPP~9; neither introduces or ever names RTX",
+        "the report body read back directly from S3 for BABA (raw/seekingalpha/BABA_US/20260911T040214Z/report.json) carries slug='BABA', matching sa_ids.json, not a mislabelled RTX object"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This cell's cell text: 'AMGT-s-b4 has since landed 18 raw objects across 3 tickers (BABA/RTX/+1) under raw/seekingalpha/.' The BATTERY FINDINGS section: 'sa_ids MEASURED for BABA (137271), RTX, +1'.",
+    "world_is": "18 raw objects across 3 tickers IS correct (the object count matches exactly); the TICKER IDENTITIES do not -- the second and third tickers are BA (769) and COST (58), not RTX. This worker proceeded against the REAL landed set (BABA_US/BA_US/COST_US) for AC1-AC4, which is what the reader can actually be re-exercised over regardless of which name the cell text expected, and which already had ir/publication fixtures under lib/research/coverage/fixtures.py's COVERAGE_FIXTURES (BABA_US/BA_US/COST_US, not RTX) -- so the substitution did not require inventing new fixture data either.",
+    "notes": "Non-blocking: AC1-AC4 all close cleanly on the real ticker set regardless of the name mismatch, and AC5 (judgment) reads the real ranked list, not the cell's ticker list. Likely cause (not verified by this worker, offered as a lead only): the cell text may have been drafted against an earlier or a different worker's SA landing attempt/plan that named RTX, while the actual AMGT-s-b4 re-run (commit 3be9d03962, 'Andrew-direct @770ee8fb18, CTO ruling msg 21152') landed against BABA/BA/COST -- the same three tickers run_reader.py's docstring and run_manifest.json (0.9.0_WK_AMGT_RESAPP~9) both already named from round 1. Worth the CVO/CTO's attention only if a future cell's criteria are written against the cell text's ticker list rather than the live store; this worker's own AC1-AC5 are unaffected since none of them name a specific ticker."
   }
 ]
 ```
