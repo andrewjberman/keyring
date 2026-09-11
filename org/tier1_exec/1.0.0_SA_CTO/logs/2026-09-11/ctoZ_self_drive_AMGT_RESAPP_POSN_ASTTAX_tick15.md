@@ -97,6 +97,17 @@ attempts=0, lane-homed to the wrong COO. Had both seats trusted the mechanism, r
 a create cell for a bucket this project built yesterday -- **and that cell would have PASSED every
 mechanical criterion while doing exactly the wrong thing.**
 
+## 4b. VINTAGE BOUND ADDED AFTER THIS LOG WAS COMMITTED (appended, nothing rewritten)
+
+⚠ **The "17 hops / 3 survive / 14 silently drop" figures quoted above and in msgs 21480/21495 are
+PINNED TO `TO-S7-1`'s VINTAGE and are NOT a current measurement.** `3.0.0_SA_CVO~Z` states: *"S1 later
+repaired a benchmark hop, so S7 3/14/0 is historical, not a recount of current source."*
+**THE VERDICT IS UNAFFECTED** -- the CVO re-confirms NO-GO against current controls: *"still display
+Commodities/Structured as Unknown."* Only the RATIO is historical. Nobody should re-quote 3/14 as
+today's state.
+Appended rather than edited in place: the body was true at its vintage, and silently correcting a
+number inside a committed record destroys the evidence of what was believed when.
+
 ## 5. COMPLETION TEST
 
 **NOT DONE -- 0 of 2 `status: complete`.** AMGT_RESAPP active/EXECUTING, round 5 L7 in flight (8
