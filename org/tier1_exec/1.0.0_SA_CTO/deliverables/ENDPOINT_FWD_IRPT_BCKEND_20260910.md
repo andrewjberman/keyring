@@ -546,3 +546,16 @@ CROSSES line); `4.0.0_SA_CRO` 191505Z for Andrew's runner words (quoted from tha
 Andrew-direct record is the CRO's); `org/standards/PROJECT_TREE.contract.json` (the code grammar).
 **NOT READ:** the TO register; any `org/projects/*.json`; the nine source documents beneath the brief; the WS4
 child brief's body (cited for `FWD-5`'s lineage only).
+
+
+---
+
+## ADDENDUM 2026-09-11 ~00:5xZ -- FWD-4 gains one CONSTRAINT+ line (L2, `1.0.0_SA_CTO`); no FWD is added, renumbered or retired
+
+Source: the CRO's Andrew-directed midstream supplement `docs/briefs/investor-reporting-ycharts-session-recovery-brief-20260910.md` @`9a71ef7626` (Part I O1-O5, Part III). Carried into `IRPT_BCKEND_PRD.md` v0.5 as the line below, verbatim; the ratified DONE WHEN / ACCEPT / PROOF / CONSTRAINT lines of FWD-4 at pin `58266dab2d` are untouched.
+
+```
+  FWD-4  CONSTRAINT+ (v0.5, supplement @9a71ef7626) a session is USABLE only after the intended authenticated identity and a report-capable response shape are verified from the transport that will use it (a cookie, a 200, a dashboard screenshot, EC2 Running or SSM Success is insufficient); recovery RESUMES the same immutable request revision and checkpoint; mutual displacement with the shared vendor login is ACCEPTED (Andrew, via the supplement) but repeated displacement reaches a retryable or attention state with the request preserved -- never an endless login contest, never a duplicate vendor portfolio or report; ONE automation owner of the shared vendor login at a time; the legacy `ycharts/credentials` contract and its consumers (YALP_MDSRC) are not overwritten and no competing refresh schedule is created
+```
+
+Why a constraint and not a new outcome: every sentence bounds HOW FWD-4's chain behaves under session loss; the advisor-facing outcome (an analysis in the same client context, exported) is unchanged. O3 and O5 of the supplement are operator evidence inside FWD-4 and FWD-10's proof arms, not outcomes an advisor sees.
