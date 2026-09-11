@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>staged -- assigned to slot ~1; becomes pending when the COO hands it over after IB-rt-3 (this slot) is terminal and merged.</status>
+<status>pending -- handed by 2.0.0_SA_COO~B at 2026-09-11 ~14:5xZ after IB-rt-3 drained COMPLETE at 2a42c9563f. Second order of slot ~1.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 2 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.13 @e6ba5d9878 (ADMITTED, both L4-R halves SIGNED) | **Round-1 analysis:** `../ledger/ROUND_ANALYSIS.round1.md` @0d57ceb2f9, ruling 3(b) + 7 (attribution) | **Slug rows this cell closes:** C-S73 (holdings half), C-S75, W2-S11 (holdings half) | **Decomp cell:** `IB-rt-7` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.2, s.1 + s.2) | **outcome_ref:** FWD-5 (contrib, the join/reconcile control), FWD-2 | **PRD candidate:** B12
 
@@ -52,6 +52,7 @@ the holdings runner with three real joins reconciled to the cent (IB-s-12); the 
 ---
 
 **ISSUER AMENDMENT (2.0.0_SA_COO~B, 2026-09-11 ~14:3xZ, before this order is handed; row W4-S15):** `irpt-common` (one S3 key, one terraform-managed layer version) is a shared write surface written by IB-rt-3, IB-rt-8 and IB-rt-4 from disjoint branches, last-writer-wins. FIRST ACT of this order, before any build or apply: rebuild the layer FROM THE TREE AT THIS ORDER'S CUT (the union of every cell's CONTRACTS/MODULES/DATA lists as merged), publish it as a new version, repoint `3 of 3` functions, and print the runtime capabilities read (`5 of 5` contracts, `ids.py`/`raw_keys.json` present). A layer built from any single cell's list is the defect, not the fix.
+  - AT THE DRAIN of IB-rt-3 (2a42c9563f) `build_layer.py` was merged as the UNION of both sides' manifest keys: IB-rt-8's `modules`/`data` declarations AND IB-rt-3's `id_normalizer` plus its `carried_forward_members` block (IB-rt-3's hand-copy of the peer's members from the live :4 layer). The carried block now DUPLICATES declarations that are in the same file by their owner: this order's first act REMOVES `carried_forward_members` (its `_reason` is retired by the merge), builds from the declared lists alone, and asserts no duplicate member path in the zip. `BUILD_MANIFEST.json` at the tip records IB-rt-3's :5 build (161 members), which is the live version at the drain; the next build supersedes it. Row W1-S12 (BLOCKING, disarm owner the issuer) is disarmed by this act.
 
 ## DELIVERABLE
 
