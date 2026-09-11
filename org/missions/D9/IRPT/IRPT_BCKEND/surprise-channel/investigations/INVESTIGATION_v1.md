@@ -1711,7 +1711,7 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "The drain is closed: every worktree removed, every branch merged, HEAD f8860a4a4b. The drain-end read to the CTO follows this commit; the slug is the CVO's."
   },
   {
-    "id": "IRPT_BCKEND-S25",
+    "id": "IRPT_BCKEND-S27",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
     "surfaced_by": "0.4.0_DS_ClientPlatform~X",
@@ -1734,7 +1734,7 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "Not blocking: the cell completes and the evidence is stronger than the text asked for. What needs the issuer's pen is the acceptance TEXT, so a later reader does not grade this cell against a denominator the mechanism cannot emit."
   },
   {
-    "id": "IRPT_BCKEND-S26",
+    "id": "IRPT_BCKEND-S28",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
     "surfaced_by": "0.4.0_DS_ClientPlatform~X",
@@ -1758,7 +1758,7 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "disarm_owner": "2.0.0_SA_COO~B (owns the decomposition text); 1.0.0_SA_CTO gates .tools"
   },
   {
-    "id": "IRPT_BCKEND-S27",
+    "id": "IRPT_BCKEND-S29",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
     "surfaced_by": "0.4.0_DS_ClientPlatform~X",
@@ -1782,7 +1782,7 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "disarm_owner": "1.0.0_SA_CTO (INFRA.TOOLS gate per safe_deploy_core.py's own header); 0.7.0_AE_CloudOps authored safe-deploy.sh"
   },
   {
-    "id": "IRPT_BCKEND-S28",
+    "id": "IRPT_BCKEND-S30",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
     "surfaced_by": "0.4.0_DS_ClientPlatform~X",
@@ -1805,7 +1805,7 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "Fails LOUD rather than silently -- a D- id is refused by the row gate at commit -- so the cost is a round trip, not a bad record. Flagged because the instruction sits in a face template that other DS lanes will be handed."
   },
   {
-    "id": "IRPT_BCKEND-S29",
+    "id": "IRPT_BCKEND-S31",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
     "surfaced_by": "0.4.0_DS_ClientPlatform~X",
@@ -1828,7 +1828,7 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "Reported rather than silently resolved because the next seat handed this face template may take the literal path, edit a file another cell owns (IB-rt-3 / IB-rt-6 own the runners this round) and collide at the drain. No runner was edited by this cell."
   },
   {
-    "id": "IRPT_BCKEND-S30",
+    "id": "IRPT_BCKEND-S32",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
     "surfaced_by": "0.4.0_DS_ClientPlatform~X",
