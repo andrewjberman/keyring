@@ -646,6 +646,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "THE CELL: 'principal class (`firm-advisor` | `firm-admin` | `opal`)'.",
     "world_is": "The generated contract carries five members with different tokens. Two vocabularies for one axis; the contract is the enforceable one and the face's is prose.",
     "notes": "No remedy taken and none needed for this cell: the contract's enum is what validates. Raised so the CVO reads FIRM_OPERATIONS in the output as the face's 'firm-admin' rather than as an invention, and so a later cell does not build a third spelling."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S9",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T01:31:12Z",
+    "one_line": "THE FIRM ID HAS TWO SPELLINGS AND THE TWO MODULES BENEATH THIS WRAPPER REQUIRE OPPOSITE ONES. X-Firm-Id carries the REGISTRY id (49financial -- index.mjs:387 injects payload.firmId) and _keys.cache_key REFUSES any tenant that is not a registry firm id (_check_tenant, keys.py:237-246); DirectoryEntry.ids.firm_id carries an OPAQUE id (directory_runner.py:381 emits opaque_id(firm, firm_id, firm_id) = fir_c9fc04650e2134d6ea033da2 for 49financial) and _scope.resolve's cross-firm filter compares entry firm ids to the header value (resolve.py:135). So a resolver handed the header value verbatim compares 49financial against fir_c9fc..., drops EVERY entry, and returns an EMPTY population -- the advisor sees nothing and it reads as a correct revocation. Each cell is right inside its own tests: IB-s-2's fixtures use opaque firm ids on BOTH sides and IB-s-17's tests use registry ids on both sides, so neither suite can see the seam. It is visible only at the join, which is this cell. Handled here rather than by editing either module: _authz.FirmBinding carries BOTH spellings, gives the registry one to _keys and the opaque one to the directory join, and is PROVEN against the directory artifact's own firm_id_opaque field (no hash is recomputed and directory_runner.opaque_id is not duplicated into a Lambda). A binding that does not reconcile is a REFUSAL (code FIRM_BINDING), never the empty set an unbound firm would produce.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda-edge/auth-validator-edge/index.mjs:387 @22a125e098 -- request.headers[x-firm-id] = payload.firmId; the JWT claim is the registry firm id",
+        "data/assets/scripts/gold/investor_reporting/directory_runner.py:381 @22a125e098 -- firm_id: opaque_id(firm, firm_id, firm_id); measured by calling that function: 49financial -> fir_c9fc04650e2134d6ea033da2",
+        "infra/aws/lambda/investor-reporting/_keys/keys.py:237-246 @22a125e098 -- _check_tenant raises KeyComponentRefused unless the tenant is in load_firm_ids(), i.e. a registry firm_id",
+        "infra/aws/lambda/investor-reporting/_scope/resolve.py:135 @22a125e098 -- the cross-firm filter compares ids.firm_id to the header firm value directly",
+        "infra/aws/lambda/investor-reporting/_authz/tests/test_enforce.py test_a_firm_binding_the_artifact_does_not_declare_is_refused (this commit) -- the FIRM_BINDING refusal exercised; battery arm (a) baseline SERVES 3 of 5 accounts through the binding, the positive control that the join now lands"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "THE CELL (L5 note): a decorator/wrapper every handler uses -- resolve scope (IB-s-2), REAUTHORIZE before serving any cached result or artifact, build keys through _keys (IB-s-17). The face composes the two modules and names no id-space reconciliation between them.",
+    "world_is": "The two modules the wrapper must call take the SAME concept in DIFFERENT spellings, and the failure is silent and safe-looking: an unreconciled firm id yields an empty permitted set, which is indistinguishable from a correct revocation.",
+    "notes": "ARMED because the failure mode is a GREEN: every per-cell test passes and the joined system serves an empty workspace to an entitled advisor. This is Rule 22's shared-dependency blindness on an ID SPACE rather than on a dependency -- a check scoped to the members cannot see it. _authz handles it for the handlers it wraps; the estate-level question (which spelling is canonical for verified_request_firm_id, and whether ResolvedScope should carry BOTH) belongs to whoever owns the contract. Not worked around by editing _scope or _keys: neither is in this order's <paths>."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S10",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T01:31:12Z",
+    "one_line": "_keys.KeyComponentRefused NAMES THE REFUSED VALUE IN ITS MESSAGE -- twelve message sites use %r on the component, including keys.py:254 and keys.py:290 (parameter %r value %r matches no admissible component shape). That is correct for a developer reading a traceback and it is a DISCLOSURE the moment any caller turns the exception text into a response or a log line, because the refused value is refused precisely for being a client name, an e-mail address or a firm token. Caught in this cell's own battery arm (d): the first version of _authz passed str(exc) through as the refusal reason and printed 'the value appears in the refusal: True' for 4 of 4 name-shaped components, including a client display name and an advisor e-mail address. Fixed INSIDE _authz (the reason now names the offending PARAMETER NAMES, found by re-building the key one parameter at a time through the same public _keys.cache_key -- never by parsing the message), so no key-refusal value reaches a response or the audit trail. The hazard that remains is for every OTHER caller of _keys: the exception text is unchanged and the next cell that surfaces it will leak the same way.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_keys/keys.py:185,254,274,290,320 @22a125e098 -- five of the twelve %r message sites interpolate the COMPONENT VALUE into KeyComponentRefused",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_s_3.py arm (d) -- pre-fix run printed 'the value appears in the refusal: True' for 4 of 4 name-shaped components; post-fix the same four print False",
+        "infra/aws/lambda/investor-reporting/_authz/enforce.py Enforcer._sanitize_key_refusal (this commit) -- the boundary, with offenders found through the PUBLIC cache_key API rather than by parsing the exception text",
+        "infra/aws/lambda/investor-reporting/_authz/tests/test_enforce.py test_no_key_refusal_echoes_the_refused_value (this commit) -- 4 of 4 shapes, whole-envelope AND audit-trail assertions",
+        "IB-s-3 BOUNDS item 6: no credential in any artifact, log, fixture or commit; signed URL parameters are never logged -- a client name in a log line is the same class of disclosure"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "BOUNDS: Client names are never keys -- the wrapper refuses a key component that resolves to a display name (through _keys). The bound names the KEY as the surface to protect.",
+    "world_is": "The refusal PATH is a second surface the bound does not name: the component never enters the key, and the value comes back out in the refusal that says so. Refusing and disclosing in the same breath satisfies the letter and inverts the intent.",
+    "notes": "The second-order lesson is recorded because it cost a green: this cell's own unit test for the same property checked out.census ONLY and PASSED while the value sat in out.reason, one field over -- a verifier scoped narrower than the object it protects. The battery, which censused the WHOLE envelope, is what caught it. The test now asserts over the whole envelope and the audit trail. _keys itself is NOT edited (not in this order's <paths>); the estate-wide remedy -- a sanitised message, or a structured exception carrying the component NAME and a reason CLASS with the value in a developer-only attribute -- belongs to IB-s-17's owner."
   }
 ]
 ```
