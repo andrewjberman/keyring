@@ -5,7 +5,7 @@
  "project": "POSN_ASTTAX",
  "directive": "D4",
  "fabric": "site-z",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -13,7 +13,7 @@
 }
 ```
 
-**Version:** v0.1, 2026-09-11 -- first PRD. **Author** `1.0.0_SA_CTO~Z` (L4). **Brief:** the nomenclature
+**Version:** v0.2, 2026-09-11 -- v0.1 first PRD; **v0.2 FOLDS IN Andrew's Cottonwood satellite components as the classifier's necessary data** (s.4 C-SATELLITE-DATA), on his direct 2026-09-11 "read the satellite file and fold it in as its necessary data for POSN_ASTTAX". A v0.2 bump re-opens the two L4-R sign-offs. **Author** `1.0.0_SA_CTO~Z` (L4). **Brief:** the nomenclature
 transcript's substance, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4`.
 **Endpoint confirmed by Andrew** 2026-09-11 (see s.5). **Home note:** tree-homed at
 `org/missions/D4/POSN/POSN_ASTTAX/prd/` as `POSN_ASTTAX` (macro POSN), renamed from
@@ -121,6 +121,19 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
 - **C-MEMBERSHIP-AT-L5** -- the exact membership RULES (which instrument is Structured vs Commodities
   vs Alternatives at the edges) are the classifier's substance and are decided in the cells at L5, not
   pre-judged here. FWD-1's bar is only that every holding lands in exactly one class.
+- **C-SATELLITE-DATA** -- the classifier's NECESSARY DATA input is the Cottonwood satellite components,
+  `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_SOURCE_SATELLITE_COMPONENTS_20260911.md@3685cd9c1e`
+  (9 satellites, 228 component rows; ticker = `metadata.symbol`, the AUTHORITATIVE field, never the
+  display name; weight = `absoluteAllocation`). Andrew-named necessary data 2026-09-11 ("the whole
+  reason we are doing POSN_ASTTAX is to get these included in Cottonwood's satellites in a clean visible
+  manner" / "fold it in as its necessary data"). Every one of the 228 components MUST sort into exactly
+  one of the five classes (FWD-1) and be VISIBLE as such on the surfaces (FWD-6). The MEASURED
+  served-plane gap this project closes (2.0.0_SA_COO~Z, DynamoDB `etf-classifications`): `VXX`
+  (VIX-futures ETN) is served `asset_class=equity` and must move to **Structured**; `GLD` (physical
+  gold) is served `asset_class=hedge` and must move to **Commodities** (C-VOL-HEDGE-STRUCTURED, FWD-2).
+  `sub_asset_class` already reads `Volatility`/`Gold`, so the remedy is a TOP-LEVEL retag, not a
+  from-scratch ruling. Identity resolves BY TICKER (metadata.symbol); the display-name irregularity
+  (GLD/VXX carry no ticker prefix) is NOT the failure mode -- the wrong top-level class is.
 
 ## 5. Rulings that BIND (Andrew-direct)
 
@@ -128,6 +141,10 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
   now. Also this should likely be heavily involved with ETFClassifier."* -- confirming the six DONE WHEN
   bars (his reserved L2 step), and adding the two refinements now carried as C-TWO-SURFACES and
   C-ONE-SOURCE.
+- **2026-09-11, Andrew-direct, VERBATIM:** *"read the satellite file and fold it in as its necessary
+  data for POSN_ASTTAX"* (relayed via `0.0.0_AB_MSTR`, bus ef105705) -- the Cottonwood satellite
+  components are folded in at v0.2 as **C-SATELLITE-DATA** (s.4), binding the classifier to
+  `ANDREW_SOURCE_SATELLITE_COMPONENTS_20260911.md@3685cd9c1e` as its necessary dataset.
 - **2026-09-01, Andrew-direct (register):** the taxonomy goes in D4, owned by the site-z fabric;
   `1.0.0_SA_CTO~Z` takes the transcript and authors this PRD.
 
