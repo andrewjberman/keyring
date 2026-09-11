@@ -671,3 +671,42 @@ failing to declare its live-table deliverable, and it is filed BEFORE the instan
   }
 ]
 ```
+
+
+---
+
+## Row appended by `2.0.0_SA_COO~Z` at L7 (trigger bound on W3-S1), 2026-09-11
+
+One row from the issuer, bounding a worker's ARMED row without disarming it. `W3-S1` keeps
+`hazard_standing: ARMED` -- that field is at-surfacing and immutable, and this row does not
+disposition it either. The CVO's L9 `adjudicates` remains the only carrier that can.
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S4",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-11T16:39:53Z",
+    "one_line": "BOUNDS POSN_ASTTAX-Z-W3-S1 AND DELIBERATELY DOES NOT DISARM IT. The seeder revert W3-S1 describes is real and un-remedied, but it has NO automatic trigger: an unscoped census over 111 references in 56180 files found zero invokers, and the one gold-producer candidate references the seeder only in comments (CODE=0, COMMENT=2). The hazard is LATENT, not imminent -- and as the named disarm_owner I am declining to disarm it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TRIGGER CENSUS, UNSCOPED, AT THIS SESSION'S VINTAGE. comp-find 'seed-etf-classifications' --all --files: DENOMINATOR 111 hit(s) across 56180 file(s) scanned [corpus=all], bands HEAD=33 SURFACED=26 CONFIG=8 DOC=44. I then INSPECTED what the census found rather than stopping at the count -- the step that matters, because an unscoped read only falsifies a domain if you look at what it surfaced outside it.",
+        "THE ONE CANDIDATE THE ROUND-1 DOMAIN COULD NOT HAVE COUNTED, AND IT IS NOT AN INVOKER. The HEAD band surfaced a GOLD PRODUCER SCRIPT, data/etfs/scripts/gold/etf_positioning_publisher.py -- and gold pipelines are scheduled by estate law, so a reference there is the one shape that would overturn 'no automatic trigger'. Measured with comp-read --enumerate 'seed-etf-classifications|seed_etf_classifications': 2 hit(s) across 707 lines, bands DOCSTRING=0 COMMENT=2 DEF=0 CODE=0, both at :188 and :220 citing 'seed-etf-classifications.py:62' as a CONTRAST to how that script writes. Comments, not calls. The gold script does not invoke the seeder.",
+        "SO ROUND 1'S VERDICT STANDS, REACHED BY A DIFFERENT INSTRUMENT. S1a-AC6 (instance at HEAD, deliverables/0.9.0_WK_POSN_ASTTAX~1/) reported 'DENOMINATOR: 45 hit(s) across 30964 file(s)' and a verdict of no scheduler, EventBridge rule, CI workflow, deploy script or step function. That was an enumeration of trigger TYPES -- a forward list, the shape Rule 24 warns omits silently. This row re-took it as a SUBTRACTION from all 111 references and reached the same answer, so the two do not merely repeat each other: the second read could have falsified the first and did not.",
+        "WHAT THAT DOES AND DOES NOT BUY. It bounds W3-S1 from IMMINENT to LATENT: nothing on a clock reverts the six rows. It does NOT make the revert less real -- seed-etf-classifications.py still does an unconditional full-item put, the six commodity tickers are still absent from ETF_MANAGEMENT_STYLE in all three module copies, and a DELIBERATE manual run still rewrites management_style to 'unknown' on exactly the six rows AT2-s-5 corrected. A manual CLI run is not a trigger a census can see, and this row does not claim otherwise.",
+        "NEGATIVE CONTROL ON THE CENSUS INSTRUMENT: the same comp-find pattern returns the two seed scripts themselves and _shared/etf_classification.py in the HEAD band, so the matcher does reach real code files and its silence on invokers is an absence rather than a blind probe. SCOPE LIMIT, STATED: comp-find is REPO-ONLY. An invocation living only in a human runbook, an operator's shell history, or an agent's habit is outside every instrument used here and is exactly how a 'manual-only' script gets run."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "POSN_ASTTAX-Z-W3-S1 (ARMED, disarm_owner 2.0.0_SA_COO~Z) asserts that the next seed run silently rewrites management_style back to 'unknown' on the six rows AT2-s-5 corrected and asset_class back to 'hedge' on the six rows AT2-s-2 would move, and records its own trigger as UNMEASURED ('manual CLI, no invoker census run').",
+    "world_is": "The revert mechanism is confirmed exactly as W3-S1 states it and is NOT contested here. What was unmeasured is now measured: there is no scheduler, no pipeline and no code path that fires the seeder. It runs only when a person or an agent deliberately runs it. That changes the hazard's CLOCK, not its CONTENT.",
+    "notes": "WHY THIS IS NOT A DISARM, stated plainly because I am the seat entitled to file one. A disarm would need the revert to be impossible or remedied; it is neither. The remedy is a code-map edit (add the six tickers to ETF_MANAGEMENT_STYLE across the three module copies) that lies outside every cell of round 2, so no order in this round can close it and I will not manufacture one mid-round -- the spec and decomposition are FROZEN. W3-S1 therefore stays ARMED and travels to L9 with this bound attached. FOR THE L8/L9 READER: the practical consequence is that AT2-s-5's six writes are DURABLE IN PRACTICE until someone runs the seeder, and the same is true of any retag AT2-s-2 would perform -- which is one more reason the AT2-s-7 NO-GO should not be read as the only thing standing between this round and the retag. TWO DEFECTS, ONE OF WHICH IS NOT THE CHAIN: the chain drops five-class values (W4-S3), and the registry does not hold them against a re-seed (W3-S1)."
+  }
+]
+```
