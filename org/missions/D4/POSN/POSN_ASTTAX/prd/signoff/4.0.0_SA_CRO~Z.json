@@ -1,11 +1,11 @@
 {
   "prd": "POSN_ASTTAX_PRD.md",
   "prd_version": "v0.5",
-  "prd_pin": "66ded3a0c56009fcdef37635d9ef793dbfce3fc5",
+  "prd_pin": "49ddcc481d97d6f8261359ec48ecdcde2bd0cbd8",
   "half": "brief",
-  "half_hash": "6bb1b9894d28c2f1177f0586be893c59394948adb5926046057970182646b554",
+  "half_hash": "3c1c3202ca9ebcaf6d1c0801c3662e812b7df45ebf780c8a835c09a69a456a7a",
   "verdict": "SIGNED",
-  "review_ref": "verified v0.1->v0.5 diff: 4 amendments (v0.2 Cottonwood satellite data, v0.3 disambiguation, v0.4 ETFClassifier purpose, v0.5 GLD/VXX retag safety) touch only constraint prose citing existing FWDs; SURFACE MANIFEST S1-S3 -> FWD-1..6 mapping unchanged across all four@66ded3a0c5",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/POSN_ASTTAX_v05_BRIEF_HALF_RESIGN_REVIEW_20260911_Z.md@d6d7b29e52",
   "signed_by": "4.0.0_SA_CRO~Z",
-  "signed_at": "2026-09-11T08:52:52Z"
+  "signed_at": "2026-09-11T21:14:22Z"
 }
