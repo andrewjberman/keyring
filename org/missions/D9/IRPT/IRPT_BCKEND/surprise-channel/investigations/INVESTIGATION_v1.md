@@ -3240,6 +3240,100 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not a defect of either cell and nothing here is edited by this order: enforce.py's docstring already states the question it answers ('can a handler forget the wrapper'). Filed so that the L9 reader of arm (a)'s '1 of 12' does not read it as a live cross-firm hole, and so IB-rt-7's inline enforcement is not retro-fitted to the wrapper on the strength of a census word."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S32",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T23:48Z",
+    "one_line": "A4's RULED remedy does not carry the modules: BOTH build scripts resolve a declared input ONLY as source_dir/<name> with no second step, so declaring served.py/loaders.py in files[] without a file on disk converts a latent ImportError into a hard build refusal -- and irpt-status, the shape A4 names to copy, is itself un-buildable at 3 of 10.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Amendment A4 (2026-09-11 ~22:5xZ) RULES the layer-vs-vendor question against both halves and orders: 'declare the shared modules as FLAT BUILD INPUTS in lambda-source-map.json, per function, exactly the way irpt-status already does ... it is how four functions already resolve enforce/resolve today, and it needs neither a layer attachment nor a vendor manifest.' It further instructs: 'RESOLVE THE WAY THE BUILDER DOES, AND PRINT N of N ... A module is PRESENT if the builder resolves it from its home package at build time', and the ~18:2xZ correction names 'source_dir first, then the flat-packaged shared library roots'.",
+    "world_is": "THE BUILDER HAS NO SECOND STEP, and two independent scripts say so in their own words: build-and-upload.sh:195-202 'for f in $FN_FILES; do if [ ! -f \"$ABS_SOURCE/$f\" ]; then echo \"  ERROR: File not found: $FN_SOURCE/$f\"' and build-zip.sh:51-54 'ERROR: Source file not found: $SOURCE_DIR/$f'. Neither reads a shared library root; a declared input that is not physically in source_dir puts the function in the builder's FAILED array. Census over the 9 irpt-* functions (denominator 84 declared inputs): 64 of 84 resolve, 20 do not -- irpt-ycharts-generate 18 of 27, irpt-export-render 10 of 14, irpt-status 3 of 10, while irpt-directory-search 2 of 2, irpt-performance-adapter 13 of 13, irpt-narrative 9 of 9 and irpt-holdings 9 of 9. So irpt-status, the shape A4 says to copy, is the WORST of the six and could not build today. And the gap A4 sends me to close is real and uniform: all six guarded entry modules import served and loaders (three also import enforce), 15 unsatisfied imports in total measured against what the builder would actually package. THE ONE IRPT FUNCTION THAT SOLVED THIS AND IS DEPLOYED SOLVED IT THE OTHER WAY: irpt-holdings (IB-rt-7) carries stage.py + STAGE_MANIFEST.json, which copy enforce.py/errors.py/resolve.py into its source dir from COMMITTED blobs via git show <pin>:<path>, plus BUILD_MANIFEST.json declaring vendored_modules and layer_dependencies -- i.e. a vendor manifest, the thing A4 says is not needed. A physical copy is what MAKES a flat build input real.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/build-and-upload.sh:195-202@a296eac0f4 -- manifest->disk check, source_dir only",
+        "infra/aws/lambda/ci/build-zip.sh:51-54@a296eac0f4 -- 'ERROR: Source file not found: $SOURCE_DIR/$f'",
+        "timeout 300 python .scratch/pkg_census.py @a296eac0f4 -> 'TOTAL: 64 of 84 declared build input(s) resolve the way the builder resolves them'; 'TOTAL unsatisfied imports across the six guarded entry modules ... 15'",
+        "infra/aws/lambda/investor-reporting/holdings/STAGE_MANIFEST.json@a296eac0f4 -- 5 members staged from git show <pin>:<path>",
+        "infra/aws/lambda/investor-reporting/holdings/BUILD_MANIFEST.json@a296eac0f4 -- vendored_modules + layer_dependencies",
+        "infra/aws/terraform/investor-reporting/directory/lambda.tf:11-15@a296eac0f4 -- 'built and uploaded by infra/aws/lambda/ci/build-and-upload.sh', so the source map IS the packaging list"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "notes": "NOTHING WAS EDITED ON THE STRENGTH OF THIS. I did not write the declaration A4 orders: adding served.py/loaders.py to files[] with no file beside them would ARM a build refusal for the next actor (including rt-9, row W2-S33) and would look like a landed remedy. I also did not build the holdings-shaped staging for the six, because that is the vendor manifest A4 ruled against and the round is FROZEN -- the ruling is the issuer's to re-cut, not mine to route around. A4 anticipated exactly this shape ('If you come to believe you must, that is a BLOCKING row to me, not an act') for the layer half; this is the same sentence applied to the half it chose. What the issuer must decide: (i) stage physical copies per function, holdings-style, and declare them -- the only shape in this estate that is deployed and works; or (ii) put served/loaders/enforce/errors/resolve in the irpt-common layer and attach it, which A4 measured the layer does not carry today. Arm (e) cannot be attempted under either reading without that decision, and arm (g) needs arm (e)."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S33",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T23:48Z",
+    "one_line": "The THREE functions A6 says IB-rt-9 deploys first are exactly the three carrying all 20 absent build inputs, so rt-9's first ledgered act refuses at the build before it reaches an apply -- and the ledger will already be OPEN when it does.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Amendment A6: 'Slot ~3 (IB-rt-9) owes a rebuild-and-deploy of irpt-export-render, irpt-status and irpt-ycharts-generate for the ids.py packaging gap (row W3-S25), and that is ITS first ledgered act. Three of those overlap your six. rt-9 deploys those three FIRST.' NEVER-2 requires the OPEN sentinel committed BEFORE the act.",
+    "world_is": "Those three are precisely the functions whose declared build inputs do not resolve: irpt-export-render 4 absent (enforce.py, errors.py, ids.py, resolve.py), irpt-status 7 absent (enforce.py, errors.py, resolve.py, ids.py, keys.py, handler.py, checkpoint.py), irpt-ycharts-generate 9 absent (enforce.py, errors.py, gate.py, keys.py, resolve.py, ids.py, firm_destination_policy.json, firm_registry.json, settings.json) -- 20 of 20 of the estate-wide absences in this project sit in exactly these three, and the other three of my six are 2 of 2, 13 of 13 and 9 of 9 clean. build-and-upload.sh puts a function with an unresolved input in FAILED and continues; it never produces a zip. So the rebuild half of rt-9's act cannot succeed as declared, and NEVER-2's sequence puts the OPEN sentinel in the tree before that is discovered.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "timeout 300 python .scratch/pkg_census.py @a296eac0f4 -- per-function absent lists, 20 absent of 84 declared",
+        "infra/aws/lambda/ci/build-and-upload.sh:195-207@a296eac0f4 -- FAILED+=(\"$FN_NAME\"); continue",
+        "IRPT_BCKEND.TO-IB-rt-2 face, ISSUER AMENDMENT 2026-09-11 ~22:5xZ section A6@a296eac0f4"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT because the failure is LOUD and fails closed -- the builder prints the missing path and refuses; nothing half-lands in AWS. Filed as friction rt-9 will hit in its first minutes, and because it is the same root as W2-S32 seen from the other slot: whatever the issuer decides there decides this. Not mine to fix: ycharts/generate is in my <paths> but the deploy of it is held by A6, and ops/ and export/ are shared with rt-9's owed act. I did not edit any of the three source-map entries."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S34",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T23:48Z",
+    "one_line": "The A5 rename leaves the FROZEN v1 contract naming a path that no longer exists: routes.json's `checked_by` and CONTRACT.md's provenance table both point at _authz/dispatch.py, and docs/contracts/ is out of this order's <paths> by its own rule.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Amendment A5 orders the rename 'in one commit with its importer, leaving no shim at the old basename', and names ONE importer (_contracts/tests/test_seam_paired.py:41). Row W2-S25's amendment says 'the v1 freeze at c22f179bbf stands and nothing in docs/contracts/ is edited by this order', and docs/contracts/ is not in <paths>.",
+    "world_is": "There are two further references and both are in the frozen artifact: docs/contracts/investor-reporting/v1/routes.json:169 \"checked_by\": \"infra/aws/lambda/investor-reporting/_authz/dispatch.py\" and docs/contracts/investor-reporting/v1/CONTRACT.md:44 '| version checked by | `infra/aws/lambda/investor-reporting/_authz/dispatch.py` |'. Neither is code: an unscoped census of the token `checked_by` over 31,362 files returns 2 hits, this one and an unrelated CRO yaml, so NOTHING reads the field and the rename breaks no mechanism. The strings are now stale provenance inside a frozen contract, and the only in-lane options were to leave a shim (A5 forbids it) or edit the freeze (W2-S25 forbids it).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'checked_by' --all --corpus default @a296eac0f4 -> 'DENOMINATOR: 2 hit(s) across 31362 file(s)', both CONFIG/prose, no code consumer",
+        "docs/contracts/investor-reporting/v1/routes.json:169@a296eac0f4",
+        "docs/contracts/investor-reporting/v1/CONTRACT.md:44@a296eac0f4",
+        "commit 49035683d1 on wk-irpt_bckend-2-2b -- the rename, its one importer and PATH_MANIFEST.json:5561"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Carried to whoever next opens the v1 contract for an amendment, so the line is corrected in a commit that is allowed to touch it rather than by this order reaching past its grant. No hazard: the field is documentation of a checker, not an input to one."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S35",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T23:48Z",
+    "one_line": "A6 conditions this order's deploy on an act its assignee cannot perform -- 'Ask me; do not read its branch and decide for yourself' -- and a spine v3 L7 worker has no broker, no message tool and cannot be messaged, so arms (e) and (g) have no reachable path to completion in this run.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Amendment A6: 'rt-9 deploys those three FIRST. You do NOT deploy them until I tell you its deploy has landed. Ask me; do not read its branch and decide for yourself.' Arm (e) requires CodeSha256 equality and a clean post-apply plan for EVERY function changed; arm (g) requires the paired producer-to-consumer test re-run against the DEPLOYED functions, so it needs arm (e).",
+    "world_is": "The worker face's own IDENTITY section states the opposite capability: 'You have no broker, no message tool and no skill tool. You cannot be messaged and you message no one. Your ONE report is your final message', and the spine's L7 carries no send tool by design. So the condition A6 places on the deploy can be neither satisfied nor waived from inside this cell: asking is not an act available to me, reading rt-9's branch is expressly forbidden, and deploying anyway would override a grant. Three of the six (irpt-export-render, irpt-status, irpt-ycharts-generate) are held by A6 directly; the other three (irpt-directory-search, irpt-performance-adapter, irpt-narrative) are not held by A6 but are blocked independently by W2-S32, because their zips would not carry served.py or loaders.py and the re-pointed handler = entry.lambda_handler would ImportError on the first invocation.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IRPT_BCKEND.TO-IB-rt-2 face, ISSUER AMENDMENT 2026-09-11 ~22:5xZ section A6@a296eac0f4",
+        "the worker face's IDENTITY/communication section as delivered to this subagent, 2026-09-11 ~23:0xZ",
+        "timeout 300 python .scratch/pkg_census.py @a296eac0f4 -- served/loaders unsatisfied in 6 of 6 guarded entry modules"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "notes": "NOT an argument for deploying: the sequencing A6 states is sound and its reason is stated (until this order's apply re-points the handler strings the world runs the OLD handlers, which import neither served nor loaders, so rt-9's deploy is safe ahead of mine and mine is unsafe ahead of its declaration landing). The mismatch is only that the CONDITION is discharged by a message and the party who must act on it cannot receive one. The remedy is the issuer's: re-hand this order after rt-9's deploy lands, with the fact stated in the face, which needs no new mechanism. Arms (a) in-lane, (b), (c), (d) and (f) are complete and committed; (e) and (g) are what this row holds."
   }
 ]
 ```
