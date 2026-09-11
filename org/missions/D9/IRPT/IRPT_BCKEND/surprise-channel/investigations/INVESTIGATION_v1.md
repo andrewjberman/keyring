@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 12 rows (S1-S7, W1-S1..S5), COUNTED.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 16 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-1-4 and CLOUD resolved as a strict UNION of both sides (12 ours + 11 theirs, 7 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -149,6 +149,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "Disarmed same turn as read (spine L7: an ARMED row is disarmed in the same turn by its named owner, and disarmed is not remediated). Carried for the CVO's L8 compile so the ARMED row reads resolved."
   },
   {
+    "id": "IRPT_BCKEND-S7",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-10T23:28:00Z",
+    "one_line": "EVERY L7 WORKER SPAWNED ON THIS FABRIC SINCE 22:43:03Z RUNS ON SONNET, NOT OPUS. .claude/agents/worker.md line 5 reads `model: sonnet` at HEAD since the merge b9ee1966cc (origin/SITEZ into CLOUD, 2026-09-10 18:43:03 -0400), while the file's own ruled note (1.0.0_SA_CTO @052aafbdf7) says this fabric runs `opus` and site Z runs `sonnet`, and Andrew-direct 2026-09-09 ~21:5xZ says 'All spawned workers for /canonical-flow should be subagents in the same session box using Opus with effort high'. The value on CLOUD was `opus` at 052aafbdf7 and 1d62717c65 (leg 1) and flipped to `sonnet` at b9ee1966cc -- the exact silent re-point the note predicts. For THIS project: slot ~1 (spawned 21:3xZ, resumed since) is on Opus; slots ~2 (IB-s-1) and ~4 (IB-s-11), spawned ~22:5xZ, were spawned under the flipped definition and are STOPPED and RESPAWNED by the issuer with the model set explicitly at the spawn; every later spawn in this round passes the model explicitly until the definition is repaired. The repair of the definition is not this lane's (the file is fabric law under the CTO's ruling and the integrator's merge); surfaced here for the CVO's L8 compile and the CTO's L10 read, and it reaches every COO lane spawning on this fabric, not only this project.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B for this project's spawns (disarmed same turn: the model is passed explicitly at every spawn in this round); 1.0.0_SA_CTO / 0.0.0_AB_MSTR for the definition itself (the per-fabric value at HEAD contradicts the CTO's own ruling in the same file)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log --first-parent -- .claude/agents/worker.md @6800337403 -- b9ee1966cc 2026-09-10 18:43:03 -0400 'Merge remote-tracking branch origin/SITEZ into CLOUD' carries `model: sonnet`; 1d62717c65 (leg 1) and 052aafbdf7 (the ruling) carry `model: opus`",
+        ".claude/agents/worker.md:5,8-16 @6800337403 -- `model: sonnet` under the note 'This fabric (CLOUD) runs opus; site Z runs sonnet ... whoever merges second silently re-points the other fabric's entire worker population'",
+        "ea764aecc6 0.0.0_AB_MSTR~Z 2026-09-10 13:52:35 -0400 'integrate: LEG 2, CLOUD -> SITEZ ... the SILENT MODEL FLIP WE BOTH PREDICTED ACTUALLY FIRED, arriving with ZERO conflicts because leg 1 had already resolved it' -- the integrators predicted it and it fired anyway on the return leg",
+        "org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md L7 @6800337403 -- 'Its model is Opus at high effort, declared by the worker agent type's own definition ... never chosen per task order and never left to a per-spawn override' -- which is why an explicit per-spawn model is a DISARM and not a fix"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Spine v3 L7: the worker's model is Opus at high effort, declared by .claude/agents/worker.md; Andrew-direct 2026-09-09 ~21:5xZ: 'using Opus with effort high'.",
+    "world_is": "At HEAD 6800337403 the definition declares `model: sonnet`; a spawn that trusts the definition runs a Sonnet worker on this fabric. Two of this project's four slots were spawned in that window.",
+    "notes": "Issuer acts this turn: TaskStop on slots ~2 and ~4, respawn on their existing worktrees and branches with the model passed explicitly; slot ~3 and every hand-off likewise. No face edited. The ~2/~4 work done under the wrong model before the stop stays on their branches and is re-grounded by the respawned worker's first act; nothing is discarded by the issuer."
+  },
+  {
     "id": "IRPT_BCKEND-W1-S1",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
@@ -266,28 +290,102 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "Named so an L9 re-grade reads a FAIL correctly if anyone re-runs the older battery in a used worktree. The general shape is worth the issuer's attention: an acceptance arm that asserts the ABSENCE of a sibling cell's future work is falsified by that work landing, and only the gitignore is keeping this one from biting the normal re-grade path."
   },
   {
-    "id": "IRPT_BCKEND-S7",
+    "id": "IRPT_BCKEND-W4-S1",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-10T23:28:00Z",
-    "one_line": "EVERY L7 WORKER SPAWNED ON THIS FABRIC SINCE 22:43:03Z RUNS ON SONNET, NOT OPUS. .claude/agents/worker.md line 5 reads `model: sonnet` at HEAD since the merge b9ee1966cc (origin/SITEZ into CLOUD, 2026-09-10 18:43:03 -0400), while the file's own ruled note (1.0.0_SA_CTO @052aafbdf7) says this fabric runs `opus` and site Z runs `sonnet`, and Andrew-direct 2026-09-09 ~21:5xZ says 'All spawned workers for /canonical-flow should be subagents in the same session box using Opus with effort high'. The value on CLOUD was `opus` at 052aafbdf7 and 1d62717c65 (leg 1) and flipped to `sonnet` at b9ee1966cc -- the exact silent re-point the note predicts. For THIS project: slot ~1 (spawned 21:3xZ, resumed since) is on Opus; slots ~2 (IB-s-1) and ~4 (IB-s-11), spawned ~22:5xZ, were spawned under the flipped definition and are STOPPED and RESPAWNED by the issuer with the model set explicitly at the spawn; every later spawn in this round passes the model explicitly until the definition is repaired. The repair of the definition is not this lane's (the file is fabric law under the CTO's ruling and the integrator's merge); surfaced here for the CVO's L8 compile and the CTO's L10 read, and it reaches every COO lane spawning on this fabric, not only this project.",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-10T23:18:00Z",
+    "one_line": "IB-s-11 S11-AC1 arm (b) names `probe_performance.py` run offline over INVESTOR_REPORTING_PERFORMANCE_EVIDENCE_20260910.json, but that file carries RECEIPTS, FIELD SHAPES and VALIDATION AGGREGATES and no response bodies at all, and the probe does not read it -- the probe requires --input-dir holding three HAR captures (dashboard_exploration_bdpt1.har, bdpt2.har, orionpt2.har, 138 MB total) that live in Downloads, outside the repository, and its --output-dir must be under the repo's gitignored .runtime tree. So the named invocation cannot produce the named result on any machine that lacks the operator's Downloads folder. The bodies WERE recoverable here: the probe's own live output tree (.runtime/codex-seats/4.0.0_SA_CRO/performance-recon, named by the evidence's meta.raw_storage) holds all seven 200 bodies and the two zero-byte 401s, and 8 of 8 saved bodies hash EXACTLY to the matching http_receipts[].response_sha256. The cell therefore derived scrubbed fixtures from those bytes, committed them under the package, and the battery replays THEM -- so the arm is proven from the same bytes the evidence attests, without depending on an untracked folder.",
     "class": "OBSERVATION",
-    "hazard_standing": "ARMED",
-    "disarm_owner": "2.0.0_SA_COO~B for this project's spawns (disarmed same turn: the model is passed explicitly at every spawn in this round); 1.0.0_SA_CTO / 0.0.0_AB_MSTR for the definition itself (the per-fabric value at HEAD contradicts the CTO's own ruling in the same file)",
+    "hazard_standing": "INERT",
     "grounding": {
       "status": "GROUNDED",
       "evidence": [
-        "git log --first-parent -- .claude/agents/worker.md @6800337403 -- b9ee1966cc 2026-09-10 18:43:03 -0400 'Merge remote-tracking branch origin/SITEZ into CLOUD' carries `model: sonnet`; 1d62717c65 (leg 1) and 052aafbdf7 (the ruling) carry `model: opus`",
-        ".claude/agents/worker.md:5,8-16 @6800337403 -- `model: sonnet` under the note 'This fabric (CLOUD) runs opus; site Z runs sonnet ... whoever merges second silently re-points the other fabric's entire worker population'",
-        "ea764aecc6 0.0.0_AB_MSTR~Z 2026-09-10 13:52:35 -0400 'integrate: LEG 2, CLOUD -> SITEZ ... the SILENT MODEL FLIP WE BOTH PREDICTED ACTUALLY FIRED, arriving with ZERO conflicts because leg 1 had already resolved it' -- the integrators predicted it and it fired anyway on the return leg",
-        "org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md L7 @6800337403 -- 'Its model is Opus at high effort, declared by the worker agent type's own definition ... never chosen per task order and never left to a per-spawn override' -- which is why an explicit per-spawn model is a DISARM and not a fix"
+        "docs/briefs/sources/INVESTOR_REPORTING_PERFORMANCE_EVIDENCE_20260910.json @410f28f7db -- top-level keys meta, captures, screenshots, http_receipts, validation, response_field_shapes, unverified, presentation_validation; no body field anywhere; meta.classification 'Sanitized source fingerprints, shapes, counts and receipts; no client identifiers, credentials or raw payloads'",
+        "docs/research/investor_reporting_performance_20260910/probe_performance.py:165-176 @410f28f7db -- `--input-dir` required, FILES = {bd1: dashboard_exploration_bdpt1.har, bd2: dashboard_exploration_bdpt2.har, orion: orionpt2.har}, read via (args.input_dir / name).read_bytes(); parser.error unless output-dir is beneath repo/.runtime",
+        "Glob '**/*.har' over the worktree: No files found -- 0 HAR captures are in the repository",
+        "sha256 tie run by this worker: bd_114 0 bytes / bd_117 0 bytes / orion_252 2354 / orion_compact 5290686 / bd_refreshed_period 176999 / bd_refreshed_series 26918 / orion_daily 119975 / orion_value_check 3850 -- 8 of 8 equal to http_receipts[].response_sha256 and to response_bytes; the ninth receipt (bd_session_refresh) has no saved body because the probe never writes or digests a session-token response",
+        "infra/aws/lambda/investor-reporting/performance/fixtures/FIXTURE_MANIFEST.json @de87f0976d -- 9 of 9 receipts accounted, 5 bodies committed, each carrying source_response_sha256 and fixture_sha256"
       ]
     },
     "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "Spine v3 L7: the worker's model is Opus at high effort, declared by .claude/agents/worker.md; Andrew-direct 2026-09-09 ~21:5xZ: 'using Opus with effort high'.",
-    "world_is": "At HEAD 6800337403 the definition declares `model: sonnet`; a spawn that trusts the definition runs a Sonnet worker on this fabric. Two of this project's four slots were spawned in that window.",
-    "notes": "Issuer acts this turn: TaskStop on slots ~2 and ~4, respawn on their existing worktrees and branches with the model passed explicitly; slot ~3 and every hand-off likewise. No face edited. The ~2/~4 work done under the wrong model before the stop stays on their branches and is re-grounded by the respawned worker's first act; nothing is discarded by the issuer."
+    "spec_asserts": "S11-AC1 arm (b): '`probe_performance.py` offline over the evidence JSON: the seven successful outcomes parse into `PerformanceReport` objects that validate'; the cell text names 'docs/research/investor_reporting_performance_20260910/probe_performance.py (offline)' as the fixtures/evidence.",
+    "world_is": "The evidence JSON holds no bodies and the probe never opens it; the probe opens three HAR files that are not in the repository. The bodies exist only in an untracked .runtime tree on this one device.",
+    "notes": "Not blocking and not escalated: the arm was met from the same bytes, tied by digest, and the derivation is now committed so it no longer depends on the untracked tree. The residue for the CVO is that any OTHER cell citing this evidence file for BODIES will find none -- IB-s-11's fixtures are the only committed carrier of those bytes in the estate."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S2",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-10T23:18:00Z",
+    "one_line": "The task order's identity mechanism -- 'Every Bash call begins export OPAL_AGENT_SERIAL=0.9.0_WK_IRPT_BCKEND~4' -- does NOT satisfy safe-apply.sh's halt gate. `.tools/halt-gate-check.sh` resolves the principal ONLY from org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial or a sibling .orphan-cleaned marker, and it consults no environment variable at all, so the first safe-apply attempt exited 3 with 'HALT-GATE: IDENTITY UNRESOLVED -- BLOCKED (fail-closed)' and terraform was never invoked. The gate DOES know about spine-v3 workers (halt_gate_validate_serial admits 0.9.0_WK_*~[0-9]* by finding a non-terminal task order under the code issued_to the serial and scanning its ISSUER's inbox) -- the hole is one layer earlier, in resolution rather than validation. Unblocked by writing the serial file the gate's own banner prescribes. That path is NOT in this order's <paths>, and it is not a repository edit either: org/mcp/sessions/ is gitignored (.gitignore:423) and holds zero tracked files, so the write is per-session runtime state that cannot enter a commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B -- the issuer writes worker faces, and every future face whose cell carries a deploy needs the session-serial line beside the OPAL_AGENT_SERIAL line; this worker cannot edit another face and cannot edit its own",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/halt-gate-check.sh:52-92 @410f28f7db -- halt_gate_resolve_serial reads ${repo_root}/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial, then the ${sid}.${serial}.orphan-cleaned marker, then FAILS CLOSED; the legacy .comp-graph/.agent_context fallback is removed by Andrew-direct 2026-07-13 and no env var is consulted",
+        ".tools/halt-gate-check.sh:135-165 @410f28f7db -- the SPINE v3 WORKER block: 0.9.0_WK_<CODE>~<n> is admitted iff a NON-TERMINAL task order under <CODE> at HEAD is issued_to it, and its STOPs are its issuer's",
+        "first safe-apply invocation, verbatim rc=3: 'HALT-GATE: IDENTITY UNRESOLVED -- BLOCKED (fail-closed) ... FIX (one line -- use YOUR serial, incl. any ~lane suffix): printf %s\\n \"1.2.3_XX_Yourserial\" > \"org/mcp/sessions/6e2c2caf-f95a-4a53-bb58-c9963d9f0a19.serial\"'",
+        "git check-ignore -v org/mcp/sessions/6e2c2caf-f95a-4a53-bb58-c9963d9f0a19.serial -> .gitignore:423:org/mcp/sessions/ ; git ls-files org/mcp/sessions/ -> 0 tracked files ; git status --porcelain org/mcp/ -> empty after the write",
+        "memory reference_a_worker_subagent_in_a_fresh_worktree_fails_safe_applys_identity_gate_closed_export_opal_agent_serial_at_spawn.md -- the same trap, already measured on a previous worker"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IDENTITY AND WORKTREE: 'Serial: 0.9.0_WK_IRPT_BCKEND~4. Every Bash call begins export OPAL_AGENT_SERIAL=0.9.0_WK_IRPT_BCKEND~4.' BOUNDS item 4: 'Deploys ... .tools/safe-apply.sh only'.",
+    "world_is": "safe-apply has two identity surfaces and OPAL_AGENT_SERIAL satisfies only the commit-lane one. The apply surface reads a session-keyed file that no worker face tells a worker to write, so a worker whose cell carries a deploy is blocked on its first apply until it discovers the banner.",
+    "notes": "ARMED because it recurs for every deploy-carrying cell in this round -- IB-s-1, IB-s-4, IB-s-6, IB-s-8, IB-s-9, IB-s-12, IB-s-13, IB-s-14, IB-s-15, IB-s-16, IB-s-17 all apply. Each will lose the same cycle. Cheapest disarm is one line in the face; the alternative (teaching the gate to read OPAL_AGENT_SERIAL) is a change to a safety gate and is not this worker's to make."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S3",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-10T23:18:00Z",
+    "one_line": "The deployed irpt-performance-adapter cannot carry two of its own dependencies, and neither remedy is inside this order's <paths>. (i) jsonschema is not in the AWS python3.12 runtime and infra/aws/lambda/ci/lambda-layer-map.json declares no layer providing it (0 hits for 'jsonschema' across the map's 180 lines), while a layer lives under infra/aws/lambda/layers/ -- not a granted path -- so the deployed function returns contract_validated=false with an absence naming the missing instrument rather than claiming a validation it did not perform. (ii) The bounded Black Diamond helpers the cell reuses (body_performance_period, requested_range_index and the four range builders) live in another Lambda's source_dir; packaging them means either a vendor step or a layer, and 'reusing an existing helper never widens its deployment' -- so the zip does not carry them and the deployed BD path degrades to date-labelled, UNCERTIFIED period cells with the loss recorded as a PARTIAL absence. In the worktree, where the battery and the 28 unit tests run, BOTH dependencies resolve and both are exercised: validation is mandatory and passes 3 of 3, and the request body is built by the estate's own function.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B -- a follow-on cell (or an amendment to a later face) owns the jsonschema layer and the helper packaging decision; both are write surfaces this order does not name",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-read infra/aws/lambda/ci/lambda-layer-map.json --enumerate 'jsonschema' @410f28f7db -- 0 hit(s) across 180 lines scanned",
+        "python infra/aws/lambda/ci/import-closure-check.py infra/aws/lambda/investor-reporting/performance <7 modules> -> 'OK: import-closure -- 7 packaged .py file(s), every top-level import satisfied by package/stdlib/runtime/layer' -- jsonschema passes ONLY because normalize.py imports it inside the function, which the gate exempts by design",
+        "infra/aws/lambda/investor-reporting/performance/normalize.py ValidationUnavailable @de87f0976d -- three outcomes, never two: validated / not-validated-with-a-named-missing-instrument / schema error",
+        "infra/aws/lambda/investor-reporting/performance/bd_adapter.py HELPER_CANDIDATES and HelpersUnavailable @de87f0976d -- env pin, then a _vendor/ copy, then the repo path; no local restatement of the request body is offered as a fallback",
+        "the order's <paths>: infra/aws/lambda/investor-reporting/performance/, infra/aws/terraform/investor-reporting/performance/, PATH_MANIFEST.json, change_management/, the sentinel, lambda-source-map.json -- infra/aws/lambda/layers/ and infra/aws/lambda/opal-assets/ are absent"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DELIVERABLE: 'infra/aws/lambda/investor-reporting/performance/ (bd_adapter.py, orion_adapter.py, normalize.py, handler.py)'; THE CELL: 'Bounded helpers from opal-assets-bd49f-reporting-pull/lambda_function.py are reused (name the functions)'; BOUNDS 7: 'no served output is touched ... except where THIS order's cell says it ADDS a resource'.",
+    "world_is": "A Lambda zip is closed over its own directory. Two dependencies the package needs at runtime live outside it, and both remedies (a layer, a vendor step into another Lambda's tree) are outside the write grant. Nothing in the criteria invokes the deployed function, so neither gap is reached by S11-AC1 or S11-AC2.",
+    "notes": "Deliberately NOT worked around by copying the helper source into this package: two definitions of one vendor request body is the defect the reuse exists to prevent, and a copy would also be the over-vendoring the estate's own lazy-import note warns against. Both gaps are visible in the function's own output rather than silent."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S4",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-10T23:18:00Z",
+    "one_line": "The committed fixtures carry REAL client economic values -- market values around 63,000 USD, daily returns, fees and cash flows for one Black Diamond 49F account and one Orion Inflection household of two accounts -- with every IDENTIFIER pseudonymised (account name, account number, externalId, BD account and Account-level ids, Orion group names and groupEntityId, the Orion sessionId; 242 replacements across five files, verified by a leak check that fails the generator). The numbers are preserved EXACTLY because they ARE the evidence: the percent-vs-factor tie, the linked-factors-to-summary tie at 1e-13, the 210.68 USD value-shortcut mismatch and the 9x hierarchy overstatement all vanish under any perturbation. This goes one step beyond what the CRO chose to commit -- the evidence file's own meta.classification says 'no ... raw payloads' -- so the choice is surfaced rather than assumed. Black Diamond SEGMENT names (International, Large Cap Value, Cash, ...) are BD's standard asset classification, shared across every client of the tenant, and are kept.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/performance/fixtures/FIXTURE_MANIFEST.json @de87f0976d -- identifiers_replaced per file: 3 + 195 + 30 + 7 + 7 = 242; _scrub states exactly what was replaced and that every economic number is preserved",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/make_perf_fixtures.py leaked() @de87f0976d -- the generator RE-READS its own output and exits 1 if any original identifier survives; it did exit 1 on the first run (11 Segment classification ids) and the scrub was corrected to be level-aware rather than the check relaxed",
+        "post-generation read of all five fixtures: every accountName/accountNumber/externalId/sessionId is SCRUBBED-*, every calculated-group name is SCRUBBED-NAME-* and every groupEntityId is 9000000xx",
+        "docs/briefs/sources/INVESTOR_REPORTING_PERFORMANCE_EVIDENCE_20260910.json meta.classification @410f28f7db -- 'Sanitized source fingerprints, shapes, counts and receipts; no client identifiers, credentials or raw payloads'",
+        "IB-s-11 BOUNDS item 6: 'a recorded fixture is scrubbed before it is committed'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DELIVERABLE names 'fixtures/'; BOUNDS 6: 'No credential in any artifact, log, fixture or commit. Secrets are read by NAME at runtime; a recorded fixture is scrubbed before it is committed.'",
+    "world_is": "'Scrubbed' is not defined in the order. Removing identifiers keeps every arm provable; removing or perturbing the magnitudes destroys the four arithmetic ties that ARE the proof. This worker read the bound as identifier-scrubbing and says so rather than letting the interpretation ride silently.",
+    "notes": "No credential of any kind is in the fixtures (checked: no bd.identity, Bearer, access_token or Cookie string appears). If 3.0.0_SA_CVO reads the bound as magnitude-scrubbing too, the remedy is a single affine rescale of every dollar quantity in the generator -- returns and factors are scale-invariant, so only the value-shortcut arm's absolute dollar figure changes, and it would then be cited against a rescaled expectation rather than against the evidence's 210.68."
   }
 ]
 ```
