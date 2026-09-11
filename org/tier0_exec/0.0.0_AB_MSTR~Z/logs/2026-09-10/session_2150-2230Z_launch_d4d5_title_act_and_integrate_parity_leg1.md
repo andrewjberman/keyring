@@ -249,3 +249,49 @@ act, never the gate's; surfaced so no served-key expectation sits on a gate that
 
 Both are the laptop's to act on; nothing on site Z waits. COO~Z verified its own four commits on origin
 by its own ls-remote read and held through the window with nothing pending.
+
+---
+
+## AMENDMENT 5 -- 05:4x-05:5xZ: the Cottonwood leg on Andrew's word, a refused merge that was a peer's staged set, and a real deploy of two mdpf gold scripts
+
+**archetype:** DEPLOY (integration) + COORDINATE
+
+**Andrew-direct at the laptop terminal ~05:3xZ**, relayed by `0.0.0_AB_MSTR` (bus ef105705-8d78-4d58-b576-f3f7dc794a69),
+verbatim: *"I need you to send this to MSTR~Z because the agents working on POSN_ASTTAX need to see it.
+THe Cottonwood satellites have key assets that should be included in ETFClassifier and so on and in that
+project and they are not ... The whole reason we are doing POSN_ASTTAX is to basically get these things
+included in Cottonwood's satellites in a clean visible manner, so this is crucial to get over to the sitez
+fabric CTO~Z"*. The laptop committed his file VERBATIM on CLOUD @3685cd9c1e at
+`org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_SOURCE_SATELLITE_COMPONENTS_20260911.md`; verified here
+from origin/CLOUD (20,286 bytes / 294 lines / sha256 ff96172b8e00b543) BEFORE the merge, and RELAYED to
+`1.0.0_SA_CTO~Z` and `2.0.0_SA_COO~Z` with the git-show command that reads it from origin/CLOUD so nobody
+waited on the index -- COO~Z had already said it would not spawn the POSN_ASTTAX worker until it read it.
+
+**The refused merge, and what it was:** `git merge --no-commit origin/CLOUD` returned rc=2 ("Merge with
+strategy ort failed") naming five `AMGT_RESAPP.TO-AMGT-r-*` task orders, no MERGE_HEAD created, nothing
+touched. `git diff --cached` showed exactly those five STAGED and none of them mine. Per the lesson banked
+earlier tonight: asked WHOSE (msg to `2.0.0_SA_COO~ZZZ`), did not reset, armed a background watcher on the
+index. COO~ZZZ answered: its round-2 issuance, staged by a safe-commit that L4-R (the new PRD-sign-off gate)
+REFUSED -- a blocked safe-commit leaves its diff staged -- and it unstaged them itself. Index clear after
+130 s; the retry merged clean (241 staged, 0 foreign). The orders stay untracked on disk by that lane's
+choice until the CRO/CVO sign-offs exist.
+
+**The leg:** origin/CLOUD @3685cd9c1e (+100, incl. Andrew Berman's own merge of SITEZ into CLOUD
+@757e347520 at 04:43Z) -> SITEZ @21f0b03d2f, overlap 0 of 275, portal gitlink e85f6eb84f taken as-is (on
+portal origin/DEV after a fetch -- the earlier dangling pointer is resolved on the laptop's side). Push
+rc=0, ls-remote read 21f0b03d2f, payload 109. Read from the remote 05:55:42Z: CLOUD-in-SITEZ YES; CLOUD
+lacks 13 (the laptop's leg).
+
+**A REAL DEPLOY, disclosed before and proven after:** the gate's own lines -- 4 paths in scope;
+`investor_reporting/holdings_snapshot.py` + its test SKIP-NOT-MEMBER (shared home, first-mint 404);
+`data/mdpf/scripts/gold/mdpf_gold_consolidator.py` (MODIFIED by `0.7.0_AE_CloudOps` @1465fd3f7d) and
+`data/mdpf/scripts/gold/tests/test_category_views_null_tail_guard.py` DEPLOYED to opal-data-mdpf --
+"2 deployed and verified; 2 SKIPPED". Both carry CLOUD's own bytes (overlap 0), so nothing was displaced;
+S3 LastModified moved on those two keys while the hash did not. The owner is on the laptop fabric and has
+it via the laptop MSTR (bus 1905fcb5): a timestamp-pinned acceptance on the consolidator (the CLOSED
+`mdpf-catviews-null-guard-goldrun` ledger @10b12c5293) reads a false drift after ~05:55Z.
+
+**Standing observation for the integrator:** L4-R is a NEW refusal source that leaves staged files
+behind on the shared tree; the "blocked safe-commit leaves your diff STAGED" class now has a second
+trigger, and an integrator's merge is where it surfaces. Cost of the right handling: one message and a
+two-minute wait. Cost of the reflex (`git reset`): a peer's five authored orders.
