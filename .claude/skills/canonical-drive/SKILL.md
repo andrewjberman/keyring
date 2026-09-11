@@ -41,13 +41,22 @@ terminal/total + assignee (`task-orders/*.md` faces); cells covered / cells serv
 more labor, or assess a dropped ball and nudge the responsible agent"*): **(1) DRIVE FORWARD** -- an unblocked
 act at the measured limb; fire it. **(2) PARALLELIZE MORE LABOR** -- an uncovered cell with no unmet
 dependency; cut and spawn it (obligation 2). **(3) ASSESS A DROPPED BALL AND NUDGE.** None applies -> NO-OP,
-and say which. ⛔ **(3) DOES NOT RUN NAKED: a nudge is authorized ONLY after `/canonical-flow`'s
-LIVE-PRODUCTION PROBE reports nothing moving across ALL FOUR planes** -- commits by author windowed,
-`deliverables/<serial>/`, the seat's own worktree, and `.runtime/codex-seats/<serial>/`. **A CODEX SEAT HAS NO
-WORKTREE**, so the worktree plane is structurally blind to that whole seat class; a "dropped ball" verdict
-fired at `3.0.0_SA_CVO~Z` 2026-09-11 while it was writing 189 KB of L9 evidence. ⚠ **AND NOTHING MOVING IS NOT
-PROOF OF STALLED** -- it lowers confidence in IN-PROGRESS; it never licenses a ladder ending in a kill.
-COST: one `git log` plus three stats per suspected seat. NON-APPLICATION: a seat that has answered this tick.
+and say which. ⛔ **(3) DOES NOT RUN NAKED: a nudge is authorized ONLY after `/canonical-flow`'s LIVE-PRODUCTION PROBE
+(v3 @`9e847ad661` -- READ IT AT HEAD, it was corrected three times in two hours) reports nothing moving across
+ALL FOUR planes:** (a) **COMMITS** `git log --author "<serial> <" --since=` -- cheapest and most reliable;
+(b) **DELIVERABLES, TWO HOMES** -- a WORKER's under `org/missions/D*/<MACRO>/<CODE>/deliverables/<serial>/`, a
+TIER-1 SEAT's under `org/tier1_exec/<BASE serial>/deliverables/`; ⛔ the wrong branch returns ABSENT RATHER
+THAN AN ERROR, failing silently in the exact direction the rung exists to prevent; (c) the seat's OWN worktree
+-- ⛔ **A CODEX SEAT HAS NO WORKTREE**, so this plane is structurally blind to that whole seat class;
+(d) `.runtime/codex-seats/<serial>/` **ARTIFACTS ONLY** -- subtract the runtime logs (`turn-bridge.stdout.log`
+and friends): the `[HARD-NUDGE] [deduplicated]` loop SPINS ON ITS OWN and reports MOVING about a seat
+producing nothing, forever. ⛔ **Each plane reads MOVING | COLD | INCONCLUSIVE, and a DIRECTORY THAT IS ABSENT
+IS INCONCLUSIVE, NEVER COLD** -- an absent path and an idle seat are different answers and only one is
+evidence. ⭐ **"A PLANE THAT CAN BE WRONG IN BOTH DIRECTIONS IS NOT YET A DISCRIMINATOR"** (`2.0.0_SA_COO~ZZZ`,
+which found (b) and (d) by RUNNING the rung on a live seat, not by reading it). ⚠ **AND NOTHING MOVING IS NOT
+PROOF OF STALLED** -- it lowers confidence in IN-PROGRESS; it never licenses a ladder ending in a kill. A
+"dropped ball" verdict fired at `3.0.0_SA_CVO~Z` 2026-09-11 while it wrote 189 KB of L9 evidence.
+COST: one `git log` plus four stats per suspected seat. NON-APPLICATION: a seat that has answered this tick.
 
 ## 2. The obligations, in this order, every tick
 
