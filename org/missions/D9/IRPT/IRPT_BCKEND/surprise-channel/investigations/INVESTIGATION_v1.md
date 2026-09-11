@@ -599,6 +599,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "DELIVERABLE names 'fixtures/'; BOUNDS 6: 'No credential in any artifact, log, fixture or commit. Secrets are read by NAME at runtime; a recorded fixture is scrubbed before it is committed.'",
     "world_is": "'Scrubbed' is not defined in the order. Removing identifiers keeps every arm provable; removing or perturbing the magnitudes destroys the four arithmetic ties that ARE the proof. This worker read the bound as identifier-scrubbing and says so rather than letting the interpretation ride silently.",
     "notes": "No credential of any kind is in the fixtures (checked: no bd.identity, Bearer, access_token or Cookie string appears). If 3.0.0_SA_CVO reads the bound as magnitude-scrubbing too, the remedy is a single affine rescale of every dollar quantity in the generator -- returns and factors are scale-invariant, so only the value-shortcut arm's absolute dollar figure changes, and it would then be cited against a rescaled expectation rather than against the evidence's 210.68."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S7",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-11T02:49:44Z",
+    "one_line": "IB-s-12: the first draft used the landed DirectoryEntry population (IB-s-1) as a HARD JOIN GATE for this cell's own custody joins, on the assumption that opaque_id(account, firm, raw) would resolve against the directory for all three firms the way it does for 49F. Measured empirically: it resolves 5 of 5 (then 7,431 of 7,453 at scale) for 49financial, but 0 of 790 for inflection and 0 of 946 for cottonwood -- the directory's opaque account ids for those two firms evidently derive from a raw key different from accounts_v2.account_id (INF) and fact_model_assignment.external_id (COT), which this cell did not trace to directory_runner.py's own build_inf/build_cot source selection within its time budget. Gating on the mismatch would have zeroed both firms' snapshots while reading as a genuine coverage failure rather than an identity-space mismatch. Changed BEFORE any apply: the directory intersection is now INFORMATIONAL ONLY (reported per firm in `manifest.directory_cross_check`, never a `continue`), and each firm's own natural silver-to-silver join is the resolved-scope population -- which is what reproduces the PRD's own 946-of-950 (COT) and 7,431-of-7,453 (49F, as the cross-check) dated figures.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B (whichever cell next needs a per-firm opaque-id cross-check between HoldingsSnapshot and DirectoryEntry for INF/COT should trace directory_runner.build_inf/build_cot's exact raw-key selection first; until then, no consumer should assume the directory and this cell's holdings population share an id space for those two firms)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "empirical check, this worktree: opaque_id('account','49financial', zfilled 10-digit fact_acc account_id) matches the real landed directory's account_ids set 5 of 5 sampled, then 7431 of 7453 at full scale",
+        "empirical check: opaque_id('account','inflection', accounts_v2.account_id) matches 0 of 790; opaque_id('account','cottonwood', fact_model_assignment.external_id) matches 0 of 946, against the real landed directories in opal-data-inf and opal-data-cot respectively",
+        "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py build_49f/build_inf/build_cot manifest.directory_cross_check fields, this commit",
+        "data/assets/scripts/gold/investor_reporting/directory_runner.py's own docstring names DIFFERENT authoritative identity sources per firm (49F dim_relationship/dim_account; INF accounts_v2 x representatives; COT fact_allocations Relationship ID) -- consistent with a per-firm raw-key choice this cell did not reverse-engineer for INF/COT"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-s-12 decomposition note: 'unique actual custody population per resolved scope' implies a join against the resolved population IB-s-1/IB-s-2 establish.",
+    "world_is": "The resolved-scope population this cell actually uses is each firm's OWN silver-to-silver join (SmartX account map for 49F, Eclipse accounts_v2 for INF, Rebalancer assignment for COT) -- not an intersection with the landed DirectoryEntry set, because that intersection is empirically empty for two of three firms.",
+    "notes": "INERT for THIS cell's own acceptance: all three firms reconcile to the cent and reproduce the PRD's own dated figures using their own joins, which is the load-bearing evidence, not the directory cross-check. ARMED for anyone downstream who assumes the cross-check IS the join."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S8",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-11T02:49:44Z",
+    "one_line": "IB-s-12: the issuer amendment required attempting the rule-13 code deploy through the guard's explicit first-mint mechanism (`--mint-bundle`) rather than accepting the push-gate's rc=0/SKIP-NOT-MEMBER as a deploy. Measured: `.tools/safe-deploy.sh --mint-bundle holdings_snapshot` returns 'ERROR: no bundle named 'holdings_snapshot' declared (declared: ['accrual_bridge'])'. Declaring a bundle requires editing `.tools/safe_deploy_core.py` CODE_TREES, which is outside this order's `<paths>` grant (the file is not listed and is a shared DS-lane tool, not this project's). This is the SAME class row IRPT_BCKEND-W2-S5 named for IB-s-1's sibling script, one level deeper: not only does the ordinary push path SKIP-NOT-MEMBER, the EXPLICIT escape hatch the guard itself documents ('first-mints stay explicit/manual') has no declared target for this project at all. `head-object s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/holdings_snapshot.py` confirms 404 -- the artifact, not the exit code, is the oracle and it reads ABSENT.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B (a bundle declaration for the investor_reporting gold scripts in .tools/safe_deploy_core.py CODE_TREES, or a routing decision that these scripts belong to a different CODE_TREES entry entirely, is a DS-lane / tooling-owner act outside any IRPT_BCKEND worker's <paths>)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-deploy.sh --mint-bundle holdings_snapshot -> 'ERROR: no bundle named 'holdings_snapshot' declared (declared: ['accrual_bridge'])', exit code 0",
+        "bash .tools/safe-deploy.sh --author '0.9.0_WK_IRPT_BCKEND~1 <...>' data/assets/scripts/gold/investor_reporting/holdings_snapshot.py -> 'SKIP-NOT-MEMBER [mdpf] ... probed s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/holdings_snapshot.py -> 404 ... OK: safe-deploy gate PASS -- 0 file(s) deployed; 1 SKIPPED (first-mint, 404). NOTHING WAS DEPLOYED.'",
+        "aws s3api head-object --bucket opal-data-mdpf --key code/scripts/assets_gold/investor_reporting/holdings_snapshot.py -> 'An error occurred (404) when calling the HeadObject operation: Not Found'",
+        "this order's own <paths> block names infra/aws/lambda/ci/lambda-source-map.json but NOT .tools/safe_deploy_core.py -- the file the fix would require editing is not in this order's grant",
+        "row IRPT_BCKEND-W2-S5 (IB-s-1, the sibling script) already measured the SAME shape one layer shallower (the push-gate SKIP, not the --mint-bundle refusal specifically)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer amendment (2.0.0_SA_COO~B, before this order was handed): 'read .tools/safe-deploy.sh's own header for the explicit first-mint mechanism it names and use it ... If the guard names a lane this serial cannot satisfy for the first-mint, that is a BLOCKING row on the deploying arm, not an override.'",
+    "world_is": "The guard's explicit first-mint mechanism is --mint-bundle, and it requires a bundle declared in a file outside this order's <paths>. No lane this serial can reach satisfies the first-mint. S12-AC1 arm (f)'s code-deploy leg reads BLOCKED, exactly as the criterion's own text anticipates ('a refusal is printed verbatim, filed as a BLOCKING row, and this arm reads BLOCKED') -- the token IBS12-HOLDINGS-RECONCILED is not withheld for it, per that same text.",
+    "notes": "Filed per the issuer amendment's own instruction. The data-landing half of arm (f) (head-object on each firm's QA latest.json) is unaffected and HELD; only the code-deploy half is blocked."
   }
 ]
 ```
