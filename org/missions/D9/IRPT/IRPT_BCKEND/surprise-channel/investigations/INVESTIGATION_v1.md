@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 23 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-1-1 and CLOUD resolved as a strict UNION of both sides (22 ours + 12 theirs, 11 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 25 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-1-3 and CLOUD resolved as a strict UNION of both sides (23 ours + 14 theirs, 12 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -451,6 +451,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "TO IB-s-1 acceptance arm (f): \"the ledger CLOSED and the sentinel committed (hash)\"; and BOUNDS 4: \"a change-management entry ... closed at completion, the sentinel `org/critical_paths/.open_deploys/<slug>.json` COMMITTED\".",
     "world_is": "The sentinel is an OPEN-state marker with a delete-on-close contract. Committing it is meaningful across turns while an entry is open (so a drain cannot destroy the open state); at close there is nothing to commit but its removal. This cell opened and closed inside one window, so the sentinel never existed at a commit boundary -- and the bound's own ORDER ('close the entry and commit it BEFORE taking the reads that grade the act') is satisfied by committing the CLOSED entry, which is what happened.",
     "notes": "Not blocking and not a defect in either the order or the tool -- a clause written for the multi-turn case read literally in the single-turn case. Recorded so a grader who greps for the sentinel path finds this row instead of concluding the NEVER-2 discipline was skipped. If the clause is meant to bind literally, the only way to satisfy it is to commit the sentinel while the entry is OPEN and commit its deletion at close -- worth one line in the next round's face rather than a re-cut here."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S1",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T00:30:14Z",
+    "one_line": "THE OFFLINE PROOF OF THE YCHARTS SESSION LIBRARY RUNS WITHOUT A REAL BROWSER. TO-IB-s-8's L5 note specifies 'a local browser against the captured HAR flows ... through a replay server', and arm (a) of S8-AC1 grades the five surfaces against that replay. Playwright is NOT installed in this worktree (a require of it returns \"Cannot find module 'playwright'\"; node itself is v26.8.1 and present), and installing it is an npm install against the public registry -- egress off Opal infrastructure, which CLAUDE.md's Agent Autonomy section excludes from this seat's standing authority, and which would also be the one thing arm (e) exists to refuse. So ycharts_session.js takes its browser as an INJECTABLE PORT (opts.browser, default require('playwright').chromium) and tests/replay_browser.js implements that same shape over real loopback HTTP. WHAT THIS DOES PROVE: the library's own code paths run unmodified -- classifyScreen, the selector list, fillAndSubmit, the cookie jar handling, probeSession, the lease and fence logic, the bounded reacquisition -- against real HTTP responses carrying the MEASURED YCharts statuses. WHAT IT DOES NOT PROVE: anything about Chromium, JavaScript execution, rendering, a real WAF challenge, real cookie rotation, or the vision fallback (replay_browser.js's screenshot() THROWS rather than stubbing, so a vision path cannot pass unexercised). ARMED because 'arm (a) 5 of 5' reads, to a later cell or an L9 grader, exactly like 'the runner works in a browser'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~3 -- DISARMED SAME TURN by naming the limit in the three places a reader will actually be standing: tests/replay_browser.js's header ('it is NOT Chromium'), infra/aws/ec2/investor-reporting-ycharts/README.md section 'What the offline proof cannot show', and the S8-AC3 judgment record in the proof-of-spec instance, which 3.0.0_SA_CVO grades at L9. The residual -- exercising the library in a real browser against the real site -- is the QUALIFIED LIVE ARM and belongs to 1.0.0_SA_CTO's L10 read on Andrew's per-use word, not to this order.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "node -e require('playwright') in /c/tmp/wk-irpt-1-3 -> \"PLAYWRIGHT-ABSENT: Cannot find module 'playwright'\"; node --version -> v26.8.1",
+        "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js @ff12d98c4d -- 'PORTS. Every outside edge is an injectable port with a lazy default' and defaultBrowserPort() = require(YC_PW_PATH || 'playwright').chromium",
+        "infra/aws/ec2/investor-reporting-ycharts/tests/replay_browser.js @ff12d98c4d -- 'WHAT THIS IS NOT ... it is NOT Chromium' and ReplayPage.screenshot() throws rather than returning a stub",
+        "CLAUDE.md Agent Autonomy @7d7f33569a -- 'Do NOT ask permission to read/write/build/test/commit ... Excluded: all egress off Opal infrastructure.'",
+        "IB-s-8_S8-AC1_battery_output.txt arm (e) -- 'netguard: 0 external of 1 connection attempts during the suite' with a POSITIVE CONTROL at https://ycharts.com refused by netguard.js (guard_external 0 -> 1)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-s-8, 'What L5 adds' s.9: 'Proof of the library is OFFLINE: a local browser against the captured HAR flows ... through a replay server; no request leaves the machine.'",
+    "world_is": "No browser is installed in this worktree and installing one is egress this order does not authorize. The proof runs the library against a Playwright-SHAPED loopback adapter, so it grades the library's mechanism and not a browser's behaviour.",
+    "notes": "The shape is worth an issuer's attention beyond this cell: a cut that specifies a proof instrument the worktree does not carry, and whose installation is itself outside the worker's standing authority, will be met either by an honest substitute (this) or by a quiet egress. IB-s-9 hangs off this cell and meets the same wall the moment it needs a rendered page."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S2",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T00:30:14Z",
+    "one_line": "THERE IS NO CAPTURED LOGIN FLOW ANYWHERE IN THIS CELL'S EVIDENCE, SO THE 'REPLAYED LOGIN FLOW' IN S8-AC1 ARM (a) IS MODELLED, NOT REPLAYED. Two separate facts, both measured. (1) The private packet is NOT in the worktree: docs/research/investor_reporting_ycharts_20260910/ contains exactly one file, profile_handoff.py -- the PROFILER, not the HARs it profiles -- so the three .har files and the six transcripts the TO names as fixtures cannot be read here at all. (2) The sanitized derivative that IS present, docs/briefs/sources/INVESTOR_REPORTING_YCHARTS_HAR_EVIDENCE_20260910.json, profiles three HARs of 220, 403 and 462 entries, and every one of the 16 profiled calls is a report_generation or a model-portfolio POST: all three captures are POST-AUTHENTICATION application sessions. profile_handoff.py:profile() only emits rows for /custom_pdf_reports/{id} and /model_portfolios/fixed/, so even the raw packet would have to be re-profiled to say anything about a sign-in. CONSEQUENCE: the replay's APP surface is grounded (measured routes and statuses, plus ycharts_client.py's probe route, its 200-and-only-200 predicate, its 403 'concurrent sign in' eviction discriminator and the three cookie names), but the sign-in PAGE, its form action and its DOM are a MODEL -- built on the Django shape that the csrftoken cookie and the X-CSRFToken header imply -- and the selector list ycharts_session.js tries is exactly the set that model satisfies. A green arm (a) therefore does not bound the risk that the real selectors differ. ARMED for the same reason as W3-S1 and for one more: the first live run is also the first test of those selectors.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~3 -- DISARMED SAME TURN by (i) writing the measured-versus-modelled split line by line into tests/replay_ycharts.js's header and into tests/fixtures/har_derived_routes.json's _meta.not_present field, which says 'NO LOGIN FLOW' in the fixture the replay actually loads; (ii) making acquireSession fail EXPLICITLY rather than silently when its selectors do not match ('sign-in form present but its fields are not addressable'), so a wrong selector on the live site is a named failure and not a hang; (iii) carrying it into the S8-AC3 judgment for 3.0.0_SA_CVO at L9. Closing it needs a capture of an actual YCharts sign-in, which is a LIVE VENDOR CALL and belongs to Andrew's per-use word via 1.0.0_SA_CTO at L10.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls -la docs/research/investor_reporting_ycharts_20260910/ @7d7f33569a -> one file, profile_handoff.py (8685 bytes); no MANIFEST.json, no hars/, no transcripts",
+        "docs/briefs/sources/INVESTOR_REPORTING_YCHARTS_HAR_EVIDENCE_20260910.json @7d7f33569a -- hars[].entry_count = [220, 403, 462]; every calls[] row has kind report_generation or holdings_upload or portfolio_create; distinct method+route pairs = 3, all POST /model_portfolios/* or POST /custom_pdf_reports/{id}",
+        "docs/research/investor_reporting_ycharts_20260910/profile_handoff.py profile() @7d7f33569a -- rows are appended only for POST /custom_pdf_reports/<id> and POST /model_portfolios/fixed/*, so the emitted evidence CANNOT contain a login entry even if the raw HAR did",
+        "infra/aws/ec2/investor-reporting-ycharts/tests/fixtures/har_derived_routes.json @ff12d98c4d -- _meta.not_present: 'NO LOGIN FLOW. All three HARs are post-authentication application sessions'",
+        "infra/aws/lambda/ycharts-market-data-pull/ycharts_client.py @7d7f33569a lines 41, 76-84, 162-164, 170-186 -- the probe route, the three cookie names, seat_evicted() and the 200-only predicate, which ARE measured and which the replay's authenticated surface is built from"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-s-8 S8-AC1 arm (a): 'acquireSession through the replayed login flow -> authenticated'; and the cell's fixtures row: 'six transcripts + manifest + three HARs (private packet, offline profile docs/research/investor_reporting_ycharts_20260910/profile_handoff.py)'.",
+    "world_is": "The packet is not in the worktree, and the sanitized evidence that is present contains no sign-in traffic by construction. The login flow in the replay is a model; the app surface is measured.",
+    "notes": "Worth the issuer's attention because the same fixtures row is cited by other cells: any cell that expects to read the HARs themselves will find only the profiler, and any cell that expects the evidence JSON to describe authentication will find it describes report generation."
   },
   {
     "id": "IRPT_BCKEND-W4-S1",
