@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>staged -- assigned to slot ~2; becomes pending when the COO hands it over after IB-s-2 is terminal and merged.</status>
+<status>complete -- S3-AC1 PASS-by-output (IBS3-AUTHZ-LIBRARY, 5 of 5 arms; 6 of 6 swaps refused leaking 0 of 16 protected tokens, a revoked grant refused against an untouched warm cache, and a job refused at consumption); S3-AC2 RECORDED as judgment for 3.0.0_SA_CVO at L9 -- the wrapper CAN be bypassed and ships the detector that finds it, with four declared limits. Instance VALID rc=0 (7 artifact rows, 2 of 2 surprise ids resolve, alignment 1/1 cell). No deploy in this cell by the face's own words; nothing in the world changed.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.4 @62301f71e0 | **Decomp cell:** `IB-s-3` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, s.1 + s.2) | **outcome_ref:** FWD-2 (own) | **PRD candidate:** B3
 

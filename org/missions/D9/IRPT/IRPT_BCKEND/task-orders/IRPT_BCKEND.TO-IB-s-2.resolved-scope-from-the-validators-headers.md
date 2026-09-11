@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>staged -- assigned to slot ~2; becomes pending when the COO hands it over after IB-s-1 is terminal and merged.</status>
+<status>complete -- S2-AC1 PASS-by-output (IBS2-SCOPE-RESOLVED, 7 of 7 arms incl. the issuer's arm (g)); S2-AC2 RECORDED as judgment for 3.0.0_SA_CVO at L9, answer NOT DISTINGUISHABLE with the upstream file and lane named. Instance VALID rc=0 (11 artifact rows, 2 of 2 surprise ids resolve, alignment 1/1 cell). No deploy in this cell by the face's own words; nothing in the world changed.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.4 @62301f71e0 | **Decomp cell:** `IB-s-2` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, s.1 + s.2) | **outcome_ref:** FWD-1 (contrib), FWD-2 (own), FWD-11 (contrib) | **PRD candidate:** B2
 
@@ -40,6 +40,9 @@
 - **Trace before you build (Phase 1, recorded in the instance):** `infra/aws/lambda-edge/auth-validator-edge/index.mjs` injects `X-User-*` headers and downstream Lambdas never parse JWTs (its own header comment, line 7); `X-Advisor-Role` is injected from the JWT claim (line 31); non-admin callers without an `advisorId` claim cannot hit advisor-scoped paths (line 188). Print the exact header names the validator injects, with line numbers, and the claim each comes from. The Opal-principal class is NOT visible in the validator's qualifiers at the cut: record how an Opal (non-firm) principal is distinguishable from that header set, or that it is NOT, as a finding -- IB-s-15 builds on your answer.
 - `infra/aws/lambda/investor-reporting/_scope/resolve.py`: `resolve(headers, directory) -> ResolvedScope` validating against the schema: viewer policy, principal class (`firm-advisor` | `firm-admin` | `opal`), entitlement revision, verified request firm, the unique permitted account set + a stable fingerprint, requested vs resolved scope with a partial reason; namespaced vendor ids stay server-side (never in the returned object's browser-safe view). Consumed by every handler; the permitted-firm catalogue for Global is IB-s-15's addition to the same module.
 - Fixtures: the 49F 201-group overlap (no manufactured primary credit), the INF unmapped list, a firm-authorized viewer (gets the firm population under the same rules), a browser-supplied header that the validator would never inject (refused).
+
+**ISSUER AMENDMENT (2.0.0_SA_COO~B, 2026-09-11 ~00:2xZ, before this order was handed -- a cut defect of the issuer, surfaced on a worker's row):**
+- **THE CONTRACT MUST ADMIT THE NULL IT DESCRIBES (row `IRPT_BCKEND-W2-S2`).** `_contracts/DirectoryEntry.schema.json` types `ids.relationship_id` as a bare string while its own description says an account-only entry carries null; 263 account-only 49F entries were refused by the validator on IB-s-1's first build. This order fixes the ONE token -- the property's `type` becomes `["string", "null"]` -- and updates the fixture pair: `fixtures/DirectoryEntry.valid.json` gains an account-only entry carrying `null`, `fixtures/DirectoryEntry.invalid.json` still refuses. The counterpart's typed client reads the same PRD table, whose description already names null, so the widening is compatible by construction; no other property moves. The resolver consumes the fixed schema.
 
 ---
 
@@ -81,6 +84,7 @@
 **(d) NO DOUBLE COUNT, EVERY GAP REASONED.** 49F overlap fixture: unique accounts preserved; INF unmapped: `N of N` with reasons.
 **(e) THE DIFFERENCE CONTROL ON FORGED HEADERS.** A request carrying a browser-supplied `X-User-*` header the validator does not inject resolves to NOTHING extra: the resolved set equals the set without it. Printed.
 **(f) SCHEMA-VALID, SERVER-ONLY FIELDS STAY SERVER-SIDE.** Every resolved object validates; the browser-safe view carries no vendor id (census of keys printed).
+**(g) THE CONTRACT ADMITS THE NULL IT DESCRIBES -- THE DIFFERENCE CONTROL (issuer amendment, row W2-S2).** Print `ids.relationship_id`'s `type` from the schema (expect it to include `null`); an account-only fixture entry with `relationship_id: null` VALIDATES; the same entry against the pre-amendment schema text (kept as a fixture copy) is REFUSED. Both printed.
 
 <criterion id="S2-AC2" cell_refs="IB-s-2" judgment="true"/>
 **`S2-AC2` -- JUDGMENT, RECORDED AND NOT SELF-GRADED.** State for `3.0.0_SA_CVO`: whether the validator's header set is sufficient to resolve a firm-admin versus an advisor versus an Opal principal, or whether IB-s-15 must add a claim upstream (name the file and the seat that owns it); and which fixture you could NOT build from real identity data and why. No verdict: the instance row carries the output under `UNVERIFIABLE-BY-INSTRUMENT` with `status_reason` naming `3.0.0_SA_CVO` at L9.
@@ -93,6 +97,7 @@
 org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-2.resolved-scope-from-the-validators-headers.md
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
 infra/aws/lambda/investor-reporting/_scope/
+infra/aws/lambda/investor-reporting/_contracts/
 infra/aws/lambda/investor-reporting/PATH_MANIFEST.json
 </paths>
 

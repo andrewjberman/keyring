@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>pending -- GO paired at cut (the spawn is the GO). First order of slot ~2; its first act waits on IB-s-18's merge, which the issuer sequences before the spawn.</status>
+<status>complete -- S1-AC1 PASS-by-output (IBS1-DIRECTORY-SERVED, 6 of 6 arms) and S1-AC2 PASS-by-output (No changes.) re-run by 0.9.0_WK_IRPT_BCKEND~2 on the RESPAWN; S1-AC3 RECORDED as judgment for 3.0.0_SA_CVO at L9. Instance VALID rc=0 (17 artifact rows, 6 of 6 surprise ids resolve, alignment 1/1 cell). The world acts were performed under commits 3654197107 and 4d3d2d10dd by the previous instance of this slot and are read, not re-executed (NEVER-2).</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.4 @62301f71e0 | **Decomp cell:** `IB-s-1` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, s.1 + s.2) | **outcome_ref:** FWD-1 (contrib), FWD-7 (own) | **PRD candidate:** B1
 

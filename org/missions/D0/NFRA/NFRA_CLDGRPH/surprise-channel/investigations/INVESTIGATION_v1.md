@@ -8732,3 +8732,250 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-S127 -- the CloudTrail payload already carries what the dead classes re-fetch, and no VPC endpoint for IAM exists at all
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-10T22:58Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S127",
+    "one_line": "THE UPDATER IS DISCARDING THE ANSWER AND THEN MAKING A CALL IT CANNOT COMPLETE. S120/S125 left an open question: is the updater MEANT to be S3+DynamoDB-only, or are the endpoints missing? Measured answer: neither. The CloudTrail event that wakes the Lambda ALREADY CARRIES the fields bounded_derive_node re-fetches, for every dead class measured. Over 6 days: 6 of 6 mutating lambda events carry functionArn AND functionName AND runtime in responseElements -- the exact three fields the LAMBDA node needs; 1 of 1 sns carries topicArn; 6 of 6 sqs carry queueUrl plus the ARN in the resources array. The S3 branch ALREADY works this way and is the only branch that never fails: it makes no API call, it parses the bucket out of the ARN. The pattern is in the file; it was never extended to the other four classes. Andrew raised the possibility unprompted; this row is the measurement, not the proposal, and nothing has been built.",
+    "spec_asserts": "bounded_derive_node re-derives each node 'from live AWS state' via a per-service boto3 call: lambda.get_function, iam.get_role, dynamodb.describe_table, sns.get_topic_attributes, sqs.get_queue_attributes. The _BOTO_CFG comment treats the no-route condition as a latency problem to fail fast on ('fail fast (3s) rather than hanging'), not as a data-availability problem with another source.",
+    "world_is": "The data is already in the payload. CloudTrail lookup-events over 6 days, mutating only (readOnly=false): lambda.amazonaws.com 6 mutating of 200 scanned -- ALL 6 carry arn+name+runtime (UpdateFunctionCode20150331v2 x4, UpdateFunctionConfiguration20150331v2 x2; responseElements also carries codeSha256, handler, memorySize, lastModified, architectures, i.e. MORE than the node uses); sns 1 mutating -- carries topicArn in requestParameters and the topic ARN in resources; sqs 6 mutating (CreateQueue) -- carry queueUrl and the queue ARN in resources; iam 0 mutating in the window, so IAM is UNMEASURED and must not be claimed. AND THE ENDPOINT ROUTE CANNOT FIX IAM AT ALL, which is the fact that decides this: over the 621 endpoint services offered in us-east-1 there is an interface endpoint for lambda, sns, sqs, sts, dynamodb and s3, and NONE for iam -- 'com.amazonaws.us-east-1.iam' does not exist, IAM being global. So provisioning endpoints, the obvious remedy, leaves IAM_ROLE permanently underivable while costing per-endpoint monthly spend. AWS Config, the other candidate source, is NOT AVAILABLE either: zero configuration recorders and zero delivery channels in this account.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws cloudtrail lookup-events per EventSource, 6d window ending 2026-09-10T22:1xZ, paginated, filtered to readOnly=false client-side -- lambda 6/6 carry arn+name+runtime; sns 1/1 topicArn; sqs 6/6 queueUrl+resources ARN; iam 0 mutating events",
+        "aws ec2 describe-vpc-endpoint-services -> 621 service names; exact-match test for com.amazonaws.us-east-1.iam returns NONE, while lambda/sns/sqs/sts/dynamodb/s3 all exist",
+        "aws configservice describe-configuration-recorders -> [] and describe-delivery-channels -> [] (AWS Config is not recording in this account)",
+        "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py bounded_derive_node -- the s3 branch returns a node built from the ARN with no _boto() call; the other five branches each call _boto(svc)"
+      ]
+    },
+    "notes": "NOT BUILT, AND DELIBERATELY SO. lambda_function.py is inside this seat's PERMIT set and inside tonight's four handoff paths, so the edit is mechanically available -- but tonight's authorization is the key-collision fix and the stitch producer, and a new derive path is a feature, not that fix. It needs a cut. THREE HONEST LIMITS ON THE MEASUREMENT, none of which the numbers above disclose on their own: (1) the denominators are SMALL -- 6, 1, 6 and 0 mutating events -- so what is established is 'carried it in every case measured', never 'always carries it'; (2) responseElements is null on some event shapes (a tag or a delete), which would yield a PARTIAL node carrying arn+name but no runtime -- still strictly better than today, where those classes produce NOTHING, but it is a design decision about partial nodes rather than a free win; (3) an event is a CHANGE RECORD, not live state, so an event-derived node reflects the event's own snapshot rather than current truth -- acceptable for a wiring graph and already accepted for S3, but it is a real semantic difference and should be chosen knowingly rather than inherited. IF IT IS CUT, the cheapest shape is a per-class payload extractor tried FIRST with the existing boto3 call kept as the fallback for whatever the payload lacks, so the change is additive and the classes that work today are untouched."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S128 -- S120's severity corrected: all six classes ARE populated nightly; the defect is freshness asymmetry, not missing coverage
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-10T23:06Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S128",
+    "one_line": "S120'S SEVERITY IS LOWER THAN ITS WORDING INVITES, AND THE OWNER SHOULD SIZE OFF THIS ROW. Read quickly, S120 suggests the graph does not carry lambdas or roles. It does. Measured over the whole table at vintage 2026-09-10T22:49:42Z: LAMBDA 203 rows, IAM_ROLE 219, SNS_TOPIC 16, SQS_QUEUE 19, DYNAMODB_TABLE 41, S3_BUCKET 36 -- every one of the six classes is POPULATED. They are written by the NIGHTLY FULL DERIVE, a different writer that does not run under the incremental updater's VPC constraint, newest rows stamped 2026-09-10 02:50Z. So the real defect is a FRESHNESS ASYMMETRY, not missing coverage: an S3 or DynamoDB change reaches the graph in about a minute, and a lambda/role/topic/queue change waits for the next nightly, up to roughly 24 hours. That is a materially different thing to fix and a materially different urgency.",
+    "spec_asserts": "NFRA_CLDGRPH-S120 notes: 'the graph's incremental layer has been blind to every non-S3 resource change for as long as this has been true', and its one_line calls the updater 'an S3-ONLY WRITER IN PRODUCTION'. Both are true OF THE INCREMENTAL LAYER and neither says what the table actually holds.",
+    "world_is": "All six classes are populated, and the incremental layer is a marginal contributor to the table overall. 27,691 rows across 59 node types. By source: full-derive 14,838; semctl-c2c3-compose 6,288; ms 6,173; portal-stitch 335; semctl-c2c3-materialize 46; incremental ELEVEN. So source='incremental' accounts for 11 of 27,691 rows, about 0.04 percent. Per class, writer and newest row: S3_BUCKET 36 (full-derive 30, incremental 6) newest 22:49Z; DYNAMODB_TABLE 41 (full-derive 36, incremental 5) newest 22:49Z; LAMBDA 203 (full-derive 203) newest 02:50Z; IAM_ROLE 219 (full-derive 219) newest 02:50Z; SNS_TOPIC 16 (full-derive 16) newest 02:50Z; SQS_QUEUE 19 (full-derive 19) newest 02:50Z. The 5 incremental DYNAMODB_TABLE rows are independent confirmation of S125: that class writes incrementally and did so before tonight's probe.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pyiceberg StaticTable over the metadata_location the writer itself stamped into warehouse/_branch_head.main.json, vintage 2026-09-10T22:49:42.634203+00:00 -- whole table, no filter, 27691 rows; counts grouped by node_type x source and max(snapshot_ts) per type",
+        "the 02:50Z stamp on all four never-incremental classes matches the nightly derive-runner window, and the 22:49Z stamp on S3_BUCKET/DYNAMODB_TABLE matches live incremental traffic"
+      ]
+    },
+    "notes": "THIS IS A SEVERITY CORRECTION TO MY OWN ROW, not a new hazard, which is why it is INERT. It is filed because S120 is ARMED and its disarm_owner will size remediation off its wording -- and its wording supports a reading ('the graph does not track lambdas') that the table falsifies. I wrote S120 about the WRITER and a reader will take it as being about the GRAPH; naming the writer is not the same as scoping the claim, and only the second protects the reader. REUSABLE FORM: when a component is one of several writers to a shared store, a finding about that component says nothing about the store until someone counts the store. Cost: one grouped read. WHAT SURVIVES UNCHANGED: S121's counter blindness, S127's finding that the event payload already carries the missing fields, and Act A's coverage conclusion (four of five collision pairs unreachable by this writer). What changes is only the urgency of provisioning any new path -- this is staleness between nightlies, not absence."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S129 -- the node-count gap inverts: the projection is correct and graph_nodes carries 23 exact duplicate rows from one producer
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-11T00:23Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S129",
+    "one_line": "THE NODE-COUNT GAP RUNS THE OPPOSITE WAY TO THE BELIEF: THE PROJECTION IS CORRECT AND THE WAREHOUSE CARRIES 23 DUPLICATE ROWS. Read at ONE shared vintage (2026-09-10T22:49:42.634203+00:00, both sides naming the same marker) the served projection reports 27,668 CloudNodes and Iceberg graph_nodes has 27,691 rows. The 23-row difference reads as 'the projection is missing nodes' and is not: graph_nodes holds 27,638 DISTINCT node_ids, of which 53 appear more than once -- 30 are the genuine CROSS-TYPE collisions (one id, two node_types) and 23 are EXACT duplicates, the same node_id AND the same node_type twice. The projection keys on (node_id, node_type), so it keeps both halves of every real collision and collapses the exact duplicates. Both arithmetic paths land on the served number with no remainder: 27,638 distinct + 30 cross-type extras = 27,668, and 27,691 rows - 23 exact duplicates = 27,668. The projection is not lossy here. The warehouse is dirty.",
+    "spec_asserts": "The working belief, stated to this seat at the Andrew terminal 2026-09-10 ~23:3xZ while scoping a direct-read design: 'the first issue is just making sure that we actually have every single node, which for whatever reason iceberg does but kuzudb does not'. That frames Iceberg as complete and the projection as lossy.",
+    "world_is": "Inverted. The 23 exact duplicates are byte-identical on every field read -- node_id, node_type, source, layer and snapshot_ts all equal between the two copies (example 'motif:a-access': both rows node_type=C2Motif, source=semctl-c2c3-materialize, layer=semctl, snapshot_ts=1789008638509). They are attributable to ONE writer: source='semctl-c2c3-materialize' for all 23, split 19 C2Motif and 4 C3System. Every other writer in the table (full-derive, semctl-c2c3-compose, ms, portal-stitch, incremental) contributes ZERO exact duplicates. So this is one producer emitting each of 23 nodes twice into a table whose identity is (node_id, node_type), not a table-wide dedup failure.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-kuzu 'MATCH (n:CloudNode) RETURN count(n)' -> 27668, banner vintage=2026-09-10T22:49:42.634203+00:00 manifest=910128c84959",
+        "pyiceberg StaticTable over the metadata_location in warehouse/_branch_head.main.json at the SAME vintage -> 27691 rows, 27638 distinct node_id, 53 duplicated ids, 30 cross-type, 23 same-type",
+        "27638 + 30 = 27668 and 27691 - 23 = 27668: two independent arithmetic paths to the served count, no remainder",
+        "the 23 exact duplicates grouped by (node_type, source): C2Motif/semctl-c2c3-materialize = 19, C3System/semctl-c2c3-materialize = 4; no other source contributes any"
+      ]
+    },
+    "notes": "WHY IT MATTERS NOW rather than as trivia: the direction of the error decides where the fix goes, and the belief pointed at the wrong component. Under the belief you would harden the projection loader. The measurement says the loader is already correct and the materialize producer is double-emitting. ARMED, and the reason is timing: a DIRECT-READ design over Iceberg is being actively scoped, and it is exactly a direct reader that inherits these rows. The served projection has always silently absorbed them, so nothing downstream has ever seen the defect -- which is also why it survived. Any count, join or traversal taken straight off graph_nodes over-counts those 23 and double-walks them. SAME FAMILY AS CG-s-41, one level up. That work established that identity in this table is (node_id, node_type) and fixed the WRITER that matched on node_id alone. This is the same identity rule broken on the EMIT side by a different producer. NOT ACTED ON: the semctl materialize producer is outside tonight's authorization and outside the four paths the handoff names. CHEAPEST NEXT STEP: dedup on (node_id, node_type) at the materialize emit, then re-run this arithmetic -- the check is two counts and it either lands on the served number or it does not."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S130 -- retiring c2c3 is four acts not a delete -- a dormant consumer exists and the producer rewrites the layer nightly
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-11T01:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S130",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "one_line": "RETIRING THE c2c3 SEMCTL LAYER IS SOUND AND IS FOUR ACTS, NOT A DELETE -- and one of them is a CONSUMER the 'completely deprecated' reading does not predict. Andrew directed the retirement at the terminal 2026-09-11 ~00:3xZ ('semctl c2c3 is completely deprecated'; 'I would be fine with outright deleting anything that is doing those c2c3 layers'). MEASURED BLAST RADIUS on the served graph: 6,334 nodes (22.9 percent of all nodes; 6,326 C2Motif + 8 C3System) and 24,138 edges (38.7 percent of all edges, every one of them CONTAINS). The excision itself is unusually clean and that is measured, not assumed: ZERO non-semctl edges touch a semctl node, and ZERO node_ids appear in both semctl and a non-semctl layer -- the layer is an edge-isolated island, so a scoped delete cannot orphan a foreign edge or over-reach onto a live row.",
+    "spec_asserts": "The directive's premise, verbatim: 'semctl c2c3 is completely deprecated we should not be using that'. Read literally, nothing consumes C2Motif or C3System and the layer can be dropped.",
+    "world_is": "A CONSUMER EXISTS IN CODE, and the unscoped census is what found it -- a census scoped to the globgrph producer would have returned the producer only. org/modules/graph/debtscan/summary_corpus.py issues Cypher against these node types at FIVE call sites (:532, :536, :828, :1003, :1009), e.g. \"WHERE m.node_type = 'C2Motif' AND e.edge_type = 'CONTAINS'\", and uses them to attribute motifs and systems to AWS resources. IT IS DORMANT, NOT LIVE, and that distinction is the whole disposition: its only published artifact, s3://opal-313476888478-globgrph/warehouse/fedobs_obs_findings/observer=DEBTSCAN/obs_findings.parquet, is dated 2026-07-07 -- over two months stale. So the code would break if re-run; nothing breaks today. MEANWHILE THE PRODUCER IS FULLY LIVE: all 6,334 c2c3 nodes carry snapshot_ts 2026-09-10 02:50Z, the nightly derive window, so derive_runner re-materializes the entire layer EVERY night via ingest_c2c3_motif_producer (:1650) and _compose_c2c3_live (:1573). A row-level delete is therefore COSMETIC AND TRANSIENT -- tonight's derive restores all 6,334 nodes and 24,138 edges. Deleting rows without retiring the producer is a no-op with extra steps.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pyiceberg whole-table read at vintage 2026-09-11T00:37:12.527596+00:00 -- layer='semctl' nodes 6334 of 27691, edges 24138 of 62327; non-semctl edges touching a semctl node = 0; node_ids shared across layers = 0",
+        "org/modules/graph/debtscan/summary_corpus.py:532,536,828,1003,1009 -- Cypher predicates on node_type 'C2Motif' and 'C3System'",
+        "aws s3 ls s3://opal-313476888478-globgrph/warehouse/fedobs_obs_findings/observer=DEBTSCAN/ -> obs_findings.parquet last modified 2026-07-07",
+        "infra/aws/globgrph/derive_runner.py:1650 ingest_c2c3_motif_producer, :1573 _compose_c2c3_live, :1715 the src_tag split semctl-c2c3-compose vs semctl-c2c3-materialize",
+        "infra/aws/globgrph/c2c3_liveness_acceptance.py:48 FROZEN_CONTROL = {'C2Motif': 19, 'C3System': 4} -- an acceptance harness that fails closed if the layer goes to zero"
+      ]
+    },
+    "notes": "THE FOUR ACTS, in the order that makes each one checkable: (1) retire ingest_c2c3_motif_producer in derive_runner.py -- this is the ONLY one that makes the deletion durable; (2) retire or re-point c2c3_liveness_acceptance.py, whose FROZEN_CONTROL of 19 C2Motif + 4 C3System becomes a guaranteed failure the moment the layer empties, so leaving it is manufacturing a red; (3) settle debtscan -- either strip the five motif/system call sites or retire the observer, because a dormant tool that breaks on next run is a trap for whoever revives it; (4) only then delete the standing rows. NOT ACTED ON, THREE INDEPENDENT REASONS, none of them a judgment call: derive_runner.py is not in this seat's PERMIT set nor among the four paths tonight's handoff names; the warehouse write path is IN-VPC ONLY, so no dev-box credential path to Nessie exists to perform a delete with; and removing 22.9 percent of nodes and 38.7 percent of edges is a SERVED-OUTPUT MOVE, which CLAUDE.md's NEVER block gates on never-widen sign-off from CTO and COO -- a standing mechanical gate, not one invented here. ARMED because the directive is live and the producer runs again tonight."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S131 -- every opal-globgrph freshness and parity alarm Terraform reports is ABSENT from CloudWatch
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-11T01:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S131",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "one_line": "EVERY opal-globgrph FRESHNESS AND PARITY ALARM TERRAFORM REPORTS AS EXISTING IS ABSENT FROM AWS. Tonight's safe-apply on infra/aws/terraform/globgrph printed, from state, twelve freshness_stale_alarm_arns and two parity_drift_alarm_arns, all named opal-globgrph-*. A live read finds ZERO of them: describe-alarms with --alarm-name-prefix opal-globgrph returns 0 MetricAlarms AND 0 CompositeAlarms. The Terraform plane says these controls exist; the CloudWatch plane says they do not. Anyone reading the outputs -- or the module -- would conclude the estate is watched on freshness and parity drift, and it is not.",
+    "spec_asserts": "infra/aws/terraform/globgrph outputs freshness_stale_alarm_arns (12 entries: code_heat_ajb_workspace, code_heat_portal, code_heat_snap_last_append, cse_producer_last_append, cse_producer_last_run, fedobs_coverage_snap_last_append, fedobs_obs_findings_compdrift, fedobs_obs_findings_debtscan, fedobs_obs_findings_graphs_d8, fedobs_obs_findings_pipescript, fedobs_observations, ms_heat_snap_last_append) and parity_drift_alarm_arns (2), each a full CloudWatch alarm ARN in us-east-1.",
+    "world_is": "None exist. aws cloudwatch describe-alarms --alarm-name-prefix opal-globgrph -> MetricAlarms 0, CompositeAlarms 0. POSITIVE CONTROL RUN BECAUSE AN EMPTY ALARM LIST IS EXACTLY WHAT A BROKEN QUERY RETURNS: the unfiltered call returns 50 alarms in the account, and a contains-filter on 'globgrph' returns two real ones (globgrph-s3-requests-daily-high, globgrph-s3-requests-daily-warning). So the instrument works, the region and plane are right, and the fourteen opal-globgrph-* alarms are genuinely gone. BOTH PLANES were checked, because describe-alarms splits results into MetricAlarms and CompositeAlarms and a query against one is blind to the other.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the apply output of .tools/safe-apply.sh -chdir=infra/aws/terraform/globgrph, 2026-09-10 ~21:07Z -- freshness_stale_alarm_arns (12) and parity_drift_alarm_arns (2) printed with full ARNs",
+        "aws cloudwatch describe-alarms --alarm-name-prefix opal-globgrph -> MetricAlarms 0, CompositeAlarms 0",
+        "positive control: aws cloudwatch describe-alarms --query 'length(MetricAlarms)' -> 50; contains-filter 'globgrph' -> ['globgrph-s3-requests-daily-high','globgrph-s3-requests-daily-warning']"
+      ]
+    },
+    "notes": "FOUND OFF-TASK during the c2c3 consumer census and filed rather than chased, per the surprise-channel rule. NOT DIAGNOSED: whether these were deleted out of band, never applied, or removed under the 2026-07-28 alarm moratorium is UNKNOWN and this row does not guess. WHY IT IS NOT SIMPLY 'apply it again': CLAUDE.md's standing moratorium forbids building or re-arming any alarm, monitor or notification without Andrew's explicit word, so the remedy here is a DECISION about whether these controls are wanted, not a terraform run. WHAT MAKES IT ARMED is the direction of the error: a declared-but-absent control reads as coverage. The Terraform output is the artifact a reader trusts, and it is currently asserting fourteen controls that would not fire. CHEAPEST NEXT STEP: a plan on that module alone will say whether state still holds them, which separates 'deleted out of band' from 'never applied' in one read."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S132 -- the AWS secret's committed description says READ-ONLY and the live token is admin/push
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.0.0_AB_MSTR",
+    "surfaced_at": "2026-09-11T01:36:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S132",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "one_line": "THE AWS SECRET'S OWN DESCRIPTION IS FALSE, AND IT IS COMMITTED TERRAFORM. infra/aws/terraform/estate-report/secrets.tf:13 declares estate-report/github-token as \"Fine-grained GitHub PAT, READ-ONLY (contents:read), Opal-Capital/ajb_workspace ONLY\". The live token in that secret reports {admin,maintain,push,triage,pull} all true. S123 covers the GITHUB REPO SECRET plane (PORTAL_REPO_PAT) and Andrew's accepted trade there; THIS ROW IS THE AWS PLANE AND A DIFFERENT DEFECT -- a versioned, reviewed, false statement about a credential that TWO SCHEDULED PRODUCERS have read on every fire since 2026-07-31.",
+    "spec_asserts": "secrets.tf:13 asserts the secret holds a READ-ONLY (contents:read) fine-grained PAT scoped to Opal-Capital/ajb_workspace only. org/tier2_senior/0.7.0_AE_CloudOps/deliverables/ESTATE_REPORT_PIPELINE_20260730/SPEC.md:307 and the 3.0.0_SA_CVO 2026-07-31 handoff repeat contents:read. The consuming design is clone-only.",
+    "world_is": "GitHub REST GET /repos/Opal-Capital/ajb_workspace with that token returns HTTP 200 and permissions {admin: true, maintain: true, push: true, triage: true, pull: true}. describe-secret: CreatedDate 2026-07-30T22:34:10Z, LastChangedDate 2026-07-31T00:01:16Z, and list-secret-version-ids returns ONE version (AWSCURRENT) -- so the value has NEVER been replaced and this is NOT a product of 2026-09-10's work. CloudTrail over the secret's full 42-day life, ResourceName lookup: 59 events, 52 GetSecretValue, by three principal classes -- estate-report-runner-role (45, four EC2 instances), user/Andrew_Berman (10), estate-report-seam-freshness-publisher CodeBuild (4). No resource policy on the secret (get-resource-policy returns None), so access is identity-based only.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/estate-report/secrets.tf:13 @b4c92fd935 -- description = 'Fine-grained GitHub PAT, READ-ONLY (contents:read), Opal-Capital/ajb_workspace ONLY. Used by the estate-report runner to fetch the commit window. Andrew-direct 2026-07-30.'",
+        "GitHub REST GET /repos/Opal-Capital/ajb_workspace with the token from that secret: HTTP 200, permissions {admin: true, maintain: true, push: true, triage: true, pull: true}. Value never printed.",
+        "secretsmanager describe-secret estate-report/github-token: CreatedDate 2026-07-30T22:34:10Z, LastChangedDate 2026-07-31T00:01:16Z; list-secret-version-ids returns ONE version (AWSCURRENT) -- the value has never been replaced, so this predates 2026-09-10 by six weeks.",
+        "secretsmanager get-resource-policy estate-report/github-token -> None. Access is identity-based only, so the CloudTrail principal set below IS the population.",
+        "cloudtrail lookup-events AttributeKey=ResourceName,AttributeValue=estate-report/github-token over a 45-day window (the secret is 42d old, so the window spans its whole life): 59 events, 52 GetSecretValue. Principals: estate-report-runner-role 45 across four EC2 instances (i-0512bd3cbaf602b7f, i-04981b6aec3bed86b, i-0584e17d283fa7ef4, i-09fa5115b3282d6ea), user/Andrew_Berman 10, estate-report-seam-freshness-publisher CodeBuild 4.",
+        "comp-secrets list: 92 secrets, TWO github tokens -- estate-report/github-token (42d) and github-token (261d). The bare github-token DOES return HTTP 401, re-probed at this seat rather than relayed.",
+        "WITHDRAWAL EVIDENCE: two Terraform files declare resource \"aws_secretsmanager_secret\" \"github_token\" naming DIFFERENT secrets -- infra/aws/terraform/estate-report/secrets.tf:11 (name = estate-report/github-token) and infra/aws/terraform/shared-infra/secrets-unowned.tf:79 (name = github-token). 0.0.0_AB_MSTR read the LABEL and assumed the NAME, and reported to Andrew that a scheduled producer was failing at its clone. It is not. A TERRAFORM RESOURCE LABEL IS NOT ITS RESOURCE'S NAME. comp-iam's own startup banner warns about this exact collision class for ROLE labels ('runner', 'scheduler', 'orchestrator' reused across modules, silently mis-linking inline policies to FALSE-MISSING); the warning was in front of me and I applied it to roles and not to secrets."
+      ]
+    },
+    "notes": "NOT AN OBJECTION AND NOT A GATE. The remedy is a choice between two honest states and it is not this seat's: either narrow the token to what the description claims, or correct the description to what the token is. EITHER IS FINE; THE CURRENT STATE IS THE ONLY BAD ONE, because a reviewed and committed description reads as verified. CONSEQUENCE THAT MAKES IT worth a row rather than a note: the daily-sprint Lambda (LD-0547) needs a clone credential, and a reader who trusts secrets.tf:13 would wire this secret believing it is read-only. ARMED because that wiring is live work tonight."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S133 -- derive_runner imports code_heat_emit and the Dockerfile never COPIES it -- the leg is undeployable, not merely off
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-11T01:46Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S133",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "one_line": "derive_runner IMPORTS code_heat_emit AND THE DOCKERFILE NEVER COPIES IT -- the code-heat leg is structurally undeployable and reads as merely switched off. derive_runner.py:2814 does `import code_heat_emit  # local module (infra/aws/globgrph/)` inside the CODEHEAT_ENABLED branch. The file EXISTS in the repo (infra/aws/globgrph/code_heat_emit.py, 14,812 bytes, dated 2026-07-16) and the Dockerfile mentions 'code_heat' ZERO times, against ~30 explicit COPY lines for every other module. So the flag is not the only thing standing between this estate and code-heat emission: flipping GLOBGRPH_CODEHEAT_ENABLED=1 today would raise ModuleNotFoundError, get swallowed by the surrounding best-effort try, and print CODEHEAT_EMIT_FAIL -- a WARN, on the nightly, forever.",
+    "spec_asserts": "derive_runner.py's code-heat block presents the leg as CADENCE-GATED, not absent: the else-branch prints 'INFO: CODEHEAT_EMIT_SKIPPED (GLOBGRPH_CODEHEAT_ENABLED!=1, day-one off)', which states a DELIBERATE default-off posture and implies the leg is otherwise ready. Three code_heat freshness alarms are declared in the terraform module (code_heat_ajb_workspace, code_heat_portal, code_heat_snap_last_append), which only makes sense for a leg expected to produce.",
+    "world_is": "The module is not in the image. `grep -c code_heat infra/aws/globgrph/Dockerfile` = 0, while the same Dockerfile carries explicit COPY lines for derive_runner, comp_aws_cli, surface_check_cli, _provenance, ms_cloud_extract, projection_worker, projection_server, kuzu_nessie_load, kuzu_incremental_refresh, comp_detect, cse_store, cse_schema, comp_ladder, comp_learns_produce, publish_contract_integrity, contract_engine, fedobs_observe, resource_summaries_store, summary_corpus, dup_scan, extract_pipeline_cloud, safe_deploy_core, both motif_c2c3_materialize JSONs and all three kimi_subdivision_harness files. code_heat_emit.py is the one imported module with no COPY. The derive is repo-less by design, so a module absent from the image is absent at runtime, full stop.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/globgrph/derive_runner.py:2814 -- `import code_heat_emit  # local module (infra/aws/globgrph/)`, inside `if CODEHEAT_ENABLED:` with an enclosing try whose except prints WARN: CODEHEAT_EMIT_FAIL",
+        "ls infra/aws/globgrph/code_heat_emit.py -> 14812 bytes, 2026-07-16 (the module exists in the repo)",
+        "grep -c 'code_heat' infra/aws/globgrph/Dockerfile -> 0",
+        "the terraform module's freshness_stale_alarm_arns output names code_heat_ajb_workspace, code_heat_portal and code_heat_snap_last_append"
+      ]
+    },
+    "notes": "THE DIRECTION IS WHAT MAKES IT ARMED, not current breakage: today the flag is off and the else-branch prints a tidy SKIPPED line, so nothing looks wrong and nothing IS wrong. The defect only fires for the person who flips the flag expecting a working leg, and it fires as a WARN they have to notice among a nightly's output rather than as a failure. COMPOUNDING: per S131 the three code_heat alarms that would otherwise have caught a silent non-emission do not exist in CloudWatch either, so both the leg and its watchdog are absent while the record asserts both. NOT ACTED ON: the Dockerfile and code_heat_emit.py are outside this seat's PERMIT set and outside the four paths tonight's handoff names, and adding a COPY is an IMAGE ACT reaching six task families. CHEAPEST NEXT STEP is a DECISION, not a COPY: either the leg is wanted, in which case it needs the COPY plus a rebuild, or it is dead, in which case the import, the flag, the else-branch and the three alarm declarations should go together. Adding the COPY alone would silently ARM a producer under the standing moratorium."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S134 -- the Dockerfile's 'kuzu has a single importer' fact is false, and it is what a drop-kuzu decision would lean on
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-11T01:46Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S134",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "THE DOCKERFILE'S kuzu BLAST-RADIUS NOTE CARRIES A FACT THAT IS NOW FALSE, AND IT IS THE FACT A FUTURE 'CAN WE DROP kuzu' DECISION WOULD LEAN ON. The note states: '`kuzu` is imported ONLY by derive_runner._c2c3_incontainer_reader(), which no other entrypoint calls'. Measured across the image's own COPY'd sources, FOUR other files import kuzu: kuzu_nessie_load.py, kuzu_incremental_refresh.py, projection_worker.py and projection_server.py -- and the last two ARE separate entrypoints, projection_server being the always-on serving path. The claim was true when written and the CG-s-2/CG-s-4 projection COPY block, added later in the same file, is what falsified it.",
+    "spec_asserts": "infra/aws/globgrph/Dockerfile, the kuzu BLAST RADIUS comment: 'FIVE task-defs run on this ONE image ... `kuzu` is imported ONLY by derive_runner._c2c3_incontainer_reader(), which no other entrypoint calls -- but SINGLE-IMPORTER IS NOT THE GROUNDING, and reaching for it would be a trap.'",
+    "world_is": "kuzu import counts over the image's COPY'd sources: kuzu_nessie_load.py 1, kuzu_incremental_refresh.py 2, projection_worker.py 2, projection_server.py 2, derive_runner.py 1, comp_detect.py 0. So five files import it, not one, and the projection serving path is among them. CONSEQUENCE FOR THE LIVE c2c3 RETIREMENT QUESTION (S130): removing the c2c3 layer does NOT permit dropping the kuzu pip dependency, because the projection entrypoints need it. Anyone scoping that retirement off this comment would size it wrong.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "grep -c 'import kuzu' over the six COPY'd globgrph sources -> kuzu_nessie_load.py 1, kuzu_incremental_refresh.py 2, projection_worker.py 2, projection_server.py 2, derive_runner.py 1, comp_detect.py 0",
+        "infra/aws/globgrph/Dockerfile -- the CG-s-2/CG-s-9 and CG-s-4 COPY blocks that introduced projection_worker.py, kuzu_nessie_load.py, kuzu_incremental_refresh.py and projection_server.py, all added AFTER the kuzu pip note"
+      ]
+    },
+    "notes": "INERT: nothing is broken by it and the DEPENDENCY ITSELF IS STILL CORRECTLY JUSTIFIED. The note's actual grounding -- that kuzu==0.11.3 declares ZERO transitive requirements, measured against a pyiceberg positive control of 31 -- is untouched and still carries, so the resolution-risk argument stands entirely. What has decayed is one supporting sentence. THE SHAPE IS THE POINT, and the comment nearly warns about itself: it says in capitals that single-importer is NOT the grounding and would be a trap, then asserts single-importer as a fact anyway, and that is the half that rotted. A wrong FACT inside a RIGHT principle survives review because the principle is what gets checked. CHEAPEST NEXT STEP: strike the sentence, or re-word it to 'kuzu is imported by derive_runner and the projection entrypoints', which is both true and still consistent with the zero-transitive-deps grounding that does the real work."
+  }
+]
+```

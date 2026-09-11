@@ -23,6 +23,8 @@
 
 **Sections** conditional on the contract: a benchmark section or a value-history section renders only when `PerformanceReport.supported.benchmark` or `.valueHistory` is `true`; absent or `false` renders nothing and no placeholder.
 
+**Path-alias resolution for tests (AMENDED BY THE ISSUER at the FE-s-3 drain on row IRPT_FNTEND-W1-S5).** `portal/tsconfig.json` is a solution file (`files: []`, two `references`) with no `compilerOptions`; the `@/*` -> `./src/*` mapping lives only in `tsconfig.app.json`, which `tsc -b` honours through the reference and Bun's resolver does not, so any test importing a portal module through `@/` fails under `bun test` with `Cannot find module`. Add to `portal/tsconfig.json` a `compilerOptions` block carrying exactly `"baseUrl": "."` and `"paths": { "@/*": ["./src/*"] }` (the same mapping `tsconfig.app.json` declares); change nothing else in that file. Write `__tests__/fe-s-5/alias-probe.test.ts` importing `cn` from `@/lib/utils` and asserting it is a function. Existing per-file `mock.module` workarounds in earlier test folders are left as they are.
+
 **Fixtures** under `fixtures/fe-s-5/`: `performance.49f-bd.json`, `performance.cottonwood-bd.json`, `performance.inflection-orion.json` (the three firm shapes, including `UNITS` distinctions and method labels), reusing `performance.partial-scope.json`, `performance.differing-dates.json`, `performance.unavailable-metric.json` from `FE-s-1`, plus `performance.unsupported-benchmark.json`. Smoke maps `fixtures/smoke/fe-s-5-<firm>.json` for each firm fixture.
 
 **Tests** under `__tests__/fe-s-5/`, `renderToStaticMarkup` of `ReportingTab` fed each fixture through the adapter: `fields.test.ts` (for each of the three firm fixtures, every leaf field the fixture carries under `summary`, `periods`, `accounts`, `method` appears in the markup as given -- the test prints `FIELDS: n of N` per fixture with N the fixture's leaf count), `states.test.ts` (partial-scope renders the `PARTIAL` label and no summary trio; unavailable-metric renders `UNAVAILABLE` where the fixture says so and never `0`; unsupported-benchmark renders no benchmark element; differing-dates renders both requested and returned dates), `controls.test.ts` (default preset is `YTD`; a preset change issues one new request whose key differs only in the period segment; refresh re-issues the same key; export is a separate control), `source-bounds.test.ts` (`tabs/reporting/` carries no arithmetic operator applied to any field named `return`, `value`, `gain` and no `reduce(` over account rows).
@@ -53,7 +55,10 @@
 <criterion id="F5-AC8" cell_refs="FE-s-5" judgment="true"/>
 `F5-AC8` -- graded at L9 from the PNGs and the `FE-s-4` print PNG: the same figures, labels and units on screen and in the template; method basis and units legible; nothing light on the silver canvas. RECORD; NO VERDICT.
 
-<expected_criteria>F5-AC1, F5-AC2, F5-AC3, F5-AC4, F5-AC5, F5-AC6, F5-AC7, F5-AC8</expected_criteria>
+<criterion id="F5-AC9" cell_refs="FE-s-5"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-5/alias-probe.test.ts</invocation><expect>0 fail</expect></criterion>
+`F5-AC9` -- a test importing through the `@/` alias resolves under `bun test` after the root tsconfig carries the mapping.
+
+<expected_criteria>F5-AC1, F5-AC2, F5-AC3, F5-AC4, F5-AC5, F5-AC6, F5-AC7, F5-AC8, F5-AC9</expected_criteria>
 
 ## BOUNDS
 
@@ -71,6 +76,7 @@
 - Report push state as LOCAL.
 
 <paths>
+portal/tsconfig.json
 portal/src/pages/InvestorReporting/tabs/reporting/
 portal/src/pages/InvestorReporting/tabs/TabShell.tsx
 portal/src/pages/InvestorReporting/fixtures/fe-s-5/
@@ -88,7 +94,7 @@ org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v
 Criterion ids: `F5-AC1` .. `F5-AC8`. Instance at
 `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-5.reporting-tab.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
-`python .tools/proof-of-spec-check.py <instance> F5-AC1,F5-AC2,F5-AC3,F5-AC4,F5-AC5,F5-AC6,F5-AC7,F5-AC8` BEFORE the `complete` flip. `F5-AC8` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `reporting-tab.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
+`python .tools/proof-of-spec-check.py <instance> F5-AC1,F5-AC2,F5-AC3,F5-AC4,F5-AC5,F5-AC6,F5-AC7,F5-AC8,F5-AC9` BEFORE the `complete` flip. `F5-AC8` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `reporting-tab.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape. You cannot send or receive messages; anything you would ask is a surprise row.
