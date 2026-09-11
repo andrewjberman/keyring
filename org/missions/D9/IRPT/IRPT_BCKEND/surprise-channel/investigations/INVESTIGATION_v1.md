@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 59 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (54 ours + 54 theirs, 49 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 63 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (60 ours + 56 theirs, 53 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -430,6 +430,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "IB-s-16 <status>: 'becomes pending ... after IB-s-6, IB-s-9, IB-s-12 and IB-s-14 are all terminal and merged.' CLAUDE.md Git: never compose the report of an act in the same call as the act; a pipeline's rc is its last command's.",
     "world_is": "Three of four target jobs are deployed; holding the whole cell for the fourth idles a slot behind a sequential chain. Handed with the substitution stated. The drain procedure had one pipe too many and it cost a re-run, not data.",
     "notes": "Andrew-direct 2026-09-11 ~05:2xZ: 'we can't get held up on this shit, keep it moving' -- the trigger for both re-sequencings (S17, S18); the substitutions are stated, not hidden, and the replay is where they are re-measured."
+  },
+  {
+    "id": "IRPT_BCKEND-S19",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T06:54:42Z",
+    "one_line": "DISARM-BY-CARRY of IRPT_BCKEND-W4-S9, W4-S10, W4-S12 and W4-S13 (all ARMED, disarm_owner 2.0.0_SA_COO~B) at the IB-s-14 drain. All four are product decisions outside every un-handed face's paths and outside this round: W4-S9 the deployed export worker cannot render (no headless browser in a python3.12 Lambda; egress refused) and says so explicitly -- the runtime choice (container image / browser layer / out-of-Lambda worker) is the CTO's L10 read and the first round-2 cell of FWD-8; W4-S10 the irpt-common layer carries 2 of 5 contracts and its rebuild is IB-s-13's surface (round 2, one line in build_layer.py plus a re-apply); W4-S12 a retry of a byte-identical bundle mints a new export_id because every PDF print engine stamps a date and /ID -- whether a retry reuses the receipt keyed on bundle_sha256 is the job-table owner's decision (IB-s-17's surface, round 2), and the stable identity of an export is the BUNDLE hash; W4-S13 four synthetic objects sit in the live evidence bucket under firms/49financial/generations/GENIBS14SYN/ with irpt-synthetic=true metadata -- an S3 delete needs a human's word and is not taken by this seat; carried to L10 with the keys so the CTO or Andrew can order the delete or relocation before any consumer reads that prefix as client evidence. Forward disarm: IB-s-15 and IB-sb-3 faces gain one line -- the export route is graded on the function's absence report, not on a render.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (this row IS the disarm act by carry; the four decisions are the CTO's L10 analysis, the S3 delete is Andrew's or the CTO's word)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W4-S9..S13 (this HEAD)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/battery_ib_s_14.result.md (this HEAD) -- the absence report, the content-hash vs raw-digest print, the four object keys",
+        "the two faces IB-s-15, IB-sb-3 (this commit) -- one line inside the S9 amendment block; <status> still staged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD B14 (v0.4): render worker executing the counterpart's RenderPackage; download reauthorized even when the artifact exists. IB-s-14 S14-AC1 (a): the rendered PDF's content hash equal between render and retry.",
+    "world_is": "The mechanism is proved locally and the deployed function honestly reports it cannot render; the round's evidence bucket carries four labelled synthetic exports. Nothing here is hidden; each item has a named owner past this seat.",
+    "notes": "FWD-8 cannot grade REALIZED on this round's evidence: the rendering runtime is the gap, stated as such for the slug."
   },
   {
     "id": "IRPT_BCKEND-W1-S1",
@@ -1106,6 +1129,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "Self-inflicted and self-found, in my own deliverable, at report time -- filed rather than quietly fixed because the finding is not the typo, it is that a MANIFEST OF HASHES HAS NO GATE TYING IT TO WHAT IT DESCRIBES. This is Rule 22's shared-dependency blindness in a new place: I verified each fixture, and each fixture was fine; what was broken was the one artifact they have in common, and no per-fixture check could see it. It surfaced only because I re-derived the manifest instead of reading it -- which is also the only reason the two stale rows were not carried into the proof instance as evidence."
   },
   {
+    "id": "IRPT_BCKEND-W3-S10",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T06:59:26Z",
+    "one_line": "A REAL VENDOR PDF LOSES THE 'fi' LIGATURE TO A FONT-SUBSET GLYPH, AND THE GLYPH'S CODE IS NOT THE SAME IN TWO DOCUMENTS FROM THE SAME VENDOR RUN. Text extracted from the three retained vendor PDFs carries the literal string '(cid:45)' where 'fi' belongs -- '(cid:45)nancial instrument' -- on EVERY page of all three specimens (23 of 23 in overview, 31 of 31 in comparison, 35 of 35 in multicomp, one occurrence per page, measured). It lands in the footer disclaimer, which is DISCLOSURE TEXT this project serves, not a number. THE PART THAT MATTERS MOST: the overview and comparison PDFs encode that glyph as (cid:45) and the multicomp PDF encodes it as (cid:46) -- the same vendor, the same run, the same day, a different font subset. A cid code is a per-document subset index, so any repair that maps a cid number to a letter is a guess about ONE FILE that will be silently wrong on the next one. This cell therefore substitutes a visible marker '[?]' rather than healing the text, and REFUSES to certify any NUMBER whose text at the recorded coordinates carries a cid (verdict UNDECODED_GLYPH_AT_COORDINATES) -- a glyph that did not decode is not a digit. WHY IT IS RAISED RATHER THAN JUST HANDLED: the census-generated synthetic specimens CANNOT reproduce this, because they are written with a standard base-14 font and no subsetting. So every arm that runs only on synthetic specimens is blind to the entire class, and the S10-AC2 judgment record names it as the first thing a real PDF carries that the synthetic cannot. ARMED for any cell that serves extracted DISCLOSURE TEXT: the disclaimer is exactly the text a compliance reader would quote, and '(cid:45)nancial' reaching a client-facing artifact is a visible defect in the one section whose wording is legally load-bearing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~3 for THIS cell -- DISARMED SAME TURN: extract.py refuses any numeric token carrying a cid (parse_number -> UNDECODED_GLYPH_IN_TOKEN), certify.py refuses to certify a value whose text at the recorded coordinates carries one (UNDECODED_GLYPH_AT_COORDINATES), and disclosure text substitutes a VISIBLE '[?]' marker rather than a guessed letter. WHAT IS NOT MINE: whether served disclosure text is acceptable with a marker in it, or needs a font-aware extraction path (a ToUnicode CMap read, which pdfplumber exposes but this cell does not build), is a product decision for 1.0.0_SA_CTO at L10 with 3.0.0_SA_CVO grading the finding at L9. IB-s-14 (export bundle) and IB-s-15 serve text and inherit this.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured over all three retained vendor PDFs fetched from s3://opal-data-ycharts/research/20260911/variants/... and hash-verified against pdf_validation.json: overview 23 (cid:N) occurrences over 23 pages with 1 distinct code ['(cid:45)']; comparison 31 over 31 pages, 1 distinct code ['(cid:45)']; multicomp 35 over 35 pages, 1 distinct code ['(cid:46)']",
+        "The affected line on every page is the footer disclaimer: 'sell, as a solicitation of an offer to buy or sell, ... any security or other (cid:45)nancial instrument' -- the ligature 'fi' in 'financial'",
+        "THE DISCRIMINATOR: the same glyph is (cid:45) in two of the three documents and (cid:46) in the third, from one vendor run on one day -- so the code indexes a per-document font subset and is not a stable character mapping",
+        "infra/aws/lambda/investor-reporting/ycharts/extract/extract.py -- CID_RE, parse_number returning UNDECODED, _repair_text substituting '[?]' with the reasoning in its docstring; certify.py FAIL_GLYPH graded before the value comparison",
+        "The census-generated synthetic specimens produce ZERO cid occurrences (helv base-14, no subsetting), which is why no synthetic-only arm can see this class"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S10-AC1 (a)/(b) grade text extraction certified with units, dates and coordinates, and the PRD's acceptance clause requires extraction certified against the paired PDF; the decomposition's proof plan is a census-generated SYNTHETIC three-variant PDF.",
+    "world_is": "Real vendor PDFs subset their fonts and a failed glyph mapping arrives as the literal text '(cid:45)', once per page on 89 of 89 pages across the three specimens, with the code differing between documents of the same run. The synthetic specimens cannot reproduce it, so the class is invisible to every synthetic-only arm.",
+    "notes": "Surfaced only because the vendor PDFs became available mid-round (PRD v0.11 / channel row S16) and were read rather than assumed to resemble the synthetic ones. It is the concrete, measured answer to the S10-AC2 judgment question 'what could a real vendor PDF carry that the census-generated synthetic cannot' -- which was asked as a hypothetical and turns out to have a number."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S11",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T06:59:26Z",
+    "one_line": "THE AnalysisReport CONTRACT REQUIRES A DATE ON EVERY TYPED SECTION; THE DOCUMENTS DO NOT STATE ONE FOR EVERY SECTION. infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.schema.json makes `as_of_date` a REQUIRED property of every `sections[]` item and pattern-binds it to ^[0-9]{4}-[0-9]{2}-[0-9]{2}$. Measured against the real specimens: the vendor Comparison states no per-section date for 34 of 81 extracted rows and the Multi for 51 of 108; the field census itself records `n/a` for S27/S29/S30/S31/S32 and 'not stated on page (report date 2026-09-09)' for S18 Fundamentals, whose nineteen fields are all numeric. The face's own words are 'a date where the census says one exists', so the face and the contract disagree about the same rows. THERE ARE EXACTLY TWO WAYS TO CLOSE IT AND ONE OF THEM IS A FABRICATION: write the report-level date into as_of_date, which is indistinguishable to every downstream consumer from a date the section actually stated -- the section item is additionalProperties:false with no field in which a report-level fallback could be DECLARED as one -- or emit fewer rows and count what was held out. This cell takes the second: analysis_report_sections() emits only dated rows and undated_rows() reports the holdout with its reason and the field names, so a smaller array never reads as a smaller document. ARMED because the holdout is invisible to a consumer that reads only `sections`: a downstream reader sees 57 rows for the Comparison and has no way, from the contract alone, to learn that 34 more were extracted and certified and are being withheld for want of a field the contract does not have.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~3 for THIS cell's OUTPUT -- DISARMED SAME TURN by emitting only dated rows and reporting undated_rows() with its count, reason and field names, so nothing is dated that the document does not date and nothing is dropped silently. THE CONTRACT ITSELF is not mine: AnalysisReport.schema.json is in _contracts/ and not in this order's <paths>. Whether the section item gains a `date_claim` field (PAGE_STATED / REPORT_STATED / NOT_STATED, which would let an undated section be carried honestly), or as_of_date becomes optional, or the holdout stands, is 1.0.0_SA_CTO's at L10 on the CONTRACTS table, with 3.0.0_SA_CVO grading at L9. IB-s-14 and IB-sb-3 consume this array and inherit the holdout.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.schema.json -- sections.items.required = ['section_id','section_type','units','as_of_date','page'] with as_of_date pattern ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ and additionalProperties:false over exactly seven properties",
+        "Measured on the retained vendor specimens: overview date claims {PAGE_STATED: 61} (all dated); comparison {PAGE_STATED: 47, NOT_STATED: 34}; multicomp {PAGE_STATED: 45, CENSUS_STATED: 12, NOT_STATED: 51}",
+        "docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json -- data_as_of is 'n/a' for S27, S29, S30, S31, S32 and 'not stated on page (report date 2026-09-09)' for S18 Fundamentals, whose 19 fields carry numeric units (pct 8, ratio 4, count 3, usd_billions 1, years 1, score 1, price 1)",
+        "The face, verbatim: S10-AC1 (a) 'every number carries units, a date where the census says one exists, and a page + coordinates'",
+        "infra/aws/lambda/investor-reporting/ycharts/extract/extract.py -- analysis_report_sections() emits only rows carrying as_of_date; undated_rows() returns total/emitted/held_out with the reason and the field names; the battery prints 'UNDATED HELD OUT: N of M' per specimen"
+      ]
+    },
+    "spec_asserts": "The PRD CONTRACTS row for AnalysisReport requires 'typed sections with units/dates/source coordinates' and the schema makes as_of_date REQUIRED on every section item; the face requires a date only where the census states one.",
+    "world_is": "34 of 81 and 51 of 108 rows extracted from the real vendor specimens carry no date the document states about their own section, and six of the census's thirty-three sections state none either. The contract cannot represent an undated typed section and has no field in which a report-level fallback could be declared as a fallback.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "This is the 'a value must carry its claim' rule meeting a schema that has no slot for the claim. The cheap remedy is one optional enum field (date_claim) on the section item, which would let every extracted row be carried with its date's provenance stated instead of forcing a choice between fabricating and withholding -- but proposing is legal and implementing is not, and the contract is another cell's surface."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S12",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T06:59:26Z",
+    "one_line": "`_keys.s3_evidence_key` ACCEPTS A CLIENT DISPLAY NAME AND AN E-MAIL ADDRESS AS A PATH SEGMENT, CONTRADICTING ITS OWN DOCSTRING, AND IT IS THE FUNCTION THAT MINTS DURABLE S3 KEYS. Its docstring states: 'segments are the opaque path segments after the family prefix (ids, dated parts, a file name). Each is validated by shape, so a client name cannot become a path.' Measured under this serial: s3_evidence_key('49financial', 'generations', ['Whitfield Family', 'attempts', '0', 'sections', 'report.json']) RETURNS 'firms/49financial/generations/Whitfield Family/attempts/0/sections/report.json', and an e-mail address is accepted identically. Reading the body confirms why: the per-segment loop checks non-empty-string, absence of '/', not-lock-shaped and not-a-foreign-firm-token, and never calls _check_shaped or _check_param_value. `cache_key` in the SAME MODULE does call _check_param_value and REFUSES both values ('matches no admissible component shape'). So the module contains both the grammar and a writer that skips it, and the writer is the one whose output is durable. WHY THE HAZARD IS ASYMMETRIC: a cache key is ephemeral and internal; an S3 key is permanent and appears in server access logs, CloudTrail data events, S3 Inventory reports and every ListObjects response, so a client name that reaches one cannot be un-logged by deleting the object. This bears directly on the issuer amendment carried in this cell's own face (row W2-S10, channel row S9), which instructs cells to find refusals 'through the public cache_key' -- correct advice that happens to route around the function that does not check. NOT FIXED HERE: _keys is not in this order's <paths> and the issuer has already placed _keys on IB-s-17's round-2 surface. This cell shape-checks its own variable segment before calling s3_evidence_key and its battery MEASURES the gap rather than asserting it, so the guard is shown to be load-bearing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B to route and IB-s-17's assignee to repair -- `_keys` is NOT in this order's <paths> and the issuer has already placed the module's sanitised-exception item on IB-s-17's round-2 surface, so this belongs in the same place. NOT DISARMED ESTATE-WIDE by anything this cell did. What IS disarmed is this cell's own use: extract.sections_artifact_key() shape-checks its variable segment against a POSITIVE allowlist before calling s3_evidence_key, refuses with KEY_REFUSED naming the PARAMETER and never the value, and battery_ib_s_10.py MEASURES that _keys accepts both a display name and an e-mail (printing the key SHAPE with the value redacted) so the guard is shown to be load-bearing rather than decorative. 3.0.0_SA_CVO grades the finding at L9; 1.0.0_SA_CTO holds the cross-firm/PII surface at L10.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_keys/keys.py s3_evidence_key docstring, verbatim: 'Each is validated by shape, so a client name cannot become a path.'",
+        "Its body: the per-segment loop checks isinstance/non-empty, '/' absence, _LOCK_SUFFIXES/_LOCK_SEGMENTS and _refuse_firm_token -- and calls NEITHER _check_shaped NOR _check_param_value",
+        "Measured under OPAL_AGENT_SERIAL=0.9.0_WK_IRPT_BCKEND~3: s3_evidence_key('49financial','generations',['Whitfield Family','attempts','0','sections','report.json']) -> 'firms/49financial/generations/Whitfield Family/attempts/0/sections/report.json'; the same call with 'whitfield@example.com' also returns a key",
+        "THE CONTRAST, same module: cache_key('49financial', <64-hex>, 'r1','r1','r1','irpt_sections_read', params={'generation': 'Whitfield Family'}) raises KeyComponentRefused 'matches no admissible component shape (ISO date, 64-hex ...)'; the e-mail address is refused identically",
+        "battery_ib_s_10.py arm (amend) prints the probe with the value redacted out of the key shape, and arm (amend) FAILS if the gap ever stops being real -- so the guard cannot quietly become decorative"
+      ]
+    },
+    "spec_asserts": "The issuer amendment carried in this face (row W2-S10, channel row S9) rests on `_keys` refusing a client display name or an e-mail address as a key component, and s3_evidence_key's own docstring asserts it validates every segment by shape for exactly that reason.",
+    "world_is": "s3_evidence_key performs no shape validation on segments and returns a key containing a client display name or an e-mail address verbatim. The shape grammar exists in the same module and is applied by cache_key, whose output is ephemeral, but not by the writer whose output is a durable S3 key that appears in access logs, CloudTrail, Inventory and every ListObjects response.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Found because this cell needed exactly one firm-scoped key and probed the grammar before trusting it, rather than calling the function and reading its docstring. Worth noting for the amendment's own wording: 'found through the public cache_key' is correct guidance that routes a reader around the function that does not check, so following the amendment exactly would not have surfaced this."
+  },
+  {
     "id": "IRPT_BCKEND-W4-S1",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
@@ -1418,29 +1516,6 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "S14-AC1 (g): 'ExportReceipt validates and its artifact_hash equals the stored object's; the object key is under the bound firm's exports prefix'. BOUNDS 7: 'No served output is touched ... except where THIS order's cell says it ADDS a resource' -- and the cell text names 'the protected artifact under firms/<id>/generations/<id>/attempts/<a>/exports/<revision>/report.pdf'.",
     "world_is": "Proving the receipt against a STORED object means storing one, and the only admissible prefixes are real firms'. The write is labelled twice (an unmistakable generation id and object metadata) rather than hidden, so a later reader can tell it from client evidence without reading this row.",
     "notes": "No client data is in any of the four: the performance/analysis content is the cell's own fixture sections, and the three vendor-input exports are rendered from the CRO's synthetic portfolio 2332257 (SPY/AGG), which the PRD already calls real vendor output on synthetic holdings."
-  },
-  {
-    "id": "IRPT_BCKEND-S19",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T06:54:42Z",
-    "one_line": "DISARM-BY-CARRY of IRPT_BCKEND-W4-S9, W4-S10, W4-S12 and W4-S13 (all ARMED, disarm_owner 2.0.0_SA_COO~B) at the IB-s-14 drain. All four are product decisions outside every un-handed face's paths and outside this round: W4-S9 the deployed export worker cannot render (no headless browser in a python3.12 Lambda; egress refused) and says so explicitly -- the runtime choice (container image / browser layer / out-of-Lambda worker) is the CTO's L10 read and the first round-2 cell of FWD-8; W4-S10 the irpt-common layer carries 2 of 5 contracts and its rebuild is IB-s-13's surface (round 2, one line in build_layer.py plus a re-apply); W4-S12 a retry of a byte-identical bundle mints a new export_id because every PDF print engine stamps a date and /ID -- whether a retry reuses the receipt keyed on bundle_sha256 is the job-table owner's decision (IB-s-17's surface, round 2), and the stable identity of an export is the BUNDLE hash; W4-S13 four synthetic objects sit in the live evidence bucket under firms/49financial/generations/GENIBS14SYN/ with irpt-synthetic=true metadata -- an S3 delete needs a human's word and is not taken by this seat; carried to L10 with the keys so the CTO or Andrew can order the delete or relocation before any consumer reads that prefix as client evidence. Forward disarm: IB-s-15 and IB-sb-3 faces gain one line -- the export route is graded on the function's absence report, not on a render.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (this row IS the disarm act by carry; the four decisions are the CTO's L10 analysis, the S3 delete is Andrew's or the CTO's word)",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W4-S9..S13 (this HEAD)",
-        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/battery_ib_s_14.result.md (this HEAD) -- the absence report, the content-hash vs raw-digest print, the four object keys",
-        "the two faces IB-s-15, IB-sb-3 (this commit) -- one line inside the S9 amendment block; <status> still staged"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "PRD B14 (v0.4): render worker executing the counterpart's RenderPackage; download reauthorized even when the artifact exists. IB-s-14 S14-AC1 (a): the rendered PDF's content hash equal between render and retry.",
-    "world_is": "The mechanism is proved locally and the deployed function honestly reports it cannot render; the round's evidence bucket carries four labelled synthetic exports. Nothing here is hidden; each item has a named owner past this seat.",
-    "notes": "FWD-8 cannot grade REALIZED on this round's evidence: the rendering runtime is the gap, stated as such for the slug."
   }
 ]
 ```
