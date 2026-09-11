@@ -222,6 +222,12 @@ escalation, then a kill, and `2.0.0_SA_COO~ZZZ` had already fired that ladder to
 worktree probe overturned it. A kill on that reading would have destroyed 189 KB of uncommitted work.
 ⭐ **THE TWO HALVES ARE ONE CHANGE:** without the probe the value is unfalsifiable; without the value
 the probe has nowhere to report. Neither lands alone.
+⚠ **ITS SCOPE IS A DECISION, NOT AN OVERSIGHT** (raised by `2.0.0_SA_COO~ZZZ` after exercising it):
+the probe reads the output of **the owner of the NEXT LIMB**, which is narrower than its raw power --
+it would NOT catch a seat producing at a moment when the next limb is measured as someone else's.
+**That is deliberate: the scope matches the question this skill asks, which is "whose turn is it and
+are they moving".** A probe that swept every seat's worktree on every run is a different and more
+expensive tool; if that is ever wanted it should be built as one, not grown here by accident.
 
 A project can carry more than one class; list all, the blocking one first. `UNFINISHED-EDITS` and
 `ORPHAN-WORKTREE` are always listed when present, whatever the limb: they are work that exists nowhere durable
