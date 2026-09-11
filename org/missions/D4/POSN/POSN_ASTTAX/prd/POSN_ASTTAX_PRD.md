@@ -186,9 +186,34 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
   ⛔ **SEQUENCE (round 2): (0) HARDEN the generator -- treat `"unknown"` as falsy in the guard AND make both
   allocation dicts tolerate an unexpected key (DT Step 3, the durable class fix); (1) set the affected
   tickers' `management_style` to the factually-correct value (passive for a bullion trust) -- DT Step 1;
-  (2) **THE BAR, stated as a CONDITION and not as an act:** for EVERY ticker in the retag set, the
-  SERVED `asset_class` value equals its ratified five-class label AND its allocation weight is
-  NON-ZERO and equal to its pre-retag weight, read from the served artifact. ⛔ **WRITTEN AS AN ACT
+  (2) **THE BAR, stated as a CONDITION and not as an act:** for EVERY ticker in the retag set, ACROSS
+  **EVERY SERVED SURFACE THE RETAGGED VALUE REACHES**, (a) the served `asset_class` equals its
+  ratified five-class label, (b) its allocation weight is NON-ZERO and equal to its pre-retag weight,
+  (c) **its row RENDERS** -- served row count equals DOM row count -- and (d) **the class subtotals
+  sum to the grand total.**
+  ⛔ **WIDENED 2026-09-11 BECAUSE THE FIRST CUT OF THIS BAR WAS NARROWER THAN THE HAZARD.** It read
+  "from the served artifact", meaning `positioning_data.json` alone. `2.0.0_SA_COO~Z`'s wave-1 cells
+  measured BOTH collapse sites OUTSIDE that artifact, so a GO would have been TRUE AND INSUFFICIENT:
+    - DOWNSTREAM (`W11-S1`): `portal/src/pages/Positioning/tabs/HoldingsTab.tsx:1392-1394` iterates a
+      HARDCODED `assetClassOrder = ['Fixed Income','Equity']`. A group keyed `Commodities` /
+      `Structured` / `Alternatives` is **NEVER ITERATED** -- the row renders NOWHERE while its weight
+      stays in the grand total. 42 of 42 consumers examined; 12 sites across 8 files.
+    - A DIFFERENT ARTIFACT (`W12-S2/S3`): `yang-generate-allocation-summary` carries `Commodities`
+      through all 88 hops, then draws `policy_weight 0.0` from a fixed two-key `BENCHMARK_ALLOCATIONS`
+      -- and writes `holdings_attribution_data.json`, not `positioning_data.json`.
+  ⛔ **AND THIS EXACT BUG HAS ALREADY SHIPPED ONCE**, which is why (c) and (d) are bars and not
+  advice: the same file documents it for `Cash` at `:1364-1372`, measured on PROD v2.1.167 -- PFDE
+  90 -> 89 served-vs-DOM rows, subtotals 99.98 under a grand total of 100.01. The remedy folded only
+  `Cash` and `Hedge`, so **a retag reproduces it with a new value.**
+  ⭐ **THE MECHANISM, in the measuring worker's own words: "Data reaches three lambdas; the code
+  hardening reaches one."** `AT3-s-1`'s write surface is ONE code path; the retagged DATA reaches the
+  siblings through a second door -- a consumer importing `ETFClassifier` directly, all three copies
+  byte-identical (`md5 e62906eff240a853029181715fc9b451`).
+  ⚠ **THE SURFACE LIST IS A SUBTRACTION, NOT A RECALL LIST:** enumerate every artifact and rendered
+  surface a retagged `asset_class` reaches and subtract the ones proven unreachable; do not re-use
+  the three named above as if they were the whole set. That error -- writing an enumeration from
+  memory after subtracting correctly over the population -- is the one this project keeps paying for.
+  ⛔ **WRITTEN AS AN ACT
   ("verify the chain") THIS STEP INVITED A READER TO TREAT A COMPLETED VERIFICATION CELL AS A PASSED
   ONE -- an error this seat made and withdrew.** A step that names a TASK is satisfied by doing the
   task; a step that names a CONDITION is satisfied only by the world. **Step (2) is currently NOT
