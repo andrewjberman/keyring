@@ -343,6 +343,28 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Matches the established pattern of S3/S4 (FE-s-4 drain): the wiring act -- importing PeriodInContextPage into PerformanceDocument.tsx in place of its own placeholder -- needs an owner of render/performance/PerformanceDocument.tsx, which this TO does not grant. Until that lands, F8-AC8's L9 grade is reading FE-s-4's placeholder page, not this cell's work; the standalone component is fully built and tested against the fixtures this TO owns."
+  },
+  {
+      "id": "IRPT_FNTEND-S6",
+      "project": "IRPT_FNTEND",
+      "fabric": "laptop",
+      "surfaced_by": "2.0.0_SA_COO~F",
+      "surfaced_at": "2026-09-11T00:20:00Z",
+      "one_line": "Disarm act for IRPT_FNTEND-W2-S6 split by its disarm_owner: the WIRING half (PeriodInContextPage built and tested but not mounted, because render/performance/PerformanceDocument.tsx was outside FE-s-8's grant -- an issuer cut defect) is granted to TO-FE-s-9 with F9-AC10 and an includeNarrative render option; the CONTRACT half (NarrativePacket carries per-event evidence, coveredWindow and prose rather than the annotations, topic terms, coverage and historyCutoff the cell text named) is a contract-inventory question for the counterpart and rides the L10 read; the market-performance components' live fetches and alias imports are recorded as a reason the page imports their presentation only.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "portal DEV @4fbbd1c4 -- render/narrative/PeriodInContextPage.tsx and compose.ts present with 8 of 8 tests passing under the issuer's own run; render/performance/PerformanceDocument.tsx contains no reference to PeriodInContextPage (measured by substring at the drain)",
+          "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-8.narrative-page.md <paths> @531ff06aab -- render/narrative/, render/fixtures/, render/manifest.ts, fixtures/smoke/, the test folder; PerformanceDocument.tsx absent",
+          "portal/src/pages/InvestorReporting/contracts/index.ts section 8 @0322a04a4d -- NarrativePacket: events[].evidence, coveredWindow/uncoveredReason, prose; no annotations, trendingTopics, topicCloud, coverage or historyCutoff",
+          "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-9.export-options-preview.md -- amended this commit: PerformanceDocument.tsx and render/manifest.ts added to <paths>; F9-AC10 added; expected_criteria 10"
+        ]
+      },
+      "spec_asserts": "IRPT_FNTEND-W2-S6: ARMED -- the print route still shows the FE-s-4 placeholder on the period-in-context page; the cell text names packet fields the contract does not carry; the named market-performance components fetch live and do not resolve under bun test.",
+      "world_is": "The page composes from the packet fields that exist (coveredWindow.start as the history cutoff, event evidence summaries as the terms) and every rendered term is provably from the packet's evidence. Mounting it is one edit in the slot owner plus one render option, granted to the export cell that owns the narrative toggle. Whether the counterpart's NarrativePacket should carry dated topic terms and a history cutoff as first-class fields is a contract decision carried to L10 with W2-S2; until it is made, the page's inputs are the packet as written.",
+      "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
