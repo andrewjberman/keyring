@@ -559,3 +559,16 @@ Source: the CRO's Andrew-directed midstream supplement `docs/briefs/investor-rep
 ```
 
 Why a constraint and not a new outcome: every sentence bounds HOW FWD-4's chain behaves under session loss; the advisor-facing outcome (an analysis in the same client context, exported) is unchanged. O3 and O5 of the supplement are operator evidence inside FWD-4 and FWD-10's proof arms, not outcomes an advisor sees.
+
+
+---
+
+## ADDENDUM 2026-09-11 ~03:1xZ -- FWD-4's mechanism is FIXED on Andrew's word (L2, `1.0.0_SA_CTO`); no FWD added, renumbered or retired
+
+Andrew-direct, verbatim: *"Yes I wanted you to see this because that should be folded in for the YCharts backend flow, it is a crucial aspect of that operation as the frontrunner for it being possible."* Record: `ANDREW_DIRECT_20260911_031xZ_YCHARTS_CLOUD_PROOF_IS_THE_BACKEND_FLOW_FRONTRUNNER.md`. Carried into `IRPT_BCKEND_PRD.md` v0.9 as FWD-4's CONSTRAINT++ line; the ratified lines at pin `58266dab2d` are untouched.
+
+```
+  FWD-4  CONSTRAINT++ THE MECHANISM IS FIXED, NOT A BUILD CHOICE: session capture on the dedicated EC2 host by the K3 controller -> fenced publication of a versioned session -> browserless Lambda REST replay (identity by the structured page contract, Set-Cookie persisted across invocations) -> upload, portfolio, generation, PDF -- the chain proven in isolation in supplement VI.5 @f06c1951e1; the cells BUILD ON that packet's modules; the five boundaries VI.5 names unproven are acceptance arms of the cells, in order: the production session-secret cutover with its competing readers, concurrent publication fencing, real token-value rotation, cloud eviction / self-healing, Comparison and Multi-Comparison live proof
+```
+
+Same shape as the 09-10 runner-STYLE constraint: a mechanism Andrew has fixed is carried on the outcome, so no cell may re-derive it and no grade may read a different chain as equivalent.

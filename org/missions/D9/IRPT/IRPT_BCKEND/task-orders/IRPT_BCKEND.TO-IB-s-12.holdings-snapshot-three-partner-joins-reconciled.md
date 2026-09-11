@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>staged -- RE-SEATED to slot ~1 by the issuer at the IB-s-5 drain (2026-09-11 ~00:5xZ): slot ~1's own queue idles until IB-s-6/9/12/14 merge while this cell's dependency (IB-s-1) is already merged; becomes pending when the COO hands it over. The directory root it applies is shared with IB-s-4 (slot ~2), so the issuer hands IB-s-4 only after this cell merges.</status>
+<status>complete -- S12-AC1 PASS-by-output (rc=0, IBS12-HOLDINGS-RECONCILED, 6 of 6 arms); S12-AC2 RECORDED for 3.0.0_SA_CVO at L9, no worker verdict; proof-of-spec-check rc=0; 3 resources applied, ledger closed at 0ab73203c2; 3 real QA snapshots landed; the rule-13 code deploy leg is BLOCKED (row W1-S8 filed, does not gate S12-AC1); row W1-S7 filed.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.4 @62301f71e0 | **Decomp cell:** `IB-s-12` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, s.1 + s.2) | **outcome_ref:** FWD-5 (contrib) | **PRD candidate:** B12
 

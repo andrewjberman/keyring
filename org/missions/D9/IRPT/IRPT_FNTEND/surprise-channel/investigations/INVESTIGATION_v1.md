@@ -456,6 +456,252 @@
     "spec_asserts": "IRPT_FNTEND-W1-S6: ARMED -- a stale server holds a slot's assigned port, vite bumps the next worker to another port, and a port-keyed instrument reads the wrong tree.",
     "world_is": "A worker's background dev server outlives the worker; the issuer's teardown removed the worktree but not the process, and a directory held by that process resisted removal. The sweep by command line, not by port, is the control that sees them.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-10T21:50:00Z",
+    "one_line": "AnalysisTab.tsx (built per TO-FE-s-6) is not reachable from the running app: TabShell.tsx (FE-s-3, IMPORTED never edited per this order's BOUNDS) fills every tab body with StatusPanel and nothing else at this cell's HEAD, so ui-smoke's --click Analysis screenshots the generic status panel, never this cell's component tree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "TO-FE-s-6's WORKER FACE: 'Tab at portal/src/pages/InvestorReporting/tabs/analysis/AnalysisTab.tsx, mounted in TabShell's analysis body.' F6-AC6/F6-AC7 invoke ui-smoke against the LIVE route investor-reporting with --click Analysis, expecting the screenshot to show this cell's rendered tab (variants, request list, input review, stage, sections) for L9's F6-AC8 judgment.",
+    "world_is": "portal/src/pages/InvestorReporting/tabs/TabShell.tsx @HEAD of this worktree (branch wk-irpt_fntend-3-1-fe-s-6) renders `<StatusPanel tabId={activeTab} envelope={envelope} />` unconditionally below the tab strip for EVERY tab id, with no per-tab body switch; its own docstring states this directly: 'Each tab's body is a MOUNT POINT this cell fills with StatusPanel and nothing else ... tabs/reporting/, tabs/analysis/, tabs/holdings/ are later cells.' index.tsx's docstring names the same three mount points as StatusPanel-only. TabShell.tsx is not in this order's <paths> and is named in BOUNDS as 'IMPORTED, never edited', so this worker cannot wire AnalysisTab into it. Measured: `node scripts/ui-smoke.mjs investor-reporting .../fe-s-6_analysis_ready_1440.png --port 5183 --width 1440 --fixtures .../fe-s-6-ready.json --click Analysis` rc=0, CLICKED: Analysis, but the saved PNG shows only the tab strip and a white 'Ready / Updated 8h ago' StatusPanel -- no VariantSelector/RequestList/InputReview/StageDisplay/NativeSections/VendorPdfPreview/Export control anywhere; the tool's own FIXTURE-DEAD line names '/api/scoped/investor-reporting/analysis-report' as declared but never matched, confirming no code path in the running app calls getAnalysisReport. Built AnalysisTab.tsx and its six panels fully per spec and unit-tested them directly (renderToStaticMarkup through FixtureAdapter, F6-AC1..AC5 all PASS); the smoke screenshots (F6-AC6/F6-AC7) pass mechanically (rc=0, the named invocation ran) but cannot show this cell's UI until a later cell (owning TabShell.tsx, out of this order's grant) mounts it, which bears on what F6-AC8's L9 judgment can conclude from these two PNGs.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/TabShell.tsx @HEAD (branch wk-irpt_fntend-3-1-fe-s-6) -- return block: `<div className=\"pt-6\"><StatusPanel tabId={activeTab} envelope={envelope} /></div>`, no other element keyed on activeTab",
+        "portal/src/pages/InvestorReporting/index.tsx @HEAD -- comment 'Tab shell mount point -- FE-s-3's TabShell: the tab strip and the three StatusPanel mount points (reporting / analysis / holdings).'",
+        "comp-find content 'AnalysisTab' src/pages/InvestorReporting --all -> 'NO HITS. This is a MEASURED zero over 105 scanned file(s)' before this worker's own commit",
+        "node scripts/ui-smoke.mjs investor-reporting fe-s-6_analysis_ready_1440.png --port 5183 --width 1440 --fixtures fe-s-6-ready.json --click Analysis -> rc=0; stdout 'CLICKED: Analysis'; 'FIXTURE-DEAD (declared, NEVER matched): /api/scoped/investor-reporting/analysis-report'; saved PNG at org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/fe-s-6_analysis_ready_1440.png shows the tab strip plus a bare white 'Ready / Updated 8h ago' panel and nothing else"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED because the same gap sits under FE-s-5 (Reporting tab) and FE-s-7 (Holdings tab) too -- neither sibling holds TabShell.tsx either (slot ~1: tabs/reporting/ + portal/tsconfig.json; slot ~4: tabs/holdings/), so THREE cells this round can each build a fully-tested tab component that no live route ever mounts unless a later TO (owning tabs/TabShell.tsx) adds the three conditional mounts. Disarm is a COO-issued amendment mounting AnalysisTab/ReportingTab/HoldingsTab inside TabShell's per-tab body, keyed on activeTab, once all three land."
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-10T21:52:00Z",
+    "one_line": "TO-FE-s-6's ACT text asserts two fields the shared contracts file does not carry -- AnalysisRequest.inputRevision and ReportSection.parity.passed -- so F6-AC3/F6-AC4 are met by two FE-s-6-LOCAL extensions (tabs/analysis/correction.ts, tabs/analysis/parity.ts) rather than by reading a producer field.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-6 WORKER FACE: 'submitCorrection sends a NEW input revision through the typed client (inputRevision = current + 1)' and 'a section shows SUPPORTED only when section.parity.passed === true, otherwise UNSUPPORTED with the reason', both stated as if reading existing contract fields.",
+    "world_is": "portal/src/pages/InvestorReporting/contracts/index.ts (FE-s-1, out of this order's <paths>) defines AnalysisRequest with `corrections: readonly AnalysisCorrection[]` and no `inputRevision` field anywhere on the interface, and ReportSection with `sectionRef, kind, title, ordinal, values` and no `parity` field; the existing consumer fixtures analysisRequest.success.json / analysisReport.success.json (FE-s-1) confirm neither field is populated in practice either. The decomposition itself names the parity gap directly (IRPT_FNTEND_DECOMP.md section 7.8: 'That the three-variant Analysis PDFs exist. They do not; FE-s-6 renders UNSUPPORTED where the fixture lacks parity, and the gap stays named.'). Resolved INSIDE this order's grant: tabs/analysis/correction.ts derives inputRevision as `1 + corrections.length` (never stored, never mutated onto the original request) and tabs/analysis/parity.ts widens ReportSection with an OPTIONAL `parity?: { passed, reason }` that a real (unwidened) AnalysisReport.sections value satisfies with no cast, rendering UNSUPPORTED whenever the fact is absent -- the safe default named in this order's own BOUNDS.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/contracts/index.ts @HEAD -- `export interface AnalysisRequest extends ContractEnvelope { ... corrections: readonly AnalysisCorrection[]; stage: AnalysisStage; ... }`, no `inputRevision` member; `export interface ReportSection { sectionRef: OpaqueId; kind: string; title: string; ordinal: number; values: readonly ReportSectionValue[] }`, no `parity` member",
+        "portal/src/pages/InvestorReporting/fixtures/analysisReport.success.json @HEAD -- two sections, neither carrying a `parity` key",
+        "org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md section 7 item 8 (@8ace3a2596) -- 'That the three-variant Analysis PDFs exist. They do not; FE-s-6 renders UNSUPPORTED where the fixture lacks parity, and the gap stays named.'",
+        "portal/src/pages/InvestorReporting/tabs/analysis/correction.ts (this commit) -- `deriveInputRevision` = `request.corrections.length + 1`; portal/src/pages/InvestorReporting/tabs/analysis/parity.ts (this commit) -- `AnalysisSection extends ReportSection { parity?: SectionParity | null }`; `bun run typecheck` rc=0 with report.sections (typed ReportSection[]) passed directly into NativeSections's AnalysisSection[]-typed prop with no cast"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT: both extensions are additive, live entirely inside this order's <paths>, and degrade safely (an unwidened contract value renders UNSUPPORTED, never SUPPORTED, and a request with no corrections renders inputRevision 1) -- nothing outside tabs/analysis/ reads either name. Recorded so a future contract revision that adds real `inputRevision`/`parity` fields to contracts/index.ts is a KNOWN convergence point rather than a silent duplicate."
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-11T02:10:00Z",
+    "one_line": "FE-s-7's HoldingsTab is built and unit-tested (F7-AC1..AC4 all pass) but is NOT reachable through the real page: TabShell.tsx's holdings body mount still fills with StatusPanel only, TabShell.tsx is out of this cell's <paths> grant, and Bounds>Reuse names it 'IMPORTED, never edited' -- so F7-AC5/AC6's screenshots (rc=0, recorded) show the generic StatusPanel, never the Holdings tab content, and F7-AC7's L9 visual grade will be reading that same StatusPanel screen, not this cell's component tree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/TabShell.tsx @65a37017 (HEAD of this worker's portal branch) -- doc comment: 'Each tab's body is a MOUNT POINT this cell fills with StatusPanel and nothing else (tabs/reporting/, tabs/analysis/, tabs/holdings/ are later cells)'; the component body renders only '<StatusPanel tabId={activeTab} envelope={envelope} />' regardless of activeTab -- no per-tab body slot exists to mount a later cell's component into",
+        "IRPT_FNTEND.TO-FE-s-7.holdings-tab.md <paths> block names only portal/src/pages/InvestorReporting/tabs/holdings/, fixtures/fe-s-7/, fixtures/smoke/, __tests__/fe-s-7/ and this investigation file -- tabs/TabShell.tsx is not listed, and Bounds>Reuse names TabShell.tsx among the files 'IMPORTED, never edited'",
+        "F7-AC5 invocation run this session: node scripts/ui-smoke.mjs investor-reporting fe-s-7_holdings_smartx_1440.png --port 5184 --width 1440 --fixtures fe-s-7-smartx.json --click Holdings -- rc=0, PNG saved; the PNG's Holdings panel shows only 'Ready / Updated 8h ago' (StatusPanel), no HoldingsSummary/DrillTree/SliceTable content, confirming the gap empirically rather than by reading alone",
+        "portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx (this cell, committed) -- self-contained (api + scopeRef props only), built specifically so a future mount is a one-line change wherever TabShell.tsx is amended"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-7's cell text: 'Tab at portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx, mounted in TabShell's holdings body.'",
+    "world_is": "TabShell.tsx has no holdings-specific body mount today (only a shared StatusPanel for every tab), and this task order neither grants tabs/TabShell.tsx for editing nor permits editing it under Bounds>Reuse -- so 'mounted' cannot be performed inside this cell's own lane; it is a distinct, later wiring act.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-11T02:12:00Z",
+    "one_line": "portal/src/components/CategoryViewTree.tsx is hard-wired to the AUM-domain MdpfCategoryViewsResult contract (fee_taking/advisory axis, Primary/Custom buckets, and a presence rule that DROPS any non-positive aum entirely) and carries no basis/denominator/signed-amount/classification fields at all, so it cannot represent a HoldingsSnapshot node's own rules; DrillTree.tsx uses it only for a coarse, lossy top-level overview (an adapter mapping each top-level category's amount into one MdpfCategoryNode with empty children/members) and implements the actual signed-amount/denominator-validity/classification/drill rules itself, over the same node graph, never delegated to CategoryViewTree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/components/CategoryViewTree.tsx @65a37017 lines ~30-40 (aum.ts types imported), ~125-129 (presentAum: 'if node.aum <= 0 return null' -- a negative or zero aum node renders NO CARD AT ALL) and ~619 (export function CategoryViewTree({ result }: { result: MdpfCategoryViewsResult }))",
+        "portal/src/api/endpoints/aum.ts @65a37017 MdpfCategoryNode/MdpfCategoryChildNode/MdpfCategoryMember interfaces carry only aum/members/label/axis/third_bucket -- no basis, no denominator, no pctOfParent/pctOfTotal, no classification/provenance field of any kind",
+        "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx (this cell, committed) -- mdpfResultFromSnapshot() adapter + header comment recording the mismatch; the donut/breadcrumb/SliceTable path (not CategoryViewTree) is what actually carries signed amounts, invalid-denominator alternative state and classification partitions"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-7's cell text: 'DrillTree.tsx: CategoryViewTree from portal/src/components/CategoryViewTree.tsx over the snapshot's node hierarchy (Models, SMAs, Client and every other category the hierarchy carries)' -- read plainly, CategoryViewTree renders the snapshot's hierarchy.",
+    "world_is": "CategoryViewTree's own contract (MdpfCategoryViewsResult) has no surface for a HoldingsNode's basis, denominator, signed amount or classification, and its own presence rule would silently drop a negative-amount node this cell is required to render (Bounds: 'a negative amount renders negative and is drawn as its own labelled slice, never through an absolute value'). CategoryViewTree is therefore used only for a coarse top-level overview card per category, adapted from the snapshot; every rule the cell actually owns is implemented in this cell's own breadcrumb+donut+SliceTable path instead, not delegated to the imported component.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S7",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-10T23:47:00Z",
+    "one_line": "The row-S7 disarm act's own tsconfig.json edit (required for F5-AC9) REGRESSES the already-terminal FE-s-3 dropdown-class.test.ts (F3-AC7), verified by a controlled A/B; separately, render/performance/MethodsAndSources.tsx and Summary.tsx need facts (an ExportBundle, a household beginning/ending value) this tab never has, PerformanceReport carries no supported.benchmark/.valueHistory field, and the cell's 'non-READY' StatusPanel rule contradicts state/status.ts's own isCompleteState (READY+STALE) -- all four resolved inside this order's grant without editing render/performance/* or __tests__/fe-s-3/.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "IRPT_FNTEND-W1-S7 (COO, prior row): adding compilerOptions.baseUrl/paths to portal/tsconfig.json 'changes nothing tsc -b compiles, and retires the per-file workaround class for every remaining cell' -- and this order's own text: 'Existing per-file mock.module workarounds in earlier test folders are left as they are.' Separately, THE CELL: 'renders ... MethodsAndSources from render/performance/ (imported, never copied)'; 'a benchmark section ... renders only when PerformanceReport.supported.benchmark ... is true'; 'StatusPanel from FE-s-3 for every non-READY envelope.'",
+    "world_is": "(1) A/B controlled: with portal/tsconfig.json restored to its pre-amendment shape (files:[]/references only, no compilerOptions), `bun test .../fe-s-3/dropdown-class.test.ts` alone -- 2 pass, 0 fail. With this order's F5-AC9 edit applied (the exact edit this row's own predecessor and this task order both require), the SAME invocation, alone, no fe-s-5 file involved -- 0 pass, 2 fail, 'SyntaxError: Export named PageSurfaceControl not found in module .../PageSurfaceControl.tsx'. The workaround was necessary exactly because @/lib/utils was UNRESOLVABLE before; making it resolvable changes how bun:test's mock.module (registered for both '@/lib/utils' and '@/components/ui/PageSurfaceControl' in that one file) evaluates the real files its own factories dynamic-import, and PageSurfaceControl.tsx's own `import { cn } from '@/lib/utils'` line is caught in it. F5-AC9 cannot be dropped (it is this order's own criterion) and __tests__/fe-s-3/ is not in this order's <paths>, so the regression is recorded rather than fixed here. (2) render/manifest.ts's RenderPerformanceReport (Summary's and MethodsAndSources's own report prop type) adds beginningValue/endingValue/valuationCurrency PerformanceReport does not carry, and MethodsAndSources additionally requires bundle: RenderBundle (ExportBundle-shaped: bundleRef, authorized report refs, approved assets, template/renderer/disclosure versions, render options) which a tab calling only getPerformanceReport never has and never fetches (Export is a separate, disabled control in this order) -- resolved by an additive bridge (toRenderPerformanceReport, honest 'unsupported' for the two values this tab's own fixtures do not carry additively, real ones for those that do) for Summary, and by NOT importing MethodsAndSources at all: tabs/reporting/MethodAndSources.tsx is original code printing the same method/lineage facts from the one contract this tab holds. (3) grep of contracts/index.ts: zero occurrences of 'supported.benchmark' or 'supported.valueHistory' or any 'supported' field on PerformanceReport itself; presence is read from non-empty benchmarks (PeriodResults' own internal check) and non-empty dailyCumulative (gated in ReportingTab.tsx). (4) state/status.ts's isCompleteState, exercised by FE-s-3's own status.test.ts, returns ['READY','STALE'] -- STALE is complete-eligible, contradicting this cell's literal 'non-READY' wording; ReportingTab.tsx uses isCompleteState so performance.differing-dates.json (STALE) reaches the report body as states.test.ts requires, and performance.unavailable-metric.json (itself PARTIAL, not READY/STALE) is graded on its StatusPanel coverage text rather than a Metric-level UNAVAILABLE render it structurally cannot reach.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "controlled A/B in this worktree: portal/tsconfig.json reverted to {files:[],references:[...]} (no compilerOptions) -> `bun test src/pages/InvestorReporting/__tests__/fe-s-3/dropdown-class.test.ts` -- 2 pass, 0 fail, rc=0; portal/tsconfig.json restored to this commit's compilerOptions.baseUrl/paths -> the SAME invocation -- 0 pass, 2 fail, rc=1, 'SyntaxError: Export named PageSurfaceControl not found in module .../src/components/ui/PageSurfaceControl.tsx'",
+        "src/components/ui/PageSurfaceControl.tsx:2 -- `import { cn } from '@/lib/utils'`, unedited (out of this order's <paths>)",
+        "src/pages/InvestorReporting/render/manifest.ts:157-177 -- RenderPerformanceReport extends PerformanceReport with beginningValue/endingValue/valuationCurrency; RenderBundle extends ExportBundle with bundleRef/reports/approvedAssets/templateVersion/rendererVersion/disclosureVersion/renderOptions, none of which PerformanceReport or the typed client's getPerformanceReport carry",
+        "src/pages/InvestorReporting/contracts/index.ts:397-410 -- PerformanceReport's own field list (lineage, requestedDates, actualDates, method, summaryReturns, dailyCumulative, accountDetail, benchmarks, uncoveredAccountIds) carries no `supported` field at all",
+        "src/pages/InvestorReporting/__tests__/fe-s-3/status.test.ts:86-92 -- `const complete = ENVELOPE_STATES.filter((s) => isCompleteState(s)); expect(complete).toEqual(['READY', 'STALE'])`",
+        "src/pages/InvestorReporting/fixtures/performance.unavailable-metric.json -- availability.state 'PARTIAL', publicReasonCode 'METRIC_NOT_SUPPORTED'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S9",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T01:35:00Z",
+    "one_line": "Disarm act for IRPT_FNTEND-W3-S1 and IRPT_FNTEND-W4-S1 assigned by their disarm_owner: the tab shell FE-s-3 built has no mount seam, so the Analysis and Holdings tabs are built and tested but unreachable; TO-FE-s-10, which already holds tabs/ in its grant and depends on every tab cell, is amended to mount AnalysisTab and HoldingsTab in the shell and to prove it (F10-AC10). W3-S2 (contract fields inputRevision and parity the cell text named) is the same contract-inventory question as W2-S2 and W2-S6 and rides the L10 read. W4-S2 (CategoryViewTree is bound to the AUM-domain contract and drops non-positive amounts; used only as a coarse overview adapter, every holdings rule implemented in the cell) is a reuse finding for the FE-s-11 census and the L10 read: the PRD's reuse row for it is NOT USED as the drill component, with that reason.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/TabShell.tsx @65a37017 -- header comment lines 10-13: every tab body is filled with StatusPanel and nothing else; no props or slot for a body component",
+        "row IRPT_FNTEND-W3-S1 @854594d51a (worker branch) -- both ui-smoke captures show the generic status panel after --click Analysis while the AnalysisTab unit renders pass 19 of 19",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-10.global-view.md -- amended this commit: tab mounting paragraph, F10-AC10, expected_criteria 10; tabs/ was already in its grant",
+        "row IRPT_FNTEND-W4-S1 @277a7199ac (worker branch) -- both Holdings captures show the generic status panel while 32 of 32 unit renders pass; row W4-S2 -- CategoryViewTree.tsx is hard-wired to MdpfCategoryViewsResult and drops non-positive aum"
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND-W3-S1 and W4-S1: ARMED -- AnalysisTab and HoldingsTab are not reachable from the running app; TO-FE-s-6 and TO-FE-s-7 said each mounts in the shell's body and neither grant included the shell.",
+    "world_is": "The FE-s-3 face said each tab body is a mount point the shell fills with StatusPanel until later cells arrive, and the worker built exactly that with no seam for those cells. FE-s-5 holds the shell in its grant and mounts its own tab; FE-s-6 and FE-s-7 do not. The integration cell mounts both remaining tabs before the Global view exercise, which needs every tab reachable anyway.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S10",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T02:45:00Z",
+    "one_line": "Disarm act for IRPT_FNTEND-W1-S7 finding (1) assigned by its disarm_owner: the root tsconfig alias mapping FE-s-5 landed makes FE-s-3's dropdown-class.test.ts per-file mock.module registrations intercept the real modules, and its two tests fail on portal DEV @5b959f63 (184 tests, 2 fail, 1 error); TO-FE-s-9 (slot ~1, next) is amended to remove those registrations and re-state the assertions against the real markup (F9-AC11). Findings (2)-(4) are adaptations inside the cell's own grant and need no act; they ride the L10 read as face notes (MethodsAndSources takes a bundle the tab never holds; PerformanceReport has no supported.* flags; the status-panel wording contradicted isCompleteState).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal DEV @5b959f63 -- bun test src/pages/InvestorReporting: 184 tests, 2 fail, both in __tests__/fe-s-3/dropdown-class.test.ts: 'Export named PageSurfaceControl not found in module .../PageSurfaceControl.tsx'",
+        "row IRPT_FNTEND-W1-S7 @3ab6275f9f (worker branch) -- A/B controlled: the same test file passes 2 of 2 with the pre-amendment tsconfig and fails 0 of 2 with the mapping, no fe-s-5 file involved",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-9.export-options-preview.md -- amended this commit: the test file added to <paths>; F9-AC11 added; expected_criteria 11"
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND-W1-S7 (1): ARMED -- F5-AC9's required edit regresses the already-terminal F3-AC7; the DEV test set is red until one of them moves.",
+    "world_is": "The mock registrations were the workaround for the alias gap; once the gap is closed they are the defect. The fix is the removal of the workaround and a real render, in the next order on the same slot, before FE-s-10 exercises the whole page. The alias mapping stays: it retires the workaround class for every remaining cell, which is why it was granted.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S11",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T04:10:00Z",
+    "one_line": "PRD v0.5 @fb5bb6e landed MID-ROUND: it changes candidate F5 (cell FE-s-6, the Analysis tab) to PRODUCE AnalysisRequest's browser request half per docs/research/investor_reporting_ycharts_variants_20260911/UI_CONTRACT.md (source S10) -- client from the header, accounts with a confirmable default and account numbers as labels, an immutable holdings snapshot_id, zero to five ordered comparisons by opaque catalog keys, variant resolved by comparison count and displayed, a stable per-click request_id, changed inputs as a new revision, job states polled from the Opal job record, needs-attention on WAF refresh. FE-s-6 was cut from v0.4 and is TERMINAL and DRAINED (workspace 883bfdff53, portal DEV 8fb4f15a); the spec is frozen for this round, so the v0.5 delta is ROUND-2 scope and rides the L10 read as the addendum a recut must cover. The message's read that FE-s-6 is un-spawned is behind the record.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO msg 95784 (2026-09-11T04:04:59Z) -- IRPT_FNTEND PRD v0.5 @fb5bb6e, coverage 35 of 35, F5 consumes the counterpart's Generate UI contract; L4-R re-opened; a NEW frontend order is refused until both reviewers sign v0.5",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-6.analysis-tab.md @883bfdff53 -- <status>complete</status>; instance VALID rc=0 re-run by the issuer at the drain; portal DEV 8fb4f15a carries tabs/analysis/",
+        "org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md L4 handoff -- a substantive PRD edit bumps prd_version and re-enters L5 through the notifier; CLAUDE.md Rule 27 -- mid-round the spec AND the decomposition are frozen, the only off-spec act is a row"
+      ]
+    },
+    "spec_asserts": "PRD v0.5 F5: the Analysis tab produces the browser request half of AnalysisRequest as the UI contract specifies, with the variant resolved by comparison count and job states from the Opal job record.",
+    "world_is": "The Analysis tab on DEV is v0.4's: variant selector, request list, input review and correction, stage display, native sections, over the v0.4 AnalysisRequest shape; it does not compose the UI-contract request (snapshot_id, catalog keys, request_id idempotency, variant=auto). No cell in this round's decomposition owns that delta, and cutting one mid-round is forbidden. The L10 read names the delta so the CTO's round-N analysis can send it back as a recut, under L4-R sign-off at v0.5.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S8",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-11T03:39:28Z",
+    "one_line": "TO-FE-s-9's own FE-s-8-drain amendment (gate PerformanceDocument's period-in-context page on includeNarrative:true) is satisfied inside this order's grant, but it turns FE-s-4's existing POSITIVE-CONTROL test -- outside this order's <paths>, not editable here -- from pass to fail: that test's fixture never sets the new option, so it now expects a page the amended template correctly no longer emits by default.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "TO-FE-s-9 (narrative page wiring amendment): \"In PerformanceDocument.tsx, replace the slot placeholder with PeriodInContextPage rendered when the RenderBundle carries a NarrativePacket AND the export options carry includeNarrative: true ... default false\"; render/performance/PerformanceDocument.tsx is this order's own granted path and the Reuse bound names it as one of the files this amendment changes.",
+    "world_is": "portal/src/pages/InvestorReporting/__tests__/fe-s-4/analysis-no-narrative.test.ts (NOT in TO-FE-s-9's <paths>; owned by the terminal FE-s-4 cell) carries a POSITIVE CONTROL, 'POSITIVE CONTROL: the performance document DOES emit the page when a narrative is present' (lines 95-103), that spreads the FE-s-4 fixture bundle.performance.json (renderOptions has no includeNarrative field, per portal HEAD 5b959f63ca5e51214fe1e605b04b82b2bbf60ef4) and asserts hits===1 / '1 / 4' present unconditionally on packet presence -- the OLD PerformanceDocument behaviour this order's own amendment retires. Measured on this worker's branch after the required PerformanceDocument.tsx edit: bun test .../__tests__/fe-s-4/analysis-no-narrative.test.ts -- 3 pass, 1 fail; the failing assertion at line 100 reads 'expect(hits).toBe(1)' with 'Received: 0'. The other three tests in that file (RENDERED/SOURCE/OMITS) are unaffected since their bundles carry no narrativePacket at all or exercise AnalysisDocument, which never gates on this option.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/render/fixtures/bundle.performance.json @5b959f63 -- renderOptions: {pageSize, orientation, includeDisclosures, locale}, no includeNarrative key",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-4/analysis-no-narrative.test.ts:95-103 @5b959f63 -- 'POSITIVE CONTROL' test spreads performanceBundle() and narrativePacket(), asserts expect(hits).toBe(1) and includes('1 / 4')",
+        "measured on this worker's branch (wk-irpt_fntend-1-5-fe-s-9, portal repo, uncommitted PerformanceDocument.tsx edit for F9-AC10): bun test src/pages/InvestorReporting/__tests__/fe-s-4/analysis-no-narrative.test.ts -- 'Ran 4 tests across 1 file', '3 pass', '1 fail', failing line 100 'Expected: 1 / Received: 0'",
+        "portal/src/pages/InvestorReporting/render/performance/PerformanceDocument.tsx (this order's granted path) now reads 'const showNarrative = packet !== null && bundle.renderOptions.includeNarrative === true' per the amendment; the FE-s-4 fixture's absent field reads as undefined, so showNarrative is false there by construction, not by a bug in this edit"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No act taken on the FE-s-4 test file: it is outside TO-FE-s-9's <paths> and 'tabs/reporting/ and tabs/analysis/ are not edited' names the pattern this order follows generally (fix inside the grant, record outside it). The fix is mechanical for whoever holds that file: either the FE-s-4 fixture spread in the positive-control test gains 'renderOptions: { ...bundle.renderOptions, includeNarrative: true }', or the test's own expectation is amended to state the option explicitly. ARMED because a reader who reruns the full InvestorReporting suite after this drain sees a NEW red test and, without this row, has no way to tell an amendment-caused, spec-correct change in expected behaviour from a regression this worker introduced by mistake."
+  },
+  {
+    "id": "IRPT_FNTEND-S12",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T04:40:00Z",
+    "one_line": "Disarm act for IRPT_FNTEND-W1-S8 finding (2) assigned by its disarm_owner: the narrative gating FE-s-9 was told to add turns FE-s-4's positive control in __tests__/fe-s-4/analysis-no-narrative.test.ts from pass to fail (202 tests, 1 fail on the branch); TO-FE-s-10 is amended to spread includeNarrative: true into that control's bundle and to run the whole set green (F10-AC11). Finding (1) -- the face named ResolvedScope.approvedAssets while the contract carries approved assets on ExportBundle; resolved by an additive in-grant extension -- is a face defect carried to L10 with the other contract-inventory notes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "FE-s-9 worker branch portal @5d5f366d -- bun test src/pages/InvestorReporting: 202 tests, 1 fail, the positive control at __tests__/fe-s-4/analysis-no-narrative.test.ts lines 95-103 asserting the page renders on packet presence alone",
+        "row IRPT_FNTEND-W1-S8 @7db8bed41b (worker branch) -- the control spreads bundle.performance.json, whose renderOptions carries no includeNarrative, so the gated template omits the page",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-10.global-view.md -- amended this commit: the test file added to <paths>; F10-AC11 added; expected_criteria 11"
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND-W1-S8 (2): ARMED -- an amendment this issuer wrote retires a behaviour a terminal cell's positive control asserts, and the DEV set is red by one until the control follows the behaviour.",
+    "world_is": "The gating is the intended behaviour (the export modal's narrative toggle decides the page); the control tested the pre-gating default. One line in the control makes it test the gated behaviour under the option it now needs. The next order on the slot carries it and proves the whole set green.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S13",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T05:05:00Z",
+    "one_line": "Two worker commits in the WORKSPACE repo carried the portal GITLINK bumped to the worker's own portal-branch commit (FE-s-8 @24c4b211b2 -> 21b17327; FE-s-5 @3ab6275f9f -> e85f6eb8), so origin/CLOUD referenced a submodule commit that existed only on this laptop until 0.0.0_AB_MSTR pushed portal DEV to 5b959f63 (msg 95796); the pointer at HEAD (e85f6eb8) now resolves on origin/DEV. Control from this row on: every remaining worker face forbids staging the gitlink; every drain reads the merge's stat for `portal` and refuses to land a bump that does not resolve on origin/DEV; the forward bump of the pointer is the issuer's own commit after the next DEV push and rides the L10 read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show --stat 24c4b211b2 -- `portal | 2 +-`; git show --stat 3ab6275f9f -- portal -- 1 gitlink line; the other seven worker commits of this round carry none",
+        "git ls-tree HEAD portal -> 160000 commit e85f6eb84f3a...; git -C portal ls-remote origin refs/heads/DEV -> 5b959f63ca5e, of which e85f6eb8 is an ancestor (FE-s-5's branch merged at 5b959f63); local portal DEV at 164c1b1a is one merge (FE-s-9) ahead of origin/DEV",
+        "0.0.0_AB_MSTR msg 95796 -- origin/DEV 5907cbca -> 5b959f63 pushed fast-forward, is-ancestor(21b17327 -> origin/DEV) YES; the forward bump named as the round owner's act"
+      ]
+    },
+    "spec_asserts": "A worker's write grant is its <paths> block; the workspace gitlink `portal` is not in any grant, and the workspace push (MSTR's) does not carry the portal repo.",
+    "world_is": "The portal worktree sits INSIDE the workspace worktree's `portal/` directory, so any workspace commit that stages the gitlink records whatever commit the portal worktree is at -- a worker-branch commit that no remote holds until the portal branch is merged AND DEV is pushed. Two of nine worker commits did so; the mechanism that swept the gitlink into their pathspec is not yet measured. The pointer is safe today only because the push happened; the guard is stated in the faces and applied at the drain.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

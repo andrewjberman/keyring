@@ -729,48 +729,59 @@ if [ ${#PATHSPEC[@]} -gt 0 ] && [ -f "$SCRIPT_DIR/surprise-row-gate.py" ]; then
   if [ "${#SRGATE_FILES[@]}" -gt 0 ]; then
     SRGATE_OUT=""; SRGATE_RC=0
     SRGATE_OUT="$(python "$SCRIPT_DIR/surprise-row-gate.py" "${SRGATE_FILES[@]}" 2>&1)" || SRGATE_RC=$?
-    if [ "$SRGATE_RC" -ne 0 ]; then
-      # Read the override out of the ACTUAL commit message, -m AND -F, mirroring the
-      # system-current-override extractor below. ⛔ The first cut of this block referenced a
-      # $COMMIT_MSG_BODY that DOES NOT EXIST ANYWHERE IN THIS SCRIPT -- under `set -euo pipefail`
-      # that aborts, and it aborts ONLY on the refusal path, i.e. exactly when the gate matters.
-      # Caught by grepping for the variable instead of assuming it; the lesson is that a NEW
-      # reference to an EXISTING-LOOKING variable is a claim that needs checking like any other.
-      SR_MSG=""; _srk=0
-      while [ $_srk -lt ${#COMMIT_ARGS[@]} ]; do
-        _sra="${COMMIT_ARGS[$_srk]}"; _srf=""
-        if [ "$_sra" = "-m" ] && [ $((_srk + 1)) -lt ${#COMMIT_ARGS[@]} ]; then
-          SR_MSG="${SR_MSG}"$'\n'"${COMMIT_ARGS[$((_srk + 1))]}"; _srk=$((_srk + 2)); continue
-        elif { [ "$_sra" = "-F" ] || [ "$_sra" = "--file" ]; } && [ $((_srk + 1)) -lt ${#COMMIT_ARGS[@]} ]; then
-          _srf="${COMMIT_ARGS[$((_srk + 1))]}"; _srk=$((_srk + 2))
-        elif [ "${_sra#--file=}" != "$_sra" ]; then
-          _srf="${_sra#--file=}"; _srk=$((_srk + 1))
-        else
-          _srk=$((_srk + 1)); continue
-        fi
-        if [ -n "$_srf" ] && [ "$_srf" != "-" ] && [ -f "$_srf" ]; then
-          SR_MSG="${SR_MSG}"$'\n'"$(cat -- "$_srf" 2>/dev/null || true)"
-        fi
-      done
-      SR_OVR="$(printf '%s' "$SR_MSG" | sed -n 's/^[[:space:]]*#\{0,1\}[[:space:]]*surprise-row-override:[[:space:]]*//p' | head -1)"
-      if [ -n "$SR_OVR" ]; then
-        mkdir -p "$(dirname "$AUDIT_LOG")" 2>/dev/null || true
-        echo "${ISO_TS} SURPRISE-ROW-OVERRIDE  ${AGENT}  reason=${SR_OVR}" >> "$AUDIT_LOG" 2>/dev/null || true
+    # READ THE OVERRIDE FIRST, INDEPENDENT OF THE STAGE VERDICT (2026-09-11, 1.0.0_SA_CTO on 0.0.0_AB_MSTR
+    # 95726 / LD-0549). This reader used to live INSIDE `if [ "$SRGATE_RC" -ne 0 ]`, so it ran only when the
+    # stage run above refused. Measured on 8322dd0b31: the stage run graded the SHARED INDEX at one instant
+    # (303 rows, 0 new -> a vacuous pass) while the pre-commit hook graded `git commit --only`'s OWN index
+    # (306 rows, 3 new -> refused). Two runs of one gate over two populations; the reader sat behind the
+    # first's refusal and never ran, so no audit line, no export, and the hook refused with nothing in hand
+    # -- the documented escape hatch was disabled by a pass. A vacuous green must not disarm the hatch: the
+    # override is extracted whenever a channel file is in the pathspec, and if present it is audited and
+    # exported whatever the stage run said. The hook honours it only if IT finds a violation; an override
+    # declared for a commit the hook admits costs one audit line and nothing else.
+    # Reads the ACTUAL commit message, -m AND -F, mirroring the system-current-override extractor below.
+    # (The first cut of this block referenced a $COMMIT_MSG_BODY that DOES NOT EXIST ANYWHERE IN THIS SCRIPT
+    # -- under `set -euo pipefail` that aborts, and it aborts ONLY on the refusal path, i.e. exactly when the
+    # gate matters. A NEW reference to an EXISTING-LOOKING variable is a claim that needs checking.)
+    SR_MSG=""; _srk=0
+    while [ $_srk -lt ${#COMMIT_ARGS[@]} ]; do
+      _sra="${COMMIT_ARGS[$_srk]}"; _srf=""
+      if [ "$_sra" = "-m" ] && [ $((_srk + 1)) -lt ${#COMMIT_ARGS[@]} ]; then
+        SR_MSG="${SR_MSG}"$'\n'"${COMMIT_ARGS[$((_srk + 1))]}"; _srk=$((_srk + 2)); continue
+      elif { [ "$_sra" = "-F" ] || [ "$_sra" = "--file" ]; } && [ $((_srk + 1)) -lt ${#COMMIT_ARGS[@]} ]; then
+        _srf="${COMMIT_ARGS[$((_srk + 1))]}"; _srk=$((_srk + 2))
+      elif [ "${_sra#--file=}" != "$_sra" ]; then
+        _srf="${_sra#--file=}"; _srk=$((_srk + 1))
+      else
+        _srk=$((_srk + 1)); continue
+      fi
+      if [ -n "$_srf" ] && [ "$_srf" != "-" ] && [ -f "$_srf" ]; then
+        SR_MSG="${SR_MSG}"$'\n'"$(cat -- "$_srf" 2>/dev/null || true)"
+      fi
+    done
+    SR_OVR="$(printf '%s' "$SR_MSG" | sed -n 's/^[[:space:]]*#\{0,1\}[[:space:]]*surprise-row-override:[[:space:]]*//p' | head -1)"
+    if [ -n "$SR_OVR" ]; then
+      mkdir -p "$(dirname "$AUDIT_LOG")" 2>/dev/null || true
+      echo "${ISO_TS} SURPRISE-ROW-OVERRIDE  ${AGENT}  reason=${SR_OVR}" >> "$AUDIT_LOG" 2>/dev/null || true
+      if [ "$SRGATE_RC" -ne 0 ]; then
         echo "WARN: surprise-row-gate OVERRIDDEN (audited): ${SR_OVR}" >&2
         printf '%s\n' "$SRGATE_OUT" | sed 's/^/  /' >&2
-        # CARRY THE AUDITED OVERRIDE TO THE HOOK (2026-09-03, 1.0.0_SA_CTO~Z's measurement via 0.0.0_AB_MSTR~Z 93575,
-        # landed at the base): this stage audits and warns, but .git/hooks/pre-commit block 10 re-runs the gate with no
-        # knowledge of the message and exits 1 regardless -- so the audited override never worked on ANY path. The gate
-        # honours this variable (prints the violations as WARN, exits 0) and ONLY safe-commit sets it, after the audit
-        # line above; a raw `git commit` has no such variable and stays refused, which is the asymmetry the installer
-        # exists to close. Scoped to this process: git inherits it for the hook, nothing else does.
-        export SURPRISE_ROW_OVERRIDE="${SR_OVR}"
       else
-        for _sf in "${SRGATE_FILES[@]}"; do git reset -q HEAD -- "$_sf" 2>/dev/null || true; done
-        echo "ERROR: BLOCKED -- surprise-channel row gate (steps 7/10). Commit aborted; files unstaged." >&2
-        printf '%s\n' "$SRGATE_OUT" | sed 's/^/  /' >&2
-        exit 1
+        echo "WARN: surprise-row-gate: the stage run PASSED but the message declares an override -- audited and exported anyway, so the hook's run (which grades the commit's OWN index, not the shared one) honours it if IT refuses: ${SR_OVR}" >&2
+        [ -n "$SRGATE_OUT" ] && printf '%s\n' "$SRGATE_OUT" | sed 's/^/  /' >&2
       fi
+      # CARRY THE AUDITED OVERRIDE TO THE HOOK (2026-09-03, 1.0.0_SA_CTO~Z's measurement via 0.0.0_AB_MSTR~Z 93575,
+      # landed at the base): this stage audits and warns, but .git/hooks/pre-commit block 10 re-runs the gate with no
+      # knowledge of the message and exits 1 regardless -- so the audited override never worked on ANY path. The gate
+      # honours this variable (prints the violations as WARN, exits 0) and ONLY safe-commit sets it, after the audit
+      # line above; a raw `git commit` has no such variable and stays refused, which is the asymmetry the installer
+      # exists to close. Scoped to this process: git inherits it for the hook, nothing else does.
+      export SURPRISE_ROW_OVERRIDE="${SR_OVR}"
+    elif [ "$SRGATE_RC" -ne 0 ]; then
+      for _sf in "${SRGATE_FILES[@]}"; do git reset -q HEAD -- "$_sf" 2>/dev/null || true; done
+      echo "ERROR: BLOCKED -- surprise-channel row gate (steps 7/10). Commit aborted; files unstaged." >&2
+      printf '%s\n' "$SRGATE_OUT" | sed 's/^/  /' >&2
+      exit 1
     elif [ -n "$SRGATE_OUT" ]; then
       printf '%s\n' "$SRGATE_OUT" | sed 's/^/  /' >&2
     fi

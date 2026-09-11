@@ -852,6 +852,30 @@ def _repo_root():
     return os.getcwd()
 
 
+def _honour_audit_line(root, reason, log_path=None, agent=None, now=None):
+    """Append the gate's OWN audit line when it honours SURPRISE_ROW_OVERRIDE. Tagged
+    SURPRISE-ROW-OVERRIDE-HONOURED so it never counts as safe-commit's SURPRISE-ROW-OVERRIDE line
+    (safe-commit's is written BEFORE the export; this one is written by the process that honoured
+    the variable, whoever set it). Measured 2026-09-11 (0.0.0_AB_MSTR 95721, LD-0549): a hand-exported
+    variable was honoured and left NO line, so an unaudited override was indistinguishable from one
+    nobody declared. Returns the path written, or None (a failed write never blocks the gate: the
+    override is already honoured by the caller, and a write failure is printed, not raised)."""
+    import datetime as _dt
+    agent = agent or os.environ.get("GIT_AUTHOR_NAME") or os.environ.get("OPAL_AGENT_SERIAL") or "UNKNOWN"
+    ts = now or _dt.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+    p = log_path or os.environ.get("SAFE_COMMIT_AUDIT_LOG") or os.path.join(root, "org", "git-author-override-audit.log")
+    try:
+        os.makedirs(os.path.dirname(p), exist_ok=True)
+        with open(p, "a", encoding="utf-8", newline="\n") as fh:
+            fh.write("%s SURPRISE-ROW-OVERRIDE-HONOURED  %s  reason=%s  provenance=UNVERIFIED-BY-GATE\n"
+                     % (ts, agent, str(reason).replace("\n", " ").strip()))
+        return p
+    except Exception as exc:  # noqa: BLE001
+        print("[surprise-row-gate] WARN: could not write the honour audit line to %s (%s: %s)"
+              % (p, type(exc).__name__, exc), file=sys.stderr)
+        return None
+
+
 def _blob(root, ref, rel):
     """(status, text) of rel at ref ('' = staged index). status is one of:
          OK      -- text is the content
@@ -1326,7 +1350,20 @@ _S34_ADJ = "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/adjudicatio
 def _self_test(root):
     """The battery of gate (iii)'s second limb: five injected arms (pure) and one live census. Red and green."""
     row = {"id": "X_PRJ-S9", "route": "SPEC_ERROR"}
+    import tempfile as _tf
+    _tmpd = _tf.mkdtemp(prefix="srg-honour-")
+    _tlog = os.path.join(_tmpd, "audit.log")
+    def _honour_line():
+        p = _honour_audit_line(root, "why: repro", log_path=_tlog, agent="9.9.9_XX_TEST", now="2026-09-11T00:00:00Z")
+        txt = open(p, encoding="utf-8").read() if p else ""
+        return txt
     arms = [
+        # THE HONOUR AUDIT LINE (2026-09-11, 0.0.0_AB_MSTR 95721): the gate records every override it honours.
+        ("honour audit line: written with the HONOURED token, agent, reason and UNVERIFIED provenance",
+         lambda: (lambda t: "SURPRISE-ROW-OVERRIDE-HONOURED  9.9.9_XX_TEST  reason=why: repro  provenance=UNVERIFIED-BY-GATE" in t
+                  and t.startswith("2026-09-11T00:00:00Z ") and "SURPRISE-ROW-OVERRIDE  " not in t.replace("HONOURED  ", ""))(_honour_line())),
+        ("honour audit line: an unwritable log path returns None and never raises (the override stays honoured)",
+         lambda: _honour_audit_line(root, "x", log_path=os.path.join(_tmpd, "audit.log", "nope", "z.log")) is None),
         ("one item UNDER_INVESTIGATION -> refused, names it",
          lambda: any("X_PRJ-S1" in x and "NOT dispositioned" in x for x in _investigations_precondition_violations(
              "r", row, "X_PRJ", "route=SPEC_ERROR", ({"X_PRJ-S1": "UNDER_INVESTIGATION", "X_PRJ-S2": "GRADUATED"}, [], 1, "")))),
@@ -1815,6 +1852,13 @@ def main(argv):
                   file=sys.stderr)
             for x in all_v:
                 print("    WARN: %s" % x, file=sys.stderr)
+            # THE GATE'S OWN LINE (2026-09-11, 1.0.0_SA_CTO on 0.0.0_AB_MSTR 95721 / LD-0549): whoever set the
+            # variable, the process that HONOURED it records that it did, under a token that never counts
+            # as safe-commit's. A hand-exported override now leaves a line naming its provenance UNVERIFIED.
+            _wrote = _honour_audit_line(root, _ovr)
+            if _wrote:
+                print("    honour line written: %s (SURPRISE-ROW-OVERRIDE-HONOURED; safe-commit's own "
+                      "SURPRISE-ROW-OVERRIDE line is the audited one, present only if it ran)" % _wrote, file=sys.stderr)
             return 0
         print("[surprise-row-gate] BLOCKED -- %d violation(s) on NEW rows:" % len(all_v),
               file=sys.stderr)

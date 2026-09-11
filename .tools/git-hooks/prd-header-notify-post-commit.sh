@@ -22,7 +22,9 @@ mkdir -p "$_ws/org/mcp/.prd-notify"
 # post-commit mode when the commit touched a PRD (R3, step 4 -> 5) OR a remediation doc on either root
 # (R7, step 10 -> loop_target owner); the python decides what, if anything, is notified.
 case "$_touched" in
-  *docs/architecture/*_PRD.md*|*/prd/*_PRD.md*|*/REMEDIATION_v*|*surprise-channel/remediations/*) _mode=post-commit ;;
+  # L4-R (2026-09-11, 1.0.0_SA_CTO): a SIGN-OFF commit (prd/signoff/<serial>.json) must run post-commit too, or the
+  # release branch never fires -- measured on 3.0.0_SA_CVO 0a317a6a73: both projects fully signed, COO delivery never sent.
+  *docs/architecture/*_PRD.md*|*/prd/*_PRD.md*|*/prd/signoff/*|*/REMEDIATION_v*|*surprise-channel/remediations/*) _mode=post-commit ;;
   *) _mode=reoffer ;;   # nothing notifiable in this commit -- outstanding rows still RE-OFFER (commit-driven in v1)
 esac
 printf '%s fired HEAD=%s mode=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$(git -C "$_ws" rev-parse --short=10 HEAD 2>/dev/null)" "$_mode" >> "$_log"
