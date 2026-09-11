@@ -144,3 +144,37 @@ fast-forward.
 carries everything the laptop has pushed; the laptop's leg is `git merge --ff-only origin/SITEZ` plus a push,
 offered on the bus, not asked.** The objective (each fabric carrying the other's work) is met. A both-YES
 read is one laptop fast-forward away and stays so until CLOUD's tip stops being an ancestor of SITEZ's.
+
+---
+
+## AMENDMENT 2 -- 01:0xZ: the Codex launcher on site Z (Andrew-direct, relayed by the laptop)
+
+**archetype:** DEPLOY (device config) + VALIDATE
+
+`0.0.0_AB_MSTR` relayed on the bus (MessageId 856d1a74-800a-47fa-8320-14e58c41cf67, 00:55Z) an
+Andrew-direct at the laptop terminal ~00:3xZ, verbatim: *"need you to send the ajb2 launcher script
+details to MSTR~Z, we need that codex launcher on the sitez device"*. The laptop measured the launcher
+chain byte-identical on both branches (10 of 10 tracked, 0 missing) and named the one device-level
+prerequisite: the `codex` binary, laptop version codex-cli 0.153.4 via bun.
+
+**Measured here before acting:**
+- Launcher chain at HEAD matches the laptop's blob hashes; `ajb2 0.0.0_AB_MSTR~Z -ShowLaunchInfo`
+  resolves every path correctly on this device; `OPAL_WS_ROOT` unset, script-location derivation correct.
+- The binary was ALREADY INSTALLED tonight by Andrew: `npm ls -g` reads `@openai/codex@0.154.0` at
+  `%APPDATA%\npm` (npm global, not bun); `~/.codex/auth.json` written 20:26 EDT (00:26Z), `config.toml`
+  trusts the profile root, Windows sandbox `unelevated`. Not read: auth contents.
+- **Defect:** `%APPDATA%\npm` was on neither the user nor the machine PATH, and
+  `org/mcp/start-codex-seat.ps1` resolves the binary by bare name (`Start-Process -FilePath 'codex'` :340,
+  `& codex` :461/:465, no env override) -- every launch would have died at the app-server start.
+
+**The one act:** appended `C:\Users\Opal Bloomberg\AppData\Roaming\npm` to the persistent USER PATH
+(one entry, reversible). Verified against the registry-composed PATH a fresh shell receives:
+`Get-Command codex` resolves, `codex --version` = codex-cli 0.154.0; negative control (a non-existent
+name) does not resolve. Open terminals need reopening to see it. Nothing in the repo chain was edited.
+
+**Reported, not fixed:** version skew, site Z 0.154.0 vs laptop 0.153.4. Andrew's own install of
+tonight; not touched. The laptop warned that a host/protocol skew presents as a seat that starts but
+does not route turns -- the symptom to watch on the first real launch. **No Codex seat was launched**;
+which serial to seat here is Andrew's or the COO's call.
+
+Bus ACK sent with the full measurement (the send's MessageId is in the consumer output file).
