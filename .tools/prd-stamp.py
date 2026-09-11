@@ -151,6 +151,19 @@ def _read_prd(prd_abs: str):
     return raw, header
 
 
+def _dep_stage(root: str, code):
+    """The register's dep_stage for `code`, read from the flat index (covers both tree and
+    docs/architecture PRDs). None when unknown -- render_status then behaves as before."""
+    if not code:
+        return None
+    p = os.path.join(root, "org", "projects", "%s.json" % code)
+    try:
+        with open(p, encoding="utf-8") as fh:
+            return json.load(fh).get("dep_stage")
+    except Exception:  # noqa: BLE001
+        return None
+
+
 def _signer():
     me = os.environ.get("OPAL_AGENT_SERIAL", "").strip()
     if not me:
@@ -288,9 +301,12 @@ def _signed_reviewers(signoff_files: dict, prd_version: str) -> set:
     return out
 
 
-def render_status(header, cur_pin, stamps, signoffs):
+def render_status(header, cur_pin, stamps, signoffs, dep_stage=None):
     """PURE. -> (lines, next_stage_or_None). `stamps`/`signoffs` = {basename: doc}. `cur_pin` is the
-    PRD's current content pin; a stamp whose prd_pin != cur_pin is STALE (PRD changed after stamping)."""
+    PRD's current content pin; a stamp whose prd_pin != cur_pin is STALE (PRD changed after stamping).
+    `dep_stage` is the register's own state (REGISTERED/EXECUTING/CLOSED) -- an instrument the stamp
+    ladder shares nothing with -- used ONLY to keep the NEXT line from asserting a start on a project
+    the register says is already under way or done (see the pre-mechanism block below)."""
     ver = header.get("prd_version") if header else None
     lines = ["PRD STAMP LEDGER -- %s %s" % (header.get("project") if header else "?", ver or "?"),
              "  current content pin: %s" % cur_pin]
@@ -334,12 +350,34 @@ def render_status(header, cur_pin, stamps, signoffs):
                 else:
                     lines.append("  sign-off %-14s -- not signed at %s (owner %s)" % (who.split("_")[-1], ver, who))
     # a NEXT that is L5 is really gated on the sign-offs
+    # --- PRE-MECHANISM REGIME (found by 3.0.0_SA_CVO~Z + 2.0.0_SA_COO~Z on the read plane) ---------
+    # A stamp can only exist from the mechanism's birth (@510ca8fe46) forward, so an UNSTAMPED limb on
+    # a project the register says is already under way -- or closed -- is NOT "pending", it predates
+    # the ledger. Without this, `status` on a CLOSED 19/19-REALIZED project printed "NEXT: L4, start
+    # here", the render lying in the one output every seat is told to route off. dep_stage (the
+    # register) is the discriminator; it shares nothing with the stamp ladder, which is why it can see
+    # the defect the ladder cannot. Andrew-direct 2026-09-11: "you cant judge things on other fabrics
+    # at other time based on a tool that was just created" -- so this does NOT backfill and does NOT
+    # treat an empty ledger as a defect; it makes the RENDER DECLINE TO ASSERT a NEXT it cannot know.
+    ds = str(dep_stage or "").upper()
+    pre_mech = False
+    if ds == "CLOSED":
+        pre_mech = True
+        next_stage = None
+        lines.append("  register: CLOSED -- unstamped limbs predate the stamp mechanism; they are NOT pending")
+    elif ds == "EXECUTING" and not by_key:
+        pre_mech = True
+        next_stage = None
+        lines.append("  register: EXECUTING but ZERO stamps -- this PRD predates the stamp mechanism; the ladder "
+                     "state before the first stamp is NOT CAPTURED (consult the register / dispatch, not this NEXT)")
     waits = ""
     if next_stage == "L5":
         missing = [r for r in SIGNOFF_REVIEWERS if r not in signed_now]
         waits = (" -- waiting on sign-off from %s" % ", ".join(missing)) if missing else " -- sign-offs complete; COO may decompose"
     if next_stage:
         lines.append("NEXT: %s (%s) -- owner %s%s" % (next_stage, STAGE_LABEL[next_stage], STAGE_OWNER[next_stage], waits))
+    elif pre_mech:
+        lines.append("NEXT: not asserted -- see the register line above (this PRD predates the stamp ledger).")
     else:
         lines.append("NEXT: ladder complete through L10 (round stamps recur per round).")
     return lines, next_stage
@@ -354,11 +392,12 @@ def cmd_status(args) -> int:
     stamps = _load_json_dir(stamps_dir)
     signoffs = _load_json_dir(signoff_dir)
     cur_pin = content_pin(raw)
-    lines, nxt = render_status(header or {}, cur_pin, stamps, signoffs)
+    dep = _dep_stage(_root(), (header or {}).get("project"))
+    lines, nxt = render_status(header or {}, cur_pin, stamps, signoffs, dep)
     if args.json:
         print(json.dumps({"project": (header or {}).get("project"),
                           "prd_version": (header or {}).get("prd_version"),
-                          "current_pin": cur_pin, "next_stage": nxt,
+                          "current_pin": cur_pin, "next_stage": nxt, "dep_stage": dep,
                           "stamps": stamps, "signoffs": signoffs}, indent=1, sort_keys=True))
     else:
         print("\n".join(lines))
@@ -428,6 +467,19 @@ def _self_test() -> int:
             "L10.r1.json": dict(l4, stage="L10", signed_by="3.0.0_SA_CVO~Z", round=1)}
     _, nxt4 = render_status(hdr, pin, full, {"a.json": cro, "b.json": cvo})
     check("render_status: full ladder through L10 -> no NEXT", lambda: nxt4 is None)
+    # PRE-MECHANISM REGIME (the CVO/COO finding): a CLOSED project with no stamps must NOT say "start at L4"
+    lc, nc = render_status(hdr, pin, {}, {}, dep_stage="CLOSED")
+    check("render_status: CLOSED + no stamps -> NEXT suppressed, register:CLOSED line, no 'NEXT: L4'",
+          lambda: nc is None and any("register: CLOSED" in x for x in lc) and not any(x.startswith("NEXT: L4") for x in lc))
+    le, ne = render_status(hdr, pin, {}, {}, dep_stage="EXECUTING")
+    check("render_status: EXECUTING + no stamps -> pre-mechanism, NEXT not asserted",
+          lambda: ne is None and any("predates the stamp mechanism" in x for x in le))
+    lr, nr = render_status(hdr, pin, {}, {}, dep_stage="REGISTERED")
+    check("render_status: REGISTERED + no stamps -> NEXT L4 (correct; genuinely pre-PRD)", lambda: nr == "L4")
+    lx, nx = render_status(hdr, pin, {"L4.json": l4}, {"a.json": cro, "b.json": cvo}, dep_stage="EXECUTING")
+    check("render_status: EXECUTING WITH an L4 stamp -> mechanism in use, NEXT L5 (not suppressed)", lambda: nx == "L5")
+    lu, nu = render_status(hdr, pin, {"L4.json": l4}, {}, dep_stage=None)
+    check("render_status: dep_stage None + a stamp -> unchanged from pre-fix behavior (NEXT L5)", lambda: nu == "L5")
     print("prd-stamp self-test: %d fail(s) of the arms above" % fails)
     return 1 if fails else 0
 
