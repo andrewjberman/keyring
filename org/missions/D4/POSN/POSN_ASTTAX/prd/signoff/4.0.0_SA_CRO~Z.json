@@ -1,0 +1,11 @@
+{
+  "prd": "POSN_ASTTAX_PRD.md",
+  "prd_version": "v0.5",
+  "prd_pin": "66ded3a0c56009fcdef37635d9ef793dbfce3fc5",
+  "half": "brief",
+  "half_hash": "6bb1b9894d28c2f1177f0586be893c59394948adb5926046057970182646b554",
+  "verdict": "SIGNED",
+  "review_ref": "verified v0.1->v0.5 diff: 4 amendments (v0.2 Cottonwood satellite data, v0.3 disambiguation, v0.4 ETFClassifier purpose, v0.5 GLD/VXX retag safety) touch only constraint prose citing existing FWDs; SURFACE MANIFEST S1-S3 -> FWD-1..6 mapping unchanged across all four@66ded3a0c5",
+  "signed_by": "4.0.0_SA_CRO~Z",
+  "signed_at": "2026-09-11T08:52:52Z"
+}
