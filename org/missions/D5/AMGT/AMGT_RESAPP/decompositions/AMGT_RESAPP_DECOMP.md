@@ -720,8 +720,8 @@ file were removed, renamed, or written under a different serial spelling.
 
 ### 13b. The eight round-5 cells
 
-**M = FOUR dependency chains. `fanout: 2 of 4 chains, cap 8`** -- the two TABLE cells are the only roots and
-both spawn at issuance (his "TABLES FIRST"); the other two chains become cuttable as their root lands.
+**M = TWO dependency-independent chains, MEASURED. `fanout: 2 of 2 chains, cap 8`** -- the two TABLE cells
+are the only roots, they are the two chains' heads, and both spawn at issuance (his "TABLES FIRST").
 
 | cell | row | outcome | act (the engine, and what binds it) | state | deps |
 |---|---|---|---|---|---|
@@ -730,7 +730,7 @@ both spawn at issuance (his "TABLES FIRST"); the other two chains become cuttabl
 | `AMGT-s5-3` | S16 | FWD-15 | **THE HARVESTER BOX + ITS OWN IAM ROLE.** NEW EC2 box in `infra/aws/terraform/amgt-resapp/` following the ASTN_WSJFT SHAPE (stopped-between-runs, SSM-woken) but with **AMGT_RESAPP's OWN IAM role** and write access to `opal-amgt-articles` -- **explicitly NOT the ASTN_WSJFT box and not its role.** ONE shared box for all four harvesters. Refresh MUST WAKE the stopped box (SSM / `inf-jwt-trigger` shape) or it silently no-ops -- the wake is part of the cell, not a follow-up. `comp-iam service` at Phase 1 and `comp-iam gaps` at Phase 2 (auto-rule 3; `iam.tf` changes). | OPEN | `s5-1` |
 | `AMGT-s5-4` | S4, S13 | FWD-4, FWD-11 | **THE FOUR HARVESTERS** (Seeking Alpha, FT, Bloomberg, WSJ) writing per-ticker article content into `opal-amgt-articles`. Each admits an item by the news/social rule `AMGT-s-11` states, and resolves the platform's OWN identifier through S12 BEFORE dispatch (SA symbol-slug, Bloomberg `"TICKER US Equity"`, FT id) -- never a bare ticker. Raw vendor bytes land before derivation. | OPEN | `s5-3` |
 | `AMGT-s5-5` | S16 | FWD-15 | **THE CHATTER AXIS WRITER.** A SCHEDULED PRODUCER computing the chatter ranking daily and writing pre-computed rows to `opal-amgt-security-metrics`. Axis = the committed chatter gate: 30-day window, 0-100 normalized, `TOP_N=10`. | OPEN | `s5-2` |
-| `AMGT-s5-6` | S16 | FWD-15 | **THE PRICE AXIS ENGINE, BOX-SIDE.** The price ranking reads Bloomberg historical/intraday and therefore runs in the **BOX-SIDE puller shape** (the ETF-daily-pull shape), **NOT a Lambda calling Bloomberg** (`C-PRICE-RANKING-BOXSIDE`). 30-day window, matching chatter -- Andrew unified both to 30. Writes pre-computed rows to the same metrics table. | OPEN | `s5-2`, `s5-3` |
+| `AMGT-s5-6` | S16 | FWD-15 | **THE PRICE AXIS ENGINE, BOX-SIDE.** The price ranking reads Bloomberg historical/intraday and therefore runs in the **BOX-SIDE puller shape** (the ETF-daily-pull shape), **NOT a Lambda calling Bloomberg** (`C-PRICE-RANKING-BOXSIDE`). 30-day window, matching chatter -- Andrew unified both to 30. Writes pre-computed rows to the same metrics table. **The BOX-SIDE host is the BLOOMBERG TERMINAL box (loopback DAPI, the ETF-daily-pull shape), NOT the new harvester EC2 box of `s5-3`** -- the harvester box hosts the four ARTICLE harvesters, which is a different machine and a different concern. | OPEN | `s5-2` |
 | `AMGT-s5-7` | S16 | FWD-15 | **THE STARRED WATCHLIST.** SHARED ACROSS THE FIRM -- both PMs see the same starred names, keyed PER-FIRM, not per-user (`C-STARRED-PER-FIRM`, Andrew-ruled, reversible to per-user on his word). **Starring is a PURE MARKER:** it triggers NO refresh and queues NO harvester. Refresh is its own explicit action and the cell must prove the two are not wired together. | OPEN | `s5-2` |
 | `AMGT-s5-8` | S16 | FWD-15 | **THE SURFACE ITSELF.** The `.tsx`: a persistent **Lead Panel** (universe discovery -- Trending/Breakout x Price/Chatter, List/Chart, Security overlay, Starred) above **three tabs: Thesis / Peers / Coverage**. **Print is a header export action**, not a tab. **The Model tab is CUT and its figures REHOMED** into Thesis and the Security overlay. Reads pre-computed rows from `opal-amgt-security-metrics`; never re-derives a ranking at render time. | OPEN | `s5-5`, `s5-6`, `s5-7` |
 
@@ -801,9 +801,13 @@ both spawn at issuance (his "TABLES FIRST"); the other two chains become cuttabl
 ### 13f. The round axis, updated
 
 - **ROUNDS 1-4:** terminal, frozen. 28 of 28 orders complete; round 4 CLOSED at L10 @`959ba3e947`.
-- **ROUND 5 (v5, THE SURFACE ROUND, 8 cells, 4 chains):** roots `AMGT-s5-1` and `AMGT-s5-2` spawn at
-  issuance (TABLES FIRST). Then `s5-1` -> `s5-3` -> `s5-4`; `s5-2` -> `s5-5`; `s5-2` + `s5-3` -> `s5-6`;
-  `s5-2` -> `s5-7`; and `s5-5` + `s5-6` + `s5-7` -> `s5-8`. **`fanout: 2 of 4 chains, cap 8.`**
+- **ROUND 5 (v5, THE SURFACE ROUND, 8 cells, 2 chains):** roots `AMGT-s5-1` and `AMGT-s5-2` spawn at
+  issuance (TABLES FIRST).
+  **CHAIN A (3 cells, slot ~1):** `s5-1` -> `s5-3` -> `s5-4`.
+  **CHAIN B (5 cells, slot ~2):** `s5-2` -> {`s5-5`, `s5-6`, `s5-7`} -> `s5-8`, the three middles
+  serialized in that slot's queue and `s5-8` handed last because it converges all three.
+  **`fanout: 2 of 2 chains, cap 8.`** N = M = 2: asking for more workers than there are independent
+  chains buys nothing and serializes anyway.
 - WARN: **THE ROUNDS ARE A READING OF THE EDGES, NOT A SECOND SOURCE OF TRUTH.** If a cell lands early the
   next becomes cuttable early; the edges govern, the round numbers describe.
 - **AFTER ROUND 5:** `REALIZED` still requires a PERSON to have exercised each surface. Round 5 makes that
@@ -838,6 +842,37 @@ server-side ranking routes and introduces new portal query keys, so every lens b
 at `@f0ff95cfac` with the second limb of 13a. Cited in each order's authority chain.
 
 **PUSH STATE: this amendment is LOCAL.** `0.0.0_AB_MSTR~Z` holds the push window.
+
+### 13g. AMENDMENT v0.6.1 -- `/dispatch --plan` caught a WRONG EDGE and a wrong fan-out, BEFORE any order was issued
+
+**This amendment is legal because NO ORDER IS ISSUED AND NO WORKER IS SPAWNED.** Rule 27's freeze binds
+the decomposition MID-ROUND; between L5 and L6 with an empty `task-orders/` set for this round, a
+correction is still an L5 act. Issuing against a knowingly-wrong edge would have been the worse choice.
+
+**WHAT `--plan` MEASURED:** under the skill's own definition of M ("two cells joined by an edge are one
+chain"), the v0.6 edge set formed **ONE connected component, not four chains** -- so the stated
+`fanout: 2 of 4` was wrong, and taken literally it implied N = M = 1 and one worker serializing all eight
+cells, which contradicts Andrew's "TABLES FIRST".
+
+**THE CAUSE WAS A SUBSTANTIVE ERROR, NOT AN ARITHMETIC ONE.** v0.6 gave `s5-6` (the price axis) a
+dependency on `s5-3` (the harvester box). That edge is WRONG on the constraint's own words:
+`C-PRICE-RANKING-BOXSIDE` names the **ETF-daily-pull shape**, which runs on the **Bloomberg TERMINAL
+box** against a loopback-only DAPI -- the same seam `AMGT-s-2` exists to cross. The NEW EC2 box of `s5-3`
+hosts the four ARTICLE harvesters. Two different machines, two different concerns; the edge conflated
+"box-side" with "the box this round builds". Removing it yields **M = 2**, which is what the two
+independent roots were always going to be.
+WARN: the wrong edge would ALSO have mis-scoped `s5-6`'s worker face -- it would have named the harvester
+box's home in `<paths>` and omitted the terminal box's, and under RULING 1 a path missing from the order
+is a WALL, not a hint. So this was on its way to a blocked worker, not just a wrong number.
+
+**THE GENERAL FINDING, worth more than this instance:** rounds 1-4 were either INDEPENDENT cells (round 2:
+5 of 5) or a single PATH (round 4: 1 of 1), and for both shapes "connected components" and "worker queues"
+give the same number. **Round 5 is this project's first CONVERGENT DAG** -- two roots meeting at `s5-8` --
+and it is the first shape where the two readings diverge. A fan-out number copied forward in the shape of
+earlier rounds is exactly where that divergence hides.
+
+*(v0.6.1 amended 2026-09-11 by `2.0.0_SA_COO~ZZZ` before issuance -- one wrong edge removed, M re-measured
+2, fan-out corrected. Sections 1-12 unchanged and FROZEN.)*
 
 *(v0.6 cut 2026-09-11 by `2.0.0_SA_COO~ZZZ` -- the SURFACE round from @959ba3e947; sections 1-12 unchanged
 and FROZEN.)*
