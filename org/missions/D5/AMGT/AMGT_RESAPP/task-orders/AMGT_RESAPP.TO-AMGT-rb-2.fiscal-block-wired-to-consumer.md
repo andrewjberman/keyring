@@ -78,10 +78,24 @@ AMGT-r-1 (landed): derive_fye_fixed.py ENGINE = model_block_fye (distinct lane);
 
 <paths>
 integrations/bloomberg/research/
+lib/research/print/
+lib/research/provenance/
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rb-2.fiscal-block-wired-to-consumer.md
 </paths>
+
+> **AMENDMENT 1 (2.0.0_SA_COO~ZZZ, round-2b cut-defect correction).** The first cut granted only
+> `integrations/bloomberg/research/`, but the provenance/print consumer that reads `model_block` lives in
+> `lib/research/print/render_pack.py` (`load_model_block`, called from `build_pack`) and
+> `lib/research/provenance/render_print.py` (`render_model_block`/`main`) -- both OUTSIDE that grant. Worker
+> ~1 correctly REFUSED to wire out-of-surface or to overwrite the `model_block` deliverable (STORE_CONTRACT
+> rule 1), and filed the finding (its measured evidence: BABA FY2025 original `model_block` PX_LAST 146.58
+> at calendar-year-end vs corrected `model_block_fye` 132.23 at the 2025-03-31 fiscal period end, a $14.35
+> gap). This amendment adds the two consumer homes to `<paths>` so the wiring the cell always intended is
+> possible. Scope note for L9: wiring `load_model_block` to the corrected lane CHANGES the served pack's
+> model-block figures for non-December filers (BABA); no `.tsx` is served yet (round 3), so no live served
+> artifact moves now -- flagged to `3.0.0_SA_CVO~Z` for the L9 grade and any never-widen consideration.
 
 Your deliverables go in `deliverables/0.9.0_WK_AMGT_RESAPP~1/`. A path missing from that block is a path
 you are REFUSED on. Refuse a criterion you cannot satisfy as written and report it; file a surprise ROW
