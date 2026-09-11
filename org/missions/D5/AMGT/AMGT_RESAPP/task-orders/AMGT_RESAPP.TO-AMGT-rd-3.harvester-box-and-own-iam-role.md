@@ -28,6 +28,40 @@ refresh appears to run, nothing harvests, and no error is raised. Refresh MUST W
 
 WHAT TO PRODUCE, under infra/aws/terraform/amgt-resapp/ + .../deliverables/0.9.0_WK_AMGT_RESAPP~1/:
 
+  (0) THE MODULE RECONCILE, FIRST, BEFORE ANYTHING ELSE -- surprise rows AMGT_RESAPP-Z-S9 and -Z-S10.
+      The module you are about to extend IS CURRENTLY INVALID and `terraform validate` fails on it:
+
+        Error: A module may have only one 'backend' configuration block (main.tf:30,3-15)
+        Error: Duplicate provider configuration (security-metrics-table.tf line 63)
+
+      CAUSE, so you do not misread it as someone's mistake: AMGT-rd-1 and AMGT-rd-2 ran in PARALLEL
+      worktrees and each correctly declared a terraform{} and provider "aws"{} block for its own tree.
+      Both are MODULE-SCOPED and may appear exactly once per directory, so they collided on merge. The
+      rd-2 worker also chose a distinct backend key deliberately, to avoid a concurrent-apply state race
+      while the two ran side by side, and documented that in the file's own header. Both workers were
+      right; the gap was the ISSUER'S bound, which named file separation and not singleton scope.
+
+      WHAT TO DO: keep `main.tf` as the single module root. Remove the duplicate terraform{} and
+      provider "aws"{} blocks from `security-metrics-table.tf`, PRESERVING its
+      `aws_dynamodb_table.security_metrics` resource and its explanatory header comments byte-for-byte.
+      Leave a short note in that file saying the blocks were removed, by whom, and why. Then confirm
+      `terraform validate` returns "Success! The configuration is valid." BEFORE you add the box.
+
+      WHY IT IS YOURS AND NOT THE COO'S: the COO wrote this exact fix, verified it, and was then
+      LANE-REFUSED -- infra/aws/terraform/ is lane CLOUD_OPS_OR_ETL ("any AE agent") and the COO is not
+      one. It reverted rather than forcing an audited override to write infra it does not own. You hold
+      the path through this order's <paths> (RULING 1), and you cannot add the harvester box to an
+      invalid module in any case, so the reconcile is genuinely part of this cell.
+
+      STATE IS NOT CONSOLIDATED AND YOU ARE NOT ASKED TO CONSOLIDATE IT. rd-1's table lives in backend
+      key `amgt-resapp/tfstate`; rd-2's was applied under `amgt-resapp/rd-2-security-metrics/tfstate`.
+      After your reconcile the module points at the former, which does NOT contain
+      `aws_dynamodb_table.security_metrics`. A plan will therefore propose CREATING a table that already
+      exists. DO NOT run an apply that would act on that proposal, and DO NOT run `terraform import` --
+      state consolidation is a separate deploy-class act with its own change-management entry, owned by
+      the COO. Scope your own apply to YOUR resources. If you cannot apply without touching that
+      proposal, STOP and file a row rather than working around it.
+
   (a) THE BOX  a new EC2 instance declared in the module, stopped-between-runs, in the ASTN_WSJFT shape.
       Read that shape from its own Terraform and say in your deliverable what you copied and what you
       deliberately did not.
@@ -83,11 +117,20 @@ comp-schedule --drift (at the cut): 6 open deploy-ledger entries (carrier C2) --
 PRD s.3b C-HARVESTER-COMPUTE (Andrew-direct 2026-09-11 ~12:1xZ): the ASTN_WSJFT SHAPE, the OWN IAM role,
     write access to opal-amgt-articles, "explicitly NOT the ASTN_WSJFT box", ONE shared box for all four,
     and "Refresh must WAKE the stopped box (SSM / inf-jwt-trigger shape) or it silently no-ops."
+AMGT_RESAPP-Z-W1-S7 (0.9.0_WK_AMGT_RESAPP~1, filed on rd-1, ARMED): safe-apply's HALTGT checkpoint
+    REFUSES with IDENTITY UNRESOLVED until a session-keyed serial file exists at
+    org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial -- the gate reads it to resolve whose inbox to scan
+    for a STOP. It is gitignored, per-session, collision-free across workers, and is TOOL PLUMBING on the
+    same footing as resolving a PATH shim, not a deliverable. rd-1's order did not grant that path and
+    its worker had to judge the call under a live BLOCK. THAT GRANT IS NOW EXPLICIT IN <paths> BELOW so
+    you do not have to re-derive it: write it if safe-apply refuses on identity, and do not file a row
+    for it.
 ```
 
 ## PATHS -- your write surface IS this list, and nothing else
 
 <paths>
+org/mcp/sessions/
 infra/aws/terraform/amgt-resapp/
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
@@ -121,6 +164,7 @@ Every invocation runs under `timeout 120`. A timeout is recorded AS the output.
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 <status>staged</status>
+<amended>2026-09-11T18:0xZ by 2.0.0_SA_COO~ZZZ, BEFORE the spawn: granted org/mcp/sessions/ per row Z-W1-S7 ; added the module reconcile per rows Z-S9/Z-S10</amended>
 <round>5</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

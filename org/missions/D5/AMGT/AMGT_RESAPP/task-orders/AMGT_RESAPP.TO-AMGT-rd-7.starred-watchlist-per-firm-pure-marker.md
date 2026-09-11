@@ -68,11 +68,20 @@ CLAUDE.md standing law (cross-firm): NEVER reference another firm's data from a 
 comp-cache collisions (at the cut): 415 of 415 portal files scanned; no AMGT key namespace exists. The
     starred read will become a query key in AMGT-rd-8 -- not your cell, but your key shape determines it.
 comp-schedule --drift (at the cut): C3 = 12 standing NEVER clauses including the no-monitor moratorium.
+AMGT_RESAPP-Z-W1-S7 (0.9.0_WK_AMGT_RESAPP~1, filed on rd-1, ARMED): safe-apply's HALTGT checkpoint
+    REFUSES with IDENTITY UNRESOLVED until a session-keyed serial file exists at
+    org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial -- the gate reads it to resolve whose inbox to scan
+    for a STOP. It is gitignored, per-session, collision-free across workers, and is TOOL PLUMBING on the
+    same footing as resolving a PATH shim, not a deliverable. rd-1's order did not grant that path and
+    its worker had to judge the call under a live BLOCK. THAT GRANT IS NOW EXPLICIT IN <paths> BELOW so
+    you do not have to re-derive it: write it if safe-apply refuses on identity, and do not file a row
+    for it.
 ```
 
 ## PATHS -- your write surface IS this list, and nothing else
 
 <paths>
+org/mcp/sessions/
 lib/research/
 infra/aws/terraform/amgt-resapp/
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/
@@ -105,6 +114,7 @@ Every invocation runs under `timeout 120`. A timeout is recorded AS the output.
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 <status>staged</status>
+<amended>2026-09-11T18:0xZ by 2.0.0_SA_COO~ZZZ, BEFORE the spawn: granted org/mcp/sessions/ per row Z-W1-S7</amended>
 <round>5</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>

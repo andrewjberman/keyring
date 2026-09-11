@@ -76,11 +76,20 @@ comp-schedule --drift (at the cut): 5 of 5 carriers scanned; carrier C3 = 12 STA
     shapes this cell: it is why the job is a producer and why nothing may watch its output.
 comp-cache collisions (at the cut): 415 of 415 portal files; no AMGT key namespace exists yet. Not your
     surface -- named so you know the read side is genuinely unbuilt and you must not build it.
+AMGT_RESAPP-Z-W1-S7 (0.9.0_WK_AMGT_RESAPP~1, filed on rd-1, ARMED): safe-apply's HALTGT checkpoint
+    REFUSES with IDENTITY UNRESOLVED until a session-keyed serial file exists at
+    org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial -- the gate reads it to resolve whose inbox to scan
+    for a STOP. It is gitignored, per-session, collision-free across workers, and is TOOL PLUMBING on the
+    same footing as resolving a PATH shim, not a deliverable. rd-1's order did not grant that path and
+    its worker had to judge the call under a live BLOCK. THAT GRANT IS NOW EXPLICIT IN <paths> BELOW so
+    you do not have to re-derive it: write it if safe-apply refuses on identity, and do not file a row
+    for it.
 ```
 
 ## PATHS -- your write surface IS this list, and nothing else
 
 <paths>
+org/mcp/sessions/
 lib/research/
 infra/aws/terraform/amgt-resapp/
 org/critical_paths/change_management/
@@ -115,6 +124,7 @@ Every invocation runs under `timeout 120`. A timeout is recorded AS the output.
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 <status>staged</status>
+<amended>2026-09-11T18:0xZ by 2.0.0_SA_COO~ZZZ, BEFORE the spawn: granted org/mcp/sessions/ per row Z-W1-S7</amended>
 <round>5</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
