@@ -360,6 +360,19 @@ RECOMMENDATIONS ("I recommend", twice); accepting one arms a real loop that no A
 COOs answered those on the merits, one accepting and one declining, and both were inside his word.
 ⚠ **A ROW IS NOT PROOF THE LOOP IS RUNNING.** It records an AUTHORIZATION; liveness is measured at the seat
 (`CronList`). The two answer different questions and a successor must not read one for the other.
+BLOCKED: **AND FOR THE SAME REASON THIS TABLE DOES NOT CARRY THE LIVE CRON ID. IT RECORDS AUTHORITY,
+SCOPE, CADENCE AND STOP-CONDITION -- THE DURABLE FACTS -- AND POINTS AT `CronList` AT THE SEAT FOR THE
+ARTIFACT.** A cron id is SESSION-LOCAL and CHURNS: `2.0.0_SA_COO~ZZZ`'s went `04145241` -> `bc1921a2`
+-> `a27dad12` in NINETY MINUTES, and the row named a CANCELLED job while the live one appeared
+nowhere. WARN: **THAT IS THIS TABLE'S OWN FAILURE MODE ONE FIELD OVER** -- a successor looks up the
+recorded id, finds nothing live, concludes NO LOOP IS ARMED, and arms a SECOND one. Recording a
+fast-churning artifact in a durable law file manufactures staleness faster than any seat can maintain
+it. Any id below is HISTORICAL and marked "then". Found by `2.0.0_SA_COO~ZZZ` against its own row,
+which also re-pointed its cron BEFORE reporting so this table was written once instead of twice.
+NOTE: **AND A NEW ARM CITES THE CANONICAL NAME, NEVER AN ALIAS** (`2.0.0_SA_COO~Z`, adopted by
+`~ZZZ`): an alias is a courtesy to EXISTING citations, never a foundation for a NEW one. A loop that
+depends on alias resolution has a failure mode nobody finds until a tick silently runs the wrong
+body. Live arms name `/canonical-drive` directly.
 ⛔ **AND A SEAT MUST NOT WRITE ITS OWN CHOSEN ROW.** `2.0.0_SA_COO~Z` declined to, in its own words, rather than
 "dress a recommendation I chose to accept in the authority of an Andrew-direct arm record" -- exactly right. Chosen
 rows are landed HERE, by the CTO, naming the chooser and citing the message that evidences the choice.
@@ -379,7 +392,7 @@ REPORTS NOTHING MOVING ACROSS ALL FOUR PLANES** (commits, `deliverables/<serial>
 worktree, `.runtime/codex-seats/<serial>/`) -- and "nothing moving" is still not proof of stalled.
 That precondition exists because this exact path fired a `[STUCK]` at a seat writing 189 KB.
 ⚠ The arm is the COO's own act; this row RECORDS the authorization, it does not perform it.
-PRIOR STATE, kept: CHOSEN-ARM 20m (cron `701a388d`, `11,31,51`;
+PRIOR STATE, kept: CHOSEN-ARM 20m (cron id then `701a388d`, `11,31,51`;
 AMGT and the harvest surface EXPLICITLY EXCLUDED in the job body). **AUTHORITY: CHOSEN, not directed** -- that seat
 re-armed on Andrew's ~20:0xZ "all agents MAY unpause" (a permission, not an order) and reported it in msg 21613.
 Landed here by `1.0.0_SA_CTO~Z` on its routing (21639/21640) because a seat may not author its own chosen row.
@@ -388,7 +401,7 @@ STOP-CONDITION: `POSN_ASTTAX` `status: complete` per the register, or Andrew's s
 `2.0.0_SA_COO~ZZZ` **[FABRIC: SITE-Z]** **`/drive` DIRECTED 10m over AMGT_RESAPP ONLY** -- **RE-CLASSED
 CHOSEN -> DIRECTED and RE-TIMED to 10m on the SAME Andrew-direct ~22:2xZ recorded on the row above;
 the same three-outcome `/canonical-flow` stage check and the same probe precondition bind here.**
-PRIOR STATE, kept because the reclass is the record: (cron `04145241`,
+PRIOR STATE, kept because the reclass is the record: (cron id then `04145241`,
 `3,23,43 * * * *` recurring, session-only). **AUTHORITY WAS: CHOSEN** -- RESOLVED 2026-09-11 21:26Z, the
 transient closed in 6 minutes by `2.0.0_SA_COO~ZZZ` reading out msg 21428, which it holds (it was
 addressed to that seat, which is why this seat's own inbox search correctly found nothing).
@@ -404,7 +417,13 @@ for being chosen.
 until fixed:** the tick's argument block opens *"(Andrew-direct ~15:4xZ, msg 21428)"* -- **an UPGRADE
 of his verb, baked into a recurring job, applied to the exact sentence the relaying seat refused to
 upgrade.** `2.0.0_SA_COO~ZZZ` found this against itself and owns the fix; until the argument is
-corrected, every tick of `04145241` re-asserts a recommendation as a directive.
+corrected, every tick re-asserts a recommendation as a directive.
+**FIXED 2026-09-11 ~22:2xZ by `2.0.0_SA_COO~ZZZ` in its own re-arm** and recorded as fixed rather
+than struck: the tick prompt now opens with the ~22:2xZ word verbatim and states that it is a
+DIRECTIVE ("need to be") superseding the ~15:4xZ "I would also recommend".
+⛔ **A DEFECT LEFT READING OPEN AFTER IT IS CLOSED IS NOT HARMLESS** -- it is a standing instruction
+to a successor to go fix something already fixed, and it spends the credibility of every other open
+item on the page. That seat found this one against itself.
 Reported by `2.0.0_SA_COO~ZZZ` itself (21650) after running `CronList` -- having twice stated it held
 no arm, inferred from "I did not deliberately arm one" and never measured. It correctly did NOT author
 this row, did NOT adjudicate its own class, and did NOT kill the cron.
