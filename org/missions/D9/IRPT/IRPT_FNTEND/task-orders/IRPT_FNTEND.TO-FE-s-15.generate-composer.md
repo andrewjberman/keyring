@@ -7,7 +7,7 @@
 <issued_date>2026-09-11</issued_date>
 <status>blocked</status>
 
-**Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F5 v0.5/v0.6, S10 `docs/research/investor_reporting_ycharts_variants_20260911/UI_CONTRACT.md` @72acd16e66; CONTRACTS `AnalysisRequest` request half) | **Decomp cell:** `FE-s-15` (round 2, v0.2) | **outcome_ref:** FWD-4 | **depends_on:** `FE-s-13` | **slot:** ~1, queue position 3 | **slug rows:** W3-S2, C-S43 (clean/correction)
+**Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F5 v0.5/v0.6, S10 `docs/research/investor_reporting_ycharts_variants_20260911/UI_CONTRACT.md` @72acd16e66; CONTRACTS `AnalysisRequest` request half) | **Decomp cell:** `FE-s-15` (round 2, v0.2) | **outcome_ref:** FWD-4 | **depends_on:** `FE-s-13`, `FE-s-14` (R1: the v1 client) | **slot:** ~1, queue position 3 | **slug rows:** W3-S2, C-S43 (clean/correction)
 
 ---
 
@@ -26,7 +26,7 @@
 7. **Variant** -- resolved by comparison count and DISPLAYED: 0 = Overview, 1 = Comparison, 2-5 = Multi-Comp; `variant: 'auto'` is sent unless the advisor picks; an explicit pick inconsistent with the count is refused client-side before submit; a sixth comparison is refused.
 8. **request_id** -- a stable idempotency key minted per click, preserved across transport retries; any changed input mints a new one.
 
-The request body is exactly `{ request_id, client_id, account_ids, snapshot_id, variant, comparison_keys, report_title }` and never carries a `resolved` key or any server-only field; it is submitted through the typed client's `POST .../analysis` operation. Job states `queued / preparing / generating / ready / needs attention` render from `GET .../status/{jobId}` (the Opal job record) polled through the typed client -- never vendor background polling; a WAF-refresh or reconciliation state renders as needs attention WITH the request preserved (the composer's inputs unchanged, resubmittable), never as a failed request.
+The request body is exactly `{ request_id, client_id, account_ids, snapshot_id, variant, comparison_keys, report_title }` and never carries a `resolved` key or any server-only field; it is submitted through the typed client's `analysis-requests` operation (`POST .../analysis`, the contract's producer name -- AMENDED on `docs/contracts/investor-reporting/v1/` @7ce4761a2f: the response envelope's `data` is the issued `identity` and `stage`, its `status` is REQUIRED). Job states `queued / preparing / generating / ready / needs attention` render from the `status` the `analysis-report` envelope carries (`GET .../analysis/{jobId}/sections`, polled through the typed client -- the contract names NO consumer operation for `status/{jobId}`; the tab polls through `analysis-report`) -- never vendor background polling; a WAF-refresh or reconciliation state renders as needs attention WITH the request preserved (the composer's inputs unchanged, resubmittable), never as a failed request. A correction is NOT a route (`submit-correction` is NOT-A-ROUTE under v1): it is a NEW `analysis-requests` submission whose `AnalysisRequest.corrections` field carries the correction, minting a new `request_id`.
 
 **W3-S2.** Revision identity and section support come from the wire fields the schemas name: `AnalysisRequest.identity` / `corrections` / `stage` / `release` and `AnalysisReport.extraction_validation` / `release` through the FE-s-13 adapters; `parity.ts`'s local derivation and any `inputRevision` fallback are removed; a clean request and its correction preserve the identity the wire carries.
 
@@ -53,7 +53,7 @@ Everything FE-s-6 built (request list under the no-route bound, input review and
 `F15-AC6` -- a transport retry sends the same `request_id` (call log: 2 sends, 1 distinct id); changing one comparison mints a new id.
 
 <criterion id="F15-AC7" cell_refs="FE-s-15"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-15/job-states.test.ts</invocation><expect>JOB STATES: 5 of 5</expect></criterion>
-`F15-AC7` -- queued, preparing, generating, ready and needs-attention each render one distinct label from a status fixture; the WAF-refresh fixture renders needs attention and the composer's inputs deep-equal their pre-submit values.
+`F15-AC7` -- queued, preparing, generating, ready and needs-attention each render one distinct label from an `analysis-report` envelope fixture whose `status` carries the state (AMENDED: the envelope's status, not a status-job call); the WAF-refresh fixture renders needs attention and the composer's inputs deep-equal their pre-submit values.
 
 <criterion id="F15-AC8" cell_refs="FE-s-15"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-15/identity.test.ts</invocation><expect>REVISION IDENTITY: preserved</expect></criterion>
 `F15-AC8` -- a clean wire request and its correction render the identity fields the schema names unchanged, and a source grep of `tabs/analysis/` for `inputRevision` returns 0 hits (printed).
