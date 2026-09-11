@@ -4,10 +4,10 @@
  "directive": "D4",
  "macro_code": "POSN",
  "fabric": "site-z",
- "dep_stage": "PRD",
+ "dep_stage": "DECOMP",
  "status": "active",
  "name": "Asset Class Taxonomy -- ONE canonical five-class asset-class taxonomy (Fixed Income/Cash, Equity, Structured, Commodities, Alternatives), sorted from a single source (ETFClassifier) and rendered consistently across the two Positioning surfaces: the Positioning view and the combined Philosophy/Capital-Market-Assumptions view.",
  "generated_from": "org/missions/D4/POSN/POSN_ASTTAX/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-11T04:54:24Z"
+ "generated_at": "2026-09-11T05:06:02Z"
 }

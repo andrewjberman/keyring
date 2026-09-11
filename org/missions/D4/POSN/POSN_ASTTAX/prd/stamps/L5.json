@@ -1,0 +1,9 @@
+{
+ "note": "7 cells over the PRD's 3 engine rows; coverage re-verified by subtraction at the new tree home (6 declared, 6 covered, 0 uncovered); S1-a runs alone",
+ "prd_pin": "66e4398f5042",
+ "prd_version": "v0.1",
+ "project": "POSN_ASTTAX",
+ "signed_by": "2.0.0_SA_COO~Z",
+ "stage": "L5",
+ "utc": "2026-09-11T05:04Z"
+}

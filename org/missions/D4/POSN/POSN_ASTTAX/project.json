@@ -8,7 +8,7 @@
  "fabric": "site-z",
  "pipeline": null,
  "status": "active",
- "dep_stage": "PRD",
+ "dep_stage": "DECOMP",
  "created": "2026-09-01",
  "registered_under_tree": "2026-09-11",
  "last_updated": "2026-09-11",
@@ -46,8 +46,8 @@
   "ETFClassifier is the canonical source and it is ONE CHAIN not a fork (Andrew-direct 2026-09-11 'I think ETFClassifier is the real one ... check what is hooked up to the Positioning page'; 2.0.0_SA_COO~Z verified via the consumer): etf_classification.py (hardcoded dict) SEEDS the DynamoDB etf-classifications table that ETFClassifier serves to Positioning. FWD-5 stays open on WHICH of the two candidate 'one places' survives the seed; L5 cell S1-a decides it.",
   "PLACEMENT is SITE-Z (D4 is SITEZ-placed; placement attaches to the directive, not the member). The five classes and their colors are a ratified constraint (C-FIVE-CLASSES), not a decomposition choice; the membership edges are the cells' (C-MEMBERSHIP-AT-L5)."
  ],
- "phase": "L4 PRD authored @a08aa0efe7 and moved to the tree home this commit. L5 is 2.0.0_SA_COO~Z's next act: it DRAFTED a 7-cell decomposition pre-tree (S1-a one-place / S1-b five-class vocabulary / S1-c unknown-is-visible / S1-d vol-hedge-commodity / S2-a order / S2-b color / S3-a the two surfaces; coverage 6 of 6, 0 uncovered) and formalizes it in the tree now that it exists. NEXT: the L4-R sign-offs (4.0.0_SA_CRO + 3.0.0_SA_CVO) land in prd/signoff/ against the tree PRD, then L5 -> L6.",
- "blocking": "Not blocked. dep_stage PRD; the COO flips it to DECOMP on its L5 handoff. The CRO/CVO L4-R sign-offs land FRESH in the tree prd/signoff/ (any SIGNED verdict on the pre-tree flat PRD was version-and-content bound to that copy and does not carry across the move + header rename). The five-class membership edges are the L5 cells' to establish.",
+ "phase": "L5 LANDED 2026-09-11 ~05:0xZ by 2.0.0_SA_COO~Z: decompositions/POSN_ASTTAX_DECOMP.md, 7 cells (S1-a one-place / S1-b five-class vocabulary / S1-c unknown-is-visible / S1-d vol-hedge-commodity / S2-a order / S2-b color / S3-a the two surfaces). Coverage re-verified BY SUBTRACTION AT THE NEW HOME rather than carried from the pre-tree draft -- 6 declared, 6 covered, 0 uncovered at PRD content pin 66e4398f5042. dep_stage PRD -> DECOMP on this act. NEXT is L6 (ONE issuance covering every cell) and it is GATED: to-pipeline-gate LIMB 6 refuses a task order until BOTH L4-R sign-offs are SIGNED in prd/signoff/ at the current prd_version.",
+ "blocking": "NOT BLOCKED AT L5 -- L5 is done. L6 IS GATED on the two L4-R sign-offs (4.0.0_SA_CRO coverage map, 3.0.0_SA_CVO ENDPOINT vs pins), neither of which is in prd/signoff/ at this writing; they land FRESH in the tree (any SIGNED verdict on the pre-tree flat PRD was version-and-content bound to that copy and does not carry across the move + header rename). Per 1.0.0_SA_CTO~Z msg 21183, 3.0.0_SA_CVO~Z is mid-grade on AMGT_RESAPP judgment criteria and its taxonomy sign-off is NOT urgent and must not interrupt that. TWO L4 ITEMS SURFACED BY L5, neither blocking: the PRD header reads status DRAFT while s.5 records Andrew confirming all six DONE WHEN bars; and the L4 stamp is unwritten at a tree home minted after prd-stamp existed (advisory -- it WARNs, never blocks). The five-class membership edges remain the L5 cells' to establish (C-MEMBERSHIP-AT-L5).",
  "threads": [],
  "thread_counter": 0
 }
