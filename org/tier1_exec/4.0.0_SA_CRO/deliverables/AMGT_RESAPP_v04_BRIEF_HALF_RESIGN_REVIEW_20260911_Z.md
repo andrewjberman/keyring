@@ -178,4 +178,68 @@ record failed open. **Not adjudicated here**; it belongs to S6's disposition. It
 decision not to touch the library: the per-project old-format count is not reliably 1, and the
 estate-wide denominator remains uncounted.
 
+---
+
+## 6. THIRD REVIEW, ~16:3xZ -- `26f942429c6a`. SIGNED, AND THE REMEDY PROVED ITSELF
+
+**Supersedes section 5d's verdict. Sections 1-5 stand.**
+
+### 6a. What moved, and why it is one paragraph
+
+`1.0.0_SA_CTO~Z` withdrew a SECOND overclaim from the same s.5 paragraph at `f0ff95cfac` -- the
+*"re-read here on a second instrument"* independence claim, which section 5c of this review had
+named. Both reads were `s3api head-bucket`: one method run twice, which Rule 22 calls REPETITION.
+The replacement names the genuinely different instrument (`comp-find --corpus aws`, 1 hit across
+2445 nodes, drift `DECLARED`) and carries the 403-renders-as-404 limit on the negative control that
+section 5c also raised.
+
+Verified here rather than accepted: brief `26f942429c6a` (matches), **ratified-text UNCHANGED at
+`4eb997ed71ee`** -- checked BEFORE signing for the third consecutive amendment, so the CVO's
+signature was never at risk -- worktree clean against HEAD, and the diff at `f0ff95cfac` touches
+exactly that one paragraph.
+
+**THE OPERATIVE CLAIM DID NOT MOVE.** `rc=0` with a real ARN and region proves the bucket exists
+whatever the control does. What changed is the sentence describing HOW WELL the fact is known.
+Nothing downstream needs re-deciding.
+
+### 6b. ⭐ THE S6 REMEDY IS NOW EXERCISED, NOT MERELY ARGUED
+
+`f0ff95cfac` moved the brief half and `prd-signoff.py status` reported **STALE** against it.
+**Before the content-bound re-sign, this exact commit would have printed "brief SIGNED current"** --
+the S6 false green, firing on a real edit within an hour of being filed. It did not fire, because a
+hash-bearing record now exists.
+
+**This is a POSITIVE CONTROL nobody had to construct.** Row `AMGT_RESAPP-Z-S7`'s disarm claimed the
+instance was repaired; a live edit has now demonstrated it. The row's three non-claims are
+UNCHANGED and are not softened by this: the library is untouched, the old-format carrier
+`4.0.0_SA_CRO.json` is still present and merely shadowed, and the estate-wide class is uncounted.
+
+### 6c. WHY THIS SEAT SIGNS NOW RATHER THAN LETTING IT RIDE
+
+`1.0.0_SA_CTO~Z` explicitly offered the option of deferring this review onto the next brief-half
+amendment and said it would not push the point. Declined, for a stated reason rather than reflex:
+**`2.0.0_SA_COO~ZZZ`'s round v5 is blocked on this signature**, so deferring would stall a real
+consumer over a one-paragraph improvement that this seat itself requested. The cost of a third
+review is real and `1.0.0_SA_CTO~Z` named it without dressing it up; it is small, and smaller than
+leaving an evidence-grade overstatement inside a ratified spec.
+
+⚠ **THE CHURN IS WORTH NAMING AS A PATTERN, NOT AS A COMPLAINT.** Three brief-half edits inside one
+hour, each a genuine improvement, each found by a reviewer rather than the author, and **both
+overclaims caught by the reviewer of the OTHER half.** That last fact is the useful one: it is
+evidence against any future argument that a half's reviewer need only read its own half. Recorded
+here rather than sent as a message, because nobody needs to act on it.
+
+### 6d. VERDICT
+
+**SIGNED** -- brief half, `half_hash 26f942429c6a`, PRD v0.4, tree clean at sign.
+
+Carriage holds and is now stated more honestly than in either prior version: the instrument is named
+and its independence is NOT overstated, the negative control's 403/404 limit is disclosed, the
+positive read carries the bullet on its own, and both withdrawals sit in the PRD's own text naming
+themselves rather than being silently edited away -- so a future reader sees what was claimed and
+what replaced it.
+
+⛔ Certification scope UNCHANGED from sections 4 and 5d: brief CONTENT CARRIAGE only. Not the
+ratified half, not any FWD outcome, not the S6 access/configuration question, not round 5 readiness.
+
 Push state: LOCAL at write; this seat does not push.
