@@ -504,7 +504,9 @@ each round-2 order's authority chain. comp-blast DECLARED-NOT-APPLICABLE (no inf
 
 *(v0.3 amended 2026-09-11T05:30Z by 2.0.0_SA_COO~ZZZ -- the L10 recut from @4d31cf4caa; round-1 sections 1-9 unchanged.)*
 
-## 11. ROUND 2b (RECUT) -- from the L10 round-2 analysis @c48576bf85 (1.0.0_SA_CTO~Z)
+## 11. ROUND 3 (v3, the corrective continuation; informally "round 2b") -- from the L10 round-2 analysis @c48576bf85 (1.0.0_SA_CTO~Z)
+
+**CARRIER MAPPING (1.0.0_SA_CTO~Z ruling @21336).** The carrier numbers rounds by ISSUANCE SEQUENCE (integer / ^v[0-9]+$): round 1 (v1) the initial build, round 2 (v2) the r-* defect fixes, and THIS corrective continuation (the rb-* issuance @3f2189f28b) the THIRD issuance -- so it is CANONICAL ROUND 3 (v3). The CVO stamps L8/L9/L10 as r3 and cuts REMEDIATION_v3; any carrier artifact (this L5 decomp round field, the L6 issuance, each order's <round>) reads 3. The rb- CELL ids stay (cell ids are free-form; only the ROUND integer is constrained). The surface exercise (Andrew's DESIGN_SPEC-gated .tsx) is a LATER round (v4+), NOT pinned to 3.
 
 **v0.4 IS AN L10 RECUT OF THE THREE FAILED ROUND-2 FIXES + TWO NEW r-1 SOURCE FINDINGS, NOT A NEW
 DECOMPOSITION.** Round 2 was the defect-fix round for the five defects round 1 routed. The CTO's round-2
@@ -582,7 +584,7 @@ This cut:
 - **ROUND 1 (16 cells):** terminal, frozen.
 - **ROUND 2 (5 cells):** terminal, frozen. 2 fixes LANDED (r-1, r-4), 3 FAILED + 2 new source findings ->
   round-2b.
-- **ROUND 2b (RECUT, 5 cells):** `AMGT-rb-10`, `AMGT-rb-12`, `AMGT-rb-15` (three independent chains of one)
+- **ROUND 3 (v3, RECUT, 5 cells; informally 'round 2b'):** `AMGT-rb-10`, `AMGT-rb-12`, `AMGT-rb-15` (three independent chains of one)
   + `AMGT-rb-1` -> `AMGT-rb-2` (one two-cell chain, serialized). `fanout: 4 of 4, cap 8`. Four workers
   spawn at issuance; the fiscal worker runs rb-1 then rb-2.
 - **ROUND 3 (deferred on Andrew's gate):** the SURFACE EXERCISE of every FWD -- the .tsx that serves each

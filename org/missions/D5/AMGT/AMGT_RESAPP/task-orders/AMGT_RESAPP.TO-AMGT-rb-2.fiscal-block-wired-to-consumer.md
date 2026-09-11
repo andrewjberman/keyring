@@ -122,7 +122,7 @@ Every invocation runs under `timeout 120`. A timeout is recorded AS the output.
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 <status>complete</status>
-<round>2b</round>
+<round>3</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
 <dep_stage>EXECUTING</dep_stage>
