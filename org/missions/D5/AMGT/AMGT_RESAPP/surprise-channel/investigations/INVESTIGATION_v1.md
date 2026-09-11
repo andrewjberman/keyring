@@ -584,6 +584,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "This cell's task text: 'Also present: ... the F10 precedent portal/src/pages/SecurityScanner/DESIGN_SPEC.md (READ)' -- implying the file is reachable in this worktree at the pinned vintage.",
     "world_is": "The portal submodule cannot be populated in this worktree at all (no .gitmodules mapping), so the file was read from a DIFFERENT, unrelated checkout of the same repo at a DIFFERENT commit than this worktree's own gitlink pins -- a substitution this worker discloses rather than silently treats as equivalent. The line count (560) matching the task order's own citation is the only corroboration that the substitute is faithful; the commit hash itself was not, and could not be, verified to be the same content.",
     "notes": "Not this worker's <paths>/BOUNDS to fix -- .gitmodules is not in this cell's write surface (lib/research/print/, deliverables/, the investigation file, this cell's own task-order file). This worker used the substitute read only for STYLE/GRAMMAR guidance (DESIGN_SPEC.md's section structure), not as a data source whose exact bytes are reproduced verbatim into this cell's own criteria, which limits how much a vintage mismatch here could actually mislead the deliverable. Whoever owns this fabric's submodule wiring may want a populated .gitmodules on this worktree class generally, not just for this cell."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W1-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~1",
+    "surfaced_at": "2026-09-11T07:50Z",
+    "one_line": "AMGT-r-1's bound reads the FYE month from 'Bloomberg's fiscal-period fields the CRO mapped' -- but no such field is mapped; FISCAL_YEAR_END is BAD_FLD/INVALID_FIELD and no alternative was tested. The fix instead reads the true period end from WHICH DATE a fundamentals-bearing row itself carries (already on the record, no lookup field needed).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/4.0.0_SA_CRO/deliverables/AMGT_RESAPP_BLOOMBERG_FIELD_MAP_20260910.md s.2: 'Fiscal Yr | FISCAL_YEAR_END | NO | BAD_FLD / INVALID_FIELD -- needs an alternative'; s.7 'NOT MEASURED': 'No test of FISCAL_YEAR_END alternatives.' -- no Bloomberg fiscal-period REFERENCE field was successfully mapped for this coverage.",
+        "raw/bloomberg/BABA_US_Equity/20260910T224407Z/histdata.json (re-read this session): every row carrying a fundamental (SALES_REV_TURN, EBITDA, IS_EPS, ...) is dated at ~03-31 of its fiscal year; every row carrying only PX_LAST/PE_RATIO/... is dated at the nearest December trading day -- the true period end is already ON the record via which date a fundamentals row lands on, independent of any FISCAL_YEAR_END lookup.",
+        "integrations/bloomberg/research/fye_join.py:fiscal_period_join reads `period_end = row['date']` directly off each fundamentals-bearing row (never a FISCAL_YEAR_END field, never `date[:4]`, never a hardcoded December) -- exercised on all 3 landed securities, check_join_fye.py measured max gaps 2/2/3 days (well under the AC2 45-day bar) with no FISCAL_YEAR_END value read anywhere in the module."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-r-1 bound (a): 'The issuer's fiscal-year-end month is read from the record (Bloomberg's fiscal-period fields the CRO mapped), never assumed December.'",
+    "world_is": "'Bloomberg's fiscal-period fields the CRO mapped' names a mapped field that does not exist for this coverage -- FISCAL_YEAR_END is BAD_FLD/INVALID_FIELD and the CRO's own field map lists testing an alternative under NOT MEASURED. The 'never assumed December' half of the bound is satisfied, but through a DIFFERENT carrier than the one named: the fiscal period end is read off the DATE a fundamentals-bearing historical row is itself reported on (already present in every landed histdata.json, no separate field or lookup required), not off any Bloomberg fiscal-period reference field. This is not a gap in the fix -- fye_join.py never assumes December and never needed the unmapped field -- but a later reader searching this module for a FISCAL_YEAR_END-keyed implementation, because the cell text says 'the CRO mapped' one, would not find it.",
+    "notes": "Non-blocking; AC1/AC2 both pass on the implemented (date-of-record) method. Not this worker's <paths>/BOUNDS to correct the CRO's field map document itself. Worth a future cell's attention only if a consumer elsewhere assumes FISCAL_YEAR_END is a live, mapped Bloomberg field for this coverage -- it is not, per the CRO's own s.2/s.7."
   }
 ]
 ```
