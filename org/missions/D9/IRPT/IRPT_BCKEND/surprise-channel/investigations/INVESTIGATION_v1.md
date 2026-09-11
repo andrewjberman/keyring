@@ -1587,6 +1587,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Seat row S15: 'normalise through the ONE normaliser IB-s-4 shipped under infra/aws/lambda/investor-reporting/directory/'. Memory: a grader's restatement lends credibility the claim has not earned.",
     "world_is": "The normaliser was a battery-local helper, not a shipped module; the amendment named a path that does not carry it. Corrected before either remaining consumer reads it.",
     "notes": "Issuer's own lapse, stated plainly: an amendment that names a path must be written from a read of the tree at HEAD, not from a report about it."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S12",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T09:01:13Z",
+    "one_line": "THE CLOUDFRONT APPLY IS STOPPED BY ITS OWN GATE AND NOTHING WAS APPLIED. The pre-apply plan on the portal-auth root reads 'Plan: 0 to add, 3 to change, 0 to destroy' and names THREE resources, not one. MINE IS CLEAN: aws_cloudfront_distribution.portal shows exactly ONE added ordered_cache_behavior (/api/scoped/investor-reporting/* -> APIGateway-portal, caching disabled, one viewer-request association to auth-validator-edge:19), 1 of 1 block, with no existing behavior touched. THE OTHER TWO ARE NOT THIS PROJECT'S: (1) aws_cloudfront_function.spa_fallback is a CRLF CHECKOUT ARTIFACT -- measured, not inferred: spa-fallback-function.js is 26 CRLF / 0 bare LF on disk in this fresh worktree while the HEAD blob is 0 CRLF / 26 LF, and every diff line shows byte-identical text on both sides; (2) aws_wafv2_web_acl.opal_cloudfront_protection is REAL churn -- 3 managed-rule blocks removed and 3 re-added (common-rule-set p4, ip-reputation p3, known-bad-inputs p5) on the WAF protecting the whole portal. The face's bound is exact -- 'The CloudFront plan shows exactly ONE change or you STOP ... never an apply' -- so safe-apply was never invoked on that root. THE WORLD IS VERIFIED UNCHANGED: get-distribution-config on EVTSA9VEHNZVH after the plan is byte-identical to the one taken before any act (27 ordered behaviors then and now, identical pattern list, investor-reporting present = False, full DistributionConfig JSON identical). The behavior is COMMITTED and UNAPPLIED. The API half of this cell is SEPARATE and IS LIVE: 11 routes applied 23 added / 0 changed / 0 destroyed under the existing naqxlm authorizer.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan -no-color -input=false -lock=false on infra/aws/terraform/portal-auth @d0a61c6acb -> 'Plan: 0 to add, 3 to change, 0 to destroy' naming aws_cloudfront_distribution.portal, aws_cloudfront_function.spa_fallback and aws_wafv2_web_acl.opal_cloudfront_protection; saved verbatim",
+        "the distribution's own diff in that plan: ONE '+ ordered_cache_behavior' block with path_pattern /api/scoped/investor-reporting/*; grep count of ordered_cache_behavior blocks inside that resource's diff = 1",
+        "measured CRLF: infra/aws/terraform/portal-auth/spa-fallback-function.js on disk = 26 CRLF / 0 bare LF; git show HEAD:<same path> = 0 CRLF / 26 LF",
+        "the WAF diff: 3 blocks matching '^      - rule {' and 3 matching '^      + rule {' inside aws_wafv2_web_acl.opal_cloudfront_protection, named common-rule-set (p4), ip-reputation (p3), known-bad-inputs (p5)",
+        "aws cloudfront get-distribution-config --id EVTSA9VEHNZVH before any act and again after the plan: 27 behaviors both times, identical pattern list, full DistributionConfig json-identical, investor-reporting absent both times",
+        "org/critical_paths/change_management/20260911T0855Z_irpt-bckend-s15-cloudfront_deploy_completion.md -- every leg closed on NON-EXECUTION, with a READ-THIS-FIRST block above the status line saying so"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "BOUNDS: 'The CloudFront plan shows exactly ONE change or you STOP. The distribution serves the whole portal; a plan that touches any other behavior, origin or setting is a BLOCKING row, never an apply.' S15-AC1 arm (c): 'The saved terraform plan output for portal-auth before the apply shows 1 to add, 0 to change, 0 to destroy or an in-place update touching only the new behavior block.'",
+    "world_is": "The plan touches two further resources that pre-date this cell and belong to a root this project does not own. One is a line-ending artifact of a fresh worktree; the other is genuine WAF drift. Neither is reachable from this order's <paths>, and applying would rewrite a WAF ACL protecting 28 behaviors in order to land one additive behavior.",
+    "notes": "BLOCKING on arms (b), (c) and the cloudfront half of (f) -- S15-AC1 therefore WITHHOLDS its token and this order stays OPEN. Every other arm was still measured and passed: 11 of 11 routes live under naqxlm, the catalogue is the registry 3 of 3, Global is proven on two firms' fixtures 4 of 4, the seam's three outcomes, and the amend census. WHAT UN-BLOCKS IT: the portal-auth root plans clean, or its two drifting resources are dispositioned by that root's owner (lane CLOUD_OPS_OR_ETL, any AE agent). The behavior is committed and unapplied, so the remaining act is a re-plan and an apply under the same entry -- no rework. The CRLF half would clear for any actor whose worktree renders that file LF; the WAF half is a real decision someone must take, and taking it from inside this order would be the widening the bound forbids."
   }
 ]
 ```
