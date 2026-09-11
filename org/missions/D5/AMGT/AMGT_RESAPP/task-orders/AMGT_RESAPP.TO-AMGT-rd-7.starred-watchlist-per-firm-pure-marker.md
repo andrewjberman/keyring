@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md</decomp_doc>
 <owned_cells>AMGT-rd-7</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_AMGT_RESAPP~2</issued_to>
+<issued_to>0.9.0_WK_AMGT_RESAPP~7</issued_to>
 
 ## THE CELL, INLINED IN FULL (round 5/v5, row S16, FWD-15)
 
@@ -22,7 +22,7 @@ vendor egress that nobody authorized per-use. YOU MUST PROVE THE TWO ARE NOT WIR
 refrain from wiring them.
 
 WHAT TO PRODUCE, under lib/research/ + the persistence AMGT-rd-2 landed +
-.../deliverables/0.9.0_WK_AMGT_RESAPP~2/:
+.../deliverables/0.9.0_WK_AMGT_RESAPP~7/:
 
   (a) THE PER-FIRM STORE  starred state persisted keyed by FIRM, so two PMs at one firm see one list.
       Not per-user, and not global across firms.
@@ -89,9 +89,9 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rd-7.starred-watchlist-per-firm-pure-marker.md
 </paths>
 
-Your deliverables go in `deliverables/0.9.0_WK_AMGT_RESAPP~2/`. A path missing from that block is a path you
+Your deliverables go in `deliverables/0.9.0_WK_AMGT_RESAPP~7/`. A path missing from that block is a path you
 are REFUSED on. Refuse a criterion you cannot satisfy as written and report it; file a surprise ROW
-(`AMGT_RESAPP-Z-W2-S<k>` continuing your prior sequence) and STOP on that criterion if you need a surface
+(`AMGT_RESAPP-Z-W7-S<k>` continuing your prior sequence) and STOP on that criterion if you need a surface
 not listed. MINT THE ROW ID FROM A RE-READ of the channel file, never from recall.
 
 ## PROOF OF SPEC
@@ -114,9 +114,10 @@ Every invocation runs under `timeout 120`. A timeout is recorded AS the output.
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 <status>staged</status>
+<amended>2026-09-11T18:3xZ by 2.0.0_SA_COO~ZZZ, BEFORE the spawn: issued_to ~2 -> ~7 so this cell runs in PARALLEL rather than queued behind rd-5. Its only dependency, rd-2, is LANDED; the queue position was this issuer choice, not a dependency. Row prefix moved W2 -> W7 so two live workers cannot mint from one sequence in two indexes.</amended>
 <amended>2026-09-11T18:0xZ by 2.0.0_SA_COO~ZZZ, BEFORE the spawn: granted org/mcp/sessions/ per row Z-W1-S7</amended>
 <round>5</round>
-<slot>~2</slot>
+<slot>~7</slot>
 <fabric>site-z</fabric>
 <dep_stage>EXECUTING</dep_stage>
 <issued_by>2.0.0_SA_COO~ZZZ</issued_by>
