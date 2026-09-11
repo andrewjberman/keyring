@@ -24,7 +24,7 @@ for the two new outcomes. The PRD's `brief_ref` carries `bed01b226a`.
          ACCEPT     the person names capability differences (it does more, it shows my data) and no visual ones; typeface, canvas colour, corner radius, focus visibility and the role of navy read as one system across the boundary
          PROOF      the website's measured values (design/brand/opalinvest.com.json) beside the same measurements taken headlessly on three portal routes; every dimension in the brief's IV.3 table reads the same on both sides, or the difference is a deliberate inverted band
          SOURCE     brief O1; IV.2 (the website is a measured system); IV.3 (the portal contradicts it on every dimension but shadows)
-         CONSTRAINT Andrew-direct 2026-09-11: THE CANVAS IS LIGHT #F4F6FA with #0A1733 reserved for deliberate inverted bands. This SUPERSEDES the 2026-07-15 archetype in design/brand/COLOR_ARCHETYPES.md and design/systems/portal/DESIGN_SYSTEM.md ("light silver #C3CADA canvas, dark navy containers floating on it"); those files are REWRITTEN under this project, never left standing beside a new contract
+         CONSTRAINT THE CANVAS IS LIGHT #F4F6FA with #0A1733 reserved for deliberate inverted bands, in the default light mode; design/brand/COLOR_ARCHETYPES.md, design/systems/portal/DESIGN_SYSTEM.md and the portal colour law are REWRITTEN IN PLACE onto that ruling under this project, never left standing beside a new contract
 
   FWD-2  An advisor reads a figure without the typeface telling them it came out of a terminal
          DONE WHEN  APPLIED -- every numeral in the product renders in the firm's typeface with tabular alignment
@@ -38,12 +38,12 @@ for the two new outcomes. The PRD's `brief_ref` carries `bed01b226a`.
          ACCEPT     shown a duration ladder, a performance band or an over/under-weight scale with the legend covered, an advisor puts the steps in the right order
          PROOF      a census of every ordered scale in portal/src/ (denominator printed) and, for each, the ramp it now uses; the /positioning five-hue segmented control (UST/ST/INT/LT/ULT) is the named positive case
          SOURCE     brief O3; III.4; VI (the five-hue segmented control)
-         CONSTRAINT the charts keep their colour: "don't forego the color of the charts themselves" (Andrew). What goes quiet is the chrome; a ramp replaces unordered hue on ORDERED quantities only
+         CONSTRAINT the charts keep their colour; what goes quiet is the chrome; a ramp replaces unordered hue on ORDERED quantities only
 
   FWD-4  An advisor can tell at a glance which single thing on a screen is the action to take
-         DONE WHEN  APPLIED -- each view spends the accent on one primary action and nothing else
-         ACCEPT     on any screen an advisor points at the one thing that is clearly the action; tabs, segmented controls and toggles mark their active state by weight and rule, never by a filled accent chip per option
-         PROOF      three routes rendered; the accent colour's share of pixels per route printed and the elements carrying it enumerated -- one per view
+         DONE WHEN  APPLIED -- each view spends the accent on ONE PERSISTENT primary action; the ring that follows keyboard focus and the highlight on selected text share the accent as TRANSIENT feedback and are budgeted separately, as is the data palette
+         ACCEPT     on any screen an advisor points at the one thing that is clearly the action; tabs, segmented controls and toggles mark their active state by weight and rule, never by a filled accent chip per option; the ring around whatever the keyboard has landed on, and the highlight on text the advisor has selected, are the same colour and are not a second action
+         PROOF      three routes rendered; the accent colour's share of pixels per route printed and the PERSISTENT elements carrying it enumerated -- one per view; the counterexample walked on each route: the primary action visible, a secondary control given keyboard focus, a run of text selected -- the ring and the highlight appear beside the one action and the persistent count stays one
          SOURCE     brief O4; III.3; IV.2 (accent never above 1.0 % on the website)
 
   FWD-5  An advisor working by keyboard can see where they are
@@ -64,7 +64,7 @@ for the two new outcomes. The PRD's `brief_ref` carries `bed01b226a`.
          ACCEPT     no series on any chart shares a colour with an error, warning or success state; a reviewer can show the two systems and where they are kept apart
          PROOF      the aliasing at portal/src/index.css:111-115 is gone; every chart palette token and every status token listed with no intersection (both denominators printed)
          SOURCE     brief O7; IV.3 (Chart colours aliased onto status)
-         CONSTRAINT the charts stay as colourful as today (Andrew's constraint carried on FWD-3)
+         CONSTRAINT the charts stay as colourful as today
 
   FWD-8  Two charts on the same screen share their axis, tick, tooltip and legend treatment
          DONE WHEN  APPLIED -- a screen's charts come from one rendering system
@@ -77,21 +77,21 @@ for the two new outcomes. The PRD's `brief_ref` carries `bed01b226a`.
          DONE WHEN  EXERCISED -- Andrew has made that comparison and said so
          ACCEPT     the comparison turns on capability rather than on finish
          PROOF      Andrew's word, on the record, after a side-by-side he chooses; graded by him, never self-graded
-         SOURCE     brief O11 at bed01b226a (this was O9 at d4b20a28ba; the brief's author inserted O9 and O10 and renumbered; this id is permanent) -- the outcome the other ten serve
+         SOURCE     brief O11 -- the outcome the other ten serve
          CONSTRAINT this is the one outcome graded by the person it is for; FWD-1..8, FWD-10 and FWD-11 are its mechanism, and a grade of REALIZED on all ten does not substitute for his word here
 
   FWD-10 An advisor's screen is filled by the work, not by the space around it
-         DONE WHEN  APPLIED -- on every route the density gradient runs generous inside a data container and disciplined between sections
-         ACCEPT     an advisor opening any route sees the content reach the fold, with less space between sections than inside a container; a page that has run out of content says so in words instead of trailing off into empty canvas
-         PROOF      the three routes of brief IV.9 re-rendered at 1440x900 WITH populated fixtures; the share of the viewport below the last content element printed before and after; the inside-container and between-section spacing values read from the contract and measured on the render
-         SOURCE     brief O9 (at bed01b226a); IV.9 (lower third empty; three nested containers); A17, A18
+         DONE WHEN  APPLIED -- on every route the density gradient runs generous inside a data container and disciplined between sections, and a page that has run out of content ends on purpose
+         ACCEPT     on the representative populated routes an advisor sees the work fill the screen, with less space between sections than inside a container; a page whose content is genuinely short ends with a designed statement that it has ended -- never a stretched row, never filler, never a trail of empty canvas
+         PROOF      the three routes of brief IV.9 re-rendered at 1440x900 WITH the named populated fixtures; the share of the viewport below the last content element printed before and after; the inside-container and between-section spacing values read from the contract and measured on the render; a sparse-populated negative control (one short row, panels intact) graded on the spacing values and the explicit end state, not on the fold
+         SOURCE     brief O9; IV.9 (lower third empty; three nested containers); A17, A18
          CONSTRAINT density is graded on populated fixtures only -- the brief's captures had none (VII.6), and a route whose data plane is failing is evidence of nothing either way; information architecture is out of scope (Part II): which panels exist does not change
 
   FWD-11 An advisor meeting a panel with no data still sees a designed surface
          DONE WHEN  APPLIED -- empty, loading, error and no-permission are four designed states and every panel uses one of them
          ACCEPT     a panel with nothing to show still looks like part of the product, says in plain words which of the four things happened, never repeats its own message, and never paints an error on the bare page
          PROOF      a census of every "nothing here" rendering in portal/src/ (denominator printed) and, for each, which of the four states it now uses; the six treatments of brief IV.9 shown before and after; the duplicated error string of A20 gone
-         SOURCE     brief O10 (at bed01b226a); IV.9; A19, A20
+         SOURCE     brief O10; IV.9; A19, A20
          CONSTRAINT the four states belong to the contract, never to a component's author; the count of six from three routes is a floor (VII.11), so the census runs over the whole tree
 ```
 

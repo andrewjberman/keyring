@@ -181,7 +181,13 @@ def cmd_stamp(lib, verdict, code, half, review, reason, substitute_for):
     with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as fh:
         fh.write(msg)
     author = "%s <%s@opal.agent>" % (serial, serial)
-    sc = subprocess.run(["bash", os.path.join(ROOT, ".tools", "safe-commit.sh"), "--author", author, "-F", mpath, "--", out_rel],
+    sys.path.insert(0, os.path.join(ROOT, ".tools"))
+    from git_bash_resolver import git_bash  # bare "bash" Windows-resolves to the System32 WSL stub (measured by 3.0.0_SA_CVO 2026-09-11)
+    bash = git_bash()
+    if not bash:
+        print("ERROR: no Git-for-Windows bash.exe found; the stamp file is written at %s but NOT committed" % out_rel, file=sys.stderr)
+        return 2
+    sc = subprocess.run([bash, os.path.join(ROOT, ".tools", "safe-commit.sh"), "--author", author, "-F", mpath, "--", out_rel],
                         cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace")
     tail = (sc.stdout + sc.stderr).strip().splitlines()[-6:]
     for ln in tail:
