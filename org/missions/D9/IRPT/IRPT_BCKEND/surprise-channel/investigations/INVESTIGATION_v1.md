@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 35 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (31 ours + 26 theirs, 22 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 37 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (35 ours + 27 theirs, 25 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -646,6 +646,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "TO-IB-s-8 S8-AC1 arm (a): 'acquireSession through the replayed login flow -> authenticated'; and the cell's fixtures row: 'six transcripts + manifest + three HARs (private packet, offline profile docs/research/investor_reporting_ycharts_20260910/profile_handoff.py)'.",
     "world_is": "The packet is not in the worktree, and the sanitized evidence that is present contains no sign-in traffic by construction. The login flow in the replay is a model; the app surface is measured.",
     "notes": "Worth the issuer's attention because the same fixtures row is cited by other cells: any cell that expects to read the HARs themselves will find only the profiler, and any cell that expects the evidence JSON to describe authentication will find it describes report generation."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S3",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T02:21:34Z",
+    "one_line": "THE PER-FIRM EXECUTION ROLES THE FirmDestinationPolicy NAMES CANNOT BE ASSUMED BY ANY RUNNING FUNCTION, SO THE POLICY'S `execution_role` FIELD DESCRIBES A PER-FIRM LAMBDA FLEET RATHER THAN SOMETHING AN INGESTION POLLER CAN USE. core/firm_destination_policy.json gives every firm an `execution_role` (irpt-core-firm-49financial, -cottonwood, -inflection, plus irpt-core-quarantine), and core/iam_firm_conditions.tf scopes each one to that firm's prefix -- the correct second arm of the cross-firm control. But every one of those roles trusts ONLY the service principal lambda.amazonaws.com, on the DESIRED plane (core/roles.tf data.aws_iam_policy_document.lambda_trust) AND on the APPLIED plane (iam get-role, read live 2026-09-11: Principal {Service: lambda.amazonaws.com}, no role and no account principal). A role a Lambda may be CREATED WITH is not a role a RUNNING Lambda can sts:AssumeRole, and one function cannot change its execution role per message. THE INGESTION POLLER IS EXACTLY THE CASE THAT BREAKS ON THIS: at the moment it writes it has just discovered the firm, so it would have to become that firm's principal mid-request. IB-s-6 therefore runs under ONE role and narrows on the axis that actually bounds the damage -- the PREFIX FAMILY: PutObject on firms/<each enumerated firm>/intake/* and on quarantine/ and nothing else; no Get, no List, no Delete, and nothing under requests/, generations/ or exports/. That is a defensible shape and it is NOT the shape the policy's own field implies. Surfaced rather than worked around: repairing the trust policy would be an edit to IB-s-5's root, which is outside this order's write grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~3 for THIS cell -- DISARMED SAME TURN by not using the per-firm roles at all, by narrowing the poller's grant to the intake prefix family, and by writing the reason into infra/aws/terraform/investor-reporting/intake/iam.tf where the next reader of that grant stands. The FIELD's meaning is not this lane's to settle: whether `execution_role` is aspirational (a later per-firm fleet), or the trust policy should admit the roles that will actually run, belongs to IB-s-5's owner and to 3.0.0_SA_CVO at L9. It is ARMED because the next cell that reads `execution_role` and builds toward assuming it will discover this at apply time, not at design time.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/investor-reporting/core/roles.tf @95a34541f8 -- data.aws_iam_policy_document.lambda_trust has one statement whose principals block is type Service, identifiers [lambda.amazonaws.com]; aws_iam_role.firm_execution (for_each over local.firm_ids) and aws_iam_role.quarantine_execution both use it as assume_role_policy",
+        "aws iam get-role --role-name irpt-core-firm-49financial (live, 2026-09-11) -> AssumeRolePolicyDocument.Statement[0] = {Sid AllowLambdaAssume, Effect Allow, Principal {Service lambda.amazonaws.com}, Action sts:AssumeRole} -- the APPLIED plane agrees with the DESIRED one",
+        "aws iam get-role --role-name irpt-core-quarantine (live, 2026-09-11) -> Principal {Service: lambda.amazonaws.com}",
+        "infra/aws/terraform/investor-reporting/core/firm_destination_policy.json @95a34541f8 -- each firms[] entry carries execution_role irpt-core-firm-<id>, and quarantine.execution_role is irpt-core-quarantine",
+        "infra/aws/terraform/investor-reporting/intake/iam.tf @HEAD -- the poller's grant is PutObject on the intake prefix family plus quarantine only, with the reason stated in the file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD B5 / the FirmDestinationPolicy names an `execution_role` per firm, and the project bound requires per-firm prefixes plus IAM conditions in the shared bucket; the natural reading is that a write to a firm's location happens under that firm's role.",
+    "world_is": "Those roles admit only the Lambda SERVICE principal, so no running function can assume one, and an ingestion poller -- which learns the firm at write time -- cannot be one function per firm. IB-s-6 uses a single role narrowed to the intake prefix family across the enumerated firms.",
+    "notes": "Worth the issuer's and the CVO's attention beyond this cell: any later cell that reads `execution_role` and builds toward assuming it discovers this at apply time. The cross-firm CONTROL itself is intact -- the gate refuses a cross-firm destination in-process before a key is built, and the per-firm IAM conditions still bound anything that does run under those roles."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S4",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T02:21:34Z",
+    "one_line": "THE CHANGE-MANAGEMENT SENTINEL FOR THIS DEPLOY WAS NEVER COMMITTED IN ITS OPEN STATE, SO THE OPEN WINDOW EXISTS IN THE ENTRY BUT NOT IN GIT. The project bound requires the sentinel org/critical_paths/.open_deploys/<slug>.json COMMITTED, and the ORDER it prescribes is open -> ACT -> close -> commit -> then take the grading reads. Those two are in tension for a deploy that completes inside one turn: committing the sentinel OPEN requires a commit BETWEEN the open and the close, which the order does not ask for and which nothing enforces. On IB-s-8 this seat satisfied both by accident of sequencing (the source commit fell between the open and the apply); on IB-s-6 the source commit landed BEFORE the entry was opened, deploy_ledger.py open staged the sentinel, deploy_ledger.py close removed it, and safe-commit then refused the path outright ('pathspec did not match any files') because an add-then-delete of a file never in HEAD is nothing to commit. WHAT IT COSTS, precisely: had this turn died between the open and the close, deploy_ledger.py check would have found a non-terminal change_management entry with NO sentinel -- its BYPASS class, the 'false-clean gate-bypass' the tool's own help names -- rather than an OPEN one. The deploy itself is complete and every leg is proven on the live plane, so nothing is left armed; what is lost is the crash-window evidence, and it is lost for this entry only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/critical_paths/change_management/20260911T0149Z_irpt-bckend-s6_deploy_completion.md @61fbbd22ae -- the entry, CLOSED, with all six legs and their proofs; committed in ONE commit, after the close",
+        "git log -- org/critical_paths/.open_deploys/irpt-bckend-s6.json -> EMPTY: the sentinel has no commit at any point",
+        "safe-commit refusal, verbatim: \"fatal: pathspec 'org/critical_paths/.open_deploys/irpt-bckend-s6.json' did not match any files\" -- an add-then-delete of a path never in HEAD leaves nothing to commit",
+        "IB-s-6_S6-AC1_battery_output.txt arm (g) -- 'DISCLOSED: sentinel ever committed = False' printed by the battery itself rather than left for a reader to infer",
+        "IRPT_BCKEND.TO-IB-s-6 BOUNDS 4, verbatim: 'a change-management entry opened at the start ... and closed at completion, the sentinel org/critical_paths/.open_deploys/<slug>.json COMMITTED; ORDER on any act that changes the world: open the entry, ACT, close the entry and COMMIT it BEFORE taking the reads that grade the act'",
+        ".tools/deploy_ledger.py check --help -- the BYPASS class it sweeps for is 'change_management/*.md with an OPEN/non-terminal ledger and NO sentinel'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BOUNDS 4: the sentinel is COMMITTED, and the order is open -> act -> close -> commit -> grade.",
+    "world_is": "For a deploy that completes inside one turn the two clauses cannot both be satisfied without an extra commit BETWEEN the open and the close, which the bound does not ask for and nothing enforces. On IB-s-6 the sentinel existed only between the open and the close and was never committed; the entry itself is committed, CLOSED, with six proven legs.",
+    "notes": "INERT: the deploy is complete, every leg verified on the live plane, and the sentinel is correctly absent now. Recorded because the record should not read better than what happened, and because the tension is structural rather than particular to this cell -- the cheap remedy for any future one-turn deploy is one commit of the OPEN sentinel immediately after deploy_ledger.py open, which is what IB-s-8 did by accident of sequencing rather than by rule."
   },
   {
     "id": "IRPT_BCKEND-W4-S1",
