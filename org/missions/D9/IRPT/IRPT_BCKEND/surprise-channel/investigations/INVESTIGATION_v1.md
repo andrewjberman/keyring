@@ -1875,6 +1875,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "IB-rt-1 RT1-AC1 (b) as cut: 'the response validates against the producer schema; print 11 of 11'. CTO ruling 1: a paired producer-to-consumer test per operation runs the real dispatcher against the consumer's request.",
     "world_is": "The contract artifact exists and is one carrier; the responses do not yet have a contract and the handlers do not yet conform. The seam cell defines the response; the guards cell, which deploys the handlers, makes them conform; the replay grades the deployed whole.",
     "notes": "The proxy-criterion shape recurs from round 1 (S13's routes.json fallback): a criterion that names an artifact another cell produces must name that cell. Carried for the round-2 analysis as an L5 lesson of this seat."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S18",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T13:40Z",
+    "one_line": "THE RE-CUT NAMES TWO DENOMINATORS FOR THE SAME SET: 'one per route in routes.json' is 12 and 'the eleven response schemas ... 11 of 11' is 11. Both hold only if the NO-HANDLER-AT-HEAD route gets none. That is how it was built, and BOTH numbers are printed rather than one being quietly chosen.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the amended face at c8189bb6ae, arm (b): 'one per route in `routes.json` (the denominator printed)' and, in the same clause, 'The eleven response schemas exist, validate as schemas, and each `data` `$ref` resolves to a document schema (`11 of 11`)'",
+        "docs/contracts/investor-reporting/v1/routes.json at this commit: 12 routes = 11 DECLARED + 1 NO-HANDLER-AT-HEAD (GET /api/scoped/investor-reporting/holdings/{accountSetId})",
+        "docs/contracts/investor-reporting/v1/responses/ at this commit: 11 files, one per DECLARED route; the battery prints 'denominator: 12 route(s) ... = 11 DECLARED + 1 NO-HANDLER-AT-HEAD' and then 'published ... 11 of 11 DECLARED'",
+        "test_every_declared_route_has_a_response_contract_whose_refs_resolve asserts BOTH directions: 11 of 11 DECLARED routes have one, and the NO-HANDLER route has NONE"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-1 arm (b) as re-cut: response schemas are published 'one per route in routes.json (the denominator printed)', and separately 'The eleven response schemas exist ... (11 of 11)'.",
+    "world_is": "routes.json carries TWELVE routes, so 'one per route' and 'eleven' cannot both be satisfied by the same reading. The reading taken: the 11 DECLARED routes each get a response contract and the 1 NO-HANDLER-AT-HEAD route gets NONE -- because a route with no handler answers nothing, and a response contract for it would describe a response that cannot exist while adding a twelfth file that makes '11 of 11' read as a shortfall. Both denominators are printed side by side by the battery and stated in routes.json and CONTRACT.md, and the absence is asserted by test rather than merely left empty.",
+    "notes": "FILED AS FORM, NOT SIGNIFICANCE: the worker had to choose between two readings the face gives equal standing, and a choice made silently is indistinguishable from not noticing. Nothing is blocked -- arm (b) passes on either reading's evidence because both counts are printed. IF THE OTHER READING WAS MEANT, the remedy is one more file (holdings-snapshot.response.schema.json) and a one-line change to the assertion that currently requires its ABSENCE; v1 is not frozen until this order's complete flip, so it is cheap now and a v2 afterwards."
   }
 ]
 ```
