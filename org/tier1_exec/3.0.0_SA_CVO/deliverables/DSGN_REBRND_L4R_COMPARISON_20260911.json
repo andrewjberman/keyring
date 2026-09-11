@@ -1,0 +1,286 @@
+{
+  "reviewer": "3.0.0_SA_CVO",
+  "measured_at": "2026-09-11T08:21:32.755301+00:00",
+  "prd_path": "org/missions/D13/DSGN/DSGN_REBRND/prd/DSGN_REBRND_PRD.md",
+  "prd_pin": "9769e40c6fc3deb25b037794f93f4ff792144eaf",
+  "prd_version": "v0.1",
+  "sha256": "6a8b77da2826ec16162f01b0175d13ea5486448c51aaf02a69b471b5f427ef72",
+  "endpoint_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_D13_PORTAL_VISUAL_ELEVATION_20260911.md",
+  "endpoint_snapshot_pin": "9769e40c6fc3deb25b037794f93f4ff792144eaf",
+  "brief_path": "docs/briefs/portal-visual-elevation-brief-20260911.md",
+  "brief_pin": "bed01b226a15d80d05269b84dae94f18a1fecfc1",
+  "field_comparisons": [
+    {
+      "outcome": "FWD-1",
+      "field": "DONE WHEN",
+      "prd_line": 24,
+      "endpoint_line": 23,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-1",
+      "field": "ACCEPT",
+      "prd_line": 25,
+      "endpoint_line": 24,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-1",
+      "field": "PROOF",
+      "prd_line": 26,
+      "endpoint_line": 25,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-2",
+      "field": "DONE WHEN",
+      "prd_line": 31,
+      "endpoint_line": 30,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-2",
+      "field": "ACCEPT",
+      "prd_line": 32,
+      "endpoint_line": 31,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-2",
+      "field": "PROOF",
+      "prd_line": 33,
+      "endpoint_line": 32,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-3",
+      "field": "DONE WHEN",
+      "prd_line": 38,
+      "endpoint_line": 37,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-3",
+      "field": "ACCEPT",
+      "prd_line": 39,
+      "endpoint_line": 38,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-3",
+      "field": "PROOF",
+      "prd_line": 40,
+      "endpoint_line": 39,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-4",
+      "field": "DONE WHEN",
+      "prd_line": 45,
+      "endpoint_line": 44,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-4",
+      "field": "ACCEPT",
+      "prd_line": 46,
+      "endpoint_line": 45,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-4",
+      "field": "PROOF",
+      "prd_line": 47,
+      "endpoint_line": 46,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-5",
+      "field": "DONE WHEN",
+      "prd_line": 51,
+      "endpoint_line": 50,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-5",
+      "field": "ACCEPT",
+      "prd_line": 52,
+      "endpoint_line": 51,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-5",
+      "field": "PROOF",
+      "prd_line": 53,
+      "endpoint_line": 52,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-6",
+      "field": "DONE WHEN",
+      "prd_line": 57,
+      "endpoint_line": 56,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-6",
+      "field": "ACCEPT",
+      "prd_line": 58,
+      "endpoint_line": 57,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-6",
+      "field": "PROOF",
+      "prd_line": 59,
+      "endpoint_line": 58,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-7",
+      "field": "DONE WHEN",
+      "prd_line": 64,
+      "endpoint_line": 63,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-7",
+      "field": "ACCEPT",
+      "prd_line": 65,
+      "endpoint_line": 64,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-7",
+      "field": "PROOF",
+      "prd_line": 66,
+      "endpoint_line": 65,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-8",
+      "field": "DONE WHEN",
+      "prd_line": 71,
+      "endpoint_line": 70,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-8",
+      "field": "ACCEPT",
+      "prd_line": 72,
+      "endpoint_line": 71,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-8",
+      "field": "PROOF",
+      "prd_line": 73,
+      "endpoint_line": 72,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-9",
+      "field": "DONE WHEN",
+      "prd_line": 78,
+      "endpoint_line": 77,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-9",
+      "field": "ACCEPT",
+      "prd_line": 79,
+      "endpoint_line": 78,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-9",
+      "field": "PROOF",
+      "prd_line": 80,
+      "endpoint_line": 79,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-10",
+      "field": "DONE WHEN",
+      "prd_line": 85,
+      "endpoint_line": 84,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-10",
+      "field": "ACCEPT",
+      "prd_line": 86,
+      "endpoint_line": 85,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-10",
+      "field": "PROOF",
+      "prd_line": 87,
+      "endpoint_line": 86,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-11",
+      "field": "DONE WHEN",
+      "prd_line": 92,
+      "endpoint_line": 91,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-11",
+      "field": "ACCEPT",
+      "prd_line": 93,
+      "endpoint_line": 92,
+      "equal": true
+    },
+    {
+      "outcome": "FWD-11",
+      "field": "PROOF",
+      "prd_line": 94,
+      "endpoint_line": 93,
+      "equal": true
+    }
+  ],
+  "brief_headings": [
+    "## ORIGIN \u2014 what created this brief",
+    "## PART I \u2014 THE OUTCOME TERRITORY",
+    "### O1 \u2014 A prospect moving from the website into the portal does not experience a change of firm",
+    "### O2 \u2014 An advisor reads a figure without the typeface telling them it came out of a terminal",
+    "### O3 \u2014 An advisor reads the ORDER of an ordered scale off its colour, without consulting a legend",
+    "### O4 \u2014 An advisor can tell at a glance which single thing on a screen is the action to take",
+    "### O5 \u2014 An advisor working by keyboard can see where they are",
+    "### O6 \u2014 An engineer or an agent building a new portal page derives every visual decision from one written contract, and a reviewer can FAIL the page against it, citing the clause",
+    "### O7 \u2014 A chart series is never painted in the colour the product reserves for \"something is wrong\"",
+    "### O8 \u2014 Two charts on the same screen share their axis, tick, tooltip and legend treatment",
+    "### O9 \u2014 An advisor's screen is filled by the work, not by the space around it",
+    "### O10 \u2014 An advisor meeting a panel with no data still sees a designed surface",
+    "### O11 \u2014 Andrew can put the portal on screen beside an institutional competitor and the difference is not that ours looks generated",
+    "## PART II \u2014 WHERE THE BOUNDARY SITS",
+    "## PART III \u2014 THE QUALITATIVE BAR",
+    "## PART IV \u2014 THE SUBSTRATE: is this in a canonical pattern?",
+    "### IV.1 \u2014 The brand book cannot govern a dashboard, and that is the root cause",
+    "### IV.2 \u2014 The website is a complete, measurable design system, and nobody has read it into the product",
+    "### IV.3 \u2014 The portal contradicts that system on every dimension but one",
+    "### IV.4 \u2014 The token architecture is already correct and already live; only its VALUES are wrong",
+    "### IV.5 \u2014 One of the three token writers is dead code",
+    "### IV.6 \u2014 Dependency duplication is the mechanism behind \"inconsistency\"",
+    "### IV.7 \u2014 The estate already has the pattern this project needs",
+    "### IV.8 \u2014 A contract format exists that the estate's design tooling already reads",
+    "### IV.9 - What three rendered routes actually showed",
+    "### IV.10 - The design toolchain now exists and did not before",
+    "### IV.11 - The comparator set, so \"expensive\" is not left abstract",
+    "## PART V \u2014 WHAT MUST BE TRUE, WITHOUT SCOPING IT NOW",
+    "## PART VI \u2014 STATUS  \u26d4 **NOT OUTCOME-BEARING**",
+    "## PART VII \u2014 WHAT THIS BRIEF DOES NOT CLAIM",
+    "## APPENDIX A - MEASURED DEFECT INVENTORY",
+    "## REFS TO CARRY"
+  ],
+  "defect_count": 23,
+  "defects_without_outcome": [
+    "A15",
+    "A22"
+  ],
+  "changed_proof_control_detected": true,
+  "scope": "Document comparison and coverage accounting; no render or implementation certification; gate status is measured through prd-signoff.py status."
+}
