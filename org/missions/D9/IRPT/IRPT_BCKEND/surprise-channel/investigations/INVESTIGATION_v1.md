@@ -1563,6 +1563,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "S14-AC1 (g): 'ExportReceipt validates and its artifact_hash equals the stored object's; the object key is under the bound firm's exports prefix'. BOUNDS 7: 'No served output is touched ... except where THIS order's cell says it ADDS a resource' -- and the cell text names 'the protected artifact under firms/<id>/generations/<id>/attempts/<a>/exports/<revision>/report.pdf'.",
     "world_is": "Proving the receipt against a STORED object means storing one, and the only admissible prefixes are real firms'. The write is labelled twice (an unmistakable generation id and object metadata) rather than hidden, so a later reader can tell it from client evidence without reading this row.",
     "notes": "No client data is in any of the four: the performance/analysis content is the cell's own fixture sections, and the three vendor-input exports are rendered from the CRO's synthetic portfolio 2332257 (SPY/AGG), which the PRD already calls real vendor output on synthetic holdings."
+  },
+  {
+    "id": "IRPT_BCKEND-S21",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T08:37:23Z",
+    "one_line": "DISARM of IRPT_BCKEND-W1-S9 (ARMED, disarm_owner 2.0.0_SA_COO~B) -- an ISSUER DEFECT: the S15 amendment (902ea877dc) told four faces to normalise holdings account ids 'through the ONE normaliser IB-s-4 shipped under infra/aws/lambda/investor-reporting/directory/'. No such module exists; IB-s-4 normalised the `<firm>:acct:` prefix inside its own battery (battery_ib_s_4.py), and the issuer wrote the amendment from the worker's report rather than from the tree (a grader's restatement lending a claim it had not earned). IB-s-16 found it (function-name enumeration of directory/handler.py, refresh.py, expiry.py; git show 624a60e4fc --stat) and needed no such join. Measured now: the prefix is minted at holdings_snapshot.py:370 (49f), :486 (inf), :638 (cot) as `<firm>:acct:<opaque>` and nowhere else in the lambda tree (comp-find 'acct:' 7 hits of 260 files, 3 SURFACED, all in the runner). The two un-handed faces (IB-s-15, IB-sb-3) are corrected: strip exactly that grammar in one named function of the consumer's own, cite the three lines, print both counts. IB-s-14 and IB-s-16, already complete, carried the false sentence; neither made the join (IB-s-14 exports from fixture sections; IB-s-16 measured the absence), so no output is affected.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (corrected on every face it can still reach; the shared normaliser is a round-2 item alongside the id-space table of S15)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W1-S9 (this HEAD); IRPT_BCKEND-S15 @902ea877dc (the defective sentence)",
+        "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:370,486,638 (HEAD) -- the three mint sites",
+        "comp-find 'acct:' over infra/aws/lambda/investor-reporting, the project's deliverables and the gold home: 7 hits across 260 files, 3 SURFACED (the runner), 0 in directory/",
+        "the two faces (this commit) -- the sentence replaced in place; <status> still staged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Seat row S15: 'normalise through the ONE normaliser IB-s-4 shipped under infra/aws/lambda/investor-reporting/directory/'. Memory: a grader's restatement lends credibility the claim has not earned.",
+    "world_is": "The normaliser was a battery-local helper, not a shipped module; the amendment named a path that does not carry it. Corrected before either remaining consumer reads it.",
+    "notes": "Issuer's own lapse, stated plainly: an amendment that names a path must be written from a read of the tree at HEAD, not from a report about it."
   }
 ]
 ```
