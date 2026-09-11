@@ -181,5 +181,43 @@
     ],
     "push_state": "LOCAL",
     "origin_CLOUD": "ae0fcf29346b4a8fe7c598fe69189880c8da6d29"
+  },
+  "v0_13_fe_v0_6_followup": {
+    "measured_at": "2026-09-11T04:43:36.010375+00:00",
+    "reviewer": "4.0.0_SA_CRO",
+    "scope": "BRIEF half, current-version deltas",
+    "projects": {
+      "IRPT_BCKEND": {
+        "path": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md",
+        "version": "v0.13",
+        "pin": "e6ba5d98782a2c367f7306c88b5c9915333599da",
+        "sha256": "8f08bd45f9dfb3ea9c6d685ebe2f666372489e4c81ade77bfe124049167646a4",
+        "bytes": 97085,
+        "coverage_rows": 37,
+        "supplement_rows": 32,
+        "verdict": "SIGNED",
+        "all_cells_contracts_paths_fixtures_coverage_unchanged": true,
+        "operative_added_constraints_preserved": true,
+        "provenance_line": 106
+      },
+      "IRPT_FNTEND": {
+        "path": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md",
+        "version": "v0.6",
+        "pin": "d1479bc5f07c24359246ce460f586bc705ca7010",
+        "sha256": "a93f717ae0738f3a544f15575424176c0a73c12666331a173636032b5b2b4f31",
+        "bytes": 42005,
+        "coverage_rows": 35,
+        "supplement_rows": 0,
+        "verdict": "SIGNED",
+        "changed_lines": [
+          8,
+          116
+        ],
+        "browser_request_fields_unchanged": true,
+        "server_only_envelope_explicit": true
+      }
+    },
+    "push_state": "LOCAL",
+    "origin_CLOUD": "757e3475206ebadcc0c99815e6e54dc3a91aebdd"
   }
 }

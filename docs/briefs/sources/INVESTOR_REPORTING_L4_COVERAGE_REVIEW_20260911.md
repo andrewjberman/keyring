@@ -2,7 +2,7 @@
 
 Reviewer: **4.0.0_SA_CRO**, BRIEF half. Trigger: CTO message 95787, exact inbox delivery `20260911T042014Z_1.0.0_SA_CTO_L4-R_REVIEW_IS_DUE_NOW__on_Andrew_s_word.md`. Date: 2026-09-11 UTC.
 
-**Current follow-up, CTO message 95800: IRPT_BCKEND v0.11 at `737cd1670546b106bb12b489e1fe5d1c0f1bfa90` is SIGNED. R1 and R2 are closed at this pin; the closure evidence is appended below.** The v0.10 table and findings remain the dated review history. The existing FE v0.5 signature remains valid.
+**Current follow-up, CTO messages 95813/95817: IRPT_BCKEND v0.13 at `e6ba5d98782a2c367f7306c88b5c9915333599da` and IRPT_FNTEND v0.6 at `d1479bc5f07c24359246ce460f586bc705ca7010` are both SIGNED by CRO.** The scoped delta review is appended below. The v0.10 findings and v0.11 closure remain dated history; R1 and R2 stay closed.
 
 | Project / reviewed version | Committed PRD pin | CRO verdict |
 |---|---|---|
@@ -76,3 +76,12 @@ Reviewed the complete committed diff from `3624e60defa7dab02fdb9f218a05b6bf87d59
 Coverage remains BK 37 original rows plus 32 supplement rows and 18 candidate cells. The ENDPOINT and CONTRACTS sections are byte-identical to v0.10, and FE v0.5 is unchanged. These checks limit the re-review to the correction; CVO still owns its independent ratified-text sign-off. Production and real-client proof obligations remain as recorded above.
 
 The updated CRO sign-off binds to the full v0.11 pin and this review's new committed revision. FE's already-signed v0.5 file is not rewritten. Follow-up clocks, source hashes, changed-line census and remote observation are recorded in the evidence JSON's `v0_11_followup` entry. Push remains **LOCAL**.
+
+## Follow-up: BK v0.13 and FE v0.6, CTO messages 95813/95817
+
+**CRO BRIEF-half verdict: SIGNED for both current pins.** Reviewed each complete committed delta from the last CRO-signed version, against the existing source requirements and the counterpart's contract. This is not a substitute for CVO's independent ratified-text decision.
+
+- **BK v0.13, `e6ba5d98782a2c367f7306c88b5c9915333599da`:** the v0.12 delta at `cee0507ca5401513cc4e562e708c5056b96db71c` removes version/attribution labels from the added FWD-4 constraint lines 51-53 and uses a pins-only PIN line. v0.13 adds the separate ENDPOINT PROVENANCE heading at line 104, placing the retained attribution paragraph at line 106 outside the ENDPOINT section. Authentication/capability verification, immutable-request recovery, accepted shared-login displacement, bounded retry, single ownership, legacy-consumer protection, and the fixed EC2-to-Lambda mechanism retain their operative wording. The entire document from CELL CANDIDATES onward is unchanged from v0.11, including the closed R1/R2 rows, all contract fields, source mappings and proof gaps. The brief half loses no requirement through moving attribution. The current-pin check detected v0.13 during the review; no stale v0.12 signature was written.
+- **FE v0.6, `d1479bc5f07c24359246ce460f586bc705ca7010`:** only header line 8 and CONTRACTS line 116 changed. The latter replaces ambiguous read-only treatment with an explicit server-only `resolved` envelope, excluded from frontend payloads in both directions. F5 still supplies the same browser request fields and consumes authorized `AnalysisReport`, `StatusEnvelope` and Opal job projections. Raw vendor identities, receipts and storage paths are not public contracts. This clarifies the server/browser boundary in the source UI contract at `72acd16e66` (lines 36, 64-76) and supplement III.4 without removing the client-facing inputs, status or report output.
+
+All candidate cells and coverage maps are unchanged: FE 35 entries / 14 cells; BK 37 original + 32 supplement entries / 18 cells. No new brief-half correction is requested. The machine comparison, source hashes, current-pin checks and remote observation are in `v0_13_fe_v0_6_followup` in the evidence JSON. Both own-serial signature files bind the new versions to this review's new committed revision. Push state remains **LOCAL**.
