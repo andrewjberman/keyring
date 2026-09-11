@@ -454,3 +454,55 @@ origin/CLOUD notifies this seat when 6560583fd5 lands.
 relay; the laptop holds the recipe's file-count-vs-content-provenance half; this seat's contribution was
 executing and then MEASURING (the three sha256 triples). The laptop needs no marker (its seed was its own
 history: 19 refreshed / 0 pinned, closure bar 7 of 7).
+
+---
+
+## AMENDMENT 11 -- 11:2x-11:5xZ: a wedged COO~Z diagnosed from its own transcript, one wrong PID caught before the kill, the kill and respawn, and the Huntress leak identified
+
+**archetype:** DIAGNOSE + DEPLOY (population) + SCRIBE
+
+**The escalation** (`1.0.0_SA_CTO~Z` msg 21341, 11:22Z): POSN_ASTTAX round 2 halted; `2.0.0_SA_COO~Z` LIVE
+on the broker but 2 of 2 messages OFFER-EXHAUSTED, summary frozen, 7 authored task orders untracked on disk,
+no workers. Ask: restore the seat.
+
+**Diagnosis, measured before touching anything:** its session transcript (id e8df5b2d..., bypassPermissions
+mode -- so not a permission prompt) ends at 09:04:33Z with an assistant Bash `tool_use` -- its own Rule-14b
+isolation step, `git worktree add -b coo-posn-l6r2 ".../Desktop/wk-coo-posn-l6r2"` -- and NO tool_result;
+the only later entry is a `queue-operation` at 10:53:46Z. On disk: no worktree, no branch, no index.lock, no
+git process. Under its real claude.exe (14924): four MCP server children and one session-start bash chain,
+NOTHING for the 09:04Z call. A tool call wedged inside the harness with nothing external to kill.
+
+**Two of my own misreads, both caught by a second read before they became acts:**
+1. At 11:33Z I named PID 30860 as COO~Z ("hook chains spawning every ~10 s under it"). Process truth with the
+   serial EXTRACTED and compared exactly: 30860 is `2.0.0_SA_COO~ZZZ`, alive and draining AMGT (hooks fire per
+   tool call). COO~Z is 14924. Had I killed by the first read, the healthy seat would have died. Corrected to
+   the CTO at 11:43Z; the kill script matches the claude.exe by serial, which is what actually landed it.
+2. At 11:46Z the transcript's mtime moved to 11:45:58Z and I read "un-wedged". Entry count unchanged (2477),
+   last line unchanged -- a fourth queued message had touched the file. **A modification time is not
+   progress; the entry count and the last entry are the discriminator.** Caught before standing down.
+
+**The act** (`/mstr-kill` then `/mstr-spawn`, both my primitives): Andrew was given the one-keypress
+alternative by push notification at 11:33Z and a 15-minute window; two background waits on the transcript
+were reaped by the harness for low memory; no keypress landed. `kill-agent.ps1 2.0.0_SA_COO~Z` at 11:48:11Z
+-> "terminated 2.0.0_SA_COO~Z (claude pid 14924)"; verified after: 14924 and its MCP server gone, 30860 /
+13720 / 16456 / this seat alive, 0 claude.exe carrying the serial; KILL audit line written with msg 21341
+cited. The 7 orders verified present on disk after the kill (7 of 7). `spawn-agent.ps1 2.0.0_SA_COO~Z` at
+11:49:18Z -> pid 47332, host 46744, marker-tracked (cap 2 of 20), startup hint "run /watcher, then read the
+[SPAWN-DIRECT] message from 0.0.0_AB_MSTR~Z before any other act". The full re-orient (7 untracked orders,
+decomp v0.5 @2b07a34314, L4-R ADMITTED @9a2e542c0b, C-RETAG-SAFETY order S6 -> S7 -> S2, the four not-yet-read
+message ids, the worktree-add shape that wedged the predecessor) is sent by broker on registration, not
+before, so it cannot OFFER-EXHAUST against the dead PID.
+
+**A tooling gap for the skill's steward:** `/mstr-kill` Step 4 says the caller deregisters the serial;
+`deregister_agent` answered "Denied: only CTO/COO can deregister agents. Caller: 0.0.0_AB_MSTR~Z". The stale
+entry ages out by heartbeat and is replaced by the new session's registration; the step as written cannot be
+executed by MSTR.
+
+**The memory condition, identified:** 63.5 GB total, 4.0-4.7 GB free (6-7 %), commit 89 of 96 GB. `Rio.exe`
+5380 (SYSTEM, path/vendor blank to this user) holds 40 GB. The laptop identified it from LD-0255: **Huntress
+EDR's core process, a recorded leaker on this estate**; `C:\Program Files\Huntress` exists here and not on the
+laptop, which is the device difference. The laptop's hypothesis that the wedged seat was feeding the leak
+through process churn was FALSIFIED here by its own falsifiers: COO~Z had zero process activity (the churn was
+COO~ZZZ's normal tool calls); Rio's working set 40,133 -> 40,152 -> 40,180 MB across 11 minutes (~4 MB/min,
+flat); Rio's parent created at boot, 33 h before the wedge. Not touched (SYSTEM, IT/vendor-managed, LD-0255
+alternative (a) rejected); Andrew has the numbers by push notification; the July escalation path applies.
