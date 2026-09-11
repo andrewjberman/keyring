@@ -32,6 +32,10 @@ The request body is exactly `{ request_id, client_id, account_ids, snapshot_id, 
 
 Everything FE-s-6 built (request list under the no-route bound, input review and correction as a NEW revision, stage display without percentages, native sections, vendor PDF preview labelled as such, MODELED never actual) stays; the composer is added above it.
 
+### R2 -- RE-PIN TO THE CURRENT v1 VINTAGE FIRST (AMENDED BY THE ISSUER at the FE-s-14 drain, row IRPT_FNTEND-S21)
+
+The counterpart moved the v1 artifact again at d9c940244a (IB-rt-7): `GET .../holdings/{accountSetId}` is now DECLARED with handler `irpt-holdings` (12 of 12 DECLARED, `_denominator.no_handler_at_head` 0) and the document schemas' bytes changed. FE-s-14's re-pin is at 7ce4761a2f, so on DEV the fe-s-13 / fe-s-14 / fe-s-1 tests that hash the artifact read 6 failures. BEFORE the composer: refresh `WIRE_SCHEMA_PINS`, the `fixtures/wire/` copies and `fixtures/wire/requests/` to the artifact at `<WS>/docs/contracts/investor-reporting/v1/` as your worktree carries it (record its vintage `git log -1 --format=%h -- docs/contracts/investor-reporting/v1` in the result file); regenerate the wire types if any schema body changed; make `holdings-snapshot` a callable DECLARED operation on the live client (its `NotYetExercisable` refusal retires; the routes test prints `NOT-YET-EXERCISABLE: 0` and `ROUTES MATCHED: 12 of 12`); the published map `default.json` gains the holdings envelope. Grant for R2: `src/api/endpoints/investor-reporting.ts`, `contracts/`, `fixtures/`, `__tests__/fe-s-13/`, `__tests__/fe-s-14/`, `__tests__/fe-s-1/` (the routes/fixtures assertions only).
+
 ### ACCEPTANCE
 
 <criterion id="F15-AC1" cell_refs="FE-s-15"><invocation>cd <WS>/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun run typecheck; echo rc=$?</invocation><expect>rc=0</expect></criterion>
@@ -70,11 +74,17 @@ Everything FE-s-6 built (request list under the no-route bound, input review and
 <criterion id="F15-AC12" cell_refs="FE-s-15" judgment="true"/>
 `F15-AC12` -- graded at L9 from the two PNGs: the composer reads in the S10 order, the variant is displayed, and the clean and correction states are distinguishable. RECORD; NO VERDICT.
 
-<expected_criteria>F15-AC1, F15-AC2, F15-AC3, F15-AC4, F15-AC5, F15-AC6, F15-AC7, F15-AC8, F15-AC9, F15-AC10, F15-AC11, F15-AC12</expected_criteria>
+<criterion id="F15-AC13" cell_refs="FE-s-15"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-13/routes.test.ts</invocation><expect>ROUTES MATCHED: 12 of 12</expect></criterion>
+`F15-AC13` (AMENDED, added -- R2) -- the operation table equals the current v1 route table, holdings included; prints `NOT-YET-EXERCISABLE: 0`.
+
+<criterion id="F15-AC14" cell_refs="FE-s-15"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-13</invocation><expect>0 fail</expect></criterion>
+`F15-AC14` (AMENDED, added -- R2) -- the seam battery passes against the refreshed pins (producer fixtures 11 of 11 by the current hashes; request corpus 12 of 12).
+
+<expected_criteria>F15-AC1, F15-AC2, F15-AC3, F15-AC4, F15-AC5, F15-AC6, F15-AC7, F15-AC8, F15-AC9, F15-AC10, F15-AC11, F15-AC12, F15-AC13, F15-AC14</expected_criteria>
 
 ## BOUNDS
 
-- **Grant.** Your write surface is the `<paths>` block below, plus `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/<your serial>/` and this order's own file. The typed client and the adapters are FE-s-13's and are READ only; a wire field the composer needs that the adapter does not expose is a surprise row, never an edit there. A path you need that is not named is a BLOCKING row on that criterion; never an override.
+- **Grant.** Your write surface is the `<paths>` block below, plus `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/<your serial>/` and this order's own file. The typed client and the adapters are granted for the R2 re-pin ONLY; beyond R2 they are READ only and a wire field the composer needs that the adapter does not expose is a surprise row, never an edit there. A path you need that is not named is a BLOCKING row on that criterion; never an override.
 - **Numbers.** The 0.30% fee stays a displayed setting from the contract; no fee, count or width constant in `tabs/analysis/`. 390 is a test setup.
 - **Two repos, one worktree pair.** `<WS>` / `<WS>/portal` as in your identity line. Portal commit pathspec: `src/pages/InvestorReporting/tabs/analysis/ src/pages/InvestorReporting/fixtures/smoke/ src/pages/InvestorReporting/__tests__/fe-s-15/`. Workspace records under org/ only. Never push, merge, rebase, `checkout --` or `clean`. Never stage `portal` in the workspace repo.
 - **Dev server.** `node_modules` is a junction; do not run `bun install`. Start once in the background from `<WS>/portal`: `/c/Users/AndrewBerman/.bun/bin/bun run dev --port <PORT>`; use the port it prints; kill it before your final report. Routes without a leading slash.
@@ -85,8 +95,13 @@ Everything FE-s-6 built (request list under the no-route bound, input review and
 
 <paths>
 portal/src/pages/InvestorReporting/tabs/analysis/
-portal/src/pages/InvestorReporting/fixtures/smoke/
+portal/src/pages/InvestorReporting/fixtures/
 portal/src/pages/InvestorReporting/__tests__/fe-s-15/
+portal/src/api/endpoints/investor-reporting.ts
+portal/src/pages/InvestorReporting/contracts/
+portal/src/pages/InvestorReporting/__tests__/fe-s-13/
+portal/src/pages/InvestorReporting/__tests__/fe-s-14/
+portal/src/pages/InvestorReporting/__tests__/fe-s-1/
 org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md
 </paths>
 
@@ -96,10 +111,10 @@ org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `F15-AC1` .. `F15-AC12`. Instance at
+Criterion ids: `F15-AC1` .. `F15-AC14`. Instance at
 `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-15.generate-composer.proof_of_spec.json`
 (phase `BUILD-GENERAL` -- AMENDED BY THE ISSUER at the FE-s-12 drain on row IRPT_FNTEND-W1-S15: the schema's phase enum has no BUILD member, firm `FABRIC`, spec_ref.group `OTHER`), validated with
-`python .tools/proof-of-spec-check.py <instance> F15-AC1,F15-AC2,F15-AC3,F15-AC4,F15-AC5,F15-AC6,F15-AC7,F15-AC8,F15-AC9,F15-AC10,F15-AC11,F15-AC12` BEFORE the `complete` flip. `F15-AC12` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `generate-composer.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
+`python .tools/proof-of-spec-check.py <instance> F15-AC1,F15-AC2,F15-AC3,F15-AC4,F15-AC5,F15-AC6,F15-AC7,F15-AC8,F15-AC9,F15-AC10,F15-AC11,F15-AC12,F15-AC13,F15-AC14` BEFORE the `complete` flip. `F15-AC12` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `generate-composer.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape. You cannot send or receive messages; anything you would ask is a surprise row.
