@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>staged -- assigned to slot ~2; becomes pending when the COO hands it over after IB-s-1 is terminal and merged.</status>
+<status>complete -- S2-AC1 PASS-by-output (IBS2-SCOPE-RESOLVED, 7 of 7 arms incl. the issuer's arm (g)); S2-AC2 RECORDED as judgment for 3.0.0_SA_CVO at L9, answer NOT DISTINGUISHABLE with the upstream file and lane named. Instance VALID rc=0 (11 artifact rows, 2 of 2 surprise ids resolve, alignment 1/1 cell). No deploy in this cell by the face's own words; nothing in the world changed.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.4 @62301f71e0 | **Decomp cell:** `IB-s-2` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, s.1 + s.2) | **outcome_ref:** FWD-1 (contrib), FWD-2 (own), FWD-11 (contrib) | **PRD candidate:** B2
 
