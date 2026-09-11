@@ -430,3 +430,63 @@ sparse cone -- NOT by the audited override, which would have skipped a real chec
   }
 ]
 ```
+
+---
+
+Two rows from `0.9.0_WK_POSN_ASTTAX~6` (cell `AT2-s-1`, task order `POSN_ASTTAX.TO-S1-1`),
+appended as ONE fenced block. Both are about the ORDER'S OWN CRITERIA rather than the code under change,
+and neither stopped the order: `S1-AC5`'s invocation does not resolve from the cwd its sibling criteria
+require and fails with the same text a genuinely missing predecessor would produce, and `S1-AC1` measures
+a property of the INPUT bytes that this order's act deliberately removes.
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W6-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~6",
+    "surfaced_at": "2026-09-11T17:40:00Z",
+    "one_line": "S1-AC5's invocation CANNOT RUN FROM THE CWD ITS SIBLING CRITERIA REQUIRE: it names ../task-orders/POSN_ASTTAX.TO-S6-1.harden-the-generator.md while S1-AC1/AC2/AC4 name repo-root-relative paths, so run as written from the repo root it returns rc=2 'No such file or directory' -- and that failure is INDISTINGUISHABLE from the negative it exists to detect (the predecessor order missing/not complete), which is a STOP condition for this order.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AS WRITTEN, FROM THE REPO ROOT (/c/tmp/wk-posn-s1, branch wk-posn_asttax-2-1 @f937521939): `timeout 120 grep -n \"<status>\" ../task-orders/POSN_ASTTAX.TO-S6-1.harden-the-generator.md` -> 'grep: ../task-orders/POSN_ASTTAX.TO-S6-1.harden-the-generator.md: No such file or directory', RC=2. The comp-tool rail did NOT deny the single-file grep; the failure is purely the relative path.",
+        "THE SAME COMMAND, SAME BYTES, FROM org/missions/D4/POSN/POSN_ASTTAX/deliverables/ -> '8:<status>complete</status>' and '68:  `<status>` to `complete`.', RC=0. So the criterion's expectation is satisfiable and the predecessor IS terminal; only the cwd was wrong. Nothing was substituted for the instrument: the command text is identical, byte for byte.",
+        "NO CWD SATISFIES ALL FIVE MECHANICAL CRITERIA AS WRITTEN. S1-AC1, S1-AC2 and S1-AC4 name 'infra/aws/lambda/v2_portal/...' and 'git -C .', which resolve at the repo root; S1-AC5's '../task-orders/...' resolves only from a directory that is a SIBLING of task-orders (or from task-orders itself). The two sets do not intersect -- verified by reading the order's own <criterion> invocations at org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S1-1.unknown-is-not-equity.md@f937521939.",
+        "CORROBORATION FROM THE ARTIFACT, NOT THE INSTRUMENT: commit 7f247caae0 ('L7(POSN_ASTTAX.TO-S6-1, 0.9.0_WK_POSN_ASTTAX~2): harden the positioning generator ... cell AT2-s-6, chain head') is an ancestor of this worktree's HEAD -- `git log --oneline -- <lambda path>` lists it as the most recent commit on the shared file. That is a SECOND instrument for the same claim (the predecessor is done and its work is already in my bytes), so the AC5 verdict does not rest on the grep alone."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order makes S1-AC5 a STOP: 'the status line pasted verbatim reading `complete`; if not, this order STOPS and files a row rather than editing the same file underneath an unfinished cell.' The worker face repeats it and adds that a rail denial (not a path failure) is the anticipated substitution, to be recorded rather than silently swapped.",
+    "world_is": "The anticipated failure mode (rail denial) did not occur. A DIFFERENT one did: the invocation's relative path does not resolve from the cwd every other criterion in the same order requires. Run as written from the repo root it fails rc=2 with 'No such file or directory' -- the exact text a genuinely missing predecessor order would produce. A worker that took that output at face value would STOP this order on a false negative; a worker that re-ran it from the right cwd, as this one did, gets 'complete'.",
+    "notes": "THIS DID NOT STOP THIS ORDER. The substitution made was CWD ONLY -- same command, same file, no change of instrument -- and both readings are recorded in the proof-of-spec instance with their cwds. Filed ARMED because the harm is in FUTURE normal operation, not this turn: any seat re-running S1-AC5 verbatim at L9 from the repo root to check this worker's claim gets rc=2 and a false ABSENCE, and an instrument whose failure is indistinguishable from the negative it tests for is the classic silent-stop shape. Disarm is one character of issuer text (an absolute or repo-root-relative path in the criterion), which is the issuer's surface, not a worker's -- hence disarm_owner 2.0.0_SA_COO~Z. The same '../' shape appears in this order's <decomp_ref>/PRD pointers, which are prose and harm nothing; only the mechanical criterion is affected."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W6-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~6",
+    "surfaced_at": "2026-09-11T17:44:00Z",
+    "one_line": "S1-AC1 IS A PRE-EDIT MEASUREMENT WHOSE OUTPUT THIS ORDER'S OWN ACT DESTROYS: it asks for 'the three sites and their disagreement' and for a count of DISTINCT defaults, but the act it accompanies collapses the three asset_class call sites to one, so the same invocation re-run at the resulting commit returns ONE line and one default -- not three and two.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRE-EDIT, at f937521939 (the branch point), invocation verbatim from the repo root, RC=0, 4 lines: '91:    return registry_field(ticker, 'management_style', 'passive')  # Default to passive if unknown' / '219:    return registry_field(ticker, 'asset_class', 'fixed_income')  # Default to FI if unknown' / '390:            asset_class = registry_field(ticker, 'asset_class', 'equity')  # Default to equity if unknown' / '550:            asset_class = registry_field(ticker, 'asset_class', 'equity')'. asset_class subset = 3 sites, DISTINCT defaults = 2.",
+        "POST-EDIT, same invocation, same cwd, RC=0, 2 lines: '91:    return registry_field(ticker, 'management_style', 'passive')  # Default to passive if unknown' / '258:    return registry_field(ticker, 'asset_class', UNCLASSIFIED_ASSET_CLASS)'. asset_class subset = 1 site, DISTINCT defaults = 1.",
+        "THE CAUSE IS THE ACT, NOT A DEFECT: the order directs 'Re-take the three sites' AND 'Make an unrecognised ticker RENDER AS UNRECOGNISED', and the shape chosen routes the two benchmark call sites through classify_etf so the default is defined once. The three sites are therefore a property of the INPUT vintage, not of the deliverable.",
+        "NOT A HIDDEN DELETION: git diff --stat HEAD for the file reads '1 file changed, 101 insertions(+), 8 deletions(-)' and the pre-edit line text is recoverable at any time by `git show f937521939:<path>` -- the negative control at deliverables/0.9.0_WK_POSN_ASTTAX~6/negative_control_unknown_is_not_equity.py does exactly that and asserts a positive control on the two old default literals before it will run."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S1-AC1 <expect>: 'every numbered line pasted verbatim, the `asset_class` subset separated from other fields, each with its default named, and the count of DISTINCT defaults across the asset_class sites only', labelled 'THE THREE SITES AND THEIR DISAGREEMENT, RE-TAKEN'. The worker face adds 'AC1 re-measures them and AC1's output is the truth'.",
+    "world_is": "The criterion's subject (three disagreeing sites) exists only in the bytes the order starts from. The commit this order produces does not contain three asset_class default sites, so the criterion is not reproducible at the artifact it certifies -- its evidence is vintage-bound in a way the criterion text does not say.",
+    "notes": "FILED FOR FORM, NOT SIGNIFICANCE, and it blocked nothing. Mitigated inside the deliverable rather than left to a re-run: the proof-of-spec instance records BOTH readings, each with its own cwd, commit-ish and line numbers, and names which one is the criterion's answer (the pre-edit one). Flagged INERT because the mitigation travels with the instance -- a grader reading the instance has both numbers in front of it and needs no re-run. Raised at all because the general shape is worth the issuer's attention: a BEFORE-measurement criterion and an AFTER-state criterion in the same order both grade 'the file', and only one of them can be true at the commit."
+  }
+]
+```
