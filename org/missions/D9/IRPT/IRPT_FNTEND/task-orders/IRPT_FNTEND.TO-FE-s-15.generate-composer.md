@@ -98,7 +98,7 @@ org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v
 <proof_of_spec>
 Criterion ids: `F15-AC1` .. `F15-AC12`. Instance at
 `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-15.generate-composer.proof_of_spec.json`
-(phase `BUILD`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
+(phase `BUILD-GENERAL` -- AMENDED BY THE ISSUER at the FE-s-12 drain on row IRPT_FNTEND-W1-S15: the schema's phase enum has no BUILD member, firm `FABRIC`, spec_ref.group `OTHER`), validated with
 `python .tools/proof-of-spec-check.py <instance> F15-AC1,F15-AC2,F15-AC3,F15-AC4,F15-AC5,F15-AC6,F15-AC7,F15-AC8,F15-AC9,F15-AC10,F15-AC11,F15-AC12` BEFORE the `complete` flip. `F15-AC12` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `generate-composer.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
 </proof_of_spec>
 

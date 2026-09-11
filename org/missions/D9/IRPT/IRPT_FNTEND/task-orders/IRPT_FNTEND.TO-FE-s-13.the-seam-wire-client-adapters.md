@@ -97,7 +97,7 @@ org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v
 <proof_of_spec>
 Criterion ids: `F13-AC1` .. `F13-AC10`. Instance at
 `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-13.the-seam-wire-client-adapters.proof_of_spec.json`
-(phase `BUILD`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
+(phase `BUILD-GENERAL` -- AMENDED BY THE ISSUER at the FE-s-12 drain on row IRPT_FNTEND-W1-S15: the schema's phase enum has no BUILD member, firm `FABRIC`, spec_ref.group `OTHER`), validated with
 `python .tools/proof-of-spec-check.py <instance> F13-AC1,F13-AC2,F13-AC3,F13-AC4,F13-AC5,F13-AC6,F13-AC7,F13-AC8,F13-AC9,F13-AC10` BEFORE the `complete` flip. Result file `the-seam-wire-client-adapters.result.md` beside it, carrying the FIELD_MAP summary (n view fields, per type) and the list of consumer files changed. Flip only when every criterion PASSES by output.
 </proof_of_spec>
 

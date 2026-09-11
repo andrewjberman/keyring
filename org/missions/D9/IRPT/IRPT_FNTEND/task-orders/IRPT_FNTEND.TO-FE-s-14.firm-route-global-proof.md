@@ -89,7 +89,7 @@ org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v
 <proof_of_spec>
 Criterion ids: `F14-AC1` .. `F14-AC11`. Instance at
 `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-14.firm-route-global-proof.proof_of_spec.json`
-(phase `BUILD`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
+(phase `BUILD-GENERAL` -- AMENDED BY THE ISSUER at the FE-s-12 drain on row IRPT_FNTEND-W1-S15: the schema's phase enum has no BUILD member, firm `FABRIC`, spec_ref.group `OTHER`), validated with
 `python .tools/proof-of-spec-check.py <instance> F14-AC1,F14-AC2,F14-AC3,F14-AC4,F14-AC5,F14-AC6,F14-AC7,F14-AC8,F14-AC9,F14-AC10,F14-AC11` BEFORE the `complete` flip. `F14-AC11` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `firm-route-global-proof.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
 </proof_of_spec>
 

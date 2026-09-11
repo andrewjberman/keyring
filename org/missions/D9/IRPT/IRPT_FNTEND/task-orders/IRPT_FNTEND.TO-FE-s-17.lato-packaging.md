@@ -84,7 +84,7 @@ org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v
 <proof_of_spec>
 Criterion ids: `F17-AC1` .. `F17-AC9`. Instance at
 `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-17.lato-packaging.proof_of_spec.json`
-(phase `BUILD`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
+(phase `BUILD-GENERAL` -- AMENDED BY THE ISSUER at the FE-s-12 drain on row IRPT_FNTEND-W1-S15: the schema's phase enum has no BUILD member, firm `FABRIC`, spec_ref.group `OTHER`), validated with
 `python .tools/proof-of-spec-check.py <instance> F17-AC1,F17-AC2,F17-AC3,F17-AC4,F17-AC5,F17-AC6,F17-AC7,F17-AC8,F17-AC9` BEFORE the `complete` flip. `F17-AC9` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `lato-packaging.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
 </proof_of_spec>
 
