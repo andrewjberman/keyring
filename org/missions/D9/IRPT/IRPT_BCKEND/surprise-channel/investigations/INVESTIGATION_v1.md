@@ -1686,6 +1686,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "S14-AC1 (g): 'ExportReceipt validates and its artifact_hash equals the stored object's; the object key is under the bound firm's exports prefix'. BOUNDS 7: 'No served output is touched ... except where THIS order's cell says it ADDS a resource' -- and the cell text names 'the protected artifact under firms/<id>/generations/<id>/attempts/<a>/exports/<revision>/report.pdf'.",
     "world_is": "Proving the receipt against a STORED object means storing one, and the only admissible prefixes are real firms'. The write is labelled twice (an unmistakable generation id and object metadata) rather than hidden, so a later reader can tell it from client evidence without reading this row.",
     "notes": "No client data is in any of the four: the performance/analysis content is the cell's own fixture sections, and the three vendor-input exports are rendered from the CRO's synthetic portfolio 2332257 (SPY/AGG), which the PRD already calls real vendor output on synthetic holdings."
+  },
+  {
+    "id": "IRPT_BCKEND-S24",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T10:22:42Z",
+    "one_line": "ROUND 1 TERMINAL at f8860a4a4b: 19 of 19 task orders read <status>complete with VALID instances re-graded by the issuer at each drain (denominator: 19 files under task-orders/). DISARM-BY-CARRY of IRPT_BCKEND-W1-S10 (ARMED, disarm_owner 2.0.0_SA_COO~B): IB-sb-3's real-file unguarded_routes() census reads 6 of 11 handler-bearing routes unguarded, not the 3 row S9 disclosed -- the three newly observed are POST /analysis (irpt-ycharts-generate, IB-s-9: job.py's own comment says it registers no route, written before routes.json existed, and IB-s-15 mapped the route to it anyway), GET /narrative/{reportId} (irpt-narrative, IB-s-13: no _authz import), GET /export/{exportId} (irpt-export-render, IB-s-14: the deployed handler implements only action=capabilities). None discloses protected data today, each for its own unrelated reason (a consent gate, a request shape with no identity, an absent operation), so the row is OBSERVATION; it is ARMED because that safety rests on each handler's own behaviour rather than on the wrapper. Every one of the six is a merged cell and outside every remaining face, so the issuer carries it to L10 as ONE round-2 item: `guard()` on the six routes, with IB-s-3's own S3-AC2 judgment ('the wrapper can be bypassed by a handler that forgets to use it') now measured at 6 of 11. The replay also measured the real CloudFront path live: 11 of 11 declared routes refuse unauthenticated (401 with the edge's own error), a forged bearer is refused, and a direct-to-API-Gateway bypass meets API Gateway's own 401 -- the origin-verify secret is a separately enforced gate. Authenticated replay on the real path remains not-run: no test-JWT-minting mechanism a worker may use without a human exists (stated on the instance, arm (a)).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (carried; the six-route guard is the first item of the round-2 recut of FWD-2; the test-principal mechanism is the CTO's L10 read)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W1-S10 (this HEAD)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_sb_3.result.md @f8860a4a4b -- the 6 of 11 census, the 11 of 11 real-path refusals, the bypass probe",
+        "grep -l '^<status>complete' over org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-*.md at f8860a4a4b: 19 of 19"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer amendment @812bbec0e9: every handler this cell ships is wrapped by _authz.guard(); IB-s-3 S3-AC2: whether the wrapper can be bypassed by a handler that forgets to use it -- and how a reader would detect that.",
+    "world_is": "The detector IB-s-3 shipped found what it was built to find: three handlers written before the route table existed were mapped to routes after the fact and never revisited. Measured, not repaired, at the last cell of the round.",
+    "notes": "The drain is closed: every worktree removed, every branch merged, HEAD f8860a4a4b. The drain-end read to the CTO follows this commit; the slug is the CVO's."
   }
 ]
 ```
