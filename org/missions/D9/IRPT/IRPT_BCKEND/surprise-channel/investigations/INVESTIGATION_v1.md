@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 30 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (28 ours + 29 theirs, 27 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 35 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (31 ours + 26 theirs, 22 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -195,6 +195,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Row W2-S7 spec_asserts: the cell's signature resolve(headers, directory) -> ResolvedScope with the unique permitted account set; PRD B15 acceptance: an Opal principal reaches clients at two firms through scoped routes; a firm advisor replaying the same requests is refused.",
     "world_is": "The permitted set is only computable through a third input and a projection the face did not name; absent the projection the resolver returns an empty set that is indistinguishable from a revocation. Disarmed by making the absence a refusal with a reason at the handler cell, and by binding the projection to one definition of the opaque id.",
     "notes": "Amendment shape: the FE-s-2 / FE-s-5 shape (a not-yet-handed face amended by its issuer, recorded on the channel). Nothing in the decomposition changed; the cell's rectangle already covered the Global permitted-set path. Carried to L10: whether the one-line edge fix beside index.mjs:390 is worth a CLOUD_OPS_OR_ETL act in round 2 once the roster path is measured."
+  },
+  {
+    "id": "IRPT_BCKEND-S9",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T01:57:50Z",
+    "one_line": "DISARM of IRPT_BCKEND-W2-S9 and IRPT_BCKEND-W2-S10 (disarm_owner 2.0.0_SA_COO~B), the same drain they merged in (3cca035c66). W2-S9: the firm id has two spellings (registry id in X-Firm-Id and _keys; opaque id in DirectoryEntry and the _scope cross-firm filter) and a handler that joins on the header value serves an EMPTY population that reads as a revocation -- visible only at the join, invisible to every per-module test. W2-S10: _keys.KeyComponentRefused names the refused value in its message, so str(exc) anywhere is a disclosure of a client name or e-mail. The issuer amended the EIGHT un-handed faces (IB-s-4, 7, 9, 10, 14, 15, 16, sb-3) with one block and one acceptance arm: every handler wrapped by _authz.guard() with unguarded_routes() printed 0 of N; every firm-scoped read bound through _authz.FirmBinding with a non-reconciling binding REFUSED (FIRM_BINDING), never empty; no _keys exception text in any response, log, audit row or print, with a whole-envelope assertion. Two facts carried to L10 rather than fixed mid-round: the directory and performance handlers (IB-s-1, IB-s-11) merged BEFORE the wrapper existed -- a sequencing defect of the decomposition (s.1 said the library lands before the handlers ship; the chains did not enforce it) -- and IB-s-17's _keys exception text is a round-2 item on that cell's surface. The three in-flight faces (IB-s-12 on ~1, IB-s-6 on ~3, IB-s-13 on ~4) cannot be amended and are re-graded for the same two properties by the issuer at their drains.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (this row IS the disarm act for W2-S9 and W2-S10 on every un-handed cell; the merged handlers' unguarded state is measured at IB-sb-3 and carried to L10)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W2-S9, IRPT_BCKEND-W2-S10 @3cca035c66 -- both ARMED, disarm_owner 2.0.0_SA_COO~B",
+        "infra/aws/lambda/investor-reporting/_authz/enforce.py @3cca035c66 -- guard(), FirmBinding, unguarded_routes(), the refusal reason built from parameter names",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-{4,7,9,10,14,15,16}.*.md and IRPT_BCKEND.TO-IB-sb-3.*.md (this commit) -- ISSUER AMENDMENT block + arm (amend); every <status> still staged, none handed",
+        "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md v0.1.1 s.1 @3cca035c66 -- 'this half is a shared dependency beneath every handler and must land BEFORE the handlers ship', while s.5's chains seat IB-s-1 and IB-s-11 ahead of IB-s-3"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition s.1 for IB-s-3: the enforcement library is a shared dependency beneath every handler and lands before the handlers ship. IB-s-3 bounds: client names are never keys; the wrapper never widens.",
+    "world_is": "Two handlers shipped before the library; the library's own seams (firm-id spelling, refusal text) are only visible at the join and were found by the cell that made the join. Disarmed forward on every un-handed face; the merged handlers are measured at the replay and carried to L10.",
+    "notes": "Amendment shape: FE-s-2 / FE-s-5 (not-yet-handed faces amended by the issuer, recorded on the channel). The decomposition is not edited mid-round; the sequencing defect is the issuer's own L5 finding for the round-2 recut."
   },
   {
     "id": "IRPT_BCKEND-W1-S1",
@@ -722,28 +746,98 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "No credential of any kind is in the fixtures (checked: no bd.identity, Bearer, access_token or Cookie string appears). If 3.0.0_SA_CVO reads the bound as magnitude-scrubbing too, the remedy is a single affine rescale of every dollar quantity in the generator -- returns and factors are scale-invariant, so only the value-shortcut arm's absolute dollar figure changes, and it would then be cited against a rescaled expectation rather than against the evidence's 210.68."
   },
   {
-    "id": "IRPT_BCKEND-S9",
+    "id": "IRPT_BCKEND-W4-S5",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T01:57:50Z",
-    "one_line": "DISARM of IRPT_BCKEND-W2-S9 and IRPT_BCKEND-W2-S10 (disarm_owner 2.0.0_SA_COO~B), the same drain they merged in (3cca035c66). W2-S9: the firm id has two spellings (registry id in X-Firm-Id and _keys; opaque id in DirectoryEntry and the _scope cross-firm filter) and a handler that joins on the header value serves an EMPTY population that reads as a revocation -- visible only at the join, invisible to every per-module test. W2-S10: _keys.KeyComponentRefused names the refused value in its message, so str(exc) anywhere is a disclosure of a client name or e-mail. The issuer amended the EIGHT un-handed faces (IB-s-4, 7, 9, 10, 14, 15, 16, sb-3) with one block and one acceptance arm: every handler wrapped by _authz.guard() with unguarded_routes() printed 0 of N; every firm-scoped read bound through _authz.FirmBinding with a non-reconciling binding REFUSED (FIRM_BINDING), never empty; no _keys exception text in any response, log, audit row or print, with a whole-envelope assertion. Two facts carried to L10 rather than fixed mid-round: the directory and performance handlers (IB-s-1, IB-s-11) merged BEFORE the wrapper existed -- a sequencing defect of the decomposition (s.1 said the library lands before the handlers ship; the chains did not enforce it) -- and IB-s-17's _keys exception text is a round-2 item on that cell's surface. The three in-flight faces (IB-s-12 on ~1, IB-s-6 on ~3, IB-s-13 on ~4) cannot be amended and are re-graded for the same two properties by the issuer at their drains.",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-11T01:55:00Z",
+    "one_line": "S13-AC1 arm (h) asks that the layer zip imports jsonschema AND bd_helpers in a clean Python. bd_helpers does, on any host. jsonschema CANNOT on this one, and the reason is that the layer is CORRECT: its only native dependency resolves to python/rpds/rpds.cpython-312-x86_64-linux-gnu.so, a LINUX cp312 extension -- what an AWS python3.12 Lambda needs and what a Windows build host cannot load. A clean-Python import succeeding HERE would be evidence the layer had been built for the wrong platform. The arm's substance is therefore proved on the runtime: both deployed functions carry irpt-common:2 (2 of 2) and irpt-performance-adapter returns contract_validated=true on BOTH provider paths, which is only reachable by importing jsonschema from the layer inside the Lambda. The battery prints the host attempt, its ModuleNotFoundError and the .so member name side by side so a reader can see which of the two readings they are getting.",
     "class": "OBSERVATION",
     "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (this row IS the disarm act for W2-S9 and W2-S10 on every un-handed cell; the merged handlers' unguarded state is measured at IB-sb-3 and carried to L10)",
     "grounding": {
       "status": "GROUNDED",
       "evidence": [
-        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W2-S9, IRPT_BCKEND-W2-S10 @3cca035c66 -- both ARMED, disarm_owner 2.0.0_SA_COO~B",
-        "infra/aws/lambda/investor-reporting/_authz/enforce.py @3cca035c66 -- guard(), FirmBinding, unguarded_routes(), the refusal reason built from parameter names",
-        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-{4,7,9,10,14,15,16}.*.md and IRPT_BCKEND.TO-IB-sb-3.*.md (this commit) -- ISSUER AMENDMENT block + arm (amend); every <status> still staged, none handed",
-        "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md v0.1.1 s.1 @3cca035c66 -- 'this half is a shared dependency beneath every handler and must land BEFORE the handlers ship', while s.5's chains seat IB-s-1 and IB-s-11 ahead of IB-s-3"
+        "battery_ib_s_13.py arm (h) output, verbatim: bd_helpers -> OK: imported; built a request body with 6 dateRange(s) and a requested_range_index of 6 row(s): Custom,Year To Date,Trailing 12 Months,2025,2024,Since Inception ; jsonschema -> ERROR: ModuleNotFoundError: No module named rpds.rpds -- run with python -E -s and sys.path set to the extracted layer python/ directory only",
+        "zipfile namelist of infra/aws/lambda/layers/irpt-common/irpt-common.zip: the single native member of 154 is python/rpds/rpds.cpython-312-x86_64-linux-gnu.so, and it is Linux",
+        "infra/aws/lambda/layers/irpt-common/build_layer.py pip_install @a12b0df4e7 -- --platform manylinux2014_x86_64 --implementation cp --abi cp312 --only-binary=:all:, so a host-shaped resolution FAILS the build instead of producing a host-shaped layer",
+        "lambda invoke irpt-performance-adapter after the attach, both providers: contract_validated=true for F-INF (Orion) and F-49F (Black Diamond) -- the RUNTIME import, which is the one the product depends on"
       ]
     },
     "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "Decomposition s.1 for IB-s-3: the enforcement library is a shared dependency beneath every handler and lands before the handlers ship. IB-s-3 bounds: client names are never keys; the wrapper never widens.",
-    "world_is": "Two handlers shipped before the library; the library's own seams (firm-id spelling, refusal text) are only visible at the join and were found by the cell that made the join. Disarmed forward on every un-handed face; the merged handlers are measured at the replay and carried to L10.",
-    "notes": "Amendment shape: FE-s-2 / FE-s-5 (not-yet-handed faces amended by the issuer, recorded on the channel). The decomposition is not edited mid-round; the sequencing defect is the issuer's own L5 finding for the round-2 recut."
+    "spec_asserts": "S13-AC1 arm (h): The layer zip imports `jsonschema` and `bd_helpers` in a clean Python (printed).",
+    "world_is": "One of the two imports is host-portable and one is deliberately not. The un-portable one is un-portable BECAUSE the layer is built for its deployment target, so the literal arm is unsatisfiable on any non-Linux build host and its substance is checkable only on the runtime.",
+    "notes": "Not blocking: the arm was met on the plane that matters and both readings are printed. The residue for 3.0.0_SA_CVO is a wording one -- a future face asking for a clean-Python import of a cross-platform layer should ask instead for the RUNTIME import (an invoke) plus the platform tag of the native member, which is what was done here."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S6",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-11T01:55:00Z",
+    "one_line": "The issuer amendment names TWO things the deployed irpt-performance-adapter could not carry (jsonschema and the bounded BD helpers). There is a THIRD, and jsonschema alone would not have moved the arm: the CONTRACT SCHEMA FILE is not in the performance zip either. normalize.py resolved it at <package>/../_contracts/PerformanceReport.schema.json, which inside a Lambda is /var/_contracts and does not exist, so contract_validated would have gone from false-for-want-of-a-library to false-for-want-of-a-file and arm (h) would still have failed. Fixed inside this order grant: the layer carries the contracts at /opt/python/irpt_contracts and normalize.py resolves env -> layer -> repo BY PRESENCE OF THE FILE, so an empty layer directory cannot shadow a worktree run, with the repo path last and unchanged. Measured after: the deployed function returns contract_validated=true on both provider paths and the 28 IB-s-11 tests still pass.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/performance/normalize.py:43 @410f28f7db -- CONTRACTS = pathlib.Path(__file__).resolve().parents[1] / _contracts ; the build flattens source_dir to the zip root, so parents[1] is /var on the runtime",
+        "infra/aws/lambda/ci/lambda-source-map.json @410f28f7db -- the irpt-performance-adapter files[] list carries 7 .py files and 6 fixture JSONs and NO _contracts entry, so the schema is not in the artifact",
+        "normalize.py _resolve_contracts_dir @a12b0df4e7 -- three candidates, resolution by (path / PerformanceReport.schema.json).is_file(), repo path last",
+        "lambda invoke irpt-performance-adapter after the attach: contract_validated=true, and the contract_validation PARTIAL absence IB-s-11 shipped is absent from the response",
+        "python -m pytest infra/aws/lambda/investor-reporting/performance/tests -q -> 28 passed, after the change"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The L5 note in this face: This order builds ONE shared layer at infra/aws/lambda/layers/irpt-common/ -- jsonschema (pinned) plus a bd_helpers module ... The deployed performance function then validates contracts (contract_validated=true).",
+    "world_is": "A Lambda zip is closed over its own directory, so a SHARED contract resolved by a relative path out of the package cannot resolve on the runtime. Two of the three dependencies were named in the amendment; the third had to be found by building it.",
+    "notes": "Surfaced rather than silently absorbed because it WIDENS what the layer carries beyond the amendment wording. Both the layer path and the performance package are in this order <paths>, so no grant was exceeded. The alternative -- packaging a copy of the schema inside the performance zip -- was refused: a second copy of a SHARED contract is the same defect class the bd_helpers reuse exists to prevent."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S7",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-11T01:55:00Z",
+    "one_line": "The first assembled bd_helpers PARSED and could not IMPORT: the AST closure pulled functions and module-level constants but not module-level IMPORTS, so BENCHMARK_IDS = [int(x) for x in os.environ.get(...)] raised NameError: name os is not defined at /opt/python/bd_helpers.py line 21 on the runtime. compile() passed it, which is exactly why a generator whose only test is that its output parses will ship a module that cannot import. Two things made it visible and both are worth carrying: (1) the failure was INVISIBLE to the first verification invoke because that invoke used the Orion path, which never loads the BD helpers -- one provider read GREEN on a layer broken for the other; (2) the remedy is not only the closure but the FALSIFIER -- build_layer.py now execs the module it generated in a clean namespace and requires every requested helper to be callable, so a missed closure member fails the BUILD instead of the deployed function. Separately the same build was NOT reproducible as first written (three builds, three digests): pip console-script launchers are freshly stamped .exe files on a Windows host and the dist-info RECORD line hashes them. Both are excluded now and two consecutive builds are byte-identical.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lambda invoke irpt-performance-adapter with an F-49F scope, verbatim: errorMessage name os is not defined / errorType NameError / stackTrace File /opt/python/bd_helpers.py, line 21, in <module> BENCHMARK_IDS = [int(x) for x in os.environ.get(",
+        "infra/aws/lambda/layers/irpt-common/build_layer.py assemble_helpers @8e5d8cadad -- module-level Import/ImportFrom aliases are collected and joined into the closure; BUILD_MANIFEST records imports_emitted [os] beside functions_emitted (6) and constants_emitted (3)",
+        "build_layer.py @8e5d8cadad -- the assembled module is exec'd in a clean namespace at build time and every requested helper must be callable afterwards, or the build exits non-zero",
+        "three builds of identical inputs before the exclusions: 674531 / 674530 / 674529 bytes with three distinct digests, differing ONLY in python/bin/jsonschema.exe and the jsonschema dist-info RECORD line that hashes it; after: two consecutive builds cmp-clean at 621748 bytes",
+        "battery_ib_s_13.py arm (h): both providers invoked, 2 of 2 contract_validated=true, 0 helper-degraded cells"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The L5 note: a bd_helpers module ASSEMBLED AT BUILD TIME from the reporting-pull Lambda source at a pinned commit (the estate build_package.py shape: git show <pin>:<path>, never a hand copy).",
+    "world_is": "An AST closure over functions and constants is not the closure a module needs in order to import; imports are part of it. And a code generator whose only test is that its output compiles has no test of the property its consumers depend on.",
+    "notes": "The generalisable half is the verification one rather than the Python one: a PER-PATH dependency needs a PER-PATH exercise. One green invoke was not the population, and the arm now invokes both providers explicitly and prints 2 of 2."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S8",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-11T01:55:00Z",
+    "one_line": "`.tools/aws` cannot be spawned from a Windows Python: subprocess raises OSError [WinError 193] is not a valid Win32 application, because the file is a bash script with no Windows launcher. Any battery, generator or gate that shells the estate AWS shim FROM PYTHON on this device dies at the first call, and the error names Win32 rather than the shim, so it reads as a broken AWS call. The usable face is the sibling `.tools/aws.cmd` invoked as [cmd, /c, <path>, ...] -- same shim, same credentials, same CLI v1 behaviour -- and it keeps the instrument the estate own rather than substituting a boto3 call for it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "subprocess.run([str(REPO/.tools/aws), dynamodb, scan, ...]) from Python 3.12.10 on this device: OSError: [WinError 193] is not a valid Win32 application -- raised twice, once in make_narrative_fixtures.py and once in battery_ib_s_13.py",
+        "ls -la .tools/aws .tools/aws.cmd -- both present (7350 and 2271 bytes); CLAUDE.md Git section says AWS via the .tools/aws shim (+aws.cmd, both or neither), which is the pairing rule and not guidance on which face Python may exec",
+        "subprocess.run([cmd, /c, .tools\\aws.cmd, sts, get-caller-identity, --output, json]) -> rc 0 with arn:aws:iam::313476888478:user/Andrew_Berman",
+        "battery_ib_s_13.py AWS constant at this commit: [cmd, /c, str(REPO/.tools/aws.cmd)], with the reason in a comment beside it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md Git section: AWS via the `.tools/aws` shim (+`aws.cmd`, both or neither); never bare MSYS_NO_PATHCONV=1 aws.",
+    "world_is": "The two faces of the shim are not interchangeable by caller. From bash either works; from a Windows Python only the .cmd does, and the bash one fails with an error that points away from the cause.",
+    "notes": "Recorded because it costs a cycle every time. Same family as the existing memory note that Python spawning an MSYS binary must go through .tools/msys_argv_guard.py -- this is the AWS-shim instance of it."
   }
 ]
 ```

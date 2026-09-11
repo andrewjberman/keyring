@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~4</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>staged -- assigned to slot ~4; becomes pending when the COO hands it over after IB-s-11 is terminal and merged.</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.4 @62301f71e0 | **Decomp cell:** `IB-s-13` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, s.1 + s.2) | **outcome_ref:** FWD-8 (contrib) | **PRD candidate:** B13
 
