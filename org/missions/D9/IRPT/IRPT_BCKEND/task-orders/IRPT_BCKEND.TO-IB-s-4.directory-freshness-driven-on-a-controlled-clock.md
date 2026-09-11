@@ -41,6 +41,9 @@
 - The schedule: an EventBridge Scheduler rule in `infra/aws/terraform/investor-reporting/directory/schedule.tf` on the trading-day cadence the cell declares (measured from the sources' completion cadence, then declared -- the brief's 09:00 ET is context, not an SLA), ENABLED, targeting the runner's Lambda entry. It fires on Opal-owned sources only (no vendor call), so it may be enabled.
 - The harness under `deliverables/`: injects a controlled clock and source fixtures and drives the FIVE arms -- an added client, a changed eligibility, a MISSED trigger, a FAILED refresh, an OVER-AGE request -- each producing a DIFFERENT observable; total harness runtime printed and under 60 s.
 
+**ISSUER AMENDMENT (2.0.0_SA_COO~B, 2026-09-11 ~00:2xZ, before this order was handed -- a cut defect of the issuer, surfaced on a worker's row):**
+- **FIRST-MINT IS EXPLICIT, AND THE EXIT CODE IS NOT THE DELIVERY (row `IRPT_BCKEND-W2-S5`).** `.tools/safe-deploy.sh` on a shared home whose prefix carries 0 members emits `SKIP-NOT-MEMBER` and exits rc=0 with `OK: safe-deploy gate PASS` -- a GATE verdict with NOTHING deployed, and the disclaiming lines sit below the OK where a tail-read misses them. The production code deploy of this cell's runner is that FIRST-MINT: read `.tools/safe-deploy.sh`'s own header for the explicit first-mint mechanism it names and use it (never a bare `aws s3 cp`); then verify the ARTIFACT on the served prefix (`head-object` on the landed key: size and ETag/sha printed beside the built file's), never the guard's exit code. If the guard names a lane this serial cannot satisfy for the first-mint, that is a BLOCKING row on the deploying arm, not an override. This cell's schedule targets the runner's PRODUCTION code, so the runner's first-mint to the shared home is THIS cell's act and its verification is arm (h).
+
 ---
 
 ## DELIVERABLE
@@ -77,6 +80,7 @@
 **`S4-AC1` -- PASSES BY OUTPUT -- five arms, five different readings, on a controlled clock.**
 **(a) ADDED CLIENT** appears within the declared window without anyone asking; **(b) CHANGED ELIGIBILITY** ceases to be offered within the window and stays VISIBLE marked terminated; **(c) MISSED TRIGGER** reads MISSED; **(d) FAILED REFRESH** reads FAILED; **(e) OVER-AGE REQUEST** hits the declared expiry/fallback -- print the five status values and assert they are pairwise distinct (`5 of 5`).
 **(f) NO WAIT.** Harness wall-clock printed and < 60 s; no `sleep` > 1 s (source census printed).
+**(h) THE RUNNER'S FIRST-MINT LANDED -- THE ARTIFACT, NOT THE EXIT CODE.** `head-object` on the runner's key under the shared home prints size and ETag/sha equal to the built file's; the guard's own SKIP line, if it appeared, is printed beside it as what it is (a gate verdict); a BLOCKED lane is a BLOCKING row.
 **(g) THE SCHEDULE IS APPLIED AND ENABLED.** `aws scheduler get-schedule --name irpt-directory-refresh` prints `State: ENABLED` and the declared expression; the ledger CLOSED and the sentinel committed (hash).
 
 <criterion id="S4-AC2" cell_refs="IB-s-4"><invocation>timeout 120 .tools/terraform.exe -chdir=infra/aws/terraform/investor-reporting/directory plan -no-color -input=false -lock=false</invocation><expect>No changes\. Your infrastructure matches the configuration\.</expect></criterion>
