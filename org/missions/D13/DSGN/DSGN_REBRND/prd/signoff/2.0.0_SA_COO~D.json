@@ -1,0 +1,13 @@
+{
+  "prd": "DSGN_REBRND_PRD.md",
+  "prd_version": "v0.1",
+  "prd_pin": "9769e40c6fc3deb25b037794f93f4ff792144eaf",
+  "half": "brief",
+  "half_hash": "d80ea326e715761c01fad7a5157040dec6ce257f6f4989b19248436ae552ad86",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/2.0.0_SA_COO/deliverables/laneD_L4R_BRIEF_HALF_REVIEW_DSGN_REBRND_v0.1.md@b5a959bb82",
+  "signed_by": "2.0.0_SA_COO~D",
+  "signed_at": "2026-09-11T08:24:45Z",
+  "reason": "SURFACE MANIFEST omits Andrew's 2026-09-11 feature-branch confinement: as written every cell drains to DEV, the branch he ruled this work must stay off; suggested one-line correction in the review record",
+  "designated_by": "designated by org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_080xZ_DSGN_REBRND_COO_D_SIGNS_CVO_ADVERSARIAL_SELF_DRIVE_WIDENED.md@2daf4d8b85"
+}
