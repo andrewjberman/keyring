@@ -747,6 +747,28 @@
     "spec_asserts": "This order's WORKER FACE: \"the ui-smoke `--firm <id>` flag renders a PARTNER session\" and \"ui-smoke prints `DID NOT LAND` for a route carrying a query string while rc=0 and the PNG is the evidence (F10-AC8 carries `?firm=global`)\" -- framing the expected DID-NOT-LAND print as a query-string artifact of the instrument, implying the PNG would otherwise show Investor Reporting's firm-scoped view.",
     "world_is": "The PNG shows the Market Overview page, not Investor Reporting in any form -- a real client-side route redirect, reproduced identically with the query string removed. No partner firm has been onboarded to '/investor-reporting' in firmAccess.ts yet (consistent with IRPT_BCKEND's routes not existing yet, per api/endpoints/investor-reporting.ts's own docstring). F10-AC8's rc=0 bar is met and the PNG is exactly what a firm session gets today (no dropdown, no second firm, no IR content at all) -- but the redirect's CAUSE is this file, not the query string, and not anything FE-s-10 (or any IRPT_FNTEND cell to date) controls; onboarding the path is a firmAccess.ts edit outside every current cell's <paths>.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S14",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T07:05:00Z",
+    "one_line": "FE-s-10 drained (portal DEV 787015e8, workspace eada87592e; the whole Investor Reporting set reads 236 pass, 1 skip, 0 fail on DEV by the issuer's own run). Two worker rows read at the drain: W1-S9 (getServerSnapshot on the three stores in state/hooks.ts) is an edit inside the state/ folder the BOUNDS grant, needed for the criterion's own invocation to execute, accepted as in-grant; W1-S10 names a defect in THIS ISSUER'S FACE -- F10-AC8 attributed the expected DID-NOT-LAND print to the query string when the cause is portal/src/lib/firmAccess.ts listing no partner firm for /investor-reporting, so every firm session is redirected to /market today. That onboarding is a step no cell of this decomposition owns and no <paths> block grants; it is carried to L10 as round-2 scope together with W2-S2, W2-S3, W2-S4, W2-S6, W3-S2, W4-S2 and W1-S8 (1). Ten of eleven orders terminal; FE-s-11 seated on a fresh pair from e23ab5d9d4 / 787015e8.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal DEV @787015e8 -- bun test src/pages/InvestorReporting: 236 pass, 1 skip, 0 fail, 1137 expect() calls, 46 files (issuer's run after the merge, distinct from the worker's)",
+        "workspace @eada87592e -- proof-of-spec-check.py on the FE-s-10 instance: VALID rc=0, 11 acceptance rows, 0 violations; git show --format= e1314eb32b -- portal: empty (no gitlink in the worker's commit)",
+        "row IRPT_FNTEND-W1-S10 @eada87592e -- diagnostic re-run with the query string removed lands on /market identically; firmAccess.ts FIRM_ALLOWED_PATHS carries no /investor-reporting for 49financial, inflection, cottonwood or demo",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-11.design-conformity-census.md -- no --firm invocation; every fixture it names present under fixtures/smoke/ on DEV (5 of 5)"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-10 F10-AC8 face: the DID-NOT-LAND print is an artifact of a route carrying a query string; a firm-scoped session renders the Investor Reporting page with one firm and no dropdown.",
+    "world_is": "The print is a real client-side redirect from the firm access matrix, reproduced without the query string; no partner firm can reach the route today. The mechanical bar (rc=0) held and the PNG is faithful evidence of what a firm session gets, so the criterion stands as recorded; the face's explanation was wrong and the onboarding step is unowned.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
