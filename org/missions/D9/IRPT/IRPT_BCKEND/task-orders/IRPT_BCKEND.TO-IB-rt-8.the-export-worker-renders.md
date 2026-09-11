@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~4</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending -- GO paired at the round-2 issuance (the hand-off is the GO). First and only order of slot ~4.</status>
+<status>complete -- RT8-AC1 PASS-by-output (6 of 6 mechanical arms, rc 0, IBRT8-EXPORT-RENDERS); RT8-AC2 RECORDED as judgment for 3.0.0_SA_CVO at L9, no verdict taken here. The RENDER STEP READS HUMAN-GATED, admitted by RT8-AC1 (a) as the arm's own rule: no reachable host may be STARTED by this cell, and the operator's act is written verbatim in infra/aws/ec2/investor-reporting-export/README.md (row IRPT_BCKEND-W4-S14). proof-of-spec-check rc 0. Six rows filed, W4-S14 through W4-S19.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 2 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.13 @e6ba5d9878 (ADMITTED, both L4-R halves SIGNED) | **Round-1 analysis:** `../ledger/ROUND_ANALYSIS.round1.md` @0d57ceb2f9, ruling 5 | **Slug rows this cell closes:** W4-S9, W4-S10, W4-S12, W4-S13, C-S76 | **Decomp cell:** `IB-rt-8` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.2, s.1 + s.2) | **outcome_ref:** FWD-8 (contrib, the worker), FWD-3, FWD-4 (the Analysis PDF) | **PRD candidate:** B14
 
