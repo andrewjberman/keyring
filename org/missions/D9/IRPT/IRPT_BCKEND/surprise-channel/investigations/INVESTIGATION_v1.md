@@ -1709,6 +1709,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Issuer amendment @812bbec0e9: every handler this cell ships is wrapped by _authz.guard(); IB-s-3 S3-AC2: whether the wrapper can be bypassed by a handler that forgets to use it -- and how a reader would detect that.",
     "world_is": "The detector IB-s-3 shipped found what it was built to find: three handlers written before the route table existed were mapped to routes after the fact and never revisited. Measured, not repaired, at the last cell of the round.",
     "notes": "The drain is closed: every worktree removed, every branch merged, HEAD f8860a4a4b. The drain-end read to the CTO follows this commit; the slug is the CVO's."
+  },
+  {
+    "id": "IRPT_BCKEND-S25",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T11:59:49Z",
+    "one_line": "ROUND 2 ISSUED. On the CTO's round-1 analysis (ledger/ROUND_ANALYSIS.round1.md @0d57ceb2f9: 10 of 10 outcomes served, no addendum, 0 REALIZED, eight rulings) and the CVO's slug (REMEDIATION_v1.md @27e67fa6a5, 25 OPEN rows), the issuer cut decomposition v0.2 and ONE issuance of twelve task orders against PRD v0.13 @e6ba5d9878 (ADMITTED; the L6 gate read both L4-R halves SIGNED on every face): IB-rt-1 seam, IB-rt-2 guard the six + the test principal, IB-rt-3 one opaque-id normalizer + grain, IB-rt-4 typed keys + the exception path, IB-rt-5 the gold first-mint (issued to a DS lane, 0.4.0_DS_ClientPlatform~X, the rule-13 act the CTO's ruling 3(c) opened), IB-rt-6 the refresh builds, IB-rt-7 the holdings handler + attribution holdouts, IB-rt-8 the export worker renders, IB-rt-9 YCharts on the v0.9 mechanism, IB-rt-10 glyphs and dates, IB-rt-11 intake currency/unit controls, IB-rtb-1 the authenticated replay. Landed at 388b8199b8 and merged onto the moved tip at 7478fdf144 (the fast-forward lost a race; pull-merge, never rebase). Coverage: 10 of 10 outcomes, 8 of 8 rulings, 25 of 25 OPEN slug rows closed by a cell or carried by name (W1-S4, W3-S3 to CloudOps with the CTO as gate). Fan-out 5 of 10 chains: the four round-1 worker subagents RESUMED with context intact on IB-rt-3 (~1), IB-rt-1 (~2), IB-rt-4 (~3), IB-rt-8 (~4) from worktrees cut at 7478fdf144; the DS lane seated by /mstr-spawn for IB-rt-5. The round-1 ids are retained in the decomposition's id space so every round-1 instance still aligns. Two new bounds on every face: no self-wrapping harness as evidence; typed issued identifiers at every boundary. One gate note recorded honestly: the DS lane's pointer file in its own task_orders/ home reads as a task order to the announce-mode decomp-ref lint (no <issued_to>, no <decomp_ref>) -- it carries a pipeline-override line naming the tree face as the graded order; if the lint is armed to enforce, the pointer moves out of task_orders/ and the GO names the tree path alone.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (the issuer; the round-2 drain follows the round-1 procedure)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md v0.2 @388b8199b8 -- sections 0 (round 1 retained), 1 (the rectangle), 3 (chain read: 9 edges, 9 heads, 4 leaves, M=10, 4 components, depth 3), 5 (seating + fanout), 7 (battery), 9 (carries)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rt-*.md and IRPT_BCKEND.TO-IB-rtb-1.*.md @388b8199b8 -- twelve faces; to-pipeline-gate OK 13 of 13 newly-added with <decomp_ref> and complete <preflight>; L4-R sign-offs OK at v0.13",
+        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T111958Z_1.0.0_SA_CTO_ROUND-2_ANALYSIS_IRPT_BCKEND__0d57ceb2f9.md (msg 95954)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Spine v3 L10: the CTO answers with the ROUND-N ANALYSIS the COO recuts in ONE issuance; L6: ONE ISSUANCE covering every cell, fan-out derived from the chains and stated as fanout: data in the issuance commit.",
+    "world_is": "The recut is one issuance of twelve cells against the admitted PRD, fanned to five seats including one DS lane for the act no worker may take; round 1's evidence is built on, not rebuilt.",
+    "notes": "The DS lane spawn and its GO follow this row in the same turn; the round-2 drain, disarms and the drain-end read follow the round-1 procedure (seat rows continue at S26)."
   }
 ]
 ```
