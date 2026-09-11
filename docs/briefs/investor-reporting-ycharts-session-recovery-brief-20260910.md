@@ -4,6 +4,8 @@ Author: **4.0.0_SA_CRO**. Andrew-directed experiments, September 10, 2026 Easter
 
 The chosen direction is unchanged: use the **BDAPI Node/Playwright/Kimi runner on a transient, dedicated EC2 host** to acquire YCharts authentication; use ordinary REST workers for report operations when transport portability is proven. Carry forward Inflection's refresh-and-resume behavior with explicit session generations and bounded retries. This research produces runnable probes and failure-injection evidence; it does not claim a working cloud deployment.
 
+**K3 amendment, September 10 Eastern / September 11 UTC:** Andrew selected `kimi-k3` and separate 2500-token read / 400-token action calls. That controller has now cleared live YCharts AWS WAF CAPTCHAs. Encrypted local cookies retained that clearance across fresh browser runs. The final correctly populated login submission was rejected by YCharts; authenticated report REST access is still unverified. See VI.3 for the evidence and exact limitations. The original K2.6 failures remain dated baseline evidence.
+
 ## PART 0 - Midstream constraint and where it bent
 
 No current task orders or project `phase` / `blocking` fields were read to formulate this supplement. Sources were Andrew's request, the existing IR briefs/design, actual runtime code, historical BDAPI/Inflection architecture and logs, and new experiments. The context leak is explicit: this seat previously reviewed the IR frontend/backend v0.4 PRDs and signed their brief coverage; their component vocabulary and ownership are already known. Scoped searches also surfaced new IR backend source directories. Those do not establish completion and are not ratified by this document.
@@ -93,7 +95,7 @@ Adapt the behavior, not the JWT assumptions. YCharts cookies/WAF state are not O
 
 `tools/astn_wsjft/scripts/harvest_ft_session.js` contains a Kimi-guided hCaptcha tile loop. Its own status says synthetic localization passed and the live challenge selectors/geometry still need tuning. A different vendor's challenge is not a reusable solved YCharts puzzle. Keep the BDAPI model-health timeout/retry/fallback pattern, inspect the actual YCharts challenge, constrain actions to its visible controls, and verify the result using the vendor response.
 
-The local browser experiments reached HTTP 405 and an AWS WAF script before any password submission. Waiting alone did not reveal the login form. AWS documents 405 for its CAPTCHA action and 202 for its automatic Challenge action; confirm `x-amzn-waf-action` and actual page state rather than classifying every 405 as authentication expiry. [AWS WAF action behavior](https://docs.aws.amazon.com/waf/latest/developerguide/waf-captcha-and-challenge-actions.html).
+The initial K2.6 browser experiments reached HTTP 405 and an AWS WAF script before any password submission. Waiting alone did not reveal the login form. AWS documents 405 for its CAPTCHA action and 202 for its automatic Challenge action; confirm `x-amzn-waf-action` and actual page state rather than classifying every 405 as authentication expiry. [AWS WAF action behavior](https://docs.aws.amazon.com/waf/latest/developerguide/waf-captcha-and-challenge-actions.html). The later K3 experiments in VI.3 provide actual YCharts puzzle-clearance evidence.
 
 ### IV.4 FINDING: existing YCharts code cannot be reused unchanged
 
@@ -126,7 +128,7 @@ The controller uses the BD start/SSM/completion/stop pattern with an account-sco
 
 Use a durable job wait/event continuation rather than keeping Lambda busy through browser startup. Accept SSM Success only for the expected command and current attempt, then independently verify the candidate session. A successful capture must be usable by the intended report worker before waiting jobs proceed. An empty or missing secret is a capture requirement, not a reason to try an unauthenticated report POST.
 
-**No OTP workflow.** An unexpected OTP/MFA prompt becomes a distinct unsupported-challenge outcome. Do not fake BD's `otpEntered` condition. The experiment uses the canonical `kimi-k2.6` configuration and the runner's 1500-token response cap; those settings are versioned implementation inputs, not permanent product requirements.
+**No OTP workflow.** An unexpected OTP/MFA prompt becomes a distinct unsupported-challenge outcome. Do not fake BD's `otpEntered` condition. Andrew's latest model choice is **`kimi-k3`**, replacing the initial K2.6/1500-token experiment. Use two calls: 2500 completion tokens for observation, then 400 for a constrained action, both with low reasoning effort in the final tested controller. K3 always reasons; its supported effort setting replaces a thinking-disable assumption. [K3 settings](https://platform.kimi.ai/docs/guide/kimi-k3-quickstart). The budgets and retries remain versioned engineering inputs.
 
 ### IV.6 Proposed session record and publication
 
@@ -170,7 +172,7 @@ Preserve the existing settings and revisions, including the specified annual man
 These dependencies are required evidence boundaries, not a new decomposition:
 
 - A dedicated YCharts EC2 runtime, declared IAM/SSM/artifact deployment, native egress and browser package versions, with measured start/capture/stop behavior.
-- A real YCharts CAPTCHA interaction inspected and tested with the bounded Kimi runner; the FT hCaptcha framework is not sufficient proof.
+- The locally proven K3 YCharts CAPTCHA controller exercised on the dedicated cloud runtime; the FT hCaptcha framework alone is not sufficient proof.
 - An authenticated identity/report-capability probe whose expected schema is verified, plus EC2-capture-to-Lambda-replay evidence. Local browser evidence cannot establish cloud portability.
 - A durable lease/fence and request ledger implementation, fault-tested against duplicate starts, stale completion, partial secret publication, timeout and cleanup races.
 - Coordination with existing YALP_MDSRC session consumers and schedules so they do not continually evict the new runner.
@@ -179,7 +181,7 @@ These dependencies are required evidence boundaries, not a new decomposition:
 
 ## PART VI - Status: NOT OUTCOME-BEARING
 
-### VI.1 New experiments
+### VI.1 Initial K2.6 and offline experiments
 
 Evidence lives in `docs/research/investor_reporting_ycharts_auth_20260910/`:
 
@@ -191,11 +193,33 @@ Evidence lives in `docs/research/investor_reporting_ycharts_auth_20260910/`:
 
 ### VI.2 Existing secret state observed in this research
 
-Safe `comp-secrets` inspection found `ycharts/login/credentials` with username/password fields, `astn/kimi/api-key` present, and no AWSCURRENT value available for `ycharts/session/current`. No secret value is included in these documents or probes. Presence is not proof that the vendor accepts the credentials; the browser tests stopped earlier.
+Safe `comp-secrets` inspection found `ycharts/login/credentials` with username/password fields, `astn/kimi/api-key` present, and no AWSCURRENT value available for `ycharts/session/current`. No secret value is included in these documents or probes. Presence is not proof that the vendor accepts the credentials. The initial tests stopped before credential submission; the final K3 submission in VI.3 reached an explicit rejection. A subsequent safe metadata check confirmed the stored username matches Andrew's requested account, both fields have no surrounding whitespace, and the password is nonempty. No credential guess or secret replacement was performed.
+
+### VI.3 K3 split-call experiments and present blocker
+
+Current research modules: `kimi_split.cjs`, `probe_split_session.cjs`, `login_form.cjs`, `local_checkpoint.cjs`, `test_kimi_split.cjs`, and `test_login_form.cjs`, all under `docs/research/investor_reporting_ycharts_auth_20260910/`. `k3_evidence.json` pins the current modules, historical results and isolated test run. Earlier result hashes identify earlier revisions; they are not relabeled as the final source.
+
+| Evidence | Measured result |
+|---|---|
+| `split_k3_probe_01.json` | The separate actor produced a usable action even after a reader exhausted its 2500-token allowance. The run was stopped to correct stale-image/single-tile behavior; it did not establish login. |
+| `split_k3_probe_02.json` | A grid batch cleared the puzzle into the public dashboard. A missing sign-in transition caused the original blocked outcome; the separate reviewed observation preserves that distinction. |
+| `split_k3_probe_03.json` | Two CAPTCHA actions, four K3 calls, and a verified transition to the login form. Its older credential selector was not yet correct. |
+| `split_k3_probe_04.json` | Stopped after repeated image-change rejections with slower high-effort reads. Partial evidence does not count every rejected step. |
+| `split_k3_probe_05.json` | Final low-effort 2500/400 configuration cleared the CAPTCHA with two actions and four calls. Saved an encrypted local pre-login cookie checkpoint. Its older form selector still prevents interpreting its login error as a correct credential test. |
+| `split_k3_probe_06.json`, `split_k3_form_07.json`, `split_k3_probe_08.json` | Cookie restore avoided another CAPTCHA. Form inspection identified `auth-username` / `auth-password`. Earlier page-wide email and Sign In selectors were unsuitable. Probe 08 increments a counter before a click that times out; its counter is not a verified POST. |
+| `split_k3_probe_09.json`, 01:25:26.128Z-01:26:02.482Z | Restored the solved challenge, submitted once through the actual login form, observed the POST, and verified both submitted fields exactly matched Secrets Manager. YCharts returned 200 on the login page with its incorrect-email/password message. No MFA, concurrent-session or CAPTCHA message was detected. No authenticated report GET was attempted. |
+
+The reader describes every matching unselected tile and Confirm. The actor returns one bounded batch so repeated read latency does not leave a half-selected puzzle. The controller compares the full screenshot again before acting; a changed image rejects the plan. This is conservative and can reject cosmetic changes as well as puzzle changes. Reader/actor deadlines are 180/60 seconds, each with one retry; the controller permits at most 12 iterations. Empty or invalid actor output authorizes no click. Raw external reasoning stays in memory and can feed the separate actor when the reader's final text is exhausted; it is never logged or committed.
+
+The model receives only the explicit public CAPTCHA page. Normal account pages are excluded. The login helper scopes fields to the form containing the visible password, captures field names before navigation, submits with Enter, and counts actual observed POSTs. Six isolated tests pass, including a real Edge fixture with a preceding newsletter email and hidden native submit; that test preserves the form's CSRF and wizard fields and verifies the transmitted credentials without logging them. This fixture is not a live successful login.
+
+Research cookies are protected with Windows DPAPI CurrentUser at `.runtmp/ycharts-k3-probe.cookies.dpapi`; no plaintext cookie file, AWS session publication or production login runner was created. Cookie restore has been demonstrated for WAF/pre-login state only. Reuse of an already authenticated checkpoint still needs an identity/capability fast path and live proof. Do not promote a solved CAPTCHA cookie to a verified authenticated session.
+
+**Immediate prerequisite:** a vendor-accepted credential secret. Stop repeated identical credential submissions after the confirmed rejection. Once corrected, verify identity and the captured Overview template shape from both browser fetch and plain HTTP. Then measure dedicated EC2 capture to Lambda replay before report generation. The local K3 fix removes the original CAPTCHA blocker; it does not establish those later stages. No alternative CAPTCHA service is required by the evidence so far.
 
 ## PART VII - What this brief does not claim
 
-No successful YCharts login, live CAPTCHA solve, session publication, EC2/Lambda portability, report generation, holdings upload, PDF fidelity, current cloud topology or deployment was proven by this research. The scripts are a repeatable research starting point, not the completed sensitivity service. No existing production runtime, PRD, task order, secret or peer implementation was modified.
+Live CAPTCHA clearance and encrypted local pre-login cookie reuse are proven by the K3 amendment. Successful authenticated YCharts login, session publication, EC2/Lambda portability, report generation, holdings upload, PDF fidelity, current cloud topology and deployment remain unproven. The scripts are a repeatable research starting point, not the completed sensitivity service. No existing production runtime, PRD, task order, secret or peer implementation was modified.
 
 The local HTTP 405 result does not prove AWS egress will fail or that a proxy is needed. The research did not validate MFA/OTP because Andrew chose no OTP workflow. It does not re-open the two-project product split, make the native vendor PDF viewer the finished Opal tab, ratify a new service-level target or assert that YCharts offers a stable public report API.
 
