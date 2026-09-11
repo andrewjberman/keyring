@@ -414,6 +414,48 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "ARMED because the pattern (a worker not killing its dev server before its final report) is already reproduced three times across two rounds and will collide with the NEXT worker assigned 5182 or 5183, exactly as it collided with this one on 5181. No mechanical gate enforces the 'stop it before your final report' instruction; disarm is either a cleanup step the dispatch/drain mechanism runs between rounds or a port-collision-tolerant retry added to the ui-smoke instrument itself, neither of which this lane's <paths> reach."
+  },
+  {
+    "id": "IRPT_FNTEND-S7",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T00:40:00Z",
+    "one_line": "Disarm act for IRPT_FNTEND-W1-S5 assigned by its disarm_owner: TO-FE-s-5 (slot ~1, next in queue) is amended at the FE-s-3 drain to add the @/* path mapping to portal/tsconfig.json, the solution file Bun's resolver reads, and to prove it with an alias probe test (F5-AC9); the per-file mock.module workarounds in earlier test folders stay as they are.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/tsconfig.json @b86e6aa2 -- { files: [], references: [tsconfig.app.json, tsconfig.node.json] }, no compilerOptions; tsconfig.app.json carries baseUrl and paths @/* -> ./src/*",
+        "row IRPT_FNTEND-W1-S5 @4664ba9bd2 (worker branch) -- a one-line test importing @/lib/utils fails under bun test with Cannot find module, nothing of the cell's code involved",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-5.reporting-tab.md -- amended this commit: portal/tsconfig.json added to <paths>; F5-AC9 added; expected_criteria 9"
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND-W1-S5: ARMED -- every later cell whose tests import a portal module through @/ hits the same failure and works around it per file, and a workaround that mocks the module is a test that never exercises the real component.",
+    "world_is": "Bun resolves paths from the nearest tsconfig.json and does not follow project references. The mapping already exists in the referenced file; carrying the same two keys in the solution file makes both resolvers agree, changes nothing tsc -b compiles, and retires the per-file workaround class for every remaining cell.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S8",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T00:41:00Z",
+    "one_line": "Disarm act for IRPT_FNTEND-W1-S6 taken by its disarm_owner at this drain: the vite dev servers left running by the FE-s-2, FE-s-4 and FE-s-8 workers under worktrees already removed were located by command line and stopped; the drain step now includes that sweep before any teardown, and every remaining face already tells the worker to stop its own server before its final report.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "row IRPT_FNTEND-W1-S6 @4664ba9bd2 (worker branch) -- three LISTENING vite processes on 5181/5182/5183 resolved by Win32_Process command line to wk-irpt_fntend-1-2-fe-s-2, -2-1-fe-s-4 and -2-2-fe-s-8, all torn-down worktrees; the FE-s-3 worker stopped only the one holding its own port",
+        "this drain -- Get-CimInstance Win32_Process filtered to node.exe with vite and wk-irpt_fntend in the command line; processes whose worktree path no longer exists stopped; result recorded in the session log",
+        "the earlier netstat check that reported no listeners used a findstr pattern that did not match; the process-list read is the instrument that saw them"
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND-W1-S6: ARMED -- a stale server holds a slot's assigned port, vite bumps the next worker to another port, and a port-keyed instrument reads the wrong tree.",
+    "world_is": "A worker's background dev server outlives the worker; the issuer's teardown removed the worktree but not the process, and a directory held by that process resisted removal. The sweep by command line, not by port, is the control that sees them.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
