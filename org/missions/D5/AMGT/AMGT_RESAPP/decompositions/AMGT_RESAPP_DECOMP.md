@@ -725,29 +725,29 @@ are the only roots, they are the two chains' heads, and both spawn at issuance (
 
 | cell | row | outcome | act (the engine, and what binds it) | state | deps |
 |---|---|---|---|---|---|
-| `AMGT-s5-1` | S4, S13 | FWD-4, FWD-11 | **THE ARTICLE STORE.** NEW DynamoDB table `opal-amgt-articles`, shaped like `opal-news-articles` (title/source/url/published_at/sentiment) PLUS `ticker`/`security_key` (via S12) and `platform`. Terraform in `infra/aws/terraform/amgt-resapp/` via `safe-apply`, change-management entry OPENED BEFORE the act and closed before the grading read. **GENUINELY SEPARATE** from `opal-news-articles` (not that table with a filter) and from `opal-data-research`. MEASURED ABSENT on the live plane at this cut (row `Z-S5`: 0 hits across 2445 aws nodes) -- a genuine create, not an integration. | OPEN | -- (ROOT) |
-| `AMGT-s5-2` | S16 | FWD-15 | **THE METRICS STORE.** NEW DynamoDB table `opal-amgt-security-metrics` holding PRE-COMPUTED per-ticker ranking rows, mirroring the proven `opal-news-articles` / `opal-news-trending-daily` split. Same Terraform module, same `safe-apply` + ledger discipline. MEASURED ABSENT at this cut. The Lead Panel READS it and never re-derives a ranking at render time (`C-SERVER-SIDE-RANKING`). | OPEN | -- (ROOT) |
-| `AMGT-s5-3` | S16 | FWD-15 | **THE HARVESTER BOX + ITS OWN IAM ROLE.** NEW EC2 box in `infra/aws/terraform/amgt-resapp/` following the ASTN_WSJFT SHAPE (stopped-between-runs, SSM-woken) but with **AMGT_RESAPP's OWN IAM role** and write access to `opal-amgt-articles` -- **explicitly NOT the ASTN_WSJFT box and not its role.** ONE shared box for all four harvesters. Refresh MUST WAKE the stopped box (SSM / `inf-jwt-trigger` shape) or it silently no-ops -- the wake is part of the cell, not a follow-up. `comp-iam service` at Phase 1 and `comp-iam gaps` at Phase 2 (auto-rule 3; `iam.tf` changes). | OPEN | `s5-1` |
-| `AMGT-s5-4` | S4, S13 | FWD-4, FWD-11 | **THE FOUR HARVESTERS** (Seeking Alpha, FT, Bloomberg, WSJ) writing per-ticker article content into `opal-amgt-articles`. Each admits an item by the news/social rule `AMGT-s-11` states, and resolves the platform's OWN identifier through S12 BEFORE dispatch (SA symbol-slug, Bloomberg `"TICKER US Equity"`, FT id) -- never a bare ticker. Raw vendor bytes land before derivation. | OPEN | `s5-3` |
-| `AMGT-s5-5` | S16 | FWD-15 | **THE CHATTER AXIS WRITER.** A SCHEDULED PRODUCER computing the chatter ranking daily and writing pre-computed rows to `opal-amgt-security-metrics`. Axis = the committed chatter gate: 30-day window, 0-100 normalized, `TOP_N=10`. | OPEN | `s5-2` |
-| `AMGT-s5-6` | S16 | FWD-15 | **THE PRICE AXIS ENGINE, BOX-SIDE.** The price ranking reads Bloomberg historical/intraday and therefore runs in the **BOX-SIDE puller shape** (the ETF-daily-pull shape), **NOT a Lambda calling Bloomberg** (`C-PRICE-RANKING-BOXSIDE`). 30-day window, matching chatter -- Andrew unified both to 30. Writes pre-computed rows to the same metrics table. **The BOX-SIDE host is the BLOOMBERG TERMINAL box (loopback DAPI, the ETF-daily-pull shape), NOT the new harvester EC2 box of `s5-3`** -- the harvester box hosts the four ARTICLE harvesters, which is a different machine and a different concern. | OPEN | `s5-2` |
-| `AMGT-s5-7` | S16 | FWD-15 | **THE STARRED WATCHLIST.** SHARED ACROSS THE FIRM -- both PMs see the same starred names, keyed PER-FIRM, not per-user (`C-STARRED-PER-FIRM`, Andrew-ruled, reversible to per-user on his word). **Starring is a PURE MARKER:** it triggers NO refresh and queues NO harvester. Refresh is its own explicit action and the cell must prove the two are not wired together. | OPEN | `s5-2` |
-| `AMGT-s5-8` | S16 | FWD-15 | **THE SURFACE ITSELF.** The `.tsx`: a persistent **Lead Panel** (universe discovery -- Trending/Breakout x Price/Chatter, List/Chart, Security overlay, Starred) above **three tabs: Thesis / Peers / Coverage**. **Print is a header export action**, not a tab. **The Model tab is CUT and its figures REHOMED** into Thesis and the Security overlay. Reads pre-computed rows from `opal-amgt-security-metrics`; never re-derives a ranking at render time. | OPEN | `s5-5`, `s5-6`, `s5-7` |
+| `AMGT-rd-1` | S4, S13 | FWD-4, FWD-11 | **THE ARTICLE STORE.** NEW DynamoDB table `opal-amgt-articles`, shaped like `opal-news-articles` (title/source/url/published_at/sentiment) PLUS `ticker`/`security_key` (via S12) and `platform`. Terraform in `infra/aws/terraform/amgt-resapp/` via `safe-apply`, change-management entry OPENED BEFORE the act and closed before the grading read. **GENUINELY SEPARATE** from `opal-news-articles` (not that table with a filter) and from `opal-data-research`. MEASURED ABSENT on the live plane at this cut (row `Z-S5`: 0 hits across 2445 aws nodes) -- a genuine create, not an integration. | OPEN | -- (ROOT) |
+| `AMGT-rd-2` | S16 | FWD-15 | **THE METRICS STORE.** NEW DynamoDB table `opal-amgt-security-metrics` holding PRE-COMPUTED per-ticker ranking rows, mirroring the proven `opal-news-articles` / `opal-news-trending-daily` split. Same Terraform module, same `safe-apply` + ledger discipline. MEASURED ABSENT at this cut. The Lead Panel READS it and never re-derives a ranking at render time (`C-SERVER-SIDE-RANKING`). | OPEN | -- (ROOT) |
+| `AMGT-rd-3` | S16 | FWD-15 | **THE HARVESTER BOX + ITS OWN IAM ROLE.** NEW EC2 box in `infra/aws/terraform/amgt-resapp/` following the ASTN_WSJFT SHAPE (stopped-between-runs, SSM-woken) but with **AMGT_RESAPP's OWN IAM role** and write access to `opal-amgt-articles` -- **explicitly NOT the ASTN_WSJFT box and not its role.** ONE shared box for all four harvesters. Refresh MUST WAKE the stopped box (SSM / `inf-jwt-trigger` shape) or it silently no-ops -- the wake is part of the cell, not a follow-up. `comp-iam service` at Phase 1 and `comp-iam gaps` at Phase 2 (auto-rule 3; `iam.tf` changes). | OPEN | `rd-1` |
+| `AMGT-rd-4` | S4, S13 | FWD-4, FWD-11 | **THE FOUR HARVESTERS** (Seeking Alpha, FT, Bloomberg, WSJ) writing per-ticker article content into `opal-amgt-articles`. Each admits an item by the news/social rule `AMGT-s-11` states, and resolves the platform's OWN identifier through S12 BEFORE dispatch (SA symbol-slug, Bloomberg `"TICKER US Equity"`, FT id) -- never a bare ticker. Raw vendor bytes land before derivation. | OPEN | `rd-3` |
+| `AMGT-rd-5` | S16 | FWD-15 | **THE CHATTER AXIS WRITER.** A SCHEDULED PRODUCER computing the chatter ranking daily and writing pre-computed rows to `opal-amgt-security-metrics`. Axis = the committed chatter gate: 30-day window, 0-100 normalized, `TOP_N=10`. | OPEN | `rd-2` |
+| `AMGT-rd-6` | S16 | FWD-15 | **THE PRICE AXIS ENGINE, BOX-SIDE.** The price ranking reads Bloomberg historical/intraday and therefore runs in the **BOX-SIDE puller shape** (the ETF-daily-pull shape), **NOT a Lambda calling Bloomberg** (`C-PRICE-RANKING-BOXSIDE`). 30-day window, matching chatter -- Andrew unified both to 30. Writes pre-computed rows to the same metrics table. **The BOX-SIDE host is the BLOOMBERG TERMINAL box (loopback DAPI, the ETF-daily-pull shape), NOT the new harvester EC2 box of `rd-3`** -- the harvester box hosts the four ARTICLE harvesters, which is a different machine and a different concern. | OPEN | `rd-2` |
+| `AMGT-rd-7` | S16 | FWD-15 | **THE STARRED WATCHLIST.** SHARED ACROSS THE FIRM -- both PMs see the same starred names, keyed PER-FIRM, not per-user (`C-STARRED-PER-FIRM`, Andrew-ruled, reversible to per-user on his word). **Starring is a PURE MARKER:** it triggers NO refresh and queues NO harvester. Refresh is its own explicit action and the cell must prove the two are not wired together. | OPEN | `rd-2` |
+| `AMGT-rd-8` | S16 | FWD-15 | **THE SURFACE ITSELF.** The `.tsx`: a persistent **Lead Panel** (universe discovery -- Trending/Breakout x Price/Chatter, List/Chart, Security overlay, Starred) above **three tabs: Thesis / Peers / Coverage**. **Print is a header export action**, not a tab. **The Model tab is CUT and its figures REHOMED** into Thesis and the Security overlay. Reads pre-computed rows from `opal-amgt-security-metrics`; never re-derives a ranking at render time. | OPEN | `rd-5`, `rd-6`, `rd-7` |
 
 ### 13c. Rule 24 record for what v0.6 ADDS (the eight round-5 cells)
 
 - **(i) MECE over the DECLARED domain, BY SUBTRACTION from a printed denominator -- not by recall.** The
   domain is the SIX named constraints of PRD s.3b plus the S16 manifest row. Subtracting what each cell
-  covers: `C-AMGT-ARTICLES-STORE` -> `s5-1`; `C-SERVER-SIDE-RANKING` -> `s5-2` (the store) + `s5-5` (its
-  writer); `C-PRICE-RANKING-BOXSIDE` -> `s5-6`; `C-HARVESTER-COMPUTE` -> `s5-3` (box + role) + `s5-4` (the
-  four harvesters); `C-STARRED-PER-FIRM` -> `s5-7`; the approved page shape + S16 -> `s5-8`. **REMAINDER
+  covers: `C-AMGT-ARTICLES-STORE` -> `rd-1`; `C-SERVER-SIDE-RANKING` -> `rd-2` (the store) + `rd-5` (its
+  writer); `C-PRICE-RANKING-BOXSIDE` -> `rd-6`; `C-HARVESTER-COMPUTE` -> `rd-3` (box + role) + `rd-4` (the
+  four harvesters); `C-STARRED-PER-FIRM` -> `rd-7`; the approved page shape + S16 -> `rd-8`. **REMAINDER
   ZERO.** `C-VENDOR-WORD-HARVESTERS` is the sixth constraint and is deliberately NOT a cell -- it is a
-  time-scoped BOUND on `s5-4`, carried in 13d. A constraint that is a bound rather than a cell is named
+  time-scoped BOUND on `rd-4`, carried in 13d. A constraint that is a bound rather than a cell is named
   here so the subtraction balances visibly rather than by silence.
 - **(ii) SAME GRAIN:** each cell is one engine with one home. The two stores are separate cells because
   they are separate tables with separate consumers, not one "make the tables" cell.
-- **(iii) INTENT COHERENCE:** one axis per cell. Storage (`s5-1`, `s5-2`), compute host (`s5-3`),
-  acquisition (`s5-4`), ranking production (`s5-5`, `s5-6`), marker state (`s5-7`), presentation (`s5-8`).
+- **(iii) INTENT COHERENCE:** one axis per cell. Storage (`rd-1`, `rd-2`), compute host (`rd-3`),
+  acquisition (`rd-4`), ranking production (`rd-5`, `rd-6`), marker state (`rd-7`), presentation (`rd-8`).
   No cell mixes another's concern; notably the BOX is separated from the HARVESTERS that run on it, because
   a box that exists and a harvester that runs are different proofs.
 - **(iv) STATE COHERENCE -- what these do NOT move:** they build the surface, so for the first time an
@@ -760,11 +760,11 @@ are the only roots, they are the two chains' heads, and both spawn at issuance (
 
 - **`C-VENDOR-WORD-HARVESTERS` IS TIME-SCOPED AND ITS CLOCK IS THE BOX.** Andrew gave the per-use word for
   Seeking Alpha, FT, Bloomberg and WSJ for THIS project's harvesters, **effective when the harvester box is
-  stood up and ready to run -- NOT before.** So `s5-4` may not egress to any of the four until `s5-3` has
+  stood up and ready to run -- NOT before.** So `rd-4` may not egress to any of the four until `rd-3` has
   landed. It is NOT a blanket grant: `C-VENDOR-EGRESS` still binds every other vendor and every other use,
   and "availability is not authorization" is unchanged.
 - **NO MONITOR, NO ALARM, NO FRESHNESS-CHECKER** (standing moratorium; `comp-schedule` carrier C3 counts 12
-  standing NEVER clauses). `s5-5` and `s5-6` are SCHEDULED PRODUCERS, which is not only permitted but
+  standing NEVER clauses). `rd-5` and `rd-6` are SCHEDULED PRODUCERS, which is not only permitted but
   required ("production pipelines MUST be scheduled"); a producer that computes a ranking is not a monitor.
   STOP: neither cell may add an alert, an SNS topic, an SES send or a freshness checker on top of its output.
 - **`opal-data-research` IS AN EXISTING DECLARED RESOURCE AND IS NOT RE-CREATED** (rows `Z-S5` -> `Z-S8`).
@@ -773,7 +773,7 @@ are the only roots, they are the two chains' heads, and both spawn at issuance (
   `list-objects-v2` -- existence and access measured separately. Created by this project's own `AMGT-s-6`
   @`20260910T2059Z` via `safe-apply`. A round-5 cell touching it INTEGRATES; it must not re-create,
   re-declare or re-configure it.
-- **S12 RESOLVES EACH PLATFORM'S OWN IDENTIFIER BEFORE DISPATCH.** `s5-4` never dispatches on a bare ticker.
+- **S12 RESOLVES EACH PLATFORM'S OWN IDENTIFIER BEFORE DISPATCH.** `rd-4` never dispatches on a bare ticker.
   This is the direct carry-forward of F6 (48 of 54 packs with a foreign peer set) -- **cutting an
   acquisition cell ahead of identity rebuilds that defect on a new axis.**
 - **EVERY INFRA CELL: change-management entry OPENED BEFORE the act and CLOSED before the grading read;
@@ -801,11 +801,11 @@ are the only roots, they are the two chains' heads, and both spawn at issuance (
 ### 13f. The round axis, updated
 
 - **ROUNDS 1-4:** terminal, frozen. 28 of 28 orders complete; round 4 CLOSED at L10 @`959ba3e947`.
-- **ROUND 5 (v5, THE SURFACE ROUND, 8 cells, 2 chains):** roots `AMGT-s5-1` and `AMGT-s5-2` spawn at
+- **ROUND 5 (v5, THE SURFACE ROUND, 8 cells, 2 chains):** roots `AMGT-rd-1` and `AMGT-rd-2` spawn at
   issuance (TABLES FIRST).
-  **CHAIN A (3 cells, slot ~1):** `s5-1` -> `s5-3` -> `s5-4`.
-  **CHAIN B (5 cells, slot ~2):** `s5-2` -> {`s5-5`, `s5-6`, `s5-7`} -> `s5-8`, the three middles
-  serialized in that slot's queue and `s5-8` handed last because it converges all three.
+  **CHAIN A (3 cells, slot ~1):** `rd-1` -> `rd-3` -> `rd-4`.
+  **CHAIN B (5 cells, slot ~2):** `rd-2` -> {`rd-5`, `rd-6`, `rd-7`} -> `rd-8`, the three middles
+  serialized in that slot's queue and `rd-8` handed last because it converges all three.
   **`fanout: 2 of 2 chains, cap 8.`** N = M = 2: asking for more workers than there are independent
   chains buys nothing and serializes anyway.
 - WARN: **THE ROUNDS ARE A READING OF THE EDGES, NOT A SECOND SOURCE OF TRUTH.** If a cell lands early the
@@ -823,17 +823,17 @@ server-side ranking routes and introduces new portal query keys, so every lens b
   no-monitor bound.
 - `comp-iam gaps` -- RUN. 836 call(s) verdicted across 96 mapped role(s); 12 missing, 291 deny-present, 1
   coverage-unknown, 2 resource-mismatch across 31 services. **No AMGT role exists yet**, which is the honest
-  baseline for `s5-3` (the cell creates the first one). WARN -- COVERAGE LIMIT carried, not cleared: 630
+  baseline for `rd-3` (the cell creates the first one). WARN -- COVERAGE LIMIT carried, not cleared: 630
   UNRESOLVABLE-RESOURCE, 266 calls in 26 role-UNMAPPED services NOT resource-checked, and 51 GRANTED-BROAD
   rows EXCLUDED rather than cleared -- a wildcard grant cannot be falsified by a resource check.
 - `comp-cache collisions` -- RUN. 415 of 415 files scanned. Every existing collision is on another surface
   (market-performance, model-portfolio, partner-analytics, positioning); **no AMGT/research key exists**, so
-  `s5-8` enters a clean namespace and its new keys must be checked at Phase 1 (auto-rule 2).
+  `rd-8` enters a clean namespace and its new keys must be checked at Phase 1 (auto-rule 2).
 - `comp-routes behaviors` -- RUN. 27 behaviors; the auth-gated `/api/scoped/*` + `auth-validator-edge`
-  viewer-request pattern is the precedent `s5-8`'s reads follow.
+  viewer-request pattern is the precedent `rd-8`'s reads follow.
 - `comp-blast` -- DECLARED-NOT-APPLICABLE AT THE CUT, with the reason: round 5 CREATES resources rather than
   modifying shared ones, and no live served artifact moves at L5. STOP: it becomes APPLICABLE inside
-  `s5-8`, which edits the portal shell, and that cell carries it at Phase 1.
+  `rd-8`, which edits the portal shell, and that cell carries it at Phase 1.
 - `comp-adversary` -- RUN on this file; the declaration at section 7 stands and is extended by 13a's
   statement of what the gate could and could not tell this lane.
 
@@ -854,20 +854,20 @@ chain"), the v0.6 edge set formed **ONE connected component, not four chains** -
 `fanout: 2 of 4` was wrong, and taken literally it implied N = M = 1 and one worker serializing all eight
 cells, which contradicts Andrew's "TABLES FIRST".
 
-**THE CAUSE WAS A SUBSTANTIVE ERROR, NOT AN ARITHMETIC ONE.** v0.6 gave `s5-6` (the price axis) a
-dependency on `s5-3` (the harvester box). That edge is WRONG on the constraint's own words:
+**THE CAUSE WAS A SUBSTANTIVE ERROR, NOT AN ARITHMETIC ONE.** v0.6 gave `rd-6` (the price axis) a
+dependency on `rd-3` (the harvester box). That edge is WRONG on the constraint's own words:
 `C-PRICE-RANKING-BOXSIDE` names the **ETF-daily-pull shape**, which runs on the **Bloomberg TERMINAL
-box** against a loopback-only DAPI -- the same seam `AMGT-s-2` exists to cross. The NEW EC2 box of `s5-3`
+box** against a loopback-only DAPI -- the same seam `AMGT-s-2` exists to cross. The NEW EC2 box of `rd-3`
 hosts the four ARTICLE harvesters. Two different machines, two different concerns; the edge conflated
 "box-side" with "the box this round builds". Removing it yields **M = 2**, which is what the two
 independent roots were always going to be.
-WARN: the wrong edge would ALSO have mis-scoped `s5-6`'s worker face -- it would have named the harvester
+WARN: the wrong edge would ALSO have mis-scoped `rd-6`'s worker face -- it would have named the harvester
 box's home in `<paths>` and omitted the terminal box's, and under RULING 1 a path missing from the order
 is a WALL, not a hint. So this was on its way to a blocked worker, not just a wrong number.
 
 **THE GENERAL FINDING, worth more than this instance:** rounds 1-4 were either INDEPENDENT cells (round 2:
 5 of 5) or a single PATH (round 4: 1 of 1), and for both shapes "connected components" and "worker queues"
-give the same number. **Round 5 is this project's first CONVERGENT DAG** -- two roots meeting at `s5-8` --
+give the same number. **Round 5 is this project's first CONVERGENT DAG** -- two roots meeting at `rd-8` --
 and it is the first shape where the two readings diverge. A fan-out number copied forward in the shape of
 earlier rounds is exactly where that divergence hides.
 
