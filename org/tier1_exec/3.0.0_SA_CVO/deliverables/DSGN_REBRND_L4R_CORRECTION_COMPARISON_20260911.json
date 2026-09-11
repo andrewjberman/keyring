@@ -1,0 +1,411 @@
+{
+  "seat": "3.0.0_SA_CVO",
+  "measured_utc": "2026-09-11T08:42:26.975554+00:00",
+  "prd_ref": "org/missions/D13/DSGN/DSGN_REBRND/prd/DSGN_REBRND_PRD.md@8ad762f7bfb1a0609d2f133934104af726dafdff",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_D13_PORTAL_VISUAL_ELEVATION_20260911.md@8ad762f7bfb1a0609d2f133934104af726dafdff",
+  "previous_prd_pin": "9769e40c6fc3deb25b037794f93f4ff792144eaf",
+  "observed_head": "4cd3ebbfe430915b89afa1aaf468041119c9dc4b",
+  "head_and_worktree_equal_reviewed_prd": true,
+  "prd_sha256_lf": "da24d948381fd7f7bf8f7bf4b60e255f31ba5127fd0d0c5f11e7f78ef0a2abe4",
+  "endpoint_sha256_lf": "d19c11cc522d6dc4d678f6b6dc11c10aacef511769f2b9b7159ce9b9f896f3b9",
+  "half_hashes_content_only_not_gate_authority": {
+    "ratified-text": "1a4cc291f538dd4cccc525672ddce423613d44b6b76924ec47fad2350c19d905",
+    "brief": "5c71da53ce72357ba66283fa6ed7e1b046bc982d82e41024f0e1b6650df04e09"
+  },
+  "outcomes": 11,
+  "required_triplets": {
+    "matched": 33,
+    "denominator": 33
+  },
+  "all_carried_fields": {
+    "matched": 53,
+    "denominator": 53
+  },
+  "comparisons": [
+    {
+      "field": "FWD-1.DONE WHEN",
+      "prd_line": 24,
+      "endpoint_line": 23,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-1.ACCEPT",
+      "prd_line": 25,
+      "endpoint_line": 24,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-1.PROOF",
+      "prd_line": 26,
+      "endpoint_line": 25,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-1.SOURCE",
+      "prd_line": 27,
+      "endpoint_line": 26,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-1.CONSTRAINT",
+      "prd_line": 28,
+      "endpoint_line": 27,
+      "equal": true,
+      "changed_from_v01": true
+    },
+    {
+      "field": "FWD-2.DONE WHEN",
+      "prd_line": 31,
+      "endpoint_line": 30,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-2.ACCEPT",
+      "prd_line": 32,
+      "endpoint_line": 31,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-2.PROOF",
+      "prd_line": 33,
+      "endpoint_line": 32,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-2.SOURCE",
+      "prd_line": 34,
+      "endpoint_line": 33,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-2.CONSTRAINT",
+      "prd_line": 35,
+      "endpoint_line": 34,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-3.DONE WHEN",
+      "prd_line": 38,
+      "endpoint_line": 37,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-3.ACCEPT",
+      "prd_line": 39,
+      "endpoint_line": 38,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-3.PROOF",
+      "prd_line": 40,
+      "endpoint_line": 39,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-3.SOURCE",
+      "prd_line": 41,
+      "endpoint_line": 40,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-3.CONSTRAINT",
+      "prd_line": 42,
+      "endpoint_line": 41,
+      "equal": true,
+      "changed_from_v01": true
+    },
+    {
+      "field": "FWD-4.DONE WHEN",
+      "prd_line": 45,
+      "endpoint_line": 44,
+      "equal": true,
+      "changed_from_v01": true
+    },
+    {
+      "field": "FWD-4.ACCEPT",
+      "prd_line": 46,
+      "endpoint_line": 45,
+      "equal": true,
+      "changed_from_v01": true
+    },
+    {
+      "field": "FWD-4.PROOF",
+      "prd_line": 47,
+      "endpoint_line": 46,
+      "equal": true,
+      "changed_from_v01": true
+    },
+    {
+      "field": "FWD-4.SOURCE",
+      "prd_line": 48,
+      "endpoint_line": 47,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-5.DONE WHEN",
+      "prd_line": 51,
+      "endpoint_line": 50,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-5.ACCEPT",
+      "prd_line": 52,
+      "endpoint_line": 51,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-5.PROOF",
+      "prd_line": 53,
+      "endpoint_line": 52,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-5.SOURCE",
+      "prd_line": 54,
+      "endpoint_line": 53,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-6.DONE WHEN",
+      "prd_line": 57,
+      "endpoint_line": 56,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-6.ACCEPT",
+      "prd_line": 58,
+      "endpoint_line": 57,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-6.PROOF",
+      "prd_line": 59,
+      "endpoint_line": 58,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-6.SOURCE",
+      "prd_line": 60,
+      "endpoint_line": 59,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-6.CONSTRAINT",
+      "prd_line": 61,
+      "endpoint_line": 60,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-7.DONE WHEN",
+      "prd_line": 64,
+      "endpoint_line": 63,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-7.ACCEPT",
+      "prd_line": 65,
+      "endpoint_line": 64,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-7.PROOF",
+      "prd_line": 66,
+      "endpoint_line": 65,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-7.SOURCE",
+      "prd_line": 67,
+      "endpoint_line": 66,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-7.CONSTRAINT",
+      "prd_line": 68,
+      "endpoint_line": 67,
+      "equal": true,
+      "changed_from_v01": true
+    },
+    {
+      "field": "FWD-8.DONE WHEN",
+      "prd_line": 71,
+      "endpoint_line": 70,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-8.ACCEPT",
+      "prd_line": 72,
+      "endpoint_line": 71,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-8.PROOF",
+      "prd_line": 73,
+      "endpoint_line": 72,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-8.SOURCE",
+      "prd_line": 74,
+      "endpoint_line": 73,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-8.CONSTRAINT",
+      "prd_line": 75,
+      "endpoint_line": 74,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-9.DONE WHEN",
+      "prd_line": 78,
+      "endpoint_line": 77,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-9.ACCEPT",
+      "prd_line": 79,
+      "endpoint_line": 78,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-9.PROOF",
+      "prd_line": 80,
+      "endpoint_line": 79,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-9.SOURCE",
+      "prd_line": 81,
+      "endpoint_line": 80,
+      "equal": true,
+      "changed_from_v01": true
+    },
+    {
+      "field": "FWD-9.CONSTRAINT",
+      "prd_line": 82,
+      "endpoint_line": 81,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-10.DONE WHEN",
+      "prd_line": 85,
+      "endpoint_line": 84,
+      "equal": true,
+      "changed_from_v01": true
+    },
+    {
+      "field": "FWD-10.ACCEPT",
+      "prd_line": 86,
+      "endpoint_line": 85,
+      "equal": true,
+      "changed_from_v01": true
+    },
+    {
+      "field": "FWD-10.PROOF",
+      "prd_line": 87,
+      "endpoint_line": 86,
+      "equal": true,
+      "changed_from_v01": true
+    },
+    {
+      "field": "FWD-10.SOURCE",
+      "prd_line": 88,
+      "endpoint_line": 87,
+      "equal": true,
+      "changed_from_v01": true
+    },
+    {
+      "field": "FWD-10.CONSTRAINT",
+      "prd_line": 89,
+      "endpoint_line": 88,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-11.DONE WHEN",
+      "prd_line": 92,
+      "endpoint_line": 91,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-11.ACCEPT",
+      "prd_line": 93,
+      "endpoint_line": 92,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-11.PROOF",
+      "prd_line": 94,
+      "endpoint_line": 93,
+      "equal": true,
+      "changed_from_v01": false
+    },
+    {
+      "field": "FWD-11.SOURCE",
+      "prd_line": 95,
+      "endpoint_line": 94,
+      "equal": true,
+      "changed_from_v01": true
+    },
+    {
+      "field": "FWD-11.CONSTRAINT",
+      "prd_line": 96,
+      "endpoint_line": 95,
+      "equal": true,
+      "changed_from_v01": false
+    }
+  ],
+  "endpoint_section_scan": {
+    "scope": "heading through immediately before CELL CANDIDATES heading",
+    "date_serial_renumber_supersedes_hits": 0,
+    "human_review": "operative constraints and SOURCE citations remain; history is in separate PROVENANCE AND AMENDMENT HISTORY section"
+  },
+  "negative_control": {
+    "field": "FWD-4.PROOF",
+    "edit": "appear -> disappear for the transient ring and selection beside the primary action",
+    "detected_mismatches": [
+      "FWD-4.PROOF"
+    ],
+    "repo_prd_mutated": false
+  },
+  "scope": "Document comparison. Content hashes are not gate admission; actual prd-signoff.py CLI status/stamp is required. No implementation, browser render, or WCAG conformity certification."
+}
