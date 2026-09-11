@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 39 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (37 ours + 27 theirs, 25 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 44 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (42 ours + 39 theirs, 37 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -219,6 +219,77 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Decomposition s.1 for IB-s-3: the enforcement library is a shared dependency beneath every handler and lands before the handlers ship. IB-s-3 bounds: client names are never keys; the wrapper never widens.",
     "world_is": "Two handlers shipped before the library; the library's own seams (firm-id spelling, refusal text) are only visible at the join and were found by the cell that made the join. Disarmed forward on every un-handed face; the merged handlers are measured at the replay and carried to L10.",
     "notes": "Amendment shape: FE-s-2 / FE-s-5 (not-yet-handed faces amended by the issuer, recorded on the channel). The decomposition is not edited mid-round; the sequencing defect is the issuer's own L5 finding for the round-2 recut."
+  },
+  {
+    "id": "IRPT_BCKEND-S10",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T03:12:00Z",
+    "one_line": "DISARM of IRPT_BCKEND-W1-S7 (ARMED) and IRPT_BCKEND-W1-S8 (BLOCKING), disarm_owner 2.0.0_SA_COO~B, the same drain they merged in (3bed36da5b). W1-S8: the rule-13 first-mint of this project's gold scripts has NO declared bundle in .tools/safe_deploy_core.py CODE_TREES (declared: accrual_bridge only), so both the ordinary push path (SKIP-NOT-MEMBER, W2-S5) and the guard's own explicit escape hatch (--mint-bundle) have no target; head-object on the served code prefix reads 404 for both scripts. The declaration is a DS-lane / tooling act outside every worker's grant and outside this round: the issuer carries it to L10 as a BLOCKING item with that owner, and the IB-s-4 face (the next cell on the directory root, un-handed) is amended so its first-mint arm records BLOCKED-BY-W1-S8 once, without a duplicate row. The schedules those cells apply target Lambda entries whose code Terraform ships by CodeSha256, so the product runs; what is absent is the shared-home copy of the gold scripts. W1-S7: the directory's opaque account ids resolve against the holdings join keys for 49financial (7,431 of 7,453) and for NEITHER other firm (0 of 790 INF, 0 of 946 COT) -- a raw-key selection difference inside directory_runner.build_inf/build_cot that IB-s-12 could not trace inside its budget. IB-s-4 re-builds the directory, so its face gains a Phase-1 trace (which raw key each firm's opaque_id derives from, file:line @ commit) and an arm (i) that prints per firm N of M snapshot ids resolved against the refreshed directory; no join is changed mid-round, the fact goes to the CTO at L10.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (this row IS the disarm act: W1-S8 becomes an L10 BLOCKING item owned by the DS lane / tooling owner; W1-S7 becomes IB-s-4's traced fact, graded at that drain)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W1-S7, IRPT_BCKEND-W1-S8, IRPT_BCKEND-W2-S5 @3bed36da5b",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_s_12.result.md @3bed36da5b -- the mint refusal and the 404 printed beside the three landed QA snapshots",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-4.directory-freshness-driven-on-a-controlled-clock.md (this commit) -- ISSUER AMENDMENT block + arm (i); <status> still staged, unhanded",
+        "memory: feedback_a_decomposition_that_covers_every_code_cell_can_still_leave_the_deploy_step_unowned -- the shape, recurring: COMMITTED is not SERVED and the first-mint had no owner in the decomposition"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rule 13: DS owns commit-to-QA-deploy for data/*/scripts/gold/*.py; safe-deploy.sh: first-mints stay explicit. IB-s-12 / IB-s-4 issuer amendment: the first-mint is attempted through the guard's explicit mechanism and verified by artifact.",
+    "world_is": "The explicit mechanism has no declared target for this project's gold home, so no worker in this round can land the shared-home copy; the served code prefix reads 404 for both scripts while the Lambdas that run them are converged. The directory and holdings id spaces coincide for one firm of three.",
+    "notes": "Two decisions recorded here rather than made silently: (1) the issuer does NOT declare the bundle mid-round -- it is a tooling edit under another lane and the only off-spec act available to this seat is a row; (2) IB-s-4's arm (h) is read as BLOCKED-BY-W1-S8 rather than re-filed, so the channel carries one BLOCKING row for one defect. Carried to L10 with the sequencing defect of S9 and the execution-role trust question of W3-S3."
+  },
+  {
+    "id": "IRPT_BCKEND-S11",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T03:20:41Z",
+    "one_line": "PRD MOVED TO v0.8 @d67e9813b5 MID-ROUND (v0.5 at 00:54Z, v0.6/v0.7/v0.8 through 03:09Z; 1.0.0_SA_CTO 95705 and 95751, information only) and the CTO left the amend-at-drain versus re-cut-in-round-2 decision to this lane. Decision, recorded: round 1 stays FROZEN on v0.4 @62301f71e0 for every cell's RECTANGLE and for every handed face; the ONE un-handed face whose cell the delta measures against live vendor behaviour -- IB-s-9, the YCharts generation chain -- is amended in the FE-s-2 / FE-s-5 shape with the v0.5 REST decision table and the v0.8 measured working contracts (upload field `holdings`; save fields `portfolio`/`items`; the full 201 payload vs the 404 minimal payload as a contract failure; fee 0 -> 422; empty sections legitimate; 26.76 s job budget; PDF via a separate unauthenticated client) as the SHAPES its replay transport records, plus one arm. Building IB-s-9 to the v0.4 row would have shipped a chain against a contract the estate has already measured to be wrong (the v0.4 row forbade inventing the upload field name that v0.8 now records). The B8 delta (session broker, isolated secret, fence, K3 controller) is NOT amended in: IB-s-8 is complete at 95a34541f8 on v0.4 and its delta, with B16/B17's, is round-2 material for the CTO's L10 analysis; the LIMB 6 gate refuses a NEW order against v0.8 until CRO and CVO re-sign, and no new order is cut here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (the decision is this lane's by the CTO's own words; the re-sign of v0.8 is 4.0.0_SA_CRO's and 3.0.0_SA_CVO's; the round-2 recut of B8/B16/B17 is the L10 read)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T005445Z_1.0.0_SA_CTO_INFORMATION__IRPT_BCKEND_PRD_is_at_v0.5_.md (msg 95705) and ...20260911T030903Z_..._v0.8_.md (msg 95751) -- 'the amend-at-drain versus re-cut-in-round-2 decision is the lane's'",
+        "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md @d67e9813b5 line 117 -- the B9 row with its (v0.5, SUPP IV.7/IV.8/III.2) and (v0.8, SUPP VI.5) additions, read by git show",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-9.the-ycharts-generation-chain-as-an-opal-async-job.md (this commit) -- ISSUER AMENDMENT block + arm (v0.8); <status> still staged, unhanded; PRD pin line unchanged at v0.4",
+        "org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md (HEAD) -- mid-round the spec and the decomposition are frozen; the decomposition v0.1.1 is NOT edited by this amendment"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Spine v3: mid-round the spec AND the decomposition are FROZEN; the only off-spec act is a surprise row. CLAUDE.md L4-R: the L4 notifier withholds the COO delivery until CRO and CVO sign at the current prd_version.",
+    "world_is": "The PRD advanced four versions during the round on Andrew's word at the CRO terminal; the delta is measured vendor behaviour that one un-handed cell would otherwise build against wrongly. The amendment carries measured shapes into that face without touching its rectangle, the decomposition or any handed face.",
+    "notes": "Recorded so the CVO's L8 compile and the CTO's L10 read see the decision and its scope in one place: amended IB-s-9 only; IB-s-8 (complete), IB-s-16 and IB-s-17 (B16/B17 deltas) carried to round 2. The v0.8 cloud packet is named as read-only reuse, never as a write surface."
+  },
+  {
+    "id": "IRPT_BCKEND-S12",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T03:24:38Z",
+    "one_line": "PRD v0.9 @86bde3ea26 (1.0.0_SA_CTO 95756, Andrew-direct ~03:1xZ: the proven YCharts cloud chain is FWD-4's FIXED mechanism, same shape as the 09-10 runner-STYLE constraint) folded into the un-handed IB-s-9 face as one more line of the S11 amendment: the generation transport IS the packet's cloud_transport.py extended (B9 BUILDS ON it), never a parallel transport and never the stopped-host SSM dispatch as the primary path; the Lambda holds the fenced session by name and replays REST; EC2 capture and fencing are B8's (round 2) and are stubbed here; v0.9's arm (5) -- Comparison and Multi-Comparison replayed LIVE -- is a live vendor call and stays the L10 qualified read on Andrew's per-use word. Consequence for the round the issuer states plainly: IB-s-8 (complete on v0.4, the stopped-host runner) is now the wrong mechanism by Andrew's word and is a round-2 RECUT, not a repair; IB-s-9's rectangle (seven-step chain, offline proof) is unchanged and the cell is still handed after IB-s-7 merges.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (folded same turn; the B8 recut is the CTO's L10 analysis)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T032054Z_1.0.0_SA_CTO_INFORMATION__IRPT_BCKEND_PRD_v0.9__86bde.md (msg 95756) -- 'the mechanism is FIXED, not a build choice'; 'B9 BUILDS ON cloud_transport.py; arm (5)'",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_031xZ_YCHARTS_CLOUD_PROOF_IS_THE_BACKEND_FLOW_FRONTRUNNER.md -- the record the CTO names",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-9.the-ycharts-generation-chain-as-an-opal-async-job.md (this commit) -- the v0.9 line inside the S11 amendment block; <status> still staged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition v0.1.1 s.8 bound 1: NO LIVE VENDOR CALL is authorized by this document; a live arm is an express qualification read by the CTO at L10 on Andrew's per-use word. IB-s-9 L5 note (v0.4): a Lambda dispatching to the runner host over SSM when live.",
+    "world_is": "Andrew fixed the mechanism as the browserless Lambda replay of a fenced session; the v0.4 SSM-dispatch primary path is superseded and IB-s-8's runner host is the wrong seat for it. The face now reads the Lambda replay as the primary path on the replay transport; nothing live is run in this round.",
+    "notes": "Andrew's word reached this lane as a mechanism constraint through the CTO, not as a per-use live-call authorization; it is relayed at exactly that scope (CLAUDE.md s.2: never convert Andrew's word to one agent into a gate or a widening on another)."
   },
   {
     "id": "IRPT_BCKEND-W1-S1",
@@ -747,6 +818,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "INERT: the deploy is complete, every leg verified on the live plane, and the sentinel is correctly absent now. Recorded because the record should not read better than what happened, and because the tension is structural rather than particular to this cell -- the cheap remedy for any future one-turn deploy is one commit of the OPEN sentinel immediately after deploy_ledger.py open, which is what IB-s-8 did by accident of sequencing rather than by rule."
   },
   {
+    "id": "IRPT_BCKEND-W3-S5",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T03:23:21Z",
+    "one_line": "THE `routes.json` THE ISSUER AMENDMENT NAMES AS THE FALLBACK FOR THE GUARD CENSUS DOES NOT EXIST ANYWHERE IN THE CORPUS. The amendment's (amend) arm reads: 'Where this cell ships no handler, the same census runs over routes.json at the replay.' This cell ships no handler -- the issuer's own hand-off says so ('a PARSER and a correction state inside the intake package, not a route handler') -- so that fallback is the arm's whole content here. Measured: comp-find --name 'routes.json' over 32,481 files returns ONE hit, and it is this same worker's IB-s-8 fixture infra/aws/ec2/investor-reporting-ycharts/tests/fixtures/har_derived_routes.json, matched on a basename SUBSTRING and entirely unrelated -- a YCharts HAR route table, not an IRPT route registry. A second, content census for 'route_table|unguarded_routes|ROUTES' over the whole investor-reporting lambda tree finds the function's own definition, its own unit test, and performance/tenants.py's per-firm ROUTES dict (a vendor-host map, not a handler table). NO IRPT ROUTE REGISTRY EXISTS IN ANY FORM: the api root that would carry one (IB-s-15) is an unapplied skeleton. WHAT THIS CELL DID INSTEAD, stated so a grader can disagree with it: corrections.ROUTES is exported EMPTY, the census runs over it and reads 0 of 0 -- and because a 0-of-0 census reads identically whether the censor works or not, the battery pairs it with TWO controls on the same censor: an UNGUARDED handler wired to a route reads '1 of 1 unguarded' and the SAME handler wrapped by guard() reads '0 of 1'. The instrument is therefore shown to fire, and the empty table is shown to be an empty table rather than a broken reader.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~3 for THIS cell -- DISARMED SAME TURN by refusing the vacuous reading: the 0-of-0 census is PRINTED AS VACUOUS in the battery output and is paired with two controls that make the censor's behaviour measurable, and the route-reachability of this cell's nine public callables is censused at 0. THE FALLBACK ITSELF is the issuer's: 2.0.0_SA_COO~B wrote the (amend) arm and names the artifact, so whether `routes.json` is a planned artifact of IB-sb-3's replay, a different name, or a mistake is the issuer's to say, with 3.0.0_SA_CVO grading the arm at L9. ARMED because every LATER cell that ships no handler inherits the same unsatisfiable fallback and may quietly report a vacuous pass instead.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find --name 'routes.json' @5236a7603d -> 'DENOMINATOR: 1 hit(s) across 32481 file(s) scanned in scope [corpus=all]'; the single hit is infra/aws/ec2/investor-reporting-ycharts/tests/fixtures/har_derived_routes.json, a basename-substring match on this worker's own IB-s-8 YCharts fixture",
+        "comp-find 'route_table|unguarded_routes|ROUTES' infra/aws/lambda/investor-reporting @5236a7603d -> enforce.py:562 (the function), _authz/tests/test_enforce.py:264-266 (its unit test), performance/tenants.py:113-127 (a per-firm vendor-host map named ROUTES, not a handler table). No handler registry anywhere",
+        "infra/aws/terraform/investor-reporting/README.md @5236a7603d -- the `api` root (IB-s-15) that would own routes is listed among the nine and is an unapplied skeleton",
+        "IRPT_BCKEND.TO-IB-s-7 (amend) arm, verbatim: 'Where this cell ships no handler, the arm reads over routes.json at the replay.'",
+        "IB-s-7_S7-AC1_battery_output.txt arm (amend) -- 'unguarded_routes(corrections.ROUTES) -> 0 of 0 unguarded', printed together with 'CONTROL, an UNGUARDED handler wired to a route: 1 of 1 unguarded' and 'CONTROL, the SAME handler wrapped by guard(): 0 of 1 unguarded'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The issuer amendment's (amend) arm: where a cell ships no handler, the unguarded-route census runs over `routes.json` at the replay.",
+    "world_is": "No `routes.json` and no IRPT route registry of any kind exists in the corpus at 5236a7603d; the only basename match is an unrelated YCharts HAR fixture. The census was run over this cell's own (empty) exported route table, printed as vacuous, and paired with two controls on the censor itself.",
+    "notes": "The amendment is right about the HAZARD -- a handler reachable without the wrapper is a real defect and the census is the right instrument. What is missing is the OBJECT it censuses for a cell that ships no handler. A cheap repair that needs no new artifact: have such a cell run the two controls this battery runs, so the arm proves the censor rather than proving an empty set."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S6",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T03:23:21Z",
+    "one_line": "THE FACE ASKS FOR A `StatusEnvelope` VALUE THE CONTRACT DOES NOT DEFINE. The L5 note and the S7-AC1 (d) arm both name the correction state as the StatusEnvelope value `needs-correction` (lowercase, hyphenated). The shared contract infra/aws/lambda/investor-reporting/_contracts/StatusEnvelope.schema.json, generated at IB-s-18 from the PRD CONTRACTS table, defines `state` as a CLOSED enum of nine values -- QUEUED, RUNNING, READY, PARTIAL, STALE, UNAVAILABLE, NEEDS_CORRECTION, UNCERTAIN, FAILED -- and `needs-correction` is not among them. A producer that emitted the face's spelling would be rejected by the contract on BOTH sides, since the schema sets additionalProperties false and the enum is closed. This cell writes NEEDS_CORRECTION, the contract's spelling, because the contract is the artifact a consumer validates against and the face is prose about it; the difference is stated in corrections.py at the constant rather than resolved silently. INERT: nothing is broken and nothing is waiting -- the prose and the schema mean the same state. It is filed because the same lowercase spelling appears in the PRD row this cell was cut from, so the NEXT cell to produce a StatusEnvelope will read the same prose and may write the same invalid value, and because resolving a spec-versus-contract difference in one direction without saying so is exactly how the two carriers stop agreeing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_contracts/StatusEnvelope.schema.json @5236a7603d -- properties.state.enum = ['QUEUED','RUNNING','READY','PARTIAL','STALE','UNAVAILABLE','NEEDS_CORRECTION','UNCERTAIN','FAILED'], and the object sets additionalProperties false",
+        "IRPT_BCKEND.TO-IB-s-7, 'What L5 adds', verbatim: 'the correction state (needs-correction) on the AnalysisRequest revision with the StatusEnvelope value needs-correction'",
+        "IRPT_BCKEND.TO-IB-s-7 S7-AC1 arm (d), verbatim: 'Uncertain items enter needs-correction'",
+        "infra/aws/lambda/investor-reporting/intake/corrections.py @HEAD -- NEEDS_CORRECTION = 'NEEDS_CORRECTION' with the difference stated at the constant",
+        "intake/tests/test_parse.py::test_the_status_envelope_uses_the_contract_spelling asserts the emitted state is the CONTRACT's value"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order and the PRD row name the StatusEnvelope value `needs-correction`.",
+    "world_is": "The generated contract's `state` enum is closed and contains NEEDS_CORRECTION; `needs-correction` would be rejected by the schema on both sides. This cell emits the contract's spelling.",
+    "notes": "Filed rather than absorbed because the lowercase spelling is in the PRD row too, so the next cell to emit a StatusEnvelope reads the same prose. The two carriers mean the same state; only the literal differs."
+  },
+  {
     "id": "IRPT_BCKEND-W4-S1",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
@@ -937,77 +1057,6 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "CLAUDE.md Git section: AWS via the `.tools/aws` shim (+`aws.cmd`, both or neither); never bare MSYS_NO_PATHCONV=1 aws.",
     "world_is": "The two faces of the shim are not interchangeable by caller. From bash either works; from a Windows Python only the .cmd does, and the bash one fails with an error that points away from the cause.",
     "notes": "Recorded because it costs a cycle every time. Same family as the existing memory note that Python spawning an MSYS binary must go through .tools/msys_argv_guard.py -- this is the AWS-shim instance of it."
-  },
-  {
-    "id": "IRPT_BCKEND-S10",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T03:12:00Z",
-    "one_line": "DISARM of IRPT_BCKEND-W1-S7 (ARMED) and IRPT_BCKEND-W1-S8 (BLOCKING), disarm_owner 2.0.0_SA_COO~B, the same drain they merged in (3bed36da5b). W1-S8: the rule-13 first-mint of this project's gold scripts has NO declared bundle in .tools/safe_deploy_core.py CODE_TREES (declared: accrual_bridge only), so both the ordinary push path (SKIP-NOT-MEMBER, W2-S5) and the guard's own explicit escape hatch (--mint-bundle) have no target; head-object on the served code prefix reads 404 for both scripts. The declaration is a DS-lane / tooling act outside every worker's grant and outside this round: the issuer carries it to L10 as a BLOCKING item with that owner, and the IB-s-4 face (the next cell on the directory root, un-handed) is amended so its first-mint arm records BLOCKED-BY-W1-S8 once, without a duplicate row. The schedules those cells apply target Lambda entries whose code Terraform ships by CodeSha256, so the product runs; what is absent is the shared-home copy of the gold scripts. W1-S7: the directory's opaque account ids resolve against the holdings join keys for 49financial (7,431 of 7,453) and for NEITHER other firm (0 of 790 INF, 0 of 946 COT) -- a raw-key selection difference inside directory_runner.build_inf/build_cot that IB-s-12 could not trace inside its budget. IB-s-4 re-builds the directory, so its face gains a Phase-1 trace (which raw key each firm's opaque_id derives from, file:line @ commit) and an arm (i) that prints per firm N of M snapshot ids resolved against the refreshed directory; no join is changed mid-round, the fact goes to the CTO at L10.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (this row IS the disarm act: W1-S8 becomes an L10 BLOCKING item owned by the DS lane / tooling owner; W1-S7 becomes IB-s-4's traced fact, graded at that drain)",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W1-S7, IRPT_BCKEND-W1-S8, IRPT_BCKEND-W2-S5 @3bed36da5b",
-        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_s_12.result.md @3bed36da5b -- the mint refusal and the 404 printed beside the three landed QA snapshots",
-        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-4.directory-freshness-driven-on-a-controlled-clock.md (this commit) -- ISSUER AMENDMENT block + arm (i); <status> still staged, unhanded",
-        "memory: feedback_a_decomposition_that_covers_every_code_cell_can_still_leave_the_deploy_step_unowned -- the shape, recurring: COMMITTED is not SERVED and the first-mint had no owner in the decomposition"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "Rule 13: DS owns commit-to-QA-deploy for data/*/scripts/gold/*.py; safe-deploy.sh: first-mints stay explicit. IB-s-12 / IB-s-4 issuer amendment: the first-mint is attempted through the guard's explicit mechanism and verified by artifact.",
-    "world_is": "The explicit mechanism has no declared target for this project's gold home, so no worker in this round can land the shared-home copy; the served code prefix reads 404 for both scripts while the Lambdas that run them are converged. The directory and holdings id spaces coincide for one firm of three.",
-    "notes": "Two decisions recorded here rather than made silently: (1) the issuer does NOT declare the bundle mid-round -- it is a tooling edit under another lane and the only off-spec act available to this seat is a row; (2) IB-s-4's arm (h) is read as BLOCKED-BY-W1-S8 rather than re-filed, so the channel carries one BLOCKING row for one defect. Carried to L10 with the sequencing defect of S9 and the execution-role trust question of W3-S3."
-  },
-  {
-    "id": "IRPT_BCKEND-S11",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T03:20:41Z",
-    "one_line": "PRD MOVED TO v0.8 @d67e9813b5 MID-ROUND (v0.5 at 00:54Z, v0.6/v0.7/v0.8 through 03:09Z; 1.0.0_SA_CTO 95705 and 95751, information only) and the CTO left the amend-at-drain versus re-cut-in-round-2 decision to this lane. Decision, recorded: round 1 stays FROZEN on v0.4 @62301f71e0 for every cell's RECTANGLE and for every handed face; the ONE un-handed face whose cell the delta measures against live vendor behaviour -- IB-s-9, the YCharts generation chain -- is amended in the FE-s-2 / FE-s-5 shape with the v0.5 REST decision table and the v0.8 measured working contracts (upload field `holdings`; save fields `portfolio`/`items`; the full 201 payload vs the 404 minimal payload as a contract failure; fee 0 -> 422; empty sections legitimate; 26.76 s job budget; PDF via a separate unauthenticated client) as the SHAPES its replay transport records, plus one arm. Building IB-s-9 to the v0.4 row would have shipped a chain against a contract the estate has already measured to be wrong (the v0.4 row forbade inventing the upload field name that v0.8 now records). The B8 delta (session broker, isolated secret, fence, K3 controller) is NOT amended in: IB-s-8 is complete at 95a34541f8 on v0.4 and its delta, with B16/B17's, is round-2 material for the CTO's L10 analysis; the LIMB 6 gate refuses a NEW order against v0.8 until CRO and CVO re-sign, and no new order is cut here.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (the decision is this lane's by the CTO's own words; the re-sign of v0.8 is 4.0.0_SA_CRO's and 3.0.0_SA_CVO's; the round-2 recut of B8/B16/B17 is the L10 read)",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T005445Z_1.0.0_SA_CTO_INFORMATION__IRPT_BCKEND_PRD_is_at_v0.5_.md (msg 95705) and ...20260911T030903Z_..._v0.8_.md (msg 95751) -- 'the amend-at-drain versus re-cut-in-round-2 decision is the lane's'",
-        "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md @d67e9813b5 line 117 -- the B9 row with its (v0.5, SUPP IV.7/IV.8/III.2) and (v0.8, SUPP VI.5) additions, read by git show",
-        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-9.the-ycharts-generation-chain-as-an-opal-async-job.md (this commit) -- ISSUER AMENDMENT block + arm (v0.8); <status> still staged, unhanded; PRD pin line unchanged at v0.4",
-        "org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md (HEAD) -- mid-round the spec and the decomposition are frozen; the decomposition v0.1.1 is NOT edited by this amendment"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "Spine v3: mid-round the spec AND the decomposition are FROZEN; the only off-spec act is a surprise row. CLAUDE.md L4-R: the L4 notifier withholds the COO delivery until CRO and CVO sign at the current prd_version.",
-    "world_is": "The PRD advanced four versions during the round on Andrew's word at the CRO terminal; the delta is measured vendor behaviour that one un-handed cell would otherwise build against wrongly. The amendment carries measured shapes into that face without touching its rectangle, the decomposition or any handed face.",
-    "notes": "Recorded so the CVO's L8 compile and the CTO's L10 read see the decision and its scope in one place: amended IB-s-9 only; IB-s-8 (complete), IB-s-16 and IB-s-17 (B16/B17 deltas) carried to round 2. The v0.8 cloud packet is named as read-only reuse, never as a write surface."
-  },
-  {
-    "id": "IRPT_BCKEND-S12",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T03:24:38Z",
-    "one_line": "PRD v0.9 @86bde3ea26 (1.0.0_SA_CTO 95756, Andrew-direct ~03:1xZ: the proven YCharts cloud chain is FWD-4's FIXED mechanism, same shape as the 09-10 runner-STYLE constraint) folded into the un-handed IB-s-9 face as one more line of the S11 amendment: the generation transport IS the packet's cloud_transport.py extended (B9 BUILDS ON it), never a parallel transport and never the stopped-host SSM dispatch as the primary path; the Lambda holds the fenced session by name and replays REST; EC2 capture and fencing are B8's (round 2) and are stubbed here; v0.9's arm (5) -- Comparison and Multi-Comparison replayed LIVE -- is a live vendor call and stays the L10 qualified read on Andrew's per-use word. Consequence for the round the issuer states plainly: IB-s-8 (complete on v0.4, the stopped-host runner) is now the wrong mechanism by Andrew's word and is a round-2 RECUT, not a repair; IB-s-9's rectangle (seven-step chain, offline proof) is unchanged and the cell is still handed after IB-s-7 merges.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (folded same turn; the B8 recut is the CTO's L10 analysis)",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T032054Z_1.0.0_SA_CTO_INFORMATION__IRPT_BCKEND_PRD_v0.9__86bde.md (msg 95756) -- 'the mechanism is FIXED, not a build choice'; 'B9 BUILDS ON cloud_transport.py; arm (5)'",
-        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_031xZ_YCHARTS_CLOUD_PROOF_IS_THE_BACKEND_FLOW_FRONTRUNNER.md -- the record the CTO names",
-        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-9.the-ycharts-generation-chain-as-an-opal-async-job.md (this commit) -- the v0.9 line inside the S11 amendment block; <status> still staged"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "Decomposition v0.1.1 s.8 bound 1: NO LIVE VENDOR CALL is authorized by this document; a live arm is an express qualification read by the CTO at L10 on Andrew's per-use word. IB-s-9 L5 note (v0.4): a Lambda dispatching to the runner host over SSM when live.",
-    "world_is": "Andrew fixed the mechanism as the browserless Lambda replay of a fenced session; the v0.4 SSM-dispatch primary path is superseded and IB-s-8's runner host is the wrong seat for it. The face now reads the Lambda replay as the primary path on the replay transport; nothing live is run in this round.",
-    "notes": "Andrew's word reached this lane as a mechanism constraint through the CTO, not as a per-use live-call authorization; it is relayed at exactly that scope (CLAUDE.md s.2: never convert Andrew's word to one agent into a gate or a widening on another)."
   }
 ]
 ```
