@@ -560,6 +560,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC6 amendment 1 (commit 9cbbc84f71) and the issuer's message: 'comp-routes' extractor parses only the portal's known api-gateway.tf files ... structurally cannot observe a pure-add route in the NEW module' and 'I could not reproduce your claim that comp-routes api-routes shows the route -- api-routes count reads 0 in your worktree too'.",
     "world_is": "The extractor is NOT limited to a fixed set of known pipeline directories (it globs every subdirectory); it already parses this new module correctly once given the right tree to read. The '0' both the issuer and this worker's own bare-command test produce comes from a DIFFERENT, purely mechanical cause: `comp-routes` on PATH is a forwarder baked to this device's single MAIN checkout, so any invocation via the bare command name reads that checkout's disk state, which never received this branch's commits (or, before commit 1a62bb9932, never received this worktree's uncommitted files either) -- regardless of which comp-routes subcommand is named. Invoking this worktree's OWN tracked `.tools/comp-routes` directly (as `bash .tools/comp-routes`, sidestepping the PATH shim) reads the correct tree and shows the route in `api-routes` (though NOT in `behaviors`, whose per-behavior text is genuinely static source prose -- that half of AC6's original finding stands). AC6 itself is unaffected by this row (the amended invocation reads the .tf file directly, bypassing comp-routes and this whole class of confusion); this row exists so the CVO/CTO's follow-up into 'comp-routes and new modules' (named as a finding beyond this order in the amendment) investigates the PATH-shim cause rather than the extractor, which would otherwise send that investigation to the wrong file.",
     "notes": "Does not reopen or edit AMGT_RESAPP-Z-W2-S2, which stands as filed (comp-routes behaviors' own per-behavior-comment-is-static limitation is real and separate from this row). Non-blocking: AC6 already passes via the amended, comp-routes-independent invocation. Worth the CVO/CTO's attention only if a future criterion or investigation reasons about comp-routes' coverage of a new Terraform module from a bare `comp-routes` invocation on this device -- the correct read requires either merging the branch first or invoking the worktree's own `.tools/comp-routes` by relative path."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W1-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~1",
+    "surfaced_at": "2026-09-11T00:05Z",
+    "one_line": "This worktree's .gitmodules is EMPTY, so the portal/ gitlink (pinned at 5907cbca98eb091124e38a32debefa355c1d4376) cannot be initialized here at all; the F10 precedent DESIGN_SPEC.md this cell's task text names as READ material was read instead from the shared main workspace checkout, which itself carries a DIFFERENT portal commit (30ca034bbaa4b9d2864d3acce826e3c2fa59be0a) that also does not contain the pinned commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git ls-tree HEAD -- portal` -> `160000 commit 5907cbca98eb091124e38a32debefa355c1d4376\tportal` (a gitlink); `ls -la portal/` in this worktree -> directory exists, 0 entries besides `.`/`..`",
+        "`git submodule update --init -- portal` -> `fatal: No url found for submodule path 'portal' in .gitmodules`; the `.gitmodules` file in this worktree exists but is 0 bytes (Read tool: 'the file exists but the contents are empty')",
+        "`C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\portal\\src\\pages\\SecurityScanner\\DESIGN_SPEC.md` exists in the shared main workspace checkout, read from there instead; `git rev-parse HEAD` in that checkout's portal/ -> `30ca034bbaa4b9d2864d3acce826e3c2fa59be0a`",
+        "`git cat-file -e 5907cbca98eb091124e38a32debefa355c1d4376` inside that same checkout's portal/ -> not found (rc!=0, no output) -- the exact pinned commit is unreachable from either location available to this worker",
+        "the file read is 560 lines exactly, matching this cell's own task text ('F10: 560 lines') -- circumstantial confidence the CONTENT is the same the task order describes, but the commit identity itself is unverified"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This cell's task text: 'Also present: ... the F10 precedent portal/src/pages/SecurityScanner/DESIGN_SPEC.md (READ)' -- implying the file is reachable in this worktree at the pinned vintage.",
+    "world_is": "The portal submodule cannot be populated in this worktree at all (no .gitmodules mapping), so the file was read from a DIFFERENT, unrelated checkout of the same repo at a DIFFERENT commit than this worktree's own gitlink pins -- a substitution this worker discloses rather than silently treats as equivalent. The line count (560) matching the task order's own citation is the only corroboration that the substitute is faithful; the commit hash itself was not, and could not be, verified to be the same content.",
+    "notes": "Not this worker's <paths>/BOUNDS to fix -- .gitmodules is not in this cell's write surface (lib/research/print/, deliverables/, the investigation file, this cell's own task-order file). This worker used the substitute read only for STYLE/GRAMMAR guidance (DESIGN_SPEC.md's section structure), not as a data source whose exact bytes are reproduced verbatim into this cell's own criteria, which limits how much a vintage mismatch here could actually mislead the deliverable. Whoever owns this fabric's submodule wiring may want a populated .gitmodules on this worktree class generally, not just for this cell."
   }
 ]
 ```
