@@ -71,3 +71,66 @@ round 3's readiness. Step (2) is NOT MET by the spec's own words and `TO-S2-1`/`
 correctly uncut.
 
 Push state: LOCAL at write; this seat does not push.
+
+---
+
+## 6. SECOND REVIEW -- brief `0cc8a7d2dd9d` @`71a376b98e`. SIGNED
+
+**Supersedes section 5's verdict. Sections 1-5 stand.** The bar this seat signed two hours ago was
+NARROWER THAN THE HAZARD, and the defect was in the re-founding itself.
+
+| check | result |
+|---|---|
+| brief half | `0cc8a7d2dd9d` -- matches |
+| ratified-text | `1c60358b916e` **UNCHANGED** -- CVO signature intact |
+| `endpoint_outcomes` | 6, unchanged |
+| worktree | clean at sign |
+
+### 6a. ⛔ A NEW FAILURE MODE, AND IT IS NOT THE ONE SECTION 3 PRAISED
+
+Section 3 rated step (2) highly for being a CONDITION rather than an act, and for FAILING IN THE
+BROKEN WORLD where `S2-AC5` could not. **Both of those remain true and both were insufficient.**
+The bar read *"from the served artifact"* -- meaning `positioning_data.json` alone -- and
+`2.0.0_SA_COO~Z`'s wave-1 cells measured **both collapse sites OUTSIDE that artifact**:
+
+- **DOWNSTREAM:** `HoldingsTab.tsx:1392-1394` iterates a HARDCODED
+  `assetClassOrder = ['Fixed Income','Equity']`. A `Commodities`/`Structured`/`Alternatives` group is
+  **NEVER ITERATED** -- the row renders NOWHERE while its weight stays in the grand total. 42 of 42
+  consumers, 12 sites, 8 files.
+- **A DIFFERENT ARTIFACT:** `yang-generate-allocation-summary` carries `Commodities` through all 88
+  hops, then draws `policy_weight 0.0` from a two-key `BENCHMARK_ALLOCATIONS`, writing
+  `holdings_attribution_data.json`.
+
+⭐ **SO THE CELL COULD HAVE RETURNED GO -- CORRECTLY, ABOUT THE ARTIFACT IT WAS POINTED AT -- WHILE
+THE PAGE DROPPED THE ROW.** `TRUE AND INSUFFICIENT`. That is a THIRD criterion pathology, distinct
+from the two this project already names: not always-passes (`S2-AC5` could not fail at all), and not
+unsatisfiable -- **a criterion that discriminates correctly over the WRONG DOMAIN.** It is Rule 24's
+wrong-domain subtraction wearing a criterion's clothes, and it reads as rigorous precisely because it
+*can* fail.
+
+### 6b. THE EVIDENCE THAT MAKES (c) AND (d) BARS RATHER THAN ADVICE
+
+**This exact bug has already SHIPPED.** The same file documents it for `Cash` at `:1364-1372`,
+measured on PROD v2.1.167: **PFDE 90 -> 89 served-vs-DOM rows, subtotals 99.98 under a grand total of
+100.01.** The remedy folded only `Cash` and `Hedge` -- **so a retag reproduces it with a new value.**
+A bar that did not check RENDER and SUBTOTAL would have certified the reproduction.
+
+⭐ **THE MECHANISM IN THE MEASURING WORKER'S OWN WORDS:** *"Data reaches three lambdas; the code
+hardening reaches one."* That sentence is why hardening one write surface never bounded this.
+
+### 6c. VERDICT
+
+**SIGNED** -- brief half, `half_hash 0cc8a7d2dd9d`, PRD v0.5, tree clean at sign.
+
+Carriage holds and is materially better than what section 5 signed: the bar now spans **every served
+surface the retagged value reaches**, with (a) served value, (b) non-zero unchanged weight,
+(c) **the row RENDERS** -- served row count equals DOM row count -- and (d) **class subtotals sum to
+the grand total**.
+
+⚠ **AND MY OWN SECTION 3 IS CORRECTED BY THIS, NOT MERELY SUPERSEDED.** I praised the bar for failing
+in the broken world without asking WHICH broken worlds it could see. "Fails in the broken world" is
+necessary and not sufficient; the next question is **"over what domain?"** -- and I did not ask it.
+`2.0.0_SA_COO~Z` did, by measuring the consumers rather than reasoning about the artifact.
+
+⛔ Scope unchanged: brief CONTENT CARRIAGE only. Step (2) is still NOT MET; `TO-S2-1`/`TO-S3-1`
+remain correctly uncut and ADMITTED is not a retag GO.
