@@ -524,6 +524,53 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "DELIVERABLE names 'fixtures/'; BOUNDS 6: 'No credential in any artifact, log, fixture or commit. Secrets are read by NAME at runtime; a recorded fixture is scrubbed before it is committed.'",
     "world_is": "'Scrubbed' is not defined in the order. Removing identifiers keeps every arm provable; removing or perturbing the magnitudes destroys the four arithmetic ties that ARE the proof. This worker read the bound as identifier-scrubbing and says so rather than letting the interpretation ride silently.",
     "notes": "No credential of any kind is in the fixtures (checked: no bd.identity, Bearer, access_token or Cookie string appears). If 3.0.0_SA_CVO reads the bound as magnitude-scrubbing too, the remedy is a single affine rescale of every dollar quantity in the generator -- returns and factors are scale-invariant, so only the value-shortcut arm's absolute dollar figure changes, and it would then be cited against a rescaled expectation rather than against the evidence's 210.68."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S7",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T00:37:15Z",
+    "one_line": "The face's signature is resolve(headers, directory) -> ResolvedScope, but NEITHER input carries an advisor-to-account link: the injected header set has no account claim, and DirectoryEntry deliberately holds only opaque firm/client/relationship/account ids with no advisor field. There is no path from those two objects to a permitted account set. This worker therefore introduced a THIRD input the face does not name -- the ownership map the edge validator itself reads for its own .004c gate (s3://opal-data-{alias}/platinum/{firmId}/ownership_map.json, schema_version 1, advisors[advisorId].{accounts,relationships}) -- as an optional argument, and made the permitted set the INTERSECTION of that grant with the verified firm's directory population, so the map can only ever SHRINK what the directory holds. SECOND ORDER, and the sharper half: the ownership map is keyed in platinum's CUSTODIAN id space while the directory is keyed in the opaque sha256(namespace|firm|kind|raw)[:24] space, so the join does not land at all without a projection. Rather than duplicate directory_runner.opaque_id inside a Lambda module (two definitions of one id space is the defect the reuse exists to prevent), the projection is an INJECTED SEAM (id_projection) and every granted id that matches nothing is reported UNMATCHED with one of three reasons -- CROSS-FIRM, NOT-IN-DIRECTORY, UNPROJECTED-ID -- because an unmatched grant and a correctly-empty grant produce the same smaller set.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json @313659c29c properties.ids -- firm_id, client_id, relationship_id, account_ids and nothing else; additionalProperties false. No advisor field exists to join on.",
+        "infra/aws/lambda-edge/auth-validator-edge/index.mjs:383-391 @313659c29c -- the nine injected headers are email, name, tier, role, firm-id, user-type, advisor-id, advisor-role, origin-verify. None carries an account or a permitted set.",
+        "infra/aws/lambda-edge/auth-validator-edge/index.mjs:135-136, :153-154, :162-163 @313659c29c -- the validator's OWN entitlement source is the ownership map, read per firm from platinum with schema_version 1 and advisors[id].{accounts,relationships}.",
+        "data/assets/scripts/gold/investor_reporting/directory_runner.py opaque_id @313659c29c -- ids are sha256(namespace|firm|kind|raw)[:24]; no custodian account number leaves the runner, so the ownership map's ids cannot equal the directory's.",
+        "infra/aws/lambda/investor-reporting/_scope/resolve.py advisor_grant / unmatched_reasons (this commit) -- the seam and the three reasons, with the UNPROJECTED-ID case exercised by test_a_custodian_shaped_id_is_reported_as_unprojected_not_as_missing."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "THE CELL (L5 note): 'infra/aws/lambda/investor-reporting/_scope/resolve.py: resolve(headers, directory) -> ResolvedScope validating against the schema: ... the unique permitted account set + a stable fingerprint'. ACCEPTANCE S2-AC1(b): 'a relationship with one account outside the viewer's population'.",
+    "world_is": "headers + directory cannot produce a permitted account set: neither object relates an advisor to an account. A third authority is required, it already exists and is already trusted by the edge validator, and its key space differs from the directory's.",
+    "notes": "ARMED rather than INERT because the seam is silent in the safe direction: with no id_projection the intersection is EMPTY and an advisor sees NOTHING, which reads as a correct revocation rather than as a broken join. The resolver therefore refuses to be quiet about it (the unmatched count and its reasons are in every census). The disarm act belongs to whoever wires the resolver to a live ownership map -- IB-s-15 by the face's own note that the Global catalogue is its addition to this module -- and is: supply id_projection, or publish the ownership map in the directory's opaque space. NOT worked around here by widening the order."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S8",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T00:37:15Z",
+    "one_line": "The face names the principal-class vocabulary as (firm-advisor | firm-admin | opal); the ResolvedScope contract this cell must validate against carries a DIFFERENT enum -- OPAL_GLOBAL | FIRM_ADVISOR | FIRM_OPERATIONS | CLIENT | UNKNOWN -- with different tokens AND two extra members the face does not mention. Built to the CONTRACT, because arm (f) grades every resolved object against it and the contract is the artifact the FNTEND counterpart consumes. The mapping taken, stated so it is not inferred: firm-advisor -> FIRM_ADVISOR, firm-admin -> FIRM_OPERATIONS, opal -> OPAL_GLOBAL; CLIENT and UNKNOWN are additional and UNKNOWN is the one that carries every refusal (an unauthorized caller is a scope with an empty set and a reason, never an exception).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-2.resolved-scope-from-the-validators-headers.md @313659c29c THE CELL, L5 note -- 'principal class (`firm-advisor` | `firm-admin` | `opal`)'",
+        "infra/aws/lambda/investor-reporting/_contracts/ResolvedScope.schema.json @313659c29c properties.principal_class.enum -- ['OPAL_GLOBAL','FIRM_ADVISOR','FIRM_OPERATIONS','CLIENT','UNKNOWN'], generated from the PRD CONTRACTS table at 62301f71e0",
+        "infra/aws/lambda/investor-reporting/directory/handler.py:113-117 @313659c29c -- IB-s-1's handler already branches on principal_class 'UNKNOWN', so the contract's vocabulary is the one live code reads"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "THE CELL: 'principal class (`firm-advisor` | `firm-admin` | `opal`)'.",
+    "world_is": "The generated contract carries five members with different tokens. Two vocabularies for one axis; the contract is the enforceable one and the face's is prose.",
+    "notes": "No remedy taken and none needed for this cell: the contract's enum is what validates. Raised so the CVO reads FIRM_OPERATIONS in the output as the face's 'firm-admin' rather than as an invention, and so a later cell does not build a third spelling."
   }
 ]
 ```
