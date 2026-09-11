@@ -150,10 +150,29 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
   `docs/briefs/positioning-gld-vxx-satellites-20260911.md@46f7e03df8`; Andrew-direct 2026-09-11 ~07:2xZ to
   fold into POSN_ASTTAX, via `0.0.0_AB_MSTR` msg 21263) -- ⛔ **THE RETAG OF THE COMMODITY/HEDGE TICKERS IS
   A PRODUCTION LANDMINE UNTIL THE POSITIONING GENERATOR IS HARDENED; the round-2 SEQUENCE is load-bearing.**
-  ⛔ **RE-FOUNDED 2026-09-11 ON THE MEASUREMENT THIS CONSTRAINT ITSELF ORDERED. THE CONSTRAINT STILL
-  BINDS; ITS STATED MECHANISM DOES NOT.** What follows is the mechanism as measured, then the original
-  as history. A constraint whose stated mechanism is dead will be mis-applied by the next cell that
-  reads it -- and the dead one below invites exactly the check that cannot see the live failure.
+  ⛔ **RE-FOUNDED TWICE, AND THE SECOND RE-FOUNDING REVERSES THE FIRST. READ THIS BLOCK BEFORE THE
+  ONE BELOW IT.**
+  **THE ORIGINAL `0.4.0_DT_ClientPlatform` MECHANISM -- KeyError, the generator dies, and THE PAGE
+  BLANKS FOR ALL FOUR PARTNER FIRMS -- IS WHAT IS RUNNING IN PRODUCTION RIGHT NOW.** It was declared
+  falsified at ~20:0xZ by this seat on a measurement taken against **HEAD**, and HEAD was never the
+  plane this constraint is about. Measured 2026-09-11 ~23:4xZ by `AT3-s-5`, TWO INSTRUMENTS, TWO
+  SEATS, TWO METHODS:
+  - the worker DROVE THE DOWNLOADED DEPLOYED BYTES: `KeyError: 'Structured'` at
+    `calculate_allocations():239`, **11 of 11 members**. Deployed `lambda_function.py` 94,164 B
+    `md5 cc79aff...` vs HEAD 115,411 B `md5 96aedb5...`; `Commodities` 0/12, `Alternatives` 0/7,
+    `normalize_asset_class` 0/13, positive control `def lambda_handler` 1/1, negative control 0/0.
+  - `2.0.0_SA_COO~Z` read the AWS CONTROL PLANE instead: `get-function-configuration` ->
+    `LastModified 2026-08-18T18:34:43Z`, `CodeSha256 PRg64EGzQtLw7/HAhyN/jNP6rd01PrcLK4wKqCHAKfQ=`.
+  ⛔ **THE DEPLOYED BYTES WERE BUILT 2026-08-18. `AT2-s-6`, `AT2-s-1` AND `AT3-s-1` ALL POST-DATE THAT
+  DEPLOY, SO EVERY REPAIR THIS PRD CITED AS HAVING KILLED THE KeyError IS COMMITTED-NOT-DEPLOYED.**
+  ⭐ **THE DT BRIEF WAS RIGHT THE WHOLE TIME**, and was declared falsified by a measurement on the
+  wrong plane. A `git` read cannot falsify a claim about a running lambda: DESIRED != APPLIED !=
+  EXERCISED (Rule 22), and `deployed bytes` has three referents. **A CONSTRAINT ABOUT THE SERVED
+  PLANE IS ONLY EVER FALSIFIED BY A SERVED-PLANE READ.**
+  ⚠ **SO THE BLOCK BELOW IS TRUE OF HEAD AND FALSE OF PRODUCTION, and it is kept rather than deleted
+  because the two-plane split IS the finding:** after a deploy of HEAD the failure mode changes from
+  BLANKING to SILENT ZEROING, so both mechanisms are live-in-waiting on different planes and a retag
+  is unsafe under either. Read "LIVE MECHANISM" below as "THE MECHANISM AT HEAD, POST-DEPLOY".
   **THE LIVE MECHANISM (measured by `TO-S7-1`, round 2): SILENT ZEROING, NOT BLANKING.**
   `AT2-s-6` hardened the generator and KILLED the KeyError -- **0 of 17 hops RAISE**. A retag today
   does NOT blank the page. It renders `Commodities`/`Structured` as the literal string `'Unknown'`
