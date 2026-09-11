@@ -252,6 +252,19 @@ CHANGE IDENTITY under a seat that has stopped looking:** `rd-8` was flipped `sup
 opened `staged` IN THE SAME COMMIT 43 minutes later, so the open count never reached zero and the
 named blocker silently became a different order. Nothing announces that.
 
+⛔ **AND A COLD PLANE IS ONLY EVIDENCE OF STALLING IF ENOUGH TIME HAS ELAPSED SINCE THE SEAT BECAME
+ABLE TO WORK. MEASURE STALENESS FROM THE CLOCK ORIGIN, NOT FROM NOW.** The origin is whichever is
+LATER: the seat's last output, or **the moment its named blocker cleared**. A seat unblocked three
+minutes ago reads COLD on every plane by ARITHMETIC, not by fault.
+Found 2026-09-11 by `1.0.0_SA_CTO~Z` running this rung on its OWN wait: `3.0.0_SA_CVO~Z` had named
+"1 of 36 orders nonterminal"; re-measured at HEAD it was **0 of 37, CLEARED** by a drain THREE
+MINUTES EARLIER -- so the BLOCKED arm correctly expired, and the four planes then read COLD and would
+have classified as STALLED a seat that had not yet had time to draw breath.
+⚠ **THIS IS THE FAILURE A 10-MINUTE CADENCE MANUFACTURES:** a driver ticking shortly after a peer
+unblocks sees cold planes and reaches outcome (3), and the shorter the cadence the more often a tick
+lands inside the window where COLD means nothing. **State the elapsed time FROM THE ORIGIN beside
+every COLD verdict, and treat anything under one tick-interval as INCONCLUSIVE rather than COLD.**
+
 ⚠ **AND THE COVERAGE IS ONE PLANE DEEP IN BOTH DIRECTIONS, WHICH IS THE STRUCTURAL FINDING:** plane
 (3) is the only one that sees a v3 worker mid-flight, plane (4) is the only one that sees a codex
 seat, and **they do not overlap.** Lose either and a whole seat class goes dark with no second
