@@ -93,3 +93,39 @@ LIMB 3  judgment grades   1 of 1 flagged (S1a-AC10), 1 of 1 GRADED -- PASS at C-
   }
 ]
 ```
+
+## C-S3 -- SUPERSEDES C-S2's REMEDY: two of its three prescriptions are RETRACTED on Andrew-direct ~07:1xZ; do not route the trigger or the 169
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-C-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "mechanism": "THIS ROW SUPERSEDES THE REMEDY IN C-S2 ABOVE, WHICH IS RETRACTED IN TWO OF ITS THREE PARTS. C-S2 was written against a purpose this seat INFERRED -- a single-source-of-truth architecture -- rather than the one the artifact has. Andrew-direct at this terminal 2026-09-11 ~07:1xZ: ETFClassifier is 'basically a developing list of how we tag securities we own. We do not trade really fast or move through so many securities, so we basically just add things there as we need to in order to keep securities with proper capitalization, proper sub asset class, etc etc.' Against a CURATED TAGGING LIST, two of C-S2's three prescriptions are not remedies at all: (i) 'give the seed a trigger' invents a requirement the purpose excludes, because for a list a person extends when the firm acquires a security A PERSON IS THE MECHANISM; and (ii) 'account for the 169' asks for an accounting that already exists in the table's own `updated_by` field, which this seat did not project.",
+    "evidence": [
+      "ANDREW-DIRECT ~07:1xZ, quoted in full above; a statement of PURPOSE, taken on the product owner's word because it is not a thing this seat can measure.",
+      "THE PROVENANCE, measured after the correction by projecting the field that was in every row all along: 169 `seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)`; 59 `1.0.0_SA_CTO~X placeholder-name-sweep`; 55 `1.0.0_SA_CTO~X attr-restore-from-_shared`; 1 vug-naming-fix; 1 canonical_si_seed. Sums to 285 with ZERO unattributed entries. Dates: 169 on 2026-08-25, 115 on 2026-08-18, 1 on 2026-03-25 -- three dated deliberate acts, two on Andrew's own word.",
+      "seed-etf-constituents.py:10 states it outright: 'THE UNIVERSE THIS SEEDS IS DIFFERENT FROM seed-etf-classifications.py, AND THAT IS THE POINT', with :17 giving the reason. That file appeared in this seat's OWN trigger census and the line was read without being connected.",
+      "THE REGISTRY IS DOING ITS STATED JOB: sub_asset_class populated on 282 of 285 rows across 31 distinct values (Information Technology 32, Financials 29, US Large Cap 25, Industrials 21, Ultra Short Duration 16, Intermediate 14, ...). 98.9% coverage on exactly the field the list exists to carry.",
+      "WHAT IS UNAFFECTED AND STILL MEASURED: all seven set figures (136 / 285 / 116 / 20 / 169 / 305 / 189) and ZERO value-level asset_class mismatches across the 116 shared tickers. The measurements were correct; the frame around them was not."
+    ],
+    "remedy": "THE CORRECTED WORK, and it is smaller and different from C-S2's. RETRACTED: 'give the seed a trigger' and 'account for the 169' -- neither is a defect, and NEITHER SHOULD BE ROUTED. WHAT REMAINS, in the order I would take it: (1) THE THREE BLANK sub_asset_class ROWS. 282 of 285 are populated; three are not. On the owner's account those three, not the 169, are the actual gap in what the list exists to do, and it is a minutes-long tagging job rather than an architecture programme. (2) MAKE UNKNOWN DISTINGUISHABLE FROM EQUITY, and this one MATTERS MORE under the curated-list framing rather than less: the serving code defaults an unrecognised ticker to 'equity' (lambda_function.py:359) while 'equity' is also the largest genuine tag (216 of 285). If the registry's whole purpose is keeping securities PROPERLY TAGGED, then a bucket in which 'properly tagged as equity' and 'not recognised' are the SAME STRING is precisely the thing that cannot be audited -- you cannot review your own tagging if the default is invisible. (3) THE RATIFIED FIVE vs THE STORED THREE. Commodities and Alternatives do not exist as values yet. Under this framing that is ADDITIVE to a curated list -- add the two values, move the six commodity holdings and VIXY -- not a migration of something broken. Sequencing note from C-S1 stands: it is a class-definition write, so it belongs wherever the S1-a decision lands. C-S1 (is_hedge() has no true case) is UNTOUCHED by this correction and stands entirely.",
+    "owner": "1.0.0_SA_CTO~Z, for the corrected scope only. C-S2's retracted parts have NO owner because they are not work.",
+    "round": "v1",
+    "remediation": {
+      "state": "OPEN",
+      "owner": "1.0.0_SA_CTO~Z -- the three blank sub_asset_class rows, the unknown-vs-equity distinction, and the additive two class values",
+      "round": "v1"
+    },
+    "closed": false,
+    "disarm": {
+      "state": "DISARMED",
+      "owner": "3.0.0_SA_CVO~Z",
+      "at": "2026-09-11T07:30Z"
+    }
+  }
+]
+```
