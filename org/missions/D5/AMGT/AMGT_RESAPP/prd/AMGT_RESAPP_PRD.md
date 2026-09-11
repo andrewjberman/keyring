@@ -557,7 +557,7 @@ vendor and every other use, and the standing "availability is not authorization"
 | S3 | `FWD-3` | THE PROVENANCE FACE -- source, basis and vintage beside every figure | absent | F3 (basis stated beside the number, Andrew-ruled) | wire | S1 | `C-BLOOMBERG-BASIS` |
 | S4 | `FWD-4` | THE COVERAGE READER -- recent commentary, ranked by recency and frequency | absent | F7 (the landed corpus is an ARCHIVE, not a feed: dates stop at 2026-04, 0 of 200 sampled carry a ticker); F11 (the SERP path works; the obvious link field is an obfuscated redirect) | build | S12 | `C-VENDOR-EGRESS`, `C-RULE-MUST-EXIST` |
 | S5 | `FWD-5` | THE PRINT RENDERER -- Adam's artifact | absent | F1 (template and packs are consistent, provenance confirmed by a shared misspelling) | build | S1, S3 | `C-DESIGN-SPEC-FIRST` |
-| S6 | `FWD-6` | THE VERSION STORE -- snapshots that accumulate rather than overwrite | absent | brief O6; `opal-data-research` **MEASURED PRESENT 2026-09-11T15:55Z** (head-bucket rc=0, `us-east-1`; 404 negative control) -- brief PART V's ABSENT is superseded, not rewritten; **re-read live identity + config at the cut** | build | -- | `C-RAW-BEFORE-DERIVED` |
+| S6 | `FWD-6` | THE VERSION STORE -- snapshots that accumulate rather than overwrite | **STORE EXISTS; surface absent** | brief O6; `opal-data-research` was created by THIS project's own `AMGT-s-6` (CLOSED deploy-completion @2026-09-10T20:59Z; declared `infra/aws/terraform/research/s3.tf:11`); **versioning `Enabled`, so FWD-6's accumulate-never-overwrite bar is met BY CONFIG, not by convention**; no lifecycle, so accumulation is not silently truncated; read/list access MEASURED. Row `AMGT_RESAPP-Z-S8` | **INTEGRATE -- no create cell** | -- | `C-RAW-BEFORE-DERIVED` |
 | S7 | `FWD-7` | THE COVERAGE-FRESHNESS VIEW -- Adam's one place | absent | brief O7 | wire | S6 | -- |
 | S8 | `FWD-8` | THE PEER SET -- comparable to THIS company, or absent with a reason | **BROKEN TODAY** | F6: 48 of 54 (88.9%) carry a stale set copied from one workbook; 4 (7.4%) are genuine and hand-chosen | build | S12 | `C-IDENTITY-RESOLVED`, `C-SHARED-DEFECT` |
 | S9 | `FWD-9` | THE DRAFTING FACE -- generated prose marked, beside its evidence | absent | brief O9; Andrew's ruling on limb order | wire | S1, S4 | `C-VERBATIM-GATE` |
@@ -602,18 +602,25 @@ Carried from brief PART V. **These are preconditions, not outcomes -- no `FWD-n`
   so a 404 means absent **OR unauthorised**. The POSITIVE read is unaffected and carries this
   bullet on its own -- rc=0 with a real ARN and region proves the bucket EXISTS, whatever the
   control does.
-  **The brief's PART V measurement of ABSENT is NOT rewritten and is NOT re-graded.** What is
-  measured here is the PRESENT state only. ⛔ **This PRD does NOT claim the earlier ABSENT reading
-  was correct when taken** -- that was asserted in an earlier draft of this bullet and is WITHDRAWN:
-  nothing in the 15:44Z/15:55Z reads establishes what was true earlier, and `C-S23` expressly left
-  the original reading's correctness UNRESOLVED. The honest statement is that the bucket EXISTS NOW
-  and the planning premise must follow the present measurement; whether it ever was absent, was
-  misread, or was permission-masked is an OPEN question nobody has answered and none of it changes
-  what the next cut must do. `C-RAW-BEFORE-DERIVED` is no longer blocked on the bucket's existence.
-  ⛔ **EXISTENCE IS NOT ACCESS AND NOT CONFIGURATION.** This read proves the name resolves and
-  nothing more -- not that the pipeline may read or write it, not its policy, versioning,
-  encryption or lifecycle. **The S6 cut RE-READS live identity and configuration and states
-  EXISTING-RESOURCE INTEGRATION, never an absent-bucket creation premise.**
+  ⭐ **THE HISTORY QUESTION IS ANSWERED, AND THE ANSWER IS "GENUINELY ABSENT THEN."** An earlier
+  draft of this bullet asserted the ABSENT reading "was correct when taken"; that was WITHDRAWN as
+  unmeasured, and **the withdrawal was correct ON THE EVIDENCE THEN.** Round-4 row
+  `AMGT_RESAPP-Z-S8` since supplied evidence that settles it, so the fact is carried on MEASUREMENT
+  rather than on courtesy: **`opal-data-research` was measured ABSENT TWICE and was then CREATED BY
+  THIS PROJECT'S OWN CELL.** `comp-find --corpus aws` read 0 of 2382 nodes at 2026-09-10T12:24:50Z,
+  and a live `head-bucket` re-measured it absent at **2026-09-10T20:56:33Z as cell `AMGT-s-6`'s own
+  AC1, three minutes before that cell created it**. Creation is recorded in a CLOSED
+  deploy-completion entry (`org/critical_paths/change_management/
+  20260910T2059Z_amgt-resapp-opal-data-research-bucket_deploy_completion.md`) and the resource is
+  DECLARED at `infra/aws/terraform/research/s3.tf:11`. **Brief PART V is SUPERSEDED, never
+  falsified** -- and that is now a measured statement rather than a generous one.
+  ⭐ **ACCESS IS MEASURED TOO, not just existence** -- the gap an earlier draft of this bullet
+  correctly flagged as open. `list-objects-v2` SUCCEEDS and returns this project's own round-1
+  output under `derived/model_block/`, so the principal holds read/list rather than mere name
+  resolution. Configuration measured with it: **versioning `Enabled`** (re-read independently by
+  this seat), **no lifecycle configuration**, **no bucket policy** (access is IAM-only).
+  ⚠ What is still NOT claimed: write access was not exercised, and nothing here grants it.
+  `C-RAW-BEFORE-DERIVED` is no longer blocked on the bucket's existence.
 - **A decision on paywalled sources.** If analysis behind a login is in scope, the vision-
   authenticator pattern is the route; if public pages suffice, neither it nor the credential is
   needed. **Nobody has decided, and whether the login is captcha-gated is unknown.**
