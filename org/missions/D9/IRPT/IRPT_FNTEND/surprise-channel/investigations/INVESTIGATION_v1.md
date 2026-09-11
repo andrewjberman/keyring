@@ -792,6 +792,28 @@
     "spec_asserts": "Issuer faces F11-AC5..AC8 (and F9's print-route coverage): rc=0 from ui-smoke is the mechanical bar for 'the <screen> at 390'. Spine mid-round: the sanctioned repair of a defect is an issuer amendment to a NON-TERMINAL order; an ARMED row disarms via its disarm_owner.",
     "world_is": "rc=0 from ui-smoke is met by the error boundary and by the not-rendered panel alike -- a bar that cannot fail on the defect it was cut to catch (four criteria across two faces, this issuer's). The instrument prints discriminating lines (CLICKED:, CLICK-FAIL:, CONSOLE[log]: REFS RESOLVED) that the faces did not key on; the amendment keys on them. The crash reaches any real one-firm scope, not only the fixtures.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S16",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T09:35:00Z",
+    "one_line": "FE-s-11's second report: the three repairs of the first amendment hold (colour-law 4 of 4, Analysis and Export tabs CLICKED, the print route resolves REFS RESOLVED: 1 of 1, whole set 322 pass 0 fail) and two criteria still fail -- (a) F11-AC8's amended expect `CONSOLE[log]: ...` is graded by .tools/proof-of-spec-check.py as a REGEX, so `[log]` is a character class and the bar is unsatisfiable by construction (W1-S14, this issuer's defect, second in the same criterion); (b) F11-AC6's fixture fe-s-7-smartx.json serves an envelope-only performance-report (no method, lineage, dates, returns) while the contract requires them and the Reporting tab, default-mounted since FE-s-5's drain, reads method.currency -- the page crashes before Holdings can be clicked (W1-S13; FE-s-7's fixture predates the default mount, which is why FE-s-7's own smoke passed). Second amendment on the worker's branch @feb4266016: AC8's bar loses the bracketed tag; fe-s-7-smartx.json is granted so its report body becomes fe-s-6-ready.json's contract-conformant one. No component is edited by this amendment.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/proof-of-spec-check.py:83-103 @HEAD -- `expect` is 'the pattern its output must match'; a non-compiling expect is a violation and PASS requires the pattern to match output_evidence (read by the issuer after the worker's re.search reproduction)",
+        "portal (worker branch @ffdae260) contracts/index.ts:397-409 -- PerformanceReport requires method: PerformanceMethod (348-354); tabs/reporting/ReportingTab.tsx:109 reads report.method.currency; tabs/reporting/MethodAndSources.tsx:32-43 destructures method",
+        "fixtures/smoke/fe-s-7-smartx.json performance-report keys: availability, revision, schemaVersion, scope, sourceTimestamps -- vs fe-s-6-ready.json, fe-s-5-49f-bd.json, fe-s-9-modal.json, fe-s-10-global.json, each carrying the full report with method (issuer's own read of five fixtures)",
+        "worker report (second): F11-AC6 CLICK-FAIL: Holdings after the useFirmContext repair; F11-AC10 322 pass, 1 skip, 0 fail across 48 files; rows W1-S13 (INERT) and W1-S14 (ARMED, disarm_owner 3.0.0_SA_CVO)"
+      ]
+    },
+    "spec_asserts": "Issuer face F11-AC8 (first amendment): the bar is the printed line `CONSOLE[log]: REFS RESOLVED: 1 of 1`. FE-s-7's fixture map serves what the Holdings tab needs; the default tab's needs were not part of FE-s-7's cut.",
+    "world_is": "A bar written as prose that the checker reads as a regex; and a fixture map cut for one tab that the page's later default mount made insufficient -- each fixture map is a snapshot of the page's needs at its cut, and every later mount widens those needs silently. The second amendment fixes both in data and in the face; W1-S14's ARMED standing is retired on the worker's branch and the DISARM is the CVO's remediation row at L8.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
