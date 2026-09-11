@@ -283,11 +283,28 @@ Named, not sequenced. Sequencing is L5.
    on 2026-09-11. **This project is D13's first client-facing-surface member.**
 5. **Portal commits respect any active DEV-push freeze**, and a shared branch is pushed only by
    `0.0.0_AB_MSTR` on Andrew's word.
-6. **Third-party skill provenance.** Six repositories were pulled on 2026-09-11; three carry no
-   licence file (`senlindesign/taste-skill`, `vercel-labs/agent-skills`, `anthropics/skills`) and
-   three are licensed (`nextlevelbuilder/ui-ux-pro-max-skill` MIT, `leonxlnx/taste-skill` MIT,
-   `pbakaus/impeccable` Apache-2.0). Andrew ruled the unlicensed three are gitignored with a
-   pinned manifest.
+6. **Third-party skill provenance — and a constraint discovered in execution.** Seven repositories
+   were pulled on 2026-09-11; three carry no licence file (`senlindesign/taste-skill`,
+   `vercel-labs/agent-skills`, `anthropics/skills`), four are licensed
+   (`nextlevelbuilder/ui-ux-pro-max-skill` MIT, `leonxlnx/taste-skill` MIT, `pbakaus/impeccable`
+   Apache-2.0, `google-labs-code/design.md` Apache-2.0). Andrew ruled the unlicensed ones
+   gitignored with a pinned manifest and the licensed ones committed normally.
+
+   ⛔ **The licensed half could not be committed, and the reason is estate-level.**
+   `.tools/commit-gate.sh` is UNIVERSAL and FAIL-CLOSED on every `.py` in a commit (Rule 14). The
+   16 licensed skills carry **39 third-party `.py` files**; ruff blocked on upstream code and the
+   gate states explicitly that **`--force` does not bypass a gate failure — it only overrides the
+   contamination check.** Vendoring would mean maintaining a permanent lint fork of another
+   party's repository.
+
+   **Finding, generalised beyond this project: the estate cannot vendor third-party Python at all
+   under Rule 14 as written.** That is not a defect of Rule 14 — the gate is doing exactly its job
+   — but it is a constraint nobody had written down, and any future decision to vendor an external
+   Python dependency into this repo will hit it. Surfaced for the CTO; not adjudicated here.
+
+   **Resolution applied:** nothing third-party is vendored. The approved mechanism (pinned repo+SHA
+   manifest, `design/SKILLS_MANIFEST.md`) is unchanged; its coverage widened from 3 repositories to
+   all 7. This widens Andrew's ruling and is stated rather than absorbed.
 7. **A reviewer-facing gate must exist** or O6 is unenforceable and the system decays back.
 
 ---
