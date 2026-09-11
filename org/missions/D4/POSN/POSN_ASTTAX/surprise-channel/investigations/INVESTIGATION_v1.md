@@ -430,3 +430,85 @@ sparse cone -- NOT by the audited override, which would have skipped a real chec
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W4-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~4",
+    "surfaced_at": "2026-09-11T16:02:41Z",
+    "one_line": "VXX IS a current holding -- the urgency the DT brief claimed is CONFIRMED -- but it is NOT where the brief puts it. There is no satellites artifact at all; VXX is held in the CORE models LT and ULT and is rendered in the live served positioning_data.json, so the live surface is the four partner firms' positioning page, not Satellites 70/80/90/98.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MODELS PAYLOAD, READ DIRECTLY (S7-AC4, the read the issuer said it had not done): s3://opal-data-portal-v2/benchmarks/model_20260910_v1.pkl, LastModified 2026-09-11T11:04:19+00:00 UTC by s3api, ContentLength 17682489, ETag aa2e619e77d85ffa5a1a8fc9f56112ee. Selected as the newest of 87 objects under benchmarks/model_ (client-side count over an auto-paginated list-objects-v2, sorted by LastModified -- not a page).",
+        "VXX HELD, ON THE GENERATOR'S OWN RULE. The holdings frame carries 1547 rows / 56 unique tickers; VXX appears in 36 rows. The decisive read mirrors extract_current_holdings (lambda_function.py:1396-1401, latest date PER MODEL): UST 2026-07-01 no, ST 2026-08-11 no, INT 2026-08-18 no, LT 2026-08-18 YES weight 0.0150, ULT 2026-08-18 YES weight 0.0200. VXX is in the CURRENT slice of 2 of 5 core models.",
+        "SECOND INSTRUMENT, DIFFERENT PLANE, so this is corroboration and not repetition: the SERVED artifact s3://opal-data-portal-v2/json/positioning/positioning_data.json (LastModified 2026-09-11T11:06:24+00:00 UTC, gzip, 8123 bytes, produced from the same run as the PKL above) carries VXX in 5 of its 198 holding objects -- $.portfolios.LT.holdings[13], $.portfolios.ULT.holdings[12], $.current_holdings.LT.holdings[13], $.current_holdings.ULT.holdings[12], $.current_holdings.AGG.holdings[20] -- each with asset_class 'Equity' and sub_asset_class 'Volatility'. VXX is not merely in the source frame; it RENDERS today.",
+        "THE BRIEF'S LOCATION IS THE PART THAT FAILS. Census of the serving bucket: 0 of 4346 keys in opal-data-portal-v2 match 'satellite' case-insensitively (client-side count over an auto-paginated list-objects-v2 of every key). The positioning generator iterates MODEL_CODES = ['UST','ST','INT','LT','ULT'] (lambda_function.py:197) and the payload's own model axis carries exactly those five. No Satellites 70/80/90/98 artifact was found on this plane.",
+        "AND THE REST OF THE RETAG SET IS LATENT, WHICH INVERTS THE BRIEF'S PRIORITY: of the eight tickers AT2-s-2 would move, DBC, GLD, GSG, IAU, SLV, USO and VIXY have ZERO rows anywhere in the models payload -- not merely absent from the current slice. VXX is the ONLY member of the retag set that is held at all, so VXX->Structured is the entire live blast radius and the six-way Commodities split is latent.",
+        "POSITIVE AND NEGATIVE CONTROLS ON THE INSTRUMENT, so the zeros are true absences rather than a dead matcher: AGG (a known holding) reads 3 rows; the synthetic ticker ZZZZNOPE reads 0. The ticker match is whole-value, case-insensitive and whitespace-stripped."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The DT brief, carried verbatim into TO-S7-1's cell text and into this worker's face, asserts that VXX is already flowing into Satellites 70/80/90/98, framing the retag's live exposure as sitting on the satellite models.",
+    "world_is": "VXX is held and the exposure is LIVE -- so the brief's urgency claim is vindicated -- but its location claim is not. VXX sits in the CURRENT slice of the CORE models LT (1.50%) and ULT (2.00%) and renders in 5 places in the live served positioning_data.json; meanwhile no satellites artifact exists in the serving bucket at all (0 of 4346 keys). The surface a retag would disturb is the partner-facing positioning page, not a satellite model.",
+    "notes": "FORM ONLY, NOT SIGNIFICANCE -- the grade is the CVO's at L9. Recorded because targeting follows the brief: a check, a rollback or a render-verification aimed at Satellites 70/80/90/98 would inspect a surface this measurement could not find, while the surface that actually moves goes unwatched. WARN: SCOPE HONESTY ON THE NEGATIVE HALF: 'no satellites artifact' is measured over ONE plane, the opal-data-portal-v2 bucket. A satellites payload living in another bucket, in DynamoDB, or behind a scoped API path (see POSN_TENANCY's 'scoped api path for the satellites') would NOT be visible to this census, and this row does not claim otherwise. What is established without qualification is the POSITIVE half: VXX is held in the core models and served today."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W4-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~4",
+    "surfaced_at": "2026-09-11T16:02:41Z",
+    "one_line": "THE FRONTEND CONTRACT HOP IS UNTRACED AND UNTRACEABLE FROM THIS WORKTREE: my order names 'a frontend contract' as a distinct hop class, but portal/ is outside the sparse cone, so 29577 files were UNREADABLE to every census I ran. The served asset_class value post-retag is 'Unknown', and whether the renderer tolerates it has been measured by nobody.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CONE, MEASURED: git sparse-checkout list in /c/tmp/wk-posn-s7 returns exactly .tools, infra/aws/lambda/v2_portal, org/missions, org/modules, org/projects, org/ref, org/standards. 'ls portal' returns EMPTY. portal/ is not present to be read.",
+        "THE CENSUS DISCLOSED ITS OWN BLIND SPOT and I am quoting its denominator line rather than paraphrasing it -- S7-AC1, verbatim: 'DENOMINATOR: 500 hit(s) across 3426 file(s) scanned in scope [corpus=all] | 10 EPHEMERAL-FLOOR, NOT searched (--corpus raw reads these) | 29577 UNREADABLE, NOT searched | 26 BINARY, NOT searched'. The 29577 UNREADABLE is the out-of-cone remainder. The 500 hits certify the SWEEP, not the SET.",
+        "THE FRONTEND CONSUMER IS NAMED IN-CONE, so this is a known hop rather than a speculative one: org/modules/graph/estate-coverage-resolver.json:2924 records 'portal/src/api/portal-proxy.ts getPositioningData -> /api/general/positioning/positioning_data.json', and org/projects/ETFS_INGEST.json:47 records a ruling about what 'HoldingsTab.tsx renders'. The consumer exists and is identified; it is simply not readable from here.",
+        "WHY IT MATTERS RATHER THAN BEING A TIDINESS NOTE: S7-AC3 measured that three separate served-output hops (lambda_function.py:1272-1286, :1416-1430, :1908-1930) rewrite an unmapped class to the literal string 'Unknown' in the fields 'asset_class' and 'assetClass'. So the retag does not merely fail to propagate a new class -- it PUBLISHES a new literal value into a served contract whose consumer has not been inspected. A frontend that buckets, filters or switches on asset_class is an 18th hop, and it is the one hop nobody in this chain has read.",
+        "SCOPE OF THE CLAIM: this row asserts NOT-MEASURED, not BROKEN. I make no claim about how the portal behaves on 'Unknown' -- I am recording that the question is open and that my grant and my cone both stop short of it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-S7-1's act names a frontend contract as one of the hop classes the trace must cover ('a value can be carried by a dict key, a comparison chain, a schema field or a frontend contract, and each is a separate hop'), and S7-AC1 asks for a census whose count equals its denominator.",
+    "world_is": "The census count did equal its denominator (500 of 500) but only WITHIN the cone; 29577 files including all of portal/ were never searched, and the tool said so on its own denominator line. The frontend-contract hop is therefore enumerated in principle and measured in neither AC1 nor AC3. My write grant and my sparse cone both exclude portal/, so closing it is not an act available to this cell.",
+    "notes": "NOT AN OVERRIDE REQUEST AND NOT A SCOPE COMPLAINT -- per CLAUDE.md a path I need that my order's <paths> lacks is a row on the criterion, never a widening, and I did not widen. The AC3 hop set is bounded by AC2 (the generator file) exactly as the criterion defines it, so this does not make AC3 incomplete against its own contract; it bounds how far the WORD 'end to end' in AC6 can be taken, which is why it is filed rather than mentioned. SECOND, SMALLER INSTANCE OF THE SAME CAUSE, recorded here rather than as its own row because the cause is identical, AND CARRYING ITS OWN REMEDY SO IT IS NOT READ AS AN OPEN GAP: org/surprise_channel/schemas/investigation_item.schema.json is also outside the cone and unreadable from the worktree filesystem. It IS reachable in the object store, so these rows were validated against the real schema after extracting it with `MSYS_NO_PATHCONV=1 git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json` (9854 bytes), the same route 0.9.0_WK_POSN_ASTTAX~2 used. THE DISTINCTION THAT MATTERS FOR THE PRIMARY CLAIM ABOVE: a SCHEMA is a single known path and survives object-store extraction; the portal FRONTEND hop is a search over an unknown file set, and no git-show of a path I cannot first enumerate substitutes for a census. The cone blinds a SEARCH in a way it does not blind a FETCH, which is why the frontend half of this row stands unremedied while this half does not."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W4-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~4",
+    "surfaced_at": "2026-09-11T16:02:41Z",
+    "one_line": "THE KeyError PREMISE NO LONGER HOLDS, AND ITS RETIREMENT MADE THE FAILURE QUIETER RATHER THAN SAFER: 0 of 17 hops RAISE on a five-class value now that AT2-s-6 has landed, while 14 of 17 SILENTLY DROP it. This defeats TO-S2-1's S2-AC5 as written -- 'confirm the page still renders' is a criterion that cannot discriminate, because the page WILL render, showing 'Unknown'.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SUPERSEDED PREMISE, QUOTED FROM THE ORDER THAT STILL CARRIES IT: TO-S2-1 BOUNDS reads 'Retagging a HELD ticker to a class the generator does not carry raises KeyError, kills the generator, and blanks the positioning page for all four partner firms.' TO-S7-1's cell text carries the same shape ('the issuer measured the KeyError at the subscript').",
+        "MEASURED AT HEAD (S7-AC3, harness bound to the file's real bytes -- each hop's literal source is extracted from lambda_function.py and executed, and the executed text is printed beside its result): HOPS TESTED 17, SURVIVES 3, SILENTLY DROPPED 14, RAISES 0. Accounting closed by subtraction from the AC2 denominator: 79 of 79 enumerate hits fall inside a tested hop, 0 unassigned, hops tested == hops enumerated.",
+        "WHY THE RAISE IS GONE, and it is not an accident: AT2-s-6 replaced the direct subscript with a seeded-plus-fallback accumulator (lambda_function.py:258-264) whose own comment states the design -- 'The canonical keys stay seeded, so every fixed-list consumer of these dicts keeps finding them.' That is exactly why the four hardcoded four-class consumers (:894-897, :953-956, :1960-1961) no longer KeyError: they still find their four seeded keys. The hardening removed the CRASH and left the DROP.",
+        "THE DISCRIMINATION FAILURE, STATED CONCRETELY. S2-AC5 asks a successor worker to 'confirm the page still renders'. Post-AT2-s-6 the page renders in BOTH the healthy and the broken world, so that criterion returns the same observation either way -- the always-passes shape. The broken world is specifically: three served-output hops rewrite the class to the literal 'Unknown' (:1272-1286, :1416-1430, :1908-1930), the allocation spread and delta omit it entirely (:894-897, :953-956, :1960-1961), and the benchmark allocation silently loses the weight because its if/elif chain has no else (:389-407, probe weight 0.25 accumulating to TOTAL 0.000).",
+        "AND IT IS LIVE, NOT HYPOTHETICAL, because of W4-S1: VXX is in the current slice of LT and ULT and renders in 5 places today as 'Equity'. Retagging VXX to 'Structured' turns those 5 served rows into 'Unknown' on the next generator run, with no exception, no log line from the display hops, and a page that still draws.",
+        "NEGATIVE CONTROL ON THE HARNESS, so 'SILENTLY DROPPED' is not a dead probe: at every comparison hop the controls 'equity' and 'fixed_income' DO take their branches (printed per hop), and at the display hops 'equity' maps to 'Equity'. The maps and branches work; they simply carry four keys."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-S2-1 asserts the retag's failure mode is a KeyError that kills the generator and blanks the positioning page, and gates its own safety on that tell -- S2-AC5 verifies the retag by confirming the page still renders.",
+    "world_is": "After AT2-s-6 the generator does not raise at all on a five-class value: 0 RAISES of 17 hops. It absorbs the value at the seeded accumulator and then drops it at 14 downstream hops, three of which publish the literal 'Unknown' into the served asset_class/assetClass fields. The page renders in both the healthy and the broken world, so the successor's verification step cannot distinguish them.",
+    "notes": "FORM ONLY; the grade and any recut are the CVO's at L9 and the COO's at L10. Recorded because the two facts point OPPOSITE ways and could cancel if read singly: 'the KeyError is fixed' reads as reassurance and is true, while 'the tell that the retag went wrong has been removed along with it' is the same fact and is the hazard. Note also that this row does NOT argue AT2-s-6 was wrong -- carrying the value under its own name rather than folding it into a catch-all is what makes the drop COUNTABLE at all, and it is why H4 reads SURVIVES with a WARN line naming the ticker. What is owed is a discriminating acceptance step downstream of it, and that is a cut decision, not mine."
+  }
+]
+```
