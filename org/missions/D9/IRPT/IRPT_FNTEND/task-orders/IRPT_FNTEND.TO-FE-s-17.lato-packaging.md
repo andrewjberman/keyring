@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>blocked</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F9: locally packaged licensed fonts; PATHS brand rows) | **Decomp cell:** `FE-s-17` (round 2, v0.2) | **outcome_ref:** FWD-8, FWD-12, FWD-3 | **depends_on:** `FE-s-12` | **slot:** ~2, queue position 1 | **slug rows:** W2-S3
 
@@ -44,8 +44,8 @@ The 700 weight (Bold) and the italics are NOT on the box and are NOT fetched: 60
 <criterion id="F17-AC5" cell_refs="FE-s-17"><invocation>cd <WS>/portal && timeout 120 node scripts/ui-smoke.mjs "investor-reporting/print?bundle=perf-narrative-fixture-1" <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/fe-s-17_print_performance_1440.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-11-print.json --console "REFS RESOLVED" --netlog <WS>/.scratch/fe-s-17.netlog; echo rc=$?</invocation><expect>REFS RESOLVED: 1 of 1</expect></criterion>
 `F17-AC5` -- the print route renders the performance document with the packaged font and writes its request log (ui-smoke prints `DID NOT LAND` for the query-string route; the resolver line is the bar).
 
-<criterion id="F17-AC6" cell_refs="FE-s-17"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-17/fonts-served.test.ts</invocation><expect>EXTERNAL: 0</expect></criterion>
-`F17-AC6` -- the test reads `../.scratch/fe-s-17.netlog` (written by F17-AC5), prints `LATO REQUESTS: n` for requests whose URL contains `Lato-` with status 200 (n at least 1), and `EXTERNAL: 0` for font requests to any host other than the dev server's origin.
+<criterion id="F17-AC6" cell_refs="FE-s-17"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-17/fonts-served.test.ts</invocation><expect>LATO OFF-ORIGIN: 0</expect></criterion>
+`F17-AC6` (AMENDED BY THE ISSUER at the FE-s-17 report on row IRPT_FNTEND-W2-S7) -- the test reads `../.scratch/fe-s-17.netlog` (written by F17-AC5) and prints, unnarrowed first, `FONT REQUESTS: n` (every request whose URL names a font file or a font stylesheet) and `SHELL FONT REQUESTS OFF-ORIGIN: n` (the portal shell's own faces -- today the Inter import in `src/index.css`, outside this order's grant and this project's scope; recorded, never a bar); then the bar this cell owns: `LATO REQUESTS: n` (URL contains `Lato-`, status 200, n at least 1) and `LATO OFF-ORIGIN: 0` (no request for a Lato face leaves the dev server's origin). The first bar's population was the whole page and counted a face this order cannot move; the amended bar is the render package's faces, which is the cell's claim.
 
 <criterion id="F17-AC7" cell_refs="FE-s-17"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-17/fonts.test.ts</invocation><expect>LICENCE: OFL-1.1</expect></criterion>
 `F17-AC7` -- `render/assets/fonts/FONT_LICENSE.txt` contains the string `SIL OPEN FONT LICENSE Version 1.1` and the manifest names it.
