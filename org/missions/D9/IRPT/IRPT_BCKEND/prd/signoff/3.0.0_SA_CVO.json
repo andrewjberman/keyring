@@ -1,9 +1,9 @@
 {
   "prd": "IRPT_BCKEND_PRD.md",
-  "prd_version": "v0.11",
-  "prd_pin": "737cd1670546b106bb12b489e1fe5d1c0f1bfa90",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_L4R_RATIFIED_TEXT_REVIEW_20260911.md@3f1494fd367c1cc3f3887346303fad0da8cf26bf",
+  "prd_version": "v0.13",
+  "prd_pin": "e6ba5d98782a2c367f7306c88b5c9915333599da",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_L4R_CORRECTION_REVIEW_20260911.md@39bdc72308815cc75e1f205155dc854d94d39bc6",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-11T04:36:13Z"
+  "signed_at": "2026-09-11T04:46:10Z"
 }
