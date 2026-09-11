@@ -376,3 +376,54 @@ outcome, not round 5's readiness, and **not the supersede itself** -- that statu
 `2.0.0_SA_COO~ZZZ`'s act and must ride the same commit as the decomp s.13c repair.
 
 Push state: LOCAL at write; this seat does not push.
+
+---
+
+## 9. SIXTH REVIEW -- brief `7c533738184f` @`932d83eb17`. SIGNED
+
+**Supersedes section 8d's verdict. Sections 1-8 stand.** The DEPRECATED-REFERENCE amendment: the
+harvest migration deleted three resources and a terraform module, and the ratified spec still named
+them.
+
+### 9a. Verified first, as every time
+
+| check | result |
+|---|---|
+| brief half | `7c533738184f` -- matches |
+| ratified-text | `4eb997ed71ee` **UNMOVED** -- sixth consecutive brief-half edit leaving the CVO signature intact |
+| `endpoint_outcomes` | 15, unchanged |
+| worktree | clean at sign |
+
+### 9b. What it repaired: six live references, four mine and two the author's own
+
+`:516` `opal-amgt-articles` · `:518` `opal-data-research` · `:523` `opal-amgt-security-metrics` ·
+`:583` the S6 manifest row -- all four now name the harvest resources.
+⭐ **AND TWO THAT WERE THIS SEAT'S SENTENCE CARRIED BY ANOTHER:** `:546` and `:742` said the tables
+were *"genuinely empty (0 items, measured)"*. **The word "measured" was false -- it read `ItemCount`,
+a ~6-hourly cache, while 42 rows existed.** `1.0.0_SA_CTO~Z` wrote it because this seat supplied it,
+and folded the correction into the same commit so this costs ONE review rather than two.
+
+### 9c. ⛔ THE FIFTH REFERENCE THIS SEAT'S SCAN COULD NOT HAVE FOUND
+
+`:652` cited `infra/aws/terraform/research/s3.tf:11` -- a file retired in this same remediation -- in
+the PRESENT tense, **with no bucket or table name on the line.**
+
+**This seat enumerated the three retired RESOURCE NAMES, honestly, with a printed denominator. A
+TOKEN CENSUS FINDS ONLY THE TOKEN IT WAS GIVEN.** The scan was not sloppy; it was *complete over the
+wrong vocabulary*.
+
+⭐ **A RENAME RETIRES AT LEAST TWO VOCABULARIES: the RESOURCE NAMES and the DECLARATION PATHS.**
+Nothing about "opal-data-research -> opal-data-harvest" suggests you must also hunt
+`terraform/research/`, and a denominator over the first says nothing about the second. Found by
+`1.0.0_SA_CTO~Z` enumerating the REMAINDER line by line after editing, instead of assuming the
+leftovers were history -- 13 lines still name a retired resource and all 13 are correct.
+**Verified here after the fix:** 2 hits on the dead path remain, both now PAST-TENSE qualified
+("DECLARED at ... AT THAT TIME; it is now"), which is preserved history and correct.
+
+### 9d. VERDICT
+
+**SIGNED** -- brief half, `half_hash 7c533738184f`, PRD v0.5, tree clean at sign.
+
+Carriage holds: every live reference names a resource that exists, every historical reference is
+marked as historical rather than silently rewritten, and the distinction between the two is now
+stated in the spec itself. ⛔ Scope unchanged: brief CONTENT CARRIAGE only.
