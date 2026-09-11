@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 97 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-2-4 and CLOUD resolved as a strict UNION of both sides (91 ours + 77 theirs, 71 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 101 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-2-1 and CLOUD resolved as a strict UNION of both sides (98 ours + 74 theirs, 71 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -762,6 +762,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "disarm_owner": "2.0.0_SA_COO~B (routes the correction to the owning cells IB-s-4 / IB-s-12); 3.0.0_SA_CVO reads it at L9"
   },
   {
+    "id": "IRPT_BCKEND-S33",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T14:38:49Z",
+    "one_line": "ROUND 2, SECOND DRAIN BATCH: four branches landed, two orders COMPLETE, one OPEN and routed, one COMPLETE then RE-OPENED on Andrew's word. (1) IB-rt-4 (slot ~3) merged OPEN at 98f756a90c: its withheld export apply was CORRECT and its premise (W3-S17) was WRONG -- the three resources its plan read as orphans left by IB-s-14 are IB-rt-8's, declared on that cell's branch at 1365a96fad and applied into the shared export state at 67aa231c29; git show 1beda4bf49 removes nothing. Route: the merge, not a destroy, a re-declare or a state rm; arm (e) completes at the merged tip (issuer amendment at 122206aab7, which also packages enforce.py for W3-S14, re-registers 6 of 6 for W3-S18, and rebuilds irpt-common from the tree for W4-S15). (2) IB-rt-5 (DS lane) merged COMPLETE at 86d2d0835f after its six rows were re-minted S27..S32 (the ids S25/S26 it had minted from a stale read were the issuer's); the CVO's pinned L9 review (IRPT_RT5_L9_REVIEW_20260911.md, C-S79..C-S81) graded RT5-AC2 PASS and found the battery's arm (a) predicate count-only (C-S80) -- the DS lane accepted four findings against its merged record in 95970; no merged row is edited, the CVO's rows carry the correction. (3) IB-rt-1 (slot ~2) merged COMPLETE at 8abcb1563b: v1 frozen at c22f179bbf with eleven response contracts; the census handed to IB-rt-2 (CONFORMS 0, 8 blocked of which 1 is the no-handler holdings route). (4) IB-rt-8 (slot ~4) merged COMPLETE at 790d948e98 through FIVE conflicts: the channel and PATH_MANIFEST as unions; export/handler.py, export/render.py and the export entry of lambda-source-map.json taken from IB-rt-8's side because rt-8 restructured the function into a controller and those bytes are what the function SERVES -- IB-rt-4's edits to the same two files are re-applied by IB-rt-4 on the controller structure at the merged tip (its amendment says so; nothing of IB-rt-4's is silently lost, it is named). Then RE-OPENED at 122206aab7 (complete -> pending) for ONE addendum arm (g): the four synthetic exports under firms/49financial/generations/GENIBS14SYN/attempts/1/exports/ deleted on Andrew-direct 13:4xZ 'yes on synthetic exports' (1.0.0_SA_CTO 95968), four literal keys, ledger before the act, 404 on 4 of 4 after, a fifth object a STOP. ROUTED ROWS: W4-S14 (the cloud render is HUMAN-GATED: the only host with a browser is irpt-ycharts-runner, held stopped by its own root) goes to 1.0.0_SA_CTO for Andrew's word on the README's option A, with the print-route session named as the second missing thing; W4-S16 (ExportReceipt has no attempt_id slot; a shared-contract change needs the counterpart's half) and W3-S15 (arm (c)'s except-handler denominator is narrower than 'every public reason'; the dataflow census) are carried to L10 by name; W3-S13 disarmed by its worker; W3-S16 and W2-S18 INERT for the CVO. ONE PROCESS FACT: a foreign commit (3b28cf1c6f) landed on the tip while the DS drain's merge was OPEN in the shared index; completing that merge would have staged a revert of it, so the merge was ABORTED and re-run from the moved tip. Two seat rows the DS lane vacated (S25, S26) remain the issuer's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (the issuer; W4-S14 to the CTO for Andrew's word; W4-S16, W3-S15 carried to L10)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 98f756a90c (drain wk-irpt_bckend-2-3), 86d2d0835f (drain wk-irpt_bckend-2-ds), 8abcb1563b (drain wk-irpt_bckend-2-2), 790d948e98 (drain wk-irpt_bckend-2-4), 122206aab7 (four-face amendment; IB-rt-8 re-opened)",
+        "git show 1beda4bf49 -- infra/aws/terraform/investor-reporting/export/ -- adds only; grep of the three resource names across the tree at 7478fdf144: 0 files; on wk-irpt_bckend-2-4 at 1365a96fad: iam.tf, lambda.tf, ssm.tf",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_RT5_L9_REVIEW_20260911.md; org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T140829Z_0.4.0_DS_ClientPlatform_X_IB-rt-5__the_CVO_is_right_on_four_counts.md (95970)",
+        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T134833Z_1.0.0_SA_CTO_ANDREW_S_WORD_13_4xZ__yes_on_synthetic_e.md (95968); org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/RT8_synthetic_pdfs_inventory.md (four keys, 169,425 bytes)",
+        "infra/aws/ec2/investor-reporting-export/README.md @790d948e98 -- the operator act, option A and option B"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Spine v3 L7: a worker's report is drained by the issuer, its rows dispositioned and its next order handed; L6: a mid-round amendment re-cuts a criterion under the standing authority and never widens the issuance; CLAUDE.md hard stops: an S3 delete needs a human's word, and the word arrived by name for four keys.",
+    "world_is": "Round 2 stands at IB-rt-1, IB-rt-5 COMPLETE; IB-rt-8 COMPLETE on six arms and re-opened on a seventh; IB-rt-4 OPEN at the merged tip; IB-rt-3 in flight; IB-rt-2 handed; the rest staged. The export function's served bytes are IB-rt-8's controller and IB-rt-4 moves them forward at the merged tip.",
+    "notes": "Slots ~2, ~3, ~4 re-cut at 122206aab7 and resumed in this turn (IB-rt-2; IB-rt-4 arm (e) then IB-rt-9; IB-rt-8 arm (g)). The DS lane's only order is drained; its seat is released by /mstr-kill after this row lands."
+  },
+  {
     "id": "IRPT_BCKEND-W1-S1",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
@@ -1000,6 +1025,84 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Issuer amendment (IB-s-3 drain, row S9): 'the two merged-before-the-wrapper handlers (IB-s-1 directory, IB-s-11 performance; row S9) are the population where an unguarded route is EXPECTED -- print the count as measured, do not repair.'",
     "world_is": "The measured unguarded population is 6 of 11, not 3 of 11 -- three additional routes (ycharts-generate/analysis, narrative, export-status) are ALSO unguarded and were not named by row S9 or by any later amendment reaching this cell. This cell prints the full measured census (5 of 11 guarded, 6 of 11 unguarded, both sub-populations named separately) per S13's real-file instruction, and does not repair any of the six.",
     "notes": "None of the three newly-observed routes currently discloses protected data given their CURRENT implementation (each has an independent reason nothing leaks today, cited in one_line) -- this is a mechanical-guard gap, not a demonstrated data leak, which is why it reads OBSERVATION rather than BLOCKING. ARMED because that safety currently rests on each handler's OWN unrelated behavior (a hard refusal gate, a narrow request shape, a capabilities-only dispatch) rather than on _authz.guard() -- any one of those three independent protections quietly changing would remove the thing currently standing in for authorization."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S11",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-11T12:41:18Z",
+    "one_line": "A FOURTH id-shape disagreement, found while moving the id space onto one normalizer (IB-rt-3): `_scope/resolve.py`'s `_OPAQUE_ID_PAT = re.compile(r'^[0-9a-f]{24}$')` -- the shape check `unmatched_reasons` uses to decide whether an ownership id was ever projected -- is a BARE 24-hex pattern, while the directory has always emitted `acc_` + 24 hex. MEASURED against the landed 49financial QA artifact at this cell's cut: 0 of 80 real directory account ids match the pattern. The consequence is NOT an authorization defect -- the check is only reached for an id the directory does NOT hold, so nothing was ever served wrongly and no permitted set was ever widened -- it is a DIAGNOSTIC inversion at exactly the seam row W2-S7 exists to explain: every genuinely-missing REAL id was reported as UNPROJECTED-ID ('you forgot id_projection') when the true reason was NOT-IN-DIRECTORY ('this account is not in this build'). A reason that is confidently wrong sends the reader to the wrong repair, which is worse than no reason at all. The same wrong shape was also WRITTEN DOWN as fact in `_scope/tests/fixtures.py` ('account ids are 24-hex, the shape directory_runner.opaque_id emits'), so every test reading that fixture agreed with the defect and none could see it. CLOSED BY THIS CELL, inside its own <paths>: the shape now comes from `_ids.is_issued('account', ...)` -- the one normalizer -- and the fixture ids are corrected to the real issued shape; 50 of 50 _scope tests and 27 of 27 _authz tests pass after both changes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured this turn: a bare-24-hex regex matched 0 of 80 account ids read from the landed artifact s3://opal-data-bd/investor-reporting/qa/directory/latest.json -> .../2026-09-09/directory.json (sample: acc_0a199b24742c36c24436fd42)",
+        "infra/aws/lambda/investor-reporting/_scope/resolve.py at 7478fdf144: `_OPAQUE_ID_PAT = re.compile(r'^[0-9a-f]{24}$')` and its only use, the `elif not _OPAQUE_ID_PAT.match(str(aid))` branch of `unmatched_reasons`",
+        "infra/aws/lambda/investor-reporting/_scope/tests/fixtures.py at 7478fdf144, line 13: 'account ids are 24-hex, the shape directory_runner.opaque_id emits (sha256[:24])' -- the fixture states the wrong shape as fact, which is why the suite agreed with the defect",
+        "data/assets/scripts/gold/investor_reporting/directory_runner.py opaque_id (round 1) and _ids/ids.py KINDS (this cell): the emitted id is kind[:3] + '_' + 24 hex, and always was",
+        "after the fix: pytest _scope/tests 50 passed; pytest _authz/tests 27 passed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The CTO's ruling 4 as this face carries it: 'Directory, holdings and performance ids through one admitted transformation (W1-S7, W1-S9, W2-S11)' -- three id-shape disagreements are named (the duplicate definition, the missing normaliser, the <firm>:acct: prefix).",
+    "world_is": "There was a FOURTH, unnamed disagreement in the same id space: the resolver's own shape check, and the fixture that documented it, both described a bare 24-hex id that no producer has ever emitted. It is closed by this cell because it sits inside this order's <paths> and is the same defect class the ruling names -- but it was not on the ruling's list, and it was invisible precisely because the test fixture asserted the wrong shape.",
+    "notes": "INERT: the branch is unreachable for any id the directory DOES hold, so no served answer was ever affected -- only the reason string on an already-missing id. Filed rather than fixed silently because the mechanism by which it hid (a fixture stating a shape as fact, so every test agreed) is worth the record independently of the one-line repair."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S12",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-11T13:10:00Z",
+    "one_line": "TWO ROUND-2 CELLS ARE REBUILDING THE SAME SHARED LAYER CONCURRENTLY, and `aws_lambda_layer_version` REPLACES rather than appends, so each publish DESTROYS the other's version. Measured: at this cell's cut `irpt-common` was :2; by the time IB-rt-3 had built its zip the live layer was :4, published 2026-09-11T12:55:55Z (one minute before this cell's ledger opened) by a peer cell adding python/keys.py and the three export contracts (row W4-S10's item), with :1-:3 already deleted. Publishing THIS cell's zip as built would have silently REVERTED that peer's landed deploy -- NEVER-2's half-landed-deploy hazard pointed at a neighbour. AVOIDED, not merely noticed: IB-rt-3 measured the live :4 zip member-by-member, found all four peer members BYTE-EQUAL to blobs already committed in its own ancestry, declared them in build_layer.py as CARRIED_FORWARD_MEMBERS with that measurement cited, and published a UNION -- verified against the live :4 as 0 members regressed, exactly 2 added (python/ids.py, python/raw_keys.json), 0 common members differing. Both consumer functions are on :5 and both roots plan clean. THE REMAINING HAZARD IS THE MERGE, NOT THE BUILD: both cells edited infra/aws/lambda/layers/irpt-common/build_layer.py on separate branches, in the same region of the file, and whoever merges SECOND owns the member declaration -- if the peer's edit lands after this one without carrying IDS_MEMBERS, the next build of that file drops the normalizer from the layer and every handler's `import ids` fails at cold start, which no source diff of either branch would show.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B (the drain owns the build_layer.py merge: the merged file must carry BOTH cells' member declarations -- IDS_MEMBERS and the peer's export-contract/keys members -- and the merged layer must be rebuilt and re-applied ONCE afterwards, with the zip's member list compared against the live version before the apply. Neither worker can see the other's branch, so neither can do this.)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured at this cell's cut: `aws lambda list-layer-versions --layer-name irpt-common` returned ONLY {V:2, Created 2026-09-11T01:27:24Z}, and both functions carried layer:irpt-common:2",
+        "measured ~40 minutes later, mid-build: the same call returned ONLY {V:4, Created 2026-09-11T12:55:55.881Z} -- versions 1-3 gone -- and both functions already carried :4",
+        "get-layer-version :4 CodeSha256=TjZRSAPsIAUdOB3pjGIU9dIBtnnEwW1jotd+8hXDfnE= Size=637134, DIFFERENT from this cell's build (ZvfLP5IwnaROdfP0nplUZxzci13k2A8b3Abd/pmJ+2Q=, 631060) -- so :4 was not this cell's bytes",
+        "member diff of the downloaded :4 zip against this cell's first build: IN :4 ONLY = python/keys.py + python/irpt_contracts/{ExportBundle,ExportReceipt,RenderPackage}.schema.json; IN MINE ONLY = python/ids.py + python/raw_keys.json; 0 common members differing",
+        "each of the four peer members verified byte-equal to `git show HEAD:<path>` in this worktree (21320 / 9849 / 8351 / 11074 bytes) BEFORE being declared as carried-forward",
+        "the union build: 161 members, sha ZUcsQUOsc3lT2cKlnur5rCAZc/a0rCkKvU5pjg11U20=; verified against live :4 as REGRESSED=[] ADDED=['python/ids.py','python/raw_keys.json'] common-differing=0",
+        "terraform plan on the performance root read 'Plan: 1 to add, 1 to change, 1 to destroy' -- the DESTROY is the peer's :4; the apply published :5 and moved both functions onto it in the same act",
+        "after the apply: get-layer-version :5 sha matches the built zip; 2 of 2 functions on :5; both roots 'No changes.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's DELIVERABLE: 'the layer rebuilt to carry `_ids` (its root re-applied under a ledger entry, `irpt-common:3`)' -- the face names the next version as 3 and assumes this cell is the only one rebuilding it.",
+    "world_is": "The next version was 5, not 3: a peer cell had already taken 3 and 4 while this cell worked, and `aws_lambda_layer_version` destroys the prior version on every publish, so the two cells' builds are mutually destructive by construction rather than by mistake. This cell published a measured UNION so nothing regressed, but the shared BUILD SCRIPT still has two independent edits on two branches and only the drain can reconcile them.",
+    "notes": "BLOCKING is for the MERGE, not for this cell's own acceptance: arm (f) is satisfied and verified on the live plane (irpt-common:5, 2 of 2 functions, both roots 0-diff). The reason it is ARMED rather than INERT is that the failure mode is SILENT and DELAYED -- a merged build_layer.py missing one cell's member list produces a layer that imports cleanly in every test that runs from the repo path and fails only at a deployed cold start."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S13",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-11T15:22:00Z",
+    "one_line": "ARM (b)'S FLOOR IS UNREACHABLE BY CONSTRUCTION, AND NOT BECAUSE THE IDS DISAGREE. The face asks for equal ids 'N of N per firm with N >= the round-1 populations (7,453 / 790 / 946)', but N there is the JOINED set of two producers whose populations are built from DIFFERENT upstream tables and were never the same size: the directory is built from the account dimension (every account the firm holds) and the holdings snapshot from the allocation/position tables (only accounts that carry a position on the as-of date). Measured at this cell, after the fix: 49F directory 7,480 accounts, holdings 5,873, joined 5,856 -- 5,856 of 5,873 holdings ids found in the directory, and 7,453 is ABOVE the holdings artifact's entire population, so no repair of the id space could reach it. COT directory 837, holdings 961, joined 837 -- the directory population is matched 837 of 837 (100%), and 946 is likewise above it. INF 790 of 790 exactly meets its floor. The id-equality claim the floor exists to test is at 100% on both directions that are measurable: 0 ids of non-issued shape, 0 ':acct:' ids, and the third producer (the performance adapter's own check_scope) accepted 25 of 25 resolved ids for each of the three firms. The battery therefore prints the JOIN IN BOTH DIRECTIONS with both denominators rather than a single N, and arm (b) grades the equality, not the population size.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery arm (b) at HEAD, read from the LANDED QA objects through their own latest.json pointers: 49financial directory 7480 / holdings 5873 / holdings-ids-in-directory 5856 of 5873 / directory-ids-in-holdings 5856 of 7480",
+        "cottonwood directory 837 / holdings 961 / holdings-ids-in-directory 837 of 961 / directory-ids-in-holdings 837 of 837 -- the DIRECTORY side is complete",
+        "inflection directory 874 / holdings 790 / holdings-ids-in-directory 790 of 790 -- meets the face's 790 floor exactly",
+        "firm_prefixed_ids = 0 and ids_not_of_issued_shape_sample = [] for all three firms (the ':acct:' census arm (b) names)",
+        "third_producer_scope_ids '25 of 25' and performance_adapter_accepted true for all three firms -- the adapter's OWN check_scope, not a copy",
+        "round_1_state in _ids/raw_keys.json records the pre-fix figures IB-s-4 measured: INF 0 of 790, COT 0 of 946 -- both now 100% of the measurable direction",
+        "the populations differ by SOURCE, cited in raw_keys.json: the directory reads accounts_v2 / dim_account / fact_allocations; the holdings build reads portfolios_simple / fact_allocation_positions / fact_model_assignment"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ACCEPTANCE arm (b): 'the account ids minted by the directory build, the holdings build and the performance adapter's scope for the same raw accounts are pairwise equal: N of N per firm with N >= the round-1 populations (7,453 / 790 / 946), 0 raw-suffix ids'.",
+    "world_is": "The equality holds at 100% of every population that BOTH producers hold (INF 790 of 790; COT 837 of 837 directory-side; 49F 5,856 of 5,873 holdings-side, the 17 gaps being holdings accounts the directory build does not carry), with 0 raw-suffix ids -- but the JOINED count cannot reach 7,453 or 946 because those numbers exceed the size of the other producer's artifact. The floor reads as a claim about the id space and is actually a claim about two populations' overlap.",
+    "notes": "NOT BLOCKING and not a defect of this cell: arm (b) passes on what it can discriminate. Filed because a grader comparing the printed N against the face's floor would read a SHORTFALL where there is none, and because the 17 (49F) and 124 (COT) holdings accounts the directory does not carry are a real population question for IB-rt-6's production build -- they are named here so that cell inherits the measurement rather than rediscovering it."
   },
   {
     "id": "IRPT_BCKEND-W2-S1",
@@ -2336,31 +2439,6 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "IB-s-14's (v0.11) arm: 'the three retained vendor PDFs are verified by digest and exported as Analysis bundles labelled vendor_synthetic_holdings' -- read as three exports of three inputs.",
     "world_is": "Three exports of three inputs produced ONE rendered document three times. The digest chain was intact end to end for each variant separately, which is exactly why the constancy was invisible: every per-object check passed.",
     "notes": "The general form, and the reason this is worth a row rather than a footnote: a per-member verification cannot see a property the members SHARE. Three arms each asserting 'this object's stored hash equals its receipt's' certify the set clean while the set is one document repeated. The discriminating check is a COMPARISON ACROSS members, and it costs one equality test."
-  },
-  {
-    "id": "IRPT_BCKEND-S33",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T14:38:49Z",
-    "one_line": "ROUND 2, SECOND DRAIN BATCH: four branches landed, two orders COMPLETE, one OPEN and routed, one COMPLETE then RE-OPENED on Andrew's word. (1) IB-rt-4 (slot ~3) merged OPEN at 98f756a90c: its withheld export apply was CORRECT and its premise (W3-S17) was WRONG -- the three resources its plan read as orphans left by IB-s-14 are IB-rt-8's, declared on that cell's branch at 1365a96fad and applied into the shared export state at 67aa231c29; git show 1beda4bf49 removes nothing. Route: the merge, not a destroy, a re-declare or a state rm; arm (e) completes at the merged tip (issuer amendment at 122206aab7, which also packages enforce.py for W3-S14, re-registers 6 of 6 for W3-S18, and rebuilds irpt-common from the tree for W4-S15). (2) IB-rt-5 (DS lane) merged COMPLETE at 86d2d0835f after its six rows were re-minted S27..S32 (the ids S25/S26 it had minted from a stale read were the issuer's); the CVO's pinned L9 review (IRPT_RT5_L9_REVIEW_20260911.md, C-S79..C-S81) graded RT5-AC2 PASS and found the battery's arm (a) predicate count-only (C-S80) -- the DS lane accepted four findings against its merged record in 95970; no merged row is edited, the CVO's rows carry the correction. (3) IB-rt-1 (slot ~2) merged COMPLETE at 8abcb1563b: v1 frozen at c22f179bbf with eleven response contracts; the census handed to IB-rt-2 (CONFORMS 0, 8 blocked of which 1 is the no-handler holdings route). (4) IB-rt-8 (slot ~4) merged COMPLETE at 790d948e98 through FIVE conflicts: the channel and PATH_MANIFEST as unions; export/handler.py, export/render.py and the export entry of lambda-source-map.json taken from IB-rt-8's side because rt-8 restructured the function into a controller and those bytes are what the function SERVES -- IB-rt-4's edits to the same two files are re-applied by IB-rt-4 on the controller structure at the merged tip (its amendment says so; nothing of IB-rt-4's is silently lost, it is named). Then RE-OPENED at 122206aab7 (complete -> pending) for ONE addendum arm (g): the four synthetic exports under firms/49financial/generations/GENIBS14SYN/attempts/1/exports/ deleted on Andrew-direct 13:4xZ 'yes on synthetic exports' (1.0.0_SA_CTO 95968), four literal keys, ledger before the act, 404 on 4 of 4 after, a fifth object a STOP. ROUTED ROWS: W4-S14 (the cloud render is HUMAN-GATED: the only host with a browser is irpt-ycharts-runner, held stopped by its own root) goes to 1.0.0_SA_CTO for Andrew's word on the README's option A, with the print-route session named as the second missing thing; W4-S16 (ExportReceipt has no attempt_id slot; a shared-contract change needs the counterpart's half) and W3-S15 (arm (c)'s except-handler denominator is narrower than 'every public reason'; the dataflow census) are carried to L10 by name; W3-S13 disarmed by its worker; W3-S16 and W2-S18 INERT for the CVO. ONE PROCESS FACT: a foreign commit (3b28cf1c6f) landed on the tip while the DS drain's merge was OPEN in the shared index; completing that merge would have staged a revert of it, so the merge was ABORTED and re-run from the moved tip. Two seat rows the DS lane vacated (S25, S26) remain the issuer's.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (the issuer; W4-S14 to the CTO for Andrew's word; W4-S16, W3-S15 carried to L10)",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "CLOUD 98f756a90c (drain wk-irpt_bckend-2-3), 86d2d0835f (drain wk-irpt_bckend-2-ds), 8abcb1563b (drain wk-irpt_bckend-2-2), 790d948e98 (drain wk-irpt_bckend-2-4), 122206aab7 (four-face amendment; IB-rt-8 re-opened)",
-        "git show 1beda4bf49 -- infra/aws/terraform/investor-reporting/export/ -- adds only; grep of the three resource names across the tree at 7478fdf144: 0 files; on wk-irpt_bckend-2-4 at 1365a96fad: iam.tf, lambda.tf, ssm.tf",
-        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_RT5_L9_REVIEW_20260911.md; org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T140829Z_0.4.0_DS_ClientPlatform_X_IB-rt-5__the_CVO_is_right_on_four_counts.md (95970)",
-        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T134833Z_1.0.0_SA_CTO_ANDREW_S_WORD_13_4xZ__yes_on_synthetic_e.md (95968); org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/RT8_synthetic_pdfs_inventory.md (four keys, 169,425 bytes)",
-        "infra/aws/ec2/investor-reporting-export/README.md @790d948e98 -- the operator act, option A and option B"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "Spine v3 L7: a worker's report is drained by the issuer, its rows dispositioned and its next order handed; L6: a mid-round amendment re-cuts a criterion under the standing authority and never widens the issuance; CLAUDE.md hard stops: an S3 delete needs a human's word, and the word arrived by name for four keys.",
-    "world_is": "Round 2 stands at IB-rt-1, IB-rt-5 COMPLETE; IB-rt-8 COMPLETE on six arms and re-opened on a seventh; IB-rt-4 OPEN at the merged tip; IB-rt-3 in flight; IB-rt-2 handed; the rest staged. The export function's served bytes are IB-rt-8's controller and IB-rt-4 moves them forward at the merged tip.",
-    "notes": "Slots ~2, ~3, ~4 re-cut at 122206aab7 and resumed in this turn (IB-rt-2; IB-rt-4 arm (e) then IB-rt-9; IB-rt-8 arm (g)). The DS lane's only order is drained; its seat is released by /mstr-kill after this row lands."
   }
 ]
 ```
