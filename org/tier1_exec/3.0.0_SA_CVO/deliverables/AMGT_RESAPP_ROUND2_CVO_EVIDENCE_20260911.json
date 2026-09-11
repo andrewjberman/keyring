@@ -1,0 +1,392 @@
+{
+  "head": "9a2e542c0bea91b87046e243bd5009e310642155",
+  "at": "2026-09-11T08:54:05.063716+00:00",
+  "tests": "15 passed in 5.15s",
+  "impostor_truth_table": [
+    {
+      "checks": [
+        false,
+        false,
+        false
+      ],
+      "actual": "unresolved"
+    },
+    {
+      "checks": [
+        false,
+        false,
+        true
+      ],
+      "actual": "impostor"
+    },
+    {
+      "checks": [
+        false,
+        true,
+        false
+      ],
+      "actual": "official"
+    },
+    {
+      "checks": [
+        false,
+        true,
+        true
+      ],
+      "actual": "official"
+    },
+    {
+      "checks": [
+        true,
+        false,
+        false
+      ],
+      "actual": "official"
+    },
+    {
+      "checks": [
+        true,
+        false,
+        true
+      ],
+      "actual": "official"
+    },
+    {
+      "checks": [
+        true,
+        true,
+        false
+      ],
+      "actual": "official"
+    },
+    {
+      "checks": [
+        true,
+        true,
+        true
+      ],
+      "actual": "official"
+    }
+  ],
+  "fye_future_price_control": {
+    "2025": {
+      "fiscal_year": "2025",
+      "period_end": "2025-12-31",
+      "IS_EPS": 1,
+      "price": 100,
+      "price_date": "2026-01-02",
+      "gap_days": 2
+    }
+  },
+  "identity_reads": [
+    {
+      "file": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Shared - Documents\\Asset Management\\Research\\Imperial Brands IMB LN\\Imperial International Dividend One Pagers.xlsx",
+      "sheet": "Overview",
+      "row2": [
+        "Ticker:",
+        "IMB LN",
+        "IMPERIAL BRANDS",
+        "Sector:",
+        "Consumer Staples",
+        "Location:",
+        "BRITAIN",
+        "Currency:",
+        "GBP",
+        "Date of Pricing",
+        "2026-07-17 00:00:00",
+        "ADTV (90 days)",
+        3491.831,
+        "SHORT_NAME",
+        "COUNTRY_FULL_NAME",
+        "PX_LAST",
+        "AVG_DAILY_VALUE_TRADED_3M"
+      ]
+    },
+    {
+      "file": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Shared - Documents\\Asset Management\\Research\\SAP GY\\SAP International Dividend One Pagers.xlsx",
+      "sheet": "Overview",
+      "row2": [
+        "Ticker:",
+        "SAP GY",
+        "SAP SE",
+        "Sector:",
+        "Information Technology",
+        "Location:",
+        "GERMANY",
+        "Currency:",
+        "EUR",
+        "Date of Pricing",
+        "2024-11-07 00:00:00",
+        "ADTV (90 days)",
+        267.7386,
+        "SHORT_NAME",
+        "COUNTRY_FULL_NAME",
+        "PX_LAST",
+        "AVG_DAILY_VALUE_TRADED_3M"
+      ]
+    }
+  ],
+  "identity_partition": {
+    "MEASURED": 34,
+    "UNRESOLVED": 55
+  },
+  "measured_distinct": 34,
+  "model_block_fye_BABA_US_Equity.json": {
+    "keys": [
+      "security",
+      "security_key",
+      "join",
+      "hist_source",
+      "dense_price_source",
+      "fiscal_years",
+      "max_gap_days",
+      "_derived_key"
+    ],
+    "data_sample": "{'security': 'BABA US Equity', 'security_key': 'BABA_US_Equity', 'join': 'fiscal-period (fye_join.fiscal_period_join)', 'hist_source': 'raw/bloomberg/BABA_US_Equity/20260910T224407Z/histdata.json', 'dense_price_source': 'raw/bloomberg/BABA_US_Equity/20260911T073221Z/histdata_daily_px.json', 'fiscal_years': [{'fiscal_year': '2016', 'period_end': '2016-03-31', 'SALES_REV_TURN': 101143.0, 'IS_OPER_INC': 29102.0, 'OPER_MARGIN': 28.7731, 'EBITDA': 36150.0, 'EBITDA_ADJUSTED': 40172.6923, 'EBITDA_MARGI"
+  },
+  "model_block_fye_BA_US_Equity.json": {
+    "keys": [
+      "security",
+      "security_key",
+      "join",
+      "hist_source",
+      "dense_price_source",
+      "fiscal_years",
+      "max_gap_days",
+      "_derived_key"
+    ],
+    "data_sample": "{'security': 'BA US Equity', 'security_key': 'BA_US_Equity', 'join': 'fiscal-period (fye_join.fiscal_period_join)', 'hist_source': 'raw/bloomberg/BA_US_Equity/20260910T224406Z/histdata.json', 'dense_price_source': None, 'fiscal_years': [{'fiscal_year': '2016', 'period_end': '2016-12-31', 'SALES_REV_TURN': 93496.0, 'IS_OPER_INC': 6527.0, 'OPER_MARGIN': 6.981, 'EBITDA': 8416.0, 'EBITDA_ADJUSTED': 12134.0, 'EBITDA_MARGIN': 9.0015, 'IS_EPS': 7.92, 'BOOK_VAL_PER_SH': 1.3238, 'IS_SH_FOR_DILUTED_EPS': "
+  },
+  "model_block_fye_SAP_GY_Equity.json": {
+    "keys": [
+      "security",
+      "security_key",
+      "join",
+      "hist_source",
+      "dense_price_source",
+      "fiscal_years",
+      "max_gap_days",
+      "_derived_key"
+    ],
+    "data_sample": "{'security': 'SAP GY Equity', 'security_key': 'SAP_GY_Equity', 'join': 'fiscal-period (fye_join.fiscal_period_join)', 'hist_source': 'raw/bloomberg/SAP_GY_Equity/20260911T010951Z/histdata.json', 'dense_price_source': None, 'fiscal_years': [{'fiscal_year': '2016', 'period_end': '2016-12-31', 'SALES_REV_TURN': 22062.0, 'IS_OPER_INC': 5135.0, 'OPER_MARGIN': 23.2753, 'EBITDA': 6403.0, 'EBITDA_ADJUSTED': 7118.0, 'EBITDA_MARGIN': 29.0228, 'IS_EPS': 3.04, 'BOOK_VAL_PER_SH': 22.0074, 'IS_SH_FOR_DILUTED_"
+  },
+  "served_readback": [
+    {
+      "key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+      "security": "BABA US Equity",
+      "years": 10,
+      "max_gap": 3,
+      "future_prices": 0,
+      "FY2025": [
+        {
+          "fiscal_year": "2025",
+          "period_end": "2025-03-31",
+          "SALES_REV_TURN": 996347.0,
+          "IS_OPER_INC": 140905.0,
+          "OPER_MARGIN": 14.1422,
+          "EBITDA": 193795.0,
+          "EBITDA_ADJUSTED": 209364.0,
+          "EBITDA_MARGIN": 19.4506,
+          "IS_EPS": 55.12,
+          "BOOK_VAL_PER_SH": 423.2827,
+          "IS_SH_FOR_DILUTED_EPS": 2414.7229,
+          "CAPITAL_EXPEND": -85972.0,
+          "CF_FREE_CASH_FLOW": 77537.0,
+          "IS_DIV_PER_SHR": 14.48,
+          "RETURN_ON_ASSET": 7.2909,
+          "RETURN_COM_EQY": 12.9703,
+          "price": 132.23,
+          "price_date": "2025-03-31",
+          "gap_days": 0
+        }
+      ]
+    },
+    {
+      "key": "derived/model_block_fye/BA_US_Equity/20260911T073934Z/model_block_fye.json",
+      "security": "BA US Equity",
+      "years": 10,
+      "max_gap": 2,
+      "future_prices": 0,
+      "FY2025": [
+        {
+          "fiscal_year": "2025",
+          "period_end": "2025-12-31",
+          "PX_LAST": 217.12,
+          "SALES_REV_TURN": 89463.0,
+          "IS_OPER_INC": 4281.0,
+          "OPER_MARGIN": 4.7852,
+          "EBITDA": 6752.0,
+          "EBITDA_ADJUSTED": -3920.0,
+          "EBITDA_MARGIN": 7.5473,
+          "IS_EPS": 2.49,
+          "BOOK_VAL_PER_SH": -0.3772,
+          "IS_SH_FOR_DILUTED_EPS": 762.3,
+          "CAPITAL_EXPEND": -2942.0,
+          "CF_FREE_CASH_FLOW": -1877.0,
+          "IS_DIV_PER_SHR": 0.0,
+          "RETURN_ON_ASSET": 1.3771,
+          "CURRENT_EV_TO_T12M_EBITDA": 30.0264,
+          "price": 217.12,
+          "price_date": "2025-12-31",
+          "gap_days": 0
+        }
+      ]
+    },
+    {
+      "key": "derived/model_block_fye/SAP_GY_Equity/20260911T073934Z/model_block_fye.json",
+      "security": "SAP GY Equity",
+      "years": 10,
+      "max_gap": 2,
+      "future_prices": 0,
+      "FY2025": [
+        {
+          "fiscal_year": "2025",
+          "period_end": "2025-12-31",
+          "PX_LAST": 208.35,
+          "SALES_REV_TURN": 36800.0,
+          "IS_OPER_INC": 9617.0,
+          "OPER_MARGIN": 26.1332,
+          "EBITDA": 10928.0,
+          "EBITDA_ADJUSTED": 11729.0,
+          "EBITDA_MARGIN": 29.6957,
+          "IS_EPS": 6.14,
+          "BOOK_VAL_PER_SH": 38.1729,
+          "IS_SH_FOR_DILUTED_EPS": 1175.0,
+          "CAPITAL_EXPEND": -739.0,
+          "CF_FREE_CASH_FLOW": 8264.0,
+          "IS_DIV_PER_SHR": 2.5,
+          "RETURN_ON_ASSET": 9.9046,
+          "RETURN_COM_EQY": 15.9091,
+          "PE_RATIO": 33.9332,
+          "CURRENT_EV_TO_T12M_EBITDA": 23.2644,
+          "PX_TO_BOOK_RATIO": 5.4581,
+          "EQY_DVD_YLD_IND": 1.1279,
+          "price": 208.35,
+          "price_date": "2025-12-31",
+          "gap_days": 0
+        }
+      ]
+    }
+  ],
+  "sa_landed_keys": [
+    "raw/seekingalpha/BABA_US/20260911T040211Z/symbol.json",
+    "raw/seekingalpha/BABA_US/20260911T040214Z/report.json",
+    "raw/seekingalpha/BABA_US/20260911T040217Z/analysis.json",
+    "raw/seekingalpha/BABA_US/20260911T040221Z/news.json",
+    "raw/seekingalpha/BABA_US/20260911T040224Z/article_4944152.json",
+    "raw/seekingalpha/BABA_US/20260911T040227Z/article_4941330.json",
+    "raw/seekingalpha/BA_US/20260911T040253Z/symbol.json",
+    "raw/seekingalpha/BA_US/20260911T040258Z/report.json",
+    "raw/seekingalpha/BA_US/20260911T040301Z/analysis.json",
+    "raw/seekingalpha/BA_US/20260911T040304Z/news.json",
+    "raw/seekingalpha/BA_US/20260911T040307Z/article_4943496.json",
+    "raw/seekingalpha/BA_US/20260911T040311Z/article_4943384.json",
+    "raw/seekingalpha/COST_US/20260911T040336Z/symbol.json",
+    "raw/seekingalpha/COST_US/20260911T040340Z/report.json",
+    "raw/seekingalpha/COST_US/20260911T040343Z/analysis.json",
+    "raw/seekingalpha/COST_US/20260911T040346Z/news.json",
+    "raw/seekingalpha/COST_US/20260911T040348Z/article_4934799.json",
+    "raw/seekingalpha/COST_US/20260911T040351Z/article_4934221.json"
+  ],
+  "proof_validation": [
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-r-1.fiscal-year-join-served-correct.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-s-1.model-block-bloomberg-covered-name.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-s-3.provenance-face-beside-every-figure.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-s-5.print-renderer-design-spec-then-adams-artifact.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~2\\AMGT_RESAPP.TO-AMGT-r-4.sa-coverage-re-exercise.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~2\\AMGT_RESAPP.TO-AMGT-s-2.on-demand-pull-the-seam-design-then-build.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-r-10.check-face-marker-in-the-reading.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-s-12.identity-layer-the-root.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-s-4.coverage-reader-non-sa-sources.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-s-9.drafting-face-marked-beside-its-evidence.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~4\\AMGT_RESAPP.TO-AMGT-r-12.identity-coverage-pass.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~4\\AMGT_RESAPP.TO-AMGT-s-8.peer-set-comparable-or-absent-with-a-reason.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~5\\AMGT_RESAPP.TO-AMGT-r-15.impostor-and-clause.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~5\\AMGT_RESAPP.TO-AMGT-s-15.list-register-owned-lists-with-a-rot-signal.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~6\\AMGT_RESAPP.TO-AMGT-s-13.social-feed-measure-then-build.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~7\\AMGT_RESAPP.TO-AMGT-s-14.input-ledger-per-class-rerun-alone.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~7\\AMGT_RESAPP.TO-AMGT-s-6.version-store-opal-data-research.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~7\\AMGT_RESAPP.TO-AMGT-s-7.coverage-freshness-view-one-place.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~8\\AMGT_RESAPP.TO-AMGT-s-10.check-face-pass-fail-provisional-per-figure.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~8\\AMGT_RESAPP.TO-AMGT-s-11.qualification-rules-six-classes.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~9\\AMGT_RESAPP.TO-AMGT-s-b4.seeking-alpha-backend-the-measured-route.proof_of_spec.json",
+      "rc": 0
+    }
+  ],
+  "handoff_pin": "56c755b86a",
+  "l8": {
+    "investigation_rows": 28,
+    "undispositioned_before": 4,
+    "watcher_mode": "canonical once; no persistent Monitor tool available",
+    "observed_pid": 33888,
+    "observed_parent_pid": 42628,
+    "observed_child_pid": 29748,
+    "observed_banner": "[SURPRISE] AMGT_RESAPP NEW CHANNEL 28 row(s)",
+    "scope": "Both flat and project-tree channel roots compiled; unrelated channel notifications not acted on.",
+    "once_exit_code": 0,
+    "undispositioned_after": 0,
+    "rollup_defects": 0,
+    "rollup_malformed": 0
+  }
+}
