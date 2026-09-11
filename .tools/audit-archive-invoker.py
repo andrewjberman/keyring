@@ -219,8 +219,19 @@ def age_hours(dt: datetime, now: datetime) -> float:
     return (now - dt).total_seconds() / 3600.0
 
 
-def baseline_dir() -> Path | None:
+def baseline_dir(device: str | None = None) -> Path | None:
+    """The baseline DETECTION compares against. PER-DEVICE CHAIN FIRST (archive/<device>/.baseline ->
+    archive/<device>/<ts>), else the shared pointer. Wiring half of the rv0057-f001 migration, CTO gate
+    D0 s.6 row 12 opened 2026-09-11: without this the mint lands under archive/<device>/ while detection
+    kept grading against the shared 08-20 baseline, so STALE-BASELINE could never clear (0.0.0_AB_MSTR 95942)."""
     ts = None
+    if device:
+        droot = ARCHIVE / device
+        dptr = droot / ".baseline"
+        if dptr.is_file():
+            dts = dptr.read_text(encoding="utf-8").strip()
+            if dts and (droot / dts).is_dir():
+                return droot / dts
     if BASELINE_PTR.is_file():
         ts = BASELINE_PTR.read_text(encoding="utf-8").strip()
     elif (ARCHIVE / S2_TS).is_dir():
@@ -617,7 +628,8 @@ def run(now: datetime, dry: bool) -> tuple[int, dict]:
                                    "log": rel, "detail": "audit-log-shaped file not in MANIFEST -- review + add or exclude"})
 
     # clause 2 (integrity) -- and, via the SAME read, the growth signal (interlock).
-    base = baseline_dir()
+    device_for_read, _dev_detail = authorise_device()   # None => shared pointer; detection never refuses on it
+    base = baseline_dir(device_for_read)
     integrity_clean = True
     uncaptured_tail = False
     dirty_logs: set[str] = set()   # per-log integrity: these get PINNED, they no longer wedge the rest
