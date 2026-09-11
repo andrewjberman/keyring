@@ -2439,6 +2439,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "IB-s-14's (v0.11) arm: 'the three retained vendor PDFs are verified by digest and exported as Analysis bundles labelled vendor_synthetic_holdings' -- read as three exports of three inputs.",
     "world_is": "Three exports of three inputs produced ONE rendered document three times. The digest chain was intact end to end for each variant separately, which is exactly why the constancy was invisible: every per-object check passed.",
     "notes": "The general form, and the reason this is worth a row rather than a footnote: a per-member verification cannot see a property the members SHARE. Three arms each asserting 'this object's stored hash equals its receipt's' certify the set clean while the set is one document repeated. The discriminating check is a COMPARISON ACROSS members, and it costs one equality test."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S14",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-11T15:41:00Z",
+    "one_line": "THE ISSUER AMENDMENT ORDERS A FIRST ACT ON A PATH THIS ORDER'S <paths> GRANT DOES NOT NAME -- AND THE ACT IS ALREADY A NO-OP ON THE RUNTIME, MEASURED. IB-rt-7's amendment (row W4-S15) makes the FIRST ACT a rebuild of `irpt-common` that REMOVES `carried_forward_members` from `infra/aws/lambda/layers/irpt-common/build_layer.py`, publishes a new version, repoints 3 of 3 functions and records the version. That act writes `infra/aws/lambda/layers/irpt-common/{build_layer.py,BUILD_MANIFEST.json}` and `infra/aws/lambda/ci/lambda-layer-map.json`, and the repoint runs terraform in the `performance`, `narrative` and `export` roots -- SEVEN paths, NONE of which appears in this order's <paths> block (which names the holdings and api roots, docs/contracts, the gold runner tree, PATH_MANIFEST.json, change_management, the rt7 sentinel and lambda-source-map.json). Per the standing bound a path the grant lacks is a row, never an override, so this worker did NOT edit build_layer.py. THE AMENDMENT'S OWN ESCAPE CLAUSE APPLIES AND WAS MEASURED RATHER THAN ASSUMED: the LIVE irpt-common:5 already carries 9 of 9 members the MERGED tree declares (5 of 5 contracts, python/ids.py, python/raw_keys.json, python/keys.py, python/firm_registry.json), and all 3 consumer functions (irpt-performance-adapter, irpt-narrative, irpt-export-render) already carry layer:irpt-common:5 -- so there is nothing to repoint and no capability missing. The `carried_forward_members` block contributes 0 packaged paths that the CONTRACTS, MODULES, DATA and IDS_MEMBERS lists do not already declare, and it is staged from the SAME committed blobs at the SAME pins, so removing it changes ZERO bytes in the zip. The residue is SOURCE HYGIENE on a shared build script, not a deployed defect.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B -- either widen IB-rt-7's <paths> to name infra/aws/lambda/layers/irpt-common/ and infra/aws/lambda/ci/lambda-layer-map.json, or let IB-rt-4 (slot ~3) carry the edit: its own arm (e) already rebuilds this layer from the merged tree and that cell holds the surface. Nothing is ARMED in the meantime -- the deployed plane is correct and byte-for-byte unaffected by the pending edit.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the face's <paths> block read at this cut: 10 entries, and infra/aws/lambda/layers/irpt-common/ is not among them; infra/aws/lambda/ci/ appears only as lambda-source-map.json, not lambda-layer-map.json",
+        "aws lambda list-layer-versions --layer-name irpt-common: exactly ONE version live, 5, created 2026-09-11T13:08:52.458+0000",
+        "the live :5 zip downloaded through its own get-layer-version Location and censused member-by-member against the declarations exec'd out of the MERGED build_layer.py at this cut: declared_present_in_live '9 of 9', declared_missing_from_live []",
+        "contracts_present '5 of 5'; ids_py_present true; raw_keys_json_present true; keys_py_present true; firm_registry_present true; live_member_count 161",
+        "carried_forward_paths_not_also_declared_elsewhere [] -- the block is PURE duplication of CONTRACTS/MODULES paths, and both sides resolve the same pin for the same repo path, so the staged bytes are identical either way",
+        "get-function-configuration on all three consumers: irpt-performance-adapter, irpt-narrative and irpt-export-render each read arn:aws:lambda:us-east-1:313476888478:layer:irpt-common:5 -- 3 of 3 already on it",
+        "comp-find 'irpt_common' infra/aws/terraform: 14 hits across 4 files -- the performance root DECLARES the layer resource, narrative and export read it as a data source; a repoint would therefore run in three roots this order does not grant"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ISSUER AMENDMENT (2.0.0_SA_COO~B, row W4-S15): 'FIRST ACT of this order, before any build or apply: rebuild the layer FROM THE TREE AT THIS ORDER'S CUT ..., publish it as a new version, repoint `3 of 3` functions, and print the runtime capabilities read (`5 of 5` contracts, `ids.py`/`raw_keys.json` present)' -- and 'this order's first act REMOVES `carried_forward_members`'. The <paths> block in the same face says 'a path you need that is not listed is a BLOCKING row, never an override'.",
+    "world_is": "The two clauses of one face disagree: the amendment orders writes to seven paths the grant does not name. Measured, the ordered outcome is ALREADY TRUE on the plane that matters -- 9 of 9 declared members live in irpt-common:5, 5 of 5 contracts, ids.py/raw_keys.json/keys.py/firm_registry.json all present, 3 of 3 functions already on :5 -- so this worker RECORDS the capabilities read (the amendment's own 'record that and repoint only' branch) and leaves the source-hygiene removal of the now-duplicated block to the owner of that surface.",
+    "notes": "The removal is CORRECT and should happen -- the merge did make the block redundant. It is BLOCKING only in the sense that this order named an act this order did not grant; it is INERT because the edit cannot change a deployed byte (0 unique paths contributed, identical pins) and because no capability is missing at runtime. Filed before any other act of this cell so the sequencing claim in the amendment is answered in the record rather than silently skipped."
   }
 ]
 ```
