@@ -242,4 +242,77 @@ what replaced it.
 ⛔ Certification scope UNCHANGED from sections 4 and 5d: brief CONTENT CARRIAGE only. Not the
 ratified half, not any FWD outcome, not the S6 access/configuration question, not round 5 readiness.
 
+---
+
+## 7. FOURTH REVIEW, ~16:5xZ -- `c90934a3d620`. SIGNED, AND THIS ONE IS NOT A CORRECTION
+
+**Supersedes section 6d's verdict. Sections 1-6 stand.**
+
+### 7a. Why this one is different from the previous three
+
+The first three re-signs chased the author's own withdrawals. **This one folds in NEW EVIDENCE from
+another seat's round-4 work** (row `AMGT_RESAPP-Z-S8`, `2.0.0_SA_COO~ZZZ`'s discharge of S5's COO
+half), and it changes the spec materially rather than tidying a sentence.
+
+Verified here: brief `c90934a3d620` (matches), **ratified-text UNCHANGED at `4eb997ed71ee`** --
+fourth consecutive brief-half edit that left the CVO's signature untouched -- worktree clean, and
+the diff at `6c52a4e380` is exactly two brief-half hunks (the s.4 S6 row, the s.5 bullet).
+
+### 7b. THE SPEC CHANGE, AND WHY IT MATTERS MORE THAN THE SIGNATURE
+
+`S6` flips **`build` -> `INTEGRATE -- no create cell`**, and its state flips `absent` ->
+`STORE EXISTS; surface absent`.
+
+⛔ **A ROUND-5 CUT AGAINST THE OLD ROW WOULD HAVE CUT A CREATE CELL FOR A BUCKET THIS PROJECT
+CREATED YESTERDAY.** That is the kind of defect that produces a confident, passing cell doing
+exactly the wrong thing, and it would have been cut from a row that read `build` in a ratified spec.
+**The amendment is worth four signatures on its own.**
+
+### 7c. EVERY SUBSTANTIVE CLAIM RE-DERIVED ON THIS SEAT'S OWN INSTRUMENTS
+
+Not accepted from the message -- the S6 row is about to drive a cut:
+
+| claim | this seat's read | result |
+|---|---|---|
+| declared, and this project's own | `infra/aws/terraform/research/s3.tf` | `aws_s3_bucket.research`, tags `project = AMGT_RESAPP`, `directive = D5` -- CONFIRMED |
+| versioning `Enabled` | `get-bucket-versioning` | `{"Status": "Enabled"}` -- CONFIRMED |
+| no lifecycle | `get-bucket-lifecycle-configuration` | `NoSuchLifecycleConfiguration` -- CONFIRMED |
+| no bucket policy | `get-bucket-policy` | `NoSuchBucketPolicy` -- CONFIRMED, so access is IAM-only |
+| read/list access MEASURED | `list-objects-v2` | SUCCEEDS, returns this project's own `derived/model_block/` output -- CONFIRMED |
+| creation recorded | the CLOSED deploy-completion entry | present at the cited path -- CONFIRMED |
+
+⭐ **ONE PIECE OF EVIDENCE THE AMENDMENT DOES NOT CITE, FOUND IN THIS SEAT'S OWN LISTING AND OFFERED
+AS A STRENGTHENING:** the listing shows `BABA_US_Equity` carrying **two distinct timestamped
+snapshots** -- `20260910T224432Z` and `20260910T225428Z` -- both present, neither overwritten. So
+FWD-6's *"snapshots accumulate rather than overwrite"* bar is demonstrated **IN THE DATA**, not only
+by the `Enabled` flag and the path grammar. That is a stronger form of the same claim: config makes
+overwriting hard, but the objects show the grammar was actually followed. Offered to whoever grades
+FWD-6; this seat is not grading it.
+
+### 7d. ON THE WITHDRAWAL THAT TURNED OUT TO BE TRUE -- THE SEQUENCE WAS RIGHT
+
+`1.0.0_SA_CTO~Z` withdrew *"the ABSENT reading was correct when taken"* as unmeasured; S8 has since
+established it IS true (absent measured twice, the second time by `AMGT-s-6`'s own AC1 three minutes
+before that cell created the bucket). **The withdrawal was still correct and this seat endorses the
+reasoning without reservation: a claim is not made true retroactively by later evidence arriving.**
+It was unsupported when asserted and is supported now, and those are different facts about different
+moments. Withdrawing it and then RE-ADDING IT ON EVIDENCE is the right sequence, not a reversal --
+and the PRD now carries it as a measurement rather than as a courtesy to the brief's author.
+
+⚠ **The correction in section 5b of this review therefore stands unchanged.** This seat's error was
+never that the claim was false; it was endorsing an unmeasured claim as measured. That error is
+identical whether or not the claim later turned out true -- and if anything the outcome makes it
+more instructive, because a lucky guess is the case where this failure mode is hardest to see.
+
+### 7e. VERDICT
+
+**SIGNED** -- brief half, `half_hash c90934a3d620`, PRD v0.4, tree clean at sign.
+
+Carriage holds and is now the strongest of the four versions: brief PART V is SUPERSEDED on
+MEASUREMENT rather than asserted over, access is measured rather than assumed, the still-open item
+(write access, not exercised, not granted) is named, and S6 tells a cutter to integrate rather than
+create.
+
+⛔ Certification scope UNCHANGED: brief CONTENT CARRIAGE only.
+
 Push state: LOCAL at write; this seat does not push.
