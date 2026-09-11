@@ -321,6 +321,29 @@
     "spec_asserts": "Nothing in this order speaks to the Holdings tab's unavailable state; FE-s-13's own rule (no-route.test.ts) is that an empty list and an absent route must not render the same.",
     "world_is": "For the NO-HANDLER route the two DO render the same, one layer above where the distinction is made. hazard_standing INERT: no wrong number is shown and the panel does say Failed rather than showing an empty holdings tree, so the defect is a misattributed CAUSE and an unusable affordance, not a silent success. It belongs to whichever round-2 cell owns the holdings tab's states.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S21",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T18:05:00Z",
+    "one_line": "FE-s-14 complete and drained in both repos (portal DEV 84a86c10; workspace ee35a25392): 17 of 17, R1 re-pin to contract v1 (header, envelope parser, producer operation ids, default.json as the published map), the merge repairs, three firms admitted; 383 pass, 0 fail and tsc rc=0 in the worker's worktree. On the MAIN checkout the same DEV tree reads tsc rc=0 but 6 test fails (fe-s-13: 4, fe-s-14: 1, fe-s-1: 1): the tests hash and count the v1 artifact from the WORKSPACE and the counterpart moved it again at d9c940244a (IB-rt-7: holdings route DECLARED with handler irpt-holdings, 12 of 12; schema bytes changed) after the worker's worktree was cut at ffa98ac525 (v1 @7ce4761a2f). Second time this round the producer's pin moved under a consumer cell (S20 the first). The drain is sound; the pin is stale by one commit. FE-s-15 is amended (R2) to re-pin to the current vintage first and make holdings-snapshot callable (F15-AC13 ROUTES MATCHED: 12 of 12, F15-AC14). Design finding for L10: a consumer bar that hashes a producer artifact the producer legitimately extends goes red on every additive change; round 3 pins by CONTENT (route keys, required sets) and records the vintage as data. S20 disarmed by this drain (DEV green under tsc by the issuer's run); the test red is this row's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "worker worktree portal @9e68a9aa (merged as DEV 84a86c10): bun run typecheck rc=0; bun test src/pages/InvestorReporting 383 pass, 1 skip, 0 fail (issuer's re-run); proof-of-spec-check VALID rc=0 over 17 ids",
+        "main checkout portal DEV @84a86c10: tsc rc=0; bun test 6 fail -- fe-s-13/routes.test.ts:92 expected 11 received 12, :133 expected length 0 received 1; producer-fixtures.test.ts:104,163 sha256 mismatch; fe-s-14/envelope.test.ts:141; fe-s-1 fixtures assertion",
+        "git log 7ce4761a2f..HEAD -- docs/contracts/investor-reporting/v1: d9c940244a (0.9.0_WK_IRPT_BCKEND~1, IB-rt-7); routes.json _denominator declared 12, no_handler_at_head 0; holdings handler irpt-holdings",
+        "FE-s-14 worktree base ffa98ac525 predates d9c940244a; FE-s-15 amended on CLOUD this turn (R2 section, F15-AC13/14, grant widened for the re-pin)"
+      ]
+    },
+    "spec_asserts": "Round-2 BOUNDS (decomp v0.2 R2.2): the producer's artifact is the authority and the consumer conforms; every order's whole set reads 0 fail on its branch. v1 CONTRACT.md: v1 is IMMUTABLE once IB-rt-1 completes; adding an optional field or a handler is not breaking.",
+    "world_is": "The consumer's bar pinned bytes, not content, so a non-breaking producer extension reads as a consumer failure the moment the workspace moves. The branch was green at its pin; DEV is green under tsc; six tests are red on the main checkout until the next order refreshes the pin. No push is affected (portal is frozen by Andrew).",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
