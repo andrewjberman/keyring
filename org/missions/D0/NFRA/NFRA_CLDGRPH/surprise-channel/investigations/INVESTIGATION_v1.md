@@ -8823,3 +8823,65 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-S130 -- retiring c2c3 is four acts not a delete -- a dormant consumer exists and the producer rewrites the layer nightly
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-11T01:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S130",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "one_line": "RETIRING THE c2c3 SEMCTL LAYER IS SOUND AND IS FOUR ACTS, NOT A DELETE -- and one of them is a CONSUMER the 'completely deprecated' reading does not predict. Andrew directed the retirement at the terminal 2026-09-11 ~00:3xZ ('semctl c2c3 is completely deprecated'; 'I would be fine with outright deleting anything that is doing those c2c3 layers'). MEASURED BLAST RADIUS on the served graph: 6,334 nodes (22.9 percent of all nodes; 6,326 C2Motif + 8 C3System) and 24,138 edges (38.7 percent of all edges, every one of them CONTAINS). The excision itself is unusually clean and that is measured, not assumed: ZERO non-semctl edges touch a semctl node, and ZERO node_ids appear in both semctl and a non-semctl layer -- the layer is an edge-isolated island, so a scoped delete cannot orphan a foreign edge or over-reach onto a live row.",
+    "spec_asserts": "The directive's premise, verbatim: 'semctl c2c3 is completely deprecated we should not be using that'. Read literally, nothing consumes C2Motif or C3System and the layer can be dropped.",
+    "world_is": "A CONSUMER EXISTS IN CODE, and the unscoped census is what found it -- a census scoped to the globgrph producer would have returned the producer only. org/modules/graph/debtscan/summary_corpus.py issues Cypher against these node types at FIVE call sites (:532, :536, :828, :1003, :1009), e.g. \"WHERE m.node_type = 'C2Motif' AND e.edge_type = 'CONTAINS'\", and uses them to attribute motifs and systems to AWS resources. IT IS DORMANT, NOT LIVE, and that distinction is the whole disposition: its only published artifact, s3://opal-313476888478-globgrph/warehouse/fedobs_obs_findings/observer=DEBTSCAN/obs_findings.parquet, is dated 2026-07-07 -- over two months stale. So the code would break if re-run; nothing breaks today. MEANWHILE THE PRODUCER IS FULLY LIVE: all 6,334 c2c3 nodes carry snapshot_ts 2026-09-10 02:50Z, the nightly derive window, so derive_runner re-materializes the entire layer EVERY night via ingest_c2c3_motif_producer (:1650) and _compose_c2c3_live (:1573). A row-level delete is therefore COSMETIC AND TRANSIENT -- tonight's derive restores all 6,334 nodes and 24,138 edges. Deleting rows without retiring the producer is a no-op with extra steps.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pyiceberg whole-table read at vintage 2026-09-11T00:37:12.527596+00:00 -- layer='semctl' nodes 6334 of 27691, edges 24138 of 62327; non-semctl edges touching a semctl node = 0; node_ids shared across layers = 0",
+        "org/modules/graph/debtscan/summary_corpus.py:532,536,828,1003,1009 -- Cypher predicates on node_type 'C2Motif' and 'C3System'",
+        "aws s3 ls s3://opal-313476888478-globgrph/warehouse/fedobs_obs_findings/observer=DEBTSCAN/ -> obs_findings.parquet last modified 2026-07-07",
+        "infra/aws/globgrph/derive_runner.py:1650 ingest_c2c3_motif_producer, :1573 _compose_c2c3_live, :1715 the src_tag split semctl-c2c3-compose vs semctl-c2c3-materialize",
+        "infra/aws/globgrph/c2c3_liveness_acceptance.py:48 FROZEN_CONTROL = {'C2Motif': 19, 'C3System': 4} -- an acceptance harness that fails closed if the layer goes to zero"
+      ]
+    },
+    "notes": "THE FOUR ACTS, in the order that makes each one checkable: (1) retire ingest_c2c3_motif_producer in derive_runner.py -- this is the ONLY one that makes the deletion durable; (2) retire or re-point c2c3_liveness_acceptance.py, whose FROZEN_CONTROL of 19 C2Motif + 4 C3System becomes a guaranteed failure the moment the layer empties, so leaving it is manufacturing a red; (3) settle debtscan -- either strip the five motif/system call sites or retire the observer, because a dormant tool that breaks on next run is a trap for whoever revives it; (4) only then delete the standing rows. NOT ACTED ON, THREE INDEPENDENT REASONS, none of them a judgment call: derive_runner.py is not in this seat's PERMIT set nor among the four paths tonight's handoff names; the warehouse write path is IN-VPC ONLY, so no dev-box credential path to Nessie exists to perform a delete with; and removing 22.9 percent of nodes and 38.7 percent of edges is a SERVED-OUTPUT MOVE, which CLAUDE.md's NEVER block gates on never-widen sign-off from CTO and COO -- a standing mechanical gate, not one invented here. ARMED because the directive is live and the producer runs again tonight."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S131 -- every opal-globgrph freshness and parity alarm Terraform reports is ABSENT from CloudWatch
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-11T01:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S131",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "one_line": "EVERY opal-globgrph FRESHNESS AND PARITY ALARM TERRAFORM REPORTS AS EXISTING IS ABSENT FROM AWS. Tonight's safe-apply on infra/aws/terraform/globgrph printed, from state, twelve freshness_stale_alarm_arns and two parity_drift_alarm_arns, all named opal-globgrph-*. A live read finds ZERO of them: describe-alarms with --alarm-name-prefix opal-globgrph returns 0 MetricAlarms AND 0 CompositeAlarms. The Terraform plane says these controls exist; the CloudWatch plane says they do not. Anyone reading the outputs -- or the module -- would conclude the estate is watched on freshness and parity drift, and it is not.",
+    "spec_asserts": "infra/aws/terraform/globgrph outputs freshness_stale_alarm_arns (12 entries: code_heat_ajb_workspace, code_heat_portal, code_heat_snap_last_append, cse_producer_last_append, cse_producer_last_run, fedobs_coverage_snap_last_append, fedobs_obs_findings_compdrift, fedobs_obs_findings_debtscan, fedobs_obs_findings_graphs_d8, fedobs_obs_findings_pipescript, fedobs_observations, ms_heat_snap_last_append) and parity_drift_alarm_arns (2), each a full CloudWatch alarm ARN in us-east-1.",
+    "world_is": "None exist. aws cloudwatch describe-alarms --alarm-name-prefix opal-globgrph -> MetricAlarms 0, CompositeAlarms 0. POSITIVE CONTROL RUN BECAUSE AN EMPTY ALARM LIST IS EXACTLY WHAT A BROKEN QUERY RETURNS: the unfiltered call returns 50 alarms in the account, and a contains-filter on 'globgrph' returns two real ones (globgrph-s3-requests-daily-high, globgrph-s3-requests-daily-warning). So the instrument works, the region and plane are right, and the fourteen opal-globgrph-* alarms are genuinely gone. BOTH PLANES were checked, because describe-alarms splits results into MetricAlarms and CompositeAlarms and a query against one is blind to the other.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the apply output of .tools/safe-apply.sh -chdir=infra/aws/terraform/globgrph, 2026-09-10 ~21:07Z -- freshness_stale_alarm_arns (12) and parity_drift_alarm_arns (2) printed with full ARNs",
+        "aws cloudwatch describe-alarms --alarm-name-prefix opal-globgrph -> MetricAlarms 0, CompositeAlarms 0",
+        "positive control: aws cloudwatch describe-alarms --query 'length(MetricAlarms)' -> 50; contains-filter 'globgrph' -> ['globgrph-s3-requests-daily-high','globgrph-s3-requests-daily-warning']"
+      ]
+    },
+    "notes": "FOUND OFF-TASK during the c2c3 consumer census and filed rather than chased, per the surprise-channel rule. NOT DIAGNOSED: whether these were deleted out of band, never applied, or removed under the 2026-07-28 alarm moratorium is UNKNOWN and this row does not guess. WHY IT IS NOT SIMPLY 'apply it again': CLAUDE.md's standing moratorium forbids building or re-arming any alarm, monitor or notification without Andrew's explicit word, so the remedy here is a DECISION about whether these controls are wanted, not a terraform run. WHAT MAKES IT ARMED is the direction of the error: a declared-but-absent control reads as coverage. The Terraform output is the artifact a reader trusts, and it is currently asserting fourteen controls that would not fire. CHEAPEST NEXT STEP: a plan on that module alone will say whether state still holds them, which separates 'deleted out of band' from 'never applied' in one read."
+  }
+]
+```
