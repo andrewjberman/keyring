@@ -422,10 +422,30 @@ def take_snapshot(now: datetime, paths: list[str], dry: bool,
     snaps = snapshots(droot)
     if snaps and age_hours(snaps[-1][0], now) < SNAPSHOT_INTERVAL_H:   # guard 1: pre-commit age re-check (per-device chain)
         return ("skip", f"newest {snaps[-1][1].name} is < {SNAPSHOT_INTERVAL_H}h old")
+    # RE-BASELINE RULE (CTO ruling 2026-09-11 ~10:4xZ on 0.0.0_AB_MSTR 95950). A chain whose ONLY snapshot is the
+    # seeded copy of the SHARED legacy baseline holds laptop-origin bytes by construction (see :105/:110), so its
+    # first mint REFRESHES EVERY LOG FROM THIS DEVICE'S LIVE BYTES and pins nothing -- a pin would carry foreign
+    # evidence forward as this device's baseline (measured on sitez 2026-09-11T103259Z: 8 refreshed / 10 PINNED at
+    # laptop bytes; site Z's own audit evidence stayed unarchived). The same holds once when the operator marks the
+    # chain with `.rebaseline-once` (the repair for a chain already seeded the wrong way); the marker is CONSUMED
+    # into the snapshot directory as a record and never survives the mint. The laptop is unaffected either way:
+    # its seed WAS its own history and it minted 19 refreshed / 0 pinned. Detection is untouched -- the NON-APPEND
+    # findings still fire on the run that mints; only what the mint carries forward changes.
+    shared_ts = BASELINE_PTR.read_text(encoding="utf-8").strip() if BASELINE_PTR.is_file() else ""
+    marker = droot / ".rebaseline-once"
+    seeded_only = len(snaps) == 1 and bool(shared_ts) and snaps[0][1].name == shared_ts
+    rebaseline_why = ""
+    if marker.is_file():
+        rebaseline_why = "operator marker .rebaseline-once: " + (marker.read_text(encoding="utf-8", errors="replace").strip() or "no reason given")
+    elif seeded_only:
+        rebaseline_why = f"first mint on a chain whose only snapshot is the seeded shared baseline {shared_ts}"
+    if rebaseline_why:
+        pinned = frozenset()
     if dry:
         pin_note = f"; {len(pinned)} PINNED (baseline carried forward): {sorted(pinned)}" if pinned else ""
+        rb_note = f"; RE-BASELINE ({rebaseline_why}) -- every log refreshed from live, nothing pinned" if rebaseline_why else ""
         return ("dry", f"would mint {fmt_ts(now)} covering {len(paths)} logs "
-                       f"as author={serial or 'UNKNOWN'}{pin_note}")
+                       f"as author={serial or 'UNKNOWN'}{pin_note}{rb_note}")
     if not serial:
         return ("deferred", "no running serial (LD-0290 file) -- cannot attribute a tamper-lane commit")
     try:                                                              # guard 2: atomic mkdir lock
@@ -459,9 +479,15 @@ def take_snapshot(now: datetime, paths: list[str], dry: bool,
                 shutil.copy2(WS / rel, dest / flatten(rel))
                 copied.append(rel)
         pin_msg = f" + {len(carried)} PINNED at prior baseline (adjudicated non-append)" if carried else ""
-        rc, out = safe_commit(serial, [f"org/audit/archive/{device}/{ts}"],
-                              f"snapshot({device}/{ts}): audit-archive-invoker automated snapshot "
-                              f"({len(copied)} logs refreshed{pin_msg})")
+        pathspec = [f"org/audit/archive/{device}/{ts}"]
+        if rebaseline_why:
+            (dest / ".rebaseline").write_text(rebaseline_why + "\n", encoding="utf-8")   # the record travels with the snapshot
+            if marker.is_file():
+                marker.unlink()                                                # consumed: one-time by construction
+                pathspec.append(f"org/audit/archive/{device}/.rebaseline-once")
+        msg = (f"snapshot({device}/{ts}): audit-archive-invoker automated snapshot "
+               f"({len(copied)} logs refreshed{pin_msg})" + (f"; RE-BASELINE ({rebaseline_why})" if rebaseline_why else ""))
+        rc, out = safe_commit(serial, pathspec, msg)
         if rc == 0:
             (droot / ".baseline").write_text(ts + "\n", encoding="utf-8")
             safe_commit(serial, [f"org/audit/archive/{device}/.baseline"],
