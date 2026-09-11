@@ -1230,3 +1230,34 @@ inventing market data; one records an act taken that the order did not name. Non
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S36",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-11T23:14:00Z",
+    "one_line": "DISARM of POSN_ASTTAX-Z-S7 by the named disarm_owner: the law text is corrected @ab642b92e5 and every PROPAGATING carrier is closed. AND IT CORRECTS THIS SEAT'S OWN OVERSTATEMENT OF ITS OWN ERROR -- I told five seats the false fence was in my committed tick-25 log; it is NOT. It is in commit message 3832ac543c. Measured both ways.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CARRIER 1, THE LAW TEXT -- CLOSED @ab642b92e5. CLAUDE.md Rule 27's L4-R block now reads 'LIMB 6 REFUSES a NEWLY-ADDED task order', carries the gate's own docstring verbatim ('a modification (M) does not: this gate never refuses an existing TO'), states that on a re-cut the rule is a HUMAN discipline, and names the widening as Andrew's call because the prospective-only scoping is his word at :21. This was the ROOT carrier: it is where 2.0.0_SA_COO~ZZZ says it got the belief, and it is prescriptive rather than historical, which is why it had to move.",
+        "CARRIER 2, A LIVE CRON BODY -- CLOSED by 2.0.0_SA_COO~Z in its own re-arm (job 6d233876). This was the dangerous one: a false mechanical claim inside a loop that re-asserts itself every ten minutes to whatever session reads it next.",
+        "CARRIER 3, DELIVERED MESSAGES -- carry their own corrections. 2.0.0_SA_COO~Z retracted to all three recipients; 2.0.0_SA_COO~ZZZ verified the retraction at source and published the discriminating pair; 4.0.0_SA_CRO~Z and this seat re-measured independently. Four seats measured the same claim and none took the previous seat's read on report, which is why the LAW carrier was found rather than only the tool behaviour.",
+        "CARRIER 4, FOUND BY THIS SEAT AND NAMED BY NOBODY ELSE -- commit message 3832ac543c contains, verbatim: 'the L4-R gate refuses a task order against a stale half'. A commit message is IMMUTABLE on a shared branch; it cannot be corrected in place and rewriting history is forbidden. It is therefore a PERMANENT but HISTORICAL carrier, timestamped before @ab642b92e5, and this row is its pointer. Measured: git log -1 --format=%B 3832ac543c | grep -c '<the sentence>' -> 1.",
+        "AND THE CORRECTION OF THIS SEAT'S OWN OVERSTATEMENT, measured rather than recalled. In msgs 21739 and 21749 this seat told five recipients the false claim was in 'msg 21715 AND the committed tick-25 log @d6434eada5'. THE LOG DOES NOT CONTAIN IT: grep over ctoZ_self_drive_AMGT_RESAPP_POSN_ASTTAX_tick25.md for the fence returns ZERO; its only L4-R mentions are 'the whole L4-R load' (about re-sign volume) and 'the L4-R rule' (about routing a half to a COO), neither of which is the mechanical claim. The tick-23 log's 'the L4-R gate did exactly its job at both ends' refers to prd-signoff status flipping WITHHELD/ADMITTED, which is TRUE and is a different gate surface. Per-commit check: 3832ac543c -> 1 hit, 71a376b98e -> 0, d6434eada5 -> 0.",
+        "NEGATIVE CONTROL on the disarm, so INERT is not asserted from the corrections alone: the hazard bites when a seat RELIES on LIMB 6 to refuse a re-cut. 2.0.0_SA_COO~Z's actual behaviour did not rely on it -- it read prd-signoff.py status directly, held both orders uncommitted for ~30 minutes, and spawned only after measuring ADMITTED @3832ac543c with a positive AND negative pin control. So the hazard never bit, and the disarm rests on the carriers being closed rather than on the outcome having been lucky."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "POSN_ASTTAX-Z-S7 asserts that the false belief is ACTIVELY PROPAGATING across three carriers -- CLAUDE.md's law text, a live 10m cron body, and three delivered messages -- and that the next COO to re-cut an order mid-round will inherit it.",
+    "world_is": "All three named carriers are closed, and a FOURTH that nobody named (commit message 3832ac543c) is immutable, historical, and now pointed at by this row. The underlying GATE BEHAVIOUR is unchanged and is NOT what this row disarms: LIMB 6 still does not grade modifications, that scoping is Andrew's own word at :21, and widening it is carded to him with a refined shape -- grade the FIELDS a worker cannot legitimately change (criterion grammar, <paths>, inlined cell text, the PRD pin) and leave <status> alone, because a worker's own completion flip is itself a MODIFY. The BELIEF is disarmed; the HOLE is open and owned.",
+    "notes": "SPEC_ASSERTS ON Z-S7 IS NOT BEING CORRECTED, AND THAT IS DELIBERATE -- 2.0.0_SA_COO~Z's reasoning, adopted here in full: spec_asserts is AT-SURFACING by design, CLAUDE.md:38 DID read unqualified when the row was written, so the field is a CORRECT record of what the spec asserted then. Retro-editing it would delete the only committed artifact preserving WHY three seats believed a fence that did not exist, and a later adjudicator would read a row asserting a fence nobody could plausibly have believed. THE NEAR-MISS STOPS BEING LEGIBLE EXACTLY WHERE IT IS MOST INSTRUCTIVE. A moved spec is recorded by a NEW CITING ROW -- this one -- which is the append-only mechanism working as designed. THE SHARPEST EXPOSURE IS NOT THE ONE THE ROW STARTED FROM: 2.0.0_SA_COO~ZZZ measured 10 ungraded task-order MODIFICATIONS against 3 correct refusals on the add path, same gate, same project, same hour -- and one of those ten (@d8248188b7) edited the INLINED CELL TEXT OF A FACE A WORKER WAS READING AT THE TIME. A modification can change a criterion's grammar, a <paths> grant or a live worker's instructions, and the worker never sees a refusal. That is carried into the law text and into the card to Andrew. FILED BY THE SEAT THAT OWNS BOTH THE LAW LINE AND THE OVERSTATEMENT."
+  }
+]
+```
