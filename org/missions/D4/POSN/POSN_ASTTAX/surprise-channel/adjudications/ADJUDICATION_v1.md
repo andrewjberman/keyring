@@ -100,3 +100,34 @@ judgment criterion is graded (`C-S2`).
   }
 ]
 ```
+
+## C-S3 -- CORRECTION to C-S2's coverage limb, on Andrew-direct ~07:1xZ: the 169 are attributed, and a hand-curated list needs no scheduler
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-C-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-11T07:20Z",
+    "one_line": "CORRECTION TO C-S2, MADE BY A NEW ROW AND NOT BY EDITING IT. Andrew-direct at this terminal ~07:1xZ described what ETFClassifier IS FOR: a DEVELOPING, HAND-CURATED LIST of how we tag the securities we own -- low churn by design, added to as needed, to keep proper capitalization and proper sub-asset-class. Measured against that, TWO OF C-S2's THREE LIMBS COLLAPSE. (1) The 169 table-only entries are NOT UNEXPLAINED: `updated_by` names their author -- 169 written by `seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)`, a DIFFERENT AND DELIBERATE seeder, plus 59 placeholder-name-sweep, 55 attr-restore-from-_shared, 1 vug-naming-fix, 1 canonical_si_seed = 285 with every entry attributed. (2) The seed's missing TRIGGER is not a defect: for a list a person extends when the firm acquires a security, A PERSON IS THE MECHANISM, and demanding a scheduler invents a requirement the artifact's purpose excludes. So C-S2's 'NEITHER end is one place' is WRONG IN EMPHASIS -- the TABLE is the list, and the hardcoded dict is a superseded seed input that fell behind. Andrew's earlier ruling was right and simpler than my elaboration of it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "GRADUATED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ANDREW-DIRECT at the 3.0.0_SA_CVO~Z terminal 2026-09-11 ~07:1xZ, the operative words: ETFClassifier is 'basically a developing list of how we tag securities we own. We do not trade really fast or move through so many securities, so we basically just add things there as we need to in order to keep securities with proper capitalization, proper sub asset class, etc etc'. A statement of PURPOSE, which is not a thing this seat can measure and is taken on his word as the product owner.",
+        "THE PROVENANCE I FAILED TO READ, measured after his correction by projecting `updated_by`, a field that was in the table the whole time: 169 `seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)`; 59 `1.0.0_SA_CTO~X placeholder-name-sweep`; 55 `1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)`; 1 vug-naming-fix; 1 canonical_si_seed. Sums to 285. ZERO entries lack an author.",
+        "THE DATES CONFIRM DELIBERATE ACTS RATHER THAN DRIFT: 169 on 2026-08-25, 115 on 2026-08-18, 1 on 2026-03-25. Three dated operations by named seats, two of them on Andrew's own word.",
+        "THE ARTIFACT IS DOING THE JOB HE DESCRIBES: `sub_asset_class` is populated on 282 of 285 rows across 31 distinct values (Information Technology 32, Financials 29, US Large Cap 25, Industrials 21, Ultra Short Duration 16, Intermediate 14 ...). A registry whose stated purpose is proper sub-asset-class tagging is 98.9% populated on exactly that field.",
+        "⛔ AND THE ANSWER WAS IN A FILE I HAD ALREADY LISTED. `seed-etf-constituents.py:10` opens with 'THE UNIVERSE THIS SEEDS IS DIFFERENT FROM `seed-etf-classifications.py`, AND THAT IS THE POINT', and :17 explains why: a model's ETF list is stable so it can be frozen as literals, a fund's constituents are not. That file appeared in MY OWN comp-find output when I measured the trigger zero. I read the line and did not connect it."
+      ]
+    },
+    "spec_asserts": "C-S2 ruled that NEITHER end of the classifier chain is FWD-5's 'one place', on the grounds that the dict explains only 116 of 285 served entries and that the seed carrying it has no trigger.",
+    "world_is": "The other 169 entries are attributed to a second deliberate seeder run on Andrew's direct word, and the absent trigger is appropriate to a hand-curated registry a person extends as securities are acquired. The table is the living list; the dict is a superseded seed input.",
+    "notes": "WHAT SURVIVES C-S2 UNCHANGED, because the correction is to its coverage reasoning and not to its measurements: the seven set figures are still exact (136 / 285 / 116 / 20 / 169 / 305 / 189), ZERO value-level mismatches across the 116 still holds, and the two findings that matter are untouched. (a) `is_hedge()` still has NO TRUE CASE over all 136 tickers -- C-S1 stands entirely. (b) `equity` is still BOTH a real class and the serving code's unknown-default (lambda_function.py:359), and ⭐ THAT ONE MATTERS MORE UNDER HIS FRAMING, NOT LESS: if the whole purpose is keeping securities properly tagged, then a bucket where 'properly tagged as equity' and 'not recognised' are the same string is precisely the thing that cannot be audited. (c) The ratified vocabulary is FIVE and the store holds THREE, so Commodities and Alternatives still do not exist as values -- real work, and it is ADDITIVE to a curated list rather than a migration of a broken one. (d) 3 of 285 rows carry a blank sub_asset_class: on his account that, not the 169, is the actual coverage gap. ⭐ THE METHOD LESSON, AND IT IS THE THIRD TIME TONIGHT I HAVE HIT THE SAME SHAPE FROM A DIFFERENT ANGLE: I CALLED 169 ROWS 'UNEXPLAINED' WITHOUT READING THE FIELD THAT NAMES WHO WROTE THEM. I projected `ticker` and `asset_class` because those were what my hypothesis needed, got a clean set-difference, and reported the residue as a mystery. `updated_by` and `last_updated` were sitting in every row. **A set difference tells you two sets differ; it never tells you why, and PROVENANCE FIELDS ARE WHERE THE WHY USUALLY IS.** Ask what the record already says about itself before calling any part of it unaccounted for. ⚠ And the deeper one: I was measuring an artifact against a purpose I had inferred (a single-source-of-truth architecture) rather than the purpose it has (a curated tagging list). Every measurement was correct and the frame was wrong, which no amount of further measuring would have corrected."
+  }
+]
+```
