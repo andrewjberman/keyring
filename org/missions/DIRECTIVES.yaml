@@ -498,13 +498,14 @@ directives:
   D13:
     title: "Design"
     directive: "docs/architecture/D13_DESIGN_PRD.md"
-    placement: "LAPTOP -- DEFAULTED BY 0.0.0_AB_MSTR (register owner), NOT RULED BY ANDREW. He minted the
-      directive without naming a fabric, and placement is a REQUIRED field, so a value had to be written
-      rather than left blank. LAPTOP is the defensible default on measurement rather than taste: the design
-      surfaces this estate actually has are the portal (laptop working branch CLOUD, submodule DEV/PROD) and
-      the IRPT_FNTEND frontend round, both laptop. ONE WORD FROM HIM CHANGES IT -- he moved D9 whole to
-      LAPTOP on 2026-09-10 with a single sentence, and placement attaches to the DIRECTIVE, never to a
-      member (LD-0498, LD-0502), so a move is one row and not N."
+    placement: "LAPTOP -- RULED BY ANDREW 2026-09-11, VERBATIM AND ENTIRE: 'Also ive had MSTR create D13
+      for Design, it will be laptop fabric'. His word CONFIRMS the value this row carried as a register-owner
+      DEFAULT, and the caveat that stood here until 2026-09-11 ('NOT RULED BY ANDREW ... ONE WORD FROM HIM
+      CHANGES IT') is DISCHARGED by that sentence. Restated by 0.0.0_AB_MSTR (register owner) on the surfacing
+      of 0.1.1_RD_MarketPerformance (msg-id 95901), the seat that received the word and recorded it; the
+      verbatim is read at docs/briefs/portal-visual-elevation-brief-20260911.md:31 and :367-368, record
+      org/tier3_junior/0.1.1_RD_MarketPerformance/deliverables/ANDREW_DIRECT_20260911_PORTAL_VISUAL_ELEVATION_FIVE_RULINGS.md.
+      Placement attaches to the DIRECTIVE, never to a member (LD-0498, LD-0502), so a future move is one row and not N."
     members:
       subgroups: []
       projects: [DSGN_REBRND]
