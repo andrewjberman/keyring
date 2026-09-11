@@ -313,3 +313,13 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 <!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/to-pipeline-override-audit.log|baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\#-#-#T#Z\org_to-pipeline-override-audit.log -->
 - log: org/to-pipeline-override-audit.log
 - detail: baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\2026-08-20T042433Z\org_to-pipeline-override-audit.log
+
+## 2026-09-11T102111Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/to-pos-override-audit.log|baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\laptop\#-#-#T#Z\org_to-pos-override-audit.log -->
+- log: org/to-pos-override-audit.log
+- detail: baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\laptop\2026-08-20T042433Z\org_to-pos-override-audit.log
+
+## 2026-09-11T102111Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/to-pipeline-override-audit.log|baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\laptop\#-#-#T#Z\org_to-pipeline-override-audit.log -->
+- log: org/to-pipeline-override-audit.log
+- detail: baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\laptop\2026-08-20T042433Z\org_to-pipeline-override-audit.log
