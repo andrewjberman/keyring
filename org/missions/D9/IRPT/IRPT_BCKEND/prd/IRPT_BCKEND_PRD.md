@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.12",
+ "prd_version": "v0.13",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
@@ -100,6 +100,8 @@ Brief: `docs/briefs/investor-reporting-ir-bk-brief-20260910.md` @`2acf23d8fd`, 5
          CONSTRAINT the multitenant `api/scoped/` layout is the pattern -- fixed, not a build choice; Global never rebinds an email request's firm and never mixes firm data or destinations in one report; no new all-firm financial aggregate is authorized
          PIN        2dcd88091f
 ```
+
+## ENDPOINT PROVENANCE (outside the ratified section)
 
 **Provenance of FWD-4's three CONSTRAINT lines (kept outside the ratified block by the L4-R rule):** the first is the ratified text at `58266dab2d`; the second was carried from `4.0.0_SA_CRO`'s supplement `docs/briefs/investor-reporting-ycharts-session-recovery-brief-20260910.md` @`9a71ef7626` at v0.5 (its acceptance of mutual displacement with the shared vendor login is Andrew's, stated in that supplement); the third was fixed on Andrew-direct 2026-09-11 ~03:1xZ at the `1.0.0_SA_CTO` terminal, verbatim *"Yes I wanted you to see this because that should be folded in for the YCharts backend flow, it is a crucial aspect of that operation as the frontrunner for it being possible"* (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_031xZ_YCHARTS_CLOUD_PROOF_IS_THE_BACKEND_FLOW_FRONTRUNNER.md`; the proven chain is supplement VI.5 @`f06c1951e1`) at v0.9. The endpoint of record carries the matching addenda.
 
