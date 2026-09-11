@@ -1,0 +1,464 @@
+{
+  "schema_version": "1.0",
+  "project": "IRPT_FNTEND",
+  "round": 1,
+  "seat": "3.0.0_SA_CVO",
+  "written_utc": "2026-09-11T23:20Z",
+  "trigger": "The round-1 L10 slug org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v1.md@27e67fa6a5 (recorded 2026-09-11T10:56:02Z), delivered to 1.0.0_SA_CTO as org/mcp/inbox/1.0.0_SA_CTO/read/20260911T111137Z_3.0.0_SA_CVO_L10_IRPT_FNTEND_round_1__41_items_adjudi.md. WRITTEN LATE, and the lateness is part of the record: this file was owed at the L10 stamp, was absent when this seat wrote its managed-winddown handoff (org/tier1_exec/3.0.0_SA_CVO/logs/2026-09-11/session_close_0953-1739Z.md@b93df1e4a6, Blockers section, directly checked), and is reconstructed here from committed evidence only. No round was rerun and no battery was re-executed to manufacture a row.",
+  "rows": [
+    {
+      "seq": 1,
+      "limb": "X",
+      "started_utc": "2026-09-10T18:33Z",
+      "ended_utc": "2026-09-10T18:41Z",
+      "act": "Recorded Andrew's word at the CTO terminal registering IRPT as a new macro under D9, as the receiving seat's own durable record, and relayed the receipt",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "95457"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "RECORD",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260910_183xZ_IRPT_MACRO_D9.md@2605bc7554"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/mcp/inbox/1.0.0_SA_CTO/read/20260910T184219Z_3.0.0_SA_CVO_95457_DONE_receiving-seat_record_2605bc7.md (UNTRACKED device-local file: org/mcp/inbox/* is gitignored, 0 files tracked; NO commit vintage exists for this carrier)"
+        }
+      ],
+      "spine_clause": "NONE (record and broadcast of a sovereign word, org/XXX.md)",
+      "note": "pre-L1 for this project; the macro home D9/IRPT is created by this word"
+    },
+    {
+      "seq": 2,
+      "limb": "L2",
+      "started_utc": "2026-09-10T19:05Z",
+      "ended_utc": "2026-09-10T19:14Z",
+      "act": "Reviewed the CTO's L2 eight-outcome ACCEPT allocation across the two IRPT projects against both pinned CRO briefs; confirmed FE owns FWD-1 and FWD-6 and BK owns the other six",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "95496"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_INVESTOR_REPORTING_LIGHTWEIGHT_20260910.md@58266dab2d"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md@efa5a94bf1"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_L2_DISTRIBUTION_REVIEW_20260910.md@9b9cf89bbc"
+        }
+      ],
+      "spine_clause": "NONE (L2 is 1.0.0_SA_CTO only; this is review input to the L2 owner, not a certification)",
+      "note": "confirms allocation and its cross-project proof obligations only; grades no implementation and realizes no outcome"
+    },
+    {
+      "seq": 3,
+      "limb": "L2",
+      "started_utc": "2026-09-10T19:14Z",
+      "ended_utc": "2026-09-10T19:16Z",
+      "act": "Reviewed the re-cut project ACCEPT prose before PRD inheritance and found it drops ratified proof obligations",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "95504"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND (project endpoint text)@00af569662"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_PROJECT_ENDPOINT_REVIEW_20260910.md@8b2bbe2085"
+        }
+      ],
+      "spine_clause": "NONE (L2 is 1.0.0_SA_CTO only)",
+      "note": "FWD-9 and FWD-10 recorded as explicitly unratified proposals; this review ratifies neither"
+    },
+    {
+      "seq": 4,
+      "limb": "L2",
+      "started_utc": "2026-09-10T19:20Z",
+      "ended_utc": "2026-09-10T20:03Z",
+      "act": "Ran eight successive re-verification passes on the CTO's endpoint repairs as each landed, each pass consuming a new revision and returning a measured verdict rather than a re-read of the prior one; FWD-12's ratification and the frontend closure were verified in this series",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "95507"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "95516"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "95518"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "95520"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "95523"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "95525"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "95527"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "95535"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "95536"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_PROJECT_ENDPOINT_REVIEW_20260910.md@df23e32346"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_PROJECT_ENDPOINT_REVIEW_20260910.md@67c881f9f7"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_PROJECT_ENDPOINT_REVIEW_20260910.md@43ce67bacd"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_PROJECT_ENDPOINT_REVIEW_20260910.md@10a6fb0010"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_PROJECT_ENDPOINT_REVIEW_20260910.md@59003539cc"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_PROJECT_ENDPOINT_REVIEW_20260910.md@20f675122a"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_PROJECT_ENDPOINT_REVIEW_20260910.md@c757162da3"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_PROJECT_ENDPOINT_REVIEW_20260910.md@f712bad657"
+        }
+      ],
+      "spine_clause": "NONE (L2 is 1.0.0_SA_CTO only)",
+      "note": "one artifact, eight vintages; a reader wanting per-pass grain reads the eight commits in order"
+    },
+    {
+      "seq": 5,
+      "limb": "L4",
+      "started_utc": "2026-09-10T20:24Z",
+      "ended_utc": "2026-09-10T20:31Z",
+      "act": "Bounded pre-decomposition coverage review of both landed PRDs against their source briefs; three contract/handoff findings raised",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "95561"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@d555a33482"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md@2acf23d8fd"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_PRD_COVERAGE_REVIEW_20260910.md@d0e72ccd56"
+        }
+      ],
+      "spine_clause": "NONE (L4 is 1.0.0_SA_CTO only; this is bounded input, not an L4-R half)",
+      "note": "explicitly not an L9 adjudication, not an approval, and not a new gate or hold"
+    },
+    {
+      "seq": 6,
+      "limb": "L4",
+      "started_utc": "2026-09-10T20:31Z",
+      "ended_utc": "2026-09-10T20:34Z",
+      "act": "Verified the CTO's v0.2 repairs and closed the three handoff findings at PRD level",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md (v0.2)"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_PRD_COVERAGE_REVIEW_20260910.md@b0def16c13"
+        }
+      ],
+      "spine_clause": "NONE (L4 is 1.0.0_SA_CTO only)",
+      "note": "closure is at PRD level only and certifies no implementation"
+    },
+    {
+      "seq": 7,
+      "limb": "L4",
+      "started_utc": "2026-09-10T21:36Z",
+      "ended_utc": "2026-09-10T22:07Z",
+      "act": "L4-R RATIFIED-TEXT half at v0.4: reviewed ENDPOINT + CONTRACTS for both PRDs and SIGNED both, then bound the signed records with prd-signoff.py",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "95614"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@62301f71e0"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_L4R_RATIFIED_TEXT_REVIEW_20260910.md@f1c6762d0e"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/signoff/3.0.0_SA_CVO.json@d1f613fff3"
+        }
+      ],
+      "spine_clause": "L4-R sign-off gate (spine v3.15): 3.0.0_SA_CVO signs the RATIFIED-TEXT half, always",
+      "gate_or_notifier_touched": "prd-signoff.py sign --half ratified-text: SIGNED, bound to the section hash",
+      "note": "this v0.4 signature is later superseded by the v0.5 refusal at seq 8"
+    },
+    {
+      "seq": 8,
+      "limb": "L4",
+      "started_utc": "2026-09-11T04:20Z",
+      "ended_utc": "2026-09-11T04:36Z",
+      "act": "L4-R re-review at BK v0.11 / FE v0.5 after the sections changed: REFUSED both halves; this project's finding is C2, the counterpart contract",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md (v0.5)"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_L4R_RATIFIED_TEXT_REVIEW_20260911.md@3f1494fd36"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_L4R_RATIFIED_TEXT_COMPARISON_20260911.json@3f1494fd36"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/signoff/3.0.0_SA_CVO.json@27a6c5ecf8"
+        }
+      ],
+      "spine_clause": "L4-R sign-off gate: the half is bound to the HASH of its sections, never to prd_version, so changed bytes re-open the half",
+      "gate_or_notifier_touched": "prd-signoff.py refuse --half ratified-text: REFUSED, C2 named",
+      "note": "the version-vs-hash binding is what made this re-read mandatory rather than optional"
+    },
+    {
+      "seq": 9,
+      "limb": "L4",
+      "started_utc": "2026-09-11T04:39Z",
+      "ended_utc": "2026-09-11T04:48Z",
+      "act": "L4-R final: C1 and C2 closed at BK v0.13 / FE v0.6; SIGNED both and bound the signed records; reported L4-R COMPLETE to the CTO",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "95812"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "95816"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@d1479bc5f0"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_L4R_CORRECTION_REVIEW_20260911.md@39bdc72308"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_L4R_CORRECTION_COMPARISON_20260911.json@39bdc72308"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/signoff/3.0.0_SA_CVO.json@0a317a6a73"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/mcp/inbox/1.0.0_SA_CTO/read/20260911T044822Z_3.0.0_SA_CVO_L4-R_COMPLETE__BK_v0.13_and_FE_v0.6_SIGN.md (UNTRACKED device-local file: org/mcp/inbox/* is gitignored, 0 files tracked; NO commit vintage exists for this carrier)"
+        }
+      ],
+      "spine_clause": "L4-R sign-off gate; the COO delivery is WITHHELD until both halves are SIGNED at the current bytes",
+      "gate_or_notifier_touched": "prd-signoff.py status IRPT_FNTEND: ratified-text SIGNED 3.0.0_SA_CVO current (re-read 2026-09-11T22:5xZ, still current at v0.6 @d1479bc5f0)",
+      "note": "three L4-R passes for one project in one night: SIGNED v0.4, REFUSED v0.5, SIGNED v0.6"
+    },
+    {
+      "seq": 10,
+      "limb": "X",
+      "started_utc": "2026-09-11T09:53Z",
+      "ended_utc": "2026-09-11T09:59Z",
+      "act": "Relaunch after the device event: verified this seat's own runtime, censused the L8 intake surface, and corrected one of this seat's own claims (a rollup flag) against a measured control in the same record",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "95935"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/mcp/inbox/3.0.0_SA_CVO/read/20260911T095338Z_0.0.0_AB_MSTR_relaunch_both_Codex_exec_seats___your_se.md (UNTRACKED device-local file: org/mcp/inbox/* is gitignored, 0 files tracked; NO commit vintage exists for this carrier)"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_L8_RELAUNCH_INTAKE_20260911T095338Z.md@1eb0b1729a"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_L8_RELAUNCH_INTAKE_20260911T095338Z.md@a5111d1496"
+        }
+      ],
+      "spine_clause": "NONE (startup); L8 intake census",
+      "note": "the self-correction at a5111d1496 is 40 seconds after the claim; it is on the record rather than amended away"
+    },
+    {
+      "seq": 11,
+      "limb": "L8",
+      "started_utc": "2026-09-11T10:25Z",
+      "ended_utc": "2026-09-11T10:56Z",
+      "act": "L8 CHANNEL COMPILE for this project: took in the round-1 investigation channel and checked 41 of 41 original items, leaving zero undispositioned",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "95947"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v1.md@2e50d2e129"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/mcp/inbox/1.0.0_SA_CTO/read/20260911T102518Z_3.0.0_SA_CVO_ACK_95947__IRPT_L8-L10_work_begun_on_bot.md (UNTRACKED device-local file: org/mcp/inbox/* is gitignored, 0 files tracked; NO commit vintage exists for this carrier)"
+        }
+      ],
+      "spine_clause": "L8 channel compile (the CVO's engagement with the project BEGINS here, not at L9)",
+      "note": "input snapshot: workspace eb6f7068db, portal edab15b54f; the channel pin is what every row citation binds to"
+    },
+    {
+      "seq": 12,
+      "limb": "L9",
+      "started_utc": "2026-09-11T10:30Z",
+      "ended_utc": "2026-09-11T11:06Z",
+      "act": "L9 adjudication: graded all 10 JUDGMENT criteria against their issued faces on this seat's own instruments (1 PASS, 5 FAIL, 4 NOT_EVALUATED) and confirmed 11 of 11 proof instances structurally VALID",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v1.md@2e50d2e129"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/ (11 terminal orders at the channel pin)"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ROUND1_L8_REVIEW_20260911.md@27e67fa6a5"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ROUND1_VERIFIER_EVIDENCE_20260911.json@27e67fa6a5"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ROUND1_SEAM_PROBE_20260911.py@27e67fa6a5"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/adjudications/ADJUDICATION_v1.md@27e67fa6a5"
+        }
+      ],
+      "spine_clause": "L9 adjudicate: JUDGMENT criteria are graded HERE and never self-graded",
+      "note": "the four NOT_EVALUATED are recorded as non-evaluation, not as a verdict; a vocabulary without that value would have encoded them as PASS or FAIL"
+    },
+    {
+      "seq": 13,
+      "limb": "L10",
+      "started_utc": "2026-09-11T10:56Z",
+      "ended_utc": "2026-09-11T11:11Z",
+      "act": "Cut the ONE round-1 remediation slug for this project (8 rows OPEN, 13 REMEDIATED; 'disarm by carry' rejected) and sent it to 1.0.0_SA_CTO as this seat's single send for the round",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/adjudications/ADJUDICATION_v1.md@27e67fa6a5"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v1.md@27e67fa6a5"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/mcp/inbox/1.0.0_SA_CTO/read/20260911T111137Z_3.0.0_SA_CVO_L10_IRPT_FNTEND_round_1__41_items_adjudi.md (UNTRACKED device-local file: org/mcp/inbox/* is gitignored, 0 files tracked; NO commit vintage exists for this carrier)"
+        }
+      ],
+      "spine_clause": "L10 ONE SLUG to the CTO, ALWAYS; reader is 1.0.0_SA_CTO only; no row carries route or loop_target",
+      "gate_or_notifier_touched": "none refused",
+      "note": "NO MESSAGE ID EXISTS for this slug and that is a measured fact, not an omission: the send went through codex-send, which delivers OFF-LEDGER, so the delivered file carries 'Sender-unverified' and no Msg-ID line. The slug is therefore cited as an ARTIFACT. A READ ack for it cannot exist."
+    },
+    {
+      "seq": 14,
+      "limb": "L10",
+      "started_utc": "2026-09-11T11:11Z",
+      "ended_utc": "2026-09-11T11:21Z",
+      "act": "Received and acknowledged the CTO's round-1 decisions on the slug; the round's backward route is the CTO's, not this seat's",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "95955"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/mcp/inbox/1.0.0_SA_CTO/read/20260911T112121Z_3.0.0_SA_CVO_ACK_95955__IRPT_decisions_received__DSGN.md (UNTRACKED device-local file: org/mcp/inbox/* is gitignored, 0 files tracked; NO commit vintage exists for this carrier)"
+        }
+      ],
+      "spine_clause": "L10: the CTO answers the slug with a PRD addendum or the ROUND-N ANALYSIS the COO recuts in ONE issuance",
+      "note": "round 1 ends for this seat here; this project also carries a COMPLETION_REPORT.round1.json in the same ledger dir, which is the COO's artifact and not this seat's"
+    }
+  ]
+}
