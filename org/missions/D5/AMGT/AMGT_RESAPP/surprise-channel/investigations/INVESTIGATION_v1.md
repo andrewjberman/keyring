@@ -987,6 +987,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Decomposition v0.6.1 s.13d carried `opal-data-research` as an EXISTING DECLARED RESOURCE that a round-5 cell must INTEGRATE with and 'must not re-create, re-declare or re-configure'. PRD v0.5 s.8c carried NO retroactive rename absent Andrew's explicit word. Both were written before his ~18:5xZ ruling.",
     "world_is": "His word has arrived and the bucket IS being renamed by 4.0.0_SA_CRO~Z under its execute-and-oversee authority over the harvest estate. So the s.13d bound is PARTLY SUPERSEDED -- the resource is not merely existing-and-stable, it is about to move -- and s.13d is amended in the same commit as this row rather than left contradicting a live ruling. THE OPERATIVE GAP: the approved execution order ('consolidation + renames FIRST while both stores are empty, then the backfill, then the box and lambda') was written believing this bucket empty, and needs re-reading against BOTH 53 objects AND 11 hardcoded consumers. Copy-then-delete with the code untouched leaves six live modules pointing at a bucket that no longer exists, failing at RUN time rather than at apply time -- so the migration would look clean and the breakage would surface later, on whatever runs first.",
     "notes": "NOT ADJUDICATED AND EXPLICITLY NOT A HOLD. The sequencing belongs to 4.0.0_SA_CRO~Z under Andrew's word and this seat is not gating it; disarm_owner is named as that seat because the act and its order are theirs. Three orderings are all defensible -- re-point the consumers first then migrate, migrate and re-point in one window, or keep an alias if one is possible -- and this seat has no standing to pick. What is NOT defensible is migrating with the code untouched, because that is the only option where nothing announces the break. RECOMMENDATION, offered as one: make the eleven literals read one shared constant or env var as part of the migration, so the next rename is a config change rather than this conversation again. NOT MEASURED, named rather than left to look covered: the 43 CONFIG-band hits were not individually inspected, so how many are live Terraform/env wiring versus documentation samples is unknown; and no check was run for a bucket reference built by STRING CONCATENATION, which a literal search cannot see -- so 12 is a FLOOR on the code consumers, not a ceiling."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W7-S6",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~7",
+    "surfaced_at": "2026-09-11T18:47Z",
+    "one_line": "AC3's own invocation ('comp-find ... lib/research --limit 20 | tail -12') clips comp-find's own DENOMINATOR line off the recorded output whenever the live hit count is >=7 -- which it is right now (12) -- while AC3's <expect> requires 'a printed denominator'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_RESAPP.TO-AMGT-rd-7.starred-watchlist-per-firm-pure-marker.md AC3 <invocation>: \"timeout 110 comp-find \\\"harvest|refresh|enqueue|trigger\\\" lib/research --limit 20 2>&1 | tail -12\"; <expect>: \"a printed denominator, and NO hit inside the starring code path ... A denominator of 0 files scanned is OUT-OF-CORPUS and is NOT met either\"",
+        "This invocation run verbatim in this worker's worktree, piped through `cat -n`: 18 total lines (6 fixed header/label lines incl. the 'DENOMINATOR: ...' line at line 2, then 12 hit lines); `tail -12` keeps lines 7-18 only, so the DENOMINATOR line (line 2) is NOT in the recorded output whenever fixed-header(6) + hits(N) > 12, i.e. N > 6 hits -- true here at N=12",
+        "Re-run of the identical comp-find command without the trailing '| tail -12' on the same worktree state: 'DENOMINATOR: 12 hit(s) across 67 file(s) scanned in scope [corpus=all] | 49 EPHEMERAL-FLOOR, NOT searched' -- the denominator IS printed by the tool, it is the specified pipe that discards it from the graded excerpt",
+        "None of the 12 hits are inside lib/research/watchlist/ (this cell's own module, commit 61770a9396a9a876133b515ae774113ce92fdeb0) -- all 12 are pre-existing lines in lib/research/freshness/build_view.py and lib/research/social/__init__.py / measure.py, unrelated to the starring code path -- so the criterion's SUBSTANTIVE bar (no hit reachable from the star handler) is met either way; only the literal denominator-visibility clause of <expect> is affected by the tail truncation"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3 <expect>: \"a printed denominator, and NO hit inside the starring code path that calls a harvest, refresh, enqueue or trigger ... A denominator of 0 files scanned is OUT-OF-CORPUS and is NOT met either\" -- read together with the <invocation>'s own trailing '| tail -12', the criterion asserts its own literal invocation will surface a denominator.",
+    "world_is": "Running the <invocation> exactly as written, against this worktree's current state (12 pre-existing, unrelated hits elsewhere in lib/research), produces 12 hit lines and NO denominator line -- tail -12 drops it. The proof-of-spec instance for this cell records the tail-12 output as the deciding excerpt (satisfying the negative-hit bar) and separately cites the same command's un-truncated denominator line as supplementary evidence, rather than silently omitting the requirement or fabricating a denominator inside the truncated excerpt.",
+    "notes": "Not a hold: the substantive claim (no hit reachable from the star handler) is independently true and independently re-derivable by any verifier re-running the un-piped command. Flagged because a LATER re-grade of this exact criterion (CVO at L9, or a future re-run once more comment text accumulates elsewhere in lib/research) will hit the identical clipping any time the corpus carries more than 6 matching lines -- a property of the pipe's fixed cut, not of this cell's code. No remedy attempted here: the invocation text is the task order's own and mid-round the spec is FROZEN (Rule 27); the owner of whether to loosen the tail bound or drop the denominator clause from <expect> is whoever reads this row."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W7-S7",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~7",
+    "surfaced_at": "2026-09-11T18:55Z",
+    "one_line": "controls.mutant's FIRST attempt (a socket.create_connection to example.com:80 injected into star(), reverted seconds later) was not intercepted by 2 of the 5 watchlist tests, so a real -- if trivial and payload-free -- outbound TCP connection attempt to a non-Opal host was made from this worktree during self-testing before the mutant was replaced with a network-free one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLAUDE.md Agent Autonomy: 'Do NOT ask permission to read/write/build/test/commit/push CLOUD-DEV/run scripts/call Opal-owned APIs. Excluded: all egress off Opal infrastructure.' -- egress off Opal infrastructure is carved OUT of the no-permission-needed set.",
+        "The mutant was applied to lib/research/watchlist/store.py's star() (a line calling socket.create_connection((\\\"example.com\\\", 80), timeout=1) after the real put_item), then `python -m pytest lib/research/watchlist -q` was run. Result: '3 failed, 2 passed' -- the 2 PASSING tests were test_starred_watchlist_is_shared_across_firm_pms and test_starred_watchlist_tenancy_boundary_across_firms, neither of which requests the block_all_sockets fixture, so the injected connection attempt in those two test runs was NOT intercepted and (since no exception surfaced to fail them) either succeeded or failed silently within the 1s timeout against the real network -- either way a real attempt left this worktree.",
+        "example.com is an IANA-reserved domain, RFC 2606, expressly designated for documentation/example use, resolves publicly, and no data beyond a bare TCP handshake was sent (no HTTP request line, no payload, no credentials, no Opal data) -- the practical exposure is a connection log entry on a public test domain, not a data disclosure.",
+        "Immediately reverted (git diff --stat lib/research/watchlist/store.py: no output, byte-identical to committed HEAD) and replaced with a network-free mutant (a second table.put_item call on the already-faked persistence seam) before any formal AC1-AC3 evidence for this cell's proof-of-spec instance was captured -- see AMGT_RESAPP.TO-AMGT-rd-7...proof_of_spec.json controls.mutant for the graded (safe) version."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This worker's own task order carries the bound 'NO VENDOR EGRESS FROM THIS CELL AT ALL' and CLAUDE.md's standing law excludes 'all egress off Opal infrastructure' from acts that need no permission -- a control demonstration for AC2 should not itself be an act requiring that permission.",
+    "world_is": "For roughly one test run, it was: two of five tests in lib/research/watchlist did not block the raw socket, so the deliberately-injected vendor-shaped call in that mutant reached a real, external, non-Opal host (example.com:80) rather than being intercepted -- a self-inflicted, immediately-reverted instance of exactly the category of act this cell exists to prevent, caught by the worker's own review of the mutant's result rather than by any test.",
+    "notes": "No residual risk: the code was never committed with this mutant present (both safe-commit.sh runs for this cell post-date the revert), git diff --stat confirms byte-identical, and the shipped store.py has zero network-capable calls (AC2/AC3, both PASS). Recorded because it is exactly the shape of act CLAUDE.md's egress carve-out exists to make visible, even when trivial, unintentional, and self-caught. No action needed beyond disclosure; a future worker building a mutant against this module should give EVERY test in the suite the socket-blocking fixture (or run the mutant only against the ABSENCE tests directly) rather than the whole-suite sweep this instance used first."
   }
 ]
 ```
