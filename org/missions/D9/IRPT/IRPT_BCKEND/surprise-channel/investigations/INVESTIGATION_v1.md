@@ -1826,6 +1826,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "RT5-AC1(c) requires a new no-op commit touching a runner; BOUNDS 1 forbids editing a runner in this cell.",
     "world_is": "Both are satisfiable at once only because the repo already contains commits that touch the runners. The gate's commit-range path over those historical commits is the same code path a fresh no-op commit would exercise, and it is a STRICTLY better discriminator: the input is byte-identical to the one that produced the round-1 SKIP-NOT-MEMBER finding, so the before/after comparison holds the input fixed and varies only the declaration.",
     "notes": "Reported rather than silently resolved because the next seat handed this face template may take the literal path, edit a file another cell owns (IB-rt-3 / IB-rt-6 own the runners this round) and collide at the drain. No runner was edited by this cell."
+  },
+  {
+    "id": "IRPT_BCKEND-S30",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-11T12:57:01Z",
+    "one_line": "Both round-1 batteries grade the first-mint by head-object on a LOOSE per-file key, so now that the mint has correctly landed as a BUNDLE they will read ABSENT / DEPLOY LEG BLOCKED -- a FALSE RED that says the opposite of what happened.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_s_4.py:320-324 -- key = SHARED_CODE_PREFIX + 'directory_runner.py'; head-object; landed = (rc == 0)",
+        "deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_s_12.py:39,279-292 -- CODE_KEY = '.../holdings_snapshot.py'; artifact_landed = (rc_h == 0); and it probes --mint-bundle holdings_snapshot, a bundle NAME that does not exist (the declared bundle is investor_reporting, of which holdings_snapshot.py is a MEMBER), so bundle_declared stays False and deploy_blocked stays True",
+        "measured after the mint: list-objects-v2 on code/scripts/assets_gold/investor_reporting/ returns 1 object, the tar.gz; head-object on the loose .../directory_runner.py key returns 404",
+        "the 404 is CORRECT and PERMANENT by design: safe_deploy_core.py routes a bundle member away from the loose leg ('loose leg frozen 2026-08-11, X-iii') and the X-iii note states a member's loose S3 objects are deprecated-in-place, never updated"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round 1's IB-s-4 and IB-s-12 encode 'SERVED' as 'the per-file key exists at the shared-home prefix'.",
+    "world_is": "After IB-rt-5 the served shape is ONE hash-stamped bundle at that prefix and the per-file keys are frozen 404s. Re-running either round-1 battery therefore produces 'ABSENT' / 'DEPLOY LEG: BLOCKED' AFTER a successful first-mint, which reads as a regression and is the exact opposite of the world.",
+    "notes": "Raised because L9 adjudication is the likeliest place to re-run a round-1 battery. The instrument that IS current for this surface is deliverables/0.4.0_DS_ClientPlatform~X/battery_ib_rt_5.py, which grades the bundle object and both member sha stamps. Not repaired here: those batteries belong to IB-s-4 / IB-s-12, not to this cell, and editing another cell's deliverable is outside these bounds.",
+    "disarm_owner": "2.0.0_SA_COO~B (routes the correction to the owning cells IB-s-4 / IB-s-12); 3.0.0_SA_CVO reads it at L9"
   }
 ]
 ```
