@@ -1,11 +1,11 @@
 {
   "prd": "POSN_ASTTAX_PRD.md",
   "prd_version": "v0.5",
-  "prd_pin": "71a376b98ecfce2df496ad67b7682d082a53dd29",
+  "prd_pin": "3832ac543c2061e596a39c0866b448510e2ba62b",
   "half": "brief",
-  "half_hash": "0cc8a7d2dd9dfed1db9f3938658e125f39c3fa3ae97cffad744a69587c26acd7",
+  "half_hash": "f5bbef8c9ca91ed9ff987c5ae26fbd4404d26ecc8cb192d8c76d709cc13e87e3",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/POSN_ASTTAX_v05_BRIEF_HALF_RESIGN_REVIEW_20260911_Z.md@6d55ac4980",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/POSN_ASTTAX_v05_BRIEF_HALF_RESIGN_REVIEW_20260911_Z.md@1b27cf55f8",
   "signed_by": "4.0.0_SA_CRO~Z",
-  "signed_at": "2026-09-11T22:23:21Z"
+  "signed_at": "2026-09-11T22:37:00Z"
 }
