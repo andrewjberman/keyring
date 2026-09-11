@@ -69,6 +69,7 @@ OPPOSITE failure modes, and nobody has measured which one a change survives:**
    invokes it, say so with the denominator of what you searched.
 4. **Re-take the two live-code readings** (`S1a-AC7`, `S1a-AC8`) at your own vintage.
 5. **Run the negative control** (`S1a-AC9`): the classifier consumer set is the enumerated one and no other.
+5a. **Record Andrew's three named Cottonwood holdings in BOTH stores** (`S1a-AC11`, `S1a-AC12`) and state whether the two agree on each.
 6. Write the instance, run the checker from inside your worktree, flip `complete` only if every mechanical criterion
    PASSES, commit once, report once.
 
@@ -128,7 +129,11 @@ OPPOSITE failure modes, and nobody has measured which one a change survives:**
 
 <criterion id="S1a-AC10" cell_refs="AT1-s-1" judgment="true"/> `S1a-AC10` -- **JUDGMENT, GRADED BY `3.0.0_SA_CVO~Z` AT L9, NOT SELF-GRADED.** Given AC5's drift result and AC6's trigger result, which end of the chain -- the DynamoDB table or the hardcoded dict -- is the place where a class-boundary change SURVIVES and FLOWS, as FWD-5 requires. **Record what the instruments read and offer NO verdict.**
 
-<expected_criteria>S1a-AC1, S1a-AC2, S1a-AC3, S1a-AC4, S1a-AC5, S1a-AC6, S1a-AC7, S1a-AC8, S1a-AC9, S1a-AC10</expected_criteria>
+<criterion id="S1a-AC11" cell_refs="AT1-s-1"><invocation>timeout 120 comp-read infra/aws/lambda/v2_portal/_shared/etf_classification.py --enumerate 'GLD|VXX|CLIP'</invocation><expect>the printed DENOMINATOR and every hit, pasted verbatim; and the top-level asset_class value the SEEDING DICT carries for each of GLD, VXX and CLIP named separately from their sub_asset_class value.</expect></criterion> `S1a-AC11` -- THE AUTHORING END'S CLASS FOR ANDREW'S THREE NAMED COTTONWOOD HOLDINGS.
+
+<criterion id="S1a-AC12" cell_refs="AT1-s-1"><invocation>timeout 120 .tools/aws dynamodb batch-get-item --request-items '{"etf-classifications":{"Keys":[{"ticker":{"S":"GLD"}},{"ticker":{"S":"VXX"}},{"ticker":{"S":"CLIP"}}]}}' --query 'Responses."etf-classifications"[].{t:ticker.S,a:asset_class.S,s:sub_asset_class.S}' --output json</invocation><expect>all three tickers returned with their asset_class and sub_asset_class, pasted verbatim; and a stated comparison against AC11 saying whether the SERVED store and the SEEDING dict agree on each of the three.</expect></criterion> `S1a-AC12` -- ⭐ **THE SERVED CLASS FOR THE SAME THREE, AND THE POINT OF THE PAIR IS THE COMPARISON.** Andrew-direct 2026-09-11 ~05:3xZ (relayed 21210) says the Cottonwood satellites' key assets "should be included in ETFClassifier ... and they are not". **The issuer measured this at the cut and found they ARE present and MIS-CLASSIFIED, not absent** -- VXX served `equity` (a VIX futures ETN), GLD served `hedge`, while `sub_asset_class` already reads `Volatility` and `Gold` correctly. ⛔ **RE-TAKE IT; DO NOT INHERIT IT.** These two criteria exist so round 1 records that state at ITS OWN VINTAGE rather than citing a message. ⚠ **AND DO NOT WIDEN:** three tickers are measured because Andrew's file flags three. The 228-row sweep of his file against the classifier is NOT this order's -- naming it here so a later cell can claim it.
+
+<expected_criteria>S1a-AC1, S1a-AC2, S1a-AC3, S1a-AC4, S1a-AC5, S1a-AC6, S1a-AC7, S1a-AC8, S1a-AC9, S1a-AC11, S1a-AC12, S1a-AC10</expected_criteria>
 
 <paths>
 org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S1A-1.which-one-place-survives-the-seed.md

@@ -1,0 +1,9 @@
+{
+ "note": "round 1: ONE order over cell AT1-s-1, coverage 1 of 1 against POSN_ASTTAX_DECOMP_round1.md, fanout 1 of 1 chains cap 8",
+ "prd_pin": "66e4398f5042",
+ "prd_version": "v0.1",
+ "project": "POSN_ASTTAX",
+ "signed_by": "2.0.0_SA_COO~Z",
+ "stage": "L6",
+ "utc": "2026-09-11T05:58Z"
+}
