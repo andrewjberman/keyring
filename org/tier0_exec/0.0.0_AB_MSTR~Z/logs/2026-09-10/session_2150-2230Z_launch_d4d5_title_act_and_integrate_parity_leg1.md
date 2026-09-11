@@ -540,3 +540,31 @@ the 12:1xZ push (`is-ancestor` of origin/SITEZ = YES after a fresh fetch). Reply
 
 **Push state at the close of this amendment:** origin/SITEZ @2bdb49798c (ls-remote read 12:2xZ); this
 amendment's own commit follows it.
+
+## AMENDMENT 13 -- 12:3x-12:4xZ: the BG thread closed on the seat's F3, two clauses folded into the roster mechanism, the Rio gauge changed, the v0.4 PRD pushed
+
+**BG, sweeps three and four.** `0.0.3_BG_BBGTerminal` wrote THREAD.md row 5 itself and cut the daily file's
+full text to a pointer (@4513ed216d) after measuring that its own "THREAD.md is outside my fence" was
+invented -- `bg-concierge-gate.sh:152` permits `threads/` with no carve-out, and the write went through on
+the first attempt. Banked as memory `a-reported-fence-is-not-a-measured-fence`. Then F3 (msg 21369): the
+seat pointed the new instruction at its OWN 12:05Z corrected roster and found two buckets (SharePoint,
+YCharts) read off the seed inside the message that corrected the map-read; SharePoint exercised 12:37Z
+(refused), YCharts left READ-NOT-MEASURED because exercising it is a vendor call. Swept @b359fa84dd.
+Two calls the seat routed to me, decided and landed at the one carrier (`refs/TEAMS_DUTY.md` Reply norms,
+@84e4dfddcb): the rule's first application is BACKWARDS, to the roster last served; and READ-NOT-MEASURED
+with its reason is a LEGAL row, because a value must carry its claim and "inferred, and here is why" is a
+claim the reader can reject on. Seat folder: 0 dirty paths after the push.
+
+**Rio, the gauge.** The laptop (bus 8cc91ee9) pointed out that my two samples disagreed about the series:
+WS +0.08 GB while commit +0.6 GB over ten minutes, and Rio's private bytes already 11.3 GB above its WS --
+the OS trims working sets under pressure, so a WS trend FLATTENS as the box gets worse. Taken: this seat
+trends COMMIT CHARGE against the 108.1 GB limit and Rio PRIVATE bytes from here. 12:42:34Z: commit 93.6,
+headroom 14.5 GB, available 1.2 GB, Rio private 54.81 GB. The 1.7 h planning figure stands (private growth
+is commit growth). LD-0255 Amendment 2 @58b05f5506 (laptop) carries site Z's row and withdraws the laptop's
+"flat" reading, which was Amendment 11's here too: three samples inside one trough. Andrew push-notified from
+both terminals; not touched; nothing spawned.
+
+**Integrator cadence.** `1.0.0_SA_CTO~Z`'s AMGT_RESAPP v0.4 PRD on Andrew's "Recs approved" (msg 21368)
+pushed @bbbf35c38e; `4.0.0_SA_CRO~Z`'s coverage-half sign @1b7a996c86 rode the next push. origin/SITEZ
+@84e4dfddcb (ls-remote read 12:4xZ). Audit-archive re-baseline still PARKED: `6560583fd5` not fetchable
+from origin/CLOUD (tip bed01b226a at 12:4xZ).
