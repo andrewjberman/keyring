@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-11T02:12:08.384419+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20260911T030348Z
 **Deploy:** Andrew-directed isolated YCharts EC2-to-Lambda and generation tests
 **Authored by:** 4.0.0_SA_CRO
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -15,7 +15,7 @@
 | L1 | verify | isolated test resources and exact runner artifact | safe-apply receipt and deployed hashes | safe-apply created 6 isolated resources; EC2 source hash verified and Lambda deployed CodeSha256 matched tested zip. See docs/research/investor_reporting_ycharts_cloud_20260911/lambda_deployment.json and source_evidence.json. | CLOSED 20260911T025728Z |
 | L2 | verify | live boundaries | sanitized per-stage pass or measured failure evidence | Live EC2 capture, structured identity, isolated publication, Lambda cookie store/reload, synthetic upload and portfolio creation, Overview report 201, and 23-page PDF verified. See per-stage lambda JSON, ec2_capture_02.json and pdf_validation.json. Production recovery/concurrency and two other variants remain explicitly unproven. | CLOSED 20260911T025728Z |
 | L3 | verify | cleanup | dedicated EC2 stopped and temporary compute/grants removed | cleanup.json measured EC2 stopped, test Lambda/role and EC2 temporary policy absent, no experiment-owned lease. safe-apply removed 4 resources; retained isolated secret/log/artifacts and synthetic portfolio are enumerated. | CLOSED 20260911T025729Z |
-| L4 | verify | local research packet | exact local commit and CTO delivery |  | OPEN |
+| L4 | verify | local research packet | exact local commit and CTO delivery | Repository-confirmed local commit f06c1951e1e63a16ba7e876d7604296b0a92c615 contains source, evidence, amended brief and inactive Terraform. CTO handoff delivered by codex-send at 20260911T030331Z as 20260911T030331Z_4.0.0_SA_CRO_YCharts_cloud_flow_PROVEN__EC2_session_t.md. No push. | CLOSED 20260911T030347Z |
 
 ## Log
 
@@ -23,3 +23,5 @@
 - 20260911T025728Z LEG L1 closed: safe-apply created 6 isolated resources; EC2 source hash verified and Lambda deployed CodeSha256 matched tested zip. See
 - 20260911T025728Z LEG L2 closed: Live EC2 capture, structured identity, isolated publication, Lambda cookie store/reload, synthetic upload and portfolio 
 - 20260911T025729Z LEG L3 closed: cleanup.json measured EC2 stopped, test Lambda/role and EC2 temporary policy absent, no experiment-owned lease. safe-app
+- 20260911T030347Z LEG L4 closed: Repository-confirmed local commit f06c1951e1e63a16ba7e876d7604296b0a92c615 contains source, evidence, amended brief and 
+- 20260911T030348Z CLOSED -- all 4 legs proven
