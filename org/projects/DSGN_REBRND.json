@@ -4,10 +4,10 @@
  "directive": "D13",
  "macro_code": "DSGN",
  "fabric": "laptop",
- "dep_stage": "DECOMP",
+ "dep_stage": "EXECUTING",
  "status": "active",
  "name": "Portal Visual Elevation: the portal's visual layer brought onto the firm's measured design system -- light canvas, Lato numerals, ordered-scale ramps, one accent per view, visible focus, one written contract (portal/DESIGN.md) a reviewer can fail a page against, status and data colour separated, one charting system",
  "generated_from": "org/missions/D13/DSGN/DSGN_REBRND/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-11T08:57:59Z"
+ "generated_at": "2026-09-11T09:15:50Z"
 }

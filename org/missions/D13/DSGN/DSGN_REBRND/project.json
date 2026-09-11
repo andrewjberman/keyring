@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "DECOMP",
+  "dep_stage": "EXECUTING",
   "created": "2026-09-11",
   "registered_under_tree": "2026-09-11",
   "placement": "LAPTOP",
@@ -43,7 +43,7 @@
     "quoted": "get the signoff from 2.0.0_SA_COO~D specifically"
   },
   "fabric_ruling": "laptop -- D13 Design placed LAPTOP; Andrew-direct 2026-09-11 'it will be laptop fabric' (brief V.4), confirming the register owner's default.",
-  "blocking": "Not blocked. L4-R CLOSED 2026-09-11 ~08:46Z -- prd-signoff status reads ADMITTED, both halves SIGNED at v0.2 (ratified-text 3.0.0_SA_CVO @302eae7712; brief 2.0.0_SA_COO~D @b53a0864ad, the designated signer on Andrew's word, after a REFUSE at v0.1 @45fc3f539b that the CTO cured in v0.2). L5 decomposition v1 landed: 15 cells RB-s-1..RB-s-15 over 11 write surfaces, M=3 chains, battery run (comp-adversary RUN; comp-schedule RUN, 3 gates registered; comp-iam DECLARED-NOT-APPLICABLE on a measured 0-token AWS sweep). Next: L6 one issuance covering every cell, 2.0.0_SA_COO~D. ALL WORK CONFINED TO feature/d13-visual-elevation in both repos (Andrew-direct); no cell writes DEV or CLOUD.",
+  "blocking": "Not blocked. L6 ISSUANCE landed 2026-09-11: 15 task orders RB-s-1..RB-s-15 covering every decomp cell, fanout 3 of 3 chains cap 8. 81 criteria, 0 grammar violations; all 30 mechanical census criteria EXERCISED against the live tree before issuing -- 29 detect a real defect, 1 (RB8-AC4) is a declared no-regression guard. ALL WORK CONFINED TO feature/d13-visual-elevation in both repos (Andrew-direct); no cell writes DEV or CLOUD. Next: L7 spawn 3 worker slots.",
   "thread_counter": 0,
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_D13_PORTAL_VISUAL_ELEVATION_20260911.md",
