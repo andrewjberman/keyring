@@ -456,6 +456,50 @@
     "spec_asserts": "IRPT_FNTEND-W1-S6: ARMED -- a stale server holds a slot's assigned port, vite bumps the next worker to another port, and a port-keyed instrument reads the wrong tree.",
     "world_is": "A worker's background dev server outlives the worker; the issuer's teardown removed the worktree but not the process, and a directory held by that process resisted removal. The sweep by command line, not by port, is the control that sees them.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-11T02:10:00Z",
+    "one_line": "FE-s-7's HoldingsTab is built and unit-tested (F7-AC1..AC4 all pass) but is NOT reachable through the real page: TabShell.tsx's holdings body mount still fills with StatusPanel only, TabShell.tsx is out of this cell's <paths> grant, and Bounds>Reuse names it 'IMPORTED, never edited' -- so F7-AC5/AC6's screenshots (rc=0, recorded) show the generic StatusPanel, never the Holdings tab content, and F7-AC7's L9 visual grade will be reading that same StatusPanel screen, not this cell's component tree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/TabShell.tsx @65a37017 (HEAD of this worker's portal branch) -- doc comment: 'Each tab's body is a MOUNT POINT this cell fills with StatusPanel and nothing else (tabs/reporting/, tabs/analysis/, tabs/holdings/ are later cells)'; the component body renders only '<StatusPanel tabId={activeTab} envelope={envelope} />' regardless of activeTab -- no per-tab body slot exists to mount a later cell's component into",
+        "IRPT_FNTEND.TO-FE-s-7.holdings-tab.md <paths> block names only portal/src/pages/InvestorReporting/tabs/holdings/, fixtures/fe-s-7/, fixtures/smoke/, __tests__/fe-s-7/ and this investigation file -- tabs/TabShell.tsx is not listed, and Bounds>Reuse names TabShell.tsx among the files 'IMPORTED, never edited'",
+        "F7-AC5 invocation run this session: node scripts/ui-smoke.mjs investor-reporting fe-s-7_holdings_smartx_1440.png --port 5184 --width 1440 --fixtures fe-s-7-smartx.json --click Holdings -- rc=0, PNG saved; the PNG's Holdings panel shows only 'Ready / Updated 8h ago' (StatusPanel), no HoldingsSummary/DrillTree/SliceTable content, confirming the gap empirically rather than by reading alone",
+        "portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx (this cell, committed) -- self-contained (api + scopeRef props only), built specifically so a future mount is a one-line change wherever TabShell.tsx is amended"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-7's cell text: 'Tab at portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx, mounted in TabShell's holdings body.'",
+    "world_is": "TabShell.tsx has no holdings-specific body mount today (only a shared StatusPanel for every tab), and this task order neither grants tabs/TabShell.tsx for editing nor permits editing it under Bounds>Reuse -- so 'mounted' cannot be performed inside this cell's own lane; it is a distinct, later wiring act.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-11T02:12:00Z",
+    "one_line": "portal/src/components/CategoryViewTree.tsx is hard-wired to the AUM-domain MdpfCategoryViewsResult contract (fee_taking/advisory axis, Primary/Custom buckets, and a presence rule that DROPS any non-positive aum entirely) and carries no basis/denominator/signed-amount/classification fields at all, so it cannot represent a HoldingsSnapshot node's own rules; DrillTree.tsx uses it only for a coarse, lossy top-level overview (an adapter mapping each top-level category's amount into one MdpfCategoryNode with empty children/members) and implements the actual signed-amount/denominator-validity/classification/drill rules itself, over the same node graph, never delegated to CategoryViewTree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/components/CategoryViewTree.tsx @65a37017 lines ~30-40 (aum.ts types imported), ~125-129 (presentAum: 'if node.aum <= 0 return null' -- a negative or zero aum node renders NO CARD AT ALL) and ~619 (export function CategoryViewTree({ result }: { result: MdpfCategoryViewsResult }))",
+        "portal/src/api/endpoints/aum.ts @65a37017 MdpfCategoryNode/MdpfCategoryChildNode/MdpfCategoryMember interfaces carry only aum/members/label/axis/third_bucket -- no basis, no denominator, no pctOfParent/pctOfTotal, no classification/provenance field of any kind",
+        "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx (this cell, committed) -- mdpfResultFromSnapshot() adapter + header comment recording the mismatch; the donut/breadcrumb/SliceTable path (not CategoryViewTree) is what actually carries signed amounts, invalid-denominator alternative state and classification partitions"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-7's cell text: 'DrillTree.tsx: CategoryViewTree from portal/src/components/CategoryViewTree.tsx over the snapshot's node hierarchy (Models, SMAs, Client and every other category the hierarchy carries)' -- read plainly, CategoryViewTree renders the snapshot's hierarchy.",
+    "world_is": "CategoryViewTree's own contract (MdpfCategoryViewsResult) has no surface for a HoldingsNode's basis, denominator, signed amount or classification, and its own presence rule would silently drop a negative-amount node this cell is required to render (Bounds: 'a negative amount renders negative and is drawn as its own labelled slice, never through an absolute value'). CategoryViewTree is therefore used only for a coarse top-level overview card per category, adapted from the snapshot; every rule the cell actually owns is implemented in this cell's own breadcrumb+donut+SliceTable path instead, not delegated to the imported component.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
