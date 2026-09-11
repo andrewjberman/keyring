@@ -40,6 +40,8 @@ REVIEWERS = {                                          # base serials permitted 
 PRIMARY = {"ratified-text": "3.0.0_SA_CVO", "brief": "4.0.0_SA_CRO"}
 SUBSTITUTE = {"brief": "2.0.0_SA_COO"}                 # only when the primary is not live / overdue; recorded in the file
 AUTHOR = "1.0.0_SA_CTO"                                # the PRD's author never signs
+DESIGNATION_FIELD = "l4r_brief_signer"                 # project.json: {"serial", "authority": "<path>@<commit>", "quoted"} -- Andrew's word names the brief signer
+DESIGNATION_AUTHORITY_RE = re.compile(r"^[^@\s]+@[0-9a-f]{7,40}$")
 SIGNOFF_DIR = "signoff"
 VERDICTS = ("SIGNED", "REFUSED")
 FENCE_RE = re.compile(r"^(```|~~~)")
@@ -133,20 +135,43 @@ def infer_half(doc):
     return None
 
 
-def permitted_signer(half, serial, coo_lane_of_project=None):
+def designated_brief_signer(project_doc):
+    """(serial|None, reason). A project row may DESIGNATE the brief half's signer on Andrew's word -- the one case
+    in which the round-holding COO lane signs (Andrew-direct 2026-09-11 ~08:0xZ: "get the signoff from 2.0.0_SA_COO~D
+    specifically"). Admitted ONLY with a `serial` whose base is a brief-half reviewer AND a pinned `authority`
+    (<path>@<commit>); anything less is ignored and the reason says so -- a value carries its claim and the
+    consumer rejects. The separation-of-duties default stands for every project without the field."""
+    d = (project_doc or {}).get(DESIGNATION_FIELD)
+    if not isinstance(d, dict):
+        return None, "no designation"
+    serial = str(d.get("serial") or "").strip()
+    auth = str(d.get("authority") or "").strip()
+    if not serial:
+        return None, "designation without a serial is ignored"
+    if not DESIGNATION_AUTHORITY_RE.match(auth):
+        return None, "designation for %s ignored: `authority` must be <path>@<commit>, got %r" % (serial, auth)
+    if base_serial(serial) not in REVIEWERS["brief"]:
+        return None, "designation for %s ignored: its base is not a brief-half reviewer" % serial
+    return serial, "designated by %s" % auth
+
+
+def permitted_signer(half, serial, coo_lane_of_project=None, designated=None):
     """(ok, reason). The author never signs; a COO instance holding the project's round never signs
-    the brief half it will decompose (separation of duties); otherwise the base must be in REVIEWERS."""
+    the brief half it will decompose (separation of duties) UNLESS the project row designates it on Andrew's
+    word (`designated`, from designated_brief_signer); otherwise the base must be in REVIEWERS."""
     b = base_serial(serial)
     if b == AUTHOR:
         return False, "%s is the PRD's author and cannot sign its own document" % serial
     if b not in REVIEWERS.get(half, ()):
         return False, "%s is not a permitted signer of the %s half (permitted: %s)" % (serial, half, ", ".join(REVIEWERS.get(half, ())))
+    if half == "brief" and designated and str(serial).strip() == str(designated).strip():
+        return True, "designated"
     if b == "2.0.0_SA_COO" and coo_lane_of_project and str(serial).strip() == str(coo_lane_of_project).strip():
         return False, "%s holds this project's round and cannot sign the brief half it decomposes" % serial
     return True, "ok"
 
 
-def evaluate(prd_text, files, coo_lane_of_project=None):
+def evaluate(prd_text, files, coo_lane_of_project=None, designated=None):
     """PURE. `files` = {basename: parsed-json-or-None}. Returns
         {"halves": {half: {"state": SIGNED|REFUSED|STALE|MISSING|UNREADABLE|NOT-PERMITTED,
                            "by": serial|None, "file": name|None, "detail": str}},
@@ -169,7 +194,7 @@ def evaluate(prd_text, files, coo_lane_of_project=None):
         half = infer_half(doc)
         if half is None:
             continue
-        ok, why = permitted_signer(half, doc.get("signed_by"), coo_lane_of_project)
+        ok, why = permitted_signer(half, doc.get("signed_by"), coo_lane_of_project, designated)
         current = (str(doc.get("half_hash") or "") == hashes[half]) if doc.get("half_hash") else (str(doc.get("prd_version")) == version)
         candidates[half].append((str(doc.get("signed_at") or ""), name, doc, ok, why, current))
     for half in HALVES:
@@ -315,7 +340,7 @@ def live_serials(root, now=None):
     return {s for s, info in data.items() if isinstance(info, dict) and now - float(info.get("last_seen_epoch", 0) or 0) < LIVE_SECONDS}
 
 
-def route_half(half, live, coo_lane_of_project=None, overdue=False):
+def route_half(half, live, coo_lane_of_project=None, overdue=False, designated=None):
     """(serial, reason) -- who is ASKED to sign `half` right now. The ratified-text half always goes to the
     CVO (base or its live lane). The brief half goes to the CRO when a CRO base/lane is live; else, or when the
     CRO is OVERDUE on it, to a live 2.0.0_SA_COO instance that is NOT this project's round holder; else to the
@@ -325,6 +350,9 @@ def route_half(half, live, coo_lane_of_project=None, overdue=False):
     if half == "ratified-text":
         c = live_of("3.0.0_SA_CVO")
         return (c[0] if c else "3.0.0_SA_CVO"), ("live" if c else "no live CVO session; the base is addressed, which is a hole until a session is live; re-offer continues")
+    if designated:
+        return str(designated), ("designated on the project row (Andrew's word); the CRO is not asked" +
+                                 ("" if str(designated) in live else "; no live session, which is a hole until one is; re-offer continues"))
     cro = live_of("4.0.0_SA_CRO")
     if cro and not overdue:
         return cro[0], "live"
@@ -393,6 +421,24 @@ def self_test():
     arm("route: brief -> the live CRO lane when one is live", route_half("brief", live)[0] == "4.0.0_SA_CRO~X")
     arm("route: brief -> a live COO instance NOT holding the round when no CRO is live", route_half("brief", live - {"4.0.0_SA_CRO~X"}, coo_lane_of_project="2.0.0_SA_COO~B")[0] == "2.0.0_SA_COO~F")
     arm("route: brief -> COO when the CRO is OVERDUE", route_half("brief", live, coo_lane_of_project="2.0.0_SA_COO~B", overdue=True)[0] == "2.0.0_SA_COO~F")
+    des_ok = designated_brief_signer({"l4r_brief_signer": {"serial": "2.0.0_SA_COO~D", "authority": "org/x/ANDREW_DIRECT_x.md@abc1234"}})
+    des_nopin = designated_brief_signer({"l4r_brief_signer": {"serial": "2.0.0_SA_COO~D", "authority": "org/x/ANDREW_DIRECT_x.md"}})
+    des_cvo = designated_brief_signer({"l4r_brief_signer": {"serial": "3.0.0_SA_CVO", "authority": "org/x/A.md@abc1234"}})
+    arm("designation: serial + pinned authority is admitted", des_ok[0] == "2.0.0_SA_COO~D")
+    arm("designation: an UNPINNED authority is ignored (a citation without a vintage is not a citation)", des_nopin[0] is None and "authority" in des_nopin[1])
+    arm("designation: a non-brief-reviewer base is ignored", des_cvo[0] is None)
+    arm("designation: absent field -> None", designated_brief_signer({})[0] is None)
+    arm("permitted: the round-holding COO lane is REFUSED by default", not permitted_signer("brief", "2.0.0_SA_COO~D", coo_lane_of_project="2.0.0_SA_COO~D")[0])
+    arm("permitted: the round-holding COO lane is ADMITTED when designated", permitted_signer("brief", "2.0.0_SA_COO~D", coo_lane_of_project="2.0.0_SA_COO~D", designated="2.0.0_SA_COO~D")[0])
+    arm("permitted: a designation admits only THAT serial (another round holder still refused)", not permitted_signer("brief", "2.0.0_SA_COO~B", coo_lane_of_project="2.0.0_SA_COO~B", designated="2.0.0_SA_COO~D")[0])
+    arm("permitted: a designation never lifts the author refusal", not permitted_signer("brief", "1.0.0_SA_CTO", designated="1.0.0_SA_CTO")[0])
+    arm("permitted: a designation never reaches the ratified-text half", not permitted_signer("ratified-text", "2.0.0_SA_COO~D", designated="2.0.0_SA_COO~D")[0])
+    des_doc = build_doc("T_PRD.md", prd, "abc", "brief", "SIGNED", "r@1", "2.0.0_SA_COO~D")
+    arm("evaluate: designated round holder grades SIGNED", evaluate(prd, {"2.0.0_SA_COO~D.json": des_doc, "3.0.0_SA_CVO.json": cvo}, coo_lane_of_project="2.0.0_SA_COO~D", designated="2.0.0_SA_COO~D")["admitted"])
+    arm("evaluate: the same file WITHOUT the designation grades NOT-PERMITTED", evaluate(prd, {"2.0.0_SA_COO~D.json": des_doc, "3.0.0_SA_CVO.json": cvo}, coo_lane_of_project="2.0.0_SA_COO~D")["halves"]["brief"]["state"] == "NOT-PERMITTED")
+    arm("route: brief -> the DESIGNATED serial even with a live CRO", route_half("brief", live | {"2.0.0_SA_COO~D"}, coo_lane_of_project="2.0.0_SA_COO~D", designated="2.0.0_SA_COO~D")[0] == "2.0.0_SA_COO~D")
+    arm("route: a designated serial with NO live session is named a hole", "hole" in route_half("brief", live, designated="2.0.0_SA_COO~D")[1])
+    arm("route: ratified-text ignores the designation", route_half("ratified-text", live, designated="2.0.0_SA_COO~D")[0].startswith("3.0.0_SA_CVO"))
     arm("route: nobody live -> the primary base, with the hole named", route_half("brief", set())[0] == "4.0.0_SA_CRO" and "hole" in route_half("brief", set())[1])
     arm("route: the CVO is never substituted", route_half("ratified-text", {"2.0.0_SA_COO"})[0] == "3.0.0_SA_CVO")
     print("prd_signoff_lib self-test: %d defect(s)" % fails)

@@ -1244,7 +1244,7 @@ def _base_serial_of(s):
     return s.split("~", 1)[0]
 
 
-def _signoff_violations(rel, code, prd_rel, prd_version, prd_last_commit, files, prd_text=None, coo_lane=None):
+def _signoff_violations(rel, code, prd_rel, prd_version, prd_last_commit, files, prd_text=None, coo_lane=None, designated=None):
     """PURE given `prd_text`. v3.15: the verdict is prd_signoff_lib.evaluate() -- each half (ratified-text =
     ENDPOINT + CONTRACTS; brief = every other section) bound to the HASH of its sections, legacy files
     bound to prd_version. `prd_version` / `prd_last_commit` are kept in the signature for the callers
@@ -1253,7 +1253,7 @@ def _signoff_violations(rel, code, prd_rel, prd_version, prd_last_commit, files,
     lib = _signoff_lib()
     if prd_text is None:
         prd_text = '```json\n{"prd_version": "%s"}\n```\n' % prd_version
-    r = lib.evaluate(prd_text, files, coo_lane_of_project=coo_lane)
+    r = lib.evaluate(prd_text, files, coo_lane_of_project=coo_lane, designated=designated)
     return lib.violations(rel, code, prd_rel, r)
 
 
@@ -1299,7 +1299,7 @@ def check_prd_signoff(root, rel):
             notes.append("%s: L4-R not applied to %s -- %s" % (rel, rp, why))
             continue
         files = lib.read_signoff_files(os.path.join(os.path.dirname(ap), lib.SIGNOFF_DIR))
-        r = lib.evaluate(text, files, coo_lane_of_project=doc.get("coo_lane"))
+        r = lib.evaluate(text, files, coo_lane_of_project=doc.get("coo_lane"), designated=lib.designated_brief_signer(doc)[0])
         sv = lib.violations(rel, code, rp, r)
         if sv:
             v.extend(sv)

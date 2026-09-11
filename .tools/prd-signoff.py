@@ -85,7 +85,7 @@ def _evaluate(lib, code, prd_rel, pj_rel):
         text = fh.read()
     files = lib.read_signoff_files(os.path.join(ROOT, os.path.dirname(prd_rel), lib.SIGNOFF_DIR))
     doc = _project_doc(pj_rel)
-    return lib.evaluate(text, files, coo_lane_of_project=doc.get("coo_lane")), text, doc
+    return lib.evaluate(text, files, coo_lane_of_project=doc.get("coo_lane"), designated=lib.designated_brief_signer(doc)[0]), text, doc
 
 
 def cmd_status(lib, code=None):
@@ -114,7 +114,7 @@ def cmd_status(lib, code=None):
             if st["state"] == "SIGNED":
                 owed = ""
             else:
-                who, reason = lib.route_half(half, live, coo_lane_of_project=doc.get("coo_lane"))
+                who, reason = lib.route_half(half, live, coo_lane_of_project=doc.get("coo_lane"), designated=lib.designated_brief_signer(doc)[0])
                 owed = "   OWED BY %s (%s)" % (who, reason)
             print("    %-14s %-13s %-22s %s%s" % (half, st["state"], st["by"] or "-", st["detail"][:90], owed))
         for n in r["unreadable"]:
@@ -135,11 +135,15 @@ def cmd_stamp(lib, verdict, code, half, review, reason, substitute_for):
         return 2
     pj_rel, prd_rel = projects[code]
     doc = _project_doc(pj_rel)
-    ok, why = lib.permitted_signer(half, serial, coo_lane_of_project=doc.get("coo_lane"))
+    designated, designated_why = lib.designated_brief_signer(doc)
+    is_designated = bool(designated) and str(serial) == str(designated) and half == "brief"
+    ok, why = lib.permitted_signer(half, serial, coo_lane_of_project=doc.get("coo_lane"), designated=designated)
     if not ok:
         print("REFUSED: %s" % why, file=sys.stderr)
         return 3
-    if lib.base_serial(serial) == lib.SUBSTITUTE.get(half) and not substitute_for:
+    if is_designated:
+        substitute_for = None  # a designated signer signs in its own name; the file records the designation instead
+    elif lib.base_serial(serial) == lib.SUBSTITUTE.get(half) and not substitute_for:
         print("REFUSED: %s signs the %s half only in a primary's stead -- pass --for %s" % (serial, half, lib.PRIMARY[half]), file=sys.stderr)
         return 3
     if "@" not in review:
@@ -162,6 +166,8 @@ def cmd_stamp(lib, verdict, code, half, review, reason, substitute_for):
         return 3
     pin = _git("log", "-1", "--format=%H", "--", prd_rel).stdout.strip()
     sdoc = lib.build_doc(os.path.basename(prd_rel), text, pin, half, verdict, review, serial, substitute_for=substitute_for, reason=reason)
+    if is_designated:
+        sdoc["designated_by"] = designated_why
     sdir = os.path.join(ROOT, os.path.dirname(prd_rel), lib.SIGNOFF_DIR)
     os.makedirs(sdir, exist_ok=True)
     out_rel = os.path.relpath(os.path.join(sdir, serial + ".json"), ROOT).replace("\\", "/")
