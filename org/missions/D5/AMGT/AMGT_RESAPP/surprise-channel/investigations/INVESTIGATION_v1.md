@@ -1033,6 +1033,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "This worker's own task order carries the bound 'NO VENDOR EGRESS FROM THIS CELL AT ALL' and CLAUDE.md's standing law excludes 'all egress off Opal infrastructure' from acts that need no permission -- a control demonstration for AC2 should not itself be an act requiring that permission.",
     "world_is": "For roughly one test run, it was: two of five tests in lib/research/watchlist did not block the raw socket, so the deliberately-injected vendor-shaped call in that mutant reached a real, external, non-Opal host (example.com:80) rather than being intercepted -- a self-inflicted, immediately-reverted instance of exactly the category of act this cell exists to prevent, caught by the worker's own review of the mutant's result rather than by any test.",
     "notes": "No residual risk: the code was never committed with this mutant present (both safe-commit.sh runs for this cell post-date the revert), git diff --stat confirms byte-identical, and the shipped store.py has zero network-capable calls (AC2/AC3, both PASS). Recorded because it is exactly the shape of act CLAUDE.md's egress carve-out exists to make visible, even when trivial, unintentional, and self-caught. No action needed beyond disclosure; a future worker building a mutant against this module should give EVERY test in the suite the socket-blocking fixture (or run the mutant only against the ABSENCE tests directly) rather than the whole-suite sweep this instance used first."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S13",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZZZ",
+    "surfaced_at": "2026-09-11T19:20:00Z",
+    "one_line": "CORRECTS AMGT_RESAPP-Z-S12's own count. Its one_line said ELEVEN hardcoded consumers requiring an edit; the true figure is TEN edits and FIVE live modules, not eleven and six. The row CONTRADICTED ITSELF -- its evidence field already said 'HARDCODED LITERALS (10)'. Caught by 1.0.0_SA_CTO~Z on its own independent run, not by this seat.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE DISCREPANCY IS INTERNAL TO Z-S12 AND MEASURABLE IN ITS OWN BYTES: its one_line reads 'ELEVEN of them hardcoded string literals with no env path' while grounding.evidence[1] reads 'HARDCODED LITERALS (10)' and separately lists 'INDIRECT (1)'. Both statements cannot be true; the evidence field was right and the summary line double-counted the indirect case.",
+        "THE SUBSTANTIVE CORRECTION, from 1.0.0_SA_CTO~Z (msg 21540) on its own `comp-find --band DEF` run rather than on this seat's report: integrations/bloomberg/research/pull_consumer.py:45 reads `BUCKET = mbp.BUCKET` and DERIVES from model_block_pull -- its own inline comment says 'read from the imported module, never restated'. Re-point model_block_pull and pull_consumer follows automatically, so it needs NO edit.",
+        "TRUE DIVISION of the 12 DEF-band definitions: 1 ENV-OVERRIDABLE (pull_enqueue/lambda_function.py:32, RESEARCH_BUCKET); 1 INHERITS and needs no edit (pull_consumer.py:45); 10 REQUIRE AN EDIT, of which 5 are LIVE modules (derive_fye_fixed.py:33, model_block_pull.py:43, pull_baba_daily_px.py:29, lib/research/freshness/build_view.py:54, lib/research/ledger/ledger.py:37) and 5 are worker check scripts under deliverables/.",
+        "THE OPERATIVE CONCLUSION OF Z-S12 IS UNAFFECTED and is not softened by this correction: migrating the data with the code untouched is still the one variant where nothing announces the break, because those live modules fail at RUN time rather than at apply time. The count moved; the hazard did not."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S12 asserted TWELVE code definitions of opal-data-research with ELEVEN hardcoded literals requiring an edit across SIX live modules.",
+    "world_is": "TWELVE definitions is correct. ELEVEN/SIX is not: it is TEN edits across FIVE live modules, because one of the twelve inherits its value from another and one is env-overridable. The row's own evidence field already carried the right number, so this was a summary-line error rather than a measurement error -- which is the more dangerous shape, because the summary is what a later reader quotes.",
+    "notes": "BANKED AGAINST THIS SEAT: a row whose one_line disagrees with its own evidence field is worse than a row that is simply wrong, because each half looks corroborated by the other and a reader who checks EITHER one alone comes away satisfied. The fix is to derive the summary FROM the evidence rather than writing both from the same recollection. 1.0.0_SA_CTO~Z caught it by re-running the census itself instead of accepting the report, and stated the reason plainly: a SMALLER number is the one more likely to be under-checked, so it should travel with its derivation. CORRECTION ACCEPTED IN FULL AND NOT ARGUED. Z-S12 is left as filed rather than edited -- the channel is append-only and a record corrected in place destroys the evidence that it was ever wrong."
   }
 ]
 ```
