@@ -513,14 +513,18 @@ the Model tab CUT with its figures rehomed into Thesis and the Security overlay.
 in the SURFACE round (a later issuance, after round 4 drains). `FWD-15` is his confirmed outcome.
 
 **`C-AMGT-ARTICLES-STORE`** -- per-ticker article content lands in a NEW DynamoDB table
-`opal-amgt-articles`, shaped like `opal-news-articles` (title/source/url/published_at/sentiment) plus
+`opal-harvest-articles` (RENAMED from `opal-amgt-articles` 2026-09-11; env knob
+`HARVEST_ARTICLES_TABLE`), shaped like `opal-news-articles` (title/source/url/published_at/sentiment) plus
 `ticker`/`security_key` (via S12) and `platform`. GENUINELY SEPARATE from the general-market
-`opal-news-articles` (not that table with a filter) and from `opal-data-research` (which stays S1's
-model-block + S5's print-snapshot home). Serves S4 (`FWD-4`) + S13 (`FWD-11`). ⛔ S12 must resolve each
+`opal-news-articles` (not that table with a filter) and from `opal-data-harvest` (which stays S1's
+model-block + S5's print-snapshot home; RENAMED from `opal-data-research` 2026-09-11, env knob
+`HARVEST_BUCKET`). Serves S4 (`FWD-4`) + S13 (`FWD-11`). ⛔ S12 must resolve each
 platform's OWN identifier before dispatch (SA symbol-slug, Bloomberg `"TICKER US Equity"`, FT id).
 
 **`C-SERVER-SIDE-RANKING`** -- Trending/Breakout/Price/Chatter are computed SERVER-SIDE by daily jobs
-and written as pre-computed per-ticker rows into a SEPARATE metrics table `opal-amgt-security-metrics`
+and written as pre-computed per-ticker rows into a SEPARATE metrics table
+`opal-harvest-security-metrics` (RENAMED from `opal-amgt-security-metrics` 2026-09-11, MIGRATED with
+42 live rows on full item equality; env knob `HARVEST_METRICS_TABLE`)
 (mirroring the proven `opal-news-articles` / `opal-news-trending-daily` split). The Lead Panel READS
 them and never re-derives a ranking at render time. Chatter axis = the committed chatter gate (30-day,
 0-100 normalized, TOP_N=10); Price axis = the new engine (S16).
@@ -542,8 +546,18 @@ included in the aws resource cloud."* A local server cannot sit inside a canonic
 terraformed estate, so site-Z is ruled OUT as the box -- while remaining fine for the one-shot
 BACKFILL, which is an operator PROCESS and never was a provisioned resource.
 ⛔ Refresh must still WAKE the stopped box (SSM / inf-jwt-trigger shape) or it silently no-ops.
-**EXECUTION ORDER, Andrew-approved:** module consolidation + renames FIRST while both stores are empty
-(0 items, measured), THEN the backfill, THEN the box and lambda.
+**EXECUTION ORDER, Andrew-approved:** module consolidation + renames FIRST, THEN the backfill, THEN
+the box and lambda. **THE RENAMES ARE DONE** (`4.0.0_SA_CRO~Z`, 2026-09-11, under Andrew's
+~19:5xZ full-authority word): bucket migrated with all 53 objects verified and the source deleted;
+both tables migrated and the old ones deleted.
+BLOCKED: **ITS STATED PREMISE -- "while both stores are empty (0 items, measured)" -- WAS FALSE, AND
+THE WORD "measured" WAS THIS SEAT'S.** It rested on DynamoDB `ItemCount`, which is a ~6-HOURLY CACHE,
+not a measurement. Measured properly on 2026-09-11, same table, two instruments:
+`describe-table ItemCount` -> **0**; `scan --select COUNT` -> **42**. Both come from the live API and
+only one is live. The 42 reconcile exactly to this project's own output (rd-6: 32 PRICE + 10 CHATTER).
+A DynamoDB rename is a DESTROY/RECREATE, so on this sentence's premise the rename would have SILENTLY
+DROPPED 42 live rows belonging to two round-5 cells. Caught by `4.0.0_SA_CRO~Z` distrusting a number
+this seat had repeated, and the migration preserved all 42 on full item equality.
 
 **`C-STARRED-PER-FIRM`** -- the starred watchlist is SHARED ACROSS THE FIRM (both PMs see the same
 starred names), keyed per-firm, not per-user. Andrew-ruled 2026-09-11; reversible to per-user on his
@@ -580,7 +594,7 @@ Andrew, never an inference from an EC2 IP proving unworkable against PerimeterX.
 | S3 | `FWD-3` | THE PROVENANCE FACE -- source, basis and vintage beside every figure | absent | F3 (basis stated beside the number, Andrew-ruled) | wire | S1 | `C-BLOOMBERG-BASIS` |
 | S4 | `FWD-4` | THE COVERAGE READER -- recent commentary, ranked by recency and frequency | absent | F7 (the landed corpus is an ARCHIVE, not a feed: dates stop at 2026-04, 0 of 200 sampled carry a ticker); F11 (the SERP path works; the obvious link field is an obfuscated redirect) | build | S12 | `C-VENDOR-EGRESS`, `C-RULE-MUST-EXIST` |
 | S5 | `FWD-5` | THE PRINT RENDERER -- Adam's artifact | absent | F1 (template and packs are consistent, provenance confirmed by a shared misspelling) | build | S1, S3 | `C-DESIGN-SPEC-FIRST` |
-| S6 | `FWD-6` | THE VERSION STORE -- snapshots that accumulate rather than overwrite | **STORE EXISTS; surface absent** | brief O6; `opal-data-research` was created by THIS project's own `AMGT-s-6` (CLOSED deploy-completion @2026-09-10T20:59Z; declared `infra/aws/terraform/research/s3.tf:11`); **versioning `Enabled`, so FWD-6's accumulate-never-overwrite bar is met BY CONFIG, not by convention**; no lifecycle, so accumulation is not silently truncated; read/list access MEASURED. Row `AMGT_RESAPP-Z-S8` | **INTEGRATE -- no create cell** | -- | `C-RAW-BEFORE-DERIVED` |
+| S6 | `FWD-6` | THE VERSION STORE -- snapshots that accumulate rather than overwrite | **STORE EXISTS; surface absent** | brief O6; `opal-data-harvest` (RENAMED from `opal-data-research` 2026-09-11, 53 objects migrated and verified, source deleted) was created by THIS project's own `AMGT-s-6` (CLOSED deploy-completion @2026-09-10T20:59Z; declared at `infra/aws/terraform/harvest/s3.tf` -- **the former citation `infra/aws/terraform/research/s3.tf:11` is DEAD, that module was retired 2026-09-11**); **versioning `Enabled`, so FWD-6's accumulate-never-overwrite bar is met BY CONFIG, not by convention**; no lifecycle, so accumulation is not silently truncated; read/list access MEASURED. Row `AMGT_RESAPP-Z-S8` | **INTEGRATE -- no create cell** | -- | `C-RAW-BEFORE-DERIVED` |
 | S7 | `FWD-7` | THE COVERAGE-FRESHNESS VIEW -- Adam's one place | absent | brief O7 | wire | S6 | -- |
 | S8 | `FWD-8` | THE PEER SET -- comparable to THIS company, or absent with a reason | **BROKEN TODAY** | F6: 48 of 54 (88.9%) carry a stale set copied from one workbook; 4 (7.4%) are genuine and hand-chosen | build | S12 | `C-IDENTITY-RESOLVED`, `C-SHARED-DEFECT` |
 | S9 | `FWD-9` | THE DRAFTING FACE -- generated prose marked, beside its evidence | absent | brief O9; Andrew's ruling on limb order | wire | S1, S4 | `C-VERBATIM-GATE` |
@@ -634,8 +648,11 @@ Carried from brief PART V. **These are preconditions, not outcomes -- no `FWD-n`
   and a live `head-bucket` re-measured it absent at **2026-09-10T20:56:33Z as cell `AMGT-s-6`'s own
   AC1, three minutes before that cell created it**. Creation is recorded in a CLOSED
   deploy-completion entry (`org/critical_paths/change_management/
-  20260910T2059Z_amgt-resapp-opal-data-research-bucket_deploy_completion.md`) and the resource is
-  DECLARED at `infra/aws/terraform/research/s3.tf:11`. **Brief PART V is SUPERSEDED, never
+  20260910T2059Z_amgt-resapp-opal-data-research-bucket_deploy_completion.md`) and the resource was
+  DECLARED at `infra/aws/terraform/research/s3.tf:11` AT THAT TIME; it is now
+  `infra/aws/terraform/harvest/s3.tf` (the research module was retired 2026-09-11 and that path NO
+  LONGER EXISTS -- a citation left in the present tense would send a reader to nothing).
+  **Brief PART V is SUPERSEDED, never
   falsified** -- and that is now a measured statement rather than a generous one.
   ⭐ **ACCESS IS MEASURED TOO, not just existence** -- the gap an earlier draft of this bullet
   correctly flagged as open. `list-objects-v2` SUCCEEDS and returns this project's own round-1
@@ -739,8 +756,11 @@ neither is the box or the lambda), `rd-7`, `rd-8`. Round 5's coverage drops from
   lives in the KEY GRAMMAR -- distinct timestamped paths -- which a copy PRESERVES. What is lost is the
   S3 VERSION HISTORY (60 -> 53, the ~7 versions of overwritten keys), and `FWD-6` does not read those.
   **The rename is more expensive than his sentence assumes and much cheaper than this PRD claimed.**
-  ⚠ **The two DynamoDB tables remain a SEPARATE case, unaffected:** genuinely empty (0 items measured)
-  and already approved for rename in the ~18:3xZ draw.
+  ⛔ **THE CLAIM THAT ONCE STOOD HERE -- that the two DynamoDB tables were "genuinely empty (0 items
+  measured)" -- IS WITHDRAWN AS FALSE.** It read `ItemCount`, a ~6-hourly CACHE, and called it a
+  measurement. `opal-amgt-articles` was genuinely empty; `opal-amgt-security-metrics` held **42 live
+  rows** (`scan --select COUNT`), which a destroy/recreate rename would have dropped. Both were
+  MIGRATED rather than recreated, on full item equality, and both old tables are deleted.
 - **Terraform commits ride an audited `GIT_COMMIT_AUTHOR_OVERRIDE`** naming Andrew's grant, one per
   lane. **No `.owned-paths.yaml` edit** -- the AE-only lane rule is overridden per-commit with an audit
   line, not amended.
