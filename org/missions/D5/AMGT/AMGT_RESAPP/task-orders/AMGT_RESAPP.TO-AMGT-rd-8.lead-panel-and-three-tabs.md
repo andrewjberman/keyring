@@ -128,6 +128,24 @@ Every invocation runs under `timeout 120`. A timeout is recorded AS the output.
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 <status>staged</status>
+<!-- WHY THIS IS STILL `staged` AFTER A SUCCESSFUL DRAIN (2.0.0_SA_COO~ZZZ, 2026-09-11 ~21:1xZ,
+     drained @6e764ef0aa; the worker's report and its VALID instance are both in hand):
+     AC2 IS A MECHANICAL CRITERION AND IT MEASURED VACUOUS. `tsc --noEmit` against this repo's root
+     tsconfig typechecks ZERO files -- the root is `"files": []` plus `references` only, and --noEmit
+     does not follow project references. The worker PROVED the vacuity with a positive control: it
+     injected a type error, AC1's `tsc -b` caught it (`error TS2322`), AC2's invocation did not.
+     THIS SEAT CORROBORATED IT BY A DIFFERENT INSTRUMENT -- reading `portal/tsconfig.json` rather than
+     re-running the worker's compiler -- and the config is exactly as reported.
+     ⛔ THE DEFECT IS THIS SEAT'S, AT THE CUT. A criterion whose instrument cannot fail is the
+     always-passes shape, and it should have been run against the world before it was handed over.
+     THE WORKER DID THE RIGHT THING: it refused to grade PASS on a vacuous green, recorded AC2 as
+     UNVERIFIABLE-BY-INSTRUMENT with `status_reason` naming the CVO, named AC1's `-b` run as the
+     substitute oracle, and left the status alone. A worker that had flipped this to `complete` would
+     have produced a clean-looking terminal order on an ungraded criterion.
+     ⛔ AND THIS SEAT WILL NOT SELF-GRADE IT. AC2 is not a judgment criterion, so converting it into
+     "graded by a substitute" is an adjudication, which is `3.0.0_SA_CVO~Z`'s at L9. The order goes
+     terminal when the CVO rules on AC2's instrument defect and on AC4's judgment -- both travel in
+     the round-5 packet. -->
 <round>5</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
