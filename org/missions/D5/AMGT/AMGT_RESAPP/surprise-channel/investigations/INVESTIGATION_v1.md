@@ -675,6 +675,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "W3-S5 asserts lib/research/ is a normal write surface for a new module, while root .gitignore:47 `lib/` (Python build-artifact boilerplate) blankets the whole lib/ tree and hides a brand-new file there from a plain `git status`/`git add`.",
     "world_is": "The ARMED hazard did not bite this round: every round-2 cell that added a new file under lib/research/ committed it through safe-commit.sh, which force-adds (`git add -f`) its declared pathspec regardless of .gitignore, so all five cells' new lib/research/ modules are tracked and VALID at HEAD (fec90bfb4f). The residual is real but narrow: a seat running a PLAIN `git status --porcelain`/`git add` (not the wrapper) as a verifier would undercount new lib/ files with no signal that anything was excluded. As disarm_owner I am NOT editing the shared root .gitignore mid-round -- it is a fabric-wide surface on a shared tree, and whether lib/research/ should carry a tracked-source negative exception (`!lib/research/`) is a repo-hygiene design call, not a COO mid-round act. Brought to rest here; the residual is routed to the CVO's round-2 L9 as a candidate remediation.",
     "notes": "Disarm decision (2.0.0_SA_COO~ZZZ, disarm_owner): ACCEPT-AND-ROUTE. The sanctioned commit path is unaffected -- proven this round -- so nothing landed is at risk and the hazard is INERT going forward for any seat or worker using safe-commit.sh. Candidate remediations for the CVO to disposition at round-2 L9 (none required this round): (a) narrow root .gitignore with a `!lib/research/` tracked-source exception so plain git tooling sees new files there; (b) route any future repo-hygiene criterion of the 'diff `git status` against a stated file list' shape through `git ls-files` or the wrapper rather than a plain `git status`. Not editing .gitignore here: shared fabric-wide surface, design call, outside a COO mid-round lane."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W5-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~5",
+    "surfaced_at": "2026-09-11T10:07Z",
+    "one_line": "AMGT-rb-15's AC3 (exact invocation) sweeps ALL of lib/research/lists/, and its pattern now includes socket\\. -- so it nets rot.py's pre-existing, already-reviewed G-24-compliant DNS-only lookup and measures 1 hit, not the expected 0, though this cell's own module (impostor.py) adds no network/vendor call.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "3.0.0_SA_CVO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC3 invocation run verbatim in this worktree: `python -c \"import pathlib,re; fs=list(pathlib.Path('lib/research/lists').rglob('*.py')); pat=re.compile(r'(?i)\\b(requests\\.|urllib\\.request|httpx|aiohttp|socket\\.|boto3|brightdata|twitter\\.com|x\\.com|linkedin\\.com|api\\.)'); hits=[str(f) for f in fs if pat.search(f.read_text(encoding='utf-8'))]; print('py files', len(fs), '| network/vendor-call files', len(hits), hits)\"` -> `py files 6 | network/vendor-call files 1 ['lib\\\\research\\\\lists\\\\rot.py']`, not the expected 0",
+        "lib/research/lists/rot.py:12,60,63 (unmodified by this worker): `socket.getaddrinfo(domain, None)`, with its own docstring framing -- 'a lookup, never an HTTP fetch -- G-24/C-VENDOR-EGRESS'",
+        "round-2's AC3 for the SAME directory (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~5/AMGT_RESAPP.TO-AMGT-r-15.impostor-and-clause.proof_of_spec.json, criterion AC3) used the pattern `requests\\.|urllib\\.request|httpx|brightdata|api\\.|twitter\\.com|x\\.com|linkedin\\.com` -- no `socket\\.` token -- and measured 0 of 1 sweep over the identical directory (including rot.py) at commit 26316f09b3",
+        "this cell's WHAT TO PRODUCE names only impostor.py, tests/test_impostor.py and the social_accounts.json schema/rule text; DEPENDENCIES states this cell 'reads AMGT-s-15's landed social_accounts.json' and says nothing about rot.py, AMGT-s-15's sibling artifact -- rot.py is untouched by this worker's diff (`git status --porcelain -- lib/research/lists/` shows only build_lists.py, impostor.py, tests/test_impostor.py modified)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3 <expect>: \"network/vendor-call files 0\" with a non-zero \"py files\" denominator -- NEGATIVE: the predicate resolves no handle and calls no platform or vendor; it is a pure rule over caller-supplied attributes.",
+    "world_is": "The corrected predicate (impostor.py) itself adds no network/vendor call -- but AC3's invocation, as written, sweeps every .py file under lib/research/lists/ (rglob), not just this cell's own module, and its regex now includes `socket\\.` (a token round-2's otherwise-identical AC3 did not carry). That nets lib/research/lists/rot.py's `socket.getaddrinfo` DNS-only lookup, a module this cell neither owns nor is asked to touch, already reviewed as G-24/C-VENDOR-EGRESS-compliant by its own docstring in an earlier round. Measured output: 1 hit, not 0 -- AC3 as literally invoked does NOT match its stated expect. This worker does not modify rot.py (out of WHAT TO PRODUCE, a different landed cell's artifact -- touching it would be repairing an out-of-scope module by an un-named route) and does not narrow or reroute the invocation; AC3 is recorded FAIL-by-output in this worker's proof_of_spec instance, and the task order's <status> is NOT flipped to complete on that basis.",
+    "notes": "Not this worker's to disarm: narrowing AC3's sweep to the cell's own new/changed files, or excluding rot.py by name, or accepting rot.py's DNS-only socket call as compliant and re-running the criterion, are all criterion-authoring calls outside an L7 worker's lane. Routed to 3.0.0_SA_CVO~Z for the round-2b L8/L9 read alongside AC4's judgment grade."
   }
 ]
 ```
