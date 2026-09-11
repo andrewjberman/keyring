@@ -47,6 +47,33 @@
 | **L2 endpoint** | `.../deliverables/AMGT_RESAPP_ENDPOINT_20260910.md` @`3bc8f5f2c4` |
 | **Origin** | Adam Muller (Head of Asset Management) -> Andrew, 2026-09-10, "Claude automation" |
 
+### ENDPOINT provenance and history -- held HERE, deliberately
+
+**This block lives in the PRD PREAMBLE, which belongs to NEITHER sign-off half** (`half_of_section`
+returns `None` for the pre-heading text), so the record below is preserved without contaminating
+`ENDPOINT` and without re-opening the CRO's brief half. It was moved out of `ENDPOINT` on the L4-R
+refusal @`1ec5ade3f5` (review `.../AMGT_RESAPP_v04_RATIFIED_TEXT_REVIEW_20260911_Z.md`@`cfaa24b7b8`),
+which held that L4-R forbids annotation, history and seat names across the whole section.
+
+- **Outcome provenance.** The outcomes are reproduced VERBATIM from the L2 endpoint @`3bc8f5f2c4`
+  and are NOT re-authored in this PRD. `FWD-1`..`FWD-12` derive from brief `O1`-`O12`; `FWD-13` and
+  `FWD-14` were added at L2 and accepted without reservation by `4.0.0_SA_CRO~Z` (msg 21001) as its
+  own gaps. `FWD-15` came from Andrew's frontend walkthrough (the Lead Panel), carried in
+  `4.0.0_SA_CRO`'s full-stack vision Part C and this seat's synthesis, and was CONFIRMED by Andrew
+  2026-09-11 ~12:1xZ ("Recs approved") as his reserved L2 confirmation.
+- **The transcription omission, recorded rather than quietly fixed.** The staged copy of this PRD
+  carried a POINTER to the L2 endpoint artifact instead of the outcome cards, with a note saying the
+  block "is transcribed into this section when this file lands in the tree." The landing was
+  byte-for-byte, so the transcription never happened, and for roughly an hour the outcomes existed
+  only in a deliverable while the PRD that cites them held none -- `FWD_DEF_RE` measured **0
+  outcomes defined**. This is the same TWO-CARRIER shape that cost `NFRA_REPORT` a round the same
+  morning, committed again by the same seat hours after writing the correction. Found by
+  `2.0.0_SA_COO~ZZZ` running the L6 gate's own functions with a positive control, not by its author.
+  **The `ENDPOINT` section is the only carrier of the cards.**
+- **Stale count corrected in the same amendment.** The L5 bar read "Thirteen outcomes cannot be
+  closed by any build" while the section carries FOURTEEN `EXERCISED` outcomes; the reviewer caught
+  it and it now reads "Fourteen".
+
 ---
 
 ## 0. THE VERSION HAZARD -- BINDING ON EVERY READER OF THIS PRD
@@ -63,10 +90,6 @@ citing the brief cites `@19ce7d5b4d` explicitly** and reads from the working tre
 ---
 
 ## ENDPOINT (step 2, /endpoint --forward)
-
-**The fourteen outcomes are reproduced VERBATIM from the L2 endpoint @`3bc8f5f2c4` and are NOT
-re-authored here.** `FWD-1`..`FWD-12` derive from brief `O1`-`O12`; `FWD-13` and `FWD-14` were added
-at L2 and **accepted without reservation by `4.0.0_SA_CRO~Z`** (msg 21001) as its own gaps.
 
 ⛔ **`FWD-n` IDS ARE PERMANENT AND NEVER REUSED.** A new outcome takes the next unused number; a
 retired one leaves its number vacant forever. The round-N analysis and any addendum cite them back.
@@ -211,29 +234,15 @@ disputable, by rule, and carry no technical language.*
                     discussion, and follows one of them into its full page --
                     a decision about WHERE TO LOOK that they would otherwise
                     have made by gut or by scrolling a spreadsheet.
-         SOURCE     Andrew's frontend walkthrough (the Lead Panel), carried in
-                    4.0.0_SA_CRO's full-stack vision Part C and this seat's
-                    synthesis; CONFIRMED by Andrew 2026-09-11 ~12:1xZ
-                    ("Recs approved") -- his reserved L2 confirmation
+         SOURCE     Andrew's frontend walkthrough (the Lead Panel); his
+                    reserved L2 confirmation
 ```
 
-> ⛔ **TRANSCRIBED HERE 2026-09-10 ~19:1xZ, AND THE OMISSION IS RECORDED RATHER THAN QUIETLY
-> FIXED.** The staged copy of this PRD carried a POINTER to the L2 endpoint artifact instead of
-> these cards, with a note saying the block "is transcribed into this section when this file lands
-> in the tree." **The landing was byte-for-byte, so the transcription never happened**, and for
-> roughly an hour the fourteen outcomes existed only in a deliverable while the PRD that cites them
-> held none. `FWD_DEF_RE` measured **0 outcomes defined**. ⛔ **THIS IS THE SAME TWO-CARRIER SHAPE
-> THAT COST `NFRA_REPORT` A ROUND THIS MORNING, COMMITTED AGAIN BY THE SAME SEAT HOURS AFTER
-> WRITING THE CORRECTION.** Found by `2.0.0_SA_COO~ZZZ` running the L6 gate's own functions with a
-> positive control, not by its author. **This section is now the only carrier.**
+**BAR DISTRIBUTION: 14 of 15 are `EXERCISED`; only `FWD-9` is `APPLIED`.**
 
-**BAR DISTRIBUTION: 14 of 15 are `EXERCISED`; only `FWD-9` is `APPLIED`.** (`FWD-15` added at v0.4 on
-Andrew's 2026-09-11 confirmation; its bar is `EXERCISED` like the other thirteen.)
-
-⚠ **THIS IS THE MOST IMPORTANT SINGLE FACT FOR L5.** Thirteen outcomes cannot be closed by any build.
-**No cell may claim an `EXERCISED` outcome REALIZED on the strength of its own artifact** -- the
-sibling project on this fabric graded eight outcomes REALIZED today against an artifact that had
-never run once. **Grade the `DONE WHEN` state line, never the `ACCEPT` paragraph beside it.**
+⚠ **THIS IS THE MOST IMPORTANT SINGLE FACT FOR L5. Fourteen outcomes cannot be closed by any
+build.** **No cell may claim an `EXERCISED` outcome REALIZED on the strength of its own artifact.**
+**Grade the `DONE WHEN` state line, never the `ACCEPT` paragraph beside it.**
 
 ---
 
