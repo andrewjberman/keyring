@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.3",
+  "prd_version": "v0.4",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -22,7 +22,8 @@
     "FWD-11",
     "FWD-12",
     "FWD-13",
-    "FWD-14"
+    "FWD-14",
+    "FWD-15"
   ],
   "status": "RATIFIED"
 }
@@ -200,6 +201,20 @@ disputable, by rule, and carry no technical language.*
                     somebody is told.
          SOURCE     brief PART V ("an enumerated list with no owner lapses
                     silently ... the same failure that left two keys dead")
+
+  FWD-15 A PM can see which covered names are worth looking at right now,
+         without opening each one
+         DONE WHEN  EXERCISED -- a PM has actually opened the page, read the
+                    ranked list, and followed one name it surfaced
+         ACCEPT     Adam or Lauren opens the page cold, sees a short ranked
+                    list of names that are moving in price or spiking in
+                    discussion, and follows one of them into its full page --
+                    a decision about WHERE TO LOOK that they would otherwise
+                    have made by gut or by scrolling a spreadsheet.
+         SOURCE     Andrew's frontend walkthrough (the Lead Panel), carried in
+                    4.0.0_SA_CRO's full-stack vision Part C and this seat's
+                    synthesis; CONFIRMED by Andrew 2026-09-11 ~12:1xZ
+                    ("Recs approved") -- his reserved L2 confirmation
 ```
 
 > ⛔ **TRANSCRIBED HERE 2026-09-10 ~19:1xZ, AND THE OMISSION IS RECORDED RATHER THAN QUIETLY
@@ -212,7 +227,8 @@ disputable, by rule, and carry no technical language.*
 > WRITING THE CORRECTION.** Found by `2.0.0_SA_COO~ZZZ` running the L6 gate's own functions with a
 > positive control, not by its author. **This section is now the only carrier.**
 
-**BAR DISTRIBUTION: 13 of 14 are `EXERCISED`; only `FWD-9` is `APPLIED`.**
+**BAR DISTRIBUTION: 14 of 15 are `EXERCISED`; only `FWD-9` is `APPLIED`.** (`FWD-15` added at v0.4 on
+Andrew's 2026-09-11 confirmation; its bar is `EXERCISED` like the other thirteen.)
 
 ⚠ **THIS IS THE MOST IMPORTANT SINGLE FACT FOR L5.** Thirteen outcomes cannot be closed by any build.
 **No cell may claim an `EXERCISED` outcome REALIZED on the strength of its own artifact** -- the
@@ -477,6 +493,51 @@ cell that touches the vendor.
 
 ---
 
+### 3b. THE APPROVED SURFACE -- ANDREW-DIRECT 2026-09-11 ~12:1xZ ("Recs approved")
+
+Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_121xZ_OPEN_CALLS_ALL_FOUR_RECS_APPROVED.md`.
+
+**⛔ `C-DESIGN-SPEC-FIRST` IS LIFTED FOR THIS PROJECT.** Andrew approved the amended page shape: three
+tabs (Thesis / Peers / Coverage) beneath a persistent **Lead Panel**; Print as a header export action;
+the Model tab CUT with its figures rehomed into Thesis and the Security overlay. `.tsx` is authorized
+in the SURFACE round (a later issuance, after round 4 drains). `FWD-15` is his confirmed outcome.
+
+**`C-AMGT-ARTICLES-STORE`** -- per-ticker article content lands in a NEW DynamoDB table
+`opal-amgt-articles`, shaped like `opal-news-articles` (title/source/url/published_at/sentiment) plus
+`ticker`/`security_key` (via S12) and `platform`. GENUINELY SEPARATE from the general-market
+`opal-news-articles` (not that table with a filter) and from `opal-data-research` (which stays S1's
+model-block + S5's print-snapshot home). Serves S4 (`FWD-4`) + S13 (`FWD-11`). ⛔ S12 must resolve each
+platform's OWN identifier before dispatch (SA symbol-slug, Bloomberg `"TICKER US Equity"`, FT id).
+
+**`C-SERVER-SIDE-RANKING`** -- Trending/Breakout/Price/Chatter are computed SERVER-SIDE by daily jobs
+and written as pre-computed per-ticker rows into a SEPARATE metrics table `opal-amgt-security-metrics`
+(mirroring the proven `opal-news-articles` / `opal-news-trending-daily` split). The Lead Panel READS
+them and never re-derives a ranking at render time. Chatter axis = the committed chatter gate (30-day,
+0-100 normalized, TOP_N=10); Price axis = the new engine (S16).
+
+**`C-PRICE-RANKING-BOXSIDE`** -- the price axis reads Bloomberg historical/intraday and therefore runs
+in the BOX-SIDE puller shape (the ETF-daily-pull shape), NOT a Lambda calling Bloomberg. 30-day window,
+matching chatter (Andrew unified both to 30).
+
+**`C-HARVESTER-COMPUTE`** -- the four harvesters run on a NEW EC2 box in
+`infra/aws/terraform/amgt-resapp/`, following the ASTN_WSJFT SHAPE (stopped-between-runs, SSM-woken)
+but with AMGT_RESAPP's OWN IAM role and write access to `opal-amgt-articles` -- explicitly NOT the
+ASTN_WSJFT box. ONE shared box for all four. ⛔ Refresh must WAKE the stopped box (SSM /
+inf-jwt-trigger shape) or it silently no-ops. **Andrew-authorized 2026-09-11: the box + both tables,
+TABLES FIRST.**
+
+**`C-STARRED-PER-FIRM`** -- the starred watchlist is SHARED ACROSS THE FIRM (both PMs see the same
+starred names), keyed per-firm, not per-user. Andrew-ruled 2026-09-11; reversible to per-user on his
+word. ⛔ Starring is a PURE MARKER -- it triggers no refresh and queues no harvester; Refresh is its own
+explicit action.
+
+**`C-VENDOR-WORD-HARVESTERS` (TIME-SCOPED)** -- Andrew gave the per-use word for **Seeking Alpha, FT,
+Bloomberg and WSJ** for THIS project's harvesters, **effective when the harvester box is stood up and
+ready to run -- NOT before**. ⚠ NOT a blanket grant: `C-VENDOR-EGRESS` continues to bind every other
+vendor and every other use, and the standing "availability is not authorization" law is unchanged.
+
+---
+
 ## 4. SURFACE MANIFEST (step 4 -> step 5) -- one row per ENGINE
 
 | id | outcome | surface | claim | measured-by | verb | depends on | bound |
@@ -496,6 +557,7 @@ cell that touches the vendor.
 | S13 | `FWD-11` | THE SOCIAL FEED -- admitted by a stated rule | absent | F12 (1,763 datasets LISTED, none exercised); F13 (0 cashtag-native) | **measure, then build** | S11, S12 | ⛔ `C-LISTING-NOT-CAPABILITY`, `C-VENDOR-EGRESS` |
 | S14 | `FWD-12` | THE INPUT LEDGER -- per class: source, last run, outcome, re-run | absent | brief O12 | wire | S6 | `C-STAGE-PERSISTS` |
 | S15 | `FWD-14` | THE LIST REGISTER -- allowlist + social map, each owned, each with a rot signal | absent | PART V (both rot; an unowned list lapses silently) | build | S12 | `C-LIST-OWNER` |
+| S16 | `FWD-15` | THE LEAD PANEL + ITS RANKINGS -- universe discovery: Trending/Breakout x Price/Chatter, List/Chart, Security overlay, Starred | absent | Andrew's frontend walkthrough; CRO full-stack vision Part C; CONFIRMED 2026-09-11 | build | S4, S8, S12, S13 | `C-SERVER-SIDE-RANKING`, `C-PRICE-RANKING-BOXSIDE`, `C-STARRED-PER-FIRM`, `C-AMGT-ARTICLES-STORE` |
 
 ⭐ **S12 IS THE ROOT AND IT IS NOT IN THE BRIEF'S OWN SURFACE LIST.** Four surfaces depend on it
 (S4, S8, S13, S15) and it is the direct remedy for the one defect this project has actually measured
