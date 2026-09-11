@@ -152,10 +152,19 @@ instrument is named so the number is not quoted as measured.
   gitlink PREDATES this drain. The worker left it uncommitted on purpose and routed it to the
   integrator. PORTAL FROZEN stands: COMMIT YES / PROMOTE NO until Andrew names it. Naming it so it is
   not mistaken for drain residue.
-- **`comp-iam` has NOT been re-run** and it must be. At the round-6 cut the preflight recorded, in its
-  own words, that `/api/scoped/amgt`'s adapters "do not exist until this cell writes them, so their IAM
-  cannot be verdicted here. Re-run after they land. That is a real gap, not a formality." **They have
-  now landed.** Owner: this seat, next tick. It is recorded here so it survives a context loss.
+- **`comp-iam` HAS NOW BEEN RE-RUN, AND THE RE-RUN CANNOT DISCHARGE THE GAP -- see `Z-S27`
+  @`ef99ea7fa9`, filed after this packet was first cut.** Every figure came back byte-for-byte
+  unchanged (835 calls / 96 mapped roles / 12 missing / 291 deny-present / 2 resource-mismatch, the
+  same two rows, neither on this surface). ⛔ **THAT IS NOT A CLEAN RE-CHECK, IT IS PROOF THE
+  INSTRUMENT NEVER SAW THE NEW CODE.** Measured with a positive control over the tool's own 992 lines:
+  lines naming `lib/` = 0, `scoped_amgt` = 0, POSITIVE CONTROL `infra/aws/lambda/` = 37; and comp-iam
+  states its own scope as "3 trees (472 .tf files): infra/aws/terraform, infra/aws/multi-account/terraform,
+  infra/aws/ec2" -- `lib/` is in none of them. `comp-iam` verdicts CALLS against ROLES and a library has
+  no role, so `lib/research/api/scoped_amgt.py:192`'s `boto3.resource("dynamodb")` is OUT-OF-CORPUS,
+  which is worse than the 266 calls it honestly discloses as blind. **This is `Z-W10-S3` from a second
+  plane: no mount -> no role -> no IAM verdict. The two resolve together or not at all**, so the real
+  condition is the mount, not another run. `Z-S27` carries a falsifiable disarm condition and
+  explicitly refuses "same totals" as a discharge.
 - **No criterion of a terminal order was amended.** `AC3`'s defect is carried by `Z-W10-S1`, not by an
   edit -- a record corrected in place destroys the evidence it was ever wrong, and the L6 gate never
   grades a modification anyway (`to-pipeline-gate.py:809-813`, "this gate never refuses an existing TO").
