@@ -699,6 +699,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC3 <expect>: \"network/vendor-call files 0\" with a non-zero \"py files\" denominator -- NEGATIVE: the predicate resolves no handle and calls no platform or vendor; it is a pure rule over caller-supplied attributes.",
     "world_is": "The corrected predicate (impostor.py) itself adds no network/vendor call -- but AC3's invocation, as written, sweeps every .py file under lib/research/lists/ (rglob), not just this cell's own module, and its regex now includes `socket\\.` (a token round-2's otherwise-identical AC3 did not carry). That nets lib/research/lists/rot.py's `socket.getaddrinfo` DNS-only lookup, a module this cell neither owns nor is asked to touch, already reviewed as G-24/C-VENDOR-EGRESS-compliant by its own docstring in an earlier round. Measured output: 1 hit, not 0 -- AC3 as literally invoked does NOT match its stated expect. This worker does not modify rot.py (out of WHAT TO PRODUCE, a different landed cell's artifact -- touching it would be repairing an out-of-scope module by an un-named route) and does not narrow or reroute the invocation; AC3 is recorded FAIL-by-output in this worker's proof_of_spec instance, and the task order's <status> is NOT flipped to complete on that basis.",
     "notes": "Not this worker's to disarm: narrowing AC3's sweep to the cell's own new/changed files, or excluding rot.py by name, or accepting rot.py's DNS-only socket call as compliant and re-running the criterion, are all criterion-authoring calls outside an L7 worker's lane. Routed to 3.0.0_SA_CVO~Z for the round-2b L8/L9 read alongside AC4's judgment grade."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W1-S6",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~1",
+    "surfaced_at": "2026-09-11T00:00Z",
+    "one_line": "AC1's own bar ('the existing consumer/unresolved tests still pass') was jointly unsatisfiable with AC1's own mandate (stop substituting price_date for fig.vintage): AMGT-rb-2's pre-existing test_consumer_wiring.py asserted the EXACT old behaviour C-S20/rc-20 names as the defect -- fixed in-session by updating that one stale assertion (own worktree, own <paths>), never by leaving it broken or by widening scope.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Pre-edit run: `python -m pytest integrations/bloomberg/research/tests -q` -> `1 failed, 17 passed`, the single failure in `test_wired_consumer_load_model_block_returns_fiscal_period_price_not_calendar_year` (test_consumer_wiring.py, landed by this same worker slot under AMGT-rb-2): `assert fig['vintage'] == '2025-03-31'` failed with `AssertionError: ... got '2026-09-10T23:20:19Z'` -- i.e. once rc-20's fix stopped overwriting `fig.vintage` with the corrected price's observation date, this pre-existing assertion (which required exactly that overwrite) could no longer pass by construction.",
+        "AMGT-rc-20's own task order, WHAT TO PRODUCE (a): 'carry OBSERVATION DATE and DERIVATION/LANDING IDENTITY as DISTINCT fields... never one substituted for the other' and the coordinator's own instruction text, verbatim: 'apply_corrected_price_overlay must stop substituting price_date for fig.vintage' -- the OLD test's assertion is a direct restatement of the C-S20 defect the cell exists to remove.",
+        "Post-edit run: `python -m pytest integrations/bloomberg/research/tests -q 2>&1 | tail -1` -> `22 passed` (18 pre-existing incl. the corrected assertion + 4 new AC1 vintage/derivation-identity tests), 0 failed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1's <expect>: 'the existing consumer/unresolved tests still pass PLUS a NEW test...' -- read as every pre-existing assertion, byte-for-byte, staying green.",
+    "world_is": "One pre-existing assertion (test_consumer_wiring.py's `fig['vintage'] == '2025-03-31'`) was itself an encoding of the exact defect this cell's WHAT TO PRODUCE and BOUNDS explicitly mandate removing (OBSERVATION DATE != VINTAGE, never collapsed) -- so 'still pass unchanged' and 'implement the mandated fix' were jointly unsatisfiable for that one line. This worker updated ONLY that stale assertion (test_consumer_wiring.py sits inside this task order's own <paths>, `integrations/bloomberg/research/`, and was originally authored by this same worker slot under AMGT-rb-2) to check the NEW, correct contract -- vintage stays the figure's own original vintage, unchanged, and the corrected observation date now lives in its own `observation_date` field, which AMGT-rb-2's test actually needed captured correctly, not the specific field it used to land in. No other assertion in that file, and no other file outside this cell's <paths>, was touched.",
+    "notes": "Recorded as a surprise rather than silently folded into the AC1 diff because it touches a PRIOR cell's (AMGT-rb-2) committed test, not new territory this cell's WHAT TO PRODUCE named -- the update itself is judged correct here (it makes the suite assert the CURRENT, spec-mandated contract rather than the removed one), but the call on whether a prior cell's regression test may ever be edited by a later cell in the same chain is left for L8/L9 to weigh in on."
   }
 ]
 ```
