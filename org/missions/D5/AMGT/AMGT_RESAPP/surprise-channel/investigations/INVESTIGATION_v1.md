@@ -331,6 +331,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "spec_asserts": "The cell's mechanism for AC1 (carried from the reference, section 2b): 'the fetch MUST egress through the residential proxy ... The proxy is GET-capable today,' i.e. that egressing through astn/brightdata/residential-proxy with the parked jar produces vendor HTTP responses this ETL can classify and land.",
    "world_is": "The proxy zone is currently terminating and re-signing HTTPS with its own 'Bright Data Proxy Root CA' rather than passing the origin's real certificate through, and does not include that root/intermediate in the handshake -- so no standard TLS client (tested: curl_cffi/certifi AND native Windows Schannel) can complete verification without either disabling certificate verification (a security-posture change this cell's BOUNDS do not authorize) or being supplied that specific root CA out of band, which this worker does not have and did not seek from Bright Data (no vendor API/dashboard call made). verify stayed at its safe default for every real attempt in this run, so no part of the parked session's 65-cookie jar was ever transmitted to the intercepting party -- the TLS handshake aborted before any HTTP request left the client. AC1 reads 'raw objects 0 across 3 keys; symbol+report present for 0 of 3; sa_ids MEASURED 0' -- a genuine, reproduced, non-rescued finding, recorded rather than routed around.",
    "notes": "Not this worker's <paths>/BOUNDS to fix: resolving it means either obtaining Bright Data's specific proxy root CA (an out-of-band vendor artifact, e.g. from their account dashboard or support) and pinning it as a scoped trust anchor for this proxy only, or toggling off whatever zone-level SSL-interception feature is enabled, or an explicit Andrew-authorized decision to disable verification for this specific proxy -- all security-posture calls outside this cell's granted authority. The rest of the module is built and exercised as far as the transport layer allows: AC2 (4 fixture tests), AC3 (referer/proxy/method/pacing census), AC4 (3 tickers, 1 run), AC5 and AC6 (structural bans) all pass against this exact run's real output; only AC1 (the live landing) is blocked by this transport-layer finding."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W3-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~3",
+    "surfaced_at": "2026-09-11T00:19Z",
+    "one_line": "AMGT-s-4's cell text names which securities the reader should key items by only implicitly (via AMGT-s-12's identity layer); this worker reused AMGT-s-b4's own run_manifest.json ticker selection (BABA_US, BA_US, COST_US) rather than deriving an independent set.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT-s-4 cell text (a): 'read(security_key, sources) -> coverage_items.json' -- takes a security_key as a parameter but the order does not name which security_key(s) to run the reader over for AC2's 'at least 1 security'",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~9/run_manifest.json's own selection_rule: 'the first three entries whose bloomberg_ticker.status == MEASURED, whose bloomberg_ticker.value ends with \" US\", and whose value is not \"AAPL US\"' -- read directly and reused verbatim (BABA_US, BA_US, COST_US) by lib/research/coverage/run_reader.py",
+        "python -m lib.research.coverage.run_reader -> 'COVERAGE RUN: 3 securities; 4 items attached; sa_raw_keys_found 0; identity_dropped {BABA_US: 1, BA_US: 1, COST_US: 1}'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-s-4 (a): the reader is a function of security_key and sources; the order does not name which securities AC2's run must cover.",
+    "world_is": "This worker reused a SIBLING cell's (AMGT-s-b4) selection artifact instead of deriving one independently from universe.json -- a reasonable, grounded, non-arbitrary choice (identity-resolved, non-placeholder, consistent with the store keys AMGT-s-b4 would land SA raw JSON under) but a choice this order left open, not one it named. Non-blocking: AC2/AC3/AC7 all close cleanly on this selection; a different, equally valid selection would also have closed them.",
+    "notes": "Recorded for the CVO/next reader: if AMGT-s-b4's run_manifest.json selection ever changes (a re-run with different tickers), this cell's run_reader.py silently follows it (it is read live, not pinned) -- worth a read before assuming these three names are stable across rounds."
   }
 ]
 ```
