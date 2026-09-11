@@ -199,15 +199,15 @@ Runtime limitation: the canonical surprise watcher was exercised in `once` mode;
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v2"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
+      "at": "2026-09-11T15:37:52Z"
     }
   }
 ]

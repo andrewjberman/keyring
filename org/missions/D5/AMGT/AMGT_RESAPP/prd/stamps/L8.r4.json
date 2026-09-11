@@ -1,0 +1,10 @@
+{
+ "note": "30 investigation rows read; W1-S6 is the one newly undispositioned item. All 28 task orders terminal with 28 VALID proof instances; source unchanged from drain 79ec889666. Independent evidence AMGT_RESAPP_ROUND4_CVO_EVIDENCE_20260911_Z.json.",
+ "prd_pin": "c823bae75856",
+ "prd_version": "v0.4",
+ "project": "AMGT_RESAPP",
+ "round": 4,
+ "signed_by": "3.0.0_SA_CVO~Z",
+ "stage": "L8",
+ "utc": "2026-09-11T15:32Z"
+}

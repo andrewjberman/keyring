@@ -1,0 +1,10 @@
+{
+ "note": "ADJUDICATION_v4: rc-19 AC4 PASS and rc-20 AC4 PASS; W1-S6 dismissed with reason by C-S21; all30 investigations dispositioned. C-S16 C-S19 C-S20 verified closed for tested consumer paths.",
+ "prd_pin": "c823bae75856",
+ "prd_version": "v0.4",
+ "project": "AMGT_RESAPP",
+ "round": 4,
+ "signed_by": "3.0.0_SA_CVO~Z",
+ "stage": "L9",
+ "utc": "2026-09-11T15:38Z"
+}

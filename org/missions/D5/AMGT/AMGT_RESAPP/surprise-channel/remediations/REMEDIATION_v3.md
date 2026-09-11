@@ -56,16 +56,16 @@ Runtime: canonical surprise-watch once completed rc0 and emitted the 29-row bann
     "owner": "2.0.0_SA_COO~ZZZ to route to the consumer owner",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ to route to the consumer owner",
       "round": "v3"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ to route to the consumer owner",
-      "at": null
+      "at": "2026-09-11T15:37:52Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-Z-C-S20",
@@ -83,16 +83,16 @@ Runtime: canonical surprise-watch once completed rc0 and emitted the 29-row bann
     "owner": "2.0.0_SA_COO~ZZZ to route to the consumer owner",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ to route to the consumer owner",
       "round": "v3"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ to route to the consumer owner",
-      "at": null
+      "at": "2026-09-11T15:37:52Z"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
