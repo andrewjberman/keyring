@@ -1709,6 +1709,100 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Issuer amendment @812bbec0e9: every handler this cell ships is wrapped by _authz.guard(); IB-s-3 S3-AC2: whether the wrapper can be bypassed by a handler that forgets to use it -- and how a reader would detect that.",
     "world_is": "The detector IB-s-3 shipped found what it was built to find: three handlers written before the route table existed were mapped to routes after the fact and never revisited. Measured, not repaired, at the last cell of the round.",
     "notes": "The drain is closed: every worktree removed, every branch merged, HEAD f8860a4a4b. The drain-end read to the CTO follows this commit; the slug is the CVO's."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S13",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T12:30Z",
+    "one_line": "THE TWO SIDES DO NOT AGREE ON WHAT AN OPERATION IS: the consumer publishes 11 flat slugs, the producer publishes 12 nested routes; 11 of 11 consumer paths are ROUTE_UNKNOWN under v1, 2 consumer operations have no producer route and 3 producer routes have no consumer operation.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/routes.json @7478fdf144 -- 12 route_keys, all of the form /api/scoped/investor-reporting/<noun>/<sub-noun-or-{param}>",
+        "portal/src/pages/InvestorReporting/fixtures/smoke/default.json at the PRIMARY checkout (C:/Users/AndrewBerman/Desktop/ajb_workspace/portal) -- 11 keys, all of the form /api/scoped/investor-reporting/<slug>",
+        "infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py @7478fdf144 -- each paired case dispatches the CONSUMER's own flat-slug path through the real dispatcher and asserts ROUTE_UNKNOWN; 9 of 9 routed operations assert it and pass",
+        "the two consumer operations with NO producer route: submit-correction, export-preview (OPERATIONS table, route None)",
+        "the three producer routes with NO consumer operation: GET .../status, GET .../status/{jobId}, GET .../export/{exportId}/download"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-1, criterion RT1-AC1 (b): 'For each operation the consumer's request (from the counterpart's fixture, checkout printed) runs through the real handler entry point' -- which presupposes that each of the consumer's 11 operations names a route this contract serves.",
+    "world_is": "The operation SETS differ in both directions and the path GRAMMARS differ everywhere. The consumer addresses a flat slug per operation; v1 addresses nested nouns with path parameters (the shape the 14 pre-existing scoped routes on 7k3ed8px20 already use). No consumer path routes under v1. THE PRODUCER DEFINES: v1 is published as-is and this row is the notice to the counterpart's round-2 cell, which regenerates against this artifact. Nothing in v1 was renamed to match the consumer.",
+    "notes": "Not a defect of either side taken alone -- each is internally consistent and each passed its own suite for two rounds. It is only visible at the seam, which is what this cell was cut to build. The two orphaned consumer operations are the sharper half: submit-correction and export-preview are UI affordances with no backend route in the PRD's route table at all, so they are not a renaming question."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S14",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T12:30Z",
+    "one_line": "FIELD NAMING IS TOTALLY DISJOINT ACROSS THE SEAM: 194 of the producer's 293 published property names are snake_case and 0 are camelCase; 139 of the consumer's 220 fixture keys are camelCase and 0 are snake_case; 55 of the 194 match only after camelizing. Meaning is not negotiated by casing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "census over docs/contracts/investor-reporting/v1/*.schema.json @7478fdf144 (every `properties` object at every depth, `contract_version` excluded): 293 distinct names, 194 containing '_', 0 matching [a-z][A-Z]",
+        "census over portal/src/pages/InvestorReporting/fixtures/smoke/default.json at the primary checkout (every key at every depth): 220 distinct keys, 139 matching [a-z][A-Z], 0 containing '_'",
+        "EXACT-NAME overlap: 44 of 293 -- and all 44 are single-word names (access, amount, basis, date, kind, ...) where the two conventions cannot differ",
+        "CASING-ONLY match: 55 of 194 snake names equal a consumer key after camelizing -- publicReasonCode/public_reason_code, businessAsOf/business_as_of, scopeFingerprint/scope_fingerprint, directoryRevision/directory_revision, entitlementRevision/entitlement_revision among them"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-1 bound: 'The producer defines, the consumer conforms. No field's meaning, unit or date changes to match the frontend; where the counterpart's fixture disagrees with II.3, the test FAILS for that operation and the disagreement is a row naming the field.'",
+    "world_is": "The disagreement is not per-field, it is TOTAL and MECHANICAL: the two sides use different naming conventions and the intersection is exactly the set of names too short to have one. So 'the field' this row names is every multi-word field: 55 of 194 are the same concept under two spellings, and the remaining 139 producer names have no consumer counterpart at all. NO SCHEMA WAS EDITED. v1 publishes the PRD's II.3 spellings unchanged.",
+    "notes": "The remedy is the counterpart's, and it is mechanical rather than semantic: a generated client that camelizes at the wire boundary satisfies both sides without either meaning moving. This row exists so that choice is made deliberately and recorded, rather than being absorbed by hand-written types that quietly re-define a field while renaming it. The 139-name gap is the reason it must not be absorbed by hand."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S15",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T12:30Z",
+    "one_line": "REACH LIMIT, NAMED NOT HIDDEN: ops/status.py builds its own boto3 S3 client with no fixture path, so the analysis-report operation reaches AWS the moment the real handler is called in process; the dispatcher and handler are exercised, the RESPONSE cannot be graded without the deployed environment.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ops/status.py @7478fdf144 -- lambda_handler constructs the directory loader itself; there is no event key that supplies a recorded artifact, unlike directory/handler.py's `directory_fixture`",
+        "pytest run @7478fdf144: test_paired_consumer_request_through_the_real_dispatcher[analysis-report] XFAIL, botocore.errorfactory.NoSuchKey raised from inside the real handler -- i.e. the dispatcher ADMITTED the request and the handler RAN",
+        "the xfail reason names this row id, so the outcome is enumerated in the suite's own output rather than absorbed as a pass"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-1 RT1-AC1 (b): the paired test runs the request 'through the real handler entry point ... in-process', for each of the 11 operations.",
+    "world_is": "In-process reach is not uniform across the six handlers. Five accept a recorded artifact on the event and take a pure in-process path; ops/status.py does not, so 'in-process' and 'no AWS call' cannot both hold for the operations it serves. Recorded as its own outcome. IB-rtb-1's deployed replay is where this operation's response is graded.",
+    "notes": "Deliberately NOT worked around. Patching a client into the real handler from the test would make the subject a copy the harness controls, which bound 12 forbids and round-1 rows W1-S10/S24 were filed about."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S16",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T12:30Z",
+    "one_line": "THE PUBLISHED SCHEMAS ARE DOCUMENT CONTRACTS, NOT RESPONSE CONTRACTS: 0 of the 7 operations that reach a response return anything validating against its route's schema in ANY document position; the six handlers emit three different envelopes; and 2 of the 11 schemas can never be an HTTP response at all. RT1-AC1 (b) cannot read 11 of 11 and the remedy is outside this order's <paths>.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pytest @7478fdf144, test_paired_consumer_request_through_the_real_dispatcher: 7 failed, 4 xfailed, 0 passed -- every failure is the assertion 'validates against <Schema> in NO document position', over three positions tried (whole response, response.result, json(response.body))",
+        "THREE ENVELOPES, measured: directory/handler.py returns {ok, op, result, reason}; performance, narrative and export handler.py return the API-Gateway {statusCode, body}; ycharts/generate/job.py returns {ok, live_call, reason, measured_overview_seconds, budget_seconds, note}",
+        "TWO SCHEMAS ARE NOT RESPONSES BY CONSTRUCTION: AnalysisRequest is the queue message the intake produces (PRD CONTRACTS row, 8 required-meaning items, none of them a response field) and FirmDestinationPolicy is firm configuration; neither is ever an HTTP response body, so no handler can be wrong about them",
+        "every schema is additionalProperties:false, so an envelope around a correct document is itself a validation failure -- the failures above are envelope mismatches, not field disagreements",
+        "TO-IB-rt-1 <paths> @7478fdf144 grants docs/contracts/, _contracts/, _authz/, terraform/investor-reporting/api/ and PATH_MANIFEST.json -- it does NOT grant directory/, performance/, narrative/, export/, ops/ or ycharts/, which is where a response contract would have to be implemented"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-1 RT1-AC1 (b), verbatim: 'For each operation the consumer's request ... runs through the real handler entry point and the response validates against the producer schema; print 11 of 11'. The decomposition's s.2 note says the same: 'asserting the response validates against the producer schema'.",
+    "world_is": "There is no mapping from a route to a response schema at this vintage, and the eleven published schemas were never response schemas: they are the PRD CONTRACTS table's DOCUMENT contracts (an AnalysisRequest queue message, a FirmDestinationPolicy configuration, a DirectoryEntry artifact). The six handlers return three ad-hoc envelopes that no published schema describes. The paired test therefore measures 0 of 7 rather than 11 of 11, and it measures it with the assertion the criterion names rather than skipping the half it cannot satisfy.",
+    "notes": "WHY THIS IS BLOCKING AND NOT AN OBSERVATION: it is the deciding output of RT1-AC1, so the criterion reads FAIL and the order stays open; the worker cannot grade around it and does not. WHY IT IS ARMED: v1 is published and declared immutable at the complete flip, and the counterpart's round-2 cell regenerates against it -- if the response envelope is settled LATER it will settle against an immutable v1 that never described it, which is a v2 on the first serve. THE WORKER JUDGES FORM, NOT SIGNIFICANCE: three shapes the issuer may choose between are stated without preference -- (i) publish a response envelope contract in v1 and require the handlers to emit it (a handler-lane cell, IB-rt-2 is the candidate: it already opens all six handlers to add guard()); (ii) rule that the schemas are document contracts only and re-cut RT1-AC1 (b) to grade the documents the handlers WRITE rather than the responses they RETURN; (iii) defer the response grading to IB-rtb-1's deployed replay. NO WIDENING WAS TAKEN: no handler was edited and no schema was loosened to make an assertion pass."
   }
 ]
 ```
