@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>staged -- assigned to slot ~2; becomes pending when the COO hands it over after IB-s-3 is terminal and merged.</status>
+<status>complete -- S4-AC1 PASS-by-output (IBS4-FRESHNESS-DRIVEN; 9 of 10 arms PASS with arm (h) BLOCKED-BY-W1-S8 exactly as the face's own rule admits, 5 of 5 status values pairwise distinct on a controlled clock in 0.659 s, the schedule ENABLED and the root converged) and S4-AC2 PASS-by-output (No changes.); S4-AC3 RECORDED as judgment for 3.0.0_SA_CVO at L9, including what the one-day cadence measurement CANNOT support and the scheduler outage this system is blind to by design. Instance VALID rc=0 (11 artifact rows, 1 of 1 surprise id resolves, alignment 1/1 cell). Deploy: 7 added / 0 changed / 0 destroyed on the first apply -- IB-s-1's and IB-s-12's resources in the same root were not touched; ledger CLOSED with 5 of 5 legs, the OPEN sentinel committed before the act.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.4 @62301f71e0 | **Decomp cell:** `IB-s-4` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, s.1 + s.2) | **outcome_ref:** FWD-7 (own) | **PRD candidate:** B4
 

@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 44 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (42 ours + 39 theirs, 37 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 47 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (46 ours + 41 theirs, 40 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -290,6 +290,53 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Decomposition v0.1.1 s.8 bound 1: NO LIVE VENDOR CALL is authorized by this document; a live arm is an express qualification read by the CTO at L10 on Andrew's per-use word. IB-s-9 L5 note (v0.4): a Lambda dispatching to the runner host over SSM when live.",
     "world_is": "Andrew fixed the mechanism as the browserless Lambda replay of a fenced session; the v0.4 SSM-dispatch primary path is superseded and IB-s-8's runner host is the wrong seat for it. The face now reads the Lambda replay as the primary path on the replay transport; nothing live is run in this round.",
     "notes": "Andrew's word reached this lane as a mechanism constraint through the CTO, not as a per-use live-call authorization; it is relayed at exactly that scope (CLAUDE.md s.2: never convert Andrew's word to one agent into a gate or a widening on another)."
+  },
+  {
+    "id": "IRPT_BCKEND-S13",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T03:38:33Z",
+    "one_line": "DISARM of IRPT_BCKEND-W3-S5 (ARMED; the worker disarmed it for its own cell and routed the fallback's meaning to the issuer). The issuer's (amend) arm of 812bbec0e9 named `routes.json` as the guard census's fallback for a cell that ships no handler, and that file is IB-s-15's deliverable (its face: route keys enumerated in routes.json so IB-sb-3 reads its denominator from a file) -- it does not exist before IB-s-15 lands, so for IB-s-7 the fallback was unsatisfiable and a naive reading would have printed a vacuous 0 of 0 as a pass. The worker's repair is adopted verbatim as the issuer's clarification on the six un-handed faces (IB-s-9, 10, 14, 15, 16, sb-3): the census is printed AS VACUOUS and the arm proves the CENSOR through two controls (an unguarded handler censused 1 of 1; the same handler wrapped 0 of 1); IB-s-15 and IB-sb-3 read the real file. Also carried: W3-S6 -- the face's and the PRD row's `needs-correction` is the contract's closed-enum `NEEDS_CORRECTION`; the contract's spelling is the one emitted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (this row IS the disarm act; a cut defect of the issuer's own amendment, corrected on every face it can still reach)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W3-S5, IRPT_BCKEND-W3-S6 (this HEAD)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-15.scoped-routes-opal-principal-and-the-cloudfront-behavior.md THE CELL -- 'Route keys ... enumerated in routes.json so the replay battery (IB-sb-3) reads its denominator from a file'",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/battery_ib_s_7.result.md (this HEAD) -- the vacuous census printed as such and the two controls",
+        "the six faces (this commit) -- one sentence appended to the (amend) arm; every <status> still staged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer (amend) arm @812bbec0e9: 'Where this cell ships no handler, the same census runs over routes.json at the replay.' Memory: a gate called with an EMPTY input set returns a vacuous pass that reads as clean.",
+    "world_is": "The named fallback object is a future artifact of another cell; for every handler-less cell handed before IB-s-15 the arm's only honest reading is the censor's own controls. The amendment named the right hazard and the wrong object.",
+    "notes": "Adopted the worker's repair rather than inventing a second one; the faces already handed (IB-s-4 on ~2) carry the old sentence and are re-graded by the issuer at their drain under this reading."
+  },
+  {
+    "id": "IRPT_BCKEND-S14",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T04:05:41Z",
+    "one_line": "PRD v0.10 @3624e60def (1.0.0_SA_CTO 95780, 04:03Z) landed MINUTES AFTER IB-s-9 was handed to slot ~3 at 1f795d1f71: all three YCharts recipes proven live in one Lambda by the CRO on Andrew's word (VI.6 @72acd16e66), and B9 now BUILDS ON docs/research/investor_reporting_ycharts_variants_20260911/{recipe_contract.py,variant_worker.py,UI_CONTRACT.md,manifest.example.json} -- recipe selected from the comparison COUNT (0 Overview / 1 Comparison / 2-5 Multi), two wire shapes, one handler, duplicate re-delivery without a vendor call, input/account controls before vendor access, WAF refresh and unknown-mutation reconciliation the coordinator's. The face on the worker's branch cannot be amended (its grant is read from ITS HEAD), so the issuer sent the worker ONE supplement by the harness resume channel naming the packet as the reuse source to read FIRST and stating that the rectangle, criteria, paths and the no-live-call bound are unchanged; this row is the record of that supplement so the change is not only in a message. Carried to round 2, not amended in: B2's Generate resolver (server-only `resolved` half of the job envelope; IB-s-2 is complete), the AnalysisRequest browser-request half (IB-s-18's contracts are complete), and the v0.10 NOT-yet-proven list (public-ETF / mixed comparisons, the five-comparison maximum, percent uploads, real tenant entitlement, autonomous recovery, publication fencing).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (supplement sent same turn; the round-2 items are the CTO's L10 analysis after CRO/CVO re-sign v0.10)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T040336Z_1.0.0_SA_CTO_INFORMATION__IRPT_BCKEND_PRD_v0.10__3624.md (msg 95780)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-9.the-ycharts-generation-chain-as-an-opal-async-job.md @1f795d1f71 -- handed 03:4xZ; the v0.9 amendment already names the transport packet",
+        "docs/research/investor_reporting_ycharts_variants_20260911/ (HEAD) -- the packet the supplement names as read-only reuse"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Spine v3 L7: the TO's WORKER FACE is the worker's whole context; a worker cannot be messaged. CLAUDE.md s.2: a broker message is never the carrier of an off-spec fact.",
+    "world_is": "The issuer used the same harness resume channel that carries every hand-off to send one bounded supplement to a worker mid-order, because the PRD delta names a reuse source the cell would otherwise rebuild; the record of it is this row, and the worker's own report will say what it read.",
+    "notes": "Stated as a deviation so the CVO can grade it at L8: the alternative (let the cell build on v0.9's packet alone and recut in round 2) was judged the more expensive correct path; the supplement adds a reuse source and changes no criterion."
   },
   {
     "id": "IRPT_BCKEND-W1-S1",
@@ -718,6 +765,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "The second-order lesson is recorded because it cost a green: this cell's own unit test for the same property checked out.census ONLY and PASSED while the value sat in out.reason, one field over -- a verifier scoped narrower than the object it protects. The battery, which censused the WHOLE envelope, is what caught it. The test now asserts over the whole envelope and the audit trail. _keys itself is NOT edited (not in this order's <paths>); the estate-wide remedy -- a sanitised message, or a structured exception carrying the component NAME and a reason CLASS with the value in a developer-only attribute -- belongs to IB-s-17's owner."
   },
   {
+    "id": "IRPT_BCKEND-W2-S11",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T03:55:59Z",
+    "one_line": "A THIRD ID SPELLING, AND IT MAKES ROW W1-S7 LOOK WORSE THAN IT IS. The holdings snapshot NAMESPACES its account ids -- scope.account_ids reads `49f:acct:acc_e57c30bb3e2ba80252fa0bd4` -- while the directory carries the bare `acc_...` tail that directory_runner.opaque_id emits. A consumer joining the two artifacts on the id AS WRITTEN gets 0 of N for ALL THREE firms and would conclude the directory and the holdings population share no id space anywhere. That is NOT what W1-S7 says and it is not true: after stripping the `<firm>:acct:` prefix, 49financial resolves 5,856 of 5,873 against a directory refreshed in the same run, while inflection stays 0 of 790 and cottonwood 0 of 946 -- which is exactly the W1-S7 shape. So there are TWO different problems wearing one symptom: a PREFIX difference that affects every firm and is cosmetic, and a RAW-KEY difference that affects INF and COT only and is real. This cell measured it because its arm (i) carried a positive control: 0 of 3 firms resolving non-zero is a broken instrument, not a finding, since W1-S7 records 49financial resolving 7,431 of 7,453. The first run of the arm DID read 0 of 3 and the control is what caught it. RESIDUAL, stated: 17 of 5,873 49F holdings ids do not resolve even after normalisation (0.3 percent), unexplained by this cell.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-bd/investor-reporting/qa/holdings/2026-09-11/snapshot.json scope.account_ids -- read live by this cell: 5873 ids, sample 49f:acct:acc_0010de3a921e3e1fbb55bd28",
+        "data/assets/scripts/gold/investor_reporting/directory_runner.py:367 @ b873f64de3 -- account_ids = [opaque_id(account, firm_id, a[account_number]) ...]; the directory carries the bare opaque tail with no namespace prefix",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_s_4.py arm (i) (this commit) -- first run 49financial 0 of 5873; after prefix normalisation 5856 of 5873, inflection 0 of 790, cottonwood 0 of 946, all against directories rebuilt in the same run",
+        "row IRPT_BCKEND-W1-S7 (issuer amendment carried on this face) -- 7,431 of 7,453 for 49financial, 0 of 790 INF, 0 of 946 COT, measured at IB-s-12: the same shape from a different instrument on a different snapshot"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "Arm (i), issuer amendment: print per firm how many of the latest holdings snapshot account ids resolve against the refreshed directory (N of M); and W1-S7: the directory opaque account ids for INF and COT do not resolve against the holdings join keys.",
+    "world_is": "They do not resolve for a SECOND reason as well, and that reason applies to all three firms: the two artifacts spell the same id differently (namespaced vs bare). Measured naively the gap reads 3 of 3 firms; measured correctly it is 2 of 3, and the 49F arm is the control that tells them apart.",
+    "notes": "ARMED because the two causes are indistinguishable in the SYMPTOM and the wrong one is the cheaper conclusion: a reader who sees 0 of N everywhere will look for a broken id space instead of a missing prefix, and a reader who fixes only the prefix will believe INF and COT are cured. NO JOIN WAS EDITED here -- the spec is frozen and whether one id space is owed is the CTO's L10 read. The disarm act is a decision about which spelling is canonical between the two artifacts, alongside the same question W2-S9 raises for the FIRM id: this estate now has THREE id spellings in play (registry vs opaque firm, namespaced vs bare account) and each was found only where two cells JOIN."
+  },
+  {
     "id": "IRPT_BCKEND-W3-S1",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
@@ -1057,53 +1128,6 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "CLAUDE.md Git section: AWS via the `.tools/aws` shim (+`aws.cmd`, both or neither); never bare MSYS_NO_PATHCONV=1 aws.",
     "world_is": "The two faces of the shim are not interchangeable by caller. From bash either works; from a Windows Python only the .cmd does, and the bash one fails with an error that points away from the cause.",
     "notes": "Recorded because it costs a cycle every time. Same family as the existing memory note that Python spawning an MSYS binary must go through .tools/msys_argv_guard.py -- this is the AWS-shim instance of it."
-  },
-  {
-    "id": "IRPT_BCKEND-S13",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T03:38:33Z",
-    "one_line": "DISARM of IRPT_BCKEND-W3-S5 (ARMED; the worker disarmed it for its own cell and routed the fallback's meaning to the issuer). The issuer's (amend) arm of 812bbec0e9 named `routes.json` as the guard census's fallback for a cell that ships no handler, and that file is IB-s-15's deliverable (its face: route keys enumerated in routes.json so IB-sb-3 reads its denominator from a file) -- it does not exist before IB-s-15 lands, so for IB-s-7 the fallback was unsatisfiable and a naive reading would have printed a vacuous 0 of 0 as a pass. The worker's repair is adopted verbatim as the issuer's clarification on the six un-handed faces (IB-s-9, 10, 14, 15, 16, sb-3): the census is printed AS VACUOUS and the arm proves the CENSOR through two controls (an unguarded handler censused 1 of 1; the same handler wrapped 0 of 1); IB-s-15 and IB-sb-3 read the real file. Also carried: W3-S6 -- the face's and the PRD row's `needs-correction` is the contract's closed-enum `NEEDS_CORRECTION`; the contract's spelling is the one emitted.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (this row IS the disarm act; a cut defect of the issuer's own amendment, corrected on every face it can still reach)",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W3-S5, IRPT_BCKEND-W3-S6 (this HEAD)",
-        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-15.scoped-routes-opal-principal-and-the-cloudfront-behavior.md THE CELL -- 'Route keys ... enumerated in routes.json so the replay battery (IB-sb-3) reads its denominator from a file'",
-        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/battery_ib_s_7.result.md (this HEAD) -- the vacuous census printed as such and the two controls",
-        "the six faces (this commit) -- one sentence appended to the (amend) arm; every <status> still staged"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "Issuer (amend) arm @812bbec0e9: 'Where this cell ships no handler, the same census runs over routes.json at the replay.' Memory: a gate called with an EMPTY input set returns a vacuous pass that reads as clean.",
-    "world_is": "The named fallback object is a future artifact of another cell; for every handler-less cell handed before IB-s-15 the arm's only honest reading is the censor's own controls. The amendment named the right hazard and the wrong object.",
-    "notes": "Adopted the worker's repair rather than inventing a second one; the faces already handed (IB-s-4 on ~2) carry the old sentence and are re-graded by the issuer at their drain under this reading."
-  },
-  {
-    "id": "IRPT_BCKEND-S14",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T04:05:41Z",
-    "one_line": "PRD v0.10 @3624e60def (1.0.0_SA_CTO 95780, 04:03Z) landed MINUTES AFTER IB-s-9 was handed to slot ~3 at 1f795d1f71: all three YCharts recipes proven live in one Lambda by the CRO on Andrew's word (VI.6 @72acd16e66), and B9 now BUILDS ON docs/research/investor_reporting_ycharts_variants_20260911/{recipe_contract.py,variant_worker.py,UI_CONTRACT.md,manifest.example.json} -- recipe selected from the comparison COUNT (0 Overview / 1 Comparison / 2-5 Multi), two wire shapes, one handler, duplicate re-delivery without a vendor call, input/account controls before vendor access, WAF refresh and unknown-mutation reconciliation the coordinator's. The face on the worker's branch cannot be amended (its grant is read from ITS HEAD), so the issuer sent the worker ONE supplement by the harness resume channel naming the packet as the reuse source to read FIRST and stating that the rectangle, criteria, paths and the no-live-call bound are unchanged; this row is the record of that supplement so the change is not only in a message. Carried to round 2, not amended in: B2's Generate resolver (server-only `resolved` half of the job envelope; IB-s-2 is complete), the AnalysisRequest browser-request half (IB-s-18's contracts are complete), and the v0.10 NOT-yet-proven list (public-ETF / mixed comparisons, the five-comparison maximum, percent uploads, real tenant entitlement, autonomous recovery, publication fencing).",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (supplement sent same turn; the round-2 items are the CTO's L10 analysis after CRO/CVO re-sign v0.10)",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T040336Z_1.0.0_SA_CTO_INFORMATION__IRPT_BCKEND_PRD_v0.10__3624.md (msg 95780)",
-        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-9.the-ycharts-generation-chain-as-an-opal-async-job.md @1f795d1f71 -- handed 03:4xZ; the v0.9 amendment already names the transport packet",
-        "docs/research/investor_reporting_ycharts_variants_20260911/ (HEAD) -- the packet the supplement names as read-only reuse"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "Spine v3 L7: the TO's WORKER FACE is the worker's whole context; a worker cannot be messaged. CLAUDE.md s.2: a broker message is never the carrier of an off-spec fact.",
-    "world_is": "The issuer used the same harness resume channel that carries every hand-off to send one bounded supplement to a worker mid-order, because the PRD delta names a reuse source the cell would otherwise rebuild; the record of it is this row, and the worker's own report will say what it read.",
-    "notes": "Stated as a deviation so the CVO can grade it at L8: the alternative (let the cell build on v0.9's packet alone and recut in round 2) was judged the more expensive correct path; the supplement adds a reuse source and changes no criterion."
   }
 ]
 ```
