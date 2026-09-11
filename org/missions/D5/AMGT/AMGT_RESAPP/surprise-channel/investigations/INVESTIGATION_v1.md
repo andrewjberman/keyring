@@ -606,6 +606,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-r-1 bound (a): 'The issuer's fiscal-year-end month is read from the record (Bloomberg's fiscal-period fields the CRO mapped), never assumed December.'",
     "world_is": "'Bloomberg's fiscal-period fields the CRO mapped' names a mapped field that does not exist for this coverage -- FISCAL_YEAR_END is BAD_FLD/INVALID_FIELD and the CRO's own field map lists testing an alternative under NOT MEASURED. The 'never assumed December' half of the bound is satisfied, but through a DIFFERENT carrier than the one named: the fiscal period end is read off the DATE a fundamentals-bearing historical row is itself reported on (already present in every landed histdata.json, no separate field or lookup required), not off any Bloomberg fiscal-period reference field. This is not a gap in the fix -- fye_join.py never assumes December and never needed the unmapped field -- but a later reader searching this module for a FISCAL_YEAR_END-keyed implementation, because the cell text says 'the CRO mapped' one, would not find it.",
     "notes": "Non-blocking; AC1/AC2 both pass on the implemented (date-of-record) method. Not this worker's <paths>/BOUNDS to correct the CRO's field map document itself. Worth a future cell's attention only if a consumer elsewhere assumes FISCAL_YEAR_END is a live, mapped Bloomberg field for this coverage -- it is not, per the CRO's own s.2/s.7."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W3-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~3",
+    "surfaced_at": "2026-09-11T07:48:05Z",
+    "one_line": "The repo's own top-level .gitignore line 47 ('lib/', Python-boilerplate) blankets the ENTIRE lib/ tree, including the already-tracked lib/research/checkface/ this cell writes to -- a brand-new file there (markers.py) is invisible to plain `git status`/`git add` and would be silently dropped unless force-added.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git check-ignore -v lib/research/checkface/markers.py` -> `.gitignore:47:lib/\tlib/research/checkface/markers.py` -- the file matches the generic Python-boilerplate `lib/` ignore rule at .gitignore:47 (org/.., root .gitignore, last touched 1655d876884156dc5d30a379a0ba2e946e250e9f)",
+        "`git status --porcelain -- lib/research/checkface/` (after creating markers.py, before any `git add`) lists the four MODIFIED tracked files (__init__.py unchanged so absent, run_checks.py, render_print.py, tests/test_checkface.py) but NOT markers.py at all -- no `??` line, no line of any kind; a plain status read undercounts this cell's own new file by one with no signal that anything was excluded",
+        "`git ls-files lib/research/checkface/` at HEAD 3730474e77e1a9c930eb0e77380ee7567c540aa0 lists __init__.py, fixtures.py, render_print.py, run_checks.py, tests/test_checkface.py as already TRACKED despite the same blanket rule -- those five survive only because a prior committer force-added them (`git add -f`) at some earlier commit; nothing in this tree's own state documents that as a standing requirement for a NEW file in the same directory",
+        "`.tools/safe-commit.sh`'s own docstring (line 49): 'Staging uses `git add -f`, which FORCE-adds files EVEN IF gitignored' -- the estate's sanctioned commit path already force-adds and so is UNAFFECTED; the gap is any OTHER read of this tree (a plain `git status`/`git add`/`git diff --stat` a verifier or a future worker runs without knowing this rule exists) that would report markers.py as absent, uncommitted-and-invisible, or simply never notice it needed adding"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell's WHAT TO PRODUCE names 'lib/research/checkface/' (an already-tracked source directory carrying five committed files) as a normal write surface for a new module.",
+    "world_is": "That directory sits inside a repo-wide gitignore rule (.gitignore:47 `lib/`, plain Python build-artifact boilerplate) that was never scoped to exclude the source subtree living inside it; the five pre-existing files are tracked only by historical force-add, not by any narrower ignore exception. This worker's new lib/research/checkface/markers.py was silently excluded from `git status`/`git add` until diagnosed with `git check-ignore -v`, and committed only because `.tools/safe-commit.sh` already force-adds its declared pathspec (verified: markers.py IS present in `git add -f`'s target set per the wrapper's own stated mechanism, not re-derived by this row).",
+    "notes": "Not this worker's <paths>/BOUNDS to fix -- .gitignore is not in this cell's write surface (lib/research/checkface/, deliverables/, the investigation file, this cell's own task-order file). safe-commit.sh's `-f` already covers the SANCTIONED commit path, so this row is not blocking THIS cell's own deliverable; it is ARMED because any future new file under lib/research/ (or lib/'s other live-code subtrees, unaudited by this row) hits the identical silent gap for any device/verifier that runs a plain `git status`/`git add` instead of the wrapper -- e.g. an add-a-line-not-add-a-file sanity check, or a verifier diffing `git status --porcelain` against a stated file list, would undercount by exactly the new files and see no signal that anything was excluded. Named to 2.0.0_SA_COO~ZZZ as the issuing seat for this project's gate/repo-hygiene surface, not something this cell's paths license editing."
   }
 ]
 ```
