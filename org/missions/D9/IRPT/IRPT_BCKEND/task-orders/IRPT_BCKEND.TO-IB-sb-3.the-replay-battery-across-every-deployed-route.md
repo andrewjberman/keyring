@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>staged -- assigned to slot ~1; becomes pending when the COO hands it over after IB-s-16 is terminal and merged AND IB-s-15 (slot ~2) is terminal and merged.</status>
+<status>complete -- IBSB3-REPLAY-CLEAN printed by battery_ib_sb_3.py (rc=0); both planes recorded (POST-AUTHORIZER for the six-swap proof, REAL PATH for the live boundary measurement against the now-applied CloudFront behavior); proof-of-spec instance VALID; SB3-AC1 PASS-by-output, SB3-AC2 RECORDED for 3.0.0_SA_CVO at L9. The last cell of the round.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.4 @62301f71e0 | **Decomp cell:** `IB-sb-3` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, s.1 + s.2) | **outcome_ref:** FWD-2 (own) | **PRD candidate:** B3
 

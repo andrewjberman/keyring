@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 65 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (64 ours + 54 theirs, 53 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 70 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (69 ours + 68 theirs, 67 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -478,6 +478,78 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "Third _keys finding of the round (W2-S10 exception text, W2-S9/W2-S11 id spellings around it, now W3-S12); the round-2 recut owes IB-s-17 one consolidated order."
   },
   {
+    "id": "IRPT_BCKEND-S21",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T08:37:23Z",
+    "one_line": "DISARM of IRPT_BCKEND-W1-S9 (ARMED, disarm_owner 2.0.0_SA_COO~B) -- an ISSUER DEFECT: the S15 amendment (902ea877dc) told four faces to normalise holdings account ids 'through the ONE normaliser IB-s-4 shipped under infra/aws/lambda/investor-reporting/directory/'. No such module exists; IB-s-4 normalised the `<firm>:acct:` prefix inside its own battery (battery_ib_s_4.py), and the issuer wrote the amendment from the worker's report rather than from the tree (a grader's restatement lending a claim it had not earned). IB-s-16 found it (function-name enumeration of directory/handler.py, refresh.py, expiry.py; git show 624a60e4fc --stat) and needed no such join. Measured now: the prefix is minted at holdings_snapshot.py:370 (49f), :486 (inf), :638 (cot) as `<firm>:acct:<opaque>` and nowhere else in the lambda tree (comp-find 'acct:' 7 hits of 260 files, 3 SURFACED, all in the runner). The two un-handed faces (IB-s-15, IB-sb-3) are corrected: strip exactly that grammar in one named function of the consumer's own, cite the three lines, print both counts. IB-s-14 and IB-s-16, already complete, carried the false sentence; neither made the join (IB-s-14 exports from fixture sections; IB-s-16 measured the absence), so no output is affected.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (corrected on every face it can still reach; the shared normaliser is a round-2 item alongside the id-space table of S15)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W1-S9 (this HEAD); IRPT_BCKEND-S15 @902ea877dc (the defective sentence)",
+        "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:370,486,638 (HEAD) -- the three mint sites",
+        "comp-find 'acct:' over infra/aws/lambda/investor-reporting, the project's deliverables and the gold home: 7 hits across 260 files, 3 SURFACED (the runner), 0 in directory/",
+        "the two faces (this commit) -- the sentence replaced in place; <status> still staged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Seat row S15: 'normalise through the ONE normaliser IB-s-4 shipped under infra/aws/lambda/investor-reporting/directory/'. Memory: a grader's restatement lends credibility the claim has not earned.",
+    "world_is": "The normaliser was a battery-local helper, not a shipped module; the amendment named a path that does not carry it. Corrected before either remaining consumer reads it.",
+    "notes": "Issuer's own lapse, stated plainly: an amendment that names a path must be written from a read of the tree at HEAD, not from a report about it."
+  },
+  {
+    "id": "IRPT_BCKEND-S22",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T09:22:01Z",
+    "one_line": "ROUTING of IRPT_BCKEND-W2-S12 (BLOCKING, disarm_owner 2.0.0_SA_COO~B) at the IB-s-15 drain (ac2ee67133). IB-s-15's STOP fired correctly: the portal-auth plan reads 'Plan: 0 to add, 3 to change, 0 to destroy'. The issuer re-ran the plan read-only in the same worktree and CLASSIFIED the two foreign changes from the saved diff: (1) aws_cloudfront_function.spa_fallback -- a CRLF checkout artifact (26 CRLF on disk vs 0 in the HEAD blob; the banked fresh-worktree trap), which clears for any actor whose checkout renders the file LF; (2) aws_wafv2_web_acl.opal_cloudfront_protection -- three managed-rule blocks (common-rule-set p4, ip-reputation p3, known-bad-inputs p5) removed and re-added with EVERY value identical and the only difference an attribute hidden in state ('# (1 unchanged attribute hidden)' inside managed_rule_group_statement, absent from the config) -- a provider-normalisation diff under hashicorp/aws 5.100.0 (lock tracked), NOT intended drift; an apply would still issue UpdateWebACL on the WAF fronting all 27 behaviors. NEITHER is this project's: the root is lane CLOUD_OPS_OR_ETL and NEVER-1 puts a served-output move behind CTO+COO sign-off. Disposition: the ONE additive behavior stays committed and unapplied on CLOUD; the two-line remedy (declare the hidden attribute in the WAF config so the root plans clean, or apply the no-op under sign-off) belongs to the portal-auth root's owner, and the issuer puts the classified plan in front of 1.0.0_SA_CTO and 0.7.0_AE_CloudOps as information. FWD-2's EXERCISED bar therefore lacks the CloudFront -> edge leg this round; IB-sb-3 replays on API Gateway's invoke URL through the real naqxlm authorizer and names the boundary it could not cross. S15-AC1 stays FAIL, the order stays OPEN, and the round's L10 slug carries it as its second BLOCKING item.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (routed; the remedy is the portal-auth root owner's under CTO+COO sign-off; re-plan and apply of IB-s-15's behavior follows, no rework)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W2-S12 (this HEAD) -- the worker's measurement, get-distribution-config byte-identical before and after",
+        "issuer's read-only re-plan in /c/tmp/wk-irpt-1-2 at 1d61219844 (scratch pa_plan_wk.txt): 'Plan: 0 to add, 3 to change, 0 to destroy'; the WAF block shows six rule blocks, three '-' and three '+', pairwise identical on name, priority, override_action count, managed_rule_group_statement name/vendor_name, visibility_config; '# (1 unchanged attribute hidden)' only on the removed side",
+        "infra/aws/terraform/portal-auth/.terraform.lock.hcl (tracked): hashicorp/aws 5.100.0, constraint ~> 5.0",
+        "CLAUDE.md NEVER-1: never move served output without never-widen sign-off (CTO+COO)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-s-15 face: 'The CloudFront plan shows exactly ONE change or you STOP ... any other change in that plan is a STOP and a BLOCKING row.' PRD B15: an Opal principal reaches clients at two firms through scoped routes.",
+    "world_is": "The routes are live behind the authorizer; the portal path to them is one unapplied behavior away, held by a foreign root's normalisation diff. Nothing served has moved. The replay measures what exists and names the leg it cannot exercise.",
+    "notes": "Two BLOCKING items now carry to L10 with owners: W1-S8 (first-mint bundle, INFRA.TOOLS + DS) and W2-S12 (portal-auth root, CLOUD_OPS_OR_ETL under sign-off). Both are one act each for their owners; neither is a rework of this round's cells."
+  },
+  {
+    "id": "IRPT_BCKEND-S23",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T09:37:45Z",
+    "one_line": "DISARM of IRPT_BCKEND-W2-S12 (BLOCKING) by the CTO's ruling 95933 and both never-widen sign-off halves. 1.0.0_SA_CTO, as the gate over the portal-auth root (0.7.0_AE_CloudOps has no live session), measured in the shared tree: the CRLF half is closed at b9b3eafb6b (.gitattributes eol=lf for infra/aws/terraform/**/*.js); the WAF half is a hashicorp/aws 5.100.0 read-normalisation artefact (managed_rule_group_statement.version '' in the refreshed read vs null in config and state serial 173; everything else byte-identical by terraform show -json; live get-web-acl has no Version; CloudTrail shows no UpdateWebACL since the 09-03 opsec applies), recurring on every plan until the provider is bumped (CTO item 4, owner 0.7.0_AE_CloudOps, gate CTO, a D0 s.6 row). RULING: IB-s-15's bound is widened FOR THIS APPLY ONLY to 'one change plus the classified WAF no-op'. CTO half in 95933; COO half at org/tier1_exec/2.0.0_SA_COO~B/deliverables/NEVER_WIDEN_SIGNOFF_COO_HALF_IRPT_BCKEND_IB-s-15_CLOUDFRONT_20260911.md (blast radius and rollback per key, writers counted N=1, both outcome branches). The OPEN face is amended with the widened bound and the verifications the apply must print (27 -> 28 behaviors with the prior 27 in order; get-web-acl Rules identical LockToken excepted; the unauthenticated request now 401/403); slot ~2 is re-cut from a HEAD carrying b9b3eafb6b and the apply is handed back as IB-s-15's own act through safe-apply under a ledger entry citing the first.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (the COO half signed; the apply is the worker's under both halves; the provider bump is the CTO's D0 item)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T093348Z_1.0.0_SA_CTO_IRPT_BCKEND-W2-S12_RULED__CTO___the_WAF_.md (msg 95933) -- the ruling, the CTO half, items 1-4",
+        "b9b3eafb6b (CLOUD) -- .gitattributes: infra/aws/terraform/**/*.js text eol=lf",
+        "org/tier1_exec/2.0.0_SA_COO~B/deliverables/NEVER_WIDEN_SIGNOFF_COO_HALF_IRPT_BCKEND_IB-s-15_CLOUDFRONT_20260911.md (this commit) -- the COO half",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-15.*.md (this commit) -- ISSUER AMENDMENT on the open face; <status> pending"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md NEVER-1: never move served output without never-widen sign-off (CTO+COO); a sign-off names the act's blast radius and counts the writers of the named property. IB-s-15 face: exactly ONE change or STOP.",
+    "world_is": "The foreign change is a content-identical provider read artefact, pinned by three instruments; both halves are signed on the two keys the act may touch; the STOP condition stays armed for anything else in the plan.",
+    "notes": "The bound's STOP produced exactly the classification the sign-off needed; widening it once, for one apply, under two signed halves is the mechanism working, not the bound bending."
+  },
+  {
     "id": "IRPT_BCKEND-W1-S1",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
@@ -691,6 +763,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "IB-s-16 hand-off, fact (4): 'the second-firm hash census reads the firm buckets and the shared bucket under both prefixes, normalised through IB-s-4's one normaliser where an id crosses the holdings/directory seam, both counts printed.'",
     "world_is": "No such normaliser exists anywhere in the repo under infra/aws/lambda/investor-reporting/directory/ (or, by the same enumeration, anywhere else this cell's search reached) -- IB-s-4's actual merged commit (624a60e4fc) added expiry.py/refresh.py/schedule.tf/tests only. This cell proceeds by writing its own minimal, explicitly-labelled inline prefix-stripper (citing this row) for its own second-firm hash census, rather than importing a function that is not present.",
     "notes": "OBSERVATION, not BLOCKING: this cell can still satisfy its own acceptance criteria by building the minimal stripper inline and printing both as-written and after-normalisation counts, which is the literal ask. ARMED because a FUTURE cell that trusts the hand-off's citation and tries to `import` a shared normaliser from directory/ will fail, and because the underlying id-space mismatch for INF/COT (rows W1-S7, W2-S11) is a raw-key difference no prefix-stripper reconciles."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S10",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-11T10:09:09Z",
+    "one_line": "IB-sb-3's real-file unguarded_routes() census over routes.json (S13's real-file case) reads 6 of 11 handler-bearing routes unguarded, not the 3 the amendment names as the EXPECTED population (row S9: IB-s-1 directory x2, IB-s-11 performance). THREE MORE are unguarded but not disclosed anywhere: POST /api/scoped/investor-reporting/analysis (irpt-ycharts-generate, IB-s-9 -- its own job.py source comments 'THIS CELL REGISTERS NO ROUTE ... woken by irpt-generation, not reached through the edge', written before routes.json existed; routes.json (IB-s-15, landed after that comment) now maps this route TO this function anyway, and job.py was never revisited), GET /api/scoped/investor-reporting/narrative/{reportId} (irpt-narrative, IB-s-13 -- no _authz import at all, no disclaimer either), and GET /api/scoped/investor-reporting/export/{exportId} (irpt-export-render, IB-s-14 -- the deployed lambda_handler only implements action=capabilities; no separate guarded export-status operation exists in the codebase for this route at all). None of the three currently discloses protected data (ycharts-generate always refuses via a hard consent-env-var gate before looking at identity; narrative takes an already-built PerformanceReport with no firm/account field of its own to leak; export-status returns only capability/contract-availability info) -- measured, not repaired, per the same 'print the count as measured' instruction row S9 itself gives.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B (a future change to any of these three handlers -- e.g. wiring irpt-ycharts-generate's live path, adding identity-bearing fields to narrative's request shape, or adding a real export-status operation -- must not assume the current no-leak state persists; each is UNGUARDED mechanically and would need _authz.guard() wired in before it could safely change shape)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_sb_3.py::arm_unguarded_routes_census(), this commit: _authz.unguarded_routes() over a REAL route table built from infra/aws/terraform/investor-reporting/api/routes.json (11 of 11 handler-bearing routes, the NO-HANDLER holdings route excluded) reads 'BLOCKED: 6 of 11 route(s) reach an unguarded handler', denominator 5 of 11 guarded",
+        "3 of the 6 unguarded routes match row S9's disclosed population exactly (GET/POST directory search+resolve, GET performance/{accountSetId}); the other 3 (POST /analysis, GET /narrative/{reportId}, GET /export/{exportId}) are NOT named anywhere in row S9 or the issuer amendment's text",
+        "infra/aws/lambda/investor-reporting/ycharts/generate/job.py, this worktree's HEAD: the comment block above `ROUTES = {}` states 'THIS CELL REGISTERS NO ROUTE. The generation job is a QUEUE CONSUMER -- it is woken by irpt-generation, not reached through the edge' and separately 'routes.json ... DOES NOT EXIST before that cell lands' -- both true AT IB-s-9's OWN cut, neither true now that routes.json exists and names this function directly",
+        "infra/aws/lambda/investor-reporting/narrative/handler.py, this worktree's HEAD: no `_authz`/`enforce` import anywhere in the file, and no comment naming this as an intentional predates-the-wrapper exemption the way row S9's two routes carry",
+        "infra/aws/lambda/investor-reporting/export/handler.py::lambda_handler, this worktree's HEAD: dispatches solely on event.get('action', 'capabilities') with no path awareness; export.handler.routes()/export.download.route_table() define export_submit and export_download as the only two guarded operations -- no third, export-status, operation exists to wire a route 9 against"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer amendment (IB-s-3 drain, row S9): 'the two merged-before-the-wrapper handlers (IB-s-1 directory, IB-s-11 performance; row S9) are the population where an unguarded route is EXPECTED -- print the count as measured, do not repair.'",
+    "world_is": "The measured unguarded population is 6 of 11, not 3 of 11 -- three additional routes (ycharts-generate/analysis, narrative, export-status) are ALSO unguarded and were not named by row S9 or by any later amendment reaching this cell. This cell prints the full measured census (5 of 11 guarded, 6 of 11 unguarded, both sub-populations named separately) per S13's real-file instruction, and does not repair any of the six.",
+    "notes": "None of the three newly-observed routes currently discloses protected data given their CURRENT implementation (each has an independent reason nothing leaks today, cited in one_line) -- this is a mechanical-guard gap, not a demonstrated data leak, which is why it reads OBSERVATION rather than BLOCKING. ARMED because that safety currently rests on each handler's OWN unrelated behavior (a hard refusal gate, a narrow request shape, a capabilities-only dispatch) rather than on _authz.guard() -- any one of those three independent protections quietly changing would remove the thing currently standing in for authorization."
   },
   {
     "id": "IRPT_BCKEND-W2-S1",
@@ -950,6 +1047,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Arm (i), issuer amendment: print per firm how many of the latest holdings snapshot account ids resolve against the refreshed directory (N of M); and W1-S7: the directory opaque account ids for INF and COT do not resolve against the holdings join keys.",
     "world_is": "They do not resolve for a SECOND reason as well, and that reason applies to all three firms: the two artifacts spell the same id differently (namespaced vs bare). Measured naively the gap reads 3 of 3 firms; measured correctly it is 2 of 3, and the 49F arm is the control that tells them apart.",
     "notes": "ARMED because the two causes are indistinguishable in the SYMPTOM and the wrong one is the cheaper conclusion: a reader who sees 0 of N everywhere will look for a broken id space instead of a missing prefix, and a reader who fixes only the prefix will believe INF and COT are cured. NO JOIN WAS EDITED here -- the spec is frozen and whether one id space is owed is the CTO's L10 read. The disarm act is a decision about which spelling is canonical between the two artifacts, alongside the same question W2-S9 raises for the FIRM id: this estate now has THREE id spellings in play (registry vs opaque firm, namespaced vs bare account) and each was found only where two cells JOIN."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S12",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T09:01:13Z",
+    "one_line": "THE CLOUDFRONT APPLY IS STOPPED BY ITS OWN GATE AND NOTHING WAS APPLIED. The pre-apply plan on the portal-auth root reads 'Plan: 0 to add, 3 to change, 0 to destroy' and names THREE resources, not one. MINE IS CLEAN: aws_cloudfront_distribution.portal shows exactly ONE added ordered_cache_behavior (/api/scoped/investor-reporting/* -> APIGateway-portal, caching disabled, one viewer-request association to auth-validator-edge:19), 1 of 1 block, with no existing behavior touched. THE OTHER TWO ARE NOT THIS PROJECT'S: (1) aws_cloudfront_function.spa_fallback is a CRLF CHECKOUT ARTIFACT -- measured, not inferred: spa-fallback-function.js is 26 CRLF / 0 bare LF on disk in this fresh worktree while the HEAD blob is 0 CRLF / 26 LF, and every diff line shows byte-identical text on both sides; (2) aws_wafv2_web_acl.opal_cloudfront_protection is REAL churn -- 3 managed-rule blocks removed and 3 re-added (common-rule-set p4, ip-reputation p3, known-bad-inputs p5) on the WAF protecting the whole portal. The face's bound is exact -- 'The CloudFront plan shows exactly ONE change or you STOP ... never an apply' -- so safe-apply was never invoked on that root. THE WORLD IS VERIFIED UNCHANGED: get-distribution-config on EVTSA9VEHNZVH after the plan is byte-identical to the one taken before any act (27 ordered behaviors then and now, identical pattern list, investor-reporting present = False, full DistributionConfig JSON identical). The behavior is COMMITTED and UNAPPLIED. The API half of this cell is SEPARATE and IS LIVE: 11 routes applied 23 added / 0 changed / 0 destroyed under the existing naqxlm authorizer.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan -no-color -input=false -lock=false on infra/aws/terraform/portal-auth @d0a61c6acb -> 'Plan: 0 to add, 3 to change, 0 to destroy' naming aws_cloudfront_distribution.portal, aws_cloudfront_function.spa_fallback and aws_wafv2_web_acl.opal_cloudfront_protection; saved verbatim",
+        "the distribution's own diff in that plan: ONE '+ ordered_cache_behavior' block with path_pattern /api/scoped/investor-reporting/*; grep count of ordered_cache_behavior blocks inside that resource's diff = 1",
+        "measured CRLF: infra/aws/terraform/portal-auth/spa-fallback-function.js on disk = 26 CRLF / 0 bare LF; git show HEAD:<same path> = 0 CRLF / 26 LF",
+        "the WAF diff: 3 blocks matching '^      - rule {' and 3 matching '^      + rule {' inside aws_wafv2_web_acl.opal_cloudfront_protection, named common-rule-set (p4), ip-reputation (p3), known-bad-inputs (p5)",
+        "aws cloudfront get-distribution-config --id EVTSA9VEHNZVH before any act and again after the plan: 27 behaviors both times, identical pattern list, full DistributionConfig json-identical, investor-reporting absent both times",
+        "org/critical_paths/change_management/20260911T0855Z_irpt-bckend-s15-cloudfront_deploy_completion.md -- every leg closed on NON-EXECUTION, with a READ-THIS-FIRST block above the status line saying so"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "BOUNDS: 'The CloudFront plan shows exactly ONE change or you STOP. The distribution serves the whole portal; a plan that touches any other behavior, origin or setting is a BLOCKING row, never an apply.' S15-AC1 arm (c): 'The saved terraform plan output for portal-auth before the apply shows 1 to add, 0 to change, 0 to destroy or an in-place update touching only the new behavior block.'",
+    "world_is": "The plan touches two further resources that pre-date this cell and belong to a root this project does not own. One is a line-ending artifact of a fresh worktree; the other is genuine WAF drift. Neither is reachable from this order's <paths>, and applying would rewrite a WAF ACL protecting 28 behaviors in order to land one additive behavior.",
+    "notes": "BLOCKING on arms (b), (c) and the cloudfront half of (f) -- S15-AC1 therefore WITHHOLDS its token and this order stays OPEN. Every other arm was still measured and passed: 11 of 11 routes live under naqxlm, the catalogue is the registry 3 of 3, Global is proven on two firms' fixtures 4 of 4, the seam's three outcomes, and the amend census. WHAT UN-BLOCKS IT: the portal-auth root plans clean, or its two drifting resources are dispositioned by that root's owner (lane CLOUD_OPS_OR_ETL, any AE agent). The behavior is committed and unapplied, so the remaining act is a re-plan and an apply under the same entry -- no rework. The CRLF half would clear for any actor whose worktree renders that file LF; the WAF half is a real decision someone must take, and taking it from inside this order would be the widening the bound forbids."
   },
   {
     "id": "IRPT_BCKEND-W3-S1",
@@ -1563,104 +1686,6 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "S14-AC1 (g): 'ExportReceipt validates and its artifact_hash equals the stored object's; the object key is under the bound firm's exports prefix'. BOUNDS 7: 'No served output is touched ... except where THIS order's cell says it ADDS a resource' -- and the cell text names 'the protected artifact under firms/<id>/generations/<id>/attempts/<a>/exports/<revision>/report.pdf'.",
     "world_is": "Proving the receipt against a STORED object means storing one, and the only admissible prefixes are real firms'. The write is labelled twice (an unmistakable generation id and object metadata) rather than hidden, so a later reader can tell it from client evidence without reading this row.",
     "notes": "No client data is in any of the four: the performance/analysis content is the cell's own fixture sections, and the three vendor-input exports are rendered from the CRO's synthetic portfolio 2332257 (SPY/AGG), which the PRD already calls real vendor output on synthetic holdings."
-  },
-  {
-    "id": "IRPT_BCKEND-S21",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T08:37:23Z",
-    "one_line": "DISARM of IRPT_BCKEND-W1-S9 (ARMED, disarm_owner 2.0.0_SA_COO~B) -- an ISSUER DEFECT: the S15 amendment (902ea877dc) told four faces to normalise holdings account ids 'through the ONE normaliser IB-s-4 shipped under infra/aws/lambda/investor-reporting/directory/'. No such module exists; IB-s-4 normalised the `<firm>:acct:` prefix inside its own battery (battery_ib_s_4.py), and the issuer wrote the amendment from the worker's report rather than from the tree (a grader's restatement lending a claim it had not earned). IB-s-16 found it (function-name enumeration of directory/handler.py, refresh.py, expiry.py; git show 624a60e4fc --stat) and needed no such join. Measured now: the prefix is minted at holdings_snapshot.py:370 (49f), :486 (inf), :638 (cot) as `<firm>:acct:<opaque>` and nowhere else in the lambda tree (comp-find 'acct:' 7 hits of 260 files, 3 SURFACED, all in the runner). The two un-handed faces (IB-s-15, IB-sb-3) are corrected: strip exactly that grammar in one named function of the consumer's own, cite the three lines, print both counts. IB-s-14 and IB-s-16, already complete, carried the false sentence; neither made the join (IB-s-14 exports from fixture sections; IB-s-16 measured the absence), so no output is affected.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (corrected on every face it can still reach; the shared normaliser is a round-2 item alongside the id-space table of S15)",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W1-S9 (this HEAD); IRPT_BCKEND-S15 @902ea877dc (the defective sentence)",
-        "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:370,486,638 (HEAD) -- the three mint sites",
-        "comp-find 'acct:' over infra/aws/lambda/investor-reporting, the project's deliverables and the gold home: 7 hits across 260 files, 3 SURFACED (the runner), 0 in directory/",
-        "the two faces (this commit) -- the sentence replaced in place; <status> still staged"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "Seat row S15: 'normalise through the ONE normaliser IB-s-4 shipped under infra/aws/lambda/investor-reporting/directory/'. Memory: a grader's restatement lends credibility the claim has not earned.",
-    "world_is": "The normaliser was a battery-local helper, not a shipped module; the amendment named a path that does not carry it. Corrected before either remaining consumer reads it.",
-    "notes": "Issuer's own lapse, stated plainly: an amendment that names a path must be written from a read of the tree at HEAD, not from a report about it."
-  },
-  {
-    "id": "IRPT_BCKEND-W2-S12",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
-    "surfaced_at": "2026-09-11T09:01:13Z",
-    "one_line": "THE CLOUDFRONT APPLY IS STOPPED BY ITS OWN GATE AND NOTHING WAS APPLIED. The pre-apply plan on the portal-auth root reads 'Plan: 0 to add, 3 to change, 0 to destroy' and names THREE resources, not one. MINE IS CLEAN: aws_cloudfront_distribution.portal shows exactly ONE added ordered_cache_behavior (/api/scoped/investor-reporting/* -> APIGateway-portal, caching disabled, one viewer-request association to auth-validator-edge:19), 1 of 1 block, with no existing behavior touched. THE OTHER TWO ARE NOT THIS PROJECT'S: (1) aws_cloudfront_function.spa_fallback is a CRLF CHECKOUT ARTIFACT -- measured, not inferred: spa-fallback-function.js is 26 CRLF / 0 bare LF on disk in this fresh worktree while the HEAD blob is 0 CRLF / 26 LF, and every diff line shows byte-identical text on both sides; (2) aws_wafv2_web_acl.opal_cloudfront_protection is REAL churn -- 3 managed-rule blocks removed and 3 re-added (common-rule-set p4, ip-reputation p3, known-bad-inputs p5) on the WAF protecting the whole portal. The face's bound is exact -- 'The CloudFront plan shows exactly ONE change or you STOP ... never an apply' -- so safe-apply was never invoked on that root. THE WORLD IS VERIFIED UNCHANGED: get-distribution-config on EVTSA9VEHNZVH after the plan is byte-identical to the one taken before any act (27 ordered behaviors then and now, identical pattern list, investor-reporting present = False, full DistributionConfig JSON identical). The behavior is COMMITTED and UNAPPLIED. The API half of this cell is SEPARATE and IS LIVE: 11 routes applied 23 added / 0 changed / 0 destroyed under the existing naqxlm authorizer.",
-    "class": "BLOCKING",
-    "hazard_standing": "INERT",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "terraform plan -no-color -input=false -lock=false on infra/aws/terraform/portal-auth @d0a61c6acb -> 'Plan: 0 to add, 3 to change, 0 to destroy' naming aws_cloudfront_distribution.portal, aws_cloudfront_function.spa_fallback and aws_wafv2_web_acl.opal_cloudfront_protection; saved verbatim",
-        "the distribution's own diff in that plan: ONE '+ ordered_cache_behavior' block with path_pattern /api/scoped/investor-reporting/*; grep count of ordered_cache_behavior blocks inside that resource's diff = 1",
-        "measured CRLF: infra/aws/terraform/portal-auth/spa-fallback-function.js on disk = 26 CRLF / 0 bare LF; git show HEAD:<same path> = 0 CRLF / 26 LF",
-        "the WAF diff: 3 blocks matching '^      - rule {' and 3 matching '^      + rule {' inside aws_wafv2_web_acl.opal_cloudfront_protection, named common-rule-set (p4), ip-reputation (p3), known-bad-inputs (p5)",
-        "aws cloudfront get-distribution-config --id EVTSA9VEHNZVH before any act and again after the plan: 27 behaviors both times, identical pattern list, full DistributionConfig json-identical, investor-reporting absent both times",
-        "org/critical_paths/change_management/20260911T0855Z_irpt-bckend-s15-cloudfront_deploy_completion.md -- every leg closed on NON-EXECUTION, with a READ-THIS-FIRST block above the status line saying so"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "disarm_owner": "2.0.0_SA_COO~B",
-    "spec_asserts": "BOUNDS: 'The CloudFront plan shows exactly ONE change or you STOP. The distribution serves the whole portal; a plan that touches any other behavior, origin or setting is a BLOCKING row, never an apply.' S15-AC1 arm (c): 'The saved terraform plan output for portal-auth before the apply shows 1 to add, 0 to change, 0 to destroy or an in-place update touching only the new behavior block.'",
-    "world_is": "The plan touches two further resources that pre-date this cell and belong to a root this project does not own. One is a line-ending artifact of a fresh worktree; the other is genuine WAF drift. Neither is reachable from this order's <paths>, and applying would rewrite a WAF ACL protecting 28 behaviors in order to land one additive behavior.",
-    "notes": "BLOCKING on arms (b), (c) and the cloudfront half of (f) -- S15-AC1 therefore WITHHOLDS its token and this order stays OPEN. Every other arm was still measured and passed: 11 of 11 routes live under naqxlm, the catalogue is the registry 3 of 3, Global is proven on two firms' fixtures 4 of 4, the seam's three outcomes, and the amend census. WHAT UN-BLOCKS IT: the portal-auth root plans clean, or its two drifting resources are dispositioned by that root's owner (lane CLOUD_OPS_OR_ETL, any AE agent). The behavior is committed and unapplied, so the remaining act is a re-plan and an apply under the same entry -- no rework. The CRLF half would clear for any actor whose worktree renders that file LF; the WAF half is a real decision someone must take, and taking it from inside this order would be the widening the bound forbids."
-  },
-  {
-    "id": "IRPT_BCKEND-S22",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T09:22:01Z",
-    "one_line": "ROUTING of IRPT_BCKEND-W2-S12 (BLOCKING, disarm_owner 2.0.0_SA_COO~B) at the IB-s-15 drain (ac2ee67133). IB-s-15's STOP fired correctly: the portal-auth plan reads 'Plan: 0 to add, 3 to change, 0 to destroy'. The issuer re-ran the plan read-only in the same worktree and CLASSIFIED the two foreign changes from the saved diff: (1) aws_cloudfront_function.spa_fallback -- a CRLF checkout artifact (26 CRLF on disk vs 0 in the HEAD blob; the banked fresh-worktree trap), which clears for any actor whose checkout renders the file LF; (2) aws_wafv2_web_acl.opal_cloudfront_protection -- three managed-rule blocks (common-rule-set p4, ip-reputation p3, known-bad-inputs p5) removed and re-added with EVERY value identical and the only difference an attribute hidden in state ('# (1 unchanged attribute hidden)' inside managed_rule_group_statement, absent from the config) -- a provider-normalisation diff under hashicorp/aws 5.100.0 (lock tracked), NOT intended drift; an apply would still issue UpdateWebACL on the WAF fronting all 27 behaviors. NEITHER is this project's: the root is lane CLOUD_OPS_OR_ETL and NEVER-1 puts a served-output move behind CTO+COO sign-off. Disposition: the ONE additive behavior stays committed and unapplied on CLOUD; the two-line remedy (declare the hidden attribute in the WAF config so the root plans clean, or apply the no-op under sign-off) belongs to the portal-auth root's owner, and the issuer puts the classified plan in front of 1.0.0_SA_CTO and 0.7.0_AE_CloudOps as information. FWD-2's EXERCISED bar therefore lacks the CloudFront -> edge leg this round; IB-sb-3 replays on API Gateway's invoke URL through the real naqxlm authorizer and names the boundary it could not cross. S15-AC1 stays FAIL, the order stays OPEN, and the round's L10 slug carries it as its second BLOCKING item.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (routed; the remedy is the portal-auth root owner's under CTO+COO sign-off; re-plan and apply of IB-s-15's behavior follows, no rework)",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W2-S12 (this HEAD) -- the worker's measurement, get-distribution-config byte-identical before and after",
-        "issuer's read-only re-plan in /c/tmp/wk-irpt-1-2 at 1d61219844 (scratch pa_plan_wk.txt): 'Plan: 0 to add, 3 to change, 0 to destroy'; the WAF block shows six rule blocks, three '-' and three '+', pairwise identical on name, priority, override_action count, managed_rule_group_statement name/vendor_name, visibility_config; '# (1 unchanged attribute hidden)' only on the removed side",
-        "infra/aws/terraform/portal-auth/.terraform.lock.hcl (tracked): hashicorp/aws 5.100.0, constraint ~> 5.0",
-        "CLAUDE.md NEVER-1: never move served output without never-widen sign-off (CTO+COO)"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "IB-s-15 face: 'The CloudFront plan shows exactly ONE change or you STOP ... any other change in that plan is a STOP and a BLOCKING row.' PRD B15: an Opal principal reaches clients at two firms through scoped routes.",
-    "world_is": "The routes are live behind the authorizer; the portal path to them is one unapplied behavior away, held by a foreign root's normalisation diff. Nothing served has moved. The replay measures what exists and names the leg it cannot exercise.",
-    "notes": "Two BLOCKING items now carry to L10 with owners: W1-S8 (first-mint bundle, INFRA.TOOLS + DS) and W2-S12 (portal-auth root, CLOUD_OPS_OR_ETL under sign-off). Both are one act each for their owners; neither is a rework of this round's cells."
-  },
-  {
-    "id": "IRPT_BCKEND-S23",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T09:37:45Z",
-    "one_line": "DISARM of IRPT_BCKEND-W2-S12 (BLOCKING) by the CTO's ruling 95933 and both never-widen sign-off halves. 1.0.0_SA_CTO, as the gate over the portal-auth root (0.7.0_AE_CloudOps has no live session), measured in the shared tree: the CRLF half is closed at b9b3eafb6b (.gitattributes eol=lf for infra/aws/terraform/**/*.js); the WAF half is a hashicorp/aws 5.100.0 read-normalisation artefact (managed_rule_group_statement.version '' in the refreshed read vs null in config and state serial 173; everything else byte-identical by terraform show -json; live get-web-acl has no Version; CloudTrail shows no UpdateWebACL since the 09-03 opsec applies), recurring on every plan until the provider is bumped (CTO item 4, owner 0.7.0_AE_CloudOps, gate CTO, a D0 s.6 row). RULING: IB-s-15's bound is widened FOR THIS APPLY ONLY to 'one change plus the classified WAF no-op'. CTO half in 95933; COO half at org/tier1_exec/2.0.0_SA_COO~B/deliverables/NEVER_WIDEN_SIGNOFF_COO_HALF_IRPT_BCKEND_IB-s-15_CLOUDFRONT_20260911.md (blast radius and rollback per key, writers counted N=1, both outcome branches). The OPEN face is amended with the widened bound and the verifications the apply must print (27 -> 28 behaviors with the prior 27 in order; get-web-acl Rules identical LockToken excepted; the unauthenticated request now 401/403); slot ~2 is re-cut from a HEAD carrying b9b3eafb6b and the apply is handed back as IB-s-15's own act through safe-apply under a ledger entry citing the first.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (the COO half signed; the apply is the worker's under both halves; the provider bump is the CTO's D0 item)",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T093348Z_1.0.0_SA_CTO_IRPT_BCKEND-W2-S12_RULED__CTO___the_WAF_.md (msg 95933) -- the ruling, the CTO half, items 1-4",
-        "b9b3eafb6b (CLOUD) -- .gitattributes: infra/aws/terraform/**/*.js text eol=lf",
-        "org/tier1_exec/2.0.0_SA_COO~B/deliverables/NEVER_WIDEN_SIGNOFF_COO_HALF_IRPT_BCKEND_IB-s-15_CLOUDFRONT_20260911.md (this commit) -- the COO half",
-        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-15.*.md (this commit) -- ISSUER AMENDMENT on the open face; <status> pending"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "CLAUDE.md NEVER-1: never move served output without never-widen sign-off (CTO+COO); a sign-off names the act's blast radius and counts the writers of the named property. IB-s-15 face: exactly ONE change or STOP.",
-    "world_is": "The foreign change is a content-identical provider read artefact, pinned by three instruments; both halves are signed on the two keys the act may touch; the STOP condition stays armed for anything else in the plan.",
-    "notes": "The bound's STOP produced exactly the classification the sign-off needed; widening it once, for one apply, under two signed halves is the mechanism working, not the bound bending."
   }
 ]
 ```
