@@ -33,7 +33,7 @@
   },
   "coo_lane": "2.0.0_SA_COO~F",
   "fabric_ruling": "laptop -- inherited from D9, placed LAPTOP 2026-09-10 ~18:5xZ (Andrew-direct, D9 as a whole).",
-  "blocking": "Not blocked. Every outcome is ratified; the PRD is landed and RATIFIED; L5 decomposition is the COO lane's.",
+  "blocking": "Not blocked in the pipeline sense. EXECUTING at L7 under 2.0.0_SA_COO~F, round 2 (PRD v0.6, decomposition v0.2, both frozen mid-round per Rule 27); the issuance, the worker slots and the drain are the COO lane's. This field states the BLOCKING POSTURE and the owner only -- no task-order counts and no round-scoped snapshot, because a census written here goes stale silently and is not the authority. Live TO state: `.tools/to-check.py --project IRPT_FNTEND`. STANDING CONSTRAINT, not a blocker on the work: PORTAL IS FROZEN by Andrew-direct (\"nobody does any portal promotes until i say so\") -- this project commits to LOCAL portal DEV, does not push DEV, and does not bump the workspace gitlink; the promote and the gitlink bump wait behind his word.",
   "thread_counter": 0,
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FNTEND_20260910.md",

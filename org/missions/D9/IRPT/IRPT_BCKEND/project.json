@@ -33,7 +33,7 @@
   },
   "coo_lane": "2.0.0_SA_COO~B",
   "fabric_ruling": "laptop -- inherited from D9, placed LAPTOP 2026-09-10 ~18:5xZ (Andrew-direct, D9 as a whole).",
-  "blocking": "Not blocked. Round 1 EXECUTING: L6 issuance by 2.0.0_SA_COO~B -- 19 task orders on four worker slots (0.9.0_WK_IRPT_BCKEND~1..4), decomposition v0.1.1; the drain is the COO lane's.",
+  "blocking": "Not blocked. EXECUTING at L7 under 2.0.0_SA_COO~B, round 2 (PRD v0.13, decomposition v0.2, both frozen mid-round per Rule 27); the issuance, the worker slots and the drain are the COO lane's. This field states the BLOCKING POSTURE and the owner only -- it deliberately carries no task-order counts and no round-scoped snapshot, because a per-round census written here goes stale silently and is not the authority. Live TO state: `.tools/to-check.py --project IRPT_BCKEND`; live limb: the COO lane's /canonical-flow read. One item stands with Andrew and blocks a CLAIM, not the work -- channel row W4-S20, whether the four noncurrent synthetic-export versions in opal-data-ycharts are deleted too.",
   "thread_counter": 0,
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md",
