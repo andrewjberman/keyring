@@ -2437,6 +2437,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "world_is": "Two different modules already share the name `dispatch`. On the worktree's sys.path one shadows the other and a sibling cell's tests fail against it; in a zip that carried both, one would overwrite the other outright.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "The flat-packaging convention is what makes the shared libraries work at all, and this is its cost: the module namespace is GLOBAL across the whole investor-reporting tree, and nothing enforces uniqueness. A name census over every packaged basename would catch it in one pass and nobody runs one."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S23",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T16:53:42Z",
+    "one_line": "RT9-AC1 ARM (a) REQUIRES RETIRING A LEGACY PROBE THAT IS NOT IN THIS ORDER'S <paths>, AND THE SAME IS TRUE OF A SECOND LEGACY READER. The arm's words are 'legacy any-non-403 probes remaining: 0'. Censused with comp-find over infra/ at the merged tip: 39 hits across 6,589 files, resolving to FOUR code readers of `ycharts/session/current` -- two of them this project's and already on the versioned bundle shape (infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js from IB-s-8 and infra/aws/lambda/investor-reporting/ycharts/generate/transport.py from IB-s-9, both inside the grant), and two of them LEGACY ycharts-pipeline consumers that are NOT: infra/aws/lambda/ycharts-session-probe/lambda_function.py and infra/aws/lambda/ycharts-session-capture/index.mjs. The probe is the one the PRD names: its predicate is `rec[\"auth_ok\"] = rec.get(\"status\") is not None and rec.get(\"status\") != 403` under the comment 'Per A3 P2 section 3.4 a 403 fails the gate; any non-403 (200, or even a 400 bad-params) means the session authenticated successfully.' A 400 bad-params response therefore reads as a healthy authenticated session, which is precisely the false-green the v0.9 cutover exists to remove. THIS ORDER'S <paths> GRANT COVERS infra/aws/lambda/investor-reporting/ycharts/, infra/aws/ec2/investor-reporting-ycharts/ and the two ycharts Terraform roots -- it does NOT cover infra/aws/lambda/ycharts-session-probe/ or infra/aws/lambda/ycharts-session-capture/, and the face's own rule is that a path this order needs and does not hold is a BLOCKING row, never an override.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B to route -- either by extending this order's <paths> to the two legacy ycharts-pipeline readers, or by naming them OUT OF SCOPE BY PRD NAME, which is the escape the arm itself already provides ('N of N migrated to the versioned bundle shape OR EXPLICITLY OUT OF SCOPE BY PRD NAME'). Either route closes the arm; neither is this order's to choose, because one of them edits a served Lambda outside the grant and the other writes a scope decision into the record. 1.0.0_SA_CTO holds the YALP_MDSRC coordination the PRD names (the legacy `ycharts/credentials` consumer must not evict the runner); 3.0.0_SA_CVO grades the cutover at L9. FILED BEFORE ANY BUILD so the cell is not aimed at a file it cannot write.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'ycharts/session/current' infra/ --corpus all -> DENOMINATOR: 39 hit(s) across 6589 file(s) scanned; the code readers are ycharts_session.js (IB-s-8), generate/transport.py (IB-s-9), ycharts-session-capture/index.mjs and ycharts-session-probe/lambda_function.py, the rest being Terraform grants and briefs",
+        "infra/aws/lambda/ycharts-session-probe/lambda_function.py:134 -- 'rec[\"auth_ok\"] = rec.get(\"status\") is not None and rec.get(\"status\") != 403', with the comment at :132-133 'any non-403 (200, or even a 400 bad-params) means the session authenticated successfully'",
+        "The face's <paths> block lists infra/aws/lambda/investor-reporting/ycharts/, infra/aws/ec2/investor-reporting-ycharts/, infra/aws/terraform/investor-reporting/ycharts/ and .../ycharts-research-20260911/ -- neither ycharts-session-probe/ nor ycharts-session-capture/ appears",
+        "RT9-AC1 arm (a), verbatim: 'Census of readers of ycharts/session/current and of the legacy probe across the estate (denominator printed): N of N migrated to the versioned bundle shape or explicitly out of scope by PRD name; legacy any-non-403 probes remaining: 0'",
+        "The PRD's own v0.8 text names this as one of the five unproven boundaries: 'the production ycharts/session/current cookie-schema cutover with its competing readers (cookie-string vs cookie-array consumers; the legacy session-probe accepts any non-403 as authenticated)'"
+      ]
+    },
+    "spec_asserts": "RT9-AC1 arm (a) requires the legacy any-non-403 probe count to reach 0 and every reader of ycharts/session/current to be migrated to the versioned bundle shape or named out of scope by PRD name.",
+    "world_is": "Two of the four code readers -- the legacy probe carrying the non-403 predicate, and the legacy Puppeteer capture Lambda -- live under infra/aws/lambda/ycharts-session-probe/ and infra/aws/lambda/ycharts-session-capture/, neither of which is in this order's <paths>. The arm cannot reach 0 from inside the grant.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The arm already contains its own escape -- 'or explicitly out of scope by PRD name' -- so this may be a scope statement rather than a grant extension. That is the issuer's call and the reason this is filed rather than decided: writing 'out of scope' into the record on my own authority would be adjudicating a PRD boundary, and extending the grant myself would be the override the face forbids. Filed at the START of the cell, before anything was built against a file this order cannot write."
   }
 ]
 ```
