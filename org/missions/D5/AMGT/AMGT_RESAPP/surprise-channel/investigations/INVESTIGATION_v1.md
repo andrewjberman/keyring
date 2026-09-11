@@ -468,6 +468,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-s-9 part (d): 'evidence = its figures (from model_block_*.json) + AMGT-s-4's coverage_items for that key' -- figures are intended as a first-class evidence source; AC2's checker computes the resolvable id-space FROM a 'figure_ids' key it expects those files to carry.",
     "world_is": "AMGT-s-1's landed model_block_*.json files carry no 'figure_ids' key at all, so AC2's resolvable id-space is populated ENTIRELY by AMGT-s-4 coverage item_ids -- any sentence citing a figure as evidence would fail 'all evidence resolves' under AC2 exactly as written, even though the figure genuinely exists and is real Bloomberg data. This worker's producer.py therefore drafts company_description/ceo_bio/recommendation as EMPTY limbs (no figure evidence is citable) rather than cite an id that would never resolve -- figures are still read and their count reported in drafting_run_summary.json, never invented into evidence.",
     "notes": "Not this worker's <paths>/BOUNDS to fix: AMGT-s-1's deliverable format is that cell's own, already landed and committed; this worker did not edit it. A future round could mint stable figure ids (e.g. '<security_key>::<scope>::<fiscal_year>::<mnemonic>') and add a 'figure_ids' key to AMGT-s-1's own output, or amend AC2's checker to read the (scope,fiscal_year,mnemonic) tuples directly -- either is the owning seats' call, not this worker's to make unilaterally on a sibling's landed artifact."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W1-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~1",
+    "surfaced_at": "2026-09-11T00:05Z",
+    "one_line": "This worktree's .gitmodules is EMPTY, so the portal/ gitlink (pinned at 5907cbca98eb091124e38a32debefa355c1d4376) cannot be initialized here at all; the F10 precedent DESIGN_SPEC.md this cell's task text names as READ material was read instead from the shared main workspace checkout, which itself carries a DIFFERENT portal commit (30ca034bbaa4b9d2864d3acce826e3c2fa59be0a) that also does not contain the pinned commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git ls-tree HEAD -- portal` -> `160000 commit 5907cbca98eb091124e38a32debefa355c1d4376\tportal` (a gitlink); `ls -la portal/` in this worktree -> directory exists, 0 entries besides `.`/`..`",
+        "`git submodule update --init -- portal` -> `fatal: No url found for submodule path 'portal' in .gitmodules`; the `.gitmodules` file in this worktree exists but is 0 bytes (Read tool: 'the file exists but the contents are empty')",
+        "`C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\portal\\src\\pages\\SecurityScanner\\DESIGN_SPEC.md` exists in the shared main workspace checkout, read from there instead; `git rev-parse HEAD` in that checkout's portal/ -> `30ca034bbaa4b9d2864d3acce826e3c2fa59be0a`",
+        "`git cat-file -e 5907cbca98eb091124e38a32debefa355c1d4376` inside that same checkout's portal/ -> not found (rc!=0, no output) -- the exact pinned commit is unreachable from either location available to this worker",
+        "the file read is 560 lines exactly, matching this cell's own task text ('F10: 560 lines') -- circumstantial confidence the CONTENT is the same the task order describes, but the commit identity itself is unverified"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This cell's task text: 'Also present: ... the F10 precedent portal/src/pages/SecurityScanner/DESIGN_SPEC.md (READ)' -- implying the file is reachable in this worktree at the pinned vintage.",
+    "world_is": "The portal submodule cannot be populated in this worktree at all (no .gitmodules mapping), so the file was read from a DIFFERENT, unrelated checkout of the same repo at a DIFFERENT commit than this worktree's own gitlink pins -- a substitution this worker discloses rather than silently treats as equivalent. The line count (560) matching the task order's own citation is the only corroboration that the substitute is faithful; the commit hash itself was not, and could not be, verified to be the same content.",
+    "notes": "Not this worker's <paths>/BOUNDS to fix -- .gitmodules is not in this cell's write surface (lib/research/print/, deliverables/, the investigation file, this cell's own task-order file). This worker used the substitute read only for STYLE/GRAMMAR guidance (DESIGN_SPEC.md's section structure), not as a data source whose exact bytes are reproduced verbatim into this cell's own criteria, which limits how much a vintage mismatch here could actually mislead the deliverable. Whoever owns this fabric's submodule wiring may want a populated .gitmodules on this worktree class generally, not just for this cell."
   }
 ]
 ```
