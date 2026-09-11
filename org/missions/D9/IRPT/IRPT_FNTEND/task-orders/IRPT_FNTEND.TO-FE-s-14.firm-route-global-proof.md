@@ -41,6 +41,8 @@ Portal DEV @8cc43736 carries FE-s-13 and FE-s-17 merged and is RED: `bun run typ
 
 (6) Your own cell's smoke maps (`fe-s-14-*.json`) are envelope-wrapped v1 maps.
 
+(7) **(AMENDED BY THE ISSUER at the FE-s-14 report on row IRPT_FNTEND-W2-S10.)** `__tests__/fe-s-1/fixtures.test.ts:116` asserts `default.json`'s keys equal the round-1 flat slugs -- the very form item (5) retires. Update that ONE assertion to assert the keys equal the eleven DECLARED v1 paths read from `docs/contracts/investor-reporting/v1/routes.json` (the same set F14-AC16 grades); no other line of `__tests__/fe-s-1/` changes. The counterpart's paired test (`test_seam_paired.py`) asserting the OLD consumer form is the counterpart's file; it is named in your W2-S10 row and carried to L10, never edited here.
+
 ### ACCEPTANCE
 
 <criterion id="F14-AC1" cell_refs="FE-s-14"><invocation>cd <WS>/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun run typecheck; echo rc=$?</invocation><expect>rc=0</expect></criterion>
@@ -116,6 +118,7 @@ portal/src/api/endpoints/investor-reporting.ts
 portal/src/pages/InvestorReporting/contracts/
 portal/src/pages/InvestorReporting/__tests__/fe-s-13/
 portal/src/pages/InvestorReporting/__tests__/fe-s-17/
+portal/src/pages/InvestorReporting/__tests__/fe-s-1/
 portal/src/pages/InvestorReporting/state/
 portal/src/pages/InvestorReporting/tabs/
 portal/src/pages/InvestorReporting/export/
