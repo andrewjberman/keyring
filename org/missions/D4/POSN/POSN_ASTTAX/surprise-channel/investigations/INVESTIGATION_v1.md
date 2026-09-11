@@ -1199,3 +1199,227 @@ inventing market data; one records an act taken that the order did not name. Non
   }
 ]
 ```
+
+---
+
+## Rows appended by `0.9.0_WK_POSN_ASTTAX~14` at L7 (TO-T5-1, cell `AT3-s-5` -- THE BAR), 2026-09-11
+
+Eight rows from the gate cell. `S1` is the one that changes the round: the generator RUNNING in AWS
+predates every repair this project has committed, so the KeyError the PRD preserves as history is the
+live mechanism at the served plane. `S2` widens the retag set to eleven by subtraction over all 285
+registry rows; `S3` and `S4` name a second registry WRITER and a second live positioning PRODUCER that
+no document in the project has reached; `S6` records that the criterion's own named invocation can read
+11 percent of this worktree. `S5` and `S7` are findings about the bar's own text. None blocked the cell:
+all seven mechanical criteria were measured and the verdict is NO-GO.
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W14-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~14",
+    "surfaced_at": "2026-09-11T23:40:00Z",
+    "one_line": "THE KEYERROR IS NOT HISTORY -- IT IS THE LIVE MECHANISM AT THE SERVED PLANE. The generator RUNNING in AWS was built 2026-08-18 and raises KeyError: 'Structured' / 'Commodities' at calculate_allocations():239 on the ratified labels, measured by driving the DOWNLOADED DEPLOYED BYTES. Every repair the PRD cites as having killed that raise (AT2-s-6, AT2-s-1, AT3-s-1) exists only in the repo; nothing in rounds 2 or 3 deployed any of them, so a retag today does NOT silently zero -- it blanks the page for all four partner firms, exactly as the original DT brief said.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SPEC TEXT, quoted: PRD org/missions/D4/POSN/POSN_ASTTAX/prd/POSN_ASTTAX_PRD.md@3832ac543c s.4 C-RETAG-SAFETY -- 'THE LIVE MECHANISM (measured by TO-S7-1, round 2): SILENT ZEROING, NOT BLANKING. AT2-s-6 hardened the generator and KILLED the KeyError -- 0 of 17 hops RAISE. A retag today does NOT blank the page.' and, of the KeyError route, 'THE ORIGINAL MECHANISM, PRESERVED AS HISTORY AND NO LONGER OPERATIVE ... falsified by AT2-s-6'.",
+        "THE DEPLOYED BYTES, FETCHED NOT INFERRED: `aws lambda get-function --function-name yang-generate-positioning --query Code.Location` then a direct download of the package (23103 bytes). Its lambda_function.py is 94164 bytes, md5 cc79aff7506f8c39e17453f386c69551. The same file at 3ce0c0e372 is 115411 bytes, md5 96aedb53a9fcac4151517028c72ded42. IDENTICAL: False.",
+        "MARKER COUNTS, DEPLOYED vs HEAD, with controls: Commodities 0 vs 12, commodities 0 vs 7, Alternatives 0 vs 7, normalize_asset_class 0 vs 13, RATIFIED 0 vs 5, hedge 31 vs 5. POSITIVE CONTROL 'def lambda_handler' 1 vs 1 and 'positioning_data.json' 10 vs 11; NEGATIVE CONTROL 'ZZZ_NOT_PRESENT' 0 vs 0. The deployed bytes contain no five-class carrier at all.",
+        "EXERCISED, not read: the deployed bytes were imported and `generate_positioning_data()` was driven on one synthetic model with each of the eleven retag-set members in turn (deliverables/0.9.0_WK_POSN_ASTTAX~14/t5_ac3_bar_v2.py). BEFORE arm (the member's CURRENT registry value) returns a payload -- served label 'Hedge'/'Equity'/'Fixed Income', allocation keys ['cash','fixed_income','equity','hedge']. AFTER arm (the ratified label) raises, verbatim: `File \"...lambda_function.py\", line 239, in calculate_allocations / asset_allocations[asset_class] += weight * 100 / KeyError: 'Structured'`. 11 of 11 members raise; 0 of 11 produce an artifact.",
+        "THE BEFORE ARM IS THE POSITIVE CONTROL: it proves the harness CAN produce a payload from these same deployed bytes, so the AFTER raise is the code's behaviour and not the harness failing to run.",
+        "CORROBORATED ON A SECOND, INDEPENDENT INSTRUMENT -- the LIVE ARTIFACT ITSELF: s3://opal-data-portal-v2/json/positioning/positioning_data.json (LastModified 2026-09-11T11:06:24Z, 8123 B gzip) carries allocation objects with exactly four keys {cash, fixed_income, equity, hedge} in all five portfolios. The HEAD bytes emit seven keys (measured: ['cash','fixed_income','equity','hedge','structured','commodities','alternatives']). The served artifact therefore comes from the old generation, agreeing with the byte diff by a route that does not share its method.",
+        "VINTAGE ARITHMETIC: deployed LastModified 2026-08-18T18:34:43Z; AT3-s-1's terminal commit 425da33b79 is authored 2026-09-11 18:20:23 -0400 (2026-09-11T22:20Z). The running bytes predate the hardening by 24 days. The two SIBLING producers were checked the same way and are byte-identical to HEAD (holdings-attribution md5 c7307781723c4c37f295288930fa9b21, allocation-summary md5 06bf1c106208791b1ea3b3d852b01bb1), so this divergence is specific to the one file the round hardened."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD s.4 C-RETAG-SAFETY states the KeyError/page-blank mechanism is HISTORY and no longer operative, and that the live mechanism is silent zeroing at a page that still renders. Round 3's chain A (AT3-s-1 -> AT3-s-5 -> AT3-s-6) treats AT3-s-1's commit as the act that 'makes the bar meetable'.",
+    "world_is": "At the SERVED plane -- the only plane step (2) is about -- the KeyError is live. The bytes running in AWS were built 2026-08-18 and contain zero occurrences of Commodities, Alternatives or normalize_asset_class; driving them with a ratified label raises at calculate_allocations():239 for 11 of 11 members, and the live artifact's four-key allocation object independently confirms the old generation is what serves. Every repair cited as killing the raise is COMMITTED-NOT-DEPLOYED, and no cell in rounds 2 or 3 deploys anything.",
+    "notes": "BLOCKING because it inverts the hazard the retag was sequenced behind, in the dangerous direction: the project believes the failure mode is a quiet wrong number and it is actually a dead generator and a blank page for four partner firms. ARMED with the COO as disarm_owner because the disarm is a SCOPE act belonging to whoever cuts the round -- either a deploy cell for yang-generate-positioning (Terraform-owned per CLAUDE.md, not this worker's lane and not attempted) or an explicit deferral of AT3-s-6 until one exists. THE GENERAL SHAPE, offered because it will recur: every measurement in rounds 2 and 3 that grades this producer was taken against REPO BYTES, and a repo byte is a DESIRED state. The instrument that catches it is `lambda get-function` + a byte diff, and it costs one call. NOT CLAIMED: that the deploy is anyone's defect -- the rounds cut code cells and no cell was ever asked to deploy; the defect is that the bar was read at a plane where the difference cannot show."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W14-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~14",
+    "surfaced_at": "2026-09-11T23:40:00Z",
+    "one_line": "THE RETAG SET IS ELEVEN ROWS, NOT SEVEN OR EIGHT: derived by subtraction over all 285 registry rows, the ratified rules also reach UVXY (equity/Volatility), QBER (fixed_income/Volatility) and PDBC (equity/Commodities) -- three rows no document in this project names, two of which carry LIVE WEIGHT in a served artifact today.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SUBTRACTION, over the whole population rather than a recall list: a full scan of DynamoDB etf-classifications returned Count 285, ScannedCount 285, LastEvaluatedKey None (not a page). The cross-tab of asset_class x sub_asset_class sums to 285 of 285 cells. START 285 rows MINUS 274 rows whose asset_class is not 'hedge' and whose sub_asset_class is not 'Volatility' and which are not an equity-served commodity sub = 11 SURVIVORS.",
+        "THE SURVIVORS, with the ratified rule that reaches each: DBC, GLD, GSG, IAU, SLV, USO (asset_class=hedge, sub in {Gold,Silver,Oil,Commodities} -> Commodities); VIXY, VXX, UVXY, QBER (sub_asset_class=Volatility -> Structured); PDBC (served equity, sub Commodities -- C-VOL-HEDGE-STRUCTURED's other half, 'physical/crypto/commodity-index positions to Commodities, not Equity').",
+        "CONTROL 1, the inherited claim re-measured: the hedge bucket IS exactly seven -- ['DBC','GLD','GSG','IAU','SLV','USO','VIXY']. The PRD is right about the bucket and the bucket is not the set.",
+        "CONTROL 2, the read that finds the extras: every row with sub_asset_class='Volatility' at ANY asset_class -- QBER (fixed_income), UVXY (equity), VIXY (hedge), VXX (equity). Four, not two. The PRD names VIXY and VXX and stops.",
+        "CONTROL 3: rows served non-hedge whose sub_asset_class is a commodity sub -- exactly one, PDBC.",
+        "THEY ARE NOT DORMANT: json/positioning/holdings_attribution_data.json (LastModified 2026-09-04T13:51:29Z, 386689 B) carries 31 rows for retag-set members, and they are PDBC (4 rows), QBER (3), UVXY (9) and VXX (15) -- three of the four are the newly-derived ones. VXX is the only member with weight in positioning_data.json, but it is NOT the only member with live served weight.",
+        "AND THE SAME THREE ARE HARDCODED IN THE FRONTEND: portal src/pages/Attribution/constants/etf-categories.ts@e85f6eb84f :59 QBER Fixed Income, :94 UVXY Equity, :95 VXX Equity, :98 PDBC Equity."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD s.4 C-VOL-HEDGE-STRUCTURED states the retag population as 'SEVEN tickers: SIX commodities (DBC, GLD, GSG, IAU, SLV, USO) and ONE volatility (VIXY)', plus VXX named separately as 'currently mis-served equity'. TO-T5-1's T5-AC1 invocation enumerates exactly eight keys and invites a differing set to be stated.",
+    "world_is": "Eleven rows satisfy the ratified membership rules as written. UVXY and QBER carry sub_asset_class='Volatility' -- the exact property that moves VIXY and VXX -- and PDBC carries sub_asset_class='Commodities' while served 'equity', the exact property that moves the six. All three were found by enumerating over the whole table rather than by reading the eight keys the criterion supplies.",
+    "notes": "Stated per the criterion's own invitation, not as a correction of anyone: the eight-key invocation is an input, and the cell was told to re-derive. WHY ARMED: a retag scoped to seven or eight leaves three rows carrying a legacy label under a taxonomy that is supposed to be exhaustive, so FWD-1 ('every holding lands in exactly one of five') cannot grade REALIZED afterwards, and the gap is invisible because the rows that are left behind look exactly like the ones nobody moved on purpose. TWO OF THE THREE ARE EDGE CALLS AND I DO NOT RESOLVE THEM: UVXY is unambiguous (it is VXX's shape exactly), but QBER is served fixed_income and the ratified sentence contrasts volatility with EQUITY, and PDBC is a commodity-index strategy rather than a physical holding -- C-MEMBERSHIP-AT-L5 reserves both to the cells, so they travel as DERIVED CANDIDATES with their rule cited, never as a ruling by this worker."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W14-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~14",
+    "surfaced_at": "2026-09-11T23:40:00Z",
+    "one_line": "THE REGISTRY HAS A SECOND WRITER AND THE DURABILITY CELL HARDENED ONLY THE FIRST: data/black_diamond/scripts/classification/seed_canonical_securities.py --upload --yang does update_item SET asset_class on etf-classifications for 57 curated rows, FOUR of which are retag-set members (VXX, UVXY, QBER, PDBC), from a vocabulary of exactly two values -- so one run reverts the retag for them and AT3-s-4's fix cannot see it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SECOND WRITER, at 3ce0c0e372: data/black_diamond/scripts/classification/seed_canonical_securities.py :30 `YANG_TABLE = 'etf-classifications'`; :210 `yang_table = dynamodb.Table(YANG_TABLE) if sync_yang else None`; :262-272 `yang_table.update_item(Key={'ticker': ticker}, UpdateExpression='SET asset_class = :ac, sub_asset_class = :sac, #n = :n, last_updated = :ts, updated_by = :ub', ... ':ac': sec['asset_class'] ...)`. Its docstring says so out loud at :10-11: 'It also syncs these records into the Yang etf-classifications table so both tables stay consistent.'",
+        "WHICH MEMBERS IT CARRIES, by ast.literal_eval over its own CANONICAL_SECURITIES list (57 rows), checked against the 11-member retag set: VXX asset_class='equity', UVXY asset_class='equity', QBER asset_class='fixed_income', PDBC asset_class='equity'. 4 of 11. The other seven are absent.",
+        "ITS VOCABULARY IS TWO VALUES, printed as its own enum: 'fixed_income' 33 rows, 'equity' 24 rows. It has no Structured and no Commodities, so it cannot preserve a retagged value -- it can only overwrite it with one of two legacy labels.",
+        "IT IS A DIFFERENT FILE FROM THE ONE THE ROUND FIXED: AT3-s-4 / TO-T4-1's grant and its measured subject are infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py (see row POSN_ASTTAX-Z-W13-S2, which measured that seeder's empty-string crash and disarmed it in the same commit). Nothing in that cell reads or guards seed_canonical_securities.py.",
+        "THE SAME SCRIPT IS ALSO THE SOURCE OF THE OTHER DIRECTION: data/black_diamond/scripts/classification/seed_bd_securities.py:21 `SOURCE_TABLE = 'etf-classifications'` copies the Yang table INTO bd-securities, which is the table the BD and COT gold ETFClassifiers read (data/{black_diamond,cot}/scripts/gold/lib/etf_classifier.py, default table_name='bd-securities'). So the two stores are wired in BOTH directions by two scripts neither of which the project has looked at.",
+        "NOT CLAIMED, and deliberately not measured: whether either script has a scheduled trigger. Row W13-S1/Z-S4 established the sibling seeder's trigger is LATENT rather than absent; I did not repeat that census for this file, so the hazard is stated as 'a manual run reverts', never as 'a job will revert'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomp round 3 cell AT3-s-4 frames registry durability as a property of ONE producer -- 'seed-etf-classifications.py does an unconditional full-item put ... Make the registry hold its values against a re-seed' -- and TO-T4-1 closed on that file. PRD s.4 step (3) requires the retag to land in BOTH stores and cites AT3-s-4's refusal as the mechanism that makes it durable.",
+    "world_is": "etf-classifications has at least TWO writers in the repo. The second, seed_canonical_securities.py, writes asset_class by update_item for 57 curated tickers from a two-value vocabulary, and four of those tickers are retag-set members including VXX -- the only member with live weight in positioning_data.json. A retag that survives the hardened seeder is still reverted by this one, and no gate, guard or cell in the project points at it.",
+    "notes": "This is CLAUDE.md's never-widen clause read at the registry rather than at a served key: a property with N writers needs N rules read, and N here is 2, not 1. THE SMALLEST DISARM, offered and not taken (out of my lane and out of this order's paths): extend AT3-s-4's preserve-don't-clobber discipline to seed_canonical_securities.py's yang_table.update_item, or drop asset_class from that UpdateExpression entirely so the sync carries names and sub-classes but never top-level class. NOT FIXED HERE: this order is READ-ONLY and the file is outside its grant."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W14-S4",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~14",
+    "surfaced_at": "2026-09-11T23:40:00Z",
+    "one_line": "A SECOND, LIVE PRODUCER WRITES AN ARTIFACT CALLED positioning_data.json AND NOTHING IN THIS PROJECT HAS EVER NAMED IT: data/etfs/scripts/gold/etf_positioning_publisher.py imports the same ETFClassifier and publishes s3://opal-data-portal-v2/platinum/etfs/positioning_data.json (148526 B, rewritten 2026-09-11T13:01:27Z) with a FOUR-KEY allocation literal -- a fourth copy of the shape the round hardened in one file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE PRODUCER, at 3ce0c0e372: data/etfs/scripts/gold/etf_positioning_publisher.py :66 `from etf_classifications_dynamodb import ETFClassifier`; :86 `SERVE_LEAF = 'positioning_data.json'`; :84-85 SERVE_BUCKET 'opal-data-portal-v2' / SERVE_ROOT 'platinum/etfs'; :7-8 its own header names the served URL `/api/general/etfs/positioning_data.json`.",
+        "IT IS LIVE AND FRESH: `s3api head-object` on platinum/etfs/positioning_data.json returns LastModified 2026-09-11T13:01:27+00:00, ContentLength 148526, ETag 367fba76d3537fae874bd7db6c23279f -- rewritten today, about two hours after the Models artifact.",
+        "MEASURED IN THE SERVED BYTES, not in the source: 189 rows carry an asset_class key, values 'Equity' (181) and 'Fixed Income' (8), label-grouped weights 3.953400 and 0.046300 summing to 3.999700 across four books; and every book's allocation object is exactly {\"cash\", \"fixed_income\", \"equity\", \"hedge\"} -- e.g. /portfolios/PFDE/allocation = {\"cash\": 0, \"fixed_income\": 0.4, \"equity\": 99.57, \"hedge\": 0.0}.",
+        "THE SOURCE OF THAT SHAPE: :469-472 builds the allocation object from four hardcoded gold columns, `\"cash\": _n(b[\"alloc_cash\"]), \"fixed_income\": ..., \"equity\": ..., \"hedge\": _n(b[\"alloc_hedge\"])`. There is no fifth key and no else; a Commodities or Structured weight has nowhere to land.",
+        "AND ITS PORTAL CONSUMER CARRIES A FOURTH COPY: portal src/pages/Positioning/shared/etfAdapter.ts@e85f6eb84f :105 `const ZERO_ALLOCATION = { cash: 0, fixed_income: 0, equity: 0, hedge: 0 }`, used at :126-127 for both allocation and delta.",
+        "WHY IT WAS INVISIBLE UNTIL NOW: it lives under data/, outside this worktree's sparse cone, so the criterion's own named invocation could not read it -- comp-find printed '29824 UNREADABLE, NOT searched' (see W14-S6). It surfaced only on a census run out of the git object store.",
+        "BOUNDED HONESTLY: 0 of the 11 retag-set members hold a row in this artifact at this vintage, because its books are the four Opal ETFs and its holdings are their underlying securities. So the surface is REACHABLE BY CODE and CARRIES NO MEMBER TODAY -- it is graded VACUOUS-PASS on clause (a) and FAIL on (b)/(d) in this cell's table, never PASS."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD s.4 C-RETAG-SAFETY names the surfaces a retagged value reaches as positioning_data.json (the Models artifact), a portal tab, and the yang-generate-allocation-summary sibling writing holdings_attribution_data.json, and the worker quote it adopts is 'Data reaches three lambdas; the code hardening reaches one.'",
+    "world_is": "A FOURTH consumer of the same registry exists, it is not a lambda, and it publishes a second live artifact whose leaf name is also positioning_data.json. It reads ETFClassifier directly, it was rewritten today, and its allocation object is the same four-key shape the round's hardening removed from exactly one file. The sentence 'data reaches three lambdas' undercounts by at least one producer and by a whole lane -- this one is a DS gold script, not a lambda, so a census scoped to infra/aws/lambda cannot see it however carefully it is run.",
+    "notes": "Filed as the clearest instance of this cell's AC2 finding rather than as a defect in the publisher, which is a correct and carefully-built producer for its own contract. TWO CONSEQUENCES the issuer may want: (1) any future 'every served surface' claim must enumerate by REGISTRY CONSUMER, not by lambda directory -- the reach census in deliverables/0.9.0_WK_POSN_ASTTAX~14/t5_readings.txt R6 lists all 43 code-plane files that reference the registry or its module, of which 21 are outside infra/aws/lambda entirely; (2) the same leaf name on two live keys means 'positioning_data.json' is now an ambiguous referent in this project's prose, and both round-3 and round-4 text uses it unqualified."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W14-S5",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~14",
+    "surfaced_at": "2026-09-11T23:40:00Z",
+    "one_line": "THE NON-DISCRIMINATING COLUMN DISCRIMINATES UNDER THE BAR'S OWN BEFORE: the PRD's table shows allocation['commodities'] at 2.5 both sides, but that BEFORE is an input ALREADY TAGGED commodities on old bytes. Measured with BEFORE as the member's LIVE pre-retag registry value -- which is what step (2) actually compares -- the same column reads 0 then 2.5. Both tables are true about different questions, and a reader who takes the warning literally will reject a column that is in fact informative.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SPEC'S TABLE, quoted from PRD@3832ac543c s.4: BEFORE served label 'Unknown', LABEL-GROUPED 0.000, allocation['commodities'] 2.5; AFTER 'Commodities', 0.025, 2.5 -- under the heading 'THE ALLOCATION-DICT COLUMN DOES NOT MOVE'.",
+        "ITS BEFORE IS DEFINED IN ROW W10-S1's own words: the AC3 harness 'drives the real generate_positioning_data on the 651ffd4f16 bytes with a PROBE ticker tagged commodities'. So BEFORE = already-retagged INPUT, OLD CODE. That isolates the code repair, which is exactly what AT3-s-1 needed to show.",
+        "THE BAR'S BEFORE IS DIFFERENT: step (2) compares the world before the retag with the world after it, and before the retag the registry says 'hedge' (DBC/GLD/GSG/IAU/SLV/USO/VIXY) or 'equity' (VXX/UVXY/PDBC) or 'fixed_income' (QBER) -- measured this session on the live table.",
+        "MEASURED ON THAT BEFORE, HEAD bytes, all 11 members (t5_ac3_bar_v2.py): allocation[target_key] reads 0 BEFORE and 2.5 AFTER (1.5 for VXX at its real 0.015 weight). The column MOVES. On the DEPLOYED bytes the same column reads <ABSENT> BEFORE and is unobtainable AFTER because the run raises.",
+        "SO THE TWO COLUMNS DO NOT DISAGREE IN MY ARMS, and the criterion asked me to say so explicitly: label-grouped weight and allocation-dict entry both move 0 -> weight at HEAD, and both are unavailable at DEPLOYED. The warning's substance is intact -- the LABEL-GROUPED column is the one that answers the clause -- but its stated evidence does not reproduce under the bar's own comparison."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD s.4 and TO-T5-1 both assert, in bold, that the allocation-dict entry 'reads IDENTICALLY in the healthy world and the broken one' and that '(b) evidence that does not move between BEFORE and AFTER is the wrong column'.",
+    "world_is": "That is true of AT3-s-1's BEFORE (an input already tagged with the new class, run on pre-repair bytes) and false of the bar's BEFORE (the member's current registry value, run on either byte set). Under the comparison step (2) actually names, the dict entry moves 0 -> 2.5, so a reader could satisfy clause (b) from it and be RIGHT, for a reason the spec tells them is wrong.",
+    "notes": "INERT and filed for precision, not for rescue: reading the LABEL-GROUPED column remains strictly better, because it is the number a consumer can reproduce from the served payload without knowing the producer's internal key spelling, and because the dict entry is keyed on a NORMALISED raw value (W10-S3's alias table) while the clause is stated in ratified LABELS. The warning should be kept and its worked example re-stated against a pre-retag registry value, or the two BEFOREs should be named apart -- 'code BEFORE' and 'data BEFORE' -- because this cell needed both and the PRD supplies one word for them."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W14-S6",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~14",
+    "surfaced_at": "2026-09-11T23:40:00Z",
+    "one_line": "THE CRITERION'S OWN NAMED INVOCATION CANNOT PRODUCE THE SET IT ASKS FOR, AND THIS TIME THE BLINDNESS IS IN THE SUPERPROJECT, NOT THE SUBMODULE: run verbatim in this cone-mode worktree, comp-find reports 1794 hits across 3655 files with 29824 UNREADABLE of 33520 -- it can read 11 percent of the repo. An object-store census at the same commit finds 55788 hits across 629 files; 528 token-carrying files are invisible to the criterion's instrument, including the second live producer in W14-S4.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CRITERION, verbatim: T5-AC2 <invocation> `timeout 300 comp-find 'asset_class|assetClass' --all --files` and <expect> 'the printed DENOMINATOR (files scanned) and the full file list -- never a page'.",
+        "RUN VERBATIM, rc=0, output quoted: 'DENOMINATOR: 1794 hit(s) across 3655 file(s) scanned in scope [corpus=all] | 2 EPHEMERAL-FLOOR, NOT searched (--corpus raw reads these) | 29824 UNREADABLE, NOT searched | 39 BINARY, NOT searched'. It lists 101 files.",
+        "THE CAUSE, measured rather than assumed: `git sparse-checkout list` in /c/tmp/wk-posn-t5 prints exactly eight cones -- .tools, infra/aws/lambda/v2_portal, org/missions, org/modules, org/projects, org/ref, org/standards, org/surprise_channel. `git ls-files` reports 33516 entries (the full index) while only the cone exists on disk, so comp-find enumerates everything and can read only what is checked out.",
+        "THE SECOND INSTRUMENT, which is not a re-run: a census over the git OBJECT STORE at the same commit (deliverables/0.9.0_WK_POSN_ASTTAX~14/t5_ac2_objstore_census.py) reads blobs by sha and is unaffected by the cone. At 3ce0c0e372 it reports 33516 tree entries = 33514 blobs + 2 gitlinks (models/factor_scanner, portal), READ 33514 of 33514, arithmetic closed, and 55788 occurrences across 629 files.",
+        "WHAT THE DIFFERENCE CONTAINS, not merely how big it is: of the 43 code-plane files that reference the registry or its module, 21 sit outside infra/aws/lambda entirely -- data/etfs (the second live positioning producer, W14-S4), data/black_diamond (the second registry writer, W14-S3), data/cot, data/assets/runners_49f (which rewrites hedge to alternatives), data/inf. Every one of them is invisible to the criterion's invocation in this worktree.",
+        "IT IS THE SAME SHAPE AS W11-S1 AND A DIFFERENT INSTANCE: that row records comp-find being unable to cross into the portal SUBMODULE. This one is the SUPERPROJECT's own sparse cone. A worker who reads W11-S1, uses the object-store route for portal, and then trusts comp-find for everything else still gets an 11-percent census."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "T5-AC2 names comp-find as the invocation that yields the printed denominator and full file list from which the surface set is to be derived by subtraction, and the cell's own star clause says the surface set is 'THE PART WITH NO PRIOR ART'.",
+    "world_is": "In a cone-mode worktree comp-find's denominator certifies a SWEEP of 3655 files, not a population of 33516, and it discloses this in a line ('29824 UNREADABLE') that reads like a footnote beside a number that reads like an answer. A subtraction performed over that sweep would have produced a surface set missing the second registry writer, the second live positioning producer and the 49F class-rewriter -- and it would have printed a denominator while doing it.",
+    "notes": "ARMED, not INERT, and the reason is Rule 24's own failure mode: a subtraction over the wrong domain arrives WITH a printed denominator and therefore reads as MEASURED. The disarm is one line in the order -- name the object-store census as the required instrument for any 'every surface' claim taken from a sparse worktree, or issue such cells against a full checkout -- and it belongs to the issuer. NOT CLAIMED: that comp-find is defective. It is honest: it printed its own blindness on its own denominator line. The defect is a criterion that reads that line as a footnote."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W14-S7",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~14",
+    "surfaced_at": "2026-09-11T23:40:00Z",
+    "one_line": "CLAUSE (b) IS UNSATISFIABLE FOR TEN OF ELEVEN MEMBERS AT THE LIVE ARTIFACT: it requires the label-grouped weight to be NON-ZERO and EQUAL TO ITS PRE-RETAG WEIGHT, but only VXX holds weight in positioning_data.json, so for the other ten the pre-retag weight IS zero and the two halves of the clause contradict each other. Graded at a synthetic weight through the real code and labelled as such, never silently.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CLAUSE, verbatim from PRD@3832ac543c step (2): 'for EVERY ticker in the retag set ... (b) its LABEL-GROUPED weight is NON-ZERO and equal to its pre-retag weight'.",
+        "THE LIVE WEIGHTS, measured on s3://opal-data-portal-v2/json/positioning/positioning_data.json (LastModified 2026-09-11T11:06:24Z): of the eleven members, exactly one appears -- VXX, at weight 0.0099 (AGG book), 0.015 (LT) and 0.02 (ULT). The other ten hold zero rows, so their pre-retag label-grouped weight is 0.000.",
+        "SO THE TWO HALVES CONFLICT for those ten: a weight that is EQUAL TO ZERO cannot also be NON-ZERO. The clause can only be read as conditional -- 'if it is held, its weight survives' -- and the PRD does not say so.",
+        "HOW THIS CELL GRADED IT INSTEAD, disclosed rather than papered over: each member was driven through the real generator at a synthetic 0.025 weight (VXX at its real 0.015), so the measurement answers 'would this member's weight survive the retag' rather than 'does its current weight survive'. On HEAD bytes all eleven return the input weight exactly; on the DEPLOYED bytes all eleven raise.",
+        "A SECOND ARTIFACT MAKES THE POINT SHARPER, not weaker: json/positioning/holdings_attribution_data.json carries live rows for FOUR members (PDBC, QBER, UVXY, VXX -- 31 rows), so 'the retag set is mostly unheld' is true of one artifact and false of another. Any restatement of clause (b) has to name the artifact it measures the pre-retag weight in."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Step (2) states clause (b) as a conjunction that must hold for EVERY ticker in the retag set on EVERY served surface.",
+    "world_is": "On the Models artifact ten of eleven members hold no weight at all, so the conjunction is unsatisfiable for them by arithmetic and not by any defect in the world; on the attribution artifact four members do hold weight. The clause is well-formed only once it names an artifact and admits the held/unheld split.",
+    "notes": "INERT: it changed no verdict here, because clause (b) fails on the deployed generator for every member anyway and the NO-GO does not rest on this reading. Recorded because it will decide how round 4's bar is re-grained: the honest restatement is 'for every ticker in the retag set that HOLDS WEIGHT on that surface, the label-grouped weight is unchanged; for every ticker that does not, the surface carries its LABEL with a zero weight rather than dropping it' -- the second half is what actually catches the 'Unknown' regression for an unheld member, and the clause as written cannot."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W14-S8",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~14",
+    "surfaced_at": "2026-09-11T23:40:00Z",
+    "one_line": "THE FRONTEND HOLDS ITS OWN TICKER-TO-CLASS TABLE AND IT OVERRIDES THE REGISTRY FOR FOUR RETAG-SET MEMBERS: portal Attribution/constants/etf-categories.ts hardcodes QBER Fixed Income, UVXY Equity, VXX Equity and PDBC Equity by ticker, and Positioning's copy hardcodes UVXY. So even a perfect retag plus a widened order array leaves these four rendering under their old class -- the hardcoded ORDER LIST is not the only thing the retag has to get past.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/pages/Attribution/constants/etf-categories.ts@e85f6eb84f -- :59 'QBER': { assetClass: 'Fixed Income', segment: 'Volatility' }; :94 'UVXY': { assetClass: 'Equity', segment: 'Volatility' }; :95 'VXX': { assetClass: 'Equity', segment: 'Volatility' }; :98 'PDBC': { assetClass: 'Equity', segment: 'Commodities' }. Its type at :7 is assetClass: 'Fixed Income' | 'Equity' | 'Cash' | 'Hedge'.",
+        "portal src/pages/Positioning/constants/etf-categories.ts@e85f6eb84f -- :66 'UVXY': { assetClass: 'Equity', segment: 'Volatility' }; type at :5 is assetClass: 'Fixed Income' | 'Equity' | 'Cash' -- three values, and it does not even carry 'Hedge'.",
+        "THESE ARE TWO SEPARATE COPIES, not one shared module: 86 lines and 119 lines, different ticker sets (Attribution has VXX/PDBC/QBER, Positioning does not) and different segment vocabularies ('Intermediate Duration' vs 'Intermediate'). Neither imports the other.",
+        "THE THREE NEW LABELS ARE ABSENT FROM THE RENDER PLANE ENTIRELY, measured with controls over 557 src/ blobs at the portal pin: 'Commodities' 23 files / 69 occurrences, 'Alternatives' 13 / 20, 'Structured' 6 / 15 -- and every one of the 15 'Structured' hits is the string 'Structured Credit', a FIXED-INCOME segment (chartColors.ts:292, holdings-shared.tsx:85/:136/:216, Attribution/constants/etf-categories.ts:49/:50/:116, HoldingsTab.tsx:248/:543). POSITIVE CONTROLS in the same sweep: 'Fixed Income' 44 files / 248 occurrences, 'Equity' 57 / 274. NEGATIVE CONTROL 'ZZZ_NONEXISTENT_TOKEN' 0 / 0.",
+        "SO THE RATIFIED LABEL 'Structured' HAS NO REPRESENTATION AND A NAME COLLISION: it appears nowhere as a top-level class, and the token it would be confused with already means a fixed-income segment with its own colour (PALETTE.green700).",
+        "AND THE SECOND RATIFIED SURFACE DISAGREES WITH THE FIRST: src/pages/CapitalMarketAssumptions/types.ts:10 uses 'Equities' (not the ratified 'Equity'), and ExpectationsTab.tsx:98-102 maps BOTH 'Alternatives' and 'Commodities' onto ASSET_CLASS.alternatives -- two ratified classes sharing one colour token, which is FWD-4's bar read on the surface C-TWO-SURFACES says must agree with Positioning."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-ONE-SOURCE: 'the classification originates in ONE place and flows to every surface; no surface re-implements it', SETTLED at v0.4 to mean the served TABLE is the one place. The known frontend collapse site is recorded as the hardcoded assetClassOrder at HoldingsTab.tsx:1392-1394.",
+    "world_is": "Two portal pages each carry their own ticker-to-asset-class table, with different memberships and different type unions, and between them they pin four retag-set members to the legacy classes by ticker. The hardcoded ORDER ARRAY and the hardcoded TICKER MAP are two independent overrides of the registry on the same page: widening the order array alone would make the group renderable and still leave these four tickers sorted into Equity/Fixed Income by the frontend's own table.",
+    "notes": "ARMED against AT3-s-6 and against any future 'widen the order array' remedy, which is the obvious fix and is not sufficient. NOT FIXED AND NOT FIXABLE HERE: portal is FROZEN by Andrew's standing word on both fabrics, and this order forbids editing, building or staging anything under portal/ -- reading is all that was done. The remedy is a scope call for the issuer and ultimately Andrew, because it needs the freeze lifted on at least two constants files; it is priced in this cell's T5-AC7 list."
+  }
+]
+```
