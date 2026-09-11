@@ -95,15 +95,15 @@ Runtime limitation: the canonical surprise watcher was exercised in `once` mode;
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v2"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
+      "at": "2026-09-11T11:09:15Z"
     }
   },
   {
@@ -121,15 +121,15 @@ Runtime limitation: the canonical surprise watcher was exercised in `once` mode;
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v2"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
+      "at": "2026-09-11T11:09:15Z"
     }
   },
   {
@@ -147,15 +147,15 @@ Runtime limitation: the canonical surprise watcher was exercised in `once` mode;
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v2"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
+      "at": "2026-09-11T11:09:15Z"
     }
   },
   {
@@ -173,15 +173,15 @@ Runtime limitation: the canonical surprise watcher was exercised in `once` mode;
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v2"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
+      "at": "2026-09-11T11:09:15Z"
     }
   },
   {
@@ -216,3 +216,7 @@ Runtime limitation: the canonical surprise watcher was exercised in `once` mode;
 ## C-S10 closure verification, 2026-09-11
 
 CTO source fix `b750649397d413a62bc4ad2d4103fc9035a5f6cc` independently passed seven visible-source and seven ignored-dependency controls at `2026-09-11T09:30:24Z`. C-S10 alone advances to DISARMED / REMEDIATED / closed. Evidence: `org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_C_S10_CLOSURE_20260911.md`. Historical row evidence remains unchanged; the bundled round-1 W1-S3 row is not closed by this act.
+
+## Canonical round 3 corrective closure
+
+CTO mapping 21335 identifies informal round 2b as canonical v3. Independent regrades in ADJUDICATION_v3 at review pin `bb654d2d4f401e9aa1dea7d59932f50ff6395abc` close C-S12, C-S13, C-S14 and C-S15 through monotone clock updates only. C-S16 remains OPEN; its consumer can discard an unresolved corrected result and omit the derivation pin (C-S19/C-S20 in REMEDIATION_v3). Evidence: `org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND3_CVO_EVIDENCE_20260911.json`. Historical grades, owners and evidence lists remain unchanged.

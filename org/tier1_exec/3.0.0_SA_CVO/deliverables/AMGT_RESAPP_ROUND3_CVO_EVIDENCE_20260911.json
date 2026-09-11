@@ -1,0 +1,474 @@
+{
+  "head": "bb654d2d4f401e9aa1dea7d59932f50ff6395abc",
+  "at": "2026-09-11T11:03:14Z",
+  "tests": "23 passed in 4.63s",
+  "salience": {
+    "PASS": "12345",
+    "PROVISIONAL": "[WARN] 12345 [PROVISIONAL]",
+    "REFUSE": "[BLOCKED] [REFUSED: unit never confirmed against a field map]"
+  },
+  "verification_table": [
+    {
+      "check1": false,
+      "present": false,
+      "identity_bound": false,
+      "check3": false,
+      "actual": "unresolved"
+    },
+    {
+      "check1": false,
+      "present": false,
+      "identity_bound": false,
+      "check3": true,
+      "actual": "impostor"
+    },
+    {
+      "check1": false,
+      "present": false,
+      "identity_bound": true,
+      "check3": false,
+      "actual": "unresolved"
+    },
+    {
+      "check1": false,
+      "present": false,
+      "identity_bound": true,
+      "check3": true,
+      "actual": "impostor"
+    },
+    {
+      "check1": false,
+      "present": true,
+      "identity_bound": false,
+      "check3": false,
+      "actual": "unresolved"
+    },
+    {
+      "check1": false,
+      "present": true,
+      "identity_bound": false,
+      "check3": true,
+      "actual": "impostor"
+    },
+    {
+      "check1": false,
+      "present": true,
+      "identity_bound": true,
+      "check3": false,
+      "actual": "official"
+    },
+    {
+      "check1": false,
+      "present": true,
+      "identity_bound": true,
+      "check3": true,
+      "actual": "official"
+    },
+    {
+      "check1": true,
+      "present": false,
+      "identity_bound": false,
+      "check3": false,
+      "actual": "official"
+    },
+    {
+      "check1": true,
+      "present": false,
+      "identity_bound": false,
+      "check3": true,
+      "actual": "official"
+    },
+    {
+      "check1": true,
+      "present": false,
+      "identity_bound": true,
+      "check3": false,
+      "actual": "official"
+    },
+    {
+      "check1": true,
+      "present": false,
+      "identity_bound": true,
+      "check3": true,
+      "actual": "official"
+    },
+    {
+      "check1": true,
+      "present": true,
+      "identity_bound": false,
+      "check3": false,
+      "actual": "official"
+    },
+    {
+      "check1": true,
+      "present": true,
+      "identity_bound": false,
+      "check3": true,
+      "actual": "official"
+    },
+    {
+      "check1": true,
+      "present": true,
+      "identity_bound": true,
+      "check3": false,
+      "actual": "official"
+    },
+    {
+      "check1": true,
+      "present": true,
+      "identity_bound": true,
+      "check3": true,
+      "actual": "official"
+    }
+  ],
+  "bare_bool_rejected": true,
+  "direction_cases": {
+    "empty": null,
+    "future_only": null,
+    "exact": [
+      "2025-12-31",
+      99
+    ],
+    "mixed": [
+      "2025-12-30",
+      98
+    ]
+  },
+  "future_only_join": {
+    "2025": {
+      "fiscal_year": "2025",
+      "period_end": "2025-12-31",
+      "IS_EPS": 1,
+      "price": null,
+      "price_date": null,
+      "gap_days": null
+    }
+  },
+  "current_consumer": {
+    "original": {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2025",
+      "mnemonic": "PX_LAST",
+      "value": 146.58,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi",
+      "currency_caveat": null
+    },
+    "wired": {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2025",
+      "mnemonic": "PX_LAST",
+      "value": 132.23,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2025-03-31",
+      "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+      "currency_caveat": null
+    }
+  },
+  "unresolved_overlay_control": {
+    "kind": "synthetic future-only input at BABA fiscal period; no live artifact altered",
+    "injected_corrected_row": {
+      "fiscal_years": [
+        {
+          "fiscal_year": "2025",
+          "period_end": "2025-03-31",
+          "IS_EPS": 55.12,
+          "price": null,
+          "price_date": null,
+          "gap_days": null
+        }
+      ]
+    },
+    "loaded_overlay": {},
+    "consumer_price": {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2025",
+      "mnemonic": "PX_LAST",
+      "value": 146.58,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi",
+      "currency_caveat": null
+    },
+    "render_contains_old_146_58": true
+  },
+  "identity_read_gate_inferred": {
+    "admitted": [
+      "control"
+    ]
+  },
+  "amended_ac3": {
+    "files": [
+      "lib\\research\\lists\\impostor.py",
+      "lib\\research\\lists\\build_lists.py",
+      "lib\\research\\lists\\tests\\test_impostor.py"
+    ],
+    "hits": []
+  },
+  "old_ac3_hits": [
+    "lib\\research\\lists\\rot.py"
+  ],
+  "proofs": [
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-r-1.fiscal-year-join-served-correct.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-rb-1.fiscal-join-direction-correct.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-rb-2.fiscal-block-wired-to-consumer.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-s-1.model-block-bloomberg-covered-name.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-s-3.provenance-face-beside-every-figure.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-s-5.print-renderer-design-spec-then-adams-artifact.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~2\\AMGT_RESAPP.TO-AMGT-r-4.sa-coverage-re-exercise.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~2\\AMGT_RESAPP.TO-AMGT-s-2.on-demand-pull-the-seam-design-then-build.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-r-10.check-face-marker-in-the-reading.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-rb-10.check-face-salient-warning.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-s-12.identity-layer-the-root.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-s-4.coverage-reader-non-sa-sources.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-s-9.drafting-face-marked-beside-its-evidence.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~4\\AMGT_RESAPP.TO-AMGT-r-12.identity-coverage-pass.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~4\\AMGT_RESAPP.TO-AMGT-rb-12.identity-decision-note-correction.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~4\\AMGT_RESAPP.TO-AMGT-s-8.peer-set-comparable-or-absent-with-a-reason.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~5\\AMGT_RESAPP.TO-AMGT-r-15.impostor-and-clause.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~5\\AMGT_RESAPP.TO-AMGT-rb-15.impostor-predicate-corrected.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~5\\AMGT_RESAPP.TO-AMGT-s-15.list-register-owned-lists-with-a-rot-signal.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~6\\AMGT_RESAPP.TO-AMGT-s-13.social-feed-measure-then-build.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~7\\AMGT_RESAPP.TO-AMGT-s-14.input-ledger-per-class-rerun-alone.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~7\\AMGT_RESAPP.TO-AMGT-s-6.version-store-opal-data-research.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~7\\AMGT_RESAPP.TO-AMGT-s-7.coverage-freshness-view-one-place.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~8\\AMGT_RESAPP.TO-AMGT-s-10.check-face-pass-fail-provisional-per-figure.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~8\\AMGT_RESAPP.TO-AMGT-s-11.qualification-rules-six-classes.proof_of_spec.json",
+      "rc": 0
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~9\\AMGT_RESAPP.TO-AMGT-s-b4.seeking-alpha-backend-the-measured-route.proof_of_spec.json",
+      "rc": 0
+    }
+  ],
+  "order_statuses": {
+    "AMGT_RESAPP.TO-AMGT-r-1.fiscal-year-join-served-correct.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-r-10.check-face-marker-in-the-reading.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-r-12.identity-coverage-pass.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-r-15.impostor-and-clause.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-r-4.sa-coverage-re-exercise.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-rb-1.fiscal-join-direction-correct.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-rb-10.check-face-salient-warning.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-rb-12.identity-decision-note-correction.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-rb-15.impostor-predicate-corrected.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-rb-2.fiscal-block-wired-to-consumer.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-s-1.model-block-bloomberg-covered-name.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-s-10.check-face-pass-fail-provisional-per-figure.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-s-11.qualification-rules-six-classes.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-s-12.identity-layer-the-root.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-s-13.social-feed-measure-then-build.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-s-14.input-ledger-per-class-rerun-alone.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-s-15.list-register-owned-lists-with-a-rot-signal.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-s-2.on-demand-pull-the-seam-design-then-build.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-s-3.provenance-face-beside-every-figure.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-s-4.coverage-reader-non-sa-sources.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-s-5.print-renderer-design-spec-then-adams-artifact.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-s-6.version-store-opal-data-research.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-s-7.coverage-freshness-view-one-place.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-s-8.peer-set-comparable-or-absent-with-a-reason.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-s-9.drafting-face-marked-beside-its-evidence.md": [
+      "complete"
+    ],
+    "AMGT_RESAPP.TO-AMGT-s-b4.seeking-alpha-backend-the-measured-route.md": [
+      "complete"
+    ]
+  },
+  "sample_artifacts_unchanged": [
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\model_block_BABA_US_Equity.json",
+      "unchanged_since_round2": true
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\model_block_BA_US_Equity.json",
+      "unchanged_since_round2": true
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\model_block_fye_BABA_US_Equity.json",
+      "unchanged_since_round2": true
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\model_block_fye_BA_US_Equity.json",
+      "unchanged_since_round2": true
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\model_block_fye_SAP_GY_Equity.json",
+      "unchanged_since_round2": true
+    },
+    {
+      "file": "org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\model_block_SAP_GY_Equity.json",
+      "unchanged_since_round2": true
+    }
+  ],
+  "social_changed_keys": [
+    "official_vs_impostor_test"
+  ],
+  "identity_universe_unchanged": true,
+  "controlled_pdf_probe": {
+    "scope": "CVO scratch-output verification only; worker and live served files unchanged",
+    "pdf_path": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\.tools\\state\\cvoZ_amgt_round2b_pack_probe\\pack_BABA_US_Equity.pdf",
+    "bytes": 77583,
+    "FY2025_matching_lines": [
+      "132.23 PRICE (local trading currency, per share/unit) \u00b7 PX_LAST (Last traded/closing price, in the security's trading currency.) \u00b7 as of 2025-03-31 \u00b7 Bloomberg"
+    ],
+    "FY2025_old_price_present": false,
+    "FY2025_new_price_present": true,
+    "full_text_has_derived_key": false
+  },
+  "canonical_round": 3,
+  "informal_round": "2b",
+  "mapping_authority": "CTO~Z msg 21335: third issuance -> canonical v3; rb cell ids preserved; surface exercise later v4+",
+  "l8": {
+    "roots": [
+      "org/surprise_channel",
+      "org/missions"
+    ],
+    "investigations": 29,
+    "open_before": 1,
+    "open_ids": [
+      "AMGT_RESAPP-Z-W5-S2"
+    ],
+    "watcher_mode": "canonical once",
+    "watcher_exit_code": 0,
+    "watcher_banner": "[SURPRISE] AMGT_RESAPP +1 new row(s) (now 29)",
+    "watcher_pid": "one-pass process exited; PID/parent not captured; no persistent Monitor tool available"
+  },
+  "corrected_derived_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+  "corrected_key_carried_in_consumer_figure": false
+}
