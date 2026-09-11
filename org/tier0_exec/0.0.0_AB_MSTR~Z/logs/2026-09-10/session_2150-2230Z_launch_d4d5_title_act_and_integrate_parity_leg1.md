@@ -317,3 +317,35 @@ two-minute wait. Cost of the reflex (`git reset`): a peer's five authored orders
   warning unread. What survives: the class statement for the two rewritten keys under
   `data/mdpf/scripts/gold/` (LastModified moved ~05:55Z, hash unchanged), with NO known instance. Corrected
   to the laptop (bus) and to `2.0.0_SA_COO~Z` (who had repeated the line back) the same turn.
+
+---
+
+## AMENDMENT 7 -- 07:3x-07:4xZ: the GLD/VXX brief leg on Andrew's word, and a correction of my own relayed sentence
+
+**archetype:** DEPLOY (integration) + COORDINATE
+
+**Andrew-direct at the laptop terminal ~07:2xZ**, relayed by `0.0.0_AB_MSTR` (bus 199c7ba4-c578-415d-bdbd-db5868b6b12c),
+verbatim: *"Also i need this brief sent over to sitez, specifically to CTO~Z:
+docs\briefs\positioning-gld-vxx-satellites-20260911.md. They need to see this because this needs to get
+folded into the work on POSN_ASTTAX."* Author `0.4.0_DT_ClientPlatform`, amended @59481137f4. The laptop
+held the ferry ~20 minutes on his "wait" while DT was still editing; the pre-amendment version lacked
+conclusion 5 (the landmine). Verified here from origin/CLOUD: 18,673 bytes, sha256 224691618c899f96.
+Relayed to `1.0.0_SA_CTO~Z` and `2.0.0_SA_COO~Z` with the git-show command before the merge; merged
+origin/CLOUD @46f7e03df8 -> SITEZ @21401e7006 (overlap 1 of 160, DIRECTIVES.yaml on disjoint rows; 104
+staged / 0 foreign; nothing deployed; 14 live directives now render, malformed=0). Push rc=0, ls-remote
+read 21401e7006; the brief is in the tree at the verified hash. CLOUD lacks 40 (the laptop's leg).
+
+**The brief's substance, as the pointer for a later reader:** VXX is already in the Satellites toggle;
+GLD is absent by an allocation decision in Yang's model holdings, not an engineering gap; the Satellites
+toggle reads the MODELS payload, not the Bloomberg ETF pull, so the plan's premise does not hold; the fix
+is one DynamoDB field plus Yang's decision, in that order, because adding GLD to the models today
+KeyErrors the positioning generator on `management_style "unknown"` (187 of 285 registry rows; 0 of the
+30 held tickers) and blanks the page for four firms. Composes with COO~Z's 06:0xZ served-plane read: the
+classifications were never the problem; the answer differs per ticker.
+
+**A correction of my own sentence to Andrew (~06:1xZ):** I wrote "Its worker is executing" about the
+POSN_ASTTAX worker as fact. It was COO~Z's report relayed, and by the time I repeated it the order read
+`complete` and the round was drained. Andrew, at this device, saw nothing because a v3 worker is a
+subagent inside the COO's own session -- no window, no registration, no telemetry, its worktree removed
+at the drain. Measured after his question: one commit by `0.9.0_WK_POSN_ASTTAX~1` @6bed191b42, the order
+`complete`, CVO~Z's L10 stamp. Same shape as amendment 6, one line later: a relay stated as a measurement.
