@@ -1273,6 +1273,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "CLAUDE.md Git section: AWS via the `.tools/aws` shim (+`aws.cmd`, both or neither); never bare MSYS_NO_PATHCONV=1 aws.",
     "world_is": "The two faces of the shim are not interchangeable by caller. From bash either works; from a Windows Python only the .cmd does, and the bash one fails with an error that points away from the cause.",
     "notes": "Recorded because it costs a cycle every time. Same family as the existing memory note that Python spawning an MSYS binary must go through .tools/msys_argv_guard.py -- this is the AWS-shim instance of it."
+  },
+  {
+    "id": "IRPT_BCKEND-S18",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T05:52:27Z",
+    "one_line": "TWO ISSUER FACTS at the IB-s-9 drain (7799dcfb10), on Andrew's word 'keep it moving'. (1) RE-SEQUENCING, same shape as S17: IB-s-16 is handed to idle slot ~1 ahead of IB-s-14's merge. Its seven recovery arms are driven on the DEPLOYED jobs of IB-s-6, IB-s-9 and IB-s-12 (all merged and live) and IB-s-14 (in flight on slot ~4, re-sequenced itself); the arm(s) that target the export job run on a labelled in-process STAND-IN of the export worker and say so, and arm (e)'s manifest-completeness census is taken at this HEAD with the export cell's entries named as the known delta -- both re-measured at IB-sb-3's replay. IB-s-15 stays held: its routes target Lambdas that do not exist until IB-s-14 and IB-s-16 land. (2) AN ISSUER DEFECT, recorded so the record does not read better than what happened: during the IB-s-9 drain the shared index held another seat's open-deploy sentinel for 500 s, so the drain was run through a temporary linked worktree (guarded merge, same union, commit 53965f4f38) and CLOUD fast-forwarded to it; the ff failed because 0.7.0_AE_CloudOps had committed 36422d66d4 in between, and the failure was MASKED by a pipe (`git merge --ff-only ... 2>&1 | tail -2`, the banked pipeline-rc trap), so the chain continued, deleted the temp branch and the worker branch, and re-cut slot ~3 from the wrong tip. Both commits were still in the object store; the worker branch was restored at 183d5241d0, the drain re-run on the new tip (7799dcfb10, guarded, unions identical) and the ff checked by exit code. Nothing was lost; 53965f4f38 is an orphaned merge commit. Cost: ~10 minutes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (the stand-in arm is printed by the worker and re-graded at the drain; the ff-race procedure now checks rc without a pipe)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-16.operations-status-envelope-and-per-tenant-recovery.md (HEAD) -- L5 note: 'The seven recovery arms, driven on the DEPLOYED jobs of IB-s-6 (intake), IB-s-9 (generation), IB-s-12 (holdings) and IB-s-14 (export)'",
+        "git log 7799dcfb10 -- parents b30839715c + 183d5241d0; 53965f4f38 orphaned (parents 5701c5c3ce + 183d5241d0)",
+        "memory: reference_a_pipelines_exit_status_is_its_last_commands_so_cmd_pipe_tail_always_reads_rc_0 -- the banked trap this seat hit"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-s-16 <status>: 'becomes pending ... after IB-s-6, IB-s-9, IB-s-12 and IB-s-14 are all terminal and merged.' CLAUDE.md Git: never compose the report of an act in the same call as the act; a pipeline's rc is its last command's.",
+    "world_is": "Three of four target jobs are deployed; holding the whole cell for the fourth idles a slot behind a sequential chain. Handed with the substitution stated. The drain procedure had one pipe too many and it cost a re-run, not data.",
+    "notes": "Andrew-direct 2026-09-11 ~05:2xZ: 'we can't get held up on this shit, keep it moving' -- the trigger for both re-sequencings (S17, S18); the substitutions are stated, not hidden, and the replay is where they are re-measured."
   }
 ]
 ```
