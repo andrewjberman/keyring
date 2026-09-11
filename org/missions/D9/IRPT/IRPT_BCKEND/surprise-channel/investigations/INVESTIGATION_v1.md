@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 70 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (69 ours + 68 theirs, 67 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 77 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (72 ours + 76 theirs, 71 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -550,6 +550,52 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "The bound's STOP produced exactly the classification the sign-off needed; widening it once, for one apply, under two signed halves is the mechanism working, not the bound bending."
   },
   {
+    "id": "IRPT_BCKEND-S24",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T10:22:42Z",
+    "one_line": "ROUND 1 TERMINAL at f8860a4a4b: 19 of 19 task orders read <status>complete with VALID instances re-graded by the issuer at each drain (denominator: 19 files under task-orders/). DISARM-BY-CARRY of IRPT_BCKEND-W1-S10 (ARMED, disarm_owner 2.0.0_SA_COO~B): IB-sb-3's real-file unguarded_routes() census reads 6 of 11 handler-bearing routes unguarded, not the 3 row S9 disclosed -- the three newly observed are POST /analysis (irpt-ycharts-generate, IB-s-9: job.py's own comment says it registers no route, written before routes.json existed, and IB-s-15 mapped the route to it anyway), GET /narrative/{reportId} (irpt-narrative, IB-s-13: no _authz import), GET /export/{exportId} (irpt-export-render, IB-s-14: the deployed handler implements only action=capabilities). None discloses protected data today, each for its own unrelated reason (a consent gate, a request shape with no identity, an absent operation), so the row is OBSERVATION; it is ARMED because that safety rests on each handler's own behaviour rather than on the wrapper. Every one of the six is a merged cell and outside every remaining face, so the issuer carries it to L10 as ONE round-2 item: `guard()` on the six routes, with IB-s-3's own S3-AC2 judgment ('the wrapper can be bypassed by a handler that forgets to use it') now measured at 6 of 11. The replay also measured the real CloudFront path live: 11 of 11 declared routes refuse unauthenticated (401 with the edge's own error), a forged bearer is refused, and a direct-to-API-Gateway bypass meets API Gateway's own 401 -- the origin-verify secret is a separately enforced gate. Authenticated replay on the real path remains not-run: no test-JWT-minting mechanism a worker may use without a human exists (stated on the instance, arm (a)).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (carried; the six-route guard is the first item of the round-2 recut of FWD-2; the test-principal mechanism is the CTO's L10 read)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W1-S10 (this HEAD)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_sb_3.result.md @f8860a4a4b -- the 6 of 11 census, the 11 of 11 real-path refusals, the bypass probe",
+        "grep -l '^<status>complete' over org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-*.md at f8860a4a4b: 19 of 19"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer amendment @812bbec0e9: every handler this cell ships is wrapped by _authz.guard(); IB-s-3 S3-AC2: whether the wrapper can be bypassed by a handler that forgets to use it -- and how a reader would detect that.",
+    "world_is": "The detector IB-s-3 shipped found what it was built to find: three handlers written before the route table existed were mapped to routes after the fact and never revisited. Measured, not repaired, at the last cell of the round.",
+    "notes": "The drain is closed: every worktree removed, every branch merged, HEAD f8860a4a4b. The drain-end read to the CTO follows this commit; the slug is the CVO's."
+  },
+  {
+    "id": "IRPT_BCKEND-S25",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T11:59:49Z",
+    "one_line": "ROUND 2 ISSUED. On the CTO's round-1 analysis (ledger/ROUND_ANALYSIS.round1.md @0d57ceb2f9: 10 of 10 outcomes served, no addendum, 0 REALIZED, eight rulings) and the CVO's slug (REMEDIATION_v1.md @27e67fa6a5, 25 OPEN rows), the issuer cut decomposition v0.2 and ONE issuance of twelve task orders against PRD v0.13 @e6ba5d9878 (ADMITTED; the L6 gate read both L4-R halves SIGNED on every face): IB-rt-1 seam, IB-rt-2 guard the six + the test principal, IB-rt-3 one opaque-id normalizer + grain, IB-rt-4 typed keys + the exception path, IB-rt-5 the gold first-mint (issued to a DS lane, 0.4.0_DS_ClientPlatform~X, the rule-13 act the CTO's ruling 3(c) opened), IB-rt-6 the refresh builds, IB-rt-7 the holdings handler + attribution holdouts, IB-rt-8 the export worker renders, IB-rt-9 YCharts on the v0.9 mechanism, IB-rt-10 glyphs and dates, IB-rt-11 intake currency/unit controls, IB-rtb-1 the authenticated replay. Landed at 388b8199b8 and merged onto the moved tip at 7478fdf144 (the fast-forward lost a race; pull-merge, never rebase). Coverage: 10 of 10 outcomes, 8 of 8 rulings, 25 of 25 OPEN slug rows closed by a cell or carried by name (W1-S4, W3-S3 to CloudOps with the CTO as gate). Fan-out 5 of 10 chains: the four round-1 worker subagents RESUMED with context intact on IB-rt-3 (~1), IB-rt-1 (~2), IB-rt-4 (~3), IB-rt-8 (~4) from worktrees cut at 7478fdf144; the DS lane seated by /mstr-spawn for IB-rt-5. The round-1 ids are retained in the decomposition's id space so every round-1 instance still aligns. Two new bounds on every face: no self-wrapping harness as evidence; typed issued identifiers at every boundary. One gate note recorded honestly: the DS lane's pointer file in its own task_orders/ home reads as a task order to the announce-mode decomp-ref lint (no <issued_to>, no <decomp_ref>) -- it carries a pipeline-override line naming the tree face as the graded order; if the lint is armed to enforce, the pointer moves out of task_orders/ and the GO names the tree path alone.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (the issuer; the round-2 drain follows the round-1 procedure)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md v0.2 @388b8199b8 -- sections 0 (round 1 retained), 1 (the rectangle), 3 (chain read: 9 edges, 9 heads, 4 leaves, M=10, 4 components, depth 3), 5 (seating + fanout), 7 (battery), 9 (carries)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rt-*.md and IRPT_BCKEND.TO-IB-rtb-1.*.md @388b8199b8 -- twelve faces; to-pipeline-gate OK 13 of 13 newly-added with <decomp_ref> and complete <preflight>; L4-R sign-offs OK at v0.13",
+        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T111958Z_1.0.0_SA_CTO_ROUND-2_ANALYSIS_IRPT_BCKEND__0d57ceb2f9.md (msg 95954)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Spine v3 L10: the CTO answers with the ROUND-N ANALYSIS the COO recuts in ONE issuance; L6: ONE ISSUANCE covering every cell, fan-out derived from the chains and stated as fanout: data in the issuance commit.",
+    "world_is": "The recut is one issuance of twelve cells against the admitted PRD, fanned to five seats including one DS lane for the act no worker may take; round 1's evidence is built on, not rebuilt.",
+    "notes": "The DS lane spawn and its GO follow this row in the same turn; the round-2 drain, disarms and the drain-end read follow the round-1 procedure (seat rows continue at S26)."
+  },
+  {
     "id": "IRPT_BCKEND-W1-S1",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
@@ -1073,6 +1119,124 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "BOUNDS: 'The CloudFront plan shows exactly ONE change or you STOP. The distribution serves the whole portal; a plan that touches any other behavior, origin or setting is a BLOCKING row, never an apply.' S15-AC1 arm (c): 'The saved terraform plan output for portal-auth before the apply shows 1 to add, 0 to change, 0 to destroy or an in-place update touching only the new behavior block.'",
     "world_is": "The plan touches two further resources that pre-date this cell and belong to a root this project does not own. One is a line-ending artifact of a fresh worktree; the other is genuine WAF drift. Neither is reachable from this order's <paths>, and applying would rewrite a WAF ACL protecting 28 behaviors in order to land one additive behavior.",
     "notes": "BLOCKING on arms (b), (c) and the cloudfront half of (f) -- S15-AC1 therefore WITHHOLDS its token and this order stays OPEN. Every other arm was still measured and passed: 11 of 11 routes live under naqxlm, the catalogue is the registry 3 of 3, Global is proven on two firms' fixtures 4 of 4, the seam's three outcomes, and the amend census. WHAT UN-BLOCKS IT: the portal-auth root plans clean, or its two drifting resources are dispositioned by that root's owner (lane CLOUD_OPS_OR_ETL, any AE agent). The behavior is committed and unapplied, so the remaining act is a re-plan and an apply under the same entry -- no rework. The CRLF half would clear for any actor whose worktree renders that file LF; the WAF half is a real decision someone must take, and taking it from inside this order would be the widening the bound forbids."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S13",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T12:30Z",
+    "one_line": "THE TWO SIDES DO NOT AGREE ON WHAT AN OPERATION IS: the consumer publishes 11 flat slugs, the producer publishes 12 nested routes; 11 of 11 consumer paths are ROUTE_UNKNOWN under v1, 2 consumer operations have no producer route and 3 producer routes have no consumer operation.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/routes.json @7478fdf144 -- 12 route_keys, all of the form /api/scoped/investor-reporting/<noun>/<sub-noun-or-{param}>",
+        "portal/src/pages/InvestorReporting/fixtures/smoke/default.json at the PRIMARY checkout (C:/Users/AndrewBerman/Desktop/ajb_workspace/portal) -- 11 keys, all of the form /api/scoped/investor-reporting/<slug>",
+        "infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py @7478fdf144 -- each paired case dispatches the CONSUMER's own flat-slug path through the real dispatcher and asserts ROUTE_UNKNOWN; 9 of 9 routed operations assert it and pass",
+        "the two consumer operations with NO producer route: submit-correction, export-preview (OPERATIONS table, route None)",
+        "the three producer routes with NO consumer operation: GET .../status, GET .../status/{jobId}, GET .../export/{exportId}/download"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-1, criterion RT1-AC1 (b): 'For each operation the consumer's request (from the counterpart's fixture, checkout printed) runs through the real handler entry point' -- which presupposes that each of the consumer's 11 operations names a route this contract serves.",
+    "world_is": "The operation SETS differ in both directions and the path GRAMMARS differ everywhere. The consumer addresses a flat slug per operation; v1 addresses nested nouns with path parameters (the shape the 14 pre-existing scoped routes on 7k3ed8px20 already use). No consumer path routes under v1. THE PRODUCER DEFINES: v1 is published as-is and this row is the notice to the counterpart's round-2 cell, which regenerates against this artifact. Nothing in v1 was renamed to match the consumer.",
+    "notes": "Not a defect of either side taken alone -- each is internally consistent and each passed its own suite for two rounds. It is only visible at the seam, which is what this cell was cut to build. The two orphaned consumer operations are the sharper half: submit-correction and export-preview are UI affordances with no backend route in the PRD's route table at all, so they are not a renaming question."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S14",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T12:30Z",
+    "one_line": "FIELD NAMING IS TOTALLY DISJOINT ACROSS THE SEAM: 194 of the producer's 293 published property names are snake_case and 0 are camelCase; 139 of the consumer's 220 fixture keys are camelCase and 0 are snake_case; 55 of the 194 match only after camelizing. Meaning is not negotiated by casing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "census over docs/contracts/investor-reporting/v1/*.schema.json @7478fdf144 (every `properties` object at every depth, `contract_version` excluded): 293 distinct names, 194 containing '_', 0 matching [a-z][A-Z]",
+        "census over portal/src/pages/InvestorReporting/fixtures/smoke/default.json at the primary checkout (every key at every depth): 220 distinct keys, 139 matching [a-z][A-Z], 0 containing '_'",
+        "EXACT-NAME overlap: 44 of 293 -- and all 44 are single-word names (access, amount, basis, date, kind, ...) where the two conventions cannot differ",
+        "CASING-ONLY match: 55 of 194 snake names equal a consumer key after camelizing -- publicReasonCode/public_reason_code, businessAsOf/business_as_of, scopeFingerprint/scope_fingerprint, directoryRevision/directory_revision, entitlementRevision/entitlement_revision among them"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-1 bound: 'The producer defines, the consumer conforms. No field's meaning, unit or date changes to match the frontend; where the counterpart's fixture disagrees with II.3, the test FAILS for that operation and the disagreement is a row naming the field.'",
+    "world_is": "The disagreement is not per-field, it is TOTAL and MECHANICAL: the two sides use different naming conventions and the intersection is exactly the set of names too short to have one. So 'the field' this row names is every multi-word field: 55 of 194 are the same concept under two spellings, and the remaining 139 producer names have no consumer counterpart at all. NO SCHEMA WAS EDITED. v1 publishes the PRD's II.3 spellings unchanged.",
+    "notes": "The remedy is the counterpart's, and it is mechanical rather than semantic: a generated client that camelizes at the wire boundary satisfies both sides without either meaning moving. This row exists so that choice is made deliberately and recorded, rather than being absorbed by hand-written types that quietly re-define a field while renaming it. The 139-name gap is the reason it must not be absorbed by hand."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S15",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T12:30Z",
+    "one_line": "REACH LIMIT, NAMED NOT HIDDEN: ops/status.py builds its own boto3 S3 client with no fixture path, so the analysis-report operation reaches AWS the moment the real handler is called in process; the dispatcher and handler are exercised, the RESPONSE cannot be graded without the deployed environment.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ops/status.py @7478fdf144 -- lambda_handler constructs the directory loader itself; there is no event key that supplies a recorded artifact, unlike directory/handler.py's `directory_fixture`",
+        "pytest run @7478fdf144: test_paired_consumer_request_through_the_real_dispatcher[analysis-report] XFAIL, botocore.errorfactory.NoSuchKey raised from inside the real handler -- i.e. the dispatcher ADMITTED the request and the handler RAN",
+        "the xfail reason names this row id, so the outcome is enumerated in the suite's own output rather than absorbed as a pass"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-1 RT1-AC1 (b): the paired test runs the request 'through the real handler entry point ... in-process', for each of the 11 operations.",
+    "world_is": "In-process reach is not uniform across the six handlers. Five accept a recorded artifact on the event and take a pure in-process path; ops/status.py does not, so 'in-process' and 'no AWS call' cannot both hold for the operations it serves. Recorded as its own outcome. IB-rtb-1's deployed replay is where this operation's response is graded.",
+    "notes": "Deliberately NOT worked around. Patching a client into the real handler from the test would make the subject a copy the harness controls, which bound 12 forbids and round-1 rows W1-S10/S24 were filed about."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S16",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T12:30Z",
+    "one_line": "THE PUBLISHED SCHEMAS ARE DOCUMENT CONTRACTS, NOT RESPONSE CONTRACTS: 0 of the 7 operations that reach a response return anything validating against its route's schema in ANY document position; the six handlers emit three different envelopes; and 2 of the 11 schemas can never be an HTTP response at all. RT1-AC1 (b) cannot read 11 of 11 and the remedy is outside this order's <paths>.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pytest @7478fdf144, test_paired_consumer_request_through_the_real_dispatcher: 7 failed, 4 xfailed, 0 passed -- every failure is the assertion 'validates against <Schema> in NO document position', over three positions tried (whole response, response.result, json(response.body))",
+        "THREE ENVELOPES, measured: directory/handler.py returns {ok, op, result, reason}; performance, narrative and export handler.py return the API-Gateway {statusCode, body}; ycharts/generate/job.py returns {ok, live_call, reason, measured_overview_seconds, budget_seconds, note}",
+        "TWO SCHEMAS ARE NOT RESPONSES BY CONSTRUCTION: AnalysisRequest is the queue message the intake produces (PRD CONTRACTS row, 8 required-meaning items, none of them a response field) and FirmDestinationPolicy is firm configuration; neither is ever an HTTP response body, so no handler can be wrong about them",
+        "every schema is additionalProperties:false, so an envelope around a correct document is itself a validation failure -- the failures above are envelope mismatches, not field disagreements",
+        "TO-IB-rt-1 <paths> @7478fdf144 grants docs/contracts/, _contracts/, _authz/, terraform/investor-reporting/api/ and PATH_MANIFEST.json -- it does NOT grant directory/, performance/, narrative/, export/, ops/ or ycharts/, which is where a response contract would have to be implemented"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-1 RT1-AC1 (b), verbatim: 'For each operation the consumer's request ... runs through the real handler entry point and the response validates against the producer schema; print 11 of 11'. The decomposition's s.2 note says the same: 'asserting the response validates against the producer schema'.",
+    "world_is": "There is no mapping from a route to a response schema at this vintage, and the eleven published schemas were never response schemas: they are the PRD CONTRACTS table's DOCUMENT contracts (an AnalysisRequest queue message, a FirmDestinationPolicy configuration, a DirectoryEntry artifact). The six handlers return three ad-hoc envelopes that no published schema describes. The paired test therefore measures 0 of 7 rather than 11 of 11, and it measures it with the assertion the criterion names rather than skipping the half it cannot satisfy.",
+    "notes": "WHY THIS IS BLOCKING AND NOT AN OBSERVATION: it is the deciding output of RT1-AC1, so the criterion reads FAIL and the order stays open; the worker cannot grade around it and does not. WHY IT IS ARMED: v1 is published and declared immutable at the complete flip, and the counterpart's round-2 cell regenerates against it -- if the response envelope is settled LATER it will settle against an immutable v1 that never described it, which is a v2 on the first serve. THE WORKER JUDGES FORM, NOT SIGNIFICANCE: three shapes the issuer may choose between are stated without preference -- (i) publish a response envelope contract in v1 and require the handlers to emit it (a handler-lane cell, IB-rt-2 is the candidate: it already opens all six handlers to add guard()); (ii) rule that the schemas are document contracts only and re-cut RT1-AC1 (b) to grade the documents the handlers WRITE rather than the responses they RETURN; (iii) defer the response grading to IB-rtb-1's deployed replay. NO WIDENING WAS TAKEN: no handler was edited and no schema was loosened to make an assertion pass."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S17",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T12:58Z",
+    "one_line": "SELF-CORRECTION ON A ROW OF MINE, FILED RATHER THAN EDITED: W2-S16 named `FirmDestinationPolicy` as one of the eleven published schemas. It is not one of them. The eleventh is `RenderPackage` -- and RenderPackage is the ONE schema of the eleven whose PRODUCER IS THE FRONTEND, which inverts this cell's governing bound for exactly one contract.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls docs/contracts/investor-reporting/v1/*.schema.json @173349a652 -- 11 files: AnalysisReport, AnalysisRequest, DirectoryEntry, ExportBundle, ExportReceipt, HoldingsSnapshot, NarrativePacket, PerformanceReport, RenderPackage, ResolvedScope, StatusEnvelope. FirmDestinationPolicy is NOT among them",
+        "the same 11 in infra/aws/lambda/investor-reporting/_contracts/*.schema.json, from which they were published -- so the publication was correct and only the PROSE describing it was wrong",
+        "docs/contracts/investor-reporting/v1/RenderPackage.schema.json @173349a652, x-contract: {producer: FNTEND, consumer: BCKEND B14, cell: B14 (consumer)}",
+        "a FirmDestinationPolicy CONTRACT does exist in this project -- as firm_destination_policy.json, shipped inside the intake and ycharts zips -- which is why the wrong name was plausible and why it was not caught by reading the sentence",
+        "PATH_MANIFEST.json @173349a652 carries a DEAD entry for docs/contracts/investor-reporting/v1/FirmDestinationPolicy.schema.json and, before this row's companion append, carried NO entry for RenderPackage.schema.json"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row IRPT_BCKEND-W2-S16 (this cell's own, committed at 173349a652) asserts: 'TWO SCHEMAS ARE NOT RESPONSES BY CONSTRUCTION: AnalysisRequest ... and FirmDestinationPolicy is firm configuration'. The same sentence appears in this cell's battery result and proof-of-spec instance.",
+    "world_is": "FirmDestinationPolicy is not one of the eleven published schemas. The eleventh is RenderPackage. THE SUBSTANTIVE CLAIM SURVIVES THE SUBSTITUTION -- RenderPackage is the package handed to the export renderer, never an HTTP response body -- so 'two of the eleven can never be a response' remains true with RenderPackage in place of FirmDestinationPolicy, and arm (b)'s 0 of 11 is unaffected. What is NOT merely a naming slip: RenderPackage's x-contract names the PRODUCER as FNTEND and the CONSUMER as BCKEND. For that one contract this cell's governing bound -- THE PRODUCER DEFINES, THE CONSUMER CONFORMS -- points the OTHER WAY, and this cell published it under a directory whose CONTRACT.md says the producer is IRPT_BCKEND. The per-schema x-contract block states the true direction and was published unedited, so the artifact is not wrong; the directory-level prose over-generalises for 1 of 11.",
+    "notes": "WHY A NEW ROW AND NOT AN EDIT: the channel is append-only and W2-S16 is already committed. Editing it would leave no trace that the correction happened, which is the failure mode the append-only rule exists for. W2-S16 stands as filed; this row is its correction and any reader of one must read the other. HOW IT HAPPENED, stated so the shape is reusable: the eleven schemas were enumerated CORRECTLY everywhere they were DERIVED (the publisher globbed the directory, the instance's artifact rows glob it, the battery counts 11 of 11) and WRONGLY in the one place they were RECALLED -- a sentence in prose. A derived list and a recalled list disagreed and only the recalled one was wrong. FIXED IN THIS COMMIT: the PATH_MANIFEST gains its RenderPackage entry (the dead FirmDestinationPolicy entry is left, per the manifest's own append-only contract, and this row is its notice); the battery result and the proof-of-spec instance -- neither append-only -- are corrected in place and say so. CARRIED FORWARD: whether the directory-level CONTRACT.md should name RenderPackage's inverted direction is a v2 question, because v1 is immutable from this cell's complete flip -- which has not happened, since RT1-AC1 is a FAIL."
   },
   {
     "id": "IRPT_BCKEND-W3-S1",
@@ -1686,52 +1850,6 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "S14-AC1 (g): 'ExportReceipt validates and its artifact_hash equals the stored object's; the object key is under the bound firm's exports prefix'. BOUNDS 7: 'No served output is touched ... except where THIS order's cell says it ADDS a resource' -- and the cell text names 'the protected artifact under firms/<id>/generations/<id>/attempts/<a>/exports/<revision>/report.pdf'.",
     "world_is": "Proving the receipt against a STORED object means storing one, and the only admissible prefixes are real firms'. The write is labelled twice (an unmistakable generation id and object metadata) rather than hidden, so a later reader can tell it from client evidence without reading this row.",
     "notes": "No client data is in any of the four: the performance/analysis content is the cell's own fixture sections, and the three vendor-input exports are rendered from the CRO's synthetic portfolio 2332257 (SPY/AGG), which the PRD already calls real vendor output on synthetic holdings."
-  },
-  {
-    "id": "IRPT_BCKEND-S24",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T10:22:42Z",
-    "one_line": "ROUND 1 TERMINAL at f8860a4a4b: 19 of 19 task orders read <status>complete with VALID instances re-graded by the issuer at each drain (denominator: 19 files under task-orders/). DISARM-BY-CARRY of IRPT_BCKEND-W1-S10 (ARMED, disarm_owner 2.0.0_SA_COO~B): IB-sb-3's real-file unguarded_routes() census reads 6 of 11 handler-bearing routes unguarded, not the 3 row S9 disclosed -- the three newly observed are POST /analysis (irpt-ycharts-generate, IB-s-9: job.py's own comment says it registers no route, written before routes.json existed, and IB-s-15 mapped the route to it anyway), GET /narrative/{reportId} (irpt-narrative, IB-s-13: no _authz import), GET /export/{exportId} (irpt-export-render, IB-s-14: the deployed handler implements only action=capabilities). None discloses protected data today, each for its own unrelated reason (a consent gate, a request shape with no identity, an absent operation), so the row is OBSERVATION; it is ARMED because that safety rests on each handler's own behaviour rather than on the wrapper. Every one of the six is a merged cell and outside every remaining face, so the issuer carries it to L10 as ONE round-2 item: `guard()` on the six routes, with IB-s-3's own S3-AC2 judgment ('the wrapper can be bypassed by a handler that forgets to use it') now measured at 6 of 11. The replay also measured the real CloudFront path live: 11 of 11 declared routes refuse unauthenticated (401 with the edge's own error), a forged bearer is refused, and a direct-to-API-Gateway bypass meets API Gateway's own 401 -- the origin-verify secret is a separately enforced gate. Authenticated replay on the real path remains not-run: no test-JWT-minting mechanism a worker may use without a human exists (stated on the instance, arm (a)).",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (carried; the six-route guard is the first item of the round-2 recut of FWD-2; the test-principal mechanism is the CTO's L10 read)",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W1-S10 (this HEAD)",
-        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_sb_3.result.md @f8860a4a4b -- the 6 of 11 census, the 11 of 11 real-path refusals, the bypass probe",
-        "grep -l '^<status>complete' over org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-*.md at f8860a4a4b: 19 of 19"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "Issuer amendment @812bbec0e9: every handler this cell ships is wrapped by _authz.guard(); IB-s-3 S3-AC2: whether the wrapper can be bypassed by a handler that forgets to use it -- and how a reader would detect that.",
-    "world_is": "The detector IB-s-3 shipped found what it was built to find: three handlers written before the route table existed were mapped to routes after the fact and never revisited. Measured, not repaired, at the last cell of the round.",
-    "notes": "The drain is closed: every worktree removed, every branch merged, HEAD f8860a4a4b. The drain-end read to the CTO follows this commit; the slug is the CVO's."
-  },
-  {
-    "id": "IRPT_BCKEND-S25",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T11:59:49Z",
-    "one_line": "ROUND 2 ISSUED. On the CTO's round-1 analysis (ledger/ROUND_ANALYSIS.round1.md @0d57ceb2f9: 10 of 10 outcomes served, no addendum, 0 REALIZED, eight rulings) and the CVO's slug (REMEDIATION_v1.md @27e67fa6a5, 25 OPEN rows), the issuer cut decomposition v0.2 and ONE issuance of twelve task orders against PRD v0.13 @e6ba5d9878 (ADMITTED; the L6 gate read both L4-R halves SIGNED on every face): IB-rt-1 seam, IB-rt-2 guard the six + the test principal, IB-rt-3 one opaque-id normalizer + grain, IB-rt-4 typed keys + the exception path, IB-rt-5 the gold first-mint (issued to a DS lane, 0.4.0_DS_ClientPlatform~X, the rule-13 act the CTO's ruling 3(c) opened), IB-rt-6 the refresh builds, IB-rt-7 the holdings handler + attribution holdouts, IB-rt-8 the export worker renders, IB-rt-9 YCharts on the v0.9 mechanism, IB-rt-10 glyphs and dates, IB-rt-11 intake currency/unit controls, IB-rtb-1 the authenticated replay. Landed at 388b8199b8 and merged onto the moved tip at 7478fdf144 (the fast-forward lost a race; pull-merge, never rebase). Coverage: 10 of 10 outcomes, 8 of 8 rulings, 25 of 25 OPEN slug rows closed by a cell or carried by name (W1-S4, W3-S3 to CloudOps with the CTO as gate). Fan-out 5 of 10 chains: the four round-1 worker subagents RESUMED with context intact on IB-rt-3 (~1), IB-rt-1 (~2), IB-rt-4 (~3), IB-rt-8 (~4) from worktrees cut at 7478fdf144; the DS lane seated by /mstr-spawn for IB-rt-5. The round-1 ids are retained in the decomposition's id space so every round-1 instance still aligns. Two new bounds on every face: no self-wrapping harness as evidence; typed issued identifiers at every boundary. One gate note recorded honestly: the DS lane's pointer file in its own task_orders/ home reads as a task order to the announce-mode decomp-ref lint (no <issued_to>, no <decomp_ref>) -- it carries a pipeline-override line naming the tree face as the graded order; if the lint is armed to enforce, the pointer moves out of task_orders/ and the GO names the tree path alone.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (the issuer; the round-2 drain follows the round-1 procedure)",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md v0.2 @388b8199b8 -- sections 0 (round 1 retained), 1 (the rectangle), 3 (chain read: 9 edges, 9 heads, 4 leaves, M=10, 4 components, depth 3), 5 (seating + fanout), 7 (battery), 9 (carries)",
-        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rt-*.md and IRPT_BCKEND.TO-IB-rtb-1.*.md @388b8199b8 -- twelve faces; to-pipeline-gate OK 13 of 13 newly-added with <decomp_ref> and complete <preflight>; L4-R sign-offs OK at v0.13",
-        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T111958Z_1.0.0_SA_CTO_ROUND-2_ANALYSIS_IRPT_BCKEND__0d57ceb2f9.md (msg 95954)"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "Spine v3 L10: the CTO answers with the ROUND-N ANALYSIS the COO recuts in ONE issuance; L6: ONE ISSUANCE covering every cell, fan-out derived from the chains and stated as fanout: data in the issuance commit.",
-    "world_is": "The recut is one issuance of twelve cells against the admitted PRD, fanned to five seats including one DS lane for the act no worker may take; round 1's evidence is built on, not rebuilt.",
-    "notes": "The DS lane spawn and its GO follow this row in the same turn; the round-2 drain, disarms and the drain-end read follow the round-1 procedure (seat rows continue at S26)."
   }
 ]
 ```
