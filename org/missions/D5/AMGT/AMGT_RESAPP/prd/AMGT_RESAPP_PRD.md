@@ -226,13 +226,14 @@ disputable, by rule, and carry no technical language.*
                     silently ... the same failure that left two keys dead")
 
   FWD-15 A PM can see which covered names are worth looking at right now,
-         without opening each one
+         without opening each one -- ranked by how much they are moving or
+         being talked about, and can jump straight to any name
          DONE WHEN  EXERCISED -- a PM has actually opened the page, read the
-                    ranked list, and followed one name it surfaced
+                    ranked list, and clicked through to a name it surfaced
          ACCEPT     Adam or Lauren opens the page cold, sees a short ranked
                     list of names that are moving in price or spiking in
-                    discussion, and follows one of them into its full page --
-                    a decision about WHERE TO LOOK that they would otherwise
+                    discussion, and follows one into its full page -- a
+                    decision about WHERE TO LOOK that they would otherwise
                     have made by gut or by scrolling a spreadsheet.
          SOURCE     Andrew's frontend walkthrough (the Lead Panel); his
                     reserved L2 confirmation
