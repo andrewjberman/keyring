@@ -747,6 +747,57 @@
     "spec_asserts": "This order's WORKER FACE: \"the ui-smoke `--firm <id>` flag renders a PARTNER session\" and \"ui-smoke prints `DID NOT LAND` for a route carrying a query string while rc=0 and the PNG is the evidence (F10-AC8 carries `?firm=global`)\" -- framing the expected DID-NOT-LAND print as a query-string artifact of the instrument, implying the PNG would otherwise show Investor Reporting's firm-scoped view.",
     "world_is": "The PNG shows the Market Overview page, not Investor Reporting in any form -- a real client-side route redirect, reproduced identically with the query string removed. No partner firm has been onboarded to '/investor-reporting' in firmAccess.ts yet (consistent with IRPT_BCKEND's routes not existing yet, per api/endpoints/investor-reporting.ts's own docstring). F10-AC8's rc=0 bar is met and the PNG is exactly what a firm session gets today (no dropdown, no second firm, no IR content at all) -- but the redirect's CAUSE is this file, not the query string, and not anything FE-s-10 (or any IRPT_FNTEND cell to date) controls; onboarding the path is a firmAccess.ts edit outside every current cell's <paths>.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S11",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-11T06:10:00Z",
+    "one_line": "Two FE-s-9 export components (`export/AppliedBranding.tsx`, `export/ReceiptPanel.tsx`) are exported but imported by NOTHING under pages/InvestorReporting/** or portal/src/App.tsx -- confirmed by the FE-s-11 component census's own edge scan -- and AppliedBranding.tsx's own light text has no dark ancestor in its own file, so colour-law.test.ts (F11-AC3) genuinely fails on it: `export/AppliedBranding.tsx:43 -- text-white` with no same-file Panel/variant=\"dark\" ancestor and no self-contained dark background.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/component-census.json@PENDING-THIS-COMMIT -- `definedButNotImported`: [{file: export/AppliedBranding.tsx, component: AppliedBranding}, {file: export/ReceiptPanel.tsx, component: ReceiptPanel}], produced by census.ts's edge scan of every import under the tree plus portal/src/App.tsx",
+        "portal (worker branch wk-irpt_fntend-1-7-fe-s-11) src/pages/InvestorReporting/export/AppliedBranding.tsx -- grep-equivalent census confirms 'AppliedBranding' appears only in its own file (interface, function, default export); no other .tsx file under the tree or App.tsx contains the substring",
+        "same for 'ReceiptPanel' -- appears only in export/ReceiptPanel.tsx itself; ReceiptPanel.tsx DOES import and render StatusPanel as JSX (a real edge, captured normally in the census), it is ReceiptPanel ITSELF that is never mounted",
+        "portal bun test src/pages/InvestorReporting/__tests__/fe-s-11/colour-law.test.ts (this order's own new test) -- 3 pass, 1 fail: 'export/AppliedBranding.tsx:43 -- text-white', with the other two known-good self-dark-button patterns (export/ExportButton.tsx, export/ExportModal.tsx) explicitly asserted NOT flagged in the same run",
+        "export/AppliedBranding.tsx:38-45 @ this worktree HEAD -- `<div className=\"text-xs text-white/80\" ...>Branding applied: <span className=\"font-medium text-white\">{label}</span>...</div>` -- no `bg-*` utility anywhere in the file and no `<Panel>`/`variant=\"dark\"` element anywhere in the file"
+      ]
+    },
+    "spec_asserts": "FWD-12's CONSTRAINT: 'a new component requires a stated need the existing set cannot meet; matching appearance alone is not reuse' and its PROOF: 'a census of EVERY component the page uses... each is REUSED... or is NEW with a stated reason'; F11-AC3's colour law: 'no light-on-canvas class outside a dark container'. AppliedBranding.tsx's own header states its need (show what branding was ACTUALLY applied, from the preview bundle) but nothing in the tree ever renders it to meet that need.",
+    "world_is": "Both components are dead code today: built (presumably at the FE-s-9 drain, per their 'FE-s-9' header comments) but never wired into ExportModal.tsx, ExportButton.tsx or Preview.tsx, so an advisor's export flow never actually shows 'what branding was applied' or a receipt/download panel with job-state tracking -- and because AppliedBranding.tsx was never mounted inside ExportModal's dark Panel (the only place its light text would be legal), its colour-law compliance was never exercised or caught. hazard_standing ARMED: if a future cell imports AppliedBranding.tsx as-is without ALSO wrapping it in a dark container, the light-on-canvas defect ships live; disarm_owner is whichever cell/order next wires either component in, or 3.0.0_SA_CVO at L9 if no such cell is planned.",
+    "disarm_owner": "3.0.0_SA_CVO",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S12",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-11T06:25:00Z",
+    "one_line": "F11-AC5/AC6/AC7's own named fixtures (fe-s-6-ready.json, fe-s-7-smartx.json, fe-s-9-modal.json) each crash the WHOLE /investor-reporting page with React's 'Maximum update depth exceeded' before any tab/modal content renders (rc=0 still, PNG is the portal's generic error boundary) -- reproducible on plain page load, not just after --click; isolated to every fixture whose resolve-scope response carries exactly ONE permitted firm (3 of 3 one-firm fixtures crash; the two-firm fixtures tested, fe-s-10-global.json and fe-s-2-default.json, do not).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "node scripts/ui-smoke.mjs investor-reporting ... --fixtures fe-s-6-ready.json --click Analysis --console Error: CONSOLE[error] 'Error: Maximum update depth exceeded...' and '[ErrorBoundary] Caught error: ...'; CLICK-FAIL: Analysis -- locator.click timeout (the error page has no Analysis control); PNG shows 'Something went wrong'",
+        "same crash reproduced with the SAME fixture and NO --click at all (plain page load) -- rules out the click as the trigger",
+        "node scripts/ui-smoke.mjs investor-reporting ... --fixtures fe-s-7-smartx.json --click Holdings: identical crash/PNG",
+        "node scripts/ui-smoke.mjs investor-reporting ... --fixtures fe-s-9-modal.json --click Export: identical crash/PNG",
+        "node scripts/ui-smoke.mjs investor-reporting ... --fixtures fe-s-10-global.json --click Analysis: 'CLICKED: Analysis', no crash, PNG shows the Analysis tab body -- and the SAME route with fe-s-10-global.json (no click) and fe-s-2-default.json (no click) both render normally",
+        "resolve-scope fixture comparison (this worker's own reading): fe-s-6-ready.json/fe-s-7-smartx.json/fe-s-9-modal.json each declare exactly ONE entry in `permittedFirms`; fe-s-10-global.json declares two (49financial, cottonwood) with scope.firmId null; fe-s-2-default.json declares two (firm-op1, firm-op2) -- the one-firm/two-firm split lines up 3-for-3 and 2-for-2 with crash/no-crash",
+        "portal/src/pages/InvestorReporting/global/useFirmContext.ts @ this worktree HEAD -- the ONLY code path this cell's own docstring says engages for a one-firm catalogue ('a one-firm catalogue is still corrected to its single firm even though the control itself renders nothing', per FirmDropdown.tsx's header, amended at the FE-s-10 drain); the hook's own effect comment names the exact risk this crash matches: 're-validating on [value/onChange]'s identity change (rather than only on scope) would loop with the onChange call above'",
+        "FE-s-6's and FE-s-7's OWN earlier deliverables (fe-s-6_analysis_ready_1440.png, fe-s-7_holdings_smartx_1440.png), captured before FE-s-10 introduced useFirmContext, mount the SAME tabs successfully against similarly-shaped scopes -- consistent with this being a regression introduced at the FE-s-10 drain rather than a pre-existing condition"
+      ]
+    },
+    "spec_asserts": "This order's WORKER FACE names these exact invocations (fixture + --click) as producing 'the Analysis tab at 390' / 'the Holdings tab at 390' / 'the export modal at 390', with only rc=0 as the stated expectation.",
+    "world_is": "rc=0 is met (ui-smoke's own process succeeds and saves a PNG) but the PNG is the portal's generic error boundary in all three cases, not the named tab/modal -- a page-breaking infinite render loop, not a design-conformity question this cell's own record can be silent about. hazard_standing ARMED: any real advisor session whose resolve-scope answer carries exactly one permitted firm would crash the whole Investor Reporting page today, not just this smoke instrument; disarm_owner is whoever next owns global/useFirmContext.ts (outside this order's <paths>, which grants only portal/src/pages/InvestorReporting/__tests__/fe-s-11/) or 3.0.0_SA_CVO at L9.",
+    "disarm_owner": "3.0.0_SA_CVO",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
