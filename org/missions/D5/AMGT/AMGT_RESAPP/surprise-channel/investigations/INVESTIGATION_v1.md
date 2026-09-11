@@ -422,6 +422,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-s-4 (a): the reader is a function of security_key and sources; the order does not name which securities AC2's run must cover.",
     "world_is": "This worker reused a SIBLING cell's (AMGT-s-b4) selection artifact instead of deriving one independently from universe.json -- a reasonable, grounded, non-arbitrary choice (identity-resolved, non-placeholder, consistent with the store keys AMGT-s-b4 would land SA raw JSON under) but a choice this order left open, not one it named. Non-blocking: AC2/AC3/AC7 all close cleanly on this selection; a different, equally valid selection would also have closed them.",
     "notes": "Recorded for the CVO/next reader: if AMGT-s-b4's run_manifest.json selection ever changes (a re-run with different tickers), this cell's run_reader.py silently follows it (it is read live, not pinned) -- worth a read before assuming these three names are stable across rounds."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W4-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~4",
+    "surfaced_at": "2026-09-11T00:26:26Z",
+    "one_line": "AC1's own required action -- re-running AMGT-s-12's f6_remeasure.py -- overwrites that already-completed worker's committed f6_remeasure.json in place; the instrument's output path is not scoped to the calling worker, so a peer's landed deliverable is mutated by design on every re-run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "f6_remeasure.py's OUTPUT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'f6_remeasure.json') -- hardcoded beside the script itself, which lives at org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/f6_remeasure.py (a DIFFERENT, already-completed worker's deliverables folder), not this worker's own deliverables/0.9.0_WK_AMGT_RESAPP~4/",
+        "this worker ran `python org/.../deliverables/0.9.0_WK_AMGT_RESAPP~3/f6_remeasure.py` at 2026-09-11T00:05Z per AC1; `git diff` on that path afterward shows read_started_at/read_finished_at moved from '2026-09-10T23:20Z' (0.9.0_WK_AMGT_RESAPP~3's own committed run) to '2026-09-11T00:05Z' (this worker's run) with every other field byte-identical (partition stale-set 48/own-set 4/no-CSC 2 of 54 unchanged) -- `git status --porcelain` reports `M org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/f6_remeasure.json` in this worker's own worktree",
+        "this worker's own printed AC1 output (2026-09-11T00:05Z) and 0.9.0_WK_AMGT_RESAPP~3's committed AC3 output (2026-09-10T23:20Z, cited verbatim in identity-layer-the-root.result.md:72) agree on every count -- the content is unaffected, only the shared file's vintage/timestamp fields move on each re-run"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~ZZZ",
+    "spec_asserts": "This cell's AC1: 'RE-MEASURE F6 FIRST ... by RE-RUNNING AMGT-s-12's script, not by a third implementation ... Record its output line verbatim in your deliverable with the time you ran it' -- treating the script as a read-style re-measure instrument whose only expected effect is printing a line for the calling worker to record; the worker face names AMGT-s-12's and AMGT-s-1's deliverables as READ.",
+    "world_is": "Running the named script exactly as AC1 requires does not merely print a line -- it also overwrites 0.9.0_WK_AMGT_RESAPP~3's already-committed f6_remeasure.json with this run's own vintage, because the script's OUTPUT_PATH is hardcoded to write beside itself rather than into the calling worker's own deliverables folder or a run-scoped path. This worker did NOT commit the mutated file (left uncommitted, outside this worker's own deliverables/0.9.0_WK_AMGT_RESAPP~4/ output), so this round's shared branch state is undisturbed by this run -- but the coupling persists as a property of the shared instrument: any future worker or cell asked to 're-measure F6 first' by re-running this exact script (as this cell's AC1 and AMGT-s-12's own AC3 both already do) will keep silently overwriting a committed peer artifact's vintage rather than writing its own timestamped copy, which is why hazard_standing is ARMED rather than INERT.",
+    "notes": "A safer instrument would take an --out argument or default to writing into the CALLING worker's own deliverables folder; not fixed here -- altering AMGT-s-12's landed script is outside this cell's <paths>/BOUNDS, and the order says re-run it, never repair it. Disarm is a design decision (re-cut the script's output convention, or accept the mutation as harmless since content never disagrees) that this worker is not positioned to make -- named to 2.0.0_SA_COO~ZZZ, the issuer of this round."
   }
 ]
 ```
