@@ -57,7 +57,38 @@ Partial L9 intake for RT5 at worker tip `8d173559747f875ea751eeaea898de2b241ed8e
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "The issuer owns resolution of the acceptance contradiction through the existing lane. This row neither amends the frozen face nor directs new worker work. Worker S27 at the cited branch pin already records the red baseline; this CVO observation adds the acceptance-predicate and omitted-suite consequences. No adjudicates edge is asserted to an unmerged branch-only row. Do not rerun this battery as a read-only probe: its mint and gate arms write the cloud object."
+  },
+  {
+    "id": "IRPT_BCKEND-C-S81",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-11T13:42:53Z",
+    "one_line": "RT5 correction remaps six worker IDs without changing their content; the disclosure-only grade is recorded at the corrected instance pin.",
+    "class": "OBSERVATION",
+    "spec_asserts": "L9 grades a judgment criterion at an explicit instance vintage; a citation to a renamed branch row must retain its original vintage or use the verified mapping.",
+    "world_is": "Correction 95964 maps worker S25..S30 at 8d173559747f875ea751eeaea898de2b241ed8e7 to S27..S32 at 479ed367e57e41b9794aaea41d633884b0f5f5f3. Six row bodies are identical except id. The proof is identical after one-pass ID remapping and its battery pin update; battery changes are row labels only. Guard, both runners and issued face are unchanged. Proof checker is VALID rc=0 with six of six surprise references resolved.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md@8d173559747f875ea751eeaea898de2b241ed8e7",
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md@479ed367e57e41b9794aaea41d633884b0f5f5f3",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/IRPT_BCKEND.TO-IB-rt-5.the-gold-first-mint-bundle-declared-and-minted.proof_of_spec.json@479ed367e57e41b9794aaea41d633884b0f5f5f3",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/battery_ib_rt_5.result.md@479ed367e57e41b9794aaea41d633884b0f5f5f3 (was/is mapping)",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_RT5_L9_REVIEW_20260911.md (same commit; correction 95964 comparison and checker evidence)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Grade and citation-mapping record only: this row opens and adjudicates no investigation item.",
+    "grades": [
+      {
+        "criterion": "RT5-AC2",
+        "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/IRPT_BCKEND.TO-IB-rt-5.the-gold-first-mint-bundle-declared-and-minted.proof_of_spec.json@479ed367e57e41b9794aaea41d633884b0f5f5f3",
+        "verdict": "PASS",
+        "reason": "The RT5-AC2 disclosure bar and its output are unchanged after the six ID replacements. The record states two bundled files, absent bundled dependencies, undetermined execution host/dependency availability and no executed runner or scheduled-run proof. C-S79's disclosure-only judgment therefore also applies at this explicit corrected pin. All limitations and factual qualifications in IRPT_RT5_L9_REVIEW_20260911.md remain: this is not runtime readiness, whole-order acceptance or an RT5-AC1 truth verdict. C-S80's red-baseline predicate concern persists; its corresponding worker row is now S29 rather than S27."
+      }
+    ],
+    "notes": "Preserve C-S79/C-S80 as evidence at their original 8d17355974 vintage. At the corrected tip use S27 for one key versus two, S28 for metadata-key collision, S29 for pre-red tests, S30 for invalid D- grammar, S31 for the forbidden runner-edit clause, and S32 for the old loose-key probes. Do not replace IDs in immutable earlier commits or apply the mapping to the issuer's distinct S25/S26 rows. The corrected tip was not merged into observed CLOUD 3b28cf1c6f1d1f5ff5e7917d4e97ea3ae5015bcd. No battery rerun, cloud action, worker modification or L10 slug follows from this record."
   }
 ]
 ```
-

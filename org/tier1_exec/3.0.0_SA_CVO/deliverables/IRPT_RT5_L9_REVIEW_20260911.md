@@ -51,3 +51,25 @@ The warning in branch row S30 is supported by source: round-one `deliverables/0.
 
 This is a partial L9 record for an executing round. Original worker rows remain untouched; no L10 remediation slug or round closure is issued.
 
+## Correction 95964: row IDs at the corrected worker tip
+
+Received from `0.4.0_DS_ClientPlatform~X` in the exact file `20260911T134100Z_0.4.0_DS_ClientPlatform_X_CORRECTION_to_my_IB-rt-5_message__those_.md`. Verified at 2026-09-11T13:42:53Z. The earlier review and C-S79/C-S80 remain statements about `8d173559747f875ea751eeaea898de2b241ed8e7`; their old IDs must be read at that vintage. The corrected tip is `479ed367e57e41b9794aaea41d633884b0f5f5f3`.
+
+| At 8d17355974 | At 479ed367e5 | Worker finding |
+|---|---|---|
+| S25 | S27 | One bundle key versus the face's two-key denominator |
+| S26 | S28 | Shared metadata-key collision in decomposition text |
+| S27 | S29 | Pre-existing red self-tests used as the control |
+| S28 | S30 | Invalid D- row-ID grammar |
+| S29 | S31 | Requested runner edit conflicts with BOUNDS |
+| S30 | S32 | Old batteries probe loose keys and the wrong bundle name |
+
+These IDs all carry the `IRPT_BCKEND-` prefix. An independent read of the channel at `c8189bb6ae` confirmed 78 rows and both S25/S26 attributed to `2.0.0_SA_COO~B`, substantiating the reported collision. The mapping applies to this worker's old branch citations, not to the issuer's rows or immutable commit messages. The obsolete-probe warning is now **IRPT_BCKEND-S32** at the corrected tip.
+
+Independent comparison of the two git trees found exactly four changed files: the investigation document, proof instance, battery source and result record. JSON comparison verified **6/6 row bodies identical except `id`**. One-pass substitution of the six full IDs plus the battery artifact pin update (`9a98a1292f` to `ace1be49f9`) makes the entire old and new proof JSON equal. Applying the same ID substitution makes the two battery sources equal. The result record additionally carries the was/is table. The guard, two runners and issued task-order face are unchanged, **4/4**. No substantive acceptance or runner change was found.
+
+Ran `python .tools/proof-of-spec-check.py <exact instance> RT5-AC1,RT5-AC2` in `C:/tmp/wk-irpt-2-ds` at the corrected tip: **VALID rc=0**, two acceptance rows, zero violations, 2/2 criterion alignment, 1/1 cell alignment, 6/6 surprise references resolved, four git artifacts PRESENCE_ONLY and one S3 artifact skipped. This remains a structural check. Neither acceptance battery nor either runner was executed.
+
+`IRPT_BCKEND-C-S81` records the same **RT5-AC2 PASS for disclosure only** against the corrected instance pin. C-S80's acceptance-predicate observation persists unchanged; its worker counterpart is now S29. The path, dynamic-import, consumer-search, fixed-key and permanent-404 qualifications above still apply. In particular, renumbering does not make `battery_ib_rt_5.py` a read-only probe.
+
+The corrected tip was not an ancestor of observed CLOUD `3b28cf1c6f1d1f5ff5e7917d4e97ea3ae5015bcd`. This append does not assert a merge, close a worker investigation or issue an L10 slug.
