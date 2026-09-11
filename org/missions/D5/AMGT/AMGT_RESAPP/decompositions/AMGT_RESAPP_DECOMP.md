@@ -809,6 +809,22 @@ are the only roots, they are the two chains' heads, and both spawn at issuance (
   `HARVEST_METRICS_TABLE`.
   WHAT STILL HOLDS UNCHANGED: no cell of this project re-creates, re-declares or re-configures any of them,
   and none performs a migration -- those acts belong to the harvest estate.
+  ⛔ **RE-MEASURED ON THE LIVE PLANE AT 2026-09-11 ~20:5xZ, AGAINST `opal-data-harvest` ITSELF** -- the
+  earlier configuration line in this section was measured on `opal-data-research`, WHICH NO LONGER EXISTS,
+  so it was a true statement about a dead object. Existence and access measured SEPARATELY, per the S5
+  binding:
+  IDENTITY `arn:aws:s3:::opal-data-harvest`, **us-east-1**, not an access-point alias.
+  ACCESS **PROVEN, not assumed** -- `list-objects-v2` RETURNED KEYS, e.g.
+  `derived/model_block/BABA_US_Equity/20260910T224432Z/model_block.json`; head-bucket rc=0 alone would
+  have proved only that the NAME RESOLVES.
+  ⭐ **AND THE TIMESTAMPED KEY GRAMMAR SURVIVED THE MIGRATION**, which is the property FWD-6's accumulate
+  bar actually reads.
+  CONFIGURATION: versioning **Enabled**; SSE **AES256**; **NO lifecycle** (`NoSuchLifecycleConfiguration`
+  -- accumulation is not silently truncated); **NO bucket policy** (`NoSuchBucketPolicy` -- IAM-only).
+  NEGATIVE CONTROL, so the reads are known to discriminate: `head-bucket opal-data-research` now returns
+  **404 Not Found**. The instrument returns real data for one name and nothing for the other.
+  EVERY DIMENSION MATCHES what this section asserted of the old bucket -- the migration preserved the
+  configuration -- but it is now MEASURED rather than inherited.
   WHAT STILL HOLDS UNCHANGED: no round-5 cell re-creates, re-declares or re-configures it, and none of them
   performs the migration -- that act is the harvest estate's.
   Measured at the round-5 cut and still true of the source bucket: versioning **Enabled**, SSE AES256
