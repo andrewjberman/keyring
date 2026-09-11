@@ -5,7 +5,7 @@
  "project": "POSN_ASTTAX",
  "directive": "D4",
  "fabric": "site-z",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -13,7 +13,7 @@
 }
 ```
 
-**Version:** v0.2, 2026-09-11 -- v0.1 first PRD; **v0.2 FOLDS IN Andrew's Cottonwood satellite components as the classifier's necessary data** (s.4 C-SATELLITE-DATA), on his direct 2026-09-11 "read the satellite file and fold it in as its necessary data for POSN_ASTTAX". A v0.2 bump re-opens the two L4-R sign-offs. **Author** `1.0.0_SA_CTO~Z` (L4). **Brief:** the nomenclature
+**Version:** v0.3, 2026-09-11 -- v0.1 first PRD; v0.2 folded in Andrew's Cottonwood satellite components (s.4 C-SATELLITE-DATA), on his direct "read the satellite file and fold it in as its necessary data for POSN_ASTTAX"; **v0.3 disambiguates C-VOL-HEDGE-STRUCTURED's "hedge products" from the legacy served value `asset_class=hedge`** -- a latent defect where the constraint, read against the live data, said the whole `hedge` bucket goes to Structured (found by 2.0.0_SA_COO~Z + 3.0.0_SA_CVO~Z). Each bump re-opens the two L4-R sign-offs. **Author** `1.0.0_SA_CTO~Z` (L4). **Brief:** the nomenclature
 transcript's substance, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4`.
 **Endpoint confirmed by Andrew** 2026-09-11 (see s.5). **Home note:** tree-homed at
 `org/missions/D4/POSN/POSN_ASTTAX/prd/` as `POSN_ASTTAX` (macro POSN), renamed from
@@ -115,6 +115,15 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
 - **C-VOL-HEDGE-STRUCTURED** -- volatility and hedge products classify to **Structured**, not Equity,
   and physical/crypto/commodity-index positions to **Commodities**, not Equity. This is the Cottonwood
   catalyst and it is a CLASSIFICATION change, verified on a surface but driven by the classifier.
+  ⛔ **"HEDGE PRODUCTS" HERE MEANS VOLATILITY AND DERIVATIVE INSTRUMENTS (e.g. VXX, VIXY) -- NOT the
+  legacy served value `asset_class=hedge`.** The word "hedge" does two jobs -- a product CATEGORY (this
+  constraint) and a legacy DATA VALUE -- and their memberships DIFFER. The `asset_class=hedge` bucket,
+  enumerated over the live table by two seats on two instruments (2.0.0_SA_COO~Z, 3.0.0_SA_CVO~Z), holds
+  SEVEN tickers: SIX commodities (DBC, GLD, GSG, IAU, SLV, USO) and ONE volatility (VIXY). It DISSOLVES;
+  it does NOT rename wholesale to Structured. It splits by `sub_asset_class`: {Gold, Silver, Oil,
+  Commodities} -> **Commodities**; Volatility -> **Structured** (VIXY, plus VXX currently mis-served
+  `equity`). Reading this constraint as "the `hedge` bucket -> Structured" mis-files the six commodities
+  and is the exact error to avoid.
 - **C-TWO-SURFACES** -- there are **TWO** surfaces that show asset classes: **Positioning**, and the
   **combined Philosophy / Capital-Market-Assumptions** view. (Andrew-direct 2026-09-11: Philosophy and
   CMA are the same page now.) Both must agree; FWD-6 is graded over the two.
