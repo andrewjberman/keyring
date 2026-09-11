@@ -188,9 +188,25 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
   tickers' `management_style` to the factually-correct value (passive for a bullion trust) -- DT Step 1;
   (2) **THE BAR, stated as a CONDITION and not as an act:** for EVERY ticker in the retag set, ACROSS
   **EVERY SERVED SURFACE THE RETAGGED VALUE REACHES**, (a) the served `asset_class` equals its
-  ratified five-class label, (b) its allocation weight is NON-ZERO and equal to its pre-retag weight,
-  (c) **its row RENDERS** -- served row count equals DOM row count -- and (d) **the class subtotals
-  sum to the grand total.**
+  ratified five-class label, (b) **its LABEL-GROUPED weight** is NON-ZERO and equal to its pre-retag
+  weight, (c) **its row RENDERS** -- served row count equals DOM row count -- and (d) **the class
+  subtotals sum to the grand total.**
+  ⛔ **(b) SAYS "LABEL-GROUPED" BECAUSE THE ALLOCATION-DICT ENTRY DOES NOT DISCRIMINATE, AND READING
+  IT WOULD BE THE `S2-AC5` SHAPE A THIRD TIME -- INSIDE THIS BAR.** Measured by `AT3-s-1` (row
+  `W10-S1`) on the real `generate_positioning_data`, same input:
+  | | served label | LABEL-GROUPED weight | `allocation['commodities']` |
+  |---|---|---|---|
+  | BEFORE | `'Unknown'` | **0.000** | 2.5 |
+  | AFTER | `'Commodities'` | **0.025** | 2.5 |
+  **THE ALLOCATION-DICT COLUMN DOES NOT MOVE.** At base `651ffd4f16` all three `if/elif` chains
+  ALREADY carried an `else` from `AT2-s-1` and the accumulator ALREADY served 2.5, so a clause reading
+  "the weight zeroes in the allocation dict" reads IDENTICALLY in the healthy world and the broken
+  one. What was broken is the SERVED LABEL and the LABEL-GROUPED weight -- and those are what (a) and
+  (b) now name.
+  ⚠ **AND THIS IS THE SECOND TIME THIS CONSTRAINT'S MECHANISM HAS BEEN OVERTAKEN BY A REPAIR** --
+  `AT2-s-6` killed the KeyError, then `AT2-s-1` filled the `else` branches. A constraint that names a
+  mechanism must be re-read against the repairs that land after it, every round, or it silently
+  describes a world that no longer exists.
   ⛔ **WIDENED 2026-09-11 BECAUSE THE FIRST CUT OF THIS BAR WAS NARROWER THAN THE HAZARD.** It read
   "from the served artifact", meaning `positioning_data.json` alone. `2.0.0_SA_COO~Z`'s wave-1 cells
   measured BOTH collapse sites OUTSIDE that artifact, so a GO would have been TRUE AND INSUFFICIENT:
@@ -218,7 +234,15 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
   ONE -- an error this seat made and withdrew.** A step that names a TASK is satisfied by doing the
   task; a step that names a CONDITION is satisfied only by the world. **Step (2) is currently NOT
   MET: `TO-S7-1` measured it and returned NO-GO.** ONLY THEN
-  (3) retag.** A retag before (0)-(2) serves `'Unknown'` at a ZEROED weight on a page that still
+  (3) retag **IN BOTH STORES.** ⛔ **A DYNAMODB-ONLY RETAG IS NOT A RETAG: it is ANNOUNCED AND
+  REFUSED (`rc=3`) by `AT3-s-4`'s durability fix, so the retag MUST ALSO land in
+  `ETF_CLASSIFICATIONS`.** ⭐ And the finding under that is sharper than the rule: the revert hazard
+  was MASKED. The seeder at HEAD **cannot complete a run at all** -- it writes `sub_asset_class=""`
+  for 16 of 136 tickers and that is a GSI hash key, so batch 1 is rejected and ZERO items are
+  written (measured on the real table with a control, first offender at sorted index 0). **Anyone who
+  fixed only the crash would have converted a dead script into a working revert**, which is why the
+  durability fix and the crash fix had to land together.**
+  A retag before (0)-(2) serves `'Unknown'` at a ZEROED weight on a page that still
   renders -- which is why "confirm the page still renders" can never discharge this step. This is
   the SAME defect class as C-CLASSIFIER-PURPOSE(c) -- a placeholder value indistinguishable from a real one
   -- at the `management_style` grain. ⭐ VXX is ALREADY correctly flowing into Satellites 70/80/90/98 via the
