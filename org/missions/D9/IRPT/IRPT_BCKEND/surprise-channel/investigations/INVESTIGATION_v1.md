@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 53 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (50 ours + 48 theirs, 45 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 59 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (54 ours + 54 theirs, 49 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -407,6 +407,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "IB-s-14 face <status>: 'becomes pending when the COO hands it over after IB-s-13 is terminal and merged AND IB-s-10 (slot ~3) is terminal and merged.' Spine v3 L6: fan-out derived from the decomposition's dependency chains.",
     "world_is": "The wait on IB-s-10 guards one arm that the face already lets run on fixtures; holding the whole cell for it idles a slot for hours. Handed early with the substitution stated; the real-sections arm is the replay's.",
     "notes": "Cost of being wrong: one arm re-run at IB-sb-3, which re-runs anyway. Cost of waiting: the export Lambda, its root, its ledger and six arms idle behind a sequential chain. Andrew's question was the trigger; the decision and its record are the issuer's."
+  },
+  {
+    "id": "IRPT_BCKEND-S18",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T05:52:27Z",
+    "one_line": "TWO ISSUER FACTS at the IB-s-9 drain (7799dcfb10), on Andrew's word 'keep it moving'. (1) RE-SEQUENCING, same shape as S17: IB-s-16 is handed to idle slot ~1 ahead of IB-s-14's merge. Its seven recovery arms are driven on the DEPLOYED jobs of IB-s-6, IB-s-9 and IB-s-12 (all merged and live) and IB-s-14 (in flight on slot ~4, re-sequenced itself); the arm(s) that target the export job run on a labelled in-process STAND-IN of the export worker and say so, and arm (e)'s manifest-completeness census is taken at this HEAD with the export cell's entries named as the known delta -- both re-measured at IB-sb-3's replay. IB-s-15 stays held: its routes target Lambdas that do not exist until IB-s-14 and IB-s-16 land. (2) AN ISSUER DEFECT, recorded so the record does not read better than what happened: during the IB-s-9 drain the shared index held another seat's open-deploy sentinel for 500 s, so the drain was run through a temporary linked worktree (guarded merge, same union, commit 53965f4f38) and CLOUD fast-forwarded to it; the ff failed because 0.7.0_AE_CloudOps had committed 36422d66d4 in between, and the failure was MASKED by a pipe (`git merge --ff-only ... 2>&1 | tail -2`, the banked pipeline-rc trap), so the chain continued, deleted the temp branch and the worker branch, and re-cut slot ~3 from the wrong tip. Both commits were still in the object store; the worker branch was restored at 183d5241d0, the drain re-run on the new tip (7799dcfb10, guarded, unions identical) and the ff checked by exit code. Nothing was lost; 53965f4f38 is an orphaned merge commit. Cost: ~10 minutes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (the stand-in arm is printed by the worker and re-graded at the drain; the ff-race procedure now checks rc without a pipe)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-16.operations-status-envelope-and-per-tenant-recovery.md (HEAD) -- L5 note: 'The seven recovery arms, driven on the DEPLOYED jobs of IB-s-6 (intake), IB-s-9 (generation), IB-s-12 (holdings) and IB-s-14 (export)'",
+        "git log 7799dcfb10 -- parents b30839715c + 183d5241d0; 53965f4f38 orphaned (parents 5701c5c3ce + 183d5241d0)",
+        "memory: reference_a_pipelines_exit_status_is_its_last_commands_so_cmd_pipe_tail_always_reads_rc_0 -- the banked trap this seat hit"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-s-16 <status>: 'becomes pending ... after IB-s-6, IB-s-9, IB-s-12 and IB-s-14 are all terminal and merged.' CLAUDE.md Git: never compose the report of an act in the same call as the act; a pipeline's rc is its last command's.",
+    "world_is": "Three of four target jobs are deployed; holding the whole cell for the fourth idles a slot behind a sequential chain. Handed with the substitution stated. The drain procedure had one pipe too many and it cost a re-run, not data.",
+    "notes": "Andrew-direct 2026-09-11 ~05:2xZ: 'we can't get held up on this shit, keep it moving' -- the trigger for both re-sequencings (S17, S18); the substitutions are stated, not hidden, and the replay is where they are re-measured."
   },
   {
     "id": "IRPT_BCKEND-W1-S1",
@@ -1275,27 +1298,126 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "Recorded because it costs a cycle every time. Same family as the existing memory note that Python spawning an MSYS binary must go through .tools/msys_argv_guard.py -- this is the AWS-shim instance of it."
   },
   {
-    "id": "IRPT_BCKEND-S18",
+    "id": "IRPT_BCKEND-W4-S9",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T05:52:27Z",
-    "one_line": "TWO ISSUER FACTS at the IB-s-9 drain (7799dcfb10), on Andrew's word 'keep it moving'. (1) RE-SEQUENCING, same shape as S17: IB-s-16 is handed to idle slot ~1 ahead of IB-s-14's merge. Its seven recovery arms are driven on the DEPLOYED jobs of IB-s-6, IB-s-9 and IB-s-12 (all merged and live) and IB-s-14 (in flight on slot ~4, re-sequenced itself); the arm(s) that target the export job run on a labelled in-process STAND-IN of the export worker and say so, and arm (e)'s manifest-completeness census is taken at this HEAD with the export cell's entries named as the known delta -- both re-measured at IB-sb-3's replay. IB-s-15 stays held: its routes target Lambdas that do not exist until IB-s-14 and IB-s-16 land. (2) AN ISSUER DEFECT, recorded so the record does not read better than what happened: during the IB-s-9 drain the shared index held another seat's open-deploy sentinel for 500 s, so the drain was run through a temporary linked worktree (guarded merge, same union, commit 53965f4f38) and CLOUD fast-forwarded to it; the ff failed because 0.7.0_AE_CloudOps had committed 36422d66d4 in between, and the failure was MASKED by a pipe (`git merge --ff-only ... 2>&1 | tail -2`, the banked pipeline-rc trap), so the chain continued, deleted the temp branch and the worker branch, and re-cut slot ~3 from the wrong tip. Both commits were still in the object store; the worker branch was restored at 183d5241d0, the drain re-run on the new tip (7799dcfb10, guarded, unions identical) and the ff checked by exit code. Nothing was lost; 53965f4f38 is an orphaned merge commit. Cost: ~10 minutes.",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-11T07:10:00Z",
+    "one_line": "THE DEPLOYED EXPORT WORKER CANNOT RENDER, and this is the cell's central product gap rather than a packaging detail. A PDF needs a headless browser; none exists in a python3.12 Lambda and one cannot be added without fetching a browser build off Opal infrastructure, which the estate refused at IB-s-8 (rows W3-S1/S2). irpt-export-render is therefore deployed with IRPT_EXPORT_RENDERER=unavailable set EXPLICITLY -- a function that discovers it has no browser at invoke time reports an error, a function that is told it has none reports an ABSENCE with a reason -- and its iam.tf grants no s3:PutObject and no kms:Decrypt, because a write grant for a path that cannot execute is a standing grant bought with nothing. The MECHANISM is proved in the worktree against the estate's OWN existing headless path (Playwright driving the locally installed Edge through channel=msedge, exactly as docs/research/investor_reporting_export_20260910/build_export_review.py does, downloading nothing): 9 of 9 battery arms including three real vendor-input exports. What does not exist is a CLOUD render. Until a runtime lands, FWD-8's export is a worktree capability with a deployed shell around it.",
     "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (the stand-in arm is printed by the worker and re-graded at the drain; the ff-race procedure now checks rc without a pipe)",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B -- the headless runtime is a build decision (a container image, a browser layer, or an out-of-Lambda worker) and every candidate is outside this order's <paths>; a later cell owns it, and the S14 arms that would have to be re-run at that point are named in the S14-AC3 judgment",
     "grounding": {
       "status": "GROUNDED",
       "evidence": [
-        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-16.operations-status-envelope-and-per-tenant-recovery.md (HEAD) -- L5 note: 'The seven recovery arms, driven on the DEPLOYED jobs of IB-s-6 (intake), IB-s-9 (generation), IB-s-12 (holdings) and IB-s-14 (export)'",
-        "git log 7799dcfb10 -- parents b30839715c + 183d5241d0; 53965f4f38 orphaned (parents 5701c5c3ce + 183d5241d0)",
-        "memory: reference_a_pipelines_exit_status_is_its_last_commands_so_cmd_pipe_tail_always_reads_rc_0 -- the banked trap this seat hit"
+        "lambda invoke irpt-export-render action=capabilities, verbatim: renderer=unavailable, renderer_available=false, renderer_absence='forced by IRPT_EXPORT_RENDERER=unavailable', renderer_version=chromium-print/msedge-channel/irpt-1.0.0",
+        "infra/aws/terraform/investor-reporting/export/lambda.tf @1beda4bf49 -- IRPT_EXPORT_RENDERER is set to `unavailable` explicitly, with the reason in the header",
+        "infra/aws/terraform/investor-reporting/export/iam.tf @1beda4bf49 -- the NOT GRANTED list names s3:PutObject/GetObject and kms:Decrypt and says they land WITH the runtime",
+        "docs/research/investor_reporting_export_20260910/build_export_review.py:210-235 -- the estate's own headless path: playwright.chromium.launch(channel='msedge'), page.pdf(prefer_css_page_size=True)",
+        "battery_ib_s_14.py arms (a)-(g)+(v0.11): 9 of 9 passed in the worktree, 4 renders under a socket guard with 0 external connections and a positive control that moved the counter"
       ]
     },
     "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "IB-s-16 <status>: 'becomes pending ... after IB-s-6, IB-s-9, IB-s-12 and IB-s-14 are all terminal and merged.' CLAUDE.md Git: never compose the report of an act in the same call as the act; a pipeline's rc is its last command's.",
-    "world_is": "Three of four target jobs are deployed; holding the whole cell for the fourth idles a slot behind a sequential chain. Handed with the substitution stated. The drain procedure had one pipe too many and it cost a re-run, not data.",
-    "notes": "Andrew-direct 2026-09-11 ~05:2xZ: 'we can't get held up on this shit, keep it moving' -- the trigger for both re-sequencings (S17, S18); the substitutions are stated, not hidden, and the replay is where they are re-measured."
+    "spec_asserts": "The L5 note: 'infra/aws/lambda/investor-reporting/export/ (Lambda irpt-export-render, a headless-browser runtime consuming irpt-export)'; the hand-off's fact (1): 'if no headless runtime is reachable without egress, that is ONE row and the render arm uses the estate's existing PDF path with the substitution stated'.",
+    "world_is": "The render MECHANISM is proved and reproducible; the CLOUD RENDER does not exist. The deployed function reports the absence with its reason instead of emitting a PDF from a different engine under the same artifact revision.",
+    "notes": "The substitution IS the estate's existing PDF path, not a new dependency: playwright and a local Edge were already on this machine and nothing was installed. The deployed absence and the worktree proof are two different claims and the battery keeps them apart."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S10",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-11T07:10:00Z",
+    "one_line": "THE irpt-common LAYER CARRIES 2 OF THE 5 IRPT CONTRACTS THE DEPLOYED FUNCTIONS NEED. IB-s-13 built it for the performance and narrative functions, so it packages PerformanceReport and NarrativePacket; the three EXPORT contracts (RenderPackage, ExportBundle, ExportReceipt) are not in it. The export function's resolution order worked exactly as designed -- env, then /opt/python/irpt_contracts, then the repo path, BY PRESENCE OF THE FILE -- and correctly fell through to /var/_contracts, which does not exist in a Lambda. jsonschema IS importable there; the schema FILES are not, and those are different facts. Rebuilding the layer is not available to this order: infra/aws/lambda/layers/irpt-common/ and infra/aws/terraform/investor-reporting/performance/ are NOT in IB-s-14's <paths>, and a path this cell needs that the order does not name is a row, never an override. What changed instead is the REPORT: `capabilities` now names per contract which schema this runtime can check, rather than raising ValidationUnavailable and dying of the thing it exists to report.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B -- one line in the layer's CONTRACTS tuple (build_layer.py) plus a rebuild and a re-apply of the performance root; both surfaces belong to IB-s-13's paths, not this order's. Every later cell whose deployed function validates an export contract inherits the same UNAVAILABLE until it lands",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/layers/irpt-common/BUILD_MANIFEST.json @HEAD -- contracts[] carries exactly python/irpt_contracts/PerformanceReport.schema.json and python/irpt_contracts/NarrativePacket.schema.json; 2 of the 11 contracts in _contracts/, and 0 of the 3 this cell validates",
+        "lambda invoke irpt-export-render, first attempt after the import fix: {\"errorMessage\": \"contract not packaged at /var/_contracts/RenderPackage.schema.json\", \"errorType\": \"ValidationUnavailable\"}",
+        "lambda invoke irpt-export-render after the change: contract_validators = {RenderPackage: UNAVAILABLE..., ExportBundle: UNAVAILABLE..., ExportReceipt: UNAVAILABLE...} with statusCode 200",
+        "IRPT_BCKEND.TO-IB-s-14 <paths> -- infra/aws/lambda/layers/ and infra/aws/terraform/investor-reporting/performance/ are absent from the grant",
+        "infra/aws/lambda/investor-reporting/export/bundle.py contracts_dir() -- resolution by (path / filename).is_file(), env then layer then repo, so an empty layer directory cannot shadow a worktree run"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S14-AC1 arm (g): 'the packet validates'; the deployed function is expected to validate the contracts it produces.",
+    "world_is": "A shared layer built for two consumers serves two consumers. The third arrived with three more contracts and no write access to the layer, so the deployed function reports which validators it has instead of claiming a validation it did not perform.",
+    "notes": "The worktree validates all three (jsonschema plus the repo _contracts path), which is what the 33 offline tests and the 9 battery arms exercise. The gap is deployed-only and is visible in the function's own output."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S11",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-11T07:10:00Z",
+    "one_line": "A REPO-RELATIVE PATH COMPUTED AT IMPORT KILLED THE DEPLOYED FUNCTION BEFORE IT COULD REPORT ANYTHING. assets.py resolved the estate's gitignored brand sources from `_HERE.parents[4]`; the packaged zip unzips to /var/task, which has TWO ancestors, so the expression raised `IndexError: 4` at line 1 of the handler's import. THREE local instruments passed it -- the 31 offline tests, the ADHC import-closure gate and the build -- because all three run in a tree where five ancestors exist. AND THE FIX HAD ITS OWN NEAR-MISS WORTH MORE THAN THE BUG: written as a bounded walk with levels=4 it reproduced parents[3] and landed on infra/, and THE TEST SUITE STILL PASSED, because the fallback test accepts either the present or the absent branch on purpose (a machine may legitimately lack the gitignored sources) -- so a wrong root silently took the absent branch and read green. It is caught by asserting the resolved root CARRIES infra/aws/lambda and deck_generation, which is a property of the ROOT rather than of the files.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lambda invoke irpt-export-render, verbatim: {\"errorMessage\": \"4\", \"errorType\": \"IndexError\", stackTrace ... File \"/var/task/handler.py\", line 44, in <module> import assets as assets_mod / File \"/var/task/assets.py\", line 75, in <module>}",
+        "infra/aws/lambda/investor-reporting/export/assets.py _repo_root() @e3fe224e30 -- a bounded walk that stops at the filesystem root, levels=5, with the off-by-one recorded in its own docstring",
+        "test_the_repo_root_walk_survives_a_shallow_path and test_the_brand_sources_resolve_where_they_are_provisioned @e3fe224e30 -- the two controls; the second is the one that can see a wrong depth",
+        "python -m pytest infra/aws/lambda/investor-reporting/export/tests -q -> 33 passed, after both",
+        "with the corrected root the fallback resolves the official logo: sha256 02477c761bbaac4ec4c23e1b0d2f743271c1d94ec6b1f81ed9a31a8e99fe58b3, 3853 bytes, 1301.87 x 575.0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DELIVERABLE: 'infra/aws/lambda/investor-reporting/export/ (assets.py, ...)'; BOUNDS 4: served bytes verified as CodeSha256 against the built zip.",
+    "world_is": "A module that computes a REPO-RELATIVE path at import time carries a claim about its own depth in a tree, and a Lambda is the environment where that claim is false. Every local instrument runs where it is true.",
+    "notes": "Same family as IB-s-13's assembled module that parsed and could not import (row W4-S7): a failure the deployed environment has and no local instrument does. The generalisable half is that a test which accepts BOTH branches of an absence cannot detect a wrong path -- it needs one assertion about the path itself."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S12",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-11T07:10:00Z",
+    "one_line": "A RETRY OF A BYTE-IDENTICAL BUNDLE MINTS A NEW export_id, AND NOTHING THIS CELL CAN DO PREVENTS IT. Chromium stamps a creation date and a document /ID into every PDF, so two renders of ONE frozen bundle produce different bytes (measured: 25,231 bytes each, different sha256; and across two full battery runs the ONLY lines that moved were four raw digests and the export ids derived from them). The receipt's artifact.sha256 is the RAW digest -- an artifact hash must name the object that exists -- and export_id is derived from (bundle_sha256, artifact_sha256), so it moves with the bytes. S14-AC1 (a) is therefore met on a CONTENT hash (page count + each page's media box + each page's content stream + the extracted text), which IS stable, and the battery prints both side by side rather than quietly hashing something normalized and calling it the PDF. THE CONSEQUENCE FOR A CONSUMER: the stable identity of an export is the BUNDLE hash, not the receipt id. A downstream consumer that de-duplicates on export_id will see a new export for every retry of identical input.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B -- whether a retry REUSES the prior receipt (keyed on bundle_sha256) or mints a new one is a product decision, not a rendering one, and it belongs to the cell that owns the job table (IB-s-17's surface). Until it is taken, a consumer keying on export_id accumulates duplicates",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_s_14.py arm (a) output: 'bundle sha256, preview/render/retry equal across the three: True (3 of 3)', 'content hash equal: True', 'RAW equal: False'",
+        "diff of two consecutive full battery runs: 14 lines, 8 changed lines, ALL of them raw sha256 values and the export ids derived from them; every bundle hash, content hash, page count, census and verdict identical",
+        "infra/aws/lambda/investor-reporting/export/receipt.py export_id_for() -- sha256 over (bundle_sha256 | artifact_sha256), so the id is a function of the bytes",
+        "a direct probe before the design was fixed: two renders of identical HTML through playwright/msedge, 25231 bytes each, sha256 437618c1d8079286... and 55e6ac2f925046e4..., with the normalized content hash equal (eac447b107987789...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S14-AC1 (a): 'the rendered PDF's content hash equal between render and retry'; the acceptance clause draft: 'retry reuses the bundle, no vendor call during render'.",
+    "world_is": "The bundle is reusable and is reused; the ARTIFACT is not byte-reproducible, because the engine stamps time into it. The face's own words say 'content hash', and that is what is asserted -- the raw digest is reported as unstable rather than presented as if it were not.",
+    "notes": "Not a defect of the render: it is a property of every PDF print engine. Recorded because the receipt id inherits it, and a reader who assumes export_id is stable across a retry will be wrong."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S13",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-11T07:10:00Z",
+    "one_line": "THE BATTERY WRITES FOUR REAL OBJECTS INTO THE LIVE EVIDENCE BUCKET, under firms/49financial/generations/GENIBS14SYN/attempts/1/exports/{r1,v0-11-overview,v0-11-comparison,v0-11-multicomp}/report.pdf. S14-AC1 (g) requires the receipt's artifact_hash to equal THE STORED OBJECT'S, and a stored object is a write -- there is no reading of that arm that does not put bytes in the bucket. Two things make the write safe to read later and both are deliberate: the generation id is GENIBS14SYN, which is not a client generation and cannot be mistaken for one, and every object carries irpt-synthetic=true in its metadata (the vendor-input three additionally carry vendor-synthetic-holdings=true, the label the v0.11 amendment asks for and never synthetic:true, which the face reserves). The firm prefix is REAL because _keys._check_tenant validates the tenant against data/firm_registry.json -- a made-up firm has no admissible shape, so there is no synthetic prefix to write to.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B -- four objects under one unmistakable generation id; delete or relocate them before any consumer reads the generations prefix as client evidence. This worker does not delete them because arm (g) and arm (v0.11) are graded on them being there",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_s_14.py arm (g): 'artifact key firms/49financial/generations/GENIBS14SYN/attempts/1/exports/r1/report.pdf', put then get, 'receipt artifact_hash == stored object sha256: True'",
+        "battery_ib_s_14.py arm (v0.11): three more keys under the same generation, each put with --metadata irpt-synthetic=true,vendor-synthetic-holdings=true,export-revision=v0-11-<variant>, each read back and hash-compared",
+        "infra/aws/terraform/investor-reporting/core/layout.json -- generation_artifacts.export_pdf = exports/{revision}/report.pdf under firms/{firm_id}/generations/{id}/attempts/{a}/: the key is the DECLARED layout, built by _keys.s3_evidence_key and not by a format string",
+        "infra/aws/lambda/investor-reporting/_keys/keys.py _check_tenant -- the tenant is validated against data/firm_registry.json, so a synthetic firm prefix is inexpressible"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S14-AC1 (g): 'ExportReceipt validates and its artifact_hash equals the stored object's; the object key is under the bound firm's exports prefix'. BOUNDS 7: 'No served output is touched ... except where THIS order's cell says it ADDS a resource' -- and the cell text names 'the protected artifact under firms/<id>/generations/<id>/attempts/<a>/exports/<revision>/report.pdf'.",
+    "world_is": "Proving the receipt against a STORED object means storing one, and the only admissible prefixes are real firms'. The write is labelled twice (an unmistakable generation id and object metadata) rather than hidden, so a later reader can tell it from client evidence without reading this row.",
+    "notes": "No client data is in any of the four: the performance/analysis content is the cell's own fixture sections, and the three vendor-input exports are rendered from the CRO's synthetic portfolio 2332257 (SPY/AGG), which the PRD already calls real vendor output on synthetic holdings."
   }
 ]
 ```
