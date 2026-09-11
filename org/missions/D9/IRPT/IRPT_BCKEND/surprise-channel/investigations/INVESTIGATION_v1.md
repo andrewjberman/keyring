@@ -961,6 +961,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Rule 13: DS owns commit-to-QA-deploy for data/*/scripts/gold/*.py; safe-deploy.sh: first-mints stay explicit. IB-s-12 / IB-s-4 issuer amendment: the first-mint is attempted through the guard's explicit mechanism and verified by artifact.",
     "world_is": "The explicit mechanism has no declared target for this project's gold home, so no worker in this round can land the shared-home copy; the served code prefix reads 404 for both scripts while the Lambdas that run them are converged. The directory and holdings id spaces coincide for one firm of three.",
     "notes": "Two decisions recorded here rather than made silently: (1) the issuer does NOT declare the bundle mid-round -- it is a tooling edit under another lane and the only off-spec act available to this seat is a row; (2) IB-s-4's arm (h) is read as BLOCKED-BY-W1-S8 rather than re-filed, so the channel carries one BLOCKING row for one defect. Carried to L10 with the sequencing defect of S9 and the execution-role trust question of W3-S3."
+  },
+  {
+    "id": "IRPT_BCKEND-S11",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T03:20:41Z",
+    "one_line": "PRD MOVED TO v0.8 @d67e9813b5 MID-ROUND (v0.5 at 00:54Z, v0.6/v0.7/v0.8 through 03:09Z; 1.0.0_SA_CTO 95705 and 95751, information only) and the CTO left the amend-at-drain versus re-cut-in-round-2 decision to this lane. Decision, recorded: round 1 stays FROZEN on v0.4 @62301f71e0 for every cell's RECTANGLE and for every handed face; the ONE un-handed face whose cell the delta measures against live vendor behaviour -- IB-s-9, the YCharts generation chain -- is amended in the FE-s-2 / FE-s-5 shape with the v0.5 REST decision table and the v0.8 measured working contracts (upload field `holdings`; save fields `portfolio`/`items`; the full 201 payload vs the 404 minimal payload as a contract failure; fee 0 -> 422; empty sections legitimate; 26.76 s job budget; PDF via a separate unauthenticated client) as the SHAPES its replay transport records, plus one arm. Building IB-s-9 to the v0.4 row would have shipped a chain against a contract the estate has already measured to be wrong (the v0.4 row forbade inventing the upload field name that v0.8 now records). The B8 delta (session broker, isolated secret, fence, K3 controller) is NOT amended in: IB-s-8 is complete at 95a34541f8 on v0.4 and its delta, with B16/B17's, is round-2 material for the CTO's L10 analysis; the LIMB 6 gate refuses a NEW order against v0.8 until CRO and CVO re-sign, and no new order is cut here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (the decision is this lane's by the CTO's own words; the re-sign of v0.8 is 4.0.0_SA_CRO's and 3.0.0_SA_CVO's; the round-2 recut of B8/B16/B17 is the L10 read)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T005445Z_1.0.0_SA_CTO_INFORMATION__IRPT_BCKEND_PRD_is_at_v0.5_.md (msg 95705) and ...20260911T030903Z_..._v0.8_.md (msg 95751) -- 'the amend-at-drain versus re-cut-in-round-2 decision is the lane's'",
+        "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md @d67e9813b5 line 117 -- the B9 row with its (v0.5, SUPP IV.7/IV.8/III.2) and (v0.8, SUPP VI.5) additions, read by git show",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-9.the-ycharts-generation-chain-as-an-opal-async-job.md (this commit) -- ISSUER AMENDMENT block + arm (v0.8); <status> still staged, unhanded; PRD pin line unchanged at v0.4",
+        "org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md (HEAD) -- mid-round the spec and the decomposition are frozen; the decomposition v0.1.1 is NOT edited by this amendment"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Spine v3: mid-round the spec AND the decomposition are FROZEN; the only off-spec act is a surprise row. CLAUDE.md L4-R: the L4 notifier withholds the COO delivery until CRO and CVO sign at the current prd_version.",
+    "world_is": "The PRD advanced four versions during the round on Andrew's word at the CRO terminal; the delta is measured vendor behaviour that one un-handed cell would otherwise build against wrongly. The amendment carries measured shapes into that face without touching its rectangle, the decomposition or any handed face.",
+    "notes": "Recorded so the CVO's L8 compile and the CTO's L10 read see the decision and its scope in one place: amended IB-s-9 only; IB-s-8 (complete), IB-s-16 and IB-s-17 (B16/B17 deltas) carried to round 2. The v0.8 cloud packet is named as read-only reuse, never as a write surface."
   }
 ]
 ```
