@@ -809,3 +809,90 @@ disarmed and why. Nothing here dispositions anything -- that is the CVO's L9 act
   }
 ]
 ```
+
+
+---
+
+## Rows appended by `0.9.0_WK_POSN_ASTTAX~10` at L7 (TO-T1-1, cell AT3-s-1), 2026-09-11
+
+Three rows from the round-3 chain head. One records that the constraint's stated mechanism is half
+historical at this cell's own vintage; one records a served-grain gap this cell cannot close without
+inventing market data; one records an act taken that the order did not name. None blocked the work.
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W10-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~10",
+    "surfaced_at": "2026-09-11T22:06:05Z",
+    "one_line": "THE WEIGHT HALF OF C-RETAG-SAFETY'S LIVE MECHANISM IS ALSO HISTORICAL, not just its 17/3/14 ratio: at 651ffd4f16 EVERY asset_class if/elif chain already carries an else (AT2-s-1) and the portfolio accumulator already carries an unseeded class under its own key (AT2-s-6), so a Commodities holding served allocation 2.5 and NOT 0.000 -- the 0.000 that is live sits at the FIVE-CLASS served view (no holding carries the label) and at the delta and spread rows, which were ABSENT rather than zero.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SPEC TEXT, quoted: PRD org/missions/D4/POSN/POSN_ASTTAX/prd/POSN_ASTTAX_PRD.md@49ddcc481d s.4 C-RETAG-SAFETY -- 'THE LIVE MECHANISM (measured by TO-S7-1, round 2): SILENT ZEROING, NOT BLANKING ... It renders Commodities/Structured as the literal string Unknown and silently zeroes the weight.' The same sentences are in this order's worker face and in the decomp cell AT3-s-1 ('the allocation if/elif chain has no else, so an unmatched value accumulates to TOTAL 0.000'). The PRD caveats only the RATIO as historical: 'the 17-hop figures are pinned to TO-S7-1's run'.",
+        "WORLD, READ AT THE ORDER'S OWN BASE COMMIT 651ffd4f16 (git show 651ffd4f16:<file>): the three if/elif chains that branch on asset_class ALL have an else, added by AT2-s-1 @c34eab85dc -- calculate_benchmark_allocations_from_holdings :432-451 (else accumulates into `unallocated` and WARNs), calculate_weighted_etf_characteristics :610-624 (else WARNs), calculate_characteristics :1131-1146 (else WARNs). The chain named 'no else' is the FIRST of those and it is the one AT2-s-1 repaired.",
+        "MEASURED, not read: the AC3 harness at deliverables/0.9.0_WK_POSN_ASTTAX~10/ac3_before_after_five_classes.py drives the real generate_positioning_data on the 651ffd4f16 bytes with a PROBE ticker tagged 'commodities' at weight 0.025 and the BEFORE arm prints, verbatim: served assetClass 'Unknown'; allocation['commodities'] 2.5; delta['commodities'] <ABSENT>; spread['commodities'] <ABSENT>; and the five-class served weight for Commodities 0.000. Identical shape for 'structured' and 'alternatives'.",
+        "SO THE ORDER'S VERDICT IS CONFIRMED AND ITS MECHANISM IS NOT: both classes DO still display as 'Unknown' (the half that was checked), and the weight IS lost at the served grain (a class line with no holdings, and no delta or spread row at all) -- but NOT by the cited route. A cell that verifies the cited route by reading `allocation` finds 2.5 there and can conclude the defect is already gone.",
+        "COVERAGE OF THE CLAIM, printed: the AC1 census at this vintage is 98 hits / 2391 lines / 31 sections, every hit assigned to one of 14 hops with 0 unassigned (deliverables/0.9.0_WK_POSN_ASTTAX~10/ac1_hop_accounting.py, T1-AC1 ACCOUNTING: COMPLETE). 12 of 14 in-census hops are served-path; a second census over the class VALUES (comp-read --enumerate 'hedge', 31 hits) finds 3 further served-path hops the asset_class census cannot see at all."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD s.4 C-RETAG-SAFETY, this order's worker face and decomp cell AT3-s-1 all state the LIVE mechanism as: the allocation if/elif chain has NO else, so a Commodities or Structured value renders as the literal 'Unknown' AND its weight accumulates to 0.000. The PRD marks only the 17/3/14 RATIO as historical and states the mechanism itself as current and measured.",
+    "world_is": "At the order's own base commit the else exists in all three chains (AT2-s-1 @c34eab85dc) and the portfolio accumulator carries an unseeded class under its own key (AT2-s-6), so the served allocation for a Commodities holding read 2.5, not 0.000. The weight loss is real but sits elsewhere: at the five-class served view (the label is 'Unknown', so the Commodities line has no holdings and reads 0.000) and at the delta and benchmark-spread rows, which carried no row for the class at all.",
+    "notes": "FILED FOR FORM, NOT SIGNIFICANCE. It blocked nothing and the cell was executed as ordered: the three chains now match the ratified five ABOVE their else, the else is loud and names the value, and the delta and spread rows carry every class. ARMED rather than INERT for one reason only: the mis-stated mechanism lives in the PRD, which I may not edit (it is outside this order's <paths>), and the next cell to read it is AT3-s-5 -- the bar that GATES the retag. A bar built on 'confirm the weight zeroes in the allocation dict' would read 'already fine' pre-retag and 'fine' post-retag: a check that returns the same answer in both worlds, which is the exact defect POSN_ASTTAX-Z-W4-S3 records against TO-S2-1's S2-AC5. disarm_owner is the PRD's owner because amending that text is the only disarm; this worker's mitigation is limited to recording the corrected reading in its proof-of-spec instance and here. The RE-FOUNDING itself was right -- only the half of the mechanism that was not re-measured went stale."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W10-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~10",
+    "surfaced_at": "2026-09-11T22:06:05Z",
+    "one_line": "THREE OF THE FIVE RATIFIED CLASSES HAVE NO BENCHMARK ETF AND THIS CELL CANNOT MINT ONE: BENCHMARK_ETFS holds three keys (cash/BIL, fixed_income/AGG, equity/IVV), so at the benchmark hops Structured, Commodities and Alternatives can be carried as allocation and spread rows but cannot be BENCHMARKED -- benchmark_etf_info still falls back to the cash benchmark, and a portfolio whose largest class is one of the three is compared against a smaller one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE LITERAL, at infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py@651ffd4f16:176-181 -- BENCHMARK_ETFS = {'cash': {'ticker': 'BIL'}, 'fixed_income': {'ticker': 'AGG'}, 'equity': {'ticker': 'IVV'}}. Three keys, and the global_benchmarks section of the served payload is emitted by iterating exactly that dict (:2103-2110 at the same vintage), so the served benchmark set is three regardless of how many classes the holdings carry.",
+        "THE SILENT FALLBACK, same file :185-188 pre-edit -- `BENCHMARK_ETFS.get(asset_class, BENCHMARK_ETFS['cash'])`. TO-S7-1's own harness recorded this as hop H3 SILENTLY DROPPED ('a five-class value resolves to the CASH benchmark with no signal'), and that reading is unchanged at this vintage.",
+        "WHY THIS CELL DOES NOT CLOSE IT: choosing a benchmark instrument for Commodities or Structured is a market-data and product decision, not a carry. Inventing one here would be minting content the PRD does not ratify, against this order's BOUNDS ('DO NOT MINT A SIXTH CLASS', 'the five are ratified') and against the build ladder's first rung.",
+        "WHAT WAS DONE INSTEAD, and it is exercised: benchmark_etf_info() now WARNs by name when it falls back ('no benchmark ETF is defined for asset_class %r (defined: %s) -- falling back to the cash benchmark %r'); the primary-benchmark selection is derived from BENCHMARK_ETFS instead of a hardcoded ['fixed_income','equity'], so a class with no benchmark cannot be selected and then silently resolved to cash; and a second WARN fires when a class with no benchmark holds the LARGEST allocation. The allocation and spread rows carry all five classes at 0.0 rather than being absent, so the gap is visible in the payload rather than only in a log.",
+        "BLAST RADIUS TODAY IS BOUNDED BY THE HOLDINGS, which is why this is INERT: TO-T6-1 records VXX as the entire live member of the retag set at LT 0.0150 / ULT 0.0200 and the six commodity tickers as holding zero rows. A 1.5-2.0% sleeve cannot be the largest allocation in any model, so the wrong-benchmark branch is unreachable in current data. It becomes reachable only if a Structured or Commodities sleeve grows past the largest of cash/fixed_income/equity."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell AT3-s-1 orders every hop where an asset_class value is mapped, branched, bucketed or rendered on the served path to carry all five ratified classes, so that a correctly-tagged ticker renders under its own label with its weight intact.",
+    "world_is": "Two served benchmark hops cannot satisfy that in the same sense the others can, because the thing they carry is an INSTRUMENT and only three exist. benchmark_etf_info() has three candidates and must fall back for the other two classes, and the global_benchmarks section is emitted by iterating that same three-key dict. The classes are now carried as allocation, delta and spread rows and every fallback is named out loud, but no benchmark exists for Structured, Commodities or Alternatives and this cell is not permitted to invent one.",
+    "notes": "Raised so the gap travels as a MEASURED absence rather than as an unexamined pass. It is an input for AT3-s-5's bar (the bar asserts served value and weight, neither of which this affects) and for whoever owns the benchmark set -- a product question for Andrew/Yang, not a code defect. Deliberately NOT marked ARMED: the harmful branch is unreachable at today's weights, and the two WARNs make it self-announcing if it ever becomes reachable."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W10-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~10",
+    "surfaced_at": "2026-09-11T22:06:05Z",
+    "one_line": "NOTHING FIXES THE RAW REGISTRY SPELLING THE RETAG WILL WRITE, so a carrier keyed on 'commodities' and a retag writing 'Commodities' would miss each other and the bar would read NO-GO for an invisible reason: I added a normalization step the order did not name (case/separator/plural folding plus a six-entry alias table) so any spelling of a ratified class resolves to the same carried class.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SPEC NAMES LABELS, NEVER RAW VALUES: PRD s.3 ratifies the five as display labels ('Fixed Income / Cash', 'Equity', 'Structured', 'Commodities', 'Alternatives'); the decomp's AT3-s-6 says 'move the retag set to its ratified five-class labels'; TO-T6-1 asserts served asset_class == 'the ratified five-class label'. None of the three names the string written INTO the registry's asset_class field.",
+        "BUT EVERY HOP KEYS ON THE RAW VALUE: classify_etf returns registry_field(ticker, 'asset_class', UNCLASSIFIED_ASSET_CLASS) verbatim, and the legacy vocabulary is lower_snake ('cash', 'fixed_income', 'equity', 'hedge'). The estate carries BOTH conventions for these words: infra/aws/lambda/v2_portal/_shared/etf_classification.py:652 stores 'DBC': 'Commodities' (display case) in its sub-asset map while its asset_class map at :240 stores 'DBC': 'hedge' (lower snake). A retag author reading the labels could reasonably write either.",
+        "WHAT I DID THAT THE ORDER DID NOT SAY: added normalize_asset_class() -- strip, lower, '-' and ' ' to '_', then a six-entry alias table (commodity, alternative, alts, structured_product(s), fixedincome) -- and routed every hop through it. It never maps one ratified class onto another and it never adopts an unresolved value: anything that does not fold into the ratified set still reaches the loud path and is named in a WARN.",
+        "EXERCISED, not asserted: the SPELLING ROBUSTNESS table in deliverables/0.9.0_WK_POSN_ASTTAX~10/ac3_before_after_five_classes.py drives the real served path once per spelling and prints -- 'commodities'->'Commodities' w=0.025; 'Commodities'->'Commodities' w=0.025; 'COMMODITIES'->'Commodities' w=0.025; 'commodity'->'Commodities' w=0.025; 'Fixed Income'->'Fixed Income' w=0.025; 'alternative'->'Alternatives' w=0.025. All recognized=True.",
+        "AND THE LOUD PATH STILL FIRES for a value outside the taxonomy: T1-AC4 feeds 'Fine Wine Fund' and every chain carries it under its own key with a WARN naming it verbatim -- 'WARN: calculate_allocations: asset_class 'Fine Wine Fund' (ticker PROBE) is OUTSIDE the five ratified classes -- carried under its own key 'fine_wine_fund', not dropped and not folded into a ratified class'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's act is to make every hop carry the five ratified classes so a correctly-tagged ticker renders under its own label, and its BOUNDS forbid retagging any registry row and minting a sixth class. It names the five by LABEL and leaves the raw registry spelling unspecified.",
+    "world_is": "The carrier is keyed on the raw registry value, and no document in the project fixes that value for the three new classes -- the estate uses display case for these words in one map and lower snake in another. A carrier keyed on one spelling and a retag writing the other would produce a served 'Unknown' and a NO-GO bar with no visible cause, so I added a normalization layer the order did not ask for rather than pick a spelling and hope the retag matches it.",
+    "notes": "Recorded because it is an ACT BEYOND THE ORDER, not because it is a defect: the order said carry the five classes, and folding spellings is how I made that true for a value whose exact form is decided by a later cell (the retag, AT3-s-6, cited here in prose rather than as a field). Two things the issuer may want to settle rather than leave to my choice: (1) whether the alias table belongs in this producer at all or whether the retag should be required to write lower-snake canonical values, since an alias table is an enumeration and enumerations lapse silently as new spellings appear; (2) that this cell preserves the existing served KEY ORDER (cash, fixed_income, equity, hedge, then the three new classes appended) rather than the PRD's canonical DISPLAY order from FWD-3 -- a deliberate choice to move no existing consumer's key, and a surface concern belonging to the frontend hop cell rather than to this one."
+  }
+]
+```

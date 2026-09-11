@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_POSN_ASTTAX~10</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>staged</status>
+<status>complete</status>
 
 **Directive:** D4 · **Macro:** POSN · **Fabric:** site-z · **PRD:** `../prd/POSN_ASTTAX_PRD.md` **v0.5**
 @`49ddcc481d` · **Decomp cell:** `AT3-s-1` · **Issuance:** round 3. **CHAIN HEAD -- `AT3-s-5` and
