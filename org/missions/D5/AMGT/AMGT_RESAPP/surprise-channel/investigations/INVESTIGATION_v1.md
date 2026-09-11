@@ -422,6 +422,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-s-4 (a): the reader is a function of security_key and sources; the order does not name which securities AC2's run must cover.",
     "world_is": "This worker reused a SIBLING cell's (AMGT-s-b4) selection artifact instead of deriving one independently from universe.json -- a reasonable, grounded, non-arbitrary choice (identity-resolved, non-placeholder, consistent with the store keys AMGT-s-b4 would land SA raw JSON under) but a choice this order left open, not one it named. Non-blocking: AC2/AC3/AC7 all close cleanly on this selection; a different, equally valid selection would also have closed them.",
     "notes": "Recorded for the CVO/next reader: if AMGT-s-b4's run_manifest.json selection ever changes (a re-run with different tickers), this cell's run_reader.py silently follows it (it is read live, not pinned) -- worth a read before assuming these three names are stable across rounds."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W3-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~3",
+    "surfaced_at": "2026-09-11T00:57Z",
+    "one_line": "AMGT-s-9's AC2 reads a top-level 'figure_ids' key from every AMGT-s-1 model_block_*.json, but none of AMGT-s-1's three landed files carries that key -- figures are identified there by a (scope, fiscal_year, mnemonic) tuple, not a flat id list -- so no figure can ever be cited as evidence and pass AC2's resolution check.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC2 invocation (task order verbatim): \"ids.update(json.load(open(f)).get('figure_ids',[]))\" over glob('.../deliverables/0.9.0_WK_AMGT_RESAPP~1/model_block_*.json')",
+        "python -c \"import json; d=json.load(open('org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/model_block_BABA_US_Equity.json')); print(list(d.keys()))\" -> ['security', 'security_key', 'raw_stamp_used', 'fiscal_years', 'fiscal_year_row_count', 'orphan_price_rows', 'figures', 'unresolved'] -- no 'figure_ids' key on any of the three landed model_block_*.json files (checked all three)",
+        "each element of d['figures'] carries {scope, fiscal_year, mnemonic, value, unit, sign, basis, vintage, source, currency_caveat} -- no single 'id' field either; a figure is identified by the (scope, fiscal_year, mnemonic) tuple",
+        "the cell text (a) itself permits evidence as 'item_id|figure_id' -- an OR -- so citing only item_ids is within the marking contract's own stated shape, not a route the order failed to name"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-s-9 part (d): 'evidence = its figures (from model_block_*.json) + AMGT-s-4's coverage_items for that key' -- figures are intended as a first-class evidence source; AC2's checker computes the resolvable id-space FROM a 'figure_ids' key it expects those files to carry.",
+    "world_is": "AMGT-s-1's landed model_block_*.json files carry no 'figure_ids' key at all, so AC2's resolvable id-space is populated ENTIRELY by AMGT-s-4 coverage item_ids -- any sentence citing a figure as evidence would fail 'all evidence resolves' under AC2 exactly as written, even though the figure genuinely exists and is real Bloomberg data. This worker's producer.py therefore drafts company_description/ceo_bio/recommendation as EMPTY limbs (no figure evidence is citable) rather than cite an id that would never resolve -- figures are still read and their count reported in drafting_run_summary.json, never invented into evidence.",
+    "notes": "Not this worker's <paths>/BOUNDS to fix: AMGT-s-1's deliverable format is that cell's own, already landed and committed; this worker did not edit it. A future round could mint stable figure ids (e.g. '<security_key>::<scope>::<fiscal_year>::<mnemonic>') and add a 'figure_ids' key to AMGT-s-1's own output, or amend AC2's checker to read the (scope,fiscal_year,mnemonic) tuples directly -- either is the owning seats' call, not this worker's to make unilaterally on a sibling's landed artifact."
   }
 ]
 ```
