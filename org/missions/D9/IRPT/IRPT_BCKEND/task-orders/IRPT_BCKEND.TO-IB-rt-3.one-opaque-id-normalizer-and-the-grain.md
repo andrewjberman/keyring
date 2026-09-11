@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending -- GO paired at the round-2 issuance (the hand-off is the GO). First order of slot ~1.</status>
+<status>complete -- IBRT3-ONE-ID-SPACE printed by battery_ib_rt_3.py (rc=0), all six arms holding and byte-identical across two same-input runs; the ONE normalizer lives at _ids/ids.py and is deployed inside irpt-common:5 (2 of 2 consumers, both roots 0-diff, ledger CLOSED); INF 0 of 790 -> 790 of 790 and COT 0 of 946 -> 837 of 837 on the DECLARED raw key; 0 second definitions of the grammar and 0 live ':acct:' sites; the grain 3 of 3; the projection 0 UNPROJECTED-ID per firm against a negative control. proof-of-spec instance VALID (rc=0); RT3-AC1 PASS-by-output, RT3-AC2 RECORDED for 3.0.0_SA_CVO at L9. Rows filed: W1-S11, W1-S12 (BLOCKING/ARMED -- the build_layer.py MERGE, disarm owner 2.0.0_SA_COO~B), W1-S13.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 2 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.13 @e6ba5d9878 (ADMITTED, both L4-R halves SIGNED) | **Round-1 analysis:** `../ledger/ROUND_ANALYSIS.round1.md` @0d57ceb2f9, ruling 4 (ids and grain) | **Slug rows this cell closes:** W1-S7, W1-S9, W2-S11, W2-S2 | **Decomp cell:** `IB-rt-3` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.2, s.1 + s.2) | **outcome_ref:** FWD-1, FWD-2, FWD-5 (contrib) | **PRD candidate:** B2
 

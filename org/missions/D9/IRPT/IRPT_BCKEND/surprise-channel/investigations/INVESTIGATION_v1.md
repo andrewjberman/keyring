@@ -1761,6 +1761,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "This order's DELIVERABLE: 'the layer rebuilt to carry `_ids` (its root re-applied under a ledger entry, `irpt-common:3`)' -- the face names the next version as 3 and assumes this cell is the only one rebuilding it.",
     "world_is": "The next version was 5, not 3: a peer cell had already taken 3 and 4 while this cell worked, and `aws_lambda_layer_version` destroys the prior version on every publish, so the two cells' builds are mutually destructive by construction rather than by mistake. This cell published a measured UNION so nothing regressed, but the shared BUILD SCRIPT still has two independent edits on two branches and only the drain can reconcile them.",
     "notes": "BLOCKING is for the MERGE, not for this cell's own acceptance: arm (f) is satisfied and verified on the live plane (irpt-common:5, 2 of 2 functions, both roots 0-diff). The reason it is ARMED rather than INERT is that the failure mode is SILENT and DELAYED -- a merged build_layer.py missing one cell's member list produces a layer that imports cleanly in every test that runs from the repo path and fails only at a deployed cold start."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S13",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-11T15:22:00Z",
+    "one_line": "ARM (b)'S FLOOR IS UNREACHABLE BY CONSTRUCTION, AND NOT BECAUSE THE IDS DISAGREE. The face asks for equal ids 'N of N per firm with N >= the round-1 populations (7,453 / 790 / 946)', but N there is the JOINED set of two producers whose populations are built from DIFFERENT upstream tables and were never the same size: the directory is built from the account dimension (every account the firm holds) and the holdings snapshot from the allocation/position tables (only accounts that carry a position on the as-of date). Measured at this cell, after the fix: 49F directory 7,480 accounts, holdings 5,873, joined 5,856 -- 5,856 of 5,873 holdings ids found in the directory, and 7,453 is ABOVE the holdings artifact's entire population, so no repair of the id space could reach it. COT directory 837, holdings 961, joined 837 -- the directory population is matched 837 of 837 (100%), and 946 is likewise above it. INF 790 of 790 exactly meets its floor. The id-equality claim the floor exists to test is at 100% on both directions that are measurable: 0 ids of non-issued shape, 0 ':acct:' ids, and the third producer (the performance adapter's own check_scope) accepted 25 of 25 resolved ids for each of the three firms. The battery therefore prints the JOIN IN BOTH DIRECTIONS with both denominators rather than a single N, and arm (b) grades the equality, not the population size.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery arm (b) at HEAD, read from the LANDED QA objects through their own latest.json pointers: 49financial directory 7480 / holdings 5873 / holdings-ids-in-directory 5856 of 5873 / directory-ids-in-holdings 5856 of 7480",
+        "cottonwood directory 837 / holdings 961 / holdings-ids-in-directory 837 of 961 / directory-ids-in-holdings 837 of 837 -- the DIRECTORY side is complete",
+        "inflection directory 874 / holdings 790 / holdings-ids-in-directory 790 of 790 -- meets the face's 790 floor exactly",
+        "firm_prefixed_ids = 0 and ids_not_of_issued_shape_sample = [] for all three firms (the ':acct:' census arm (b) names)",
+        "third_producer_scope_ids '25 of 25' and performance_adapter_accepted true for all three firms -- the adapter's OWN check_scope, not a copy",
+        "round_1_state in _ids/raw_keys.json records the pre-fix figures IB-s-4 measured: INF 0 of 790, COT 0 of 946 -- both now 100% of the measurable direction",
+        "the populations differ by SOURCE, cited in raw_keys.json: the directory reads accounts_v2 / dim_account / fact_allocations; the holdings build reads portfolios_simple / fact_allocation_positions / fact_model_assignment"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ACCEPTANCE arm (b): 'the account ids minted by the directory build, the holdings build and the performance adapter's scope for the same raw accounts are pairwise equal: N of N per firm with N >= the round-1 populations (7,453 / 790 / 946), 0 raw-suffix ids'.",
+    "world_is": "The equality holds at 100% of every population that BOTH producers hold (INF 790 of 790; COT 837 of 837 directory-side; 49F 5,856 of 5,873 holdings-side, the 17 gaps being holdings accounts the directory build does not carry), with 0 raw-suffix ids -- but the JOINED count cannot reach 7,453 or 946 because those numbers exceed the size of the other producer's artifact. The floor reads as a claim about the id space and is actually a claim about two populations' overlap.",
+    "notes": "NOT BLOCKING and not a defect of this cell: arm (b) passes on what it can discriminate. Filed because a grader comparing the printed N against the face's floor would read a SHORTFALL where there is none, and because the 17 (49F) and 124 (COT) holdings accounts the directory does not carry are a real population question for IB-rt-6's production build -- they are named here so that cell inherits the measurement rather than rediscovering it."
   }
 ]
 ```
