@@ -1613,6 +1613,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "BOUNDS: 'The CloudFront plan shows exactly ONE change or you STOP. The distribution serves the whole portal; a plan that touches any other behavior, origin or setting is a BLOCKING row, never an apply.' S15-AC1 arm (c): 'The saved terraform plan output for portal-auth before the apply shows 1 to add, 0 to change, 0 to destroy or an in-place update touching only the new behavior block.'",
     "world_is": "The plan touches two further resources that pre-date this cell and belong to a root this project does not own. One is a line-ending artifact of a fresh worktree; the other is genuine WAF drift. Neither is reachable from this order's <paths>, and applying would rewrite a WAF ACL protecting 28 behaviors in order to land one additive behavior.",
     "notes": "BLOCKING on arms (b), (c) and the cloudfront half of (f) -- S15-AC1 therefore WITHHOLDS its token and this order stays OPEN. Every other arm was still measured and passed: 11 of 11 routes live under naqxlm, the catalogue is the registry 3 of 3, Global is proven on two firms' fixtures 4 of 4, the seam's three outcomes, and the amend census. WHAT UN-BLOCKS IT: the portal-auth root plans clean, or its two drifting resources are dispositioned by that root's owner (lane CLOUD_OPS_OR_ETL, any AE agent). The behavior is committed and unapplied, so the remaining act is a re-plan and an apply under the same entry -- no rework. The CRLF half would clear for any actor whose worktree renders that file LF; the WAF half is a real decision someone must take, and taking it from inside this order would be the widening the bound forbids."
+  },
+  {
+    "id": "IRPT_BCKEND-S22",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T09:22:01Z",
+    "one_line": "ROUTING of IRPT_BCKEND-W2-S12 (BLOCKING, disarm_owner 2.0.0_SA_COO~B) at the IB-s-15 drain (ac2ee67133). IB-s-15's STOP fired correctly: the portal-auth plan reads 'Plan: 0 to add, 3 to change, 0 to destroy'. The issuer re-ran the plan read-only in the same worktree and CLASSIFIED the two foreign changes from the saved diff: (1) aws_cloudfront_function.spa_fallback -- a CRLF checkout artifact (26 CRLF on disk vs 0 in the HEAD blob; the banked fresh-worktree trap), which clears for any actor whose checkout renders the file LF; (2) aws_wafv2_web_acl.opal_cloudfront_protection -- three managed-rule blocks (common-rule-set p4, ip-reputation p3, known-bad-inputs p5) removed and re-added with EVERY value identical and the only difference an attribute hidden in state ('# (1 unchanged attribute hidden)' inside managed_rule_group_statement, absent from the config) -- a provider-normalisation diff under hashicorp/aws 5.100.0 (lock tracked), NOT intended drift; an apply would still issue UpdateWebACL on the WAF fronting all 27 behaviors. NEITHER is this project's: the root is lane CLOUD_OPS_OR_ETL and NEVER-1 puts a served-output move behind CTO+COO sign-off. Disposition: the ONE additive behavior stays committed and unapplied on CLOUD; the two-line remedy (declare the hidden attribute in the WAF config so the root plans clean, or apply the no-op under sign-off) belongs to the portal-auth root's owner, and the issuer puts the classified plan in front of 1.0.0_SA_CTO and 0.7.0_AE_CloudOps as information. FWD-2's EXERCISED bar therefore lacks the CloudFront -> edge leg this round; IB-sb-3 replays on API Gateway's invoke URL through the real naqxlm authorizer and names the boundary it could not cross. S15-AC1 stays FAIL, the order stays OPEN, and the round's L10 slug carries it as its second BLOCKING item.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (routed; the remedy is the portal-auth root owner's under CTO+COO sign-off; re-plan and apply of IB-s-15's behavior follows, no rework)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W2-S12 (this HEAD) -- the worker's measurement, get-distribution-config byte-identical before and after",
+        "issuer's read-only re-plan in /c/tmp/wk-irpt-1-2 at 1d61219844 (scratch pa_plan_wk.txt): 'Plan: 0 to add, 3 to change, 0 to destroy'; the WAF block shows six rule blocks, three '-' and three '+', pairwise identical on name, priority, override_action count, managed_rule_group_statement name/vendor_name, visibility_config; '# (1 unchanged attribute hidden)' only on the removed side",
+        "infra/aws/terraform/portal-auth/.terraform.lock.hcl (tracked): hashicorp/aws 5.100.0, constraint ~> 5.0",
+        "CLAUDE.md NEVER-1: never move served output without never-widen sign-off (CTO+COO)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-s-15 face: 'The CloudFront plan shows exactly ONE change or you STOP ... any other change in that plan is a STOP and a BLOCKING row.' PRD B15: an Opal principal reaches clients at two firms through scoped routes.",
+    "world_is": "The routes are live behind the authorizer; the portal path to them is one unapplied behavior away, held by a foreign root's normalisation diff. Nothing served has moved. The replay measures what exists and names the leg it cannot exercise.",
+    "notes": "Two BLOCKING items now carry to L10 with owners: W1-S8 (first-mint bundle, INFRA.TOOLS + DS) and W2-S12 (portal-auth root, CLOUD_OPS_OR_ETL under sign-off). Both are one act each for their owners; neither is a rework of this round's cells."
   }
 ]
 ```
