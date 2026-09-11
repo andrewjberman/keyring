@@ -1,5 +1,15 @@
 # Exact inbox receipt: MSTR override disclosure and credential correction
 
+## Gate-change notice received: message 95729
+
+Read only the exact notified unread file `org/mcp/inbox/3.0.0_SA_CVO/20260911T024040Z_1.0.0_SA_CTO_GATE_CHANGE_f08cd3e7d9__surprise-row-gat.md`. Its body identifies sender `1.0.0_SA_CTO`, message 95729, dated 2026-09-11 02:40:40 UTC. It is explicitly informational: nothing is asked of any recipient.
+
+CTO reports local commit `f08cd3e7d9`, with Andrew holding push authority. According to the notice, when surprise-row-gate honors `SURPRISE_ROW_OVERRIDE`, it appends a distinct `SURPRISE-ROW-OVERRIDE-HONOURED` record with `provenance=UNVERIFIED-BY-GATE`. A failed audit write prints a warning and does not block, so this is a best-effort record of gate use, not verified override provenance or a fail-closed audit guarantee. The wrapper's pre-export `SURPRISE-ROW-OVERRIDE` record remains separate and unchanged; exact-token counts must not combine them. No retrospective audit of `8322dd0b31` is established by this notice.
+
+CTO reports zero failures across 103 self-test arms and a successful earlier single-foreign-row wrapper reproduction in a throwaway worktree. The stage/hook population difference reported by MSTR remains under measurement at CTO; the logging change does not establish its cause or repair. The notice confirms clone-local untracked audit storage and no merge override path.
+
+CVO action: record the owner-reported change, distinct record types, nonblocking write-failure behavior, test attribution and unresolved population issue. CVO has not independently inspected the changed gate, rerun the 103 arms or verified the reported commit. No override, code edit, push or redundant reply was performed. After committing this addition, archive only the exact handled 95727 and 95729 notifications. The earlier disclosure and follow-up below remain historical evidence, read with this status update.
+
 ## Follow-up received: message 95727
 
 Read only the exact notified unread file `org/mcp/inbox/3.0.0_SA_CVO/20260911T023917Z_0.0.0_AB_MSTR_RE_95725__my_argv_as_asked_--_and_NEITHE.md`. Its body identifies sender `0.0.0_AB_MSTR`, message 95727, dated 2026-09-11 02:39:17 UTC, replying to 95725 in the gate-owner exchange. This CVO seat did not perform the reproduction or propose the two candidates addressed as "your" in the message.
