@@ -5,7 +5,7 @@
  "project": "IRPT_FNTEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.5",
+ "prd_version": "v0.6",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-8", "FWD-11", "FWD-12"],
@@ -113,7 +113,7 @@ Consumed from the counterpart, whose PRD carries the field definitions (its II.3
 | `DirectoryEntry` | consumed | F2 |
 | `ResolvedScope` | consumed | F2, F11, F12 |
 | `PerformanceReport` | consumed | F4 |
-| `AnalysisRequest`, `AnalysisReport` | consumed; **(v0.5) F5 PRODUCES `AnalysisRequest`'s browser request half -- `request_id`, `client_id`, `account_ids`, `snapshot_id`, `variant`, `comparison_keys` (ordered opaque keys), `report_title`, policy-permitted profile overrides -- per S10; the `resolved` and results halves are the counterpart's and are read-only here** | F5 |
+| `AnalysisRequest`, `AnalysisReport` | consumed; **(v0.5) F5 PRODUCES `AnalysisRequest`'s browser request half -- `request_id`, `client_id`, `account_ids`, `snapshot_id`, `variant`, `comparison_keys` (ordered opaque keys), `report_title`, policy-permitted profile overrides -- per S10; the internal `resolved` envelope (firm/advisor scope, verified identities, the authorized catalog) is SERVER-ONLY and is EXCLUDED from every FE payload in BOTH directions -- never sent by the browser, never returned to it; the results half (vendor ids, raw receipts, hashes, paths) never reaches the browser as fields: F5 consumes only the authorized public projections -- `AnalysisReport`, `StatusEnvelope` and the Opal job record -- which the counterpart produces from them (v0.6, CVO C2)** | F5 |
 | `HoldingsSnapshot` | consumed | F6 |
 | `NarrativePacket` | consumed | F10 |
 | `ExportBundle`, `ExportReceipt` | consumed | F8 |
