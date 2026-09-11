@@ -5,7 +5,7 @@
  "project": "POSN_ASTTAX",
  "directive": "D4",
  "fabric": "site-z",
- "prd_version": "v0.3",
+ "prd_version": "v0.4",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -13,7 +13,7 @@
 }
 ```
 
-**Version:** v0.3, 2026-09-11 -- v0.1 first PRD; v0.2 folded in Andrew's Cottonwood satellite components (s.4 C-SATELLITE-DATA), on his direct "read the satellite file and fold it in as its necessary data for POSN_ASTTAX"; **v0.3 disambiguates C-VOL-HEDGE-STRUCTURED's "hedge products" from the legacy served value `asset_class=hedge`** -- a latent defect where the constraint, read against the live data, said the whole `hedge` bucket goes to Structured (found by 2.0.0_SA_COO~Z + 3.0.0_SA_CVO~Z). Each bump re-opens the two L4-R sign-offs. **Author** `1.0.0_SA_CTO~Z` (L4). **Brief:** the nomenclature
+**Version:** v0.4, 2026-09-11 -- v0.1 first PRD; v0.2 folded in Andrew's Cottonwood satellite components (s.4 C-SATELLITE-DATA), on his direct "read the satellite file and fold it in as its necessary data for POSN_ASTTAX"; **v0.3 disambiguates C-VOL-HEDGE-STRUCTURED's "hedge products" from the legacy served value `asset_class=hedge`** -- a latent defect where the constraint, read against the live data, said the whole `hedge` bucket goes to Structured (found by 2.0.0_SA_COO~Z + 3.0.0_SA_CVO~Z); **v0.4 folds in Andrew's ETFClassifier PURPOSE ruling as C-CLASSIFIER-PURPOSE (s.4)** -- the registry is a curated tagging list, so the served TABLE is the one place, the dict a retired seed input, and equity-as-class must be distinguishable from equity-as-unknown-default (carried via 3.0.0_SA_CVO~Z C-S3 @`4275402ec2`). Each bump re-opens the two L4-R sign-offs. **Author** `1.0.0_SA_CTO~Z` (L4). **Brief:** the nomenclature
 transcript's substance, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4`.
 **Endpoint confirmed by Andrew** 2026-09-11 (see s.5). **Home note:** tree-homed at
 `org/missions/D4/POSN/POSN_ASTTAX/prd/` as `POSN_ASTTAX` (macro POSN), renamed from
@@ -111,7 +111,29 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
   (`infra/aws/lambda/v2_portal/_shared/etf_classification.py` and `etf_classifications_dynamodb.py`,
   the module the positioning and CMA lambdas already share -- "ETFClassifier", Andrew 2026-09-11).
   FWD-5's FIRST L5 investigation confirms that is the source, or finds where it truly lives -- it is
-  NOT hard-pre-judged here.
+  NOT hard-pre-judged here. **SETTLED at v0.4 by C-CLASSIFIER-PURPOSE: the ONE place is the served
+  TABLE; the dict is a retired seed input, not a competing source.**
+- **C-CLASSIFIER-PURPOSE** (Andrew-direct 2026-09-11 ~07:1xZ, via `3.0.0_SA_CVO~Z` C-S3 @`4275402ec2`) --
+  ETFClassifier is a **CURATED TAGGING LIST**, not a single-source-of-truth architecture. VERBATIM:
+  *"ETFClassifier is basically a developing list of how we tag securities we own. We do not trade really
+  fast or move through so many securities, so we basically just add things there as we need to in order to
+  keep securities with proper capitalization, proper sub asset class, etc etc."* This SETTLES C-ONE-SOURCE
+  and BINDS the cells three ways:
+  - **(a) the ONE place is the served TABLE** (DynamoDB `etf-classifications`, read via ETFClassifier by
+    the positioning and CMA lambdas). The dict `_shared/etf_classification.py` (136 entries) is a
+    **SUPERSEDED seed input** that fell behind the table (285) -- to be retired/reconciled, NOT treated as
+    a competing source.
+  - **(b) a missing scheduler is NOT a defect and the 169 table-only rows are NOT unexplained.** A person
+    extends a curated list on acquisition (the person IS the mechanism), and `updated_by` attributes all
+    285 rows with ZERO unattributed. ⛔ Do NOT cut "give the seed a trigger" or "account for the 169" as
+    work.
+  - **(c) `equity` as a CLASS must be distinguishable from `equity` as the positioning lambda's
+    unknown-DEFAULT** (`lambda_function.py:359`). A registry whose job is keeping securities PROPERLY
+    TAGGED cannot let "properly tagged equity" and "not recognised" be the same string -- that bucket is
+    unauditable. This is **FWD-5's PRIMARY round-2 work.**
+  The reconciliation is ADDITIVE to the list (add Commodities + Alternatives to the stored vocabulary; move
+  the seven `hedge` tickers per C-VOL-HEDGE-STRUCTURED; fill the 3 blank `sub_asset_class` rows -- the real
+  coverage gap, 282 of 285 populated), NOT a migration of something broken.
 - **C-VOL-HEDGE-STRUCTURED** -- volatility and hedge products classify to **Structured**, not Equity,
   and physical/crypto/commodity-index positions to **Commodities**, not Equity. This is the Cottonwood
   catalyst and it is a CLASSIFICATION change, verified on a surface but driven by the classifier.
@@ -146,6 +168,13 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
 
 ## 5. Rulings that BIND (Andrew-direct)
 
+- **2026-09-11 ~07:1xZ, Andrew-direct, VERBATIM (via `3.0.0_SA_CVO~Z` C-S3 @`4275402ec2`):**
+  *"ETFClassifier is basically a developing list of how we tag securities we own. We do not trade really
+  fast or move through so many securities, so we basically just add things there as we need to in order to
+  keep securities with proper capitalization, proper sub asset class, etc etc"* -- the PURPOSE ruling,
+  folded in at v0.4 as **C-CLASSIFIER-PURPOSE** (s.4). It settles C-ONE-SOURCE (the served TABLE is the one
+  place) and strikes "give the seed a trigger" / "account for the 169" from round-2 work (neither is a
+  defect for a curated list a person extends).
 - **2026-09-11, Andrew-direct, VERBATIM:** *"Confirmed, just note that Philosophy/CMA are the same page
   now. Also this should likely be heavily involved with ETFClassifier."* -- confirming the six DONE WHEN
   bars (his reserved L2 step), and adding the two refinements now carried as C-TWO-SURFACES and
