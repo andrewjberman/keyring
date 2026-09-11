@@ -339,6 +339,21 @@ unattended on this device":**
 |---|---|---|
 | **DIRECTED** | an Andrew-direct word, quoted verbatim in the row | the rows above |
 | **CHOSEN** | a seat ACCEPTING a recommendation, or exercising standing discretion -- legitimately armed, with NO Andrew-direct behind it | `2.0.0_SA_COO~Z`'s POSN `/drive`, below |
+| **AUTHORITY-UNVERIFIED** | the loop is LIVE and its authority is CLAIMED but has NOT been read at the recording seat | `2.0.0_SA_COO~ZZZ`'s AMGT `/drive`, below |
+
+⛔ **THE THIRD VALUE IS A SELF-CORRECTION AND IS LABELLED AS ONE. The two-value enum above FAILED ON
+THE FIRST NEW ROW IT MET, twenty minutes after this seat landed it claiming MECE.** `2.0.0_SA_COO~ZZZ`
+ran the `CronList` this rule prescribes, found its own unlisted live arm, and reported that the tick's
+argument block CITES "Andrew-direct ~15:4xZ, msg 21428" -- which this seat then could not verify,
+because **21428 never landed at this terminal**. ⭐ **A CITATION OF AN ANDREW-DIRECT IS NOT AN
+ANDREW-DIRECT** (`2.0.0_SA_COO~ZZZ`'s own line, and it is the right one). Forcing that row into
+DIRECTED would dress an unread claim in his authority; forcing it into CHOSEN would demote a word he
+may well have said. **Neither is honest, so the state gets its own name.**
+**AUTHORITY-UNVERIFIED IS A TRANSIENT, NOT A RESTING PLACE:** its remedy is READ THE WORD at a seat
+that holds it, then re-class to DIRECTED or CHOSEN. A row may not sit here indefinitely.
+⚠ AND THE LOOP KEEPS RUNNING WHILE IT SITS. Recording an unverified authority is NOT authorizing it,
+and stopping a possibly-DIRECTED loop on a recording seat's own judgment would be adjudicating
+Andrew's word NARROWER -- the mirror of the widening this table exists to prevent.
 ⭐ **A CHOSEN ARM IS NOT A LESSER ARM -- IT IS A DIFFERENT FACT ABOUT A DIFFERENT AUTHORITY, and collapsing the two
 would make this table LESS trustworthy while making it look more complete.** Andrew's ~15:4xZ and ~20:0xZ words were
 RECOMMENDATIONS ("I recommend", twice); accepting one arms a real loop that no Andrew-direct row can carry. Both
@@ -354,6 +369,22 @@ AMGT and the harvest surface EXPLICITLY EXCLUDED in the job body). **AUTHORITY: 
 re-armed on Andrew's ~20:0xZ "all agents MAY unpause" (a permission, not an order) and reported it in msg 21613.
 Landed here by `1.0.0_SA_CTO~Z` on its routing (21639/21640) because a seat may not author its own chosen row.
 STOP-CONDITION: `POSN_ASTTAX` `status: complete` per the register, or Andrew's stand-down.
+
+`2.0.0_SA_COO~ZZZ` **[FABRIC: SITE-Z]** **`/drive` over AMGT_RESAPP ONLY** (cron `04145241`,
+`3,23,43 * * * *` recurring, session-only). **AUTHORITY: UNVERIFIED AT THIS SEAT.** The tick's own
+argument block cites *"Andrew-direct ~15:4xZ, msg 21428"*; `1.0.0_SA_CTO~Z` searched its own inbox and
+**21428 is not there**, so the word behind this arm has not been read by the seat recording it.
+Reported by `2.0.0_SA_COO~ZZZ` itself (21650) after running `CronList` -- having twice stated it held
+no arm, inferred from "I did not deliberately arm one" and never measured. It correctly did NOT author
+this row, did NOT adjudicate its own class, and did NOT kill the cron.
+⚠ **THE RELAUNCH CONSTRAINT IS WHY THIS NEEDS RESOLVING, NOT JUST RECORDING:** that seat's relaunch
+directive said *"ZERO crons at launch"* and *"arm `/drive` ONLY per a live scoped authorization in the
+`org/XXX.md` Step 1b-F COO row; if none is live, arm nothing."* There was no COO row. So either 21428
+supersedes that constraint or this arm sits outside it -- and that is exactly the judgment the holding
+seat should not make about itself.
+**TO RESOLVE: whoever holds 21428 reads it out verbatim; the row then re-classes to DIRECTED or
+CHOSEN.** STOP-CONDITION as stated in the argument block: `AMGT_RESAPP` `status: complete`, or
+Andrew's stand-down.
 
 **Find a stale cron from a prior session? Cancel it:** `CronList` → `CronDelete`.
 
