@@ -331,6 +331,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "spec_asserts": "The cell's mechanism for AC1 (carried from the reference, section 2b): 'the fetch MUST egress through the residential proxy ... The proxy is GET-capable today,' i.e. that egressing through astn/brightdata/residential-proxy with the parked jar produces vendor HTTP responses this ETL can classify and land.",
    "world_is": "The proxy zone is currently terminating and re-signing HTTPS with its own 'Bright Data Proxy Root CA' rather than passing the origin's real certificate through, and does not include that root/intermediate in the handshake -- so no standard TLS client (tested: curl_cffi/certifi AND native Windows Schannel) can complete verification without either disabling certificate verification (a security-posture change this cell's BOUNDS do not authorize) or being supplied that specific root CA out of band, which this worker does not have and did not seek from Bright Data (no vendor API/dashboard call made). verify stayed at its safe default for every real attempt in this run, so no part of the parked session's 65-cookie jar was ever transmitted to the intercepting party -- the TLS handshake aborted before any HTTP request left the client. AC1 reads 'raw objects 0 across 3 keys; symbol+report present for 0 of 3; sa_ids MEASURED 0' -- a genuine, reproduced, non-rescued finding, recorded rather than routed around.",
    "notes": "Not this worker's <paths>/BOUNDS to fix: resolving it means either obtaining Bright Data's specific proxy root CA (an out-of-band vendor artifact, e.g. from their account dashboard or support) and pinning it as a scoped trust anchor for this proxy only, or toggling off whatever zone-level SSL-interception feature is enabled, or an explicit Andrew-authorized decision to disable verification for this specific proxy -- all security-posture calls outside this cell's granted authority. The rest of the module is built and exercised as far as the transport layer allows: AC2 (4 fixture tests), AC3 (referer/proxy/method/pacing census), AC4 (3 tickers, 1 run), AC5 and AC6 (structural bans) all pass against this exact run's real output; only AC1 (the live landing) is blocked by this transport-layer finding."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W1-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~1",
+    "surfaced_at": "2026-09-10T23:45Z",
+    "one_line": "The repo's root .gitignore ignores the whole lib/ tree (a standard Python-venv boilerplate line, :47), so any NEW file under lib/research/<anything>/ is gitignored until force-added -- git status/git add report it as clean-absent unless -f is used, even though lib/research/identity/ etc. are already tracked and unaffected (git does not re-apply .gitignore to already-tracked paths).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git check-ignore -v lib/research/provenance/schema.json lib/research/provenance/validate.py lib/research/provenance/__init__.py` (this worker's own new files, cell AMGT-s-3) -> all three: `.gitignore:47:lib/`",
+        ".gitignore:44-50: a standard Python-boilerplate block (`build/`, `develop-eggs/`, `dist/`, ... `lib/`, `lib64/`, ...) with only two negation exceptions, both under `data/`: `!data/black_diamond/scripts/gold/lib/`, `!data/inf/scripts/gold/lib/` -- none for `lib/research/`",
+        "`git check-ignore -v lib/research/identity/resolver.py lib/research/identity/__init__.py lib/README.md lib/trading_calendar.py` -> no output (not reported as ignored) BECAUSE these paths are already tracked (`git ls-files lib/` lists them) -- git's ignore check does not apply to a path already in the index, which is why the s-12 worker's commit into lib/research/identity/ never surfaced this",
+        ".tools/safe-commit.sh:49: 'Staging uses `git add -f`, which FORCE-adds files EVEN IF gitignored' -- the estate's OWN commit wrapper already force-adds, so this did not block this worker's commit; a plain, non-wrapped `git add` on a NEW lib/research/ path (bypassing safe-commit.sh) would silently stage nothing"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This cell's <paths> grant: `lib/research/provenance/` is a write surface this worker may create files under, with no stated caveat about gitignore interaction.",
+    "world_is": "The path IS writable and IS committable (safe-commit.sh's `git add -f` handles it transparently), so this cell's own work was never blocked -- but a bare `git add`/`git status` on a brand-new `lib/research/<new-module>/` directory reports it as absent/untracked-and-ignored, which reads exactly like 'nothing here' to any tool or worker that does not know to force-add. Not a defect in THIS cell's outcome (verified via `git ls-files` after commit, below), but a live trap for the next worker who creates a NEW subpackage under `lib/research/` and checks its own work with a bare `git add`/`git status` instead of `safe-commit.sh`.",
+    "notes": "Not this worker's <paths>/BOUNDS to fix -- editing the root .gitignore is outside this cell's write surface (lib/research/provenance/, deliverables/, the investigation file, and this cell's own task-order file only). Flagged for whichever seat owns .gitignore maintenance: either add `!lib/research/` alongside the existing `data/.../lib/` exceptions, or accept the current state as intentional (this repo's `lib/` boilerplate rule predates `lib/research/` as a source tree) and rely on safe-commit.sh's force-add, which already works."
   }
 ]
 ```
