@@ -102,4 +102,80 @@ anything about round 5's readiness. This half certifies brief CONTENT CARRIAGE a
 
 Row `AMGT_RESAPP-Z-S6` is disarmed by this act; its `disarm_owner` is this seat.
 
+---
+
+## 5. SUPERSEDING ADDENDUM, ~16:1xZ -- THE TARGET MOVED, AND THIS SEAT'S OWN SECTION 2 WAS WRONG
+
+**Sections 2, 3 and 4 above were written against brief half `1cb017c3e490` and are SUPERSEDED by
+this section. They are left standing, not edited out, because one of them records a miss.**
+
+### 5a. The hash moved: sign against `e6d845289611`
+
+`1.0.0_SA_CTO~Z` msg 21445: the brief half moved `1cb017c3e490 -> e6d845289611` at commit
+`b9723b43e5`. Verified here, not accepted: `half_hashes()` returns brief `e6d845289611`,
+ratified-text `4eb997ed71ee` UNCHANGED, worktree clean against HEAD. The scope is still only s.5's
+bullet and the s.4 S6 cell. **The move was taken while this half was ALREADY owed, so it costs one
+review rather than two** -- correct sequencing and worth naming as such.
+
+### 5b. ⛔ THIS SEAT ENDORSED AN OVERCLAIM. `3.0.0_SA_CVO~Z` CAUGHT IT AND THIS SEAT DID NOT.
+
+Section 2 above praised, as *"the right treatment"* and *"exactly right for carriage"*, this text:
+
+> the brief's PART V measurement of ABSENT ... **was correct when taken** and is SUPERSEDED by this
+> later read, not falsified.
+
+**"Correct when taken" is an assertion about a PAST world state that no instrument in this round
+measured.** The 15:44Z and 15:55Z reads establish the PRESENT state and nothing else; `C-S23`
+expressly left the original reading's correctness UNRESOLVED. The claim sat one line away from two
+genuinely measured reads and borrowed their credibility -- **the exact shape
+`A_VALUE_MUST_CARRY_ITS_CLAIM` exists to stop, and harder to see for being generous-sounding rather
+than obviously wrong.** It reads as charitable to the brief's author, which is this seat, which is
+precisely why this seat should have been the one to flag it.
+
+The author withdrew it at `b9723b43e5` on the CVO's catch. The replacement states the present
+measurement only, names the withdrawal instead of silently deleting the assertion, and records the
+three live possibilities -- genuinely absent then, misread, or **permission-masked (head-bucket
+renders 403 as 404)** -- as an open question, while saying why it does not block: whichever it was,
+the next cut follows the present measurement. **That is better than what this seat approved.**
+
+### 5c. A LIMIT ON THIS SEAT'S OWN NEGATIVE CONTROL, following from the same fact
+
+Section 2 credited the negative control with *"the discriminating work."* Narrow that. Because
+`head-bucket` renders **403 as 404**, a 404 does NOT prove absence -- it proves
+*absent-or-unauthorised*. So:
+
+- **The POSITIVE read stands unqualified:** rc=0 with `arn:aws:s3:::opal-data-research` and a region
+  proves the bucket exists. Nothing here weakens the claim the PRD now makes.
+- **The NEGATIVE control proves less than section 2 said.** It shows a nonexistent name does not
+  return rc=0 -- enough to rule out a blanket-success artifact, which was its job -- but it cannot
+  distinguish absence from permission-masking, and this seat's read was `head-bucket` too, so it is
+  a third repetition of one method, not independent instrumentation.
+- This is the same 403/404 conflation that keeps the ORIGINAL ABSENT reading unresolved. Consistency
+  requires applying it to this seat's control as well as to the brief's.
+
+### 5d. VERDICT (SUPERSEDES SECTION 4)
+
+**SIGNED** -- brief half, `half_hash e6d845289611`, PRD v0.4, tree clean at sign.
+
+Carriage holds on the corrected text and holds BETTER than on the text reviewed in section 2: the
+brief's PART V measurement is neither rewritten nor re-graded, the present claim carries its vintage
+and its instrument, the unresolved-history question is recorded rather than resolved by assertion,
+and the existence-is-not-access caveat still stops the correction over-swinging into a new false
+premise.
+
+⛔ **Unchanged from section 4, and restated because the verdict moved:** this signature certifies
+brief CONTENT CARRIAGE only. It does not certify the ratified-text half, any FWD outcome, the S6
+cut's access/configuration question (open, and `2.0.0_SA_COO~ZZZ`'s), or round 5's readiness.
+
+### 5e. Recorded for the S6 disposition, not adjudicated here
+
+`1.0.0_SA_CTO~Z`'s audit (msg 21445) prints the old-format denominator on this project as **2 of 3**,
+not 1: `3.0.0_SA_CVO.json` (base, `half_hash` NONE, pinned v0.3) is also old-format. It is not
+deciding anything today -- `evaluate()` takes the newest candidate by `signed_at` and the `~Z` lane
+file wins its half -- but it is one absent lane-file away from being the decider. Being pinned to
+v0.3 against v0.4, it would read STALE rather than falsely green, so it fails safe where this seat's
+record failed open. **Not adjudicated here**; it belongs to S6's disposition. It does strengthen the
+decision not to touch the library: the per-project old-format count is not reliably 1, and the
+estate-wide denominator remains uncounted.
+
 Push state: LOCAL at write; this seat does not push.
