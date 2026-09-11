@@ -866,7 +866,8 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "disarm_owner": "2.0.0_SA_COO~ZZZ",
     "spec_asserts": "This task order's <paths> block states: 'your write surface IS this list, and nothing else' -- six paths, none of them org/mcp/sessions/ -- and BOUNDS requires 'safe-apply, NEVER a bare terraform apply.' The BLOCK and the write-surface grant are jointly unsatisfiable as literally scoped: the named tool for the named BLOCK will not run at all without a write outside the named grant.",
     "world_is": "org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial is HALTGT's own session-identity mechanism (halt-gate-check.sh), not a task deliverable or record surface -- gitignored estate-wide, scoped to this worker's own CLAUDE_CODE_SESSION_ID (no cross-worker collision possible), and read by no consumer this cell's <paths> or PROOF OF SPEC names. Judged as tool plumbing required to invoke safe-apply at all (on the same footing as resolving a PATH shim, Rule 16) rather than a scope widening of the deliverable, and written; safe-apply then ran and applied cleanly, verified live at AC2/AC3. Not filed as BLOCKING because it did not stop the turn -- but every worker on every fabric running a BLOCK-bounded safe-apply for the first time in a fresh session hits the identical refusal, and the <paths> grant convention on infra cells has no named exception for it, so each worker is left to make this same judgment call independently.",
-    "notes": "Routed for a standing call rather than a one-off: either the canonical <paths> convention for infra/deploy cells should name org/mcp/sessions/ (or HALTGT session-identity files generally) as an always-implicit grant alongside .scratch/, or safe-apply's own documentation should say so explicitly, so a future worker does not have to re-derive this same judgment under a live BLOCK. Disarm owner named as the issuing COO instance, which controls the <paths> convention on future task orders in this chain (AMGT-rd-3, AMGT-rd-5, AMGT-rd-6 in this same round all carry the identical BLOCK)."  },
+    "notes": "Routed for a standing call rather than a one-off: either the canonical <paths> convention for infra/deploy cells should name org/mcp/sessions/ (or HALTGT session-identity files generally) as an always-implicit grant alongside .scratch/, or safe-apply's own documentation should say so explicitly, so a future worker does not have to re-derive this same judgment under a live BLOCK. Disarm owner named as the issuing COO instance, which controls the <paths> convention on future task orders in this chain (AMGT-rd-3, AMGT-rd-5, AMGT-rd-6 in this same round all carry the identical BLOCK)."
+  },
   {
     "id": "AMGT_RESAPP-Z-S10",
     "project": "AMGT_RESAPP",
@@ -1418,6 +1419,104 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "CLAUDE.md Rule 27 L4-R, at the surfacing time of `Z-S6` (2026-09-11 ~15:5xZ), `Z-S7` (~16:23Z) and `Z-S18` (~20:0xZ): \"`.tools/to-pipeline-gate.py` LIMB 6 REFUSES a task order against a PRD with a half not SIGNED\" -- stated without qualification, which is the text all three rows quote and which three seats relied on the same evening.",
     "world_is": "LIMB 6 fires on NEWLY-ADDED orders only. A MODIFICATION of an existing task order is never graded by it -- not the criterion grammar, not `<paths>`, not the proof block, not the signed-half check. \u26d4 THE EXPOSURE IS THIS PROJECT'S AND IT IS COUNTED, NOT ESTIMATED: **10 task-order MODIFICATIONS by this seat in one evening on AMGT_RESAPP** (rd-3 x2, rd-4, rd-5, rd-6, rd-7 x2, rd-8 x3) passed through NO gate limb, including an edit to the inlined cell text of a face a worker was reading at the time. The discriminator that makes this a measurement of the tool rather than a guess: the SAME gate REFUSED the newly-added `AMGT-re-1` TWICE in the same hour (missing `<issued_by>`, then the `<preflight>` line shapes). Add path loud, modify path silent, same tool, same session, both measured.",
     "notes": "\u2b50 WHY AN EDIT WOULD HAVE MADE THE RECORD WORSE, which is the reusable half: `Z-S7`'s spec half is currently the only committed artifact in this project that preserves WHY three seats believed a fence that did not exist, because it QUOTES THE SENTENCE THAT CAUSED THE BELIEF. Correct that field and a later adjudicator reads a row asserting a fence nobody could have believed, with the evidence of the belief's origin deleted -- the near-miss stops being legible exactly where it is most instructive. ROUTING, for the record: `4.0.0_SA_CRO~Z` surfaced `Z-S7` and OFFERED to correct its own `spec_asserts` (msg 21753); `2.0.0_SA_COO~Z` declined to adjudicate another project's row from outside it and routed the call to this seat as scope owner (msg 21755); `4.0.0_SA_CRO~Z` then withdrew the offer and confirmed no correcting row from itself (msg 21758). \u26a0 WHAT THIS ROW DOES NOT DO: it does not disarm `Z-S18`, whose ARMED hazard is the OUT-VOTED old-format base sign-off record and whose disarm owner remains `4.0.0_SA_CRO~Z`; it does not re-open `Z-S6`, which `Z-S7` disarmed; and it asserts nothing about the 10 modifications' CORRECTNESS -- each was hand-verified with a unique-anchor assert and a read-back, and hand verification is what the record should show was relied on, rather than a gate that never ran."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W10-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~10",
+    "surfaced_at": "2026-09-12T00:20:00Z",
+    "one_line": "AC3's OWN INVOCATION DESTROYS UNCOMMITTED WORK IN THE FILE IT MUTATES. Its final limb is `git checkout -- src/pages/SecurityAnalysis/types.ts`, which restores that path from the INDEX, not from a pre-mutation snapshot -- so it reverts EVERY uncommitted edit in the file, not only the appended mutant. Run mid-work, as the criterion's own ordering invites, it silently deletes the cell's recut of the very file the mutant targets.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED IN THIS WORKTREE, 2026-09-12 ~00:0xZ: AC3 was run as written after `types.ts` had been recut (the MovementControl/SubjectControl/CrossedAxis/AxisResolution block and the RankTimePoint/TickerRankSeries/RankTimeSeriesSet block). It printed the expected `1` TS2322 hit, and the trailing `git checkout --` then restored the file to its committed state at `e6057f26`, discarding roughly 90 lines of this cell's own work. The loss was caught only because the harness echoed the restored file's contents back; nothing in the criterion's output says a revert happened.",
+        "THE MECHANISM IS NOT SPECIFIC TO THIS FILE OR THIS CELL: `git checkout -- <path>` is defined as 'overwrite the working-tree copy from the index'. Any criterion that mutates a TRACKED file in place and undoes the mutation with `git checkout --` has the same blast radius, and it is invisible in the criterion's own printed output because the count it reports is computed BEFORE the restore.",
+        "CLAUDE.md already carries the general form of this hazard under the worker bar ('never ... `checkout --` or `clean`'), which this criterion's text instructs the worker to do. The conflict is in the criterion, not in the worker's reading of it.",
+        "THE SAFE ORDERING EXISTS AND WAS USED HERE: run AC3 AFTER the commit that lands the cell's edits. Then the index carries the recut, `git checkout --` restores exactly that, and the criterion's restore-clause ('a criterion that leaves the mutant in the tree is NOT met') is satisfied with no collateral loss. Evidence of the safe ordering is this cell's own proof-of-spec, whose AC3 row records a post-commit run."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3's invocation reads `... >> src/pages/SecurityAnalysis/types.ts && <tsc> | grep -c TS2322; git checkout -- src/pages/SecurityAnalysis/types.ts`, and its expectation says 'The final `git checkout --` MUST restore the file' -- i.e. the restore is described as undoing the injected mutant.",
+    "world_is": "The restore is not scoped to the mutant. It is scoped to the FILE, and its source is the index, so it reverts the file to whatever was last committed or staged. On a cell that edits `types.ts` -- which this cell necessarily does, since the crossed-control types live there -- the criterion deletes the cell's work as a side effect of measuring the instrument.",
+    "notes": "WHAT WOULD FIX IT AT THE CUT, offered as a REC and not applied (the criterion text is the issuer's): either (a) state the ORDERING in the criterion -- 'run after the commit that lands this cell's edits' -- which is a one-sentence change and needs nothing else, or (b) mutate a file the cell does NOT edit, or (c) restore from a copy taken before the append rather than from the index. NOT CLAIMED: that any other criterion in this task order has the same shape. AC1/AC2/AC4/AC5 are read-only invocations; AC3 is the only one that writes. NOT MEASURED: whether criteria of this shape exist in other cells of this project -- the denominator there is the whole round-5/round-6 criterion set and this worker read only its own."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W10-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~10",
+    "surfaced_at": "2026-09-12T00:25:00Z",
+    "one_line": "THE CROSS IS FOUR CONTROLS OVER TWO PARTITIONS: the cell requires Trending/Breakout x Price/Chatter as two independent controls producing four combinations, and the producer plane holds only the SUBJECT half. No `TRENDING_*` or `BREAKOUT_*` partition has ever been written, so two of the four combinations cannot yet be served by a distinct pre-computed read. The panel is built crossed and DISCLOSES the fallback per combination rather than collapsing it, but the movement dimension is not discriminating until a producer writes it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE TASK ORDER'S OWN MEASUREMENT, quoted: the metrics store is `opal-harvest-security-metrics`, base key axis_date (HASH) / ticker (RANGE), GSI `axis-rank-index`, '42 rows live', measured on the live plane 2026-09-11 ~20:5xZ. The producers that write those rows are AMGT-rd-5 (chatter) and AMGT-rd-6 (price).",
+        "THE PRODUCER'S OWN PARTITION SHAPE, at source: `lib/research/metrics/chatter_axis.py` docstring declares `axis_date (HASH) = \"CHATTER#<as_of_date>\"`. `lib/research/watchlist/store.py:50-52` names the writer axes' namespace as '<AXIS>#<as_of_date>' and lists the axis names it must not collide with as CHATTER, PRICE, TRENDING, BREAKOUT -- i.e. the crossed names are ANTICIPATED in the keyspace and are not WRITTEN by either landed producer.",
+        "WHAT THIS CELL DID INSTEAD OF COLLAPSING: `lib/research/api/scoped_amgt.py` builds `CROSSED_AXES` as the PRODUCT of the two control domains (four members, asserted in `test_crossed_axes_is_the_product_of_the_two_control_domains`), resolves every (movement, subject) pair to a crossed partition, and returns an `AxisResolution` record carrying `requested_axis`, `served_axis`, `resolution` (CROSSED | SUBJECT_ONLY_FALLBACK) and `movement_basis` (MEASURED | ABSENT). The Lead Panel renders that record verbatim; a fallback is visible to the reader on the page.",
+        "THE SWITCH IS ONE MEMBERSHIP EDIT AND IS PROVEN, NOT ASSERTED: `test_a_landed_crossed_partition_would_be_served_crossed` adds `BREAKOUT_PRICE` to `PRODUCER_LANDED_AXES` and the same resolver serves the crossed partition with `movement_basis` MEASURED and no other change.",
+        "WHY THIS IS NOT A CLIENT-SIDE FIX: deriving 'trending' from 'breakout' over the same rows would be re-deriving a ranking at read time, which this cell's BLOCK forbids ('no client-side sort of an unranked set, no score computed on load, no scan-then-rank'). The only correct home for the movement dimension is a producer that writes it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Gap 1 of the cell: 'The panel is Trending/Breakout X Price/Chatter -- TWO INDEPENDENT CONTROLS producing FOUR combinations, not two names for two axes.' The cell also states the ranked read is a Query on `axis-rank-index` keyed on `axis_date`, and forbids re-deriving any ranking at render time.",
+    "world_is": "The controls ARE two and independent, and all four combinations are reachable and separately keyed end to end (four query keys, four path pairs, four partition identities). But the DATA behind two of them does not exist: only `CHATTER#<date>` and `PRICE#<date>` have ever been written. A crossed read therefore falls back to the subject-only partition today, and the cell states so in the payload and on the page instead of pretending the movement control selects different rows.",
+    "notes": "WHAT THIS CELL COULD AND COULD NOT DO. It could deliver the cross as a real two-control surface with a disclosed resolution, and it did. It could not write the crossed partitions: the producers are AMGT-rd-5 and AMGT-rd-6, both `complete` and drained, and re-cutting a producer is not in this cell's text or its `<paths>`. THE DISARM IS A PRODUCER CELL that writes `TRENDING_<SUBJECT>#<date>` and `BREAKOUT_<SUBJECT>#<date>`, after which `PRODUCER_LANDED_AXES` gains those values and nothing else changes. NOT CLAIMED: that fallback-with-disclosure is what the adjudicator wants rather than an empty crossed read -- that is a judgment on AC6 and is `3.0.0_SA_CVO~Z`'s. The alternative (query the crossed partition strictly and render four empty lists) was considered and NOT taken, because it would leave FWD-15's own DONE WHEN test ('opens the page, reads a ranked list, clicks through to a name') unreachable on all four combinations while 42 pre-computed rows sit unread."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W10-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~10",
+    "surfaced_at": "2026-09-12T00:30:00Z",
+    "one_line": "THE `/api/scoped/amgt` ADAPTERS ARE DELIVERED AS CODE BUT CANNOT BE MOUNTED FROM THIS CELL'S GRANT: the handler and its client are both landed and wired to each other, and the API Gateway route plus the Lambda declaration that would make the path resolve live under `infra/aws/terraform/`, which is not in this task order's `<paths>`. Until an infra cell mounts `scoped_amgt.handler`, every one of the eleven routes 4xx at the edge.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE GRANT, quoted from this task order's `<paths>` block: `portal/src/`, `lib/research/`, the deliverables folder, the investigation file and the task order itself. `infra/aws/terraform/` appears nowhere in it, and the order separately names one terraform file as explicitly out of scope (`chatter-axis-schedule.tf`, row C-S49).",
+        "WHAT WAS DELIVERED INSIDE THE GRANT: `lib/research/api/scoped_amgt.py` -- eleven routes, the GSI Query for the ranked read, the BatchGetItem point-read series, the landed-artifact reads, the watchlist delegation, and a fail-closed auth gate that takes the firm ONLY from the `X-Firm-Id` header `auth-validator-edge` injects. 16 tests in `lib/research/api/tests/test_scoped_amgt.py`, all passing.",
+        "THE CLIENT HALF IS WIRED TO IT, not to an invented path: `portal/src/api/endpoints/amgt-lead-panel.ts` exports ten call functions, each landing on a route in `scoped_amgt_route_table()`; the render check drives the real `requestPrintPack()` and records that it requests `/api/scoped/amgt/security/BABA_US_Equity/print`, the exact string `printPackPath()` declares.",
+        "THE SAME RELATIONSHIP ALREADY EXISTS IN THIS ESTATE and is documented in the portal: `useScannerApi.ts` / `security-scanner.ts` carry a client written against a route whose declaration lives elsewhere. This cell follows that precedent rather than minting an unauthenticated path, which the cell text forbids.",
+        "WHAT AN UNMOUNTED ROUTE LOOKS LIKE ON THE PAGE, so it is not mistaken for a code defect: every React Query read resolves to its error/empty state and the page renders its stated 'no ranked names for this partition yet' and 'not loaded' copy. The render check reads 0 colour-law violations across 828 elements in exactly that state."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Gap 2 of the cell: 'required /api/scoped/amgt adapters are not delivered. Follow the established auth-gated `/api/scoped/*` pattern with the auth-validator-edge viewer-request; do not mint a new unauthenticated path.'",
+    "world_is": "An `/api/scoped/*` route in this estate is THREE artifacts, not one: a client, a handler, and a CloudFront/API-Gateway route declaration that points the path at the handler behind `auth-validator-edge`. Two of the three are inside this cell's write grant and are delivered; the third is not, so the adapters exist and are correct but are not reachable over HTTP. A `<paths>` block is the write grant, and a path it lacks is a refusal on that limb rather than an override.",
+    "notes": "THE DISARM IS ONE INFRA CELL: a Lambda declaration whose handler is `lib.research.api.scoped_amgt.handler`, a CloudFront behavior or API Gateway route for `/api/scoped/amgt/*` behind the existing `auth-validator-edge` viewer-request, and the `HARVEST_METRICS_TABLE` env var (default already correct). NOT CLAIMED: that the handler runs correctly in Lambda -- it has never been invoked outside pytest, and `read_thesis_bundle`/`_print_pack` import modules (`lib.research.checkface.run_checks`, `lib.research.print.render_pack`, the latter pulling matplotlib) whose packaging into a Lambda bundle this worker did not size. NOT MEASURED: whether the artifact roots those two reads default to exist in any deployed environment; they are env knobs (`AMGT_MODEL_BLOCK_ROOT`, `AMGT_PEER_SET_ROOT`) precisely so the deployment can point them somewhere real."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W10-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~10",
+    "surfaced_at": "2026-09-12T00:35:00Z",
+    "one_line": "THE SURFACE THIS RECUT WAS TOLD TO BUILD ON ALREADY VIOLATES ITS OWN `NO non-ASCII in code` BLOCK: 6 of 27 files under this cell's write surface carry non-ASCII characters, all of them landed by the previous cut and all of them in files outside this recut's four named gaps. Every file this recut authored or rewrote is ASCII-clean.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CENSUS, 2026-09-12, DENOMINATOR PRINTED: 27 files scanned across `portal/src/pages/SecurityAnalysis`, `portal/src/api/endpoints/amgt-lead-panel.ts` and `lib/research/api`; 6 carry at least one codepoint above U+007F.",
+        "THE SIX, with the offending codepoints and line numbers: `components/PrintExportAction.tsx` (U+2026 at :90); `components/ProvenanceLine.tsx` (U+2022 at :38, U+2014 at :48); `components/SecurityOverlay.tsx` (U+2026 at :41, U+00B7 at :89 and :99); `tabs/CoverageTab.tsx` (U+2026 at :91); `tabs/PeersTab.tsx` (U+2026 at :40); `tabs/ThesisTab.tsx` (U+2026 at :86 and :127).",
+        "ALL SIX PREDATE THIS CELL: every one of them is unmodified from `wk-amgt_resapp-5-8-portal@e6057f26`, the branch this recut was ordered to start from. `git status --porcelain src/` in the portal repo lists eleven modified files at this cell's commit, and none of the six is among them.",
+        "THE FILES THIS CELL WROTE OR REWROTE ARE CLEAN: `types.ts`, `constants.ts`, `hooks/useLeadPanelApi.ts`, `hooks/useSecurityAnalysisState.ts`, `components/LeadPanel.tsx`, `components/RankedList.tsx`, `components/RankedChart.tsx`, `components/StarredList.tsx`, `__rendercheck__/renderCheck.tsx`, `api/endpoints/amgt-lead-panel.ts`, and all of `lib/research/api/` -- 0 non-ASCII codepoints across all of them. Where this cell rewrote a file that had carried an ellipsis (RankedList, RankedChart, StarredList), the character was replaced with ASCII '...' as part of the rewrite.",
+        "THE BOUND, quoted from this task order: `BLOCK NO non-ASCII in code, logs or AWS.` CLAUDE.md section 4 carries the same rule estate-wide."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This cell's bounds forbid non-ASCII in code, and simultaneously instruct: 'Do NOT rebuild the panel, the tabs or the Print header that already exist there', with the four named gaps as the whole of the cell.",
+    "world_is": "The two instructions do not reach the same files. The non-ASCII lives entirely in components the recut is told not to rebuild, so satisfying the bound across the whole surface would require edits outside the cell's four gaps. This worker left the six files untouched rather than widen the order, which means the delivered surface still carries six non-ASCII characters.",
+    "notes": "WHY NOT JUST FIX IT: the files are inside the `<paths>` write grant, so the edit was mechanically available; it was declined because 'never widen the order or fix a neighbouring defect' is the stronger bound and because a rewrite of ThesisTab/PeersTab/CoverageTab/SecurityOverlay is exactly the rebuild the cell forbids. THE FIX IS SMALL IF SOMEONE OWNS IT: eight characters across six files, each an ellipsis, bullet, em-dash or middot inside a JSX string, with ASCII equivalents ('...', '-', '--', '|'). NOT CLAIMED: that non-ASCII in a JSX display string is the same hazard as non-ASCII in a log line or an AWS resource name -- the rule does not distinguish them and this row does not either. NOT MEASURED: whether the rest of `portal/src` (523 files by comp-cache's denominator) carries the same characters; the census above was scoped to this cell's own surface and a scoped census cannot answer the wider question."
   }
 ]
 ```
