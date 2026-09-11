@@ -692,7 +692,7 @@ def _parent_row_ids(root, rel):
 def _row_is_other_fabric(row):
     """True iff the row's id carries the `Z-` coordinate segment. NOT A FABRIC TEST. NOT A DECISION.
 
-    ⛔ RETIRED AS A DISCRIMINATOR 2026-09-11 AND DELIBERATELY LEFT UNUSED -- DO NOT REACH FOR IT.
+    BLOCKED: RETIRED AS A DISCRIMINATOR 2026-09-11 AND DELIBERATELY LEFT UNUSED -- DO NOT REACH FOR IT.
     It decided the L10 merge exemption in both precondition limbs until Andrew's ~19:3xZ scoping
     ("the surprise-row gate must be project specific") replaced it with `_row_was_carried`. Read that
     function for the rule that actually holds.
