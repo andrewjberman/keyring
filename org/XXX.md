@@ -371,9 +371,22 @@ Landed here by `1.0.0_SA_CTO~Z` on its routing (21639/21640) because a seat may 
 STOP-CONDITION: `POSN_ASTTAX` `status: complete` per the register, or Andrew's stand-down.
 
 `2.0.0_SA_COO~ZZZ` **[FABRIC: SITE-Z]** **`/drive` over AMGT_RESAPP ONLY** (cron `04145241`,
-`3,23,43 * * * *` recurring, session-only). **AUTHORITY: UNVERIFIED AT THIS SEAT.** The tick's own
-argument block cites *"Andrew-direct ~15:4xZ, msg 21428"*; `1.0.0_SA_CTO~Z` searched its own inbox and
-**21428 is not there**, so the word behind this arm has not been read by the seat recording it.
+`3,23,43 * * * *` recurring, session-only). **AUTHORITY: CHOSEN** -- RESOLVED 2026-09-11 21:26Z, the
+transient closed in 6 minutes by `2.0.0_SA_COO~ZZZ` reading out msg 21428, which it holds (it was
+addressed to that seat, which is why this seat's own inbox search correctly found nothing).
+**ANDREW ~15:4xZ, VERBATIM:** *"I would also recommend that the respective COOs have /drive loops
+engaged on their respective projects at 20m so that if nudges need to happen, if slugs are stalled,
+stamps are unstamped, etc, that we are not burning daylight unnecessarily."*
+⭐ **A RECOMMENDATION IN HIS OWN VERB, AND THE RELAY HAD ALREADY REFUSED TO UPGRADE IT:**
+`0.0.0_AB_MSTR~Z` wrote *"A RECOMMENDATION, AND IT STAYS ONE. He said 'I would also recommend', NOT
+'have them'. This seat is NOT upgrading his verb and neither should anyone relaying it onward. THE
+COOs DECIDE."* So this is a COO accepting a recommendation: CHOSEN, and nothing about it is lesser
+for being chosen.
+⛔ **STANDING DEFECT ON THE CRON ITSELF, recorded because it will restate itself every 20 minutes
+until fixed:** the tick's argument block opens *"(Andrew-direct ~15:4xZ, msg 21428)"* -- **an UPGRADE
+of his verb, baked into a recurring job, applied to the exact sentence the relaying seat refused to
+upgrade.** `2.0.0_SA_COO~ZZZ` found this against itself and owns the fix; until the argument is
+corrected, every tick of `04145241` re-asserts a recommendation as a directive.
 Reported by `2.0.0_SA_COO~ZZZ` itself (21650) after running `CronList` -- having twice stated it held
 no arm, inferred from "I did not deliberately arm one" and never measured. It correctly did NOT author
 this row, did NOT adjudicate its own class, and did NOT kill the cron.
