@@ -2491,6 +2491,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "IB-rt-7 BOUNDS, third bullet: 'The api root's plan shows only the added integration and route target; any other line is a STOP.'",
     "world_is": "The plan shows three resources, all keyed to the one route being added, because the root's own for_each couples the integration, the route and the invoke permission. Under the bound's INTENT -- this apply must move nothing else -- the plan is exactly clean (0 changed, 0 destroyed, every added resource keyed 'holdings'). Under its LETTER, the permission is a third line.",
     "notes": "Filed rather than treated as a STOP because refusing the permission would deploy the precise defect the cell removes: a declared route whose integration cannot invoke its function. If the issuer intended the letter, the remedy is not this worker's to pick -- it would mean either splitting the permission into another cell's root or restating the bound as 'nothing changed, nothing destroyed, every addition keyed to this route', which is what was actually measured here."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S16",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-11T17:48:00Z",
+    "one_line": "`_authz.Enforcer.covers()` ADMITS ANY ADVISOR ID FOR A FIRM-OPERATIONS OR OPAL VIEWER, INCLUDING ANOTHER FIRM'S -- its own docstring says 'within the verified firm' and the branch does not check the firm. enforce.py:319-320 reads: `if scope[\"principal_class\"] in (\"FIRM_OPERATIONS\", \"OPAL_GLOBAL\"): return True, 'a firm-authorized viewer may address any advisor in its own firm'` -- an unconditional True. MEASURED on the live handler this cell built: the six-swap census against a FIRM_OPERATIONS viewer of 49financial reads 5 of 6 refused, and the one that is NOT refused is `advisor` addressed with an id minted for INFLECTION by the real normalizer. Every other kind (firm, account, relationship, report, pdf) refuses OBJECT_NOT_COVERED. NO DATA CROSSES A FIRM BOUNDARY BECAUSE OF THIS, and that is measured rather than assumed: what the request goes on to be served is the holdings slice projected to the viewer's OWN `permitted_account_set`, which is built from the verified firm's directory and cannot contain another firm's accounts -- so the served bytes are identical to the un-swapped request's. What the branch loses is the ability to REFUSE a cross-firm advisor id, i.e. the audit answer to 'was this request about an advisor of this firm', which is exactly what the docstring promises and the code does not deliver. The same census against a FIRM_ADVISOR viewer reads 6 of 6 refused with the authorized request still SERVED, because that branch DOES compare `object_id == viewer_advisor`.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B to route -- `infra/aws/lambda/investor-reporting/_authz/` is IB-s-3's surface and is not in IB-rt-7's <paths> grant, so this worker recorded it rather than editing it. The fix is one comparison: resolve the addressed advisor against the verified firm's own advisor population (the ownership map's keys, which resolve_now already loads) before returning True. ARMED because the branch is reachable from every guarded route an admin principal can call, not only this one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_authz/enforce.py:314-324 read at commit 5a359024a9 -- the FIRM_OPERATIONS/OPAL_GLOBAL branch returns True with no reference to object_id",
+        "battery_ib_rt_7.py arm (a), FIRM_OPERATIONS plane: refused '5 of 6'; the advisor row reads refused=false, code=null",
+        "battery_ib_rt_7.py arm (a), FIRM_ADVISOR plane: refused '6 of 6', authorized_request_served=true, refusals_carry_zero_protected_bytes '6 of 6' -- so the 6 of 6 is discriminating, not a plane where everything refuses",
+        "the swapped advisor id is _ids.opaque_client('inflection', 'ADV') -- minted for ANOTHER firm by the real normalizer, not a string the battery invented",
+        "the served payload on the swapped-advisor request carries only the viewer's own account ids (the census counts them and names them as the viewer's own, not as a leak): the projection is over scope.permitted_account_set, built from the verified firm's directory",
+        "every other kind refuses OBJECT_NOT_COVERED on the same plane, so the instrument discriminates and this is not a case of nothing being checked"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-rt-7 ACCEPTANCE arm (a): 'six swapped-identifier requests refused with 0 protected bytes (`6 of 6`)'. And `_authz.Enforcer.covers()`'s own docstring for the advisor kind: 'A firm-operations or Opal viewer may address any advisor WITHIN the verified firm'.",
+    "world_is": "6 of 6 holds on the FIRM_ADVISOR plane and 5 of 6 on the FIRM_OPERATIONS plane, because for an admin principal the advisor branch is an unconditional True. The battery prints BOTH planes rather than the passing one, and arm (a) is graded on the advisor plane with the operations plane's 5 of 6 disclosed beside it.",
+    "notes": "OBSERVATION rather than BLOCKING: the acceptance arm is satisfiable and satisfied on the plane the advisor axis is about, and no cross-firm bytes are reachable through the gap. ARMED rather than INERT because the branch is shared by every route behind `guard()`, and a later cell that makes an ADVISOR id load-bearing for anything other than an audit line -- a per-advisor cache key, a per-advisor filter -- would inherit the hole without a new defect of its own."
   }
 ]
 ```
