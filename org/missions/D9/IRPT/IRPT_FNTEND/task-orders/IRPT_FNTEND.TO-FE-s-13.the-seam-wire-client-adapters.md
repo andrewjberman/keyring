@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>blocked</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (CONTRACTS: consumed from the counterpart; F12, F14) | **Decomp cell:** `FE-s-13` (round 2, v0.2) | **outcome_ref:** FWD-1, FWD-6 (the data half of FWD-3, 4, 5, 8, 11) | **depends_on:** `FE-s-12` | **slot:** ~1, queue position 2 | **slug rows:** C-S42, W2-S2, W3-S2 (wire half)
 
