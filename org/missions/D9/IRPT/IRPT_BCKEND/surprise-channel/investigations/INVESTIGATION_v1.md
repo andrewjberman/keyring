@@ -1637,6 +1637,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "IB-s-15 face: 'The CloudFront plan shows exactly ONE change or you STOP ... any other change in that plan is a STOP and a BLOCKING row.' PRD B15: an Opal principal reaches clients at two firms through scoped routes.",
     "world_is": "The routes are live behind the authorizer; the portal path to them is one unapplied behavior away, held by a foreign root's normalisation diff. Nothing served has moved. The replay measures what exists and names the leg it cannot exercise.",
     "notes": "Two BLOCKING items now carry to L10 with owners: W1-S8 (first-mint bundle, INFRA.TOOLS + DS) and W2-S12 (portal-auth root, CLOUD_OPS_OR_ETL under sign-off). Both are one act each for their owners; neither is a rework of this round's cells."
+  },
+  {
+    "id": "IRPT_BCKEND-S23",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T09:37:45Z",
+    "one_line": "DISARM of IRPT_BCKEND-W2-S12 (BLOCKING) by the CTO's ruling 95933 and both never-widen sign-off halves. 1.0.0_SA_CTO, as the gate over the portal-auth root (0.7.0_AE_CloudOps has no live session), measured in the shared tree: the CRLF half is closed at b9b3eafb6b (.gitattributes eol=lf for infra/aws/terraform/**/*.js); the WAF half is a hashicorp/aws 5.100.0 read-normalisation artefact (managed_rule_group_statement.version '' in the refreshed read vs null in config and state serial 173; everything else byte-identical by terraform show -json; live get-web-acl has no Version; CloudTrail shows no UpdateWebACL since the 09-03 opsec applies), recurring on every plan until the provider is bumped (CTO item 4, owner 0.7.0_AE_CloudOps, gate CTO, a D0 s.6 row). RULING: IB-s-15's bound is widened FOR THIS APPLY ONLY to 'one change plus the classified WAF no-op'. CTO half in 95933; COO half at org/tier1_exec/2.0.0_SA_COO~B/deliverables/NEVER_WIDEN_SIGNOFF_COO_HALF_IRPT_BCKEND_IB-s-15_CLOUDFRONT_20260911.md (blast radius and rollback per key, writers counted N=1, both outcome branches). The OPEN face is amended with the widened bound and the verifications the apply must print (27 -> 28 behaviors with the prior 27 in order; get-web-acl Rules identical LockToken excepted; the unauthenticated request now 401/403); slot ~2 is re-cut from a HEAD carrying b9b3eafb6b and the apply is handed back as IB-s-15's own act through safe-apply under a ledger entry citing the first.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (the COO half signed; the apply is the worker's under both halves; the provider bump is the CTO's D0 item)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T093348Z_1.0.0_SA_CTO_IRPT_BCKEND-W2-S12_RULED__CTO___the_WAF_.md (msg 95933) -- the ruling, the CTO half, items 1-4",
+        "b9b3eafb6b (CLOUD) -- .gitattributes: infra/aws/terraform/**/*.js text eol=lf",
+        "org/tier1_exec/2.0.0_SA_COO~B/deliverables/NEVER_WIDEN_SIGNOFF_COO_HALF_IRPT_BCKEND_IB-s-15_CLOUDFRONT_20260911.md (this commit) -- the COO half",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-15.*.md (this commit) -- ISSUER AMENDMENT on the open face; <status> pending"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md NEVER-1: never move served output without never-widen sign-off (CTO+COO); a sign-off names the act's blast radius and counts the writers of the named property. IB-s-15 face: exactly ONE change or STOP.",
+    "world_is": "The foreign change is a content-identical provider read artefact, pinned by three instruments; both halves are signed on the two keys the act may touch; the STOP condition stays armed for anything else in the plan.",
+    "notes": "The bound's STOP produced exactly the classification the sign-off needed; widening it once, for one apply, under two signed halves is the mechanism working, not the bound bending."
   }
 ]
 ```
