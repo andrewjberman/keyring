@@ -4,7 +4,9 @@ Author: **4.0.0_SA_CRO**. Andrew-directed experiments, September 10, 2026 Easter
 
 The chosen direction is unchanged: use the **BDAPI Node/Playwright/Kimi runner on a transient, dedicated EC2 host** to acquire YCharts authentication; use ordinary REST workers for report operations when transport portability is proven. Carry forward Inflection's refresh-and-resume behavior with explicit session generations and bounded retries. This research produces runnable probes and failure-injection evidence; it does not claim a working cloud deployment.
 
-**K3 amendment, September 10 Eastern / September 11 UTC:** Andrew selected `kimi-k3` and separate 2500-token read / 400-token action calls. That controller has now cleared live YCharts AWS WAF CAPTCHAs. Encrypted local cookies retained that clearance across fresh browser runs. The final correctly populated login submission was rejected by YCharts; authenticated report REST access is still unverified. See VI.3 for the evidence and exact limitations. The original K2.6 failures remain dated baseline evidence.
+**Current result, September 11 01:42 UTC:** Andrew corrected the credentials and explicitly requested Secrets Manager storage. The new version was saved and verified; login succeeded. Browser fetch, plain Node HTTP, and a subsequent separate process with the browser closed all retrieved the expected Overview template. The separate process also matched the expected account email in dashboard HTML; its session-free template control returned 403. See VI.4. Cloud portability, report creation and PDF output remain unproven.
+
+**Earlier K3 amendment, September 10 Eastern / September 11 UTC:** Andrew selected `kimi-k3` and separate 2500-token read / 400-token action calls. That controller cleared live YCharts AWS WAF CAPTCHAs. Encrypted local cookies retained that clearance across fresh browser runs. Probe 09 correctly submitted the former stored credentials and received a rejection, subsequently resolved by the credential correction in VI.4. The original K2.6 failures remain dated baseline evidence.
 
 ## PART 0 - Midstream constraint and where it bent
 
@@ -193,9 +195,9 @@ Evidence lives in `docs/research/investor_reporting_ycharts_auth_20260910/`:
 
 ### VI.2 Existing secret state observed in this research
 
-Safe `comp-secrets` inspection found `ycharts/login/credentials` with username/password fields, `astn/kimi/api-key` present, and no AWSCURRENT value available for `ycharts/session/current`. No secret value is included in these documents or probes. Presence is not proof that the vendor accepts the credentials. The initial tests stopped before credential submission; the final K3 submission in VI.3 reached an explicit rejection. A subsequent safe metadata check confirmed the stored username matches Andrew's requested account, both fields have no surrounding whitespace, and the password is nonempty. No credential guess or secret replacement was performed.
+Safe `comp-secrets` inspection found `ycharts/login/credentials` with username/password fields, `astn/kimi/api-key` present, and no AWSCURRENT value available for `ycharts/session/current`. No secret value is included in these documents or probes. Presence is not proof that the vendor accepts the credentials. The initial tests stopped before credential submission; probe 09 in VI.3 reached an explicit rejection. A subsequent safe metadata check confirmed the then-stored username matched Andrew's originally requested account, both fields had no surrounding whitespace, and the password was nonempty. No credential guess or replacement was performed during those initial tests. Andrew's later correction and authorized secret update are recorded in VI.4.
 
-### VI.3 K3 split-call experiments and present blocker
+### VI.3 K3 split-call experiments and former credential blocker
 
 Current research modules: `kimi_split.cjs`, `probe_split_session.cjs`, `login_form.cjs`, `local_checkpoint.cjs`, `test_kimi_split.cjs`, and `test_login_form.cjs`, all under `docs/research/investor_reporting_ycharts_auth_20260910/`. `k3_evidence.json` pins the current modules, historical results and isolated test run. Earlier result hashes identify earlier revisions; they are not relabeled as the final source.
 
@@ -215,11 +217,29 @@ The model receives only the explicit public CAPTCHA page. Normal account pages a
 
 Research cookies are protected with Windows DPAPI CurrentUser at `.runtmp/ycharts-k3-probe.cookies.dpapi`; no plaintext cookie file, AWS session publication or production login runner was created. Cookie restore has been demonstrated for WAF/pre-login state only. Reuse of an already authenticated checkpoint still needs an identity/capability fast path and live proof. Do not promote a solved CAPTCHA cookie to a verified authenticated session.
 
-**Immediate prerequisite:** a vendor-accepted credential secret. Stop repeated identical credential submissions after the confirmed rejection. Once corrected, verify identity and the captured Overview template shape from both browser fetch and plain HTTP. Then measure dedicated EC2 capture to Lambda replay before report generation. The local K3 fix removes the original CAPTCHA blocker; it does not establish those later stages. No alternative CAPTCHA service is required by the evidence so far.
+**Probe 09's prerequisite was a vendor-accepted credential secret**, resolved in VI.4. Repeated identical rejected submissions were stopped until Andrew supplied the correction. The next transport boundary is dedicated EC2 capture to Lambda replay before report generation. No alternative CAPTCHA service is required by the evidence so far.
+
+### VI.4 Corrected credential storage, accepted login and separate-process REST replay
+
+Andrew supplied replacement credentials in this Codex session and explicitly authorized saving them. They were entered through hidden console input into an in-memory SDK update, preserving the existing secret's other fields. The exact resource is **`ycharts/login/credentials`, `us-east-1`**, new AWSCURRENT version **`e6b721ac-8d36-4042-9b85-e571fca68bc8`**. Readback verified both supplied values at **2026-09-11T01:39:16.145515+00:00**. `credential_update_20260911.json` contains this metadata and no credential values. No password was written to a source/evidence file or used as a command-line argument.
+
+`split_k3_probe_10.json` covers **01:39:29.720Z-01:39:52.396Z**. The login POST returned **302**, both transmitted fields matched the updated secret, and the dashboard's inline scripts contained the expected account email. Browser fetch and ordinary Node HTTP each returned **200 JSON** for the market probe and the existing Overview template. Both template responses matched ID `14141822`, type `aggregate_security_overview`, and populated sections. The runner's historical outcome label still says identity not yet verified; the recorded email match is corroboration, not a newly verified dedicated identity endpoint.
+
+`probe_rest_checkpoint.cjs` then ran in a **separate Node process with no browser import**, restoring only the protected local cookie checkpoint. `rest_checkpoint_probe_11.json` covers **01:41:53.981Z-01:42:01.239Z**:
+
+| Request | Observed result |
+|---|---|
+| Overview template with only WAF state, no authenticated session | 403 plain text; no template schema. |
+| Same template with restored authenticated cookies | 200 JSON; expected ID/type/sections. |
+| Dashboard with restored authenticated cookies | 200 HTML containing the expected account email read from the current credential secret. |
+
+This run used Node's default user agent, not the browser user agent. It launched zero browsers, called Kimi zero times, submitted zero logins, and performed no cloud or business-data mutation. It proves the local browser-to-ordinary-HTTP handoff and an observed need for the authenticated session on that template route. It does not prove that a token captured on EC2 will work from Lambda's egress. Account email is corroborated in the authenticated response; a dedicated identity contract remains to be selected and verified.
+
+Use the REST checkpoint probe first for a healthy local session. The login and REST probes remain separate research entry points; they do not implement a production lease/recovery orchestrator. The REST probe does not persist Set-Cookie updates, which the production transport must handle. No holdings upload, report POST or PDF download was performed. The credential secret is saved in AWS; the captured session remains local DPAPI research state and was **not published to `ycharts/session/current`**.
 
 ## PART VII - What this brief does not claim
 
-Live CAPTCHA clearance and encrypted local pre-login cookie reuse are proven by the K3 amendment. Successful authenticated YCharts login, session publication, EC2/Lambda portability, report generation, holdings upload, PDF fidelity, current cloud topology and deployment remain unproven. The scripts are a repeatable research starting point, not the completed sensitivity service. No existing production runtime, PRD, task order, secret or peer implementation was modified.
+Live CAPTCHA clearance, accepted YCharts login, local authenticated cookie reuse and ordinary HTTP template retrieval are proven by the K3 amendment and credential correction. Session publication, EC2/Lambda portability, report generation, holdings upload, PDF fidelity, current cloud topology and deployment remain unproven. The scripts are a repeatable research starting point, not the completed sensitivity service. The only cloud mutation was Andrew's explicitly authorized credential-secret update; no existing production runtime, PRD, task order or peer implementation was modified.
 
 The local HTTP 405 result does not prove AWS egress will fail or that a proxy is needed. The research did not validate MFA/OTP because Andrew chose no OTP workflow. It does not re-open the two-project product split, make the native vendor PDF viewer the finished Opal tab, ratify a new service-level target or assert that YCharts offers a stable public report API.
 
