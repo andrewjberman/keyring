@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 47 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (46 ours + 41 theirs, 40 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 53 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (50 ours + 48 theirs, 45 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -337,6 +337,76 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Spine v3 L7: the TO's WORKER FACE is the worker's whole context; a worker cannot be messaged. CLAUDE.md s.2: a broker message is never the carrier of an off-spec fact.",
     "world_is": "The issuer used the same harness resume channel that carries every hand-off to send one bounded supplement to a worker mid-order, because the PRD delta names a reuse source the cell would otherwise rebuild; the record of it is this row, and the worker's own report will say what it read.",
     "notes": "Stated as a deviation so the CVO can grade it at L8: the alternative (let the cell build on v0.9's packet alone and recut in round 2) was judged the more expensive correct path; the supplement adds a reuse source and changes no criterion."
+  },
+  {
+    "id": "IRPT_BCKEND-S15",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T04:14:43Z",
+    "one_line": "DISARM of IRPT_BCKEND-W2-S11 (ARMED, disarm_owner 2.0.0_SA_COO~B), the same drain it merged in: a THIRD id spelling -- HoldingsSnapshot namespaces account ids (`<firm>:acct:acc_...`) while DirectoryEntry carries the bare tail -- makes a naive join read 0 of N for all three firms and so hides W1-S7's real raw-key difference (INF, COT) behind a cosmetic prefix difference (every firm). Disarmed forward on the four un-handed faces that can join holdings to the directory (IB-s-14, IB-s-15, IB-s-16, IB-sb-3): normalise through the ONE normaliser IB-s-4 shipped (import, never a second strip) and print both counts per firm, as-written and after normalisation, so the two causes stay distinguishable. No join changed; the canonical spelling is the CTO's L10 read together with W1-S7. Residual carried: 17 of 5,873 49F ids (0.3 percent) unresolved after normalisation, unexplained.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (this row IS the disarm act; the canonical-spelling decision is L10's)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W2-S11, IRPT_BCKEND-W1-S7 (this HEAD)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_s_4.result.md (this HEAD) -- arm (i): 5,856 of 5,873 / 0 of 790 / 0 of 946 after normalisation; the positive control that refused 0 of 3",
+        "the four faces (this commit) -- one line inside the S9 amendment block; every <status> still staged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD B1/B12 (v0.4): one opaque id space per firm minted by directory_runner.opaque_id; IB-s-12 L5 note: HoldingsSnapshot objects schema-valid against the contract.",
+    "world_is": "Two artifacts of the same project spell one account id two ways (prefix vs bare), and a third firm-dependent difference sits beneath. The wrong conclusion is the cheaper one in both directions; the faces now force both counts to be printed.",
+    "notes": "Third id-space finding this round after W2-S9 (registry vs opaque firm id) and W1-S7 (raw key per firm); the round-2 recut should carry ONE id-space table for the project, an L5 deliverable of this seat."
+  },
+  {
+    "id": "IRPT_BCKEND-S16",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T04:59:17Z",
+    "one_line": "L4 HAND-OFF RELEASED at PRD v0.13 @e6ba5d9878 with both L4-R sign-offs (1.0.0_SA_CTO 95827; the notifier's COO row went to the base inbox that has no session, so the lane message is the delivery). Round 1 stays frozen on v0.4 for every rectangle. Diffed v0.13 against v0.10 by candidate row: only B10 and B14 changed (v0.11, CRO R2), and the change is an AVAILABLE INPUT, not a new obligation -- the three synthetic vendor PDFs (Overview 23 pp / Comparison 31 pp / Multi-Comp 35 pp on synthetic portfolio 2332257) are RETAINED, KMS-encrypted, at s3://opal-data-ycharts/research/20260911/variants/.../report.pdf with SHA-256s in the packet's pdf_validation.json (measured: the repo packet holds receipts only, no PDF bytes; cleanup.json lists the PDFs among the retained artifacts). Folded into the two un-handed faces IB-s-10 and IB-s-14 in the FE-s-2 / FE-s-5 shape: the PDFs as input specimens beside the synthetic ones (hash-verified before use, labelled vendor_synthetic_holdings, an Opal S3 read and never a vendor call), one arm each (v0.11); every existing arm unchanged; real-client specimens remain the FWD-4/FWD-8 proof gap. v0.12/v0.13 (CRO R1, CVO C1) touch no candidate row this round still builds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (folded same turn; the KMS/IAM readability of the research prefix under a worker serial is unmeasured until IB-s-10 runs and is bounded by the amendment's own refusal clause)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T045421Z_1.0.0_SA_CTO_L4_HANDOFF_RELEASED__IRPT_BCKEND_PRD_v0..md (msg 95827)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md @e6ba5d9878 rows B10, B14 -- the (v0.11, CRO R2) clauses; diff against @3624e60def by row in the issuer's scratch",
+        "docs/research/investor_reporting_ycharts_variants_20260911/{pdf_validation.json,cleanup.json,README.md} (HEAD) -- the three SHA-256s, the retained-artifacts list, the S3 prefix",
+        "the two faces (this commit) -- ISSUER AMENDMENT block + arm (v0.11); <status> still staged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-s-10 face (v0.4): 'No real YCharts PDF exists (row IRPT_BCKEND-S5)'; PRD v0.13 B10: 'AVAILABLE: the three SYNTHETIC vendor PDFs ... sufficient to BUILD and exercise the extractor'.",
+    "world_is": "Row S5's premise (no real vendor PDF) is no longer true for synthetic holdings; it remains true for client holdings. The faces now carry both facts and grade the extractor on both kinds of input.",
+    "notes": "The gate now admits a NEW IRPT_BCKEND order against v0.13; none is cut mid-round. The round-2 recut reads v0.13 whole."
+  },
+  {
+    "id": "IRPT_BCKEND-S17",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T05:14:36Z",
+    "one_line": "ISSUER RE-SEQUENCING at 05:1xZ on Andrew's question ('what's holding you up?'): the six remaining cells form ONE sequential chain through slot ~3 by the decomposition's edges (9 -> 10 -> 14 -> 16 -> 15 -> sb-3), so three slots idle while IB-s-9 runs. The edge IB-s-10 -> IB-s-14 exists for ONE arm, S14-AC1 (f) (the Analysis export renders IB-s-10's certified sections), and the IB-s-14 face ALREADY admits the fixture-sections path for it ('where IB-s-10's sections have landed on CLOUD; otherwise the fixture sections, and say which', arm (v0.11) at e34e09a88d), while its other six mechanical arms and its deploy depend on nothing un-merged (IB-s-13, IB-s-17 merged). IB-s-14 is therefore HANDED NOW to slot ~4 ahead of IB-s-10's merge: arm (f) and arm (v0.11) run on the fixture sections and SAY SO; the re-run on IB-s-10's real sections is IB-sb-3's replay (which already re-runs every deployed route) and is named there. The decomposition is not edited (frozen); the chain order is the issuer's L6 fan-out to re-derive, and this row is the record. The same reasoning does NOT free IB-s-16 (it consumes IB-s-9's job status shape and IB-s-14's receipts, both un-merged) or IB-s-15 (routes to Lambdas that do not exist yet).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (the fixture-vs-real sections distinction is printed by the worker and re-graded at the drain; the real-sections run lands at IB-sb-3)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md v0.1.1 s.5 (HEAD) -- edges IB-s-10 -> IB-s-14, IB-s-13 -> IB-s-14, IB-s-17 -> IB-s-14",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-14.export-bundle-freeze-render-worker-receipt.md @e34e09a88d -- arm (f) and arm (v0.11) with the fixture-sections clause; <status> staged with the cross-slot wait on IB-s-10 named",
+        "ListAgents 05:1xZ -- one worker subagent running (slot ~3, IB-s-9, started ~1 h earlier); slots ~1, ~2, ~4 idle"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-s-14 face <status>: 'becomes pending when the COO hands it over after IB-s-13 is terminal and merged AND IB-s-10 (slot ~3) is terminal and merged.' Spine v3 L6: fan-out derived from the decomposition's dependency chains.",
+    "world_is": "The wait on IB-s-10 guards one arm that the face already lets run on fixtures; holding the whole cell for it idles a slot for hours. Handed early with the substitution stated; the real-sections arm is the replay's.",
+    "notes": "Cost of being wrong: one arm re-run at IB-sb-3, which re-runs anyway. Cost of waiting: the export Lambda, its root, its ledger and six arms idle behind a sequential chain. Andrew's question was the trigger; the decision and its record are the issuer's."
   },
   {
     "id": "IRPT_BCKEND-W1-S1",
@@ -938,6 +1008,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "Filed rather than absorbed because the lowercase spelling is in the PRD row too, so the next cell to emit a StatusEnvelope reads the same prose. The two carriers mean the same state; only the literal differs."
   },
   {
+    "id": "IRPT_BCKEND-W3-S7",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T04:25:45Z",
+    "one_line": "THE REUSE PACKET THE ISSUER SUPPLEMENT TELLS THIS CELL TO READ FIRST DOES NOT EXIST IN THIS WORKTREE. The supplement (channel row IRPT_BCKEND-S14, PRD v0.10 @3624e60def) says 'READ THAT PACKET FIRST' and names docs/research/investor_reporting_ycharts_variants_20260911/ with five files. Measured: the directory is ABSENT from the worktree; this branch was re-cut at 1f795d1f71 and the packet landed at 72acd16e66, which `git merge-base --is-ancestor 72acd16e66 HEAD` reports is NOT an ancestor of HEAD (with a positive control on 1f795d1f71, which IS). The 26 files ARE in the local object store at that commit, so the packet was read BY OBJECT REFERENCE (`git show 72acd16e66:<path>`) -- a read, not a merge, since a worker never merges or rebases. WHAT THIS COSTS AND WHAT IT DOES NOT: the CONTENT was fully available, so nothing in the supplement went unread; what is not available is a CITABLE WORKTREE PATH, so every reference this cell makes to the packet is written as path@72acd16e66 rather than as a path a reader of this branch can open. The battery prints the reachability measurement (present_in_worktree false, files_at_72acd16e66 26, commit_is_ancestor_of_head false, positive_control true) rather than leaving it as an absence a later reader would have to rediscover. ARMED because the SHAPE recurs: an issuer supplement that names a path landing after a worker's cut is unreadable to that worker by the route the supplement assumes, and the next worker may read the absence as 'the packet does not exist' rather than 'my branch predates it'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~3 for THIS cell -- DISARMED SAME TURN by reading the packet by object reference, citing it as path@72acd16e66 everywhere it is used (code comments, templates.json sources, the proof instance), and printing the reachability measurement in the battery so the absence is a recorded fact rather than a silence. THE ROUTING is the issuer's: 2.0.0_SA_COO~B decides whether a supplement that names a post-cut path should re-cut the worktree, cite by commit, or carry the packet into the face; 3.0.0_SA_CVO grades the arm at L9.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls docs/research/investor_reporting_ycharts_variants_20260911/ in /c/tmp/wk-irpt-1-3 -> 'No such file or directory'; git ls-tree -d --name-only HEAD -- docs/research/ lists eight directories and not that one",
+        "git ls-tree -r --name-only 72acd16e66 -- docs/research/investor_reporting_ycharts_variants_20260911/ -> 26 files including README.md, UI_CONTRACT.md, recipe_contract.py, variant_worker.py and manifest.example.json",
+        "git merge-base --is-ancestor 72acd16e66 HEAD -> NO; git merge-base --is-ancestor 3624e60def HEAD -> NO; positive control git merge-base --is-ancestor 1f795d1f71 HEAD -> YES",
+        "IB-s-9_S9-AC1_battery_output.txt arm (h) -- 'THE VARIANTS PACKET IS NOT IN THIS BRANCH (row W3-S7)' with present_in_worktree false, files_at_72acd16e66 26, commit_is_ancestor_of_head false, positive_control_known_ancestor true",
+        "The issuer supplement, verbatim: 'READ THAT PACKET FIRST, before cloud_transport.py, and treat it as the reuse source in the same way (read-only; extend into ycharts/generate/, never a parallel implementation)'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The issuer supplement names docs/research/investor_reporting_ycharts_variants_20260911/ as a read-only reuse source this cell must read first, as a worktree path.",
+    "world_is": "That path is absent from this worktree and its commit is not an ancestor of this branch's HEAD. The packet was read by object reference at 72acd16e66 and is cited that way throughout; no merge or rebase was performed.",
+    "notes": "The supplement itself is sound and its content was fully used -- the gap is only in how a post-cut artifact reaches a branch that predates it. Worth the issuer's attention because the same shape will recur on every mid-round supplement, and the cheap remedy is to name the commit alongside the path."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S8",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T04:25:45Z",
+    "one_line": "THE CARRIED DECISION TABLE CANNOT SEE A WAF CHALLENGE WHOSE ONLY SIGNAL IS THE RESPONSE HEADER -- AND THE LIVE RUN MEASURED EXACTLY THAT CASE. docs/research/investor_reporting_ycharts_auth_20260910/recovery_contract.py `decision()` classifies a WAF interstitial with `if reply.status in (202, 403, 405) and 'awswaf' in text.lower()`, i.e. by reading the BODY. The variants live run (docs/.../ycharts_variants_20260911/README.md@72acd16e66) recorded a 202 during calculation polling, after three healthy `calculating` responses, whose ONLY evidence was the `x-amzn-waf-action: challenge` RESPONSE HEADER; its body carried the ordinary calculating payload. Run through the carried table unchanged, that response classifies INVALID_RESPONSE (202 is not the expected 200), which is the wrong remedy twice over: it treats a challenge as a protocol failure, and it discards work that the packet's own operator-orchestrated recovery PRESERVED. This cell's copy adds the header as a field on Reply and classifies it BEFORE the body rules, as its own outcome WAF_REFRESH_REQUIRED rather than BROWSER_CHALLENGE, because the remedy differs: a challenge mid-chain needs a coordinated session refresh by B8/B16 and the work already done is kept. The battery keeps the two WAF branches as SEPARATE fixtures reached by DIFFERENT signals and shows the same 202 WITHOUT the header still classifying INVALID_RESPONSE -- so the new rule is load-bearing rather than decorative. INERT for this cell (fixed in its own copy) and raised because the research module is a NAMED REUSE SOURCE for other cells: anyone who carries `decision()` verbatim inherits the blind spot.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~3 for THIS cell -- DISARMED SAME TURN: this cell's copy adds the x-amzn-waf-action header to Reply, classifies it before the body rules as WAF_REFRESH_REQUIRED, and proves the rule is load-bearing with a control (the same 202 without the header still reads INVALID_RESPONSE). THE RESEARCH MODULE ITSELF is not this cell's to edit and is a NAMED REUSE SOURCE for B8/B16 and the recovery coordinator: whether recovery_contract.py is corrected, superseded by this cell's copy, or left as research is the issuer's call with 3.0.0_SA_CVO at L9 and 1.0.0_SA_CTO at L10. ARMED for any cell that carries decision() verbatim.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/research/investor_reporting_ycharts_auth_20260910/recovery_contract.py @1f795d1f71 -- 'if reply.status in (202, 403, 405) and \"awswaf\" in text.lower(): return \"BROWSER_CHALLENGE\"'; the Reply dataclass has no header field at all (status, mime, body, location, transport_uncertain)",
+        "docs/research/investor_reporting_ycharts_variants_20260911/README.md @72acd16e66 -- 'The next run received 202 with x-amzn-waf-action: challenge during calculation polling, after three successful calculating responses. The worker now classifies that response as WAF_REFRESH_REQUIRED.'",
+        "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py @88c97c1529 -- Reply.waf_action and the rule placed before the body checks; DECISIONS extended with WAF_REFRESH_REQUIRED",
+        "IB-s-9_S9-AC1_battery_output.txt arm (v0.10) -- 'WAF: the same 202 WITH the x-amzn-waf-action header -> WAF_REFRESH_REQUIRED; WITHOUT it -> INVALID_RESPONSE'",
+        "The two WAF branches are kept as separate fixtures reached by different signals (decision_branches.json BROWSER_CHALLENGE carries the body interstitial and no header; WAF_REFRESH_REQUIRED carries the header and an ordinary body), so neither rule can pass while the other is dead"
+      ]
+    },
+    "spec_asserts": "PRD v0.5 (SUPP IV.7/IV.8/III.2) binds the decision table, and recovery_contract.py is the named reuse source for it: a WAF action, header or interstitial is challenge handling, never bad holdings or authorization denial.",
+    "world_is": "As carried, decision() reads only the BODY for the WAF signal, so the measured case -- a 202 whose only signal is the response header -- classifies INVALID_RESPONSE and neither refreshes the session nor preserves the work.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Found by building the fixture from the variants README rather than from the classifier, which is why it surfaced at all: a fixture derived from the code under test would have carried 'awswaf' in the body and passed."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S9",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T04:50:58Z",
+    "one_line": "THE FIXTURE MANIFEST -- THE ARTIFACT THAT SAYS WHICH FIXTURES ARE MEASURED AND WHICH ARE EXTENDED -- WENT STALE IN MY OWN PACKAGE, AND IT IS A DEPLOYED ZIP MEMBER. infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/FIXTURE_MANIFEST.json was written at 5e4a92380b. The issuer-supplement commit 88c97c1529 then changed two fixtures it describes -- decision_branches.json (the tenth branch WAF_REFRESH_REQUIRED added; the BROWSER_CHALLENGE fixture's waf_action removed so the two WAF branches are reached by different signals) and upload_ok.json (the echoed rows step_upload() reconciles) -- and did NOT regenerate the manifest. Measured at report time by recomputing every row from disk rather than reading the manifest: 2 of 13 file rows carried a WRONG sha256 AND a wrong byte count (decision_branches.json ab7c405441..1621B declared vs e55589ccba..2545B actual; upload_ok.json 18263ec209..463B declared vs 5249e5b855..753B actual), and two declared denominators disagreed with the fixtures (decision_branches 9 declared vs 10 counted; templates_with_live_proof 1 vs 3). Its prose also still read 'NO LIVE PROOF EXISTS for templates 14141824 and 14141847', which the supplement contradicts -- all three recipes were proven live by 4.0.0_SA_CRO on Andrew's word. WHY IT MATTERS MORE THAN A DOC NIT: a stale hash in a provenance record is WORSE than no hash, because it reads as MEASURED and a reader checking a fixture's integrity against it would get a false MISMATCH on a good file and would have no way to tell that from a tampered one; and this is the exact artifact the S9-AC3 judgment record points the CVO at to separate what was measured from what was extended. REPAIRED SAME TURN by recomputation and REDEPLOYED, because the manifest is a packaged zip member and leaving it repaired-but-not-served would have broken the served-equals-source equality arm (h) grades. ARMED because the SHAPE is general and has no gate: nothing in this estate ties a manifest of hashes to the files it describes, so any commit that edits a described file and not its describer produces a provenance record that is confidently wrong, and every per-file check still passes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~3 for THIS artifact -- DISARMED SAME TURN: the manifest was repaired by recomputation from disk (not by hand), the zip rebuilt and redeployed under its own change-management entry irpt-bckend-s9-manifest, the source-map registration moved to the new hash, and battery_ib_s_9.py now RE-DERIVES every manifest row and both fixture denominators from disk on every run with the file list taken from the DIRECTORY BY SUBTRACTION, load-bearing in arm (h) -- so this artifact cannot go stale silently again. THE GENERAL SHAPE is not mine to close: whether a manifest-freshness check belongs in .tools/commit-gate.sh or in ds-precommit, so that ANY commit editing a described file without its describer is refused estate-wide, is 1.0.0_SA_CTO's at L10 with 3.0.0_SA_CVO grading the finding at L9. I did not build that gate: it would be a widening of this order and a gate nobody asked for.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show --stat 88c97c1529 -- the commit changes fixtures/har/decision_branches.json (14 lines) and fixtures/har/upload_ok.json (3 lines) and does NOT contain FIXTURE_MANIFEST.json; git log on the manifest shows its last touch is 5e4a92380b",
+        "Recomputation over all 13 described files: 'files checked: 13 of 13 | stale: 2' -- decision_branches.json manifest ab7c40544112cf26/1621B vs disk e55589ccbabd01fb/2545B; upload_ok.json manifest 18263ec209542bf9/463B vs disk 5249e5b85571ea9f/753B",
+        "decision_branches.json on disk carries 10 branch keys (ARTIFACT_FETCH_PENDING, BACKOFF_429, BROWSER_CHALLENGE, DENIED, HEALTHY, INVALID_RESPONSE_HTML, RECONCILE_UNCERTAIN, REFRESH_401, REFRESH_EVICTION, WAF_REFRESH_REQUIRED) against _meta.denominators.decision_branches = 9; the battery independently prints 'DECISION TABLE -- 10 of 10 branches classified as declared'",
+        "infra/aws/lambda/ci/lambda-source-map.json functions['irpt-ycharts-generate'].files lists 'fixtures/har/FIXTURE_MANIFEST.json' as member 12 of 25 -- the manifest is PACKAGED, so a repair without a redeploy would have broken served == rebuilt in arm (h)",
+        "Repair output: 'STALE ROWS REPAIRED: 2 of 13 files'; denominators {decision_branches 9, files 13, templates 3, templates_with_live_proof 1} -> {decision_branches 10, files 13, templates 3, templates_with_live_proof 3}; zip content sha256 gYMxOLN8XndUFeK54aP/A5HsxhOsTSrY62GijStzmH4= -> S9C9ibDNI8D77ZUefrAQSq2OgwO1206wySuzfolxUhI="
+      ]
+    },
+    "spec_asserts": "A value must carry its claim in a field a consumer can reject on, and a printed denominator certifies the sweep it names; FIXTURE_MANIFEST.json declares itself 'DERIVED FROM MEASURED ARTIFACTS -- every shape cites the artifact it came from' and is the carrier the S9-AC3 judgment record points the CVO at for the MEASURED-vs-EXTENDED split.",
+    "world_is": "Two of its thirteen per-file sha256/byte rows described the PREVIOUS revision of files the same worker changed one commit later, two of its four declared denominators disagreed with the fixtures on disk, and its prose denied live proof that the issuer supplement records as existing. Every per-file consumer of those rows would have read a confident MEASURED value that was false.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Self-inflicted and self-found, in my own deliverable, at report time -- filed rather than quietly fixed because the finding is not the typo, it is that a MANIFEST OF HASHES HAS NO GATE TYING IT TO WHAT IT DESCRIBES. This is Rule 22's shared-dependency blindness in a new place: I verified each fixture, and each fixture was fine; what was broken was the one artifact they have in common, and no per-fixture check could see it. It surfaced only because I re-derived the manifest instead of reading it -- which is also the only reason the two stale rows were not carried into the proof instance as evidence."
+  },
+  {
     "id": "IRPT_BCKEND-W4-S1",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
@@ -1128,76 +1273,6 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "CLAUDE.md Git section: AWS via the `.tools/aws` shim (+`aws.cmd`, both or neither); never bare MSYS_NO_PATHCONV=1 aws.",
     "world_is": "The two faces of the shim are not interchangeable by caller. From bash either works; from a Windows Python only the .cmd does, and the bash one fails with an error that points away from the cause.",
     "notes": "Recorded because it costs a cycle every time. Same family as the existing memory note that Python spawning an MSYS binary must go through .tools/msys_argv_guard.py -- this is the AWS-shim instance of it."
-  },
-  {
-    "id": "IRPT_BCKEND-S15",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T04:14:43Z",
-    "one_line": "DISARM of IRPT_BCKEND-W2-S11 (ARMED, disarm_owner 2.0.0_SA_COO~B), the same drain it merged in: a THIRD id spelling -- HoldingsSnapshot namespaces account ids (`<firm>:acct:acc_...`) while DirectoryEntry carries the bare tail -- makes a naive join read 0 of N for all three firms and so hides W1-S7's real raw-key difference (INF, COT) behind a cosmetic prefix difference (every firm). Disarmed forward on the four un-handed faces that can join holdings to the directory (IB-s-14, IB-s-15, IB-s-16, IB-sb-3): normalise through the ONE normaliser IB-s-4 shipped (import, never a second strip) and print both counts per firm, as-written and after normalisation, so the two causes stay distinguishable. No join changed; the canonical spelling is the CTO's L10 read together with W1-S7. Residual carried: 17 of 5,873 49F ids (0.3 percent) unresolved after normalisation, unexplained.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (this row IS the disarm act; the canonical-spelling decision is L10's)",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W2-S11, IRPT_BCKEND-W1-S7 (this HEAD)",
-        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_s_4.result.md (this HEAD) -- arm (i): 5,856 of 5,873 / 0 of 790 / 0 of 946 after normalisation; the positive control that refused 0 of 3",
-        "the four faces (this commit) -- one line inside the S9 amendment block; every <status> still staged"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "PRD B1/B12 (v0.4): one opaque id space per firm minted by directory_runner.opaque_id; IB-s-12 L5 note: HoldingsSnapshot objects schema-valid against the contract.",
-    "world_is": "Two artifacts of the same project spell one account id two ways (prefix vs bare), and a third firm-dependent difference sits beneath. The wrong conclusion is the cheaper one in both directions; the faces now force both counts to be printed.",
-    "notes": "Third id-space finding this round after W2-S9 (registry vs opaque firm id) and W1-S7 (raw key per firm); the round-2 recut should carry ONE id-space table for the project, an L5 deliverable of this seat."
-  },
-  {
-    "id": "IRPT_BCKEND-S16",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T04:59:17Z",
-    "one_line": "L4 HAND-OFF RELEASED at PRD v0.13 @e6ba5d9878 with both L4-R sign-offs (1.0.0_SA_CTO 95827; the notifier's COO row went to the base inbox that has no session, so the lane message is the delivery). Round 1 stays frozen on v0.4 for every rectangle. Diffed v0.13 against v0.10 by candidate row: only B10 and B14 changed (v0.11, CRO R2), and the change is an AVAILABLE INPUT, not a new obligation -- the three synthetic vendor PDFs (Overview 23 pp / Comparison 31 pp / Multi-Comp 35 pp on synthetic portfolio 2332257) are RETAINED, KMS-encrypted, at s3://opal-data-ycharts/research/20260911/variants/.../report.pdf with SHA-256s in the packet's pdf_validation.json (measured: the repo packet holds receipts only, no PDF bytes; cleanup.json lists the PDFs among the retained artifacts). Folded into the two un-handed faces IB-s-10 and IB-s-14 in the FE-s-2 / FE-s-5 shape: the PDFs as input specimens beside the synthetic ones (hash-verified before use, labelled vendor_synthetic_holdings, an Opal S3 read and never a vendor call), one arm each (v0.11); every existing arm unchanged; real-client specimens remain the FWD-4/FWD-8 proof gap. v0.12/v0.13 (CRO R1, CVO C1) touch no candidate row this round still builds.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (folded same turn; the KMS/IAM readability of the research prefix under a worker serial is unmeasured until IB-s-10 runs and is bounded by the amendment's own refusal clause)",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T045421Z_1.0.0_SA_CTO_L4_HANDOFF_RELEASED__IRPT_BCKEND_PRD_v0..md (msg 95827)",
-        "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md @e6ba5d9878 rows B10, B14 -- the (v0.11, CRO R2) clauses; diff against @3624e60def by row in the issuer's scratch",
-        "docs/research/investor_reporting_ycharts_variants_20260911/{pdf_validation.json,cleanup.json,README.md} (HEAD) -- the three SHA-256s, the retained-artifacts list, the S3 prefix",
-        "the two faces (this commit) -- ISSUER AMENDMENT block + arm (v0.11); <status> still staged"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "IB-s-10 face (v0.4): 'No real YCharts PDF exists (row IRPT_BCKEND-S5)'; PRD v0.13 B10: 'AVAILABLE: the three SYNTHETIC vendor PDFs ... sufficient to BUILD and exercise the extractor'.",
-    "world_is": "Row S5's premise (no real vendor PDF) is no longer true for synthetic holdings; it remains true for client holdings. The faces now carry both facts and grade the extractor on both kinds of input.",
-    "notes": "The gate now admits a NEW IRPT_BCKEND order against v0.13; none is cut mid-round. The round-2 recut reads v0.13 whole."
-  },
-  {
-    "id": "IRPT_BCKEND-S17",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T05:14:36Z",
-    "one_line": "ISSUER RE-SEQUENCING at 05:1xZ on Andrew's question ('what's holding you up?'): the six remaining cells form ONE sequential chain through slot ~3 by the decomposition's edges (9 -> 10 -> 14 -> 16 -> 15 -> sb-3), so three slots idle while IB-s-9 runs. The edge IB-s-10 -> IB-s-14 exists for ONE arm, S14-AC1 (f) (the Analysis export renders IB-s-10's certified sections), and the IB-s-14 face ALREADY admits the fixture-sections path for it ('where IB-s-10's sections have landed on CLOUD; otherwise the fixture sections, and say which', arm (v0.11) at e34e09a88d), while its other six mechanical arms and its deploy depend on nothing un-merged (IB-s-13, IB-s-17 merged). IB-s-14 is therefore HANDED NOW to slot ~4 ahead of IB-s-10's merge: arm (f) and arm (v0.11) run on the fixture sections and SAY SO; the re-run on IB-s-10's real sections is IB-sb-3's replay (which already re-runs every deployed route) and is named there. The decomposition is not edited (frozen); the chain order is the issuer's L6 fan-out to re-derive, and this row is the record. The same reasoning does NOT free IB-s-16 (it consumes IB-s-9's job status shape and IB-s-14's receipts, both un-merged) or IB-s-15 (routes to Lambdas that do not exist yet).",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (the fixture-vs-real sections distinction is printed by the worker and re-graded at the drain; the real-sections run lands at IB-sb-3)",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md v0.1.1 s.5 (HEAD) -- edges IB-s-10 -> IB-s-14, IB-s-13 -> IB-s-14, IB-s-17 -> IB-s-14",
-        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-14.export-bundle-freeze-render-worker-receipt.md @e34e09a88d -- arm (f) and arm (v0.11) with the fixture-sections clause; <status> staged with the cross-slot wait on IB-s-10 named",
-        "ListAgents 05:1xZ -- one worker subagent running (slot ~3, IB-s-9, started ~1 h earlier); slots ~1, ~2, ~4 idle"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "IB-s-14 face <status>: 'becomes pending when the COO hands it over after IB-s-13 is terminal and merged AND IB-s-10 (slot ~3) is terminal and merged.' Spine v3 L6: fan-out derived from the decomposition's dependency chains.",
-    "world_is": "The wait on IB-s-10 guards one arm that the face already lets run on fixtures; holding the whole cell for it idles a slot for hours. Handed early with the substitution stated; the real-sections arm is the replay's.",
-    "notes": "Cost of being wrong: one arm re-run at IB-sb-3, which re-runs anyway. Cost of waiting: the export Lambda, its root, its ledger and six arms idle behind a sequential chain. Andrew's question was the trigger; the decision and its record are the issuer's."
   }
 ]
 ```
