@@ -178,3 +178,38 @@ does not route turns -- the symptom to watch on the first real launch. **No Code
 which serial to seat here is Andrew's or the COO's call.
 
 Bus ACK sent with the full measurement (the send's MessageId is in the consumer output file).
+
+---
+
+## AMENDMENT 3 -- 01:2x-02:0xZ: the closes, the profile alignment, and one fabric-health pattern for the standing view
+
+**archetype:** COORDINATE + SCRIBE
+
+- **NFRA_OPSEC202609 CLOSED** by `1.0.0_SA_CTO~Z` @85907c8985 on Andrew's two words ("Ok i want that thing
+  marked as closed" @da104cacab at the COO~Z terminal; "yes opsec202609 is done" at the CTO~Z terminal).
+  19 of 19 REALIZED, R6 admits. FWD-15/FWD-19 are recorded as closed by HIS ACCEPTANCE, not by observation,
+  in three places. Pushed: origin/SITEZ @02feeddc09 carries it (is-ancestor read YES).
+- **Codex launcher, profile alignment with the laptop closed** (bus exchange ffdd224b -> c7def525 ->
+  ddbd950b -> cdc3ec30 -> 41f99be2 -> d5193f30 -> 5083cc17): derivation line taken; plain-ASCII warning on
+  both launchers on both devices; both guard arms exercised on each device; profile FILE stays a device
+  fact. The BEL defect in this device's original `ajb` warning (backtick-a inside a double-quoted string)
+  was found by re-reading my own live line after the laptop declined to copy it. Record @3dd039a8b9.
+- **Three facts from `3.0.0_SA_CVO~Z` via `1.0.0_SA_CTO~Z` (msg 21127; the v3 send gate holds the CVO's
+  one send to the slug, so CVO->MSTR routes through the CTO):** (1) LD-0319 load-time parity 20 of 22
+  CHECK-PASS at @b9dff53130, both FAILs known -- a check-pass RATE, 0 of 22 content-reading; the CVO
+  replaced a drift instrument whose NON-RECURSIVE pathspec (202 files) under-covered a recursive
+  fingerprint (260), 58 files invisible incl. the live comp-rail hook; nothing overturned. (2) The LD-0318
+  SYSPARITY cron is DELIBERATELY NOT ARMED -- consistent with the launch word "ZERO crons at launch" and
+  1b-F's re-arm-from-an-ANDREW_DIRECT-record clause; not negligence. (3) **A 14-DAY DELIVERY HOLE at the
+  CVO BASE inbox** (`org/mcp/inbox/3.0.0_SA_CVO/`, not the ~Z lane): two `2.0.0_SA_COO~Z` messages from
+  2026-08-27 asking the CVO to certify, unread, no bounce, no staleness signal; no harm landed (the
+  certification was done correctly @afb1be5dba).
+
+**STANDING-VIEW NOTE for this seat (device/fabric infra manager):** (3) is the SECOND measured instance
+of CLAUDE.md's "a BASE serial with no base session is a silent hole" class (first: five messages at
+`0.7.0_AE_CloudOps`, 6-9 days). Both were found by the recipient's own later curiosity, never by the
+fabric. The rule binds by reading only; no mechanism refuses or flags a send to a base serial whose
+only live instances are lanes. NOT BUILT (monitor moratorium; an agent-made gate is invisible to
+Andrew). SURFACED as a candidate for the CTO's gate queue: `send_message` could return QUEUED-NO-LIVE-BASE
+(distinct from QUEUED) when the recipient is a base serial with zero live sessions and one or more live
+`~lane` instances, so the sender sees the hole at send time. Proposing is legal; implementing is not.
