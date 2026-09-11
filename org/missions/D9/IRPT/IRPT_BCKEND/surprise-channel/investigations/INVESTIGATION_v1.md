@@ -1273,6 +1273,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "CLAUDE.md Git section: AWS via the `.tools/aws` shim (+`aws.cmd`, both or neither); never bare MSYS_NO_PATHCONV=1 aws.",
     "world_is": "The two faces of the shim are not interchangeable by caller. From bash either works; from a Windows Python only the .cmd does, and the bash one fails with an error that points away from the cause.",
     "notes": "Recorded because it costs a cycle every time. Same family as the existing memory note that Python spawning an MSYS binary must go through .tools/msys_argv_guard.py -- this is the AWS-shim instance of it."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S10",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T06:59:26Z",
+    "one_line": "A REAL VENDOR PDF LOSES THE 'fi' LIGATURE TO A FONT-SUBSET GLYPH, AND THE GLYPH'S CODE IS NOT THE SAME IN TWO DOCUMENTS FROM THE SAME VENDOR RUN. Text extracted from the three retained vendor PDFs carries the literal string '(cid:45)' where 'fi' belongs -- '(cid:45)nancial instrument' -- on EVERY page of all three specimens (23 of 23 in overview, 31 of 31 in comparison, 35 of 35 in multicomp, one occurrence per page, measured). It lands in the footer disclaimer, which is DISCLOSURE TEXT this project serves, not a number. THE PART THAT MATTERS MOST: the overview and comparison PDFs encode that glyph as (cid:45) and the multicomp PDF encodes it as (cid:46) -- the same vendor, the same run, the same day, a different font subset. A cid code is a per-document subset index, so any repair that maps a cid number to a letter is a guess about ONE FILE that will be silently wrong on the next one. This cell therefore substitutes a visible marker '[?]' rather than healing the text, and REFUSES to certify any NUMBER whose text at the recorded coordinates carries a cid (verdict UNDECODED_GLYPH_AT_COORDINATES) -- a glyph that did not decode is not a digit. WHY IT IS RAISED RATHER THAN JUST HANDLED: the census-generated synthetic specimens CANNOT reproduce this, because they are written with a standard base-14 font and no subsetting. So every arm that runs only on synthetic specimens is blind to the entire class, and the S10-AC2 judgment record names it as the first thing a real PDF carries that the synthetic cannot. ARMED for any cell that serves extracted DISCLOSURE TEXT: the disclaimer is exactly the text a compliance reader would quote, and '(cid:45)nancial' reaching a client-facing artifact is a visible defect in the one section whose wording is legally load-bearing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~3 for THIS cell -- DISARMED SAME TURN: extract.py refuses any numeric token carrying a cid (parse_number -> UNDECODED_GLYPH_IN_TOKEN), certify.py refuses to certify a value whose text at the recorded coordinates carries one (UNDECODED_GLYPH_AT_COORDINATES), and disclosure text substitutes a VISIBLE '[?]' marker rather than a guessed letter. WHAT IS NOT MINE: whether served disclosure text is acceptable with a marker in it, or needs a font-aware extraction path (a ToUnicode CMap read, which pdfplumber exposes but this cell does not build), is a product decision for 1.0.0_SA_CTO at L10 with 3.0.0_SA_CVO grading the finding at L9. IB-s-14 (export bundle) and IB-s-15 serve text and inherit this.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured over all three retained vendor PDFs fetched from s3://opal-data-ycharts/research/20260911/variants/... and hash-verified against pdf_validation.json: overview 23 (cid:N) occurrences over 23 pages with 1 distinct code ['(cid:45)']; comparison 31 over 31 pages, 1 distinct code ['(cid:45)']; multicomp 35 over 35 pages, 1 distinct code ['(cid:46)']",
+        "The affected line on every page is the footer disclaimer: 'sell, as a solicitation of an offer to buy or sell, ... any security or other (cid:45)nancial instrument' -- the ligature 'fi' in 'financial'",
+        "THE DISCRIMINATOR: the same glyph is (cid:45) in two of the three documents and (cid:46) in the third, from one vendor run on one day -- so the code indexes a per-document font subset and is not a stable character mapping",
+        "infra/aws/lambda/investor-reporting/ycharts/extract/extract.py -- CID_RE, parse_number returning UNDECODED, _repair_text substituting '[?]' with the reasoning in its docstring; certify.py FAIL_GLYPH graded before the value comparison",
+        "The census-generated synthetic specimens produce ZERO cid occurrences (helv base-14, no subsetting), which is why no synthetic-only arm can see this class"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S10-AC1 (a)/(b) grade text extraction certified with units, dates and coordinates, and the PRD's acceptance clause requires extraction certified against the paired PDF; the decomposition's proof plan is a census-generated SYNTHETIC three-variant PDF.",
+    "world_is": "Real vendor PDFs subset their fonts and a failed glyph mapping arrives as the literal text '(cid:45)', once per page on 89 of 89 pages across the three specimens, with the code differing between documents of the same run. The synthetic specimens cannot reproduce it, so the class is invisible to every synthetic-only arm.",
+    "notes": "Surfaced only because the vendor PDFs became available mid-round (PRD v0.11 / channel row S16) and were read rather than assumed to resemble the synthetic ones. It is the concrete, measured answer to the S10-AC2 judgment question 'what could a real vendor PDF carry that the census-generated synthetic cannot' -- which was asked as a hypothetical and turns out to have a number."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S11",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T06:59:26Z",
+    "one_line": "THE AnalysisReport CONTRACT REQUIRES A DATE ON EVERY TYPED SECTION; THE DOCUMENTS DO NOT STATE ONE FOR EVERY SECTION. infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.schema.json makes `as_of_date` a REQUIRED property of every `sections[]` item and pattern-binds it to ^[0-9]{4}-[0-9]{2}-[0-9]{2}$. Measured against the real specimens: the vendor Comparison states no per-section date for 34 of 81 extracted rows and the Multi for 51 of 108; the field census itself records `n/a` for S27/S29/S30/S31/S32 and 'not stated on page (report date 2026-09-09)' for S18 Fundamentals, whose nineteen fields are all numeric. The face's own words are 'a date where the census says one exists', so the face and the contract disagree about the same rows. THERE ARE EXACTLY TWO WAYS TO CLOSE IT AND ONE OF THEM IS A FABRICATION: write the report-level date into as_of_date, which is indistinguishable to every downstream consumer from a date the section actually stated -- the section item is additionalProperties:false with no field in which a report-level fallback could be DECLARED as one -- or emit fewer rows and count what was held out. This cell takes the second: analysis_report_sections() emits only dated rows and undated_rows() reports the holdout with its reason and the field names, so a smaller array never reads as a smaller document. ARMED because the holdout is invisible to a consumer that reads only `sections`: a downstream reader sees 57 rows for the Comparison and has no way, from the contract alone, to learn that 34 more were extracted and certified and are being withheld for want of a field the contract does not have.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~3 for THIS cell's OUTPUT -- DISARMED SAME TURN by emitting only dated rows and reporting undated_rows() with its count, reason and field names, so nothing is dated that the document does not date and nothing is dropped silently. THE CONTRACT ITSELF is not mine: AnalysisReport.schema.json is in _contracts/ and not in this order's <paths>. Whether the section item gains a `date_claim` field (PAGE_STATED / REPORT_STATED / NOT_STATED, which would let an undated section be carried honestly), or as_of_date becomes optional, or the holdout stands, is 1.0.0_SA_CTO's at L10 on the CONTRACTS table, with 3.0.0_SA_CVO grading at L9. IB-s-14 and IB-sb-3 consume this array and inherit the holdout.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.schema.json -- sections.items.required = ['section_id','section_type','units','as_of_date','page'] with as_of_date pattern ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ and additionalProperties:false over exactly seven properties",
+        "Measured on the retained vendor specimens: overview date claims {PAGE_STATED: 61} (all dated); comparison {PAGE_STATED: 47, NOT_STATED: 34}; multicomp {PAGE_STATED: 45, CENSUS_STATED: 12, NOT_STATED: 51}",
+        "docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json -- data_as_of is 'n/a' for S27, S29, S30, S31, S32 and 'not stated on page (report date 2026-09-09)' for S18 Fundamentals, whose 19 fields carry numeric units (pct 8, ratio 4, count 3, usd_billions 1, years 1, score 1, price 1)",
+        "The face, verbatim: S10-AC1 (a) 'every number carries units, a date where the census says one exists, and a page + coordinates'",
+        "infra/aws/lambda/investor-reporting/ycharts/extract/extract.py -- analysis_report_sections() emits only rows carrying as_of_date; undated_rows() returns total/emitted/held_out with the reason and the field names; the battery prints 'UNDATED HELD OUT: N of M' per specimen"
+      ]
+    },
+    "spec_asserts": "The PRD CONTRACTS row for AnalysisReport requires 'typed sections with units/dates/source coordinates' and the schema makes as_of_date REQUIRED on every section item; the face requires a date only where the census states one.",
+    "world_is": "34 of 81 and 51 of 108 rows extracted from the real vendor specimens carry no date the document states about their own section, and six of the census's thirty-three sections state none either. The contract cannot represent an undated typed section and has no field in which a report-level fallback could be declared as a fallback.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "This is the 'a value must carry its claim' rule meeting a schema that has no slot for the claim. The cheap remedy is one optional enum field (date_claim) on the section item, which would let every extracted row be carried with its date's provenance stated instead of forcing a choice between fabricating and withholding -- but proposing is legal and implementing is not, and the contract is another cell's surface."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S12",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T06:59:26Z",
+    "one_line": "`_keys.s3_evidence_key` ACCEPTS A CLIENT DISPLAY NAME AND AN E-MAIL ADDRESS AS A PATH SEGMENT, CONTRADICTING ITS OWN DOCSTRING, AND IT IS THE FUNCTION THAT MINTS DURABLE S3 KEYS. Its docstring states: 'segments are the opaque path segments after the family prefix (ids, dated parts, a file name). Each is validated by shape, so a client name cannot become a path.' Measured under this serial: s3_evidence_key('49financial', 'generations', ['Whitfield Family', 'attempts', '0', 'sections', 'report.json']) RETURNS 'firms/49financial/generations/Whitfield Family/attempts/0/sections/report.json', and an e-mail address is accepted identically. Reading the body confirms why: the per-segment loop checks non-empty-string, absence of '/', not-lock-shaped and not-a-foreign-firm-token, and never calls _check_shaped or _check_param_value. `cache_key` in the SAME MODULE does call _check_param_value and REFUSES both values ('matches no admissible component shape'). So the module contains both the grammar and a writer that skips it, and the writer is the one whose output is durable. WHY THE HAZARD IS ASYMMETRIC: a cache key is ephemeral and internal; an S3 key is permanent and appears in server access logs, CloudTrail data events, S3 Inventory reports and every ListObjects response, so a client name that reaches one cannot be un-logged by deleting the object. This bears directly on the issuer amendment carried in this cell's own face (row W2-S10, channel row S9), which instructs cells to find refusals 'through the public cache_key' -- correct advice that happens to route around the function that does not check. NOT FIXED HERE: _keys is not in this order's <paths> and the issuer has already placed _keys on IB-s-17's round-2 surface. This cell shape-checks its own variable segment before calling s3_evidence_key and its battery MEASURES the gap rather than asserting it, so the guard is shown to be load-bearing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B to route and IB-s-17's assignee to repair -- `_keys` is NOT in this order's <paths> and the issuer has already placed the module's sanitised-exception item on IB-s-17's round-2 surface, so this belongs in the same place. NOT DISARMED ESTATE-WIDE by anything this cell did. What IS disarmed is this cell's own use: extract.sections_artifact_key() shape-checks its variable segment against a POSITIVE allowlist before calling s3_evidence_key, refuses with KEY_REFUSED naming the PARAMETER and never the value, and battery_ib_s_10.py MEASURES that _keys accepts both a display name and an e-mail (printing the key SHAPE with the value redacted) so the guard is shown to be load-bearing rather than decorative. 3.0.0_SA_CVO grades the finding at L9; 1.0.0_SA_CTO holds the cross-firm/PII surface at L10.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_keys/keys.py s3_evidence_key docstring, verbatim: 'Each is validated by shape, so a client name cannot become a path.'",
+        "Its body: the per-segment loop checks isinstance/non-empty, '/' absence, _LOCK_SUFFIXES/_LOCK_SEGMENTS and _refuse_firm_token -- and calls NEITHER _check_shaped NOR _check_param_value",
+        "Measured under OPAL_AGENT_SERIAL=0.9.0_WK_IRPT_BCKEND~3: s3_evidence_key('49financial','generations',['Whitfield Family','attempts','0','sections','report.json']) -> 'firms/49financial/generations/Whitfield Family/attempts/0/sections/report.json'; the same call with 'whitfield@example.com' also returns a key",
+        "THE CONTRAST, same module: cache_key('49financial', <64-hex>, 'r1','r1','r1','irpt_sections_read', params={'generation': 'Whitfield Family'}) raises KeyComponentRefused 'matches no admissible component shape (ISO date, 64-hex ...)'; the e-mail address is refused identically",
+        "battery_ib_s_10.py arm (amend) prints the probe with the value redacted out of the key shape, and arm (amend) FAILS if the gap ever stops being real -- so the guard cannot quietly become decorative"
+      ]
+    },
+    "spec_asserts": "The issuer amendment carried in this face (row W2-S10, channel row S9) rests on `_keys` refusing a client display name or an e-mail address as a key component, and s3_evidence_key's own docstring asserts it validates every segment by shape for exactly that reason.",
+    "world_is": "s3_evidence_key performs no shape validation on segments and returns a key containing a client display name or an e-mail address verbatim. The shape grammar exists in the same module and is applied by cache_key, whose output is ephemeral, but not by the writer whose output is a durable S3 key that appears in access logs, CloudTrail, Inventory and every ListObjects response.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Found because this cell needed exactly one firm-scoped key and probed the grammar before trusting it, rather than calling the function and reading its docstring. Worth noting for the amendment's own wording: 'found through the public cache_key' is correct guidance that routes a reader around the function that does not check, so following the amendment exactly would not have surfaced this."
   }
 ]
 ```
