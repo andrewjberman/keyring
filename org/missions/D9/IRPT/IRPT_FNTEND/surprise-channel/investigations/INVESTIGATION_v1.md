@@ -636,6 +636,30 @@
     "spec_asserts": "PRD v0.5 F5: the Analysis tab produces the browser request half of AnalysisRequest as the UI contract specifies, with the variant resolved by comparison count and job states from the Opal job record.",
     "world_is": "The Analysis tab on DEV is v0.4's: variant selector, request list, input review and correction, stage display, native sections, over the v0.4 AnalysisRequest shape; it does not compose the UI-contract request (snapshot_id, catalog keys, request_id idempotency, variant=auto). No cell in this round's decomposition owns that delta, and cutting one mid-round is forbidden. The L10 read names the delta so the CTO's round-N analysis can send it back as a recut, under L4-R sign-off at v0.5.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S8",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-11T03:39:28Z",
+    "one_line": "TO-FE-s-9's own FE-s-8-drain amendment (gate PerformanceDocument's period-in-context page on includeNarrative:true) is satisfied inside this order's grant, but it turns FE-s-4's existing POSITIVE-CONTROL test -- outside this order's <paths>, not editable here -- from pass to fail: that test's fixture never sets the new option, so it now expects a page the amended template correctly no longer emits by default.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "TO-FE-s-9 (narrative page wiring amendment): \"In PerformanceDocument.tsx, replace the slot placeholder with PeriodInContextPage rendered when the RenderBundle carries a NarrativePacket AND the export options carry includeNarrative: true ... default false\"; render/performance/PerformanceDocument.tsx is this order's own granted path and the Reuse bound names it as one of the files this amendment changes.",
+    "world_is": "portal/src/pages/InvestorReporting/__tests__/fe-s-4/analysis-no-narrative.test.ts (NOT in TO-FE-s-9's <paths>; owned by the terminal FE-s-4 cell) carries a POSITIVE CONTROL, 'POSITIVE CONTROL: the performance document DOES emit the page when a narrative is present' (lines 95-103), that spreads the FE-s-4 fixture bundle.performance.json (renderOptions has no includeNarrative field, per portal HEAD 5b959f63ca5e51214fe1e605b04b82b2bbf60ef4) and asserts hits===1 / '1 / 4' present unconditionally on packet presence -- the OLD PerformanceDocument behaviour this order's own amendment retires. Measured on this worker's branch after the required PerformanceDocument.tsx edit: bun test .../__tests__/fe-s-4/analysis-no-narrative.test.ts -- 3 pass, 1 fail; the failing assertion at line 100 reads 'expect(hits).toBe(1)' with 'Received: 0'. The other three tests in that file (RENDERED/SOURCE/OMITS) are unaffected since their bundles carry no narrativePacket at all or exercise AnalysisDocument, which never gates on this option.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/render/fixtures/bundle.performance.json @5b959f63 -- renderOptions: {pageSize, orientation, includeDisclosures, locale}, no includeNarrative key",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-4/analysis-no-narrative.test.ts:95-103 @5b959f63 -- 'POSITIVE CONTROL' test spreads performanceBundle() and narrativePacket(), asserts expect(hits).toBe(1) and includes('1 / 4')",
+        "measured on this worker's branch (wk-irpt_fntend-1-5-fe-s-9, portal repo, uncommitted PerformanceDocument.tsx edit for F9-AC10): bun test src/pages/InvestorReporting/__tests__/fe-s-4/analysis-no-narrative.test.ts -- 'Ran 4 tests across 1 file', '3 pass', '1 fail', failing line 100 'Expected: 1 / Received: 0'",
+        "portal/src/pages/InvestorReporting/render/performance/PerformanceDocument.tsx (this order's granted path) now reads 'const showNarrative = packet !== null && bundle.renderOptions.includeNarrative === true' per the amendment; the FE-s-4 fixture's absent field reads as undefined, so showNarrative is false there by construction, not by a bug in this edit"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No act taken on the FE-s-4 test file: it is outside TO-FE-s-9's <paths> and 'tabs/reporting/ and tabs/analysis/ are not edited' names the pattern this order follows generally (fix inside the grant, record outside it). The fix is mechanical for whoever holds that file: either the FE-s-4 fixture spread in the positive-control test gains 'renderOptions: { ...bundle.renderOptions, includeNarrative: true }', or the test's own expectation is amended to state the option explicitly. ARMED because a reader who reruns the full InvestorReporting suite after this drain sees a NEW red test and, without this row, has no way to tell an amendment-caused, spec-correct change in expected behaviour from a regression this worker introduced by mistake."
   }
 ]
 ```
