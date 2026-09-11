@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_POSN_ASTTAX~1</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D4 "Positioning" · **Macro:** POSN · **Fabric:** site-z · **PRD:** `../prd/POSN_ASTTAX_PRD.md` **v0.1** (FWD-5) ·
 **Decomp cell:** `AT1-s-1` (readable name: S1-a MAKE ONE PLACE THE ONE PLACE) · **Issuance:** round 1, ONE cell (the decomposition's chain puts S1-a alone).
