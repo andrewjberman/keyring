@@ -1709,6 +1709,100 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Issuer amendment @812bbec0e9: every handler this cell ships is wrapped by _authz.guard(); IB-s-3 S3-AC2: whether the wrapper can be bypassed by a handler that forgets to use it -- and how a reader would detect that.",
     "world_is": "The detector IB-s-3 shipped found what it was built to find: three handlers written before the route table existed were mapped to routes after the fact and never revisited. Measured, not repaired, at the last cell of the round.",
     "notes": "The drain is closed: every worktree removed, every branch merged, HEAD f8860a4a4b. The drain-end read to the CTO follows this commit; the slug is the CVO's."
+  },
+  {
+    "id": "IRPT_BCKEND-S25",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-11T12:31:26Z",
+    "one_line": "TO-IB-rt-5 grades on 'each of the 2 keys (2 of 2)', but the guard's bundle mechanism mints EXACTLY ONE S3 object -- the tar.gz at b['s3_key'] -- so a two-key denominator is not producible through the mandated mint path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/safe_deploy_core.py mint_bundle(): one `aws s3 cp <tmp> s3://{b['bucket']}/{b['s3_key']}` and one head-object on that same single key; no loop over members at the upload step",
+        ".tools/safe_deploy_core.py build_bundle_payload(): members are tar members INSIDE one gzip payload, not separate objects",
+        "the accrual_bridge precedent this order says to copy is likewise ONE key: portal/gold/mdpf/_code/mdpf-accrual-bridge.tar.gz",
+        "measured after the mint: list-objects-v2 on code/scripts/assets_gold/investor_reporting/ returns 1 object"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-5 DELIVERABLE: 'the two minted keys under s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/'; RT5-AC1(b): 'head-object on each of the 2 keys ... (2 of 2)'.",
+    "world_is": "One bundle object is minted. The cell reports the achievable and strictly stronger denominator instead: 1 of 1 KEY verified (ETag == local md5) carrying 2 of 2 MEMBER sha stamps, each equal to sha256sum of its repo file. Minting two loose twins WOULD satisfy the literal text and is refused here: the X-iii design freezes the loose leg for a bundle member (CTO 2026-08-06 no-S3-roster-twin ruling), so the literal reading and the ratified design are in direct conflict.",
+    "notes": "Not blocking: the cell completes and the evidence is stronger than the text asked for. What needs the issuer's pen is the acceptance TEXT, so a later reader does not grade this cell against a denominator the mechanism cannot emit."
+  },
+  {
+    "id": "IRPT_BCKEND-S26",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-11T12:31:26Z",
+    "one_line": "The decomposition's literal 'sha_metadata_key: script-sha256' for BOTH bundle members collides inside build_bundle_payload and silently drops one member's sha; implemented literally it produces a stamp that verifies one file while reading as though it covered both.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/safe_deploy_core.py build_bundle_payload(): `shas[spec['sha_metadata_key']] = hashlib.sha256(data).hexdigest()` inside `for member_name in sorted(b['members'])` -- last write wins",
+        "sorted member order is ['directory_runner.py', 'holdings_snapshot.py'], so directory_runner.py's sha is the one overwritten",
+        "mint_bundle() then builds --metadata from that same dict, so the dropped sha never reaches S3 and its absence is not an error",
+        "accrual_bridge, the shape this order says to copy, is per-member: script-sha256 + roster-authority-sha256"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IRPT_BCKEND_DECOMP.md v0.2 s.2 and the TO's L5 note: members directory_runner.py and holdings_snapshot.py with `sha_metadata_key: script-sha256`.",
+    "world_is": "As SHIPPED the collision does not exist: this cell declared distinct per-member keys (directory-runner-sha256, holdings-snapshot-sha256) and both stamps are verified on the served object. The ARMED hazard is the DECOMP TEXT, which still reads as a one-key instruction and would reintroduce the collision for any seat that re-derives the declaration from it -- including a future re-mint or a second bundle in this tree.",
+    "notes": "Deviation from the face's literal text is deliberate and is named in the declaring commit. The face itself is not edited (spec FROZEN mid-round).",
+    "disarm_owner": "2.0.0_SA_COO~B (owns the decomposition text); 1.0.0_SA_CTO gates .tools"
+  },
+  {
+    "id": "IRPT_BCKEND-S27",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-11T12:31:26Z",
+    "one_line": "The guard's own self-test suites were ALREADY FAILING before this cell touched anything -- test_code_trees_invariant.py 3 of 18 and test_safe_deploy.py 7 of 14 -- so RT5-AC1(a)'s 'the guard's self-test and .tools/tests/ pass' is not achievable by any act inside this cell's bounds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "baseline (pre-edit) `python .tools/test_code_trees_invariant.py` -> 'FAIL: 3/18 cases failed', rc=1; the three are the frozen PIPELINE_MAP comparison, which predates the advi tree added 2026-08-18",
+        "baseline (pre-edit) `python .tools/test_safe_deploy.py` -> 'FAIL: 7/14 cases failed', rc=1; four are INDEX_MISSING (fixtures built outside the workspace) and three are 'EXCEPTION: Strings must be encoded before hashing'",
+        "baseline .tools/tests/*.py run standalone: 47 PASS / 8 FAIL of 55; none of the 8 is a deploy test",
+        "pytest over .tools/tests/ collects ZERO: test_fabric_check_classify.py raises SystemExit at import and takes the whole directory with it (INTERNALERROR, 'no tests ran')"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RT5-AC1(a): 'the guard's self-test and .tools/tests/ pass (counts printed)'; BOUNDS: 'the self-test run is the control'.",
+    "world_is": "The suites fail at baseline for reasons this cell does not touch. The run is therefore used the way BOUNDS names it -- as a CONTROL: post-edit, test_code_trees_invariant.py output is BYTE-IDENTICAL to baseline and test_safe_deploy.py differs only by a tempdir nonce inside a pre-existing failure line. That identity is the discriminator that says a bundle addition moves neither PIPELINE_MAP nor VALID_LAYERS.",
+    "notes": "Repairing either suite is outside this cell's bounds (the guard's other trees are untouched; the runners are not this cell's to edit either). The invariant suite is the live net under every future CODE_TREES edit and it is currently red, which is why this is ARMED rather than noted.",
+    "disarm_owner": "1.0.0_SA_CTO (INFRA.TOOLS gate per safe_deploy_core.py's own header); 0.7.0_AE_CloudOps authored safe-deploy.sh"
+  },
+  {
+    "id": "IRPT_BCKEND-S28",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-11T12:31:26Z",
+    "one_line": "The task order instructs a DS lane to mint row ids of the form IRPT_BCKEND-D-S<k>, which the ratified investigation-item schema REFUSES: the id pattern admits only the Z-, W<n>- and C- infixes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/surprise_channel/schemas/investigation_item.schema.json id pattern: ^[A-Z0-9_]+-(Z-)?(W[0-9]+-|C-)?S[0-9]+$ -- 'D-' matches no alternative and [A-Z0-9_]+ cannot absorb the hyphen",
+        "re-tested directly: pattern.match('IRPT_BCKEND-D-S1') is False; pattern.match('IRPT_BCKEND-S1') is True",
+        "all 71 ids already in this channel match the pattern (0 failures), so the pattern is enforced in practice, not merely declared",
+        "the schema names the seat form as the correct one for a seat: '{PROJECT}-S{n} = a seat's row on the laptop fabric'; the W<n> form is gate-bound to a committing 0.9.0_WK_ worker's suffix, which this serial is not"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-5 BOUNDS 8: 'id IRPT_BCKEND-W<your slot>-S<k> (a DS lane mints IRPT_BCKEND-D-S<k>)'.",
+    "world_is": "These rows use the valid seat form IRPT_BCKEND-S<k>, continuing the channel's shared seat sequence from its measured max at write time rather than from a read taken earlier in the session.",
+    "notes": "Fails LOUD rather than silently -- a D- id is refused by the row gate at commit -- so the cost is a round trip, not a bad record. Flagged because the instruction sits in a face template that other DS lanes will be handed."
   }
 ]
 ```
