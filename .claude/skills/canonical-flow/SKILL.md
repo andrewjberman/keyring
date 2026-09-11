@@ -151,7 +151,7 @@ Measure each of these; ABSENT is a value, not a guess. Print the table.
 | proof instances | `deliverables/<serial>/<TO>.proof_of_spec.json` at HEAD, each run through `.tools/proof-of-spec-check.py`; VALID at HEAD is the only terminal read -- a `<status>` field is the stalest carrier in its own document; a criterion the task order flags as judgment is graded only in the CVO's adjudication, never by the instance's own verdict |
 | worker branches | `git worktree list` + `git branch --list 'worktree-*'`; each unmerged branch is a worker that died mid-task-order |
 | **unfinished edits** | `git status --porcelain -- org/missions/D*/<MACRO>/<CODE>/` AND every path the project's open task orders name in `<paths>` (or cite in their bodies), plus `git stash list`; a modified, staged or untracked file under those paths with no commit is a dead seat's unfinished work -- the outage residue. Print the file list with its denominator; never `git checkout --` or `git clean` anything here |
-| **live production (THE PROBE)** | ⛔ **THE READ ABOVE IS BLIND TO THE ONE THING THAT DISTINGUISHES STALLED FROM WORKING.** `git status` runs in THE RUNNING TREE, so another seat's in-flight output -- in ITS worktree, or untracked under `deliverables/<its serial>/` -- is INVISIBLE to it. So probe the plane the owner's output actually lands on, before assigning any class: `git worktree list` then `git status --porcelain` in EACH other seat's worktree, plus mtimes under `deliverables/<serial>/` for the owner of the next limb. **Print the newest mtime and its age.** Output written in the last few minutes is the discriminator; absence of it is what earns a stalled reading. **NEVER touch what this finds** -- it is another seat's live work, not residue |
+| **live production (THE PROBE)** | ⛔ **THE `git status` READ ABOVE RUNS IN THE RUNNING TREE AND CANNOT SEE A PEER'S IN-FLIGHT WORK.** So before assigning ANY class, probe every plane a seat's output can land on. ⛔ **ENUMERATE THEM BY SUBTRACTION FROM "every plane this seat's output can land on", NEVER BY RECALL** -- the first cut of this rung listed two planes from memory and missed two: **(1) COMMITS** -- `git log --author "<serial> <" --since="60 minutes ago"` (the CHEAPEST and most reliable, and the one the first cut forgot: a seat committing every ten minutes is unambiguously working); **(2) the SHARED tree** -- `git status --porcelain -- .../deliverables/<serial>/` plus mtimes there; **(3) its OWN git worktree** -- `git worktree list`, then `git status --porcelain` in it; **(4) its CODEX RUNTIME DIR** -- `.runtime/codex-seats/<serial>/` mtimes. ⚠ **(4) IS NOT OPTIONAL: A CODEX SEAT HAS NO GIT WORKTREE AT ALL** (measured 2026-09-11 -- `3.0.0_SA_CVO~Z`, the seat whose misclassification founded this rung, returns ZERO from `git worktree list`), so a probe that checks only (3) is structurally blind to an entire seat class. **Print the newest artifact and its AGE across all four.** **NEVER touch what this finds** -- it is another seat's live work, not residue |
 | surprise channel | `comp-surprise --project <CODE>` (both roots); the latest row citing each item decides its state; the CVO's heartbeat watermark (rows seen / undispositioned / watch pid) against the channel's row count |
 | the slug and the CTO's answer | `surprise-channel/remediations/REMEDIATION_v<N>.md` (present = the slug is cut); `ledger/ROUND_ANALYSIS.round<N>.md` or a bumped `prd_version` (present = the CTO has answered it) |
 | step logs / compilation | tree `ledger/STEP_LOG.*`; the compiled log's share of acts outside the limbs is the round's own instrument |
@@ -222,6 +222,16 @@ escalation, then a kill, and `2.0.0_SA_COO~ZZZ` had already fired that ladder to
 worktree probe overturned it. A kill on that reading would have destroyed 189 KB of uncommitted work.
 ⭐ **THE TWO HALVES ARE ONE CHANGE:** without the probe the value is unfalsifiable; without the value
 the probe has nowhere to report. Neither lands alone.
+⛔ **AND "NOTHING MOVING" IS NOT PROOF OF STALLED** (`4.0.0_SA_CRO~Z`). Absence of evidence ABOUT A
+PEER is not evidence of absence: the peer may be thinking, blocked on a tool, or writing somewhere
+none of the four planes reach. A silent probe LOWERS confidence in IN-PROGRESS; it does not raise
+confidence in STALLED to the point where a destructive act is safe. ⭐ **WHICH IS WHY THE REAL GUARD
+BELONGS AT THE ACT, NOT AT THE LABEL** -- `4.0.0_SA_CRO~Z` measured that `/mstr-kill` has NO pre-kill
+probe at all (2 mentions of in-flight work across 252 lines, BOTH AFTER the kill), and that
+`/canonical-flow` is only one of several instruments that classify a peer while reading the DELIVERY
+plane. Ten labels and four instruments can each be wrong; the kill is the one irreversible act.
+Gating it is `0.0.0_AB_MSTR~Z`'s surface and is endorsed here, not implemented here.
+
 ⚠ **ITS SCOPE IS A DECISION, NOT AN OVERSIGHT** (raised by `2.0.0_SA_COO~ZZZ` after exercising it):
 the probe reads the output of **the owner of the NEXT LIMB**, which is narrower than its raw power --
 it would NOT catch a seat producing at a moment when the next limb is measured as someone else's.
