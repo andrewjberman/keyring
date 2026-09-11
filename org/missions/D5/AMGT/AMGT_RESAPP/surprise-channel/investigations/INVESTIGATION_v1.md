@@ -400,6 +400,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "This cell's <paths> grant: `lib/research/provenance/` is a write surface this worker may create files under, with no stated caveat about gitignore interaction.",
     "world_is": "The path IS writable and IS committable (safe-commit.sh's `git add -f` handles it transparently), so this cell's own work was never blocked -- but a bare `git add`/`git status` on a brand-new `lib/research/<new-module>/` directory reports it as absent/untracked-and-ignored, which reads exactly like 'nothing here' to any tool or worker that does not know to force-add. Not a defect in THIS cell's outcome (verified via `git ls-files` after commit, below), but a live trap for the next worker who creates a NEW subpackage under `lib/research/` and checks its own work with a bare `git add`/`git status` instead of `safe-commit.sh`.",
     "notes": "Not this worker's <paths>/BOUNDS to fix -- editing the root .gitignore is outside this cell's write surface (lib/research/provenance/, deliverables/, the investigation file, and this cell's own task-order file only). Flagged for whichever seat owns .gitignore maintenance: either add `!lib/research/` alongside the existing `data/.../lib/` exceptions, or accept the current state as intentional (this repo's `lib/` boilerplate rule predates `lib/research/` as a source tree) and rely on safe-commit.sh's force-add, which already works."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W3-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~3",
+    "surfaced_at": "2026-09-11T00:19Z",
+    "one_line": "AMGT-s-4's cell text names which securities the reader should key items by only implicitly (via AMGT-s-12's identity layer); this worker reused AMGT-s-b4's own run_manifest.json ticker selection (BABA_US, BA_US, COST_US) rather than deriving an independent set.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT-s-4 cell text (a): 'read(security_key, sources) -> coverage_items.json' -- takes a security_key as a parameter but the order does not name which security_key(s) to run the reader over for AC2's 'at least 1 security'",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~9/run_manifest.json's own selection_rule: 'the first three entries whose bloomberg_ticker.status == MEASURED, whose bloomberg_ticker.value ends with \" US\", and whose value is not \"AAPL US\"' -- read directly and reused verbatim (BABA_US, BA_US, COST_US) by lib/research/coverage/run_reader.py",
+        "python -m lib.research.coverage.run_reader -> 'COVERAGE RUN: 3 securities; 4 items attached; sa_raw_keys_found 0; identity_dropped {BABA_US: 1, BA_US: 1, COST_US: 1}'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-s-4 (a): the reader is a function of security_key and sources; the order does not name which securities AC2's run must cover.",
+    "world_is": "This worker reused a SIBLING cell's (AMGT-s-b4) selection artifact instead of deriving one independently from universe.json -- a reasonable, grounded, non-arbitrary choice (identity-resolved, non-placeholder, consistent with the store keys AMGT-s-b4 would land SA raw JSON under) but a choice this order left open, not one it named. Non-blocking: AC2/AC3/AC7 all close cleanly on this selection; a different, equally valid selection would also have closed them.",
+    "notes": "Recorded for the CVO/next reader: if AMGT-s-b4's run_manifest.json selection ever changes (a re-run with different tickers), this cell's run_reader.py silently follows it (it is read live, not pinned) -- worth a read before assuming these three names are stable across rounds."
   }
 ]
 ```
