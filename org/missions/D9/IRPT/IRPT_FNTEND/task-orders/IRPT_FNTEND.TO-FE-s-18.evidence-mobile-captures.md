@@ -23,6 +23,8 @@
 - **Paired views from ONE frozen report.** `fixtures/smoke/fe-s-18-frozen.json` serves one performance report at one revision to the Reporting tab (screen), the export modal's preview and the print route; the three maps carry the same `performance-report` body (the test hashes it).
 - **The four NOT_EVALUATED surfaces on the mounted views:** Analysis clean and needs-correction (FE-s-15's fixtures), Holdings observed / target / missing-attribution (three fixtures built from FE-s-13's wire holdings fixture: the observed custody basis, a target-blend basis, a node with attribution unavailable), print narrative-on and pre-history (FE-s-16's fixtures).
 - **Global at 1440** with two firms (FE-s-14's fixture).
+**Lato Bold (AMENDED BY THE ISSUER on 1.0.0_SA_CTO 95967, Andrew's word 13:4xZ "Yes fetch lato").** The 700 weight is now on this box: `/c/Users/AndrewBerman/Desktop/ajb_workspace/.runtime/codex-seats/4.0.0_SA_CRO/performance-export-recon/fonts/Lato-Bold.ttf`, 656544 bytes, sha256 `8a0aace75d33794eece4b28187bfc1df0bbd2888b5d8a56e01788c8d65d16be1` (fetched once by the CTO from the font's OFL upstream; no other fetch is authorized). Before the captures: copy it byte for byte into `render/assets/fonts/`; add its entry to `fonts.manifest.json` (weight 700, style normal, licence OFL-1.1) and set `stand_ins` to an empty object and `not_packaged` to `["italic"]`; point `print.css`'s 700 face at `Lato-Bold.ttf` and remove the stand-in comment; mirror the change in `render/manifest.ts`'s `fontPackage` (FE-s-17 put the full mirror there because `RENDER_PACKAGE.fonts` is a flat string array consumed by fe-s-4's manifest test; add the fourth file name to `fonts` too, and if fe-s-4's test asserts the array length, a surprise row names it and you leave the length as the test needs). FE-s-17's `__tests__/fe-s-17/fonts.test.ts` is updated for four files and no stand-in. This is the one non-layout edit this order carries, and it is the ONLY edit under `render/assets/fonts/`, `render/print.css` and `render/manifest.ts`.
+
 - The census and the colour-law scan re-run on the round-2 tree (`bun run census.ts` from `deliverables/0.9.0_WK_IRPT_FNTEND~1/`, the FE-s-11 script; its outputs overwrite `component-census.json` / `.md`).
 
 ### ACCEPTANCE
@@ -81,11 +83,17 @@
 <criterion id="F18-AC18" cell_refs="FE-s-18" judgment="true"/>
 `F18-AC18` -- graded at L9 from the manifest's PNGs: nothing clips or overlaps at 390; screen, preview and print of the frozen report agree figure for figure; the screens and the export read as one Opal product. RECORD; NO VERDICT.
 
-<expected_criteria>F18-AC1, F18-AC2, F18-AC3, F18-AC4, F18-AC5, F18-AC6, F18-AC7, F18-AC8, F18-AC9, F18-AC10, F18-AC11, F18-AC12, F18-AC13, F18-AC14, F18-AC15, F18-AC16, F18-AC17, F18-AC18</expected_criteria>
+<criterion id="F18-AC19" cell_refs="FE-s-18"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-17/fonts.test.ts</invocation><expect>FONTS: 4 of 4</expect></criterion>
+`F18-AC19` (AMENDED, added) -- the four Lato files under `render/assets/fonts/` hash to the manifest (Regular, Light, SemiBold, Bold); the Bold entry's sha256 is `8a0aace75d33794eece4b28187bfc1df0bbd2888b5d8a56e01788c8d65d16be1`.
+
+<criterion id="F18-AC20" cell_refs="FE-s-18"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-17/fonts.test.ts</invocation><expect>STAND-INS: 0</expect></criterion>
+`F18-AC20` (AMENDED, added) -- the manifest and `render/manifest.ts` declare no stand-in; `not_packaged` is exactly `["italic"]`; `print.css`'s 700 face names `Lato-Bold.ttf`.
+
+<expected_criteria>F18-AC1, F18-AC2, F18-AC3, F18-AC4, F18-AC5, F18-AC6, F18-AC7, F18-AC8, F18-AC9, F18-AC10, F18-AC11, F18-AC12, F18-AC13, F18-AC14, F18-AC15, F18-AC16, F18-AC17, F18-AC18, F18-AC19, F18-AC20</expected_criteria>
 
 ## BOUNDS
 
-- **Grant.** Your write surface is the `<paths>` block below, plus `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/<your serial>/` and this order's own file. Under `tabs/`, `header/`, `export/`, `global/`, `render/`: LAYOUT ONLY (class attributes, wrappers, order of siblings); a change to any prop, state, data read, adapter call or text is a surprise row on the owning cell, never an edit here. A path you need that is not named is a BLOCKING row on that criterion; never an override.
+- **Grant.** Your write surface is the `<paths>` block below, plus `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/<your serial>/` and this order's own file. Under `tabs/`, `header/`, `export/`, `global/`, `render/`: LAYOUT ONLY (class attributes, wrappers, order of siblings), with ONE exception the amendment names -- the Lato Bold packaging under `render/assets/fonts/`, `render/print.css`, `render/manifest.ts` and `__tests__/fe-s-17/`; any other change to a prop, state, data read, adapter call or text is a surprise row on the owning cell, never an edit here. A path you need that is not named is a BLOCKING row on that criterion; never an override.
 - **Two repos, one worktree pair.** `<WS>` / `<WS>/portal` as in your identity line. Portal commit pathspec: the files you changed under `src/pages/InvestorReporting/` (name each) plus `src/pages/InvestorReporting/fixtures/smoke/ src/pages/InvestorReporting/__tests__/fe-s-18/`. Workspace records under org/ only. Never push, merge, rebase, `checkout --` or `clean`. Never stage `portal` in the workspace repo.
 - **Dev server.** `node_modules` is a junction; do not run `bun install`. Start once in the background from `<WS>/portal`: `/c/Users/AndrewBerman/.bun/bin/bun run dev --port <PORT>`; use the port it prints; kill it before your final report. Routes without a leading slash; quote a route carrying `?`.
 - **Fixture maps name the whole page's needs.** Files you add: `fe-s-18-frozen.json`, `fe-s-18-holdings-observed.json`, `fe-s-18-holdings-target.json`, `fe-s-18-holdings-missing-attribution.json` (and `fe-s-16-print-prehistory.json` only if absent).
@@ -102,6 +110,7 @@ portal/src/pages/InvestorReporting/global/
 portal/src/pages/InvestorReporting/render/
 portal/src/pages/InvestorReporting/fixtures/smoke/
 portal/src/pages/InvestorReporting/__tests__/fe-s-18/
+portal/src/pages/InvestorReporting/__tests__/fe-s-17/
 org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md
 </paths>
 
@@ -111,10 +120,10 @@ org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `F18-AC1` .. `F18-AC18`. Instance at
+Criterion ids: `F18-AC1` .. `F18-AC20`. Instance at
 `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-18.evidence-mobile-captures.proof_of_spec.json`
 (phase `INVESTIGATION`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
-`python .tools/proof-of-spec-check.py <instance> F18-AC1,F18-AC2,F18-AC3,F18-AC4,F18-AC5,F18-AC6,F18-AC7,F18-AC8,F18-AC9,F18-AC10,F18-AC11,F18-AC12,F18-AC13,F18-AC14,F18-AC15,F18-AC16,F18-AC17,F18-AC18` BEFORE the `complete` flip. `F18-AC18` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `evidence-mobile-captures.result.md` beside it, listing every layout edit by file and line. Flip only when every mechanical criterion PASSES by output.
+`python .tools/proof-of-spec-check.py <instance> F18-AC1,F18-AC2,F18-AC3,F18-AC4,F18-AC5,F18-AC6,F18-AC7,F18-AC8,F18-AC9,F18-AC10,F18-AC11,F18-AC12,F18-AC13,F18-AC14,F18-AC15,F18-AC16,F18-AC17,F18-AC18,F18-AC19,F18-AC20` BEFORE the `complete` flip. `F18-AC18` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `evidence-mobile-captures.result.md` beside it, listing every layout edit by file and line. Flip only when every mechanical criterion PASSES by output.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape. You cannot send or receive messages; anything you would ask is a surprise row.
