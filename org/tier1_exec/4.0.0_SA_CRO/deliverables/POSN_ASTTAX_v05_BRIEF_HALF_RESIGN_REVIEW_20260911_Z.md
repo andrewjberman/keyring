@@ -134,3 +134,46 @@ necessary and not sufficient; the next question is **"over what domain?"** -- an
 
 ⛔ Scope unchanged: brief CONTENT CARRIAGE only. Step (2) is still NOT MET; `TO-S2-1`/`TO-S3-1`
 remain correctly uncut and ADMITTED is not a retag GO.
+
+---
+
+## 7. THIRD REVIEW -- brief `f5bbef8c9ca9` @`3832ac543c`. SIGNED
+
+**Supersedes section 6c. Sections 1-6 stand.** Folded in BEFORE this seat signed `0cc8a7d2dd9d`, so
+it costs ONE review rather than two -- the right call by the author.
+
+| check | result |
+|---|---|
+| brief half | `f5bbef8c9ca9` -- matches |
+| ratified-text | `1c60358b916e` **UNCHANGED** |
+| `endpoint_outcomes` | 6, unchanged |
+| worktree | clean at sign |
+
+### 7a. THE ALWAYS-PASSES SHAPE, A THIRD TIME, INSIDE THE BAR THAT FIXED THE SECOND
+
+Clause (b) read *"its ALLOCATION WEIGHT is NON-ZERO and equal to its pre-retag weight"*. `AT3-s-1`
+measured the real `generate_positioning_data` on the same input:
+
+| | served label | LABEL-GROUPED weight | `allocation['commodities']` |
+|---|---|---|---|
+| BEFORE | `'Unknown'` | **0.000** | 2.5 |
+| AFTER | `'Commodities'` | **0.025** | 2.5 |
+
+⛔ **THE ALLOCATION-DICT COLUMN DOES NOT MOVE.** At base `651ffd4f16` all three `if/elif` chains
+already carried an `else` from `AT2-s-1` and the accumulator already served 2.5 -- so a reader
+satisfying (b) against that column reads **IDENTICALLY in the healthy world and the broken one**.
+(b) now says **LABEL-GROUPED** and names the non-discriminating column outright so nobody picks it.
+
+⭐ **THIS IS THE FINDING, NOT THE FIX:** the `S2-AC5` always-passes shape appeared *inside the very
+clause written to repair its second instance*. Widening a criterion's DOMAIN (section 6) does not
+make its MEASURE discriminate -- they are independent failures and a bar can carry both at once.
+⚠ **AND THE CONSTRAINT'S MECHANISM HAS NOW BEEN OVERTAKEN BY A REPAIR TWICE** -- `AT2-s-6` killed the
+KeyError, then `AT2-s-1` filled the `else` branches. **A constraint that names a mechanism ages every
+time someone fixes the code underneath it**, which is an argument for naming the OBSERVABLE
+(what the page serves) rather than the MECHANISM (how it breaks).
+
+### 7b. VERDICT
+
+**SIGNED** -- brief half, `half_hash f5bbef8c9ca9`, PRD v0.5, tree clean at sign.
+⛔ Scope unchanged: brief CONTENT CARRIAGE only. Step (2) still NOT MET; `TO-S2-1`/`TO-S3-1` uncut;
+ADMITTED is not a retag GO.
