@@ -1516,6 +1516,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "S14-AC1 (g): 'ExportReceipt validates and its artifact_hash equals the stored object's; the object key is under the bound firm's exports prefix'. BOUNDS 7: 'No served output is touched ... except where THIS order's cell says it ADDS a resource' -- and the cell text names 'the protected artifact under firms/<id>/generations/<id>/attempts/<a>/exports/<revision>/report.pdf'.",
     "world_is": "Proving the receipt against a STORED object means storing one, and the only admissible prefixes are real firms'. The write is labelled twice (an unmistakable generation id and object metadata) rather than hidden, so a later reader can tell it from client evidence without reading this row.",
     "notes": "No client data is in any of the four: the performance/analysis content is the cell's own fixture sections, and the three vendor-input exports are rendered from the CRO's synthetic portfolio 2332257 (SPY/AGG), which the PRD already calls real vendor output on synthetic holdings."
+  },
+  {
+    "id": "IRPT_BCKEND-S20",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T07:35:25Z",
+    "one_line": "ROUTING of IRPT_BCKEND-W3-S12 (ARMED; disarm_owner '2.0.0_SA_COO~B to route and IB-s-17's assignee to repair') at the IB-s-10 drain: `_keys.s3_evidence_key` lets a client display name or an e-mail address into a durable S3 key while its docstring claims the opposite and `cache_key` in the same module refuses both -- the asymmetric hazard is that an S3 key is logged everywhere and cannot be un-logged. Routed as the issuer's SECOND round-2 item on IB-s-17's surface (with the sanitised exception of W2-S10), and disarmed forward on the two un-handed faces (IB-s-15, IB-sb-3): every S3 key built or replayed passes a shape check before the grammar, and the replay censuses observed keys for name- or e-mail-shaped components with a hit as FAIL. Also carried from this drain: W3-S10 (undecoded cid glyphs in the vendor PDFs: `fi` reads `(cid:45)` on 89 of 89 pages and the same glyph maps differently across documents from one run -- the extractor refuses such tokens; the CVO's judgment item) and W3-S11 (the AnalysisReport contract requires `as_of_date` on every section item while the vendor Comparison and Multi date 34 of 81 and 51 of 108 rows only -- undated rows are held out and counted; one optional `date_claim` enum on IB-s-18's contract is the round-2 proposal).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (routing done; the repair is IB-s-17's round-2 surface, the contract field IB-s-18's, the glyph map the CVO's L9 read)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W3-S10, W3-S11, W3-S12 (this HEAD)",
+        "infra/aws/lambda/investor-reporting/_keys/keys.py s3_evidence_key vs cache_key (this HEAD) -- the asymmetry the worker measured",
+        "the two faces IB-s-15, IB-sb-3 (this commit) -- one line inside the S9 amendment block; <status> still staged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-s-3 bounds: client names are never keys. _keys.s3_evidence_key docstring: 'Each is validated by shape, so a client name cannot become a path.'",
+    "world_is": "The cache key refuses a name; the S3 key accepts it. The docstring describes the cache key's behaviour on the S3 key's function. Forward-disarmed at the two consumers this round can still reach; repaired at the source in round 2.",
+    "notes": "Third _keys finding of the round (W2-S10 exception text, W2-S9/W2-S11 id spellings around it, now W3-S12); the round-2 recut owes IB-s-17 one consolidated order."
   }
 ]
 ```
