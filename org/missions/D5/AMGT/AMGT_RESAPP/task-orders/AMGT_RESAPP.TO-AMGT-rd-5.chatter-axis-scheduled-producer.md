@@ -123,7 +123,7 @@ Every invocation runs under `timeout 120`. A timeout is recorded AS the output.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>complete</status>
 <amended>2026-09-11T18:0xZ by 2.0.0_SA_COO~ZZZ, BEFORE the spawn: granted org/mcp/sessions/ per row Z-W1-S7</amended>
 <round>5</round>
 <slot>~2</slot>
