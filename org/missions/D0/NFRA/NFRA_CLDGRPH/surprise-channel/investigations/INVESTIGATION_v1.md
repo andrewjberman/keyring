@@ -8792,3 +8792,34 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-S129 -- the node-count gap inverts: the projection is correct and graph_nodes carries 23 exact duplicate rows from one producer
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-11T00:23Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S129",
+    "one_line": "THE NODE-COUNT GAP RUNS THE OPPOSITE WAY TO THE BELIEF: THE PROJECTION IS CORRECT AND THE WAREHOUSE CARRIES 23 DUPLICATE ROWS. Read at ONE shared vintage (2026-09-10T22:49:42.634203+00:00, both sides naming the same marker) the served projection reports 27,668 CloudNodes and Iceberg graph_nodes has 27,691 rows. The 23-row difference reads as 'the projection is missing nodes' and is not: graph_nodes holds 27,638 DISTINCT node_ids, of which 53 appear more than once -- 30 are the genuine CROSS-TYPE collisions (one id, two node_types) and 23 are EXACT duplicates, the same node_id AND the same node_type twice. The projection keys on (node_id, node_type), so it keeps both halves of every real collision and collapses the exact duplicates. Both arithmetic paths land on the served number with no remainder: 27,638 distinct + 30 cross-type extras = 27,668, and 27,691 rows - 23 exact duplicates = 27,668. The projection is not lossy here. The warehouse is dirty.",
+    "spec_asserts": "The working belief, stated to this seat at the Andrew terminal 2026-09-10 ~23:3xZ while scoping a direct-read design: 'the first issue is just making sure that we actually have every single node, which for whatever reason iceberg does but kuzudb does not'. That frames Iceberg as complete and the projection as lossy.",
+    "world_is": "Inverted. The 23 exact duplicates are byte-identical on every field read -- node_id, node_type, source, layer and snapshot_ts all equal between the two copies (example 'motif:a-access': both rows node_type=C2Motif, source=semctl-c2c3-materialize, layer=semctl, snapshot_ts=1789008638509). They are attributable to ONE writer: source='semctl-c2c3-materialize' for all 23, split 19 C2Motif and 4 C3System. Every other writer in the table (full-derive, semctl-c2c3-compose, ms, portal-stitch, incremental) contributes ZERO exact duplicates. So this is one producer emitting each of 23 nodes twice into a table whose identity is (node_id, node_type), not a table-wide dedup failure.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-kuzu 'MATCH (n:CloudNode) RETURN count(n)' -> 27668, banner vintage=2026-09-10T22:49:42.634203+00:00 manifest=910128c84959",
+        "pyiceberg StaticTable over the metadata_location in warehouse/_branch_head.main.json at the SAME vintage -> 27691 rows, 27638 distinct node_id, 53 duplicated ids, 30 cross-type, 23 same-type",
+        "27638 + 30 = 27668 and 27691 - 23 = 27668: two independent arithmetic paths to the served count, no remainder",
+        "the 23 exact duplicates grouped by (node_type, source): C2Motif/semctl-c2c3-materialize = 19, C3System/semctl-c2c3-materialize = 4; no other source contributes any"
+      ]
+    },
+    "notes": "WHY IT MATTERS NOW rather than as trivia: the direction of the error decides where the fix goes, and the belief pointed at the wrong component. Under the belief you would harden the projection loader. The measurement says the loader is already correct and the materialize producer is double-emitting. ARMED, and the reason is timing: a DIRECT-READ design over Iceberg is being actively scoped, and it is exactly a direct reader that inherits these rows. The served projection has always silently absorbed them, so nothing downstream has ever seen the defect -- which is also why it survived. Any count, join or traversal taken straight off graph_nodes over-counts those 23 and double-walks them. SAME FAMILY AS CG-s-41, one level up. That work established that identity in this table is (node_id, node_type) and fixed the WRITER that matched on node_id alone. This is the same identity rule broken on the EMIT side by a different producer. NOT ACTED ON: the semctl materialize producer is outside tonight's authorization and outside the four paths the handoff names. CHEAPEST NEXT STEP: dedup on (node_id, node_type) at the materialize emit, then re-run this arithmetic -- the check is two counts and it either lands on the served number or it does not."
+  }
+]
+```
