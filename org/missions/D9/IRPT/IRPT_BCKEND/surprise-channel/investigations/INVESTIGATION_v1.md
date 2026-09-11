@@ -1418,6 +1418,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "S14-AC1 (g): 'ExportReceipt validates and its artifact_hash equals the stored object's; the object key is under the bound firm's exports prefix'. BOUNDS 7: 'No served output is touched ... except where THIS order's cell says it ADDS a resource' -- and the cell text names 'the protected artifact under firms/<id>/generations/<id>/attempts/<a>/exports/<revision>/report.pdf'.",
     "world_is": "Proving the receipt against a STORED object means storing one, and the only admissible prefixes are real firms'. The write is labelled twice (an unmistakable generation id and object metadata) rather than hidden, so a later reader can tell it from client evidence without reading this row.",
     "notes": "No client data is in any of the four: the performance/analysis content is the cell's own fixture sections, and the three vendor-input exports are rendered from the CRO's synthetic portfolio 2332257 (SPY/AGG), which the PRD already calls real vendor output on synthetic holdings."
+  },
+  {
+    "id": "IRPT_BCKEND-S19",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T06:54:42Z",
+    "one_line": "DISARM-BY-CARRY of IRPT_BCKEND-W4-S9, W4-S10, W4-S12 and W4-S13 (all ARMED, disarm_owner 2.0.0_SA_COO~B) at the IB-s-14 drain. All four are product decisions outside every un-handed face's paths and outside this round: W4-S9 the deployed export worker cannot render (no headless browser in a python3.12 Lambda; egress refused) and says so explicitly -- the runtime choice (container image / browser layer / out-of-Lambda worker) is the CTO's L10 read and the first round-2 cell of FWD-8; W4-S10 the irpt-common layer carries 2 of 5 contracts and its rebuild is IB-s-13's surface (round 2, one line in build_layer.py plus a re-apply); W4-S12 a retry of a byte-identical bundle mints a new export_id because every PDF print engine stamps a date and /ID -- whether a retry reuses the receipt keyed on bundle_sha256 is the job-table owner's decision (IB-s-17's surface, round 2), and the stable identity of an export is the BUNDLE hash; W4-S13 four synthetic objects sit in the live evidence bucket under firms/49financial/generations/GENIBS14SYN/ with irpt-synthetic=true metadata -- an S3 delete needs a human's word and is not taken by this seat; carried to L10 with the keys so the CTO or Andrew can order the delete or relocation before any consumer reads that prefix as client evidence. Forward disarm: IB-s-15 and IB-sb-3 faces gain one line -- the export route is graded on the function's absence report, not on a render.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (this row IS the disarm act by carry; the four decisions are the CTO's L10 analysis, the S3 delete is Andrew's or the CTO's word)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W4-S9..S13 (this HEAD)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/battery_ib_s_14.result.md (this HEAD) -- the absence report, the content-hash vs raw-digest print, the four object keys",
+        "the two faces IB-s-15, IB-sb-3 (this commit) -- one line inside the S9 amendment block; <status> still staged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD B14 (v0.4): render worker executing the counterpart's RenderPackage; download reauthorized even when the artifact exists. IB-s-14 S14-AC1 (a): the rendered PDF's content hash equal between render and retry.",
+    "world_is": "The mechanism is proved locally and the deployed function honestly reports it cannot render; the round's evidence bucket carries four labelled synthetic exports. Nothing here is hidden; each item has a named owner past this seat.",
+    "notes": "FWD-8 cannot grade REALIZED on this round's evidence: the rendering runtime is the gap, stated as such for the slug."
   }
 ]
 ```
