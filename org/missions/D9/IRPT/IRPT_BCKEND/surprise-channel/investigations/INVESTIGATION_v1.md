@@ -2439,6 +2439,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "IB-s-14's (v0.11) arm: 'the three retained vendor PDFs are verified by digest and exported as Analysis bundles labelled vendor_synthetic_holdings' -- read as three exports of three inputs.",
     "world_is": "Three exports of three inputs produced ONE rendered document three times. The digest chain was intact end to end for each variant separately, which is exactly why the constancy was invisible: every per-object check passed.",
     "notes": "The general form, and the reason this is worth a row rather than a footnote: a per-member verification cannot see a property the members SHARE. Three arms each asserting 'this object's stored hash equals its receipt's' certify the set clean while the set is one document repeated. The discriminating check is a COMPARISON ACROSS members, and it costs one equality test."
+  },
+  {
+    "id": "IRPT_BCKEND-S34",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T15:17:40Z",
+    "one_line": "ROUND 2, THIRD DRAIN: IB-rt-3 (slot ~1) merged COMPLETE at 2a42c9563f through four conflicts -- the channel and PATH_MANIFEST as unions, infra/aws/lambda/layers/irpt-common/build_layer.py as the UNION of both cells' manifest keys (IB-rt-8's modules/data and IB-rt-3's id_normalizer plus its carried_forward_members hand-copy of the peer's members), BUILD_MANIFEST.json from IB-rt-3's side because its :5 build is the live layer version at the drain. Row W1-S12 (BLOCKING: two cells publishing one layer, aws_lambda_layer_version REPLACES) is disarmed by routing, not by a rebuild here: IB-rt-7 (handed at df84a8a952, slot ~1) removes the carried block and rebuilds from the declared lists as its first act, and IB-rt-4's arm (e) rebuilds from the same tree -- whichever publishes second builds the same members, and each prints the version it read and the version it published. W1-S11 (a fourth id-shape disagreement in _scope/resolve.py, bare 24-hex vs acc_ prefix, reached only for an id the directory does not hold) and W1-S13 (arm (b)'s floor unreachable by construction: the joined set of two producers built from different upstream tables) are INERT for the CVO at L9. SECOND ANDREW'S WORD OF THE ROUND: 14:5xZ 'Yes ycharts runner may be started' (1.0.0_SA_CTO 95983) resolves W4-S14 by option A -- IB-rt-8 arm (a) is UNLOCKED at ffa98ac525: start irpt-ycharts-runner for the render, ssm irpt-export-render-run, return to the Terraform-declared stopped state, the ycharts root's header and output description amended in the same act to say a start FOR A RENDER is not the gated sign-in; no vendor act; a SESSION_ABSENT refusal is the recorded negative and the arm then reads SESSION-GATED naming IB-rtb-1. The DS lane 0.4.0_DS_ClientPlatform~X, its only order drained and IDLE by its own report (95980), is RELEASED by /mstr-kill on the already-dead path (its claude process was gone, no marker window, broker NOT REGISTERED; deregistered; audit line appended).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (the issuer)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 2a42c9563f (drain wk-irpt_bckend-2-1), df84a8a952 (IB-rt-7 handed), ffa98ac525 (IB-rt-8 arm (a) unlocked)",
+        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T150157Z_1.0.0_SA_CTO_ANDREW_S_WORD_14_5xZ__Yes_ycharts_runner.md (95983)",
+        "org/mcp/agent-spawn-audit.log (KILL line, 2026-09-11T15:17:40Z)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Spine v3 L7: the drain carries both sides of a shared write surface and names the cell that reconciles it; CLAUDE.md Agent Autonomy: a live vendor call needs Andrew's per-use word, and the word arrived by name for a start that is not a sign-in.",
+    "world_is": "Round 2: IB-rt-1, IB-rt-3, IB-rt-5 COMPLETE; IB-rt-8 re-opened on two Andrew's-word arms (~4); IB-rt-4 at the merged tip (~3); IB-rt-2 (~2) and IB-rt-7 (~1) in flight; rt-6, rt-9, rt-10, rt-11, rtb-1 staged. Five worktrees to four; the DS seat released.",
+    "notes": "Seat rows continue at S35."
   }
 ]
 ```
