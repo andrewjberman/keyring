@@ -888,6 +888,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "CLAUDE.md Git section: AWS via the `.tools/aws` shim (+`aws.cmd`, both or neither); never bare MSYS_NO_PATHCONV=1 aws.",
     "world_is": "The two faces of the shim are not interchangeable by caller. From bash either works; from a Windows Python only the .cmd does, and the bash one fails with an error that points away from the cause.",
     "notes": "Recorded because it costs a cycle every time. Same family as the existing memory note that Python spawning an MSYS binary must go through .tools/msys_argv_guard.py -- this is the AWS-shim instance of it."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S5",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T03:23:21Z",
+    "one_line": "THE `routes.json` THE ISSUER AMENDMENT NAMES AS THE FALLBACK FOR THE GUARD CENSUS DOES NOT EXIST ANYWHERE IN THE CORPUS. The amendment's (amend) arm reads: 'Where this cell ships no handler, the same census runs over routes.json at the replay.' This cell ships no handler -- the issuer's own hand-off says so ('a PARSER and a correction state inside the intake package, not a route handler') -- so that fallback is the arm's whole content here. Measured: comp-find --name 'routes.json' over 32,481 files returns ONE hit, and it is this same worker's IB-s-8 fixture infra/aws/ec2/investor-reporting-ycharts/tests/fixtures/har_derived_routes.json, matched on a basename SUBSTRING and entirely unrelated -- a YCharts HAR route table, not an IRPT route registry. A second, content census for 'route_table|unguarded_routes|ROUTES' over the whole investor-reporting lambda tree finds the function's own definition, its own unit test, and performance/tenants.py's per-firm ROUTES dict (a vendor-host map, not a handler table). NO IRPT ROUTE REGISTRY EXISTS IN ANY FORM: the api root that would carry one (IB-s-15) is an unapplied skeleton. WHAT THIS CELL DID INSTEAD, stated so a grader can disagree with it: corrections.ROUTES is exported EMPTY, the census runs over it and reads 0 of 0 -- and because a 0-of-0 census reads identically whether the censor works or not, the battery pairs it with TWO controls on the same censor: an UNGUARDED handler wired to a route reads '1 of 1 unguarded' and the SAME handler wrapped by guard() reads '0 of 1'. The instrument is therefore shown to fire, and the empty table is shown to be an empty table rather than a broken reader.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~3 for THIS cell -- DISARMED SAME TURN by refusing the vacuous reading: the 0-of-0 census is PRINTED AS VACUOUS in the battery output and is paired with two controls that make the censor's behaviour measurable, and the route-reachability of this cell's nine public callables is censused at 0. THE FALLBACK ITSELF is the issuer's: 2.0.0_SA_COO~B wrote the (amend) arm and names the artifact, so whether `routes.json` is a planned artifact of IB-sb-3's replay, a different name, or a mistake is the issuer's to say, with 3.0.0_SA_CVO grading the arm at L9. ARMED because every LATER cell that ships no handler inherits the same unsatisfiable fallback and may quietly report a vacuous pass instead.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find --name 'routes.json' @5236a7603d -> 'DENOMINATOR: 1 hit(s) across 32481 file(s) scanned in scope [corpus=all]'; the single hit is infra/aws/ec2/investor-reporting-ycharts/tests/fixtures/har_derived_routes.json, a basename-substring match on this worker's own IB-s-8 YCharts fixture",
+        "comp-find 'route_table|unguarded_routes|ROUTES' infra/aws/lambda/investor-reporting @5236a7603d -> enforce.py:562 (the function), _authz/tests/test_enforce.py:264-266 (its unit test), performance/tenants.py:113-127 (a per-firm vendor-host map named ROUTES, not a handler table). No handler registry anywhere",
+        "infra/aws/terraform/investor-reporting/README.md @5236a7603d -- the `api` root (IB-s-15) that would own routes is listed among the nine and is an unapplied skeleton",
+        "IRPT_BCKEND.TO-IB-s-7 (amend) arm, verbatim: 'Where this cell ships no handler, the arm reads over routes.json at the replay.'",
+        "IB-s-7_S7-AC1_battery_output.txt arm (amend) -- 'unguarded_routes(corrections.ROUTES) -> 0 of 0 unguarded', printed together with 'CONTROL, an UNGUARDED handler wired to a route: 1 of 1 unguarded' and 'CONTROL, the SAME handler wrapped by guard(): 0 of 1 unguarded'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The issuer amendment's (amend) arm: where a cell ships no handler, the unguarded-route census runs over `routes.json` at the replay.",
+    "world_is": "No `routes.json` and no IRPT route registry of any kind exists in the corpus at 5236a7603d; the only basename match is an unrelated YCharts HAR fixture. The census was run over this cell's own (empty) exported route table, printed as vacuous, and paired with two controls on the censor itself.",
+    "notes": "The amendment is right about the HAZARD -- a handler reachable without the wrapper is a real defect and the census is the right instrument. What is missing is the OBJECT it censuses for a cell that ships no handler. A cheap repair that needs no new artifact: have such a cell run the two controls this battery runs, so the arm proves the censor rather than proving an empty set."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S6",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T03:23:21Z",
+    "one_line": "THE FACE ASKS FOR A `StatusEnvelope` VALUE THE CONTRACT DOES NOT DEFINE. The L5 note and the S7-AC1 (d) arm both name the correction state as the StatusEnvelope value `needs-correction` (lowercase, hyphenated). The shared contract infra/aws/lambda/investor-reporting/_contracts/StatusEnvelope.schema.json, generated at IB-s-18 from the PRD CONTRACTS table, defines `state` as a CLOSED enum of nine values -- QUEUED, RUNNING, READY, PARTIAL, STALE, UNAVAILABLE, NEEDS_CORRECTION, UNCERTAIN, FAILED -- and `needs-correction` is not among them. A producer that emitted the face's spelling would be rejected by the contract on BOTH sides, since the schema sets additionalProperties false and the enum is closed. This cell writes NEEDS_CORRECTION, the contract's spelling, because the contract is the artifact a consumer validates against and the face is prose about it; the difference is stated in corrections.py at the constant rather than resolved silently. INERT: nothing is broken and nothing is waiting -- the prose and the schema mean the same state. It is filed because the same lowercase spelling appears in the PRD row this cell was cut from, so the NEXT cell to produce a StatusEnvelope will read the same prose and may write the same invalid value, and because resolving a spec-versus-contract difference in one direction without saying so is exactly how the two carriers stop agreeing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_contracts/StatusEnvelope.schema.json @5236a7603d -- properties.state.enum = ['QUEUED','RUNNING','READY','PARTIAL','STALE','UNAVAILABLE','NEEDS_CORRECTION','UNCERTAIN','FAILED'], and the object sets additionalProperties false",
+        "IRPT_BCKEND.TO-IB-s-7, 'What L5 adds', verbatim: 'the correction state (needs-correction) on the AnalysisRequest revision with the StatusEnvelope value needs-correction'",
+        "IRPT_BCKEND.TO-IB-s-7 S7-AC1 arm (d), verbatim: 'Uncertain items enter needs-correction'",
+        "infra/aws/lambda/investor-reporting/intake/corrections.py @HEAD -- NEEDS_CORRECTION = 'NEEDS_CORRECTION' with the difference stated at the constant",
+        "intake/tests/test_parse.py::test_the_status_envelope_uses_the_contract_spelling asserts the emitted state is the CONTRACT's value"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order and the PRD row name the StatusEnvelope value `needs-correction`.",
+    "world_is": "The generated contract's `state` enum is closed and contains NEEDS_CORRECTION; `needs-correction` would be rejected by the schema on both sides. This cell emits the contract's spelling.",
+    "notes": "Filed rather than absorbed because the lowercase spelling is in the PRD row too, so the next cell to emit a StatusEnvelope reads the same prose. The two carriers mean the same state; only the literal differs."
   }
 ]
 ```
