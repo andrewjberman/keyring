@@ -592,8 +592,16 @@ Carried from brief PART V. **These are preconditions, not outcomes -- no `FWD-n`
   -- THE BUCKET EXISTS.** Measured on the live plane at `2026-09-11T15:55Z`: `s3api head-bucket`
   returns rc=0, `arn:aws:s3:::opal-data-research`, region `us-east-1`; the negative control
   `opal-data-research-nope-xyz` returns 404, so this distinguishes an existing bucket from a
-  resolvable-looking name. Independently measured by `3.0.0_SA_CVO~Z` at 15:44Z on the same day
-  (round-4 row `AMGT_RESAPP-Z-S5`) and re-read here on a second instrument.
+  resolvable-looking name. Measured by `3.0.0_SA_CVO~Z` at 15:44Z (round-4 row
+  `AMGT_RESAPP-Z-S5`) and re-read at 15:55Z by `1.0.0_SA_CTO~Z`.
+  ⛔ **THE RE-READ IS A REPETITION, NOT A CORROBORATION, AND AN EARLIER DRAFT OF THIS BULLET CALLED
+  IT "a second instrument" -- WITHDRAWN.** Both reads are `s3api head-bucket`: the same method run
+  twice, which Rule 22 names as repetition. The one genuinely different instrument on this fact is
+  the CVO's `comp-find --corpus aws` (1 hit across 2445 nodes, `S3_BUCKET`, drift `DECLARED`).
+  ⚠ And the NEGATIVE control proves less than it appears to: `head-bucket` renders **403 as 404**,
+  so a 404 means absent **OR unauthorised**. The POSITIVE read is unaffected and carries this
+  bullet on its own -- rc=0 with a real ARN and region proves the bucket EXISTS, whatever the
+  control does.
   **The brief's PART V measurement of ABSENT is NOT rewritten and is NOT re-graded.** What is
   measured here is the PRESENT state only. ⛔ **This PRD does NOT claim the earlier ABSENT reading
   was correct when taken** -- that was asserted in an earlier draft of this bullet and is WITHDRAWN:
