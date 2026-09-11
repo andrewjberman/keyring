@@ -3194,6 +3194,127 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Andrew-direct 17:1xZ (via 0.0.0_AB_MSTR 95994): workers finish, nothing new starts, log and commit; spine v3 L7: a worker's branch is drained by its issuer and a disagreement between two workers' instruments is resolved by the issuer without destroying either's work.",
     "world_is": "IRPT_BCKEND round 2 at 22f2238cd7: COMPLETE rt-1, rt-3, rt-4, rt-5, rt-7, rt-8 (6 of 12); OPEN rt-2 (guards 0 of 11 unguarded; arms (e),(g) unbuilt), rt-9 (arm (a) of six); pending-unhanded rt-10; staged rt-6, rt-11, rtb-1. No worker is live; no worktree remains; the successor cold-starts every remaining order.",
     "notes": "Seat rows continue at S38. The drain-end read to the CTO (CVO watermark vs channel rows, armed rows not seatable) is the successor's act at round end, not this seat's now: the round is not at its end."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S26",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T23:39Z",
+    "one_line": "The owed ids.py deploy cannot be taken: all THREE roots carry a committed, unapplied handler flip to entry.lambda_handler, and the entry module fails to import in the /var/task layout in 3 of 3 exercised extracts -- an apply that lands the packaging fix also lands a Runtime.ImportModuleError.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan (vendored terraform v1.9.8, after init) infra/aws/terraform/investor-reporting/ycharts @a296eac0f4 -> 'handler = \"job.lambda_handler\" -> \"entry.lambda_handler\"', 'Plan: 0 to add, 1 to change, 0 to destroy'",
+        "terraform plan infra/aws/terraform/investor-reporting/ops @a296eac0f4 -> 'handler = \"status.lambda_handler\" -> \"entry.lambda_handler\"', 'Plan: 0 to add, 1 to change, 0 to destroy'",
+        "terraform plan infra/aws/terraform/investor-reporting/export @a296eac0f4 -> 'handler = \"handler.lambda_handler\" -> \"entry.lambda_handler\"', 'Plan: 0 to add, 1 to change, 0 to destroy'",
+        "aws lambda get-function-configuration --query Handler, read live 2026-09-11T23:2xZ: irpt-export-render=handler.lambda_handler, irpt-status=status.lambda_handler, irpt-ycharts-generate=job.lambda_handler -- the flip is DESIRED-not-APPLIED in all three",
+        "EXERCISED, not asserted: zip extracted to a flat /var/task dir, imported in a FRESH python3.12 interpreter with the repo stripped from sys.path and a negative control proving an absent module raises -- 'IMPORT-FAIL entry: ModuleNotFoundError: No module named served' for irpt-status (9 of 10 CLOSED), irpt-ycharts-generate (9 of 10) and irpt-export-render with the live irpt-common:5 layer mounted at /opt/python (14 of 15)",
+        "static: entry.py top-level imports are served + loaders (both infra/aws/lambda/investor-reporting/_authz/); neither is declared in files[] for ANY of the three functions in infra/aws/lambda/ci/lambda-source-map.json @a296eac0f4, and entry.py itself is declared for 1 of 3 (irpt-status only, via the drain's UNION)",
+        "infra/aws/lambda/investor-reporting/ops/entry.py:34-43 -- the sys.path insert that makes entry.py importable IN THE REPO derives _authz from the file's PARENT DIRECTORY, which at /var/task is /var; the module is importable in the tree and not in the runtime, so no in-repo test can see this"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-9 issuer amendment A4 (2026-09-11 ~22:5xZ): 'YOUR FIRST LEDGERED ACT IS THE OWED DEPLOY (row IRPT_BCKEND-W3-S25), AND YOU ARE FIRST IN LINE FOR IT ... Sequencing is ruled: you deploy these three FIRST; slot ~2 is held off them until I confirm your deploy landed.'",
+    "world_is": "The two halves CANNOT be sequenced apart. terraform apply is per-ROOT, not per-attribute: any apply that carries the new zip also carries slot ~2's already-committed handler attribute. So deploying the ids.py fix first takes irpt-export-render, irpt-status and irpt-ycharts-generate DOWN at their next cold start, and the ORDER the amendment rules is the reverse of the order the tree permits -- slot ~2's entry.py packaging (entry.py + served.py + loaders.py in files[]) must land in the SAME artifact as any apply of these three roots. No deploy was taken.",
+    "notes": "Not fixed here: entry.py, served.py and loaders.py are cell IB-rt-2's, and widening another cell's declared build inputs mid-round is the neighbouring-defect fix this order forbids. The ids.py declaration fix at d3397434d5 stands in the tree and is correct; only its ACTIVATION is blocked. Nothing regressed: the three live functions still serve their older, working bytes, and the import closure of each LIVE zip was re-measured CLOSED under its own live handler (irpt-status 8 of 8, irpt-ycharts-generate 8 of 8, irpt-export-render 13 of 13 with the layer)."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S27",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T23:39Z",
+    "one_line": "irpt-export-render was never ARMED by the ids.py packaging gap: the irpt-common:5 layer already carries python/ids.py byte-identical to the tree's _ids/ids.py, so a rebuild without ids.py reads 13 of 13 CLOSED -- and adding it at /var/task is the second definition that this entry's own note refuses for keys.py.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda get-function-configuration --function-name irpt-export-render --query 'Layers[].Arn' -> arn:aws:lambda:us-east-1:313476888478:layer:irpt-common:5 (irpt-status and irpt-ycharts-generate: None)",
+        "layer irpt-common:5 downloaded and listed: python/ids.py 14173 bytes sha256 fc1017b2523f2340... == infra/aws/lambda/investor-reporting/_ids/ids.py 14173 bytes sha256 fc1017b2523f2340... @a296eac0f4 -- IDENTICAL",
+        "DIFFERENCE CONTROL in the /var/task + /opt/python layout, fresh interpreter: irpt-export-render rebuilt from the current tree WITHOUT ids.py, layer mounted -> 'import closure in the /var/task layout: 13 of 13 CLOSED'; the same zip WITHOUT the layer -> 'IMPORT-FAIL resolve: ModuleNotFoundError: No module named ids', 10 of 13. The armed reading in W3-S25 is the no-layer reading; the function has a layer.",
+        "lambda-source-map.json @a296eac0f4 functions['irpt-export-render'].note: 'keys.py is NOT added: the published irpt-common layer already carries it at python/keys.py, and a second copy at /var/task would shadow the layer's and put two definitions of the key grammar in one runtime.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row IRPT_BCKEND-W3-S25 and TO-IB-rt-9 amendment A4: the ids.py packaging gap arms irpt-export-render, irpt-status AND irpt-ycharts-generate equally, and the remedy for all three is to add ids.py to files[].",
+    "world_is": "The gap is real and armed for irpt-status and irpt-ycharts-generate (0 layers, exercised OPEN at 5 of 8 each on a rebuild). For irpt-export-render it is NOT: /opt/python/ids.py already resolves the import with the same bytes. Adding ids.py to its zip is therefore either a no-op or, the moment the layer and the tree diverge, a SHADOW -- exactly the failure mode the same entry's note cites as its reason for excluding keys.py. The declaration at d3397434d5 adds it anyway.",
+    "notes": "Not reverted here: the declaration is committed and the round is frozen; this row records the measurement so the issuer can rule on whether irpt-export-render's ids.py entry stands or comes out. Either way it is not what BLOCKS the deploy -- W3-S26 is."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S28",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T23:39Z",
+    "one_line": "The irpt-common:5 layer's python/keys.py is 21320 bytes and the tree's _keys/keys.py is 29894 -- irpt-export-render deliberately does not package keys.py, so the deployed function runs a key grammar 8574 bytes behind the one every other IRPT function ships flat.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "layer irpt-common:5 python/keys.py 21320 bytes sha256 426196b676fcb268...; infra/aws/lambda/investor-reporting/_keys/keys.py @a296eac0f4 29894 bytes sha256 56ee3cc22e802579... -- NOT equal",
+        "layer irpt-common:5 python/raw_keys.json 5990 bytes sha256 702de57727b9c58f... vs infra/aws/lambda/investor-reporting/_ids/raw_keys.json 6064 bytes sha256 82ac2b162ecdb800... -- also NOT equal",
+        "layer irpt-common:5 python/firm_registry.json 5094 bytes vs data/firm_registry.json 5229 bytes -- also NOT equal",
+        "the LIVE irpt-export-render zip imported in a flat /var/task with NO layer: 'IMPORT-FAIL download: No module named keys' and 'IMPORT-FAIL enforce: No module named keys', 11 of 13 CLOSED -- the dependency on the layer's copy is EXERCISED, not inferred",
+        "irpt-status and irpt-ycharts-generate both package keys.py FLAT from _keys/keys.py (29894 bytes, LIVE-MATCH against their S3 artifacts), so two definitions of the key grammar are live across the six IRPT functions today"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "lambda-source-map.json functions['irpt-export-render'].note: excluding keys.py from the zip avoids 'two definitions of the key grammar in one runtime' because 'the published irpt-common layer already carries it'.",
+    "world_is": "There are already two definitions, and the layer holds the OLDER one. The note's reasoning is sound and its premise -- that the layer's copy IS the tree's copy -- is false at a296eac0f4 for keys.py, raw_keys.json and firm_registry.json alike. A per-member census of the three functions' zips cannot see this: it is a defect in what they SHARE.",
+    "notes": "Out of this cell and not repaired here. Publishing irpt-common:6 is an IMAGE-class act reaching every function that attaches the layer, and the layer is not in this order's <paths>. Surfaced, not chased."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S29",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T23:39Z",
+    "one_line": "Arm (a) does not re-confirm at 4 of 4 in the new worktree: it reads 4 of 5, because battery_ib_rt_9.py became TRACKED when its own branch was drained, and the a1 census (git ls-files) now counts the battery itself as a reader of ycharts/session/current.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "timeout 900 python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/battery_ib_rt_9.py on wk-irpt_bckend-2-3b @a296eac0f4 -> 'FAIL a1 readers migrated or retired: 4 of 5' and 'UNACCOUNTED org/missions/.../battery_ib_rt_9.py -- the census found a reader the table does not hold'",
+        "the same battery's saved arm-(a) output at deliverables/0.9.0_WK_IRPT_BCKEND~3/IB-rt-9_RT9-AC1_arm_a_output.txt reads 'a1 readers migrated or retired: 4 of 4'",
+        "DENOMINATOR line of the new run: '33179 file(s) scanned (git ls-files, tracked) | 62 name the secret | 8 are CODE | 5 of those RESOLVE it | 3 only MENTION it' -- 5 resolvers where the saved run had 4",
+        "a2, a3 and a4 are unchanged and all PASS in the same run (0 legacy predicates, 14 of 14, END TO END 400 -> STALE)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-9 amendment A5: 'ARM (a) IS DONE AND MUST NOT BE RE-DONE ... Re-run the battery once to confirm the cutover still passes (~40 s), then leave arm (a) alone.'",
+    "world_is": "The cutover itself still passes -- the fifth 'reader' is the battery's own fixture code, which drives fakes and reaches no AWS. What changed is the census POPULATION, not the estate: an untracked file at the first run is a tracked file at this one. The arm is repaired inside this cell (the battery's own deliverable) by classifying the harness explicitly with its own printed count, not by widening the discriminator that already distinguishes a READER from a MENTION.",
+    "notes": "Bound 12 in reverse: a battery that CENSUSES the real population will eventually census ITSELF once its own file is committed, and it reports that as a defect in the estate. The tell is that the unaccounted path is under deliverables/."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S30",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T23:39Z",
+    "one_line": ".tools/terraform.exe was NOT provisioned in this worktree, contrary to the order's bound 4; resolved by copying the SAME binary by path from the primary workspace (v1.9.8), never a PATH substitute.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls -l /c/tmp/wk-irpt-2-3b/.tools/terraform.exe -> 'No such file or directory' at worker start",
+        "ls -l /c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/terraform.exe -> present, 91104424 bytes",
+        "after copy: /c/tmp/wk-irpt-2-3b/.tools/terraform.exe version -> 'Terraform v1.9.8 on windows_amd64'; git check-ignore -q .tools/terraform.exe -> rc 0 (gitignored, so nothing is committed by this)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-9 bounds, item 4: '.tools/terraform.exe is provisioned in your worktree by the issuer -- use it by that path, never a PATH substitute (a substitute re-pins remote state)'; amendment A3 repeats that the absence is a trap already paid for.",
+    "world_is": "The binary was absent in /c/tmp/wk-irpt-2-3b. A3 already names the absence as the expected condition, so the bound and the amendment disagree with each other about who provisions it. The remedy taken is the one A3 names -- resolve the binary BY PATH -- using the byte-identical estate binary rather than any terraform on PATH.",
+    "notes": "Each of the three investor-reporting roots was then `init`-ed with that binary before any plan, per A3."
   }
 ]
 ```
