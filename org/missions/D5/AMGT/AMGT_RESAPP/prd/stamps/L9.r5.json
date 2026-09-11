@@ -1,0 +1,10 @@
+{
+  "note": "ADJUDICATION_v5: 25 new original items dispositioned, 18 GRADUATED and 7 DISMISSED_WITH_REASON; 56 total originals, zero undispositioned at validation. Six round-5 AC4 judgments: five historical PASS and rd8 FAIL; rd8 AC2 FAIL as issued. C-S49/C-S50 add current scheduler/surface findings. Late S22 in C-S51. L10 withheld: rd8 remains staged, no terminal exception.",
+  "prd_pin": "932d83eb1704f3e9e9364a803a6478d178c23093",
+  "prd_version": "v0.5",
+  "project": "AMGT_RESAPP",
+  "round": 5,
+  "signed_by": "3.0.0_SA_CVO~Z",
+  "stage": "L9",
+  "utc": "2026-09-11T21:40:48Z"
+}
