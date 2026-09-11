@@ -2,6 +2,13 @@
 
 Continues `session_cooB_1210-1515Z_irpt_bckend_round2_L7_drains_1_to_3.md` (bb2af58de2). Push state of every commit below: LOCAL (this seat never pushes; LD-0522). **Written for a SUCCESSOR holding serial `2.0.0_SA_COO~B` with none of this session's context** (Andrew-direct via 0.0.0_AB_MSTR 95994, 17:30Z: managed wind-down, this device reboots).
 
+## FINAL ~18:2xZ (tip after this commit; rows S35, S36, S37) -- EVERY WORKER BRANCH IS DRAINED, NO WORKTREE REMAINS
+
+- IB-rt-9's wind-down branch LANDED at 22f2238cd7 (order OPEN; arm (a) done; read `deliverables/0.9.0_WK_IRPT_BCKEND~3/WIP_IB-rt-9_winddown.md`; its face carries an ISSUER CORRECTION on the build-input premise and the owed deploy).
+- `git worktree list` shows no `wk-irpt-2-*` and no `coo-b-drain`; no `wk-irpt_bckend-2-*` branch exists; nothing of this seat is staged or uncommitted.
+- Successor's order of work: (1) `/watcher`, register, read this log and rows S33..S37; (2) cold-start IB-rt-2 (slot ~2) and IB-rt-9 (slot ~3) from their WIP files in FRESH worktrees cut from the tip; (3) hand IB-rt-10 (face pending on ~4) in a fresh worktree; (4) rt-6 after rt-2, rt-11 after rt-9 or rt-10, rtb-1 last (after rt-1, rt-2, rt-4, rt-6, rt-8); (5) at round end the drain-end read to the CTO.
+- Andrew's-word items still open: W4-S20 (do the four noncurrent versions of the synthetic PDFs go too -- unrecoverable), carried to the CTO at 17:40Z.
+
 ## UPDATE ~18:0xZ (tip after this commit; rows S35, S36) -- two more branches drained
 
 - IB-rt-2's wind-down branch LANDED at 5347f30b34 (order still OPEN; W2-S28 granted and W1-S16 routed on its face for the successor run; read `WIP_IB-rt-2_winddown.md`).

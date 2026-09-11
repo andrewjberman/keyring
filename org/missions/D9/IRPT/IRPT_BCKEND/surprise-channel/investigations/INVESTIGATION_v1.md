@@ -3171,6 +3171,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "The amendment: 'if the run refuses SESSION_ABSENT, that refusal IS the recorded output -- arm (a) then reads SESSION-GATED naming IB-rtb-1'.",
     "world_is": "Exactly that branch, reached on the first send that got past the infrastructure gaps. The render pipeline is complete except for authentication.",
     "notes": "Four earlier sends in the same authorization each produced a NAMED refusal before this one -- MODULE_NOT_FOUND playwright, MODULE_NOT_FOUND @aws-sdk/client-s3, RENDERER_MODULE_ABSENT, and a TLS error on a hostname the estate does not own. Each was a real gap between a host half that was written and a host it had never run on."
+  },
+  {
+    "id": "IRPT_BCKEND-S37",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T18:29:35Z",
+    "one_line": "WIND-DOWN COMPLETE FOR THIS SEAT: the last in-flight branch landed. IB-rt-9's wind-down branch (e021ddcdfd, slot ~3) drained at 22f2238cd7 with the order OPEN: arm (a), the v0.9 cutover, passes with 0 failures -- 33,107 files scanned, 4 of 4 code readers of ycharts/session/current migrated or retired, 0 legacy any-non-403 predicates remaining, positive and negative controls on the detector; the probe's negative predicate (wrong on 10 of a 14-case recorded matrix: a 400, 401, 404, 429, 500, a WAF interstitial, a login page, a redirect, a teapot all read as a fresh session) replaced by a positive allowlist plus a fence read; the capture Lambda retired in source with its schedule read DISABLED live. No instance was written (the one-shot sentinel is not burnt on five unbuilt arms) and the acceptance token is absent in every form. TWO DISAGREEMENTS RESOLVED WITHOUT DESTRUCTION: (i) W3-S24 -- slot ~3 measured the 'absent build inputs' premise of the issuer's W2-S21 amendment FALSE at its tip (26 declared, 26 resolve; the 8 outside source_dir are flat-packaged shared libraries), while slot ~2 had measured 7 of 25 and 5 of 7 absent one cut earlier; the drain conflicted on irpt-status's file list (rt-2's list minus the six it removed, plus entry.py; rt-9's list with the shared libraries) and was resolved as the UNION, and both faces now carry the rule 'resolve the way the builder does, print N of N, remove only what resolves NOWHERE'; (ii) W3-S25 -- _scope/resolve.py gained an import whose packaging followed only in the declaration; the rebuild of the three functions shipping it is the successor's first ledgered act. The live probe still runs the retired predicate until IB-rt-9's arm (e) redeploys it. Every worker worktree and branch of this round is removed after its merge was verified an ancestor of the tip; no merge is open; the shared index holds nothing of this seat's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (the successor session: read the wind-down log, then cold-start rt-2, rt-9, rt-10, rt-6, rt-11, rtb-1 in fresh worktrees)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 22f2238cd7 (drain wk-irpt_bckend-2-3 @e021ddcdfd; lambda-source-map.json irpt-status entry resolved as the union of both sides)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/WIP_IB-rt-9_winddown.md; battery_ib_rt_9.py output 'ARM-A-ONLY, INCOMPLETE-UNDER-WINDDOWN'",
+        "git worktree list: 0 worker worktrees; git branch: no wk-irpt_bckend-2-* branch"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Andrew-direct 17:1xZ (via 0.0.0_AB_MSTR 95994): workers finish, nothing new starts, log and commit; spine v3 L7: a worker's branch is drained by its issuer and a disagreement between two workers' instruments is resolved by the issuer without destroying either's work.",
+    "world_is": "IRPT_BCKEND round 2 at 22f2238cd7: COMPLETE rt-1, rt-3, rt-4, rt-5, rt-7, rt-8 (6 of 12); OPEN rt-2 (guards 0 of 11 unguarded; arms (e),(g) unbuilt), rt-9 (arm (a) of six); pending-unhanded rt-10; staged rt-6, rt-11, rtb-1. No worker is live; no worktree remains; the successor cold-starts every remaining order.",
+    "notes": "Seat rows continue at S38. The drain-end read to the CTO (CVO watermark vs channel rows, armed rows not seatable) is the successor's act at round end, not this seat's now: the round is not at its end."
   }
 ]
 ```
