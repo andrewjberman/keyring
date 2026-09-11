@@ -27,6 +27,8 @@
 
 **Narrative page wiring (AMENDED BY THE ISSUER at the FE-s-8 drain on row IRPT_FNTEND-W2-S6).** `render/narrative/PeriodInContextPage.tsx` is built and tested but not mounted: `render/performance/PerformanceDocument.tsx`, the owner of the `data-page="period-in-context"` slot, was outside FE-s-8's grant. In `PerformanceDocument.tsx`, replace the slot placeholder with `PeriodInContextPage` rendered when the `RenderBundle` carries a `NarrativePacket` AND the export options carry `includeNarrative: true` (add that boolean to the package's `RenderOptions` in `render/manifest.ts`, default false, beside the existing options); nothing else in the template changes. The export modal's narrative toggle from this cell writes that option.
 
+**Dropdown test repair (AMENDED BY THE ISSUER at the FE-s-5 drain on row IRPT_FNTEND-W1-S7).** `portal/tsconfig.json` now carries the `@/*` mapping, so `__tests__/fe-s-3/dropdown-class.test.ts`'s per-file `mock.module` registrations for `@/lib/utils` and `@/components/ui/PageSurfaceControl` now intercept the real modules' own imports and the two tests fail on DEV with `Export named PageSurfaceControl not found`. Remove both `mock.module` registrations from that file so it renders the REAL `FirmDropdown` over the real `PageSurfaceControl`; keep its two assertions, re-stated against the real markup: the rendered `<select>`'s class attribute contains `text-[hsl(var(--primary))]` and `ring-1`, and (because `cn` resolves conflicting utilities last-wins) the primary text class appears AFTER any `text-white` in that attribute or `text-white` is absent -- assert whichever the real markup shows and print `CLASS: <the select's class attribute>`; the one-firm arm stays as it is. No other file under `__tests__/fe-s-3/` changes.
+
 **Fixtures** under `fixtures/fe-s-9/`: `scope.two-assets.json`, `scope.no-assets.json`, `bundle.preview.opal.json`, `bundle.preview.cobranded.json`, `receipt.ready.json`, `receipt.running.json`. Smoke maps `fixtures/smoke/fe-s-9-modal.json`, `fe-s-9-preview.json`.
 
 **Tests** under `__tests__/fe-s-9/`: `default.test.ts` (initial render contains no modal element), `branding.test.ts` (a branding change yields a preview request whose `performanceRevision` equals the previous request's and whose `exportRevision` differs; with `scope.no-assets.json` the applied label is `Opal`), `no-refetch.test.ts` (the adapter call log during a preview contains no `performance`, `analysis` or provider-shaped operation -- printed as `CALLS: <list>`), `receipt.test.ts` (the rendered download route equals the receipt fixture's route; a `running` receipt renders no link; the analysis export request carries the tab's `inputRevision`, `configuration` and `artifactHash`).
@@ -63,7 +65,10 @@
 <criterion id="F9-AC10" cell_refs="FE-s-9"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-9/narrative-wired.test.ts</invocation><expect>0 fail</expect></criterion>
 `F9-AC10` -- `renderToStaticMarkup` of `PerformanceDocument` with `render/fixtures/bundle.performance-with-narrative.json` and `includeNarrative: true` contains the fixed contemporaneous-context statement inside the `data-page="period-in-context"` element; with `includeNarrative: false`, or with a bundle carrying no packet, that element is absent.
 
-<expected_criteria>F9-AC1, F9-AC2, F9-AC3, F9-AC4, F9-AC5, F9-AC6, F9-AC7, F9-AC8, F9-AC9, F9-AC10</expected_criteria>
+<criterion id="F9-AC11" cell_refs="FE-s-9"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-3</invocation><expect>0 fail</expect></criterion>
+`F9-AC11` -- the FE-s-3 test set passes under real alias resolution (record the `CLASS:` line).
+
+<expected_criteria>F9-AC1, F9-AC2, F9-AC3, F9-AC4, F9-AC5, F9-AC6, F9-AC7, F9-AC8, F9-AC9, F9-AC10, F9-AC11</expected_criteria>
 
 ## BOUNDS
 
@@ -86,6 +91,7 @@ portal/src/pages/InvestorReporting/index.tsx
 portal/src/pages/InvestorReporting/render/PrintEntry.tsx
 portal/src/pages/InvestorReporting/render/manifest.ts
 portal/src/pages/InvestorReporting/render/performance/PerformanceDocument.tsx
+portal/src/pages/InvestorReporting/__tests__/fe-s-3/dropdown-class.test.ts
 portal/src/pages/InvestorReporting/fixtures/fe-s-9/
 portal/src/pages/InvestorReporting/fixtures/smoke/
 portal/src/pages/InvestorReporting/__tests__/fe-s-9/
@@ -101,7 +107,7 @@ org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v
 Criterion ids: `F9-AC1` .. `F9-AC8`. Instance at
 `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-9.export-options-preview.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
-`python .tools/proof-of-spec-check.py <instance> F9-AC1,F9-AC2,F9-AC3,F9-AC4,F9-AC5,F9-AC6,F9-AC7,F9-AC8,F9-AC9,F9-AC10` BEFORE the `complete` flip. `F9-AC8` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `export-options-preview.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
+`python .tools/proof-of-spec-check.py <instance> F9-AC1,F9-AC2,F9-AC3,F9-AC4,F9-AC5,F9-AC6,F9-AC7,F9-AC8,F9-AC9,F9-AC10,F9-AC11` BEFORE the `complete` flip. `F9-AC8` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `export-options-preview.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape. You cannot send or receive messages; anything you would ask is a surprise row.
