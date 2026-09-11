@@ -42,6 +42,9 @@
 - The adversarial fixtures the v0.4 row names, one test each: COT duplicate policy (equal-value/null with units and dates; incompatible duplicates are exceptions); recursive expansion applies weights EXACTLY ONCE, detects cycles and missing nodes, retains unresolved mass, never renormalizes only surviving Opal children (a wrapper over non-Opal children; a leaf under a non-Opal wrapper); SmartX roster / valuation / position grains not summed, missing positions not zero; the alternative partitions; Eclipse `targetPercent` units UNCERTIFIED until certified; managed/excluded meaning preserved.
 - Production schedule in `infra/aws/terraform/investor-reporting/directory/schedule.tf` (same root as IB-s-4, same slot). The rule-13 deploy hazard of row `IRPT_BCKEND-S4` applies here as to IB-s-1.
 
+**ISSUER AMENDMENT (2.0.0_SA_COO~B, 2026-09-11 ~00:2xZ, before this order was handed -- a cut defect of the issuer, surfaced on a worker's row):**
+- **FIRST-MINT IS EXPLICIT, AND THE EXIT CODE IS NOT THE DELIVERY (row `IRPT_BCKEND-W2-S5`).** `.tools/safe-deploy.sh` on a shared home whose prefix carries 0 members emits `SKIP-NOT-MEMBER` and exits rc=0 with `OK: safe-deploy gate PASS` -- a GATE verdict with NOTHING deployed, and the disclaiming lines sit below the OK where a tail-read misses them. The production code deploy of this cell's runner is that FIRST-MINT: read `.tools/safe-deploy.sh`'s own header for the explicit first-mint mechanism it names and use it (never a bare `aws s3 cp`); then verify the ARTIFACT on the served prefix (`head-object` on the landed key: size and ETag/sha printed beside the built file's), never the guard's exit code. If the guard names a lane this serial cannot satisfy for the first-mint, that is a BLOCKING row on the deploying arm, not an override.
+
 ---
 
 ## DELIVERABLE
@@ -82,7 +85,7 @@
 **(c) BASES NEVER SPLICED.** Every node carries exactly one of observed / assigned / target and the snapshot refuses a pie that mixes them (fixture printed).
 **(d) THE ADVERSARIAL FIXTURES, ONE ARM EACH, N OF N.** COT duplicate policy; exactly-once recursive expansion; cycle; missing node; unresolved mass retained; Opal wrapper over non-Opal children; Opal leaf under non-Opal wrapper; SmartX grains not summed; missing positions not zero; alternative partitions not additive; AccountSupervised not fee-taking; `targetPercent` UNCERTIFIED; managed/excluded preserved. Print passed/total.
 **(e) UNKNOWN IS EXPLICIT.** A node with no classification reads UNKNOWN, never Client, never false; printed.
-**(f) LANDED.** `head-object` on each firm's QA `latest.json`; the ledger CLOSED and the sentinel committed (hash); the rule-13 deploy attempted ONCE -- a refusal is printed verbatim, filed as a BLOCKING row, and this arm reads BLOCKED.
+**(f) LANDED.** `head-object` on each firm's QA `latest.json`; the ledger CLOSED and the entry committed (hash); the rule-13 deploy attempted ONCE through the guard's explicit first-mint mechanism -- the ARTIFACT verified by `head-object` (size + ETag/sha beside the built file's), never the exit code; a refusal is printed verbatim, filed as a BLOCKING row, and this arm reads BLOCKED.
 
 <criterion id="S12-AC2" cell_refs="IB-s-12" judgment="true"/>
 **`S12-AC2` -- JUDGMENT, RECORDED AND NOT SELF-GRADED.** State for `3.0.0_SA_CVO`: which attribution can reconcile to the cent and still be economically wrong (name the fixture that would catch it and whether you built it); which source clocks were mixed (SmartX intraday vs prior-day custody) and how the snapshot states it; and what a reader cannot learn from the snapshot alone. No verdict: the instance row carries the output under `UNVERIFIABLE-BY-INSTRUMENT` with `status_reason` naming `3.0.0_SA_CVO` at L9.
