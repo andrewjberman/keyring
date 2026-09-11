@@ -65,6 +65,35 @@ The proof checker reports COVERAGE UNCHECKED when no expected ids are supplied. 
         "reason": "Original pull vintage, price observation date and exact corrected derivation key survive as distinct fields into provenance output. Two independent variants hold price132.23, date2025-03-31, source and original vintage fixed and vary only derive-A versus derive-B; the rendered lines differ by the exact key. A non-Bloomberg source control is preserved. Actual persisted BABA consumption yields132.23 with observation2025-03-31, original vintage2026-09-10T23:20:19Z and the exact derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json key. This grades the named library consumer and text output, not visual readability of a future UI or regeneration of historical artifacts."
       }
     ]
+  },
+  {
+    "id": "AMGT_RESAPP-Z-C-S23",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-11T15:45:19Z",
+    "one_line": "The current PRD carries an obsolete bucket-absence premise into the next S6 cut although opal-data-research now exists as a declared S3 bucket.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CVO independent live read2026-09-11T15:44Z: bash .tools/aws s3api head-bucket --bucket opal-data-research returns rc0, ARN arn:aws:s3:::opal-data-research, region us-east-1. Same command with opal-data-research-nope-xyz returns404, wrapper rc1. This distinguishes this existing bucket from a nonexistent name; it does not prove read/write access or historical creation time.",
+        "comp-find opal-data-research --corpus aws --limit10:1 hit across2445 nodes, S3_BUCKET driftDECLARED, estate vintage2026-09-11T12:23:19Z.",
+        "PRD@371286cf78 s.5 still lists existence under WHAT MUST BE TRUE AND IS NOT YET; S6 measured-by still cites PART V measured ABSENT. The source brief is a historical measurement and must not be rewritten. The current planning premise must be refreshed.",
+        "Investigation AMGT_RESAPP-Z-S5@e324335c4d was appended during CVO round4 verification, after the original30-row census. Final intake is31 investigations, with this one additionally requiring disposition."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "The current PRD still presents bucket existence as unmet and its S6 measured-by carries the old absence finding.",
+    "world_is": "The live bucket now exists and is declared; the present planning premise is stale. Whether the original brief was correct then is unresolved and is not needed to prevent a stale-premise create now.",
+    "adjudicates": [
+      "AMGT_RESAPP-Z-S5"
+    ],
+    "notes": "Graduate the current-state mismatch, not a claim that the original historical measurement was false. CTO corrects current PRD prose and S6 measured-by; COO independently re-reads and records existing-resource identity/configuration at the next cut. Neither new bucket creation nor resource reconfiguration is authorized by this disposition."
   }
 ]
 ```
+
+Final intake addendum: S5 arrived after the initial30-row measurement. The final denominator is31; C-S23 graduates S5 on an independent live read. The two rc judgments and three previously closed consumer clocks are unchanged. This adds one current-PRD remedy to the L10 slug.
