@@ -809,3 +809,88 @@ disarmed and why. Nothing here dispositions anything -- that is the CVO's L9 act
   }
 ]
 ```
+
+
+---
+
+## Rows appended by `0.9.0_WK_POSN_ASTTAX~11` at L7 (TO-T2-1, cell AT3-s-2 -- the frontend hop), 2026-09-11
+
+Three rows from the worker that measured the hop `TO-S7-1` disclosed it could not see. None of them
+blocked the cell: AC1-AC4 were all completed. S1 records that the criteria's own named invocation cannot
+reach a submodule and that one of the order's two fallbacks fails SILENTLY; S2 records which of the two
+portal vintages was read; S3 names the one pocket of portal that remains unmeasured.
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W11-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~11",
+    "surfaced_at": "2026-09-11T21:57:22Z",
+    "one_line": "The invocation T2-AC1/T2-AC3 NAME (comp-find) is structurally incapable of answering its own criterion: portal/ is a GITLINK (mode 160000), comp-find is repo-only, and BOTH fallbacks the task order offered are unusable -- `git show HEAD:portal/<path>` is fatal (no subtree exists) and `git sparse-checkout add portal` yields an EMPTY directory, which a census reads as a SILENT ZERO. The route that works is the submodule's own object store at the pin.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal is a gitlink, not a subtree: `git ls-tree HEAD portal` in /c/tmp/wk-posn-t2 @651ffd4f16 prints `160000 commit e85f6eb84f3a1771a37011a7e77e372570bad02a\\tportal`. A gitlink stores a COMMIT ID, not the files, so the superproject tree has no portal/<path> entries at all.",
+        "THE ORDER'S FIRST FALLBACK FAILS LOUDLY: `git show HEAD:portal/package.json` -> `fatal: path 'portal/package.json' does not exist in 'HEAD'`. The task order's BOUNDS say 'read blobs via `git show HEAD:<path>`'; for this subject that instruction cannot be carried out.",
+        "THE ORDER'S SECOND FALLBACK FAILS SILENTLY, WHICH IS THE HAZARD: `git sparse-checkout add portal` governs superproject tree entries only. A submodule's working tree is populated by `git submodule update`, which is a WRITE under portal/ and is forbidden by this order's own freeze. The result is an EMPTY portal/ directory -- and `ls -la portal` in this worktree already shows exactly that (total 4, only ./ and ../). A census over an empty directory returns 0 hits and reads identically to 'no consumers'.",
+        "THE VERBATIM CRITERION INVOCATION REPRODUCES ROUND 2'S BLINDNESS EXACTLY: `timeout 300 comp-find 'assetClass|asset_class' --all --files` printed `DENOMINATOR: 797 hit(s) across 3634 file(s) scanned in scope [corpus=all] | 29802 UNREADABLE, NOT searched` and listed ZERO files under portal/. TO-S7-1 recorded 29,577 UNREADABLE for the same reason; the figure moved to 29,802 and the blindness did not change.",
+        "THE ROUTE THAT ACTUALLY WORKS, used for this cell and stated so the next worker need not rediscover it: read the submodule's OWN object store. `git -C <workspace>/portal cat-file blob e85f6eb84f:<path>` and `git -C <workspace>/portal ls-tree -r e85f6eb84f` both succeed, because the portal repo at /c/Users/Opal Bloomberg/Desktop/ajb_workspace/portal carries the pinned commit (`git cat-file -t e85f6eb84f` -> `commit`). This is READ-ONLY and touches neither the submodule pointer nor any file under portal/."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-T2-1 BOUNDS: 'portal/ is outside your sparse cone. If you need to read it, widen your OWN worktree's cone (`git sparse-checkout add portal`) or read blobs via `git show HEAD:<path>`', and criteria T2-AC1/T2-AC3 name `comp-find ... --all --files` as the invocation that produces 'the PORTAL subset named explicitly'.",
+    "world_is": "portal/ is a submodule (gitlink e85f6eb84f), not a directory of the superproject. comp-find is REPO-ONLY by ruling and cannot cross into it; `git show HEAD:portal/<path>` is fatal because no such subtree exists; and `git sparse-checkout add portal` produces an EMPTY directory rather than the portal files. None of the three named routes can enumerate a portal consumer. The measurement was obtained instead from the submodule's own object store at the pinned commit.",
+    "notes": "FILED FOR FORM, NOT SIGNIFICANCE. It blocked nothing -- the cell was completed in full via the object-store route -- and the finding it enabled STRENGTHENS the existing NO-GO, exactly as the order anticipated.\n\nWHY ARMED RATHER THAN INERT: the failure mode of the second fallback is a SILENT FALSE ZERO, and this cell exists precisely because a false zero on this hop already travelled once as if it were a measurement. A future worker handed the same BOUNDS text who runs `git sparse-checkout add portal`, sees rc=0, then censuses portal/ and finds nothing would conclude 'no frontend consumers' with no error anywhere in its transcript. That is indistinguishable from a true absence at every rung short of opening the directory. The disarm is a one-line correction to the cone/BOUNDS recipe -- name the object-store route -- which is the issuer's to make, hence disarm_owner 2.0.0_SA_COO~Z.\n\nNOT CLAIMED: that comp-find should cross submodule boundaries. Repo-only is a deliberate ruling and this row does not ask for it to change; it asks that an order which sends a worker into a submodule name a route that reaches one."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W11-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~11",
+    "surfaced_at": "2026-09-11T21:57:22Z",
+    "one_line": "TWO VINTAGES OF portal EXIST AND THE READABLE ONE IS NOT THE PINNED ONE: the superproject gitlink pins e85f6eb84f, while the only populated checkout (the main workspace, branch DEV) sits at 30ca034bba -- 14 commits BEHIND the pin. Measured at the pin; verified byte-identical on the subject files, so this cell's reading is unaffected.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE PIN: `git ls-tree HEAD portal` @651ffd4f16 -> `160000 commit e85f6eb84f3a1771a37011a7e77e372570bad02a`.",
+        "THE READABLE COPY: `git -C <workspace>/portal rev-parse HEAD` -> 30ca034bbaa4b9d2864d3acce826e3c2fa59be0a, `--abbrev-ref HEAD` -> DEV, `status --porcelain` -> 0 lines (clean).",
+        "DIRECTION ESTABLISHED, NOT ASSUMED: `merge-base --is-ancestor 30ca034bba e85f6eb84f` -> rc=0, so the working tree is an ANCESTOR of the pin, i.e. BEHIND it. `rev-list --count 30ca034bba..e85f6eb84f` -> 14 commits in the pin that the checkout does not have. The first read ran the ancestry the other way round (rc=1) and would have supported the opposite sentence; both directions were run before the claim was written.",
+        "WHY IT DID NOT CONTAMINATE THIS CELL: `git -C <workspace>/portal diff --stat 30ca034bba e85f6eb84f -- src/pages/Positioning src/pages/Attribution src/lib/chartColors.ts` returns EMPTY -- every file this cell's verdict rests on is byte-identical at both vintages. The AC1/AC2/AC3 reads were nevertheless taken at the PIN via the object store, which is the correct grain regardless."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-T2-1 treats 'portal' as a single readable object -- 'the PORTAL subset named explicitly' -- and names no commit at which the portal bytes are to be read.",
+    "world_is": "There are two portal vintages on this device and they differ by 14 commits. The copy a reader can browse (the populated working tree) is the STALER of the two; the copy the superproject actually pins is reachable only through the submodule's object store. An unqualified 'I read portal' does not say which was read.",
+    "notes": "INERT, and deliberately so rather than by omission: the divergence is a normal submodule condition (a DEV checkout left behind a moved pin), not a defect, and it is disclosed here with the exact remedy -- cite the pin and read at it. It is recorded because this round's whole subject is a hop that travelled unmeasured, and 'measured at an unstated vintage' is the next-door failure. GRAIN NOTE for whoever grades AC1-AC4: every portal line cited in the instance is at e85f6eb84f, and the equality check above means the same lines hold at 30ca034bba as well."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W11-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~11",
+    "surfaced_at": "2026-09-11T21:57:22Z",
+    "one_line": "ONE POCKET OF portal REMAINS UNMEASURED AND IS NAMED RATHER THAN ROUNDED AWAY: a NESTED submodule, archive/dashboards/main_dashboard (mode 160000), is 1 of the 1201 tree entries at the pin and cannot be read through by the same argument as S1 -- its objects are not in the portal repo.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git -C <workspace>/portal ls-tree -r e85f6eb84f` yields 1201 entries, of which 1200 are blobs and exactly 1 is `archive/dashboards/main_dashboard  mode=160000 type=commit` -- printed by the census instrument itself as NON-BLOB, so the denominator discloses it rather than hiding it.",
+        "THE CENSUS ARITHMETIC IS CLOSED AND CHECKED: 1113 READ + 87 UNREADABLE = 1200 blobs, asserted by the instrument ('READ + UNREADABLE : 1200 (must equal blobs)'). The 87 are vendored .pyc/.so binaries under etl/orchestration/green/fred/lambda/ -- backend dependency payloads, not frontend source -- each named with its reason (BINARY, NUL byte).",
+        "RELEVANCE BOUNDED: the pocket sits under archive/, which the banding pass classifies as retired, and no frontend source file under src/ imports from it (the 42 src/ consumers were each read in full). So the residual risk that a five-class consumer hides there is low -- but it is NOT zero and it is NOT measured, which is the only honest statement available."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "T2-AC1 <expect>: 'a stated count of files READ versus files UNREADABLE. If anything is unreadable, say so and say why -- an unreadable file is not an absent consumer.'",
+    "world_is": "Beyond the 87 unreadable BLOBS (all vendored binaries, named), there is a category the READ/UNREADABLE split does not cover at all: a nested GITLINK, which is not a file and so appears in neither count. It is 1 of 1201 tree entries and its contents are unreachable from this device's portal object store.",
+    "notes": "Filed so that the AC1 denominator cannot be read as total coverage of portal. The claim this cell supports is 'every FRONTEND SOURCE consumer under src/ was read'; the claim it does NOT support is 'every byte of portal was read'. Naming the gap costs one row and prevents exactly the inheritance this cell was created to stop -- an unmeasured pocket travelling inside a measured-sounding total."
+  }
+]
+```
