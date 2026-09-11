@@ -594,9 +594,14 @@ Carried from brief PART V. **These are preconditions, not outcomes -- no `FWD-n`
   `opal-data-research-nope-xyz` returns 404, so this distinguishes an existing bucket from a
   resolvable-looking name. Independently measured by `3.0.0_SA_CVO~Z` at 15:44Z on the same day
   (round-4 row `AMGT_RESAPP-Z-S5`) and re-read here on a second instrument.
-  **The brief's PART V measurement of ABSENT is NOT rewritten** -- it was correct when taken and is
-  SUPERSEDED by this later read, not falsified. `C-RAW-BEFORE-DERIVED` is no longer blocked on the
-  bucket's existence.
+  **The brief's PART V measurement of ABSENT is NOT rewritten and is NOT re-graded.** What is
+  measured here is the PRESENT state only. ⛔ **This PRD does NOT claim the earlier ABSENT reading
+  was correct when taken** -- that was asserted in an earlier draft of this bullet and is WITHDRAWN:
+  nothing in the 15:44Z/15:55Z reads establishes what was true earlier, and `C-S23` expressly left
+  the original reading's correctness UNRESOLVED. The honest statement is that the bucket EXISTS NOW
+  and the planning premise must follow the present measurement; whether it ever was absent, was
+  misread, or was permission-masked is an OPEN question nobody has answered and none of it changes
+  what the next cut must do. `C-RAW-BEFORE-DERIVED` is no longer blocked on the bucket's existence.
   ⛔ **EXISTENCE IS NOT ACCESS AND NOT CONFIGURATION.** This read proves the name resolves and
   nothing more -- not that the pipeline may read or write it, not its policy, versioning,
   encryption or lifecycle. **The S6 cut RE-READS live identity and configuration and states
