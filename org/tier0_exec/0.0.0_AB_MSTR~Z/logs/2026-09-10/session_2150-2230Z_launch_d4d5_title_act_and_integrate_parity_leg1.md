@@ -144,3 +144,108 @@ fast-forward.
 carries everything the laptop has pushed; the laptop's leg is `git merge --ff-only origin/SITEZ` plus a push,
 offered on the bus, not asked.** The objective (each fabric carrying the other's work) is met. A both-YES
 read is one laptop fast-forward away and stays so until CLOUD's tip stops being an ancestor of SITEZ's.
+
+---
+
+## AMENDMENT 2 -- 01:0xZ: the Codex launcher on site Z (Andrew-direct, relayed by the laptop)
+
+**archetype:** DEPLOY (device config) + VALIDATE
+
+`0.0.0_AB_MSTR` relayed on the bus (MessageId 856d1a74-800a-47fa-8320-14e58c41cf67, 00:55Z) an
+Andrew-direct at the laptop terminal ~00:3xZ, verbatim: *"need you to send the ajb2 launcher script
+details to MSTR~Z, we need that codex launcher on the sitez device"*. The laptop measured the launcher
+chain byte-identical on both branches (10 of 10 tracked, 0 missing) and named the one device-level
+prerequisite: the `codex` binary, laptop version codex-cli 0.153.4 via bun.
+
+**Measured here before acting:**
+- Launcher chain at HEAD matches the laptop's blob hashes; `ajb2 0.0.0_AB_MSTR~Z -ShowLaunchInfo`
+  resolves every path correctly on this device; `OPAL_WS_ROOT` unset, script-location derivation correct.
+- The binary was ALREADY INSTALLED tonight by Andrew: `npm ls -g` reads `@openai/codex@0.154.0` at
+  `%APPDATA%\npm` (npm global, not bun); `~/.codex/auth.json` written 20:26 EDT (00:26Z), `config.toml`
+  trusts the profile root, Windows sandbox `unelevated`. Not read: auth contents.
+- **Defect:** `%APPDATA%\npm` was on neither the user nor the machine PATH, and
+  `org/mcp/start-codex-seat.ps1` resolves the binary by bare name (`Start-Process -FilePath 'codex'` :340,
+  `& codex` :461/:465, no env override) -- every launch would have died at the app-server start.
+
+**The one act:** appended `C:\Users\Opal Bloomberg\AppData\Roaming\npm` to the persistent USER PATH
+(one entry, reversible). Verified against the registry-composed PATH a fresh shell receives:
+`Get-Command codex` resolves, `codex --version` = codex-cli 0.154.0; negative control (a non-existent
+name) does not resolve. Open terminals need reopening to see it. Nothing in the repo chain was edited.
+
+**Reported, not fixed:** version skew, site Z 0.154.0 vs laptop 0.153.4. Andrew's own install of
+tonight; not touched. The laptop warned that a host/protocol skew presents as a seat that starts but
+does not route turns -- the symptom to watch on the first real launch. **No Codex seat was launched**;
+which serial to seat here is Andrew's or the COO's call.
+
+Bus ACK sent with the full measurement (the send's MessageId is in the consumer output file).
+
+---
+
+## AMENDMENT 3 -- 01:2x-02:0xZ: the closes, the profile alignment, and one fabric-health pattern for the standing view
+
+**archetype:** COORDINATE + SCRIBE
+
+- **NFRA_OPSEC202609 CLOSED** by `1.0.0_SA_CTO~Z` @85907c8985 on Andrew's two words ("Ok i want that thing
+  marked as closed" @da104cacab at the COO~Z terminal; "yes opsec202609 is done" at the CTO~Z terminal).
+  19 of 19 REALIZED, R6 admits. FWD-15/FWD-19 are recorded as closed by HIS ACCEPTANCE, not by observation,
+  in three places. Pushed: origin/SITEZ @02feeddc09 carries it (is-ancestor read YES).
+- **Codex launcher, profile alignment with the laptop closed** (bus exchange ffdd224b -> c7def525 ->
+  ddbd950b -> cdc3ec30 -> 41f99be2 -> d5193f30 -> 5083cc17): derivation line taken; plain-ASCII warning on
+  both launchers on both devices; both guard arms exercised on each device; profile FILE stays a device
+  fact. The BEL defect in this device's original `ajb` warning (backtick-a inside a double-quoted string)
+  was found by re-reading my own live line after the laptop declined to copy it. Record @3dd039a8b9.
+- **Three facts from `3.0.0_SA_CVO~Z` via `1.0.0_SA_CTO~Z` (msg 21127; the v3 send gate holds the CVO's
+  one send to the slug, so CVO->MSTR routes through the CTO):** (1) LD-0319 load-time parity 20 of 22
+  CHECK-PASS at @b9dff53130, both FAILs known -- a check-pass RATE, 0 of 22 content-reading; the CVO
+  replaced a drift instrument whose NON-RECURSIVE pathspec (202 files) under-covered a recursive
+  fingerprint (260), 58 files invisible incl. the live comp-rail hook; nothing overturned. (2) The LD-0318
+  SYSPARITY cron is DELIBERATELY NOT ARMED -- consistent with the launch word "ZERO crons at launch" and
+  1b-F's re-arm-from-an-ANDREW_DIRECT-record clause; not negligence. (3) **A 14-DAY DELIVERY HOLE at the
+  CVO BASE inbox** (`org/mcp/inbox/3.0.0_SA_CVO/`, not the ~Z lane): two `2.0.0_SA_COO~Z` messages from
+  2026-08-27 asking the CVO to certify, unread, no bounce, no staleness signal; no harm landed (the
+  certification was done correctly @afb1be5dba).
+
+**STANDING-VIEW NOTE for this seat (device/fabric infra manager):** (3) is the SECOND measured instance
+of CLAUDE.md's "a BASE serial with no base session is a silent hole" class (first: five messages at
+`0.7.0_AE_CloudOps`, 6-9 days). Both were found by the recipient's own later curiosity, never by the
+fabric. The rule binds by reading only; no mechanism refuses or flags a send to a base serial whose
+only live instances are lanes. NOT BUILT (monitor moratorium; an agent-made gate is invisible to
+Andrew). SURFACED as a candidate for the CTO's gate queue: `send_message` could return QUEUED-NO-LIVE-BASE
+(distinct from QUEUED) when the recipient is a base serial with zero live sessions and one or more live
+`~lane` instances, so the sender sees the hole at send time. Proposing is legal; implementing is not.
+
+---
+
+## AMENDMENT 4 -- 04:0x-04:3xZ: the overnight leg, and two laptop-side findings it surfaced
+
+**archetype:** DEPLOY (integration) + TRACE
+
+Pushed 21 site-Z commits at 04:12Z (origin/SITEZ @6ffdaa8ccb). Both fabrics had then drifted 89 / 85
+commits apart since the 23:0xZ legs. Assessed first: overlap 0 of 403 touched files, merge-tree rc=0,
+no untracked collisions, the only dirty tracked path in the delta the portal submodule pointer. Ran the
+leg: window OPEN (5 of 5), `git merge --no-commit --no-ff`, 206 staged / 0 foreign, gates green, merge
+@26faa1485e, push rc=0, ls-remote read 26faa1485e, CLOSE (5 of 5). Read from the remote at 04:23:40Z:
+CLOUD-in-SITEZ YES; CLOUD lacks 86 (the laptop's leg, on its cadence).
+
+**Deploy, proven by the gate rather than predicted:** the delta carried two new `.py` files under
+`data/assets/scripts/gold/investor_reporting/` -- a SHARED repo home (mdpf tree), where the push gate
+applies the S3-membership guard. Its own lines: `2 path(s) to deploy` -> both `SKIP-NOT-MEMBER [mdpf]`
+(probed the mdpf `assets_gold/investor_reporting/...` keys -> 404, 0 members) -> `0 file(s) deployed;
+2 SKIPPED (first-mint, 404). NOTHING WAS DEPLOYED.` My glob (`data/*/scripts/gold/*.py`, which in a git
+pathspec matches across `/`) read 2 and the gate's matcher (`startswith(repo_home + "/")`, any suffix)
+agrees on scope -- the membership guard, not the pattern, is what made it zero writes.
+
+**Per-path resolution, disclosed:** CLOUD's commit @24c4b211b2 (laptop worker `0.9.0_WK_IRPT_FNTEND~2`)
+moves the portal gitlink to 21b17327b078, which after a full fetch is on NO branch of the portal remote
+(origin/DEV = 5907cbca98eb, our pointer). Kept the gitlink at 5907cbca in the merge index. The laptop's
+next leg auto-resolves to its own pointer (base = SITEZ side, unchanged) with no conflict.
+
+**Two findings sent to the laptop (bus 3111d468-d263-41e0-a95b-073c84c8e6dd):** (1) the dangling
+portal pointer on origin/CLOUD -- the portal submodule does not ride the workspace push, so the worker's
+portal commit never reached origin; remedy is the laptop's (push portal DEV or re-point), and any
+proof-of-spec instance citing that hash does not resolve off-device; (2) the two investor_reporting
+scripts are on S3 from neither fabric's push -- a first-mint into a shared home is an explicit owner
+act, never the gate's; surfaced so no served-key expectation sits on a gate that will never satisfy it.
+
+Both are the laptop's to act on; nothing on site Z waits. COO~Z verified its own four commits on origin
+by its own ls-remote read and held through the window with nothing pending.

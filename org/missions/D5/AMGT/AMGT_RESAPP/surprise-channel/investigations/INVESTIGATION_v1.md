@@ -170,6 +170,420 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "This worker's task text: 'your proof-of-spec instance at org/.../deliverables/0.9.0_WK_AMGT_RESAPP~3/AMGT_RESAPP.TO-AMGT-s-12.proof_of_spec.json' -- the short to_id form.",
     "world_is": "The mechanical gate that actually decides whether a 'complete' flip is accepted keys on the TASK ORDER FILE'S OWN full basename stem, not the short to_id -- a file named with the short form is invisible to check_complete_flip's glob and the flip is refused with a message that reads as if no instance exists at all, even though a VALID one does, just under the wrong name. Renamed to the full-stem form (permitted -- deliverables/ is broadly granted) and the flip proceeded.",
     "notes": "Non-blocking, caught before any commit landed (safe-commit's pre-commit hook aborted cleanly, files left unstaged, nothing to roll back). Worth fixing at the source that generates worker task text (the short-form path may be a convenience abbreviation that was never cross-checked against the gate it has to pass) so the next worker does not repeat the same round trip."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W7-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~7",
+    "surfaced_at": "2026-09-10T22:40:36Z",
+    "one_line": "16 of the 48 MEASURED bloomberg_ticker values in AMGT-s-12's universe.json are the SAME value, 'AAPL US' -- every one resolved from a 'FactSet Based ONE PAGER' workbook's sheet 'Model', label 'Ticker:', row 2, for a company that is not Apple.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/universe.json read whole: of 89 folders, 48 carry a MEASURED bloomberg_ticker; grouping those 48 values, exactly one value repeats, 'AAPL US', across 16 distinct folders: AstraZeneca AZN, Canadian National Railway CNR, Clorox CLX, Copa CPA, Imperial Brands IMB LN, JD.com 9618 HK, Michelin ML FP, Mitsubishi UFJ Financial Group 8306 JP, Nestle NESN SW, Nokia FH, Orange ORA FP, SAP GY, Sanofi SAN FP, Shopify SHOP CA, Tokyo Marine 8766 JP, Total Energies TTE FP -- none of them Apple",
+        "every one of the 16 entries' bloomberg_ticker.evidence field reads identically in shape: \"...:: sheet 'Model', label 'Ticker:' found, value read from the adjacent cell in the same row (row 2)\", and every one of the 16 entries' one_pager_files names a workbook whose filename contains 'FactSet Based ONE PAGER' (e.g. 'AZN FactSet Based ONE PAGER 2026 06 22_v2.xlsx', 'CNR CA FactSet Based ONE PAGER 2026 06 30_v1.xlsx', 'Nestle FactSet Based ONE PAGER TEMPLATE 2026 05 11_v2.xlsx') -- a single template family, not 16 independent coincidences",
+        "a control case from the SAME universe.json: 'ASML NA' resolves to 'ASML NA' (correct, its own ticker) from a workbook named 'ASML One Pager 2025 07 17_v1.xlsx' -- a DIFFERENT, non-FactSet-based template naming -- so the defect tracks the template family, not the resolver rule in general",
+        "lib/research/identity/build_universe.py's own docstring already names this exact CLASS of hazard for a sibling sheet: \"the 'Model NEW VERSION' sheet ... was found to carry unrelated template residue (Alibaba's copy names Apple's ticker on that sheet) ... EXCLUDED from the scan\" -- the exclusion list covers 'Model NEW VERSION' but not plain 'Model', and these 16 hits are all on sheet 'Model'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-s-12's cell text: each name's bloomberg_ticker is read from that folder's own one-pager workbook and is MEASURED with cited evidence -- a status of MEASURED asserts the value is the SUBJECT company's own ticker, read from that company's own workbook.",
+    "world_is": "16 of 89 covered names (18%) carry status=MEASURED with value='AAPL US' -- Apple's ticker, not their own -- all sourced from the 'Model' sheet of a 'FactSet Based ONE PAGER' template workbook at row 2 beside 'Ticker:'. This reads exactly like the ALREADY-KNOWN template-residue class the resolver's own docstring names and partially guards against (the 'Model NEW VERSION' sheet exclusion), except this instance is on the plain 'Model' sheet, which is not excluded. Every downstream consumer of security_key (this cell's own coverage_freshness.json included) will silently carry 'AAPL_US' as the identity for 16 companies that are not Apple -- and if AMGT-s-1 (raw landing) or any later cell pulls Bloomberg data keyed on these 16 security_keys, it will pull APPLE's model block and attribute it to AstraZeneca, Nestle, SAP, etc. This worker's own coverage_freshness.json rows for these 16 names carry security_key='AAPL_US' as a faithful pass-through of the input -- not corrected here (out of this cell's <paths> and out of its mandate; AMGT-s-12's deliverable is READ, not owned).",
+    "notes": "ARMED because the failure mode is SILENT and COMPOUNDING: nothing in this cell's own battery, nor a naive read of universe.json's per-entry MEASURED/evidence fields, flags it -- it only shows up as a CROSS-ENTRY census (grouping all 48 measured values and counting repeats), which no criterion in either AMGT-s-7 or (as far as this worker can see) AMGT-s-12's own battery runs. Disarm: re-run AMGT-s-12's build_universe.py with the 'Model' sheet's row-2 Ticker cell EXCLUDED (or cross-checked against the folder's own company name) wherever the source workbook filename matches 'FactSet Based ONE PAGER', mirroring the existing 'Model NEW VERSION' exclusion; then re-generate coverage_freshness.json from the corrected universe.json (no code change needed in this cell -- build_view.py already treats security_key as untrusted input past AMGT-s-12's boundary)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZZZ",
+    "surfaced_at": "2026-09-10T23:17:30Z",
+    "one_line": "Issuer's read of AMGT_RESAPP-Z-W7-S3 (ARMED, disarm_owner this seat): the 16-of-48 AAPL US collapse in universe.json is REAL (re-measured 48 MEASURED / 33 distinct / one value on 16 folders), the ISSUANCE cut no unscoped pass over the identity layer's members, and the order is REOPENED with AC7 rather than left to round 2 -- four consumers hang off the root inside this round.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/universe.json @fcfec6f1c0, read by a Counter over the MEASURED bloomberg_ticker values (a different instrument from the surfacing row's group-by): 48 MEASURED, 33 distinct, [('AAPL US', 16)] -- the surfacing row's count reproduced",
+        "the sixteen folders' evidence fields each name a 'FactSet Based ONE PAGER' workbook and the Model sheet's row 2 beside 'Ticker:' -- SAP GY is among them, so the CRO's own control security reads as Apple in the identity layer while AMGT-s-1 pulls it correctly by its own selection rule",
+        "AMGT_RESAPP.TO-AMGT-s-12 as issued @908880f6d1 carried AC2 (a partition that closes) and AC5 (per-key negatives) and no criterion over what the 89 members share; AMGT-s-8 and AMGT-s-4, cut by the same issuer in the same issuance, each carry an explicit unscoped pass (C-SHARED-DEFECT) -- the root was the one place it was left out",
+        "blast radius read before the reopen: AMGT-s-1 pull_log.json names BA US Equity, BABA US Equity, SAP GY Equity (chosen by its own rule, none contaminated); AMGT-s-13's MEASUREMENT_PLAN.md names Home Depot HD (not contaminated); AMGT-s-7's coverage_freshness.json carries the 16 keys and is held off the drain until it regenerates; AMGT-s-15 and AMGT-s-b4 executing, read on their reports",
+        "the reopen: commit 0d2cfbfc11 on wk-AMGT_RESAPP-1-3 (author 2.0.0_SA_COO~ZZZ) adds AC7 -- NEGATIVE, UNSCOPED: no MEASURED ticker value shared by two or more folders, MEASURED equals distinct -- and flips <status> complete -> pending; AC7 exercised against the contaminated file before the commit printed 'values shared by two or more folders 1 [(AAPL US, 16)]', the failure it exists to catch"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md Rule 22: 'A CHECK SCOPED TO THE MEMBERS CANNOT SEE A DEFECT IN WHAT THE MEMBERS SHARE ... Ask what the members have in COMMON, and check THAT on its own; then re-read the population UNSCOPED once.' PRD v0.3 C-SHARED-DEFECT: the unscoped pass over the population is the pass that would have caught a telecom set on 48 non-telecoms. FWD-13's bar: everything on one page is about the same company.",
+    "world_is": "The identity layer -- the root four surfaces hang from, cut to remedy F6 -- shipped with the F6 shape inside it: one template's example ticker keyed 16 of 89 covered names to Apple, every per-member criterion passed, and the defect was found by a CONSUMER building on the artifact, not by the issuer or the gate. Remedy taken by the disarm owner the same turn: the order reopened on its own branch with the unscoped criterion the issuance lacked, the worker resumed to regenerate with a placeholder read as UNRESOLVED, and the consumers that already read the keys held off the drain until they regenerate. What this row does NOT claim: that the corrected universe has landed (it lands with the next drain of wk-AMGT_RESAPP-1-3), or that the CVO's disposition of W7-S3 is anything but its own.",
+    "notes": "Owner of the remedy: 2.0.0_SA_COO~ZZZ (issuer). The CVO's L9 disposition of AMGT_RESAPP-Z-W7-S3 is not pre-empted by this row; this row records the issuer's act and its evidence so the disposition can be graded against the artifact rather than the message."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W5-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~5",
+    "surfaced_at": "2026-09-10T22:53Z",
+    "one_line": "AMGT-s-15's own two schemas name reviewed_at/review_interval_days once per LIST, never per entry, so rot.py's staleness is list-wide (N is 0 or the full entry count, never partial); and social_accounts.json's entries are keyed by a `security_key` this project has not defined anywhere else, resolved here to AMGT-s-12 universe.json's `folder` value.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_RESAPP.TO-AMGT-s-15...md worker face (a)/(b): publishers.json and social_accounts.json are BOTH given as {owner, owner_status, reviewed_at, review_interval_days, entries: [...]} -- reviewed_at and review_interval_days sit at the list's top level in both named shapes; neither named entry shape ({domain,name,status,added_at,added_by,reason} for publishers, {security_key,platform,handle,status,evidence} for social_accounts) carries a per-entry reviewed_at field",
+        "same worker face (c): 'for each list, entries older than review_interval_days since reviewed_at are STALE' -- read against the schemas in (a)/(b), the only reviewed_at available to compare against is the list's single value, so lib/research/lists/rot.py's is_stale() runs once per list and the result (stale or not) is reported against the whole entries_total (rot_signal.json, entries_stale field is either 0 or equal to entries_total for every list at every run so far)",
+        "python search of lib/research/**/*.py for the literal string 'security_key' before this cell's own build_lists.py existed: 0 hits (rules/, identity/ modules carry no such field)",
+        "AMGT-s-12's universe.json (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/universe.json@074d0d1ebe) names, per entry, folder/one_pager_files/bloomberg_ticker/sa_symbol/ir_domain/social_account -- no field named security_key; folder is the one field MEASURED present and unique across all 89 entries (bloomberg_ticker and sa_symbol are UNRESOLVED for a majority: e.g. Adobe ADBE US, Air Liquide AI FP, America Movil AXMB MM all carry bloomberg_ticker.status UNRESOLVED in the same file), so folder was read as security_key's value in social_accounts.json's 267 entries (89 names x 3 platforms)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell's own (a)/(b) schemas carry reviewed_at/review_interval_days at the list level only, and (c) then describes staleness in terms of 'entries older than review_interval_days since reviewed_at' as if the comparison were per-entry; the cell also names social_accounts.json entries by `security_key` without defining the term or pointing at an existing field it maps from.",
+    "world_is": "No per-entry reviewed_at field exists in either schema the cell itself gives, so this cell's rot.py computes staleness once per list (all-or-nothing over that list's entries) rather than per entry, and security_key was set to AMGT-s-12 universe.json's `folder` value -- the only field measured unique over all 89 names, since bloomberg_ticker/sa_symbol are UNRESOLVED for many of them and would leave holes as a key.",
+    "notes": "Non-blocking: AC1/AC2/AC3 all pass under this reading, and the cell's own (c) text -- 'Prints ONE line per list' -- is itself consistent with a per-list (not per-entry) rot computation. Recorded because a later cell or an owner editing these lists by hand and expecting a per-entry review date, or a per-entry security_key drawn from some other identifier, would find neither and should read this row first."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W1-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~1",
+    "surfaced_at": "2026-09-10T22:35Z",
+    "one_line": "AMGT-s-12's universe.json carries a measurement defect: 16 of its 48 MEASURED bloomberg_ticker values -- unrelated folders from AstraZeneca to Total Energies, including the CRO's own control folder 'SAP GY' -- all read the identical string 'AAPL US'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/universe.json, read via select_securities.py: 48 of 89 entries carry bloomberg_ticker.status=='MEASURED'; grouping those 48 by bloomberg_ticker.value shows the single value 'AAPL US' shared by 16 distinct folders (AstraZeneca AZN, Canadian National Railway CNR, Clorox CLX, Copa CPA, Imperial Brands IMB LN, JD.com 9618 HK, Michelin ML FP, Mitsubishi UFJ Financial Group 8306 JP, Nestle NESN SW, Nokia FH, Orange ORA FP, Sanofi SAN FP, Shopify SHOP CA, Tokyo Marine 8766 JP, Total Energies TTE FP, and SAP GY) while every one of the remaining 32 MEASURED entries carries a value unique to its own folder",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/select_securities.py run (this worker's own build), dup_report={'AAPL US': 16}, clean_unique_entries=32",
+        "The SAP GY folder's own universe.json entry -- the CRO's control security -- carries bloomberg_ticker.value=='AAPL US', which does not match the CRO's own field-map deliverable's control ticker 'SAP GY Equity' (org/tier1_exec/4.0.0_SA_CRO/deliverables/AMGT_RESAPP_BLOOMBERG_FIELD_MAP_20260910.md, throughout): the folder's own resolver output disagrees with the CRO's independently-measured value for the identical company"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This cell's bound (d): 'a US name and an ADR, both chosen from the coverage universe by a rule you state ... AMGT-s-12's universe.json enumerates them if it has landed' -- implying universe.json's bloomberg_ticker.value entries are each an independent, per-folder MEASURED read this worker could select from directly.",
+    "world_is": "16 of the 48 MEASURED entries are not independent per-folder reads -- they share one identical string that is correct for at most one folder (at most one company is genuinely 'AAPL US Equity') and wrong for the other 15, including the control company SAP GY itself. This worker's selection rule (select_securities.py) drops every duplicate-valued entry before picking a US-domiciled name and an ADR, so the defect did not propagate into AMGT-s-1's own security choices (Boeing BA US Equity, Alibaba BABA US Equity) or into the SAP GY Equity control (taken directly from the task order text/CRO brief, never from this universe.json row). Not fixed here: AMGT-s-12's resolver.py and build_universe.py are outside this worker's <paths> grant, and repairing another cell's deliverable is out of bounds regardless.",
+    "notes": "Worth the identity-layer owner's attention before AMGT-s-2/-3/-5/-9 (this cell's downstream dependents per the DEPENDENCIES section) build on universe.json for a folder OTHER than the 3 this worker touched -- any of the 16 affected folders would silently resolve to Apple's ticker if consumed without the uniqueness check this worker applied. The shape (one recurring constant value across unrelated keys) looks like a resolver bug that returns a previous/cached result on a failure path rather than a per-folder read; not diagnosed further here (outside this cell's write surface)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W1-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~1",
+    "surfaced_at": "2026-09-10T23:05Z",
+    "one_line": "For the ADR (BABA US Equity, fiscal year end 31 March), Bloomberg's raw HistoricalDataRequest response never carries a single row with BOTH a price field and a fundamentals field -- 100% of its rows split fiscal-period-end (March) fundamentals from calendar-year-end (December) price/ratios, so the fiscal-year join (grouping by the calendar year of `date`) merges each fiscal year's fundamentals with a price observation roughly nine months later, not one from the fiscal period end itself.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "raw/bloomberg/BABA_US_Equity/20260910T224407Z/histdata.json (S3, opal-data-research): all 20 raw rows for BABA US Equity split cleanly into 10 fundamentals-only rows dated '<year>-03-31' and 10 price/ratio-only rows dated '<year>-12-31' -- zero rows carry both a fundamentals field and PX_LAST/PE_RATIO together. SAP GY Equity and BA US Equity (both December-FYE issuers), by contrast, merge most years into one row (SAP: 6 of 10 years single-row, matching the CRO's own 'F5' 14-rows-for-10-years finding).",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/build_field_map.py detect_reporting_currency_mismatch(), run against the fiscal-year-merged groups: fiscal-year-2025-merged naive PE (PX_LAST/IS_EPS = 2.6593) vs Bloomberg's own PE_RATIO (15.7545) for the same fiscal-year label on BABA US Equity, ratio 0.1688 -- outside the 0.8-1.25 plausible-reconciliation band. The identical check on SAP GY Equity's FY2025 (both December-FYE, same-year rows) reconciles to 1.0000007 (positive control: the method is sound and the SAP case shows no such gap).",
+        "field_map.json cross_security_findings[0] (this worker's own committed artifact): the finding is recorded as consistent with a currency difference AND/OR the ~9-month fiscal-vs-calendar timing gap AND/OR an ADR share-ratio effect -- explicitly NOT isolated to one cause"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This cell's bound (e)/C-FISCAL-YEAR-JOIN: 'Fiscal year is the join key ... Join on fiscal year, never the date string' and AC4's bar: 'JOIN: 3 of 3 securities at 10 FY rows; orphan price rows 0'.",
+    "world_is": "Grouping by the calendar year of `date` (date[:4]) satisfies AC4's MECHANICAL bar exactly -- 10 distinct fiscal-year labels, 0 raw rows left un-merged, for all three securities including BABA -- but for a non-December-FYE issuer this calendar-year grouping is not the same thing as grouping by the ISSUER'S OWN FISCAL PERIOD: it pairs each fiscal year's fundamentals (reported as of the true period end, 31 March) with a price/ratio observation from nine months later in the same calendar-year label (31 December), rather than one from at or near the fiscal period end. AC4's row-count-and-orphan-count bar cannot detect this, because it counts rows, not temporal alignment. This worker did not attempt a deeper fix (e.g. sourcing a price observation nearer the fiscal period end would need an additional Bloomberg field/call this order's F2/G-24 three-security cap does not budget for) -- the finding is disclosed in field_map.json, in every affected figure's `currency_caveat` (model_block_pull.py), and in README.md, per AC8's own question about what the deliverable could not resolve and said so.",
+    "notes": "Downstream cells building fiscal-year-keyed ratios for a non-December-FYE covered name (this universe includes several: KDDI, Hon Hai 2317 TT, Mitsubishi UFJ 8306 JP among the ~89, though this order touched none of them besides BABA) should re-derive rather than assume the calendar-year grouping is fiscal-period-aligned. A more precise fix (e.g. reading a Bloomberg fiscal-period-end price via an override, or accepting the March-dated sub-row's own trailing PX_LAST if one exists) is a candidate for whichever cell next builds ratio-bearing figures on a non-calendar-FYE name; not attempted here to stay inside the three-security cost cap and because it was not established which route Bloomberg actually supports without a further, uncosted call."
+  },
+  {
+   "id": "AMGT_RESAPP-Z-W9-S1",
+   "project": "AMGT_RESAPP",
+   "fabric": "site-z",
+   "surfaced_by": "0.9.0_WK_AMGT_RESAPP~9",
+   "surfaced_at": "2026-09-10T23:15:24Z",
+   "one_line": "16 of 89 folders in AMGT-s-12's universe.json carry bloomberg_ticker.value == 'AAPL US' with status MEASURED even though their folder names name distinct companies -- an identity-layer data-quality anomaly this cell's ticker selection had to route around.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "python census over org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/universe.json's 'names' array (89 entries): collections.Counter over bloomberg_ticker.value where status=='MEASURED' -> 33 unique values, one of which ('AAPL US') accounts for 16 of the 48 MEASURED entries; the 16 folders include AstraZeneca AZN, Canadian National Railway CNR, Clorox CLX, Copa CPA, Imperial Brands IMB LN, JD.com 9618 HK, Michelin ML FP, Mitsubishi UFJ Financial Group 8306 JP, Nestle NESN SW, Nokia FH, Orange ORA FP, SAP GY, Sanofi SAN FP, Shopify SHOP CA, Tokyo Marine 8766 JP, Total Energies TTE FP",
+     "AMGT_RESAPP-Z-W3-S1 (this same investigation file) already recorded a related identity-layer defect (5 of 89 folders carrying two disagreeing *ONE PAGER*.xlsx workbooks) found by the same worker who produced universe.json -- this is a second, distinct anomaly in the same artifact, not yet recorded",
+     "This worker's stated ticker-selection rule for AMGT-s-b4's AC1/AC4 (run_manifest.json in this worker's deliverables) explicitly excludes the 'AAPL US' value and picks the first three array-order MEASURED, ' US'-suffixed, non-anomalous entries (BABA, BA, COST) precisely to avoid resting the test on a non-discriminating identity"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "AMGT-s-12's universe.json entry per folder carries a MEASURED bloomberg_ticker.value that uniquely identifies that folder's subject company (the identity layer's whole purpose, per AMGT-s-12's cell text and STORE_CONTRACT.md section 2: 'there is exactly one identity axis in this bucket').",
+   "world_is": "16 of 89 folders' bloomberg_ticker.value is the identical literal 'AAPL US' at status MEASURED, which cannot be true for 16 distinct companies (AstraZeneca, Boeing peers, etc. are not Apple); the resolver measured SOMETHING at those folders but not each folder's own identity. This worker did not fix or re-run AMGT-s-12's resolver (out of this cell's <paths> and BOUNDS) and instead selected its 3 test tickers by a rule that provably avoids the anomalous value.",
+   "notes": "Non-blocking for AMGT-s-b4: the stated selection rule (run_manifest.json) sidesteps the anomaly entirely and BABA/BA/COST are independently confirmed real, distinct, US-listed tickers. Worth AMGT-s-12's owner re-reading build_universe.py/resolver.py for whichever code path defaults to 'AAPL US' (possibly a template/placeholder cell read from a workbook whose real ticker cell was blank or unreadable, silently falling back to a literal in the script rather than refusing) before any other cell trusts universe.json's bloomberg_ticker column at face value for one of these 16 folders."
+  },
+  {
+   "id": "AMGT_RESAPP-Z-W9-S2",
+   "project": "AMGT_RESAPP",
+   "fabric": "site-z",
+   "surfaced_by": "0.9.0_WK_AMGT_RESAPP~9",
+   "surfaced_at": "2026-09-10T23:15:24Z",
+   "one_line": "astn/brightdata/residential-proxy currently TLS-intercepts every HTTPS GET with an untrusted 'Bright Data Proxy Root CA' leaf that no standard client can verify, so this run's 9 attempted GETs (3 tickers) all failed at the TLS handshake before reaching Seeking Alpha, and AC1 reads 0 of 3 landed -- not a defect in this order's fetcher, detectors, or logging (AC2-AC6 all pass).",
+   "class": "BLOCKING",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "curl_cffi.requests.Session(impersonate='chrome', proxies={http/https: the astn/brightdata/residential-proxy secret's host:port with a fresh per-request random sticky-session username, as sa_rest_fetch.py's own build_session() constructs it}).get('https://example.com') -> curl_cffi.requests.exceptions.CertificateVerifyError 'SSL certificate problem: unable to get local issuer certificate'; the identical Session with no proxy set against the same URL succeeded 200/559 bytes, and the identical Session with verify=False against the proxy also succeeded 200/559 bytes (diagnostic only, not used in the shipped fetcher, which never sets verify=False)",
+     "openssl s_client -connect example.com:443 -proxy <secret host>:<secret port> -proxy_user <sticky-session id> -proxy_pass env:<var> -servername example.com -showcerts: exactly 1 certificate returned in the chain -- '0 s:CN=*.example.com' / 'i:C=IL, ST=IL, O=Bright Data, CN=Bright Data Proxy Root CA' -- no intermediate or root sent, verify return code 21 (unable to verify the first certificate)",
+     "A second, independent TLS stack (native Windows Schannel via curl.exe 8.21.0, which trusts the OS root store, distinct from curl_cffi's bundled certifi store) reproduces the same rejection through the same proxy: 'curl: (60) schannel: SEC_E_UNTRUSTED_ROOT -- The certificate chain was issued by an authority that is not trusted'",
+     "Reproduced on 3 independent per-invocation sticky-session identifiers, one per ticker (BABA, BA, COST), each generating its own fresh random suffix per sa_rest_fetch.py's username convention -- all 9 GET attempts (symbol/analysis/news x3 tickers) failed identically, logged in this worker's deliverables/request_log.json with classification TRANSPORT_ERROR and the curl error text (no secret value in any entry)",
+     "The reference (@b1656bbebc section 2b) measured 'the proxy is GET-capable today ... never challenged once the PX cookies were present' at 19:4x-19:5xZ 2026-09-10 through the same secret, same default verify=True code path; this run (23:0x-23:1xZ, same day, same secret, same session-building code) reproduces the interception on every attempt with no code difference in how the session or proxy is built"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The cell's mechanism for AC1 (carried from the reference, section 2b): 'the fetch MUST egress through the residential proxy ... The proxy is GET-capable today,' i.e. that egressing through astn/brightdata/residential-proxy with the parked jar produces vendor HTTP responses this ETL can classify and land.",
+   "world_is": "The proxy zone is currently terminating and re-signing HTTPS with its own 'Bright Data Proxy Root CA' rather than passing the origin's real certificate through, and does not include that root/intermediate in the handshake -- so no standard TLS client (tested: curl_cffi/certifi AND native Windows Schannel) can complete verification without either disabling certificate verification (a security-posture change this cell's BOUNDS do not authorize) or being supplied that specific root CA out of band, which this worker does not have and did not seek from Bright Data (no vendor API/dashboard call made). verify stayed at its safe default for every real attempt in this run, so no part of the parked session's 65-cookie jar was ever transmitted to the intercepting party -- the TLS handshake aborted before any HTTP request left the client. AC1 reads 'raw objects 0 across 3 keys; symbol+report present for 0 of 3; sa_ids MEASURED 0' -- a genuine, reproduced, non-rescued finding, recorded rather than routed around.",
+   "notes": "Not this worker's <paths>/BOUNDS to fix: resolving it means either obtaining Bright Data's specific proxy root CA (an out-of-band vendor artifact, e.g. from their account dashboard or support) and pinning it as a scoped trust anchor for this proxy only, or toggling off whatever zone-level SSL-interception feature is enabled, or an explicit Andrew-authorized decision to disable verification for this specific proxy -- all security-posture calls outside this cell's granted authority. The rest of the module is built and exercised as far as the transport layer allows: AC2 (4 fixture tests), AC3 (referer/proxy/method/pacing census), AC4 (3 tickers, 1 run), AC5 and AC6 (structural bans) all pass against this exact run's real output; only AC1 (the live landing) is blocked by this transport-layer finding."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W7-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~7",
+    "surfaced_at": "2026-09-10T23:59:24Z",
+    "one_line": "build_view.py's security_key derivation omitted the Bloomberg yellow key ('Equity'), so it matched NOTHING in the store even for correctly-resolved names -- invisible while the store was empty, caught once AMGT-s-1 landed real data; fixed in-session (own bug, own <paths>).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live boto3 read of opal-data-research at this vintage: 18 keys now present (previously 0), under raw/bloomberg/{BABA_US_Equity,BA_US_Equity,SAP_GY_Equity}/ and derived/model_block/{same three}/ -- AMGT-s-1 has landed real Bloomberg pulls",
+        "raw/bloomberg/BABA_US_Equity/20260910T224407Z/refdata.json read directly (get_object): its own top-level JSON key is literally 'BABA US Equity' -- the FULL Bloomberg security identifier including the yellow key, confirming the store's actual key grammar rather than assuming it",
+        "universe.json's bloomberg_ticker.value for the same name is 'BABA US' (no yellow key) -- this cell's original security_key_for() did `value.replace(' ','_')` -> 'BABA_US', which never matches 'raw/bloomberg/BABA_US_Equity/' -- regenerating coverage_freshness.json BEFORE the fix showed 89 of 89 rows NEVER even though 2 of those 89 names (Alibaba BABA, Boeing BA) had real, fresh Bloomberg data landed under a key one underscore-segment away from what this module looked up",
+        "fix: security_key_for() now appends '_Equity' before replacing spaces; re-run after the fix: 2 of 89 rows now read a real timestamp (20260910T224407Z, 20260910T224406Z) matching the store's own object timestamps; re-ran AC1/AC2/AC3/AC4/AC5 against the fixed module, all PASS-by-output"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This cell's own STORE_CONTRACT.md (AMGT-s-6 deliverable) section 2 worked example already showed the full identifier ('AAPL US Equity' -> 'AAPL_US_Equity'), implying <security_key> always carries the yellow key.",
+    "world_is": "AMGT-s-12's universe.json (the identity layer this cell is told to read security_key FROM) never carries the yellow key in bloomberg_ticker.value -- only '<TICKER> <EXCH>'. Bridging that gap (appending 'Equity') was left implicit in the contract's own text and this cell's first draft did not do it, so the freshness view was silently wrong (100% false-NEVER) for any name with real store data, for as long as the store was empty to hide it. Fixed in this cell's own module (lib/research/freshness/build_view.py, in <paths>) and amended into STORE_CONTRACT.md (also in <paths>: deliverables/ broadly granted) so AMGT-s-14 (the next consumer in this chain) does not repeat it.",
+    "notes": "Secondary, related observation, not separately filed: SAP GY still reads NEVER in the regenerated view even though real SAP data is landed under raw/bloomberg/SAP_GY_Equity/ -- because AMGT-s-12's shared-template-placeholder fix (AC7) downgraded SAP GY's bloomberg_ticker to UNRESOLVED (it was one of the 16 folders that shared the 'AAPL US' placeholder), and this cell correctly treats UNRESOLVED as no-key rather than re-deriving one from the store. SAP GY's TRUE ticker ('SAP GY') is now independently confirmed by the store's own successful landing under that exact key -- a fact AMGT-s-12's own re-resolution pass could use, but re-resolving identity from a downstream store write is AMGT-s-12's call, not this cell's to make."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W7-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~7",
+    "surfaced_at": "2026-09-11T00:08:37Z",
+    "one_line": "The issuer's instruction ('AMGT-s-7 stays COMPLETE... regenerate coverage_freshness.json') is jointly unsatisfiable with the owned-paths lane gate: lib/research/freshness/ is granted ONLY by AMGT-s-7's own order, and a TERMINAL (complete) order is not a live grant, so this worker cannot commit the code fix its own regenerate required.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~ZZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'lib/research/freshness' across all 16 task-orders/*.md in this project -> 5 hits, ALL inside AMGT_RESAPP.TO-AMGT-s-7.coverage-freshness-view-one-place.md (its own WHAT-TO-PRODUCE text, its own <paths> line, its own AC4/AC5 invocations) -- no OTHER task order, including the already-staged AMGT_RESAPP.TO-AMGT-s-14.input-ledger-per-class-rerun-alone.md (issued_to this same serial, <paths> = lib/research/ledger/, two named integrations/ scripts, deliverables/, the investigation file, its own TO file), names this path",
+        "AMGT-s-7's own task-order file at HEAD reads <status>complete</status> (this worker's own prior commit, cc3961a3ce)",
+        "bash .tools/safe-commit.sh --author \"0.9.0_WK_AMGT_RESAPP~7 ...\" -F <msgfile> -- lib/research/freshness/build_view.py <3 other paths> -> 'ERROR: owned-paths lane violation(s) detected (block mode): VIOLATION: lib/research/freshness/build_view.py -- lane=BASE_EXEC (Base workspace execs -- CTO + COO + CVO...); agent=0.9.0_WK_AMGT_RESAPP~7 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block (ADHC_OWNPTH.005: the order is the grant; a missing path is a cut defect, never an override)' -- rc 1, nothing committed (files left unstaged, verified via git status immediately after)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The issuer's message, verbatim: 'The order AMGT-s-7 stays COMPLETE; this is its own deliverable refreshed on the correction of its input, not a reopen' -- paired with 'Re-run the generator... Commit the regenerated deliverable and the instance on your branch via safe-commit'.",
+    "world_is": "Those two instructions cannot both hold under ADHC_OWNPTH.005 as gated: the code fix to lib/research/freshness/build_view.py this regenerate REQUIRED (surprise row AMGT_RESAPP-Z-W7-S4 -- security_key_for() needed the yellow-key fix or the regenerated coverage_freshness.json would still misreport BABA/BA as NEVER) sits in a directory ONLY AMGT-s-7's own order ever granted, and that order is now terminal by the issuer's own explicit instruction. This worker did NOT force an override (GIT_COMMIT_AUTHOR_OVERRIDE=<LANE> is an audited escape for a LANE HOLDER, not a route for a worker to widen its own grant past what an order names -- CLAUDE.md 14a's own text, and this order's own bound: 'you cannot ask for one to be added') and did NOT commit the regenerated coverage_freshness.json without its generating code, which would have landed a data artifact with no committed code to justify it -- a worse state than reporting the block. Every fix (build_view.py's yellow-key correction, the regenerated JSON, the STORE_CONTRACT.md amendment, this row) exists in the worktree, verified correct (AC1-AC5 all re-run PASS against the fixed module), and is UNCOMMITTED pending the issuer's resolution: reopen AMGT-s-7 briefly for this one write, amend AMGT-s-14 (or a new order) to add lib/research/freshness/ to its <paths> before it is formally handed, or name an explicit route this order did not anticipate.",
+    "notes": "This worker treats this the same as an unsatisfiable proof-of-spec criterion: refuse the action as instructed, record the measurement, and report -- never repair the gate, never self-authorize an override, never widen the grant. Nothing was rolled back; the worktree carries the complete, correct, verified fix, uncommitted, exactly as the gate left it."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W1-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~1",
+    "surfaced_at": "2026-09-10T23:45Z",
+    "one_line": "The repo's root .gitignore ignores the whole lib/ tree (a standard Python-venv boilerplate line, :47), so any NEW file under lib/research/<anything>/ is gitignored until force-added -- git status/git add report it as clean-absent unless -f is used, even though lib/research/identity/ etc. are already tracked and unaffected (git does not re-apply .gitignore to already-tracked paths).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git check-ignore -v lib/research/provenance/schema.json lib/research/provenance/validate.py lib/research/provenance/__init__.py` (this worker's own new files, cell AMGT-s-3) -> all three: `.gitignore:47:lib/`",
+        ".gitignore:44-50: a standard Python-boilerplate block (`build/`, `develop-eggs/`, `dist/`, ... `lib/`, `lib64/`, ...) with only two negation exceptions, both under `data/`: `!data/black_diamond/scripts/gold/lib/`, `!data/inf/scripts/gold/lib/` -- none for `lib/research/`",
+        "`git check-ignore -v lib/research/identity/resolver.py lib/research/identity/__init__.py lib/README.md lib/trading_calendar.py` -> no output (not reported as ignored) BECAUSE these paths are already tracked (`git ls-files lib/` lists them) -- git's ignore check does not apply to a path already in the index, which is why the s-12 worker's commit into lib/research/identity/ never surfaced this",
+        ".tools/safe-commit.sh:49: 'Staging uses `git add -f`, which FORCE-adds files EVEN IF gitignored' -- the estate's OWN commit wrapper already force-adds, so this did not block this worker's commit; a plain, non-wrapped `git add` on a NEW lib/research/ path (bypassing safe-commit.sh) would silently stage nothing"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This cell's <paths> grant: `lib/research/provenance/` is a write surface this worker may create files under, with no stated caveat about gitignore interaction.",
+    "world_is": "The path IS writable and IS committable (safe-commit.sh's `git add -f` handles it transparently), so this cell's own work was never blocked -- but a bare `git add`/`git status` on a brand-new `lib/research/<new-module>/` directory reports it as absent/untracked-and-ignored, which reads exactly like 'nothing here' to any tool or worker that does not know to force-add. Not a defect in THIS cell's outcome (verified via `git ls-files` after commit, below), but a live trap for the next worker who creates a NEW subpackage under `lib/research/` and checks its own work with a bare `git add`/`git status` instead of `safe-commit.sh`.",
+    "notes": "Not this worker's <paths>/BOUNDS to fix -- editing the root .gitignore is outside this cell's write surface (lib/research/provenance/, deliverables/, the investigation file, and this cell's own task-order file only). Flagged for whichever seat owns .gitignore maintenance: either add `!lib/research/` alongside the existing `data/.../lib/` exceptions, or accept the current state as intentional (this repo's `lib/` boilerplate rule predates `lib/research/` as a source tree) and rely on safe-commit.sh's force-add, which already works."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W3-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~3",
+    "surfaced_at": "2026-09-11T00:19Z",
+    "one_line": "AMGT-s-4's cell text names which securities the reader should key items by only implicitly (via AMGT-s-12's identity layer); this worker reused AMGT-s-b4's own run_manifest.json ticker selection (BABA_US, BA_US, COST_US) rather than deriving an independent set.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT-s-4 cell text (a): 'read(security_key, sources) -> coverage_items.json' -- takes a security_key as a parameter but the order does not name which security_key(s) to run the reader over for AC2's 'at least 1 security'",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~9/run_manifest.json's own selection_rule: 'the first three entries whose bloomberg_ticker.status == MEASURED, whose bloomberg_ticker.value ends with \" US\", and whose value is not \"AAPL US\"' -- read directly and reused verbatim (BABA_US, BA_US, COST_US) by lib/research/coverage/run_reader.py",
+        "python -m lib.research.coverage.run_reader -> 'COVERAGE RUN: 3 securities; 4 items attached; sa_raw_keys_found 0; identity_dropped {BABA_US: 1, BA_US: 1, COST_US: 1}'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-s-4 (a): the reader is a function of security_key and sources; the order does not name which securities AC2's run must cover.",
+    "world_is": "This worker reused a SIBLING cell's (AMGT-s-b4) selection artifact instead of deriving one independently from universe.json -- a reasonable, grounded, non-arbitrary choice (identity-resolved, non-placeholder, consistent with the store keys AMGT-s-b4 would land SA raw JSON under) but a choice this order left open, not one it named. Non-blocking: AC2/AC3/AC7 all close cleanly on this selection; a different, equally valid selection would also have closed them.",
+    "notes": "Recorded for the CVO/next reader: if AMGT-s-b4's run_manifest.json selection ever changes (a re-run with different tickers), this cell's run_reader.py silently follows it (it is read live, not pinned) -- worth a read before assuming these three names are stable across rounds."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W4-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~4",
+    "surfaced_at": "2026-09-11T00:26:26Z",
+    "one_line": "AC1's own required action -- re-running AMGT-s-12's f6_remeasure.py -- overwrites that already-completed worker's committed f6_remeasure.json in place; the instrument's output path is not scoped to the calling worker, so a peer's landed deliverable is mutated by design on every re-run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "f6_remeasure.py's OUTPUT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'f6_remeasure.json') -- hardcoded beside the script itself, which lives at org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/f6_remeasure.py (a DIFFERENT, already-completed worker's deliverables folder), not this worker's own deliverables/0.9.0_WK_AMGT_RESAPP~4/",
+        "this worker ran `python org/.../deliverables/0.9.0_WK_AMGT_RESAPP~3/f6_remeasure.py` at 2026-09-11T00:05Z per AC1; `git diff` on that path afterward shows read_started_at/read_finished_at moved from '2026-09-10T23:20Z' (0.9.0_WK_AMGT_RESAPP~3's own committed run) to '2026-09-11T00:05Z' (this worker's run) with every other field byte-identical (partition stale-set 48/own-set 4/no-CSC 2 of 54 unchanged) -- `git status --porcelain` reports `M org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/f6_remeasure.json` in this worker's own worktree",
+        "this worker's own printed AC1 output (2026-09-11T00:05Z) and 0.9.0_WK_AMGT_RESAPP~3's committed AC3 output (2026-09-10T23:20Z, cited verbatim in identity-layer-the-root.result.md:72) agree on every count -- the content is unaffected, only the shared file's vintage/timestamp fields move on each re-run"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~ZZZ",
+    "spec_asserts": "This cell's AC1: 'RE-MEASURE F6 FIRST ... by RE-RUNNING AMGT-s-12's script, not by a third implementation ... Record its output line verbatim in your deliverable with the time you ran it' -- treating the script as a read-style re-measure instrument whose only expected effect is printing a line for the calling worker to record; the worker face names AMGT-s-12's and AMGT-s-1's deliverables as READ.",
+    "world_is": "Running the named script exactly as AC1 requires does not merely print a line -- it also overwrites 0.9.0_WK_AMGT_RESAPP~3's already-committed f6_remeasure.json with this run's own vintage, because the script's OUTPUT_PATH is hardcoded to write beside itself rather than into the calling worker's own deliverables folder or a run-scoped path. This worker did NOT commit the mutated file (left uncommitted, outside this worker's own deliverables/0.9.0_WK_AMGT_RESAPP~4/ output), so this round's shared branch state is undisturbed by this run -- but the coupling persists as a property of the shared instrument: any future worker or cell asked to 're-measure F6 first' by re-running this exact script (as this cell's AC1 and AMGT-s-12's own AC3 both already do) will keep silently overwriting a committed peer artifact's vintage rather than writing its own timestamped copy, which is why hazard_standing is ARMED rather than INERT.",
+    "notes": "A safer instrument would take an --out argument or default to writing into the CALLING worker's own deliverables folder; not fixed here -- altering AMGT-s-12's landed script is outside this cell's <paths>/BOUNDS, and the order says re-run it, never repair it. Disarm is a design decision (re-cut the script's output convention, or accept the mutation as harmless since content never disagrees) that this worker is not positioned to make -- named to 2.0.0_SA_COO~ZZZ, the issuer of this round."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W3-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~3",
+    "surfaced_at": "2026-09-11T00:57Z",
+    "one_line": "AMGT-s-9's AC2 reads a top-level 'figure_ids' key from every AMGT-s-1 model_block_*.json, but none of AMGT-s-1's three landed files carries that key -- figures are identified there by a (scope, fiscal_year, mnemonic) tuple, not a flat id list -- so no figure can ever be cited as evidence and pass AC2's resolution check.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC2 invocation (task order verbatim): \"ids.update(json.load(open(f)).get('figure_ids',[]))\" over glob('.../deliverables/0.9.0_WK_AMGT_RESAPP~1/model_block_*.json')",
+        "python -c \"import json; d=json.load(open('org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/model_block_BABA_US_Equity.json')); print(list(d.keys()))\" -> ['security', 'security_key', 'raw_stamp_used', 'fiscal_years', 'fiscal_year_row_count', 'orphan_price_rows', 'figures', 'unresolved'] -- no 'figure_ids' key on any of the three landed model_block_*.json files (checked all three)",
+        "each element of d['figures'] carries {scope, fiscal_year, mnemonic, value, unit, sign, basis, vintage, source, currency_caveat} -- no single 'id' field either; a figure is identified by the (scope, fiscal_year, mnemonic) tuple",
+        "the cell text (a) itself permits evidence as 'item_id|figure_id' -- an OR -- so citing only item_ids is within the marking contract's own stated shape, not a route the order failed to name"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-s-9 part (d): 'evidence = its figures (from model_block_*.json) + AMGT-s-4's coverage_items for that key' -- figures are intended as a first-class evidence source; AC2's checker computes the resolvable id-space FROM a 'figure_ids' key it expects those files to carry.",
+    "world_is": "AMGT-s-1's landed model_block_*.json files carry no 'figure_ids' key at all, so AC2's resolvable id-space is populated ENTIRELY by AMGT-s-4 coverage item_ids -- any sentence citing a figure as evidence would fail 'all evidence resolves' under AC2 exactly as written, even though the figure genuinely exists and is real Bloomberg data. This worker's producer.py therefore drafts company_description/ceo_bio/recommendation as EMPTY limbs (no figure evidence is citable) rather than cite an id that would never resolve -- figures are still read and their count reported in drafting_run_summary.json, never invented into evidence.",
+    "notes": "Not this worker's <paths>/BOUNDS to fix: AMGT-s-1's deliverable format is that cell's own, already landed and committed; this worker did not edit it. A future round could mint stable figure ids (e.g. '<security_key>::<scope>::<fiscal_year>::<mnemonic>') and add a 'figure_ids' key to AMGT-s-1's own output, or amend AC2's checker to read the (scope,fiscal_year,mnemonic) tuples directly -- either is the owning seats' call, not this worker's to make unilaterally on a sibling's landed artifact."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W2-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~2",
+    "surfaced_at": "2026-09-11T00:20:00Z",
+    "one_line": "This cell's own BUILD text names an unstamped key, packs/<security_key>/status.json, that STORE_CONTRACT.md rule 1 ('nothing is ever written to a path that already exists') would otherwise forbid -- a deliberate, disclosed exception, not a defect, but worth a row so AMGT-s-14 does not assume every packs/ key follows the stamp convention.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This cell's own TO text, THE BUILD, third bullet: 'the status object: packs/<security_key>/status.json in opal-data-research with {state: REQUESTED|FETCHING|LANDED|FAILED, requested_at, updated_at, reason}' -- no <YYYYMMDDTHHMMSSZ> stamp segment in the named key, unlike every other packs/ key STORE_CONTRACT.md names",
+        "STORE_CONTRACT.md (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~7/STORE_CONTRACT.md) section 4 rule 1, verbatim: 'Nothing is ever written to a path that already exists. Every write mints a fresh <YYYYMMDDTHHMMSSZ> prefix; an S3 PutObject to a key that already exists is never issued by a correct writer.'",
+        "integrations/bloomberg/research/pull_consumer.py _write_status(): GetObject-then-merge-then-PutObject onto the SAME key packs/<security_key>/status.json on every call (REQUESTED -> FETCHING -> LANDED/FAILED all overwrite in place) -- exercised live in this order's own AC3 run, where the SAME key's `state` field was observed to change from REQUESTED to FETCHING to LANDED across three writes to one key"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "STORE_CONTRACT.md rule 1: every write mints a fresh stamp; nothing is ever overwritten. This cell's own BUILD text: the status object lives at one fixed, unstamped key and carries requested_at/updated_at fields implying in-place mutation.",
+    "world_is": "The two documents are in tension on this ONE key class; this cell followed its own TO text literally (the more specific, later-authored instruction) and treats status.json as a deliberate, scoped exception -- a mutable current-state pointer, not a versioned artifact -- documented as such in SEAM_DESIGN.md section 4. Every OTHER write this cell makes (raw/bloomberg/..., derived/model_block/...) keeps STORE_CONTRACT's stamp-and-never-overwrite rule untouched; this exception is confined to the one key whose entire purpose is to answer 'what is the CURRENT state' without a caller first discovering a latest stamp.",
+    "notes": "Not a defect and not blocking (AC1/AC3 both pass under this reading). Filed so AMGT-s-14 (the input ledger, which reads this bucket read-only per STORE_CONTRACT section 5) does not assume status.json is stamped/versioned like every other packs/ key -- its 'last run' logic (max lexicographic stamp under a prefix) has no stamp level to find under packs/<security_key>/status.json and should read it as a flat, mutable pointer instead. Owner of reconciling STORE_CONTRACT.md's text with this exception (e.g. adding a named carve-out for *status.json keys) is whoever next amends STORE_CONTRACT.md; not this cell's <paths> to edit (STORE_CONTRACT.md lives under 0.9.0_WK_AMGT_RESAPP~7's deliverables folder, AMGT-s-6's, not this cell's write surface)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W2-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~2",
+    "surfaced_at": "2026-09-11T00:45:00Z",
+    "one_line": "AC6's literal invocation, `comp-routes behaviors | grep -c -E 'research|amgt'`, cannot see a pure-add API Gateway route on an EXISTING CloudFront catch-all -- the ONLY design shape available inside this cell's write surface -- because `cmd_behaviors` prints each behavior's STATIC hand-authored comment, never a dynamically-computed route list; `comp-routes api-routes` (a different subcommand, not named by AC6) DOES show the declared route.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/modules/graph/routes_cli.py:423-437 cmd_behaviors(): for each behavior, prints `b.comment` (a string field parsed from cloudfront-distribution.tf's own `# N. ...` comment lines) -- never a lookup against `rt.api_gw_routes` (the separately-built list `cmd_api_routes` at :487-501 reads); the 'API GW depth-N: ...' text visible on behaviors 5-9 in a fresh comp-routes behaviors read is itself STATIC prose already committed in cloudfront-distribution.tf, not computed at read time",
+        "This cell's route lives on the EXISTING behavior #22 (`/api/private/*` -> APIGateway-portal, per infra/aws/terraform/portal-auth/cloudfront-distribution.tf:757-773, read-only -- not in this cell's <paths>) precisely because SEAM_DESIGN.md section 1 chose a pure-add on that catch-all to avoid touching portal-auth/, which this cell's <paths> excludes entirely",
+        "`bash .tools/comp-routes api-routes` (run from this worktree, after the apply) lists `research: POST /api/private/research/pull` -- the route IS in the estate's DESIRED-plane record -- while `bash .tools/comp-routes behaviors 2>&1 | grep -c -E 'research|amgt'` and the bare PATH-resolved `comp-routes behaviors` (baked to this device's main checkout, .tools/comp-routes wrapper) both return `0`",
+        "The literal AC6 invocation, run exactly as written in this order, returns rc=1 (grep's no-match exit) with stdout `0`"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC6: 'a count of 1 or greater AFTER the apply -- the request path's route is DECLARED in the estate's source of record and comp-routes sees it; 0 means the build reached AWS without reaching the record ... and is NOT met.'",
+    "world_is": "The route IS declared in the estate's source of record (infra/aws/terraform/research/api-gateway.tf, committed alongside this row) and `comp-routes api-routes` proves it; the LITERAL invocation AC6 names (`comp-routes behaviors`) structurally cannot reflect a pure-add route on an existing CloudFront catch-all regardless of correctness, because that subcommand's per-behavior annotation is static source prose, not a live join against the parsed route table. This worker did not substitute `api-routes` for `behaviors` to force a match (CLAUDE.md: never repair or route around a criterion) -- AC6 is recorded FAIL against its exact literal invocation and output.",
+    "notes": "Owner to choose the fix shape: (a) amend AC6 (or a future such criterion) to name `api-routes` instead of `behaviors` for a pure-add route on an existing catch-all, since `behaviors`' route detail is provably static prose keyed to hand-editing cloudfront-distribution.tf; or (b) grant a future cell write access to portal-auth/ to add a dedicated, hand-commented CloudFront behavior naming this route explicitly. Not this worker's <paths> or BOUNDS to choose -- portal-auth/ is outside this cell's write surface and the criterion text is not this worker's to edit."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W2-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~2",
+    "surfaced_at": "2026-09-11T00:47:00Z",
+    "one_line": "AC5's `grep -r` over infra/aws/terraform/research/ transiently counted a byte-coincidence match inside a gitignored `terraform init` provider-plugin binary as a loopback violation, reading '1' instead of '0' until the ephemeral `.terraform/` cache was removed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First run of AC5's exact invocation (grep -r -c -i -E 'listen\\(|bind\\(|0\\.0\\.0\\.0|--port|ngrok|reverse.?tunnel|ssm start-session.*portNumber' integrations/bloomberg/research/ infra/aws/terraform/research/ | grep -v -c ':0$') returned '1'",
+        "grep -r -n (no -c) on the same paths isolated the single match to a BINARY file: 'infra/aws/terraform/research/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/windows_amd64/terraform-provider-aws_v5.100.0_x5.exe matches' -- a compiled Go binary downloaded by this cell's own `terraform init`, containing an incidental byte sequence matching one of the five patterns",
+        "git check-ignore -v confirms the match is under infra/aws/terraform/.gitignore's `.terraform/` rule -- never part of any commit, regenerated fresh by any future `terraform init` in this directory",
+        "After `rm -rf infra/aws/terraform/research/.terraform`, the identical invocation returns '0' -- confirming the source this worker authored (sqs.tf, api-gateway.tf, pull_consumer.py, lambda_function.py) never itself matches any of the five patterns"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC5: 'exactly \"0\" -- NEGATIVE and structural: nothing under the box-side module or the Terraform opens a listener, binds a port, or reverse-tunnels into this device.'",
+    "world_is": "True of every file this worker authored; NOT true, transiently, of a vendored provider binary `terraform init` writes into the same directory tree as a build-time side effect. AC5's invocation, being a plain filesystem `grep -r`, does not distinguish tracked source from a gitignored build cache sitting in the same directory. This worker removed the cache before the final graded read (a cleanup of an ephemeral, git-ignored byproduct, not an edit to the criterion or to any source file) and the criterion now reads '0' honestly.",
+    "notes": "ARMED because the SAME false positive will recur, identically, for ANY future `terraform init` in infra/aws/terraform/research/ (or any other module this pattern is later applied to) until either the check is scoped to tracked/source files only (e.g. `git grep` instead of `grep -r`, or an explicit `--exclude-dir=.terraform`) or graders remember to clean the cache first. Disarm: whoever next authors a criterion of this shape should route it through `git grep` (tracked files only) rather than a raw filesystem `grep -r`, or scope it with `--exclude-dir=.terraform`; named to the issuer (2.0.0_SA_COO~ZZZ) as the seat that cuts this criterion's future instances, not something this worker's <paths>/BOUNDS license fixing in the criterion text itself."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W2-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~2",
+    "surfaced_at": "2026-09-11T02:05:00Z",
+    "one_line": "A correction, re-measured rather than argued: `comp-routes api-routes` DOES list this cell's route when invoked as this worktree's own tracked copy (`bash .tools/comp-routes`); the '0' the issuer could not reproduce past comes from the BARE `comp-routes` PATH shim, which is baked to this device's MAIN checkout (a different directory that never had this branch's commits), not from the extractor being blind to a new module's routes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "At HEAD 9cbbc84f71 (the issuer's own amendment commit), `bash .tools/comp-routes api-routes` (this worktree's tracked copy, invoked by its own relative path) prints 'API GATEWAY ROUTES (22)' including a 'research:' group with 'POST /api/private/research/pull' -- reproduced fresh, not cited from an earlier run",
+        "The SAME invocation via the bare command name, `bash -c \"comp-routes api-routes\"` (PATH resolution), prints 'API GATEWAY ROUTES (21)' with NO research group -- `type comp-routes` resolves to `/c/Users/Opal Bloomberg/bin/comp-routes`, a forwarder shim whose own header states it execs a BAKED absolute path `/c/Users/Opal Bloomberg/Desktop/ajb_workspace/.tools/comp-routes` (this device's main checkout, not C:/tmp/wk-amgt-1-2)",
+        "org/modules/graph/routes_cli.py:33-34: `_THIS_DIR = Path(__file__).resolve().parent; _WORKSPACE = _THIS_DIR.parent.parent.parent` -- WORKSPACE is derived from wherever the invoked routes_cli.py FILE physically sits, so the bare shim and this worktree's copy necessarily resolve to two different WORKSPACE roots and therefore two different `infra/aws/terraform/` directory listings",
+        "org/modules/graph/extract_routes.py:801-807 `_parse_api_gw_routes`: iterates `sorted(tf_base.iterdir())` over EVERY subdirectory of `infra/aws/terraform/`, not a fixed list of 'known' pipeline names -- so the extractor itself is not structurally limited to bd-pipeline/inf-pipeline/partners-api; a NEW module with an `api-gateway*.tf` file is picked up automatically once the tool reads the tree that actually contains it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC6 amendment 1 (commit 9cbbc84f71) and the issuer's message: 'comp-routes' extractor parses only the portal's known api-gateway.tf files ... structurally cannot observe a pure-add route in the NEW module' and 'I could not reproduce your claim that comp-routes api-routes shows the route -- api-routes count reads 0 in your worktree too'.",
+    "world_is": "The extractor is NOT limited to a fixed set of known pipeline directories (it globs every subdirectory); it already parses this new module correctly once given the right tree to read. The '0' both the issuer and this worker's own bare-command test produce comes from a DIFFERENT, purely mechanical cause: `comp-routes` on PATH is a forwarder baked to this device's single MAIN checkout, so any invocation via the bare command name reads that checkout's disk state, which never received this branch's commits (or, before commit 1a62bb9932, never received this worktree's uncommitted files either) -- regardless of which comp-routes subcommand is named. Invoking this worktree's OWN tracked `.tools/comp-routes` directly (as `bash .tools/comp-routes`, sidestepping the PATH shim) reads the correct tree and shows the route in `api-routes` (though NOT in `behaviors`, whose per-behavior text is genuinely static source prose -- that half of AC6's original finding stands). AC6 itself is unaffected by this row (the amended invocation reads the .tf file directly, bypassing comp-routes and this whole class of confusion); this row exists so the CVO/CTO's follow-up into 'comp-routes and new modules' (named as a finding beyond this order in the amendment) investigates the PATH-shim cause rather than the extractor, which would otherwise send that investigation to the wrong file.",
+    "notes": "Does not reopen or edit AMGT_RESAPP-Z-W2-S2, which stands as filed (comp-routes behaviors' own per-behavior-comment-is-static limitation is real and separate from this row). Non-blocking: AC6 already passes via the amended, comp-routes-independent invocation. Worth the CVO/CTO's attention only if a future criterion or investigation reasons about comp-routes' coverage of a new Terraform module from a bare `comp-routes` invocation on this device -- the correct read requires either merging the branch first or invoking the worktree's own `.tools/comp-routes` by relative path."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W1-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~1",
+    "surfaced_at": "2026-09-11T00:05Z",
+    "one_line": "This worktree's .gitmodules is EMPTY, so the portal/ gitlink (pinned at 5907cbca98eb091124e38a32debefa355c1d4376) cannot be initialized here at all; the F10 precedent DESIGN_SPEC.md this cell's task text names as READ material was read instead from the shared main workspace checkout, which itself carries a DIFFERENT portal commit (30ca034bbaa4b9d2864d3acce826e3c2fa59be0a) that also does not contain the pinned commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git ls-tree HEAD -- portal` -> `160000 commit 5907cbca98eb091124e38a32debefa355c1d4376\tportal` (a gitlink); `ls -la portal/` in this worktree -> directory exists, 0 entries besides `.`/`..`",
+        "`git submodule update --init -- portal` -> `fatal: No url found for submodule path 'portal' in .gitmodules`; the `.gitmodules` file in this worktree exists but is 0 bytes (Read tool: 'the file exists but the contents are empty')",
+        "`C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\portal\\src\\pages\\SecurityScanner\\DESIGN_SPEC.md` exists in the shared main workspace checkout, read from there instead; `git rev-parse HEAD` in that checkout's portal/ -> `30ca034bbaa4b9d2864d3acce826e3c2fa59be0a`",
+        "`git cat-file -e 5907cbca98eb091124e38a32debefa355c1d4376` inside that same checkout's portal/ -> not found (rc!=0, no output) -- the exact pinned commit is unreachable from either location available to this worker",
+        "the file read is 560 lines exactly, matching this cell's own task text ('F10: 560 lines') -- circumstantial confidence the CONTENT is the same the task order describes, but the commit identity itself is unverified"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This cell's task text: 'Also present: ... the F10 precedent portal/src/pages/SecurityScanner/DESIGN_SPEC.md (READ)' -- implying the file is reachable in this worktree at the pinned vintage.",
+    "world_is": "The portal submodule cannot be populated in this worktree at all (no .gitmodules mapping), so the file was read from a DIFFERENT, unrelated checkout of the same repo at a DIFFERENT commit than this worktree's own gitlink pins -- a substitution this worker discloses rather than silently treats as equivalent. The line count (560) matching the task order's own citation is the only corroboration that the substitute is faithful; the commit hash itself was not, and could not be, verified to be the same content.",
+    "notes": "Not this worker's <paths>/BOUNDS to fix -- .gitmodules is not in this cell's write surface (lib/research/print/, deliverables/, the investigation file, this cell's own task-order file). This worker used the substitute read only for STYLE/GRAMMAR guidance (DESIGN_SPEC.md's section structure), not as a data source whose exact bytes are reproduced verbatim into this cell's own criteria, which limits how much a vintage mismatch here could actually mislead the deliverable. Whoever owns this fabric's submodule wiring may want a populated .gitmodules on this worktree class generally, not just for this cell."
   }
 ]
 ```

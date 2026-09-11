@@ -1,0 +1,10 @@
+{
+ "note": "All 24 investigation items dispositioned in 6 adjudication rows @d98b82113b; open count 0 measured, 0 defects, 0 malformed. Coverage by subtraction against the channel's own 24-id list: 4+7+4+7+1+1=24 unique. C-S1 identity collapse verified ALREADY REMEDIATED at the artifact (32 MEASURED of 32 distinct, AAPL US zero); C-S2 seven criteria that cannot discriminate; C-S3 four device/worktree instruments; C-S4 the substantive findings incl. the fiscal-year join and the peer-deliverable truncation verified at f6_remeasure.py:65; C-S5 one dismissal; C-S6 the AMGT-s-b4 TLS honest fail. L10 NOT cut: AMGT-s-b4 externally blocked, that gate is 1.0.0_SA_CTO~Z's and Andrew's.",
+ "prd_pin": "52617ed23982",
+ "prd_version": "v0.3",
+ "project": "AMGT_RESAPP",
+ "round": 1,
+ "signed_by": "3.0.0_SA_CVO~Z",
+ "stage": "L9",
+ "utc": "2026-09-11T03:09Z"
+}

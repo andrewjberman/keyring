@@ -892,6 +892,12 @@ lanes:
     - 4.0.0_SA_CRO
     - 3.0.0_SA_CVO
     description: "Project tree, prd/signoff/ (L4-R, spine v3.14; Andrew-direct 2026-09-10 ~21:2xZ 'CRO and CVO should have to sign off on PRD before COO gets it'). The two reviewers' version-bound sign-off files, <serial>.json. SoD: the PRD's author (ANY_CTO on prd/**) CANNOT write here, and this longest-match rule DISPLACES prd/** for the signoff/ subtree; the L6 gate (to-pipeline-gate.py LIMB 6) and the L4 notifier read these files, nobody else writes them. Tilde lanes of each reviewer carry it."
+  TREE_PRD_STAMP:
+    permitted_agents:
+    - 1.0.0_SA_CTO
+    - 2.0.0_SA_COO
+    - 3.0.0_SA_CVO
+    description: "Project tree, prd/stamps/ (spine STAMP mechanism; Andrew-direct 2026-09-11 at the 1.0.0_SA_CTO~Z terminal, VERBATIM 'the spine should not rely on CVO talking to you ... they run a script that stamps the PRD'). The handoff-progression stamps <STAGE>[.rN].json, one per limb (L4 CTO / L5,L6 COO / L8,L9,L10 CVO), written ONLY by .tools/prd-stamp.py under the stage owner's own author line. SoD: like signoff/, this longest-match rule DISPLACES prd/** (ANY_CTO) for the stamps/ subtree, so a NON-CTO owner CAN mark the PRD's tree without being able to edit the .md (which is why a stamp is a sidecar, not an edit to the .md). The next owner reads the stamp instead of waiting for a broker message. Tilde lanes of each owner carry it; CRO is NOT here (its act is the signoff, in TREE_PRD_SIGNOFF)."
   TREE_PROJECT_ROW:
     permitted_agents:
     - 1.0.0_SA_CTO
@@ -921,6 +927,9 @@ paths:
   org/missions/*/*/*/prd/signoff/**:
     lane: TREE_PRD_SIGNOFF
     note: 'Project tree: prd/signoff/ (L4-R). Longest match DISPLACES prd/** (ANY_CTO): the author cannot sign its own PRD.'
+  org/missions/*/*/*/prd/stamps/**:
+    lane: TREE_PRD_STAMP
+    note: 'Project tree: prd/stamps/ (spine STAMP mechanism, Andrew-direct 2026-09-11). Longest match DISPLACES prd/** (ANY_CTO): a non-CTO stage owner marks the PRD tree via .tools/prd-stamp.py without editing the CTO-owned .md.'
   org/missions/*/*/*/prd/**:
     lane: ANY_CTO
     note: 'Project tree: prd/ (steps 2-4; the ENDPOINT lives INSIDE the PRD). Spec s.6.'

@@ -1797,3 +1797,120 @@ whether one row can close it; the groupable share is ~41, not 78.
   }
 ]
 ```
+
+## C-S47 -- Z-W7-S1, Z-W7-S2: both graduate; S4-AC4's invocation cannot run as written and is still unfixed at HEAD
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S47",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-11T01:45Z",
+    "one_line": "BOTH GRADUATE, AND ONE OF THEM IS A CRITERION THAT CANNOT RUN. Z-W7-S2 is CONFIRMED at this seat WITHOUT AN AWS CALL and with a negative control: `.tools/aws cloudwatch describe-alarm-history help` lists ONLY `[--start-date <value>]` / `[--end-date <value>]`, while `get-metric-statistics help` lists `--start-time` / `--end-time` -- so S4-AC4's invocation text is the ALWAYS-FAILS criterion shape: rc=252 on argument parsing, before any AWS call, so it can DISCRIMINATE NOTHING as written. The defect is STILL LIVE at HEAD (line 106 of the order carries `--start-time <T0> --end-time <T0+15m>`; line 108's S4-AC5 legitimately uses the time flags two lines later), which is why this graduates ARMED rather than closing with the order. Z-W7-S1 graduates on a different axis: the order's line 58 does instruct 'Run `S4-AC2` in the same minute as `T0`', the worker read at 22:11:16Z against T0=22:13:10Z, and the gap IS honestly closed by S4-AC4's own oldState record -- but a criterion that asks one worker to CO-TIME two acts it performs sequentially is unenforceable by construction, and the remedy is to DERIVE the pre-state read inside the burst tool rather than to instruct co-timing. Neither row's underlying GRADE is disturbed: S4-AC2 and S4-AC4 both stand.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-W7-S1",
+      "NFRA_OPSEC202609-Z-W7-S2"
+    ],
+    "disarm_owner": "PER-ROW, and NEITHER is disarmed by TO-OP4-S-1 being terminal. Z-W7-S2 -> the criterion author (2.0.0_SA_COO~Z at the cut, 1.0.0_SA_CTO~Z if the shape is fixed at the PRD): the ONE-LINE disarm is substituting `--start-date`/`--end-date` in the order's S4-AC4 invocation text at line 106; until that edit lands, any future worker or re-cut copying this criterion verbatim hits the identical rc=252. VERIFIED STILL UNFIXED AT HEAD b9dff53130. Z-W7-S1 -> the same author, as a CRITERION-SHAPE fix rather than a text fix: replace 'run X in the same minute as T0' with an invocation that reads the pre-state as the burst tool's own first act, so the co-timing is structural instead of instructed. Both are P2 -- no served artifact and no live control rides either, and this order's own grades are unaffected.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-W7-S2, THE FLAG CLAIM, RE-DERIVED WITH A DIFFERENT INSTRUMENT THAN THE WORKER'S AND WITH NO AWS CALL AT ALL (the worker proved it by RUNNING the command and reading rc=252; this seat proved it from the CLI's own help, so the two do not share a method): `timeout 60 .tools/aws cloudwatch describe-alarm-history help` -> `[--start-date <value>]`, `[--end-date <value>]`, and NO --start-time/--end-time among the subcommand's options. NEGATIVE CONTROL, which is what makes this a statement about the SUBCOMMAND rather than about the shim: `timeout 60 .tools/aws cloudwatch get-metric-statistics help` -> `--start-time <value>`, `--end-time <value>`. CLI vintage printed beside the claim: aws-cli/2.35.21 Python/3.14.6 Windows/11 exe/AMD64.",
+        "Z-W7-S2, THE DEFECT IS LIVE, read from HEAD rather than the worktree: `git show HEAD:<the order> | sed -n '106p'` -> `<criterion id=\"S4-AC4\" ...><invocation>timeout 120 .tools/aws cloudwatch describe-alarm-history --alarm-name OPSEC-auth-throttled --history-item-type StateUpdate --start-time <T0> --end-time <T0+15m> --output json</invocation>`. The broken text is UNCHANGED at b9dff53130; nobody has fixed it, so the hazard the row names is not historical.",
+        "Z-W7-S2, THE INTERNAL INCONSISTENCY IS IN ONE FILE TWO LINES APART, which is the part that makes this a criterion-authoring lesson and not an AWS trivia note: line 106 (describe-alarm-history) uses --start-time/--end-time and cannot run; line 108 (S4-AC5, get-metric-statistics) uses --start-time/--end-time and runs correctly. Same `cloudwatch` service, same author, same cut, two subcommands that name the same concept with different flags.",
+        "Z-W7-S2, THE EVIDENCE THE CRITERION MEANT TO PRODUCE IS SOUND, re-taken here with the CORRECTED flags: `describe-alarm-history --alarm-name OPSEC-auth-throttled --history-item-type StateUpdate --start-date 2026-09-10T22:13:10Z --end-date 2026-09-10T22:28:10Z` -> OK->ALARM at 2026-09-10T18:14:03.280-04:00 and ALARM->OK at 18:15:03.277-04:00. RENDERED LOCAL, CONVERTED HERE (Rule 22a: this CLI prints -04:00; the UTC instants are 22:14:03.280Z and 22:15:03.277Z) -- identical to the worker's figures. So S4-AC4's GRADE stands; only its invocation text is defective.",
+        "Z-W7-S1, THE INSTRUCTION EXISTS AS THE ROW QUOTES IT: line 58 of the order reads '**Run `S4-AC2` in the same minute as `T0`**'. The row is not arguing against a paraphrase.",
+        "Z-W7-S1, THE RETROACTIVE CLOSE IS SOUND AND THIS SEAT ACCEPTS IT ON MECHANISM, not on the worker's word: an alarm-history StateUpdate item's `oldState.stateValue` is the state immediately BEFORE that transition, and its stateReason here names round 3's TO-OP3-S-2 S2-AC5 restore. So OPSEC-auth-throttled held OK continuously from that earlier fix through the 22:14:03.280Z transition -- an interval that CONTAINS both the 22:11:16Z read and the 22:13:10Z burst start with no intervening flip. The 1m54s gap therefore could not have hidden a state change, and S4-AC2's PASS is not resting on the co-timing it failed to achieve.",
+        "SCOPE OF WHAT IS AND IS NOT RE-OPENED: this row disturbs no grade. S4-AC2 PASS and S4-AC4 PASS both stand on the evidence above. What graduates is one TEXT defect (live) and one CRITERION-SHAPE defect (general), each with a named owner and a one-line remedy."
+      ]
+    },
+    "spec_asserts": "TO-OP4-S-1 step 2 instructs that S4-AC2 be run in T0's own minute, and S4-AC4's <invocation> is the literal command a worker is to run to evidence the alarm transition.",
+    "world_is": "S4-AC4's invocation cannot run on this AWS CLI as written (rc=252, argument parsing, before any AWS call) and is still unfixed at HEAD; and the same-minute instruction was not met, because the worker authored and compile-checked the burst tool between the pre-state read and the burst, a sequence the instruction cannot prevent.",
+    "notes": "THE CLASS, stated once because this estate has now met it repeatedly: a criterion whose INVOCATION cannot execute is not a weak criterion, it is a NON-criterion -- it returns the same failure on a correct world and a broken one, so nothing about the estate can move its verdict. That is the always-fails member of the three shapes (always-fails / always-passes / unsatisfiable-honest), and the only reason this instance cost nothing is that the worker noticed the CLI error, substituted the right flag, disclosed the substitution, and filed the row instead of quietly pasting a passing output. ⭐ THE PRACTICE WORTH KEEPING IS THE WORKER'S, NOT THE AUTHOR'S: it ran the criterion VERBATIM FIRST, which is exactly how an unrunnable invocation becomes visible rather than silently repaired in someone's head. A worker that had 'helpfully' fixed the flags without a row would have left the defect in the order for the next round to inherit. This row does not cut the slug -- it clears two of the three L9 preconditions; C-S48 takes the third and C-S49 carries the judgment grade."
+  }
+]
+```
+
+## C-S48 -- Z-W7-S3: DISMISSED, premise falsified -- the WATCH row exists under the table's CIDR key; a bare-address get-item cannot match
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S48",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-11T01:45Z",
+    "one_line": "DISMISSED -- THE PREMISE IS FALSE, AND THE ROW'S TWO CANDIDATE CAUSES ARE BOTH FALSE WITH IT. The predicted sentinel WATCH row for this device's egress address EXISTS AND ALREADY EXISTED AT THE MOMENT THE WORKER LOOKED: key `108.242.96.89/32`, status WATCH, case_ids [57df947ba391], hits 189, first_seen 2026-09-08T13:58:07Z, last_seen 2026-09-10T22:17:57Z -- INSIDE the burst window (T0=22:13:10Z) and FOUR MINUTES BEFORE the worker's 22:22Z query -- and paths_top carries `/auth/login`, the exact path the burst hit. The table's hash key is a CIDR: 60 of 60 sampled keys carry a prefix, 0 bare. The worker queried the BARE address `108.242.96.89`, so `get-item` returned rc=0 with no Item -- A WRONG-KEY-SHAPE READ, which is byte-identical to a genuine absence. So the sentinel DID see this burst: it is not a coverage gap (the row's hypothesis 1) and not an ingestion lag (hypothesis 2). ⛔ THE ROW'S FINDING IS WITHDRAWN; ITS FILING WAS STILL CORRECT -- an unmet BOUNDS prediction is exactly what the channel is for, and the worker bounded it, called it non-blocking, and did not chase it outside the order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The observation's world_is is falsified by direct measurement: the row asserts 'No row exists in opal-suspicious-addresses for 108.242.96.89 as of 2026-09-10T22:22Z', and a row for that address existed at that instant under the table's actual key form (`108.242.96.89/32`, last_seen 2026-09-10T22:17:57Z, i.e. already written ~4 minutes earlier). The negative read was a retrieval defect at this seat's own fabric, not a fact about the sentinel. Nothing about the control is impeached and no remediation is owed on the control; the METHOD lesson is carried in notes.",
+    "adjudicates": [
+      "NFRA_OPSEC202609-Z-W7-S3"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE ROW EXISTS, read at this seat 2026-09-11T01:4xZ: `.tools/aws dynamodb get-item --table-name opal-suspicious-addresses --key '{\"address\":{\"S\":\"108.242.96.89/32\"}}' --output json` -> Item present, status.S=WATCH, case_ids.SS=[57df947ba391], hits.N=189, first_seen.S=2026-09-08T13:58:07Z, last_seen.S=2026-09-10T22:17:57Z, paths_top.SS=[/auth/login, /authorize, /token], rules.SS=[Default_Action].",
+        "THE KEY SHAPE IS THE WHOLE EXPLANATION, and it is measured rather than inferred: the SAME get-item with the bare key `{\"address\":{\"S\":\"108.242.96.89\"}}` returns rc=0 and NO Item -- reproducing the worker's result exactly -- while the `/32` form returns the Item. Two calls, one differing character-run, opposite answers.",
+        "THE KEY CONVENTION, with a printed denominator rather than an impression: `dynamodb scan --max-items 60 --query 'Items[].address.S'` -> 60 of 60 sampled keys carry a `/` prefix, 0 bare (examples: 64.62.156.66/32, 138.91.108.245/32). `describe-table` -> KeySchema is a single HASH attribute `address` (S), ItemCount 679 (DynamoDB's approximate count, cited as approximate).",
+        "THE ADDRESS IS THE RIGHT ONE, so this is not a different-device artifact: `curl -sS https://checkip.amazonaws.com` at this seat now -> `108.242.96.89`, identical to the worker's pre-burst read. The key was correct; only its FORM was wrong.",
+        "HYPOTHESIS 1 (coverage bound) IS REFUTED BY THE ROW'S OWN CONTENT: the item's `paths_top` includes `/auth/login`, the burst's exact path, so the portal's CLOUDFRONT-scope WAF ACL demonstrably logs this path to the sentinel. The coverage_bound text stored on the item is real and unchanged, but the paths it disclaims (raw execute-api, opalinvest.com) do not include this one -- the worker correctly noted it had not CONFIRMED coverage either way, and the confirmation now exists.",
+        "HYPOTHESIS 2 (ingestion lag) IS REFUTED BY THE TIMESTAMP ORDERING: last_seen 2026-09-10T22:17:57Z PRECEDES the worker's 22:22Z query by about four minutes, so the data had already landed when the query ran. There was no lag to wait out.",
+        "S4-AC9 IS UNAFFECTED IN EITHER DIRECTION, as the row itself said: SENTINEL_BLOCK_ARMED reads false, and the WATCH status found here is a watch row, not an arming -- the sentinel observed and did not block, which is the configured posture.",
+        "POSITIVE CONTROL ON THE INSTRUMENT, so that an empty answer could be distinguished from a dead read path: the same credentials and shim scanned the table and returned real keys in the same session."
+      ]
+    },
+    "spec_asserts": "TO-OP4-S-1's BOUNDS section predicts that the burst will add or append a WATCH row and a case file for this device's egress address, as round 2's bursts did.",
+    "world_is": "The BOUNDS prediction was CORRECT and was already satisfied at the time of the worker's check: the WATCH row and its case id exist under the table's CIDR key form, updated inside the burst window. The row reporting their absence rests on a bare-address get-item that could not have matched.",
+    "notes": "⛔ WHAT GRADUATES HERE IS A METHOD, NOT A DEFECT IN THE CONTROL, and it is worth more than the row it dismisses: A KEYED-STORE MISS IS NOT AN ABSENCE UNTIL THE KEY FORM IS READ FROM THE STORE'S OWN SCHEMA OR ITS OWN ROWS. `get-item` answers a wrong key with rc=0 and an empty body -- the same two bytes of evidence a true absence produces -- so the failure is invisible on rc, on stderr, and on output shape alike. The cheap discriminator, which costs one call, is the one that found this: SCAN A FEW KEYS FIRST AND LOOK AT THEIR FORM. ⭐ AND NOTE WHERE THE REASONING WENT WRONG, because that is the reusable half: the worker, holding a false negative, went looking for CAUSES OF AN ABSENCE and found two genuinely plausible ones -- a real documented coverage bound and a real possible ingestion lag. Both were true statements about the world and neither was the answer. A plausible mechanism offered for a fact not yet established is how a retrieval error acquires a respectable explanation and stops being questioned. The prior question is always 'did I read the right object', and it is cheaper than either hypothesis. Routed to no one as a fix: there is nothing to fix on the sentinel."
+  }
+]
+```
+
+## C-S49 -- S4-AC10 JUDGMENT GRADE: PASS on the two in-artifact limbs, READ limb expressly not graded
+
+```json
+[
+  {
+    "id": "NFRA_OPSEC202609-Z-C-S49",
+    "project": "NFRA_OPSEC202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-11T01:45Z",
+    "one_line": "S4-AC10 (JUDGMENT, reserved to this seat by the order's own face) GRADED PASS on the two limbs it scopes: FWD-4's FIRED and DELIVERED are EXERCISED end to end with a CONFIRMED subscriber attached. Every number re-taken at this seat ~3.5h after the worker's, with the corrected flags, and all four agree: OK->ALARM 2026-09-10T22:14:03.280Z on the burst's own 429 bucket; SNS NumberOfNotificationsDelivered Sum=1.0 in the 22:14:00Z bucket with NumberOfNotificationsFailed Sum=0.0 beside it; subscription still one email endpoint on the same SubscriptionArn ...7a80a743-96aa-4a82-b34f-37188f38c0aa. ⚠ THE GRADE IS SCOPED AND SAYS SO: the READ limb is EXPRESSLY the issuer's record and is NOT graded here, and SNS 'Delivered' means the topic handed the message to the email transport -- which is precisely why a READ limb exists separately and why this PASS must not be read as evidence anybody opened it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "GRADUATED",
+    "grades": [
+      {
+        "criterion": "S4-AC10",
+        "instance": "org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.9.0_WK_NFRA_OPSEC202609~7/NFRA_OPSEC202609.TO-OP4-S-1.login-abuse-notification-delivered.proof_of_spec.json@b9dff53130",
+        "verdict": "PASS",
+        "reason": "THE CRITERION ASKS A SCOPED QUESTION -- whether FWD-4's IN-ARTIFACT limbs (FIRED, DELIVERED) are exercised end to end WITH A SUBSCRIBER ATTACHED, the READ limb being the issuer's -- and it instructs the assignee to record instruments and offer no verdict. The assignee did exactly that and marked itself UNVERIFIABLE-BY-INSTRUMENT with this seat named as the substitute oracle, which is the correct handling of a judgment criterion and is not a shortfall. THREE LIMBS, EACH RE-DERIVED HERE RATHER THAN ACCEPTED. (1) SUBSCRIBER: `sns list-subscriptions-by-topic --topic-arn ...:opal-login-abuse-alerts` -> exactly one subscription, Protocol email, Endpoint andrew@opalinvest.com, SubscriptionArn ...:7a80a743-96aa-4a82-b34f-37188f38c0aa. The ARN is a real subscription id and not the literal `PendingConfirmation`, which is the discriminator that separates CONFIRMED from merely created; and it is the same ARN the worker read before and after the burst, so the subscriber was attached across the whole run and still is. (2) FIRED: `describe-alarm-history --start-date/--end-date` -> OPSEC-auth-throttled OK->ALARM at 22:14:03.280Z, ALARM->OK at 22:15:03.277Z (CLI renders -04:00; converted here). The transition sits one metric bucket after the burst window T0=22:13:10Z..T1=22:13:18Z, its oldState names round 3's restore so the alarm was continuously OK beforehand, and the crossing datapoint is the burst's own 235 429-responses -- so the firing is attributable to this burst and to nothing else. (3) DELIVERED: `get-metric-statistics AWS/SNS NumberOfNotificationsDelivered ... TopicName=opal-login-abuse-alerts` -> Sum=1.0 in the 60s bucket starting 22:14:00Z, and NumberOfNotificationsFailed -> Sum=0.0 in that same bucket. This is the TOPIC'S OWN delivery metric, not a Publish MessageId and not the alarm firing: the order itself rules that a MessageId is SENT and does not satisfy this, and the alarm firing alone would only prove the action was invoked. The failed-count read beside the delivered-count is what makes the 1.0 a delivery rather than an attempt. WHAT THIS PASS DOES NOT CLAIM, stated because the criterion's own wording invites the over-read: SNS reports DELIVERED when it has handed the notification to the email transport. That is the strongest oracle available inside the artifact and it is the right one for this limb, but it is not a human receipt -- SENT, EMITTED and READ are three clocks, and this grade reaches the second. The READ limb is expressly excluded from this criterion and remains the issuer's record; nothing here manufactures it, and the order's assignee correctly never attempted contact. NO SIDE EFFECT, checked as part of the grade rather than taken on report: subscription count 1 before and after, OPSEC- alarm count 2 before and after, SENTINEL_BLOCK_ARMED false before and after, one burst only. PASS."
+      }
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "FIRED, this seat's own read at 2026-09-11T01:4xZ with the CORRECTED flags: `timeout 90 .tools/aws cloudwatch describe-alarm-history --alarm-name OPSEC-auth-throttled --history-item-type StateUpdate --start-date 2026-09-10T22:13:10Z --end-date 2026-09-10T22:28:10Z --query 'AlarmHistoryItems[].{ts:Timestamp,summary:HistorySummary}'` -> [{ts 2026-09-10T18:15:03.277-04:00, 'Alarm updated from ALARM to OK'}, {ts 2026-09-10T18:14:03.280-04:00, 'Alarm updated from OK to ALARM'}]. LOCAL RENDER CONVERTED, not mis-cited: 22:15:03.277Z and 22:14:03.280Z.",
+        "DELIVERED, this seat's own read: `get-metric-statistics --namespace AWS/SNS --metric-name NumberOfNotificationsDelivered --dimensions Name=TopicName,Value=opal-login-abuse-alerts --statistics Sum --period 60 --start-time 2026-09-10T22:13:10Z --end-time 2026-09-10T22:33:10Z` -> one datapoint, t=2026-09-10T18:14:00-04:00 (=22:14:00Z), Sum=1.0.",
+        "THE NEGATIVE ARM, without which a Sum of 1.0 is not a delivery: NumberOfNotificationsFailed over the identical window -> one datapoint, same 22:14:00Z bucket, Sum=0.0.",
+        "SUBSCRIBER, this seat's own read: one subscription, Protocol email, Endpoint andrew@opalinvest.com, SubscriptionArn arn:aws:sns:us-east-1:313476888478:opal-login-abuse-alerts:7a80a743-96aa-4a82-b34f-37188f38c0aa -- a real subscription id rather than `PendingConfirmation`, and the same ARN the assignee recorded at 22:10:55Z and 22:18:42Z.",
+        "AGREEMENT ACROSS A ~3.5 HOUR GAP AND A DIFFERENT INVOCATION IS THE POINT OF RE-TAKING THEM: the assignee's figures and this seat's are identical on all four quantities, and this seat reached the alarm history by the corrected flags the assignee had to substitute, so the two reads do not share the defective command text.",
+        "WHAT WAS NOT RE-RUN, and must not be: the burst itself. The order bounds this to ONE burst and it was respected; re-firing to re-verify would be a new unauthorised act against a live public path, and the alarm-history and SNS metrics are durable records of the original.",
+        "THE JUDGMENT FLAG ITSELF, read from the order at HEAD rather than assumed: line 118 carries `<criterion id=\"S4-AC10\" cell_refs=\"OP4-s-1\" judgment=\"true\"/>` with the text 'GRADED BY 3.0.0_SA_CVO~Z AT L9, NOT SELF-GRADED ... Record what the instruments read and offer NO verdict.' A census of the order's judgment carriers returns 1 of 10 criteria flagged, so S4-AC10 is the only grade this order reserves and no second judgment criterion is left ungraded."
+      ]
+    },
+    "spec_asserts": "S4-AC10 reserves to 3.0.0_SA_CVO~Z at L9 the judgment of whether FWD-4's in-artifact FIRED and DELIVERED limbs are exercised end to end with a subscriber attached, and instructs the assignee to record instruments without a verdict.",
+    "world_is": "Both in-artifact limbs are exercised and independently re-measured at this seat: the alarm transitioned on the burst's own throttle bucket, the topic's own metric reports one delivery and zero failures in the following minute, and a single confirmed email subscriber was attached throughout and still is. The READ limb is out of this criterion's scope and is not graded here.",
+    "notes": "WITH THIS ROW TO-OP4-S-1 HAS 10 OF 10 CRITERIA GRADED (9 mechanical PASS by instrument, 1 judgment PASS here) AND THE PROJECT HAS 0 ITEMS UNDER_INVESTIGATION -- C-S47 graduated two, C-S48 dismissed one, this row carries the reserved grade. That is the L9 limb of round 4 discharged. ⚠ THE L10 SLUG IS A SEPARATE ACT AND IS NOT CUT BY THIS ROW. ⛔ AND NOTHING HERE TOUCHES THE THREE COMPLETION_GRADES RESIDUES (FWD-4's READ limb, FWD-15's ALLOW-list date gate, FWD-19's volume window) OR THE REGISTER FLIP: Andrew's 2026-09-11T01:21Z 'Ok i want that thing marked as closed' lands on grades that are 1.0.0_SA_CTO~Z's to write and a dep_stage that is the register owner's to flip, and this seat states plainly that its own limb reaching 0-open does NOT by itself make the project closeable. Surfaced, not adjudicated."
+  }
+]
+```
