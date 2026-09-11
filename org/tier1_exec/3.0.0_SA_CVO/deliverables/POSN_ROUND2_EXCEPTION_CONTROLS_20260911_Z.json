@@ -1,0 +1,158 @@
+{
+  "authority_pin": "10ceba8c43",
+  "head": "e5443d12b9c7c481ddc49958c4bf23d2974e17cf",
+  "controls": [
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v3.md#POSN_ASTTAX-Z-C-S30",
+      "passed": true
+    },
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v3.md#POSN_ASTTAX-Z-C-S31",
+      "passed": true
+    },
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v3.md#POSN_ASTTAX-Z-C-S32",
+      "passed": true
+    },
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v3.md#POSN_ASTTAX-Z-C-S33",
+      "passed": true
+    },
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md#POSN_ASTTAX-Z-C-S6",
+      "passed": true
+    },
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md#POSN_ASTTAX-Z-C-S7",
+      "passed": true
+    },
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md#POSN_ASTTAX-Z-C-S8",
+      "passed": true
+    },
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md#POSN_ASTTAX-Z-C-S9",
+      "passed": true
+    },
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md#POSN_ASTTAX-Z-C-S10",
+      "passed": true
+    },
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md#POSN_ASTTAX-Z-C-S14",
+      "passed": true
+    },
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md#POSN_ASTTAX-Z-C-S16",
+      "passed": true
+    },
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md#POSN_ASTTAX-Z-C-S17",
+      "passed": true
+    },
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md#POSN_ASTTAX-Z-C-S23",
+      "passed": true
+    },
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md#POSN_ASTTAX-Z-C-S24",
+      "passed": true
+    },
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md#POSN_ASTTAX-Z-C-S26",
+      "passed": true
+    },
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md#POSN_ASTTAX-Z-C-S30",
+      "passed": true
+    },
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md#POSN_ASTTAX-Z-C-S31",
+      "passed": true
+    },
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md#POSN_ASTTAX-Z-C-S32",
+      "passed": true
+    },
+    {
+      "case": "authorized org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md#POSN_ASTTAX-Z-C-S33",
+      "passed": true
+    },
+    {
+      "case": "changed row content",
+      "passed": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S33: NEW remediation row (None) while 2 of 8 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "unlisted row id",
+      "passed": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S999: NEW remediation row (None) while 2 of 8 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "another round file",
+      "passed": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S33: NEW remediation row (None) while 2 of 8 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "another project",
+      "passed": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S33: NEW remediation row (None) while 2 of 8 task order(s) under AMGT_RESAPP are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "extra open order",
+      "passed": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S33: NEW remediation row (None) while 3 of 9 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged], EXTRA [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "one named order changed status",
+      "passed": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S33: NEW remediation row (None) while 1 of 8 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "census failed",
+      "passed": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S33: the L10 precondition (every task order under POSN_ASTTAX terminal) could NOT be evaluated (injected unreadable census) -- REFUSED, fail-closed"
+      ]
+    },
+    {
+      "case": "authorization pin unavailable",
+      "passed": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S33: NEW remediation row (None) while 2 of 8 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "named order content changed",
+      "passed": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S33: NEW remediation row (None) while 2 of 8 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+      ]
+    },
+    {
+      "case": "ordinary terminal-only case still passes",
+      "passed": true
+    },
+    {
+      "case": "independent investigation-completion gate still refuses",
+      "passed": true,
+      "refusal": [
+        "POSN_ASTTAX-Z-C-S33: NEW row (slug) while 1 of 1 investigation item(s) under POSN_ASTTAX are NOT dispositioned (latest carrier reads UNDER_INVESTIGATION): POSN_ASTTAX-Z-W8-S2. The slug waits until every investigation is CVO-checked; an existing item is dispositioned by a NEW row that names it in `adjudicates` (spine L10 precondition; Andrew-direct 2026-09-03 'Recs approved')."
+      ]
+    }
+  ],
+  "count": 30,
+  "scope": "Read-only production predicate calls. Mutated inputs are in memory; no index, task order, gate environment or service was changed."
+}

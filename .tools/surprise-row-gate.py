@@ -771,6 +771,50 @@ def _open_tos_for_project(root, code, merging=False):
     return open_ids, len(paths), ""
 
 
+# Andrew's call 1 YES, relayed by CTO 21533: POSN round 2 ONLY may route with
+# S2-1/S3-1 unrun. The immutable record pins all 19 authorized row contents,
+# their filing paths and the two unchanged order blobs. This is NOT the broad
+# override: every other limb, including investigation completion, still runs.
+POSN_R2_EXCEPTION_PIN = "10ceba8c43"
+POSN_R2_EXCEPTION_PATH = (
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/"
+    "POSN_ASTTAX_ROUND2_ROUTING_EXCEPTION_20260911_Z.json")
+
+
+def _posn_round2_terminal_exception(root, rel, row, code, open_ids, total):
+    """Match the exact authorized case; an absent/unreadable record never grants it."""
+    if code != "POSN_ASTTAX" or not open_ids or total != 8:
+        return False
+    allowed_paths = (
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v3.md",
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md")
+    if rel.replace("\\", "/") not in allowed_paths:
+        return False
+    status, text = _blob(root, POSN_R2_EXCEPTION_PIN, POSN_R2_EXCEPTION_PATH)
+    if status != "OK":
+        return False
+    try:
+        record = json.loads(text)
+        if (record["schema_version"] != 1 or record["project"] != code
+                or record["round"] != 2 or record["authority_message_id"] != 21533
+                or record["expected_total_orders"] != total):
+            return False
+        orders = record["orders"]
+        if len(orders) != 2 or sorted(open_ids) != sorted(o["open_label"] for o in orders):
+            return False
+        if not any(r["path"] == rel.replace("\\", "/") and r["id"] == row.get("id")
+                   and r["sha256"] == _canon_hash(row) for r in record["rows"]):
+            return False
+        import hashlib
+        for order in orders:
+            state, body = _blob(root, "HEAD", order["path"])
+            if state != "OK" or hashlib.sha256(body.encode("utf-8")).hexdigest() != order["sha256"]:
+                return False
+    except (KeyError, TypeError, ValueError):
+        return False
+    return True
+
+
 def _route_precondition_violations(root, rel, row, code, open_tos=None, route_word=None, merging=False):
     """GATE (iii) first limb for ONE new tree row carrying a route. `open_tos` is injectable for the
     red-first exercise; production passes None and the census runs.
@@ -802,6 +846,8 @@ def _route_precondition_violations(root, rel, row, code, open_tos=None, route_wo
         return ["%s: the L10 precondition (every task order under %s terminal) could NOT be evaluated (%s) "
                 "-- REFUSED, fail-closed" % (rid, code, note)]
     if open_ids:
+        if _posn_round2_terminal_exception(root, rel, row, code, open_ids, total):
+            return []
         return ["%s: NEW remediation row (%s) while %d of %d task order(s) under %s are NOT "
                 "terminal at HEAD: %s. The slug waits until every task order is complete "
                 "(Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job "
@@ -1330,7 +1376,13 @@ def check_file(root, rel):
             elif not pre:
                 _o, _t, _n = _open_tos_for_project(root, folder_project)
                 _l, _u, _nf, _ = _latest_dispositions(root, folder_project)
-                notes.append("%s: L10 precondition for %s -- %d task order(s) at HEAD on both roots, 0 open; %d "
+                if _o:
+                    notes.append("%s: L10 NAMED EXCEPTION for %s -- Andrew call 1 YES / CTO 21533 / %s; "
+                                 "%d of %d orders STILL OPEN, explicitly unrun: %s. Exact row and order "
+                                 "content matched; other limbs passed. NOT the broad override."
+                                 % (rel, rid, POSN_R2_EXCEPTION_PIN, len(_o), _t, ", ".join(_o)))
+                else:
+                    notes.append("%s: L10 precondition for %s -- %d task order(s) at HEAD on both roots, 0 open; %d "
                              "investigation item(s) across %d channel file(s) in the index, 0 undispositioned; "
                              "route admitted" % (rel, rid, _t, len(_l or {}), _nf))
     notes.append("%s: %d new row(s) of %d total checked (%d pre-existing, NOT re-graded)"
