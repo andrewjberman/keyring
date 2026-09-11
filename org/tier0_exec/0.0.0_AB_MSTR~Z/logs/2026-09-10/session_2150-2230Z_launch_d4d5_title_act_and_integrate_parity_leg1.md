@@ -608,3 +608,32 @@ commit wall, not 1.7 h from it; Rio's own growth flattened and the last headroom
 amendment -> re-check the audit park condition -> take the post-boot memory baseline -> census which seats
 Andrew relaunched (1pt process truth, never the broker alone) and hand each its own last log; spawn nothing
 without his word except by `/mstr-spawn` on its own charter.
+
+## AMENDMENT 15 -- 13:4xZ: the /log census before the reboot, the Rio evidence persisted to the Desktop on Andrew's word
+
+**Second Andrew-direct, same terminal, mid-turn, verbatim:** *"also persist a log of huntress rio leak onto
+desktop oonce youre done with log, i want to have evidence of this"*. Done after the log commit @a335612060:
+`C:/Users/Opal Bloomberg/Desktop/HUNTRESS_RIO_MEMORY_LEAK_EVIDENCE_2026-09-11.md` (8,124 bytes: machine,
+process identity, the full measured series with instruments and seats, the workload consequences, the laptop
+control row, the decision trail, what IT would need) and `HUNTRESS_RIO_LEAK_RAW_2026-09-11.txt` (94,509 bytes:
+the vendor's `version.log`, `Rio.state`, agent/updater state files, the last 120 lines of `rio.log`,
+`HuntressAgent.log` and `hUpdate.log`, the full `Get-Process` object for pid 5380, the memory counters, the
+pagefile row, every process by private bytes). Both outside the repo, by his word. New facts from the evidence
+pass: Rio is **0.7.77**, `Rio_0.7.77.msi` dated 2026-08-24 21:26Z with its install log a minute later; pid 5380
+was started by `services.exe` 44 s after boot; `tasklist /svc` binds it to no named service; at 13:43:24Z it
+held **55.31 GB private / 43.65 GB working set / 89.6 GB virtual, 955 handles, 62 threads** after 31.4 h of
+uptime, while the box's commit charge had fallen to 89.5 GB (other work released memory; Rio did not).
+
+**The /log census, denominator 6 seats addressed (5 DELIVERED, BG QUEUED then answered):**
+| seat | LOGGED | on origin |
+|---|---|---|
+| `4.0.0_SA_CRO~Z` | @c187072692 | yes |
+| `1.0.0_SA_CTO~Z` | @1d36e8df4c | yes |
+| `2.0.0_SA_COO~Z` | @23783dd2b6 (waves 2-4 PARKED; tree clean) | yes |
+| `2.0.0_SA_COO~ZZZ` | @b8386bea24 (SURFACE round parked on the CVO sign) | yes |
+| `0.0.3_BG_BBGTerminal` | @72aeee47ce -- committed ON ITS OWN SERIAL: the seat CAN commit and cannot push; "no git lane" was its own unmeasured claim, the third self-reported fence of its day (memory widened) | yes |
+| `3.0.0_SA_CVO~Z` (codex) | NO REPLY at 13:4xZ; no commit on its serial since 13:30Z; nudged once more directly. Its owed acts (v0.4 ratified-text sign; round-4 L8/L9/L10) are recorded in the CTO~Z and COO~ZZZ logs, so the reboot does not wait on it | -- |
+origin/SITEZ @72aeee47ce (ls-remote read 13:4xZ) = local HEAD at that read. Laptop told (bus 75c33fb2, acked
+f7a945c4 "GO DOWN CLEAN"; final frame 18dd87f2 sent). The laptop asks the relaunched MSTR~Z for Rio's post-boot
+private bytes and the box's commit charge shortly after boot and again an hour or two in -- the missing arm of
+LD-0255 (does a reboot reset the leak and it re-accumulates on a schedule).
