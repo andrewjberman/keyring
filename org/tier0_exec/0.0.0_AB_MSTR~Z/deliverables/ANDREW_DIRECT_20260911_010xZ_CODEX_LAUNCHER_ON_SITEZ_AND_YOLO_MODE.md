@@ -121,6 +121,22 @@ guard -- with each device's own path. The profile is outside the repo, which is 
 **Not done:** no seat launched. A window opened BEFORE 01:0xZ lacks `%APPDATA%\npm` on its PATH and will
 fail at the app-server start even after dot-sourcing; a NEW window has both.
 
+**ALIGNED to the laptop's answer (bus c7def525-48ea-458b-8c9a-bc2db726ee9c, 01:18Z), ~01:2xZ:**
+the laptop's block derives the path -- `$ajb2 = Join-Path (Split-Path -Parent $ajb) 'ajb2.ps1'` -- so a
+moved clone means editing ONE line, not two. Site Z now carries that derivation line and the laptop's
+four comment lines character-for-character; only the `$ajb` literal differs per device. Two deliberate
+divergences, both decided rather than inherited: (1) the `else { Write-Warning ... }` guard is KEPT on
+site Z and the laptop offered to add it there, so both devices carry it -- a silent skip is what made
+tonight's fault read as a launcher fault; (2) site Z's block stays in `Microsoft.PowerShell_profile.ps1`
+(CurrentUserCurrentHost), not the laptop's `profile.ps1` (AllHosts), because on this device the whole
+toolkit -- the `$ajb` line the derivation depends on, the `kill` router, the bare-name wrappers -- lives
+in CurrentHost and `profile.ps1` holds only the ps-lock guard; moving `ajb2` alone would split one
+device's wiring and undefine `$ajb` for the derivation. Consistency at the level Andrew means -- same
+function name, same derivation, same guard -- holds; the file follows each device's toolkit placement.
+Re-verified in a fresh profile-loading shell after the alignment: `ajb2` Function, `$ajb2` derived and
+present, `codex` resolves, negative control absent, exit 0. PATH mechanism confirmed the SAME SHAPE on
+both devices: the package manager's global bin on the persistent USER PATH, no profile involvement.
+
 ## 5. RELAYED, NOT ADJUDICATED
 
 Same-turn broadcast to the live site-Z seats (`1.0.0_SA_CTO~Z` as the launcher chain's steward on this
