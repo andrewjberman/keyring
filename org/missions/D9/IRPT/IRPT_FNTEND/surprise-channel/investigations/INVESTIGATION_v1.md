@@ -316,6 +316,55 @@
     "spec_asserts": "IRPT_FNTEND-W2-S3: ARMED, disarm_owner 2.0.0_SA_COO~F -- the packaged Lato faces the cell names could not be packaged.",
     "world_is": "The disarm is a supplied font file, which only Andrew's word can bring onto the estate. Until then the package is correct under its own terms (local() first, licence packaged, fallback stack) and the brand grade at L9 reads the typeface as a pending input, never as a defect of the cut.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S5",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-11T00:11:00Z",
+    "one_line": "`bun test` cannot resolve the portal's `@/*` alias AT ALL -- reproduced with a one-line probe importing `@/lib/utils` from a throwaway test file, independent of this cell -- so F3-AC7's `renderToStaticMarkup(FirmDropdown)` would fail on 'Cannot find module' the moment FirmDropdown's own import chain is loaded as real code; worked around inside this cell's own test file with `bun:test`'s `mock.module`, re-exporting the REAL files by relative path so neither FirmDropdown.tsx nor the do-not-edit PageSurfaceControl.tsx changed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "TO-FE-s-3 F3-AC7: `bun test .../dropdown-class.test.ts` renders FirmDropdown via `renderToStaticMarkup` and asserts its computed classes; BOUNDS names `PageSurfaceControl.tsx` as imported, never edited.",
+    "world_is": "portal/tsconfig.json (root) is `{ files: [], references: [...] }` with NO `compilerOptions` of its own; the `@/*` -> `./src/*` mapping lives only in the REFERENCED tsconfig.app.json, which `tsc -b` honours (via project references) but which Bun's own module resolver does not merge in when running `bun test` -- Bun looks only at the nearest tsconfig.json it finds walking up from the importing file. Measured directly: a disposable one-line test file containing only `import { cn } from '@/lib/utils'` fails with 'Cannot find module' under `bun test`, with NOTHING of this cell's code involved. FirmDropdown.tsx imports PageSurfaceControl via `@/components/ui/PageSurfaceControl` (unedited, matching every other component in the portal); PageSurfaceControl.tsx (out of this order's <paths>, explicitly do-not-edit) imports `@/lib/utils`. Neither file could be changed to dodge the gap without violating the order or widening the grant, so dropdown-class.test.ts registers `mock.module('@/lib/utils', () => import('../../../../lib/utils'))` and the same for `@/components/ui/PageSurfaceControl`, each re-exporting the REAL file by relative path -- the test still renders the actual, unmodified production component, just resolved by a path Bun can follow. Measured after: `bun test .../dropdown-class.test.ts` -- 2 pass, 0 fail, rc=0.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/tsconfig.json @ this worktree HEAD -- `{ \"files\": [], \"references\": [{ \"path\": \"./tsconfig.app.json\" }, { \"path\": \"./tsconfig.node.json\" }] }`, no compilerOptions.paths of its own",
+        "portal/tsconfig.app.json compilerOptions.paths: { \"@/*\": [\"./src/*\"] } -- read by `tsc -b --noEmit` (portal typecheck rc=0) but not by `bun test`",
+        "measured: a disposable test file at src/pages/InvestorReporting/__tests__/fe-s-3/ containing only `import { cn } from '@/lib/utils'` -- `bun test <file>` prints 'error: Cannot find module \\'@/lib/utils\\' from ...zzalias-probe.test.ts', rc=1, before any FE-s-3 code is reached; the same probe with a plain relative import succeeds",
+        "portal/src/pages/InvestorReporting/header/FirmDropdown.tsx (this cell) -- `import { PageSurfaceControl } from '@/components/ui/PageSurfaceControl'`, unedited; portal/src/components/ui/PageSurfaceControl.tsx (out of grant) -- `import { cn } from '@/lib/utils'`",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-3/dropdown-class.test.ts (this commit) -- two `mock.module` calls, each a relative re-export of the real file; `bun test src/pages/InvestorReporting/__tests__/fe-s-3/dropdown-class.test.ts` -- 2 pass, 0 fail, rc=0, rendering the real FirmDropdown/PageSurfaceControl chain"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED because the mock.module workaround is per-test-file and does not fix the underlying resolver gap: ANY future `bun test` file in this portal that imports a component transitively touching an `@/`-aliased module (which is most of the shared component library) will hit the identical 'Cannot find module' failure and need the identical dance, or will simply fail if the author does not know the trick. Disarm is either a `paths`/`baseUrl` entry added directly to portal/tsconfig.json (not just tsconfig.app.json) or a project-root bunfig.toml declaring the alias for Bun's own loader -- both outside every task order's <paths> seen so far, hence a COO-level decision on which future TO carries it."
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S6",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-11T00:13:00Z",
+    "one_line": "This order's assigned port 5181 was already bound by an ORPHANED vite dev server from the already-integrated FE-s-2 worker's worktree (wk-irpt_fntend-1-2-fe-s-2), and 5182/5183 were likewise held by orphaned servers from wk-irpt_fntend-2-1-fe-s-4 and wk-irpt_fntend-2-2-fe-s-8 -- none stopped their server before their own final report, exactly the step every worker's identity brief names; terminated only the PID bound to THIS order's assigned port to bind my own instance there.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "This order's identity line fixes <PORT>=5181 and every ui-smoke invocation (F3-AC4, F3-AC5, F3-AC9) names --port <PORT> literally; the identity line also instructs 'Stop it (kill its pid) before your final report', implying the port is this worker's alone to bind.",
+    "world_is": "Before this worker started its own dev server, `netstat -ano` showed three LISTENING vite processes on 5181/5182/5183 -- `Get-CimInstance Win32_Process` on each PID resolved their command lines to node .../vite/bin/vite.js under three DIFFERENT worktrees: wk-irpt_fntend-1-2-fe-s-2 (PID 23844, port 5181 -- this order's assigned port), wk-irpt_fntend-2-1-fe-s-4 (PID 17632, requested 5182 but bound 5182), and wk-irpt_fntend-2-2-fe-s-8 (PID 23696, requested 5182 but bumped to 5183 since 5182 was already taken). All three worktrees correspond to cells this order's own brief lists as already landed (FE-s-2, FE-s-4), so these are stale processes left running past their own worker's completion, not a live concurrent session. Terminated PID 23844 (taskkill /F) to free 5181 for this order's own instance; 5182/5183 were left running since they do not block this order and killing a sibling's process beyond what blocks this task would be widening scope.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "netstat -ano before any action: '[::1]:5181 LISTENING 23844', '[::1]:5182 LISTENING 17632', '[::1]:5183 LISTENING 23696'",
+        "Get-CimInstance Win32_Process -Filter 'ProcessId=23844' -> CommandLine 'node \"C:\\tmp\\wk-irpt_fntend-1-2-fe-s-2\\portal\\node_modules\\vite\\bin\\vite.js\" --port 5181'",
+        "Get-CimInstance Win32_Process -Filter 'ProcessId=17632 or ProcessId=23696' -> 'wk-irpt_fntend-2-1-fe-s-4 ... --port 5182' and 'wk-irpt_fntend-2-2-fe-s-8 ... --port 5182' (the second bumped to 5183 by vite's own port-in-use fallback)",
+        "taskkill //PID 23844 //F -> 'SUCCESS: the process with PID 23844 has been terminated'; netstat -ano afterward shows 5181 free and this worker's own vite bound there (dev-server.log: 'Local: http://localhost:5181/')"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED because the pattern (a worker not killing its dev server before its final report) is already reproduced three times across two rounds and will collide with the NEXT worker assigned 5182 or 5183, exactly as it collided with this one on 5181. No mechanical gate enforces the 'stop it before your final report' instruction; disarm is either a cleanup step the dispatch/drain mechanism runs between rounds or a port-collision-tolerant retry added to the ui-smoke instrument itself, neither of which this lane's <paths> reach."
   }
 ]
 ```
