@@ -1,12 +1,11 @@
 {
   "prd": "AMGT_RESAPP_PRD.md",
   "prd_version": "v0.4",
-  "prd_pin": "371286cf78a56c0e2519e4349858fe11810faec0",
+  "prd_pin": "3e35a50e74f98e0fdb16f84fb57e36a868426581",
   "half": "ratified-text",
-  "half_hash": "8d2ae62e98344b2068a0651e3932aaf51e13d1fc98d2271d591b24bbb80d52d3",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_v04_DELTA_REVIEW_20260911_Z.md@5bb982e794",
+  "half_hash": "4eb997ed71ee75583465ef4d6530c53bee98f0fb91b41431737f0c7daa4ece6b",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_v04_RATIFIED_TEXT_SIGN_REVIEW_20260911_Z.md@8e1f2c57d7",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-09-11T15:43:30Z",
-  "reason": "FWD15 at371286cf78 lines228-236 paraphrases the ratified synthesis at79b48a9298 lines56-65; restore complete title and verbatim DONE WHEN and ACCEPT. Prior contamination corrections pass."
+  "signed_at": "2026-09-11T16:08:10Z"
 }
