@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.4",
+  "prd_version": "v0.5",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -529,12 +529,21 @@ them and never re-derives a ranking at render time. Chatter axis = the committed
 in the BOX-SIDE puller shape (the ETF-daily-pull shape), NOT a Lambda calling Bloomberg. 30-day window,
 matching chatter (Andrew unified both to 30).
 
-**`C-HARVESTER-COMPUTE`** -- the four harvesters run on a NEW EC2 box in
-`infra/aws/terraform/amgt-resapp/`, following the ASTN_WSJFT SHAPE (stopped-between-runs, SSM-woken)
-but with AMGT_RESAPP's OWN IAM role and write access to `opal-amgt-articles` -- explicitly NOT the
-ASTN_WSJFT box. ONE shared box for all four. ⛔ Refresh must WAKE the stopped box (SSM /
-inf-jwt-trigger shape) or it silently no-ops. **Andrew-authorized 2026-09-11: the box + both tables,
-TABLES FIRST.**
+**`C-HARVESTER-COMPUTE`** -- ⭐ **AMENDED AT v0.5 (addendum s.8). The compute moves OUT of this
+project's build and INTO the HARVEST ESTATE**, which Andrew assigned to `4.0.0_SA_CRO~Z` to oversee and
+execute (Andrew-direct 2026-09-11 ~17:3xZ) and whose architecture he APPROVED ~18:3xZ.
+**ONE box and ONE lambda**, harvest-named, declared in the ONE harvester terraform module -- **not the
+four harvesters on a shared box this constraint previously specified, and not
+`infra/aws/terraform/amgt-resapp/`.** It keeps AMGT_RESAPP's OWN IAM role and write access to the
+article store, and the ASTN_WSJFT box is still explicitly NOT reused.
+⛔ **THE BOX IS AN EC2 INSTANCE. IT IS NOT SITE-Z.** Andrew-direct ~18:3xZ, VERBATIM: *"this box is
+sitez. it is a local server at Opal, not an aws cloud box. accordingly it is not terraformed nor
+included in the aws resource cloud."* A local server cannot sit inside a canonical, self-contained,
+terraformed estate, so site-Z is ruled OUT as the box -- while remaining fine for the one-shot
+BACKFILL, which is an operator PROCESS and never was a provisioned resource.
+⛔ Refresh must still WAKE the stopped box (SSM / inf-jwt-trigger shape) or it silently no-ops.
+**EXECUTION ORDER, Andrew-approved:** module consolidation + renames FIRST while both stores are empty
+(0 items, measured), THEN the backfill, THEN the box and lambda.
 
 **`C-STARRED-PER-FIRM`** -- the starred watchlist is SHARED ACROSS THE FIRM (both PMs see the same
 starred names), keyed per-firm, not per-user. Andrew-ruled 2026-09-11; reversible to per-user on his
@@ -545,6 +554,20 @@ explicit action.
 Bloomberg and WSJ** for THIS project's harvesters, **effective when the harvester box is stood up and
 ready to run -- NOT before**. ⚠ NOT a blanket grant: `C-VENDOR-EGRESS` continues to bind every other
 vendor and every other use, and the standing "availability is not authorization" law is unchanged.
+⭐ **RE-HOMED AT v0.5, AND THIS IS THE AMENDMENT THAT MATTERS MOST.** Until v0.5 this bound had no cell
+of its own -- decomposition s.13d carried it as a TIME-SCOPED BOUND ON `rd-4`, deliberately, so the
+subtraction balanced visibly. **Superseding `rd-4` therefore removes this constraint's only carrier.**
+It is re-homed HERE, onto the HARVEST ESTATE's acquisition surface, **with all three limits intact:
+the four named platforms, THIS project's harvesters only, and not before the box stands.**
+⛔ **AND IT IS NOT WIDENED BY THE HARVEST HANDOVER.** Andrew's ~17:3xZ grant of "full egress and
+override authority" to `4.0.0_SA_CRO~Z` is authority to REALIZE THE ESTATE; it is **not** a widening of
+`C-VENDOR-EGRESS`. Recorded in writing rather than left to assumption, because a narrow time-scoped
+grant losing its carrier at the same moment broad-sounding egress language arrives is exactly how a
+bound quietly becomes blanket with nobody seeing it happen.
+⛔ **A PROXY VENDOR IS A SEPARATE, UNANSWERED QUESTION.** This constraint authorises egress TO the four
+platforms. It does **not** authorise a new PROXY VENDOR for platforms that did not use one -- extending
+Bright Data Web Unlocker from WSJ to the three SESSION harvesters is a NEW per-use vendor call for
+Andrew, never an inference from an EC2 IP proving unworkable against PerimeterX.
 
 ---
 
@@ -657,3 +680,64 @@ UNVERIFIED:   every F-numbered measurement is the CRO's, re-derived by nobody. T
 ```
 
 **Push state:** LOCAL at write time; ancestry rather than a tip hash. `0.0.0_AB_MSTR~Z` pushes.
+
+---
+
+## 8. ADDENDUM v0.5 -- THE HARVEST ESTATE (Andrew-direct 2026-09-11 ~17:3xZ and ~18:3xZ)
+
+**Author** `1.0.0_SA_CTO~Z` (L4). **Trigger:** two Andrew-directs relayed VERBATIM by `4.0.0_SA_CRO~Z`
+and recorded @`bb1800ec4d` (the five directives) and @`135aa5b0d0` (the approved draw).
+
+⛔ **THIS ADDENDUM CHANGES THE BRIEF HALF ONLY. The ENDPOINT is untouched** -- `FWD-1`..`FWD-15` are
+unchanged and the ratified-text half's hash is unmoved, so `3.0.0_SA_CVO~Z`'s signature stands. The
+brief half re-opens and is owed to `4.0.0_SA_CRO~Z`. **No outcome changed; only HOW and BY WHOM two of
+them are served.**
+
+### 8a. What Andrew ruled
+
+One box and one lambda under harvest naming, `opal-data-harvest` buckets, all worker terraform in ONE
+harvester module, and `4.0.0_SA_CRO~Z` to **oversee and execute** it with full egress and override
+authority -- behind his own gate, *"just /draw me your intended architecture and i can approve/revise."*
+The draw was APPROVED ~18:3xZ with ONE correction: **the box is an EC2 instance, NOT site-Z**, because
+a local server "is not terraformed nor included in the aws resource cloud."
+
+### 8b. What changes in round 5, and what does NOT
+
+**`rd-3` (harvester box + own IAM role) and `rd-4` (four harvesters) are SUPERSEDED** by the harvest
+estate. ⛔ **The SUPERSEDE IS THE ISSUER'S ACT, NOT THIS SEAT'S** -- `2.0.0_SA_COO~ZZZ` sets the status,
+and it correctly declined to do so before this addendum existed because coverage is graded at L10.
+⛔ **AND THE DECOMPOSITION IS NOT EDITED HERE.** `decompositions/**` is lane `TREE_COO` (checked at
+`.owned-paths.yaml`, not assumed). **Decomp s.13c's subtraction becomes FALSE the moment rd-3/rd-4 go**
+-- it reads "REMAINDER ZERO" over PRD s.3b's six constraints with `C-HARVESTER-COMPUTE -> rd-3 + rd-4`,
+and that constraint would then map to no cell in this round. **Repairing s.13c is the COO's act in its
+recut, and it must land in the SAME act as the supersede.** A subtraction record that is quietly
+falsified is worse than none, because it still prints a clean remainder.
+
+**UNCHANGED and still round 5's:** `rd-1`/`rd-2` (terminal, tables live), `rd-5`/`rd-6` (running --
+neither is the box or the lambda), `rd-7`, `rd-8`. Round 5's coverage drops from EIGHT cells to SIX.
+
+### 8c. Bounds that survive the handover -- stated because a handover is where bounds die
+
+- **`C-VENDOR-WORD-HARVESTERS` re-homed** onto the harvest estate's acquisition surface, three limits
+  intact (s.3b). It had no carrier but `rd-4`.
+- **A PROXY VENDOR IS NOT AUTHORISED.** Extending Bright Data Web Unlocker from WSJ to the three
+  SESSION harvesters is a NEW per-use vendor call for Andrew.
+- ⛔ **THE PORTAL HOLD STANDS.** `/api/private/research/pull` keeps its path and the route rename is
+  DEFERRED; nothing portal promotes, PROD or DEV, until Andrew names it. `rd-8` stays commit-yes,
+  promote-no.
+- ⛔ **NO RETROACTIVE RENAME of the two live tables or of `opal-data-research`**, absent Andrew naming
+  the retroactive case. A DynamoDB rename is DESTROY/RECREATE against two TERMINAL cells whose tables
+  `rd-5`/`rd-6` are writing into now; an S3 rename is create-copy-delete on live VERSIONED data, and a
+  copy does not carry version history -- **the act would destroy the two-snapshot evidence that
+  `FWD-6`'s accumulate bar was followed.** Harvest naming applies PROSPECTIVELY. Three seats reached
+  this independently.
+- **Terraform commits ride an audited `GIT_COMMIT_AUTHOR_OVERRIDE`** naming Andrew's grant, one per
+  lane. **No `.owned-paths.yaml` edit** -- the AE-only lane rule is overridden per-commit with an audit
+  line, not amended.
+
+### 8d. What this addendum does NOT claim
+
+It does not grade any `FWD` outcome, does not authorise an apply, and does not settle whether the
+harvest consolidation absorbs the orphaned S9/S10 module reconcile -- `4.0.0_SA_CRO~Z` has since
+confirmed it does, and verified the module is genuinely broken first (`terraform validate` -> three
+duplicate-block errors), which is that seat's to carry rather than this PRD's.
