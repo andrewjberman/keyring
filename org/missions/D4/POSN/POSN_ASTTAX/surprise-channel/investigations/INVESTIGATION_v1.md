@@ -770,3 +770,42 @@ a property of the INPUT bytes that this order's act deliberately removes.
   }
 ]
 ```
+
+
+---
+
+## Row appended by `2.0.0_SA_COO~Z` at L7 (drain-end disarm + declared declines), 2026-09-11
+
+One row from the issuer at the end of the wave-2 drain. It disarms `W3-S4` on exercised evidence and
+records, in the plane L9 actually reads, which of this seat's remaining ARMED rows are NOT being
+disarmed and why. Nothing here dispositions anything -- that is the CVO's L9 act via `adjudicates`.
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S5",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-11T17:09:15Z",
+    "one_line": "DISARM of POSN_ASTTAX-Z-W3-S4 (BLOCKING, the cone missing org/surprise_channel): cause was mine, remedy applied to the two live sibling worktrees mid-flight and built into the fourth, and it is now EXERCISED AT THE COMMIT by four real worker commits and four merged-index drains -- discharging the explicit limit my earlier row Z-S3 placed on itself. Also records, as disarm_owner, my DECLINED disarms on W4-S1, W4-S2, W4-S3 and W6-S1 with a reason for each.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE GAP WAS REAL AND IS MINE: I cut the wave-2 cones carrying seven directories and org/surprise_channel was not among them, so surprise-row-gate.py's standing-corpus pass could not read its own schema from the worktree. 0.9.0_WK_POSN_ASTTAX~3 hit it fail-closed at its first surprise row and remedied its own worktree with `git sparse-checkout add org/surprise_channel` -- deliberately NOT with the audited `# surprise-row-override:` escape, which is the right call and the reason its rows were graded for real.",
+        "REMEDY APPLIED TO THE LIVE SIBLINGS BEFORE THEY REACHED IT, at ~16:0xZ: `git sparse-checkout add org/surprise_channel` run against /c/tmp/wk-posn-s7 and /c/tmp/wk-posn-s4 while both workers were mid-execution; each reported 'schemas present: 2 file(s)'. The fourth worktree /c/tmp/wk-posn-s1 was cut AFTER the finding and carried org/surprise_channel from creation (verified at cut: schemas=2). So 4 of 4 wave-2 worktrees ended up with the directory and none of the three later workers hit the refusal.",
+        "EXERCISED AT THE COMMIT, WHICH IS THE BAR MY OWN EARLIER ROW SAID WAS STILL OWED. POSN_ASTTAX-Z-S3 disarmed the org/projects cone gap but stated its limit explicitly: 'the exercise ran the gates DIRECTLY, not through a real safe-commit of a worker diff ... EXERCISED-AT-THE-GATE, not EXERCISED-AT-THE-COMMIT.' That caveat is now discharged by four real worker commits that each passed safe-commit with the row gate grading their rows: eec92c9cf2 (~3), 8a911af2d7 (~4), 95e59e1408 (~8), c34eab85dc (~6).",
+        "CORROBORATED ON THE MERGED INDEX, a second instrument and a stricter one, since a worker's own commit is graded against its worktree index while the drain is graded against the union: the four drains 6ea4a9d1ef, 7c014732d4, bead9019ce and 7dc668da2d each printed '[surprise-row-gate] ... N new row(s) of M total checked' followed by 'OK: 1 file(s), all new rows carry their step-7/step-10 fields', with no override in play on any of them. Channel now 24 rows, 24 VALID / 0 INVALID against investigation_item.schema.json.",
+        "WHAT IS NOT CLOSED, so this disarm is not read wider than it is: the HOOK's underlying property is unchanged -- surprise-row-gate.py still reads its schema from the WORKTREE and still has no --staged mode, exactly as W2-S3 and W2-S4 record for the sibling gates (both 1.0.0_SA_CTO~Z's to disposition). Any future seat cutting a cone without org/surprise_channel reproduces this refusal identically. THE RECIPE, NOT THE HOOK, IS WHAT WAS FIXED. The complete cone measured sufficient across four worktrees this round is: .tools, org/projects, org/missions, org/modules, org/ref, org/standards, org/surprise_channel, plus the infra subtree the cell needs."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "POSN_ASTTAX-Z-W3-S4 asserts that the first safe-commit in a wave-2 cone is refused fail-closed because surprise-row-gate.py's standing-corpus pass reads org/surprise_channel/schemas/ from the WORKTREE and the cone does not carry it, and that every sibling worktree hits this at its first surprise row.",
+    "world_is": "Exactly as stated, and it was my cone recipe at fault rather than the gate. The directory was added to both live siblings mid-execution and built into the fourth worktree at cut, so 4 of 4 ended up carrying it and only the surfacing worker ever hit the refusal. Four worker commits and four drains then passed the row gate with no override in play, which is the end-to-end proof Z-S3 said it did not yet have.",
+    "notes": "SCOPE: this row disarms W3-S4 ONLY. It dispositions nothing -- the CVO's L9 `adjudicates` is the only carrier that can -- and W3-S4 keeps hazard_standing ARMED, which is at-surfacing and immutable.\n\nRECORDED HERE BECAUSE THE CHANNEL IS WHERE L9 READS, NOT A MESSAGE: as the named disarm_owner I am DECLINING to disarm my four remaining ARMED rows, and the reason differs per row. None is an oversight and none should be read as pending my further action this round.\n  - W4-S1 (VXX held, but the DT brief's stated satellites location fails -- 0 of 4346 bucket keys match 'satellite'). NOT DISARMED: the brief's location claim is wrong and nothing in round 2 owns correcting a DT brief. It is an L10 input.\n  - W4-S2 (BLOCKING -- the frontend-contract hop was never measured; portal/ is outside the worker cone and the census itself printed 29577 UNREADABLE). NOT DISARMED: it is a genuine MEASUREMENT GAP, not a remedied defect. I did not measure it myself because it can only STRENGTHEN the AT2-s-7 NO-GO, never weaken it, so it changes no decision this round -- but an unmeasured hop must not travel as though it were measured.\n  - W4-S3 (BLOCKING -- the KeyError premise is retired; 0 of 17 hops RAISE, which defeats TO-S2-1's S2-AC5). NOT DISARMED, and it must not be: this is the round's most consequential finding. The retag order's acceptance criterion returns the SAME reading in the healthy and the broken world. Fixing it is an L10 re-cut, and the spec is FROZEN mid-round under Rule 27.\n  - W6-S1 (AC5's relative path fails with the exact text a missing predecessor produces -- a STOP criterion whose failure is indistinguishable from its own negative). NOT DISARMED: the worker discriminated in practice with a second instrument (git ancestry of 7f247caae0), but the CRITERION TEXT is still non-discriminating for the next reader. Same class as W4-S3 and the same remedy: an L10 re-cut, not a mid-round edit.\n\nTWO OF MY FOUR DECLINES ARE THE SAME DEFECT CLASS -- a criterion that cannot fail in the broken world (W4-S3, W6-S1). That is a pattern in this round's authorship, mine as issuer, and it belongs in the round-2 analysis rather than in any single row."
+  }
+]
+```
