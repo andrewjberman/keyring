@@ -1081,6 +1081,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Issuer (amend) arm @812bbec0e9: 'Where this cell ships no handler, the same census runs over routes.json at the replay.' Memory: a gate called with an EMPTY input set returns a vacuous pass that reads as clean.",
     "world_is": "The named fallback object is a future artifact of another cell; for every handler-less cell handed before IB-s-15 the arm's only honest reading is the censor's own controls. The amendment named the right hazard and the wrong object.",
     "notes": "Adopted the worker's repair rather than inventing a second one; the faces already handed (IB-s-4 on ~2) carry the old sentence and are re-graded by the issuer at their drain under this reading."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S7",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T04:25:45Z",
+    "one_line": "THE REUSE PACKET THE ISSUER SUPPLEMENT TELLS THIS CELL TO READ FIRST DOES NOT EXIST IN THIS WORKTREE. The supplement (channel row IRPT_BCKEND-S14, PRD v0.10 @3624e60def) says 'READ THAT PACKET FIRST' and names docs/research/investor_reporting_ycharts_variants_20260911/ with five files. Measured: the directory is ABSENT from the worktree; this branch was re-cut at 1f795d1f71 and the packet landed at 72acd16e66, which `git merge-base --is-ancestor 72acd16e66 HEAD` reports is NOT an ancestor of HEAD (with a positive control on 1f795d1f71, which IS). The 26 files ARE in the local object store at that commit, so the packet was read BY OBJECT REFERENCE (`git show 72acd16e66:<path>`) -- a read, not a merge, since a worker never merges or rebases. WHAT THIS COSTS AND WHAT IT DOES NOT: the CONTENT was fully available, so nothing in the supplement went unread; what is not available is a CITABLE WORKTREE PATH, so every reference this cell makes to the packet is written as path@72acd16e66 rather than as a path a reader of this branch can open. The battery prints the reachability measurement (present_in_worktree false, files_at_72acd16e66 26, commit_is_ancestor_of_head false, positive_control true) rather than leaving it as an absence a later reader would have to rediscover. ARMED because the SHAPE recurs: an issuer supplement that names a path landing after a worker's cut is unreadable to that worker by the route the supplement assumes, and the next worker may read the absence as 'the packet does not exist' rather than 'my branch predates it'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~3 for THIS cell -- DISARMED SAME TURN by reading the packet by object reference, citing it as path@72acd16e66 everywhere it is used (code comments, templates.json sources, the proof instance), and printing the reachability measurement in the battery so the absence is a recorded fact rather than a silence. THE ROUTING is the issuer's: 2.0.0_SA_COO~B decides whether a supplement that names a post-cut path should re-cut the worktree, cite by commit, or carry the packet into the face; 3.0.0_SA_CVO grades the arm at L9.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls docs/research/investor_reporting_ycharts_variants_20260911/ in /c/tmp/wk-irpt-1-3 -> 'No such file or directory'; git ls-tree -d --name-only HEAD -- docs/research/ lists eight directories and not that one",
+        "git ls-tree -r --name-only 72acd16e66 -- docs/research/investor_reporting_ycharts_variants_20260911/ -> 26 files including README.md, UI_CONTRACT.md, recipe_contract.py, variant_worker.py and manifest.example.json",
+        "git merge-base --is-ancestor 72acd16e66 HEAD -> NO; git merge-base --is-ancestor 3624e60def HEAD -> NO; positive control git merge-base --is-ancestor 1f795d1f71 HEAD -> YES",
+        "IB-s-9_S9-AC1_battery_output.txt arm (h) -- 'THE VARIANTS PACKET IS NOT IN THIS BRANCH (row W3-S7)' with present_in_worktree false, files_at_72acd16e66 26, commit_is_ancestor_of_head false, positive_control_known_ancestor true",
+        "The issuer supplement, verbatim: 'READ THAT PACKET FIRST, before cloud_transport.py, and treat it as the reuse source in the same way (read-only; extend into ycharts/generate/, never a parallel implementation)'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The issuer supplement names docs/research/investor_reporting_ycharts_variants_20260911/ as a read-only reuse source this cell must read first, as a worktree path.",
+    "world_is": "That path is absent from this worktree and its commit is not an ancestor of this branch's HEAD. The packet was read by object reference at 72acd16e66 and is cited that way throughout; no merge or rebase was performed.",
+    "notes": "The supplement itself is sound and its content was fully used -- the gap is only in how a post-cut artifact reaches a branch that predates it. Worth the issuer's attention because the same shape will recur on every mid-round supplement, and the cheap remedy is to name the commit alongside the path."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S8",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T04:25:45Z",
+    "one_line": "THE CARRIED DECISION TABLE CANNOT SEE A WAF CHALLENGE WHOSE ONLY SIGNAL IS THE RESPONSE HEADER -- AND THE LIVE RUN MEASURED EXACTLY THAT CASE. docs/research/investor_reporting_ycharts_auth_20260910/recovery_contract.py `decision()` classifies a WAF interstitial with `if reply.status in (202, 403, 405) and 'awswaf' in text.lower()`, i.e. by reading the BODY. The variants live run (docs/.../ycharts_variants_20260911/README.md@72acd16e66) recorded a 202 during calculation polling, after three healthy `calculating` responses, whose ONLY evidence was the `x-amzn-waf-action: challenge` RESPONSE HEADER; its body carried the ordinary calculating payload. Run through the carried table unchanged, that response classifies INVALID_RESPONSE (202 is not the expected 200), which is the wrong remedy twice over: it treats a challenge as a protocol failure, and it discards work that the packet's own operator-orchestrated recovery PRESERVED. This cell's copy adds the header as a field on Reply and classifies it BEFORE the body rules, as its own outcome WAF_REFRESH_REQUIRED rather than BROWSER_CHALLENGE, because the remedy differs: a challenge mid-chain needs a coordinated session refresh by B8/B16 and the work already done is kept. The battery keeps the two WAF branches as SEPARATE fixtures reached by DIFFERENT signals and shows the same 202 WITHOUT the header still classifying INVALID_RESPONSE -- so the new rule is load-bearing rather than decorative. INERT for this cell (fixed in its own copy) and raised because the research module is a NAMED REUSE SOURCE for other cells: anyone who carries `decision()` verbatim inherits the blind spot.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~3 for THIS cell -- DISARMED SAME TURN: this cell's copy adds the x-amzn-waf-action header to Reply, classifies it before the body rules as WAF_REFRESH_REQUIRED, and proves the rule is load-bearing with a control (the same 202 without the header still reads INVALID_RESPONSE). THE RESEARCH MODULE ITSELF is not this cell's to edit and is a NAMED REUSE SOURCE for B8/B16 and the recovery coordinator: whether recovery_contract.py is corrected, superseded by this cell's copy, or left as research is the issuer's call with 3.0.0_SA_CVO at L9 and 1.0.0_SA_CTO at L10. ARMED for any cell that carries decision() verbatim.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/research/investor_reporting_ycharts_auth_20260910/recovery_contract.py @1f795d1f71 -- 'if reply.status in (202, 403, 405) and \"awswaf\" in text.lower(): return \"BROWSER_CHALLENGE\"'; the Reply dataclass has no header field at all (status, mime, body, location, transport_uncertain)",
+        "docs/research/investor_reporting_ycharts_variants_20260911/README.md @72acd16e66 -- 'The next run received 202 with x-amzn-waf-action: challenge during calculation polling, after three successful calculating responses. The worker now classifies that response as WAF_REFRESH_REQUIRED.'",
+        "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py @88c97c1529 -- Reply.waf_action and the rule placed before the body checks; DECISIONS extended with WAF_REFRESH_REQUIRED",
+        "IB-s-9_S9-AC1_battery_output.txt arm (v0.10) -- 'WAF: the same 202 WITH the x-amzn-waf-action header -> WAF_REFRESH_REQUIRED; WITHOUT it -> INVALID_RESPONSE'",
+        "The two WAF branches are kept as separate fixtures reached by different signals (decision_branches.json BROWSER_CHALLENGE carries the body interstitial and no header; WAF_REFRESH_REQUIRED carries the header and an ordinary body), so neither rule can pass while the other is dead"
+      ]
+    },
+    "spec_asserts": "PRD v0.5 (SUPP IV.7/IV.8/III.2) binds the decision table, and recovery_contract.py is the named reuse source for it: a WAF action, header or interstitial is challenge handling, never bad holdings or authorization denial.",
+    "world_is": "As carried, decision() reads only the BODY for the WAF signal, so the measured case -- a 202 whose only signal is the response header -- classifies INVALID_RESPONSE and neither refreshes the session nor preserves the work.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Found by building the fixture from the variants README rather than from the classifier, which is why it surfaced at all: a fixture derived from the code under test would have carried 'awswaf' in the body and passed."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S9",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T04:50:58Z",
+    "one_line": "THE FIXTURE MANIFEST -- THE ARTIFACT THAT SAYS WHICH FIXTURES ARE MEASURED AND WHICH ARE EXTENDED -- WENT STALE IN MY OWN PACKAGE, AND IT IS A DEPLOYED ZIP MEMBER. infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/FIXTURE_MANIFEST.json was written at 5e4a92380b. The issuer-supplement commit 88c97c1529 then changed two fixtures it describes -- decision_branches.json (the tenth branch WAF_REFRESH_REQUIRED added; the BROWSER_CHALLENGE fixture's waf_action removed so the two WAF branches are reached by different signals) and upload_ok.json (the echoed rows step_upload() reconciles) -- and did NOT regenerate the manifest. Measured at report time by recomputing every row from disk rather than reading the manifest: 2 of 13 file rows carried a WRONG sha256 AND a wrong byte count (decision_branches.json ab7c405441..1621B declared vs e55589ccba..2545B actual; upload_ok.json 18263ec209..463B declared vs 5249e5b855..753B actual), and two declared denominators disagreed with the fixtures (decision_branches 9 declared vs 10 counted; templates_with_live_proof 1 vs 3). Its prose also still read 'NO LIVE PROOF EXISTS for templates 14141824 and 14141847', which the supplement contradicts -- all three recipes were proven live by 4.0.0_SA_CRO on Andrew's word. WHY IT MATTERS MORE THAN A DOC NIT: a stale hash in a provenance record is WORSE than no hash, because it reads as MEASURED and a reader checking a fixture's integrity against it would get a false MISMATCH on a good file and would have no way to tell that from a tampered one; and this is the exact artifact the S9-AC3 judgment record points the CVO at to separate what was measured from what was extended. REPAIRED SAME TURN by recomputation and REDEPLOYED, because the manifest is a packaged zip member and leaving it repaired-but-not-served would have broken the served-equals-source equality arm (h) grades. ARMED because the SHAPE is general and has no gate: nothing in this estate ties a manifest of hashes to the files it describes, so any commit that edits a described file and not its describer produces a provenance record that is confidently wrong, and every per-file check still passes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~3 for THIS artifact -- DISARMED SAME TURN: the manifest was repaired by recomputation from disk (not by hand), the zip rebuilt and redeployed under its own change-management entry irpt-bckend-s9-manifest, the source-map registration moved to the new hash, and battery_ib_s_9.py now RE-DERIVES every manifest row and both fixture denominators from disk on every run with the file list taken from the DIRECTORY BY SUBTRACTION, load-bearing in arm (h) -- so this artifact cannot go stale silently again. THE GENERAL SHAPE is not mine to close: whether a manifest-freshness check belongs in .tools/commit-gate.sh or in ds-precommit, so that ANY commit editing a described file without its describer is refused estate-wide, is 1.0.0_SA_CTO's at L10 with 3.0.0_SA_CVO grading the finding at L9. I did not build that gate: it would be a widening of this order and a gate nobody asked for.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show --stat 88c97c1529 -- the commit changes fixtures/har/decision_branches.json (14 lines) and fixtures/har/upload_ok.json (3 lines) and does NOT contain FIXTURE_MANIFEST.json; git log on the manifest shows its last touch is 5e4a92380b",
+        "Recomputation over all 13 described files: 'files checked: 13 of 13 | stale: 2' -- decision_branches.json manifest ab7c40544112cf26/1621B vs disk e55589ccbabd01fb/2545B; upload_ok.json manifest 18263ec209542bf9/463B vs disk 5249e5b85571ea9f/753B",
+        "decision_branches.json on disk carries 10 branch keys (ARTIFACT_FETCH_PENDING, BACKOFF_429, BROWSER_CHALLENGE, DENIED, HEALTHY, INVALID_RESPONSE_HTML, RECONCILE_UNCERTAIN, REFRESH_401, REFRESH_EVICTION, WAF_REFRESH_REQUIRED) against _meta.denominators.decision_branches = 9; the battery independently prints 'DECISION TABLE -- 10 of 10 branches classified as declared'",
+        "infra/aws/lambda/ci/lambda-source-map.json functions['irpt-ycharts-generate'].files lists 'fixtures/har/FIXTURE_MANIFEST.json' as member 12 of 25 -- the manifest is PACKAGED, so a repair without a redeploy would have broken served == rebuilt in arm (h)",
+        "Repair output: 'STALE ROWS REPAIRED: 2 of 13 files'; denominators {decision_branches 9, files 13, templates 3, templates_with_live_proof 1} -> {decision_branches 10, files 13, templates 3, templates_with_live_proof 3}; zip content sha256 gYMxOLN8XndUFeK54aP/A5HsxhOsTSrY62GijStzmH4= -> S9C9ibDNI8D77ZUefrAQSq2OgwO1206wySuzfolxUhI="
+      ]
+    },
+    "spec_asserts": "A value must carry its claim in a field a consumer can reject on, and a printed denominator certifies the sweep it names; FIXTURE_MANIFEST.json declares itself 'DERIVED FROM MEASURED ARTIFACTS -- every shape cites the artifact it came from' and is the carrier the S9-AC3 judgment record points the CVO at for the MEASURED-vs-EXTENDED split.",
+    "world_is": "Two of its thirteen per-file sha256/byte rows described the PREVIOUS revision of files the same worker changed one commit later, two of its four declared denominators disagreed with the fixtures on disk, and its prose denied live proof that the issuer supplement records as existing. Every per-file consumer of those rows would have read a confident MEASURED value that was false.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Self-inflicted and self-found, in my own deliverable, at report time -- filed rather than quietly fixed because the finding is not the typo, it is that a MANIFEST OF HASHES HAS NO GATE TYING IT TO WHAT IT DESCRIBES. This is Rule 22's shared-dependency blindness in a new place: I verified each fixture, and each fixture was fine; what was broken was the one artifact they have in common, and no per-fixture check could see it. It surfaced only because I re-derived the manifest instead of reading it -- which is also the only reason the two stale rows were not carried into the proof instance as evidence."
   }
 ]
 ```
