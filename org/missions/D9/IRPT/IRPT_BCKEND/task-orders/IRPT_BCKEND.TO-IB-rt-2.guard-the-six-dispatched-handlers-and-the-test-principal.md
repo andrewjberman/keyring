@@ -78,6 +78,124 @@
 - **A DEPLOY IS OWED (W3-S25), first act of the successor run of IB-rt-9, which holds the ycharts functions; this order rebuilds only the functions it deploys:** `_scope/resolve.py` gained `import ids` and the packaging followed only in the declaration -- the three functions shipping `resolve.py` are REBUILT from the tree and deployed under a ledger; `CodeSha256` equality cannot see this defect by construction, the import-closure check in the `/var/task` + `/opt/python` layout can.
 - **THE LIVE PROBE STILL RUNS THE RETIRED PREDICATE** (`ycharts-session-probe`, LastModified 2026-05-22, rule ENABLED, every 6 hours): the rewrite is in the tree at 22f2238cd7, not in the world. Its redeploy rides IB-rt-9's arm (e) ledger; until then `SessionFresh=1` from that probe is not evidence of anything.
 
+---
+
+## ISSUER AMENDMENT -- 2026-09-11 ~22:5xZ (`2.0.0_SA_COO~B`, post-reboot re-entry). THIS BLOCK GOVERNS OVER EVERY LINE ABOVE IT.
+
+**Authority:** Andrew-direct ~22:25Z at the `1.0.0_SA_CTO` terminal, VERBATIM AND ENTIRE: *"load up and get
+/canonical-flow driving for COO~B (IRPT_BCKEND) and COO~F (IRPT_FNTEND)."* Relayed as msg 96019; recorded at
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_2225Z_RESUME_AFTER_REBOOT_DRIVE_BOTH_IRPT_LANES.md`
+@4a90ec8d2f. It lifts exactly ONE thing: MSTR 95994's instruction 2, "start nothing new". **The round stays FROZEN
+(Rule 27)** -- no re-cut, no PRD re-open; an off-spec finding is a surprise ROW and you keep working.
+
+### A1. YOU ARE A COLD START. The IDENTITY section's *"the same subagent as round 1, continued with its context intact"* is FALSE and is STRUCK.
+This device rebooted at ~22:0xZ. **Every worker subagent of this round is DEAD and cannot be resumed.** You carry no
+prior context and must assume none. Your whole context is: THIS FACE (the newest amendment governs), and the WIP hand-off written for exactly this moment: `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/WIP_IB-rt-2_winddown.md`. **READ THAT FILE BEFORE YOU READ ANYTHING ELSE IN THIS FACE'S BODY** -- it names what is done, what must not be re-done, and the traps this cell already paid for.
+
+### A2. NEW WORKTREE -- the pair named in IDENTITY IS GONE.
+- **Worktree:** `/c/tmp/wk-irpt-2-2b` on branch `wk-irpt_bckend-2-2b`, cut by the issuer from CLOUD HEAD `7d6db9bcfa`.
+- The old pair (`/c/tmp/wk-irpt-2-2 on wk-irpt_bckend-2-2`) was REMOVED after its branch was verified an ancestor of the tip. Do not look for it, and
+  **never spawn into an old worktree.**
+- **Every path in this face is relative to the NEW worktree root**; make it absolute by prefixing `/c/tmp/wk-irpt-2-2b/`.
+- First act unchanged: `git rev-parse --abbrev-ref HEAD`, then `test -d org && test -d .tools && echo TREE-OK`.
+
+### A3. FRESH-WORKTREE TRAPS THIS ROUND HAS ALREADY PAID FOR -- none of these is yours to rediscover.
+- **`.tools/terraform.exe` is gitignored and therefore ABSENT here.** Four roots read `rc 1` for want of
+  `terraform init`, and **an rc is not a reading.** Resolve the binary by path; `init` each root before any plan.
+- **`safe-apply.sh` has TWO identity gates.** `export OPAL_AGENT_SERIAL=...` satisfies only the commit-lane one; the
+  halt gate reads `org/mcp/sessions/$CLAUDE_CODE_SESSION_ID.serial`, gitignored per-session state **you must write
+  yourself BEFORE any apply** (row W4-S2). Write it before you need it.
+- **A rail denial ABORTS THE WHOLE BASH CALL**, so every later segment of an `&&` chain is a SILENT no-op --
+  including your commit. Put a gated read in its own call, or verify the later segment's EFFECT.
+- **`safe-commit.sh` force-adds gitignored files under a DIRECTORY pathspec** (it once staged a 685 MB provider
+  binary). Always pass explicit FILE paths.
+- **Heredoc backslashes arrive HALVED** in the Bash tool. Write scripts and commit messages with the Write tool.
+- A raw `grep`/`find` over a directory is denied and routed to `comp-find`; a `cmd | grep` pipe RECEIVER is free.
+
+### A4. THE DEPLOY PREREQUISITE IN THE WIP HAND-OFF's SECTION 5 IS **RULED**. DO NOT RE-OPEN IT AS A CHOICE.
+The WIP frames it as *"attach the `irpt-common` layer to the functions that lack it, OR vendor the modules per
+function"*. **Both halves rest on a premise the issuer measured FALSE at `7d6db9bcfa`, and the layer is the WRONG
+CARRIER.**
+
+**Measured, `infra/aws/lambda/ci/lambda-layer-map.json`, `layers["irpt-common"]` at HEAD:** irpt-common:5 carries
+jsonschema 4.26.0 with transitive pins, the IRPT contract schemas, `bd_helpers`, and
+`python/{ids.py,raw_keys.json,firm_registry.json,keys.py}`. **It does NOT carry `served.py`, `loaders.py`,
+`enforce.py`, `errors.py` or `resolve.py`.** Attaching it to `directory` and `ops` would therefore NOT fix the
+ImportError the WIP predicts -- it would publish a change that LOOKS like a remedy and leaves the gap standing.
+
+**Measured, `infra/aws/lambda/ci/lambda-source-map.json` at HEAD** -- the shared modules each IRPT function already
+declares as FLAT build inputs (denominator: 9 irpt-* functions of 214 declared):
+
+```
+irpt-status               enforce, errors, resolve, keys, ids     <- THE SHAPE TO COPY
+irpt-ycharts-generate     enforce, errors, resolve, keys, ids
+irpt-export-render        enforce, errors, resolve, ids
+irpt-holdings             enforce, errors, resolve
+irpt-directory-refresh    errors
+irpt-directory-search     (none declared; 2 files total)
+irpt-narrative            (none)
+irpt-performance-adapter  (none)
+```
+
+**THE RULING: declare the shared modules as FLAT BUILD INPUTS in `lambda-source-map.json`, per function, exactly the
+way `irpt-status` already does.** That is the estate's existing mechanism (BUILD LADDER rung 2 -- the estate already
+has it), it is how four functions already resolve `enforce`/`resolve` today, and it needs neither a layer attachment
+nor a vendor manifest. `infra/aws/lambda/layers/irpt-common/` and `lambda-layer-map.json` remain granted, but **you
+are NOT to publish a layer version for this.** If you come to believe you must, that is a BLOCKING row to me, not an
+act.
+
+**AND `served.py` AND `loaders.py` ARE DECLARED BY NOBODY** -- you created them in this cell, so the gap is UNIFORM
+across all six functions your entry modules touch, not confined to the two that read `layers = []`. Census the SIX,
+print the denominator.
+
+- **RESOLVE THE WAY THE BUILDER DOES, AND PRINT `N of N`.** This is the same trap slot ~3 paid for on W3-S24: a naive
+  *does `source_dir/<name>` exist* check calls flat-packaged shared libraries ABSENT and invites you to delete them.
+  A module is PRESENT if the builder resolves it from its home package at build time. **Remove only what resolves
+  NOWHERE; add only what resolves nowhere.**
+- **THE ONLY INSTRUMENT THAT CATCHES A MISSING MODULE IS AN EXTRACT-AND-IMPORT IN THE FLAT `/var/task` LAYOUT WITH
+  THE REPO STRIPPED FROM `sys.path`, IN A FRESH INTERPRETER.** `CodeSha256` equality cannot see this by construction:
+  a hash certifies bytes and nothing in the deploy path ever imports them. A saved-and-restored `sys.modules` is not
+  isolation either -- only a new interpreter is.
+- My `layers=` probe returned `?` for most rows because I probed a key name I did not confirm. **The
+  layer-ATTACHMENT facts are UNMEASURED BY ME and are yours to measure from Terraform**, as the WIP did at
+  `bebcab6315`. Do not quote my table for attachment.
+
+### A5. THE `_authz/dispatch.py` RENAME IS UNBLOCKED. WIP section 6.5 is STALE.
+It says *"do not start the rename until `_contracts/` is granted"*. **`_contracts/` WAS granted at `db1be7e127`**
+(issuer amendment, same session). The rename's only importer is `_contracts/tests/test_seam_paired.py:41` and that
+path is in lane. Do it, in one commit with its importer, leaving no shim at the old basename.
+
+### A6. DEPLOY SEQUENCING -- YOU ARE SECOND, AND THIS IS NOT NEGOTIABLE.
+Slot ~3 (IB-rt-9) owes a rebuild-and-deploy of `irpt-export-render`, `irpt-status` and `irpt-ycharts-generate` for
+the `ids.py` packaging gap (row W3-S25), and that is ITS first ledgered act. **Three of those overlap your six.**
+- **rt-9 deploys those three FIRST. You do NOT deploy them until I tell you its deploy has landed.** Ask me; do not
+  read its branch and decide for yourself.
+- Your own deploy of the guarded entries (arm (e)) re-points the Terraform `handler =` strings. Until that apply,
+  the world runs the OLD handlers, which do not import `served`/`loaders` -- **so rt-9's deploy is safe ahead of
+  yours, and yours is unsafe ahead of its declaration landing.** That asymmetry is the reason for the order.
+- NEVER-2 stands: open the change-management ledger only with the room to CLOSE it in-session; commit the OPEN
+  sentinel BEFORE the act and the CLOSE before the reads that grade it. Print
+  `artifact_sha256 == S3 content-sha256 == live CodeSha256` for every function you deploy (W3-S18).
+
+### A7. FIRST ACTS, IN ORDER (the WIP's section 4 stands, with A4 folded in).
+1. Add `"irpt-status"` to `IN_LANE_FUNCTIONS` in `_authz/tests/test_guarded_entries.py` (ONE line; the census
+   test's own copy of that set is already updated -- the two lists are separate).
+2. Re-run `timeout 600 python -m pytest infra/aws/lambda/investor-reporting/_authz/tests/ -q` (104 passing before
+   the line; expect 36 swaps after) and then `timeout 900 python
+   org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_rt_2.py`.
+3. **Rewrite `battery_ib_rt_2.result.md` and the proof-of-spec instance FROM THAT OUTPUT.** Both currently record
+   pre-amendment numbers and say so in their own text. **Do not hand-edit their numbers** -- that is a new vintage,
+   not a correction.
+4. Then the packaging census and declaration of A4; then the rename of A5; then, only after A6 clears, the deploy.
+
+### A8. EVERYTHING IN THE WIP's SECTIONS 6 AND 7 STILL BINDS.
+Do not re-measure the "6 of 11 unguarded" the face inherits (the real census at the cut was 11 of 11, row W2-S20).
+Do not add a guard inside a wrapped handler module. Do not wire `ops`'s status loader to make an arm pass. Do not
+add `expiry.py`/`refresh.py` to `irpt-directory-search`'s files. Do not re-derive the protected-string set as a flat
+list. Do not assert REFUSED for the advisor swap -- the bar is that it never WIDENS. Read the `PUBLIC_REASONS` enum
+before reaching for `CONTRACT_VERSION`.
+
+
 ## DELIVERABLE
 
 The guarded entry points in `directory/`, `performance/`, `ycharts/generate/` (the request handler), `narrative/`, `export/` (the status operation); `_authz/tests/test_unguarded_census.py` with the control; the test-principal module `_authz/testprincipal.py` OR the `HUMAN-GATED` arm record `deliverables/0.9.0_WK_IRPT_BCKEND~2/RT2_test_principal_human_gated.md`; the ledger entries + sentinels for each root applied; the battery `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_rt_2.py` and `.result.md`.
