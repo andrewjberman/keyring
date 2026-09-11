@@ -3097,6 +3097,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "The amendment: 'if the run refuses SESSION_ABSENT, that refusal IS the recorded output -- arm (a) then reads SESSION-GATED naming IB-rtb-1'.",
     "world_is": "Exactly that branch, reached on the first send that got past the infrastructure gaps. The render pipeline is complete except for authentication.",
     "notes": "Four earlier sends in the same authorization each produced a NAMED refusal before this one -- MODULE_NOT_FOUND playwright, MODULE_NOT_FOUND @aws-sdk/client-s3, RENDERER_MODULE_ABSENT, and a TLS error on a hostname the estate does not own. Each was a real gap between a host half that was written and a host it had never run on."
+  },
+  {
+    "id": "IRPT_BCKEND-S36",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T18:12:34Z",
+    "one_line": "WIND-DOWN DRAINS. (1) IB-rt-2's wind-down branch (496a2767d2, slot ~2) landed at 5347f30b34: no ledger opened across two runs, arm (a) reads 0 of 11 unguarded across all six functions with the control firing 1 of 11, irpt-status at 3 of 3 triple equality with six absent build inputs REMOVED, and the order stays OPEN for a successor run -- W2-S28 (the rename's one importer lives in _contracts/, outside the grant) is GRANTED on the face; W2-S29 (directory-search and directory-refresh share a source dir) is RULED to a per-function files list. (2) IB-rt-7 (slot ~1) landed COMPLETE at 47522d2ba9: the live holdings route serves under the api root with 12 of 12 routes declared, holdouts visible and before == after to the cent on 3 of 3 firms, both clocks on every node, :acct: 0 of 127,071; the layer was NOT published because the live :5 already carried 9 of 9 declared members (W1-S14's 'record and repoint only' branch); W1-S16 (_authz.covers() admits any advisor id for an admin principal against its own docstring; no cross-firm bytes reachable today) is ROUTED to IB-rt-2's successor run, which holds _authz/. (3) A PROCESS SLIP, RECORDED AGAINST THIS SEAT: the first attempt at drain (1) was REFUSED by the row gate (another seat's commit landed while the merge was open, the conflict stages vanished, and a marker-laden channel was staged) and the cleanup chained after it -- `git worktree remove && git branch -D` -- ran anyway, deleting the un-merged branch. Row S18's lesson, again, one level up: a destructive step chained after a merge whose rc was not the chain's condition. The branch was restored from the object store (496a2767d2, nothing lost), the merge residue (three modified files and two untracked files, each verified byte-identical modulo CRLF to the branch) was cleared from the shared tree, and the drain re-run through a temporary linked worktree, then pull-merged when the fast-forward lost two races. Every cleanup in this session from here on is gated on `merge-base --is-ancestor <branch tip> HEAD`, never on the chain reaching it. (4) IN FLIGHT at this row: IB-rt-9 on slot ~3 only, under the wind-down caveat. IB-rt-10 held unhanded on ~4.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (the issuer; the successor session reads the wind-down log first)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 5347f30b34 (drain of coo-b-drain-tmp carrying 4d234193a8 = wk-irpt_bckend-2-2 @496a2767d2), 47522d2ba9 (drain wk-irpt_bckend-2-1 @b9a3fcc335)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/WIP_IB-rt-2_winddown.md; deliverables/0.9.0_WK_IRPT_BCKEND~1/WIP_IB-rt-7_winddown.md",
+        "the refused --continue's log: [surprise-corpus] REFUSED: 1 malformed block(s) -- the staged channel carried conflict markers"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md 14b and rule 27: a drain is graded on the merged index by safe-merge.sh and its remaining steps (remove the worktree, delete the branch) follow a LANDED merge; memory reference: a pipeline's rc is its last command's, so a chained cleanup must key on the merge's own outcome.",
+    "world_is": "IRPT_BCKEND round 2 at 47522d2ba9: COMPLETE rt-1, rt-3, rt-4, rt-5, rt-7, rt-8; OPEN rt-2 (successor run), rt-9 (~3 in flight, wind-down); rt-10 pending on ~4 unhanded; rt-6, rt-11, rtb-1 staged.",
+    "notes": "Seat rows continue at S37. The successor drains wk-irpt_bckend-2-3 when slot ~3 reports, then cold-starts rt-2, rt-9 (if open), rt-10, rt-6, rt-11, rtb-1 in fresh worktrees."
   }
 ]
 ```

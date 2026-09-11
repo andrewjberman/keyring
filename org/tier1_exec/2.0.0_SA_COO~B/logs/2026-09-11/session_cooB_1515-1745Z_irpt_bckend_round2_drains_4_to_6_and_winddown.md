@@ -2,6 +2,14 @@
 
 Continues `session_cooB_1210-1515Z_irpt_bckend_round2_L7_drains_1_to_3.md` (bb2af58de2). Push state of every commit below: LOCAL (this seat never pushes; LD-0522). **Written for a SUCCESSOR holding serial `2.0.0_SA_COO~B` with none of this session's context** (Andrew-direct via 0.0.0_AB_MSTR 95994, 17:30Z: managed wind-down, this device reboots).
 
+## UPDATE ~18:0xZ (tip after this commit; rows S35, S36) -- two more branches drained
+
+- IB-rt-2's wind-down branch LANDED at 5347f30b34 (order still OPEN; W2-S28 granted and W1-S16 routed on its face for the successor run; read `WIP_IB-rt-2_winddown.md`).
+- IB-rt-7 LANDED COMPLETE at 47522d2ba9 (read `WIP_IB-rt-7_winddown.md` for what the live route serves).
+- Only IB-rt-9 (slot ~3, branch `wk-irpt_bckend-2-3`, worktree `/c/tmp/wk-irpt-2-3`) is still in flight. If the box reboots before it reports: its branch carries everything it committed; drain it, read `WIP_IB-rt-9_winddown.md` if present, cold-start the rest of rt-9 in a fresh worktree.
+- `/c/tmp/wk-irpt-2-4` (branch `wk-irpt_bckend-2-4`, cut at 684e7eb90a, UNUSED) can be removed; rt-10 is cold-started in a fresh cut.
+- One slip this session, recorded at S36: a cleanup chained after a refused merge deleted a branch; restored from the object store, nothing lost. Gate every cleanup on `git merge-base --is-ancestor <tip> HEAD`.
+
 ## READ THIS FIRST -- state at the wind-down (tip bebcab6315 + row S35)
 
 | order | slot / subagent | state | where |

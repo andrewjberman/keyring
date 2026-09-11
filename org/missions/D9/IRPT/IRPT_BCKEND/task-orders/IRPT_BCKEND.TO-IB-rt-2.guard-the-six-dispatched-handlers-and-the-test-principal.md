@@ -66,6 +66,13 @@
 - **W3-S22 / W4-S24 ROUTED HERE.** `_authz/dispatch.py` was authored in this slot (173349a652) and collides with `export/dispatch.py` on the flat `sys.path` every export module shares (IB-rt-8's own tests cannot see its module). Rename `_authz/dispatch.py` to `_authz/authz_dispatch.py`, update every importer, and print a census of module basenames in `_authz/` against every function directory: `0` collisions. `export/dispatch.py` is not renamed.
 - Arm (a)'s inherited `6 of 11` is retired by your census (`11 of 11` unguarded at the cut, row W2-S20); the battery prints the census it derives from `routes.json` + the source map + each root's `handler =`, never an inherited number.
 
+**ISSUER AMENDMENT (2.0.0_SA_COO~B, 2026-09-11 ~18:0xZ, at the drain of the wind-down branch 496a2767d2 -> 5347f30b34; for the SUCCESSOR run of this order):**
+- **W2-S28 GRANTED.** `<paths>` now carries `infra/aws/lambda/investor-reporting/_contracts/`: the one importer of `_authz/dispatch.py` is `_contracts/tests/test_seam_paired.py:41`, so the rename to `_authz/authz_dispatch.py` updates that test in the same commit and leaves no shim at the old basename.
+- **W1-S16 ROUTED HERE (from IB-rt-7, slot ~1):** `_authz.covers()` admits ANY advisor id for an admin principal while its docstring says "within the verified firm". No cross-firm bytes are reachable today (the firm is bound before the check), but the predicate and its docstring disagree on a security boundary: make `covers()` refuse an advisor id outside the verified firm for every principal class, add the negative to the swap census, and print it.
+- **W2-S29 (two remedies, no preference in the row):** `irpt-directory-search` and `irpt-directory-refresh` share one source dir. RULED: split the packaged lists by an explicit per-function `files` list in `lambda-source-map.json` (the builder's parity check runs per function and must pass for both), not by moving code; the refresh runner's modules are not in the search zip.
+- The committed battery result and the instance record the PRE-amendment numbers (`0 of 8 / 3 of 11`): they are REWRITTEN from a fresh run, never hand-edited. `directory` and `ops` declare `layers = []`, so the guarded entries' shared imports need the layer attached (or vendored) before those two zips are deployed; read the live `irpt-common` version immediately before publishing.
+- Successor: read `deliverables/0.9.0_WK_IRPT_BCKEND~2/WIP_IB-rt-2_winddown.md` (496a2767d2) first. No ledger was opened by this order across two runs; nothing is half-landed.
+
 ## DELIVERABLE
 
 The guarded entry points in `directory/`, `performance/`, `ycharts/generate/` (the request handler), `narrative/`, `export/` (the status operation); `_authz/tests/test_unguarded_census.py` with the control; the test-principal module `_authz/testprincipal.py` OR the `HUMAN-GATED` arm record `deliverables/0.9.0_WK_IRPT_BCKEND~2/RT2_test_principal_human_gated.md`; the ledger entries + sentinels for each root applied; the battery `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_rt_2.py` and `.result.md`.
@@ -140,6 +147,7 @@ infra/aws/lambda/investor-reporting/ops/
 infra/aws/terraform/investor-reporting/ops/
 infra/aws/lambda/layers/irpt-common/
 infra/aws/lambda/ci/lambda-layer-map.json
+infra/aws/lambda/investor-reporting/_contracts/
 </paths>
 
 
