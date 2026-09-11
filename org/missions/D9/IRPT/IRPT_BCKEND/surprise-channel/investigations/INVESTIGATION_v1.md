@@ -1057,6 +1057,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "CLAUDE.md Git section: AWS via the `.tools/aws` shim (+`aws.cmd`, both or neither); never bare MSYS_NO_PATHCONV=1 aws.",
     "world_is": "The two faces of the shim are not interchangeable by caller. From bash either works; from a Windows Python only the .cmd does, and the bash one fails with an error that points away from the cause.",
     "notes": "Recorded because it costs a cycle every time. Same family as the existing memory note that Python spawning an MSYS binary must go through .tools/msys_argv_guard.py -- this is the AWS-shim instance of it."
+  },
+  {
+    "id": "IRPT_BCKEND-S13",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T03:38:33Z",
+    "one_line": "DISARM of IRPT_BCKEND-W3-S5 (ARMED; the worker disarmed it for its own cell and routed the fallback's meaning to the issuer). The issuer's (amend) arm of 812bbec0e9 named `routes.json` as the guard census's fallback for a cell that ships no handler, and that file is IB-s-15's deliverable (its face: route keys enumerated in routes.json so IB-sb-3 reads its denominator from a file) -- it does not exist before IB-s-15 lands, so for IB-s-7 the fallback was unsatisfiable and a naive reading would have printed a vacuous 0 of 0 as a pass. The worker's repair is adopted verbatim as the issuer's clarification on the six un-handed faces (IB-s-9, 10, 14, 15, 16, sb-3): the census is printed AS VACUOUS and the arm proves the CENSOR through two controls (an unguarded handler censused 1 of 1; the same handler wrapped 0 of 1); IB-s-15 and IB-sb-3 read the real file. Also carried: W3-S6 -- the face's and the PRD row's `needs-correction` is the contract's closed-enum `NEEDS_CORRECTION`; the contract's spelling is the one emitted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (this row IS the disarm act; a cut defect of the issuer's own amendment, corrected on every face it can still reach)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W3-S5, IRPT_BCKEND-W3-S6 (this HEAD)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-15.scoped-routes-opal-principal-and-the-cloudfront-behavior.md THE CELL -- 'Route keys ... enumerated in routes.json so the replay battery (IB-sb-3) reads its denominator from a file'",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/battery_ib_s_7.result.md (this HEAD) -- the vacuous census printed as such and the two controls",
+        "the six faces (this commit) -- one sentence appended to the (amend) arm; every <status> still staged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer (amend) arm @812bbec0e9: 'Where this cell ships no handler, the same census runs over routes.json at the replay.' Memory: a gate called with an EMPTY input set returns a vacuous pass that reads as clean.",
+    "world_is": "The named fallback object is a future artifact of another cell; for every handler-less cell handed before IB-s-15 the arm's only honest reading is the censor's own controls. The amendment named the right hazard and the wrong object.",
+    "notes": "Adopted the worker's repair rather than inventing a second one; the faces already handed (IB-s-4 on ~2) carry the old sentence and are re-graded by the issuer at their drain under this reading."
   }
 ]
 ```
