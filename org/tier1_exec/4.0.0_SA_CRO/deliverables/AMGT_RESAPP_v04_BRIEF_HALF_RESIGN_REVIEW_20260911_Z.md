@@ -315,4 +315,64 @@ create.
 
 ⛔ Certification scope UNCHANGED: brief CONTENT CARRIAGE only.
 
+---
+
+## 8. FIFTH REVIEW -- PRD **v0.5** @`5517e071e8`, brief `c977c8c275ce`. SIGNED
+
+**Supersedes section 7e's verdict. Sections 1-7 stand.** First review against a NEW PRD VERSION
+rather than an amendment of v0.4: the L4 ADDENDUM carrying the HARVEST ESTATE.
+
+### 8a. Verified before reading a word of the substance
+
+| check | result |
+|---|---|
+| brief half | `c977c8c275ce` -- matches the hash the addendum names |
+| ratified-text half | `4eb997ed71ee` **UNMOVED** -- `3.0.0_SA_CVO~Z`'s signature stands; fifth consecutive brief-half edit that left it alone |
+| `endpoint_outcomes` | **15 ids, `FWD-1`..`FWD-15`, the set UNCHANGED** -- the load-bearing one |
+| worktree | clean against HEAD at sign |
+
+⭐ **THE OUTCOME-SET CHECK IS WHAT MAKES THIS A ONE-HALF REVIEW, AND IT WAS RUN RATHER THAN
+ASSUMED.** The addendum claims *"no outcome changed; only HOW and BY WHOM two of them are served."*
+Had an `FWD` been added, renumbered or reworded, the ratified half would have moved and
+`3.0.0_SA_CVO~Z` would owe a re-sign too. It did not. **The claim is true at the header, and that is
+why this costs one review instead of two.**
+
+### 8b. Carriage verdict: SIGN
+
+- **`C-HARVESTER-COMPUTE` amended** from four harvesters on a shared box to ONE box and ONE lambda in
+  the ONE harvester module, with Andrew's EC2-not-site-Z ruling carried VERBATIM and its reason
+  stated: a local server cannot sit inside a canonical, self-contained, terraformed estate.
+- ⭐ **`C-VENDOR-WORD-HARVESTERS` RE-HOMED -- the single most consequential line in the addendum.**
+  It had no cell of its own; decomp s.13d carried it as a time-scoped BOUND on `rd-4`, so
+  superseding `rd-4` would have removed its only carrier. It now sits on the harvest estate's
+  acquisition surface **with all three limits intact**, and the PRD states in terms that Andrew's
+  "full egress and override authority" is authority to REALIZE THE ESTATE and **NOT** a widening of
+  `C-VENDOR-EGRESS`. ⚠ **This seat is the BENEFICIARY of that grant and is therefore the wrong party
+  to have been the only one watching it narrow. That `1.0.0_SA_CTO~Z` wrote the narrowing into the
+  spec is the actual control**, and it is worth more than this seat's own assurance.
+- **The proxy-vendor question is written in as OPEN** -- never inferable from an EC2 IP failing
+  against PerimeterX.
+- **This seat's error is recorded AS an error:** the bot-wall reasoning was sound about PerimeterX
+  and wrong about the estate -- a correct local fact deciding a question it does not govern.
+
+### 8c. ONE OBLIGATION THIS SEAT INHERITS AND HAD NOT STATED
+
+> *"Refresh must still WAKE the stopped box (SSM / inf-jwt-trigger shape) or it silently no-ops."*
+
+**Accepted, and it is a genuine gap in the drawn architecture.** This seat MEASURED that all three
+existing scraper boxes read `stopped` -- including `astn-wsjft-scraper`, launched only today at
+07:00Z -- so **a stopped harvester box is the NORMAL state under the auto-shutdown regime, not an
+edge case.** A scheduled refresh against a stopped box does not fail loudly; it silently does
+nothing, which is the freshness failure that looks like healthy quiet. The wake step is part of what
+the box cell must build, and it is named here so it cannot be lost between the addendum and the
+build.
+
+### 8d. VERDICT
+
+**SIGNED** -- brief half, `half_hash c977c8c275ce`, PRD **v0.5**, tree clean at sign.
+
+⛔ Certification scope UNCHANGED: brief CONTENT CARRIAGE only. Not the ratified half, not any FWD
+outcome, not round 5's readiness, and **not the supersede itself** -- that status flip is
+`2.0.0_SA_COO~ZZZ`'s act and must ride the same commit as the decomp s.13c repair.
+
 Push state: LOCAL at write; this seat does not push.
