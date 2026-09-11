@@ -1,4 +1,4 @@
-# AMGT_RESAPP -- L5 decomposition (COO) -- v0.3
+# AMGT_RESAPP -- L5 decomposition (COO) -- v0.4
 
 **Seat:** `2.0.0_SA_COO~ZZZ`, spawned by Andrew 2026-09-10 ~17:4xZ at the `1.0.0_SA_CTO~Z` terminal for this
 project (seating brief msg 21003; `project.json` `seats.coo`). **Directive:** D5 Alternative Research.
@@ -503,3 +503,100 @@ each round-2 order's authority chain. comp-blast DECLARED-NOT-APPLICABLE (no inf
 **PUSH STATE: this amendment is LOCAL.** 0.0.0_AB_MSTR~Z holds the push window.
 
 *(v0.3 amended 2026-09-11T05:30Z by 2.0.0_SA_COO~ZZZ -- the L10 recut from @4d31cf4caa; round-1 sections 1-9 unchanged.)*
+
+## 11. ROUND 2b (RECUT) -- from the L10 round-2 analysis @c48576bf85 (1.0.0_SA_CTO~Z)
+
+**v0.4 IS AN L10 RECUT OF THE THREE FAILED ROUND-2 FIXES + TWO NEW r-1 SOURCE FINDINGS, NOT A NEW
+DECOMPOSITION.** Round 2 was the defect-fix round for the five defects round 1 routed. The CTO's round-2
+analysis @c48576bf85 (answering the CVO's slug REMEDIATION_v2 @b3acbcf3dd, drain 56c755b86a; artifacts
+pinned 9a2e542c0b) graded 2 PASS / 3 FAIL, and the CVO's independent L8/L9 control surfaced 2 more source
+findings on r-1. **0 of 14 FWDs newly REALIZED, unchanged -- every FWD still needs an EXERCISED served
+surface and no .tsx exists.** This round is the pre-surface CORRECTNESS the surfaces will rest on; it
+builds no surface. The round-1 and round-2 cells are FROZEN and terminal; this section ADDS the five
+round-2b remediation cells the analysis s.2/s.3/s.5 sends back. Nothing prior moves.
+
+**NONE OF THE FIVE IS DESIGN_SPEC-GATED** (analysis s.2/s.5): print-fixture / doc / logic / source
+correctness, doable now without a .tsx and without Andrew's design approval. Only the SURFACE EXERCISE
+(round 3) waits on him -- unchanged.
+
+**C-S8 and C-S9 FOLD IN AS TEXT CORRECTIONS, not cells** (analysis s.3; both OBSERVATION/INERT, the WORK
+is sound):
+- **C-S8:** the r-1 order text implied a mapped `FISCAL_YEAR_END` reference field; that field is
+  BAD_FLD/INVALID_FIELD and the join correctly uses the fundamentals ROW-DATE. Round-2b cells that touch
+  the fiscal join name the measured row-date carrier, never a mapped reference field.
+- **C-S9:** the SA exercise population is BABA/BA/COST (18 raw keys), NOT the order's BABA/RTX/+1. Any
+  round-2b context that names the SA denominator uses the actual one.
+
+### 11a. The five round-2b cells
+
+M = FOUR dependency-independent chains: three single-cell chains (`AMGT-rb-10`, `AMGT-rb-12`, `AMGT-rb-15`,
+DISJOINT write surfaces) + one two-cell chain (`AMGT-rb-1` -> `AMGT-rb-2`, both on
+`integrations/bloomberg/research/`, serialized -- rb-2 wires the block rb-1 corrects and they share the
+write surface). `fanout: 4 of 4, cap 8`. Ids match CELL_ID_RE (verified against the enforcer's pattern).
+
+| cell | fixes | finding | FWD | the defect (analysis s.2/s.3; CVO evidence @b3acbcf3dd) | the engine, and its bound |
+|---|---|---|---|---|---|
+| `AMGT-rb-10` | `AMGT-r-10` | C-S12 (BLOCKING) | FWD-10 | the round-2 fix added a SECOND trailing text tag (`12345 [PROVISIONAL] [WARN]`) -- another plain suffix on the same NUMBER-FIRST presentation round 1 already rejected; render_print.py appends the icon as bracketed text and never renders a leading status or the colour_token; and the test compared DIFFERENT values (500 vs 12345), so string inequality never proved the marker made the difference. | THE CHECK-FACE SALIENT WARNING, IN THE READING. Make a PROVISIONAL/REFUSE figure visibly salient AT A GLANCE in the permitted print fixture (render_print.py, S5) -- a LEADING status marker (ASCII, from the closed contract green/OK, amber/WARN, red/BLOCKED) so the number is no longer the FIRST thing read, not a second trailing word. The difference-arm test renders the SAME number under PASS and under PROVISIONAL and shows the PROVISIONAL render is distinguished at the START. Regrade AC4 (CVO) before FWD-10 is treated realized. Home: `lib/research/checkface/`. Bound: NO .tsx (C-DESIGN-SPEC-FIRST); the marker contract is PRESERVED and carries into the approved design; NO non-ASCII (no glyph/emoji) -- a leading ASCII status token is the print-path "visual prominence". |
+| `AMGT-rb-12` | `AMGT-r-12` | C-S13 (BLOCKING) | FWD-8, FWD-13 | the measured-source limb PASSED (34 distinct MEASURED); the DECISION NOTE failed -- `DESIGN_QUESTION_identity_fallback.md` twice promises "MEASURED-or-better 34 -> 49" while limiting ALL fallback values to INFERRED (categories that cannot share one denominator) and treats hypothetical renaming as a measured failure. | THE IDENTITY DECISION-NOTE CORRECTION (doc). Correct the note to "34 MEASURED + up to 15 INFERRED candidates" (never "49 MEASURED-or-better"); SEPARATE observed ambiguity (e.g. Nokia FH, a real trailing-token ambiguity in this corpus) from hypothetical renaming (e.g. a re-org rename -- not observed); NAME which downstream gate(s) still refuse INFERRED. Keep the fallback UNIMPLEMENTED pending Andrew. AC: a census over the doc finds NO "MEASURED-or-better ... 49" claim, the doc states 34 MEASURED + up-to-15 INFERRED, it names the INFERRED-refusing gate(s), and the measured count (34 distinct) is unchanged. Home: `lib/research/identity/` + deliverable. Bound: NO fallback coded (AC3 still refuses it in `*.py`); NO new vendor call; the 34 MEASURED are not re-litigated. |
+| `AMGT-rb-15` | `AMGT-r-15` | C-S14 (BLOCKING) | FWD-14 | the advertised AND-clause executes as `check1 OR check2` and returns official immediately (the docstring's "AND any further evidence" is UNMET); the 8-case enumeration admits check2-alone and check1-alone; verification (check2) is an untyped boolean NOT bound to company identity, so a non-identity verification mark + a copied bio still passes. | THE IMPOSTOR PREDICATE, CORRECTED. Clarify the INTENDED truth table and the identity meaning of "verification"; make the CODE enforce the STATED contract (require the co-occurrence where intended -- resolve the docstring-vs-code contradiction in favour of the stated rule); bind check2 to COMPANY IDENTITY (a mark that does not attest the company's identity is not check2). Add NEGATIVE CONTROLS for (a) verification-without-further-evidence and (b) a mark that does not attest company identity. AC: the 8-case truth table matches the STATED contract with no admit the contract forbids; the two negative controls REFUSE where the old code admitted (the difference arm). Home: `lib/research/lists/`. Bound: ALL real handles stay UNRESOLVED; NO social/vendor call and NO owner assignment (C-NO-CONTACT; Andrew's per-use word, round 3). |
+| `AMGT-rb-1` | `AMGT-r-1` / C-S15 | C-S15 (BLOCKING) | FWD-1, FWD-3 | `fye_join._nearest_price` falls back to the nearest point in EITHER direction when nothing is on-or-before, and `gap_days` uses `abs`, so a period_end 2025-12-31 with only a 2026-01-02 price returns that FUTURE price at gap_days 2 and passes the under-45-day check. A BOUNDED source defect -- 0 of 30 live served rows affected at this vintage. | THE FISCAL JOIN, DIRECTION-CORRECT. `_nearest_price` returns UNRESOLVED (None) when no on-or-before price exists (drop the either-direction FUTURE fallback); a price_date is NEVER after its period_end. Add a FUTURE-ONLY negative control (period_end 2025-12-31 + only a 2026-01-02 price -> UNRESOLVED, never gap 2) and a DIRECTION ASSERTION (price_date <= period_end on every resolved row). PRESERVE the passing 3-security sample and its exact pins (0 of 30 unaffected). Home: `integrations/bloomberg/research/`. Bound: the passing sample is not disturbed; C-S8 -- name the fundamentals ROW-DATE carrier, never a mapped FISCAL_YEAR_END field; NO new vendor call. |
+| `AMGT-rb-2` | `AMGT-r-1` / C-S16 | C-S16 (OBSERVATION, re-cut as integration) | FWD-1, FWD-3 | `derive_fye_fixed.py` writes `derived/model_block_fye/`, a DISTINCT engine lane; the provenance/print consumers still read the original `model_block` lane (r-1 explicitly excluded replacing them), so the served analyst pack still reads the OLD calendar-year join. | THE FISCAL BLOCK, WIRED TO THE CONSUMER. NAME the provenance/print consumer path that reads `model_block` and TEST that the served pack reads the CORRECTED `model_block_fye` lane (its derived vintage) -- the smallest correct switch, never overwriting or aliasing `model_block` (STORE_CONTRACT rule 1). AC: a test names the consumer and shows it reads the corrected lane -- the difference arm: for BABA the OLD lane gives the calendar-year price, the corrected lane the fiscal-period price. DEPENDS ON rb-1 (wires the direction-corrected join). Home: `integrations/bloomberg/research/`. Bound: do NOT overwrite peer outputs; NO round-3 / .tsx; NO new vendor call. |
+
+### 11b. Rule 24 record for what v0.4 ADDS (the five round-2b cells)
+
+- **(i) MECE over the DECLARED domain = the analysis s.5's round-2b recut set.** SUBTRACTION, not recall:
+  the analysis names the THREE failed fixes (r-10 salience C-S12, r-12 doc C-S13, r-15 predicate C-S14) +
+  the TWO new r-1 source findings (C-S15 direction, C-S16 integration) = FIVE. C-S8/C-S9 are text
+  corrections folded in (not cells); C-S10 is the CTO's to route to the repo owner (not a COO cell);
+  round 3 is Andrew's. No sixth cell, no dropped item.
+- **(ii) SAME GRAIN:** each is one cell fixing one named finding.
+- **(iii) INTENT COHERENCE:** one axis -- reading-salience / doc-coherence / predicate-correctness /
+  source-direction / consumer-integration. No cell mixes remediation with new scope.
+- **(iv) STATE COHERENCE -- what these cells do NOT move:** they fix the pre-surface correctness; they do
+  NOT make any EXERCISED bar REALIZED (that needs the served surface -> the .tsx -> Andrew's DESIGN_SPEC --
+  round 3). rb-1 + rb-2 TOGETHER make the fiscal alignment LIVE in the served pack; alone, r-1's fix was
+  correct on the sample but not the served figure. A round-2b cell landing complete does not close its FWD.
+
+### 11c. Round-2 lessons absorbed into this cut
+
+The round-2 cut carried three fixes that FAILED the CVO's judgment and two the CVO's own control caught.
+This cut:
+- **A difference arm must vary ONLY the thing under test.** r-10's round-2 test compared 500 vs 12345 --
+  two different numbers, so string-inequality proved nothing about the marker. Every round-2b difference
+  arm holds the value FIXED and varies only the verdict / direction / check.
+- **A judgment fix must satisfy the JUDGMENT, not a mechanical proxy.** r-10 added a second text tag
+  (mechanically "a marker") that did not achieve at-a-glance salience (the judgment). rb-10's AC names the
+  SALIENCE property (leading status, value not first), not merely "a marker field present".
+- **Advertised contract == executed code.** r-15's docstring said AND, the code did OR. rb-15 makes the
+  8-case truth table the acceptance and asserts the code matches the STATED contract.
+- **A benefit claim states ONE denominator's category.** r-12's note mixed MEASURED and INFERRED under one
+  "34 -> 49" number. rb-12 keeps the two categories separate with their own counts.
+- **A source fix is not live until a CONSUMER reads it.** r-1 corrected the join on a new lane nothing
+  consumes. rb-2 tests the consumer path; rb-1 + rb-2 is the pair that makes it served.
+- Carried from round 1: every criterion DISCRIMINATES; the proof instance uses the FULL task-order stem
+  filename; a criterion names the instrument that OBSERVES the artifact; the write grant is read while the
+  order is NON-TERMINAL.
+
+### 11d. The round axis, updated
+
+- **ROUND 1 (16 cells):** terminal, frozen.
+- **ROUND 2 (5 cells):** terminal, frozen. 2 fixes LANDED (r-1, r-4), 3 FAILED + 2 new source findings ->
+  round-2b.
+- **ROUND 2b (RECUT, 5 cells):** `AMGT-rb-10`, `AMGT-rb-12`, `AMGT-rb-15` (three independent chains of one)
+  + `AMGT-rb-1` -> `AMGT-rb-2` (one two-cell chain, serialized). `fanout: 4 of 4, cap 8`. Four workers
+  spawn at issuance; the fiscal worker runs rb-1 then rb-2.
+- **ROUND 3 (deferred on Andrew's gate):** the SURFACE EXERCISE of every FWD -- the .tsx that serves each
+  surface, cut only after the DESIGN_SPEC approval + the four words land. NOT cut now.
+
+**PREFLIGHT for the round-2b recut:** the mandatory core battery is NOT re-run -- v0.2's run stands at its
+vintage and no round-2b cell touches a new gate/IAM/adversary/vendor surface (all five are edits to landed
+modules against landed data). The authority is the L10 round-2 analysis @c48576bf85 (the CTO's one send)
+answering the CVO's slug REMEDIATION_v2 @b3acbcf3dd, cited in each order's authority chain. comp-blast
+DECLARED-NOT-APPLICABLE (no infra act; no served-output move -- rb-2 tests a consumer READ, it does not
+move a served key). L4-R: the PRD is GRANDFATHERED (predates the L4-R law commit f8337502a9) -- no new
+sign-off cycle and no prd_version bump (this is a round-analysis answer, not a PRD addendum).
+
+**PUSH STATE: this amendment is LOCAL.** 0.0.0_AB_MSTR~Z holds the push window.
+
+*(v0.4 amended 2026-09-11 by 2.0.0_SA_COO~ZZZ -- the L10 round-2b recut from @c48576bf85; rounds 1-2
+sections 1-10 unchanged.)*
