@@ -377,6 +377,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The issuer's message, verbatim: 'The order AMGT-s-7 stays COMPLETE; this is its own deliverable refreshed on the correction of its input, not a reopen' -- paired with 'Re-run the generator... Commit the regenerated deliverable and the instance on your branch via safe-commit'.",
     "world_is": "Those two instructions cannot both hold under ADHC_OWNPTH.005 as gated: the code fix to lib/research/freshness/build_view.py this regenerate REQUIRED (surprise row AMGT_RESAPP-Z-W7-S4 -- security_key_for() needed the yellow-key fix or the regenerated coverage_freshness.json would still misreport BABA/BA as NEVER) sits in a directory ONLY AMGT-s-7's own order ever granted, and that order is now terminal by the issuer's own explicit instruction. This worker did NOT force an override (GIT_COMMIT_AUTHOR_OVERRIDE=<LANE> is an audited escape for a LANE HOLDER, not a route for a worker to widen its own grant past what an order names -- CLAUDE.md 14a's own text, and this order's own bound: 'you cannot ask for one to be added') and did NOT commit the regenerated coverage_freshness.json without its generating code, which would have landed a data artifact with no committed code to justify it -- a worse state than reporting the block. Every fix (build_view.py's yellow-key correction, the regenerated JSON, the STORE_CONTRACT.md amendment, this row) exists in the worktree, verified correct (AC1-AC5 all re-run PASS against the fixed module), and is UNCOMMITTED pending the issuer's resolution: reopen AMGT-s-7 briefly for this one write, amend AMGT-s-14 (or a new order) to add lib/research/freshness/ to its <paths> before it is formally handed, or name an explicit route this order did not anticipate.",
     "notes": "This worker treats this the same as an unsatisfiable proof-of-spec criterion: refuse the action as instructed, record the measurement, and report -- never repair the gate, never self-authorize an override, never widen the grant. Nothing was rolled back; the worktree carries the complete, correct, verified fix, uncommitted, exactly as the gate left it."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W1-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~1",
+    "surfaced_at": "2026-09-10T23:45Z",
+    "one_line": "The repo's root .gitignore ignores the whole lib/ tree (a standard Python-venv boilerplate line, :47), so any NEW file under lib/research/<anything>/ is gitignored until force-added -- git status/git add report it as clean-absent unless -f is used, even though lib/research/identity/ etc. are already tracked and unaffected (git does not re-apply .gitignore to already-tracked paths).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git check-ignore -v lib/research/provenance/schema.json lib/research/provenance/validate.py lib/research/provenance/__init__.py` (this worker's own new files, cell AMGT-s-3) -> all three: `.gitignore:47:lib/`",
+        ".gitignore:44-50: a standard Python-boilerplate block (`build/`, `develop-eggs/`, `dist/`, ... `lib/`, `lib64/`, ...) with only two negation exceptions, both under `data/`: `!data/black_diamond/scripts/gold/lib/`, `!data/inf/scripts/gold/lib/` -- none for `lib/research/`",
+        "`git check-ignore -v lib/research/identity/resolver.py lib/research/identity/__init__.py lib/README.md lib/trading_calendar.py` -> no output (not reported as ignored) BECAUSE these paths are already tracked (`git ls-files lib/` lists them) -- git's ignore check does not apply to a path already in the index, which is why the s-12 worker's commit into lib/research/identity/ never surfaced this",
+        ".tools/safe-commit.sh:49: 'Staging uses `git add -f`, which FORCE-adds files EVEN IF gitignored' -- the estate's OWN commit wrapper already force-adds, so this did not block this worker's commit; a plain, non-wrapped `git add` on a NEW lib/research/ path (bypassing safe-commit.sh) would silently stage nothing"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This cell's <paths> grant: `lib/research/provenance/` is a write surface this worker may create files under, with no stated caveat about gitignore interaction.",
+    "world_is": "The path IS writable and IS committable (safe-commit.sh's `git add -f` handles it transparently), so this cell's own work was never blocked -- but a bare `git add`/`git status` on a brand-new `lib/research/<new-module>/` directory reports it as absent/untracked-and-ignored, which reads exactly like 'nothing here' to any tool or worker that does not know to force-add. Not a defect in THIS cell's outcome (verified via `git ls-files` after commit, below), but a live trap for the next worker who creates a NEW subpackage under `lib/research/` and checks its own work with a bare `git add`/`git status` instead of `safe-commit.sh`.",
+    "notes": "Not this worker's <paths>/BOUNDS to fix -- editing the root .gitignore is outside this cell's write surface (lib/research/provenance/, deliverables/, the investigation file, and this cell's own task-order file only). Flagged for whichever seat owns .gitignore maintenance: either add `!lib/research/` alongside the existing `data/.../lib/` exceptions, or accept the current state as intentional (this repo's `lib/` boilerplate rule predates `lib/research/` as a source tree) and rely on safe-commit.sh's force-add, which already works."
   }
 ]
 ```
