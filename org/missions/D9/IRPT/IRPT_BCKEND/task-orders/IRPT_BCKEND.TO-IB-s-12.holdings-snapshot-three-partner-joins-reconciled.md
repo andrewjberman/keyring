@@ -2,10 +2,10 @@
 
 <to_id>IRPT_BCKEND.TO-IB-s-12</to_id>
 <project>IRPT_BCKEND</project>
-<issued_to>0.9.0_WK_IRPT_BCKEND~2</issued_to>
+<issued_to>0.9.0_WK_IRPT_BCKEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>staged -- assigned to slot ~2; becomes pending when the COO hands it over after IB-s-4 is terminal and merged.</status>
+<status>staged -- RE-SEATED to slot ~1 by the issuer at the IB-s-5 drain (2026-09-11 ~00:5xZ): slot ~1's own queue idles until IB-s-6/9/12/14 merge while this cell's dependency (IB-s-1) is already merged; becomes pending when the COO hands it over. The directory root it applies is shared with IB-s-4 (slot ~2), so the issuer hands IB-s-4 only after this cell merges.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.4 @62301f71e0 | **Decomp cell:** `IB-s-12` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, s.1 + s.2) | **outcome_ref:** FWD-5 (contrib) | **PRD candidate:** B12
 
@@ -13,12 +13,12 @@
 
 ## IDENTITY AND WORKTREE
 
-- **Serial:** `0.9.0_WK_IRPT_BCKEND~2`. Every Bash call begins `export OPAL_AGENT_SERIAL=0.9.0_WK_IRPT_BCKEND~2;`.
-- **Worktree:** `/c/tmp/wk-irpt-1-2` on branch `wk-irpt_bckend-1-2`, cut by the issuer from `HEAD` of `CLOUD` at hand-off. First act: `git rev-parse --abbrev-ref HEAD` and `test -d org && test -d .tools && echo TREE-OK`; a worktree that does not carry the paths this face names is a BLOCKING row and a stop.
-- **Repo root for every path below:** the worktree. Every path in this face is relative to that root; make it absolute by prefixing `/c/tmp/wk-irpt-1-2/`.
-- **Commit:** `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_BCKEND~2 <0.9.0_WK_IRPT_BCKEND~2@opal.agent>" -F <msgfile> -- <paths>`, `<msgfile>` written with the Write tool. On your branch only; never push, merge, rebase, `checkout --` or `clean`.
-- **Deliverables:** `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/` (granted by the tree convention; no `<paths>` entry needed).
-- **Queue:** fifth in slot ~2, after IB-s-4 (depends on IB-s-1 for identity and scope keys).
+- **Serial:** `0.9.0_WK_IRPT_BCKEND~1`. Every Bash call begins `export OPAL_AGENT_SERIAL=0.9.0_WK_IRPT_BCKEND~1;`.
+- **Worktree:** `/c/tmp/wk-irpt-1-1` on branch `wk-irpt_bckend-1-1`, cut by the issuer from `HEAD` of `CLOUD` at hand-off. First act: `git rev-parse --abbrev-ref HEAD` and `test -d org && test -d .tools && echo TREE-OK`; a worktree that does not carry the paths this face names is a BLOCKING row and a stop.
+- **Repo root for every path below:** the worktree. Every path in this face is relative to that root; make it absolute by prefixing `/c/tmp/wk-irpt-1-1/`.
+- **Commit:** `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_BCKEND~1 <0.9.0_WK_IRPT_BCKEND~1@opal.agent>" -F <msgfile> -- <paths>`, `<msgfile>` written with the Write tool. On your branch only; never push, merge, rebase, `checkout --` or `clean`.
+- **Deliverables:** `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/` (granted by the tree convention; no `<paths>` entry needed).
+- **Queue:** RE-SEATED: fourth in slot ~1, after IB-s-5 (depends on IB-s-1 for identity and scope keys -- merged at f1aac99b66). IB-s-4 (slot ~2) shares the directory root and is handed only after this cell merges.
 
 ---
 
@@ -49,7 +49,7 @@
 
 ## DELIVERABLE
 
-`data/assets/scripts/gold/investor_reporting/holdings_snapshot.py` + `tests/` (the adversarial fixtures); the schedule addition; the ledger entry + sentinel; the battery `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_s_12.py` and `.result.md`; QA snapshots in each firm bucket.
+`data/assets/scripts/gold/investor_reporting/holdings_snapshot.py` + `tests/` (the adversarial fixtures); the schedule addition; the ledger entry + sentinel; the battery `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_s_12.py` and `.result.md`; QA snapshots in each firm bucket.
 
 ---
 
@@ -78,7 +78,7 @@
 
 ## ACCEPTANCE
 
-<criterion id="S12-AC1" cell_refs="IB-s-12"><invocation>timeout 600 python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_s_12.py</invocation><expect>IBS12-HOLDINGS-RECONCILED</expect></criterion>
+<criterion id="S12-AC1" cell_refs="IB-s-12"><invocation>timeout 600 python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_s_12.py</invocation><expect>IBS12-HOLDINGS-RECONCILED</expect></criterion>
 **`S12-AC1` -- PASSES BY OUTPUT -- the joins with their denominators, the reconcile, and the adversarial fixtures.**
 **(a) THE JOINS, LIVE, WITH DENOMINATORS.** Per firm print joined / total (49F mappings joined of valid keys; INF assignments resolved of total and the multi-account count; COT assignments joined of total and accounts with no map) beside the PRD row's dated figures (7,431 of 7,453; 658 of 663; 946 of 950) as CONTEXT, not as the bar -- the bar is that every count carries its denominator and every gap a reason.
 **(b) RECONCILE BEFORE AND AFTER.** Per firm: unique custody total before the overlay == after (printed, to the cent); coverage and join exceptions carry denominators.
@@ -122,8 +122,8 @@ lane: the `<paths>` block above IS the grant (RULING 1 @9ef9a40aae) plus the two
 
 <proof_of_spec>
 Criterion ids minted at cut: S12-AC1, S12-AC2. Instance at
-`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-s-12.holdings-snapshot-three-partner-joins-reconciled.proof_of_spec.json`
-(the TASK ORDER'S OWN BASENAME stem, which `.tools/to-pipeline-gate.py` `check_complete_flip` globs for under `deliverables/*/`), per `org/standards/PROOF_OF_SPEC.schema.json`: one acceptance row per id, `criterion_verbatim` the spec's words, `invocation` the exact command, `output_evidence` the verbatim deciding excerpt, `denominator` beside every count, `expect` carried from this face; a judgment row under `UNVERIFIABLE-BY-INSTRUMENT` with `status_reason` naming the CVO. Validate with `python .tools/proof-of-spec-check.py org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-s-12.holdings-snapshot-three-partner-joins-reconciled.proof_of_spec.json S12-AC1,S12-AC2` BEFORE the complete flip; rc 0 AND every mechanical criterion PASS-by-output, then flip this order's `<status>` to `complete` and commit instance, deliverables and flip together. A FAIL row leaves the order open and is your final report on it.
+`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-s-12.holdings-snapshot-three-partner-joins-reconciled.proof_of_spec.json`
+(the TASK ORDER'S OWN BASENAME stem, which `.tools/to-pipeline-gate.py` `check_complete_flip` globs for under `deliverables/*/`), per `org/standards/PROOF_OF_SPEC.schema.json`: one acceptance row per id, `criterion_verbatim` the spec's words, `invocation` the exact command, `output_evidence` the verbatim deciding excerpt, `denominator` beside every count, `expect` carried from this face; a judgment row under `UNVERIFIABLE-BY-INSTRUMENT` with `status_reason` naming the CVO. Validate with `python .tools/proof-of-spec-check.py org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-s-12.holdings-snapshot-three-partner-joins-reconciled.proof_of_spec.json S12-AC1,S12-AC2` BEFORE the complete flip; rc 0 AND every mechanical criterion PASS-by-output, then flip this order's `<status>` to `complete` and commit instance, deliverables and flip together. A FAIL row leaves the order open and is your final report on it.
 
 The grant is read from HEAD of your branch and only while this order is NON-TERMINAL: the issuance commit is in your ancestry at hand-off, so the flip is a modification, not an add.
 </proof_of_spec>
