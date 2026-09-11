@@ -2949,6 +2949,53 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "The amendment: 'if the run refuses SESSION_ABSENT, that refusal IS the recorded output -- arm (a) then reads SESSION-GATED naming IB-rtb-1'.",
     "world_is": "Exactly that branch, reached on the first send that got past the infrastructure gaps. The render pipeline is complete except for authentication.",
     "notes": "Four earlier sends in the same authorization each produced a NAMED refusal before this one -- MODULE_NOT_FOUND playwright, MODULE_NOT_FOUND @aws-sdk/client-s3, RENDERER_MODULE_ABSENT, and a TLS error on a hostname the estate does not own. Each was a real gap between a host half that was written and a host it had never run on."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S28",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T17:45Z",
+    "one_line": "THE RENAME ROUTED TO ME CANNOT BE COMPLETED IN LANE: `_authz/dispatch.py`'s ONLY importer is `_contracts/tests/test_seam_paired.py`, and `infra/aws/lambda/investor-reporting/_contracts/` is not in this order's <paths> -- so renaming it would leave a committed test importing a module that no longer exists.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the issuer's hand-off, 2026-09-11: 'W3-S22/W4-S24 ROUTED TO YOU (rename _authz/dispatch.py, which this slot authored, to _authz/authz_dispatch.py, update importers, print 0 basename collisions across _authz/ and every function dir; export/dispatch.py is not renamed)'",
+        "importer census over infra/aws/lambda/investor-reporting at bebcab6315: the ONLY code importer of the _authz module is _contracts/tests/test_seam_paired.py:41 `import dispatch as dp`; export/handler.py:51 and export/tests/test_rt8.py:19 import export/dispatch.py, which the hand-off says is NOT renamed",
+        "the amended <paths> block at bebcab6315 lists _authz/, _scope/, directory/, performance/, ycharts/generate/, narrative/, export/, ops/, the six terraform roots, PATH_MANIFEST.json, change_management/, one sentinel, lambda-source-map.json, layers/irpt-common/ and lambda-layer-map.json -- `_contracts/` appears NOWHERE",
+        "_contracts/tests/test_seam_paired.py puts _authz FIRST on sys.path, so after the rename `import dispatch` would raise ModuleNotFoundError rather than silently binding export/dispatch.py"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The hand-off routes the rename of `_authz/dispatch.py` to this worker and says to update its importers.",
+    "world_is": "The one importer is out of lane. THE RENAME WAS NOT STARTED: a rename whose importer cannot be updated leaves a committed test importing a module that no longer exists, which is the half-landed state the managed wind-down forbids -- and a compatibility shim left behind at the old basename would keep the very collision the rename exists to remove, so the census could not read 0 either way.",
+    "notes": "CHEAP TO UNBLOCK: add `infra/aws/lambda/investor-reporting/_contracts/` to this order's <paths> (one line) and the rename is a ten-minute act -- the module has exactly one importer. RECORDED RATHER THAN WORKED AROUND under the managed wind-down relayed at 17:30Z. The basename-collision census this cell CAN print today is unchanged by the decision: `dispatch.py` appears twice across _authz/ and the function dirs (_authz/dispatch.py and export/dispatch.py), and `entry.py` appears six times -- once per function dir, which is correct and is why the shared boundary is named served.py."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S29",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T17:45Z",
+    "one_line": "THE DIRECTORY PARITY CHECK IS STRUCTURALLY UNSATISFIABLE, NOT MERELY UNSATISFIED: two functions share one source directory and the builder's disk-to-manifest check runs PER FUNCTION, so whichever one does not list the other's modules reports them as unregistered EXTRAS.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "after this cell's registration at HEAD: irpt-directory-search files[] = [handler.py, entry.py]; top-level .py in infra/aws/lambda/investor-reporting/directory/ = [entry.py, expiry.py, handler.py, refresh.py]; manifest-not-on-disk 0, disk-not-in-manifest 2",
+        "expiry.py and refresh.py are irpt-directory-refresh's declared files[], and that function's source_dir is the SAME directory",
+        "infra/aws/lambda/ci/build-and-upload.sh, the ADHC_DRIFTD.002 limb: the parity check iterates `$ABS_SOURCE/*.py` per function with an ignore list of __pycache__|*.pyc|test_*.py|*_test.py -- there is no per-function exclusion",
+        "irpt-status, which does NOT share its directory, reached 3 of 3 triple equality in the same registration pass"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The amendment's split of row W2-S21: 'irpt-status's absent build inputs and irpt-directory-search's parity are yours -- remove absent inputs, never invent them, register N of N triple equality.'",
+    "world_is": "The absent inputs were removed and irpt-status reached 3 of 3. irpt-directory-search cannot reach N of N while it shares a directory with irpt-directory-refresh: the only ways to make the per-function check pass are to list the refresh runner's modules in the SEARCH zip -- inventing content to satisfy a check -- or to change the check. Neither is a worker's to choose.",
+    "notes": "TWO SHAPES, WITHOUT PREFERENCE: (i) split the source dirs, so each function's directory holds only its own modules -- which is what every other IRPT function already has; (ii) give the parity check a per-function ignore list sourced from the OTHER functions that declare the same source_dir, so the check reads the shared dir as the shared thing it is. NOT REPAIRED under the managed wind-down: build-and-upload.sh is outside this order's <paths> and a directory split is a move that must be planned and applied, not half-done."
   }
 ]
 ```
