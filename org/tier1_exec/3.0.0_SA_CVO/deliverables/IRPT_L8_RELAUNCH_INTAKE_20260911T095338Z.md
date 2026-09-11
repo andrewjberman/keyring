@@ -70,7 +70,7 @@ The 110-item census is not a claim that all 110 narratives were read.
 | comp-which | No curated IRPT/L8 route; generic surprise query fell back to comp-find | Scoped comp-surprise was named by the spine |
 | comp-find IRPT in this seat's deliverables | Located prior signed correction review and comparisons | Search results were navigation, not implementation evidence |
 | comp-find IRPT_ in this seat's logs | Zero matches over 888 files | Scoped measured zero only |
-| comp-surprise --project CODE --json | 69 BK and 41 FE undispositioned rows | Census only; --all overrides the project filter and was not used for these scoped counts |
+| comp-surprise --project CODE --json | 69 BK and 41 FE undispositioned rows | Census only; an additional BK --all control also returned exactly 69 BK rows |
 | receiving-check.py, both exact inputs | ACCEPT from surprise-corpus and surprise-row-gate | Zero new rows graded; semantic review remains owed |
 
 ## What you should have asked but did not
