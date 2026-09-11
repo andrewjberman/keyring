@@ -294,3 +294,139 @@ that is the CVO's L9 act via `adjudicates`.
   }
 ]
 ```
+
+
+---
+
+Rows from `0.9.0_WK_POSN_ASTTAX~3` (cell `AT2-s-5`, TO-S5-1), appended as ONE new fenced block.
+Neither row is BLOCKING: every S5 criterion ran and the six writes landed. `W3-S1` is the DURABILITY
+of those writes; `W3-S2` is their ATTRIBUTION. Neither is fixed here -- both remedies live outside
+this order's `<paths>`.
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W3-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~3",
+    "surfaced_at": "2026-09-11T15:53:58Z",
+    "one_line": "THE SEEDER SILENTLY REVERTS THIS CELL'S WRITE AND AT2-s-2'S RETAG: seed-etf-classifications.py does an UNCONDITIONAL FULL-ITEM put over the whole ticker universe, and the six commodity tickers are ABSENT from ETF_MANAGEMENT_STYLE in all three copies of the canonical module -- so the next seed run rewrites management_style back to 'unknown' on exactly the six rows AT2-s-5 just corrected, and asset_class back to 'hedge' on exactly the six rows AT2-s-2 is about to move.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE WRITE MODE IS A FULL-ITEM PUT, NOT AN UPDATE, read verbatim at infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py@fd9f8ba9a4: line 60 builds 'management_style': ETF_MANAGEMENT_STYLE.get(ticker, 'unknown') and line 58 builds 'asset_class': ETF_CLASSIFICATIONS.get(ticker, 'unknown') into one dict, and the loop writes that dict with batch.put_item(Item=item) under `with table.batch_writer()`. A put replaces the ENTIRE item; there is no ConditionExpression and no per-attribute update anywhere in the script.",
+        "THE SIX ARE ABSENT FROM THE STYLE MAP, measured by AST parse rather than by the grep that found the file -- the map is evaluated as a literal, so a commented-out or shadowed entry cannot fool it. infra/aws/lambda/v2_portal/_shared/etf_classification.py@fd9f8ba9a4: ETF_MANAGEMENT_STYLE = 99 keys, value set {'active','passive'}, and DBC/GLD/GSG/IAU/SLV/USO each return None. The same parse over the two sibling copies: partners/lambdas/opal-partners-data/etf_classification.py = 99 keys, same six absent; yang_pipeline/portfolios/yang-generate-etf-returns/etf_classification.py = 97 keys, same six absent. 3 of 3 copies agree, so this is not one stale fork.",
+        "DISCRIMINATION -- the map is NOT simply missing every hedge-bucket name, which is what would make this finding vacuous: VIXY is present with 'passive' (:328) and PDBC, itself a commodity fund, is present with 'active' (:337). The map carries hedge and commodity tickers; it carries these six nowhere. And .get(ticker, 'unknown') at :60 is measurably the MINT of the placeholder this entire cell exists to remove.",
+        "THE REVERT REACHES A SIBLING CELL, not only this one: ETF_CLASSIFICATIONS in the same module at :237-244 carries GLD/IAU/SLV/DBC/GSG/USO as 'hedge'. AT2-s-2's retag to Commodities would be reverted by the same put in the same run, and neither cell's write surface includes the code map that would prevent it.",
+        "SCOPE HONESTY -- WHAT IS NOT MEASURED HERE: whether any schedule, pipeline or deploy step invokes this script. It is a __main__ argparse CLI whose own docstring says 'Run this whenever the classification source is updated', and this worker did NOT census EventBridge, Terraform or task definitions for an invoker -- out of this order's surface and out of this sparse cone. The hazard is therefore a LIVE CAPABILITY WITH AN UNMEASURED TRIGGER, and is stated ARMED on that basis rather than on a measured firing."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "POSN_ASTTAX.TO-S5-1 (cell AT2-s-5) asserts that setting management_style to the factually correct value on the six served hedge rows makes those rows safe to hold, and scopes the fix to the DynamoDB registry rows alone; the round-2 chain (AT2-s-6 hardening, AT2-s-5 style, AT2-s-2 retag) treats the registry as the durable place a correction lands.",
+    "world_is": "The registry is DOWNSTREAM of a code map that no cell in round 2 writes. The six corrected values are durable only until seed-etf-classifications.py runs, at which point an unconditional full-item put restores management_style='unknown' (the six are absent from ETF_MANAGEMENT_STYLE) and asset_class='hedge' (the six ARE in ETF_CLASSIFICATIONS as hedge), with no error, no diff and no alert. The registry is not the source of truth for this field; the module is, and the module still does not carry these six tickers.",
+    "notes": "NOT FIXED HERE, DELIBERATELY. The remedy is a code edit to ETF_MANAGEMENT_STYLE (and, for the sibling cell, ETF_CLASSIFICATIONS) in infra/aws/lambda/v2_portal/_shared/etf_classification.py plus its two copies -- none of which is in this order's <paths>, and the order's BOUNDS forbid widening. Adding the six to the style map would also close the placeholder AT ITS MINT rather than at its landing site. Filed ARMED with the issuer as disarm_owner because the call is a scoping decision (a round-2 amendment or a round-3 cell), not a worker's. That three separately-maintained copies of the canonical module exist at all is a shared-dependency shape a future cell may want to look at; this row does not open it."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W3-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~3",
+    "surfaced_at": "2026-09-11T15:53:58Z",
+    "one_line": "THE SIX ROWS NOW CARRY A VALUE WHOSE PROVENANCE FIELDS NAME A DIFFERENT WRITER AND A DIFFERENT DAY: this order's bound restricts the write to management_style ONLY, so updated_by still reads '1.0.0_SA_CTO~X placeholder-name-sweep' and last_updated still reads 2026-08-18T18:05:00Z on rows whose management_style was changed by 0.9.0_WK_POSN_ASTTAX~3 on 2026-09-11.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE ROW'S OWN PROVENANCE FIELDS, read before the write by get-item on GLD (full item, every attribute): updated_by = '1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)', last_updated = '2026-08-18T18:05:00Z', management_style = 'unknown'. After this order's write the third value reads 'passive' and the first two are unchanged, because the UpdateExpression is 'SET management_style = :new' and names no other attribute.",
+        "THE OMISSION IS THE ORDER'S INSTRUCTION, NOT AN OVERSIGHT, quoted from POSN_ASTTAX.TO-S5-1@fd9f8ba9a4 BOUNDS: 'DO NOT TOUCH asset_class. Different field, different cell (AT2-s-2) ... You write management_style ONLY.' Restamping updated_by would have been a second attribute and outside the literal bound, so it was not written and this row was filed instead.",
+        "THE TABLE HAS AN ESTABLISHED CONVENTION FOR EXACTLY THIS, which is why the gap is visible rather than theoretical: a prior seat that changed one field DID restamp provenance and encoded the supersession inline -- 'placeholder-name-sweep (prior: name=ticker, seed-script)' is a hand-written 1.0.0_SA_CTO~X updated_by, not the seeder's. The convention exists; this order could not follow it.",
+        "CONSEQUENCE, stated narrowly: any later reader -- including 3.0.0_SA_CVO~Z at L9, and any seat auditing whether the retag chain actually ran -- who asks 'who set management_style on GLD, and when' gets 1.0.0_SA_CTO~X / 2026-08-18 from the row itself. The true answer lives only in this project's git history and in this row. No consumer reads updated_by for logic (the classifier reads management_style, asset_class, sub_asset_class, sector and name), which is why this is INERT rather than ARMED."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order restricts this cell's live-world write to the single attribute management_style, on the reasoning that the neighbouring attribute asset_class belongs to cell AT2-s-2 and must not be disturbed by this order.",
+    "world_is": "The bound reads on the whole item, not only on asset_class, so it also excludes the item's two PROVENANCE attributes. The six rows are now correct in VALUE and stale in ATTRIBUTION: they assert a writer and a date that did not produce the value they carry. CLAUDE.md's 'A VALUE MUST CARRY ITS CLAIM' wants the opposite, and the table demonstrably supports the convention.",
+    "notes": "DELIBERATELY NOT SELF-REMEDIED: restamping updated_by would have been a worker widening its own order, which is a failure class this project already carries rows about. The clean fix is one clause in a future order -- 'write management_style, and restamp updated_by/last_updated to your serial' -- which would serve AT2-s-2 equally. Cross-reference POSN_ASTTAX-Z-W3-S1: a seed run resets updated_by to 'seed-script' on every row anyway, erasing the CTO~X sweep's attribution as well as this cell's. The two rows are separate findings about the same weak provenance surface."
+  }
+]
+```
+
+
+---
+
+A third row from `0.9.0_WK_POSN_ASTTAX~3`, appended as its own fenced block after the first two (never
+edited into them). Surfaced while closing out: the proof-of-spec standard has no artifact shape for this
+cell's actual deliverable. NOT BLOCKING -- the instance passes by carrying the live write as evidence on
+the script that produced it, which is what the estate's prior art already does.
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W3-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~3",
+    "surfaced_at": "2026-09-11T16:07:00Z",
+    "one_line": "A CELL WHOSE DELIVERABLE IS A LIVE DATASTORE ROW CANNOT NAME THAT DELIVERABLE AS AN ARTIFACT: PROOF_OF_SPEC's artifacts_produced.kind enum carries s3_object but no member for a DynamoDB (or other live non-S3) write, and proof-of-spec-check.py's artifact-resolution limb exempts ONLY s3_object from git resolution -- so a row naming the table resolves as a repo path, fails the 7-40 hex / PENDING-THIS-COMMIT test, and the instance is INVALID until the live deliverable is demoted into another artifact's deploy_evidence prose.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED, NOT REASONED: the first run of .tools/proof-of-spec-check.py@fd9f8ba9a4 on this order's instance returned INVALID (rc=1) with, verbatim, \"VIOLATION: artifact-resolution: 'dynamodb://etf-classifications (us-east-1, acct 313476888478) -- attribute `management_style` ...' carries commit_or_etag '...', which is neither PENDING-THIS-COMMIT nor a 7-40 hex commit-ish for a repo artifact\". The other two violations in that run were the same limb on repo paths and are a separate, correctable authoring error; this one is not correctable by better authoring.",
+        "THE TWO HALVES OF THE GAP, cited: org/standards/PROOF_OF_SPEC.schema.json@fd9f8ba9a4 artifacts_produced.items.kind enum = ['script','s3_object','terraform','config_data','schedule','iam','test','doc','frontend_component'] -- one live-plane member, and it is S3-specific. .tools/proof-of-spec-check.py@fd9f8ba9a4 artifact_resolution_check() skips a row with `if a.get('kind') == 's3_object': n_s3 += 1; continue` and sends everything else through PENDING-THIS-COMMIT-or-commit-ish resolution against the repo. So the exemption is keyed to ONE storage service by name, not to the property that matters (the artifact is not a git object).",
+        "NO PRIOR ART EXISTS TO COPY, which is why this was hit rather than avoided: a census of proof-of-spec instances under org/missions for 'dynamodb://' returns exactly ONE hit, and it is this order's own instance. The instances that DO record live-plane work (NFRA_OPSEC202609.TO-OP3A-S-1, NFRA_IAMROLES202609.TO-IAM-t-2) name only REPO paths with PENDING-THIS-COMMIT and carry the live state in deployed_state + deploy_evidence -- the convention exists and works, but it is a convention discovered by reading peers, not a shape the standard offers.",
+        "THE COST IS NOT HYPOTHETICAL AND IT LANDS AGAIN NEXT: cell AT2-s-2 writes asset_class on these same six DynamoDB rows and its deliverable has exactly this shape. Whatever that worker does will either repeat this INVALID cycle or reproduce this workaround by luck.",
+        "SCOPE HONESTY: this is a standards observation surfaced by a worker, not a defect in this project's work, and it did NOT block this order -- the instance validates once the live write rides as deploy_evidence on the script that performed it, which is the estate's existing convention. No remedy is proposed here and none is applied."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "POSN_ASTTAX.TO-S5-1's CLOSING OUT asserts the worker writes an instance per org/standards/PROOF_OF_SPEC.schema.json naming what it produced, and that .tools/proof-of-spec-check.py must pass before the status flip -- the implicit premise being that the standard can express this cell's deliverable, which the order itself describes as a live-world write ('the DynamoDB table is a live-world write surface, authorised for this cell').",
+    "world_is": "The standard can express the SCRIPT but not the WRITE. artifacts_produced is a git-resolved surface with one service-specific escape hatch (s3_object); a DynamoDB item write has no member and no exemption, so the only valid encodings are to omit the live deliverable or to describe it in another artifact's free-text deploy_evidence -- which is what this instance does, and which means the estate's machine-readable artifact ledger structurally cannot see live datastore writes.",
+    "notes": "FILED, NOT FIXED, AND DELIBERATELY NOT PROPOSED AS AN ENUM CHANGE: a value-enum proposal arrives with its four-postulate record and a word-boundary token census (CLAUDE.md Rule 24), which is a standards act several lanes outside this worker's <paths> and outside this cell. Recorded so the next live-plane cell -- AT2-s-2 first -- does not pay the same discovery cost, and so whoever owns PROOF_OF_SPEC decides whether the right fix is a new kind member, a wider exemption keyed to non-git artifacts generally, or nothing at all because the deploy_evidence convention is considered sufficient."
+  }
+]
+```
+
+
+---
+
+A fourth row from `0.9.0_WK_POSN_ASTTAX~3`, appended as its own fenced block. Surfaced BY THE COMMIT
+ITSELF: the first commit of this wave that actually files a surprise row was refused by the surprise-row
+gate for a reason that has nothing to do with the rows. Remedied in-lane by widening the worktree's
+sparse cone -- NOT by the audited override, which would have skipped a real check to land a clean diff.
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W3-S4",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~3",
+    "surfaced_at": "2026-09-11T16:14:00Z",
+    "one_line": "THE WAVE-2 WORKER CONE STILL CANNOT COMMIT A SURPRISE ROW: the corrected cone recipe carries org/projects (which fixed the missions-tree hook, W2-S5/Z-S3) but NOT org/surprise_channel, and .tools/surprise-row-gate.py's standing-corpus pass resolves its schema by FILESYSTEM path -- so the first commit in this cone that files a NEW row died fail-closed on FileNotFoundError for the schema, with the rows themselves never graded.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE REFUSAL, VERBATIM, from the aborted safe-commit run in /c/tmp/wk-posn-s5 on branch wk-posn_asttax-2-5: 'ERROR: BLOCKED -- surprise-channel row gate (steps 7/10). Commit aborted; files unstaged.' / '[surprise-row-gate] BLOCKED -- 1 violation(s) on NEW rows:' / 'standing corpus pass could not run (FileNotFoundError: [Errno 2] No such file or directory: C:/tmp/wk-posn-s5\\\\org\\\\surprise_channel\\\\schemas\\\\investigation_item.schema.json) -- fail-closed'. The same run also printed '[surprise-row-gate] org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md: 3 new row(s) of 12 total checked (9 pre-existing, NOT re-graded)' -- so the gate SAW the rows and still could not grade them.",
+        "THE CAUSE IS THE CONE, MEASURED: git sparse-checkout list in this worktree returned exactly 7 entries -- .tools, infra/aws/lambda/v2_portal, org/missions, org/modules, org/projects, org/ref, org/standards. org/surprise_channel is NOT among them, so org/surprise_channel/schemas/investigation_item.schema.json did not exist on disk (ls: No such file or directory) even though it is tracked and readable from the index at HEAD via git show.",
+        "THE REMEDY IS EXERCISED, NOT DESCRIBED: `git sparse-checkout add org/surprise_channel` (rc=0) materialised investigation_item.schema.json (9854 bytes) and remediation_row.schema.json (10202 bytes), after which `.tools/surprise-row-gate.py --self-test` returns 'RESULT: 0 arm(s) failed of 103 (+ live census)' rc=0 and the commit proceeds. Widening the cone writes no repo content and stages nothing -- it materialises tracked blobs -- so it is not an edit outside this order's <paths>.",
+        "WHAT WAS EXPLICITLY NOT DONE: the gate's own audited escape ('# surprise-row-override: <reason>' in the commit body) was NOT used. The rows were not the problem, so overriding would have landed them with the standing-corpus pass never run -- trading a visible refusal for an invisible gap. Recorded because the override was offered in the refusal text and declined deliberately.",
+        "SCOPE HONESTY -- WHAT IS NOT MEASURED: whether `--self-test` alone would have FAILED in the narrow cone. It was run only AFTER the cone was widened, so this row cannot claim the self-test is or is not a sufficient pre-flight for this gate. Z-S3 records a self-test passing in the sibling wk-posn-s7 cone; whether that cone carried org/surprise_channel, or whether the self-test simply does not exercise the standing-corpus path, is UNREAD here. That distinction matters to whoever fixes this and is left open rather than guessed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This worker's face states 'All three commit gates have been verified to RUN in this cone', and the order directs the worker to file any divergence as a row in org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md, validated against org/surprise_channel/schemas/investigation_item.schema.json, and then to land everything in ONE commit through safe-commit.sh.",
+    "world_is": "The gates were verified against a commit that files NO NEW ROWS. A commit that DOES file rows takes a different path through .tools/surprise-row-gate.py -- the standing-corpus pass -- which reads the schema from the worktree filesystem rather than from the index, and the cone does not carry it. So the one gate whose whole purpose is to grade surprise rows is the one that cannot run in the worktree where surprise rows are written. The rows in this commit validated cleanly against that same schema when it was read from the index (jsonschema Draft7Validator, 0 errors each), which is how the failure was distinguished from a real row defect.",
+    "notes": "THIS DID NOT STOP THIS ORDER -- remedied in-lane and the commit landed with all four rows and the gate running for real. It is filed ARMED and BLOCKING because it is not specific to this worker: every sibling wave-2 worktree cut from the same recipe hits it at the moment it files its first row, which is precisely when a worker is least able to afford a puzzling refusal, and the fail-closed message names a schema path rather than a cone. The cheap fix is one more entry in the cone recipe (org/surprise_channel) -- that is the issuer's call, not a worker's, hence disarm_owner 2.0.0_SA_COO~Z. A more durable fix would be for the standing-corpus pass to read its schema from the index the way this gate's other limb already does (_schema(): 'read from the staged index, never the worktree'); that is 1.0.0_SA_CTO's surface and is named, not proposed."
+  }
+]
+```
