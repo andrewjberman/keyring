@@ -349,3 +349,36 @@ POSN_ASTTAX worker as fact. It was COO~Z's report relayed, and by the time I rep
 subagent inside the COO's own session -- no window, no registration, no telemetry, its worktree removed
 at the drain. Measured after his question: one commit by `0.9.0_WK_POSN_ASTTAX~1` @6bed191b42, the order
 `complete`, CVO~Z's L10 stamp. Same shape as amendment 6, one line later: a relay stated as a measurement.
+
+---
+
+## AMENDMENT 8 -- 07:5x-08:2xZ: the first real Codex launch, its root cause, the seat up, and a stale number retracted
+
+**archetype:** DIAGNOSE + DEPLOY (device config) + SCRIBE
+
+- **Launch failure at `start-codex-seat.ps1:340`** ("%1 is not a valid Win32 application"): the npm global
+  install ships an extensionless POSIX `codex` beside `codex.cmd`/`codex.ps1`; `Get-Command` picks the
+  `.ps1` (so every earlier verification passed) but the launcher's `Start-Process` with output redirection
+  is raw CreateProcess, which takes the exact-name file and cannot execute a shell script. **Fixed with the
+  laptop's own mechanism:** `bun install -g @openai/codex@0.154.0` (pinned to the version Andrew installed
+  here; his npm install untouched) -> `.bun\bin\codex.exe`, placed ahead of `%APPDATA%\npm` on the user
+  PATH. Verified with the launcher's EXACT call shape on the registry PATH: exit 0, `codex-cli 0.154.0`;
+  `app-server --help` exit 0; negative control fails. One package install from the public registry under
+  Andrew's explicit word; reversible.
+- **Andrew relaunched: `3.0.0_SA_CVO~Z` is UP as a Codex seat** (app-server ws://127.0.0.1:50167, heartbeat
+  LIVE PID 34844, bridge bound 08:03:01Z, detector alive, inbox nudging). His word "I have CTO~Z running
+  now as a codex agent, tell CTO~Z and COO~Z that they are ready to resume their duties" relayed to both
+  with the measured state; the seat that exists is CVO~Z, CTO~Z remains the Claude session (record
+  `ANDREW_DIRECT_20260911_080xZ_CODEX_SEAT_UP_CTOZ_COOZ_RESUME_DUTIES.md`). The CTO's flagged "v0.5 sign
+  request QUEUED to a stale CVO~Z" hole closed by the seat's own bridge.
+- **Retracted: the version skew.** The laptop re-measured itself at 0.154.0 (upgraded 02:22 local after its
+  00:3xZ read); I carried "0.153.4 vs 0.154.0" forward in two records and this log. Both devices are 0.154.0
+  on the bun exe shim. The "starts but never routes turns" watch-item is dropped as a skew symptom.
+- **The night's shape, named by the laptop and true of my own checks:** `Get-Command` / `which` /
+  `GetEnvironmentVariable` answer "can something named codex be found"; the launcher asks "can CreateProcess
+  execute this file". A check that is not the consumer's own call is a different question answered
+  truthfully. Banked as the reason the launcher-shaped `Start-Process` test is now the only verification
+  this seat cites for the launcher.
+- Fabric-health class from `2.0.0_SA_COO~Z` (21293): a DELIVERED receipt decays silently when the recipient
+  restarts; routed to `1.0.0_SA_CTO~Z` as a one-line B.0 candidate with the shared root named (delivery
+  state lives only at the broker); banked in memory; not built.

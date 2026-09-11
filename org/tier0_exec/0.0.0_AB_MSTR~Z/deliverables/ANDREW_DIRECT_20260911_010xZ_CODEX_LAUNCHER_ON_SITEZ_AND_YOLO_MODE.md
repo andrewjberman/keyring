@@ -185,6 +185,18 @@ on this device, under his explicit word that the launcher must work here and mat
 **The two devices now match on the codex mechanism too:** bun global exe shim on the persistent USER PATH
 on both. The npm shims remain on site Z behind it; they resolve for bash users and harm nothing.
 
+**CORRECTION 08:2xZ -- THERE IS NO VERSION SKEW, and every "0.153.4 vs 0.154.0" line above is stale.**
+`0.0.0_AB_MSTR` re-measured the laptop (bus 91e9ee2a-133e-41f0-aa97-96ae802e4fd4): `Get-Command codex
+-All` returns one shim, `.bun\bin\codex.exe`, codex-cli **0.154.0**; no npm codex on the laptop. Its
+0.153.4 was true at ~00:3xZ and the laptop was upgraded at 02:22 local; the number was then re-asserted
+hours later without a re-read, and this seat carried it forward twice more. Both devices: 0.154.0, bun
+exe shim, identical mechanism. The "starts but never routes turns" watch-item is DROPPED as a skew
+symptom; only the `default_permissions` key question (s.4) survives, and the first live seat answers it by
+running. The laptop also tested ITS launcher with the launcher's actual `Start-Process -Redirect...` call
+shape and it passes there: one shim, nothing for CreateProcess to pick wrongly. The night's recurring
+shape, in the laptop's words: a check that is not the consumer's own call is a different question
+answered truthfully.
+
 ## 5. RELAYED, NOT ADJUDICATED
 
 Same-turn broadcast to the live site-Z seats (`1.0.0_SA_CTO~Z` as the launcher chain's steward on this
