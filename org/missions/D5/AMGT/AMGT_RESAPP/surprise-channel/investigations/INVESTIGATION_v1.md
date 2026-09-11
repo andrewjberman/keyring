@@ -331,6 +331,75 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "spec_asserts": "The cell's mechanism for AC1 (carried from the reference, section 2b): 'the fetch MUST egress through the residential proxy ... The proxy is GET-capable today,' i.e. that egressing through astn/brightdata/residential-proxy with the parked jar produces vendor HTTP responses this ETL can classify and land.",
    "world_is": "The proxy zone is currently terminating and re-signing HTTPS with its own 'Bright Data Proxy Root CA' rather than passing the origin's real certificate through, and does not include that root/intermediate in the handshake -- so no standard TLS client (tested: curl_cffi/certifi AND native Windows Schannel) can complete verification without either disabling certificate verification (a security-posture change this cell's BOUNDS do not authorize) or being supplied that specific root CA out of band, which this worker does not have and did not seek from Bright Data (no vendor API/dashboard call made). verify stayed at its safe default for every real attempt in this run, so no part of the parked session's 65-cookie jar was ever transmitted to the intercepting party -- the TLS handshake aborted before any HTTP request left the client. AC1 reads 'raw objects 0 across 3 keys; symbol+report present for 0 of 3; sa_ids MEASURED 0' -- a genuine, reproduced, non-rescued finding, recorded rather than routed around.",
    "notes": "Not this worker's <paths>/BOUNDS to fix: resolving it means either obtaining Bright Data's specific proxy root CA (an out-of-band vendor artifact, e.g. from their account dashboard or support) and pinning it as a scoped trust anchor for this proxy only, or toggling off whatever zone-level SSL-interception feature is enabled, or an explicit Andrew-authorized decision to disable verification for this specific proxy -- all security-posture calls outside this cell's granted authority. The rest of the module is built and exercised as far as the transport layer allows: AC2 (4 fixture tests), AC3 (referer/proxy/method/pacing census), AC4 (3 tickers, 1 run), AC5 and AC6 (structural bans) all pass against this exact run's real output; only AC1 (the live landing) is blocked by this transport-layer finding."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W2-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~2",
+    "surfaced_at": "2026-09-11T00:20:00Z",
+    "one_line": "This cell's own BUILD text names an unstamped key, packs/<security_key>/status.json, that STORE_CONTRACT.md rule 1 ('nothing is ever written to a path that already exists') would otherwise forbid -- a deliberate, disclosed exception, not a defect, but worth a row so AMGT-s-14 does not assume every packs/ key follows the stamp convention.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This cell's own TO text, THE BUILD, third bullet: 'the status object: packs/<security_key>/status.json in opal-data-research with {state: REQUESTED|FETCHING|LANDED|FAILED, requested_at, updated_at, reason}' -- no <YYYYMMDDTHHMMSSZ> stamp segment in the named key, unlike every other packs/ key STORE_CONTRACT.md names",
+        "STORE_CONTRACT.md (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~7/STORE_CONTRACT.md) section 4 rule 1, verbatim: 'Nothing is ever written to a path that already exists. Every write mints a fresh <YYYYMMDDTHHMMSSZ> prefix; an S3 PutObject to a key that already exists is never issued by a correct writer.'",
+        "integrations/bloomberg/research/pull_consumer.py _write_status(): GetObject-then-merge-then-PutObject onto the SAME key packs/<security_key>/status.json on every call (REQUESTED -> FETCHING -> LANDED/FAILED all overwrite in place) -- exercised live in this order's own AC3 run, where the SAME key's `state` field was observed to change from REQUESTED to FETCHING to LANDED across three writes to one key"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "STORE_CONTRACT.md rule 1: every write mints a fresh stamp; nothing is ever overwritten. This cell's own BUILD text: the status object lives at one fixed, unstamped key and carries requested_at/updated_at fields implying in-place mutation.",
+    "world_is": "The two documents are in tension on this ONE key class; this cell followed its own TO text literally (the more specific, later-authored instruction) and treats status.json as a deliberate, scoped exception -- a mutable current-state pointer, not a versioned artifact -- documented as such in SEAM_DESIGN.md section 4. Every OTHER write this cell makes (raw/bloomberg/..., derived/model_block/...) keeps STORE_CONTRACT's stamp-and-never-overwrite rule untouched; this exception is confined to the one key whose entire purpose is to answer 'what is the CURRENT state' without a caller first discovering a latest stamp.",
+    "notes": "Not a defect and not blocking (AC1/AC3 both pass under this reading). Filed so AMGT-s-14 (the input ledger, which reads this bucket read-only per STORE_CONTRACT section 5) does not assume status.json is stamped/versioned like every other packs/ key -- its 'last run' logic (max lexicographic stamp under a prefix) has no stamp level to find under packs/<security_key>/status.json and should read it as a flat, mutable pointer instead. Owner of reconciling STORE_CONTRACT.md's text with this exception (e.g. adding a named carve-out for *status.json keys) is whoever next amends STORE_CONTRACT.md; not this cell's <paths> to edit (STORE_CONTRACT.md lives under 0.9.0_WK_AMGT_RESAPP~7's deliverables folder, AMGT-s-6's, not this cell's write surface)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W2-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~2",
+    "surfaced_at": "2026-09-11T00:45:00Z",
+    "one_line": "AC6's literal invocation, `comp-routes behaviors | grep -c -E 'research|amgt'`, cannot see a pure-add API Gateway route on an EXISTING CloudFront catch-all -- the ONLY design shape available inside this cell's write surface -- because `cmd_behaviors` prints each behavior's STATIC hand-authored comment, never a dynamically-computed route list; `comp-routes api-routes` (a different subcommand, not named by AC6) DOES show the declared route.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/modules/graph/routes_cli.py:423-437 cmd_behaviors(): for each behavior, prints `b.comment` (a string field parsed from cloudfront-distribution.tf's own `# N. ...` comment lines) -- never a lookup against `rt.api_gw_routes` (the separately-built list `cmd_api_routes` at :487-501 reads); the 'API GW depth-N: ...' text visible on behaviors 5-9 in a fresh comp-routes behaviors read is itself STATIC prose already committed in cloudfront-distribution.tf, not computed at read time",
+        "This cell's route lives on the EXISTING behavior #22 (`/api/private/*` -> APIGateway-portal, per infra/aws/terraform/portal-auth/cloudfront-distribution.tf:757-773, read-only -- not in this cell's <paths>) precisely because SEAM_DESIGN.md section 1 chose a pure-add on that catch-all to avoid touching portal-auth/, which this cell's <paths> excludes entirely",
+        "`bash .tools/comp-routes api-routes` (run from this worktree, after the apply) lists `research: POST /api/private/research/pull` -- the route IS in the estate's DESIRED-plane record -- while `bash .tools/comp-routes behaviors 2>&1 | grep -c -E 'research|amgt'` and the bare PATH-resolved `comp-routes behaviors` (baked to this device's main checkout, .tools/comp-routes wrapper) both return `0`",
+        "The literal AC6 invocation, run exactly as written in this order, returns rc=1 (grep's no-match exit) with stdout `0`"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC6: 'a count of 1 or greater AFTER the apply -- the request path's route is DECLARED in the estate's source of record and comp-routes sees it; 0 means the build reached AWS without reaching the record ... and is NOT met.'",
+    "world_is": "The route IS declared in the estate's source of record (infra/aws/terraform/research/api-gateway.tf, committed alongside this row) and `comp-routes api-routes` proves it; the LITERAL invocation AC6 names (`comp-routes behaviors`) structurally cannot reflect a pure-add route on an existing CloudFront catch-all regardless of correctness, because that subcommand's per-behavior annotation is static source prose, not a live join against the parsed route table. This worker did not substitute `api-routes` for `behaviors` to force a match (CLAUDE.md: never repair or route around a criterion) -- AC6 is recorded FAIL against its exact literal invocation and output.",
+    "notes": "Owner to choose the fix shape: (a) amend AC6 (or a future such criterion) to name `api-routes` instead of `behaviors` for a pure-add route on an existing catch-all, since `behaviors`' route detail is provably static prose keyed to hand-editing cloudfront-distribution.tf; or (b) grant a future cell write access to portal-auth/ to add a dedicated, hand-commented CloudFront behavior naming this route explicitly. Not this worker's <paths> or BOUNDS to choose -- portal-auth/ is outside this cell's write surface and the criterion text is not this worker's to edit."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W2-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~2",
+    "surfaced_at": "2026-09-11T00:47:00Z",
+    "one_line": "AC5's `grep -r` over infra/aws/terraform/research/ transiently counted a byte-coincidence match inside a gitignored `terraform init` provider-plugin binary as a loopback violation, reading '1' instead of '0' until the ephemeral `.terraform/` cache was removed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZZZ",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First run of AC5's exact invocation (grep -r -c -i -E 'listen\\(|bind\\(|0\\.0\\.0\\.0|--port|ngrok|reverse.?tunnel|ssm start-session.*portNumber' integrations/bloomberg/research/ infra/aws/terraform/research/ | grep -v -c ':0$') returned '1'",
+        "grep -r -n (no -c) on the same paths isolated the single match to a BINARY file: 'infra/aws/terraform/research/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/windows_amd64/terraform-provider-aws_v5.100.0_x5.exe matches' -- a compiled Go binary downloaded by this cell's own `terraform init`, containing an incidental byte sequence matching one of the five patterns",
+        "git check-ignore -v confirms the match is under infra/aws/terraform/.gitignore's `.terraform/` rule -- never part of any commit, regenerated fresh by any future `terraform init` in this directory",
+        "After `rm -rf infra/aws/terraform/research/.terraform`, the identical invocation returns '0' -- confirming the source this worker authored (sqs.tf, api-gateway.tf, pull_consumer.py, lambda_function.py) never itself matches any of the five patterns"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC5: 'exactly \"0\" -- NEGATIVE and structural: nothing under the box-side module or the Terraform opens a listener, binds a port, or reverse-tunnels into this device.'",
+    "world_is": "True of every file this worker authored; NOT true, transiently, of a vendored provider binary `terraform init` writes into the same directory tree as a build-time side effect. AC5's invocation, being a plain filesystem `grep -r`, does not distinguish tracked source from a gitignored build cache sitting in the same directory. This worker removed the cache before the final graded read (a cleanup of an ephemeral, git-ignored byproduct, not an edit to the criterion or to any source file) and the criterion now reads '0' honestly.",
+    "notes": "ARMED because the SAME false positive will recur, identically, for ANY future `terraform init` in infra/aws/terraform/research/ (or any other module this pattern is later applied to) until either the check is scoped to tracked/source files only (e.g. `git grep` instead of `grep -r`, or an explicit `--exclude-dir=.terraform`) or graders remember to clean the cache first. Disarm: whoever next authors a criterion of this shape should route it through `git grep` (tracked files only) rather than a raw filesystem `grep -r`, or scope it with `--exclude-dir=.terraform`; named to the issuer (2.0.0_SA_COO~ZZZ) as the seat that cuts this criterion's future instances, not something this worker's <paths>/BOUNDS license fixing in the criterion text itself."
   }
 ]
 ```
