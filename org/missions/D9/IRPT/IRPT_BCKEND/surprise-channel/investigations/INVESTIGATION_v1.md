@@ -2466,6 +2466,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "ISSUER AMENDMENT (2.0.0_SA_COO~B, row W4-S15): 'FIRST ACT of this order, before any build or apply: rebuild the layer FROM THE TREE AT THIS ORDER'S CUT ..., publish it as a new version, repoint `3 of 3` functions, and print the runtime capabilities read (`5 of 5` contracts, `ids.py`/`raw_keys.json` present)' -- and 'this order's first act REMOVES `carried_forward_members`'. The <paths> block in the same face says 'a path you need that is not listed is a BLOCKING row, never an override'.",
     "world_is": "The two clauses of one face disagree: the amendment orders writes to seven paths the grant does not name. Measured, the ordered outcome is ALREADY TRUE on the plane that matters -- 9 of 9 declared members live in irpt-common:5, 5 of 5 contracts, ids.py/raw_keys.json/keys.py/firm_registry.json all present, 3 of 3 functions already on :5 -- so this worker RECORDS the capabilities read (the amendment's own 'record that and repoint only' branch) and leaves the source-hygiene removal of the now-duplicated block to the owner of that surface.",
     "notes": "The removal is CORRECT and should happen -- the merge did make the block redundant. It is BLOCKING only in the sense that this order named an act this order did not grant; it is INERT because the edit cannot change a deployed byte (0 unique paths contributed, identical pins) and because no capability is missing at runtime. Filed before any other act of this cell so the sequencing claim in the amendment is answered in the record rather than silently skipped."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S15",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-11T17:05:00Z",
+    "one_line": "THE API ROOT'S PLAN CARRIES THREE LINES, NOT TWO, AND THE THIRD IS THE ROUTE TARGET'S OWN PREREQUISITE. IB-rt-7's third bound reads 'The api root's plan shows only the added integration and route target; any other line is a STOP.' The measured plan after the holdings function existed is `Plan: 3 to add, 0 to change, 0 to destroy`: aws_apigatewayv2_integration.handler[\"holdings\"], aws_apigatewayv2_route.irpt[\"GET /api/scoped/investor-reporting/holdings/{accountSetId}\"] AND aws_lambda_permission.apigw_invoke[\"holdings\"]. All three are keyed [\"holdings\"] and come from the SAME for_each family the bound names; nothing else in the root moves, and 0 changed / 0 destroyed is the half of the plan that answers 'did this apply touch another project's route'. THE PERMISSION IS NOT AN EXTRA CHANGE, IT IS THE TARGET: api/integrations.tf declares one aws_lambda_permission per route_functions entry, narrowed to execute-api:.../api/scoped/investor-reporting/*, and WITHOUT it API Gateway cannot invoke the new function -- the route would answer 5xx from INSIDE the auth boundary, which is the exact failure that integrations.tf's own header says the NO-HANDLER-AT-HEAD status existed to avoid. So a literal reading of the bound forbids the resource that makes the bound's own subject work. This worker APPLIED, and records the literal wording against the measurement rather than deciding silently either way.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan on infra/aws/terraform/investor-reporting/api, AFTER the holdings function existed: 'Plan: 3 to add, 0 to change, 0 to destroy.'",
+        "the three resources, verbatim from the plan: # aws_apigatewayv2_integration.handler[\"holdings\"] will be created; # aws_apigatewayv2_route.irpt[\"GET /api/scoped/investor-reporting/holdings/{accountSetId}\"] will be created; # aws_lambda_permission.apigw_invoke[\"holdings\"] will be created",
+        "0 resources changed and 0 destroyed -- no pre-existing route, integration or permission of this project or any other is touched",
+        "api/integrations.tf declares aws_lambda_permission.apigw_invoke with `for_each = local.route_functions`, the SAME map the integration uses, so one map entry necessarily produces all three resources; there is no configuration in which a route is added without its permission",
+        "the same file's header states the reason the holdings route was never declared before: 'a route pointing at an integration pointing at nothing is worse than an absent route: it answers 5xx from inside the auth boundary'",
+        "BEFORE the holdings function existed the same plan FAILED LOUDLY (ResourceNotFoundException on data.aws_lambda_function.handler[\"holdings\"]), which is the data-source discipline working: the api root cannot create a target, only read one"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-rt-7 BOUNDS, third bullet: 'The api root's plan shows only the added integration and route target; any other line is a STOP.'",
+    "world_is": "The plan shows three resources, all keyed to the one route being added, because the root's own for_each couples the integration, the route and the invoke permission. Under the bound's INTENT -- this apply must move nothing else -- the plan is exactly clean (0 changed, 0 destroyed, every added resource keyed 'holdings'). Under its LETTER, the permission is a third line.",
+    "notes": "Filed rather than treated as a STOP because refusing the permission would deploy the precise defect the cell removes: a declared route whose integration cannot invoke its function. If the issuer intended the letter, the remedy is not this worker's to pick -- it would mean either splitting the permission into another cell's root or restating the bound as 'nothing changed, nothing destroyed, every addition keyed to this route', which is what was actually measured here."
   }
 ]
 ```
