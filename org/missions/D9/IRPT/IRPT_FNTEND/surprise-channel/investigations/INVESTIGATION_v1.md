@@ -915,6 +915,29 @@
     "world_is": "No output_evidence containing a literal 'CONSOLE[log]:' prefix (the ONLY form ui-smoke's --console flag ever produces for a console.log line) can satisfy this pattern under regex search, because '[log]' consumes one literal bracket-class character instead of three literal bracket/l/o/g characters -- the criterion is UNSATISFIABLE BY CONSTRUCTION for any correct output in this exact printed form, not just for this worker's capture. hazard_standing ARMED: any future worker or re-run against this exact <expect> string hits the identical mechanical FAIL regardless of whether the underlying repair/fixture is correct, and the task order can never mechanically reach F11-AC8 PASS as currently worded; disarm_owner is whoever next amends this task order's <expect> text (to the escaped form or an unambiguous substring with no regex metacharacters) or 3.0.0_SA_CVO at L9 if the judgment layer treats this as a known instrument limitation instead.",
     "disarm_owner": "3.0.0_SA_CVO",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S17",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T10:20:00Z",
+    "one_line": "FE-s-11 drained in both repos (portal DEV edab15b5, workspace ad959f08ce); eleven of eleven orders complete; the whole Investor Reporting test set reads 322 pass, 1 skip, 0 fail on DEV by the issuer's run. ONE RED THE ROUND LEAVES ON DEV: `bun run typecheck` (tsc -b --noEmit) exits 2 with 8 errors, all in this order's two new test files -- census.test.ts uses `test.each` and `toMatch`, colour-law.test.ts imports `statSync` from node:fs -- members the repo's ambient `bun:test` / `node:fs` shims under __tests__/fe-s-1/ and __tests__/fe-s-3/ do not declare; bun runs the tests green because bun does not typecheck. TO-FE-s-11 carried no typecheck criterion (every earlier order did: F10-AC1 was `bun run typecheck` rc=0) -- this issuer's face defect. The order is terminal and its grant withdrawn, so no amendment can carry the repair; it goes to L10 as the first item, for an addendum cell in the round-2 issuance (eight lines inside __tests__/fe-s-11/). Nothing shipped by the round is affected at runtime; the red is the type gate every portal seat runs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal DEV @edab15b5, issuer's run: `bun run typecheck` rc=2; error lines: census.test.ts(85,8) TS2339 'each' on typeof test; (87,6)/(87,13)/(140,97)/(140,101) TS7006 implicit any; (95,30) TS2339 'toMatch' on Matchers; (140,8) TS2339 'each'; colour-law.test.ts(39,37) TS2305 node:fs has no 'statSync' -- 8 of 8 errors under __tests__/fe-s-11/, 0 elsewhere",
+        "portal DEV @787015e8 (before this drain): F10-AC1 `bun run typecheck` rc=0 proven by the FE-s-10 worker and the issuer's instance re-run -- the red is introduced by the FE-s-11 merge alone",
+        "portal DEV @edab15b5, issuer's run: `bun test src/pages/InvestorReporting` 322 pass, 1 skip, 0 fail, 48 files -- bun's runner does not typecheck",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-11.design-conformity-census.md @ad959f08ce -- ten criteria, none invokes typecheck; F10-AC1 in TO-FE-s-10 does"
+      ]
+    },
+    "spec_asserts": "Portal DEV carries every drained cell with `bun run typecheck` rc=0 (F10-AC1's bar on the cell before this one, and the standing bar of every earlier order); the census order's product is the record and its tests run under bun.",
+    "world_is": "The test files typecheck against ambient shims narrower than bun's real API surface, and the one order that did not carry the typecheck bar is the one whose tests exceed the shims. DEV is green under bun and red under tsc. ARMED: any portal seat or gate that runs typecheck on DEV reads red until an order with __tests__/fe-s-11/ in its grant lands the eight-line repair; disarm_owner is this issuer via the round-2 issuance (addendum cell requested at L10).",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
