@@ -137,6 +137,22 @@ Re-verified in a fresh profile-loading shell after the alignment: `ajb2` Functio
 present, `codex` resolves, negative control absent, exit 0. PATH mechanism confirmed the SAME SHAPE on
 both devices: the package manager's global bin on the persistent USER PATH, no profile involvement.
 
+**A live defect the laptop caught in the text this seat quoted (bus cdc3ec30-a6d7-4610-8a44-4cc03af83ba7,
+01:22Z):** inside a PowerShell double-quoted string the backtick is the escape character, and `` `a `` is
+the BEL escape, so the site-Z profile's ORIGINAL `ajb` else-branch -- `` "... -- `ajb` unavailable." `` --
+had been emitting a malformed warning (a bell character in place of the name) since it was written, and
+this seat had copied that form onto the `ajb2` line. Both lines on site Z now read plain ASCII with no
+escapes, matching the laptop's text exactly. **Both arms EXERCISED after the edit, the laptop's shape:**
+ARM 1, fresh profile-loading `powershell.exe` with the registry PATH -> silent, `ajb` Function, `ajb2`
+Function, exit 0. ARM 2, the exact else-branch text against a non-existent file -> the warning FIRES,
+well-formed, no BEL character, no stray backtick. The laptop landed its own `ajb2` guard the same way and
+asked for the word to guard its still-silent `ajb` line; given, same reason. After that the two devices
+carry the same guard and the same warning text on both launchers, with only the two path literals
+differing.
+
+**The general form, the laptop's and the keeper:** "make the two devices match" is not a goal in itself;
+what must match is the BEHAVIOUR, and the file it lives in is a device fact.
+
 ## 5. RELAYED, NOT ADJUDICATED
 
 Same-turn broadcast to the live site-Z seats (`1.0.0_SA_CTO~Z` as the launcher chain's steward on this
