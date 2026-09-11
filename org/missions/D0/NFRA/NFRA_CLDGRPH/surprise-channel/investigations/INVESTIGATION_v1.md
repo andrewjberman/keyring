@@ -8885,3 +8885,97 @@ and its four S3 objects are verified.
   }
 ]
 ```
+
+## NFRA_CLDGRPH-S132 -- the AWS secret's committed description says READ-ONLY and the live token is admin/push
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.0.0_AB_MSTR",
+    "surfaced_at": "2026-09-11T01:36:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S132",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "one_line": "THE AWS SECRET'S OWN DESCRIPTION IS FALSE, AND IT IS COMMITTED TERRAFORM. infra/aws/terraform/estate-report/secrets.tf:13 declares estate-report/github-token as \"Fine-grained GitHub PAT, READ-ONLY (contents:read), Opal-Capital/ajb_workspace ONLY\". The live token in that secret reports {admin,maintain,push,triage,pull} all true. S123 covers the GITHUB REPO SECRET plane (PORTAL_REPO_PAT) and Andrew's accepted trade there; THIS ROW IS THE AWS PLANE AND A DIFFERENT DEFECT -- a versioned, reviewed, false statement about a credential that TWO SCHEDULED PRODUCERS have read on every fire since 2026-07-31.",
+    "spec_asserts": "secrets.tf:13 asserts the secret holds a READ-ONLY (contents:read) fine-grained PAT scoped to Opal-Capital/ajb_workspace only. org/tier2_senior/0.7.0_AE_CloudOps/deliverables/ESTATE_REPORT_PIPELINE_20260730/SPEC.md:307 and the 3.0.0_SA_CVO 2026-07-31 handoff repeat contents:read. The consuming design is clone-only.",
+    "world_is": "GitHub REST GET /repos/Opal-Capital/ajb_workspace with that token returns HTTP 200 and permissions {admin: true, maintain: true, push: true, triage: true, pull: true}. describe-secret: CreatedDate 2026-07-30T22:34:10Z, LastChangedDate 2026-07-31T00:01:16Z, and list-secret-version-ids returns ONE version (AWSCURRENT) -- so the value has NEVER been replaced and this is NOT a product of 2026-09-10's work. CloudTrail over the secret's full 42-day life, ResourceName lookup: 59 events, 52 GetSecretValue, by three principal classes -- estate-report-runner-role (45, four EC2 instances), user/Andrew_Berman (10), estate-report-seam-freshness-publisher CodeBuild (4). No resource policy on the secret (get-resource-policy returns None), so access is identity-based only.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/estate-report/secrets.tf:13 @b4c92fd935 -- description = 'Fine-grained GitHub PAT, READ-ONLY (contents:read), Opal-Capital/ajb_workspace ONLY. Used by the estate-report runner to fetch the commit window. Andrew-direct 2026-07-30.'",
+        "GitHub REST GET /repos/Opal-Capital/ajb_workspace with the token from that secret: HTTP 200, permissions {admin: true, maintain: true, push: true, triage: true, pull: true}. Value never printed.",
+        "secretsmanager describe-secret estate-report/github-token: CreatedDate 2026-07-30T22:34:10Z, LastChangedDate 2026-07-31T00:01:16Z; list-secret-version-ids returns ONE version (AWSCURRENT) -- the value has never been replaced, so this predates 2026-09-10 by six weeks.",
+        "secretsmanager get-resource-policy estate-report/github-token -> None. Access is identity-based only, so the CloudTrail principal set below IS the population.",
+        "cloudtrail lookup-events AttributeKey=ResourceName,AttributeValue=estate-report/github-token over a 45-day window (the secret is 42d old, so the window spans its whole life): 59 events, 52 GetSecretValue. Principals: estate-report-runner-role 45 across four EC2 instances (i-0512bd3cbaf602b7f, i-04981b6aec3bed86b, i-0584e17d283fa7ef4, i-09fa5115b3282d6ea), user/Andrew_Berman 10, estate-report-seam-freshness-publisher CodeBuild 4.",
+        "comp-secrets list: 92 secrets, TWO github tokens -- estate-report/github-token (42d) and github-token (261d). The bare github-token DOES return HTTP 401, re-probed at this seat rather than relayed.",
+        "WITHDRAWAL EVIDENCE: two Terraform files declare resource \"aws_secretsmanager_secret\" \"github_token\" naming DIFFERENT secrets -- infra/aws/terraform/estate-report/secrets.tf:11 (name = estate-report/github-token) and infra/aws/terraform/shared-infra/secrets-unowned.tf:79 (name = github-token). 0.0.0_AB_MSTR read the LABEL and assumed the NAME, and reported to Andrew that a scheduled producer was failing at its clone. It is not. A TERRAFORM RESOURCE LABEL IS NOT ITS RESOURCE'S NAME. comp-iam's own startup banner warns about this exact collision class for ROLE labels ('runner', 'scheduler', 'orchestrator' reused across modules, silently mis-linking inline policies to FALSE-MISSING); the warning was in front of me and I applied it to roles and not to secrets."
+      ]
+    },
+    "notes": "NOT AN OBJECTION AND NOT A GATE. The remedy is a choice between two honest states and it is not this seat's: either narrow the token to what the description claims, or correct the description to what the token is. EITHER IS FINE; THE CURRENT STATE IS THE ONLY BAD ONE, because a reviewed and committed description reads as verified. CONSEQUENCE THAT MAKES IT worth a row rather than a note: the daily-sprint Lambda (LD-0547) needs a clone credential, and a reader who trusts secrets.tf:13 would wire this secret believing it is read-only. ARMED because that wiring is live work tonight."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S133 -- derive_runner imports code_heat_emit and the Dockerfile never COPIES it -- the leg is undeployable, not merely off
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-11T01:46Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S133",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "one_line": "derive_runner IMPORTS code_heat_emit AND THE DOCKERFILE NEVER COPIES IT -- the code-heat leg is structurally undeployable and reads as merely switched off. derive_runner.py:2814 does `import code_heat_emit  # local module (infra/aws/globgrph/)` inside the CODEHEAT_ENABLED branch. The file EXISTS in the repo (infra/aws/globgrph/code_heat_emit.py, 14,812 bytes, dated 2026-07-16) and the Dockerfile mentions 'code_heat' ZERO times, against ~30 explicit COPY lines for every other module. So the flag is not the only thing standing between this estate and code-heat emission: flipping GLOBGRPH_CODEHEAT_ENABLED=1 today would raise ModuleNotFoundError, get swallowed by the surrounding best-effort try, and print CODEHEAT_EMIT_FAIL -- a WARN, on the nightly, forever.",
+    "spec_asserts": "derive_runner.py's code-heat block presents the leg as CADENCE-GATED, not absent: the else-branch prints 'INFO: CODEHEAT_EMIT_SKIPPED (GLOBGRPH_CODEHEAT_ENABLED!=1, day-one off)', which states a DELIBERATE default-off posture and implies the leg is otherwise ready. Three code_heat freshness alarms are declared in the terraform module (code_heat_ajb_workspace, code_heat_portal, code_heat_snap_last_append), which only makes sense for a leg expected to produce.",
+    "world_is": "The module is not in the image. `grep -c code_heat infra/aws/globgrph/Dockerfile` = 0, while the same Dockerfile carries explicit COPY lines for derive_runner, comp_aws_cli, surface_check_cli, _provenance, ms_cloud_extract, projection_worker, projection_server, kuzu_nessie_load, kuzu_incremental_refresh, comp_detect, cse_store, cse_schema, comp_ladder, comp_learns_produce, publish_contract_integrity, contract_engine, fedobs_observe, resource_summaries_store, summary_corpus, dup_scan, extract_pipeline_cloud, safe_deploy_core, both motif_c2c3_materialize JSONs and all three kimi_subdivision_harness files. code_heat_emit.py is the one imported module with no COPY. The derive is repo-less by design, so a module absent from the image is absent at runtime, full stop.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/globgrph/derive_runner.py:2814 -- `import code_heat_emit  # local module (infra/aws/globgrph/)`, inside `if CODEHEAT_ENABLED:` with an enclosing try whose except prints WARN: CODEHEAT_EMIT_FAIL",
+        "ls infra/aws/globgrph/code_heat_emit.py -> 14812 bytes, 2026-07-16 (the module exists in the repo)",
+        "grep -c 'code_heat' infra/aws/globgrph/Dockerfile -> 0",
+        "the terraform module's freshness_stale_alarm_arns output names code_heat_ajb_workspace, code_heat_portal and code_heat_snap_last_append"
+      ]
+    },
+    "notes": "THE DIRECTION IS WHAT MAKES IT ARMED, not current breakage: today the flag is off and the else-branch prints a tidy SKIPPED line, so nothing looks wrong and nothing IS wrong. The defect only fires for the person who flips the flag expecting a working leg, and it fires as a WARN they have to notice among a nightly's output rather than as a failure. COMPOUNDING: per S131 the three code_heat alarms that would otherwise have caught a silent non-emission do not exist in CloudWatch either, so both the leg and its watchdog are absent while the record asserts both. NOT ACTED ON: the Dockerfile and code_heat_emit.py are outside this seat's PERMIT set and outside the four paths tonight's handoff names, and adding a COPY is an IMAGE ACT reaching six task families. CHEAPEST NEXT STEP is a DECISION, not a COPY: either the leg is wanted, in which case it needs the COPY plus a rebuild, or it is dead, in which case the import, the flag, the else-branch and the three alarm declarations should go together. Adding the COPY alone would silently ARM a producer under the standing moratorium."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S134 -- the Dockerfile's 'kuzu has a single importer' fact is false, and it is what a drop-kuzu decision would lean on
+
+```json
+[
+  {
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-11T01:46Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "id": "NFRA_CLDGRPH-S134",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "THE DOCKERFILE'S kuzu BLAST-RADIUS NOTE CARRIES A FACT THAT IS NOW FALSE, AND IT IS THE FACT A FUTURE 'CAN WE DROP kuzu' DECISION WOULD LEAN ON. The note states: '`kuzu` is imported ONLY by derive_runner._c2c3_incontainer_reader(), which no other entrypoint calls'. Measured across the image's own COPY'd sources, FOUR other files import kuzu: kuzu_nessie_load.py, kuzu_incremental_refresh.py, projection_worker.py and projection_server.py -- and the last two ARE separate entrypoints, projection_server being the always-on serving path. The claim was true when written and the CG-s-2/CG-s-4 projection COPY block, added later in the same file, is what falsified it.",
+    "spec_asserts": "infra/aws/globgrph/Dockerfile, the kuzu BLAST RADIUS comment: 'FIVE task-defs run on this ONE image ... `kuzu` is imported ONLY by derive_runner._c2c3_incontainer_reader(), which no other entrypoint calls -- but SINGLE-IMPORTER IS NOT THE GROUNDING, and reaching for it would be a trap.'",
+    "world_is": "kuzu import counts over the image's COPY'd sources: kuzu_nessie_load.py 1, kuzu_incremental_refresh.py 2, projection_worker.py 2, projection_server.py 2, derive_runner.py 1, comp_detect.py 0. So five files import it, not one, and the projection serving path is among them. CONSEQUENCE FOR THE LIVE c2c3 RETIREMENT QUESTION (S130): removing the c2c3 layer does NOT permit dropping the kuzu pip dependency, because the projection entrypoints need it. Anyone scoping that retirement off this comment would size it wrong.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "grep -c 'import kuzu' over the six COPY'd globgrph sources -> kuzu_nessie_load.py 1, kuzu_incremental_refresh.py 2, projection_worker.py 2, projection_server.py 2, derive_runner.py 1, comp_detect.py 0",
+        "infra/aws/globgrph/Dockerfile -- the CG-s-2/CG-s-9 and CG-s-4 COPY blocks that introduced projection_worker.py, kuzu_nessie_load.py, kuzu_incremental_refresh.py and projection_server.py, all added AFTER the kuzu pip note"
+      ]
+    },
+    "notes": "INERT: nothing is broken by it and the DEPENDENCY ITSELF IS STILL CORRECTLY JUSTIFIED. The note's actual grounding -- that kuzu==0.11.3 declares ZERO transitive requirements, measured against a pyiceberg positive control of 31 -- is untouched and still carries, so the resolution-risk argument stands entirely. What has decayed is one supporting sentence. THE SHAPE IS THE POINT, and the comment nearly warns about itself: it says in capitals that single-importer is NOT the grounding and would be a trap, then asserts single-importer as a fact anyway, and that is the half that rotted. A wrong FACT inside a RIGHT principle survives review because the principle is what gets checked. CHEAPEST NEXT STEP: strike the sentence, or re-word it to 'kuzu is imported by derive_runner and the projection entrypoints', which is both true and still consistent with the zero-transitive-deps grounding that does the real work."
+  }
+]
+```
