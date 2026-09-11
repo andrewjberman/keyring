@@ -213,3 +213,39 @@ only live instances are lanes. NOT BUILT (monitor moratorium; an agent-made gate
 Andrew). SURFACED as a candidate for the CTO's gate queue: `send_message` could return QUEUED-NO-LIVE-BASE
 (distinct from QUEUED) when the recipient is a base serial with zero live sessions and one or more live
 `~lane` instances, so the sender sees the hole at send time. Proposing is legal; implementing is not.
+
+---
+
+## AMENDMENT 4 -- 04:0x-04:3xZ: the overnight leg, and two laptop-side findings it surfaced
+
+**archetype:** DEPLOY (integration) + TRACE
+
+Pushed 21 site-Z commits at 04:12Z (origin/SITEZ @6ffdaa8ccb). Both fabrics had then drifted 89 / 85
+commits apart since the 23:0xZ legs. Assessed first: overlap 0 of 403 touched files, merge-tree rc=0,
+no untracked collisions, the only dirty tracked path in the delta the portal submodule pointer. Ran the
+leg: window OPEN (5 of 5), `git merge --no-commit --no-ff`, 206 staged / 0 foreign, gates green, merge
+@26faa1485e, push rc=0, ls-remote read 26faa1485e, CLOSE (5 of 5). Read from the remote at 04:23:40Z:
+CLOUD-in-SITEZ YES; CLOUD lacks 86 (the laptop's leg, on its cadence).
+
+**Deploy, proven by the gate rather than predicted:** the delta carried two new `.py` files under
+`data/assets/scripts/gold/investor_reporting/` -- a SHARED repo home (mdpf tree), where the push gate
+applies the S3-membership guard. Its own lines: `2 path(s) to deploy` -> both `SKIP-NOT-MEMBER [mdpf]`
+(probed the mdpf `assets_gold/investor_reporting/...` keys -> 404, 0 members) -> `0 file(s) deployed;
+2 SKIPPED (first-mint, 404). NOTHING WAS DEPLOYED.` My glob (`data/*/scripts/gold/*.py`, which in a git
+pathspec matches across `/`) read 2 and the gate's matcher (`startswith(repo_home + "/")`, any suffix)
+agrees on scope -- the membership guard, not the pattern, is what made it zero writes.
+
+**Per-path resolution, disclosed:** CLOUD's commit @24c4b211b2 (laptop worker `0.9.0_WK_IRPT_FNTEND~2`)
+moves the portal gitlink to 21b17327b078, which after a full fetch is on NO branch of the portal remote
+(origin/DEV = 5907cbca98eb, our pointer). Kept the gitlink at 5907cbca in the merge index. The laptop's
+next leg auto-resolves to its own pointer (base = SITEZ side, unchanged) with no conflict.
+
+**Two findings sent to the laptop (bus 3111d468-d263-41e0-a95b-073c84c8e6dd):** (1) the dangling
+portal pointer on origin/CLOUD -- the portal submodule does not ride the workspace push, so the worker's
+portal commit never reached origin; remedy is the laptop's (push portal DEV or re-point), and any
+proof-of-spec instance citing that hash does not resolve off-device; (2) the two investor_reporting
+scripts are on S3 from neither fabric's push -- a first-mint into a shared home is an explicit owner
+act, never the gate's; surfaced so no served-key expectation sits on a gate that will never satisfy it.
+
+Both are the laptop's to act on; nothing on site Z waits. COO~Z verified its own four commits on origin
+by its own ls-remote read and held through the window with nothing pending.
