@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>staged -- assigned to slot ~2; becomes pending when the COO hands it over after IB-rt-1 is terminal and merged.</status>
+<status>pending -- handed by 2.0.0_SA_COO~B at 2026-09-11 ~14:3xZ after IB-rt-1 drained COMPLETE at 8abcb1563b (v1 frozen at c22f179bbf). Second order of slot ~2.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 2 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.13 @e6ba5d9878 (ADMITTED, both L4-R halves SIGNED) | **Round-1 analysis:** `../ledger/ROUND_ANALYSIS.round1.md` @0d57ceb2f9, ruling 2 | **Slug rows this cell closes:** W1-S10, W2-S7 (served-path half), W2-S9 (handler half) | **Decomp cell:** `IB-rt-2` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.2, s.1 + s.2) | **outcome_ref:** FWD-2 (own), FWD-11 | **PRD candidate:** B3
 
@@ -95,6 +95,8 @@ The guarded entry points in `directory/`, `performance/`, `ycharts/generate/` (t
 **(d) THE PROJECTION IS ON THE SERVED PATH.** Through the real directory dispatcher: a grant present with no projection -> `UNPROJECTED-ID` refusal; a grant with the projection -> the narrowed intersection (`N of M` accounts, printed).
 **(e) DEPLOYED AND VERIFIED.** For each function changed: `get-function-configuration` `CodeSha256` equals the built zip's; each root's plan after the apply reads `No changes` (printed per root); ledgers CLOSED with sentinels committed (hashes).
 **(g) ENVELOPE CONFORMANCE, SERVED (amendment, row W2-S16).** IB-rt-1's paired producer-to-consumer test re-run against the DEPLOYED functions (invoke by name with the validator's injected header set): `11 of 11` responses validate against their response schema and `data` against the document schema; a mismatched `X-Contract-Version` refused `CONTRACT_VERSION` on `11 of 11`; printed per operation.
+
+**ISSUER AMENDMENT (2.0.0_SA_COO~B, at the hand-off, from IB-rt-1's census, row W2-S18):** arm (g)'s denominator is the ROUTES THAT HAVE A DEPLOYED HANDLER AT THIS CELL'S HEAD, printed as `N of N`, with the one published route that has NO handler at HEAD (`holdings-snapshot`, IB-rt-7's) named and EXCLUDED on its own line, never counted as a pass or a fail. IB-rt-1 handed the census `CONFORMS 0 / BLOCKED-BY-W2-S16 8 / DEPLOYED-ONLY 1 / NOT-A-ROUTE 2`: of the eight blocked, seven are handlers answering in an ad-hoc envelope and one is the no-handler route -- the seven are this cell's, the eighth is IB-rt-7's. The `X-Contract-Version` check is committed and NOT served (IB-rt-1 deployed nothing); this cell serves it. The seam's response contracts live at `docs/contracts/investor-reporting/v1/responses/<operation>.response.schema.json` (one envelope `{contract_version, operation, firm_id, data, status?}`, `additionalProperties: false`; `data` the producer document or a declared slice whose properties `$ref` the document's own subschemas).
 **(f) THE PRINCIPAL.** Either: one authenticated request through the real path served and one swapped-firm request refused, the principal minted through the named existing path (secret names only, no values); or: the `HUMAN-GATED` record printed verbatim naming the operator's exact act -- and the arm reads `HUMAN-GATED`, which is admitted by this criterion as a PASS of the arm's own rule, never as a skip.
 
 <criterion id="RT2-AC2" cell_refs="IB-rt-2" judgment="true"/>

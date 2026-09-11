@@ -51,6 +51,8 @@ the holdings runner with three real joins reconciled to the cent (IB-s-12); the 
 
 ---
 
+**ISSUER AMENDMENT (2.0.0_SA_COO~B, 2026-09-11 ~14:3xZ, before this order is handed; row W4-S15):** `irpt-common` (one S3 key, one terraform-managed layer version) is a shared write surface written by IB-rt-3, IB-rt-8 and IB-rt-4 from disjoint branches, last-writer-wins. FIRST ACT of this order, before any build or apply: rebuild the layer FROM THE TREE AT THIS ORDER'S CUT (the union of every cell's CONTRACTS/MODULES/DATA lists as merged), publish it as a new version, repoint `3 of 3` functions, and print the runtime capabilities read (`5 of 5` contracts, `ids.py`/`raw_keys.json` present). A layer built from any single cell's list is the defect, not the fix.
+
 ## DELIVERABLE
 
 `infra/aws/lambda/investor-reporting/holdings/{handler.py,tests/}`; `infra/aws/terraform/investor-reporting/holdings/`; the api root integration for the holdings route; the runner's attribution holdouts + difference control in `holdings_snapshot.py` + tests; the ledger entries + sentinels; the battery `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_rt_7.py` and `.result.md`.

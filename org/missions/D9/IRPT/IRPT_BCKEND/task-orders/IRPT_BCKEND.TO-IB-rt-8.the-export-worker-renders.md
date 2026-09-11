@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~4</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>complete -- RT8-AC1 PASS-by-output (6 of 6 mechanical arms, rc 0, IBRT8-EXPORT-RENDERS); RT8-AC2 RECORDED as judgment for 3.0.0_SA_CVO at L9, no verdict taken here. The RENDER STEP READS HUMAN-GATED, admitted by RT8-AC1 (a) as the arm's own rule: no reachable host may be STARTED by this cell, and the operator's act is written verbatim in infra/aws/ec2/investor-reporting-export/README.md (row IRPT_BCKEND-W4-S14). proof-of-spec-check rc 0. Six rows filed, W4-S14 through W4-S19.</status>
+<status>pending -- RE-OPENED by 2.0.0_SA_COO~B at 2026-09-11 ~14:3xZ, after this order drained COMPLETE at 790d948e98 (b33136854d on its branch): Andrew's word on the four synthetic exports arrived at 13:48Z (1.0.0_SA_CTO 95968), the act this face carried by name in its own bound. Addendum arm (g) below is the ONLY open work; every other arm stays proven as it was.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 2 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.13 @e6ba5d9878 (ADMITTED, both L4-R halves SIGNED) | **Round-1 analysis:** `../ledger/ROUND_ANALYSIS.round1.md` @0d57ceb2f9, ruling 5 | **Slug rows this cell closes:** W4-S9, W4-S10, W4-S12, W4-S13, C-S76 | **Decomp cell:** `IB-rt-8` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.2, s.1 + s.2) | **outcome_ref:** FWD-8 (contrib, the worker), FWD-3, FWD-4 (the Analysis PDF) | **PRD candidate:** B14
 
@@ -64,6 +64,7 @@
 - **No egress off Opal infrastructure** for a browser or any dependency; the estate's existing hosts or a HUMAN-GATED arm.
 - **No vendor call during render or preview** (an outbound-network guard on the host's render run, printed with its denominator).
 - **Nothing under `GENIBS14SYN` is deleted or moved by this cell**; exclusion is proved, deletion carried.
+  - **SUPERSEDED for the four `.../attempts/1/exports/*/report.pdf` keys only, by arm (g) on Andrew's word (13:48Z); every other object stays untouched.**
 - **The performance revision is immutable across export revisions**; the receipt's `artifact_hash` names the bytes that exist.
 
 ### Bounds every order carries (decomposition v0.2 s.8, verbatim)
@@ -94,6 +95,13 @@
 **(d) STABLE IDENTITY.** Identical-input retry: same `export_id`, receipt reused, attempt count printed; changed input: different `export_id`; printed side by side with the raw digests.
 **(e) EXCLUSION PROVED.** The inventory of the 4 keys printed (sizes, metadata); per production reader (directory, holdings, export status, download) a test shows objects under `GENIBS14SYN` or with `irpt-synthetic=true` are excluded (`N of N` readers); 0 deletes issued (CloudTrail-free assertion: the 4 keys still `head-object` 200 after the battery).
 **(f) LEDGERS AND PLANS.** Every entry CLOSED, sentinels committed; export, performance and narrative roots' post-apply plans `No changes`.
+
+**(g) ADDENDUM ON ANDREW'S WORD -- THE FOUR SYNTHETIC EXPORTS DELETED (2.0.0_SA_COO~B, 2026-09-11 ~14:3xZ; 1.0.0_SA_CTO 95968 carrying Andrew-direct 13:4xZ VERBATIM "yes on synthetic exports"; record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_134xZ_PUSH_CLOUD_HOLD_DEV_FETCH_LATO_DELETE_SYNTHETIC_EXPORTS.md`).** The word covers EXACTLY these four objects in bucket `opal-data-ycharts` (us-east-1) under `firms/49financial/generations/GENIBS14SYN/attempts/1/exports/` and nothing else -- no other object, prefix or firm:
+  1. `firms/49financial/generations/GENIBS14SYN/attempts/1/exports/r1/report.pdf` (43,848 bytes at the inventory)
+  2. `firms/49financial/generations/GENIBS14SYN/attempts/1/exports/v0-11-overview/report.pdf` (41,859)
+  3. `firms/49financial/generations/GENIBS14SYN/attempts/1/exports/v0-11-comparison/report.pdf` (41,859)
+  4. `firms/49financial/generations/GENIBS14SYN/attempts/1/exports/v0-11-multicomp/report.pdf` (41,859)
+  The act, in order: (i) the inventory RE-READ at the moment of the act (`list-objects-v2` under the prefix + `head-object` per key: sizes, `irpt-synthetic=true` on 4 of 4; the prefix holds exactly these four and any FIFTH object is a STOP, not a fifth delete); (ii) the production-reader check already proven in arm (e) is cited, not re-run; (iii) a change-management ledger entry OPENED with its sentinel committed before the act, naming the four keys and the word; (iv) `delete-object` per key (four literal keys, never a prefix delete, never `--recursive`), each response captured; (v) `head-object` reads `404` on 4 of 4 after; (vi) the ledger CLOSED with the four delete receipts and the before/after inventory retained under this order's deliverables; (vii) the bound "nothing under GENIBS14SYN is deleted or moved by this cell" is SUPERSEDED for these four keys only, by this arm. Battery arm (g) prints `4 of 4 deleted, 0 of 4 remaining, 0 unexpected objects`; the expect token is unchanged. The bucket's other `GENIBS14SYN` objects (the bundle, receipts, sidecars under other prefixes, if any) are NOT covered and are listed in the after-inventory as remaining.
 
 <criterion id="RT8-AC2" cell_refs="IB-rt-8" judgment="true"/>
 **`RT8-AC2` -- JUDGMENT, RECORDED AND NOT SELF-GRADED.** State for `3.0.0_SA_CVO`: which host rendered and what its lifetime, cost and concurrency limits are; which fonts the PDF actually embedded versus the package's requirement; what changed in the PDF between two renders of one bundle and why the content hash is the identity; and what the exclusion proof does not cover (a reader added later). No verdict: the instance row carries the output under `UNVERIFIABLE-BY-INSTRUMENT` with `status_reason` naming `3.0.0_SA_CVO` at L9.
