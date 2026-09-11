@@ -736,20 +736,36 @@ are the only roots, they are the two chains' heads, and both spawn at issuance (
 
 ### 13c. Rule 24 record for what v0.6 ADDS (the eight round-5 cells)
 
-- **(i) MECE over the DECLARED domain, BY SUBTRACTION from a printed denominator -- not by recall.** The
-  domain is the SIX named constraints of PRD s.3b plus the S16 manifest row. Subtracting what each cell
-  covers: `C-AMGT-ARTICLES-STORE` -> `rd-1`; `C-SERVER-SIDE-RANKING` -> `rd-2` (the store) + `rd-5` (its
-  writer); `C-PRICE-RANKING-BOXSIDE` -> `rd-6`; `C-HARVESTER-COMPUTE` -> `rd-3` (box + role) + `rd-4` (the
-  four harvesters); `C-STARRED-PER-FIRM` -> `rd-7`; the approved page shape + S16 -> `rd-8`. **REMAINDER
-  ZERO.** `C-VENDOR-WORD-HARVESTERS` is the sixth constraint and is deliberately NOT a cell -- it is a
-  time-scoped BOUND on `rd-4`, carried in 13d. A constraint that is a bound rather than a cell is named
-  here so the subtraction balances visibly rather than by silence.
+- **(i) MECE over the DECLARED domain, BY SUBTRACTION from a printed denominator -- not by recall.**
+  ⚠ **AMENDED 2026-09-11 ~18:4xZ. THIS RECORD WAS TRUE AT EIGHT CELLS AND BECAME FALSE THE MOMENT `rd-3`
+  AND `rd-4` WERE SUPERSEDED. It is repaired in the SAME commit as that supersede, deliberately: a
+  subtraction record that is quietly falsified is WORSE than no record, because it still prints a clean
+  remainder and every later reader trusts it.** The pre-amendment text mapped `C-HARVESTER-COMPUTE` to
+  `rd-3` + `rd-4` and `C-VENDOR-WORD-HARVESTERS` to a bound on `rd-4`; both of those homes are gone.
+  THE DOMAIN IS UNCHANGED -- the SIX named constraints of PRD s.3b plus the S16 manifest row. What changed
+  is where two of them are SERVED. Subtracting what each cell covers:
+  `C-AMGT-ARTICLES-STORE` -> `rd-1`; `C-SERVER-SIDE-RANKING` -> `rd-2` (the store) + `rd-5` (its writer);
+  `C-PRICE-RANKING-BOXSIDE` -> `rd-6`; `C-STARRED-PER-FIRM` -> `rd-7`; the approved page shape + S16 ->
+  `rd-8`. **THAT IS FIVE CONSTRAINTS OVER SIX CELLS.**
+  ⛔ **THE REMAINING TWO ARE NOT UNCOVERED -- THEY ARE RE-HOMED OUTSIDE THIS ROUND, AND THE DIFFERENCE IS
+  THE WHOLE POINT OF SAYING SO:**
+  `C-HARVESTER-COMPUTE` -> **THE HARVEST ESTATE**, owned and executed by `4.0.0_SA_CRO~Z` per PRD v0.5
+  @`5517e071e8` on Andrew's ~17:3xZ directive and his ~18:3xZ approval of the draw. It maps to NO round-5
+  cell and must not be re-cut here.
+  `C-VENDOR-WORD-HARVESTERS` -> re-homed onto the harvest estate's ACQUISITION surface **with all three
+  limits intact** (the four named platforms; THIS project's harvesters only; not before the box stands).
+  It was previously a time-scoped BOUND on `rd-4` and had no cell of its own, so superseding `rd-4` would
+  have left it with NO CARRIER AT ALL -- found by `1.0.0_SA_CTO~Z` while verifying this very record, and it
+  is the sharper half of this amendment. Andrew's "full egress and override authority" is authority to
+  REALIZE THE ESTATE and is **NOT** a widening of `C-VENDOR-EGRESS`.
+  **REMAINDER ZERO over the six constraints, now stated as FIVE SERVED IN-ROUND + TWO RE-HOMED, rather
+  than as a single number that hides where the members went.**
 - **(ii) SAME GRAIN:** each cell is one engine with one home. The two stores are separate cells because
   they are separate tables with separate consumers, not one "make the tables" cell.
-- **(iii) INTENT COHERENCE:** one axis per cell. Storage (`rd-1`, `rd-2`), compute host (`rd-3`),
-  acquisition (`rd-4`), ranking production (`rd-5`, `rd-6`), marker state (`rd-7`), presentation (`rd-8`).
-  No cell mixes another's concern; notably the BOX is separated from the HARVESTERS that run on it, because
-  a box that exists and a harvester that runs are different proofs.
+- **(iii) INTENT COHERENCE:** one axis per cell. Storage (`rd-1`, `rd-2`), ranking production (`rd-5`,
+  `rd-6`), marker state (`rd-7`), presentation (`rd-8`). ⚠ AMENDED: compute host (`rd-3`) and acquisition
+  (`rd-4`) left this round with the harvest estate. The original separation of the BOX from the HARVESTERS
+  that run on it stands as a design point and now applies inside that estate rather than here.
 - **(iv) STATE COHERENCE -- what these do NOT move:** they build the surface, so for the first time an
   `EXERCISED` bar becomes REACHABLE -- but **REACHABLE IS NOT REALIZED.** No cell may grade its own FWD
   REALIZED on the strength of its own artifact; fourteen of fifteen outcomes need a PERSON to have used the
@@ -758,11 +774,22 @@ are the only roots, they are the two chains' heads, and both spawn at issuance (
 
 ### 13d. BOUNDS carried onto the round-5 cells
 
-- **`C-VENDOR-WORD-HARVESTERS` IS TIME-SCOPED AND ITS CLOCK IS THE BOX.** Andrew gave the per-use word for
-  Seeking Alpha, FT, Bloomberg and WSJ for THIS project's harvesters, **effective when the harvester box is
-  stood up and ready to run -- NOT before.** So `rd-4` may not egress to any of the four until `rd-3` has
-  landed. It is NOT a blanket grant: `C-VENDOR-EGRESS` still binds every other vendor and every other use,
-  and "availability is not authorization" is unchanged.
+- **`C-VENDOR-WORD-HARVESTERS` -- RE-HOMED 2026-09-11 ~18:4xZ, AND THIS IS THE BOUND THAT ALMOST VANISHED.**
+  ⚠ It had NO cell of its own: it was carried here as a time-scoped BOUND ON `rd-4`, deliberately, so the
+  s.13c subtraction balanced visibly. **Superseding `rd-4` would therefore have left it with NO CARRIER AT
+  ALL** -- found by `1.0.0_SA_CTO~Z` while verifying s.13c, and it is the sharper half of this amendment.
+  IT IS NOW RE-HOMED onto the HARVEST ESTATE's acquisition surface per PRD v0.5 @`5517e071e8`, **with all
+  three limits intact and none of them softened by the move:** the FOUR named platforms (Seeking Alpha, FT,
+  Bloomberg, WSJ); **THIS project's harvesters only**; and **effective only once the box is stood up and
+  ready to run -- NOT before.**
+  ⛔ **ANDREW'S "FULL EGRESS AND OVERRIDE AUTHORITY" TO `4.0.0_SA_CRO~Z` IS AUTHORITY TO REALIZE THE ESTATE
+  AND IS NOT A WIDENING OF `C-VENDOR-EGRESS`.** Written down rather than assumed, because a narrow
+  time-scoped grant losing its carrier at the same moment another seat is handed broad-sounding egress
+  language is exactly the shape in which it quietly becomes a blanket one, and nobody would see it happen.
+  ⛔ **A PROXY VENDOR IS A SEPARATE, UNANSWERED QUESTION.** Extending Bright Data Web Unlocker from WSJ to
+  the session harvesters is a NEW per-use call for Andrew -- never an inference from an EC2 IP proving
+  unworkable against PerimeterX. `C-VENDOR-EGRESS` still binds every other vendor and every other use, and
+  "availability is not authorization" is unchanged.
 - **NO MONITOR, NO ALARM, NO FRESHNESS-CHECKER** (standing moratorium; `comp-schedule` carrier C3 counts 12
   standing NEVER clauses). `rd-5` and `rd-6` are SCHEDULED PRODUCERS, which is not only permitted but
   required ("production pipelines MUST be scheduled"); a producer that computes a ranking is not a monitor.
@@ -801,13 +828,19 @@ are the only roots, they are the two chains' heads, and both spawn at issuance (
 ### 13f. The round axis, updated
 
 - **ROUNDS 1-4:** terminal, frozen. 28 of 28 orders complete; round 4 CLOSED at L10 @`959ba3e947`.
-- **ROUND 5 (v5, THE SURFACE ROUND, 8 cells, 2 chains):** roots `AMGT-rd-1` and `AMGT-rd-2` spawn at
-  issuance (TABLES FIRST).
-  **CHAIN A (3 cells, slot ~1):** `rd-1` -> `rd-3` -> `rd-4`.
-  **CHAIN B (5 cells, slot ~2):** `rd-2` -> {`rd-5`, `rd-6`, `rd-7`} -> `rd-8`, the three middles
-  serialized in that slot's queue and `rd-8` handed last because it converges all three.
-  **`fanout: 2 of 2 chains, cap 8.`** N = M = 2: asking for more workers than there are independent
-  chains buys nothing and serializes anyway.
+- **ROUND 5 (v5, THE SURFACE ROUND) -- AMENDED 2026-09-11 ~18:4xZ: SIX cells, was EIGHT.**
+  `rd-3` and `rd-4` are SUPERSEDED by the harvest estate (PRD v0.5 @`5517e071e8`); CHAIN A is therefore
+  `rd-1` ALONE and terminal. The round did not lose coverage -- `C-HARVESTER-COMPUTE` and
+  `C-VENDOR-WORD-HARVESTERS` are RE-HOMED, see 13c(i) and 13d.
+  **AS ISSUED (the historical record, not the current shape):** roots `rd-1` and `rd-2` spawned at issuance
+  (TABLES FIRST); CHAIN A was `rd-1` -> `rd-3` -> `rd-4`; CHAIN B `rd-2` -> {`rd-5`, `rd-6`, `rd-7`} ->
+  `rd-8`; `fanout: 2 of 2 chains, cap 8`.
+  **AS IT STANDS:** `rd-1`, `rd-2`, `rd-5`, `rd-6` terminal; `rd-7` in flight; `rd-8` last, converging
+  `rd-5`/`rd-6`/`rd-7`.
+  ⚠ **`rd-7` WAS RE-SLOTTED ~2 -> ~7 AND `rd-6` ~2 -> ~6, BOTH BY COMMITTED AMENDMENT BEFORE THEIR SPAWNS**
+  (@`b67133bd80`, @`f3501860e8`). The queue positions were an ISSUER choice about worker slots, not edges in
+  the dependency set; the edges are unchanged. The serial is part of the `<paths>` GRANT under RULING 1, so
+  it moves in the FILE and never only in a spawn prompt.
 - WARN: **THE ROUNDS ARE A READING OF THE EDGES, NOT A SECOND SOURCE OF TRUTH.** If a cell lands early the
   next becomes cuttable early; the edges govern, the round numbers describe.
 - **AFTER ROUND 5:** `REALIZED` still requires a PERSON to have exercised each surface. Round 5 makes that

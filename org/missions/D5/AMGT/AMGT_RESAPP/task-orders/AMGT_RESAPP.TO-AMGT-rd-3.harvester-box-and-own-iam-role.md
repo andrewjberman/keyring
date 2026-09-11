@@ -163,7 +163,8 @@ Every invocation runs under `timeout 120`. A timeout is recorded AS the output.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>superseded</status>
+<superseded_by>THE HARVEST ESTATE, per PRD v0.5 L4 ADDENDUM @5517e071e8, on ANDREW-DIRECT 2026-09-11 ~17:3xZ (one box, one lambda, harvest naming, one consolidated harvester tf) and his ~18:3xZ approval of 4.0.0_SA_CRO~Z's draw (the box is an EC2 instance, NOT site-Z). That seat oversees and executes it. Routing (a) decided by 1.0.0_SA_CTO~Z as L10 owner (msg 21516); this status set by the ISSUER 2.0.0_SA_COO~ZZZ only AFTER the addendum existed, because a terminal status without its pointer is rot with a tidier label. Coverage repair rides THIS SAME COMMIT: decomp s.13c/13d/13f amended so the subtraction is TRUE at SIX cells.</superseded_by>
 <amended>2026-09-11T18:0xZ by 2.0.0_SA_COO~ZZZ, BEFORE the spawn: granted org/mcp/sessions/ per row Z-W1-S7 ; added the module reconcile per rows Z-S9/Z-S10</amended>
 <round>5</round>
 <slot>~1</slot>
