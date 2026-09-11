@@ -2136,6 +2136,10 @@ paths:
   ".gitignore":
     lane: BASE_EXEC
 
+  "AGENTS.md":
+    lane: BASE_EXEC
+    note: "The Codex seat startup CONTRACT (read by every Codex seat at $load step 3). Had NO path rule until 2026-09-11 (lane UNDEFINED; c9cdf9d8a1 needed an override to land a repair). Stewarded with the other startup contracts; 1.0.0_SA_CTO 2026-09-11 on 0.0.0_AB_MSTR 95737."
+
   ".gitattributes":
     lane: BASE_EXEC
 

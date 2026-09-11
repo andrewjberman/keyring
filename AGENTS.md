@@ -44,6 +44,11 @@ ID, stop old helpers, then exit the old TUI; its `codex.exe` writer must close
 before the shared-host launcher can resume that thread.
 
 At the beginning of every active turn, sweep the canonical root-level inbox for
-the full suffixed serial. A message from CRO Base is an immediate Go unless its
-body explicitly says hold: read the exact file, ACK and begin, act, and only
-then move that exact file into `read/`.
+the full suffixed serial. A message is an immediate Go, whoever sent it, when it
+names a task order in your own `task_orders/` home issued by `2.0.0_SA_COO` (or
+its lane), or when it triggers an act the spine assigns to your seat by name (the
+L1 brief, the L4-R PRD sign-off, the L8 compile, L9 adjudication and L10 slug --
+`org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md`, owner table), unless its body
+explicitly says hold: read the exact file, ACK and begin, act, and only then move
+that exact file into `read/`. Any other ask is information or is routed back to
+its sender; no sender serial makes a message a Go by itself.
