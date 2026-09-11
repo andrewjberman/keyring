@@ -328,3 +328,28 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 <!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/to-pos-override-audit.log|baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\#-#-#T#Z\org_to-pos-override-audit.log -->
 - log: org/to-pos-override-audit.log
 - detail: baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\2026-09-11T103259Z\org_to-pos-override-audit.log
+
+## 2026-09-11T224547Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/pipescript-suite-gate-audit.log|baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\#-#-#T#Z\org_pipescript-suite-gate-audit.log -->
+- log: org/pipescript-suite-gate-audit.log
+- detail: baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\2026-09-11T224403Z\org_pipescript-suite-gate-audit.log
+
+## 2026-09-11T224547Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/surface-check-ack-audit.log|baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\#-#-#T#Z\org_surface-check-ack-audit.log -->
+- log: org/surface-check-ack-audit.log
+- detail: baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\2026-09-11T224403Z\org_surface-check-ack-audit.log
+
+## 2026-09-11T224547Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/mcp/comp-detect-gate-override.log|baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\#-#-#T#Z\org_mcp_comp-detect-gate-override.log -->
+- log: org/mcp/comp-detect-gate-override.log
+- detail: baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\2026-09-11T224403Z\org_mcp_comp-detect-gate-override.log
+
+## 2026-09-11T224547Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/mcp/log-open-ok-override.log|baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\#-#-#T#Z\org_mcp_log-open-ok-override.log -->
+- log: org/mcp/log-open-ok-override.log
+- detail: baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\2026-09-11T224403Z\org_mcp_log-open-ok-override.log
+
+## 2026-09-11T224547Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/jq-ban-override-audit.log|baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\#-#-#T#Z\org_jq-ban-override-audit.log -->
+- log: org/jq-ban-override-audit.log
+- detail: baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\2026-09-11T224403Z\org_jq-ban-override-audit.log
