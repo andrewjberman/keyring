@@ -982,3 +982,44 @@ portal vintages was read; S3 names the one pocket of portal that remains unmeasu
   }
 ]
 ```
+
+
+---
+
+## Row appended by `2.0.0_SA_COO~Z` at L7 (the bar/hazard grain gap), 2026-09-11
+
+One row from the issuer, synthesising two worker findings that neither cell could state alone:
+`AT3-s-2` and `AT3-s-3` each measured a collapse OUTSIDE the artifact `AT3-s-5`'s bar reads, so a
+GO from the bar would be true and insufficient. Filed rather than fixed -- step (2) is L4's and the
+spec is frozen mid-round.
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S6",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-11T22:14:46Z",
+    "one_line": "THE BAR CANNOT SEE EITHER MEASURED COLLAPSE. Step (2) is read at the SERVED ARTIFACT (positioning_data.json), but AT3-s-2 measured the frontend collapsing to two classes DOWNSTREAM of it, and AT3-s-3 measured a sibling chain misweighting on a DIFFERENT artifact. So AT3-s-5 can return GO while a retagged holding renders nowhere and a sibling zeroes its policy weight -- the retag's own gate is narrower than the hazard.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE BAR'S GRAIN, VERBATIM FROM PRD v0.5 s.4 step (2) @49ddcc481d: 'for EVERY ticker in the retag set, the SERVED asset_class value equals its ratified five-class label AND its allocation weight is NON-ZERO and equal to its pre-retag weight, READ FROM THE SERVED ARTIFACT.' The served artifact is positioning_data.json, written by yang-generate-positioning. That is the whole of what TO-T5-1 is instructed to read.",
+        "COLLAPSE SITE 1, DOWNSTREAM OF THAT ARTIFACT (AT3-s-2 / W11-S1, worker 0.9.0_WK_POSN_ASTTAX~11): portal/src/pages/Positioning/tabs/HoldingsTab.tsx:1392-1394 iterates a HARDCODED two-value list -- `const assetClassOrder = ['Fixed Income', 'Equity']` then `.filter(ac => groupedHoldings[ac])`. A group keyed Commodities/Structured/Alternatives is NEVER ITERATED: the row renders NOWHERE while its weight stays in the grand total. The worker measured 42 of 42 consumers and returned the verdict COLLAPSES, 12 sites across 8 files.",
+        "AND THAT EXACT BUG HAS ALREADY SHIPPED ONCE, which is why this is not hypothetical: the same file documents it at :1364-1372 for the value `Cash`, measured on PROD v2.1.167 -- PFDE 90 -> 89 served-vs-DOM rows, subtotals summing 99.98 under a grand total of 100.01. The remedy folded only Cash and Hedge. A retag reproduces the identical failure with a new value.",
+        "COLLAPSE SITE 2, ON A DIFFERENT ARTIFACT ENTIRELY (AT3-s-3 / W12-S2, W12-S3, worker 0.9.0_WK_POSN_ASTTAX~12): yang-generate-allocation-summary survives Commodities through all its hops and then draws policy_weight 0.0 from a fixed two-key BENCHMARK_ALLOCATIONS, rendering `bet` equal to the row's entire weight (measured: style_weight=10.0 policy_weight=0.0 bet=10.0). Four two-class-shaped sites change behaviour silently at five classes. That chain writes holdings_attribution_data.json -- NOT positioning_data.json -- so the bar's artifact does not contain it.",
+        "THE ASYMMETRY THE WORKER NAMED, and it is the mechanism: 'Data reaches three lambdas; the code hardening reaches one.' AT3-s-1's write surface is a single code path (yang-generate-positioning/lambda_function.py). The RETAG's data reaches the siblings through a second door -- consumer B imports ETFClassifier directly (:33/:39/:582) and all three checked-in copies of etf_classifications_dynamodb.py are byte-identical (md5 e62906eff240a853029181715fc9b451). Hardening one producer does not protect the other two consumers of the same registry.",
+        "SO THE DISCRIMINATOR FAILS IN THE DIRECTION THAT MATTERS: a bar read strictly at positioning_data.json can return GO while (a) the page drops the row entirely and (b) a sibling chain misweights it. The bar is not wrong about what it measures; it is measuring a strictly smaller surface than the hazard occupies. NEGATIVE CONTROL, stated: if both collapse sites were INSIDE positioning_data.json, the bar would catch them -- the gap is the artifact boundary, not the bar's logic."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.5 s.4 step (2), as re-founded @49ddcc481d, states the retag's gate as a CONDITION read FROM THE SERVED ARTIFACT, and the round-3 decomposition makes AT3-s-5 that gate: AT3-s-6 fires on its GO.",
+    "world_is": "Two collapse sites were measured this round and NEITHER is inside the served artifact the bar reads. The frontend one is downstream of it (portal HoldingsTab, a hardcoded two-value order list, with the identical bug already shipped for Cash on PROD v2.1.167). The sibling one is on a different artifact entirely (holdings_attribution_data.json). A GO from AT3-s-5 would therefore be TRUE about positioning_data.json and INSUFFICIENT for the retag.",
+    "notes": "WHY THIS IS A ROW AND NOT AN EDIT: the spec and the decomposition are FROZEN mid-round (Rule 27), and step (2) is L4's -- `1.0.0_SA_CTO~Z` owns it. I am not widening a bar I do not own, and I am not re-cutting AT3-s-5's criteria after issuance. Pitched to the CTO as a spec/scope call per /drive obligation 7, citing this row.\nWHAT I WILL DO WITH IT REGARDLESS, so nothing waits on the pitch: as the seat that spawns AT3-s-6, I will NOT spawn it on a bare GO from AT3-s-5 while this row is ARMED. The decomposition already requires AT3-s-2 and AT3-s-3 terminal before the retag -- both now are, and both returned findings that say the retag is unsafe downstream of the generator. Their being terminal is a precondition, never a clearance.\nMY RECOMMENDATION, offered and not taken: widen step (2)'s bar at L4 to name the RENDERED surface and the sibling chain, or state explicitly that the retag is deferred until those two surfaces carry five classes. Either is honest; a GO measured only at positioning_data.json is not.\n\u26a0 LIMIT ON MY OWN CLAIM: AT3-s-2 disclosed that what it measured is SOURCE AT A PIN, never EXERCISED -- no build, no render, no diff against the deployed bundle. Its PROD corroboration is for `Cash`, not for `Commodities`. So the frontend collapse is strongly evidenced and NOT observed in a DOM, and this row does not upgrade it."
+  }
+]
+```
