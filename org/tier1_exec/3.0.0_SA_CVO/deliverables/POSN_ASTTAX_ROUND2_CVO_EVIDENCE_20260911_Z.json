@@ -1,0 +1,129 @@
+{
+  "measured_at": "2026-09-11T17:14:35.901488+00:00",
+  "head": "cbf8c145fc9420e8fa0fed8ed37bc717e410d905",
+  "orders": [
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S1-1.unknown-is-not-equity.md",
+      "status": "complete",
+      "proof": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~6/POSN_ASTTAX.TO-S1-1.unknown-is-not-equity.proof_of_spec.json"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S1A-1.which-one-place-survives-the-seed.md",
+      "status": "complete",
+      "proof": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~1/POSN_ASTTAX.TO-S1A-1.which-one-place-survives-the-seed.proof_of_spec.json"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md",
+      "status": "staged",
+      "proof": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~5/POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.proof_of_spec.json"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md",
+      "status": "staged",
+      "proof": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~7/POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.proof_of_spec.json"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S4-1.blank-sub-asset-class-rows.md",
+      "status": "complete",
+      "proof": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~8/POSN_ASTTAX.TO-S4-1.blank-sub-asset-class-rows.proof_of_spec.json"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S5-1.management-style-placeholder.md",
+      "status": "complete",
+      "proof": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~3/POSN_ASTTAX.TO-S5-1.management-style-placeholder.proof_of_spec.json"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S6-1.harden-the-generator.md",
+      "status": "complete",
+      "proof": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~2/POSN_ASTTAX.TO-S6-1.harden-the-generator.proof_of_spec.json"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S7-1.verify-the-five-class-chain.md",
+      "status": "complete",
+      "proof": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~4/POSN_ASTTAX.TO-S7-1.verify-the-five-class-chain.proof_of_spec.json"
+    }
+  ],
+  "proof_checks": [
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~6/POSN_ASTTAX.TO-S1-1.unknown-is-not-equity.proof_of_spec.json",
+      "rc": 0,
+      "expected_ids": "S1-AC1, S1-AC2, S1-AC3, S1-AC4, S1-AC5, S1-AC6",
+      "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=POSN_ASTTAX dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 2b07a3431409f95f3ba768ad2a9ac431f66a9e55 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D4\\POSN\\POSN_ASTTAX\\task-orders\\POSN_ASTTAX.TO-S1-1.unknown-is-not-equity.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md)\n  alignment-frame: decomp id space = 7 distinct cell id(s) in org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 5 PENDING co-committed (POST-COMMIT: touched by the instance commit c34eab85dc) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 5 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 1 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for POSN_ASTTAX; mode ENFORCE -- governing TO is under the TREE root (org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S1-1.unknown-is-not-equity.md)\nVALID (rc=0)\n"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~1/POSN_ASTTAX.TO-S1A-1.which-one-place-survives-the-seed.proof_of_spec.json",
+      "rc": 0,
+      "expected_ids": "S1a-AC1, S1a-AC2, S1a-AC3, S1a-AC4, S1a-AC5, S1a-AC6, S1a-AC7, S1a-AC8, S1a-AC9, S1a-AC11, S1a-AC12, S1a-AC10",
+      "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=12 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=POSN_ASTTAX dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 9039bdd977f30de562020eddea5de916b7dad861 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D4\\POSN\\POSN_ASTTAX\\task-orders\\POSN_ASTTAX.TO-S1A-1.which-one-place-survives-the-seed.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round1.md)\n  alignment-frame: decomp id space = 1 distinct cell id(s) in org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round1.md\n  alignment-forward-1 (criterion -> cell): 12/12 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 2 PENDING co-committed (POST-COMMIT: touched by the instance commit 6bed191b42) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 2 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for POSN_ASTTAX; mode ENFORCE -- governing TO is under the TREE root (org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S1A-1.which-one-place-survives-the-seed.md)\nVALID (rc=0)\n"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~8/POSN_ASTTAX.TO-S4-1.blank-sub-asset-class-rows.proof_of_spec.json",
+      "rc": 0,
+      "expected_ids": "S4-AC1, S4-AC2, S4-AC3, S4-AC4, S4-AC5",
+      "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=5 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=POSN_ASTTAX dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 2b07a3431409f95f3ba768ad2a9ac431f66a9e55 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D4\\POSN\\POSN_ASTTAX\\task-orders\\POSN_ASTTAX.TO-S4-1.blank-sub-asset-class-rows.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md)\n  alignment-frame: decomp id space = 7 distinct cell id(s) in org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md\n  alignment-forward-1 (criterion -> cell): 5/5 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 4 PENDING co-committed (POST-COMMIT: touched by the instance commit 95e59e1408) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 1 s3_object (not a git ref; skipped) -- denominator 5 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 5 entries; 5 open with a row id; 5 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for POSN_ASTTAX; mode ENFORCE -- governing TO is under the TREE root (org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S4-1.blank-sub-asset-class-rows.md)\nVALID (rc=0)\n"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~3/POSN_ASTTAX.TO-S5-1.management-style-placeholder.proof_of_spec.json",
+      "rc": 0,
+      "expected_ids": "S5-AC1, S5-AC2, S5-AC3, S5-AC4, S5-AC5, S5-AC6",
+      "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=POSN_ASTTAX dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit fd9f8ba9a4 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D4\\POSN\\POSN_ASTTAX\\task-orders\\POSN_ASTTAX.TO-S5-1.management-style-placeholder.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md)\n  alignment-frame: decomp id space = 7 distinct cell id(s) in org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit eec92c9cf2) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 1 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 4 entries; 4 open with a row id; 4 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for POSN_ASTTAX; mode ENFORCE -- governing TO is under the TREE root (org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S5-1.management-style-placeholder.md)\nVALID (rc=0)\n"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~2/POSN_ASTTAX.TO-S6-1.harden-the-generator.proof_of_spec.json",
+      "rc": 0,
+      "expected_ids": "S6-AC1, S6-AC2, S6-AC3, S6-AC4, S6-AC5, S6-AC6, S6-AC7",
+      "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=7 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=POSN_ASTTAX dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 2b07a3431409f95f3ba768ad2a9ac431f66a9e55 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D4\\POSN\\POSN_ASTTAX\\task-orders\\POSN_ASTTAX.TO-S6-1.harden-the-generator.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md)\n  alignment-frame: decomp id space = 7 distinct cell id(s) in org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md\n  alignment-forward-1 (criterion -> cell): 7/7 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 5 PENDING co-committed (POST-COMMIT: touched by the instance commit 7f247caae0) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 5 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 1 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 5 entries; 5 open with a row id; 5 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for POSN_ASTTAX; mode ENFORCE -- governing TO is under the TREE root (org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S6-1.harden-the-generator.md)\nVALID (rc=0)\n"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~4/POSN_ASTTAX.TO-S7-1.verify-the-five-class-chain.proof_of_spec.json",
+      "rc": 0,
+      "expected_ids": "S7-AC1, S7-AC2, S7-AC3, S7-AC4, S7-AC5, S7-AC6",
+      "output": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=POSN_ASTTAX dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 2b07a3431409f95f3ba768ad2a9ac431f66a9e55 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D4\\POSN\\POSN_ASTTAX\\task-orders\\POSN_ASTTAX.TO-S7-1.verify-the-five-class-chain.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md)\n  alignment-frame: decomp id space = 7 distinct cell id(s) in org/missions/D4/POSN/POSN_ASTTAX/decompositions/POSN_ASTTAX_DECOMP_round2.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 5 PENDING co-committed (POST-COMMIT: touched by the instance commit 8a911af2d7) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 5 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 5 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 3 entries; 3 open with a row id; 3 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for POSN_ASTTAX; mode ENFORCE -- governing TO is under the TREE root (org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S7-1.verify-the-five-class-chain.md)\nVALID (rc=0)\n"
+    }
+  ],
+  "L10_terminal_precondition": {
+    "open_tos": [
+      [
+        "POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged]",
+        "POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]"
+      ],
+      8,
+      ""
+    ],
+    "violations": [
+      "POSN_ASTTAX-Z-W4-S3: NEW remediation row (None) while 2 of 8 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+    ],
+    "rechecked_at": "2026-09-11T17:27:29Z",
+    "head": "5c9e329a21719e7bf386646cdd01334cd5028294",
+    "production_census": [
+      [
+        "POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged]",
+        "POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]"
+      ],
+      8,
+      ""
+    ],
+    "red_control": [
+      "POSN_ASTTAX-Z-C-S29: NEW remediation row (the slug) while 2 of 8 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+    ],
+    "terminal_only_positive_control": [],
+    "positive_control_scope": "Injected empty open-order set only; the real orders were not changed."
+  },
+  "instrument_corrections": [
+    {
+      "time": "2026-09-11T17:20:13.562312+00:00",
+      "test": "S1a proof coverage",
+      "rejected_measurement": "Unanchored expected_criteria regex matched a prose mention and supplied body text as IDs. Initial INVALID was an instrument error, not a worker defect.",
+      "correction": "Anchor opening expected_criteria tag at line start; actual declared list has 12 IDs."
+    }
+  ],
+  "channel_census": {
+    "investigations": 25,
+    "raw_armed": 15,
+    "prior_adjudications": 3,
+    "previously_dispositioned": [
+      "POSN_ASTTAX-Z-W1-S1"
+    ],
+    "initial_undispositioned": 24
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "s3_metadata": {
+    "AcceptRanges": "bytes",
+    "LastModified": "2026-09-11T13:01:27+00:00",
+    "ContentLength": 148526,
+    "ETag": "\"367fba76d3537fae874bd7db6c23279f\"",
+    "ChecksumCRC32": "7AXsxg==",
+    "ChecksumType": "FULL_OBJECT",
+    "VersionId": "HQYvt1tnqm7Z5XApTZThUwAL273jJtF5",
+    "ContentType": "application/json",
+    "ServerSideEncryption": "AES256",
+    "Metadata": {}
+  },
+  "bucket": "opal-data-portal-v2",
+  "key": "platinum/etfs/positioning_data.json",
+  "version_id": "HQYvt1tnqm7Z5XApTZThUwAL273jJtF5",
+  "selected": [
+    {
+      "path": "$.portfolios.IDVZ.holdings[33]",
+      "row": {
+        "ticker": "ICT",
+        "name": "International Container Terminal Services Inc",
+        "asset_class": "Equity",
+        "sub_asset_class": "Industrials",
+        "industry_group": "Transportation",
+        "industry_group_basis": "observed",
+        "weight": 0.0169,
+        "fee": null,
+        "aum": 1988560.0546,
+        "yield": 1.812183,
+        "duration": null,
+        "credit": null,
+        "beta": 1.087115,
+        "active": 1,
+        "returns": {
+          "1D": 1.2308,
+          "WTD": 5.618,
+          "MTD": 11.5255,
+          "1M": -0.9033,
+          "QTD": 10.8991,
+          "1Q": 10.6504,
+          "YTD": 78.5005,
+          "1Y": 106.9725
+        }
+      }
+    },
+    {
+      "path": "$.portfolios.IDVZ.holdings[39]",
+      "row": {
+        "ticker": "MER",
+        "name": "Manila Electric Co",
+        "asset_class": "Equity",
+        "sub_asset_class": "Utilities",
+        "industry_group": "Utilities",
+        "industry_group_basis": "observed",
+        "weight": 0.0105,
+        "fee": null,
+        "aum": 541004.4043,
+        "yield": 4.899167,
+        "duration": null,
+        "credit": null,
+        "beta": 0.711179,
+        "active": 1,
+        "returns": {
+          "1D": -1.0309,
+          "WTD": 3.8961,
+          "MTD": 4.3478,
+          "1M": 0.4918,
+          "QTD": -13.683,
+          "1Q": -14.2845,
+          "YTD": -11.9159,
+          "1Y": -5.495
+        }
+      }
+    },
+    {
+      "path": "$.portfolios.PFDE.holdings[89]",
+      "row": {
+        "ticker": "2602335D",
+        "name": "TPG Inc",
+        "asset_class": "Equity",
+        "sub_asset_class": "Financials",
+        "industry_group": "Financial Services",
+        "industry_group_basis": "observed",
+        "weight": 0.0,
+        "fee": null,
+        "aum": null,
+        "yield": null,
+        "duration": null,
+        "credit": null,
+        "beta": null,
+        "active": 1,
+        "returns": {
+          "1D": null,
+          "WTD": null,
+          "MTD": null,
+          "1M": null,
+          "QTD": null,
+          "1Q": null,
+          "YTD": null,
+          "1Y": null
+        }
+      }
+    }
+  ]
+}

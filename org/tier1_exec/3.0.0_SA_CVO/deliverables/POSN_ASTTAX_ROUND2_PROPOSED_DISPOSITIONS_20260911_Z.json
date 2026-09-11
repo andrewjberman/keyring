@@ -1,0 +1,127 @@
+{
+  "status": "DRAFT_NOT_ISSUED_L10_BLOCKED",
+  "reason": [
+    "POSN_ASTTAX-Z-C-S29: NEW remediation row (the slug) while 2 of 8 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+  ],
+  "proposed_dispositions": [
+    {
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-09-11T17:27:29Z",
+      "id": "POSN_ASTTAX-Z-C-S13",
+      "one_line": "The source seeder builds every shared item from code maps and unconditionally batch.put_item writes it. Current six passive registry values can be replaced with unknown/hedge on a manual run. PRD C-CLASSIFIER-PURPOSE makes the TABLE authoritative: the row sentence making the module the source of truth is rejected. Reconcile or retire the stale writer under a new cell; do not add a scheduler. Z-S4 bounds the trigger to deliberate invocation, not automatic recurrence.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disposition": "DECOMP_INVALIDATING",
+      "adjudicates": [
+        "POSN_ASTTAX-Z-W3-S1"
+      ],
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-W3-S1",
+          "The source seeder builds every shared item from code maps and unconditionally batch.put_item writes it. Current six passive registry values can be replaced with unknown/hedge on a manual run. PRD C-CLASSIFIER-PURPOSE makes the TABLE authoritative: the row sentence making the module the source of truth is rejected. Reconcile or retire the stale writer under a new cell; do not add a scheduler. Z-S4 bounds the trigger to deliberate invocation, not automatic recurrence."
+        ]
+      },
+      "spec_asserts": "POSN_ASTTAX.TO-S5-1 (cell AT2-s-5) asserts that setting management_style to the factually correct value on the six served hedge rows makes those rows safe to hold, and scopes the fix to the DynamoDB registry rows alone; the round-2 chain (AT2-s-6 hardening, AT2-s-5 style, AT2-s-2 retag) treats the registry as the durable place a correction lands.",
+      "world_is": "The source seeder builds every shared item from code maps and unconditionally batch.put_item writes it. Current six passive registry values can be replaced with unknown/hedge on a manual run. PRD C-CLASSIFIER-PURPOSE makes the TABLE authoritative: the row sentence making the module the source of truth is rejected. Reconcile or retire the stale writer under a new cell; do not add a scheduler. Z-S4 bounds the trigger to deliberate invocation, not automatic recurrence.",
+      "notes": "Evidence reviewed at 5c9e329a21719e7bf386646cdd01334cd5028294. Historical worker measurements are attributed to their row/proof; only the separately saved CVO controls and service reads are claimed as newly executed. Proposed DECOMP_INVALIDATING: remedy requires a cell absent from the round-2 decomposition. Evidence review is complete, but the existing terminal-task-order gate refuses that formal disposition while S2-1/S3-1 are staged. UNDER_INVESTIGATION remains mechanically visible; no closed-L9 claim.",
+      "disarm_owner": "2.0.0_SA_COO~Z"
+    },
+    {
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-09-11T17:27:29Z",
+      "id": "POSN_ASTTAX-Z-C-S18",
+      "one_line": "A 500-hit census within the cone left 29577 files, including portal, unreadable. It does not cover the explicitly named frontend-contract hop. Add a readable frontend verification cell with exact consumer paths at recut. Current source-only controls cannot prove deployed UI behavior.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disposition": "DECOMP_INVALIDATING",
+      "adjudicates": [
+        "POSN_ASTTAX-Z-W4-S2"
+      ],
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-W4-S2",
+          "A 500-hit census within the cone left 29577 files, including portal, unreadable. It does not cover the explicitly named frontend-contract hop. Add a readable frontend verification cell with exact consumer paths at recut. Current source-only controls cannot prove deployed UI behavior."
+        ]
+      },
+      "spec_asserts": "TO-S7-1's act names a frontend contract as one of the hop classes the trace must cover ('a value can be carried by a dict key, a comparison chain, a schema field or a frontend contract, and each is a separate hop'), and S7-AC1 asks for a census whose count equals its denominator.",
+      "world_is": "A 500-hit census within the cone left 29577 files, including portal, unreadable. It does not cover the explicitly named frontend-contract hop. Add a readable frontend verification cell with exact consumer paths at recut. Current source-only controls cannot prove deployed UI behavior.",
+      "notes": "Evidence reviewed at 5c9e329a21719e7bf386646cdd01334cd5028294. Historical worker measurements are attributed to their row/proof; only the separately saved CVO controls and service reads are claimed as newly executed. Proposed DECOMP_INVALIDATING: remedy requires a cell absent from the round-2 decomposition. Evidence review is complete, but the existing terminal-task-order gate refuses that formal disposition while S2-1/S3-1 are staged. UNDER_INVESTIGATION remains mechanically visible; no closed-L9 claim.",
+      "disarm_owner": "2.0.0_SA_COO~Z"
+    },
+    {
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-09-11T17:27:29Z",
+      "id": "POSN_ASTTAX-Z-C-S19",
+      "one_line": "The pinned S7 source measured 17 hops: 3 survive, 14 drop, 0 raise. Later S1 changes repair a benchmark hop, so that count is historical. Current actual-function controls still serialize Commodities and Structured as Unknown while Equity is carried correctly. Retag remains NO-GO. Page-renders S2-AC5 cannot discriminate this broken world; chain repair requires a cell absent from the round-2 verification-only cut.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disposition": "DECOMP_INVALIDATING",
+      "adjudicates": [
+        "POSN_ASTTAX-Z-W4-S3"
+      ],
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-W4-S3",
+          "The pinned S7 source measured 17 hops: 3 survive, 14 drop, 0 raise. Later S1 changes repair a benchmark hop, so that count is historical. Current actual-function controls still serialize Commodities and Structured as Unknown while Equity is carried correctly. Retag remains NO-GO. Page-renders S2-AC5 cannot discriminate this broken world; chain repair requires a cell absent from the round-2 verification-only cut."
+        ]
+      },
+      "spec_asserts": "TO-S2-1 asserts the retag's failure mode is a KeyError that kills the generator and blanks the positioning page, and gates its own safety on that tell -- S2-AC5 verifies the retag by confirming the page still renders.",
+      "world_is": "The pinned S7 source measured 17 hops: 3 survive, 14 drop, 0 raise. Later S1 changes repair a benchmark hop, so that count is historical. Current actual-function controls still serialize Commodities and Structured as Unknown while Equity is carried correctly. Retag remains NO-GO. Page-renders S2-AC5 cannot discriminate this broken world; chain repair requires a cell absent from the round-2 verification-only cut.",
+      "notes": "Evidence reviewed at 5c9e329a21719e7bf386646cdd01334cd5028294. Historical worker measurements are attributed to their row/proof; only the separately saved CVO controls and service reads are claimed as newly executed. Proposed DECOMP_INVALIDATING: remedy requires a cell absent from the round-2 decomposition. Evidence review is complete, but the existing terminal-task-order gate refuses that formal disposition while S2-1/S3-1 are staged. UNDER_INVESTIGATION remains mechanically visible; no closed-L9 claim.",
+      "disarm_owner": "2.0.0_SA_COO~Z"
+    },
+    {
+      "project": "POSN_ASTTAX",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-09-11T17:27:29Z",
+      "id": "POSN_ASTTAX-Z-C-S21",
+      "one_line": "Pinned HEAD seed-etf-constituents main preserves every existing row by default, including blank fields. The versioned upstream object contains all three sector values; the live table now matches. A new cell must reconcile missing-field filling with preservation of curated values. Current upstream correctness does not prove it was correct for all 17 historical days. An unrelated uncommitted edit to this script was excluded from this read.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disposition": "DECOMP_INVALIDATING",
+      "adjudicates": [
+        "POSN_ASTTAX-Z-W8-S2"
+      ],
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/investigations/INVESTIGATION_v1.md@5c9e329a21719e7bf386646cdd01334cd5028294#POSN_ASTTAX-Z-W8-S2",
+          "Pinned HEAD seed-etf-constituents main preserves every existing row by default, including blank fields. The versioned upstream object contains all three sector values; the live table now matches. A new cell must reconcile missing-field filling with preservation of curated values. Current upstream correctness does not prove it was correct for all 17 historical days. An unrelated uncommitted edit to this script was excluded from this read."
+        ]
+      },
+      "spec_asserts": "TO-S4-1 frames the three blanks as the registry's own coverage gap to be filled by hand, and the round-1 analysis it quotes treats 282-of-285 as a property of the registry.",
+      "world_is": "Pinned HEAD seed-etf-constituents main preserves every existing row by default, including blank fields. The versioned upstream object contains all three sector values; the live table now matches. A new cell must reconcile missing-field filling with preservation of curated values. Current upstream correctness does not prove it was correct for all 17 historical days. An unrelated uncommitted edit to this script was excluded from this read.",
+      "notes": "Evidence reviewed at 5c9e329a21719e7bf386646cdd01334cd5028294. Historical worker measurements are attributed to their row/proof; only the separately saved CVO controls and service reads are claimed as newly executed. Proposed DECOMP_INVALIDATING: remedy requires a cell absent from the round-2 decomposition. Evidence review is complete, but the existing terminal-task-order gate refuses that formal disposition while S2-1/S3-1 are staged. UNDER_INVESTIGATION remains mechanically visible; no closed-L9 claim.",
+      "disarm_owner": "1.0.0_SA_CTO~Z"
+    }
+  ],
+  "remaining_remedy_topics": [
+    "The +10/+30 prose shift is real. Z-S2 reviewed all six sibling orders and found 0 offset-based navigations in 28 criterion invocations, with the S6 order as a positive control. Operational exposure is disarmed; stale historical prose is not silently rewritten.",
+    "The worker recorded the missing org/modules/graph import and a pinned scratch import workaround. Later cone widening restores this instance; the general worktree-dependent Python gate remains a tooling concern for CTO, outside the POSN recut. Do not represent the missing historical scratch directory as a currently reproducible environment.",
+    "The missing filesystem schema refusal is attributed to the standing-corpus schema reader. Worker rows passed object-store schema validation, but that is a different execution path. Z-S5 provides later actual commit evidence for the repaired cone; the tooling class remains with CTO.",
+    "The omitted org/projects directory caused the registry census failure. Z-S3 measured 360 register rows after widening; Z-S5 records four later worker commits and drains with the gates running. The complete-but-uncommitted claim is historical: the S6 proof now resolves at 7f247caae0.",
+    "The recorded override suppressed six violations under one reason; a single SURPRISE_ROW_OVERRIDE boolean is commit-wide. Correct row contents and later clean merges do not make that escape reason-scoped. CTO retains the tooling concern; no override is used in this review.",
+    "Fresh consistent-read scan confirms all six passive values still carry 2026-08-18 attribution. The single-attribute write complied with the order; the resulting attribution is stale. Correct the provenance bound when the existing registry-write cell is recut. Do not falsify old dates or blame the worker for obeying its write grant.",
+    "The initial cone check exercised no new surprise rows; a new-row commit reached an omitted schema path. Z-S5 records four commits eec92c9cf2/8a911af2d7/95e59e1408/c34eab85dc and their drains after the cone correction. This instance is remediated, while the general filesystem-reader issue remains in W2-S4.",
+    "Positive evidence establishes VXX in current core LT/ULT and the served positioning payload. A zero over 4346 keys in one bucket does not establish that Satellites 70/80/90/98 lack VXX elsewhere. Accept the core exposure and require the PRD/brief location claim to name its measured plane; reject the global satellite-absence inference. Holdings and weights are not a POSN write surface.",
+    "Worker evidence isolates the module-level while false-undefined diagnostic with function-scope and for-loop controls. The worker refactoring cleared its immediate commit; the checker behavior remains a CTO tooling concern. This review does not claim a new independent execution of those historical checker probes.",
+    "Current PROOF_OF_SPEC kind enum has nine members and no DynamoDB item kind. The S4 instance openly substitutes s3_object, which the checker skips for git resolution; VALID does not make the datastore an S3 object. Consolidates W3-S3. CTO owns the standard concern outside the POSN recut.",
+    "The relative predecessor path fails from repository root and resolves from the project deliverables directory. That is execution-context ambiguity, not proof of an unfinished predecessor. The proof resolves S6 code at 7f247caae0; future issuance must pin an explicit cwd or repo-relative path. Keep this defect distinct from S2-AC5 passing on a silent misclassification.",
+    "The claimed absence of an L10 terminality refuser is falsified by the existing surprise-row-gate implementation and its executed predicate."
+  ],
+  "two_unrun_orders": [
+    "POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged]",
+    "POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]"
+  ],
+  "scope": "No task order, PRD, deployed code or live registry write is authorized by this review. CTO is the sole slug recipient once the precondition is resolved."
+}

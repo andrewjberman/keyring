@@ -1,0 +1,10 @@
+{
+ "note": "25 investigation items compiled; six proof instances VALID and six judgment grades recorded in ADJUDICATION_v2. Four proposed DECOMP_INVALIDATING dispositions remain pending on the existing terminal-order gate; L9 and L10 are not complete. Round two remains seven cells, five executed and two staged.",
+ "prd_pin": "f5d38390682b",
+ "prd_version": "v0.5",
+ "project": "POSN_ASTTAX",
+ "round": 2,
+ "signed_by": "3.0.0_SA_CVO~Z",
+ "stage": "L8",
+ "utc": "2026-09-11T17:28Z"
+}
