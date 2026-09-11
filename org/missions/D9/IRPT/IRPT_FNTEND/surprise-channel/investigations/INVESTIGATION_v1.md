@@ -702,6 +702,73 @@
     "spec_asserts": "A worker's write grant is its <paths> block; the workspace gitlink `portal` is not in any grant, and the workspace push (MSTR's) does not carry the portal repo.",
     "world_is": "The portal worktree sits INSIDE the workspace worktree's `portal/` directory, so any workspace commit that stages the gitlink records whatever commit the portal worktree is at -- a worker-branch commit that no remote holds until the portal branch is merged AND DEV is pushed. Two of nine worker commits did so; the mechanism that swept the gitlink into their pathspec is not yet measured. The pointer is safe today only because the push happened; the guard is stated in the faces and applied at the drain.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S9",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-11T05:05:00Z",
+    "one_line": "F10-AC10 required rendering TabShell (and, transitively, AnalysisTab/HoldingsTab) through renderToStaticMarkup; state/hooks.ts's three useSyncExternalStore calls (FE-s-3) were built with only a client getSnapshot, which React THROWS on under any SSR-style render (\"Missing getServerSnapshot\") -- a pre-existing FE-s-3 gap no earlier cell's test surfaced because no test before FE-s-10 rendered TabShell via renderToStaticMarkup. Fixed by adding the same function as the third argument on all three calls (the store carries no browser-only state, so one function answers both planes); this edits state/hooks.ts, which TO-FE-s-10's BOUNDS names only state/selection.ts (switchFirm) as the granted seam.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal (worker branch wk-irpt_fntend-1-6-fe-s-10, uncommitted) src/pages/InvestorReporting/state/hooks.ts, PRE-FIX -- useSelection/useSlice/useDroppedLate each called useSyncExternalStore(subscribe, getSnapshot) with no third argument",
+        "measured on this worker's branch: bun test src/pages/InvestorReporting/__tests__/fe-s-10/tabs-mounted.test.ts against the pre-fix file -- 5 fail, every failure 'Missing getServerSnapshot, which is required for server-rendered content', thrown from useSyncExternalStore inside TabShell (tabs/TabShell.tsx:165, TabShell -> useSlice)",
+        "portal HEAD 164c1b1a (this order's starting point) -- no __tests__ file anywhere under InvestorReporting imports TabShell.tsx before this worker's own tabs-mounted.test.ts, confirmed by a name search over __tests__/",
+        "post-fix: the same invocation -- bun test src/pages/InvestorReporting/__tests__/fe-s-10/tabs-mounted.test.ts -- 5 pass, 0 fail; bun test src/pages/InvestorReporting -- 236 pass, 1 skip, 0 fail"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-10 BOUNDS: \"Edits inside header/, state/, tabs/*/ and export/ are limited to the named export seams; a needed change beyond them is a surprise row on the owning cell.\" The named state/ seam is exactly \"state/selection.ts gains switchFirm(next)\" -- state/hooks.ts is not named.",
+    "world_is": "F10-AC10's own invocation (\"renderToStaticMarkup of TabShell with the active tab analysis... and with holdings...\") cannot execute at all while state/hooks.ts calls useSyncExternalStore with two arguments -- the render throws before either tab's marker can appear, regardless of anything this order's own granted files do. The fix is a two-line, backward-compatible addition (a third argument identical to the second) inside state/, the same folder the BOUNDS already grant; no external behaviour changes on the client plane, which is the only plane FE-s-3's own tests exercise.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S10",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-11T05:20:00Z",
+    "one_line": "F10-AC8's ui-smoke run for a firm-scoped (--firm 49financial) session prints LOC /market (not /investor-reporting) with rc=0 as the WORKER FACE anticipated ('DID NOT LAND ... a route carrying a query string') -- but the actual cause, confirmed with the query string REMOVED, is portal/src/lib/firmAccess.ts's FIRM_ALLOWED_PATHS matrix, which does not list '/investor-reporting' for ANY partner firm (49financial, inflection, cottonwood or demo) -- ProtectedRoute's firm-matrix guard (portal/src/components/ProtectedRoute.tsx:57-59) bounces every partner-firm session to /market for this route today, independent of Global mode, independent of the query string, and outside every IRPT_FNTEND cell's <paths> so far.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "worker run: node scripts/ui-smoke.mjs \"investor-reporting?firm=global\" ... --firm 49financial --fixtures .../fe-s-10-one-firm.json -- LOC /market, FIXTURES 0 of 4 matched (the resolve-scope fixture never served because the route never rendered)",
+        "diagnostic re-run, query string removed: node scripts/ui-smoke.mjs \"investor-reporting\" ... --firm 49financial -- SAME result, LOC /market, 0 of 4 fixtures matched -- isolates the cause away from the query string the WORKER FACE named",
+        "portal/src/lib/firmAccess.ts @164c1b1a -- FIRM_ALLOWED_PATHS entries for '49financial', 'inflection', 'cottonwood', 'demo' each enumerated explicitly; '/investor-reporting' is absent from all four sets",
+        "portal/src/components/ProtectedRoute.tsx:53-59 @164c1b1a -- 'if (!isPathAllowedForFirm(claims?.firmId, location.pathname)) return <Navigate to={FIRM_DEFAULT_LANDING} replace />'; portal/src/App.tsx:421 mounts <Route path=\"/investor-reporting\"> in a bare <ProtectedRoute> (no requireAdmin/requireInternal/requireDev), so this firm-matrix limb is the only gate reached",
+        "F10-AC8's own invocation still returned rc=0 (the mechanical bar it names) and the PNG (fe-s-10_firm_refused_1440.png) is saved as the recorded evidence"
+      ]
+    },
+    "spec_asserts": "This order's WORKER FACE: \"the ui-smoke `--firm <id>` flag renders a PARTNER session\" and \"ui-smoke prints `DID NOT LAND` for a route carrying a query string while rc=0 and the PNG is the evidence (F10-AC8 carries `?firm=global`)\" -- framing the expected DID-NOT-LAND print as a query-string artifact of the instrument, implying the PNG would otherwise show Investor Reporting's firm-scoped view.",
+    "world_is": "The PNG shows the Market Overview page, not Investor Reporting in any form -- a real client-side route redirect, reproduced identically with the query string removed. No partner firm has been onboarded to '/investor-reporting' in firmAccess.ts yet (consistent with IRPT_BCKEND's routes not existing yet, per api/endpoints/investor-reporting.ts's own docstring). F10-AC8's rc=0 bar is met and the PNG is exactly what a firm session gets today (no dropdown, no second firm, no IR content at all) -- but the redirect's CAUSE is this file, not the query string, and not anything FE-s-10 (or any IRPT_FNTEND cell to date) controls; onboarding the path is a firmAccess.ts edit outside every current cell's <paths>.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S14",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T07:05:00Z",
+    "one_line": "FE-s-10 drained (portal DEV 787015e8, workspace eada87592e; the whole Investor Reporting set reads 236 pass, 1 skip, 0 fail on DEV by the issuer's own run). Two worker rows read at the drain: W1-S9 (getServerSnapshot on the three stores in state/hooks.ts) is an edit inside the state/ folder the BOUNDS grant, needed for the criterion's own invocation to execute, accepted as in-grant; W1-S10 names a defect in THIS ISSUER'S FACE -- F10-AC8 attributed the expected DID-NOT-LAND print to the query string when the cause is portal/src/lib/firmAccess.ts listing no partner firm for /investor-reporting, so every firm session is redirected to /market today. That onboarding is a step no cell of this decomposition owns and no <paths> block grants; it is carried to L10 as round-2 scope together with W2-S2, W2-S3, W2-S4, W2-S6, W3-S2, W4-S2 and W1-S8 (1). Ten of eleven orders terminal; FE-s-11 seated on a fresh pair from e23ab5d9d4 / 787015e8.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal DEV @787015e8 -- bun test src/pages/InvestorReporting: 236 pass, 1 skip, 0 fail, 1137 expect() calls, 46 files (issuer's run after the merge, distinct from the worker's)",
+        "workspace @eada87592e -- proof-of-spec-check.py on the FE-s-10 instance: VALID rc=0, 11 acceptance rows, 0 violations; git show --format= e1314eb32b -- portal: empty (no gitlink in the worker's commit)",
+        "row IRPT_FNTEND-W1-S10 @eada87592e -- diagnostic re-run with the query string removed lands on /market identically; firmAccess.ts FIRM_ALLOWED_PATHS carries no /investor-reporting for 49financial, inflection, cottonwood or demo",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-11.design-conformity-census.md -- no --firm invocation; every fixture it names present under fixtures/smoke/ on DEV (5 of 5)"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-10 F10-AC8 face: the DID-NOT-LAND print is an artifact of a route carrying a query string; a firm-scoped session renders the Investor Reporting page with one firm and no dropdown.",
+    "world_is": "The print is a real client-side redirect from the firm access matrix, reproduced without the query string; no partner firm can reach the route today. The mechanical bar (rc=0) held and the PNG is faithful evidence of what a firm session gets, so the criterion stands as recorded; the face's explanation was wrong and the onboarding step is unowned.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

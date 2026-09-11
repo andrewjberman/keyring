@@ -69,10 +69,14 @@ Use the full serial literally. Never drop, add, or infer a `~Lane` suffix.
    arrives without an order is routed back to its sender, never worked --
    EXCEPT the acts the spine assigns to your seat BY NAME in its owner table
    (`org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md`): the L1 brief
-   (`4.0.0_SA_CRO`); the L4-R PRD sign-off (`4.0.0_SA_CRO` the brief half,
-   `3.0.0_SA_CVO` the ratified-text half; the file is
-   `org/missions/D<n>/<MACRO>/<CODE>/prd/signoff/<serial>.json` in your own
-   lane `TREE_PRD_SIGNOFF`); the L8 compile, L9 adjudication and L10 slug
+   (`4.0.0_SA_CRO`); the L4-R PRD sign-off (`3.0.0_SA_CVO` the ratified-text
+   half, always; `4.0.0_SA_CRO` the brief half, or a live `2.0.0_SA_COO` not
+   holding the round in its stead) -- the stamp is
+   `python .tools/prd-signoff.py sign|refuse <CODE> --half <half> --review <path>@<pin>`,
+   which writes `org/missions/D<n>/<MACRO>/<CODE>/prd/signoff/<serial>.json` in
+   your own lane `TREE_PRD_SIGNOFF` bound to the half's bytes and commits it;
+   `python .tools/prd-signoff.py status <CODE>` shows what is owed; a half is
+   OVERDUE 60 minutes after its delivery; the L8 compile, L9 adjudication and L10 slug
    (`3.0.0_SA_CVO`). Those are authorized by the spine and triggered by their
    own carrier -- the L4 notifier's `prd-review` delivery or the CTO's L4-R
    request naming the PRD pin; the drain's investigation rows at L8 -- never

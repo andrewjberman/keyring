@@ -320,7 +320,8 @@ project leaving DECOMP/EXECUTING/ROUND_CLOSE. Record:
 **WHY THESE TWO ROWS EXIST:** he observed the lanes were not driving and the markers agreed -- `~Z` last ticked
 480h before the arm and `~ZZ` had NEVER ticked. Neither lane had a `/drive` row in this table, so neither was at
 fault and no successor would have armed one;
-`1.0.0_SA_CTO` `/self-drive` D2 then D8 on Andrew's word via `0.0.0_AB_MSTR` (D2 under the pause above). A pause
+`1.0.0_SA_CTO` `/self-drive` D2 then D8 on Andrew's word via `0.0.0_AB_MSTR` (D2 under the pause above).
+`1.0.0_SA_CTO` **`/self-drive D9 IRPT` ARMED 2026-09-11 ~06:4xZ by Andrew-direct at the CTO terminal** ("run a /self-drive D9 IRPT, just checking in whats going on every 30 min, making sure that the ball isn't stuck in anybody's court ... Your loop is the only chance every 30m as an exogenous stimuli to get the fabric going if work is halted"): 30-minute ticks via ScheduleWakeup, scope IRPT_FNTEND + IRPT_BCKEND; each tick measures both lanes, the L4-R halves (`prd-signoff.py status`), the L10 slugs and the shared index, and clears a dead seat's index state; ends on both projects `status: complete` or his stand-down. A successor re-arms ONLY off this line. A pause
 or hold with no line here is re-armed by the next successor who reads only the ledger — so every one is listed.
 
 **Find a stale cron from a prior session? Cancel it:** `CronList` → `CronDelete`.

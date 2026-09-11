@@ -73,9 +73,20 @@ SIGNOFF_REVIEWERS = ("4.0.0_SA_CRO", "3.0.0_SA_CVO")
 SIGNOFF_RE = re.compile(r"^(org/missions/D(?:0|[1-9][0-9]?)/[^/]+/[^/]+/prd)/signoff/[^/]+\.json$")
 
 
+REVIEW_WINDOW_MINUTES = int(os.environ.get("PRD_REVIEW_WINDOW_MINUTES", "60"))   # spine v3.15: a half is OVERDUE after this
+
+
+def _lib():
+    import importlib.util as _ilu
+    _spec = _ilu.spec_from_file_location("prd_signoff_lib", os.path.join(os.path.dirname(os.path.abspath(__file__)), "prd_signoff_lib.py"))
+    _m = _ilu.module_from_spec(_spec)
+    _spec.loader.exec_module(_m)
+    return _m
+
+
 def _signed_serials(files, prd_version):
-    """PURE. `files` = {basename: parsed-json-or-None}. The base serials that SIGNED this exact prd_version;
-    a ~lane of a reviewer signs for its base serial; REFUSED, stale or unreadable files sign nothing."""
+    """PURE, kept for the selftest arms: base serials with a SIGNED file that is CURRENT under the legacy
+    (version-bound) rule. The live path is _evaluate_prd(); this is the v3.14 shape."""
     out = set()
     for name, doc in files.items():
         if not isinstance(doc, dict):
@@ -85,6 +96,24 @@ def _signed_serials(files, prd_version):
                 and str(doc.get("prd_version")) == str(prd_version):
             out.add(base)
     return out
+
+
+def _coo_lane_of(root, prd_rel):
+    try:
+        with open(os.path.join(root, os.path.dirname(os.path.dirname(prd_rel)), "project.json"), "r", encoding="utf-8") as fh:
+            return json.load(fh).get("coo_lane")
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def _evaluate_prd(root, prd_rel, prd_text=None):
+    """The lib's verdict on the PRD's working-tree bytes (post-commit: HEAD is checked out) and its sign-off dir."""
+    lib = _lib()
+    if prd_text is None:
+        with open(os.path.join(root, prd_rel), "r", encoding="utf-8", errors="replace") as fh:
+            prd_text = fh.read()
+    files = lib.read_signoff_files(os.path.join(root, os.path.dirname(prd_rel), lib.SIGNOFF_DIR))
+    return lib.evaluate(prd_text, files, coo_lane_of_project=_coo_lane_of(root, prd_rel))
 
 
 def _signoff_files(root, prd_rel):
@@ -101,8 +130,10 @@ def _signoff_files(root, prd_rel):
     return files
 
 
-def _missing_signoffs(root, prd_rel, prd_version):
-    return [r for r in SIGNOFF_REVIEWERS if r not in _signed_serials(_signoff_files(root, prd_rel), prd_version)]
+def _missing_signoffs(root, prd_rel, prd_version=None):
+    """The HALVES still owed on this PRD (half-bound, spine v3.15), as '<half> (<state>)' strings."""
+    r = _evaluate_prd(root, prd_rel)
+    return ["%s (%s)" % (h, r["halves"][h]["state"]) for h in _lib().missing_halves(r)]
 REOFFER_MINUTES = int(os.environ.get("PRD_NOTIFY_REOFFER_MINUTES", "30"))
 MAX_ATTEMPTS = int(os.environ.get("PRD_NOTIFY_MAX_ATTEMPTS", "6"))
 BROKER = "http://127.0.0.1:%s" % os.environ.get("OPAL_BROKER_PORT", "7800")
@@ -321,6 +352,37 @@ def _compose(row):
                 % (row["id"], row.get("route"), row.get("loop_target"), row.get("outcome_ref"), row["project"],
                    row.get("fabric"), row["sha"], row["path"], row.get("remedy"), act, _ACK_TAIL))
         return subject, body
+    if row.get("kind") in ("prd-review", "prd-nudge"):
+        half = row.get("half", "?")
+        what = ("ENDPOINT section verbatim against the ratified pins; every operative constraint present; no annotation, "
+                "history or seat name inside the section; CONTRACTS agrees with the counterpart PRD"
+                if half == "ratified-text" else
+                "every BRIEF COVERAGE entry carries its section's CONTENT into the consuming cell (fields, units, paths, "
+                "guards, proof gaps), not a pointer; the heading denominator matches the brief at the named pin; "
+                "corrections return by pinned line")
+        nudge = ""
+        if row.get("kind") == "prd-nudge":
+            nudge = ("OVERDUE: this half has been owed for %d minutes (window %d). Sign or refuse; a REFUSED with the "
+                     "review record is as good as a signature. 1.0.0_SA_CTO is copied.\n\n" % (int(row.get("overdue_min", 0)), REVIEW_WINDOW_MINUTES))
+        subject = "[L4-R %s] %s %s @%s -- sign or refuse the %s half%s" % (
+            "OVERDUE" if nudge else "REVIEW", row["project"], row["prd_version"], row["sha"][:10], half,
+            (" (in %s's stead)" % row["substitute_for"]) if row.get("substitute_for") else "")
+        body = ("L4-R SIGN-OFF (canonical loop, spine v3.15). This is the delivery of a PRD to its reviewer; it is a "
+                "spine-owned act of the seat addressed, and no task order exists or can for it.\n\n%s"
+                "  project      %s\n  prd_version  %s\n  half         %s\n  commit       %s\n  path         %s\n  brief_ref    %s\n  outcomes     %s\n"
+                "  half_hash    %s\n\n"
+                "THE REVIEW: %s.\n\n"
+                "THE STAMP (writes prd/signoff/<your serial>.json bound to this half's bytes and commits it):\n"
+                "  python .tools/prd-signoff.py sign   %s --half %s --review <review path>@<pin>%s\n"
+                "  python .tools/prd-signoff.py refuse %s --half %s --review <review path>@<pin> --reason \"<one line>\"\n"
+                "  python .tools/prd-signoff.py status %s      (what is owed, by whom)\n\n"
+                "WINDOW: %d minutes from this delivery; then a nudge with the CTO copied; a brief half still owed after two "
+                "windows is offered to a live COO instead. A later bump re-opens ONLY the half whose bytes changed.\n%s"
+                % (nudge, row["project"], row["prd_version"], half, row["sha"], row["path"], row.get("brief_ref"),
+                   ", ".join(row.get("outcomes") or []), str(row.get("half_hash") or "")[:12], what,
+                   row["project"], half, (" --for %s" % row["substitute_for"]) if row.get("substitute_for") else "",
+                   row["project"], half, row["project"], REVIEW_WINDOW_MINUTES, _ACK_TAIL))
+        return subject, body
     subject = "[PRD LANDED] %s %s @%s -- step 4 done; step 5 is yours" % (row["project"], row["prd_version"], row["sha"][:10])
     body = ("R3 NOTIFIER (canonical loop step 4 -> 5). This is a NOTIFICATION, not a dispatch: no TO is cut and "
             "no decomposition is started by it.\n\n"
@@ -332,8 +394,11 @@ def _compose(row):
 
 
 def _label(row):
-    return ("%s %s" % (row["id"], row.get("route")) if row.get("kind") == "route"
-            else "%s %s" % (row["project"], row.get("prd_version")))
+    if row.get("kind") == "route":
+        return "%s %s" % (row["id"], row.get("route"))
+    if row.get("half"):
+        return "%s %s [%s half -> %s]" % (row["project"], row.get("prd_version"), row["half"], row.get("to"))
+    return "%s %s" % (row["project"], row.get("prd_version"))
 
 
 def _notify(root, row):
@@ -402,16 +467,27 @@ def post_commit(root, at=None):
                     "outcomes": now_h.get("endpoint_outcomes"),
                     "from": os.environ.get("OPAL_AGENT_SERIAL", ""),
                     "attempts": 0, "msg_id": None, "sent_at": None, "history": []}
-        # L4-R: the two reviewers are notified on EVERY bump, unconditionally.
-        for reviewer in SIGNOFF_REVIEWERS:
-            r = dict(base_row, to=_seat(reviewer), history=[], kind="prd-review")
+        # L4-R (spine v3.15): each HALF still owed at the PRD's current bytes goes to the reviewer ROUTED for it
+        # (CVO always for ratified-text; CRO, or a live COO not holding the round, for brief). A half already
+        # SIGNED at these bytes is not re-asked -- a bump re-opens only what it changed.
+        lib = _lib()
+        ev = _evaluate_prd(root, rel, now_text)
+        live = lib.live_serials(root)
+        coo_lane = _coo_lane_of(root, rel)
+        for half in lib.missing_halves(ev):
+            to, why = lib.route_half(half, live, coo_lane_of_project=coo_lane)
+            r = dict(base_row, to=to, history=[], kind="prd-review", half=half, half_hash=ev["hashes"][half],
+                     route_reason=why)
+            if lib.base_serial(to) == lib.SUBSTITUTE.get(half):
+                r["substitute_for"] = lib.PRIMARY[half]
+            print("[prd-notify] %s @%s: %s half -> %s (%s)" % (rel, sha[:10], half, to, why))
             sent += _dispatch(root, state, r)
-        # L4-R: the COO is notified ONLY when both sign-offs exist at this prd_version.
-        missing = _missing_signoffs(root, rel, now_h["prd_version"])
+        # the COO is notified ONLY when both halves are SIGNED at these bytes.
+        missing = lib.missing_halves(ev)
         if missing:
-            print("[prd-notify] %s @%s: COO delivery WITHHELD (L4-R) -- awaiting SIGNED sign-off at %s from %s; "
+            print("[prd-notify] %s @%s: COO delivery WITHHELD (L4-R) -- halves still owed at %s: %s; "
                   "the L6 gate refuses a task order against it meanwhile"
-                  % (rel, sha[:10], now_h["prd_version"], ", ".join(missing)))
+                  % (rel, sha[:10], now_h["prd_version"], ", ".join("%s (%s)" % (h, ev["halves"][h]["state"]) for h in missing)))
         else:
             sent += _dispatch(root, state, dict(base_row, to=RECIPIENT, history=[]))
     # ---- L4-R: a sign-off landed in this commit -> re-check its PRD and release the COO delivery if complete ----
@@ -430,9 +506,9 @@ def post_commit(root, at=None):
             continue
         if not h:
             continue
-        missing = _missing_signoffs(root, prd_rel, h.get("prd_version"))
+        missing = _missing_signoffs(root, prd_rel)
         if missing:
-            print("[prd-notify] %s: sign-off recorded; COO delivery still WITHHELD for %s at %s -- awaiting %s"
+            print("[prd-notify] %s: sign-off recorded; COO delivery still WITHHELD for %s at %s -- still owed: %s"
                   % (so_rel, prd_rel, h.get("prd_version"), ", ".join(missing)))
             continue
         already = [r for r in state if r.get("kind") == "prd" and r.get("path") == prd_rel
@@ -513,11 +589,54 @@ def route_dryrun(root, sha):
     return 0
 
 
+def _overdue_halves(root, state, now):
+    """spine v3.15: for each OPEN prd-review row (any read state -- READ is not SIGNED), if its half is still owed
+    at the PRD's CURRENT bytes and the window has passed, emit a nudge (CTO copied); after two windows on the
+    brief half, re-route to a live COO. Returns rows to append. A row whose half is now SIGNED, or whose
+    half_hash no longer matches the PRD (a later bump re-asked it), is RETIRED by the caller."""
+    lib = _lib()
+    out = []
+    live = lib.live_serials(root, now)
+    for row in state:
+        if row.get("kind") != "prd-review" or not row.get("sent_at"):
+            continue
+        try:
+            ev = _evaluate_prd(root, row["path"])
+        except Exception:  # noqa: BLE001
+            continue
+        half = row.get("half")
+        if half not in lib.HALVES or ev["halves"][half]["state"] == "SIGNED" or ev["hashes"][half] != row.get("half_hash"):
+            row["_retire"] = "half %s now %s at current bytes" % (half, ev["halves"][half]["state"] if half in lib.HALVES else "?")
+            continue
+        age_min = (now - row["sent_at"]) / 60.0
+        windows = int(age_min // REVIEW_WINDOW_MINUTES)
+        if windows < 1 or row.get("nudged_windows", 0) >= windows:
+            continue
+        row["nudged_windows"] = windows
+        coo_lane = _coo_lane_of(root, row["path"])
+        to, why = lib.route_half(half, live, coo_lane_of_project=coo_lane, overdue=(half == "brief" and windows >= 2))
+        nudge = dict(row, kind="prd-nudge", to=to, route_reason=why, overdue_min=int(age_min), history=[],
+                     attempts=0, msg_id=None, sent_at=None)
+        if lib.base_serial(to) == lib.SUBSTITUTE.get(half):
+            nudge["substitute_for"] = lib.PRIMARY[half]
+        out.append(nudge)
+        out.append(dict(nudge, to=_seat("1.0.0_SA_CTO"), history=[]))
+        print("[prd-notify] OVERDUE %s %s half by %d min (window %d) -> nudge to %s (%s), CTO copied"
+              % (_label(row), half, int(age_min), windows, to, why))
+    return out
+
+
 def reoffer(root):
     state = _load_state(root)
     keep, retired, resent = [], 0, 0
     now = time.time()
+    for nudge in _overdue_halves(root, state, now):
+        resent += _dispatch(root, state, nudge)
     for row in state:
+        if row.get("_retire"):
+            retired += 1
+            print("[prd-notify] RETIRED %s -- %s" % (_label(row), row["_retire"]))
+            continue
         mid = row.get("msg_id")
         if mid and is_read(mid):
             retired += 1
@@ -610,6 +729,21 @@ def selftest(root):
     ok = bool(SIGNOFF_RE.match("org/missions/D9/IRPT/IRPT_BCKEND/prd/signoff/4.0.0_SA_CRO.json")) and \
         not SIGNOFF_RE.match("org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md")
     print("  %-7s SIGNOFF_RE matches prd/signoff/*.json and not the PRD itself" % ("OK" if ok else "DEFECT"))
+    fails += int(not ok)
+    # ---- L4-R v3.15: compose + routing, pure ----
+    _row = {"kind": "prd-review", "project": "X", "prd_version": "v1", "sha": "abcdef1234", "path": "p", "half": "brief",
+            "half_hash": "h" * 64, "outcomes": ["FWD-1"], "brief_ref": "b@1", "substitute_for": "4.0.0_SA_CRO"}
+    _subj, _body = _compose(_row)
+    ok = "sign or refuse the brief half" in _subj and "prd-signoff.py sign   X --half brief" in _body and "--for 4.0.0_SA_CRO" in _body and str(REVIEW_WINDOW_MINUTES) in _body
+    print("  %-7s _compose(prd-review): names the half, the stamp command, the substitution and the window" % ("OK" if ok else "DEFECT"))
+    fails += int(not ok)
+    _subj2, _body2 = _compose(dict(_row, kind="prd-nudge", overdue_min=75))
+    ok = "OVERDUE" in _subj2 and "owed for 75 minutes" in _body2
+    print("  %-7s _compose(prd-nudge): says OVERDUE and the minutes" % ("OK" if ok else "DEFECT"))
+    fails += int(not ok)
+    _lb = _lib()
+    ok = _lb.route_half("brief", {"2.0.0_SA_COO~F"}, coo_lane_of_project="2.0.0_SA_COO~B")[0] == "2.0.0_SA_COO~F"
+    print("  %-7s route_half: no CRO live -> a live COO not holding the round" % ("OK" if ok else "DEFECT"))
     fails += int(not ok)
     # ---- delivery, LIVE: delivered is not read (the RC7 property) ----
     try:
