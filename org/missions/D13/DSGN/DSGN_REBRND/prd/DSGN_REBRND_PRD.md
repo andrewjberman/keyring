@@ -1,0 +1,234 @@
+# DSGN_REBRND -- Portal Visual Elevation: the portal's visual layer brought onto the firm's measured design system under one written contract a reviewer can fail a page against
+
+```json
+{
+ "project": "DSGN_REBRND",
+ "directive": "D13",
+ "fabric": "laptop",
+ "prd_version": "v0.1",
+ "step": 4,
+ "brief_ref": "docs/briefs/portal-visual-elevation-brief-20260911.md@bed01b226a",
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
+ "status": "RATIFIED"
+}
+```
+
+Brief: `docs/briefs/portal-visual-elevation-brief-20260911.md` @`bed01b226a`, 32,300 bytes, 32 sections (ORIGIN; PART I with O1-O11; PART II; PART III; PART IV with IV.1-IV.11; PART V; PART VI; PART VII; APPENDIX A; REFS TO CARRY) + a 23-row measured defect inventory. Authored by `0.1.1_RD_MarketPerformance` on Andrew's direct word, adopted as the L1 input on that word; that seat is now `2.0.0_SA_COO~D` and leads this project. Endpoint of record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_D13_PORTAL_VISUAL_ELEVATION_20260911.md` (FWD-1..9 cut at brief `d4b20a28ba`; FWD-10, FWD-11 appended for the two outcomes the brief's completion commit inserted; FWD-9's number kept, its source re-pointed O9 -> O11). Directive D13 Design, LAPTOP; macro `DSGN` (LD-0552). Project minted `DSGN_PORTALVIS` at L3 and renamed `DSGN_REBRND` on Andrew's word the same hour.
+
+This is an EXECUTION-ONLY PRD: it names cells, contracts, paths, fixtures and the coverage map; it invents no number the brief did not measure, and it sequences nothing (sequencing is L5, `2.0.0_SA_COO~D`). Three of Andrew's rulings bind every cell: **the canvas is light `#F4F6FA` with `#0A1733` reserved for deliberate inverted bands** (supersedes the 2026-07-15 silver-canvas archetype); **the charts keep their colour** ("don't forego the color of the charts themselves" -- what goes quiet is the chrome); **nothing third-party is vendored** (the pinned manifest `design/SKILLS_MANIFEST.md` is the provenance carrier; Rule 14's universal gate makes upstream Python uncommittable, brief V.6).
+
+## ENDPOINT (step 2, /endpoint --forward)
+
+```
+  FWD-1  A prospect moving from the website into the portal does not experience a change of firm
+         DONE WHEN  EXERCISED -- one person who has never seen the portal is walked from opalinvest.com into a portal route and asked what changed
+         ACCEPT     the person names capability differences (it does more, it shows my data) and no visual ones; typeface, canvas colour, corner radius, focus visibility and the role of navy read as one system across the boundary
+         PROOF      the website's measured values (design/brand/opalinvest.com.json) beside the same measurements taken headlessly on three portal routes; every dimension in the brief's IV.3 table reads the same on both sides, or the difference is a deliberate inverted band
+         SOURCE     brief O1; IV.2 (the website is a measured system); IV.3 (the portal contradicts it on every dimension but shadows)
+         CONSTRAINT Andrew-direct 2026-09-11: THE CANVAS IS LIGHT #F4F6FA with #0A1733 reserved for deliberate inverted bands. This SUPERSEDES the 2026-07-15 archetype in design/brand/COLOR_ARCHETYPES.md and design/systems/portal/DESIGN_SYSTEM.md ("light silver #C3CADA canvas, dark navy containers floating on it"); those files are REWRITTEN under this project, never left standing beside a new contract
+
+  FWD-2  An advisor reads a figure without the typeface telling them it came out of a terminal
+         DONE WHEN  APPLIED -- every numeral in the product renders in the firm's typeface with tabular alignment
+         ACCEPT     an advisor reading a return, a value or a date cannot tell from its letterforms whether it came from the product or a developer's console, and columns of figures still line up
+         PROOF      the 222 font-mono occurrences at the cut are zero in portal/src/ or each remaining one is a code sample, not a figure; three routes rendered before and after with the figure columns compared by eye and by pixel alignment
+         SOURCE     brief O2; IV.3 (Numerals row); III.2
+         CONSTRAINT Lato self-hosted at the weights the website ships (400/700); the licence is VERIFIED before it is relied on (brief V.1 did not verify it)
+
+  FWD-3  An advisor reads the ORDER of an ordered scale off its colour, without a legend
+         DONE WHEN  APPLIED -- every ordered quantity in the product is one hue ramped light to dark
+         ACCEPT     shown a duration ladder, a performance band or an over/under-weight scale with the legend covered, an advisor puts the steps in the right order
+         PROOF      a census of every ordered scale in portal/src/ (denominator printed) and, for each, the ramp it now uses; the /positioning five-hue segmented control (UST/ST/INT/LT/ULT) is the named positive case
+         SOURCE     brief O3; III.4; VI (the five-hue segmented control)
+         CONSTRAINT the charts keep their colour: "don't forego the color of the charts themselves" (Andrew). What goes quiet is the chrome; a ramp replaces unordered hue on ORDERED quantities only
+
+  FWD-4  An advisor can tell at a glance which single thing on a screen is the action to take
+         DONE WHEN  APPLIED -- each view spends the accent on one primary action and nothing else
+         ACCEPT     on any screen an advisor points at the one thing that is clearly the action; tabs, segmented controls and toggles mark their active state by weight and rule, never by a filled accent chip per option
+         PROOF      three routes rendered; the accent colour's share of pixels per route printed and the elements carrying it enumerated -- one per view
+         SOURCE     brief O4; III.3; IV.2 (accent never above 1.0 % on the website)
+
+  FWD-5  An advisor working by keyboard can see where they are
+         DONE WHEN  APPLIED -- focus is visible on every interactive element, with the ring the website ships
+         ACCEPT     tabbing through any route, the advisor always sees which element is focused
+         PROOF      a keyboard walk of three routes recorded as screenshots at each stop; the `outline: none !important` at portal/src/index.css:166 is gone
+         SOURCE     brief O5; IV.3 (Focus ring row); III.9
+
+  FWD-6  A builder derives every visual decision from one written contract, and a reviewer can FAIL a page by citing its clause
+         DONE WHEN  EXERCISED -- one new page has been built from the contract alone by someone who has not seen the portal, and one page has been rejected by clause
+         ACCEPT     the contract resolves typeface, colour role, spacing, shape, elevation, focus and layout split; it is the file the estate's design tooling reads; a rejected page's author agrees the clause was violated without further argument
+         PROOF      the contract (portal/DESIGN.md, RATIFIED by the PRD, not the RD-authored draft as-is) and the token files it governs agree byte-for-byte on every value the contract names; the three token writers of brief V.2 are one; one build-from-contract and one rejection-by-clause are on record
+         SOURCE     brief O6; III.6; III.8; IV.4 (the token architecture is already correct); IV.5 (one writer is dead code); IV.7 (the estate already has the pattern; no parallel structure); IV.8 (DESIGN.md is the container the tooling reads)
+         CONSTRAINT populate and enforce the EXISTING design/ repository and the frontend-dev verification loop; a second design repository or a second verification mechanism is the shadow system the estate bans; the existing archetype documents are rewritten in place (FWD-1 CONSTRAINT)
+
+  FWD-7  A chart series is never painted in the colour the product reserves for "something is wrong"
+         DONE WHEN  APPLIED -- status colour and data colour are two separate token systems with no aliasing
+         ACCEPT     no series on any chart shares a colour with an error, warning or success state; a reviewer can show the two systems and where they are kept apart
+         PROOF      the aliasing at portal/src/index.css:111-115 is gone; every chart palette token and every status token listed with no intersection (both denominators printed)
+         SOURCE     brief O7; IV.3 (Chart colours aliased onto status)
+         CONSTRAINT the charts stay as colourful as today (Andrew's constraint carried on FWD-3)
+
+  FWD-8  Two charts on the same screen share their axis, tick, tooltip and legend treatment
+         DONE WHEN  APPLIED -- a screen's charts come from one rendering system
+         ACCEPT     an advisor looking at two charts on one screen sees one product, not two libraries
+         PROOF      the import census of brief IV.6 (four charting libraries: recharts 36 files, apexcharts 4, nivo 1, visx 1; two icon sets; two animation libraries) re-run after the change reads ONE charting library, ONE icon set, ONE animation library, with the migrated files enumerated
+         SOURCE     brief O8; IV.6
+         CONSTRAINT consolidation, never a fifth renderer; a chart that cannot be migrated without changing what it shows is a surprise row, not a quiet exception
+
+  FWD-9  Andrew puts the portal on screen beside an institutional competitor and the difference is not that ours looks generated
+         DONE WHEN  EXERCISED -- Andrew has made that comparison and said so
+         ACCEPT     the comparison turns on capability rather than on finish
+         PROOF      Andrew's word, on the record, after a side-by-side he chooses; graded by him, never self-graded
+         SOURCE     brief O11 at bed01b226a (this was O9 at d4b20a28ba; the brief's author inserted O9 and O10 and renumbered; this id is permanent) -- the outcome the other ten serve
+         CONSTRAINT this is the one outcome graded by the person it is for; FWD-1..8, FWD-10 and FWD-11 are its mechanism, and a grade of REALIZED on all ten does not substitute for his word here
+
+  FWD-10 An advisor's screen is filled by the work, not by the space around it
+         DONE WHEN  APPLIED -- on every route the density gradient runs generous inside a data container and disciplined between sections
+         ACCEPT     an advisor opening any route sees the content reach the fold, with less space between sections than inside a container; a page that has run out of content says so in words instead of trailing off into empty canvas
+         PROOF      the three routes of brief IV.9 re-rendered at 1440x900 WITH populated fixtures; the share of the viewport below the last content element printed before and after; the inside-container and between-section spacing values read from the contract and measured on the render
+         SOURCE     brief O9 (at bed01b226a); IV.9 (lower third empty; three nested containers); A17, A18
+         CONSTRAINT density is graded on populated fixtures only -- the brief's captures had none (VII.6), and a route whose data plane is failing is evidence of nothing either way; information architecture is out of scope (Part II): which panels exist does not change
+
+  FWD-11 An advisor meeting a panel with no data still sees a designed surface
+         DONE WHEN  APPLIED -- empty, loading, error and no-permission are four designed states and every panel uses one of them
+         ACCEPT     a panel with nothing to show still looks like part of the product, says in plain words which of the four things happened, never repeats its own message, and never paints an error on the bare page
+         PROOF      a census of every "nothing here" rendering in portal/src/ (denominator printed) and, for each, which of the four states it now uses; the six treatments of brief IV.9 shown before and after; the duplicated error string of A20 gone
+         SOURCE     brief O10 (at bed01b226a); IV.9; A19, A20
+         CONSTRAINT the four states belong to the contract, never to a component's author; the count of six from three routes is a floor (VII.11), so the census runs over the whole tree
+```
+
+## CELL CANDIDATES
+
+One row per candidate cell. The decomposition at L5 is `2.0.0_SA_COO~D`'s and may split, merge or re-sequence these; every brief section a row consumes is cited by heading so the coverage map can be checked against it. Cell ids are `R<n>` (REBRND). "Three routes" throughout means the brief's IV.9 set -- `/market`, `/positioning`, `/portfolio-management` -- rendered by `portal/scripts/ui-smoke.mjs` at 1440x900 against the dev server, with the fixtures column's data loaded; a route rendered against a failing data plane is evidence of nothing (brief VII.6).
+
+| cell | serves | brief sections consumed | contracts consumed (C) / produced (P) | paths: reuse | paths: new / rewrite | fixtures / evidence | acceptance clause draft |
+|---|---|---|---|---|---|---|---|
+| R1 the token spine: ONE writer, the measured values | FWD-1, FWD-6, FWD-7 (foundation for every colour cell) | IV.2; IV.4; IV.5; V.2; V.3; A3, A16, A22 | P `DesignTokens` (the brand JSON -> generated theme CSS chain) | `portal/design/brands/opal-capital.json` (the token architecture, "correct shape, wrong values"); `portal/design/themes/opal-capital.css` (generated; wired at `portal/src/main.tsx:7`); `portal/src/index.css` `:root` | rewrite: the brand JSON's values (canvas `#F4F6FA`, dark field `#0A1733`, navy `#163372` as text/hairline, accent `#5F3BE3`, radii 2/3/4px + pill, no drop shadow); delete: `portal/tailwind.config.js` (dead under Tailwind v4, `primary-500` in 0 files) | `design/brand/opalinvest.com.json` (the measured values, [3/3] rows) | exactly ONE writer of every token value survives (the brand JSON, through its generator); `src/index.css` `:root` consumes and never redefines a value the JSON carries; the dead Tailwind config is deleted, not left; every value the contract (R7) names is byte-equal to the JSON's; the existing dark theme survives as the user-selectable toggle (V.3) with its own values in the same JSON |
+| R2 typography: Lato self-hosted, tabular numerals, the mono census to zero | FWD-2, FWD-1 | O2; IV.2 (Lato 400/700 only; letter-spacing normal); IV.3 Typeface + Numerals rows; III.2; V.1; A1, A2 | C `DesignTokens` | `docs/research/investor_reporting_export_20260910/FONT_LICENSE.txt` (Lato, SIL Open Font License 1.1 -- the licence text is IN the estate; V.1's "not verified" is closed by this file, and the cell confirms the woff2 files it ships are covered by it) | new: self-hosted Lato woff2 at 400/700 under `portal/public/fonts/` with the OFL text beside them; rewrite: `portal/src/index.css:16` (the Inter import goes) and `:142` (the body face) | the 222-occurrence `font-mono` census (denominator re-run at the cut); three routes before/after with figure columns compared | no external font request on any route; body and numerals are Lato; numerals carry `font-variant-numeric: tabular-nums` through ONE token; the `font-mono` census reads ZERO in `portal/src/` or every remaining occurrence is a code sample, enumerated; column alignment no worse than before (pixel comparison on the three routes) |
+| R3 canvas and surfaces: light canvas, navy as ink, inverted bands, nesting collapsed, native controls | FWD-1, FWD-10 (partial) | O1; IV.2 (canvas share 56-67 %; dark field 20-31 %; navy 0.2-0.4 %); IV.3 Canvas, Navy, Radius, `color-scheme` rows; IV.9 (three nested containers; native `<select>`); V.3; A3, A4, A12, A16, A17 | C `DesignTokens` | `portal/src/index.css:52` (`--bg-page`), `:132` (`color-scheme: dark`); the panel primitives under `portal/src/ui/components/panels/` | rewrite: the three-tier navy nesting collapses to canvas + ONE container level, with `#0A1733` bands enumerated per route as deliberate inversions; `color-scheme` follows the canvas; the Fund selector and every native control styled | three routes before/after; contrast ratios computed for text-on-canvas and text-on-band (denominator = text token pairs; brief VII.4 computed none) | the resolved canvas on every route is `#F4F6FA` (ui-smoke prints it); navy appears as text and hairline only, never as a container fill; every dark band is on the enumerated list with its reason; no route nests more than one visible container inside another; no native unstyled control renders; every text/background pair meets the contract's stated minimum contrast; dark mode is the toggle, never the residue of a declaration (III.7) |
+| R4 ordered scales: one hue, ramped | FWD-3 | O3; III.4; IV.9 (the five-hue duration ladder); IV.11 (ordered data in ordered colour); A9; `deck_generation/DESIGN_BIBLE.md` B1 (dark-to-light traversal, the estate's precedent) | C `DesignTokens` (the ramp tokens R1 defines) | `deck_generation/DESIGN_BIBLE.md` (precedent only, unchanged) | rewrite: every ordered scale in `portal/src/` onto a single-hue ramp; the `/positioning` `UST/ST/INT/LT/ULT` control is the named positive case | census of every ordered quantity in `portal/src/` (denominator printed: duration ladders, performance bands, over/under-weight scales, the gauge arc) | each ordered quantity uses ONE hue ramped light-to-dark; legend-covered, the order is readable; the census names every scale and its ramp; chart series that are NOT ordered keep their colour (Andrew's constraint) |
+| R5 accent rationing and one set of controls | FWD-4 | O4; III.3; IV.2 (accent <= 1.0 %); IV.9 (five button idioms; chartreuse; rainbow gauge; underlined headers); A7, A8, A10, A21, A23 | C `DesignTokens` | `portal/src/index.css:69` (`--sentiment-chartreuse`), `:171` (`::selection`) | rewrite: one control vocabulary (primary / secondary / ghost / segmented) in the existing component set; active state by weight and rule; chartreuse retired from chrome (it may survive INSIDE a chart series only under R4/R8's palette); the Fear & Greed arc becomes an R4 ramp; column-header underlines removed (DESIGN_BIBLE C4); `::selection` on the accent | three routes; accent pixel share per route printed | each route carries the accent on exactly ONE primary action, enumerated; no filled accent chip per option in any tab, toggle or segmented control; no colour off the brand-derived palette is the loudest thing on a page; the five idioms of `/positioning` are one set |
+| R6 focus: visible everywhere, the website's ring | FWD-5 | O5; IV.2 (focusVisible true; the 2px purple ring is the site's only box-shadow); IV.3 Focus ring row; III.9; A11 | C `DesignTokens` (the ring token) | `portal/src/index.css:166` | rewrite: `outline: none !important` deleted; one `:focus-visible` rule from the ring token; `prefers-reduced-motion` respected as the site does | keyboard walk of three routes, screenshot at every stop | every interactive element on the three routes shows the ring on keyboard focus; the walk's screenshots are on record; the system survives a raised browser default font size (III.9) on the same walk |
+| R7 THE CONTRACT and its gate: `portal/DESIGN.md` ratified, the archetype files rewritten in place, the review loop enforces by clause | FWD-6, FWD-1 (constraint) | O6; III.6; III.8; IV.7 (the estate already has the pattern; no parallel structure); IV.8 (DESIGN.md is what the tooling reads); IV.10 (the toolchain; `impeccable` reads DESIGN.md; `web-design-guidelines` is the review gate); V.7; VII.1 (the L2 read closed this gap); VII.8 (the draft carries no authority) | P `DesignContract` (`portal/DESIGN.md`) | `design/brand/COLOR_ARCHETYPES.md`; `design/systems/portal/DESIGN_SYSTEM.md`; `design/process/UI_VERIFICATION.md`; `portal/CLAUDE.md` "Color law" section; `.claude/skills/frontend-dev/SKILL.md`; `portal/scripts/ui-smoke.mjs`; `design/SKILLS_MANIFEST.md` | new: `portal/DESIGN.md` (YAML token front matter + prose, the shape IV.8 names; the RD draft at portal DEV `10236236` is INPUT where the lane can reach it, never authority -- it is ABSENT from this workspace's portal checkout at `787015e8`); rewrite IN PLACE: the three `design/` files and `portal/CLAUDE.md`'s colour law onto the light-canvas contract (never a second archetype beside the old); rewrite: `UI_VERIFICATION.md` + the frontend-dev loop gain a clause-cite step | the contract; the token JSON; one build-from-contract record; one rejection-by-clause record | the contract resolves typeface, colour role, spacing, shape, elevation, focus, density and layout split, each clause numbered; every value it names is byte-equal to R1's JSON; NO second design repository and NO second verification mechanism exist (a census of `design/`-like roots and of headless-render scripts, denominators printed); a worker subagent that has never seen the portal builds one new page from the contract alone and it lands inside the system; one page is rejected by clause number with the author's agreement on record; `ui-smoke.mjs` still prints the resolved canvas and the loop's review step cites clauses |
+| R8 status colour and data colour: two token families, disjoint | FWD-7, FWD-3 (constraint) | O7; IV.1 (the brand book has no state colours and no data palette -- the root cause); IV.3 Status colours + Chart colours rows; A5, A6 | P `DesignTokens` (the `--status-*` and `--data-*` families) | `portal/src/index.css:40-43` (the Argon template status set), `:111-115` (`--chart-1..5` aliased onto status); `portal/src/lib/modelPortfolioColors.ts` (the canonical model colours -- a DATA palette that already exists and is reused, not replaced) | rewrite: a brand-derived status family (success / danger / warning / info) and a data family with the chroma the charts have today; the aliasing deleted | both families listed with denominators; the intersection | no chart series token resolves to a status token; the two lists have an EMPTY intersection, both denominators printed; the charts are as colourful after as before (three routes side by side) |
+| R9 one rendering system: charting, icons, animation consolidated | FWD-8 | O8; IV.6 (recharts 36 files, apexcharts 4, nivo 1, visx 1; lucide 102, phosphor 1; framer-motion and motion both); A13, A14, A15 | C `DesignTokens` (axis, tick, tooltip, legend treatment from the contract) | `portal/package.json` (dependencies); the 36 recharts files (the incumbent) | rewrite: the 4 apexcharts, 1 nivo and 1 visx files onto the incumbent; the 1 phosphor file onto lucide; ONE of `framer-motion` / `motion` retained; the retired packages removed from `package.json`; one shared axis/tick/tooltip/legend treatment applied to every chart | the import census re-run (denominators per library); a chart that cannot migrate without changing WHAT it shows is a surprise row, never a quiet exception; ag-grid is a grid, not a renderer, and is named as out of this census | the census reads ONE charting library, ONE icon set, ONE animation library in `portal/src/` and `package.json`; the migrated files are enumerated; two charts on one screen share axis, tick, tooltip and legend treatment (three routes) |
+| R10 density: the work fills the screen | FWD-10 | O9; IV.9 (lower third empty; three nested containers); VI; A17, A18; Part II (information architecture is NOT in scope -- which panels exist does not change) | C `DesignContract` (the density clause: generous inside a container, disciplined between sections) | the panel primitives; the page layouts of the three routes | rewrite: spacing scale applied per the contract; a page that has run out of content ends with a designed terminator, not empty canvas | three routes WITH populated fixtures (`portal/.frontend-dev/testing/` fixtures where they exist; new fixture JSON where none does) | on each route the content reaches the fold with populated data; the share of viewport below the last content element printed before and after; between-section spacing < inside-container spacing on the render, read from the contract |
+| R11 empty, loading, error and no-permission: four designed states | FWD-11 | O10; IV.9 (the duplicated error string on the canvas; six treatments); A19, A20; `portal/CLAUDE.md` (canvas-level notices use dark text -- the existing law the duplicated string violates) | C `DesignContract` (the four-state clause) | the panel primitives' `PanelHeader actions` slot (portal/CLAUDE.md) | new: four state components in the existing component set; rewrite: every "nothing here" rendering onto them | census of every empty/loading/error/no-permission rendering in `portal/src/` (denominator printed); the six IV.9 treatments before/after | every panel with nothing to show uses exactly one of the four; the message says which in plain words; no message repeats itself; no error is painted on the bare canvas; the census enumerates every rendering and its state |
+| R12 the boundary exercise: measured parity and one person's walk | FWD-1 (proof) | O1; III.1; IV.2 (the measured system); IV.3 (the whole table); IV.10 (`taste` produced IV.2 -- the same extractor is run on the portal routes) | C `DesignContract` | `design/brand/opalinvest.com.{md,json}`; the `taste` extractor (third-party, gitignored, pinned in `design/SKILLS_MANIFEST.md`) | new: `design/brand/portal-routes.json` -- the same measurements taken on the three portal routes, beside the website's | the two JSON files; the walk's record | every dimension of the IV.3 table reads the same on both sides or the difference is an enumerated inverted band; one person who has never seen the portal is walked from opalinvest.com into a portal route and names capability differences and no visual ones, on record |
+| R13 Andrew's comparison: the side-by-side prepared, his word recorded | FWD-9 | O11; IV.11 (the comparator set is NOT measured, VII.10 -- no competitor site is captured under this PRD; a competitor capture is egress and needs his per-use word); III.5 | -- | -- | new: a one-page pack (the three routes rendered after R1-R11, with the before renders beside them) for him to put on screen beside a competitor HE chooses | the pack; his word | the pack exists and is handed to him; his comparison and his word are recorded verbatim in `org/tier1_exec/1.0.0_SA_CTO/deliverables/`; the grade is HIS -- a REALIZED on FWD-1..8, 10, 11 does not substitute for it |
+
+## CONTRACTS
+
+This project PRODUCES the portal's visual contract and the token chain that carries it; every portal page CONSUMES them. No cell redefines a brand constant the guidelines carry; the brief's measured website values are the source of every value that is not a brand constant.
+
+| contract | direction | shape | cells |
+|---|---|---|---|
+| `DesignContract` -- `portal/DESIGN.md` | **produced** (R7); consumed by every portal page, by `IRPT_FNTEND` (a CONSUMER, never a sub-scope: its round 1 grades design conformity against the v0.6 sources; later rounds inherit this contract through the token files), and by the design tooling that reads `DESIGN.md` (IV.8) | YAML front matter naming every token value + prose rationale; numbered clauses for typeface (Lato 400/700, tabular numerals), colour role (canvas `#F4F6FA`; dark field `#0A1733` as inverted bands only; navy `#163372` as text and hairline; accent `#5F3BE3`, one primary action per view; status family and data family disjoint; ordered scales as single-hue ramps), spacing and density (generous inside a container, disciplined between sections), shape (radii 2/3/4px + pill), elevation (no drop shadows; the focus ring is the only box-shadow), focus (`:focus-visible` ring), layout split, the four empty states, and the minimum text contrast it commits to | R7 produces; R1-R6, R8-R12 consume |
+| `DesignTokens` -- `portal/design/brands/opal-capital.json` -> generated `portal/design/themes/opal-capital.css` | **produced** (R1; families extended by R8); consumed by `portal/src/index.css` and every component | the existing brand-token architecture (IV.4: correct shape, wrong values) with its values replaced by the contract's; ONE writer; `palette`, `semantic`, `darkMode` as today, plus `status` and `data` families (R8) and ramp tokens (R4) | R1, R8 produce; R2-R6, R9-R11 consume |
+| brand constants -- `deck_generation/brand_spec/brand.json`, `deck_generation/brand/opal_brand_guidelines.pdf` | consumed, unchanged (the four brand colours and Lato; IV.1: the brand book specifies no neutral ramp, no data palette, no elevation, no density rule and no state colours -- this contract supplies those five) | -- | R1, R7, R8 |
+| the measured website -- `design/brand/opalinvest.com.json` | consumed, unchanged (every non-brand value's source, [3/3] rows) | -- | R1, R12 |
+| `design/SKILLS_MANIFEST.md` | consumed, unchanged (provenance of every third-party design skill; nothing vendored; a new third-party skill is a gitignore edit + a manifest row) | -- | R7, R12 |
+
+## PATHS
+
+| kind | path | cell | use |
+|---|---|---|---|
+| reuse | `portal/design/brands/opal-capital.json`; `portal/design/themes/opal-capital.css`; `portal/src/main.tsx:7` | R1 | the live token architecture; values swapped, shape kept |
+| reuse | `portal/src/index.css` (`:16`, `:40-43`, `:52`, `:69`, `:111-115`, `:132`, `:142`, `:166`, `:171` -- every line the brief cites, verified present at portal `787015e8`) | R1, R2, R3, R5, R6, R8 | the consumer of the tokens; each cited line is a named edit |
+| reuse | `portal/src/ui/components/panels/`; the `PanelHeader actions` slot | R3, R10, R11 | the panel primitives every surface change lands in |
+| reuse | `portal/src/lib/modelPortfolioColors.ts` | R8 | the canonical model colours, a data palette that already exists |
+| reuse | `portal/scripts/ui-smoke.mjs`; `.claude/skills/frontend-dev/SKILL.md`; `design/process/UI_VERIFICATION.md` | R7, every render | the existing verification loop (IV.7); gains a clause-cite step, never a second mechanism |
+| reuse | `design/brand/opalinvest.com.{md,json}` | R1, R12 | the measured website |
+| reuse | `docs/research/investor_reporting_export_20260910/FONT_LICENSE.txt` | R2 | Lato's SIL OFL 1.1 text, already in the estate |
+| reuse | `deck_generation/DESIGN_BIBLE.md` (B1 dark-to-light traversal; C4 underlined headers banned) | R4, R5 | precedent, unchanged |
+| reuse | `design/SKILLS_MANIFEST.md` and the gitignored skills it pins (`taste`, `impeccable`, `web-design-guidelines`, `theme-factory`) | R7, R12 | tooling; `ui-ux-pro-max` is reference lookup ONLY (it must not generate a system) |
+| rewrite | `design/brand/COLOR_ARCHETYPES.md`; `design/systems/portal/DESIGN_SYSTEM.md`; `design/process/UI_VERIFICATION.md`; `portal/CLAUDE.md` "Color law" | R7 | in place, onto the light-canvas contract; the 2026-07-15 archetype is superseded, never left standing beside the new one |
+| new | `portal/DESIGN.md` | R7 | the contract |
+| new | `portal/public/fonts/` (Lato woff2 400/700 + OFL) | R2 | self-hosted typeface |
+| new | four state components in the existing component set; `design/brand/portal-routes.json`; the FWD-9 pack | R11, R12, R13 | -- |
+| delete | `portal/tailwind.config.js`; the retired chart/icon/animation packages in `portal/package.json` | R1, R9 | dead code and duplicate renderers |
+
+## FIXTURES AND EVIDENCE
+
+| artifact | cell | proves / limits |
+|---|---|---|
+| `design/brand/opalinvest.com.json` (3 pages, 1440x900, 2026-09-11) | R1, R12 | the target values with [3/3] agreement; does NOT measure the portal |
+| brief IV.3 table and Appendix A (23 rows: A1-A6, A11-A16, A22-A23 code-wide; A7-A10, A17-A21 observed on one to three rendered pages, VII.12) | every cell | the defect set; a per-page row is not a product claim and the cells' censuses widen it to the tree |
+| `portal/scripts/ui-smoke.mjs` renders of the three routes, before and after, at 1440x900 | R2-R6, R8-R12 | visual evidence; the resolved canvas is printed; three of twenty-six routes (VII.2) -- the census cells cover the tree, the renders cover three |
+| populated fixtures (`portal/.frontend-dev/testing/*.json` where they exist; new ones where not) | R10, R11 | density and empty-state evidence; the brief's captures had a failing data plane (VII.6) |
+| the `font-mono`, ordered-scale, status/data, import and empty-state censuses, each with its denominator | R2, R4, R8, R9, R11 | coverage over `portal/src/`, never over three routes |
+| `docs/research/investor_reporting_export_20260910/FONT_LICENSE.txt` | R2 | Lato's licence text; the cell confirms the shipped woff2 files fall under it |
+| the build-from-contract page and the rejection-by-clause record | R7 | FWD-6's EXERCISED bar |
+| Andrew's recorded word after the side-by-side | R13 | FWD-9; graded by him, never self-graded |
+
+## BRIEF COVERAGE
+
+Denominator: **32 sections** of the brief at `bed01b226a` (ORIGIN; PART I heading + O1-O11; PART II; PART III; PART IV heading + IV.1-IV.11; PART V; PART VI; PART VII; APPENDIX A; REFS TO CARRY). Every entry maps to a cell and outcome or carries `NOT CONSUMED` with its reason. Unmapped entries: **0**. Appendix A's 23 defects are mapped separately below (23 of 23; 20 bear on an outcome, 3 are cleanup).
+
+| # | entry | consumed by | outcome |
+|---|---|---|---|
+| 1 | ORIGIN (Andrew's words; the three same-day rulings: light canvas, gitignored unlicensed skills + manifest, a registered project) | the preamble's three binding rulings; R1, R3, R7 | all |
+| 2 | PART I heading | structural | -- |
+| 3 | O1 no change of firm at the website boundary | R3, R2, R1, R12 | FWD-1 |
+| 4 | O2 figures in the firm's typeface | R2 | FWD-2 |
+| 5 | O3 order read off colour | R4 | FWD-3 |
+| 6 | O4 one action per screen | R5 | FWD-4 |
+| 7 | O5 keyboard focus visible | R6 | FWD-5 |
+| 8 | O6 one contract; reject by clause | R7 | FWD-6 |
+| 9 | O7 status and data colour separated | R8 | FWD-7 |
+| 10 | O8 one rendering system | R9 | FWD-8 |
+| 11 | O9 the screen filled by the work | R10 | FWD-10 |
+| 12 | O10 designed empty states | R11 | FWD-11 |
+| 13 | O11 Andrew's side-by-side | R13 | FWD-9 |
+| 14 | PART II boundary (owns the visual layer, tokens, typography, colour role, spacing/shape/elevation, focus, dependency consolidation, the contract, the gate; NOT data correctness, information architecture, routes/auth/API, deck_generation, opalinvest.com; siblings ADHC_DESIGN, IRPT_FNTEND, ADHC_MKOVFX, NFRA_REPORT) | the NOT-COMMISSIONED list below, read against every cell; R10's IA constraint; the CONTRACTS table's IRPT_FNTEND row; `ADHC_DESIGN` read CLOSED at L2 (finding 2) | all |
+| 15 | PART III the qualitative bar (9 statements) | the ACCEPT lines of the ENDPOINT section; III.7 -> R3 (dark mode is a toggle); III.9 -> R6 (raised font size) | all |
+| 16 | PART IV heading | structural | -- |
+| 17 | IV.1 the brand book cannot govern a dashboard | R8, R7 (the five things the contract supplies) | FWD-6, FWD-7 |
+| 18 | IV.2 the website is a measured system | R1 (the values), R12 (the comparison), R5 (accent share), R6 (the ring) | FWD-1, 4, 5 |
+| 19 | IV.3 the portal contradicts it on every dimension but one | the PATHS table's `index.css` row (every cited line); R1-R3, R5, R6, R8 | FWD-1, 2, 4, 5, 7 |
+| 20 | IV.4 the token architecture is correct, the values are wrong | R1 | FWD-1, FWD-6 |
+| 21 | IV.5 one writer is dead code | R1 (delete) | FWD-6 |
+| 22 | IV.6 dependency duplication | R9 | FWD-8 |
+| 23 | IV.7 the estate already has the pattern | R7 (no second repository, no second mechanism -- censused) | FWD-6 |
+| 24 | IV.8 DESIGN.md is what the tooling reads | R7 | FWD-6 |
+| 25 | IV.9 what three rendered routes showed | R3, R4, R5, R10, R11, R12 | FWD-1, 3, 4, 10, 11 |
+| 26 | IV.10 the toolchain now exists | R7, R12 (tooling roles; `ui-ux-pro-max` reference-only) | FWD-6, FWD-1 |
+| 27 | IV.11 the comparator set | R4 (ordered data in ordered colour); R13 (reference, NOT measured -- VII.10; no competitor capture under this PRD) | FWD-9 |
+| 28 | PART V what must be true (V.1 Lato licence -> R2, closed by the in-estate OFL text; V.2 three writers -> R1; V.3 light canvas settled, dark theme as toggle -> R1, R3; V.4 D13 LAPTOP -> the header; V.5 DEV-push freeze, MSTR pushes -> SURFACE MANIFEST; V.6 nothing vendored -> the preamble, R7; V.7 a reviewer-facing gate -> R7) | as listed | all |
+| 29 | PART VI status | NOT CONSUMED as work: not outcome-bearing; its measurements are carried by IV.9 and Appendix A | -- |
+| 30 | PART VII what this brief does not claim (12 items) | read as the NOT-CLAIMED list: VII.1 closed at L2; VII.2 three of twenty-six routes -> the census cells cover the tree; VII.3 responsive NOT COMMISSIONED beyond 1440x900; VII.4 contrast -> R3 computes it; VII.5 -> R2; VII.6 -> R10, R11 use populated fixtures; VII.7 not outcome-bearing; VII.8 -> R7 (draft is input, never authority); VII.9 no effort estimate here either; VII.10 -> R13; VII.11 -> R11's census; VII.12 -> FIXTURES row 2 | -- |
+| 31 | APPENDIX A measured defect inventory | the defect map below | -- |
+| 32 | REFS TO CARRY | NOT CONSUMED as work: a link list; each referent is consumed through the entry that cites it | -- |
+
+Defect map (Appendix A, 23 of 23): A1 -> R2; A2 -> R2; A3 -> R1, R3; A4 -> R3; A5 -> R8; A6 -> R8; A7 -> R5; A8 -> R5 (arc onto an R4 ramp); A9 -> R4; A10 -> R5; A11 -> R6; A12 -> R3; A13 -> R9; A14 -> R9; A15 -> R9 (cleanup); A16 -> R1, R3; A17 -> R3, R10; A18 -> R10; A19 -> R11; A20 -> R11; A21 -> R5; A22 -> R1 (cleanup, not causal); A23 -> R5. Cleanup rows A15 and A22 (and A21's cosmetic half) earn no outcome and are listed so the decomposition does not mistake them for work that does.
+
+**NOT COMMISSIONED** (brief Part II and Part VII, carried so no cell widens): data correctness or freshness (every capture ran against 401s); information architecture (which panels exist and what they show); route structure, auth, the backend API; `deck_generation/` (precedent only); `opalinvest.com` (the reference surface, never edited); a competitor capture (egress -- Andrew's per-use word); responsive and mobile behaviour beyond the 1440x900 bar; a second design repository, a second verification mechanism, a fifth chart renderer; vendoring any third-party skill code.
+
+## L2 FINDINGS CARRIED (from the endpoint record)
+
+1. The brief's largest declared gap (VII.1) is CLOSED at L2: the `design/` prior art was read; its 2026-07-15 archetype ("light SILVER canvas #C3CADA, dark navy containers floating on it", also `portal/CLAUDE.md`'s colour law) is SUPERSEDED by Andrew's 2026-09-11 ruling and those four files are R7's in-place rewrite targets. The verification loop is kept as-is and extended.
+2. `ADHC_DESIGN` does not collide: `org/projects/ADHC_DESIGN.json` reads `status: complete`, CLOSED 2026-04-21.
+3. `IRPT_FNTEND` is a consumer, not a sub-scope (CONTRACTS table).
+4. The register names a directive document that does not exist (`docs/architecture/D13_DESIGN_PRD.md`): `0.0.0_AB_MSTR`'s; surfaced, not this PRD's.
+5. Third-party design tooling is pinned, never vendored (`design/SKILLS_MANIFEST.md`, 7 repositories); the PRD relies on the manifest.
+6. (L4) The brief moved after L2: FWD-10 and FWD-11 appended; FWD-9 re-sourced to O11. `portal/DESIGN.md` (the RD draft) is ABSENT from this workspace's portal checkout at `787015e8`; R7 treats it as input where reachable and authority nowhere.
+
+## SURFACE MANIFEST
+
+Surfaces this project writes, reads, deletes or executes. Nothing here is deployed by this document. The portal is a submodule on `DEV`: workers commit in their own portal worktrees inside their workspace worktrees, `2.0.0_SA_COO~D` drains them, any active DEV-push freeze is respected, and a shared branch is pushed only by `0.0.0_AB_MSTR` on Andrew's word (brief V.5).
+
+| surface | kind | cell | owner |
+|---|---|---|---|
+| `portal/DESIGN.md` | new -- the contract | R7 | DSGN_REBRND |
+| `portal/design/brands/opal-capital.json`; `portal/design/themes/opal-capital.css` (generated) | rewrite -- the one token writer | R1, R8 | DSGN_REBRND |
+| `portal/src/index.css` (cited lines); `portal/src/main.tsx` | edit | R1, R2, R3, R5, R6, R8 | DSGN_REBRND |
+| `portal/public/fonts/` | new | R2 | DSGN_REBRND |
+| `portal/src/ui/components/panels/`; the control components; every file the R2/R4/R5/R9/R11 censuses name | edit | R3, R4, R5, R9, R10, R11 | DSGN_REBRND (visual layer only; behaviour and data untouched) |
+| `portal/package.json` | edit (retired packages removed) | R9 | DSGN_REBRND |
+| `portal/tailwind.config.js` | delete | R1 | DSGN_REBRND |
+| `portal/CLAUDE.md` "Color law" | rewrite in place | R7 | DSGN_REBRND |
+| `design/brand/COLOR_ARCHETYPES.md`; `design/systems/portal/DESIGN_SYSTEM.md`; `design/process/UI_VERIFICATION.md` (lane ANY) | rewrite in place | R7 | DSGN_REBRND |
+| `design/brand/portal-routes.json`; the FWD-9 pack | new | R12, R13 | DSGN_REBRND |
+| `.claude/skills/frontend-dev/SKILL.md`; `portal/scripts/ui-smoke.mjs` | edit (clause-cite step; canvas print kept) | R7 | DSGN_REBRND |
+| `design/brand/opalinvest.com.{md,json}`; `deck_generation/brand_spec/brand.json`; the guidelines PDF; `DESIGN_BIBLE.md`; `FONT_LICENSE.txt`; `design/SKILLS_MANIFEST.md` | read | R1, R2, R4, R5, R7, R8, R12 | their existing owners; reading never widens ownership |
+| the gitignored third-party skills the manifest pins | execute locally | R7, R12 | never committed |
+| `opalinvest.com`, any competitor site, the backend API, `deck_generation/` outputs, route/auth code | excluded | -- | -- |

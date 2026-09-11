@@ -4,10 +4,15 @@
 `0.1.1_RD_MarketPerformance` on Andrew's direct word, adopted as the L1 input on that word).
 **Directive:** D13 Design, LAPTOP (Andrew-ruled 2026-09-11). **Macro:** `DSGN` — RATIFIED by Andrew-direct 2026-09-11 ~07:1xZ at the
 `0.0.0_AB_MSTR` terminal ("First macro will be DSGN, obviously"; scope "design system, branding, aesthetic frontend"; LD-0552).
-**Project code:** `DSGN_PORTALVIS`, minted at L3 the same turn. **Lead:** `2.0.0_SA_COO~D` (Andrew-direct ~07:5xZ at this terminal:
+**Project code:** `DSGN_REBRND` (minted `DSGN_PORTALVIS` at L3, renamed ~08:0xZ on Andrew's word "DSGN_REBRND (what i would call this project)"). **Lead:** `2.0.0_SA_COO~D` (Andrew-direct ~07:5xZ at this terminal:
 `0.1.1_RD_MarketPerformance` promoted to `2.0.0_SA_COO~D` to lead the DSGN project).
-**Written by:** `1.0.0_SA_CTO`, 2026-09-11 ~07:5xZ. **NOT YET LANDED in a PRD** — a PRD does not exist; this block is
-the ENDPOINT section that PRD will carry verbatim once L3 mints the code.
+**Written by:** `1.0.0_SA_CTO`, 2026-09-11 ~07:5xZ. **LANDED** 2026-09-11 ~08:0xZ in
+`org/missions/D13/DSGN/DSGN_REBRND/prd/DSGN_REBRND_PRD.md` v0.1, which carries the block below verbatim.
+**Vintage note (L4, same day):** this record was cut against the brief at `d4b20a28ba` (9 outcomes). Ten minutes later its
+author completed the brief at `bed01b226a` (32,300 bytes; 11 outcomes: O9 density and O10 empty states INSERTED, the
+former O9 renumbered O11; IV.9-IV.11 and Appendix A added). Under the id contract (ids permanent, never renumbered)
+FWD-9 keeps its number with its SOURCE re-pointed to O11, and FWD-10 / FWD-11 are APPENDED at the next unused numbers
+for the two new outcomes. The PRD's `brief_ref` carries `bed01b226a`.
 
 ---
 
@@ -72,12 +77,27 @@ the ENDPOINT section that PRD will carry verbatim once L3 mints the code.
          DONE WHEN  EXERCISED -- Andrew has made that comparison and said so
          ACCEPT     the comparison turns on capability rather than on finish
          PROOF      Andrew's word, on the record, after a side-by-side he chooses; graded by him, never self-graded
-         SOURCE     brief O9 (the outcome the other eight serve)
-         CONSTRAINT this is the one outcome graded by the person it is for; FWD-1..8 are its mechanism, and a grade of REALIZED on all eight does not substitute for his word here
+         SOURCE     brief O11 at bed01b226a (this was O9 at d4b20a28ba; the brief's author inserted O9 and O10 and renumbered; this id is permanent) -- the outcome the other ten serve
+         CONSTRAINT this is the one outcome graded by the person it is for; FWD-1..8, FWD-10 and FWD-11 are its mechanism, and a grade of REALIZED on all ten does not substitute for his word here
+
+  FWD-10 An advisor's screen is filled by the work, not by the space around it
+         DONE WHEN  APPLIED -- on every route the density gradient runs generous inside a data container and disciplined between sections
+         ACCEPT     an advisor opening any route sees the content reach the fold, with less space between sections than inside a container; a page that has run out of content says so in words instead of trailing off into empty canvas
+         PROOF      the three routes of brief IV.9 re-rendered at 1440x900 WITH populated fixtures; the share of the viewport below the last content element printed before and after; the inside-container and between-section spacing values read from the contract and measured on the render
+         SOURCE     brief O9 (at bed01b226a); IV.9 (lower third empty; three nested containers); A17, A18
+         CONSTRAINT density is graded on populated fixtures only -- the brief's captures had none (VII.6), and a route whose data plane is failing is evidence of nothing either way; information architecture is out of scope (Part II): which panels exist does not change
+
+  FWD-11 An advisor meeting a panel with no data still sees a designed surface
+         DONE WHEN  APPLIED -- empty, loading, error and no-permission are four designed states and every panel uses one of them
+         ACCEPT     a panel with nothing to show still looks like part of the product, says in plain words which of the four things happened, never repeats its own message, and never paints an error on the bare page
+         PROOF      a census of every "nothing here" rendering in portal/src/ (denominator printed) and, for each, which of the four states it now uses; the six treatments of brief IV.9 shown before and after; the duplicated error string of A20 gone
+         SOURCE     brief O10 (at bed01b226a); IV.9; A19, A20
+         CONSTRAINT the four states belong to the contract, never to a component's author; the count of six from three routes is a floor (VII.11), so the census runs over the whole tree
 ```
 
-**Denominator:** 9 outcomes from 9 brief outcomes (O1-O9), one to one; 9 of 9 carried; 0 dropped; 0 invented.
-**Bar:** FWD-1, FWD-6, FWD-9 EXERCISED (a person acts); FWD-2, 3, 4, 5, 7, 8 APPLIED (the change is in place and measured).
+**Denominator:** 11 outcomes from 11 brief outcomes (O1-O11 at `bed01b226a`), one to one; 11 of 11 carried; 0 dropped; 0 invented.
+FWD-1..9 were cut at `d4b20a28ba` (9 of 9 then); FWD-10 and FWD-11 appended at L4 for the two outcomes the brief's completion commit inserted.
+**Bar:** FWD-1, FWD-6, FWD-9 EXERCISED (a person acts); FWD-2, 3, 4, 5, 7, 8, 10, 11 APPLIED (the change is in place and measured).
 **No FWD is a wait** (Rule 27): every proof is an act a seat can take on demand; FWD-9's proof is Andrew's act and is expressly qualified as such on the outcome.
 
 ## THE L2 FINDINGS THE PRD MUST CARRY
@@ -105,7 +125,7 @@ the ENDPOINT section that PRD will carry verbatim once L3 mints the code.
 ## L3 (the next limb) -- NOTHING OPEN
 
 The D13 macro enum in `org/missions/MACROS.yaml` already reads `macros: [DSGN]`, RATIFIED on Andrew's word (LD-0552) before this
-endpoint was written. The tree row lands as `org/missions/D13/DSGN/DSGN_PORTALVIS/` with `coo_lane: 2.0.0_SA_COO~D`, and this
+endpoint was written. The tree row lands as `org/missions/D13/DSGN/DSGN_REBRND/` with `coo_lane: 2.0.0_SA_COO~D`, and this
 block becomes the PRD's ENDPOINT section verbatim.
 
 **Provenance.** READ: the brief at `d4b20a28ba` in full; `design/brand/COLOR_ARCHETYPES.md`,
