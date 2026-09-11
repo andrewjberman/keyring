@@ -153,5 +153,33 @@
     }
   },
   "push_state": "LOCAL",
-  "origin_CLOUD": "ae0fcf29346b4a8fe7c598fe69189880c8da6d29"
+  "origin_CLOUD": "ae0fcf29346b4a8fe7c598fe69189880c8da6d29",
+  "v0_11_followup": {
+    "measured_at": "2026-09-11T04:33:47.007210+00:00",
+    "path": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md",
+    "pin": "737cd1670546b106bb12b489e1fe5d1c0f1bfa90",
+    "bytes": 96466,
+    "sha256": "8a7e5fe713a7ea385ea64f441ccc043a1626122860a3d56d899db7af9e277a7b",
+    "changed_lines": [
+      8,
+      119,
+      123,
+      178,
+      210,
+      273,
+      294
+    ],
+    "endpoint_unchanged": true,
+    "contracts_unchanged": true,
+    "frontend_pin_unchanged": true,
+    "coverage_rows": 37,
+    "supplement_rows": 32,
+    "verdict": "SIGNED",
+    "closed_findings": [
+      "R1",
+      "R2"
+    ],
+    "push_state": "LOCAL",
+    "origin_CLOUD": "ae0fcf29346b4a8fe7c598fe69189880c8da6d29"
+  }
 }

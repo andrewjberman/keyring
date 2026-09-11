@@ -2,6 +2,8 @@
 
 Reviewer: **4.0.0_SA_CRO**, BRIEF half. Trigger: CTO message 95787, exact inbox delivery `20260911T042014Z_1.0.0_SA_CTO_L4-R_REVIEW_IS_DUE_NOW__on_Andrew_s_word.md`. Date: 2026-09-11 UTC.
 
+**Current follow-up, CTO message 95800: IRPT_BCKEND v0.11 at `737cd1670546b106bb12b489e1fe5d1c0f1bfa90` is SIGNED. R1 and R2 are closed at this pin; the closure evidence is appended below.** The v0.10 table and findings remain the dated review history. The existing FE v0.5 signature remains valid.
+
 | Project / reviewed version | Committed PRD pin | CRO verdict |
 |---|---|---|
 | IRPT_FNTEND v0.5 | `fb5bb6e8b7dfeee031bf7c2850804079eb46516d` | **SIGNED** |
@@ -59,3 +61,18 @@ The signature reviews document carriage only. Production cutover/fencing, real t
 The canonical CRO records bind the verdicts above to these exact current versions, with this committed review as `review_ref`. CTO owns the two backend corrections and its version bump; that new pin reopens review normally. No intermediate v0.5-v0.9 backend signatures are needed.
 
 Push state: **LOCAL**. Observed `origin/CLOUD` via `git ls-remote`: `ae0fcf29346b4a8fe7c598fe69189880c8da6d29`. No push is performed.
+
+## Closure: IRPT_BCKEND v0.11, CTO message 95800
+
+Reviewed the complete committed diff from `3624e60defa7dab02fdb9f218a05b6bf87d598ee` to **`737cd1670546b106bb12b489e1fe5d1c0f1bfa90`**, then checked the changed rows against R1/R2 and the FE v0.5 consumers. Only the header version and the six named lines changed. No additional implementation, endpoint or source requirement was introduced by this correction.
+
+| Finding | Verified correction at v0.11 |
+|---|---|
+| R1: Generate source consumer | Lines 178 and 294 now name **F5 Analysis**. Line 273 assigns lifecycle/progress to **F7**, export options/rendering to **F8/F9**, and explicitly excludes **F6 Holdings** from the YCharts role. These agree with the counterpart's existing cells. |
+| R2: available specimens reach extraction/export | B10 line 119 names the three synthetic vendor PDFs and receipts as available extractor/harness inputs, with paired section certification and representative real-client cases still required. B14 line 123 names them as available Analysis export inputs, with native/Opal-rendered certification and real-client cases still required. Fixture line 210 now includes **B10 and B14** as consumers. Both cells explicitly prevent generator success from certifying their own downstream work. |
+
+**CRO verdict: SIGNED for IRPT_BCKEND v0.11.** No residual from R1/R2 remains. B14's older trailing shorthand about a PDF proof gap is bounded by the new explicit available-specimen/remaining-certification distinction in the same row; it does not instruct the implementer to reacquire missing synthetic PDFs. This is the same reading applied to FE F9 through FE F5's current specimen disposition.
+
+Coverage remains BK 37 original rows plus 32 supplement rows and 18 candidate cells. The ENDPOINT and CONTRACTS sections are byte-identical to v0.10, and FE v0.5 is unchanged. These checks limit the re-review to the correction; CVO still owns its independent ratified-text sign-off. Production and real-client proof obligations remain as recorded above.
+
+The updated CRO sign-off binds to the full v0.11 pin and this review's new committed revision. FE's already-signed v0.5 file is not rewritten. Follow-up clocks, source hashes, changed-line census and remote observation are recorded in the evidence JSON's `v0_11_followup` entry. Push remains **LOCAL**.
