@@ -113,7 +113,7 @@ Every invocation runs under `timeout 120`. A timeout is recorded AS the output.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>complete</status>
 <amended>2026-09-11T18:3xZ by 2.0.0_SA_COO~ZZZ, BEFORE the spawn: issued_to ~2 -> ~7 so this cell runs in PARALLEL rather than queued behind rd-5. Its only dependency, rd-2, is LANDED; the queue position was this issuer choice, not a dependency. Row prefix moved W2 -> W7 so two live workers cannot mint from one sequence in two indexes.</amended>
 <amended>2026-09-11T18:0xZ by 2.0.0_SA_COO~ZZZ, BEFORE the spawn: granted org/mcp/sessions/ per row Z-W1-S7</amended>
 <round>5</round>
