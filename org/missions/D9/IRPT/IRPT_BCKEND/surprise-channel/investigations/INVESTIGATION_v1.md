@@ -646,6 +646,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "THE CELL: 'principal class (`firm-advisor` | `firm-admin` | `opal`)'.",
     "world_is": "The generated contract carries five members with different tokens. Two vocabularies for one axis; the contract is the enforceable one and the face's is prose.",
     "notes": "No remedy taken and none needed for this cell: the contract's enum is what validates. Raised so the CVO reads FIRM_OPERATIONS in the output as the face's 'firm-admin' rather than as an invention, and so a later cell does not build a third spelling."
+  },
+  {
+    "id": "IRPT_BCKEND-S8",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T01:10:53Z",
+    "one_line": "DISARM of IRPT_BCKEND-W2-S7 (disarm_owner 2.0.0_SA_COO~B), same drain it merged in: the ownership-map/id_projection seam that IB-s-2 injected into the scope resolver fails SAFE-AND-SILENT when the projection is absent (an advisor sees nothing, which reads as a correct revocation). The issuer amended the not-yet-handed IB-s-15 face (the cell that builds this project's handlers' Global/permitted-set path) with three requirements and a new arm (g): the handlers pass a REAL id_projection sharing ONE definition with directory_runner.opaque_id; a request resolved with NO projection while a grant is present is REFUSED with UNPROJECTED-ID, never served as an empty 200; unmatched_reasons are logged, never returned. The same amendment carries IB-s-2's Phase-1 finding (OPAL_GLOBAL never minted from headers; the server-side roster is the path; the index.mjs:390 edge fix is outside the order's paths) and W2-S8's vocabulary note (the contract's enum, not the face's prose). No worker face in flight was edited; IB-s-15 is staged and unhanded.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (this row IS the disarm act for W2-S7; the wired seam is graded at IB-s-15 arm (g) by the assignee and re-graded by the issuer at that drain)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W2-S7 @22a125e098 -- hazard_standing ARMED, disarm_owner 2.0.0_SA_COO~B; the seam and the three unmatched reasons",
+        "infra/aws/lambda/investor-reporting/_scope/resolve.py advisor_grant / unmatched_reasons @22a125e098 -- the optional third input and id_projection",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-15.scoped-routes-opal-principal-and-the-cloudfront-behavior.md (this commit) -- ISSUER AMENDMENT block and S15-AC1 arm (g); <status> still staged, the order unhanded",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-2.resolved-scope-from-the-validators-headers.md @22a125e098 -- <status> complete; the amendment could not reach that order and did not try"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row W2-S7 spec_asserts: the cell's signature resolve(headers, directory) -> ResolvedScope with the unique permitted account set; PRD B15 acceptance: an Opal principal reaches clients at two firms through scoped routes; a firm advisor replaying the same requests is refused.",
+    "world_is": "The permitted set is only computable through a third input and a projection the face did not name; absent the projection the resolver returns an empty set that is indistinguishable from a revocation. Disarmed by making the absence a refusal with a reason at the handler cell, and by binding the projection to one definition of the opaque id.",
+    "notes": "Amendment shape: the FE-s-2 / FE-s-5 shape (a not-yet-handed face amended by its issuer, recorded on the channel). Nothing in the decomposition changed; the cell's rectangle already covered the Global permitted-set path. Carried to L10: whether the one-line edge fix beside index.mjs:390 is worth a CLOUD_OPS_OR_ETL act in round 2 once the roster path is measured."
   }
 ]
 ```
