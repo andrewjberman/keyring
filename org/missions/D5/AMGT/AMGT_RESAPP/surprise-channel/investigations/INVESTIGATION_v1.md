@@ -653,6 +653,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "This cell's cell text: 'AMGT-s-b4 has since landed 18 raw objects across 3 tickers (BABA/RTX/+1) under raw/seekingalpha/.' The BATTERY FINDINGS section: 'sa_ids MEASURED for BABA (137271), RTX, +1'.",
     "world_is": "18 raw objects across 3 tickers IS correct (the object count matches exactly); the TICKER IDENTITIES do not -- the second and third tickers are BA (769) and COST (58), not RTX. This worker proceeded against the REAL landed set (BABA_US/BA_US/COST_US) for AC1-AC4, which is what the reader can actually be re-exercised over regardless of which name the cell text expected, and which already had ir/publication fixtures under lib/research/coverage/fixtures.py's COVERAGE_FIXTURES (BABA_US/BA_US/COST_US, not RTX) -- so the substitution did not require inventing new fixture data either.",
     "notes": "Non-blocking: AC1-AC4 all close cleanly on the real ticker set regardless of the name mismatch, and AC5 (judgment) reads the real ranked list, not the cell's ticker list. Likely cause (not verified by this worker, offered as a lead only): the cell text may have been drafted against an earlier or a different worker's SA landing attempt/plan that named RTX, while the actual AMGT-s-b4 re-run (commit 3be9d03962, 'Andrew-direct @770ee8fb18, CTO ruling msg 21152') landed against BABA/BA/COST -- the same three tickers run_reader.py's docstring and run_manifest.json (0.9.0_WK_AMGT_RESAPP~9) both already named from round 1. Worth the CVO/CTO's attention only if a future cell's criteria are written against the cell text's ticker list rather than the live store; this worker's own AC1-AC5 are unaffected since none of them name a specific ticker."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZZZ",
+    "surfaced_at": "2026-09-11T08:39:00Z",
+    "one_line": "Issuer's disarm read of AMGT_RESAPP-Z-W3-S5 (ARMED, disarm_owner this seat): the root .gitignore:47 `lib/` blanket did NOT bite round 2 -- all five round-2 cells' new lib/research/ files landed via safe-commit.sh's `git add -f` and are VALID at HEAD (fec90bfb4f); the residual is only a plain-git verifier undercount, routed to the CVO's round-2 L9.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Every round-2 cell that added a new file under lib/research/ landed it tracked and VALID at HEAD despite .gitignore:47 `lib/`: lib/research/checkface/markers.py (r-10, drain e73ecf1952), lib/research/lists/impostor.py (r-15, drain 9dc755a6f5), lib/research/coverage/sa_ingest.py + run_sa_reexercise.py (r-4, drain fec90bfb4f), lib/research/identity/coverage_pass.py (r-12, drain 0456b7cde8) -- five new modules under the blanket rule, all five present in `git ls-files` at HEAD.",
+        ".tools/safe-commit.sh's own docstring: 'Staging uses `git add -f`, which FORCE-adds files EVEN IF gitignored' -- the sanctioned commit path (used by every seat and every worker, and by the drains that landed this round) force-adds its declared pathspec regardless of the ignore rule; W3-S5's own grounding already cites this same mechanism.",
+        "`git check-ignore -v lib/research/checkface/markers.py` -> `.gitignore:47:lib/` confirms the blanket rule still matches, yet `git ls-files lib/research/checkface/markers.py` lists it TRACKED at HEAD -- the force-add on the sanctioned path is what closes the gap, measured on the exact file W3-S5 named."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "W3-S5 asserts lib/research/ is a normal write surface for a new module, while root .gitignore:47 `lib/` (Python build-artifact boilerplate) blankets the whole lib/ tree and hides a brand-new file there from a plain `git status`/`git add`.",
+    "world_is": "The ARMED hazard did not bite this round: every round-2 cell that added a new file under lib/research/ committed it through safe-commit.sh, which force-adds (`git add -f`) its declared pathspec regardless of .gitignore, so all five cells' new lib/research/ modules are tracked and VALID at HEAD (fec90bfb4f). The residual is real but narrow: a seat running a PLAIN `git status --porcelain`/`git add` (not the wrapper) as a verifier would undercount new lib/ files with no signal that anything was excluded. As disarm_owner I am NOT editing the shared root .gitignore mid-round -- it is a fabric-wide surface on a shared tree, and whether lib/research/ should carry a tracked-source negative exception (`!lib/research/`) is a repo-hygiene design call, not a COO mid-round act. Brought to rest here; the residual is routed to the CVO's round-2 L9 as a candidate remediation.",
+    "notes": "Disarm decision (2.0.0_SA_COO~ZZZ, disarm_owner): ACCEPT-AND-ROUTE. The sanctioned commit path is unaffected -- proven this round -- so nothing landed is at risk and the hazard is INERT going forward for any seat or worker using safe-commit.sh. Candidate remediations for the CVO to disposition at round-2 L9 (none required this round): (a) narrow root .gitignore with a `!lib/research/` tracked-source exception so plain git tooling sees new files there; (b) route any future repo-hygiene criterion of the 'diff `git status` against a stated file list' shape through `git ls-files` or the wrapper rather than a plain `git status`. Not editing .gitignore here: shared fabric-wide surface, design call, outside a COO mid-round lane."
   }
 ]
 ```
