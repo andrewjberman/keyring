@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 128 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-2-1 and CLOUD resolved as a strict UNION of both sides (125 ours + 104 theirs, 101 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 131 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-2-3 and CLOUD resolved as a strict UNION of both sides (129 ours + 124 theirs, 122 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -831,6 +831,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Spine v3 L7: the issuer drains, dispositions and hands; a worker's grant is its <paths> and a path it needs is a row the issuer answers by grant or by scope; Andrew-direct 17:1xZ: workers finish, nothing new starts, log and commit.",
     "world_is": "IRPT_BCKEND round 2 at bebcab6315: COMPLETE rt-1, rt-3, rt-4, rt-5, rt-8; OPEN rt-2 (~2), rt-7 (~1), rt-9 (~3), all under the wind-down caveat; rt-10 pending on ~4 with no worker; rt-6, rt-11, rtb-1 staged. Every drain landed; no merge is open; every worker worktree is at or after the amended tip.",
     "notes": "Seat rows continue at S36. The successor session: read the log first, drain the three WIP branches (wk-irpt_bckend-2-1, -2, -3 at /c/tmp/wk-irpt-2-{1,2,3}), then hand rt-10 (~4), rt-6 (~2 after rt-2), rt-11 (~3 after rt-9), rtb-1 (~1 last)."
+  },
+  {
+    "id": "IRPT_BCKEND-S36",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T18:12:34Z",
+    "one_line": "WIND-DOWN DRAINS. (1) IB-rt-2's wind-down branch (496a2767d2, slot ~2) landed at 5347f30b34: no ledger opened across two runs, arm (a) reads 0 of 11 unguarded across all six functions with the control firing 1 of 11, irpt-status at 3 of 3 triple equality with six absent build inputs REMOVED, and the order stays OPEN for a successor run -- W2-S28 (the rename's one importer lives in _contracts/, outside the grant) is GRANTED on the face; W2-S29 (directory-search and directory-refresh share a source dir) is RULED to a per-function files list. (2) IB-rt-7 (slot ~1) landed COMPLETE at 47522d2ba9: the live holdings route serves under the api root with 12 of 12 routes declared, holdouts visible and before == after to the cent on 3 of 3 firms, both clocks on every node, :acct: 0 of 127,071; the layer was NOT published because the live :5 already carried 9 of 9 declared members (W1-S14's 'record and repoint only' branch); W1-S16 (_authz.covers() admits any advisor id for an admin principal against its own docstring; no cross-firm bytes reachable today) is ROUTED to IB-rt-2's successor run, which holds _authz/. (3) A PROCESS SLIP, RECORDED AGAINST THIS SEAT: the first attempt at drain (1) was REFUSED by the row gate (another seat's commit landed while the merge was open, the conflict stages vanished, and a marker-laden channel was staged) and the cleanup chained after it -- `git worktree remove && git branch -D` -- ran anyway, deleting the un-merged branch. Row S18's lesson, again, one level up: a destructive step chained after a merge whose rc was not the chain's condition. The branch was restored from the object store (496a2767d2, nothing lost), the merge residue (three modified files and two untracked files, each verified byte-identical modulo CRLF to the branch) was cleared from the shared tree, and the drain re-run through a temporary linked worktree, then pull-merged when the fast-forward lost two races. Every cleanup in this session from here on is gated on `merge-base --is-ancestor <branch tip> HEAD`, never on the chain reaching it. (4) IN FLIGHT at this row: IB-rt-9 on slot ~3 only, under the wind-down caveat. IB-rt-10 held unhanded on ~4.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (the issuer; the successor session reads the wind-down log first)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 5347f30b34 (drain of coo-b-drain-tmp carrying 4d234193a8 = wk-irpt_bckend-2-2 @496a2767d2), 47522d2ba9 (drain wk-irpt_bckend-2-1 @b9a3fcc335)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/WIP_IB-rt-2_winddown.md; deliverables/0.9.0_WK_IRPT_BCKEND~1/WIP_IB-rt-7_winddown.md",
+        "the refused --continue's log: [surprise-corpus] REFUSED: 1 malformed block(s) -- the staged channel carried conflict markers"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md 14b and rule 27: a drain is graded on the merged index by safe-merge.sh and its remaining steps (remove the worktree, delete the branch) follow a LANDED merge; memory reference: a pipeline's rc is its last command's, so a chained cleanup must key on the merge's own outcome.",
+    "world_is": "IRPT_BCKEND round 2 at 47522d2ba9: COMPLETE rt-1, rt-3, rt-4, rt-5, rt-7, rt-8; OPEN rt-2 (successor run), rt-9 (~3 in flight, wind-down); rt-10 pending on ~4 unhanded; rt-6, rt-11, rtb-1 staged.",
+    "notes": "Seat rows continue at S37. The successor drains wk-irpt_bckend-2-3 when slot ~3 reports, then cold-starts rt-2, rt-9 (if open), rt-10, rt-6, rt-11, rtb-1 in fresh worktrees."
   },
   {
     "id": "IRPT_BCKEND-W1-S1",
@@ -2493,6 +2516,57 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "The arm already contains its own escape -- 'or explicitly out of scope by PRD name' -- so this may be a scope statement rather than a grant extension. That is the issuer's call and the reason this is filed rather than decided: writing 'out of scope' into the record on my own authority would be adjudicating a PRD boundary, and extending the grant myself would be the override the face forbids. Filed at the START of the cell, before anything was built against a file this order cannot write."
   },
   {
+    "id": "IRPT_BCKEND-W3-S24",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T17:52Z",
+    "one_line": "W2-S21's PREMISE DOES NOT HOLD AS WRITTEN, AND ACTING ON IT LITERALLY WOULD STRIP THE SHARED LIBRARIES OUT OF irpt-ycharts-generate. The amendment says the function declares 25 build inputs in lambda-source-map.json of which 7 have never existed in the tree, and instructs that a build input absent from the tree is REMOVED, never invented. Measured instead of taken on faith, because the removal is destructive: the function declares 26 inputs, and 26 of 26 RESOLVE to a real file -- 0 are genuinely absent. The 8 that do not sit under the entry's own source_dir (enforce.py, errors.py, gate.py, keys.py, resolve.py, firm_destination_policy.json, firm_registry.json, settings.json) all exist elsewhere in the tree and are packaged FLAT by this estate's Lambda convention, which is the whole reason they appear in the list by bare name: every module lands at /var/task, so a shared library is declared by basename and resolved from its home package at build time. A naive 'does source_dir/<name> exist' check is what returns 7 or 8 absent. Removing those entries would delete enforce, gate, keys and resolve -- the modules the deployed job.py imports at module scope -- and firm_registry.json, which keys.py reads. That is the W3-S19 failure class (a two-part change whose packaging half is missing), self-inflicted, and it would read GREEN at every deploy-time rung because the zip would build, upload and register cleanly and only die at cold start. NOTHING WAS REMOVED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B -- the issuer owns the amendment text. The correction is to the PREMISE, not to a file: any later cell handed the same sentence, on this function or another, will run the same naive resolution and get the same 7-or-8 and, lacking the flat-packaging fact, will do the removal this cell declined to do. The estate has no resolver that encodes the flat convention; every reader re-derives it. 1.0.0_SA_CTO if the fix is to give lambda-source-map.json an explicit source path per entry so the convention stops being tacit.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/lambda-source-map.json @684e7eb90a, the irpt-ycharts-generate entry's files array -- 26 entries before this cell's edit, not 25",
+        "measured by .scratch/verify_ycharts_inputs.py (this worker, flat-packaging resolver), verbatim: 'declared inputs: 26 | RESOLVE to a real file: 26 | genuinely absent: 0'",
+        "the 8 outside source_dir resolve to infra/aws/lambda/investor-reporting/_authz/enforce.py and errors.py, _gate/gate.py, _keys/keys.py, _scope/resolve.py, infra/aws/terraform/investor-reporting/core/firm_destination_policy.json, data/firm_registry.json and infra/aws/lambda/investor-reporting/intake/settings.json -- each present at 684e7eb90a",
+        "registered artifact_sha256 == S3 object content-sha256 == live CodeSha256 == hiVUThOsWCSe304UfRug466Oqv6tqvL/8fjKskUUpoo= , read live this turn: the RECORD AGREES WITH THE WORLD, which is not what a record carrying 7 phantom inputs would look like",
+        "a rebuild from the declared list yields IdFoLLRZqJpHP9ISk8amWypuoH2dMCwUIh+dyzV/YcA= (89,789 bytes) before this cell's edit -- the tree is AHEAD of the deploy, which is a separate and expected fact, not an absence"
+      ]
+    },
+    "spec_asserts": "The IB-rt-9 issuer amendment (W2-S21 half), verbatim: irpt-ycharts-generate declares 25 build inputs in lambda-source-map.json of which 7 have never existed in the tree: register the truth (a build input absent from the tree is REMOVED, never invented).",
+    "world_is": "26 declared inputs, 26 resolving, 0 absent. The 7-of-25 figure is an artifact of resolving every name under the entry's source_dir, which the estate's flat Lambda packaging does not do.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed rather than obeyed, and filed rather than argued: the face's rule is that a premise which does not hold is ONE row and then keep working. The half of W2-S21 that DID hold -- register the truth, verify the triple equality -- was executed: the triple equality is printed above, and the declaration was corrected in the only direction the measurement supports, which is the ADDITION recorded in row W3-S25, not a removal."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S25",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-11T17:52Z",
+    "one_line": "_scope/resolve.py GAINED A MODULE-LEVEL 'import ids' AND THE PACKAGING HALF DID NOT FOLLOW FOR ANY OF THE THREE FUNCTIONS THAT SHIP IT. resolve.py at 684e7eb90a carries 'import ids as _ids' at line 81 (IB-rt-3's typed identifiers, _ids/ids.py), but lambda-source-map.json declared ids.py in ZERO of the three functions whose build inputs include resolve.py: irpt-export-render, irpt-status and irpt-ycharts-generate. Measured in the /var/task layout with the worktree excluded from sys.path: 'import closure in the /var/task layout: 6 of 8 OPEN [enforce: ModuleNotFoundError, resolve: ModuleNotFoundError]' -- enforce fails transitively because enforce.py imports resolve. The three LIVE functions still serve OLDER bytes and work today, so every deploy-time rung reads green and nothing is currently broken in production; the harm is armed for the NEXT rebuild-and-deploy of any of the three, which would upload, register, match its hash three ways and then die at cold start on ModuleNotFoundError. This is exactly the two-part-change split of row W3-S19, at a new tip, introduced by a different cell -- which is the tell that the estate has no mechanism tying an import to a build input, only workers who happen to check. REPAIRED IN THE DECLARATION HALF ONLY, inside this order's grant: ids.py is added to all three file lists and closure now reads 9 of 9 CLOSED for irpt-ycharts-generate. artifact_sha256 is DELIBERATELY NOT MOVED -- it still equals the S3 object and the live CodeSha256, and under the managed wind-down this order deploys nothing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B to route the rebuild-and-deploy that makes the served bytes match the corrected declaration -- three functions (irpt-export-render, irpt-status, irpt-ycharts-generate), each needing a ledger entry, a safe-apply and a registered-equals-S3-equals-live re-read per W3-S18. Deferred here and ONLY here because the wind-down instruction from 0.0.0_AB_MSTR relayed 2026-09-11 17:30Z forbids opening a change-management ledger, applying, publishing or deploying for the rest of this session. The DECLARATION is fixed and committed; the DEPLOY is the successor session's first act and is written down as such in WIP_IB-rt-9_winddown.md.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_scope/resolve.py:81 @684e7eb90a -- 'import ids as _ids  # noqa: E402'",
+        "infra/aws/lambda/investor-reporting/_ids/ids.py exists at 684e7eb90a (git cat-file -e rc 0); IB-rt-3 introduced it",
+        "per-function read of lambda-source-map.json @684e7eb90a: irpt-export-render resolve=True enforce=True ids.py=False; irpt-status resolve=True enforce=True ids.py=False; irpt-ycharts-generate resolve=True enforce=True ids.py=False -- 3 of 3 ship resolve.py, 0 of 3 declared ids.py",
+        "import closure measured in a /var/task extraction with every repo path stripped from sys.path, BEFORE the fix: '6 of 8 OPEN [enforce: ModuleNotFoundError, resolve: ModuleNotFoundError]'; AFTER adding ids.py: 'import closure in the /var/task layout: 9 of 9 CLOSED'",
+        "registered == S3 == live == hiVUThOsWCSe304UfRug466Oqv6tqvL/8fjKskUUpoo= read live this turn, so the CURRENTLY SERVED bytes predate the resolve.py change and are not affected",
+        "row IRPT_BCKEND-W3-S19 -- the same class of split, recorded earlier in this project by this worker"
+      ]
+    },
+    "spec_asserts": "The IB-rt-9 amendment (W2-S21 half) treats the build-input list as a record to be trued up, and W3-S18 requires artifact_sha256 == S3 content-sha256 == live CodeSha256 for every function a cell touches.",
+    "world_is": "The build-input list was missing a module that three functions' declared code imports at module scope. The record and the world agreed on the HASH while disagreeing on IMPORTABILITY, because a hash certifies bytes and nothing in the deploy path ever imports them.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The general shape is worth more than this instance: CodeSha256 equality is the estate's standard deploy proof and it CANNOT see this defect, by construction. The only instrument that catches it is an extract-and-import in the flat layout with the repo off sys.path, which this worker runs from .scratch and which no gate runs anywhere. A candidate disarm that outlives these three functions is to make that check a commit-time gate over lambda-source-map.json; proposing is legal, implementing it is outside this order."
+  },
+  {
     "id": "IRPT_BCKEND-W4-S1",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
@@ -3097,29 +3171,6 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "The amendment: 'if the run refuses SESSION_ABSENT, that refusal IS the recorded output -- arm (a) then reads SESSION-GATED naming IB-rtb-1'.",
     "world_is": "Exactly that branch, reached on the first send that got past the infrastructure gaps. The render pipeline is complete except for authentication.",
     "notes": "Four earlier sends in the same authorization each produced a NAMED refusal before this one -- MODULE_NOT_FOUND playwright, MODULE_NOT_FOUND @aws-sdk/client-s3, RENDERER_MODULE_ABSENT, and a TLS error on a hostname the estate does not own. Each was a real gap between a host half that was written and a host it had never run on."
-  },
-  {
-    "id": "IRPT_BCKEND-S36",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T18:12:34Z",
-    "one_line": "WIND-DOWN DRAINS. (1) IB-rt-2's wind-down branch (496a2767d2, slot ~2) landed at 5347f30b34: no ledger opened across two runs, arm (a) reads 0 of 11 unguarded across all six functions with the control firing 1 of 11, irpt-status at 3 of 3 triple equality with six absent build inputs REMOVED, and the order stays OPEN for a successor run -- W2-S28 (the rename's one importer lives in _contracts/, outside the grant) is GRANTED on the face; W2-S29 (directory-search and directory-refresh share a source dir) is RULED to a per-function files list. (2) IB-rt-7 (slot ~1) landed COMPLETE at 47522d2ba9: the live holdings route serves under the api root with 12 of 12 routes declared, holdouts visible and before == after to the cent on 3 of 3 firms, both clocks on every node, :acct: 0 of 127,071; the layer was NOT published because the live :5 already carried 9 of 9 declared members (W1-S14's 'record and repoint only' branch); W1-S16 (_authz.covers() admits any advisor id for an admin principal against its own docstring; no cross-firm bytes reachable today) is ROUTED to IB-rt-2's successor run, which holds _authz/. (3) A PROCESS SLIP, RECORDED AGAINST THIS SEAT: the first attempt at drain (1) was REFUSED by the row gate (another seat's commit landed while the merge was open, the conflict stages vanished, and a marker-laden channel was staged) and the cleanup chained after it -- `git worktree remove && git branch -D` -- ran anyway, deleting the un-merged branch. Row S18's lesson, again, one level up: a destructive step chained after a merge whose rc was not the chain's condition. The branch was restored from the object store (496a2767d2, nothing lost), the merge residue (three modified files and two untracked files, each verified byte-identical modulo CRLF to the branch) was cleared from the shared tree, and the drain re-run through a temporary linked worktree, then pull-merged when the fast-forward lost two races. Every cleanup in this session from here on is gated on `merge-base --is-ancestor <branch tip> HEAD`, never on the chain reaching it. (4) IN FLIGHT at this row: IB-rt-9 on slot ~3 only, under the wind-down caveat. IB-rt-10 held unhanded on ~4.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (the issuer; the successor session reads the wind-down log first)",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "CLOUD 5347f30b34 (drain of coo-b-drain-tmp carrying 4d234193a8 = wk-irpt_bckend-2-2 @496a2767d2), 47522d2ba9 (drain wk-irpt_bckend-2-1 @b9a3fcc335)",
-        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/WIP_IB-rt-2_winddown.md; deliverables/0.9.0_WK_IRPT_BCKEND~1/WIP_IB-rt-7_winddown.md",
-        "the refused --continue's log: [surprise-corpus] REFUSED: 1 malformed block(s) -- the staged channel carried conflict markers"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "CLAUDE.md 14b and rule 27: a drain is graded on the merged index by safe-merge.sh and its remaining steps (remove the worktree, delete the branch) follow a LANDED merge; memory reference: a pipeline's rc is its last command's, so a chained cleanup must key on the merge's own outcome.",
-    "world_is": "IRPT_BCKEND round 2 at 47522d2ba9: COMPLETE rt-1, rt-3, rt-4, rt-5, rt-7, rt-8; OPEN rt-2 (successor run), rt-9 (~3 in flight, wind-down); rt-10 pending on ~4 unhanded; rt-6, rt-11, rtb-1 staged.",
-    "notes": "Seat rows continue at S37. The successor drains wk-irpt_bckend-2-3 when slot ~3 reports, then cold-starts rt-2, rt-9 (if open), rt-10, rt-6, rt-11, rtb-1 in fresh worktrees."
   }
 ]
 ```
