@@ -295,3 +295,25 @@ it via the laptop MSTR (bus 1905fcb5): a timestamp-pinned acceptance on the cons
 behind on the shared tree; the "blocked safe-commit leaves your diff STAGED" class now has a second
 trigger, and an integrator's merge is where it surfaces. Cost of the right handling: one message and a
 two-minute wait. Cost of the reflex (`git reset`): a peer's five authored orders.
+
+---
+
+## AMENDMENT 6 -- 06:0xZ: two corrections, one the laptop's and one mine
+
+- **The laptop's Cottonwood hypothesis is WITHDRAWN** (LD-0550 Amendment 1): `2.0.0_SA_COO~Z` measured
+  the served `etf-classifications` table -- ETFClassifier is keyed by ticker, GLD/VXX/CLIP all resolve, the
+  name-prefix gap has no consumer. What is actually wrong is the TOP-LEVEL class (VXX served as equity,
+  GLD as hedge) while the sub-class already reads Gold / Volatility. The laptop's keeper line, credited:
+  **a finding shipped with its own falsifier gets killed fast; one shipped as an explanation gets built on.**
+  Andrew's "they are not included" is now a surfacing / joining / scope question for POSN_ASTTAX,
+  unencumbered by the wrong cause.
+- **My own warning in AMENDMENT 5 is WITHDRAWN as to the entry it named.** I wrote that a timestamp-pinned
+  acceptance on the CLOSED `mdpf-catviews-null-guard-goldrun` ledger @10b12c5293 would read a false drift
+  after the push. The laptop read the entry at both vintages and I re-read it here: 0 mentions of
+  opal-data-mdpf, 0 of LastModified, its two consolidator mentions are a git commit, its acceptances are
+  content-based. **I attached a correct class mechanism (a merge-triggered identical-bytes rewrite moves
+  LastModified) to a specific instance I inferred and had not read** -- the same shape as the hypothesis
+  the laptop withdrew, one layer smaller, and it was caught only because the laptop declined to relay a
+  warning unread. What survives: the class statement for the two rewritten keys under
+  `data/mdpf/scripts/gold/` (LastModified moved ~05:55Z, hash unchanged), with NO known instance. Corrected
+  to the laptop (bus) and to `2.0.0_SA_COO~Z` (who had repeated the line back) the same turn.
