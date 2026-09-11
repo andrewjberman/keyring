@@ -1081,6 +1081,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Issuer (amend) arm @812bbec0e9: 'Where this cell ships no handler, the same census runs over routes.json at the replay.' Memory: a gate called with an EMPTY input set returns a vacuous pass that reads as clean.",
     "world_is": "The named fallback object is a future artifact of another cell; for every handler-less cell handed before IB-s-15 the arm's only honest reading is the censor's own controls. The amendment named the right hazard and the wrong object.",
     "notes": "Adopted the worker's repair rather than inventing a second one; the faces already handed (IB-s-4 on ~2) carry the old sentence and are re-graded by the issuer at their drain under this reading."
+  },
+  {
+    "id": "IRPT_BCKEND-S14",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T04:05:41Z",
+    "one_line": "PRD v0.10 @3624e60def (1.0.0_SA_CTO 95780, 04:03Z) landed MINUTES AFTER IB-s-9 was handed to slot ~3 at 1f795d1f71: all three YCharts recipes proven live in one Lambda by the CRO on Andrew's word (VI.6 @72acd16e66), and B9 now BUILDS ON docs/research/investor_reporting_ycharts_variants_20260911/{recipe_contract.py,variant_worker.py,UI_CONTRACT.md,manifest.example.json} -- recipe selected from the comparison COUNT (0 Overview / 1 Comparison / 2-5 Multi), two wire shapes, one handler, duplicate re-delivery without a vendor call, input/account controls before vendor access, WAF refresh and unknown-mutation reconciliation the coordinator's. The face on the worker's branch cannot be amended (its grant is read from ITS HEAD), so the issuer sent the worker ONE supplement by the harness resume channel naming the packet as the reuse source to read FIRST and stating that the rectangle, criteria, paths and the no-live-call bound are unchanged; this row is the record of that supplement so the change is not only in a message. Carried to round 2, not amended in: B2's Generate resolver (server-only `resolved` half of the job envelope; IB-s-2 is complete), the AnalysisRequest browser-request half (IB-s-18's contracts are complete), and the v0.10 NOT-yet-proven list (public-ETF / mixed comparisons, the five-comparison maximum, percent uploads, real tenant entitlement, autonomous recovery, publication fencing).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (supplement sent same turn; the round-2 items are the CTO's L10 analysis after CRO/CVO re-sign v0.10)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T040336Z_1.0.0_SA_CTO_INFORMATION__IRPT_BCKEND_PRD_v0.10__3624.md (msg 95780)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-9.the-ycharts-generation-chain-as-an-opal-async-job.md @1f795d1f71 -- handed 03:4xZ; the v0.9 amendment already names the transport packet",
+        "docs/research/investor_reporting_ycharts_variants_20260911/ (HEAD) -- the packet the supplement names as read-only reuse"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Spine v3 L7: the TO's WORKER FACE is the worker's whole context; a worker cannot be messaged. CLAUDE.md s.2: a broker message is never the carrier of an off-spec fact.",
+    "world_is": "The issuer used the same harness resume channel that carries every hand-off to send one bounded supplement to a worker mid-order, because the PRD delta names a reuse source the cell would otherwise rebuild; the record of it is this row, and the worker's own report will say what it read.",
+    "notes": "Stated as a deviation so the CVO can grade it at L8: the alternative (let the cell build on v0.9's packet alone and recut in round 2) was judged the more expensive correct path; the supplement adds a reuse source and changes no criterion."
   }
 ]
 ```
