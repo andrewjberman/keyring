@@ -557,7 +557,7 @@ vendor and every other use, and the standing "availability is not authorization"
 | S3 | `FWD-3` | THE PROVENANCE FACE -- source, basis and vintage beside every figure | absent | F3 (basis stated beside the number, Andrew-ruled) | wire | S1 | `C-BLOOMBERG-BASIS` |
 | S4 | `FWD-4` | THE COVERAGE READER -- recent commentary, ranked by recency and frequency | absent | F7 (the landed corpus is an ARCHIVE, not a feed: dates stop at 2026-04, 0 of 200 sampled carry a ticker); F11 (the SERP path works; the obvious link field is an obfuscated redirect) | build | S12 | `C-VENDOR-EGRESS`, `C-RULE-MUST-EXIST` |
 | S5 | `FWD-5` | THE PRINT RENDERER -- Adam's artifact | absent | F1 (template and packs are consistent, provenance confirmed by a shared misspelling) | build | S1, S3 | `C-DESIGN-SPEC-FIRST` |
-| S6 | `FWD-6` | THE VERSION STORE -- snapshots that accumulate rather than overwrite | absent | brief O6; PART V (`opal-data-research` measured ABSENT on the live plane) | build | -- | `C-RAW-BEFORE-DERIVED` |
+| S6 | `FWD-6` | THE VERSION STORE -- snapshots that accumulate rather than overwrite | absent | brief O6; `opal-data-research` **MEASURED PRESENT 2026-09-11T15:55Z** (head-bucket rc=0, `us-east-1`; 404 negative control) -- brief PART V's ABSENT is superseded, not rewritten; **re-read live identity + config at the cut** | build | -- | `C-RAW-BEFORE-DERIVED` |
 | S7 | `FWD-7` | THE COVERAGE-FRESHNESS VIEW -- Adam's one place | absent | brief O7 | wire | S6 | -- |
 | S8 | `FWD-8` | THE PEER SET -- comparable to THIS company, or absent with a reason | **BROKEN TODAY** | F6: 48 of 54 (88.9%) carry a stale set copied from one workbook; 4 (7.4%) are genuine and hand-chosen | build | S12 | `C-IDENTITY-RESOLVED`, `C-SHARED-DEFECT` |
 | S9 | `FWD-9` | THE DRAFTING FACE -- generated prose marked, beside its evidence | absent | brief O9; Andrew's ruling on limb order | wire | S1, S4 | `C-VERBATIM-GATE` |
@@ -588,8 +588,19 @@ Carried from brief PART V. **These are preconditions, not outcomes -- no `FWD-n`
   local to one device. **Any design must say how a browser request reaches it.**
 - **The Bloomberg session's state is visible to the user.** Sign-out is the most common failure and
   costs a budgeted repair; a page that fails silently against it reads as broken.
-- **`opal-data-research` exists** -- **measured ABSENT on the live plane.** `C-RAW-BEFORE-DERIVED`
-  cannot hold until it does.
+- ~~**`opal-data-research` exists** -- measured ABSENT on the live plane.~~ **RESOLVED 2026-09-11
+  -- THE BUCKET EXISTS.** Measured on the live plane at `2026-09-11T15:55Z`: `s3api head-bucket`
+  returns rc=0, `arn:aws:s3:::opal-data-research`, region `us-east-1`; the negative control
+  `opal-data-research-nope-xyz` returns 404, so this distinguishes an existing bucket from a
+  resolvable-looking name. Independently measured by `3.0.0_SA_CVO~Z` at 15:44Z on the same day
+  (round-4 row `AMGT_RESAPP-Z-S5`) and re-read here on a second instrument.
+  **The brief's PART V measurement of ABSENT is NOT rewritten** -- it was correct when taken and is
+  SUPERSEDED by this later read, not falsified. `C-RAW-BEFORE-DERIVED` is no longer blocked on the
+  bucket's existence.
+  ⛔ **EXISTENCE IS NOT ACCESS AND NOT CONFIGURATION.** This read proves the name resolves and
+  nothing more -- not that the pipeline may read or write it, not its policy, versioning,
+  encryption or lifecycle. **The S6 cut RE-READS live identity and configuration and states
+  EXISTING-RESOURCE INTEGRATION, never an absent-bucket creation premise.**
 - **A decision on paywalled sources.** If analysis behind a login is in scope, the vision-
   authenticator pattern is the route; if public pages suffice, neither it nor the credential is
   needed. **Nobody has decided, and whether the login is captcha-gated is unknown.**
