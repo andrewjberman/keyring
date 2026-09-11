@@ -985,6 +985,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Spine v3: mid-round the spec AND the decomposition are FROZEN; the only off-spec act is a surprise row. CLAUDE.md L4-R: the L4 notifier withholds the COO delivery until CRO and CVO sign at the current prd_version.",
     "world_is": "The PRD advanced four versions during the round on Andrew's word at the CRO terminal; the delta is measured vendor behaviour that one un-handed cell would otherwise build against wrongly. The amendment carries measured shapes into that face without touching its rectangle, the decomposition or any handed face.",
     "notes": "Recorded so the CVO's L8 compile and the CTO's L10 read see the decision and its scope in one place: amended IB-s-9 only; IB-s-8 (complete), IB-s-16 and IB-s-17 (B16/B17 deltas) carried to round 2. The v0.8 cloud packet is named as read-only reuse, never as a write surface."
+  },
+  {
+    "id": "IRPT_BCKEND-S12",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T03:24:38Z",
+    "one_line": "PRD v0.9 @86bde3ea26 (1.0.0_SA_CTO 95756, Andrew-direct ~03:1xZ: the proven YCharts cloud chain is FWD-4's FIXED mechanism, same shape as the 09-10 runner-STYLE constraint) folded into the un-handed IB-s-9 face as one more line of the S11 amendment: the generation transport IS the packet's cloud_transport.py extended (B9 BUILDS ON it), never a parallel transport and never the stopped-host SSM dispatch as the primary path; the Lambda holds the fenced session by name and replays REST; EC2 capture and fencing are B8's (round 2) and are stubbed here; v0.9's arm (5) -- Comparison and Multi-Comparison replayed LIVE -- is a live vendor call and stays the L10 qualified read on Andrew's per-use word. Consequence for the round the issuer states plainly: IB-s-8 (complete on v0.4, the stopped-host runner) is now the wrong mechanism by Andrew's word and is a round-2 RECUT, not a repair; IB-s-9's rectangle (seven-step chain, offline proof) is unchanged and the cell is still handed after IB-s-7 merges.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (folded same turn; the B8 recut is the CTO's L10 analysis)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T032054Z_1.0.0_SA_CTO_INFORMATION__IRPT_BCKEND_PRD_v0.9__86bde.md (msg 95756) -- 'the mechanism is FIXED, not a build choice'; 'B9 BUILDS ON cloud_transport.py; arm (5)'",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_031xZ_YCHARTS_CLOUD_PROOF_IS_THE_BACKEND_FLOW_FRONTRUNNER.md -- the record the CTO names",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-9.the-ycharts-generation-chain-as-an-opal-async-job.md (this commit) -- the v0.9 line inside the S11 amendment block; <status> still staged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition v0.1.1 s.8 bound 1: NO LIVE VENDOR CALL is authorized by this document; a live arm is an express qualification read by the CTO at L10 on Andrew's per-use word. IB-s-9 L5 note (v0.4): a Lambda dispatching to the runner host over SSM when live.",
+    "world_is": "Andrew fixed the mechanism as the browserless Lambda replay of a fenced session; the v0.4 SSM-dispatch primary path is superseded and IB-s-8's runner host is the wrong seat for it. The face now reads the Lambda replay as the primary path on the replay transport; nothing live is run in this round.",
+    "notes": "Andrew's word reached this lane as a mechanism constraint through the CTO, not as a per-use live-call authorization; it is relayed at exactly that scope (CLAUDE.md s.2: never convert Andrew's word to one agent into a gate or a widening on another)."
   }
 ]
 ```
