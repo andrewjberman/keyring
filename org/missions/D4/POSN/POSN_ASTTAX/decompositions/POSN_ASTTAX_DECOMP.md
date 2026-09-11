@@ -87,6 +87,35 @@ already passes cannot grade the fix** -- so FWD-1's cells must assert the unknow
 
 ## 2. THE RECTANGLE -- 7 cells over the PRD's 3 engine rows
 
+### ⛔ CELL IDS -- AMENDED 2026-09-11 ~05:4xZ, AND THE AMENDMENT IS A GATE REFUSAL, NOT A PREFERENCE
+
+This decomposition first named its cells `S1-a` .. `S3-a`. **`.tools/to-pipeline-gate.py` REFUSED the
+round-1 issuance on it**, ten times over -- once per criterion -- with *"names 'S1-a', which is not a
+cell id by the decomposition grammar"*, plus the deeper line: *"decomposition ... carries no cell id by
+the grammar -- cell references graded on grammar only"* and *"issuance coverage not graded."* So the
+readable names were not merely unconventional: **they made the coverage limb unable to grade anything,
+which is the check that exists to stop a cell being cut into no order.**
+
+The grammar is `CELL_ID_RE` in `.tools/to-pipeline-gate.py:189` (shared with
+`.tools/proof-of-spec-check.py`): `[A-Z][A-Z0-9]*-(?:m-[a-z0-9_]+|[a-z]{1,4}-[a-z]?\d+)` and friends.
+Tested rather than assumed -- `S1-a` REFUSED, `AT1-s-1` VALID, and an existing estate id of the `OP4-s-<n>` shape VALID as the positive control.
+
+**`AT1` = Asset Taxonomy, round 1**, matching the estate's `OP4-s-<n>` house style. The readable names
+are KEPT as prose labels because they carry the meaning; the id is what the machinery grades.
+
+| cell id | readable name | PRD surface row | outcome |
+|---|---|---|---|
+| **`AT1-s-1`** | S1-a MAKE ONE PLACE THE ONE PLACE | S1 | FWD-5 |
+| **`AT1-s-2`** | S1-b FIVE-CLASS VOCABULARY | S1 | FWD-1 |
+| **`AT1-s-3`** | S1-c UNKNOWN IS VISIBLE | S1 | FWD-1 |
+| **`AT1-s-4`** | S1-d VOL / HEDGE / COMMODITY REASSIGNMENT | S1 | FWD-2 |
+| **`AT1-s-5`** | S2-a CANONICAL ORDER | S2 | FWD-3 |
+| **`AT1-s-6`** | S2-b CANONICAL COLOR | S2 | FWD-4 |
+| **`AT1-s-7`** | S3-a SURFACES READ, NEVER RE-DERIVE | S3 | FWD-6 |
+
+**COVERAGE RE-STATED ON THE IDS:** 7 cells, 6 outcomes, `AT1-s-2` and `AT1-s-3` both serving FWD-1 by
+design (two independent causes -- see §1). Declared 6 MINUS covered 6 = **0 uncovered.**
+
 ### S1 -- ETFClassifier: the one classification source (FWD-1, FWD-2, FWD-5)
 
 | cell | outcome | boundary | bound |
@@ -162,3 +191,22 @@ by the next seed run -- and would look like it worked until then.
 | the seed trigger, UNMEASURED | S1-a, this decomposition |
 
 **Push state:** LOCAL at authorship; `0.0.0_AB_MSTR~Z` holds all pushes.
+
+---
+
+## 6. ⛔ A TRAP THIS DOCUMENT WALKED INTO, RECORDED BECAUSE THE NEXT DECOMPOSITION WILL TOO
+
+**The gate scrapes cell ids from the WHOLE decomposition text, so a cell-id-shaped token written in
+PROSE becomes a DECLARED CELL of the decomposition.** The paragraph above originally cited a real
+estate cell id verbatim as a positive control. `.tools/to-pipeline-gate.py` then read this document as
+declaring **8 cells, not 7**, and refused the round-1 issuance for failing to cover a cell belonging to
+a different project entirely.
+
+The tell was in the gate's own line -- *"(8 cell ids, index)"* -- against a rectangle that names seven.
+**Re-scraping this file with the gate's own `CELL_ID_RE` printed the denominator and the offending
+token with its line numbers in one read**; guessing from the refusal text alone would not have found it,
+because the refusal names the MISSING cells, not the spurious one.
+
+**Rule for any future decomposition: never write a literal cell id of another project in prose.** Use a
+shape (`OP4-s-<n>`) or a slashed form. Verified: the shape form does NOT match the grammar, the literal
+does.
