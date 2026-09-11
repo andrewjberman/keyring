@@ -1,0 +1,149 @@
+{
+  "utc": "2026-09-11T21:25:02.938676+00:00",
+  "head": "bf4ab454f5a4649e0a9fcee9c01f9df43d66dd1d",
+  "network": "socket connect/connect_ex/create_connection denied before tests/imports",
+  "signoff_current": {
+    "halves": {
+      "ratified-text": {
+        "state": "SIGNED",
+        "by": "3.0.0_SA_CVO~Z",
+        "file": "3.0.0_SA_CVO~Z.json",
+        "detail": "current"
+      },
+      "brief": {
+        "state": "SIGNED",
+        "by": "4.0.0_SA_CRO~Z",
+        "file": "4.0.0_SA_CRO~Z.json",
+        "detail": "current"
+      }
+    },
+    "unreadable": [],
+    "admitted": true,
+    "hashes": {
+      "ratified-text": "4eb997ed71ee75583465ef4d6530c53bee98f0fb91b41431737f0c7daa4ece6b",
+      "brief": "7c533738184fd9fa7668123d3f3641265cf75bda6953c3c5efa4667b72e846ba"
+    },
+    "prd_version": "v0.5"
+  },
+  "signoff_without_lane_files": {
+    "halves": {
+      "ratified-text": {
+        "state": "STALE",
+        "by": "3.0.0_SA_CVO~Z",
+        "file": "3.0.0_SA_CVO.json",
+        "detail": "signed at prd_version v0.3; the ratified-text half's bytes have changed since (now 4eb997ed71ee) -- re-review is owed on this half only"
+      },
+      "brief": {
+        "state": "STALE",
+        "by": "4.0.0_SA_CRO~Z",
+        "file": "4.0.0_SA_CRO.json",
+        "detail": "signed at prd_version v0.4; the brief half's bytes have changed since (now 7c533738184f) -- re-review is owed on this half only"
+      }
+    },
+    "unreadable": [],
+    "admitted": false,
+    "hashes": {
+      "ratified-text": "4eb997ed71ee75583465ef4d6530c53bee98f0fb91b41431737f0c7daa4ece6b",
+      "brief": "7c533738184fd9fa7668123d3f3641265cf75bda6953c3c5efa4667b72e846ba"
+    },
+    "prd_version": "v0.5"
+  },
+  "signoff_changed_bytes_with_lane_files": {
+    "halves": {
+      "ratified-text": {
+        "state": "SIGNED",
+        "by": "3.0.0_SA_CVO~Z",
+        "file": "3.0.0_SA_CVO~Z.json",
+        "detail": "current"
+      },
+      "brief": {
+        "state": "STALE",
+        "by": "4.0.0_SA_CRO~Z",
+        "file": "4.0.0_SA_CRO~Z.json",
+        "detail": "signed at half_hash 7c533738184f; the brief half's bytes have changed since (now 1b4478af51f2) -- re-review is owed on this half only"
+      }
+    },
+    "unreadable": [],
+    "admitted": false,
+    "hashes": {
+      "ratified-text": "4eb997ed71ee75583465ef4d6530c53bee98f0fb91b41431737f0c7daa4ece6b",
+      "brief": "1b4478af51f23217aaa727a5edcbb17213b9603e61ae4292eeabccaf5c1342fa"
+    },
+    "prd_version": "v0.5"
+  },
+  "legacy_same_version_changed_bytes_synthetic": {
+    "halves": {
+      "ratified-text": {
+        "state": "SIGNED",
+        "by": "3.0.0_SA_CVO~Z",
+        "file": "3.0.0_SA_CVO.json",
+        "detail": "current"
+      },
+      "brief": {
+        "state": "SIGNED",
+        "by": "4.0.0_SA_CRO~Z",
+        "file": "4.0.0_SA_CRO.json",
+        "detail": "current"
+      }
+    },
+    "unreadable": [],
+    "admitted": true,
+    "hashes": {
+      "ratified-text": "4eb997ed71ee75583465ef4d6530c53bee98f0fb91b41431737f0c7daa4ece6b",
+      "brief": "1b4478af51f23217aaa727a5edcbb17213b9603e61ae4292eeabccaf5c1342fa"
+    },
+    "prd_version": "v0.5"
+  },
+  "universes": {
+    "3": {
+      "rows": 89,
+      "measured": 32,
+      "distinct": 32,
+      "aapl_us": 0,
+      "consumer_tickers": 32
+    },
+    "4": {
+      "rows": 89,
+      "measured": 34,
+      "distinct": 34,
+      "aapl_us": 0,
+      "consumer_tickers": 34
+    }
+  },
+  "producer_controls": {
+    "chatter_zero": {
+      "B": 0.0,
+      "A": 0.0
+    },
+    "chatter_spread": {
+      "B": 100.0,
+      "A": 0.0
+    },
+    "chatter_top_n": 10,
+    "price_rank": [
+      {
+        "ticker": "HIGH",
+        "score": 20.0,
+        "rank": 1,
+        "rank_sort": "00001"
+      },
+      {
+        "ticker": "LOW",
+        "score": -10.0,
+        "rank": 2,
+        "rank_sort": "00002"
+      }
+    ]
+  },
+  "pytest_rc": 0,
+  "pytest_output": ".....................................                                    [100%]\n37 passed in 0.18s\n",
+  "source_sha256": {
+    ".tools/prd_signoff_lib.py": "e24dc6bc93b4f73d04c41cd61bf2b4440d059f122ee1e3be85a6dfbfbb41143b",
+    "lib/research/metrics/chatter_axis.py": "a543dc74f9a5f27dac30a8f3c119acbb2c9a0b0dc23aa37d02338c9948c184c9",
+    "lib/research/metrics/chatter_gate.py": "78916b72983520fed4982393ce46ad7ef32f2c919cea784d08835a89a2a84adc",
+    "lib/research/watchlist/store.py": "741ac74b4f89a7676d82c365e25ac9913f0d7e88f0d6dfe83e39915317606afc",
+    "lib/research/watchlist/tests/test_watchlist.py": "2f66072c909db5bb79d3f8f9d66e84899de9d4a32ab81ace0c3f09eec19d0c0c",
+    "lib/research/price/axis.py": "4bdb108efd446dad5acd9886fb64b61cfcad60102f28c273dfcecf43e7794a06",
+    "integrations/bloomberg/research/price_axis_pull.py": "345adb527d12adeb8781b5e91d37b3da51e83e559ff133a164777a21666c03b1"
+  }
+}
