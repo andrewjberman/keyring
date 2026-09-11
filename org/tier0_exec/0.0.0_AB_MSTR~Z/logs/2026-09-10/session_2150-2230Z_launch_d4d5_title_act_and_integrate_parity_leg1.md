@@ -506,3 +506,37 @@ through process churn was FALSIFIED here by its own falsifiers: COO~Z had zero p
 COO~ZZZ's normal tool calls); Rio's working set 40,133 -> 40,152 -> 40,180 MB across 11 minutes (~4 MB/min,
 flat); Rio's parent created at boot, 33 h before the wedge. Not touched (SYSTEM, IT/vendor-managed, LD-0255
 alternative (a) rejected); Andrew has the numbers by push notification; the July escalation path applies.
+
+## AMENDMENT 12 -- 12:1x-12:3xZ: the BG seat's thread record swept twice, its roster instruction landed at three layers, the rename trap banked; the Rio leak re-measured at a different number and NOT flipped
+
+**The BG thread, closed on the seat's terms.** `0.0.3_BG_BBGTerminal` msgs 21355/21356 (both acked): my first
+sweep @2d8b5f7314 carried the 11:5xZ blob, and my sentence "the F2 update is in that blob" was an inference across
+a seconds-wide window, falsified by the seat's `git show` of the pushed blob beside a positive control (0 hits on
+three section titles; control 1). Second sweep @3f8aff81bd, on origin/SITEZ (ls-remote read). The durable home
+for "a capability roster is a self-report -- serve it only after exercising it" was the seat's to route and mine to
+decide: landed @2bdb49798c, on origin (ls-remote read), in the three-layer shape of @00b47a90c4 --
+`refs/TEAMS_DUTY.md` Reply norms (the mechanism, cost, non-application and the measured 22-day incident),
+`prompt.md` hard line (imperative), `bbg-teams-assist` SKILL step 4 (procedure); one carrier, two pointers.
+THREAD.md row 5 left to the seat, with the reason: `bg-concierge-gate.sh:148/:152` list `threads/` as writable
+and the enumerate over that file has no THREAD.md carve-out (11 hits, 0 naming THREAD.md), and rows 1-4 are in
+the seat's own voice; 21355 said the opposite, so I asked for the measured refusal rather than acting on the
+claim. Memory `a-rename-reads-as-an-add-under-diff-filter-a` banked (the seat cannot write memory, by fence);
+it also corrects the baseline pin in an older memory. Reply to the seat 12:30:05Z, 4,788 bytes delivered.
+
+**The Rio leak, re-taken at a different number and NOT flipped.** `2.0.0_SA_COO~Z` msg 21358 (acked): free
+4.1 -> 1.9 GB and Rio WS 39.54 -> 43.17 GB across 11:55Z-12:20Z. My own read at 12:26:57Z with a DIFFERENT
+instrument (`Win32_PerfFormattedData_PerfOS_Memory` + `PrivateMemorySize64`): available 2.2 GB, commit 93.1 of
+108.1 GB (the pagefile has grown to 45.7 GB allocated, 7.1 GB in use), Rio pid 5380 WS 43.3 GB / private
+54.5 GB. **Amendment 11's "~4 MB/min, flat" was true over its 11-minute window at ~11:4xZ, and that window was
+not representative** -- two seats now measure 5-9 GB/h. At that rate the commit limit is ~1.7 h away, after
+which every site-Z session is exposed to the OOM-kill wedge. The not-touch decision is a CLASS decision (SYSTEM,
+vendor-managed; LD-0255 alternative (a) rejected; LD-0255 names IT-side remediation as "outside fabric
+authority to act on unilaterally") and does not turn on the number, so it stands. The re-take is Andrew's:
+push-notified 12:2xZ with the numbers and the two options (Huntress agent restart; box reboot, which wipes the
+fabric and nothing respawns); the laptop MSTR told over the bus (MessageId
+ddf409e4-cc21-4504-aa7e-c21ee93e28aa, unacked at write time). Fabric-side until his word: no spawns from this
+seat, sparse worktrees, commit early. COO~Z's "0.0.0_AB_MSTR~Z holds pushes" for @f60de462ae answered: it rode
+the 12:1xZ push (`is-ancestor` of origin/SITEZ = YES after a fresh fetch). Reply 12:30:26Z, 3,620 bytes delivered.
+
+**Push state at the close of this amendment:** origin/SITEZ @2bdb49798c (ls-remote read 12:2xZ); this
+amendment's own commit follows it.
