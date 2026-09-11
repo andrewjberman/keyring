@@ -318,8 +318,19 @@ def render_status(header, cur_pin, stamps, signoffs, dep_stage=None):
             continue
         by_key[(doc["stage"], doc.get("round"))] = doc
     signed_now = _signed_reviewers(signoffs, ver)
+    # FORWARD-FROM-HIGH-WATER (regression fix, 3.0.0_SA_CVO~Z, found BY the first real stamp): NEXT is the
+    # first UNSTAMPED limb ABOVE the highest stamped one -- never the first unstamped from the bottom. A
+    # rung below a stamped rung is never pending; it predates the mechanism or already happened. The prior
+    # fix keyed suppression on ZERO stamps, but the hazard is unstamped PRE-MECHANISM limbs, and the two
+    # diverge the instant anyone stamps anything -- one stamp disarmed the guard while L4-L6 were unstamped
+    # and the render fell through to L4. The guard's precondition was not the condition it protected against.
+    stamped_stages = {k[0] for k in by_key}
+    high_water = max((STAGE_ORDER.index(s) for s in stamped_stages), default=-1)
+    hw_rounds = [k[1] for k in by_key if high_water >= 0 and k[0] == STAGE_ORDER[high_water] and k[1] is not None]
+    hw_round = max(hw_rounds) if hw_rounds else None
     next_stage = None
     for stage in STAGE_ORDER:
+        idx = STAGE_ORDER.index(stage)
         # for recurring stages, show the highest round present (or absent)
         rounds = sorted([k[1] for k in by_key if k[0] == stage and k[1] is not None])
         keys = [(stage, r) for r in rounds] if stage in RECURRING else [(stage, None)]
@@ -334,10 +345,13 @@ def render_status(header, cur_pin, stamps, signoffs, dep_stage=None):
             lines.append("  %-4s%-3s %-11s %-18s %s  %s  %s"
                          % (stage, rlabel, STAGE_LABEL[stage], doc.get("signed_by"), doc.get("utc"),
                             doc.get("prd_version"), "STALE-PIN" if stale else "pin OK"))
-        if not shown:
+        if not shown and idx > high_water:
             lines.append("  %-7s %-11s -- not stamped (owner %s)" % (stage, STAGE_LABEL[stage], STAGE_OWNER[stage]))
             if next_stage is None:
                 next_stage = stage
+        elif not shown:
+            lines.append("  %-7s %-11s -- no stamp, below the %s high-water (predates the mechanism or already "
+                         "past; NOT pending)" % (stage, STAGE_LABEL[stage], STAGE_ORDER[high_water]))
         # sign-off ladder sits right after L4
         if stage == "L4":
             for who in SIGNOFF_REVIEWERS:
@@ -365,7 +379,7 @@ def render_status(header, cur_pin, stamps, signoffs, dep_stage=None):
         pre_mech = True
         next_stage = None
         lines.append("  register: CLOSED -- unstamped limbs predate the stamp mechanism; they are NOT pending")
-    elif ds == "EXECUTING" and not by_key:
+    elif high_water < 0 and ds == "EXECUTING":
         pre_mech = True
         next_stage = None
         lines.append("  register: EXECUTING but ZERO stamps -- this PRD predates the stamp mechanism; the ladder "
@@ -375,11 +389,12 @@ def render_status(header, cur_pin, stamps, signoffs, dep_stage=None):
         missing = [r for r in SIGNOFF_REVIEWERS if r not in signed_now]
         waits = (" -- waiting on sign-off from %s" % ", ".join(missing)) if missing else " -- sign-offs complete; COO may decompose"
     if next_stage:
-        lines.append("NEXT: %s (%s) -- owner %s%s" % (next_stage, STAGE_LABEL[next_stage], STAGE_OWNER[next_stage], waits))
+        rlabel = (" round %d" % (hw_round or 1)) if next_stage in RECURRING else ""
+        lines.append("NEXT: %s%s (%s) -- owner %s%s" % (next_stage, rlabel, STAGE_LABEL[next_stage], STAGE_OWNER[next_stage], waits))
     elif pre_mech:
         lines.append("NEXT: not asserted -- see the register line above (this PRD predates the stamp ledger).")
     else:
-        lines.append("NEXT: ladder complete through L10 (round stamps recur per round).")
+        lines.append("NEXT: ladder complete through L10 for the stamped round (round stamps recur per round).")
     return lines, next_stage
 
 
@@ -480,6 +495,14 @@ def _self_test() -> int:
     check("render_status: EXECUTING WITH an L4 stamp -> mechanism in use, NEXT L5 (not suppressed)", lambda: nx == "L5")
     lu, nu = render_status(hdr, pin, {"L4.json": l4}, {}, dep_stage=None)
     check("render_status: dep_stage None + a stamp -> unchanged from pre-fix behavior (NEXT L5)", lambda: nu == "L5")
+    # REGRESSION GUARD (3.0.0_SA_CVO~Z, the first real stamp): a stamp mid-ladder must not make status
+    # report a limb BELOW it as NEXT. L8.r1 stamped, L4-L6 unstamped, EXECUTING -> NEXT is L9, never L4.
+    l8r1 = {"stage": "L8", "signed_by": "3.0.0_SA_CVO~Z", "utc": "2026-09-11T02:53Z", "prd_version": "v0.4", "prd_pin": pin, "round": 1}
+    lz, nz = render_status(hdr, pin, {"L8.r1.json": l8r1}, {"a.json": cro, "b.json": cvo}, dep_stage="EXECUTING")
+    check("render_status: L8.r1 stamped, L4-L6 unstamped -> NEXT L9 (forward from high-water), NOT L4",
+          lambda: nz == "L9" and not any(x.startswith("NEXT: L4") for x in lz) and any("below the L8 high-water" in x for x in lz))
+    lz2, nz2 = render_status(hdr, pin, {"L8.r1.json": l8r1, "L9.r1.json": dict(l8r1, stage="L9")}, {"a.json": cro, "b.json": cvo}, dep_stage="EXECUTING")
+    check("render_status: L8.r1 + L9.r1 stamped -> NEXT L10 round 1", lambda: nz2 == "L10" and any("NEXT: L10 round 1" in x for x in lz2))
     print("prd-stamp self-test: %d fail(s) of the arms above" % fails)
     return 1 if fails else 0
 
