@@ -5,7 +5,7 @@
  "project": "POSN_ASTTAX",
  "directive": "D4",
  "fabric": "site-z",
- "prd_version": "v0.4",
+ "prd_version": "v0.5",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -13,7 +13,7 @@
 }
 ```
 
-**Version:** v0.4, 2026-09-11 -- v0.1 first PRD; v0.2 folded in Andrew's Cottonwood satellite components (s.4 C-SATELLITE-DATA), on his direct "read the satellite file and fold it in as its necessary data for POSN_ASTTAX"; **v0.3 disambiguates C-VOL-HEDGE-STRUCTURED's "hedge products" from the legacy served value `asset_class=hedge`** -- a latent defect where the constraint, read against the live data, said the whole `hedge` bucket goes to Structured (found by 2.0.0_SA_COO~Z + 3.0.0_SA_CVO~Z); **v0.4 folds in Andrew's ETFClassifier PURPOSE ruling as C-CLASSIFIER-PURPOSE (s.4)** -- the registry is a curated tagging list, so the served TABLE is the one place, the dict a retired seed input, and equity-as-class must be distinguishable from equity-as-unknown-default (carried via 3.0.0_SA_CVO~Z C-S3 @`4275402ec2`). Each bump re-opens the two L4-R sign-offs. **Author** `1.0.0_SA_CTO~Z` (L4). **Brief:** the nomenclature
+**Version:** v0.5, 2026-09-11 -- v0.1 first PRD; v0.2 folded in Andrew's Cottonwood satellite components (s.4 C-SATELLITE-DATA), on his direct "read the satellite file and fold it in as its necessary data for POSN_ASTTAX"; **v0.3 disambiguates C-VOL-HEDGE-STRUCTURED's "hedge products" from the legacy served value `asset_class=hedge`** -- a latent defect where the constraint, read against the live data, said the whole `hedge` bucket goes to Structured (found by 2.0.0_SA_COO~Z + 3.0.0_SA_CVO~Z); **v0.4 folds in Andrew's ETFClassifier PURPOSE ruling as C-CLASSIFIER-PURPOSE (s.4)** -- the registry is a curated tagging list, so the served TABLE is the one place, the dict a retired seed input, and equity-as-class must be distinguishable from equity-as-unknown-default (carried via 3.0.0_SA_CVO~Z C-S3 @`4275402ec2`); **v0.5 folds in the `0.4.0_DT_ClientPlatform` GLD/VXX positioning brief as C-RETAG-SAFETY (s.4)** -- the retag of the commodity/hedge tickers is a production landmine (a fixed-key allocation dict KeyErrors and blanks the page for all four partner firms) until the positioning generator is hardened; Andrew-direct 2026-09-11 ~07:2xZ to fold it into POSN_ASTTAX. Each bump re-opens the two L4-R sign-offs. **Author** `1.0.0_SA_CTO~Z` (L4). **Brief:** the nomenclature
 transcript's substance, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4`.
 **Endpoint confirmed by Andrew** 2026-09-11 (see s.5). **Home note:** tree-homed at
 `org/missions/D4/POSN/POSN_ASTTAX/prd/` as `POSN_ASTTAX` (macro POSN), renamed from
@@ -146,6 +146,34 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
   Commodities} -> **Commodities**; Volatility -> **Structured** (VIXY, plus VXX currently mis-served
   `equity`). Reading this constraint as "the `hedge` bucket -> Structured" mis-files the six commodities
   and is the exact error to avoid.
+- **C-RETAG-SAFETY** (measured, `0.4.0_DT_ClientPlatform` brief
+  `docs/briefs/positioning-gld-vxx-satellites-20260911.md@46f7e03df8`; Andrew-direct 2026-09-11 ~07:2xZ to
+  fold into POSN_ASTTAX, via `0.0.0_AB_MSTR` msg 21263) -- ⛔ **THE RETAG OF THE COMMODITY/HEDGE TICKERS IS
+  A PRODUCTION LANDMINE UNTIL THE POSITIONING GENERATOR IS HARDENED; the round-2 SEQUENCE is load-bearing.**
+  `yang-generate-positioning/lambda_function.py` buckets weight into FIXED-KEY dicts --
+  `management_allocations = {'active','passive'}` (:228, :242-243) and an `asset_class` chain summing into
+  `{cash, fixed_income, equity, hedge}` (:368-369). A classification VALUE the dict lacks raises `KeyError`
+  in `calculate_allocations()` (called unconditionally at :1917/:1926 per model book): the generator dies,
+  `positioning_data.json` is not rewritten, and the page BLANKS FOR ALL FOUR PARTNER FIRMS.
+  - **`management_style` half -- ARMED and LATENT.** `management_style="unknown"` is a TRUTHY placeholder the
+    default-to-passive guard (:72 `value if value else default`, :81) CANNOT fire on; 187 of 285 rows carry
+    it, 0 of the 30 currently-held tickers do (the only reason the page works today). GLD, IAU, SLV, USO,
+    DBC, GSG -- every commodity/hedge instrument -- trip=TRUE; VXX is `passive` (trip=FALSE), which is
+    precisely why VXX works today. (`2.0.0_SA_COO~Z` independently verified: the unsafe six ARE the six
+    Commodities moves; VIXY, the Structured move, is the safe one.)
+  - **`asset_class` half -- the SAME shape, NOT yet measured.** Moving GLD `hedge`->Commodities or VXX
+    `equity`->Structured introduces asset_class VALUES the four-key chain may not carry. DT measured the
+    management_style KeyError; the asset_class KeyError is the same fixed-key pattern and a round-2 cell MUST
+    measure it against the generator before retagging, never assume it.
+  ⛔ **SEQUENCE (round 2): (0) HARDEN the generator -- treat `"unknown"` as falsy in the guard AND make both
+  allocation dicts tolerate an unexpected key (DT Step 3, the durable class fix); (1) set the affected
+  tickers' `management_style` to the factually-correct value (passive for a bullion trust) -- DT Step 1;
+  (2) verify the asset_class allocation chain carries the ratified FIVE-class vocabulary; ONLY THEN
+  (3) retag.** A retag before (0)-(2) leaves rows one allocation decision from blanking the page. This is
+  the SAME defect class as C-CLASSIFIER-PURPOSE(c) -- a placeholder value indistinguishable from a real one
+  -- at the `management_style` grain. ⭐ VXX is ALREADY correctly flowing into Satellites 70/80/90/98 via the
+  MODELS path (LT 1.5% / ULT 2.0%, `sub_asset_class` Volatility); POSN only retags VXX's served top-level
+  `asset_class`, and touches NO holding, weight or satellite placement.
 - **C-TWO-SURFACES** -- there are **TWO** surfaces that show asset classes: **Positioning**, and the
   **combined Philosophy / Capital-Market-Assumptions** view. (Andrew-direct 2026-09-11: Philosophy and
   CMA are the same page now.) Both must agree; FWD-6 is graded over the two.
@@ -175,6 +203,11 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
   folded in at v0.4 as **C-CLASSIFIER-PURPOSE** (s.4). It settles C-ONE-SOURCE (the served TABLE is the one
   place) and strikes "give the seed a trigger" / "account for the 169" from round-2 work (neither is a
   defect for a curated list a person extends).
+- **2026-09-11 ~07:2xZ, Andrew-direct (laptop terminal, relayed via `0.0.0_AB_MSTR` msg 21263):**
+  *"i need this brief sent over to sitez, specifically to CTO~Z ... this needs to get folded into the work
+  on POSN_ASTTAX"* -- the `0.4.0_DT_ClientPlatform` GLD/VXX positioning brief
+  (`docs/briefs/positioning-gld-vxx-satellites-20260911.md@46f7e03df8`), folded at v0.5 as
+  **C-RETAG-SAFETY** (s.4). It names a production landmine the round-2 retag must sequence behind.
 - **2026-09-11, Andrew-direct, VERBATIM:** *"Confirmed, just note that Philosophy/CMA are the same page
   now. Also this should likely be heavily involved with ETFClassifier."* -- confirming the six DONE WHEN
   bars (his reserved L2 step), and adding the two refinements now carried as C-TWO-SURFACES and
@@ -192,6 +225,14 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
 - Any surface's content beyond the asset-class breakdown itself.
 - The TAX SMA Teams thread (a second source Andrew named; deferred on "the transcript is fine for now"
   -- MAY refine scope at L4 if read, but does not block this PRD).
+- Whether GLD (or any instrument) is ADDED to Yang's MODEL HOLDINGS -- an ALLOCATION decision (Yang +
+  Andrew), not classification. POSN_ASTTAX classifies the registry rows; it does not decide holdings.
+- Adding GLD/VXX to the Bloomberg ETF daily pull for CHARACTERISTICS accrual -- `0.0.3_BG_BBGTerminal` /
+  site-Z's surface (the pull file is a Bloomberg-box working-tree deploy), NOT this lane. ⚠ TIME-SENSITIVE
+  (Bloomberg derived fields are current-day-only, no backfill; DT "step 0") -- CARRIED to Andrew / the BBG
+  lane, not a POSN cell.
+- The SPYM-duplicate-in-INT count defect and the VXX beta 0.9968 anomaly (DT brief, "found in passing") --
+  separate defects for the PKL-to-JSON owner; surfaced, not folded here.
 
 ## 7. SURFACE MANIFEST (step 4 -> step 5) -- one row per ENGINE
 
