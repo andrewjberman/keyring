@@ -1023,3 +1023,92 @@ spec is frozen mid-round.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W13-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~13",
+    "surfaced_at": "2026-09-11T21:58Z",
+    "one_line": "The order's BOUND tells this worker to MEASURE THE WORKTREE for seed-etf-constituents.py's uncommitted bytes, but a linked worktree has its own working files: in /c/tmp/wk-posn-t4 that file is CLEAN and its blob equals HEAD's, so the instructed measurement returns a false ABSENCE. The bytes exist only in the shared SITEZ working tree and in two committed carriers; I read them from the preserved patch instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED IN MY OWN WORKTREE: `git status --porcelain` returns EMPTY and `git diff --stat HEAD` returns EMPTY at branch wk-posn_asttax-3-4 @651ffd4f16. `git hash-object infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py` = d489a6107146d716e74dc49fac2cbf2b775a672b and `git rev-parse HEAD:infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py` = the SAME sha. Worktree and HEAD are identical for that path; there is nothing uncommitted here to read.",
+        "THE BYTES ARE REAL, JUST NOT HERE. The session-start `git status` of the SHARED tree on branch SITEZ lists ` M infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py`. A linked worktree created by `git worktree add` carries its own index and its own working files, so another tree's uncommitted edit is invisible in it BY CONSTRUCTION -- this is not drift and nothing is lost.",
+        "READ INSTEAD FROM THE COMMITTED CARRIER, which is the instrument the bound should have named: org/tier1_exec/1.0.0_SA_CTO/deliverables/at_risk_patches/seed-etf-constituents_UNCOMMITTED_20260911T1725Z.patch @651ffd4f16, retrieved with `git show HEAD:<path>` beside a negative control (a non-existent path returns rc=128 `fatal: path ... does not exist in 'HEAD'`, so the successful reads are not clean-empty mangles). That path is OUTSIDE this worktree's sparse cone, so it is readable only from the object store, never from disk.",
+        "WHAT THE PATCH CONTAINS, since the order asked to be told: TWO hunks against seed-etf-constituents.py, 13 insertions / 6 deletions, index d489a61071..01b2005690. (1) NAME_CORRECTIONS collapses the two cash lines -- the derived NAV-residual 'CASH' and the issuer-reported 'CASH&OTHER' -- into ONE canonical 'CASH': 'Cash & Cash Equivalents', citing Andrew-direct 2026-08-25 'it should always be managed the same way ... CASH for ticker, and Cash & Cash Equivalents for Name', on the stated ground that the producer now normalises both rows onto one ticker so CASH&OTHER no longer reaches the served artifact. (2) The batch put changes from `if v is not None` to `if v is not None and v != \"\"`, with a comment recording a MEASURED ValidationException: sub_asset_class backs a GSI and DynamoDB refuses an empty string for an indexed key attribute.",
+        "HUNK 2 IS LOAD-BEARING ON THIS CELL AND IS WHY THE BOUND WAS WORTH OBEYING: the same empty-string defect exists in seed-etf-classifications.py, the file this order DOES own, and I confirmed the constraint against the etf-classifications table itself (see POSN_ASTTAX-Z-W13-S2). Had I read only the committed producer I would have shipped a merge that still wrote sub_asset_class=\"\" and still could not complete a run."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-T4-1 BOUNDS: 'MEASURE THE WORKTREE, NOT JUST HEAD. seed-etf-constituents.py carries UNCOMMITTED bytes preserved at 5c9e329a21 (13 insertions / 6 deletions, another seat's, reviewed by nobody) ... the difference is invisible unless you look. Do not apply or commit those bytes; read, and say what you read.'",
+    "world_is": "In THIS worktree the file is clean and byte-identical to HEAD, so the instructed measurement (look at the worktree) returns ABSENCE rather than the bytes. The uncommitted edit lives in the shared SITEZ tree, which a linked worktree cannot see. The bytes were read from the committed preserved patch and are summarised in the evidence above; the bound's INTENT was satisfiable, its stated METHOD was not.",
+    "notes": "FORM, NOT SIGNIFICANCE. The trap is that the failure mode is INDISTINGUISHABLE FROM COMPLIANCE: a worker that runs `git diff` in its own worktree, sees clean, and reports 'no uncommitted bytes' has followed the bound exactly and learned nothing. ARMED because the next worker given the same bound reproduces it identically. A one-word remedy exists and is not mine to apply: name the preserved PATCH path in the bound instead of the worktree path."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W13-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~13",
+    "surfaced_at": "2026-09-11T21:58Z",
+    "one_line": "seed-etf-classifications.py at HEAD FAILS Rule 14's own commit gate: ruff reports 4 errors (F401 unused `import json`, plus F541 f-strings-without-placeholders at :80, :82, :86), so .tools/commit-gate.sh refuses the file as committed. I had to make an edit this order never named -- deleting the unused import -- for a durability change in that file to be committable at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED ON THE HEAD BYTES, NOT ON MY EDIT: the HEAD blob was dumped to .scratch/ruffctl/seed-etf-classifications.py (same filename, so per-file config resolves identically) and `python -m ruff check --target-version py39` on it returned rc=1 with 'Found 4 errors' -- F401 `json` imported but unused at :14:8, and F541 at :80:11, :82:11, :86:11.",
+        "AND ON THE LIVE PATH: `bash .tools/commit-gate.sh infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py ...` returned rc=1 with 'BLOCKED: ruff check failed on infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py' while my limb-B rewrite was in place and still carried the inherited import.",
+        "AFTER limb B2 removed the one inherited import, the same gate invocation returns rc=0, 'OK: pre-commit gate clean for 2 of 2 file(s)'. The three F541s needed no action: the rewritten tail replaced those lines outright.",
+        "SCOPE OF THE CLAIM: this says the FILE fails the gate, nothing about when or how it was committed. I did not measure the gate's own history and make no claim about it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md Rule 14: 'Every `.py` edit passes `.tools/commit-gate.sh` (py_compile + ds-precommit + ruff py39). Universal.' TO-T4-1 CLOSING OUT names one commit via safe-commit.sh and grants exactly five paths; it names no lint remediation.",
+    "world_is": "The file this order grants me is already non-compliant with that gate at HEAD, so ANY edit to it is refused until the pre-existing violation is cleared. The edit is inside my granted path and is the minimum that lets the ordered change land, so I made it and am recording it rather than letting it ride as an unexplained line in the diff.",
+    "notes": "FORM ONLY. Worth a row for two reasons beyond my own diff: a gate that is 'Universal' has at least one file in the tree that cannot pass it, which means the NEXT seat to touch this file pays the same unbudgeted tax; and a worker whose write grant did NOT include the offending line would have had to file this as BLOCKING instead. The removal is provably safe -- `json` appears nowhere else in the module at HEAD, and the applier refuses to remove it if it finds any `json.` or `json(` reference."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W13-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~13",
+    "surfaced_at": "2026-09-11T21:58Z",
+    "one_line": "The seeder at HEAD cannot complete a run at all: it writes sub_asset_class=\"\" for 16 of 136 tickers, and sub_asset_class is the HASH key of GSI sub-asset-class-index on etf-classifications, which DynamoDB refuses. The first such ticker (ACSG) is sorted index 0, so BatchWriteItem rejects batch 1 and ZERO items are written -- an accidental shield in front of the revert this cell exists to remove, and FIXING THE CRASH ALONE WOULD ARM IT.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_POSN_ASTTAX~13",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE INDEX EXISTS, MEASURED: `timeout 120 .tools/aws dynamodb describe-table --table-name etf-classifications` returns GSIs asset-class-index (HASH asset_class) and sub-asset-class-index (HASH sub_asset_class), AttributeDefinitions for asset_class/sub_asset_class/ticker, ItemCount 285.",
+        "THE CONSTRAINT, MEASURED ON THIS EXACT TABLE WITH A WRITE THAT COULD NOT LAND: a PutItem for a non-existent ticker ZZ_PROBE_T4 guarded by `--condition-expression \"attribute_exists(ticker)\"` (which cannot pass on an absent row, so no write was possible) carrying sub_asset_class=\"\" returned, verbatim: 'An error occurred (ValidationException) when calling the PutItem operation: One or more parameter values are not valid. A value specified for a secondary index key is not supported. The AttributeValue for a key attribute cannot contain an empty string value. IndexName: sub-asset-class-index, IndexKey: sub_asset_class'.",
+        "DISCRIMINATION CONTROL ON THAT PROBE: the IDENTICAL request with sub_asset_class=\"Commodities\" returned 'ConditionalCheckFailedException: The conditional request failed' -- so validation passed and only my condition stopped it. The empty string, not the request shape, is what the table refuses. Closed the loop afterwards: `get-item` for ZZ_PROBE_T4 returns no Item, so neither probe wrote anything.",
+        "THE POPULATION AND ITS DENOMINATOR, from the module at HEAD by ast.literal_eval: the seeder's all_tickers union is 136; 16 of 136 resolve ETF_SUB_ASSET_CLASS to \"\" (ACSG, BSCN, GARP, IBND, IXJ, JMUB, JPEM, JPMI, LDUR, MDY, SCHB, SHV, SMDV, SPLG, STIP, SYLD) and 37 of 136 resolve ETF_MANAGEMENT_STYLE to \"unknown\". Sorted positions put ACSG at index 0 and BSCN at index 8 -- both inside the FIRST 25-item batch.",
+        "REPRODUCED END-TO-END AGAINST A SCRATCH TARGET, never the live table (T4-AC3 arm 1): the real HEAD seeder bytes executed against an in-process scratch store that enforces the measured constraint raised that exact ValidationException with 'items written to scratch: 0, batches rejected: 1'. The six retag rows were UNCHANGED afterwards -- not because they are safe, but because the run died before reaching them.",
+        "WHY IT IS ARMED RATHER THAN GOOD NEWS -- arm 5 of the same control: with the crash lifted and the OLD seeder bytes, the seventh curated row reverts to \"unknown\" while the six survive only because limb A populated the map. Arm 2 (old bytes, crash lifted) reverts ALL SIX plus the seventh, 0 of 6 surviving. So the crash is the only thing currently preventing the revert, and the obvious next maintenance act -- 'the seeder is broken, let me fix the empty string' -- arms it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-T4-1 THE CELL: 'seed-etf-classifications.py does an unconditional full-item put over the whole ticker universe ... So a seed run rewrites management_style back to \"unknown\" on exactly the six rows AT2-s-5 corrected', and 'A deliberate manual run still reverts everything.'",
+    "world_is": "The put is unconditional exactly as stated, but a deliberate manual run TODAY reverts NOTHING: it aborts on the first BatchWriteItem with a ValidationException on sub_asset_class=\"\", having written zero items. The revert is real in shape and currently unreachable in practice. The cell's premise understates the defect in one direction (the producer is wholly non-functional, not merely dangerous) and overstates the immediacy in the other.",
+    "notes": "DISARMED IN THE SAME COMMIT THAT SURFACED IT, which is why I am named disarm_owner: limb B of this order drops empty values from the merged item, citing this measurement, so the seeder both RUNS and PRESERVES. The two had to move together -- closing the crash without the merge would have converted a dead script into a working revert, and closing the merge without the crash would have left a guard nobody could ever execute. Recorded because a future reader of the cell's premise will otherwise conclude the live rows were being reverted all along, and because the same empty-string defect in the SIBLING producer (seed-etf-constituents.py) is still only an uncommitted patch -- see POSN_ASTTAX-Z-W13-S1."
+  }
+]
+```
