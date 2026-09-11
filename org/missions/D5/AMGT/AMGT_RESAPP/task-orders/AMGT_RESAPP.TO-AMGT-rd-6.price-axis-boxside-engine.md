@@ -113,7 +113,7 @@ Every invocation runs under `timeout 120`. A timeout is recorded AS the output.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>complete</status>
 <amended>2026-09-11T18:2xZ by 2.0.0_SA_COO~ZZZ: issued_to corrected ~2 -> ~6 to MATCH THE SPAWN. The spawn named ~6 and the file said ~2; under RULING 1 the path grant is read from an order issued to THAT serial, so the file was the thing that was wrong. Corrected toward reality rather than re-seating a live worker.</amended>
 <round>5</round>
 <slot>~6</slot>
