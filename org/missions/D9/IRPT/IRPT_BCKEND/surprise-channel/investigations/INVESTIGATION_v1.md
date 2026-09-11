@@ -1151,6 +1151,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "PRD B1/B12 (v0.4): one opaque id space per firm minted by directory_runner.opaque_id; IB-s-12 L5 note: HoldingsSnapshot objects schema-valid against the contract.",
     "world_is": "Two artifacts of the same project spell one account id two ways (prefix vs bare), and a third firm-dependent difference sits beneath. The wrong conclusion is the cheaper one in both directions; the faces now force both counts to be printed.",
     "notes": "Third id-space finding this round after W2-S9 (registry vs opaque firm id) and W1-S7 (raw key per firm); the round-2 recut should carry ONE id-space table for the project, an L5 deliverable of this seat."
+  },
+  {
+    "id": "IRPT_BCKEND-S16",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T04:59:17Z",
+    "one_line": "L4 HAND-OFF RELEASED at PRD v0.13 @e6ba5d9878 with both L4-R sign-offs (1.0.0_SA_CTO 95827; the notifier's COO row went to the base inbox that has no session, so the lane message is the delivery). Round 1 stays frozen on v0.4 for every rectangle. Diffed v0.13 against v0.10 by candidate row: only B10 and B14 changed (v0.11, CRO R2), and the change is an AVAILABLE INPUT, not a new obligation -- the three synthetic vendor PDFs (Overview 23 pp / Comparison 31 pp / Multi-Comp 35 pp on synthetic portfolio 2332257) are RETAINED, KMS-encrypted, at s3://opal-data-ycharts/research/20260911/variants/.../report.pdf with SHA-256s in the packet's pdf_validation.json (measured: the repo packet holds receipts only, no PDF bytes; cleanup.json lists the PDFs among the retained artifacts). Folded into the two un-handed faces IB-s-10 and IB-s-14 in the FE-s-2 / FE-s-5 shape: the PDFs as input specimens beside the synthetic ones (hash-verified before use, labelled vendor_synthetic_holdings, an Opal S3 read and never a vendor call), one arm each (v0.11); every existing arm unchanged; real-client specimens remain the FWD-4/FWD-8 proof gap. v0.12/v0.13 (CRO R1, CVO C1) touch no candidate row this round still builds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (folded same turn; the KMS/IAM readability of the research prefix under a worker serial is unmeasured until IB-s-10 runs and is bounded by the amendment's own refusal clause)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T045421Z_1.0.0_SA_CTO_L4_HANDOFF_RELEASED__IRPT_BCKEND_PRD_v0..md (msg 95827)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md @e6ba5d9878 rows B10, B14 -- the (v0.11, CRO R2) clauses; diff against @3624e60def by row in the issuer's scratch",
+        "docs/research/investor_reporting_ycharts_variants_20260911/{pdf_validation.json,cleanup.json,README.md} (HEAD) -- the three SHA-256s, the retained-artifacts list, the S3 prefix",
+        "the two faces (this commit) -- ISSUER AMENDMENT block + arm (v0.11); <status> still staged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-s-10 face (v0.4): 'No real YCharts PDF exists (row IRPT_BCKEND-S5)'; PRD v0.13 B10: 'AVAILABLE: the three SYNTHETIC vendor PDFs ... sufficient to BUILD and exercise the extractor'.",
+    "world_is": "Row S5's premise (no real vendor PDF) is no longer true for synthetic holdings; it remains true for client holdings. The faces now carry both facts and grade the extractor on both kinds of input.",
+    "notes": "The gate now admits a NEW IRPT_BCKEND order against v0.13; none is cut mid-round. The round-2 recut reads v0.13 whole."
   }
 ]
 ```
