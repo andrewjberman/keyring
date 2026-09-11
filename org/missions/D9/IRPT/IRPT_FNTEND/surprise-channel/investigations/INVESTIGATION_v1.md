@@ -456,6 +456,53 @@
     "spec_asserts": "IRPT_FNTEND-W1-S6: ARMED -- a stale server holds a slot's assigned port, vite bumps the next worker to another port, and a port-keyed instrument reads the wrong tree.",
     "world_is": "A worker's background dev server outlives the worker; the issuer's teardown removed the worktree but not the process, and a directory held by that process resisted removal. The sweep by command line, not by port, is the control that sees them.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-10T21:50:00Z",
+    "one_line": "AnalysisTab.tsx (built per TO-FE-s-6) is not reachable from the running app: TabShell.tsx (FE-s-3, IMPORTED never edited per this order's BOUNDS) fills every tab body with StatusPanel and nothing else at this cell's HEAD, so ui-smoke's --click Analysis screenshots the generic status panel, never this cell's component tree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "TO-FE-s-6's WORKER FACE: 'Tab at portal/src/pages/InvestorReporting/tabs/analysis/AnalysisTab.tsx, mounted in TabShell's analysis body.' F6-AC6/F6-AC7 invoke ui-smoke against the LIVE route investor-reporting with --click Analysis, expecting the screenshot to show this cell's rendered tab (variants, request list, input review, stage, sections) for L9's F6-AC8 judgment.",
+    "world_is": "portal/src/pages/InvestorReporting/tabs/TabShell.tsx @HEAD of this worktree (branch wk-irpt_fntend-3-1-fe-s-6) renders `<StatusPanel tabId={activeTab} envelope={envelope} />` unconditionally below the tab strip for EVERY tab id, with no per-tab body switch; its own docstring states this directly: 'Each tab's body is a MOUNT POINT this cell fills with StatusPanel and nothing else ... tabs/reporting/, tabs/analysis/, tabs/holdings/ are later cells.' index.tsx's docstring names the same three mount points as StatusPanel-only. TabShell.tsx is not in this order's <paths> and is named in BOUNDS as 'IMPORTED, never edited', so this worker cannot wire AnalysisTab into it. Measured: `node scripts/ui-smoke.mjs investor-reporting .../fe-s-6_analysis_ready_1440.png --port 5183 --width 1440 --fixtures .../fe-s-6-ready.json --click Analysis` rc=0, CLICKED: Analysis, but the saved PNG shows only the tab strip and a white 'Ready / Updated 8h ago' StatusPanel -- no VariantSelector/RequestList/InputReview/StageDisplay/NativeSections/VendorPdfPreview/Export control anywhere; the tool's own FIXTURE-DEAD line names '/api/scoped/investor-reporting/analysis-report' as declared but never matched, confirming no code path in the running app calls getAnalysisReport. Built AnalysisTab.tsx and its six panels fully per spec and unit-tested them directly (renderToStaticMarkup through FixtureAdapter, F6-AC1..AC5 all PASS); the smoke screenshots (F6-AC6/F6-AC7) pass mechanically (rc=0, the named invocation ran) but cannot show this cell's UI until a later cell (owning TabShell.tsx, out of this order's grant) mounts it, which bears on what F6-AC8's L9 judgment can conclude from these two PNGs.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/TabShell.tsx @HEAD (branch wk-irpt_fntend-3-1-fe-s-6) -- return block: `<div className=\"pt-6\"><StatusPanel tabId={activeTab} envelope={envelope} /></div>`, no other element keyed on activeTab",
+        "portal/src/pages/InvestorReporting/index.tsx @HEAD -- comment 'Tab shell mount point -- FE-s-3's TabShell: the tab strip and the three StatusPanel mount points (reporting / analysis / holdings).'",
+        "comp-find content 'AnalysisTab' src/pages/InvestorReporting --all -> 'NO HITS. This is a MEASURED zero over 105 scanned file(s)' before this worker's own commit",
+        "node scripts/ui-smoke.mjs investor-reporting fe-s-6_analysis_ready_1440.png --port 5183 --width 1440 --fixtures fe-s-6-ready.json --click Analysis -> rc=0; stdout 'CLICKED: Analysis'; 'FIXTURE-DEAD (declared, NEVER matched): /api/scoped/investor-reporting/analysis-report'; saved PNG at org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/fe-s-6_analysis_ready_1440.png shows the tab strip plus a bare white 'Ready / Updated 8h ago' panel and nothing else"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED because the same gap sits under FE-s-5 (Reporting tab) and FE-s-7 (Holdings tab) too -- neither sibling holds TabShell.tsx either (slot ~1: tabs/reporting/ + portal/tsconfig.json; slot ~4: tabs/holdings/), so THREE cells this round can each build a fully-tested tab component that no live route ever mounts unless a later TO (owning tabs/TabShell.tsx) adds the three conditional mounts. Disarm is a COO-issued amendment mounting AnalysisTab/ReportingTab/HoldingsTab inside TabShell's per-tab body, keyed on activeTab, once all three land."
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-10T21:52:00Z",
+    "one_line": "TO-FE-s-6's ACT text asserts two fields the shared contracts file does not carry -- AnalysisRequest.inputRevision and ReportSection.parity.passed -- so F6-AC3/F6-AC4 are met by two FE-s-6-LOCAL extensions (tabs/analysis/correction.ts, tabs/analysis/parity.ts) rather than by reading a producer field.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-6 WORKER FACE: 'submitCorrection sends a NEW input revision through the typed client (inputRevision = current + 1)' and 'a section shows SUPPORTED only when section.parity.passed === true, otherwise UNSUPPORTED with the reason', both stated as if reading existing contract fields.",
+    "world_is": "portal/src/pages/InvestorReporting/contracts/index.ts (FE-s-1, out of this order's <paths>) defines AnalysisRequest with `corrections: readonly AnalysisCorrection[]` and no `inputRevision` field anywhere on the interface, and ReportSection with `sectionRef, kind, title, ordinal, values` and no `parity` field; the existing consumer fixtures analysisRequest.success.json / analysisReport.success.json (FE-s-1) confirm neither field is populated in practice either. The decomposition itself names the parity gap directly (IRPT_FNTEND_DECOMP.md section 7.8: 'That the three-variant Analysis PDFs exist. They do not; FE-s-6 renders UNSUPPORTED where the fixture lacks parity, and the gap stays named.'). Resolved INSIDE this order's grant: tabs/analysis/correction.ts derives inputRevision as `1 + corrections.length` (never stored, never mutated onto the original request) and tabs/analysis/parity.ts widens ReportSection with an OPTIONAL `parity?: { passed, reason }` that a real (unwidened) AnalysisReport.sections value satisfies with no cast, rendering UNSUPPORTED whenever the fact is absent -- the safe default named in this order's own BOUNDS.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/contracts/index.ts @HEAD -- `export interface AnalysisRequest extends ContractEnvelope { ... corrections: readonly AnalysisCorrection[]; stage: AnalysisStage; ... }`, no `inputRevision` member; `export interface ReportSection { sectionRef: OpaqueId; kind: string; title: string; ordinal: number; values: readonly ReportSectionValue[] }`, no `parity` member",
+        "portal/src/pages/InvestorReporting/fixtures/analysisReport.success.json @HEAD -- two sections, neither carrying a `parity` key",
+        "org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md section 7 item 8 (@8ace3a2596) -- 'That the three-variant Analysis PDFs exist. They do not; FE-s-6 renders UNSUPPORTED where the fixture lacks parity, and the gap stays named.'",
+        "portal/src/pages/InvestorReporting/tabs/analysis/correction.ts (this commit) -- `deriveInputRevision` = `request.corrections.length + 1`; portal/src/pages/InvestorReporting/tabs/analysis/parity.ts (this commit) -- `AnalysisSection extends ReportSection { parity?: SectionParity | null }`; `bun run typecheck` rc=0 with report.sections (typed ReportSection[]) passed directly into NativeSections's AnalysisSection[]-typed prop with no cast"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT: both extensions are additive, live entirely inside this order's <paths>, and degrade safely (an unwidened contract value renders UNSUPPORTED, never SUPPORTED, and a request with no corrections renders inputRevision 1) -- nothing outside tabs/analysis/ reads either name. Recorded so a future contract revision that adds real `inputRevision`/`parity` fields to contracts/index.ts is a KNOWN convergence point rather than a silent duplicate."
   }
 ]
 ```
