@@ -809,3 +809,91 @@ disarmed and why. Nothing here dispositions anything -- that is the CVO's L9 act
   }
 ]
 ```
+
+---
+
+## Rows appended by `0.9.0_WK_POSN_ASTTAX~12` at L7 (TO-T3-1, cell `AT3-s-3`), 2026-09-11
+
+Three rows from the hop-test of the two sibling consumers `TO-S7-1` enumerated but never tested.
+`W12-S1` reconciles the inherited hit counts. `W12-S2` and `W12-S3` are two DISTINCT two-class
+assumptions baked into `yang-generate-allocation-summary`, both ARMED against the retag this cell
+gates. Neither was fixed: this cell is READ-ONLY ON BEHAVIOUR by its own bound.
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-W12-S1",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~12",
+    "surfaced_at": "2026-09-11T17:56:00Z",
+    "one_line": "The inherited '67 hits / 32 hits' figures for the two sibling consumers are correct NUMBERS at the WRONG GRAIN: re-measured at 651ffd4f16 the two files carry 93 and 49 asset_class HITS, and 67 and 32 are exactly their DISTINCT-LINE counts. Nothing downstream is wrong; the word 'hits' is.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SPEC SIDE: TO-T3-1's cell text (org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-T3-1.hop-test-the-two-sibling-consumers.md@651ffd4f16) carries the fenced block 'yang-generate-allocation-summary 67 hits / yang-generate-holdings-attribution 32 hits', inherited from TO-S7-1. The order's own <preflight> declares this: 'the issuer inherits TO-S7-1's hit counts (67 and 32) as ITS figures at ITS vintage and has not re-derived them; AC1 re-takes both denominators independently.' This row is that re-take reporting back.",
+        "WORLD SIDE, INSTRUMENT 1 (comp-read, the AC1 invocation, run verbatim): allocation-summary 'ENUMERATE: 93 hit(s) across 378 lines / 8 section(s) scanned | 9 whole | 84 sub'; holdings-attribution 'ENUMERATE: 49 hit(s) across 696 lines / 14 section(s) scanned | 19 whole | 30 sub'. Both rc=0.",
+        "WORLD SIDE, INSTRUMENT 2 (deliberately DIFFERENT, so this is corroboration and not repetition -- raw substring-occurrence recount in the AC2 harness, which never calls comp-read): reproduces 93 and 49 as HIT counts ('RECONCILE vs T3-AC1 comp-read: allocation-summary expect 93, got 93 MATCH | holdings-attribution expect 49, got 49 MATCH') AND independently yields 'distinct lines carrying the token=67' for allocation-summary and '=32' for holdings-attribution -- the inherited pair, exactly, with no rounding.",
+        "SO THE RESOLUTION IS GRAIN, NOT STALENESS: 67 and 32 are the DISTINCT LINES that carry the token; 93 and 49 are the OCCURRENCES of the token. A line like ':173 qtd_asset_classes = aggregate_by_asset_class(' is 1 line and 2 hits, which is precisely where the two series diverge. No commit moved between TO-S7-1's read and mine that could explain a 26/17 drift, and none is needed.",
+        "WHY IT IS STILL WORTH A ROW RATHER THAN A SILENT CORRECTION: the figures travel as 'hits' into the round-3 cell text and would be compared, by the next reader, against a comp-read denominator that counts something else. A denominator certifies the SWEEP, never the SET (Rule 22) -- and here two correct sweeps of the same files disagree by 41 because they count different objects."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-T3-1's cell (inheriting TO-S7-1) asserts the two sibling consumers carry 67 and 32 asset_class HITS respectively.",
+    "world_is": "At 651ffd4f16 the files carry 93 and 49 asset_class HITS (comp-read, and an independent substring recount agreeing exactly). 67 and 32 are the DISTINCT-LINE counts of the same two files, reproduced to the unit by the second instrument. The inherited figures are right about the files and wrong about the unit; no measurement below this row depends on the inherited pair.",
+    "notes": "Filed by the worker whose AC1 re-take produced the divergence, per the order's bound that a divergence is a row. This CHANGES NOTHING in T3-AC2: the hop set was rebuilt from the files at my own vintage, not from the inherited counts. Stated for L9 so the round-3 record does not carry two incompatible meanings of the same number."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W12-S2",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~12",
+    "surfaced_at": "2026-09-11T17:56:10Z",
+    "one_line": "yang-generate-allocation-summary's own comment says Commodities is folded into Equity; its CODE has no Commodities branch at all and passes the value through as its own asset-class row -- which then draws policy_weight 0.0 from a fixed-key benchmark table, so the row renders with a 'bet' equal to its ENTIRE weight. The value survives; its economics do not.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SPEC SIDE, TWO PLACES IN THE CONSUMER'S OWN TEXT (infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-allocation-summary/lambda_function.py@651ffd4f16): :43-44 'Canonical two-asset-class model: Fixed Income and Equity only / (Cash folded into Fixed Income, Hedge/Commodities folded into Equity)'; and the function docstring at :237 'Canonical reclassification: Cash -> Fixed Income, Hedge -> Equity.' The first NAMES Commodities explicitly as a folded class.",
+        "CODE SIDE, THE SAME FILE :247-256, read in full: branches exist for ('fixed_income','fixed income') -> 'Fixed Income'; 'equity' -> 'Equity'; 'cash' -> 'Fixed Income'; 'hedge' -> 'Equity'; and then `else: asset_class = raw_asset_class`. There is NO Commodities branch. The else is a PASS-THROUGH, so the comment at :44 is false for the one class it names that the code does not handle.",
+        "MEASURED, NOT INFERRED -- a REAL call into the real module under sys.settrace (deliverables/0.9.0_WK_POSN_ASTTAX~12/ac2_hop_harness.py): five-class input ['Commodities','Equity','Fixed Income','Real Estate','Cash'] -> aggregate_by_asset_class(...,'INT') returns ['Fixed Income','Equity','Commodities','Real Estate']. Commodities SURVIVES as its own row and Cash correctly folds. The same call through the OUTER function generate_allocation_summary with a five-class S3 payload returns the identical INT/qtd row set.",
+        "THE ARMED PART, from the same measured run: BENCHMARK_ALLOCATIONS at :45-52 is a fixed-key dict carrying only 'Fixed Income' and 'Equity' per model, and :267 reads it as `benchmark_allocations.get(asset_class_name, 0.0)`. Measured output rows: name=Commodities style_weight=10.0 policy_weight=0.0 bet=10.0; name=Real Estate style_weight=10.0 policy_weight=0.0 bet=10.0 -- against Fixed Income -10.0 and Equity -10.0. `bet` is style_weight minus policy_weight, so every class outside the two-key table is rendered as a 100%-overweight position against a zero policy.",
+        "DISCRIMINATION: the harness carries a POSITIVE CONTROL -- a deliberately fixed-key reducer over the SAME five-class input returns ['Fixed Income','Equity'] and the harness reports it 'SILENTLY DROPPED'. So the instrument demonstrably CAN report a drop; it reports SURVIVES here because the value survives. And the two-class negative control returns ['Fixed Income','Equity'] with no probe present, so a pass is not an artifact of the probe being unfindable."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell AT3-s-3 asks whether either sibling 'buckets asset_class into its own fixed-key structure' such that a retag 'silently zeroes or mislabels there too'. yang-generate-allocation-summary's own comment at :44 asserts Commodities is folded into Equity.",
+    "world_is": "Neither claim holds as written. The code has no Commodities branch and passes the value through (:255-256), so Commodities is NOT folded into Equity -- it survives as its own row, and the comment at :44 is wrong. But the fixed-key structure the cell feared is REAL and sits one hop later: BENCHMARK_ALLOCATIONS (:45-52) carries only Fixed Income and Equity, and :267 defaults every other class to policy_weight 0.0, measured as Commodities bet=10.0 on a 10.0 weight. The retag will not ZERO the class; it will MISLABEL its policy economics.",
+    "notes": "ARMED against AT3-s-6, the retag this cell gates. The hazard is not visible today because no five-class value reaches this consumer in production; it fires the moment the retag lands and a Commodities/Real Estate ticker appears in holdings_attribution_data.json. NOT FIXED HERE BY DESIGN -- TO-T3-1's bound is READ-ONLY ON BEHAVIOUR, and a cell that fixes what it measures cannot report on it cleanly. disarm_owner is the issuer because the remedy is a scope decision (extend BENCHMARK_ALLOCATIONS to five keys per model, or accept 0.0 policy for satellite classes) that belongs to whoever cuts AT3-s-6, not to this worker."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W12-S3",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~12",
+    "surfaced_at": "2026-09-11T17:56:20Z",
+    "one_line": "Three separate sites in yang-generate-allocation-summary are shaped for EXACTLY two asset classes and silently change behaviour at five -- the symmetric-tilt block stops executing entirely (measured NOT-REACHED under five classes while REACHED under two), the sort key knows only two names, and the placeholder path emits a hardcoded two-row list. No exception, no log, no drop: the logic just stops applying.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SITE 1 -- :306-311 `if len(asset_classes) == 2:` guards the FI/Equity symmetric-tilt enforcement (`asset_classes[eq_idx]['bet'] = round(-fi_bet, 2)`). MEASURED by sys.settrace line coverage over the real module: lines 307, 308, 310, 311 appear in the executed set of the TWO-CLASS control run and are ABSENT from every five-class run. The harness reports them 'NOT-REACHED under five classes (runs ONLY on the 2-class / error path)'. The tilt enforcement is not wrong at five classes -- it is simply gone, with nothing announcing it.",
+        "SITE 2 -- :291-292 `asset_class_order = {'Fixed Income': 1, 'Equity': 2}` then `.sort(key=lambda x: asset_class_order.get(x['name'], 99))`. Every class outside the two named collapses to the same sort key 99, so their relative order is dict-insertion order, i.e. whatever order holdings happened to arrive in. Measured five-class output order: ['Fixed Income','Equity','Commodities','Real Estate'] -- correct-looking here only because insertion order happened to agree.",
+        "SITE 3 -- :339-341 generate_placeholder_data builds a hardcoded two-element asset_class_rows list ('Fixed Income', 'Equity'). MEASURED by calling it for real: rows = ['Fixed Income', 'Equity']. This is the path taken when the S3 read of holdings_attribution_data.json FAILS (:160-163 catch -> return generate_placeholder_data), so the degraded view can never show a five-class shape even after a successful retag.",
+        "SITE 4, same family, measured on a deliberately skewed run (weights summing to 89, hedge present) -- the renormalisation at :296-301 dumps the entire 11-point gap onto the single largest row: Equity style_weight 48.0 -> 59.0, bet -1.0, while Commodities (12.0) and Real Estate (9.0) keep policy_weight 0.0 and bets of +12.0 and +9.0. With two classes that gap had one sensible home; with five it silently concentrates on whichever row is biggest.",
+        "COVERAGE THIS RESTS ON, stated as a denominator rather than asserted: 88 of 88 enumerated hop lines across both consumers were reached by an executed run (A 60/60, B 28/28); 80 of 88 under five-class inputs specifically, and the 8 that are not are named individually -- :220-223 (the per-model except branch) and :307-311 (this row's site 1). Nothing is uncovered and unnamed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell frames the risk as a consumer that 'silently zeroes or mislabels' a retagged value, and asks per hop whether Commodities SURVIVES, RAISES or is SILENTLY DROPPED.",
+    "world_is": "The three-verdict frame does not have a slot for what this consumer actually does. Commodities SURVIVES every hop in both siblings -- 0 drop sites, 0 raises, measured. What happens instead is that four two-class-shaped code paths stop applying, and the value carries on looking healthy while the arithmetic around it quietly changes meaning. A hop-level SURVIVES verdict is true and, on its own, would be misleading -- which is why this is a row and not a footnote.",
+    "notes": "ARMED against AT3-s-6 for the same reason as W12-S2 and with the same owner, but it is a DISTINCT defect with a DISTINCT remedy: W12-S2 is a missing key in a data table, this is control flow gated on a class COUNT. Fixing one does not move the other, so they must not be collapsed into a single remediation. NOT FIXED HERE: TO-T3-1 is read-only on behaviour. Offered to L9 as an input to the retag's acceptance criteria -- a retag criterion that asserts only 'the class appears in the output' would pass in this world while the tilt logic, the ordering and the fallback view were all silently two-class."
+  }
+]
+```
