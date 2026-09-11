@@ -5,7 +5,7 @@
 
 **Date:** 2026-09-11
 **Task Order:** ad-hoc, Andrew-direct at this terminal (no TO; no registered project code -- the news-pipeline Lambda `opal-news-layer3-curation`)
-**Status:** COMPLETE -- code LIVE and verified end to end; both deploy ledgers CLOSED 5 of 5; the 21:15Z scheduled fire is the acceptance read; session closing for a device reboot
+**Status:** COMPLETE -- code LIVE and verified end to end; THREE deploy ledgers CLOSED 5 of 5 (the third, `news-layer3-backfill-headline`, fixes the pre-existing backfill defect on Andrew's word after the first close); the 21:15Z scheduled fire is the acceptance read
 **Workspace CLOUD commits:** `bc7514c173` -> `76dcff5718` -> `494b80e867` -> `b98f9a493a` (merge) -> `d8bb3ce2d5` -> `3e83049fe0` (SUPERSEDED, broken) -> `aa484f6b62` -> `06b6cef383` (LIVE)
 
 ---
@@ -219,9 +219,18 @@ a 4h window.
 
 ## Current State
 
-`opal-news-layer3-curation` is LIVE on `06b6cef383` (CodeSha256 `DA8R9OMHOhYTxI9Nc76SH1lcNsNoPTylQYSLv2RkPms=`,
-S3 version `EWfHWsCcPjRc2nGd.2W63g9a7xxxnfjC`, LastModified ~18:56Z), env `GPT_MODEL` and
-`ANALYSIS_GPT_MODEL` both `gpt-5.6-sol`, terraform 0-diff. It implements Andrew's write-from-the-sort
+`opal-news-layer3-curation` is LIVE on `d6913f1e9b` (CodeSha256 `bWvoG+WeKBa/b/S1NPHV2W1G2p16kZMZr+jXt9nrw1M=`,
+S3 version `a3tIkpIz9gUHzIo5KeGiwjWYY_T9oPCG`, applied ~19:31Z; supersedes `06b6cef383` / `DA8R9O..`),
+env `GPT_MODEL` and `ANALYSIS_GPT_MODEL` both `gpt-5.6-sol`, terraform 0-diff. `d6913f1e9b` adds the
+BACKFILL FIX (Andrew-direct "just fix the pre-existing defect"): backfilled topics get a GPT-written
+<=45-char headline from their lead CARRYING article plus the selection pass's relevance rejections,
+on the per-topic call backfill already made; a mechanical 45-char cap backstops it. Rehearsal 6
+(`2099-01-06`) proved it: same merge (10->7 / 10->8), 5 backfills, ALL with real headlines (max 42
+chars) where rehearsal 4's were 78-char raw titles; 0 drops, 0 citation warnings, 0 tracebacks.
+Deploying it took two attempts -- the first re-applied the previous bytes because a grep guard let
+the chain run past a failed sentinel commit and the build used HEAD~1; caught by comparing HEAD's blob
+sha to the live CodeSha256, redone with a hash-pinned build asserted against an independently computed
+expected sha (memory written). Ledger `news-layer3-backfill-headline` CLOSED 5 of 5. It implements Andrew's write-from-the-sort
 model: the direction is given, the headline is built from an article tagged CARRIES THE SORT and cited
 in `topline_source`, counterpoint goes in the body, and only NO_SUPPORTING_NARRATIVE (0 of 279 in 14
 days) can drop a topic. Rehearsal 4 on throwaway `date=2099-01-04` (log stream
@@ -249,8 +258,12 @@ upload the zip rebuilt from `494b80e867` (sha `HXl8HhPKq7CXFNX8KUkdfreYpj5quXBrg
 3. **[0.1.0_DS_MarketIntelligence] Commit `render_check.py` beside the Lambda** -- the check that
    caught today's regression must not live only in a scratchpad.
 4. **[0.0.0_AB_MSTR] Publish `06b6cef383`** -- integrator-only push; everything earlier is already on origin.
-5. **[0.7.0_AE_CloudOps] `backfill_from_layer2` emits raw article titles** -- unbounded, unfiltered;
-   surfaced not fixed; pre-existing and reachable whenever the selected set is short.
+5. **[0.1.0_DS_MarketIntelligence] Persist backfill provenance to the row** -- the wrapped topic's
+   `backfilled=True` and `topline_source_check` are not written to DynamoDB (the enrich step builds
+   the row from a fixed key set), so the LOG, not the row, is the evidence of which slots were
+   backfilled. Small follow-up; the backfill defect itself is FIXED (`d6913f1e9b`, see Current State).
+   Also unexercised live so far: `BLOCKED: RELEVANCE` and `HEADLINE_CAPPED` -- proven by the rendered
+   prompt and offline tests, watch for their first live firing.
 6. **[Andrew's call] Upstream fix in `news-trending-analysis`** -- label fidelity 44.1% under-half,
    40.9% self-contradicting clusters; multi-session, different Lambda, measured not started.
 7. **[0.1.0_DS_MarketIntelligence] Watch one week** -- the `MINORITY_SUPPORT` / `EVENLY_SPLIT` / `TOPLINE_SOURCE`
