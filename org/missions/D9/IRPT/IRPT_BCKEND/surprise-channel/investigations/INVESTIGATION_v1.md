@@ -1709,6 +1709,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Issuer amendment @812bbec0e9: every handler this cell ships is wrapped by _authz.guard(); IB-s-3 S3-AC2: whether the wrapper can be bypassed by a handler that forgets to use it -- and how a reader would detect that.",
     "world_is": "The detector IB-s-3 shipped found what it was built to find: three handlers written before the route table existed were mapped to routes after the fact and never revisited. Measured, not repaired, at the last cell of the round.",
     "notes": "The drain is closed: every worktree removed, every branch merged, HEAD f8860a4a4b. The drain-end read to the CTO follows this commit; the slug is the CVO's."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S11",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-11T12:41:18Z",
+    "one_line": "A FOURTH id-shape disagreement, found while moving the id space onto one normalizer (IB-rt-3): `_scope/resolve.py`'s `_OPAQUE_ID_PAT = re.compile(r'^[0-9a-f]{24}$')` -- the shape check `unmatched_reasons` uses to decide whether an ownership id was ever projected -- is a BARE 24-hex pattern, while the directory has always emitted `acc_` + 24 hex. MEASURED against the landed 49financial QA artifact at this cell's cut: 0 of 80 real directory account ids match the pattern. The consequence is NOT an authorization defect -- the check is only reached for an id the directory does NOT hold, so nothing was ever served wrongly and no permitted set was ever widened -- it is a DIAGNOSTIC inversion at exactly the seam row W2-S7 exists to explain: every genuinely-missing REAL id was reported as UNPROJECTED-ID ('you forgot id_projection') when the true reason was NOT-IN-DIRECTORY ('this account is not in this build'). A reason that is confidently wrong sends the reader to the wrong repair, which is worse than no reason at all. The same wrong shape was also WRITTEN DOWN as fact in `_scope/tests/fixtures.py` ('account ids are 24-hex, the shape directory_runner.opaque_id emits'), so every test reading that fixture agreed with the defect and none could see it. CLOSED BY THIS CELL, inside its own <paths>: the shape now comes from `_ids.is_issued('account', ...)` -- the one normalizer -- and the fixture ids are corrected to the real issued shape; 50 of 50 _scope tests and 27 of 27 _authz tests pass after both changes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured this turn: a bare-24-hex regex matched 0 of 80 account ids read from the landed artifact s3://opal-data-bd/investor-reporting/qa/directory/latest.json -> .../2026-09-09/directory.json (sample: acc_0a199b24742c36c24436fd42)",
+        "infra/aws/lambda/investor-reporting/_scope/resolve.py at 7478fdf144: `_OPAQUE_ID_PAT = re.compile(r'^[0-9a-f]{24}$')` and its only use, the `elif not _OPAQUE_ID_PAT.match(str(aid))` branch of `unmatched_reasons`",
+        "infra/aws/lambda/investor-reporting/_scope/tests/fixtures.py at 7478fdf144, line 13: 'account ids are 24-hex, the shape directory_runner.opaque_id emits (sha256[:24])' -- the fixture states the wrong shape as fact, which is why the suite agreed with the defect",
+        "data/assets/scripts/gold/investor_reporting/directory_runner.py opaque_id (round 1) and _ids/ids.py KINDS (this cell): the emitted id is kind[:3] + '_' + 24 hex, and always was",
+        "after the fix: pytest _scope/tests 50 passed; pytest _authz/tests 27 passed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The CTO's ruling 4 as this face carries it: 'Directory, holdings and performance ids through one admitted transformation (W1-S7, W1-S9, W2-S11)' -- three id-shape disagreements are named (the duplicate definition, the missing normaliser, the <firm>:acct: prefix).",
+    "world_is": "There was a FOURTH, unnamed disagreement in the same id space: the resolver's own shape check, and the fixture that documented it, both described a bare 24-hex id that no producer has ever emitted. It is closed by this cell because it sits inside this order's <paths> and is the same defect class the ruling names -- but it was not on the ruling's list, and it was invisible precisely because the test fixture asserted the wrong shape.",
+    "notes": "INERT: the branch is unreachable for any id the directory DOES hold, so no served answer was ever affected -- only the reason string on an already-missing id. Filed rather than fixed silently because the mechanism by which it hid (a fixture stating a shape as fact, so every test agreed) is worth the record independently of the one-line repair."
   }
 ]
 ```
