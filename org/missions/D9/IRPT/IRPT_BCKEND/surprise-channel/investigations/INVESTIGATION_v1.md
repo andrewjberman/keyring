@@ -1709,6 +1709,153 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Issuer amendment @812bbec0e9: every handler this cell ships is wrapped by _authz.guard(); IB-s-3 S3-AC2: whether the wrapper can be bypassed by a handler that forgets to use it -- and how a reader would detect that.",
     "world_is": "The detector IB-s-3 shipped found what it was built to find: three handlers written before the route table existed were mapped to routes after the fact and never revisited. Measured, not repaired, at the last cell of the round.",
     "notes": "The drain is closed: every worktree removed, every branch merged, HEAD f8860a4a4b. The drain-end read to the CTO follows this commit; the slug is the CVO's."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S14",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-11T13:40:00Z",
+    "one_line": "THE CLOUD RENDER IS HUMAN-GATED, and the reason is NOT that no host carries a browser -- it is that no host carrying one may be started by this cell. Three candidates, each measured: (1) a NEW export host needs `playwright install chromium`, egress off Opal infra refused at IB-s-8, and there is nothing internal to install from -- 0 of 317 objects in opal-313476888478-lambda-artifacts and 0 of 10 layer zips carry a Chromium or Playwright bundle; (2) irpt-ycharts-runner (i-0167fd745ad906a66) HAS the browser (the CRO drove Playwright on it for the 2026-09-11 variants capture) and is HELD STOPPED by aws_ec2_instance_state.runner, whose own root header says starting it is a live vendor call needing Andrew's per-use word -- a render is NOT a vendor call, but an operator seeing that host running cannot tell a render from the sign-in the control exists to gate, and that indistinguishability IS the control; (3) bd-49f-auto-login HAS the browser and hosting an IRPT render on the box that holds a Black Diamond firm session is the co-tenancy investor-reporting-ycharts/instance.tf refuses in writing, and neither its directory nor its root is in this order's <paths>. A FOURTH dependency is named so it is not discovered at the console: the counterpart's print entry point is an AUTHENTICATED APP ROUTE, so the host also needs a session the typed client can use -- a separate operator decision from starting a box. Everything around the render is built, deployed and proven on the served service; the render itself is one step, and RT8-AC1 (a) admits HUMAN-GATED as the arm's own rule.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B -- two acts disarm it and both are outside this order's grant: EITHER Andrew's word that starting irpt-ycharts-runner for a RENDER is not the gated sign-in (with the ycharts root amended to say so), OR a one-time image build on Opal infrastructure for a dedicated export host. The operator act is written verbatim in infra/aws/ec2/investor-reporting-export/README.md; IB-rtb-1's replay is where a rendered PDF would be graded",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lambda invoke irpt-export-render action=render_preflight, verbatim: decision=HUMAN_GATED, host irpt-ycharts-runner (i-0167fd745ad906a66) state=stopped, document_exists=true, with the three-command operator act returned as data -- the SERVED controller reads the world and refuses",
+        "infra/aws/terraform/investor-reporting/ycharts/instance.tf @7478fdf144 -- resource aws_ec2_instance_state.runner { state = \"stopped\" } and the header 'starting this host is a live vendor call and needs Andrew's per-use word'",
+        "s3api list-objects-v2 over opal-313476888478-lambda-artifacts: 317 objects, 0 matching chromium/playwright/chrome/headless; the layers bucket holds 10 zips and none is a browser",
+        "portal/src/pages/InvestorReporting/render/manifest.ts @edab15b54f -- RENDER_PACKAGE.runtime = 'browser' with the note that recharts draws only under a browser layout pass (IRPT_FNTEND-W2-S4)",
+        "portal/src/pages/InvestorReporting/render/PrintEntry.tsx @edab15b54f -- the print entry is the ROUTE /investor-reporting/print, which reads the bundle through the typed client, so the render needs an authenticated session as well as a browser",
+        "docs/research/investor_reporting_ycharts_variants_20260911/ec2_recapture_01.json -- the CRO's Playwright capture ran on that instance, which is how the browser got onto its volume without new egress"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The L5 note: 'the host runs the counterpart's RenderPackage print entry point in Chromium and writes the PDF ... If no existing host carries a usable browser without egress, that is ONE row and the render arm reads HUMAN-GATED naming the operator's act, never a silent skip.'",
+    "world_is": "A host DOES carry a usable browser. What no reachable host offers is a start this cell may perform without breaching a control it does not own or a co-tenancy the estate refuses in writing. The face's trigger condition and the actual blocker are adjacent but not identical, and the difference is stated rather than folded into the nearer wording.",
+    "notes": "The controller carries no ec2:StartInstances and no ec2:StopInstances by design: a function that could start a host held stopped by a declared control would make that control advisory. The whole gated surface is ONE step; the freeze, the persist-before-render, the version gate, the identity, the dispatch decision and the download all ran on the served service."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S15",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-11T13:40:00Z",
+    "one_line": "THE `irpt-common` LAYER IS A SHARED WRITE SURFACE AND TWO ROUND-2 CELLS ARE WRITING IT FROM DISJOINT BRANCHES. One S3 key (s3://opal-313476888478-lambda-layers/irpt-common.zip) and one terraform-managed aws_lambda_layer_version, named in both IB-rt-8's <paths> and IB-rt-3's. MEASURED: this cell uploaded a 637,134-byte zip at 12:55 and published it as version 4; at 12:59:37 the key held a DIFFERENT 631,060-byte object, and a member diff showed it carried IB-rt-3's python/ids.py and python/raw_keys.json while MISSING this cell's three export contract schemas and keys.py. Last writer wins on the key, and the loser's members vanish from the NEXT publish -- silently, because a layer version is immutable so the already-deployed functions keep working while the plan quietly proposes replacing the version with the other cell's content. This cell restored the key to match its published version (deleting nothing; S3 versioning keeps both), and by 13:3xZ a version 5 existed at 644,526 bytes whose runtime read is 5 of 5 contracts -- i.e. a UNION -- so the published digest can no longer equal any single cell's local build. The battery's arm (c) was rewritten to assert the RUNTIME READ rather than digest equality, because asserting equality would make a correct merged layer read as a failure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B -- the drain must rebuild irpt-common from the MERGED branch state (the union of each cell's CONTRACTS/MODULES/DATA lists) and republish BEFORE any further apply of the performance root, and IB-rtb-1's replay must re-read a capabilities invoke afterwards. Until then a plan on the performance root that proposes replacing the layer version must not be applied blind: it will publish whichever branch's zip happens to be on the key",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api head-object on irpt-common.zip at 12:59:37Z: ContentLength 631060, content-sha256 ZvfLP5IwnaROdfP0nplUZxzci13k2A8b3Abd/pmJ+2Q= -- neither this cell's 637134 / TjZRSAPsIAUdOB3pjGIU9dIBtnnEwW1jotd+8hXDfnE= nor the value its published version 4 carries",
+        "zipfile member diff, live object vs this cell's build: only in LIVE ['python/ids.py', 'python/raw_keys.json']; only in MINE ['python/irpt_contracts/ExportBundle.schema.json', 'python/irpt_contracts/ExportReceipt.schema.json', 'python/irpt_contracts/RenderPackage.schema.json', 'python/keys.py']; contracts in LIVE: only NarrativePacket and PerformanceReport",
+        "the live python/ids.py header names its own cell: 'IRPT_BCKEND -- THE ONE OPAQUE-ID NORMALIZER. Cell IB-rt-3 (CTO ruling 4, round 2)'; neither ids.py nor raw_keys.json exists anywhere in THIS worktree, so the two builds cannot produce each other's union from source",
+        "terraform plan on the performance root while the key was drifted: 'aws_lambda_layer_version.irpt_common must be replaced ... source_code_hash ... # forces replacement' -- an apply there would have published the other cell's content",
+        "after restoring the key: 'No changes. Your infrastructure matches the configuration.'; later, get-layer-version irpt-common:5 reads 644526 bytes and a capabilities invoke reads 5 of 5 contracts, so version 5 is a union"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The face's <paths> grants this cell infra/aws/lambda/layers/irpt-common/ and infra/aws/terraform/investor-reporting/performance/; the L5 note says the layer is 'rebuilt to carry all five IRPT contracts ... the performance and narrative functions re-pointed'.",
+    "world_is": "Two cells hold a write grant on the same single-object surface and neither can produce the other's content from its own branch. The grant is per-path and the CONFLICT is per-OBJECT, so nothing in the lane system sees it.",
+    "notes": "No content was deleted: the restore was a PUT of this cell's zip, and S3 object versioning retains the other. The deployed state is correct as of this row -- all three functions reference ONE version and its runtime read is 5 of 5 -- but that correctness is a property of who published last, not of any control."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S16",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-11T13:40:00Z",
+    "one_line": "THE ExportReceipt CONTRACT HAS NO SLOT FOR AN ATTEMPT ID, and the ruling asks the receipt to carry one. The CTO's ruling 5 and this face both say 'the receipt carries both plus the raw artifact digest' -- export_id, attempt_id and the digest. The contract admits two of the three: export_ref.export_id (now the LOGICAL identity, which is the load-bearing half) and artifact.sha256 (the raw digest). It cannot admit the third: the schema is additionalProperties:false at the ROOT and on EVERY nested object, including export_ref, whose properties are exactly export_id, bundle_id and bundle_sha256. Putting the attempt id in bundle_id would be a lie about a field named for something else. So attempt_id and attempt_number travel in the receipt's SIDECAR and in the stored object's metadata (irpt-attempt-id), where a reader can find them beside the artifact -- and the gap is recorded rather than papered over, because infra/aws/lambda/investor-reporting/_contracts/ is NOT in this order's <paths> and a contract edit is not this cell's act.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B -- adding `attempt_id` (and `attempt_number`) to ExportReceipt.export_ref is a one-field contract change on a SHARED contract, so it needs the counterpart's half as well as a cell that holds _contracts/ in its paths. Until it lands, any consumer that needs to know WHICH attempt produced a stored artifact must read the object's metadata, not the receipt",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_contracts/ExportReceipt.schema.json @7478fdf144 -- root additionalProperties:false; export_ref additionalProperties:false with properties ['export_id','bundle_id','bundle_sha256']; every other nested object likewise closed",
+        "ROUND_ANALYSIS.round1.md ruling 5 and this face's L5 note: 'the receipt carries both plus the raw artifact digest'",
+        "infra/aws/lambda/investor-reporting/export/handler.py finalize_export @this commit -- sidecar['attempt_id'] / ['attempt_number'] and object_metadata['irpt-attempt-id'], with the reason in a comment at the site",
+        "the persisted bundle object's live metadata, read back by the battery: {'irpt-attempt-id': 'ATT-...', 'irpt-bundle-sha256': '...', 'irpt-contract-version': 'investor-reporting_1', 'irpt-export-id': 'EXP-...'}",
+        "IRPT_BCKEND.TO-IB-rt-8 <paths> -- infra/aws/lambda/investor-reporting/_contracts/ is absent from the grant"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The L5 note: 'IDENTITY: export_id = the logical identity derived from (bundle_sha256, contract_version) ... attempt_id explicit per render; the receipt carries both plus the raw artifact digest'.",
+    "world_is": "A closed contract cannot carry a field the ruling adds to it. Two of the three facts fit; the third is carried beside the artifact instead, and the divergence from the ruling's wording is stated rather than absorbed.",
+    "notes": "The load-bearing half of the ruling IS satisfied: export_id is now stable across a byte-identical retry, which is what row W4-S12 was about. What is deferred is only where the attempt id is written."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S17",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-11T13:40:00Z",
+    "one_line": "THE ESTATE'S KEY GRAMMAR WAS NOT IN THE RUNTIME, and only a deployed invoke could see it. The export controller builds every S3 key through `_keys.s3_evidence_key` so a client name cannot become a path component; `_keys` lives one directory above the package and a Lambda zip is closed over its own directory, so the first submit on the served service returned `No module named 'keys'`. The 68 offline tests, the import-closure gate and the build all passed, because all three run where the whole package tree is on sys.path -- the same shape as rows W4-S7 (an assembled module that parsed and could not import) and W4-S11 (a repo-relative path that is an IndexError in /var/task). THE FIX IS THE LAYER, NOT A COPY: keys.py and data/firm_registry.json now travel in irpt-common at pinned commits beside the contracts, and IRPT_FIRM_REGISTRY names the packaged registry so nothing depends on the module's bounded upward walk. Copying keys.py beside each function would have put N definitions of one grammar in the estate, which is the defect the layer exists to prevent.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lambda invoke irpt-export-render action=submit, first deployed attempt: statusCode carried \"No module named 'keys'\"",
+        "infra/aws/lambda/layers/irpt-common/build_layer.py MODULES/DATA @this commit -- ('infra/aws/lambda/investor-reporting/_keys/keys.py',) and ('data/firm_registry.json','firm_registry.json'), carried by git show at a pin like the contracts; BUILD_MANIFEST records keys.py @3be9d03962 and firm_registry.json @1f54e16dfd",
+        "infra/aws/lambda/investor-reporting/_keys/keys.py _find_registry -- IRPT_FIRM_REGISTRY first, then a bounded walk, then a copy beside the module; the export function's env now names the first",
+        "after the layer rebuild and re-apply, the same invoke returns statusCode 200 with the bundle key firms/49financial/generations/GENRT8PROOF/attempts/1/exports/rt8-a/bundle.json built by the grammar"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Bound 13: 'Firm, client, relationship, account, report, export and job ids cross a function boundary as ISSUED opaque ids of a declared type'; the L5 note: the host writes the PDF to 'the bound firm's exports/<revision>/attempts/<a>/report.pdf'.",
+    "world_is": "A shared library a package imports is not in the package's zip. Three local instruments all run where it is on the path, so none of them can see the absence; the deployed invoke is the only oracle.",
+    "notes": "Third instance of one class in this slot's history (W4-S7, W4-S11, this). The generalisable form: any claim a module makes about its own ENVIRONMENT -- its depth in a tree, what is importable beside it -- is false in a Lambda and true everywhere a test runs."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S18",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-11T13:40:00Z",
+    "one_line": "THIS CELL'S OWN PROOF OBJECTS WERE THE CASE ITS EXCLUSION ARM EXISTS TO CATCH, for one run. The RT8 battery's submits write frozen bundles under generation GENRT8PROOF; that name does not end in SYN and was not in SYNTHETIC_GENERATIONS, and the controller was not yet stamping metadata -- so neither exclusion predicate fired on them, and an arm that censused only the ruling's GENIBS14SYN prefix would never have looked. Two fixes, and the second is the one that matters: the generation is listed, AND `handler.persist_bundle` now stamps irpt-synthetic=true from `exclusion.key_is_synthetic(key)`, so a synthetic generation labels its own objects without anyone remembering to pass a flag. The battery now censuses BOTH prefixes and reads 5 of 5 EXCLUDED_BY_BOTH.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rt_8.py run 4 arm (a): the persisted bundle's live metadata carried irpt-export-id, irpt-attempt-id, irpt-bundle-sha256 and irpt-contract-version -- and NO irpt-synthetic key",
+        "infra/aws/lambda/investor-reporting/export/exclusion.py @this commit -- SYNTHETIC_GENERATIONS = ('GENIBS14SYN', 'GENRT8PROOF') with the reason recorded at the constant",
+        "infra/aws/lambda/investor-reporting/export/handler.py persist_bundle @this commit -- if exclusion_mod.key_is_synthetic(key): meta['irpt-synthetic'] = 'true'",
+        "battery run 6 arm (e): 'prefix .../GENIBS14SYN/ 4 object(s)' and 'prefix .../GENRT8PROOF/ 1 object(s)', classification ['EXCLUDED_BY_BOTH'] x 5, and 4 of 4 readers admit 0 of 5 while the control shows export_status and download still admit an ordinary object"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RT8-AC1 (e): 'per production reader ... a test shows objects under GENIBS14SYN or with irpt-synthetic=true are excluded'.",
+    "world_is": "An enumerated generation list lapses the moment a new synthetic generation is created -- including one created by the very cell proving the exclusion. The metadata predicate is the half that survives a rename, and it only helps if something writes the metadata.",
+    "notes": "Recorded rather than quietly corrected because it is a measurement of the arm's own blind spot: the population an exclusion proof reads is chosen by the prover, and choosing it narrowly is how an exclusion proof passes over the objects it missed."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S19",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-11T14:05:00Z",
+    "one_line": "ROUND 1's RENDERER PRODUCED IDENTICAL CONTENT FROM THREE DIFFERENT BUNDLES, and its arm passed because the arm compared each PDF only to ITSELF. IB-s-14's (v0.11) built three Analysis exports from three DISTINCT bundles -- the battery printed bundle digests 38753e307c2e, 86c38f465c00 and 9f89d01d4fa7 -- and stored three objects. Read back from S3 in round 2: three DIFFERENT raw sha256, ONE normalized content hash (b646b23012...), and an identical decompressed content-stream length of 71,944 bytes. The three PDFs differ only in the creation date and the /ID the print engine stamps; their PAGE CONTENT is byte-identical. So the round-1 fixture renderer's output did not vary with its input, and A RENDERER WHOSE OUTPUT DOES NOT VARY WITH ITS INPUT CANNOT BE EVIDENCE THAT THE INPUT WAS RENDERED. Nothing in that arm could have caught it: each variant was graded on stored-hash-equals-receipt-hash, which is a claim about ONE object, and no arm compared the three to EACH OTHER. This is a measurement about ROUND 1's artifacts, not a defect in round 2 -- IB-rt-8 retires the fixture renderer from the render path (0 render-path modules, 0 of 10 packaged files reference it) for the independent reason that the counterpart's real RenderPackage is the render now.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "3.0.0_SA_CVO -- the finding bears on the GRADE of IB-s-14's (v0.11) arm and on FWD-4/FWD-8, whose proof gap that arm was narrowing; the grader decides what the arm established. The forward remedy belongs to whoever next renders: IB-rtb-1's replay should compare TWO renders of DIFFERENT bundles to each other and require the content hashes to DIFFER, which is the arm nobody has run",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IB-s-14_S14-AC1_battery_output.txt lines 135-148 -- three variants, bundle 38753e307c2e / 86c38f465c00 / 9f89d01d4fa7, three distinct keys, each 'stored hash equal True'",
+        "s3api get-object on all three keys under firms/49financial/generations/GENIBS14SYN/attempts/1/exports/ then sha256sum: 9aede5a23bd8889b..., 579b85d087e5babe..., 6954433a9efaecf9... -- three distinct raw digests",
+        "render.content_hash() over the same three objects: b646b2301237e6d3 for all three; sizes 41859 bytes for all three",
+        "zlib-decompressed content streams of all three: 71944 bytes each, and render.fonts_embedded() returns the same three subsets for each",
+        "IRPT_BCKEND.TO-IB-rt-8 arm (b) census @this commit: the fixture renderer is referenced by 0 render-path modules and 0 of 10 packaged files"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-s-14's (v0.11) arm: 'the three retained vendor PDFs are verified by digest and exported as Analysis bundles labelled vendor_synthetic_holdings' -- read as three exports of three inputs.",
+    "world_is": "Three exports of three inputs produced ONE rendered document three times. The digest chain was intact end to end for each variant separately, which is exactly why the constancy was invisible: every per-object check passed.",
+    "notes": "The general form, and the reason this is worth a row rather than a footnote: a per-member verification cannot see a property the members SHARE. Three arms each asserting 'this object's stored hash equals its receipt's' certify the set clean while the set is one document repeated. The discriminating check is a COMPARISON ACROSS members, and it costs one equality test."
   }
 ]
 ```
