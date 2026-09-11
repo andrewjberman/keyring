@@ -1,4 +1,4 @@
-# POSN_ASTTAX -- ROUND 2 DECOMPOSITION: the curated-list reconciliation (5 cells)
+# POSN_ASTTAX -- ROUND 2 DECOMPOSITION: the curated-list reconciliation (7 cells)
 
 **archetype:** DIAGNOSE
 
@@ -200,3 +200,62 @@ is authored now and committed after the CLOSE line.
 against v0.1-v0.3 that genuinely happened there. Round 2 mints its own.
 
 **Push state:** LOCAL at authorship; `0.0.0_AB_MSTR~Z` holds all pushes.
+
+
+---
+
+## 6. AMENDED AT v0.5 -- TWO CELLS ADDED, AND THE RETAG IS NOW LAST BY MEASUREMENT
+
+`C-RETAG-SAFETY` (PRD v0.5 @`66ded3a0c5`, folding the `0.4.0_DT_ClientPlatform` brief on Andrew's direct)
+names a FOUR-STEP SEQUENCE. Subtracting it against the five cells above leaves **TWO UNCOVERED**:
+
+```
+  (0) HARDEN the generator (falsy "unknown" + both dicts tolerate an unknown key)   UNCOVERED -> AT2-s-6
+  (1) set management_style on the affected tickers                                  covered   -> AT2-s-5
+  (2) verify the asset_class chain carries the ratified FIVE-class vocabulary       UNCOVERED -> AT2-s-7
+  (3) THEN retag                                                                    covered   -> AT2-s-2
+```
+
+### `AT2-s-6` -- HARDEN THE GENERATOR (the durable class fix; NEW chain head, ABSOLUTE FIRST)
+### `AT2-s-7` -- VERIFY THE ALLOCATION CHAIN CARRIES FIVE CLASSES (gates the retag)
+
+⛔ **AND THE CONSTRAINT SAID THE `asset_class` HALF WAS "NOT YET MEASURED". IT IS NOW, BY THIS SEAT, AND
+IT CONFIRMS THE HAZARD AT THE SUBSCRIPT:**
+
+```
+  :221-226  asset_allocations = {'cash':0, 'fixed_income':0, 'equity':0, 'hedge':0}   FOUR FIXED KEYS
+  :207-209  classify_etf(ticker) -> registry_field(ticker,'asset_class','fixed_income')  RAW registry value
+  :239      asset_allocations[asset_class] += weight * 100        DIRECT SUBSCRIPT -- no .get(), no guard
+```
+
+A retagged HELD ticker returns `Commodities` or `Structured` from the registry, the subscript raises
+**`KeyError`**, `calculate_allocations()` dies (called unconditionally per model book), the generator
+never rewrites `positioning_data.json`, and **the page BLANKS FOR ALL FOUR PARTNER FIRMS.**
+
+⛔⛔ **AND THIS EXPOSURE IS NOT LATENT THE WAY THE `management_style` ONE IS.** That half needs GLD to be
+ADDED to the models -- an allocation decision nobody has taken. **This half needs only a RETAG of a
+ticker that is ALREADY HELD.** Per the brief, **VXX is already flowing into Satellites 70/80/90/98**, and
+`C-VOL-HEDGE-STRUCTURED` retags VXX `equity` -> `Structured`. On that reading the retag fires the
+KeyError **on the next generator run**, not one decision away.
+⚠ **`AT2-s-7` CONFIRMS VXX's HELD STATUS FIRST** -- the brief asserts it and this seat has not read the
+models payload. If VXX is NOT held, the exposure returns to latent; the sequence does not change either
+way, because `AT2-s-6` precedes the retag regardless.
+
+⭐ **SO `AT2-s-2` AS FIRST CUT WAS ITSELF THE LANDMINE, NOT MERELY ADJACENT TO ONE.** Round 2's original
+five cells would have let a worker retag six commodity rows and VXX with every mechanical criterion
+passing, and taken the page down. `AT2-s-5` (management_style) does NOT protect against this -- it is a
+different field and a different dict.
+
+**REVISED CHAIN -- the retag is now strictly last:**
+```
+  AT2-s-6  HARDEN THE GENERATOR        [ABSOLUTE FIRST -- nothing else may precede it]
+      |
+      +--> AT2-s-5  management_style SAFETY
+      +--> AT2-s-7  VERIFY FIVE-CLASS CHAIN  --> AT2-s-2  RETAG --> AT2-s-3  is_hedge()
+  AT2-s-1  UNKNOWN IS NOT equity   [independent]
+  AT2-s-4  THREE BLANK SUB ROWS    [independent]
+```
+**`fanout: 3 of 3 chains, cap 8`** (heads: `AT2-s-6`, `AT2-s-1`, `AT2-s-4`).
+**COVERAGE: 7 declared MINUS 7 covered = 0 uncovered**, re-run at v0.5 rather than carried from v0.4.
+
+⚠ L5 re-pins to v0.5 on this amendment. `AT2-s-2` must NOT be issued in the same wave as `AT2-s-6`.
