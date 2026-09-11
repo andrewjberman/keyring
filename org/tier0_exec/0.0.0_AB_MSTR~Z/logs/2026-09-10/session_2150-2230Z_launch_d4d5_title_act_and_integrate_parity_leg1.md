@@ -568,3 +568,43 @@ both terminals; not touched; nothing spawned.
 pushed @bbbf35c38e; `4.0.0_SA_CRO~Z`'s coverage-half sign @1b7a996c86 rode the next push. origin/SITEZ
 @84e4dfddcb (ls-remote read 12:4xZ). Audit-archive re-baseline still PARKED: `6560583fd5` not fetchable
 from origin/CLOUD (tip bed01b226a at 12:4xZ).
+
+## AMENDMENT 14 -- 13:3xZ: ANDREW-DIRECT "have everyone take /log of current state and ill reboot this device" -- the seat's /log, written for a successor with no context
+
+**The order.** Andrew-direct at this terminal ~13:3xZ, verbatim above; record
+`deliverables/ANDREW_DIRECT_20260911_133xZ_EVERYONE_LOG_CURRENT_STATE_DEVICE_REBOOT.md`. Broadcast same turn to
+the six seats the site-Z broker listed LIVE or last-live (`1.0.0_SA_CTO~Z`, `2.0.0_SA_COO~Z`, `2.0.0_SA_COO~ZZZ`,
+`3.0.0_SA_CVO~Z`, `4.0.0_SA_CRO~Z`, `0.0.3_BG_BBGTerminal`): log, commit, reply LOGGED @hash, no new work. The
+device at the order: 0.2 GB free, 100% load, Rio WS 43.56 GB (COO~Z msg 21379, 13:35Z) -- the box is AT the
+commit wall, not 1.7 h from it; Rio's own growth flattened and the last headroom went to other work.
+
+**STATE AT CLOSE, this seat.**
+- Push: origin/SITEZ @015b7e3892 at 12:47Z (ls-remote read); further pushes follow each seat's log commit and
+  are stated in amendment 15 if one is written before the reboot. Nothing of this seat's is LOCAL-only after
+  this amendment's own commit and push.
+- Parity: LEG-OUTSTANDING (the laptop's leg; CLOUD tip bed01b226a at 12:4xZ lacks site Z's commits since its
+  last merge). Not a defect; the laptop merges SITEZ on its cadence.
+- Audit-archive re-baseline: PARKED. Condition: `6560583fd5` (CTO's invoker fix, on top of `83b202ed7b`)
+  fetchable and on origin/CLOUD. Then: amendment 10 verbatim -- write
+  `org/audit/archive/sitez/.rebaseline-once` with the exact text `CTO ruling 2026-09-11 on MSTR 95950: chain
+  seeded from the laptop-origin legacy root; re-baseline from this device's live bytes`, commit on this serial
+  (lane GOVERNANCE_AUDIT), ONE live run of `python .tools/audit-archive-invoker.py` after 2026-09-11T22:32Z; the
+  mint line must read re-baseline with 0 pinned, non-zero = finding, stop. The watcher Monitor that carried the
+  park dies with this session; the successor re-checks the condition by hand at launch.
+- Rio.exe: NOT touched, by class (SYSTEM, vendor-managed, LD-0255 alt (a) rejected). The reboot resets the leak;
+  the first post-boot commit-charge reading is the new baseline, and the gauge to trend is COMMIT CHARGE vs
+  LIMIT plus Rio PRIVATE bytes, never working set (laptop bus 8cc91ee9; LD-0255 Amendment 2 @58b05f5506 on the
+  laptop carries site Z's row).
+- BG roster thread: CLOSED; instruction at `refs/TEAMS_DUTY.md` Reply norms bullet 2 (+ prompt.md, SKILL
+  step 4) @2bdb49798c and @84e4dfddcb; seat folder clean at 12:47Z. Andrew's 06:44Z attachment to the seat
+  stays unserved and his.
+- Codex launcher: `ajb2 <serial>` works on this device (profile dot-source; bun `codex.exe` ahead of the npm
+  shim on the user PATH); `1.0.0_SA_CTO~Z` and `3.0.0_SA_CVO~Z` ran as codex seats this session.
+- Messages: every inbox message opened this session is acked; none unanswered. Last bus MessageIds to the
+  laptop: ddf409e4, 3cd7db47, 34ed815b (all acked by `0.0.0_AB_MSTR`).
+
+**WHAT THE SUCCESSOR MSTR~Z DOES AT LAUNCH (after Andrew relaunches it -- nothing respawns on its own):**
+`/watcher` -> `/agentbus` -> `org/XXX.md` startup -> `git fetch` + `merge --ff-only origin/SITEZ` -> read this
+amendment -> re-check the audit park condition -> take the post-boot memory baseline -> census which seats
+Andrew relaunched (1pt process truth, never the broker alone) and hand each its own last log; spawn nothing
+without his word except by `/mstr-spawn` on its own charter.
