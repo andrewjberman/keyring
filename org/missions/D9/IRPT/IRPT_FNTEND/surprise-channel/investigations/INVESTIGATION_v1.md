@@ -769,6 +769,29 @@
     "spec_asserts": "TO-FE-s-10 F10-AC8 face: the DID-NOT-LAND print is an artifact of a route carrying a query string; a firm-scoped session renders the Investor Reporting page with one firm and no dropdown.",
     "world_is": "The print is a real client-side redirect from the firm access matrix, reproduced without the query string; no partner firm can reach the route today. The mechanical bar (rc=0) held and the PNG is faithful evidence of what a firm session gets, so the criterion stands as recorded; the face's explanation was wrong and the onboarding step is unowned.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S15",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T08:05:00Z",
+    "one_line": "FE-s-11 reported non-terminal (status blocked) with rows W1-S11 and W1-S12 ARMED, disarm_owner 3.0.0_SA_CVO. The issuer verified both by its own instruments and found a third defect the worker recorded but did not row: (a) W1-S12's crash is a resolve-scope ping-pong -- index.tsx keys the query on firmId, useFirmContext's [scope] effect fires while the re-keyed query is loading, resolves the undefined scope to 'global', which re-keys back to the cached one-firm answer, forever; two-firm scopes are stable, matching 3-of-3 / 2-of-2; (b) W1-S11's light tokens sit in a component nothing mounts; (c) the print route's smoke PNG reads 'rev-000401 is absent' because since FE-s-9 PrintEntry resolves reports through the typed client and fe-s-8-narrative.json serves only export-preview -- F9's print route was verified by bun test on resolveBundle, never by a smoke render, and F11-AC8's rc=0 bar could not see it. TO-FE-s-11 is amended (the round's only non-terminal order) to repair all three inside a three-file grant, with F11-AC5..AC8 re-barred on the instrument's own printed lines (CLICKED: <name>; CONSOLE[log]: REFS RESOLVED: 1 of 1) and F11-AC10 the whole set green. The ARMED standing of W1-S11 and W1-S12 is not disarmed by this row: the amendment retires their world_is condition on the worker's branch; the DISARM is the CVO's remediation row at L8 once the drain lands.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal (worker branch wk-irpt_fntend-1-7-fe-s-11 @c5c02964) src/pages/InvestorReporting/index.tsx:53-54 -- useQuery keyed on irKey('resolve-scope', ..., firmId); global/useFirmContext.ts effect deps [scope], resolveFirmSelection(candidate, undefined) returns 'global' (firms.ts: zero permitted firms -> 'global')",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-11_analysis_390.png @44e591e624 -- the portal's generic error boundary ('Something went wrong'), read by the issuer; fe-s-11_print_390.png -- 'This bundle was not rendered ... rev-000401 is absent'",
+        "fixtures/smoke/fe-s-8-narrative.json and fe-s-4-performance.json carry rev-000401 only INLINE under one key (investor-reporting/export-preview); export/resolveBundle.ts:148-195 fetches api.getPerformanceReport / api.getNarrativePacket and logs 'REFS RESOLVED: n of n'; scripts/ui-smoke.mjs:137 prints CONSOLE[<type>]: for --console matches, :257 CLICKED:, :275 CLICK-FAIL:",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-9.export-options-preview.md F9-AC9 -- the print path proven by bun test on resolveBundle, no smoke invocation of investor-reporting/print after the amendment",
+        "TO-FE-s-11 amended on the worker's branch this turn: <paths> + global/useFirmContext.ts, export/AppliedBranding.tsx, fixtures/smoke/fe-s-11-print.json; expected_criteria F11-AC1..AC10"
+      ]
+    },
+    "spec_asserts": "Issuer faces F11-AC5..AC8 (and F9's print-route coverage): rc=0 from ui-smoke is the mechanical bar for 'the <screen> at 390'. Spine mid-round: the sanctioned repair of a defect is an issuer amendment to a NON-TERMINAL order; an ARMED row disarms via its disarm_owner.",
+    "world_is": "rc=0 from ui-smoke is met by the error boundary and by the not-rendered panel alike -- a bar that cannot fail on the defect it was cut to catch (four criteria across two faces, this issuer's). The instrument prints discriminating lines (CLICKED:, CLICK-FAIL:, CONSOLE[log]: REFS RESOLVED) that the faces did not key on; the amendment keys on them. The crash reaches any real one-firm scope, not only the fixtures.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
