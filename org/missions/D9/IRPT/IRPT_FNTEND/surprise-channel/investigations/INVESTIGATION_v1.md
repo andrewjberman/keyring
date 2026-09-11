@@ -615,6 +615,27 @@
     "spec_asserts": "IRPT_FNTEND-W1-S7 (1): ARMED -- F5-AC9's required edit regresses the already-terminal F3-AC7; the DEV test set is red until one of them moves.",
     "world_is": "The mock registrations were the workaround for the alias gap; once the gap is closed they are the defect. The fix is the removal of the workaround and a real render, in the next order on the same slot, before FE-s-10 exercises the whole page. The alias mapping stays: it retires the workaround class for every remaining cell, which is why it was granted.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S11",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T04:10:00Z",
+    "one_line": "PRD v0.5 @fb5bb6e landed MID-ROUND: it changes candidate F5 (cell FE-s-6, the Analysis tab) to PRODUCE AnalysisRequest's browser request half per docs/research/investor_reporting_ycharts_variants_20260911/UI_CONTRACT.md (source S10) -- client from the header, accounts with a confirmable default and account numbers as labels, an immutable holdings snapshot_id, zero to five ordered comparisons by opaque catalog keys, variant resolved by comparison count and displayed, a stable per-click request_id, changed inputs as a new revision, job states polled from the Opal job record, needs-attention on WAF refresh. FE-s-6 was cut from v0.4 and is TERMINAL and DRAINED (workspace 883bfdff53, portal DEV 8fb4f15a); the spec is frozen for this round, so the v0.5 delta is ROUND-2 scope and rides the L10 read as the addendum a recut must cover. The message's read that FE-s-6 is un-spawned is behind the record.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO msg 95784 (2026-09-11T04:04:59Z) -- IRPT_FNTEND PRD v0.5 @fb5bb6e, coverage 35 of 35, F5 consumes the counterpart's Generate UI contract; L4-R re-opened; a NEW frontend order is refused until both reviewers sign v0.5",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-6.analysis-tab.md @883bfdff53 -- <status>complete</status>; instance VALID rc=0 re-run by the issuer at the drain; portal DEV 8fb4f15a carries tabs/analysis/",
+        "org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md L4 handoff -- a substantive PRD edit bumps prd_version and re-enters L5 through the notifier; CLAUDE.md Rule 27 -- mid-round the spec AND the decomposition are frozen, the only off-spec act is a row"
+      ]
+    },
+    "spec_asserts": "PRD v0.5 F5: the Analysis tab produces the browser request half of AnalysisRequest as the UI contract specifies, with the variant resolved by comparison count and job states from the Opal job record.",
+    "world_is": "The Analysis tab on DEV is v0.4's: variant selector, request list, input review and correction, stage display, native sections, over the v0.4 AnalysisRequest shape; it does not compose the UI-contract request (snapshot_id, catalog keys, request_id idempotency, variant=auto). No cell in this round's decomposition owns that delta, and cutting one mid-round is forbidden. The L10 read names the delta so the CTO's round-N analysis can send it back as a recut, under L4-R sign-off at v0.5.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
