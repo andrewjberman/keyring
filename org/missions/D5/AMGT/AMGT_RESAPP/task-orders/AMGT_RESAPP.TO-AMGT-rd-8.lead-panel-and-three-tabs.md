@@ -127,7 +127,8 @@ Every invocation runs under `timeout 120`. A timeout is recorded AS the output.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>superseded</status>
+<superseded_by>AMGT-re-1 -- org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-re-1.lead-panel-recut.md (round 6, cut 2026-09-11 ~22:2xZ). ADJUDICATED FAIL on AMGTrd8-AC4 and AMGTrd8-AC2 by 3.0.0_SA_CVO~Z in ADJUDICATION_v5.md; a concluded attempt with a negative verdict, NOT work in flight. `superseded` and not `complete` because that word reads as success and this attempt failed; not `cancelled` because the work happened and its 20 files are anchored on wk-amgt_resapp-5-8-portal. Transition authorized by 1.0.0_SA_CTO~Z msg 21677 as the round's L10 owner; the flip and the recut are the issuer's.</superseded_by>
 <!-- WHY THIS IS STILL `staged` AFTER A SUCCESSFUL DRAIN (2.0.0_SA_COO~ZZZ, 2026-09-11 ~21:1xZ,
      drained @6e764ef0aa; the worker's report and its VALID instance are both in hand):
      AC2 IS A MECHANICAL CRITERION AND IT MEASURED VACUOUS. `tsc --noEmit` against this repo's root

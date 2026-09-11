@@ -945,3 +945,82 @@ earlier rounds is exactly where that divergence hides.
 
 *(v0.6 cut 2026-09-11 by `2.0.0_SA_COO~ZZZ` -- the SURFACE round from @959ba3e947; sections 1-12 unchanged
 and FROZEN.)*
+
+
+## 14. ROUND 6 (v0.7) -- THE RECUT OF `AMGT-rd-8`, ONE CELL
+
+**Cut 2026-09-11 ~22:2xZ by `2.0.0_SA_COO~ZZZ` on `1.0.0_SA_CTO~Z`'s L10 assessment (msg 21677).**
+`AMGT-rd-8` was adjudicated FAIL on TWO criteria by `3.0.0_SA_CVO~Z` (`ADJUDICATION_v5.md`:
+`AMGTrd8-AC4` FAIL, `AMGTrd8-AC2` FAIL). ⛔ **AN ADJUDICATED FAIL IS A CONCLUDED ATTEMPT WITH A
+NEGATIVE VERDICT, NOT WORK IN FLIGHT** -- so L9 RELEASES the recut and `rd-8` does not wait for the
+slug. `rd-8` flips to **`superseded`**, never `complete`: that word reads as success and this attempt
+failed. The pointer is `AMGT-re-1`, the same shape `rd-3`/`rd-4` already carry @`64ce3b3c55`.
+
+### 14a. The cell
+
+| cell | rows | FWD | text | status | depends on |
+|---|---|---|---|---|---|
+| `AMGT-re-1` | S16 | FWD-15 | **THE SURFACE, RECUT.** Everything `AMGT-rd-8` was asked for, MINUS what it delivered, PLUS the four shape gaps L9 named and the two instruments it could not be graded on. Reads pre-computed rows from `opal-harvest-security-metrics`; never re-derives a ranking at render time. | OPEN | none -- `rd-5`, `rd-6`, `rd-7` are complete and drained |
+
+### 14b. WHAT THE RECUT CARRIES, AS A SUBTRACTION FROM L9's OWN FAIL TEXT
+
+⭐ **NOT re-derived from a summary.** `ADJUDICATION_v5.md`'s `AMGTrd8-AC4` reason names exactly what is
+present and what is missing, and 14b is that text partitioned:
+
+**ALREADY DELIVERED AT `e6057f26` AND NOT TO BE REBUILT** -- L9: *"the persistent panel, three tabs and
+header Print location are present"*. The recut KEEPS them. 20 files / 2,067 insertions are on branch
+`wk-amgt_resapp-5-8-portal` in the MAIN portal repo, anchored there by an explicit fetch before the
+`rd-8` teardown (row `Z-S21`). **THE RECUT STARTS FROM THAT BRANCH, NOT FROM AN EMPTY PAGE.**
+
+**THE FOUR SHAPE GAPS, verbatim from the grade:**
+1. *"Trending/Breakout are mapped ONE-TO-ONE to Chatter/Price instead of CROSSED controls"* -- the cell
+   says **Trending/Breakout x Price/Chatter**, a CROSS of two independent controls (four combinations),
+   not two labels for two axes.
+2. *"required `/api/scoped/amgt` adapters are not delivered"* -- and the battery's `comp-routes` finding
+   already named the auth-gated `/api/scoped/*` pattern as the precedent to follow.
+3. *"The StarredList iterates stored starred order, contrary to the report's producer-order filter
+   claim"* -- the starred set FILTERS the producer's ranked order; it does not re-order it.
+4. *"RankedChart is ticker-indexed and has no time-series implementation despite the stated automatic
+   second-day behavior"* -- the Chart view is over TIME, and it begins working on day two by itself
+   because `rd-5` writes a new `axis_date` daily.
+
+**THE TWO INSTRUMENT DEFECTS, WHICH ARE THE ISSUER'S AND ARE FIXED IN THE CRITERIA, NOT THE CELL**
+(rows `Z-S23`, `Z-S24`):
+- `rd-8` AC2 was an **ALWAYS-PASSES** criterion: `tsc --noEmit` against a `files: []` references-only
+  root examines ZERO source files, so it could not fail in the broken world. L9 did not detect a
+  failure -- `3.0.0_SA_CVO~Z` INJECTED a type error and watched the check MISS it.
+- `rd-8`'s render check rendered **FIXTURE components and a `PrintTriggerButtonReplica`** rather than
+  the actual route and action, so it measured a plane the claim is not about.
+
+### 14c. THE RULE THE SURVIVING CELLS ALREADY DEMONSTRATE, NOW BINDING ON THIS CUT
+
+⛔ **EVERY MECHANICAL CRITERION OF THIS CELL NAMES, INSIDE ITS OWN `<expect>`, WHAT AN UNINFORMATIVE
+RESULT LOOKS LIKE AND WHY THAT IS NOT MET.** Measured across round 5 (`Z-S24`): all FIFTEEN mechanical
+criteria of the five cells that PASSED carry such a clause -- `rd-1`/`rd-2` an explicit negative
+control (`...-NOPE-xyz`), `rd-5`/`rd-6`/`rd-7` an explicit false-zero refusal (*"a denominator of 0
+files scanned is OUT-OF-CORPUS and is NOT met"*). `rd-8`'s three carried none, and `rd-8` is the one
+that failed. ⚠ Stated as a CORRELATION with its mechanism named, not a controlled comparison: the six
+cells differ in subject, difficulty and how hard L9 graded them.
+
+### 14d. BOUNDS CARRIED UNCHANGED ONTO `AMGT-re-1`
+
+- **PORTAL IS FROZEN, both fabrics, PROD and DEV. COMMIT YES / PROMOTE NO.** Andrew ~15:0xZ.
+- **`Z-S16` STAYS PARKED, NOT DISARMED** -- the portal base is `DEV` + 19 un-merged `IRPT_FNTEND`
+  commits on a chain no branch contains. `1.0.0_SA_CTO~Z`: that is a bound on the eventual PROMOTE, NOT
+  on the cell, so it does not gate this recut. Un-parking needs the freeze lifted AND those 19 on
+  `DEV`; the freeze is Andrew's.
+- **C-SERVER-SIDE-RANKING**, the three Andrew shape decisions, the standing monitor/alarm moratorium,
+  no device-specific portal logic, no non-ASCII, and **no cell may grade an EXERCISED outcome REALIZED
+  on its own artifact** -- this cell makes FWD-15 REACHABLE; a PERSON must still have used it.
+- **NOT THIS CELL'S, and it must not be held behind it:** `C-S49`'s scheduler IAM/resource defect.
+  `1.0.0_SA_CTO~Z` measured it worse than the row states (`chatter-axis-schedule.tf:76` references
+  `aws_dynamodb_table.security_metrics`, declared ZERO times across the whole terraform estate; `:68`
+  and `:69` carry literal ARNs for a DELETED table) and REC'd `4.0.0_SA_CRO~Z` to sequence it as the
+  migration's unfinished consolidation. Independent surface; `AMGT-re-1` does not touch it.
+
+### 14e. The round axis
+
+- **ROUND 6 (v0.7, THE RECUT): ONE cell, ONE chain.** `AMGT-re-1`, no unmet dependency --
+  `rd-5`/`rd-6`/`rd-7` are complete and drained, and their outputs are what this cell reads.
+  **`fanout: 1 of 1 chains, cap 8.`** N = M = 1: one cell cannot be parallelised, and a second worker
+  on one portal surface is the two-builders collision this estate has already paid for twice tonight.
