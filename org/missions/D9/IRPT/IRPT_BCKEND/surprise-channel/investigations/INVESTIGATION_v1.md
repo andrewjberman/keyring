@@ -1803,6 +1803,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "TO-IB-rt-5 BOUNDS 8: 'id IRPT_BCKEND-W<your slot>-S<k> (a DS lane mints IRPT_BCKEND-D-S<k>)'.",
     "world_is": "These rows use the valid seat form IRPT_BCKEND-S<k>, continuing the channel's shared seat sequence from its measured max at write time rather than from a read taken earlier in the session.",
     "notes": "Fails LOUD rather than silently -- a D- id is refused by the row gate at commit -- so the cost is a round trip, not a bad record. Flagged because the instruction sits in a face template that other DS lanes will be handed."
+  },
+  {
+    "id": "IRPT_BCKEND-S29",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-11T12:43:56Z",
+    "one_line": "TO-IB-rt-5 contradicts itself: RT5-AC1(c) instructs a no-op CHANGE to a runner committed on the branch, while BOUNDS 1 of the same face says 'do not edit the runners'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO-IB-rt-5 RT5-AC1(c): 'A no-op change to a runner committed on the branch runs the push gate and reads MEMBER / deployed or verified, never SKIP-NOT-MEMBER'",
+        "TO-IB-rt-5 BOUNDS: 'Declare and mint; do not edit the runners.' and 'The DELIVERABLE names no runner edit'",
+        "resolved without editing either runner: the gate's own --commit-range path was run over the two REAL commits that added them (3654197107 IB-s-1, 2dbc92e956 IB-s-12) -- the identical input that read SKIP-NOT-MEMBER in round 1",
+        "both runs printed 'BUNDLE-ROUTED: <runner> -> bundle investor_reporting' with rc=0, and each run's sibling tests/*.py still printed 'SKIP-NOT-MEMBER ... 404' as an in-run negative control"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RT5-AC1(c) requires a new no-op commit touching a runner; BOUNDS 1 forbids editing a runner in this cell.",
+    "world_is": "Both are satisfiable at once only because the repo already contains commits that touch the runners. The gate's commit-range path over those historical commits is the same code path a fresh no-op commit would exercise, and it is a STRICTLY better discriminator: the input is byte-identical to the one that produced the round-1 SKIP-NOT-MEMBER finding, so the before/after comparison holds the input fixed and varies only the declaration.",
+    "notes": "Reported rather than silently resolved because the next seat handed this face template may take the literal path, edit a file another cell owns (IB-rt-3 / IB-rt-6 own the runners this round) and collide at the drain. No runner was edited by this cell."
   }
 ]
 ```
