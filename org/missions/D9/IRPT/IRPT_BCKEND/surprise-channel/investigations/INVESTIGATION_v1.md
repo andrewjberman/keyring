@@ -1175,6 +1175,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "IB-s-10 face (v0.4): 'No real YCharts PDF exists (row IRPT_BCKEND-S5)'; PRD v0.13 B10: 'AVAILABLE: the three SYNTHETIC vendor PDFs ... sufficient to BUILD and exercise the extractor'.",
     "world_is": "Row S5's premise (no real vendor PDF) is no longer true for synthetic holdings; it remains true for client holdings. The faces now carry both facts and grade the extractor on both kinds of input.",
     "notes": "The gate now admits a NEW IRPT_BCKEND order against v0.13; none is cut mid-round. The round-2 recut reads v0.13 whole."
+  },
+  {
+    "id": "IRPT_BCKEND-S17",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T05:14:36Z",
+    "one_line": "ISSUER RE-SEQUENCING at 05:1xZ on Andrew's question ('what's holding you up?'): the six remaining cells form ONE sequential chain through slot ~3 by the decomposition's edges (9 -> 10 -> 14 -> 16 -> 15 -> sb-3), so three slots idle while IB-s-9 runs. The edge IB-s-10 -> IB-s-14 exists for ONE arm, S14-AC1 (f) (the Analysis export renders IB-s-10's certified sections), and the IB-s-14 face ALREADY admits the fixture-sections path for it ('where IB-s-10's sections have landed on CLOUD; otherwise the fixture sections, and say which', arm (v0.11) at e34e09a88d), while its other six mechanical arms and its deploy depend on nothing un-merged (IB-s-13, IB-s-17 merged). IB-s-14 is therefore HANDED NOW to slot ~4 ahead of IB-s-10's merge: arm (f) and arm (v0.11) run on the fixture sections and SAY SO; the re-run on IB-s-10's real sections is IB-sb-3's replay (which already re-runs every deployed route) and is named there. The decomposition is not edited (frozen); the chain order is the issuer's L6 fan-out to re-derive, and this row is the record. The same reasoning does NOT free IB-s-16 (it consumes IB-s-9's job status shape and IB-s-14's receipts, both un-merged) or IB-s-15 (routes to Lambdas that do not exist yet).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (the fixture-vs-real sections distinction is printed by the worker and re-graded at the drain; the real-sections run lands at IB-sb-3)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md v0.1.1 s.5 (HEAD) -- edges IB-s-10 -> IB-s-14, IB-s-13 -> IB-s-14, IB-s-17 -> IB-s-14",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-14.export-bundle-freeze-render-worker-receipt.md @e34e09a88d -- arm (f) and arm (v0.11) with the fixture-sections clause; <status> staged with the cross-slot wait on IB-s-10 named",
+        "ListAgents 05:1xZ -- one worker subagent running (slot ~3, IB-s-9, started ~1 h earlier); slots ~1, ~2, ~4 idle"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-s-14 face <status>: 'becomes pending when the COO hands it over after IB-s-13 is terminal and merged AND IB-s-10 (slot ~3) is terminal and merged.' Spine v3 L6: fan-out derived from the decomposition's dependency chains.",
+    "world_is": "The wait on IB-s-10 guards one arm that the face already lets run on fixtures; holding the whole cell for it idles a slot for hours. Handed early with the substitution stated; the real-sections arm is the replay's.",
+    "notes": "Cost of being wrong: one arm re-run at IB-sb-3, which re-runs anyway. Cost of waiting: the export Lambda, its root, its ledger and six arms idle behind a sequential chain. Andrew's question was the trigger; the decision and its record are the issuer's."
   }
 ]
 ```
