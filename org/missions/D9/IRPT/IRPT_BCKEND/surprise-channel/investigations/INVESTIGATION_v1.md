@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 107 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-2-3 and CLOUD resolved as a strict UNION of both sides (102 ours + 102 theirs, 97 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 122 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-2-4 and CLOUD resolved as a strict UNION of both sides (116 ours + 103 theirs, 97 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -1554,6 +1554,222 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "FILED AS FORM, NOT SIGNIFICANCE: the worker had to choose between two readings the face gives equal standing, and a choice made silently is indistinguishable from not noticing. Nothing is blocked -- arm (b) passes on either reading's evidence because both counts are printed. IF THE OTHER READING WAS MEANT, the remedy is one more file (holdings-snapshot.response.schema.json) and a one-line change to the assertion that currently requires its ABSENCE; v1 is not frozen until this order's complete flip, so it is cheap now and a v2 afterwards."
   },
   {
+    "id": "IRPT_BCKEND-W2-S19",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T15:11Z",
+    "one_line": "ARM (a) CANNOT READ `0 of N` IN THIS LANE: three of the eleven handler-bearing routes dispatch to `irpt-status`, whose source dir `infra/aws/lambda/investor-reporting/ops/` and whose Terraform root `infra/aws/terraform/investor-reporting/ops/` are BOTH absent from this order's <paths>. The wrapper cannot be put on a handler this order may not open.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/routes.json @fa89acb5d3: three DECLARED routes carry handler `irpt-status` -- analysis-report (GET /analysis/{jobId}/sections), status-summary (GET /status) and status-job (GET /status/{jobId})",
+        "infra/aws/lambda/ci/lambda-source-map.json @fa89acb5d3: irpt-status source_dir = infra/aws/lambda/investor-reporting/ops, tf_file = infra/aws/terraform/investor-reporting/ops/lambda.tf",
+        "TO-IB-rt-2 <paths> @fa89acb5d3 lists directory/, performance/, ycharts/generate/, narrative/, export/ and the five matching terraform roots -- ops/ appears on NEITHER side",
+        "the census measured in this worktree over the REAL declared entry points: 11 of 11 routes unguarded, of which 8 are in this lane and 3 are irpt-status's"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-2 arm (a): '`unguarded_routes()` over docs/contracts/investor-reporting/v1/routes.json at HEAD reads `0 of N` (N = handler-bearing routes, printed)'. The L5 note names the population as 'every route's integration target ... every targeted function's entry point is wrapped'.",
+    "world_is": "N = 11 and 3 of the 11 targets are `irpt-status`, which this order does not grant. The best reachable in-lane result is `0 of 8` with the other 3 named and attributed; the whole-file census reads `3 of 11` unguarded and cannot read zero without a grant this order does not carry. The preflight's own rule is followed: 'a path you need that is not listed is a BLOCKING row, never an override.'",
+    "notes": "NO OVERRIDE TAKEN AND NO ops/ FILE READ FOR EDIT. Two shapes the issuer may choose between, stated without preference: (i) extend this order's <paths> with ops/ and terraform/investor-reporting/ops/ so the eleventh route and its two siblings can be guarded here; (ii) leave the three with their own cell and re-cut arm (a)'s denominator to the handler-bearing routes THIS order may open, printed beside the whole-file number. The battery prints BOTH numbers either way, so the evidence does not depend on the choice."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S20",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T15:11Z",
+    "one_line": "THE REAL CENSUS READS 11 OF 11 UNGUARDED, NOT 6 OF 11: every one of the six dispatched functions' DECLARED entry point is unwrapped at HEAD. The face's inherited `6 of 11` counted a table the round-1 battery had partly wrapped itself -- row W1-S10's own lesson, recurring inside the summary that records it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured in this worktree at fa89acb5d3: each route's handler resolved from lambda-source-map.json (source_dir + tf_file) and that Terraform file's own `handler = \"<module>.<attr>\"`, the module imported by path, `_authz.enforce.is_guarded(fn)` read on the resulting callable",
+        "result: directory-search, resolve-scope, performance-report, analysis-requests, analysis-report, narrative-packet, status-summary, status-job, submit-export, export-receipt, export-download -- guarded=False on all 11",
+        "`unguarded_routes()` verdict over that table: 'BLOCKED: 11 of 11 route(s) reach an unguarded handler'",
+        "TO-IB-rt-2 'WHAT ROUND 1 DELIVERED' @fa89acb5d3: 'the round-1 replay's measurement 6 of 11 unguarded (three known: IB-s-1 directory x2, IB-s-11 performance; three new: analysis, narrative, export status)'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-2: 'the round-1 replay's measurement 6 of 11 unguarded', with five routes implicitly already guarded.",
+    "world_is": "0 of 11 are guarded. The five the summary treats as already-done (analysis-report, status-summary, status-job, submit-export, export-receipt/download) are not: their declared entry points carry no `__irpt_guarded__` mark. The work is LARGER than the face's summary, not smaller, and nothing is being skipped on the strength of the old number.",
+    "notes": "WHY THE OLD NUMBER WAS WRONG IN THE SAFE DIRECTION AND STILL DANGEROUS: a census over a route table the measuring battery populated itself reads the battery, not the estate -- exactly row W1-S10. The number then travelled into a task-order face as inherited fact. This row is not a criticism of the cut; it is the reason the census in this cell is built to resolve entry points from lambda-source-map.json plus each function's OWN Terraform `handler =` declaration, so the population cannot be supplied by the thing being measured."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S21",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T15:11Z",
+    "one_line": "TWO SERVED FUNCTIONS CANNOT BE REBUILT FROM COMMITTED SOURCE: irpt-ycharts-generate declares 25 build inputs of which 7 have NEVER existed in this repository, and irpt-status declares 7 of which 5 have not; a third, irpt-directory-search, fails the builder's parity check because two functions share one source dir.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/lambda-source-map.json @fa89acb5d3, irpt-ycharts-generate files[]: enforce.py, gate.py, keys.py, resolve.py, firm_destination_policy.json, firm_registry.json, settings.json -- none present in infra/aws/lambda/investor-reporting/ycharts/generate/",
+        "`git ls-tree --name-only 88c97c1529 infra/aws/lambda/investor-reporting/ycharts/generate/` (the commit IB-s-9's CLOSED ledger names as the built source) lists job.py, recipe.py, templates.json, transport.py, fixtures, tests -- THE SEVEN WERE NEVER COMMITTED, at that commit or at HEAD; `git check-ignore` does not claim them",
+        "org/critical_paths/change_management/20260911T0417Z_irpt-bckend-s9_deploy_completion.md: L1 proof asserts 'the zip rebuilt from the COMMITTED source at 88c97c1529 (25 members, byte-identical rebuild)' -- 25 members, of which 7 are not in that commit",
+        "irpt-status files[]: enforce.py, resolve.py, keys.py, handler.py, checkpoint.py absent from infra/aws/lambda/investor-reporting/ops/ (git ls-tree at HEAD lists RUNBOOK.md, manifests.py, status.py, tests)",
+        "irpt-directory-search files[] = ['handler.py'] while its source dir also carries refresh.py and expiry.py (irpt-directory-refresh's), so build-and-upload.sh's ADHC_DRIFTD.002 disk->manifest parity check reports them as unregistered EXTRAS and refuses; the check is per-function over a SHARED directory and cannot be satisfied by both functions at once",
+        "infra/aws/lambda/ci/build-and-upload.sh :195-207 (manifest->disk) and :218-235 (disk->manifest parity)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-2 L5 note: 'every function whose code changes here is rebuilt, its zip uploaded, its root applied under a ledger entry ... `CodeSha256` verified'. Bound 4: 'served bytes verified as `CodeSha256` against the built zip, never by filename'.",
+    "world_is": "For three of the six the BUILD INPUT ITSELF is unsatisfiable at HEAD, so there is no zip to verify CodeSha256 against and no way to reproduce what is currently served. Rule 22a's instruction -- diff deployed bytes against the BUILD INPUT, never by filename -- has nothing to diff against for irpt-ycharts-generate and irpt-status.",
+    "notes": "THE HAZARD IS NOT THE MISSING FILES, IT IS THE GREEN THEY PRODUCED: a CLOSED ledger entry records a byte-identical rebuild from a commit that does not carry seven of the twenty-five members, and every downstream reader takes that as reproducibility. The estate HAS the mechanism for this -- `BUILD_MANIFEST.json` + `infra/aws/lambda/ci/vendor-manifest.sh`, which copies `vendored_modules[]` flat into the source dir and has a `--check` parity mode -- and NO IRPT lambda directory carries one (checked: directory, performance, narrative, export, ops, intake, ycharts/generate; 0 of 7). NOT REPAIRED HERE: repairing it for irpt-status needs ops/, which this order does not grant (row W2-S19), and repairing it for ycharts/generate means authoring the vendoring for a function another cell may also be holding. This cell therefore does NOT apply any root: a deploy whose input cannot be reproduced is the half-landed state NEVER-2 exists to prevent."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S22",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T15:11Z",
+    "one_line": "TWO CELLS ARE POINTED AT ONE SERVED FUNCTION: the issuer's own hand-off states IB-rt-4 is CONCURRENTLY re-applying its error-path envelope on irpt-export-render from slot ~3, while this order's <paths> grant export/ and its Terraform root to this cell. Two cells applying one function is the half-landed-deploy hazard, not a merge conflict.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the issuer's hand-off to this worker, 2026-09-11 ~14:3xZ, verbatim: 'IB-rt-4 is concurrently re-applying its error-path envelope on the export function from slot ~3, so do not edit infra/aws/lambda/investor-reporting/export/handler.py in this order unless your face grants it -- guard it at the boundary your paths name'",
+        "TO-IB-rt-2 <paths> @fa89acb5d3 DOES grant infra/aws/lambda/investor-reporting/export/ and infra/aws/terraform/investor-reporting/export/ -- the instruction and the grant point opposite ways on the same directory",
+        "the tree at this cut already carries IB-rt-8's export controller (export/ now holds dispatch.py, exclusion.py, identity.py, package.py beside handler.py) and IB-rt-4's _authz/errors.py",
+        "three of the eleven routes (submit-export, export-receipt, export-download) dispatch to irpt-export-render"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-2 arm (e): 'For each function changed: `get-function-configuration` `CodeSha256` equals the built zip's; each root's plan after the apply reads `No changes`' -- for roots including export.",
+    "world_is": "Another cell is applying the same function in the same window. This cell therefore writes its export guard WITHOUT editing export/handler.py -- the entry point is a NEW module in export/, and the Terraform `handler =` string names it -- and does NOT apply the export root. The code is committed and its deploy is the issuer's to sequence after IB-rt-4's window closes.",
+    "notes": "THE INSTRUCTION IS FOLLOWED AND THE CONFLICT IS RECORDED RATHER THAN RESOLVED BY THE WORKER: a worker judges a surprise's form, never its significance, and 'which of two cells owns a served function this hour' is not a worker's call. NO APPLY WAS ATTEMPTED ON ANY ROOT (see also row W2-S21, which blocks the build inputs independently)."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S23",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T15:11Z",
+    "one_line": "THE ONE ERROR ENVELOPE CANNOT EXPRESS THE REFUSAL THE AMENDMENT REQUIRES: `_authz/errors.py`'s PUBLIC_REASONS is CLOSED and does not contain `CONTRACT_VERSION`, which arm (g) names as the served public reason for a mismatched `X-Contract-Version`; v1's own StatusEnvelope admits it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_authz/errors.py @fa89acb5d3: PUBLIC_REASONS is a 15-member closed tuple (NOT_AUTHORIZED, FIRM_BINDING, OBJECT_NOT_COVERED, INVALID_INPUT, KEY_REFUSED, UNSUPPORTED_OPERATION, NOT_FOUND, NOT_READY, CONFLICT, SUPERSEDED, DEPENDENCY_UNAVAILABLE, DEPENDENCY_TIMEOUT, RATE_LIMITED, UNEXPECTED) -- no CONTRACT_VERSION; `error_envelope()` RAISES ReasonNotDeclared on a member it does not hold",
+        "docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json @fa89acb5d3: `public_reason_code` is `{type: string, pattern: ^[A-Z0-9_]+$}` -- v1 admits CONTRACT_VERSION and constrains only the SHAPE",
+        "TO-IB-rt-2 arm (g): 'a mismatched `X-Contract-Version` refused `CONTRACT_VERSION` on `11 of 11`'",
+        "infra/aws/lambda/investor-reporting/_authz/dispatch.py @fa89acb5d3 (IB-rt-1's): REFUSAL_CODES carries CONTRACT_VERSION, so the two closed vocabularies in one package disagree about the same axis"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-2 amendment: 'The refusal envelope of `_authz` and the response envelope are two shapes of one family: `status` carries the `StatusEnvelope` on both', and arm (g) requires the served refusal to read CONTRACT_VERSION.",
+    "world_is": "`errors.error_envelope('CONTRACT_VERSION')` raises. This cell does NOT edit errors.py: it is IB-rt-4's module, IB-rt-4 is live in slot ~3 this hour (row W2-S22), and adding a member to a closed enum is a schema change that Rule 24 says arrives with its four-postulate record and a token census -- which is a proposal, not a worker's edit mid-round. The served version refusal is therefore built as a StatusEnvelope directly, valid under v1, using errors.new_correlation_id() so the correlation id still comes from the one minter.",
+    "notes": "STATED AS FORM: two closed vocabularies covering one axis now live in one package -- `enforce.REFUSAL_CODES` (7), `errors.PUBLIC_REASONS` (15, minted by a different cell) and `dispatch.REFUSAL_CODES` (5). Whether they should be one enum is a taxonomy question with an owner, not a worker's call; what is recorded here is only that the amendment's required value exists in two of the three and a handler that reaches for the ONE envelope cannot emit it."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S24",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T16:20Z",
+    "one_line": "THE GUARD IS WRITTEN AND HAS NO IN-LANE WAY TO REACH THE FIVE ZIPS: `_authz` is shared source, the estate distributes shared source by the `irpt-common` LAYER, and the layer's source dir, its build script and `lambda-layer-map.json` are all outside this order's <paths> -- while the layer itself was republished as v5 at 13:08Z today by another cell.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the five guarded entry modules import `served`, `loaders`, `enforce`, `errors`, `resolve` and `keys`; only `handler`/`job` live in the function's own source dir",
+        "infra/aws/lambda/ci/lambda-layer-map.json @fa89acb5d3: irpt-common source_dir = infra/aws/lambda/layers/irpt-common, build_script = .../build_layer.py, build_manifest = .../BUILD_MANIFEST.json, tf_file = infra/aws/terraform/investor-reporting/performance/layers.tf, used_by = [irpt-performance-adapter, irpt-narrative]",
+        "`aws lambda list-layer-versions --layer-name irpt-common` at this cut: Version 5, CreatedDate 2026-09-11T13:08:52Z -- republished DURING this round by a cell that is not this one",
+        "TO-IB-rt-2 <paths> @fa89acb5d3 grants the five lambda source dirs, the five terraform roots, _authz/, _scope/, PATH_MANIFEST.json, change_management/, one sentinel and lambda-source-map.json -- NOT infra/aws/lambda/layers/** and NOT lambda-layer-map.json",
+        "the per-function alternative is vendoring, and the estate's mechanism for it is BUILD_MANIFEST.json + infra/aws/lambda/ci/vendor-manifest.sh: 0 of 7 IRPT lambda directories carry one (directory, performance, narrative, export, ops, intake, ycharts/generate all checked)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-2 L5 note: 'every function whose code changes here is rebuilt, its zip uploaded, its root applied under a ledger entry'.",
+    "world_is": "The code changes are written and committed; there is no carrier THIS ORDER may write that puts them in the five zips. Two of the five (performance, narrative) already take the layer, so for them the layer is not merely one option but the established one -- and it is the one out of lane. No layer file was opened and no layer was rebuilt.",
+    "notes": "THREE SHAPES, STATED WITHOUT PREFERENCE, for the issuer: (i) grant this cell infra/aws/lambda/layers/irpt-common/ and lambda-layer-map.json and sequence the layer rebuild against whichever cell published v5; (ii) grant the vendoring instead -- BUILD_MANIFEST.json in each of the five dirs plus the files[] additions, which IS in lane except that it establishes a second distribution mechanism beside the layer for the same modules; (iii) move the deploy to a cell that already owns the layer. Read with row W2-S21 (the build inputs of three functions do not resolve at all) and W2-S22 (export is being applied by another cell this window): the deploy is blocked three independent ways and this cell applied NOTHING."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S25",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T16:20Z",
+    "one_line": "v1's RESPONSE CONTRACTS CANNOT REPRESENT A REFUSAL, and serving them is what revealed it: `firm_id` and `data` are both REQUIRED, `firm_id` is the opaque id that only exists inside a firm's directory artifact, and `data` is typed as the producer document with no null branch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/responses/*.response.schema.json @c22f179bbf: required = [contract_version, operation, firm_id, data] on all eleven",
+        "`firm_id` = allOf[$ref ResolvedScope#/properties/verified_request_firm_id, {pattern ^fir_[0-9a-f]{24}$}] -- the ISSUED opaque id",
+        "data/firm_registry.json @fa89acb5d3 carries firm_id and bucket for five firms and NO opaque id, so the opaque spelling is knowable only by reading the firm's directory artifact from its bucket",
+        "the contract-version check must answer BEFORE any bucket is read (that is the whole point of checking it first), so a version refusal has no legal value for firm_id",
+        "`data` is a $ref to the document or a declared slice; none of the eleven admits null"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-2 amendment: 'The refusal envelope of `_authz` and the response envelope are two shapes of one family: `status` carries the `StatusEnvelope` on both.' TO-IB-rt-1 arm (b) as re-cut: 'the RESPONSE is validated against responses/<operation>.response.schema.json'.",
+    "world_is": "No refusal can validate against a response contract -- not a version mismatch, not a firm-binding refusal, not an object-not-covered. The amendment's own words already provide for this ('TWO SHAPES of one family'), so the boundary emits the `_authz` refusal shape {ok:false, contract_version, operation, status, firm_id?} for refusals and the response envelope for successes, with a StatusEnvelope on both. What is recorded here is that arm (g)'s '11 of 11 responses validate' can only ever mean SUCCESSFUL responses, and that the refusal shape is not published in v1 at all.",
+    "notes": "THE DEFECT IS THIS SLOT'S OWN: IB-rt-1 authored those contracts and made `data` required with a document type and no null branch. v1 froze at c22f179bbf, so it cannot be corrected in place -- publishing a refusal contract is a v2 act. Recorded now rather than at the next cell that trips over it. NOT DONE: no schema was loosened and no refusal was dressed as a response to make a count read better."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S26",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T16:20Z",
+    "one_line": "THE PUBLISHED OPERATION IDS ARE NOT ADMISSIBLE KEY COMPONENTS: v1 names them with hyphens (`narrative-packet`) and `_keys.OPERATION_RE` is `^[a-z][a-z0-9_]{0,63}$`, so every guarded request was refused KEY_REFUSED at the cache-key step -- a refusal about the caller for a defect that was not theirs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_keys/keys.py:58 @fa89acb5d3: OPERATION_RE = re.compile(r\"^[a-z][a-z0-9_]{0,63}$\"); :475 applies it to the `operation` component of cache_key",
+        "docs/contracts/investor-reporting/v1/routes.json @c22f179bbf: every `operation` is hyphenated -- directory-search, resolve-scope, performance-report, analysis-requests, analysis-report, narrative-packet, status-summary, status-job, submit-export, export-receipt, export-download, holdings-snapshot",
+        "measured before the fix: all five guarded entries refused every request, authorized and swapped alike, with public_reason_code KEY_REFUSED",
+        "after the fix: 30 of 30 swaps refuse for their own reason and 0 of 5 authorized requests are refused for an authorization reason"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-2 acceptance clause draft: 'client names are never cache keys', and the wrapper keys every served answer through `_keys`.",
+    "world_is": "The published id space and the key id space do not intersect for any multi-word operation. The boundary now converts once, in one place (`served.key_operation`), and REFUSES AT CONSTRUCTION if a published id has no admissible key spelling -- so a wiring error fails at import rather than presenting to a caller as KEY_REFUSED. The published id is unchanged and still what the response envelope carries; v1 is frozen.",
+    "notes": "WHY IT READ AS A PASS BEFORE IT WAS LOOKED AT: KEY_REFUSED is a LEGITIMATE member of the refusal vocabulary, so every swap 'was refused' and a refused-or-not assertion was satisfied. Only printing the CODE per swap showed that all thirty were refused for the same wrong reason. A negative test that does not assert WHICH refusal cannot tell a working control from a broken subject."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S27",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T16:20Z",
+    "one_line": "A THIRD FIRM ID SPELLING: `performance/tenants.py` routes on `F-49F` / `F-COT` / `F-INF`, which is neither the registry spelling (`49financial`) nor the issued opaque id (`fir_...`), so the performance adapter cannot resolve a route for the firm the boundary binds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/performance/tenants.py:81,91,101 @fa89acb5d3: the route table keys are F-49F, F-COT, F-INF",
+        "handler.check_scope returns `verified_request_firm_id` -- the OPAQUE id -- and handler.run passes it straight to tenants.route_for",
+        "measured: an AUTHORIZED performance request raises UnknownTenant with \"no performance route for firm 'fir_c9fc04650e2134d6ea033da2'; known firms: F-49F,F-COT,F-INF\"",
+        "data/firm_registry.json @fa89acb5d3 carries the registry spellings 49financial, inflection, cottonwood -- a fourth set of tokens again",
+        "row IRPT_BCKEND-W2-S9 already records TWO spellings reconciled only by FirmBinding; this is a third, on the vendor-routing axis"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Bound 13: 'Firm, client, relationship, account, report, export and job ids cross a function boundary as ISSUED opaque ids of a declared type.' TO-IB-rt-2 arm (b): a valid principal is SERVED on each of the handlers.",
+    "world_is": "The performance adapter's tenant routing is a third id space. An authorized, correctly scoped request therefore cannot be served by that function at all -- it refuses DEPENDENCY_UNAVAILABLE, which is the honest code for 'this function has no route for that firm' and is not an authorization failure. NOT REPAIRED HERE: reconciling a third id space is a FirmBinding change on the axis row W2-S9 owns, and inventing a mapping in this cell would put a fourth definition of one id space in the estate. The boundary classifies the refusal and stops it reaching a caller as the residual.",
+    "notes": "READ WITH W2-S9. The estate now has FOUR firm tokens in play -- registry (`49financial`), issued opaque (`fir_...`), vendor-route (`F-49F`) and the bucket alias (`opal-data-bd`) -- and only the first two have a declared reconciler. Which of them is the id space is not a worker's call."
+  },
+  {
     "id": "IRPT_BCKEND-W3-S1",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
@@ -2590,220 +2806,149 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "The general form, and the reason this is worth a row rather than a footnote: a per-member verification cannot see a property the members SHARE. Three arms each asserting 'this object's stored hash equals its receipt's' certify the set clean while the set is one document repeated. The discriminating check is a COMPARISON ACROSS members, and it costs one equality test."
   },
   {
-    "id": "IRPT_BCKEND-W2-S19",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
-    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
-    "surfaced_at": "2026-09-11T15:11Z",
-    "one_line": "ARM (a) CANNOT READ `0 of N` IN THIS LANE: three of the eleven handler-bearing routes dispatch to `irpt-status`, whose source dir `infra/aws/lambda/investor-reporting/ops/` and whose Terraform root `infra/aws/terraform/investor-reporting/ops/` are BOTH absent from this order's <paths>. The wrapper cannot be put on a handler this order may not open.",
-    "class": "BLOCKING",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_BCKEND-W4-S20",
+    "surfaced_at": "2026-09-11T15:05:00Z",
+    "one_line": "'DELETED' ON A VERSIONED BUCKET MEANS 'HIDDEN FROM EVERY ORDINARY READ', NOT 'THE BYTES ARE GONE' -- and the difference is invisible in the receipt. opal-data-ycharts has versioning ENABLED (get-bucket-versioning: Status=Enabled, read in the same pass as the pre-act inventory). `delete-object` without `--version-id` writes a DELETE MARKER: head-object 404s, list-objects-v2 returns 0, every production reader stops finding the object -- and the four noncurrent versions (wl2x4Z9vSi31..., Jg9agZs3W5xchqyD..., NO5Dioo.m.mOZs4J..., arZTAfWafyUSzIQR...) remain retrievable by VersionId to anyone with s3:GetObjectVersion. The four delete responses SAY SO -- DeleteMarker:true on 4 of 4 -- which is the bucket telling the operator what kind of delete it just performed. The permanent form is a per-version delete, is UNRECOVERABLE, and was NOT taken: the word said 'yes on synthetic exports', and reading a one-line yes as authorization for the irreversible variant of an act is exactly the widening a relay must not do. This row exists so the estate does not later believe those bytes are gone because a report said 'deleted'.",
+    "class": "OBSERVATION",
     "hazard_standing": "ARMED",
-    "disarm_owner": "2.0.0_SA_COO~B",
+    "disarm_owner": "2.0.0_SA_COO~B -- EITHER carry the question back to Andrew (do the noncurrent versions go too, which is unrecoverable), OR record that delete-marker semantics satisfy the intent and close it. Until one of those, any statement that the four synthetic PDFs are 'gone' must carry this qualifier",
     "grounding": {
       "status": "GROUNDED",
       "evidence": [
-        "docs/contracts/investor-reporting/v1/routes.json @fa89acb5d3: three DECLARED routes carry handler `irpt-status` -- analysis-report (GET /analysis/{jobId}/sections), status-summary (GET /status) and status-job (GET /status/{jobId})",
-        "infra/aws/lambda/ci/lambda-source-map.json @fa89acb5d3: irpt-status source_dir = infra/aws/lambda/investor-reporting/ops, tf_file = infra/aws/terraform/investor-reporting/ops/lambda.tf",
-        "TO-IB-rt-2 <paths> @fa89acb5d3 lists directory/, performance/, ycharts/generate/, narrative/, export/ and the five matching terraform roots -- ops/ appears on NEITHER side",
-        "the census measured in this worktree over the REAL declared entry points: 11 of 11 routes unguarded, of which 8 are in this lane and 3 are irpt-status's"
+        "s3api get-bucket-versioning --bucket opal-data-ycharts -> {\"Status\": \"Enabled\"}, read immediately before the act",
+        "the four delete-object responses, verbatim: {\"DeleteMarker\": true, \"VersionId\": \"04OM8jGc8DHS0zMtKePd0CBx_XLv7m.s\"} and three siblings -- DeleteMarker true on 4 of 4",
+        "the pre-act head-object reads carry the object VersionIds that still exist: wl2x4Z9vSi31.i.TUVq__pjfcz0U4qFK, Jg9agZs3W5xchqyD8bH3UCQTCMQ8Z2HS, NO5Dioo.m.mOZs4JjR2GsZHXKmhI6nVE, arZTAfWafyUSzIQRYcctzEswDuMxmOlv",
+        "after the act: head-object 404 on 4 of 4 and list-objects-v2 under the whole GENIBS14SYN/ generation returns 0 objects -- the ORDINARY-read view is empty, which is what every production reader sees",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/RT8-g_delete_receipts.json @this commit -- _meta.delete_grain states this in the artifact itself"
       ]
     },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "TO-IB-rt-2 arm (a): '`unguarded_routes()` over docs/contracts/investor-reporting/v1/routes.json at HEAD reads `0 of N` (N = handler-bearing routes, printed)'. The L5 note names the population as 'every route's integration target ... every targeted function's entry point is wrapped'.",
-    "world_is": "N = 11 and 3 of the 11 targets are `irpt-status`, which this order does not grant. The best reachable in-lane result is `0 of 8` with the other 3 named and attributed; the whole-file census reads `3 of 11` unguarded and cannot read zero without a grant this order does not carry. The preflight's own rule is followed: 'a path you need that is not listed is a BLOCKING row, never an override.'",
-    "notes": "NO OVERRIDE TAKEN AND NO ops/ FILE READ FOR EDIT. Two shapes the issuer may choose between, stated without preference: (i) extend this order's <paths> with ops/ and terraform/investor-reporting/ops/ so the eleventh route and its two siblings can be guarded here; (ii) leave the three with their own cell and re-cut arm (a)'s denominator to the handler-bearing routes THIS order may open, printed beside the whole-file number. The battery prints BOTH numbers either way, so the evidence does not depend on the choice."
+    "spec_asserts": "Arm (g): 'delete-object per key (four literal keys, never a prefix delete, never --recursive), each response captured; head-object reads 404 on 4 of 4 after'.",
+    "world_is": "Both of those happened exactly as written, AND the bytes still exist as noncurrent versions. The arm's own acceptance text is satisfied by the weaker act, so nothing in the criterion would have surfaced the difference.",
+    "notes": "The general shape: a delete verb on a versioned store is a VISIBILITY change, and the only instrument that distinguishes it from destruction is the response field nobody reads. Both halves are printed in the battery."
   },
   {
-    "id": "IRPT_BCKEND-W2-S20",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
-    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
-    "surfaced_at": "2026-09-11T15:11Z",
-    "one_line": "THE REAL CENSUS READS 11 OF 11 UNGUARDED, NOT 6 OF 11: every one of the six dispatched functions' DECLARED entry point is unwrapped at HEAD. The face's inherited `6 of 11` counted a table the round-1 battery had partly wrapped itself -- row W1-S10's own lesson, recurring inside the summary that records it.",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_BCKEND-W4-S21",
+    "surfaced_at": "2026-09-11T15:35:00Z",
+    "one_line": "A RENDER ON THE SHARED BROWSER HOST NEEDED A GRANT THAT HOST'S OWN ROOT DOES NOT HAVE, so this cell declared it from ITS root against ANOTHER cell's role. irpt-ycharts-runner-role (IB-s-8, ycharts/iam.tf) grants Secrets Manager on three YCharts names, one DynamoDB lease item, KMS for that table, and the YCharts artifact prefix -- and NOTHING on opal-data-ycharts. A render under that role can neither READ the frozen bundle nor WRITE the PDF, so 'start the host and send the document' would have produced an AccessDenied and nothing else; the README's option A, as written, was not executable. The issuer's amendment permits exactly two edits to the ycharts root (its header and one output description) and 'no other change to that root', so aws_iam_role_policy.render_host_export_evidence is declared in the EXPORT root and attached BY NAME to irpt-ycharts-runner-role. It is additive, reversible (deleting it returns the role to exactly what IB-s-8 declared), scoped to the SAME exports prefix the controller itself uses, and adds NO vendor reach. THE SHAPE IS STILL WORTH A ROW: one role now has two roots writing policies onto it, and a reader of ycharts/iam.tf cannot see the second.",
     "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "measured in this worktree at fa89acb5d3: each route's handler resolved from lambda-source-map.json (source_dir + tf_file) and that Terraform file's own `handler = \"<module>.<attr>\"`, the module imported by path, `_authz.enforce.is_guarded(fn)` read on the resulting callable",
-        "result: directory-search, resolve-scope, performance-report, analysis-requests, analysis-report, narrative-packet, status-summary, status-job, submit-export, export-receipt, export-download -- guarded=False on all 11",
-        "`unguarded_routes()` verdict over that table: 'BLOCKED: 11 of 11 route(s) reach an unguarded handler'",
-        "TO-IB-rt-2 'WHAT ROUND 1 DELIVERED' @fa89acb5d3: 'the round-1 replay's measurement 6 of 11 unguarded (three known: IB-s-1 directory x2, IB-s-11 performance; three new: analysis, narrative, export status)'"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "TO-IB-rt-2: 'the round-1 replay's measurement 6 of 11 unguarded', with five routes implicitly already guarded.",
-    "world_is": "0 of 11 are guarded. The five the summary treats as already-done (analysis-report, status-summary, status-job, submit-export, export-receipt/download) are not: their declared entry points carry no `__irpt_guarded__` mark. The work is LARGER than the face's summary, not smaller, and nothing is being skipped on the strength of the old number.",
-    "notes": "WHY THE OLD NUMBER WAS WRONG IN THE SAFE DIRECTION AND STILL DANGEROUS: a census over a route table the measuring battery populated itself reads the battery, not the estate -- exactly row W1-S10. The number then travelled into a task-order face as inherited fact. This row is not a criticism of the cut; it is the reason the census in this cell is built to resolve entry points from lambda-source-map.json plus each function's OWN Terraform `handler =` declaration, so the population cannot be supplied by the thing being measured."
-  },
-  {
-    "id": "IRPT_BCKEND-W2-S21",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
-    "surfaced_at": "2026-09-11T15:11Z",
-    "one_line": "TWO SERVED FUNCTIONS CANNOT BE REBUILT FROM COMMITTED SOURCE: irpt-ycharts-generate declares 25 build inputs of which 7 have NEVER existed in this repository, and irpt-status declares 7 of which 5 have not; a third, irpt-directory-search, fails the builder's parity check because two functions share one source dir.",
-    "class": "BLOCKING",
     "hazard_standing": "ARMED",
-    "disarm_owner": "2.0.0_SA_COO~B",
+    "disarm_owner": "2.0.0_SA_COO~B -- either fold this grant into the ycharts root at the next round (one role, one declaring root) or record the cross-root attachment as the estate's accepted pattern for a shared host. Until then, an IAM census that reads the ycharts root alone UNDERSTATES what that instance role can reach",
     "grounding": {
       "status": "GROUNDED",
       "evidence": [
-        "infra/aws/lambda/ci/lambda-source-map.json @fa89acb5d3, irpt-ycharts-generate files[]: enforce.py, gate.py, keys.py, resolve.py, firm_destination_policy.json, firm_registry.json, settings.json -- none present in infra/aws/lambda/investor-reporting/ycharts/generate/",
-        "`git ls-tree --name-only 88c97c1529 infra/aws/lambda/investor-reporting/ycharts/generate/` (the commit IB-s-9's CLOSED ledger names as the built source) lists job.py, recipe.py, templates.json, transport.py, fixtures, tests -- THE SEVEN WERE NEVER COMMITTED, at that commit or at HEAD; `git check-ignore` does not claim them",
-        "org/critical_paths/change_management/20260911T0417Z_irpt-bckend-s9_deploy_completion.md: L1 proof asserts 'the zip rebuilt from the COMMITTED source at 88c97c1529 (25 members, byte-identical rebuild)' -- 25 members, of which 7 are not in that commit",
-        "irpt-status files[]: enforce.py, resolve.py, keys.py, handler.py, checkpoint.py absent from infra/aws/lambda/investor-reporting/ops/ (git ls-tree at HEAD lists RUNBOOK.md, manifests.py, status.py, tests)",
-        "irpt-directory-search files[] = ['handler.py'] while its source dir also carries refresh.py and expiry.py (irpt-directory-refresh's), so build-and-upload.sh's ADHC_DRIFTD.002 disk->manifest parity check reports them as unregistered EXTRAS and refuses; the check is per-function over a SHARED directory and cannot be satisfied by both functions at once",
-        "infra/aws/lambda/ci/build-and-upload.sh :195-207 (manifest->disk) and :218-235 (disk->manifest parity)"
+        "infra/aws/terraform/investor-reporting/ycharts/iam.tf @77b2acc7a9 -- aws_iam_role_policy.runner has five statements: three YCharts secrets, the lease item, the system CMK, the YCharts artifact prefix and its conditioned ListBucket. No s3 statement names opal-data-ycharts",
+        "infra/aws/terraform/investor-reporting/export/iam.tf @this commit -- data.aws_iam_role.render_host + aws_iam_role_policy.render_host_export_evidence, five statements, all prefix- or ViaService-conditioned",
+        "terraform apply on the export root: 'aws_iam_role_policy.render_host_export_evidence: Creation complete after 1s [id=irpt-ycharts-runner-role:irpt-export-render-host-evidence]'",
+        "the host then downloaded 3 of 3 files from the export artifact prefix under its instance role, printed by its own 'ls -la /opt/investor-reporting-export' in the SSM output -- the grant is EXERCISED, not merely declared"
       ]
     },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "TO-IB-rt-2 L5 note: 'every function whose code changes here is rebuilt, its zip uploaded, its root applied under a ledger entry ... `CodeSha256` verified'. Bound 4: 'served bytes verified as `CodeSha256` against the built zip, never by filename'.",
-    "world_is": "For three of the six the BUILD INPUT ITSELF is unsatisfiable at HEAD, so there is no zip to verify CodeSha256 against and no way to reproduce what is currently served. Rule 22a's instruction -- diff deployed bytes against the BUILD INPUT, never by filename -- has nothing to diff against for irpt-ycharts-generate and irpt-status.",
-    "notes": "THE HAZARD IS NOT THE MISSING FILES, IT IS THE GREEN THEY PRODUCED: a CLOSED ledger entry records a byte-identical rebuild from a commit that does not carry seven of the twenty-five members, and every downstream reader takes that as reproducibility. The estate HAS the mechanism for this -- `BUILD_MANIFEST.json` + `infra/aws/lambda/ci/vendor-manifest.sh`, which copies `vendored_modules[]` flat into the source dir and has a `--check` parity mode -- and NO IRPT lambda directory carries one (checked: directory, performance, narrative, export, ops, intake, ycharts/generate; 0 of 7). NOT REPAIRED HERE: repairing it for irpt-status needs ops/, which this order does not grant (row W2-S19), and repairing it for ycharts/generate means authoring the vendoring for a function another cell may also be holding. This cell therefore does NOT apply any root: a deploy whose input cannot be reproduced is the half-landed state NEVER-2 exists to prevent."
+    "spec_asserts": "The amendment: 'no other change to that root'; and the README's option A, which lists start / send / stop and nothing about permissions.",
+    "world_is": "The act needed a permission neither the amendment nor the README mentions, on a role this cell does not own. The minimal legal form puts a second writer on one role.",
+    "notes": "The operator act was written from the CONTROLLER's side (what the Lambda needs to send) and never from the HOST's side (what the box needs to do the work). That asymmetry is why the gap survived being written out verbatim twice."
   },
   {
-    "id": "IRPT_BCKEND-W2-S22",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
-    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
-    "surfaced_at": "2026-09-11T15:11Z",
-    "one_line": "TWO CELLS ARE POINTED AT ONE SERVED FUNCTION: the issuer's own hand-off states IB-rt-4 is CONCURRENTLY re-applying its error-path envelope on irpt-export-render from slot ~3, while this order's <paths> grant export/ and its Terraform root to this cell. Two cells applying one function is the half-landed-deploy hazard, not a merge conflict.",
-    "class": "BLOCKING",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_BCKEND-W4-S22",
+    "surfaced_at": "2026-09-11T16:08:00Z",
+    "one_line": "THE PORTAL ORIGIN THIS CELL HAS BEEN CARRYING SINCE ROUND 2 IS A HOSTNAME THE ESTATE DOES NOT OWN, and only a browser could find out. local.portal_origin read `https://portal.opalcapital.co`; it is in the export root, in the Lambda's environment as IRPT_PORTAL_ORIGIN, and in the SSM document's parameter. The first real render opened it and Chromium answered net::ERR_SSL_UNRECOGNIZED_NAME_ALERT -- the name is not served, and infra/aws/terraform/website/iam.tf:68 records Andrew-direct 2026-07-13 that the estate does not even own opalcapital.com. The served portal is the portal-auth distribution, aliases opalinvest.dev and www.opalinvest.dev. NOTHING COULD HAVE CAUGHT IT EARLIER BY ITS OWN DESIGN: a controller whose whole job is to pass an origin STRING to a host that is never started cannot discover that the string is fiction, every test asserts the value it was given, and terraform validates a string as a string. The corrected value is applied and the render reached the real origin on the next send.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM command output, verbatim: 'page.goto: net::ERR_SSL_UNRECOGNIZED_NAME_ALERT at https://portal.opalcapital.co/investor-reporting/print?bundle=EXP-184aaa5454d45e8eb6312fe2a175fa01&kind=performance'",
+        "infra/aws/terraform/website/iam.tf:68 @77b2acc7a9 -- 'NOT opalcapital.com (Andrew-direct 2026-07-13: \"We do not even own opalcapital.com\")'",
+        "infra/aws/terraform/portal-auth/cloudfront-distribution.tf:110 @77b2acc7a9 -- aliases = [\"opalinvest.dev\", \"www.opalinvest.dev\"]",
+        "infra/aws/terraform/investor-reporting/export/main.tf @this commit -- portal_origin = \"https://opalinvest.dev\", applied; the next send reached the route and got a sign-in screen rather than a TLS error"
+      ]
+    },
+    "spec_asserts": "The round-2 face: the host 'runs the counterpart's RenderPackage print entry point', served from the portal origin the controller supplies.",
+    "world_is": "The origin was a plausible-looking string that resolved to nothing. It sat in a deployed Lambda's environment and in an SSM document for two rounds.",
+    "notes": "The class is worth naming: a CONFIGURATION VALUE ONLY USED BY A STEP THAT NEVER RUNS is unfalsifiable by every instrument that does run. The gated arm was not just unproven -- it was hiding a wrong value."
+  },
+  {
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_BCKEND-W4-S23",
+    "surfaced_at": "2026-09-11T16:20:00Z",
+    "one_line": "'0 EXTERNAL CONNECTIONS DURING THE RENDER' IS NOT ACHIEVABLE AGAINST THE PORTAL AS BUILT, and the guard is what proved it: 12 requests, opalinvest.dev 10, fonts.googleapis.com 1, fonts.gstatic.com 1 -- 2 FOREIGN of 12, 0 VENDOR of 12. The page the render reached pulls WEBFONTS FROM GOOGLE. That is not a vendor call and it breaches no bound this project carries, but it does falsify the criterion's own phrase, and it connects to the font finding in RT8-AC2: the package DECLARES Lato and the app FETCHES its faces from a third party at render time, so the document's typography depends on an origin outside Opal being reachable. A render host firewalled to Opal origins only -- the obvious hardening -- would render with substituted fonts and no error. The battery now prints the measured figure and refuses to print 'zero'.",
+    "class": "OBSERVATION",
     "hazard_standing": "ARMED",
-    "disarm_owner": "2.0.0_SA_COO~B",
+    "disarm_owner": "3.0.0_SA_CVO at L9 for the criterion's wording, and IRPT_FNTEND for the substance: either self-host the webfonts (which also fixes the 0-of-3-embedded finding) or the acceptance text becomes '0 VENDOR connections' with the foreign-origin count printed beside it",
     "grounding": {
       "status": "GROUNDED",
       "evidence": [
-        "the issuer's hand-off to this worker, 2026-09-11 ~14:3xZ, verbatim: 'IB-rt-4 is concurrently re-applying its error-path envelope on the export function from slot ~3, so do not edit infra/aws/lambda/investor-reporting/export/handler.py in this order unless your face grants it -- guard it at the boundary your paths name'",
-        "TO-IB-rt-2 <paths> @fa89acb5d3 DOES grant infra/aws/lambda/investor-reporting/export/ and infra/aws/terraform/investor-reporting/export/ -- the instruction and the grant point opposite ways on the same directory",
-        "the tree at this cut already carries IB-rt-8's export controller (export/ now holds dispatch.py, exclusion.py, identity.py, package.py beside handler.py) and IB-rt-4's _authz/errors.py",
-        "three of the eleven routes (submit-export, export-receipt, export-download) dispatch to irpt-export-render"
+        "the host's own guard line, verbatim: GUARD: {\"requests_total\":12,\"requests_by_origin\":{\"opalinvest.dev\":10,\"fonts.googleapis.com\":1,\"fonts.gstatic.com\":1},\"foreign_origin_requests\":2,\"vendor_requests\":0,\"allowed_origin\":\"opalinvest.dev\",\"denominator\":\"2 foreign of 12 request(s); vendor hosts checked: ycharts.com,api.ycharts.com,bd3.bdreporting.com,api.cloud.orionadvisor.com\",\"outcome\":\"REFUSED\"}",
+        "RT8-AC1 (a) verbatim: '0 external connections during the render (host guard log, denominator printed)'",
+        "RT8-AC2_judgment.md s.2 -- 0 of 3 declared fonts embedded in 4 of 4 round-1 artifacts; the same typography question from the other end",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/RT8-a_render_record.json @this commit -- network_guard"
       ]
     },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "TO-IB-rt-2 arm (e): 'For each function changed: `get-function-configuration` `CodeSha256` equals the built zip's; each root's plan after the apply reads `No changes`' -- for roots including export.",
-    "world_is": "Another cell is applying the same function in the same window. This cell therefore writes its export guard WITHOUT editing export/handler.py -- the entry point is a NEW module in export/, and the Terraform `handler =` string names it -- and does NOT apply the export root. The code is committed and its deploy is the issuer's to sequence after IB-rt-4's window closes.",
-    "notes": "THE INSTRUCTION IS FOLLOWED AND THE CONFLICT IS RECORDED RATHER THAN RESOLVED BY THE WORKER: a worker judges a surprise's form, never its significance, and 'which of two cells owns a served function this hour' is not a worker's call. NO APPLY WAS ATTEMPTED ON ANY ROOT (see also row W2-S21, which blocks the build inputs independently)."
+    "spec_asserts": "RT8-AC1 (a): '0 external connections during the render (host guard log, denominator printed)'.",
+    "world_is": "2 of 12 requests left Opal, both to Google Fonts, 0 to any vendor. The criterion's number is unreachable against this page; the number it was protecting -- vendor calls -- is zero.",
+    "notes": "The guard was moved OFF the success path for this run (it used to write only beside a PDF), which is the only reason this measurement exists: the run that refused is the run where 'what did the page talk to' was most worth knowing."
   },
   {
-    "id": "IRPT_BCKEND-W2-S23",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
-    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
-    "surfaced_at": "2026-09-11T15:11Z",
-    "one_line": "THE ONE ERROR ENVELOPE CANNOT EXPRESS THE REFUSAL THE AMENDMENT REQUIRES: `_authz/errors.py`'s PUBLIC_REASONS is CLOSED and does not contain `CONTRACT_VERSION`, which arm (g) names as the served public reason for a mismatched `X-Contract-Version`; v1's own StatusEnvelope admits it.",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_BCKEND-W4-S24",
+    "surfaced_at": "2026-09-11T15:10:00Z",
+    "one_line": "TWO CELLS' MODULES SHARE ONE NAME ON ONE IMPORT PATH, and `import dispatch` silently answered with the OTHER cell's file. Round 2's IB-rt-2 added infra/aws/lambda/investor-reporting/_authz/dispatch.py beside this cell's export/dispatch.py; the RT8 battery puts both directories on sys.path, the later insert wins, and the import resolved to _authz. THE ATTRIBUTE ERROR WAS THE LUCKY OUTCOME -- the modules happen not to share a symbol, so it crashed on HUMAN_GATED. Had they shared a function name with different semantics, the battery would have measured the wrong module and PASSED. Census of the four directories on that path: 'dispatch' is the only collision today (export has 10 modules, _authz 4, _keys 1). Fixed by loading every export module BY PATH rather than by name; the name collision itself is untouched and belongs to whoever owns the two packages.",
     "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "infra/aws/lambda/investor-reporting/_authz/errors.py @fa89acb5d3: PUBLIC_REASONS is a 15-member closed tuple (NOT_AUTHORIZED, FIRM_BINDING, OBJECT_NOT_COVERED, INVALID_INPUT, KEY_REFUSED, UNSUPPORTED_OPERATION, NOT_FOUND, NOT_READY, CONFLICT, SUPERSEDED, DEPENDENCY_UNAVAILABLE, DEPENDENCY_TIMEOUT, RATE_LIMITED, UNEXPECTED) -- no CONTRACT_VERSION; `error_envelope()` RAISES ReasonNotDeclared on a member it does not hold",
-        "docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json @fa89acb5d3: `public_reason_code` is `{type: string, pattern: ^[A-Z0-9_]+$}` -- v1 admits CONTRACT_VERSION and constrains only the SHAPE",
-        "TO-IB-rt-2 arm (g): 'a mismatched `X-Contract-Version` refused `CONTRACT_VERSION` on `11 of 11`'",
-        "infra/aws/lambda/investor-reporting/_authz/dispatch.py @fa89acb5d3 (IB-rt-1's): REFUSAL_CODES carries CONTRACT_VERSION, so the two closed vocabularies in one package disagree about the same axis"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "TO-IB-rt-2 amendment: 'The refusal envelope of `_authz` and the response envelope are two shapes of one family: `status` carries the `StatusEnvelope` on both', and arm (g) requires the served refusal to read CONTRACT_VERSION.",
-    "world_is": "`errors.error_envelope('CONTRACT_VERSION')` raises. This cell does NOT edit errors.py: it is IB-rt-4's module, IB-rt-4 is live in slot ~3 this hour (row W2-S22), and adding a member to a closed enum is a schema change that Rule 24 says arrives with its four-postulate record and a token census -- which is a proposal, not a worker's edit mid-round. The served version refusal is therefore built as a StatusEnvelope directly, valid under v1, using errors.new_correlation_id() so the correlation id still comes from the one minter.",
-    "notes": "STATED AS FORM: two closed vocabularies covering one axis now live in one package -- `enforce.REFUSAL_CODES` (7), `errors.PUBLIC_REASONS` (15, minted by a different cell) and `dispatch.REFUSAL_CODES` (5). Whether they should be one enum is a taxonomy question with an owner, not a worker's call; what is recorded here is only that the amendment's required value exists in two of the three and a handler that reaches for the ONE envelope cannot emit it."
-  },
-  {
-    "id": "IRPT_BCKEND-W2-S24",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
-    "surfaced_at": "2026-09-11T16:20Z",
-    "one_line": "THE GUARD IS WRITTEN AND HAS NO IN-LANE WAY TO REACH THE FIVE ZIPS: `_authz` is shared source, the estate distributes shared source by the `irpt-common` LAYER, and the layer's source dir, its build script and `lambda-layer-map.json` are all outside this order's <paths> -- while the layer itself was republished as v5 at 13:08Z today by another cell.",
-    "class": "BLOCKING",
     "hazard_standing": "ARMED",
-    "disarm_owner": "2.0.0_SA_COO~B",
+    "disarm_owner": "2.0.0_SA_COO~B -- the two packages are flat directories deployed into separate Lambda zips, so nothing fails in PRODUCTION today; what is armed is every TEST, battery and tool that puts both on one path. The durable fix is a package namespace (irpt_export.dispatch / irpt_authz.dispatch), which is a cross-cell change",
     "grounding": {
       "status": "GROUNDED",
       "evidence": [
-        "the five guarded entry modules import `served`, `loaders`, `enforce`, `errors`, `resolve` and `keys`; only `handler`/`job` live in the function's own source dir",
-        "infra/aws/lambda/ci/lambda-layer-map.json @fa89acb5d3: irpt-common source_dir = infra/aws/lambda/layers/irpt-common, build_script = .../build_layer.py, build_manifest = .../BUILD_MANIFEST.json, tf_file = infra/aws/terraform/investor-reporting/performance/layers.tf, used_by = [irpt-performance-adapter, irpt-narrative]",
-        "`aws lambda list-layer-versions --layer-name irpt-common` at this cut: Version 5, CreatedDate 2026-09-11T13:08:52Z -- republished DURING this round by a cell that is not this one",
-        "TO-IB-rt-2 <paths> @fa89acb5d3 grants the five lambda source dirs, the five terraform roots, _authz/, _scope/, PATH_MANIFEST.json, change_management/, one sentinel and lambda-source-map.json -- NOT infra/aws/lambda/layers/** and NOT lambda-layer-map.json",
-        "the per-function alternative is vendoring, and the estate's mechanism for it is BUILD_MANIFEST.json + infra/aws/lambda/ci/vendor-manifest.sh: 0 of 7 IRPT lambda directories carry one (directory, performance, narrative, export, ops, intake, ycharts/generate all checked)"
+        "the battery's traceback, verbatim: AttributeError: module 'dispatch' has no attribute 'HUMAN_GATED', raised at the arm (a) assertion",
+        "infra/aws/lambda/investor-reporting/export/dispatch.py @77b2acc7a9 defines HUMAN_GATED at line 40; the module that answered did not",
+        "module-name census over the four directories the battery puts on sys.path: export {assets,bundle,dispatch,download,exclusion,handler,identity,package,receipt,render}, _authz {dispatch,enforce,error_path_census,errors}, _authz/tests {fixtures,test_enforce}, _keys {keys} -- intersection with export: ['dispatch'], 1 of 10",
+        "battery_ib_rt_8.py @this commit -- _load() resolves by spec_from_file_location, with the incident recorded at the function"
       ]
     },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "TO-IB-rt-2 L5 note: 'every function whose code changes here is rebuilt, its zip uploaded, its root applied under a ledger entry'.",
-    "world_is": "The code changes are written and committed; there is no carrier THIS ORDER may write that puts them in the five zips. Two of the five (performance, narrative) already take the layer, so for them the layer is not merely one option but the established one -- and it is the one out of lane. No layer file was opened and no layer was rebuilt.",
-    "notes": "THREE SHAPES, STATED WITHOUT PREFERENCE, for the issuer: (i) grant this cell infra/aws/lambda/layers/irpt-common/ and lambda-layer-map.json and sequence the layer rebuild against whichever cell published v5; (ii) grant the vendoring instead -- BUILD_MANIFEST.json in each of the five dirs plus the files[] additions, which IS in lane except that it establishes a second distribution mechanism beside the layer for the same modules; (iii) move the deploy to a cell that already owns the layer. Read with row W2-S21 (the build inputs of three functions do not resolve at all) and W2-S22 (export is being applied by another cell this window): the deploy is blocked three independent ways and this cell applied NOTHING."
+    "spec_asserts": "Bound 12 and the battery's own docstring: 'THE SUBJECT IS THE REAL ARTIFACT, NEVER A COPY THIS FILE WRAPS'.",
+    "world_is": "An import by NAME does not name an artifact. The subject was decided by sys.path insertion order, which is a property of the test harness rather than of the thing being tested.",
+    "notes": "Generalisable: bound 12 is usually read as 'do not wrap the subject in a fixture'. This is the same defect through a different door -- the harness silently SUBSTITUTED the subject, and no amount of care about fixtures would have caught it."
   },
   {
-    "id": "IRPT_BCKEND-W2-S25",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
-    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
-    "surfaced_at": "2026-09-11T16:20Z",
-    "one_line": "v1's RESPONSE CONTRACTS CANNOT REPRESENT A REFUSAL, and serving them is what revealed it: `firm_id` and `data` are both REQUIRED, `firm_id` is the opaque id that only exists inside a firm's directory artifact, and `data` is typed as the producer document with no null branch.",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_BCKEND-W4-S25",
+    "surfaced_at": "2026-09-11T16:20:00Z",
+    "one_line": "THE RENDER IS NO LONGER HOST-GATED AND IS NOW SESSION-GATED: with the host authorized and started, Chromium reached https://opalinvest.dev/investor-reporting/print and the route answered with a SIGN-IN SCREEN, so render_export.cjs refused SESSION_ABSENT and never signed in. Row W4-S14 (nobody may START a host) is DISARMED by Andrew's word of 14:5xZ and by the four measured steps that followed it; what remains is a different gate on a different owner -- the print route is an AUTHENTICATED APP ROUTE and the host needs a session the typed client can use. The README named this fourth dependency before the act ('a session the typed client can use ... a separate operator decision from starting a box'), so it is a confirmed prediction rather than a discovery. Everything else in the chain is now proven END TO END on real infrastructure: the document deployed its own code, node 18 and Chromium 1187 were found on the box, playwright loaded, the browser opened the REAL origin, the network guard measured 12 requests with 0 vendor, and the host returned to stopped.",
     "class": "OBSERVATION",
-    "hazard_standing": "INERT",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "IB-rtb-1 (the authenticated replay across every deployed route) -- the amendment names it as the owner of the session. The concrete need: a non-interactive session for a machine principal that the portal's typed client accepts on the print route, OR a print route that accepts a signed, short-lived render grant instead of a user session",
     "grounding": {
       "status": "GROUNDED",
       "evidence": [
-        "docs/contracts/investor-reporting/v1/responses/*.response.schema.json @c22f179bbf: required = [contract_version, operation, firm_id, data] on all eleven",
-        "`firm_id` = allOf[$ref ResolvedScope#/properties/verified_request_firm_id, {pattern ^fir_[0-9a-f]{24}$}] -- the ISSUED opaque id",
-        "data/firm_registry.json @fa89acb5d3 carries firm_id and bucket for five firms and NO opaque id, so the opaque spelling is knowable only by reading the firm's directory artifact from its bucket",
-        "the contract-version check must answer BEFORE any bucket is read (that is the whole point of checking it first), so a version refusal has no legal value for firm_id",
-        "`data` is a $ref to the document or a declared slice; none of the eleven admits null"
+        "SSM command output, verbatim: 'BLOCKED: SESSION_ABSENT -- the print route answered with a sign-in screen. This script never signs in; an authenticated session for the host is an OPERATOR ACT.'",
+        "the same run's guard line proves the page LOADED before the refusal: 10 requests to opalinvest.dev, 2 to Google Fonts, 12 total",
+        "infra/aws/ec2/investor-reporting-export/README.md @77b2acc7a9 -- 'a fourth thing is still missing and is named here so it is not discovered at the console: the print route is an authenticated app route'",
+        "the issuer's amendment, which names SESSION-GATED and IB-rtb-1 for exactly this branch",
+        "ec2 describe-instances after the cycle: State.Name=stopped, re-read LIVE by the battery's arm (a)"
       ]
     },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "TO-IB-rt-2 amendment: 'The refusal envelope of `_authz` and the response envelope are two shapes of one family: `status` carries the `StatusEnvelope` on both.' TO-IB-rt-1 arm (b) as re-cut: 'the RESPONSE is validated against responses/<operation>.response.schema.json'.",
-    "world_is": "No refusal can validate against a response contract -- not a version mismatch, not a firm-binding refusal, not an object-not-covered. The amendment's own words already provide for this ('TWO SHAPES of one family'), so the boundary emits the `_authz` refusal shape {ok:false, contract_version, operation, status, firm_id?} for refusals and the response envelope for successes, with a StatusEnvelope on both. What is recorded here is that arm (g)'s '11 of 11 responses validate' can only ever mean SUCCESSFUL responses, and that the refusal shape is not published in v1 at all.",
-    "notes": "THE DEFECT IS THIS SLOT'S OWN: IB-rt-1 authored those contracts and made `data` required with a document type and no null branch. v1 froze at c22f179bbf, so it cannot be corrected in place -- publishing a refusal contract is a v2 act. Recorded now rather than at the next cell that trips over it. NOT DONE: no schema was loosened and no refusal was dressed as a response to make a count read better."
-  },
-  {
-    "id": "IRPT_BCKEND-W2-S26",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
-    "surfaced_at": "2026-09-11T16:20Z",
-    "one_line": "THE PUBLISHED OPERATION IDS ARE NOT ADMISSIBLE KEY COMPONENTS: v1 names them with hyphens (`narrative-packet`) and `_keys.OPERATION_RE` is `^[a-z][a-z0-9_]{0,63}$`, so every guarded request was refused KEY_REFUSED at the cache-key step -- a refusal about the caller for a defect that was not theirs.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "infra/aws/lambda/investor-reporting/_keys/keys.py:58 @fa89acb5d3: OPERATION_RE = re.compile(r\"^[a-z][a-z0-9_]{0,63}$\"); :475 applies it to the `operation` component of cache_key",
-        "docs/contracts/investor-reporting/v1/routes.json @c22f179bbf: every `operation` is hyphenated -- directory-search, resolve-scope, performance-report, analysis-requests, analysis-report, narrative-packet, status-summary, status-job, submit-export, export-receipt, export-download, holdings-snapshot",
-        "measured before the fix: all five guarded entries refused every request, authorized and swapped alike, with public_reason_code KEY_REFUSED",
-        "after the fix: 30 of 30 swaps refuse for their own reason and 0 of 5 authorized requests are refused for an authorization reason"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "TO-IB-rt-2 acceptance clause draft: 'client names are never cache keys', and the wrapper keys every served answer through `_keys`.",
-    "world_is": "The published id space and the key id space do not intersect for any multi-word operation. The boundary now converts once, in one place (`served.key_operation`), and REFUSES AT CONSTRUCTION if a published id has no admissible key spelling -- so a wiring error fails at import rather than presenting to a caller as KEY_REFUSED. The published id is unchanged and still what the response envelope carries; v1 is frozen.",
-    "notes": "WHY IT READ AS A PASS BEFORE IT WAS LOOKED AT: KEY_REFUSED is a LEGITIMATE member of the refusal vocabulary, so every swap 'was refused' and a refused-or-not assertion was satisfied. Only printing the CODE per swap showed that all thirty were refused for the same wrong reason. A negative test that does not assert WHICH refusal cannot tell a working control from a broken subject."
-  },
-  {
-    "id": "IRPT_BCKEND-W2-S27",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
-    "surfaced_at": "2026-09-11T16:20Z",
-    "one_line": "A THIRD FIRM ID SPELLING: `performance/tenants.py` routes on `F-49F` / `F-COT` / `F-INF`, which is neither the registry spelling (`49financial`) nor the issued opaque id (`fir_...`), so the performance adapter cannot resolve a route for the firm the boundary binds.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "infra/aws/lambda/investor-reporting/performance/tenants.py:81,91,101 @fa89acb5d3: the route table keys are F-49F, F-COT, F-INF",
-        "handler.check_scope returns `verified_request_firm_id` -- the OPAQUE id -- and handler.run passes it straight to tenants.route_for",
-        "measured: an AUTHORIZED performance request raises UnknownTenant with \"no performance route for firm 'fir_c9fc04650e2134d6ea033da2'; known firms: F-49F,F-COT,F-INF\"",
-        "data/firm_registry.json @fa89acb5d3 carries the registry spellings 49financial, inflection, cottonwood -- a fourth set of tokens again",
-        "row IRPT_BCKEND-W2-S9 already records TWO spellings reconciled only by FirmBinding; this is a third, on the vendor-routing axis"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "Bound 13: 'Firm, client, relationship, account, report, export and job ids cross a function boundary as ISSUED opaque ids of a declared type.' TO-IB-rt-2 arm (b): a valid principal is SERVED on each of the handlers.",
-    "world_is": "The performance adapter's tenant routing is a third id space. An authorized, correctly scoped request therefore cannot be served by that function at all -- it refuses DEPENDENCY_UNAVAILABLE, which is the honest code for 'this function has no route for that firm' and is not an authorization failure. NOT REPAIRED HERE: reconciling a third id space is a FirmBinding change on the axis row W2-S9 owns, and inventing a mapping in this cell would put a fourth definition of one id space in the estate. The boundary classifies the refusal and stops it reaching a caller as the residual.",
-    "notes": "READ WITH W2-S9. The estate now has FOUR firm tokens in play -- registry (`49financial`), issued opaque (`fir_...`), vendor-route (`F-49F`) and the bucket alias (`opal-data-bd`) -- and only the first two have a declared reconciler. Which of them is the id space is not a worker's call."
+    "spec_asserts": "The amendment: 'if the run refuses SESSION_ABSENT, that refusal IS the recorded output -- arm (a) then reads SESSION-GATED naming IB-rtb-1'.",
+    "world_is": "Exactly that branch, reached on the first send that got past the infrastructure gaps. The render pipeline is complete except for authentication.",
+    "notes": "Four earlier sends in the same authorization each produced a NAMED refusal before this one -- MODULE_NOT_FOUND playwright, MODULE_NOT_FOUND @aws-sdk/client-s3, RENDERER_MODULE_ABSENT, and a TLS error on a hostname the estate does not own. Each was a real gap between a host half that was written and a host it had never run on."
   }
 ]
 ```
