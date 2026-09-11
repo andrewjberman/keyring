@@ -520,15 +520,19 @@ def post_commit(root, at=None):
             print("[prd-notify] %s: sign-off recorded; COO delivery still WITHHELD for %s at %s -- still owed: %s"
                   % (so_rel, prd_rel, h.get("prd_version"), ", ".join(missing)))
             continue
+        # The release goes to the project's ROUND HOLDER (project.json coo_lane) when the tree row names one; the base
+        # serial is a hole when only lanes are live (measured 2026-09-11: ten IRPT rows QUEUED to 2.0.0_SA_COO, attempts=6,
+        # while ~B/~F did the work off the CTO's own messages; DSGN_REBRND's release UNSENT to the base).
+        recipient = _coo_lane_of(root, prd_rel) or RECIPIENT
         already = [r for r in state if r.get("kind") == "prd" and r.get("path") == prd_rel
-                   and r.get("prd_version") == h.get("prd_version") and r.get("to") == RECIPIENT]
+                   and r.get("prd_version") == h.get("prd_version") and r.get("to") == recipient]
         if already:
             print("[prd-notify] %s: both sign-offs present; COO delivery for %s at %s already recorded (id=%s)"
                   % (so_rel, prd_rel, h.get("prd_version"), already[-1].get("msg_id")))
             continue
         row = {"kind": "prd", "project": h["project"], "directive": h.get("directive"), "fabric": h.get("fabric"),
                "prd_version": h["prd_version"], "status": h.get("status"), "sha": sha, "path": prd_rel,
-               "brief_ref": h.get("brief_ref"), "outcomes": h.get("endpoint_outcomes"), "to": RECIPIENT,
+               "brief_ref": h.get("brief_ref"), "outcomes": h.get("endpoint_outcomes"), "to": recipient,
                "from": os.environ.get("OPAL_AGENT_SERIAL", ""), "attempts": 0, "msg_id": None, "sent_at": None,
                "history": [], "released_by": so_rel}
         print("[prd-notify] %s: BOTH sign-offs present at %s -> COO delivery RELEASED (L4-R)" % (so_rel, h.get("prd_version")))
