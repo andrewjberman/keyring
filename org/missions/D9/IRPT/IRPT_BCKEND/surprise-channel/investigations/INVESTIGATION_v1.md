@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 122 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-2-4 and CLOUD resolved as a strict UNION of both sides (116 ours + 103 theirs, 97 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 125 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-2-2 and CLOUD resolved as a strict UNION of both sides (123 ours + 124 theirs, 122 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -808,6 +808,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Spine v3 L7: the drain carries both sides of a shared write surface and names the cell that reconciles it; CLAUDE.md Agent Autonomy: a live vendor call needs Andrew's per-use word, and the word arrived by name for a start that is not a sign-in.",
     "world_is": "Round 2: IB-rt-1, IB-rt-3, IB-rt-5 COMPLETE; IB-rt-8 re-opened on two Andrew's-word arms (~4); IB-rt-4 at the merged tip (~3); IB-rt-2 (~2) and IB-rt-7 (~1) in flight; rt-6, rt-9, rt-10, rt-11, rtb-1 staged. Five worktrees to four; the DS seat released.",
     "notes": "Seat rows continue at S35."
+  },
+  {
+    "id": "IRPT_BCKEND-S35",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T17:35:32Z",
+    "one_line": "ROUND 2, DRAINS FOUR TO SIX AND THE MANAGED WIND-DOWN. (1) IB-rt-4 (slot ~3) merged COMPLETE at 3ed2c79443: arm (e) at the merged tip, the export root's baseline plan read No changes (W3-S17's three 'orphans' were IB-rt-8's), enforce.py/errors.py/resolve.py packaged (W3-S14 closed), triple equality 6 of 6 (W3-S18 closed), the layer NOT republished because the published zip already carried the union at the tip (measured member by member). Rows W3-S19 (disarmed by the worker), W3-S20 (closed by IB-rt-8's merge), W3-S21 (layer BUILD_MANIFEST disagrees with the published :5 -- superseded by the next rebuild), W3-S22 (two dispatch.py on one flat sys.path -- routed to slot ~2, which authored _authz/dispatch.py at 173349a652, to rename it). IB-rt-9 taken by the same slot (191547be34) and BLOCKED on W3-S23: the arm's 'legacy any-non-403 probes remaining: 0' names infra/aws/lambda/ycharts-session-probe/ and ycharts-session-capture/, outside its grant. RULED at bebcab6315: GRANTED, not scoped out -- a probe that reads a 400 as an authenticated session is the false green the v0.9 cutover exists to remove. (2) IB-rt-2 (slot ~2) merged OPEN at aef37711d3 on four BLOCKING rows, every one routed at bebcab6315: W2-S19 ops/ granted; W2-S24 the irpt-common layer granted under the rebuild-from-tree rule; W2-S22 resolved by sequence (IB-rt-4 landed first); W2-S21 split by owner (irpt-status and directory-search to rt-2, irpt-ycharts-generate's 7 of 25 never-existing build inputs to rt-9; the closed ledger entry claiming a byte-identical rebuild at a commit lacking the inputs is a RECORD defect carried to L10). W2-S23 CONTRACT_VERSION admitted to the closed reason set by amendment; W2-S25 ruled (a refusal is a StatusEnvelope, never a response-contract instance; v1 stays frozen); W2-S26/S27 in lane; W2-S20 retires the inherited '6 of 11' (11 of 11 unguarded at the cut). (3) IB-rt-8 (slot ~4) merged COMPLETE AGAIN at f20bebd15d through a temporary linked worktree (the shared index held another seat's open-deploy sentinel): arm (g) 4 of 4 synthetic exports deleted -- AS DELETE MARKERS on a versioned bucket (W4-S20: the noncurrent versions remain retrievable by VersionId; the unrecoverable per-version delete was NOT taken on a one-line yes; carried to Andrew via the CTO); arm (a) RAN on irpt-ycharts-runner (1 start, 1 send, 1 stop; host stopped on 5 of 5 sends) and reads SESSION-GATED -- the print route answered with a sign-in screen, so the remaining gate is IB-rtb-1's authenticated session (W4-S25); the network guard measured 2 foreign of 12 requests, both Google Fonts, 0 vendor (W4-S23: '0 external connections' is unachievable against the portal as built -- carried to IRPT_FNTEND and the CVO); W4-S21 the render host's evidence grant declared from the export root onto the ycharts runner role (recorded in the ycharts root's header by rt-9; the fold carried to L10); W4-S22 a portal origin the estate does not own carried in a deployed Lambda for two rounds (INERT). (4) IB-rt-10 RE-SEATED from slot ~3 to slot ~4 at bebcab6315 and flipped pending -- then NOT HANDED: at 17:30Z 0.0.0_AB_MSTR relayed Andrew-direct 'let all agents know that they need to let their workers finish but prepare for a reboot, so we're in a managed winddown' (95994). Nothing new starts: IB-rt-10's face reads pending on slot ~4 with no worker on it, and the successor session hands it (or re-seats it) after the reboot. Slots ~1 (IB-rt-7), ~2 (IB-rt-2), ~3 (IB-rt-9) were told to finish only what closes without opening a ledger, to commit early and often, and to leave a WIP_<order>_winddown.md for a successor. The successor log is org/tier1_exec/2.0.0_SA_COO~B/logs/2026-09-11/session_cooB_1515-1745Z_irpt_bckend_round2_drains_4_to_6_and_winddown.md.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (the issuer; the successor session reads the log named here first)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 3ed2c79443 (drain ~3), aef37711d3 (drain ~2), f20bebd15d (drain ~4 via coo-b-drain-tmp, fast-forwarded), bebcab6315 (three-face amendment; rt-10 re-seated)",
+        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T173049Z_0.0.0_AB_MSTR_MANAGED_WINDDOWN__THIS_DEVICE__let_worke.md (95994)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/RT8-g_delete_receipts.json (DeleteMarker true on 4 of 4); RT8-a_render_record.md (SESSION-GATED)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Spine v3 L7: the issuer drains, dispositions and hands; a worker's grant is its <paths> and a path it needs is a row the issuer answers by grant or by scope; Andrew-direct 17:1xZ: workers finish, nothing new starts, log and commit.",
+    "world_is": "IRPT_BCKEND round 2 at bebcab6315: COMPLETE rt-1, rt-3, rt-4, rt-5, rt-8; OPEN rt-2 (~2), rt-7 (~1), rt-9 (~3), all under the wind-down caveat; rt-10 pending on ~4 with no worker; rt-6, rt-11, rtb-1 staged. Every drain landed; no merge is open; every worker worktree is at or after the amended tip.",
+    "notes": "Seat rows continue at S36. The successor session: read the log first, drain the three WIP branches (wk-irpt_bckend-2-1, -2, -3 at /c/tmp/wk-irpt-2-{1,2,3}), then hand rt-10 (~4), rt-6 (~2 after rt-2), rt-11 (~3 after rt-9), rtb-1 (~1 last)."
   },
   {
     "id": "IRPT_BCKEND-W1-S1",
@@ -1768,6 +1791,53 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Bound 13: 'Firm, client, relationship, account, report, export and job ids cross a function boundary as ISSUED opaque ids of a declared type.' TO-IB-rt-2 arm (b): a valid principal is SERVED on each of the handlers.",
     "world_is": "The performance adapter's tenant routing is a third id space. An authorized, correctly scoped request therefore cannot be served by that function at all -- it refuses DEPENDENCY_UNAVAILABLE, which is the honest code for 'this function has no route for that firm' and is not an authorization failure. NOT REPAIRED HERE: reconciling a third id space is a FirmBinding change on the axis row W2-S9 owns, and inventing a mapping in this cell would put a fourth definition of one id space in the estate. The boundary classifies the refusal and stops it reaching a caller as the residual.",
     "notes": "READ WITH W2-S9. The estate now has FOUR firm tokens in play -- registry (`49financial`), issued opaque (`fir_...`), vendor-route (`F-49F`) and the bucket alias (`opal-data-bd`) -- and only the first two have a declared reconciler. Which of them is the id space is not a worker's call."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S28",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T17:45Z",
+    "one_line": "THE RENAME ROUTED TO ME CANNOT BE COMPLETED IN LANE: `_authz/dispatch.py`'s ONLY importer is `_contracts/tests/test_seam_paired.py`, and `infra/aws/lambda/investor-reporting/_contracts/` is not in this order's <paths> -- so renaming it would leave a committed test importing a module that no longer exists.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the issuer's hand-off, 2026-09-11: 'W3-S22/W4-S24 ROUTED TO YOU (rename _authz/dispatch.py, which this slot authored, to _authz/authz_dispatch.py, update importers, print 0 basename collisions across _authz/ and every function dir; export/dispatch.py is not renamed)'",
+        "importer census over infra/aws/lambda/investor-reporting at bebcab6315: the ONLY code importer of the _authz module is _contracts/tests/test_seam_paired.py:41 `import dispatch as dp`; export/handler.py:51 and export/tests/test_rt8.py:19 import export/dispatch.py, which the hand-off says is NOT renamed",
+        "the amended <paths> block at bebcab6315 lists _authz/, _scope/, directory/, performance/, ycharts/generate/, narrative/, export/, ops/, the six terraform roots, PATH_MANIFEST.json, change_management/, one sentinel, lambda-source-map.json, layers/irpt-common/ and lambda-layer-map.json -- `_contracts/` appears NOWHERE",
+        "_contracts/tests/test_seam_paired.py puts _authz FIRST on sys.path, so after the rename `import dispatch` would raise ModuleNotFoundError rather than silently binding export/dispatch.py"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The hand-off routes the rename of `_authz/dispatch.py` to this worker and says to update its importers.",
+    "world_is": "The one importer is out of lane. THE RENAME WAS NOT STARTED: a rename whose importer cannot be updated leaves a committed test importing a module that no longer exists, which is the half-landed state the managed wind-down forbids -- and a compatibility shim left behind at the old basename would keep the very collision the rename exists to remove, so the census could not read 0 either way.",
+    "notes": "CHEAP TO UNBLOCK: add `infra/aws/lambda/investor-reporting/_contracts/` to this order's <paths> (one line) and the rename is a ten-minute act -- the module has exactly one importer. RECORDED RATHER THAN WORKED AROUND under the managed wind-down relayed at 17:30Z. The basename-collision census this cell CAN print today is unchanged by the decision: `dispatch.py` appears twice across _authz/ and the function dirs (_authz/dispatch.py and export/dispatch.py), and `entry.py` appears six times -- once per function dir, which is correct and is why the shared boundary is named served.py."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S29",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T17:45Z",
+    "one_line": "THE DIRECTORY PARITY CHECK IS STRUCTURALLY UNSATISFIABLE, NOT MERELY UNSATISFIED: two functions share one source directory and the builder's disk-to-manifest check runs PER FUNCTION, so whichever one does not list the other's modules reports them as unregistered EXTRAS.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "after this cell's registration at HEAD: irpt-directory-search files[] = [handler.py, entry.py]; top-level .py in infra/aws/lambda/investor-reporting/directory/ = [entry.py, expiry.py, handler.py, refresh.py]; manifest-not-on-disk 0, disk-not-in-manifest 2",
+        "expiry.py and refresh.py are irpt-directory-refresh's declared files[], and that function's source_dir is the SAME directory",
+        "infra/aws/lambda/ci/build-and-upload.sh, the ADHC_DRIFTD.002 limb: the parity check iterates `$ABS_SOURCE/*.py` per function with an ignore list of __pycache__|*.pyc|test_*.py|*_test.py -- there is no per-function exclusion",
+        "irpt-status, which does NOT share its directory, reached 3 of 3 triple equality in the same registration pass"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The amendment's split of row W2-S21: 'irpt-status's absent build inputs and irpt-directory-search's parity are yours -- remove absent inputs, never invent them, register N of N triple equality.'",
+    "world_is": "The absent inputs were removed and irpt-status reached 3 of 3. irpt-directory-search cannot reach N of N while it shares a directory with irpt-directory-refresh: the only ways to make the per-function check pass are to list the refresh runner's modules in the SEARCH zip -- inventing content to satisfy a check -- or to change the check. Neither is a worker's to choose.",
+    "notes": "TWO SHAPES, WITHOUT PREFERENCE: (i) split the source dirs, so each function's directory holds only its own modules -- which is what every other IRPT function already has; (ii) give the parity check a per-function ignore list sourced from the OTHER functions that declare the same source_dir, so the check reads the shared dir as the shared thing it is. NOT REPAIRED under the managed wind-down: build-and-upload.sh is outside this order's <paths> and a directory split is a move that must be planned and applied, not half-done."
   },
   {
     "id": "IRPT_BCKEND-W3-S1",
@@ -2949,29 +3019,6 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "The amendment: 'if the run refuses SESSION_ABSENT, that refusal IS the recorded output -- arm (a) then reads SESSION-GATED naming IB-rtb-1'.",
     "world_is": "Exactly that branch, reached on the first send that got past the infrastructure gaps. The render pipeline is complete except for authentication.",
     "notes": "Four earlier sends in the same authorization each produced a NAMED refusal before this one -- MODULE_NOT_FOUND playwright, MODULE_NOT_FOUND @aws-sdk/client-s3, RENDERER_MODULE_ABSENT, and a TLS error on a hostname the estate does not own. Each was a real gap between a host half that was written and a host it had never run on."
-  },
-  {
-    "id": "IRPT_BCKEND-S35",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T17:35:32Z",
-    "one_line": "ROUND 2, DRAINS FOUR TO SIX AND THE MANAGED WIND-DOWN. (1) IB-rt-4 (slot ~3) merged COMPLETE at 3ed2c79443: arm (e) at the merged tip, the export root's baseline plan read No changes (W3-S17's three 'orphans' were IB-rt-8's), enforce.py/errors.py/resolve.py packaged (W3-S14 closed), triple equality 6 of 6 (W3-S18 closed), the layer NOT republished because the published zip already carried the union at the tip (measured member by member). Rows W3-S19 (disarmed by the worker), W3-S20 (closed by IB-rt-8's merge), W3-S21 (layer BUILD_MANIFEST disagrees with the published :5 -- superseded by the next rebuild), W3-S22 (two dispatch.py on one flat sys.path -- routed to slot ~2, which authored _authz/dispatch.py at 173349a652, to rename it). IB-rt-9 taken by the same slot (191547be34) and BLOCKED on W3-S23: the arm's 'legacy any-non-403 probes remaining: 0' names infra/aws/lambda/ycharts-session-probe/ and ycharts-session-capture/, outside its grant. RULED at bebcab6315: GRANTED, not scoped out -- a probe that reads a 400 as an authenticated session is the false green the v0.9 cutover exists to remove. (2) IB-rt-2 (slot ~2) merged OPEN at aef37711d3 on four BLOCKING rows, every one routed at bebcab6315: W2-S19 ops/ granted; W2-S24 the irpt-common layer granted under the rebuild-from-tree rule; W2-S22 resolved by sequence (IB-rt-4 landed first); W2-S21 split by owner (irpt-status and directory-search to rt-2, irpt-ycharts-generate's 7 of 25 never-existing build inputs to rt-9; the closed ledger entry claiming a byte-identical rebuild at a commit lacking the inputs is a RECORD defect carried to L10). W2-S23 CONTRACT_VERSION admitted to the closed reason set by amendment; W2-S25 ruled (a refusal is a StatusEnvelope, never a response-contract instance; v1 stays frozen); W2-S26/S27 in lane; W2-S20 retires the inherited '6 of 11' (11 of 11 unguarded at the cut). (3) IB-rt-8 (slot ~4) merged COMPLETE AGAIN at f20bebd15d through a temporary linked worktree (the shared index held another seat's open-deploy sentinel): arm (g) 4 of 4 synthetic exports deleted -- AS DELETE MARKERS on a versioned bucket (W4-S20: the noncurrent versions remain retrievable by VersionId; the unrecoverable per-version delete was NOT taken on a one-line yes; carried to Andrew via the CTO); arm (a) RAN on irpt-ycharts-runner (1 start, 1 send, 1 stop; host stopped on 5 of 5 sends) and reads SESSION-GATED -- the print route answered with a sign-in screen, so the remaining gate is IB-rtb-1's authenticated session (W4-S25); the network guard measured 2 foreign of 12 requests, both Google Fonts, 0 vendor (W4-S23: '0 external connections' is unachievable against the portal as built -- carried to IRPT_FNTEND and the CVO); W4-S21 the render host's evidence grant declared from the export root onto the ycharts runner role (recorded in the ycharts root's header by rt-9; the fold carried to L10); W4-S22 a portal origin the estate does not own carried in a deployed Lambda for two rounds (INERT). (4) IB-rt-10 RE-SEATED from slot ~3 to slot ~4 at bebcab6315 and flipped pending -- then NOT HANDED: at 17:30Z 0.0.0_AB_MSTR relayed Andrew-direct 'let all agents know that they need to let their workers finish but prepare for a reboot, so we're in a managed winddown' (95994). Nothing new starts: IB-rt-10's face reads pending on slot ~4 with no worker on it, and the successor session hands it (or re-seats it) after the reboot. Slots ~1 (IB-rt-7), ~2 (IB-rt-2), ~3 (IB-rt-9) were told to finish only what closes without opening a ledger, to commit early and often, and to leave a WIP_<order>_winddown.md for a successor. The successor log is org/tier1_exec/2.0.0_SA_COO~B/logs/2026-09-11/session_cooB_1515-1745Z_irpt_bckend_round2_drains_4_to_6_and_winddown.md.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (the issuer; the successor session reads the log named here first)",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "CLOUD 3ed2c79443 (drain ~3), aef37711d3 (drain ~2), f20bebd15d (drain ~4 via coo-b-drain-tmp, fast-forwarded), bebcab6315 (three-face amendment; rt-10 re-seated)",
-        "org/mcp/inbox/2.0.0_SA_COO/~B/read/20260911T173049Z_0.0.0_AB_MSTR_MANAGED_WINDDOWN__THIS_DEVICE__let_worke.md (95994)",
-        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/RT8-g_delete_receipts.json (DeleteMarker true on 4 of 4); RT8-a_render_record.md (SESSION-GATED)"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "Spine v3 L7: the issuer drains, dispositions and hands; a worker's grant is its <paths> and a path it needs is a row the issuer answers by grant or by scope; Andrew-direct 17:1xZ: workers finish, nothing new starts, log and commit.",
-    "world_is": "IRPT_BCKEND round 2 at bebcab6315: COMPLETE rt-1, rt-3, rt-4, rt-5, rt-8; OPEN rt-2 (~2), rt-7 (~1), rt-9 (~3), all under the wind-down caveat; rt-10 pending on ~4 with no worker; rt-6, rt-11, rtb-1 staged. Every drain landed; no merge is open; every worker worktree is at or after the amended tip.",
-    "notes": "Seat rows continue at S36. The successor session: read the log first, drain the three WIP branches (wk-irpt_bckend-2-1, -2, -3 at /c/tmp/wk-irpt-2-{1,2,3}), then hand rt-10 (~4), rt-6 (~2 after rt-2), rt-11 (~3 after rt-9), rtb-1 (~1 last)."
   }
 ]
 ```
