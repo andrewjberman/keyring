@@ -209,6 +209,41 @@ CODE_TREES: dict[str, dict] = {
                 "bucket": "opal-data-assets",
                 "s3_key": "portal/gold/mdpf/_code/mdpf-accrual-bridge.tar.gz",
             },
+            # IRPT FIRST-MINT 2026-09-11 (IRPT_BCKEND.TO-IB-rt-5; the CTO's
+            # round-1 analysis ruling 3(c) opens the Rule-13 gate; DS act).
+            # The two investor-reporting runners were COMMITTED in round 1 and
+            # never SERVED: their shared-home keys under
+            # code/scripts/assets_gold/investor_reporting/ 404, so every push
+            # read SKIP-NOT-MEMBER and the loose leg CANNOT first-mint by
+            # design (first-mints stay explicit). Declaring the pair as ONE
+            # bundle routes both through the in-flow mint, which is the only
+            # explicit first-mint mechanism the guard carries.
+            #
+            # >> DISTINCT sha_metadata_key PER MEMBER, AND THAT IS LOAD-BEARING.
+            # build_bundle_payload assigns shas[spec["sha_metadata_key"]] inside
+            # a loop over sorted members, so two members sharing ONE key
+            # silently COLLIDE: only the last-sorted member's sha reaches S3,
+            # and the object then carries a stamp that verifies ONE file while
+            # reading as though it covered both -- a false green on the exact
+            # surface the mint's verify leg exists to police. accrual_bridge is
+            # per-member (script-sha256 + roster-authority-sha256) for the same
+            # reason. <<
+            #
+            # tests/ is NOT a member: only declared members enter the tar.
+            "investor_reporting": {
+                "members": {
+                    "directory_runner.py": {
+                        "repo_path": "data/assets/scripts/gold/investor_reporting/directory_runner.py",
+                        "sha_metadata_key": "directory-runner-sha256",
+                    },
+                    "holdings_snapshot.py": {
+                        "repo_path": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+                        "sha_metadata_key": "holdings-snapshot-sha256",
+                    },
+                },
+                "bucket": "opal-data-mdpf",
+                "s3_key": "code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz",
+            },
         },
         "layers": {
             "gold": ("data/mdpf/scripts/gold", "code/scripts/gold/"),

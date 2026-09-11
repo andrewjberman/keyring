@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 84 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-2-3 and CLOUD resolved as a strict UNION of both sides (78 ours + 77 theirs, 71 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 90 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-2-ds and CLOUD resolved as a strict UNION of both sides (84 ours + 77 theirs, 71 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -619,6 +619,147 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "IB-rt-1 RT1-AC1 (b) as cut: 'the response validates against the producer schema; print 11 of 11'. CTO ruling 1: a paired producer-to-consumer test per operation runs the real dispatcher against the consumer's request.",
     "world_is": "The contract artifact exists and is one carrier; the responses do not yet have a contract and the handlers do not yet conform. The seam cell defines the response; the guards cell, which deploys the handlers, makes them conform; the replay grades the deployed whole.",
     "notes": "The proxy-criterion shape recurs from round 1 (S13's routes.json fallback): a criterion that names an artifact another cell produces must name that cell. Carried for the round-2 analysis as an L5 lesson of this seat."
+  },
+  {
+    "id": "IRPT_BCKEND-S27",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-11T12:31:26Z",
+    "one_line": "TO-IB-rt-5 grades on 'each of the 2 keys (2 of 2)', but the guard's bundle mechanism mints EXACTLY ONE S3 object -- the tar.gz at b['s3_key'] -- so a two-key denominator is not producible through the mandated mint path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/safe_deploy_core.py mint_bundle(): one `aws s3 cp <tmp> s3://{b['bucket']}/{b['s3_key']}` and one head-object on that same single key; no loop over members at the upload step",
+        ".tools/safe_deploy_core.py build_bundle_payload(): members are tar members INSIDE one gzip payload, not separate objects",
+        "the accrual_bridge precedent this order says to copy is likewise ONE key: portal/gold/mdpf/_code/mdpf-accrual-bridge.tar.gz",
+        "measured after the mint: list-objects-v2 on code/scripts/assets_gold/investor_reporting/ returns 1 object"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-5 DELIVERABLE: 'the two minted keys under s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/'; RT5-AC1(b): 'head-object on each of the 2 keys ... (2 of 2)'.",
+    "world_is": "One bundle object is minted. The cell reports the achievable and strictly stronger denominator instead: 1 of 1 KEY verified (ETag == local md5) carrying 2 of 2 MEMBER sha stamps, each equal to sha256sum of its repo file. Minting two loose twins WOULD satisfy the literal text and is refused here: the X-iii design freezes the loose leg for a bundle member (CTO 2026-08-06 no-S3-roster-twin ruling), so the literal reading and the ratified design are in direct conflict.",
+    "notes": "Not blocking: the cell completes and the evidence is stronger than the text asked for. What needs the issuer's pen is the acceptance TEXT, so a later reader does not grade this cell against a denominator the mechanism cannot emit."
+  },
+  {
+    "id": "IRPT_BCKEND-S28",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-11T12:31:26Z",
+    "one_line": "The decomposition's literal 'sha_metadata_key: script-sha256' for BOTH bundle members collides inside build_bundle_payload and silently drops one member's sha; implemented literally it produces a stamp that verifies one file while reading as though it covered both.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/safe_deploy_core.py build_bundle_payload(): `shas[spec['sha_metadata_key']] = hashlib.sha256(data).hexdigest()` inside `for member_name in sorted(b['members'])` -- last write wins",
+        "sorted member order is ['directory_runner.py', 'holdings_snapshot.py'], so directory_runner.py's sha is the one overwritten",
+        "mint_bundle() then builds --metadata from that same dict, so the dropped sha never reaches S3 and its absence is not an error",
+        "accrual_bridge, the shape this order says to copy, is per-member: script-sha256 + roster-authority-sha256"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IRPT_BCKEND_DECOMP.md v0.2 s.2 and the TO's L5 note: members directory_runner.py and holdings_snapshot.py with `sha_metadata_key: script-sha256`.",
+    "world_is": "As SHIPPED the collision does not exist: this cell declared distinct per-member keys (directory-runner-sha256, holdings-snapshot-sha256) and both stamps are verified on the served object. The ARMED hazard is the DECOMP TEXT, which still reads as a one-key instruction and would reintroduce the collision for any seat that re-derives the declaration from it -- including a future re-mint or a second bundle in this tree.",
+    "notes": "Deviation from the face's literal text is deliberate and is named in the declaring commit. The face itself is not edited (spec FROZEN mid-round).",
+    "disarm_owner": "2.0.0_SA_COO~B (owns the decomposition text); 1.0.0_SA_CTO gates .tools"
+  },
+  {
+    "id": "IRPT_BCKEND-S29",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-11T12:31:26Z",
+    "one_line": "The guard's own self-test suites were ALREADY FAILING before this cell touched anything -- test_code_trees_invariant.py 3 of 18 and test_safe_deploy.py 7 of 14 -- so RT5-AC1(a)'s 'the guard's self-test and .tools/tests/ pass' is not achievable by any act inside this cell's bounds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "baseline (pre-edit) `python .tools/test_code_trees_invariant.py` -> 'FAIL: 3/18 cases failed', rc=1; the three are the frozen PIPELINE_MAP comparison, which predates the advi tree added 2026-08-18",
+        "baseline (pre-edit) `python .tools/test_safe_deploy.py` -> 'FAIL: 7/14 cases failed', rc=1; four are INDEX_MISSING (fixtures built outside the workspace) and three are 'EXCEPTION: Strings must be encoded before hashing'",
+        "baseline .tools/tests/*.py run standalone: 47 PASS / 8 FAIL of 55; none of the 8 is a deploy test",
+        "pytest over .tools/tests/ collects ZERO: test_fabric_check_classify.py raises SystemExit at import and takes the whole directory with it (INTERNALERROR, 'no tests ran')"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RT5-AC1(a): 'the guard's self-test and .tools/tests/ pass (counts printed)'; BOUNDS: 'the self-test run is the control'.",
+    "world_is": "The suites fail at baseline for reasons this cell does not touch. The run is therefore used the way BOUNDS names it -- as a CONTROL: post-edit, test_code_trees_invariant.py output is BYTE-IDENTICAL to baseline and test_safe_deploy.py differs only by a tempdir nonce inside a pre-existing failure line. That identity is the discriminator that says a bundle addition moves neither PIPELINE_MAP nor VALID_LAYERS.",
+    "notes": "Repairing either suite is outside this cell's bounds (the guard's other trees are untouched; the runners are not this cell's to edit either). The invariant suite is the live net under every future CODE_TREES edit and it is currently red, which is why this is ARMED rather than noted.",
+    "disarm_owner": "1.0.0_SA_CTO (INFRA.TOOLS gate per safe_deploy_core.py's own header); 0.7.0_AE_CloudOps authored safe-deploy.sh"
+  },
+  {
+    "id": "IRPT_BCKEND-S30",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-11T12:31:26Z",
+    "one_line": "The task order instructs a DS lane to mint row ids of the form IRPT_BCKEND-D-S<k>, which the ratified investigation-item schema REFUSES: the id pattern admits only the Z-, W<n>- and C- infixes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/surprise_channel/schemas/investigation_item.schema.json id pattern: ^[A-Z0-9_]+-(Z-)?(W[0-9]+-|C-)?S[0-9]+$ -- 'D-' matches no alternative and [A-Z0-9_]+ cannot absorb the hyphen",
+        "re-tested directly: pattern.match('IRPT_BCKEND-D-S1') is False; pattern.match('IRPT_BCKEND-S1') is True",
+        "all 71 ids already in this channel match the pattern (0 failures), so the pattern is enforced in practice, not merely declared",
+        "the schema names the seat form as the correct one for a seat: '{PROJECT}-S{n} = a seat's row on the laptop fabric'; the W<n> form is gate-bound to a committing 0.9.0_WK_ worker's suffix, which this serial is not"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-5 BOUNDS 8: 'id IRPT_BCKEND-W<your slot>-S<k> (a DS lane mints IRPT_BCKEND-D-S<k>)'.",
+    "world_is": "These rows use the valid seat form IRPT_BCKEND-S<k>, continuing the channel's shared seat sequence from its measured max at write time rather than from a read taken earlier in the session.",
+    "notes": "Fails LOUD rather than silently -- a D- id is refused by the row gate at commit -- so the cost is a round trip, not a bad record. Flagged because the instruction sits in a face template that other DS lanes will be handed."
+  },
+  {
+    "id": "IRPT_BCKEND-S31",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-11T12:43:56Z",
+    "one_line": "TO-IB-rt-5 contradicts itself: RT5-AC1(c) instructs a no-op CHANGE to a runner committed on the branch, while BOUNDS 1 of the same face says 'do not edit the runners'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO-IB-rt-5 RT5-AC1(c): 'A no-op change to a runner committed on the branch runs the push gate and reads MEMBER / deployed or verified, never SKIP-NOT-MEMBER'",
+        "TO-IB-rt-5 BOUNDS: 'Declare and mint; do not edit the runners.' and 'The DELIVERABLE names no runner edit'",
+        "resolved without editing either runner: the gate's own --commit-range path was run over the two REAL commits that added them (3654197107 IB-s-1, 2dbc92e956 IB-s-12) -- the identical input that read SKIP-NOT-MEMBER in round 1",
+        "both runs printed 'BUNDLE-ROUTED: <runner> -> bundle investor_reporting' with rc=0, and each run's sibling tests/*.py still printed 'SKIP-NOT-MEMBER ... 404' as an in-run negative control"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RT5-AC1(c) requires a new no-op commit touching a runner; BOUNDS 1 forbids editing a runner in this cell.",
+    "world_is": "Both are satisfiable at once only because the repo already contains commits that touch the runners. The gate's commit-range path over those historical commits is the same code path a fresh no-op commit would exercise, and it is a STRICTLY better discriminator: the input is byte-identical to the one that produced the round-1 SKIP-NOT-MEMBER finding, so the before/after comparison holds the input fixed and varies only the declaration.",
+    "notes": "Reported rather than silently resolved because the next seat handed this face template may take the literal path, edit a file another cell owns (IB-rt-3 / IB-rt-6 own the runners this round) and collide at the drain. No runner was edited by this cell."
+  },
+  {
+    "id": "IRPT_BCKEND-S32",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-11T12:57:01Z",
+    "one_line": "Both round-1 batteries grade the first-mint by head-object on a LOOSE per-file key, so now that the mint has correctly landed as a BUNDLE they will read ABSENT / DEPLOY LEG BLOCKED -- a FALSE RED that says the opposite of what happened.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_s_4.py:320-324 -- key = SHARED_CODE_PREFIX + 'directory_runner.py'; head-object; landed = (rc == 0)",
+        "deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_s_12.py:39,279-292 -- CODE_KEY = '.../holdings_snapshot.py'; artifact_landed = (rc_h == 0); and it probes --mint-bundle holdings_snapshot, a bundle NAME that does not exist (the declared bundle is investor_reporting, of which holdings_snapshot.py is a MEMBER), so bundle_declared stays False and deploy_blocked stays True",
+        "measured after the mint: list-objects-v2 on code/scripts/assets_gold/investor_reporting/ returns 1 object, the tar.gz; head-object on the loose .../directory_runner.py key returns 404",
+        "the 404 is CORRECT and PERMANENT by design: safe_deploy_core.py routes a bundle member away from the loose leg ('loose leg frozen 2026-08-11, X-iii') and the X-iii note states a member's loose S3 objects are deprecated-in-place, never updated"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round 1's IB-s-4 and IB-s-12 encode 'SERVED' as 'the per-file key exists at the shared-home prefix'.",
+    "world_is": "After IB-rt-5 the served shape is ONE hash-stamped bundle at that prefix and the per-file keys are frozen 404s. Re-running either round-1 battery therefore produces 'ABSENT' / 'DEPLOY LEG: BLOCKED' AFTER a successful first-mint, which reads as a regression and is the exact opposite of the world.",
+    "notes": "Raised because L9 adjudication is the likeliest place to re-run a round-1 battery. The instrument that IS current for this surface is deliverables/0.4.0_DS_ClientPlatform~X/battery_ib_rt_5.py, which grades the bundle object and both member sha stamps. Not repaired here: those batteries belong to IB-s-4 / IB-s-12, not to this cell, and editing another cell's deliverable is outside these bounds.",
+    "disarm_owner": "2.0.0_SA_COO~B (routes the correction to the owning cells IB-s-4 / IB-s-12); 3.0.0_SA_CVO reads it at L9"
   },
   {
     "id": "IRPT_BCKEND-W1-S1",
