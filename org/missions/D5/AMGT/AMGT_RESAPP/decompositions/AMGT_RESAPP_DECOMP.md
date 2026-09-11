@@ -794,12 +794,22 @@ are the only roots, they are the two chains' heads, and both spawn at issuance (
   standing NEVER clauses). `rd-5` and `rd-6` are SCHEDULED PRODUCERS, which is not only permitted but
   required ("production pipelines MUST be scheduled"); a producer that computes a ranking is not a monitor.
   STOP: neither cell may add an alert, an SNS topic, an SES send or a freshness checker on top of its output.
-- **`opal-data-research` IS AN EXISTING DECLARED RESOURCE AND IS NOT RE-CREATED** (rows `Z-S5` -> `Z-S8`).
-  Measured at this cut: versioning **Enabled**, SSE AES256 (SSE-C blocked), **no lifecycle** (accumulation is
-  not silently truncated), **no bucket policy** (IAM-only), us-east-1, and list access PROVEN by a successful
-  `list-objects-v2` -- existence and access measured separately. Created by this project's own `AMGT-s-6`
-  @`20260910T2059Z` via `safe-apply`. A round-5 cell touching it INTEGRATES; it must not re-create,
-  re-declare or re-configure it.
+- **`opal-data-research` -- PARTLY SUPERSEDED 2026-09-11 ~19:0xZ: IT IS BEING RENAMED.** Andrew ruled at
+  ~18:5xZ that harvest naming DOES reach this bucket ("better to have all of this stuff grouped by name
+  right from the start"), so it is no longer a stable existing resource -- it is one that is about to move,
+  under `4.0.0_SA_CRO~Z`'s execute-and-oversee authority over the harvest estate. Amended here rather than
+  left contradicting a live ruling.
+  WHAT STILL HOLDS UNCHANGED: no round-5 cell re-creates, re-declares or re-configures it, and none of them
+  performs the migration -- that act is the harvest estate's.
+  Measured at the round-5 cut and still true of the source bucket: versioning **Enabled**, SSE AES256
+  (SSE-C blocked), **no lifecycle**, **no bucket policy** (IAM-only), us-east-1, list access PROVEN by a
+  successful `list-objects-v2`. Created by this project's own `AMGT-s-6` @`20260910T2059Z` via `safe-apply`.
+  ⛔ **AND THE RENAME HAS CODE CONSUMERS, NOT ONLY DATA -- row `Z-S12`.** 12 DEF-band definitions of the
+  bucket name across a printed denominator of 56,351 files; **ELEVEN are hardcoded literals with no env
+  path** and six of those are LIVE round-1..4 modules. Exactly ONE is re-pointable by an environment
+  variable. A cell of this round that reads a research-store path must expect the name to move under it,
+  and `rd-5`'s producer is SCHEDULED daily -- so a rename landing between two fires breaks the next one at
+  RUN time, not at apply time.
 - **S12 RESOLVES EACH PLATFORM'S OWN IDENTIFIER BEFORE DISPATCH.** `rd-4` never dispatches on a bare ticker.
   This is the direct carry-forward of F6 (48 of 54 packs with a foreign peer set) -- **cutting an
   acquisition cell ahead of identity rebuilds that defect on a new axis.**
