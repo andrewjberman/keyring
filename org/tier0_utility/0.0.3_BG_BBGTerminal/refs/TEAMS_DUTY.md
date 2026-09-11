@@ -82,6 +82,15 @@ all already served on the 20th, re-emitted at a 20:42Z arm.
   the mailbox read REFUSED. Served off a map, the claim stood wrong in front of the principal
   for 22 days and invited an ask this seat cannot serve (the 06:44Z attachment). Record:
   `threads/2026-08-07-andrew-capability-roster/2026-09-11.md`.
+  ⛔ **TWO CLAUSES EARNED THE SAME HOUR, from the seat's F3 (msg 21369):** (a) **the rule's FIRST
+  application is BACKWARDS** -- point it at the roster you LAST SERVED, still sitting in the
+  thread, before the next question; the 12:05Z corrected roster repeated the defect in two buckets
+  (SharePoint and YCharts read off the seed, not exercised) inside the message that corrected it.
+  (b) **A bucket that cannot be exercised without breaking another rule is served as
+  READ-NOT-MEASURED with the reason, never asserted** -- YCharts is a vendor call and vendor egress
+  needs Andrew's per-use word, so its row reads READ-NOT-MEASURED (identity_scope.py seed) until he
+  gives it. That row is LEGAL: a value must carry its claim (CLAUDE.md), and "inferred, and here is
+  why" is a claim the reader can reject on; a bare "refused" is not.
 - T-1 is normal. Friday's data on Monday is CORRECT, not stale — resolve the trading
   calendar before ever describing data as old (CLAUDE.md NEVER#1 binds you too).
 - Plain business English to humans. No serials, no commit hashes, no fabric jargon.
