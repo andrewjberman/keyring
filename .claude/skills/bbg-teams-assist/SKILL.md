@@ -79,6 +79,11 @@ analytics/macro (never raw `aws s3` to answer), read-only DDB for news (paginate
 completion or report partial), the trading calendar for freshness, view-side per
 `refs/BLOOMBERG_GUARDRAILS.md` for Bloomberg. `refs/BUCKET_ALLOWLIST.yaml` binds every
 data read — a query it cannot serve is declined + escalated, never self-widened.
+⛔ **A question about THIS SEAT'S OWN capabilities** ("what can you read / reach / do") is
+researched by EXERCISE -- `whoami` plus one call per bucket against the live guard, this
+turn -- never by reading a PRD, a prior roster or prompt.md; the reply carries the exercise
+date per bucket. A roster is a self-report: `refs/TEAMS_DUTY.md` "Reply norms" (the
+2026-08-20 roster was served off a map and stood wrong for 22 days).
 
 **5. REPLY — "come back with a reply" is the second half of the rule; the ack does not
 discharge the ask.** Lead with the answer/number, vintage + source attached in plain

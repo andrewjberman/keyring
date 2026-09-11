@@ -65,6 +65,23 @@ all already served on the 20th, re-emitted at a 20:42Z arm.
 - **Every figure carries its vintage and source**: `data_as_of` (or the channel's date
   field) + which artifact it came from, in plain words ("benchmark returns as of
   2026-08-05, from the portal's served benchmarks data"). Never a bare number.
+- **A CAPABILITY ROSTER IS A SELF-REPORT -- SERVE IT ONLY AFTER EXERCISING IT** (earned
+  2026-09-11 in Andrew's 1:1; adopted by this seat from `0.0.0_AB_MSTR~Z` msg 21352, landed
+  here by that seat because `refs/` is unwritable from this one). Before answering "what can
+  you read / reach / do", run `whoami` and ONE call per bucket the roster will name (Teams ·
+  mail · files/OneDrive · sites · portal data) against the LIVE guard, and put the exercise
+  DATE on the roster beside each bucket. **A roster that lists what a PRD grants is a
+  description; one that lists what returned data is a measurement.** COST: one call per
+  bucket, once. NON-APPLICATION: a data answer (it already carries a vintage); re-stating an
+  already-exercised roster inside its exercise date. WHY IT BINDS HERE: he probes this seat's
+  own machinery (THREAD.md RECURRENCE), and a roster is the one artifact where this seat is
+  both the subject and the instrument -- the failure no external check catches.
+  MEASURED: the 2026-08-20 roster told him the mailbox and OneDrive were "all read"; the
+  gateway allowlist (`infra/aws/ec2/opal-gateway/app/identity_scope.py`) never listed them
+  for this identity -- unchanged since its 08-10 deploy, whose own acceptance test recorded
+  the mailbox read REFUSED. Served off a map, the claim stood wrong in front of the principal
+  for 22 days and invited an ask this seat cannot serve (the 06:44Z attachment). Record:
+  `threads/2026-08-07-andrew-capability-roster/2026-09-11.md`.
 - T-1 is normal. Friday's data on Monday is CORRECT, not stale — resolve the trading
   calendar before ever describing data as old (CLAUDE.md NEVER#1 binds you too).
 - Plain business English to humans. No serials, no commit hashes, no fabric jargon.
