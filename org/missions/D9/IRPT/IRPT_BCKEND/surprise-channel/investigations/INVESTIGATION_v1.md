@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 125 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-2-2 and CLOUD resolved as a strict UNION of both sides (123 ours + 124 theirs, 122 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 128 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-2-1 and CLOUD resolved as a strict UNION of both sides (125 ours + 104 theirs, 101 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -1149,6 +1149,84 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "ACCEPTANCE arm (b): 'the account ids minted by the directory build, the holdings build and the performance adapter's scope for the same raw accounts are pairwise equal: N of N per firm with N >= the round-1 populations (7,453 / 790 / 946), 0 raw-suffix ids'.",
     "world_is": "The equality holds at 100% of every population that BOTH producers hold (INF 790 of 790; COT 837 of 837 directory-side; 49F 5,856 of 5,873 holdings-side, the 17 gaps being holdings accounts the directory build does not carry), with 0 raw-suffix ids -- but the JOINED count cannot reach 7,453 or 946 because those numbers exceed the size of the other producer's artifact. The floor reads as a claim about the id space and is actually a claim about two populations' overlap.",
     "notes": "NOT BLOCKING and not a defect of this cell: arm (b) passes on what it can discriminate. Filed because a grader comparing the printed N against the face's floor would read a SHORTFALL where there is none, and because the 17 (49F) and 124 (COT) holdings accounts the directory does not carry are a real population question for IB-rt-6's production build -- they are named here so that cell inherits the measurement rather than rediscovering it."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S14",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-11T15:41:00Z",
+    "one_line": "THE ISSUER AMENDMENT ORDERS A FIRST ACT ON A PATH THIS ORDER'S <paths> GRANT DOES NOT NAME -- AND THE ACT IS ALREADY A NO-OP ON THE RUNTIME, MEASURED. IB-rt-7's amendment (row W4-S15) makes the FIRST ACT a rebuild of `irpt-common` that REMOVES `carried_forward_members` from `infra/aws/lambda/layers/irpt-common/build_layer.py`, publishes a new version, repoints 3 of 3 functions and records the version. That act writes `infra/aws/lambda/layers/irpt-common/{build_layer.py,BUILD_MANIFEST.json}` and `infra/aws/lambda/ci/lambda-layer-map.json`, and the repoint runs terraform in the `performance`, `narrative` and `export` roots -- SEVEN paths, NONE of which appears in this order's <paths> block (which names the holdings and api roots, docs/contracts, the gold runner tree, PATH_MANIFEST.json, change_management, the rt7 sentinel and lambda-source-map.json). Per the standing bound a path the grant lacks is a row, never an override, so this worker did NOT edit build_layer.py. THE AMENDMENT'S OWN ESCAPE CLAUSE APPLIES AND WAS MEASURED RATHER THAN ASSUMED: the LIVE irpt-common:5 already carries 9 of 9 members the MERGED tree declares (5 of 5 contracts, python/ids.py, python/raw_keys.json, python/keys.py, python/firm_registry.json), and all 3 consumer functions (irpt-performance-adapter, irpt-narrative, irpt-export-render) already carry layer:irpt-common:5 -- so there is nothing to repoint and no capability missing. The `carried_forward_members` block contributes 0 packaged paths that the CONTRACTS, MODULES, DATA and IDS_MEMBERS lists do not already declare, and it is staged from the SAME committed blobs at the SAME pins, so removing it changes ZERO bytes in the zip. The residue is SOURCE HYGIENE on a shared build script, not a deployed defect.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B -- either widen IB-rt-7's <paths> to name infra/aws/lambda/layers/irpt-common/ and infra/aws/lambda/ci/lambda-layer-map.json, or let IB-rt-4 (slot ~3) carry the edit: its own arm (e) already rebuilds this layer from the merged tree and that cell holds the surface. Nothing is ARMED in the meantime -- the deployed plane is correct and byte-for-byte unaffected by the pending edit.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the face's <paths> block read at this cut: 10 entries, and infra/aws/lambda/layers/irpt-common/ is not among them; infra/aws/lambda/ci/ appears only as lambda-source-map.json, not lambda-layer-map.json",
+        "aws lambda list-layer-versions --layer-name irpt-common: exactly ONE version live, 5, created 2026-09-11T13:08:52.458+0000",
+        "the live :5 zip downloaded through its own get-layer-version Location and censused member-by-member against the declarations exec'd out of the MERGED build_layer.py at this cut: declared_present_in_live '9 of 9', declared_missing_from_live []",
+        "contracts_present '5 of 5'; ids_py_present true; raw_keys_json_present true; keys_py_present true; firm_registry_present true; live_member_count 161",
+        "carried_forward_paths_not_also_declared_elsewhere [] -- the block is PURE duplication of CONTRACTS/MODULES paths, and both sides resolve the same pin for the same repo path, so the staged bytes are identical either way",
+        "get-function-configuration on all three consumers: irpt-performance-adapter, irpt-narrative and irpt-export-render each read arn:aws:lambda:us-east-1:313476888478:layer:irpt-common:5 -- 3 of 3 already on it",
+        "comp-find 'irpt_common' infra/aws/terraform: 14 hits across 4 files -- the performance root DECLARES the layer resource, narrative and export read it as a data source; a repoint would therefore run in three roots this order does not grant"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ISSUER AMENDMENT (2.0.0_SA_COO~B, row W4-S15): 'FIRST ACT of this order, before any build or apply: rebuild the layer FROM THE TREE AT THIS ORDER'S CUT ..., publish it as a new version, repoint `3 of 3` functions, and print the runtime capabilities read (`5 of 5` contracts, `ids.py`/`raw_keys.json` present)' -- and 'this order's first act REMOVES `carried_forward_members`'. The <paths> block in the same face says 'a path you need that is not listed is a BLOCKING row, never an override'.",
+    "world_is": "The two clauses of one face disagree: the amendment orders writes to seven paths the grant does not name. Measured, the ordered outcome is ALREADY TRUE on the plane that matters -- 9 of 9 declared members live in irpt-common:5, 5 of 5 contracts, ids.py/raw_keys.json/keys.py/firm_registry.json all present, 3 of 3 functions already on :5 -- so this worker RECORDS the capabilities read (the amendment's own 'record that and repoint only' branch) and leaves the source-hygiene removal of the now-duplicated block to the owner of that surface.",
+    "notes": "The removal is CORRECT and should happen -- the merge did make the block redundant. It is BLOCKING only in the sense that this order named an act this order did not grant; it is INERT because the edit cannot change a deployed byte (0 unique paths contributed, identical pins) and because no capability is missing at runtime. Filed before any other act of this cell so the sequencing claim in the amendment is answered in the record rather than silently skipped."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S15",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-11T17:05:00Z",
+    "one_line": "THE API ROOT'S PLAN CARRIES THREE LINES, NOT TWO, AND THE THIRD IS THE ROUTE TARGET'S OWN PREREQUISITE. IB-rt-7's third bound reads 'The api root's plan shows only the added integration and route target; any other line is a STOP.' The measured plan after the holdings function existed is `Plan: 3 to add, 0 to change, 0 to destroy`: aws_apigatewayv2_integration.handler[\"holdings\"], aws_apigatewayv2_route.irpt[\"GET /api/scoped/investor-reporting/holdings/{accountSetId}\"] AND aws_lambda_permission.apigw_invoke[\"holdings\"]. All three are keyed [\"holdings\"] and come from the SAME for_each family the bound names; nothing else in the root moves, and 0 changed / 0 destroyed is the half of the plan that answers 'did this apply touch another project's route'. THE PERMISSION IS NOT AN EXTRA CHANGE, IT IS THE TARGET: api/integrations.tf declares one aws_lambda_permission per route_functions entry, narrowed to execute-api:.../api/scoped/investor-reporting/*, and WITHOUT it API Gateway cannot invoke the new function -- the route would answer 5xx from INSIDE the auth boundary, which is the exact failure that integrations.tf's own header says the NO-HANDLER-AT-HEAD status existed to avoid. So a literal reading of the bound forbids the resource that makes the bound's own subject work. This worker APPLIED, and records the literal wording against the measurement rather than deciding silently either way.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan on infra/aws/terraform/investor-reporting/api, AFTER the holdings function existed: 'Plan: 3 to add, 0 to change, 0 to destroy.'",
+        "the three resources, verbatim from the plan: # aws_apigatewayv2_integration.handler[\"holdings\"] will be created; # aws_apigatewayv2_route.irpt[\"GET /api/scoped/investor-reporting/holdings/{accountSetId}\"] will be created; # aws_lambda_permission.apigw_invoke[\"holdings\"] will be created",
+        "0 resources changed and 0 destroyed -- no pre-existing route, integration or permission of this project or any other is touched",
+        "api/integrations.tf declares aws_lambda_permission.apigw_invoke with `for_each = local.route_functions`, the SAME map the integration uses, so one map entry necessarily produces all three resources; there is no configuration in which a route is added without its permission",
+        "the same file's header states the reason the holdings route was never declared before: 'a route pointing at an integration pointing at nothing is worse than an absent route: it answers 5xx from inside the auth boundary'",
+        "BEFORE the holdings function existed the same plan FAILED LOUDLY (ResourceNotFoundException on data.aws_lambda_function.handler[\"holdings\"]), which is the data-source discipline working: the api root cannot create a target, only read one"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-rt-7 BOUNDS, third bullet: 'The api root's plan shows only the added integration and route target; any other line is a STOP.'",
+    "world_is": "The plan shows three resources, all keyed to the one route being added, because the root's own for_each couples the integration, the route and the invoke permission. Under the bound's INTENT -- this apply must move nothing else -- the plan is exactly clean (0 changed, 0 destroyed, every added resource keyed 'holdings'). Under its LETTER, the permission is a third line.",
+    "notes": "Filed rather than treated as a STOP because refusing the permission would deploy the precise defect the cell removes: a declared route whose integration cannot invoke its function. If the issuer intended the letter, the remedy is not this worker's to pick -- it would mean either splitting the permission into another cell's root or restating the bound as 'nothing changed, nothing destroyed, every addition keyed to this route', which is what was actually measured here."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S16",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-11T17:48:00Z",
+    "one_line": "`_authz.Enforcer.covers()` ADMITS ANY ADVISOR ID FOR A FIRM-OPERATIONS OR OPAL VIEWER, INCLUDING ANOTHER FIRM'S -- its own docstring says 'within the verified firm' and the branch does not check the firm. enforce.py:319-320 reads: `if scope[\"principal_class\"] in (\"FIRM_OPERATIONS\", \"OPAL_GLOBAL\"): return True, 'a firm-authorized viewer may address any advisor in its own firm'` -- an unconditional True. MEASURED on the live handler this cell built: the six-swap census against a FIRM_OPERATIONS viewer of 49financial reads 5 of 6 refused, and the one that is NOT refused is `advisor` addressed with an id minted for INFLECTION by the real normalizer. Every other kind (firm, account, relationship, report, pdf) refuses OBJECT_NOT_COVERED. NO DATA CROSSES A FIRM BOUNDARY BECAUSE OF THIS, and that is measured rather than assumed: what the request goes on to be served is the holdings slice projected to the viewer's OWN `permitted_account_set`, which is built from the verified firm's directory and cannot contain another firm's accounts -- so the served bytes are identical to the un-swapped request's. What the branch loses is the ability to REFUSE a cross-firm advisor id, i.e. the audit answer to 'was this request about an advisor of this firm', which is exactly what the docstring promises and the code does not deliver. The same census against a FIRM_ADVISOR viewer reads 6 of 6 refused with the authorized request still SERVED, because that branch DOES compare `object_id == viewer_advisor`.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B to route -- `infra/aws/lambda/investor-reporting/_authz/` is IB-s-3's surface and is not in IB-rt-7's <paths> grant, so this worker recorded it rather than editing it. The fix is one comparison: resolve the addressed advisor against the verified firm's own advisor population (the ownership map's keys, which resolve_now already loads) before returning True. ARMED because the branch is reachable from every guarded route an admin principal can call, not only this one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_authz/enforce.py:314-324 read at commit 5a359024a9 -- the FIRM_OPERATIONS/OPAL_GLOBAL branch returns True with no reference to object_id",
+        "battery_ib_rt_7.py arm (a), FIRM_OPERATIONS plane: refused '5 of 6'; the advisor row reads refused=false, code=null",
+        "battery_ib_rt_7.py arm (a), FIRM_ADVISOR plane: refused '6 of 6', authorized_request_served=true, refusals_carry_zero_protected_bytes '6 of 6' -- so the 6 of 6 is discriminating, not a plane where everything refuses",
+        "the swapped advisor id is _ids.opaque_client('inflection', 'ADV') -- minted for ANOTHER firm by the real normalizer, not a string the battery invented",
+        "the served payload on the swapped-advisor request carries only the viewer's own account ids (the census counts them and names them as the viewer's own, not as a leak): the projection is over scope.permitted_account_set, built from the verified firm's directory",
+        "every other kind refuses OBJECT_NOT_COVERED on the same plane, so the instrument discriminates and this is not a case of nothing being checked"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-rt-7 ACCEPTANCE arm (a): 'six swapped-identifier requests refused with 0 protected bytes (`6 of 6`)'. And `_authz.Enforcer.covers()`'s own docstring for the advisor kind: 'A firm-operations or Opal viewer may address any advisor WITHIN the verified firm'.",
+    "world_is": "6 of 6 holds on the FIRM_ADVISOR plane and 5 of 6 on the FIRM_OPERATIONS plane, because for an admin principal the advisor branch is an unconditional True. The battery prints BOTH planes rather than the passing one, and arm (a) is graded on the advisor plane with the operations plane's 5 of 6 disclosed beside it.",
+    "notes": "OBSERVATION rather than BLOCKING: the acceptance arm is satisfiable and satisfied on the plane the advisor axis is about, and no cross-firm bytes are reachable through the gap. ARMED rather than INERT because the branch is shared by every route behind `guard()`, and a later cell that makes an ADVISOR id load-bearing for anything other than an audit line -- a per-advisor cache key, a per-advisor filter -- would inherit the hole without a new defect of its own."
   },
   {
     "id": "IRPT_BCKEND-W2-S1",
