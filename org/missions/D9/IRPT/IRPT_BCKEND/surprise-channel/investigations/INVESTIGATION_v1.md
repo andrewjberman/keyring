@@ -3194,6 +3194,52 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Andrew-direct 17:1xZ (via 0.0.0_AB_MSTR 95994): workers finish, nothing new starts, log and commit; spine v3 L7: a worker's branch is drained by its issuer and a disagreement between two workers' instruments is resolved by the issuer without destroying either's work.",
     "world_is": "IRPT_BCKEND round 2 at 22f2238cd7: COMPLETE rt-1, rt-3, rt-4, rt-5, rt-7, rt-8 (6 of 12); OPEN rt-2 (guards 0 of 11 unguarded; arms (e),(g) unbuilt), rt-9 (arm (a) of six); pending-unhanded rt-10; staged rt-6, rt-11, rtb-1. No worker is live; no worktree remains; the successor cold-starts every remaining order.",
     "notes": "Seat rows continue at S38. The drain-end read to the CTO (CVO watermark vs channel rows, armed rows not seatable) is the successor's act at round end, not this seat's now: the round is not at its end."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S30",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T23:08Z",
+    "one_line": "Arm (a)'s whole-file denominator moved from 11 to 12 while this cell was dead: IB-rt-7's irpt-holdings is now LIVE on its published route, so routes.json resolves 12 handler-bearing routes and the whole-file census reads 1 of 12 unguarded -- and the only remedy paths (holdings/ lambda + terraform) are OUTSIDE this order's <paths>.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The face's hand-off amendment says the whole-file population is ELEVEN and names holdings-snapshot as 'the one published route that has NO handler at HEAD (IB-rt-7's)', EXCLUDED on its own line; arm (a) requires unguarded_routes() over routes.json at HEAD to read '0 of N' with N the handler-bearing routes. The in-lane half is what this cell can move; <paths> carries directory/, performance/, ycharts/generate/, narrative/, export/, ops/ and NOT infra/aws/lambda/investor-reporting/holdings/ nor infra/aws/terraform/investor-reporting/holdings/.",
+    "world_is": "At this worktree's cut a296eac0f4 the holdings route HAS a handler: infra/aws/terraform/investor-reporting/holdings declares handler = 'snapshot.lambda_handler' and holdings/snapshot.py exists, landed by IB-rt-7 at d9c940244a and deployed at 5a359024a9 ('irpt-holdings is LIVE on its declared route'). routetable therefore resolves 12 routes, the IN-LANE census reads 'OK: every route is guarded' over 11 of 11, and the WHOLE-FILE census reads 'BLOCKED: 1 of 12 route(s) reach an unguarded handler: [GET /api/scoped/investor-reporting/holdings/{accountSetId}]'. Guarding it would require writing a new entry module under holdings/ and re-pointing its Terraform handler -- both out of lane, so this cell reports it NAMED and ATTRIBUTED and does not act on it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/investor-reporting/holdings/*.tf@a296eac0f4 -- handler = \"snapshot.lambda_handler\"",
+        "git log --oneline -- infra/aws/lambda/investor-reporting/holdings/@a296eac0f4 -> 5a359024a9 'irpt-holdings is LIVE on its declared route', d9c940244a 'the holdings handler'",
+        "timeout 600 python -m pytest infra/aws/lambda/investor-reporting/_authz/tests/ -q @a296eac0f4 -> test_the_whole_file_census_is_zero AssertionError {'guarded': 11, 'routes': 12, 'unguarded': ['GET /api/scoped/investor-reporting/holdings/{accountSetId}']}",
+        "IRPT_BCKEND.TO-IB-rt-2 face, ISSUER AMENDMENT at the hand-off (row W2-S18): 'the one published route that has NO handler at HEAD (holdings-snapshot, IB-rt-7's) named and EXCLUDED on its own line'",
+        "<paths> of IRPT_BCKEND.TO-IB-rt-2@a296eac0f4 -- no holdings entry, lambda or terraform"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Hazard read INERT, not ARMED, because of row W2-S31: the un-wrapped holdings entry point enforces FirmBinding and Enforcer.guard() INLINE, so 'unguarded' here means 'does not carry the wrapper mark', not 'serves without authorization'. What the issuer owes this cell is a choice, not an act by me: either (i) grant holdings/ + its terraform root and arm (a) reads 0 of 12, or (ii) re-read arm (a)'s N as the IN-LANE handler-bearing routes with holdings NAMED and EXCLUDED on its own line exactly as the W2-S18 amendment already does for arm (g). This cell renders BOTH numbers in the battery and asserts neither as a pass."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S31",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-11T23:08Z",
+    "one_line": "The bypass detector grades a MARK, not a behaviour: is_guarded() reads __irpt_guarded__, so a handler that enforces FirmBinding + Enforcer.guard() INLINE (irpt-holdings' snapshot.lambda_handler) is counted UNGUARDED -- the census's word and the security property it is read as are not the same claim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Arm (a) reads unguarded_routes() as the bypass detector and its verdict string says 'N of M route(s) reach an unguarded handler'; the cell's own ruling is that the guard is a NEW ENTRY MODULE per function whose wrapper sets the mark, and no arm distinguishes 'unwrapped' from 'unauthorized'.",
+    "world_is": "_authz/enforce.py:577 is_guarded(fn) returns bool(getattr(fn, '__irpt_guarded__', False)) and unguarded_routes():591 selects on it alone. holdings/snapshot.py:343 builds _authz.FirmBinding(registry_firm_id, directory.get('firm_id_opaque')) and :353 builds _authz.Request(headers, KEY_OPERATION, 'account', account_set_id), importing enforce as _authz at :44 -- it enforces with THIS library and carries no mark, so it scores as a bypass. The detector is sound for its own question (did this entry point go through guard()) and is NOT a measurement of whether the route authorizes; a reader who converts the one into the other over-reads it in the unsafe direction only for wrapped-but-broken handlers and in the safe direction here.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_authz/enforce.py:577-596@a296eac0f4 -- is_guarded/unguarded_routes",
+        "infra/aws/lambda/investor-reporting/holdings/snapshot.py:44,313,343,353@a296eac0f4 -- import enforce as _authz; FirmBinding; Request",
+        "comp-read infra/aws/lambda/investor-reporting/holdings/snapshot.py --for '...' @a296eac0f4 -- 24 sections, lambda_handler salient at 313-361"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not a defect of either cell and nothing here is edited by this order: enforce.py's docstring already states the question it answers ('can a handler forget the wrapper'). Filed so that the L9 reader of arm (a)'s '1 of 12' does not read it as a live cross-firm hole, and so IB-rt-7's inline enforcement is not retro-fitted to the wrapper on the strength of a census word."
   }
 ]
 ```
