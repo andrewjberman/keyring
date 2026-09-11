@@ -363,10 +363,13 @@ def _ledger_sender(row):
     return None
 
 
-def post_commit(root):
-    sha = _git(root, "rev-parse", "HEAD").stdout.strip()
+def post_commit(root, at=None):
+    """`at` (optional): process THAT commit instead of HEAD -- the recovery path for a commit the wrapper
+    missed (L4-R, 2026-09-11: a sign-off commit ran in reoffer mode and the release branch never fired)."""
+    ref = at or "HEAD"
+    sha = _git(root, "rev-parse", ref).stdout.strip()
     touched = [ln.strip().replace("\\", "/") for ln in
-               _git(root, "diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD").stdout.splitlines()]
+               _git(root, "diff-tree", "--no-commit-id", "--name-only", "-r", sha).stdout.splitlines()]
     prds = [f for f in touched if PRD_GLOB_RE.match(f)]
     state = _load_state(root)
     sent = 0
@@ -415,13 +418,13 @@ def post_commit(root):
     for so_rel in [f for f in touched if SIGNOFF_RE.match(f)]:
         prd_dir = SIGNOFF_RE.match(so_rel).group(1)
         try:
-            so_doc = json.loads(_blob(root, "HEAD", so_rel, must=True))
+            so_doc = json.loads(_blob(root, sha, so_rel, must=True))
         except Exception as exc:  # noqa: BLE001
             print("[prd-notify] %s: sign-off unreadable at HEAD (%s) -- nothing released" % (so_rel, exc))
             continue
         prd_rel = prd_dir + "/" + str(so_doc.get("prd") or "")
         try:
-            h = _header(_blob(root, "HEAD", prd_rel, must=True))
+            h = _header(_blob(root, sha, prd_rel, must=True))
         except Exception as exc:  # noqa: BLE001
             print("[prd-notify] %s: names PRD %s which is unreadable at HEAD (%s)" % (so_rel, prd_rel, exc))
             continue
@@ -639,7 +642,7 @@ def main(argv):
     root = _root()
     mode = argv[0] if argv else "status"
     if mode == "post-commit":
-        post_commit(root)
+        post_commit(root, argv[1] if len(argv) > 1 else None)
         reoffer(root)
         return 0
     if mode == "reoffer":
@@ -651,7 +654,7 @@ def main(argv):
         return selftest(root)
     if mode == "route-dryrun" and len(argv) > 1:
         return route_dryrun(root, argv[1])
-    print("usage: prd-header-notify.py post-commit|reoffer|status|selftest|route-dryrun <sha>", file=sys.stderr)
+    print("usage: prd-header-notify.py post-commit [<sha>]|reoffer|status|selftest|route-dryrun <sha>", file=sys.stderr)
     return 2
 
 
