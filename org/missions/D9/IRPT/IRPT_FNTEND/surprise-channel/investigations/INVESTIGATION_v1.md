@@ -798,6 +798,56 @@
     "world_is": "rc=0 is met (ui-smoke's own process succeeds and saves a PNG) but the PNG is the portal's generic error boundary in all three cases, not the named tab/modal -- a page-breaking infinite render loop, not a design-conformity question this cell's own record can be silent about. hazard_standing ARMED: any real advisor session whose resolve-scope answer carries exactly one permitted firm would crash the whole Investor Reporting page today, not just this smoke instrument; disarm_owner is whoever next owns global/useFirmContext.ts (outside this order's <paths>, which grants only portal/src/pages/InvestorReporting/__tests__/fe-s-11/) or 3.0.0_SA_CVO at L9.",
     "disarm_owner": "3.0.0_SA_CVO",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S13",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-11T07:05:00Z",
+    "one_line": "After the issuer's useFirmContext.ts repair (W1-S12) fixed the one-firm infinite loop, F11-AC6's own named fixture (fe-s-7-smartx.json) STILL fails to reach the Holdings tab -- a DIFFERENT, previously-masked crash: `tabs/reporting/ReportingTab.tsx:36`'s `toRenderPerformanceReport` reads `report.method.currency` on the fixture's `performance-report` response, which carries no `method` field at all (a 5-field stub: schemaVersion/scope/revision/availability/sourceTimestamps only) -- the DEFAULT-mounted Reporting tab throws before Holdings can ever be clicked.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "node scripts/ui-smoke.mjs investor-reporting ... --fixtures fe-s-7-smartx.json --click Holdings --console Error (post-repair): CONSOLE[error] 'TypeError: Cannot read properties of undefined (reading \\'currency\\') at toRenderPerformanceReport (tabs/reporting/ReportingTab.tsx:36:65)'; CLICK-FAIL: Holdings -- locator.click timeout; PNG is the portal's error boundary",
+        "reproduced identically on a second run (byte-identical CLICK-FAIL/PNG/fixture-match count)",
+        "F11-AC5 (fe-s-6-ready.json) and F11-AC7 (fe-s-9-modal.json), run with the SAME post-repair code, both now succeed ('CLICKED: Analysis' / 'CLICKED: Export', no crash) -- isolating the defect to this ONE fixture's data shape, not to the repair or to the Analysis/Export/Holdings tabs themselves",
+        "python read of src/pages/InvestorReporting/fixtures/smoke/fe-s-7-smartx.json's 'investor-reporting/performance-report' key: {schemaVersion, scope, revision, availability, sourceTimestamps} -- no 'method' key at all",
+        "same read of fe-s-6-ready.json and fe-s-9-modal.json's own performance-report fixtures: both carry a full method object ({currency: 'USD', returnMethod: ..., feeBasis: ..., accrualBasis: ..., annualization: ...})",
+        "portal/src/pages/InvestorReporting/tabs/reporting/ReportingTab.tsx:36 @ this worktree HEAD -- its own toRenderPerformanceReport reads `report.method.currency` unconditionally (a local copy of export/resolveBundle.ts's near-identical helper of the same name, per that file's own header comment)",
+        "portal bun test src/pages/InvestorReporting (full suite, post-repair): 322 pass, 1 skip, 0 fail, 1496 expect() calls across 48 files -- no EXISTING test exercises ReportingTab against a performance-report payload lacking `method`, so this gap was never caught by the suite either"
+      ]
+    },
+    "spec_asserts": "F11-AC6 (AMENDED): 'the bar is the printed CLICKED: Holdings'; this order's grant (BOUNDS) names exactly three portal files for repair (global/useFirmContext.ts, export/AppliedBranding.tsx, fixtures/smoke/fe-s-11-print.json) and states 'any other defect found is a surprise row on its cell.'",
+    "world_is": "F11-AC6 still does not print CLICKED: Holdings -- it fails on a DIFFERENT defect than the one this amendment repaired, in a file (tabs/reporting/ReportingTab.tsx) outside this order's grant. hazard_standing INERT: the DEFAULT Reporting tab crashing on a performance-report payload with no `method` field is a fixture-authoring gap (fe-s-7-smartx.json was built for FE-s-7's own Holdings-focused smoke test, before Reporting-tab rendering was exercised against it), not a live-data shape any REAL resolve-scope/performance-report pairing has been shown to produce; disarm_owner is whoever next touches fe-s-7-smartx.json or tabs/reporting/ReportingTab.tsx's defensive handling.",
+    "disarm_owner": "3.0.0_SA_CVO",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S14",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-11T07:25:00Z",
+    "one_line": "F11-AC8's amended <expect> text, 'CONSOLE[log]: REFS RESOLVED: 1 of 1', is carried verbatim into the proof_of_spec instance per schema convention and graded by proof-of-spec-check.py as a raw Python regex (re.search, DOTALL) -- '[log]' parses as a CHARACTER CLASS (one of l/o/g), not the three literal characters, so the pattern can never match a real console line (which always has a literal '[' there), even though the actual printed line is character-for-character correct.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python: re.search('CONSOLE[log]: REFS RESOLVED: 1 of 1', 'CONSOLE[log]: REFS RESOLVED: 1 of 1\\nLOC   : ...', re.S|re.M) -> None",
+        "python: re.search(re.escape('CONSOLE[log]: REFS RESOLVED: 1 of 1'), same text, re.S|re.M) -> matches at span (0, 35)",
+        ".tools/proof-of-spec-check.py:94 -- `matched = _re_x.search(exp, row.get('output_evidence', '') or '', _re_x.S | _re_x.M) is not None` (no escaping, no literal-substring fallback)",
+        "python .tools/proof-of-spec-check.py <instance> F11-AC1..F11-AC10 with F11-AC8's row set to status=PASS: 'VIOLATION: acceptance[F11-AC8]: status=PASS but output_evidence does NOT match expect ... INVALID' -- reproduced directly against this order's own real output_evidence text (the actual ui-smoke capture, not a fabricated string)",
+        "the ui-smoke instrument's own console-line format (scripts/ui-smoke.mjs) is literally `'CONSOLE[' + m.type() + ']:' ...` -- the source of the '[log]' substring the amended <expect> quotes"
+      ]
+    },
+    "spec_asserts": "F11-AC8 (AMENDED): '<expect>CONSOLE[log]: REFS RESOLVED: 1 of 1</expect>'; <proof_of_spec>: 'validated with python .tools/proof-of-spec-check.py <instance> F11-AC1..F11-AC10 BEFORE the complete flip'; the PROOF_OF_SPEC.schema.json's own field description: 'the PATTERN (Python regex, searched with DOTALL) the deciding output must match; the checker grades a mechanical criterion by this match, not by the worker.'",
+    "world_is": "No output_evidence containing a literal 'CONSOLE[log]:' prefix (the ONLY form ui-smoke's --console flag ever produces for a console.log line) can satisfy this pattern under regex search, because '[log]' consumes one literal bracket-class character instead of three literal bracket/l/o/g characters -- the criterion is UNSATISFIABLE BY CONSTRUCTION for any correct output in this exact printed form, not just for this worker's capture. hazard_standing ARMED: any future worker or re-run against this exact <expect> string hits the identical mechanical FAIL regardless of whether the underlying repair/fixture is correct, and the task order can never mechanically reach F11-AC8 PASS as currently worded; disarm_owner is whoever next amends this task order's <expect> text (to the escaped form or an unambiguous substring with no regex metacharacters) or 3.0.0_SA_CVO at L9 if the judgment layer treats this as a known instrument limitation instead.",
+    "disarm_owner": "3.0.0_SA_CVO",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
