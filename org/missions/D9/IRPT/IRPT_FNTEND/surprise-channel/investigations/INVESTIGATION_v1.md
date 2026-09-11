@@ -681,6 +681,27 @@
     "spec_asserts": "IRPT_FNTEND-W1-S8 (2): ARMED -- an amendment this issuer wrote retires a behaviour a terminal cell's positive control asserts, and the DEV set is red by one until the control follows the behaviour.",
     "world_is": "The gating is the intended behaviour (the export modal's narrative toggle decides the page); the control tested the pre-gating default. One line in the control makes it test the gated behaviour under the option it now needs. The next order on the slot carries it and proves the whole set green.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S13",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T05:05:00Z",
+    "one_line": "Two worker commits in the WORKSPACE repo carried the portal GITLINK bumped to the worker's own portal-branch commit (FE-s-8 @24c4b211b2 -> 21b17327; FE-s-5 @3ab6275f9f -> e85f6eb8), so origin/CLOUD referenced a submodule commit that existed only on this laptop until 0.0.0_AB_MSTR pushed portal DEV to 5b959f63 (msg 95796); the pointer at HEAD (e85f6eb8) now resolves on origin/DEV. Control from this row on: every remaining worker face forbids staging the gitlink; every drain reads the merge's stat for `portal` and refuses to land a bump that does not resolve on origin/DEV; the forward bump of the pointer is the issuer's own commit after the next DEV push and rides the L10 read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show --stat 24c4b211b2 -- `portal | 2 +-`; git show --stat 3ab6275f9f -- portal -- 1 gitlink line; the other seven worker commits of this round carry none",
+        "git ls-tree HEAD portal -> 160000 commit e85f6eb84f3a...; git -C portal ls-remote origin refs/heads/DEV -> 5b959f63ca5e, of which e85f6eb8 is an ancestor (FE-s-5's branch merged at 5b959f63); local portal DEV at 164c1b1a is one merge (FE-s-9) ahead of origin/DEV",
+        "0.0.0_AB_MSTR msg 95796 -- origin/DEV 5907cbca -> 5b959f63 pushed fast-forward, is-ancestor(21b17327 -> origin/DEV) YES; the forward bump named as the round owner's act"
+      ]
+    },
+    "spec_asserts": "A worker's write grant is its <paths> block; the workspace gitlink `portal` is not in any grant, and the workspace push (MSTR's) does not carry the portal repo.",
+    "world_is": "The portal worktree sits INSIDE the workspace worktree's `portal/` directory, so any workspace commit that stages the gitlink records whatever commit the portal worktree is at -- a worker-branch commit that no remote holds until the portal branch is merged AND DEV is pushed. Two of nine worker commits did so; the mechanism that swept the gitlink into their pathspec is not yet measured. The pointer is safe today only because the push happened; the guard is stated in the faces and applied at the drain.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
