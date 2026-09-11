@@ -223,8 +223,72 @@ key instead of raising. **Step 1 unblocks GLD; step 3 is what stops the next 186
 trap.** I would not ship step 2 without at least step 1, and I would not call this closed without
 step 3.
 
-**What is explicitly NOT needed:** no new Bloomberg pull, no change to the ETFS toggle, no change to
-`etfAdapter.ts`, no satellite-registry edit, no portal deploy, and no new API route.
+**What is explicitly NOT needed:** no change to the ETFS toggle, no change to `etfAdapter.ts`, no
+satellite-registry edit, no portal deploy, and no new API route.
+
+---
+
+## AMENDMENT 2026-09-11, Andrew-direct -- THE BLOOMBERG PULL *IS* A ROUTE, FOR CHARACTERISTICS
+
+> Andrew: *"most of these things come from Yang's files, but notice the ETFS toggle on Positioning,
+> none of those come from Yang, they all come from Bloomberg."*
+
+**Correct, and it improves the plan.** The section above was right that the ETFS pull is the wrong
+surface for SATELLITES PLACEMENT, and it under-sold the pull as a source of CHARACTERISTICS. Separate
+the two halves, because they have different owners and different urgency:
+
+| | Source | Yang-dependent? |
+|---|---|---|
+| **WEIGHT** (what gets GLD into a satellite) | Yang's model holdings -> `positioning_data.json` | **YES -- the only door** |
+| **CHARACTERISTICS** (fee/aum/yield/beta/returns) | **Bloomberg, via the daily ETF leg** | **NO** |
+
+**Adding the two tickers to the Bloomberg pull is a TWO-STRING change and carries no holdings
+dependency.** `integrations/bloomberg/pipeline/etf_daily_pull.py:45` is
+`FUNDS = ["DIVZ", "IDVZ", "PFDE", "PFOE"]`, and at `:174-176` the funds are appended to the universe
+**unconditionally**:
+
+```python
+for _t in FUNDS:
+    qmap[f"{_t} US Equity"] = f"{_t} US Equity"
+universe = list(qmap)
+```
+
+Only the CONSTITUENTS are derived from `silver/holdings/` (the exit-61 path). **A new fund therefore
+cannot trip exit 61**, which was the obvious objection and it does not hold.
+
+**The fields line up with what the page needs.** `CHAR` (`:237`) and `FUND_D` (`:255`) carry
+`FUND_EXPENSE_RATIO` -> `fee`, `FUND_TOTAL_ASSETS` -> `aum`, `EQY_DVD_YLD_IND_NET` -> `yield`,
+`BETA_ADJ_OVERRIDABLE` -> `beta`, plus `PX_LAST` and `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS` for the
+returns windows.
+
+**The fields that will refuse, refuse SAFELY.** `GICS_SECTOR_NAME` / `GICS_INDUSTRY_GROUP_NAME`
+(neither GLD nor VXX is an operating company), `HB_OAS_EFF_DURTN` / `YAS_ISPREAD_TO_GOVT` (not fixed
+income), `TOTAL_NUMBER_OF_HOLDINGS_IN_PORT` (GLD holds bullion; VXX is an ETN with no portfolio).
+At `:271` the script does `vals.pop("__field_errors__")` and COUNTS them into `field_errs` -- it never
+raises. So a partial field set degrades rather than failing the leg. **Expect those refusals; they are
+the correct answer for these two security types, not a defect** (`READ_HERE.md` section 4 names the
+`NOT_APPLICABLE_TO_REF_DATA` shape).
+
+### >> THIS IS THE ONE THING THAT IS TIME-SENSITIVE, AND IT IS THE ARGUMENT FOR DOING IT TODAY <<
+
+`integrations/bloomberg/READ_HERE.md` section 4: the derived fields are **CURRENT-DAY ONLY.** *"There
+is no backfill. Every uncaptured day is gone permanently."* So GLD/VXX history begins accruing the day
+they enter `FUNDS`, and **every day of delay is a day of series that can never be recovered** -- which
+inverts the sequencing. Adding them to the pull is worth doing NOW, before and independently of any
+allocation decision, precisely because it is cheap, reversible, and the cost of waiting is permanent.
+Steps 1-3 above stand; this becomes **step 0**.
+
+**LANE, stated because it is not mine.** That FILE lives on the Bloomberg box (the `Opal Bloomberg`
+desktop workspace) and `READ_HERE.md` section 3 is explicit that **"SITE-Z SCHEDULED TASKS RUN THE
+WORKING TREE -- an edit to these files IS a deploy the moment it touches disk."** So this is
+`0.0.3_BG_BBGTerminal` / site-Z's surface to change, not this seat's, and it wants the terminal's
+two-phase sign-in state confirmed first. I did not edit it.
+
+**STILL OPEN and NOT closed by this amendment:** getting Bloomberg-sourced characteristics into the
+MODELS payload, where Satellites actually read, is a join that **does not exist today**. The pull lands
+to `s3://opal-data-etfs/bbg/<date>/` and feeds the ETF artifact. So step 0 accrues the data and makes
+these characteristics available on the ETFS surface; it does not by itself put gold inside a
+satellite. The weight still has to come through the models.
 
 ---
 
