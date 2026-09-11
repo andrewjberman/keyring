@@ -185,6 +185,142 @@
     "spec_asserts": "Round-2 decomposition v0.2 R2.2 and FE-s-13's face: the two raw pins (routes.json@bef9b459f3, _contracts@33351469c2) are the authority until the counterpart's versioned artifact lands, and the face pins THAT when it does; analysis ruling 2: regenerate the client against the producer's contract. Every round-2 order: bun run typecheck rc=0 and the whole set 0 fail on its branch.",
     "world_is": "The artifact landed AFTER FE-s-13 was seated and BEFORE its drain, so the seam cell conformed to a pin the producer retired under it; two green branches merged red because a shim and a scratch path were each visible only from one side. The repair is the next non-terminal order's, seated alone so DEV is green before the composer and the export cells build on the v1 client. ARMED until FE-s-14 drains green; disarm_owner this lane.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S9",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-11T17:22:01Z",
+    "one_line": "R1 item 2 orders `fixtures/wire/` copies to come from v1 (\"sha256 of the v1 files\"), but docs/contracts/investor-reporting/v1/ PUBLISHES NO FIXTURES -- it carries 11 document schemas, responses/ (11), routes.json and CONTRACT.md and nothing else. The eleven `.valid.json` instances exist ONLY in the producer package, so the SCHEMA pins moved to v1 while the FIXTURE copies still come from infra/aws/lambda/investor-reporting/_contracts/fixtures/, and producer-fixtures.test.ts now PRINTS both sources so no reader infers that both moved.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls docs/contracts/investor-reporting/v1/ @7ce4761a2f (worktree /c/tmp/wk-irpt_fntend-2-4-fe-s-14, workspace HEAD ffa98ac525): AnalysisReport.schema.json, AnalysisRequest.schema.json, CONTRACT.md, DirectoryEntry.schema.json, ExportBundle.schema.json, ExportReceipt.schema.json, HoldingsSnapshot.schema.json, NarrativePacket.schema.json, PerformanceReport.schema.json, RenderPackage.schema.json, ResolvedScope.schema.json, StatusEnvelope.schema.json, responses/, routes.json -- 14 entries, denominator printed, and NO fixtures directory among them.",
+        "ls infra/aws/lambda/investor-reporting/_contracts/fixtures/ at the same HEAD: the 11 `<Contract>.valid.json` instances (plus `.invalid.json` and one pre_amendment schema) -- the only place in the repo any producer instance exists.",
+        "MEASURED after the re-pin: `bun test src/pages/InvestorReporting/__tests__/fe-s-13/producer-fixtures.test.ts` prints `SCHEMAS READ FROM: docs/contracts/investor-reporting/v1/`, `FIXTURES READ FROM: infra/aws/lambda/investor-reporting/_contracts/fixtures/ (v1 publishes none)`, `FIXTURE COPIES IDENTICAL: 11 of 11`, `WIRE SCHEMA PINS FRESH: 11 of 11` and `RESPONSE SCHEMA PINS FRESH: 11 of 11`.",
+        "The v1 document bodies equal the producer package's plus an OPTIONAL `contract_version` const and an `x-contract-version` annotation (python diff of ResolvedScope.schema.json: 3 hunks, $id path + the property + the annotation), so the fixtures remain valid against BOTH -- which is why splitting the two sources is safe rather than merely convenient."
+      ]
+    },
+    "spec_asserts": "R1 item 2: \"`WIRE_SCHEMA_PINS` and `__tests__/fe-s-13/gen-wire.ts` read `<WS>/docs/contracts/investor-reporting/v1/<Contract>.schema.json` (11 ...) and the 11 `responses/<operation>.response.schema.json`; `fixtures/wire/` copies come from v1 (sha256 of the v1 files)`.\"",
+    "world_is": "The schema half is executed exactly. The fixture half CANNOT be executed as written because v1 publishes no fixtures at all; the copies therefore still equal the producer package's instances by sha256, and both source paths are printed by the test that grades them. hazard_standing INERT: nothing is armed -- the fixtures are byte-identical to a source that still exists, and the only cost is that a future v1 amendment to a document schema would not be accompanied by a v1 fixture. For the issuer: either v1 should publish fixtures, or the order's wording should name the producer package as the fixture source; this worker picked neither, it recorded both.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S10",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-11T17:22:01Z",
+    "one_line": "BLOCKING on F14-AC10. Re-basing fixtures/smoke/default.json to v1 DECLARED paths (ordered by R1 item 5, graded by F14-AC16, done) breaks TWO pins on that same file that this order's <paths> does not grant: portal `__tests__/fe-s-1/fixtures.test.ts:116` asserts the key set EQUALS the eleven FLAT CONSUMER SLUGS, and the counterpart's `_contracts/tests/test_seam_paired.py` asserts len==11, that each key's last segment is one of ITS eleven operations, and that `/api/scoped/investor-reporting/<op>` is IN the map for every operation including the two v1 serves with no route. The portal pin is the single remaining failure in `bun test src/pages/InvestorReporting` (381 pass, 1 skip, 1 fail), so F14-AC10 reads `1 fail` and cannot read `0 fail` from inside this grant.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal @wk-irpt_fntend-2-4-fe-s-14, src/pages/InvestorReporting/__tests__/fe-s-1/fixtures.test.ts:116-124 read directly: `const expected = IR_OPERATIONS.map((op) => `${IR_ROUTE_BASE}/${op}`).sort()` then `expect(keys).toEqual(expected)` -- an EQUALITY on the key set, so neither an extra key nor a renamed one can pass.",
+        "MEASURED: `timeout 240 bun test src/pages/InvestorReporting` after the re-base -> `381 pass, 1 skip, 1 fail`, the one failure being `fixture set > the smoke map covers every scoped route, one entry each`. Before the re-base the same command read 380 pass / 2 fail (the second was fe-s-13's corpus slug, repaired in-grant), and at the ORDERED BASE 8cc43736 it read 351 pass / 6 fail.",
+        "The two key sets cannot be reconciled: IR_OPERATIONS is the eleven CONSUMER operations (it includes `submit-correction` and `export-preview`, which v1 serves with NO route, and it excludes `holdings-snapshot`, which v1 declares); the v1 DECLARED set is eleven ROUTES with different membership. No single key set satisfies both, so this is a genuine collision and not an ordering of edits.",
+        "infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py @HEAD, lines 212-223 and 369-373: `assert len(smoke) == 11`; `theirs = {k.rsplit(\"/\", 1)[-1] for k in smoke}` compared to its own OPERATIONS list; `consumer_path = \"/api/scoped/investor-reporting/\" + op` then `assert consumer_path in smoke`. Under the v1 key form the last segments are `search`, `resolve`, a fingerprint, `analysis`, `sections`, a report id, `status`, a job id, `export`, an export id and `download` -- so all three assertions fail once this branch reaches the primary checkout.",
+        "GRANT, read from this order: <paths> names portal/src/pages/InvestorReporting/__tests__/fe-s-{13,14,17}/ and not fe-s-1/, and names no path under infra/. Neither file is writable from this order and neither was touched (git status shows no change under __tests__/fe-s-1/ or infra/)."
+      ]
+    },
+    "spec_asserts": "R1 item 5: default.json's \"keys are the DECLARED paths (ui-smoke's longest-substring rule) ... the two NOT-A-ROUTE keys are gone from it\", graded by F14-AC16 (`PUBLISHED MAP: v1`); and F14-AC10: `bun test src/pages/InvestorReporting` prints `0 fail`.",
+    "world_is": "Both cannot hold from inside this grant. F14-AC16 passes (11 of 11 declared-path keys, every body v1, every data satisfying its response contract's required set); F14-AC10 reads `1 fail` because the out-of-grant fe-s-1 test pins the OLD key form. ARMED because the same re-base also arms the producer's paired test the moment this branch is drained into the primary checkout -- the producer's seam would read RED for a consumer file that is now MORE conformant, not less. The remedy is two edits this order cannot make: fe-s-1/fixtures.test.ts re-based to the v1 published map (or re-pointed at a fixture-plane map of its own), and the counterpart's `consumer_smoke()` expectations moved to the declared paths. disarm_owner 2.0.0_SA_COO~F.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S11",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-11T17:22:01Z",
+    "one_line": "The v1 envelope parser is STRICT, but LiveClient still ACCEPTS a body carrying none of `contract_version` / `operation` / `firm_id` -- a PRE-ENVELOPE document -- instead of refusing it, because `__tests__/fe-s-1/adapter.test.ts:213` (outside this grant) resolves a bare producer instance through `LiveClient.getPerformanceReport` and F14-AC10 requires the whole set green. The carry is counted, not silent: `LiveClient.preEnvelopeResponses` increments on every such body, and closing it is one line in contracts/envelope.ts.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/pages/InvestorReporting/__tests__/fe-s-1/adapter.test.ts:205-217 read directly: a transport that resolves `(wire as {instance}).instance` -- the RAW PerformanceReport document -- and `await live.getPerformanceReport(...)` with no try/catch, then asserts the URL. A LiveClient that refused an unenveloped body would reject that promise and fail the test.",
+        "MEASURED both ways: with the strict-only path the fe-s-1 suite fails; with `isEnvelopeShaped` gating the parse it passes, and the whole set reads 381 pass / 1 fail (the one failure is W2-S10's, a different file).",
+        "The refusal arms that ARE implemented and graded: F14-AC14 prints `REFUSALS: 3 of 3` -- a v2 `contract_version`, an `operation` naming another route, and a `status` carrying CONTRACT_VERSION (UNAVAILABLE with the code, `data` withheld, sentinel absent from the result). So a body that CLAIMS v1 and disagrees is refused; only a body that claims nothing is carried.",
+        "contracts/envelope.ts, `isEnvelopeShaped` + the file header naming this row; src/api/endpoints/investor-reporting.ts `LiveClient.preEnvelopeResponses`, incremented on the carried path -- a number a test can read rather than an invisible tolerance."
+      ]
+    },
+    "spec_asserts": "R1 item 4: \"ONE response parser for every route: the body is {contract_version, operation, firm_id, data, status?}; `contract_version` must equal `v1` ... else a typed `EnvelopeMismatch` error naming the field\".",
+    "world_is": "Held for every body that carries the envelope's identity, and NOT held for a body that carries none of it -- that one is adapted on FE-s-13's own path and counted. ARMED: a live producer that answered without the envelope (an unmigrated handler, a proxy that strips the body, a cached pre-v1 response) would be accepted rather than refused, which is precisely the class of silent acceptance the envelope exists to prevent. Disarming is one line -- make the non-envelope case throw `EnvelopeMismatch('body')` -- and it requires the fe-s-1 adapter test to hand LiveClient an ENVELOPED body, a file this order's <paths> does not grant. disarm_owner 2.0.0_SA_COO~F.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S12",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-11T17:22:01Z",
+    "one_line": "The consumer NARROWS an optional field of the contract: v1's submit-export response marks `status` OPTIONAL (x-response-contract.status_required false) and its `data` is an ExportReceipt, but `InvestorReportingApi.submitExport` is typed to return the StatusEnvelope ACK, so LiveClient reads `status` and refuses a legal status-less response with EnvelopeMismatch('status').",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/responses/submit-export.response.schema.json @7ce4761a2f: `required: [contract_version, operation, firm_id, data]` (no `status`), `x-response-contract.status_required: false`, `data: {$ref: ../ExportReceipt.schema.json}`.",
+        "portal src/api/endpoints/investor-reporting.ts: `submitExport(req): Promise<StatusEnvelope>` on the interface (unchanged since FE-s-1), and `export/submit.ts:87` passes it straight through; its header calls StatusEnvelope \"the immediate ack\".",
+        "The generated `RESPONSE_STATUS_REQUIRED` (contracts/wire/responses.ts, derived from each schema's own `x-response-contract`) reads `'submit-export': false` and `'analysis-requests': true` -- so the parser itself does NOT require status here; the narrowing is at the METHOD, in the `take: 'status'` argument, and is commented there.",
+        "F14-AC13 prints `ENVELOPES PARSED: 11 of 11` including submit-export, parsed WITHOUT a status, so the parser's own behaviour is unnarrowed and measured."
+      ]
+    },
+    "spec_asserts": "R1 item 4: `status`, when present, is the StatusEnvelope view; `data` goes through the FE-s-13 adapter for that operation. The v1 response contract: `status` optional on submit-export.",
+    "world_is": "The parser holds the contract; the METHOD narrows it, because the consumer's only typed return for this operation is the ack. hazard_standing INERT: the failure mode is a LOUD typed refusal naming the field, never a silent wrong value, and the producer's deployed export worker reports absence explicitly anyway (routes.json's own note on POST /export). For the issuer: either the interface's submitExport should return the receipt (a consumer-wide type change well outside this cell), or FE-s-16 should read the receipt from `data` and the ack from `status` when present.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S13",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-11T17:22:01Z",
+    "one_line": "The print route was DEAD on the merged tree and the order's own item-5 premise could not be met until it was repaired: `/investor-reporting/print` enters through `export-preview`, which v1 lists as NOT-A-ROUTE (and NO v1 route answers an ExportBundle at all), so PrintEntry rendered only its refusal panel; FE-s-13 had wired its own composer into export/Preview.tsx but not into this entry point, and the composer itself was refused by the render package's version gate because `composeExportBundle` left `schemaVersion` as the explicit unknown. Both are repaired in-cell and the print document now renders on the LIVE plane at v1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED before the repair, on the merged tree with the v1 print map: `node scripts/ui-smoke.mjs \"investor-reporting/print?bundle=perf-narrative-fixture-1\" ... --fixtures fe-s-14-print-v1.json --netlog ...` printed `TEXT : This bundle was not rendered investor-reporting export-preview: NO DECLARED ROUTE`, `FIXTURES: 3 declared; 0 matched >=1 URL`, and the netlog carried TWO Lato faces (SemiBold, Light) -- so fonts-served.test.ts's `expect(lato.length).toBe(3)` could not pass from any capture of that page.",
+        "docs/contracts/investor-reporting/v1/routes.json `_operations.consumer_operations_with_no_route`: export-preview, status NOT-A-ROUTE, reason \"a preview is a client-side render of an ExportBundle the consumer already holds\"; and no route in the file has an ExportBundle response contract (11 response schemas: DirectoryEntry, ResolvedScope, PerformanceReport, AnalysisRequest slice, AnalysisReport slice, NarrativePacket, StatusEnvelope x2, ExportReceipt x2, ExportReceipt slice).",
+        "portal export/Preview.tsx:105-116 @8cc43736 already caught `NoDeclaredRoute` and called `composeExportBundle`; render/PrintEntry.tsx:83 did not -- it awaited `previewExportBundle` and let the refusal reach its panel. The same pattern is now applied in PrintEntry, on the SAME trigger (instanceof NoDeclaredRoute, never a blanket catch).",
+        "SECOND defect, measured after the first repair: the composed bundle was refused with `investor-reporting-render/1.0.0 does not support ExportBundle schemaVersion 'unknown'` -- `composeExportBundle` builds its envelope through `wireEnvelope`, which fills schemaVersion with EXPLICIT_UNKNOWN_TEXT, while render/manifest.ts lists `investor-reporting/1`. Preview.tsx's composed path runs through the same gate and had the same hole. Fixed at the composer (COMPOSED_BUNDLE_SCHEMA_VERSION), which is a statement about the composer's OWN object, the same rule that already lets it claim state READY.",
+        "MEASURED after both repairs, live plane, v1 map: `CONSOLE[log]: REFS RESOLVED: 1 of 1`, `TEXT : Prepared for the selected scope rev-000117 ... PERFORMANCE REPORT 2026-01-02 to 2026-09-09`, `FIXTURES: 2 declared; 2 matched >=1 URL`, netlog 146 requests with all THREE Lato faces 200 from this origin; `bun test src/pages/InvestorReporting/__tests__/fe-s-17` 13 pass / 0 fail, printing `LATO OFF-ORIGIN: 0`."
+      ]
+    },
+    "spec_asserts": "R1 item 5: \"Add `fe-s-14-print-v1.json` (the print route's whole needs at v1: performance-report and narrative-packet envelopes) and run F17-AC5's print smoke with `--netlog <committed path>`.\"",
+    "world_is": "Those two ARE the print route's whole needs, but only AFTER the bundle stops being fetched: as merged, the route's FIRST need was an operation v1 refuses, so the capture rendered a refusal and could never have exercised the fonts. Repaired inside this order's grant (render/ and export/ are granted for exactly the reads an operation retirement changes) and both repairs are commented at their sites. TWO residuals, recorded and not fixed here: (1) a print URL minted without `?scope=` and `?revision=` now refuses with MissingPayloadError rather than rendering, because the live performance route binds the scope fingerprint into its PATH -- the committed capture passes both; (2) a client-composed bundle names no account set, so the document header reads `0 account(s) in scope`. Neither is a wrong number on a rendered page; both are the honest consequence of composing a bundle the server no longer authorizes.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S14",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-11T17:22:01Z",
+    "one_line": "Recorded off-task from this cell's own PNGs: the Holdings tab renders the NO-HANDLER-AT-HEAD refusal as `Failed / IR-REQUEST-FAILED / Retry`, so \"this route has no handler at HEAD and the client refused before issuing\" and \"the request was issued and failed\" look identical to a viewer -- and the offered Retry can never succeed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Four captures taken for F14-AC4 / AC5 / AC6 / AC9 (deliverables/0.9.0_WK_IRPT_FNTEND~2/fe-s-14_firm_{49financial,inflection,cottonwood}_1440.png and fe-s-14_global_two_firms_1440.png), read as images: each shows the Holdings panel reading `Failed  Source time unknown`, `IR-REQUEST-FAILED`, and a `Retry` button.",
+        "The client's own behaviour, measured by fe-s-13/routes.test.ts on the same tree: `HOLDINGS REQUESTS ISSUED: 0` and the refusal is `NotYetExercisable` with reasonCode `no-handler-at-head` -- so no request was issued and none can succeed until the counterpart ships a handler (routes.json records the measured absence: 8 irpt-* functions at HEAD, none of them holdings).",
+        "The distinction exists one layer down and is lost one layer up: `NotYetExercisable` is a DIFFERENT class from `IrRequestError`, and FE-s-13 already proved the retired-operation case renders its own state (`no-route.test.ts`: data-slot=\"requests-unavailable\", data-reason-code=\"no-declared-route\"). The holdings tab has no equivalent arm.",
+        "SCOPE: tabs/holdings/ is inside this order's <paths> only \"for the reads the envelope parser or an operation rename changes\", and this is neither -- the behaviour is identical before and after this cell. Recorded, not changed."
+      ]
+    },
+    "spec_asserts": "Nothing in this order speaks to the Holdings tab's unavailable state; FE-s-13's own rule (no-route.test.ts) is that an empty list and an absent route must not render the same.",
+    "world_is": "For the NO-HANDLER route the two DO render the same, one layer above where the distinction is made. hazard_standing INERT: no wrong number is shown and the panel does say Failed rather than showing an empty holdings tree, so the defect is a misattributed CAUSE and an unusable affordance, not a silent success. It belongs to whichever round-2 cell owns the holdings tab's states.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

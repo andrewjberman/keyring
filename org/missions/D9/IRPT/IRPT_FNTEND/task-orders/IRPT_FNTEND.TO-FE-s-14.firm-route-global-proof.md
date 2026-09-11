@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>blocked</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F1, F11) | **Decomp cell:** `FE-s-14` (round 2, v0.2) | **outcome_ref:** FWD-1, FWD-11 | **depends_on:** `FE-s-13`, `FE-s-17` (both terminal) | **slot:** ~2, queue position 2, SEATED ALONE before FE-s-15 and FE-s-16 (R1) | **slug rows:** W1-S10
 
@@ -40,6 +40,8 @@ Portal DEV @8cc43736 carries FE-s-13 and FE-s-17 merged and is RED: `bun run typ
 (5) **The consumer's published map.** `fixtures/smoke/default.json` is what the counterpart's paired test reads (`infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py`, `consumer_smoke()`, from the primary checkout); re-base it to v1: keys are the DECLARED paths (ui-smoke's longest-substring rule), bodies are envelope-wrapped producer `.valid.json` documents (`data` = the document or the declared slice, `operation` = the route's operation, `contract_version` = v1, `firm_id` an opaque `fir_` plus 24 hex); the two NOT-A-ROUTE keys are gone from it. `fe-s-13-wire.json` is re-based the same way. Add `fe-s-14-print-v1.json` (the print route's whole needs at v1: performance-report and narrative-packet envelopes) and run F17-AC5's print smoke with `--netlog <WS>/portal/src/pages/InvestorReporting/__tests__/fe-s-17/fixtures/fe-s-17.netlog`; `fonts-served.test.ts` reads THAT committed path (relative to the test file), never `.scratch/`.
 
 (6) Your own cell's smoke maps (`fe-s-14-*.json`) are envelope-wrapped v1 maps.
+
+(7) **(AMENDED BY THE ISSUER at the FE-s-14 report on row IRPT_FNTEND-W2-S10.)** `__tests__/fe-s-1/fixtures.test.ts:116` asserts `default.json`'s keys equal the round-1 flat slugs -- the very form item (5) retires. Update that ONE assertion to assert the keys equal the eleven DECLARED v1 paths read from `docs/contracts/investor-reporting/v1/routes.json` (the same set F14-AC16 grades); no other line of `__tests__/fe-s-1/` changes. The counterpart's paired test (`test_seam_paired.py`) asserting the OLD consumer form is the counterpart's file; it is named in your W2-S10 row and carried to L10, never edited here.
 
 ### ACCEPTANCE
 
@@ -116,6 +118,7 @@ portal/src/api/endpoints/investor-reporting.ts
 portal/src/pages/InvestorReporting/contracts/
 portal/src/pages/InvestorReporting/__tests__/fe-s-13/
 portal/src/pages/InvestorReporting/__tests__/fe-s-17/
+portal/src/pages/InvestorReporting/__tests__/fe-s-1/
 portal/src/pages/InvestorReporting/state/
 portal/src/pages/InvestorReporting/tabs/
 portal/src/pages/InvestorReporting/export/
