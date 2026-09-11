@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-10</issued_date>
-<status>staged -- assigned to slot ~1; becomes pending when the COO hands it over after IB-s-6, IB-s-9, IB-s-12 and IB-s-14 are all terminal and merged.</status>
+<status>complete -- IBS16-RECOVERY-ISOLATED printed by battery_ib_s_16.py (rc=0); the ops root applied (4 resources), irpt-status CodeSha256 verified against the built zip, terraform plan 0-diff; proof-of-spec instance VALID; S16-AC1 and S16-AC2 PASS-by-output, S16-AC3 RECORDED for 3.0.0_SA_CVO at L9.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.4 @62301f71e0 | **Decomp cell:** `IB-s-16` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, s.1 + s.2) | **outcome_ref:** FWD-10 (own, the proof arms), FWD-7, FWD-6 (contrib) | **PRD candidate:** B16
 

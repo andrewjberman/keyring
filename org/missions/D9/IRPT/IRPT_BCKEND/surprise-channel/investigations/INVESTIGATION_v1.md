@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 63 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (60 ours + 56 theirs, 53 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 65 rows, COUNTED not carried forward -- the MERGE of <branch> and CLOUD resolved as a strict UNION of both sides (64 ours + 54 theirs, 53 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -455,6 +455,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "FWD-8 cannot grade REALIZED on this round's evidence: the rendering runtime is the gap, stated as such for the slug."
   },
   {
+    "id": "IRPT_BCKEND-S20",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T07:35:25Z",
+    "one_line": "ROUTING of IRPT_BCKEND-W3-S12 (ARMED; disarm_owner '2.0.0_SA_COO~B to route and IB-s-17's assignee to repair') at the IB-s-10 drain: `_keys.s3_evidence_key` lets a client display name or an e-mail address into a durable S3 key while its docstring claims the opposite and `cache_key` in the same module refuses both -- the asymmetric hazard is that an S3 key is logged everywhere and cannot be un-logged. Routed as the issuer's SECOND round-2 item on IB-s-17's surface (with the sanitised exception of W2-S10), and disarmed forward on the two un-handed faces (IB-s-15, IB-sb-3): every S3 key built or replayed passes a shape check before the grammar, and the replay censuses observed keys for name- or e-mail-shaped components with a hit as FAIL. Also carried from this drain: W3-S10 (undecoded cid glyphs in the vendor PDFs: `fi` reads `(cid:45)` on 89 of 89 pages and the same glyph maps differently across documents from one run -- the extractor refuses such tokens; the CVO's judgment item) and W3-S11 (the AnalysisReport contract requires `as_of_date` on every section item while the vendor Comparison and Multi date 34 of 81 and 51 of 108 rows only -- undated rows are held out and counted; one optional `date_claim` enum on IB-s-18's contract is the round-2 proposal).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (routing done; the repair is IB-s-17's round-2 surface, the contract field IB-s-18's, the glyph map the CVO's L9 read)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W3-S10, W3-S11, W3-S12 (this HEAD)",
+        "infra/aws/lambda/investor-reporting/_keys/keys.py s3_evidence_key vs cache_key (this HEAD) -- the asymmetry the worker measured",
+        "the two faces IB-s-15, IB-sb-3 (this commit) -- one line inside the S9 amendment block; <status> still staged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-s-3 bounds: client names are never keys. _keys.s3_evidence_key docstring: 'Each is validated by shape, so a client name cannot become a path.'",
+    "world_is": "The cache key refuses a name; the S3 key accepts it. The docstring describes the cache key's behaviour on the S3 key's function. Forward-disarmed at the two consumers this round can still reach; repaired at the source in round 2.",
+    "notes": "Third _keys finding of the round (W2-S10 exception text, W2-S9/W2-S11 id spellings around it, now W3-S12); the round-2 recut owes IB-s-17 one consolidated order."
+  },
+  {
     "id": "IRPT_BCKEND-W1-S1",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
@@ -644,6 +667,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Issuer amendment (2.0.0_SA_COO~B, before this order was handed): 'read .tools/safe-deploy.sh's own header for the explicit first-mint mechanism it names and use it ... If the guard names a lane this serial cannot satisfy for the first-mint, that is a BLOCKING row on the deploying arm, not an override.'",
     "world_is": "The guard's explicit first-mint mechanism is --mint-bundle, and it requires a bundle declared in a file outside this order's <paths>. No lane this serial can reach satisfies the first-mint. S12-AC1 arm (f)'s code-deploy leg reads BLOCKED, exactly as the criterion's own text anticipates ('a refusal is printed verbatim, filed as a BLOCKING row, and this arm reads BLOCKED') -- the token IBS12-HOLDINGS-RECONCILED is not withheld for it, per that same text.",
     "notes": "Filed per the issuer amendment's own instruction. The data-landing half of arm (f) (head-object on each firm's QA latest.json) is unaffected and HELD; only the code-deploy half is blocked."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S9",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-11T06:21:55Z",
+    "one_line": "IB-s-16's hand-off (issuer amendment 812bbec0e9 + 902ea877dc, fact 4) asserts 'IB-s-4's one normaliser' strips the `<firm>:acct:` namespace prefix where a holdings id crosses the directory seam, and names it as living under infra/aws/lambda/investor-reporting/directory/. Measured: no such function exists anywhere under that path. Every top-level def in handler.py, refresh.py and expiry.py was enumerated (handler.py: normalize() is an unrelated lowercase-ASCII text-search folder used for search tokens, plus tokens/load_directory/etc; refresh.py: manifest_key, new_manifest, compute_delta, reason_for_delta, missed_business_dates, refresh_firm, serve_read, lambda_handler, _firm_ids_from_env; expiry.py: _as_date, resolve_calendar, age_in_trading_days, _source_of, evaluate, status_envelope, fallback_answer) -- none strips or normalises an account-id namespace prefix. `git show 624a60e4fc --stat` (IB-s-4's actual merged commit) confirms its file list is lambda-source-map.json, PATH_MANIFEST.json, directory/{expiry.py,refresh.py,tests/test_refresh_expiry.py,schedule.tf} plus deploy/proof/battery/investigation artifacts -- no normalizer file was ever added. Row IRPT_BCKEND-W2-S11 (which this amendment cites as disarmed by IB-s-4) names the SAME prefix ('<firm>:acct:') but its own grounding evidence never names a shipped normaliser function either -- it reads as a manual prefix-strip performed inline by whoever measured that row, not a shared library call.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B (a shared account-id namespace-prefix normaliser for the holdings/directory seam either needs to be built and declared as the ONE normaliser future cells import, or the amendment's citation needs correcting to point at wherever the prefix-strip logic actually lives; until then this cell builds its own minimal, clearly-labelled inline stripper for its own second-firm hash census rather than importing a function that does not exist, and that inline copy is NOT the shared normaliser the amendment describes)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-read/enumeration of every top-level `def` in infra/aws/lambda/investor-reporting/directory/handler.py, refresh.py and expiry.py at this worktree's HEAD (5fa4a113107af2d884a1fe101c135584852586e8) -- zero functions named or shaped like a namespace-prefix strip or account-id normaliser",
+        "git show 624a60e4fc --stat -> file list is infra/aws/lambda/ci/lambda-source-map.json, infra/aws/lambda/investor-reporting/PATH_MANIFEST.json, infra/aws/lambda/investor-reporting/directory/{expiry.py,refresh.py,tests/test_refresh_expiry.py,schedule.tf} plus deploy-completion/proof-of-spec/battery/adversary-declaration/investigation artifacts -- no normalizer file",
+        "handler.py's only def named normalize() is a lowercase-ASCII text-search token folder (used for search matching), unrelated to account-id namespaces -- read in full at this worktree's HEAD",
+        "row IRPT_BCKEND-W2-S11's own grounding text (this file, this project) describes the `<firm>:acct:` prefix mismatch and a post-normalisation count but does not cite a shipped shared function as the mechanism used to strip it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-s-16 hand-off, fact (4): 'the second-firm hash census reads the firm buckets and the shared bucket under both prefixes, normalised through IB-s-4's one normaliser where an id crosses the holdings/directory seam, both counts printed.'",
+    "world_is": "No such normaliser exists anywhere in the repo under infra/aws/lambda/investor-reporting/directory/ (or, by the same enumeration, anywhere else this cell's search reached) -- IB-s-4's actual merged commit (624a60e4fc) added expiry.py/refresh.py/schedule.tf/tests only. This cell proceeds by writing its own minimal, explicitly-labelled inline prefix-stripper (citing this row) for its own second-firm hash census, rather than importing a function that is not present.",
+    "notes": "OBSERVATION, not BLOCKING: this cell can still satisfy its own acceptance criteria by building the minimal stripper inline and printing both as-written and after-normalisation counts, which is the literal ask. ARMED because a FUTURE cell that trusts the hand-off's citation and tries to `import` a shared normaliser from directory/ will fail, and because the underlying id-space mismatch for INF/COT (rows W1-S7, W2-S11) is a raw-key difference no prefix-stripper reconciles."
   },
   {
     "id": "IRPT_BCKEND-W2-S1",
@@ -1516,29 +1563,6 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "S14-AC1 (g): 'ExportReceipt validates and its artifact_hash equals the stored object's; the object key is under the bound firm's exports prefix'. BOUNDS 7: 'No served output is touched ... except where THIS order's cell says it ADDS a resource' -- and the cell text names 'the protected artifact under firms/<id>/generations/<id>/attempts/<a>/exports/<revision>/report.pdf'.",
     "world_is": "Proving the receipt against a STORED object means storing one, and the only admissible prefixes are real firms'. The write is labelled twice (an unmistakable generation id and object metadata) rather than hidden, so a later reader can tell it from client evidence without reading this row.",
     "notes": "No client data is in any of the four: the performance/analysis content is the cell's own fixture sections, and the three vendor-input exports are rendered from the CRO's synthetic portfolio 2332257 (SPY/AGG), which the PRD already calls real vendor output on synthetic holdings."
-  },
-  {
-    "id": "IRPT_BCKEND-S20",
-    "project": "IRPT_BCKEND",
-    "fabric": "laptop",
-    "surfaced_by": "2.0.0_SA_COO~B",
-    "surfaced_at": "2026-09-11T07:35:25Z",
-    "one_line": "ROUTING of IRPT_BCKEND-W3-S12 (ARMED; disarm_owner '2.0.0_SA_COO~B to route and IB-s-17's assignee to repair') at the IB-s-10 drain: `_keys.s3_evidence_key` lets a client display name or an e-mail address into a durable S3 key while its docstring claims the opposite and `cache_key` in the same module refuses both -- the asymmetric hazard is that an S3 key is logged everywhere and cannot be un-logged. Routed as the issuer's SECOND round-2 item on IB-s-17's surface (with the sanitised exception of W2-S10), and disarmed forward on the two un-handed faces (IB-s-15, IB-sb-3): every S3 key built or replayed passes a shape check before the grammar, and the replay censuses observed keys for name- or e-mail-shaped components with a hit as FAIL. Also carried from this drain: W3-S10 (undecoded cid glyphs in the vendor PDFs: `fi` reads `(cid:45)` on 89 of 89 pages and the same glyph maps differently across documents from one run -- the extractor refuses such tokens; the CVO's judgment item) and W3-S11 (the AnalysisReport contract requires `as_of_date` on every section item while the vendor Comparison and Multi date 34 of 81 and 51 of 108 rows only -- undated rows are held out and counted; one optional `date_claim` enum on IB-s-18's contract is the round-2 proposal).",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "disarm_owner": "2.0.0_SA_COO~B (routing done; the repair is IB-s-17's round-2 surface, the contract field IB-s-18's, the glyph map the CVO's L9 read)",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W3-S10, W3-S11, W3-S12 (this HEAD)",
-        "infra/aws/lambda/investor-reporting/_keys/keys.py s3_evidence_key vs cache_key (this HEAD) -- the asymmetry the worker measured",
-        "the two faces IB-s-15, IB-sb-3 (this commit) -- one line inside the S9 amendment block; <status> still staged"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "IB-s-3 bounds: client names are never keys. _keys.s3_evidence_key docstring: 'Each is validated by shape, so a client name cannot become a path.'",
-    "world_is": "The cache key refuses a name; the S3 key accepts it. The docstring describes the cache key's behaviour on the S3 key's function. Forward-disarmed at the two consumers this round can still reach; repaired at the source in round 2.",
-    "notes": "Third _keys finding of the round (W2-S10 exception text, W2-S9/W2-S11 id spellings around it, now W3-S12); the round-2 recut owes IB-s-17 one consolidated order."
   }
 ]
 ```
