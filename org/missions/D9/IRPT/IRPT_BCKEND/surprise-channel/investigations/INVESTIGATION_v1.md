@@ -937,6 +937,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "CLAUDE.md Git section: AWS via the `.tools/aws` shim (+`aws.cmd`, both or neither); never bare MSYS_NO_PATHCONV=1 aws.",
     "world_is": "The two faces of the shim are not interchangeable by caller. From bash either works; from a Windows Python only the .cmd does, and the bash one fails with an error that points away from the cause.",
     "notes": "Recorded because it costs a cycle every time. Same family as the existing memory note that Python spawning an MSYS binary must go through .tools/msys_argv_guard.py -- this is the AWS-shim instance of it."
+  },
+  {
+    "id": "IRPT_BCKEND-S10",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-11T03:12:00Z",
+    "one_line": "DISARM of IRPT_BCKEND-W1-S7 (ARMED) and IRPT_BCKEND-W1-S8 (BLOCKING), disarm_owner 2.0.0_SA_COO~B, the same drain they merged in (3bed36da5b). W1-S8: the rule-13 first-mint of this project's gold scripts has NO declared bundle in .tools/safe_deploy_core.py CODE_TREES (declared: accrual_bridge only), so both the ordinary push path (SKIP-NOT-MEMBER, W2-S5) and the guard's own explicit escape hatch (--mint-bundle) have no target; head-object on the served code prefix reads 404 for both scripts. The declaration is a DS-lane / tooling act outside every worker's grant and outside this round: the issuer carries it to L10 as a BLOCKING item with that owner, and the IB-s-4 face (the next cell on the directory root, un-handed) is amended so its first-mint arm records BLOCKED-BY-W1-S8 once, without a duplicate row. The schedules those cells apply target Lambda entries whose code Terraform ships by CodeSha256, so the product runs; what is absent is the shared-home copy of the gold scripts. W1-S7: the directory's opaque account ids resolve against the holdings join keys for 49financial (7,431 of 7,453) and for NEITHER other firm (0 of 790 INF, 0 of 946 COT) -- a raw-key selection difference inside directory_runner.build_inf/build_cot that IB-s-12 could not trace inside its budget. IB-s-4 re-builds the directory, so its face gains a Phase-1 trace (which raw key each firm's opaque_id derives from, file:line @ commit) and an arm (i) that prints per firm N of M snapshot ids resolved against the refreshed directory; no join is changed mid-round, the fact goes to the CTO at L10.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (this row IS the disarm act: W1-S8 becomes an L10 BLOCKING item owned by the DS lane / tooling owner; W1-S7 becomes IB-s-4's traced fact, graded at that drain)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_BCKEND-W1-S7, IRPT_BCKEND-W1-S8, IRPT_BCKEND-W2-S5 @3bed36da5b",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_s_12.result.md @3bed36da5b -- the mint refusal and the 404 printed beside the three landed QA snapshots",
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-s-4.directory-freshness-driven-on-a-controlled-clock.md (this commit) -- ISSUER AMENDMENT block + arm (i); <status> still staged, unhanded",
+        "memory: feedback_a_decomposition_that_covers_every_code_cell_can_still_leave_the_deploy_step_unowned -- the shape, recurring: COMMITTED is not SERVED and the first-mint had no owner in the decomposition"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rule 13: DS owns commit-to-QA-deploy for data/*/scripts/gold/*.py; safe-deploy.sh: first-mints stay explicit. IB-s-12 / IB-s-4 issuer amendment: the first-mint is attempted through the guard's explicit mechanism and verified by artifact.",
+    "world_is": "The explicit mechanism has no declared target for this project's gold home, so no worker in this round can land the shared-home copy; the served code prefix reads 404 for both scripts while the Lambdas that run them are converged. The directory and holdings id spaces coincide for one firm of three.",
+    "notes": "Two decisions recorded here rather than made silently: (1) the issuer does NOT declare the bundle mid-round -- it is a tooling edit under another lane and the only off-spec act available to this seat is a row; (2) IB-s-4's arm (h) is read as BLOCKED-BY-W1-S8 rather than re-filed, so the channel carries one BLOCKING row for one defect. Carried to L10 with the sequencing defect of S9 and the execution-role trust question of W3-S3."
   }
 ]
 ```
