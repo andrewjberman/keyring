@@ -1,4 +1,4 @@
-# AMGT_RESAPP -- L5 decomposition (COO) -- v0.4
+# AMGT_RESAPP -- L5 decomposition (COO) -- v0.5
 
 **Seat:** `2.0.0_SA_COO~ZZZ`, spawned by Andrew 2026-09-10 ~17:4xZ at the `1.0.0_SA_CTO~Z` terminal for this
 project (seating brief msg 21003; `project.json` `seats.coo`). **Directive:** D5 Alternative Research.
@@ -602,3 +602,77 @@ sign-off cycle and no prd_version bump (this is a round-analysis answer, not a P
 
 *(v0.4 amended 2026-09-11 by 2.0.0_SA_COO~ZZZ -- the L10 round-2b recut from @c48576bf85; rounds 1-2
 sections 1-10 unchanged.)*
+
+## 12. ROUND 4 (v4) -- from the L10 round-3 analysis @38948db85c (1.0.0_SA_CTO~Z)
+
+**v0.5 IS AN L10 RECUT closing the consumer-wiring so C-S16 closes, NOT a new decomposition.** Round 3
+(the "rb-" corrective continuation, canonical v3 per the CTO carrier ruling @21336) graded 4 PASS / 1 FAIL:
+rb-10 salience, rb-12 identity note, rb-15 impostor predicate, rb-1 fiscal direction all LANDED
+(C-S12/C-S13/C-S14/C-S15 DISARMED/REMEDIATED). rb-2 (consumer-wiring, C-S16) FAILED -- a GOOD fail: the
+consumer-wiring-as-its-own-AC (the CTO tick-2 generalization) caught that the overlay silently reverts to
+the stale served price when the corrected fiscal row is UNRESOLVED (the rb-1 x rb-2 interaction). The CVO's
+L8/L9 control surfaced two findings. **0 of 14 FWDs newly REALIZED -- the surfaces are still unserved.**
+This section ADDS the two round-4 cells; rounds 1-3 are FROZEN and terminal. C-S16 stays OPEN until this holds.
+
+**NONE IS DESIGN_SPEC-GATED** (analysis + slug): consumer-code / provenance correctness, doable now without
+a .tsx. The surface exercise is a LATER round (v5+), still on Andrew's DESIGN_SPEC + the four words.
+
+### 12a. The two round-4 cells
+
+M = ONE dependency chain: rc-19 -> rc-20, both editing the SAME consumer functions
+(lib/research/provenance/render_print.py's `load_corrected_price_overlay`/`apply_corrected_price_overlay`/
+`render_figure_line` and lib/research/print/render_pack.py's `load_model_block`), so serialized to one
+worker. `fanout: 1 of 1, cap 8`. Ids match CELL_ID_RE; cell ids are free-form, the ROUND integer is 4.
+
+| cell | fixes | finding | FWD | the defect (analysis @38948db85c; CVO evidence @13ae38f3f89b) | the engine, and its bound |
+|---|---|---|---|---|---|
+| `AMGT-rc-19` | `AMGT-rb-2` | C-S19 (BLOCKING) | FWD-1, FWD-3 | `load_corrected_price_overlay` keeps only rows whose price is not None, and `apply_corrected_price_overlay` `continue`s on a missing year -- so an UNRESOLVED corrected fiscal row (rb-1 now returns None for a future-only price) is DROPPED and the consumer silently keeps the OLD calendar price (BABA FY2025 146.58) UNMARKED, presented as trusted. Control: period_end 2025-03-31 with only a 2025-04-02 price -> corrected None -> loader {} -> render retains 146.58, no marker. | THE UNRESOLVED-ROW CONTRACT. Preserve explicit UNRESOLVED corrected rows; DISTINGUISH missing-lane/year (corrected lane absent for this year) from resolved data; MARK or REFUSE a fiscal price that has NO valid corrected evidence -- the calendar price may remain in source storage but NEVER silently regains trusted presentation. Test the NAMED consumer from a full corrected-join None output straight through to the RENDERED value. Home: `lib/research/provenance/`, `lib/research/print/`. Bound: STORE_CONTRACT rule 1 (original model_block byte-unchanged); NO new vendor call; the resolved 132.23 sample still renders correct. |
+| `AMGT-rc-20` | `AMGT-rb-2` | C-S20 (OBSERVATION) | FWD-1, FWD-3 | `apply_corrected_price_overlay` replaces `fig.vintage` with the price OBSERVATION DATE (price_date) and drops the corrected artifact's derivation key (derived/model_block_fye/<sec>/<stamp>/model_block_fye.json); `render_figure_line` hardcodes "Bloomberg" and never emits `fig.source`. So observation date substitutes for vintage and the derivation identity is lost. | THE VINTAGE/DERIVATION IDENTITY. Carry OBSERVATION DATE and DERIVATION/LANDING IDENTITY as DISTINCT fields; retain the exact corrected artifact key (or an equivalent immutable pin) through the consumer and its provenance render; `render_figure_line` emits `fig.source`, never a hardcoded vendor. Add a test DISTINGUISHING two derived vintages that share one observation date. Home: `lib/research/provenance/`, `lib/research/print/`. DEPENDS ON rc-19 (same functions). Bound: within rb-2's own named-vintage acceptance; NO new vendor work; STORE_CONTRACT rule 1 holds. |
+
+### 12b. Rule 24 record for what v0.5 ADDS (the two round-4 cells)
+
+- **(i) MECE over the DECLARED domain = the analysis's round-4 recut set.** SUBTRACTION, not recall: the
+  analysis routes exactly C-S19 (BLOCKING) + C-S20 (OBSERVATION) to close C-S16; the four round-3 PASSes are
+  terminal, the surface exercise is a later round (Andrew's). No third cell, no dropped item.
+- **(ii) SAME GRAIN:** each is one cell fixing one named consumer-wiring finding.
+- **(iii) INTENT COHERENCE:** two distinct axes kept separate -- rc-19 unresolved-row SAFETY, rc-20
+  vintage/derivation IDENTITY. Neither mixes the other's concern.
+- **(iv) STATE COHERENCE -- what these do NOT move:** they close the consumer-wiring contract so the served
+  pack reads the corrected join HONESTLY (unresolved marked, vintage distinct); they do NOT make an
+  EXERCISED FWD REALIZED (that needs the served .tsx -- a later round). C-S16 closes when rc-19 + rc-20 land.
+
+### 12c. Round-3 lessons absorbed into this cut
+
+- **A consumer-wiring AC must exercise the UNRESOLVED path, not only the happy path.** rb-2's test proved the
+  resolved BABA row reads 132.23, but never drove a None-corrected row through -- so a silent stale-price
+  revert passed. rc-19's AC drives a FULL corrected-join None output straight to the rendered value.
+- **An overlay that mutates a figure must not leave a stale value wearing a trusted face.** Marking/refusing
+  an unresolved figure is the contract; silently keeping the old value is the C-S19 defect.
+- **Observation date != vintage != derivation identity** -- three distinct provenance facts; collapsing any
+  two loses auditability (C-S20). Carried from [[a-value-must-carry-its-claim]].
+- Carried from prior rounds: every criterion DISCRIMINATES (a difference arm); the proof instance uses the
+  FULL task-order stem filename; a criterion names the instrument that OBSERVES the artifact; an integration
+  cell's <paths> names the CONSUMER's home (rc-19/rc-20 grant lib/research/print/ + lib/research/provenance/
+  from the start -- the rb-2 cut-defect absorbed).
+
+### 12d. The round axis, updated
+
+- **ROUNDS 1-3:** terminal, frozen (v1 build; v2 defect fixes; v3 the rb- corrective continuation, 4 of 5
+  landed).
+- **ROUND 4 (v4, RECUT, 2 cells):** `AMGT-rc-19` -> `AMGT-rc-20`, one two-cell chain, one worker (slot ~1),
+  serialized. `fanout: 1 of 1, cap 8`. rc-19 spawns at issuance; rc-20 handed after rc-19 lands.
+- **SURFACE EXERCISE (v5+, deferred on Andrew's gate):** the .tsx that serves each FWD, cut only after the
+  DESIGN_SPEC approval + the four words. NOT cut now, NOT pinned to a number.
+
+**PREFLIGHT for the round-4 recut:** the mandatory core battery is NOT re-run -- v0.2's run stands and no
+round-4 cell touches a new gate/IAM/adversary/vendor surface (both edit landed consumer modules against
+landed data). The authority is the L10 round-3 analysis @38948db85c (the CTO's one send) answering the CVO's
+slug REMEDIATION_v3 @13ae38f3f89b, cited in each order's authority chain. comp-blast DECLARED-NOT-APPLICABLE
+(no infra act; the served pack's .tsx is not built, so no live served artifact moves -- but the consumer's
+rendered figures change, flagged to the CVO for the L9 grade). L4-R: the PRD is GRANDFATHERED (predates the
+law commit f8337502a9) -- no sign-off cycle, no prd_version bump.
+
+**PUSH STATE: this amendment is LOCAL.** 0.0.0_AB_MSTR~Z holds the push window.
+
+*(v0.5 amended 2026-09-11 by 2.0.0_SA_COO~ZZZ -- the L10 round-4 recut from @38948db85c; rounds 1-3 sections
+1-11 unchanged.)*
