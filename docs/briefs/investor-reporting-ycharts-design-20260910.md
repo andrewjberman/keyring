@@ -4,6 +4,8 @@
 
 **September 10, 2026 · 4.0.0_SA_CRO · Investor Reporting WS3.** Companion to the [new child brief](investor-reporting-ycharts-brief-20260910.md). This annex supplies the explicit instructions and sequencing Andrew requested. “Captured” identifies observations in supplied artifacts; “proposed” identifies implementation design. No production execution is implied.
 
+> **September 11 live-proof supplement:** The browser-to-Lambda handoff and all three report recipes now have actual synthetic PDF evidence. Read [the three-recipe packet](../research/investor_reporting_ycharts_variants_20260911/README.md) and [Generate input contract](../research/investor_reporting_ycharts_variants_20260911/UI_CONTRACT.md) before implementing the dated flow below. One Lambda runs Overview, Comparison or Multi-Comp from deterministic inputs; Kimi K3 is confined to session capture/recovery. Browser-context REST during generation is no longer a prerequisite. API/queue wiring, real firm/advisor resolution, ingestion and automatic recovery remain existing project work.
+
 ## 1. Product and execution flow
 
 ```mermaid
