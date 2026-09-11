@@ -6,7 +6,7 @@
 identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a worker's row is `IRPT_BCKEND-W<n>-S<k>` (`<n>` = its slot, `<k>` next unused within that
 coordinate); a seat's row is `IRPT_BCKEND-S<k>`; the CVO's adjudication rows live in `../adjudications/` as
-`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 22 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-1-2 and CLOUD resolved as a strict UNION of both sides (16 ours + 13 theirs, 7 shared); no row dropped, no id duplicated.
+`IRPT_BCKEND-C-S<k>`. **Append-only during the round.** Never edit an existing row. **Denominator at this write:** 23 rows, COUNTED not carried forward -- the MERGE of wk-irpt_bckend-1-1 and CLOUD resolved as a strict UNION of both sides (22 ours + 12 theirs, 11 shared); no row dropped, no id duplicated.
 **Round 1 task orders:** 19, one per cell of `../../decompositions/IRPT_BCKEND_DECOMP.md` v0.1.1, on four worker
 slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 
@@ -288,6 +288,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "S18-AC1 arm (d): 'assert no `.terraform/` directory and no `terraform.tfstate*` exists under any root' -- graded PASS at c4214773c9 and merged at 410f28f7db.",
     "world_is": "The assertion is a POINT-IN-TIME property of a shared tree, not a property of the deliverable, and the very next cell in the same slot is the one specified to falsify it.",
     "notes": "Named so an L9 re-grade reads a FAIL correctly if anyone re-runs the older battery in a used worktree. The general shape is worth the issuer's attention: an acceptance arm that asserts the ABSENCE of a sibling cell's future work is falsified by that work landing, and only the gitignore is keeping this one from biting the normal re-grade path."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S6",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-11T00:21:03Z",
+    "one_line": "IB-s-5: the preflight declares 'this cell's role is graded at Phase 1 by `comp-iam service irpt-core` once its .tf exists and at Phase 2 by `comp-iam gaps`'. Both ran, after the apply, against the four real IAM role stubs and their attached per-firm prefix policies. Neither sees them: `comp-iam service irpt-core` returns 'No service matching', `comp-iam role irpt-core-firm-49financial` returns 'No role matching', and `comp-iam stats` reads 'IAM roles parsed: 191' UNCHANGED both before this order's apply and after it (231 live roles in the SAME apply's own comp-tagauthz sweep, which reads iam:GetAccountAuthorizationDetails directly -- a DIFFERENT, LIVE-plane instrument that DOES count them). comp-iam's static census is built by working BACKWARD from a Lambda function in infra/aws/lambda/ci/lambda-source-map.json or an EC2 instance profile to the role each one assumes (extract_iam.py's own docstring names lambda-source-map.json and *.tf role/policy blocks as its two inputs) -- a role stub with no Lambda or EC2 resource yet referencing it has no entry point into that walk, so it is INVISIBLE to the tool regardless of whether its permissions are correct, missing or over-broad. The preflight's own comp-iam BLIND SPOT line ('a GRANTED-BROAD wildcard cannot be falsified by a resource check') anticipated a narrower gap than this: the roles are not merely un-falsifiable for over-permission, they do not appear in the census AT ALL.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-iam service irpt-core (post-apply) -> 'No service matching \\'irpt-core\\''",
+        "comp-iam role irpt-core-firm-49financial (post-apply) -> 'No role matching \\'irpt-core-firm-49financial\\''",
+        "comp-iam stats (pre-apply, preflight @20:2xZ): 'IAM roles parsed: 191'; comp-iam stats (post-apply, this cell): 'IAM roles parsed: 191' -- identical despite 4 new aws_iam_role resources applied and confirmed live via 4 of 4 get-role calls in the IB-s-5 battery",
+        "the same apply's own comp-tagauthz gate output: 'roles 231 ... derived from the account, one call: iam get-account-authorization-details' -- the LIVE plane counts 231 (up from 229 at IB-s-17's apply), confirming the roles exist and only the STATIC comp-iam census misses them",
+        "org/modules/graph/extract_iam.py:9-10 docstring -- 'infra/aws/lambda/ci/lambda-source-map.json -- Lambda function -> source path' and 'infra/aws/terraform/*/iam.tf -- IAM role policies' named as its two data sources; TF_SCAN_ROOTS at :2105-2109 confirms a recursive rglob so directory depth is not the cause -- the entry point is the SERVICE (Lambda/EC2), never a bare aws_iam_role scan",
+        "IRPT_BCKEND.TO-IB-s-5 preflight block: 'this cell's role is graded at Phase 1 by comp-iam service irpt-core once its .tf exists and at Phase 2 by comp-iam gaps -- both recorded in the instance'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-s-5 preflight (comp-iam): 'ZERO investor-reporting roles exist on the DESIRED plane, so this cell's role is graded at Phase 1 by comp-iam service irpt-core once its .tf exists and at Phase 2 by comp-iam gaps -- both recorded in the instance.'",
+    "world_is": "Once the .tf exists AND is applied, comp-iam service/role/stats still cannot see the four roles at all -- not a gap finding, an absence from the tool's own population -- because its census walks from a Lambda/EC2 service definition to its role, and no service yet assumes these role stubs (by design: this cell creates role stubs, not Lambda functions).",
+    "notes": "INERT: no permission was granted incorrectly and nothing here is a security gap -- the per-firm S3 conditions were read back directly via get-role (trust policy) in the battery and via terraform plan (0 diff) for the full policy documents, so this cell's own claims are verified by OTHER instruments. The gap is that comp-iam's Phase 1/2 checks the preflight named cannot be the read that closes THIS cell -- they will become live the moment IB-s-6/9/13/14/16 attach a Lambda to one of these roles and name it in lambda-source-map.json, which is the natural point for a future cell's comp-iam gaps read to first see them."
   },
   {
     "id": "IRPT_BCKEND-W2-S1",
