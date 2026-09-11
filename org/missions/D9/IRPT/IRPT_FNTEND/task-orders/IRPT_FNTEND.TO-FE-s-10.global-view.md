@@ -23,6 +23,8 @@
 
 **Tab mounting (AMENDED BY THE ISSUER at the FE-s-6 drain on row IRPT_FNTEND-W3-S1).** `tabs/TabShell.tsx` fills every tab body with `StatusPanel` and exposes no mount seam, so the tabs built by FE-s-6 (`tabs/analysis/AnalysisTab.tsx`) and FE-s-7 (`tabs/holdings/HoldingsTab.tsx`) are not reachable from the running app; FE-s-5 mounts its own `ReportingTab` because its grant carries `TabShell.tsx`. In `TabShell.tsx`, render `AnalysisTab` in the `analysis` body and `HoldingsTab` in the `holdings` body (each tab component owns its own `StatusPanel` for non-`READY` envelopes), keeping `ReportingTab` as FE-s-5 mounted it; nothing else in the shell changes.
 
+**Positive-control update (AMENDED BY THE ISSUER at the FE-s-9 drain on row IRPT_FNTEND-W1-S8).** `__tests__/fe-s-4/analysis-no-narrative.test.ts` carries a positive control asserting the performance document emits the period-in-context page whenever a packet is present; since FE-s-9 the page renders only when `renderOptions.includeNarrative` is `true`. In that test's positive-control case only, spread `renderOptions: { ...bundle.renderOptions, includeNarrative: true }` into the bundle it renders; the analysis-template assertions and every other case stay as they are. No other file under `__tests__/fe-s-4/` changes.
+
 **Fixtures** under `fixtures/fe-s-10/`: `scope.two-firms.json` (permitted firms `49financial`, `cottonwood`), `scope.one-firm.json` (`49financial` only), `directory.two-firms.json` (clients at both), `performance.clientX.rev7.json` served identically through the global and the firm-scoped operation. Smoke maps `fixtures/smoke/fe-s-10-global.json`, `fe-s-10-one-firm.json`.
 
 **Tests** under `__tests__/fe-s-10/`: `catalogue.test.ts` (with the one-firm scope: `?firm=global`, a persisted `global` and a forced selector value `global` each resolve to `49financial`; with the two-firm scope `global` is admitted), `search.test.ts` (with the two-firm scope, search returns clients from both firms, each option carrying its firm; with the one-firm scope only that firm's clients), `switch.test.ts` (a firm switch clears the store and the adapter call log shows the clear before the first request for the new firm), `parity.test.ts` (the markup of client X at revision 7 rendered in Global deep-equals the markup rendered firm-scoped, ignoring only the attribution element -- printed as `PARITY: identical`), `source-bounds.test.ts` (`global/**` and the edited files carry no arithmetic over amounts or returns and no write to a request's `firm` field).
@@ -59,7 +61,10 @@
 <criterion id="F10-AC10" cell_refs="FE-s-10"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-10/tabs-mounted.test.ts</invocation><expect>0 fail</expect></criterion>
 `F10-AC10` -- `renderToStaticMarkup` of `TabShell` with the active tab `analysis` contains `AnalysisTab`'s root marker and with `holdings` contains `HoldingsTab`'s root marker, both fed the two-firm fixtures through the adapter; neither body renders only the generic status panel.
 
-<expected_criteria>F10-AC1, F10-AC2, F10-AC3, F10-AC4, F10-AC5, F10-AC6, F10-AC7, F10-AC8, F10-AC9, F10-AC10</expected_criteria>
+<criterion id="F10-AC11" cell_refs="FE-s-10"><invocation>cd <WS>/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting</invocation><expect>0 fail</expect></criterion>
+`F10-AC11` -- the whole Investor Reporting test set is green on this branch (record the `Ran N tests` line).
+
+<expected_criteria>F10-AC1, F10-AC2, F10-AC3, F10-AC4, F10-AC5, F10-AC6, F10-AC7, F10-AC8, F10-AC9, F10-AC10, F10-AC11</expected_criteria>
 
 ## BOUNDS
 
@@ -85,6 +90,7 @@ portal/src/pages/InvestorReporting/export/
 portal/src/pages/InvestorReporting/fixtures/fe-s-10/
 portal/src/pages/InvestorReporting/fixtures/smoke/
 portal/src/pages/InvestorReporting/__tests__/fe-s-10/
+portal/src/pages/InvestorReporting/__tests__/fe-s-4/analysis-no-narrative.test.ts
 org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -97,7 +103,7 @@ org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v
 Criterion ids: `F10-AC1` .. `F10-AC9`. Instance at
 `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-10.global-view.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
-`python .tools/proof-of-spec-check.py <instance> F10-AC1,F10-AC2,F10-AC3,F10-AC4,F10-AC5,F10-AC6,F10-AC7,F10-AC8,F10-AC9,F10-AC10` BEFORE the `complete` flip. `F10-AC9` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `global-view.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
+`python .tools/proof-of-spec-check.py <instance> F10-AC1,F10-AC2,F10-AC3,F10-AC4,F10-AC5,F10-AC6,F10-AC7,F10-AC8,F10-AC9,F10-AC10,F10-AC11` BEFORE the `complete` flip. `F10-AC9` recorded `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming the CVO at L9. Result file `global-view.result.md` beside it. Flip only when every mechanical criterion PASSES by output.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape. You cannot send or receive messages; anything you would ask is a surprise row.

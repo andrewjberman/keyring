@@ -660,6 +660,27 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "No act taken on the FE-s-4 test file: it is outside TO-FE-s-9's <paths> and 'tabs/reporting/ and tabs/analysis/ are not edited' names the pattern this order follows generally (fix inside the grant, record outside it). The fix is mechanical for whoever holds that file: either the FE-s-4 fixture spread in the positive-control test gains 'renderOptions: { ...bundle.renderOptions, includeNarrative: true }', or the test's own expectation is amended to state the option explicitly. ARMED because a reader who reruns the full InvestorReporting suite after this drain sees a NEW red test and, without this row, has no way to tell an amendment-caused, spec-correct change in expected behaviour from a regression this worker introduced by mistake."
+  },
+  {
+    "id": "IRPT_FNTEND-S12",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T04:40:00Z",
+    "one_line": "Disarm act for IRPT_FNTEND-W1-S8 finding (2) assigned by its disarm_owner: the narrative gating FE-s-9 was told to add turns FE-s-4's positive control in __tests__/fe-s-4/analysis-no-narrative.test.ts from pass to fail (202 tests, 1 fail on the branch); TO-FE-s-10 is amended to spread includeNarrative: true into that control's bundle and to run the whole set green (F10-AC11). Finding (1) -- the face named ResolvedScope.approvedAssets while the contract carries approved assets on ExportBundle; resolved by an additive in-grant extension -- is a face defect carried to L10 with the other contract-inventory notes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "FE-s-9 worker branch portal @5d5f366d -- bun test src/pages/InvestorReporting: 202 tests, 1 fail, the positive control at __tests__/fe-s-4/analysis-no-narrative.test.ts lines 95-103 asserting the page renders on packet presence alone",
+        "row IRPT_FNTEND-W1-S8 @7db8bed41b (worker branch) -- the control spreads bundle.performance.json, whose renderOptions carries no includeNarrative, so the gated template omits the page",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-10.global-view.md -- amended this commit: the test file added to <paths>; F10-AC11 added; expected_criteria 11"
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND-W1-S8 (2): ARMED -- an amendment this issuer wrote retires a behaviour a terminal cell's positive control asserts, and the DEV set is red by one until the control follows the behaviour.",
+    "world_is": "The gating is the intended behaviour (the export modal's narrative toggle decides the page); the control tested the pre-gating default. One line in the control makes it test the gated behaviour under the option it now needs. The next order on the slot carries it and proves the whole set green.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
