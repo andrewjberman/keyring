@@ -51,6 +51,13 @@ the stopped runner host and its root (IB-s-8, the v0.4 mechanism, superseded by 
 
 ---
 
+**ISSUER AMENDMENT (2.0.0_SA_COO~B, 2026-09-11 ~17:3xZ, at the drain of this slot's report -- row W3-S23 read at 3ed2c79443; the order stays OPEN):**
+- **W3-S23 GRANTED, NOT SCOPED OUT.** `<paths>` now carries `infra/aws/lambda/ycharts-session-probe/` and `infra/aws/lambda/ycharts-session-capture/`, the two legacy ycharts-pipeline readers of `ycharts/session/current`. The probe's predicate (`status is not None and status != 403` reads a 400 as an authenticated session) is the false green the v0.9 cutover exists to remove, so naming it out of scope would leave it live: arm (a) reads `4 of 4` readers on the versioned bundle shape OR retired, with the probe's predicate replaced by a read of the versioned session's fence (a 400 is NOT authenticated), and a retired reader's function is left deployed only if its trigger is DISABLED and its source says why. Bound 1 stands: no live YCharts call rides on any of this.
+- **W2-S21's YCHARTS HALF IS THIS ORDER'S.** `irpt-ycharts-generate` declares 25 build inputs in `lambda-source-map.json` of which 7 have never existed in the tree: register the truth (a build input absent from the tree is REMOVED, never invented), rebuild from the tree, and print `artifact_sha256` == S3 `content-sha256` == live `CodeSha256` for every ycharts function you deploy. The closed ledger entry that claimed a byte-identical rebuild at a commit lacking the inputs is a RECORD defect carried to L10 by name; do not edit it.
+- **W4-S21 NOTED FOR THE YCHARTS ROOT.** The export root (IB-rt-8) declares `aws_iam_role_policy.render_host_export_evidence` BY NAME onto `irpt-ycharts-runner-role`, so the ycharts root's `iam.tf` no longer enumerates everything that role can reach. This order does NOT move that policy (a cross-root move is a destroy-and-create on a live role); it records the cross-root attachment in the ycharts root's `iam.tf` header as a comment naming the export root, and the fold is carried to L10.
+- **W3-S20 IS CLOSED BY THE MERGE:** the export root's live state at f20bebd15d is declared (IB-rt-8's arm (a) landed); a plan of that root from this cut reads `No changes` or files a row.
+- Arm (e) (the research root absorbed into the ycharts root by `state mv` under the ledger) proceeds once arm (a) is measured; NEVER-2 stands -- open the ledger only with the room to close it in-session.
+
 ## DELIVERABLE
 
 `infra/aws/lambda/investor-reporting/ycharts/session/` + tests; `infra/aws/ec2/investor-reporting-ycharts/` (the capture controller from `capture_ec2.cjs`); the ycharts root absorbing the research root (`state mv` under the ledger; the research directory removed); the reader census and migrations; the ledger entries + sentinels; the battery `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/battery_ib_rt_9.py` and `.result.md`.
@@ -110,6 +117,8 @@ infra/aws/lambda/investor-reporting/PATH_MANIFEST.json
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/irpt-bckend-rt9.json
 infra/aws/lambda/ci/lambda-source-map.json
+infra/aws/lambda/ycharts-session-probe/
+infra/aws/lambda/ycharts-session-capture/
 </paths>
 
 

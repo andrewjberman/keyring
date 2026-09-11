@@ -2,10 +2,10 @@
 
 <to_id>IRPT_BCKEND.TO-IB-rt-10</to_id>
 <project>IRPT_BCKEND</project>
-<issued_to>0.9.0_WK_IRPT_BCKEND~3</issued_to>
+<issued_to>0.9.0_WK_IRPT_BCKEND~4</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>staged -- assigned to slot ~3; becomes pending when the COO hands it over after IB-rt-9 is terminal and merged.</status>
+<status>pending -- RE-SEATED by 2.0.0_SA_COO~B at 2026-09-11 ~17:3xZ from slot ~3 to slot ~4 (a head with no incoming edge; slot ~4 freed by IB-rt-8's second COMPLETE at f20bebd15d; slot ~3 stays on IB-rt-9 then IB-rt-11). Handed now.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 2 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.13 @e6ba5d9878 (ADMITTED, both L4-R halves SIGNED) | **Round-1 analysis:** `../ledger/ROUND_ANALYSIS.round1.md` @0d57ceb2f9, ruling 6 (extraction) | **Slug rows this cell closes:** W3-S10, W3-S11 | **Decomp cell:** `IB-rt-10` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.2, s.1 + s.2) | **outcome_ref:** FWD-4 (contrib), FWD-3 (contrib) | **PRD candidate:** B10
 
@@ -13,11 +13,11 @@
 
 ## IDENTITY AND WORKTREE
 
-- **Serial:** `0.9.0_WK_IRPT_BCKEND~3` (the same subagent as round 1, continued with its context intact). Every Bash call begins `export OPAL_AGENT_SERIAL=0.9.0_WK_IRPT_BCKEND~3;`.
+- **Serial:** `0.9.0_WK_IRPT_BCKEND~4` (the same subagent as round 1, continued with its context intact). Every Bash call begins `export OPAL_AGENT_SERIAL=0.9.0_WK_IRPT_BCKEND~4;`.
 - **Worktree:** `/c/tmp/wk-irpt-2-3` on branch `wk-irpt_bckend-2-3`, cut by the issuer from `HEAD` of `CLOUD` at hand-off. First act: `git rev-parse --abbrev-ref HEAD` and `test -d org && test -d .tools && echo TREE-OK`; a worktree that does not carry the paths this face names is a BLOCKING row and a stop. Then the gitignored session-serial line `org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial` BEFORE any apply.
 - **Repo root for every path below:** the worktree. Every path in this face is relative to that root; make it absolute by prefixing `/c/tmp/wk-irpt-2-3/`.
-- **Commit:** `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_BCKEND~3 <0.9.0_WK_IRPT_BCKEND~3@opal.agent>" -F <msgfile> -- <paths>`, `<msgfile>` written with the Write tool. On your branch only; never push, merge, rebase, `checkout --` or `clean`.
-- **Deliverables:** `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/` (granted by the tree convention; no `<paths>` entry needed). Round-2 batteries are named `battery_<cell>.py` with the cell id lower-cased and hyphens as underscores.
+- **Commit:** `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_BCKEND~4 <0.9.0_WK_IRPT_BCKEND~4@opal.agent>" -F <msgfile> -- <paths>`, `<msgfile>` written with the Write tool. On your branch only; never push, merge, rebase, `checkout --` or `clean`.
+- **Deliverables:** `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/` (granted by the tree convention; no `<paths>` entry needed). Round-2 batteries are named `battery_<cell>.py` with the cell id lower-cased and hyphens as underscores.
 - **Queue:** third in slot ~3, after IB-rt-9.
 
 ---
@@ -50,9 +50,11 @@ the extractor and certifier with cid refusal and undated holdouts (IB-s-10); the
 
 ---
 
+**ISSUER AMENDMENT (2.0.0_SA_COO~B, 2026-09-11 ~17:3xZ, at the hand-off):** this order is executed by slot ~4 (`0.9.0_WK_IRPT_BCKEND~4`, the subagent that built and deployed the export worker); every serial in this face reads ~4 accordingly and the deliverables home is `deliverables/0.9.0_WK_IRPT_BCKEND~4/`. The decomposition's seating table (v0.2 s.5) is descriptive; the fanout is unchanged at five chains. Two facts from IB-rt-8's judgment bear on glyphs: the four round-1 PDFs embedded SegoeUI/TimesNewRoman against a package declaring Lato (0 of 3 declared fonts embedded, 4 of 4 artifacts), and the live render fetched its typefaces from `fonts.googleapis.com` (2 foreign of 12 requests) -- the font mapping this cell writes is per document and provenanced, never a fetch.
+
 ## DELIVERABLE
 
-`infra/aws/lambda/investor-reporting/ycharts/extract/{fonts.py,extract.py,certify.py}` + tests + the unmapped-glyph fixture; the optional `date_claim` property on `AnalysisReport` (schema + v1 artifact); the battery `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/battery_ib_rt_10.py` and `.result.md`.
+`infra/aws/lambda/investor-reporting/ycharts/extract/{fonts.py,extract.py,certify.py}` + tests + the unmapped-glyph fixture; the optional `date_claim` property on `AnalysisReport` (schema + v1 artifact); the battery `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/battery_ib_rt_10.py` and `.result.md`.
 
 ---
 
@@ -82,7 +84,7 @@ the extractor and certifier with cid refusal and undated holdouts (IB-s-10); the
 
 ## ACCEPTANCE
 
-<criterion id="RT10-AC1" cell_refs="IB-rt-10"><invocation>timeout 600 python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/battery_ib_rt_10.py</invocation><expect>IBRT10-GLYPHS-DATES-PROVENANCED</expect></criterion>
+<criterion id="RT10-AC1" cell_refs="IB-rt-10"><invocation>timeout 600 python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/battery_ib_rt_10.py</invocation><expect>IBRT10-GLYPHS-DATES-PROVENANCED</expect></criterion>
 **`RT10-AC1` -- PASSES BY OUTPUT -- per-document mapping, both codes and the negative, provenance on every date.**
 **(a) PER-DOCUMENT.** For each of the 3 vendor PDFs the `fi` ligature is recovered through that document's map (the code used printed per document: 45 / 45 / 46 as measured); `(cid:` occurrences in certified text: 0 of the round-1 89 pages.
 **(b) THE NEGATIVE.** The synthetic document's unmapped cid reads `UNRESOLVED_GLYPH` and certification refuses a value carrying it (printed).
@@ -122,8 +124,8 @@ lane: the `<paths>` block above IS the grant (RULING 1 @9ef9a40aae) plus the two
 
 <proof_of_spec>
 Criterion ids minted at cut: RT10-AC1, RT10-AC2. Instance at
-`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rt-10.glyphs-and-dates-per-document-font-mapping-and-provenance.proof_of_spec.json`
-(the TASK ORDER'S OWN BASENAME stem, which `.tools/to-pipeline-gate.py` `check_complete_flip` globs for under `deliverables/*/`), per `org/standards/PROOF_OF_SPEC.schema.json`: one acceptance row per id, `criterion_verbatim` the spec's words, `invocation` the exact command, `output_evidence` the verbatim deciding excerpt, `denominator` beside every count, `expect` carried from this face; a judgment row under `UNVERIFIABLE-BY-INSTRUMENT` with `status_reason` naming the CVO. Validate with `python .tools/proof-of-spec-check.py org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rt-10.glyphs-and-dates-per-document-font-mapping-and-provenance.proof_of_spec.json RT10-AC1,RT10-AC2` BEFORE the complete flip; rc 0 AND every mechanical criterion PASS-by-output, then flip this order's `<status>` to `complete` and commit instance, deliverables and flip together. A FAIL row leaves the order open and is your final report on it. The PENDING-THIS-COMMIT sentinel is one-shot: pin artifact rows to the commit that carries them.
+`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-rt-10.glyphs-and-dates-per-document-font-mapping-and-provenance.proof_of_spec.json`
+(the TASK ORDER'S OWN BASENAME stem, which `.tools/to-pipeline-gate.py` `check_complete_flip` globs for under `deliverables/*/`), per `org/standards/PROOF_OF_SPEC.schema.json`: one acceptance row per id, `criterion_verbatim` the spec's words, `invocation` the exact command, `output_evidence` the verbatim deciding excerpt, `denominator` beside every count, `expect` carried from this face; a judgment row under `UNVERIFIABLE-BY-INSTRUMENT` with `status_reason` naming the CVO. Validate with `python .tools/proof-of-spec-check.py org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-rt-10.glyphs-and-dates-per-document-font-mapping-and-provenance.proof_of_spec.json RT10-AC1,RT10-AC2` BEFORE the complete flip; rc 0 AND every mechanical criterion PASS-by-output, then flip this order's `<status>` to `complete` and commit instance, deliverables and flip together. A FAIL row leaves the order open and is your final report on it. The PENDING-THIS-COMMIT sentinel is one-shot: pin artifact rows to the commit that carries them.
 
 The grant is read from HEAD of your branch and only while this order is NON-TERMINAL: the issuance commit is in your ancestry at hand-off, so the flip is a modification, not an add.
 </proof_of_spec>

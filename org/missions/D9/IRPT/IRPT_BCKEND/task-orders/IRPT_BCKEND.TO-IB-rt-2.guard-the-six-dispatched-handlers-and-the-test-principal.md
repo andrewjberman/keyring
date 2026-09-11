@@ -55,6 +55,17 @@
 
 ---
 
+**ISSUER AMENDMENT (2.0.0_SA_COO~B, 2026-09-11 ~17:3xZ, at the drain of this order's first report -- rows W2-S19..S27 read at aef37711d3; the order stays OPEN):**
+- **W2-S19 GRANTED.** `<paths>` now carries `infra/aws/lambda/investor-reporting/ops/` and `infra/aws/terraform/investor-reporting/ops/`: `irpt-status` and its three routes are inside the six, and arm (a) reads `0 of N` over all eleven handler-bearing routes.
+- **W2-S24 GRANTED, under the shared-surface rule (row W4-S15).** `<paths>` now carries `infra/aws/lambda/layers/irpt-common/` and `infra/aws/lambda/ci/lambda-layer-map.json`. `_authz` reaches the zips through the layer: rebuild the layer FROM THE TREE AT YOUR CUT (the union of every declared member list; the `carried_forward_members` block is removed by IB-rt-7 or by you, whichever touches the file first -- assert no duplicate member path), publish, repoint `3 of 3`, print the version you READ and the version you PUBLISHED. IB-rt-7 (slot ~1, cut at df84a8a952) is rebuilding the same layer now from a tree that predates your guard; whichever of you publishes second publishes the superset, because both build from the merged tree. The capabilities read prints `5 of 5` contracts and the `_authz` members present.
+- **W2-S22 RESOLVED BY SEQUENCE.** IB-rt-4 is COMPLETE and merged (56525018f8 -> 3ed2c79443); its export apply landed and closed. From your re-cut onward `irpt-export-render` is this order's alone; the new entry module per function stands, and `export/handler.py` may now be touched where the guard needs it.
+- **W2-S21 SPLIT BY OWNER.** `irpt-status` (5 of 7 declared build inputs absent) and `irpt-directory-search` (builder parity on a shared source dir) are THIS order's: register the truth in `lambda-source-map.json` -- a build input that does not exist in the tree is REMOVED from the list, never invented; two functions sharing one source dir carry two entries whose packaged lists are each derivable from the tree and whose parity check passes; every registered `artifact_sha256` equals the S3 object's `content-sha256` equals the live `CodeSha256` (`N of N` printed). `irpt-ycharts-generate` (7 of 25 absent) is IB-rt-9's and is carried to it by amendment. The CLOSED ledger entry that claims a byte-identical rebuild at a commit that lacks the inputs is a RECORD defect carried to L10 by name -- do not edit a closed entry.
+- **W2-S23 IN LANE.** `_authz/errors.py` PUBLIC_REASONS gains `CONTRACT_VERSION` (it is the one envelope; the reason set is closed by design and grows by amendment, which this is). Arm (g)'s mismatched-header refusal is served with that code.
+- **W2-S25 RULED.** A refusal is NEVER an instance of a response contract: it is v1's `StatusEnvelope`. Arm (g) grades SUCCESS responses against `responses/<operation>.response.schema.json` and REFUSALS against `StatusEnvelope`, both printed per operation; the v1 freeze at c22f179bbf stands and nothing in `docs/contracts/` is edited by this order.
+- **W2-S27 IN LANE.** `performance/tenants.py` routes on the firm the boundary binds (the registry spelling resolved from the issued opaque id), and the `F-49F`/`F-COT`/`F-INF` spelling is retired from the adapter; the swap census covers performance after the change.
+- **W3-S22 / W4-S24 ROUTED HERE.** `_authz/dispatch.py` was authored in this slot (173349a652) and collides with `export/dispatch.py` on the flat `sys.path` every export module shares (IB-rt-8's own tests cannot see its module). Rename `_authz/dispatch.py` to `_authz/authz_dispatch.py`, update every importer, and print a census of module basenames in `_authz/` against every function directory: `0` collisions. `export/dispatch.py` is not renamed.
+- Arm (a)'s inherited `6 of 11` is retired by your census (`11 of 11` unguarded at the cut, row W2-S20); the battery prints the census it derives from `routes.json` + the source map + each root's `handler =`, never an inherited number.
+
 ## DELIVERABLE
 
 The guarded entry points in `directory/`, `performance/`, `ycharts/generate/` (the request handler), `narrative/`, `export/` (the status operation); `_authz/tests/test_unguarded_census.py` with the control; the test-principal module `_authz/testprincipal.py` OR the `HUMAN-GATED` arm record `deliverables/0.9.0_WK_IRPT_BCKEND~2/RT2_test_principal_human_gated.md`; the ledger entries + sentinels for each root applied; the battery `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_rt_2.py` and `.result.md`.
@@ -125,6 +136,10 @@ infra/aws/lambda/investor-reporting/PATH_MANIFEST.json
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/irpt-bckend-rt2.json
 infra/aws/lambda/ci/lambda-source-map.json
+infra/aws/lambda/investor-reporting/ops/
+infra/aws/terraform/investor-reporting/ops/
+infra/aws/lambda/layers/irpt-common/
+infra/aws/lambda/ci/lambda-layer-map.json
 </paths>
 
 
