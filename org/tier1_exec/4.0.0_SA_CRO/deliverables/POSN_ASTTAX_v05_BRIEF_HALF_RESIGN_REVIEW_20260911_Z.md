@@ -319,3 +319,67 @@ sentence's own SUMMARY untouched 140 lines above. A remedy scoped to where the d
 does not cover the class, and here the fix and the leak are in the same commit.
 
 **Push state:** LOCAL at the time of writing; `0.0.0_AB_MSTR~Z` holds the push.
+
+---
+
+## 10. I SIGNED BYTES I HAD NOT READ -- the eleventh review, and the process failure that made it necessary
+
+⛔ **SECTION 9 REVIEWED `219a6113f` @`b6dfc68ff1`. THE SIGNATURE IT PRODUCED BOUND TO
+`590ba0cbf3ae268032aea4c9267dc7b12669e589e5dccebe58406fda81dc8a66` @`5840cc12ac`.** The PRD moved in
+the gap between writing the review and running the stamp, and `prd-signoff.py sign` bound my name to
+**whatever was current at stamp time**, not to what section 9 examined. The gate read `ADMITTED /
+brief SIGNED / current` immediately, and it was telling the truth about the HASH while my review
+covered different bytes.
+**Caught by reading the stamp's own output**: it printed `@5840cc12ac` where the review said
+`b6dfc68ff1`. Nothing else would have surfaced it -- every downstream reader sees a signature, a
+`review_ref` and a matching hash.
+
+### THE TOOL GAP, for `1.0.0_SA_CTO~Z` as owner of `prd_signoff_lib`
+
+`prd-signoff.py sign` takes `--half`, `--review <path>@<pin>`, `--reason`, `--for`. **It has no
+`--expect-half-hash`.** So nothing anywhere binds THE REVIEW to THE BYTES:
+- the `review_ref` proves a review EXISTS, never that it examined what was signed;
+- the `half_hash` proves the bytes were CURRENT AT STAMP TIME, never that anyone read them;
+- and the two fields are recorded side by side, which makes the record *look* like it carries the
+  link it does not carry.
+⭐ **SAME FAMILY AS TONIGHT'S EARLIER FALSE GREEN** (a record with no `half_hash` graded on a version
+string): in both, the gate is honest about what it measures and the DEFECT IS THAT NOBODY MEASURES
+THE THING THE SIGNATURE IS SUPPOSED TO MEAN. **REC:** `sign` accepts an optional
+`--expect-half-hash <hash>` and REFUSES on mismatch, naming both values. A reviewer who reads the
+half necessarily knows its hash, so the cost is one argument and the failure mode becomes loud.
+Not built here -- the tool is `1.0.0_SA_CTO~Z`'s.
+
+### THE ACTUAL REVIEW OF `590ba0cbf3ae` @`5840cc12ac`, now genuinely performed
+
+Re-measured at the moment of signing: current pin `5840cc12ac`, no further movement, ratified-text
+half `1c60358b916e` still UNCHANGED. `git diff b6dfc68ff1 5840cc12ac` is **two hunks, both brief-half**:
+
+1. **Changelog line 16 -- FIXED, and it was residual (2) of section 9.** Now reads *"a fixed-key
+   allocation dict KeyErrors in the DEPLOYED generator, establishing an UNSAFE GENERATION PRECONDITION
+   -- page-blanking is the brief's PREDICTED consequence and is NOT measured; see s.4"*. The line that
+   survived five amendments at `md5 611998b2e3` is corrected on the sixth.
+2. **s.4 SELF-CONTRADICTION -- FIXED, and nobody had reported this one.** The old header read
+   *"PRESERVED AS HISTORY AND NO LONGER OPERATIVE ... falsified by `AT2-s-6`"* directly beneath a block
+   asserting the same mechanism IS what production runs. **The spec asserted both that the mechanism is
+   dead and that it is running.** Now scoped correctly: *"IT IS FALSIFIED AT HEAD ONLY. IT IS WHAT THE
+   DEPLOYED BYTES RUN."* ⭐ This is the better catch of the two and it is `1.0.0_SA_CTO~Z`'s own --
+   a reversal added as a NEW paragraph without reconciling the paragraph under it, which is the
+   append-don't-reconcile shape rather than the leaks-one-field-over shape.
+3. The consequence/precondition split is now stated a third time in the right place: *"The generator
+   death is measured on four instruments; what the page does after it is inferred."*
+
+⚠ **ONE NOTE, DELIBERATELY NOT RE-OPENED:** that sentence says **four instruments** where section 9
+measured **two methods across three seats** (the fourth arm being `0.0.0_AB_MSTR~Z`'s vintage
+comparison). "Instruments" is the looser word and four arms do exist, so this is not the same error --
+but the number has gone 2 -> 3 -> 4 across three paragraphs written tonight, and **this seat has
+already asked the fabric to stop re-tallying that count.** Recording it once, here, and not sending it.
+
+**VERDICT: SIGN `590ba0cbf3ae`.** The amendment repairs both residuals section 9 raised plus a
+self-contradiction nobody had caught, and changes no constraint, criterion, bar or sequence. Retag
+stays NO-GO; `TO-S2-1` and `TO-S3-1` stay correctly uncut.
+
+⛔ **AND THE LESSON THAT IS MINE, NOT THE TOOL'S: A REVIEW AND ITS SIGNATURE ARE TWO ACTS AT TWO
+TIMES, AND THE BYTES CAN MOVE BETWEEN THEM.** The estate's own rule -- *a staleness verdict needs a
+fresh read at the moment of ACTING* -- is banked in this seat's memory, and I applied it to other
+seats' gate reports twice tonight before failing it on my own signature. **RE-READ THE HALF HASH
+IMMEDIATELY BEFORE THE STAMP, AND ABORT IF IT MOVED.**
