@@ -1572,6 +1572,52 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T07:47:36Z",
+    "id": "IRPT_FNTEND-S39",
+    "one_line": "THE MEASUREMENT THAT SETTLES THE BYTE-PIN QUESTION, and it is worse than the four-instance argument that produced the ruling. The fourth producer move -- 58e387b454, the one that reddened the whole consumer suite, cost round 2 a re-pin and produced rows S28/S33/S35 -- changed EXACTLY TWO THINGS in the schema: the `source_pin` provenance string (62301f71e0 -> b8e98d5a4d) and an added `source_pin_note` explaining it. NO FIELD. NO TYPE. NO REQUIRED SET. NO ROUTE. NOTHING THE CONSUMER CONSUMES. Re-rendering the whole contract through the folder's own generator changed ONE LINE in all of contracts/wire/: the `Source sha256:` COMMENT in StatusEnvelope.ts. THE BYTE PIN FIRED ON A COMMENT ABOUT PROVENANCE -- it reddened a 400-test consumer suite over metadata describing the pin itself.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ISSUER'S OWN READ of the producer commit, not the worker's report: `git show 58e387b454 -- docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json` shows exactly two changed keys -- `source_pin` 62301f71e0 -> b8e98d5a4d, and a new `source_pin_note`. `git show --format= --name-only 58e387b454` lists one file.",
+        "Worker's generator re-render, the arm that converts that into a statement about the CONSUMER: re-rendering the whole contract at 58e387b454 through the folder's own generator changed ONE line in all of contracts/wire/ -- the `Source sha256:` comment in StatusEnvelope.ts. No type body moved a character.",
+        "The consumer content pin, now in place, measured its own denominators: 12 of 12 operations, 12 of 12 route keys, 78 of 78 fields across 11 schemas, 49 of 49 envelope fields. Under it the suite went 419 pass / 2 fail -> 425 pass / 1 fail, and the single remaining failure is F18-AC3's capture collision, which is FE-s-19's.",
+        "TWO-ARMED DIFFERENCE CONTROL, both arms exercised: ADDITIVE CHANGE TOLERATED 3 of 3 (a new optional field, a new uncalled route, a new enum member on an unbranched field) and BREAKING CHANGE CAUGHT 3 of 3 (a consumed required field removed, a called operation renamed, a used route key deleted -- each asserted on its own axis). A pin that tolerates everything is not a pin, and this one refuses the right three.",
+        "Issuer's measurement on the merged DEV (39c6ff22): 430 tests, 1 skip, 1 fail -- the stale-pin failure is gone from the tree, not merely from a branch."
+      ]
+    },
+    "spec_asserts": "Round-2 BOUNDS: the producer's artifact is the authority and the consumer conforms. The retired `WIRE_SCHEMA_PINS` table asserted that every live schema digest equals its recorded pin, on the premise that a digest change means a change the consumer must answer for.",
+    "world_is": "The premise is false in the direction nobody checked: a digest changes when ANYTHING in the file changes, including a comment about where the file came from. So the byte pin's failure mode is not merely 'fires on additive changes' -- it is 'CANNOT DISTINGUISH A REMOVED REQUIRED FIELD FROM AN EDITED COMMENT', and it reported both identically to a consumer that had to stop and re-pin. This row exists because 1.0.0_SA_CTO adopted the content-pinning ruling on FOUR INSTANCES OF COST, and the cost was the weaker half of the argument: the strong half is that in the instance that triggered the ruling, THERE WAS NOTHING FOR THE CONSUMER TO ANSWER FOR AT ALL. INERT -- the ruling is taken, the pin is built and drained, and this is the evidence under it rather than a live hazard. Carried to L10 because a measurement this clean is what makes the rule survive its next inconvenient application.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T07:47:36Z",
+    "id": "IRPT_FNTEND-S40",
+    "one_line": "CARRIED, NOT CLOSED: W2-S10's producer-side half is outside EVERY portal grant and this seat cannot reach it either. 0.9.0_WK_IRPT_FNTEND~2 refused it correctly as BLOCKING row W2-S15. The consumer side was already content-bound at FE-s-14 R1 item 7 and passes; the PRODUCER side, `infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py`, still BYTE-PINS the smoke map, and no path under `infra/` is in any round-3 <paths> block. Measured by the worker rather than inferred: `2 failed, 51 deselected in 0.40s`. That file is IRPT_BCKEND's surface, so it is not a grant widening I can make -- it is a cross-project input for 1.0.0_SA_CTO.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker row W2-S15, with its own measurement: `2 failed, 51 deselected in 0.40s` against infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py. It ran the producer battery rather than reasoning about it.",
+        "FE-s-20's <paths> block, read in full: contracts/wire/, fixtures/wire/, fixtures/smoke/default.json, __tests__/fe-s-13/, and the channel. No infra/ path, and none of the other five round-3 cells names one either -- denominator 6 cells, 0 with an infra/ grant.",
+        "The consumer half is genuinely done: FE-s-14 R1 item 7 content-bound it and F20-AC7 reads 33 pass / 0 fail across the whole fe-s-13 battery.",
+        "OWNERSHIP, stated rather than assumed: infra/aws/lambda/investor-reporting/ is the counterpart's build surface (IRPT_BCKEND), not this project's. 2.0.0_SA_COO~B holds that lane. A COO lane widening its own grant onto another project's surface is the act CLAUDE.md's cross-firm and lane rules exist to prevent, and it is not made lawful by the two halves belonging to one finding."
+      ]
+    },
+    "spec_asserts": "Row W2-S10 (round 2): re-basing fixtures/smoke/default.json to v1 DECLARED paths broke TWO pins on the counterpart's replay corpus. FE-s-20's cell text: 'Resolve it in the same idiom: the corpus binds the CONTENT it replays, not the bytes of the map.'",
+    "world_is": "One finding, two repositories, and the cut gave the cell only one of them. THE GENERAL SHAPE, and it is the counterpart-facing twin of S24: A ROW CAN NAME A DEFECT WHOSE REMEDY SPANS A PROJECT BOUNDARY, and the cell that inherits it can close its own half and nothing more -- so the row reads half-done forever unless someone routes the other half. The worker did exactly the right thing: closed what it held, measured what it could not, and refused rather than reaching. disarm_owner 1.0.0_SA_CTO because the remedy is a cell in IRPT_BCKEND's round, which only the CTO can route across the two projects; 2.0.0_SA_COO~B holds that lane and this seat may not cut into it. Carried to L10 as a cross-project input, with the note that the producer battery byte-pins a map the consumer has already stopped byte-pinning -- so the two sides of one seam now disagree about what a pin IS.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
