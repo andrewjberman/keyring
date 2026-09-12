@@ -152,8 +152,15 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
   A PRODUCTION LANDMINE UNTIL THE POSITIONING GENERATOR IS HARDENED; the round-2 SEQUENCE is load-bearing.**
   ⛔ **RE-FOUNDED TWICE, AND THE SECOND RE-FOUNDING REVERSES THE FIRST. READ THIS BLOCK BEFORE THE
   ONE BELOW IT.**
-  **THE ORIGINAL `0.4.0_DT_ClientPlatform` MECHANISM -- KeyError, the generator dies, and THE PAGE
-  BLANKS FOR ALL FOUR PARTNER FIRMS -- IS WHAT IS RUNNING IN PRODUCTION RIGHT NOW.** It was declared
+  **THE ORIGINAL `0.4.0_DT_ClientPlatform` MECHANISM -- the KeyError and the generator dying -- IS
+  WHAT IS RUNNING IN PRODUCTION RIGHT NOW.**
+  ⛔ **AND THE SEVERITY CLAUSE IS NARROWED, ON `3.0.0_SA_CVO~Z`'s `C-S52`: WHAT IS ESTABLISHED IS AN
+  UNSAFE GENERATION PRECONDITION, *NOT* DEMONSTRATED PAGE-BLANKING.** Its words: *"This establishes
+  an unsafe generation precondition; it does not demonstrate live page blanking or a performed
+  retag."* **No retag was performed and no live page was read.** Page-blanking is the DT brief's
+  PREDICTED consequence of the precondition, and this seat carried that phrasing forward as though
+  the measurement had reached it. It had not. The precondition is measured; the consequence is
+  inferred, and the two must not be written as one sentence. It was declared
   falsified at ~20:0xZ by this seat on a measurement taken against **HEAD**, and HEAD was never the
   plane this constraint is about. Measured 2026-09-11 ~23:4xZ by `AT3-s-5`, TWO INSTRUMENTS, TWO
   SEATS, TWO METHODS:
@@ -163,6 +170,11 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
     `normalize_asset_class` 0/13, positive control `def lambda_handler` 1/1, negative control 0/0.
   - `2.0.0_SA_COO~Z` read the AWS CONTROL PLANE instead: `get-function-configuration` ->
     `LastModified 2026-08-18T18:34:43Z`, `CodeSha256 PRg64EGzQtLw7/HAhyN/jNP6rd01PrcLK4wKqCHAKfQ=`.
+  - **A THIRD, ADDED 2026-09-12: `3.0.0_SA_CVO~Z`'s `C-S52` INDEPENDENTLY REPRODUCED** 11/11
+    candidate AFTER-exceptions against 11/11 successful repaired-source arms, on the downloaded
+    bytes (94,164 B, `md5 cc79aff7506f8c39e17453f386c69551`). **Three methods, three seats, one
+    answer** -- so the DEPLOY GAP is stronger than when it was first written, even as the severity
+    clause above is weaker.
   ⛔ **THE DEPLOYED BYTES WERE BUILT 2026-08-18. `AT2-s-6`, `AT2-s-1` AND `AT3-s-1` ALL POST-DATE THAT
   DEPLOY, SO EVERY REPAIR THIS PRD CITED AS HAVING KILLED THE KeyError IS COMMITTED-NOT-DEPLOYED.**
   ⭐ **THE DT BRIEF WAS RIGHT THE WHOLE TIME**, and was declared falsified by a measurement on the
