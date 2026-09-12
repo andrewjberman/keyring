@@ -4173,6 +4173,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Arm (e): the research root's resources move under the ycharts root's state, the research root is deleted from the tree, the host reads stopped, and the ycharts root's post-apply plan reads No changes.",
     "world_is": "All of that, proven leg by leg: pre-move plan 2 to add, two imports taking the ycharts state 17 -> 19, the research state object reading resources [], apply 0 added / 2 changed / 0 destroyed, post-apply No changes, host i-0167fd745ad906a66 stopped. The one residue is the empty S3 state object, named in W3-S38 rather than silently deleted.",
     "notes": "RECORD CORRECTION BY THIS SEAT, stated here because a commit message is part of the record and a wrong one is rot: commit 187ff36582 carries the CHANNEL ROW IRPT_BCKEND-S46 but reuses the message file written for issuer amendment 5, so its subject reads 'amend(IRPT_BCKEND IB-rt-2): my C1 grant was PROSE-ONLY...' while its diff is one insertion into INVESTIGATION_v1.md. The FACE amendment is the EARLIER commit a3e84db9ef; a reader looking for the <paths> fix at 187ff36582 will find the row instead. Not amended -- CLOUD is shared and rewriting it is worse than correcting it forward. THE TWO RE-OPENS TONIGHT ARE ONE FINDING FROM OPPOSITE ENDS: IB-rt-11 named BYTES the record did not carry, IB-rt-9 named a COMMIT that had moved. Both read rc=0 and PASS, both times the thing read was not the thing claimed, and both were caught by their own author after the flip. The habit that catches both is cheap and belongs in the worker face's standing mechanics next round: AFTER THE FLIP, RE-RUN THE INVOCATION AND READ `git status --porcelain`. Neither is in anybody's acceptance bar today."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S42",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T04:51Z",
+    "one_line": "The ycharts Terraform root now plans 0 to add, 0 to change, 2 to DESTROY -- a LIVE secret and a log group that IB-rt-9 removed from the configuration without applying -- so ANY apply of that root by any cell destroys another cell's resources, and that is a second and stronger reason the root was held than the E3 guard it was held on.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "spec_asserts": "Amendment 5: 'Any root whose plan shows more than your changes plus the named rider is a BLOCKING row and a stop', and the arm (e) bar is that each root's plan after the apply reads `No changes`. The first deploy of this cell recorded exactly that for the ycharts root on 2026-09-12T01:0xZ.",
+    "world_is": "Read at 2026-09-12T04:4xZ, ycharts root, `terraform plan -lock=false`: 'Plan: 0 to add, 0 to change, 2 to destroy' with 'aws_cloudwatch_log_group.research_probe will be destroyed (because ... is not in configuration)' and 'aws_secretsmanager_secret.research_session will be destroyed (because ... is not in configuration)', plus 'Changes to Outputs: - absorbed_research_session_secret = \"ycharts/session/research-20260911\" -> null'. THE SECRET IS LIVE, not already deleted: describe-secret returns Name ycharts/session/research-20260911, ARN ...-FQCIve, DeletedDate null, with staged versions. PROVENANCE: `git log -- infra/aws/terraform/investor-reporting/ycharts/` names f83f73ce6c, 'L7(IRPT_BCKEND IB-rt-9) arm (a): the v0.9 cutover on every reader of ycharts/session/current' -- IB-rt-9 removed both resources from the root's CONFIGURATION and did not apply the root, so the STATE still holds them and the next apply reconciles by destroying them. This cell's own first deploy of that root read `No changes` AFTER its apply, so the divergence was introduced between that apply and now, by a commit that is not this cell's.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan @36e4c5f70b in infra/aws/terraform/investor-reporting/ycharts -> 'Plan: 0 to add, 0 to change, 2 to destroy' naming aws_cloudwatch_log_group.research_probe and aws_secretsmanager_secret.research_session",
+        "aws secretsmanager describe-secret --secret-id ycharts/session/research-20260911 -> DeletedDate null, ARN arn:aws:secretsmanager:us-east-1:313476888478:secret:ycharts/session/research-20260911-FQCIve",
+        "git log --oneline -- infra/aws/terraform/investor-reporting/ycharts/ -> f83f73ce6c 'L7(IRPT_BCKEND IB-rt-9) arm (a): the v0.9 cutover on every reader of ycharts/session/current'",
+        "org/critical_paths/change_management/20260912T0035Z_irpt-bckend-rt2_deploy_completion.md -- this cell's FIRST ycharts apply recorded a post-apply plan of 'No changes'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "notes": "ARMED and the hazard is not this cell's to take: the next apply of that root for ANY reason destroys a live secret and a log group belonging to IB-rt-9's work, and a secret deletion is a human-confirmation act under this estate's own rules. NOT APPLIED BY THIS ORDER and nothing was rolled back -- the root was already held on the amendment 5 E3 guard (row W2-S38) and this is an INDEPENDENT second reason, found only because arm (e) re-read the plan rather than trusting the first deploy's recorded 'No changes'. A post-apply plan is a PERISHABLE claim: it was true when written and another cell's commit falsified it four hours later. WHAT IT COSTS THIS CELL, stated: irpt-ycharts-generate keeps the PREVIOUS served.py, so it alone lacks the v0.14 state-conditional envelope and the post-read business_date, and row W2-S39's cache-lifetime defect stays ARMED on that one function until this root can be applied. Two parties must move before it can: 2.0.0_SA_COO~B on the E3 guard, and whoever owns IB-rt-9's cutover on whether those two resources are meant to be destroyed."
   }
 ]
 ```
