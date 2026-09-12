@@ -548,3 +548,74 @@ After the deploy verifies: re-run the battery, rewrite the instance FROM that ru
 commit that CARRIES it, re-grade with `proof-of-spec-check`, and only then flip `<status>`. IB-rt-6 and IB-rtb-1
 both gate on this order being terminal, so the flip releases two cells -- but not one moment before the deploy is
 verified and the record matches the bytes.
+
+---
+
+## ISSUER AMENDMENT 6 -- 2026-09-12T05:07:38Z (`2.0.0_SA_COO~B`). Governs over every line above it. **TWO RULINGS; THE SECOND IS A HARD BOUNDARY.**
+
+Six roots applied one at a time with each function verified on SERVED bytes before the next, ledger closed with 13
+legs and its sentinel gone, C1 committed at `4758ec3dd1` with the census reading **0 of 12 on COMMITTED bytes** --
+the mark earned, the instrument not loosened. Accepted. And `"0 subject file(s) differ from HEAD: every byte above
+is IN THE RECORD"` printed beside the token is the direct answer to IB-rt-11's false green; it belongs in every
+battery from here.
+
+### F1. ⛔ THE E3 GUARD IS RELEASED. I WROTE THE CONDITION BACKWARDS AND IT BLOCKED A DEPLOY IT WAS NEVER MEANT TO STOP.
+E3 said: *"If that zip picks up `settings.json` without `fixtures/holdings/security_mapping.json`, or either without
+`parse.py`, that is a BLOCKING row to me and a STOP."* You measured the literal condition TRUE -- `parse.py` is in 0
+of 214 functions, so no zip can carry it -- and stopped. **Correct reading of what I wrote. What I wrote was wrong.**
+
+Row `W3-S36`'s obligation runs in ONE direction: *whoever ships `parse.py`* must ship `settings.json` and
+`security_mapping.json` beside it, or the parser refuses at its first money column. **Nobody ships `parse.py`.** So
+the converse -- `settings.json` riding along WITHOUT `parse.py` -- is not the hazard; it is the normal and inert
+case, and `W3-S34` measured exactly that (served 5104 B vs tree 9670 B, the delta an added sibling key, the
+`settings` subtree and `cautions` byte-identical). **Data that no shipped code reads cannot refuse anything.**
+
+**The guard is released. Ship the rider.** The corrected guard, which still stands: if a future zip carries
+`parse.py`, it must carry `settings.json` AND `fixtures/holdings/security_mapping.json` with it. That is not this
+deploy.
+
+### F2. ⛔⛔ W2-S42 RULED -- AND NO PLAN CARRYING A DESTROY IS APPLIED TO THAT ROOT. NOT ONE.
+I verified your finding on my own instrument rather than taking the row:
+```
+aws secretsmanager describe-secret --secret-id ycharts/session/research-20260911   -> rc=0
+  DeletedDate  ABSENT  (the secret is LIVE, not scheduled for deletion)   VersionIdsToStages  2 versions
+```
+So the root really does plan to destroy a **live** secret plus a log group, because `IB-rt-9` removed both from
+config at `f83f73ce6c` and never applied. **Your row is right and you were right that no cell can apply that root as
+it stands.**
+
+**THE RULING: RESTORE THE TWO DECLARATIONS to the ycharts root so the plan reads `No changes`, and apply only
+then.** Non-destructive, reversible, and it preserves a live secret with two versions in it.
+- ⛔ **Do NOT apply a plan with any `destroy` line on that root.** Destroying a live secret is unrecoverable-class
+  and needs Andrew's own word, which has not been given and which I am not seeking tonight for two pieces of
+  research debris.
+- ⛔ **Do NOT `state rm` them instead.** That leaves them live but managed by nothing, which trades a visible
+  hazard for an invisible one.
+- **If re-declaring cannot produce `No changes`** -- the live shape differs from anything you can write, or the
+  restore itself plans a change -- **STOP and report. Do not improvise a third option.**
+- **Whether those two SHOULD eventually be retired is NOT this round's question.** It is carried to `1.0.0_SA_CTO`
+  at L10 and it needs Andrew's word if the answer is yes. Say nothing in your record about their future; record only
+  that they are preserved and why.
+
+### F3. THEN THE LAST ROOT, THEN THE FLIP.
+With F1 released and F2 restored: apply `irpt-ycharts-generate`'s root ALONE, verify it on served bytes the way you
+verified the other six (extract-and-import in the flat `/var/task` layout, fresh interpreter, repo off `sys.path`,
+plus the three-way hash equality), and confirm the post-apply plan reads `No changes`. **That apply is what disarms
+`W2-S39` on the last function and what finally puts the v0.14 envelope and the post-read `business_date` on it.**
+Then re-run the battery, rewrite the instance FROM that run, re-pin every artifact row to the commit that carries
+it, re-grade, and **flip last.**
+
+### F4. ⭐ WHAT YOUR VERIFIER FOUND IS A ROUND-LEVEL FINDING AND I AM CARRYING IT AS ONE.
+A verify read RED on a sound zip (`No module named 'keys'`) because the verifier kept **its own** layer list beside
+the packager's. That is the FOURTH divergence of two hand-maintained copies of one fact in this cell, **and every
+one appeared the moment a function was granted** -- the grant is the event that exposes the duplicate. Each was
+fixed by DELETING a copy, never by syncing it: the layer read from the live function, the function list imported
+from the packager. The two defects found in the same read (`join` raising on a null `Layers`; `--output text` plus
+`strip()` losing an empty trailing field) are exactly the kind a ONE-FUNCTION probe reports clean. **A DUPLICATED
+FACT IS A DEFECT WITH A LATENCY, AND THE LATENCY ENDS AT THE NEXT GRANT.**
+
+### F5. AND A `No changes` IS PERISHABLE -- THAT IS THE OTHER ROUND-LEVEL FINDING.
+The ycharts root read clean after your first apply and now plans two destroys, and you found it only because arm (e)
+**re-read the plan instead of trusting the record**. A post-apply `No changes` is a measurement with a timestamp,
+not a property of the root. Re-read it immediately before any later apply to the same root, and never carry a clean
+plan forward across another cell's commits.
