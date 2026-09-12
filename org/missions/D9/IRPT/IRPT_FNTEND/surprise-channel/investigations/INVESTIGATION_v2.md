@@ -1245,6 +1245,59 @@
     "spec_asserts": "scripts/ui-smoke.mjs presents `LOC   : <path>` with `<-- DID NOT LAND (auth redirect? bad route?)` as a diagnostic that the requested route was not reached -- a line a worker or a grader reads as a failure signal beside the capture it annotates.",
     "world_is": "It is a string comparison between a PATH and a PATH-PLUS-QUERY, so on every route carrying `?` it reads DID NOT LAND while the page has landed perfectly. Five of this order's twelve captures use query-bearing routes (the four print runs and its control), so the round's own evidence carries an alarming line that means nothing. INERT: nothing is degraded by it and no criterion turns on it -- every print criterion is graded on `REFS RESOLVED: 1 of 1`, which is a page-side console line and a real oracle. Recorded so the next reader of these captures does not take the warning at face value, and because the fix is one line (compare against the route's own pathname, `new URL(ORIGIN + route).pathname`). scripts/ui-smoke.mjs is outside this order's <paths>, so it is named here and not edited.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T05:37:49Z",
+    "id": "IRPT_FNTEND-S33",
+    "one_line": "FOURTH producer move of the round, and the one that settles the argument: 58e387b454 landed at 2026-09-11 22:57:36 -0400, FOURTEEN MINUTES AFTER I cut FE-s-18's worktree at 22:43:10 and while its worker was still running. I HAD applied S28's own recommendation -- I measured the target tree at seating time and verified v1 at b8e98d5a4d in the pair -- and it was STILL not enough. portal DEV f0443ba8 now reads 2 fail: F18-AC3's Holdings collision (the real defect, W1-S33) and producer-fixtures.test.ts's `STALE PINS` arm, 3 schema pins stale against 58e387b454. The second failure is NOT an incomplete R3 and is NOT worker error: the worker's tree could not contain a commit that did not exist when the tree was cut, and a worktree is frozen by design.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git merge-base --is-ancestor 58e387b454 7b04394dcb` -> NO. The producer commit is not reachable from the commit the worktree was cut at, which is the structural proof rather than an inference from timestamps.",
+        "Ordering, all three from `git log -1 --format=%ad --date=iso`: cut 7b04394dcb 2026-09-11 22:43:10 -0400; producer 58e387b454 22:57:36 -0400; worker's R3 commit a00e279d 2026-09-12 00:34:37 -0400. The move falls strictly between the cut and the work.",
+        "`git show --format= --name-only 58e387b454` -> exactly one path: docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json.",
+        "Issuer's own run on portal DEV f0443ba8: `bun test src/pages/InvestorReporting` -> 419 pass, 1 skip, 2 fail across 422 tests in 69 files; typecheck rc=0. The two failing arms named by their own output: `producer fixtures > the generated wire types were generated from THESE schemas` (STALE PINS, Expected -1 / Received +3) and `F18-AC3 ... UNIQUE HASHES`.",
+        "SEATING-TIME MEASUREMENT WAS TAKEN AND IS ON THE RECORD: the seating commit 7b04394dcb's own message reports 'v1 vintage in the pair: b8e98d5a4d' and the R3 section cites the 1-fail measurement it was cut to fix. So this is not a case of the recommendation being skipped."
+      ]
+    },
+    "spec_asserts": "Row IRPT_FNTEND-S28's recommendation: 'RE-MEASURE THE TARGET TREE AT SEATING TIME, never at issuance time -- a dependency list is a claim about siblings, not about the world.' Round-2 BOUNDS: the producer's artifact is the authority and the consumer conforms.",
+    "world_is": "S28's recommendation is NECESSARY AND NOT SUFFICIENT, and this row is the counter-example to my own advice given one round after I gave it. The vulnerable window is not the instant of the cut; IT IS THE WHOLE DURATION OF THE WORKER'S PASS, and a worker in an isolated worktree cannot see a producer move and MUST NOT -- the frozen tree is what makes its result reproducible. So no amount of measuring before the cut closes this, and no amount of worker diligence closes it either. \u26d4 THE CONCLUSION THE ROUND HAS NOW EARNED FOUR TIMES (S20, S21, S28, this): PINNING A CONSUMER TO PRODUCER BYTES IS STRUCTURALLY UNWORKABLE WHILE THE PRODUCER IS ACTIVELY MOVING. Every additive, non-breaking producer change reds the consumer, the consumer's own tests cannot distinguish that from a real break, and the cost is one re-pin per move forever. The remedy is the one carried since S21 and it is now the round's central recommendation rather than a design note: PIN BY CONTENT OF WHAT THE CLIENT ACTUALLY CONSUMES -- route keys, required field sets, the operations it calls -- and record the producer vintage as DATA rather than as a BAR. A consumer that asserts 'the twelve operations I call are all DECLARED with handlers' does not care that a thirteenth was added or that a comment changed. NOT REPAIRED HERE: the remaining red is a round-3 input alongside W1-S33, and re-pinning a fifth time inside round 2 would buy hours, not correctness.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T05:37:49Z",
+    "id": "IRPT_FNTEND-S34",
+    "one_line": "DISARM SWEEP at the round-2 drain end, one line of evidence per row, nothing swept in bulk. DISARMED: S20, S21, S22, S23, S24, S25, S26, S31, S32, W3-S9, W3-S10, W2-S3, W2-S6 -- thirteen rows whose hazard this round's work provably retired. STILL ARMED AND NAMED TO THE CTO, because this seat cannot retire them in lane: W1-S33 and S30 (the envelope-to-view seam, a round-3 cell), S28 and S33 (the producer-move class, round-3), W1-S28 (RENDER_PACKAGE.fonts at 3 of 4, blocked by fe-s-4's length assertion which no round-2 grant reaches), S27 (owner 3.0.0_SA_CVO, an L9 judgment), W2-S10 and W2-S11 (not addressed by any round-2 cell). Disarmed is NOT remediated.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S20, S21 -- the stale-pin reds they carried are gone: the six fe-s-13/fe-s-14/fe-s-1 failures those rows named read 0 on every branch after FE-s-15's re-pin (398 pass / 0 fail on its branch; 406 / 0 after the FE-s-16 merge). The pin-staleness CLASS is not disarmed and rides on S28/S33.",
+        "S22 -- the two live worker branches it armed are gone: both drained (portal d2962a69 and 774c595b; workspace 736bb04ad2 and e5d566bf67), both pairs torn down, `git branch --list 'wk-irpt_fntend*'` returns EMPTY in both repos, `/c/tmp/wk-irpt_fntend-2-*` does not exist.",
+        "S23 -- the undeclared FE-s-16 -> FE-s-15 edge: F16-AC9 read 406 pass / 1 skip / 0 fail on the merged branch, measured by the worker and independently by this seat before the continue was sent.",
+        "S24 -- F15-AC8 passed after the grant widening: `INPUTREVISION HITS IN tabs/analysis/: 0`, `BAR: 0 hits`, with a CONTROL (`export/submit.ts, outside the scanned dir: token found=true`) proving the grep can still fire. No assertion was deleted: expect() calls rose 1813 -> 1822.",
+        "S25, W3-S9 -- F16-AC8 passed under the amended invocation: `REFS RESOLVED: 1 of 1`, `FIXTURES: 2 declared; 2 matched`.",
+        "W3-S10 -- F16-AC9's six failures are gone, same measurement as S23.",
+        "S26 -- the status-flip slip: FE-s-18's drain produced NO status-line conflict (only the channel conflicted), which is the positive test that committing the flip BEFORE cutting the worktree fixes it. All three orders read their correct status at HEAD.",
+        "S31 -- F18-AC6 passed under the amended URL, and the record now carries the params on ALL THREE print URLs in the face (denominator 3, verified by enumeration after the fix).",
+        "S32 -- F18-AC3's literal arm is restored and re-run: `MANIFEST: 11 entries`, `DISTINCT HASHES: 9 of 11`, `COLLIDING SETS: 1`. The narrowing is gone and the criterion still FAILS on the real defect.",
+        "W2-S3 -- 'no Lato font binary exists anywhere reachable, and obtaining one is egress': Andrew authorised the fetch 2026-09-11 13:4xZ, the CTO fetched it once, FE-s-18 packaged it, and F18-AC19 reads `FONTS: 4 of 4` with the Bold's sha256 8a0aace7...16be1 verified on disk by this seat at 656544 bytes.",
+        "W2-S6 -- the NarrativePacket fields FE-s-8's cell guessed (annotations, topics, historyCutoff) are gone: F16-AC5 prints `historyCutoff` 0 hits over 3 of 3 files in render/narrative/ with a positive control of 16, and F16-AC4 renders the packet's own two dated events."
+      ]
+    },
+    "spec_asserts": "CLAUDE.md: 'An ARMED hazard still disarms same-turn via the row's disarm_owner.' Spine L7: at each merge the COO reads every row the branch carries; an ARMED row it cannot seat rides the drain-end read to the CTO. Disarmed is not remediated.",
+    "world_is": "Thirteen hazards are retired by work that landed and was measured, and eight are not. The eight are not left armed for tidiness: five need a round-3 cell nobody holds a grant for, one is a CVO judgment at L9, and two were never in any round-2 cell's scope. NOTE ON WHAT THIS SWEEP DELIBERATELY DOES NOT TOUCH: the thirteen round-1 C-S* adjudication rows carry owner 2.0.0_SA_COO~F and read ARMED, and I am NOT disarming them. They are the CVO's graduated adjudications from round 1; I have not verified each against this round's tree, and disarming thirteen rows on the strength of a round having ended is exactly the bulk sweep the per-row evidence rule exists to prevent. They stay armed and are named to the CTO as an outstanding population with a denominator rather than silently carried.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
