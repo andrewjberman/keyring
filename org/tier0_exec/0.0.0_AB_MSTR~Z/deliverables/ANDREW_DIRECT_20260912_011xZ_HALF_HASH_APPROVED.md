@@ -67,3 +67,71 @@ ratification requires a new deploy, a gate flip, or an act by any other fabric.
 
 Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_015xKcpLRvtCWL5P3uTb6L3g
+
+---
+
+# AMENDMENT 1 -- 2026-09-12 ~21:3xZ: THIS RECORD CARRIES A WRONG OWNERSHIP CLAIM. STRUCK BY NAME, NOT EDITED AWAY.
+
+## THE STRUCK LINE
+
+Item 1 of "WHAT THIS WORD DOES NOT REACH" above ends:
+
+> "Row `AMGT_RESAPP-Z-S6` stays ARMED and is `1.0.0_SA_CTO~Z`'s."
+
+**The "is `1.0.0_SA_CTO~Z`'s" half is FALSE.** Measured over the AMGT_RESAPP channel, denominator
+67 rows, whole array parsed:
+
+```
+AMGT_RESAPP-Z-S6   surfaced_by      1.0.0_SA_CTO~Z
+AMGT_RESAPP-Z-S6   disarm_owner     4.0.0_SA_CRO~Z     <- the ownership that matters
+AMGT_RESAPP-Z-S6   hazard_standing  ARMED              <- unchanged
+```
+
+POSITIVE CONTROL, because a uniform field is also the shape of a broken field -- the `disarm_owner`
+distribution across those 67 rows is `2.0.0_SA_COO~ZZZ` 18 | `4.0.0_SA_CRO~Z` 3 |
+`1.0.0_SA_CTO~Z` 2 | `3.0.0_SA_CVO~Z` 1. **Four distinct owners, so the field discriminates and this
+is a read rather than an artifact of the query.**
+
+## WHERE THE DEFECT IS, STATED PRECISELY
+
+⛔ **NOT IN THIS RELAY'S FIDELITY.** `1.0.0_SA_CTO~Z` asserted the ownership in its own five-seat
+broadcast (msgs 21899-21903) and in a committed round analysis; this seat relayed that claim
+**accurately**, and `1.0.0_SA_CTO~Z` says so explicitly in its correction (msg 21928).
+
+⛔ **BUT THE CLAIM IS IN A PUSHED RECORD UNDER THIS SEAT'S NAME, SO THE STRIKE IS THIS SEAT'S TO
+WRITE.** A relay that faithfully carries a false claim has still put that claim on a durable carrier
+under its own authorship. **Fidelity to the source is not a defence against the record being wrong**
+-- it only locates where the error entered.
+
+>> **AND THE GENERAL FORM, which is the reusable half: A CLAIM ABOUT AN ARTIFACT'S OWNERSHIP FIELD
+   IS STILL A CLAIM ABOUT AN ARTIFACT -- read the field, or do not make the claim.** The conflation
+   here was `surfaced_by` with `disarm_owner`. `1.0.0_SA_CTO~Z` DID surface Z-S6; it does not own its
+   disarm. Both facts are in the same row, four lines apart, and nobody opened it for two hours. <<
+
+⭐ **THE COHERENCE THAT SHOULD HAVE PROMPTED THE READ:** the row's live instance IS
+`4.0.0_SA_CRO.json`. **The seat that can re-stamp that record hash-bound is the seat that can disarm
+the row.** The ownership field was right and every claim about it was wrong.
+
+## THE FULL CARRIER COUNT IS FOUR, NOT THREE
+
+`1.0.0_SA_CTO~Z` named three carriers. `2.0.0_SA_COO~ZZZ` found a **fourth** -- its own committed
+drive log (`b91fb6f262:org/tier1_exec/2.0.0_SA_COO/drive_log_20260912T0045Z.md:88`) -- which could
+not appear in that enumeration because `1.0.0_SA_CTO~Z` was censusing **its own** carriers, a scope
+correct for its question and structurally blind to this one. **This record is a fifth carrier and is
+struck here.** All five are corrected forward; none is rewritten.
+
+## WHAT DOES NOT CHANGE
+
+- **Z-S6 stays ARMED.** Nothing here disarms it, and its disarm is `4.0.0_SA_CRO~Z`'s act by the
+  row's own field. This seat holds no view on when and is not asking for it.
+- Andrew's "Half hash approved" still reaches **only** `--expect-half-hash`.
+- The refusal to fix the version-string fallback unilaterally stands, for the blast-radius reason.
+- The IRPT re-stamp stays ROUTED to the laptop fabric per that carrier's own amendment.
+
+## NOBODY WAS BLOCKED BY THIS
+
+`4.0.0_SA_CRO~Z` ran every measurement bearing on Z-S6 while the record said the row belonged
+elsewhere. **The cost was a disarm act pointed at the wrong seat in a pushed record for about two
+hours, not lost work.** Stated so the correction is not over-read into a harm it did not cause.
+
+Sources: `1.0.0_SA_CTO~Z` msg 21928 (row `AMGT_RESAPP-Z-S29`); `2.0.0_SA_COO~ZZZ` msg 21935.
