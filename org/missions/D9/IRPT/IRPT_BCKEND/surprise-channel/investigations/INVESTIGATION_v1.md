@@ -4077,6 +4077,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "disposition": "UNDER_INVESTIGATION",
     "disarm_owner": "2.0.0_SA_COO~B",
     "notes": "ARMED because the work sits UNCOMMITTED in a worktree: four files (holdings/entry.py, holdings/tests/test_entry_guarded.py, the _authz census re-cut, and the holdings lambda.tf re-point) exist only on this device's filesystem, and a worktree removal or a forced clean loses them. That is the hazard, and it disarms the moment the <paths> line lands and the commit is taken. NOT OVERRIDDEN: GIT_COMMIT_AUTHOR_OVERRIDE would have committed it and is exactly the escape the rule forbids. The _authz half of the same work WAS committed separately at e42495e8f1 because _authz/ IS in <paths>; the census re-cut is held with the holdings files deliberately, because committing a test that asserts 0 of 12 guarded without the entry module that makes it true would leave a failing test in the tree for everyone else."
+  },
+  {
+    "id": "IRPT_BCKEND-S46",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T04:03:19Z",
+    "one_line": "IB-rt-2 REACHED 15 of 15 ARMS WITH THE TOKEN PRINTING AND DID NOT FLIP, AND BOTH HALVES OF THAT ARE CORRECT. W2-S41 IS THE ISSUER'S DEFECT AND IS FIXED: amendment 3's C1 granted infra/aws/lambda/investor-reporting/holdings/ in a PROSE SENTENCE and never added it to the <paths> BLOCK, which is the surface the owned-paths lane gate actually reads, so the gate refused four files of finished work and THE GATE WAS RIGHT. Two lines added to <paths> at a3e84db9ef, verified present at the worker's own HEAD after its worktree was fast-forwarded to f27b6f4cc3 with its four uncommitted files confirmed intact before and after. A GRANT IS ONLY REAL IN THE SURFACE THE ENFORCER READS -- and this is the INVERSE of the failure /canonical-flow already warns about, where a DOCTRINE line routed an act through a seat the gate did not require and the cost was an invisible WAIT; here a doctrine line GRANTED what the gate does not read and the cost was an invisible REFUSAL. Same root, opposite direction: prose is not a grant and prose is not a gate. AND THE WORKER'S REFUSAL TO FLIP ON A PASSING TOKEN IS A FINDING IN ITS OWN RIGHT: the <paths> grant is LIVE ONLY WHILE THE ORDER IS NON-TERMINAL, so flipping would have RETIRED the grant and permanently orphaned C1's work -- A TERMINAL FLIP REVOKES THE GRANTS THE ORDER CARRIES, so the flip is the LAST act and never the act that frees you to finish. No face states that. Its second call is equally right: it did NOT hand holdings' Entry the shared loaders the other six use, because make_holdings_enforcer defaults ownership to _no_grant and wiring them would have turned a route that serves NOTHING into one that serves real holdings -- IB-rt-7's decision, not this cell's. A MARK MUST NOT WIDEN WHAT IT MARKS. W2-S38 RULED IN: IB-rt-11's intake/settings.json rider ships with the deploy and is NAMED IN THE LEDGER on the irpt-ycharts-generate leg, because an entry listing only the author's own changes understates what the apply carries. W2-S40 accepted INERT. W2-S39 IS THE ONE THAT CHANGES URGENCY: the cell introduced a stale-payload defect tonight and removed it IN THE TREE -- served.Entry held one cache dict for the module's lifetime, so a snapshot that must be REFUSED was SERVED from a prior request's payload -- and the fix is STILL ARMED ON THE SIX LIVE FUNCTIONS until a deploy ships it. Authorization was never at risk and the worker disclosed that plainly rather than minimising it. A known armed serving defect sitting in production while we sequence is a worse trade than any sequencing benefit, so the ONE deploy is now urgent rather than merely ready.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_BCKEND~2 under issuer amendment 5 -- the single deploy disarms W2-S39 on the six live functions and lands C1, the v0.14 envelope work, the post-read business_date emission and the named rider. Until that apply verifies, W2-S39 stays ARMED in the world and this row stays ARMED with it",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD f27b6f4cc3 (drain of wk-irpt_bckend-2-2b; rows W2-S38..S41 and the 15-of-15 instance)",
+        "the <paths> block at f27b6f4cc3 read in the worker's own worktree: both holdings paths present (absent at a3e84db9ef~1)",
+        "proof-of-spec-check over IB-rt-2's instance: VALID rc=0, 21 of 21 rows resolving; RT2-AC1 PASS-by-output, token IBRT2-SIX-GUARDED, 15 of 15 arms",
+        "the worker's own disclosure that arm (a)'s 0 of 12 reads uncommitted bytes from the filesystem and a clean checkout reads 1 of 12 -- printed ABOVE its own token",
+        "issuer amendment 5 at a3e84db9ef (the <paths> fix, the W2-S38 ruling, the one-deploy instruction)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer amendment 3, C1: 'GRANTED, additive, for this cell only: infra/aws/lambda/investor-reporting/holdings/ and the holdings Terraform root.'",
+    "world_is": "That sentence existed only in prose. The <paths> block -- the surface .tools/git-hooks/install-owned-paths and the lane gate read -- did not name either path, so the grant had no effect on the only reader that matters and four files of completed work could not be committed.",
+    "notes": "⭐ THE WORKER ALSO DID SOMETHING THIS ROUND HAS BEEN SHORT OF: its battery DISCLOSES ITS OWN WEAKNESS ABOVE ITS OWN TOKEN -- arm (a)'s '0 of 12' is read from filesystem bytes that are at no commit, and it prints that a clean checkout reads '1 of 12'. A passing token that names the condition under which it would fail is worth more than a passing token. Compare tonight's opposite cases: an arm that passed while printing '0 of 11' beside itself, and an instance that pinned bytes the record did not carry. Both of those were also caught by their own authors, which is the round's real pattern. To the L10 slug as a positive finding alongside the grant-revocation-on-flip property."
   }
 ]
 ```
