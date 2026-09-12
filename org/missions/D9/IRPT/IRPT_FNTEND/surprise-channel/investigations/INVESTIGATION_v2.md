@@ -913,6 +913,54 @@
     "spec_asserts": "CLAUDE.md Rule 27 freezes the spec and the decomposition mid-round. The spine's L6 makes the issuance cover every cell of the decomposition and leaves no cell for a later round; a later round exists only when the CTO's round-N analysis sends work back.",
     "world_is": "This input arrived mid-round from the counterpart's PRD, so it belongs to no cell of the frozen decomposition and there is no lawful way to serve it in round 2 except by widening the evidence cell into a data-read change it was not cut for. Deferring is the rule working, not the rule being dodged. INERT rather than ARMED: nothing is served to any reader while portal is frozen, and the row names the exposure so the round-3 cut inherits it rather than rediscovering it. Carried to L10 as a named round-3 input, with the note that it will re-open F7's PRD row when it is cut.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T04:36:00Z",
+    "id": "IRPT_FNTEND-S30",
+    "one_line": "ISSUER CONFIRMATION of IRPT_FNTEND-W1-S33, re-derived with this seat's own instruments rather than taken from the worker's report, because it is the finding of the round and it decides round 3. CONFIRMED: on portal 774c595b the Reporting and Holdings tab BODIES cannot mount from any network response. The v1 envelope's real state IS parsed (contracts/envelope.ts, `state: status?.state ?? 'READY'`) and is then DISCARDED by the endpoint, which returns `parsed.data` (api/endpoints/investor-reporting.ts:932). adapt.ts therefore fills `availability.state` from `parts.state ?? EXPLICIT_UNKNOWN_STATE`, and EXPLICIT_UNKNOWN_STATE is 'UNCERTAIN'. TabShell.tsx:133 and :150 gate the two bodies on `envelopeFromAvailability(report.availability)` / `(snapshot.availability)`, so every network-sourced response reaches them as UNCERTAIN. FE-s-18 CANNOT BE TERMINAL IN ROUND 2: F18-AC3 and F18-AC17 turn on this and are TRUE failures, not criterion defects, and they are NOT amended.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer read the three cited sites directly at portal 774c595b in the FE-s-18 worktree: contracts/envelope.ts builds `state: status?.state ?? 'READY'`; api/endpoints/investor-reporting.ts:932 `return parsed.data as unknown as TView`; contracts/adapt.ts `state: parts.state ?? EXPLICIT_UNKNOWN_STATE` with `EXPLICIT_UNKNOWN_STATE: EnvelopeState = 'UNCERTAIN'`. A DIFFERENT instrument from the worker's: source read at the pin, not a test run.",
+        "comp-find 'envelopeFromAvailability' over src/pages/InvestorReporting: DENOMINATOR 34 hits across 305 files, bands DEF=3 SURFACED=31. The two network call sites are TabShell.tsx:133 (performance) and :150 (holdings); AnalysisTab.tsx:151 is the third consumer.",
+        "THE DISCRIMINATOR, and the reason the test suite is blind: every test that exercises a tab body seeds it DIRECTLY -- `initialEnvelope: envelopeFromAvailability(report.availability)` in fe-s-5/controls, fe-s-5/fields, fe-s-5/states, fe-s-10/parity; `initialHoldingsEnvelope:` in fe-s-10/tabs-mounted. None traverses the network path, which is why 420 of 422 tests pass over a broken seam.",
+        "MEASURED CONSEQUENCE, independent of any source reading: three smoke fixtures differing in `basis` and in the presence of `classification` produced ONE byte-identical PNG -- sha256 8ce52e6ad0b60e29... for all three of fe-s-18_holdings_{observed,target,missing_attribution}_390.png. Across the twelve captures: 12 files, 10 distinct hashes.",
+        "REGRESSION, not an always-broken surface: round 1's own committed captures fe-s-11_holdings_390.png and fe-s-5_reporting_49f_1440.png show both bodies rendering, so the defect arrived with the envelope plane during round 2."
+      ]
+    },
+    "spec_asserts": "FE-s-18's cell orders captures of 'the four NOT_EVALUATED surfaces on the mounted views', including Holdings on three distinct bases, and F18-AC3 asserts no two manifest entries share a hash. Round-2 BOUNDS assert every order's whole set reads 0 fail on its branch.",
+    "world_is": "The three bases cannot be distinguished on a mounted view because no mounted view reaches its data: the bodies render the UNCERTAIN status panel instead. So F18-AC3's hash-collision arm and F18-AC17's 0-fail arm are REPORTING THE DEFECT CORRECTLY and must not be amended away -- amending either would convert the round's own evidence into a certificate that the product works. The remedy is a ROUND-3 CELL, not a grant widening: the fix spans contracts/adapt.ts and api/endpoints/investor-reporting.ts, it carries a real design question (what the view's state should be derived from once the envelope carries it), and it must not be authored inside the EVIDENCE cell -- a cell cannot photograph a behaviour it is simultaneously writing. THE GENERAL SHAPE FOR L10, and it is Rule 22's shared-dependency blindness exactly: EVERY PER-TAB TEST SEEDS THE STATE IT SHOULD HAVE FETCHED, so each arm certifies its member while the dependency all members share is broken beneath them, and no arm can fail. The instrument that DID catch it was hashing the captures -- nobody asked for it, it cost nothing, and the eye would have read three plausible PNGs. RECOMMENDATION: round 3 carries one cell for the envelope-to-view seam whose criteria traverse the NETWORK path, plus a standing rule that a capture set asserts DISTINCT HASHES whenever its fixtures differ.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T04:36:00Z",
+    "id": "IRPT_FNTEND-S31",
+    "one_line": "THIRD criterion of this round cut against a print URL that FE-s-14 made unservable (F16-AC8 first, now F18-AC6). The worker refused it correctly and took a CONTROL with `&tenant=F-49F&scope=fp-49f-0824&revision=rev-49f-000091` that printed `REFS RESOLVED: 1 of 1` and rendered the report in full. ISSUER AMENDMENT: F18-AC6's URL gains exactly those params; THE BAR IS UNCHANGED. AND A SECOND DEFECT FOUND WHILE FIXING THE FIRST: I had put the corrected params into F18-AC12 and F18-AC13 IN THE SPAWN PROMPT ONLY, never into the task-order FILE -- so the worker ran and passed URLs that the RECORD does not contain. Both are now corrected in the file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker report F18-AC6 as written: no `REFS RESOLVED` line; page text `This bundle was not rendered ... fe-s-18-frozen is absent`; `FIXTURES: 9 declared; 0 matched`. Denominator 0 of 9 -- no request was issued, the same discriminator that localised F16-AC8.",
+        "Worker CONTROL, same commit, same fixture map, same bundle id, plus the four params: `REFS RESOLVED: 1 of 1`, report renders in full, saved as fe-s-18_print_frozen_control_1440.png and carried in the manifest.",
+        "THE RECORD/PROMPT DIVERGENCE, measured: after amending F18-AC6 this seat grepped every print URL in the face -- denominator 3 -- and found F18-AC12 and F18-AC13 still carrying the BARE bundle URLs, while the worker's instance records those same two criteria as run WITH the params and PASSING. The spawn prompt and the file had diverged and nothing said so.",
+        "proof-of-spec-check on that instance returned VALID (rc=0), 20 acceptance rows, 0 violations, WHILE that divergence existed -- so no gate compares a recorded invocation against the text of the criterion it claims to satisfy. That is the mechanism gap, stated as a measurement rather than an inference.",
+        "Row IRPT_FNTEND-W2-S13 recorded the route change during FE-s-14; row IRPT_FNTEND-S25 recorded that it does not propagate to criteria of orders already cut. This is the predicted third instance."
+      ]
+    },
+    "spec_asserts": "F18-AC6 asserts 'investor-reporting/print?bundle=fe-s-18-frozen' is a URL the print route can serve.",
+    "world_is": "The URL has not been servable since FE-s-14, and worse, the fix I DID apply went to the travelling copy rather than the durable one. TWO LESSONS, and the second is the one with teeth. (1) Rule 24's subtraction applies to one's own edits: the population was 'every print URL in this face', the denominator was 3, and I patched the 2 I had copied into the prompt rather than subtracting from the 3 the file contained. (2) \u26d4 THE WORKER FACE THAT TRAVELS AND THE RECORD FACE THAT STAYS CAN DIVERGE SILENTLY, because the spine has the issuer substitute `<WS>` and `<PORT>` into the prompt at spawn -- and once you are editing that prompt, nothing stops a SUBSTANTIVE correction going only there. The proof instance then records an invocation that the task order does not contain, and proof-of-spec-check does not compare the two, so the instance reads VALID over the divergence. The record is what a successor and the CVO read; the prompt is gone the moment the worker ends. RECOMMENDATION for L10: placeholder substitution is the ONLY edit permitted between the file's worker face and the spawned prompt, any other change lands in the file FIRST, and proof-of-spec-check gains a limb comparing each recorded invocation against its criterion's invocation modulo the declared placeholders. Disarmed when F18-AC6 passes and the record carries all three URLs.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
