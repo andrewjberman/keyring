@@ -1298,6 +1298,28 @@
     "spec_asserts": "CLAUDE.md: 'An ARMED hazard still disarms same-turn via the row's disarm_owner.' Spine L7: at each merge the COO reads every row the branch carries; an ARMED row it cannot seat rides the drain-end read to the CTO. Disarmed is not remediated.",
     "world_is": "Thirteen hazards are retired by work that landed and was measured, and eight are not. The eight are not left armed for tidiness: five need a round-3 cell nobody holds a grant for, one is a CVO judgment at L9, and two were never in any round-2 cell's scope. NOTE ON WHAT THIS SWEEP DELIBERATELY DOES NOT TOUCH: the thirteen round-1 C-S* adjudication rows carry owner 2.0.0_SA_COO~F and read ARMED, and I am NOT disarming them. They are the CVO's graduated adjudications from round 1; I have not verified each against this round's tree, and disarming thirteen rows on the strength of a round having ended is exactly the bulk sweep the per-row evidence rule exists to prevent. They stay armed and are named to the CTO as an outstanding population with a denominator rather than silently carried.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S35",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T05:44:00Z",
+    "one_line": "CORRECTION TO MY OWN ROW IRPT_FNTEND-S33, filed before the drain-end read so the CTO does not cite a wrong number into a round-3 cut. S33 states '3 schema pins stale against 58e387b454'. THE REAL FIGURE IS ONE: the arm prints `WIRE SCHEMA PINS FRESH: 10 of 11` and `STALE PINS: StatusEnvelope: pinned 9c4bcce436bf, on disk f06c0029cd20` -- a single contract, and 58e387b454 changed exactly one file, StatusEnvelope.schema.json. S33's CAUSE, ORDERING AND CONCLUSION ARE UNAFFECTED and stand as written; only the count was wrong. A landed row is never edited, so this is the correction.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Re-run of the arm alone at portal DEV f0443ba8: `bun test __tests__/fe-s-13/producer-fixtures.test.ts` prints `STALE PINS:` followed by ONE line, `StatusEnvelope: pinned 9c4bcce436bf, on disk f06c0029cd20`, then `WIRE SCHEMA PINS FRESH: 10 of 11`. Denominator 11 contracts, 1 stale.",
+        "`git show --format= --name-only 58e387b454` lists exactly one path: docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json. One file moved, one pin stale -- the two agree, which is the check that the corrected number is right rather than merely different.",
+        "HOW THE WRONG NUMBER AROSE, because the trap is reusable: I read the failure through a grep that surfaced bun's assertion diff header, `- Expected - 1 / + Received + 3`, and took `+3` as three stale contracts. Those digits are the diff's LINE COUNTS, not domain counts -- the received array renders across three lines. I quoted a FORMATTING artifact as a MEASUREMENT.",
+        "The general form, and it is Rule 22a's instrument-trap class: a test runner's assertion-diff header counts LINES OF RENDERED OUTPUT, never members of the failing set. The domain count is only ever in the test's own printed denominator -- here `10 of 11`, which the same test prints one line below and which my grep pattern excluded."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND-S33 asserts 'producer-fixtures.test.ts's STALE PINS arm, 3 schema pins stale against 58e387b454'. CLAUDE.md Rule 22: COVERAGE -- print the denominator.",
+    "world_is": "One pin, not three. The irony is exact and worth keeping rather than smoothing away: S33's own recommendation is that a consumer should pin by CONTENT and print its denominator, and I wrote that row after reading a count off a diff header instead of off the denominator the test printed one line below. The corrected figure makes the case for S33 STRONGER, not weaker -- ONE non-breaking producer edit to ONE schema file reds the whole consumer suite, which is a cleaner demonstration of byte-pinning's fragility than three would have been. INERT: nothing acts on the count, the round-3 input is unchanged, and no grade turns on it.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
