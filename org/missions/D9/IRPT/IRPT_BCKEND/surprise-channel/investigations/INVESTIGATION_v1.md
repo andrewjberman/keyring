@@ -3433,6 +3433,150 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "IRPT_BCKEND-W3-S31: 'Not fixed in job.py: it is IB-rt-2's artifact this round, and editing it would put my change into slot ~2's artifact.'",
     "world_is": "IB-rt-2 does not edit job.py and never intended to. But it DOES build the zip and apply the root that carry job.py, and it holds an OPEN deploy ledger on them at this moment -- so the conclusion the worker reached is correct while the reason it gave is not. The correct reason is stronger, because it still forbids the edit after IB-rt-2's file set is known and a file-ownership reading would have permitted it.",
     "notes": "Second instance tonight of one class, and the first was this seat's own (S38): A CLAIM ABOUT WHO MAY TOUCH A FILE IS A CLAIM ABOUT THE ARTIFACT AND THE TERRAFORM ROOT THAT CARRY IT, NOT ABOUT THE FILE. In S38 the issuer read two cells' file sets and missed that one root held both cells' desired state; here a worker read one cell's file set and missed that one zip carries both cells' code. Same shape, opposite seats, same remedy: grade the SHARED artifact before ruling on the member. Carried to L10 as one finding with two instances rather than two findings."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S26",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-12T00:22:27Z",
+    "one_line": "THE FI-LIGATURE CODES ARE NOT RECOVERABLE FROM THESE DOCUMENTS AND THE RIGHT ANSWER IS THE RULING'S SECOND BRANCH. The TO's arm (a) reads 'the fi ligature is recovered through that document's map (the code used printed per document: 45 / 45 / 46 as measured)'. Measured on all three retained vendor specimens: the code is real and the face's numbers are exact (overview 45, comparison 45, multicomp 46, each rendered by exactly ONE font resource, on 23 of 23, 31 of 31 and 35 of 35 pages), but NO resource of the document states it. Each document's ToUnicode CMap has a GAP at precisely that code -- the overview's RobotoCondensed-Regular subset maps bfranges 1..44 and 46..87 and the content stream renders 45; the multicomp's maps 1..45 and 47..88 and renders 46 -- and every embedded subset carries only OS/2, glyf, head, hhea, hmtx, loca, maxp and name: no cmap table and no post table, so the font PROGRAM states nothing either. Both sources were asked per font and the exhaustion is recorded on the row. So the cell implements the CTO's ruling as it is written -- 'Per-document font mapping OR explicit unresolved for the fi-ligature codes 45/46' -- and takes the second disjunct, printing UNRESOLVED with the document's own evidence rather than recovering a letter the document does not state. THE ONLY WAY TO PRINT 'RECOVERED' HERE WOULD HAVE BEEN TO GUESS: the negative control measures what each guess would have cost. Resolving the same code through the SAME DOCUMENT'S other font resource returns U+0038 in the overview, U+004D in the comparison and U+0044 in the multicomp -- three different confident wrong characters -- and across the three documents 73 of 89 compared codes already mean different characters, so a global table is wrong on 82 percent of the codes it would cover.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rt_10.py arm (a), verbatim: 'CODE 45   UNRESOLVED  rendered by ['QXFAAA+RobotoCondensed-Regular'] on 23 of 23 page(s)' and 'the shape of the hole in this font's own map: {\"codes_mapped\": 87, \"lowest\": 0, \"highest\": 87, \"nearest_below\": 44, \"nearest_above\": 46, \"note\": \"the code sits in a GAP of this font's own map\"}'",
+        "the same arm's cross-font control: '1 of 2 other font resource(s) in this document would have returned a character for this code' with QHGAAA+RobotoCondensed-Bold would_answer=True U+0038",
+        "the raw ToUnicode streams, read with pdfminer's own CMap parser: overview F6 declares '<0001> <002C>' and '<002E> <0057>'; multicomp F6 declares '<0001> <002D>' and '<002F> <0058>'",
+        "infra/aws/lambda/investor-reporting/ycharts/extract/fonts.py@56a6e07e8f -- resolve_code() asks the ToUnicode CMap and then the embedded program's cmap and post tables, scoped to the font that rendered the code, and records the exhaustion",
+        "ROUND_ANALYSIS.round1.md@0d57ceb2f9 ruling 6, verbatim: 'Per-document font mapping or explicit unresolved for the fi-ligature codes 45/46'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rt-10 arm (a): 'For each of the 3 vendor PDFs the fi ligature is RECOVERED through that document's map (the code used printed per document: 45 / 45 / 46 as measured)'.",
+    "world_is": "The codes and their per-document assignment are exactly as the face measured, and each is rendered by exactly one font resource -- but no resource of any of the three documents maps them, so RECOVERED is unreachable without a guess and the answer is the ruling's explicit UNRESOLVED. The arm is graded on the ruling's disjunction, with the code, the font, the gap, the sources asked and the cost of each available guess all printed.",
+    "notes": "The ruling that this cell executes admits both branches; the TO's prose gloss of it names only the first. The gloss and the ruling are not in conflict about what to DO -- both forbid a global table -- but a reader of the battery output who had only the gloss would expect a recovered character, so the branch taken is stated on the arm and here. The form of the finding is a spec-vs-world mismatch; its significance is 3.0.0_SA_CVO's at L9."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S27",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-12T00:22:27Z",
+    "one_line": "CONTRACT ADDITION, FOR THE CTO'S L10 READ: an OPTIONAL `date_claim` enum (SECTION | REPORT | NONE) is now a property of AnalysisReport.sections[] in BOTH published copies -- infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.schema.json and docs/contracts/investor-reporting/v1/AnalysisReport.schema.json -- added by this cell on the decomposition's own instruction (v0.2 s.2) even though the contract surface belongs to IB-s-18. The property is OPTIONAL and never required, exactly as `contract_version` is: the section item is additionalProperties:false and round-1 instances predate it, so requiring it would invalidate documents that are already correct. The block is byte-identical in both copies (1370 bytes, sha256 92bff92c879fa6c8) because it was written once and inserted into both, and its description quotes the PRD CONTRACTS table item 3 of 6 verbatim at 62301f71e0. WHAT THE CTO IS BEING ASKED TO READ: whether an optional producer-side enum is the right carrier for 'whose date is this', or whether the FNTEND consumer needs it REQUIRED to be able to refuse a report-level date rendered as a section date -- this cell cannot decide that without widening beyond its own surface. A consumer effect is graded at IB-rtb-1; nothing is deployed by this cell.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IRPT_BCKEND_DECOMP.md v0.2 s.2, verbatim: 'proposed to the contract as an OPTIONAL enum so additionalProperties:false holds (the contract edit is IB-s-18's surface: this cell adds the optional property to _contracts/AnalysisReport.schema.json and the v1 artifact in the same commit, with the CONTRACTS-table citation, and files a row naming the CTO's L10 read on it)'",
+        "battery_ib_rt_10.py arm (d), verbatim: '2 of 2 published copies carry 'date_claim', byte-identical: True' with lambda and published_v1 both 1370 bytes at sha256 92bff92c879fa6c8",
+        "the same arm: seven specimens validated against BOTH copies (71, 91, 118, 16, 23, 30 and 4 rows), additionalProperties:false intact",
+        "battery_ib_s_18.py arm (a) re-run after the edit: 'TOTAL: 385 of 385 description quote(s) resolve VERBATIM in the CONTRACTS section at 62301f71e0'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition v0.2 s.2 directs this cell to add the optional property to both contract artifacts in one commit and to file a row naming the CTO's L10 read on it; TO bound 7 otherwise holds this cell off surfaces it does not own.",
+    "world_is": "The property is added to both copies, byte-identical, optional, and validated on seven specimens. The open question the CTO reads at L10 is whether OPTIONAL is the right strength for a field whose whole purpose is to let a consumer REFUSE, given that an optional field a producer may omit is one a consumer cannot rely on.",
+    "notes": "The first draft of the description wrote the PDF's own heading as a double-quoted span, which battery_ib_s_18.py arm (a) correctly reads as a claim to quote the PRD verbatim and refused as the 1 of 386 that did not resolve. The prose was re-worded; the checker was not touched. Worth recording because the checker's rule -- every double-quoted span in a contract description IS a PRD quote -- is not stated anywhere a later author of a description would see it."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S28",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-12T00:22:27Z",
+    "one_line": "THE ROUND-1 EXTRACTOR DATED ROWS FROM A NEIGHBOURING BLOCK AND FROM A DIFFERENT DOCUMENT, AND ITS OWN CERTIFICATION READ CERTIFIED THROUGHOUT. Re-derived from this run's rows by extract.round1_undated_baseline(): on the retained overview specimen 15 of 61 emitted rows sit on a page that prints TWO different Data-as-of dates (page 2 carries 2026-09-09 and 2026-09-11; page 6 carries 2026-08-31 and 2026-09-11), and round 1's rule took the page's FIRST date line for every row on the page -- so those 15 rows carried whichever date came first in the text stream, which for a stale-priced block is the fresher date. On the multicomp specimen a further 12 of 108 rows were dated CENSUS_STATED: a date read from docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json, which is a DIFFERENT DOCUMENT'S statement about this one. NONE OF THIS WAS VISIBLE TO ROUND 1'S CERTIFIER, and that is the structural point rather than the incident: its three legs graded value-at-coordinates, label-in-neighbourhood and unit-declared, and a date is at NONE of those coordinates -- it is at the block heading's. Every one of the 15 rows passed all three legs, because each was individually correct about everything the legs could see. IB-rt-10 adds the fourth leg that can see it and two mutants that exercise it; the round-1 counts are reproduced exactly (comparison 34 of 81, multicomp 51 of 108) so the change is a measured delta and not a recollection. Source-only: nothing is deployed by this cell and the extractor rides the generate package's next build.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "IB-rtb-1 (the deployed-route replay) -- the corrected extractor reaches a running function only at the irpt-ycharts-generate package's next build, so until that build any deployed caller of ycharts/extract still applies the page's first date line and the census date. The disarming act is that rebuild plus a read of the served CodeSha256 against the built zip; no separate remediation is needed, because the fix is already in source at 56a6e07e8f.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rt_10.py arm (c), verbatim: 'and on the overview specimen 15 of 61 emitted rows sit on a page printing TWO different 'Data as of' dates'",
+        "the same arm: 'multicomp  51 of 108 section row(s) undated under the round-1 rule | by round-1 claim {\"PAGE_STATED\": 45, \"CENSUS_STATED\": 12, \"NOT_STATED\": 51}'",
+        "the same arm: 'pages printing >1 distinct date: {\"2\": [\"2026-09-09\", \"2026-09-11\"], \"6\": [\"2026-08-31\", \"2026-09-11\"]}' for the overview specimen",
+        "IRPT_BCKEND.TO-IB-s-10...proof_of_spec.json in deliverables/0.9.0_WK_IRPT_BCKEND~3/ -- the round-1 instance whose battery reported every vendor specimen fully CERTIFIED under three legs",
+        "infra/aws/lambda/investor-reporting/ycharts/extract/certify.py@56a6e07e8f -- the L4 date-provenance leg and the neighbour-date and shifted-provenance mutants, both of which refuse on the overview and comparison specimens"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rt-10 arm (c): '0 items dated from a neighbour (a mutant that copies a neighbour's date FAILS the arm)', and the CTO's ruling on W3-S11: undated sections are represented with document provenance, never inferred from a neighbour.",
+    "world_is": "0 of the rows this cell emits are dated from a neighbour and both mutants are refused -- but the rows the PREVIOUS round emitted were, on 15 of 61 overview rows and 12 of 108 multicomp rows, and that round's certifier had no leg that could have seen it. The defect is fixed in source here; what is ARMED is the window until the package that carries the extractor is rebuilt.",
+    "notes": "Recorded as a structural finding about CERTIFICATION SCOPE rather than as a defect report: a certifier's legs bound what its verdict can mean, and 'N of N CERTIFIED' read clean across three specimens while a whole class of error sat outside every leg. The worker judges the form of this row; its significance is 3.0.0_SA_CVO's at L9."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S29",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-12T00:22:27Z",
+    "one_line": "THE PATH REGISTER'S OWN VERIFIER CANNOT COMPLETE, AND THIS CELL APPENDS TO THAT REGISTER. battery_ib_s_18.py -- the battery that grades infra/aws/lambda/investor-reporting/PATH_MANIFEST.json, the register every later cell is told to append to -- raises TypeError at line 315 in arm (c), '<' not supported between instances of 'NoneType' and 'str', sorting a presence breakdown whose keys include None. Measured cause: 127 of the manifest's 377 entries carry no presence_at_base at all (the field is `recommended` and not `required` by the manifest's own append_contract), so the breakdown dict has a None key and sorted() refuses it. Arms (a) and (b) run and pass before the crash; arms (d) and (e) never run, and the battery exits rc 1 with no verdict line -- so a reader who checks only the exit code sees a FAILURE and one who reads the last printed arm sees a PASS. PRE-EXISTING, NOT INDUCED: PATH_MANIFEST.json is byte-unmodified in this worktree (git status --porcelain returns nothing for it), so the crashing input is identical to the base tree's. NOT THIS CELL'S TO FIX -- battery_ib_s_18.py is 0.9.0_WK_IRPT_BCKEND~1's deliverable and is outside this order's paths. This cell's own appended entries carry presence_at_base, so they do not add to the 127.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B, to route to whichever order owns deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_s_18.py (IB-s-18's re-run, or IB-rtb-1 if the path register is graded there). The concrete fix is one line -- sort the breakdown on str(key), or default the missing field -- but the reason to disarm it is not the line: while arm (c) crashes, arms (d) and (e) of the FOUNDATION cell's acceptance have not run at all, on any commit since the 127 entries were appended, and no reader of the rc can tell that apart from a failing assertion.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_s_18.py run at 56a6e07e8f, verbatim: 'File \"C:\\tmp\\wk-irpt-2-4b\\org\\missions\\D9\\IRPT\\IRPT_BCKEND\\deliverables\\0.9.0_WK_IRPT_BCKEND~1\\battery_ib_s_18.py\", line 315, in arm_c / for k in sorted(breakdown): / TypeError: '<' not supported between instances of 'NoneType' and 'str'', rc 1",
+        "the same run's last completed line: '44 of 44 entry(ies) claiming PRESENT_AT_PIN verify with `git cat-file -e 261c8d2080:<path>`'",
+        "a Counter over PATH_MANIFEST.json's own entries: 377 entries, presence_at_base None on 127 of them (the remainder spread over 11 declared values)",
+        "git status --porcelain infra/aws/lambda/investor-reporting/PATH_MANIFEST.json -- empty, so the crashing input is the base tree's bytes",
+        "PATH_MANIFEST.json _meta.append_contract: presence_at_base is listed under recommended_fields, never required_fields"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rt-10 lists infra/aws/lambda/investor-reporting/PATH_MANIFEST.json in its paths, and the manifest's own append_contract directs every later cell to append its concrete read/write paths; bound 7 and the lane clause forbid this cell from editing anything its paths do not name.",
+    "world_is": "The register is appendable and this cell appends to it, but the battery that grades the register crashes part-way through on data the register already contains, so there is no instrument that can currently certify the append. This cell reports the crash rather than repairing another worker's battery.",
+    "notes": "The shape is worth more than the line: a verifier that dies mid-run leaves clean metrics printed ABOVE the traceback, so the output reads as three passing arms and the failure is only in the exit code. Two readers of the same run reach opposite conclusions depending on where they stop."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S30",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-12T00:22:27Z",
+    "one_line": "THE PATH REGISTER'S OWN PRINTED DENOMINATOR WAS STALE BY 41. infra/aws/lambda/investor-reporting/PATH_MANIFEST.json declared _meta.denominators.entries_total = 336 while its `entries` array held 377 -- a 12 percent understatement, in the one field a reader would quote as the register's size. The declared value is consistent with _meta.denominators.appended_by_cell, which records IB-s-17 (24) and IB-rt-1 (28) and nothing after: cells that appended later added entries without touching either counter, which the manifest's own append_contract does not ask them to. This cell wrote the MEASURED count (382 after its 5) rather than incrementing the stale one, because 341 would have been a fresh wrong number carrying the authority of having just been updated. The class matters more than the 41: a denominator that is printed is READ AS MEASURED, and a register whose size is quoted from _meta rather than counted from `entries` reports 336 with no visible sign of being wrong. Nothing else in _meta was touched, and no existing entry was moved -- verified by comparing the parsed arrays before and after the append, not by reading the diff.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PATH_MANIFEST.json at 56a6e07e8f, _meta.denominators, verbatim: '\"entries_total\": 336'",
+        "len(json.load(...)['entries']) over the same bytes: 377",
+        "_meta.denominators.appended_by_cell at the same commit: {'IB-s-17': 24, 'IB-rt-1': 28} -- no key for any cell after IB-rt-1",
+        ".scratch/append_manifest2.py run output, verbatim: 'NOTE: entries_total declared 336, array holds 377 before this append; writing 382'",
+        "the same run: 'OK: entries 377 -> 382' with git diff --stat reporting 67 insertions and 1 deletion on the register"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PATH_MANIFEST.json _meta.append_contract: 'append only; one entry per concrete path'; _meta.denominators.entries_total is published as the register's size and Rule 22's COVERAGE axis requires a printed denominator to be the one that was measured.",
+    "world_is": "The published total had drifted 41 below the array it describes, and the append_contract names no owner for keeping it true, so every append since IB-rt-1 left it further behind. This cell wrote the measured value and recorded the drift rather than absorbing it.",
+    "notes": "Filed separately from IRPT_BCKEND-W4-S29 rather than folded into it: S29 is about the register's VERIFIER crashing, this is about the register's own published COUNT being wrong. Different owners and different remedies -- and the channel is append-only, so an existing row could not have carried it."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S31",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-12T00:52:00Z",
+    "one_line": "A HAND-BUILT PDF IS TEXT TO GIT, AND THE FRESH-WORKTREE FAILURE IS A HASH CHANGE ON A FILE NOBODY EDITED. git decides binary-vs-text on whether a NUL byte appears in the first 8 KB, and a PDF is not required to carry one: measured, the three round-1 synthetic specimens carry a NUL in 3 of 3 cases (their content streams are deflated) while this cell's hand-built unmapped_glyph.pdf carries one in 0 of 1 -- it has uncompressed content streams, so every byte is ASCII. With core.autocrlf=true on this box, a fresh checkout renders it CRLF: 3,024 bytes become 3,121 and the sha256 moves from f15b39103fc9f5a7 to 76a7ddc5ad775756. THE DANGEROUS PART IS THAT NOTHING CRASHES -- the CRLF copy still opens and still extracts both pages, because pdfminer reconstructs the xref when the offsets do not resolve. What fails is the fixture manifest's freshness check, in every worktree except the one that generated the file, for a file nobody touched. The standard PDF binary marker the generator writes (four high-bit bytes in a comment after the header) is correct PDF practice and does NOT satisfy git's heuristic, because high bits are not NUL -- so it was necessary and not sufficient. Remedied inside this order's own granted subtree with infra/aws/lambda/investor-reporting/ycharts/extract/.gitattributes declaring '*.pdf -text'; the estate's ROOT .gitattributes is not this cell's to edit and a fixture's binary-ness is a fact about the fixture rather than a repo-wide policy. Verified after: git check-attr reports 'text: unset' for both the new fixture and the round-1 specimens.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output at 98d579cd1b, verbatim: 'warning: in the working copy of 'infra/aws/lambda/investor-reporting/ycharts/extract/fixtures/unmapped_glyph/unmapped_glyph.pdf', LF will be replaced by CRLF the next time Git touches it'",
+        "a NUL census over the fixture PDFs: synthetic_pdf/{overview,comparison,multicomp}.pdf carry a NUL in the first 8000 bytes 3 of 3; unmapped_glyph/unmapped_glyph.pdf 0 of 1",
+        "the simulated checkout, run rather than reasoned about: the HEAD blob with every LF replaced by CRLF is 3,121 bytes at sha256 76a7ddc5ad775756 against the manifest's declared f15b39103fc9f5a7 / 3,024 bytes, AND pdfplumber opens it: '2 pages; page2 text: SYNTHETIC SPECIMEN: generated from the field census'",
+        "git check-attr -a after the fix: both unmapped_glyph.pdf and synthetic_pdf/overview.pdf report 'text: unset'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rt-10 names infra/aws/lambda/investor-reporting/ycharts/extract/ in its paths and directs this cell to add the unmapped-glyph fixture there; the fixture manifest is re-derived from disk by the battery on every run (row W3-S9), which presumes the checked-out bytes are the committed bytes.",
+    "world_is": "For a PDF with no NUL in its first 8 KB that presumption does not hold on an autocrlf box, and the failure surfaces as a hash mismatch in a worktree that did nothing wrong rather than as anything resembling a corrupt file. A .gitattributes the order did not name had to be written -- inside the subtree the order does grant -- which is why this is a row rather than a silent fix.",
+    "notes": "Recorded for the CLASS, which is not specific to this project: any hand-built or uncompressed binary-format fixture committed on an autocrlf box has this property, and the tell is a hash check that fails everywhere except where the file was made. The estate already carries the neighbouring lesson for hash-pinned TEXT assets; this is the same trap reached from the other direction, by a file that is binary in intent and text by measurement."
   }
 ]
 ```
