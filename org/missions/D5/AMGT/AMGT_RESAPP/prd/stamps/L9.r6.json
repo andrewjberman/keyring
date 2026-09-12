@@ -1,0 +1,10 @@
+{
+ "note": "ADJUDICATION_v6: nine originals dispositioned, seven graduated and two dismissed; 65 originals total, zero open. re-1 AC6 FAIL. C-S61 through C-S63 record fiscal scope, corrected overlay and unprocessed batch defects; C-S64 adjudicates late S27. Sixteen offline tests pass. REMEDIATION_v5 and v6 issued together after terminal gate.",
+ "prd_pin": "d424885ed453",
+ "prd_version": "v0.5",
+ "project": "AMGT_RESAPP",
+ "round": 6,
+ "signed_by": "3.0.0_SA_CVO~Z",
+ "stage": "L9",
+ "utc": "2026-09-11T23:57Z"
+}
