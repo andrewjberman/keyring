@@ -8,21 +8,21 @@ commit** -- MDPF_GLOBAL had neither a tree channel under `org/missions/` nor a l
 CLAUDE.md Rule 2 names the flat path as a sanctioned carrier with lane ANY, so it is opened here
 rather than leaving two findings inside one seat's deliverable where no other reader would meet them.
 
-**NO TALLY IS RECORDED IN THIS HEADER** -- counts, class and standing splits are DERIVED from the
-block below by the protocol's extractor, which prints its own denominator. A hand-maintained summary
-loses to the record it summarises.
-
 **The rows below were surfaced by the EXECUTING seat about ITS OWN ORDER**, which is the case Rule 2
 contemplates ("the seat that sees it appends its own row"). None is a remediation row; remediation
-stays `3.0.0_SA_CVO`'s. ⚠ **AND THE HEADER DELIBERATELY DOES NOT SAY HOW MANY** -- it said "both" when
-there were two, and was stale within the hour when S3 and S4 landed. The count, the class split and the
-ARMED-without-owner check are DERIVED from the block below by the protocol's extractor, which prints its
-own denominator.
+stays `3.0.0_SA_CVO`'s.
 
-**Round history, because the two halves of this round reached opposite outcomes:** S1 and S2 were
-surfaced when the order STOPPED pre-act on its own population tripwire and nothing was applied. S3 and
-S4 were surfaced after amendment 1 re-cut the ceiling and the grant DID apply -- cleanly, 0-diff, and
-still short of its goal for a reason no identity policy can reach.
+⚠ **NO TALLY IS RECORDED IN THIS HEADER, AND THAT IS EARNED RATHER THAN INHERITED ADVICE** -- this
+header said "both rows below" when there were two and was stale inside the hour when S3 and S4 landed,
+then again when S5 did. The count, the class split and the ARMED-without-owner check are all DERIVED
+from the block below by the protocol's extractor, which prints its own denominator. A hand-maintained
+derived figure loses to the record it summarises.
+
+**Round history, because the phases reached different outcomes and the ids alone do not say so:**
+S1/S2 were surfaced when the order STOPPED pre-act on its own population tripwire and nothing was
+applied. S3/S4 followed amendment 1, after the grant DID apply -- cleanly and 0-diff -- and was still
+short of its goal for a reason no identity policy can reach. S5 answers the one READ the issuer then
+asked, and closes the remaining engineering route by measurement rather than by attempt.
 
 ```json
 [
@@ -125,6 +125,32 @@ still short of its goal for a reason no identity policy can reach.
     "spec_asserts": "The cloud-ops skill's IAM INSTRUMENT TRAPS section enumerates four independent false-DENY modes for simulate-principal-policy and concludes 'It fails in the UNDER-granted direction and is INVISIBLE against a narrowly scoped principal'.",
     "world_is": "There is a fifth mode and it fails the OTHER way. simulate-principal-policy evaluates identity policies only; a resource-policy Deny is invisible to it, so it returns ALLOWED where the effective decision is DENY. The four documented mitigations (one ARN per call, --context-entries, validate-policy for action names, correct resource grain) were ALL in force here and none of them touches this mode.",
     "notes": "\u26d4 WHY THIS IS WORSE THAN THE FOUR ALREADY DOCUMENTED, EVEN THOUGH IT IS RARER: a false DENY gets argued with, because somebody has to explain why a grant they just wrote does not work. A false ALLOW gets ACTED ON -- it is the green that closes a ticket. The estate's standing note that 'the failure mode is a GREEN' applies exactly. \u2b50 THE CHEAP DEFENCE IS ALREADY IN THE LAW AND COSTS ONE CALL: simulate-principal-policy answers a question about the IDENTITY plane only, so on any S3 target ask get-bucket-policy whether a resource policy exists BEFORE quoting a simulate ALLOW -- and where a host can run the action, prefer the host. SCOPE OF THE CLAIM, STATED NARROWLY: this was measured on S3 with a bucket policy. The same blindness must apply to every resource-policy surface the simulator does not take as input (KMS key policies, SQS/SNS, Secrets Manager, Lambda permissions, S3 Access Points), but this lane measured ONE and is not asserting the others. `simulate-custom-policy` with the resource policy supplied is the documented way to include one, and nothing in the estate currently does that."
+  },
+  {
+    "id": "MDPF_GLOBAL-S5",
+    "project": "MDPF_GLOBAL",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~C",
+    "surfaced_at": "2026-09-12T13:06:32Z",
+    "one_line": "ROUTE (b) IS CLOSED BY MEASUREMENT, AND THE ROUTE ITSELF WOULD COLLIDE WITH A SECOND NEVER. 1.0.0_SA_CTO asked one read under TO-IAM1: are the five 49F dimension tables reachable by KEY-PREFIX in a bucket mdpf-daily-runner-ec2-role may read -- which would satisfy the cross-firm law rather than circumvent it, key-prefix being one of the two shapes the law names. ANSWER: NO, not today. The five tables exist ONLY at opal-data-49financial/gold/advi/dimensions/ (1098 / 1098 / 1098 / 2 / 2 objects), and a census of ALL 23 prefixes this role may read found 0 of 35,538 objects carrying any of the five table names. The legacy shared-bucket root opal-data-assets/portal/gold/advi/ is EMPTY (0 objects). \u26d4 AND THE REASON IT IS EMPTY IS ITSELF THE ANSWER TO WHETHER IT SHOULD BE REFILLED: the GOLDHOME re-point (Andrew-direct 2026-08-18 ~1730Z, 'Ratified, proceed with the re-point before the P2 apply') deliberately moved the ADVI gold root FROM that shared path INTO the per-client bucket. Re-mirroring it back to make it readable would reverse a standing Andrew ruling AND stand up a duplicate output path -- which is its own NEVER carrying Andrew's complete veto ('NEVER stand up a shadow/build-alongside pipeline, duplicate output path').",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3api list-objects-v2 on opal-data-49financial/gold/advi/dimensions/<table>/ with CLIENT-SIDE counting -> dim_account 1098, dim_relationship 1098, dim_identity_crosswalk 1098, dim_portfolio_group 2, bridge_group_account 2",
+        "census over all 23 prefixes this role may read post-grant (opal-data-assets x11, opal-data-mdpf, opal-data-portal-v2 x3, opal-data-bd x4, opal-data-inf x3, opal-data-etfs x1) -> DENOMINATOR 35,538 objects, 0 carrying dim_account/ dim_relationship/ dim_identity_crosswalk/ dim_portfolio_group/ or bridge_group_account/",
+        "aws s3api list-objects-v2 --bucket opal-data-assets --prefix portal/gold/advi/ -> Contents None, i.e. 0 objects",
+        "aws s3api list-objects-v2 --bucket opal-data-49financial --prefix gold/advi/ --delimiter / -> CommonPrefixes _logs/ canonical/ dimensions/ insurance/ reference/, so the canonical root is live and structured",
+        "docs/architecture/GOLD_MIGRATION_PHASE_FRAMEWORK.md:37 -- 'ADVI GOLD HOME SUPERSEDED 2026-08-18 ~1730Z (Andrew-direct, RATIFIED)': the ADVI gold root moves out of opal-data-assets",
+        "org/critical_paths/change_management/20260819T0106Z_goldhome-repoint-49f-rp-ae-1-bucket-mint_deploy_completion.md -- CLOSED, the re-point ledger; its own pre-act check recorded comp-find 'portal/gold/advi' = 0 hits",
+        "CLAUDE.md HARD STOPS: 'NEVER stand up a shadow/build-alongside pipeline, duplicate output path, or standing parity comparator (Andrew complete veto)'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "1.0.0_SA_CTO msg 96105 under MDPF_GLOBAL.TO-IAM1: route (b) is the live engineering route IF the five dimension tables are reachable by key-prefix in a bucket this role may read -- 'whether they exist under a prefix this role may read is a measurement nobody has taken', asked as a READ and explicitly NOT ordered as a build.",
+    "world_is": "They are not. One location only, and it is the bucket whose policy refuses this principal. Every readable alternative is empty of them across a 35,538-object denominator. Making route (b) true requires WRITING 49F gold data somewhere new, which is a build, reverses an Andrew-direct supersession, and trips the duplicate-output-path veto.",
+    "notes": "\u2b50 THE VALUE HERE IS THAT A ROUTE WAS CLOSED BY ONE READ INSTEAD OF BY A SPRINT. The issuer declined to order the build off an assumption after two wrong counts in one night and asked for the measurement first; the measurement says the build would have been wasted AND would have collided with a second hard stop nobody had connected to this question. \u26d4 NOTE THE SHAPE OF THE NEAR-MISS: route (b) is ATTRACTIVE precisely because it sounds like compliance -- 'use the key-prefix shape the law allows' -- and the law does name key-prefix as a legitimate shape. What makes it wrong is not the shape but the ACT required to reach it: you cannot make data appear under a new key-prefix without writing it there, and for already-published gold that write is a duplicate output path. A law that names two permitted SHAPES does not thereby permit any ACT that produces one of them. THE REMAINING ROUTES ARE (a), which is Andrew's and which 1.0.0_SA_CTO recommends AGAINST, and (c), which is IRPT's expectation to re-cut. This lane has no engineering route left on this order and says so rather than inventing one."
   }
 ]
 ```
