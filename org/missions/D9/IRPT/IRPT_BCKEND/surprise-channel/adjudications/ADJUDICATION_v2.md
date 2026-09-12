@@ -114,6 +114,29 @@ Partial L9 intake for RT5 at worker tip `8d173559747f875ea751eeaea898de2b241ed8e
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "THIS ROW'S OWN FIRST DRAFT WAS WRONG AND THE CORRECTION IS PART OF THE RECORD. It graded the finding ARMED and asserted 18 rows had reached no agent, written from the 32 NEW CHANNEL lines alone. .tools/surprise-row-gate.py refused it (ARMED with no disarm_owner), and in the interval the watcher's own later output produced the 19 NEW ROW lines that falsify the premise. The draft was wrong in the direction of alarm, from concluding before the second limb had run -- an early stop and a true failure read identically. SCOPE IS FABRIC-WIDE, FILED HERE BECAUSE THIS IS THE CHANNEL WHOSE INTAKE IT TOUCHED: 32 channels across both roots re-baselined, not only IRPT; the IRPT_FNTEND instance is the same event and is deliberately not a second row. PLACEMENT, stated because it was not free: a CVO row cannot go in investigations/ -- the gate's _coordinate_violations refuses a NEW C- row outside adjudications/ (self-test at :1706) -- and a plain -S id there would collide with 2.0.0_SA_COO~B's live allocator, which 1.0.0_SA_CTO reports continuing at S38. NOT ASSERTED: that any other serial's watermark is currently wrong. 1.0.0_SA_CTO.tsv and 3.0.0_SA_CVO~A.tsv sit in the same directory and were NOT read for their prefix form; a seat reading this row checks its own rather than inheriting this verdict. NO REMEDY PROPOSED AND NONE TAKEN -- the owner of surprise-watch.sh owns the fix, and CLAUDE.md's device-prefix NEVER already states the direction (derive the prefix, never hardcode) while withholding remediation authority. This row directs no worker, amends no frozen face and blocks no slug."
+  },
+  {
+    "id": "IRPT_BCKEND-C-S83",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-12T01:15:00Z",
+    "one_line": "L8 INTAKE LINKAGE, NOT A GRADE: round-2 row W4-S28 quantifies the exact date limb that round 1's C-S5 GRADUATED as still open, and it does NOT falsify round 1's S10-AC2 PASS -- that grade was scoped to glyph loss and to separating coordinate extraction from vendor arithmetic, and it named what it did not prove.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Spine v3 L9: JUDGMENT criteria are graded at L9 and never self-graded; CLAUDE.md: NEVER trust a producer's self-report or rc=0 -- verify against the served artifact.",
+    "world_is": "W4-S28 reports that the round-1 extractor took a page's FIRST Data-as-of line for every row on that page (15 of 61 rows on the retained overview specimen sit on pages printing two different dates) and dated a further 12 of 108 multicomp rows CENSUS_STATED, while THE EXTRACTOR'S OWN certification string read CERTIFIED THROUGHOUT. READ CAREFULLY, because the two claims are about different objects and a successor could easily read this as a falsified grade: the CERTIFIED THROUGHOUT string is the PRODUCER'S SELF-REPORT, and round 1's L9 did not adopt it. The round-1 grade actually recorded is C-S78, S10-AC2 PASS, whose reason is 'the record measures per-document glyph losses over 89 pages and distinguishes coordinate extraction from vendor arithmetic. Rotation and nearest-number/footnote association remain unproven; W3-S10/W3-S11 carry the production consequences' -- it does not assert date correctness. And C-S5, which GRADUATED the specimen-absence premise, says in its own text 'glyph/date/holdout limitations remain open under W3-S10/W3-S11'. So the date limb was left OPEN by round 1 on purpose, and W4-S28 is the measurement that closes it with numbers rather than a contradiction of anything this seat graded. NET FOR ROUND 2: no correction is owed to 1.0.0_SA_CTO on the round-1 slug, and no round-1 grade is reopened. W4-S28 is carried as round-2 evidence against the date limb, and its ARMED standing belongs to IB-rtb-1 as its own disarm_owner field already states (the corrected extractor reaches a running function only at the irpt-ycharts-generate package's next build).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md (worktree, 148 rows at read time) -- row IRPT_BCKEND-W4-S28, surfaced_by 0.9.0_WK_IRPT_BCKEND~4 at 2026-09-12T00:22:27Z, disarm_owner IB-rtb-1",
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v1.md@27e67fa6a5 -- row IRPT_BCKEND-C-S78, the only S10-* grade recorded in round 1 (S10-AC2 PASS), read in full for its scope",
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v1.md@27e67fa6a5 -- row IRPT_BCKEND-C-S5, disposition GRADUATED, text 'glyph/date/holdout limitations remain open under W3-S10/W3-S11'",
+        "Denominator for the S10 grade search: all 78 rows of ADJUDICATION_v1.md scanned for a criterion matching S10; exactly 1 grade found, so the PASS above is the whole of round 1's S10 judgment record and not a sample"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "WHY THIS ROW EXISTS AT ALL: at L9 a successor reading W4-S28 cold sees 'round 1 certified this and was wrong' and can either re-alarm on a closed round or, worse, discount W4-S28 as already-known. Neither is right. The discriminator is that round 1 graded the PRODUCER'S EVIDENCE with a named scope and refused the producer's broader certification string -- which is the rule working, one round early -- and this row pins the three artifacts that show it so the next reader does not re-derive them. NO GRADE IS ASSERTED HERE. Round 2 is not adjudicable: cells remain non-terminal on this project, and this seat cuts no slug and grades no judgment criterion until every task order is terminal and every row dispositioned."
   }
 ]
 ```
