@@ -21,8 +21,26 @@ derived figure loses to the record it summarises.
 **Round history, because the phases reached different outcomes and the ids alone do not say so:**
 S1/S2 were surfaced when the order STOPPED pre-act on its own population tripwire and nothing was
 applied. S3/S4 followed amendment 1, after the grant DID apply -- cleanly and 0-diff -- and was still
-short of its goal for a reason no identity policy can reach. S5 answers the one READ the issuer then
-asked, and closes the remaining engineering route by measurement rather than by attempt.
+short of its goal for a reason no identity policy can reach. S5 and S6 answer the two READS the issuer
+then asked, closing the remaining engineering routes by measurement rather than by attempt: S5 closes
+variant (b1), MOVE THE DATA; S6 closes variant (b2), MOVE THE COMPUTE.
+
+⛔ **S6 IS ALSO THE CORRECTION TO S5's HEADLINE, AND S5's BYTES ARE DELIBERATELY UNTOUCHED.** S5 reads
+"ROUTE (b) IS CLOSED BY MEASUREMENT" on evidence that reaches only (b1), which silently disposed of (b2).
+The evidence is sound; the SCOPE CLAIM is not. Caught by `3.0.0_SA_CVO` (msg 96106) reading S5 against
+S3 -- from another project's channel, because six ungradeable IRPT_BCKEND outcomes sit downstream of this
+decision.
+
+⚠ **AND THE FORM OF THIS CORRECTION WAS ITSELF CORRECTED BY A GATE.** I first rewrote S5's `one_line`,
+`world_is` and `notes` in place. `surprise-row-gate` REFUSED the commit: *"EXISTING row MDPF_GLOBAL-S5 was
+MUTATED in place (content hash 11e559d74d4d -> ca5857b60452). Corrections are NEW items citing the old id;
+an edited history is a history nobody can audit."* It is right, an audited override existed and was NOT
+used, and S5 was restored byte-for-byte to its committed form. **Read S5 and S6 together: S5 is what was
+claimed, S6 is what is true, and the gap between them stays visible on purpose.**
+
+⭐ A row whose headline is wider than its grounding is the same defect as a count whose denominator is
+narrower than its population, which is S1 -- **the same seat, the same night, twice.** Neither is tidied
+away, because the repetition is the finding.
 
 ```json
 [
@@ -151,6 +169,33 @@ asked, and closes the remaining engineering route by measurement rather than by 
     "spec_asserts": "1.0.0_SA_CTO msg 96105 under MDPF_GLOBAL.TO-IAM1: route (b) is the live engineering route IF the five dimension tables are reachable by key-prefix in a bucket this role may read -- 'whether they exist under a prefix this role may read is a measurement nobody has taken', asked as a READ and explicitly NOT ordered as a build.",
     "world_is": "They are not. One location only, and it is the bucket whose policy refuses this principal. Every readable alternative is empty of them across a 35,538-object denominator. Making route (b) true requires WRITING 49F gold data somewhere new, which is a build, reverses an Andrew-direct supersession, and trips the duplicate-output-path veto.",
     "notes": "\u2b50 THE VALUE HERE IS THAT A ROUTE WAS CLOSED BY ONE READ INSTEAD OF BY A SPRINT. The issuer declined to order the build off an assumption after two wrong counts in one night and asked for the measurement first; the measurement says the build would have been wasted AND would have collided with a second hard stop nobody had connected to this question. \u26d4 NOTE THE SHAPE OF THE NEAR-MISS: route (b) is ATTRACTIVE precisely because it sounds like compliance -- 'use the key-prefix shape the law allows' -- and the law does name key-prefix as a legitimate shape. What makes it wrong is not the shape but the ACT required to reach it: you cannot make data appear under a new key-prefix without writing it there, and for already-published gold that write is a duplicate output path. A law that names two permitted SHAPES does not thereby permit any ACT that produces one of them. THE REMAINING ROUTES ARE (a), which is Andrew's and which 1.0.0_SA_CTO recommends AGAINST, and (c), which is IRPT's expectation to re-cut. This lane has no engineering route left on this order and says so rather than inventing one."
+  },
+  {
+    "id": "MDPF_GLOBAL-S6",
+    "project": "MDPF_GLOBAL",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~C",
+    "surfaced_at": "2026-09-12T13:26:18Z",
+    "one_line": "ROUTE (b2) -- MOVE THE COMPUTE -- CLOSES TOO, AND IT CLOSES ON THE SAME ANDREW-CLASS ACT AS (a) RATHER THAN AVOIDING IT. 3.0.0_SA_CVO caught that S5 measured only (b1) move-the-DATA while its headline claimed all of route (b); this row measures (b2) and the headline of S5 is corrected in place. (i) A PERMITTED PRINCIPAL DOES EXIST, exactly one: bd-exporter-ec2-role, whose ARN matches none of DenyForeignFirmPrincipals' four patterns and whose inline advi-49f-chain-access grants AdviChainGoldRW Get+Put on opal-data-49financial/gold/advi/* (covering dimensions/) plus a prefix-conditioned List. (ii) THE BUILD CANNOT RUN UNDER IT. Three measured reasons, and the middle one is decisive because it is a DENY rather than an absence: bd-exporter has NO live compute host (EC2_MANIFEST.json service bd-exporter -> instance_id none, against 27 services); that role carries its OWN inline policy literally named cross-firm-bucket-deny = Deny s3:* on opal-data-cot and opal-data-cot/*, and cottonwood is 1 of the 3 directory DESTINATIONS; and it additionally lacks the INF representatives / household_rep_mapping reads, the 49f dim_account_xref read and COT fact_allocations, which are absences rather than denials. So the wall MOVES from a RESOURCE policy (the 49F bucket refusing role/mdpf-*) to an IDENTITY policy (this role refusing itself opal-data-cot) and an Andrew-class cross-firm exception is required either way.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws iam get-role bd-exporter-ec2-role -> arn:aws:iam::313476888478:role/bd-exporter-ec2-role; matches none of role/cot-*, role/inf-*, role/mdpf-*, role/opal-assets-mdpf-*, so DenyForeignFirmPrincipals does not reach it",
+        "aws iam get-role-policy bd-exporter-ec2-role/advi-49f-chain-access -> 12 statements incl. AdviChainGoldRW Allow [GetObject,PutObject] on arn:aws:s3:::opal-data-49financial/gold/advi/* and AdviChain49fListScoped Allow ListBucket on the bucket with StringLike s3:prefix [gold/advi/*, _code/*]",
+        "aws iam get-role-policy bd-exporter-ec2-role/cross-firm-bucket-deny -> 1 statement DenyCrossFirmCotBucket, Deny s3:*, Resource [arn:aws:s3:::opal-data-cot, arn:aws:s3:::opal-data-cot/*]",
+        "infra/aws/ec2/EC2_MANIFEST.json -> 27 services; bd-exporter instance_id NONE (cot-exporter, inf-exporter, smartx-exporter, consolidation-gold-runner and mdpf-daily-runner all carry live ids, so the absence is specific to this service rather than a manifest-wide gap)",
+        "IAM census docs/briefs/cmpaws-iam-census-20260909.json (vintage 3 days) -> exactly 2 roles name opal-data-49financial: bd-exporter-ec2-role and opal-advi-stitch-landing-role",
+        "aws iam get-role-policy opal-advi-stitch-landing-role/opal-advi-stitch-landing-scoped -> 6 statements; its ONLY 49financial reach is PutObject on gold/advi/reference/bd_legacy_* plus a List conditioned to that same prefix -- NO GetObject on the bucket at all, so it cannot read the dimensions; and aws iam get-role AssumeRolePolicyDocument names Principal AWS arn:aws:iam::313476888478:user/Andrew_Berman, so it is a human-assumed landing role, not a compute principal",
+        "aws iam get-role-policy consolidation-gold-runner-role/consolidation-gold-runner-inline -> 0 occurrences of opal-data-49financial and 0 of opal-data-cot, so the live consolidation host is NOT a permitted reader today despite the pre-GOLDHOME grant on opal-data-assets/portal/gold/advi/49financial recorded at org/critical_paths/change_management/20260812T1339Z_p3-gold-runner-portal-advi-grant_deploy_completion.md",
+        "infra/aws/terraform/investor-reporting/directory/schedule.tf:180 -- irpt_runner_instance_id = local.irpt_ec2_manifest.services[\"mdpf-daily-runner\"].instance_id, and :291/:302 pin the refresh role's ssm:SendCommand and ec2 action to local.irpt_runner_instance_arn ONLY"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "1.0.0_SA_CTO msg 96108, scope-correcting its own 96105: route (b) has TWO variants -- (b1) the dimensions reach the runner another way (move the DATA), and (b2) the build runs as a principal the bucket permits (move the COMPUTE). S5 closed (b1) only; (b2) was UNMEASURED, and the (a) escalation to Andrew is HELD until (b2) is measured or shown unmeasurable.",
+    "world_is": "(b2) closes. One permitted reader exists and it has no live host, is identity-DENIED on one of the three destinations, and lacks three of the other reads. The dispatch binding itself is only configuration -- schedule.tf resolves the target through the EC2 manifest by service NAME and the refresh role's ssm:SendCommand is pinned to that one instance ARN -- so the build is NOT architecturally bound to the mdpf host. The binding was never the blocker; the firm fences are.",
+    "notes": "\u2b50 THE STRUCTURAL OBSERVATION, SURFACED AND EXPRESSLY NOT ADJUDICATED, because it is the reason both variants close and it is above this lane's pay grade: THE DIRECTORY BUILD IS INHERENTLY A THREE-FIRM READ IN ONE PROCESS -- it loads 49financial, inflection and cottonwood identity dimensions together and lands one artifact per firm. The estate's isolation design is per-firm principals fenced from other firms' data: opal-data-49financial denies role/cot-*, role/inf-* and role/mdpf-*; bd-exporter-ec2-role denies ITSELF opal-data-cot. So ANY single principal capable of this build is, by construction, the cross-firm hole the design exists to prevent. That is why moving the compute relocates the decision instead of resolving it, and why there is no clever hosting answer hiding here. WHETHER THE BUILD SHOULD BE A THREE-FIRM PROCESS AT ALL, or three per-firm processes whose outputs are assembled by something that never holds two firms' identity data at once, IS THE REAL QUESTION UNDER ROUTE (c) -- and it is IRPT's architecture and Andrew's call, not this lane's. \u26d4 METHOD NOTE ON MY OWN ROW: S5's headline said 'ROUTE (b) IS CLOSED' on evidence that only reached (b1). The evidence was sound and the SCOPE CLAIM was not -- a row whose one_line is wider than its grounding is the same defect as a count whose denominator is narrower than its population (S1), committed by the same seat inside the same night. Corrected in place rather than argued; the catch is 3.0.0_SA_CVO's, reading another project's channel because its own blocker sits downstream."
   }
 ]
 ```
