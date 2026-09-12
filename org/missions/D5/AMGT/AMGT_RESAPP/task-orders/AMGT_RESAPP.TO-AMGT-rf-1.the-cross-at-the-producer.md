@@ -128,7 +128,7 @@ identity, the criterion is NOT met however good its count looks.
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-rf-1"><invocation>timeout 110 python -c "import sys; sys.path.insert(0,'.'); from lib.research.api import scoped_amgt as s; combos=[(m,x) for m in ('trending','breakout') for x in ('price','chatter')]; res=[s.resolve_axis(m,x) for m,x in combos]; served=sum(1 for r in res if r.get('served_axis')==r.get('requested_axis')); print('SERVED_EQ_REQUESTED=%d of %d' % (served,len(combos))); print('LANDED=%s' % sorted(s.PRODUCER_LANDED_AXES))"</invocation><expect>`SERVED_EQ_REQUESTED=4 of 4` -- all four requested combinations resolve to a partition that IS the one requested. ⛔ The measured defect is 4 of 4 FALLING BACK, so any number below 4 is NOT met. ⛔ AND THE PRINTED `LANDED` SET IS THE DISCRIMINATOR: it must contain four crossed values (a TRENDING_* and a BREAKOUT_* form), not the two subject-only values `CHATTER`/`PRICE`. A pass with `LANDED` still reading two values means the read side was taught to stop reporting the fallback rather than the producer being fixed, and is NOT met</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-rf-1"><invocation>timeout 110 python -c "import sys; sys.path.insert(0,'.'); from lib.research.api import scoped_amgt as s; bad=[('sideways','chatter'),('trending','volume')]; n=0; [n:=n+1 for _ in ()]; out=[]
+  <criterion id="AC2" cell_refs="AMGT-rf-1"><invocation>timeout 110 python -c "import sys; sys.path.insert(0,'.'); from lib.research.api import scoped_amgt as s; bad=[('sideways','chatter'),('trending','volume')]; out=[]
 for m,x in bad:
     try: out.append((m,x,'ACCEPTED',s.resolve_axis(m,x)))
     except Exception as e: out.append((m,x,'REFUSED',type(e).__name__))
