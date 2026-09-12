@@ -4517,6 +4517,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "NOT FIXED HERE AND NOT MINE TO FIX -- comp-iam is outside this order's <paths> and repairing a neighbouring tool is expressly refused. RECORDED BECAUSE OF WHAT THE ZERO WOULD DO TO THE NEXT READER: this cell's whole IAM change is four new statements on this exact role, and the preflight the order names to grade that change reports the role as having none. A reviewer who took the preflight at face value would conclude there was nothing to review. The instance records the preflight's output VERBATIM with the applied-plane measurement BESIDE it, never instead of it. THE GENERAL SHAPE IS THE CATCHABLE PART: a census tool that cannot resolve a reference emits ZERO, and zero is the same symbol it emits for 'nothing there'. `comp-iam attach-census` is the tool's own named remedy for listing the 26 blocks it never saw, and running it against this root would say whether this role is one of them -- one read, and it is the read whoever owns comp-iam should take before anyone else quotes a comp-iam zero about an IRPT role."
+  },
+  {
+    "id": "IRPT_BCKEND-S50",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T10:00:30Z",
+    "one_line": "IB-rt-6 WORKED TO ITS WALL AND STAYS OPEN: 14 of 17 graded checks PASS, 0 FAIL, 3 BLOCKED, status untouched at pending. Amendment H's grant WORKED and the worker proved it with a negative control -- the host now reads 'IMPORT-OK first-party modules resolved: trading_calendar, ids, contract' where the SAME script printed IMPORT-FAIL two mints earlier, so declaring ids.py as a bundle member resolved from _ids/ was the right remedy and was not a second definition. THE REMAINING BLOCKER IS AN IAM CHANGE ON A SHARED HOST ROLE AND I AM ROUTING IT, NOT GRANTING IT. mdpf-daily-runner-ec2-role is AccessDenied on 5 of 9 prefixes directory_runner.py reads and on 3 of 3 firm DESTINATION prefixes, measured FROM the host BY the host with a positive control in the same sweep. Rule 27 says no lane enumerates a worker, so this order's <paths> block would technically suffice to grant it -- BUT infra/aws/** is lane CLOUD_OPS_OR_ETL ('AE 0.5/0.6/0.6.1/0.7 only'), the role is a SHARED scheduled-gold host role carrying ANOTHER PROJECT'S PRODUCTION CHAIN, and an IAM widening there sits outside this project's blast radius. A path grant I have the mechanical power to write is not the same as an act this project should take. ROUTED to 1.0.0_SA_CTO for AE assignment, and flagged HIGH because it gates SIX OF TEN OUTCOMES: rt-6 itself owns FWD-7 and contributes FWD-1, and IB-rtb-1 sits behind rt-6 on a real dependency edge carrying FWD-2, FWD-5, FWD-8, FWD-11 and FWD-1. ONE AE-OWNED IAM CHANGE IS THE WHOLE REMAINING CRITICAL PATH OF THE ROUND.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- route the mdpf-daily-runner-ec2-role IAM widening to an AE lane (infra/aws/** is CLOUD_OPS_OR_ETL). Until it lands, IB-rt-6 cannot close, IB-rtb-1 cannot start, and six of ten FWD outcomes stay ungradeable. This seat is NOT granting a worker write access to another pipeline's shared host role",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 5931cf2de9 (drain of wk-irpt_bckend-2-2c; rows W2-S48..S53; 17 worker commits)",
+        "the worker's on-host AccessDenied sweep: 5 of 9 read prefixes and 3 of 3 firm destination prefixes, with a positive control in the same sweep",
+        ".owned-paths.yaml 'infra/aws/**' lane CLOUD_OPS_OR_ETL, note 'AWS infra (Terraform, IAM, Lambda) -- AE 0.5/0.6/0.6.1/0.7 only'",
+        "decomp edge set: IB-rt-6 -> IB-rtb-1, and the coverage line giving rt-6 FWD-7 own + FWD-1, rtb-1 FWD-2/5/8/11 + FWD-1",
+        "issuer's own run: comp-iam service irpt-directory-refresh -> 'statements: 0' for tf_resource irpt_directory_refresh"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order names `comp-iam service` as the preflight that grades an IAM change in this cell.",
+    "world_is": "That preflight reads statements: 0 for a role whose policy resource demonstrably exists, so it cannot grade the very change the order names it for.",
+    "notes": "TWO ESTATE-WIDE FINDINGS, BOTH VERIFIED BY THIS SEAT RATHER THAN RELAYED. (1) W2-S50: S3 ANSWERS 403, NOT 404, FOR A MISSING KEY WHEN THE CALLER HAS NO ListBucket. The deployed refresh's FIRST read of its own memory therefore arrived as a DENIAL for 3 of 3 firms and the cell could not bootstrap. The worker's offline fixture returned 404 and COULD NEVER HAVE SEEN IT -- a fixture that cannot represent the failure cannot score it. Fixed in lane WITHOUT loosening the classifier: absence is established by a prefix LIST before any GET, under a ListBucket grant conditioned to exactly the prefix the role could already read, with a negative control (s3:prefix=gold/ -> implicitDeny). ⭐ THE GENERAL FORM IS THE VALUABLE PART AND IT IS NOT ABOUT THIS CELL: EVERY LEAST-PRIVILEGE ROLE IN THIS ESTATE THAT READS A COMPUTED S3 KEY WITHOUT ListBucket HAS THIS PROPERTY -- a first read of a not-yet-written key is indistinguishable from a permissions failure, and the more correctly scoped the role, the more certain the confusion. (2) W2-S53, and the issuer verified the MECHANISM rather than just the symptom: comp-iam service reads statements: 0 because the policy is `data.aws_iam_policy_document.irpt_directory_refresh.json` -- A DATA-SOURCE INDIRECTION THE PARSER DOES NOT FOLLOW. It is not specific to this role: ANY role whose policy comes from a data source rather than an inline document reads ZERO, and that is the idiomatic Terraform pattern. The tool's own startup NOTEs already disclose a related FALSE-MISSING class from reused module labels, so this is a second blindness beside a known one. THIRD INSTANCE TONIGHT of one shape: A NAMED ENFORCEMENT SURFACE IS A CLAIM UNTIL SOMEONE RUNS IT -- after the IB-s-18 battery pinned at rc=1 and the obligation routed into it, this is a preflight that reads zero for exactly the change it is named to grade."
   }
 ]
 ```
