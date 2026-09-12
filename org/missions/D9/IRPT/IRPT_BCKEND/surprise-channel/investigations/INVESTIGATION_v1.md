@@ -3577,6 +3577,78 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "TO IB-rt-10 names infra/aws/lambda/investor-reporting/ycharts/extract/ in its paths and directs this cell to add the unmapped-glyph fixture there; the fixture manifest is re-derived from disk by the battery on every run (row W3-S9), which presumes the checked-out bytes are the committed bytes.",
     "world_is": "For a PDF with no NUL in its first 8 KB that presumption does not hold on an autocrlf box, and the failure surfaces as a hash mismatch in a worktree that did nothing wrong rather than as anything resembling a corrupt file. A .gitattributes the order did not name had to be written -- inside the subtree the order does grant -- which is why this is a row rather than a silent fix.",
     "notes": "Recorded for the CLASS, which is not specific to this project: any hand-built or uncompressed binary-format fixture committed on an autocrlf box has this property, and the tell is a hash check that fails everywhere except where the file was made. The estate already carries the neighbouring lesson for hash-pinned TEXT assets; this is the same trap reached from the other direction, by a file that is binary in intent and text by measurement."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S34",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-12T02:12Z",
+    "one_line": "IB-rt-11's ORDERED edit to intake/settings.json moved a DECLARED BUILD INPUT of irpt-ycharts-generate 20 minutes after slot ~2 deployed and closed its ledger on it, so the tree and the served zip now disagree for that function by exactly one top-level key.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/lambda-source-map.json @72db64c153: functions['irpt-ycharts-generate'].files[] contains 'settings.json', which resolves to infra/aws/lambda/investor-reporting/intake/settings.json (1 of 214 functions declares it; parse.py and corrections.py are declared by 0)",
+        "aws lambda get-function-configuration --function-name irpt-ycharts-generate, read live 2026-09-12T02:0xZ: CodeSha256 VGsTbaPGv70V2l2w8X85z7XK8NEB9hTkbkeDmke1Dt8=, LastModified 2026-09-12T01:10:12Z, Handler entry.lambda_handler -- slot ~2's deploy, intact",
+        "the S3 artifact downloaded and its member extracted: served settings.json is 5104 bytes sha256 b6467fc1789ea50b..., tree settings.json is 9670 bytes sha256 c493ea6edd6ee7c3... at dc5d119b84 -- NOT equal; the downloaded zip's own sha256 equals the live CodeSha256, so the deploy is not what moved",
+        "DISCRIMINATOR, and it is what makes this INERT rather than ARMED: the served and tree copies of the `settings` SUBTREE and of `cautions` are byte-identical (7 members each); the only difference is the ADDED sibling key `intake_controls`. recipe.SETTING_TO_VENDOR_FIELD reads settings['settings'] by name, so nothing irpt-ycharts-generate reads has changed",
+        "the sibling-key placement was chosen for exactly this reason and says so in settings.json _meta.why_this_is_a_SEPARATE_TOP_LEVEL_KEY"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-11 DELIVERABLE names `intake/{parse.py,corrections.py,settings.json}` as this cell's files and BOUNDS says 'No deploy in this cell (the intake Lambda's next build carries it)'; slot ~2's drain reports artifact_sha256 == S3 content-sha256 == live CodeSha256 on 6 of 6 roots.",
+    "world_is": "Both are true and they interact: settings.json is ALSO a build input of a function in another cell's root, so an edit this order was told to make invalidates the hash agreement another order just certified. Nothing is broken and nothing needs re-deploying for correctness -- the served bytes are a valid older vintage of a file whose changed part that function does not read. What is no longer true is the SENTENCE 'the tree and the served artifact agree', for one of the six.",
+    "notes": "Not remediated here: rebuilding or re-deploying irpt-ycharts-generate is out of this cell (BOUNDS: no deploy) and lambda-source-map.json is not in this order's <paths>. Carried so the next rebuild of that function is expected rather than surprising, and so nobody reads a moved hash as drift."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S35",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-12T02:12Z",
+    "one_line": "The shared contract's `corrections` item is additionalProperties:false with exactly four keys and no timestamp, so the WHEN this cell's law requires on a human correction CANNOT travel in the contract -- a consumer validating AnalysisRequest never sees who corrected what WHEN.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_contracts/AnalysisRequest.schema.json @72db64c153, properties.corrections.items: additionalProperties false, properties = finding_code, approved_by, from_value, to_value; required = all four. There is no time field of any name",
+        "TO-IB-rt-11 acceptance (c), verbatim: 'A human correction on a quarantined row appears on r+1 with who/when/from-what'",
+        "the amendment's B4, verbatim: 'Human correction provenance is PRESERVED, not overwritten. A corrected value carries who corrected it and what it was'",
+        "`_contracts/` is not in this order's <paths> block, so the schema is READ here and not edited"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The correction provenance the cell's law requires -- WHO, WHEN and WHAT-IT-WAS -- is carried on the revision in the contract's own `corrections` array.",
+    "world_is": "The contract can carry WHO and WHAT-IT-WAS and cannot carry WHEN. This cell makes `approved_at` REQUIRED on an approval and validates it as an ISO-8601 UTC instant, then writes it into a SIBLING `correction_provenance` array on the revision, leaving the contract array at exactly its four keys so it still validates. The provenance is preserved, hashed with the revision and readable -- but ONLY by a consumer that knows to look outside the contract. A consumer that validates AnalysisRequest and reads `corrections` gets a correction with no time on it, and no care inside this cell changes that.",
+    "notes": "The remedy is a one-field contract amendment (`approved_at`, string, ISO-8601 Z) and it belongs to whoever owns _contracts/. Raised rather than worked around silently: the sibling array is the honest placement available to this order, not the right long-term shape."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S36",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-12T02:12Z",
+    "one_line": "parse.py and corrections.py are declared by 0 of 214 functions, so every currency and unit control this cell certifies is certified in the REPO for a module that has no runtime yet -- and the first function to ship parse.py must ship settings.json beside it or the parser refuses at its first money column.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/lambda-source-map.json @72db64c153, over all 214 functions: 0 declare parse.py, 0 declare corrections.py, 1 declares settings.json (irpt-ycharts-generate, which does not ship the parser)",
+        "parse.load_intake_controls reads os.path.join(_HERE, 'settings.json'); in a Lambda _HERE is the flat /var/task, so the policy file must be a declared build input of any function shipping parse.py",
+        "EXERCISED: load_intake_controls against a missing path raises ParseRefused 'the intake currency/unit policy is not readable ... This module REFUSES rather than applying a built-in default' -- the refusal is by design, added in this cell rather than left as a FileNotFoundError",
+        "the sibling shape of the same defect was measured one cell over as IRPT_BCKEND-W3-S25: _scope/resolve.py gained a module-level import and the packaging half did not follow, and CodeSha256 equality could not see it by construction"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The issuer's note of 2026-09-12 ~02:0xZ: 'A CHECK THAT RUNS IN THE WRONG ENVIRONMENT PASSES ON A BROKEN ARTIFACT. When you certify a currency or a unit, ask where your check runs versus where the value is actually consumed.'",
+    "world_is": "The answer to that question for this cell is NOWHERE YET: the module is not packaged into any function, so there is no runtime in which the value is consumed and the controls are certified only in the repo. The battery therefore runs the controls a SECOND time in a flat /var/task-shaped directory in a fresh interpreter with the repo stripped from sys.path, and carries a negative arm proving the parser REFUSES when the policy file is absent rather than defaulting to USD -- which is the exact runtime-only failure the warning names. That is the closest a cell that deploys nothing can get, and it is not the same thing as a deployed check.",
+    "notes": "Not remediated here: adding parse.py to a function's files[] is a packaging act, lambda-source-map.json is not in this order's <paths>, and this cell deploys nothing by its own BOUNDS. The requirement for whoever packages it: parse.py, corrections.py, settings.json AND fixtures/holdings/security_mapping.json (load_mapping reads a SUBDIRECTORY of _HERE) must land together."
   }
 ]
 ```
