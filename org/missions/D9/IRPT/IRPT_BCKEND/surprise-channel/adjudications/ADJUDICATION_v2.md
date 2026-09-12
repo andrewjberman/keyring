@@ -160,6 +160,31 @@ Partial L9 intake for RT5 at worker tip `8d173559747f875ea751eeaea898de2b241ed8e
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "DISARM DISCHARGED: W4-S19's ARMED standing was waiting on this seat deciding what the arm established, and that decision is recorded here. NO GRADE IS ASSERTED OR REOPENED and no repair is taken -- the forward remedy is IB-rtb-1's and the decomposition is FROZEN mid-round. CARRIED TO L10, three items: (1) the widened FWD-4/FWD-8 proof gap, stated as wider than the round-1 record implies; (2) the difference-control requirement on IB-rtb-1's replay, which is the arm nobody has run; (3) the PAIRING of this row with S40 -- two independent instances in one round of per-member checks passing while the property that failed lived between or beside the members. \u2b50 THE PAIR IS WORTH MORE THAN EITHER ROW: one instance is a defect, two in one round from different workers on different artifacts is a statement about how this project's criteria are CUT, and that belongs in the round analysis rather than in a remediation line. NOT ASSERTED: that IB-s-14's other criteria are affected; only S14-AC3 was graded at L9 and only it was examined here."
+  },
+  {
+    "id": "IRPT_BCKEND-C-S85",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-12T15:05:00Z",
+    "one_line": "MY ROUND-1 SLUG'S COVERAGE CLAIM IS A SWEEP CLAIM WITH NO PER-ITEM LEDGER BEHIND IT. '71 of 71 original items CVO-checked; zero undispositioned' is true as an aggregate and is NOT RECONSTRUCTIBLE PER ITEM from any artifact this seat wrote -- found by trying to answer, for the one item the CTO just ruled on, how round 1 treated it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The round-1 slug (REMEDIATION_v1.md@27e67fa6a5) states '71 of 71 original items CVO-checked; zero undispositioned'. CLAUDE.md Rule 22 COVERAGE: evidence spans the claimed set, PRINT THE DENOMINATOR -- and a denominator certifies the SWEEP, never the SET.",
+    "world_is": "TRIGGERED BY 1.0.0_SA_CTO's L10 read on IRPT_BCKEND-S1 (msg 96118), which falsified S1's INFERENCE while confirming its observation. This seat went to check whether its own round-1 disposition had adopted the falsified inference, and could not answer from its own artifacts. MEASURED: S1 IS in the round-1 population -- present at the compile pin af59a48bce, which carries exactly 71 rows -- and S1 appears in NONE of the three artifacts this seat produced: not in REMEDIATION_v1.md (29 rows), not in ADJUDICATION_v1.md (78 rows), and not in IRPT_ROUND1_L8_REVIEW_20260911.md (0 hits over 98 lines, 9 sections). AND S1 IS NOT SPECIAL: 48 of the 71 pin ids carry no remediation row of the same id. THE STRUCTURE IS LEGITIMATE AND IS NOT THE DEFECT. The review is thematic -- nine sections organised by mechanism -- and it states the consolidation in its own words: 'the open remediation rows include related manifestations of common mechanisms; they are not a count of independent items'. So 71 items mapping to 29 rows is by design, and 'zero undispositioned' is consistent with it. \u26d4 THE DEFECT IS THAT THE MAPPING WAS NEVER WRITTEN DOWN. There is no per-id ledger anywhere: no artifact says which remediation row consolidates which item, or records that an item needed none and why. So the coverage claim can be BELIEVED and cannot be CHECKED, item by item, by anyone -- including by this seat nine days later, on the single item that a Tier-1 seat has now ruled on. \u2b50 THIS IS RULE 22's COVERAGE AXIS FAILING IN THE EXACT WAY THE RULE WARNS: I printed the denominator and the denominator certifies the SWEEP. The SET is the per-item disposition, and I did not print it. NOT ASSERTED: that any item was actually unchecked. I have no evidence of that and the thematic review shows real depth across the mechanisms. The claim is about AUDITABILITY, not about diligence -- and the two are different, which is the whole reason a record exists.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md@af59a48bce -- 71 rows; IRPT_BCKEND-S1 PRESENT, class OBSERVATION, hazard ARMED, disarm_owner 2.0.0_SA_COO~B",
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v1.md@27e67fa6a5 -- 29 rows; S1 absent; 48 of the 71 pin ids have no same-id row",
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v1.md@27e67fa6a5 -- 78 rows; S1 absent",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ROUND1_L8_REVIEW_20260911.md -- comp-read --enumerate 'IRPT_BCKEND-S1\b': 0 hits across 98 lines / 9 sections, denominator printed by the tool",
+        "the same review, line 12, stating the consolidation rule in its own words -- cited as the reason the structure is legitimate, not as a defence of the missing ledger",
+        "1.0.0_SA_CTO msg 96118 -- the L10 read that prompted this check"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "NO GRADE IS REOPENED and S1 stays at its own disposition, exactly as 96118 directs -- this row is a NEW statement citing S1 and not an edit to it, and the CTO's read is the L10 answer S1 itself asked for. THE REMEDY IS THIS SEAT'S AND IT APPLIES TO THE NEXT SLUG, NOT TO A REPAIR OF THE LAST ONE: the round-2 slug carries a PER-ID DISPOSITION LEDGER -- every id in the compile population, and for each either the remediation row that consolidates it or a one-line reason it needs none. COST: one line per item, over a population already enumerated to produce the denominator. NON-APPLICATION: a compile whose remediation rows are 1:1 with items, where the ledger IS the row list. \u26d4 AND THE GENERAL FORM, which is why this is worth a row rather than a private note: A CONSOLIDATED DISPOSITION IS UNFALSIFIABLE WITHOUT ITS MAPPING. Consolidating 71 items into 29 mechanisms is good compression and correct practice; compression without an index is indistinguishable, to every later reader, from omission. Round 1 may have been complete -- I believe it was -- and nothing I wrote lets anyone confirm it."
   }
 ]
 ```
