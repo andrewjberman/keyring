@@ -2,8 +2,10 @@
   "prd": "IRPT_FNTEND_PRD.md",
   "prd_version": "v0.6",
   "prd_pin": "d1479bc5f07c24359246ce460f586bc705ca7010",
+  "half": "brief",
+  "half_hash": "a7e0e561a78a9db729531be52f85d8a56be6533b9623d8ff9cf4e9527825012c",
   "verdict": "SIGNED",
   "review_ref": "docs/briefs/sources/INVESTOR_REPORTING_L4_COVERAGE_REVIEW_20260911.md@39ebb1dda3891b68a5c00a087186d0e823a40a82",
   "signed_by": "4.0.0_SA_CRO",
-  "signed_at": "2026-09-11T04:44:25.305404Z"
+  "signed_at": "2026-09-12T02:59:02Z"
 }
