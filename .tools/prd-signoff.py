@@ -149,6 +149,25 @@ def cmd_stamp(lib, verdict, code, half, review, reason, substitute_for, expect_h
     if "@" not in review:
         print("ERROR: --review must be <path>@<pin> (the pinned review record)", file=sys.stderr)
         return 2
+    # THE REVIEW-ARTIFACT GUARD. "@" in the string is not a review: --review accepted ANY value and
+    # never checked that the path resolves, so a stamp could cite a review that DOES NOT EXIST and
+    # still read structurally immaculate -- review_ref populated, half_hash present, verdict SIGNED.
+    # Measured by 4.0.0_SA_CRO~Z 2026-09-12 over all 7 stamps on the POSN record (5 clean, 1
+    # unread-bytes, 1 no-artifact): stamp 9a2e542c0b's review_ref is a PROSE SENTENCE with a pin
+    # appended, whose "path" is a sentence fragment and whose git show returns ZERO BYTES. The gate
+    # had counted it a signed half since 08:52:52Z. A real verification had happened; NONE OF IT WAS
+    # AUDITABLE, which is the whole property this field exists to provide.
+    # --expect-half-hash CANNOT see this class: the bytes can be current and genuinely reviewed and
+    # there is still no durable artifact to re-read.
+    _rpath, _, _rpin = review.rpartition("@")
+    _probe = _git("cat-file", "-e", "%s:%s" % (_rpin, _rpath))
+    if _probe.returncode != 0:
+        print("REFUSED: --review does not resolve to an artifact.", file=sys.stderr)
+        print("  path: %s" % _rpath, file=sys.stderr)
+        print("  pin : %s" % _rpin, file=sys.stderr)
+        print("A review nobody can re-read is not a review. Pass <path>@<pin> naming a file that "
+              "exists at that commit; prose belongs in --reason.", file=sys.stderr)
+        return 3
     if verdict == "REFUSED" and not reason:
         print("ERROR: a REFUSED verdict carries --reason (one line; the corrections live in the review by pinned line)", file=sys.stderr)
         return 2
