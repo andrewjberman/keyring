@@ -1320,6 +1320,53 @@
     "spec_asserts": "IRPT_FNTEND-S33 asserts 'producer-fixtures.test.ts's STALE PINS arm, 3 schema pins stale against 58e387b454'. CLAUDE.md Rule 22: COVERAGE -- print the denominator.",
     "world_is": "One pin, not three. The irony is exact and worth keeping rather than smoothing away: S33's own recommendation is that a consumer should pin by CONTENT and print its denominator, and I wrote that row after reading a count off a diff header instead of off the denominator the test printed one line below. The corrected figure makes the case for S33 STRONGER, not weaker -- ONE non-breaking producer edit to ONE schema file reds the whole consumer suite, which is a cleaner demonstration of byte-pinning's fragility than three would have been. INERT: nothing acts on the count, the round-3 input is unchanged, and no grade turns on it.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S15",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-12T07:12:11Z",
+    "one_line": "BLOCKING on the carried half of IRPT_FNTEND-W2-S10. FE-s-20's cell orders `fixtures/smoke/default.json`'s two broken pins resolved 'in the same idiom' -- the corpus binds the CONTENT it replays, not the bytes of the map. ONE of the two is already repaired and needed nothing from me: the portal pin at `__tests__/fe-s-1/fixtures.test.ts` was rewritten at FE-s-14 (R1 item 7) to compare per ROUTE TEMPLATE against routes.json's own DECLARED set, which is exactly the idiom asked for. THE OTHER IS NOT IN THIS ORDER'S GRANT IN ANY DIRECTION: `infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py` still binds the map's BYTE FORM (`len(smoke) == 11`; last-path-segment equality against its own OPERATIONS list; `'/api/scoped/investor-reporting/' + op in smoke`), and <paths> names nothing under infra/. It is the PRODUCER's file. MEASURED FAILING, not inferred.",
+    "spec_asserts": "TO IRPT_FNTEND.TO-FE-s-20 WORKER FACE, 'Also carried: W2-S10 ... Resolve it in the same idiom: the corpus binds the CONTENT it replays, not the bytes of the map.'",
+    "world_is": "The consumer-side arm was already in that idiom before this order was cut. The producer-side arm is in the byte idiom and is unreachable from this grant, so the carried item cannot be closed by this worker at any level of effort. No numbered criterion of this order depends on it: F20-AC7 covers __tests__/fe-s-13/ and F20-AC8 covers the portal set, and both are green.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, worktree wk-irpt_fntend-3-2-fe-s-20 @9762d5b8a3: `cd infra/aws/lambda/investor-reporting/_contracts && timeout 180 python -m pytest tests/test_seam_paired.py -k 'consumer_fixture_source or operation_map_covers' -q` -> `2 failed, 51 deselected in 0.40s`; `test_the_consumer_fixture_source_is_named_and_non_empty - AssertionError: 12` (it asserts 11) and `test_the_operation_map_covers_the_consumers_own_denominator - AssertionError` listing `analysis-report, analysis-requests, directory-search, performance-report, submit-export, ...` as extra in ITS set and `3a7bd3e2360a..., EXP-1, REQ-0001, analysis, export` as extra in the map's.",
+        "infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py @9762d5b8a3, lines 212-223 and 369-373 read directly: `assert len(smoke) == 11, len(smoke)`; `theirs = {k.rsplit('/', 1)[-1] for k in smoke}` then `assert ours == theirs`; `consumer_path = '/api/scoped/investor-reporting/' + op` then `assert consumer_path in smoke`. All three bind the FLAT-SLUG key form the v1 re-base retired.",
+        "portal/src/pages/InvestorReporting/fixtures/smoke/default.json @f0443ba8 carries 12 keys in the v1 DECLARED path form (`/directory/search`, `/performance/<fingerprint>`, `/export/EXP-1/download`, ...), so `len(smoke) == 11` is arithmetically false before any semantics are considered.",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-1/fixtures.test.ts @f0443ba8, the `smoke map covers every scoped route` test: it reads `docs/contracts/investor-reporting/v1/routes.json`, filters `status === 'DECLARED'`, builds a REGEX per route_key template and requires each route to own exactly one key -- content, not bytes. It passes: `bun test src/pages/InvestorReporting` reads `425 pass, 1 skip, 1 fail` and the one failure is F18-AC3's capture collision, not this.",
+        "GRANT, read from this order's <paths>: portal/src/pages/InvestorReporting/{contracts/wire/, fixtures/wire/, fixtures/smoke/default.json, __tests__/fe-s-13/} and org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md. Nothing under infra/ and nothing under __tests__/fe-s-1/.",
+        "The two key sets STILL cannot be reconciled by editing default.json, which is the one granted file that could move: W2-S10 measured that the producer's OPERATIONS set includes `submit-correction` and `export-preview` (v1 serves both with no route) and excludes `holdings-snapshot` (v1 declares it), so no single key set satisfies both the v1 route templates and that test."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S16",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-12T07:12:11Z",
+    "one_line": "OBSERVATION, disclosed because it is the one thing the new content pin cannot see. FE-s-20 replaces the schema DIGEST table with `contracts/wire/consumed.ts`: the operation ids, route keys and required field sets this client consumes. The FIELD axis can only be derived from what the client actually reads, and the only source for that is `contracts/adapt.ts` + `contracts/envelope.ts` -- BOTH of which are FE-s-19's files this round and READ ONLY to me. So `gen-consumed.ts` derives the table ONCE, at generation time, and the table is COMMITTED; no test re-reads adapt.ts. That is deliberate -- a test that re-read a neighbouring cell's text every run would be the same tripwire one layer over -- and its cost is named here: if a later cell makes an adapter read a field the table does not list, NOTHING FAILS. The pin silently under-covers, and an under-covering pin reads exactly like a clean one.",
+    "spec_asserts": "TO IRPT_FNTEND.TO-FE-s-20 WORKER FACE: pin 'the REQUIRED FIELD SETS it reads out of each schema', and BOUNDS: '`contracts/adapt.ts` and `contracts/envelope.ts` are `FE-s-19`'s and are READ ONLY to you'.",
+    "world_is": "The cut names WHAT to pin but not HOW to determine 'reads', and the only instrument for it sits behind the file split. The chosen instrument is a static derivation over the two neighbouring files, run once and committed, with the derivation script committed beside it (`__tests__/fe-s-13/gen-consumed.ts`) so the next reader re-runs rather than re-invents. The staleness direction is ASYMMETRIC and worth stating: a field REMOVED from an adapter leaves a harmlessly over-wide pin; a field ADDED to an adapter leaves an under-wide one, and only the second can let a real producer break through. No instrument in this cell measures that gap.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-consumed.ts on branch wk-irpt_fntend-3-2-fe-s-20: `consumedRows()` reads ADAPT_PATH once and extracts every top-level `wire.<field>` inside each `adapt<Contract>` body; `envelopeFields()` does the same for `body.<field>` and `'<field>' in body` inside `parseIrEnvelope` and `isEnvelopeShaped`. Output written to contracts/wire/consumed.ts and committed.",
+        "MEASURED denominator of the derived table: `CONSUMED CONTENT GENERATED: 11 of 11 contracts; 12 operation(s); 12 route key(s); 5 envelope field(s)`; the battery then reports `CONSUMED FIELDS OFFERED: 78 of 78 across 11 schema(s)` and `CONSUMED ENVELOPE FIELDS OFFERED: 49 of 49`.",
+        "The derivation is NOT re-run by any test: `bun test src/pages/InvestorReporting/__tests__/fe-s-13` reads `Ran 33 tests across 6 files` and neither generator is among the six -- bun collects `*.test.ts` only.",
+        "A NEAR MISS OF THIS EXACT SHAPE WAS CAUGHT DURING THE CELL and is why the row is filed: the first `functionBody()` matched `export function <name>(` by indexOf and so MISSED `parseIrEnvelope<T>(`, emitting 3 envelope fields instead of 5. Nothing failed -- an absent read is indistinguishable from a field the consumer does not use. Corrected to a `[(<]` match before the file landed; the incident is written into that function's own docstring."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
