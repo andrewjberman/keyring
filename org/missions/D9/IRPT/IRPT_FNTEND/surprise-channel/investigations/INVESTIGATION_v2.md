@@ -1618,6 +1618,54 @@
     "spec_asserts": "Row W2-S10 (round 2): re-basing fixtures/smoke/default.json to v1 DECLARED paths broke TWO pins on the counterpart's replay corpus. FE-s-20's cell text: 'Resolve it in the same idiom: the corpus binds the CONTENT it replays, not the bytes of the map.'",
     "world_is": "One finding, two repositories, and the cut gave the cell only one of them. THE GENERAL SHAPE, and it is the counterpart-facing twin of S24: A ROW CAN NAME A DEFECT WHOSE REMEDY SPANS A PROJECT BOUNDARY, and the cell that inherits it can close its own half and nothing more -- so the row reads half-done forever unless someone routes the other half. The worker did exactly the right thing: closed what it held, measured what it could not, and refused rather than reaching. disarm_owner 1.0.0_SA_CTO because the remedy is a cell in IRPT_BCKEND's round, which only the CTO can route across the two projects; 2.0.0_SA_COO~B holds that lane and this seat may not cut into it. Carried to L10 as a cross-project input, with the note that the producer battery byte-pins a map the consumer has already stopped byte-pinning -- so the two sides of one seam now disagree about what a pin IS.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T08:02:00Z",
+    "id": "IRPT_FNTEND-S41",
+    "one_line": "I CUT F19-AC8's BAR ON A PREDICTION AND THE WORKER MEASURED IT FALSE. The criterion read `0 fail` because I wrote into its own prose that F18-AC3's capture collision 'is expected to CLEAR when this cell lands'. It does not and it cannot. TWO reasons the worker measured and I did not: (1) F18-AC3 grades ELEVEN COMMITTED PNG FILES and a source change cannot move image bytes; (2) even re-taken, the three Holdings smoke maps carry ZERO `status` members, and `status` is the only wire carrier of a state on this plane -- so under the now-CORRECT seam they render three identical panels BY THE CONTRACT. Bar corrected to `1 fail` with a name check, the same idiom I cut F20-AC8 and F24-AC7 in.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ISSUER'S OWN CENSUS of portal/src/pages/InvestorReporting/fixtures/smoke/ on the merged DEV, parsing every map: 36 maps, 84 v1 envelopes, 3 carrying a `status` member, 81 not. The three Holdings maps F18-AC3 collides on -- fe-s-18-holdings-{observed,target,missing-attribution}.json -- read envelopes=9 with_status=0 EACH.",
+        "Worker's independent census on its own branch found the same shape at a narrower denominator (62 envelopes across 16 maps, 3 with status, the three Holdings maps at 0). Two seats, two scopes, same conclusion -- and the disagreement in totals is explained: my read is post-FE-s-20/FE-s-24 drain, its read predates them.",
+        "F18-AC3's population is eleven COMMITTED PNG files with committed sha256s (manifest: 11 entries, 9 distinct hashes, 1 colliding set, the three Holdings at 8ce52e6ad0b60e29..., folder last committed 544392594e). No source change moves those bytes.",
+        "The seam fix itself is proven and is NOT in question: F19-AC2 `NETWORK STATES CARRIED: 9 of 9` against a pre-fix 1 of 9; F19-AC4 `BODIES MOUNTED: 2 of 2` against a pre-fix 0 of 2 -- in a real browser, with all three new test files recorded RED before the fix (F19-AC9, three PRE-FIX RED pairs).",
+        "CONSISTENCY CHECK AGAINST MY OWN CUT: I set F20-AC8 at `1 fail` and F24-AC7 at `2 fail` precisely because those cells could not clear another cell's failure. F19-AC8 at `0 fail` was the one place I substituted a prediction for that same reasoning."
+      ]
+    },
+    "spec_asserts": "F19-AC8 as cut: `<expect>0 fail</expect>`, with prose asserting 'The collision is expected to CLEAR when this cell lands -- three Holdings fixtures produced one byte-identical image precisely because no body mounted.'",
+    "world_is": "The stated CAUSE was right and the INFERENCE from it was wrong. The three images were identical because no body mounted AND because the fixtures carry nothing to distinguish; fixing the first left the second standing, and I asserted the conjunction as if it were the first alone. \u2b50 THE SHAPE, and it is the one I keep producing: A PREDICTION ABOUT ANOTHER CELL'S ARTIFACT, WRITTEN INTO A BAR, IS AN UNMEASURED CLAIM WEARING A CRITERION'S CLOTHES -- and unlike a prose error it is load-bearing, because a worker cannot pass it. Three of round 3's bars had to name another cell's failure count; on two I measured and on one I guessed, and the guess is the one that failed. Disarmed when FE-s-19 passes AC8 at the corrected bar.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T08:02:00Z",
+    "id": "IRPT_FNTEND-S42",
+    "one_line": "TWO FINDINGS FROM FE-s-19 THAT EXPLAIN ROUND 2's BLINDNESS AT THE INSTRUMENT LEVEL, and one that blocks F18-AC3 permanently until a fixture cell is cut. (a) THE PORTAL INSTALLS NO DOM TEST ENVIRONMENT, so under `renderToStaticMarkup` React runs no effect and A MOUNTED BODY AND A SEEDED BODY ARE LITERALLY INDISTINGUISHABLE -- which is not a metaphor for how 420 tests passed over the defect, it is the mechanism. FE-s-19's AC4/AC5 are browser criteria of necessity, and `chromium.launch` UNDER BUN fails on this box (network-service crash, rc=124 at 180s) while the identical launch under NODE returns in seconds. (b) 81 of 84 v1 envelopes in the smoke corpus carry no `status`, so no capture set built on them can discriminate a state.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker's comp-find census for a DOM test environment: 2 hits across 741 files, BOTH of them comments saying the portal has none; `bun install` is forbidden by every face, so installing one is not a worker act.",
+        "Worker's measured instrument split: chromium.launch under bun -> network-service crash, rc=124 at the 180s bound; the identical launch under node -> returns in seconds. Its browser-driver.mjs therefore runs under node, spawned by the bun test -- a two-runtime arrangement nothing in the cut anticipated.",
+        "Issuer's own fixture census, independent of the worker's: 36 maps, 84 v1 envelopes, 3 with a `status` member. The three Holdings maps are 0 of 9 each.",
+        "The load-bearing source line the worker changed, which shows how wide the defaulting branch was: `state: status?.state ?? 'READY'` became `?? EXPLICIT_UNKNOWN_STATE` -- and `status_required` is false on TEN of the TWELVE response contracts, so that default decided what EVERY read route rendered, not an edge case.",
+        "NEGATIVE CONTROL ON THE WHOLE CELL, recorded before any source moved: F19-AC2 read 1 of 9 pre-fix and 9 of 9 post-fix; F19-AC4 read 0 of 2 pre-fix and 2 of 2 post-fix. The criteria were shown capable of failing on the exact bytes they later passed on."
+      ]
+    },
+    "spec_asserts": "Round 2's suite ran 420 passing tests over a seam that could not mount from any network response. F18-AC3 asserts no two manifest entries share a hash; FE-s-18's cell orders three Holdings captures 'from three fixtures built from FE-s-13's wire holdings fixture: the observed custody basis, a target-blend basis, a node with attribution unavailable'.",
+    "world_is": "The blindness was not carelessness by any seat -- THE AVAILABLE INSTRUMENT COULD NOT SEE THE DIFFERENCE. A suite with no DOM environment cannot distinguish mounting from seeding, so every honest test written in it is silent on the one property that mattered, and the round-2 workers had no way to know. That is a substrate fact about this portal and it belongs to whoever owns the test environment, not to a cell. And the fixture half is a standing block: F18-AC3 cannot pass, ever, until the three Holdings maps carry DISTINCT `status` members -- a FIXTURE cell nobody holds, which is why this row's disarm_owner is 1.0.0_SA_CTO and not me. \u26a0 It also re-opens a question for the CTO's ruling 4: a capture set can only assert distinct hashes on a field its FIXTURES actually vary, so the scoped rule needs a third limb -- a fixture that does not carry the claimed field is a DEFECTIVE FIXTURE, not an admitted collision.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
