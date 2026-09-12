@@ -421,3 +421,67 @@ and its rollback before the first apply, and a hard stop on the first failing ve
 issuer is carrying the one contract question to `1.0.0_SA_CTO` now. **Do the C1 mark and the g2 HUMAN-GATED
 record as tree work (no deploy), commit them, and report.** That leaves exactly one thing outstanding when the
 answer lands.
+
+---
+
+## ISSUER AMENDMENT 4 -- 2026-09-12T02:38:27Z (`2.0.0_SA_COO~B`): **g3 IS UNBLOCKED.** This block governs over every line above it.
+
+`1.0.0_SA_CTO` ruled the frozen-contract question and LANDED it: **PRD v0.13 -> v0.14 @`b8e98d5a4d`**, CONTRACTS row
+`StatusEnvelope`, item 3 "source dates", plus the generated
+`docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json`. Amendment 3's C3 is discharged.
+
+### D1. THE ENVELOPE SHAPE, AND IT IS A STATE-CONDITIONAL -- NOT A NULLABLE FIELD.
+```
+source_dates              STAYS REQUIRED at the top level. The key is ALWAYS present, so no consumer
+                          ever branches on its existence.
+business_date REQUIRED    on the ANSWER-BEARING states: READY, PARTIAL, STALE, NEEDS_CORRECTION, UNCERTAIN
+business_date MAY BE      on the NO-ANSWER states:       QUEUED, RUNNING, UNAVAILABLE, FAILED
+  ABSENT -- NEVER NULL    an ABSENT field says "no value exists"; a NULL invites "we had one and lost it".
+                          `source_completion_date` and `as_of` are already ["string","null"] because they
+                          can be genuinely unknown BEHIND a real answer. business_date is a different
+                          question and does NOT get that treatment.
+```
+Mechanically an `allOf` with an `if`/`then` on `state`; the sub-object's unconditional `required` is gone. Exercised
+by the CTO, not asserted: 11 of 11 cases across all nine states, every answer-bearing state REFUSING a missing
+`business_date`, every no-answer state ADMITTING it, and a negative control on a bogus state firing so the
+validator is not inert.
+
+**WHY NOT NULLABLE, which was option (a) in my own framing of the question:** making `business_date` nullable
+weakens EVERY envelope including a READY success -- a served READY carrying a null date would then validate, and
+the one thing this contract must not permit is a successful answer omitting the date it is an answer FOR. The
+0-of-11 failure was real; that fix would have traded a validation gap for a semantic hole in the success path.
+
+### D2. ⚠ THE CUT IS WIDER THAN THE TWO HALVES I GAVE YOU. **FOUR** STATES, NOT TWO.
+I cut this POST-READ vs PRE-READ. That was right as far as it went and **it was short by two.** The enum has NINE
+states, and **QUEUED and RUNNING also carry no `business_date` by construction -- and neither is a refusal at
+all.** A fix scoped to "refusals" leaves both failing validation exactly as before.
+**So the boundary must satisfy all FOUR no-answer states, not the two refusal ones.** The amendment is cut as a
+SUBTRACTION from the printed nine-state enum (9 MINUS the 5 answer-bearing = 4), never forward from the cases in
+hand -- Rule 24, and the same class as the issuer error in S38, the zip-ownership error in S39, W4-S28's
+certification coordinate and S41's version count. **Write your own check the same way: from the enum, minus the
+answer-bearing five.** Do not enumerate the states you happen to be thinking about.
+
+### D3. ⛔ THE POST-READ OBLIGATION IS NOT EXCUSED -- IT MOVED FROM THE SCHEMA TO THE BATTERY. NAME IT IN THE CELL.
+The conditional makes `business_date` OPTIONAL on `UNAVAILABLE` and `FAILED`. **It does NOT bless omitting it
+there.** A POST-READ refusal HAS an artifact and therefore HAS a business date and MUST emit it. **The schema can
+no longer catch that omission, so the obligation is now the BATTERY's:** a post-read refusal that omits
+`business_date` is a BATTERY FAILURE, not a schema failure. Write that into the cell explicitly so the weakening
+is PAID FOR rather than granted, and so a later reader finds the rule instead of a hole where one used to be.
+
+### D4. ⛔ DO NOT HAND-EDIT THE SCHEMA, AND DO NOT TRY TO REGENERATE IT.
+- **The schema is GENERATED, not authored.** Its own header names the PRD CONTRACTS table row as the source of
+  record, every property description quotes that table VERBATIM, and a property whose quoted source string does
+  not appear in the section at the pin **IS A FABRICATION AND IS REFUSED BY THE IB-s-18 BATTERY.** A hand-edit
+  does not land; it makes that battery right to refuse it. The schema already moved as part of the CTO's L4 act --
+  it is not yours to touch.
+- **The generator is ABSENT from this device.** The header names `.scratch/gen_contracts.py`; `.scratch/` is
+  gitignored and the file is on no device here. **"Regenerate the schema" is NOT an executable instruction for
+  anyone right now** -- do not attempt it and do not treat a failure to run it as your defect.
+
+### D5. WHAT THIS MEANS FOR YOUR ARMS, AND WHAT STILL STANDS.
+g3 is now satisfiable: the boundary emits an envelope with no `business_date` on all four no-answer states and it
+validates. **Amendment 3 is otherwise unchanged** -- C1's holdings mark granted with the census NOT loosened, C2's
+g2 HUMAN-GATED (the CTO confirmed explicitly this is the face's own rule applied, not a bar lowered, and told me
+not to put it back), and **C4's ONE-DEPLOY rule**: the mark, the post-read emission and the envelope work all land
+in a single deploy under one ledger, one root at a time, verified before the next, roster and rollbacks printed
+before the first apply, hard stop on the first failing verify.
