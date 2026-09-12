@@ -252,6 +252,15 @@ CHANGE IDENTITY under a seat that has stopped looking:** `rd-8` was flipped `sup
 opened `staged` IN THE SAME COMMIT 43 minutes later, so the open count never reached zero and the
 named blocker silently became a different order. Nothing announces that.
 
+⛔ **AND THE DELIVERY PLANE IS NOT ONE OF THE FOUR, DELIBERATELY -- IT CAN BE FLATLY WRONG ABOUT
+DELIVERY ITSELF, NOT MERELY SILENT ABOUT WORK.** Measured 2026-09-12 by `2.0.0_SA_COO~Z`:
+`get_delivery_state(3.0.0_SA_CVO~Z)` returned **QUEUED on 8 of 8 rows with NO clock stamps -- not
+READ, not EMITTED, NOT EVEN SENT** -- spanning 23:54Z to 00:17Z, while in that same window the seat
+wrote its intake JSON, committed `ee0a2dbf82`, and landed a 29-row `ADJUDICATION_v4` dispositioning
+**exactly the rows that packet carried**. ⭐ **A SEAT CANNOT ADJUDICATE ROWS IT DID NOT RECEIVE: THE
+ARTIFACT IS THE RECEIPT, AND THE BROKER IS BLIND TO THE FILESYSTEM CARRIER.** So a QUEUED reading is
+NOT evidence of non-delivery, and no nudge ladder may rest on one.
+
 ⛔ **AND A COLD PLANE IS ONLY EVIDENCE OF STALLING IF ENOUGH TIME HAS ELAPSED SINCE THE SEAT BECAME
 ABLE TO WORK. MEASURE STALENESS FROM THE CLOCK ORIGIN, NOT FROM NOW.** The origin is whichever is
 LATER: the seat's last output, or **the moment its named blocker cleared**. A seat unblocked three
