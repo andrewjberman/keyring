@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~4</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-12</issued_date>
-<status>blocked</status>
+<status>pending</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (no PRD surface -- FABRIC grain, decomp R4.5(ii)) | **Decomp cell:** `FE-s-28` (round 4, v0.4 @1d9839797c) | **outcome_ref:** none -- serves the record | **depends_on:** none -- READY ROOT | **slot:** ~4 | **rows:** S38, S31, S43
 
