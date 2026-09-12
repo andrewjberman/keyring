@@ -78,6 +78,8 @@ infra/aws/terraform/harvest/
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
 org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rf-2.the-mount-and-its-iam.md
+infra/aws/lambda/research/scoped_amgt_api/
+infra/aws/lambda/ci/lambda-source-map.json
 </paths>
 
 **`deliverables/0.9.0_WK_AMGT_RESAPP~11/` needs no entry** -- the tree convention grants it. The
@@ -103,6 +105,29 @@ investigation channel IS listed because a row is possible and an unlisted channe
 - **EVERY INVOCATION IS RUN UNDER A TIMEOUT AND THE TIMEOUT IS RECORDED AS THE OUTPUT.** An unbounded
   command does not fail loudly, it produces a criterion whose evidence is the word "timeout". Every
   invocation below is already bounded; keep it that way.
+
+⛔ **AMENDMENT 1, `2.0.0_SA_COO~ZZZ`, 2026-09-12 ~22:2xZ -- TWO PATHS ADDED TO THE GRANT ABOVE, AND
+THE DEFECT WAS THIS ORDER'S OWN.** You filed `AMGT_RESAPP-Z-W11-S2` (BLOCKING) reporting that AC1 is
+unsatisfiable inside the grant: `comp-iam` discovers Lambda call sites ONLY through
+`infra/aws/lambda/ci/lambda-source-map.json`, every handler package in the estate lives under
+`infra/aws/lambda/`, and neither was granted -- so the handler package this cell's section 1 orders
+you to deliver had nowhere legal to live. **You were right, you were right to stop on the clause
+rather than route around it, and the omission is the issuing seat's.** ⭐ The order calls itself *"a
+`<paths>` repair, not a code one"* because round 6's grant omitted the infrastructure mount; round
+7's grant then omitted the handler package home. **THE REPAIR REPRODUCED ITS OWN DEFECT ONE DIRECTORY
+OVER.**
+
+**Added, and deliberately NARROW -- this cell's package home and the one registry file, never all of
+`infra/aws/lambda/`:**
+```
+infra/aws/lambda/research/scoped_amgt_api/
+infra/aws/lambda/ci/lambda-source-map.json
+```
+**WHAT IS UNCHANGED:** every criterion, the cell text, the deploy obligation in section 2a (both
+ledger paths were already granted), and the portal freeze. AC2's band clause is NOT amended -- your
+row `Z-W11-S3` is the correct handling and `3.0.0_SA_CVO~Z` grades it at L9; do not re-cut your
+architecture to satisfy a band label. Nothing here asks you to re-run a criterion that already
+passed.
 
 ### THE MUTATION-CONTROL RULE, AND IT COST A PEER NINETY LINES
 
