@@ -1320,6 +1320,79 @@
     "spec_asserts": "IRPT_FNTEND-S33 asserts 'producer-fixtures.test.ts's STALE PINS arm, 3 schema pins stale against 58e387b454'. CLAUDE.md Rule 22: COVERAGE -- print the denominator.",
     "world_is": "One pin, not three. The irony is exact and worth keeping rather than smoothing away: S33's own recommendation is that a consumer should pin by CONTENT and print its denominator, and I wrote that row after reading a count off a diff header instead of off the denominator the test printed one line below. The corrected figure makes the case for S33 STRONGER, not weaker -- ONE non-breaking producer edit to ONE schema file reds the whole consumer suite, which is a cleaner demonstration of byte-pinning's fragility than three would have been. INERT: nothing acts on the count, the round-3 input is unchanged, and no grade turns on it.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S37",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T07:32Z",
+    "one_line": "TO-FE-s-19's cell text locates the tab-body gate at `tabs/TabShell.tsx:133`, `:148` and `:150`. At the ordered bytes NONE of those three lines gates a tab body: :133 and :150 feed the selection STORE (whose value TabShell then discards -- `void useSlice(...)` at :165), :148 is `api.getHoldingsSnapshot(scopeRef)` and is not an `envelopeFromAvailability` call at all (the third such call is :143). The gates are inside the bodies, at `tabs/reporting/ReportingTab.tsx:149`+`:175` and `tabs/holdings/HoldingsTab.tsx:79`+`:88`, and NEITHER FILE IS IN THIS ORDER'S <paths>. The repair still landed inside the grant because the true seam is upstream of both, but an order that had named the tab bodies as the fix site would have been unexecutable.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/TabShell.tsx@f0443ba8 (portal DEV, the ordered bytes): `grep -n envelopeFromAvailability` returns exactly five lines -- :30 and :52 (a comment and the import) and :133, :143, :150 (three `store.applyResponse(...)` arguments). There is no :148 hit; :148 reads `.getHoldingsSnapshot(scopeRef)`.",
+        "portal/src/pages/InvestorReporting/tabs/TabShell.tsx@f0443ba8:160-165, the file's own words: 'no longer rendered directly here now that every tab body owns its own non-READY display, but still read via `useSlice` so this store subscription ... stays exercised for real' -- followed by `void useSlice(store, SLICE_FOR_TAB[activeTab])`. The shell reads the slice and throws the value away; nothing it computes can gate a body.",
+        "portal/src/pages/InvestorReporting/tabs/reporting/ReportingTab.tsx@f0443ba8:149 `setEnvelope(envelopeFromAvailability(payload.availability))` and :175 `const complete = report !== null && isCompleteState(envelope.state)`, which is what chooses `data-slot=\"reporting-body\"` over `<StatusPanel>` at :188-211.",
+        "portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx@f0443ba8:79 `setEnvelope(envelopeFromAvailability(snap.availability))` and :88 `if (!snapshot || envelope.state !== 'READY') return <StatusPanel .../>`, which is what chooses `data-slot=\"holdings-tab\"`.",
+        "MEASURED IN A BROWSER, not read from source: with a READY v1 envelope fulfilled over HTTP against the dev server on 5181, the pre-fix bytes rendered `status-panel@UNCERTAIN` on BOTH tabs (`.scratch/red2.txt`, `BODIES MOUNTED: 0 of 2`); the post-fix bytes render `reporting-body` and `holdings-tab` (`BODIES MOUNTED: 2 of 2`). The gate that moved is inside the bodies; the value that moved was set in the client seam.",
+        "The order's <paths> block names `tabs/TabShell.tsx` and does NOT name `tabs/reporting/` or `tabs/holdings/`. Denominator: 7 path entries, 0 of them reaching either tab body."
+      ]
+    },
+    "spec_asserts": "TO-FE-s-19 WORKER FACE, THE CELL: '`tabs/TabShell.tsx:133`, `:148` and `:150` gate the Reporting and Holdings bodies on `envelopeFromAvailability(<x>.availability)`.'",
+    "world_is": "Those three lines feed a store the shell discards; the bodies gate themselves, in two files this order cannot write. The cell's DIAGNOSIS is right in every other particular (the state is built in envelope.ts, dropped at investor-reporting.ts:932, refilled as UNCERTAIN by adapt.ts:157) and the ordered fix site was sufficient -- carrying the envelope's state onto the document at the parser makes both bodies mount without touching either of them. This row exists because the line citation and the write grant would have contradicted each other under any fix that touched the gate itself, and the next cut against these files should not inherit the wrong coordinates.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S38",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T07:32Z",
+    "one_line": "F19-AC8 CANNOT reach `0 fail` from this cell and its premise is falsified twice over. The order predicts F18-AC3's capture collision 'is expected to CLEAR when this cell lands'; F18-AC3 grades ELEVEN COMMITTED PNG FILES against a committed manifest, so no source change can move its verdict -- the captures must be RE-TAKEN, which is FE-s-18's cell and outside this grant. AND A RE-TAKE WOULD STILL COLLIDE: 59 of the 62 v1 envelopes in the committed smoke-fixture corpus carry NO `status` member, including all three Holdings maps, so under the (correct) fixed bytes all three still render the explicit unknown and produce one image again.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED AT THE CUT: `bun test src/pages/InvestorReporting` at the ordered bytes = 419 pass / 1 skip / 2 fail across 422 tests, 69 files. MEASURED AFTER THIS CELL: 424 pass / 1 skip / 2 fail across 427 tests, 72 files. The two failures are the SAME two, by name: `producer fixtures > the generated wire types were generated from THESE schemas` (the stale StatusEnvelope pin, FE-s-20's, row S33/S35) and `F18-AC3 ... UNIQUE HASHES`. Nothing this cell touched moved either, and nothing it touched broke anything: +5 pass is exactly this order's three new files.",
+        "F18-AC3's population is static files: portal/src/pages/InvestorReporting/__tests__/fe-s-18/manifest.test.ts:57 reads `captures.manifest.json` from `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/` and the uniqueness arm at :118-145 groups `entry.sha256`. Re-derived on disk this turn: 11 entries, 9 distinct, ONE colliding set -- fe-s-18_holdings_observed_390.png, fe-s-18_holdings_target_390.png and fe-s-18_holdings_missing_attribution_390.png all sha256 8ce52e6ad0b60e29..., all three matching their manifest value. `git log -1` on the deliverables folder: 544392594e 2026-09-12T01:21:25-0400, i.e. taken BEFORE this cell existed.",
+        "THE SECOND HALF, and it is the one a re-take would have discovered the hard way: a census of every committed map under portal/src/pages/InvestorReporting/fixtures/smoke/ counts the envelopes carrying a `status` member. Denominator 62 envelopes across 16 maps; 3 carry one (default.json 1 of 12, fe-s-15-clean.json 1 of 5, fe-s-15-needs-correction.json 1 of 5); 59 do not. All three FE-s-18 Holdings maps read `envelopes=9 with_status=0`.",
+        "WHY THAT IS DECISIVE RATHER THAN INCIDENTAL: `StatusEnvelope.schema.json`@58e387b454 is the only wire carrier of a state on this plane -- neither `PerformanceReport.schema.json` (5 top-level members) nor `HoldingsSnapshot.schema.json` (6) declares one. A response with no `status` has stated no state, and this cell's own NOT-OPEN clause ('an absent state still renders as the explicit unknown rather than as a default') requires it to render UNCERTAIN. So the three Holdings maps produce three identical status panels BY THE CONTRACT, not by a defect.",
+        "MEASURED, not inferred: the browser arm of this order served the fe-s-18-frozen map's own documents WITH a status added and both bodies mounted (`BODIES MOUNTED: 2 of 2`); served with a status carrying no state, both rendered `status-panel@UNCERTAIN`. The variable is the `status` member and nothing else -- same documents, same route keys, same browser, same run.",
+        "The response contracts say the producer should have sent one: docs/contracts/investor-reporting/v1/responses/performance-report.response.schema.json@58e387b454, `status` description -- 'PRESENT ON A SUCCESS TOO, not only a failure' -- while `x-response-contract.status_required` is false. The fixtures follow the flag, not the sentence."
+      ]
+    },
+    "spec_asserts": "TO-FE-s-19 F19-AC8: `<expect>0 fail</expect>`, with the note 'at this cut the set reads 2 fail (F18-AC3's capture collision and one stale schema pin). The collision is expected to CLEAR when this cell lands -- three Holdings fixtures produced one byte-identical image precisely because no body mounted. ... If this criterion still reads a stale-pin failure and nothing else, that is a BLOCKING row naming it, not a repair here.'",
+    "world_is": "The set reads 2 fail, not 1, and the order's contingency covers only the 1-fail case. The collision's cause was correctly identified and is now FIXED IN THE CODE -- a Holdings body does mount from a wire response, proven in a browser this turn -- but the criterion reads COMMITTED IMAGE BYTES, and an image does not re-render because the code that produced it changed. Re-taking eleven captures and rewriting their manifest is FE-s-18's work (the round-3 issuance carries FE-s-18 untouched) and `__tests__/fe-s-18/` is not in this order's <paths>, so it is refused here rather than performed. ARMED because the second half outlives this cell: until the smoke corpus carries a `status`, EVERY future browser capture of either tab body is a status panel, and any later criterion of the form 'the capture shows the content' will fail for a reason that looks like a product defect and is not one. Disarm needs a fixture act, not a code act.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S39",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T07:32Z",
+    "one_line": "W2-S11 is only PARTLY closed by this cell, and the remainder is refused rather than silently carried. F19-AC6's three bodies each carry TWO of the three envelope identifiers, so `isEnvelopeShaped` already admitted all three to the parser and all three were already refused -- what this cell added is the NAMED public reason and the refusal-as-a-state. The row's actual hole, a body carrying NONE of the three, is still ACCEPTED on `LiveClient`'s pre-envelope plane, because closing it reds at least three tests in TWO suites outside this order's write grant and would take F19-AC8 further from `0 fail`, not closer.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/contracts/envelope.ts@f0443ba8:138-141, `isEnvelopeShaped`: 'return 'contract_version' in body || 'operation' in body || 'firm_id' in body'. A body missing exactly ONE identifier still carries the other two, so it is envelope-SHAPED and reaches `parseIrEnvelope`, which refuses it at :154/:155/:157. The three bodies F19-AC6 names were therefore never on the bypass.",
+        "MEASURED at the pre-fix bytes: the criterion's own test could not even load -- `SyntaxError: Export named 'envelopeFromRefusal' not found in module .../state/status.ts` (.scratch/red3.txt). Post-fix it prints `MISSING contract_version -> rejected=true reason=ENVELOPE_CONTRACT_VERSION state=UNAVAILABLE`, and the same for `operation` and `firm_id`, with the control `a whole v1 envelope on the same path -> ACCEPTED (availability.state=READY)`. So what changed is the REASON and the STATE, exactly as AC6 words it, and not the bypass.",
+        "THE BYPASS'S CONSUMERS, censused rather than recalled: `comp-find 'new LiveClient' portal/src` = 12 hits across 744 files, 11 of them constructions. Three construct a client whose transport resolves `{}` -- a body carrying none of the three identifiers: __tests__/fe-s-1/adapter.test.ts:91, :276 and __tests__/fe-s-13/no-route.test.ts:134. Neither fe-s-1/ nor fe-s-13/ is in this order's <paths>.",
+        "envelope.ts's own header@f0443ba8:34-40 predicts exactly this: the pre-envelope plane is 'the plane four round-1 test suites outside this order's write grant still drive `LiveClient` with ... Making that case a refusal is a ONE-LINE change here and is named in the row.' The one line is not the obstacle; the four suites are.",
+        "The carry is DISCLOSED rather than invisible in two places: `LiveClient.preEnvelopeResponses` (investor-reporting.ts:867, incremented at :936) counts every pre-envelope response accepted, and pre-envelope.test.ts prints that the bypass is open beside its own result -- it does NOT assert the counter, which would have locked the defect in as expected behaviour."
+      ]
+    },
+    "spec_asserts": "TO-FE-s-19, THE CELL: 'Also carried: W2-S11. LiveClient still ACCEPTS a body carrying none of contract_version / operation / firm_id ... A body that is not a v1 envelope is refused with a named reason.' F19-AC6: 'three bodies missing contract_version, operation and firm_id respectively are each REFUSED with a named public reason.'",
+    "world_is": "The prose clause and the criterion do not cover the same set. The criterion's three bodies are envelope-shaped and were already refused; the clause's body (none of the three) is the one still accepted. Satisfying the criterion as written does not close the clause, and closing the clause would red three tests in two suites this order may not write while F19-AC8 already reads 2 fail -- so the criterion is met as written, the remainder is refused with its measurement, and neither is quietly rounded into the other. ARMED because an unrefused non-v1 body is a live acceptance of a document this build cannot parse; INERT would claim the future normal path is safe, and it is not. Disarm is one line in envelope.ts's caller PLUS a grant over fe-s-1/ and fe-s-13/, which is a cut, not a worker act.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
