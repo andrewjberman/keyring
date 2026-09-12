@@ -4246,6 +4246,107 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Issuer amendment 6 F2, committed at f4b229db52: 'the root really does plan to destroy a live secret plus a log group, because IB-rt-9 removed both from config at f83f73ce6c and never applied.'",
     "world_is": "IB-rt-9 ADDED those declarations in its pre-act OPEN commit. f83f73ce6c removed nothing. The plan's two destroys came from a stale worktree on the reading side, and the same plan output is produced by both causes -- which is why the output could not adjudicate between them and a git read could.",
     "notes": "⭐ THE WORKER'S METHOD CORRECTION IS THE REUSABLE PART AND IT IS SHARPER THAN MY APOLOGY: `git log -- <path>` ANSWERS 'WHAT LAST TOUCHED THIS PATH', NEVER 'WHAT CHANGED THIS THING' -- its top entry is a NEIGHBOUR, not a cause, and `git log -S<token>` named exactly one commit. A neighbour cited as a cause is how a row comes to accuse another cell. ⭐ AND ITS OTHER TWO FINDINGS EXTEND EARLIER ONES: a clean plan PERISHES IN TWO DIRECTIONS -- somebody else's commit, or your own stale worktree over a shared state -- and THE PLAN OUTPUT IS IDENTICAL, which is the fifth duplicated-fact divergence in that cell and the first that was a duplicated VIEW rather than duplicated data; and a PASSING ARM WAS PRINTING A SENTENCE THAT HAD BECOME FALSE (arm (e)'s hardcoded 'HELD ROOT ... not applicable by anyone' paragraph, after both halves were untrue), now a measurement instead of a paragraph -- A GREEN ARM IS NOT LICENCE FOR THE PROSE BESIDE IT. All three go to the L10 slug. Also for the slug: this cell withheld its flip at 15 of 15 THREE times -- once with four deliverables at no commit under my prose-only grant, once with one function still serving its own defect, once on my backwards guard -- because a terminal flip retires the <paths> grants the order carries. Two arms remain HUMAN-GATED rather than measured and the status line says so itself: 0 of 12 success responses measured, none claimed."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S44",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T06:10Z",
+    "one_line": "ARM (d) IS BLOCKED ON ONE NAMED DEPENDENCY, measured on the host: `import directory_runner` fails with ModuleNotFoundError: No module named 'ids', the bundle carries only the two runner files, no ids.py exists anywhere on the host, and all three remedies are out of this order's reach -- two by lane and the third by the estate's own one-normalizer law.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The face's arm (d): 'THE HOST CAN RUN IT. The SSM run's stdout shows the runner's import check passing on the host (module names printed) -- or a BLOCKING row naming the missing dependency and this arm reads BLOCKED.' The L5 note adds that the runners reach first-party code by repo shape and that 'a missing dependency on the host is a BLOCKING row and arm (d) reads BLOCKED'.",
+    "world_is": "MEASURED ON THE HOST, not inferred. mdpf-daily-runner i-02448edb624a7a7cf was started (it was `stopped`), reported SSM PingStatus Online, and ran one read-only AWS-RunShellScript (command id 15783da8-aea7-41b6-a000-b1557ad6f8f5, Status Success rc=0, writes confined to /tmp). Its stdout: python3 is 3.9.25; boto3 1.42.97, pandas 2.3.3 and jsonschema 3.2.0 ALL RESOLVE; a repo-shaped tree assembled from what is actually pullable (the minted tarball into data/assets/scripts/gold/investor_reporting/, the distributed trading_calendar.py into lib/) gives trading_calendar; and then `import directory_runner` prints IMPORT-FAIL: ModuleNotFoundError: No module named 'ids'. A bounded find over /opt /srv /home /usr/local/lib /var/lib returned NO ids.py anywhere on the host (it did find /opt/mdpf/scripts/gold/trading_calendar.py, so the calendar is genuinely distributed and the search works). WHY: directory_runner.py imports BOTH trading_calendar (line 108) and ids (line 115) at MODULE LEVEL, col 0, so the module cannot be imported at all without them, and it uses _ids.opaque at line 146 for the opaque-id normalization. The minted bundle carries EXACTLY TWO members, flat: directory_runner.py (45,676 B) and holdings_snapshot.py (74,684 B) -- verified by downloading it and listing the tar. THE THREE REMEDIES, EACH MEASURED OUT OF REACH: (1) add ids.py as a third bundle member -- the member list is a hardcoded dict in .tools/safe_deploy_core.py:233-246 and .tools/ is NOT in this order's <paths>; (2) distribute infra/aws/lambda/investor-reporting/_ids/ids.py to a host-readable code prefix -- that path is NOT in <paths>, and the assets_gold layer mapping only covers data/assets/scripts/gold; (3) copy ids.py into data/assets/scripts/gold/investor_reporting/, which IS in <paths> -- FORBIDDEN BY LAW, not by lane: ids is THE ONE opaque-id normalizer (IB-rt-3, CTO ruling 4) and irpt-holdings' own BUILD_MANIFEST.json states it is 'never vendored beside the function, because a second copy of either is the defect the layer exists to prevent'. Editing the runner to accept an injected normalizer is also refused by the face ('No runner is edited to change its import shape here').",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ssm get-command-invocation 15783da8-aea7-41b6-a000-b1557ad6f8f5 on i-02448edb624a7a7cf -> Status Success rc=0, stdout 'IMPORT-FAIL: ModuleNotFoundError: No module named ids' and 'OK: boto3 1.42.97 / pandas 2.3.3 / jsonschema 3.2.0'",
+        "tarfile listing of s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz (ETag 964b4eef4f50792d4599e7df0d419486, 34476 B) -> 2 members, flat",
+        "data/assets/scripts/gold/investor_reporting/directory_runner.py lines 108 and 115 (module-level, col 0) and line 146 (_ids.opaque)",
+        ".tools/safe_deploy_core.py:233-246 -- the investor_reporting bundle's members dict, two entries",
+        "comp-find --name ids.py --corpus default -> 2 hits, both under infra/aws/lambda/investor-reporting/_ids/",
+        "infra/aws/lambda/investor-reporting/holdings/BUILD_MANIFEST.json -- 'never vendored beside the function, because a second copy of either is the defect the layer exists to prevent'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "notes": "WHAT THIS BLOCKS AND WHAT IT DOES NOT. Arm (d) reads BLOCKED with the dependency named, which is the face's own provision rather than a failure of it. Downstream: arm (b) (three firms built for real, before/after revisions) CANNOT happen, because a runner that cannot be imported cannot build; arm (c)'s source-completion and new-revision arms depend on a successful build, while its missed-trigger and expiry arms do not. Arm (a) is NOT blocked by this -- the SSM dispatch can be written and PROVEN to dispatch, with a real command id on a real manifest, and the build's outcome is then an honest REFRESH_FAILED naming this dependency. The fix is one line of a member list or one distribution of one file, by a lane that holds .tools/ or _ids/; it is ten minutes of work for someone who may do it, and it is not ten minutes this order may take. NOT a defect of IB-rt-5's mint: the mint did exactly what it declared, both per-member shas verify against the repo bytes (directory-runner-sha256 1e8eb8a5... equals the repo file), and the bundle's two-member scope was the declared scope."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S45",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T06:25Z",
+    "one_line": "The completion manifest that refresh.py's own docstring calls 'the ONLY memory this cell has between fires' is NEVER PERSISTED and never read back: refresh.py contains zero references to boto3/s3/put_object, lambda_handler passes no last_manifest_as_of, so the MISSED-trigger detector is dead code in production and there is no manifest OBJECT for arm (a) to read.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "refresh.py:85 -- 'The completion manifest -- the ONLY memory this cell has between fires.' The face's arm (a): 'the deployed function's manifest after one driven fire reads build_dispatch: SSM with the command id'. The L5 note: 'read the runner's completion manifest, and record COMPLETED / FAILED / MISSED as the round-1 envelope already does'. The function's IAM grants s3:PutObject on <firm bucket>/investor-reporting/directory/_refresh/* with the comment 'writes ONLY the refresh manifests beneath them'.",
+    "world_is": "THREE MEASUREMENTS, each a zero with its denominator printed. (1) comp-find 'put_object|boto3|s3' over infra/aws/lambda/investor-reporting/directory/refresh.py -> 0 hits across 1 file scanned. Over the whole directory package -> 5 hits across 7 files, ALL FIVE in handler.py (the directory SEARCH handler, lines 5, 84, 85, 382, 383); refresh.py and expiry.py carry none. So nothing in the refresh path can write an object. (2) comp-find 'last_manifest_as_of' over the package -> 7 hits: the def at refresh.py:144, its use at :155, the parameter at :165, the guard at :177 and the call at :178 -- and exactly ONE caller supplies it, tests/test_refresh_expiry.py:218. lambda_handler (:290-304) calls refresh_firm(firm_id, now, build_fn=None, correlation_id=...) and passes NO last_manifest_as_of, so the guard `if last_manifest_as_of is not None` is ALWAYS FALSE in production and the missed-fire branch is unreachable there. (3) The world agrees: `s3 ls --recursive` on investor-reporting/directory/_refresh/ in all three firm buckets returns NOTHING, while the function HAS been invoked (its log group carries a stream from 2026/09/11). So the IAM grants a write that no code performs, and the cell's memory does not exist.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'put_object|boto3|s3' infra/aws/lambda/investor-reporting/directory/refresh.py -> 'DENOMINATOR: 0 hit(s) across 1 file(s) scanned'",
+        "comp-find 'put_object|boto3' infra/aws/lambda/investor-reporting/directory -> 5 hits across 7 files, all in handler.py",
+        "comp-find 'last_manifest_as_of' infra/aws/lambda/investor-reporting -> 7 hits; only caller supplying it is directory/tests/test_refresh_expiry.py:218",
+        "infra/aws/lambda/investor-reporting/directory/refresh.py:290-304 -- lambda_handler, no last_manifest_as_of argument",
+        "aws s3 ls s3://opal-data-{bd,cot,inf}/investor-reporting/directory/_refresh/ --recursive -> empty for all three",
+        "aws logs describe-log-streams /aws/lambda/irpt-directory-refresh -> one stream 2026/09/11",
+        "infra/aws/terraform/investor-reporting/directory/schedule.tf:157,178-185 -- the PutObject grant on _refresh/*"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "IN THIS ORDER'S LANE AND THIS ORDER FIXES IT: directory/refresh.py is in <paths>, the IAM already grants the write, and the missed-trigger arm cannot be real until the memory is. The fix is a persisted manifest write plus a read-back of the previous manifest into last_manifest_as_of. Filed rather than silently repaired because it changes what the face's arm (a) and arm (c) are measuring: before this, 'the deployed function's manifest' named an object that has never existed, and the MISSED arm was provable only in a test harness. NOT a defect of IB-s-4's design -- the envelope, the precedence rule and the subtraction-based detector are all correct and are what makes the fix small; what was missing is the durable half, and round 1 honestly recorded the build as NOT_WIRED so nothing downstream was relying on the manifest either."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S46",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T06:25Z",
+    "one_line": "The L5 note's 'dispatch via SSM, WAIT BOUNDED for completion, read the completion manifest' cannot fit the function it is for: irpt-directory-refresh has a 60-SECOND timeout and the measured cost of reaching an SSM-ready host from STOPPED is ~45s of polling before the runner does any work at all -- and the runner's own work is minutes of pandas and per-firm S3 loads.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Decomposition v0.2 s.2, quoted by the face: build_fn becomes 'dispatch the minted directory_runner.py for one firm on one business date via SSM, wait bounded for completion, read the runner's completion manifest, and record COMPLETED / FAILED / MISSED'. The estate's named pattern is mdpf-accrual-trigger, which this cell is told to follow.",
+    "world_is": "MEASURED. `aws lambda get-function-configuration --function-name irpt-directory-refresh` -> Timeout 60, MemorySize 512, declared at terraform/investor-reporting/directory/schedule.tf:133. The host mdpf-daily-runner i-02448edb624a7a7cf was STOPPED; in this worker's own probe the sequence start-instances -> state running took one 15s poll, running -> SSM PingStatus Online was satisfied on the first check, and send-command -> Status Success took one further 15s poll: roughly 45 SECONDS of polling for a command that did nothing but print, with the Lambda's entire budget being 60. The runner's real work is strictly larger: three distinct per-firm `load` implementations reading S3 sources (directory_runner.py:196, :257, :311, :335) plus pandas imports at :243, :258, :453 and jsonschema at :744. AND THE ESTATE'S OWN PATTERN DOES NOT WAIT: mdpf-accrual-trigger sends the command and RETURNS (lambda_function.py:118-136, 'synchronous on purpose: the SSM command status carries the script rc' refers to the SHELL being synchronous on the host, not to the Lambda waiting) -- so 'wait bounded' is not what the pattern this cell is told to copy actually does.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda get-function-configuration --function-name irpt-directory-refresh -> '60 512 refresh.lambda_handler ... python3.12'",
+        "infra/aws/terraform/investor-reporting/directory/schedule.tf:133 -- timeout = 60",
+        "this worker's probe transcript: stopped -> running (one 15s poll) -> PingStatus Online -> send-command -> Status Success (one 15s poll)",
+        "infra/aws/lambda/mdpf-pipeline/mdpf-accrual-trigger/lambda_function.py:118-136 -- send_command then return, no wait on the command",
+        "data/assets/scripts/gold/investor_reporting/directory_runner.py:196,257,311,335 (per-firm loads), 243,258,453 (pandas), 744 (jsonschema)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "notes": "THE DESIGN CHOICE IS NAMED RATHER THAN TAKEN SILENTLY, which is what G4 asks for. Three options and none is free: (1) raise the timeout toward 900s -- in this order's lane (the root is granted) but it makes a scheduled Lambda sit for minutes waiting on an EC2 boot, and it bills for the wait; (2) make the dispatch ASYNCHRONOUS like the pattern it is told to copy -- fits 60s, records build_dispatch: SSM and the command id immediately, and moves 'read the completion manifest' to the NEXT fire, which changes the cell's contract from one-fire-one-answer to two-phase; (3) a bounded wait INSIDE the 60s budget that records DISPATCHED-PENDING with the command id when the command has not finished, and reconciles on the next fire -- which is (2) with a best-effort fast path. I have implemented (3) because it is the only one that both fits the measured budget and still satisfies the face's own words for the fast case, but the CHOICE is the issuer's to confirm. AND THE G4 WINDOW, STATED: while row W2-S44 stands, a deployed dispatch cannot succeed, so every weekday 09:00 ET fire would start a shared EC2 host and record an honest REFRESH_FAILED. That is not a WRONG artifact -- the build genuinely failed and the manifest would say so with the dependency named -- and the start is safe (the mdpf chain's own 15:00Z run self-stops the host, and the trigger pattern starts it too). It is nonetheless a daily side effect on shared infrastructure for no product value, which is why nothing is deployed by this order until the issuer rules."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S47",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T06:25Z",
+    "one_line": "Arm (b) asks for a revision 'before and after (r -> r+1)' and for 'the previous revision object still present', but NO production directory artifact has ever existed for any firm: all three latest.json read 404 and investor-reporting/ holds only qa/ -- so the act is a FIRST MINT and the retained-previous-revision clause is vacuous by construction.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The face's arm (b): 'THREE OF THREE, BEFORE/AFTER. Per firm: the latest.json revision before and after (r -> r+1), the artifact hash differs, the previous revision object still present (head-object), the entry count with its denominator, 0 ids carrying `:acct:`.' The L5 note: 'the latest.json revision advances ... and the previous revision is retained (immutable revisions)'.",
+    "world_is": "MEASURED WITH A POSITIVE CONTROL, because a 404 can be a permissions artifact rather than an absence. get-object on investor-reporting/directory/latest.json returns 404 for opal-data-bd, opal-data-cot AND opal-data-inf. `s3 ls s3://<bucket>/investor-reporting/` returns exactly one child for each -- `PRE qa/` -- so there is no `directory/` prefix under production at all. The control: `s3 ls s3://opal-data-bd/` lists many prefixes, so the credential reads these buckets fine. WHAT DOES EXIST IS QA, and it shows the runner works: investor-reporting/qa/directory/ carries two dated builds per firm (bd 2026-09-09 6,371,481 B and 2026-09-10 6,392,329 B; cot 2026-09-09 417,709 B and 2026-09-10 420,584 B; inf 2026-09-10 and 2026-09-11 450,726 B each) plus a latest.json pointer of 273-275 bytes for each. So `r -> r+1` has no r: the first production build mints latest.json and one dated object, and 'the previous revision object still present' cannot be shown because there is no previous revision. NOTE ALSO that the revision is not an integer: directory_runner.py:822 builds it as `irpt-dir/<firm>/<business_date>/1.0`, so an advancing revision is a CHANGED STRING carrying a new business date, never r+1 arithmetic.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3api get-object investor-reporting/directory/latest.json -> 404 on opal-data-bd, opal-data-cot, opal-data-inf",
+        "aws s3 ls s3://opal-data-{bd,cot,inf}/investor-reporting/ -> 'PRE qa/' only, for all three",
+        "POSITIVE CONTROL: aws s3 ls s3://opal-data-bd/ -> many prefixes listed, so the read works",
+        "aws s3 ls s3://opal-data-{bd,cot,inf}/investor-reporting/qa/ --recursive -> two dated directory builds plus latest.json per firm",
+        "data/assets/scripts/gold/investor_reporting/directory_runner.py:822 and :770-780 -- the revision string shape and the dated/latest key pair"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not a blocker on its own and not a defect of anyone: round 1 built to QA deliberately and the production prefix was always this cell's to first-mint. Filed because arm (b) is worded for an ADVANCE and the world offers a FIRST MINT, and those are different evidence: the before half is an ABSENCE (recorded here with its control), the after half is one dated object plus one pointer, and the immutability clause becomes provable only on the SECOND production build. A reader who takes arm (b)'s '(r -> r+1)' literally would look for an integer that does not exist in the revision grammar either."
   }
 ]
 ```
