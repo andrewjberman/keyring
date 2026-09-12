@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.13",
+ "prd_version": "v0.14",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
@@ -145,7 +145,7 @@ Source: brief II.3, eleven contracts, proposed canonical, versioned. BK owns ide
 | `NarrativePacket` | BCKEND B13 | FNTEND, B14 | B13 | performance revision; event policy/version; dated peak/trough/recovery/movement events; cited historical evidence with cutoffs; validated prose; coverage; generation/model/prompt versions |
 | `ExportBundle` | BCKEND B14 | B14 render; FNTEND F8 (preview -- a preview never calls the vendor again) | B14 | immutable authorized report revisions + selected sections; narrative packet; approved asset hashes; template/renderer/disclosure versions; render options; no live vendor request during render |
 | `ExportReceipt` | BCKEND B14 | FNTEND | B14 | export/bundle hash; artifact hash/location server-side; page/validation facts; created/released timestamps; job state; authorized download route; no vendor signed URL in FE |
-| `StatusEnvelope` | BCKEND B16 | FNTEND | B16 | operation + revision; queued/running/ready/partial/stale/unavailable/needs-correction/uncertain/failed; source dates; safe retry/recovery actions; public reason code; internal correlation id |
+| `StatusEnvelope` | BCKEND B16 | FNTEND | B16 | operation + revision; queued/running/ready/partial/stale/unavailable/needs-correction/uncertain/failed; source dates -- the business date is REQUIRED on an ANSWER-BEARING state (ready, partial, stale, needs-correction, uncertain) and MAY BE ABSENT, never null, on a NO-ANSWER state (queued, running, unavailable, failed) where no source read has occurred; safe retry/recovery actions; public reason code; internal correlation id |
 | `RenderPackage` | FNTEND | BCKEND B14 | B14 (consumer) | supported contract/template versions; deterministic screen/print components; fonts/assets requirements; print entry point; visual fixtures -- BK packages and executes the compatible version |
 
 **v0.5 field additions from the supplement, no new browser contract:** `AnalysisReport` carries the generation attempt, vendor-object ownership and transformation provenance beside the vendor artifact hash (SUPP O5); `AnalysisRequest.stage` maps to the public states queued / preparing analysis / generating / input needed / retryable delay / ready (SUPP IV.5); the session bundle, the request ledger and the account coordinator are SERVER-ONLY records produced and consumed inside B8/B9/B16/B17 and never reach the browser.
