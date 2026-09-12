@@ -1407,6 +1407,53 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S3",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-12T06:47:45Z",
+    "one_line": "F24-AC3's bar as written -- 'a source scan of __tests__/fe-s-4/manifest.test.ts for a literal length comparison against a digit returns zero hits' -- cannot be met UNSCOPED: that file already carried TWO such comparisons before this cell touched it (expect(files.length > 8) and expect(RENDER_PACKAGE.templates.length).toBe(2)), neither about fonts, and an unscoped zero would require deleting bars this cell does not own. The scan was therefore SCOPED to the font count (the subject the cell names) and reports 0 of 8 -- the full unscoped denominator is printed beside it, every hit listed, so the scoping is visible to a grader rather than hidden in a green.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE BAR: org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-24.render-package-fonts.md @9762d5b8a3, F24-AC3 prose line 35, verbatim: 'the assertion's shape: a source scan of `__tests__/fe-s-4/manifest.test.ts` for a literal length comparison against a digit returns zero hits, printed with a positive control proving the scan can find one.' The <expect> the checker greps for is the string COUNT IS DERIVED, NOT LITERAL, which IS printed.",
+        "THE WORLD, at the commit the worktree was cut from and BEFORE this cell's edit: portal DEV @f0443ba8, src/pages/InvestorReporting/__tests__/fe-s-4/manifest.test.ts carried `expect(files.length > 8).toBe(true)` (line 106, a lower bound on render/ source files, FE-s-4's own coverage control) and `expect(RENDER_PACKAGE.templates.length).toBe(2)` (line 215, the TEMPLATE count). Both are literal count comparisons against a digit; neither grades the font count; neither is this cell's subject.",
+        "MEASURED, not predicted -- the scan was written unscoped FIRST and run: `bun test src/pages/InvestorReporting/__tests__/fe-s-4/manifest.test.ts` prints `LITERAL COUNT COMPARISONS: 8 of 8 found, 0 of them grade the FONT count` and then lists all eight (the two above plus six `=== 0` emptiness checks and `.length > 0` non-vacuity guards introduced by this cell's own derived-count helper). 8 is the denominator; 0 is the scoped claim.",
+        "WHY NOT MAKE THE UNSCOPED NUMBER ZERO: the only way to zero `expect(RENDER_PACKAGE.templates.length).toBe(2)` is to derive the template count from Object.keys(pageOptions) -- but this file's very next line already asserts those two are equal, so the derivation would be tautological and the bar 'there are exactly two templates' would be LOST. Trading a real bar for a cosmetic zero is the opposite of what F24-AC3 asks for, and templates are not this cell's subject (the order's own line 24 names the defect as the font count: 'manifest.test.ts asserts a LITERAL 3. Changing it to a literal 4 reproduces the defect one face later').",
+        "THE SCOPING IS FALSIFIABLE, not an assertion of convenience: the positive control runs the SAME scoped predicate over a seeded line and must find it -- `POSITIVE CONTROL: scan of a seeded typed-in line found 1 hit -- expect(RENDER_PACKAGE.fonts.length).toBe(4)`. The seeded string is assembled from three fragments in the source so the control is not itself a hit when the file scans its own bytes; written whole it would plant the exact line it looks for, and the arm would be a constant.",
+        "SCOPE OF THIS ROW: it asserts ONLY that the criterion's unscoped reading is unsatisfiable inside this cell's grant and that a scoped scan was substituted with its denominator printed. It does NOT assert the issuer meant the wider reading, and it decides nothing about whether the two out-of-scope literals should ever be derived -- that is a later cell's call, not this worker's."
+      ]
+    },
+    "spec_asserts": "F24-AC3: a source scan of __tests__/fe-s-4/manifest.test.ts for a literal length comparison against a digit returns ZERO hits, printed with a positive control proving the scan can find one.",
+    "world_is": "Zero is reachable only for the FONT count, which is the subject the cell names; the file held two unrelated literal count comparisons before this cell existed, and six more emptiness/non-vacuity guards are the ordinary idiom of the derived-count helper the cell was ordered to write. The test therefore prints BOTH numbers -- `LITERAL COUNT COMPARISONS: 8 of 8 found, 0 of them grade the FONT count` -- lists every one of the eight, and asserts emptiness on the font-scoped set only. INERT: nothing is armed, no artifact or served surface moves, and the substitution is disclosed in the proof-of-spec instance's surprises array as well as here, so a grader reading either sees the scoping without reading the test source. The open question left for the issuer, not decided here: whether F24-AC3's wording should be narrowed to 'the font count' in future faces, or whether the two out-of-scope literals should be cut in a cell that owns them.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S4",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-12T06:54:44Z",
+    "one_line": "TO-FE-s-24's BOUNDS order this worker to mint rows 'starting at IRPT_FNTEND-W4-S1 (the W4 coordinate has no round-3 rows yet; if the file carries no W4 sequence, yours opens it)'. Followed literally it produces a REFUSED COMMIT: INVESTIGATION_v2.md carries no W4 sequence, but INVESTIGATION_v1.md already holds W4-S1 and W4-S2 from round 1, and .tools/surprise-row-gate.py allocates over the whole PLANE, not per document. The ordered id was minted, staged and BLOCKED; the row was re-minted as W4-S3, the next unused number over both documents.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE ORDER: org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-24.render-package-fonts.md @9762d5b8a3, BOUNDS bullet 'Surprise', verbatim: 'id `IRPT_FNTEND-W4-S<k>` starting at `IRPT_FNTEND-W4-S1` (the W4 coordinate has no round-3 rows yet; if the file carries no W4 sequence, yours opens it)'. The spawn prompt carries the same instruction, 'ids IRPT_FNTEND-W4-S<k> from W4-S1'. Both halves of the parenthetical are TRUE and the conclusion drawn from them is still wrong, which is what makes this worth a row: the coordinate has no ROUND-3 rows, and v2 carries no W4 sequence -- but the allocator is neither round-scoped nor document-scoped.",
+        "THE GATE, its own run and the authority: the commit was attempted and REFUSED -- `.tools/safe-commit.sh ... -- .../INVESTIGATION_v2.md` printed 'ERROR: BLOCKED -- surprise-channel row gate (steps 7/10). Commit aborted; files unstaged.' and '[surprise-row-gate] BLOCKED -- 1 violation(s) on NEW rows: NEW row IRPT_FNTEND-W4-S1 -- that id already exists in org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v1.md (the same plane of IRPT_FNTEND's channel, at the graded index). An id is ONE row across the project's documents; mint the next unused number over EVERY document of the plane'. This is the gate's own verdict, not a re-derivation of its rule.",
+        "THE WORLD: INVESTIGATION_v1.md @9762d5b8a3 carries `\"id\": \"IRPT_FNTEND-W4-S1\"` at line 508 and `\"id\": \"IRPT_FNTEND-W4-S2\"` at line 531 -- round 1's slot ~4. Census over BOTH documents of the plane (the denominator the gate uses): W1-S1..S36, W2-S1..S14, W3-S1..S12 minus S3, W4-S1..S2. Next unused W4 number = S3, which is what this worker's rows now carry.",
+        "HOW THE WRONG ID SURVIVED MY OWN CHECK, because the trap is reusable and is Rule 24's: I DID re-read the channel immediately before minting, as ordered -- but I read the document the order named (INVESTIGATION_v2.md) and got zero W4 hits, and a zero from a SCOPED domain read as an absence. The unscoped read over both documents was one `cat *.md` away and returned two. The order's own parenthetical is what scoped me, and the gate is the only thing that caught it.",
+        "The uncommitted block was backed out by text removal and the file verified byte-identical to HEAD (`git diff --numstat` = 0 lines, `git status --porcelain` empty) before the corrected rows were spliced -- so no landed row was edited and no half-written row remains."
+      ]
+    },
+    "spec_asserts": "TO-FE-s-24 BOUNDS: 'Surprise. ONE row per finding in org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md, id IRPT_FNTEND-W4-S<k> starting at IRPT_FNTEND-W4-S1 (the W4 coordinate has no round-3 rows yet; if the file carries no W4 sequence, yours opens it). Re-read the file immediately before minting each id.'",
+    "disposition": "UNDER_INVESTIGATION",
+    "world_is": "The W4 coordinate is NOT empty: INVESTIGATION_v1.md holds W4-S1 and W4-S2 from round 1's slot ~4, and the row gate allocates ids over every document of the project's channel plane rather than over the document a face names. The ordered id therefore collides and the commit is refused. This worker's rows are W4-S3 and W4-S4. INERT: the gate is fail-closed and loud, the refusal costs one retry, nothing is served, and no landed row was touched. The re-usable half for the issuer, not decided here: a face that names a starting number is naming a value only the ALLOCATOR can know, and it teaches a worker to scope its pre-mint read to one document -- 'mint the next unused number over every document of the plane' would be both shorter and correct, and is what the gate's own error text says."
   }
 ]
 ```
