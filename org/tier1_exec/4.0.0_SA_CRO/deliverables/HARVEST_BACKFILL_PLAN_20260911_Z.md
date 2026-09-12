@@ -30,6 +30,11 @@ account, and you cannot query SA by symbol without the symbol.
 `build_social_accounts()`. **The slots and the code exist; the values were never populated.**
 Resolution is desk work against names we already hold -- no scraping, no vendor call, no captcha.
 
+⛔ **CORRECTION 2026-09-12, SEE §10 -- THE PRECEDING PARAGRAPH IS WRONG AND THIS SEAT MEASURED IT
+AFTERWARDS, NOT BEFORE.** Identity resolution is NOT vendor-free and its LOCAL yield is **ZERO NEW
+VALUES**: the pass that exists has already run to its ceiling. Read §10 before acting on §0 or on
+step 1 of §7. The rest of this brief stands.
+
 **So the plan is: RESOLVE FIRST, then backfill against resolved identifiers.** Doing it the other way
 builds a careful low-and-slow harvester that can address 11% of the universe on SA and none of it on
 social.
@@ -238,3 +243,76 @@ cleanly and scores every ticker zero.
 
 ⭐ **THE CHATTER AXIS IS NOT WAITING ON CODE. IT IS WAITING ON THIS BACKFILL.** Every row this plan
 lands is a row that axis can rank, and the Lead Panel reads those pre-computed rows directly.
+
+---
+
+## 10. CORRECTION (2026-09-12): §0's "CHEAP AND LOCAL" IS WRONG, AND THE FREE MOVE DOES NOT EXIST
+
+⛔ **THIS SECTION CORRECTS THIS SEAT'S OWN HEADLINE RECOMMENDATION, WHICH WAS GIVEN TO ANDREW AS THE
+ONE THING THAT NEEDED NO DECISION.** The words in §0 were *"Resolution is desk work against names we
+already hold -- no scraping, no vendor call, no captcha"*, and §7 step 1 carries **vendor egress? NO**.
+Both are false. What follows is measured; the original text is left standing above so the error is
+legible rather than quietly removed.
+
+### What the code's own bounds say -- and this was readable before the brief was written
+
+`lib/research/identity/resolver.py`, module docstring, BOUNDS:
+
+> *"ir_domain and social_account are UNRESOLVED at this cut, and the record says so plainly --
+> **resolving them needs a SERP zone request and social lookups, each a vendor call this order does
+> not carry the word for.**"*
+
+So **two of the three keys named in step 1 are vendor-gated at the source**, stated by the module this
+brief cited as evidence that the work was free. `sa_symbol` to MEASURED is likewise not local: the
+numeric `sa_id` comes from the SA fetch path (AMGT-s-b4), also a vendor call. The module resolves
+`sa_symbol` at most to INFERRED, and only from an already-MEASURED US ticker.
+
+### The local yield, measured over the whole population rather than recalled
+
+| key | state | NEW values obtainable with NO vendor call |
+|---|---|---|
+| `bloomberg_ticker` | 34 MEASURED / 55 UNRESOLVED | **0** -- local sources exhausted |
+| `sa_symbol` | 10 INFERRED / 79 UNRESOLVED | **0** -- all 10 US-suffixed MEASURED tickers already inferred |
+| `ir_domain` | 0 / 89 UNRESOLVED | **0** -- needs a SERP zone request |
+| `social_account` | 0 / 89 UNRESOLVED | **0** -- needs social lookups |
+
+`lib/research/identity/coverage_pass.py` **is** the "resolve locally" pass, it has already RUN (it is
+what produced the 34, up from 32), and it names and checks three local sources, recording a null
+contribution as a finding rather than a skip. Its residual, subtracted over the denominator rather
+than listed forward:
+
+    55 UNRESOLVED  =  40 with NO one-pager workbook on this device (PDF-only research material)
+                   +  15 with a workbook whose only valid-shaped label hit is the shared
+                         'AAPL US' template placeholder (or, for Rio Tinto, an
+                         '#N/A Invalid Security' artifact)
+
+There is no fourth local source. The gap is **data that is not on this device**, not work nobody did.
+
+### The one large local lever left is ANDREW'S CALL AND IS ALREADY CARDED
+
+`.../0.9.0_WK_AMGT_RESAPP~4/DESIGN_QUESTION_identity_fallback.md` -- marked **"Not coded. Not
+exercised. Andrew's call, not this cell's."** The mechanism: read the trailing Bloomberg-shaped token
+off a directory's own name (`Nestle NESN SW` -> `NESN SW`). Its own assessment: **up to 15 additional
+INFERRED**, *"the single largest lever available on this identity layer, larger than every
+workbook-read source combined -- it is just not a MEASURED lever."*
+⚠ It reads **whoever named the directory's belief**, not the company's identity, and the document
+records an OBSERVED failure mode in this corpus (`Nokia FH` yields the ambiguous `FH`). That is why it
+is a call and not a default.
+
+### Why the error happened, since the mechanism recurs
+
+The brief read that `resolver.py` **declares** all four keys and that `build_social_accounts()`
+**exists**, and concluded the values could be populated. **THE SLOTS EXISTING IS NOT THE VALUES BEING
+OBTAINABLE** -- and the same file's BOUNDS said so, four lines from the line that was cited. This is
+the night's recurring shape one more time: a DECLARATION read as a CAPABILITY, and a source quoted for
+the half that supported the conclusion.
+⭐ **The practical rule: when a module is cited as evidence that work is cheap, read its BOUNDS
+section before quoting its API.** A module that knows what it cannot do usually says so.
+
+### What this changes for the decision
+
+**It does not slow anything down; it sharpens the ask.** §8's single call was *"does the vendor word
+cover a local site-Z backfill"*. The corrected picture is that **every remaining step -- including the
+identity step this brief offered as free -- sits behind that word or behind the design call above.**
+There is no longer a "start here while deciding" item, and §7's ordering still holds: identity first,
+because a backfill against 10 of 89 names is the more expensive mistake.
