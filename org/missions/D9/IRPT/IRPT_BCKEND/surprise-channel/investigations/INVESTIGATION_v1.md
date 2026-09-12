@@ -3334,6 +3334,53 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "disposition": "UNDER_INVESTIGATION",
     "disarm_owner": "2.0.0_SA_COO~B",
     "notes": "NOT an argument for deploying: the sequencing A6 states is sound and its reason is stated (until this order's apply re-points the handler strings the world runs the OLD handlers, which import neither served nor loaders, so rt-9's deploy is safe ahead of mine and mine is unsafe ahead of its declaration landing). The mismatch is only that the CONDITION is discharged by a message and the party who must act on it cannot receive one. The remedy is the issuer's: re-hand this order after rt-9's deploy lands, with the fact stated in the face, which needs no new mechanism. Arms (a) in-lane, (b), (c), (d) and (f) are complete and committed; (e) and (g) are what this row holds."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S36",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T01:31Z",
+    "one_line": "EVERY refusal the guarded boundary serves fails v1's StatusEnvelope on one clause -- source_dates.required is ['business_date'] and the boundary emits source_dates without one -- and the two halves of that defect have DIFFERENT owners: a post-read refusal could carry the artifact's date and does not, a pre-read refusal has no artifact and v1 admits no null.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Row W2-S25, RULED by the issuer at the hand-off: 'A refusal is NEVER an instance of a response contract: it is v1's StatusEnvelope. Arm (g) grades SUCCESS responses against responses/<operation>.response.schema.json and REFUSALS against StatusEnvelope, both printed per operation.' The v1 freeze at c22f179bbf stands and nothing in docs/contracts/ is edited by this order.",
+    "world_is": "Measured against the DEPLOYED functions, invoked by name after this order's apply: 11 of 11 in-lane routes refuse a mismatched X-Contract-Version with CONTRACT_VERSION (the face's own bar for that half, MET) and 0 of 11 of those refusals validate against docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json. Every one fails on the same clause: the schema's properties.source_dates carries required=['business_date'] with business_date typed as a non-null date string, and the boundary emits 'source_dates': {'source_completion_date': null}. The top-level required list does NOT name business_date, which is why a key-presence test passes -- the in-process arm 'b/c/d the envelope' asserts the SUBSET of top-level keys and reads 6 of 6, and only a schema validation against the published file sees this. TWO DEFECTS, MEASURED APART in process on irpt-directory-search: a POST-READ refusal (account swap, OBJECT_NOT_COVERED, raised after the directory artifact was read) emits the same date-less source_dates although the artifact it just read carries a business date -- fixable in lane; a PRE-READ refusal (CONTRACT_VERSION, raised before any artifact is read, which is the property that makes the version check trustworthy and is proven by the arm that refuses with the storage loaders REMOVED) has NO artifact to take a date from, and the business date comes from the artifact and never from a clock.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json@a296eac0f4 -- properties.source_dates.required == ['business_date']; top-level required == ['operation','state','source_dates','actions','public_reason_code','internal_correlation_id']",
+        "timeout 900 python .../battery_ib_rt_2.py @737548f735 -- arm (g): 'a mismatched X-Contract-Version is refused CONTRACT_VERSION on the DEPLOYED function: 11 of 11; the refusal validates against v1 StatusEnvelope: 0 of 11', each line printing \"StatusEnvelope INVALID: 'business_date' is a required property\"",
+        "live invoke of irpt-status @737548f735 -> {\"ok\": false, \"operation\": \"status-summary\", \"status\": {..., \"source_dates\": {\"source_completion_date\": null}, \"public_reason_code\": \"CONTRACT_VERSION\"}}",
+        "in-process discriminator on irpt-directory-search @737548f735: POST-READ refusal code=OBJECT_NOT_COVERED source_dates={\"source_completion_date\": null}; PRE-READ refusal code=CONTRACT_VERSION source_dates={\"source_completion_date\": null}"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "notes": "NOT FIXED, AND THE REASON IS STATED RATHER THAN THE FIX BEING HALF-TAKEN. The post-read half is this cell's and is a small in-lane change; the pre-read half cannot be fixed without amending a FROZEN v1 contract that this order is expressly forbidden to touch (W2-S25's own amendment). Shipping the post-read half alone would still leave 11 of 11 version refusals non-conforming -- it moves no arm -- and would spend a second six-root build-and-deploy cycle to do it. So the arm reads BLOCKED with this row rather than PASS with a repair that changes no number. What the issuer or the CTO must decide: whether v1's StatusEnvelope gains a null branch for a refusal raised before any artifact read (an L10 addendum to a frozen contract), or whether a pre-read refusal is declared to be a different shape from a StatusEnvelope, as W2-S25 already declared it a different shape from a response contract. NO HAZARD: the refusal is well-formed, carries its public reason code and its correlation id, and leaks nothing -- what fails is the SCHEMA claim about it, not the safety of it."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S37",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T01:31Z",
+    "one_line": "The record corrected in flight: A6 was struck by the issuer mid-run and the six-root deploy landed and verified, so rows W2-S35 (the un-receivable release condition) and W2-S33 (rt-9's build) are OVERTAKEN BY EVENTS, and W2-S32's operational claim is REFUTED BY THE ACT -- the members do resolve, from the flat shared roots, and six artifacts now import in the runtime layout.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "W2-S32 asserted that A4's ruled remedy could not carry the modules because both build scripts resolve source_dir/<name> only, and W2-S35 asserted that arms (e) and (g) had no reachable path because A6 conditioned the deploy on a message a worker cannot receive. Both were filed as BLOCKING with disarm owner 2.0.0_SA_COO~B.",
+    "world_is": "The issuer STRUCK AND REVERSED A6 in the same session ('you are not inheriting a delay, you are inheriting the whole act') after slot ~3 refused the deploy it had been ordered to take and was right to: all three roots already carried the unapplied handler flip, so the apply that shipped the ids.py fix would also have flipped the handler onto an `entry` module no zip carried. W2-S35 is therefore discharged by the issuer's own act, not by mine. W2-S32's DIAGNOSIS stands -- neither build-and-upload.sh nor build-zip.sh has a second resolution step, so declaring a member that is not in source_dir makes THOSE scripts refuse -- but its operational conclusion ('the ruled remedy does not carry the modules') is REFUTED: resolving source_dir first and then the flat shared roots (_authz, _scope, _keys, _ids, _gate, intake, directory, data, terraform/core) finds every declared member, which is what slot ~3 measured independently at 14 of 14, 10 of 10 and 27 of 27, and what this cell then EXERCISED -- 6 of 6 artifacts built, and 6 of 6 import in the flat /var/task (+ /opt/python where the layer is attached) layout from their SERVED bytes with the repo off sys.path, every negative control firing. The reconciliation is that the two measurements answered DIFFERENT QUESTIONS: mine asked whether the shipped build SCRIPT resolves from the repo, slot ~3's asked whether the declared names exist in the repo at all. Both answers were correct and only together do they say what to do. W2-S33 (rt-9's three functions refusing at the build) is overtaken the same way: those three are now this cell's, are built by the recipe rather than by that script, and are deployed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the issuer's correction and addendum to 0.9.0_WK_IRPT_BCKEND~2, 2026-09-12, striking A6 and placing the one-root-at-a-time control",
+        "org/critical_paths/change_management/20260912T0035Z_irpt-bckend-rt2_deploy_completion.md@737548f735 -- 12 legs CLOSED, six roots, every post-apply plan 'No changes'",
+        "timeout 900 python .../battery_ib_rt_2.py @737548f735 -- arm (e): 'declared artifact_sha256 == live CodeSha256: 6 of 6; handler is the guarded entry: 6 of 6; Active/Successful: 6 of 6' and 'IMPORT-OK 6 of 6 | negative control FIRES 6 of 6 | VERIFIED 6 of 6'",
+        "infra/aws/lambda/ci/build-and-upload.sh:195-202 and build-zip.sh:51-54@a296eac0f4 -- the diagnosis half of W2-S32, unchanged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed because the channel is APPEND-ONLY and an earlier row of mine may not be edited: a reader who finds W2-S32 and W2-S35 without this row would act on two BLOCKING items that the world has already passed. Neither earlier row was wrong when written and neither is deleted. What survives from W2-S32 and is still worth an owner: the shipped build scripts cannot build these six functions from their declared lists, so the artifacts were built by the proven recipe instead -- anyone who later runs build-and-upload.sh against irpt-status will still get 'ERROR: File not found', and that gap belongs to whoever owns infra/aws/lambda/ci/, which is not in this order's <paths>."
   }
 ]
 ```
