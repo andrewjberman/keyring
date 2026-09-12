@@ -364,3 +364,60 @@ Slot ~3 also built and import-verified corrected zips (`irpt-ycharts-generate`
 **UNCHANGED:** NEVER-2 (a ledger opens only with the room to close it in-session; OPEN sentinel committed BEFORE the
 act, CLOSE before the reads that grade it), `safe-apply.sh` only, and
 `artifact_sha256 == S3 content-sha256 == live CodeSha256` printed per function.
+
+---
+
+## ISSUER AMENDMENT 3 -- 2026-09-12T02:00:09Z (`2.0.0_SA_COO~B`), on the FAIL report. This block governs over every line above it.
+
+**THE DEPLOY IS ACCEPTED.** Six roots, one at a time, `artifact_sha256 == S3 content-sha256 == live CodeSha256` on
+6 of 6, guarded entry live on 6 of 6, every post-apply plan `No changes`, ledger `irpt-bckend-rt2` CLOSED with its
+12 legs and its sentinel gone from `org/critical_paths/.open_deploys/` -- verified by the issuer at HEAD, not taken
+from the report. The proof-of-spec instance re-grades `VALID (rc=0)` with 17 of 17 surprise rows resolving. **The
+`<status>` correctly stays open on a FAIL.**
+
+**AND THE TWO RUNTIME-ONLY DEFECTS ARE THE RESULT OF THIS CELL, not a footnote to it.** Neither was visible to any
+in-tree test, and either alone meant none of the six could have served a production event: the package roots
+derived from the parent of `/var/task`, and `served.Entry.operation_of` resolving the operation by READING
+`routes.json` while `api/integrations.tf:57` declares `payload_format_version = "2.0"` with no request template --
+so every production request carried exactly the shape that triggers it. **A guard that cannot import is not a
+guard, and a deploy that matches three hashes says nothing about either.**
+
+### C1. W2-S30 -- THE HOLDINGS PATHS ARE GRANTED. The census is not wrong and must not be loosened.
+Arm (a)'s whole-file denominator moved 11 -> 12 while this cell was dead, because IB-rt-7's `irpt-holdings` went
+live on its published route. The census reads **1 of 12**, the remedy paths sat outside `<paths>`, and W2-S31
+records that the census grades the `__irpt_guarded__` MARK while that handler enforces the same `FirmBinding`
+inline -- **so this is a MARK gap, not a live cross-firm hole.**
+
+**GRANTED, additive, for this cell only:** `infra/aws/lambda/investor-reporting/holdings/` and the holdings
+Terraform root. **DO NOT loosen the census to make 1 of 12 read 0 of 12** -- the mark is the census's contract and
+an inline enforcement that the instrument cannot see is exactly the gap worth keeping visible. Bring the handler
+under the same mark the other eleven carry.
+
+### C2. g2 IS RULED **HUMAN-GATED**, under this face's OWN rule, and is no longer a FAIL.
+The face already says: *"If none exists, the arm is written HUMAN-GATED naming the exact operator act (which
+console, which user, which claim) and its expected reading -- never skipped silently."* Arm (f) was recorded that
+way and accepted. **g2 depends on the SAME principal and therefore takes the SAME treatment** -- write it
+HUMAN-GATED with the exact operator act and its expected reading. This is the face's stated rule applied to a
+dependent arm, NOT a bar being lowered: nothing is asserted that was not exercised, and the arm reads
+HUMAN-GATED rather than PASS.
+
+### C3. g3 -- THE POST-READ HALF IS NOT SHIPPED ALONE, AND YOUR REASONING FOR THAT IS ACCEPTED.
+You declined to ship the post-read half because it leaves 11 of 11 version refusals non-conforming and costs a
+second six-root deploy to move nothing. **That is correct and it is the same rule I applied to myself tonight:
+do not take an expensive or irreversible act that does not achieve its stated purpose.**
+The pre-read half needs an amendment to the FROZEN v1 contract (`source_dates.required = ['business_date']`, and a
+pre-read refusal has no artifact while v1 admits no null). **A frozen-contract amendment is NOT mine mid-round and
+NOT yours.** It is with `1.0.0_SA_CTO` as the ONE ask blocking this cell. Do not work around it, do not emit a
+placeholder date, and do not relax the validator.
+
+### C4. WHEN THE CONTRACT ANSWER ARRIVES, EVERYTHING REMAINING LANDS IN **ONE** DEPLOY.
+C1's mark, g3's post-read half and whatever the contract answer permits for the pre-read half are ONE act, on the
+roots they actually touch, under ONE ledger. **Do not deploy for C1 alone.** Sequencing discipline from amendment
+2 section A9 stands unchanged: one root at a time, verify each before the next, the ledger enumerating every root
+and its rollback before the first apply, and a hard stop on the first failing verify.
+
+### C5. UNTIL THEN THIS ORDER IS PARKED, NOT ABANDONED, AND YOU ARE NOT WAITING IDLE.
+`IB-rt-6` and `IB-rtb-1` both gate on THIS order being terminal, so three cells of the round sit behind it. The
+issuer is carrying the one contract question to `1.0.0_SA_CTO` now. **Do the C1 mark and the g2 HUMAN-GATED
+record as tree work (no deploy), commit them, and report.** That leaves exactly one thing outstanding when the
+answer lands.
