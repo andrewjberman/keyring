@@ -1151,6 +1151,28 @@
     "spec_asserts": "TO-FE-s-18's cell: `at 390 the Holdings summary card's values overlap, the firm attribution floats outside its card, the slice table and the pie labels clip, the Reporting period columns clip, the header actions wrap badly. Fix each with the portal's own utilities (a horizontal-scroll container for wide tables, stacked cards, wrapped actions), keeping the 1440 layout as it is.`",
     "world_is": "Five of the six are fixable with the portal's own utilities and were fixed. The sixth is not: the pie's clipping is a chart-geometry property, and the three remedies the order itself suggests (scroll container, stacked cards, wrapped actions) do not reach a value drawn inside an SVG that sizes itself to its parent. The cell's list and its grant disagree on this one item. Recorded for the owning cell (FE-s-7 owns DrillTree) with the measurement, rather than silently widened or silently skipped. The likely one-line fix, offered and NOT applied: make `outerRadius` responsive, or move the labels inside the arc, either of which is a prop change on tabs/holdings/DrillTree.tsx.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S36",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T07:05:00Z",
+    "one_line": "ui-smoke.mjs's landing check compares `window.location.PATHNAME` against the full route STRING, so it prints `<-- DID NOT LAND (auth redirect? bad route?)` on EVERY query-bearing route whether or not anything went wrong. Observed on F18-AC6's amended run, which landed and rendered correctly. The warning cannot distinguish a real auth redirect from a normal query.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal wk-irpt_fntend-2-7-fe-s-18, scripts/ui-smoke.mjs:331-332 `const state = await page.evaluate(() => ({ loc: window.location.pathname, ...`, and :341 `console.log('LOC   :', state.loc, state.loc === route ? '' : ' <-- DID NOT LAND (auth redirect? bad route?)')`. `route` is built at :41 as `'/' + route.replace(/^\\/+/, '')` from argv[0] and KEEPS its query string; `location.pathname` never carries one. The comparison is therefore false by construction for any route containing `?`.",
+        "MEASURED, one instance, on the run this row was found in: F18-AC6's amended invocation printed `LOC   : /investor-reporting/print  <-- DID NOT LAND (auth redirect? bad route?)` in the SAME run that printed `CONSOLE[log]: REFS RESOLVED: 1 of 1` twice, `TEXT  : Prepared for the selected scope rev-49f-000091 ... PERFORMANCE REPORT 2026-01-02 to 2026-09-09`, and `FIXTURES: 9 declared; 1 matched >=1 URL`. The page landed, fetched and rendered three full pages; the warning is the instrument's, not the product's.",
+        "SCOPE OF THE CLAIM, stated because it bounds what was actually seen: the SOURCE READ is general and covers every query-bearing route; the OBSERVATION is ONE run. This row does NOT claim to have watched the line appear on F18-AC12 or F18-AC13 -- those were not re-run (the issuer's amendment message instructs re-running only F18-AC6 and F18-AC3), and their earlier output was filtered through a grep that did not include the LOC line. From the source, the line must have fired on them too, and that is an inference, not a measurement.",
+        "NOT A FALSE NEGATIVE RISK IN ONE DIRECTION ONLY: because the check fires unconditionally on query-bearing routes, it is also unable to report a GENUINE failure to land on such a route -- the message is already there, so it carries no information either way. For a route with no query string it still discriminates normally, which is why no existing caller noticed."
+      ]
+    },
+    "spec_asserts": "scripts/ui-smoke.mjs presents `LOC   : <path>` with `<-- DID NOT LAND (auth redirect? bad route?)` as a diagnostic that the requested route was not reached -- a line a worker or a grader reads as a failure signal beside the capture it annotates.",
+    "world_is": "It is a string comparison between a PATH and a PATH-PLUS-QUERY, so on every route carrying `?` it reads DID NOT LAND while the page has landed perfectly. Five of this order's twelve captures use query-bearing routes (the four print runs and its control), so the round's own evidence carries an alarming line that means nothing. INERT: nothing is degraded by it and no criterion turns on it -- every print criterion is graded on `REFS RESOLVED: 1 of 1`, which is a page-side console line and a real oracle. Recorded so the next reader of these captures does not take the warning at face value, and because the fix is one line (compare against the route's own pathname, `new URL(ORIGIN + route).pathname`). scripts/ui-smoke.mjs is outside this order's <paths>, so it is named here and not edited.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
