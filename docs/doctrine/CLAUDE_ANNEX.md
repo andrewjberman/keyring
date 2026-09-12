@@ -408,10 +408,30 @@ Doctrine: `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`.
     DISAGREE, "which is RUNNING?" is the wrong question — "which is RIGHT?" is, and that is ARCHITECTURAL,
     which no measurement answers. "It is deployed and it works" is not an architecture.** <<
     `memory/feedback_bronze_is_raw_untouched_parquet_is_a_silver_conversion.md`.
-17b. **THE CANONICAL MEDALLION FORM IS FOUR TIERS AND EACH TIER HAS EXACTLY ONE HOME.**
+17b. **THE CANONICAL MEDALLION FORM IS FOUR TIERS. `bronze` AND `silver` HAVE ONE HOME; `gold` AND
+    `platinum` ARE HOMED BY TENANCY.**
     `bronze` raw vendor + `silver` parquet queryable under **`opal-data-assets`**; `gold` processed
     analytics under **a per-product or per-firm bucket, WITH THE GOLD PROCESS'S CODE IN THAT SAME
-    BUCKET**; `platinum` serving under **`opal-data-portal-v2/platinum/`**. **SERVING IS ITS OWN TIER**
+    BUCKET**; `platinum` serving under **`opal-data-{firm}/platinum/` for CLIENT data and
+    `opal-data-portal-v2/platinum/` for GENERAL (non-client) data**.
+    ⛔ **PLATINUM'S HOME IS PER-TENANCY, NOT ABSOLUTE — AMENDED 2026-09-12 ~16:0xZ.** This line read
+    `opal-data-portal-v2/platinum/` as absolute until then, which put it in a LIVE COLLISION with
+    `ADVI_APISCP_PRD.md` s.2, labelled NON-NEGOTIABLE (*partner data never enters a shared bucket*).
+    **FIRM SEPARATION WINS.** Andrew-direct at the `4.0.0_SA_CRO~D` terminal, VERBATIM AND ENTIRE:
+    *"Recs approved"*, answering a four-card frame whose card 1 was the client-platinum home;
+    record `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260912_1601Z_FOUR_CALLS_RECS_APPROVED_CLIENT_PLATINUM_PER_FIRM_GOLD_STAYS_PARQUET.md`
+    @`e29a895ce3`, relayed as msg 96122. ⭐ **THE RULING RATIFIES OBSERVED BEHAVIOUR RATHER THAN
+    ORDERING A MOVE** — the live scoped route already serves client JSON from firm buckets
+    (`shared-advisor-router` rewrites `request.origin.s3.domainName` to `opal-data-{firm}` per
+    request, measured 2026-09-12 at the CTO seat).
+    ⚠ **AND THE COLLISION IS THE LESSON, NOT THE FIX:** two ratified lines, one in the annex and one
+    in a PRD marked NON-NEGOTIABLE, disagreed for months and NOTHING SURFACED IT — because each was
+    correct in its own document and neither named the other. **A rule that says "exactly one home" is
+    falsifiable by any second document that says otherwise; a rule that says "homed by tenancy" is
+    not.** ⛔ The `ADVI_APISCP_PRD.md` clause is dated 2026-03-10 and was read FROM THE DOCUMENT, not
+    re-derived against live CloudFront behaviours — `4.0.0_SA_CRO~D` disclosed that itself and the
+    bible's census re-derives it before it is quoted as current law.
+    **SERVING IS ITS OWN TIER**
     -- per-consumer projection, display naming and route-shaping belong in platinum, NEVER in gold.
     **GOLD IS PARQUET** (`{table}/date={D}/`); every platinum publisher READS PARQUET and is the
     estate's ONLY JSON producer, so one-producer-per-served-key holds by construction.
