@@ -171,6 +171,7 @@ infra/aws/lambda/investor-reporting/PATH_MANIFEST.json
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/irpt-bckend-rt6.json
 infra/aws/lambda/ci/lambda-source-map.json
+.tools/safe_deploy_core.py
 </paths>
 
 
@@ -197,3 +198,82 @@ The grant is read from HEAD of your branch and only while this order is NON-TERM
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape. You cannot send or receive messages -- anything you would ask is a surprise row.
+
+---
+
+## ISSUER AMENDMENT H -- 2026-09-12T06:38:56Z (`2.0.0_SA_COO~B`). Governs over every line above it. **FOUR RULINGS AND A REDIRECT.**
+
+Your G4 reading is accepted and it is the kind of thing that should never be inferred: the trigger is an EventBridge
+**Scheduler schedule**, not a Rule, so `describe-rule` returns `ResourceNotFoundException` -- **a false absence if
+read carelessly** -- and `scheduler get-schedule` reads ENABLED, `cron(0 9 ? * MON-FRI *)` America/New_York. You also
+said the right thing about the 55-hour window: **that is calendar luck, not a property of any plan.** Do not build on
+it.
+
+### H1. ⛔ THE FOURTH OPTION IS REFUSED. You were right not to take it, and it is refused by LAW, not by preference.
+Having the host extract `ids.py` out of an existing Lambda artifact zip is **a shadow distribution channel** --
+bytes reaching a runtime by a route nothing declares. CLAUDE.md carries Andrew's COMPLETE VETO on shadow and
+build-alongside channels. **Never raise it again and do not let a later cell rediscover it as clever.** That you
+named it and handed it up instead of taking it is the correct handling of an option you can see is out of bounds.
+
+### H2. THE BLOCKER IS MINE TO CLEAR AND I AM CLEARING IT IN THE `<paths>` BLOCK, NOT IN PROSE.
+**Your lane reading was wrong, and the error is understandable:** you said the member list in
+`.tools/safe_deploy_core.py` is out of lane. **Measured at `.owned-paths.yaml:2003-2009`: `.tools/**` is lane `ANY`**
+-- "Shared .tools/ -- any agent may contribute tooling" -- and the only narrower entries under `.tools/` are
+`git-hooks/**`, `tests/**`, `surprise-row-gate.py` and `to-pipeline-gate.py`, none of which match. So
+`safe_deploy_core.py` was never out of LANE. It was out of **this order's `<paths>`**, which is a different thing.
+
+**GRANTED, in the block, in this amendment's commit:**
+```
+.tools/safe_deploy_core.py
+```
+I put it in the BLOCK because I granted `holdings/` to IB-rt-2 in a PROSE SENTENCE the gate cannot read and it cost
+that order a blocked commit on four finished files. **A grant is only real in the surface the enforcer reads.**
+
+### H3. ⛔ AND DECLARING `ids.py` AS A BUNDLE MEMBER IS **NOT** A SECOND COPY. This is the distinction the cell turns on.
+You declined to copy `ids.py` into the in-lane bundle directory because that would be a second copy of THE ONE
+opaque-id normalizer, which `irpt-holdings`' own BUILD_MANIFEST forbids in those words. **Correct -- a FILE COPY
+would be a second definition.** But adding `ids.py` to the member list so the packager RESOLVES IT FROM `_ids/ids.py`
+at build time is a **DISTRIBUTION**, not a definition. There is one source of truth and the bundle carries a copy of
+it the way every zip does.
+**Two precedents, both already in this estate and one of them inside this very bundle:**
+- `lambda-source-map.json` declares `ids.py` as a FLAT BUILD INPUT for three functions -- that is the mechanism I
+  ruled on for IB-rt-2, and it is the same shape.
+- **`trading_calendar` already resolves from its real distribution on that host**, which you measured yourself. The
+  bundle already carries a module it does not define.
+So: **declare the member, resolve it from `_ids/`, copy no file.** If the packager cannot resolve it from `_ids/`
+without a copy, that is a BLOCKING row -- not a copy you make anyway.
+
+### H4. W2-S46 IS RESOLVED BY READING THIS FACE'S OWN SOURCE, NOT BY CHANGING A TIMEOUT. **SEND AND RETURN.**
+You found the named pattern does not wait -- `mdpf-accrual-trigger` sends and returns -- and that a bounded wait
+cannot fit a 60s function. **The face agrees with you and against the wait**, in its own words:
+- line 36: *"no real-calendar wait"*
+- line 127: *"The schedule stays ENABLED; its first REAL fire is OBSERVED, NOT WAITED FOR: the battery drives the
+  trigger's handler directly with a controlled clock and reads the same artifacts the scheduled fire would produce."*
+
+**RULING: the dispatch SENDS AND RETURNS, exactly like the pattern the face names. Build no in-function wait and do
+not raise the timeout.** Completion is OBSERVED by reading the artifacts, which is what line 127 already requires.
+⛔ And do not let "observed" become "polled on a real clock" -- the controlled clock is the instrument.
+
+### H5. ⭐ W2-S45 IS THE CELL'S REAL WORK, IT IS IN LANE, AND IT IS WHAT YOU DO NOW.
+You called it that yourself and you are right. `refresh.py` calls the manifest *"the ONLY memory this cell has
+between fires"* and contains **0 hits across 1 file** for `put_object|boto3|s3` -- all five hits in the package are
+in the SEARCH handler. `last_manifest_as_of` has exactly one caller and it is a TEST, so **the MISSED-trigger
+detector is unreachable in production**, `_refresh/` is empty in all three buckets though the function has run, and
+the IAM grants a write NO CODE PERFORMS.
+**That is a cell whose central claim -- it remembers between fires -- is false today, and it needs no external
+dependency to fix.** Build it while H2's grant lets you clear the import. A MISSED-trigger arm that cannot detect a
+missed trigger in production is the false green this round has been finding all night, and this one is findable
+before it ships.
+
+### H6. W2-S47 ACCEPTED, AND SAY IT ON THE ARM RATHER THAN AROUND IT.
+All three production `latest.json` read 404 with only `qa/` present, positive-controlled. So arm (b)'s `r -> r+1` is
+a **FIRST MINT**, *"previous revision retained"* is **VACUOUS until a second build**, and the revision is a STRING
+(`irpt-dir/<firm>/<date>/1.0`) and not an integer. **Write all three facts onto the arm.** An arm that reads PASS on
+a vacuous condition is exactly what `W4-S28` caught in round 1.
+
+### H7. ⛔ THE HOST YOU LEFT RUNNING: DO NOT STOP IT, AND DO NOT START IT AGAIN WITHOUT TELLING ME FIRST.
+`i-02448edb624a7a7cf` is `running` because you started it at 06:07Z for the import check. **Stopping EC2 requires
+human confirmation and is NOT yours or mine to take** -- you were right to leave it. The mdpf chain's own 15:00Z run
+self-stops it, so it is bounded rather than indefinite, and I am surfacing it to Andrew rather than acting. **Record
+the start, the reason and the self-stop in your report.** Any further start is a line to me BEFORE you take it, not
+after -- a started host is a cost nobody else can see.
