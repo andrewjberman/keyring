@@ -1,9 +1,11 @@
 {
   "prd": "IRPT_BCKEND_PRD.md",
-  "prd_version": "v0.13",
-  "prd_pin": "e6ba5d98782a2c367f7306c88b5c9915333599da",
+  "prd_version": "v0.14",
+  "prd_pin": "b8e98d5a4d9fd4004e6e8d2300dc7883866deef0",
+  "half": "brief",
+  "half_hash": "49684def32765f24c9d6d93bfe3387e76d96b523a8125ef067b33fa2a46c0e98",
   "verdict": "SIGNED",
   "review_ref": "docs/briefs/sources/INVESTOR_REPORTING_L4_COVERAGE_REVIEW_20260911.md@39ebb1dda3891b68a5c00a087186d0e823a40a82",
   "signed_by": "4.0.0_SA_CRO",
-  "signed_at": "2026-09-11T04:44:25.179178Z"
+  "signed_at": "2026-09-12T02:57:59Z"
 }
