@@ -3835,6 +3835,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "IRPT_BCKEND-S41 disarm_owner: '1.0.0_SA_CTO -- carry the corrected count back to Andrew: does the approval cover all NINE noncurrent versions of the four keys, or exactly the FOUR the row names. Until he answers on the CORRECTED number, no version is deleted.'",
     "world_is": "He answered on the corrected number: all nine. The disarm condition S41 names is satisfied, so S41 is DISARMED and the act is unblocked under the enumerated boundary. Nothing has been deleted by this row; the bucket is unchanged at the time of writing.",
     "notes": "The CTO-side half of the class S41 names. The first authorization failed because this seat carried a head-read count into a sovereign card for an unrecoverable act without measuring it -- a head-object read returns ONE version while a versioned key holds MANY. The stop condition this seat wrote was also weaker than it looked: it was keyed to whether the four named VersionIds RESOLVE (they did) rather than to whether the SET IS COMPLETE (it was not), and only the second protects the act. 2.0.0_SA_COO~B refused on better reasoning than the condition contained. Full record: org/tier1_exec/1.0.0_SA_CTO/deliverables/CORRECTION_20260912_W4_S20_CARD_CARRIED_A_COUNT_OF_FOUR_THE_WORLD_HOLDS_NINE.md."
+  },
+  {
+    "id": "IRPT_BCKEND-S43",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T02:45:32Z",
+    "one_line": "THE NINE NONCURRENT VERSIONS ARE PERMANENTLY GONE, AND 'THE FOUR SYNTHETIC EXPORT PDFS ARE GONE' NO LONGER CARRIES A QUALIFIER -- the first time that sentence has been true tonight. Andrew-direct ~01:5xZ 'Approved all 9' (via 1.0.0_SA_CTO 96050) on the CORRECTED count; ledger opened BEFORE the act at 89d9b2965d and closed at c441d163ab with 8 of 8 legs. The pre-act gate re-read the prefix at the moment of acting and matched the authorized subtraction exactly (denominator 10 versions / 5 delete markers / 5 keys, MINUS probe/probe.txt, = 9 targets; IsTruncated absent) -- the authorization was over a MEASURED SET, never over the number nine as a target, and a mismatch would have been a second STOP. Nine per-version deletes, then a BY-VERSIONID head-object returning (404) Not Found on 9 of 9 with byte-identical error text -- NOT AccessDenied, which is the failure that looks the same at rc level -- and a POSITIVE CONTROL on probe/probe.txt's version resolving rc=0 at ContentLength 5 under the SAME credential, operation and bucket, which is what rules out a permissions or network explanation for the nine. Prefix versions 10 -> 1; the remaining one is probe/probe.txt, deliberately excluded and untouched. THE FIVE DELETE MARKERS WERE NOT TOUCHED AND THAT WAS A BOUNDARY, NOT AN OVERSIGHT: deleting a delete marker RESTORES a current object, the opposite of the intent, so 'delete all 9' does not reach them -- 1.0.0_SA_CTO named it as a trap rather than a rule in 96050 and was right to, because a cleanup loop reads five markers as debris. A 404 on the ORDINARY key is cited nowhere in this record: it was already true before the act and that is the entire reason this call existed. Receipts at org/critical_paths/change_management/20260912T0215Z_irpt-bckend-w4s20-nine-version-delete_receipts.json with delete_grain stating in the artifact itself that this was the PERMANENT form and not a marker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (the act is complete and verified; W4-S20's and S41's qualifier is discharged by measurement. A remediation row resolving W4-S20 and S41 remains 3.0.0_SA_CVO's, per the vocabulary note in S42)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/critical_paths/change_management/20260912T0215Z_irpt-bckend-w4s20-nine-version-delete_deploy_completion.md -- CLOSED, 8 of 8 legs",
+        "org/critical_paths/change_management/20260912T0215Z_irpt-bckend-w4s20-nine-version-delete_receipts.json -- 9 delete responses, 9 post-act head reads, the positive control and the deltas",
+        "ledger+sentinel commit 89d9b2965d BEFORE the act; close commit c441d163ab; sentinel removed from org/critical_paths/.open_deploys/",
+        "post-act s3api list-object-versions over the prefix: versions=1 deletemarkers=5 (pre-act 10 and 5)",
+        "Andrew-direct record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260912_015xZ_ALL_NINE_NONCURRENT_VERSIONS_APPROVED.md"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Andrew-direct 2026-09-12 ~01:5xZ, VERBATIM AND ENTIRE: 'Approved all 9', answering the card '(a) delete all nine (b) delete only the four named (c) leave them', REC (a).",
+    "world_is": "Nine noncurrent versions deleted permanently and verified gone by VersionId; one excluded version and five delete markers untouched; no bucket-level setting changed.",
+    "notes": "The lineage is worth keeping intact because each step was a different error being caught: W4-S20 found that a delete on a versioned bucket is a VISIBILITY change reported as destruction; S41 found that the authorization's own count was short by five because a head read enumerates one version of a key that holds many; S42 carried the corrected number back; this row is the act. Two STOPs and one delete, and the only irreversible step happened on a re-measured set with Andrew's word on the real number."
+  },
+  {
+    "id": "IRPT_BCKEND-S44",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T02:45:32Z",
+    "one_line": "IB-rt-2's EIGHT ROWS DISPOSITIONED, AND THE POST-READ OBLIGATION RE-ROUTED OFF A BATTERY THAT CANNOT FIRE. W2-S30: holdings paths GRANTED additively (holdings/ lambda + the holdings Terraform root) and LOOSENING THE CENSUS REFUSED -- W2-S31 establishes the census grades the __irpt_guarded__ MARK while that handler enforces FirmBinding inline, so it is a MARK gap and not a live cross-firm hole, and an inline enforcement the instrument cannot see should stay VISIBLE; the handler moves under the mark, the instrument does not move. 1.0.0_SA_CTO endorsed that reasoning explicitly. g2: RULED HUMAN-GATED under the face's OWN standing rule, which the CTO confirmed is a rule applied and not a bar lowered, with an instruction not to put it back. W2-S36: RESOLVED by the CTO's L4 amendment, PRD v0.14 @b8e98d5a4d -- business_date is STATE-CONDITIONAL (required on the 5 answer-bearing states, may be ABSENT and never NULL on the 4 no-answer states) rather than nullable, because nullable -- which was THIS SEAT'S option (a) -- would have weakened every envelope including a READY success and traded a validation gap for a semantic hole in the success path. AND MY OWN TWO-WAY CUT WAS SHORT BY TWO: QUEUED and RUNNING carry no business_date by construction and are not refusals at all, so a fix scoped to 'refusals' would have left both failing exactly as before. W2-S32 and W2-S35 discharged by the worker's own W2-S37; W2-S33 and W2-S34 accepted INERT. THE RE-ROUTING: the CTO's ruling places the surviving post-read business_date obligation on 'the IB-s-18 BATTERY'. MEASURED BEFORE ROUTING A WORKER INTO IT -- that battery is rc=1 and has been: battery_ib_s_18.py:315, arm_c, `for k in sorted(breakdown)`, TypeError '<' not supported between NoneType and str. Its arm (b) -- the schema-provenance arm -- PASSES 11 of 11 valid ACCEPTED and 11 of 11 invalid REFUSED, ABOVE the traceback, so CLEAN METRICS PRINT ABOVE A FAILING VERDICT and the battery's rc, which is its verdict, is permanently 1. ANY OBLIGATION ADDED THERE COULD NEVER FIRE, because a crash in a DIFFERENT arm masks it. So the obligation is landed in battery_ib_rt_2.py instead -- live, in lane, and the instrument RT2-AC1 actually reads -- and the departure from the CTO's routing was stated to it with an explicit invitation to overturn, not taken silently.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- (i) confirm or overturn landing the post-read business_date obligation in battery_ib_rt_2.py rather than the IB-s-18 battery; (ii) W4-S29's crash is now LOAD-BEARING, because the same battery is the named enforcement for generated-schema provenance while its generator exists on no device -- two holes in one provenance chain, and the fix belongs to a CLOSED cell so it is routed, never taken here",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD be8adeba41 (drain of wk-irpt_bckend-2-2b; rows W2-S30..S37)",
+        "timeout 600 python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_s_18.py -> rc=1, traceback at :315 in arm_c; arm (b) printing 11 of 11 ACCEPTED and 11 of 11 REFUSED above it",
+        "IB-rt-2 face issuer amendments 3 @4131ef651f and 4 @76ae1b20fb; worker worktree fast-forwarded to 76ae1b20fb",
+        "1.0.0_SA_CTO 96051 (the ruling) and 96060 (L4 landed, PRD v0.14 @b8e98d5a4d, 11 of 11 cases over nine states with a negative control)",
+        "proof-of-spec-check over IB-rt-2's instance at HEAD: VALID rc=0, RT2-AC1 FAIL at 10 of 13 arms"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "1.0.0_SA_CTO 96051: 'the obligation moves to the BATTERY: a post-read refusal that omits business_date is a battery failure, not a schema failure' -- naming the IB-s-18 battery.",
+    "world_is": "That battery exits 1 on a pre-existing crash in an unrelated arm, so it cannot carry a new obligation and cannot return a passing verdict for the provenance arm that does work. IB-s-18 is also a CLOSED round-1 cell, so editing it mid-round is the re-open Rule 27 forbids.",
+    "notes": "FIFTH INSTANCE TONIGHT OF ONE CLASS AND THE SECOND FROM THIS SEAT: S38 (a Terraform root holding two cells' desired state), S39 (a zip carrying two cells' code), W4-S28 (a coordinate no certification leg inspects), S41 (a versioned key holding more versions than the head read that enumerated it), and this seat's two-way cut of a NINE-member enum. A SCOPE THAT ENUMERATES ITS MEMBERS CANNOT SEE WHAT THE ENUMERATION MISSED; Rule 24's subtraction clause is the remedy in all five. A SIXTH SHAPE APPEARS HERE AND IS WORTH NAMING SEPARATELY: moving an obligation into an instrument without first running that instrument. The routing was correct in intent and unenforceable in fact, and only an execution of the battery could tell the difference -- a gate's OWN RUN is the authority, and a named enforcement surface is a claim until someone runs it. Carried to L10 with the other five."
   }
 ]
 ```
