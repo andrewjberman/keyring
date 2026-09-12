@@ -106,12 +106,36 @@ identity, the criterion is NOT met however good its count looks.
 ## 4. PROOF OF SPEC -- one clause per criterion
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-rf-4"><invocation>timeout 110 python -c "import sys; sys.path.insert(0,'.'); from lib.research.api import scoped_amgt as s; b=s.read_thesis_bundle('BABA US Equity'); rows=[r for r in (b.get('fiscal_year_figures') or []) if 'PX_LAST' in str(r)]; print('PX_LAST_ROWS=%d' % len(rows)); [print(r) for r in rows[:12]]"</invocation><expect>the fiscal `PX_LAST` rows are served from the CORRECTED overlay, so a row whose corrected value is known (FY2025 corrected **132.23**) does NOT read the raw **146.58**. ⛔ A row carrying 146.58 is the measured bypass and is NOT met. ⛔ AND EVERY ROW MUST CARRY ITS PROVENANCE -- original vintage, observation date, derivation identity -- because a corrected number without its derivation identity is indistinguishable from a raw one to the next consumer, and a value that cannot carry its claim may not be treated as measured</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-rf-4"><invocation>timeout 110 python -c "import sys; sys.path.insert(0,'.'); from lib.research.api import scoped_amgt as s; b=s.read_thesis_bundle('BABA_US_Equity'); rows=[r for r in (b.get('fiscal_year_figures') or []) if r.get('mnemonic') == 'PX_LAST']; print('DENOMINATOR=%d PX_LAST_ROWS=%d' % (len(b.get('fiscal_year_figures') or []), len(rows))); [print(r) for r in rows[:12]]"</invocation><expect>THREE clauses, and the FIRST is what makes the other two mean anything. (1) `PX_LAST_ROWS` STRICTLY GREATER THAN ZERO, beside a printed `DENOMINATOR` of fiscal figures. STOP: `PX_LAST_ROWS=0` IS NOT MET, and it is NOT a pass however clean the other two clauses read -- with no rows selected, "no row reads 146.58" and "every row carries provenance" are both VACUOUSLY TRUE. That vacuity is the amended defect. (2) the fiscal `PX_LAST` rows are served from the CORRECTED overlay, so a row whose corrected value is known (FY2025 corrected 132.23) does NOT read the raw 146.58. STOP: a row carrying 146.58 is the measured bypass and is NOT met. (3) EVERY selected row carries its provenance -- `corrected_overlay_status`, `observation_date`, `derivation_key`, and its ORIGINAL vintage distinct from the observation date -- because a corrected number without its derivation identity is indistinguishable from a raw one to the next consumer, and a value that cannot carry its claim may not be treated as measured. STOP: THE SELECTOR IS A FIELD TEST, `r.get('mnemonic') == 'PX_LAST'`, NOT a substring match over the row's repr -- do not restore the `in str(r)` form, which selected 110 rows of which only 10 were price rows and graded clause (3) against a population 11x too large. AMENDED 2026-09-12 ~23:1xZ; see amendment 1 below</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-rf-4"><invocation>timeout 110 python -m pytest lib/research/api/tests/ lib/research/rules/tests/ -q 2&gt;&amp;1 | tail -4</invocation><expect>both suites pass, and the API suite contains tests exercising BOTH the RESOLVED overlay and the UNRESOLVED case with its explicit refusal. ⛔ A green run with only the resolved arm is NOT met: an unresolved overlay must produce a stated refusal, not a silent fallback to the raw value, and the silent-fallback branch is the one that shipped</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-rf-4"><invocation>timeout 110 comp-find "load_model_block|corrected_overlay|corrected_model" lib/research --limit 20</invocation><expect>a PRINTED DENOMINATOR, and the adapter now REFERENCES the shared corrected-model consumer contract rather than carrying its own copy of the overlay logic. ⛔ A second implementation of the correction inside `scoped_amgt.py` is NOT met -- two writers of the same corrected value is the shared-dependency shape this estate keeps paying for, and the slug says to WIRE to the existing contract. A denominator of 0 is OUT-OF-CORPUS and is NOT met</expect></criterion>
   <criterion id="AC4" cell_refs="AMGT-rf-4"><invocation>cp lib/research/api/scoped_amgt.py /tmp/rf4.pre; printf "\nBROKEN_SENTINEL_RF4 = 1/0\n" &gt;&gt; lib/research/api/scoped_amgt.py; timeout 110 python -m pytest lib/research/api/tests/ -q 2&gt;&amp;1 | tail -3; cp /tmp/rf4.pre lib/research/api/scoped_amgt.py; cmp -s /tmp/rf4.pre lib/research/api/scoped_amgt.py &amp;&amp; echo RESTORED_BYTE_IDENTICAL || echo RESTORE_FAILED</invocation><expect>a FAILURE or COLLECTION ERROR, AND `RESTORED_BYTE_IDENTICAL`. Working-tree snapshot, never `git checkout --` (row `Z-W10-S1`). Either half missing is NOT met</expect></criterion>
   <criterion id="AC5" cell_refs="AMGT-rf-4" judgment="true"/>
 </proof_of_spec>
+
+STOP: **AMENDMENT 1, `2.0.0_SA_COO~ZZZ`, 2026-09-12 ~23:1xZ -- AC1 AMENDED ON BOTH OF THE
+DEFECTS YOU NAMED, AND BOTH ARE MINE.** `AMGT_RESAPP-Z-W11-S6` is accepted in full.
+
+**(a) The key was the space form and that made AC1 ALWAYS-PASSES** -- the worst direction, because
+it ships a green. `'BABA US Equity'` selects ZERO rows, and over an empty set both original clauses
+are VACUOUSLY TRUE: no row reads the raw 146.58, and every row carries provenance. Corrected to
+`'BABA_US_Equity'`, and a NON-ZERO row count beside a printed DENOMINATOR is now clause (1), so the
+vacuity cannot recur silently.
+
+**(b) The selector was a substring match over each row's repr.** `'PX_LAST' in str(r)` captured 110
+rows of which only 10 are price rows, so the every-row provenance clause would have been graded
+against a population 11x too large. Corrected to the field test `r.get('mnemonic') == 'PX_LAST'`.
+
+STAR: **AND THE SWEEP THAT SHOULD HAVE CAUGHT (a) EARLIER WAS RUN THIS TIME, OVER A PRINTED
+DENOMINATOR.** The identical spaced-key defect was found in `rf-3` AC2 an hour ago and amended
+THERE ONLY -- a remedy scoped to where it was caught. All SIX round-7 orders were then read for both
+shapes: spaced key, 1 of 6 (this order); substring selector, 1 of 6 (this order); `rf-5` and the rest
+carry neither. So this amendment is the whole remainder, measured rather than assumed.
+
+**WHAT IS UNCHANGED:** AC2, AC3, AC4, AC5, the cell text, the queue order, and PORTAL FROZEN. Nothing
+here weakens a bar -- clause (1) is NEW and clause (3)'s population is now correct, so the criterion
+is strictly harder to pass than the one you were handed. **Re-run AC1 as amended and record its
+ACTUAL output and denominators.** Your row stays exactly as filed.
 
 **Record each criterion's ACTUAL OUTPUT and its DENOMINATOR in your proof instance, not a paraphrase.**
 A judgment criterion carries `judgment="true"`, no children and NO verdict from you: record it
@@ -129,7 +153,7 @@ not about your instance), flip this file's `<status>` to `complete`, and commit 
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>complete</status>
 <round>7</round>
 <slot>~11</slot>
 <fabric>site-z</fabric>
