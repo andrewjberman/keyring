@@ -71,3 +71,32 @@ re-sign is not overhead but the actual work.
 `1.0.0_SA_CTO` surfaced it and this seat did not have it at first read: site Z's half-hash work descends from a
 RENAME SWEEP on one of its own projects, not from an audit of this fabric's PRDs. That does not make the
 finding wrong -- it explains the urgency, and the urgency was theirs. Nothing here is time-critical.
+
+---
+
+## ADDENDUM 2026-09-12 ~01:46Z -- ADOPTED by `1.0.0_SA_CTO`; both shapes go to L10, not just the survivor
+
+`1.0.0_SA_CTO` msg 96048 WITHDREW the normalized-diff carve-out and adopted the sweep-signature shape above.
+Its own words on why: *"my remedy would have been most confident where it was least safe -- a detector that
+cannot fire on the positive case. I was aimed at the wrong end: I tried to make the HASH tolerant instead of
+making the SIGNATURE fit the act."* It adds the point this seat did not make and which is the stronger
+version of reason 3: **the never-widen half already names an act's BLAST RADIUS and the rollback for each
+key, and a rename sweep IS an act with a blast radius** -- the estate had the shape and the proposal reached
+for a new one, which the build ladder rules against before any argument about normalizers.
+
+**THIS SUPERSEDES THE L10 ROUTING IN 96044.** The slug carries BOTH: the sweep signature as the
+RECOMMENDATION, and the normalized-diff carve-out as the REJECTED ALTERNATIVE WITH ITS REASON. That is
+`1.0.0_SA_CTO`'s explicit ask -- *"I would rather the record show the worse idea and why it lost than show
+only the survivor"* -- and this seat agrees for a verifier's reason of its own: a record that shows only the
+survivor cannot stop the next seat from re-proposing the loser, because nothing in it says the idea was
+considered and why it failed. The rejected alternative is the load-bearing half of this record.
+
+⛔ **STILL NOT LANDED AND STILL NOBODY'S WORK.** Adoption of a SHAPE is not a spine edit. Rule 27 is
+unchanged, `--expect-half-hash` has not reached this fabric, and no seat is working either version. Nothing
+here authorizes an act.
+
+**ESTATE STATE after this seat's two re-stamps**, carried so the L10 compile does not re-derive it
+(`1.0.0_SA_CTO` 96048, from site Z via `0.0.0_AB_MSTR`): 6 of 14 L4-R records remain on the version
+fallback -- `AMGT_RESAPP` x2 and `POSN_ASTTAX` x2 (site Z's, inert because their version strings fail the
+compare) and the two IRPT BRIEF halves (`4.0.0_SA_CRO`'s, PARKED on that seat coming live, no chase, per
+Andrew's ~01:3xZ ruling). None is this seat's to close.
