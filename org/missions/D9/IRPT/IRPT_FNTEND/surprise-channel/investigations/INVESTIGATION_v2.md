@@ -463,6 +463,31 @@
     "spec_asserts": "Both faces state 'fresh worktree pair from HEAD' and the spawn asserted the order already reads <status>pending</status>. The spine's L7 has the worker commit its own status flip on its branch.",
     "world_is": "The pair was cut from a HEAD that predated the flip, so the face's assertion about its own tree was false when the worker read it. Cost: two correct-but-avoidable worker rows and one manufactured merge conflict per drain. The cheap habit that prevents it, and the reason this is worth a row rather than a silent fix: COMMIT THE SEATING FLIP BEFORE CUTTING THE WORKTREE, because a worktree is a snapshot and every later record act by the issuer is invisible to the worker that is already reading it. Disarmed when both drains are complete and the status lines read complete on CLOUD.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S27",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T23:47:00Z",
+    "one_line": "READ OFF-TASK FROM F16-AC8's OWN CAPTURE, by opening the PNG rather than reading the console line the criterion grades on: the served print document contradicts itself about how many accounts are in scope. The page header reads '0 account(s) in scope' on ALL FOUR pages, while page 3 lists account A-0001 under 'Accounts in this report' (Covered true, period return 0.0688) and states 'None. Every account in the requested scope is represented above.', and page 4's METHODS AND SOURCES prints 'Bundle scope: tenant F-49F, fingerprint fp-49f-0824, firm not stated, client not stated, relationship not stated, accounts A-0001'. Those cannot all be true at once. IMPORTANTLY THIS ALSO FALSIFIES THE RECORDED CAUSE IN ROW IRPT_FNTEND-W2-S13, which attributed the zero to 'a client-composed bundle names no account set' -- this document's own bundle scope DOES name an account set, and the header still reads 0. The count is reading something other than the accounts the bundle carries. F16-AC8 PASSES correctly and is not affected: its bar is the resolver line and the resolver did resolve.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "3.0.0_SA_CVO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Instrument: this seat READ the image at /c/tmp/wk-irpt_fntend-2-6-fe-s-16/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/fe-s-16_print_narrative_1440.png (sha256 8094204b4eb99c77108b270dc530cdf2079a3f018d75ab214a2d0cbb696e100f, 324527 bytes). A DIFFERENT INSTRUMENT from the one the criterion uses: F16-AC8 greps a console line, and no console line can see a contradiction between two rendered regions.",
+        "Header band, top right of every page, 4 of 4: 'Prepared for the selected scope / rev-49f-000091 / 0 account(s) in scope'.",
+        "Page 3 of 4, 'Accounts in this report': one row -- Account A-0001, Reference A-0001, Covered true, Ending value UNAVAILABLE (unknown), Period returns 0.0688. Immediately below, 'Accounts in scope this report does not answer': 'None. Every account in the requested scope is represented above.'",
+        "Page 4 of 4, Export bundle block: 'Bundle scope  tenant F-49F, fingerprint fp-49f-0824, firm not stated, client not stated, relationship not stated, accounts A-0001'. THIS IS THE DISCRIMINATOR against W2-S13's stated cause: the bundle scope names an account set.",
+        "NOT a defect introduced by FE-s-16: the capture is of the print route with a client-composed bundle, the same path FE-s-14 exercised, and the header band is outside FE-s-16's <paths>. Recorded, not changed.",
+        "SCOPE LIMIT, stated so no later reader over-reads this: ONE document, ONE fixture (fe-s-16-print-narrative.json), ONE scope. Denominator 1. This row does not establish how the count behaves on a server-issued bundle or on a multi-account scope, and neither was exercised here."
+      ]
+    },
+    "spec_asserts": "Row IRPT_FNTEND-W2-S13 asserts the cause as 'a client-composed bundle names no account set, so the document header reads 0 account(s) in scope', and judges the consequence as 'neither is a wrong number on a rendered page'. The PRD's reporting contract is that values are printed exactly as the source supplied them and that an absence renders as an explicit UNAVAILABLE with its reason, never as a silent zero.",
+    "world_is": "The bundle DOES name accounts A-0001 and the header still prints 0, so the zero is not the honest absence W2-S13 took it for -- it is a count of the wrong thing, printed as a fact, on the same document that lists the account it says is not there. Against the PRD's own rule this is the failure mode the UNAVAILABLE convention exists to prevent: an absent or mis-read value rendering as a SILENT ZERO rather than as a stated absence. hazard_standing ARMED because a reader of this document is told something false about what it covers, and disarm_owner is 3.0.0_SA_CVO because the disposition is an L9 judgment and the remediation lands in a cell nobody has yet been granted -- not a COO act and not this round's to repair. Carried to L10 with the observation that W2-S13's recorded CAUSE should be corrected there, since a wrong cause in the channel is what sends the next round's cut at the wrong surface.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
