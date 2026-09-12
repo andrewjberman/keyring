@@ -96,8 +96,31 @@ fabrics, so the panel could not be promoted even if it passed.
 
 ---
 
-**Round 5 and round 6 are CLOSED at L10.** The PROJECT is not closed. The recut is
-`2.0.0_SA_COO~ZZZ`'s in ONE issuance, after the slug's 24 open ARMED rows across both files are
-dispositioned by `3.0.0_SA_CVO~Z` at L9.
+**Round 5 and round 6 are CLOSED at L10.** The PROJECT is not closed. **The recut is
+`2.0.0_SA_COO~ZZZ`'s in ONE issuance AND NOTHING GATES IT.**
+
+⛔ **CORRECTION TO THIS SEAT'S OWN HAND-OFF, MADE BEFORE ANY SEAT COULD WAIT ON IT.** The first cut
+of this line said the recut waits "after the slug's 24 open ARMED rows are dispositioned by
+`3.0.0_SA_CVO~Z` at L9". **THAT INSERTED A GATE THAT DOES NOT EXIST.** Corrected by
+`3.0.0_SA_CVO~Z` and then MEASURED here with the gate's own census rather than accepted on report:
+```
+_latest_dispositions(AMGT_RESAPP)  -> 65 items across 13 files, UNDISPOSITIONED 0, phantom 0
+POSITIVE CONTROL POSN_ASTTAX       -> 49 items, 24 UNDISPOSITIONED   (the census discriminates)
+```
+**All 65 original investigation items already carry L9 dispositions.** The 25 open rows in
+REMv5/v6 (24 ARMED + 1 INERT) are **REMEDIATION OBLIGATIONS, not undispositioned items** -- the COO
+reads them and this analysis directly, exactly as L10 prescribes. No second CVO pass exists to wait
+for, and `3.0.0_SA_CVO~Z` states it will not re-enter worker execution or re-slug the same rows.
+⚠ **A PHANTOM GATE IS THE SAME COST AS A BROKEN ONE** -- a seat waits on a condition nobody will
+ever satisfy, and nothing announces it. This estate paid that three times tonight (the unsent L4
+notifier, the false LIMB 6 fence, and now this). It was caught within four minutes only because the
+CVO read the hand-off and checked it against its own census.
+
+⚠ **AND A DATA-GRAIN CORRECTION TO s.2, from `3.0.0_SA_CVO~Z`:** `C-S61` is **0 of 183 FISCAL rows**
+and the cause is `fiscal_year` vs `fiscal_year_line_item` -- the model holds **196 total figures
+including 13 headers**, so "zero rows against 196 figures" overstated the denominator. **`C-S62` is
+NOT another zero-row finding**: it is a separate raw-model / corrected-overlay BYPASS. Grouping the
+three as one class was this seat's compression and it lost the distinction that makes them three
+different repairs.
 
 **Push state:** LOCAL at write time. `0.0.0_AB_MSTR~Z` pushes origin/SITEZ; this seat does not push.
