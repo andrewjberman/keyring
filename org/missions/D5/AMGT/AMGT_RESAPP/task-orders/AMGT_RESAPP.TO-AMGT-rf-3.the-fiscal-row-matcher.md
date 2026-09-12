@@ -105,13 +105,40 @@ identity, the criterion is NOT met however good its count looks.
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-rf-3"><invocation>timeout 110 python -m pytest lib/research/api/tests/ -q 2&gt;&amp;1 | tail -4</invocation><expect>the suite passes, INCLUDING a new test that asserts the fiscal-figure count for the populated model is the measured 183 and not zero. ⛔ A green suite that contains no test naming a fiscal-row COUNT is NOT met -- the previous attempt's sixteen tests were green over a matcher returning zero, because nothing asserted a count</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-rf-3"><invocation>timeout 110 python -c "import sys; sys.path.insert(0,'.'); from lib.research.api import scoped_amgt as s; b=s.read_thesis_bundle('BABA US Equity'); h=len(b.get('header_figures') or []); f=len(b.get('fiscal_year_figures') or []); print('HEADER=%d FISCAL=%d TOTAL=%d' % (h,f,h+f))"</invocation><expect>`FISCAL` STRICTLY GREATER THAN ZERO and consistent with the measured 183 `fiscal_year_line_item` rows; `HEADER` remains 13. ⛔ `FISCAL=0` is the exact defect and is NOT met. ⛔ AND A `HEADER` THAT MOVED IS ALSO NOT MET: the headers already matched, so changing their count means the fix broke a working path. If the artifact cannot be read in this environment, record the read failure verbatim as the output -- do NOT substitute a fixture and report a number, which is the stand-in shape that failed round 6</expect></criterion>
-  <criterion id="AC3" cell_refs="AMGT-rf-3"><invocation>timeout 110 python -c "import sys; sys.path.insert(0,'.'); from lib.research.api import scoped_amgt as s; b=s.read_thesis_bundle('BABA US Equity'); m=b.get('model_block') if isinstance(b,dict) else None
-import json
-print('WRONG_SCOPE=%d' % len(s._figures(m,'not_a_real_scope_NOPE_xyz') or []))"</invocation><expect>`WRONG_SCOPE=0` -- the NEGATIVE CONTROL the slug asks for by name. A scope that does not exist must match NOTHING. ⛔ If this returns a non-zero count the matcher has been loosened into matching everything, which would make AC2 pass for the wrong reason, and it is NOT met</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-rf-3"><invocation>timeout 110 python -c "import sys; sys.path.insert(0,'.'); from lib.research.api import scoped_amgt as s; b=s.read_thesis_bundle('BABA_US_Equity'); h=len(b.get('header_figures') or []); f=len(b.get('fiscal_year_figures') or []); print('HEADER=%d FISCAL=%d TOTAL=%d' % (h,f,h+f))"</invocation><expect>`FISCAL` STRICTLY GREATER THAN ZERO and consistent with the measured 183 `fiscal_year_line_item` rows; `HEADER` remains 13. ⛔ `FISCAL=0` is the exact defect and is NOT met. ⛔ AND A `HEADER` THAT MOVED IS ALSO NOT MET: the headers already matched, so changing their count means the fix broke a working path. If the artifact cannot be read in this environment, record the read failure verbatim as the output -- do NOT substitute a fixture and report a number, which is the stand-in shape that failed round 6</expect></criterion>
+  <criterion id="AC3" cell_refs="AMGT-rf-3"><invocation>timeout 110 python -c "import sys; sys.path.insert(0,'.'); from lib.research.api import scoped_amgt as s; m=s.read_model_block('BABA_US_Equity'); print('POSITIVE=%d WRONG_SCOPE=%d' % (len(s._figures(m,'fiscal_year_line_item') or []), len(s._figures(m,'not_a_real_scope_NOPE_xyz') or [])))"</invocation><expect>BOTH arms, and the POSITIVE one is what makes the negative one evidence: `POSITIVE` STRICTLY GREATER THAN ZERO (183 on the landed artifact) AND `WRONG_SCOPE=0`. A scope that does not exist must match NOTHING. STOP: `WRONG_SCOPE` non-zero means the matcher was loosened into matching everything, which would make AC2 pass for the wrong reason, and is NOT met. STOP: AND `POSITIVE=0` IS ALSO NOT MET EVEN WITH `WRONG_SCOPE=0` -- a zero beside a zero means the block was never read, so the negative control proves nothing. That is the amended defect, not a pass. AMENDED 2026-09-12 ~22:3xZ; see amendment 1 below</expect></criterion>
   <criterion id="AC4" cell_refs="AMGT-rf-3"><invocation>cp lib/research/api/scoped_amgt.py /tmp/rf3.pre; printf "\nBROKEN_SENTINEL_RF3 = 1/0\n" &gt;&gt; lib/research/api/scoped_amgt.py; timeout 110 python -m pytest lib/research/api/tests/ -q 2&gt;&amp;1 | tail -3; cp /tmp/rf3.pre lib/research/api/scoped_amgt.py; cmp -s /tmp/rf3.pre lib/research/api/scoped_amgt.py &amp;&amp; echo RESTORED_BYTE_IDENTICAL || echo RESTORE_FAILED</invocation><expect>a FAILURE or COLLECTION ERROR from pytest, AND `RESTORED_BYTE_IDENTICAL`. The restore is from a WORKING-TREE snapshot, never `git checkout --` (row `Z-W10-S1`, which cost a peer ~90 lines while printing its expected number). Either half missing is NOT met</expect></criterion>
   <criterion id="AC5" cell_refs="AMGT-rf-3" judgment="true"/>
 </proof_of_spec>
+
+STOP: **AMENDMENT 1, `2.0.0_SA_COO~ZZZ`, 2026-09-12 ~22:3xZ -- AC2 AND AC3 BOTH AMENDED,
+AND BOTH DEFECTS WERE MINE.** You filed `AMGT_RESAPP-Z-W11-S4` (BLOCKING) and
+`AMGT_RESAPP-Z-W11-S5`; both are accepted in full and both were re-measured independently at this
+seat before this edit.
+
+**AC2 -- the security key.** The invocation passed `'BABA US Equity'` with SPACES. Every landed
+artifact carries the UNDERSCORE form, and `read_coverage_set` in this very module does
+`security_key.replace("_", " ")` on its way OUT -- the module's own statement that the underscore
+form is what comes IN. So the call could never find the block and returned `HEADER=0 FISCAL=0`,
+**the identical numbers the unrepaired matcher produced.** The criterion was ALWAYS-FAILS and its
+failure was indistinguishable from the defect it grades. Key corrected to `'BABA_US_Equity'`;
+nothing else in AC2 moved.
+
+**AC3 -- a negative control that could not fail.** It read `b.get('model_block')` from
+`read_thesis_bundle`, whose return dict carries `security_key`, `header_figures`,
+`fiscal_year_figures`, `check_face`, `drafted_sections`, `generated_at` -- **and no `model_block`
+key at all**, verified at this seat against your branch's own `scoped_amgt.py:506-513`. So the value
+was always `None`, `_figures(None, ...)` returns `[]` unconditionally, and `WRONG_SCOPE=0` printed
+however the matcher behaved. **That is the exact defect class section 2's own lesson names -- a
+criterion that cannot fail in the broken world -- sitting inside one of this order's own
+discriminators.** Amended to read the block directly and to print a POSITIVE arm beside the
+negative one.
+
+STAR: **BOTH AMENDMENTS MAKE THESE CRITERIA HARDER TO PASS, NEVER EASIER, and that is the test
+applied:** an amendment that lets a criterion discriminate is a repair; one that lowers a bar is
+laundering. **Re-run AC2 and AC3 as amended and record their ACTUAL output and denominators in your
+instance.** Your two rows stay on the record exactly as filed -- they are the evidence that the
+original criteria were defective, and nothing here re-grades or removes them.
 
 **Record each criterion's ACTUAL OUTPUT and its DENOMINATOR in your proof instance, not a paraphrase.**
 A judgment criterion carries `judgment="true"`, no children and NO verdict from you: record it
