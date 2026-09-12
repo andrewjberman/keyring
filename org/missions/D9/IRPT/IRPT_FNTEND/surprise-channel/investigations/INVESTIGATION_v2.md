@@ -344,6 +344,184 @@
     "spec_asserts": "Round-2 BOUNDS (decomp v0.2 R2.2): the producer's artifact is the authority and the consumer conforms; every order's whole set reads 0 fail on its branch. v1 CONTRACT.md: v1 is IMMUTABLE once IB-rt-1 completes; adding an optional field or a handler is not breaking.",
     "world_is": "The consumer's bar pinned bytes, not content, so a non-breaking producer extension reads as a consumer failure the moment the workspace moves. The branch was green at its pin; DEV is green under tsc; six tests are red on the main checkout until the next order refreshes the pin. No push is affected (portal is frozen by Andrew).",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S4",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-11T19:45:00Z",
+    "one_line": "F16-AC2 names renderToStaticMarkup of the OPEN ExportModal as the instrument, and the cell requires AppliedBranding and ReceiptPanel to mount INSIDE that modal's dark Panel -- but Headless UI v2's Dialog emits nothing but its hidden accessibility sentinel under SSR, so the open modal renders 225 bytes and carries no body at all, and this portal installs no DOM test environment (no happy-dom, no jsdom, no testing-library) while this order forbids bun install. The two cannot both be met by that instrument. The mount is made as the cell says (both components render inside <Panel variant=chart>), the body is ONE exported component ExportModalPanel that ExportModal instantiates with a plain spread of its own props, and the acceptance test renders THAT with the modal's props plus a SOURCE assertion that the modal mounts it and that both components sit inside the Panel span. Every state's byte count and the 225-byte open-modal SSR measurement are printed by the run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal worktree wk-irpt_fntend-2-6-fe-s-16 (cut from DEV 84a86c10): spike run of renderToStaticMarkup(ExportModal open) printed SPIKE BYTES: 225 and HAS BRANDING FIELDSET: false",
+        "portal src/pages/InvestorReporting/export/ExportModal.tsx@84a86c10 header records the same measurement at FE-s-9 (~189 bytes then)",
+        "portal/node_modules: no happy-dom, no jsdom, no @testing-library (ls @happy-dom returned rc=2)",
+        "__tests__/fe-s-16/mounted-states.test.ts run: STATES RENDERED: 5 of 5; each state prints OPEN MODAL SSR: 225 bytes"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-16 F16-AC2: renderToStaticMarkup of the open ExportModal with each of the five wire fixtures contains the AppliedBranding slot with the expected label and the ReceiptPanel slot with the expected state; and the cell: mount both INSIDE ExportModal's dark Panel.",
+    "world_is": "An open Headless v2 Dialog renders no body under renderToStaticMarkup in this worktree (225 bytes, measured), so no instrument available here can read the modal's body through the whole modal. The criterion's BAR (STATES RENDERED: 5 of 5) is met on the modal's own body component with the modal's own props, and the mount itself is graded from the source rather than asserted from a comment.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S5",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-11T19:45:00Z",
+    "one_line": "v1's submit-export answers the ExportReceipt WHOLE in data (the receipt carries the producer-minted export_ref.export_id) with the ack in status, but the FE-s-13 typed client's submitExport is typed to the ACK and takes the status half only, and adaptStatusEnvelope carries operation_kind rather than operation_id -- so neither the receipt nor the minted export id reaches a consumer from a submit. The mounted flow therefore submits, then asks export-receipt for the ref THIS browser submitted (the composed bundleRef), and displays a refusal as a refusal. The typed client and adapters are FE-s-13's and READ-ONLY to this order.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/responses/submit-export.response.schema.json@7ce4761a2f: 'Returns the receipt whole, including job_state -- so a caller that polls and a caller that does not read the same document'",
+        "portal src/api/endpoints/investor-reporting.ts@84a86c10:1040-1053 submitExport(...): Promise<StatusEnvelope>, send(..., 'status')",
+        "portal src/pages/InvestorReporting/contracts/adapt.ts@84a86c10 adaptStatusEnvelope: operation = wire.operation.operation_kind; operation_id is not carried",
+        "portal src/pages/InvestorReporting/export/ExportButton.tsx (this branch) handleSubmit: submitExport then getExportReceipt({exportRef: bundle.bundleRef})"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-16 cell: ReceiptPanel reads the ExportReceipt the typed client returns from submit-export (POST .../export) and export-receipt (GET .../export/{exportId}).",
+    "world_is": "The typed client returns an ExportReceipt from export-receipt only; from submit-export it returns the ack. On the FIXTURE plane the follow-up serves the receipt regardless of the ref, so the five states are provable; on a LIVE plane the follow-up would ask for an id the producer did not mint and be refused. Nothing in this order's grant can widen the client.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S6",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-11T19:45:00Z",
+    "one_line": "The cell says both ExportAnchorSlot mounts in index.tsx pass the tab's real report refs; the REPORTING tab's reference is reachable (that tab identifies its report by ResolvedScope.revision.revisionId, which performanceReportRequest sends as revision) and is now passed. The ANALYSIS tab's reference is an analysis REQUEST id minted inside tabs/analysis/AnalysisTab.tsx; that file and TabShell are outside this order's grant and expose no callback that would carry it up to index.tsx, so the analysis slot still references nothing rather than referencing the performance revision, which is a different document.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/pages/InvestorReporting/index.tsx (this branch): performance slot reportRefs={resolved ? [resolved.revision.revisionId] : []}; analysis slot unchanged at []",
+        "portal src/pages/InvestorReporting/tabs/reporting/ReportingTab.tsx@84a86c10:145 getPerformanceReport(performanceReportRequest(scopeRef, period, now))",
+        "portal src/pages/InvestorReporting/tabs/TabShell.tsx@84a86c10 TabShellProps: api, scope, firmId and test-only seeds -- no callback out",
+        "TO-FE-s-16 <paths>: tabs/ is not granted; index.tsx is granted for the two ExportAnchorSlot JSX blocks only"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-16 cell: the two ExportAnchorSlot mounts in index.tsx pass the tab's real report refs and revision instead of reportRefs={[]}.",
+    "world_is": "One of the two slots can be satisfied from what index.tsx holds; the other cannot without a file this order does not grant. The revision both slots pass IS the tab's real one.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S7",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-11T19:45:00Z",
+    "one_line": "The cell requires render/narrative/ to read cited_evidence and coverage through the FE-s-13 adapter, but adaptNarrativePacket exposes NEITHER: it hangs evidence off each EVENT and fills it with [] (its own comment, row -W1-S17), and it sets coveredWindow: null, carrying only missing_history as uncoveredReason. The adapter is FE-s-13's and READ-ONLY to this order, so both groups are carried by a new in-grant module render/narrative/wire.ts under the adapter's own three verbs (RENAME / RESTRUCTURE / CARRY, nothing computed). The carried half reaches the page through an OPTIONAL facts prop; on the PRINT path render/performance/PerformanceDocument.tsx mounts the page with {packet, report} only and is outside this order's grant, so a printed narrative composes from the view packet alone and its coverage note reads 'Covered window not stated'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/pages/InvestorReporting/contracts/adapt.ts@84a86c10 adaptNarrativePacket: evidence: [], coveredWindow: null",
+        "portal src/pages/InvestorReporting/render/narrative/wire.ts (this branch): narrativeWireFacts(NarrativePacketWire), rename/restructure/carry only",
+        "portal src/pages/InvestorReporting/render/performance/PerformanceDocument.tsx@84a86c10:113 PeriodInContextPage packet report",
+        "capture fe-s-16_print_narrative_1440_CONTROL_with_scope_segments.png page 2 of 4: markers and prose render; the coverage note reads 'Covered window not stated'"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-16 cell: render/narrative/ reads NarrativePacket through the FE-s-13 adapter from the wire fields the schema names -- events, cited_evidence, prose, coverage, performance_revision, versions.",
+    "world_is": "Four of the six named field groups arrive through the adapter; cited_evidence and coverage do not and are carried in-grant beside it. The print path cannot receive the carried half until a file outside this grant passes it.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S8",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-11T19:45:00Z",
+    "one_line": "F16-AC5 requires the MISSING HISTORY state to name coverage's cutoff, but v1's NarrativePacket coverage object carries NO DATE AT ALL: its four properties are windows_evaluated, windows_covered, missing_history and missing_history_reason (schema sha256 5a2507151efce130e29c6c5d37aeb5fd4361fe60a040ecfc79eb50ab15c4687a, additionalProperties false). The state itself is gated on the packet's own answer (coverage.missing_history === MISSING_HISTORY) and the DATE named is the earliest cited_evidence[].cutoff_at the packet carries -- the schema's own 'history past this instant was NOT considered'. A selection over carried values, never a computed or inferred date.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workspace docs/contracts/investor-reporting/v1/NarrativePacket.schema.json@7d6db9bcfa: coverage.properties = windows_evaluated, windows_covered, missing_history, missing_history_reason; no date member",
+        "portal src/pages/InvestorReporting/contracts/wire/NarrativePacket.ts@84a86c10 mirrors those four",
+        "portal render/narrative/wire.ts historyDateFromEvidence(); __tests__/fe-s-16/narrative-wire.test.ts run: MISSING HISTORY: rendered naming 2026-05-01"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-16 F16-AC5: the pre-history wire fixture renders the MISSING HISTORY state naming coverage's cutoff and no topic element.",
+    "world_is": "coverage names no cutoff. The rendered date is the packet's earliest cited-evidence cutoff, the only history instant v1's NarrativePacket carries, and it is labelled as the date before which market history is not available.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S9",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-11T19:45:00Z",
+    "one_line": "F16-AC8 CANNOT PASS AS WRITTEN: its route investor-reporting/print?bundle=fe-s-16-narrative names no ?scope=, and the declared performance route binds that value as its path parameter (GET /api/scoped/investor-reporting/performance/{accountSetId}, accountSetId = scopeFingerprint). irBuildRequest throws IrKeyError (route needs path parameter accountSetId) BEFORE any request is issued, resolveOne wraps it as MissingPayloadError, and REFS RESOLVED -- which resolveBundle prints AFTER the resolution loop -- never runs. Measured: the as-written run printed no REFS line, reported both fixtures FIXTURE-DEAD (no URL ever matched) and rendered the refusal panel. POSITIVE CONTROL on the same instrument, same fixtures, same page, with &narrative=1&tenant=F-49F&scope=fp-49f-0824&revision=rev-49f-000091 added: REFS RESOLVED: 1 of 1 twice, both fixtures matched, and the narrative page renders with its two dated markers. The criterion is refused, not repaired: the invocation is the cut's and this worker did not change it.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "as-written run (F16-AC8): TEXT 'This bundle was not rendered ... cannot render reportKind performance-report: fe-s-16-narrative is absent'; FIXTURES: 2 declared, 0 matched >=1 URL; no CONSOLE[log] REFS line; PNG fe-s-16_print_narrative_1440.png",
+        "control run: CONSOLE[log]: REFS RESOLVED: 1 of 1 (twice); FIXTURES: 2 declared, 2 matched; PNG fe-s-16_print_narrative_1440_CONTROL_with_scope_segments.png",
+        "portal src/api/endpoints/investor-reporting.ts@84a86c10 irBuildRequest(): throws IrKeyError when a pathParam is empty; getPerformanceReport pathParams {accountSetId: req.scopeFingerprint}",
+        "portal src/pages/InvestorReporting/render/PrintEntry.tsx@84a86c10: scopeFingerprint = params.get('scope') ?? '' -- PrintEntry is outside this order's grant",
+        "portal src/pages/InvestorReporting/__tests__/fe-s-17/fixtures/fe-s-17.netlog:1 shows the working form of this route carrying &tenant= and &scope="
+      ]
+    },
+    "spec_asserts": "TO-FE-s-16 F16-AC8 invocation: node scripts/ui-smoke.mjs investor-reporting/print?bundle=fe-s-16-narrative ... --console REFS RESOLVED; expect REFS RESOLVED: 1 of 1.",
+    "world_is": "The named URL cannot reach the resolver: the route the print page must call binds the scope fingerprint as a PATH segment and the query string names none, so the client refuses before the network. Adding the segments makes the same command print the expected line. Closure -- re-cut the invocation with the segments, or re-run it -- belongs to the issuer.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S10",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-11T19:45:00Z",
+    "one_line": "F16-AC9 (bun test src/pages/InvestorReporting, expect 0 fail) reads 384 pass, 1 skip, 6 FAIL on this branch. The six are exactly the six the task order's own face names as pre-existing and NOT this worker's: __tests__/fe-s-13 (producer-fixtures.test.ts twice, routes.test.ts twice), __tests__/fe-s-14 (envelope.test.ts) and __tests__/fe-s-1 (fixtures.test.ts, 'the smoke map covers every scoped route' -- holdings-snapshot: 0 key(s) in smoke/default.json). None of those three directories is in this order's grant; the repair is FE-s-15's R2 re-pin to the v1 artifact at d9c940244a, running in parallel. Baseline at the branch cut was 376 pass / 1 skip / 6 fail; this order added 8 passing tests and moved no failure.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bun test src/pages/InvestorReporting on this branch: 384 pass, 1 skip, 6 fail, 391 tests across 62 files",
+        "failing assertions: fe-s-1/fixtures.test.ts:164 unmatchedRoutes ['holdings-snapshot: 0 key(s)']; fe-s-13/producer-fixtures.test.ts twice; fe-s-13/routes.test.ts twice; fe-s-14/envelope.test.ts",
+        "fe-s-1/fixtures.test.ts:143 reads ONLY fixtures/smoke/default.json, so the fixtures this order added (fixtures/smoke/fe-s-16-*.json) cannot affect it",
+        "TO-FE-s-16 worker face: 376 pass / 1 skip / 6 fail, 'not one of those three directories is in your grant'; channel rows IRPT_FNTEND-S23 (issuer) and IRPT_FNTEND-S21 carry the same finding"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-16 F16-AC9: the whole Investor Reporting set is green (expect 0 fail).",
+    "world_is": "Six tests outside this order's grant are red for a producer re-pin this order may not make. Every criterion this order owns is green on the same run. The face assigns closure of this criterion to the issuer after the FE-s-15 drain.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S11",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-11T19:45:00Z",
+    "one_line": "F16-AC6/AC7 read 'the modal opens on the mounted flow in the ready state', but their invocation carries a single --click Export, which opens the modal and submits nothing: no export exists, so no receipt is fetched and the mounted ReceiptPanel shows its awaiting state (Loading / Source time unknown) rather than a READY receipt with a download link. Both criteria's BAR (CLICKED: Export) is met at both widths, and both PNGs show the mounted AppliedBranding ('Branding applied: Opal'), the mounted ReceiptPanel and the Create export control on the light card inside the dark Panel, with the real performance preview below. The READY receipt state is graded mechanically by F16-AC2 instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "runs: CLICKED: Export at --width 1440 and --width 390, rc=0, no 'Maximum update depth' console line",
+        "PNGs fe-s-16_export_ready_1440.png and fe-s-16_export_ready_390.png in this worker's deliverables folder",
+        "smoke map fe-s-16-ready.json declares the export-receipt key; ui-smoke reported it FIXTURE-DEAD (never matched), so nothing asked for a receipt",
+        "F16-AC2 run: STATE ready renders data-slot=download-link at /api/scoped/investor-reporting/exports/EXP-FE16-1/download"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-16 F16-AC6: the modal opens on the mounted flow in the ready state at 1440; F16-AC7: the same at 390.",
+    "world_is": "One click opens the modal; reaching a READY receipt needs a second act (Create export) the invocation does not name. The captures show the mounted flow at the state that single click produces.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
