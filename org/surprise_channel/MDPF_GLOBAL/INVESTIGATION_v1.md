@@ -12,10 +12,17 @@ rather than leaving two findings inside one seat's deliverable where no other re
 block below by the protocol's extractor, which prints its own denominator. A hand-maintained summary
 loses to the record it summarises.
 
-**Both rows below were surfaced by the EXECUTING seat about ITS OWN ORDER**, which is the case Rule 2
-contemplates ("the seat that sees it appends its own row"). Neither is a remediation row; remediation
-stays `3.0.0_SA_CVO`'s. Neither was actioned beyond being recorded -- the order was STOPPED on its own
-stop condition and nothing was applied.
+**The rows below were surfaced by the EXECUTING seat about ITS OWN ORDER**, which is the case Rule 2
+contemplates ("the seat that sees it appends its own row"). None is a remediation row; remediation
+stays `3.0.0_SA_CVO`'s. ⚠ **AND THE HEADER DELIBERATELY DOES NOT SAY HOW MANY** -- it said "both" when
+there were two, and was stale within the hour when S3 and S4 landed. The count, the class split and the
+ARMED-without-owner check are DERIVED from the block below by the protocol's extractor, which prints its
+own denominator.
+
+**Round history, because the two halves of this round reached opposite outcomes:** S1 and S2 were
+surfaced when the order STOPPED pre-act on its own population tripwire and nothing was applied. S3 and
+S4 were surfaced after amendment 1 re-cut the ceiling and the grant DID apply -- cleanly, 0-diff, and
+still short of its goal for a reason no identity policy can reach.
 
 ```json
 [
@@ -68,6 +75,56 @@ stop condition and nothing was applied.
     "spec_asserts": "MDPF_GLOBAL.TO-IAM1 @85f58dfd9c preflight: comp-iam reads statements: 0 on this role because its policy comes from data.aws_iam_policy_document and the parser does not follow the indirection.",
     "world_is": "This role's policy is an inline jsonencode document and this terraform root contains no aws_iam_policy_document data source at all, so whatever makes comp-iam read zero here, it is not that indirection. The true cause on THIS role is UNESTABLISHED and this row does not assert one.",
     "notes": "NOTHING IN THE ORDER'S DECISION DEPENDS ON THE CAUSE -- comp-iam is excluded as a grading instrument either way, and that exclusion was the right call. Recorded because A WRONG CAUSE IS MORE DURABLE THAN A WRONG COUNT: the count has a tripwire on it and the cause does not. A later seat reading 'this role uses a data source' will look in the wrong file; worse, a seat that learns the blindness as data-source-specific may TRUST comp-iam on the next inline-policy role and read its zero as an empty policy. Sibling of the estate's standing note that a named enforcement surface is a claim until someone runs it -- the same holds one level down: a named MECHANISM is a claim until someone reads the source. Two independent runs agreed on the zero (2.0.0_SA_COO~B msg 96077, 1.0.0_SA_CTO), so the symptom is not in doubt; only the explanation is."
+  },
+  {
+    "id": "MDPF_GLOBAL-S3",
+    "project": "MDPF_GLOBAL",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~C",
+    "surfaced_at": "2026-09-12T12:35:00Z",
+    "one_line": "THE 49FINANCIAL HALF OF TO-IAM1 IS STRUCTURALLY IMPOSSIBLE AS AN IDENTITY GRANT, AND THE ESTATE ALREADY DECIDED SO ON PURPOSE. The grant applied cleanly (0-diff, 34 live statements, 7 new Sids present) and the host STILL reads AccessDenied on 5 of 5 opal-data-49financial prefixes, because that bucket carries a bucket-policy statement DenyForeignFirmPrincipals -- Deny s3:* on Principal * conditioned ArnLike aws:PrincipalArn [role/cot-*, role/inf-*, role/mdpf-*, role/opal-assets-mdpf-*]. mdpf-daily-runner-ec2-role matches role/mdpf-*, and an explicit resource-policy Deny beats every identity Allow. This is not a defect: it is CLAUDE.md's cross-firm isolation hard stop in its PER-FIRM-BUCKET shape ('per-firm buckets -> bucket-scoped Deny'), and opal-data-49financial is the ONLY one of the five involved buckets carrying it (bd, cot, inf and assets were each read: CloudFront OAC/OAI allows only, no PrincipalArn-conditioned Deny). So 6 of the 11 authorized grants are effective, 3 destination writes are effective on the APPLIED plane, and 2 statements are INERT BY DESIGN OF A CONTROL NOBODY HAS PROPOSED REMOVING.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- three mutually exclusive routes and NONE of them is an AE lane's to choose: (a) seek an exception to DenyForeignFirmPrincipals for this one role and prefix set, which is a CROSS-FIRM ISOLATION decision and on CLAUDE.md's NEVER list, so Andrew's; (b) re-route the 49financial dimension read so the mdpf host never touches that bucket (e.g. the three dimensions reach the runner the way its bundle already reaches it, or the build moves to a principal the bucket permits); (c) accept that the 49financial leg cannot run from this host and re-cut IRPT's expectation. \u26d4 AND A FOURTH ITEM THAT IS NOT A ROUTE BUT IS OWED EITHER WAY: two now-INERT statements (IrptDirectory49fDimsRead, IrptDirectory49fDimsListScoped) reference another firm's BUCKET from the mdpf pipeline tree and grant nothing. This lane RECOMMENDS REVERTING THEM if the Deny stands, and did NOT revert them unilaterally because the amended face enumerated those five prefixes as authorized -- removing an explicitly authorized grant is the issuer's call, not the executor's.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM b2da11c2-cf22-40d8-8335-14169fd0445a on i-02448edb624a7a7cf, Success rc=0, positive control READ-OK: 'AC4 SOURCE: READ-OK=5 READ-DENY=5 READ-OTHER=0 denominator 10'; the 5 denials are exactly the 5 opal-data-49financial prefixes and nothing else",
+        "aws s3api get-bucket-policy --bucket opal-data-49financial -> 1 statement, DenyForeignFirmPrincipals, Deny s3:*, Principal *, Resource [bucket, bucket/*], Condition ArnLike aws:PrincipalArn [role/cot-*, role/inf-*, role/mdpf-*, role/opal-assets-mdpf-*]",
+        "the same call on opal-data-bd, opal-data-cot, opal-data-inf, opal-data-assets -> 2 statements each, CloudFront OAC/OAI allows plus one non-PrincipalArn Deny on assets; NONE denies mdpf-*; opal-data-mdpf has NoSuchBucketPolicy",
+        "aws s3api head-bucket opal-data-49financial -> exists, us-east-1, same account 313476888478 (so this is neither a missing bucket nor a cross-account gap), and it is 1 of 36 buckets in the account's list",
+        "aws iam get-role-policy post-apply -> 34 statements = 27 pre-existing + 7 new, all 7 Irpt* Sids present with the authored shape, so the identity grant is APPLIED and correct",
+        "terraform 0-diff re-plan after apply: 'No changes. Your infrastructure matches the configuration.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MDPF_GLOBAL.TO-IAM1 amendment 1 @bcff22b113 authorizes 11 enumerated prefix grants, of which 5 are opal-data-49financial/gold/advi/dimensions/*, and defines IAM1-AC4 as the host-side re-read reading ALLOWED on the previously denied prefixes.",
+    "world_is": "Five of those eight denied source prefixes cannot be granted by any identity policy, because the bucket itself explicitly denies every mdpf-* principal. IAM1-AC4 therefore reads 5 of 10 rather than 10 of 10 and the order stays OPEN.",
+    "notes": "\u2b50 THIS IS THE CLEANEST AVAILABLE DEMONSTRATION OF WHY THE FACE CALLED IAM1-AC4 NON-SUBSTITUTABLE, AND IT SHOULD BE CITED WHEREVER THAT CLAIM IS DOUBTED. THREE INSTRUMENTS ALL SAID THE GRANT WAS CORRECT: a green targeted plan (0 to add, 1 to change, 0 to destroy, 26 unchanged elements hidden), a live get-role-policy showing all 7 statements exactly as authored, and simulate-principal-policy returning ALLOWED for both the GetObject and the prefix-conditioned ListBucket on 49financial. THE WORLD STILL SAYS AccessDenied. Every one of those three reads the IDENTITY plane; only the host reads the EFFECTIVE plane, where a resource-policy Deny lives. A DESIRED-APPLIED-EXERCISED ladder is not a formality here -- APPLIED was true and EXERCISED was false, and no amount of APPLIED evidence would ever have found it. See MDPF_GLOBAL-S4 for the instrument half of this finding. NOT A DEFECT OF THE ISSUER: the face's enumeration came from this lane's own host sweep, which measured the denial correctly and could not have known its CAUSE was a resource policy rather than a missing grant -- a denial looks identical either way from the caller's side, which is the same indistinguishability that produced W2-S50."
+  },
+  {
+    "id": "MDPF_GLOBAL-S4",
+    "project": "MDPF_GLOBAL",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~C",
+    "surfaced_at": "2026-09-12T12:35:00Z",
+    "one_line": "simulate-principal-policy HAS A FIFTH FALSE-VERDICT MODE AND IT IS THE FIRST ONE THAT FAILS IN THE OVER-GRANTED DIRECTION: it does not evaluate RESOURCE policies, so it returns ALLOWED for an action an explicit bucket-policy Deny refuses. Measured here: the same action, the same principal, the same ARN -- simulate says 'allowed' for s3:GetObject on opal-data-49financial/gold/advi/dimensions/dim_account/... and for the prefix-conditioned s3:ListBucket, while the host's own attempt returns AccessDenied, because opal-data-49financial carries DenyForeignFirmPrincipals. The cloud-ops skill documents FOUR false-DENY modes and states the instrument 'fails in the UNDER-granted direction'; that sentence is true of those four and is NOT true of the instrument as a whole.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws iam simulate-principal-policy --policy-source-arn arn:aws:iam::313476888478:role/mdpf-daily-runner-ec2-role --action-names s3:GetObject --resource-arns arn:aws:s3:::opal-data-49financial/gold/advi/dimensions/dim_account/date=2026-09-11/data.parquet -> allowed (ONE resource ARN, object grain, no batching)",
+        "the same tool, s3:ListBucket on arn:aws:s3:::opal-data-49financial WITH --context-entries s3:prefix=gold/advi/dimensions/dim_account/ (so mode 2 is excluded) -> allowed",
+        "the host's own attempt as that exact principal, SSM b2da11c2-cf22-40d8-8335-14169fd0445a: READ-DENY AccessDenied on all five 49financial prefixes, positive control READ-OK in the same sweep",
+        "aws s3api get-bucket-policy --bucket opal-data-49financial -> DenyForeignFirmPrincipals, Deny s3:*, ArnLike aws:PrincipalArn role/mdpf-*",
+        "accessanalyzer validate-policy on the action set -> 0 findings, so mode 3 (a typo reading as a deny) is excluded"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cloud-ops skill's IAM INSTRUMENT TRAPS section enumerates four independent false-DENY modes for simulate-principal-policy and concludes 'It fails in the UNDER-granted direction and is INVISIBLE against a narrowly scoped principal'.",
+    "world_is": "There is a fifth mode and it fails the OTHER way. simulate-principal-policy evaluates identity policies only; a resource-policy Deny is invisible to it, so it returns ALLOWED where the effective decision is DENY. The four documented mitigations (one ARN per call, --context-entries, validate-policy for action names, correct resource grain) were ALL in force here and none of them touches this mode.",
+    "notes": "\u26d4 WHY THIS IS WORSE THAN THE FOUR ALREADY DOCUMENTED, EVEN THOUGH IT IS RARER: a false DENY gets argued with, because somebody has to explain why a grant they just wrote does not work. A false ALLOW gets ACTED ON -- it is the green that closes a ticket. The estate's standing note that 'the failure mode is a GREEN' applies exactly. \u2b50 THE CHEAP DEFENCE IS ALREADY IN THE LAW AND COSTS ONE CALL: simulate-principal-policy answers a question about the IDENTITY plane only, so on any S3 target ask get-bucket-policy whether a resource policy exists BEFORE quoting a simulate ALLOW -- and where a host can run the action, prefer the host. SCOPE OF THE CLAIM, STATED NARROWLY: this was measured on S3 with a bucket policy. The same blindness must apply to every resource-policy surface the simulator does not take as input (KMS key policies, SQS/SNS, Secrets Manager, Lambda permissions, S3 Access Points), but this lane measured ONE and is not asserting the others. `simulate-custom-policy` with the resource policy supplied is the documented way to include one, and nothing in the estate currently does that."
   }
 ]
 ```
