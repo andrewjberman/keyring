@@ -12,9 +12,22 @@ Usage: proof-of-spec-check <instance.json> [expected_criterion_ids]
   (the row-quality/row-coverage split -- CVO's step-zero, mechanized). Missing or
   extra criteria are violations, with both denominators printed.
 Exit 0 = VALID. Exit 1 = INVALID (every violation printed). Exit 2 = usage/read error.
-  --self-test               exercise the SURPRISES LIMB red-first (6 arms, N of N printed; rc 0 only
-                            when every arm behaves) -- the battery lives HERE because the checker's
+  --self-test               exercise the SURPRISES LIMB, the v3 expect/judgment carrier and the
+                            INVOCATION ALIGNMENT limb red-first (N of N printed; rc 0 only when
+                            every arm behaves) -- the battery lives HERE because the checker's
                             author seat is deliberately not in the TOOL_BATTERIES lane.
+  There is NO --help. An unrecognised single argument is read as an INSTANCE PATH.
+
+INVOCATION ALIGNMENT LIMB (2026-09-12, FE-s-23, row IRPT_FNTEND-S31): each acceptance row's recorded
+`invocation` is compared against the same-id criterion's <invocation> in the GOVERNING TASK ORDER,
+modulo the declared placeholders and trailing/leading whitespace ONLY -- a changed flag, path, query
+parameter or quoted argument is a divergence, and the frame prints both strings and the criterion id.
+It closes the hole S31 measured: an issuer corrects the SPAWN PROMPT and never the task-order FILE,
+the worker runs the corrected command, the record is faithful to the prompt and FOREIGN to the order,
+and this checker said VALID. ENFORCE is OPT-IN: a TO carrying <placeholders>WS, PORT</placeholders>
+gets VIOLATIONS; a TO without one gets the same diagnostic as ANNOUNCE frames and refuses nothing
+(measured before the choice: 318 of 874 comparable rows across 294 committed instances diverge, mostly
+honestly -- refusing by default would retro-invalidate the estate). See the block above the limb.
 
 SURPRISES LIMB (Andrew-direct 2026-09-03 ~03:1xZ at the 3.0.0_SA_CVO terminal, relayed 92976, VERBATIM:
 "claude.md should not have that rule to do this over mcp + any gate with proof of spec surprises field to
@@ -1061,6 +1074,178 @@ def surprises_check(inst: dict, enforce: bool | None = None, row_ids: set | None
     return v, frames
 
 
+# ---------------------------------------------------------------------------
+# INVOCATION ALIGNMENT LIMB (2026-09-12, 0.9.0_WK_IRPT_FNTEND~3 on IRPT_FNTEND.TO-FE-s-23,
+# decomp cell FE-s-23, channel row IRPT_FNTEND-S31).
+#
+# THE CLASS. The spine has the ISSUER substitute <WS>/<PORT> into the worker face at spawn,
+# so an issuer is ALWAYS editing the criterion string on the way out. Once you are editing
+# it, nothing stops a SUBSTANTIVE correction going only there. MEASURED: on IRPT_FNTEND round 2
+# an issuer corrected two print-route URLs in the SPAWN PROMPT and never in the task-order FILE;
+# the worker ran the corrected URLs, recorded them faithfully, and THIS CHECKER returned
+# VALID (rc=0) over 20 rows with 0 violations -- because nothing here compared a RECORDED
+# invocation against the text of the criterion it claims to satisfy. The prompt is gone the
+# moment the worker ends; the RECORD is what the CVO grades and every successor reads.
+#
+# WHAT IS COMPARED, AND WHAT IS NOT NORMALISED AWAY. Per row: the instance's `invocation`
+# against the same-id criterion's <invocation> in the governing TO. Normalisation is EXACTLY
+# TWO THINGS -- placeholder expansion, and whitespace at the ENDS of the string. A difference
+# in a flag, a path, a query parameter or a quoted argument is NOT normalised away; those are
+# the four shapes the seeded battery refuses (.tools/tests/test_invocation_limb.py).
+# A repeated placeholder is a BACKREFERENCE: <WS> twice in one invocation must expand to the
+# SAME value, so two different workspaces in one command cannot pass as one substitution.
+#
+# BLOCKED: ENFORCE IS OPT-IN, VIA A DECLARATION IN THE GOVERNING TO, AND THAT IS NOT A SOFTENING --
+# IT IS THE ONLY BRANCH THE MEASUREMENT ALLOWS. The corpus was read UNSCOPED before this limb
+# was written: 294 committed instances, 275 with a governing TO under the tree root, 1481
+# acceptance rows, 874 of them comparable -- and 318 of those 874 DIVERGE under the rule above.
+# The dominant shapes are honest ones (a worker adding the `timeout 120` bound the order's
+# BOUNDS section demanded but its <invocation> omitted; a record eliding a long path to
+# `.../x.txt`). Refusing by default would retro-INVALIDATE work across every project in the
+# estate and refuse in-flight completion flips in projects this cell does not own. So the
+# discriminator is a DECLARATION the TO makes: <placeholders>WS, PORT</placeholders>. Present
+# -> the substitution set is KNOWN, comparison is exact modulo exactly those tokens, and a
+# mismatch is a VIOLATION. Absent -> the set is a GUESS (the <UPPER> heuristic), and a guess
+# must not refuse: the divergence is PRINTED with both strings on every run and refuses nothing.
+# Same shape as <owned_cells> (CTO 66893): an opt-in delimiter that turns an announce into an
+# assertion, because the undelimited form cannot tell a claim from a read-dependency.
+# Census before choosing the token: 0 of 2554 task-order files carry <placeholders> today, so
+# nothing in the estate is retro-enforced by construction.
+# WARN: NAMED WEAKNESS, not hidden: the opt-in is written by the ISSUER, and the issuer is the
+# party whose prompt-only correction this limb exists to catch. The ANNOUNCE branch is what
+# covers the un-opted case -- it prints both strings for the CVO at L8/L9 -- and making the
+# declaration MANDATORY at the L6 gate is a different cell's business, deliberately not done here.
+CRITERION_SELFCLOSE_RE = re.compile(r"<criterion\b([^>]*?)/>", re.S)
+# The paired form must not swallow a self-closing tag: `[^>]*?` alone matches up to the `/`
+# of `... />` and then `(.*?)</criterion>` runs on to the NEXT criterion's closing tag,
+# attributing that criterion's invocation to the self-closed id. Measured on
+# IRPT_FNTEND.TO-FE-s-15: F15-AC12 (self-closing, judgment) took F15-AC13's invocation.
+CRITERION_BLOCK_RE = re.compile(r"<criterion\b((?:(?!/>)[^>])*?)>(.*?)</criterion>", re.S)
+INVOCATION_TAG_RE = re.compile(r"<invocation>(.*?)</invocation>", re.S)
+PLACEHOLDERS_TAG_RE = re.compile(r"<placeholders>(.*?)</placeholders>", re.S)
+PLACEHOLDER_TOKEN_RE = re.compile(r"<([A-Z][A-Z0-9_]*)>")
+
+
+def _to_invocations(text: str) -> dict:
+    """{criterion_id: invocation string or None}. None = the criterion carries no
+    <invocation> (a judgment criterion, or a prose-only clause) and is NOT comparable."""
+    out: dict = {}
+    for m in CRITERION_SELFCLOSE_RE.finditer(text):
+        cid = dict(ATTR_RE.findall(m.group(1))).get("id", "").strip()
+        if cid:
+            out.setdefault(cid, None)
+    for m in CRITERION_BLOCK_RE.finditer(text):
+        cid = dict(ATTR_RE.findall(m.group(1))).get("id", "").strip()
+        if not cid:
+            continue
+        i = INVOCATION_TAG_RE.search(m.group(2))
+        out[cid] = i.group(1).strip() if i else None
+    return out
+
+
+def _declared_placeholders(text: str):
+    """The TO's declared substitution set, or None when it declares none.
+
+    None and set() are DIFFERENT: None = undeclared = ANNOUNCE; an empty/NONE declaration =
+    ENFORCE with no token expanded at all (a TO whose invocations are literal)."""
+    m = PLACEHOLDERS_TAG_RE.search(text)
+    if m is None:
+        return None
+    names = {n.upper() for n in re.findall(r"[A-Za-z][A-Za-z0-9_]*", m.group(1))}
+    names.discard("NONE")
+    return names
+
+
+def _invocation_pattern(to_inv: str, names) -> str:
+    """The criterion's invocation as a regex: literal everywhere, `(\\S+)` at each occurrence
+    of a placeholder in `names`, and a BACKREFERENCE at every repeat of the same placeholder.
+    `\\S+` cannot cross whitespace or a newline, so an expansion can never swallow an added
+    flag, an added argument or an appended query parameter -- the literal tail would then have
+    nothing to match and the row diverges, which is the whole point."""
+    pat, last, seen = "", 0, {}
+    for m in PLACEHOLDER_TOKEN_RE.finditer(to_inv):
+        if m.group(1) not in names:
+            continue
+        pat += re.escape(to_inv[last:m.start()])
+        if m.group(1) in seen:
+            pat += "\\%d" % seen[m.group(1)]
+        else:
+            seen[m.group(1)] = len(seen) + 1
+            pat += r"(\S+)"
+        last = m.end()
+    return pat + re.escape(to_inv[last:])
+
+
+def invocation_alignment_check(inst: dict, to_text: str | None = None,
+                               to_label: str | None = None) -> tuple[list, list]:
+    """(violations, frames). `to_text`/`to_label` are injectable so the battery exercises the
+    limb without planting a task order in the live estate."""
+    v: list[str] = []
+    frames: list[str] = []
+    if to_text is None:
+        try:
+            to_path, note, _scanned = _resolve_governing_to(inst)
+        except Exception as exc:  # noqa: BLE001 -- a shape error is layer 1's complaint, not this limb's
+            return v, ["invocation-frame: NOT EVALUATED -- governing TO could not be resolved (%s)" % exc]
+        if to_path is None:
+            return v, ["invocation-frame: NOT EVALUATED -- governing TO unresolved: %s. A recorded "
+                       "invocation can only be compared against a criterion that resolves." % note]
+        to_text = to_path.read_text(encoding="utf-8", errors="replace")
+        to_label = str(to_path.relative_to(WORKSPACE)).replace("\\", "/")
+    to_inv = _to_invocations(to_text)
+    declared = _declared_placeholders(to_text)
+    enforce = declared is not None
+    rows = inst.get("acceptance", []) or []
+    n_cmp = n_ok = n_nocrit = n_noinv = 0
+    defects: list[str] = []
+    for r in rows:
+        if not isinstance(r, dict):
+            continue
+        rid = str(r.get("criterion_id", "") or "").strip()
+        rec = str(r.get("invocation", "") or "").strip()
+        if rid not in to_inv:
+            n_nocrit += 1          # coverage_check owns "this id is not in the TO"
+            continue
+        if to_inv[rid] is None or not rec:
+            n_noinv += 1           # judgment / prose criterion: nothing to compare against
+            continue
+        n_cmp += 1
+        spec = to_inv[rid]
+        names = declared if enforce else {
+            t for t in PLACEHOLDER_TOKEN_RE.findall(spec)}
+        try:
+            ok = re.fullmatch(_invocation_pattern(spec, names), rec, re.S) is not None
+        except re.error:  # noqa: PERF203 -- an unbuildable pattern is announced, never a silent pass
+            ok = False
+        if ok:
+            n_ok += 1
+            continue
+        defects.append(
+            "invocation-alignment[%s]: the RECORDED invocation is NOT the criterion's invocation "
+            "modulo the placeholder(s) %s.\n      TO-CRITERION: %s\n      INSTANCE-RECORD: %s\n"
+            "      -- a correction that reaches the spawn prompt and never the task-order FILE "
+            "leaves the record ungoverned; the prompt is gone, the record is what the CVO grades "
+            "(IRPT_FNTEND-S31)" % (rid, sorted(names) or "<none>", spec, rec))
+    frames.append(
+        "invocation-frame: governing TO=%s; placeholders %s"
+        % (to_label or "<injected>",
+           ("DECLARED %s -> ENFORCE" % (sorted(declared) or "<none>")) if enforce
+           else "UNDECLARED -> ANNOUNCE (the <UPPER> heuristic is a guess, and a guess must not "
+                "refuse; declare <placeholders>WS, PORT</placeholders> in the TO to enforce)"))
+    frames.append(
+        "invocation-alignment (recorded invocation -> criterion text): %d/%d comparable row(s) "
+        "match modulo placeholder expansion; %d diverge. NOT COMPARABLE: %d row(s) name no "
+        "criterion in the TO (coverage_check owns that), %d row(s) whose criterion carries no "
+        "<invocation> (judgment/prose). Rows in instance: %d."
+        % (n_ok, n_cmp, len(defects), n_nocrit, n_noinv, len(rows)))
+    if enforce:
+        v.extend(defects)
+    else:
+        frames.extend("invocation-announce (would REFUSE under a TO declaring <placeholders>): "
+                      + d for d in defects)
+    return v, frames
+
+
 def _self_test() -> int:
     """RED-FIRST BATTERY for the surprises limb. Six arms; each names its expectation; N of N printed.
     A gate never exercised on its failure limbs is a gate that cannot fail."""
@@ -1102,8 +1287,50 @@ def _self_test() -> int:
     _v3("K judgment=true under UNVERIFIABLE-BY-INSTRUMENT with a reason -> 0 violations",
         _row(judgment=True, status="UNVERIFIABLE-BY-INSTRUMENT", status_reason="judgment criterion; the CVO grades it at L9"), 0, "")
     _v3("L no expect, no judgment (a pre-v3 row) -> 0 violations (graded as before)", _row(), 0, "")
+
+    # ---- FE-s-23: the INVOCATION ALIGNMENT limb (the prompt/record divergence, row S31) ----
+    def _to_fixture(inv, placeholders=None, judgment=False):
+        ph = ("<placeholders>%s</placeholders>\n" % placeholders) if placeholders is not None else ""
+        if judgment:
+            body = '<criterion id="V23-AC1" cell_refs="FIX-a-1" judgment="true"/>'
+        else:
+            body = ('<criterion id="V23-AC1" cell_refs="FIX-a-1"><invocation>%s</invocation>'
+                    '<expect>x</expect></criterion>' % inv)
+        return ph + body
+
+    def _inv(name, to_text, recorded, expect_v, needle=None):
+        inst_ = {"to_id": "NFRA_TESTPROJ.TO-X-1",
+                 "acceptance": [{"criterion_id": "V23-AC1", "invocation": recorded}]}
+        got, fr = invocation_alignment_check(inst_, to_text=to_text, to_label="<fixture>")
+        ok = (len(got) == expect_v) and (needle is None or any(needle in x for x in got + fr))
+        arms.append((name, ok, len(got), expect_v, (got[0] if got else (fr[-1] if fr else ""))[:110]))
+
+    _inv("M invocation limb: ENFORCE, record differs only by placeholder expansion (<WS> twice, "
+         "same value, + <PORT>) -> 0 violations",
+         _to_fixture("cd <WS>/portal && node s.mjs <WS>/out.png --port <PORT>", placeholders="WS, PORT"),
+         "cd /c/tmp/ws-7/portal && node s.mjs /c/tmp/ws-7/out.png --port 5181", 0)
+    _inv("N invocation limb: ENFORCE, a CHANGED FLAG in the recorded invocation -> 1 violation "
+         "naming BOTH strings",
+         _to_fixture("cd <WS>/portal && timeout 120 bun test x", placeholders="WS"),
+         "cd /c/tmp/ws-7/portal && timeout 180 bun test x", 1, "TO-CRITERION:")
+    _inv("O invocation limb: ENFORCE expands ONLY the DECLARED placeholders, so an undeclared "
+         "<FOO> stays literal -> 1 violation",
+         _to_fixture("run --path <FOO>/a", placeholders="WS"), "run --path /tmp/a", 1)
+    _inv("P invocation limb: UNDECLARED <placeholders> -> ANNOUNCE; the same changed flag "
+         "PRINTS with both strings and refuses nothing",
+         _to_fixture("cd <WS>/portal && timeout 120 bun test x"),
+         "cd /c/tmp/ws-7/portal && timeout 180 bun test x", 0, "invocation-announce")
+    _inv("Q invocation limb: a judgment criterion carries no <invocation>, so the row is NOT "
+         "COMPARABLE -> 0 violations",
+         _to_fixture(None, placeholders="WS", judgment=True),
+         "read the two PNGs beside this instance", 0, "row(s) whose criterion carries no")
+    _inv("R invocation limb: a REPEATED placeholder is a backreference -- two different "
+         "expansions of <WS> in one invocation -> 1 violation",
+         _to_fixture("cd <WS>/portal && node s.mjs <WS>/out.png", placeholders="WS"),
+         "cd /c/tmp/ws-7/portal && node s.mjs /c/tmp/ws-9/out.png", 1)
+
     passed = sum(1 for a in arms if a[1])
-    print("proof-of-spec-check --self-test (surprises limb + v3 carrier 4)")
+    print("proof-of-spec-check --self-test (surprises limb + v3 carrier 4 + invocation alignment)")
     for name, ok, got, exp, tail in arms:
         print("  %s  %s  (violations got=%d expected=%d)  %s" % ("PASS" if ok else "FAIL", name, got, exp, tail))
     print("  RESULT: %d of %d arm(s) behaved" % (passed, len(arms)))
@@ -1216,6 +1443,13 @@ def main() -> int:
     sur_violations, sur_frames = surprises_check(inst)
     violations.extend(sur_violations)
     align_frames = align_frames + sur_frames
+    # INVOCATION ALIGNMENT LIMB (2026-09-12, FE-s-23): runs on EVERY instance and prints its
+    # denominator whether or not anything diverged. ENFORCE vs ANNOUNCE is derived from the
+    # governing TO's own <placeholders> declaration, never from a caller-side flag -- the same
+    # one-discriminator rule as layer 1 and the surprises limb.
+    inv_violations, inv_frames = invocation_alignment_check(inst)
+    violations.extend(inv_violations)
+    align_frames = align_frames + inv_frames
 
     n_acc = len(inst.get("acceptance", []))
     print(f"proof-of-spec-check | structural={structural} | acceptance rows={n_acc} | violations={len(violations)}")

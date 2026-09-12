@@ -27,6 +27,9 @@ Why that matters more than the one incident: the spine has the issuer substitute
 
 ### ACCEPTANCE
 
+<placeholders>WS</placeholders>
+⚠ **THE ONE ELEMENT THE WORKER ADDED TO THIS ORDER (row `IRPT_FNTEND-W3-S16`).** It declares, IN THE FILE, the substitution the spawn prompt declared -- `<WS>` = the worktree root -- and nothing else. It changes no criterion id, no invocation, no expectation and no `<expected_criteria>`. Its effect is that THIS order's instance is graded on the new limb's **ENFORCE** branch: every recorded invocation below must equal its criterion's text modulo `<WS>` alone, so the limb ships EXERCISED on a real instance rather than proved only by fixtures. Delete the line and this instance returns to ANNOUNCE; nothing else in the estate keys on it.
+
 <criterion id="F23-AC1" cell_refs="FE-s-23"><invocation>cd <WS> && timeout 120 python .tools/proof-of-spec-check.py --self-test</invocation><expect>RESULT: (\d+) of \1 arm</expect></criterion>
 `F23-AC1` -- the checker's own self-test passes with the limb in place: every arm behaves, whatever the arm count has grown to. **The expectation is a BACKREFERENCE and not a literal count** because your limb ADDS arms -- at this cut the tool prints `RESULT: 12 of 12 arm(s) behaved` (verified by the issuer), and a literal `12` would refuse your own correct work. ⛔ And it carries NO literal parenthesis: `<expect>` is graded as a REGEX, so `arm(s)` would match the text `arms` and not what the tool prints (round 2's S16).
 
