@@ -206,10 +206,27 @@ def evaluate(prd_text, files, coo_lane_of_project=None, designated=None):
         if not ok:
             per[half] = {"state": "NOT-PERMITTED", "by": doc.get("signed_by"), "file": name, "detail": why}
         elif not current:
-            bound = ("half_hash %s" % str(doc.get("half_hash"))[:12]) if doc.get("half_hash") else ("prd_version %s" % doc.get("prd_version"))
-            per[half] = {"state": "STALE", "by": doc.get("signed_by"), "file": name,
-                         "detail": "signed at %s; the %s half's bytes have changed since (now %s) -- re-review is owed on this half only"
-                                   % (bound, half, hashes[half][:12])}
+            # The STALE detail must name the COMPARISON THAT ACTUALLY RAN, not the one the reader assumes.
+            # A hash-bound record went stale because the half's BYTES moved. A version-bound record (no
+            # half_hash) went stale because the VERSION STRING moved -- and the bytes may be identical.
+            # Claiming "bytes have changed" on the version-bound branch is a FALSE CAUSE in a gate's own
+            # error text, and it sends the reader hunting the wrong artifact: measured 2026-09-12, where
+            # v0.13 -> v0.14 re-opened a brief half whose sections were byte-identical, and the first
+            # hypothesis chased was the header carve-out (which is implemented correctly, :94-95).
+            # Routed to this gate's owner by 4.0.0_SA_CRO after hitting it live. A fail-closed gate's
+            # error text is its AUTHOR'S CLAIM, never a measurement -- so it states which claim it is.
+            if doc.get("half_hash"):
+                detail = ("signed against half_hash %s; the %s half's BYTES have changed since (now %s)"
+                          " -- re-review is owed on this half only"
+                          % (str(doc.get("half_hash"))[:12], half, hashes[half][:12]))
+            else:
+                detail = ("signed against prd_version %s and this PRD is %s -- LEGACY VERSION-BOUND RECORD:"
+                          " this record carries NO half_hash, so the comparison that ran was the VERSION"
+                          " STRING, NOT the bytes. The %s half's bytes MAY BE UNCHANGED (current hash %s);"
+                          " a version bump alone re-opens a version-bound half. Re-stamping WITH a"
+                          " half_hash closes this permanently."
+                          % (doc.get("prd_version"), version, half, hashes[half][:12]))
+            per[half] = {"state": "STALE", "by": doc.get("signed_by"), "file": name, "detail": detail}
         elif verdict == "SIGNED":
             per[half] = {"state": "SIGNED", "by": doc.get("signed_by"), "file": name, "detail": "current"}
         elif verdict == "REFUSED":
