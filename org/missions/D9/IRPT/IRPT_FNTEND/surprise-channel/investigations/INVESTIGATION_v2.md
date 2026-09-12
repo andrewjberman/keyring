@@ -1812,7 +1812,7 @@
     "spec_asserts": "1.0.0_SA_CTO ruling 1: 'FE-s-18 NON-TERMINAL, CARRIED, BOTH CRITERIA UNTOUCHED. No amendment, no re-grade, no pass-with-a-note.' Decomposition v0.3 R3.1: 'FE-s-18 ... is re-run, never re-issued, once FE-s-19 and FE-s-20 are terminal and drained.'",
     "world_is": "FE-s-19 and FE-s-20 ARE terminal and drained, so the stated precondition for FE-s-18's re-run is met -- and the re-run still cannot pass, because the precondition I wrote was about the SEAM and the blocker is the FIXTURES. I got the dependency right and the sufficiency wrong, which is the same error as S41 one layer up: a re-run condition is a prediction unless it was measured. WHAT ROUND 4 NEEDS, stated so the CTO can rule it without re-deriving: ONE FIXTURE CELL giving the three Holdings smoke maps distinct `status` members, after which FE-s-18's existing criteria are re-run UNCHANGED and close on their own terms. \u26a0 AND IT COUPLES TO RULING 4: a capture set can only assert distinct hashes on a field its FIXTURES vary, so the scoped rule needs a third limb -- A FIXTURE THAT DOES NOT CARRY THE CLAIMED FIELD IS A DEFECTIVE FIXTURE, NOT AN ADMITTED COLLISION. Without that limb the scoped rule would have ADMITTED this collision as legitimate.",
     "disposition": "UNDER_INVESTIGATION"
-  },
+  },
   {
     "project": "IRPT_FNTEND",
     "fabric": "laptop",
@@ -1951,6 +1951,53 @@
     },
     "spec_asserts": "TO FE-s-21 THE CELL: \"`state/status.ts:170`'s `formatSourceAge(sourceAsOf, now)` AND THE PANELS THAT CONSUME IT must render those four as 'no source age yet'.\" TO BOUNDS: 'A path you need that is not named is a BLOCKING row on that criterion; never an override.'",
     "world_is": "The cell's sentence reaches three panels and the <paths> block reaches one. No criterion of mine names the Analysis tab, so this blocks nothing I was asked to prove and is filed as an OBSERVATION rather than a BLOCKING row -- but F21-AC2's '4 of 4' certifies the StatusPanel only, and read as a claim about 'the panels that consume it' it would be a coverage overclaim, which is why the denominator is in this row rather than in a report. ARMED because the defect the cell names is still live on a shipped surface after this cell closes, and the closing evidence will not show it: every arm I ran passes. disarm_owner 2.0.0_SA_COO because the remedy is a grant -- either tabs/analysis/ added to a cell's <paths>, or a follow-on cell -- and mid-round the decomposition is frozen.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T09:57:03Z",
+    "id": "IRPT_FNTEND-W1-S47",
+    "one_line": "W1-S44 IS SUPERSEDED AND I CANNOT EDIT IT, SO THIS ROW CARRIES THE CORRECTION. I filed W1-S44 refusing F21-AC7 against a bar of `0 fail`; the issuer then corrected that bar to `1 fail` with a name check, at commit 0e25c1d422, after my worktree was cut. Re-measured against the corrected bar: the set reads EXACTLY ONE failure and it IS F18-AC3, printed by name -- so F21-AC7 PASSES and the order is met. W1-S44's refusal was correct against the bar that existed when it was written and is WRONG about the current bar, and the channel is append-only, so the record is repaired forward rather than rewritten.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The amended bar, read AT THE COMMIT rather than from the message or from my own tree (procedure of row IRPT_FNTEND-S43): `git merge-base --is-ancestor 0e25c1d422 HEAD` = FALSE, so the commit is readable in the shared object store and ABSENT from this branch; `MSYS_NO_PATHCONV=1 git show 0e25c1d422:<order>` returned 10771 bytes.",
+        "POSITIVE CONTROL beside it, because a mangled `git show` returns clean-empty on this box: the same command against a non-existent path at the same ref returned `fatal: path ... does not exist in '0e25c1d422'`, rc=128 -- so the read is content.",
+        "BOUNDED DIFF before anything was written: 112 lines each side, EXACTLY TWO differing (53 and 54), both inside the F21-AC7 block; `<status>pending</status>` on both sides and `<expected_criteria>` byte-identical. Only those two lines were written into this branch's copy, CRLF preserved, and the result verified identical to the blob modulo line endings.",
+        "Line 53 at the pin: `<expect>1 fail</expect>` where my tree read `<expect>0 fail</expect>`.",
+        "FRESH RE-MEASUREMENT against the corrected bar, not carried forward from the earlier run as the issuer's message required: 441 pass / 1 skip / 1 fail across 443 tests in 74 files, true rc=1, failing test printed by name -- 'F18-AC3 -- the captures are the files the manifest claims > UNIQUE HASHES -- no two entries share a hash'. Exactly one failure and it IS that one, so the criterion's two conditions are both met."
+      ]
+    },
+    "spec_asserts": "Issuer's mid-flight correction: 'F21-AC7 now reads <expect>1 fail</expect> with a name check, instead of 0 fail ... If you have already run F21-AC7 against the old bar, re-run it against the corrected one and record the new output; do not carry the old result forward.' TO BOUNDS: 'never edit an existing row'.",
+    "world_is": "The bar moved after I had already committed a BLOCKING row against it. Both halves of the obligation bind at once -- the proof must state the current truth, and the channel must not be rewritten -- so the refusal row stands as filed and this row supersedes it. Filed so that a reader arriving at W1-S44 through a search, a bridged citation or the L8 compile is not left holding a refusal the world has retracted: an append-only record is only honest if the correction is as findable as the claim. INERT: nothing is left armed by it, the criterion now passes, and the underlying F18-AC3 defect keeps its own standing on S44 where it belongs. NOTE, and it is the issuer's own finding rather than mine: the same prediction-shaped bar was cut onto F19-AC8, F21-AC7 and FE-s-22's criterion from one template and corrected on only one of them at first -- one amendment, three faces, enumerated nowhere (issuer's row S45).",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T09:57:03Z",
+    "id": "IRPT_FNTEND-W1-S48",
+    "one_line": "I FLIPPED A SHARED APPEND-ONLY CHANNEL FROM LF TO CRLF AND TURNED A 140-LINE APPEND INTO A 3618-LINE WHOLE-FILE REWRITE. My own defect, caught by reading the commit's diffstat rather than by any gate, and repaired in the same session. On this autocrlf=true box the worktree copy is CHECKED OUT as CRLF while the committed blob is LF; reading the worktree file and writing it back verbatim therefore commits CRLF, and because the appended block was LF the file ended MIXED -- which is exactly the case git's autocrlf declines to normalise, so the flip reached the blob. Every gate passed and the row content was perfect.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED ON THE COMMITTED BLOBS, not on the worktree: HEAD~1 blob CRLF=0 LF=1817; my HEAD blob CRLF=1816 LF=141. The append itself was 140 lines.",
+        "THE DIFFSTAT IS THE TELL AND IT IS THE ONLY ONE THERE WAS: `INVESTIGATION_v2.md | 3618 ++++----` on a commit whose entire intent was to append six rows. Nothing else flagged it -- surprise-row-gate reported 'OK: 6 new row(s) of 84 total checked', the corpus gate matched its exact legacy baseline, missions-tree-check read 0 violations, and the JSON parsed at 84 rows with no duplicate ids. A content-correct append is precisely what this failure mode looks like.",
+        "SECOND ARTIFACT FROM THE SAME CAUSE: the splice landed the separating comma AFTER a carriage return, producing a literal `  }\\r,` line. JSON treats CR as whitespace so it parsed clean and the gate passed; it would have been invisible until someone read the raw bytes.",
+        "REPAIRED AND VERIFIED AGAINST THE PRIOR BLOB: the file was normalised to LF (CRLF 0, stray CR 0), re-parsed at 84 rows with all six of my ids present and the pre-existing seat rows S43/S44 intact, and `git diff --stat HEAD~1` now reads '140 insertions(+)' with ZERO deletions. The check that proves it is a byte comparison: everything before the array's closing bracket is byte-identical to the HEAD~1 blob.",
+        "WHY IT MATTERS BEYOND TIDINESS, and why the estate's own rule predicts it: CLAUDE.md Rule 14b says an APPEND-ONLY SHARED file must NOT be isolated on a side branch because two branches appending at the same offset conflict -- measured 3 of 3 on round 4's drains (NFRA_CLDGRPH-S36). A worker worktree is mandated by the spine, so that conflict is already the accepted cost; a line-ending flip makes it far worse, because the drain no longer conflicts on one hunk at the tail but on the whole file, and a hand-finished merge of a 1958-line channel is where rows get lost."
+      ]
+    },
+    "spec_asserts": "CLAUDE.md Rule 14b: 'an APPEND-ONLY SHARED file -> DO NOT ISOLATE; take the shared index's seconds-long race', with the worker worktree as the standing exception. TO BOUNDS: the channel file is in this order's <paths> and rows are appended to it.",
+    "world_is": "Appending to a channel by reading the CHECKED-OUT file and writing it back is the obvious implementation and it silently rewrites the whole blob on this box. The guard that would have caught it is not a gate but a habit: READ THE DIFFSTAT OF A COMMIT WHOSE INTENT IS AN APPEND, and if the changed-line count is not roughly the number of lines you appended, the line endings moved. Stated as a rule because the two existing memory entries name the adjacent traps (a worktree sha256 hashes the checkout; Path.write_text re-introduces CRLF) and neither names the one that bites here, which is that the damage lands on a SHARED APPEND-ONLY surface and is discovered by the next agent to drain rather than by the one that caused it. ARMED for the next appender, not for this branch: repaired here and verified, but nothing prevents the identical move next time. disarm_owner 2.0.0_SA_COO because the drain is where the harm lands and the COO runs it; the cheap mechanical fix is for the row-gate to refuse a channel commit whose deletion count on an append-only file is non-zero.",
     "disposition": "UNDER_INVESTIGATION"
   }
 ]

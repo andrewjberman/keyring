@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-12</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F7; CONTRACTS `StatusEnvelope` consumed) | **Decomp cell:** `FE-s-21` (round 3, v0.3 @38f68b965c) | **outcome_ref:** FWD-5 | **depends_on:** `FE-s-19` (shares `state/status.ts` -- never concurrent) | **slot:** ~1, queue position 2 | **rows:** S29
 
@@ -51,8 +51,8 @@ This cell is SEQUENCED BEHIND `FE-s-19` because you share `state/status.ts` with
 <criterion id="F21-AC6" cell_refs="FE-s-21"><invocation>cd <WS>/portal && timeout 120 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-21_reporting_no_source_age_1440.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-21-queued.json --click Reporting --console "Maximum update depth"</invocation><expect>CLICKED: Reporting</expect></criterion>
 `F21-AC6` -- the Reporting tab on a QUEUED envelope at 1440, captured on a MOUNTED view (`FE-s-19` is terminal before you are seated, so the body mounts).
 
-<criterion id="F21-AC7" cell_refs="FE-s-21"><invocation>cd <WS>/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting</invocation><expect>0 fail</expect></criterion>
-`F21-AC7` -- the whole Investor Reporting set is green. By the time you are seated, `FE-s-19` and `FE-s-20` have drained and both of this cut's known failures are cleared; if a failure remains that is not yours, that is a BLOCKING row naming it.
+<criterion id="F21-AC7" cell_refs="FE-s-21"><invocation>cd <WS>/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting</invocation><expect>1 fail</expect></criterion>
+`F21-AC7` (BAR CORRECTED BY THE ISSUER, row IRPT_FNTEND-S45 -- it read `0 fail` on the same PREDICTION that F19-AC8 carried and that row S41 already corrected there. `F18-AC3`'s capture collision CANNOT clear in round 3: it needs the three Holdings smoke maps to carry distinct `status` members and no round-3 cell holds the fixtures (row S44). The set reads **exactly one** failure and it IS that one; **print the failing test's name**, and if it is anything else or a second appears, that is a BLOCKING row.) -- the whole Investor Reporting set is green. By the time you are seated, `FE-s-19` and `FE-s-20` have drained and both of this cut's known failures are cleared; if a failure remains that is not yours, that is a BLOCKING row naming it.
 
 <criterion id="F21-AC8" cell_refs="FE-s-21" judgment="true"/>
 `F21-AC8` -- graded at L9 from the capture: a reader can tell that the page is reporting a state rather than failing to load. RECORD; NO VERDICT.
