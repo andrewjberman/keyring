@@ -230,6 +230,34 @@ CODE_TREES: dict[str, dict] = {
             # reason. <<
             #
             # tests/ is NOT a member: only declared members enter the tar.
+            #
+            # >> ids.py IS A DISTRIBUTION, NOT A SECOND DEFINITION, AND THE DIFFERENCE IS THE
+            # WHOLE POINT (IRPT_BCKEND.TO-IB-rt-6 amendment H3; row IRPT_BCKEND-W2-S44).
+            # MEASURED ON THE HOST 2026-09-12: `import directory_runner` on the mdpf-daily-runner
+            # fails `ModuleNotFoundError: No module named 'ids'` -- the runner imports BOTH
+            # trading_calendar and ids at MODULE level (directory_runner.py:108, :115, col 0) and
+            # uses _ids.opaque at :146, so it cannot be imported at all without them, and the
+            # bundle carried only the two runner files.
+            #
+            # A FILE COPY into data/assets/scripts/gold/investor_reporting/ would have been a
+            # SECOND DEFINITION of THE ONE opaque-id normalizer, which irpt-holdings'
+            # BUILD_MANIFEST.json forbids in those words ("never vendored beside the function,
+            # because a second copy of either is the defect the layer exists to prevent").
+            # Declaring it HERE is different in kind: `build_bundle_payload` resolves
+            # `repo_path` from the repository at build time, so the ONE authority stays
+            # infra/aws/lambda/investor-reporting/_ids/ids.py and the bundle carries a copy the
+            # way every Lambda zip already does -- lambda-source-map.json declares the same file
+            # as a flat build input for three functions, and `trading_calendar` already reaches
+            # that same host from its own distribution (measured byte-identical to lib/).
+            # NO FILE IS COPIED INTO THE REPO BY THIS LINE.
+            #
+            # The member name is FLAT (`ids.py`), which is what makes it importable: the runner
+            # is executed as a script, so its own directory is sys.path[0] and the unpacked
+            # sibling resolves as `ids` without the repo-shaped `_IDS_DIR` existing on the box.
+            #
+            # DISTINCT sha_metadata_key, per the rule stated above this dict: two members sharing
+            # one key silently collide and the object then carries a stamp that verifies ONE file
+            # while reading as though it covered both. `ids-sha256` is its own key. <<
             "investor_reporting": {
                 "members": {
                     "directory_runner.py": {
@@ -239,6 +267,10 @@ CODE_TREES: dict[str, dict] = {
                     "holdings_snapshot.py": {
                         "repo_path": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
                         "sha_metadata_key": "holdings-snapshot-sha256",
+                    },
+                    "ids.py": {
+                        "repo_path": "infra/aws/lambda/investor-reporting/_ids/ids.py",
+                        "sha_metadata_key": "ids-sha256",
                     },
                 },
                 "bucket": "opal-data-mdpf",
