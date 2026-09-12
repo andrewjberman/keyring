@@ -297,3 +297,70 @@ The grant is read from HEAD of your branch and only while this order is NON-TERM
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape. You cannot send or receive messages -- anything you would ask is a surprise row.
+
+---
+
+## ISSUER AMENDMENT 2 -- 2026-09-12T00:03:10Z (`2.0.0_SA_COO~B`). **SECTION A6 ABOVE IS STRUCK AND REVERSED.** This block governs over it and over every line above it.
+
+**A6 SAID:** slot ~3 deploys `irpt-export-render`, `irpt-status` and `irpt-ycharts-generate` FIRST, and this cell is
+held off those three until the issuer confirms the landing.
+
+**A6 WAS WRONG, AND THE TREE REFUSED IT.** Slot ~3 measured the consequence and filed row `IRPT_BCKEND-W3-S26`
+(BLOCKING; landed on CLOUD at `670092d321`) rather than overriding the order. **That refusal is ACCEPTED IN FULL and
+the row is DISARMED at the issuer** by seat row `IRPT_BCKEND-S38`.
+
+**THE MEASUREMENT THAT KILLED IT.** All three roots ALREADY carry this cell's committed, unapplied
+`handler -> entry.lambda_handler` flip, and `terraform apply` is per-ROOT, not per-attribute -- so the apply that
+lands the `ids.py` packaging fix also lands the handler flip, and the `entry` module is in no zip:
+
+```
+plan investor-reporting/ycharts  ~ handler "job.lambda_handler"     -> "entry.lambda_handler"   0 add, 1 change, 0 destroy
+plan investor-reporting/ops      ~ handler "status.lambda_handler"  -> "entry.lambda_handler"   0 add, 1 change, 0 destroy
+plan investor-reporting/export   ~ handler "handler.lambda_handler" -> "entry.lambda_handler"   0 add, 1 change, 0 destroy
+```
+
+EXERCISED, not asserted -- each zip extracted to a flat `/var/task`, imported in a FRESH python3.12 interpreter with
+the repo stripped from `sys.path`, negative control armed: all three read
+`IMPORT-FAIL entry: ModuleNotFoundError: No module named 'served'`. Nothing was deployed; all three functions are
+`Active` on their live bytes and each live zip re-measured CLOSED under its own live handler.
+
+### A9. THE NEW SEQUENCING -- THE WHOLE ACT IS THIS CELL'S, AND IT IS ATOMIC.
+**`entry.py` + `served.py` + `loaders.py` + (where genuinely needed) `ids.py` MUST LAND IN ONE ARTIFACT PER FUNCTION,
+and the apply that flips the `handler` is the SAME apply that ships them.** There is no first-in-line cell, nothing to
+wait for, and no hold on any function. A6 split an atomic act across two cells; you are not inheriting a delay, you
+are inheriting the whole act across all six roots.
+
+### A10. FIVE MEASURED GIFTS FROM SLOT ~3 -- DO NOT RE-DERIVE ANY OF THEM.
+1. **THE BUILD RECIPE IS PROVEN.** Rebuilding each live artifact from its own live member bytes reproduces the S3
+   object BYTE-FOR-BYTE (3 of 3 REPRODUCED): sorted arcnames, `ZIP_DEFLATED` at zlib default,
+   `date_time=(2026,9,11,0,0,0)`, `external_attr=0o644<<16`, and **`create_system=0`** -- that last is the
+   non-obvious member.
+2. **RESOLUTION THE WAY THE BUILDER DOES IT** -- `source_dir` first, then the flat shared roots -- reads
+   **14 of 14, 10 of 10, 27 of 27; NOTHING RESOLVES NOWHERE.** This independently confirms W3-S24 and the drain's
+   union rule: **REMOVE NOTHING.** (`handler.py` for `irpt-status` resolves from `.../directory/`, which looks wrong
+   and is not.)
+3. **DO NOT ADD `ids.py` TO `irpt-export-render`** (row W3-S27). That function was NEVER armed by the `ids.py` gap:
+   `irpt-common:5` carries `python/ids.py` byte-identical to `_ids/ids.py` (14173 B, sha `fc1017b2523f2340...`) and
+   that function mounts the layer. Difference control: rebuilt WITHOUT `ids.py`, layer mounted -> 13 of 13 CLOSED;
+   without the layer -> 10 of 13. **W3-S25's armed reading was the NO-LAYER reading.** Adding it there is the second
+   definition the entry's own note refuses for `keys.py`. The gap IS real for the two layer-less functions (armed
+   control 5 of 8 CLOSED, `No module named 'ids'`).
+4. **THE IMPORT DERIVATION IS THE ROOT CAUSE, AND NO IN-REPO TEST CAN SEE IT.** `entry.py:34-43` derives `_authz`
+   from the file's PARENT DIRECTORY, which at `/var/task` is `/var`. It resolves in the tree and cannot resolve in
+   the runtime. **Verification for this arm is therefore extract-and-import in the flat layout, fresh interpreter,
+   repo off `sys.path`** -- an in-tree pytest passes on a zip that dies at cold start, and `CodeSha256` equality
+   cannot see it by construction.
+5. **A SHARED-DEPENDENCY DEFECT SITS BENEATH ALL OF THIS AND IS NOT YOURS TO FIX** (row W3-S28): the layer's
+   `python/keys.py` is **21320 B** against the tree's `_keys/keys.py` **29894 B** (also `raw_keys.json` 5990/6064,
+   `firm_registry.json` 5094/5229). `irpt-export-render` ships no `keys.py` and therefore runs the LAYER's OLDER key
+   grammar -- **two grammars are live at once.** Do not repair it and do not let your packaging make it worse. If
+   your work forces a choice about which `keys.py` a function resolves, that is a BLOCKING row to me.
+
+Slot ~3 also built and import-verified corrected zips (`irpt-ycharts-generate`
+`gU4v6NbjxbygxEDLdYURjAgeGPGx3Xc2qzKGldjnbnE=`, `irpt-export-render` `6S29BGvKhG6O1T4TmR1b3bMlkyOZ50RlKWAY2fi/wMg=`,
+`irpt-status` `/wihp7Lgum/nlmFMP6kNAqp039rWrvaqfOyXvvl6lPs=`). They sit on ITS branch, are NOT uploaded, and
+`irpt-status` still read 9 of 10 with `entry` OPEN -- a reference point, never a substitute for your own build.
+
+**UNCHANGED:** NEVER-2 (a ledger opens only with the room to close it in-session; OPEN sentinel committed BEFORE the
+act, CLOSE before the reads that grade it), `safe-apply.sh` only, and
+`artifact_sha256 == S3 content-sha256 == live CodeSha256` printed per function.
