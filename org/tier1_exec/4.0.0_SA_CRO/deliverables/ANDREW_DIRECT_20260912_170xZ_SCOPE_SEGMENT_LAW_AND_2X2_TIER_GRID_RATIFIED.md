@@ -83,6 +83,40 @@ PORTAL READS, and silver is never portal-read. Settled: **client silver lives in
 
 ---
 
+## 4a. ⛔ SUPERSESSION THIS SEAT FAILED TO DISCLOSE AT THE TIME -- recorded the moment it was found
+
+**The 16:0xZ card-3 ruling (D10-1 default: firm-shaped where client-confidential, product-shaped
+otherwise) SUPERSEDES an earlier Andrew word this seat had not found when it put the card to him.**
+
+Andrew-direct 2026-08-25 ~20:4xZ, VERBATIM (`docs/architecture/MDPF_CANON_PRD.md` s.1):
+> *"regarding D10, it varies, I specify them on a per instance basis."*
+
+recorded there by `1.0.0_SA_CTO` as **"A-1 -- THE PRODUCT/FIRM AXIS IS NOT A RULE. There is no
+general test and NO SEAT DERIVES ONE."**
+
+**Card 3 asked him for exactly the general default A-1 said did not exist, and did not cite A-1,
+because this seat found A-1 forty minutes after he approved.** That is the `/open-calls` cardinal
+failure -- re-asking a ruled question -- committed without knowing it. His 09-12 ~16:0xZ *"Recs
+approved"* is the LATER word and STANDS; a default he ratified is still him specifying, and the
+approved mechanism keeps every per-instance tick returning to him, so the two are reconcilable. But
+the record must show that 09-12 supersedes A-1's "no general test" **explicitly**, and it must show
+that the card was put to him without that disclosure. Both are now stated. Disclosed to him
+in-terminal the same turn this was found.
+
+## 4b. ⛔ A COLLISION BETWEEN TWO OF HIS OWN RULINGS, SURFACED NOT RESOLVED
+
+`MDPF_CANON_PRD.md` s.2, on his A-1/A-2 words: MDPF is **product-shaped** and its platinum at
+`opal-data-portal-v2/platinum/mdpf/{scope}/` is *"unchanged, already conformant"*.
+
+The 2x2 grid ratified at ~17:0xZ: **client-confidential** data serves from the **firm bucket**.
+
+The census (`d35653da5e` s.2) measured **13 objects written 2026-09-12** at
+`platinum/mdpf/{49financial,cottonwood,inflection}/*` in the shared bucket -- per-firm slices of a
+product-shaped pipeline. One ruling says conformant; the other says firm bucket. **The doctrine
+cannot write the tier-home rule for product-shaped pipelines that emit per-firm slices until he says
+whether "client-confidential" attaches to the DATA's tenancy or to the PIPELINE's shape.** Routed to
+him as an open call; not decided here.
+
 ## 5. DIRECTION IN FORCE FROM THE SAME EXCHANGE
 
 `/next-steps` five options approved in order: (1) the doctrine as a checkable rule set; (2) the D10-1
