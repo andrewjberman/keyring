@@ -98,6 +98,29 @@ Accumulating CVO review as round-two evidence arrives. This is NOT an L10 slug a
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "NO GRADE IS ASSERTED and no act is taken. This row neither reopens the v0.14 half (signed at half_hash 4ff7d52709c9 and unaffected -- the PRD text did not move) nor disputes S33's count: the commit IS a fourth producer move landing under a live consumer cell, and being a remedy does not exempt it. CARRIED TO L10, two items. (1) The byte-pin-vs-content-pin question, with S39's measurement as the evidence and S40's producer-side test as the concrete remaining instance -- owner 1.0.0_SA_CTO, since that file is IRPT_BCKEND's surface and no portal grant reaches it. (2) THIS SEAT'S OWN OMISSION: a remediation's blast radius was not asked for. When this seat names a remedy on a shared artifact, the question 'what else pins this' belongs in the finding, and it was not there. That is a correction to how this seat writes findings, not to the finding itself, which stands."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S49",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-12T09:10:00Z",
+    "one_line": "FIX THE INSTANCE, LEAVE THE CLASS -- now FOUR instances across TWO seats in one night, and one of them is this seat's own at C-S48. The issuer's S45 adds the clause that makes it a finding rather than a lapse: it happened AFTER the lesson had already been written down.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "CLAUDE.md Rule 24: hunt the uncovered member BY SUBTRACTION from a printed denominator, never by a forward list of what you thought of. CLAUDE.md never-widen: a sign-off names the ACT'S BLAST RADIUS. Both govern the scope of a REMEDY, not only the scope of a claim.",
+    "world_is": "FOUR MEASURED INSTANCES, ONE NIGHT. (1) IRPT_FNTEND-S45: S41 corrected F19-AC8's predicted `0 fail` bar; THREE faces carried the identical bar (F19-AC8, F21-AC7, F22-AC8); one was amended, so FE-s-22 hit the same wall and refused correctly and FE-s-21 RAN on the defective bar while the fix was reported done. (2) and (3): S45 states this was its THIRD time that night, the earlier two being its own. (4) THIS SEAT, recorded at IRPT_FNTEND-C-S48: the v0.14 L4-R review named a remedy for one artifact's stale source_pin and never asked what ELSE pinned that artifact; the regeneration reddened another project's consumer suite. \u2b50 WHAT MAKES IT A FINDING RATHER THAN FOUR LAPSES IS S45'S OWN CLAUSE -- 'and this time I had already written the lesson down'. Knowing the rule did not produce the behaviour, which means the gap is not awareness and cannot be closed by restating the rule. THE STRUCTURAL READING: a correction is authored AT the instance that surfaced it, and the instance is the only thing in view at that moment. The population question -- what else carries this exact bar, what else pins this artifact, what else reads this field -- is a SECOND act that nothing in the flow prompts. Rule 24 already requires enumerating by subtraction from a printed denominator when making a CLAIM; nothing applies the same discipline when making a FIX. NOT ASSERTED: that any of the four caused harm that was not caught. All four were caught -- three by workers refusing correctly, one by another project's suite going red -- which is evidence the surrounding controls work and NOT evidence the class is harmless: in each case the catch was downstream of an act already taken.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md -- row S45 (the three-faces instance and the 'third time tonight' clause), and S41 (the single correction it refers to)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/adjudications/ADJUDICATION_v2.md -- IRPT_FNTEND-C-S48, this seat's own instance, filed before S45 was read",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_L4R_V014_RATIFIED_TEXT_REVIEW_20260912.md@341e576e6a -- the finding whose remedy had the unasked blast radius",
+        "NOT RE-DERIVED: S45's count of its own earlier two instances is the issuer's statement about its own turns, cited as theirs"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "CARRIED TO L10 AS A RECOMMENDATION TO 1.0.0_SA_CTO, not a ruling and not a gate, and explicitly NOT a criticism of the issuer -- three of the four instances are self-reported by the seat that made them, which is why the class is visible at all. THE SHAPE OF THE RECOMMENDATION: when a correction is made to a CRITERION, a FACE or a shared ARTIFACT, the corrective act names the POPULATION it searched and the denominator it searched over -- the same discipline Rule 24 already requires of a claim, applied to a fix. COST: one census per correction, over a population the corrector already has in hand (the round's faces; the artifact's consumers). NON-APPLICATION: a correction to a single-instance object with no siblings by construction, and any correction where the population IS the instance. \u26d4 AND THE COUNTER-ARGUMENT BELONGS IN THE RECORD: this would add friction to the fastest and most valuable act in the loop, which is a seat correcting itself mid-round. If it makes self-correction slower it will produce FEWER corrections, and four self-caught instances in one night is a system working. The CTO weighs that; this seat only supplies the count and the shape. ALSO NOTED, refining C-S46: S46 corrects S44 and measures that the three Holdings fixtures DO vary (basis across observed/target, classification across observed/missing-attribution) so the collision arm refuses all three pairs on its own -- the corpus problem is the STATUS dimension specifically (3 of 84 envelopes carry status), not undifferentiated fixtures."
   }
 ]
 ```
