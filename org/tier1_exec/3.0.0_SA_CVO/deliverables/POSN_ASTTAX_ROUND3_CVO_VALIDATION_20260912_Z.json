@@ -1,0 +1,26 @@
+{
+  "head": "3c73d946e3e5633c489cc2b3c0a31571cd9f6ed6",
+  "rows": 29,
+  "issues": [],
+  "originals": 49,
+  "pending_originals": [
+    "POSN_ASTTAX-Z-W14-S1"
+  ],
+  "unknown_targets": [],
+  "duplicate_ids": [],
+  "orders": [
+    [
+      "POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged]",
+      "POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]",
+      "POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged]",
+      "POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]"
+    ],
+    15,
+    ""
+  ],
+  "proposed_di_refusal": [
+    "POSN_ASTTAX-Z-C-S52: NEW remediation row (disposition=DECOMP_INVALIDATING (CVO read-only proposed-disposition check)) while 4 of 15 task order(s) under POSN_ASTTAX are NOT terminal at HEAD: POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged], POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged], POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged], POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]. The slug waits until every task order is complete (Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job is over')."
+  ],
+  "offline_control_assertions": "PASS",
+  "limits": "Prospective working-file census; safe-commit enforces the actual index. No L10 carrier and no override."
+}
