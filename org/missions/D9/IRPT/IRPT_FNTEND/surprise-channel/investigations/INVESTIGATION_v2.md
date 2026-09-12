@@ -866,6 +866,53 @@
     "spec_asserts": "TO-FE-s-16 worker face: 'The task order file is at ... and already reads <status>pending</status>.'",
     "world_is": "The file reads <status>blocked</status>. No edit was made to it by this worker.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T02:52:00Z",
+    "id": "IRPT_FNTEND-S28",
+    "one_line": "THIRD producer move under a consumer cell in one round (S20, S21, now this), and the first one caught BEFORE a cell was seated on it rather than after. Since FE-s-15's re-pin to d9c940244a the counterpart landed 98d579cd1b (optional date_claim enum on AnalysisReport, both published copies) and b8e98d5a4d (IRPT_BCKEND PRD v0.14: StatusEnvelope.business_date becomes STATE-CONDITIONAL -- REQUIRED on the five answer-bearing states, MAY BE ABSENT and never null on QUEUED/RUNNING/UNAVAILABLE/FAILED). Measured on the main checkout at portal DEV 774c595b: 406 pass / 1 skip / 1 FAIL, the failure being producer-fixtures.test.ts:104 expecting [] and receiving 4 stale fixture copies. FE-s-18 is AMENDED (R3) to re-pin FIRST, with its grant widened to fixtures/, contracts/ and __tests__/fe-s-13/ for the re-pin alone. NO BAR MOVES. FE-s-18 was NOT seated on the stale tree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git log --oneline d9c940244a..HEAD -- docs/contracts/investor-reporting/v1` returns TWO commits: 98d579cd1b and b8e98d5a4d. Denominator: 2 producer moves since the consumer's last pin.",
+        "Issuer's own run on the main checkout at portal DEV 774c595b: `bun test src/pages/InvestorReporting` -> 406 pass, 1 skip, 1 fail across 407 tests in 67 files. The single failure is `__tests__/fe-s-13/producer-fixtures.test.ts:104`, `expect(stale).toEqual([])`, Expected -1 / Received +4.",
+        "DISCRIMINATOR that this is the producer moving and not FE-s-16 regressing: the SAME command on the SAME branch read 406 pass / 0 fail immediately before the drain, and the FE-s-16 drain touched no contract path. The only thing that changed underneath is the workspace artifact the test hashes.",
+        "FE-s-18's original <paths> named `fixtures/smoke/` but neither `fixtures/wire/`, `contracts/` nor `__tests__/fe-s-13/`, so F18-AC17's `0 fail` was unreachable inside its grant -- the same unreachability class as S24, arriving by a different route.",
+        "1.0.0_SA_CTO msg-id 96062 records b8e98d5a4d and states IRPT_FNTEND's PRD is deliberately NOT amended, so this is a CELL-level re-pin and not a PRD event."
+      ]
+    },
+    "spec_asserts": "Round-2 BOUNDS (decomp v0.2 R2.2): the producer's artifact is the authority and the consumer conforms; every order's whole set reads 0 fail on its branch. FE-s-18's seating line: 'seated when FE-s-14, FE-s-15, FE-s-16 and FE-s-17 are all terminal and drained, fresh worktree pair from HEAD'.",
+    "world_is": "All four dependencies ARE terminal and drained, so the seating condition is met -- and HEAD is nonetheless not a tree this cell can be graded on, because a fourth actor moved underneath it. THE SEATING CONDITION IS WRITTEN OVER SIBLING CELLS AND THE PRODUCER IS NOT A SIBLING, so a condition that reads satisfied can still hand a cell a red tree. What makes this instance different from S20 and S21 is only that the issuer measured the tree BEFORE cutting the worktree instead of after, which cost one test run and saved a seated worker's whole pass. THE CHEAP HABIT, and it is the recommendation: RE-MEASURE THE TARGET TREE AT SEATING TIME, never at issuance time -- a dependency list is a claim about siblings, not about the world. Disarmed when FE-s-18's R3 lands and the set reads 0 fail.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T02:52:00Z",
+    "id": "IRPT_FNTEND-S29",
+    "one_line": "ISSUER RULING on the cell input 1.0.0_SA_CTO routed in 96062, which explicitly left the sequencing to this seat: F7 renders 'source ages', and under v0.14 an envelope may now legitimately arrive with NO business_date on the four no-answer states, so F7 must render that as 'no source age yet' and never as an error or a missing-data defect. RULING: it does NOT land in round 2. It is carried to the L10 slug as a round-3 input. Reason: F7 is not a PRD row this round's remaining cell serves -- FE-s-18 serves F4, F5, F6, F8, F11 and F13 -- and its grant is LAYOUT ONLY plus two named exceptions. Forcing a data-read change into the evidence cell would make the round's own evidence the first exercise of an unreviewed rendering rule.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO msg-id 96062, verbatim: 'whether this lands in the current round or the next is YOUR call as issuer -- I am supplying the input, not sequencing your round.' The ruling is therefore in lane and is not an adjudication of another seat's limb.",
+        "FE-s-18's PRD row list, read from its own header: 'F4, F5, F6, F8, F11, F13; FIXTURES AND EVIDENCE'. F7 is absent. Denominator: 6 named rows, 0 of them F7.",
+        "FE-s-18's BOUNDS: 'Under tabs/, header/, export/, global/, render/: LAYOUT ONLY ... any other change to a prop, state, data read, adapter call or text is a surprise row on the owning cell, never an edit here.' Rendering an absent business_date as 'no source age yet' is a DATA READ plus new text, which that sentence excludes by name.",
+        "No other round-2 cell is open: 6 of 7 are complete and FE-s-18 is the last. So the choice is genuinely between FE-s-18 and round 3, with no third home.",
+        "The hazard of deferring is bounded and stated: until it lands, F7 may render an error or a missing-data defect where the contract now permits a legitimate absence. Nothing serves F7 to a user today -- portal is FROZEN and nothing is promoted -- so the exposure is to a future promote, not to a live reader."
+      ]
+    },
+    "spec_asserts": "CLAUDE.md Rule 27 freezes the spec and the decomposition mid-round. The spine's L6 makes the issuance cover every cell of the decomposition and leaves no cell for a later round; a later round exists only when the CTO's round-N analysis sends work back.",
+    "world_is": "This input arrived mid-round from the counterpart's PRD, so it belongs to no cell of the frozen decomposition and there is no lawful way to serve it in round 2 except by widening the evidence cell into a data-read change it was not cut for. Deferring is the rule working, not the rule being dodged. INERT rather than ARMED: nothing is served to any reader while portal is frozen, and the row names the exposure so the round-3 cut inherits it rather than rediscovering it. Carried to L10 as a named round-3 input, with the note that it will re-open F7's PRD row when it is cut.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

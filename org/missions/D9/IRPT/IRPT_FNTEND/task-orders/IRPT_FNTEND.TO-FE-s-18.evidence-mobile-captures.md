@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>blocked</status>
+<status>pending</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F4, F5, F6, F8, F11, F13; FIXTURES AND EVIDENCE) | **Decomp cell:** `FE-s-18` (round 2, v0.2) | **outcome_ref:** FWD-3, FWD-5, FWD-8, FWD-11, FWD-12 | **depends_on:** `FE-s-14`, `FE-s-15`, `FE-s-16`, `FE-s-17` (all terminal) | **slot:** ~1, queue position 4, last | **slug rows:** C-S43, W3-S1, W4-S1, W1-S12 (retained control)
 
@@ -26,6 +26,18 @@
 **Lato Bold (AMENDED BY THE ISSUER on 1.0.0_SA_CTO 95967, Andrew's word 13:4xZ "Yes fetch lato").** The 700 weight is now on this box: `/c/Users/AndrewBerman/Desktop/ajb_workspace/.runtime/codex-seats/4.0.0_SA_CRO/performance-export-recon/fonts/Lato-Bold.ttf`, 656544 bytes, sha256 `8a0aace75d33794eece4b28187bfc1df0bbd2888b5d8a56e01788c8d65d16be1` (fetched once by the CTO from the font's OFL upstream; no other fetch is authorized). Before the captures: copy it byte for byte into `render/assets/fonts/`; add its entry to `fonts.manifest.json` (weight 700, style normal, licence OFL-1.1) and set `stand_ins` to an empty object and `not_packaged` to `["italic"]`; point `print.css`'s 700 face at `Lato-Bold.ttf` and remove the stand-in comment; mirror the change in `render/manifest.ts`'s `fontPackage` (FE-s-17 put the full mirror there because `RENDER_PACKAGE.fonts` is a flat string array consumed by fe-s-4's manifest test; add the fourth file name to `fonts` too, and if fe-s-4's test asserts the array length, a surprise row names it and you leave the length as the test needs). FE-s-17's `__tests__/fe-s-17/fonts.test.ts` is updated for four files and no stand-in. This is the one non-layout edit this order carries, and it is the ONLY edit under `render/assets/fonts/`, `render/print.css` and `render/manifest.ts`.
 
 - The census and the colour-law scan re-run on the round-2 tree (`bun run census.ts` from `deliverables/0.9.0_WK_IRPT_FNTEND~1/`, the FE-s-11 script; its outputs overwrite `component-census.json` / `.md`).
+
+### R3 -- RE-PIN TO THE CURRENT v1 VINTAGE FIRST (AMENDED BY THE ISSUER at the FE-s-16 drain, row IRPT_FNTEND-S28)
+
+**This is the THIRD time this round the producer has moved `docs/contracts/investor-reporting/v1/` under a consumer cell** (S20, then S21, now this). FE-s-15 re-pinned to `d9c940244a`; since that drain the counterpart landed `98d579cd1b` (the optional `date_claim` enum on AnalysisReport, both published copies) and `b8e98d5a4d` (IRPT_BCKEND PRD v0.14: `StatusEnvelope.business_date` becomes STATE-CONDITIONAL -- REQUIRED on the five answer-bearing states, MAY BE ABSENT and NEVER NULL on QUEUED / RUNNING / UNAVAILABLE / FAILED).
+
+MEASURED BY THE ISSUER on the main checkout at portal DEV `774c595b`: `bun test src/pages/InvestorReporting` reads **406 pass, 1 skip, 1 fail**, the single failure being `__tests__/fe-s-13/producer-fixtures.test.ts:104` -- `expect(stale).toEqual([])` receiving **4** stale fixture copies. `F18-AC17` ('0 fail') cannot pass until those are refreshed, and no surface that carries them was in this order's original grant.
+
+**BEFORE ANY CAPTURE:** refresh `WIRE_SCHEMA_PINS` and the `fixtures/wire/` copies to the artifact at `<WS>/docs/contracts/investor-reporting/v1/` as your worktree carries it, and record that vintage (`git log -1 --format=%h -- docs/contracts/investor-reporting/v1`) in the result file. Regenerate the wire types if any schema body changed. Then re-run `bun test src/pages/InvestorReporting/__tests__/fe-s-13` and record it.
+
+**Grant for R3 ONLY:** `src/pages/InvestorReporting/fixtures/` (widened from `fixtures/smoke/`), `src/pages/InvestorReporting/contracts/`, `src/pages/InvestorReporting/__tests__/fe-s-13/`. These are granted for the re-pin and for nothing else; beyond R3 they are READ only.
+
+⛔ **AND THE CAPTURES COME AFTER IT, NOT BEFORE.** Every PNG this order produces is the round's EVIDENCE. A capture taken against a stale pin is evidence of a tree that will not exist once the pin is refreshed, and it would be indistinguishable from a good one. Do R3, prove it, then capture.
 
 ### ACCEPTANCE
 
@@ -94,6 +106,7 @@
 ## BOUNDS
 
 - **Grant.** Your write surface is the `<paths>` block below, plus `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/<your serial>/` and this order's own file. Under `tabs/`, `header/`, `export/`, `global/`, `render/`: LAYOUT ONLY (class attributes, wrappers, order of siblings), with ONE exception the amendment names -- the Lato Bold packaging under `render/assets/fonts/`, `render/print.css`, `render/manifest.ts` and `__tests__/fe-s-17/`; any other change to a prop, state, data read, adapter call or text is a surprise row on the owning cell, never an edit here. A path you need that is not named is a BLOCKING row on that criterion; never an override.
+- **R3 IS THE SECOND NON-LAYOUT EXCEPTION** (the Lato packaging is the first). The re-pin surfaces named in R3 are granted for the re-pin alone. Everything else under `tabs/`, `header/`, `export/`, `global/`, `render/` stays LAYOUT ONLY.
 - **Two repos, one worktree pair.** `<WS>` / `<WS>/portal` as in your identity line. Portal commit pathspec: the files you changed under `src/pages/InvestorReporting/` (name each) plus `src/pages/InvestorReporting/fixtures/smoke/ src/pages/InvestorReporting/__tests__/fe-s-18/`. Workspace records under org/ only. Never push, merge, rebase, `checkout --` or `clean`. Never stage `portal` in the workspace repo.
 - **Dev server.** `node_modules` is a junction; do not run `bun install`. Start once in the background from `<WS>/portal`: `/c/Users/AndrewBerman/.bun/bin/bun run dev --port <PORT>`; use the port it prints; kill it before your final report. Routes without a leading slash; quote a route carrying `?`.
 - **Fixture maps name the whole page's needs and are v1 envelopes** (keys = DECLARED paths; bodies `{contract_version: v1, operation, firm_id, data}` per `docs/contracts/investor-reporting/v1/`; AMENDED at the FE-s-14 R1 repair). Files you add: `fe-s-18-frozen.json`, `fe-s-18-holdings-observed.json`, `fe-s-18-holdings-target.json`, `fe-s-18-holdings-missing-attribution.json` (and `fe-s-16-print-prehistory.json` only if absent).
@@ -108,7 +121,9 @@ portal/src/pages/InvestorReporting/header/
 portal/src/pages/InvestorReporting/export/
 portal/src/pages/InvestorReporting/global/
 portal/src/pages/InvestorReporting/render/
-portal/src/pages/InvestorReporting/fixtures/smoke/
+portal/src/pages/InvestorReporting/fixtures/
+portal/src/pages/InvestorReporting/contracts/
+portal/src/pages/InvestorReporting/__tests__/fe-s-13/
 portal/src/pages/InvestorReporting/__tests__/fe-s-18/
 portal/src/pages/InvestorReporting/__tests__/fe-s-17/
 org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md
