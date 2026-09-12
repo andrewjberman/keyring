@@ -1859,6 +1859,77 @@
     "spec_asserts": "Row S44: 'a capture set can only assert distinct hashes on a field its FIXTURES vary ... Without that limb the scoped rule would have ADMITTED this collision as legitimate.' 1.0.0_SA_CTO ruling 4 scopes the hash rule to fields a capture CLAIMS TO RENDER.",
     "world_is": "The first half of S44's sentence is right and the second is wrong, and a landed row is never edited, so this is the correction. What survives and is stronger: ruling 4's 'claimed field' is AMBIGUOUS between varied-by-the-fixture and reachable-by-the-page, and a set can satisfy one while failing the other. The CTO's third limb should therefore be a SEPARATE FINDING rather than a precondition on the collision arm -- which is exactly how the worker built it, and it built it that way after measuring rather than after being told. disarm_owner is none needed: INERT, nothing acts on it, and the round-4 input in S44 stands unchanged -- one fixture cell, for a reason S44 states correctly.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-12T09:23:44Z",
+    "id": "IRPT_FNTEND-W2-S17",
+    "one_line": "F22-AC8 CANNOT PASS AS WRITTEN AND THE REMAINING FAILURE IS NOT THIS CELL'S. The order asks the whole Investor Reporting set for `0 fail`; measured on this branch with both of this cell's new files landed, the set reads 446 pass / 1 skip / 1 fail across 448 tests in 75 files, and the ONE failure is `F18-AC3 -- the captures are the files the manifest claims > UNIQUE HASHES -- no two entries share a hash`, in `__tests__/fe-s-18/manifest.test.ts` -- a folder this order's BOUNDS put OUTSIDE the grant in as many words. F22-AC8 is REFUSED with its measurement, per the order's own instruction that such a failure is a BLOCKING row naming it.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`cd <WS>/portal && timeout 180 bun test src/pages/InvestorReporting` -> `446 pass / 1 skip / 1 fail / 2021 expect() calls / Ran 448 tests across 75 files`, rc=1. The failing line, read from the captured run rather than from a summary: `F18-AC3 -- the captures are the files the manifest claims > UNIQUE HASHES -- no two entries share a hash (FAILS at this commit; see the file header)`.",
+        "DENOMINATOR OF THE FAILURE: exactly 1 of 448. This cell's own two files contribute 13 tests, 0 fail, measured separately -- capture-hash.test.ts 7 pass / 0 fail (27 expect calls) and smoke-detector.test.ts 6 pass / 0 fail (12 expect calls).",
+        "GRAIN: the failing arm is in `src/pages/InvestorReporting/__tests__/fe-s-18/manifest.test.ts`. This order's BOUNDS: `__tests__/fe-s-18/ IS NOT IN YOUR GRANT AND MUST NOT BE TOUCHED -- FE-s-18 is carried with its criteria untouched by CTO ruling 1`. The <paths> block names `portal/src/pages/InvestorReporting/__tests__/fe-s-22/` and `portal/scripts/ui-smoke.mjs` only.",
+        "NOT FIXABLE FROM THIS CELL EVEN IF THE GRANT ALLOWED IT: row IRPT_FNTEND-S44 measured that F18-AC3's population is eleven COMMITTED PNG files with committed sha256s, so no source change moves those bytes -- the captures must be re-taken against fixtures that do not yet exist. The cause is in the FIXTURES, which no round-3 cell holds.",
+        "The failure is the one the issuer's own seating note predicted ('the suite at your cut reads 1 fail, F18-AC3's collision, which is nobody's in round 3'), and this row is its independent measurement on the post-build branch rather than a restatement of that note."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-22 F22-AC8: invocation `bun test src/pages/InvestorReporting`, <expect>0 fail</expect> -- 'the whole Investor Reporting set is green. By your seating FE-s-19 and FE-s-20 have drained; a remaining failure that is not yours is a BLOCKING row naming it.'",
+    "world_is": "FE-s-19 and FE-s-20 have indeed drained and the set still reads 1 fail. The failure is F18-AC3's hash-uniqueness arm, which fails BY DESIGN at this commit (its own file header says so and refuses rather than absorbing the defect) and which cannot be moved by any edit inside this cell's grant. The bar `0 fail` was therefore unsatisfiable at issuance, not made unsatisfiable by this cell's work: the same 1 fail stands with this cell's 13 new tests all green. REFUSED with its measurement rather than reported as a pass with a note.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-12T09:23:44Z",
+    "id": "IRPT_FNTEND-W2-S18",
+    "one_line": "THE THIRD LIMB S44 ASKED FOR IS BUILT, AND THE TWO FINDINGS TURN OUT TO BE INDEPENDENT -- which corrects one clause of S44 and sharpens the CTO's open question rather than answering it. S44 wrote 'without that limb the scoped rule would have ADMITTED this collision as legitimate'. Measured: it would NOT have. The three round-2 Holdings fixtures DO differ in the claimed fields (basis across observed/target, classification across observed/missing-attribution), so the COLLISION arm refuses all three pairs on its own, with the precondition limb stripped out entirely. The defective-fixture limb adds a SECOND, separately-reported finding on the same set -- it does not rescue the first.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Both verdicts printed by one run of `bun test src/pages/InvestorReporting/__tests__/fe-s-22/capture-hash.test.ts` on the round-2 PNG BYTES and the three fixture maps: `ROUND-2 COLLISION REPRODUCED: 3 of 3` and `DEFECTIVE FIXTURES: 3 of 3`.",
+        "THE INDEPENDENCE ARM, which is the whole content of this row: `INDEPENDENCE: preconditions stripped -> defective=0, refused-pairs=3, refused=true`. With `requires` removed from every entry the collision arm alone still refuses all three pairs, keyed on `/api/scoped/investor-reporting/holdings/.data.nodes[].basis` and `.data.nodes[].classification`.",
+        "The defective-fixture limb's own measurement: all three maps lack `/api/scoped/investor-reporting/holdings/.status`, so under the FE-s-19 seam (portal 0bdff934, envelope.ts + state/status.ts: a status that is missing yields EXPLICIT_UNKNOWN_STATE) the page could never reach `basis` or `classification` in any of the three runs. This agrees with the issuer's census (84 v1 envelopes / 36 maps / 3 with `status`; the three Holdings maps 0 of 9 each) by a DIFFERENT instrument -- a path census over the parsed map, not an envelope scan.",
+        "AND A TRAP THAT WOULD HAVE FALSE-PASSED THE LIMB, measured and controlled for: matching `requires` as a field-name SUFFIX rather than an exact path hits `/api/scoped/investor-reporting/analysis/.data.extraction_validation.status` in all three maps -- a field on a DIFFERENT response, three levels inside `data`. Printed by the rule's own control arm: `PATH DENOMINATOR: 325 paths ... EXACT /api/scoped/investor-reporting/holdings/.status: 0 hit(s) ... SUFFIX 'status': 1 hit(s)`. A suffix rule would have read the precondition as SATISFIED in exactly the case it exists to fail, and the set would then have carried only the collision finding.",
+        "WHERE IT IS EXPRESSED: `portal/src/pages/InvestorReporting/__tests__/fe-s-22/capture-hash.ts` -- `CaptureEntry.requires` (exact fixture paths), `EntryResult.preconditionMet` (null = NO precondition declared, never a met one), `CaptureSetVerdict.defectiveFixtures`. The claim model for the round-2 set is the separate declaration `round-2-holdings.claims.json`, joined to the round-2 manifest BY CRITERION; no filename selects, exempts or classifies any capture."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND-S44: 'IT COUPLES TO RULING 4: a capture set can only assert distinct hashes on a field its FIXTURES vary, so the scoped rule needs a third limb -- A FIXTURE THAT DOES NOT CARRY THE CLAIMED FIELD IS A DEFECTIVE FIXTURE, NOT AN ADMITTED COLLISION. Without that limb the scoped rule would have ADMITTED this collision as legitimate.' And this cell's spawn context: whether a fixture that does not carry the claimed field is a DEFECTIVE FIXTURE rather than an admitted collision is 'a question the CTO owns and has not ruled'.",
+    "world_is": "The limb is built and the distinction is mechanically expressible, but S44's stated consequence does not hold on this set, and the difference matters for the ruling. 'The claimed field' is TWO different fields in S44's sentence: the field the fixtures VARY (basis, classification -- they do vary it, so the collision arm fires) and the field the wire must carry for the page to REACH it (status -- absent, so the fixtures are defective). A rule scoped only on the first refuses this set correctly and for a REASON THAT IS TRUE BUT INCOMPLETE: it reports 'the page did not render a field it claims' when the measured world is 'the page never received the state that would let it reach the field'. Those have different owners and different remedies -- a page change versus a fixture change -- which is why the rule reports them as two findings on one set rather than folding either into the other. disarm_owner 1.0.0_SA_CTO because ruling 4 is the CTO's and this narrows it; the code states the distinction, it does not rule it.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-12T09:52:00Z",
+    "id": "IRPT_FNTEND-W2-S19",
+    "one_line": "W2-S17'S BLOCKER WAS REMOVED BY AN ISSUER AMENDMENT AFTER THE ROW LANDED, AND THE CHANNEL IS APPEND-ONLY -- so this row carries the new measurement rather than W2-S17 being edited. 2.0.0_SA_COO~F corrected F22-AC8's bar from `0 fail` to `1 fail` with a name check, committed on CLOUD at 0e25c1d422 AFTER this worktree was cut. Re-measured against the corrected bar: the Investor Reporting set reads 446 pass / 1 skip / 1 fail across 448 tests in 75 files, EXACTLY ONE fail-marked line, and it IS `F18-AC3 -- the captures are the files the manifest claims > UNIQUE HASHES -- no two entries share a hash`. F22-AC8 now PASSES by output. W2-S17's measurement was correct and is unchanged; only the bar it was measured against moved. THIS ROW ADJUDICATES NOTHING -- W2-S17's disposition is the CVO's at L9 and no `adjudicates` field is carried here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE AMENDMENT WAS READ AT ITS COMMIT, NOT FROM THE MESSAGE AND NOT FROM THIS TREE (the procedure row IRPT_FNTEND-S43 establishes). `git merge-base --is-ancestor 0e25c1d422 HEAD` = FALSE and `git cat-file -t 0e25c1d422` = `commit`: reachable in the shared object store, ABSENT from this branch's history, so the tree's own copy still held the retracted bar.",
+        "POSITIVE CONTROL BESIDE THE EXTRACTION, because a mangled `git show` returns clean-empty on this box: the same command against a non-existent path at the same ref returned `fatal: path ... does not exist in '0e25c1d422'` with rc=128, not empty. The real path returned 12125 bytes at rc=0.",
+        "THE DIFF WAS BOUNDED BEFORE ANYTHING WAS WRITTEN: 115 lines each side, EXACTLY TWO differing (61 and 62), both inside the F22-AC8 block; `<status>` reads `pending` on both sides. Only those two lines were written into this branch's copy, CRLF preserved (114/114 measured after the write), and the result verified byte-identical to the blob modulo line endings. `git diff --numstat` read `2\t2` on that file. No merge, rebase, checkout or clean was run in either repo.",
+        "THE RE-MEASUREMENT, run with the dev server restarted on 5182 so the run is comparable to the pre-amendment one: `bun test src/pages/InvestorReporting` -> `446 pass / 1 skip / 1 fail / 2021 expect() calls / Ran 448 tests across 75 files`, rc=1. Identical totals to the pre-amendment run, as expected -- the amendment touches no source, no fixture and no test file.",
+        "THE NAME CHECK THE CORRECTED BAR ADDS, answered with its own denominator: the run carries exactly ONE fail-marked line and it is `F18-AC3 -- the captures are the files the manifest claims > UNIQUE HASHES -- no two entries share a hash (FAILS at this commit; see the file header)`. No second failure and no different one, so the corrected bar's BLOCKING condition did not trigger.",
+        "F22-AC1 WAS NOT RE-RUN, and the reason is stated rather than assumed: the only file this pass changed is the task order's own markdown, which lives in the WORKSPACE repo and is not in the portal's TypeScript program (tsconfig.app.json includes `src`). No source file, fixture or test file moved, so the earlier `tsc -b --noEmit` rc=0 stands over the same program. The other seven criteria were likewise not re-run, on the same ground."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND-W2-S17, filed by this worker one commit earlier: 'F22-AC8 CANNOT PASS AS WRITTEN ... The order asks the whole Investor Reporting set for `0 fail` ... F22-AC8 is REFUSED with its measurement.' And this order's BOUNDS: 'never edit an existing row'.",
+    "world_is": "The bar, not the measurement, was the defect -- the issuer says so itself and carries it as row S45: F22-AC8 read `0 fail` on the same PREDICTION that F19-AC8 carried and that row S41 had already corrected there, one amendment applied to one of three faces. At the corrected bar `1 fail` with a name check, the same measured world (446/1/1, the one failure being F18-AC3's) now MEETS the criterion. The row is filed because W2-S17 states a refusal in the present tense and a landed row can never be edited: without a successor row the channel would carry an open BLOCKING claim that the current bytes contradict, and the L8 compile would read it as live. It deliberately carries NO `adjudicates` field -- dispositioning W2-S17 is the CVO's act at L9, and a worker asserting it would be the worker grading its own refusal.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
