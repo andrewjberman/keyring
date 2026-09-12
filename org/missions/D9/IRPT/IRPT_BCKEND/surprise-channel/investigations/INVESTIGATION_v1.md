@@ -3315,6 +3315,76 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "TO-IB-rt-9 bounds, item 4: '.tools/terraform.exe is provisioned in your worktree by the issuer -- use it by that path, never a PATH substitute (a substitute re-pins remote state)'; amendment A3 repeats that the absence is a trap already paid for.",
     "world_is": "The binary was absent in /c/tmp/wk-irpt-2-3b. A3 already names the absence as the expected condition, so the bound and the amendment disagree with each other about who provisions it. The remedy taken is the one A3 names -- resolve the binary BY PATH -- using the byte-identical estate binary rather than any terraform on PATH.",
     "notes": "Each of the three investor-reporting roots was then `init`-ed with that binary before any plan, per A3."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S31",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-12T00:39Z",
+    "one_line": "The deployed generation job has NO eviction outcome: a 401 at the read-back is recorded as SETTINGS_DRIFTED and a 401 at the create as CREATE_NOT_VERIFIED, so an evicted session and a genuine contract failure are indistinguishable in the job's own record -- and the two have OPPOSITE remedies.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED on job.GenerationJob with the replay transport, run_session_suite.py arm d @a2aa857b05: a 401 at GET /model_portfolios/{id}/status yields the job's own why 'SETTINGS_DRIFTED' while transport.decision on the same wire status yields 'REFRESH'",
+        "infra/aws/lambda/investor-reporting/ycharts/generate/job.py:426-429 @a296eac0f4 -- `if not read_back['ok']: self._state(job_id, 'ATTENTION', {'why': 'SETTINGS_DRIFTED', ...})`; step_read_back's ok is `info['status'] == 200 and matched == len(rows)`, so ANY non-200 lands on the drifted-settings word",
+        "job.py:390-392 -- the same shape at the create step: a non-201 is 'CREATE_NOT_VERIFIED'",
+        "comp-find 'resume_allowed' --all: DENOMINATOR 10 hit(s) across 31391 file(s) | 2 DEF, 6 TEST, 2 DOC -- ZERO production callers; the rule at transport.py:202 is exercised only as a pure function by tests/run_offline_suite.py:494,498",
+        "the DIFFERENCE CONTROL that makes this actionable: the same step returning 422 classifies NOT_AN_EVICTION with 0 refreshes, so the two cases ARE separable at the wire -- it is the job's outcome word that loses the distinction, not the evidence"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-9 arm (d) and the decomposition v0.2 s.2(4): 'a 401 mid-job triggers ONE refresh through the broker and the job resumes its checkpoint' -- i.e. the deployed job recognises an eviction and routes it to the broker.",
+    "world_is": "It does not recognise one. `transport.resume_allowed` has ZERO production callers and `job.py` carries no eviction member in its outcome vocabulary, so the eviction path was a LIBRARY RULE with no wiring. Arm (d) is met by classifying at the wire in the new broker (transport.decision over the recorded status) and re-entering through the job's OWN resume()/after_create(), which required no edit to job.py. The residual hazard is that anything ELSE reading the job's `why` -- an operator, the status envelope, a retry policy -- will refresh a session for a contract failure or fail a request that only needed a refresh.",
+    "notes": "NOT fixed inside job.py deliberately: job.py is a declared build input of irpt-ycharts-generate, which cell IB-rt-2 is about to rebuild and deploy (row W3-S26), and editing it here would put this cell's change into that cell's artifact. The broker classifies correctly without touching it. Whether job.py should gain an EVICTED outcome is a cut-time question, not a mid-round one."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S32",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-12T00:39Z",
+    "one_line": "JobStore keeps only the LATEST state per job, so the durable `model_portfolio_id` written at SUBMITTED is ERASED by the next transition -- the checkpoint a recovery reads back no longer carries the identity of the vendor object the request already created.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ycharts/generate/job.py:121-124 @a296eac0f4 -- `put_state` assigns `self.items[job_id] = {...}`, one row per job, overwritten in place; only `self.transitions` is append-only and it carries job_id + state and NO detail",
+        "EXERCISED, run_session_suite.py arm d: after the create succeeded (state SUBMITTED, detail {'model_portfolio_id': 2332060}) and the read-back returned 401 (state ATTENTION, detail {'why','drifted'}), the broker's checkpoint read returned `checkpoint_state_at_recovery: ATTENTION` -- the portfolio id was gone",
+        "the recovery still worked, and that is the point: it worked because job.resume() RECONCILES the owned object from the VENDOR by the deterministic portfolio name, not because the store remembered it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The job's own design note at job.py:102-110: the store is 'durable job state with a CONDITIONAL intent claim ... the shape it mirrors is irpt-jobs', and the chain writes SUBMITTING/SUBMITTED with the identity of the object it is about to create or has created, so a restarted worker can find it.",
+    "world_is": "The identity written at SUBMITTED does not survive one further transition. Nothing in this cell depends on it -- reconciliation from the vendor by owned identity is the stronger design and it is what actually recovers -- but any future consumer that reads the checkpoint DETAIL for a portfolio id will find whatever the last transition wrote, and a DynamoDB-backed JobStore with the same put shape would have the same erasure.",
+    "notes": "Surfaced, not chased: job.py is IB-rt-2's artifact this round (W3-S26). The remedy, if one is wanted, is a per-(job, state) row or an append-only detail log, which is a store-shape decision and belongs at a cut."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S33",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-12T00:39Z",
+    "one_line": "The arm-(a) reader census caught this cell's OWN new broker before it was declared -- 4 of 5, UNACCOUNTED -- which is the table working; recorded because it is the second time in one session that adding a file to the tree moved this arm's denominator.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rt_9.py run before broker.py was declared: 'UNACCOUNTED infra/aws/lambda/investor-reporting/ycharts/session/broker.py -- the census found a reader the table does not hold' and 'FAIL a1 readers migrated or retired: 4 of 5'",
+        "after the declaration: 'PASS a1 readers migrated or retired: 5 of 5', denominator '33184 file(s) scanned (git ls-files, tracked) | 64 name the secret | 10 are CODE | 6 of those RESOLVE it | 4 only MENTION it | 1 ... OWN TEST HARNESS'",
+        "the earlier instance is row IRPT_BCKEND-W3-S29 (the battery counting itself once its own file became tracked)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-9 amendment A5: arm (a) is DONE and stays done -- 're-run the battery once to confirm the cutover still passes, then leave arm (a) alone'.",
+    "world_is": "Arm (a) is not a fixed result; it is a LIVE census whose denominator moves whenever the cell adds a file that resolves the secret. Twice in one session it failed for a correct reason and was answered by declaring the new member rather than by widening the discriminator. Both answers are recorded in the battery beside the entries they explain. This is the arm behaving as specified -- the record exists so a later reader does not mistake a moving denominator for an unstable instrument.",
+    "notes": "The discriminator (a Secrets Manager READ API call) was NOT touched in either case. The only structural exclusion is the HARNESS class, which carries its own control asserting it removed 0 declared estate readers."
   }
 ]
 ```
