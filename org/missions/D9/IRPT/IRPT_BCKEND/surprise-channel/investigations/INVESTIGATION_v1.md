@@ -3315,6 +3315,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "TO-IB-rt-9 bounds, item 4: '.tools/terraform.exe is provisioned in your worktree by the issuer -- use it by that path, never a PATH substitute (a substitute re-pins remote state)'; amendment A3 repeats that the absence is a trap already paid for.",
     "world_is": "The binary was absent in /c/tmp/wk-irpt-2-3b. A3 already names the absence as the expected condition, so the bound and the amendment disagree with each other about who provisions it. The remedy taken is the one A3 names -- resolve the binary BY PATH -- using the byte-identical estate binary rather than any terraform on PATH.",
     "notes": "Each of the three investor-reporting roots was then `init`-ed with that binary before any plan, per A3."
+  },
+  {
+    "id": "IRPT_BCKEND-S38",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T00:07:11Z",
+    "one_line": "ISSUER SELF-CORRECTION, DISARMING W3-S26: my amendment A6 ordered slot ~3 to deploy irpt-export-render, irpt-status and irpt-ycharts-generate ahead of slot ~2 on the reasoning that until IB-rt-2's apply re-points the Terraform handler strings the world runs the OLD handlers, which do not import served/loaders. THAT REASONING WAS FALSIFIED BY THE TREE: IB-rt-2's handler flip is ALREADY COMMITTED AND UNAPPLIED in all three roots, and terraform apply is per-ROOT and not per-attribute, so the apply that lands the ids.py packaging fix also lands the handler flip and the entry module is in no zip. Slot ~3 planned all three roots (0 add, 1 change, 0 destroy, on exactly that attribute), extracted each zip to a flat /var/task and imported it in a fresh python3.12 interpreter with the repo stripped from sys.path with a negative control armed, read IMPORT-FAIL ModuleNotFoundError: No module named 'served' on all three, and REFUSED THE ORDER WITH A BLOCKING ROW RATHER THAN OVERRIDING IT -- the behaviour the row mechanism exists for. RE-CUT: entry.py + served.py + loaders.py + ids.py must land in ONE artifact per function and the apply that flips the handler is the SAME apply that ships them, so the whole packaging-plus-deploy is cell IB-rt-2's across all six roots; the owed W3-S25 deploy is removed from IB-rt-9 and IB-rt-9's arm (e) is now gated on IB-rt-2's apply. Amendment A6 is struck by issuer amendment 2 on the IB-rt-2 face; slot ~2 was handed the re-cut with slot ~3's five measurements attached, and slot ~3 was re-tasked to the four unblocked fixture arms (b), (c), (d), (f).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (disarmed same turn: A6 struck on the face, both slots re-tasked, no seat is waiting on another)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 670092d321 (drain of wk-irpt_bckend-2-3b; rows W3-S26..S30, channel 137 rows)",
+        "IRPT_BCKEND-W3-S26, the worker's BLOCKING row carrying the three plans and the three import failures",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/WIP_IB-rt-9_coldstart2_blocked.md",
+        "The struck clause is on the IB-rt-2 face, issuer amendment 1 section A6, committed 7f86d664c6 and merged a296eac0f4"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer amendment 1 section A6 (IB-rt-2 face, a296eac0f4): 'rt-9 deploys those three FIRST. You do NOT deploy them until I tell you its deploy has landed ... until that apply, the world runs the OLD handlers, which do not import served/loaders -- so rt-9's deploy is safe ahead of yours.'",
+    "world_is": "The three roots already DESIRE entry.lambda_handler, so no apply on them can be partial. There is no ordering of the two cells that works, because the act is atomic and was split. The issuer's error was reasoning about the WORLD's handler (old, safe) while the DESIRED state in the tree had already moved -- Rule 22's DESIRED-vs-APPLIED distinction applied to the wrong one of the two, inside a sign-off-shaped ruling about what an act MAY touch.",
+    "notes": "Recorded as the issuer's own defect rather than the worker's finding, because the worker did exactly what it should have and the cost of the error was one refused act and no deployment. The general form worth carrying to L10: an ISSUER sequencing ruling that names two cells is itself a claim about a shared surface, and a per-cell reading cannot see a defect in what the two cells SHARE -- here, one Terraform root holding both cells' desired state. The ruling should have been graded against the ROOT, which is what both cells have in common, before it was written."
   }
 ]
 ```
