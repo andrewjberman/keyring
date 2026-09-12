@@ -538,3 +538,57 @@ directives:
       and that seat holds it as of 2026-09-11), and directives-check reports prd_exists false, which is
       legal at this stage. L1 and L2 are DONE: brief docs/briefs/portal-visual-elevation-brief-20260911.md,
       endpoint org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_D13_PORTAL_VISUAL_ELEVATION_20260911.md."
+  D14:
+    title: "Platform Logic"
+    directive: "docs/architecture/D14_PLATFORM_LOGIC_PRD.md"
+    placement: "LAPTOP -- RULED BY ANDREW 2026-09-12 ~17:2xZ at the 4.0.0_SA_CRO~D terminal, VERBATIM:
+      'we put that at d fourteen. And and it''s owned by the laptop.' SUPERSEDES his own placement of this
+      same work in D12 minutes earlier: he replaced it once 4.0.0_SA_CRO~D surfaced that D12 is SITEZ-placed,
+      and both words are preserved verbatim in that seat''s record (relay msg-ids 96206 then 96211). The later
+      governs. Placement attaches to the DIRECTIVE, never to a member (LD-0498, LD-0502)."
+    members:
+      subgroups: []
+      projects: []
+      members_note: "EMPTY AT MINT, AND THAT IS CORRECT RATHER THAN INCOMPLETE -- the D5/D10 precedent
+        (LD-0454): an empty member set is honest where a plausible one is not, and must NOT be filled to make
+        a row look finished. Rule 27 also makes the DIRECTIVES.yaml members line the CTO''s L3 carrier
+        (0.0.0_AB_MSTR is PERMIT only as an integrator fallback), so the register owner mints the row on
+        Andrew''s title word and does not invent a member set. L1 IS DONE: brief
+        docs/briefs/d14-pipeline-canon-brief-20260912.md @2659d45788, authored by 4.0.0_SA_CRO~D under his
+        ~17:2xZ tensions-first method. L2 endpoint, the PRD and the first member are 1.0.0_SA_CTO''s."
+    stance: "MINTED BY 0.0.0_AB_MSTR (register owner) 2026-09-12 ~17:5xZ on Andrew''s word, relayed by
+      4.0.0_SA_CRO~D as msg-id 96234, VERBATIM: 'Platform Logic is it , let mstr know and then give me the
+      order of operations that need to be compiled in order to create the foundational brief and references'.
+      WHAT IT IS FOR, in his own earlier words (~16:2xZ): a canon for how data pipelines are structured, so
+      that projects are not built against a structure that is about to change -- 'we''re going to come up with
+      a structure that could directly contradict them'. The ~16:1xZ pause on projects actively building data
+      pipelines exists to protect exactly that, and this row does not lift it.
+      TITLE HISTORY, recorded so it is not re-opened as new: he offered 'ontology', then 'canin' (heard as
+      CANON), then 'Logic' / 'platform logic', before ruling. Measured before he chose -- 0 of 14 directive
+      titles carried 'logic', and no slash command, comp-tool, graph carrier, registered project or top-level
+      directory did either, on two independent instruments (4.0.0_SA_CRO~D filename census; 0.0.0_AB_MSTR
+      surface enumeration, msg-id 96232). SURFACED TO HIM BEFORE THE RULING AND RULED ANYWAY: 'Platform Logic'
+      sits beside D12 'Platform Operations'. That is a CONFUSABILITY note at the directive-title grain, never
+      a name collision -- the strings differ and nothing breaks. He chose it with the note in front of him;
+      it is settled and is not a defect to re-raise.
+      NOT RULED BY HIM AND NOT INFERRED HERE: the PRD''s content; the member set; migration sequencing (the
+      brief''s Part II holds that migrations are SEPARATE projects, one per pipeline family); and the
+      disposition of D10 below. The `directive` path above is the canonical SLOT the L4 owner writes into,
+      and directives-check reporting prd_exists false is legal and expected at mint.
+      *** THE D10 CONSEQUENCE, SURFACED AND DELIBERATELY NOT RESOLVED. *** D10 was minted BY ANDREW on
+      2026-08-25 ~18:4xZ for THIS WORK -- its stance carries his verbatim 'canonizing how things are ingested,
+      taxonomy of ingestion/bucket structure/naming' and its `directive` field points at
+      docs/architecture/D10_GLOBAL_PIPELINE_STRUCTURE_PRD.md, which EXISTS (15,951 B, measured with a positive
+      control). Its title nonetheless reads 'Partner Implementations', so that row already disagrees with its
+      own stance and its own PRD path. Now that the canon work is D14, D10''s disposition is a SOVEREIGN
+      question with at least two readings and I take neither: (a) D10 re-scopes to Partner Implementations
+      proper and its canon content, PRD included, folds into D14; (b) D10 keeps the structural PRD and D14
+      carries only the new canon. Related and NOT fixed here: CLAUDE_ANNEX.md:444 (Rule 17b) cites
+      docs/architecture/D8_GLOBAL_PIPELINE_STRUCTURE_PRD.md, which DOES NOT EXIST on disk. That is a LAW
+      surface and therefore 1.0.0_SA_CTO''s, and fixing a pointer to a missing file by guessing which file was
+      meant is how a wrong cause becomes durable."
+    title_provenance: "NAMED 'Platform Logic' at mint 2026-09-12 ~17:5xZ by Andrew-direct at the
+      4.0.0_SA_CRO~D terminal, VERBATIM: 'Platform Logic is it , let mstr know'. Register act by
+      0.0.0_AB_MSTR; relay msg-id 96234. Two earlier candidates he raised and did not rule -- 'ontology' and
+      'canin'/CANON -- are preserved in 4.0.0_SA_CRO~D''s record; both were measured to collide with live
+      instruments and neither was chosen."
