@@ -488,6 +488,185 @@
     "spec_asserts": "Row IRPT_FNTEND-W2-S13 asserts the cause as 'a client-composed bundle names no account set, so the document header reads 0 account(s) in scope', and judges the consequence as 'neither is a wrong number on a rendered page'. The PRD's reporting contract is that values are printed exactly as the source supplied them and that an absence renders as an explicit UNAVAILABLE with its reason, never as a silent zero.",
     "world_is": "The bundle DOES name accounts A-0001 and the header still prints 0, so the zero is not the honest absence W2-S13 took it for -- it is a count of the wrong thing, printed as a fact, on the same document that lists the account it says is not there. Against the PRD's own rule this is the failure mode the UNAVAILABLE convention exists to prevent: an absent or mis-read value rendering as a SILENT ZERO rather than as a stated absence. hazard_standing ARMED because a reader of this document is told something false about what it covers, and disarm_owner is 3.0.0_SA_CVO because the disposition is an L9 judgment and the remediation lands in a cell nobody has yet been granted -- not a COO act and not this round's to repair. Carried to L10 with the observation that W2-S13's recorded CAUSE should be corrected there, since a wrong cause in the channel is what sends the next round's cut at the wrong surface.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S18",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T00:26:05Z",
+    "one_line": "F15-AC8's second limb (`a source grep of tabs/analysis/ for inputRevision returns 0 hits`) CANNOT be satisfied inside this order's write grant: removing the fallback breaks four assertions in __tests__/fe-s-6/correction.test.ts, and __tests__/fe-s-6/ is not in this order's <paths> -- so F15-AC8 and F15-AC11 (`0 fail` over the whole set) cannot both be met by any act this worker is permitted.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED by this cell's own test, __tests__/fe-s-15/identity.test.ts on the worker branch: `SOURCE FILES SCANNED: 12`, `INPUTREVISION HITS IN tabs/analysis/: 5 -- InputReview.tsx:9, correction.ts:4, correction.ts:6, correction.ts:63, correction.ts:86`. Two are the CorrectionResult field and its assignment; three are prose naming the derivation.",
+        "portal src/pages/InvestorReporting/__tests__/fe-s-6/correction.test.ts @84a86c10 imports `deriveInputRevision` from '../../tabs/analysis/correction' (line 18) and asserts `result.inputRevision` at lines 46, 87 and 88, plus `deriveInputRevision(request)` at line 29. Removing the field or the function reds those four assertions.",
+        "The task order's <paths> block names portal/src/pages/InvestorReporting/{tabs/analysis/,fixtures/,__tests__/fe-s-15/}, src/api/endpoints/investor-reporting.ts, contracts/, __tests__/fe-s-13/, __tests__/fe-s-14/, __tests__/fe-s-1/ -- __tests__/fe-s-6/ is absent, and the BOUNDS say a path not named is a BLOCKING row on that criterion and never an override.",
+        "The FIRST limb of F15-AC8 is met and measured: identity.test.ts prints `REVISION IDENTITY: preserved` -- a clean producer AnalysisRequest instance and the same instance with one correction appended render byte-identical identity blocks (1618 bytes each) across the seven wire fields the schema names.",
+        "The same clause's OTHER half, `parity.ts`'s local derivation, is blocked the same way and by the same battery: __tests__/fe-s-6/sections.test.ts asserts the parity-driven SUPPORTED/UNSUPPORTED rendering in three tests. No criterion of this order grades it, so it was left in place rather than removed under a bar nobody could check."
+      ]
+    },
+    "spec_asserts": "Cell FE-s-15 W3-S2: \"`parity.ts`'s local derivation and any `inputRevision` fallback are removed\"; F15-AC8: \"a source grep of `tabs/analysis/` for `inputRevision` returns 0 hits (printed)\"; F15-AC11: `bun test src/pages/InvestorReporting` expects `0 fail`.",
+    "world_is": "The symbols the removal clause names are IMPORTED BY ANOTHER CELL'S BATTERY that this order may not edit. The worker chose the branch that leaves the tree consistent -- suite green at 398 pass / 0 fail, tsc rc=0 -- and REFUSED F15-AC8 with its measurement (5 hits against a bar of 0) rather than reding four assertions in __tests__/fe-s-6/ to satisfy it. Either branch leaves exactly one criterion FAILED; this one leaves nothing broken. The order stays open on F15-AC8. What unblocks it: a re-cut whose <paths> adds portal/src/pages/InvestorReporting/__tests__/fe-s-6/.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S19",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T00:26:05Z",
+    "one_line": "TWO of the composer's eight rows name a wire prefill source v1 does not carry: the COMPARISON CATALOGUE (cell item 4, \"the catalogue the wire scope carries\") and the PREPARED-FOR / PREPARED-BY / CONTACTS profile (item 6, \"prefilled from the profile fields the wire scope carries\"). ResolvedScope v1 carries neither, and no other v1 document does.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/ResolvedScope.schema.json @d9c940244a -- the generated wire type (portal contracts/wire/ResolvedScope.ts, source sha256 fc5504b5768f...) carries exactly: viewer_policy, principal_class, entitlement_revision, permitted_firm_catalogue, verified_request_firm_id, permitted_account_set, permitted_account_set_fingerprint, requested_scope, resolved_scope, partial_reason, vendor_ids, contract_version. No comparison catalogue; no profile.",
+        "The other ten v1 document schemas were read for the same two: AnalysisRequest carries comparisons as SUBMITTED (position + security_identifier) and no catalogue of selectable ones, and no v1 document carries a prepared-for firm, a preparer, an organization, an email, a phone or a URL.",
+        "UI_CONTRACT.md @72acd16e66 names both as backend bindings: \"Opaque catalog keys resolve to authorized, typed YCharts security IDs and expected names\" and \"Firm/advisor profile supplies prepared-for firm, preparer, Opal organization, email, phone and URL\" -- so the sources exist in the DESIGN and are unpublished in v1.",
+        "What the composer does instead, in GenerateComposer.tsx: the comparison control takes the OPAQUE KEY itself (ordered, capped at 5, de-duplicated) and PRINTS the absence beside it; the prepared-for block renders the absence and prefills nothing. Nothing is invented, and the two PNGs in this order's deliverables show both notes."
+      ]
+    },
+    "spec_asserts": "Cell FE-s-15 items 4 and 6: comparisons are chosen \"by OPAQUE catalog keys (the catalogue the wire scope carries)\" and prepared-for / prepared-by / contacts are \"prefilled from the profile fields the wire scope carries; overrides only where the wire policy allows; nothing invented\".",
+    "world_is": "v1's wire scope carries neither the catalogue nor the profile, so there is nothing to prefill from and no wire policy that names an override. The composer renders both absences rather than inventing a list or a contact -- \"nothing invented\" is the half of the clause that CAN be honoured, and it is. For L10: either v1 gains the two, or the cell's items 4 and 6 are re-cut to say what the browser may do without them.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S20",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T00:26:05Z",
+    "one_line": "The cell requires `report_title` to send `null` when the advisor states no override, but the granted adapter's `toAnalysisGenerateWire` types it `report_title: string` -- and the adapter is READ ONLY beyond this order's R2 re-pin, so the composer builds its own seven-key body and asserts key-set equality against the adapter's ANALYSIS_GENERATE_KEYS instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/pages/InvestorReporting/contracts/adapt.ts: `AnalysisGenerateRequestWire.report_title: string` and `AnalysisGenerateInput.reportTitle: string` -- under the portal's strict tsconfig neither admits null.",
+        "UI_CONTRACT.md @72acd16e66 'Browser request' block sends `\"report_title\": null` verbatim, and the cell text says \"the request sends `null` when not overridden\".",
+        "This order's BOUNDS: \"The typed client and the adapters are granted for the R2 re-pin ONLY; beyond R2 they are READ only\" -- widening the adapter's type is not an R2 act.",
+        "The composer's own body type (tabs/analysis/composer.ts, AnalysisGenerateBody) carries `report_title: string | null`, and __tests__/fe-s-15/composer.test.ts asserts its key set EQUALS [...ANALYSIS_GENERATE_KEYS].sort() -- printed as `REQUEST KEYS: 7 of 7` with both denominators -- so the two producers of this shape cannot drift apart in silence."
+      ]
+    },
+    "spec_asserts": "Cell FE-s-15 item 5: \"Title -- optional; otherwise derived for display from the client/account label and comparison names (the request sends `null` when not overridden)\"; and the request body is \"exactly `{ request_id, client_id, account_ids, snapshot_id, variant, comparison_keys, report_title }`\".",
+    "world_is": "The granted adapter cannot express the null the contract sends, and the fix is one character in a file this order may only read past R2. The composer therefore owns its own body builder, bound to the adapter's key denominator. A later cell that widens `toAnalysisGenerateWire` to `string | null` collapses the two back into one producer; until then the key-set assertion is the control.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S21",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T00:26:05Z",
+    "one_line": "The five job states cannot be read through the typed client at all: `LiveClient.send` returns a response's `data` and DROPS the `status` envelope beside it, and `adapt.ts` maps BOTH wire QUEUED and RUNNING onto the single view state LOADING -- so queued / preparing / generating are indistinguishable to any screen that reads only the view. v1 also has no PREPARING state; the composer splits it from generating on `request_ref.attempt_number`.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/api/endpoints/investor-reporting.ts, LiveClient.send: `return parsed.data as unknown as TView` on the data path -- `parsed.status` is used only for the revocation/telemetry hook and for the `take: 'status'` operations (submit-export). `getAnalysisReport` takes 'data', so no caller ever sees the analysis-report envelope's status.",
+        "portal src/pages/InvestorReporting/contracts/adapt.ts STATE_FOR_WIRE: `QUEUED: 'LOADING', RUNNING: 'LOADING'` -- two producer states, one view state.",
+        "docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json @d9c940244a: the nine states are \"verbatim and exhaustive; there is no tenth\" -- QUEUED, RUNNING, READY, PARTIAL, STALE, UNAVAILABLE, NEEDS_CORRECTION, UNCERTAIN, FAILED. No PREPARING.",
+        "MEASURED by __tests__/fe-s-15/job-states.test.ts on the worker branch: the five fixtures parse through the ONE parser and print `parsed-state=LOADING` for queued, preparing AND generating, while the WIRE states they carry are QUEUED, RUNNING(attempt 0) and RUNNING(attempt 1). `JOB STATES: 5 of 5` is measured from the WIRE status the fixture carries, which is what F15-AC7 names.",
+        "A HoldingsSnapshot DOCUMENT carries no availability of its own either: adaptHoldingsSnapshot's wireEnvelope names no `state`, so every holdings view reads the explicit-unknown state whatever the envelope's status said. Measured in this cell's own first capture, which showed 'Uncertain' beside a snapshot served under a READY status."
+      ]
+    },
+    "spec_asserts": "Cell FE-s-15: \"Job states queued / preparing / generating / ready / needs attention render from the `status` the `analysis-report` envelope carries (GET .../analysis/{jobId}/sections, polled through the typed client)\".",
+    "world_is": "The envelope carries the status; the typed client does not pass it on, and the adapter's view vocabulary cannot represent the queued/running difference in any case. The composer's mapping (tabs/analysis/composer.ts, jobStateFromStatus) therefore takes the WIRE status envelope and the report's own attempt_number, is MECE over the producer's nine states with the table printed by the test, and is exercised against real envelope fixtures. On the live plane the tab can only show the state it tracked at submit until the client is widened -- a one-line change (`take`) in a file this order may only read past R2.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S22",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T00:26:05Z",
+    "one_line": "The seam's request corpus binds `snapshot_id` to the SCOPE FINGERPRINT (`HoldingsSnapshot.scope.resolved_scope_fingerprint`) while the composer sends the SNAPSHOT's own id (`source_set_revision`) -- two different facts under one key, and the counterpart replays the corpus into its real handler.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts, ANALYSIS_BODY: `snapshotId: holdings.scope.resolved_scope_fingerprint` -- the value is `3333...3333`, the scope's fingerprint, which identifies the ACCOUNT SET and not the snapshot.",
+        "portal tabs/analysis/composer.ts + __tests__/fe-s-15/composer.test.ts: the composer sends `smartx:sx-2026-09-09`, the adapted `sourceSetRevision` (HoldingsSnapshot.source_set_revision, source+revision per source), printed as `SNAPSHOT: body smartx:sx-2026-09-09 | held smartx:sx-2026-09-09`.",
+        "UI_CONTRACT.md @72acd16e66: \"An immutable normalized attachment/snapshot ID, unit, positions, total and provenance. Never fetch a different 'latest' snapshot halfway through a job\" -- the id names the snapshot, and a scope fingerprint cannot, because the same scope has a different snapshot every business day.",
+        "Both are inside this order's grant; neither was changed, because the corpus record is FE-s-13's seam artifact and re-binding it is not an act any criterion of this order names."
+      ]
+    },
+    "spec_asserts": "F15-AC2: \"`snapshot_id` equal to the held snapshot's id\"; and the request corpus is \"the FILE the counterpart replays into its real handlers\".",
+    "world_is": "Two producers of the same body key disagree about what the key means. The composer's reading is the one the UI_CONTRACT states; the corpus record predates the holdings route being DECLARED and was never exercised against a handler. Whichever is right, the counterpart's replay is currently fed a scope fingerprint where a snapshot id is expected -- for L10, and cheap to settle once (one line in gen-corpus.ts plus a regenerated record).",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S23",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T00:26:05Z",
+    "one_line": "The spawn prompt states the task order file \"already reads `<status>pending</status>`\"; at the worktree's base commit it reads `<status>blocked</status>`. Recorded, not changed: this worker's flip condition was not met anyway (F15-AC8 FAILED), so the value is left exactly as the issuer wrote it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-15.generate-composer.md:8 @7d6db9bcfa (this worktree's base): `<status>blocked</status>`.",
+        "The spawn prompt's closing line: \"The task order file is at ... and already reads <status>pending</status>. You flip it to complete on your branch ... only when the instance validates.\"",
+        "No flip was made: F15-AC8 is FAILED (row IRPT_FNTEND-W1-S18), so the order stays open and its status value is untouched."
+      ]
+    },
+    "spec_asserts": "Spawn prompt: the task order \"already reads `<status>pending</status>`\", and the worker flips it to `complete` when the proof-of-spec instance validates.",
+    "world_is": "It reads `blocked`. A worker that had met every criterion would have flipped a `blocked` order straight to `complete`, skipping whatever the blocked value was recording -- worth the issuer's eye even though it changed nothing here.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S24",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T01:20:40Z",
+    "one_line": "Retiring `parity.ts` under the widened grant costs a distinction the wire cannot make: v1 publishes ONE support verdict per REPORT (`AnalysisReport.extraction_validation`) and none per SECTION, so the three FE-s-6 assertions that marked one section SUPPORTED and another UNSUPPORTED INSIDE ONE REPORT are now report-level arms. Named here rather than deleted, per the issuer's amendment.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/AnalysisReport.schema.json @d9c940244a: `sections[]` carries section_id, section_type, value, units, as_of_date, page and bbox -- NO support, parity or certification field. The only verdict is the document-level `extraction_validation` {status: CERTIFIED|UNCERTIFIED|FAILED, checks_run, checks_failed, notes}.",
+        "The retired concept said so itself: portal tabs/analysis/parity.ts's own header read \"`ReportSection` carries no `parity` field ... the three-variant vendor PDF comparison this concept names does not exist yet\" and cited the decomposition section 7.8. It was a LOCAL widening, never a producer fact.",
+        "THE THREE ASSERTIONS, NAMED (portal __tests__/fe-s-6/sections.test.ts @e5833214): (1) 'a section with parity.passed === true renders SUPPORTED' -> now 'a CERTIFIED report renders its sections SUPPORTED' (same summary-block assertion, same expectation); (2) 'a section with parity.passed === false renders UNSUPPORTED with its reason' -> now 'an UNCERTIFIED report renders the SAME sections UNSUPPORTED, with the producer's own reason code' (the prose reason `the three-variant vendor PDF comparison for this section has not been certified` was a FIXTURE STRING for a concept the wire does not carry; the assertion now reads the producer's code UNCERTIFIED and its unconfirmed-value count); (3) 'a section with NO parity field at all renders UNSUPPORTED too' -> now 'a report with NO extraction verdict at all renders UNSUPPORTED too', which preserves the claim that mattered -- ABSENT EVIDENCE IS NEVER SUPPORTED BY DEFAULT.",
+        "MEASURED after the carry: bun test src/pages/InvestorReporting/__tests__/fe-s-6 = 19 pass / 0 fail; the whole set = 398 pass / 1 skip / 0 fail across the SAME 399 tests, with expect() calls RISING from 1813 to 1822 -- no assertion was dropped to make a bar pass.",
+        "RESIDUAL, recorded and not fixed here: portal fixtures/fe-s-6/report.released.json and fixtures/smoke/fe-s-6-ready.json still carry per-section `parity` objects. They are DEAD BYTES -- no code reads them and the view type never declared them. Rewriting another cell's fixture to tidy them was not an act this order names, and a fixture edit that no test grades is how a silent change lands."
+      ]
+    },
+    "spec_asserts": "Cell FE-s-15 clause W3-S2: \"revision identity and section support come from the wire fields the schemas name: `AnalysisRequest.identity` / `corrections` / `stage` / `release` and `AnalysisReport.extraction_validation` / `release` through the FE-s-13 adapters; `parity.ts`'s local derivation and any `inputRevision` fallback are removed\". Issuer amendment: \"If a FE-s-6 assertion turns out to be testing something the wire genuinely no longer carries, that is a surprise row naming the assertion -- not a deletion.\"",
+    "world_is": "`extraction_validation` is a REPORT-level verdict, so it cannot express the per-section difference the local parity fact could. The retirement is still right -- the browser was rendering a support claim no producer had made -- but the grain changed, and a viewer who could previously see WHICH section failed now sees only that the report's extraction was not certified, with the count of values it could not confirm. If per-section support is a product requirement, it is a v2 field on `sections[]`, not a consumer derivation. For L10.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S25",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T01:20:40Z",
+    "one_line": "The retired revision counter's second half -- \"each accepted correction advances the revision by exactly one\" -- is NOT a wire fact either: under v1 the PRODUCER issues the next `identity.revision` when it accepts the new submission, so a correction made in the browser moves the corrections array and NOT the identity. The FE-s-6 chain assertion is carried onto the array; the identity half is asserted to stay PUT.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/AnalysisRequest.schema.json @d9c940244a: `identity` {tenant_firm_id, request_id, revision, immutable: true, ingestion_gate_revision, destination_policy_revision} and `corrections[]` {finding_code, approved_by, from_value, to_value}. `immutable: true` is a const on the identity block; nothing in the document lets a consumer compute the next revision.",
+        "routes.json `_operations.consumer_operations_with_no_route`: submit-correction is NOT-A-ROUTE -- \"Corrections are a FIELD of AnalysisRequest (`corrections`) carried on the submission, not an endpoint of their own\". The next revision is therefore issued by the producer at the next `analysis-requests` submission, which the browser cannot anticipate.",
+        "THE ASSERTIONS, NAMED (portal __tests__/fe-s-6/correction.test.ts @e5833214): 'a freshly loaded request with no corrections is inputRevision 1' -> 'a freshly loaded request carries the wire's own revision and no corrections' (the value now re-read from the fixture rather than typed as a literal); 'one accepted correction advances inputRevision to 2' -> 'appends exactly one record, leaves the wire revision alone'; 'a second correction ... advances inputRevision to 3' -> 'appends a second record, still does not move the identity'. The chain that read 1 -> 2 -> 3 on a derived counter now reads 0 -> 1 -> 2 on `corrections`, with the wire revision asserted EQUAL at every step.",
+        "MEASURED: `AS INGESTED: requestRevision=areq-f6-needscorrection/r1, corrections=0`; `WIRE REVISION: areq-f6-needscorrection/r1 -> areq-f6-needscorrection/r1 (unchanged by the browser)`; `CORRECTION CHAIN: 0 -> 1 -> 2 at wire revision areq-f6-needscorrection/r1 -> ... -> ...` -- 19 pass / 0 fail in fe-s-6.",
+        "The consumer's own F15-AC8 test proves the same thing from the other side: a clean producer AnalysisRequest instance and the same instance with one correction appended render byte-identical identity blocks (1618 bytes)."
+      ]
+    },
+    "spec_asserts": "Cell FE-s-15 clause W3-S2: \"a clean request and its correction preserve the identity the wire carries\", with \"any `inputRevision` fallback\" removed. The FE-s-6 test it replaces asserted a browser-derived revision advancing 1 -> 2 -> 3 per correction.",
+    "world_is": "Both halves of the old claim were true of the LOCAL counter and only one is true of the wire: the corrections array does advance by exactly one, and the revision identity does not advance at all until the producer issues it. The retired counter was the browser answering a question only the producer can answer. Nothing downstream reads the retired field (`AnalysisTab.handleCorrected` uses only `result.request`), and portal export/submit.ts's own `inputRevision` is a DIFFERENT field on a different surface (an export receipt binding, out of this order's scope and untouched) -- the F15-AC8 scan is directory-scoped to tabs/analysis/ and its positive control reads that file to prove the scanner can still find the token.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
