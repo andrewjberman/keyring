@@ -60,6 +60,16 @@ the grant ask stands as a durable-fix suggestion, no longer as a blocker). Not a
 other path. Every loop tick that commits into `infra/logic/` uses this override under this authority
 and cites this section.
 
+## 2b. THE OVERRIDE'S END -- the lane landed
+
+`0.0.0_AB_MSTR` granted `infra/logic/**` to `4.0.0_SA_CRO` at `@df27878bfe` (~18:32Z, its own read that
+a document lane is not an act the pause forbids). **From that commit on this seat does not set
+`GIT_COMMIT_AUTHOR_OVERRIDE`; the gate decides.** Commits made under the override between 18:11Z
+and 18:3xZ: `845abef6c9` (the folder), `e729fd6f30` (doctrine), `b5d95a032d`, `51cbf75cca`
+(contradiction reports), `54a764cb28` (tick-list) -- one audit line each in
+`org/git-author-override-audit.log`, exactly as Andrew said: *"It can be documented in the
+overrides."* The authorization in s.2a is not revoked; it is no longer needed.
+
 ## 3. INSTRUCTION 2 -- THE LOOP, ARMED
 
 **Cadence:** every 10 minutes (`*/10 * * * *`), operator-initiated on his word above.
