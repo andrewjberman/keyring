@@ -4347,6 +4347,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not a blocker on its own and not a defect of anyone: round 1 built to QA deliberately and the production prefix was always this cell's to first-mint. Filed because arm (b) is worded for an ADVANCE and the world offers a FIRST MINT, and those are different evidence: the before half is an ABSENCE (recorded here with its control), the after half is one dated object plus one pointer, and the immutability clause becomes provable only on the SECOND production build. A reader who takes arm (b)'s '(r -> r+1)' literally would look for an integer that does not exist in the revision grammar either."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S48",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T07:08Z",
+    "one_line": "THE DEPLOYED REFRESH FUNCTION CANNOT RESOLVE A TRADING CALENDAR AT ALL -- its served zip carries four members and trading_calendar.py is not one of them -- so resolve_calendar() returns None, missed_business_dates() returns None, and every fire that HAS a prior manifest can only answer CALENDAR_UNAVAILABLE. Fixing the missing manifest write (W2-S45) does not reach this: it is the second half of the same dead detector.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "expiry.resolve_calendar's docstring: 'The trading calendar, or None. NEVER an approximation ... imported lazily and by NAME so this module can be read, imported and unit-tested in an environment that has no pandas_market_calendars -- which includes the Lambda runtime.' CLAUDE.md: 'One frontier: lib/trading_calendar.py'. The face's arm (c) requires a MISSED-trigger verdict on the real path, and refresh_firm reaches it only through missed_business_dates.",
+    "world_is": "MEASURED ON THE SERVED ARTIFACT, not on the declaration, because those are different claims. `aws lambda get-function --function-name irpt-directory-refresh` -> Code.Location downloaded and listed: FOUR members, errors.py / expiry.py / handler.py / refresh.py, and NO trading_calendar.py. lambda-source-map.json declares the same four. So `import trading_calendar` inside resolve_calendar (expiry.py:116-128) raises and the except returns None -- deliberately, and honestly, but the consequence is that the deployed function has no calendar. THE CHAIN: resolve_calendar(None) -> None; missed_business_dates(...) -> None; refresh_firm's first branch then returns CALENDAR_UNAVAILABLE for any fire that has a last_manifest_as_of. Today that branch is unreachable for a second reason (W2-S45: nothing is ever persisted, so last_manifest_as_of is always None and the branch is skipped entirely) -- which is why the estate has never seen CALENDAR_UNAVAILABLE either. MEASURED AGAIN AFTER FIXING W2-S45 IN THE TREE: an offline probe with a fake S3 and a controlled clock ran three fires; fire 2 still read `previous: None` after fire 1 had written its manifest, because last_manifest() resolves the calendar FIRST and returns before touching S3. The two gaps mask each other and neither is visible from the other's side.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "zipfile listing of the SERVED irpt-directory-refresh artifact (downloaded from its own Code.Location) -> 4 members, trading_calendar absent",
+        "infra/aws/lambda/ci/lambda-source-map.json, irpt-directory-refresh.files -> ['refresh.py','expiry.py','handler.py','errors.py']",
+        "infra/aws/lambda/investor-reporting/directory/expiry.py:116-128 -- resolve_calendar returns None when the import fails",
+        "infra/aws/lambda/investor-reporting/directory/refresh.py:144-160 -- missed_business_dates returns None when the calendar is unresolved; refresh_firm:177-190 turns that into CALENDAR_UNAVAILABLE",
+        "offline probe with a fake S3 at this worktree: fire 1 wrote _refresh/2026-09-10/manifest.json, fire 2 still read previous=None"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "IN LANE AND THIS ORDER FIXES IT, by the same distinction amendment H3 drew for ids.py: declaring trading_calendar.py as a packaged member of this function RESOLVED FROM lib/trading_calendar.py is a DISTRIBUTION, not a second definition, and lambda-source-map.json is in this order's <paths>. A FILE COPY into directory/ would be a second copy of the estate's ONE frontier and is refused. NOT a defect of IB-s-4: expiry.py's lazy-by-name import with an honest None is the right shape for a module that must be unit-testable without pandas_market_calendars, and round 1 could not have seen this because the branch it feeds was unreachable for the OTHER reason. THE PAIR IS THE POINT: W2-S45 (no memory) and this row (no calendar) each make the missed-trigger detector dead, and fixing either alone leaves it dead -- which is exactly why a green arm on one of them would have been a false green."
   }
 ]
 ```
