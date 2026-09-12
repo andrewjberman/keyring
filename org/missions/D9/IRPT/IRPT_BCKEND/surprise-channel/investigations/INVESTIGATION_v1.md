@@ -4468,6 +4468,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "FILED BECAUSE IT IS A PREMISE OF THE ORDER THAT DID NOT HOLD, not because it cost anything -- it cost one copy. It is worth a row for the NEXT worker: a worktree cut for a cell whose deliverable includes a terraform apply needs this binary placed AFTER the worktree is created, because `git worktree add` cannot carry a gitignored file, and the order's own bound makes the obvious fallback (PATH terraform) refused. The substitute is refused for a real reason -- a different terraform version re-pins remote state -- so the right repair is a byte-identical copy with the hashes printed, which is what this row records."
+ },
+ {
+  "id": "IRPT_BCKEND-W2-S53",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+  "surfaced_at": "2026-09-12T09:20Z",
+  "one_line": "THE PREFLIGHT THIS ORDER NAMES READS 'statements: 0' FOR A ROLE THAT HOLDS SEVEN. `comp-iam service irpt-directory-refresh` prints statements: 0 for BOTH irpt-directory-refresh-role and irpt-directory-refresh-scheduler-role, while the APPLIED plane (aws iam get-role-policy) returns 7 and 1. A zero from a preflight is the most dangerous number a tool can print, because a reader treats it as 'nothing to check'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IB-rt-6 <preflight>: 'this cell's change to irpt-directory-refresh is re-graded by the assignee at Phase 1 by `comp-iam service irpt-directory-refresh` and at Phase 2 by `comp-iam gaps` -- both recorded in the instance. BLIND SPOT: DESIRED plane only; a GRANTED-BROAD wildcard cannot be falsified by a resource check.' The declared blind spot is about PLANE. This is not a plane problem: the DESIRED plane -- the Terraform this worker wrote and committed -- carries the statements, and the tool still reads zero.",
+  "world_is": "MEASURED, BOTH PLANES, SAME ROLE, SAME MINUTE. `comp-iam service irpt-directory-refresh` -> 'SERVICE: irpt-directory-refresh-role [iam-role] ... tf_resource: irpt_directory_refresh, source: infra/aws/terraform/investor-reporting/directory/schedule.tf, statements: 0' and the same for irpt-directory-refresh-scheduler-role. `aws iam get-role-policy --role-name irpt-directory-refresh-role --policy-name irpt-directory-refresh-policy` -> SEVEN statements (ReadFirmDirectoryPrefixOnly, WriteRefreshManifestsOnly, ListExactlyWhatItMayAlreadyRead, OwnLogStreamOnly, DispatchTheDirectoryBuildToOneRunnerOnly, StartThatRunnerNeverStopIt, ReadBackTheCommandsThisFunctionSent). The Terraform declaring all seven is committed at 9696f637a0 in the file comp-iam itself names as the source. THE TOOL DOES DECLARE A PARSER LIMIT IN THE SAME RUN, and it is the likely mechanism rather than a guess this row asserts: `comp-iam gaps` prints 'policy blocks attached 389; NOT ATTACHED 26 (a role ref this parser cannot resolve)' and adds, in its own voice, 'statements comp-iam has NEVER SEEN. Its verdicts are computed WITHOUT them, so a role may hold a grant this tool cannot find. NOT a plane limitation -- a parser limitation, and it is stated rather than swallowed.' The `aws_iam_role_policy` in this root sets `role = aws_iam_role.irpt_directory_refresh.id` and its `policy` comes from a `data.aws_iam_policy_document`, which is a two-hop reference. CORROBORATION FROM THE SAME RUN: `comp-iam gaps` reports 'Total: 12 missing | 291 deny-present | 1 coverage-unknown | 2 resource-mismatch across 31 service(s)' and irpt-directory-refresh appears in NONE of them -- which is exactly what a role the parser cannot see would look like, and is INDISTINGUISHABLE from a role with no gaps.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "timeout 400 comp-iam service irpt-directory-refresh -> statements: 0 for both roles",
+    "aws iam get-role-policy --role-name irpt-directory-refresh-role --policy-name irpt-directory-refresh-policy -> 7 statements, listed by Sid",
+    "infra/aws/terraform/investor-reporting/directory/schedule.tf @9696f637a0 -- the seven statements in data.aws_iam_policy_document.irpt_directory_refresh, attached by aws_iam_role_policy.irpt_directory_refresh",
+    "comp-iam gaps, same session: 'policy blocks attached 389; NOT ATTACHED 26 (a role ref this parser cannot resolve)' and 'a role may hold a grant this tool cannot find'",
+    "comp-iam gaps totals: 12 missing / 291 deny-present / 1 coverage-unknown / 2 resource-mismatch across 31 services, none of them irpt-directory-refresh"
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "NOT FIXED HERE AND NOT MINE TO FIX -- comp-iam is outside this order's <paths> and repairing a neighbouring tool is expressly refused. RECORDED BECAUSE OF WHAT THE ZERO WOULD DO TO THE NEXT READER: this cell's whole IAM change is four new statements on this exact role, and the preflight the order names to grade that change reports the role as having none. A reviewer who took the preflight at face value would conclude there was nothing to review. The instance records the preflight's output VERBATIM with the applied-plane measurement BESIDE it, never instead of it. THE GENERAL SHAPE IS THE CATCHABLE PART: a census tool that cannot resolve a reference emits ZERO, and zero is the same symbol it emits for 'nothing there'. `comp-iam attach-census` is the tool's own named remedy for listing the 26 blocks it never saw, and running it against this root would say whether this role is one of them -- one read, and it is the read whoever owns comp-iam should take before anyone else quotes a comp-iam zero about an IRPT role."
  }
 ]
 ```
