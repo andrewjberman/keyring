@@ -2117,6 +2117,54 @@
     "spec_asserts": "CLAUDE.md Rule 14b: 'an APPEND-ONLY SHARED file -> DO NOT ISOLATE; take the shared index's seconds-long race', with the worker worktree as the standing exception. TO BOUNDS: the channel file is in this order's <paths> and rows are appended to it.",
     "world_is": "Appending to a channel by reading the CHECKED-OUT file and writing it back is the obvious implementation and it silently rewrites the whole blob on this box. The guard that would have caught it is not a gate but a habit: READ THE DIFFSTAT OF A COMMIT WHOSE INTENT IS AN APPEND, and if the changed-line count is not roughly the number of lines you appended, the line endings moved. Stated as a rule because the two existing memory entries name the adjacent traps (a worktree sha256 hashes the checkout; Path.write_text re-introduces CRLF) and neither names the one that bites here, which is that the damage lands on a SHARED APPEND-ONLY surface and is discovered by the next agent to drain rather than by the one that caused it. ARMED for the next appender, not for this branch: repaired here and verified, but nothing prevents the identical move next time. disarm_owner 2.0.0_SA_COO because the drain is where the harm lands and the COO runs it; the cheap mechanical fix is for the row-gate to refuse a channel commit whose deletion count on an append-only file is non-zero.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T10:25:58Z",
+    "id": "IRPT_FNTEND-S47",
+    "one_line": "MY OWN CHANNEL UNION RESOLVER RE-RENDERS EVERY ROW'S LINE ENDING, and I only looked because 0.9.0_WK_IRPT_FNTEND~1 disclosed the same class in its own commit (W1-S48: a 140-line append whose diffstat read 3618 because a read-then-write committed the CRLF checkout of an LF blob). The script I have used at EVERY drain conflict this round parses the whole array and re-emits it with ONE detected EOL, so a conflict resolve rewrites the line ending of every pre-existing row while leaving their CONTENT byte-identical. The channel is now uniformly CRLF on both CLOUD and every branch, consistent and parsing at 91 unique rows -- so nothing is broken, and the mechanism is still wrong.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The resolver's own code: it parses stages 1/2/3, computes the union, then emits `'[' + EOL + (',' + EOL).join(render(r) for r in merged) + EOL + ']'` -- every row re-rendered through one `render()` with one EOL, rather than the surviving rows' bytes being carried through untouched.",
+        "Measured now, both sides: CLOUD HEAD blob 1935 CR / 1935 lines; the FE-s-21 branch blob 2004 CR / 2004 lines. CR count EQUALS line count on both, i.e. fully CRLF -- whereas the file measured 349 CR against a far larger line count early in this session, when it was mixed.",
+        "WHY IT NEVER TRIPPED A GATE, which is the part worth keeping: the row gate checks fields, the corpus gate checks the baseline, and a JSON parse checks structure. All three are CONTENT checks and all three pass over a pure line-ending rewrite. W1-S48 records the worker hitting the identical blind spot from the other direction.",
+        "The append-only rule is not violated in substance -- no row's text changed, none was removed, ids stay unique at 91 -- but 'never edit an existing row' is weaker than it reads if the resolver rewrites every row's bytes on every conflict.",
+        "NOT REPAIRED MID-ROUND, deliberately: the file is now self-consistent and normalising it again would be a second whole-file rewrite to fix the consequences of the first. The fix belongs to the resolver, not to the artifact."
+      ]
+    },
+    "spec_asserts": "CLAUDE.md and the spine: the surprise channel is APPEND-ONLY and an existing row is never edited. Every drain-conflict resolve this round reported 'UNION OK ... all unique' and I treated that as the whole of the check.",
+    "world_is": "'All unique' certifies the SET; it says nothing about the BYTES. I verified the union's membership at every drain and never once read the diffstat of the resolve itself -- which is exactly the check that would have shown it, and exactly the check the worker used to catch its own instance. THE FIX, for the resolver rather than the file: splice the surviving rows' ORIGINAL BYTES and append only the new rows, as the append path already does, instead of re-rendering the array. And the habit that generalises past this script: WHEN AN ACT'S INTENT IS AN APPEND, READ THE DIFFSTAT -- an append whose diff touches lines it did not write is doing something else. Disarmed when the resolver splices.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T10:25:58Z",
+    "id": "IRPT_FNTEND-S48",
+    "one_line": "ROUND 3 IS DRAINED: all SIX cells COMPLETE (FE-s-19, 20, 21, 22, 23, 24), every worktree pair torn down, zero branches in either repo, 91 rows. FE-s-18 remains CARRIED at pending and is the round's one open order. DEV's true state is 454 pass / 1 skip / 1 FAIL -- and the count is PORT-CONDITIONAL (row W1-S45): with no dev server on 5181 the same commit reads 3 fail, because FE-s-19's two browser criteria hard-code that port and a down server renders as a code defect rather than as an absent precondition. The single real failure is F18-AC3's capture collision, which needs a round-4 fixture cell (S44).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer's measurement on the MAIN checkout at portal DEV 237a9027, both ways at one commit: no server -> 452 pass / 1 skip / 3 fail, the extra two being F19-AC4 and F19-AC5; server on 5181 -> 454 pass / 1 skip / 1 fail. Same bytes, different verdict.",
+        "Status census at HEAD: FE-s-19/20/21/22/23/24 all `complete`; FE-s-18 `pending`. `git branch --list 'wk-irpt_fntend*'` empty in BOTH repos; `/c/tmp/wk-irpt_fntend-3-*` absent; portal node_modules intact at 308 entries.",
+        "Drain hashes: portal DEV d2962a69 -> 774c595b -> f0443ba8 -> cc6b0592 -> 39c6ff22 -> baf230eb -> 83afdcc8 -> 237a9027; workspace CLOUD through 40cb397602, a84a36dd4d, 66b7f9d298, 943017345d, 44813db40f, 0367b9208c.",
+        "Gitlink hygiene across every round-3 branch: `git show --format= --name-only <c> -- portal` EMPTY for every workspace commit on all six. Push state measured at close: `git ls-remote` returns 0 refs for every branch; origin/CLOUD 6ced337f86; workspace gitlink still e85f6eb84f, NOT bumped.",
+        "The one failure's identity confirmed by name in three independent runs (FE-s-20's, FE-s-22's and the issuer's): `F18-AC3 ... UNIQUE HASHES -- no two entries share a hash`."
+      ]
+    },
+    "spec_asserts": "Decomposition v0.3 R3.1: six cells, and FE-s-18 'is re-run, never re-issued, once FE-s-19 and FE-s-20 are terminal and drained'. 1.0.0_SA_CTO ruling 1: FE-s-18 non-terminal, carried, both criteria untouched.",
+    "world_is": "Every cell round 3 cut is done and the round still cannot close, for a reason that is now measured rather than predicted: FE-s-18's re-run condition was written about the SEAM and its blocker is the FIXTURES. \u26d4 AND THE PORT-CONDITIONALITY IS THE FINDING THE CTO MOST NEEDS, because it makes the round's own deliverable read differently to different readers: a numeric fail bar on this suite is only meaningful beside a named dev server and port, a worker assigned any other slot's port cannot pass F19-AC4/AC5 at all, and a down server produces a FAILURE that looks exactly like a regression -- I made that mistake myself once this round and nearly reported it. Round 4 owes: one fixture cell for F18-AC3; a precondition declaration on the two browser criteria so an absent server reads as SKIPPED or BLOCKED rather than FAILED; and the checker limb's opt-in made mandatory at the L6 gate (S38).",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
