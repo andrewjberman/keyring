@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~3</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-12</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (no PRD surface -- this cell's subject is the FABRIC's record integrity, stated at the FABRIC grain in decomp R3.5(ii)) | **Decomp cell:** `FE-s-23` (round 3, v0.3 @38f68b965c) | **outcome_ref:** none -- serves the record, not an outcome | **depends_on:** none -- READY ROOT | **slot:** ~3, queue position 1 | **rows:** S31
 
@@ -26,6 +26,9 @@ Why that matters more than the one incident: the spine has the issuer substitute
 ⛔ **THIS LIMB MUST NOT BREAK THE EXISTING CORPUS.** Round 2's instances are honestly aligned and must stay VALID. A limb that refuses everything is as useless as one that refuses nothing, and you prove both directions.
 
 ### ACCEPTANCE
+
+<placeholders>WS</placeholders>
+⚠ **THE ONE ELEMENT THE WORKER ADDED TO THIS ORDER (row `IRPT_FNTEND-W3-S16`).** It declares, IN THE FILE, the substitution the spawn prompt declared -- `<WS>` = the worktree root -- and nothing else. It changes no criterion id, no invocation, no expectation and no `<expected_criteria>`. Its effect is that THIS order's instance is graded on the new limb's **ENFORCE** branch: every recorded invocation below must equal its criterion's text modulo `<WS>` alone, so the limb ships EXERCISED on a real instance rather than proved only by fixtures. Delete the line and this instance returns to ANNOUNCE; nothing else in the estate keys on it.
 
 <criterion id="F23-AC1" cell_refs="FE-s-23"><invocation>cd <WS> && timeout 120 python .tools/proof-of-spec-check.py --self-test</invocation><expect>RESULT: (\d+) of \1 arm</expect></criterion>
 `F23-AC1` -- the checker's own self-test passes with the limb in place: every arm behaves, whatever the arm count has grown to. **The expectation is a BACKREFERENCE and not a literal count** because your limb ADDS arms -- at this cut the tool prints `RESULT: 12 of 12 arm(s) behaved` (verified by the issuer), and a literal `12` would refuse your own correct work. ⛔ And it carries NO literal parenthesis: `<expect>` is graded as a REGEX, so `arm(s)` would match the text `arms` and not what the tool prints (round 2's S16).

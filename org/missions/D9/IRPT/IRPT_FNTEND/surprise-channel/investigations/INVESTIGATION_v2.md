@@ -1320,6 +1320,93 @@
     "spec_asserts": "IRPT_FNTEND-S33 asserts 'producer-fixtures.test.ts's STALE PINS arm, 3 schema pins stale against 58e387b454'. CLAUDE.md Rule 22: COVERAGE -- print the denominator.",
     "world_is": "One pin, not three. The irony is exact and worth keeping rather than smoothing away: S33's own recommendation is that a consumer should pin by CONTENT and print its denominator, and I wrote that row after reading a count off a diff header instead of off the denominator the test printed one line below. The corrected figure makes the case for S33 STRONGER, not weaker -- ONE non-breaking producer edit to ONE schema file reds the whole consumer suite, which is a cleaner demonstration of byte-pinning's fragility than three would have been. INERT: nothing acts on the count, the round-3 input is unchanged, and no grade turns on it.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S13",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-12T06:56:43Z",
+    "one_line": "TO-FE-s-23's stated premise that round 2's seven instances are HONESTLY ALIGNED is FALSE: 2 of the 7 carry a recorded invocation that is not its criterion's invocation modulo placeholder expansion and end-whitespace, and one of them is a real bound change. FE-s-18 F18-AC17 recorded `timeout 180` where the governing task order's criterion says `timeout 120` -- the S31 class itself, in the very instance S31 was raised about, surviving the record fix. FE-s-12 F12-AC5 recorded the criterion's command with the CLOSING DOUBLE QUOTE DROPPED, so the string the schema calls 're-runnable by a verifier' is an unbalanced shell command. Neither is edited and neither is normalised away: both are PRINTED BY NAME with both strings by the new limb's census arm (`ROUND-2 STRICT DIVERGENCE CENSUS: 2 row(s) across 2 of 7 instance(s)`), and both instances still read VALID because no IRPT_FNTEND task order declares <placeholders> (see W3-S14). F23-AC4's bar `ROUND-2 CORPUS STILL VALID: 7 of 7` is met as a statement about the VERDICT; it is NOT a statement that the seven are aligned, and the battery prints the census immediately beneath it so the number cannot be read wider than it is.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-23 WORKER FACE, THE CELL: 'Round 2's instances are honestly aligned and must stay VALID'; and F23-AC4: 'All seven of round 2's committed instances (FE-s-12, 13, 14, 15, 16, 17, 18) still validate with the limb active.'",
+    "world_is": "5 of the 7 are aligned under the rule the same cell mandates (normalisation limited to declared placeholder expansion and whitespace at the ends). The other 2 diverge. FE-s-18 F18-AC17 -- TO-CRITERION: 'cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting' | INSTANCE-RECORD: 'cd /c/tmp/wk-irpt_fntend-2-7-fe-s-18/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting'. FE-s-12 F12-AC5 -- TO-CRITERION: 'cd <WS>/portal && echo \"SHIMS-EDITED: $(git diff --name-only edab15b5 -- src/pages/InvestorReporting/__tests__/fe-s-1 src/pages/InvestorReporting/__tests__/fe-s-3/ambient-shims.d.ts src/pages/InvestorReporting/__tests__/fe-s-7/ambient-shims.d.ts tsconfig.json | wc -l)\"' | INSTANCE-RECORD: 'cd /c/tmp/wk-irpt_fntend-2-1-fe-s-12/portal && echo \"SHIMS-EDITED: $(git diff --name-only edab15b5 -- src/pages/InvestorReporting/__tests__/fe-s-1 src/pages/InvestorReporting/__tests__/fe-s-3/ambient-shims.d.ts src/pages/InvestorReporting/__tests__/fe-s-7/ambient-shims.d.ts tsconfig.json | wc -l)'.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`timeout 300 python .tools/tests/test_invocation_limb.py` at this worktree prints `ROUND-2 CORPUS STILL VALID: 7 of 7` and, beneath it, `ROUND-2 STRICT DIVERGENCE CENSUS: 2 row(s) across 2 of 7 instance(s)` with both strings for each of F12-AC5 and F18-AC17. rc=0, 17 of 17 arms as expected.",
+        "Both instances are committed bytes read at CLOUD@9762d5b8a3: org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-12.dev-green-typecheck.proof_of_spec.json and IRPT_FNTEND.TO-FE-s-18.evidence-mobile-captures.proof_of_spec.json, against org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-12.dev-green-typecheck.md and IRPT_FNTEND.TO-FE-s-18.evidence-mobile-captures.md at the same commit.",
+        "DISCRIMINATION: the same comparison over the other five round-2 cells returns 0 divergences (FE-s-13 10 comparable, FE-s-14 16, FE-s-15 13, FE-s-16 9, FE-s-17 8), so the finding is not an artifact of a rule that refuses everything -- it separates 5 clean instances from 2.",
+        "NOT REMEDIATED BY ME AND DELIBERATELY SO: the task order's BOUNDS say 'NEVER EDIT AN EXISTING PROOF INSTANCE ... never a reason to edit the instance or to widen the normalisation until it passes.' The instances are untouched and the normalisation is exactly the two operations the cell names."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S14",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-12T06:56:43Z",
+    "one_line": "The cell's two constraints -- 'A mismatch is a VIOLATION' and 'THIS LIMB MUST NOT BREAK THE EXISTING CORPUS' -- are JOINTLY UNSATISFIABLE at a default-ENFORCE setting, measured before the limb was written: over the WHOLE repo, 294 committed proof-of-spec instances, 275 of them with a governing task order under the tree root, 1481 acceptance rows, 874 comparable, and 318 of those 874 DIVERGE under the cell's own normalisation. The dominant shapes are HONEST (a worker adding the `timeout 120` bound the order's BOUNDS section demanded while its <invocation> omitted it; a record eliding a long path to `.../x.txt`), so refusing by default would retro-invalidate work across every project in the estate and refuse IN-FLIGHT completion flips in projects this cell does not own. ENFORCE is therefore OPT-IN, on a DECLARATION THE TASK ORDER MAKES -- <placeholders>WS, PORT</placeholders> -- exactly the shape of the existing <owned_cells> opt-in (CTO 66893); absent it the limb ANNOUNCES the identical diagnostic with both strings and refuses nothing. Census before choosing the token: 0 of 2554 task-order files carry <placeholders>, so nothing in the estate is retro-enforced by construction. NAMED WEAKNESS: the opt-in is written by the ISSUER, and the issuer is the party whose prompt-only correction this limb exists to catch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-23 WORKER FACE: 'A mismatch is a VIOLATION that names BOTH strings and the criterion id' AND the same section's stop: 'THIS LIMB MUST NOT BREAK THE EXISTING CORPUS ... A limb that refuses everything is as useless as one that refuses nothing.' The cell specifies the NORMALISATION exactly and specifies no ENFORCE/ANNOUNCE scope at all.",
+    "world_is": "Under the specified normalisation, unconditional enforcement refuses 318 of 874 comparable rows across the committed corpus, so the two clauses cannot both hold at the default. The axis the cell left unspecified -- enforcement SCOPE -- is where the conflict was resolved, and the NORMALISATION was not touched: both round-2 divergences (W3-S13) are still detected and printed by name. What remains open, and is not this worker's to decide: whether <placeholders> should be MANDATORY on every task order at the L6 gate, which is the only thing that makes refusal unconditional. Until then a future issuer repeating S31 gets an ANNOUNCE frame and no refusal.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "UNSCOPED corpus read before the design was chosen, at CLOUD@9762d5b8a3: 294 instance files matched by org/**/*.proof_of_spec.json; governing TO tree=275 flat=18 unresolved=1; rows total=1481 comparable=874 match=556 MISMATCH=318 no-criterion=10 no-invocation=597. The denominator certifies the SWEEP, not the SET: 'comparable' excludes rows whose criterion carries no <invocation> (judgment/prose) and rows naming an id the task order does not carry.",
+        "Token census for the opt-in carrier: 2554 task-order files scanned under org/**/task-orders/ and org/**/task_orders/, 0 carrying a <placeholders> element. Nothing existing is re-graded.",
+        "Both branches are exercised red-first in .tools/tests/test_invocation_limb.py: 'DIVERGENCE CAUGHT: 4 of 4' (ENFORCE refuses a changed flag, a changed path, an added query parameter and a changed quoted argument, each naming both strings) and the anti-brick arm '3 of 3' proving the tolerated pairs are tolerated BECAUSE of the declaration and not by a limb that accepts whatever it is handed.",
+        "ARMED, not INERT: left alone, an issuer who corrects the spawn prompt and not the file on a task order carrying no <placeholders> produces a frame line and no refusal -- the S31 class can recur, detected but not blocked. Disarm is out of this order's <paths> (it is an L6-gate or issuance-template change) and is named here rather than taken."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S15",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-12T06:56:43Z",
+    "one_line": "CORRECTION to TO-FE-s-23's own <preflight> instrument fact (2) and to the same claim repeated in the F23-AC6 clause and in the spawn message: `.tools/proof-of-spec-check.py --help` does NOT return rc=0. It is read as a file path and prints `READ-ERROR (rc=2): [Errno 2] No such file or directory: '--help'` and RETURNS 2, measured. The order states it 'RETURNS rc=0 while doing so'. The re-cut of F23-AC6 onto --self-test stands on its own (there is genuinely no --help), and the order's conclusion that no criterion should key on rc alone is still good practice -- but the stated reason for it is not true of this tool, and a wrong instrument fact in a preflight is the kind of thing a successor cites.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-23 <preflight> instrument line: '`--help` DOES NOT EXIST -- it is read as a file path, prints `READ-ERROR (rc=2)` AND RETURNS rc=0 ... An instrument that returns 0 on a read error is why no criterion in this order keys on rc alone.' The F23-AC6 clause repeats it: 'and returning rc=0 while doing so'.",
+    "world_is": "The tool returns 2. main() returns 2 on the READ-ERROR branch and the __main__ guard passes it through sys.exit(main()); the only rc=1-vs-rc=2 hazard the file documents is an UNCAUGHT exception, which that guard already closes. Measured at CLOUD@9762d5b8a3 before this worker's edits touched main().",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`timeout 60 python .tools/proof-of-spec-check.py --help` in this worktree: stdout tail is \"READ-ERROR (rc=2): [Errno 2] No such file or directory: '--help'\" and the shell reports rc=2. The exit code was read from $? on its own line, not inferred from the printed text.",
+        ".tools/proof-of-spec-check.py main(): the READ-ERROR branch executes `return 2`, and the __main__ guard is `sys.exit(main())`, so the printed rc and the process rc agree here.",
+        "NO CRITERION IN THIS ORDER WAS AFFECTED: F23-AC6 was already re-cut onto --self-test, and no criterion in the order keys on rc alone either way. Filed because the order explicitly instructs 'Record the rc=0-on-error behaviour as a surprise row if you touch that code path' and main() is the function this worker edited."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S16",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-12T06:56:43Z",
+    "one_line": "DISCLOSED ACT: this worker added ONE element -- <placeholders>WS</placeholders> -- to its OWN task order file, IRPT_FNTEND.TO-FE-s-23, which the order's BOUNDS grant covers ('the <paths> block below, plus ... and this order's own file') but whose only NAMED edit is the <status> flip. Reason: without it the new limb would ship APPLIED but never EXERCISED on a real instance anywhere in the estate -- every existing task order predates the declaration, so the ENFORCE branch would be proved only by fixtures. With it, THIS order's own proof-of-spec instance is the first instance in the estate graded under ENFORCE, and every one of its recorded invocations must equal its criterion's text modulo <WS>. It changes no criterion id, no invocation, no expectation and no expected_criteria; it records in the FILE the substitution the SPAWN PROMPT declared ('<WS> = /c/tmp/wk-irpt_fntend-3-3-fe-s-23'), which is precisely the prompt-to-record move this cell exists to make unnecessary.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-23 BOUNDS, Grant: 'The <paths> block below, plus org/missions/D9/IRPT/IRPT_FNTEND/deliverables/<your serial>/ and this order's own file.' The order names no edit to its own file other than the <status> flip to complete.",
+    "world_is": "One line was added to that file inside the granted surface. The worker judges the FORM of this as an act the order did not say to take, which is the row trigger; it judges no significance. If 1.0.0_SA_CTO, 2.0.0_SA_COO~F or 3.0.0_SA_CVO reads the declaration as outside a worker's authority, removing the single line returns this instance to the ANNOUNCE branch and changes no other behaviour of the limb, no other file, and no other instance in the estate.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The added element is the whole diff to the order beyond the <status> flip: `<placeholders>WS</placeholders>` in org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-23.checker-invocation-limb.md.",
+        "EXERCISED, not merely APPLIED: this order's instance validates with the frame line `invocation-frame: ... placeholders DECLARED ['WS'] -> ENFORCE`, which no other instance in the estate can print today (0 of 2554 task orders carry the element -- W3-S14).",
+        "REVERSIBILITY IS THE CONTROL: deleting the one line flips this instance to ANNOUNCE. Nothing else keys on it, so the act is bounded to this order."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
