@@ -1,4 +1,4 @@
-# IRPT_FNTEND -- L5 decomposition -- rounds 1, 2 and 3 -- v0.3
+# IRPT_FNTEND -- L5 decomposition -- rounds 1 through 4 -- v0.4
 
 ```json
 {
@@ -6,7 +6,7 @@
  "directive": "D9",
  "fabric": "laptop",
  "round": 2,
- "decomp_version": "v0.3",
+ "decomp_version": "v0.4",
  "round_1_header_retained_below": true,
  "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@62301f71e0",
  "prd_version": "v0.4",
@@ -944,3 +944,176 @@ Under IRPT_BCKEND v0.14 `business_date` is state-conditional: REQUIRED on the fi
 ⚠ **ROUND 2 PRODUCED NO CVO SLUG.** `surprise-channel/remediations/` holds `REMEDIATION_v1.md` only, and `3.0.0_SA_CVO` states "No L9 grade, no slug: IB-rt-2 open, FE-s-18 non-terminal." The spine's L10 is the CVO's slug to the CTO; what actually happened is that the CTO answered the COO's DRAIN-END READ and issued the round-2 analysis from it. `ADJUDICATION_v2.md` exists and the CVO's watermark is current (v2 at 54 of 57), so the rows ARE compiled -- they are not ADJUDICATED, and no round-2 judgment criterion (`F15-AC12`, `F16-AC10`, `F18-AC18`) has been graded.
 
 **So round 3 is cut on the CTO's analysis, not on an adjudicated slug, and its cells inherit no L9 disposition.** This is legible and was ruled by the CTO; it is recorded here rather than in prose elsewhere because the next reader of this rectangle needs to know that the row set behind it is compiled and un-graded. The L9 grades and the slug remain owed for round 2 and are `3.0.0_SA_CVO`'s; they are not a precondition of this issuance and no cell here waits on them.
+
+---
+
+# ROUND 4 -- v0.4 -- the recut on the CTO's ROUND-3 ANALYSIS
+
+```json
+{
+ "round": 4,
+ "decomp_version": "v0.4",
+ "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@d1479bc5f0",
+ "prd_version": "v0.6 -- UNCHANGED; no round-4 ruling touches the PRD, so the L4-R halves stay closed",
+ "analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND3_20260912.md@b453306a65",
+ "slug_ref": "ABSENT -- rounds 2 and 3 both produced NO REMEDIATION; the CTO answered the COO's drain-end read each time. See R4.8.",
+ "round3_cells": "FE-s-19..FE-s-24 ALL COMPLETE and drained; FE-s-18 NON-TERMINAL and CARRIED for a SECOND consecutive round (ruling B)",
+ "cells": 4,
+ "cell_id_shape": "FE-s-<n> continuing from 25",
+ "code_repo": "portal (gitlink in the workspace; branch DEV @237a9027)",
+ "record_repo": "workspace (branch CLOUD @c968d44558)",
+ "producer_pins": {
+  "contract": "docs/contracts/investor-reporting/v1/@58e387b454 -- RECORDED AS DATA, NEVER AS A BAR (round-3 ruling 3, and the consumer's byte pin is retired)",
+  "backend_prd": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d (v0.14) -- SOUND AS PRODUCER LAW and NOT re-cut (ruling A)"
+ }
+}
+```
+
+Round 3 fixed the seam and proved it on the path that could not fake it. Round 4 is what round 3's own evidence exposed: **the v0.14 amendment is sound as producer law and its semantics do not survive the consumer boundary** (`3.0.0_SA_CVO` C-S50, four independent measurements), plus the three mechanism rulings round 3 earned. Rounds 1-3 above are unchanged and keep their statuses; round-4 cells are additive.
+
+## R4.1 THE RECTANGLE -- four cells, seven rulings
+
+| cell | ruling | write surface (portal unless stated) | serves | rows | wave | slot |
+|---|---|---|---|---|---|---|
+| `FE-s-25` | A the consumer boundary | `contracts/adapt.ts`; `contracts/index.ts`; `state/status.ts`; `__tests__/fe-s-13/gen-wire.ts`; `contracts/wire/`; `__tests__/fe-s-25/` | FWD-1, FWD-5, FWD-6 | W1-S26, W1-S41, W1-S42, W1-S43, C-S50 | A | ~1 |
+| `FE-s-26` | B the fixture cell | `fixtures/smoke/` (the three Holdings maps); `__tests__/fe-s-26/` | FWD-3, FWD-5 | S44, W1-S33 (residual), C-S46 | A | ~2 |
+| `FE-s-27` | C environmental preconditions | `__tests__/fe-s-19/`; `__tests__/fe-s-27/` | the evidence plane | W1-S45, S48 | A | ~3 |
+| `FE-s-28` | D the opt-in becomes mandatory | **workspace** `.tools/to-pipeline-gate.py`; `.tools/tests/` | the fabric's record integrity | S38, S31, S43 | A | ~4 |
+
+**CARRIED, NOT RE-CUT, FOR THE SECOND ROUND:** `FE-s-18` stays OPEN at `<status>pending</status>` with `F18-AC3` and `F18-AC17` UNTOUCHED (ruling B: "Not amended, not re-scoped, not passed with a caveat"). It is RE-RUN once `FE-s-26` is terminal and drained. **No round-4 cell writes `__tests__/fe-s-18/` or the deliverables folder it captures into.**
+
+**RULED ELSEWHERE, DELIBERATELY NOT CELLS HERE:** ruling E (the third limb) is ADOPTED as a BOUND below -- `FE-s-22` already built it and no code change is owed. Ruling F (read the face at the named commit) is a BOUND, not a cell. Ruling G (`W2-S15`, the producer-side byte pin) is **`1.0.0_SA_CTO`'s to route into IRPT_BCKEND and is NOT round 4's** -- it is another project's surface and this seat may not cut into it.
+
+**Coverage by subtraction, three domains.**
+(1) The analysis's rulings (denominator 7) MINUS what covers each: A=FE-s-25; B=FE-s-26 plus the FE-s-18 re-run; C=FE-s-27; D=FE-s-28; E=R4.2 BOUND (no code owed); F=R4.2 BOUND; G=the CTO's, by the ruling = **0 uncovered**.
+(2) C-S50's rows (denominator 4: W1-S26, W1-S41, W1-S42, W1-S43) MINUS FE-s-25's criteria = **0 uncovered**, with W1-S43 first by the ruling.
+(3) The PRD header's outcomes (denominator 8) MINUS those round 4 moves: FWD-1 {25}, FWD-3 {26}, FWD-5 {25,26}, FWD-6 {25} = **4 NOT MOVED AND NAMED** -- FWD-4, FWD-8, FWD-11, FWD-12 were served in rounds 2-3 and wait on the L9 grade, not on a cell.
+
+## R4.2 BOUNDS -- ALL ROUND-4 CELLS (rounds 1-3 bounds stand)
+
+```
+precond    ⛔ RULING C, AND IT BINDS EVERY CRITERION IN THIS ISSUANCE. A criterion with an
+           ENVIRONMENTAL precondition -- a dev server, a port, a network, a browser -- DECLARES it in
+           its own text, and an absent precondition renders SKIPPED or BLOCKED, NEVER FAILED. Measured
+           cause: at ONE commit the suite read 452/1/3 with no server on 5181 and 454/1/1 with one, so
+           a down server rendered as a code defect. ⛔ AND NO CRITERION IN THIS ROUND CARRIES A BARE
+           WHOLE-SUITE `N fail` BAR: if a cell needs one, it names the precondition beside it and
+           prints the failing test NAMES, never a count alone. A count is a property of the
+           ENVIRONMENT as much as of the CUT.
+survives   ⛔ RULING A. A criterion about a contract distinction asserts THE DISTINCTION SURVIVES AT
+           THE VIEW, never that the producer emits it. ADMITTED means the text was reviewed; it does
+           NOT mean the described behaviour exists -- 3.0.0_SA_CVO's C-S50, adopted verbatim by the CTO.
+           `?? null` is REFUSED as a pattern wherever the contract distinguishes ABSENT from null.
+domain     ⛔ RULE 24, as it landed on the CTO in W1-S41: a subtraction's DOMAIN must be the CLAIM's
+           population, and choosing the domain is itself a claim. The producer's nine-state enum and
+           the view's closed `EnvelopeState` are DIFFERENT NINES. Any cell partitioning states names
+           WHICH PLANE it partitions and proves the image lands in the other.
+faceread   ⛔ RULING F. Placeholder substitution is the ONLY edit between this file's worker face and
+           a spawned prompt, anything else lands in the FILE first -- AND an amendment NAMES ITS
+           COMMIT, with the worker reading the face at that commit via `git show <commit>:<path>`
+           beside a POSITIVE CONTROL. An amendment made after a cut is READABLE and NOT CARRIED.
+captures   ⛔ RULING E, third limb: a fixture that does NOT carry the claimed field is a DEFECTIVE
+           FIXTURE, not an admitted collision. Already built by FE-s-22; no code is owed, and any
+           capture set in this round uses it rather than re-deriving it.
+messages   an issuer's continue message carries ACTS and MEASURED FACTS only; an unruled
+           recommendation is omitted or marked NOT BINDING (S32).
+append     ⛔ WHEN AN ACT'S INTENT IS AN APPEND, READ THE DIFFSTAT (S47/W1-S48). A channel append
+           whose diff touches lines it did not write is doing something else; every gate over that
+           file is a CONTENT check and none of them sees a line-ending rewrite. Write the channel
+           with `newline='\n'`.
+refusal    every face instructs its worker to REFUSE a criterion it cannot satisfy as written and
+           report the refusal with its measurement. Every round so far: the refusals were right.
+typecheck  EVERY order carries `cd <WS>/portal && timeout 180 bun run typecheck; echo rc=$?` -> rc=0.
+channel    round-4 rows go to INVESTIGATION_v2.md; READ THE WHOLE PLANE (v1 AND v2) before minting an
+           id -- the gate allocates across both documents and a number named in a face was wrong once
+           (S36). No face in this round names a starting number.
+gitlink    never stage `portal` in the workspace repo. PORTAL IS FROZEN: local DEV commits only.
+```
+
+## R4.3 THE CELLS
+
+### `FE-s-25` -- the consumer boundary: the distinction has to survive arrival
+
+The v0.14 amendment is SOUND as producer law (ruling A) and four independent measurements say its semantics do not reach the view. All four are this cell's, `W1-S43` first:
+
+- **`W1-S43`, the one that bites hardest.** `contracts/adapt.ts:376` reads `const asOf = wire.source_dates.as_of ?? null` inside `adaptStatusEnvelope` (`:375`). The `?? null` COLLAPSES ABSENT AND NULL -- the exact distinction the amendment was written to create, and whose reason the CTO put into the schema's own `$comment`. The contract says ABSENT, never null; the consumer erases the difference on arrival.
+- **`W1-S42`.** The clause governs `business_date`; the age surface computes from `source_dates.as_of` (`adapt.ts:376`) while `state/status.ts:343`'s `sourceDateFact` reads `sourceDates.business_date`. So a READY envelope carrying the REQUIRED `business_date` renders "Source time unknown".
+- **`W1-S41`.** `contracts/adapt.ts:222`'s `STATE_FOR_WIRE` maps the producer's nine onto the view's closed `EnvelopeState` (`contracts/index.ts:68`), and QUEUED/RUNNING collapse onto LOADING -- so a queued job renders the label "Loading" and only `IR-JOB-QUEUED` distinguishes it from a browser that has not answered.
+- **`W1-S26`.** `__tests__/fe-s-13/gen-wire.ts` tests `allOf` BEFORE `type`/`properties`, so regenerating StatusEnvelope at v0.14 emitted `export interface StatusEnvelopeWire unknown` and dropped all seven properties. The CONTRACT is sound and the GENERATOR degrades on a valid conditional.
+
+⛔ **EVERY CRITERION ASSERTS THE DISTINCTION SURVIVES AT THE VIEW.** A test that proves the producer emits the right bytes proves nothing this cell is for.
+
+### `FE-s-26` -- the fixture cell: three maps that can actually differ
+
+`F18-AC3` has failed for two rounds and cannot pass until the three Holdings smoke maps carry DISTINCT `status` members. Measured twice independently (issuer 84 envelopes / 36 maps / 3 with `status`; worker 62/16/3): `fe-s-18-holdings-{observed,target,missing-attribution}.json` read **envelopes=9, with_status=0 EACH**. `status` is the only wire carrier of a state, so under the correct seam those three render identical panels BY THE CONTRACT.
+
+Give each map a `status` that makes its basis visible at the view, using FE-s-22's third limb to prove the set is no longer DEFECTIVE. ⛔ **This cell does NOT re-take a capture and does NOT touch `__tests__/fe-s-18/`** -- FE-s-18 is carried untouched and re-runs itself afterwards.
+
+### `FE-s-27` -- a precondition that is declared, and an absence that is not a failure
+
+At ONE commit: 452/1/3 with no dev server on 5181, 454/1/1 with one. `__tests__/fe-s-19/mounted-from-wire.test.ts` hard-codes `PORT = '5181'` and declares a precondition no runner sees, so a DOWN SERVER RENDERS AS A CODE DEFECT and a worker on any other slot's port cannot pass those two tests at all. The test's own note covers the harmless direction (a down server can never read as a pass) and not the dangerous one.
+
+Make the precondition explicit and make its absence render SKIPPED or BLOCKED, never FAILED; take the port from the environment rather than a literal. ⭐ **The cell's own proof is the two-way measurement**: the same command, at one commit, with and without the precondition.
+
+### `FE-s-28` -- an integrity check the checked party may decline to arm is not an enforcement (WORKSPACE cell)
+
+`FE-s-23` shipped the invocation-comparison limb with ENFORCE gated on a `<placeholders>` declaration in the task order, because at default-ENFORCE the two constraints it was given were arithmetically unsatisfiable (318 divergent rows across 874 comparable). That was the right call at the time and the CTO has now ruled it out (ruling D): **the declaration becomes MANDATORY at the L6 gate**, so an issuance cannot be cut without it. NON-APPLICATION: none -- an opt-in integrity check has no honest scope.
+
+This is the only cell writing the workspace repo and it touches no portal path.
+
+## R4.4 DEPENDENCY EDGES, SLOTS, FAN-OUT
+
+```
+  FE-s-25 <- (none)     READY ROOT   contracts/, state/, gen-wire
+  FE-s-26 <- (none)     READY ROOT   fixtures/smoke/ only
+  FE-s-27 <- (none)     READY ROOT   __tests__/fe-s-19/ only
+  FE-s-28 <- (none)     READY ROOT   workspace .tools/ only
+  FE-s-18 <- FE-s-26    CARRIED, re-run only; NOT part of this issuance
+
+  weakly connected components:  M = 4      ready roots at issuance: R = 4
+  waves by depth:  A={25,26,27,28}   then the FE-s-18 re-run
+  max concurrent width: 4
+
+  ~1 FE-s-25   ~2 FE-s-26   ~3 FE-s-27   ~4 FE-s-28
+```
+
+**Fan-out: `4 of 4 chains, cap 8, reason: four disjoint write surfaces, no shared file in any pair`.** All four are ready roots; nothing carries `blocked`.
+
+## R4.5 RULE 24 RECORD (round 4)
+
+| postulate | how |
+|---|---|
+| (i) MECE | three domains by subtraction in R4.1: rulings 7-7=0; C-S50's rows 4-4=0; outcomes 8-4=4 NOT MOVED AND NAMED. Cells partition by FILE: `contracts/` is FE-s-25's entirely this round (FE-s-20 is terminal); `fixtures/smoke/` is FE-s-26's; `__tests__/fe-s-19/` is FE-s-27's; `.tools/` is FE-s-28's. `__tests__/fe-s-18/` is written by NO cell. |
+| (ii) same grain | (write region, ruling) per cell; FE-s-28 is at the FABRIC grain and is stated as such rather than folded into a portal cell, as FE-s-23 was in round 3. |
+| (iii) intent | one axis: what the contract distinguishes must still be distinguishable at the view, and what a criterion depends on must be declared. FE-s-28's intent is the record's integrity -- a different axis, its own cell. |
+| (iv) state | moves FWD-1/5/6 toward EXERCISABLE on a consumer that preserves the producer's distinctions. Does NOT move: any grade to REALIZED; FWD-4/8/11/12 (served in rounds 2-3, waiting on L9); the producer's contract (ruling A: it STANDS); W2-S15 (the CTO's, ruling G); the portal freeze. |
+
+## R4.6 BATTERY DISPOSITION (round 4)
+
+| lens | disposition | denominator / reason |
+|---|---|---|
+| comp-schedule / comp-iam | DECLARED-NOT-APPLICABLE | no scheduled producer, no IAM-gated resource among these four surfaces |
+| comp-adversary | RUN at L4 on v0.6 (both halves SIGNED, ADMITTED) | carried; PRD unchanged, and ruling A explicitly does NOT re-cut the producer contract |
+| the four defects | RUN by the issuer at the pin | `adaptStatusEnvelope` adapt.ts:375 with `as_of ?? null` at :376; `STATE_FOR_WIRE` adapt.ts:222 against `ENVELOPE_STATES` contracts/index.ts:68; `sourceDateFact` state/status.ts:343 reading `business_date`; the generator at `__tests__/fe-s-13/gen-wire.ts` (comp-find: 1 of 325 files) |
+| the fixture gap | RUN | 84 v1 envelopes across 36 smoke maps, 3 carrying `status`; the three Holdings maps at 0 of 9 each |
+| the precondition | RUN, TWO WAYS AT ONE COMMIT | portal DEV 237a9027: no server 452/1/3, server on 5181 454/1/1. The delta is exactly F19-AC4 and F19-AC5 |
+| tree at the cut | RUN | portal DEV 237a9027 typecheck rc=0; the one real failure is F18-AC3's collision |
+| instrument | RUN, WITH KNOWN DEFECTS NAMED | `ui-smoke.mjs`'s DID-NOT-LAND defect is FIXED (FE-s-22, one line, both arms proven); `--help` does not exist on proof-of-spec-check and returns rc=2 (S36); the checker's own limb is live and ENFORCE is opt-in until FE-s-28 lands |
+
+## R4.7 REFUSES TO ASSUME (round 4)
+
+1. That a signed-off PRD half means the described behaviour exists. It means the TEXT was reviewed -- C-S50, adopted by the CTO against its own signature.
+2. That a subtraction with a printed denominator is over the right domain. W1-S41 is Rule 24 landing on the seat that wrote the ruling.
+3. That a failure count is a property of the code. It is equally a property of the environment (W1-S45).
+4. That an integrity check the checked party may decline to arm is an enforcement (ruling D).
+5. That a fixture which varies a claimed field can exercise it. It must also be REACHABLE at the view (ruling E's third limb).
+6. That "the file is authority" identifies a file. It does not name WHICH commit (ruling F).
+7. That a gate over a file sees everything about that file. Three gates over the channel are all CONTENT checks and none saw a whole-file line-ending rewrite (S47).
+
+## R4.8 HOLDS
+
+**None blocking.** Two deviations recorded rather than buried, both unchanged from round 3 and now in their second and third rounds:
+
+⚠ **NO CVO SLUG HAS BEEN CUT FOR ROUNDS 2 OR 3.** `surprise-channel/remediations/` holds `REMEDIATION_v1.md` only. Both round-2 and round-3 analyses answered the COO's DRAIN-END READ instead, which the spine's L10 does not describe. `ADJUDICATION_v2.md` exists, the CVO's watermark is CURRENT (v2 at 91 of 93) and it has dispositioned every row it owns -- so the rows ARE compiled and adjudicated in substance, and no round-2 or round-3 JUDGMENT criterion (`F15-AC12`, `F16-AC10`, `F18-AC18`, `F19-AC10`, `F20-AC9`, `F21-AC8`, `F22-AC9`, `F23-AC7`) has been GRADED. Round 4 inherits no L9 disposition and no cell waits on one.
+
+⚠ **`FE-s-18` IS NOW CARRIED INTO ITS THIRD ROUND.** Cut in round 2, non-terminal at the round-2 close, non-terminal at the round-3 close, and its blocker is `FE-s-26` in this one. Recorded so that the length of the carry is visible as a fact rather than as an accident.
