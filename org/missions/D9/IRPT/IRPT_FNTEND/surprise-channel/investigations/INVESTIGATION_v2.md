@@ -522,6 +522,27 @@
     "spec_asserts": "TO-FE-s-16 F16-AC6: the modal opens on the mounted flow in the ready state at 1440; F16-AC7: the same at 390.",
     "world_is": "One click opens the modal; reaching a READY receipt needs a second act (Create export) the invocation does not name. The captures show the mounted flow at the state that single click produces.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S12",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-11T20:05:00Z",
+    "one_line": "The worker face states that TO-FE-s-16 'already reads <status>pending</status>'; the file on this branch reads <status>blocked</status> at line 8. Nothing was changed: the flip this order authorises is pending -> complete and its condition (every mechanical criterion PASSES by output) is NOT met (F16-AC8 refused as written, F16-AC9 blocked on six pre-existing failures), so the order stays open either way and a blocked -> pending edit is not this worker's to make. Recorded because a premise the face asserts does not match the file, and the issuer's own view of this order's standing may differ from the face it dispatched.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-16.export-flow-mounted-narrative.md@7d6db9bcfa (worktree wk-irpt_fntend-2-6-fe-s-16, unmodified): line 8 <status>blocked</status>",
+        "the same file line 87: 'Flip only when every mechanical criterion PASSES by output'",
+        "this order's proof instance: F16-AC8 FAIL, F16-AC9 FAIL (rows IRPT_FNTEND-W3-S9, -W3-S10); the status was not touched"
+      ]
+    },
+    "spec_asserts": "TO-FE-s-16 worker face: 'The task order file is at ... and already reads <status>pending</status>.'",
+    "world_is": "The file reads <status>blocked</status>. No edit was made to it by this worker.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
