@@ -271,6 +271,8 @@ infra/aws/terraform/investor-reporting/ops/
 infra/aws/lambda/layers/irpt-common/
 infra/aws/lambda/ci/lambda-layer-map.json
 infra/aws/lambda/investor-reporting/_contracts/
+infra/aws/lambda/investor-reporting/holdings/
+infra/aws/terraform/investor-reporting/holdings/
 </paths>
 
 
@@ -485,3 +487,64 @@ g2 HUMAN-GATED (the CTO confirmed explicitly this is the face's own rule applied
 not to put it back), and **C4's ONE-DEPLOY rule**: the mark, the post-read emission and the envelope work all land
 in a single deploy under one ledger, one root at a time, verified before the next, roster and rollbacks printed
 before the first apply, hard stop on the first failing verify.
+
+---
+
+## ISSUER AMENDMENT 5 -- 2026-09-12T03:56:10Z (`2.0.0_SA_COO~B`). Governs over every line above it.
+
+### E1. ⛔ THE C1 GRANT WAS PROSE-ONLY. THAT IS MY DEFECT AND IT IS NOW FIXED IN THE `<paths>` BLOCK.
+Amendment 3 C1 granted `holdings/` "additively" in a prose sentence and **never added it to the `<paths>` block**.
+The owned-paths lane gate reads the BLOCK, not the prose, so it refused your four holdings files and **the gate was
+right**. Row `IRPT_BCKEND-W2-S41` is correct and it is mine.
+
+Added to `<paths>` in this amendment's commit:
+```
+infra/aws/lambda/investor-reporting/holdings/
+infra/aws/terraform/investor-reporting/holdings/
+```
+**Commit C1's four files now.** Nothing else about C1 changes: `holdings/entry.py` composes the same triple, and
+`make_holdings_enforcer` keeps defaulting ownership to `_no_grant`. ⭐ Your reasoning there was exactly right and I
+want it on the record: handing `Entry` the shared loaders -- what the other six do -- would have turned a route
+that serves nothing into one that serves real holdings, and that is IB-rt-7's decision, not this cell's. **A mark
+must not widen what it marks.**
+
+### E2. ⭐ AND YOUR REFUSAL TO FLIP `<status>` WAS CORRECT. I am recording it as a finding, not as a delay.
+You did not flip on 15 of 15 because **the `<paths>` grant is live only while the order is NON-TERMINAL**, so
+flipping would have retired the grant and permanently orphaned C1's work. That is a real property of the gate that
+no face states, and reading it correctly under a passing token is the opposite of the failure mode this round has
+been full of. It goes in the round-close slug: **A TERMINAL FLIP REVOKES THE GRANTS THE ORDER CARRIES, so the flip
+is the LAST act and never the act that frees you to finish.**
+
+### E3. W2-S38 RULED: THE YCHARTS RIDER IS **IN**. Deploy it.
+IB-rt-11's `intake/settings.json` edit is a declared build input of `irpt-ycharts-generate` and your deploy will
+carry it. It is **INERT** on measurement -- the cell read the SERVED artifact (5104 B) against the tree (9670 B) and
+showed the delta is ONLY an added sibling key, with the `settings` subtree and `cautions` byte-identical -- and it is
+that cell's committed, accepted, in-lane work. Ship it.
+**NAME IT IN THE LEDGER ENTRY as a rider on the `irpt-ycharts-generate` leg**, so the entry states what the apply
+actually carries rather than only what this cell authored. ⚠ If your zip for that function picks up
+`settings.json` without `fixtures/holdings/security_mapping.json`, or either without `parse.py`, that is a BLOCKING
+row to me and a stop -- row `W3-S36` says the parser refuses at its first money column otherwise.
+
+### E4. TAKE THE ONE DEPLOY NOW. C4 is satisfied, and the cost of waiting has changed.
+Everything remaining is one atomic act and all of it is finally in lane: C1's holdings mark, the v0.14 envelope
+work, the post-read `business_date` emission, the `W2-S39` cache-lifetime fix, and the ycharts rider.
+⛔ **`W2-S39` IS THE REASON THIS IS NOW URGENT RATHER THAN MERELY READY.** You introduced a stale-payload defect and
+removed it in the tree, and it is **STILL ARMED ON THE SIX LIVE FUNCTIONS until a deploy ships the fix** -- a
+snapshot that must be refused was SERVED from a prior request's payload. Authorization was never at risk and you
+say so plainly, which is the right disclosure; but a known armed serving defect sitting in production while we
+sequence is a worse trade than any sequencing benefit. **You were right to stop rather than split the atomic act I
+defined -- that was my sequencing to fix, and E1 fixes it.**
+
+Sequencing discipline UNCHANGED and it binds hardest here: ONE ledger, opened only with the room to CLOSE it
+in-session, OPEN sentinel committed BEFORE the act and CLOSE before the reads that grade it; **one root at a time,
+each function verified by extract-and-import in the flat `/var/task` layout in a fresh interpreter with the repo off
+`sys.path` BEFORE the next root**; the full root roster and each root's rollback printed before the first apply;
+`artifact_sha256 == S3 content-sha256 == live CodeSha256` per function; and a HARD STOP on the first failing verify
+with N-of-M applied stated in the ledger. If any root's plan shows anything beyond your own changes and the named
+rider, that is a BLOCKING row and a stop.
+
+### E5. THE FLIP IS THE LAST ACT.
+After the deploy verifies: re-run the battery, rewrite the instance FROM that run, re-pin every artifact row to the
+commit that CARRIES it, re-grade with `proof-of-spec-check`, and only then flip `<status>`. IB-rt-6 and IB-rtb-1
+both gate on this order being terminal, so the flip releases two cells -- but not one moment before the deploy is
+verified and the record matches the bytes.
