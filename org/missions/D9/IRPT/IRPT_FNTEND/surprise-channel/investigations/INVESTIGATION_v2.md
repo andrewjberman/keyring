@@ -477,6 +477,52 @@
     "spec_asserts": "Spawn prompt: the task order \"already reads `<status>pending</status>`\", and the worker flips it to `complete` when the proof-of-spec instance validates.",
     "world_is": "It reads `blocked`. A worker that had met every criterion would have flipped a `blocked` order straight to `complete`, skipping whatever the blocked value was recording -- worth the issuer's eye even though it changed nothing here.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S24",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T01:20:40Z",
+    "one_line": "Retiring `parity.ts` under the widened grant costs a distinction the wire cannot make: v1 publishes ONE support verdict per REPORT (`AnalysisReport.extraction_validation`) and none per SECTION, so the three FE-s-6 assertions that marked one section SUPPORTED and another UNSUPPORTED INSIDE ONE REPORT are now report-level arms. Named here rather than deleted, per the issuer's amendment.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/AnalysisReport.schema.json @d9c940244a: `sections[]` carries section_id, section_type, value, units, as_of_date, page and bbox -- NO support, parity or certification field. The only verdict is the document-level `extraction_validation` {status: CERTIFIED|UNCERTIFIED|FAILED, checks_run, checks_failed, notes}.",
+        "The retired concept said so itself: portal tabs/analysis/parity.ts's own header read \"`ReportSection` carries no `parity` field ... the three-variant vendor PDF comparison this concept names does not exist yet\" and cited the decomposition section 7.8. It was a LOCAL widening, never a producer fact.",
+        "THE THREE ASSERTIONS, NAMED (portal __tests__/fe-s-6/sections.test.ts @e5833214): (1) 'a section with parity.passed === true renders SUPPORTED' -> now 'a CERTIFIED report renders its sections SUPPORTED' (same summary-block assertion, same expectation); (2) 'a section with parity.passed === false renders UNSUPPORTED with its reason' -> now 'an UNCERTIFIED report renders the SAME sections UNSUPPORTED, with the producer's own reason code' (the prose reason `the three-variant vendor PDF comparison for this section has not been certified` was a FIXTURE STRING for a concept the wire does not carry; the assertion now reads the producer's code UNCERTIFIED and its unconfirmed-value count); (3) 'a section with NO parity field at all renders UNSUPPORTED too' -> now 'a report with NO extraction verdict at all renders UNSUPPORTED too', which preserves the claim that mattered -- ABSENT EVIDENCE IS NEVER SUPPORTED BY DEFAULT.",
+        "MEASURED after the carry: bun test src/pages/InvestorReporting/__tests__/fe-s-6 = 19 pass / 0 fail; the whole set = 398 pass / 1 skip / 0 fail across the SAME 399 tests, with expect() calls RISING from 1813 to 1822 -- no assertion was dropped to make a bar pass.",
+        "RESIDUAL, recorded and not fixed here: portal fixtures/fe-s-6/report.released.json and fixtures/smoke/fe-s-6-ready.json still carry per-section `parity` objects. They are DEAD BYTES -- no code reads them and the view type never declared them. Rewriting another cell's fixture to tidy them was not an act this order names, and a fixture edit that no test grades is how a silent change lands."
+      ]
+    },
+    "spec_asserts": "Cell FE-s-15 clause W3-S2: \"revision identity and section support come from the wire fields the schemas name: `AnalysisRequest.identity` / `corrections` / `stage` / `release` and `AnalysisReport.extraction_validation` / `release` through the FE-s-13 adapters; `parity.ts`'s local derivation and any `inputRevision` fallback are removed\". Issuer amendment: \"If a FE-s-6 assertion turns out to be testing something the wire genuinely no longer carries, that is a surprise row naming the assertion -- not a deletion.\"",
+    "world_is": "`extraction_validation` is a REPORT-level verdict, so it cannot express the per-section difference the local parity fact could. The retirement is still right -- the browser was rendering a support claim no producer had made -- but the grain changed, and a viewer who could previously see WHICH section failed now sees only that the report's extraction was not certified, with the count of values it could not confirm. If per-section support is a product requirement, it is a v2 field on `sections[]`, not a consumer derivation. For L10.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S25",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T01:20:40Z",
+    "one_line": "The retired revision counter's second half -- \"each accepted correction advances the revision by exactly one\" -- is NOT a wire fact either: under v1 the PRODUCER issues the next `identity.revision` when it accepts the new submission, so a correction made in the browser moves the corrections array and NOT the identity. The FE-s-6 chain assertion is carried onto the array; the identity half is asserted to stay PUT.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/AnalysisRequest.schema.json @d9c940244a: `identity` {tenant_firm_id, request_id, revision, immutable: true, ingestion_gate_revision, destination_policy_revision} and `corrections[]` {finding_code, approved_by, from_value, to_value}. `immutable: true` is a const on the identity block; nothing in the document lets a consumer compute the next revision.",
+        "routes.json `_operations.consumer_operations_with_no_route`: submit-correction is NOT-A-ROUTE -- \"Corrections are a FIELD of AnalysisRequest (`corrections`) carried on the submission, not an endpoint of their own\". The next revision is therefore issued by the producer at the next `analysis-requests` submission, which the browser cannot anticipate.",
+        "THE ASSERTIONS, NAMED (portal __tests__/fe-s-6/correction.test.ts @e5833214): 'a freshly loaded request with no corrections is inputRevision 1' -> 'a freshly loaded request carries the wire's own revision and no corrections' (the value now re-read from the fixture rather than typed as a literal); 'one accepted correction advances inputRevision to 2' -> 'appends exactly one record, leaves the wire revision alone'; 'a second correction ... advances inputRevision to 3' -> 'appends a second record, still does not move the identity'. The chain that read 1 -> 2 -> 3 on a derived counter now reads 0 -> 1 -> 2 on `corrections`, with the wire revision asserted EQUAL at every step.",
+        "MEASURED: `AS INGESTED: requestRevision=areq-f6-needscorrection/r1, corrections=0`; `WIRE REVISION: areq-f6-needscorrection/r1 -> areq-f6-needscorrection/r1 (unchanged by the browser)`; `CORRECTION CHAIN: 0 -> 1 -> 2 at wire revision areq-f6-needscorrection/r1 -> ... -> ...` -- 19 pass / 0 fail in fe-s-6.",
+        "The consumer's own F15-AC8 test proves the same thing from the other side: a clean producer AnalysisRequest instance and the same instance with one correction appended render byte-identical identity blocks (1618 bytes)."
+      ]
+    },
+    "spec_asserts": "Cell FE-s-15 clause W3-S2: \"a clean request and its correction preserve the identity the wire carries\", with \"any `inputRevision` fallback\" removed. The FE-s-6 test it replaces asserted a browser-derived revision advancing 1 -> 2 -> 3 per correction.",
+    "world_is": "Both halves of the old claim were true of the LOCAL counter and only one is true of the wire: the corrections array does advance by exactly one, and the revision identity does not advance at all until the producer issues it. The retired counter was the browser answering a question only the producer can answer. Nothing downstream reads the retired field (`AnalysisTab.handleCorrected` uses only `result.request`), and portal export/submit.ts's own `inputRevision` is a DIFFERENT field on a different surface (an export receipt binding, out of this order's scope and untouched) -- the F15-AC8 scan is directory-scoped to tabs/analysis/ and its positive control reads that file to prove the scanner can still find the token.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
