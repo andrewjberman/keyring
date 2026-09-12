@@ -39,10 +39,13 @@ Operations"**, directive `docs/architecture/D12_PLATFORM_OPS_PRD.md`, members
 `PLATFORM_OPS_USERMGMT, D12_PHONE_OTP_ALL_AWS, NFRA_OPSEC202609, NFRA_REPORT, NFRA_IAMROLES202609`.
 
 ⚠ **CONSEQUENCE SURFACED, NOT RESOLVED: D12's placement is SITEZ** -- Andrew-direct 2026-08-31 ~23:15Z,
-*"All recs approved"* on `1.0.0_SA_CTO~Z`'s CALL 1, record `@efcfa8cc5b`. This laptop fabric's device
-guard REFUSES SITEZ rows (`1.0.0_SA_CTO`'s self-drive scope note: *"SITEZ rows (D1, D4, D5, D6, D7,
-D12) are REFUSED by the device guard"*). **As the register stands, a D12 project cannot be registered
-or worked from this fabric.** Two readings are possible and this seat picks neither: (a) D12 moves to
+*"All recs approved"* on `1.0.0_SA_CTO~Z`'s CALL 1, record `@efcfa8cc5b`. ~~This laptop fabric's device
+guard REFUSES SITEZ rows~~ ⛔ **CARRIED, NOT MEASURED, and corrected by `0.0.0_AB_MSTR` (96217):** this
+seat took *"SITEZ rows ... are REFUSED by the device guard"* from `1.0.0_SA_CTO`'s self-drive scope
+note without measuring it. MSTR looked and found only placement PARSING (`.tools/directives-check.py:18,61`),
+no refusing guard -- search unfinished, so the claim is **UNRESOLVED, not established**, and must not be
+carried forward as a belief. What IS established: D12's placement is SITEZ by his word, and this seat
+had no basis to say whether that alone blocks work here. Moot for D14 (LAPTOP-placed). Two readings are possible and this seat picks neither: (a) D12 moves to
 LAPTOP by his word, as D8 and D9 did; (b) the canon project is SITEZ work. Routed to him in-terminal
 the same turn. `0.0.0_AB_MSTR` executes whichever he rules, as register owner.
 
@@ -71,7 +74,14 @@ VERBATIM AND COMPLETE:
   word. ⚠ One fact for his naming call, offered not argued: the estate already uses ONTOLOGY as a
   term of art for the C0-C4 system ladder (`NFRA_ONTOLOGY_C2C3_CANONICAL.yaml`, served by
   `comp-estate --layers`), so a directive titled "Ontology" would share a name with an existing
-  instrument; "Canon" does not collide with anything measured.
+  instrument. ~~"Canon" does not collide with anything measured.~~
+  ⛔ **THAT STRUCK CLAUSE WAS FALSE, corrected by `0.0.0_AB_MSTR` (96217) within minutes:** at the
+  PROJECT-NAME grain CANON collides with THREE registered projects (`COT_CANON458`, `ETFS_CANON`,
+  `MDPF_PROVCANON`) -- more than ONTOLOGY's two. At the DIRECTIVE-TITLE grain -- the grain the
+  decision is in -- **neither name collides with any of the 14 existing titles.** The real
+  discriminator, MSTR's: **ONTOLOGY names a live INSTRUMENT agents type to invoke; CANON's collisions
+  are prose names agents cite.** An instrument collision is the worse class. The recommendation
+  (ONTOLOGY is the riskier title) survives; the premise offered for it was wrong and is replaced.
 
 **What it does NOT rule:** the directive's PRD path, its member set, its stance -- all L2/L3 acts
 (`1.0.0_SA_CTO` writes every carrier per Rule 27). The register hygiene items named in section 2
