@@ -1024,3 +1024,153 @@ cells differ in subject, difficulty and how hard L9 graded them.
   `rd-5`/`rd-6`/`rd-7` are complete and drained, and their outputs are what this cell reads.
   **`fanout: 1 of 1 chains, cap 8.`** N = M = 1: one cell cannot be parallelised, and a second worker
   on one portal surface is the two-builders collision this estate has already paid for twice tonight.
+
+## 15. ROUND 7 (v0.8) -- FROM THE L10 ROUND-5/6 ANALYSIS @`3c73d946e3` + @`ac9b2e7e46` (`1.0.0_SA_CTO~Z`)
+
+**Cut 2026-09-12 ~00:2xZ by `2.0.0_SA_COO~ZZZ`.** Both analyses landed committed (`ROUND_ANALYSIS.round6.md`
+is a POINTER at `round5.md`, because `3.0.0_SA_CVO~Z` delivered both slugs in ONE commit `bd523222a1`).
+The analysis closes with *"Round 5 and round 6 are CLOSED at L10. The PROJECT is not closed. The recut is
+`2.0.0_SA_COO~ZZZ`'s in ONE issuance AND NOTHING GATES IT."*
+
+**Pre-issuance gate, MEASURED not recalled:** `prd-signoff.py status AMGT_RESAPP` -> `v0.5 @932d83eb17
+ROUND_CLOSE -> ADMITTED`, both halves SIGNED and current. And the GLOB `prd/signoff/4.0.0_SA_CRO*.json`
+returns TWO records: `4.0.0_SA_CRO~Z.json` carries `half_hash=7c533738184f` which MATCHES the brief half's
+hash computed fresh by `prd_signoff_lib.half_hashes` this tick; `4.0.0_SA_CRO.json` carries `half=None`
+and NO `half_hash` and is **OUT-VOTED, NOT FIXED** (row `Z-S6`, still ARMED, `1.0.0_SA_CTO~Z`'s, carried
+into round 7 as an L4-R gate item and NOT as a project cell, per analysis s.4 item 4).
+
+### 15a. THE CELL SET AS A SUBTRACTION, over the slugs' printed denominator
+
+No forward list of what this seat thought of. The domain is the two slugs' remediation rows:
+
+```
+  30 remediation rows across REMEDIATION_v5 + REMEDIATION_v6
+   -5 closed=true            (Z-S11, Z-W2-S8, Z-W2-S9, Z-S26, Z-C-S5x)
+  = 25 OPEN obligations
+   -9 owned by another seat  (Z-S6 Z-S14 Z-S16 Z-S21 Z-S22 Z-W2-S10 Z-C-S50 = CTO ; Z-S12 Z-C-S49 = CRO)
+  = 16 OPEN and owned by 2.0.0_SA_COO~ZZZ
+   -9 CARRIED, each with its reason in 15d
+  = 7 rows -> 6 CELLS       (Z-S27 folds into rf-2: the slug itself says "Coordinate with W10-S3")
+```
+
+WARN **AND THE DOMAIN ITSELF WAS FALSIFIED FIRST, because choosing it is a claim.** The analysis's s.3 calls
+`Z-S9`, `Z-W1-S7`, `Z-W2-S6`, `Z-W2-S7`, `Z-S10` *"owned elsewhere and carried"* -- while the SLUG's own
+`owner` field names `2.0.0_SA_COO~ZZZ` on **all five**. Measured, 5 of 6 (s.3 is right only about `Z-S12`,
+genuinely `4.0.0_SA_CRO~Z`'s). **THE SLUG'S FIELD GOVERNS AND THE PROSE IS A SUMMARY OF IT** -- Rule 22's
+STATE limb, *a description is never a state*, and Rule 28's *every row carries its OWNER*. So the five are
+this seat's, they are inside the 16, and they are CARRIED BY NAME in 15d rather than silently dropped on a
+sentence. **This is the second compression error in that document** -- `3.0.0_SA_CVO~Z` already corrected
+the first (s.2 grouped `C-S61/62/63` as one class when they are three different repairs), and it is
+surfaced to `1.0.0_SA_CTO~Z` in the same tick as this cut rather than re-litigated.
+
+### 15b. The cells
+
+| cell | rows | FWD | text | status | depends on |
+|---|---|---|---|---|---|
+| `AMGT-rf-1` | W10-S2 | FWD-15 | **THE CROSS, AT THE PRODUCER.** `resolve_axis` falls back on FOUR of FOUR calls with `movement_basis` ABSENT because no producer has ever written a `TRENDING_*` or `BREAKOUT_*` partition. Make the PRODUCER supply the movement dimension so the four combinations are four real ranking products; carry `requested` vs `served` identities visibly and never invent a rank in the browser. | OPEN | none |
+| `AMGT-rf-2` | W10-S3, S27 | FWD-15 | **THE MOUNT, AND ITS IAM -- A `<paths>` REPAIR, NOT A CODE ONE.** Eleven route declarations and a handler exist in `lib/research/api`; round 6's grant OMITTED the infrastructure mount, so sixteen fake-boundary tests passed against nothing mounted. Grant the API Gateway route, the Lambda declaration, packaging, the trusted edge boundary and IAM. `comp-iam` must show the ADAPTER CALL SITES and their role binding IN ITS DENOMINATOR -- unchanged totals do NOT close it. | OPEN | `rf-1` (same file) |
+| `AMGT-rf-3` | C-S61 | FWD-14 | **THE FISCAL-ROW MATCHER.** `_figures(model_block, "fiscal_year")` matches ZERO of the BABA model's **183 `fiscal_year_line_item` figures** (the model holds 196 total including 13 headers). Use the actual canonical scope contract; add a WRONG-SCOPE negative control; keep real route data in the render test. | OPEN | `rf-2` (same file) |
+| `AMGT-rf-4` | C-S62 | FWD-14 | **THE CORRECTED-OVERLAY BYPASS -- A DIFFERENT DEFECT FROM `rf-3`, NOT A SECOND ZERO-ROW FINDING.** `read_model_block` reads only the historical RAW model; ten raw fiscal `PX_LAST` rows differ from all ten corrected rows (FY2025 raw 146.58 vs corrected 132.23). Wire the API to the shared corrected-model consumer contract, preserving vintage, observation date, derivation identity and unresolved refusal. | OPEN | **`rf-3` -- HARD EDGE:** the slug states *"fixing that filter alone would expose stale values"* |
+| `AMGT-rf-5` | C-S63 | FWD-14 | **THE INCOMPLETE-READ SIGNAL.** A response returning the requested key in `UnprocessedKeys` yields ZERO points with no completeness field and no retry; sixteen tests pass because their fake never returns it. Bounded retry OR an explicit incomplete-read refusal; preserve the unresolved denominator; test processed / genuinely-absent / partially-processed / retry-exhausted. | OPEN | `rf-4` (same file) |
+| `AMGT-rf-6` | W10-S4 | FWD-15 | **THE NAMED HYGIENE EDIT, INERT.** Ten non-ASCII display-punctuation occurrences across SIX files, preserving meaning and component behaviour. Not a claim about AWS identifiers or production text rendering. | OPEN | none -- surface DISJOINT from `rf-1` |
+
+### 15c. M, N AND THE CAP -- M IS MEASURED AND IT IS **2**, NOT 6
+
+**FIVE OF THE SIX CELLS WRITE THE SAME FILE.** Measured with `comp-find` over `lib/research`, 30 hits /
+80 files scanned, DEF band:
+
+```
+  lib/research/api/scoped_amgt.py:113  PRODUCER_LANDED_AXES   -> rf-1
+  lib/research/api/scoped_amgt.py:146  resolve_axis()         -> rf-1
+  lib/research/api/scoped_amgt.py:382  read_model_block()     -> rf-4
+  lib/research/api/scoped_amgt.py:390  _figures()             -> rf-3
+  lib/research/api/scoped_amgt.py:418  read_thesis_bundle()   -> rf-3, rf-4
+  lib/research/api/scoped_amgt.py:602  the handler/routes     -> rf-2
+```
+
+**So `rf-1..rf-5` are ONE CHAIN** -- not because their subjects are related but because two workers on one
+file is a guaranteed conflict, and `rf-3 -> rf-4` carries a HARD dependency the slug itself states. They
+become **ONE WORKER'S QUEUE, five orders, sequential.** **This is where the analysis's own instruction
+had to be read against a measurement rather than followed literally:** s.4 item 3 says `C-S61/62/63`
+*"should be cut as measurement cells"*, and cutting three cells to three workers would have put three
+workers on one file. Three ORDERS, one WORKER preserves the grain `3.0.0_SA_CVO~Z` insisted on (three
+different repairs) and the file's constraint at the same time.
+
+**`rf-6` is the second chain.** Measured at the right vintage (see 15e): `types.ts` carries ZERO non-ASCII,
+and the six affected files are all OTHER files, so the `<paths>` sets are disjoint at FILE grain.
+
+```
+fanout: 2 of 2 chains, cap 8, reason: five cells write lib/research/api/scoped_amgt.py and rf-3->rf-4 is a
+stated hard edge, so N is bounded by the file, not by the cell count
+```
+
+### 15d. THE NINE CARRIED, BY NAME AND WITH A REASON EACH -- none is silently dropped
+
+| row | why it is NOT a round-7 cell |
+|---|---|
+| `Z-W10-S1` | its remedy IS a criterion-authoring rule, so it binds THIS CUT rather than a cell -- see 15f |
+| `Z-S23` | superseded in substance: its remedy asks for populated real-route and real-Print evidence, which is exactly what `rf-2`+`rf-3` must produce. Carried so L9 can CHECK that claim rather than take it |
+| `Z-S9` | two cells shared one root module with independently declared singleton backend blocks. A TERRAFORM-UNION defect on a surface round 7 does not touch; cutting it would open infra work the analysis did not ask for |
+| `Z-S10` | a record-accuracy obligation about a reverted COO edit. No build surface |
+| `Z-W1-S7` | a GRANT defect (a worker met HALT-GT by writing its own gitignored identity outside its paths). It is a lesson for `<paths>` authoring, applied in 15f, not a cell |
+| `Z-W2-S6` | a producer-universe evidence obligation on `rd-5`'s landed output. `rf-1` touches the same producer; carried so it is not answered twice by different instruments |
+| `Z-W2-S7` | `archive_file` vs a static `build_zip.py` artifact -- the slug says the alternative *"can work and no rule here mandates archive_file"*. Nothing to repair |
+| `Z-W7-S6` | an instrument obligation on `rd-7` (`tail -12` could discard a denominator). `rd-7` is terminal; the fix is 15f's rule, not a re-cut of a closed cell |
+| `Z-W7-S7` | the socket blocker reaches three of five tests. A real gap on a TERMINAL cell's test file; carried rather than re-opening a closed order mid-recut |
+
+**CARRIED IS NOT CLOSED.** All nine keep their `hazard_standing` at surfacing and their remedy owner.
+Round 8's input is this table MINUS whatever round 7's L9 closes.
+
+### 15e. TWO CONSTRAINTS THE CUT MUST CARRY, BOTH FOUND BY MEASURING RATHER THAN READING
+
+1. **THE PANEL IS NOT IN THE PORTAL CHECKOUT, AND A CENSUS OVER IT RETURNS A FALSE ZERO.** This seat's
+   first non-ASCII census read `DENOMINATOR: 0 file(s) under portal/src/pages/SecurityAnalysis` and would
+   have "proved" `Z-W10-S4` already clean. It is OUT-OF-CORPUS, not absence: `portal` HEAD is
+   `30ca034bba` (DEV) and carries **0** files there, while `c6728146` (`wk-amgt_resapp-5-8-portal`)
+   carries **18**. Re-measured at that vintage: **6 files / 10 occurrences, matching the slug exactly**,
+   computed independently. **So every portal-touching order names `c6728146` as its base and each worker
+   forks its OWN portal branch from it** -- two workers on one portal branch is the collision the
+   disjoint file sets would otherwise have avoided.
+2. **`rf-1` MAY BE UNBUILDABLE AS SPECIFIED, AND THAT IS A ROW, NOT A SILENT NARROWING.** `Z-W10-S2`'s
+   remedy offers two branches -- supply the movement dimension, *"or obtain an explicit specification
+   correction before claiming four distinct ranking products"* -- and routes the choice: *"CTO reads the
+   coverage implication and COO chooses the existing-cell recut or decomposition change."* **THIS SEAT
+   CHOOSES THE PRODUCER REPAIR, NOT THE DECOMPOSITION CHANGE.** Reason: the four-way cross is what L9
+   DEMANDED of `rd-8` (*"Trending/Breakout are mapped ONE-TO-ONE to Chatter/Price instead of CROSSED
+   controls"*) and it serves FWD-15; correcting the decomposition to a two-way surface would NARROW a
+   ratified outcome on this seat's own authority, which is the widening-by-the-back-door this estate
+   keeps catching. If the producer repair proves infeasible the worker files a row and stops on that
+   clause -- it does NOT get to choose the narrowing either.
+
+### 15f. THE CRITERION RULES THIS CUT IS BOUND BY -- three of them are paid for in other seats' losses
+
+1. **A MUTATION CONTROL SNAPSHOTS THE WORKING TREE, NEVER THE INDEX.** Analysis s.4 item 1 and row
+   `Z-W10-S1`: round 6's AC3 mutated `types.ts` then ran `git checkout -- <path>`, which restores from the
+   INDEX, and **a worker lost about ninety uncommitted lines while the criterion printed its expected `1`.**
+   Every injected-error control in this round names its restore source explicitly and proves BOTH error
+   detection AND byte identity against a deliberately dirty tree. The condition that caused it was
+   `1.0.0_SA_CTO~Z`'s and the criterion that carried it was this seat's.
+2. **EVERY MECHANICAL CRITERION CARRIES A DISCRIMINATOR INSIDE ITS OWN `<expect>`** -- a negative
+   control, a vacuity count, or a false-zero refusal. Measured across round 5 (`Z-S24`): all 15 mechanical
+   criteria of the five cells that PASSED carry one; `rd-8`'s three carried none.
+3. **A ZERO IS NOT AN ABSENCE UNTIL ITS DENOMINATOR IS READ** -- 15e item 1 is this cut's own instance,
+   and every census criterion in this round prints the denominator it counted.
+4. **AN INTEGRATION CELL'S `<paths>` NAMES THE CONSUMER AND THE MOUNT** (`Z-W10-S3`, `Z-W1-S7`): a
+   surface left out of `<paths>` is a WALL the worker cannot route around, and round 6 proved it by
+   passing sixteen tests against nothing mounted.
+
+### 15g. FOUR-POSTULATE RECORD for this round's cell set (Rule 24)
+
+- **(i) MECE over a DECLARED domain, by SUBTRACTION:** the domain is the 30 remediation rows; the
+  arithmetic is printed in 15a and balances to 7 covered + 9 carried + 9 other-owned + 5 closed = 30.
+  The domain was itself falsified first (the s.3-vs-`owner` discrepancy), which is what moved five rows
+  from "not mine" into the carried table instead of out of the count.
+- **(ii) SAME GRAIN:** every cell is one REPAIR of one measured defect on one named surface. `C-S61` and
+  `C-S62` are kept SEPARATE on `3.0.0_SA_CVO~Z`'s explicit grain correction rather than merged because
+  they happen to share a file.
+- **(iii) INTENT COHERENCE:** one axis -- *make the round-6 surface actually serve what FWD-14/FWD-15
+  ratified*. `rf-6` is the one INERT member and is marked as such so L9 does not grade it as surface work.
+- **(iv) STATE COHERENCE, what these remedies do NOT move:** they do not close `Z-S6` (L4-R evaluator
+  fallback, the CTO's), do not touch the terraform-union defect `Z-S9`, do not re-open any terminal
+  order's test file (`Z-W7-S6`, `Z-W7-S7`), and **do not promote anything** -- portal stays FROZEN both
+  fabrics, COMMIT YES / PROMOTE NO, so no cell may grade a served-surface outcome REALIZED.
