@@ -58,8 +58,8 @@ The blanket form is wrong and the CTO ruled it out: two fixtures may legitimatel
 <criterion id="F22-AC7" cell_refs="FE-s-22"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-22/smoke-detector.test.ts</invocation><expect>GENUINELY BAD ROUTE: DID NOT LAND</expect></criterion>
 `F22-AC7` -- **the arm that proves the detector still detects.** A route that genuinely fails to land -- including one carrying a query string -- STILL prints `DID NOT LAND`. Fixing an always-firing detector by making it never fire is the failure mode this arm exists to prevent.
 
-<criterion id="F22-AC8" cell_refs="FE-s-22"><invocation>cd <WS>/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting</invocation><expect>0 fail</expect></criterion>
-`F22-AC8` -- the whole Investor Reporting set is green. By your seating `FE-s-19` and `FE-s-20` have drained; a remaining failure that is not yours is a BLOCKING row naming it.
+<criterion id="F22-AC8" cell_refs="FE-s-22"><invocation>cd <WS>/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting</invocation><expect>1 fail</expect></criterion>
+`F22-AC8` (BAR CORRECTED BY THE ISSUER, row IRPT_FNTEND-S45 -- it read `0 fail` on the same PREDICTION that F19-AC8 carried and that row S41 already corrected there. `F18-AC3`'s capture collision CANNOT clear in round 3: it needs the three Holdings smoke maps to carry distinct `status` members and no round-3 cell holds the fixtures (row S44). The set reads **exactly one** failure and it IS that one; **print the failing test's name**, and if it is anything else or a second appears, that is a BLOCKING row.) -- the whole Investor Reporting set is green. By your seating `FE-s-19` and `FE-s-20` have drained; a remaining failure that is not yours is a BLOCKING row naming it.
 
 <criterion id="F22-AC9" cell_refs="FE-s-22" judgment="true"/>
 `F22-AC9` -- graded at L9: the scoped rule's claim model is one a later cell can actually apply without re-deriving it, and the detector's two arms are genuinely opposite. RECORD; NO VERDICT.

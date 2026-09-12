@@ -1812,6 +1812,53 @@
     "spec_asserts": "1.0.0_SA_CTO ruling 1: 'FE-s-18 NON-TERMINAL, CARRIED, BOTH CRITERIA UNTOUCHED. No amendment, no re-grade, no pass-with-a-note.' Decomposition v0.3 R3.1: 'FE-s-18 ... is re-run, never re-issued, once FE-s-19 and FE-s-20 are terminal and drained.'",
     "world_is": "FE-s-19 and FE-s-20 ARE terminal and drained, so the stated precondition for FE-s-18's re-run is met -- and the re-run still cannot pass, because the precondition I wrote was about the SEAM and the blocker is the FIXTURES. I got the dependency right and the sufficiency wrong, which is the same error as S41 one layer up: a re-run condition is a prediction unless it was measured. WHAT ROUND 4 NEEDS, stated so the CTO can rule it without re-deriving: ONE FIXTURE CELL giving the three Holdings smoke maps distinct `status` members, after which FE-s-18's existing criteria are re-run UNCHANGED and close on their own terms. \u26a0 AND IT COUPLES TO RULING 4: a capture set can only assert distinct hashes on a field its FIXTURES vary, so the scoped rule needs a third limb -- A FIXTURE THAT DOES NOT CARRY THE CLAIMED FIELD IS A DEFECTIVE FIXTURE, NOT AN ADMITTED COLLISION. Without that limb the scoped rule would have ADMITTED this collision as legitimate.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T09:32:00Z",
+    "id": "IRPT_FNTEND-S45",
+    "one_line": "I FIXED THE INSTANCE AND LEFT THE CLASS -- THIRD TIME TONIGHT, AND THIS TIME I HAD ALREADY WRITTEN THE LESSON DOWN. When row S41 corrected F19-AC8's `0 fail` bar I corrected ONE criterion. THREE faces carried the identical predicted bar: F19-AC8, F21-AC7 and F22-AC8. I amended F19 and left the other two, so FE-s-22 hit exactly the same wall and refused correctly, and FE-s-21 was RUNNING with the same defective bar while I reported the fix as done. Both are now corrected to `1 fail` with a name check, and all four suite-wide bars across the round agree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Enumeration over the round's faces AFTER the fix, which is the read I should have taken before it: F19-AC8 '1 fail', F20-AC8 '1 fail', F21-AC7 '1 fail', F22-AC8 '1 fail', F24-AC7 '2 fail'. Denominator 5 suite-wide bars; before this commit two of them read '0 fail'.",
+        "FE-s-22's report: `F22-AC8 FAIL ... 446 pass / 1 skip / 1 fail`, the one failure being F18-AC3's collision, and `this cell's own 13 tests read 0 fail`. It refused rather than chasing, exactly as instructed, which is the only reason the cost was one refusal and not a wasted pass.",
+        "FE-s-21 was spawned at 08:4xZ and was still running when this was found, carrying F21-AC7 at the uncorrected bar. Corrected mid-flight and the worker told, rather than left to discover it.",
+        "THE PRIOR TWO INSTANCES OF THE SAME CLASS, both mine, both this session: S31 (corrected three print URLs in a face and left F18-AC17's timeout divergence eighteen rows away, found later by FE-s-23) and S36 (told one worker a row-id start that was right for three coordinates and wrong for the fourth). This is the third.",
+        "\u2b50 AND THE AGGRAVATION IS THE PART WORTH KEEPING: S31's own `world_is` already says a fix scoped to the instance you noticed leaves the class untouched. I wrote that sentence at 05:0xZ and reproduced the behaviour it describes at 08:0xZ. Knowing the rule and enumerating the population are different acts."
+      ]
+    },
+    "spec_asserts": "Row S41 states F19-AC8's bar was corrected because it was cut on a prediction. CLAUDE.md Rule 24: hunt the uncovered member BY SUBTRACTION from a printed denominator, never by a forward list of what you thought of.",
+    "world_is": "A criterion defect is almost never confined to the criterion where it is noticed, because faces are written in one sitting from one mental model -- so the defect's real population is EVERY FACE OF THAT ISSUANCE, and the only sound remedy is to enumerate that population and subtract. I have now applied the correct remedy only after the third occurrence. THE CHEAP HABIT, stated so it can be checked rather than remembered: WHEN A CRITERION IS AMENDED, GREP THE WHOLE ISSUANCE FOR THE SAME BAR SHAPE AND PRINT THE DENOMINATOR BEFORE COMMITTING THE AMENDMENT. It costs one read. Disarmed when FE-s-21 and FE-s-22 both pass their corrected bars.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T09:32:00Z",
+    "id": "IRPT_FNTEND-S46",
+    "one_line": "CORRECTION TO MY OWN ROW S44, MEASURED FALSE BY 0.9.0_WK_IRPT_FNTEND~2. S44 wrote that 'without that limb the scoped rule would have ADMITTED this collision as legitimate.' It would NOT have. The three Holdings fixtures DO differ in the fields their captures claim -- `basis` across observed/target, `classification` across observed/missing-attribution -- so the collision arm refuses all three pairs ON ITS OWN: `INDEPENDENCE: preconditions stripped -> defective=0, refused-pairs=3, refused=true`. My error was conflating TWO senses of 'the claimed field': the field the fixtures VARY (present) and the field the wire must carry for the page to REACH it (`status`, absent). Both are true of this set and NEITHER RESCUES THE OTHER.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer's own run of the worker's battery: `ROUND-2 COLLISION REPRODUCED: 3 of 3` AND `DEFECTIVE FIXTURES: 3 of 3` AND `INDEPENDENCE: preconditions stripped -> defective=0, refused-pairs=3, refused=true`. The two findings are independently derived and independently reported.",
+        "So the rule yields TWO findings with DIFFERENT OWNERS AND REMEDIES: a page defect (the captures collide) and a fixture defect (the fixtures cannot exercise the state the page renders). Folding them into one, as S44 did, would have sent a round-4 cut at one surface and left the other.",
+        "THE TRAP THE WORKER AVOIDED WITH A PRINTED CONTROL, worth more than the correction itself: `requires` matches an EXACT fixture path, not a field-name suffix. `PATH DENOMINATOR: 325 paths ... EXACT '/api/scoped/investor-reporting/holdings/.status': 0 hit(s) ... SUFFIX 'status': 1 hit(s) -- /api/scoped/investor-reporting/analysis/.data.extraction_validation.status`. A suffix rule would have matched a field on a DIFFERENT response, three levels inside `data`, and read the precondition as SATISFIED in the one case it exists to fail.",
+        "Shared-instrument discipline, measured: `git diff --numstat -- scripts/ui-smoke.mjs` = `1 1`. And smoke-detector.test.ts does NOT re-type the comparison -- it reads the SHIPPED BYTES, asserts exactly one line in the file mentions `DID NOT LAND`, and compiles its expression from that line, so a later edit fails loudly instead of grading a stale copy.",
+        "The detector's two arms are genuinely opposite: `LANDED QUERY ROUTE: no DID NOT LAND -- 3 of 3 landed cases clean` (pre-fix control fired on 2 of 2 query-bearing) and `GENUINELY BAD ROUTE: DID NOT LAND -- 4 of 4 failed cases detected`, with `DISCRIMINATION: 3 of 3 landed pass AND 4 of 4 failed fire`."
+      ]
+    },
+    "spec_asserts": "Row S44: 'a capture set can only assert distinct hashes on a field its FIXTURES vary ... Without that limb the scoped rule would have ADMITTED this collision as legitimate.' 1.0.0_SA_CTO ruling 4 scopes the hash rule to fields a capture CLAIMS TO RENDER.",
+    "world_is": "The first half of S44's sentence is right and the second is wrong, and a landed row is never edited, so this is the correction. What survives and is stronger: ruling 4's 'claimed field' is AMBIGUOUS between varied-by-the-fixture and reachable-by-the-page, and a set can satisfy one while failing the other. The CTO's third limb should therefore be a SEPARATE FINDING rather than a precondition on the collision arm -- which is exactly how the worker built it, and it built it that way after measuring rather than after being told. disarm_owner is none needed: INERT, nothing acts on it, and the round-4 input in S44 stands unchanged -- one fixture cell, for a reason S44 states correctly.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
