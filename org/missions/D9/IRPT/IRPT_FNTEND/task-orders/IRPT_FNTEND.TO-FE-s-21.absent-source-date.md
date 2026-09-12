@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-12</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F7; CONTRACTS `StatusEnvelope` consumed) | **Decomp cell:** `FE-s-21` (round 3, v0.3 @38f68b965c) | **outcome_ref:** FWD-5 | **depends_on:** `FE-s-19` (shares `state/status.ts` -- never concurrent) | **slot:** ~1, queue position 2 | **rows:** S29
 

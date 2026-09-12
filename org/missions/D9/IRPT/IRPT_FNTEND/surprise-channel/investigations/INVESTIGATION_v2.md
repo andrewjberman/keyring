@@ -1930,6 +1930,193 @@
     "spec_asserts": "IRPT_FNTEND-W2-S17, filed by this worker one commit earlier: 'F22-AC8 CANNOT PASS AS WRITTEN ... The order asks the whole Investor Reporting set for `0 fail` ... F22-AC8 is REFUSED with its measurement.' And this order's BOUNDS: 'never edit an existing row'.",
     "world_is": "The bar, not the measurement, was the defect -- the issuer says so itself and carries it as row S45: F22-AC8 read `0 fail` on the same PREDICTION that F19-AC8 carried and that row S41 had already corrected there, one amendment applied to one of three faces. At the corrected bar `1 fail` with a name check, the same measured world (446/1/1, the one failure being F18-AC3's) now MEETS the criterion. The row is filed because W2-S17 states a refusal in the present tense and a landed row can never be edited: without a successor row the channel would carry an open BLOCKING claim that the current bytes contradict, and the L8 compile would read it as live. It deliberately carries NO `adjudicates` field -- dispositioning W2-S17 is the CVO's act at L9, and a worker asserting it would be the worker grading its own refusal.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T09:26:07Z",
+    "id": "IRPT_FNTEND-W1-S41",
+    "one_line": "THE TASK ORDER'S 'PRINTED NINE-STATE ENUM' IS THE PRODUCER'S NINE, AND THE VIEW HAS A DIFFERENT NINE -- so the ordered subtraction yields two different fours depending on which plane you take it over, and only one of them is expressible in the code the order tells me to change. The wire enum carries QUEUED and RUNNING; the view's closed `EnvelopeState` carries LOADING and RETRYABLE instead. Taking 9-minus-5 over the VIEW gives {LOADING, UNAVAILABLE, RETRYABLE, FAILED}, not the {QUEUED, RUNNING, UNAVAILABLE, FAILED} the cell names. I took the partition on the WIRE plane (where the contract states it) and proved the IMAGE of those four lands inside the view's own no-answer set, rather than silently widening to whichever four was convenient.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The two enums, read at HEAD of this branch: portal/src/pages/InvestorReporting/contracts/wire/StatusEnvelope.ts:18 gives the producer's nine (QUEUED, RUNNING, READY, PARTIAL, STALE, UNAVAILABLE, NEEDS_CORRECTION, UNCERTAIN, FAILED); contracts/index.ts:57-66 gives the view's nine (LOADING, READY, STALE, PARTIAL, UNAVAILABLE, RETRYABLE, UNCERTAIN, NEEDS-CORRECTION, FAILED). Both are nine and they are not the same nine: the symmetric difference is {QUEUED, RUNNING} against {LOADING, RETRYABLE}.",
+        "The collapse is deliberate and in-tree: contracts/adapt.ts:223-224 `STATE_FOR_WIRE` maps QUEUED -> 'LOADING' and RUNNING -> 'LOADING'. So the four wire no-answer states reach only THREE distinct view states.",
+        "CORROBORATION FROM AN INSTRUMENT I DID NOT WRITE: the pre-existing __tests__/fe-s-19/network-state.test.ts prints, on its own passing run, 'PRODUCER ENUM (StatusEnvelope.schema.json): QUEUED, RUNNING, READY, PARTIAL, STALE, UNAVAILABLE, NEEDS_CORRECTION, UNCERTAIN, FAILED' and 'SENT QUEUED -> reporting LOADING', 'SENT RUNNING -> reporting LOADING'. My reading of the collapse is not my own method confirming itself.",
+        "My BRIDGE arm measures the consequence rather than asserting it: 'wire no-answer -> view: LOADING, LOADING, UNAVAILABLE, FAILED', 'DISTINCT view states reached: 3', 'view no-answer members NO wire state produces: RETRYABLE', 'IMAGE OUTSIDE THE VIEW PARTITION: 0 of 4'.",
+        "USER-VISIBLE CONSEQUENCE, read off my own F21-AC6 capture (deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-21_reporting_no_source_age_1440.png): a QUEUED envelope renders the state label 'Loading'. Nothing in the label distinguishes 'the producer has queued this job' from 'this browser has not answered yet'; only the reason code IR-JOB-QUEUED carries it."
+      ]
+    },
+    "spec_asserts": "TO FE-s-21 THE CELL: 'The cut is a SUBTRACTION from the printed nine-state enum: 9 minus the 5 answer-bearing = the 4 you handle. Do not enumerate forward from the cases you happen to think of.' And: \"`state/status.ts:170`'s `formatSourceAge(sourceAsOf, now)` and the panels that consume it must render those four as 'no source age yet'\" -- phrasing the four as though they were states a panel can hold.",
+    "world_is": "There are TWO nine-state enums, one per plane, and the order's four exist only on the producer's. QUEUED and RUNNING are not assignable to the view's `EnvelopeState` at all, so a test that constructed a panel in state 'QUEUED' would have failed F21-AC1's typecheck, and widening the view enum would have needed contracts/index.ts, which is not in this order's <paths>. This is Rule 24's domain clause at the level of the CUT rather than the census: the subtraction was specified without saying which population it runs over, and the two populations disagree. ARMED because the collapse is live in the product, not just in the spec: a viewer looking at a queued job sees the word 'Loading', which is the one thing this page exists not to do -- report a state as an absence of information. disarm_owner 1.0.0_SA_CTO because the remedy is a contract/enum ruling (either the view gains QUEUED/RUNNING, or the panel is ruled to key its label on the reason code), not a worker edit.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T09:26:07Z",
+    "id": "IRPT_FNTEND-W1-S42",
+    "one_line": "THE FIELD THE CONTRACT CLAUSE GOVERNS IS NOT THE FIELD THE AGE IS COMPUTED FROM. The order quotes the state-conditional rule for `StatusEnvelope.business_date` and then names `formatSourceAge(sourceAsOf, now)` as the surface to change -- but `sourceAsOf` comes from `source_dates.as_of`, a DIFFERENT wire member with a DIFFERENT nullability. MEASURED CONSEQUENCE: a READY envelope carrying the contract-REQUIRED `business_date` and no `as_of` renders 'Source time unknown' -- the panel reports a missing source date while the source date the contract requires is present and carried.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The two wire members, contracts/wire/StatusEnvelope.ts:19-23: `business_date?: string` (optional, NOT nullable) and `as_of?: string | null` (optional AND nullable). Different optionality, different nullability, different meaning.",
+        "The split in the adapter, contracts/adapt.ts:375-396 `adaptStatusEnvelope`: `const asOf = wire.source_dates.as_of ?? null`, then `sourceAsOf: asOf` and separately `businessAsOf: wire.source_dates.business_date`. `sourceAsOf` never reads `business_date`.",
+        "DIRECT MEASUREMENT of the divergent case (probe run in .scratch, not committed): wire {state READY, source_dates {business_date: '2026-09-11'}} with NO as_of yields status.sourceAsOf = null, sourceTimestamps.businessAsOf = 2026-09-11, and the panel renders \"Source time unknown\".",
+        "So the contract-required field was PRESENT and the panel still reported it absent. The two carriers disagree and the rendering follows the one the contract clause does not govern."
+      ]
+    },
+    "spec_asserts": "TO FE-s-21 THE CELL quotes `IRPT_BCKEND` PRD v0.14: 'business_date REQUIRED on the ANSWER-BEARING states ... MAY BE ABSENT on the NO-ANSWER states', and then directs: \"`state/status.ts:170`'s `formatSourceAge(sourceAsOf, now)` and the panels that consume it must render those four as 'no source age yet'.\"",
+    "world_is": "`business_date` and `as_of` are two different wire fields and the cell's contract clause governs only the first while its named code path reads only the second. I implemented the state-conditional rule on the carrier the panel actually holds (`sourceAsOf`) so F21-AC2/AC3/AC4 grade the surface the order named, and put the `business_date` fact on its own classifier (`sourceDateFact` / `renderSourceDateFact`) where the contract's own field is what is read -- but the two planes are not joined, and the measured READY case above shows the gap is not theoretical. NOT resolved by this cell and NOT silently papered over: joining them means deciding which field a 'source age' is an age OF, which is a contract question. disarm_owner 1.0.0_SA_CTO. NOTE ALSO, minor and non-blocking: the order's RECORD FACE preflight pins `formatSourceAge` at state/status.ts:170; at my cut it is at :207, because FE-s-19 inserted `envelopeFromRefusal` above it. The file was right, so this cost nothing, but a pinned line number in a preflight ages the moment the cell it is sequenced behind lands.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T09:26:07Z",
+    "id": "IRPT_FNTEND-W1-S43",
+    "one_line": "F21-AC5 ASKS FOR A DISTINCTION THE ADAPTER HAS ALREADY DESTROYED BEFORE ANY PANEL SEES IT. `adaptStatusEnvelope` carries the source dates through `?? null`, so an ABSENT `business_date` and an explicit `null` arrive at the view as the SAME value. The distinction is therefore only observable on the WIRE object, and that is where I graded it; making it survive to a panel requires editing contracts/adapt.ts, which is NOT in this order's <paths>.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The collapsing lines: contracts/adapt.ts:389 `businessAsOf: wire.source_dates.business_date` feeding adapt.ts:164 `businessAsOf: parts.businessAsOf ?? null`, and adapt.ts:375 `const asOf = wire.source_dates.as_of ?? null`. `??` maps both undefined and null onto null.",
+        "MEASURED, in my own test's disclosed arm: 'view sourceTimestamps.businessAsOf from ABSENT: null' / 'view sourceTimestamps.businessAsOf from NULL : null' / 'COLLAPSED BY THE ADAPTER: the two are indistinguishable downstream of contracts/adapt.ts.' The assertion is an equality between the two, so the arm FAILS the day the adapter stops collapsing them -- it is a live tripwire, not a comment.",
+        "WHERE IT IS STILL OBSERVABLE, and what I graded AC5 on: `sourceDateFact(source_dates)` reads the wire object itself -- {} -> ABSENT, {business_date: null} -> NULL, {business_date: '2026-09-11'} -> PRESENT -- and `renderSourceDateFact` gives three distinct strings, 'No source age yet' / 'Source date malformed' / 'Source dated'. Printed by the test with the contract line above it.",
+        "LANE: this order's <paths> names state/status.ts, tabs/StatusPanel.tsx, tabs/reporting/, fixtures/smoke/, __tests__/fe-s-21/ and the channel file. contracts/adapt.ts is not among them, and the order is explicit that 'A path you need that is not named is a BLOCKING row on that criterion; never an override'."
+      ]
+    },
+    "spec_asserts": "TO FE-s-21 F21-AC5: 'a `business_date` of `null` on a no-answer state is distinguished from an ABSENT one and does not silently render as \"no source age yet\"; the test prints what it does instead.' And the cell: 'AN ABSENT FIELD AND A NULL ARE DIFFERENT FACTS AND MUST STAY DIFFERENT.'",
+    "world_is": "They are different facts on the wire and the same value in the view, and no code inside this order's grant can change that. I did not treat this as blocking, because AC5 is satisfiable as written on the plane where the distinction exists and the criterion does not name a plane -- but a reader who assumes AC5 proves a PANEL can tell null from absent would be wrong, so the limit is stated here and measured in the test rather than left for L9 to discover. ARMED because the standing consequence is that a producer contract violation (a null where the schema permits only absence) is invisible to every consumer downstream of the adapter: it renders as the tidy no-answer state, which is precisely the 'we had one and lost it' confusion the contract's ABSENT-NEVER-NULL rule exists to prevent. disarm_owner 1.0.0_SA_CTO: the remedy is a cell against contracts/adapt.ts, and mid-round the decomposition is frozen.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T09:26:07Z",
+    "id": "IRPT_FNTEND-W1-S44",
+    "one_line": "F21-AC7 REFUSED, AS THE ORDER INSTRUCTED. The Investor Reporting suite reads 1 fail against AC7's bar of `0 fail`, and the failure is F18-AC3's capture-hash collision -- pre-existing, not mine, self-declared as refused in its own test file, and already carried by IRPT_FNTEND-S44 and W1-S33. My work did not cause it and no path in my grant can clear it.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The measurement, with the dev server up so the environmental arm is excluded: `timeout 180 bun test src/pages/InvestorReporting` -> '441 pass / 1 skip / 1 fail', 'Ran 443 tests across 74 files', true exit code 1 (captured without a pipe; a piped run reports the LAST command's rc).",
+        "The single failing test, in full: 'F18-AC3 -- the captures are the files the manifest claims > UNIQUE HASHES -- no two entries share a hash (FAILS at this commit; see the file header)'.",
+        "IT IS NOT MINE, by content and not by assumption: the collision set the assertion prints is [fe-s-18_holdings_observed_390.png, fe-s-18_holdings_target_390.png, fe-s-18_holdings_missing_attribution_390.png] -- three FE-s-18 captures, all 51206 bytes. My capture, fe-s-21_reporting_no_source_age_1440.png (68854 bytes), is not in the set and is not in captures.manifest.json.",
+        "IT PRE-DATES MY EDITS: the same test failed on my untouched cut, before any file in my grant was written (baseline run at branch creation, 431 pass / 3 fail).",
+        "The test file says so itself at __tests__/fe-s-18/manifest.test.ts:143-145: 'Row IRPT_FNTEND-W1-S33 carries the cause. F18-AC3 is refused.'"
+      ]
+    },
+    "spec_asserts": "TO FE-s-21 F21-AC7: invocation `bun test src/pages/InvestorReporting`, expect `0 fail` -- 'By the time you are seated, `FE-s-19` and `FE-s-20` have drained and both of this cut's known failures are cleared; if a failure remains that is not yours, that is a BLOCKING row naming it.'",
+    "world_is": "FE-s-19 and FE-s-20 have indeed drained, and a failure that is not mine remains anyway: the precondition AC7 names was about the SEAM, and F18-AC3's blocker is the FIXTURES -- which is exactly what IRPT_FNTEND-S44 predicted in advance ('FE-s-18 CANNOT CLOSE IN ROUND 3 AS CUT'). So this row is the BLOCKING filing AC7's own text calls for, and it is the confirmation of S44 rather than a new hazard. Marked INERT deliberately and not out of convenience: the underlying defect is already ARMED on S44 with disarm_owner 1.0.0_SA_CTO named, and minting a second ARMED standing over one hazard would double-count it and split its ownership. Everything else in this order passed by output; AC7 is the only refusal, so the order stays OPEN on this one criterion.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T09:26:07Z",
+    "id": "IRPT_FNTEND-W1-S45",
+    "one_line": "THE SUITE'S FAILURE COUNT IS PORT-CONDITIONAL, AND NOTHING IN THE RUN SAYS SO. `bun test src/pages/InvestorReporting` reads 3 fail with no vite dev server on port 5181 and 1 fail with one -- the same bytes, the same command, two different verdicts. Both my spawn prompt and F21-AC7's own text assert '1 fail' as a property of the cut; it is a property of the ENVIRONMENT. A worker or a drain that measured this suite without the server would read two of FE-s-19's own criteria as a regression in a cell that had just been graded complete.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BOTH ARMS MEASURED, same worktree, same commit, nothing edited between them. Server DOWN, at my untouched cut: '431 pass / 1 skip / 3 fail', failing = F18-AC3, F19-AC4, F19-AC5. Server UP, same tests: F19-AC4 and F19-AC5 both pass ('2 pass, 0 fail' on mounted-from-wire.test.ts).",
+        "THE DISCRIMINATOR IS IN THE FAILURE OUTPUT ITSELF and names the cause: 'READY WIRE -> reporting slot=NO DRIVER LINE', 'BODIES MOUNTED: 0 of 2', and the assertion that fires is `expect(driverStatus).toBe(0)` -- Received 1. With the server up the same lines read 'slot=reporting-body', 'BODIES MOUNTED: 2 of 2', 'DRIVER EXIT: 0'.",
+        "THE PRECONDITION IS DECLARED IN THE TEST FILE, just nowhere a runner sees it: __tests__/fe-s-19/mounted-from-wire.test.ts:29-31 -- 'PRECONDITION: the vite dev server is up on the port below. If it is not, the driver's page load fails and both arms fail LOUDLY -- a down server can never read as a pass here, because the assertion is on a slot being PRESENT.' The port is hard-coded at :39 as `const PORT = '5181'`.",
+        "THE HARD-CODED PORT IS THE SECOND HALF OF THE HAZARD: 5181 is THIS order's assigned <PORT>. A worker on any other slot's port cannot make these two tests pass at all, however correct its code, and would read a false regression with no line in the output naming a port.",
+        "The test author's claim 'a down server can never read as a pass' is TRUE and is not the risk. The risk is the converse, which that sentence does not cover: a down server reads as a FAIL that looks like a code defect."
+      ]
+    },
+    "spec_asserts": "My spawn prompt: 'The suite at your cut reads 1 fail, and it is F18-AC3's capture collision, which is nobody's in round 3 (row S44).' TO FE-s-21 F21-AC7 expects `0 fail` from a bare `bun test src/pages/InvestorReporting` with no environmental precondition stated, and its BOUNDS name the dev server only as a thing to start for the CAPTURE ('Start once in the background ... kill it before your final report').",
+    "world_is": "At my cut the suite read 3 fail, not 1, and the two extra failures were FE-s-19's own criteria in a cell the issuer had just drained as complete -- which is the shape that makes a worker doubt the premise it was handed rather than the environment it was handed it in. The dev server is named in BOUNDS as equipment for F21-AC6's capture; it is in fact a precondition of F21-AC7's own bar, and the two criteria are ordered in the face as if independent. A TO that names `bun test src/pages/InvestorReporting` with a numeric fail bar must also name the server and the port, or the bar is unfalsifiable at a glance in exactly the way a green looks trustworthy. disarm_owner 2.0.0_SA_COO because the fix is in TO authoring (state the precondition beside any suite-count bar) and, if it is to be fixed in code rather than in prose, in a cell that makes the driver tests skip-with-a-reason or start their own server rather than fail as if the product were broken.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T09:26:07Z",
+    "id": "IRPT_FNTEND-W1-S46",
+    "one_line": "THE CELL SAYS 'THE PANELS THAT CONSUME IT' AND THE GRANT REACHES ONE OF THREE. `formatSourceAge` has three consumers; two of them -- tabs/analysis/StageDisplay.tsx and tabs/analysis/VariantSelector.tsx -- are outside this order's <paths>, so the Analysis tab still renders 'Source time unknown' on exactly the no-answer states this cell exists to stop reporting as defects. I did not edit them and I did not widen the order.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE DENOMINATOR, by census rather than recall: `comp-find 'formatSourceAge|Source time unknown' --path portal/src --all` -> 9 hits across 750 files scanned, bands DEF=1 SURFACED=8. Consumers = StatusPanel.tsx:16,34; analysis/StageDisplay.tsx:11,51; analysis/VariantSelector.tsx:20,61. Three files, and the census is over the whole of portal/src rather than the page directory, so it cannot have missed a consumer by being scoped to where I expected one.",
+        "THE GRANT: this order's <paths> names portal/src/pages/InvestorReporting/tabs/StatusPanel.tsx and portal/src/pages/InvestorReporting/tabs/reporting/ -- tabs/analysis/ is in neither. 1 of the 3 consumers is writable by this order.",
+        "CONSEQUENCE, unchanged by my work: both analysis consumers call `formatSourceAge(envelope.sourceAsOf)` with no state argument, so on a QUEUED/RUNNING/UNAVAILABLE/FAILED envelope the Analysis tab renders 'Source time unknown' -- the exact wording this cell rules is wrong for those states.",
+        "I LEFT `formatSourceAge` ITSELF UNCHANGED for this reason, rather than changing its behaviour underneath two callers I cannot see the tests for: the new rule is an ADDITIVE function (`formatSourceAgeForState`) and the old one still answers its narrow question. That keeps the two out-of-grant callers behaving exactly as they did at my cut, so nothing regresses in a file I may not touch."
+      ]
+    },
+    "spec_asserts": "TO FE-s-21 THE CELL: \"`state/status.ts:170`'s `formatSourceAge(sourceAsOf, now)` AND THE PANELS THAT CONSUME IT must render those four as 'no source age yet'.\" TO BOUNDS: 'A path you need that is not named is a BLOCKING row on that criterion; never an override.'",
+    "world_is": "The cell's sentence reaches three panels and the <paths> block reaches one. No criterion of mine names the Analysis tab, so this blocks nothing I was asked to prove and is filed as an OBSERVATION rather than a BLOCKING row -- but F21-AC2's '4 of 4' certifies the StatusPanel only, and read as a claim about 'the panels that consume it' it would be a coverage overclaim, which is why the denominator is in this row rather than in a report. ARMED because the defect the cell names is still live on a shipped surface after this cell closes, and the closing evidence will not show it: every arm I ran passes. disarm_owner 2.0.0_SA_COO because the remedy is a grant -- either tabs/analysis/ added to a cell's <paths>, or a follow-on cell -- and mid-round the decomposition is frozen.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T09:57:03Z",
+    "id": "IRPT_FNTEND-W1-S47",
+    "one_line": "W1-S44 IS SUPERSEDED AND I CANNOT EDIT IT, SO THIS ROW CARRIES THE CORRECTION. I filed W1-S44 refusing F21-AC7 against a bar of `0 fail`; the issuer then corrected that bar to `1 fail` with a name check, at commit 0e25c1d422, after my worktree was cut. Re-measured against the corrected bar: the set reads EXACTLY ONE failure and it IS F18-AC3, printed by name -- so F21-AC7 PASSES and the order is met. W1-S44's refusal was correct against the bar that existed when it was written and is WRONG about the current bar, and the channel is append-only, so the record is repaired forward rather than rewritten.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The amended bar, read AT THE COMMIT rather than from the message or from my own tree (procedure of row IRPT_FNTEND-S43): `git merge-base --is-ancestor 0e25c1d422 HEAD` = FALSE, so the commit is readable in the shared object store and ABSENT from this branch; `MSYS_NO_PATHCONV=1 git show 0e25c1d422:<order>` returned 10771 bytes.",
+        "POSITIVE CONTROL beside it, because a mangled `git show` returns clean-empty on this box: the same command against a non-existent path at the same ref returned `fatal: path ... does not exist in '0e25c1d422'`, rc=128 -- so the read is content.",
+        "BOUNDED DIFF before anything was written: 112 lines each side, EXACTLY TWO differing (53 and 54), both inside the F21-AC7 block; `<status>pending</status>` on both sides and `<expected_criteria>` byte-identical. Only those two lines were written into this branch's copy, CRLF preserved, and the result verified identical to the blob modulo line endings.",
+        "Line 53 at the pin: `<expect>1 fail</expect>` where my tree read `<expect>0 fail</expect>`.",
+        "FRESH RE-MEASUREMENT against the corrected bar, not carried forward from the earlier run as the issuer's message required: 441 pass / 1 skip / 1 fail across 443 tests in 74 files, true rc=1, failing test printed by name -- 'F18-AC3 -- the captures are the files the manifest claims > UNIQUE HASHES -- no two entries share a hash'. Exactly one failure and it IS that one, so the criterion's two conditions are both met."
+      ]
+    },
+    "spec_asserts": "Issuer's mid-flight correction: 'F21-AC7 now reads <expect>1 fail</expect> with a name check, instead of 0 fail ... If you have already run F21-AC7 against the old bar, re-run it against the corrected one and record the new output; do not carry the old result forward.' TO BOUNDS: 'never edit an existing row'.",
+    "world_is": "The bar moved after I had already committed a BLOCKING row against it. Both halves of the obligation bind at once -- the proof must state the current truth, and the channel must not be rewritten -- so the refusal row stands as filed and this row supersedes it. Filed so that a reader arriving at W1-S44 through a search, a bridged citation or the L8 compile is not left holding a refusal the world has retracted: an append-only record is only honest if the correction is as findable as the claim. INERT: nothing is left armed by it, the criterion now passes, and the underlying F18-AC3 defect keeps its own standing on S44 where it belongs. NOTE, and it is the issuer's own finding rather than mine: the same prediction-shaped bar was cut onto F19-AC8, F21-AC7 and FE-s-22's criterion from one template and corrected on only one of them at first -- one amendment, three faces, enumerated nowhere (issuer's row S45).",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T09:57:03Z",
+    "id": "IRPT_FNTEND-W1-S48",
+    "one_line": "I FLIPPED A SHARED APPEND-ONLY CHANNEL FROM LF TO CRLF AND TURNED A 140-LINE APPEND INTO A 3618-LINE WHOLE-FILE REWRITE. My own defect, caught by reading the commit's diffstat rather than by any gate, and repaired in the same session. On this autocrlf=true box the worktree copy is CHECKED OUT as CRLF while the committed blob is LF; reading the worktree file and writing it back verbatim therefore commits CRLF, and because the appended block was LF the file ended MIXED -- which is exactly the case git's autocrlf declines to normalise, so the flip reached the blob. Every gate passed and the row content was perfect.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED ON THE COMMITTED BLOBS, not on the worktree: HEAD~1 blob CRLF=0 LF=1817; my HEAD blob CRLF=1816 LF=141. The append itself was 140 lines.",
+        "THE DIFFSTAT IS THE TELL AND IT IS THE ONLY ONE THERE WAS: `INVESTIGATION_v2.md | 3618 ++++----` on a commit whose entire intent was to append six rows. Nothing else flagged it -- surprise-row-gate reported 'OK: 6 new row(s) of 84 total checked', the corpus gate matched its exact legacy baseline, missions-tree-check read 0 violations, and the JSON parsed at 84 rows with no duplicate ids. A content-correct append is precisely what this failure mode looks like.",
+        "SECOND ARTIFACT FROM THE SAME CAUSE: the splice landed the separating comma AFTER a carriage return, producing a literal `  }\\r,` line. JSON treats CR as whitespace so it parsed clean and the gate passed; it would have been invisible until someone read the raw bytes.",
+        "REPAIRED AND VERIFIED AGAINST THE PRIOR BLOB: the file was normalised to LF (CRLF 0, stray CR 0), re-parsed at 84 rows with all six of my ids present and the pre-existing seat rows S43/S44 intact, and `git diff --stat HEAD~1` now reads '140 insertions(+)' with ZERO deletions. The check that proves it is a byte comparison: everything before the array's closing bracket is byte-identical to the HEAD~1 blob.",
+        "WHY IT MATTERS BEYOND TIDINESS, and why the estate's own rule predicts it: CLAUDE.md Rule 14b says an APPEND-ONLY SHARED file must NOT be isolated on a side branch because two branches appending at the same offset conflict -- measured 3 of 3 on round 4's drains (NFRA_CLDGRPH-S36). A worker worktree is mandated by the spine, so that conflict is already the accepted cost; a line-ending flip makes it far worse, because the drain no longer conflicts on one hunk at the tail but on the whole file, and a hand-finished merge of a 1958-line channel is where rows get lost."
+      ]
+    },
+    "spec_asserts": "CLAUDE.md Rule 14b: 'an APPEND-ONLY SHARED file -> DO NOT ISOLATE; take the shared index's seconds-long race', with the worker worktree as the standing exception. TO BOUNDS: the channel file is in this order's <paths> and rows are appended to it.",
+    "world_is": "Appending to a channel by reading the CHECKED-OUT file and writing it back is the obvious implementation and it silently rewrites the whole blob on this box. The guard that would have caught it is not a gate but a habit: READ THE DIFFSTAT OF A COMMIT WHOSE INTENT IS AN APPEND, and if the changed-line count is not roughly the number of lines you appended, the line endings moved. Stated as a rule because the two existing memory entries name the adjacent traps (a worktree sha256 hashes the checkout; Path.write_text re-introduces CRLF) and neither names the one that bites here, which is that the damage lands on a SHARED APPEND-ONLY surface and is discovered by the next agent to drain rather than by the one that caused it. ARMED for the next appender, not for this branch: repaired here and verified, but nothing prevents the identical move next time. disarm_owner 2.0.0_SA_COO because the drain is where the harm lands and the COO runs it; the cheap mechanical fix is for the row-gate to refuse a channel commit whose deletion count on an append-only file is non-zero.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
