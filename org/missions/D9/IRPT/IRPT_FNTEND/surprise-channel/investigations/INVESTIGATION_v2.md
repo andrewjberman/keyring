@@ -2165,6 +2165,30 @@
     "spec_asserts": "Decomposition v0.3 R3.1: six cells, and FE-s-18 'is re-run, never re-issued, once FE-s-19 and FE-s-20 are terminal and drained'. 1.0.0_SA_CTO ruling 1: FE-s-18 non-terminal, carried, both criteria untouched.",
     "world_is": "Every cell round 3 cut is done and the round still cannot close, for a reason that is now measured rather than predicted: FE-s-18's re-run condition was written about the SEAM and its blocker is the FIXTURES. \u26d4 AND THE PORT-CONDITIONALITY IS THE FINDING THE CTO MOST NEEDS, because it makes the round's own deliverable read differently to different readers: a numeric fail bar on this suite is only meaningful beside a named dev server and port, a worker assigned any other slot's port cannot pass F19-AC4/AC5 at all, and a down server produces a FAILURE that looks exactly like a regression -- I made that mistake myself once this round and nearly reported it. Round 4 owes: one fixture cell for F18-AC3; a precondition declaration on the two browser criteria so an absent server reads as SKIPPED or BLOCKED rather than FAILED; and the checker limb's opt-in made mandatory at the L6 gate (S38).",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S49",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T16:17:00Z",
+    "one_line": "ANDREW-DIRECT STOP, VERBATIM AND ENTIRE: \"Everyone doing backend needs to pause while we figure this out\" -- spoken at the 4.0.0_SA_CRO~D terminal ~16:1xZ 2026-09-12, relayed as 96143 by 4.0.0_SA_CRO~D and re-relayed as 96152 by 0.0.0_AB_MSTR. THIS SEAT READS ITSELF IN SCOPE AND IS HELD. It stopped ONE ACT short of spawning four round-4 workers: the seating flip landed at 4e3a94595b and ZERO workers were spawned. Round 4 is CUT, ISSUED and SEATED (decomp v0.4 @1d9839797c, issuance @b6062ad2a2) with four orders at pending and no worker -- UNSEATED, asserting nothing unproven.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The word is recorded VERBATIM AND ENTIRE above and is not paraphrased. Channel, time and relay chain: 4.0.0_SA_CRO~D terminal ~16:1xZ 2026-09-12; 96143 (CRO relay), 96152 (MSTR re-relay). Record @e29a895ce3 at the CRO; org/XXX.md requires durable record plus same-turn broadcast, and this row is the record half.",
+        "STATE AT THE HOLD, measured: workspace CLOUD 4e3a94595b, portal DEV 237a9027, gitlink e85f6eb84f NOT bumped, origin/CLOUD 6ced337f86 -- nothing pushed. Four orders (FE-s-25/26/27/28) read `<status>pending</status>`; `git branch --list 'wk-irpt_fntend-4-*'` carries four workspace and three portal branches with NO commit on any of them.",
+        "Four workspace and three portal worktrees finished cutting AS the STOP landed. They are INERT: no branch carries a commit, nothing staged, nothing served. NOT torn down -- teardown is motion during a pause and a standing checkout costs nothing.",
+        "NEVER#2 does not bite: there was no in-flight act to complete or roll back. The pause found this lane between a committed seating flip and an unstarted spawn, which is the cheapest possible place for it to land.",
+        "0.0.0_AB_MSTR re-relayed SPECIFICALLY because this seat's broker summary still read `WORKING ... Next: seating flip then spawn` when it measured at ~16:1xZ. The two measurements CROSSED: this seat set BLOCKED-SOVEREIGN before 96152 arrived. Recorded so the sequence is not later read as the relay having caused the hold."
+      ]
+    },
+    "spec_asserts": "CLAUDE.md: a relay NEVER adjudicates an Andrew word wider OR narrower, and a seat may not convert his word to one agent into a gate on another. 4.0.0_SA_CRO~D's framing, endorsed by 0.0.0_AB_MSTR: each seat applies his word to itself, and a seat unsure of scope HOLDS AND ASKS rather than reasoning its way to an exemption.",
+    "world_is": "IRPT_FNTEND is the FRONTEND project -- its counterpart IRPT_BCKEND is the backend and is another lane's -- so a narrow reading puts this seat outside his words. THIS SEAT DID NOT TAKE THE NARROW READING, for three reasons recorded rather than held: (1) 'backend' is Andrew's term and bounding it is exactly the adjudication CLAUDE.md forbids; (2) round-4 cell FE-s-28 writes the WORKSPACE `.tools/to-pipeline-gate.py`, and fabric infrastructure is not obviously outside 'backend' whatever it means; (3) THE ASYMMETRY IS ONE-SIDED -- a wrong hold costs a turn, a wrong self-exemption spends whatever the pause existed to prevent, and spends it on someone else's behalf. The scope question is routed to 1.0.0_SA_CTO and this seat acts on its answer either way; disarm_owner is the CTO because only a ruling on scope, or Andrew's own word, lifts this. \u2b50 AND ONE DISCRIMINATOR FROM 0.0.0_AB_MSTR'S RELAY IS WORTH KEEPING BEYOND THIS PAUSE: a BLOCKED broker summary is NOT evidence a stop arrived -- a seat blocked on its own dependency is indistinguishable, by that read, from a seat that never heard the halt. The natural confirmation sweep cannot tell the two apart, which is the same class this project has produced all round: a green that does not measure the thing it is taken for.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
