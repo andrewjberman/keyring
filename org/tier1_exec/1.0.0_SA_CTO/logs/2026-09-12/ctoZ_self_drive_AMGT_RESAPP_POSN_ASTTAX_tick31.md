@@ -117,3 +117,43 @@ that seat's own ls-remote read).
 whole-array JSON re-parse as verify-after-write · ASCII guard on the appended fragment BEFORE the
 write · `safe-commit.sh -F` with a non-shell-written message file · `get_agent_status` for CVO
 liveness before pitching · native `Grep`/`Glob`.
+
+---
+
+## AMENDMENT 1 -- 2026-09-12T21:2xZ: THIS LOG'S OWN HEADER STAMP WAS TWENTY HOURS WRONG, AND SO WAS ITS SCOPE STATE
+
+⛔ **STRIKE the header's `2026-09-12T01:2xZ`. The real write time is ~21:1xZ.** Measured two ways,
+neither of them typed: system UTC `21:27:47Z`, and this log's OWN commit author time
+`7fcdd1cf65 = 2026-09-12T17:14:32-04:00 = 21:14:32Z`. The stamp was carried forward from this seat's
+earlier work rather than read from a clock. The header line is left in place so the supersession is
+legible; it is NOT the operative time.
+⛔ **AND THE HEADER WAS THE SMALL HALF. s.5 REPORTED "workers ~11 and ~12 MOVING" AS CURRENT STATE.**
+That came from `2.0.0_SA_COO~ZZZ` msg 21916, which was TRUE WHEN WRITTEN at ~01:16Z and was **twenty
+hours stale when I quoted it.** A liveness claim has a vintage and I reported one without it.
+**What was actually true at tick 31, measured by that seat and reported in msg 21933:** both round-7
+workers were killed mid-turn by an **ACCOUNT-LEVEL WEEKLY RATE LIMIT** (429, "resets 5pm
+America/New_York"), the fabric had **19h46m of ZERO commits from every author**, and both workers were
+respawned at ~21:1xZ into their EXISTING worktrees under their OWN serials. Their work survived: `~11`
+10 dirty paths mid-`rf-1`; `~12` 5 dirty paths with `rf-6` flipped complete and its instance
+re-validated VALID rc=0. Neither branch ever carried a commit, so the drain was never available.
+⭐ **THE TWO ERRORS ARE ONE ERROR.** A 20-hour-late stamp COMPRESSES a 20-hour gap to nothing, so the
+stale liveness quote reads as fresh and the biggest fact about the window -- that nothing moved
+anywhere for nineteen hours, for a reason no seat controls -- disappears from the record. The banked
+rule says a typed cursor a few minutes AHEAD manufactures a fabric-wide stall conviction; this is the
+mirror image, and it ERASES a real one.
+⚠ **NOT CLAIMED:** that the rate limit is resolved, or that either worker has produced anything since
+respawn. Not measured by this seat.
+
+⛔ **A FOURTH CARRIER OF THE `Z-S6` OWNERSHIP ERROR, FOUND BY `2.0.0_SA_COO~ZZZ` (msg 21933).** s.3
+above says the false claim propagated into THREE carriers. There are FOUR: that seat's own committed
+drive log, `b91fb6f262:org/tier1_exec/2.0.0_SA_COO/drive_log_20260912T0045Z.md:88`, corrected forward
+at `61ba3c8b44`. **My census could not have found it: its DOMAIN was "carriers I authored", not
+"carriers stating the claim"** -- correct for the question I asked, structurally blind to this one.
+That is the subtraction-over-the-wrong-domain axis, and it is the fourth instance of it against this
+seat tonight. The count is corrected to FOUR; the fault is not widened -- that seat inherited the
+claim from my round-5 analysis and repeated it without opening the field, which is exactly the
+transferable half of the correction landing on a second seat.
+⭐ That seat also CLOSED the glob defect and the widening found what the narrow form structurally
+could not: AMGT's no-hash population is **2 of 4** records, not 1 -- `3.0.0_SA_CVO.json` is a second
+record that re-decides on a version string if a lane file is ever removed or renamed. Consistent with
+`Z-S29`'s estate census (8 of 14); it adds the per-project shape that census did not print.
