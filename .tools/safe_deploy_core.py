@@ -272,6 +272,27 @@ CODE_TREES: dict[str, dict] = {
                         "repo_path": "infra/aws/lambda/investor-reporting/_ids/ids.py",
                         "sha_metadata_key": "ids-sha256",
                     },
+                    # THE ESTATE'S ONE TRADING-DAY FRONTIER, DISTRIBUTED AND NOT COPIED (cell
+                    # IB-rt-6, the same distinction amendment H3 drew for ids.py above). Both
+                    # runners in this bundle import it -- `directory_runner.py:104-108` inserts
+                    # `<repo>/lib` on sys.path and does `import trading_calendar as tcal` at
+                    # MODULE level, so without this member the runner cannot be imported at all,
+                    # let alone run. MEASURED, not predicted: the first real SSM dispatch of this
+                    # bundle printed
+                    #   [irpt-directory] IMPORT-FAIL ... ModuleNotFoundError: No module named
+                    #   'trading_calendar'
+                    # on the host (command 940c828f-c176-4a2d-afcc-1693d3d97fe6, Failed rc=1) for
+                    # 3 of 3 firms.
+                    #
+                    # DECLARING A MEMBER THAT RESOLVES FROM `lib/trading_calendar.py` IS A
+                    # DISTRIBUTION; putting a second copy of the frontier in the runner's own
+                    # directory would be a SECOND DEFINITION and is refused. CLAUDE.md: "One
+                    # frontier: lib/trading_calendar.py". The tar carries a copy the way every
+                    # tar does, and it is minted from the one authority every time.
+                    "trading_calendar.py": {
+                        "repo_path": "lib/trading_calendar.py",
+                        "sha_metadata_key": "trading-calendar-sha256",
+                    },
                 },
                 "bucket": "opal-data-mdpf",
                 "s3_key": "code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz",
