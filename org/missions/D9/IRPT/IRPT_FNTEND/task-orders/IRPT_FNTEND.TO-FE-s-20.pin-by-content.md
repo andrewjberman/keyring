@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-12</issued_date>
-<status>blocked</status>
+<status>pending</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F1; CONTRACTS, the consumer half) | **Decomp cell:** `FE-s-20` (round 3, v0.3 @38f68b965c) | **outcome_ref:** FWD-1, FWD-6 | **depends_on:** none -- READY ROOT | **slot:** ~2, queue position 1 | **rows:** S20, S21, S28, S33, S35, W2-S10
 
