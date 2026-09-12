@@ -4197,6 +4197,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "disposition": "UNDER_INVESTIGATION",
     "disarm_owner": "2.0.0_SA_COO~B",
     "notes": "ARMED and the hazard is not this cell's to take: the next apply of that root for ANY reason destroys a live secret and a log group belonging to IB-rt-9's work, and a secret deletion is a human-confirmation act under this estate's own rules. NOT APPLIED BY THIS ORDER and nothing was rolled back -- the root was already held on the amendment 5 E3 guard (row W2-S38) and this is an INDEPENDENT second reason, found only because arm (e) re-read the plan rather than trusting the first deploy's recorded 'No changes'. A post-apply plan is a PERISHABLE claim: it was true when written and another cell's commit falsified it four hours later. WHAT IT COSTS THIS CELL, stated: irpt-ycharts-generate keeps the PREVIOUS served.py, so it alone lacks the v0.14 state-conditional envelope and the post-read business_date, and row W2-S39's cache-lifetime defect stays ARMED on that one function until this root can be applied. Two parties must move before it can: 2.0.0_SA_COO~B on the E3 guard, and whoever owns IB-rt-9's cutover on whether those two resources are meant to be destroyed."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S43",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T05:22Z",
+    "one_line": "MY OWN ROW W2-S42 MIS-ATTRIBUTED ITS CAUSE: the ycharts root's two pending destroys were not IB-rt-9 removing declarations, they were MY WORKTREE predating the commit that ADDS them -- `git log -- <path>` answers 'what last touched this path', never 'what changed this thing', and I read the top commit as the cause.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Row W2-S42, written by me at 2026-09-12T04:51Z, asserts: 'aws_cloudwatch_log_group.research_probe and aws_secretsmanager_secret.research_session ... IB-rt-9 removed both resources from the root's CONFIGURATION and did not apply the root, so the STATE still holds them', citing f83f73ce6c 'L7(IRPT_BCKEND IB-rt-9) arm (a)' as the provenance.",
+    "world_is": "f83f73ce6c REMOVED NOTHING from that root: `git show --stat f83f73ce6c -- infra/aws/terraform/investor-reporting/ycharts/` prints one file, `iam.tf | 28 ++++++++`, additions only. The two resources were ADDED, not removed, at 244d3a968d in a NEW file `research_absorbed.tf` -- IB-rt-9's arm (e) absorbing them from the ycharts-research-20260911 root by import-then-state-rm, with every non-tag attribute read from `terraform state show` so the move plans as bookkeeping. `git log -S'research_probe' -- infra/aws/terraform/investor-reporting/` returns exactly ONE commit and it is that one. WHY MY PLAN SAW TWO DESTROYS: the shared S3-backed STATE already held both resources because slot ~3 had imported them, and `research_absorbed.tf` was NOT YET IN MY WORKTREE -- it arrived with the fast-forward to ad85e34384. Terraform compared a state that had them against a configuration that did not and correctly planned to destroy them. The gap was on MY side of the comparison. At the current HEAD the same root plans `No changes. Your infrastructure matches the configuration.`, and amendment 6 F2's instruction to RESTORE the declarations was a no-op because they were never gone.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show --stat f83f73ce6c -- infra/aws/terraform/investor-reporting/ycharts/ -> 'ycharts/iam.tf | 28 ++++++++++++++++++++++ | 1 file changed, 28 insertions(+)'",
+        "git log --oneline --all -S'research_probe' -- infra/aws/terraform/investor-reporting/ -> 244d3a968d only, 'the research root's two live resources declared in the ycharts root'",
+        "git cat-file -e HEAD:infra/aws/terraform/investor-reporting/ycharts/research_absorbed.tf @ad85e34384 -> PRESENT",
+        "terraform plan in infra/aws/terraform/investor-reporting/ycharts @ad85e34384 -> 'No changes. Your infrastructure matches the configuration.'",
+        "the same plan @36e4c5f70b -> 'Plan: 0 to add, 0 to change, 2 to destroy' (row W2-S42)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "THE CHANNEL IS APPEND-ONLY SO W2-S42 STAYS AS WRITTEN, and a reader must reach this row to know its provenance clause is wrong. WHAT SURVIVES OF IT AND IS STILL WORTH THE OWNER'S TIME: (1) the OBSERVED FACT was real -- that root genuinely planned to destroy a live secret holding two versions, and applying it at that moment would have destroyed it; (2) the issuer independently verified the secret is live before ruling, which was the right check on a destructive-class claim; (3) the LESSON the issuer drew -- re-read a plan immediately before any later apply to the same root and never carry a clean plan across another cell's commits -- is STRENGTHENED rather than weakened, because the thing that moved was not the world but MY VIEW of it: a stale worktree plus a shared state is a second, quieter way for a plan to be wrong, and it reads identically to the first. THE METHOD DEFECT, stated so it is not repeated: `git log -- <path>` answers 'what last touched this path'. It cannot answer 'what changed this thing', and its top entry is a NEIGHBOUR, not a cause. `git log -S<token> -- <path>` answers the actual question and named exactly one commit. I cited a neighbour and called it a cause, in a row that accused another cell of leaving a root un-appliable. No act was taken on the wrong attribution -- the root was held, which was correct for the other reason (W2-S38) and correct by luck for this one."
   }
 ]
 ```
