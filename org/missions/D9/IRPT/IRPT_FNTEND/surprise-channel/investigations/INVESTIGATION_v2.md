@@ -1764,6 +1764,54 @@
     "spec_asserts": "Mid-order message from 2.0.0_SA_COO~F: 'Committed b0dbbb7a45. F19-AC8 now reads <expect>1 fail</expect> with a name check. Re-read the criterion from your order file -- the file is authority, not this message.' And this order's spawn: 'If this message and that file ever disagree, the FILE wins and the disagreement is a surprise row.'",
     "world_is": "The file on this branch and the file the issuer amended were two different files, and the instruction 'the file is authority' does not by itself say WHICH. The resolution taken -- fetch the issuer's own committed bytes for that one path, bound the diff to two lines, write only those, verify against the source blob -- keeps the authority in the FILE rather than in the message, which is what the rule is for. It is filed because the general shape outlives this instance: the S31 remedy ('point the worker at the committed file') assumes the worker's branch carries the commit, and a mid-round amendment on the issuer's branch breaks that assumption silently -- the worker reads a real file, at a real commit, and gets a retracted bar with nothing anywhere saying so. A worker with no message would have graded against `0 fail` and refused a criterion the issuer had already fixed.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T08:46:21Z",
+    "id": "IRPT_FNTEND-S43",
+    "one_line": "THE FIX I DESIGNED FOR S31 HAS A HOLE AND A WORKER FELL INTO IT CORRECTLY. Round 3's spawn prompts say 'your specification is the FILE, not this message' -- which is right, and INCOMPLETE: it does not say WHICH file. I amended F19-AC8 on CLOUD at b0dbbb7a45 AFTER the worker's branch was cut, so the order file IN ITS TREE still read the retracted bar. Both obvious moves were wrong -- grading from my message's quotation is the S31 class, grading from its own branch's file grades a bar I had already withdrawn. 0.9.0_WK_IRPT_FNTEND~1 took neither: it read the file AT MY NAMED COMMIT, with a positive control, bounded the diff to two lines, and wrote only those. Row W1-S40 is its filing; this is mine, and the rule needs the missing half.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker's measurement: `git merge-base --is-ancestor HEAD b0dbbb7a45` = FALSE. The amendment commit is reachable in the shared object store and ABSENT from the branch's history -- readable, not carried. That distinction is the whole defect.",
+        "Its extraction and its control: `git show b0dbbb7a45:<order>` returned 14297 bytes, and the SAME command against a non-existent path at the same ref returned `fatal: path ... does not exist` rather than empty -- so the read is content, not an MSYS mangle producing a clean-empty (CLAUDE.md's git-show rule, applied without being told).",
+        "Bounded write: 123 lines each side, EXACTLY TWO differing (62, 63), both inside the F19-AC8 block, <status> `pending` on both sides. Only those two lines were written, CRLF preserved, result verified byte-identical to the blob modulo line endings. No merge, rebase, checkout or clean.",
+        "Issuer's confirmation at HEAD after the drain: F19-AC8 `<expect>1 fail</expect>`, F19-AC7 `<expect>0 fail</expect>`, `<status>complete</status>`. The corrected bar is what landed.",
+        "\u26a0 AND MY OWN FIRST READ OF THAT WAS WRONG: I grepped `<expect>[0-9] fail</expect> | head -1` and got AC7's `0 fail`, briefly reading the correction as not landed. A pattern that matches two criteria returns the first, not the one asked about -- a wrong-object error, caught by re-reading per criterion id."
+      ]
+    },
+    "spec_asserts": "1.0.0_SA_CTO ruling 5(a): 'Placeholder substitution is the ONLY edit permitted between the file's worker face and the spawned prompt; anything else lands in the FILE first.' Round 3's spawn prompts: 'Its WORKER FACE section ... is AUTHORITY over anything in this message.'",
+    "world_is": "'Lands in the FILE first' and 'the file is authority' both silently assume THE WORKER'S BRANCH CARRIES THE COMMIT. A worktree is a snapshot; an issuer amendment made after the cut lands on CLOUD and is invisible to the branch, so the authority the prompt points at is a STALE COPY of the thing it means. The remedy is one clause: AN AMENDMENT NAMES ITS COMMIT, AND THE WORKER READS THE FACE AT THAT COMMIT -- `git show <commit>:<order>` with a positive control -- never from its own tree and never from the message body. That is exactly what the worker invented under pressure and it should be law rather than improvisation. disarm_owner 1.0.0_SA_CTO because it amends ruling 5(a), which is the CTO's, and proposing is not ruling -- S32's lesson, applied to myself for the third time this round.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T08:46:21Z",
+    "id": "IRPT_FNTEND-S44",
+    "one_line": "FE-s-18 CANNOT CLOSE IN ROUND 3 AS CUT, and I am naming it now rather than discovering it at the round close. All four seated round-3 cells are COMPLETE and drained (FE-s-19, 20, 23, 24) and FE-s-21 and FE-s-22 are seated. But FE-s-18's two carried criteria both turn on F18-AC3, and F18-AC3 needs the three Holdings smoke maps to carry DISTINCT `status` members -- measured: 84 v1 envelopes across 36 maps, 3 carrying `status`, and those three maps at 0 of 9 each. NO ROUND-3 CELL HOLDS THE FIXTURES, and Rule 27 freezes the decomposition mid-round, so I am NOT cutting an eighth cell to cover it.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer's own fixture census on the merged DEV: 36 maps, 84 v1 envelopes, 3 carrying a `status` member; fe-s-18-holdings-{observed,target,missing-attribution}.json read envelopes=9 with_status=0 EACH. Worker's independent census at a narrower scope agreed (62/16/3, the three at 0).",
+        "F18-AC3's population is ELEVEN COMMITTED PNG FILES with committed sha256s; a source change cannot move image bytes, so the captures must be RE-TAKEN, and `__tests__/fe-s-18/` is in no round-3 <paths> block (denominator 6 cells, 0 with it).",
+        "F18-AC17 asks `0 fail` over the whole set; the merged DEV reads 1 fail and it IS F18-AC3, so AC17 cannot pass while AC3 cannot.",
+        "The seam fix is NOT the missing piece and this is the discrimination that proves it: with FE-s-19 landed, the browser criteria read BODIES MOUNTED 2 of 2 and UNCERTAIN WITHOUT A WIRE STATE 2 of 2 -- the tabs mount correctly AND the three Holdings fixtures still cannot differ, because none of them carries a state to differ on.",
+        "CLAUDE.md Rule 27: mid-round the spec AND the decomposition are FROZEN; the only off-spec act is a surprise ROW. This row is that act."
+      ]
+    },
+    "spec_asserts": "1.0.0_SA_CTO ruling 1: 'FE-s-18 NON-TERMINAL, CARRIED, BOTH CRITERIA UNTOUCHED. No amendment, no re-grade, no pass-with-a-note.' Decomposition v0.3 R3.1: 'FE-s-18 ... is re-run, never re-issued, once FE-s-19 and FE-s-20 are terminal and drained.'",
+    "world_is": "FE-s-19 and FE-s-20 ARE terminal and drained, so the stated precondition for FE-s-18's re-run is met -- and the re-run still cannot pass, because the precondition I wrote was about the SEAM and the blocker is the FIXTURES. I got the dependency right and the sufficiency wrong, which is the same error as S41 one layer up: a re-run condition is a prediction unless it was measured. WHAT ROUND 4 NEEDS, stated so the CTO can rule it without re-deriving: ONE FIXTURE CELL giving the three Holdings smoke maps distinct `status` members, after which FE-s-18's existing criteria are re-run UNCHANGED and close on their own terms. \u26a0 AND IT COUPLES TO RULING 4: a capture set can only assert distinct hashes on a field its FIXTURES vary, so the scoped rule needs a third limb -- A FIXTURE THAT DOES NOT CARRY THE CLAIMED FIELD IS A DEFECTIVE FIXTURE, NOT AN ADMITTED COLLISION. Without that limb the scoped rule would have ADMITTED this collision as legitimate.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
