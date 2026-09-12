@@ -137,7 +137,7 @@ not about your instance), flip this file's `<status>` to `complete`, and commit 
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>staged</status>
+<status>complete</status>
 <round>7</round>
 <slot>~12</slot>
 <fabric>site-z</fabric>
