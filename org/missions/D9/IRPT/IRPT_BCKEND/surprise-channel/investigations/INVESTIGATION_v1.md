@@ -4397,6 +4397,77 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "WHAT THIS WORKER DOES INSTEAD OF WIDENING. The order's own arm (d) already carries the branch this lands in: 'or a BLOCKING row naming the missing dependency and this arm reads BLOCKED'. So: the SSM dispatch, its least-privilege Lambda IAM, the dispatch/reconcile accounting and the arms that do not need a landed artifact are built and deployed; arm (b) and the two build-dependent halves of arm (c) read BLOCKED against this row and RT6-AC1 is reported FAIL rather than flipped. NO WRONG ARTIFACT IS REACHABLE BY THE WINDOW THIS LEAVES (the order's G4 question, answered rather than implied): after the deploy, a scheduled fire dispatches a command that fails on the host, and the runner's own _assert_destination plus the AccessDenied above mean nothing is written anywhere -- the fire records the dispatch, the NEXT fire reads the command's invocation status back and records REFRESH_FAILED with the command id. A RUNNING state is therefore perishable and cannot sit forever. THE REMEDY IS NOT MINE TO CHOOSE EITHER: extending a SHARED scheduled-gold host role to read three firms' identity dimensions and write three firms' investor-reporting prefixes is a cross-firm widening on a role other pipelines assume, and the standing bound puts that behind a named sign-off, not behind a worker's convenience. NOT A DEFECT OF IB-rt-5: the bundle it minted is correct for what it declared, and the ids.py member this worker added under amendment H3 resolved the import blocker it did have."
+ },
+ {
+  "id": "IRPT_BCKEND-W2-S50",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+  "surfaced_at": "2026-09-12T08:40Z",
+  "one_line": "S3 CANNOT SAY 'ABSENT' TO A CALLER THAT CANNOT LIST, AND THAT MADE THIS CELL UNABLE TO BOOTSTRAP. A GetObject on a MISSING key returns 403 AccessDenied -- not 404 -- when the principal has no s3:ListBucket, so the refresh's first read of its own memory arrived as a denial for 3 of 3 firms, the classifier correctly refused to call it absence, and no fire could ever write the first manifest. FIXED IN LANE: absence is now established by a prefix LIST before any GET, under a ListBucket grant CONDITIONED to exactly the prefix the role could already read.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "infra/aws/terraform/investor-reporting/directory/schedule.tf, cell IB-s-4's own comment: 'PutObject ONLY, and ONLY under _refresh/. No delete, no overwrite of a directory artifact, no ListBucket: the manifest key is computed from the business date, never discovered.' And refresh.py's `_absent()`: 'only a genuine not-found is absence; everything else RAISES and is recorded as a failed fire' -- written against row W2-S45, where a bare except would have made an AccessDenied read as 'no previous manifest' and switched the MISSED detector off. Both statements are correct. Together they deadlock.",
+  "world_is": "MEASURED ON THE DEPLOYED FUNCTION, and it could not have been measured any other way. `aws lambda invoke irpt-directory-refresh` with business_date 2026-09-11 returned StatusCode 200 with THREE envelopes reading REFRESH_FAILED/FAILED and `manifest_read_error: AccessDenied`, `manifest_key: None`, `manifest_written: None` -- 3 of 3 firms, nothing written anywhere. THE SECOND INSTRUMENT, WHICH IS NOT A RE-RUN OF THE FIRST: `simulate-principal-policy`, SINGLE ARN and exact grain (a batched multi-ARN call poisons the verdict and a wrong-grain ARN is a third false-deny class), on the role irpt-directory-refresh-role: s3:GetObject on arn:aws:s3:::opal-data-bd/investor-reporting/directory/_refresh/2026-09-11/manifest.json -> ALLOWED, while s3:ListBucket on arn:aws:s3:::opal-data-bd -> implicitDeny. So the denial was never about the object; it is S3's documented rule that a caller without ListBucket is told 403 rather than 404 for a key that does not exist. AN OFFLINE FIXTURE COULD NOT SEE IT AND MINE DID NOT: the controlled-clock probe's fake S3 raised a 404-shaped error for a missing key, so every offline arm passed about a failure the fixture could not express. A fixture that cannot represent the failure cannot score it. AFTER THE FIX, MEASURED THE SAME WAY: the same invoke returns REFRESH_DISPATCHED/RUNNING for 3 of 3 with manifest_read_error None and manifest_written True, and the three manifests read back from S3 carry build_dispatch SSM with real command ids.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "aws lambda invoke irpt-directory-refresh, payload business_date=2026-09-11 -- 3 of 3 envelopes REFRESH_FAILED with manifest_read_error=AccessDenied, manifest_written=None",
+    "aws iam simulate-principal-policy, single ARN: s3:GetObject on the exact manifest key -> allowed; s3:ListBucket on arn:aws:s3:::opal-data-bd -> implicitDeny",
+    "infra/aws/lambda/investor-reporting/directory/refresh.py `_absent()` -- only NoSuchKey/404/NotFound is absence; 403 raises",
+    "after the fix: aws iam simulate-principal-policy s3:ListBucket on opal-data-bd with context s3:prefix=investor-reporting/directory/_refresh/ -> allowed, and the IDENTICAL call with s3:prefix=gold/ -> implicitDeny (the negative control)",
+    "after the fix: the same invoke -> 3 of 3 REFRESH_DISPATCHED, manifests present at <firm bucket>/investor-reporting/directory/_refresh/2026-09-11/manifest.json"
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "FIXED IN LANE BY THIS ORDER AND THE FIX DELIBERATELY DOES NOT LOOSEN THE CLASSIFIER, which would re-arm the very defect W2-S45 was written against. Absence is ESTABLISHED BEFORE the GET: `list_keys()` is the absence oracle (a refused list still RAISES; only an EMPTY SUCCESSFUL list is absence), `last_manifest` takes ONE list of the cell's own `_refresh/` prefix and then walks the TRADING CALENDAR exactly as before -- the order of candidates is still the calendar's, never the listing's, so 'the key is computed from the business date, never discovered' remains true. The new ListBucket statement is CONDITIONED on s3:prefix matching exactly the prefix the existing GetObject statement already grants, with both derived from local.directory_prefix, so the function may list precisely the set it may already read and a prefix change moves the two grants together. WORTH GENERALISING BEYOND THIS CELL: every least-privilege role in this estate that reads a computed S3 key WITHOUT ListBucket has the same property -- it cannot tell a missing object from a denied one, and any code that classifies the two apart will, correctly and silently, treat every absence as a failure. That is a property of the GRANT SHAPE, not of any one cell."
+ },
+ {
+  "id": "IRPT_BCKEND-W2-S51",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+  "surfaced_at": "2026-09-12T09:02Z",
+  "one_line": "THE MINTED BUNDLE CANNOT CARRY WHAT THE RUNNER ACTUALLY NEEDS. directory_runner.py reaches ELEVEN repo paths by derivation; the bundle declares four of the files behind them and the remaining SEVEN are not distributable as flat members -- three are a per-firm `runner_common.py` imported BY REPO PATH, each with its own transitive tree. Enumerated by subtraction over the module's own references with the denominator printed, so a further one cannot appear without the count disagreeing.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The issuer's own amendment carried in this order: 'THE RUNNERS IMPORT FIRST-PARTY CODE BY REPO SHAPE ... The SSM run therefore unpacks into a repo-shaped path on the host (or the host's tree carries lib/ at the expected depth) and arm (d) prints the import check's stdout -- the runner's modules, pandas and trading_calendar each resolved -- BEFORE the first build; a missing dependency on the host is a BLOCKING row and arm (d) reads BLOCKED.' The repo-shaped unpack is implemented and the import check now passes; what the amendment did not enumerate is how many repo files the shape must contain.",
+  "world_is": "ENUMERATED BY SUBTRACTION, NOT BY RECALL, over a printed denominator: a regex sweep of `_REPO / ...` and `_import_runner(...)` in data/assets/scripts/gold/investor_reporting/directory_runner.py returns 11 references. They resolve to SEVEN distinct repo files plus one directory: lib/trading_calendar.py (:106-107), infra/aws/lambda/investor-reporting/_ids/ids.py (:112), infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json (:120), data/firm_registry.json (:122), infra/aws/lambda-edge/_shared/firm-config.mjs (:123), and THREE per-firm runner_common.py modules imported by repo path at :233, :305 and :330 (data/assets/scripts/gold/runners_49f, data/inf/scripts/gold/runners_inf, data/cot/scripts/gold/runners_cot). THE BUNDLE NOW CARRIES FOUR MEMBERS -- directory_runner.py, holdings_snapshot.py, ids.py and (added by this order) trading_calendar.py -- so TWO of the seven are covered for the directory runner and FIVE are not. MEASURED ON THE HOST, ONE LAYER AT A TIME, each by a dispatch from the DEPLOYED function: with three members the host printed 'IMPORT-FAIL ... No module named trading_calendar' (command 940c828f-c176-4a2d-afcc-1693d3d97fe6, Failed rc=1); with four it printed 'IMPORT-OK first-party modules resolved: trading_calendar, ids, contract' and \"SOURCE_SETS ['49financial', 'cottonwood', 'inflection']\", then failed at the NEXT file -- FileNotFoundError on infra/aws/lambda-edge/_shared/firm-config.mjs (command a83c5d88-2392-43f2-be55-c9845a0b1384, Failed rc=1). The host carries NO runner_common.py anywhere (bounded find over /opt /home /srv -> 0 hits).",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "regex sweep of `_REPO /` and `_import_runner(` over directory_runner.py -> 11 references, listed with line numbers above",
+    "SSM command 940c828f-c176-4a2d-afcc-1693d3d97fe6 stdout: three members, IMPORT-FAIL ModuleNotFoundError trading_calendar",
+    "SSM command a83c5d88-2392-43f2-be55-c9845a0b1384 stdout: four members, IMPORT-OK, then FileNotFoundError on infra/aws/lambda-edge/_shared/firm-config.mjs",
+    "aws s3api head-object on the re-minted bundle: ETag c596538e9494b640e27de50720a14b52, 41844 bytes, four per-member sha metadata keys, all four re-derived from the repo files by hashlib and EQUAL",
+    "SSM command fb070815-519e-4699-9a6b-193267476d25: find /opt /home /srv -name runner_common.py -> 0 hits"
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "WHY THIS ORDER DECLARED ONE MEMBER AND STOPPED. trading_calendar.py was declared because it is a MODULE-LEVEL import -- without it the runner cannot be imported at all, so arm (d)'s import check could not even be attempted -- and because it is the estate's ONE frontier, which makes declaring it a DISTRIBUTION and copying it a second definition (amendment H3's distinction). The remaining five are a different problem: three of them are per-firm modules with their own transitive trees, and chasing them one mint at a time would walk a tail that terminates at a wall this order cannot clear anyway -- row W2-S49, where the host's identity is AccessDenied on 5 of 9 source prefixes and 3 of 3 destinations. Adding members to a shared DS-lane artifact to serve a path that cannot complete is churn, so the gap is RECORDED WITH ITS FULL ENUMERATION rather than half-closed. THE REMEDY IS A SHAPE DECISION, NOT A MEMBER LIST: either the host carries a repo checkout at the depth the runner derives, or the runner's import shape changes -- and the second is expressly refused by the amendment ('No runner is edited to change its import shape here'), so it is an L10 item for the IRPT lane."
+ },
+ {
+  "id": "IRPT_BCKEND-W2-S52",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+  "surfaced_at": "2026-09-12T08:14Z",
+  "one_line": "`.tools/terraform.exe` was NOT provisioned in this worktree, although the order states the issuer provisioned it and forbids a PATH substitute. I restored it by copying the byte-identical binary from the workspace root rather than substituting a PATH terraform, and recorded the hash equality -- the premise is repaired, not worked around.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IB-rt-6, bounds 4: '.tools/terraform.exe is provisioned in your worktree by the issuer -- use it by that path, never a PATH substitute (a substitute re-pins remote state)'.",
+  "world_is": "`ls -la /c/tmp/wk-irpt-2-2c/.tools/terraform.exe` -> 'No such file or directory'. The binary is gitignored (`git check-ignore -v` -> .gitignore:193 `.tools/*.exe`), so a fresh linked worktree never carries it -- the same class the estate already recorded as 'a gitignored tool binary is absent in every fresh worktree'. REPAIRED RATHER THAN SUBSTITUTED: copied from C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\.tools\\terraform.exe, and both files hash to sha256 7d6217a8b147d7e6d852f4b331a707df... (first 32 hex, computed on both paths in one call), 91,104,424 bytes, `terraform version` -> Terraform v1.9.8 on windows_amd64. It remains gitignored and unstaged, so nothing about the repository changed.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "ls -la .tools/terraform.exe in the worktree -> No such file or directory",
+    "git check-ignore -v .tools/terraform.exe -> .gitignore:193 .tools/*.exe",
+    "sha256 of the workspace-root binary and the copied one, printed side by side and equal; terraform version -> v1.9.8",
+    "git status --porcelain .tools/ -> empty after the copy"
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "FILED BECAUSE IT IS A PREMISE OF THE ORDER THAT DID NOT HOLD, not because it cost anything -- it cost one copy. It is worth a row for the NEXT worker: a worktree cut for a cell whose deliverable includes a terraform apply needs this binary placed AFTER the worktree is created, because `git worktree add` cannot carry a gitignored file, and the order's own bound makes the obvious fallback (PATH terraform) refused. The substitute is refused for a real reason -- a different terraform version re-pins remote state -- so the right repair is a byte-identical copy with the hashes printed, which is what this row records."
  }
 ]
 ```
