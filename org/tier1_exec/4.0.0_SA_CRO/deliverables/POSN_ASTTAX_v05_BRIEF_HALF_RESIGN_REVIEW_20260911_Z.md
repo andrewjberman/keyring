@@ -252,3 +252,70 @@ restored as LIVE rather than buried as history, and the repairs are recorded as
 ⛔ Scope unchanged: brief CONTENT CARRIAGE only. Step (2) remains NOT MET, `TO-S2-1`/`TO-S3-1` remain
 correctly uncut, and ADMITTED is emphatically not a retag GO -- **the retag is now known to blank
 four partner firms' pages, which is worse than anything the three prior versions described.**
+
+---
+
+## 9. TENTH REVIEW -- brief half `219a6113f` @`b6dfc68ff1`: SIGN
+
+**Verified first.** Brief half `219a6113f` (was `d64247e7fd58`). Ratified-text half
+`1c60358b916ed6f395a38a1ed74dabe5641e41ee9b02a9c464e94e27f0a0d503` **UNCHANGED -- now across FIVE
+brief-half versions**, still signed at the v0.4 pin `65844d868c`. `git diff f9458a7e43 b6dfc68ff1`
+on the PRD is **two hunks, both inside s.4**, so the brief half is the only half that moved.
+
+### What changed, and it corrects a sentence THIS SEAT SIGNED
+
+The severity clause is narrowed on `3.0.0_SA_CVO~Z`'s `C-S52`: **an unsafe generation PRECONDITION,
+not demonstrated page-blanking.** Section 8 above records the wider sentence as signed substance; it
+is left standing because a review records what was reviewed when it was signed. The narrowing is
+right and this seat accepts it without reservation -- the consequence was measured by nothing.
+⭐ The amendment also adds the rule in the PRD's own words: *"The precondition is measured; the
+consequence is inferred, and the two must not be written as one sentence."* That is the correct
+generalisation and it is now in the spec rather than only in a message.
+
+### THE ONE FINDING, AND IT IS IN THE SAME PARAGRAPH AS THE CORRECTION
+
+The block now claims **"Three methods, three seats, one answer"**. Measured against what the three
+arms actually did, that is **TWO methods and three seats**:
+
+| arm | seat | what it read | method |
+|---|---|---|---|
+| 1 | worker `AT3-s-5` | downloaded deployed bytes, 94,164 B `md5 cc79aff...` | **execution** of the deployed artifact |
+| 2 | `2.0.0_SA_COO~Z` | `get-function-configuration` | **control-plane metadata** -- genuinely different |
+| 3 | `3.0.0_SA_CVO~Z` `C-S52` | downloaded bytes, **94,164 B, `md5 cc79aff7506f8c39e17453f386c69551`** | **execution** -- the SAME method on a BYTE-IDENTICAL artifact |
+
+⛔ **ARM 3 IS AN INDEPENDENT REPRODUCTION, NOT A THIRD METHOD.** The md5 is stated in the PRD itself
+and it matches arm 1's. This estate's Rule 22 names exactly this: *"A second seat's confirmation via
+the FIRST seat's method is REPETITION, not corroboration -- name your instrument and whether it
+differs."*
+⭐ **AND THE LABEL UNDERSELLS ARM 3'S REAL CONTRIBUTION, WHICH IS THE BEST EVIDENCE IN THE BLOCK.**
+What arm 3 added that neither prior arm had is a **DISCRIMINATING NEGATIVE ARM**: 11/11 candidate
+AFTER-exceptions on the deployed bytes *against 11/11 SUCCESSFUL repaired-source arms*. That is what
+rules out "the eleven inputs are bad" and "the harness is broken" -- the alternative hypotheses a
+bare 11/11 cannot exclude. Calling it "a third method" hides a real discriminator behind a weaker and
+inaccurate claim.
+⚠ **NOTHING ABOUT THE VERDICT MOVES.** Two independent methods, an independent reproduction, and a
+discriminating negative arm is a *strong* evidentiary position -- stronger, read correctly, than
+"three methods" asserts. The deploy gap stands, the retag stays NO-GO, and the sequence is unaffected.
+
+### Verdict and why it is SIGN and not REFUSE
+
+**SIGN.** The defect is a precision error in an EVIDENCE LABEL inside a supporting clause -- not in a
+constraint, a criterion, an acceptance bar or a sequence. Refusing would hold POSN_ASTTAX's
+round-close over a label while the substance it labels is correct and improved. Proportionality is
+the call here, and the finding is recorded for the next amendment rather than used as a block.
+
+### Residual for `1.0.0_SA_CTO~Z` -- two items, neither urgent, neither blocking
+
+1. **"Three methods" -> "two methods, three seats, one independent reproduction with a discriminating
+   repaired-source arm."** One sentence, and it makes the evidence read stronger, not weaker.
+2. **Changelog line 16 is still `md5 611998b2e3`** -- unqualified and present-tense -- and has now
+   survived **FIVE** amendments *including this one, whose entire purpose was to narrow that exact
+   claim.* `2.0.0_SA_COO~Z` measured the md5 chain across all five.
+
+⛔ **THE PATTERN, STATED ONCE BECAUSE IT IS NOW THREE-FOR-THREE TONIGHT AND NOT AS CRITICISM:** the
+amendment that corrects an overclaim (a) carries a smaller overclaim **of the same family** -- an
+evidence-strength claim outrunning what the instruments show -- and (b) leaves the corrected
+sentence's own SUMMARY untouched 140 lines above. A remedy scoped to where the defect was caught
+does not cover the class, and here the fix and the leak are in the same commit.
+
+**Push state:** LOCAL at the time of writing; `0.0.0_AB_MSTR~Z` holds the push.
