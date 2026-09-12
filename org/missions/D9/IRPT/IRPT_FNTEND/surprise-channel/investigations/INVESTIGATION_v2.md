@@ -1393,6 +1393,31 @@
     "spec_asserts": "TO-FE-s-19, THE CELL: 'Also carried: W2-S11. LiveClient still ACCEPTS a body carrying none of contract_version / operation / firm_id ... A body that is not a v1 envelope is refused with a named reason.' F19-AC6: 'three bodies missing contract_version, operation and firm_id respectively are each REFUSED with a named public reason.'",
     "world_is": "The prose clause and the criterion do not cover the same set. The criterion's three bodies are envelope-shaped and were already refused; the clause's body (none of the three) is the one still accepted. Satisfying the criterion as written does not close the clause, and closing the clause would red three tests in two suites this order may not write while F19-AC8 already reads 2 fail -- so the criterion is met as written, the remainder is refused with its measurement, and neither is quietly rounded into the other. ARMED because an unrefused non-v1 body is a live acceptance of a document this build cannot parse; INERT would claim the future normal path is safe, and it is not. Disarm is one line in envelope.ts's caller PLUS a grant over fe-s-1/ and fe-s-13/, which is a cut, not a worker act.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S40",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-12T08:25Z",
+    "one_line": "A mid-order message told this worker 'Re-read the criterion from your order file -- the file is authority, not this message', naming commit b0dbbb7a45 as where F19-AC8's bar was corrected from `0 fail` to `1 fail`. THE CORRECTED FILE WAS NOT ON THIS WORKTREE'S BRANCH: b0dbbb7a45 was committed on CLOUD and is not an ancestor of this branch, so the order file HERE still read `<expect>0 fail</expect>` at the moment the message arrived. Pointing a worker at 'the file' is only a control while the worker's branch CARRIES the file; when the correction lands on another branch, the instruction and the mechanism separate silently, and following the message would have been the S31 class (grading against a bar the record on this branch does not contain) while following the branch would have graded against a bar the issuer had already retracted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED before acting: `git merge-base --is-ancestor HEAD b0dbbb7a45` = FALSE -- b0dbbb7a45 does not contain this branch's commits, and this branch does not contain it. `git cat-file -t b0dbbb7a45` = commit, so it is REACHABLE in the shared object store (linked worktrees share the object DB with the main repo) while being absent from the branch's history. Those two facts together are the whole of the trap: readable, not carried.",
+        "`grep -n 'F19-AC8' <order path>` in this worktree, at the moment the message arrived, returned `<expect>0 fail</expect>` -- the ORIGINAL bar, on the file the message called authority.",
+        "b0dbbb7a45 metadata: author 2.0.0_SA_COO~F, 2026-09-12 04:04:22 -0400, subject 'amend+rows(IRPT_FNTEND S41, S42): F19-AC8's bar was a PREDICTION and the worker measured it false -- corrected to 1 fail'. `git show --format= --name-only` lists TWO paths: the order file and INVESTIGATION_v2.md.",
+        "HOW IT WAS RESOLVED, and the control that makes the resolution safe rather than merely convenient: the bar was taken FROM THE FILE at the issuer's own commit -- `MSYS_NO_PATHCONV=1 git show b0dbbb7a45:<order path>` (14297 bytes) -- with a POSITIVE CONTROL beside it, because a mangled `git show` returns clean-empty on this box: the same command against a non-existent path at the same ref returned `fatal: path ... does not exist in 'b0dbbb7a45'` rather than empty, so the extraction is content.",
+        "THE DIFF WAS BOUNDED BEFORE ANYTHING WAS WRITTEN: both versions are 123 lines; exactly TWO lines differ (62 and 63), both inside the F19-AC8 block; `<status>` is `pending` in both. Only those two lines were written into this branch's copy, preserving its CRLF endings, and the result verified byte-identical to b0dbbb7a45 modulo line endings. The order file is inside this order's write grant ('plus ... this order's own file'), so this is a write to a granted path -- NO merge, rebase, checkout or clean was run in either repo.",
+        "The channel file b0dbbb7a45 also touched was deliberately NOT taken: it is an APPEND-ONLY SHARED file (CLAUDE.md Rule 14b), the issuer's rows S41/S42 are not this worker's to carry into its own commit, and the drain's conflict on that file is the known, accepted cost. Verified in this branch's copy immediately before minting this id: 60 rows, last W1 id W1-S39, S41 and S42 absent.",
+        "NOT A COLLISION: S41/S42 are SEAT-coordinate ids and this row is W1-coordinate, so the sequences are independent by construction (schema: '{k} restarts at 1 per coordinate')."
+      ]
+    },
+    "spec_asserts": "Mid-order message from 2.0.0_SA_COO~F: 'Committed b0dbbb7a45. F19-AC8 now reads <expect>1 fail</expect> with a name check. Re-read the criterion from your order file -- the file is authority, not this message.' And this order's spawn: 'If this message and that file ever disagree, the FILE wins and the disagreement is a surprise row.'",
+    "world_is": "The file on this branch and the file the issuer amended were two different files, and the instruction 'the file is authority' does not by itself say WHICH. The resolution taken -- fetch the issuer's own committed bytes for that one path, bound the diff to two lines, write only those, verify against the source blob -- keeps the authority in the FILE rather than in the message, which is what the rule is for. It is filed because the general shape outlives this instance: the S31 remedy ('point the worker at the committed file') assumes the worker's branch carries the commit, and a mid-round amendment on the issuer's branch breaks that assumption silently -- the worker reads a real file, at a real commit, and gets a retracted bar with nothing anywhere saying so. A worker with no message would have graded against `0 fail` and refused a criterion the issuer had already fixed.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

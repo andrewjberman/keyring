@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-12</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F1, F7, F12; CONTRACTS `StatusEnvelope` consumed) | **Decomp cell:** `FE-s-19` (round 3, v0.3 @38f68b965c) | **outcome_ref:** FWD-1, FWD-5, FWD-6 | **depends_on:** none -- READY ROOT | **slot:** ~1, queue position 1 | **rows:** W1-S33, S30, W2-S11
 
@@ -59,8 +59,8 @@ So every network-sourced response reaches the tabs as `UNCERTAIN` and the bodies
 <criterion id="F19-AC7" cell_refs="FE-s-19"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-19</invocation><expect>0 fail</expect></criterion>
 `F19-AC7` -- the whole fe-s-19 folder is green.
 
-<criterion id="F19-AC8" cell_refs="FE-s-19"><invocation>cd <WS>/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting</invocation><expect>0 fail</expect></criterion>
-`F19-AC8` -- the whole Investor Reporting set is green. NOTE: at this cut the set reads 2 fail (F18-AC3's capture collision and one stale schema pin). **The collision is expected to CLEAR when this cell lands** -- three Holdings fixtures produced one byte-identical image precisely because no body mounted. The stale pin is `FE-s-20`'s. If this criterion still reads a stale-pin failure and nothing else, that is a BLOCKING row naming it, not a repair here.
+<criterion id="F19-AC8" cell_refs="FE-s-19"><invocation>cd <WS>/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting</invocation><expect>1 fail</expect></criterion>
+`F19-AC8` (BAR CORRECTED BY THE ISSUER, row IRPT_FNTEND-S41 -- it read `0 fail` on a PREDICTION I made and the worker MEASURED FALSE). The set reads **exactly one** remaining failure and it is `F18-AC3`'s capture collision; **print the failing test's name**, and if it is anything else, or if a second appears, that is a BLOCKING row. ⛔ **WHY THE COLLISION DOES NOT CLEAR WHEN THIS CELL LANDS, which is what I got wrong:** `F18-AC3` grades ELEVEN COMMITTED PNG FILES and a source change cannot move image bytes -- re-capturing is `FE-s-18`'s cell and `__tests__/fe-s-18/` is in nobody's round-3 grant. AND a re-take would STILL collide: all three Holdings smoke maps carry NINE v1 envelopes and ZERO `status` members (issuer's own census: 84 envelopes across 36 maps, 3 carrying `status`), and `status` is the only wire carrier of a state on this plane -- so under your now-correct bytes those three maps render three identical panels BY THE CONTRACT. Clearing it needs a FIXTURE cell, which is a round-3 input and not yours. The stale-pin failure is `FE-s-20`'s and has already drained.
 
 <criterion id="F19-AC9" cell_refs="FE-s-19"><invocation>cd <WS> && timeout 120 python -c "import io; p='org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/envelope-to-view-seam.result.md'; print('PRE-FIX RED HEADINGS:', io.open(p, encoding='utf-8').read().count('PRE-FIX RED'))"</invocation><expect>PRE-FIX RED HEADINGS: 3</expect></criterion>
 `F19-AC9` -- the NEGATIVE-CONTROL LEDGER: the result file records, under a `PRE-FIX RED` heading for each of the three new test files, the failing output that file produced against the unmodified bytes BEFORE any source change, and beside it the passing output after. Three headings, three pairs.
