@@ -1,6 +1,6 @@
 # CHANGE MANAGEMENT -- IRPT_BCKEND W4-S20: per-version delete of NINE noncurrent versions
 
-**State:** OPEN (this entry and its sentinel are committed BEFORE the act, per NEVER-2)
+**State:** CLOSED 2026-09-12T02:24Z by `2.0.0_SA_COO~B` -- all 8 legs proven. Sentinel removed.
 **Opened:** 2026-09-12T02:15:00Z by `2.0.0_SA_COO~B`
 **Class:** IRREVERSIBLE DATA DELETE. There is no rollback leg and this entry does not pretend to one.
 
@@ -61,10 +61,29 @@ reason this call existed.
 | # | leg | state |
 |---|---|---|
 | 1 | Andrew's word on the CORRECTED count, recorded verbatim | DONE |
-| 2 | Ledger + sentinel committed BEFORE the act | DONE (this commit) |
-| 3 | Pre-act gate re-read matches the authorized subtraction | DONE -- PASS |
-| 4 | The nine per-version deletes, each response captured | PENDING |
-| 5 | By-VersionId read: `NoSuchVersion` on 9 of 9 | PENDING |
-| 6 | Positive control: `probe/probe.txt` version still resolves | PENDING |
-| 7 | Delete markers untouched (5 still present) | PENDING |
-| 8 | Ledger CLOSED and committed before the grading reads | PENDING |
+| 2 | Ledger + sentinel committed BEFORE the act | DONE @89d9b2965d |
+| 3 | Pre-act gate re-read matches the authorized subtraction | DONE -- PASS (10/5/5, target 9, excluded 1) |
+| 4 | The nine per-version deletes, each response captured | DONE -- 9 of 9 `rc=0`, receipts JSON |
+| 5 | By-VersionId read: `NoSuchVersion` on 9 of 9 | DONE -- 9 of 9 `(404) HeadObject: Not Found`, identical text, NOT AccessDenied |
+| 6 | Positive control: `probe/probe.txt` version still resolves | DONE -- `rc=0`, ContentLength 5, VersionId matches, stderr 0 bytes |
+| 7 | Delete markers untouched (5 still present) | DONE -- 5 before, 5 after |
+| 8 | Ledger CLOSED and committed before the grading reads | DONE -- this commit |
+
+## Measured outcome
+
+```
+prefix versions   10 -> 1     (the one remaining is probe/probe.txt, deliberately excluded)
+delete markers     5 -> 5     (UNTOUCHED -- deleting one would RESTORE a current object)
+target versions    9 -> 0     by-VersionId head: 404 Not Found on 9 of 9
+positive control   resolves   same credential, same operation, same bucket
+```
+
+**The discrimination is what makes this evidence rather than a hope.** Nine reads fail and one succeeds under the
+same credential, the same operation and the same bucket, so a permissions or network explanation for the nine is
+ruled out. A 404 on the ordinary key was already true before the act and is cited nowhere here.
+
+**"The four synthetic export PDFs are gone" is now sayable WITHOUT a qualifier.** That sentence was not true at any
+earlier point tonight -- not after the original four delete-markers, and not after the four named versions would
+have gone.
+
+Receipts: `20260912T0215Z_irpt-bckend-w4s20-nine-version-delete_receipts.json`.
