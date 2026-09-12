@@ -392,6 +392,77 @@
     "spec_asserts": "Decomposition v0.2 @430c5fcb4a gives FE-s-16 depends_on FE-s-13, FE-s-14 -- not FE-s-15. The spine's L6 rule is that two cells on one chain never run at once, and the dependency edges are what decide a chain. F16-AC9's expectation is the bare string '0 fail'.",
     "world_is": "An issuer amendment made mid-round (R2 on FE-s-15) silently moved a cell onto another cell's chain without the edge set being able to say so, because the edge set is frozen and the amendment is not part of it. The general shape, which is the part worth carrying to L10: AN ISSUER AMENDMENT CAN CREATE A DEPENDENCY EDGE AND NOTHING IN THE ROUND'S GRAMMAR RECORDS IT -- the decomposition is frozen, the face carries depends_on as prose written at the cut, and no gate compares the two. Same family as the design finding in S21 (a consumer bar pinned to bytes rather than content): both are cases where a legitimate upstream change invalidates a downstream bar that had no way to express what it actually depended on. Not repaired here and not a reason to re-cut: the criterion stands as written, FE-s-16 is instructed by its own BOUNDS to file a BLOCKING row rather than repair anything outside its grant, and this seat re-runs F16-AC9 on the merged tree after the FE-s-15 drain. Disarmed when that re-run reads 0 fail.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T23:31:00Z",
+    "id": "IRPT_FNTEND-S24",
+    "one_line": "ISSUER AMENDMENT answering a worker REFUSAL that was correct. 0.9.0_WK_IRPT_FNTEND~1 refused F15-AC8 ('a source grep of tabs/analysis/ for inputRevision returns 0 hits') because the criterion is UNSATISFIABLE INSIDE ITS OWN GRANT: __tests__/fe-s-6/correction.test.ts imports deriveInputRevision from tabs/analysis/correction.ts and reads result.inputRevision at three places, so retiring the fallback reds four assertions, and __tests__/fe-s-6/ is not in <paths> -- F15-AC8 and F15-AC11 ('0 fail') could not both be met by any permitted act. The worker took the branch that left nothing broken and reported the refusal with its measurement (5 hits across 12 files, against a bar of 0). Answer: <paths> gains portal/src/pages/InvestorReporting/__tests__/fe-s-6/ for the retirement ONLY, with a BOUNDS clause saying so. THE BAR IS UNCHANGED AT 0 HITS and F15-AC11 must still read 0 fail.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker report, F15-AC8: limb 1 'REVISION IDENTITY: preserved' (identity markup byte-identical, 1618 bytes each); limb 2 'INPUTREVISION HITS IN tabs/analysis/: 5 -- InputReview.tsx:9, correction.ts:4, correction.ts:6, correction.ts:63, correction.ts:86' against a bar of 0. Denominator 5 hits across 12 source files.",
+        "Issuer's own run of the gate on the instance: `python .tools/proof-of-spec-check.py <instance> F15-AC1..F15-AC14` -> VALID (rc=0), 14 acceptance rows, 0 violations, 6 of 6 surprises resolving. The refusal is recorded in a VALID instance, which is what a correct refusal looks like.",
+        "FE-s-15's original <paths> block, read in full: it names __tests__/fe-s-13/, fe-s-14/ and fe-s-1/ but NOT fe-s-6/. FE-s-6 (the Analysis tab) is a terminal round-1 cell whose tests were never expected to move.",
+        "The amendment is the GRANT, not the BAR: F15-AC8's <expect> is untouched, and the BOUNDS clause forbids deleting an assertion to make a bar pass.",
+        "NEGATIVE CONTROL that this is a cut defect and not a code defect: F15-AC11 already reads 398 pass / 1 skip / 0 fail on the worker's branch, so nothing is broken today -- the conflict is between two criteria of the same order, not between the order and the tree."
+      ]
+    },
+    "spec_asserts": "F15-AC8 asserts the inputRevision fallback and parity.ts's local derivation can be removed and graded by a source grep over tabs/analysis/ alone, and W3-S2 orders the same retirement. The cut's <paths> block asserts the order's write surface is sufficient for every criterion it carries.",
+    "world_is": "The retirement's blast radius reaches a SECOND cell's test directory, which the cut did not model, so the order carried two criteria that cannot both be satisfied. The general shape for L10, and it is the same family as S23: A CUT MODELS A WRITE SURFACE FROM THE CELL'S OWN FILES AND NOT FROM WHAT IMPORTS THEM, so a retirement inside a granted file reaches consumers outside the grant with nothing to say so at cut time. A cheap instrument exists and was not applied at L6: for any criterion ordering a symbol's REMOVAL, census the importers of that symbol and check the grant covers them. Disarmed when F15-AC8 passes on the re-run.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T23:31:00Z",
+    "id": "IRPT_FNTEND-S25",
+    "one_line": "ISSUER AMENDMENT answering a second correct worker REFUSAL. 0.9.0_WK_IRPT_FNTEND~3 refused F16-AC8 because its INVOCATION is stale, not because the code is wrong: the URL 'investor-reporting/print?bundle=...' names no &scope=, and since FE-s-14 the declared performance route binds the scope fingerprint as a PATH parameter, so irBuildRequest throws BEFORE the network and the 'REFS RESOLVED' line -- printed after the resolution loop -- never runs. The worker ran the identical command plus '&narrative=1&tenant=F-49F&scope=fp-49f-0824&revision=rev-49f-000091' as a CONTROL and got 'REFS RESOLVED: 1 of 1' twice, 2 of 2 fixtures matched, narrative page rendered. It did not edit the invocation. Answer: the issuer corrects the URL to the worker's proven control. THE BAR IS UNCHANGED AT 'REFS RESOLVED: 1 of 1'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker report, F16-AC8 as written: no 'REFS RESOLVED' line at all; 'FIXTURES: 2 declared; 0 matched >=1 URL'; refusal panel rendered. Denominator 0 of 1 refs resolved, 0 of 2 keys matched -- NO REQUEST WAS ISSUED, which is the discriminator between a stale invocation and a broken page.",
+        "Worker's CONTROL, same command plus the four query params: 'REFS RESOLVED: 1 of 1' twice, 2 of 2 fixtures matched. A control that passes where the criterion fails localises the defect to the invocation.",
+        "Row IRPT_FNTEND-W2-S13, filed by 0.9.0_WK_IRPT_FNTEND~2 during FE-s-14, ALREADY recorded this as a residual: 'a print URL minted without ?scope= and ?revision= now refuses with MissingPayloadError rather than rendering, because the live performance route binds the scope fingerprint into its PATH'. F16-AC8 was cut before that landed and was never re-cut for it.",
+        "Issuer's own run of the gate on the instance: VALID (rc=0), 10 acceptance rows, 0 violations, 9 of 9 surprises resolving.",
+        "The amendment touches the URL only: F16-AC8's <expect> string is byte-identical before and after (verified by reading the criterion after the edit)."
+      ]
+    },
+    "spec_asserts": "F16-AC8 asserts that 'investor-reporting/print?bundle=fe-s-16-narrative' is a URL the print route can serve, and grades on the resolver line the page prints after resolving its references.",
+    "world_is": "That URL stopped being servable one cell earlier, and the row that recorded it (W2-S13) never reached the criteria of the cells cut alongside it. The general shape for L10: A ROW FILED BY ONE WORKER DOES NOT PROPAGATE TO THE CRITERIA OF ORDERS ALREADY CUT -- the channel is read by the CVO at L8 and by the issuer at each drain, and neither read is wired to re-grade an unseated order's invocations. Both of this round's refusals (S24, S25) and S23 are one family: a bar that could not express what it depended on. Disarmed when F16-AC8 passes on the re-run.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-11T23:31:00Z",
+    "id": "IRPT_FNTEND-S26",
+    "one_line": "THIS SEAT'S OWN SEQUENCING SLIP, recorded because it will surface as a merge conflict at both drains and a successor would otherwise read it as worker error. I created both worktree pairs at workspace HEAD 7d6db9bcfa and only THEN committed the <status> flip to pending at ea8fb20df3, so both workers' branches carry the task-order file at <status>blocked</status> while CLOUD carries pending. Both workers noticed and filed it correctly (W1-S23, W3-S12) -- their faces asserted a status their own tree did not show. CONSEQUENCE AT THE DRAIN: when a worker flips its order to complete, the three-way merge sees base=blocked (at 7d6db9bcfa), ours=pending (CLOUD), theirs=complete (branch) and CONFLICTS on that line. THE RESOLUTION IS 'complete' EVERY TIME, and it is a conflict I manufactured, not evidence of anything wrong on the branch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Order of acts, from the commit graph: the two `git worktree add ... HEAD` calls ran while HEAD was 7d6db9bcfa; the flip landed afterwards as ea8fb20df3. The worktrees therefore predate the flip by construction, not by accident of timing.",
+        "Independently corroborated by BOTH workers from inside their own trees, which is the discriminator that this is a real tree state and not a misreading: IRPT_FNTEND-W1-S23 (slot ~1) and IRPT_FNTEND-W3-S12 (slot ~3) each record the order file reading <status>blocked</status> against a face asserting pending.",
+        "The conflict is confined to ONE line of ONE file per order: no worker committed anything else in the task-orders/ directory (verified -- the workspace commits on each branch touch deliverables/, the channel, and the order's own status line only).",
+        "NOT a gitlink hazard and NOT a lane hazard: `git show --format= --name-only <c> -- portal` is EMPTY for every workspace commit on both branches, so neither worker staged the submodule."
+      ]
+    },
+    "spec_asserts": "Both faces state 'fresh worktree pair from HEAD' and the spawn asserted the order already reads <status>pending</status>. The spine's L7 has the worker commit its own status flip on its branch.",
+    "world_is": "The pair was cut from a HEAD that predated the flip, so the face's assertion about its own tree was false when the worker read it. Cost: two correct-but-avoidable worker rows and one manufactured merge conflict per drain. The cheap habit that prevents it, and the reason this is worth a row rather than a silent fix: COMMIT THE SEATING FLIP BEFORE CUTTING THE WORKTREE, because a worktree is a snapshot and every later record act by the issuer is invisible to the worker that is already reading it. Disarmed when both drains are complete and the status lines read complete on CLOUD.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

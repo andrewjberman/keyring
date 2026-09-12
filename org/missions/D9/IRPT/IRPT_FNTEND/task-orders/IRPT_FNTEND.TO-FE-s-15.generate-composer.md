@@ -85,6 +85,7 @@ The counterpart moved the v1 artifact again at d9c940244a (IB-rt-7): `GET .../ho
 ## BOUNDS
 
 - **Grant.** Your write surface is the `<paths>` block below, plus `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/<your serial>/` and this order's own file. The typed client and the adapters are granted for the R2 re-pin ONLY; beyond R2 they are READ only and a wire field the composer needs that the adapter does not expose is a surprise row, never an edit there. A path you need that is not named is a BLOCKING row on that criterion; never an override.
+- **R3 GRANT WIDENING (AMENDED BY THE ISSUER at the round-2 drain, row IRPT_FNTEND-S24).** `__tests__/fe-s-6/` is added to `<paths>` for ONE purpose: the retirement of the `inputRevision` fallback and `parity.ts`'s local derivation that `F15-AC8` and `W3-S2` order. `__tests__/fe-s-6/correction.test.ts` imports `deriveInputRevision` from `tabs/analysis/correction.ts` and reads `result.inputRevision`, and `__tests__/fe-s-6/sections.test.ts` exercises the `parity.ts` half, so the retirement and `F15-AC11`'s `0 fail` could not both be met inside the original grant. You REFUSED that correctly rather than repairing the criterion, and this is the issuer's answer. Update those tests to the WIRE fields the retirement moves to; do not delete an assertion to make a bar pass, and do not touch anything else under `__tests__/fe-s-6/`. **`F15-AC8`'s bar is unchanged at 0 hits** and `F15-AC11` must still read `0 fail` over the whole set.
 - **Numbers.** The 0.30% fee stays a displayed setting from the contract; no fee, count or width constant in `tabs/analysis/`. 390 is a test setup.
 - **Two repos, one worktree pair.** `<WS>` / `<WS>/portal` as in your identity line. Portal commit pathspec: `src/pages/InvestorReporting/tabs/analysis/ src/pages/InvestorReporting/fixtures/smoke/ src/pages/InvestorReporting/__tests__/fe-s-15/`. Workspace records under org/ only. Never push, merge, rebase, `checkout --` or `clean`. Never stage `portal` in the workspace repo.
 - **Dev server.** `node_modules` is a junction; do not run `bun install`. Start once in the background from `<WS>/portal`: `/c/Users/AndrewBerman/.bun/bin/bun run dev --port <PORT>`; use the port it prints; kill it before your final report. Routes without a leading slash.
@@ -102,6 +103,7 @@ portal/src/pages/InvestorReporting/contracts/
 portal/src/pages/InvestorReporting/__tests__/fe-s-13/
 portal/src/pages/InvestorReporting/__tests__/fe-s-14/
 portal/src/pages/InvestorReporting/__tests__/fe-s-1/
+portal/src/pages/InvestorReporting/__tests__/fe-s-6/
 org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md
 </paths>
 
