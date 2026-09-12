@@ -13,7 +13,7 @@
 }
 ```
 
-**Version:** v0.5, 2026-09-11 -- v0.1 first PRD; v0.2 folded in Andrew's Cottonwood satellite components (s.4 C-SATELLITE-DATA), on his direct "read the satellite file and fold it in as its necessary data for POSN_ASTTAX"; **v0.3 disambiguates C-VOL-HEDGE-STRUCTURED's "hedge products" from the legacy served value `asset_class=hedge`** -- a latent defect where the constraint, read against the live data, said the whole `hedge` bucket goes to Structured (found by 2.0.0_SA_COO~Z + 3.0.0_SA_CVO~Z); **v0.4 folds in Andrew's ETFClassifier PURPOSE ruling as C-CLASSIFIER-PURPOSE (s.4)** -- the registry is a curated tagging list, so the served TABLE is the one place, the dict a retired seed input, and equity-as-class must be distinguishable from equity-as-unknown-default (carried via 3.0.0_SA_CVO~Z C-S3 @`4275402ec2`); **v0.5 folds in the `0.4.0_DT_ClientPlatform` GLD/VXX positioning brief as C-RETAG-SAFETY (s.4)** -- the retag of the commodity/hedge tickers is a production landmine (a fixed-key allocation dict KeyErrors and blanks the page for all four partner firms) until the positioning generator is hardened; Andrew-direct 2026-09-11 ~07:2xZ to fold it into POSN_ASTTAX. Each bump re-opens the two L4-R sign-offs. **Author** `1.0.0_SA_CTO~Z` (L4). **Brief:** the nomenclature
+**Version:** v0.5, 2026-09-11 -- v0.1 first PRD; v0.2 folded in Andrew's Cottonwood satellite components (s.4 C-SATELLITE-DATA), on his direct "read the satellite file and fold it in as its necessary data for POSN_ASTTAX"; **v0.3 disambiguates C-VOL-HEDGE-STRUCTURED's "hedge products" from the legacy served value `asset_class=hedge`** -- a latent defect where the constraint, read against the live data, said the whole `hedge` bucket goes to Structured (found by 2.0.0_SA_COO~Z + 3.0.0_SA_CVO~Z); **v0.4 folds in Andrew's ETFClassifier PURPOSE ruling as C-CLASSIFIER-PURPOSE (s.4)** -- the registry is a curated tagging list, so the served TABLE is the one place, the dict a retired seed input, and equity-as-class must be distinguishable from equity-as-unknown-default (carried via 3.0.0_SA_CVO~Z C-S3 @`4275402ec2`); **v0.5 folds in the `0.4.0_DT_ClientPlatform` GLD/VXX positioning brief as C-RETAG-SAFETY (s.4)** -- the retag of the commodity/hedge tickers is a production landmine (a fixed-key allocation dict KeyErrors in the DEPLOYED generator, establishing an UNSAFE GENERATION PRECONDITION -- page-blanking is the brief's PREDICTED consequence and is NOT measured; see s.4) until the positioning generator is hardened; Andrew-direct 2026-09-11 ~07:2xZ to fold it into POSN_ASTTAX. Each bump re-opens the two L4-R sign-offs. **Author** `1.0.0_SA_CTO~Z` (L4). **Brief:** the nomenclature
 transcript's substance, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_ASSET_CLASS_TAXONOMY_BRIEF.md@03f1d00ec4`.
 **Endpoint confirmed by Andrew** 2026-09-11 (see s.5). **Home note:** tree-homed at
 `org/missions/D4/POSN/POSN_ASTTAX/prd/` as `POSN_ASTTAX` (macro POSN), renamed from
@@ -194,12 +194,18 @@ changes WHERE a holding is classified and HOW that flows, not what the holdings 
   ⚠ **VINTAGE:** the 17-hop figures are pinned to `TO-S7-1`'s run and `3.0.0_SA_CVO~Z` records that
   `S1` later repaired a benchmark hop, so the RATIO is historical. **The VERDICT is not** -- the CVO
   re-confirmed against current controls that both classes still display as `Unknown`.
-  **THE ORIGINAL MECHANISM, PRESERVED AS HISTORY AND NO LONGER OPERATIVE** (true when the DT brief was
-  written, falsified by `AT2-s-6`): `yang-generate-positioning/lambda_function.py` bucketed weight into
-  FIXED-KEY dicts -- `management_allocations = {'active','passive'}` (:228, :242-243) and an
-  `asset_class` chain summing into `{cash, fixed_income, equity, hedge}` (:368-369) -- so a value the
-  dict lacked raised `KeyError` in `calculate_allocations()` (:1917/:1926), the generator died,
-  `positioning_data.json` was not rewritten, and the page BLANKED FOR ALL FOUR PARTNER FIRMS.
+  ⛔ **THE DT BRIEF'S MECHANISM -- AND ITS HEADER USED TO READ "PRESERVED AS HISTORY AND NO LONGER
+  OPERATIVE ... falsified by `AT2-s-6`", WHICH CONTRADICTED THE BLOCK ABOVE IT.** That contradiction
+  was this seat's: the reversal was ADDED as a new paragraph without reconciling the old one, so the
+  spec asserted both that this mechanism is dead and that it is running. **IT IS FALSIFIED AT HEAD
+  ONLY. IT IS WHAT THE DEPLOYED BYTES RUN.**
+  `yang-generate-positioning/lambda_function.py` buckets weight into FIXED-KEY dicts --
+  `management_allocations = {'active','passive'}` (:228, :242-243) and an `asset_class` chain summing
+  into `{cash, fixed_income, equity, hedge}` (:368-369) -- so a value the dict lacks raises `KeyError`
+  in `calculate_allocations()` (:1917/:1926), the generator dies, and `positioning_data.json` is not
+  rewritten. ⚠ **THE BRIEF THEN PREDICTED THE PAGE WOULD BLANK FOR ALL FOUR PARTNER FIRMS. THAT
+  CONSEQUENCE WAS NEVER MEASURED -- not by the brief, and not since** (`C-S52`). The generator death
+  is measured on four instruments; what the page does after it is inferred.
   - **`management_style` half -- ARMED and LATENT.** `management_style="unknown"` is a TRUTHY placeholder the
     default-to-passive guard (:72 `value if value else default`, :81) CANNOT fire on; 187 of 285 rows carry
     it, 0 of the 30 currently-held tickers do (the only reason the page works today). GLD, IAU, SLV, USO,
