@@ -1454,6 +1454,77 @@
     "spec_asserts": "TO-FE-s-24 BOUNDS: 'Surprise. ONE row per finding in org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md, id IRPT_FNTEND-W4-S<k> starting at IRPT_FNTEND-W4-S1 (the W4 coordinate has no round-3 rows yet; if the file carries no W4 sequence, yours opens it). Re-read the file immediately before minting each id.'",
     "disposition": "UNDER_INVESTIGATION",
     "world_is": "The W4 coordinate is NOT empty: INVESTIGATION_v1.md holds W4-S1 and W4-S2 from round 1's slot ~4, and the row gate allocates ids over every document of the project's channel plane rather than over the document a face names. The ordered id therefore collides and the commit is refused. This worker's rows are W4-S3 and W4-S4. INERT: the gate is fail-closed and loud, the refusal costs one retry, nothing is served, and no landed row was touched. The re-usable half for the issuer, not decided here: a face that names a starting number is naming a value only the ALLOCATOR can know, and it teaches a worker to scope its pre-mint read to one document -- 'mint the next unused number over every document of the plane' would be both shorter and correct, and is what the gate's own error text says."
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T07:30:18Z",
+    "id": "IRPT_FNTEND-S36",
+    "one_line": "TWO ISSUER MIS-MEASUREMENTS IN THE ROUND-3 CUT, both caught by the workers reading the world rather than my face. (1) I told FE-s-24 to mint surprise rows from IRPT_FNTEND-W4-S1; the row gate allocates over the whole channel PLANE and INVESTIGATION_v1.md already holds W4-S1 and W4-S2 from round 1, so the ordered id was REFUSED at the gate. (2) I wrote into FE-s-23's preflight, as a measured fact, that `proof-of-spec-check.py --help` returns rc=0 while printing READ-ERROR. IT RETURNS rc=2. I had measured it through `| head` and read the PIPELINE's exit status as the command's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Row W4-S4 (0.9.0_WK_IRPT_FNTEND~4): the ordered id was minted, staged and BLOCKED by .tools/surprise-row-gate.py -- 'that id already exists in ... INVESTIGATION_v1.md (the same plane of IRPT_FNTEND's channel, at the graded index)'. The worker backed the un-landed block out, verified the file byte-identical to HEAD, and re-minted at W4-S3/W4-S4.",
+        "ISSUER'S OWN PLANE CENSUS, run after the report across BOTH documents: W1 plane-max 36 (v1 14, v2 36); W2 plane-max 14 (v1 6, v2 14); W3 plane-max 12 (v1 2, v2 12); W4 plane-max 2 -- AND BOTH W4 IDS LIVE IN v1, WITH NONE IN v2.",
+        "\u2b50 SO MY INSTRUCTION WAS RIGHT FOR W1, W2 AND W3 BY COINCIDENCE: for those three the v2 maximum happens to exceed the v1 maximum, so a read scoped to v2 gives the plane's answer. W4 is the only coordinate where it does not, and it is the only one I got wrong. Three of four correct is not a rule working; it is a wrong method surviving on the shape of the data.",
+        "The rc claim, re-measured by the issuer WITHOUT a pipeline: `python .tools/proof-of-spec-check.py --help >/dev/null 2>&1; echo $?` -> 2. Through the original `| head -20` form the same command reports 0, which is head's exit status. Row W3-S15 (0.9.0_WK_IRPT_FNTEND~3) called it and was right.",
+        "The rc trap is in this estate's own memory index verbatim -- 'a pipeline's exit status is its last command's, so cmd | tail always reads rc=0' -- and I walked into it while writing a preflight whose purpose was to record a measured instrument fact."
+      ]
+    },
+    "spec_asserts": "FE-s-24's BOUNDS: 'id IRPT_FNTEND-W4-S<k> starting at IRPT_FNTEND-W4-S1 (the W4 coordinate has no round-3 rows yet; if the file carries no W4 sequence, yours opens it)'. FE-s-23's preflight: '--help ... prints READ-ERROR (rc=2) AND RETURNS rc=0'.",
+    "world_is": "Both halves of the W4 sentence are TRUE of INVESTIGATION_v2.md and the conclusion is still wrong, because the id space is the PLANE and not the document. The worker's own line is the lesson and is better than mine: A FACE THAT NAMES A STARTING NUMBER TEACHES A WORKER TO SCOPE ITS PRE-MINT READ TO ONE DOCUMENT. The fix is to stop naming the number: a face says 'continue the coordinate's sequence, read the PLANE for its last id', and the gate stays the authority. On the rc: an instrument fact asserted in a preflight is exactly where a pipeline-exit misread does the most damage, because every later reader takes it as measured and nobody re-runs it. \u26d4 AND NOTE WHAT I AM NOT DOING: FE-s-23's face is NOT being corrected in place. Its order is terminal and its instance records criterion_verbatim; editing the face now would create precisely the recorded-vs-criterion divergence that FE-s-23's own new limb exists to detect. A terminal order's face is effectively frozen by the limb it just shipped, and this row is the correction.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T07:30:18Z",
+    "id": "IRPT_FNTEND-S37",
+    "one_line": "THE CELL'S PREMISE WAS FALSE AND THE WORKER REFUSED TO SMOOTH IT. FE-s-23's face asserted 'round 2's instances are honestly aligned and must stay VALID'. They are aligned in 5 of 7. TWO REAL DIVERGENCES, confirmed independently by the issuer at source: F18-AC17 recorded `timeout 180` against a criterion that says `timeout 120`; F12-AC5 recorded its command with the closing double quote DROPPED, leaving an unbalanced shell string in the field the schema calls re-runnable by a verifier. Neither instance was edited and the normalisation was not widened by a character. And the estate-wide read is the number that matters: 294 committed instances, 874 comparable rows, 318 DIVERGENT.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "3.0.0_SA_CVO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ISSUER'S INDEPENDENT CONFIRMATION, parsing the committed instance JSON and the committed order side by side rather than taking the worker's report: F18-AC17 order `cd <WS>/portal && timeout 120 .../bun test src/pages/InvestorReporting` vs recorded `cd /c/tmp/wk-irpt_fntend-2-7-fe-s-18/portal && timeout 180 .../bun test src/pages/InvestorReporting`. Modulo <WS> expansion the two differ, and the difference is the timeout.",
+        "F12-AC5: the order's invocation has a BALANCED quote count and the recorded one does not (odd). Measured by counting '\"' in each string -- order True, recorded False. An unbalanced command is not re-runnable by anyone.",
+        "\u26d4 F18-AC17 IS IN THE VERY INSTANCE ROW S31 WAS RAISED ABOUT, AND IT SURVIVED MY RECORD FIX. At 74cefaf7a2 I corrected that order's three print URLs and believed the face and the record were aligned; I never checked the other seventeen rows. A fix scoped to the instance I noticed left the same class untouched one row away.",
+        "Worker's unscoped corpus read before designing: 294 committed instances, 275 with a tree-root governing TO, 1481 rows, 874 comparable, 318 divergent -- mostly HONESTLY (a worker adding the `timeout 120` an order's BOUNDS demanded while its <invocation> omitted it).",
+        "The worker printed both divergent rows BY NAME with both strings directly beneath its own `ROUND-2 CORPUS STILL VALID: 7 of 7` line, and stated that the 7 of 7 is a claim about the VERDICT and never about alignment. That distinction is the reason this row can exist at all."
+      ]
+    },
+    "spec_asserts": "FE-s-23's face: 'Round 2's instances are honestly aligned and must stay VALID. A limb that refuses everything is as useless as one that refuses nothing.' The proof-of-spec schema calls the recorded invocation re-runnable by a verifier.",
+    "world_is": "The premise was MINE, asserted without measuring, and the worker measured it instead of building on it. THE GENERAL SHAPE, and it is the third time this project has produced it: A CELL'S STATED PREMISE IS AN ISSUER'S CLAIM, NOT A FACT, AND THE ONLY PARTY POSITIONED TO FALSIFY IT IS THE WORKER THE CLAIM IS HANDED TO. Left unchecked it would have been laundered into the record by a green cell. ARMED and owned by 3.0.0_SA_CVO rather than by me: the two divergences are facts about round 2's RECORD, which is the CVO's to adjudicate at L9, and neither instance may be edited to make them go away. The estate-wide 318 is carried to L10 as a separate question -- most of it is honest drift that the new ANNOUNCE frame will now surface without refusing, which is exactly what an un-enforced count is for.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T07:30:18Z",
+    "id": "IRPT_FNTEND-S38",
+    "one_line": "ISSUER RULINGS on the two acts 0.9.0_WK_IRPT_FNTEND~3 disclosed rather than assumed. (1) W3-S14, the OPT-IN enforcement split: ACCEPTED. The cell's two constraints -- 'a mismatch is a VIOLATION' and 'must not break the existing corpus' -- are JOINTLY UNSATISFIABLE at default-ENFORCE given 318 divergent rows estate-wide, and the worker split an axis the cut left unspecified instead of quietly picking one. Detection is unconditional; refusal is opt-in via a <placeholders> declaration, and 0 of 2554 task orders carry it, so nothing is retro-enforced. (2) W3-S16, adding <placeholders>WS</placeholders> to its OWN order: ACCEPTED -- inside its grant, disclosed, reversible in one line, and it makes this the first instance in the estate graded on the strict branch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer's own run of the tool on the FE-s-23 instance: `invocation-frame: ... placeholders DECLARED ['WS'] -> ENFORCE` and `invocation-alignment: 6/6 comparable row(s) match modulo placeholder expansion; 0 diverge`. The strict branch is exercised, not merely present.",
+        "Issuer's own run of `--self-test`: `RESULT: 18 of 18 arm(s) behaved` (12 pre-existing + 6 added), and the arm descriptions name the limb, which is what F23-AC6 grades.",
+        "The unsatisfiability is arithmetic, not opinion: 318 divergent rows across 874 comparable ones in the committed corpus. Default-ENFORCE would refuse instances the cell's own second constraint requires to stay VALID.",
+        "FE-s-23's grant includes 'this order's own file', so the <placeholders> line is inside it. The worker did not rely on that quietly -- it filed W3-S16 and offered the reversal.",
+        "Sibling regression, re-run by the worker and not contradicted by the issuer's own run: alignment 35/35, content_rung 9/9, decomp_ref_content 24/24."
+      ]
+    },
+    "spec_asserts": "FE-s-23's face: 'A mismatch is a VIOLATION that names BOTH strings and the criterion id' AND 'THIS LIMB MUST NOT BREAK THE EXISTING CORPUS ... you prove both directions.' Spine L7: a worker refuses a criterion it cannot satisfy as written rather than repairing it.",
+    "world_is": "The two constraints could not both hold and the worker said so with a number instead of choosing silently. \u26d4 BUT THE ACCEPTANCE CARRIES A NAMED WEAKNESS AND IT GOES TO THE CTO RATHER THAN BEING DISARMED HERE: AN OPT-IN ENFORCEMENT IS WRITTEN BY THE ISSUER -- THE EXACT PARTY WHOSE PROMPT-ONLY CORRECTION THE LIMB EXISTS TO CATCH. A control the controlled party may decline to arm is a weaker control than it reads as, and S31 was my divergence, not a worker's. The real fix is to make the <placeholders> declaration MANDATORY at the L6 gate so an issuance cannot be cut without it, which is outside FE-s-23's <paths> and outside my lane to legislate. disarm_owner 1.0.0_SA_CTO: it is a rule about how task orders are cut, and this seat proposing it is not the same as the CTO ruling it -- the lesson of S32, applied to myself one round later.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
