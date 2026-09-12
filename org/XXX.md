@@ -323,6 +323,24 @@ fault and no successor would have armed one;
 `1.0.0_SA_CTO` `/self-drive` D2 then D8 on Andrew's word via `0.0.0_AB_MSTR` (D2 under the pause above).
 `1.0.0_SA_CTO` **`/self-drive D9 IRPT` ARMED 2026-09-11 ~06:4xZ by Andrew-direct at the CTO terminal** ("run a /self-drive D9 IRPT, just checking in whats going on every 30 min, making sure that the ball isn't stuck in anybody's court ... Your loop is the only chance every 30m as an exogenous stimuli to get the fabric going if work is halted"): 30-minute ticks via ScheduleWakeup, scope IRPT_FNTEND + IRPT_BCKEND, WIDENED ~08:0xZ on his word ("you will need DSGN_REBRND ... included in your /self-drive loop for this session") to + DSGN_REBRND (D13; L4-R halves -> 2.0.0_SA_COO~D's L5/L6); each tick measures every scoped lane, the L4-R halves (`prd-signoff.py status`), the L10 slugs and the shared index, and clears a dead seat's index state; ends on both projects `status: complete` or his stand-down. A successor re-arms ONLY off this line. A pause
 or hold with no line here is re-armed by the next successor who reads only the ledger — so every one is listed.
+`1.0.0_SA_CTO` **`/self-drive` THE FABRIC (all LAPTOP directives) ARMED 2026-09-12 ~02:1xZ by Andrew-direct at the
+CTO terminal**, VERBATIM AND ENTIRE: *"I need you to /self-drive the fabric, any open calls appear and you handle
+them with your rec"*. Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260912_021xZ_SELF_DRIVE_THE_FABRIC_HANDLE_OPEN_CALLS_ON_MY_REC.md`
+@`17a33e58a3`. SCOPE, measured at arm time from `directives-check --json`: the **7 LAPTOP directives of 14 live**
+(D0, D2, D3, D8, D9, D11, D13) -> **32 member projects**, 59 open TOs; SITEZ rows (D1, D4, D5, D6, D7, D12) are
+REFUSED by the device guard and are not this loop's. ⛔ **THE ONE CLAUSE A SUCCESSOR MUST NOT LOSE: his sentence
+makes `1.0.0_SA_CTO` THE ADJUDICATOR OF ADJUDICABLE CALLS -- the rec IS the ruling -- which OVERRIDES this skill's
+own §2 default of pitching them to the CVO lane for a verdict.** The CVO is not a gate on it and no seat owes this
+loop anything new. **RESERVED, still Andrew's and NOT self-adjudicated** (a broad delegation does not repeal a
+specific prohibition): vendor / egress off Opal infrastructure; UNRECOVERABLE acts -- recursive deletion, S3
+object/version deletes, dropping tables, stopping EC2, destructive git; money/contracts; and any standing hold he
+set BY NAME -- **the PORTAL FREEZE, the LD-0522 CLOUD push cadence, the `CLOUD -> SITEZ` merge leg**. Every
+self-adjudicated call is RECORDED with its rec, ruling and reason, so any of them is overturnable by reading one
+file -- that legibility is the condition the delegation was accepted on. `paired_with: solo` (the two IRPT COO
+lanes are already driving their own rounds event-driven; this loop dispatches nothing and gates nobody).
+STOP-CONDITION: every scoped project `status: complete` per §4, or HELD-AT-STOP, or his stand-down. A successor
+re-arms ONLY off this line.
 
 **Find a stale cron from a prior session? Cancel it:** `CronList` → `CronDelete`.
 
