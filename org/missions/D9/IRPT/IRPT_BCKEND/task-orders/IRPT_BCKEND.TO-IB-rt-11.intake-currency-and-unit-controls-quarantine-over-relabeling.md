@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~3</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-12T01:14:33Z. Its gate ('after IB-rt-10 is terminal and merged') is SATISFIED: IB-rt-10 flipped complete with its proof-of-spec instance re-graded VALID rc=0 at HEAD by the issuer, and its branch drained to CLOUD at 08962bd2ea. Third order of slot ~3.</status>
+<status>complete -- 0.9.0_WK_IRPT_BCKEND~3, 2026-09-12, on the SECOND flip and the first honest one. RT11-AC1 PASS-by-output (timeout 300 python .../battery_ib_rt_11.py -> rc 0, checks failed: 0, ARMS: 5 of 5, IBRT11-INTAKE-CONTROLLED; two full runs diff byte-identical). RT11-AC2 RECORDED under UNVERIFIABLE-BY-INSTRUMENT, status_reason naming 3.0.0_SA_CVO, no verdict. proof-of-spec-check VALID (rc=0) with parse.py CONTENT-resolved at 51db4a7d66 (the refusal token present at the pin and ABSENT at its parent). Mutant control FIRED-AS-EXPECTED on both mutants; determinism STABLE. The first flip at 3c28723d20 was REVERTED at 3db8d67f17 because it pinned a parse.py that did not carry the behaviour arm (e) proves -- that history is on the record deliberately. Rows W3-S34, W3-S35, W3-S36 filed. No deploy, by this cell's bounds.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 2 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.13 @e6ba5d9878 (ADMITTED, both L4-R halves SIGNED) | **Round-1 analysis:** `../ledger/ROUND_ANALYSIS.round1.md` @0d57ceb2f9, ruling 7 (intake) | **Slug rows this cell closes:** C-S74 | **Decomp cell:** `IB-rt-11` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.2, s.1 + s.2) | **outcome_ref:** FWD-9 (own), FWD-4 | **PRD candidate:** B7
 
