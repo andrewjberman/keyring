@@ -3577,6 +3577,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "TO IB-rt-10 names infra/aws/lambda/investor-reporting/ycharts/extract/ in its paths and directs this cell to add the unmapped-glyph fixture there; the fixture manifest is re-derived from disk by the battery on every run (row W3-S9), which presumes the checked-out bytes are the committed bytes.",
     "world_is": "For a PDF with no NUL in its first 8 KB that presumption does not hold on an autocrlf box, and the failure surfaces as a hash mismatch in a worktree that did nothing wrong rather than as anything resembling a corrupt file. A .gitattributes the order did not name had to be written -- inside the subtree the order does grant -- which is why this is a row rather than a silent fix.",
     "notes": "Recorded for the CLASS, which is not specific to this project: any hand-built or uncompressed binary-format fixture committed on an autocrlf box has this property, and the tell is a hash check that fails everywhere except where the file was made. The estate already carries the neighbouring lesson for hash-pinned TEXT assets; this is the same trap reached from the other direction, by a file that is binary in intent and text by measurement."
+  },
+  {
+    "id": "IRPT_BCKEND-S40",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T01:18:42Z",
+    "one_line": "DISPOSITION of IB-rt-10's six rows at its COMPLETE. W4-S28 IS THE ONE THAT MATTERS AND IT STAYS ARMED: round 1 dated 15 of 61 overview rows and 12 of 108 multi-comparison rows from a NEIGHBOURING block, and ALL of them passed ALL THREE of round 1's certification legs -- because a date sits at none of the coordinates those legs inspect. That is not a row about dates, it is a row about CERTIFICATION: a certification that does not inspect the coordinate where the defect lives passes it every time, and round 1's three legs returned GREEN over 27 wrong values. Disarm owner stays IB-rtb-1's rebuild, which is the act that re-derives those rows; carried to L10 as a ROUND-1 defect with its denominators, because anything round 1 certified on the same legs inherits the same blind spot and nobody has enumerated what else that covers. W4-S29 ROUTED, and it is mine: battery_ib_s_18.py crashes mid-run in arm (c). IB-s-18 is a round-1 cell already CLOSED, so under Rule 27 I am not re-opening it mid-round and IB-rt-10 was right not to touch another cell's deliverable. THE CONSEQUENCE IS THE FINDING, not the crash: IB-s-18's acceptance CANNOT BE RE-EXERCISED TODAY, so any claim resting on that battery is currently NOT-RE-VERIFIABLE rather than verified -- carried to 1.0.0_SA_CTO at L10 to decide whether it re-opens. W4-S26 ACCEPTED AS THE MEASURED ANSWER: the fi-ligature codes are NOT recoverable -- every ToUnicode CMap has a gap at exactly that code and no embedded subset carries a cmap or post table -- so the CTO ruling's SECOND branch ('or explicit unresolved') is what the world supports. The face's arm (a) prose said 'recovered' and the world does not permit it; the face is the defect, not the result, and that goes to L10. W4-S27 (the OPTIONAL date_claim enum) carried to the CTO's L10 read as the row itself asks. W4-S30 and W4-S31 INERT and accepted: a path register whose printed denominator was stale by 41 (336 declared against 377 actual), and a hand-built PDF that git treated as TEXT so a fresh checkout changed its hash -- the second already fixed in-cell by declaring the fixtures binary.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (this disposition row itself is INERT; W4-S28 REMAINS ARMED under IB-rtb-1's rebuild and W4-S29 is carried to 1.0.0_SA_CTO at L10 -- neither is disarmed by this row and neither is silently dropped)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 08962bd2ea (drain of wk-irpt_bckend-2-4b; rows W4-S26..S31, channel 148 rows)",
+        "proof-of-spec-check.py re-run by the issuer at HEAD over IB-rt-10's instance: VALID (rc=0), 13 artifact rows, 6 surprise entries all resolving",
+        "IB-rt-10 face <status> complete: RT10-AC1 PASS-by-output, RT10-AC2 RECORDED without a self-verdict",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/RT10-AC2_judgment.md"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-rt-10's face, arm (a): text recovered through each document's actual font mapping. And the CTO's round-1 ruling: 'per-document font mapping OR EXPLICIT UNRESOLVED for the fi-ligature codes 45/46'.",
+    "world_is": "Recovery is not available at all for those codes: the CMaps have a gap at exactly the code and the embedded subsets carry no cmap or post table. The ruling anticipated this and the face did not. The worker also caught its OWN first version resolving the code through whichever of that document's other fonts mapped it, returning a confident wrong character -- U+0038, U+004D and U+0044, one per document. THE UNIT OF A GLYPH MAP IS THE FONT RESOURCE, NOT THE DOCUMENT.",
+    "notes": "Third instance tonight of one class, now across three different seats: S38 (issuer, one Terraform root holding two cells' desired state), S39 (worker, one zip carrying two cells' code), and W4-S28 here (a certification whose legs do not read the coordinate the defect occupies). All three are the same failure: A CHECK SCOPED TO THE MEMBERS CANNOT SEE A DEFECT IN WHAT THE MEMBERS SHARE, or in a coordinate no member's check inspects. Rule 22 states it; three seats hit it in one round anyway, which is the argument that it belongs in the L6 issuance language where a cut is made, not only in a rule everyone has already read. Carried to L10 as ONE finding with three instances."
   }
 ]
 ```
