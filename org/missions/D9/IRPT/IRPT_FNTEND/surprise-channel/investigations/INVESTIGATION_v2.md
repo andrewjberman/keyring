@@ -961,6 +961,30 @@
     "spec_asserts": "F18-AC6 asserts 'investor-reporting/print?bundle=fe-s-18-frozen' is a URL the print route can serve.",
     "world_is": "The URL has not been servable since FE-s-14, and worse, the fix I DID apply went to the travelling copy rather than the durable one. TWO LESSONS, and the second is the one with teeth. (1) Rule 24's subtraction applies to one's own edits: the population was 'every print URL in this face', the denominator was 3, and I patched the 2 I had copied into the prompt rather than subtracting from the 3 the file contained. (2) \u26d4 THE WORKER FACE THAT TRAVELS AND THE RECORD FACE THAT STAYS CAN DIVERGE SILENTLY, because the spine has the issuer substitute `<WS>` and `<PORT>` into the prompt at spawn -- and once you are editing that prompt, nothing stops a SUBSTANTIVE correction going only there. The proof instance then records an invocation that the task order does not contain, and proof-of-spec-check does not compare the two, so the instance reads VALID over the divergence. The record is what a successor and the CVO read; the prompt is gone the moment the worker ends. RECOMMENDATION for L10: placeholder substitution is the ONLY edit permitted between the file's worker face and the spawned prompt, any other change lands in the file FIRST, and proof-of-spec-check gains a limb comparing each recorded invocation against its criterion's invocation modulo the declared placeholders. Disarmed when F18-AC6 passes and the record carries all three URLs.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S32",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-12T05:04:00Z",
+    "one_line": "THIS SEAT PATCHED A CRITERION THROUGH A MESSAGE AND THE WORKER IMPLEMENTED IT. In the continue message answering FE-s-18's first report I wrote that I was carrying a standing rule to L10 -- 'a capture set asserts DISTINCT HASHES whenever its fixtures differ'. 0.9.0_WK_IRPT_FNTEND~1 reasonably read that as governing intent and NARROWED F18-AC3's hash-uniqueness arm to match, so that only cross-fixture collisions counted. It disclosed the narrowing three ways and printed both readings and the criterion still FAILED either way, which is the correct handling of a bad instruction -- but the instruction was mine and the spine forbids it: a worker face that needs a message to be sufficient is DEFECTIVE AT L6, and an L10 recommendation is not law until the CTO rules on it. RULED: the literal arm is restored; the real fix is that the CONTROL capture was never a manifest entry, because F18-AC3's population is 'every PNG this order NAMES' and no criterion names the control.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The message this seat sent, verbatim: 'I am carrying that to L10 as a standing rule: a capture set asserts DISTINCT HASHES whenever its fixtures differ.' It was written as context and reads as direction; nothing in it said NOT to implement it.",
+        "The worker's response, verbatim from its report: 'So I re-scoped the arm to the rule you are carrying to L10 -- distinct hashes whenever the FIXTURES differ ... This is a narrowing of the arm and it is disclosed as one.' The causal chain is on the record in both directions.",
+        "MITIGATION THAT ACTUALLY HELD, and the reason this cost nothing: the worker printed BOTH readings ('under AC3's literal prose the AC6/control pair is also a violation; under the rule the prose is reaching for, it is not') and F18-AC3 read FAIL under either. A disclosed narrowing that changes no verdict is recoverable; a silent one would not have been.",
+        "F18-AC3's own first clause, read at the pin: 'every PNG THIS ORDER NAMES exists under the deliverables folder'. Eleven criteria name a capture (AC4-AC14). fe-s-18_print_frozen_control_1440.png is named by none, so the manifest's population was wrong by one entry before any arm was touched.",
+        "TRIGGERING FACT, measured by the worker: after the F18-AC6 amendment the criterion capture and its kept control are byte-identical, because '&narrative=0' is the package default so both URLs request the same render. The control had stopped being a control the moment the amendment adopted its URL."
+      ]
+    },
+    "spec_asserts": "Spine L6: the worker face 'is what the worker is given and is the whole of its context; a task order whose worker face is not sufficient on its own is defective at L6, NEVER PATCHED BY A MESSAGE'. F18-AC3 asserts 'no two entries share a file or a hash'.",
+    "world_is": "The prohibition is written for the case where an issuer knowingly sends a spec change. THIS instance is the one it does not obviously cover and the one that will recur: I sent a FINDING, framed as something I would carry upward later, and the worker could not tell a recommendation-in-flight from an instruction. \u26d4 TO A WORKER WHOSE ENTIRE CONTEXT IS WHAT THE ISSUER SENDS IT, EVERY SENTENCE FROM THE ISSUER IS SPEC. There is no channel in the prompt for 'this is context, do not act on it', and the worker has no way to check a rule's status because it cannot read the record or ask. The general shape, and the cheapest fix: an issuer's continue message carries ACTS and MEASURED FACTS only; a recommendation, a finding not yet ruled, or anything an L10 might later make law is either left out or marked explicitly as NOT BINDING ON THIS ORDER. Better still, it goes in the FILE first or not at all. Same family as S31 (a correction that reached the prompt and not the record): both are the issuer's two channels drifting apart, in opposite directions. Disarmed when F18-AC3's literal arm is restored and re-run.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
