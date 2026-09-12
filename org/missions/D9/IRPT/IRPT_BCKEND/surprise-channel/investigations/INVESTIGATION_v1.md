@@ -4102,6 +4102,52 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Issuer amendment 3, C1: 'GRANTED, additive, for this cell only: infra/aws/lambda/investor-reporting/holdings/ and the holdings Terraform root.'",
     "world_is": "That sentence existed only in prose. The <paths> block -- the surface .tools/git-hooks/install-owned-paths and the lane gate read -- did not name either path, so the grant had no effect on the only reader that matters and four files of completed work could not be committed.",
     "notes": "⭐ THE WORKER ALSO DID SOMETHING THIS ROUND HAS BEEN SHORT OF: its battery DISCLOSES ITS OWN WEAKNESS ABOVE ITS OWN TOKEN -- arm (a)'s '0 of 12' is read from filesystem bytes that are at no commit, and it prints that a clean checkout reads '1 of 12'. A passing token that names the condition under which it would fail is worth more than a passing token. Compare tonight's opposite cases: an arm that passed while printing '0 of 11' beside itself, and an instance that pinned bytes the record did not carry. Both of those were also caught by their own authors, which is the round's real pattern. To the L10 slug as a positive finding alongside the grant-revocation-on-flip property."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S37",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-12T03:36Z",
+    "one_line": "After a Terraform root is DELETED from the tree, `terraform state list` in its directory refuses with 'Backend initialization required -- Unsetting the previously set backend s3', writes NOTHING to stdout and exits 1 -- so an emptiness check that reads stdout alone PASSES on a command that never looked at the state.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED in infra/aws/terraform/investor-reporting/ycharts-research-20260911 after main.tf was deleted at cbc1e4e2fd: `.tools/terraform.exe state list` -> rc=1, 0 stdout lines, stderr 'Error: Backend initialization required, please run \"terraform init\"  Reason: Unsetting the previously set backend \"s3\"'",
+        "the first version of battery_ib_rt_9.py arm (e) read `stdout.splitlines()` and printed 'research state key still reachable from this worktree: 0 resource(s)' -- the refusal rendered as a clean zero, and the check FAILED only because it also required rc==0",
+        "the corrected instrument reads the STATE OBJECT itself: aws s3api get-object on s3://opal-313476888478-terraform-state/investor-reporting/ycharts-research-20260911/tfstate -> serial=13, resources=[] (0), which needs neither the deleted backend declaration nor terraform",
+        "the battery now carries the refusal as its OWN check: 'e the retired instrument's refusal is DISTINGUISHED from an empty state: rc=1 with 0 stdout lines'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition v0.2 s.2 and TO-IB-rt-9 acceptance (e): the research root is absorbed and then 'deleted from the tree', with its resources under the ycharts root and `state list` printed -- i.e. a state listing remains the way to show which root owns what.",
+    "world_is": "It does for the DESTINATION root and it does not for the deleted SOURCE root, and the failure is silent in the dangerous direction. Deleting the root removes the `backend \"s3\"` block that addressed the state, so terraform cannot reach the state it just emptied. This is PERMANENT and by design -- not a transient failure an `init` would fix -- so the instrument is retired rather than retried, and the emptiness of the source state is read from the tfstate OBJECT. The general form: any verification of a SOURCE state's emptiness that runs AFTER the source root is deleted must not use `terraform state list`, and any check that treats empty stdout as zero rows inherits this.",
+    "notes": "INERT because the reading was correct here (0 resources, confirmed from the object) and because the check that would have been fooled never shipped green -- it failed on the rc leg. Recorded because the NEXT root retirement in this estate will meet the same refusal, and because the pattern is the same class this round keeps measuring: an error and a clean zero are indistinguishable on stdout, so a 0 must come with the exit code beside it."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S38",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-12T03:36Z",
+    "one_line": "The research root's S3 STATE OBJECT survives its root: the tree no longer declares ycharts-research-20260911 and nothing owns that state key, but the object is still there, empty, addressed by nothing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3api get-object on s3://opal-313476888478-terraform-state/investor-reporting/ycharts-research-20260911/tfstate succeeds and returns a state document with serial=13 and resources=[]",
+        "git ls-tree -r HEAD -- infra/aws/terraform/investor-reporting/ycharts-research-20260911 -> 0 files (2 at HEAD~2), so no root in the tree declares that backend key",
+        "the change-management entry 20260912T0314Z_irpt-bckend-rt9_deploy_completion.md records the object as deliberately left in place"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rt-9 acceptance (e): 'the research root gone from the tree, its resources under the ycharts root' -- retirement of the root.",
+    "world_is": "The root is gone and the state key is not. Deleting an S3 object is a destructive delete needing a human's word (CLAUDE.md Agent Autonomy), so this order left it rather than reaching for one, and it is inert on its own -- an empty state document nothing reads. What it IS: an orphan that no `terraform state list` can reach and no root will ever reconcile, and the kind of object a later census of 'state keys with no declaring root' would surface as a finding. Naming it here means that census finds an explanation rather than a mystery.",
+    "notes": "The remedy, if one is wanted, is a one-line `aws s3 rm` on Andrew's word, or a documented convention that retired roots' state keys are left in place. Not this order's to choose. The same entry also records the 686 MB gitignored .terraform/ provider cache left in that directory in THIS WORKTREE ONLY -- no fresh checkout has it."
   }
 ]
 ```
