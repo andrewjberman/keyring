@@ -3835,6 +3835,101 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "IRPT_BCKEND-S41 disarm_owner: '1.0.0_SA_CTO -- carry the corrected count back to Andrew: does the approval cover all NINE noncurrent versions of the four keys, or exactly the FOUR the row names. Until he answers on the CORRECTED number, no version is deleted.'",
     "world_is": "He answered on the corrected number: all nine. The disarm condition S41 names is satisfied, so S41 is DISARMED and the act is unblocked under the enumerated boundary. Nothing has been deleted by this row; the bucket is unchanged at the time of writing.",
     "notes": "The CTO-side half of the class S41 names. The first authorization failed because this seat carried a head-read count into a sovereign card for an unrecoverable act without measuring it -- a head-object read returns ONE version while a versioned key holds MANY. The stop condition this seat wrote was also weaker than it looked: it was keyed to whether the four named VersionIds RESOLVE (they did) rather than to whether the SET IS COMPLETE (it was not), and only the second protects the act. 2.0.0_SA_COO~B refused on better reasoning than the condition contained. Full record: org/tier1_exec/1.0.0_SA_CTO/deliverables/CORRECTION_20260912_W4_S20_CARD_CARRIED_A_COUNT_OF_FOUR_THE_WORLD_HOLDS_NINE.md."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S38",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T03:20Z",
+    "one_line": "The ycharts root's zip carries intake/settings.json but not fixtures/holdings/security_mapping.json -- literally the asymmetry the issuer named as blocking -- and the discriminator is that NO function ships parse.py and the only readers of settings.json are two test suites, so the deployed code cannot reach the refusal the pair exists to prevent.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The issuer's note of 2026-09-12: IB-rt-11 edited infra/aws/lambda/investor-reporting/intake/settings.json, a declared build input of irpt-ycharts-generate, which this order deploys; 'NAME IT IN YOUR LEDGER ENTRY as a rider', 'verify it the way you verify your own bytes', and 'If your zip for that function picks up one of those and not the other, that is a BLOCKING row to me, not something to reconcile yourself' -- the pair being settings.json and fixtures/holdings/security_mapping.json, which row W3-S36 says parse.py needs beside it or it REFUSES at its first money column.",
+    "world_is": "MEASURED, and the literal condition IS met: irpt-ycharts-generate's 30 declared members include settings.json and do NOT include fixtures/holdings/security_mapping.json (nor any fixtures/holdings/* member), so the zip picks up one of the pair and not the other. THREE FURTHER MEASUREMENTS SAY THE PAIRING IS NOT WHY IT IS THERE, and together they are the discriminator: (1) parse.py is declared by 0 of 214 functions in lambda-source-map.json, so no deployed artifact contains the parser whose refusal the pair guards -- W3-S36's hazard has no carrier; (2) settings.json is a member of this function IN ITS OWN RIGHT and predates this order -- ycharts/generate/recipe.py:57 defines SETTINGS_PATH and :105 load_settings(), for the YCharts portfolio recipe, nothing to do with holdings; (3) an unscoped census of load_settings over the package returns 3 hits and the only two CALLERS are test suites (ycharts/generate/tests/run_offline_suite.py:175 and ycharts/session/tests/run_session_suite.py:99) -- the deployed path never calls it, and job.py receives `settings` as a constructor argument instead. AND A SEPARATE RUNTIME-ONLY DEFECT SITS IN THAT SAME LINE: SETTINGS_PATH is os.path.normpath(os.path.join(_HERE, '..', '..', 'intake', 'settings.json')), a REPO-RELATIVE path that at /var/task resolves to /intake/settings.json and cannot exist, while the zip carries the file FLAT beside recipe.py. It is the same shape as the /var/_authz defect this cell already fixed in entry.py, it is PRE-EXISTING in the live artifact, and it is unreachable today only because no deployed caller invokes load_settings().",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/lambda-source-map.json@76ae1b20fb -- irpt-ycharts-generate declares settings.json, not security_mapping.json, not parse.py; 0 of 214 functions declare parse.py",
+        "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py:57,105@76ae1b20fb -- SETTINGS_PATH and load_settings",
+        "comp-find 'load_settings' over the package @76ae1b20fb -> 3 hits, 1 DEF and 2 TEST callers, no deployed caller",
+        "comp-find --name security_mapping.json @76ae1b20fb -> 1 hit across 33,312 files: infra/aws/lambda/investor-reporting/intake/fixtures/holdings/security_mapping.json",
+        "the issuer's note of 2026-09-12 naming row IRPT_BCKEND-W3-S34 (served 5104 B vs tree 9670 B, an ADDED sibling key, settings subtree and cautions byte-identical) and W3-S36"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "notes": "NOT RECONCILED, exactly as instructed, and the irpt-ycharts-generate root is HELD OUT of this order's deploy until the issuer rules. The other roots proceed. What the issuer asked for IS done: the rider is named in the ledger entry on that function's leg, so the entry states what the apply carries rather than only what this cell authored. My reading, offered and not acted on: the asymmetry is INERT because the pair's hazard needs parse.py and nothing ships it, and settings.json is this function's own member for its own reason -- but the instruction was that the condition is the issuer's call, so it is the issuer's. The SETTINGS_PATH defect is a separate finding in a path this order holds; it is pre-existing in the live bytes, no deployed caller reaches it, and it is not fixed here because C4 says one deploy and this root is held."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S39",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T03:20Z",
+    "one_line": "A defect this cell INTRODUCED and has now removed: served.Entry held one cache dict for the MODULE'S lifetime, so a warm container served a payload computed from an artifact that had since changed -- authorization was never at risk, freshness was, and no better cache key could have fixed it because the boundary cannot see the artifacts its computes read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The PRD cell B3 is 'authorization enforcement on every route, warm-cache revocation' and its acceptance clause says 'a cached result or artifact is reauthorized before serving'. Enforcer.serve() implements exactly that and its docstring says so: both branches run resolve_now + covers before anything is returned, so there is no ordering in which cached bytes escape without a current decision.",
+    "world_is": "The reauthorization claim is TRUE and was never the gap. What this cell added was the CACHE'S LIFETIME: served.Entry.__init__ did `self.cache = cache if cache is not None else {}` and handed that one dict to every Enforcer it built, so in a warm Lambda container every invocation shared it. The six functions had no such cache before this order (their handlers did not use Entry at all) and holdings' own make_holdings_enforcer passes cache=None, which gives the Enforcer a FRESH dict per request -- so this was a regression shipped tonight to six live functions. MEASURED, and found by accident by a holdings test: a snapshot whose node clocks collapse is refused NOT_READY when its case runs ALONE, and is SERVED when a valid request for the same (tenant, scope fingerprint, operation, params) ran first in the same process; clearing the cache made it refuse again. The cache key is _keys.cache_key(tenant, permitted_account_set_fingerprint, source_revision, schema_revision, config_revision, operation, params) -- it carries the tenant and the scope fingerprint, so NOTHING CROSS-FIRM was reachable, and it carries no artifact vintage, so a changed artifact was invisible. A BETTER KEY CANNOT CLOSE IT: source_revision was sitting at the module default 'src-1', a constant, and populating it from the directory artifact's as_of_business_date (done, and it also removed a second directory read) does not help when the artifact that moved is the SNAPSHOT, which the boundary never sees. An invalidation rule can only be as good as the inputs the invalidator can see.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_authz/enforce.py:459-495@76ae1b20fb -- cache_key_for and serve, both branches reauthorizing",
+        "infra/aws/lambda/investor-reporting/_keys/keys.py:459-472@76ae1b20fb -- the cache_key components; REVISION_RE at :57 admits an ISO date",
+        "measured in process @76ae1b20fb: run 1 good snapshot served and cache size 1; run 2 node-clocks-stripped snapshot SERVED with no cache clear; run 3 same snapshot after cache.clear() refused NOT_READY",
+        "infra/aws/lambda/investor-reporting/holdings/snapshot.py:266-279@76ae1b20fb -- make_holdings_enforcer(cache=None), the pre-existing per-request behaviour",
+        "the fix, committed at e42495e8f1: Entry.shared_cache is None unless supplied and enforcer_for passes a fresh dict per request; the artifact vintage feeds source_revision"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "FIXED IN THE TREE at e42495e8f1 and INERT there; it is ARMED IN THE WORLD until C4's deploy ships it, because the six live functions carry the module-lifetime cache now. Bounded: within one warm container, an identical authorized request can be answered from a payload computed earlier in that container's life. No cross-firm or cross-scope reach, and every answer is still authorized against current inputs. Hazard read INERT rather than ARMED because the deploy that removes it is already ordered and scheduled as C4's single act, so nothing further is needed to disarm it than the act already owed. What is GIVEN UP by the fix is re-use across invocations, which nothing in this cell's spec asks for; what is KEPT is the warm-cache arm, exercised by supplying a shared cache explicitly as test_enforce and test_export already do."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S40",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T03:20Z",
+    "one_line": "The investor-reporting package's test suite cannot be run as a whole: a single pytest over the package reads 48 failed and 39 errors from cross-directory bare-name collisions, while every directory run on its own is green -- so any reader who runs the obvious command gets a false picture of the package.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Bound 12 and this cell's own practice take the REAL module as the subject, and routetable._import_entry documents the collision class in detail: five functions ship a top-level module under the same bare name because a deployed zip flattens one function's files into one directory, so in one interpreter the first to import wins and every later one silently gets the WRONG module.",
+    "world_is": "The mechanism is known and handled INSIDE the census, and not outside it. Measured at this cut: `python -m pytest infra/aws/lambda/investor-reporting/ -q` reads '48 failed, 460 passed, 39 errors' WITH this worker's new test file deselected, so it is not caused by this order. Per-directory it is clean: _authz 131, _scope 50, _keys 45, _ids 29, directory 37, performance 28, narrative 37, export 68, ops 34, holdings 29, intake 15 -- all pass; _contracts reads 14 failed / 39 passed, and those are IB-rt-1's paired-consumer arms failing at test_seam_paired.py:374 on the consumer fixture's key shape, before any dispatcher call. This worker's own new file caused one instance of the same class in both directions and now cleans up after itself (it resolves its subject through routetable.entry_points(), by path, lazily), which is evidence that the trap is live rather than historical.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "timeout 900 python -m pytest infra/aws/lambda/investor-reporting/ -q --ignore=infra/aws/lambda/investor-reporting/holdings/tests @76ae1b20fb -> '48 failed, 460 passed, 39 errors'",
+        "per-directory runs at the same commit, each printed green except _contracts (14 failed, IB-rt-1's, at test_seam_paired.py:374)",
+        "infra/aws/lambda/investor-reporting/_authz/routetable.py:111-169@76ae1b20fb -- the purge that handles this inside the census, and its measured example (performance/entry.py got the DIRECTORY handler and raised AttributeError classified UNEXPECTED)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this order's to fix and not fixed: the remedy is either a conftest per function directory that isolates sys.path and sys.modules, or a pytest invocation contract that says the package is tested per directory -- both are decisions about the whole package, spanning cells this order does not hold. Filed because the failing command is the OBVIOUS one: a seat that runs pytest over the package to check this project's health will read 48 failures that do not exist, and a seat that trusts a whole-tree green would be trusting an ordering."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S41",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-12T03:20Z",
+    "one_line": "Amendment 3 C1 grants the holdings paths in PROSE and the <paths> block does not carry them, so the lane gate refuses the commit -- C1's work is written, tested and PASSING in the worktree and cannot be committed until one line of <paths> changes.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "spec_asserts": "Amendment 3, C1: 'GRANTED, additive, for this cell only: infra/aws/lambda/investor-reporting/holdings/ and the holdings Terraform root.' The order's own lane clause says 'the <paths> block above IS the grant (RULING 1 @9ef9a40aae)', and ADHC_OWNPTH.005 says the order is the grant and a missing path is a cut defect, never an override.",
+    "world_is": "The <paths> block at HEAD (76ae1b20fb, and unchanged at e42495e8f1) carries 23 entries and NEITHER infra/aws/lambda/investor-reporting/holdings/ NOR infra/aws/terraform/investor-reporting/holdings/ is among them. safe-commit refuses both files with 'agent=0.9.0_WK_IRPT_BCKEND~2 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'. The gate is CORRECT: it reads the machine-readable grant, and the amendment changed the prose. The work itself is complete and green: holdings/entry.py puts the shared boundary in front of snapshot.py without widening what any caller reaches, the Terraform root names entry.lambda_handler, holdings/tests/test_entry_guarded.py is 29 of 29 passing including a difference control and a refused-never-narrowed arm, and the census re-cut reads 'OK: every route is guarded' over 12 of 12 with the mark NOT loosened.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rt-2...md@76ae1b20fb -- the <paths> block, 23 entries, no holdings",
+        "bash .tools/safe-commit.sh ... @76ae1b20fb -> 'ERROR: owned-paths lane violation(s) detected (block mode)' naming holdings/entry.py and holdings/lambda.tf",
+        "timeout 300 python -m pytest infra/aws/lambda/investor-reporting/holdings/tests/ -q @worktree -> '29 passed'",
+        "in-process census over the real table @worktree -> 'WHOLE FILE: OK: every route is guarded | routes: 12'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "notes": "ARMED because the work sits UNCOMMITTED in a worktree: four files (holdings/entry.py, holdings/tests/test_entry_guarded.py, the _authz census re-cut, and the holdings lambda.tf re-point) exist only on this device's filesystem, and a worktree removal or a forced clean loses them. That is the hazard, and it disarms the moment the <paths> line lands and the commit is taken. NOT OVERRIDDEN: GIT_COMMIT_AUTHOR_OVERRIDE would have committed it and is exactly the escape the rule forbids. The _authz half of the same work WAS committed separately at e42495e8f1 because _authz/ IS in <paths>; the census re-cut is held with the holdings files deliberately, because committing a test that asserts 0 of 12 guarded without the entry module that makes it true would leave a failing test in the tree for everyone else."
   }
 ]
 ```
