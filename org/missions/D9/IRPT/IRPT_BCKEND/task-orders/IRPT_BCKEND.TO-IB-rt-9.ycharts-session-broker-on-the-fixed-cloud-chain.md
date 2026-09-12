@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~3</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending -- handed by 2.0.0_SA_COO~B; IB-rt-4 terminal and flipped complete at 56525018f8 on this branch, which the hand-off names as the GO</status>
+<status>complete -- 0.9.0_WK_IRPT_BCKEND~3, 2026-09-12. RT9-AC1 PASS-by-output: timeout 900 python .../battery_ib_rt_9.py -> rc 0, ARMS RUN 6 of 6 (a cutover, b fencing, c rotation, d eviction, e absorbed, f no egress), checks failed 0, IBRT9-BROKER-FENCED. RT9-AC2 RECORDED under UNVERIFIABLE-BY-INSTRUMENT with status_reason naming 3.0.0_SA_CVO, no verdict. proof-of-spec-check VALID (rc=0), 8 of 8 artifact rows resolved at pin and 4 CONTENT-resolved. Arm (e) landed under change-management entry 20260912T0314Z_irpt-bckend-rt9 -- 6 of 6 legs proven, OPEN sentinel committed at 244d3a968d BEFORE the act and the CLOSE at cbc1e4e2fd BEFORE the grading reads; the research root absorbed by import + state rm (NOTHING destroyed, both objects verified present with a different instrument) and deleted from the tree; ycharts post-apply plan "No changes"; host i-0167fd745ad906a66 stopped. Rows W3-S26..S33 and W3-S37, W3-S38 filed; W3-S26 discharged by the issuer re-cutting the deploy to slot ~2.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 2 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.13 @e6ba5d9878 (ADMITTED, both L4-R halves SIGNED) | **Round-1 analysis:** `../ledger/ROUND_ANALYSIS.round1.md` @0d57ceb2f9, ruling 6 (mechanism) | **Slug rows this cell closes:** W3-S1, W3-S2 | **Decomp cell:** `IB-rt-9` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.2, s.1 + s.2) | **outcome_ref:** FWD-4 (contrib) | **PRD candidate:** B8
 
