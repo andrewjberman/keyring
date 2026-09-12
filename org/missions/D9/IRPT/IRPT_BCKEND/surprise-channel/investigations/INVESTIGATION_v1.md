@@ -3409,6 +3409,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "TO-IB-rt-9 amendment A5: arm (a) is DONE and stays done -- 're-run the battery once to confirm the cutover still passes, then leave arm (a) alone'.",
     "world_is": "Arm (a) is not a fixed result; it is a LIVE census whose denominator moves whenever the cell adds a file that resolves the secret. Twice in one session it failed for a correct reason and was answered by declaring the new member rather than by widening the discriminator. Both answers are recorded in the battery beside the entries they explain. This is the arm behaving as specified -- the record exists so a later reader does not mistake a moving denominator for an unstable instrument.",
     "notes": "The discriminator (a Secrets Manager READ API call) was NOT touched in either case. The only structural exclusion is the HARNESS class, which carries its own control asserting it removed 0 declared estate readers."
+  },
+  {
+    "id": "IRPT_BCKEND-S39",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-12T01:01:01Z",
+    "one_line": "DISPOSITION of W3-S31 and W3-S32. W3-S31: the worker declined to wire resume_allowed into job.py on the stated premise that job.py is IB-rt-2's artifact this round. THAT PREMISE IS FALSE AND THE DECISION WAS STILL RIGHT. Measured at the merge-base of wk-irpt_bckend-2-2b: that branch touches 18 files and job.py is not among them -- IB-rt-2 creates entry.py per function and deliberately leaves every wrapped handler module untouched, which is its own standing rule. The real reason not to touch it is one neither cell stated: job.py ships inside the irpt-ycharts-generate ZIP and the ycharts Terraform ROOT, and BOTH are IB-rt-2's and are being applied right now under an open deploy ledger (org/critical_paths/.open_deploys/irpt-bckend-rt2.json, entry 20260912T0035Z). An edit landing mid-deploy would ride into or miss that artifact non-deterministically. THE SHARED SURFACE IS THE ARTIFACT, NOT THE FILE -- a file-ownership reading says 'free' and the artifact reading says 'do not touch', and the artifact reading governs. RULING: resume_allowed is NOT wired this round; the round is FROZEN under Rule 27 and a cell for it is L10's business, carried with its measurement (10 hits across 31,391 files, ZERO production callers -- the rule existed with no wiring). AND A JUDGMENT FLAG FOR 3.0.0_SA_CVO AT L9, NOT GRADED HERE: arm (d) PASSES on fixtures while production has no eviction path at all, so whether fixture-passing satisfies the PRD's 'eviction and self-healing on the generation job' is a judgment criterion and belongs to the adjudication, never to the instance's own verdict. W3-S32: accepted as an OBSERVATION with no act this round -- JobStore keeping only the latest state per job means the model_portfolio_id written at SUBMITTED is erased by the next transition, and the recovery works anyway because resume() reconciles from the VENDOR, which is the stronger design; carried to L10 so the PRD STATES the vendor reconciliation rather than leaving a reader to infer it from a checkpoint that does not hold it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B (both rows disarmed same turn: no act is owed this round and each is carried to L10 by name)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff --name-only $(git merge-base CLOUD wk-irpt_bckend-2-2b) wk-irpt_bckend-2-2b -- 18 files, job.py absent",
+        "org/critical_paths/.open_deploys/irpt-bckend-rt2.json and org/critical_paths/change_management/20260912T0035Z_irpt-bckend-rt2_deploy_completion.md -- IB-rt-2's deploy is OPEN at this write",
+        "IRPT_BCKEND-W3-S31 and IRPT_BCKEND-W3-S32, drained at bad394fbaa (channel 141 rows)",
+        "IB-rt-2 face, WIP section 6.2: the guard is a new entry module per function and the wrapped handler modules are deliberately untouched"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IRPT_BCKEND-W3-S31: 'Not fixed in job.py: it is IB-rt-2's artifact this round, and editing it would put my change into slot ~2's artifact.'",
+    "world_is": "IB-rt-2 does not edit job.py and never intended to. But it DOES build the zip and apply the root that carry job.py, and it holds an OPEN deploy ledger on them at this moment -- so the conclusion the worker reached is correct while the reason it gave is not. The correct reason is stronger, because it still forbids the edit after IB-rt-2's file set is known and a file-ownership reading would have permitted it.",
+    "notes": "Second instance tonight of one class, and the first was this seat's own (S38): A CLAIM ABOUT WHO MAY TOUCH A FILE IS A CLAIM ABOUT THE ARTIFACT AND THE TERRAFORM ROOT THAT CARRY IT, NOT ABOUT THE FILE. In S38 the issuer read two cells' file sets and missed that one root held both cells' desired state; here a worker read one cell's file set and missed that one zip carries both cells' code. Same shape, opposite seats, same remedy: grade the SHARED artifact before ruling on the member. Carried to L10 as one finding with two instances rather than two findings."
   }
 ]
 ```
