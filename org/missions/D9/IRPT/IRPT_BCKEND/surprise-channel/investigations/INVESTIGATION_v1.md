@@ -3315,6 +3315,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "PATH_MANIFEST.json _meta.append_contract: 'append only; one entry per concrete path'; _meta.denominators.entries_total is published as the register's size and Rule 22's COVERAGE axis requires a printed denominator to be the one that was measured.",
     "world_is": "The published total had drifted 41 below the array it describes, and the append_contract names no owner for keeping it true, so every append since IB-rt-1 left it further behind. This cell wrote the measured value and recorded the drift rather than absorbing it.",
     "notes": "Filed separately from IRPT_BCKEND-W4-S29 rather than folded into it: S29 is about the register's VERIFIER crashing, this is about the register's own published COUNT being wrong. Different owners and different remedies -- and the channel is append-only, so an existing row could not have carried it."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S31",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-12T00:52:00Z",
+    "one_line": "A HAND-BUILT PDF IS TEXT TO GIT, AND THE FRESH-WORKTREE FAILURE IS A HASH CHANGE ON A FILE NOBODY EDITED. git decides binary-vs-text on whether a NUL byte appears in the first 8 KB, and a PDF is not required to carry one: measured, the three round-1 synthetic specimens carry a NUL in 3 of 3 cases (their content streams are deflated) while this cell's hand-built unmapped_glyph.pdf carries one in 0 of 1 -- it has uncompressed content streams, so every byte is ASCII. With core.autocrlf=true on this box, a fresh checkout renders it CRLF: 3,024 bytes become 3,121 and the sha256 moves from f15b39103fc9f5a7 to 76a7ddc5ad775756. THE DANGEROUS PART IS THAT NOTHING CRASHES -- the CRLF copy still opens and still extracts both pages, because pdfminer reconstructs the xref when the offsets do not resolve. What fails is the fixture manifest's freshness check, in every worktree except the one that generated the file, for a file nobody touched. The standard PDF binary marker the generator writes (four high-bit bytes in a comment after the header) is correct PDF practice and does NOT satisfy git's heuristic, because high bits are not NUL -- so it was necessary and not sufficient. Remedied inside this order's own granted subtree with infra/aws/lambda/investor-reporting/ycharts/extract/.gitattributes declaring '*.pdf -text'; the estate's ROOT .gitattributes is not this cell's to edit and a fixture's binary-ness is a fact about the fixture rather than a repo-wide policy. Verified after: git check-attr reports 'text: unset' for both the new fixture and the round-1 specimens.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output at 98d579cd1b, verbatim: 'warning: in the working copy of 'infra/aws/lambda/investor-reporting/ycharts/extract/fixtures/unmapped_glyph/unmapped_glyph.pdf', LF will be replaced by CRLF the next time Git touches it'",
+        "a NUL census over the fixture PDFs: synthetic_pdf/{overview,comparison,multicomp}.pdf carry a NUL in the first 8000 bytes 3 of 3; unmapped_glyph/unmapped_glyph.pdf 0 of 1",
+        "the simulated checkout, run rather than reasoned about: the HEAD blob with every LF replaced by CRLF is 3,121 bytes at sha256 76a7ddc5ad775756 against the manifest's declared f15b39103fc9f5a7 / 3,024 bytes, AND pdfplumber opens it: '2 pages; page2 text: SYNTHETIC SPECIMEN: generated from the field census'",
+        "git check-attr -a after the fix: both unmapped_glyph.pdf and synthetic_pdf/overview.pdf report 'text: unset'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rt-10 names infra/aws/lambda/investor-reporting/ycharts/extract/ in its paths and directs this cell to add the unmapped-glyph fixture there; the fixture manifest is re-derived from disk by the battery on every run (row W3-S9), which presumes the checked-out bytes are the committed bytes.",
+    "world_is": "For a PDF with no NUL in its first 8 KB that presumption does not hold on an autocrlf box, and the failure surfaces as a hash mismatch in a worktree that did nothing wrong rather than as anything resembling a corrupt file. A .gitattributes the order did not name had to be written -- inside the subtree the order does grant -- which is why this is a row rather than a silent fix.",
+    "notes": "Recorded for the CLASS, which is not specific to this project: any hand-built or uncompressed binary-format fixture committed on an autocrlf box has this property, and the tell is a hash check that fails everywhere except where the file was made. The estate already carries the neighbouring lesson for hash-pinned TEXT assets; this is the same trap reached from the other direction, by a file that is binary in intent and text by measurement."
   }
 ]
 ```
