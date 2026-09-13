@@ -1,0 +1,1216 @@
+{
+  "utc": "2026-09-11T23:49:43.145353+00:00",
+  "head": {
+    "args": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "rc": 0,
+    "stdout": "f9458a7e4318cdbfe7b7f8bb859813788c62a66b\n",
+    "stderr": ""
+  },
+  "orders": {
+    "AMGT_RESAPP": [
+      [],
+      37,
+      ""
+    ],
+    "POSN_ASTTAX": [
+      [
+        "POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged]",
+        "POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]",
+        "POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged]",
+        "POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]"
+      ],
+      15,
+      ""
+    ],
+    "ZZZZ_NOSUCH": [
+      [],
+      0,
+      ""
+    ]
+  },
+  "dispositions_before": [
+    {
+      "AMGT_RESAPP-Z-S1": "GRADUATED",
+      "AMGT_RESAPP-Z-S2": "GRADUATED",
+      "AMGT_RESAPP-Z-W7-S1": "GRADUATED",
+      "AMGT_RESAPP-Z-W7-S2": "GRADUATED",
+      "AMGT_RESAPP-Z-W3-S1": "GRADUATED",
+      "AMGT_RESAPP-Z-W3-S2": "GRADUATED",
+      "AMGT_RESAPP-Z-W7-S3": "GRADUATED",
+      "AMGT_RESAPP-Z-S3": "GRADUATED",
+      "AMGT_RESAPP-Z-W5-S1": "GRADUATED",
+      "AMGT_RESAPP-Z-W1-S1": "GRADUATED",
+      "AMGT_RESAPP-Z-W1-S2": "GRADUATED",
+      "AMGT_RESAPP-Z-W9-S1": "GRADUATED",
+      "AMGT_RESAPP-Z-W9-S2": "GRADUATED",
+      "AMGT_RESAPP-Z-W7-S4": "DISMISSED_WITH_REASON",
+      "AMGT_RESAPP-Z-W7-S5": "GRADUATED",
+      "AMGT_RESAPP-Z-W1-S3": "GRADUATED",
+      "AMGT_RESAPP-Z-W3-S3": "GRADUATED",
+      "AMGT_RESAPP-Z-W4-S1": "GRADUATED",
+      "AMGT_RESAPP-Z-W3-S4": "GRADUATED",
+      "AMGT_RESAPP-Z-W2-S1": "GRADUATED",
+      "AMGT_RESAPP-Z-W2-S2": "GRADUATED",
+      "AMGT_RESAPP-Z-W2-S3": "GRADUATED",
+      "AMGT_RESAPP-Z-W2-S4": "GRADUATED",
+      "AMGT_RESAPP-Z-W1-S4": "GRADUATED",
+      "AMGT_RESAPP-Z-W1-S5": "GRADUATED",
+      "AMGT_RESAPP-Z-W3-S5": "GRADUATED",
+      "AMGT_RESAPP-Z-W2-S5": "GRADUATED",
+      "AMGT_RESAPP-Z-S4": "GRADUATED",
+      "AMGT_RESAPP-Z-W5-S2": "GRADUATED",
+      "AMGT_RESAPP-Z-W1-S6": "DISMISSED_WITH_REASON",
+      "AMGT_RESAPP-Z-S5": "GRADUATED",
+      "AMGT_RESAPP-Z-S6": "GRADUATED",
+      "AMGT_RESAPP-Z-S7": "DISMISSED_WITH_REASON",
+      "AMGT_RESAPP-Z-S8": "DISMISSED_WITH_REASON",
+      "AMGT_RESAPP-Z-S9": "GRADUATED",
+      "AMGT_RESAPP-Z-W1-S7": "GRADUATED",
+      "AMGT_RESAPP-Z-S10": "GRADUATED",
+      "AMGT_RESAPP-Z-S11": "GRADUATED",
+      "AMGT_RESAPP-Z-W2-S6": "GRADUATED",
+      "AMGT_RESAPP-Z-W2-S7": "GRADUATED",
+      "AMGT_RESAPP-Z-S12": "GRADUATED",
+      "AMGT_RESAPP-Z-W7-S6": "GRADUATED",
+      "AMGT_RESAPP-Z-W7-S7": "GRADUATED",
+      "AMGT_RESAPP-Z-S13": "DISMISSED_WITH_REASON",
+      "AMGT_RESAPP-Z-S14": "GRADUATED",
+      "AMGT_RESAPP-Z-S15": "DISMISSED_WITH_REASON",
+      "AMGT_RESAPP-Z-S16": "GRADUATED",
+      "AMGT_RESAPP-Z-S17": "DISMISSED_WITH_REASON",
+      "AMGT_RESAPP-Z-S18": "DISMISSED_WITH_REASON",
+      "AMGT_RESAPP-Z-S19": "GRADUATED",
+      "AMGT_RESAPP-Z-S20": "DISMISSED_WITH_REASON",
+      "AMGT_RESAPP-Z-W2-S8": "GRADUATED",
+      "AMGT_RESAPP-Z-W2-S9": "GRADUATED",
+      "AMGT_RESAPP-Z-W2-S10": "GRADUATED",
+      "AMGT_RESAPP-Z-S21": "GRADUATED",
+      "AMGT_RESAPP-Z-S22": "GRADUATED",
+      "AMGT_RESAPP-Z-S23": "UNDER_INVESTIGATION",
+      "AMGT_RESAPP-Z-S24": "UNDER_INVESTIGATION",
+      "AMGT_RESAPP-Z-S25": "UNDER_INVESTIGATION",
+      "AMGT_RESAPP-Z-W10-S1": "UNDER_INVESTIGATION",
+      "AMGT_RESAPP-Z-W10-S2": "UNDER_INVESTIGATION",
+      "AMGT_RESAPP-Z-W10-S3": "UNDER_INVESTIGATION",
+      "AMGT_RESAPP-Z-W10-S4": "UNDER_INVESTIGATION",
+      "AMGT_RESAPP-Z-S26": "UNDER_INVESTIGATION"
+    },
+    [],
+    10,
+    ""
+  ],
+  "limits": "Offline source and controlled function reads only. No AWS, deployed authentication, browser layout, live Print, task-order mutation, portal checkout or promote.",
+  "proof_path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~10/AMGT_RESAPP.TO-AMGT-re-1.lead-panel-recut.proof_of_spec.json",
+  "proof_commit": {
+    "args": [
+      "git",
+      "log",
+      "-1",
+      "--format=%H",
+      "--",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~10/AMGT_RESAPP.TO-AMGT-re-1.lead-panel-recut.proof_of_spec.json"
+    ],
+    "rc": 0,
+    "stdout": "8d6c289dc8ff6e5b40503ac8dee36bb6f4f0f2e7\n",
+    "stderr": ""
+  },
+  "proof_structure": {
+    "args": [
+      "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+      ".tools/proof-of-spec-check.py",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~10/AMGT_RESAPP.TO-AMGT-re-1.lead-panel-recut.proof_of_spec.json",
+      "AC1,AC2,AC3,AC4,AC5,AC6"
+    ],
+    "rc": 0,
+    "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=ROUND_CLOSE\n  vintage-frame: decomp_ref.vintage_commit 4352fe1c47670a3bd8e14371bb6a38df10f6b965 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-re-1.lead-panel-recut.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 37 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 7 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 8d6c289dc8) / 0 pending-on-worktree (instance path unknown; presence only) / 2 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 9 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 7 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 4 entries; 4 open with a row id; 4 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-re-1.lead-panel-recut.md)\nVALID (rc=0)\n",
+    "stderr": ""
+  },
+  "portal_object": {
+    "args": [
+      "git",
+      "-C",
+      "portal",
+      "cat-file",
+      "-t",
+      "c67281460a2651430798c9a4c3e68233d81a6e96"
+    ],
+    "rc": 0,
+    "stdout": "commit\n",
+    "stderr": ""
+  },
+  "portal_object_negative": {
+    "args": [
+      "git",
+      "-C",
+      "portal",
+      "cat-file",
+      "-t",
+      "0000000000000000000000000000000000000000"
+    ],
+    "rc": 128,
+    "stdout": "",
+    "stderr": "fatal: git cat-file: could not get object info\n"
+  },
+  "portal_state": {
+    "args": [
+      "git",
+      "ls-tree",
+      "HEAD",
+      "portal"
+    ],
+    "rc": 0,
+    "stdout": "160000 commit e85f6eb84f3a1771a37011a7e77e372570bad02a\tportal\n",
+    "stderr": ""
+  },
+  "instrument_correction": "First audit attempt stopped before tests on wrong CVO key artifacts; corrected to actual artifacts_produced. No criterion result was inferred from that failed attempt. First successful audit used field instead of mnemonic for the price-only diagnostic; empty lists were not proof of absent price rows. This rerun corrects that diagnostic.",
+  "worker_artifacts": [
+    {
+      "path_or_key": "portal/src/pages/SecurityAnalysis/",
+      "kind": "frontend_component",
+      "commit_or_etag": "c67281460a2651430798c9a4c3e68233d81a6e96",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "portal repo (C:/tmp/wk-amgt-6-1/portal, its own git object store), branch wk-amgt_resapp-5-8-portal, started from e6057f26 as the task order ordered. 11 files changed, 1132 insertions, 518 deletions. NOTHING PORTAL PROMOTES: no push, no DEV or PROD merge, per the task order BLOCK and Andrew-direct 2026-09-11 ~15:0xZ ('nobody does any portal promotes until i say so'). Verified at the repository, not from tool stdout: `git log -1 --format=%h~%an~%s c6728146` returns c6728146~0.9.0_WK_AMGT_RESAPP~10~recut(AMGT_RESAPP.TO-AMGT-re-1)...; the negative control `git log -1 deadbee1234` returns 'fatal: ambiguous argument'. Gap 1 (crossed controls) in LeadPanel/constants/types/useSecurityAnalysisState, gap 3 (starred filters) in StarredList, gap 4 (chart over time) in RankedChart/types, and the rewritten render check in __rendercheck__/renderCheck.tsx all land here.",
+      "artifact_covered_by": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6"
+      ]
+    },
+    {
+      "path_or_key": "portal/src/api/endpoints/amgt-lead-panel.ts",
+      "kind": "frontend_component",
+      "commit_or_etag": "c67281460a2651430798c9a4c3e68233d81a6e96",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "The CLIENT half of gap 2, rewritten onto the crossed routes (two path segments, /rankings/<movement>/<subject>), plus getRankTimeSeries() for gap 4 and an exported printPackPath() so the render check asserts the real action against the real path without re-typing the string. Ten exported call functions, every one landing on a route in scoped_amgt_route_table(). NOT DEPLOYED and not deployable from this cell: see the lib/research/api row below and surprise row AMGT_RESAPP-Z-W10-S3.",
+      "artifact_covered_by": [
+        "AC1",
+        "AC2",
+        "AC5",
+        "AC6"
+      ]
+    },
+    {
+      "path_or_key": "lib/research/api/scoped_amgt.py",
+      "kind": "script",
+      "commit_or_etag": "e83bdbe7c1fd076f94e87ba6749836bd0eca5cf6",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "The SERVER half of gap 2: eleven /api/scoped/amgt routes behind one handler, auth-gated on the edge-injected X-Firm-Id and failing closed without it. NOT DEPLOYED, and the reason is a grant boundary rather than a choice: the API Gateway route and the Lambda declaration that mount this handler live under infra/aws/terraform/, which this task order's <paths> block does not contain. Filed as AMGT_RESAPP-Z-W10-S3 with the disarm named. Verified at the repository: `git log -1 --format=%H~%an~%s e83bdbe7c1` returns e83bdbe7c1fd076f94e87ba6749836bd0eca5cf6~0.9.0_WK_AMGT_RESAPP~10~build(AMGT_RESAPP.TO-AMGT-re-1)...; negative control `git log -1 beefdead999` returns 'fatal: ambiguous argument'.",
+      "artifact_covered_by": [
+        "AC6"
+      ]
+    },
+    {
+      "path_or_key": "lib/research/api/tests/test_scoped_amgt.py",
+      "kind": "test",
+      "commit_or_etag": "e83bdbe7c1fd076f94e87ba6749836bd0eca5cf6",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "16 tests, 16 passed in 0.03s (`python -m pytest lib/research/api -q`). The producer-order arm feeds DELIBERATELY SCRAMBLED rows and asserts they return unchanged, so it can tell a pass-through from a client-side sort; a test fed pre-sorted rows could not. The fake table exposes no `scan` method, so a scan-then-rank regression raises AttributeError instead of passing quietly.",
+      "artifact_covered_by": [
+        "AC6"
+      ]
+    },
+    {
+      "path_or_key": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~10/AMGT-re-1.four-gaps-closed.md",
+      "kind": "doc",
+      "commit_or_etag": "e83bdbe7c1fd076f94e87ba6749836bd0eca5cf6",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Deliverable (c): for each of the four named gaps, the file and the change that closes it, as a table; plus what the render check does and does not establish, the four surprise rows, and what this cell does not claim.",
+      "artifact_covered_by": [
+        "AC6"
+      ]
+    },
+    {
+      "path_or_key": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~10/run_render_check.mjs",
+      "kind": "script",
+      "commit_or_etag": "e83bdbe7c1fd076f94e87ba6749836bd0eca5cf6",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Deliverable (b)'s runner. Boots the portal's own vite in SSR mode (vite is already a portal devDependency -- no new dependency) so the REAL module graph loads and the real PrintExportAction/api-client chain resolves import.meta.env. It lives in this deliverables folder rather than portal/scripts/ because portal/scripts/ is not in this cell's <paths>. Exit 0 = render check clean.",
+      "artifact_covered_by": [
+        "AC4",
+        "AC6"
+      ]
+    },
+    {
+      "path_or_key": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~10/rendercheck_report.json",
+      "kind": "doc",
+      "commit_or_etag": "e83bdbe7c1fd076f94e87ba6749836bd0eca5cf6",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "The machine-readable render-check result: both route readings, the combination sweep, the chart reading, the print-action record, the colour-law reading and the colour-law reader's own broken-world control. Written beside rendercheck_route.html, the markup it was read from.",
+      "artifact_covered_by": [
+        "AC4",
+        "AC6"
+      ]
+    },
+    {
+      "path_or_key": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~10/rendercheck_route.html",
+      "kind": "doc",
+      "commit_or_etag": "e83bdbe7c1fd076f94e87ba6749836bd0eca5cf6",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "The rendered markup of BOTH declared route paths (/security-analysis and /security-analysis/BABA_US_Equity), server-rendered through the real router, the real ProtectedRoute and the real providers. This is the artifact the colour-law reading was taken from -- the render is READ, not merely captured.",
+      "artifact_covered_by": [
+        "AC4",
+        "AC6"
+      ]
+    },
+    {
+      "path_or_key": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md",
+      "kind": "doc",
+      "commit_or_etag": "e83bdbe7c1fd076f94e87ba6749836bd0eca5cf6",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Four rows appended INSIDE the one fenced JSON array, AMGT_RESAPP-Z-W10-S1 through -S4. Ids minted from a re-read of the channel (34 existing worker rows enumerated; no W10 coordinate existed, so k restarts at 1). The gate confirmed at commit time: '4 new row(s) of 62 total checked (58 pre-existing, NOT re-graded)' and 'OK: 1 file(s), all new rows carry their step-7/step-10 fields'. Fence count unchanged at 1; the diff is 98 insertions and 0 deletions, so no foreign row was edited.",
+      "artifact_covered_by": [
+        "AC6"
+      ]
+    }
+  ],
+  "adapter_tests": {
+    "rc": 0,
+    "output": "................                                                         [100%]\n16 passed in 0.03s\n",
+    "socket_guard": "connect and create_connection denied for the full suite"
+  },
+  "cross_resolutions": [
+    {
+      "requested_axis": "TRENDING_CHATTER",
+      "served_axis": "CHATTER",
+      "resolution": "SUBJECT_ONLY_FALLBACK",
+      "movement_basis": "ABSENT"
+    },
+    {
+      "requested_axis": "TRENDING_PRICE",
+      "served_axis": "PRICE",
+      "resolution": "SUBJECT_ONLY_FALLBACK",
+      "movement_basis": "ABSENT"
+    },
+    {
+      "requested_axis": "BREAKOUT_CHATTER",
+      "served_axis": "CHATTER",
+      "resolution": "SUBJECT_ONLY_FALLBACK",
+      "movement_basis": "ABSENT"
+    },
+    {
+      "requested_axis": "BREAKOUT_PRICE",
+      "served_axis": "PRICE",
+      "resolution": "SUBJECT_ONLY_FALLBACK",
+      "movement_basis": "ABSENT"
+    }
+  ],
+  "series_processed_control": {
+    "resolution": {
+      "requested_axis": "TRENDING_CHATTER",
+      "served_axis": "CHATTER",
+      "resolution": "SUBJECT_ONLY_FALLBACK",
+      "movement_basis": "ABSENT"
+    },
+    "as_of_date": "2026-09-11",
+    "window_days": 1,
+    "series": [
+      {
+        "ticker": "BABA US",
+        "points": [
+          {
+            "as_of_date": "2026-09-11",
+            "rank": 1,
+            "rank_sort": "00001",
+            "score": 82
+          }
+        ],
+        "point_count": 1
+      }
+    ],
+    "generated_at": "2026-09-11T23:49Z"
+  },
+  "series_unprocessed_control": {
+    "resolution": {
+      "requested_axis": "TRENDING_CHATTER",
+      "served_axis": "CHATTER",
+      "resolution": "SUBJECT_ONLY_FALLBACK",
+      "movement_basis": "ABSENT"
+    },
+    "as_of_date": "2026-09-11",
+    "window_days": 1,
+    "series": [
+      {
+        "ticker": "BABA US",
+        "points": [],
+        "point_count": 0
+      }
+    ],
+    "generated_at": "2026-09-11T23:49Z"
+  },
+  "series_unprocessed_call_count": 1,
+  "model_scopes": {
+    "header": 13,
+    "fiscal_year_line_item": 183
+  },
+  "thesis_response": {
+    "security_key": "BABA_US_Equity",
+    "header_figures": [
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "NAME",
+        "value": "ALIBABA GROUP HOLDING-SP ADR",
+        "unit": "TEXT (string field)",
+        "sign": "N/A (non-numeric field)",
+        "basis": {
+          "mnemonic": "NAME",
+          "definition": "Bloomberg-maintained legal/short name of the issuer."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "CRNCY",
+        "value": "USD",
+        "unit": "TEXT (string field)",
+        "sign": "N/A (non-numeric field)",
+        "basis": {
+          "mnemonic": "CRNCY",
+          "definition": "ISO currency code of the security's trading/reporting currency."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "CNTRY_OF_DOMICILE",
+        "value": "HK",
+        "unit": "TEXT (string field)",
+        "sign": "N/A (non-numeric field)",
+        "basis": {
+          "mnemonic": "CNTRY_OF_DOMICILE",
+          "definition": "ISO country code of the issuer's domicile."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "GICS_SECTOR_NAME",
+        "value": "Consumer Discretionary",
+        "unit": "TEXT (string field)",
+        "sign": "N/A (non-numeric field)",
+        "basis": {
+          "mnemonic": "GICS_SECTOR_NAME",
+          "definition": "GICS sector classification name, Bloomberg's own taxonomy mapping."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "PX_LAST",
+        "value": 108.56,
+        "unit": "PRICE (local trading currency, per share/unit)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "PX_LAST",
+          "definition": "Last traded/closing price, in the security's trading currency."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "CUR_MKT_CAP",
+        "value": 269839299644.40002,
+        "unit": "ABSOLUTE (full currency units)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "CUR_MKT_CAP",
+          "definition": "Current market capitalization, full currency units (not millions)."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": "fiscal-year-2025-merged naive PE (PX_LAST/IS_EPS = 2.6593) disagrees with Bloomberg's own PE_RATIO (15.7545) for the same fiscal-year label by a factor of 0.1688 on BABA US Equity -- consistent with a currency difference between the fundamentals-reporting basis and the header's CRNCY/PX_LAST trading-currency quote, AND/OR the gap between the fiscal-period-end fundamentals sub-row and the calendar-year-end price sub-row this security's raw response always splits into (never a single merged row), AND/OR an ADR share-ratio effect. NOT isolated to one cause; the other MILLIONS/PER-SHARE-scale financial-statement fields on this security carry the same caveat. Recorded as a FINDING, not resolved further (bound (f))."
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "NET_DEBT",
+        "value": -496090.0,
+        "unit": "MILLIONS",
+        "sign": "NEGATIVE (net-cash position)",
+        "basis": {
+          "mnemonic": "NET_DEBT",
+          "definition": "Total debt minus cash and equivalents, millions of the reporting currency; can be negative (a net-cash position)."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": "fiscal-year-2025-merged naive PE (PX_LAST/IS_EPS = 2.6593) disagrees with Bloomberg's own PE_RATIO (15.7545) for the same fiscal-year label by a factor of 0.1688 on BABA US Equity -- consistent with a currency difference between the fundamentals-reporting basis and the header's CRNCY/PX_LAST trading-currency quote, AND/OR the gap between the fiscal-period-end fundamentals sub-row and the calendar-year-end price sub-row this security's raw response always splits into (never a single merged row), AND/OR an ADR share-ratio effect. NOT isolated to one cause; the other MILLIONS/PER-SHARE-scale financial-statement fields on this security carry the same caveat. Recorded as a FINDING, not resolved further (bound (f))."
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "CURR_ENTP_VAL",
+        "value": 1404598.347073142,
+        "unit": "MILLIONS",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "CURR_ENTP_VAL",
+          "definition": "Current enterprise value (market cap + net debt + minority interest - equity affiliates), millions of the reporting currency."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": "fiscal-year-2025-merged naive PE (PX_LAST/IS_EPS = 2.6593) disagrees with Bloomberg's own PE_RATIO (15.7545) for the same fiscal-year label by a factor of 0.1688 on BABA US Equity -- consistent with a currency difference between the fundamentals-reporting basis and the header's CRNCY/PX_LAST trading-currency quote, AND/OR the gap between the fiscal-period-end fundamentals sub-row and the calendar-year-end price sub-row this security's raw response always splits into (never a single merged row), AND/OR an ADR share-ratio effect. NOT isolated to one cause; the other MILLIONS/PER-SHARE-scale financial-statement fields on this security carry the same caveat. Recorded as a FINDING, not resolved further (bound (f))."
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "VOLUME_AVG_30D",
+        "value": 11790602.0,
+        "unit": "ABSOLUTE (share count)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "VOLUME_AVG_30D",
+          "definition": "30-trading-day average daily volume, absolute share count."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "EQY_SH_OUT_REAL",
+        "value": 2485623615.0,
+        "unit": "ABSOLUTE (share count)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "EQY_SH_OUT_REAL",
+          "definition": "Real-time shares outstanding, absolute share count."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "EQY_BETA",
+        "value": 0.9779356122016907,
+        "unit": "RATIO (dimensionless multiple)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "EQY_BETA",
+          "definition": "Bloomberg-computed equity beta, Bloomberg's default calculation window."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "EQY_DVD_YLD_IND",
+        "value": 0.9672070305050517,
+        "unit": "PERCENT",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "EQY_DVD_YLD_IND",
+          "definition": "Indicated dividend yield, percent."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      },
+      {
+        "scope": "header",
+        "fiscal_year": null,
+        "mnemonic": "SHORT_INT_RATIO",
+        "value": 2.58157,
+        "unit": "RATIO (dimensionless multiple)",
+        "sign": "POSITIVE",
+        "basis": {
+          "mnemonic": "SHORT_INT_RATIO",
+          "definition": "Short interest ratio (days-to-cover)."
+        },
+        "vintage": "2026-09-10T23:20:19Z",
+        "source": "bloomberg-dapi",
+        "currency_caveat": null
+      }
+    ],
+    "fiscal_year_figures": [],
+    "check_face": [
+      {
+        "figure_id": "header:NAME",
+        "value": "ALIBABA GROUP HOLDING-SP ADR",
+        "verdict": "PASS",
+        "reason": "NAME: unit/sign convention MEASURED (basis='Bloomberg-maintained legal/short name of the issuer.')",
+        "marker": {
+          "verdict": "PASS",
+          "colour_token": "green",
+          "icon": "OK"
+        }
+      },
+      {
+        "figure_id": "header:CRNCY",
+        "value": "USD",
+        "verdict": "PASS",
+        "reason": "CRNCY: unit/sign convention MEASURED (basis=\"ISO currency code of the security's trading/reporting currency.\")",
+        "marker": {
+          "verdict": "PASS",
+          "colour_token": "green",
+          "icon": "OK"
+        }
+      },
+      {
+        "figure_id": "header:CNTRY_OF_DOMICILE",
+        "value": "HK",
+        "verdict": "PASS",
+        "reason": "CNTRY_OF_DOMICILE: unit/sign convention MEASURED (basis=\"ISO country code of the issuer's domicile.\")",
+        "marker": {
+          "verdict": "PASS",
+          "colour_token": "green",
+          "icon": "OK"
+        }
+      },
+      {
+        "figure_id": "header:GICS_SECTOR_NAME",
+        "value": "Consumer Discretionary",
+        "verdict": "PASS",
+        "reason": "GICS_SECTOR_NAME: unit/sign convention MEASURED (basis=\"GICS sector classification name, Bloomberg's own taxonomy mapping.\")",
+        "marker": {
+          "verdict": "PASS",
+          "colour_token": "green",
+          "icon": "OK"
+        }
+      },
+      {
+        "figure_id": "header:PX_LAST",
+        "value": 108.56,
+        "verdict": "PASS",
+        "reason": "PX_LAST: unit/sign convention MEASURED (basis=\"Last traded/closing price, in the security's trading currency.\")",
+        "marker": {
+          "verdict": "PASS",
+          "colour_token": "green",
+          "icon": "OK"
+        }
+      },
+      {
+        "figure_id": "header:CUR_MKT_CAP",
+        "value": 269839299644.40002,
+        "verdict": "PROVISIONAL",
+        "reason": "CUR_MKT_CAP: unit/sign convention not yet checked (status='PENDING')",
+        "marker": {
+          "verdict": "PROVISIONAL",
+          "colour_token": "amber",
+          "icon": "WARN"
+        }
+      },
+      {
+        "figure_id": "header:NET_DEBT",
+        "value": -496090.0,
+        "verdict": "PROVISIONAL",
+        "reason": "NET_DEBT: unit/sign convention not yet checked (status='PENDING')",
+        "marker": {
+          "verdict": "PROVISIONAL",
+          "colour_token": "amber",
+          "icon": "WARN"
+        }
+      },
+      {
+        "figure_id": "header:CURR_ENTP_VAL",
+        "value": 1404598.347073142,
+        "verdict": "PROVISIONAL",
+        "reason": "CURR_ENTP_VAL: unit/sign convention not yet checked (status='PENDING')",
+        "marker": {
+          "verdict": "PROVISIONAL",
+          "colour_token": "amber",
+          "icon": "WARN"
+        }
+      },
+      {
+        "figure_id": "header:VOLUME_AVG_30D",
+        "value": 11790602.0,
+        "verdict": "PASS",
+        "reason": "VOLUME_AVG_30D: unit/sign convention MEASURED (basis='30-trading-day average daily volume, absolute share count.')",
+        "marker": {
+          "verdict": "PASS",
+          "colour_token": "green",
+          "icon": "OK"
+        }
+      },
+      {
+        "figure_id": "header:EQY_SH_OUT_REAL",
+        "value": 2485623615.0,
+        "verdict": "PASS",
+        "reason": "EQY_SH_OUT_REAL: unit/sign convention MEASURED (basis='Real-time shares outstanding, absolute share count.')",
+        "marker": {
+          "verdict": "PASS",
+          "colour_token": "green",
+          "icon": "OK"
+        }
+      },
+      {
+        "figure_id": "header:EQY_BETA",
+        "value": 0.9779356122016907,
+        "verdict": "PASS",
+        "reason": "EQY_BETA: unit/sign convention MEASURED (basis=\"Bloomberg-computed equity beta, Bloomberg's default calculation window.\")",
+        "marker": {
+          "verdict": "PASS",
+          "colour_token": "green",
+          "icon": "OK"
+        }
+      },
+      {
+        "figure_id": "header:EQY_DVD_YLD_IND",
+        "value": 0.9672070305050517,
+        "verdict": "PASS",
+        "reason": "EQY_DVD_YLD_IND: unit/sign convention MEASURED (basis='Indicated dividend yield, percent.')",
+        "marker": {
+          "verdict": "PASS",
+          "colour_token": "green",
+          "icon": "OK"
+        }
+      },
+      {
+        "figure_id": "header:SHORT_INT_RATIO",
+        "value": 2.58157,
+        "verdict": "PASS",
+        "reason": "SHORT_INT_RATIO: unit/sign convention MEASURED (basis='Short interest ratio (days-to-cover).')",
+        "marker": {
+          "verdict": "PASS",
+          "colour_token": "green",
+          "icon": "OK"
+        }
+      }
+    ],
+    "drafted_sections": [],
+    "generated_at": "2026-09-11T23:49Z"
+  },
+  "raw_fiscal_prices": [
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2016",
+      "mnemonic": "PX_LAST",
+      "value": 87.81,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi",
+      "currency_caveat": null
+    },
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2017",
+      "mnemonic": "PX_LAST",
+      "value": 172.43,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi",
+      "currency_caveat": null
+    },
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2018",
+      "mnemonic": "PX_LAST",
+      "value": 137.07,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi",
+      "currency_caveat": null
+    },
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2019",
+      "mnemonic": "PX_LAST",
+      "value": 212.1,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi",
+      "currency_caveat": null
+    },
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2020",
+      "mnemonic": "PX_LAST",
+      "value": 232.73,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi",
+      "currency_caveat": null
+    },
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2021",
+      "mnemonic": "PX_LAST",
+      "value": 118.79,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi",
+      "currency_caveat": null
+    },
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2022",
+      "mnemonic": "PX_LAST",
+      "value": 88.09,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi",
+      "currency_caveat": null
+    },
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2023",
+      "mnemonic": "PX_LAST",
+      "value": 77.51,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi",
+      "currency_caveat": null
+    },
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2024",
+      "mnemonic": "PX_LAST",
+      "value": 84.79,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi",
+      "currency_caveat": null
+    },
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2025",
+      "mnemonic": "PX_LAST",
+      "value": 146.58,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi",
+      "currency_caveat": null
+    }
+  ],
+  "consumer_fiscal_prices": [
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2016",
+      "mnemonic": "PX_LAST",
+      "value": 79.03,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+      "currency_caveat": null,
+      "observation_date": "2016-03-31",
+      "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+      "corrected_overlay_status": "RESOLVED"
+    },
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2017",
+      "mnemonic": "PX_LAST",
+      "value": 107.83,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+      "currency_caveat": null,
+      "observation_date": "2017-03-31",
+      "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+      "corrected_overlay_status": "RESOLVED"
+    },
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2018",
+      "mnemonic": "PX_LAST",
+      "value": 183.54,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+      "currency_caveat": null,
+      "observation_date": "2018-03-29",
+      "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+      "corrected_overlay_status": "RESOLVED"
+    },
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2019",
+      "mnemonic": "PX_LAST",
+      "value": 182.45,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+      "currency_caveat": null,
+      "observation_date": "2019-03-29",
+      "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+      "corrected_overlay_status": "RESOLVED"
+    },
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2020",
+      "mnemonic": "PX_LAST",
+      "value": 194.48,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+      "currency_caveat": null,
+      "observation_date": "2020-03-31",
+      "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+      "corrected_overlay_status": "RESOLVED"
+    },
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2021",
+      "mnemonic": "PX_LAST",
+      "value": 226.73,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+      "currency_caveat": null,
+      "observation_date": "2021-03-31",
+      "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+      "corrected_overlay_status": "RESOLVED"
+    },
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2022",
+      "mnemonic": "PX_LAST",
+      "value": 108.8,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+      "currency_caveat": null,
+      "observation_date": "2022-03-31",
+      "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+      "corrected_overlay_status": "RESOLVED"
+    },
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2023",
+      "mnemonic": "PX_LAST",
+      "value": 102.18,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+      "currency_caveat": null,
+      "observation_date": "2023-03-31",
+      "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+      "corrected_overlay_status": "RESOLVED"
+    },
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2024",
+      "mnemonic": "PX_LAST",
+      "value": 72.36,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+      "currency_caveat": null,
+      "observation_date": "2024-03-28",
+      "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+      "corrected_overlay_status": "RESOLVED"
+    },
+    {
+      "scope": "fiscal_year_line_item",
+      "fiscal_year": "2025",
+      "mnemonic": "PX_LAST",
+      "value": 132.23,
+      "unit": "PRICE (local trading currency, per share/unit)",
+      "sign": "POSITIVE",
+      "basis": {
+        "mnemonic": "PX_LAST",
+        "definition": "Last traded/closing price, in the security's trading currency."
+      },
+      "vintage": "2026-09-10T23:20:19Z",
+      "source": "bloomberg-dapi (fiscal-period join, model_block_fye)",
+      "currency_caveat": null,
+      "observation_date": "2025-03-31",
+      "derivation_key": "derived/model_block_fye/BABA_US_Equity/20260911T073934Z/model_block_fye.json",
+      "corrected_overlay_status": "RESOLVED"
+    }
+  ],
+  "source_sha256": {
+    "lib/research/api/scoped_amgt.py": "932ca21f5e3a779a59d754202920362a424daa1760eab9371876979769410120",
+    "lib/research/api/tests/test_scoped_amgt.py": "5da71516ee0a26f8f8b1e938c20baf83da7d7fd0535bc41dc0969ceaa2d44142",
+    "infra/aws/terraform/amgt-resapp/chatter-axis-schedule.tf": "ec8589b7118e0d87fd954fe60bd1b15e522ae7865664ac9837602894af24e673"
+  },
+  "source_matches_worker_pin": {
+    "lib/research/api/scoped_amgt.py": true,
+    "lib/research/api/tests/test_scoped_amgt.py": true
+  },
+  "portal_unicode": {
+    "files_scanned": 19,
+    "affected_files": {
+      "src/pages/SecurityAnalysis/components/PrintExportAction.tsx": [
+        {
+          "line": 90,
+          "codepoints": [
+            "U+2026"
+          ]
+        }
+      ],
+      "src/pages/SecurityAnalysis/components/ProvenanceLine.tsx": [
+        {
+          "line": 38,
+          "codepoints": [
+            "U+2022"
+          ]
+        },
+        {
+          "line": 48,
+          "codepoints": [
+            "U+2014"
+          ]
+        }
+      ],
+      "src/pages/SecurityAnalysis/components/SecurityOverlay.tsx": [
+        {
+          "line": 41,
+          "codepoints": [
+            "U+2026"
+          ]
+        },
+        {
+          "line": 89,
+          "codepoints": [
+            "U+00B7"
+          ]
+        },
+        {
+          "line": 99,
+          "codepoints": [
+            "U+00B7"
+          ]
+        }
+      ],
+      "src/pages/SecurityAnalysis/tabs/CoverageTab.tsx": [
+        {
+          "line": 91,
+          "codepoints": [
+            "U+2026"
+          ]
+        }
+      ],
+      "src/pages/SecurityAnalysis/tabs/PeersTab.tsx": [
+        {
+          "line": 40,
+          "codepoints": [
+            "U+2026"
+          ]
+        }
+      ],
+      "src/pages/SecurityAnalysis/tabs/ThesisTab.tsx": [
+        {
+          "line": 86,
+          "codepoints": [
+            "U+2026"
+          ]
+        },
+        {
+          "line": 127,
+          "codepoints": [
+            "U+2026"
+          ]
+        }
+      ]
+    }
+  },
+  "worker_render_report": {
+    "routes": [
+      {
+        "path": "/security-analysis",
+        "markupLength": 7353,
+        "printButtonPresent": true,
+        "persistentPanelPresent": true,
+        "tabLabelsFound": [
+          "Thesis",
+          "Peers",
+          "Coverage"
+        ],
+        "modelTabPresent": false,
+        "movementControlPresent": true,
+        "subjectControlPresent": true
+      },
+      {
+        "path": "/security-analysis/BABA_US_Equity",
+        "markupLength": 6092,
+        "printButtonPresent": true,
+        "persistentPanelPresent": true,
+        "tabLabelsFound": [
+          "Thesis",
+          "Peers",
+          "Coverage"
+        ],
+        "modelTabPresent": false,
+        "movementControlPresent": false,
+        "subjectControlPresent": false
+      }
+    ],
+    "route": {
+      "path": "/security-analysis/BABA_US_Equity",
+      "markupLength": 6092,
+      "printButtonPresent": true,
+      "persistentPanelPresent": true,
+      "tabLabelsFound": [
+        "Thesis",
+        "Peers",
+        "Coverage"
+      ],
+      "modelTabPresent": false,
+      "movementControlPresent": false,
+      "subjectControlPresent": false
+    },
+    "cross": {
+      "declaredCombinationCount": 4,
+      "renderedStates": 16,
+      "distinctCombinationSubtitles": 4,
+      "subtitles": [
+        "Breakout x Chatter",
+        "Breakout x Price",
+        "Trending x Chatter",
+        "Trending x Price"
+      ]
+    },
+    "chart": {
+      "timeSeriesCaptionPresent": true,
+      "tickerCategoryAxisPresent": false
+    },
+    "print": {
+      "requestedUrl": "/api/scoped/amgt/security/BABA_US_Equity/print",
+      "expectedUrl": "/api/scoped/amgt/security/BABA_US_Equity/print",
+      "authorizationSent": true,
+      "returnedBlob": true,
+      "error": null
+    },
+    "colourLaw": {
+      "elementsScanned": 828,
+      "elementsCarryingLightTokens": 302,
+      "darkContainersFound": 43,
+      "findings": []
+    },
+    "colourLawControl": {
+      "brokenWorldFindings": 1,
+      "cleanWorldFindings": 0,
+      "discriminates": true
+    }
+  },
+  "iam_recheck": {
+    "commands": [
+      "comp-iam service scoped_amgt",
+      "comp-iam service amgt-resapp"
+    ],
+    "observed": "No scoped_amgt match in 188 services and 212 roles; amgt-resapp role view still lists old opal-amgt-articles Query ARNs. This is a mapping miss for the new adapter, not a green IAM verdict. No applied-plane simulation or deployed route measurement."
+  },
+  "head_end": {
+    "args": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "rc": 0,
+    "stdout": "f9458a7e4318cdbfe7b7f8bb859813788c62a66b\n",
+    "stderr": ""
+  }
+}

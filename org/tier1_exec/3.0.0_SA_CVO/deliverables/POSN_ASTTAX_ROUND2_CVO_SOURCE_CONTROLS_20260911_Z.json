@@ -1,0 +1,116 @@
+{
+  "placeholder_controls": [
+    {
+      "input": "unknown",
+      "output": "passive"
+    },
+    {
+      "input": " UNKNOWN ",
+      "output": "passive"
+    },
+    {
+      "input": "",
+      "output": "passive"
+    },
+    {
+      "input": null,
+      "output": "passive"
+    },
+    {
+      "input": "active",
+      "output": "active"
+    },
+    {
+      "input": "overlay",
+      "output": "overlay"
+    }
+  ],
+  "allocation_own_key_conservation": {
+    "asset": {
+      "cash": 0,
+      "fixed_income": 20.0,
+      "equity": 20.0,
+      "hedge": 0,
+      "Commodities": 20.0,
+      "Structured": 20.0,
+      "unclassified": 20.0
+    },
+    "style": {
+      "active": 0,
+      "passive": 80.0,
+      "overlay": 20.0
+    }
+  },
+  "serialized_served_records": {
+    "SPY": {
+      "ticker": "SPY",
+      "name": "SPY",
+      "asset_class": "Equity",
+      "asset_class_recognized": true,
+      "sub_asset_class": "Other",
+      "weight": 0.2,
+      "model_breakdown": {
+        "ST": 0.2
+      }
+    },
+    "AGG": {
+      "ticker": "AGG",
+      "name": "AGG",
+      "asset_class": "Fixed Income",
+      "asset_class_recognized": true,
+      "sub_asset_class": "Other",
+      "weight": 0.2,
+      "model_breakdown": {
+        "ST": 0.2
+      }
+    },
+    "GLD": {
+      "ticker": "GLD",
+      "name": "GLD",
+      "asset_class": "Unknown",
+      "asset_class_recognized": true,
+      "sub_asset_class": "Other",
+      "weight": 0.2,
+      "model_breakdown": {
+        "ST": 0.2
+      }
+    },
+    "VXX": {
+      "ticker": "VXX",
+      "name": "VXX",
+      "asset_class": "Unknown",
+      "asset_class_recognized": true,
+      "sub_asset_class": "Other",
+      "weight": 0.2,
+      "model_breakdown": {
+        "ST": 0.2
+      }
+    },
+    "ABSENT": {
+      "ticker": "ABSENT",
+      "name": "ABSENT",
+      "asset_class": "Unknown",
+      "asset_class_recognized": false,
+      "sub_asset_class": "Other",
+      "weight": 0.2,
+      "model_breakdown": {
+        "ST": 0.2
+      }
+    }
+  },
+  "latest_benchmark_conserves_new_classes": {
+    "ST": {
+      "cash": 0.0,
+      "fixed_income": 20.0,
+      "equity": 20.0,
+      "hedge": 0.0,
+      "Commodities": 20.0,
+      "Structured": 20.0,
+      "unclassified": 20.0
+    }
+  },
+  "stdout": "WARN: calculate_allocations: unseeded asset_class 'Commodities' (ticker GLD) -- carried under its own key, not dropped\nWARN: calculate_allocations: unseeded asset_class 'Structured' (ticker VXX) -- carried under its own key, not dropped\nWARN: calculate_allocations: unseeded management_style 'overlay' (ticker VXX) -- carried under its own key, not dropped\nWARN: calculate_allocations: unseeded asset_class 'unclassified' (ticker ABSENT) -- carried under its own key, not dropped\n\n============================================================\nAGG Portfolio Aggregation\n============================================================\n\nTotal AUM: $1,000.00\n  ST: $1,000.00 (100.0%)\n\nAGG Holdings: 5 unique tickers\nTotal weight: 1.0000 (should be ~1.0)\n\nWARN: calculate_benchmark_allocations_from_holdings: asset_class 'Commodities' (ticker GLD, model ST) is outside the four ratified classes -- carried under its own key, not dropped\nWARN: calculate_benchmark_allocations_from_holdings: asset_class 'Structured' (ticker VXX, model ST) is outside the four ratified classes -- carried under its own key, not dropped\nWARN: calculate_benchmark_allocations_from_holdings: asset_class 'unclassified' (ticker ABSENT, model ST) is outside the four ratified classes -- carried under its own key, not dropped\n",
+  "source_sha256": "bbf299384643c29f895f7716a14666826ccfae944938cde1e357ad49aa689fb5",
+  "head": "cbf8c145fc9420e8fa0fed8ed37bc717e410d905",
+  "scope": "Actual current generator functions; fake registry, fake AWS. Serialized generated records, not deployed bytes or frontend behavior. Historical S7 3/14/0 is not asserted for current source: S1 subsequently repairs the benchmark hop."
+}

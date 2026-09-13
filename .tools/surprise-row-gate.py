@@ -690,36 +690,79 @@ def _parent_row_ids(root, rel):
 
 
 def _row_is_other_fabric(row):
-    """True iff the row's id carries the OTHER fabric's coordinate (the `Z-` segment).
+    """True iff the row's id carries the `Z-` coordinate segment. NOT A FABRIC TEST. NOT A DECISION.
 
-    THE DISCRIMINATOR 3.0.0_SA_CVO's ruling (94337) names, and it is one the coordinate limb already
-    parses: an id is `<CODE>-(Z-)?(W<n>-|C-)?S<k>`, and the `Z-` segment IS the fabric. A row without
-    it is THIS fabric's record; a row with it is site Z's, minted and graded there.
-    Unparseable -> False: an id this gate cannot read is not granted the other fabric's exemption.
+    BLOCKED: RETIRED AS A DISCRIMINATOR 2026-09-11 AND DELIBERATELY LEFT UNUSED -- DO NOT REACH FOR IT.
+    It decided the L10 merge exemption in both precondition limbs until Andrew's ~19:3xZ scoping
+    ("the surprise-row gate must be project specific") replaced it with `_row_was_carried`. Read that
+    function for the rule that actually holds.
+
+    THE DOCSTRING THIS ONE REPLACES WAS FALSE ON HALF THE ESTATE, and the falsity is the whole
+    lesson: it said "a row without [`Z-`] is THIS fabric's record". That is true ON THE LAPTOP and
+    INVERTED ON SITE Z, because the sentence names no vantage point and the name `other_fabric`
+    silently assumes one. A CONSTANT CANNOT ANSWER "WHICH FABRIC AM I" -- only the device can. Cost:
+    100 already-committed laptop rows arriving by an authorised CLOUD->SITEZ merge read as native
+    here, and the gate refused the leg while citing Andrew correctly.
+
+    What it still says CORRECTLY is the narrow syntactic fact: an id is
+    `<CODE>-(Z-)?(W<n>-|C-)?S<k>` and this returns whether the `Z-` segment is present. That is a
+    statement about the STRING, never about which machine is asking. Unparseable -> False.
+    A self-test arm asserts this name appears in NEITHER precondition limb.
     """
     m = ID_RE.match(str((row or {}).get("id") or "").strip())
     return bool(m and m.group("z"))
 
 
-def _investigations_precondition_violations(rel, row, code, route_word, dispositions, merging=False):
+def _row_was_carried(row, parent_ids):
+    """True iff this row's id is present in the MERGE'S PARENTS -- history arriving, not an act.
+
+    THE L10 PRECONDITION IS A CONDITION ON A ROUTING ACT (Andrew, LD-0521, @716a9bc7ce call 3: "We do
+    not route until the job is over"). A row the merge CARRIES was routed by whoever minted it, under
+    whatever preconditions held at that seat; the merge only re-states it in this branch's record. A
+    row MINTED in the merge commit is the merging seat's OWN routing act, and the precondition binds
+    it in full.
+
+    THIS REPLACES A FABRIC CONSTANT -- `_row_is_other_fabric`, the `Z-` coordinate -- IN BOTH
+    PRECONDITION LIMBS. That test could not be right on both boxes at once: its own docstring says a
+    row without `Z-` is "THIS fabric's record", which is true on the laptop and INVERTED on site Z. So
+    100 already-committed laptop rows arriving by merge read as native here and refused an authorised
+    CLOUD->SITEZ leg, with the gate's refusal text citing Andrew correctly the whole time. A guard
+    whose truth depends on which machine runs it is not a guard.
+    Andrew-direct 2026-09-11 ~19:3xZ, VERBATIM: "the surprise-row gate must be project specific".
+    Provenance is both project-agnostic and fabric-agnostic, so it is correct on either box without a
+    device lookup and without a second carrier of "which fabric am I" to drift.
+
+    NOT AN INVENTION -- `_coordinate_violations` and the foreign-row sweep ALREADY decide carried-vs-
+    minted from `_parent_row_ids`, on the same `_pids` read. This makes two limbs consistent with two
+    others rather than adding a test.
+
+    FAIL-CLOSED: `parent_ids` None -- no merge, or parents unreadable -- exempts NOTHING.
+    `_parent_row_ids` returns None rather than an empty set precisely so that "the parents carry
+    nothing" and "the parents could not be read" stay different answers, and only one of them may
+    exempt a row.
+    """
+    if parent_ids is None:
+        return False
+    rid = str((row or {}).get("id") or "").strip()
+    return bool(rid) and rid in parent_ids
+
+
+def _investigations_precondition_violations(rel, row, code, route_word, dispositions, merging=False,
+                                            parent_ids=None):
     """GATE (iii) second limb for ONE new route-carrying row. `dispositions` is the 4-tuple from
     _latest_dispositions (injectable for the self-test).
 
     AT A MERGE: not evaluated -- see the block below and _route_precondition_violations' twin."""
-    if merging and _row_is_other_fabric(row):
-        # THE BOUNDARY IS PER FABRIC, NOT BLANKET (3.0.0_SA_CVO 94337, the L10 precondition's owner).
-        # This seat's first cut exempted EVERY row on a merge; that was too wide and the ruling replaced
-        # it. The L10 precondition is a condition on the SLUG -- an act by the CVO of the fabric that
-        # OWNS the project -- so it is PER FABRIC: each fabric's CVO slugs its own projects on its own
-        # cadence, and the two reconcile continuously with independent rounds. A cross-fabric merge slugs
-        # nothing and mints no remediation row; it carries the other fabric's open round into the record
-        # as a STATE. Refusing on it would make this fabric's integrator the enforcer of a precondition it
-        # neither owns nor can satisfy -- the same shape as the foreign-row sweep grading an integrator
-        # for rows it did not mint.
-        # THE DISCRIMINATOR IS THE ROW'S OWN COORDINATE, which the coordinate limb already parses: `Z-`
-        # is site Z's record (both L10 limbs exist there at :181/:227 and graded these rows at their own
-        # authorship, measured by 0.0.0_AB_MSTR). No `Z-` = THIS fabric's row, and it STILL BINDS on a
-        # merge -- a laptop remediation row riding a reconcile with a laptop order open is still refused.
+    if merging and _row_was_carried(row, parent_ids):
+        # CARRIED BY THE MERGE == HISTORY ARRIVING, NOT A ROUTING ACT (see _row_was_carried).
+        # SUPERSEDES THE PER-FABRIC COORDINATE TEST (3.0.0_SA_CVO 94337) ON ANDREW'S ~19:3xZ SCOPING.
+        # That ruling was right that the blanket merge exemption was too wide, and right that each
+        # fabric's CVO slugs its own projects; the defect was the PROXY it used. `Z-` names WHICH BOX
+        # minted a row, and the gate needs to know WHETHER THIS COMMIT MINTED IT -- on the laptop the
+        # two coincide, on site Z they invert. Provenance answers the question the proxy was standing
+        # in for, on both boxes.
+        # A row MINTED in the merge commit falls through and BINDS -- including a `Z-` row, which the
+        # old test would have exempted. So does any row whose parents could not be read.
         # No violations. The ANNOUNCEMENT is the caller's note, one per row-bearing file.
         return []
     rid = row.get("id", "<no id>")
@@ -771,25 +814,66 @@ def _open_tos_for_project(root, code, merging=False):
     return open_ids, len(paths), ""
 
 
-def _route_precondition_violations(root, rel, row, code, open_tos=None, route_word=None, merging=False):
+# Andrew's call 1 YES, relayed by CTO 21533: POSN round 2 ONLY may route with
+# S2-1/S3-1 unrun. The immutable record pins all 19 authorized row contents,
+# their filing paths and the two unchanged order blobs. This is NOT the broad
+# override: every other limb, including investigation completion, still runs.
+POSN_R2_EXCEPTION_PIN = "10ceba8c43"
+POSN_R2_EXCEPTION_PATH = (
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/"
+    "POSN_ASTTAX_ROUND2_ROUTING_EXCEPTION_20260911_Z.json")
+
+
+def _posn_round2_terminal_exception(root, rel, row, code, open_ids, total):
+    """Match the exact authorized case; an absent/unreadable record never grants it."""
+    if code != "POSN_ASTTAX" or not open_ids or total != 8:
+        return False
+    allowed_paths = (
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v3.md",
+        "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md")
+    if rel.replace("\\", "/") not in allowed_paths:
+        return False
+    status, text = _blob(root, POSN_R2_EXCEPTION_PIN, POSN_R2_EXCEPTION_PATH)
+    if status != "OK":
+        return False
+    try:
+        record = json.loads(text)
+        if (record["schema_version"] != 1 or record["project"] != code
+                or record["round"] != 2 or record["authority_message_id"] != 21533
+                or record["expected_total_orders"] != total):
+            return False
+        orders = record["orders"]
+        if len(orders) != 2 or sorted(open_ids) != sorted(o["open_label"] for o in orders):
+            return False
+        if not any(r["path"] == rel.replace("\\", "/") and r["id"] == row.get("id")
+                   and r["sha256"] == _canon_hash(row) for r in record["rows"]):
+            return False
+        import hashlib
+        for order in orders:
+            state, body = _blob(root, "HEAD", order["path"])
+            if state != "OK" or hashlib.sha256(body.encode("utf-8")).hexdigest() != order["sha256"]:
+                return False
+    except (KeyError, TypeError, ValueError):
+        return False
+    return True
+
+
+def _route_precondition_violations(root, rel, row, code, open_tos=None, route_word=None, merging=False,
+                                   parent_ids=None):
     """GATE (iii) first limb for ONE new tree row carrying a route. `open_tos` is injectable for the
     red-first exercise; production passes None and the census runs.
 
-    AT A MERGE: not evaluated -- see the block below and the twin limb's."""
-    if merging and _row_is_other_fabric(row):
-        # THE BOUNDARY IS PER FABRIC, NOT BLANKET (3.0.0_SA_CVO 94337, the L10 precondition's owner).
-        # This seat's first cut exempted EVERY row on a merge; that was too wide and the ruling replaced
-        # it. The L10 precondition is a condition on the SLUG -- an act by the CVO of the fabric that
-        # OWNS the project -- so it is PER FABRIC: each fabric's CVO slugs its own projects on its own
-        # cadence, and the two reconcile continuously with independent rounds. A cross-fabric merge slugs
-        # nothing and mints no remediation row; it carries the other fabric's open round into the record
-        # as a STATE. Refusing on it would make this fabric's integrator the enforcer of a precondition it
-        # neither owns nor can satisfy -- the same shape as the foreign-row sweep grading an integrator
-        # for rows it did not mint.
-        # THE DISCRIMINATOR IS THE ROW'S OWN COORDINATE, which the coordinate limb already parses: `Z-`
-        # is site Z's record (both L10 limbs exist there at :181/:227 and graded these rows at their own
-        # authorship, measured by 0.0.0_AB_MSTR). No `Z-` = THIS fabric's row, and it STILL BINDS on a
-        # merge -- a laptop remediation row riding a reconcile with a laptop order open is still refused.
+    AT A MERGE: a CARRIED row is not evaluated -- see the block below and the twin limb's."""
+    if merging and _row_was_carried(row, parent_ids):
+        # CARRIED BY THE MERGE == HISTORY ARRIVING, NOT A ROUTING ACT (see _row_was_carried).
+        # SUPERSEDES THE PER-FABRIC COORDINATE TEST (3.0.0_SA_CVO 94337) ON ANDREW'S ~19:3xZ SCOPING.
+        # That ruling was right that the blanket merge exemption was too wide, and right that each
+        # fabric's CVO slugs its own projects; the defect was the PROXY it used. `Z-` names WHICH BOX
+        # minted a row, and the gate needs to know WHETHER THIS COMMIT MINTED IT -- on the laptop the
+        # two coincide, on site Z they invert. Provenance answers the question the proxy was standing
+        # in for, on both boxes.
+        # A row MINTED in the merge commit falls through and BINDS -- including a `Z-` row, which the
+        # old test would have exempted. So does any row whose parents could not be read.
         # No violations. The ANNOUNCEMENT is the caller's note, one per row-bearing file.
         return []
     rid = row.get("id", "<no id>")
@@ -802,6 +886,8 @@ def _route_precondition_violations(root, rel, row, code, open_tos=None, route_wo
         return ["%s: the L10 precondition (every task order under %s terminal) could NOT be evaluated (%s) "
                 "-- REFUSED, fail-closed" % (rid, code, note)]
     if open_ids:
+        if _posn_round2_terminal_exception(root, rel, row, code, open_ids, total):
+            return []
         return ["%s: NEW remediation row (%s) while %d of %d task order(s) under %s are NOT "
                 "terminal at HEAD: %s. The slug waits until every task order is complete "
                 "(Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job "
@@ -1313,24 +1399,36 @@ def check_file(root, rel):
             _route_word = "disposition=DECOMP_INVALIDATING (carried in the slug)"
         if folder_project and _route_word is not None:
             _mrg = _merge_in_progress(root)
+            # PROVENANCE COMES FROM THE `_pids` READ ALREADY TAKEN ABOVE for the coordinate limb and
+            # the foreign-row sweep -- one read of the merge's parents per channel file, now shared by
+            # four limbs instead of two. No second read, and no way for the two answers to disagree.
             pre = _route_precondition_violations(root, rel, row, folder_project, route_word=_route_word,
-                                                 merging=_mrg)
+                                                 merging=_mrg, parent_ids=_pids)
             pre.extend(_investigations_precondition_violations(rel, row, folder_project, _route_word,
                                                                _latest_dispositions(root, folder_project),
-                                                               merging=_mrg))
+                                                               merging=_mrg, parent_ids=_pids))
             v.extend(pre)
             if _mrg:
-                _other = _row_is_other_fabric(row)
-                notes.append("%s: MERGE COMMIT -- L10 precondition for %s on row %s: %s. The precondition is "
-                             "PER FABRIC (3.0.0_SA_CVO 94337); the `Z-` coordinate is the discriminator. NOT "
-                             "exempt on a merge: the duplicate-id limb."
+                _carried = _row_was_carried(row, _pids)
+                notes.append("%s: MERGE COMMIT -- L10 precondition for %s on row %s: %s. The discriminator is "
+                             "CARRIED-vs-MINTED against the merge's parents (Andrew ~19:3xZ; supersedes the "
+                             "`Z-` fabric proxy, which inverted by device). NOT exempt on a merge: the "
+                             "duplicate-id limb."
                              % (rel, folder_project, rid,
-                                "NOT evaluated -- the other fabric's row, graded at its own authorship there"
-                                if _other else "EVALUATED -- this fabric's row, the precondition binds"))
+                                "NOT evaluated -- CARRIED by the merge, routed at its own authorship"
+                                if _carried else
+                                ("EVALUATED -- MINTED in this commit, the precondition binds" if _pids is not None
+                                 else "EVALUATED -- the merge's parents could not be read, fail-closed")))
             elif not pre:
                 _o, _t, _n = _open_tos_for_project(root, folder_project)
                 _l, _u, _nf, _ = _latest_dispositions(root, folder_project)
-                notes.append("%s: L10 precondition for %s -- %d task order(s) at HEAD on both roots, 0 open; %d "
+                if _o:
+                    notes.append("%s: L10 NAMED EXCEPTION for %s -- Andrew call 1 YES / CTO 21533 / %s; "
+                                 "%d of %d orders STILL OPEN, explicitly unrun: %s. Exact row and order "
+                                 "content matched; other limbs passed. NOT the broad override."
+                                 % (rel, rid, POSN_R2_EXCEPTION_PIN, len(_o), _t, ", ".join(_o)))
+                else:
+                    notes.append("%s: L10 precondition for %s -- %d task order(s) at HEAD on both roots, 0 open; %d "
                              "investigation item(s) across %d channel file(s) in the index, 0 undispositioned; "
                              "route admitted" % (rel, rid, _t, len(_l or {}), _nf))
     notes.append("%s: %d new row(s) of %d total checked (%d pre-existing, NOT re-graded)"
@@ -1374,32 +1472,79 @@ def _self_test(root):
         # battery that guards the limb it fixes, silently, because a disarmed arm and a passing arm
         # print the same line. The False default means those seven arms need no edit and still mean
         # what they meant.
-        # THE PER-FABRIC BOUNDARY (3.0.0_SA_CVO 94337). NARROWNESS IN BOTH DIRECTIONS, which the ruling
-        # named explicitly: site-Z rows off a merge still refuse, and THIS fabric's row ON a merge still
-        # refuses. The second is the one that distinguishes a boundary from the blanket it replaced.
-        ("fabric MERGE: a site-Z row (Z- coordinate) on a merge -> NOT evaluated",
-         lambda: _route_precondition_violations(None, "r", {"id": "X_PRJ-Z-S3", "route": "SPEC_ERROR"},
-                                                "X_PRJ", open_tos=({"TO-1"}, 3, ""), route_word="w",
-                                                merging=True) == []),
-        ("fabric MERGE NARROWNESS: THIS fabric's row (no Z-) on the SAME merge -> STILL REFUSED",
+        # CARRIED-vs-MINTED REPLACES THE `Z-` FABRIC PROXY IN BOTH PRECONDITION LIMBS
+        # (1.0.0_SA_CTO~Z as gate owner, on Andrew-direct 2026-09-11 ~19:3xZ: "the surprise-row gate
+        # must be project specific"). The five arms below REPLACE five that asserted the proxy; they
+        # are rewritten rather than deleted, because the NARROWNESS they protected -- the exemption
+        # must not become blanket again -- is exactly what still has to be proved.
+        # WHY THE PROXY WENT: `_row_is_other_fabric` is a CONSTANT, not a comparison. Its docstring
+        # says a row without `Z-` is "THIS fabric's record" -- true on the laptop, INVERTED on site Z.
+        # Measured: 100 already-committed IRPT_FNTEND rows arriving by an authorised CLOUD->SITEZ
+        # merge read as native here and refused the leg. A guard whose truth depends on which box
+        # runs it is not a guard, and no arm written on one box could have caught it.
+        # RED-FIRST, the discriminating exercise 4.0.0_SA_CRO~Z set as the acceptance bar (21600):
+        # these arms were run against the PRE-FIX code and FAILED ON THE ANSWER, not the signature --
+        # 12 failed / 4 controls green before, 0 failed / 4 controls green after.
+        ("carried/minted MERGE: a row CARRIED by the merge -> NOT evaluated (history arriving)",
          lambda: _route_precondition_violations(None, "r", {"id": "X_PRJ-S3", "route": "SPEC_ERROR"},
                                                 "X_PRJ", open_tos=({"TO-1"}, 3, ""), route_word="w",
-                                                merging=True) != []),
-        ("fabric: a site-Z row OFF a merge -> STILL REFUSED (the exemption is the merge's, not the Z-'s)",
+                                                merging=True, parent_ids={"X_PRJ-S3"}) == []),
+        ("carried/minted NARROWNESS: a row MINTED in the merge commit -> STILL REFUSED. This is the "
+         "arm that earns the exemption: it is the merging seat's own routing act.",
+         lambda: _route_precondition_violations(None, "r", {"id": "X_PRJ-S3", "route": "SPEC_ERROR"},
+                                                "X_PRJ", open_tos=({"TO-1"}, 3, ""), route_word="w",
+                                                merging=True, parent_ids=set()) != []),
+        ("carried/minted NARROWNESS, THE INVERSION THE PROXY GOT WRONG: a MINTED row WITH a `Z-` "
+         "coordinate -> STILL REFUSED. The old test exempted exactly this.",
          lambda: _route_precondition_violations(None, "r", {"id": "X_PRJ-Z-S3", "route": "SPEC_ERROR"},
                                                 "X_PRJ", open_tos=({"TO-1"}, 3, ""), route_word="w",
-                                                merging=False) != []),
-        ("fabric: an UNPARSEABLE id is not granted the other fabric's exemption",
+                                                merging=True, parent_ids=set()) != []),
+        ("carried/minted FABRIC-AGNOSTIC: a CARRIED row is exempt with OR without `Z-` -- the answer "
+         "must not depend on which device runs the gate",
+         lambda: _route_precondition_violations(None, "r", {"id": "X_PRJ-S3", "route": "SPEC_ERROR"},
+                                                "X_PRJ", open_tos=({"TO-1"}, 3, ""), route_word="w",
+                                                merging=True, parent_ids={"X_PRJ-S3"}) == []
+         and _route_precondition_violations(None, "r", {"id": "X_PRJ-Z-S3", "route": "SPEC_ERROR"},
+                                            "X_PRJ", open_tos=({"TO-1"}, 3, ""), route_word="w",
+                                            merging=True, parent_ids={"X_PRJ-Z-S3"}) == []),
+        ("carried/minted FAIL-CLOSED: parent_ids=None (parents unreadable) exempts NOTHING, even a "
+         "`Z-` row. 'The parents carry nothing' and 'could not be read' stay different answers.",
+         lambda: _route_precondition_violations(None, "r", {"id": "X_PRJ-Z-S3", "route": "SPEC_ERROR"},
+                                                "X_PRJ", open_tos=({"TO-1"}, 3, ""), route_word="w",
+                                                merging=True, parent_ids=None) != []),
+        ("carried/minted: a CARRIED row OFF a merge -> STILL REFUSED (the exemption is the merge's)",
+         lambda: _route_precondition_violations(None, "r", {"id": "X_PRJ-S3", "route": "SPEC_ERROR"},
+                                                "X_PRJ", open_tos=({"TO-1"}, 3, ""), route_word="w",
+                                                merging=False, parent_ids={"X_PRJ-S3"}) != []),
+        ("carried/minted: an UNPARSEABLE id is never exempt -- an id the gate cannot read cannot be "
+         "matched against a parent",
          lambda: _route_precondition_violations(None, "r", {"id": "not-an-id", "route": "SPEC_ERROR"},
                                                 "X_PRJ", open_tos=({"TO-1"}, 3, ""), route_word="w",
-                                                merging=True) != []),
-        ("fabric MERGE (investigations limb): a site-Z row -> NOT evaluated; this fabric's -> REFUSED",
+                                                merging=True, parent_ids={"X_PRJ-S3"}) != []),
+        ("carried/minted (investigations limb): CARRIED -> NOT evaluated; MINTED -> REFUSED; a MINTED "
+         "`Z-` row -> REFUSED; parents unreadable -> REFUSED",
          lambda: _investigations_precondition_violations(
-             "r", {"id": "X_PRJ-Z-S3"}, "X_PRJ", "route=SPEC_ERROR",
-             ({"X_PRJ-S1": "UNDER_INVESTIGATION"}, [], 1, ""), merging=True) == []
+             "r", {"id": "X_PRJ-S3"}, "X_PRJ", "route=SPEC_ERROR",
+             ({"X_PRJ-S1": "UNDER_INVESTIGATION"}, [], 1, ""), merging=True,
+             parent_ids={"X_PRJ-S3"}) == []
          and _investigations_precondition_violations(
              "r", {"id": "X_PRJ-S3"}, "X_PRJ", "route=SPEC_ERROR",
-             ({"X_PRJ-S1": "UNDER_INVESTIGATION"}, [], 1, ""), merging=True) != []),
+             ({"X_PRJ-S1": "UNDER_INVESTIGATION"}, [], 1, ""), merging=True, parent_ids=set()) != []
+         and _investigations_precondition_violations(
+             "r", {"id": "X_PRJ-Z-S3"}, "X_PRJ", "route=SPEC_ERROR",
+             ({"X_PRJ-S1": "UNDER_INVESTIGATION"}, [], 1, ""), merging=True, parent_ids=set()) != []
+         and _investigations_precondition_violations(
+             "r", {"id": "X_PRJ-Z-S3"}, "X_PRJ", "route=SPEC_ERROR",
+             ({"X_PRJ-S1": "UNDER_INVESTIGATION"}, [], 1, ""), merging=True, parent_ids=None) != []),
+        ("carried/minted READ: BOTH precondition limbs decide on _row_was_carried, and NEITHER still "
+         "calls the fabric proxy -- read from the functions, not the module",
+         lambda: "_row_was_carried(row, parent_ids)" in inspect.getsource(_route_precondition_violations)
+         and "_row_was_carried(row, parent_ids)" in inspect.getsource(_investigations_precondition_violations)
+         and "_row_is_other_fabric" not in inspect.getsource(_route_precondition_violations)
+         and "_row_is_other_fabric" not in inspect.getsource(_investigations_precondition_violations)),
+        ("carried/minted READ: the production caller passes the SHARED _pids to both limbs, so the "
+         "coordinate limb and the precondition limbs cannot disagree about provenance",
+         lambda: inspect.getsource(check_file).count("parent_ids=_pids") >= 3),
         # (c) THE READ. Structural, and read from the FUNCTION not the module -- a checker that greps its
         # module finds its own occurrence first (learned twice tonight in to-pipeline-gate).
         ("(c) read: _open_tos_for_project takes the ref from `merging`, not always HEAD",
@@ -1455,25 +1600,29 @@ def _self_test(root):
          lambda: _coordinate_violations("org/missions/D0/NFRA/X_PRJ/surprise-channel/adjudications/ADJUDICATION_v1.md",
                                         "ADJUDICATION", [{"id": "X_PRJ-C-S1", "surfaced_by": "3.0.0_SA_CVO"}],
                                         "3.0.0_SA_CVO", False) == []),
-        # SUPERSEDED BY 94337 AND RE-CUT, NOT DELETED: this arm asserted the BLANKET exemption this
-        # seat first shipped. The per-fabric ruling replaced it, so the arm now asserts the law that
-        # actually holds -- a site-Z row is exempt, and the arm above proves this fabric's is not.
-        ("L10 MERGE: undispositioned items, a site-Z row, merging=True -> NO violations",
+        # RE-CUT TWICE, NEVER DELETED. First it asserted the BLANKET merge exemption this seat
+        # shipped; 94337 replaced that with the per-fabric `Z-` proxy; Andrew's ~19:3xZ scoping
+        # replaced the proxy with provenance. Each re-cut kept the arm pointing at the law that
+        # actually holds, so the history of the rule is legible in the battery that guards it.
+        ("L10 MERGE: undispositioned items, a CARRIED row, merging=True -> NO violations",
          lambda: _investigations_precondition_violations(
              "r", {"id": "X_PRJ-Z-S9", "route": "SPEC_ERROR"}, "X_PRJ", "route=SPEC_ERROR",
-             ({"X_PRJ-S1": "UNDER_INVESTIGATION"}, [], 1, ""), merging=True) == []),
+             ({"X_PRJ-S1": "UNDER_INVESTIGATION"}, [], 1, ""), merging=True,
+             parent_ids={"X_PRJ-Z-S9"}) == []),
         ("L10 NARROWNESS: the SAME undispositioned items with merging=False are still REFUSED",
          lambda: _investigations_precondition_violations(
              "r", row, "X_PRJ", "route=SPEC_ERROR",
              ({"X_PRJ-S1": "UNDER_INVESTIGATION"}, [], 1, ""), merging=False) != []),
-        ("L10 MERGE: the fail-closed path is exempt too, for a site-Z row",
+        ("L10 MERGE: a CARRIED row is exempt even when the DISPOSITION census itself failed -- the "
+         "row was routed elsewhere, so this branch owes no census for it",
          lambda: _investigations_precondition_violations(
              "r", {"id": "X_PRJ-Z-S9"}, "X_PRJ", "route=SPEC_ERROR",
-             (None, [], 0, "git rc=128"), merging=True) == []),
-        ("L10 MERGE: and the fail-closed path still REFUSES for THIS fabric's row on a merge",
+             (None, [], 0, "git rc=128"), merging=True, parent_ids={"X_PRJ-Z-S9"}) == []),
+        ("L10 MERGE: and a MINTED row on a merge is still REFUSED when the census failed -- two "
+         "independent fail-closed paths, neither masking the other",
          lambda: _investigations_precondition_violations(
              "r", {"id": "X_PRJ-S9"}, "X_PRJ", "route=SPEC_ERROR",
-             (None, [], 0, "git rc=128"), merging=True) != []),
+             (None, [], 0, "git rc=128"), merging=True, parent_ids=set()) != []),
         # ROUTE LIMB -- ITS FIRST BATTERY. 94295: this limb had ZERO arms and its only caller was the
         # production path, so nothing would have caught a regression in it and nothing did catch the
         # merge defect either. Red, green, fail-closed, then the merge pair.
@@ -1486,10 +1635,11 @@ def _self_test(root):
         ("route: the open-order census could not run -> refused fail-closed",
          lambda: any("fail-closed" in x for x in _route_precondition_violations(
              None, "r", row, "X_PRJ", open_tos=(None, 0, "git rc=128"), route_word="route=SPEC_ERROR"))),
-        ("route MERGE: an OPEN task order, a site-Z row, merging=True -> NO violations (94293/94337)",
+        ("route MERGE: an OPEN task order, a CARRIED row, merging=True -> NO violations "
+         "(94293 -> 94337 -> Andrew ~19:3xZ)",
          lambda: _route_precondition_violations(
              None, "r", {"id": "X_PRJ-Z-S9"}, "X_PRJ", open_tos=({"TO-1"}, 3, ""), route_word="w",
-             merging=True) == []),
+             merging=True, parent_ids={"X_PRJ-Z-S9"}) == []),
         ("route NARROWNESS: the SAME open order with merging=False is still REFUSED",
          lambda: _route_precondition_violations(
              None, "r", row, "X_PRJ", open_tos=({"TO-1"}, 3, ""), route_word="w", merging=False) != []),

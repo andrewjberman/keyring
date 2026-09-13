@@ -153,6 +153,50 @@ differing.
 **The general form, the laptop's and the keeper:** "make the two devices match" is not a goal in itself;
 what must match is the BEHAVIOUR, and the file it lives in is a device fact.
 
+## 4c. THE FIRST REAL LAUNCH FAILED AT :340, ~07:5xZ -- and the cause was the npm shim shape, not the launcher
+
+Andrew ran `ajb2 3.0.0_SA_CVO~Z` in a fresh window. `-ShowLaunchInfo` resolved every path; the launch died
+at `start-codex-seat.ps1:340`: `Start-Process : This command cannot be run due to the error: %1 is not a
+valid Win32 application.`
+
+**Cause:** the npm global install ships THREE shims side by side in `%APPDATA%\npm`: an extensionless POSIX
+script `codex` (421 B), `codex.cmd` (341 B) and `codex.ps1` (869 B). `Get-Command codex` in PowerShell
+picks `codex.ps1` (which is why every verification above passed), but the launcher's `Start-Process
+-FilePath 'codex'` WITH `-RedirectStandardOutput/-RedirectStandardError` runs with UseShellExecute=false,
+i.e. raw CreateProcess, which takes the exact-name file first and tries to execute the shell script as a
+PE image. The laptop never hits this because its codex comes from **bun**, whose global install writes a
+real `codex.exe` shim. Two verifications of mine had passed on the wrong instrument: `Get-Command` and
+`& codex` resolve differently from `Start-Process`.
+
+**Act, on his word "What is this bullshit" (the launcher must work) and "consistent across devices":**
+`bun install -g @openai/codex@0.154.0` -- the laptop's mechanism at the version Andrew himself installed
+here via npm (his npm install left in place) -- which created `%USERPROFILE%\.bun\bin\codex.exe` (15,872 B)
++ `codex.bunx`; then `.bun\bin` inserted on the USER PATH immediately AHEAD of `%APPDATA%\npm` so the bare
+name resolves to the exe first. **Verified with the launcher's exact call shape** on the registry-composed
+PATH: `Start-Process -FilePath 'codex' -ArgumentList '--version' -RedirectStandardOutput ...` -> exit 0,
+stdout `codex-cli 0.154.0`; `codex app-server --help` -> exit 0; a non-existent name still fails. Andrew
+relaunched in a new window: **`3.0.0_SA_CVO~Z` came up as a Codex seat** (app-server on ws://127.0.0.1:50167,
+heartbeat registered LIVE PID 34844, bridge bound 08:03:01Z, detector 10668).
+
+**Egress note:** one package install from the public npm registry via bun, pinned to the version already
+on this device, under his explicit word that the launcher must work here and match the laptop. Reversible:
+`bun remove -g @openai/codex` plus one PATH entry.
+
+**The two devices now match on the codex mechanism too:** bun global exe shim on the persistent USER PATH
+on both. The npm shims remain on site Z behind it; they resolve for bash users and harm nothing.
+
+**CORRECTION 08:2xZ -- THERE IS NO VERSION SKEW, and every "0.153.4 vs 0.154.0" line above is stale.**
+`0.0.0_AB_MSTR` re-measured the laptop (bus 91e9ee2a-133e-41f0-aa97-96ae802e4fd4): `Get-Command codex
+-All` returns one shim, `.bun\bin\codex.exe`, codex-cli **0.154.0**; no npm codex on the laptop. Its
+0.153.4 was true at ~00:3xZ and the laptop was upgraded at 02:22 local; the number was then re-asserted
+hours later without a re-read, and this seat carried it forward twice more. Both devices: 0.154.0, bun
+exe shim, identical mechanism. The "starts but never routes turns" watch-item is DROPPED as a skew
+symptom; only the `default_permissions` key question (s.4) survives, and the first live seat answers it by
+running. The laptop also tested ITS launcher with the launcher's actual `Start-Process -Redirect...` call
+shape and it passes there: one shim, nothing for CreateProcess to pick wrongly. The night's recurring
+shape, in the laptop's words: a check that is not the consumer's own call is a different question
+answered truthfully.
+
 ## 5. RELAYED, NOT ADJUDICATED
 
 Same-turn broadcast to the live site-Z seats (`1.0.0_SA_CTO~Z` as the launcher chain's steward on this

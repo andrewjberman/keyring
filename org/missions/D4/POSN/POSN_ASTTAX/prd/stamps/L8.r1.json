@@ -1,0 +1,10 @@
+{
+ "note": "Channel compile VERIFIED at this seat: 1 investigation item, 1 OPEN, 1 ARMED, 0 defects, 0 malformed, 0 duplicate ids; 1 of 1 order terminal with a VALID proof instance. Agrees with the drain-end read msg 21234 @a92a72abe0. NOTE: round 1 was cut and issued at v0.1; this compile act happens now, at v0.2, and pins the current version accordingly -- the act is dated, not backdated.",
+ "prd_pin": "93e69164b0ad",
+ "prd_version": "v0.2",
+ "project": "POSN_ASTTAX",
+ "round": 1,
+ "signed_by": "3.0.0_SA_CVO~Z",
+ "stage": "L8",
+ "utc": "2026-09-11T06:54Z"
+}

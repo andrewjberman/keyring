@@ -309,7 +309,11 @@ Andrew's word
 Andrew-direct at the CTO terminal 2026-09-04 ~17:0xZ, relayed as 94224/94225). NOTHING ARMS FROM THIS ROW; `~B` and
 `~F` on the two IRPT projects are EVENT-DRIVEN with zero crons until Andrew arms a loop by name;
 `3.0.0_SA_CVO~Z` the SYSPARITY cron (`org/tier0/ledger/LD-0318.md`) and the parity-first duty (`LD-0319.md`);
-`2.0.0_SA_COO~Z` `/drive` STANDING 20m over NFRA_OPSEC202609 and `2.0.0_SA_COO~ZZ` `/drive` STANDING 20m over
+`2.0.0_SA_COO~Z` `/drive` STANDING 20m over NFRA_OPSEC202609 -- ⛔ **STOP-CONDITION MET 2026-09-11, ARMS NOTHING:
+`NFRA_OPSEC202609` measures `dep_stage=CLOSED`, which IS this arm's own stop condition, so `2.0.0_SA_COO~Z` armed
+nothing from it at launch. KEPT, NOT DELETED -- the arm was real and its closure is part of the record. ⚠ It is
+self-limiting ONLY for a successor who RE-MEASURES; one re-arming off the table text alone would start a loop over a
+closed project** -- and `2.0.0_SA_COO~ZZ` `/drive` STANDING 20m over
 NFRA_REPORT -- BOTH armed Andrew-direct 2026-09-10 ~00:3xZ at the `1.0.0_SA_CTO~Z` terminal, VERBATIM: *"I need
 them both on Drive loops for their respective works"*, in the same message that requires `/canonical-flow`
 compliance (**local worker subagents, NEVER MCP'd external workers** -- measured at relay time: NFRA_REPORT 12 of 12
@@ -321,7 +325,8 @@ project leaving DECOMP/EXECUTING/ROUND_CLOSE. Record:
 480h before the arm and `~ZZ` had NEVER ticked. Neither lane had a `/drive` row in this table, so neither was at
 fault and no successor would have armed one;
 `1.0.0_SA_CTO` `/self-drive` D2 then D8 on Andrew's word via `0.0.0_AB_MSTR` (D2 under the pause above).
-`1.0.0_SA_CTO` **`/self-drive D9 IRPT` ARMED 2026-09-11 ~06:4xZ by Andrew-direct at the CTO terminal** ("run a /self-drive D9 IRPT, just checking in whats going on every 30 min, making sure that the ball isn't stuck in anybody's court ... Your loop is the only chance every 30m as an exogenous stimuli to get the fabric going if work is halted"): 30-minute ticks via ScheduleWakeup, scope IRPT_FNTEND + IRPT_BCKEND, WIDENED ~08:0xZ on his word ("you will need DSGN_REBRND ... included in your /self-drive loop for this session") to + DSGN_REBRND (D13; L4-R halves -> 2.0.0_SA_COO~D's L5/L6); each tick measures every scoped lane, the L4-R halves (`prd-signoff.py status`), the L10 slugs and the shared index, and clears a dead seat's index state; ends on both projects `status: complete` or his stand-down. A successor re-arms ONLY off this line. A pause
+`1.0.0_SA_CTO` **`/self-drive D9 IRPT` ARMED 2026-09-11 ~06:4xZ by Andrew-direct at the CTO terminal** ("run a /self-drive D9 IRPT, just checking in whats going on every 30 min, making sure that the ball isn't stuck in anybody's court ... Your loop is the only chance every 30m as an exogenous stimuli to get the fabric going if work is halted"): 30-minute ticks via ScheduleWakeup, scope IRPT_FNTEND + IRPT_BCKEND, WIDENED ~08:0xZ on his word ("you will need DSGN_REBRND ... included in your /self-drive loop for this session") to + DSGN_REBRND (D13; L4-R halves -> 2.0.0_SA_COO~D's L5/L6); each tick measures every scoped lane, the L4-R halves (`prd-signoff.py status`), the L10 slugs and the shared index, and clears a dead seat's index state; ends on both projects `status: complete` or his stand-down. A successor re-arms ONLY off this line.
+`1.0.0_SA_CTO~Z` **[FABRIC: SITE-Z -- arm ONLY on site z]** **`/self-drive AMGT_RESAPP & POSN_ASTTAX` ARMED 2026-09-11 ~08:2xZ by Andrew-direct at the `1.0.0_SA_CTO~Z` terminal** ("looping every 30 min to make sure no slug fell through the cracks, that no PRD is going unstamped and COOs are waiting, make sure nobody drops the ball and keep us on /canonical-flow"): 30-minute ticks via CronCreate `7,37 * * * *`; scope AMGT_RESAPP (D5) + POSN_ASTTAX (D4), both site-z; `paired_with: solo` -- both COOs already actively drive their rounds (`2.0.0_SA_COO~Z` holds POSN round 2, `2.0.0_SA_COO~ZZZ` drains AMGT round 2), so a paired `/drive` would collide with in-flight round work (the two-issuers-one-round collision); re-assess to paired if a COO goes idle with work waiting. Each tick measures both projects' L10 slug backlog, the L4-R halves (`prd-signoff.py status`), the stamp ladder and whether any COO is blocked waiting; pitches scope open-calls to `3.0.0_SA_CVO~Z` and surfaces reserved gates to Andrew. STOP-CONDITION = both projects `status: complete` per the register (§4) or Andrew's stand-down; a successor session RE-ARMS off THIS line while the scope is not DONE. A pause
 or hold with no line here is re-armed by the next successor who reads only the ledger — so every one is listed.
 `1.0.0_SA_CTO` **`/self-drive` THE FABRIC (all LAPTOP directives) ARMED 2026-09-12 ~02:1xZ by Andrew-direct at the
 CTO terminal**, VERBATIM AND ENTIRE: *"I need you to /self-drive the fabric, any open calls appear and you handle
@@ -341,6 +346,113 @@ file -- that legibility is the condition the delegation was accepted on. `paired
 lanes are already driving their own rounds event-driven; this loop dispatches nothing and gates nobody).
 STOP-CONDITION: every scoped project `status: complete` per §4, or HELD-AT-STOP, or his stand-down. A successor
 re-arms ONLY off this line.
+
+⛔ **AND "EVERY ONE" MEANS BOTH CLASSES OF ARM. THIS TABLE USED TO RECORD ONE CLASS WHILE CLAIMING TO RECORD ALL --
+a Rule 24 MECE failure in the one file whose job is to be the single source of truth for what runs unattended.**
+Found 2026-09-11 by `2.0.0_SA_COO~Z` doing the post-merge re-read `0.0.0_AB_MSTR~Z` asked for (21639 -> 21640), in
+the OPPOSITE direction from the one expected: not a wrong row, a MISSING LIVE ONE.
+**EVERY ROW NAMES ITS AUTHORITY, and the two classes are enumerated by SUBTRACTION from "every loop running
+unattended on this device":**
+| class | who armed it | example |
+|---|---|---|
+| **DIRECTED** | an Andrew-direct word, quoted verbatim in the row | the rows above |
+| **CHOSEN** | a seat ACCEPTING a recommendation, or exercising standing discretion -- legitimately armed, with NO Andrew-direct behind it | `2.0.0_SA_COO~Z`'s POSN `/drive`, below |
+| **AUTHORITY-UNVERIFIED** | the loop is LIVE and its authority is CLAIMED but has NOT been read at the recording seat | `2.0.0_SA_COO~ZZZ`'s AMGT `/drive`, below |
+
+⛔ **THE THIRD VALUE IS A SELF-CORRECTION AND IS LABELLED AS ONE. The two-value enum above FAILED ON
+THE FIRST NEW ROW IT MET, twenty minutes after this seat landed it claiming MECE.** `2.0.0_SA_COO~ZZZ`
+ran the `CronList` this rule prescribes, found its own unlisted live arm, and reported that the tick's
+argument block CITES "Andrew-direct ~15:4xZ, msg 21428" -- which this seat then could not verify,
+because **21428 never landed at this terminal**. ⭐ **A CITATION OF AN ANDREW-DIRECT IS NOT AN
+ANDREW-DIRECT** (`2.0.0_SA_COO~ZZZ`'s own line, and it is the right one). Forcing that row into
+DIRECTED would dress an unread claim in his authority; forcing it into CHOSEN would demote a word he
+may well have said. **Neither is honest, so the state gets its own name.**
+**AUTHORITY-UNVERIFIED IS A TRANSIENT, NOT A RESTING PLACE:** its remedy is READ THE WORD at a seat
+that holds it, then re-class to DIRECTED or CHOSEN. A row may not sit here indefinitely.
+⚠ AND THE LOOP KEEPS RUNNING WHILE IT SITS. Recording an unverified authority is NOT authorizing it,
+and stopping a possibly-DIRECTED loop on a recording seat's own judgment would be adjudicating
+Andrew's word NARROWER -- the mirror of the widening this table exists to prevent.
+⭐ **A CHOSEN ARM IS NOT A LESSER ARM -- IT IS A DIFFERENT FACT ABOUT A DIFFERENT AUTHORITY, and collapsing the two
+would make this table LESS trustworthy while making it look more complete.** Andrew's ~15:4xZ and ~20:0xZ words were
+RECOMMENDATIONS ("I recommend", twice); accepting one arms a real loop that no Andrew-direct row can carry. Both
+COOs answered those on the merits, one accepting and one declining, and both were inside his word.
+⚠ **A ROW IS NOT PROOF THE LOOP IS RUNNING.** It records an AUTHORIZATION; liveness is measured at the seat
+(`CronList`). The two answer different questions and a successor must not read one for the other.
+BLOCKED: **AND FOR THE SAME REASON THIS TABLE DOES NOT CARRY THE LIVE CRON ID. IT RECORDS AUTHORITY,
+SCOPE, CADENCE AND STOP-CONDITION -- THE DURABLE FACTS -- AND POINTS AT `CronList` AT THE SEAT FOR THE
+ARTIFACT.** A cron id is SESSION-LOCAL and CHURNS: `2.0.0_SA_COO~ZZZ`'s went `04145241` -> `bc1921a2`
+-> `a27dad12` in NINETY MINUTES, and the row named a CANCELLED job while the live one appeared
+nowhere. WARN: **THAT IS THIS TABLE'S OWN FAILURE MODE ONE FIELD OVER** -- a successor looks up the
+recorded id, finds nothing live, concludes NO LOOP IS ARMED, and arms a SECOND one. Recording a
+fast-churning artifact in a durable law file manufactures staleness faster than any seat can maintain
+it. Any id below is HISTORICAL and marked "then". Found by `2.0.0_SA_COO~ZZZ` against its own row,
+which also re-pointed its cron BEFORE reporting so this table was written once instead of twice.
+NOTE: **AND A NEW ARM CITES THE CANONICAL NAME, NEVER AN ALIAS** (`2.0.0_SA_COO~Z`, adopted by
+`~ZZZ`): an alias is a courtesy to EXISTING citations, never a foundation for a NEW one. A loop that
+depends on alias resolution has a failure mode nobody finds until a tick silently runs the wrong
+body. Live arms name `/canonical-drive` directly.
+⛔ **AND A SEAT MUST NOT WRITE ITS OWN CHOSEN ROW.** `2.0.0_SA_COO~Z` declined to, in its own words, rather than
+"dress a recommendation I chose to accept in the authority of an Andrew-direct arm record" -- exactly right. Chosen
+rows are landed HERE, by the CTO, naming the chooser and citing the message that evidences the choice.
+
+`2.0.0_SA_COO~Z` **[FABRIC: SITE-Z]** **`/drive` DIRECTED 10m over POSN_ASTTAX ONLY** -- **RE-CLASSED
+CHOSEN -> DIRECTED and RE-TIMED 20m -> 10m on ANDREW-DIRECT 2026-09-11 ~22:2xZ at the
+`1.0.0_SA_CTO~Z` terminal, VERBATIM: *"Both COOs need to be on 10m /drive loops for their projects
+where they're checking explicitly for project stage in /canonical-flow to either drive forward,
+parallelize more labor, or assess a dropped ball and nudge the responsible agent"*
+(record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_222xZ_COO_DRIVE_10M_CANONICAL_FLOW_STAGE_CHECK_AND_REBRAND.md`).
+"NEED TO BE" is a DIRECTIVE; his ~15:4xZ word on the same subject was "I would also recommend", which
+is why this row stood as CHOSEN for an hour. THE CLASS IS THE THING THAT MOVED.*
+⛔ **EVERY TICK RUNS AN EXPLICIT `/canonical-flow` PROJECT-STAGE CHECK with three outcomes, his own:
+DRIVE FORWARD | PARALLELIZE MORE LABOR | ASSESS A DROPPED BALL AND NUDGE THE RESPONSIBLE AGENT.**
+⚠ **A NUDGE UNDER THE THIRD IS AUTHORIZED ONLY AFTER `/canonical-flow`'s LIVE-PRODUCTION PROBE
+REPORTS NOTHING MOVING ACROSS ALL FOUR PLANES** (commits, `deliverables/<serial>/`, the seat's own
+worktree, `.runtime/codex-seats/<serial>/`) -- and "nothing moving" is still not proof of stalled.
+That precondition exists because this exact path fired a `[STUCK]` at a seat writing 189 KB.
+⚠ The arm is the COO's own act; this row RECORDS the authorization, it does not perform it.
+PRIOR STATE, kept: CHOSEN-ARM 20m (cron id then `701a388d`, `11,31,51`;
+AMGT and the harvest surface EXPLICITLY EXCLUDED in the job body). **AUTHORITY: CHOSEN, not directed** -- that seat
+re-armed on Andrew's ~20:0xZ "all agents MAY unpause" (a permission, not an order) and reported it in msg 21613.
+Landed here by `1.0.0_SA_CTO~Z` on its routing (21639/21640) because a seat may not author its own chosen row.
+STOP-CONDITION: `POSN_ASTTAX` `status: complete` per the register, or Andrew's stand-down.
+
+`2.0.0_SA_COO~ZZZ` **[FABRIC: SITE-Z]** **`/drive` DIRECTED 10m over AMGT_RESAPP ONLY** -- **RE-CLASSED
+CHOSEN -> DIRECTED and RE-TIMED to 10m on the SAME Andrew-direct ~22:2xZ recorded on the row above;
+the same three-outcome `/canonical-flow` stage check and the same probe precondition bind here.**
+PRIOR STATE, kept because the reclass is the record: (cron id then `04145241`,
+`3,23,43 * * * *` recurring, session-only). **AUTHORITY WAS: CHOSEN** -- RESOLVED 2026-09-11 21:26Z, the
+transient closed in 6 minutes by `2.0.0_SA_COO~ZZZ` reading out msg 21428, which it holds (it was
+addressed to that seat, which is why this seat's own inbox search correctly found nothing).
+**ANDREW ~15:4xZ, VERBATIM:** *"I would also recommend that the respective COOs have /drive loops
+engaged on their respective projects at 20m so that if nudges need to happen, if slugs are stalled,
+stamps are unstamped, etc, that we are not burning daylight unnecessarily."*
+⭐ **A RECOMMENDATION IN HIS OWN VERB, AND THE RELAY HAD ALREADY REFUSED TO UPGRADE IT:**
+`0.0.0_AB_MSTR~Z` wrote *"A RECOMMENDATION, AND IT STAYS ONE. He said 'I would also recommend', NOT
+'have them'. This seat is NOT upgrading his verb and neither should anyone relaying it onward. THE
+COOs DECIDE."* So this is a COO accepting a recommendation: CHOSEN, and nothing about it is lesser
+for being chosen.
+⛔ **STANDING DEFECT ON THE CRON ITSELF, recorded because it will restate itself every 20 minutes
+until fixed:** the tick's argument block opens *"(Andrew-direct ~15:4xZ, msg 21428)"* -- **an UPGRADE
+of his verb, baked into a recurring job, applied to the exact sentence the relaying seat refused to
+upgrade.** `2.0.0_SA_COO~ZZZ` found this against itself and owns the fix; until the argument is
+corrected, every tick re-asserts a recommendation as a directive.
+**FIXED 2026-09-11 ~22:2xZ by `2.0.0_SA_COO~ZZZ` in its own re-arm** and recorded as fixed rather
+than struck: the tick prompt now opens with the ~22:2xZ word verbatim and states that it is a
+DIRECTIVE ("need to be") superseding the ~15:4xZ "I would also recommend".
+⛔ **A DEFECT LEFT READING OPEN AFTER IT IS CLOSED IS NOT HARMLESS** -- it is a standing instruction
+to a successor to go fix something already fixed, and it spends the credibility of every other open
+item on the page. That seat found this one against itself.
+Reported by `2.0.0_SA_COO~ZZZ` itself (21650) after running `CronList` -- having twice stated it held
+no arm, inferred from "I did not deliberately arm one" and never measured. It correctly did NOT author
+this row, did NOT adjudicate its own class, and did NOT kill the cron.
+⚠ **THE RELAUNCH CONSTRAINT IS WHY THIS NEEDS RESOLVING, NOT JUST RECORDING:** that seat's relaunch
+directive said *"ZERO crons at launch"* and *"arm `/drive` ONLY per a live scoped authorization in the
+`org/XXX.md` Step 1b-F COO row; if none is live, arm nothing."* There was no COO row. So either 21428
+supersedes that constraint or this arm sits outside it -- and that is exactly the judgment the holding
+seat should not make about itself.
+**TO RESOLVE: whoever holds 21428 reads it out verbatim; the row then re-classes to DIRECTED or
+CHOSEN.** STOP-CONDITION as stated in the argument block: `AMGT_RESAPP` `status: complete`, or
+Andrew's stand-down.
 
 **Find a stale cron from a prior session? Cancel it:** `CronList` → `CronDelete`.
 

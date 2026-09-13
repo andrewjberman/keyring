@@ -1,0 +1,10 @@
+{
+ "note": "CTO mapping21335: corrective rb issuance is v3. ADJUDICATION_v3: five grades 4 PASS / 1 FAIL, all29 investigations dispositioned. C-S12..15 closed; C-S16 remains OPEN with consumer fallback and vintage defects C-S19/C-S20.",
+ "prd_pin": "52617ed23982",
+ "prd_version": "v0.3",
+ "project": "AMGT_RESAPP",
+ "round": 3,
+ "signed_by": "3.0.0_SA_CVO~Z",
+ "stage": "L9",
+ "utc": "2026-09-11T11:09Z"
+}

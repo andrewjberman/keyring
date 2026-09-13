@@ -1,4 +1,4 @@
-# AMGT_RESAPP -- L5 decomposition (COO) -- v0.2
+# AMGT_RESAPP -- L5 decomposition (COO) -- v0.6
 
 **Seat:** `2.0.0_SA_COO~ZZZ`, spawned by Andrew 2026-09-10 ~17:4xZ at the `1.0.0_SA_CTO~Z` terminal for this
 project (seating brief msg 21003; `project.json` `seats.coo`). **Directive:** D5 Alternative Research.
@@ -424,3 +424,994 @@ focused L5 records the omission as a boundary rather than a certification.
 - **NONE held by this lane, and none at Andrew.** Sixteen cells are `OPEN` (one, `AMGT-s-5`, with its .tsx phase
   held on the design spec's approval). Round 1 is cuttable now.
 - **PUSH STATE: this lane's commits are LOCAL.** `0.0.0_AB_MSTR~Z` holds the push window.
+
+
+---
+
+## 10. ROUND 2 (RECUT) -- from the L10 round-1 analysis @4d31cf4caa (1.0.0_SA_CTO~Z)
+
+**v0.3 IS AN L10 RECUT, NOT A NEW DECOMPOSITION.** Round 1 graded 0 of 14 REALIZED (a strong build:
+16/16 terminal, valid instances, 24/0 channel, 13/16 judgment PASS) -- but 13 of 14 FWD bars are
+EXERCISED (an analyst used a SERVED surface) and the surfaces are UNSERVED because every .tsx waits on
+Andrew's DESIGN_SPEC approval (C-DESIGN-SPEC-FIRST), which measured EMPTY. So the exercise is
+systematically unmet and the gap is EXERCISE, not a missing outcome -- coverage read: every FWD has a
+cell, 0 uncovered, no PRD addendum. The round-1 cells (AMGT-s-1..15, AMGT-s-b4) are FROZEN and terminal;
+this section ADDS the remediation cells the analysis's s.4 sends back. Nothing round-1 moves.
+
+**THE TRUE CRITICAL PATH IS ANDREW'S, AND IT IS A ROUND-3 GATE, NOT THIS ROUND'S:** the DESIGN_SPEC
+approval (moves 12 of 14 outcomes at once), plus four per-use/decision words (social vendor -- FWD-11;
+drafting model -- FWD-9; peer-universe quota -- FWD-8; the two lists' owners -- FWD-14). The SURFACE
+EXERCISE of every FWD is ROUND 3, expressly qualified per Rule 27 as the essential wait the analysis
+s.4 names (a UI serving before its design is approved is the failure C-DESIGN-SPEC-FIRST exists to
+prevent). This round is the MECHANICAL work that does NOT wait on the spec.
+
+⛔ **DO NOT RE-CUT AMGT-s-b4** -- W9-S2 is disarmed by the completed re-run (18 objects / 3 tickers,
+all six mechanical criteria PASS, drained @3be9d03962); its world-fact stands and the cell is terminal.
+
+### 10a. The five round-2 cells -- ALL INDEPENDENT (fanout 5 of 5, cap 8, no deferral)
+
+Each cell fixes ONE landed round-1 cell's named defect; none depends on another (AMGT-r-4 rides the SA
+raw for tickers AMGT-s-b4 already resolved, so it does not wait on AMGT-r-12's coverage). Ids match
+CELL_ID_RE (AMGT-r-<n>, verified against the enforcer's pattern).
+
+| cell | fixes | FWD | the defect (analysis s.2) | the engine, and its bound |
+|---|---|---|---|---|
+| `AMGT-r-1` | `AMGT-s-1` / W1-S2 | FWD-1, FWD-3 | the fiscal-year join groups by the CALENDAR year of `date`, so a non-December filer's period-end fundamentals pair with a price ~9 months off (BABA, FYE 31 March: 100% of rows split). A served-correctness defect the mechanical AC4 could not see (a December-heavy sample passes). | THE FISCAL-YEAR JOIN, SERVED-CORRECT. Re-key the join to the ISSUER'S fiscal period so a period-end fundamental pairs with the price AT that period-end, never the calendar-year price. EXERCISE a CONTROL on BABA US Equity (FYE 31 March, ALREADY landed by AMGT-s-1 -- no new unique security, F2): the control FAILS under calendar-year grouping and PASSES under fiscal-period grouping (the difference arm). Home: `integrations/bloomberg/research/`. Bound: NO new unique security; the control MUST discriminate, not merely pass. |
+| `AMGT-r-4` | `AMGT-s-4` | FWD-4 | s-4 AC7 was NOT_EVALUATED at grade time -- SA raw had 0 keys then; AMGT-s-b4 has since landed 18 objects / 3 tickers (BABA/RTX/+1). The reader was never exercised on real SA content. | THE SA COVERAGE RE-EXERCISE (RIDE, not re-write). Re-run the landed coverage reader over the SA raw AMGT-s-b4 landed under `raw/seekingalpha/`, so coverage_items carry real SA-class items keyed by the identity layer, ranked, admitted PROVISIONAL by the held-back item rule. AC: `sa_raw_keys_found` >= 3 (not 0), the F11 redirect trap still 0, the identity gate still refuses an UNRESOLVED-source attachment. Home: `lib/research/coverage/` + reads the store. Bound: NO new vendor call (reads LANDED raw); no HTML parse (C-SA-NAMED-SOURCE). |
+| `AMGT-r-10` | `AMGT-s-10` | FWD-10 | s-10 AC6 FAIL: '12345 [PROVISIONAL]' skims as "a number, fine" -- the held-back verdict lives in the DATA and is absent in the READING, so an unchecked figure ships looking checked. | THE CHECK-FACE MARKER, IN THE READING. Add a machine-readable per-verdict MARKER (a colour token AND an icon name) to the check-face render and SPEC_SECTION_checkface.md, so PASS / REFUSE / PROVISIONAL are visually distinct and the later .tsx binds it -- land it BEFORE PROVISIONAL figures serve. AC: the render carries a distinct marker per verdict and a PROVISIONAL figure's marker != a PASS figure's, exercised on the fixture (the difference arm). Home: `lib/research/checkface/`. Bound: NO .tsx (C-DESIGN-SPEC-FIRST) -- the marker is a data+spec artifact the .tsx reads. |
+| `AMGT-r-12` | `AMGT-s-12` | FWD-8, FWD-13 | after W7-S3's remediation the identity layer is 32 MEASURED / 32 distinct, with 57 UNRESOLVED residual (coverage, not a regression) -- four surfaces hang off it. | THE IDENTITY COVERAGE PASS. Resolve UNRESOLVED bloomberg_ticker cells WHERE A LEGITIMATE MEASURED SOURCE EXISTS (the SA sa_ids AMGT-s-b4 landed; a workbook cell that is NOT the shared template placeholder; a coverage-universe cross-reference) -- and SURFACE the folder-name fallback as an identity-layer DESIGN QUESTION for Andrew, do NOT code it. AC: MEASURED rises from 32 by the count legitimately resolvable, distinct still == MEASURED (no new shared value -- the AC7 unscoped pass still reads 0 shared), the residual UNRESOLVED count is printed with a per-name reason, and the folder-name-fallback trade-off is stated. Home: `lib/research/identity/`. Bound: NO folder-name fallback coded; NO new vendor call. |
+| `AMGT-r-15` | `AMGT-s-15` | FWD-14 | s-15 AC6 FAIL: the official-vs-impostor test is a bare OR of three unequal checks, so an impostor beats the weakest (a copied "official account of <domain>" bio admits on check 3 alone). | THE IMPOSTOR AND-CLAUSE. Require check (3) (the bio/self-description) to CO-OCCUR with check (1) OR check (2) (the stronger signals) in the official-vs-impostor test in `social_accounts.json`'s schema and the rule. AC: the predicate REFUSES a fixture passing ONLY check 3 (the impostor) and ADMITS one passing check 3 AND (1 or 2) (the difference arm); the schema states the AND-clause. Home: `lib/research/lists/`. Bound: NO vendor call (the test is a rule); the owner stays UNASSIGNED (C-NO-CONTACT -- Andrew's). |
+
+### 10b. Rule 24 record for what v0.3 ADDS (the five round-2 cells)
+
+- **(i) MECE over the DECLARED domain = the analysis s.4's remediation set.** Written as a SUBTRACTION,
+  not a recall: the analysis names FIVE mechanical items + the surface exercise (round 3) + do-not-recut
+  s-b4. This section is exactly those five; the surface exercise is round 3 (Andrew's gate) and s-b4 is
+  excluded by name. No sixth cell, no dropped item.
+- **(ii) SAME GRAIN:** each is one cell fixing one landed cell's named defect.
+- **(iii) INTENT COHERENCE:** one axis -- served-correctness / reading-not-data / real-content re-exercise
+  / coverage / the AND-clause. No cell mixes remediation with new scope.
+- **(iv) STATE COHERENCE -- what these cells do NOT move:** they fix the mechanical defects; they do NOT
+  make any EXERCISED bar REALIZED. That needs the SERVED surface, which needs the .tsx, which needs
+  Andrew's DESIGN_SPEC approval -- round 3. A round-2 cell landing complete does not close its FWD.
+
+### 10c. Round-1 lessons absorbed into this cut (analysis s.5)
+
+The round-1 cut carried defects every one of which a worker caught by RUNNING the criterion. This cut:
+- Every criterion DISCRIMINATES -- a difference arm (fails one input, passes its twin), never an
+  always-pass or always-fail; run the EXACT invocation against the world before handing it over.
+- The proof-of-spec instance uses the FULL task-order stem filename (`<PROJECT>.TO-<cell>.<slug>.proof_of_spec.json`)
+  -- the flip gate's discovery glob requires it (W7-S2 / W3-S2).
+- A criterion names the instrument that can OBSERVE the artifact (W2-S2/W2-S4: comp-routes reads its own
+  checkout; a bare comp-tool on a branch answers from the main checkout -- read the declared source directly).
+- The write grant is live only while the order is NON-TERMINAL: the order is committed before the spawn,
+  and the worker's flip rides in a commit whose parent still carries the order open (W7-S5).
+
+### 10d. The round axis, updated
+
+- **ROUND 2 (RECUT, 5 cells, all INDEPENDENT):** `AMGT-r-1`, `AMGT-r-4`, `AMGT-r-10`, `AMGT-r-12`,
+  `AMGT-r-15`. Five chains of one; `fanout: 5 of 5, cap 8` (no deferral -- 5 < 8). Each spawns at issuance.
+- **ROUND 3 (deferred on Andrew's gate):** the SURFACE EXERCISE of every FWD -- the .tsx that serves each
+  surface, cut only after the DESIGN_SPEC approval and the four words land. NOT cut now.
+
+**PREFLIGHT for the recut:** the mandatory core battery is NOT re-run -- v0.2's run (comp-schedule 25
+armed none this project's; comp-iam 195/188/1084/304; comp-adversary 10/10) stands at its vintage and no
+round-2 cell touches a new gate/IAM/adversary surface (all five are edits to landed modules against
+landed data). The authority for the recut is the L10 analysis @4d31cf4caa (the CTO's one send), cited in
+each round-2 order's authority chain. comp-blast DECLARED-NOT-APPLICABLE (no infra act; no served-output move).
+
+**PUSH STATE: this amendment is LOCAL.** 0.0.0_AB_MSTR~Z holds the push window.
+
+*(v0.3 amended 2026-09-11T05:30Z by 2.0.0_SA_COO~ZZZ -- the L10 recut from @4d31cf4caa; round-1 sections 1-9 unchanged.)*
+
+## 11. ROUND 3 (v3, the corrective continuation; informally "round 2b") -- from the L10 round-2 analysis @c48576bf85 (1.0.0_SA_CTO~Z)
+
+**CARRIER MAPPING (1.0.0_SA_CTO~Z ruling @21336).** The carrier numbers rounds by ISSUANCE SEQUENCE (integer / ^v[0-9]+$): round 1 (v1) the initial build, round 2 (v2) the r-* defect fixes, and THIS corrective continuation (the rb-* issuance @3f2189f28b) the THIRD issuance -- so it is CANONICAL ROUND 3 (v3). The CVO stamps L8/L9/L10 as r3 and cuts REMEDIATION_v3; any carrier artifact (this L5 decomp round field, the L6 issuance, each order's <round>) reads 3. The rb- CELL ids stay (cell ids are free-form; only the ROUND integer is constrained). The surface exercise (Andrew's DESIGN_SPEC-gated .tsx) is a LATER round (v4+), NOT pinned to 3.
+
+**v0.4 IS AN L10 RECUT OF THE THREE FAILED ROUND-2 FIXES + TWO NEW r-1 SOURCE FINDINGS, NOT A NEW
+DECOMPOSITION.** Round 2 was the defect-fix round for the five defects round 1 routed. The CTO's round-2
+analysis @c48576bf85 (answering the CVO's slug REMEDIATION_v2 @b3acbcf3dd, drain 56c755b86a; artifacts
+pinned 9a2e542c0b) graded 2 PASS / 3 FAIL, and the CVO's independent L8/L9 control surfaced 2 more source
+findings on r-1. **0 of 14 FWDs newly REALIZED, unchanged -- every FWD still needs an EXERCISED served
+surface and no .tsx exists.** This round is the pre-surface CORRECTNESS the surfaces will rest on; it
+builds no surface. The round-1 and round-2 cells are FROZEN and terminal; this section ADDS the five
+round-2b remediation cells the analysis s.2/s.3/s.5 sends back. Nothing prior moves.
+
+**NONE OF THE FIVE IS DESIGN_SPEC-GATED** (analysis s.2/s.5): print-fixture / doc / logic / source
+correctness, doable now without a .tsx and without Andrew's design approval. Only the SURFACE EXERCISE
+(round 3) waits on him -- unchanged.
+
+**C-S8 and C-S9 FOLD IN AS TEXT CORRECTIONS, not cells** (analysis s.3; both OBSERVATION/INERT, the WORK
+is sound):
+- **C-S8:** the r-1 order text implied a mapped `FISCAL_YEAR_END` reference field; that field is
+  BAD_FLD/INVALID_FIELD and the join correctly uses the fundamentals ROW-DATE. Round-2b cells that touch
+  the fiscal join name the measured row-date carrier, never a mapped reference field.
+- **C-S9:** the SA exercise population is BABA/BA/COST (18 raw keys), NOT the order's BABA/RTX/+1. Any
+  round-2b context that names the SA denominator uses the actual one.
+
+### 11a. The five round-2b cells
+
+M = FOUR dependency-independent chains: three single-cell chains (`AMGT-rb-10`, `AMGT-rb-12`, `AMGT-rb-15`,
+DISJOINT write surfaces) + one two-cell chain (`AMGT-rb-1` -> `AMGT-rb-2`, both on
+`integrations/bloomberg/research/`, serialized -- rb-2 wires the block rb-1 corrects and they share the
+write surface). `fanout: 4 of 4, cap 8`. Ids match CELL_ID_RE (verified against the enforcer's pattern).
+
+| cell | fixes | finding | FWD | the defect (analysis s.2/s.3; CVO evidence @b3acbcf3dd) | the engine, and its bound |
+|---|---|---|---|---|---|
+| `AMGT-rb-10` | `AMGT-r-10` | C-S12 (BLOCKING) | FWD-10 | the round-2 fix added a SECOND trailing text tag (`12345 [PROVISIONAL] [WARN]`) -- another plain suffix on the same NUMBER-FIRST presentation round 1 already rejected; render_print.py appends the icon as bracketed text and never renders a leading status or the colour_token; and the test compared DIFFERENT values (500 vs 12345), so string inequality never proved the marker made the difference. | THE CHECK-FACE SALIENT WARNING, IN THE READING. Make a PROVISIONAL/REFUSE figure visibly salient AT A GLANCE in the permitted print fixture (render_print.py, S5) -- a LEADING status marker (ASCII, from the closed contract green/OK, amber/WARN, red/BLOCKED) so the number is no longer the FIRST thing read, not a second trailing word. The difference-arm test renders the SAME number under PASS and under PROVISIONAL and shows the PROVISIONAL render is distinguished at the START. Regrade AC4 (CVO) before FWD-10 is treated realized. Home: `lib/research/checkface/`. Bound: NO .tsx (C-DESIGN-SPEC-FIRST); the marker contract is PRESERVED and carries into the approved design; NO non-ASCII (no glyph/emoji) -- a leading ASCII status token is the print-path "visual prominence". |
+| `AMGT-rb-12` | `AMGT-r-12` | C-S13 (BLOCKING) | FWD-8, FWD-13 | the measured-source limb PASSED (34 distinct MEASURED); the DECISION NOTE failed -- `DESIGN_QUESTION_identity_fallback.md` twice promises "MEASURED-or-better 34 -> 49" while limiting ALL fallback values to INFERRED (categories that cannot share one denominator) and treats hypothetical renaming as a measured failure. | THE IDENTITY DECISION-NOTE CORRECTION (doc). Correct the note to "34 MEASURED + up to 15 INFERRED candidates" (never "49 MEASURED-or-better"); SEPARATE observed ambiguity (e.g. Nokia FH, a real trailing-token ambiguity in this corpus) from hypothetical renaming (e.g. a re-org rename -- not observed); NAME which downstream gate(s) still refuse INFERRED. Keep the fallback UNIMPLEMENTED pending Andrew. AC: a census over the doc finds NO "MEASURED-or-better ... 49" claim, the doc states 34 MEASURED + up-to-15 INFERRED, it names the INFERRED-refusing gate(s), and the measured count (34 distinct) is unchanged. Home: `lib/research/identity/` + deliverable. Bound: NO fallback coded (AC3 still refuses it in `*.py`); NO new vendor call; the 34 MEASURED are not re-litigated. |
+| `AMGT-rb-15` | `AMGT-r-15` | C-S14 (BLOCKING) | FWD-14 | the advertised AND-clause executes as `check1 OR check2` and returns official immediately (the docstring's "AND any further evidence" is UNMET); the 8-case enumeration admits check2-alone and check1-alone; verification (check2) is an untyped boolean NOT bound to company identity, so a non-identity verification mark + a copied bio still passes. | THE IMPOSTOR PREDICATE, CORRECTED. Clarify the INTENDED truth table and the identity meaning of "verification"; make the CODE enforce the STATED contract (require the co-occurrence where intended -- resolve the docstring-vs-code contradiction in favour of the stated rule); bind check2 to COMPANY IDENTITY (a mark that does not attest the company's identity is not check2). Add NEGATIVE CONTROLS for (a) verification-without-further-evidence and (b) a mark that does not attest company identity. AC: the 8-case truth table matches the STATED contract with no admit the contract forbids; the two negative controls REFUSE where the old code admitted (the difference arm). Home: `lib/research/lists/`. Bound: ALL real handles stay UNRESOLVED; NO social/vendor call and NO owner assignment (C-NO-CONTACT; Andrew's per-use word, round 3). |
+| `AMGT-rb-1` | `AMGT-r-1` / C-S15 | C-S15 (BLOCKING) | FWD-1, FWD-3 | `fye_join._nearest_price` falls back to the nearest point in EITHER direction when nothing is on-or-before, and `gap_days` uses `abs`, so a period_end 2025-12-31 with only a 2026-01-02 price returns that FUTURE price at gap_days 2 and passes the under-45-day check. A BOUNDED source defect -- 0 of 30 live served rows affected at this vintage. | THE FISCAL JOIN, DIRECTION-CORRECT. `_nearest_price` returns UNRESOLVED (None) when no on-or-before price exists (drop the either-direction FUTURE fallback); a price_date is NEVER after its period_end. Add a FUTURE-ONLY negative control (period_end 2025-12-31 + only a 2026-01-02 price -> UNRESOLVED, never gap 2) and a DIRECTION ASSERTION (price_date <= period_end on every resolved row). PRESERVE the passing 3-security sample and its exact pins (0 of 30 unaffected). Home: `integrations/bloomberg/research/`. Bound: the passing sample is not disturbed; C-S8 -- name the fundamentals ROW-DATE carrier, never a mapped FISCAL_YEAR_END field; NO new vendor call. |
+| `AMGT-rb-2` | `AMGT-r-1` / C-S16 | C-S16 (OBSERVATION, re-cut as integration) | FWD-1, FWD-3 | `derive_fye_fixed.py` writes `derived/model_block_fye/`, a DISTINCT engine lane; the provenance/print consumers still read the original `model_block` lane (r-1 explicitly excluded replacing them), so the served analyst pack still reads the OLD calendar-year join. | THE FISCAL BLOCK, WIRED TO THE CONSUMER. NAME the provenance/print consumer path that reads `model_block` and TEST that the served pack reads the CORRECTED `model_block_fye` lane (its derived vintage) -- the smallest correct switch, never overwriting or aliasing `model_block` (STORE_CONTRACT rule 1). AC: a test names the consumer and shows it reads the corrected lane -- the difference arm: for BABA the OLD lane gives the calendar-year price, the corrected lane the fiscal-period price. DEPENDS ON rb-1 (wires the direction-corrected join). Home: `integrations/bloomberg/research/`. Bound: do NOT overwrite peer outputs; NO round-3 / .tsx; NO new vendor call. |
+
+### 11b. Rule 24 record for what v0.4 ADDS (the five round-2b cells)
+
+- **(i) MECE over the DECLARED domain = the analysis s.5's round-2b recut set.** SUBTRACTION, not recall:
+  the analysis names the THREE failed fixes (r-10 salience C-S12, r-12 doc C-S13, r-15 predicate C-S14) +
+  the TWO new r-1 source findings (C-S15 direction, C-S16 integration) = FIVE. C-S8/C-S9 are text
+  corrections folded in (not cells); C-S10 is the CTO's to route to the repo owner (not a COO cell);
+  round 3 is Andrew's. No sixth cell, no dropped item.
+- **(ii) SAME GRAIN:** each is one cell fixing one named finding.
+- **(iii) INTENT COHERENCE:** one axis -- reading-salience / doc-coherence / predicate-correctness /
+  source-direction / consumer-integration. No cell mixes remediation with new scope.
+- **(iv) STATE COHERENCE -- what these cells do NOT move:** they fix the pre-surface correctness; they do
+  NOT make any EXERCISED bar REALIZED (that needs the served surface -> the .tsx -> Andrew's DESIGN_SPEC --
+  round 3). rb-1 + rb-2 TOGETHER make the fiscal alignment LIVE in the served pack; alone, r-1's fix was
+  correct on the sample but not the served figure. A round-2b cell landing complete does not close its FWD.
+
+### 11c. Round-2 lessons absorbed into this cut
+
+The round-2 cut carried three fixes that FAILED the CVO's judgment and two the CVO's own control caught.
+This cut:
+- **A difference arm must vary ONLY the thing under test.** r-10's round-2 test compared 500 vs 12345 --
+  two different numbers, so string-inequality proved nothing about the marker. Every round-2b difference
+  arm holds the value FIXED and varies only the verdict / direction / check.
+- **A judgment fix must satisfy the JUDGMENT, not a mechanical proxy.** r-10 added a second text tag
+  (mechanically "a marker") that did not achieve at-a-glance salience (the judgment). rb-10's AC names the
+  SALIENCE property (leading status, value not first), not merely "a marker field present".
+- **Advertised contract == executed code.** r-15's docstring said AND, the code did OR. rb-15 makes the
+  8-case truth table the acceptance and asserts the code matches the STATED contract.
+- **A benefit claim states ONE denominator's category.** r-12's note mixed MEASURED and INFERRED under one
+  "34 -> 49" number. rb-12 keeps the two categories separate with their own counts.
+- **A source fix is not live until a CONSUMER reads it.** r-1 corrected the join on a new lane nothing
+  consumes. rb-2 tests the consumer path; rb-1 + rb-2 is the pair that makes it served.
+- Carried from round 1: every criterion DISCRIMINATES; the proof instance uses the FULL task-order stem
+  filename; a criterion names the instrument that OBSERVES the artifact; the write grant is read while the
+  order is NON-TERMINAL.
+
+### 11d. The round axis, updated
+
+- **ROUND 1 (16 cells):** terminal, frozen.
+- **ROUND 2 (5 cells):** terminal, frozen. 2 fixes LANDED (r-1, r-4), 3 FAILED + 2 new source findings ->
+  round-2b.
+- **ROUND 3 (v3, RECUT, 5 cells; informally 'round 2b'):** `AMGT-rb-10`, `AMGT-rb-12`, `AMGT-rb-15` (three independent chains of one)
+  + `AMGT-rb-1` -> `AMGT-rb-2` (one two-cell chain, serialized). `fanout: 4 of 4, cap 8`. Four workers
+  spawn at issuance; the fiscal worker runs rb-1 then rb-2.
+- **ROUND 3 (deferred on Andrew's gate):** the SURFACE EXERCISE of every FWD -- the .tsx that serves each
+  surface, cut only after the DESIGN_SPEC approval + the four words land. NOT cut now.
+
+**PREFLIGHT for the round-2b recut:** the mandatory core battery is NOT re-run -- v0.2's run stands at its
+vintage and no round-2b cell touches a new gate/IAM/adversary/vendor surface (all five are edits to landed
+modules against landed data). The authority is the L10 round-2 analysis @c48576bf85 (the CTO's one send)
+answering the CVO's slug REMEDIATION_v2 @b3acbcf3dd, cited in each order's authority chain. comp-blast
+DECLARED-NOT-APPLICABLE (no infra act; no served-output move -- rb-2 tests a consumer READ, it does not
+move a served key). L4-R: the PRD is GRANDFATHERED (predates the L4-R law commit f8337502a9) -- no new
+sign-off cycle and no prd_version bump (this is a round-analysis answer, not a PRD addendum).
+
+**PUSH STATE: this amendment is LOCAL.** 0.0.0_AB_MSTR~Z holds the push window.
+
+*(v0.4 amended 2026-09-11 by 2.0.0_SA_COO~ZZZ -- the L10 round-2b recut from @c48576bf85; rounds 1-2
+sections 1-10 unchanged.)*
+
+## 12. ROUND 4 (v4) -- from the L10 round-3 analysis @38948db85c (1.0.0_SA_CTO~Z)
+
+**v0.5 IS AN L10 RECUT closing the consumer-wiring so C-S16 closes, NOT a new decomposition.** Round 3
+(the "rb-" corrective continuation, canonical v3 per the CTO carrier ruling @21336) graded 4 PASS / 1 FAIL:
+rb-10 salience, rb-12 identity note, rb-15 impostor predicate, rb-1 fiscal direction all LANDED
+(C-S12/C-S13/C-S14/C-S15 DISARMED/REMEDIATED). rb-2 (consumer-wiring, C-S16) FAILED -- a GOOD fail: the
+consumer-wiring-as-its-own-AC (the CTO tick-2 generalization) caught that the overlay silently reverts to
+the stale served price when the corrected fiscal row is UNRESOLVED (the rb-1 x rb-2 interaction). The CVO's
+L8/L9 control surfaced two findings. **0 of 14 FWDs newly REALIZED -- the surfaces are still unserved.**
+This section ADDS the two round-4 cells; rounds 1-3 are FROZEN and terminal. C-S16 stays OPEN until this holds.
+
+**NONE IS DESIGN_SPEC-GATED** (analysis + slug): consumer-code / provenance correctness, doable now without
+a .tsx. The surface exercise is a LATER round (v5+), still on Andrew's DESIGN_SPEC + the four words.
+
+**RULING @21343 (1.0.0_SA_CTO~Z, folded in before rc-19 was worked).** rc-19 (C-S19) is fixed as an S11
+QUALIFICATION RULE (class-level -- the "corrected-overlay unresolved" figure class in lib/research/rules/
+figure.py -> S10 REFUSE/PROVISIONAL), NOT a bespoke fallback inside load_corrected_price_overlay (Rule 22:
+fix what the members share; a bespoke fix is the next-consumer gap the CRO's holes-scan flagged). rc-19's
+<paths> accordingly grant lib/research/rules/ + lib/research/checkface/. rc-20 (C-S20) stays its own fix,
+framed as EXTENDING S3's provenance vintage/source handling, kept separate from rc-19.
+
+### 12a. The two round-4 cells
+
+M = ONE dependency chain: rc-19 -> rc-20, both editing the SAME consumer functions
+(lib/research/provenance/render_print.py's `load_corrected_price_overlay`/`apply_corrected_price_overlay`/
+`render_figure_line` and lib/research/print/render_pack.py's `load_model_block`), so serialized to one
+worker. `fanout: 1 of 1, cap 8`. Ids match CELL_ID_RE; cell ids are free-form, the ROUND integer is 4.
+
+| cell | fixes | finding | FWD | the defect (analysis @38948db85c; CVO evidence @13ae38f3f89b) | the engine, and its bound |
+|---|---|---|---|---|---|
+| `AMGT-rc-19` | `AMGT-rb-2` | C-S19 (BLOCKING) | FWD-1, FWD-3 | `load_corrected_price_overlay` keeps only rows whose price is not None, and `apply_corrected_price_overlay` `continue`s on a missing year -- so an UNRESOLVED corrected fiscal row (rb-1 now returns None for a future-only price) is DROPPED and the consumer silently keeps the OLD calendar price (BABA FY2025 146.58) UNMARKED, presented as trusted. Control: period_end 2025-03-31 with only a 2025-04-02 price -> corrected None -> loader {} -> render retains 146.58, no marker. | THE UNRESOLVED-ROW CONTRACT. Preserve explicit UNRESOLVED corrected rows; DISTINGUISH missing-lane/year (corrected lane absent for this year) from resolved data; MARK or REFUSE a fiscal price that has NO valid corrected evidence -- the calendar price may remain in source storage but NEVER silently regains trusted presentation. Test the NAMED consumer from a full corrected-join None output straight through to the RENDERED value. Home: `lib/research/provenance/`, `lib/research/print/`. Bound: STORE_CONTRACT rule 1 (original model_block byte-unchanged); NO new vendor call; the resolved 132.23 sample still renders correct. |
+| `AMGT-rc-20` | `AMGT-rb-2` | C-S20 (OBSERVATION) | FWD-1, FWD-3 | `apply_corrected_price_overlay` replaces `fig.vintage` with the price OBSERVATION DATE (price_date) and drops the corrected artifact's derivation key (derived/model_block_fye/<sec>/<stamp>/model_block_fye.json); `render_figure_line` hardcodes "Bloomberg" and never emits `fig.source`. So observation date substitutes for vintage and the derivation identity is lost. | THE VINTAGE/DERIVATION IDENTITY. Carry OBSERVATION DATE and DERIVATION/LANDING IDENTITY as DISTINCT fields; retain the exact corrected artifact key (or an equivalent immutable pin) through the consumer and its provenance render; `render_figure_line` emits `fig.source`, never a hardcoded vendor. Add a test DISTINGUISHING two derived vintages that share one observation date. Home: `lib/research/provenance/`, `lib/research/print/`. DEPENDS ON rc-19 (same functions). Bound: within rb-2's own named-vintage acceptance; NO new vendor work; STORE_CONTRACT rule 1 holds. |
+
+### 12b. Rule 24 record for what v0.5 ADDS (the two round-4 cells)
+
+- **(i) MECE over the DECLARED domain = the analysis's round-4 recut set.** SUBTRACTION, not recall: the
+  analysis routes exactly C-S19 (BLOCKING) + C-S20 (OBSERVATION) to close C-S16; the four round-3 PASSes are
+  terminal, the surface exercise is a later round (Andrew's). No third cell, no dropped item.
+- **(ii) SAME GRAIN:** each is one cell fixing one named consumer-wiring finding.
+- **(iii) INTENT COHERENCE:** two distinct axes kept separate -- rc-19 unresolved-row SAFETY, rc-20
+  vintage/derivation IDENTITY. Neither mixes the other's concern.
+- **(iv) STATE COHERENCE -- what these do NOT move:** they close the consumer-wiring contract so the served
+  pack reads the corrected join HONESTLY (unresolved marked, vintage distinct); they do NOT make an
+  EXERCISED FWD REALIZED (that needs the served .tsx -- a later round). C-S16 closes when rc-19 + rc-20 land.
+
+### 12c. Round-3 lessons absorbed into this cut
+
+- **A consumer-wiring AC must exercise the UNRESOLVED path, not only the happy path.** rb-2's test proved the
+  resolved BABA row reads 132.23, but never drove a None-corrected row through -- so a silent stale-price
+  revert passed. rc-19's AC drives a FULL corrected-join None output straight to the rendered value.
+- **An overlay that mutates a figure must not leave a stale value wearing a trusted face.** Marking/refusing
+  an unresolved figure is the contract; silently keeping the old value is the C-S19 defect.
+- **Observation date != vintage != derivation identity** -- three distinct provenance facts; collapsing any
+  two loses auditability (C-S20). Carried from [[a-value-must-carry-its-claim]].
+- Carried from prior rounds: every criterion DISCRIMINATES (a difference arm); the proof instance uses the
+  FULL task-order stem filename; a criterion names the instrument that OBSERVES the artifact; an integration
+  cell's <paths> names the CONSUMER's home (rc-19/rc-20 grant lib/research/print/ + lib/research/provenance/
+  from the start -- the rb-2 cut-defect absorbed).
+
+### 12d. The round axis, updated
+
+- **ROUNDS 1-3:** terminal, frozen (v1 build; v2 defect fixes; v3 the rb- corrective continuation, 4 of 5
+  landed).
+- **ROUND 4 (v4, RECUT, 2 cells):** `AMGT-rc-19` -> `AMGT-rc-20`, one two-cell chain, one worker (slot ~1),
+  serialized. `fanout: 1 of 1, cap 8`. rc-19 spawns at issuance; rc-20 handed after rc-19 lands.
+- **SURFACE EXERCISE (v5+, deferred on Andrew's gate):** the .tsx that serves each FWD, cut only after the
+  DESIGN_SPEC approval + the four words. NOT cut now, NOT pinned to a number.
+
+**PREFLIGHT for the round-4 recut:** the mandatory core battery is NOT re-run -- v0.2's run stands and no
+round-4 cell touches a new gate/IAM/adversary/vendor surface (both edit landed consumer modules against
+landed data). The authority is the L10 round-3 analysis @38948db85c (the CTO's one send) answering the CVO's
+slug REMEDIATION_v3 @13ae38f3f89b, cited in each order's authority chain. comp-blast DECLARED-NOT-APPLICABLE
+(no infra act; the served pack's .tsx is not built, so no live served artifact moves -- but the consumer's
+rendered figures change, flagged to the CVO for the L9 grade). L4-R: the PRD is GRANDFATHERED (predates the
+law commit f8337502a9) -- no sign-off cycle, no prd_version bump.
+
+**PUSH STATE: this amendment is LOCAL.** 0.0.0_AB_MSTR~Z holds the push window.
+
+*(v0.5 amended 2026-09-11 by 2.0.0_SA_COO~ZZZ -- the L10 round-4 recut from @38948db85c; rounds 1-3 sections
+1-11 unchanged.)*
+
+---
+
+## 13. ROUND 5 (v5) -- THE SURFACE ROUND, from the L10 round-4 analysis @959ba3e947 (`1.0.0_SA_CTO~Z`)
+
+**v0.6 IS THE SURFACE CUT, AND IT IS THE FIRST ROUND OF THIS PROJECT WHOSE DECLARED DOMAIN IS NOT A REMEDY
+SET.** Rounds 1-4 were pre-surface correctness work: round 4 graded 2 PASS / 0 FAIL, closed `C-S16` with
+its children `C-S19`/`C-S20`, and is terminal at L10. **28 of 28 orders terminal, 0 open, 0 of 15 FWD
+REALIZED** -- correct, because no surface is built and fourteen of the fifteen outcomes carry `EXERCISED`
+bars that no build can close. This section ADDS the eight round-5 cells; sections 1-12 are FROZEN.
+
+**THE DOMAIN IS ANDREW'S APPROVED SURFACE, NOT THIS LANE'S READING OF WHAT IS LEFT.** PRD s.3b
+(ANDREW-DIRECT 2026-09-11 ~12:1xZ, "Recs approved") plus the S16 manifest row. `C-DESIGN-SPEC-FIRST` IS
+LIFTED for this project, so `.tsx` is authorized in this round and the `AMGT-s-5` .tsx phase is released.
+
+**HIS STATED ORDER IS A BOUND, NOT A SUGGESTION: "the box + both tables, TABLES FIRST."** The edges below
+encode it; no cell may be re-sequenced ahead of it by a worker.
+
+### 13a. What the L4-R gate said at this cut, because this round is the first to pass through it
+
+`python .tools/prd-signoff.py status AMGT_RESAPP` -> **ADMITTED** at `@f0ff95cfac`; ratified-text SIGNED
+`3.0.0_SA_CVO~Z` half `4eb997ed71ee`; brief SIGNED `4.0.0_SA_CRO~Z` half `26f942429c6a`.
+
+BUT: **`ADMITTED` ALONE DID NOT AUTHORIZE THIS CUT AND MUST NOT AUTHORIZE THE NEXT ONE.** Row
+`AMGT_RESAPP-Z-S6` (`1.0.0_SA_CTO~Z` @`65ab345826`) measured the gate printing "brief SIGNED current" while
+the brief half's bytes had moved, because `prd_signoff_lib.evaluate()` falls back to `prd_version` equality
+for any record carrying no `half_hash`. This lane therefore cut only after a SECOND, independent limb:
+a `prd/signoff/4.0.0_SA_CRO*.json` record carrying a `half_hash` **equal to the brief half's CURRENT hash**
+(`26f942429c6a`), found in the LANE file `4.0.0_SA_CRO~Z.json`. The BASE file `4.0.0_SA_CRO.json` is still
+old-format and still returns MATCH=False -- a base-path-only check would have refused this cut.
+WARN: **The general defect is NOT fixed and is NOT claimed fixed** (`prd_signoff_lib` untouched by anyone;
+2 of this project's 3 signoff records are old-format; the estate-wide census is uncounted). The instance is
+repaired BY ADDITION -- the defective carrier is still in the directory and would decide again if the lane
+file were removed, renamed, or written under a different serial spelling.
+
+### 13b. The eight round-5 cells
+
+**M = TWO dependency-independent chains, MEASURED. `fanout: 2 of 2 chains, cap 8`** -- the two TABLE cells
+are the only roots, they are the two chains' heads, and both spawn at issuance (his "TABLES FIRST").
+
+| cell | row | outcome | act (the engine, and what binds it) | state | deps |
+|---|---|---|---|---|---|
+| `AMGT-rd-1` | S4, S13 | FWD-4, FWD-11 | **THE ARTICLE STORE.** NEW DynamoDB table `opal-amgt-articles`, shaped like `opal-news-articles` (title/source/url/published_at/sentiment) PLUS `ticker`/`security_key` (via S12) and `platform`. Terraform in `infra/aws/terraform/amgt-resapp/` via `safe-apply`, change-management entry OPENED BEFORE the act and closed before the grading read. **GENUINELY SEPARATE** from `opal-news-articles` (not that table with a filter) and from `opal-data-research`. MEASURED ABSENT on the live plane at this cut (row `Z-S5`: 0 hits across 2445 aws nodes) -- a genuine create, not an integration. | OPEN | -- (ROOT) |
+| `AMGT-rd-2` | S16 | FWD-15 | **THE METRICS STORE.** NEW DynamoDB table `opal-amgt-security-metrics` holding PRE-COMPUTED per-ticker ranking rows, mirroring the proven `opal-news-articles` / `opal-news-trending-daily` split. Same Terraform module, same `safe-apply` + ledger discipline. MEASURED ABSENT at this cut. The Lead Panel READS it and never re-derives a ranking at render time (`C-SERVER-SIDE-RANKING`). | OPEN | -- (ROOT) |
+| `AMGT-rd-3` | S16 | FWD-15 | **THE HARVESTER BOX + ITS OWN IAM ROLE.** NEW EC2 box in `infra/aws/terraform/amgt-resapp/` following the ASTN_WSJFT SHAPE (stopped-between-runs, SSM-woken) but with **AMGT_RESAPP's OWN IAM role** and write access to `opal-amgt-articles` -- **explicitly NOT the ASTN_WSJFT box and not its role.** ONE shared box for all four harvesters. Refresh MUST WAKE the stopped box (SSM / `inf-jwt-trigger` shape) or it silently no-ops -- the wake is part of the cell, not a follow-up. `comp-iam service` at Phase 1 and `comp-iam gaps` at Phase 2 (auto-rule 3; `iam.tf` changes). | OPEN | `rd-1` |
+| `AMGT-rd-4` | S4, S13 | FWD-4, FWD-11 | **THE FOUR HARVESTERS** (Seeking Alpha, FT, Bloomberg, WSJ) writing per-ticker article content into `opal-amgt-articles`. Each admits an item by the news/social rule `AMGT-s-11` states, and resolves the platform's OWN identifier through S12 BEFORE dispatch (SA symbol-slug, Bloomberg `"TICKER US Equity"`, FT id) -- never a bare ticker. Raw vendor bytes land before derivation. | OPEN | `rd-3` |
+| `AMGT-rd-5` | S16 | FWD-15 | **THE CHATTER AXIS WRITER.** A SCHEDULED PRODUCER computing the chatter ranking daily and writing pre-computed rows to `opal-amgt-security-metrics`. Axis = the committed chatter gate: 30-day window, 0-100 normalized, `TOP_N=10`. | OPEN | `rd-2` |
+| `AMGT-rd-6` | S16 | FWD-15 | **THE PRICE AXIS ENGINE, BOX-SIDE.** The price ranking reads Bloomberg historical/intraday and therefore runs in the **BOX-SIDE puller shape** (the ETF-daily-pull shape), **NOT a Lambda calling Bloomberg** (`C-PRICE-RANKING-BOXSIDE`). 30-day window, matching chatter -- Andrew unified both to 30. Writes pre-computed rows to the same metrics table. **The BOX-SIDE host is the BLOOMBERG TERMINAL box (loopback DAPI, the ETF-daily-pull shape), NOT the new harvester EC2 box of `rd-3`** -- the harvester box hosts the four ARTICLE harvesters, which is a different machine and a different concern. | OPEN | `rd-2` |
+| `AMGT-rd-7` | S16 | FWD-15 | **THE STARRED WATCHLIST.** SHARED ACROSS THE FIRM -- both PMs see the same starred names, keyed PER-FIRM, not per-user (`C-STARRED-PER-FIRM`, Andrew-ruled, reversible to per-user on his word). **Starring is a PURE MARKER:** it triggers NO refresh and queues NO harvester. Refresh is its own explicit action and the cell must prove the two are not wired together. | OPEN | `rd-2` |
+| `AMGT-rd-8` | S16 | FWD-15 | **THE SURFACE ITSELF.** The `.tsx`: a persistent **Lead Panel** (universe discovery -- Trending/Breakout x Price/Chatter, List/Chart, Security overlay, Starred) above **three tabs: Thesis / Peers / Coverage**. **Print is a header export action**, not a tab. **The Model tab is CUT and its figures REHOMED** into Thesis and the Security overlay. Reads pre-computed rows from **`opal-harvest-security-metrics`** (RENAMED 2026-09-11 ~20:1xZ from `opal-amgt-security-metrics`, which is DROPPED -- 42 rows migrated and verified on FULL ITEM EQUALITY; env knob `HARVEST_METRICS_TABLE`); never re-derives a ranking at render time. | OPEN | `rd-5`, `rd-6`, `rd-7` |
+
+### 13c. Rule 24 record for what v0.6 ADDS (the eight round-5 cells)
+
+- **(i) MECE over the DECLARED domain, BY SUBTRACTION from a printed denominator -- not by recall.**
+  ⚠ **AMENDED 2026-09-11 ~18:4xZ. THIS RECORD WAS TRUE AT EIGHT CELLS AND BECAME FALSE THE MOMENT `rd-3`
+  AND `rd-4` WERE SUPERSEDED. It is repaired in the SAME commit as that supersede, deliberately: a
+  subtraction record that is quietly falsified is WORSE than no record, because it still prints a clean
+  remainder and every later reader trusts it.** The pre-amendment text mapped `C-HARVESTER-COMPUTE` to
+  `rd-3` + `rd-4` and `C-VENDOR-WORD-HARVESTERS` to a bound on `rd-4`; both of those homes are gone.
+  THE DOMAIN IS UNCHANGED -- the SIX named constraints of PRD s.3b plus the S16 manifest row. What changed
+  is where two of them are SERVED. Subtracting what each cell covers:
+  `C-AMGT-ARTICLES-STORE` -> `rd-1`; `C-SERVER-SIDE-RANKING` -> `rd-2` (the store) + `rd-5` (its writer);
+  `C-PRICE-RANKING-BOXSIDE` -> `rd-6`; `C-STARRED-PER-FIRM` -> `rd-7`; the approved page shape + S16 ->
+  `rd-8`. **THAT IS FIVE CONSTRAINTS OVER SIX CELLS.**
+  ⛔ **THE REMAINING TWO ARE NOT UNCOVERED -- THEY ARE RE-HOMED OUTSIDE THIS ROUND, AND THE DIFFERENCE IS
+  THE WHOLE POINT OF SAYING SO:**
+  `C-HARVESTER-COMPUTE` -> **THE HARVEST ESTATE**, owned and executed by `4.0.0_SA_CRO~Z` per PRD v0.5
+  @`5517e071e8` on Andrew's ~17:3xZ directive and his ~18:3xZ approval of the draw. It maps to NO round-5
+  cell and must not be re-cut here.
+  `C-VENDOR-WORD-HARVESTERS` -> re-homed onto the harvest estate's ACQUISITION surface **with all three
+  limits intact** (the four named platforms; THIS project's harvesters only; not before the box stands).
+  It was previously a time-scoped BOUND on `rd-4` and had no cell of its own, so superseding `rd-4` would
+  have left it with NO CARRIER AT ALL -- found by `1.0.0_SA_CTO~Z` while verifying this very record, and it
+  is the sharper half of this amendment. Andrew's "full egress and override authority" is authority to
+  REALIZE THE ESTATE and is **NOT** a widening of `C-VENDOR-EGRESS`.
+  **REMAINDER ZERO over the six constraints, now stated as FIVE SERVED IN-ROUND + TWO RE-HOMED, rather
+  than as a single number that hides where the members went.**
+- **(ii) SAME GRAIN:** each cell is one engine with one home. The two stores are separate cells because
+  they are separate tables with separate consumers, not one "make the tables" cell.
+- **(iii) INTENT COHERENCE:** one axis per cell. Storage (`rd-1`, `rd-2`), ranking production (`rd-5`,
+  `rd-6`), marker state (`rd-7`), presentation (`rd-8`). ⚠ AMENDED: compute host (`rd-3`) and acquisition
+  (`rd-4`) left this round with the harvest estate. The original separation of the BOX from the HARVESTERS
+  that run on it stands as a design point and now applies inside that estate rather than here.
+- **(iv) STATE COHERENCE -- what these do NOT move:** they build the surface, so for the first time an
+  `EXERCISED` bar becomes REACHABLE -- but **REACHABLE IS NOT REALIZED.** No cell may grade its own FWD
+  REALIZED on the strength of its own artifact; fourteen of fifteen outcomes need a PERSON to have used the
+  thing, which is L9's to grade and never L7's. They do NOT close `FWD-9` (APPLIED, the drafting face) and
+  do NOT touch rounds 1-4's landed correctness work.
+
+### 13d. BOUNDS carried onto the round-5 cells
+
+- **`C-VENDOR-WORD-HARVESTERS` -- RE-HOMED 2026-09-11 ~18:4xZ, AND THIS IS THE BOUND THAT ALMOST VANISHED.**
+  ⚠ It had NO cell of its own: it was carried here as a time-scoped BOUND ON `rd-4`, deliberately, so the
+  s.13c subtraction balanced visibly. **Superseding `rd-4` would therefore have left it with NO CARRIER AT
+  ALL** -- found by `1.0.0_SA_CTO~Z` while verifying s.13c, and it is the sharper half of this amendment.
+  IT IS NOW RE-HOMED onto the HARVEST ESTATE's acquisition surface per PRD v0.5 @`5517e071e8`, **with all
+  three limits intact and none of them softened by the move:** the FOUR named platforms (Seeking Alpha, FT,
+  Bloomberg, WSJ); **THIS project's harvesters only**; and **effective only once the box is stood up and
+  ready to run -- NOT before.**
+  ⛔ **ANDREW'S "FULL EGRESS AND OVERRIDE AUTHORITY" TO `4.0.0_SA_CRO~Z` IS AUTHORITY TO REALIZE THE ESTATE
+  AND IS NOT A WIDENING OF `C-VENDOR-EGRESS`.** Written down rather than assumed, because a narrow
+  time-scoped grant losing its carrier at the same moment another seat is handed broad-sounding egress
+  language is exactly the shape in which it quietly becomes a blanket one, and nobody would see it happen.
+  ⛔ **A PROXY VENDOR IS A SEPARATE, UNANSWERED QUESTION.** Extending Bright Data Web Unlocker from WSJ to
+  the session harvesters is a NEW per-use call for Andrew -- never an inference from an EC2 IP proving
+  unworkable against PerimeterX. `C-VENDOR-EGRESS` still binds every other vendor and every other use, and
+  "availability is not authorization" is unchanged.
+- **NO MONITOR, NO ALARM, NO FRESHNESS-CHECKER** (standing moratorium; `comp-schedule` carrier C3 counts 12
+  standing NEVER clauses). `rd-5` and `rd-6` are SCHEDULED PRODUCERS, which is not only permitted but
+  required ("production pipelines MUST be scheduled"); a producer that computes a ranking is not a monitor.
+  STOP: neither cell may add an alert, an SNS topic, an SES send or a freshness checker on top of its output.
+- **`opal-data-research` -- SUPERSEDED AND NOW LANDED. THE RENAME IS DONE: IT IS `opal-data-harvest`.**
+  Andrew ruled at ~18:5xZ that harvest naming reaches this bucket ("better to have all of this stuff grouped
+  by name right from the start"); `4.0.0_SA_CRO~Z` executed the migration and closed its ledger at
+  ~20:1xZ -- 53 objects copied with the key grammar preserved and verified, the five live consumers flipped,
+  the source dropped. THE EARLIER TEXT HERE SAID "about to move" AND THAT IS NOW THE STALE HALF; it is
+  corrected rather than left, because a round-6 cutter reading a bound that says a resource is MOVING learns
+  nothing about where it went.
+  ⛔ **THE CURRENT NAMES, so no cell has to re-derive them** (`4.0.0_SA_CRO~Z`'s map, msg 21608):
+  `opal-data-research` -> **`opal-data-harvest`**; `opal-amgt-articles` -> **`opal-harvest-articles`**;
+  `opal-amgt-security-metrics` -> **`opal-harvest-security-metrics`**;
+  `infra/aws/terraform/research/s3.tf` -> `infra/aws/terraform/harvest/s3.tf` (the old module is RETIRED, so
+  a citation to it resolves to nothing). Env knobs: `HARVEST_BUCKET`, `HARVEST_ARTICLES_TABLE`,
+  `HARVEST_METRICS_TABLE`.
+  WHAT STILL HOLDS UNCHANGED: no cell of this project re-creates, re-declares or re-configures any of them,
+  and none performs a migration -- those acts belong to the harvest estate.
+  ⛔ **RE-MEASURED ON THE LIVE PLANE AT 2026-09-11 ~20:5xZ, AGAINST `opal-data-harvest` ITSELF** -- the
+  earlier configuration line in this section was measured on `opal-data-research`, WHICH NO LONGER EXISTS,
+  so it was a true statement about a dead object. Existence and access measured SEPARATELY, per the S5
+  binding:
+  IDENTITY `arn:aws:s3:::opal-data-harvest`, **us-east-1**, not an access-point alias.
+  ACCESS **PROVEN, not assumed** -- `list-objects-v2` RETURNED KEYS, e.g.
+  `derived/model_block/BABA_US_Equity/20260910T224432Z/model_block.json`; head-bucket rc=0 alone would
+  have proved only that the NAME RESOLVES.
+  ⭐ **AND THE TIMESTAMPED KEY GRAMMAR SURVIVED THE MIGRATION**, which is the property FWD-6's accumulate
+  bar actually reads.
+  CONFIGURATION: versioning **Enabled**; SSE **AES256**; **NO lifecycle** (`NoSuchLifecycleConfiguration`
+  -- accumulation is not silently truncated); **NO bucket policy** (`NoSuchBucketPolicy` -- IAM-only).
+  NEGATIVE CONTROL, so the reads are known to discriminate: `head-bucket opal-data-research` now returns
+  **404 Not Found**. The instrument returns real data for one name and nothing for the other.
+  EVERY DIMENSION MATCHES what this section asserted of the old bucket -- the migration preserved the
+  configuration -- but it is now MEASURED rather than inherited.
+  WHAT STILL HOLDS UNCHANGED: no round-5 cell re-creates, re-declares or re-configures it, and none of them
+  performs the migration -- that act is the harvest estate's.
+  Measured at the round-5 cut and still true of the source bucket: versioning **Enabled**, SSE AES256
+  (SSE-C blocked), **no lifecycle**, **no bucket policy** (IAM-only), us-east-1, list access PROVEN by a
+  successful `list-objects-v2`. Created by this project's own `AMGT-s-6` @`20260910T2059Z` via `safe-apply`.
+  ⛔ **AND THE RENAME HAS CODE CONSUMERS, NOT ONLY DATA -- row `Z-S12`.** 12 DEF-band definitions of the
+  bucket name across a printed denominator of 56,351 files; **ELEVEN are hardcoded literals with no env
+  path** and six of those are LIVE round-1..4 modules. Exactly ONE is re-pointable by an environment
+  variable. A cell of this round that reads a research-store path must expect the name to move under it,
+  and `rd-5`'s producer is SCHEDULED daily -- so a rename landing between two fires breaks the next one at
+  RUN time, not at apply time.
+- **S12 RESOLVES EACH PLATFORM'S OWN IDENTIFIER BEFORE DISPATCH.** `rd-4` never dispatches on a bare ticker.
+  This is the direct carry-forward of F6 (48 of 54 packs with a foreign peer set) -- **cutting an
+  acquisition cell ahead of identity rebuilds that defect on a new axis.**
+- **EVERY INFRA CELL: change-management entry OPENED BEFORE the act and CLOSED before the grading read;
+  `safe-apply`, never bare `terraform apply`; no second output path beside the one table.**
+- **NO NON-ASCII** in code, logs or AWS. Every F-number is CITED, not CONFIRMED -- a cell relying on one
+  re-measures it first and its criterion says so.
+
+### 13e. Round-4 lessons absorbed into this cut
+
+- **A cut may not rest on a gate's green when a row says the gate lies.** 13a is this lesson applied to the
+  cut itself: the two-limb precondition exists because `Z-S6` measured a false green THIS ROUND, and
+  `to-pipeline-gate` LIMB 6 reads the same false green, so it could not have been the backstop.
+- **An id is minted from a RE-READ, never from recall.** Row `Z-S7` was minted by this lane from "S5 mine,
+  S6 the CTO's, so S7 next" and collided with `4.0.0_SA_CRO~Z`'s committed `Z-S7`. Re-enumerating at write
+  time gives the lowest free id; recall does not. The same applies to cell ids in this table.
+- **An uncommitted channel row is an ESTATE-WIDE OUTAGE, not a personal todo** -- the standing-corpus pass
+  reads the WORKTREE and is fail-closed, so it blocked a peer's unrelated drain. The window between
+  appending a row and committing it is a shared-resource window.
+- **An invented schema field is a violation even when it looks harmless** (`additionalProperties: false`
+  rejects the KEY, and no value satisfies it). Rule 24 binds a schema ADOPTED as hard as one authored.
+- Carried from prior rounds: every criterion DISCRIMINATES; the proof instance uses the FULL task-order stem
+  filename; a criterion names the instrument that OBSERVES the artifact; an integration cell's `<paths>`
+  names the CONSUMER's home.
+
+### 13f. The round axis, updated
+
+- **ROUNDS 1-4:** terminal, frozen. 28 of 28 orders complete; round 4 CLOSED at L10 @`959ba3e947`.
+- **ROUND 5 (v5, THE SURFACE ROUND) -- AMENDED 2026-09-11 ~18:4xZ: SIX cells, was EIGHT.**
+  `rd-3` and `rd-4` are SUPERSEDED by the harvest estate (PRD v0.5 @`5517e071e8`); CHAIN A is therefore
+  `rd-1` ALONE and terminal. The round did not lose coverage -- `C-HARVESTER-COMPUTE` and
+  `C-VENDOR-WORD-HARVESTERS` are RE-HOMED, see 13c(i) and 13d.
+  **AS ISSUED (the historical record, not the current shape):** roots `rd-1` and `rd-2` spawned at issuance
+  (TABLES FIRST); CHAIN A was `rd-1` -> `rd-3` -> `rd-4`; CHAIN B `rd-2` -> {`rd-5`, `rd-6`, `rd-7`} ->
+  `rd-8`; `fanout: 2 of 2 chains, cap 8`.
+  **AS IT STANDS:** `rd-1`, `rd-2`, `rd-5`, `rd-6` terminal; `rd-7` in flight; `rd-8` last, converging
+  `rd-5`/`rd-6`/`rd-7`.
+  ⚠ **`rd-7` WAS RE-SLOTTED ~2 -> ~7 AND `rd-6` ~2 -> ~6, BOTH BY COMMITTED AMENDMENT BEFORE THEIR SPAWNS**
+  (@`b67133bd80`, @`f3501860e8`). The queue positions were an ISSUER choice about worker slots, not edges in
+  the dependency set; the edges are unchanged. The serial is part of the `<paths>` GRANT under RULING 1, so
+  it moves in the FILE and never only in a spawn prompt.
+- WARN: **THE ROUNDS ARE A READING OF THE EDGES, NOT A SECOND SOURCE OF TRUTH.** If a cell lands early the
+  next becomes cuttable early; the edges govern, the round numbers describe.
+- **AFTER ROUND 5:** `REALIZED` still requires a PERSON to have exercised each surface. Round 5 makes that
+  reachable and does not achieve it; the project closes when every FWD grades REALIZED at L9.
+
+**PREFLIGHT for the surface round -- the mandatory core battery WAS RE-RUN, and this is the first round
+since v0.2 that could not carry the prior run forward:** round 4 declared it not-re-run because both cells
+edited landed consumer modules; round 5 creates two DynamoDB tables, an EC2 box and a NEW IAM role, adds
+server-side ranking routes and introduces new portal query keys, so every lens becomes applicable again.
+- `comp-schedule --drift` -- RUN. 5 of 5 carriers scanned; REACHED-DENOMINATORS C1=23 C2=6 C3=12 C4=20
+  C5=334. 2 gates ARMED as drift candidates (`G-3` owner CTO, `G-7` owner POD4) -- **neither is this
+  project's and neither blocks this cut.** C3's 12 standing NEVER clauses are the source of 13d's
+  no-monitor bound.
+- `comp-iam gaps` -- RUN. 836 call(s) verdicted across 96 mapped role(s); 12 missing, 291 deny-present, 1
+  coverage-unknown, 2 resource-mismatch across 31 services. **No AMGT role exists yet**, which is the honest
+  baseline for `rd-3` (the cell creates the first one). WARN -- COVERAGE LIMIT carried, not cleared: 630
+  UNRESOLVABLE-RESOURCE, 266 calls in 26 role-UNMAPPED services NOT resource-checked, and 51 GRANTED-BROAD
+  rows EXCLUDED rather than cleared -- a wildcard grant cannot be falsified by a resource check.
+- `comp-cache collisions` -- RUN. 415 of 415 files scanned. Every existing collision is on another surface
+  (market-performance, model-portfolio, partner-analytics, positioning); **no AMGT/research key exists**, so
+  `rd-8` enters a clean namespace and its new keys must be checked at Phase 1 (auto-rule 2).
+- `comp-routes behaviors` -- RUN. 27 behaviors; the auth-gated `/api/scoped/*` + `auth-validator-edge`
+  viewer-request pattern is the precedent `rd-8`'s reads follow.
+- `comp-blast` -- DECLARED-NOT-APPLICABLE AT THE CUT, with the reason: round 5 CREATES resources rather than
+  modifying shared ones, and no live served artifact moves at L5. STOP: it becomes APPLICABLE inside
+  `rd-8`, which edits the portal shell, and that cell carries it at Phase 1.
+- `comp-adversary` -- RUN on this file; the declaration at section 7 stands and is extended by 13a's
+  statement of what the gate could and could not tell this lane.
+
+**AUTHORITY:** the L10 round-4 analysis @`959ba3e947` (the CTO's one send) answering the CVO's slug
+`REMEDIATION_v4`@`b97837e7fe`, plus PRD s.3b (ANDREW-DIRECT 2026-09-11 ~12:1xZ) and the L4-R ADMITTED gate
+at `@f0ff95cfac` with the second limb of 13a. Cited in each order's authority chain.
+
+**PUSH STATE: this amendment is LOCAL.** `0.0.0_AB_MSTR~Z` holds the push window.
+
+### 13g. AMENDMENT v0.6.1 -- `/dispatch --plan` caught a WRONG EDGE and a wrong fan-out, BEFORE any order was issued
+
+**This amendment is legal because NO ORDER IS ISSUED AND NO WORKER IS SPAWNED.** Rule 27's freeze binds
+the decomposition MID-ROUND; between L5 and L6 with an empty `task-orders/` set for this round, a
+correction is still an L5 act. Issuing against a knowingly-wrong edge would have been the worse choice.
+
+**WHAT `--plan` MEASURED:** under the skill's own definition of M ("two cells joined by an edge are one
+chain"), the v0.6 edge set formed **ONE connected component, not four chains** -- so the stated
+`fanout: 2 of 4` was wrong, and taken literally it implied N = M = 1 and one worker serializing all eight
+cells, which contradicts Andrew's "TABLES FIRST".
+
+**THE CAUSE WAS A SUBSTANTIVE ERROR, NOT AN ARITHMETIC ONE.** v0.6 gave `rd-6` (the price axis) a
+dependency on `rd-3` (the harvester box). That edge is WRONG on the constraint's own words:
+`C-PRICE-RANKING-BOXSIDE` names the **ETF-daily-pull shape**, which runs on the **Bloomberg TERMINAL
+box** against a loopback-only DAPI -- the same seam `AMGT-s-2` exists to cross. The NEW EC2 box of `rd-3`
+hosts the four ARTICLE harvesters. Two different machines, two different concerns; the edge conflated
+"box-side" with "the box this round builds". Removing it yields **M = 2**, which is what the two
+independent roots were always going to be.
+WARN: the wrong edge would ALSO have mis-scoped `rd-6`'s worker face -- it would have named the harvester
+box's home in `<paths>` and omitted the terminal box's, and under RULING 1 a path missing from the order
+is a WALL, not a hint. So this was on its way to a blocked worker, not just a wrong number.
+
+**THE GENERAL FINDING, worth more than this instance:** rounds 1-4 were either INDEPENDENT cells (round 2:
+5 of 5) or a single PATH (round 4: 1 of 1), and for both shapes "connected components" and "worker queues"
+give the same number. **Round 5 is this project's first CONVERGENT DAG** -- two roots meeting at `rd-8` --
+and it is the first shape where the two readings diverge. A fan-out number copied forward in the shape of
+earlier rounds is exactly where that divergence hides.
+
+*(v0.6.1 amended 2026-09-11 by `2.0.0_SA_COO~ZZZ` before issuance -- one wrong edge removed, M re-measured
+2, fan-out corrected. Sections 1-12 unchanged and FROZEN.)*
+
+*(v0.6 cut 2026-09-11 by `2.0.0_SA_COO~ZZZ` -- the SURFACE round from @959ba3e947; sections 1-12 unchanged
+and FROZEN.)*
+
+
+## 14. ROUND 6 (v0.7) -- THE RECUT OF `AMGT-rd-8`, ONE CELL
+
+**Cut 2026-09-11 ~22:2xZ by `2.0.0_SA_COO~ZZZ` on `1.0.0_SA_CTO~Z`'s L10 assessment (msg 21677).**
+`AMGT-rd-8` was adjudicated FAIL on TWO criteria by `3.0.0_SA_CVO~Z` (`ADJUDICATION_v5.md`:
+`AMGTrd8-AC4` FAIL, `AMGTrd8-AC2` FAIL). ⛔ **AN ADJUDICATED FAIL IS A CONCLUDED ATTEMPT WITH A
+NEGATIVE VERDICT, NOT WORK IN FLIGHT** -- so L9 RELEASES the recut and `rd-8` does not wait for the
+slug. `rd-8` flips to **`superseded`**, never `complete`: that word reads as success and this attempt
+failed. The pointer is `AMGT-re-1`, the same shape `rd-3`/`rd-4` already carry @`64ce3b3c55`.
+
+### 14a. The cell
+
+| cell | rows | FWD | text | status | depends on |
+|---|---|---|---|---|---|
+| `AMGT-re-1` | S16 | FWD-15 | **THE SURFACE, RECUT.** Everything `AMGT-rd-8` was asked for, MINUS what it delivered, PLUS the four shape gaps L9 named and the two instruments it could not be graded on. Reads pre-computed rows from `opal-harvest-security-metrics`; never re-derives a ranking at render time. | OPEN | none -- `rd-5`, `rd-6`, `rd-7` are complete and drained |
+
+### 14b. WHAT THE RECUT CARRIES, AS A SUBTRACTION FROM L9's OWN FAIL TEXT
+
+⭐ **NOT re-derived from a summary.** `ADJUDICATION_v5.md`'s `AMGTrd8-AC4` reason names exactly what is
+present and what is missing, and 14b is that text partitioned:
+
+**ALREADY DELIVERED AT `e6057f26` AND NOT TO BE REBUILT** -- L9: *"the persistent panel, three tabs and
+header Print location are present"*. The recut KEEPS them. 20 files / 2,067 insertions are on branch
+`wk-amgt_resapp-5-8-portal` in the MAIN portal repo, anchored there by an explicit fetch before the
+`rd-8` teardown (row `Z-S21`). **THE RECUT STARTS FROM THAT BRANCH, NOT FROM AN EMPTY PAGE.**
+
+**THE FOUR SHAPE GAPS, verbatim from the grade:**
+1. *"Trending/Breakout are mapped ONE-TO-ONE to Chatter/Price instead of CROSSED controls"* -- the cell
+   says **Trending/Breakout x Price/Chatter**, a CROSS of two independent controls (four combinations),
+   not two labels for two axes.
+2. *"required `/api/scoped/amgt` adapters are not delivered"* -- and the battery's `comp-routes` finding
+   already named the auth-gated `/api/scoped/*` pattern as the precedent to follow.
+3. *"The StarredList iterates stored starred order, contrary to the report's producer-order filter
+   claim"* -- the starred set FILTERS the producer's ranked order; it does not re-order it.
+4. *"RankedChart is ticker-indexed and has no time-series implementation despite the stated automatic
+   second-day behavior"* -- the Chart view is over TIME, and it begins working on day two by itself
+   because `rd-5` writes a new `axis_date` daily.
+
+**THE TWO INSTRUMENT DEFECTS, WHICH ARE THE ISSUER'S AND ARE FIXED IN THE CRITERIA, NOT THE CELL**
+(rows `Z-S23`, `Z-S24`):
+- `rd-8` AC2 was an **ALWAYS-PASSES** criterion: `tsc --noEmit` against a `files: []` references-only
+  root examines ZERO source files, so it could not fail in the broken world. L9 did not detect a
+  failure -- `3.0.0_SA_CVO~Z` INJECTED a type error and watched the check MISS it.
+- `rd-8`'s render check rendered **FIXTURE components and a `PrintTriggerButtonReplica`** rather than
+  the actual route and action, so it measured a plane the claim is not about.
+
+### 14c. THE RULE THE SURVIVING CELLS ALREADY DEMONSTRATE, NOW BINDING ON THIS CUT
+
+⛔ **EVERY MECHANICAL CRITERION OF THIS CELL NAMES, INSIDE ITS OWN `<expect>`, WHAT AN UNINFORMATIVE
+RESULT LOOKS LIKE AND WHY THAT IS NOT MET.** Measured across round 5 (`Z-S24`): all FIFTEEN mechanical
+criteria of the five cells that PASSED carry such a clause -- `rd-1`/`rd-2` an explicit negative
+control (`...-NOPE-xyz`), `rd-5`/`rd-6`/`rd-7` an explicit false-zero refusal (*"a denominator of 0
+files scanned is OUT-OF-CORPUS and is NOT met"*). `rd-8`'s three carried none, and `rd-8` is the one
+that failed. ⚠ Stated as a CORRELATION with its mechanism named, not a controlled comparison: the six
+cells differ in subject, difficulty and how hard L9 graded them.
+
+### 14d. BOUNDS CARRIED UNCHANGED ONTO `AMGT-re-1`
+
+- **PORTAL IS FROZEN, both fabrics, PROD and DEV. COMMIT YES / PROMOTE NO.** Andrew ~15:0xZ.
+- **`Z-S16` STAYS PARKED, NOT DISARMED** -- the portal base is `DEV` + 19 un-merged `IRPT_FNTEND`
+  commits on a chain no branch contains. `1.0.0_SA_CTO~Z`: that is a bound on the eventual PROMOTE, NOT
+  on the cell, so it does not gate this recut. Un-parking needs the freeze lifted AND those 19 on
+  `DEV`; the freeze is Andrew's.
+- **C-SERVER-SIDE-RANKING**, the three Andrew shape decisions, the standing monitor/alarm moratorium,
+  no device-specific portal logic, no non-ASCII, and **no cell may grade an EXERCISED outcome REALIZED
+  on its own artifact** -- this cell makes FWD-15 REACHABLE; a PERSON must still have used it.
+- **NOT THIS CELL'S, and it must not be held behind it:** `C-S49`'s scheduler IAM/resource defect.
+  `1.0.0_SA_CTO~Z` measured it worse than the row states (`chatter-axis-schedule.tf:76` references
+  `aws_dynamodb_table.security_metrics`, declared ZERO times across the whole terraform estate; `:68`
+  and `:69` carry literal ARNs for a DELETED table) and REC'd `4.0.0_SA_CRO~Z` to sequence it as the
+  migration's unfinished consolidation. Independent surface; `AMGT-re-1` does not touch it.
+
+### 14e. The round axis
+
+- **ROUND 6 (v0.7, THE RECUT): ONE cell, ONE chain.** `AMGT-re-1`, no unmet dependency --
+  `rd-5`/`rd-6`/`rd-7` are complete and drained, and their outputs are what this cell reads.
+  **`fanout: 1 of 1 chains, cap 8.`** N = M = 1: one cell cannot be parallelised, and a second worker
+  on one portal surface is the two-builders collision this estate has already paid for twice tonight.
+
+## 15. ROUND 7 (v0.8) -- FROM THE L10 ROUND-5/6 ANALYSIS @`3c73d946e3` + @`ac9b2e7e46` (`1.0.0_SA_CTO~Z`)
+
+**Cut 2026-09-12 ~00:2xZ by `2.0.0_SA_COO~ZZZ`.** Both analyses landed committed (`ROUND_ANALYSIS.round6.md`
+is a POINTER at `round5.md`, because `3.0.0_SA_CVO~Z` delivered both slugs in ONE commit `bd523222a1`).
+The analysis closes with *"Round 5 and round 6 are CLOSED at L10. The PROJECT is not closed. The recut is
+`2.0.0_SA_COO~ZZZ`'s in ONE issuance AND NOTHING GATES IT."*
+
+**Pre-issuance gate, MEASURED not recalled:** `prd-signoff.py status AMGT_RESAPP` -> `v0.5 @932d83eb17
+ROUND_CLOSE -> ADMITTED`, both halves SIGNED and current. And the GLOB `prd/signoff/4.0.0_SA_CRO*.json`
+returns TWO records: `4.0.0_SA_CRO~Z.json` carries `half_hash=7c533738184f` which MATCHES the brief half's
+hash computed fresh by `prd_signoff_lib.half_hashes` this tick; `4.0.0_SA_CRO.json` carries `half=None`
+and NO `half_hash` and is **OUT-VOTED, NOT FIXED** (row `Z-S6`, still ARMED, `1.0.0_SA_CTO~Z`'s, carried
+into round 7 as an L4-R gate item and NOT as a project cell, per analysis s.4 item 4).
+
+### 15a. THE CELL SET AS A SUBTRACTION, over the slugs' printed denominator
+
+No forward list of what this seat thought of. The domain is the two slugs' remediation rows:
+
+```
+  30 remediation rows across REMEDIATION_v5 + REMEDIATION_v6
+   -5 closed=true            (Z-S11, Z-W2-S8, Z-W2-S9, Z-S26, Z-C-S5x)
+  = 25 OPEN obligations
+   -9 owned by another seat  (Z-S6 Z-S14 Z-S16 Z-S21 Z-S22 Z-W2-S10 Z-C-S50 = CTO ; Z-S12 Z-C-S49 = CRO)
+  = 16 OPEN and owned by 2.0.0_SA_COO~ZZZ
+   -9 CARRIED, each with its reason in 15d
+  = 7 rows -> 6 CELLS       (Z-S27 folds into rf-2: the slug itself says "Coordinate with W10-S3")
+```
+
+WARN **AND THE DOMAIN ITSELF WAS FALSIFIED FIRST, because choosing it is a claim.** The analysis's s.3 calls
+`Z-S9`, `Z-W1-S7`, `Z-W2-S6`, `Z-W2-S7`, `Z-S10` *"owned elsewhere and carried"* -- while the SLUG's own
+`owner` field names `2.0.0_SA_COO~ZZZ` on **all five**. Measured, 5 of 6 (s.3 is right only about `Z-S12`,
+genuinely `4.0.0_SA_CRO~Z`'s). **THE SLUG'S FIELD GOVERNS AND THE PROSE IS A SUMMARY OF IT** -- Rule 22's
+STATE limb, *a description is never a state*, and Rule 28's *every row carries its OWNER*. So the five are
+this seat's, they are inside the 16, and they are CARRIED BY NAME in 15d rather than silently dropped on a
+sentence. **This is the second compression error in that document** -- `3.0.0_SA_CVO~Z` already corrected
+the first (s.2 grouped `C-S61/62/63` as one class when they are three different repairs), and it is
+surfaced to `1.0.0_SA_CTO~Z` in the same tick as this cut rather than re-litigated.
+
+### 15b. The cells
+
+| cell | rows | FWD | text | status | depends on |
+|---|---|---|---|---|---|
+| `AMGT-rf-1` | W10-S2 | FWD-15 | **THE CROSS, AT THE PRODUCER.** `resolve_axis` falls back on FOUR of FOUR calls with `movement_basis` ABSENT because no producer has ever written a `TRENDING_*` or `BREAKOUT_*` partition. Make the PRODUCER supply the movement dimension so the four combinations are four real ranking products; carry `requested` vs `served` identities visibly and never invent a rank in the browser. | OPEN | none |
+| `AMGT-rf-2` | W10-S3, S27 | FWD-15 | **THE MOUNT, AND ITS IAM -- A `<paths>` REPAIR, NOT A CODE ONE.** Eleven route declarations and a handler exist in `lib/research/api`; round 6's grant OMITTED the infrastructure mount, so sixteen fake-boundary tests passed against nothing mounted. Grant the API Gateway route, the Lambda declaration, packaging, the trusted edge boundary and IAM. `comp-iam` must show the ADAPTER CALL SITES and their role binding IN ITS DENOMINATOR -- unchanged totals do NOT close it. | OPEN | `rf-1` (same file) |
+| `AMGT-rf-3` | C-S61 | FWD-14 | **THE FISCAL-ROW MATCHER.** `_figures(model_block, "fiscal_year")` matches ZERO of the BABA model's **183 `fiscal_year_line_item` figures** (the model holds 196 total including 13 headers). Use the actual canonical scope contract; add a WRONG-SCOPE negative control; keep real route data in the render test. | OPEN | `rf-2` (same file) |
+| `AMGT-rf-4` | C-S62 | FWD-14 | **THE CORRECTED-OVERLAY BYPASS -- A DIFFERENT DEFECT FROM `rf-3`, NOT A SECOND ZERO-ROW FINDING.** `read_model_block` reads only the historical RAW model; ten raw fiscal `PX_LAST` rows differ from all ten corrected rows (FY2025 raw 146.58 vs corrected 132.23). Wire the API to the shared corrected-model consumer contract, preserving vintage, observation date, derivation identity and unresolved refusal. | OPEN | **`rf-3` -- HARD EDGE:** the slug states *"fixing that filter alone would expose stale values"* |
+| `AMGT-rf-5` | C-S63 | FWD-14 | **THE INCOMPLETE-READ SIGNAL.** A response returning the requested key in `UnprocessedKeys` yields ZERO points with no completeness field and no retry; sixteen tests pass because their fake never returns it. Bounded retry OR an explicit incomplete-read refusal; preserve the unresolved denominator; test processed / genuinely-absent / partially-processed / retry-exhausted. | OPEN | `rf-4` (same file) |
+| `AMGT-rf-6` | W10-S4 | FWD-15 | **THE NAMED HYGIENE EDIT, INERT.** Ten non-ASCII display-punctuation occurrences across SIX files, preserving meaning and component behaviour. Not a claim about AWS identifiers or production text rendering. | OPEN | none -- surface DISJOINT from `rf-1` |
+
+### 15c. M, N AND THE CAP -- M IS MEASURED AND IT IS **2**, NOT 6
+
+**FIVE OF THE SIX CELLS WRITE THE SAME FILE.** Measured with `comp-find` over `lib/research`, 30 hits /
+80 files scanned, DEF band:
+
+```
+  lib/research/api/scoped_amgt.py:113  PRODUCER_LANDED_AXES   -> rf-1
+  lib/research/api/scoped_amgt.py:146  resolve_axis()         -> rf-1
+  lib/research/api/scoped_amgt.py:382  read_model_block()     -> rf-4
+  lib/research/api/scoped_amgt.py:390  _figures()             -> rf-3
+  lib/research/api/scoped_amgt.py:418  read_thesis_bundle()   -> rf-3, rf-4
+  lib/research/api/scoped_amgt.py:602  the handler/routes     -> rf-2
+```
+
+**So `rf-1..rf-5` are ONE CHAIN** -- not because their subjects are related but because two workers on one
+file is a guaranteed conflict, and `rf-3 -> rf-4` carries a HARD dependency the slug itself states. They
+become **ONE WORKER'S QUEUE, five orders, sequential.** **This is where the analysis's own instruction
+had to be read against a measurement rather than followed literally:** s.4 item 3 says `C-S61/62/63`
+*"should be cut as measurement cells"*, and cutting three cells to three workers would have put three
+workers on one file. Three ORDERS, one WORKER preserves the grain `3.0.0_SA_CVO~Z` insisted on (three
+different repairs) and the file's constraint at the same time.
+
+**`rf-6` is the second chain.** Measured at the right vintage (see 15e): `types.ts` carries ZERO non-ASCII,
+and the six affected files are all OTHER files, so the `<paths>` sets are disjoint at FILE grain.
+
+```
+fanout: 2 of 2 chains, cap 8, reason: five cells write lib/research/api/scoped_amgt.py and rf-3->rf-4 is a
+stated hard edge, so N is bounded by the file, not by the cell count
+```
+
+### 15d. THE NINE CARRIED, BY NAME AND WITH A REASON EACH -- none is silently dropped
+
+| row | why it is NOT a round-7 cell |
+|---|---|
+| `Z-W10-S1` | its remedy IS a criterion-authoring rule, so it binds THIS CUT rather than a cell -- see 15f |
+| `Z-S23` | superseded in substance: its remedy asks for populated real-route and real-Print evidence, which is exactly what `rf-2`+`rf-3` must produce. Carried so L9 can CHECK that claim rather than take it |
+| `Z-S9` | two cells shared one root module with independently declared singleton backend blocks. A TERRAFORM-UNION defect on a surface round 7 does not touch; cutting it would open infra work the analysis did not ask for |
+| `Z-S10` | a record-accuracy obligation about a reverted COO edit. No build surface |
+| `Z-W1-S7` | a GRANT defect (a worker met HALT-GT by writing its own gitignored identity outside its paths). It is a lesson for `<paths>` authoring, applied in 15f, not a cell |
+| `Z-W2-S6` | a producer-universe evidence obligation on `rd-5`'s landed output. `rf-1` touches the same producer; carried so it is not answered twice by different instruments |
+| `Z-W2-S7` | `archive_file` vs a static `build_zip.py` artifact -- the slug says the alternative *"can work and no rule here mandates archive_file"*. Nothing to repair |
+| `Z-W7-S6` | an instrument obligation on `rd-7` (`tail -12` could discard a denominator). `rd-7` is terminal; the fix is 15f's rule, not a re-cut of a closed cell |
+| `Z-W7-S7` | the socket blocker reaches three of five tests. A real gap on a TERMINAL cell's test file; carried rather than re-opening a closed order mid-recut |
+
+**CARRIED IS NOT CLOSED.** All nine keep their `hazard_standing` at surfacing and their remedy owner.
+Round 8's input is this table MINUS whatever round 7's L9 closes.
+
+### 15e. TWO CONSTRAINTS THE CUT MUST CARRY, BOTH FOUND BY MEASURING RATHER THAN READING
+
+1. **THE PANEL IS NOT IN THE PORTAL CHECKOUT, AND A CENSUS OVER IT RETURNS A FALSE ZERO.** This seat's
+   first non-ASCII census read `DENOMINATOR: 0 file(s) under portal/src/pages/SecurityAnalysis` and would
+   have "proved" `Z-W10-S4` already clean. It is OUT-OF-CORPUS, not absence: `portal` HEAD is
+   `30ca034bba` (DEV) and carries **0** files there, while `c6728146` (`wk-amgt_resapp-5-8-portal`)
+   carries **18**. Re-measured at that vintage: **6 files / 10 occurrences, matching the slug exactly**,
+   computed independently. **So every portal-touching order names `c6728146` as its base and each worker
+   forks its OWN portal branch from it** -- two workers on one portal branch is the collision the
+   disjoint file sets would otherwise have avoided.
+2. **`rf-1` MAY BE UNBUILDABLE AS SPECIFIED, AND THAT IS A ROW, NOT A SILENT NARROWING.** `Z-W10-S2`'s
+   remedy offers two branches -- supply the movement dimension, *"or obtain an explicit specification
+   correction before claiming four distinct ranking products"* -- and routes the choice: *"CTO reads the
+   coverage implication and COO chooses the existing-cell recut or decomposition change."* **THIS SEAT
+   CHOOSES THE PRODUCER REPAIR, NOT THE DECOMPOSITION CHANGE.** Reason: the four-way cross is what L9
+   DEMANDED of `rd-8` (*"Trending/Breakout are mapped ONE-TO-ONE to Chatter/Price instead of CROSSED
+   controls"*) and it serves FWD-15; correcting the decomposition to a two-way surface would NARROW a
+   ratified outcome on this seat's own authority, which is the widening-by-the-back-door this estate
+   keeps catching. If the producer repair proves infeasible the worker files a row and stops on that
+   clause -- it does NOT get to choose the narrowing either.
+
+### 15f. THE CRITERION RULES THIS CUT IS BOUND BY -- three of them are paid for in other seats' losses
+
+1. **A MUTATION CONTROL SNAPSHOTS THE WORKING TREE, NEVER THE INDEX.** Analysis s.4 item 1 and row
+   `Z-W10-S1`: round 6's AC3 mutated `types.ts` then ran `git checkout -- <path>`, which restores from the
+   INDEX, and **a worker lost about ninety uncommitted lines while the criterion printed its expected `1`.**
+   Every injected-error control in this round names its restore source explicitly and proves BOTH error
+   detection AND byte identity against a deliberately dirty tree. The condition that caused it was
+   `1.0.0_SA_CTO~Z`'s and the criterion that carried it was this seat's.
+2. **EVERY MECHANICAL CRITERION CARRIES A DISCRIMINATOR INSIDE ITS OWN `<expect>`** -- a negative
+   control, a vacuity count, or a false-zero refusal. Measured across round 5 (`Z-S24`): all 15 mechanical
+   criteria of the five cells that PASSED carry one; `rd-8`'s three carried none.
+3. **A ZERO IS NOT AN ABSENCE UNTIL ITS DENOMINATOR IS READ** -- 15e item 1 is this cut's own instance,
+   and every census criterion in this round prints the denominator it counted.
+4. **AN INTEGRATION CELL'S `<paths>` NAMES THE CONSUMER AND THE MOUNT** (`Z-W10-S3`, `Z-W1-S7`): a
+   surface left out of `<paths>` is a WALL the worker cannot route around, and round 6 proved it by
+   passing sixteen tests against nothing mounted.
+
+### 15g. FOUR-POSTULATE RECORD for this round's cell set (Rule 24)
+
+- **(i) MECE over a DECLARED domain, by SUBTRACTION:** the domain is the 30 remediation rows; the
+  arithmetic is printed in 15a and balances to 7 covered + 9 carried + 9 other-owned + 5 closed = 30.
+  The domain was itself falsified first (the s.3-vs-`owner` discrepancy), which is what moved five rows
+  from "not mine" into the carried table instead of out of the count.
+- **(ii) SAME GRAIN:** every cell is one REPAIR of one measured defect on one named surface. `C-S61` and
+  `C-S62` are kept SEPARATE on `3.0.0_SA_CVO~Z`'s explicit grain correction rather than merged because
+  they happen to share a file.
+- **(iii) INTENT COHERENCE:** one axis -- *make the round-6 surface actually serve what FWD-14/FWD-15
+  ratified*. `rf-6` is the one INERT member and is marked as such so L9 does not grade it as surface work.
+- **(iv) STATE COHERENCE, what these remedies do NOT move:** they do not close `Z-S6` (L4-R evaluator
+  fallback, the CTO's), do not touch the terraform-union defect `Z-S9`, do not re-open any terminal
+  order's test file (`Z-W7-S6`, `Z-W7-S7`), and **do not promote anything** -- portal stays FROZEN both
+  fabrics, COMMIT YES / PROMOTE NO, so no cell may grade a served-surface outcome REALIZED.
+
+## 16. ROUND 8 (v0.9) -- FROM THE L10 ROUND-7 ANALYSIS @`65e788455a` (`1.0.0_SA_CTO~Z`), THE CONSUMER-BOUNDARY ROUND
+
+**The analysis's verdict in its own words: "NO PRD ADDENDUM IS REQUIRED -- the coverage read is CLEAN,
+15 of 15 outcomes are served by a cut order and the subtraction is EMPTY. This analysis is the L10
+answer, and the recut proceeds from it in ONE issuance."** So round 8 cuts NO coverage cell. It cuts
+the consumer boundary the round-7 evidence exposed, and nothing else.
+
+### 16a. The cell set, BY SUBTRACTION over a PRINTED denominator
+
+**DENOMINATOR: the NINE OPEN remedy rows of `REMEDIATION_v7.md` @`00e0813b9d`** (17 rows total: 8
+REMEDIATED, 9 OPEN; read from each row's own `remediation.state` field, never from prose).
+
+```
+  9  OPEN remedy rows              owners: 7 this seat, 2 1.0.0_SA_CTO~Z
+ -2  Z-S36, Z-S42                  NOT MINE. Analysis s.5.3: "Two remedies from this slug are THIS
+                                   SEAT's, not the COO's ... carried here, not routed into a cell."
+                                   Both are status-count TOOL repairs (to-check's parser, and the
+                                   directives register that reprints its count).
+ -1  Z-W11-S2                      CARRIED, NOT CUT. Its remedy needs an ARTIFACT UPLOAD and a SERVED
+                                   ROUTE -- a deploy act. NEVER-1's closers are CTO+COO and no
+                                   never-widen sign-off exists; the row's own remedy says the CVO
+                                   "neither uploads an artifact nor authorizes an AWS act through this
+                                   row". The SOURCE-plane half is already landed and graded.
+ -1  Z-W11-S1                      CARRIED, AND CARRYING IS THE REMEDY. Its own text: "Keep the
+                                   recorded-gitlink/integration decision with the existing owner under
+                                   the freeze ... do not treat materializing a checkout as disarming
+                                   this row." Cutting a cell here would act AGAINST the remedy.
+ -1  Z-W12-S1                      NO CELL, BY THE ROW'S OWN WORDS: "no new cell is inferred." It is a
+                                   SPAWN-STEP change and THIS ISSUANCE'S OWN SPAWN APPLIES IT (s.16c).
+ -1  Z-S34                         NO CELL: "A documented bounded step suffices." It is a DRAIN-
+                                   PROCEDURE step and this issuance's drain contract carries it (s.16d).
+ =  3 CELLS
+```
+
+**REMAINDER ZERO BY CONSTRUCTION:** every one of the nine is a cell, a named carry with its reason,
+another seat's, or executed by this issuance's own procedure. Nothing is dropped on a sentence.
+
+⛔ **AND THE DOMAIN WAS FALSIFIED BEFORE THE SUBTRACTION RAN, because two populations are in play and
+only one governs the CUT.** The NINE is L9's own output for this round and is what the spine routes
+into the recut. The STANDING HAZARD SET is a strictly wider population, it is carried rather than cut,
+and **ROUND 8 DOES NOT CLOSE IT.** A cell cut from it but absent from the nine would be work L9 did
+not ask for.
+
+⛔ **AND THE STANDING SET'S OWN NUMBER IS CORRECTED HERE, AGAINST THIS SEAT, BEFORE IT IS CITED AGAIN.**
+`AMGT_RESAPP-Z-S46` reported **thirty** -- measured over TWO documents, `INVESTIGATION_v1.md` and
+`ADJUDICATION_v7.md`, 132 rows. **THE CHANNEL IS FIFTEEN FILES ACROSS THREE DIRECTORIES**
+(investigations, adjudications, remediations) **and 246 rows**, and the field reads **53** ARMED with
+`disarm_owner` = this seat over that domain, 53 distinct ids with no duplicate. So the thirty is
+NARROW by the same class it was written to correct, and the true residual needs the screen-then-read
+run over all fifteen files. **That is round 8's carried work and it is NOT this cut's domain** -- the
+cut's domain is the nine, which is one complete row block with a printed state field.
+⭐ Surfaced by `1.0.0_SA_CTO~Z` (msg 22031), correcting its OWN one-file "35 of 92" in the same
+breath. **That makes four instances of the analysis's own class inside one hour, across two seats,
+including the seat that wrote the sentence and the seat quoting its warning while repeating it.** The
+class exempts nobody, which is the strongest evidence for it anyone has produced tonight.
+
+⚠ **AND `Z-W11-S5` IS BACK IN THE NINE BECAUSE THE CVO REVERSED THIS SEAT.** `Z-S40` disarmed it on a
+judgment; `ADJUDICATION_v7` **REJECTS that closure** -- "the specifically required loosened-matcher
+mutant was not run." **That verdict is executed here as a ruling, not re-litigated**, and the row is
+`AMGT-rg-3`. This seat flagged the alternative reading and named who could reverse it; the mechanism
+worked exactly as designed.
+
+### 16b. The three cells
+
+| cell | row | surface | the defect, MEASURED |
+|---|---|---|---|
+| **`AMGT-rg-1`** | `C-S99` | portal consumer -- the Thesis check face | `checkFor` builds `fy<year>:<mnemonic>`; the adapter emits `fiscal_year_line_item:<mnemonic>:<year>`. **13 of 13 header checks join; 0 of 183 fiscal checks join.** The unresolved-price control also matches 0 of 1. **The join is not flaky; it is arithmetic.** |
+| **`AMGT-rg-2`** | `C-S98` | portal consumer -- `RankedChart` | Renders **byte-identical static HTML** for the `absent` and `retry-exhausted` adapter payloads. It reads `points` and `point_count` and **never** `read_completeness` or `unresolved_point_count`; the backend now preserves the distinction and the page discards it. |
+| **`AMGT-rg-3`** | `Z-W11-S5` | `lib/research/api` + `lib/research/checkface` | rf-3's AC3 negative control has **never been shown to FIRE**. Its disarm needs the same invocation run against a matcher **deliberately loosened to match everything**, returning a NON-ZERO wrong-scope count, then exact-byte restoration. |
+
+⭐ **THE SHAPE THE ANALYSIS NAMED, and the reason rg-1 and rg-2 are cut together:** *"EVERY DEFECT
+THIS ROUND PRODUCED IS A CHECK RUN ON THE NEAR SIDE OF A BOUNDARY AND CLAIMED FOR THE FAR SIDE."* The
+producer's 107 green tests are the near side; the page reading 0 of 183 figures is the far side. **A
+cell that repairs the producer again cannot move either row** (analysis s.5.1). `rg-3` is the same
+shape at the criterion altitude -- a control that was never run in the world it claims about.
+
+### 16c. Dependency edges, and M
+
+```
+CHAIN A (portal)  AMGT-rg-1  ->  AMGT-rg-2      both write portal/src/pages/SecurityAnalysis/
+CHAIN B (library) AMGT-rg-3                     writes lib/research only
+
+fanout: 2 of 2 chains, cap 8
+```
+
+⛔ **M IS MEASURED AND IT IS 2, AND THE PORTAL EDGE IS NOT ABOUT A FILE.** `rg-1` and `rg-2` touch
+different components (`ThesisTab` vs `RankedChart`), so a file-grain disjointness read would say two
+workers are safe. **It would be wrong, and this project has the row to prove it: `AMGT_RESAPP-Z-S33`
+-- A GITLINK HAS NO SUB-PATH GRAIN, so two workers in one submodule are ONE contended object.** Two
+portal workers would commit two portal branches and the second drain would silently revert the first.
+One worker, one queue, `rg-1` before `rg-2`.
+
+**`Z-W12-S1` IS DISCHARGED BY THIS ISSUANCE'S SPAWN STEP, not by a cell:** every worktree whose order
+names a `portal/` path is created with **portal materialized**, and the spawn verifies it with the
+one probe that discriminates a missing repository from an empty answer --
+`git -C portal rev-parse --show-toplevel` compared against the portal path itself, **with an
+empty-directory negative control and a genuine-portal positive control printed side by side.**
+
+### 16d. The drain contract for this round -- `Z-S34`, executed rather than cut
+
+Before any drain of a round-8 branch, and stated here so it is procedure rather than memory:
+
+1. **Fetch the worker's portal branch into the shared clone under a REF**, never `FETCH_HEAD` -- an
+   unreferenced fetched object is gc-able.
+2. **Read the object back with a bogus-hash negative control** -- presence, not a standing yes.
+3. ⛔ **THEN THE REMOTE PLANE, WHICH IS THE STEP `Z-S34` NAMES AND THE ONE THIS SEAT SKIPPED AT THE
+   rf-6 DRAIN:** `git -C portal branch -r --contains <obj>` must be NON-EMPTY, with the recorded
+   `e85f6eb84f` run through the identical command as a POSITIVE CONTROL (it resolves via
+   `origin/DEV`). **FETCHING AN OBJECT INTO A CLONE DOES NOT PUBLISH IT, and the local check passes
+   for the same reason the remote one fails.**
+4. **NO ROUND-8 DRAIN MOVES THE `portal` GITLINK.** It stays at `e85f6eb84f`, which is what
+   `origin/SITEZ` publishes. A move is what forced the `275530053c` backout and it needs Andrew's
+   freeze lift, which is carded at his terminal and is not this round's to assume.
+
+### 16e. The four-postulate record (Rule 24)
+
+- **(i) MECE over a DECLARED domain, BY SUBTRACTION:** s.16a subtracts from the nine OPEN rows with a
+  printed denominator and a reason per exclusion; the arithmetic balances 3 cut + 2 carried + 2
+  procedure + 2 other-owned = 9. **The domain itself was falsified first** -- the thirty of `Z-S46` is
+  the wider set and is explicitly NOT the cut's domain, with the reason stated.
+- **(ii) SAME GRAIN:** each cell is ONE repair of ONE measured defect on ONE named surface. `rg-1` and
+  `rg-2` are kept SEPARATE although they share a submodule, because they are different components with
+  different evidence -- the same grain correction `3.0.0_SA_CVO~Z` made at round 7.
+- **(iii) INTENT COHERENCE, one axis:** *make the populated CONSUMER read what the repaired PRODUCER
+  emits, and make one unfired control fire.* No producer repair is in this round.
+- **(iv) STATE COHERENCE -- what these remedies do NOT move:** they do not publish portal (FROZEN both
+  fabrics, COMMIT YES / PROMOTE NO), do not deploy anything (`Z-W11-S2` carried with its reason), do
+  not move the recorded gitlink (`Z-W11-S1`, `Z-S33`), do not close the twenty-one older carries of
+  `Z-S46`, and do not touch `Z-S36`/`Z-S42`, which are `1.0.0_SA_CTO~Z`'s.
+
+⛔ **NO ROUND-8 ARTIFACT MAY GRADE A PORTAL-DEPENDENT OUTCOME `REALIZED`** -- analysis s.5.2, and the
+pin is the reason: the portal evidence lives at `83cc87f2`, contained by ONE local ref and **0 of the
+portal remote's 9 heads**, while the recorded gitlink `e85f6eb84f` IS contained by `origin/DEV`.
+Every portal-dependent outcome grades **EXERCISED**, never REALIZED, until the gitlink lands.
+
+---
+
+## 17. ROUND 9 (v1.0) -- FROM THE L10 ROUND-8 ANALYSIS @`f99eff5726` (`1.0.0_SA_CTO~Z`), THE SERVED-ROUTE ROUND
+
+**ONE CELL.** The analysis's own verdict: *"Nothing else is warranted on coverage grounds. A round 9
+wider than this would be cells written against outcomes that no build can move, which is the failure
+this project's own bar-distribution line was written to prevent."*
+
+### 17a. The cell set by SUBTRACTION over a PRINTED denominator
+
+```
+ 4  OPEN remedy rows of REMEDIATION_v8 @a51f860e36
+      (18 rows total: 14 REMEDIATED, 4 OPEN, read from each row's own remediation.state AT HEAD)
+-2  Z-S53, Z-S57   1.0.0_SA_CTO~Z's, and ONE bounded POSN paired read closes both.
+                   DISCHARGED BY THE ANALYSIS ITSELF at s.7 -- not carried, closed.
+-1  Z-S61          DISCHARGED at Z-S64 this round: the brief's figure corrected at 2f66f338da
+                   citing both pins, with the superseded line recorded rather than erased.
+-1  Z-W13-S3       ITS REMEDY IS A PROPERTY OF THE CUT, NOT A CELL -- "name the composition module
+                   as a read surface in any future applicable issuance and explicitly record the
+                   present exception disposition. No producer-ID rewrite or worker recut is
+                   inferred." THIS ISSUANCE'S <paths> AND s.17c DISCHARGE IT.
+=  0 CELLS FROM THE REMEDY ROWS.
++1 CELL FROM THE ANALYSIS'S OWN RECOMMENDATION (s.6), which is not a remedy row and is stated as
+   the one remaining producer-side distance in the project.
+=  ONE CELL. REMAINDER ZERO BY CONSTRUCTION.
+```
+
+⚠ **AND THE DOMAIN WAS FALSIFIED BEFORE THE SUBTRACTION RAN.** The four OPEN rows are the slug's
+state field *as written*; two of them were closed between the write and this read -- `Z-S53`/`Z-S57`
+by the analysis and `Z-S61` by this seat. **A slug is a snapshot of a moving channel** (`Z-S64`), so
+the states above are read AT HEAD rather than trusted from the slug. The wider standing set -- this
+seat's 63 armed items -- is explicitly **NOT** this cut's domain and is carried, for the same reason
+`Z-S46`'s thirty was excluded at round 8.
+
+### 17b. The cell
+
+| cell | row / source | what it is |
+|---|---|---|
+| **`AMGT-rh-1`** | analysis s.6 | **THE SERVED ROUTE, LOCALLY, END TO END.** The component is proven and the ROUTE is not: nobody has loaded the actual page against the actual data. Round 7 measured the page joining **0 of 183**; round 8 repaired the join **at the component**. The distance between those two sentences is the last producer-side gap in this project. |
+
+**The bar is a RENDERED ROUTE, not a passing test** -- the analysis's own words. The page loads, the
+figures join on screen, a failed check is visibly marked, and the ranked panel renders and navigates.
+
+⭐ **`FWD-9` IS COVERED EXPLICITLY**, because it is the only outcome whose bar a served page alone can
+close -- it is the single `APPLIED` bar in a set of fifteen -- and it carries the thinnest coverage in
+the whole project at **one order**.
+
+### 17c. `Z-W13-S3` discharged by this issuance rather than by a cell
+
+The row: the order granted `lib/research/checkface/scopes.py` as "the producer's identity contract",
+but `scopes.py` declares only the scope VOCABULARY; the `figure_id` COMPOSITION lives in
+`run_checks.py:figure_id()`, which the grant did not name. The worker read it anyway, **disclosed
+that it had**, and stopped rather than widening silently.
+
+**This issuance names `lib/research/checkface/run_checks.py` in `<paths>` as a READ surface**, and
+**records the present exception disposition here**: the round-8 read was OUTSIDE its grant, the
+worker's disclosure is what makes it correctable rather than invisible, and **correct source
+grounding does not retroactively supply a grant**. No producer-ID rewrite and no worker recut is
+inferred, exactly as the remedy says.
+
+### 17d. Fan-out
+
+```
+fanout: 1 of 1 chains, cap 8
+```
+
+**M is measured and it is ONE.** There is one cell, so there is one chain and one worker. No portal
+sub-path grain question arises this round because no second cell competes for the submodule
+(`Z-S33`).
+
+### 17e. The drain contract
+
+Unchanged from s.16d and re-stated because it binds again: fetch the worker's portal branch into a
+**ref** so the objects survive teardown; run the **bogus-hash negative control**; then
+`branch -r --contains` with `e85f6eb84f` as the **firing positive control**; and **no round-9 drain
+moves the gitlink.** ⛔ **AND `Z-S60` ADDS ONE STEP TO THE PROBE, NOT THE DRAIN:** this round spawns
+into a **fresh** worktree, not a reused one, so plane (c) is not inherited -- and if a worktree is
+ever reused, artifact mtimes are compared against the **spawn time** with a wider window printed
+beside them.
+
+### 17f. The four-postulate record (Rule 24)
+
+- **(i) MECE over a DECLARED domain, BY SUBTRACTION:** s.17a subtracts from the four OPEN rows with a
+  printed denominator and a reason per exclusion; the arithmetic balances 2 discharged-by-analysis +
+  1 discharged-by-row + 1 discharged-by-cut = 4, plus one cell from the analysis's recommendation.
+  **The domain was falsified first:** the slug's state field was re-read AT HEAD because two of its
+  four had already closed.
+- **(ii) SAME GRAIN:** one cell, one route, one end-to-end exercise. It is deliberately NOT split into
+  page / figures / check-face / panel, because **the thing not yet proven is the ROUTE, and a route
+  split into components is the component evidence round 8 already produced.**
+- **(iii) INTENT COHERENCE, one axis:** *prove the assembled route renders against real data, locally,
+  with nothing promoted.*
+- **(iv) STATE COHERENCE -- what this remedy does NOT move:** it does not promote (FROZEN both
+  fabrics, **COMMIT YES / PROMOTE NO**, restated by Andrew twice at 03:21:46Z), does not move the
+  recorded gitlink, does not push any remote head, does not deploy, does not close `Z-W11-S1` or
+  `Z-W11-S2`, does not touch `Z-C-S49` (carried to this round by name as a CROSS-ROOT terraform
+  reference and **not cut**, because an IAM/table change is applied state whatever the file suffix
+  says), and does not close the 63 carried armed items, which are READ one at a time and never
+  screened.
+
+⛔ **NO ROUND-9 ARTIFACT MAY GRADE A PORTAL-DEPENDENT OUTCOME `REALIZED`.** `Z-S47`'s constraint
+stands unchanged: the portal evidence is reachable from **0 of 10** remote heads while the recorded
+gitlink `e85f6eb84f` is reachable from 1. Every portal-dependent outcome grades **EXERCISED**, never
+REALIZED, until the gitlink lands -- and **a local dev render is not a publish**, which is precisely
+why this cell is cuttable under the freeze at all.

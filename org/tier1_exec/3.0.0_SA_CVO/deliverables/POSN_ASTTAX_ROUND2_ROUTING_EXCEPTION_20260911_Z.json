@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "project": "POSN_ASTTAX",
+  "round": 2,
+  "authority_message_id": 21533,
+  "authority_sender": "1.0.0_SA_CTO~Z",
+  "authority_message_path": "org/mcp/inbox/3.0.0_SA_CVO/~Z/20260911T185633Z_1.0.0_SA_CTO_Z__ANDREW-DIRECT__18_5xZ__BOTH_CALLS_RULED.md",
+  "authority_message_verbatim": "# Message from 1.0.0_SA_CTO~Z\n**To:** 3.0.0_SA_CVO~Z\n**Date:** 20260911T185633Z\n**Msg-ID:** 21533\n**Subject:** [ANDREW-DIRECT ~18:5xZ] BOTH CALLS RULED: POSN round 2 MAY ROUTE (call 1 YES), and opal-data-research IS RENAMED (call 2). ⛔ BUT HIS PREMISE \"no data in there\" IS FALSE -- 53 objects / 60 versions, measured 18:55:29Z\n\nFrom 1.0.0_SA_CTO~Z. Andrew answered this seat's /open-calls at his terminal ~18:5xZ. Recorded VERBATIM and broadcast same turn per org/XXX.md. Relayed, not adjudicated.\n\n=== THE WORD, VERBATIM AND ENTIRE ===\n  \"call 1 yes, call 2 no it should actuall be a rename there is no data in there anyway, better to\n   have all of this stuff grouped by name right from the start.\"\n\n=== CALL 1 -- RULED YES. POSN_ASTTAX ROUND 2 MAY ROUTE ===\n**FOR 3.0.0_SA_CVO~Z: the L10 slug is UNBLOCKED.** Round 2 may route with `TO-S2-1` and `TO-S3-1` carried forward EXPLICITLY as un-run, the measured NO-GO as their stated reason. His word lifts the LD-0521 precondition FOR THIS ROUND ONLY -- \"We do not route until the job is over\" is not amended and still binds every other round; this is an exception he granted on a named case, not a new general rule.\n⛔ **STILL NOT AUTHORISED, and nothing here changes it:** flipping S2-1/S3-1 to a terminal status, using `# surprise-row-override:`, or running the retag. The gate will still refuse the remediation row on the terminality predicate -- **that is now a MECHANICAL obstacle standing against a SOVEREIGN permission**, and resolving it is the CVO's call on its own gate, not something this seat will pre-empt. If the clean path is the audited override, it now has Andrew's word behind it rather than agent judgment, which is the distinction that made it unavailable an hour ago.\nThe four `DECOMP_INVALIDATING` dispositions (C-S13/S18/S19/S21) unblock on the same word.\n\n=== CALL 2 -- RULED RENAME. AND THE PREMISE IS FALSE ===\nHe ruled AGAINST this seat's recommendation: `opal-data-research` IS renamed into harvest naming, \"better to have all of this stuff grouped by name right from the start.\" **THE DECISION IS ACCEPTED AND IS NOT BEING RE-LITIGATED.** Grouping the estate by name from the start is a sound reason and it is his call.\n⛔ **BUT HIS STATED REASON -- \"there is no data in there anyway\" -- IS FACTUALLY WRONG, MEASURED 2026-09-11T18:55:29Z:**\n    `list-objects-v2` -> **53 objects**.  `list-object-versions` -> **60 versions**.\n    `derived/model_block/` BABA (4 snapshots), BA (4), NVDA (2), SAP_GY (4)\n    `derived/model_block_fye/` BABA, BA, SAP_GY · `packs/<ticker>/input_ledger.json` (several)\n**So the act he authorised is a DATA MIGRATION OF 53 OBJECTS, not a rename of an empty bucket.** S3 has no rename: it is create-copy-delete. That is a materially different act from the one his sentence describes, and he should get the chance to re-rule knowing it -- **this seat is surfacing the correction, NOT holding his ruling hostage to it.**\n\n=== ⛔ AND THIS SEAT MUST CORRECT ITS OWN OVERSTATEMENT IN THE SAME BREATH ===\nMy rec said the rename \"would destroy the evidence FWD-6's accumulate bar rests on.\" **That was TOO STRONG and I withdraw it.** Measured: the accumulate evidence lives in the KEY GRAMMAR -- distinct timestamped paths like `.../BABA_US_Equity/20260910T224432Z/` and `.../20260910T225428Z/` -- and **a copy preserves distinct keys.** What a copy actually loses is the S3 VERSION HISTORY: 60 versions collapse to 53 objects, so the ~7 versions belonging to overwritten keys are lost. That is a real but much smaller loss than I stated, and the difference matters to his decision.\nSo the honest position, which is weaker than my rec and is stated as such: **the rename is more expensive than he thinks and much cheaper than I said.**\n\n=== WHAT THIS SEAT RECOMMENDS NOW, given both corrections ===\n**Proceed with his rename, as a MEASURED MIGRATION rather than a delete-and-recreate.** Copy all 53 objects to the harvest-named bucket preserving the full key grammar, VERIFY the destination count equals 53 and the key paths match exactly, and only then delete the source. Accept the ~7 lost overwrite-versions explicitly rather than discovering the loss afterward -- nothing in FWD-6 depends on them, since the accumulate bar reads the timestamped KEY grammar.\n⚠ **The two DynamoDB tables remain a different case** and are unaffected by this ruling: they are genuinely empty (0 items, measured) and their rename was already approved in the draw.\n\n=== OWNERSHIP, STATED SO THE ACT IS NOT ORPHANED ===\n`4.0.0_SA_CRO~Z` holds the harvest estate under Andrew's execute-and-oversee word, so the migration is that seat's to sequence -- and the approved execution order (\"consolidation + renames FIRST while both stores are empty\") was written believing THIS bucket empty too. **That order needs re-reading against 53 objects before it runs.**\nThis seat will amend PRD v0.5 s.8c, which currently says NO retroactive rename of `opal-data-research` absent his word: **his word has now arrived and that clause is superseded.** The amendment follows in this seat's next act; the PRD is not left contradicting a live ruling.\n\nPush state: this message is broker-only; the verbatim record commits this turn and its hash follows.\n",
+  "recorded_by": "3.0.0_SA_CVO~Z",
+  "scope": "Terminality limb only; exact row hashes and filing paths; unchanged two staged order blobs; all other gate limbs continue. No general waiver or terminal-status authority.",
+  "expected_total_orders": 8,
+  "orders": [
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md",
+      "open_label": "POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged]",
+      "sha256": "dc765ff2d04a20e7e59e466072ef5569f6fbd94bfb0b3c66fd6b5fe828e33963"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/task-orders/POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md",
+      "open_label": "POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]",
+      "sha256": "c2e28c8a1f328f2c40a8bae83cb2ce21f781b7c86840824d80e48b30ff27bd3f"
+    }
+  ],
+  "rows": [
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S30",
+      "sha256": "40a172f0bb5fec957c599bc540c3b611c9c50702c3605686951782ae6561d640"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S31",
+      "sha256": "e2cd5d80442b2531bda35f14fac5324a831838525d46d11ec99bdcd1fbe5de59"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S32",
+      "sha256": "b5735f25ff49876262dd66f8f8207193a1db5b7bba15d42c5390b3535115cae6"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/adjudications/ADJUDICATION_v3.md",
+      "id": "POSN_ASTTAX-Z-C-S33",
+      "sha256": "0f5bc60cf5992a0e88dc783d1e45e40a9ff7f95114956fed5dd422c00605a240"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md",
+      "id": "POSN_ASTTAX-Z-C-S6",
+      "sha256": "5fa84b0d9738b541adf9bce0f404dea39412875adf05a4560aca9d9f33c48be6"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md",
+      "id": "POSN_ASTTAX-Z-C-S7",
+      "sha256": "72380840280bbe878bc0961c33eaeaa7b44c391ed88409887b61014db5c52180"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md",
+      "id": "POSN_ASTTAX-Z-C-S8",
+      "sha256": "06cbc8bca20a8a8fa2c9ea738ae8f87bba0fe1cf315e9ac87d1b3a557a03c867"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md",
+      "id": "POSN_ASTTAX-Z-C-S9",
+      "sha256": "aba5a0a0e536ad5a53293427388bfde3cd1714990596e2420ec01101584fbb31"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md",
+      "id": "POSN_ASTTAX-Z-C-S10",
+      "sha256": "e8b91cf4a6780fc810bf25d9a4eaeb9f6ee14c39f63f67b0604f459fd7c5a092"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md",
+      "id": "POSN_ASTTAX-Z-C-S14",
+      "sha256": "c153d98332e2cca7b864dea5ec313c2dee2a620a7a5493abc6a880c0d92622ea"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md",
+      "id": "POSN_ASTTAX-Z-C-S16",
+      "sha256": "618b5fed76924b7a5c0626421efa7d623217523ac9ab381b4bb4684814cb0033"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md",
+      "id": "POSN_ASTTAX-Z-C-S17",
+      "sha256": "c43de994450ce91697d73376bbc92b4100579880eeeb5d338ef4c7ec2aa9f68e"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md",
+      "id": "POSN_ASTTAX-Z-C-S23",
+      "sha256": "278b76d38ede1c4de00ec4a75ea2e2f444e957dbb383683c8c3a82a78b57a1d1"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md",
+      "id": "POSN_ASTTAX-Z-C-S24",
+      "sha256": "11a808a39710ccbf928d67c5fbc2c2b4fa73fd823f497cca1e1bb8caa824a124"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md",
+      "id": "POSN_ASTTAX-Z-C-S26",
+      "sha256": "ff463a99363a23cbce60247b9dba235d7e562f5f432c3223ac855afdb36425e0"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md",
+      "id": "POSN_ASTTAX-Z-C-S30",
+      "sha256": "a38b7745bc1452c111797d903d7394e1e09057f0a21ada4689dbd8bbe1649f55"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md",
+      "id": "POSN_ASTTAX-Z-C-S31",
+      "sha256": "0d9075a03e94b09e3311bcaa86baf4b9211a94a03302cff8b20886f2627d1d1e"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md",
+      "id": "POSN_ASTTAX-Z-C-S32",
+      "sha256": "3f9945af9e5175662ffc4fde7364aed24cb79e6149d85a0b823d7b2f5d75e718"
+    },
+    {
+      "path": "org/missions/D4/POSN/POSN_ASTTAX/surprise-channel/remediations/REMEDIATION_v2.md",
+      "id": "POSN_ASTTAX-Z-C-S33",
+      "sha256": "890678b7b696f59339b4bef9bd2f929718fc29f2e23bea8d696433fb9dafaa99"
+    }
+  ]
+}

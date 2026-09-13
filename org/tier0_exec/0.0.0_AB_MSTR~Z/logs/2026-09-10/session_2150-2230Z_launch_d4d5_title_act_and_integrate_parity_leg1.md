@@ -249,3 +249,391 @@ act, never the gate's; surfaced so no served-key expectation sits on a gate that
 
 Both are the laptop's to act on; nothing on site Z waits. COO~Z verified its own four commits on origin
 by its own ls-remote read and held through the window with nothing pending.
+
+---
+
+## AMENDMENT 5 -- 05:4x-05:5xZ: the Cottonwood leg on Andrew's word, a refused merge that was a peer's staged set, and a real deploy of two mdpf gold scripts
+
+**archetype:** DEPLOY (integration) + COORDINATE
+
+**Andrew-direct at the laptop terminal ~05:3xZ**, relayed by `0.0.0_AB_MSTR` (bus ef105705-8d78-4d58-b576-f3f7dc794a69),
+verbatim: *"I need you to send this to MSTR~Z because the agents working on POSN_ASTTAX need to see it.
+THe Cottonwood satellites have key assets that should be included in ETFClassifier and so on and in that
+project and they are not ... The whole reason we are doing POSN_ASTTAX is to basically get these things
+included in Cottonwood's satellites in a clean visible manner, so this is crucial to get over to the sitez
+fabric CTO~Z"*. The laptop committed his file VERBATIM on CLOUD @3685cd9c1e at
+`org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_SOURCE_SATELLITE_COMPONENTS_20260911.md`; verified here
+from origin/CLOUD (20,286 bytes / 294 lines / sha256 ff96172b8e00b543) BEFORE the merge, and RELAYED to
+`1.0.0_SA_CTO~Z` and `2.0.0_SA_COO~Z` with the git-show command that reads it from origin/CLOUD so nobody
+waited on the index -- COO~Z had already said it would not spawn the POSN_ASTTAX worker until it read it.
+
+**The refused merge, and what it was:** `git merge --no-commit origin/CLOUD` returned rc=2 ("Merge with
+strategy ort failed") naming five `AMGT_RESAPP.TO-AMGT-r-*` task orders, no MERGE_HEAD created, nothing
+touched. `git diff --cached` showed exactly those five STAGED and none of them mine. Per the lesson banked
+earlier tonight: asked WHOSE (msg to `2.0.0_SA_COO~ZZZ`), did not reset, armed a background watcher on the
+index. COO~ZZZ answered: its round-2 issuance, staged by a safe-commit that L4-R (the new PRD-sign-off gate)
+REFUSED -- a blocked safe-commit leaves its diff staged -- and it unstaged them itself. Index clear after
+130 s; the retry merged clean (241 staged, 0 foreign). The orders stay untracked on disk by that lane's
+choice until the CRO/CVO sign-offs exist.
+
+**The leg:** origin/CLOUD @3685cd9c1e (+100, incl. Andrew Berman's own merge of SITEZ into CLOUD
+@757e347520 at 04:43Z) -> SITEZ @21f0b03d2f, overlap 0 of 275, portal gitlink e85f6eb84f taken as-is (on
+portal origin/DEV after a fetch -- the earlier dangling pointer is resolved on the laptop's side). Push
+rc=0, ls-remote read 21f0b03d2f, payload 109. Read from the remote 05:55:42Z: CLOUD-in-SITEZ YES; CLOUD
+lacks 13 (the laptop's leg).
+
+**A REAL DEPLOY, disclosed before and proven after:** the gate's own lines -- 4 paths in scope;
+`investor_reporting/holdings_snapshot.py` + its test SKIP-NOT-MEMBER (shared home, first-mint 404);
+`data/mdpf/scripts/gold/mdpf_gold_consolidator.py` (MODIFIED by `0.7.0_AE_CloudOps` @1465fd3f7d) and
+`data/mdpf/scripts/gold/tests/test_category_views_null_tail_guard.py` DEPLOYED to opal-data-mdpf --
+"2 deployed and verified; 2 SKIPPED". Both carry CLOUD's own bytes (overlap 0), so nothing was displaced;
+S3 LastModified moved on those two keys while the hash did not. The owner is on the laptop fabric and has
+it via the laptop MSTR (bus 1905fcb5): a timestamp-pinned acceptance on the consolidator (the CLOSED
+`mdpf-catviews-null-guard-goldrun` ledger @10b12c5293) reads a false drift after ~05:55Z.
+
+**Standing observation for the integrator:** L4-R is a NEW refusal source that leaves staged files
+behind on the shared tree; the "blocked safe-commit leaves your diff STAGED" class now has a second
+trigger, and an integrator's merge is where it surfaces. Cost of the right handling: one message and a
+two-minute wait. Cost of the reflex (`git reset`): a peer's five authored orders.
+
+---
+
+## AMENDMENT 6 -- 06:0xZ: two corrections, one the laptop's and one mine
+
+- **The laptop's Cottonwood hypothesis is WITHDRAWN** (LD-0550 Amendment 1): `2.0.0_SA_COO~Z` measured
+  the served `etf-classifications` table -- ETFClassifier is keyed by ticker, GLD/VXX/CLIP all resolve, the
+  name-prefix gap has no consumer. What is actually wrong is the TOP-LEVEL class (VXX served as equity,
+  GLD as hedge) while the sub-class already reads Gold / Volatility. The laptop's keeper line, credited:
+  **a finding shipped with its own falsifier gets killed fast; one shipped as an explanation gets built on.**
+  Andrew's "they are not included" is now a surfacing / joining / scope question for POSN_ASTTAX,
+  unencumbered by the wrong cause.
+- **My own warning in AMENDMENT 5 is WITHDRAWN as to the entry it named.** I wrote that a timestamp-pinned
+  acceptance on the CLOSED `mdpf-catviews-null-guard-goldrun` ledger @10b12c5293 would read a false drift
+  after the push. The laptop read the entry at both vintages and I re-read it here: 0 mentions of
+  opal-data-mdpf, 0 of LastModified, its two consolidator mentions are a git commit, its acceptances are
+  content-based. **I attached a correct class mechanism (a merge-triggered identical-bytes rewrite moves
+  LastModified) to a specific instance I inferred and had not read** -- the same shape as the hypothesis
+  the laptop withdrew, one layer smaller, and it was caught only because the laptop declined to relay a
+  warning unread. What survives: the class statement for the two rewritten keys under
+  `data/mdpf/scripts/gold/` (LastModified moved ~05:55Z, hash unchanged), with NO known instance. Corrected
+  to the laptop (bus) and to `2.0.0_SA_COO~Z` (who had repeated the line back) the same turn.
+
+---
+
+## AMENDMENT 7 -- 07:3x-07:4xZ: the GLD/VXX brief leg on Andrew's word, and a correction of my own relayed sentence
+
+**archetype:** DEPLOY (integration) + COORDINATE
+
+**Andrew-direct at the laptop terminal ~07:2xZ**, relayed by `0.0.0_AB_MSTR` (bus 199c7ba4-c578-415d-bdbd-db5868b6b12c),
+verbatim: *"Also i need this brief sent over to sitez, specifically to CTO~Z:
+docs\briefs\positioning-gld-vxx-satellites-20260911.md. They need to see this because this needs to get
+folded into the work on POSN_ASTTAX."* Author `0.4.0_DT_ClientPlatform`, amended @59481137f4. The laptop
+held the ferry ~20 minutes on his "wait" while DT was still editing; the pre-amendment version lacked
+conclusion 5 (the landmine). Verified here from origin/CLOUD: 18,673 bytes, sha256 224691618c899f96.
+Relayed to `1.0.0_SA_CTO~Z` and `2.0.0_SA_COO~Z` with the git-show command before the merge; merged
+origin/CLOUD @46f7e03df8 -> SITEZ @21401e7006 (overlap 1 of 160, DIRECTIVES.yaml on disjoint rows; 104
+staged / 0 foreign; nothing deployed; 14 live directives now render, malformed=0). Push rc=0, ls-remote
+read 21401e7006; the brief is in the tree at the verified hash. CLOUD lacks 40 (the laptop's leg).
+
+**The brief's substance, as the pointer for a later reader:** VXX is already in the Satellites toggle;
+GLD is absent by an allocation decision in Yang's model holdings, not an engineering gap; the Satellites
+toggle reads the MODELS payload, not the Bloomberg ETF pull, so the plan's premise does not hold; the fix
+is one DynamoDB field plus Yang's decision, in that order, because adding GLD to the models today
+KeyErrors the positioning generator on `management_style "unknown"` (187 of 285 registry rows; 0 of the
+30 held tickers) and blanks the page for four firms. Composes with COO~Z's 06:0xZ served-plane read: the
+classifications were never the problem; the answer differs per ticker.
+
+**A correction of my own sentence to Andrew (~06:1xZ):** I wrote "Its worker is executing" about the
+POSN_ASTTAX worker as fact. It was COO~Z's report relayed, and by the time I repeated it the order read
+`complete` and the round was drained. Andrew, at this device, saw nothing because a v3 worker is a
+subagent inside the COO's own session -- no window, no registration, no telemetry, its worktree removed
+at the drain. Measured after his question: one commit by `0.9.0_WK_POSN_ASTTAX~1` @6bed191b42, the order
+`complete`, CVO~Z's L10 stamp. Same shape as amendment 6, one line later: a relay stated as a measurement.
+
+---
+
+## AMENDMENT 8 -- 07:5x-08:2xZ: the first real Codex launch, its root cause, the seat up, and a stale number retracted
+
+**archetype:** DIAGNOSE + DEPLOY (device config) + SCRIBE
+
+- **Launch failure at `start-codex-seat.ps1:340`** ("%1 is not a valid Win32 application"): the npm global
+  install ships an extensionless POSIX `codex` beside `codex.cmd`/`codex.ps1`; `Get-Command` picks the
+  `.ps1` (so every earlier verification passed) but the launcher's `Start-Process` with output redirection
+  is raw CreateProcess, which takes the exact-name file and cannot execute a shell script. **Fixed with the
+  laptop's own mechanism:** `bun install -g @openai/codex@0.154.0` (pinned to the version Andrew installed
+  here; his npm install untouched) -> `.bun\bin\codex.exe`, placed ahead of `%APPDATA%\npm` on the user
+  PATH. Verified with the launcher's EXACT call shape on the registry PATH: exit 0, `codex-cli 0.154.0`;
+  `app-server --help` exit 0; negative control fails. One package install from the public registry under
+  Andrew's explicit word; reversible.
+- **Andrew relaunched: `3.0.0_SA_CVO~Z` is UP as a Codex seat** (app-server ws://127.0.0.1:50167, heartbeat
+  LIVE PID 34844, bridge bound 08:03:01Z, detector alive, inbox nudging). His word "I have CTO~Z running
+  now as a codex agent, tell CTO~Z and COO~Z that they are ready to resume their duties" relayed to both
+  with the measured state; the seat that exists is CVO~Z, CTO~Z remains the Claude session (record
+  `ANDREW_DIRECT_20260911_080xZ_CODEX_SEAT_UP_CTOZ_COOZ_RESUME_DUTIES.md`). The CTO's flagged "v0.5 sign
+  request QUEUED to a stale CVO~Z" hole closed by the seat's own bridge.
+- **Retracted: the version skew.** The laptop re-measured itself at 0.154.0 (upgraded 02:22 local after its
+  00:3xZ read); I carried "0.153.4 vs 0.154.0" forward in two records and this log. Both devices are 0.154.0
+  on the bun exe shim. The "starts but never routes turns" watch-item is dropped as a skew symptom.
+- **The night's shape, named by the laptop and true of my own checks:** `Get-Command` / `which` /
+  `GetEnvironmentVariable` answer "can something named codex be found"; the launcher asks "can CreateProcess
+  execute this file". A check that is not the consumer's own call is a different question answered
+  truthfully. Banked as the reason the launcher-shaped `Start-Process` test is now the only verification
+  this seat cites for the launcher.
+- Fabric-health class from `2.0.0_SA_COO~Z` (21293): a DELIVERED receipt decays silently when the recipient
+  restarts; routed to `1.0.0_SA_CTO~Z` as a one-line B.0 candidate with the shared root named (delivery
+  state lives only at the broker); banked in memory; not built.
+
+---
+
+## AMENDMENT 9 -- 09:2x-10:4xZ: C-S10 handed to its lane; the audit-archive device chain seeded on the CTO's ruling; one measured consequence held for the tool's steward
+
+**archetype:** VALIDATE + DEPLOY (repo state) + SCRIBE
+
+- **C-S10 (.gitignore `lib/`)**: measured (273 tracked files in 13 lib homes, 2 excepted; a new file in the cot gold
+  lib deploy home invisible to status), fixed and control-tested in place (a first attempt without venv rules
+  FAILED its own `.venv` control -- no venv rule existed anywhere; corrected), then the commit was REFUSED by the
+  owned-paths gate: `.gitignore` is lane BASE_EXEC. No override spent; patch + note handed at @f7c726c454;
+  `1.0.0_SA_CTO~Z` applied it @b750649397; verified from the bytes at HEAD and pushed. Disarm rides that commit.
+- **Audit archive, ACT 1 on 1.0.0_SA_CTO's ruling** (relayed by the laptop, bus 6337ff81): the invoker had
+  minted nothing in 533 hours on either device because `archive/<DEVICE>/` was never created. Seeded
+  `org/audit/archive/sitez/2026-08-20T042433Z/` byte-identical to the legacy baseline snapshot (17 of 17
+  sha256), wrote `sitez/.baseline` the invoker's own way (CRLF, 20 bytes), left the shared pointer untouched
+  (LF, 19 bytes here), verified trackability by `git status` (rule 497 is a negation; `check-ignore` misreads it).
+  Commit fcf093325f under GOVERNANCE_AUDIT. Invoker live: rc=1, 21 findings (7 ERROR-FAILCLOSED, 5
+  NON-APPEND-EDIT, 1 STALE-BASELINE -- expected while ACT 2 @83b202ed7b sits unpushed on the laptop),
+  **snapshot 2026-09-11T103259Z MINTED, 8 refreshed, 10 pinned**, self-commits 433017947f / c7fc28384b. All on
+  origin/SITEZ @15dd12638b. The deadlock is cleared.
+- **The consequence, measured and HELD (not fixed):** the 10 pinned files in the new snapshot are byte-identical
+  to the laptop-origin legacy copies, not to this device's live logs (git-author-override 92cfe6be==92cfe6be vs
+  live 0705faec, 469,740 bytes; agent-spawn f9d5077d vs live ead5b074; ledger-hook 384ecb51 vs live 543272c6),
+  while a refreshed log equals live. Site Z's device-local logs never descended from the laptop-origin baseline,
+  so detection flags them and the pin branch carries the baseline copy forward -- and after ACT 2 the per-device
+  pointer's pinned files are still laptop bytes, so the pins persist and this device's live audit logs are never
+  archived. Proposed to the steward via the laptop: a one-time CTO-ruled re-baseline of the sitez chain from
+  live bytes AFTER ACT 2 lands, or the invoker treating a fresh chain's first mint as a re-baseline. Doing it
+  before ACT 2 is pointless (the pin source is the shared baseline until then).
+- Also pushed this hour: AMGT_RESAPP round-2b drains and cuts, the CTO's self-drive tick, the CVO's C-S10 close.
+
+---
+
+## AMENDMENT 10 -- 10:4x-10:5xZ: the CTO's ruling on the audit-archive re-baseline, PARKED on a named condition -- successor, execute this verbatim
+
+**archetype:** SCRIBE (park record)
+
+`1.0.0_SA_CTO` ruled (laptop msg 95951, relayed by `0.0.0_AB_MSTR` on bus 1e9b8549-16df-48c6-8e37-26a4487ae819,
+10:45Z): (b) DURABLE is landed in `.tools/audit-archive-invoker.py` @6560583fd5 (782 lines; on top of ACT 2
+@83b202ed7b, 756 lines) -- a device chain whose only snapshot is the seeded copy of the shared legacy baseline
+mints its FIRST snapshot as a re-baseline (every log refreshed from that device's live bytes, nothing pinned)
+and writes `.rebaseline` inside the snapshot as the record; (a) THE REPAIR for a chain already seeded the wrong
+way (site Z) -- an operator marker `archive/<device>/.rebaseline-once` (its text = the reason) makes the NEXT
+mint a re-baseline and is consumed in that mint's own commit (`:486 marker.unlink()`, deletion committed via
+`:487`; verified at source by the laptop -- one-time by construction). Detection is untouched.
+
+**PARK CONDITION, measured at 10:5xZ and NOT MET:** origin/CLOUD @bed01b226a carries the invoker at 744 lines;
+`83b202ed7b` and `6560583fd5` are both NOT on origin/CLOUD (Andrew holds the laptop's push cadence). The
+marker limb does not exist on this device; writing the marker early does nothing. A background watcher on
+origin/CLOUD notifies this seat when 6560583fd5 lands.
+
+**THE RECIPE, verbatim from the ruling, for whoever holds this seat when the condition is met:**
+1. Run the leg that carries 6560583fd5 to SITEZ (a normal `/integrate` leg; confirm
+   `.tools/audit-archive-invoker.py` reads 782 lines and `git merge-base --is-ancestor 6560583fd5 HEAD` = YES).
+2. Write `org/audit/archive/sitez/.rebaseline-once` with EXACTLY this text (it becomes the permanent record
+   inside the snapshot):
+   `CTO ruling 2026-09-11 on MSTR 95950: chain seeded from the laptop-origin legacy root; re-baseline from this device's live bytes`
+3. Commit it on this serial via safe-commit (lane GOVERNANCE_AUDIT admits `0.0.0_AB_MSTR~Z`; proven @fcf093325f).
+4. Run `python .tools/audit-archive-invoker.py` LIVE **once, after 2026-09-11T22:32Z**. ⛔ THE TIMING TRAP: the
+   12-hour snapshot interval check (`:424`, "newest <ts> is < 12.0h old") runs BEFORE the marker is read
+   (`:435`); the newest site-Z snapshot is 2026-09-11T103259Z, so a run before ~22:32Z SKIPs, does not consume
+   the marker and does not re-baseline. A skip before then is CORRECT, not a failed repair -- do not loop, do not
+   hand-edit.
+5. Report the mint line. It MUST read re-baseline with **0 pinned**. Any non-zero pin count is a finding to
+   stop on and report, not a retry.
+⛔ Nothing in any snapshot directory is hand-edited; the repair is the marker plus one live run.
+
+**Attribution as the CTO recorded it:** the instruction was the CTO's ruling (95944) before it was the laptop's
+relay; the laptop holds the recipe's file-count-vs-content-provenance half; this seat's contribution was
+executing and then MEASURING (the three sha256 triples). The laptop needs no marker (its seed was its own
+history: 19 refreshed / 0 pinned, closure bar 7 of 7).
+
+---
+
+## AMENDMENT 11 -- 11:2x-11:5xZ: a wedged COO~Z diagnosed from its own transcript, one wrong PID caught before the kill, the kill and respawn, and the Huntress leak identified
+
+**archetype:** DIAGNOSE + DEPLOY (population) + SCRIBE
+
+**The escalation** (`1.0.0_SA_CTO~Z` msg 21341, 11:22Z): POSN_ASTTAX round 2 halted; `2.0.0_SA_COO~Z` LIVE
+on the broker but 2 of 2 messages OFFER-EXHAUSTED, summary frozen, 7 authored task orders untracked on disk,
+no workers. Ask: restore the seat.
+
+**Diagnosis, measured before touching anything:** its session transcript (id e8df5b2d..., bypassPermissions
+mode -- so not a permission prompt) ends at 09:04:33Z with an assistant Bash `tool_use` -- its own Rule-14b
+isolation step, `git worktree add -b coo-posn-l6r2 ".../Desktop/wk-coo-posn-l6r2"` -- and NO tool_result;
+the only later entry is a `queue-operation` at 10:53:46Z. On disk: no worktree, no branch, no index.lock, no
+git process. Under its real claude.exe (14924): four MCP server children and one session-start bash chain,
+NOTHING for the 09:04Z call. A tool call wedged inside the harness with nothing external to kill.
+
+**Two of my own misreads, both caught by a second read before they became acts:**
+1. At 11:33Z I named PID 30860 as COO~Z ("hook chains spawning every ~10 s under it"). Process truth with the
+   serial EXTRACTED and compared exactly: 30860 is `2.0.0_SA_COO~ZZZ`, alive and draining AMGT (hooks fire per
+   tool call). COO~Z is 14924. Had I killed by the first read, the healthy seat would have died. Corrected to
+   the CTO at 11:43Z; the kill script matches the claude.exe by serial, which is what actually landed it.
+2. At 11:46Z the transcript's mtime moved to 11:45:58Z and I read "un-wedged". Entry count unchanged (2477),
+   last line unchanged -- a fourth queued message had touched the file. **A modification time is not
+   progress; the entry count and the last entry are the discriminator.** Caught before standing down.
+
+**The act** (`/mstr-kill` then `/mstr-spawn`, both my primitives): Andrew was given the one-keypress
+alternative by push notification at 11:33Z and a 15-minute window; two background waits on the transcript
+were reaped by the harness for low memory; no keypress landed. `kill-agent.ps1 2.0.0_SA_COO~Z` at 11:48:11Z
+-> "terminated 2.0.0_SA_COO~Z (claude pid 14924)"; verified after: 14924 and its MCP server gone, 30860 /
+13720 / 16456 / this seat alive, 0 claude.exe carrying the serial; KILL audit line written with msg 21341
+cited. The 7 orders verified present on disk after the kill (7 of 7). `spawn-agent.ps1 2.0.0_SA_COO~Z` at
+11:49:18Z -> pid 47332, host 46744, marker-tracked (cap 2 of 20), startup hint "run /watcher, then read the
+[SPAWN-DIRECT] message from 0.0.0_AB_MSTR~Z before any other act". The full re-orient (7 untracked orders,
+decomp v0.5 @2b07a34314, L4-R ADMITTED @9a2e542c0b, C-RETAG-SAFETY order S6 -> S7 -> S2, the four not-yet-read
+message ids, the worktree-add shape that wedged the predecessor) is sent by broker on registration, not
+before, so it cannot OFFER-EXHAUST against the dead PID.
+
+**A tooling gap for the skill's steward:** `/mstr-kill` Step 4 says the caller deregisters the serial;
+`deregister_agent` answered "Denied: only CTO/COO can deregister agents. Caller: 0.0.0_AB_MSTR~Z". The stale
+entry ages out by heartbeat and is replaced by the new session's registration; the step as written cannot be
+executed by MSTR.
+
+**The memory condition, identified:** 63.5 GB total, 4.0-4.7 GB free (6-7 %), commit 89 of 96 GB. `Rio.exe`
+5380 (SYSTEM, path/vendor blank to this user) holds 40 GB. The laptop identified it from LD-0255: **Huntress
+EDR's core process, a recorded leaker on this estate**; `C:\Program Files\Huntress` exists here and not on the
+laptop, which is the device difference. The laptop's hypothesis that the wedged seat was feeding the leak
+through process churn was FALSIFIED here by its own falsifiers: COO~Z had zero process activity (the churn was
+COO~ZZZ's normal tool calls); Rio's working set 40,133 -> 40,152 -> 40,180 MB across 11 minutes (~4 MB/min,
+flat); Rio's parent created at boot, 33 h before the wedge. Not touched (SYSTEM, IT/vendor-managed, LD-0255
+alternative (a) rejected); Andrew has the numbers by push notification; the July escalation path applies.
+
+## AMENDMENT 12 -- 12:1x-12:3xZ: the BG seat's thread record swept twice, its roster instruction landed at three layers, the rename trap banked; the Rio leak re-measured at a different number and NOT flipped
+
+**The BG thread, closed on the seat's terms.** `0.0.3_BG_BBGTerminal` msgs 21355/21356 (both acked): my first
+sweep @2d8b5f7314 carried the 11:5xZ blob, and my sentence "the F2 update is in that blob" was an inference across
+a seconds-wide window, falsified by the seat's `git show` of the pushed blob beside a positive control (0 hits on
+three section titles; control 1). Second sweep @3f8aff81bd, on origin/SITEZ (ls-remote read). The durable home
+for "a capability roster is a self-report -- serve it only after exercising it" was the seat's to route and mine to
+decide: landed @2bdb49798c, on origin (ls-remote read), in the three-layer shape of @00b47a90c4 --
+`refs/TEAMS_DUTY.md` Reply norms (the mechanism, cost, non-application and the measured 22-day incident),
+`prompt.md` hard line (imperative), `bbg-teams-assist` SKILL step 4 (procedure); one carrier, two pointers.
+THREAD.md row 5 left to the seat, with the reason: `bg-concierge-gate.sh:148/:152` list `threads/` as writable
+and the enumerate over that file has no THREAD.md carve-out (11 hits, 0 naming THREAD.md), and rows 1-4 are in
+the seat's own voice; 21355 said the opposite, so I asked for the measured refusal rather than acting on the
+claim. Memory `a-rename-reads-as-an-add-under-diff-filter-a` banked (the seat cannot write memory, by fence);
+it also corrects the baseline pin in an older memory. Reply to the seat 12:30:05Z, 4,788 bytes delivered.
+
+**The Rio leak, re-taken at a different number and NOT flipped.** `2.0.0_SA_COO~Z` msg 21358 (acked): free
+4.1 -> 1.9 GB and Rio WS 39.54 -> 43.17 GB across 11:55Z-12:20Z. My own read at 12:26:57Z with a DIFFERENT
+instrument (`Win32_PerfFormattedData_PerfOS_Memory` + `PrivateMemorySize64`): available 2.2 GB, commit 93.1 of
+108.1 GB (the pagefile has grown to 45.7 GB allocated, 7.1 GB in use), Rio pid 5380 WS 43.3 GB / private
+54.5 GB. **Amendment 11's "~4 MB/min, flat" was true over its 11-minute window at ~11:4xZ, and that window was
+not representative** -- two seats now measure 5-9 GB/h. At that rate the commit limit is ~1.7 h away, after
+which every site-Z session is exposed to the OOM-kill wedge. The not-touch decision is a CLASS decision (SYSTEM,
+vendor-managed; LD-0255 alternative (a) rejected; LD-0255 names IT-side remediation as "outside fabric
+authority to act on unilaterally") and does not turn on the number, so it stands. The re-take is Andrew's:
+push-notified 12:2xZ with the numbers and the two options (Huntress agent restart; box reboot, which wipes the
+fabric and nothing respawns); the laptop MSTR told over the bus (MessageId
+ddf409e4-cc21-4504-aa7e-c21ee93e28aa, unacked at write time). Fabric-side until his word: no spawns from this
+seat, sparse worktrees, commit early. COO~Z's "0.0.0_AB_MSTR~Z holds pushes" for @f60de462ae answered: it rode
+the 12:1xZ push (`is-ancestor` of origin/SITEZ = YES after a fresh fetch). Reply 12:30:26Z, 3,620 bytes delivered.
+
+**Push state at the close of this amendment:** origin/SITEZ @2bdb49798c (ls-remote read 12:2xZ); this
+amendment's own commit follows it.
+
+## AMENDMENT 13 -- 12:3x-12:4xZ: the BG thread closed on the seat's F3, two clauses folded into the roster mechanism, the Rio gauge changed, the v0.4 PRD pushed
+
+**BG, sweeps three and four.** `0.0.3_BG_BBGTerminal` wrote THREAD.md row 5 itself and cut the daily file's
+full text to a pointer (@4513ed216d) after measuring that its own "THREAD.md is outside my fence" was
+invented -- `bg-concierge-gate.sh:152` permits `threads/` with no carve-out, and the write went through on
+the first attempt. Banked as memory `a-reported-fence-is-not-a-measured-fence`. Then F3 (msg 21369): the
+seat pointed the new instruction at its OWN 12:05Z corrected roster and found two buckets (SharePoint,
+YCharts) read off the seed inside the message that corrected the map-read; SharePoint exercised 12:37Z
+(refused), YCharts left READ-NOT-MEASURED because exercising it is a vendor call. Swept @b359fa84dd.
+Two calls the seat routed to me, decided and landed at the one carrier (`refs/TEAMS_DUTY.md` Reply norms,
+@84e4dfddcb): the rule's first application is BACKWARDS, to the roster last served; and READ-NOT-MEASURED
+with its reason is a LEGAL row, because a value must carry its claim and "inferred, and here is why" is a
+claim the reader can reject on. Seat folder: 0 dirty paths after the push.
+
+**Rio, the gauge.** The laptop (bus 8cc91ee9) pointed out that my two samples disagreed about the series:
+WS +0.08 GB while commit +0.6 GB over ten minutes, and Rio's private bytes already 11.3 GB above its WS --
+the OS trims working sets under pressure, so a WS trend FLATTENS as the box gets worse. Taken: this seat
+trends COMMIT CHARGE against the 108.1 GB limit and Rio PRIVATE bytes from here. 12:42:34Z: commit 93.6,
+headroom 14.5 GB, available 1.2 GB, Rio private 54.81 GB. The 1.7 h planning figure stands (private growth
+is commit growth). LD-0255 Amendment 2 @58b05f5506 (laptop) carries site Z's row and withdraws the laptop's
+"flat" reading, which was Amendment 11's here too: three samples inside one trough. Andrew push-notified from
+both terminals; not touched; nothing spawned.
+
+**Integrator cadence.** `1.0.0_SA_CTO~Z`'s AMGT_RESAPP v0.4 PRD on Andrew's "Recs approved" (msg 21368)
+pushed @bbbf35c38e; `4.0.0_SA_CRO~Z`'s coverage-half sign @1b7a996c86 rode the next push. origin/SITEZ
+@84e4dfddcb (ls-remote read 12:4xZ). Audit-archive re-baseline still PARKED: `6560583fd5` not fetchable
+from origin/CLOUD (tip bed01b226a at 12:4xZ).
+
+## AMENDMENT 14 -- 13:3xZ: ANDREW-DIRECT "have everyone take /log of current state and ill reboot this device" -- the seat's /log, written for a successor with no context
+
+**The order.** Andrew-direct at this terminal ~13:3xZ, verbatim above; record
+`deliverables/ANDREW_DIRECT_20260911_133xZ_EVERYONE_LOG_CURRENT_STATE_DEVICE_REBOOT.md`. Broadcast same turn to
+the six seats the site-Z broker listed LIVE or last-live (`1.0.0_SA_CTO~Z`, `2.0.0_SA_COO~Z`, `2.0.0_SA_COO~ZZZ`,
+`3.0.0_SA_CVO~Z`, `4.0.0_SA_CRO~Z`, `0.0.3_BG_BBGTerminal`): log, commit, reply LOGGED @hash, no new work. The
+device at the order: 0.2 GB free, 100% load, Rio WS 43.56 GB (COO~Z msg 21379, 13:35Z) -- the box is AT the
+commit wall, not 1.7 h from it; Rio's own growth flattened and the last headroom went to other work.
+
+**STATE AT CLOSE, this seat.**
+- Push: origin/SITEZ @015b7e3892 at 12:47Z (ls-remote read); further pushes follow each seat's log commit and
+  are stated in amendment 15 if one is written before the reboot. Nothing of this seat's is LOCAL-only after
+  this amendment's own commit and push.
+- Parity: LEG-OUTSTANDING (the laptop's leg; CLOUD tip bed01b226a at 12:4xZ lacks site Z's commits since its
+  last merge). Not a defect; the laptop merges SITEZ on its cadence.
+- Audit-archive re-baseline: PARKED. Condition: `6560583fd5` (CTO's invoker fix, on top of `83b202ed7b`)
+  fetchable and on origin/CLOUD. Then: amendment 10 verbatim -- write
+  `org/audit/archive/sitez/.rebaseline-once` with the exact text `CTO ruling 2026-09-11 on MSTR 95950: chain
+  seeded from the laptop-origin legacy root; re-baseline from this device's live bytes`, commit on this serial
+  (lane GOVERNANCE_AUDIT), ONE live run of `python .tools/audit-archive-invoker.py` after 2026-09-11T22:32Z; the
+  mint line must read re-baseline with 0 pinned, non-zero = finding, stop. The watcher Monitor that carried the
+  park dies with this session; the successor re-checks the condition by hand at launch.
+- Rio.exe: NOT touched, by class (SYSTEM, vendor-managed, LD-0255 alt (a) rejected). The reboot resets the leak;
+  the first post-boot commit-charge reading is the new baseline, and the gauge to trend is COMMIT CHARGE vs
+  LIMIT plus Rio PRIVATE bytes, never working set (laptop bus 8cc91ee9; LD-0255 Amendment 2 @58b05f5506 on the
+  laptop carries site Z's row).
+- BG roster thread: CLOSED; instruction at `refs/TEAMS_DUTY.md` Reply norms bullet 2 (+ prompt.md, SKILL
+  step 4) @2bdb49798c and @84e4dfddcb; seat folder clean at 12:47Z. Andrew's 06:44Z attachment to the seat
+  stays unserved and his.
+- Codex launcher: `ajb2 <serial>` works on this device (profile dot-source; bun `codex.exe` ahead of the npm
+  shim on the user PATH); `1.0.0_SA_CTO~Z` and `3.0.0_SA_CVO~Z` ran as codex seats this session.
+- Messages: every inbox message opened this session is acked; none unanswered. Last bus MessageIds to the
+  laptop: ddf409e4, 3cd7db47, 34ed815b (all acked by `0.0.0_AB_MSTR`).
+
+**WHAT THE SUCCESSOR MSTR~Z DOES AT LAUNCH (after Andrew relaunches it -- nothing respawns on its own):**
+`/watcher` -> `/agentbus` -> `org/XXX.md` startup -> `git fetch` + `merge --ff-only origin/SITEZ` -> read this
+amendment -> re-check the audit park condition -> take the post-boot memory baseline -> census which seats
+Andrew relaunched (1pt process truth, never the broker alone) and hand each its own last log; spawn nothing
+without his word except by `/mstr-spawn` on its own charter.
+
+## AMENDMENT 15 -- 13:4xZ: the /log census before the reboot, the Rio evidence persisted to the Desktop on Andrew's word
+
+**Second Andrew-direct, same terminal, mid-turn, verbatim:** *"also persist a log of huntress rio leak onto
+desktop oonce youre done with log, i want to have evidence of this"*. Done after the log commit @a335612060:
+`C:/Users/Opal Bloomberg/Desktop/HUNTRESS_RIO_MEMORY_LEAK_EVIDENCE_2026-09-11.md` (8,124 bytes: machine,
+process identity, the full measured series with instruments and seats, the workload consequences, the laptop
+control row, the decision trail, what IT would need) and `HUNTRESS_RIO_LEAK_RAW_2026-09-11.txt` (94,509 bytes:
+the vendor's `version.log`, `Rio.state`, agent/updater state files, the last 120 lines of `rio.log`,
+`HuntressAgent.log` and `hUpdate.log`, the full `Get-Process` object for pid 5380, the memory counters, the
+pagefile row, every process by private bytes). Both outside the repo, by his word. New facts from the evidence
+pass: Rio is **0.7.77**, `Rio_0.7.77.msi` dated 2026-08-24 21:26Z with its install log a minute later; pid 5380
+was started by `services.exe` 44 s after boot; `tasklist /svc` binds it to no named service; at 13:43:24Z it
+held **55.31 GB private / 43.65 GB working set / 89.6 GB virtual, 955 handles, 62 threads** after 31.4 h of
+uptime, while the box's commit charge had fallen to 89.5 GB (other work released memory; Rio did not).
+
+**The /log census, denominator 6 seats addressed (5 DELIVERED, BG QUEUED then answered):**
+| seat | LOGGED | on origin |
+|---|---|---|
+| `4.0.0_SA_CRO~Z` | @c187072692 | yes |
+| `1.0.0_SA_CTO~Z` | @1d36e8df4c | yes |
+| `2.0.0_SA_COO~Z` | @23783dd2b6 (waves 2-4 PARKED; tree clean) | yes |
+| `2.0.0_SA_COO~ZZZ` | @b8386bea24 (SURFACE round parked on the CVO sign) | yes |
+| `0.0.3_BG_BBGTerminal` | @72aeee47ce -- committed ON ITS OWN SERIAL: the seat CAN commit and cannot push; "no git lane" was its own unmeasured claim, the third self-reported fence of its day (memory widened) | yes |
+| `3.0.0_SA_CVO~Z` (codex) | NO REPLY at 13:4xZ; no commit on its serial since 13:30Z; nudged once more directly. Its owed acts (v0.4 ratified-text sign; round-4 L8/L9/L10) are recorded in the CTO~Z and COO~ZZZ logs, so the reboot does not wait on it | -- |
+origin/SITEZ @72aeee47ce (ls-remote read 13:4xZ) = local HEAD at that read. Laptop told (bus 75c33fb2, acked
+f7a945c4 "GO DOWN CLEAN"; final frame 18dd87f2 sent). The laptop asks the relaunched MSTR~Z for Rio's post-boot
+private bytes and the box's commit charge shortly after boot and again an hour or two in -- the missing arm of
+LD-0255 (does a reboot reset the leak and it re-accumulates on a schedule).

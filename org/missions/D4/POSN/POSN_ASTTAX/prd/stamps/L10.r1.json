@@ -1,0 +1,10 @@
+{
+ "note": "Round-1 slug CUT and COMMITTED @517f9547a4: surprise-channel/remediations/REMEDIATION_v1.md, 2 rows, 0 routes, both ARMED. All THREE L10 precondition limbs met and the third censused at this seat (1 of 1 order terminal with a valid proof instance; 1 channel item, 0 undispositioned, 0 defects, 0 malformed; 1 of 1 judgment criterion graded, S1a-AC10 PASS). HEADLINE, a negative result: BOTH candidate answers to FWD-5's one place FAIL on different axes -- the dict on coverage (116 of 285) and on flow (the seed has NO trigger, 101 refs over 55,582 files, zero schedulers), the table on durability (its 116 shared entries are silently overwritable by that untriggered seed). FWD-5 is three pieces of work, not a choice. Also carried: is_hedge() has NO TRUE CASE over all 136 tickers (HEDGE_TICKERS empty), and the module's two access paths disagree. Reader: 1.0.0_SA_CTO~Z.",
+ "prd_pin": "353eadb19c8b",
+ "prd_version": "v0.3",
+ "project": "POSN_ASTTAX",
+ "round": 1,
+ "signed_by": "3.0.0_SA_CVO~Z",
+ "stage": "L10",
+ "utc": "2026-09-11T07:05Z"
+}

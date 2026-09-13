@@ -1,0 +1,37 @@
+diff --git a/infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py b/infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py
+index d489a61071..01b2005690 100644
+--- a/infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py
++++ b/infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py
+@@ -88,11 +88,12 @@ NAME_CORRECTIONS: dict[str, str] = {
+     # FXFXX drops a FABRICATED maturity date -- a money-market fund has none.
+     "SALXX": "State Street U.S. Government MMKT",
+     "FXFXX": "First American Treasury Obligations Fund",
+-    # The DERIVED NAV-residual line this estate emits for issuers that do not itemize their cash.
+-    "CASH": "Cash & Other Assets",
+-    # The issuer-REPORTED equivalent. Kept distinct from CASH on purpose: one is a row we were
+-    # given, the other one we derived, and the ticker is the only thing that still says which.
+-    "CASH&OTHER": "Cash & Other",
++    # THE ONE CANONICAL CASH LINE, identical in every book (Andrew-direct 2026-08-25: "it should
++    # always be managed the same way: Fixed Income for Asset Class, Ultra Short Duration for Sub
++    # Asset, CASH for ticker, and Cash & Cash Equivalents for Name"). The producer normalises BOTH
++    # the derived residual row and the issuer sentinel onto this ticker, so CASH&OTHER no longer
++    # reaches the served artifact and needs no row here.
++    "CASH": "Cash & Cash Equivalents",
+ }
+ 
+ # THE ONE CORRECTION THAT IS A RULE, NOT A ROW.
+@@ -220,7 +221,13 @@ def main() -> int:
+     wrote = 0
+     with table.batch_writer() as batch:
+         for r in creates + updates:
+-            batch.put_item(Item={k: v for k, v in r.items() if v is not None})
++            # DROP EMPTY VALUES, NOT JUST None. `sub_asset_class` backs a GSI
++            # (sub-asset-class-index) and DynamoDB REFUSES an empty string for an indexed key
++            # attribute -- measured: ValidationException on the first real write. An ABSENT
++            # attribute is valid; the item simply does not appear in that index, which is the
++            # correct outcome for a security we could not classify. Writing "" to make the
++            # shape uniform is what the table itself rejects.
++            batch.put_item(Item={k: v for k, v in r.items() if v is not None and v != ""})
+             wrote += 1
+     print("\nWROTE %d item(s) to %s" % (wrote, TABLE))
+     return 0

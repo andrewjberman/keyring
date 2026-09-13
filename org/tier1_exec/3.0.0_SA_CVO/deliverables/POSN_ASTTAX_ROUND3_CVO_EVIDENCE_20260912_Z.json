@@ -1,0 +1,1269 @@
+{
+  "utc": "2026-09-12T00:16:56.581013+00:00",
+  "head": {
+    "rc": 0,
+    "stdout": "3c73d946e3e5633c489cc2b3c0a31571cd9f6ed6\n",
+    "stderr": ""
+  },
+  "source_pin": "3ce0c0e372",
+  "portal_pin": "e85f6eb84f",
+  "limits": "No live AWS read/write, deploy, retag, portal build or DOM exercise. Synthetic generator inputs; downloaded zip provenance is worker-recorded, digest independently checked.",
+  "generator_bytes": {
+    "source": {
+      "bytes": 115411,
+      "sha256": "4956d9a345280a2543ff9db8820bcf81e2c1447b12b479fdd3ed1fb7a373d5bc",
+      "md5": "96aedb53a9fcac4151517028c72ded42"
+    },
+    "downloaded": {
+      "bytes": 94164,
+      "sha256": "b49f8dbb0536e22cc67cd76ed301a1f9cc61878cdd452bcf97c47af76d92e361",
+      "md5": "cc79aff7506f8c39e17453f386c69551"
+    },
+    "downloaded_path": "C:\\tmp\\wk-posn-t5\\.scratch\\yang-generate-positioning.DEPLOYED.zip"
+  },
+  "generator_arms": [
+    {
+      "arm": "pinned_source",
+      "ticker": "DBC",
+      "candidate_target": "Commodities",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Hedge",
+          "lg": 0,
+          "alloc": 0,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Hedge": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        },
+        "after": {
+          "label": "Commodities",
+          "lg": 0.025,
+          "alloc": 2.5,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Commodities": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        }
+      }
+    },
+    {
+      "arm": "pinned_source",
+      "ticker": "GLD",
+      "candidate_target": "Commodities",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Hedge",
+          "lg": 0,
+          "alloc": 0,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Hedge": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        },
+        "after": {
+          "label": "Commodities",
+          "lg": 0.025,
+          "alloc": 2.5,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Commodities": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        }
+      }
+    },
+    {
+      "arm": "pinned_source",
+      "ticker": "GSG",
+      "candidate_target": "Commodities",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Hedge",
+          "lg": 0,
+          "alloc": 0,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Hedge": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        },
+        "after": {
+          "label": "Commodities",
+          "lg": 0.025,
+          "alloc": 2.5,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Commodities": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        }
+      }
+    },
+    {
+      "arm": "pinned_source",
+      "ticker": "IAU",
+      "candidate_target": "Commodities",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Hedge",
+          "lg": 0,
+          "alloc": 0,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Hedge": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        },
+        "after": {
+          "label": "Commodities",
+          "lg": 0.025,
+          "alloc": 2.5,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Commodities": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        }
+      }
+    },
+    {
+      "arm": "pinned_source",
+      "ticker": "SLV",
+      "candidate_target": "Commodities",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Hedge",
+          "lg": 0,
+          "alloc": 0,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Hedge": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        },
+        "after": {
+          "label": "Commodities",
+          "lg": 0.025,
+          "alloc": 2.5,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Commodities": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        }
+      }
+    },
+    {
+      "arm": "pinned_source",
+      "ticker": "USO",
+      "candidate_target": "Commodities",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Hedge",
+          "lg": 0,
+          "alloc": 0,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Hedge": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        },
+        "after": {
+          "label": "Commodities",
+          "lg": 0.025,
+          "alloc": 2.5,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Commodities": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        }
+      }
+    },
+    {
+      "arm": "pinned_source",
+      "ticker": "VIXY",
+      "candidate_target": "Structured",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Hedge",
+          "lg": 0,
+          "alloc": 0,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Hedge": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        },
+        "after": {
+          "label": "Structured",
+          "lg": 0.025,
+          "alloc": 2.5,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Structured": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        }
+      }
+    },
+    {
+      "arm": "pinned_source",
+      "ticker": "VXX",
+      "candidate_target": "Structured",
+      "input_weight": 0.015,
+      "readings": {
+        "before": {
+          "label": "Equity",
+          "lg": 0,
+          "alloc": 0,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.615,
+            "Fixed Income": 0.385
+          },
+          "grand": 1.0,
+          "two": 1.0
+        },
+        "after": {
+          "label": "Structured",
+          "lg": 0.015,
+          "alloc": 1.5,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.385,
+            "Structured": 0.015
+          },
+          "grand": 1.0,
+          "two": 0.985
+        }
+      }
+    },
+    {
+      "arm": "pinned_source",
+      "ticker": "UVXY",
+      "candidate_target": "Structured",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Equity",
+          "lg": 0,
+          "alloc": 0,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.625,
+            "Fixed Income": 0.375
+          },
+          "grand": 1.0,
+          "two": 1.0
+        },
+        "after": {
+          "label": "Structured",
+          "lg": 0.025,
+          "alloc": 2.5,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Structured": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        }
+      }
+    },
+    {
+      "arm": "pinned_source",
+      "ticker": "QBER",
+      "candidate_target": "Structured",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Fixed Income",
+          "lg": 0,
+          "alloc": 0,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.4
+          },
+          "grand": 1.0,
+          "two": 1.0
+        },
+        "after": {
+          "label": "Structured",
+          "lg": 0.025,
+          "alloc": 2.5,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Structured": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        }
+      }
+    },
+    {
+      "arm": "pinned_source",
+      "ticker": "PDBC",
+      "candidate_target": "Commodities",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Equity",
+          "lg": 0,
+          "alloc": 0,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.625,
+            "Fixed Income": 0.375
+          },
+          "grand": 1.0,
+          "two": 1.0
+        },
+        "after": {
+          "label": "Commodities",
+          "lg": 0.025,
+          "alloc": 2.5,
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge",
+            "structured",
+            "commodities",
+            "alternatives"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Commodities": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        }
+      }
+    },
+    {
+      "arm": "worker_downloaded",
+      "ticker": "DBC",
+      "candidate_target": "Commodities",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Hedge",
+          "lg": 0,
+          "alloc": "<ABSENT>",
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Hedge": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        },
+        "after": {
+          "RAISED": "KeyError: 'Commodities'"
+        }
+      }
+    },
+    {
+      "arm": "worker_downloaded",
+      "ticker": "GLD",
+      "candidate_target": "Commodities",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Hedge",
+          "lg": 0,
+          "alloc": "<ABSENT>",
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Hedge": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        },
+        "after": {
+          "RAISED": "KeyError: 'Commodities'"
+        }
+      }
+    },
+    {
+      "arm": "worker_downloaded",
+      "ticker": "GSG",
+      "candidate_target": "Commodities",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Hedge",
+          "lg": 0,
+          "alloc": "<ABSENT>",
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Hedge": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        },
+        "after": {
+          "RAISED": "KeyError: 'Commodities'"
+        }
+      }
+    },
+    {
+      "arm": "worker_downloaded",
+      "ticker": "IAU",
+      "candidate_target": "Commodities",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Hedge",
+          "lg": 0,
+          "alloc": "<ABSENT>",
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Hedge": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        },
+        "after": {
+          "RAISED": "KeyError: 'Commodities'"
+        }
+      }
+    },
+    {
+      "arm": "worker_downloaded",
+      "ticker": "SLV",
+      "candidate_target": "Commodities",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Hedge",
+          "lg": 0,
+          "alloc": "<ABSENT>",
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Hedge": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        },
+        "after": {
+          "RAISED": "KeyError: 'Commodities'"
+        }
+      }
+    },
+    {
+      "arm": "worker_downloaded",
+      "ticker": "USO",
+      "candidate_target": "Commodities",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Hedge",
+          "lg": 0,
+          "alloc": "<ABSENT>",
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Hedge": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        },
+        "after": {
+          "RAISED": "KeyError: 'Commodities'"
+        }
+      }
+    },
+    {
+      "arm": "worker_downloaded",
+      "ticker": "VIXY",
+      "candidate_target": "Structured",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Hedge",
+          "lg": 0,
+          "alloc": "<ABSENT>",
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.375,
+            "Hedge": 0.025
+          },
+          "grand": 1.0,
+          "two": 0.975
+        },
+        "after": {
+          "RAISED": "KeyError: 'Structured'"
+        }
+      }
+    },
+    {
+      "arm": "worker_downloaded",
+      "ticker": "VXX",
+      "candidate_target": "Structured",
+      "input_weight": 0.015,
+      "readings": {
+        "before": {
+          "label": "Equity",
+          "lg": 0,
+          "alloc": "<ABSENT>",
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge"
+          ],
+          "sub": {
+            "Equity": 0.615,
+            "Fixed Income": 0.385
+          },
+          "grand": 1.0,
+          "two": 1.0
+        },
+        "after": {
+          "RAISED": "KeyError: 'Structured'"
+        }
+      }
+    },
+    {
+      "arm": "worker_downloaded",
+      "ticker": "UVXY",
+      "candidate_target": "Structured",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Equity",
+          "lg": 0,
+          "alloc": "<ABSENT>",
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge"
+          ],
+          "sub": {
+            "Equity": 0.625,
+            "Fixed Income": 0.375
+          },
+          "grand": 1.0,
+          "two": 1.0
+        },
+        "after": {
+          "RAISED": "KeyError: 'Structured'"
+        }
+      }
+    },
+    {
+      "arm": "worker_downloaded",
+      "ticker": "QBER",
+      "candidate_target": "Structured",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Fixed Income",
+          "lg": 0,
+          "alloc": "<ABSENT>",
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge"
+          ],
+          "sub": {
+            "Equity": 0.6,
+            "Fixed Income": 0.4
+          },
+          "grand": 1.0,
+          "two": 1.0
+        },
+        "after": {
+          "RAISED": "KeyError: 'Structured'"
+        }
+      }
+    },
+    {
+      "arm": "worker_downloaded",
+      "ticker": "PDBC",
+      "candidate_target": "Commodities",
+      "input_weight": 0.025,
+      "readings": {
+        "before": {
+          "label": "Equity",
+          "lg": 0,
+          "alloc": "<ABSENT>",
+          "alloc_keys": [
+            "cash",
+            "fixed_income",
+            "equity",
+            "hedge"
+          ],
+          "sub": {
+            "Equity": 0.625,
+            "Fixed Income": 0.375
+          },
+          "grand": 1.0,
+          "two": 1.0
+        },
+        "after": {
+          "RAISED": "KeyError: 'Commodities'"
+        }
+      }
+    }
+  ],
+  "t1_classes": [
+    {
+      "served_class": "Equity",
+      "recognized": true,
+      "five_class_weight": 0.625,
+      "allocation_raw_key": 62.5,
+      "delta_row": 2.5,
+      "spread_row": 2.5,
+      "allocation_keys": [
+        "cash",
+        "fixed_income",
+        "equity",
+        "hedge",
+        "structured",
+        "commodities",
+        "alternatives"
+      ],
+      "raw": "equity",
+      "target": "Equity",
+      "warnings": [
+        "WARN: No etf_returns - holdings will not include performance data",
+        "WARN: No holdings found for UST",
+        "WARN: No holdings found for ST",
+        "WARN: No holdings found for LT",
+        "WARN: No holdings found for ULT",
+        "WARN: No AUM data loaded - skipping current holdings extraction"
+      ]
+    },
+    {
+      "served_class": "Fixed Income",
+      "recognized": true,
+      "five_class_weight": 0.4,
+      "allocation_raw_key": 40.0,
+      "delta_row": 0.0,
+      "spread_row": 0.0,
+      "allocation_keys": [
+        "cash",
+        "fixed_income",
+        "equity",
+        "hedge",
+        "structured",
+        "commodities",
+        "alternatives"
+      ],
+      "raw": "fixed_income",
+      "target": "Fixed Income",
+      "warnings": [
+        "WARN: No etf_returns - holdings will not include performance data",
+        "WARN: No holdings found for UST",
+        "WARN: No holdings found for ST",
+        "WARN: No holdings found for LT",
+        "WARN: No holdings found for ULT",
+        "WARN: No AUM data loaded - skipping current holdings extraction"
+      ]
+    },
+    {
+      "served_class": "Cash",
+      "recognized": true,
+      "five_class_weight": 0.025,
+      "allocation_raw_key": 2.5,
+      "delta_row": 2.5,
+      "spread_row": 2.5,
+      "allocation_keys": [
+        "cash",
+        "fixed_income",
+        "equity",
+        "hedge",
+        "structured",
+        "commodities",
+        "alternatives"
+      ],
+      "raw": "cash",
+      "target": "Cash",
+      "warnings": [
+        "WARN: No etf_returns - holdings will not include performance data",
+        "WARN: No holdings found for UST",
+        "WARN: No holdings found for ST",
+        "WARN: No holdings found for LT",
+        "WARN: No holdings found for ULT",
+        "WARN: No AUM data loaded - skipping current holdings extraction"
+      ]
+    },
+    {
+      "served_class": "Structured",
+      "recognized": true,
+      "five_class_weight": 0.025,
+      "allocation_raw_key": 2.5,
+      "delta_row": 2.5,
+      "spread_row": 2.5,
+      "allocation_keys": [
+        "cash",
+        "fixed_income",
+        "equity",
+        "hedge",
+        "structured",
+        "commodities",
+        "alternatives"
+      ],
+      "raw": "structured",
+      "target": "Structured",
+      "warnings": [
+        "WARN: No etf_returns - holdings will not include performance data",
+        "WARN: No holdings found for UST",
+        "WARN: No holdings found for ST",
+        "WARN: No holdings found for LT",
+        "WARN: No holdings found for ULT",
+        "WARN: No AUM data loaded - skipping current holdings extraction"
+      ]
+    },
+    {
+      "served_class": "Commodities",
+      "recognized": true,
+      "five_class_weight": 0.025,
+      "allocation_raw_key": 2.5,
+      "delta_row": 2.5,
+      "spread_row": 2.5,
+      "allocation_keys": [
+        "cash",
+        "fixed_income",
+        "equity",
+        "hedge",
+        "structured",
+        "commodities",
+        "alternatives"
+      ],
+      "raw": "commodities",
+      "target": "Commodities",
+      "warnings": [
+        "WARN: No etf_returns - holdings will not include performance data",
+        "WARN: No holdings found for UST",
+        "WARN: No holdings found for ST",
+        "WARN: No holdings found for LT",
+        "WARN: No holdings found for ULT",
+        "WARN: No AUM data loaded - skipping current holdings extraction"
+      ]
+    },
+    {
+      "served_class": "Alternatives",
+      "recognized": true,
+      "five_class_weight": 0.025,
+      "allocation_raw_key": 2.5,
+      "delta_row": 2.5,
+      "spread_row": 2.5,
+      "allocation_keys": [
+        "cash",
+        "fixed_income",
+        "equity",
+        "hedge",
+        "structured",
+        "commodities",
+        "alternatives"
+      ],
+      "raw": "alternatives",
+      "target": "Alternatives",
+      "warnings": [
+        "WARN: No etf_returns - holdings will not include performance data",
+        "WARN: No holdings found for UST",
+        "WARN: No holdings found for ST",
+        "WARN: No holdings found for LT",
+        "WARN: No holdings found for ULT",
+        "WARN: No AUM data loaded - skipping current holdings extraction"
+      ]
+    },
+    {
+      "served_class": "Unknown",
+      "recognized": true,
+      "five_class_weight": 0.025,
+      "allocation_raw_key": 2.5,
+      "delta_row": 2.5,
+      "spread_row": 2.5,
+      "allocation_keys": [
+        "cash",
+        "fixed_income",
+        "equity",
+        "hedge",
+        "structured",
+        "commodities",
+        "alternatives",
+        "zz_cvo_unratified"
+      ],
+      "raw": "ZZ_CVO_UNRATIFIED",
+      "target": "Unknown",
+      "warnings": [
+        "WARN: No etf_returns - holdings will not include performance data",
+        "WARN: No holdings found for UST",
+        "WARN: No holdings found for ST",
+        "WARN: generate_positioning_data (ticker PROBE, model INT): asset_class 'ZZ_CVO_UNRATIFIED' is OUTSIDE the five ratified classes -- served as 'Unknown', not folded into a ratified class and not minted as a new one",
+        "WARN: calculate_allocations: asset_class 'ZZ_CVO_UNRATIFIED' (ticker PROBE) is OUTSIDE the five ratified classes -- carried under its own key 'zz_cvo_unratified', not dropped and not folded into a ratified class",
+        "WARN: calculate_characteristics: asset_class 'ZZ_CVO_UNRATIFIED' (ticker PROBE) is OUTSIDE the five ratified classes -- excluded from duration/beta normalization and from the yield substitution",
+        "WARN: No holdings found for LT",
+        "WARN: No holdings found for ULT",
+        "WARN: No AUM data loaded - skipping current holdings extraction"
+      ]
+    }
+  ],
+  "reseed_controls": [
+    {
+      "scenario": "normal",
+      "rc": 0,
+      "writes": 136,
+      "ACSG_after": {
+        "ticker": "ACSG",
+        "asset_class": "equity",
+        "management_style": "unknown",
+        "name": "ACSG",
+        "curator_note": "A",
+        "last_updated": "2026-09-12T00:16:58Z",
+        "updated_by": "seed-script"
+      },
+      "stdout": "Found 136 unique ETF tickers\nTimestamp: 2026-09-12T00:16:58Z\nPRE-READ: 1 existing row(s) over 1 scan page(s) -- the merge baseline.\n\nMERGE SUMMARY\n  tickers in the module union   : 136\n  rows read from the table      : 1\n  rows whose values PRESERVED   : 1 of 136 ticker(s)\n  rows already correct (skipped): 0 of 136\n  rows to write                 : 136 of 136\n\nPRESERVED -- the module had no value and the table did; the table's value stands:\n  ACSG     curator_note\n\nWriting 136 item(s) to DynamoDB...\n  [WRITTEN] 50/136\n  [WRITTEN] 100/136\n\nOK: Seeding complete!\n  Items written   : 136\n  Items untouched : 0\n  Table           : etf-classifications\n  Region          : us-east-1\n\nSample items:\n  ACSG: equity / <absent>\n  ACWI: equity / Global\n  AGG: fixed_income / Intermediate\n  BIL: fixed_income / Ultra Short Duration\n  BILS: fixed_income / Ultra Short Duration\n"
+    },
+    {
+      "scenario": "conflict",
+      "rc": 3,
+      "writes": 0,
+      "ACSG_after": {
+        "ticker": "ACSG",
+        "asset_class": "ZZ_CONFLICT",
+        "curator_note": "A"
+      },
+      "stdout": "Found 136 unique ETF tickers\nTimestamp: 2026-09-12T00:16:58Z\nPRE-READ: 1 existing row(s) over 1 scan page(s) -- the merge baseline.\n\nMERGE SUMMARY\n  tickers in the module union   : 136\n  rows read from the table      : 1\n  rows whose values PRESERVED   : 1 of 136 ticker(s)\n  rows already correct (skipped): 0 of 136\n  rows to write                 : 136 of 136\n\nPRESERVED -- the module had no value and the table did; the table's value stands:\n  ACSG     curator_note\n\nCONFLICT -- the module and the table BOTH carry a real value and they differ:\n  ACSG     asset_class        table='ZZ_CONFLICT'            module='equity'\n\nBLOCKED: 1 field(s) on 1 ticker(s) would be overwritten with a DIFFERENT\nBLOCKED: value than the table serves today. NOTHING WAS WRITTEN.\nBLOCKED: A re-seed must not silently revert a value a person or another\nBLOCKED: job curated. If the MODULE is right, re-run with\nBLOCKED: --accept-module-truth. If the TABLE is right, fix the module first.\n"
+    },
+    {
+      "scenario": "scan_denied",
+      "rc": 2,
+      "writes": 0,
+      "ACSG_after": {
+        "ticker": "ACSG",
+        "asset_class": "equity",
+        "curator_note": "A"
+      },
+      "stdout": "Found 136 unique ETF tickers\nTimestamp: 2026-09-12T00:16:58Z\n\nERROR: could not read the existing table: RuntimeError: CVO simulated missing Scan permission\nERROR: FAILING CLOSED, nothing written. Without the current rows this\nERROR: script cannot tell a curated value from a placeholder, and a\nERROR: full-item put would revert every curated row in the table.\n"
+    },
+    {
+      "scenario": "concurrent_curation",
+      "rc": 0,
+      "writes": 136,
+      "ACSG_after": {
+        "ticker": "ACSG",
+        "asset_class": "equity",
+        "management_style": "unknown",
+        "name": "ACSG",
+        "curator_note": "A",
+        "last_updated": "2026-09-12T00:16:58Z",
+        "updated_by": "seed-script"
+      },
+      "stdout": "Found 136 unique ETF tickers\nTimestamp: 2026-09-12T00:16:58Z\nPRE-READ: 1 existing row(s) over 1 scan page(s) -- the merge baseline.\n\nMERGE SUMMARY\n  tickers in the module union   : 136\n  rows read from the table      : 1\n  rows whose values PRESERVED   : 1 of 136 ticker(s)\n  rows already correct (skipped): 0 of 136\n  rows to write                 : 136 of 136\n\nPRESERVED -- the module had no value and the table did; the table's value stands:\n  ACSG     curator_note\n\nWriting 136 item(s) to DynamoDB...\n  [WRITTEN] 50/136\n  [WRITTEN] 100/136\n\nOK: Seeding complete!\n  Items written   : 136\n  Items untouched : 0\n  Table           : etf-classifications\n  Region          : us-east-1\n\nSample items:\n  ACSG: equity / <absent>\n  ACWI: equity / Global\n  AGG: fixed_income / Intermediate\n  BIL: fixed_income / Ultra Short Duration\n  BILS: fixed_income / Ultra Short Duration\n"
+    }
+  ],
+  "second_writer": {
+    "path": "data/black_diamond/scripts/classification/seed_canonical_securities.py",
+    "securities": 57,
+    "intersection": [
+      {
+        "ticker": "QBER",
+        "asset_class": "fixed_income",
+        "sub_asset_class": "Volatility",
+        "name": "TrueShares Quarterly Bear Hedge ETF"
+      },
+      {
+        "ticker": "VXX",
+        "asset_class": "equity",
+        "sub_asset_class": "Volatility",
+        "name": "iPath Series B S&P 500 VIX Short-Term Futures ETN"
+      },
+      {
+        "ticker": "UVXY",
+        "asset_class": "equity",
+        "sub_asset_class": "Volatility",
+        "name": "ProShares Ultra VIX Short-Term Futures ETF"
+      },
+      {
+        "ticker": "PDBC",
+        "asset_class": "equity",
+        "sub_asset_class": "Commodities",
+        "name": "Invesco Optimum Yield Diversified Commodity Strategy No K-1 ETF"
+      }
+    ],
+    "update_source": [
+      "                ExpressionAttributeValues=bd_values,",
+      "            )",
+      "        written_bd += 1",
+      "",
+      "        # -- etf-classifications item (Yang table) --",
+      "        if sync_yang:",
+      "            if upload:",
+      "                yang_table.update_item(",
+      "                    Key={'ticker': ticker},",
+      "                    UpdateExpression=('SET asset_class = :ac, sub_asset_class = :sac, '",
+      "                                      '#n = :n, last_updated = :ts, updated_by = :ub'),",
+      "                    ExpressionAttributeNames={'#n': 'name'},  # 'name' is a DynamoDB reserved word",
+      "                    ExpressionAttributeValues={",
+      "                        ':ac': sec['asset_class'],",
+      "                        ':sac': sec['sub_asset_class'],",
+      "                        ':n': sec['name'],",
+      "                        ':ts': now,",
+      "                        ':ub': 'canonical_si_seed',",
+      "                    },",
+      "                )",
+      "            written_yang += 1",
+      ""
+    ]
+  },
+  "portal_category_consumers": {
+    "rc": 0,
+    "stdout": "e85f6eb84f:src/pages/Attribution/constants/etf-categories.ts:11:export const ETF_CATEGORIZATION: Record<string, ETFCategory> = {\ne85f6eb84f:src/pages/Attribution/constants/etf-categories.ts:102:export function getETFCategory(ticker: string): ETFCategory | null {\ne85f6eb84f:src/pages/Attribution/constants/etf-categories.ts:103:  return ETF_CATEGORIZATION[ticker] || null\ne85f6eb84f:src/pages/Attribution/constants/holdings-shared.tsx:8:import { getETFCategory } from './etf-categories'\ne85f6eb84f:src/pages/Attribution/constants/holdings-shared.tsx:141:// Get normalized sub-asset class with fallback from ETF_CATEGORIZATION\ne85f6eb84f:src/pages/Attribution/constants/holdings-shared.tsx:149:  const category = getETFCategory(ticker)\ne85f6eb84f:src/pages/Positioning/constants/etf-categories.ts:9:export const ETF_CATEGORIZATION: Record<string, ETFCategory> = {\ne85f6eb84f:src/pages/Positioning/constants/etf-categories.ts:70:export function getETFCategory(ticker: string): ETFCategory | null {\ne85f6eb84f:src/pages/Positioning/constants/etf-categories.ts:71:  return ETF_CATEGORIZATION[ticker] || null\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:16:import { getETFCategory } from '../constants/etf-categories'\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:235:// Maps ETF_CATEGORIZATION segments to short display names used in the table\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:275:// Get normalized sub-asset class with fallback from ETF_CATEGORIZATION\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:285:  // Fallback to ETF_CATEGORIZATION if API value is missing or unrecognized\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:286:  const category = getETFCategory(ticker)\ne85f6eb84f:src/pages/Positioning/tabs/HoldingsTab.tsx:907:      // Use getSubAssetClass for normalized sub-asset class with fallback from ETF_CATEGORIZATION\n",
+    "stderr": ""
+  },
+  "portal_snippets": {
+    "src/pages/Attribution/constants/holdings-shared.tsx:141": [
+      "// Get normalized sub-asset class with fallback from ETF_CATEGORIZATION",
+      "export function getSubAssetClass(ticker: string, apiSubAssetClass: string | undefined): string {",
+      "  if (apiSubAssetClass) {",
+      "    const normalized = SUB_ASSET_CLASS_DISPLAY_MAP[apiSubAssetClass] || apiSubAssetClass",
+      "    if (SUB_ASSET_CLASS_COLORS[normalized]) {",
+      "      return normalized",
+      "    }",
+      "  }",
+      "  const category = getETFCategory(ticker)",
+      "  if (category) {",
+      "    return SUB_ASSET_CLASS_DISPLAY_MAP[category.segment] || category.segment",
+      "  }",
+      "  return apiSubAssetClass || 'Other'",
+      "}",
+      "",
+      "// Proportional rounding to ensure weights sum to exactly 100.00%"
+    ],
+    "src/pages/Positioning/tabs/HoldingsTab.tsx:276": [
+      "function getSubAssetClass(ticker: string, apiSubAssetClass: string | undefined): string {",
+      "  // First check if API provided a value that maps to our canonical names",
+      "  if (apiSubAssetClass) {",
+      "    const normalized = SUB_ASSET_CLASS_DISPLAY_MAP[apiSubAssetClass] || apiSubAssetClass",
+      "    if (SUB_ASSET_CLASS_COLORS[normalized]) {",
+      "      return normalized",
+      "    }",
+      "  }",
+      "",
+      "  // Fallback to ETF_CATEGORIZATION if API value is missing or unrecognized",
+      "  const category = getETFCategory(ticker)",
+      "  if (category) {",
+      "    return SUB_ASSET_CLASS_DISPLAY_MAP[category.segment] || category.segment",
+      "  }",
+      "",
+      "  // Last resort - use API value or 'Other'",
+      "  return apiSubAssetClass || 'Other'",
+      "}",
+      "",
+      "// Performance colors (from performanceUtils.ts)"
+    ],
+    "src/pages/Positioning/tabs/HoldingsTab.tsx:1380": [
+      "                    // used to live in this file.",
+      "                    const displayClass =",
+      "                      holding.asset_class === 'Cash' ? 'Fixed Income'",
+      "                        : holding.asset_class === 'Hedge' ? 'Equity'",
+      "                          : holding.asset_class",
+      "                    if (!acc[displayClass]) {",
+      "                      acc[displayClass] = []",
+      "                    }",
+      "                    acc[displayClass].push(holding)",
+      "                    return acc",
+      "                  }, {} as Record<string, AttributionHolding[]>)",
+      "",
+      "                  const assetClassOrder = ['Fixed Income', 'Equity']",
+      "                  const orderedGroups = assetClassOrder",
+      "                    .filter(ac => groupedHoldings[ac])",
+      "                    .map(ac => ({",
+      "                      assetClass: ac,",
+      "                      holdings: sortHoldingsByCanonicalOrder(groupedHoldings[ac]) // Apply canonical sort",
+      "                    }))",
+      "",
+      "                  // Calculate totals for each group and grand total",
+      "                  const calculateSubtotal = (holdings: AttributionHolding[]) => ({",
+      "                    weight: holdings.reduce((sum, h) => sum + h.weight, 0),",
+      "                    fund_return_weighted: holdings.reduce((sum, h) => sum + (h.weight * h.fund_return), 0),",
+      "                    style_return_weighted: holdings.reduce((sum, h) => sum + (h.weight * h.style_return), 0),"
+    ]
+  },
+  "summary": {
+    "candidate_source_after_carried": 11,
+    "candidate_downloaded_after_raises": 11,
+    "candidate_denominator": 11
+  }
+}

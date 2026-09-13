@@ -1,0 +1,23 @@
+{
+  "head": "ef99ea7fa9d21446fecba135de3cf209ba8ac5b3",
+  "new_rows": {
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v6.md": 13,
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v5.md": 20,
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v6.md": 10
+  },
+  "row_violations": {
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v6.md": [],
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v5.md": [],
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v6.md": []
+  },
+  "originals": 65,
+  "open": [],
+  "unknown_targets": [],
+  "duplicate_remediation_ids": [],
+  "orders": [
+    [],
+    37,
+    ""
+  ],
+  "limits": "Prospective working-file census; safe-commit repeats enforcement against its actual index. No overrides."
+}

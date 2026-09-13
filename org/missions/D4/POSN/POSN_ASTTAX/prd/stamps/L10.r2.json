@@ -1,0 +1,10 @@
+{
+ "note": "REMEDIATION_v2 is the single round-2 slug: 15 records, three instance remedies completed, twelve open. Andrew 21533 permits this named case only. Seven round-2 cells retained; S2-1 and S3-1 explicitly staged and unrun under retag NO-GO. Narrow exception 10ceba8c43 / e602581190; no broad override.",
+ "prd_pin": "f5d38390682b",
+ "prd_version": "v0.5",
+ "project": "POSN_ASTTAX",
+ "round": 2,
+ "signed_by": "3.0.0_SA_CVO~Z",
+ "stage": "L10",
+ "utc": "2026-09-11T19:35Z"
+}

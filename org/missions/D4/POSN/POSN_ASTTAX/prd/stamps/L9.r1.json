@@ -1,0 +1,10 @@
+{
+ "note": "Both L9 obligations discharged @59b0c8470f: the one channel row dispositioned (C-S1, GRADUATED, UPGRADED -- is_hedge() has NO true case over all 136 tickers, HEDGE_TICKERS empty, and get_asset_class disagrees with it on the same 7) and the round's one judgment criterion graded (C-S2, S1a-AC10 PASS, fork RULED: NEITHER end is FWD-5's one place -- the dict fails on coverage 116 of 285 AND on flow since nothing triggers the seed, 101 refs over 55,582 files with zero schedulers; the table fails on durability since the untriggered seed silently overwrites its 116). All seven set figures re-derived and agreeing. Open count 0.",
+ "prd_pin": "93e69164b0ad",
+ "prd_version": "v0.2",
+ "project": "POSN_ASTTAX",
+ "round": 1,
+ "signed_by": "3.0.0_SA_CVO~Z",
+ "stage": "L9",
+ "utc": "2026-09-11T06:54Z"
+}

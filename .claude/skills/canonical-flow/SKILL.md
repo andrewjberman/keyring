@@ -151,6 +151,7 @@ Measure each of these; ABSENT is a value, not a guess. Print the table.
 | proof instances | `deliverables/<serial>/<TO>.proof_of_spec.json` at HEAD, each run through `.tools/proof-of-spec-check.py`; VALID at HEAD is the only terminal read -- a `<status>` field is the stalest carrier in its own document; a criterion the task order flags as judgment is graded only in the CVO's adjudication, never by the instance's own verdict |
 | worker branches | `git worktree list` + `git branch --list 'worktree-*'`; each unmerged branch is a worker that died mid-task-order |
 | **unfinished edits** | `git status --porcelain -- org/missions/D*/<MACRO>/<CODE>/` AND every path the project's open task orders name in `<paths>` (or cite in their bodies), plus `git stash list`; a modified, staged or untracked file under those paths with no commit is a dead seat's unfinished work -- the outage residue. Print the file list with its denominator; never `git checkout --` or `git clean` anything here |
+| **live production (THE PROBE)** | ⛔ **THE `git status` READ ABOVE RUNS IN THE RUNNING TREE AND CANNOT SEE A PEER'S IN-FLIGHT WORK.** So before assigning ANY class, probe every plane a seat's output can land on. ⛔ **ENUMERATE THEM BY SUBTRACTION FROM "every plane this seat's output can land on", NEVER BY RECALL** -- the first cut of this rung listed two planes from memory and missed two: **(1) COMMITS** -- `git log --author "<serial> <" --since="60 minutes ago"` (the CHEAPEST and most reliable, and the one the first cut forgot: a seat committing every ten minutes is unambiguously working); **(2) the DELIVERABLES PLANE -- and it needs BOTH a home AND a TREE, because getting either wrong returns a SILENT ABSENT.** ⛔ **HOME differs by TIER:** a WORKER's are under the PROJECT (`.../<CODE>/deliverables/<serial>/`), a TIER-1 SEAT's under `org/tier1_exec/<base serial>/deliverables/` (measured: the project home for `3.0.0_SA_CVO~Z` is ABSENT while its real home holds 558 files). ⛔ **AND TREE differs by GENERATION, which is the MIRROR of that defect -- here the RIGHT home returns ABSENT:** a spine-v3 worker executes in a LINKED WORKTREE and writes its deliverables under the project *inside that worktree*, so they DO NOT EXIST in the shared tree until the COO drains the branch. Resolve the worktree from `git worktree list` and read the path THERE. Measured 2026-09-11, same relative path, same instant, two trees: shared tree ABSENT, `C:/tmp/wk-posn-t5` 11 files with 143 KB written in the prior two minutes.**FOR EVERY v3 WORKER AT EVERY MOMENT BEFORE ITS DRAIN, THE SHARED-TREE READ IS ABSENT BY CONSTRUCTION**; **(3) its OWN git worktree** -- `git worktree list`, then `git status --porcelain` in it; **(4) its CODEX RUNTIME DIR** -- `.runtime/codex-seats/<serial>/`, ⛔ **counting ARTIFACTS ONLY, NEVER RUNTIME LOGS** (`turn-bridge.stdout.log`, `turn-bridge.stderr.log`, `app-server.stderr.log`, `heartbeat.stdout.log`, `bridge-state.json` and any successor the runtime writes on its own). ⚠ **(4) IS NOT OPTIONAL: A CODEX SEAT HAS NO GIT WORKTREE AT ALL** (measured 2026-09-11 -- `3.0.0_SA_CVO~Z`, the seat whose misclassification founded this rung, returns ZERO from `git worktree list`), so a probe that checks only (3) is structurally blind to an entire seat class. **Print the newest artifact and its AGE across all four.** **NEVER touch what this finds** -- it is another seat's live work, not residue |
 | surprise channel | `comp-surprise --project <CODE>` (both roots); the latest row citing each item decides its state; the CVO's heartbeat watermark (rows seen / undispositioned / watch pid) against the channel's row count |
 | the slug and the CTO's answer | `surprise-channel/remediations/REMEDIATION_v<N>.md` (present = the slug is cut); `ledger/ROUND_ANALYSIS.round<N>.md` or a bumped `prd_version` (present = the CTO has answered it) |
 | step logs / compilation | tree `ledger/STEP_LOG.*`; the compiled log's share of acts outside the limbs is the round's own instrument |
@@ -195,7 +196,8 @@ grantor for a flat row) and it goes into the report; it never overrides the meas
 
 | class | meaning | owner of the next act |
 |---|---|---|
-| `STALLED-AT-OWNER` | the next limb's input exists and conforms; its owner has not acted | the next limb's owner |
+| `IN-PROGRESS` | the next limb's input exists and conforms AND **the probe above found the owner's output moving** -- the limb is being worked RIGHT NOW | the next limb's owner; **nobody nudges, escalates, kills or respawns** |
+| `STALLED-AT-OWNER` | the next limb's input exists and conforms; its owner has not acted **AND the probe found nothing moving**. ⛔ **THE PROBE IS PART OF THE TEST, NOT A COURTESY: without it this value is unfalsifiable** and every actively-working limb reads STALLED | the next limb's owner |
 | `ARTIFACT-GAP` | the next limb's input is missing or non-conforming (a PRD without an endpoint section or manifest; a decomp without its record or edges; a TO without a proof block or with a compound criterion; an issuance that does not cover every cell) | the limb that should have produced it |
 | `PRE-TREE` | exists only in the flat register; no tree home | `1.0.0_SA_CTO` (L3 under the tree, then L4 at the tree home) |
 | `DEAD-SEAT` | v2 only: open task orders whose broker-registered assignee is not live | `2.0.0_SA_COO` (re-address, or seat a fresh lane; or recut under v3 at the next issuance) |
@@ -205,6 +207,114 @@ grantor for a flat row) and it goes into the report; it never overrides the meas
 | `SLUG-UNREAD` | the slug is cut and the CTO has written neither a round-N analysis nor an addendum | `1.0.0_SA_CTO` (the L10 read) |
 | `ROUND-UNCUT` | the CTO's answer exists and no issuance has been cut from it | `2.0.0_SA_COO` (the recut, one issuance) or, after an addendum, `2.0.0_SA_COO` at L5 on the bumped PRD |
 | `SEQUENCED-BEHIND` | a named hold blocks the next limb (a register phase, a directive placement, an Andrew-direct record) | nobody: report the hold's carrier; only Andrew lifts a hold |
+
+⛔ **WHY `IN-PROGRESS` EXISTS, AND WHY IT ARRIVES WITH A TEST RATHER THAN AS A LABEL** (row
+`AMGT_RESAPP-Z-S22` @`651ffd4f16`, filed by `2.0.0_SA_COO~ZZZ` under this skill's own Rules clause that
+an unclassifiable case is a defect in the CLASS SET). **All ten original classes assume ABSENCE OF
+WORK. None named a limb whose owner was ACTIVELY PRODUCING.** Measured 2026-09-11: `1.0.0_SA_CTO~Z`
+and `2.0.0_SA_COO~ZZZ` ran this skill minutes apart and hit the SAME uncovered member -- two seats,
+two runs, which is the tell that it is the set and not either reading. In the same hour
+`0.0.0_AB_MSTR~Z` measured `3.0.0_SA_CVO~Z` writing **189 KB of L9 evidence in five minutes**, so at
+the exact moment both runs would have said STALLED, the owner was mid-adjudication.
+⛔ **AND IT IS NOT COSMETIC. A LABEL THAT IS MERELY IMPRECISE IN A REPORT BECOMES A WRONG PREMISE WHEN
+A LATER SEAT ACTS ON IT** -- the natural next act on `STALLED-AT-OWNER` is a nudge, then an
+escalation, then a kill, and `2.0.0_SA_COO~ZZZ` had already fired that ladder to `[STUCK]` before a
+worktree probe overturned it. A kill on that reading would have destroyed the seat's IN-FLIGHT
+CONTEXT mid-adjudication.
+⛔ **CORRECTED 2026-09-13 BY `1.0.0_SA_CTO~Z`, DISCHARGING `AMGT_RESAPP-Z-S22`'s RESIDUAL: THIS LINE
+USED TO SAY A KILL "WOULD HAVE DESTROYED 189 KB OF UNCOMMITTED WORK" AND THAT IS FALSE.** Process
+termination loses in-flight context; **on-disk bytes persist absent a separate deletion**, and the
+189 KB was already written to four untracked files when the probe read them (`0.0.0_AB_MSTR~Z`
+21664, correcting its own earlier framing). ⚠ **THE CORRECTED CLAIM IS STILL A REASON NOT TO KILL,
+and the precision is the point: what a kill destroys is the UNFINISHED REASONING, which is
+unrecoverable, not the written bytes, which are not. A seat that believes a kill deletes FILES will
+also refuse a kill that is CORRECT** -- a false belief that an act destroys data is worse than a
+false belief that it is safe, because it removes a legitimate recovery from the menu.
+⭐ **THE TWO HALVES ARE ONE CHANGE:** without the probe the value is unfalsifiable; without the value
+the probe has nowhere to report. Neither lands alone.
+⛔ **A PLANE READ IS `MOVING` | `COLD` | `INCONCLUSIVE`, AND "DIRECTORY ABSENT" IS **INCONCLUSIVE**,
+NEVER COLD.** An absent path and an idle seat are different answers and only one of them is evidence
+-- the same distinction `_parent_row_ids` already draws by returning None rather than an empty set.
+A prober who checks the wrong deliverables home gets ABSENT and reads it as "nothing moving", which
+FAILS SILENTLY IN THE EXACT DIRECTION THIS RUNG EXISTS TO PREVENT. Measured on the rung's FIRST LIVE
+TICK by `2.0.0_SA_COO~ZZZ`, which took the wrong branch and said so.
+
+⛔ **AND A PLANE THAT IS ALWAYS WRONG IN ONE DIRECTION FOR A WHOLE CLASS CONTRIBUTES NO EVIDENCE
+AT ALL** (`2.0.0_SA_COO~Z`, found by running the rung on a live worker). Read in the shared tree,
+plane (2) says COLD about every v3 worker producing at full rate -- not sometimes, but BY
+CONSTRUCTION, for the entire class, until the drain. It did no harm only because plane (3) outvoted
+it, which means **the exposure was bounded by a DIFFERENT plane rather than by this one being
+right.**
+⛔ **AND BEFORE ANY OF THE FOUR PLANES: READ WHETHER THE OWNER HAS NAMED ITS OWN BLOCKER. THE
+PLANES MEASURE PRODUCTION; THEY CANNOT MEASURE ENTITLEMENT TO BE IDLE.** A seat that is CORRECTLY
+WAITING on a named, measured blocker reads IDENTICAL on all four planes to a seat that has dropped
+the ball -- cold commits, cold deliverables, cold artifacts -- and the nudge ladder fires on it.
+**`BLOCKED` IS A THIRD CLASS BESIDE `IN-PROGRESS` AND `STALLED-AT-OWNER`, AND ITS TEST IS THE
+OWNER'S OWN ARTIFACT, NOT A LIVENESS PLANE:** read the limb's output document for a stated blocker,
+then RE-MEASURE that blocker at HEAD.
+Measured 2026-09-11 by `2.0.0_SA_COO~Z`/`~ZZZ` on the case that would have produced the second wrong
+nudge of the night: `3.0.0_SA_CVO~Z` read 3 planes COLD and 1 structurally blind, LIVE, summary
+"READY" -- and its own `ADJUDICATION_v5.md:13` said, at 21:41Z, *"L10 remains blocked. The production
+gate's read ... sees 1 of 36 orders nonterminal: rd8 is staged."* **It had named its blocker and was
+correctly waiting.** No plane could see that; one `grep` of its own document could.
+⚠ **AND RE-MEASURE THE BLOCKER RATHER THAN TRUSTING THE SEAT'S NAMING OF IT, because a blocker can
+CHANGE IDENTITY under a seat that has stopped looking:** `rd-8` was flipped `superseded` and `re-1`
+opened `staged` IN THE SAME COMMIT 43 minutes later, so the open count never reached zero and the
+named blocker silently became a different order. Nothing announces that.
+
+⛔ **AND THE DELIVERY PLANE IS NOT ONE OF THE FOUR, DELIBERATELY -- IT CAN BE FLATLY WRONG ABOUT
+DELIVERY ITSELF, NOT MERELY SILENT ABOUT WORK.** Measured 2026-09-12 by `2.0.0_SA_COO~Z`:
+`get_delivery_state(3.0.0_SA_CVO~Z)` returned **QUEUED on 8 of 8 rows with NO clock stamps -- not
+READ, not EMITTED, NOT EVEN SENT** -- spanning 23:54Z to 00:17Z, while in that same window the seat
+wrote its intake JSON, committed `ee0a2dbf82`, and landed a 29-row `ADJUDICATION_v4` dispositioning
+**exactly the rows that packet carried**. ⭐ **A SEAT CANNOT ADJUDICATE ROWS IT DID NOT RECEIVE: THE
+ARTIFACT IS THE RECEIPT, AND THE BROKER IS BLIND TO THE FILESYSTEM CARRIER.** So a QUEUED reading is
+NOT evidence of non-delivery, and no nudge ladder may rest on one.
+
+⛔ **AND A COLD PLANE IS ONLY EVIDENCE OF STALLING IF ENOUGH TIME HAS ELAPSED SINCE THE SEAT BECAME
+ABLE TO WORK. MEASURE STALENESS FROM THE CLOCK ORIGIN, NOT FROM NOW.** The origin is whichever is
+LATER: the seat's last output, or **the moment its named blocker cleared**. A seat unblocked three
+minutes ago reads COLD on every plane by ARITHMETIC, not by fault.
+Found 2026-09-11 by `1.0.0_SA_CTO~Z` running this rung on its OWN wait: `3.0.0_SA_CVO~Z` had named
+"1 of 36 orders nonterminal"; re-measured at HEAD it was **0 of 37, CLEARED** by a drain THREE
+MINUTES EARLIER -- so the BLOCKED arm correctly expired, and the four planes then read COLD and would
+have classified as STALLED a seat that had not yet had time to draw breath.
+⚠ **THIS IS THE FAILURE A 10-MINUTE CADENCE MANUFACTURES:** a driver ticking shortly after a peer
+unblocks sees cold planes and reaches outcome (3), and the shorter the cadence the more often a tick
+lands inside the window where COLD means nothing. **State the elapsed time FROM THE ORIGIN beside
+every COLD verdict, and treat anything under one tick-interval as INCONCLUSIVE rather than COLD.**
+
+⚠ **AND THE COVERAGE IS ONE PLANE DEEP IN BOTH DIRECTIONS, WHICH IS THE STRUCTURAL FINDING:** plane
+(3) is the only one that sees a v3 worker mid-flight, plane (4) is the only one that sees a codex
+seat, and **they do not overlap.** Lose either and a whole seat class goes dark with no second
+witness. Treat a single-plane MOVING as sufficient to REFUSE a nudge (it is), and never as
+sufficient to establish COLD (it is not).
+
+⛔ **AND A PLANE THAT CAN BE WRONG IN BOTH DIRECTIONS IS NOT YET A DISCRIMINATOR** -- the sharpest
+line to come out of exercising this rung, and it is why plane (4) counts artifacts only. Plane (4)'s
+freshest file on `3.0.0_SA_CVO~Z` was `turn-bridge.stdout.log` at 4 minutes old -- **the 876-line
+`[HARD-NUDGE] [deduplicated]` loop that SPINS ON ITS OWN**. So unfiltered, plane (4) reports MOVING
+about a seat producing nothing, forever, on any seat whose bridge is looping. **That is the MIRROR of
+the defect this rung was built to fix: version one could say STALLED about a working seat; plane (4)
+could say WORKING about a stalled one.** A test whose false positives and false negatives both live
+on the same plane discriminates nothing.
+
+⛔ **AND "NOTHING MOVING" IS NOT PROOF OF STALLED** (`4.0.0_SA_CRO~Z`). Absence of evidence ABOUT A
+PEER is not evidence of absence: the peer may be thinking, blocked on a tool, or writing somewhere
+none of the four planes reach. A silent probe LOWERS confidence in IN-PROGRESS; it does not raise
+confidence in STALLED to the point where a destructive act is safe. ⭐ **WHICH IS WHY THE REAL GUARD
+BELONGS AT THE ACT, NOT AT THE LABEL** -- `4.0.0_SA_CRO~Z` measured that `/mstr-kill` has NO pre-kill
+probe at all (2 mentions of in-flight work across 252 lines, BOTH AFTER the kill), and that
+`/canonical-flow` is only one of several instruments that classify a peer while reading the DELIVERY
+plane. Ten labels and four instruments can each be wrong; the kill is the one irreversible act.
+Gating it is `0.0.0_AB_MSTR~Z`'s surface and is endorsed here, not implemented here.
+
+⚠ **ITS SCOPE IS A DECISION, NOT AN OVERSIGHT** (raised by `2.0.0_SA_COO~ZZZ` after exercising it):
+the probe reads the output of **the owner of the NEXT LIMB**, which is narrower than its raw power --
+it would NOT catch a seat producing at a moment when the next limb is measured as someone else's.
+**That is deliberate: the scope matches the question this skill asks, which is "whose turn is it and
+are they moving".** A probe that swept every seat's worktree on every run is a different and more
+expensive tool; if that is ever wanted it should be built as one, not grown here by accident.
 
 A project can carry more than one class; list all, the blocking one first. `UNFINISHED-EDITS` and
 `ORPHAN-WORKTREE` are always listed when present, whatever the limb: they are work that exists nowhere durable
@@ -295,6 +405,7 @@ LOCATE   home: {tree path | flat only}   placement: {laptop | site-z} ({carrier}
          TOs {n open / m terminal; issuance {commit | v2 piecemeal}; fanout {N of M, cap K | ABSENT}}
          proof instances {v valid / t total at HEAD}   worker branches {k unmerged}
          unfinished edits {f file(s) under the project's paths | none}   stash {s | none}
+         live-production probe {newest output on the next limb's owner: <path> <age> | NOTHING MOVING}
          rows {n items, k undispositioned; watermark {ahead | BEHIND by d | ABSENT}}
          slug {REMEDIATION_v<N>@vintage | ABSENT}   answer {ROUND_ANALYSIS.round<N> | addendum v{..} | ABSENT}
          dep_stage (claimed): {..}
@@ -332,6 +443,13 @@ Then the act itself, or the handoff message, or nothing (report-only).
   the issuance, the proof instances at HEAD, worker branches, the slug and the CTO's answer; the classes gain
   `ORPHAN-WORKTREE`, `SLUG-UNREAD` and `ROUND-UNCUT` and lose `ROUTED-UNPICKED` with the route tokens; the
   COO's midstream read of spine L7 is this skill's Step 1 and 2.
+- `IN-PROGRESS` + the live-production probe added by `1.0.0_SA_CTO~Z` 2026-09-11 on row
+  `AMGT_RESAPP-Z-S22` @`651ffd4f16` (`2.0.0_SA_COO~ZZZ`), under this skill's own Rules clause. The class
+  set assumed absence of work and had no value for a limb being worked; two seats hit the same
+  uncovered member minutes apart, and the wrong label had already driven a `[STUCK]` escalation against
+  a seat writing 189 KB of live L9 evidence. ⚠ The gap was in the LADDER as much as the SET -- the
+  `unfinished edits` read runs `git status` in the RUNNING tree and cannot see another seat's worktree,
+  so the instrument that distinguishes stalled from working was the one the ladder never ran.
 - Hardened against seats dying mid-work by `1.0.0_SA_CTO` on Andrew's word at the MSTR terminal 2026-09-03
   ~20:0xZ (LD-0532, relayed as message 93908): the `unfinished edits` read, the `UNFINISHED-EDITS` class owned by
   the COO with the CVO validating, the decide-order step that protects those files from every other seat, and

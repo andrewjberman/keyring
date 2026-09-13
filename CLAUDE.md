@@ -35,7 +35,20 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     --half ... --review <path>@<pin>`; `status <CODE>` is the one read of what is owed. The L4 notifier delivers each
     half still owed to its routed reviewer, WITHHOLDS the COO delivery until both are SIGNED at the current bytes,
     nudges an OVERDUE half after 60 minutes with the CTO copied, and re-routes an overdue brief half to a live COO;
-    `.tools/to-pipeline-gate.py` LIMB 6 REFUSES a task order against a PRD with a half not SIGNED. One rule for all
+    `.tools/to-pipeline-gate.py` LIMB 6 REFUSES a **NEWLY-ADDED** task order against a PRD with a half
+    not SIGNED. ⛔ **IT DOES NOT FIRE ON A MODIFICATION, AND THIS LINE USED TO SAY SO WITHOUT THE
+    QUALIFIER -- SO THE LAW READ STRONGER THAN THE TOOL BEHAVES AND THREE SEATS INHERITED THE BELIEF
+    FROM IT IN ONE EVENING.** The gate's own docstring (`_newly_added`, `:813`) is explicit: *"A
+    rename (R) counts as added at its new path ... A modification (M) does not: this gate never
+    refuses an existing TO."* Measured 2026-09-11 by `2.0.0_SA_COO~ZZZ` as a discriminating pair on
+    ONE project in ONE hour: the add path refused its new order **three times** (missing
+    `<issued_by>`, missing `<preflight>`, then the preflight's line shapes) while **ten task-order
+    MODIFICATIONS went ungraded.** ⚠ **SO ON A RE-CUT OR A MID-FLIGHT AMENDMENT, "do not cut against
+    a stale half" IS A HUMAN DISCIPLINE, NOT A GATE** -- and the sharpest exposure is not the signed
+    half at all: a modification can change a criterion's grammar, a `<paths>` grant, or the inlined
+    cell text of a face **a worker is reading at that moment**, and the worker never sees a refusal.
+    The prospective-only scoping is Andrew's own (`:21`), so widening it is HIS call and is carded,
+    not assumed. One rule for all
     three: `.tools/prd_signoff_lib.py`. Andrew-direct 2026-09-10 ~21:2xZ: *"CRO and CVO should have to sign off on
     PRD before COO gets it"*; 2026-09-11 ~05:3xZ: *"CVO should always be included. If CRO is not online, can do COO
     in their stead"*. Measured 2026-09-10/11: thirteen PRD versions in one night, a half re-signed three times
@@ -54,7 +67,14 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     the spine does not name it; that ambiguity is PLACED, not resolved, and no round changes owner on it) →
     L9 adjudicate (JUDGMENT criteria are graded HERE and
     never self-graded) → L10 ONE SLUG to the CTO, ALWAYS, only after every TO is terminal and every row
-    dispositioned; the CTO answers with a PRD addendum (an FWD no cell served) or the ROUND-N ANALYSIS the
+    dispositioned; ⛔ **AND THE L10 ORDER -- slug -> the CTO's ROUND-N ANALYSIS -> the COO's recut --
+    IS LOAD-BEARING, NOT STYLISTIC. A ROUND N+1 ISSUANCE CUT BEFORE ROUND N's SLUG DEADLOCKS ROUND
+    N's L10 UNTIL N+1 FULLY DRAINS**, because the refuser counts open orders PER PROJECT and never
+    per round (LD-0521). Measured 2026-09-11 on AMGT_RESAPP, by the seat that did it: round 6 was cut
+    straight off the L9 adjudication at 22:24Z, flipping `rd-8` superseded and opening `re-1` staged
+    IN THE SAME COMMIT -- so the open count never reached zero, and `3.0.0_SA_CVO~Z`, already
+    correctly gated and having NAMED `rd-8` as its blocker, silently acquired a different one. ⚠ The
+    cost lands on ANOTHER SEAT and is invisible to the one that caused it; the CTO answers with a PRD addendum (an FWD no cell served) or the ROUND-N ANALYSIS the
     COO recuts in ONE issuance; CLOSED when every FWD grades REALIZED.** The three route tokens are RETIRED.
     Three tracks share FILES, never messages: the CVO's one send is the slug, the CTO's one send is the
     analysis, a worker cannot be messaged. `0.0.0_AB_MSTR` integrates and never works a project. Mid-round

@@ -1,0 +1,88 @@
+{
+  "utc": "2026-09-13T03:43:37.669088+00:00",
+  "head": "ef330daa7c4b654f8b79980edaceb6f1604ef045",
+  "new_rows": {
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v8.md": 37,
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v8.md": 18
+  },
+  "row_violations": {
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v8.md": [],
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v8.md": []
+  },
+  "originals": 122,
+  "pending": [],
+  "unknown_targets": [],
+  "duplicate_remedy_ids": [],
+  "duplicate_surfacing_ids": [],
+  "clock_changes": {
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v5.md": {
+      "AMGT_RESAPP-Z-S22": true
+    },
+    "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v7.md": {
+      "AMGT_RESAPP-Z-W12-S1": true,
+      "AMGT_RESAPP-Z-S34": true,
+      "AMGT_RESAPP-Z-S36": true,
+      "AMGT_RESAPP-Z-W11-S5": true,
+      "AMGT_RESAPP-Z-S42": true,
+      "AMGT_RESAPP-Z-C-S98": true,
+      "AMGT_RESAPP-Z-C-S99": true
+    }
+  },
+  "orders": {
+    "AMGT_RESAPP": [
+      [],
+      46,
+      ""
+    ],
+    "POSN_ASTTAX": [
+      [
+        "POSN_ASTTAX.TO-S2-1.retag-the-hedge-bucket.md [staged]",
+        "POSN_ASTTAX.TO-S3-1.is-hedge-reconciliation.md [staged]",
+        "POSN_ASTTAX.TO-T6-1.the-retag-with-a-criterion-that-fails-in-the-broken-world.md [staged]",
+        "POSN_ASTTAX.TO-T7-1.is-hedge-reconciliation.md [staged]"
+      ],
+      15,
+      ""
+    ],
+    "ZZZZ_NOSUCH": [
+      [],
+      0,
+      ""
+    ]
+  },
+  "reviewed_once": true,
+  "proofs_valid": true,
+  "grade_count": 7,
+  "grade_criteria": [
+    "AMGTrg1-AC1",
+    "AMGTrg1-AC5",
+    "AMGTrg2-AC2",
+    "AMGTrg2-AC4",
+    "AMGTrg2-AC5",
+    "AMGTrg3-AC5",
+    "AMGTrg2-AC1"
+  ],
+  "portal_assertions": {
+    "old_named_pair_collides": true,
+    "repaired_three_pairs_distinct": true,
+    "exhausted_denominator_rendered": true,
+    "only_signal_changed_switches_to_complete_empty": true,
+    "partial_keeps_chart_caption": true,
+    "fiscal_join_183_of_183": true,
+    "header_join_13_of_13": true,
+    "old_fiscal_zero": true,
+    "unresolved_joined_and_refused": true,
+    "unresolved_raw_value_absent": true,
+    "pass_header_still_shows_value": true,
+    "populated_thesis_renders_196_rows": true,
+    "populated_thesis_control_refuses": true,
+    "legend_preserves_producer_series_order": true
+  },
+  "typecheck": {
+    "files": 2072,
+    "rc": 0,
+    "mutant_rc": 2,
+    "restored": true
+  },
+  "limits": "Prospective working-file validation. Safe-commit repeats its index and corpus checks. No originals, task orders or proof instances changed by this review."
+}

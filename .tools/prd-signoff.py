@@ -124,7 +124,7 @@ def cmd_status(lib, code=None):
     return 0
 
 
-def cmd_stamp(lib, verdict, code, half, review, reason, substitute_for):
+def cmd_stamp(lib, verdict, code, half, review, reason, substitute_for, expect_half_hash=None):
     serial = os.environ.get("OPAL_AGENT_SERIAL", "").strip()
     if not serial:
         print("ERROR: OPAL_AGENT_SERIAL is not set -- a stamp carries the signer's identity and refuses to guess it", file=sys.stderr)
@@ -149,6 +149,25 @@ def cmd_stamp(lib, verdict, code, half, review, reason, substitute_for):
     if "@" not in review:
         print("ERROR: --review must be <path>@<pin> (the pinned review record)", file=sys.stderr)
         return 2
+    # THE REVIEW-ARTIFACT GUARD. "@" in the string is not a review: --review accepted ANY value and
+    # never checked that the path resolves, so a stamp could cite a review that DOES NOT EXIST and
+    # still read structurally immaculate -- review_ref populated, half_hash present, verdict SIGNED.
+    # Measured by 4.0.0_SA_CRO~Z 2026-09-12 over all 7 stamps on the POSN record (5 clean, 1
+    # unread-bytes, 1 no-artifact): stamp 9a2e542c0b's review_ref is a PROSE SENTENCE with a pin
+    # appended, whose "path" is a sentence fragment and whose git show returns ZERO BYTES. The gate
+    # had counted it a signed half since 08:52:52Z. A real verification had happened; NONE OF IT WAS
+    # AUDITABLE, which is the whole property this field exists to provide.
+    # --expect-half-hash CANNOT see this class: the bytes can be current and genuinely reviewed and
+    # there is still no durable artifact to re-read.
+    _rpath, _, _rpin = review.rpartition("@")
+    _probe = _git("cat-file", "-e", "%s:%s" % (_rpin, _rpath))
+    if _probe.returncode != 0:
+        print("REFUSED: --review does not resolve to an artifact.", file=sys.stderr)
+        print("  path: %s" % _rpath, file=sys.stderr)
+        print("  pin : %s" % _rpin, file=sys.stderr)
+        print("A review nobody can re-read is not a review. Pass <path>@<pin> naming a file that "
+              "exists at that commit; prose belongs in --reason.", file=sys.stderr)
+        return 3
     if verdict == "REFUSED" and not reason:
         print("ERROR: a REFUSED verdict carries --reason (one line; the corrections live in the review by pinned line)", file=sys.stderr)
         return 2
@@ -164,6 +183,24 @@ def cmd_stamp(lib, verdict, code, half, review, reason, substitute_for):
     if lib.half_hashes(wt) != lib.half_hashes(text):
         print("REFUSED: the PRD's worktree copy differs from HEAD in a half's bytes -- an uncommitted edit is not a thing to sign; commit or discard it first", file=sys.stderr)
         return 3
+    # THE REVIEWED-BYTES GUARD. Without it a stamp binds to whatever the half is AT STAMP TIME, so a
+    # half that moved WHILE THE REVIEWER WAS READING is signed by a seat that never saw it -- and
+    # nothing refuses, because the worktree/HEAD check above compares the file to itself, not to what
+    # was reviewed. `--review <path>@<pin>` pins the REVIEWER'S OWN DOCUMENT, never the PRD half it
+    # covers. Found by 4.0.0_SA_CRO~Z 2026-09-12; the consumer is the COO cut, which treats ADMITTED
+    # as its precondition to commit and spawn. Measured the same night: a brief half moved
+    # f5bbef8c9 -> d64247e7f WHILE its reviewer held it, and only a hand-sent message prevented the
+    # stale signature. OPT-IN so every existing caller is unchanged; FAIL-CLOSED when supplied.
+    if expect_half_hash:
+        _now = lib.half_hashes(text).get(half, "")
+        _want = expect_half_hash.strip()
+        if not (_now == _want or _now.startswith(_want) or _want.startswith(_now)):
+            print("REFUSED: the %s half has MOVED since the bytes you reviewed." % half, file=sys.stderr)
+            print("  reviewed: %s" % _want, file=sys.stderr)
+            print("  current : %s" % _now, file=sys.stderr)
+            print("A signature binds to the CURRENT bytes, so stamping now would certify a half you "
+                  "did not read. Re-read the current half and re-run with its hash.", file=sys.stderr)
+            return 3
     pin = _git("log", "-1", "--format=%H", "--", prd_rel).stdout.strip()
     sdoc = lib.build_doc(os.path.basename(prd_rel), text, pin, half, verdict, review, serial, substitute_for=substitute_for, reason=reason)
     if is_designated:
@@ -215,11 +252,15 @@ def main(argv):
         p.add_argument("--review", required=True, help="<path>@<pin> of the review record")
         p.add_argument("--reason", default=None)
         p.add_argument("--for", dest="substitute_for", default=None, help="primary reviewer you substitute for")
+        p.add_argument("--expect-half-hash", dest="expect_half_hash", default=None,
+                       help="the half_hash you ACTUALLY REVIEWED. If the half has moved since, the stamp "
+                            "is REFUSED instead of silently binding to bytes you did not read.")
     a = ap.parse_args(argv)
     if a.verb == "status":
         return cmd_status(lib, a.code)
     if a.verb in ("sign", "refuse"):
-        return cmd_stamp(lib, "SIGNED" if a.verb == "sign" else "REFUSED", a.code, a.half, a.review, a.reason, a.substitute_for)
+        return cmd_stamp(lib, "SIGNED" if a.verb == "sign" else "REFUSED", a.code, a.half, a.review, a.reason,
+                         a.substitute_for, a.expect_half_hash)
     ap.print_help()
     return 2
 

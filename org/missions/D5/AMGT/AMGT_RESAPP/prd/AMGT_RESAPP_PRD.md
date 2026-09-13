@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.3",
+  "prd_version": "v0.5",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -22,7 +22,8 @@
     "FWD-11",
     "FWD-12",
     "FWD-13",
-    "FWD-14"
+    "FWD-14",
+    "FWD-15"
   ],
   "status": "RATIFIED"
 }
@@ -46,6 +47,33 @@
 | **L2 endpoint** | `.../deliverables/AMGT_RESAPP_ENDPOINT_20260910.md` @`3bc8f5f2c4` |
 | **Origin** | Adam Muller (Head of Asset Management) -> Andrew, 2026-09-10, "Claude automation" |
 
+### ENDPOINT provenance and history -- held HERE, deliberately
+
+**This block lives in the PRD PREAMBLE, which belongs to NEITHER sign-off half** (`half_of_section`
+returns `None` for the pre-heading text), so the record below is preserved without contaminating
+`ENDPOINT` and without re-opening the CRO's brief half. It was moved out of `ENDPOINT` on the L4-R
+refusal @`1ec5ade3f5` (review `.../AMGT_RESAPP_v04_RATIFIED_TEXT_REVIEW_20260911_Z.md`@`cfaa24b7b8`),
+which held that L4-R forbids annotation, history and seat names across the whole section.
+
+- **Outcome provenance.** The outcomes are reproduced VERBATIM from the L2 endpoint @`3bc8f5f2c4`
+  and are NOT re-authored in this PRD. `FWD-1`..`FWD-12` derive from brief `O1`-`O12`; `FWD-13` and
+  `FWD-14` were added at L2 and accepted without reservation by `4.0.0_SA_CRO~Z` (msg 21001) as its
+  own gaps. `FWD-15` came from Andrew's frontend walkthrough (the Lead Panel), carried in
+  `4.0.0_SA_CRO`'s full-stack vision Part C and this seat's synthesis, and was CONFIRMED by Andrew
+  2026-09-11 ~12:1xZ ("Recs approved") as his reserved L2 confirmation.
+- **The transcription omission, recorded rather than quietly fixed.** The staged copy of this PRD
+  carried a POINTER to the L2 endpoint artifact instead of the outcome cards, with a note saying the
+  block "is transcribed into this section when this file lands in the tree." The landing was
+  byte-for-byte, so the transcription never happened, and for roughly an hour the outcomes existed
+  only in a deliverable while the PRD that cites them held none -- `FWD_DEF_RE` measured **0
+  outcomes defined**. This is the same TWO-CARRIER shape that cost `NFRA_REPORT` a round the same
+  morning, committed again by the same seat hours after writing the correction. Found by
+  `2.0.0_SA_COO~ZZZ` running the L6 gate's own functions with a positive control, not by its author.
+  **The `ENDPOINT` section is the only carrier of the cards.**
+- **Stale count corrected in the same amendment.** The L5 bar read "Thirteen outcomes cannot be
+  closed by any build" while the section carries FOURTEEN `EXERCISED` outcomes; the reviewer caught
+  it and it now reads "Fourteen".
+
 ---
 
 ## 0. THE VERSION HAZARD -- BINDING ON EVERY READER OF THIS PRD
@@ -62,10 +90,6 @@ citing the brief cites `@19ce7d5b4d` explicitly** and reads from the working tre
 ---
 
 ## ENDPOINT (step 2, /endpoint --forward)
-
-**The fourteen outcomes are reproduced VERBATIM from the L2 endpoint @`3bc8f5f2c4` and are NOT
-re-authored here.** `FWD-1`..`FWD-12` derive from brief `O1`-`O12`; `FWD-13` and `FWD-14` were added
-at L2 and **accepted without reservation by `4.0.0_SA_CRO~Z`** (msg 21001) as its own gaps.
 
 ⛔ **`FWD-n` IDS ARE PERMANENT AND NEVER REUSED.** A new outcome takes the next unused number; a
 retired one leaves its number vacant forever. The round-N analysis and any addendum cite them back.
@@ -200,24 +224,26 @@ disputable, by rule, and carry no technical language.*
                     somebody is told.
          SOURCE     brief PART V ("an enumerated list with no owner lapses
                     silently ... the same failure that left two keys dead")
+
+  FWD-15 A PM can see which covered names are worth looking at right now,
+         without opening each one -- ranked by how much they are moving or
+         being talked about, and can jump straight to any name
+         DONE WHEN  EXERCISED -- a PM has actually opened the page, read the
+                    ranked list, and clicked through to a name it surfaced
+         ACCEPT     Adam or Lauren opens the page cold, sees a short ranked
+                    list of names that are moving in price or spiking in
+                    discussion, and follows one into its full page -- a
+                    decision about WHERE TO LOOK that they would otherwise
+                    have made by gut or by scrolling a spreadsheet.
+         SOURCE     Andrew's frontend walkthrough (the Lead Panel); his
+                    reserved L2 confirmation
 ```
 
-> ⛔ **TRANSCRIBED HERE 2026-09-10 ~19:1xZ, AND THE OMISSION IS RECORDED RATHER THAN QUIETLY
-> FIXED.** The staged copy of this PRD carried a POINTER to the L2 endpoint artifact instead of
-> these cards, with a note saying the block "is transcribed into this section when this file lands
-> in the tree." **The landing was byte-for-byte, so the transcription never happened**, and for
-> roughly an hour the fourteen outcomes existed only in a deliverable while the PRD that cites them
-> held none. `FWD_DEF_RE` measured **0 outcomes defined**. ⛔ **THIS IS THE SAME TWO-CARRIER SHAPE
-> THAT COST `NFRA_REPORT` A ROUND THIS MORNING, COMMITTED AGAIN BY THE SAME SEAT HOURS AFTER
-> WRITING THE CORRECTION.** Found by `2.0.0_SA_COO~ZZZ` running the L6 gate's own functions with a
-> positive control, not by its author. **This section is now the only carrier.**
+**BAR DISTRIBUTION: 14 of 15 are `EXERCISED`; only `FWD-9` is `APPLIED`.**
 
-**BAR DISTRIBUTION: 13 of 14 are `EXERCISED`; only `FWD-9` is `APPLIED`.**
-
-⚠ **THIS IS THE MOST IMPORTANT SINGLE FACT FOR L5.** Thirteen outcomes cannot be closed by any build.
-**No cell may claim an `EXERCISED` outcome REALIZED on the strength of its own artifact** -- the
-sibling project on this fabric graded eight outcomes REALIZED today against an artifact that had
-never run once. **Grade the `DONE WHEN` state line, never the `ACCEPT` paragraph beside it.**
+⚠ **THIS IS THE MOST IMPORTANT SINGLE FACT FOR L5. Fourteen outcomes cannot be closed by any
+build.** **No cell may claim an `EXERCISED` outcome REALIZED on the strength of its own artifact.**
+**Grade the `DONE WHEN` state line, never the `ACCEPT` paragraph beside it.**
 
 ---
 
@@ -477,6 +503,88 @@ cell that touches the vendor.
 
 ---
 
+### 3b. THE APPROVED SURFACE -- ANDREW-DIRECT 2026-09-11 ~12:1xZ ("Recs approved")
+
+Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_121xZ_OPEN_CALLS_ALL_FOUR_RECS_APPROVED.md`.
+
+**⛔ `C-DESIGN-SPEC-FIRST` IS LIFTED FOR THIS PROJECT.** Andrew approved the amended page shape: three
+tabs (Thesis / Peers / Coverage) beneath a persistent **Lead Panel**; Print as a header export action;
+the Model tab CUT with its figures rehomed into Thesis and the Security overlay. `.tsx` is authorized
+in the SURFACE round (a later issuance, after round 4 drains). `FWD-15` is his confirmed outcome.
+
+**`C-AMGT-ARTICLES-STORE`** -- per-ticker article content lands in a NEW DynamoDB table
+`opal-harvest-articles` (RENAMED from `opal-amgt-articles` 2026-09-11; env knob
+`HARVEST_ARTICLES_TABLE`), shaped like `opal-news-articles` (title/source/url/published_at/sentiment) plus
+`ticker`/`security_key` (via S12) and `platform`. GENUINELY SEPARATE from the general-market
+`opal-news-articles` (not that table with a filter) and from `opal-data-harvest` (which stays S1's
+model-block + S5's print-snapshot home; RENAMED from `opal-data-research` 2026-09-11, env knob
+`HARVEST_BUCKET`). Serves S4 (`FWD-4`) + S13 (`FWD-11`). ⛔ S12 must resolve each
+platform's OWN identifier before dispatch (SA symbol-slug, Bloomberg `"TICKER US Equity"`, FT id).
+
+**`C-SERVER-SIDE-RANKING`** -- Trending/Breakout/Price/Chatter are computed SERVER-SIDE by daily jobs
+and written as pre-computed per-ticker rows into a SEPARATE metrics table
+`opal-harvest-security-metrics` (RENAMED from `opal-amgt-security-metrics` 2026-09-11, MIGRATED with
+42 live rows on full item equality; env knob `HARVEST_METRICS_TABLE`)
+(mirroring the proven `opal-news-articles` / `opal-news-trending-daily` split). The Lead Panel READS
+them and never re-derives a ranking at render time. Chatter axis = the committed chatter gate (30-day,
+0-100 normalized, TOP_N=10); Price axis = the new engine (S16).
+
+**`C-PRICE-RANKING-BOXSIDE`** -- the price axis reads Bloomberg historical/intraday and therefore runs
+in the BOX-SIDE puller shape (the ETF-daily-pull shape), NOT a Lambda calling Bloomberg. 30-day window,
+matching chatter (Andrew unified both to 30).
+
+**`C-HARVESTER-COMPUTE`** -- ⭐ **AMENDED AT v0.5 (addendum s.8). The compute moves OUT of this
+project's build and INTO the HARVEST ESTATE**, which Andrew assigned to `4.0.0_SA_CRO~Z` to oversee and
+execute (Andrew-direct 2026-09-11 ~17:3xZ) and whose architecture he APPROVED ~18:3xZ.
+**ONE box and ONE lambda**, harvest-named, declared in the ONE harvester terraform module -- **not the
+four harvesters on a shared box this constraint previously specified, and not
+`infra/aws/terraform/amgt-resapp/`.** It keeps AMGT_RESAPP's OWN IAM role and write access to the
+article store, and the ASTN_WSJFT box is still explicitly NOT reused.
+⛔ **THE BOX IS AN EC2 INSTANCE. IT IS NOT SITE-Z.** Andrew-direct ~18:3xZ, VERBATIM: *"this box is
+sitez. it is a local server at Opal, not an aws cloud box. accordingly it is not terraformed nor
+included in the aws resource cloud."* A local server cannot sit inside a canonical, self-contained,
+terraformed estate, so site-Z is ruled OUT as the box -- while remaining fine for the one-shot
+BACKFILL, which is an operator PROCESS and never was a provisioned resource.
+⛔ Refresh must still WAKE the stopped box (SSM / inf-jwt-trigger shape) or it silently no-ops.
+**EXECUTION ORDER, Andrew-approved:** module consolidation + renames FIRST, THEN the backfill, THEN
+the box and lambda. **THE RENAMES ARE DONE** (`4.0.0_SA_CRO~Z`, 2026-09-11, under Andrew's
+~19:5xZ full-authority word): bucket migrated with all 53 objects verified and the source deleted;
+both tables migrated and the old ones deleted.
+BLOCKED: **ITS STATED PREMISE -- "while both stores are empty (0 items, measured)" -- WAS FALSE, AND
+THE WORD "measured" WAS THIS SEAT'S.** It rested on DynamoDB `ItemCount`, which is a ~6-HOURLY CACHE,
+not a measurement. Measured properly on 2026-09-11, same table, two instruments:
+`describe-table ItemCount` -> **0**; `scan --select COUNT` -> **42**. Both come from the live API and
+only one is live. The 42 reconcile exactly to this project's own output (rd-6: 32 PRICE + 10 CHATTER).
+A DynamoDB rename is a DESTROY/RECREATE, so on this sentence's premise the rename would have SILENTLY
+DROPPED 42 live rows belonging to two round-5 cells. Caught by `4.0.0_SA_CRO~Z` distrusting a number
+this seat had repeated, and the migration preserved all 42 on full item equality.
+
+**`C-STARRED-PER-FIRM`** -- the starred watchlist is SHARED ACROSS THE FIRM (both PMs see the same
+starred names), keyed per-firm, not per-user. Andrew-ruled 2026-09-11; reversible to per-user on his
+word. ⛔ Starring is a PURE MARKER -- it triggers no refresh and queues no harvester; Refresh is its own
+explicit action.
+
+**`C-VENDOR-WORD-HARVESTERS` (TIME-SCOPED)** -- Andrew gave the per-use word for **Seeking Alpha, FT,
+Bloomberg and WSJ** for THIS project's harvesters, **effective when the harvester box is stood up and
+ready to run -- NOT before**. ⚠ NOT a blanket grant: `C-VENDOR-EGRESS` continues to bind every other
+vendor and every other use, and the standing "availability is not authorization" law is unchanged.
+⭐ **RE-HOMED AT v0.5, AND THIS IS THE AMENDMENT THAT MATTERS MOST.** Until v0.5 this bound had no cell
+of its own -- decomposition s.13d carried it as a TIME-SCOPED BOUND ON `rd-4`, deliberately, so the
+subtraction balanced visibly. **Superseding `rd-4` therefore removes this constraint's only carrier.**
+It is re-homed HERE, onto the HARVEST ESTATE's acquisition surface, **with all three limits intact:
+the four named platforms, THIS project's harvesters only, and not before the box stands.**
+⛔ **AND IT IS NOT WIDENED BY THE HARVEST HANDOVER.** Andrew's ~17:3xZ grant of "full egress and
+override authority" to `4.0.0_SA_CRO~Z` is authority to REALIZE THE ESTATE; it is **not** a widening of
+`C-VENDOR-EGRESS`. Recorded in writing rather than left to assumption, because a narrow time-scoped
+grant losing its carrier at the same moment broad-sounding egress language arrives is exactly how a
+bound quietly becomes blanket with nobody seeing it happen.
+⛔ **A PROXY VENDOR IS A SEPARATE, UNANSWERED QUESTION.** This constraint authorises egress TO the four
+platforms. It does **not** authorise a new PROXY VENDOR for platforms that did not use one -- extending
+Bright Data Web Unlocker from WSJ to the three SESSION harvesters is a NEW per-use vendor call for
+Andrew, never an inference from an EC2 IP proving unworkable against PerimeterX.
+
+---
+
 ## 4. SURFACE MANIFEST (step 4 -> step 5) -- one row per ENGINE
 
 | id | outcome | surface | claim | measured-by | verb | depends on | bound |
@@ -486,7 +594,7 @@ cell that touches the vendor.
 | S3 | `FWD-3` | THE PROVENANCE FACE -- source, basis and vintage beside every figure | absent | F3 (basis stated beside the number, Andrew-ruled) | wire | S1 | `C-BLOOMBERG-BASIS` |
 | S4 | `FWD-4` | THE COVERAGE READER -- recent commentary, ranked by recency and frequency | absent | F7 (the landed corpus is an ARCHIVE, not a feed: dates stop at 2026-04, 0 of 200 sampled carry a ticker); F11 (the SERP path works; the obvious link field is an obfuscated redirect) | build | S12 | `C-VENDOR-EGRESS`, `C-RULE-MUST-EXIST` |
 | S5 | `FWD-5` | THE PRINT RENDERER -- Adam's artifact | absent | F1 (template and packs are consistent, provenance confirmed by a shared misspelling) | build | S1, S3 | `C-DESIGN-SPEC-FIRST` |
-| S6 | `FWD-6` | THE VERSION STORE -- snapshots that accumulate rather than overwrite | absent | brief O6; PART V (`opal-data-research` measured ABSENT on the live plane) | build | -- | `C-RAW-BEFORE-DERIVED` |
+| S6 | `FWD-6` | THE VERSION STORE -- snapshots that accumulate rather than overwrite | **STORE EXISTS; surface absent** | brief O6; `opal-data-harvest` (RENAMED from `opal-data-research` 2026-09-11, 53 objects migrated and verified, source deleted) was created by THIS project's own `AMGT-s-6` (CLOSED deploy-completion @2026-09-10T20:59Z; declared at `infra/aws/terraform/harvest/s3.tf` -- **the former citation `infra/aws/terraform/research/s3.tf:11` is DEAD, that module was retired 2026-09-11**); **versioning `Enabled`, so FWD-6's accumulate-never-overwrite bar is met BY CONFIG, not by convention**; no lifecycle, so accumulation is not silently truncated; read/list access MEASURED. Row `AMGT_RESAPP-Z-S8` | **INTEGRATE -- no create cell** | -- | `C-RAW-BEFORE-DERIVED` |
 | S7 | `FWD-7` | THE COVERAGE-FRESHNESS VIEW -- Adam's one place | absent | brief O7 | wire | S6 | -- |
 | S8 | `FWD-8` | THE PEER SET -- comparable to THIS company, or absent with a reason | **BROKEN TODAY** | F6: 48 of 54 (88.9%) carry a stale set copied from one workbook; 4 (7.4%) are genuine and hand-chosen | build | S12 | `C-IDENTITY-RESOLVED`, `C-SHARED-DEFECT` |
 | S9 | `FWD-9` | THE DRAFTING FACE -- generated prose marked, beside its evidence | absent | brief O9; Andrew's ruling on limb order | wire | S1, S4 | `C-VERBATIM-GATE` |
@@ -496,6 +604,7 @@ cell that touches the vendor.
 | S13 | `FWD-11` | THE SOCIAL FEED -- admitted by a stated rule | absent | F12 (1,763 datasets LISTED, none exercised); F13 (0 cashtag-native) | **measure, then build** | S11, S12 | ⛔ `C-LISTING-NOT-CAPABILITY`, `C-VENDOR-EGRESS` |
 | S14 | `FWD-12` | THE INPUT LEDGER -- per class: source, last run, outcome, re-run | absent | brief O12 | wire | S6 | `C-STAGE-PERSISTS` |
 | S15 | `FWD-14` | THE LIST REGISTER -- allowlist + social map, each owned, each with a rot signal | absent | PART V (both rot; an unowned list lapses silently) | build | S12 | `C-LIST-OWNER` |
+| S16 | `FWD-15` | THE LEAD PANEL + ITS RANKINGS -- universe discovery: Trending/Breakout x Price/Chatter, List/Chart, Security overlay, Starred | absent | Andrew's frontend walkthrough; CRO full-stack vision Part C; CONFIRMED 2026-09-11 | build | S4, S8, S12, S13 | `C-SERVER-SIDE-RANKING`, `C-PRICE-RANKING-BOXSIDE`, `C-STARRED-PER-FIRM`, `C-AMGT-ARTICLES-STORE` |
 
 ⭐ **S12 IS THE ROOT AND IT IS NOT IN THE BRIEF'S OWN SURFACE LIST.** Four surfaces depend on it
 (S4, S8, S13, S15) and it is the direct remedy for the one defect this project has actually measured
@@ -516,8 +625,42 @@ Carried from brief PART V. **These are preconditions, not outcomes -- no `FWD-n`
   local to one device. **Any design must say how a browser request reaches it.**
 - **The Bloomberg session's state is visible to the user.** Sign-out is the most common failure and
   costs a budgeted repair; a page that fails silently against it reads as broken.
-- **`opal-data-research` exists** -- **measured ABSENT on the live plane.** `C-RAW-BEFORE-DERIVED`
-  cannot hold until it does.
+- ~~**`opal-data-research` exists** -- measured ABSENT on the live plane.~~ **RESOLVED 2026-09-11
+  -- THE BUCKET EXISTS.** Measured on the live plane at `2026-09-11T15:55Z`: `s3api head-bucket`
+  returns rc=0, `arn:aws:s3:::opal-data-research`, region `us-east-1`; the negative control
+  `opal-data-research-nope-xyz` returns 404, so this distinguishes an existing bucket from a
+  resolvable-looking name. Measured by `3.0.0_SA_CVO~Z` at 15:44Z (round-4 row
+  `AMGT_RESAPP-Z-S5`) and re-read at 15:55Z by `1.0.0_SA_CTO~Z`.
+  ⛔ **THE RE-READ IS A REPETITION, NOT A CORROBORATION, AND AN EARLIER DRAFT OF THIS BULLET CALLED
+  IT "a second instrument" -- WITHDRAWN.** Both reads are `s3api head-bucket`: the same method run
+  twice, which Rule 22 names as repetition. The one genuinely different instrument on this fact is
+  the CVO's `comp-find --corpus aws` (1 hit across 2445 nodes, `S3_BUCKET`, drift `DECLARED`).
+  ⚠ And the NEGATIVE control proves less than it appears to: `head-bucket` renders **403 as 404**,
+  so a 404 means absent **OR unauthorised**. The POSITIVE read is unaffected and carries this
+  bullet on its own -- rc=0 with a real ARN and region proves the bucket EXISTS, whatever the
+  control does.
+  ⭐ **THE HISTORY QUESTION IS ANSWERED, AND THE ANSWER IS "GENUINELY ABSENT THEN."** An earlier
+  draft of this bullet asserted the ABSENT reading "was correct when taken"; that was WITHDRAWN as
+  unmeasured, and **the withdrawal was correct ON THE EVIDENCE THEN.** Round-4 row
+  `AMGT_RESAPP-Z-S8` since supplied evidence that settles it, so the fact is carried on MEASUREMENT
+  rather than on courtesy: **`opal-data-research` was measured ABSENT TWICE and was then CREATED BY
+  THIS PROJECT'S OWN CELL.** `comp-find --corpus aws` read 0 of 2382 nodes at 2026-09-10T12:24:50Z,
+  and a live `head-bucket` re-measured it absent at **2026-09-10T20:56:33Z as cell `AMGT-s-6`'s own
+  AC1, three minutes before that cell created it**. Creation is recorded in a CLOSED
+  deploy-completion entry (`org/critical_paths/change_management/
+  20260910T2059Z_amgt-resapp-opal-data-research-bucket_deploy_completion.md`) and the resource was
+  DECLARED at `infra/aws/terraform/research/s3.tf:11` AT THAT TIME; it is now
+  `infra/aws/terraform/harvest/s3.tf` (the research module was retired 2026-09-11 and that path NO
+  LONGER EXISTS -- a citation left in the present tense would send a reader to nothing).
+  **Brief PART V is SUPERSEDED, never
+  falsified** -- and that is now a measured statement rather than a generous one.
+  ⭐ **ACCESS IS MEASURED TOO, not just existence** -- the gap an earlier draft of this bullet
+  correctly flagged as open. `list-objects-v2` SUCCEEDS and returns this project's own round-1
+  output under `derived/model_block/`, so the principal holds read/list rather than mere name
+  resolution. Configuration measured with it: **versioning `Enabled`** (re-read independently by
+  this seat), **no lifecycle configuration**, **no bucket policy** (access is IAM-only).
+  ⚠ What is still NOT claimed: write access was not exercised, and nothing here grants it.
+  `C-RAW-BEFORE-DERIVED` is no longer blocked on the bucket's existence.
 - **A decision on paywalled sources.** If analysis behind a login is in scope, the vision-
   authenticator pattern is the route; if public pages suffice, neither it nor the credential is
   needed. **Nobody has decided, and whether the login is captcha-gated is unknown.**
@@ -554,3 +697,77 @@ UNVERIFIED:   every F-numbered measurement is the CRO's, re-derived by nobody. T
 ```
 
 **Push state:** LOCAL at write time; ancestry rather than a tip hash. `0.0.0_AB_MSTR~Z` pushes.
+
+---
+
+## 8. ADDENDUM v0.5 -- THE HARVEST ESTATE (Andrew-direct 2026-09-11 ~17:3xZ and ~18:3xZ)
+
+**Author** `1.0.0_SA_CTO~Z` (L4). **Trigger:** two Andrew-directs relayed VERBATIM by `4.0.0_SA_CRO~Z`
+and recorded @`bb1800ec4d` (the five directives) and @`135aa5b0d0` (the approved draw).
+
+⛔ **THIS ADDENDUM CHANGES THE BRIEF HALF ONLY. The ENDPOINT is untouched** -- `FWD-1`..`FWD-15` are
+unchanged and the ratified-text half's hash is unmoved, so `3.0.0_SA_CVO~Z`'s signature stands. The
+brief half re-opens and is owed to `4.0.0_SA_CRO~Z`. **No outcome changed; only HOW and BY WHOM two of
+them are served.**
+
+### 8a. What Andrew ruled
+
+One box and one lambda under harvest naming, `opal-data-harvest` buckets, all worker terraform in ONE
+harvester module, and `4.0.0_SA_CRO~Z` to **oversee and execute** it with full egress and override
+authority -- behind his own gate, *"just /draw me your intended architecture and i can approve/revise."*
+The draw was APPROVED ~18:3xZ with ONE correction: **the box is an EC2 instance, NOT site-Z**, because
+a local server "is not terraformed nor included in the aws resource cloud."
+
+### 8b. What changes in round 5, and what does NOT
+
+**`rd-3` (harvester box + own IAM role) and `rd-4` (four harvesters) are SUPERSEDED** by the harvest
+estate. ⛔ **The SUPERSEDE IS THE ISSUER'S ACT, NOT THIS SEAT'S** -- `2.0.0_SA_COO~ZZZ` sets the status,
+and it correctly declined to do so before this addendum existed because coverage is graded at L10.
+⛔ **AND THE DECOMPOSITION IS NOT EDITED HERE.** `decompositions/**` is lane `TREE_COO` (checked at
+`.owned-paths.yaml`, not assumed). **Decomp s.13c's subtraction becomes FALSE the moment rd-3/rd-4 go**
+-- it reads "REMAINDER ZERO" over PRD s.3b's six constraints with `C-HARVESTER-COMPUTE -> rd-3 + rd-4`,
+and that constraint would then map to no cell in this round. **Repairing s.13c is the COO's act in its
+recut, and it must land in the SAME act as the supersede.** A subtraction record that is quietly
+falsified is worse than none, because it still prints a clean remainder.
+
+**UNCHANGED and still round 5's:** `rd-1`/`rd-2` (terminal, tables live), `rd-5`/`rd-6` (running --
+neither is the box or the lambda), `rd-7`, `rd-8`. Round 5's coverage drops from EIGHT cells to SIX.
+
+### 8c. Bounds that survive the handover -- stated because a handover is where bounds die
+
+- **`C-VENDOR-WORD-HARVESTERS` re-homed** onto the harvest estate's acquisition surface, three limits
+  intact (s.3b). It had no carrier but `rd-4`.
+- **A PROXY VENDOR IS NOT AUTHORISED.** Extending Bright Data Web Unlocker from WSJ to the three
+  SESSION harvesters is a NEW per-use vendor call for Andrew.
+- ⛔ **THE PORTAL HOLD STANDS.** `/api/private/research/pull` keeps its path and the route rename is
+  DEFERRED; nothing portal promotes, PROD or DEV, until Andrew names it. `rd-8` stays commit-yes,
+  promote-no.
+- ⭐ **SUPERSEDED 2026-09-11 ~18:5xZ -- ANDREW NAMED THE RETROACTIVE CASE AND RULED RENAME.** Verbatim:
+  *"call 2 no it should actuall be a rename there is no data in there anyway, better to have all of
+  this stuff grouped by name right from the start."* This clause previously read NO RETROACTIVE RENAME
+  absent his word; **his word has arrived.** `opal-data-research` IS renamed into harvest naming.
+  ⛔ **BUT HIS PREMISE IS FALSE AND THE ACT IS BIGGER THAN HIS SENTENCE DESCRIBES.** Measured
+  `2026-09-11T18:55:29Z` before anything moved: **53 objects, 60 versions** -- `derived/model_block/`
+  (BABA x4, BA x4, NVDA x2, SAP_GY x4), `derived/model_block_fye/` (3 tickers), `packs/*/input_ledger.json`.
+  S3 has no rename primitive. **This is a DATA MIGRATION OF 53 OBJECTS, executed as copy -> VERIFY
+  count and key grammar -> only then delete the source.** Surfaced to him; the ruling stands meanwhile.
+  ⛔ **AND THIS PRD'S EARLIER CLAIM IS WITHDRAWN AS OVERSTATED:** it said the rename "would destroy the
+  two-snapshot evidence that `FWD-6`'s accumulate bar was followed." **It would not.** That evidence
+  lives in the KEY GRAMMAR -- distinct timestamped paths -- which a copy PRESERVES. What is lost is the
+  S3 VERSION HISTORY (60 -> 53, the ~7 versions of overwritten keys), and `FWD-6` does not read those.
+  **The rename is more expensive than his sentence assumes and much cheaper than this PRD claimed.**
+  ⛔ **THE CLAIM THAT ONCE STOOD HERE -- that the two DynamoDB tables were "genuinely empty (0 items
+  measured)" -- IS WITHDRAWN AS FALSE.** It read `ItemCount`, a ~6-hourly CACHE, and called it a
+  measurement. `opal-amgt-articles` was genuinely empty; `opal-amgt-security-metrics` held **42 live
+  rows** (`scan --select COUNT`), which a destroy/recreate rename would have dropped. Both were
+  MIGRATED rather than recreated, on full item equality, and both old tables are deleted.
+- **Terraform commits ride an audited `GIT_COMMIT_AUTHOR_OVERRIDE`** naming Andrew's grant, one per
+  lane. **No `.owned-paths.yaml` edit** -- the AE-only lane rule is overridden per-commit with an audit
+  line, not amended.
+
+### 8d. What this addendum does NOT claim
+
+It does not grade any `FWD` outcome, does not authorise an apply, and does not settle whether the
+harvest consolidation absorbs the orphaned S9/S10 module reconcile -- `4.0.0_SA_CRO~Z` has since
+confirmed it does, and verified the module is genuinely broken first (`terraform validate` -> three
+duplicate-block errors), which is that seat's to carry rather than this PRD's.

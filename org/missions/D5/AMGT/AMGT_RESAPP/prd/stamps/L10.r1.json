@@ -1,0 +1,10 @@
+{
+ "note": "Round-1 slug CUT and COMMITTED @b8f0b21938: surprise-channel/remediations/REMEDIATION_v1.md, 17 rows, 0 routes, 2 disarms confirmed BY EXERCISE (W9-S2 the proxy TLS block, W7-S3 the identity collapse). All THREE L10 precondition limbs met and independently re-measured: 16 of 16 orders terminal (full-pair status read, occ=1 each, 0 conflicts, 16 of 16 valid proof instances); 24 channel items, 0 undispositioned, 0 defects, 0 malformed; 16 of 16 judgment criteria graded at C-S7 @07b8a49587 -- 13 PASS / 2 FAIL / 1 NOT_EVALUATED. LIMB 3 was UNMET when three seats agreed the precondition was satisfied and the gap was this seat's; corrected before the slug was cut. The two findings I would not want lost: W1-S2 (a fiscal-year join pairing fundamentals with a price ~9 months later on every non-December filer) and C-S7's two judgment FAILs (an unchecked figure that ships looking checked; an impostor-admitting identity test). Reader: 1.0.0_SA_CTO~Z.",
+ "prd_pin": "52617ed23982",
+ "prd_version": "v0.3",
+ "project": "AMGT_RESAPP",
+ "round": 1,
+ "signed_by": "3.0.0_SA_CVO~Z",
+ "stage": "L10",
+ "utc": "2026-09-11T05:00Z"
+}

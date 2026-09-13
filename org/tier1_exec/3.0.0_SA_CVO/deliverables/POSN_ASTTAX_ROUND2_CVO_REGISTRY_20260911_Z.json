@@ -1,0 +1,106 @@
+{
+  "measured_at": "2026-09-11T17:22:12.702120+00:00",
+  "invocation": [
+    "bash",
+    ".tools/aws",
+    "dynamodb",
+    "scan",
+    "--table-name",
+    "etf-classifications",
+    "--consistent-read",
+    "--projection-expression",
+    "ticker,asset_class,sub_asset_class,management_style,updated_by,last_updated",
+    "--output",
+    "json"
+  ],
+  "client_count": 285,
+  "returned_count": 285,
+  "scanned_count": 285,
+  "last_evaluated_key": null,
+  "style_counts": {
+    "unknown": 181,
+    "passive": 82,
+    "active": 20,
+    "<absent>": 2
+  },
+  "asset_counts": {
+    "equity": 216,
+    "fixed_income": 62,
+    "hedge": 7
+  },
+  "blank_subclass_count": 0,
+  "selected_rows": [
+    {
+      "asset_class": "hedge",
+      "last_updated": "2026-08-18T18:05:00Z",
+      "management_style": "passive",
+      "sub_asset_class": "Silver",
+      "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)",
+      "ticker": "SLV"
+    },
+    {
+      "asset_class": "equity",
+      "last_updated": "2026-08-25T17:48:57Z",
+      "management_style": "unknown",
+      "sub_asset_class": "Utilities",
+      "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)",
+      "ticker": "MER"
+    },
+    {
+      "asset_class": "equity",
+      "last_updated": "2026-08-25T17:48:57Z",
+      "management_style": "unknown",
+      "sub_asset_class": "Industrials",
+      "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)",
+      "ticker": "ICT"
+    },
+    {
+      "asset_class": "hedge",
+      "last_updated": "2026-08-18T18:05:00Z",
+      "management_style": "passive",
+      "sub_asset_class": "Oil",
+      "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)",
+      "ticker": "USO"
+    },
+    {
+      "asset_class": "equity",
+      "last_updated": "2026-08-25T17:48:57Z",
+      "management_style": "unknown",
+      "sub_asset_class": "Financials",
+      "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)",
+      "ticker": "2602335D"
+    },
+    {
+      "asset_class": "hedge",
+      "last_updated": "2026-08-18T18:05:00Z",
+      "management_style": "passive",
+      "sub_asset_class": "Gold",
+      "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)",
+      "ticker": "IAU"
+    },
+    {
+      "asset_class": "hedge",
+      "last_updated": "2026-08-18T18:05:00Z",
+      "management_style": "passive",
+      "sub_asset_class": "Gold",
+      "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)",
+      "ticker": "GLD"
+    },
+    {
+      "asset_class": "hedge",
+      "last_updated": "2026-08-18T18:05:00Z",
+      "management_style": "passive",
+      "sub_asset_class": "Commodities",
+      "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)",
+      "ticker": "DBC"
+    },
+    {
+      "asset_class": "hedge",
+      "last_updated": "2026-08-18T18:05:00Z",
+      "management_style": "passive",
+      "sub_asset_class": "Commodities",
+      "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)",
+      "ticker": "GSG"
+    }
+  ]
+}

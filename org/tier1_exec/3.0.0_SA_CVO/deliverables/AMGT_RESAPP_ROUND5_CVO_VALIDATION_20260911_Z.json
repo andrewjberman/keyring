@@ -1,0 +1,68 @@
+{
+  "utc": "2026-09-11T21:40:48Z",
+  "scope": "Draft schema and citing coverage; full staged gate also runs in safe-commit",
+  "originals": 56,
+  "prior_dispositioned": 31,
+  "new_dispositioned": 25,
+  "effective_undispositioned": [],
+  "schema_errors": [],
+  "unique_adjudication_ids": true,
+  "new_rows": 28,
+  "new_original_dispositions": {
+    "GRADUATED": 18,
+    "DISMISSED_WITH_REASON": 7
+  },
+  "grades": [
+    {
+      "criterion": "AMGTrd1-AC4",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/AMGT_RESAPP.TO-AMGT-rd-1.article-store-table.proof_of_spec.json@dfcf98aa6860104969cd9853cf41dad5618aaa3a",
+      "verdict": "PASS",
+      "reason": "AC4 asks for a genuinely separate article store with per-security/platform time lookup, not a news-table filter. The pinned table/shape record supplies the distinct key and both GSIs. This grades the issued storage design; an empty new store and a cached news ItemCount do not prove article coverage."
+    },
+    {
+      "criterion": "AMGTrd2-AC4",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~2/AMGT_RESAPP.TO-AMGT-rd-2.metrics-store-table.proof_of_spec.json@fb4ee36d8add25b03648b5c602e1d71a1338a81f",
+      "verdict": "PASS",
+      "reason": "AC4 asks for precomputed axis/rank rows retrievable without scan-and-rank. The pinned schema has axis_date/ticker keys and axis-rank-index with rank_sort, enabling ordered Query and point retrieval. It does not prove an HTTP adapter exists or prohibit every caller from scanning."
+    },
+    {
+      "criterion": "AMGTrd5-AC4",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~2/AMGT_RESAPP.TO-AMGT-rd-5.chatter-axis-scheduled-producer.proof_of_spec.json@b85bf8d729fcee558ee04e648e0cfc499768b64c",
+      "verdict": "PASS",
+      "reason": "AC4 asks for a scheduled producer, not a monitor, with the issued 30-day/0-100/top-10 semantics. The pinned worker instance, schedule source and producer controls meet that bar; zero article counts legitimately yield zero scores. This historical grade predates the migration residual in C-S49 and does not certify the currently deployed package, IAM or next scheduled run."
+    },
+    {
+      "criterion": "AMGTrd6-AC4",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~6/AMGT_RESAPP.TO-AMGT-rd-6.price-axis-boxside-engine.proof_of_spec.json@adb1f99a6968a7804dacc743aae2d98350d4c6ee",
+      "verdict": "PASS",
+      "reason": "AC4 asks for a boxside Bloomberg price engine, not a Lambda, with the specified window/ranking semantics. The pinned host record, blp_client use and price functions meet that bar; 32 measured results out of 34 attempted are recorded rather than relabelled 34 successes. No new Bloomberg call was made by CVO."
+    },
+    {
+      "criterion": "AMGTrd7-AC4",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~7/AMGT_RESAPP.TO-AMGT-rd-7.starred-watchlist-per-firm-pure-marker.proof_of_spec.json@8b63e783025d14924a71a8b1a1357f61b12920e4",
+      "verdict": "PASS",
+      "reason": "AC4 asks for per-firm starred storage as a pure marker, without research/queue side effects. The pinned store keys by WATCHLIST#firm and writes/deletes one marker; offline tests corroborate shared-firm behavior and side-effect absence. This storage-level judgment does not certify a missing HTTP authentication boundary, pagination completeness or the uncovered test-harness mutation path in W7-S7."
+    },
+    {
+      "criterion": "AMGTrd8-AC4",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~2/AMGT_RESAPP.TO-AMGT-rd-8.lead-panel-and-three-tabs.proof_of_spec.json@1a619eef6fe364315295f76efc6bd408b84e3127",
+      "verdict": "FAIL",
+      "reason": "AC4 and the inlined rd8 cell require the approved page shape and a read headless route render. At e6057f26 the persistent panel, three tabs and header Print location are present, but Trending/Breakout are mapped one-to-one to Chatter/Price instead of crossed controls; required /api/scoped/amgt adapters are not delivered; renderCheck.tsx renders fixture components and a PrintTriggerButtonReplica rather than the actual route/action. It cannot establish live ranking reads or renderer wiring. The StarredList iterates stored starred order, contrary to the report's producer-order filter claim; RankedChart is ticker-indexed and has no time-series implementation despite the stated automatic second-day behavior. Compile success cannot satisfy these clauses."
+    },
+    {
+      "criterion": "AMGTrd8-AC2",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~2/AMGT_RESAPP.TO-AMGT-rd-8.lead-panel-and-three-tabs.proof_of_spec.json@1a619eef6fe364315295f76efc6bd408b84e3127",
+      "verdict": "FAIL",
+      "reason": "AC2 requires an independent clean no-emit staleness check. The issued root --noEmit invocation examines zero source files and misses the positive-control TS2322 error. The worker's -b/--force evidence diagnoses the instrument, but AC1 alone does not meet the independent control as issued. FAIL is the criterion/instrument verdict, not an accusation against the worker who correctly refused a false PASS. A corrected invocation and its cold/mutant controls require the issuer's existing-cell recut."
+    }
+  ],
+  "open_tos": [
+    [
+      "AMGT_RESAPP.TO-AMGT-rd-8.lead-panel-and-three-tabs.md [staged]"
+    ],
+    36,
+    ""
+  ],
+  "adjudication_sha256": "7142bc04eec7b620ae5202a2a75636d961bfaee7a3d652cd6a427052125a4cff",
+  "head": "652ca9e2dde51d9f8f7c4232c8ed277171373d8a"
+}

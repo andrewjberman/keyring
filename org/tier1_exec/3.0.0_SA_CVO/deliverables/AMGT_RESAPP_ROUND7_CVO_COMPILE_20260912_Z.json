@@ -1,0 +1,19 @@
+{
+    "denominators":  {
+                         "investigation_items":  94,
+                         "adjudication_rows":  102,
+                         "duplicate_ids":  {
+
+                                           },
+                         "remediation_rows":  76,
+                         "open":  0,
+                         "armed":  70,
+                         "files":  88
+                     },
+    "open":  [
+
+             ],
+    "malformed":  [
+
+                  ]
+}

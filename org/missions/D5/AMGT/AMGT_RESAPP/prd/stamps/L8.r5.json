@@ -1,0 +1,10 @@
+{
+  "note": "Snapshot: 56 original investigation items seen (55 in packet plus late S22); 31 prior dispositions and 25 reviewed this round. All 34 cumulative proof instances structurally VALID; 36 orders, rd8 alone staged. Evidence checkpoint 11a1461029 plus CVO source and validation records. No unmeasured live-watcher/readiness claim.",
+  "prd_pin": "932d83eb1704f3e9e9364a803a6478d178c23093",
+  "prd_version": "v0.5",
+  "project": "AMGT_RESAPP",
+  "round": 5,
+  "signed_by": "3.0.0_SA_CVO~Z",
+  "stage": "L8",
+  "utc": "2026-09-11T21:40:48Z"
+}

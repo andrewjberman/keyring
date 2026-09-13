@@ -1,0 +1,9 @@
+{
+ "note": "round 2 amended at v0.5: 7 cells. Subtracting C-RETAG-SAFETY's four-step sequence left two uncovered -- AT2-s-6 harden the generator, AT2-s-7 verify the five-class chain. The asset_class KeyError is MEASURED at lambda_function.py:239 and is immediate rather than latent; retag is strictly last. fanout 3 of 3 chains cap 8, coverage 7 of 7",
+ "prd_pin": "f5d38390682b",
+ "prd_version": "v0.5",
+ "project": "POSN_ASTTAX",
+ "signed_by": "2.0.0_SA_COO~Z",
+ "stage": "L5",
+ "utc": "2026-09-11T08:00Z"
+}

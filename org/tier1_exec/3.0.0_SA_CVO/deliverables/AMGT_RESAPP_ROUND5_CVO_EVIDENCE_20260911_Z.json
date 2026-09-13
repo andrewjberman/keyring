@@ -1,0 +1,1924 @@
+{
+  "utc": "2026-09-11T21:21:01.903348+00:00",
+  "serial": "3.0.0_SA_CVO~Z",
+  "head_start": {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "rc": 0,
+    "stdout": "e07fcc91ea8772f4659db300565b2f187252ac44\n",
+    "stderr": ""
+  },
+  "scope": "Repository evidence; no AWS write, vendor call, deploy or portal mutation.",
+  "intake": {
+    "investigation_count": 55,
+    "latest": {
+      "AMGT_RESAPP-Z-S1": {
+        "row": "AMGT_RESAPP-Z-C-S4",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-S2": {
+        "row": "AMGT_RESAPP-Z-C-S2",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W7-S1": {
+        "row": "AMGT_RESAPP-Z-C-S2",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W7-S2": {
+        "row": "AMGT_RESAPP-Z-C-S2",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W3-S1": {
+        "row": "AMGT_RESAPP-Z-C-S4",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W3-S2": {
+        "row": "AMGT_RESAPP-Z-C-S2",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W7-S3": {
+        "row": "AMGT_RESAPP-Z-C-S1",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-S3": {
+        "row": "AMGT_RESAPP-Z-C-S1",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W5-S1": {
+        "row": "AMGT_RESAPP-Z-C-S4",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W1-S1": {
+        "row": "AMGT_RESAPP-Z-C-S1",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W1-S2": {
+        "row": "AMGT_RESAPP-Z-C-S4",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W9-S1": {
+        "row": "AMGT_RESAPP-Z-C-S1",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W9-S2": {
+        "row": "AMGT_RESAPP-Z-C-S6",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W7-S4": {
+        "row": "AMGT_RESAPP-Z-C-S5",
+        "disposition": "DISMISSED_WITH_REASON",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W7-S5": {
+        "row": "AMGT_RESAPP-Z-C-S2",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W1-S3": {
+        "row": "AMGT_RESAPP-Z-C-S3",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W3-S3": {
+        "row": "AMGT_RESAPP-Z-C-S4",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W4-S1": {
+        "row": "AMGT_RESAPP-Z-C-S4",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W3-S4": {
+        "row": "AMGT_RESAPP-Z-C-S2",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W2-S1": {
+        "row": "AMGT_RESAPP-Z-C-S4",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W2-S2": {
+        "row": "AMGT_RESAPP-Z-C-S2",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W2-S3": {
+        "row": "AMGT_RESAPP-Z-C-S3",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W2-S4": {
+        "row": "AMGT_RESAPP-Z-C-S3",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W1-S4": {
+        "row": "AMGT_RESAPP-Z-C-S3",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v1.md"
+      },
+      "AMGT_RESAPP-Z-W1-S5": {
+        "row": "AMGT_RESAPP-Z-C-S8",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v2.md"
+      },
+      "AMGT_RESAPP-Z-W3-S5": {
+        "row": "AMGT_RESAPP-Z-C-S10",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v2.md"
+      },
+      "AMGT_RESAPP-Z-W2-S5": {
+        "row": "AMGT_RESAPP-Z-C-S9",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v2.md"
+      },
+      "AMGT_RESAPP-Z-S4": {
+        "row": "AMGT_RESAPP-Z-C-S10",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v2.md"
+      },
+      "AMGT_RESAPP-Z-W5-S2": {
+        "row": "AMGT_RESAPP-Z-C-S17",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v3.md"
+      },
+      "AMGT_RESAPP-Z-W1-S6": {
+        "row": "AMGT_RESAPP-Z-C-S21",
+        "disposition": "DISMISSED_WITH_REASON",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v4.md"
+      },
+      "AMGT_RESAPP-Z-S5": {
+        "row": "AMGT_RESAPP-Z-C-S23",
+        "disposition": "GRADUATED",
+        "file": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v4.md"
+      },
+      "AMGT_RESAPP-Z-S6": null,
+      "AMGT_RESAPP-Z-S7": null,
+      "AMGT_RESAPP-Z-S8": null,
+      "AMGT_RESAPP-Z-S9": null,
+      "AMGT_RESAPP-Z-W1-S7": null,
+      "AMGT_RESAPP-Z-S10": null,
+      "AMGT_RESAPP-Z-S11": null,
+      "AMGT_RESAPP-Z-W2-S6": null,
+      "AMGT_RESAPP-Z-W2-S7": null,
+      "AMGT_RESAPP-Z-S12": null,
+      "AMGT_RESAPP-Z-W7-S6": null,
+      "AMGT_RESAPP-Z-W7-S7": null,
+      "AMGT_RESAPP-Z-S13": null,
+      "AMGT_RESAPP-Z-S14": null,
+      "AMGT_RESAPP-Z-S15": null,
+      "AMGT_RESAPP-Z-S16": null,
+      "AMGT_RESAPP-Z-S17": null,
+      "AMGT_RESAPP-Z-S18": null,
+      "AMGT_RESAPP-Z-S19": null,
+      "AMGT_RESAPP-Z-S20": null,
+      "AMGT_RESAPP-Z-W2-S8": null,
+      "AMGT_RESAPP-Z-W2-S9": null,
+      "AMGT_RESAPP-Z-W2-S10": null,
+      "AMGT_RESAPP-Z-S21": null
+    },
+    "new_ids": [
+      "AMGT_RESAPP-Z-S6",
+      "AMGT_RESAPP-Z-S7",
+      "AMGT_RESAPP-Z-S8",
+      "AMGT_RESAPP-Z-S9",
+      "AMGT_RESAPP-Z-W1-S7",
+      "AMGT_RESAPP-Z-S10",
+      "AMGT_RESAPP-Z-S11",
+      "AMGT_RESAPP-Z-W2-S6",
+      "AMGT_RESAPP-Z-W2-S7",
+      "AMGT_RESAPP-Z-S12",
+      "AMGT_RESAPP-Z-W7-S6",
+      "AMGT_RESAPP-Z-W7-S7",
+      "AMGT_RESAPP-Z-S13",
+      "AMGT_RESAPP-Z-S14",
+      "AMGT_RESAPP-Z-S15",
+      "AMGT_RESAPP-Z-S16",
+      "AMGT_RESAPP-Z-S17",
+      "AMGT_RESAPP-Z-S18",
+      "AMGT_RESAPP-Z-S19",
+      "AMGT_RESAPP-Z-S20",
+      "AMGT_RESAPP-Z-W2-S8",
+      "AMGT_RESAPP-Z-W2-S9",
+      "AMGT_RESAPP-Z-W2-S10",
+      "AMGT_RESAPP-Z-S21"
+    ]
+  },
+  "orders": [
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-r-1.fiscal-year-join-served-correct.md",
+      "sha256": "81c11c4a84cdf25825813acc7e13bb0dc231c4c0f3e1468ac23f3233bb0e7495",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "2"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-r-10.check-face-marker-in-the-reading.md",
+      "sha256": "5a1443724e87513cd30f135e366ed5a4cd36062ea384fb142fd85647d762635e",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "2"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-r-12.identity-coverage-pass.md",
+      "sha256": "5d283561e89746154a735f46be1b24fecbe96e1e1b299ba2a0a9958f0f43b2a0",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "2"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-r-15.impostor-and-clause.md",
+      "sha256": "7d097d2ae1924f9bf5467fa134739b941401e96d91ce81dca4f9d5c699ab95e7",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "2"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-r-4.sa-coverage-re-exercise.md",
+      "sha256": "21cb30835149552eda132c276d79c41859c7b8217745f435cb0d4e38a4fa3e05",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "2"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rb-1.fiscal-join-direction-correct.md",
+      "sha256": "b362d9dded3d671962430b93367dfb2150161d36d8a518e54790715e1b772f96",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "3"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rb-10.check-face-salient-warning.md",
+      "sha256": "2e8692f3b7753098affd306d99f1de1340b4982c43a0c0f6a684429bd45092be",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "3"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rb-12.identity-decision-note-correction.md",
+      "sha256": "97f1a879ec04710c16b9d29be4b36fc4bdc45cc35570ed0f6a421b2c14d2a875",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "3"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rb-15.impostor-predicate-corrected.md",
+      "sha256": "1aa539edf2078f67337005995d13b55b22b46efe9efb170bd0c16189e2bc8ec9",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "3"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rb-2.fiscal-block-wired-to-consumer.md",
+      "sha256": "fa357f2ef22ec6fb3fdae478d6faae99c6cadb2c9a97b061736aee304e32c7e5",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "3"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rc-19.unresolved-row-contract.md",
+      "sha256": "f91bffdf353ebadeaf6d709866b2018fcc33d4b31b64ecf40e3d99a9e77dfdb2",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "4"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rc-20.vintage-derivation-identity.md",
+      "sha256": "9d94a7e9d4c0ce49c1a101fe45da430caf7036e609a9b287eb052d86bf276e7d",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "4"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rd-1.article-store-table.md",
+      "sha256": "7b3687be0238b24f487484adcdab6bef35bda05b390a90b31c568c43a71a579a",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "5"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rd-2.metrics-store-table.md",
+      "sha256": "cf5722dffb929f7dbc7f1c024332b0c95db24224691a3bcca1e722ff996dcdb4",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "5"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rd-3.harvester-box-and-own-iam-role.md",
+      "sha256": "1432be90605c47553ad75019d8b6c40fab8ed06009ffe75c53b7bb406e2e70db",
+      "status": [
+        "superseded"
+      ],
+      "round": [
+        "5"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rd-4.four-harvesters-identity-before-dispatch.md",
+      "sha256": "021dd807f4183d797a63dacd8cb7f57b5447869e5c259195f6ff0a86d6ab5a14",
+      "status": [
+        "superseded"
+      ],
+      "round": [
+        "5"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rd-5.chatter-axis-scheduled-producer.md",
+      "sha256": "a8a802ec1ca09da2acbeaa9df66657557454c79b0cd64c7c904a68a9ef763b94",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "5"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rd-6.price-axis-boxside-engine.md",
+      "sha256": "e8277675062565085ee1a90881381cf29fc4fa72f5ed7bf45bcf0168f72feea5",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "5"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rd-7.starred-watchlist-per-firm-pure-marker.md",
+      "sha256": "eefbd3660f178ee9e06d3d3ae7caac88d6def5f2c5da8b3c248090ec923d5740",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "5"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rd-8.lead-panel-and-three-tabs.md",
+      "sha256": "f0de5c22604d03c6c2d6fb3add51b271f9bb1462d7a61deddb174443ff9ac99c",
+      "status": [
+        "staged"
+      ],
+      "round": [
+        "5"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-1.model-block-bloomberg-covered-name.md",
+      "sha256": "9b77aa867216960a031115555cc3e4ead0eb1b6f8770fb45fa53442e7b603b96",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "1"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-10.check-face-pass-fail-provisional-per-figure.md",
+      "sha256": "51fec6d64f4c399e2a13e838768e403c37d88ad04e394b2f6afe65ca7081da36",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "2"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-11.qualification-rules-six-classes.md",
+      "sha256": "c4ced0a5b486d053e2d4f50c7168e6ca85deb48ffce231aca05d08f43fc2bf09",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "1"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-12.identity-layer-the-root.md",
+      "sha256": "972b938711a15ea2113bd8de87ab6cc28b6a5eec84726d914bea584356bbd1b5",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "1"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-13.social-feed-measure-then-build.md",
+      "sha256": "00dee4fd159af608cb172ee0b4aea136af2020767d26de682f4316f79fe1810e",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "2"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-14.input-ledger-per-class-rerun-alone.md",
+      "sha256": "201e6ffe1fdb8801e879b857f11d74c32cc9cbc3a8be6582cd0073b97ab4b8f6",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "2"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-15.list-register-owned-lists-with-a-rot-signal.md",
+      "sha256": "fb382ad9e607e4a27420e956a400cd7b815d012346108e8652aea76ac1c68201",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "2"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-2.on-demand-pull-the-seam-design-then-build.md",
+      "sha256": "f7826399241ee0793066726981e93f8c3823e4790c73f08bbd10421901fcdba2",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "2"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-3.provenance-face-beside-every-figure.md",
+      "sha256": "3b2d45d0c27b8ffc6d877c7f93589a3964be03aaefabbe68e27e32a680dcf988",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "2"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-4.coverage-reader-non-sa-sources.md",
+      "sha256": "922cdab88bce0d2cef51766c8414e4a3896c82bc5a8bb38b2b6267d4251f4658",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "2"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-5.print-renderer-design-spec-then-adams-artifact.md",
+      "sha256": "4325c58b5f4048de1377fe6cc934933f463a80a3d36b11f6af2157290f38732c",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "3"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-6.version-store-opal-data-research.md",
+      "sha256": "8fe87968e8145bb1dc8b3640dc6ebbbef5777d7a8828e7374e93b5e552d210d3",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "1"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-7.coverage-freshness-view-one-place.md",
+      "sha256": "77d760e2bd6252790a5ccc9969f36c545efa97e14c82a96efe359267f0530970",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "2"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-8.peer-set-comparable-or-absent-with-a-reason.md",
+      "sha256": "2961af7c791e91e65ff9c968a8fa61e7fac961fd6e54a4d619c23ae889f5c31f",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "2"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-9.drafting-face-marked-beside-its-evidence.md",
+      "sha256": "279c49cf7c4d8e1195b6d8ca5c1a48e0ea9a86ffa3a0456e3be7dba72e7647aa",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "3"
+      ]
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-b4.seeking-alpha-backend-the-measured-route.md",
+      "sha256": "cfc77c16ded51582e839b638e834cdb86a75a6bf4c8ce9b7210a8917f86fe731",
+      "status": [
+        "complete"
+      ],
+      "round": [
+        "2"
+      ]
+    }
+  ],
+  "proofs": [
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/AMGT_RESAPP.TO-AMGT-r-1.fiscal-year-join-served-correct.proof_of_spec.json",
+      "sha256": "dc499e8af2ff20caf57b772d3e3e3f52f0d13c04236c94ae8653da2ee9f1fdea",
+      "to_id": "AMGT_RESAPP.TO-AMGT-r-1",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-r-1.fiscal-year-join-served-correct.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "91ec92c3c537c742a081503248b2884b48d20d88\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-r-1.fiscal-year-join-served-correct.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=4 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 3d2d7af6e076563fe241f36b5a4e80124e0110c2 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-r-1.fiscal-year-join-served-correct.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 4/4 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 10 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 91ec92c3c5) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 10 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 3 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 7 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-r-1.fiscal-year-join-served-correct.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/AMGT_RESAPP.TO-AMGT-rb-1.fiscal-join-direction-correct.proof_of_spec.json",
+      "sha256": "e1925b2cc62e6156287c8661840b346ccf70ccaa1aa5093a97f1d5202c9cf61f",
+      "to_id": "AMGT_RESAPP.TO-AMGT-rb-1",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-rb-1.fiscal-join-direction-correct.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "8227d50d9f2d9e20c055c76c989f46436688c181\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-rb-1.fiscal-join-direction-correct.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=4 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 192c1982316e49a38c0a41807c2468a7bdf49658 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rb-1.fiscal-join-direction-correct.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 4/4 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 2 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 8227d50d9f) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 2 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 1 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 1 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 0 entries; 0 open with a row id; 0 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rb-1.fiscal-join-direction-correct.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/AMGT_RESAPP.TO-AMGT-rb-2.fiscal-block-wired-to-consumer.proof_of_spec.json",
+      "sha256": "9212f16aa95be3f544838600f2c6a313379066a6a37522309393ef49fc16f3b4",
+      "to_id": "AMGT_RESAPP.TO-AMGT-rb-2",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-rb-2.fiscal-block-wired-to-consumer.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "ef3f42ec65e8115e1b3444bb3bf3b1033f113004\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-rb-2.fiscal-block-wired-to-consumer.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=4 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 192c1982316e49a38c0a41807c2468a7bdf49658 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rb-2.fiscal-block-wired-to-consumer.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 4/4 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 7 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit ef3f42ec65) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 7 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 2 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 5 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 0 entries; 0 open with a row id; 0 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rb-2.fiscal-block-wired-to-consumer.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/AMGT_RESAPP.TO-AMGT-rc-19.unresolved-row-contract.proof_of_spec.json",
+      "sha256": "badbeb67fbe3e2f35783aadc85047523a3b78b93b03cba6460f6a19042420528",
+      "to_id": "AMGT_RESAPP.TO-AMGT-rc-19",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-rc-19.unresolved-row-contract.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "12db4c9199ea494e8d55503045e26e6cfac99ce0\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-rc-19.unresolved-row-contract.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=4 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit af0a64a7ec82126506be458e66dd9258bc87e5b7 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rc-19.unresolved-row-contract.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 4/4 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 8 PENDING co-committed (POST-COMMIT: touched by the instance commit 12db4c9199) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 8 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 2 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 0 entries; 0 open with a row id; 0 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rc-19.unresolved-row-contract.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/AMGT_RESAPP.TO-AMGT-rc-20.vintage-derivation-identity.proof_of_spec.json",
+      "sha256": "0124acc9fcfd3d1c8ac2c86339d4c5fb35226f98bccefcc64887130f88261c4d",
+      "to_id": "AMGT_RESAPP.TO-AMGT-rc-20",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-rc-20.vintage-derivation-identity.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "4e9627458bb379b94c79a7592e657c93b4eb11e4\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-rc-20.vintage-derivation-identity.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=4 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit af0a64a7ec82126506be458e66dd9258bc87e5b7 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rc-20.vintage-derivation-identity.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 4/4 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 0 resolved at pin / 3 PENDING co-committed (POST-COMMIT: touched by the instance commit 4e9627458b) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 3 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 1 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 0 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rc-20.vintage-derivation-identity.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/AMGT_RESAPP.TO-AMGT-rd-1.article-store-table.proof_of_spec.json",
+      "sha256": "249b8e44997357b4a093f214c2f9004f38b17a27016d26f0e0c4f9fea5f4863c",
+      "to_id": "AMGT_RESAPP.TO-AMGT-rd-1",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-rd-1.article-store-table.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "dfcf98aa6860104969cd9853cf41dad5618aaa3a\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-rd-1.article-store-table.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=4 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit dcbebda22c3f527f051c1a0206cb19f52adfb3df RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rd-1.article-store-table.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 4/4 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 4 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit dfcf98aa68) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 4 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 2 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 2 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rd-1.article-store-table.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/AMGT_RESAPP.TO-AMGT-s-1.model-block-bloomberg-covered-name.proof_of_spec.json",
+      "sha256": "a42d0f0667c1aa04688fa1e94a80474a93e716e61eb6a71e6c4f3c44592c1f9e",
+      "to_id": "AMGT_RESAPP.TO-AMGT-s-1",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-s-1.model-block-bloomberg-covered-name.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "8c6e351634d92cd9eb2ae1211a01b4d63948b117\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6",
+        "AC7",
+        "AC8"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-s-1.model-block-bloomberg-covered-name.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4,AC5,AC6,AC7,AC8"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=8 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5f82262350627c51718c17e45ac61fd RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-1.model-block-bloomberg-covered-name.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 8/8 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 12 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 8c6e351634) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 12 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 3 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 9 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-1.model-block-bloomberg-covered-name.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/AMGT_RESAPP.TO-AMGT-s-3.provenance-face-beside-every-figure.proof_of_spec.json",
+      "sha256": "8fa3e86c555504ae3b296357b501dd6115452f7fa2e6b359004424761d0841dc",
+      "to_id": "AMGT_RESAPP.TO-AMGT-s-3",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-s-3.provenance-face-beside-every-figure.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "399ed9c8e2c5de9641d029b4065051070c4f5242\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-s-3.provenance-face-beside-every-figure.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4,AC5,AC6"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5f82262350627c51718c17e45ac61fd RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-3.provenance-face-beside-every-figure.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 10 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 399ed9c8e2) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 10 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 2 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 8 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-3.provenance-face-beside-every-figure.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/AMGT_RESAPP.TO-AMGT-s-5.print-renderer-design-spec-then-adams-artifact.proof_of_spec.json",
+      "sha256": "6aa39fc21c46168073b48f7b74988565a8de7f418db2a0dea7db4c5af1705ea2",
+      "to_id": "AMGT_RESAPP.TO-AMGT-s-5",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-s-5.print-renderer-design-spec-then-adams-artifact.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "6de1a2e4b677345c0cec3ff84ff7feafb1bed22d\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\AMGT_RESAPP.TO-AMGT-s-5.print-renderer-design-spec-then-adams-artifact.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4,AC5,AC6"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5f82262350627c51718c17e45ac61fd RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-5.print-renderer-design-spec-then-adams-artifact.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 7 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 6de1a2e4b6) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 7 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 1 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 6 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-5.print-renderer-design-spec-then-adams-artifact.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~2/AMGT_RESAPP.TO-AMGT-r-4.sa-coverage-re-exercise.proof_of_spec.json",
+      "sha256": "6595de4038a8d35a44391104a9426350ca0e06edf57e35f5b558da2295e9936c",
+      "to_id": "AMGT_RESAPP.TO-AMGT-r-4",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~2\\AMGT_RESAPP.TO-AMGT-r-4.sa-coverage-re-exercise.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "d470a0ff60ca8043a46d28a82fdaadc793ce34b5\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~2\\AMGT_RESAPP.TO-AMGT-r-4.sa-coverage-re-exercise.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4,AC5"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=5 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 3d2d7af6e076563fe241f36b5a4e80124e0110c2 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-r-4.sa-coverage-re-exercise.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 5/5 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 9 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit d470a0ff60) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 9 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 2 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 7 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-r-4.sa-coverage-re-exercise.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~2/AMGT_RESAPP.TO-AMGT-rd-2.metrics-store-table.proof_of_spec.json",
+      "sha256": "d741ac857313120c8a8059b33165bbb10ee5dca8baccd1c199bb62f558e15a2a",
+      "to_id": "AMGT_RESAPP.TO-AMGT-rd-2",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~2\\AMGT_RESAPP.TO-AMGT-rd-2.metrics-store-table.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "fb4ee36d8add25b03648b5c602e1d71a1338a81f\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~2\\AMGT_RESAPP.TO-AMGT-rd-2.metrics-store-table.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=4 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit d0efe81ca84b3856c917a3efefb59d56d3414591 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rd-2.metrics-store-table.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 4/4 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 4 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit fb4ee36d8a) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 4 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 1 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 3 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 0 entries; 0 open with a row id; 0 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rd-2.metrics-store-table.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~2/AMGT_RESAPP.TO-AMGT-rd-5.chatter-axis-scheduled-producer.proof_of_spec.json",
+      "sha256": "eecbb99833269865de04b64c1be575ebf45cac75aa7b5c4126739b526d389227",
+      "to_id": "AMGT_RESAPP.TO-AMGT-rd-5",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~2\\AMGT_RESAPP.TO-AMGT-rd-5.chatter-axis-scheduled-producer.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "b85bf8d729fcee558ee04e648e0cfc499768b64c\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~2\\AMGT_RESAPP.TO-AMGT-rd-5.chatter-axis-scheduled-producer.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=4 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit dcbebda22c3f527f051c1a0206cb19f52adfb3df RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rd-5.chatter-axis-scheduled-producer.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 4/4 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 9 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit b85bf8d729) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 9 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 4 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 5 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rd-5.chatter-axis-scheduled-producer.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~2/AMGT_RESAPP.TO-AMGT-rd-8.lead-panel-and-three-tabs.proof_of_spec.json",
+      "sha256": "7c54ee80ca753affba82a3169910c2718a4f26a7df82094cf4a3671a7a7ad84a",
+      "to_id": "AMGT_RESAPP.TO-AMGT-rd-8",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~2\\AMGT_RESAPP.TO-AMGT-rd-8.lead-panel-and-three-tabs.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "1a619eef6fe364315295f76efc6bd408b84e3127\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~2\\AMGT_RESAPP.TO-AMGT-rd-8.lead-panel-and-three-tabs.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=4 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit d0efe81ca84b3856c917a3efefb59d56d3414591 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rd-8.lead-panel-and-three-tabs.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 4/4 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 3 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 1a619eef6f) / 0 pending-on-worktree (instance path unknown; presence only) / 3 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 6 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 3 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 3 entries; 3 open with a row id; 3 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rd-8.lead-panel-and-three-tabs.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~2/AMGT_RESAPP.TO-AMGT-s-2.on-demand-pull-the-seam-design-then-build.proof_of_spec.json",
+      "sha256": "e4bb5f5831f6121e4d276c64ead8535a066bb268690b4640994e98396937d201",
+      "to_id": "AMGT_RESAPP.TO-AMGT-s-2",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~2\\AMGT_RESAPP.TO-AMGT-s-2.on-demand-pull-the-seam-design-then-build.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "a2a6ef4219c4939ed849c1ae1befaab2893f6a27\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6",
+        "AC7"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~2\\AMGT_RESAPP.TO-AMGT-s-2.on-demand-pull-the-seam-design-then-build.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4,AC5,AC6,AC7"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=7 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-2.on-demand-pull-the-seam-design-then-build.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 7/7 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 9 resolved at pin / 3 PENDING co-committed (POST-COMMIT: touched by the instance commit a2a6ef4219) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 12 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 9 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 4 entries; 4 open with a row id; 4 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-2.on-demand-pull-the-seam-design-then-build.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      },
+      "initial_instrument_error": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~2\\AMGT_RESAPP.TO-AMGT-s-2.on-demand-pull-the-seam-design-then-build.proof_of_spec.json",
+          ""
+        ],
+        "rc": 1,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=7 | violations=8\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-2.on-demand-pull-the-seam-design-then-build.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 7/7 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 9 resolved at pin / 3 PENDING co-committed (POST-COMMIT: touched by the instance commit a2a6ef4219) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 12 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 9 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 4 entries; 4 open with a row id; 4 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-2.on-demand-pull-the-seam-design-then-build.md)\n  WARN: alignment above is computed on a STRUCTURALLY INVALID instance. Those figures describe the criterion-to-cell MAPPING ONLY and are identical to what a VALID instance prints -- they are NOT evidence of validity. Do not quote them without the verdict.\n  VIOLATION: coverage-frame: expected=0 carried=7 matched=0\n  VIOLATION: coverage: instance row 'AC1' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC2' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC3' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC4' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC5' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC6' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC7' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\nINVALID (rc=1)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/AMGT_RESAPP.TO-AMGT-r-10.check-face-marker-in-the-reading.proof_of_spec.json",
+      "sha256": "af44311c7ff67159fa021bbe902651acc98777c27ea17bc5d051870221fd5bb9",
+      "to_id": "AMGT_RESAPP.TO-AMGT-r-10",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-r-10.check-face-marker-in-the-reading.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "b284bfed736bdd364e1ebc1fcb65b27a9097f9ce\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-r-10.check-face-marker-in-the-reading.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=4 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 3d2d7af6e0 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-r-10.check-face-marker-in-the-reading.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 4/4 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 8 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit b284bfed73) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 9 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 8 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-r-10.check-face-marker-in-the-reading.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/AMGT_RESAPP.TO-AMGT-rb-10.check-face-salient-warning.proof_of_spec.json",
+      "sha256": "2b89fa545c72c8f29a0ebd58e3e308619c8ea8ca5d03c9bc5ea78666c8feb6a3",
+      "to_id": "AMGT_RESAPP.TO-AMGT-rb-10",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-rb-10.check-face-salient-warning.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "86eae269ee1d19e6020989800fe4f47020a9c621\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-rb-10.check-face-salient-warning.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4,AC5"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=5 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 192c198231 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rb-10.check-face-salient-warning.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 5/5 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 5 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit 86eae269ee) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 6 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 5 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 0 entries; 0 open with a row id; 0 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rb-10.check-face-salient-warning.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/AMGT_RESAPP.TO-AMGT-s-12.identity-layer-the-root.proof_of_spec.json",
+      "sha256": "f868ff1a8b62f7ea9e03c1f51d77dc85b929baffbb4625dcc41255058ea1af47",
+      "to_id": "AMGT_RESAPP.TO-AMGT-s-12",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-s-12.identity-layer-the-root.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "16267cd1a2ee0f6499266fe93ee692ac0660d330\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC7",
+        "AC6"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-s-12.identity-layer-the-root.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4,AC5,AC7,AC6"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=7 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5f82262350627c51718c17e45ac61fd RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-12.identity-layer-the-root.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 7/7 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 10 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 16267cd1a2) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 10 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 2 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 8 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-12.identity-layer-the-root.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/AMGT_RESAPP.TO-AMGT-s-4.coverage-reader-non-sa-sources.proof_of_spec.json",
+      "sha256": "781c262f39e0581af45f5d06c268402504d07a7d70a0c58ade70bd7760b8b4f7",
+      "to_id": "AMGT_RESAPP.TO-AMGT-s-4",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-s-4.coverage-reader-non-sa-sources.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "93e943e35550a0c5ea679e9da2134f3d591be196\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6",
+        "AC7"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-s-4.coverage-reader-non-sa-sources.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4,AC5,AC6,AC7"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=7 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5f82262350627c51718c17e45ac61fd RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-4.coverage-reader-non-sa-sources.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 7/7 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 14 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 93e943e355) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 14 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 2 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 12 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-4.coverage-reader-non-sa-sources.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/AMGT_RESAPP.TO-AMGT-s-9.drafting-face-marked-beside-its-evidence.proof_of_spec.json",
+      "sha256": "6d78a32f633e7a63a361f8763ce7b555e31dbb222362600a4000db7aad85e35a",
+      "to_id": "AMGT_RESAPP.TO-AMGT-s-9",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-s-9.drafting-face-marked-beside-its-evidence.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "9ed3db63747f2328d59335a72602411d065abc4a\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~3\\AMGT_RESAPP.TO-AMGT-s-9.drafting-face-marked-beside-its-evidence.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4,AC5,AC6"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5f82262350627c51718c17e45ac61fd RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-9.drafting-face-marked-beside-its-evidence.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 13 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 9ed3db6374) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 13 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 3 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 10 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-9.drafting-face-marked-beside-its-evidence.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~4/AMGT_RESAPP.TO-AMGT-r-12.identity-coverage-pass.proof_of_spec.json",
+      "sha256": "0a8c07d0a88fa860a153dc3208e7e3acd5a22dbbcd2103329565c878f68d5232",
+      "to_id": "AMGT_RESAPP.TO-AMGT-r-12",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~4\\AMGT_RESAPP.TO-AMGT-r-12.identity-coverage-pass.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "3583a36e09ce87c86effe104baa2065d706843e4\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~4\\AMGT_RESAPP.TO-AMGT-r-12.identity-coverage-pass.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=4 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 3d2d7af6e076563fe241f36b5a4e80124e0110c2 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-r-12.identity-coverage-pass.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 4/4 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 5 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 3583a36e09) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 5 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 1 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 4 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 0 entries; 0 open with a row id; 0 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-r-12.identity-coverage-pass.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~4/AMGT_RESAPP.TO-AMGT-rb-12.identity-decision-note-correction.proof_of_spec.json",
+      "sha256": "5a567c4faed99897de9afc9ac15a66680af2ad01e0789083e44396430fe96586",
+      "to_id": "AMGT_RESAPP.TO-AMGT-rb-12",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~4\\AMGT_RESAPP.TO-AMGT-rb-12.identity-decision-note-correction.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "956dcdece305917a589dd129e62ffda64b1f5b21\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~4\\AMGT_RESAPP.TO-AMGT-rb-12.identity-decision-note-correction.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=4 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 192c1982316e49a38c0a41807c2468a7bdf49658 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rb-12.identity-decision-note-correction.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 4/4 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 1 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 956dcdece3) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 1 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 1 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 0 entries; 0 open with a row id; 0 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rb-12.identity-decision-note-correction.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~4/AMGT_RESAPP.TO-AMGT-s-8.peer-set-comparable-or-absent-with-a-reason.proof_of_spec.json",
+      "sha256": "530c43efef643aacd915d2b2413b48bd4ffb561b2a6ff0868c46a32d2c1e1ad2",
+      "to_id": "AMGT_RESAPP.TO-AMGT-s-8",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~4\\AMGT_RESAPP.TO-AMGT-s-8.peer-set-comparable-or-absent-with-a-reason.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "c6ddc5de7805f271f14bc2771a6a0fbfeb26b4a9\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6",
+        "AC7"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~4\\AMGT_RESAPP.TO-AMGT-s-8.peer-set-comparable-or-absent-with-a-reason.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4,AC5,AC6,AC7"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=7 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5f82262350627c51718c17e45ac61fd RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-8.peer-set-comparable-or-absent-with-a-reason.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 7/7 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 11 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit c6ddc5de78) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 11 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 3 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 8 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-8.peer-set-comparable-or-absent-with-a-reason.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~5/AMGT_RESAPP.TO-AMGT-r-15.impostor-and-clause.proof_of_spec.json",
+      "sha256": "ad30478a7f7863b69672ba142d7e46902ed15ad775a18d8bcbf39a16dad3526d",
+      "to_id": "AMGT_RESAPP.TO-AMGT-r-15",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~5\\AMGT_RESAPP.TO-AMGT-r-15.impostor-and-clause.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "6f9840bb5d163d8040641f94c370ed0519165e6a\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~5\\AMGT_RESAPP.TO-AMGT-r-15.impostor-and-clause.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=4 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 3d2d7af6e076563fe241f36b5a4e80124e0110c2 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-r-15.impostor-and-clause.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 4/4 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 4 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit 6f9840bb5d) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 5 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 2 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 2 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 0 entries; 0 open with a row id; 0 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-r-15.impostor-and-clause.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~5/AMGT_RESAPP.TO-AMGT-rb-15.impostor-predicate-corrected.proof_of_spec.json",
+      "sha256": "7cbab27c7c537d81927510f7b4af28f4eea46f4aae44d24093972da4f53e136f",
+      "to_id": "AMGT_RESAPP.TO-AMGT-rb-15",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~5\\AMGT_RESAPP.TO-AMGT-rb-15.impostor-predicate-corrected.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "57aec5e0929d2a5519405c66ca4f54ffe5d18fde\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~5\\AMGT_RESAPP.TO-AMGT-rb-15.impostor-predicate-corrected.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=4 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit 192c1982316e49a38c0a41807c2468a7bdf49658 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rb-15.impostor-predicate-corrected.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 4/4 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 6 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit 57aec5e092) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 7 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 6 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rb-15.impostor-predicate-corrected.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~5/AMGT_RESAPP.TO-AMGT-s-15.list-register-owned-lists-with-a-rot-signal.proof_of_spec.json",
+      "sha256": "cc6bdd0a41ab20d5033abbd931257828f1b254f6e01e379e5d514136a6d6773c",
+      "to_id": "AMGT_RESAPP.TO-AMGT-s-15",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~5\\AMGT_RESAPP.TO-AMGT-s-15.list-register-owned-lists-with-a-rot-signal.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "f9bfabc4046dcd7944fcd947ed59ce2b2f89cd08\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~5\\AMGT_RESAPP.TO-AMGT-s-15.list-register-owned-lists-with-a-rot-signal.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4,AC5,AC6"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5f82262350627c51718c17e45ac61fd RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-15.list-register-owned-lists-with-a-rot-signal.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 9 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit f9bfabc404) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 10 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 9 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 1 entry; 1 open with a row id; 1 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-15.list-register-owned-lists-with-a-rot-signal.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~6/AMGT_RESAPP.TO-AMGT-rd-6.price-axis-boxside-engine.proof_of_spec.json",
+      "sha256": "363fd96af52e58d2f22c0f33b4559cf450369a450285708284f3866ff8459fed",
+      "to_id": "AMGT_RESAPP.TO-AMGT-rd-6",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~6\\AMGT_RESAPP.TO-AMGT-rd-6.price-axis-boxside-engine.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "adb1f99a6968a7804dacc743aae2d98350d4c6ee\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~6\\AMGT_RESAPP.TO-AMGT-rd-6.price-axis-boxside-engine.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=4 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit d0efe81ca84b3856c917a3efefb59d56d3414591 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rd-6.price-axis-boxside-engine.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 4/4 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 6 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit adb1f99a69) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 6 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 2 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 4 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 0 entries; 0 open with a row id; 0 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rd-6.price-axis-boxside-engine.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~6/AMGT_RESAPP.TO-AMGT-s-13.social-feed-measure-then-build.proof_of_spec.json",
+      "sha256": "fcc5c5194aef5ab915033ff53f2601338d909b967e9888d2d89259affbf6891e",
+      "to_id": "AMGT_RESAPP.TO-AMGT-s-13",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~6\\AMGT_RESAPP.TO-AMGT-s-13.social-feed-measure-then-build.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "16e78fb56ffa0435e83263074616bbfa530c8302\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~6\\AMGT_RESAPP.TO-AMGT-s-13.social-feed-measure-then-build.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4,AC5,AC6"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-13.social-feed-measure-then-build.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 7 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit 16e78fb56f) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 8 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 7 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 0 entries; 0 open with a row id; 0 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-13.social-feed-measure-then-build.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~7/AMGT_RESAPP.TO-AMGT-rd-7.starred-watchlist-per-firm-pure-marker.proof_of_spec.json",
+      "sha256": "505e0f82ad02a6b6fd89d4193523f4e0d820e0ac449bfc2ea66b718159f7ee9b",
+      "to_id": "AMGT_RESAPP.TO-AMGT-rd-7",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~7\\AMGT_RESAPP.TO-AMGT-rd-7.starred-watchlist-per-firm-pure-marker.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "8b63e783025d14924a71a8b1a1357f61b12920e4\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~7\\AMGT_RESAPP.TO-AMGT-rd-7.starred-watchlist-per-firm-pure-marker.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=4 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit d0efe81ca84b3856c917a3efefb59d56d3414591 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-rd-7.starred-watchlist-per-firm-pure-marker.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 4/4 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 5 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 8b63e78302) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 5 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 5 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rd-7.starred-watchlist-per-firm-pure-marker.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~7/AMGT_RESAPP.TO-AMGT-s-14.input-ledger-per-class-rerun-alone.proof_of_spec.json",
+      "sha256": "0a6f481e3e96b5b5069e2f50dcf0d5753127de9a1b922bdbfdd260d03968d6bf",
+      "to_id": "AMGT_RESAPP.TO-AMGT-s-14",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~7\\AMGT_RESAPP.TO-AMGT-s-14.input-ledger-per-class-rerun-alone.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "21508ad508efac15430be0e59bca789bddc59558\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~7\\AMGT_RESAPP.TO-AMGT-s-14.input-ledger-per-class-rerun-alone.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4,AC5,AC6"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-14.input-ledger-per-class-rerun-alone.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 12 resolved at pin / 2 PENDING co-committed (POST-COMMIT: touched by the instance commit 21508ad508) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 14 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 12 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 0 entries; 0 open with a row id; 0 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-14.input-ledger-per-class-rerun-alone.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      },
+      "initial_instrument_error": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~7\\AMGT_RESAPP.TO-AMGT-s-14.input-ledger-per-class-rerun-alone.proof_of_spec.json",
+          ""
+        ],
+        "rc": 1,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=7\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-14.input-ledger-per-class-rerun-alone.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 12 resolved at pin / 2 PENDING co-committed (POST-COMMIT: touched by the instance commit 21508ad508) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 14 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 12 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 0 entries; 0 open with a row id; 0 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-14.input-ledger-per-class-rerun-alone.md)\n  WARN: alignment above is computed on a STRUCTURALLY INVALID instance. Those figures describe the criterion-to-cell MAPPING ONLY and are identical to what a VALID instance prints -- they are NOT evidence of validity. Do not quote them without the verdict.\n  VIOLATION: coverage-frame: expected=0 carried=6 matched=0\n  VIOLATION: coverage: instance row 'AC1' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC2' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC3' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC4' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC5' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC6' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\nINVALID (rc=1)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~7/AMGT_RESAPP.TO-AMGT-s-6.version-store-opal-data-research.proof_of_spec.json",
+      "sha256": "b0ff81d28427063abacff50f7c5cfc6eab22713e0fe40e7f179f6f19d1d78f78",
+      "to_id": "AMGT_RESAPP.TO-AMGT-s-6",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~7\\AMGT_RESAPP.TO-AMGT-s-6.version-store-opal-data-research.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "4ff9dd13aee8d8d84ed0dd24913b929c508e15dd\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6",
+        "AC7"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~7\\AMGT_RESAPP.TO-AMGT-s-6.version-store-opal-data-research.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4,AC5,AC6,AC7"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=7 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-6.version-store-opal-data-research.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 7/7 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 6 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit 4ff9dd13ae) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 7 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 6 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-6.version-store-opal-data-research.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      },
+      "initial_instrument_error": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~7\\AMGT_RESAPP.TO-AMGT-s-6.version-store-opal-data-research.proof_of_spec.json",
+          ""
+        ],
+        "rc": 1,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=7 | violations=8\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-6.version-store-opal-data-research.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 7/7 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 6 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit 4ff9dd13ae) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 7 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 6 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-6.version-store-opal-data-research.md)\n  WARN: alignment above is computed on a STRUCTURALLY INVALID instance. Those figures describe the criterion-to-cell MAPPING ONLY and are identical to what a VALID instance prints -- they are NOT evidence of validity. Do not quote them without the verdict.\n  VIOLATION: coverage-frame: expected=0 carried=7 matched=0\n  VIOLATION: coverage: instance row 'AC1' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC2' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC3' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC4' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC5' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC6' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC7' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\nINVALID (rc=1)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~7/AMGT_RESAPP.TO-AMGT-s-7.coverage-freshness-view-one-place.proof_of_spec.json",
+      "sha256": "bc4af358cac5fdb0b3fceeacc27e4d7ed0ec85b0583676f759a4ed360ed43e78",
+      "to_id": "AMGT_RESAPP.TO-AMGT-s-7",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~7\\AMGT_RESAPP.TO-AMGT-s-7.coverage-freshness-view-one-place.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "23ac31e784cd66fd569431402601ecbaecbc7238\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~7\\AMGT_RESAPP.TO-AMGT-s-7.coverage-freshness-view-one-place.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4,AC5,AC6"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-7.coverage-freshness-view-one-place.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 6 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit 23ac31e784) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 7 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 6 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 4 entries; 4 open with a row id; 4 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-7.coverage-freshness-view-one-place.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      },
+      "initial_instrument_error": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~7\\AMGT_RESAPP.TO-AMGT-s-7.coverage-freshness-view-one-place.proof_of_spec.json",
+          ""
+        ],
+        "rc": 1,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=7\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-7.coverage-freshness-view-one-place.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 6 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit 23ac31e784) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 7 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 6 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 4 entries; 4 open with a row id; 4 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-7.coverage-freshness-view-one-place.md)\n  WARN: alignment above is computed on a STRUCTURALLY INVALID instance. Those figures describe the criterion-to-cell MAPPING ONLY and are identical to what a VALID instance prints -- they are NOT evidence of validity. Do not quote them without the verdict.\n  VIOLATION: coverage-frame: expected=0 carried=6 matched=0\n  VIOLATION: coverage: instance row 'AC1' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC2' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC3' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC4' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC5' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\n  VIOLATION: coverage: instance row 'AC6' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)\nINVALID (rc=1)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~8/AMGT_RESAPP.TO-AMGT-s-10.check-face-pass-fail-provisional-per-figure.proof_of_spec.json",
+      "sha256": "ec2c64284c107cd8e48b0b55562e6f06963097b688da7ce030a9dd3a9094dcec",
+      "to_id": "AMGT_RESAPP.TO-AMGT-s-10",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~8\\AMGT_RESAPP.TO-AMGT-s-10.check-face-pass-fail-provisional-per-figure.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "5a2e8f5261d903ba4838944db7816508e13a70b8\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~8\\AMGT_RESAPP.TO-AMGT-s-10.check-face-pass-fail-provisional-per-figure.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4,AC5,AC6"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-10.check-face-pass-fail-provisional-per-figure.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 15 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit 5a2e8f5261) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 16 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 15 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 0 entries; 0 open with a row id; 0 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-10.check-face-pass-fail-provisional-per-figure.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~8/AMGT_RESAPP.TO-AMGT-s-11.qualification-rules-six-classes.proof_of_spec.json",
+      "sha256": "970445a2ba3e810c9f59eb82e659b8c5f4b3aa0fc49f30a35f67d76998e92d30",
+      "to_id": "AMGT_RESAPP.TO-AMGT-s-11",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~8\\AMGT_RESAPP.TO-AMGT-s-11.qualification-rules-six-classes.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "65e8851f3aa13234198293265caebb42ffc576f2\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~8\\AMGT_RESAPP.TO-AMGT-s-11.qualification-rules-six-classes.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4,AC5,AC6"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=6 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5 RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-11.qualification-rules-six-classes.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 6/6 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 12 resolved at pin / 1 PENDING co-committed (POST-COMMIT: touched by the instance commit 65e8851f3a) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 13 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 0 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 12 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 0 entries; 0 open with a row id; 0 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-11.qualification-rules-six-classes.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~9/AMGT_RESAPP.TO-AMGT-s-b4.seeking-alpha-backend-the-measured-route.proof_of_spec.json",
+      "sha256": "dbc6f3be28d168f73250353077c43f5b1ac0cec15742eeaa57a6bae9eaafeddd",
+      "to_id": "AMGT_RESAPP.TO-AMGT-s-b4",
+      "last_commit": {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H",
+          "--",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~9\\AMGT_RESAPP.TO-AMGT-s-b4.seeking-alpha-backend-the-measured-route.proof_of_spec.json"
+        ],
+        "rc": 0,
+        "stdout": "55e5358c622f06e3e24d9653c3b79a509d99f2cb\n",
+        "stderr": ""
+      },
+      "expected_ids": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC6",
+        "AC7"
+      ],
+      "check": {
+        "argv": [
+          "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+          ".tools/proof-of-spec-check.py",
+          "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~9\\AMGT_RESAPP.TO-AMGT-s-b4.seeking-alpha-backend-the-measured-route.proof_of_spec.json",
+          "AC1,AC2,AC3,AC4,AC5,AC6,AC7"
+        ],
+        "rc": 0,
+        "stdout": "proof-of-spec-check | structural=jsonschema | acceptance rows=7 | violations=0\n  checker-vintage: 709b9556a3 2026-09-10T14:37:30Z\n  alignment-frame: project=AMGT_RESAPP dep_stage=EXECUTING\n  vintage-frame: decomp_ref.vintage_commit ed25feaee5f82262350627c51718c17e45ac61fd RESOLVES to a commit in this repo (containment NOT checked -- declared non-goal)\n  alignment-frame: governing TO=org\\missions\\D5\\AMGT\\AMGT_RESAPP\\task-orders\\AMGT_RESAPP.TO-AMGT-s-b4.seeking-alpha-backend-the-measured-route.md (declared via decomp_ref.to_ref)\n  alignment: ENFORCE (<decomp_ref> names org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md)\n  alignment-frame: decomp id space = 36 distinct cell id(s) in org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md\n  alignment-forward-1 (criterion -> cell): 7/7 criteria carry >=1 cell_ref\n  alignment-forward-2 (cell_ref -> decomp): 1/1 distinct cell_ref(s) resolve to an id declared in the decomp\n  alignment-backward (declared cell -> criterion): 1/1 cell(s) declared in the TO's <owned_cells> are reachable from >=1 criterion\n  alignment-scope: this closes the TO against ITSELF and against the decomp's id space. Whether the TO's declared set IS the decomp's complete criterion-bearing set is a CVO cert judgment (enforcement layer 5), NOT asserted here.\n  artifact-resolution: 13 resolved at pin / 0 PENDING co-committed (POST-COMMIT: touched by the instance commit 55e5358c62) / 0 pending-on-worktree (instance path unknown; presence only) / 0 UNRESOLVED-HERE (commit not in local store; announced, not asserted) / 0 s3_object (not a git ref; skipped) -- denominator 13 row(s); a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known\n  artifact-resolution/content: 2 row(s) CONTENT-resolved (`introduces` tokens present at the pin, absent at its parent) / 11 row(s) PRESENCE-ONLY (no `introduces`; the pin exists and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never a pin cited for the wrong reason.\n  surprises-frame: 2 entries; 2 open with a row id; 2 resolve to a channel row; 1 channel file(s) scanned (flat+tree) for AMGT_RESAPP; mode ENFORCE -- governing TO is under the TREE root (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-s-b4.seeking-alpha-backend-the-measured-route.md)\nVALID (rc=0)\n",
+        "stderr": ""
+      }
+    }
+  ],
+  "portal_pin": {
+    "argv": [
+      "git",
+      "-C",
+      "portal",
+      "rev-parse",
+      "e6057f26^{commit}"
+    ],
+    "rc": 0,
+    "stdout": "e6057f26c57fc6ff6c223f1c73cc29be3c7f51d6\n",
+    "stderr": ""
+  },
+  "portal_branch": {
+    "argv": [
+      "git",
+      "-C",
+      "portal",
+      "rev-parse",
+      "wk-amgt_resapp-5-8-portal"
+    ],
+    "rc": 0,
+    "stdout": "e6057f26c57fc6ff6c223f1c73cc29be3c7f51d6\n",
+    "stderr": ""
+  },
+  "recorded_gitlink": {
+    "argv": [
+      "git",
+      "ls-tree",
+      "HEAD",
+      "portal"
+    ],
+    "rc": 0,
+    "stdout": "160000 commit e85f6eb84f3a1771a37011a7e77e372570bad02a\tportal\n",
+    "stderr": ""
+  },
+  "portal_negative_control": {
+    "argv": [
+      "git",
+      "-C",
+      "portal",
+      "cat-file",
+      "-t",
+      "0000000000000000000000000000000000000001"
+    ],
+    "rc": 128,
+    "stdout": "",
+    "stderr": "fatal: git cat-file: could not get object info\n"
+  },
+  "head_end": {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "rc": 0,
+    "stdout": "e07fcc91ea8772f4659db300565b2f187252ac44\n",
+    "stderr": ""
+  },
+  "instrument_correction": "Initial expected-ID lookup used spec_ref.doc, which names the PRD rather than the governing TO in four historical instances. This produced an erroneous empty expected set. An attempted regex-only repair still refused; inspecting both references identified the cause. Corrected to decomp_ref.to_ref, with standalone XML tags; only those four checks rerun. Initial results retained."
+}
