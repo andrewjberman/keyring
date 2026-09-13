@@ -397,7 +397,7 @@ last, when their buckets are gone.
 ## REFS TO CARRY
 
 ```
-  BRIEF PATH        docs/briefs/d14-legacy-firm-buckets-migration-brief-20260913.md
+  BRIEF PATH        docs/briefs/d8-legacy-firm-buckets-migration-brief-20260913.md
   PROJECT           NONE-YET  (a MEMBER project of D8 "Data Pipelines", by his ~02:3xZ word; L3 is 1.0.0_SA_CTO's)
   LAW IT EXECUTES   D14 "Platform Logic" -- infra/logic/02_DOCTRINE.md (the canon); D14 owns the rules, not this project
   EXISTING PRD      NONE for this project.  Inherited as law: infra/logic/02_DOCTRINE.md (R1, R4-R7, R9, R11, R12,
