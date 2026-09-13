@@ -1789,6 +1789,32 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
     "spec_asserts": "Rule 27's L10 order assumes a round that is cut can be closed: slug -> analysis -> recut. Obligation 1 binds this seat to cut round 4 in ONE issuance the same tick the round-3 analysis arrives.",
     "world_is": "Round 4 can be CUT and cannot yet be CLOSED. The four carried orders are non-terminal, are not round 4's work, and are the exact set the L10 refuser counts -- and the relief that admitted round 3's slug is pinned to a total that cutting round 4 destroys.",
     "notes": "THIS SEAT IS NOT PROPOSING A GATE CHANGE AND HAS NOT MADE ONE. The gate is 1.0.0_SA_CTO~Z's, and a COO engineering its own L10 relief is precisely the shape LD-0521 exists to prevent; this row names a premise before cutting on it, which is the measure-then-build failure already banked on this project (a dependent cell cut against a premise a later measurement kills). THREE READINGS EXIST AND THE CHOICE IS NOT THIS SEAT'S: (a) the four terminate first, which needs the retag or the freeze to move and is Andrew's; (b) round 4 is cut knowingly with its close carded as a KNOWN open item AT the issuance rather than discovered at L10; (c) the round-3 analysis re-grains the four so they are not carried into round 4's count. Mild preference for (b), because it costs nothing now and makes the block visible at the moment it is created. DISARM: any of the three, or a measurement showing the four terminal at HEAD. NON-APPLICATION: if round 4 is never cut, or if its orders are cut under a different project code, this does not apply. NOTHING IS BLOCKED ON THIS ROW -- obligation 1 still binds and round 4 is still cut in ONE issuance the tick the analysis lands; this exists so that issuance carries the item with it."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-S47",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-13T05:14:08Z",
+    "one_line": "DISARM OF Z-W10-S1 -- the mis-stated mechanism it named is CORRECTED in the PRD at v0.6 @ae66157381, which is the one act that row said would discharge it. Its disarm_owner was this seat because only the PRD's author could do it, and the correction waited for the round-3 L10 rather than opening a frozen spec mid-round.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CONDITION, quoted from Z-W10-S1's own notes: 'ARMED rather than INERT for one reason only: the mis-stated mechanism lives in the PRD, which I may not edit (it is outside this order's <paths>) ... disarm_owner is the PRD's owner because amending that text is the only disarm.'",
+        "THE AMENDMENT, verified at HEAD rather than from the worktree: git show HEAD on the PRD returns exactly one occurrence of the corrected block's marker text. s.4 now reads that the weight is lost but NOT in the allocation dict, states in terms that the line USED TO READ 'and silently zeroes the weight', and records that AT2-s-1's else means a Commodities holding served allocation 2.5 and not 0.000 -- measured by Z-W10-S1 itself on the real generator at base commit 651ffd4f16 with a probe ticker at weight 0.025.",
+        "THE CONSUMER THE ROW WAS WORRIED ABOUT IS NAMED IN THE CORRECTION. Z-W10-S1's whole argument for being ARMED was that the next cell to read the sentence is AT3-s-5, the bar that GATES the retag, and that a bar built on 'confirm the weight zeroes in the allocation dict' would read the same in both worlds. The corrected paragraph says that explicitly, so a future cell writer meets the warning at the point of use rather than having to find this row.",
+        "AND THE HAZARD WAS ALREADY MITIGATED BEFORE THE TEXT MOVED: the corrected reading went to the round owner 2.0.0_SA_COO~Z at 22254, so AT3-s-5's bar is cut correctly whenever it is cut. The PRD edit is what stops the WRONG sentence being read again by anyone who never saw that message -- a message is not a carrier."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "POSN_ASTTAX-Z-W10-S1"
+    ],
+    "spec_asserts": "POSN_ASTTAX-Z-W10-S1 records that the PRD's s.4 statement of the live mechanism -- 'renders Unknown AND silently zeroes the weight' -- is half false at HEAD, and names amending that text as its only disarm, owned by the PRD's author.",
+    "world_is": "Corrected at PRD v0.6, landed with the round-3 L10 analysis at ae66157381. The label half of the mechanism stood and is unchanged; the weight half is replaced with where the loss actually sits -- the five-class served view and the delta/spread rows, which carried no row at all rather than a zero.",
+    "notes": "WHY IT WAITED, stated because a reader will otherwise see a two-tick-old row disarmed by a one-sentence edit and wonder why it took two ticks. Rule 27 freezes the spec mid-round, and POSN was mid-round-3 with four orders open. The correct carrier for a mid-round spec defect is the round's L10 addendum, which is exactly where it landed the moment that L10 existed. Opening a frozen PRD to fix a sentence would have been the disruption Andrew's 2026-09-13 02:22Z priority ruling names, and the hazard was separately mitigated in the meantime by routing the corrected reading to the round owner. NOT CLAIMED: that the retag is safe. It is NO-GO and that is unchanged by this row. NOT CLAIMED: that AT3-s-5 has been cut or that its bar is written; only that whoever writes it now meets the correct mechanism in the spec. SIBLING, DISCHARGED EARLIER: Z-C-S55's boundary decision, ruled at Z-S42 @9d7b09987f and landed in the same v0.6 addendum as a disclosed third surface. With this row, BOTH POSN acts this seat carried into the round-3 L10 are complete."
   }
 ]
 ```
