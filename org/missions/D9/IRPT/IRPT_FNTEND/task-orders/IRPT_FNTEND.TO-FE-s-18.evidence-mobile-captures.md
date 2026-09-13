@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.6 @d1479bc5f0 (F4, F5, F6, F8, F11, F13; FIXTURES AND EVIDENCE) | **Decomp cell:** `FE-s-18` (round 2, v0.2) | **outcome_ref:** FWD-3, FWD-5, FWD-8, FWD-11, FWD-12 | **depends_on:** `FE-s-14`, `FE-s-15`, `FE-s-16`, `FE-s-17` (all terminal) | **slot:** ~1, queue position 4, last | **slug rows:** C-S43, W3-S1, W4-S1, W1-S12 (retained control)
 
