@@ -441,7 +441,15 @@ Doctrine: `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`.
     **One home per logical producer is a CORRECTNESS requirement, not tidiness** -- three seats spent
     2026-08-25 deriving "which copy of this code actually runs" by hand from deployed bytes, and the
     first derivation was wrong. Amendment history, the superseded clause, and the measured
-    non-conformance: `docs/architecture/D8_GLOBAL_PIPELINE_STRUCTURE_PRD.md`.
+    non-conformance: `docs/architecture/D10_GLOBAL_PIPELINE_STRUCTURE_PRD.md`.
+    ⚠ **THIS CITATION READ `D8_...` UNTIL 2026-09-13 AND RESOLVED TO NOTHING** -- the file was
+    renamed D8 -> D10 and the pointer was not, so Rule 17b's amendment history was unreachable from
+    the law that cites it. Andrew ruled 2026-09-13 ~01:3xZ that D10's canon content FOLDS INTO D14,
+    so this path MOVES AGAIN when `0.0.0_AB_MSTR` lands that fold. It is pinned to the file that
+    EXISTS TODAY, never to the D14 path that does not yet -- a law pointer aimed at a future file is
+    the same dead citation with a later date. ⛔ The target's OWN text still says "superseded by
+    D8" and "D8-1/D8-2" (:63, :249): the rename left stale references INSIDE it too, and that is
+    the D10 PRD's to fix, not this law's.
 15. **Every gold/silver/bronze `.py` begins with `from __future__ import annotations`** (PEP-604 on py3.9 runners). **Gate-enforced ON EDIT** -- the gate fires on files you touch, NOT over the tree, so untouched legacy files are uncovered (measured 2026-08-25: 441 of 537 carry it, 82%; the residue is migration debt, not live violation).
 
 ---
