@@ -5,7 +5,7 @@
  "project": "LGIC_NAMING",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v1.0",
+ "prd_version": "v1.1",
  "step": 4,
  "brief_ref": "docs/briefs/d14-naming-schema-brief-20260913.md@1b42dbe758",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -17,7 +17,7 @@ Brief: `docs/briefs/d14-naming-schema-brief-20260913.md` @`1b42dbe758` (author `
 coverage entries below). Endpoint: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_D14_NAMING_SCHEMA_20260913.md`,
 cut @`b6eddd11a0`, amendment record and ruling stamps @`e2210bf34c`; DONE WHEN confirmed by Andrew 2026-09-13 ~18:4xZ.
 Registered @`f25395446e` under D14/LGIC on the macro ratified @`464c1096d5`. The closed enumerations this PRD decides
-are data: `org/standards/NAMING_SCHEMA.json` v1.0, landed in the same commit. Counterpart: `LGIC_ENFORCE` (the
+are data: `org/standards/NAMING_SCHEMA.json` (v1.1 at PRD v1.1), landed with the first issue. Counterpart: `LGIC_ENFORCE` (the
 executable layer: registry, builders, flagger), which consumes this schema; its PRD does not exist yet.
 
 **Rulings this PRD executes, verbatim anchors:** the SOURCE-FIRST key string (Andrew ~03:2xZ, *"all recs approved"*,
@@ -104,7 +104,7 @@ long in the ruled source-first string).
 
 | contract | direction | shape | consumer / producer |
 |---|---|---|---|
-| `org/standards/NAMING_SCHEMA.json` v1.0 | **produced** | the closed enumerations: key grammar and tiers, bucket forms, resource grammar and last-slot rule, kind list by resource type, cadence list, secret / log-group / policy forms, firm long and short forms, refused tokens, system classes and exclusions, the grade signature and its three verdicts | consumed by `LGIC_ENFORCE` (its `key()`, `name()` and `grade()` builders and the registry-derived deny patterns), and read by every seat minting a name |
+| `org/standards/NAMING_SCHEMA.json` | **produced** | the closed enumerations: key grammar and tiers, bucket forms, resource grammar and last-slot rule, kind list by resource type, cadence list, secret / log-group / policy forms, firm long and short forms, refused tokens, system classes and exclusions, the grade signature and its three verdicts | consumed by `LGIC_ENFORCE` (its `key()`, `name()` and `grade()` builders and the registry-derived deny patterns), and read by every seat minting a name |
 | the grading rule, `(name, type) -> (verdict, canonical_form)` | **produced** (as a written, hand-applicable specification; cell N2) | three verdicts CONFORMANT / ALIAS / OUT-OF-PATTERN and no fourth; an unplaceable name or an unresolved token RAISES | consumed by `LGIC_ENFORCE`, whose flagger executes it |
 | the identity registry's ROWS (firms, products, vendors, platform subsystems, their keys and aliases) | **consumed** | rows only; this project fixes their shape and mints none | produced by `LGIC_ENFORCE` (ruling (a)); seed `infra/logic/05_IDENTITY_SPINE.md` until it exists |
 | the source-first key string | **consumed** (ruled) | `{bucket}/{source}/{scope}/{tier}/{table}/{partition}/{object}` | ruled by Andrew ~03:2xZ; first applied by `ADVI_FIRMBKTS` and `MDPF_CANON` |
@@ -136,10 +136,16 @@ as a second copy here.
   vendor's integration). A firm is never a system; nor is a project code, a workstream code, a cadence or a generic
   noun. `opal` is reserved for account-level platform resources and is never a null prefix. Which systems exist is the
   registry's rows, not this document.
-- **S7 Kinds.** The closed list is the `kind` block of the data file, with the resource type each belongs to. Two types
-  the brief's list missed were added by subtraction from the census's nameable types (ECS task definitions -> `task`,
-  state machines -> `sfn`); `secret` was removed, because secrets keep the slash-path grammar where a suffix would
-  repeat the type. `-trigger`, `-publisher` and `-scanner` are function tokens, not kinds.
+- **S7 Kinds.** The closed list is the `kind` block of the data file, with the resource type each belongs to. **Every type
+  key in the data file is a node_type value of the live-plane instrument (`comp-find --corpus aws`), spelled as it
+  returns it** -- 33 types at the graph vintage 2026-09-13 12:15:54 UTC -- so the grader's `type` has one owner. Of the
+  33, 18 are graded by kind and 15 are not; the 15 are enumerated by subtraction in `types_not_graded_by_kind`, each
+  with its rule (cadence-last, derived, the bucket, key or secret grammar, or its bucket's name) or its exclusion
+  (AWS-issued ids, DNS names, route contracts, event-source expressions, and IAM users, which are named by their
+  holder or issuer). Four types the brief's list missed were added by that subtraction: ECS task definitions ->
+  `task`, state machines -> `sfn`, load balancers -> `lb`, ECS clusters -> `cluster`. `secret` was removed, because
+  secrets keep the slash-path grammar where a suffix would repeat the type. `-trigger`, `-publisher` and `-scanner`
+  are function tokens, not kinds.
 - **S8 Cadences.** daily, weekly, monthly, hourly, or `on-{event}` with a kebab event token.
 - **S9 Secrets, log groups, policies.** Secrets `{system}/{scope}/{purpose}`; log groups are derived as
   `/aws/{service}/{resource-name}` and conform when their resource does; IAM policies are

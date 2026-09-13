@@ -1,14 +1,24 @@
 {
  "title": "NAMING_SCHEMA -- the D14 Platform Logic naming schema's CLOSED ENUMERATIONS, as data",
- "version": "v1.0",
- "ratified_by": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md v1.0 (L4, 1.0.0_SA_CTO). Spine L4: a decision that is an enumeration is closed as data in org/standards/ and cited.",
+ "version": "v1.1",
+ "ratified_by": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md v1.1 (L4, 1.0.0_SA_CTO). Spine L4: a decision that is an enumeration is closed as data in org/standards/ and cited.",
+ "changelog": [
+  "v1.0 -- first issue with LGIC_NAMING_PRD v1.0 @c65a169ba0.",
+  "v1.1 -- on 4.0.0_SA_CRO~D's REFUSED brief half (review @1e4e3e10fd): kind.by_type keys are the live plane's node_type strings (CODEBUILD -> CODEBUILD_PROJECT, ECS_TASK -> ECS_TASK_DEFINITION); every node type not graded by kind is enumerated by subtraction; lb and cluster added for the two minted types that had no kind."
+ ],
  "authority": [
   "SOURCE-FIRST key string -- Andrew-direct 2026-09-13 ~03:2xZ card 1, 'all recs approved' (relayed 4.0.0_SA_CRO~D 96332)",
   "WHICH firm short forms exist (49f, inf, cot beside the long forms; bd refused in every slot) -- Andrew-direct 2026-09-13 ~03:5xZ card 2 (record @38f2268d48)",
   "Remediation shape (a): D14 owns the rule, registry, builders and flagger; every fix goes where the resource lives -- Andrew-direct 2026-09-13 ~03:5xZ",
-  "WHERE each form is used (the per-slot split) -- RATIFIED AT L4 by 1.0.0_SA_CTO in LGIC_NAMING_PRD v1.0, revertible on Andrew's word; it narrows nothing he ruled"
+  "WHERE each form is used (the per-slot split) -- RATIFIED AT L4 by 1.0.0_SA_CTO in LGIC_NAMING_PRD, revertible on Andrew's word; it narrows nothing he ruled"
  ],
  "rows_owner": "The ROWS (which firms, products, vendors and platform subsystems exist, with their keys and aliases) belong to the identity registry, which LGIC_ENFORCE owns under ruling (a). Seed until that registry exists: infra/logic/05_IDENTITY_SPINE.md. This file fixes the SHAPE and the closed lists; it mints no row.",
+ "node_type_vocabulary": {
+  "owner": "the live-plane CloudNode graph read by comp-find --corpus aws. Every type key in this file (kind.by_type and types_not_graded_by_kind) IS a node_type value that instrument returns, spelled exactly as it returns it.",
+  "measured": "comp-find --corpus aws '.' --budget 600 by 1.0.0_SA_CTO 2026-09-13 ~22:4xZ; graph vintage 'Built from the estate as of 2026-09-13 12:15:54 UTC', manifest 48bf196564e6; 2,531 nodes, 33 node types",
+  "denominator": 33,
+  "partition": "kind.by_type (18) + types_not_graded_by_kind (15) = 33, disjoint"
+ },
  "key": {
   "grammar": "{bucket}/{source}/{scope}/{tier}/{table}/{partition}/{object}",
   "same_string_in_every_bucket": true,
@@ -37,7 +47,7 @@
   "qualifier": "optional narrowing: a table, a leg, or an environment (dev | prod)"
  },
  "kind": {
-  "values": ["lambda", "role", "policy", "profile", "sg", "api", "table", "queue", "dlq", "topic", "alerts", "alarm", "layer", "runner", "build", "document", "task", "sfn"],
+  "values": ["lambda", "role", "policy", "profile", "sg", "api", "table", "queue", "dlq", "topic", "alerts", "alarm", "layer", "runner", "build", "document", "task", "sfn", "lb", "cluster"],
   "by_type": {
    "LAMBDA": ["lambda"],
    "IAM_ROLE": ["role"],
@@ -51,12 +61,31 @@
    "CW_ALARM": ["alarm"],
    "LAMBDA_LAYER": ["layer"],
    "EC2_INSTANCE": ["runner"],
-   "CODEBUILD": ["build"],
+   "CODEBUILD_PROJECT": ["build"],
    "SSM_DOCUMENT": ["document"],
-   "ECS_TASK": ["task"],
-   "STATE_MACHINE": ["sfn"]
+   "ECS_TASK_DEFINITION": ["task"],
+   "STATE_MACHINE": ["sfn"],
+   "LOAD_BALANCER": ["lb"],
+   "ECS_CLUSTER": ["cluster"]
   },
-  "closed_at_l4": "Subtracted from the naming census's nameable types (infra/logic/09_NAMING_CENSUS.md s.2): ECS_TASK and STATE_MACHINE had no kind in the brief's list -- added as task and sfn. secret was DROPPED: secrets keep their own slash-path grammar, where a kind suffix would repeat the type. The brief's measured suffixes trigger, publisher, scanner are FUNCTION tokens, not kinds."
+  "closed_at_l4": "By subtraction from the live plane's 33 node types: ECS_TASK_DEFINITION, STATE_MACHINE, LOAD_BALANCER and ECS_CLUSTER had no kind in the brief's list -- added as task, sfn, lb and cluster (the last two each have one live node, opal-gateway and opal-globgrph, and are resources this estate mints). secret was DROPPED: secrets keep their own slash-path grammar, where a kind suffix would repeat the type. The brief's measured suffixes trigger, publisher, scanner are FUNCTION tokens, not kinds."
+ },
+ "types_not_graded_by_kind": {
+  "EVENT_RULE": "resource grammar with a CADENCE as the last slot (resource.last_slot)",
+  "SCHEDULE": "resource grammar with a CADENCE as the last slot (resource.last_slot)",
+  "LOG_GROUP": "derived: /aws/{service}/{resource-name}; conforms when its resource does (log_group)",
+  "S3_BUCKET": "the bucket grammar (bucket)",
+  "S3_BUCKET_POLICY": "carries its bucket's name exactly (15 of 15 live nodes); graded as that bucket",
+  "S3Key": "the key grammar (key)",
+  "SECRET": "the slash-path secret grammar (secret)",
+  "IAM_USER": "NOT GRADED: named by its holder or issuer -- a person, the account root, an external identity provider named by its issuer URL (4 live nodes). The one machine user among them (github-actions-portal) is recorded, not graded; a remediation that converts it to a role takes the role grammar",
+  "KMS_KEY": "NOT GRADED: AWS-issued identifier (not_covered)",
+  "CLOUDFRONT_DISTRIBUTION": "NOT GRADED: AWS-issued identifier (not_covered)",
+  "SERVICE_PRINCIPAL": "NOT GRADED: AWS-issued identifier (not_covered)",
+  "VPC_ENDPOINT": "NOT GRADED: AWS-issued identifier (not_covered)",
+  "ROUTE53_RECORD": "NOT GRADED: a DNS record name (not_covered)",
+  "API_ROUTE": "NOT GRADED: a served route contract (not_covered; infra/logic/07_ROUTING_REDERIVATION.md)",
+  "EVENT_SOURCE": "NOT GRADED: an event-source expression or service name, a different grammar (not_covered)"
  },
  "cadence": {
   "values": ["daily", "weekly", "monthly", "hourly"],
@@ -84,16 +113,19 @@
   "reserved": {"opal": "account-level platform resources only; never a null prefix before a real system"}
  },
  "grade": {
-  "signature": "(name, type) -> (verdict, canonical_form)",
+  "signature": "(name, type) -> (verdict, canonical_form); type is a node_type value (node_type_vocabulary)",
   "verdicts": ["CONFORMANT", "ALIAS", "OUT-OF-PATTERN"],
   "ALIAS": "the grammar holds but a slot carries a registry alias spelling (for example inflection or bd in a resource name's scope slot); canonical_form is printed",
   "OUT-OF-PATTERN": "the grammar fails (order, separator, case, a missing or unknown kind, a firm in the system slot); canonical_form is printed",
-  "unplaceable": "RAISES. A name the tokeniser cannot place, or a token no registry row resolves, is a defect in the tokeniser or the registry and is fixed there -- it is never filed under one of the three verdicts, and there is no fourth"
+  "not_graded": "a type marked NOT GRADED in types_not_graded_by_kind returns no verdict and is outside the grade's domain -- it is excluded, not a fourth verdict",
+  "unplaceable": "RAISES. A name the tokeniser cannot place, a node_type absent from this file, or a token no registry row resolves, is a defect in the tokeniser, this file or the registry and is fixed there -- it is never filed under one of the three verdicts, and there is no fourth"
  },
  "not_covered": [
   "Terraform resource labels and module names (the executable layer's authoring surface; measured before its flagger is specified)",
   "tag keys and values",
-  "AWS-issued identifiers (KMS key ids, distribution ids, service principals)",
+  "AWS-issued identifiers (KMS key ids, CloudFront distribution ids, service principals, VPC endpoint ids)",
+  "DNS record names (Route 53)",
+  "event-source expressions and service names",
   "API route grammar (a served contract; infra/logic/07_ROUTING_REDERIVATION.md)"
  ],
  "renames_authorized": "NONE. This schema grades; it moves no live name. Each remediation is minted where the resource lives, cites a row of the tension ranking, and carries its own sign-off."
