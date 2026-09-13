@@ -2512,6 +2512,51 @@
     "spec_asserts": "TO-FE-s-25 BOUNDS (widened at 913706a898): 'StatusPanel renders, visibly and in words a reader understands, which producer state it received whenever the view label alone does not distinguish it, using the producerState your change already carries.' The issuer's rationale for that remedy over a tenth view state: 'Displaying the producerState you already carry touches one file and no contract.' And the cell: 'EVERY CRITERION HERE ASSERTS THE DISTINCTION SURVIVES AT THE VIEW ... Drive from a wire value and assert what a reader of the page can tell apart.'",
     "world_is": "producerState was carried on the StatusEnvelope, which never reaches a panel. Displaying it took four files, and two OPTIONAL members added to Availability, which is a view-contract member all ten contracts carry. That is additive, it moves no state, label or mapping, and it is not the ruling's 'no contract'. Whether an optional Availability member counts as the contract change ruling A scoped this cell away from is the issuer's call, not this worker's. And my first pass had graded a builder no tab calls, so its F25-AC2/AC4 PASS rows at cb25688591 described a view the page does not render. They are re-measured on the tab path in this order's re-issued proof.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S54",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-13T05:20:00Z",
+    "one_line": "W3-S17 DISARMED BY ITS NAMED OWNER, WITH A DENOMINATOR. The hazard -- an IPv4-literal precondition probe reads REFUSED against vite's ::1-only listener and, under FE-s-27's new skip rule, silently turns a runnable test into a SKIP -- has ZERO live instances: 0 of 746 files under portal/{scripts,src} plus the vite/playwright configs carry 127.0.0.1 in CODE (portal DEV @3ad6fcc2). The only 2 hits are COMMENTS in FE-s-27's own probe explaining the trap, which doubles as the scan's positive control. AND THE PREMISE W3-S17 FALSIFIED CAME FROM THE ISSUER: my spawn prompt told the worker a closed loopback port times out, carried from a memory entry whose own 2.0s timeout produced that reading.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CENSUS, portal DEV working tree @3ad6fcc2 (after FE-s-27's fast-forward), node_modules excluded: DENOMINATOR 746 files (.ts .tsx .js .mjs .cjs .json .html under portal/scripts and portal/src, plus vite.config.* and playwright.config.*). 127.0.0.1 in CODE lines: 0. In COMMENT lines: 2, both at __tests__/fe-s-27/dev-server-probe.mjs:33 and :37. POSITIVE CONTROL from real bytes: that probe is FOUND by the scan.",
+        "THE SHIPPED PROBE asks the same name the instrument loads: dev-server-probe.mjs:38 `const HOST = 'localhost'`, with :32-37 recording why ('127.0.0.1 refused, probe on localhost answered HTTP 200'). FE-s-27 drained @9c2b917e0d; its criteria were measured in both worlds (server up 5181 / down).",
+        "SUPERSEDES the issuer's earlier grep over the same scope, which returned 'No matches found' with NO file count -- not evidence of absence, because an empty result with no denominator cannot tell 'nothing there' from 'nothing scanned'.",
+        "THE FALSIFIED PREMISE, located: the issuer's spawn prompt to 0.9.0_WK_IRPT_FNTEND~3 said a closed loopback port 'TIMES OUT on this box rather than refusing'. Source: the issuer's persistent memory entry (2026-08-30, CPython create_connection timeout=2 -> TimeoutError after 2.02s). Controlled sweep 2026-09-13, SAME instrument, SAME closed port proved unowned by an exclusive bind, only the timeout varied: 1.5s TimeoutError, 2.0s TimeoutError, 2.5s ConnectionRefusedError at 2.03s, 5.0s ConnectionRefusedError at 2.03s. The box REFUSES after ~2.03s; a 2.0s timeout fires first. Memory entry corrected the same day."
+      ]
+    },
+    "spec_asserts": "An ARMED hazard disarms via its row's disarm_owner (W3-S17 named 2.0.0_SA_COO~F). A precondition probe must ask the same name the instrument under test loads. '0 hits across 0 files' is out-of-corpus, not absence -- a census prints what it scanned.",
+    "world_is": "Disarmed in practice: the only precondition probe in the portal asks `localhost`, and no code line in 746 files hard-wires the IPv4 literal. The rule survives as a rule for the NEXT probe, not a live defect. The falsified premise traces to the issuer, not the worker: I passed a memory's conclusion to a worker as a fact, the worker measured it false, and a controlled timeout sweep then showed the memory's verdict was a property of its own timeout -- a verdict that flips with the timeout is a measurement of the timeout. The practical advice that survives: never infer a port's state from refused-vs-timeout with a timeout under ~2.1s on this box; use the port table.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S55",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-13T05:21:00Z",
+    "one_line": "ROUND 4's L6 CUT DEFECT, COUNTED: 3 of 4 orders carried a criterion the issuer cut against an ASSUMPTION rather than the code, and all 3 were caught by WORKERS REFUSING, 0 by any issuance gate. F28-AC6 expected `0 fail` from a battery that never prints it; F26-AC8 required FE-s-22's suite green while F26-AC5 required repairing the live fixtures FE-s-22's assertions read as defective; F25-AC6 required 9 of 9 producer states distinguishable at the view while the only display surface lay outside the grant. Three shapes, one cause: a bar is a claim about a tool's OUTPUT or a surface's REACH, and each was cut without reading it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "F28-AC6 (OUTPUT VOCABULARY): expect `0 fail`; test_proof_of_spec_alignment.py:457-462 prints only `BATTERY FAILED` or `BATTERY PASS`; measured rc=0 with '0 fail' occurring 0 times. Re-cut @9ab6043728; FE-s-28 then completed @c0eb49d1e1. The SAME shape was caught by the issuer on F28-AC1 BEFORE issuance and corrected as an instance, not generalised to the order's other instruments.",
+        "F26-AC8 (ANOTHER CELL'S ASSERTIONS): F26-AC8 required __tests__/fe-s-22 green; __tests__/fe-s-22/capture-hash.test.ts:252 `expect(verdict.defectiveFixtures).toHaveLength(3)` and :282 `expect(exact).toEqual([])` read the LIVE maps F26-AC5 ordered repaired. Contradictory as cut. Grant widened @bf95fb7b9a.",
+        "F25-AC6 (SURFACE REACH): required 9 of 9 producer states distinguishable at the view; tabs/StatusPanel.tsx:39 renders labelForState(view state), so QUEUED and RUNNING both read LOADING, and StatusPanel was not in <paths>. Grant widened with a ruling (display the state, do not add a view state) @913706a898.",
+        "DENOMINATOR: 4 orders issued this round (FE-s-25/26/27/28). FE-s-27 carried no issuer defect and completed first time. Defective criteria: 3 found at L7 + 1 (F28-AC1) caught pre-issuance = 4 criteria across 3 orders. Every worker refusal was correct; none shipped a wrong result. Prior rows carrying the fix-the-instance-leave-the-class pattern against this seat: S31, S45."
+      ]
+    },
+    "spec_asserts": "Rule 27 L6: the worker face carries 'ONE clause per criterion with its invocation and expectation'. .tools/to-pipeline-gate.py grades the FORM of an order -- shape, placeholders, paths -- not whether a criterion is satisfiable by a correct implementation.",
+    "world_is": "None of the three was detectable by the L6 gate as built, because it grades form. The controls, by what each would have caught: (1) OUTPUT VOCABULARY -- at cut time, run each criterion's invocation at HEAD and confirm its <expect> can appear in that tool's output at all; catches the F28-AC6 shape and is mechanisable as one gate limb. (2) CROSS-CELL ASSERTIONS -- for any criterion that runs ANOTHER cell's tests, read what those tests assert about the surfaces this cell changes; catches F26-AC8; judgment, not mechanisable cheaply. (3) SURFACE REACH -- for any 'distinguishable / visible at the view' criterion, confirm the component that renders it is inside <paths>; catches F25-AC6; partly mechanisable. Until (1) exists this seat applies all three by hand at its next cut -- disarm_owner is the issuer. (1) as a gate limb is offered to 1.0.0_SA_CTO through the L10 slug.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
