@@ -1910,6 +1910,50 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
     "world_is": "The gate refuses independent of the file set, including an EMPTY one, because it fails at import scope before any filtering. So the contrast S2 invites is false: a .py-free commit is refused identically. The remedy is the same one S2 names (widen the cone), but the exposure is every commit from this worktree rather than every .py.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "FILED AGAINST MY OWN PRIOR ROW. The channel is append-only, so S2 is not edited and not disarmed; this row corrects its GRAIN, the way Z-S41 refined Z-S37. The direction matters: an understatement reads as all-clear for the case it excludes, and a reader of S2 alone would reasonably conclude that dropping the .py files was a sufficient workaround. It is not, and this worker tried it and was refused. NO WORKAROUND WAS MANUFACTURED: the cone was not widened, PYTHONPATH was not re-pointed, no bare `git commit` was used, and no gate was bypassed. NOTHING IS ASKED OF ANY OTHER SEAT; the disarm is the same provisioning act S2 names."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W16-S4",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~16",
+    "surfaced_at": "2026-09-13T06:54:42Z",
+    "one_line": "THE COMMIT GATE'S NON-ASCII LIMB IS SCOPED TO infra/ AND .tools/ ONLY, SO IT CAN NEVER FIRE ON THIS CELL'S SUBJECT -- and its silence is indistinguishable from a clean pass. U3-AC4 tells the worker a staged .py arm is 'WARN-ONLY and ships', which reads as: it runs and may warn. On data/black_diamond/** it does not run at all. A probe .py carrying 5 non-ASCII bytes passed the gate rc=0 with 'All checks passed!' and zero WARN lines. The failure mode is a GREEN: a reader clears the limb and learns nothing, because a non-run and a clean verdict print identically.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/commit_gate_runner.py:427-429 @220d09901b67ab7e49ea321886ba3941c63868d6 -- _nonascii_lint_one() opens with `norm = f.replace(chr(92),'/')` then `if not (norm.startswith('infra/') or norm.startswith('.tools/')): return 0`. The early return is unconditional on path and precedes the byte read, so no file outside those two prefixes is ever scanned.",
+        "MEASURED PAIR, same gate, same invocation shape, at 220d09901b67ab7e49ea321886ba3941c63868d6: (a) `timeout 180 bash .tools/commit-gate.sh .scratch/run/u3_gate_ascii_probe.py` where the probe carries 5 bytes >127 (counted independently in python) -> 'All checks passed! / OK: pre-commit gate clean for 1 of 1 file(s)', rc=0, ZERO WARN lines. (b) the same gate on a deliberately broken .py -> 'BLOCKED: py_compile failed', rc=1. So the gate IS live and DOES refuse -- the ASCII silence in (a) is a NON-RUN, not a tolerant pass.",
+        "SCOPE OF THE CONSEQUENCE FOR THIS CELL: the subject is data/black_diamond/scripts/classification/seed_canonical_securities.py (blob fbbc7165d331 @220d09901b67ab7e49ea321886ba3941c63868d6), which starts with neither prefix. So when POD4 applies the handed-off patch under its own gate run, this limb will be silent there too. This worker therefore byte-scanned the patched bytes and every deliverable itself: 0 bytes >127."
+      ]
+    },
+    "spec_asserts": "U3-AC4 @8e67653049 instructs: 'Check BOTH ASCII limbs and say so: the commit-MESSAGE arm is BLOCKING while a staged .py arm is WARN-ONLY and ships, so clearing the one that stopped you teaches nothing about the other.' That presents the staged-.py arm as an arm that RUNS on the changed .py and whose verdict is merely non-blocking.",
+    "world_is": "The staged-.py arm runs on a PREFIX-SCOPED subset of files: infra/ and .tools/ only (commit_gate_runner.py:427-429). For every other path -- including this cell's entire subject tree data/black_diamond/** and including the scratch paths a worker would naturally probe with -- the function returns 0 before reading a single byte. 'WARN-ONLY' is accurate about its SEVERITY and silent about its COVERAGE, and the coverage is the half that decides whether checking it means anything. The order's own warning applies one level deeper than it was written: clearing the staged-.py limb on an out-of-scope path teaches nothing about that path either.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "NOT A DEFECT IN THE ORDER'S INSTRUCTION, which is correct as far as it goes, and not a request for any act. Filed because the instruction's purpose is to stop a worker citing one limb as evidence about another, and this worker could have cited a NON-RUN as a clean staged-.py limb with no way for a reader to tell. Nothing was widened to work around it: no probe file was written under infra/ or .tools/ (both outside this worker's <paths> grant), so the in-scope branch of this function is UNEXERCISED by this worker and is stated as such rather than assumed. The commit-MESSAGE limb is a separate mechanism entirely -- .tools/git-hooks/commit-msg-ascii-check.sh, installed at the shared git-common hooks/commit-msg and therefore APPLIED to this linked worktree -- and is graded separately in the proof instance."
+  },
+  {
+    "id": "POSN_ASTTAX-Z-W16-S5",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_POSN_ASTTAX~16",
+    "surfaced_at": "2026-09-13T06:54:42Z",
+    "one_line": "THE RE-CUT RETIRED U3-AC2's EDIT BUT LEFT U3-AC4 NAMING ITS OUTPUT: AC4 still expects the gate 'clean on the changed .py', and after the re-cut this cell changes NO .py in the repo by construction -- the patch is RECORDED, and the file it targets is POD4's. `git diff HEAD --name-only -- '*.py'` = 0. The clause has no repo-resident subject, so it was graded against the .py BYTES the cell actually produces (the patched seeder, materialized in scratch by applying the recorded diff), and that scoping is disclosed rather than passed over.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The order @8e67653049: U3-AC2's <expect> reads 'RECORDED as a unified diff in this cell's deliverables dir -- NOT applied to the file, which is POD4-owned', while U3-AC4's <expect> reads 'clean on the changed .py, output cited'. The first forbids the object the second names.",
+        "MEASURED at 220d09901b67ab7e49ea321886ba3941c63868d6: `git diff HEAD --name-only -- '*.py'` -> 0 line(s). `git status --porcelain -- data/black_diamond/` -> 0 line(s), against `git ls-files -- data/black_diamond/` = 176, so the empty status is CLEAN and not MATCHED-NOTHING.",
+        "HOW IT WAS GRADED INSTEAD: the recorded diff was applied to the HEAD blob in a scratch mirror (git apply rc=0; a one-line corruption of the same diff is REFUSED rc=1, so the check discriminates), the result reproduced the exact bytes U3-AC3 exercised (sha256 dde708491f6fa73d, both sides), and `timeout 180 bash .tools/commit-gate.sh` over those bytes returned 'OK: pre-commit gate clean for 1 of 1 file(s)', rc=0."
+      ]
+    },
+    "spec_asserts": "U3-AC4 @8e67653049 expects the commit gate 'clean on the changed .py', which presupposes that this cell leaves a changed .py somewhere the gate can be pointed at.",
+    "world_is": "Under the same order's U3-AC2, this cell changes no .py anywhere: the patch is a deliverable and the target file belongs to lane POD4 (.owned-paths.yaml:1712). The re-cut converted AT4-s-3 from EDIT to DISCLOSE-AND-HAND-OFF and updated AC2 and AC3 to match, but AC4's wording still describes the pre-re-cut world. The gate limb itself is in no way broken -- it runs and refuses -- there is simply no repo-resident object of the kind the clause names.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "NOT BLOCKING and no act is asked of any seat. Raised so the L9 grader sees exactly WHICH bytes carried the U3-AC4 verdict and can reject the scoping if it disagrees, rather than reading a bare PASS that silently re-defined 'the changed .py'. The alternative readings were considered and are recorded in the proof instance: grading the worker-authored control scripts instead would clear the clause on files the cell does not hand to anyone, which is weaker evidence about the thing being handed off. Note also that the path-keyed limbs of the gate are NOT exercised at the real path by this method -- see W16-S4 for one limb where that distinction is load-bearing."
   }
 ]
 ```
