@@ -17,6 +17,29 @@ this pass.
 
 ---
 
+## AMENDMENT RECORD -- THREE THINGS LEARNED AFTER THIS CUT, 2026-09-13 ~06:1xZ (brief now @`1b42dbe758`)
+
+**Measured part by part: @`2ffcf91342` -> @`b9335371e1`, Part I EQUAL and Part III EQUAL; @`b9335371e1` ->
+@`1b42dbe758`, Part I DIFFERS in O6's body only (its instrument sentence corrected -- item 3; the outcome statement is
+unchanged) and Part III EQUAL.** So **no FWD id or bar moves.** Parts II, IV, V and VII changed.
+
+1. **FWD-3 DEPENDS ON THE D14 REGISTRY.** The brief's Part II now strikes its identity-spine RUNTIME claim as superseded
+   by Andrew's ruling (a) -- D14 owns the registry and its generated views; this project owns the repoint only. So FWD-3
+   (every consumer that needs a firm's location reads one place) cannot be met until the D14 registry exists: **a second
+   D14-before-D8 item, scoped to this one outcome.** The other seven stay independent of it.
+2. **FWD-6's PRECONDITION IS TWO ACTS AT MINT, NOT ONE.** `3.0.0_SA_CVO` @`614423c438`: the bucket template
+   `s3-49financial.tf` provisions five resources and NO read instrument, so `opal-data-inflection` and
+   `opal-data-cottonwood` would be born with FWD-6 unprovable; and the organisation trail's read selector is CLI-applied
+   (`cloudwatch-alarms.tf:208-211`), outside Terraform, so no plan ever shows drift on it. Both must change before
+   either bucket is minted -- CloudTrail data events do not backdate. The brief's Part V now carries both halves.
+3. **THE BRIEF'S O6 LEANED ON A DARK INSTRUMENT, AND NO LONGER DOES.** At v1 O6 said *"the FIRMSEP detector already
+   watches exactly these three buckets and emits to SNS."* `3.0.0_SA_CVO` @`3e9200d8f1` measured that rule's
+   EventBridge-to-SNS delivery FAILING on every invocation since 2026-05-11, under a certification that counted
+   invocations and never read failures. @`1b42dbe758` corrects the sentence in place: the quiet window rests on CloudTrail
+   data events, not on FIRMSEP. FWD-6's ACCEPT already demanded a named instrument; the brief now agrees with it.
+
+---
+
 ## THE EIGHT OUTCOMES
 
 ```

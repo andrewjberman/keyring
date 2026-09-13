@@ -17,6 +17,19 @@ its machine-run bar to this one's FWD-5.
 
 ---
 
+## AMENDMENT RECORD -- L1 FIXES ABSORBED 2026-09-13 ~06:1xZ (brief now @`1b42dbe758`)
+
+**Measured @`fd579d3caf` -> @`b9335371e1` -> @`1b42dbe758`: Part I DIFFERS at both steps (O2's wording only), Part
+III EQUAL at both, every other part EQUAL. No FWD id and no bar moves.**
+
+- **s.1 RESOLVED.** The two D14 briefs no longer disagree: O2 now says `name()` takes the LONG key and emits the SHORT
+  form, labelled PROPOSED and L4-ratified by this seat since @`1b42dbe758`. The first fix had called it ruled by Andrew;
+  the naming endpoint's amendment record carries that correction.
+- **s.2's consequence is now written into the D8 migration brief's Part II:** its registry-runtime claim is struck as
+  superseded by ruling (a), and the D8 endpoint's FWD-3 is named as the second D14-before-D8 item.
+
+---
+
 ## THE SEVEN OUTCOMES
 
 ```
