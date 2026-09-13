@@ -1762,3 +1762,33 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S46",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-13T05:10:00Z",
+    "one_line": "ROUND 4 WOULD BE CUT AGAINST A CLOSE THAT IS NOT REACHABLE AT CUT TIME. The round-3 L10 exception is pinned to total==15, so the moment round 4 is cut it can never match again -- and at round 4's close the SAME four carried orders are still non-terminal, so the slug is refused by the same limb for the same reason.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE ORDER CENSUS AT HEAD, denominator printed. 15 task orders under org/missions/D4/POSN/POSN_ASTTAX/task-orders/, read via `git show HEAD:<path>` per file: ELEVEN <status>complete</status>, FOUR <status>staged</status> -- TO-S2-1, TO-S3-1, TO-T6-1, TO-T7-1. `staged` is NOT terminal, so _open_tos_for_project counts 4 open for this project.",
+        "THE GUARD, READ AT SOURCE in .tools/surprise-row-gate.py as landed by c89c0e45a2: `_posn_round3_terminal_exception` opens with `if code != \"POSN_ASTTAX\" or not open_ids or total != 15: return False`. `total` is the project's task-order count returned by _open_tos_for_project. CUTTING ROUND 4 RAISES total ABOVE 15, so the exception can never match again. That is FAIL-CLOSED and is the safe direction -- it is not a defect in the exception.",
+        "THE CONSEQUENCE, stated as a sequence rather than a prediction. At round 4's close, with every round-4 order terminal, the four carried orders are STILL non-terminal; _open_tos_for_project returns 4 open; the round-3 exception is dead by its own total guard; _route_precondition_violations therefore refuses the NEW remediation row. Round 4's slug is blocked by the same limb, on the same four orders, for the same reason round 3's was.",
+        "AND NOTHING INSIDE ROUND 4 TERMINATES THEM. TO-T6-1 is the retag and is held by a NO-GO that this loop forbids spawning against. TO-S2-1, TO-S3-1 and TO-T7-1 sit behind that same retag and the portal freeze, which Andrew has restated twice. So the four are not work round 4 can do; they are work round 4 inherits.",
+        "THE ROUND-3 EXCEPTION ITSELF IS CORRECT AND NARROW, recorded so this row is not mistaken for a complaint about it. It refuses a commit-wide override in its own comment, mirrors the established round-2 mechanism, and binds relief to an immutable record at pinned commit fa2b1764c4 requiring schema_version, project, round 3, authority_message_id 22245, authority_pin b75f5a805a, four orders whose open_labels match the live open set, the row's canonical hash, and a FRESH sha256 of each carried order's bytes at HEAD so an altered order stops being admitted. All other non-terminality limbs still run independently."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rule 27's L10 order assumes a round that is cut can be closed: slug -> analysis -> recut. Obligation 1 binds this seat to cut round 4 in ONE issuance the same tick the round-3 analysis arrives.",
+    "world_is": "Round 4 can be CUT and cannot yet be CLOSED. The four carried orders are non-terminal, are not round 4's work, and are the exact set the L10 refuser counts -- and the relief that admitted round 3's slug is pinned to a total that cutting round 4 destroys.",
+    "notes": "THIS SEAT IS NOT PROPOSING A GATE CHANGE AND HAS NOT MADE ONE. The gate is 1.0.0_SA_CTO~Z's, and a COO engineering its own L10 relief is precisely the shape LD-0521 exists to prevent; this row names a premise before cutting on it, which is the measure-then-build failure already banked on this project (a dependent cell cut against a premise a later measurement kills). THREE READINGS EXIST AND THE CHOICE IS NOT THIS SEAT'S: (a) the four terminate first, which needs the retag or the freeze to move and is Andrew's; (b) round 4 is cut knowingly with its close carded as a KNOWN open item AT the issuance rather than discovered at L10; (c) the round-3 analysis re-grains the four so they are not carried into round 4's count. Mild preference for (b), because it costs nothing now and makes the block visible at the moment it is created. DISARM: any of the three, or a measurement showing the four terminal at HEAD. NON-APPLICATION: if round 4 is never cut, or if its orders are cut under a different project code, this does not apply. NOTHING IS BLOCKED ON THIS ROW -- obligation 1 still binds and round 4 is still cut in ONE issuance the tick the analysis lands; this exists so that issuance carries the item with it."
+  }
+]
+```
