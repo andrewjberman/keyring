@@ -64,6 +64,7 @@
 
 - **Grant.** The `<paths>` block below, plus `org/missions/D9/IRPT/IRPT_FNTEND/deliverables/<your serial>/` and this order's own file. ⛔ **`__tests__/fe-s-18/` IS NOT IN YOUR GRANT AND YOU TAKE NO CAPTURE.** A path you need that is not named is a BLOCKING row; never an override.
 - ⛔ **Under `fixtures/smoke/` you own THE THREE HOLDINGS MAPS ONLY.** Other maps in that directory belong to terminal cells and to `FE-s-18`'s carried criteria; changing one would move another cell's evidence under it.
+- ⛔ **ONE FILE OF `FE-s-22` IS NOW YOURS, FOR ONE PURPOSE: `__tests__/fe-s-22/capture-hash.test.ts`, added by the issuer after your refusal (row `W2-S20`).** Two of its assertions -- `:252` `defectiveFixtures.toHaveLength(3)` and `:282` `exact.toEqual([])` -- assert the round-2 maps carry NO `status`, and they read the LIVE fixture files this order requires you to repair. So `F26-AC5` and `F26-AC8` could not both pass as cut. **That is the issuer's defect, not yours.** Re-point ONLY those two assertions' INPUT to a round-2-shaped copy of the three maps with `status` absent (in memory, or read from history at portal `25062fce`). **Do not change what either assertion claims.** Show it BOTH WAYS in the run's own output: on the status-absent copy the rule still reads `3 of 3` defective and the exact path still has `0` hits; on your repaired live maps it reads `0 of 3` (your `F26-AC5`). `capture-hash.ts` -- the RULE -- stays byte-unchanged, and every other `FE-s-22` assertion stays exactly as written. Anything else you believe that file needs is a row, not an edit.
 - **A legitimate envelope, not a forced difference.** The state you give each map must be one the contract permits for that basis. If no legitimate state distinguishes two of the three, that is a `BLOCKING` row naming which two and why -- a real and useful finding, not a failure.
 - **Two repos, one worktree pair.** `<WS>` / `<WS>/portal`. Portal commit pathspec: the files you changed, named individually. Workspace records under `org/` only. Never push, merge, rebase, `checkout --` or `clean`. Never stage `portal` in the workspace repo.
 - **Bound every invocation** with `timeout` as written. **Scratch:** `<WS>/.scratch/` only. `node_modules` is a junction; do not run `bun install`.
@@ -76,6 +77,7 @@ portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json
 portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-target.json
 portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-missing-attribution.json
 portal/src/pages/InvestorReporting/__tests__/fe-s-26/
+portal/src/pages/InvestorReporting/__tests__/fe-s-22/capture-hash.test.ts
 org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md
 </paths>
 
