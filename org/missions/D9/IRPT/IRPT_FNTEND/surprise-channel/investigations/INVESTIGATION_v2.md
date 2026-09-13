@@ -2286,6 +2286,29 @@
     "spec_asserts": "TO-FE-s-25 F25-AC6, verbatim: 'Each of the producer's nine states is distinguishable at the view from every other. If two legitimately share a LABEL, the test prints what else distinguishes them and asserts THAT is present and reachable; a pair distinguishable only by a code a reader never sees is a FAIL.' Expect: 'PRODUCER STATES DISTINGUISHABLE AT THE VIEW: 9 of 9'. BOUNDS: the <paths> block is the grant; 'No derivation ... Never fabricate a value to make a distinction visible.'",
     "world_is": "Measured 7 of 9 (35 of 36 pairs). QUEUED and RUNNING share the label 'Loading', and with every other wire field held constant NOTHING ELSE a reader sees differs between them. The two honest remedies each need a path outside this order's grant: a tenth view state collides with __tests__/fe-s-3/status.test.ts:31's `toHaveLength(9)`, and a rendered carrier needs tabs/StatusPanel.tsx. The view now CARRIES the producer's token (producerState), so the information survives arrival; it is not RENDERED. F25-AC6 is recorded FAIL and F25-AC10 fails with it, since the fe-s-25 folder contains the arm that asserts the true bar. The order is left OPEN. The choice between a tenth view state and a renderer read -- and which cell owns fe-s-3's count if it is the former -- is the issuer's, not this worker's.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-13T05:35:12Z",
+    "id": "IRPT_FNTEND-W1-S50",
+    "one_line": "MY OWN DEFECT: TO-FE-s-25's first-pass panel arms graded tabEnvelopeFromStatus, a builder no tab calls; so displaying producerState could not be the ruling's 'one file, no contract' -- it has to ride Availability, a view-contract member",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED by an unscoped census (comp-find 'envelopeFromAvailability|carryAvailabilityFromStatus|tabEnvelopeFromStatus|<StatusPanel' over portal/src, 55 hits in 761 files): tabEnvelopeFromStatus -- added by this worker at portal abd470c7 -- had exactly 3 callers, all of them this cell's own __tests__/fe-s-25/ batteries, and ZERO in production code.",
+        "EVERY TAB BUILDS ITS PANEL FROM THE DOCUMENT'S AVAILABILITY, never from a StatusEnvelope: tabs/TabShell.tsx:142, :152, :159; tabs/reporting/ReportingTab.tsx:149; tabs/holdings/HoldingsTab.tsx:79; tabs/analysis/AnalysisTab.tsx:151, :194 -- each envelopeFromAvailability(<document>.availability) @abd470c7. On the network path that availability is filled by carryAvailabilityFromStatus inside parseIrEnvelope (contracts/envelope.ts:217 @abd470c7), which at abd470c7 copied state, sourceAsOf and publicReasonCode and nothing else.",
+        "CONSEQUENCE FOR THE FIRST PASS, stated against my own record: F25-AC2 ('4 of 4'), F25-AC4 and the F25-AC6 measurement were graded on a panel envelope the page never builds. On the real tab path at abd470c7 the source-age slot still read the availability INSTANT (the status as_of, else the document's own) and a null business_date was still indistinguishable from an absent one. The proof instance committed at workspace cb25688591 recorded those arms PASS on that basis.",
+        "CONSEQUENCE FOR THE RULING on W1-S49: StatusPanel is handed a TabEnvelope, and the tabs' TabEnvelope carries only what Availability carries. So 'display the producerState you already carry' reaches a reader only if producerState rides Availability. Landed in the grant: contracts/index.ts (Availability gains OPTIONAL producerState and sourceDate), contracts/adapt.ts (carryAvailabilityFromStatus sets them when a status arrived), state/status.ts (envelopeFromAvailability hands them to the panel; tabEnvelopeFromStatus retired), tabs/StatusPanel.tsx (the words). FOUR files. No view state, label, ENVELOPE_STATES or STATE_FOR_WIRE entry changed; both new members are optional, so every out-of-grant Availability constructor still typechecks.",
+        "HOW IT WAS FOUND: re-grounding the premise of the new bound ('StatusPanel ... using the producerState your change already carries') before writing it -- asking which function builds the envelope StatusPanel is actually handed. The three fe-s-25 panel batteries now enter as a v1 response body through parseIrEnvelope and read the real StatusPanel via envelopeFromAvailability (__tests__/fe-s-25/_panel.ts)."
+      ]
+    },
+    "spec_asserts": "TO-FE-s-25 BOUNDS (widened at 913706a898): 'StatusPanel renders, visibly and in words a reader understands, which producer state it received whenever the view label alone does not distinguish it, using the producerState your change already carries.' The issuer's rationale for that remedy over a tenth view state: 'Displaying the producerState you already carry touches one file and no contract.' And the cell: 'EVERY CRITERION HERE ASSERTS THE DISTINCTION SURVIVES AT THE VIEW ... Drive from a wire value and assert what a reader of the page can tell apart.'",
+    "world_is": "producerState was carried on the StatusEnvelope, which never reaches a panel. Displaying it took four files, and two OPTIONAL members added to Availability, which is a view-contract member all ten contracts carry. That is additive, it moves no state, label or mapping, and it is not the ruling's 'no contract'. Whether an optional Availability member counts as the contract change ruling A scoped this cell away from is the issuer's call, not this worker's. And my first pass had graded a builder no tab calls, so its F25-AC2/AC4 PASS rows at cb25688591 described a view the page does not render. They are re-measured on the tab path in this order's re-issued proof.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
