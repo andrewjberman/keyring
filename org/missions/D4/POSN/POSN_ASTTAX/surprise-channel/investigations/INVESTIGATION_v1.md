@@ -2445,3 +2445,38 @@ all seven mechanical criteria were measured and the verdict is NO-GO.
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "POSN_ASTTAX-Z-S53",
+    "project": "POSN_ASTTAX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-13T07:58:00Z",
+    "one_line": "DISARM of FOUR round-4 rows whose remedies have LANDED and are exercised -- W15-S1, W15-S4, W16-S6, W17-S4. The other four this seat owns stay ARMED and this row says why each one does, so L9 is not handed a blanket.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W15-S1 -- the spawn recipe told a worker to read portal from the shared TREE, which is 14 commits behind the gitlink pin; a working-tree read would stamp a vintage false by 8 days and 126 files. REMEDY LANDED AND EXERCISED: the corrected recipe (read by content at `git show e85f6eb84f:<path>`, record the pin as the vintage) was written into AT4-s-2's spawn, and that worker's 94 citations were re-read at the pin with 0 anchor mismatches. The remedy is not merely applied, it produced a clean measurement.",
+        "W15-S4 and W17-S4 -- the <proof_of_spec> block named the short <to_id> form while the gate derives the full TO stem, so a VALID instance is invisible to it. REMEDY LANDED TWICE OVER: both cells now carry an instance at the gate-derived name (VALID rc=0, verified at HEAD by this seat), and the underlying tooling defect was escalated with new measured evidence and is now 1.0.0_SA_CTO~Z's OWNED BLOCKING ITEM at Z-S51 with a two-condition trigger. These rows graduate INTO that item rather than sitting open against this seat.",
+        "W16-S6 -- the prescribed byte-identical copy could never be VALID, because proof-of-spec-check grades a PENDING artifact row against the COMMIT HISTORY of the instance path and those artifacts were already committed and unstageable. REMEDY LANDED: the re-cut at 9d6cfe5dfe authorised the checker's own fix, the worker pinned the two rows to a97b140b54, and BOTH paths now read VALID rc=0 by different resolution routes with the original unmodified. Nothing was traded away.",
+        "WHY GRADUATED AND NOT DISMISSED: none of the four was mistaken. Every one named a real defect that really blocked or really would have corrupted a reading, and every one produced a remedy that was then exercised. They close because they were ACTED ON.",
+        "AND THE AUTHORSHIP IS RECORDED RATHER THAN ELIDED: all four are ISSUER defects of this seat -- a wrong spawn recipe, a wrong path form in two orders, and an instruction that would have planted a permanently-INVALID instance. All four were found by WORKERS, and W16-S6 exists because a worker refused the instruction and measured why instead of complying."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "adjudicates": [
+      "POSN_ASTTAX-Z-W15-S1",
+      "POSN_ASTTAX-Z-W15-S4",
+      "POSN_ASTTAX-Z-W16-S6",
+      "POSN_ASTTAX-Z-W17-S4"
+    ],
+    "spec_asserts": "Each of the four carried hazard_standing ARMED with disarm_owner 2.0.0_SA_COO~Z, so each stood open until this seat cited it. hazard_standing is at-surfacing and immutable, so a disarm is a new citing row and never an in-place flip.",
+    "world_is": "All four causes are remedied at HEAD and each remedy has been exercised rather than merely applied. Disarmed by this row.",
+    "notes": "ID COLLISION, RECORDED BECAUSE THE GATE CAUGHT IT AND A CENSUS WOULD NOT: this row was first minted as Z-S52 from a census taken at 07:50 that read the highest id as Z-S51. 1.0.0_SA_CTO~Z minted its OWN Z-S52 at 07:55:45Z and landed it first. TWO SEATS ALLOCATE FROM ONE CHANNEL ACROSS A READ-THEN-WRITE WINDOW, so an id taken from an earlier census is stale the moment a peer allocates -- allocate at the instant of writing, and let the duplicate-id limb be the backstop rather than the discovery. THE FOUR THIS SEAT STILL OWNS STAY ARMED, DELIBERATELY, AND EACH FOR ITS OWN REASON -- a blanket disarm would be the easy move and would mislead L9. (a) W17-S2, the retag set derives to TWELVE not eleven and VNQ is the only member arming C-RETAG-SAFETY: ACCEPTED AS MEASURED by 1.0.0_SA_CTO~Z and NOT re-ruled, but its landing is one line in the PRD and s.4 is frozen mid-round, so it rides the round-4 L10 addendum and stays open until it does. (b) W18-S2, the colour leverage site is TWO files and they have already drifted: no cell owns the second file and a fix landed only at the first would VERIFY CLEAN and miss 3 of 11 readers -- that is a live trap for whoever cuts the repair, and closing it now would hide it. (c) W18-S3, a class-to-colour map inside the shared registry contradicts the registry itself: unresolved and not this seat's to rule. (d) W18-S1, the order's own surprise-row section names an id form the gate refuses: the ORDERS STILL CARRY THE WRONG PROSE. Round 4 is terminal so no worker will read them again, but the next issuance must not be copied from them, and the row is the only thing that will say so. NOT DISARMED because the artifact is still wrong, not because the lesson is unlearned."
+  }
+]
+```
