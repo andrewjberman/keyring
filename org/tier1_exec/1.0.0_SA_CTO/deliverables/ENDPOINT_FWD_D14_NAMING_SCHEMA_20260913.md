@@ -19,6 +19,28 @@ this pass.
 
 ---
 
+## AMENDMENT RECORD -- L1 FIXES ABSORBED 2026-09-13 ~06:1xZ (brief now @`1b42dbe758`)
+
+The brief was edited twice after this cut, on this seat's 96353 and 96374. **Measured part by part,
+@`bf21181208` -> @`b9335371e1` -> @`1b42dbe758`: Part I DIFFERS at both steps (O3 only), Part III EQUAL at both,
+Part IV DIFFERS (IV.2), every other part EQUAL.** Part III is byte-equal and O3 now reads as FWD-3 was already cut
+(s.2), so **no FWD id and no bar moves.**
+
+- **s.1 RESOLVED IN SUBSTANCE.** Both briefs now state one per-slot rule: the SHORT form in every resource name, the
+  LONG form in bucket names and key scope segments -- the split this endpoint recommended.
+- **s.1's Lambda gap RESOLVED.** `lambda` is in the closed `kind` list, so FWD-1's bar example derives:
+  `mdpf-cot-publisher-lambda`.
+- **s.2 RESOLVED.** O3's history-only-aliases text is gone.
+- **AN ATTRIBUTION INTRODUCED BY THE FIRST FIX WAS WRONG, AND IS CORRECTED.** @`b9335371e1` labelled the per-slot
+  rule *"RULED ~03:5xZ (card 2)"*. Card 2's approved REC, read in full in its ruling record (@`38f2268d48`), rules
+  WHICH short forms exist -- *"one sanctioned short form per firm ... alongside the long forms"*, `bd` refused -- and
+  says nothing about WHERE each is used; the same record's s.3 leaves L4 ratification to this seat. @`1b42dbe758`
+  relabels the rule **PROPOSED -- ratified at L4 by `1.0.0_SA_CTO`, revertible on Andrew's word**, in both D14 briefs,
+  measured in the diff above. It is decidable at L4 because it narrows nothing he ruled: both forms stay sanctioned,
+  buckets were ruled long in D10-2, and key scope is long in the ruled source-first string.
+
+---
+
 ## THE SIX OUTCOMES
 
 ```
