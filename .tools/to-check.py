@@ -72,6 +72,57 @@ def _extract_tag(text: str, tag: str) -> str | None:
     return _strip_xml_comments(m.group(1)).strip()
 
 
+# ---------------------------------------------------------------------------------------------
+# FIX C -- STATUS READ OFF WORKER-FACE PROSE. `_extract_tag` takes the FIRST `<status>` in the
+# file and runs non-greedily to the NEXT `</status>`. A spine-v3 worker face INSTRUCTS the worker
+# to "flip this file's `<status>` to `complete`" -- an UNPAIRED inline mention, usually inside
+# backticks -- so that mention OPENS the match and the record element's own closing tag CLOSES
+# it. The captured value is then the prose BETWEEN them, and `_classify_status` grades prose: its
+# first token is a backtick, which matches no word set, so it falls through to ACTIVE.
+#
+# Measured 2026-09-12 on AMGT_RESAPP round 7 (rows AMGT_RESAPP-Z-S36 and -Z-S42): six orders
+# reported ACTIVE against six literal `<status>complete</status>` record faces and zero open
+# orders. The same count reaches the DIRECTIVES REGISTER, because directives-check.py:83
+# `open_tos()` shells out to this tool and reprints its per-project line -- so D5 stated six open
+# orders against a measured zero. Cause located by 3.0.0_SA_CVO~Z in REMEDIATION_v7 @00e0813b9d.
+#
+# THE DISCRIMINATOR IS THE BACKTICK, AND IT WAS FOUND BY MEASUREMENT, NOT BY REASONING. Every
+# spurious `<status>` token in this corpus is an INLINE CODE SPAN -- prose ABOUT the tag, written
+# between backticks. The two failing shapes are mirror images and no rule on the bare token tells
+# them apart:
+#   AMGT_RESAPP rf-*  a backticked mention BEFORE the element ("flip this file's `<status>` to
+#                     `complete`"), which the old first-open search takes as the opener.
+#   ETFS_POSITIONING  an element whose own CONTENT holds a backticked mention ("**`<status>` TAG
+#     TO-6, TO-3       ADDED 2026-08-28 ...") -- so a nearest-opener rule skips the REAL opener.
+# Masking inline code spans before locating the tag fixes both, and leaves a SET file
+# (D7_NOTIFY.TO-SET.md, six orders in one file, first status a SPRING-CLEAN prose closure) reading
+# exactly as it always has.
+#
+# WARN: TWO WRONG FIXES WERE WRITTEN BEFORE THIS ONE AND BOTH WERE CAUGHT THE SAME WAY -- by running
+# the patched tool against HEAD's copy over the whole estate at the same instant, and asking which
+# projects moved. A "single bare token" test reopened six closed projects; a non-nesting-pair test
+# turned 130 active TOs into 144 by capturing prose in the mirror shape. NEITHER would have been
+# caught by testing the case that motivated the fix. The prediction to hold the fix to: EXACTLY
+# ONE project moves, and the project SET is unchanged.
+#
+# SCOPED TO STATUS ONLY: `_extract_tag` itself is unchanged and every other tag reads as before.
+# ---------------------------------------------------------------------------------------------
+_CODE_SPAN_RE = re.compile(r"`[^`\n]*`")
+
+
+def _extract_status_tag(text: str) -> str | None:
+    """The status ELEMENT, located with inline code spans masked so prose about the tag is inert.
+
+    The mask is used ONLY to find the span; the value is sliced out of the ORIGINAL text, so a
+    status whose value legitimately contains backticks is returned intact.
+    """
+    masked = _CODE_SPAN_RE.sub(lambda m: " " * len(m.group(0)), text)
+    m = re.search(r"<status>(.*?)</status>", masked, re.DOTALL | re.IGNORECASE)
+    if not m:
+        return _extract_tag(text, "status")
+    return _strip_xml_comments(text[m.start(1):m.end(1)]).strip()
+
+
 def _extract_tag_multi(text: str, *tags: str) -> str | None:
     for tag in tags:
         v = _extract_tag(text, tag)
@@ -239,7 +290,7 @@ def parse_to_file(path: str) -> dict:
         assigned_to = _extract_tag_multi(text, "assigned_to", "issued_to") or ""
         issued_by = _extract_tag_multi(text, "issued_by") or ""
         issued_date = _extract_tag_multi(text, "issued_date", "date", "issued") or ""
-        status_raw = _extract_tag_multi(text, "status") or ""
+        status_raw = _extract_status_tag(text) or ""   # FIX C: the record element, never the prose
         priority = (_extract_tag_multi(text, "priority") or "")[:80]
 
         # Markdown fallbacks
