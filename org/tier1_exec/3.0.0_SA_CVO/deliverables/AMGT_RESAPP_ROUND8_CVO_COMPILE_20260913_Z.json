@@ -1,0 +1,106 @@
+{
+  "utc": "2026-09-13T03:37:45Z",
+  "intake_pin": "6a313b33668a4af4318398a4406ab0e42b028bfa",
+  "supplement_pin": "4f80670603660a46917cc31d9bb4464183a1cf68",
+  "originals": 122,
+  "reviewed_originals": [
+    "AMGT_RESAPP-Z-S46",
+    "AMGT_RESAPP-Z-S47",
+    "AMGT_RESAPP-Z-S48",
+    "AMGT_RESAPP-Z-S49",
+    "AMGT_RESAPP-Z-S50",
+    "AMGT_RESAPP-Z-W14-S1",
+    "AMGT_RESAPP-Z-W14-S2",
+    "AMGT_RESAPP-Z-S51",
+    "AMGT_RESAPP-Z-S52",
+    "AMGT_RESAPP-Z-S53",
+    "AMGT_RESAPP-Z-S54",
+    "AMGT_RESAPP-Z-S55",
+    "AMGT_RESAPP-Z-S56",
+    "AMGT_RESAPP-Z-W13-S1",
+    "AMGT_RESAPP-Z-W13-S2",
+    "AMGT_RESAPP-Z-W13-S3",
+    "AMGT_RESAPP-Z-W13-S4",
+    "AMGT_RESAPP-Z-W13-S5",
+    "AMGT_RESAPP-Z-W13-S6",
+    "AMGT_RESAPP-Z-W13-S7",
+    "AMGT_RESAPP-Z-S57",
+    "AMGT_RESAPP-Z-S58",
+    "AMGT_RESAPP-Z-S59",
+    "AMGT_RESAPP-Z-S60",
+    "AMGT_RESAPP-Z-W13-S8",
+    "AMGT_RESAPP-Z-S61",
+    "AMGT_RESAPP-Z-S62",
+    "AMGT_RESAPP-Z-S63"
+  ],
+  "adjudication_rows": 37,
+  "new_remedies": 18,
+  "open_remedies": [
+    "AMGT_RESAPP-Z-S53",
+    "AMGT_RESAPP-Z-W13-S3",
+    "AMGT_RESAPP-Z-S57",
+    "AMGT_RESAPP-Z-S61"
+  ],
+  "clock_advances": {
+    "v5": [
+      "S22"
+    ],
+    "v7": [
+      "C-S98",
+      "C-S99",
+      "S34",
+      "S36",
+      "S42",
+      "W11-S5",
+      "W12-S1"
+    ]
+  },
+  "grades": [
+    {
+      "criterion": "AMGTrg1-AC1",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~13/AMGT_RESAPP.TO-AMGT-rg-1.the-consumer-join.proof_of_spec.json@6a313b33668a4af4318398a4406ab0e42b028bfa",
+      "verdict": "FAIL",
+      "reason": "The requested judgment is of the worker's lost typecheck coverage: no compiler ran there. That absence and its reason are upheld, not converted to a worker PASS. Separate CVO L9 verification now fills the source gap: pinned a845a8be75 archive, matching retained package/lock dependencies, tsc 5.9.3, 2072 files, rc0/no errors; mutated RankedChart produces TS2322/rc2 and exact-byte restore. No repeated build or terminal-order rewrite is owed."
+    },
+    {
+      "criterion": "AMGTrg1-AC5",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~13/AMGT_RESAPP.TO-AMGT-rg-1.the-consumer-join.proof_of_spec.json@6a313b33668a4af4318398a4406ab0e42b028bfa",
+      "verdict": "PASS",
+      "reason": "The actual canonical identity joins 183/183 fiscal and 13/13 header rows from fresh local adapter output. Actual populated ThesisTab and real ProvenanceLine render 196 rows, preserve the unresolved REFUSE, hide its raw 146.58 and keep a PASS value visible. The old key control joins zero fiscal rows. Producer IDs remain unchanged. The disclosed ungranted producer-module read is separately W13-S3; a successful behavior grade does not grant it retroactively. EXERCISED-NOT-REALIZED at a845a8be75."
+    },
+    {
+      "criterion": "AMGTrg2-AC2",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~13/AMGT_RESAPP.TO-AMGT-rg-2.the-incomplete-read-at-the-chart.proof_of_spec.json@6a313b33668a4af4318398a4406ab0e42b028bfa",
+      "verdict": "FAIL",
+      "reason": "The worker's amended criterion explicitly refers its absent typecheck to CVO; zero files from an unstarted compiler is not a vacuous successful build. CVO's separate L9 source build now passes with 2072 examined files and zero errors. This closes the verification remedy without falsely saying the worker ran the compiler."
+    },
+    {
+      "criterion": "AMGTrg2-AC4",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~13/AMGT_RESAPP.TO-AMGT-rg-2.the-incomplete-read-at-the-chart.proof_of_spec.json@6a313b33668a4af4318398a4406ab0e42b028bfa",
+      "verdict": "FAIL",
+      "reason": "The worker could not run the typed mutant; node stripping is not a semantic typechecker. The literal worker coverage remains absent. At L9 the retained actual TypeScript compiler catches CVO_R8_TYPE_MUTANT in the real pinned RankedChart, rc2/TS2322 against baseline rc0, with exact snapshot-byte restore. The current falsifier debt is now discharged."
+    },
+    {
+      "criterion": "AMGTrg2-AC5",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~13/AMGT_RESAPP.TO-AMGT-rg-2.the-incomplete-read-at-the-chart.proof_of_spec.json@6a313b33668a4af4318398a4406ab0e42b028bfa",
+      "verdict": "PASS",
+      "reason": "The real static RankedChart at a845a8be75, driven by fresh actual offline adapter outputs, yields absent/partial/exhaust lengths 328/1554/775 and three different hashes. The actual old component has identical absent/exhaust hashes. Changing only completeness signals switches the rendered state; the unresolved denominator, partial caption and producer series order survive. This is actual component rendering, beyond the worker decision harness, but not a browser effect, full served route or promotion. EXERCISED-NOT-REALIZED."
+    },
+    {
+      "criterion": "AMGTrg3-AC5",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~14/AMGT_RESAPP.TO-AMGT-rg-3.the-control-shown-to-fire.proof_of_spec.json@6a313b33668a4af4318398a4406ab0e42b028bfa",
+      "verdict": "PASS",
+      "reason": "The recorded module-attribute matcher invocation fires under actual loosening: 196/196, restores to 183/0 on a 196-figure block. Worker also records a source-predicate mutation and correct-file byte restoration; CVO independently reproduces the object-binding difference and restored identity without shared-source writes. All 47 current API tests pass with sockets denied. The wrong-file cmp is not credited as matcher-file restoration; sibling AC4 and the explicit correct-file cmp cover it. W11-S5's named debt is paid; this does not regrade rf-3."
+    },
+    {
+      "criterion": "AMGTrg2-AC1",
+      "instance": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~13/AMGT_RESAPP.TO-AMGT-rg-2.the-incomplete-read-at-the-chart.proof_of_spec.json@6a313b33668a4af4318398a4406ab0e42b028bfa",
+      "verdict": "FAIL",
+      "reason": "rg-2 AC1 still requires a fixture of REAL captured adapter bytes. Its own _provenance and harness disclose that only read_completeness blocks were directly produced; the series arrays are constructed/transcribed. The output therefore cannot satisfy the literal provenance bar even though its decision checks pass. CVO independently supplies real offline adapter responses through the actual component; the runtime repair passes on that different evidence."
+    }
+  ],
+  "late_pin": "c4705e6ec96d71cf8ea68a1c4fca5a646e58fc64",
+  "stamp_warning": "L8 helper warned that generic predecessor L6.json was not stamped; no foreign-owned stage was fabricated.",
+  "l6_generic_exists": false,
+  "l6_round8_exists": false
+}

@@ -652,15 +652,15 @@ The physical contract is route-free, as the current gate and spine require. Some
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v5",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
       "round": "v5"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO~Z",
-      "at": null
+      "at": "2026-09-13T03:37:45Z"
     }
   }
 ]

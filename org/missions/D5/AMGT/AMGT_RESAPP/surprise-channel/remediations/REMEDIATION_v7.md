@@ -32,15 +32,15 @@ Late S44/S45 are included before the commit: the owned L10 stamp omission is rep
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
+      "at": "2026-09-13T03:37:45Z"
     }
   },
   {
@@ -148,15 +148,15 @@ Late S44/S45 are included before the commit: the owned L10 stamp omission is rep
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
+      "at": "2026-09-13T03:37:45Z"
     }
   },
   {
@@ -206,15 +206,15 @@ Late S44/S45 are included before the commit: the owned L10 stamp omission is rep
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO~Z",
-      "at": null
+      "at": "2026-09-13T03:37:45Z"
     }
   },
   {
@@ -317,15 +317,15 @@ Late S44/S45 are included before the commit: the owned L10 stamp omission is rep
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
+      "at": "2026-09-13T03:37:45Z"
     }
   },
   {
@@ -399,15 +399,15 @@ Late S44/S45 are included before the commit: the owned L10 stamp omission is rep
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO~Z",
-      "at": null
+      "at": "2026-09-13T03:37:45Z"
     }
   },
   {
@@ -427,15 +427,15 @@ Late S44/S45 are included before the commit: the owned L10 stamp omission is rep
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
+      "at": "2026-09-13T03:37:45Z"
     }
   },
   {
@@ -455,15 +455,15 @@ Late S44/S45 are included before the commit: the owned L10 stamp omission is rep
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
+      "at": "2026-09-13T03:37:45Z"
     }
   },
   {
